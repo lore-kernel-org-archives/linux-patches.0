@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E941C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A02AC433EF;
-	Mon, 20 Mar 2023 15:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9607A1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1BBC433EF;
+	Mon, 20 Mar 2023 15:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325764;
-	bh=hRCGny6RTst0Quh3CPsdx1tjLZSo1tA48HZCKGXoM2k=;
+	s=korg; t=1679325767;
+	bh=Zt0F8K9xw+LBfNYnsGFYvo4d4YcwJ3XHMOiNvxl5bh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jM0ZQedD/DV34i2MvRnUXDrFJSu1Got8kJmWOwu9Zny30EfZz4W2fJ0VLUIaOvFX9
-	 4sLJ4BaCfl29jNLRzgZHT9iX6ARjnqu4nywcIMpYUxGQRJ6djwRQ+7RiMuBZvahycF
-	 t3IEXg67wRiCVAFENQZncYlrNdTeZkLZyl3dWEFg=
+	b=nDxOilumgwKufReo6JuYFBJw14OhrLNSUpyiall33ZAgpHjcc3ZhAaqga7a9BPXht
+	 q3JLRGtjHk2vjncNcYquvup/pzeBXPBJiCPCe9gzoszxDP5NYzAPR1BgRitizDcWJA
+	 OhL5s3J7iIp+2QVs8McTld8iPxJdZUjPC/HdsYcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Dmitry Osipenko <digetx@gmail.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.1 139/198] interconnect: exynos: fix node leak in probe PM QoS error path
-Date: Mon, 20 Mar 2023 15:54:37 +0100
-Message-Id: <20230320145513.375043713@linuxfoundation.org>
+Subject: [PATCH 6.1 126/198] memory: tegra30-emc: fix interconnect registration race
+Date: Mon, 20 Mar 2023 15:54:24 +0100
+Message-Id: <20230320145512.818410553@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 References: <20230320145507.420176832@linuxfoundation.org>
@@ -38,44 +38,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 3aab264875bf3c915ea2517fae1eec213e0b4987 upstream.
+commit 9db481c909dd6312ccfbdc7e343b50e41c727483 upstream.
 
-Make sure to add the newly allocated interconnect node to the provider
-before adding the PM QoS request so that the node is freed on errors.
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to fail.
 
-Fixes: 2f95b9d5cf0b ("interconnect: Add generic interconnect driver for Exynos SoCs")
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
+
+Fixes: d5ef16ba5fbe ("memory: tegra20: Support interconnect framework")
 Cc: stable@vger.kernel.org      # 5.11
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Dmitry Osipenko <digetx@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-15-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20230306075651.2449-21-johan+linaro@kernel.org
 Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/samsung/exynos.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/memory/tegra/tegra30-emc.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/interconnect/samsung/exynos.c
-+++ b/drivers/interconnect/samsung/exynos.c
-@@ -149,6 +149,9 @@ static int exynos_generic_icc_probe(stru
- 				 &priv->bus_clk_ratio))
- 		priv->bus_clk_ratio = EXYNOS_ICC_DEFAULT_BUS_CLK_RATIO;
+--- a/drivers/memory/tegra/tegra30-emc.c
++++ b/drivers/memory/tegra/tegra30-emc.c
+@@ -1546,15 +1546,13 @@ static int tegra_emc_interconnect_init(s
+ 	emc->provider.aggregate = soc->icc_ops->aggregate;
+ 	emc->provider.xlate_extended = emc_of_icc_xlate_extended;
  
-+	icc_node->data = priv;
-+	icc_node_add(icc_node, provider);
+-	err = icc_provider_add(&emc->provider);
+-	if (err)
+-		goto err_msg;
++	icc_provider_init(&emc->provider);
+ 
+ 	/* create External Memory Controller node */
+ 	node = icc_node_create(TEGRA_ICC_EMC);
+ 	if (IS_ERR(node)) {
+ 		err = PTR_ERR(node);
+-		goto del_provider;
++		goto err_msg;
+ 	}
+ 
+ 	node->name = "External Memory Controller";
+@@ -1575,12 +1573,14 @@ static int tegra_emc_interconnect_init(s
+ 	node->name = "External Memory (DRAM)";
+ 	icc_node_add(node, &emc->provider);
+ 
++	err = icc_provider_register(&emc->provider);
++	if (err)
++		goto remove_nodes;
 +
- 	/*
- 	 * Register a PM QoS request for the parent (devfreq) device.
- 	 */
-@@ -157,9 +160,6 @@ static int exynos_generic_icc_probe(stru
- 	if (ret < 0)
- 		goto err_node_del;
+ 	return 0;
  
--	icc_node->data = priv;
--	icc_node_add(icc_node, provider);
--
- 	icc_parent_node = exynos_icc_get_parent(bus_dev->of_node);
- 	if (IS_ERR(icc_parent_node)) {
- 		ret = PTR_ERR(icc_parent_node);
+ remove_nodes:
+ 	icc_nodes_remove(&emc->provider);
+-del_provider:
+-	icc_provider_del(&emc->provider);
+ err_msg:
+ 	dev_err(emc->dev, "failed to initialize ICC: %d\n", err);
+ 
 
 
