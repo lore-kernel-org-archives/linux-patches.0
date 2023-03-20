@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3311C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E8FC433EF;
-	Mon, 20 Mar 2023 15:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41FE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D81C433D2;
+	Mon, 20 Mar 2023 15:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324771;
-	bh=aZufomS3hbjgX0dD3WTJMxWuWA4SkiioDaf41cQKJ0A=;
+	s=korg; t=1679324774;
+	bh=6NlQGWUXhT1wVOj0LUPYNHBphHVr4vz9ma/w1fHkthY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ALsrwwcleQqRroZOVVmY5pI97bxOlNKraXWNFeh9ZaBOAADIE285Eu9211M8tzLYu
-	 Cm1p1DWYHNnBnWG+ENhwMsqtYOprJhQrtMFUATjNW9fig++EQZpu8waHEvzkxMCacW
-	 15pxdI4Mxd47mk50b+InAJH1KbAXEPuZ9QSyNAhY=
+	b=0QESDKuFko9G461uFh4OtaIB9ajiDC5aWYCve4W50vdZw0dVk7dFo8gj2qUNGoR4q
+	 y5KHSPpzDnMxGvKUqJa3B2bI9blVvjpC0TWh3V4W4UOfOUKpBkvFvJYr6G/oVDx6JD
+	 TSMdpUNq0b2Q2Z3P3KpmrQDUgTKZrPoaoCeN72N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 31/99] block: sunvdc: add check for mdesc_grab() returning NULL
-Date: Mon, 20 Mar 2023 15:54:09 +0100
-Message-Id: <20230320145444.683712661@linuxfoundation.org>
+Subject: [PATCH 5.15 008/115] ALSA: hda: Match only Intel devices with CONTROLLER_IN_GPU()
+Date: Mon, 20 Mar 2023 15:53:40 +0100
+Message-Id: <20230320145449.703442079@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 6030363199e3a6341afb467ddddbed56640cbf6a ]
+[ Upstream commit ff447886e675979d66b2bc01810035d3baea1b3a ]
 
-In vdc_port_probe(), we should check the return value of mdesc_grab() as
-it may return NULL, which can cause potential NPD bug.
+CONTROLLER_IN_GPU() is clearly intended to match only Intel devices, but
+previously it checked only the PCI Device ID, not the Vendor ID, so it
+could match devices from other vendors that happened to use the same Device
+ID.
 
-Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
-Signed-off-by: Liang He <windhl@126.com>
-Link: https://lore.kernel.org/r/20230315062032.1741692-1-windhl@126.com
-[axboe: style cleanup]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Update CONTROLLER_IN_GPU() so it matches only Intel devices.
+
+Fixes: 535115b5ff51 ("ALSA: hda - Abort the probe without i915 binding for HSW/B")
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20230307214054.886721-1-helgaas@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/sunvdc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/hda_intel.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
-index 39aeebc6837da..d9e41d3bbe717 100644
---- a/drivers/block/sunvdc.c
-+++ b/drivers/block/sunvdc.c
-@@ -984,6 +984,8 @@ static int vdc_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 	print_version();
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index c8042eb703c34..5fce1ca8a393a 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -331,14 +331,15 @@ enum {
+ #define needs_eld_notify_link(chip)	false
+ #endif
  
- 	hp = mdesc_grab();
-+	if (!hp)
-+		return -ENODEV;
+-#define CONTROLLER_IN_GPU(pci) (((pci)->device == 0x0a0c) || \
++#define CONTROLLER_IN_GPU(pci) (((pci)->vendor == 0x8086) &&         \
++				       (((pci)->device == 0x0a0c) || \
+ 					((pci)->device == 0x0c0c) || \
+ 					((pci)->device == 0x0d0c) || \
+ 					((pci)->device == 0x160c) || \
+ 					((pci)->device == 0x490d) || \
+ 					((pci)->device == 0x4f90) || \
+ 					((pci)->device == 0x4f91) || \
+-					((pci)->device == 0x4f92))
++					((pci)->device == 0x4f92)))
  
- 	err = -ENODEV;
- 	if ((vdev->dev_no << PARTITION_SHIFT) & ~(u64)MINORMASK) {
+ #define IS_BXT(pci) ((pci)->vendor == 0x8086 && (pci)->device == 0x5a98)
+ 
 -- 
 2.39.2
 
