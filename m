@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1DBE4FE
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D30C4339C;
-	Mon, 20 Mar 2023 15:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971521C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F288CC433A0;
+	Mon, 20 Mar 2023 15:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324678;
-	bh=JsSUs3d/yDCt6EnGrrrVyV2AGFW09dmfpdOFyeuKY+E=;
+	s=korg; t=1679324681;
+	bh=SFBggJYkVHnCEZcZfLMB/8VKkg2NrKqNkLzN9FgAHNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EKXJgSpjjr7cT0UI0vTbQoJCzdq9P5iuREJ4TKxWdzU4rWUROglbTaeNlLBNu0+Ol
-	 5SnrOjJlkTt2YFDG3wlnSUGiHYEjUqGG615TVNA8Jl5mzRYhBjEKvxHSRQRR8iKfEa
-	 TBXWG5Wl4tHXCrDQufop4phy9IKJ3cEee/hfk2Mw=
+	b=A1/ehR3qhbI6qLL36xzmxjqe62GEDsD7j3k3gZ54AYniv1c1tRJB8xlP/b75sw0F8
+	 u2uDisMDv10xEYdgU3BCdE/WEbUFnUzlTbe8cbIqL+YYeQ0LqTd+jk6Kx0lZff+rja
+	 nUKglGInLdNIlezCRjEbgcSGpvQTgD14qUv2LTTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Piotr Raczynski <piotr.raczynski@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jianguo Wu <wujianguo@chinatelecom.cn>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 39/99] ethernet: sun: add check for the mdesc_grab()
-Date: Mon, 20 Mar 2023 15:54:17 +0100
-Message-Id: <20230320145445.007414697@linuxfoundation.org>
+Subject: [PATCH 5.15 016/115] ipvlan: Make skb->skb_iif track skb->dev for l3s mode
+Date: Mon, 20 Mar 2023 15:53:48 +0100
+Message-Id: <20230320145450.076104568@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,53 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Jianguo Wu <wujianguo@chinatelecom.cn>
 
-[ Upstream commit 90de546d9a0b3c771667af18bb3f80567eabb89b ]
+[ Upstream commit 59a0b022aa249e3f5735d93de0849341722c4754 ]
 
-In vnet_port_probe() and vsw_port_probe(), we should
-check the return value of mdesc_grab() as it may
-return NULL which can caused NPD bugs.
+For l3s mode, skb->dev is set to ipvlan interface in ipvlan_nf_input():
+  skb->dev = addr->master->dev
+but, skb->skb_iif remain unchanged, this will cause socket lookup failed
+if a target socket is bound to a interface, like the following example:
 
-Fixes: 5d01fa0c6bd8 ("ldmvsw: Add ldmvsw.c driver code")
-Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
-Signed-off-by: Liang He <windhl@126.com>
-Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  ip link add ipvlan0 link eth0 type ipvlan mode l3s
+  ip addr add dev ipvlan0 192.168.124.111/24
+  ip link set ipvlan0 up
+
+  ping -c 1 -I ipvlan0 8.8.8.8
+  100% packet loss
+
+This is because there is no match sk in __raw_v4_lookup() as sk->sk_bound_dev_if != dif(skb->skb_iif).
+Fix this by make skb->skb_iif track skb->dev in ipvlan_nf_input().
+
+Fixes: c675e06a98a4 ("ipvlan: decouple l3s mode dependencies from other modes")
+Signed-off-by: Jianguo Wu <wujianguo@chinatelecom.cn>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/29865b1f-6db7-c07a-de89-949d3721ea30@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/ldmvsw.c  | 3 +++
- drivers/net/ethernet/sun/sunvnet.c | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/net/ipvlan/ipvlan_l3s.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/sun/ldmvsw.c b/drivers/net/ethernet/sun/ldmvsw.c
-index 01ea0d6f88193..934a4b54784b8 100644
---- a/drivers/net/ethernet/sun/ldmvsw.c
-+++ b/drivers/net/ethernet/sun/ldmvsw.c
-@@ -290,6 +290,9 @@ static int vsw_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+diff --git a/drivers/net/ipvlan/ipvlan_l3s.c b/drivers/net/ipvlan/ipvlan_l3s.c
+index 943d26cbf39f5..71712ea25403d 100644
+--- a/drivers/net/ipvlan/ipvlan_l3s.c
++++ b/drivers/net/ipvlan/ipvlan_l3s.c
+@@ -101,6 +101,7 @@ static unsigned int ipvlan_nf_input(void *priv, struct sk_buff *skb,
+ 		goto out;
  
- 	hp = mdesc_grab();
- 
-+	if (!hp)
-+		return -ENODEV;
-+
- 	rmac = mdesc_get_property(hp, vdev->mp, remote_macaddr_prop, &len);
- 	err = -ENODEV;
- 	if (!rmac) {
-diff --git a/drivers/net/ethernet/sun/sunvnet.c b/drivers/net/ethernet/sun/sunvnet.c
-index 96b883f965f63..b6c03adf1e762 100644
---- a/drivers/net/ethernet/sun/sunvnet.c
-+++ b/drivers/net/ethernet/sun/sunvnet.c
-@@ -431,6 +431,9 @@ static int vnet_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 
- 	hp = mdesc_grab();
- 
-+	if (!hp)
-+		return -ENODEV;
-+
- 	vp = vnet_find_parent(hp, vdev->mp, vdev);
- 	if (IS_ERR(vp)) {
- 		pr_err("Cannot find port parent vnet\n");
+ 	skb->dev = addr->master->dev;
++	skb->skb_iif = skb->dev->ifindex;
+ 	len = skb->len + ETH_HLEN;
+ 	ipvlan_count_rx(addr->master, len, true, false);
+ out:
 -- 
 2.39.2
 
