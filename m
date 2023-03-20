@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510C81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A22C433EF;
-	Mon, 20 Mar 2023 15:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173FA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865CDC433D2;
+	Mon, 20 Mar 2023 15:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325992;
-	bh=xsFG9o14xXgME6MWWomsCa8EnTDg/iEcMyQqcGqqg8M=;
+	s=korg; t=1679325994;
+	bh=UMqypIEzTOMxGEZh1af3eG/Lpa/XJAyAYGqPcQkCnJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=St/lVRqMwq5hYPXtz7I36dye5veBfoXji+7Boe7Ps+Fzb6Zezezbvp+w3e7nze8r9
-	 dQ8TEBIbAA34kPjq0UpnW1WzBSmqezfkE+yDH0gtQZSsZDAX+Jdf+3EutnVdrJkRJQ
-	 rQ9e8rFSEQJsrHRZnuwAexp9AxDVfNrrN5kszBKQ=
+	b=CfTnnGGMC8kkMizzVnSuDzAzIHWva4h0aqeRaljx6duJ1TCzJk4/bY9R0xQXCA0cL
+	 dCgz9l5ApRuGjjImD49q/DUmwLr6VK7V8ST7Z+Ee9yJxp+WAuFCcooDaM2J4yG1U5F
+	 La36T+Pcd1/pyzobXPztpxXTfUDqs3bGZph4FvkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.2 137/211] interconnect: qcom: rpmh: fix probe child-node error handling
-Date: Mon, 20 Mar 2023 15:54:32 +0100
-Message-Id: <20230320145519.178425178@linuxfoundation.org>
+	Tero Kristo <tero.kristo@linux.intel.com>,
+	Daniel Bristot de Oliveira <bristot@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 180/198] trace/hwlat: Do not start per-cpu thread if it is already running
+Date: Mon, 20 Mar 2023 15:55:18 +0100
+Message-Id: <20230320145515.037122686@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Tero Kristo <tero.kristo@linux.intel.com>
 
-commit 6570d1d46eeade82965ccc4a3ab7d778898ef4bf upstream.
+commit 08697bca9bbba15f2058fdbd9f970bd5f6a8a2e8 upstream.
 
-Make sure to clean up and release resources properly also in case probe
-fails when populating child devices.
+The hwlatd tracer will end up starting multiple per-cpu threads with
+the following script:
 
-Fixes: 57eb14779dfd ("interconnect: qcom: icc-rpmh: Support child NoC device probe")
-Cc: stable@vger.kernel.org      # 6.0
-Cc: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-10-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+    #!/bin/sh
+    cd /sys/kernel/debug/tracing
+    echo 0 > tracing_on
+    echo hwlat > current_tracer
+    echo per-cpu > hwlat_detector/mode
+    echo 100000 > hwlat_detector/width
+    echo 200000 > hwlat_detector/window
+    echo 1 > tracing_on
+
+To fix the issue, check if the hwlatd thread for the cpu is already
+running, before starting a new one. Along with the previous patch, this
+avoids running multiple instances of the same CPU thread on the system.
+
+Link: https://lore.kernel.org/all/20230302113654.2984709-1-tero.kristo@linux.intel.com/
+Link: https://lkml.kernel.org/r/20230310100451.3948583-3-tero.kristo@linux.intel.com
+
+Cc: stable@vger.kernel.org
+Fixes: f46b16520a087 ("trace/hwlat: Implement the per-cpu mode")
+Signed-off-by: Tero Kristo <tero.kristo@linux.intel.com>
+Acked-by: Daniel Bristot de Oliveira <bristot@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/qcom/icc-rpmh.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ kernel/trace/trace_hwlat.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/interconnect/qcom/icc-rpmh.c
-+++ b/drivers/interconnect/qcom/icc-rpmh.c
-@@ -235,8 +235,11 @@ int qcom_icc_rpmh_probe(struct platform_
- 	platform_set_drvdata(pdev, qp);
+--- a/kernel/trace/trace_hwlat.c
++++ b/kernel/trace/trace_hwlat.c
+@@ -492,6 +492,10 @@ static int start_cpu_kthread(unsigned in
+ {
+ 	struct task_struct *kthread;
  
- 	/* Populate child NoC devices if any */
--	if (of_get_child_count(dev->of_node) > 0)
--		return of_platform_populate(dev->of_node, NULL, NULL, dev);
-+	if (of_get_child_count(dev->of_node) > 0) {
-+		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-+		if (ret)
-+			goto err;
-+	}
- 
- 	return 0;
- err:
++	/* Do not start a new hwlatd thread if it is already running */
++	if (per_cpu(hwlat_per_cpu_data, cpu).kthread)
++		return 0;
++
+ 	kthread = kthread_run_on_cpu(kthread_fn, NULL, cpu, "hwlatd/%u");
+ 	if (IS_ERR(kthread)) {
+ 		pr_err(BANNER "could not start sampling thread\n");
 
 
