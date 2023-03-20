@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB511C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D41CC433EF;
-	Mon, 20 Mar 2023 15:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51EE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9A3C433D2;
+	Mon, 20 Mar 2023 15:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325336;
-	bh=cu8KAXnHTm7sqjT7q12dH0X+OYUeQPqKJEzdCvHjg7g=;
+	s=korg; t=1679325339;
+	bh=n4c3IfGi4HlAcaIysP/FRM5/hLEnZcPytcIfxY6iuck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SAMTODCLeD5YZ5hi9eYow7Mjis/GYvlN9ZOeBkEXJuhrVJ1o4ckU78cAMtr9byu7N
-	 e4L42fCdft0W/XrOjL3DczKMDD4HDT3+wwEKBMj/3XhLYangoCY18KSs4j7Ni6ADT+
-	 O98sD2cWqTdg/Galn2M7G6Vo2T75voi3ifHJH4TY=
+	b=a7a5BZGjYNvX3J3vDHsoN6j0Q4Wq8kjJP6/h+/hdDXIfm2hFvka4kcGlPHXDBG6ZB
+	 6ltsOn/TC1jWN8UIFpoK7nuB0IavJelmetE8VR/ctBWYTbwU5o01HFrccXQeY2uwzI
+	 vfLEPxj4n5yji9lF2eiiqHPyQUpf6XKlnMrkOnR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	=?UTF-8?q?B=C5=82a=C5=BCej=20Szczygie=C5=82?= <mumei6102@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 092/115] drm/amd/pm: Fix sienna cichlid incorrect OD volage after resume
-Date: Mon, 20 Mar 2023 15:55:04 +0100
-Message-Id: <20230320145453.279827316@linuxfoundation.org>
+	Daniel Jurgens <danielj@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 070/198] net/mlx5: Disable eswitch before waiting for VF pages
+Date: Mon, 20 Mar 2023 15:53:28 +0100
+Message-Id: <20230320145510.478502630@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,108 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Błażej Szczygieł <mumei6102@gmail.com>
+From: Daniel Jurgens <danielj@nvidia.com>
 
-commit a9386ee9681585794dbab95d4ce6826f73d19af6 upstream.
+[ Upstream commit 7ba930fc25def6fd736abcdfa224272948a65cf7 ]
 
-Always setup overdrive tables after resume. Preserve only some
-user-defined settings in user_overdrive_table if they're set.
+The offending commit changed the ordering of moving to legacy mode and
+waiting for the VF pages. Moving to legacy mode is important in
+bluefield, because it sends the host driver into error state, and frees
+its pages. Without this transition we end up waiting 2 minutes for
+pages that aren't coming before carrying on with the unload process.
 
-Copy restored user_overdrive_table into od_table to get correct
-values.
-
-On cold boot, BTC was triggered and GfxVfCurve was calibrated. We
-got VfCurve settings (a). On resuming back, BTC will be triggered
-again and GfxVfCurve will be recalibrated. VfCurve settings (b)
-got may be different from those of cold boot.  So if we reuse
-those VfCurve settings (a) got on cold boot on suspend, we can
-run into discrepencies.
-
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/1897
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2276
-Reviewed-by: Evan Quan <evan.quan@amd.com>
-Signed-off-by: Błażej Szczygieł <mumei6102@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f019679ea5f2 ("net/mlx5: E-switch, Remove dependency between sriov and eswitch mode")
+Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c |   43 ++++++++++++----
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-@@ -2013,16 +2013,9 @@ static int sienna_cichlid_set_default_od
- 		(OverDriveTable_t *)smu->smu_table.boot_overdrive_table;
- 	OverDriveTable_t *user_od_table =
- 		(OverDriveTable_t *)smu->smu_table.user_overdrive_table;
-+	OverDriveTable_t user_od_table_bak;
- 	int ret = 0;
- 
--	/*
--	 * For S3/S4/Runpm resume, no need to setup those overdrive tables again as
--	 *   - either they already have the default OD settings got during cold bootup
--	 *   - or they have some user customized OD settings which cannot be overwritten
--	 */
--	if (smu->adev->in_suspend)
--		return 0;
--
- 	ret = smu_cmn_update_table(smu, SMU_TABLE_OVERDRIVE,
- 				   0, (void *)boot_od_table, false);
- 	if (ret) {
-@@ -2033,7 +2026,23 @@ static int sienna_cichlid_set_default_od
- 	sienna_cichlid_dump_od_table(smu, boot_od_table);
- 
- 	memcpy(od_table, boot_od_table, sizeof(OverDriveTable_t));
--	memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
-+
-+	/*
-+	 * For S3/S4/Runpm resume, we need to setup those overdrive tables again,
-+	 * but we have to preserve user defined values in "user_od_table".
-+	 */
-+	if (!smu->adev->in_suspend) {
-+		memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
-+		smu->user_dpm_profile.user_od = false;
-+	} else if (smu->user_dpm_profile.user_od) {
-+		memcpy(&user_od_table_bak, user_od_table, sizeof(OverDriveTable_t));
-+		memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
-+		user_od_table->GfxclkFmin = user_od_table_bak.GfxclkFmin;
-+		user_od_table->GfxclkFmax = user_od_table_bak.GfxclkFmax;
-+		user_od_table->UclkFmin = user_od_table_bak.UclkFmin;
-+		user_od_table->UclkFmax = user_od_table_bak.UclkFmax;
-+		user_od_table->VddGfxOffset = user_od_table_bak.VddGfxOffset;
-+	}
- 
- 	return 0;
- }
-@@ -2243,6 +2252,20 @@ static int sienna_cichlid_od_edit_dpm_ta
- 	return ret;
- }
- 
-+static int sienna_cichlid_restore_user_od_settings(struct smu_context *smu)
-+{
-+	struct smu_table_context *table_context = &smu->smu_table;
-+	OverDriveTable_t *od_table = table_context->overdrive_table;
-+	OverDriveTable_t *user_od_table = table_context->user_overdrive_table;
-+	int res;
-+
-+	res = smu_v11_0_restore_user_od_settings(smu);
-+	if (res == 0)
-+		memcpy(od_table, user_od_table, sizeof(OverDriveTable_t));
-+
-+	return res;
-+}
-+
- static int sienna_cichlid_run_btc(struct smu_context *smu)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index f07175549a87d..51c3e86f71a94 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1339,8 +1339,8 @@ static int mlx5_load(struct mlx5_core_dev *dev)
+ static void mlx5_unload(struct mlx5_core_dev *dev)
  {
- 	return smu_cmn_send_smc_msg(smu, SMU_MSG_RunDcBtc, NULL);
-@@ -3980,7 +4003,7 @@ static const struct pptable_funcs sienna
- 	.set_soft_freq_limited_range = smu_v11_0_set_soft_freq_limited_range,
- 	.set_default_od_settings = sienna_cichlid_set_default_od_settings,
- 	.od_edit_dpm_table = sienna_cichlid_od_edit_dpm_table,
--	.restore_user_od_settings = smu_v11_0_restore_user_od_settings,
-+	.restore_user_od_settings = sienna_cichlid_restore_user_od_settings,
- 	.run_btc = sienna_cichlid_run_btc,
- 	.set_power_source = smu_v11_0_set_power_source,
- 	.get_pp_feature_mask = smu_cmn_get_pp_feature_mask,
+ 	mlx5_sf_dev_table_destroy(dev);
+-	mlx5_sriov_detach(dev);
+ 	mlx5_eswitch_disable(dev->priv.eswitch);
++	mlx5_sriov_detach(dev);
+ 	mlx5_lag_remove_mdev(dev);
+ 	mlx5_ec_cleanup(dev);
+ 	mlx5_sf_hw_table_destroy(dev);
+-- 
+2.39.2
+
 
 
