@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD6E1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF0CC433D2;
-	Mon, 20 Mar 2023 15:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232D81C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A13C433D2;
+	Mon, 20 Mar 2023 15:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326140;
-	bh=op+ATlGITwr+eaPzzd4SHgYZEGMEJafQ3vBMJ5bUrSM=;
+	s=korg; t=1679326143;
+	bh=S2MT7GtQ5vxVYcNEXhKtOQ0OEdGKzxFto8a3NzbudZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GP0joUxKmedau7/zqI33RjldYM8klrb4xEw1Mrjgcdee1bJRYoI7DFWxLh+KWI3uY
-	 l8EZCrDT4Ew8hvBpj4kqg+dMY2RxOK+E534p3U411v30TTbLG/eAL6XbHLhA9yfLWU
-	 1IeTLfjk3IVOwjr50KCmYM2tEdeUVG4PIqYfWnL0=
+	b=BJttJjFDHcgQ01rTGC6rbb9MI1ALqdvji4M7l3gYb7UNlY9TfVqRDin0AgVDuFNup
+	 mTmdygIdpf3yYg3Deh+AzfXfAX9al9OMpt+U3KFUwOPiZ1Hp+mAsZtk7U4E9gelb/g
+	 23CBZ2GSbZfBaKZLyzalVhE9zXUr2VAMmITyw9fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.2 139/211] interconnect: qcom: msm8974: fix registration race
-Date: Mon, 20 Mar 2023 15:54:34 +0100
-Message-Id: <20230320145519.266637952@linuxfoundation.org>
+	Tim Huang <tim.huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.2 169/211] drm/amd/pm: bump SMU 13.0.4 driver_if header version
+Date: Mon, 20 Mar 2023 15:55:04 +0100
+Message-Id: <20230320145520.525761204@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,92 +34,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Tim Huang <tim.huang@amd.com>
 
-commit bfe7bcd2b9f5215de2144f097f39971180e7ea54 upstream.
+commit ab9bdb1213b4b40942af6a383f555d0c14874c1b upstream.
 
-The current interconnect provider registration interface is inherently
-racy as nodes are not added until the after adding the provider. This
-can specifically cause racing DT lookups to fail.
+Align the SMU driver interface version with PMFW to
+suppress the version mismatch message on driver loading.
 
-Switch to using the new API where the provider is not registered until
-after it has been fully initialised.
-
-Fixes: 4e60a9568dc6 ("interconnect: qcom: add msm8974 driver")
-Cc: stable@vger.kernel.org      # 5.5
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-12-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/qcom/msm8974.c |   20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_4.h |    4 ++--
+ drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h                       |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/interconnect/qcom/msm8974.c
-+++ b/drivers/interconnect/qcom/msm8974.c
-@@ -692,7 +692,6 @@ static int msm8974_icc_probe(struct plat
- 		return ret;
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_4.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_4.h
+@@ -27,7 +27,7 @@
+ // *** IMPORTANT ***
+ // SMU TEAM: Always increment the interface version if
+ // any structure is changed in this file
+-#define PMFW_DRIVER_IF_VERSION 7
++#define PMFW_DRIVER_IF_VERSION 8
  
- 	provider = &qp->provider;
--	INIT_LIST_HEAD(&provider->nodes);
- 	provider->dev = dev;
- 	provider->set = msm8974_icc_set;
- 	provider->aggregate = icc_std_aggregate;
-@@ -700,11 +699,7 @@ static int msm8974_icc_probe(struct plat
- 	provider->data = data;
- 	provider->get_bw = msm8974_get_bw;
+ typedef struct {
+   int32_t value;
+@@ -198,7 +198,7 @@ typedef struct {
+   uint16_t SkinTemp;
+   uint16_t DeviceState;
+   uint16_t CurTemp;                     //[centi-Celsius]
+-  uint16_t spare2;
++  uint16_t FilterAlphaValue;
  
--	ret = icc_provider_add(provider);
--	if (ret) {
--		dev_err(dev, "error adding interconnect provider: %d\n", ret);
--		goto err_disable_clks;
--	}
-+	icc_provider_init(provider);
- 
- 	for (i = 0; i < num_nodes; i++) {
- 		size_t j;
-@@ -712,7 +707,7 @@ static int msm8974_icc_probe(struct plat
- 		node = icc_node_create(qnodes[i]->id);
- 		if (IS_ERR(node)) {
- 			ret = PTR_ERR(node);
--			goto err_del_icc;
-+			goto err_remove_nodes;
- 		}
- 
- 		node->name = qnodes[i]->name;
-@@ -729,15 +724,16 @@ static int msm8974_icc_probe(struct plat
- 	}
- 	data->num_nodes = num_nodes;
- 
-+	ret = icc_provider_register(provider);
-+	if (ret)
-+		goto err_remove_nodes;
-+
- 	platform_set_drvdata(pdev, qp);
- 
- 	return 0;
- 
--err_del_icc:
-+err_remove_nodes:
- 	icc_nodes_remove(provider);
--	icc_provider_del(provider);
--
--err_disable_clks:
- 	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
- 
- 	return ret;
-@@ -747,9 +743,9 @@ static int msm8974_icc_remove(struct pla
- {
- 	struct msm8974_icc_provider *qp = platform_get_drvdata(pdev);
- 
-+	icc_provider_deregister(&qp->provider);
- 	icc_nodes_remove(&qp->provider);
- 	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
--	icc_provider_del(&qp->provider);
- 
- 	return 0;
- }
+   uint16_t AverageGfxclkFrequency;
+   uint16_t AverageFclkFrequency;
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
+@@ -29,7 +29,7 @@
+ #define SMU13_DRIVER_IF_VERSION_YELLOW_CARP 0x04
+ #define SMU13_DRIVER_IF_VERSION_ALDE 0x08
+ #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_0_0 0x37
+-#define SMU13_DRIVER_IF_VERSION_SMU_V13_0_4 0x07
++#define SMU13_DRIVER_IF_VERSION_SMU_V13_0_4 0x08
+ #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_5 0x04
+ #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_0_10 0x32
+ #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_7 0x37
 
 
