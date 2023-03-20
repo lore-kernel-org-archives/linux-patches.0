@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5531C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7B8C433EF;
-	Mon, 20 Mar 2023 15:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510C81C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A22C433EF;
+	Mon, 20 Mar 2023 15:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325989;
-	bh=2H03kPlgVZ9UReKwuHr8cdjhGt7MIJ9YvOECSJbxdBE=;
+	s=korg; t=1679325992;
+	bh=xsFG9o14xXgME6MWWomsCa8EnTDg/iEcMyQqcGqqg8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ea8pof2NkTVFqtzJB+2dkIHMO3haFh8YKNYuLvEnfJRvxZnu3LAGrt/5uDtoOJdSJ
-	 W2+C3QpixrxAQ5vFrglyTIw/CE7RHY3CfXavwLpWFCwArXN4Y4yQaYHEDrvDpz1pmk
-	 qsE/wtcDII4j1thPp6zpwlack3KrlYUEYmLUr368=
+	b=St/lVRqMwq5hYPXtz7I36dye5veBfoXji+7Boe7Ps+Fzb6Zezezbvp+w3e7nze8r9
+	 dQ8TEBIbAA34kPjq0UpnW1WzBSmqezfkE+yDH0gtQZSsZDAX+Jdf+3EutnVdrJkRJQ
+	 rQ9e8rFSEQJsrHRZnuwAexp9AxDVfNrrN5kszBKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tero Kristo <tero.kristo@linux.intel.com>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 179/198] trace/hwlat: Do not wipe the contents of per-cpu thread data
-Date: Mon, 20 Mar 2023 15:55:17 +0100
-Message-Id: <20230320145514.989427662@linuxfoundation.org>
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.2 137/211] interconnect: qcom: rpmh: fix probe child-node error handling
+Date: Mon, 20 Mar 2023 15:54:32 +0100
+Message-Id: <20230320145519.178425178@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tero Kristo <tero.kristo@linux.intel.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 4c42f5f0d1dd20bddd9f940beb1e6ccad60c4498 upstream.
+commit 6570d1d46eeade82965ccc4a3ab7d778898ef4bf upstream.
 
-Do not wipe the contents of the per-cpu kthread data when starting the
-tracer, as this will completely forget about already running instances
-and can later start new additional per-cpu threads.
+Make sure to clean up and release resources properly also in case probe
+fails when populating child devices.
 
-Link: https://lore.kernel.org/all/20230302113654.2984709-1-tero.kristo@linux.intel.com/
-Link: https://lkml.kernel.org/r/20230310100451.3948583-2-tero.kristo@linux.intel.com
-
-Cc: stable@vger.kernel.org
-Fixes: f46b16520a087 ("trace/hwlat: Implement the per-cpu mode")
-Signed-off-by: Tero Kristo <tero.kristo@linux.intel.com>
-Acked-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 57eb14779dfd ("interconnect: qcom: icc-rpmh: Support child NoC device probe")
+Cc: stable@vger.kernel.org      # 6.0
+Cc: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-10-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_hwlat.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/interconnect/qcom/icc-rpmh.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_hwlat.c
-+++ b/kernel/trace/trace_hwlat.c
-@@ -584,9 +584,6 @@ static int start_per_cpu_kthreads(struct
- 	 */
- 	cpumask_and(current_mask, cpu_online_mask, tr->tracing_cpumask);
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -235,8 +235,11 @@ int qcom_icc_rpmh_probe(struct platform_
+ 	platform_set_drvdata(pdev, qp);
  
--	for_each_online_cpu(cpu)
--		per_cpu(hwlat_per_cpu_data, cpu).kthread = NULL;
--
- 	for_each_cpu(cpu, current_mask) {
- 		retval = start_cpu_kthread(cpu);
- 		if (retval)
+ 	/* Populate child NoC devices if any */
+-	if (of_get_child_count(dev->of_node) > 0)
+-		return of_platform_populate(dev->of_node, NULL, NULL, dev);
++	if (of_get_child_count(dev->of_node) > 0) {
++		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
++		if (ret)
++			goto err;
++	}
+ 
+ 	return 0;
+ err:
 
 
