@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BA11C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62080C433D2;
-	Mon, 20 Mar 2023 15:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D213C1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BACC433D2;
+	Mon, 20 Mar 2023 15:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325388;
-	bh=ij8wE66wOzWGu0eJhDtWevI3AIN/bFrpnKNCX88YudE=;
+	s=korg; t=1679325391;
+	bh=+9XB9Rhm1c09iWR3YEFf1TqSNocuu6TcC58Mljwmc7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTgzTkPhrAodqSefkutFmo7zdYjzmSnDdV4/eCUjqXq7oCjn0bwGnMqeq+GuFmMPU
-	 mc3zBpfbB8T0h+26ljt/0CsRbd8bGQ6jetz3Gflwp2ioaL3xXzT5VkdVbQwtRxZ4ay
-	 H7sjQ0x5TO3ihXXhe6o55T6ouBdzH6SSlKJYhS2w=
+	b=e1y78txuOVFGbyMrC4nYsvnOx+ZZzlzdzYFNN/xY57RbvemsEqNkKZSaEBwAgQGq5
+	 4ygQQUz3ZX2pAv186e2IrcxeQogFjQ1B+qsjXC57vnjmqpEtJGBUtL86E3tGIALB4T
+	 M7aUwcLKnJaxROiPzw3j4p6ehy0SJ2w/0jVuu4LY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/198] net: dsa: mv88e6xxx: fix max_mtu of 1492 on 6165, 6191, 6220, 6250, 6290
-Date: Mon, 20 Mar 2023 15:53:37 +0100
-Message-Id: <20230320145510.849454438@linuxfoundation.org>
+	Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>,
+	Dave Ertman <david.m.ertman@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 5.15 099/115] ice: avoid bonding causing auxiliary plug/unplug under RTNL lock
+Date: Mon, 20 Mar 2023 15:55:11 +0100
+Message-Id: <20230320145453.566206280@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,109 +38,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Dave Ertman <david.m.ertman@intel.com>
 
-[ Upstream commit 7e9517375a14f44ee830ca1c3278076dd65fcc8f ]
+commit 248401cb2c4612d83eb0c352ee8103b78b8eb365 upstream.
 
-There are 3 classes of switch families that the driver is aware of, as
-far as mv88e6xxx_change_mtu() is concerned:
+RDMA is not supported in ice on a PF that has been added to a bonded
+interface. To enforce this, when an interface enters a bond, we unplug
+the auxiliary device that supports RDMA functionality.  This unplug
+currently happens in the context of handling the netdev bonding event.
+This event is sent to the ice driver under RTNL context.  This is causing
+a deadlock where the RDMA driver is waiting for the RTNL lock to complete
+the removal.
 
-- MTU configuration is available per port. Here, the
-  chip->info->ops->port_set_jumbo_size() method will be present.
+Defer the unplugging/re-plugging of the auxiliary device to the service
+task so that it is not performed under the RTNL lock context.
 
-- MTU configuration is global to the switch. Here, the
-  chip->info->ops->set_max_frame_size() method will be present.
-
-- We don't know how to change the MTU. Here, none of the above methods
-  will be present.
-
-Switch families MV88E6165, MV88E6191, MV88E6220, MV88E6250 and MV88E6290
-fall in category 3.
-
-The blamed commit has adjusted the MTU for all 3 categories by EDSA_HLEN
-(8 bytes), resulting in a new maximum MTU of 1492 being reported by the
-driver for these switches.
-
-I don't have the hardware to test, but I do have a MV88E6390 switch on
-which I can simulate this by commenting out its .port_set_jumbo_size
-definition from mv88e6390_ops. The result is this set of messages at
-probe time:
-
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 1
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 2
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 3
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 4
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 5
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 6
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 7
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 8
-
-It is highly implausible that there exist Ethernet switches which don't
-support the standard MTU of 1500 octets, and this is what the DSA
-framework says as well - the error comes from dsa_slave_create() ->
-dsa_slave_change_mtu(slave_dev, ETH_DATA_LEN).
-
-But the error messages are alarming, and it would be good to suppress
-them.
-
-As a consequence of this unlikeliness, we reimplement mv88e6xxx_get_max_mtu()
-and mv88e6xxx_change_mtu() on switches from the 3rd category as follows:
-the maximum supported MTU is 1500, and any request to set the MTU to a
-value larger than that fails in dev_validate_mtu().
-
-Fixes: b9c587fed61c ("dsa: mv88e6xxx: Include tagger overhead when setting MTU for DSA and CPU ports")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # 6.1.x
+Reported-by: Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>
+Link: https://lore.kernel.org/netdev/CAK8fFZ6A_Gphw_3-QMGKEFQk=sfCw1Qmq0TVZK3rtAi7vb621A@mail.gmail.com/
+Fixes: 5cb1ebdbc434 ("ice: Fix race condition during interface enslave")
+Fixes: 4eace75e0853 ("RDMA/irdma: Report the correct link speed")
+Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230310194833.3074601-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/ice/ice.h      |   14 +++++---------
+ drivers/net/ethernet/intel/ice/ice_main.c |   19 ++++++++-----------
+ 2 files changed, 13 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 3b8b2d0fbafaf..3a6db36574ad7 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -3549,7 +3549,7 @@ static int mv88e6xxx_get_max_mtu(struct dsa_switch *ds, int port)
- 		return 10240 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
- 	else if (chip->info->ops->set_max_frame_size)
- 		return 1632 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
--	return 1522 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
-+	return ETH_DATA_LEN;
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -399,6 +399,7 @@ enum ice_pf_flags {
+ 	ICE_FLAG_MDD_AUTO_RESET_VF,
+ 	ICE_FLAG_LINK_LENIENT_MODE_ENA,
+ 	ICE_FLAG_PLUG_AUX_DEV,
++	ICE_FLAG_UNPLUG_AUX_DEV,
+ 	ICE_FLAG_MTU_CHANGED,
+ 	ICE_PF_FLAGS_NBITS		/* must be last */
+ };
+@@ -706,16 +707,11 @@ static inline void ice_set_rdma_cap(stru
+  */
+ static inline void ice_clear_rdma_cap(struct ice_pf *pf)
+ {
+-	/* We can directly unplug aux device here only if the flag bit
+-	 * ICE_FLAG_PLUG_AUX_DEV is not set because ice_unplug_aux_dev()
+-	 * could race with ice_plug_aux_dev() called from
+-	 * ice_service_task(). In this case we only clear that bit now and
+-	 * aux device will be unplugged later once ice_plug_aux_device()
+-	 * called from ice_service_task() finishes (see ice_service_task()).
++	/* defer unplug to service task to avoid RTNL lock and
++	 * clear PLUG bit so that pending plugs don't interfere
+ 	 */
+-	if (!test_and_clear_bit(ICE_FLAG_PLUG_AUX_DEV, pf->flags))
+-		ice_unplug_aux_dev(pf);
+-
++	clear_bit(ICE_FLAG_PLUG_AUX_DEV, pf->flags);
++	set_bit(ICE_FLAG_UNPLUG_AUX_DEV, pf->flags);
+ 	clear_bit(ICE_FLAG_RDMA_ENA, pf->flags);
+ 	clear_bit(ICE_FLAG_AUX_ENA, pf->flags);
  }
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -2156,18 +2156,15 @@ static void ice_service_task(struct work
+ 		}
+ 	}
  
- static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
-@@ -3557,6 +3557,17 @@ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
- 	struct mv88e6xxx_chip *chip = ds->priv;
- 	int ret = 0;
- 
-+	/* For families where we don't know how to alter the MTU,
-+	 * just accept any value up to ETH_DATA_LEN
+-	if (test_bit(ICE_FLAG_PLUG_AUX_DEV, pf->flags)) {
+-		/* Plug aux device per request */
+-		ice_plug_aux_dev(pf);
++	/* unplug aux dev per request, if an unplug request came in
++	 * while processing a plug request, this will handle it
 +	 */
-+	if (!chip->info->ops->port_set_jumbo_size &&
-+	    !chip->info->ops->set_max_frame_size) {
-+		if (new_mtu > ETH_DATA_LEN)
-+			return -EINVAL;
-+
-+		return 0;
-+	}
-+
- 	if (dsa_is_dsa_port(ds, port) || dsa_is_cpu_port(ds, port))
- 		new_mtu += EDSA_HLEN;
++	if (test_and_clear_bit(ICE_FLAG_UNPLUG_AUX_DEV, pf->flags))
++		ice_unplug_aux_dev(pf);
  
-@@ -3565,9 +3576,6 @@ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
- 		ret = chip->info->ops->port_set_jumbo_size(chip, port, new_mtu);
- 	else if (chip->info->ops->set_max_frame_size)
- 		ret = chip->info->ops->set_max_frame_size(chip, new_mtu);
--	else
--		if (new_mtu > 1522)
--			ret = -EINVAL;
- 	mv88e6xxx_reg_unlock(chip);
+-		/* Mark plugging as done but check whether unplug was
+-		 * requested during ice_plug_aux_dev() call
+-		 * (e.g. from ice_clear_rdma_cap()) and if so then
+-		 * plug aux device.
+-		 */
+-		if (!test_and_clear_bit(ICE_FLAG_PLUG_AUX_DEV, pf->flags))
+-			ice_unplug_aux_dev(pf);
+-	}
++	/* Plug aux device per request */
++	if (test_and_clear_bit(ICE_FLAG_PLUG_AUX_DEV, pf->flags))
++		ice_plug_aux_dev(pf);
  
- 	return ret;
--- 
-2.39.2
-
+ 	if (test_and_clear_bit(ICE_FLAG_MTU_CHANGED, pf->flags)) {
+ 		struct iidc_event *event;
 
 
