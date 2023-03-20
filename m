@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C301C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9069C4339B;
-	Mon, 20 Mar 2023 15:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC741C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC8CC433D2;
+	Mon, 20 Mar 2023 15:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325078;
-	bh=+IHKjxMRq+xQiERRykX1ADAudBxEAWEx2ropZEXZbE8=;
+	s=korg; t=1679325081;
+	bh=fKwRQx3/9sCFxAbi+E9QknKmOWeqSWL9Rq9UYTcIkNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJaWYembRRqvCn+HfisEw1YB03BIWe6r9ttLgSq5K30noDXuMqUQ8F0TgEV8zch1y
-	 tczcP7dkAyD976JIRZVzIGbnqwWg76WtqDnn1n4N+7eSMYeA9+hSWMC4fxDjbiHyHl
-	 +Hakrhj6CaugYWZCkuPgVOyQ635RIYreTd4Jsw4w=
+	b=giUZ2ZsWAphkCtwbGDgwVdouq6KDvimoKiP9tJsEOuyXBcTsiaJX+Yf+cDKhyOGP7
+	 SQFXRFO7qRYFCQsFnuni8hcD1AZmIsKEIQRiuhJUKcX1H/w6/4S65iYWfWttiI7cFl
+	 Pr4UYbs0JGLtwj5muFf/iUz2zAUTKnh6JP7Wu+vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
-	Theodore Tso <tytso@mit.edu>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	Gautam Dawar <gautam.dawar@amd.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/115] ext4: fail ext4_iget if special inode unallocated
-Date: Mon, 20 Mar 2023 15:54:38 +0100
-Message-Id: <20230320145452.175177331@linuxfoundation.org>
+Subject: [PATCH 6.1 040/198] vhost-vdpa: free iommu domain after last use during cleanup
+Date: Mon, 20 Mar 2023 15:52:58 +0100
+Message-Id: <20230320145509.139711606@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,71 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Gautam Dawar <gautam.dawar@amd.com>
 
-[ Upstream commit 5cd740287ae5e3f9d1c46f5bfe8778972fd6d3fe ]
+[ Upstream commit 5a522150093a0eabae9470a70a37a6e436bfad08 ]
 
-In ext4_fill_super(), EXT4_ORPHAN_FS flag is cleared after
-ext4_orphan_cleanup() is executed. Therefore, when __ext4_iget() is
-called to get an inode whose i_nlink is 0 when the flag exists, no error
-is returned. If the inode is a special inode, a null pointer dereference
-may occur. If the value of i_nlink is 0 for any inodes (except boot loader
-inodes) got by using the EXT4_IGET_SPECIAL flag, the current file system
-is corrupted. Therefore, make the ext4_iget() function return an error if
-it gets such an abnormal special inode.
+Currently vhost_vdpa_cleanup() unmaps the DMA mappings by calling
+`iommu_unmap(v->domain, map->start, map->size);`
+from vhost_vdpa_general_unmap() when the parent vDPA driver doesn't
+provide DMA config operations.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=199179
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216541
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216539
-Reported-by: Luís Henriques <lhenriques@suse.de>
-Suggested-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230107032126.4165860-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+However, the IOMMU domain referred to by `v->domain` is freed in
+vhost_vdpa_free_domain() before vhost_vdpa_cleanup() in
+vhost_vdpa_release() which results in NULL pointer de-reference.
+Accordingly, moving the call to vhost_vdpa_free_domain() in
+vhost_vdpa_cleanup() would makes sense. This will also help
+detaching the dma device in error handling of vhost_vdpa_alloc_domain().
+
+This issue was observed on terminating QEMU with SIGQUIT.
+
+Fixes: 037d4305569a ("vhost-vdpa: call vhost_vdpa_cleanup during the release")
+Signed-off-by: Gautam Dawar <gautam.dawar@amd.com>
+Message-Id: <20230301163203.29883-1-gautam.dawar@amd.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/vhost/vdpa.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index b2600e8021b1d..a39d5cca41212 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4636,13 +4636,6 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 		goto bad_inode;
- 	raw_inode = ext4_raw_inode(&iloc);
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index ec32f785dfdec..b7657984dd8df 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -1134,6 +1134,7 @@ static int vhost_vdpa_alloc_domain(struct vhost_vdpa *v)
  
--	if ((ino == EXT4_ROOT_INO) && (raw_inode->i_links_count == 0)) {
--		ext4_error_inode(inode, function, line, 0,
--				 "iget: root inode unallocated");
--		ret = -EFSCORRUPTED;
--		goto bad_inode;
--	}
--
- 	if ((flags & EXT4_IGET_HANDLE) &&
- 	    (raw_inode->i_links_count == 0) && (raw_inode->i_mode == 0)) {
- 		ret = -ESTALE;
-@@ -4715,11 +4708,16 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 	 * NeilBrown 1999oct15
- 	 */
- 	if (inode->i_nlink == 0) {
--		if ((inode->i_mode == 0 ||
-+		if ((inode->i_mode == 0 || flags & EXT4_IGET_SPECIAL ||
- 		     !(EXT4_SB(inode->i_sb)->s_mount_state & EXT4_ORPHAN_FS)) &&
- 		    ino != EXT4_BOOT_LOADER_INO) {
--			/* this inode is deleted */
--			ret = -ESTALE;
-+			/* this inode is deleted or unallocated */
-+			if (flags & EXT4_IGET_SPECIAL) {
-+				ext4_error_inode(inode, function, line, 0,
-+						 "iget: special inode unallocated");
-+				ret = -EFSCORRUPTED;
-+			} else
-+				ret = -ESTALE;
- 			goto bad_inode;
- 		}
- 		/* The only unlinked inodes we let through here have
+ err_attach:
+ 	iommu_domain_free(v->domain);
++	v->domain = NULL;
+ 	return ret;
+ }
+ 
+@@ -1178,6 +1179,7 @@ static void vhost_vdpa_cleanup(struct vhost_vdpa *v)
+ 			vhost_vdpa_remove_as(v, asid);
+ 	}
+ 
++	vhost_vdpa_free_domain(v);
+ 	vhost_dev_cleanup(&v->vdev);
+ 	kfree(v->vdev.vqs);
+ }
+@@ -1250,7 +1252,6 @@ static int vhost_vdpa_release(struct inode *inode, struct file *filep)
+ 	vhost_vdpa_clean_irq(v);
+ 	vhost_vdpa_reset(v);
+ 	vhost_dev_stop(&v->vdev);
+-	vhost_vdpa_free_domain(v);
+ 	vhost_vdpa_config_put(v);
+ 	vhost_vdpa_cleanup(v);
+ 	mutex_unlock(&d->mutex);
 -- 
 2.39.2
 
