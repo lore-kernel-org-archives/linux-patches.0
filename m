@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2DA1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDD6C433EF;
-	Mon, 20 Mar 2023 15:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746851C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED213C433D2;
+	Mon, 20 Mar 2023 15:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325597;
-	bh=Hv7uNwv1335ZkhvGONfKBtSAlwto6F95Sx8jlnD/bHQ=;
+	s=korg; t=1679325600;
+	bh=CI0/Zbb6xZskhkayqhY4PN9w1I05dh4wrm4/jw9phNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jQgFQH6Y7TgpCnXw5GH+BFDv7G6nJvAhhag56cEUCX0qxKz8De964afLZssdJwcSb
-	 3JbWRm/xjESMqkQN1/jtwkqbT3nZUby7ozcXQUbhaKJqfAdQ/jGvLhybzD0UOyTk6v
-	 ACtBj5akoBZf7YDVIdrHIsVzqQ52m1Ip/GwbZpZg=
+	b=vo09iPOX2sXDN/FmLtGVmsz32ae4e/cBHVgN9qDGq5M7rjYEIfc0BEigdO5d7ZGaw
+	 2Ro4U06Uygf+il7u2vkduGyrUkb47pPbvbXjTNLSk5jaiy2bQpUmvpKfO19vFA0MI9
+	 0mMXKVAulyws1hliqi0Ntjl7cyqTDgvN9j1AaIyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/198] ext4: update s_journal_inum if it changes after journal replay
-Date: Mon, 20 Mar 2023 15:54:06 +0100
-Message-Id: <20230320145512.113876752@linuxfoundation.org>
+Subject: [PATCH 6.2 068/211] nvmet: avoid potential UAF in nvmet_req_complete()
+Date: Mon, 20 Mar 2023 15:53:23 +0100
+Message-Id: <20230320145516.074101560@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,46 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit 3039d8b8692408438a618fac2776b629852663c3 ]
+[ Upstream commit 6173a77b7e9d3e202bdb9897b23f2a8afe7bf286 ]
 
-When mounting a crafted ext4 image, s_journal_inum may change after journal
-replay, which is obviously unreasonable because we have successfully loaded
-and replayed the journal through the old s_journal_inum. And the new
-s_journal_inum bypasses some of the checks in ext4_get_journal(), which
-may trigger a null pointer dereference problem. So if s_journal_inum
-changes after the journal replay, we ignore the change, and rewrite the
-current journal_inum to the superblock.
+An nvme target ->queue_response() operation implementation may free the
+request passed as argument. Such implementation potentially could result
+in a use after free of the request pointer when percpu_ref_put() is
+called in nvmet_req_complete().
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216541
-Reported-by: Luís Henriques <lhenriques@suse.de>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230107032126.4165860-3-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Avoid such problem by using a local variable to save the sq pointer
+before calling __nvmet_req_complete(), thus avoiding dereferencing the
+req pointer after that function call.
+
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/nvme/target/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 8011600999586..2528e8216c334 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5967,8 +5967,11 @@ static int ext4_load_journal(struct super_block *sb,
- 	if (!really_read_only && journal_devnum &&
- 	    journal_devnum != le32_to_cpu(es->s_journal_dev)) {
- 		es->s_journal_dev = cpu_to_le32(journal_devnum);
--
--		/* Make sure we flush the recovery flag to disk. */
-+		ext4_commit_super(sb);
-+	}
-+	if (!really_read_only && journal_inum &&
-+	    journal_inum != le32_to_cpu(es->s_journal_inum)) {
-+		es->s_journal_inum = cpu_to_le32(journal_inum);
- 		ext4_commit_super(sb);
- 	}
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index f66ed13d7c11d..3935165048e74 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -756,8 +756,10 @@ static void __nvmet_req_complete(struct nvmet_req *req, u16 status)
+ 
+ void nvmet_req_complete(struct nvmet_req *req, u16 status)
+ {
++	struct nvmet_sq *sq = req->sq;
++
+ 	__nvmet_req_complete(req, status);
+-	percpu_ref_put(&req->sq->ref);
++	percpu_ref_put(&sq->ref);
+ }
+ EXPORT_SYMBOL_GPL(nvmet_req_complete);
  
 -- 
 2.39.2
