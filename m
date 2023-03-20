@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C7F1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0F8C433EF;
-	Mon, 20 Mar 2023 15:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03231C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5127CC433D2;
+	Mon, 20 Mar 2023 15:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326154;
-	bh=9Xb1X+eCfpt1O8VSp5RPvD6LlkSs1EUj6S7eNTdQrh8=;
+	s=korg; t=1679326156;
+	bh=JwpjM/WD8Rnle4fVUJBLIFWdz8yMifu+okXcPrSI+zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNsZowVcNQTB2poJY5jKSX+N98aLxD4Gpk1XAMJRwNDsl6PL0yVcyNsIv5cpUrNg2
-	 M7RZUjXEp/JErIkK+CMVo7kEiUzpqadnHranz96lWkycfEJRQkp3KePqZbX/esnhTT
-	 s+xqzOL8GNMH1KA+yioCwYVsW6GMfUSaBQ2CrV2U=
+	b=FxvoBrNkDJG1KV+3e1mkhJaQ3RahEWnSgCFobK8kKUN/4euslyKYWRykyn2lsXfGo
+	 0vkqVizoDeTaCX4JxiIYU7XGAVE29evUehsjY+/FM2b8r8em/T7jCFHJipR/jKdY76
+	 wr/O6MqeOBYm4IXIan3hEJEdqJvYpQz479z7qkEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 181/211] ocfs2: fix data corruption after failed write
-Date: Mon, 20 Mar 2023 15:55:16 +0100
-Message-Id: <20230320145521.067108257@linuxfoundation.org>
+	Elmer Miroslav Mosher Golovin <miroslav@mishamosher.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.2 182/211] nvme-pci: add NVME_QUIRK_BOGUS_NID for Netac NV3000
+Date: Mon, 20 Mar 2023 15:55:17 +0100
+Message-Id: <20230320145521.116511826@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -41,66 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
+From: Elmer Miroslav Mosher Golovin <miroslav@mishamosher.com>
 
-commit 90410bcf873cf05f54a32183afff0161f44f9715 upstream.
+commit 9630d80655bfe7e62e4aff2889dc4eae7ceeb887 upstream.
 
-When buffered write fails to copy data into underlying page cache page,
-ocfs2_write_end_nolock() just zeroes out and dirties the page.  This can
-leave dirty page beyond EOF and if page writeback tries to write this page
-before write succeeds and expands i_size, page gets into inconsistent
-state where page dirty bit is clear but buffer dirty bits stay set
-resulting in page data never getting written and so data copied to the
-page is lost.  Fix the problem by invalidating page beyond EOF after
-failed write.
+Added a quirk to fix the Netac NV3000 SSD reporting duplicate NGUIDs.
 
-Link: https://lkml.kernel.org/r/20230302153843.18499-1-jack@suse.cz
-Fixes: 6dbf7bb55598 ("fs: Don't invalidate page buffers in block_write_full_page()")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Elmer Miroslav Mosher Golovin <miroslav@mishamosher.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/nvme/host/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -1977,11 +1977,26 @@ int ocfs2_write_end_nolock(struct addres
- 	}
- 
- 	if (unlikely(copied < len) && wc->w_target_page) {
-+		loff_t new_isize;
-+
- 		if (!PageUptodate(wc->w_target_page))
- 			copied = 0;
- 
--		ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
--				       start+len);
-+		new_isize = max_t(loff_t, i_size_read(inode), pos + copied);
-+		if (new_isize > page_offset(wc->w_target_page))
-+			ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
-+					       start+len);
-+		else {
-+			/*
-+			 * When page is fully beyond new isize (data copy
-+			 * failed), do not bother zeroing the page. Invalidate
-+			 * it instead so that writeback does not get confused
-+			 * put page & buffer dirty bits into inconsistent
-+			 * state.
-+			 */
-+			block_invalidate_folio(page_folio(wc->w_target_page),
-+						0, PAGE_SIZE);
-+		}
- 	}
- 	if (wc->w_target_page)
- 		flush_dcache_page(wc->w_target_page);
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3468,6 +3468,8 @@ static const struct pci_device_id nvme_i
+ 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
+ 	{ PCI_DEVICE(0x2646, 0x501E),   /* KINGSTON OM3PGP4xxxxQ OS21011 NVMe SSD */
+ 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
++	{ PCI_DEVICE(0x1f40, 0x1202),   /* Netac Technologies Co. NV3000 NVMe SSD */
++		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1f40, 0x5236),   /* Netac Technologies Co. NV7000 NVMe SSD */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1e4B, 0x1001),   /* MAXIO MAP1001 */
 
 
