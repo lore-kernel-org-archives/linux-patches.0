@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8547D1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2845C433EF;
-	Mon, 20 Mar 2023 15:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B951C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4C5C433EF;
+	Mon, 20 Mar 2023 15:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326055;
-	bh=e8LMDPDJ9ngkv/xnc2jSmsLpfumS6fSoE0Qydyggcnc=;
+	s=korg; t=1679326058;
+	bh=iZc8cK3WnRqKcUjoa8VMjQKs2QCAtuLG9QxtGfUmNzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X5djUEgv1OJud5AsqsP1B96ivot8mM+dsTBsD7cuEZXbOafHklqT/J8vzuDIgYB8O
-	 uG62x8Gkv9coxkhcDgS2qTkBfLePnLW/a9DdM1DDl1g/RAOHLPt0M523JClpTZuIrY
-	 yWRDr2WZcfiAKyw5N2FMqiF8+6SFuwDoapTgGGj4=
+	b=e4CGcIijZDT0GmKks4DJNFq4UT2D4M2a1+hRJM7UEqAJ2haVi5Bf31j0/JBQgFJhr
+	 tDmP6VFWE5wdPvm2E14VrU3hOA2Kgi+JwAW8HR/TshGENK9se3V3dbEPB98bR60jyP
+	 E8DZM0MJEgMjb4oTLY6vHBsLsJ/A1LTdF8r5QhTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PATCH 6.1 192/198] virt/coco/sev-guest: Simplify extended guest request handling
-Date: Mon, 20 Mar 2023 15:55:30 +0100
-Message-Id: <20230320145515.520188117@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 151/211] cifs: return DFS root session id in DebugData
+Date: Mon, 20 Mar 2023 15:54:46 +0100
+Message-Id: <20230320145519.764147471@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,144 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit 970ab823743fb54b42002ec76c51481f67436444 upstream.
+commit f446a630802f154ef0087771683bd4f8e9d08384 upstream.
 
-Return a specific error code - -ENOSPC - to signal the too small cert
-data buffer instead of checking exit code and exitinfo2.
+Return the DFS root session id in /proc/fs/cifs/DebugData to make it
+easier to track which IPC tcon was used to get new DFS referrals for a
+specific connection, and aids in debugging.
 
-While at it, hoist the *fw_err assignment in snp_issue_guest_request()
-so that a proper error value is returned to the callers.
+A simple output of it would be
 
-  [ Tom: check override_err instead of err. ]
+  Sessions:
+  1) Address: 192.168.1.13 Uses: 1 Capability: 0x300067   Session Status: 1
+  Security type: RawNTLMSSP  SessionId: 0xd80000000009
+  User: 0 Cred User: 0
+  DFS root session id: 0x128006c000035
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230307192449.24732-4-bp@alien8.de
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Cc: stable@vger.kernel.org # 6.2
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/sev.c                   |   11 ++++---
- drivers/virt/coco/sev-guest/sev-guest.c |   48 +++++++++++++++++---------------
- 2 files changed, 32 insertions(+), 27 deletions(-)
+ fs/cifs/cifs_debug.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/x86/kernel/sev.c
-+++ b/arch/x86/kernel/sev.c
-@@ -2209,15 +2209,16 @@ int snp_issue_guest_request(u64 exit_cod
- 	if (ret)
- 		goto e_put;
+--- a/fs/cifs/cifs_debug.c
++++ b/fs/cifs/cifs_debug.c
+@@ -419,6 +419,11 @@ skip_rdma:
+ 				   from_kuid(&init_user_ns, ses->linux_uid),
+ 				   from_kuid(&init_user_ns, ses->cred_uid));
  
-+	*fw_err = ghcb->save.sw_exit_info_2;
- 	if (ghcb->save.sw_exit_info_2) {
- 		/* Number of expected pages are returned in RBX */
- 		if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST &&
--		    ghcb->save.sw_exit_info_2 == SNP_GUEST_REQ_INVALID_LEN)
-+		    ghcb->save.sw_exit_info_2 == SNP_GUEST_REQ_INVALID_LEN) {
- 			input->data_npages = ghcb_get_rbx(ghcb);
--
--		*fw_err = ghcb->save.sw_exit_info_2;
--
--		ret = -EIO;
-+			ret = -ENOSPC;
-+		} else {
-+			ret = -EIO;
-+		}
- 	}
- 
- e_put:
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -324,7 +324,8 @@ static int handle_guest_request(struct s
- 				u8 type, void *req_buf, size_t req_sz, void *resp_buf,
- 				u32 resp_sz, __u64 *fw_err)
- {
--	unsigned long err;
-+	unsigned long err, override_err = 0;
-+	unsigned int override_npages = 0;
- 	u64 seqno;
- 	int rc;
- 
-@@ -340,6 +341,7 @@ static int handle_guest_request(struct s
- 	if (rc)
- 		return rc;
- 
-+retry_request:
- 	/*
- 	 * Call firmware to process the request. In this function the encrypted
- 	 * message enters shared memory with the host. So after this call the
-@@ -348,17 +350,24 @@ static int handle_guest_request(struct s
- 	 */
- 	rc = snp_issue_guest_request(exit_code, &snp_dev->input, &err);
- 
--	/*
--	 * If the extended guest request fails due to having too small of a
--	 * certificate data buffer, retry the same guest request without the
--	 * extended data request in order to increment the sequence number
--	 * and thus avoid IV reuse.
--	 */
--	if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST &&
--	    err == SNP_GUEST_REQ_INVALID_LEN) {
--		const unsigned int certs_npages = snp_dev->input.data_npages;
-+	switch (rc) {
-+	case -ENOSPC:
-+		/*
-+		 * If the extended guest request fails due to having too
-+		 * small of a certificate data buffer, retry the same
-+		 * guest request without the extended data request in
-+		 * order to increment the sequence number and thus avoid
-+		 * IV reuse.
-+		 */
-+		override_npages = snp_dev->input.data_npages;
-+		exit_code	= SVM_VMGEXIT_GUEST_REQUEST;
- 
--		exit_code = SVM_VMGEXIT_GUEST_REQUEST;
-+		/*
-+		 * Override the error to inform callers the given extended
-+		 * request buffer size was too small and give the caller the
-+		 * required buffer size.
-+		 */
-+		override_err	= SNP_GUEST_REQ_INVALID_LEN;
- 
- 		/*
- 		 * If this call to the firmware succeeds, the sequence number can
-@@ -368,15 +377,7 @@ static int handle_guest_request(struct s
- 		 * of the VMPCK and the error code being propagated back to the
- 		 * user as an ioctl() return code.
- 		 */
--		rc = snp_issue_guest_request(exit_code, &snp_dev->input, &err);
--
--		/*
--		 * Override the error to inform callers the given extended
--		 * request buffer size was too small and give the caller the
--		 * required buffer size.
--		 */
--		err = SNP_GUEST_REQ_INVALID_LEN;
--		snp_dev->input.data_npages = certs_npages;
-+		goto retry_request;
- 	}
- 
- 	/*
-@@ -388,7 +389,10 @@ static int handle_guest_request(struct s
- 	snp_inc_msg_seqno(snp_dev);
- 
- 	if (fw_err)
--		*fw_err = err;
-+		*fw_err = override_err ?: err;
++			if (ses->dfs_root_ses) {
++				seq_printf(m, "\n\tDFS root session id: 0x%llx",
++					   ses->dfs_root_ses->Suid);
++			}
 +
-+	if (override_npages)
-+		snp_dev->input.data_npages = override_npages;
- 
- 	/*
- 	 * If an extended guest request was issued and the supplied certificate
-@@ -396,7 +400,7 @@ static int handle_guest_request(struct s
- 	 * prevent IV reuse. If the standard request was successful, return -EIO
- 	 * back to the caller as would have originally been returned.
- 	 */
--	if (!rc && err == SNP_GUEST_REQ_INVALID_LEN)
-+	if (!rc && override_err == SNP_GUEST_REQ_INVALID_LEN)
- 		return -EIO;
- 
- 	if (rc) {
+ 			spin_lock(&ses->chan_lock);
+ 			if (CIFS_CHAN_NEEDS_RECONNECT(ses, 0))
+ 				seq_puts(m, "\tPrimary channel: DISCONNECTED ");
 
 
