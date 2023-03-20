@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3A71C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E8EC433EF;
-	Mon, 20 Mar 2023 15:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5631E1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC5BC433D2;
+	Mon, 20 Mar 2023 15:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325254;
-	bh=ItwEZepMiMsvKIPT7E7ZzxgPotXPPqHnsHfZmPbNf5U=;
+	s=korg; t=1679325257;
+	bh=ZEXuUZ6tnyP9XDvjgUq4SWG4Mp0T7Uy/II4sX+pGXlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fbo7ZMUJUGJXMqXWcSH2t/NvfuraM4Zzwbia3RPQEadtaohBiHCVh/zHHwdDaMnwB
-	 08OdDIr3SPMohVcLk7N+3NHHzlTB5j6Mu7lNknwYCaAFefTZwr8oNLzK/ZuccK9+r5
-	 4cjcnhXxzsxwxF3oxx8AEDCbg41KFytoO+oAlmeM=
+	b=sjxXYckTdjylsnUCA9Ev1otRRjaItkAHbNJrIhehoQHBjkCp/roZCVI1Q3w/EyD4q
+	 aZt4r2hzghDIA8uTQKP9jvEggWGjDCmf8bv7nhpXrpzt0mk1iF/g7yeZUbX0z3OnzN
+	 lZkAID+hMiQ0euArzLMahDVV9eRBbvs/1dlzpbME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 083/115] tracing: Make tracepoint lockdep check actually test something
-Date: Mon, 20 Mar 2023 15:54:55 +0100
-Message-Id: <20230320145452.909636097@linuxfoundation.org>
+	Tomas Henzl <thenzl@redhat.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 022/211] scsi: mpi3mr: Fix memory leaks in mpi3mr_init_ioc()
+Date: Mon, 20 Mar 2023 15:52:37 +0100
+Message-Id: <20230320145514.228897123@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,86 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Tomas Henzl <thenzl@redhat.com>
 
-commit c2679254b9c9980d9045f0f722cf093a2b1f7590 upstream.
+[ Upstream commit c798304470cab88723d895726d17fcb96472e0e9 ]
 
-A while ago where the trace events had the following:
+Don't allocate memory again when IOC is being reinitialized.
 
-   rcu_read_lock_sched_notrace();
-   rcu_dereference_sched(...);
-   rcu_read_unlock_sched_notrace();
-
-If the tracepoint is enabled, it could trigger RCU issues if called in
-the wrong place. And this warning was only triggered if lockdep was
-enabled. If the tracepoint was never enabled with lockdep, the bug would
-not be caught. To handle this, the above sequence was done when lockdep
-was enabled regardless if the tracepoint was enabled or not (although the
-always enabled code really didn't do anything, it would still trigger a
-warning).
-
-But a lot has changed since that lockdep code was added. One is, that
-sequence no longer triggers any warning. Another is, the tracepoint when
-enabled doesn't even do that sequence anymore.
-
-The main check we care about today is whether RCU is "watching" or not.
-So if lockdep is enabled, always check if rcu_is_watching() which will
-trigger a warning if it is not (tracepoints require RCU to be watching).
-
-Note, that old sequence did add a bit of overhead when lockdep was enabled,
-and with the latest kernel updates, would cause the system to slow down
-enough to trigger kernel "stalled" warnings.
-
-Link: http://lore.kernel.org/lkml/20140806181801.GA4605@redhat.com
-Link: http://lore.kernel.org/lkml/20140807175204.C257CAC5@viggo.jf.intel.com
-Link: https://lore.kernel.org/lkml/20230307184645.521db5c9@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20230310172856.77406446@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Paul E. McKenney <paulmck@kernel.org>
-Fixes: e6753f23d961 ("tracepoint: Make rcuidle tracepoint callers use SRCU")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fe6db6151565 ("scsi: mpi3mr: Handle offline FW activation in graceful manner")
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://lore.kernel.org/r/20230302234336.25456-6-thenzl@redhat.com
+Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/tracepoint.h |   15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 41 ++++++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 18 deletions(-)
 
---- a/include/linux/tracepoint.h
-+++ b/include/linux/tracepoint.h
-@@ -231,12 +231,11 @@ static inline struct tracepoint *tracepo
-  * not add unwanted padding between the beginning of the section and the
-  * structure. Force alignment to the same alignment as the section start.
-  *
-- * When lockdep is enabled, we make sure to always do the RCU portions of
-- * the tracepoint code, regardless of whether tracing is on. However,
-- * don't check if the condition is false, due to interaction with idle
-- * instrumentation. This lets us find RCU issues triggered with tracepoints
-- * even when this tracepoint is off. This code has no purpose other than
-- * poking RCU a bit.
-+ * When lockdep is enabled, we make sure to always test if RCU is
-+ * "watching" regardless if the tracepoint is enabled or not. Tracepoints
-+ * require RCU to be active, and it should always warn at the tracepoint
-+ * site if it is not watching, as it will need to be active when the
-+ * tracepoint is enabled.
-  */
- #define __DECLARE_TRACE(name, proto, args, cond, data_proto)		\
- 	extern int __traceiter_##name(data_proto);			\
-@@ -249,9 +248,7 @@ static inline struct tracepoint *tracepo
- 				TP_ARGS(args),				\
- 				TP_CONDITION(cond), 0);			\
- 		if (IS_ENABLED(CONFIG_LOCKDEP) && (cond)) {		\
--			rcu_read_lock_sched_notrace();			\
--			rcu_dereference_sched(__tracepoint_##name.funcs);\
--			rcu_read_unlock_sched_notrace();		\
-+			WARN_ON_ONCE(!rcu_is_watching());		\
- 		}							\
- 	}								\
- 	__DECLARE_TRACE_RCU(name, PARAMS(proto), PARAMS(args),		\
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index e702911e8e934..4147920afbaee 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -3813,29 +3813,34 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
+ 
+ 	mpi3mr_print_ioc_info(mrioc);
+ 
+-	dprint_init(mrioc, "allocating config page buffers\n");
+-	mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
+-	    MPI3MR_DEFAULT_CFG_PAGE_SZ, &mrioc->cfg_page_dma, GFP_KERNEL);
+ 	if (!mrioc->cfg_page) {
+-		retval = -1;
+-		goto out_failed_noretry;
++		dprint_init(mrioc, "allocating config page buffers\n");
++		mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
++		mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
++		    mrioc->cfg_page_sz, &mrioc->cfg_page_dma, GFP_KERNEL);
++		if (!mrioc->cfg_page) {
++			retval = -1;
++			goto out_failed_noretry;
++		}
+ 	}
+ 
+-	mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
+-
+-	retval = mpi3mr_alloc_reply_sense_bufs(mrioc);
+-	if (retval) {
+-		ioc_err(mrioc,
+-		    "%s :Failed to allocated reply sense buffers %d\n",
+-		    __func__, retval);
+-		goto out_failed_noretry;
++	if (!mrioc->init_cmds.reply) {
++		retval = mpi3mr_alloc_reply_sense_bufs(mrioc);
++		if (retval) {
++			ioc_err(mrioc,
++			    "%s :Failed to allocated reply sense buffers %d\n",
++			    __func__, retval);
++			goto out_failed_noretry;
++		}
+ 	}
+ 
+-	retval = mpi3mr_alloc_chain_bufs(mrioc);
+-	if (retval) {
+-		ioc_err(mrioc, "Failed to allocated chain buffers %d\n",
+-		    retval);
+-		goto out_failed_noretry;
++	if (!mrioc->chain_sgl_list) {
++		retval = mpi3mr_alloc_chain_bufs(mrioc);
++		if (retval) {
++			ioc_err(mrioc, "Failed to allocated chain buffers %d\n",
++			    retval);
++			goto out_failed_noretry;
++		}
+ 	}
+ 
+ 	retval = mpi3mr_issue_iocinit(mrioc);
+-- 
+2.39.2
+
 
 
