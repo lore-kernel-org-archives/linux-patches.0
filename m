@@ -1,37 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F601C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89AEC433EF;
-	Mon, 20 Mar 2023 15:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAFE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDAEC433D2;
+	Mon, 20 Mar 2023 15:01:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324478;
-	bh=5NVLHIXonwLawaQOp/IdY2KPXsBtefrxB6wCE7yhmS8=;
+	s=korg; t=1679324481;
+	bh=1BPBZ5ylqobCPmNGb2yrq3fPue+2OLQTZEm7AWgA4Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HbqEpEi2eokwn4vgvmHApJUo/9ezdynxkinuSsIU1RYOFD4JuIDEzGu96cgksOwbG
-	 Uph3TQbCMr91y5DGgrofyGgxkz8KWRPwJQbEUw+xYcqKllPCziNCvup9C/8nAo9Rrz
-	 Ga7hWGBj+nkgDWtpGTD6Zr59TmuYWZTIAHipFxD0=
+	b=0YyIg6EvLdX52MQf5qNFfw2NHV+J7eiMws6OfKVwAd5GnhHTMHzPjgx0Vrzs6X9hh
+	 /G3CQM/csv3Rz7est9lXaDT/vQ0csXvtII+MifAEeeUVcBWoTVNVNn322dSog1BeOr
+	 /JqCqGkD0yJX7QCx8pc+9eY4/Rzp9lN5w6iOHjPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	"HeungJun, Kim" <riverful.kim@samsung.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
-	Mauro Carvalho Chehab <mchehab@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	HeungJun
-Subject: [PATCH 5.4 36/60] media: m5mols: fix off-by-one loop termination error
-Date: Mon, 20 Mar 2023 15:54:45 +0100
-Message-Id: <20230320145432.427629610@linuxfoundation.org>
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 03/99] cifs: Move the in_send statistic to __smb_send_rqst()
+Date: Mon, 20 Mar 2023 15:53:41 +0100
+Message-Id: <20230320145443.494269153@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
-References: <20230320145430.861072439@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -42,60 +35,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
+[ Upstream commit d0dc41119905f740e8d5594adce277f7c0de8c92 ]
 
-The __find_restype() function loops over the m5mols_default_ffmt[]
-array, and the termination condition ends up being wrong: instead of
-stopping when the iterator becomes the size of the array it traverses,
-it stops after it has already overshot the array.
+When send SMB_COM_NT_CANCEL and RFC1002_SESSION_REQUEST, the
+in_send statistic was lost.
 
-Now, in practice this doesn't likely matter, because the code will
-always find the entry it looks for, and will thus return early and never
-hit that last extra iteration.
+Let's move the in_send statistic to the send function to avoid
+this scenario.
 
-But it turns out that clang will unroll the loop fully, because it has
-only two iterations (well, three due to the off-by-one bug), and then
-clang will end up just giving up in the middle of the loop unrolling
-when it notices that the code walks past the end of the array.
-
-And that made 'objtool' very unhappy indeed, because the generated code
-just falls off the edge of the universe, and ends up falling through to
-the next function, causing this warning:
-
-   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
-
-Fix the loop ending condition.
-
-Reported-by: Jens Axboe <axboe@kernel.dk>
-Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
-Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
-Cc: HeungJun, Kim <riverful.kim@samsung.com>
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 7ee1af765dfa ("[CIFS]")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/transport.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
-index 21666d705e372..dcf9e4d4ee6b8 100644
---- a/drivers/media/i2c/m5mols/m5mols_core.c
-+++ b/drivers/media/i2c/m5mols/m5mols_core.c
-@@ -488,7 +488,7 @@ static enum m5mols_restype __find_restype(u32 code)
- 	do {
- 		if (code == m5mols_default_ffmt[type].code)
- 			return type;
--	} while (type++ != SIZE_DEFAULT_FFMT);
-+	} while (++type != SIZE_DEFAULT_FFMT);
+diff --git a/fs/cifs/transport.c b/fs/cifs/transport.c
+index b137006f0fd25..4409f56fc37e6 100644
+--- a/fs/cifs/transport.c
++++ b/fs/cifs/transport.c
+@@ -312,7 +312,7 @@ static int
+ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 		struct smb_rqst *rqst)
+ {
+-	int rc = 0;
++	int rc;
+ 	struct kvec *iov;
+ 	int n_vec;
+ 	unsigned int send_length = 0;
+@@ -323,6 +323,7 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 	struct msghdr smb_msg = {};
+ 	__be32 rfc1002_marker;
  
- 	return 0;
++	cifs_in_send_inc(server);
+ 	if (cifs_rdma_enabled(server)) {
+ 		/* return -EAGAIN when connecting or reconnecting */
+ 		rc = -EAGAIN;
+@@ -331,14 +332,17 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 		goto smbd_done;
+ 	}
+ 
++	rc = -EAGAIN;
+ 	if (ssocket == NULL)
+-		return -EAGAIN;
++		goto out;
+ 
++	rc = -ERESTARTSYS;
+ 	if (fatal_signal_pending(current)) {
+ 		cifs_dbg(FYI, "signal pending before send request\n");
+-		return -ERESTARTSYS;
++		goto out;
+ 	}
+ 
++	rc = 0;
+ 	/* cork the socket */
+ 	tcp_sock_set_cork(ssocket->sk, true);
+ 
+@@ -449,7 +453,8 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 			 rc);
+ 	else if (rc > 0)
+ 		rc = 0;
+-
++out:
++	cifs_in_send_dec(server);
+ 	return rc;
  }
+ 
+@@ -826,9 +831,7 @@ cifs_call_async(struct TCP_Server_Info *server, struct smb_rqst *rqst,
+ 	 * I/O response may come back and free the mid entry on another thread.
+ 	 */
+ 	cifs_save_when_sent(mid);
+-	cifs_in_send_inc(server);
+ 	rc = smb_send_rqst(server, 1, rqst, flags);
+-	cifs_in_send_dec(server);
+ 
+ 	if (rc < 0) {
+ 		revert_current_mid(server, mid->credits);
+@@ -1117,9 +1120,7 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 		else
+ 			midQ[i]->callback = cifs_compound_last_callback;
+ 	}
+-	cifs_in_send_inc(server);
+ 	rc = smb_send_rqst(server, num_rqst, rqst, flags);
+-	cifs_in_send_dec(server);
+ 
+ 	for (i = 0; i < num_rqst; i++)
+ 		cifs_save_when_sent(midQ[i]);
+@@ -1356,9 +1357,7 @@ SendReceive(const unsigned int xid, struct cifs_ses *ses,
+ 
+ 	midQ->mid_state = MID_REQUEST_SUBMITTED;
+ 
+-	cifs_in_send_inc(server);
+ 	rc = smb_send(server, in_buf, len);
+-	cifs_in_send_dec(server);
+ 	cifs_save_when_sent(midQ);
+ 
+ 	if (rc < 0)
+@@ -1495,9 +1494,7 @@ SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
+ 	}
+ 
+ 	midQ->mid_state = MID_REQUEST_SUBMITTED;
+-	cifs_in_send_inc(server);
+ 	rc = smb_send(server, in_buf, len);
+-	cifs_in_send_dec(server);
+ 	cifs_save_when_sent(midQ);
+ 
+ 	if (rc < 0)
 -- 
 2.39.2
 
