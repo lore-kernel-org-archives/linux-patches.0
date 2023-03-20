@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705A61C35
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC1FC4339B;
-	Mon, 20 Mar 2023 15:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204CB1C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955B1C433EF;
+	Mon, 20 Mar 2023 15:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326247;
-	bh=l+1JkYoUpPSatqpDKaf1gOAEMEXX7ynpvOmNc7x2JsM=;
+	s=korg; t=1679326250;
+	bh=jBCWZUU9BlE1C5GrdOf2xmkCaXeJEFIwXnmOFDJ4syQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XOBfE2TV0Muvsn09/3Q5Zn5URgu3wg/Wm8kWzV6SKoZaefdfuMeG+AgnhIBBJpA3I
-	 RzrTxRv0ZFBRy60Xswwh9SwbEBzltwk7UzzNcMnjlnyfrDf/tPeKMy+k4dmEgcr7mm
-	 Xof0z9uRELuGIJ3+UhUCm7CshHzRv0FBBER5aIEc=
+	b=fg75FRfQBNs0gkFLd4mA0JNrwqXSDbZAIPfNWWgXrstt47SvjNn0wfnb7cwsPG/wU
+	 NYvm/lj8hnAUUR1xDXkH/NPb/heaJvTfgSyaFa/4SL4W8sRHsDgKfr6oLQ7cBq8hY/
+	 Gh3sQB5rT2NwgM+OPfSXhWK+S5oNnn0FW467TW2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PATCH 6.2 207/211] virt/coco/sev-guest: Remove the disable_vmpck label in handle_guest_request()
-Date: Mon, 20 Mar 2023 15:55:42 +0100
-Message-Id: <20230320145522.199527511@linuxfoundation.org>
+Subject: [PATCH 6.2 208/211] virt/coco/sev-guest: Carve out the request issuing logic into a helper
+Date: Mon, 20 Mar 2023 15:55:43 +0100
+Message-Id: <20230320145522.246388991@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,48 +36,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit c5a338274bdb894f088767bea856be344d0ccaef upstream.
+commit 0fdb6cc7c89cb5e0cbc45dbdbafb8e3fb92ddc95 upstream.
 
-Call the function directly instead.
+This makes the code flow a lot easier to follow.
 
 No functional changes.
 
+  [ Tom: touchups. ]
+
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20230307192449.24732-5-bp@alien8.de
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230307192449.24732-6-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/coco/sev-guest/sev-guest.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/virt/coco/sev-guest/sev-guest.c |   44 +++++++++++++++++++-------------
+ 1 file changed, 27 insertions(+), 17 deletions(-)
 
 --- a/drivers/virt/coco/sev-guest/sev-guest.c
 +++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -405,7 +405,8 @@ retry_request:
+@@ -318,27 +318,12 @@ static int enc_payload(struct snp_guest_
+ 	return __enc_payload(snp_dev, req, payload, sz);
+ }
+ 
+-static int handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, int msg_ver,
+-				u8 type, void *req_buf, size_t req_sz, void *resp_buf,
+-				u32 resp_sz, __u64 *fw_err)
++static int __handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, __u64 *fw_err)
+ {
+ 	unsigned long err, override_err = 0;
+ 	unsigned int override_npages = 0;
+-	u64 seqno;
+ 	int rc;
+ 
+-	/* Get message sequence and verify that its a non-zero */
+-	seqno = snp_get_msg_seqno(snp_dev);
+-	if (!seqno)
+-		return -EIO;
+-
+-	memset(snp_dev->response, 0, sizeof(struct snp_guest_msg));
+-
+-	/* Encrypt the userspace provided payload */
+-	rc = enc_payload(snp_dev, seqno, msg_ver, type, req_buf, req_sz);
+-	if (rc)
+-		return rc;
+-
+ retry_request:
+ 	/*
+ 	 * Call firmware to process the request. In this function the encrypted
+@@ -347,7 +332,6 @@ retry_request:
+ 	 * prevent reuse of the IV.
+ 	 */
+ 	rc = snp_issue_guest_request(exit_code, &snp_dev->input, &err);
+-
+ 	switch (rc) {
+ 	case -ENOSPC:
+ 		/*
+@@ -401,7 +385,33 @@ retry_request:
+ 	if (!rc && override_err == SNP_GUEST_REQ_INVALID_LEN)
+ 		return -EIO;
+ 
++	return rc;
++}
++
++static int handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, int msg_ver,
++				u8 type, void *req_buf, size_t req_sz, void *resp_buf,
++				u32 resp_sz, __u64 *fw_err)
++{
++	u64 seqno;
++	int rc;
++
++	/* Get message sequence and verify that its a non-zero */
++	seqno = snp_get_msg_seqno(snp_dev);
++	if (!seqno)
++		return -EIO;
++
++	memset(snp_dev->response, 0, sizeof(struct snp_guest_msg));
++
++	/* Encrypt the userspace provided payload */
++	rc = enc_payload(snp_dev, seqno, msg_ver, type, req_buf, req_sz);
++	if (rc)
++		return rc;
++
++	rc = __handle_guest_request(snp_dev, exit_code, fw_err);
+ 	if (rc) {
++		if (rc == -EIO && *fw_err == SNP_GUEST_REQ_INVALID_LEN)
++			return rc;
++
  		dev_alert(snp_dev->dev,
  			  "Detected error from ASP request. rc: %d, fw_err: %llu\n",
  			  rc, *fw_err);
--		goto disable_vmpck;
-+		snp_disable_vmpck(snp_dev);
-+		return rc;
- 	}
- 
- 	rc = verify_and_dec_payload(snp_dev, resp_buf, resp_sz);
-@@ -413,14 +414,11 @@ retry_request:
- 		dev_alert(snp_dev->dev,
- 			  "Detected unexpected decode failure from ASP. rc: %d\n",
- 			  rc);
--		goto disable_vmpck;
-+		snp_disable_vmpck(snp_dev);
-+		return rc;
- 	}
- 
- 	return 0;
--
--disable_vmpck:
--	snp_disable_vmpck(snp_dev);
--	return rc;
- }
- 
- static int get_report(struct snp_guest_dev *snp_dev, struct snp_guest_request_ioctl *arg)
 
 
