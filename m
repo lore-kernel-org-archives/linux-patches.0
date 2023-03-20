@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736B11C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E452AC433D2;
-	Mon, 20 Mar 2023 14:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492FA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB176C433D2;
+	Mon, 20 Mar 2023 15:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324400;
-	bh=1WJuO73vAhh6bx+/8PU01IUU9oVPB5dKZSX6RZZVWhE=;
+	s=korg; t=1679324404;
+	bh=ZVspxuvF/DvmYQ/eLQo1Su9bKKbWjvSX82cmBguc4Dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLZOS2/GBGXivMAXJeFt9pmilmN4O/vTZfVUF2rPQ6fYoHs9dcbmF+oqa4LVzr5N8
-	 iKoWGSK3LViJVklA2IUunIUqbejhEG4TYJTnjYx4aBmcXs0bFcUsofqOrc4l2UJGtt
-	 8fTG++U5DWL35A/jUB/RTN8FwMkGDm2Cx7yxm+9w=
+	b=yBQvjt0muxgW3tHtbsGo3a4Y9jAQ8AwjXu4Z4llMJnO0PRNJ8SE0zsSAIkDCiNJlx
+	 7RjDYIyurPhkUSOeYQJLjlTulEeRG0RMGL39RYOZIb8sFZmJ6MVGPnDwbGuxrMeIO0
+	 kq3tFthl1zX+97gqp2DSuEltBlJmAlXIu9rWdjxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Heidrich <szymon.heidrich@gmail.com>,
+	syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 14/36] net: usb: smsc75xx: Move packet length check to prevent kernel panic in skb_pull
-Date: Mon, 20 Mar 2023 15:54:40 +0100
-Message-Id: <20230320145424.779647777@linuxfoundation.org>
+Subject: [PATCH 4.19 05/36] nfc: pn533: initialize struct pn533_out_arg properly
+Date: Mon, 20 Mar 2023 15:54:31 +0100
+Message-Id: <20230320145424.426252150@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -35,51 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 43ffe6caccc7a1bb9d7442fbab521efbf6c1378c ]
+[ Upstream commit 484b7059796e3bc1cb527caa61dfc60da649b4f6 ]
 
-Packet length check needs to be located after size and align_count
-calculation to prevent kernel panic in skb_pull() in case
-rx_cmd_a & RX_CMD_A_RED evaluates to true.
+struct pn533_out_arg used as a temporary context for out_urb is not
+initialized properly. Its uninitialized 'phy' field can be dereferenced in
+error cases inside pn533_out_complete() callback function. It causes the
+following failure:
 
-Fixes: d8b228318935 ("net: usb: smsc75xx: Limit packet length to skb->len")
-Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
-Link: https://lore.kernel.org/r/20230316110540.77531-1-szymon.heidrich@gmail.com
+general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.2.0-rc3-next-20230110-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+RIP: 0010:pn533_out_complete.cold+0x15/0x44 drivers/nfc/pn533/usb.c:441
+Call Trace:
+ <IRQ>
+ __usb_hcd_giveback_urb+0x2b6/0x5c0 drivers/usb/core/hcd.c:1671
+ usb_hcd_giveback_urb+0x384/0x430 drivers/usb/core/hcd.c:1754
+ dummy_timer+0x1203/0x32d0 drivers/usb/gadget/udc/dummy_hcd.c:1988
+ call_timer_fn+0x1da/0x800 kernel/time/timer.c:1700
+ expire_timers+0x234/0x330 kernel/time/timer.c:1751
+ __run_timers kernel/time/timer.c:2022 [inline]
+ __run_timers kernel/time/timer.c:1995 [inline]
+ run_timer_softirq+0x326/0x910 kernel/time/timer.c:2035
+ __do_softirq+0x1fb/0xaf6 kernel/softirq.c:571
+ invoke_softirq kernel/softirq.c:445 [inline]
+ __irq_exit_rcu+0x123/0x180 kernel/softirq.c:650
+ irq_exit_rcu+0x9/0x20 kernel/softirq.c:662
+ sysvec_apic_timer_interrupt+0x97/0xc0 arch/x86/kernel/apic/apic.c:1107
+
+Initialize the field with the pn533_usb_phy currently used.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 9dab880d675b ("nfc: pn533: Wait for out_urb's completion in pn533_usb_send_frame()")
+Reported-by: syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230309165050.207390-1-pchelkin@ispras.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc75xx.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/nfc/pn533/usb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
-index b4705dee2b751..313a4b0edc6b3 100644
---- a/drivers/net/usb/smsc75xx.c
-+++ b/drivers/net/usb/smsc75xx.c
-@@ -2213,6 +2213,13 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		size = (rx_cmd_a & RX_CMD_A_LEN) - RXW_PADDING;
- 		align_count = (4 - ((size + RXW_PADDING) % 4)) % 4;
+diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
+index c7da364b63584..a2d61d8240246 100644
+--- a/drivers/nfc/pn533/usb.c
++++ b/drivers/nfc/pn533/usb.c
+@@ -187,6 +187,7 @@ static int pn533_usb_send_frame(struct pn533 *dev,
+ 	print_hex_dump_debug("PN533 TX: ", DUMP_PREFIX_NONE, 16, 1,
+ 			     out->data, out->len, false);
  
-+		if (unlikely(size > skb->len)) {
-+			netif_dbg(dev, rx_err, dev->net,
-+				  "size err rx_cmd_a=0x%08x\n",
-+				  rx_cmd_a);
-+			return 0;
-+		}
-+
- 		if (unlikely(rx_cmd_a & RX_CMD_A_RED)) {
- 			netif_dbg(dev, rx_err, dev->net,
- 				  "Error rx_cmd_a=0x%08x\n", rx_cmd_a);
-@@ -2225,8 +2232,7 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 				dev->net->stats.rx_frame_errors++;
- 		} else {
- 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
--			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
--				     size > skb->len)) {
-+			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
- 				netif_dbg(dev, rx_err, dev->net,
- 					  "size err rx_cmd_a=0x%08x\n",
- 					  rx_cmd_a);
++	arg.phy = phy;
+ 	init_completion(&arg.done);
+ 	cntx = phy->out_urb->context;
+ 	phy->out_urb->context = &arg;
 -- 
 2.39.2
 
