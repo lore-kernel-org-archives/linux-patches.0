@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94FF1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D62C433D2;
-	Mon, 20 Mar 2023 15:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E59E1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5E4C433EF;
+	Mon, 20 Mar 2023 15:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325816;
-	bh=1u7MbV6dNGB1fbf72j2zhnJn3q0+hQss08NcFyiDhmA=;
+	s=korg; t=1679325819;
+	bh=itjs6iFZRt2JynM6LYNqrcpc5v86ZBjvB4BLoUlCYyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b44qMNgaFDsJPWdoG1Wud9yPwj9/dyGnVMUk4MBSmHxLh+BKIXK1H22jxxph3V/xa
-	 8lBzK4f9VoLKGqYashTD3G1wUQDDwm+AZ2c/kJfsrAVxojGcWvwd9BJc1rePkfC/1N
-	 ZjcTd4Nd9nx9GNdXt2M6XTBB5wzp2h9wrTJa1Qd4=
+	b=ilTakTe+orBp9UwDyPs1WZtQIXZfe7ITE8rO9B5Ve04ahdKT41CjmPqJGje7HyCzv
+	 vnDsCDg3pshT4Y7raIZ18p3kWBwVAd5/GVNxAVuoP+iu7Be1foAS+hq6QAhYMyO2y3
+	 q6dlzNnMIkc5OhvtOU+Ypq7XKipLid9gY07e7d1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 106/211] hwmon: (ltc2992) Set `can_sleep` flag for GPIO chip
-Date: Mon, 20 Mar 2023 15:54:01 +0100
-Message-Id: <20230320145517.719236889@linuxfoundation.org>
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 148/198] KVM: SVM: Modify AVIC GATag to support max number of 512 vCPUs
+Date: Mon, 20 Mar 2023 15:54:46 +0100
+Message-Id: <20230320145513.755489646@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 
-[ Upstream commit ab00709310eedcd8dae0df1f66d332f9bc64c99e ]
+commit 5999715922c5a3ede5d8fe2a6b17aba58a157d41 upstream.
 
-The ltc2992 drivers uses a mutex and I2C bus access in its GPIO chip `set`
-and `get` implementation. This means these functions can sleep and the GPIO
-chip should set the `can_sleep` property to true.
+Define AVIC_VCPU_ID_MASK based on AVIC_PHYSICAL_MAX_INDEX, i.e. the mask
+that effectively controls the largest guest physical APIC ID supported by
+x2AVIC, instead of hardcoding the number of bits to 8 (and the number of
+VM bits to 24).
 
-This will ensure that a warning is printed when trying to set or get the
-GPIO value from a context that potentially can't sleep.
+The AVIC GATag is programmed into the AMD IOMMU IRTE to provide a
+reference back to KVM in case the IOMMU cannot inject an interrupt into a
+non-running vCPU.  In such a case, the IOMMU notifies software by creating
+a GALog entry with the corresponded GATag, and KVM then uses the GATag to
+find the correct VM+vCPU to kick.  Dropping bit 8 from the GATag results
+in kicking the wrong vCPU when targeting vCPUs with x2APIC ID > 255.
 
-Fixes: 9ca26df1ba25 ("hwmon: (ltc2992) Add support for GPIOs.")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20230314093146.2443845-2-lars@metafoo.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
+Cc: stable@vger.kernel.org
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Tested-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Message-Id: <20230207002156.521736-3-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/ltc2992.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/svm/avic.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hwmon/ltc2992.c b/drivers/hwmon/ltc2992.c
-index 88514152d9306..69341de397cb9 100644
---- a/drivers/hwmon/ltc2992.c
-+++ b/drivers/hwmon/ltc2992.c
-@@ -323,6 +323,7 @@ static int ltc2992_config_gpio(struct ltc2992_state *st)
- 	st->gc.label = name;
- 	st->gc.parent = &st->client->dev;
- 	st->gc.owner = THIS_MODULE;
-+	st->gc.can_sleep = true;
- 	st->gc.base = -1;
- 	st->gc.names = st->gpio_names;
- 	st->gc.ngpio = ARRAY_SIZE(st->gpio_names);
+diff --git a/arch/x86/kvm/svm/avic.c b/arch/x86/kvm/svm/avic.c
+index ca684979e90d..326341a22153 100644
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -27,19 +27,29 @@
+ #include "irq.h"
+ #include "svm.h"
+ 
+-/* AVIC GATAG is encoded using VM and VCPU IDs */
+-#define AVIC_VCPU_ID_BITS		8
+-#define AVIC_VCPU_ID_MASK		((1 << AVIC_VCPU_ID_BITS) - 1)
++/*
++ * Encode the arbitrary VM ID and the vCPU's default APIC ID, i.e the vCPU ID,
++ * into the GATag so that KVM can retrieve the correct vCPU from a GALog entry
++ * if an interrupt can't be delivered, e.g. because the vCPU isn't running.
++ *
++ * For the vCPU ID, use however many bits are currently allowed for the max
++ * guest physical APIC ID (limited by the size of the physical ID table), and
++ * use whatever bits remain to assign arbitrary AVIC IDs to VMs.  Note, the
++ * size of the GATag is defined by hardware (32 bits), but is an opaque value
++ * as far as hardware is concerned.
++ */
++#define AVIC_VCPU_ID_MASK		AVIC_PHYSICAL_MAX_INDEX_MASK
+ 
+-#define AVIC_VM_ID_BITS			24
+-#define AVIC_VM_ID_NR			(1 << AVIC_VM_ID_BITS)
+-#define AVIC_VM_ID_MASK			((1 << AVIC_VM_ID_BITS) - 1)
++#define AVIC_VM_ID_SHIFT		HWEIGHT32(AVIC_PHYSICAL_MAX_INDEX_MASK)
++#define AVIC_VM_ID_MASK			(GENMASK(31, AVIC_VM_ID_SHIFT) >> AVIC_VM_ID_SHIFT)
+ 
+-#define AVIC_GATAG(x, y)		(((x & AVIC_VM_ID_MASK) << AVIC_VCPU_ID_BITS) | \
++#define AVIC_GATAG(x, y)		(((x & AVIC_VM_ID_MASK) << AVIC_VM_ID_SHIFT) | \
+ 						(y & AVIC_VCPU_ID_MASK))
+-#define AVIC_GATAG_TO_VMID(x)		((x >> AVIC_VCPU_ID_BITS) & AVIC_VM_ID_MASK)
++#define AVIC_GATAG_TO_VMID(x)		((x >> AVIC_VM_ID_SHIFT) & AVIC_VM_ID_MASK)
+ #define AVIC_GATAG_TO_VCPUID(x)		(x & AVIC_VCPU_ID_MASK)
+ 
++static_assert(AVIC_GATAG(AVIC_VM_ID_MASK, AVIC_VCPU_ID_MASK) == -1u);
++
+ static bool force_avic;
+ module_param_unsafe(force_avic, bool, 0444);
+ 
 -- 
-2.39.2
+2.40.0
 
 
 
