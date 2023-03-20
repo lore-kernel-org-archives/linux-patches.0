@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978341C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A15C433EF;
-	Mon, 20 Mar 2023 15:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9111C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32BEC433D2;
+	Mon, 20 Mar 2023 15:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326063;
-	bh=+2t+enFRKlzUWZbDoWwg/y0/eC8PPG1DtS/5oXXkOVM=;
+	s=korg; t=1679326066;
+	bh=aLBPc62EUGrfm+zdiGzEGNhJPt/AFl4fkmdkKFpQSDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODR0qYJ66G/4koClsGlxBiWtky8mAeV1D7pMZnf75WxonukiCrsCDHIf+eB4rJrEI
-	 C68Of8Vbnsrc97I09C3Aty+st9rFrYLOqQKXnYr2sRXRlmMem9iow2Uc4jJr/zIXss
-	 k30CrV83BJRdysHWjc1RqlZ936KIJHo/785BjAME=
+	b=SzsmMJNv2hTXJ+FZ0V1zwN/X51VlyYr9q1PHsn8ZISGMMfX7KJFPn5XRss1YZpf+M
+	 34jcItxj7PPLO3mSr7BbpsRvs6moWlFfW9t+uVYGUk79vz3hB0wM4hdhuAL0ASSxVR
+	 bU1Mp0v2EJ//lLcPLG4LP5w1QWYxBV600fQu2OT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.2 152/211] cifs: use DFS root session instead of tcon ses
-Date: Mon, 20 Mar 2023 15:54:47 +0100
-Message-Id: <20230320145519.810351136@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>
+Subject: [PATCH 6.1 194/198] virt/coco/sev-guest: Carve out the request issuing logic into a helper
+Date: Mon, 20 Mar 2023 15:55:32 +0100
+Message-Id: <20230320145515.613758018@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,33 +34,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 6284e46bdd47743a064fe6ac834a7ac05b1fd206 upstream.
+commit 0fdb6cc7c89cb5e0cbc45dbdbafb8e3fb92ddc95 upstream.
 
-Use DFS root session whenever possible to get new DFS referrals
-otherwise we might end up with an IPC tcon (tcon->ses->tcon_ipc) that
-doesn't respond to them.  It should be safe accessing
-@ses->dfs_root_ses directly in cifs_inval_name_dfs_link_error() as it
-has same lifetime as of @tcon.
+This makes the code flow a lot easier to follow.
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Cc: stable@vger.kernel.org # 6.2
-Signed-off-by: Steve French <stfrench@microsoft.com>
+No functional changes.
+
+  [ Tom: touchups. ]
+
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230307192449.24732-6-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/misc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/virt/coco/sev-guest/sev-guest.c |   44 +++++++++++++++++++-------------
+ 1 file changed, 27 insertions(+), 17 deletions(-)
 
---- a/fs/cifs/misc.c
-+++ b/fs/cifs/misc.c
-@@ -1364,6 +1364,7 @@ int cifs_inval_name_dfs_link_error(const
- 		 * removing cached DFS targets that the client would eventually
- 		 * need during failover.
- 		 */
-+		ses = CIFS_DFS_ROOT_SES(ses);
- 		if (ses->server->ops->get_dfs_refer &&
- 		    !ses->server->ops->get_dfs_refer(xid, ses, ref_path, &refs,
- 						     &num_refs, cifs_sb->local_nls,
+--- a/drivers/virt/coco/sev-guest/sev-guest.c
++++ b/drivers/virt/coco/sev-guest/sev-guest.c
+@@ -320,27 +320,12 @@ static int enc_payload(struct snp_guest_
+ 	return __enc_payload(snp_dev, req, payload, sz);
+ }
+ 
+-static int handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, int msg_ver,
+-				u8 type, void *req_buf, size_t req_sz, void *resp_buf,
+-				u32 resp_sz, __u64 *fw_err)
++static int __handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, __u64 *fw_err)
+ {
+ 	unsigned long err, override_err = 0;
+ 	unsigned int override_npages = 0;
+-	u64 seqno;
+ 	int rc;
+ 
+-	/* Get message sequence and verify that its a non-zero */
+-	seqno = snp_get_msg_seqno(snp_dev);
+-	if (!seqno)
+-		return -EIO;
+-
+-	memset(snp_dev->response, 0, sizeof(struct snp_guest_msg));
+-
+-	/* Encrypt the userspace provided payload */
+-	rc = enc_payload(snp_dev, seqno, msg_ver, type, req_buf, req_sz);
+-	if (rc)
+-		return rc;
+-
+ retry_request:
+ 	/*
+ 	 * Call firmware to process the request. In this function the encrypted
+@@ -349,7 +334,6 @@ retry_request:
+ 	 * prevent reuse of the IV.
+ 	 */
+ 	rc = snp_issue_guest_request(exit_code, &snp_dev->input, &err);
+-
+ 	switch (rc) {
+ 	case -ENOSPC:
+ 		/*
+@@ -403,7 +387,33 @@ retry_request:
+ 	if (!rc && override_err == SNP_GUEST_REQ_INVALID_LEN)
+ 		return -EIO;
+ 
++	return rc;
++}
++
++static int handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, int msg_ver,
++				u8 type, void *req_buf, size_t req_sz, void *resp_buf,
++				u32 resp_sz, __u64 *fw_err)
++{
++	u64 seqno;
++	int rc;
++
++	/* Get message sequence and verify that its a non-zero */
++	seqno = snp_get_msg_seqno(snp_dev);
++	if (!seqno)
++		return -EIO;
++
++	memset(snp_dev->response, 0, sizeof(struct snp_guest_msg));
++
++	/* Encrypt the userspace provided payload */
++	rc = enc_payload(snp_dev, seqno, msg_ver, type, req_buf, req_sz);
++	if (rc)
++		return rc;
++
++	rc = __handle_guest_request(snp_dev, exit_code, fw_err);
+ 	if (rc) {
++		if (rc == -EIO && *fw_err == SNP_GUEST_REQ_INVALID_LEN)
++			return rc;
++
+ 		dev_alert(snp_dev->dev,
+ 			  "Detected error from ASP request. rc: %d, fw_err: %llu\n",
+ 			  rc, *fw_err);
 
 
