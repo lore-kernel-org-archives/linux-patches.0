@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EBE1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D33C433D2;
-	Mon, 20 Mar 2023 15:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6761C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC62C433EF;
+	Mon, 20 Mar 2023 15:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325915;
-	bh=xiRh6sWfV3prQZpdcS43W6PEq3K7YVCnNLbksEWsJ4E=;
+	s=korg; t=1679325918;
+	bh=iKbqb9exd5j6fKs6xHxa7RARfrt2BXyXsMsRsHajGgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FPrldL6CTElnyxJcUmovcCwfh4Ulj1BocjWsrt0h73kFBuKO/LE4eeSXcRFuuhJSO
-	 RIF0iRWRod+sj73GN3wyxoBdDWYE/57Xhje5UWZzegcykqeKOZ+FkJwZX3leElZKyS
-	 HqFT7Sealv+y1SOBLHJoRmip+ov8iGrzFlniROXc=
+	b=LuMzc2hdsDIYsQN06Pd+c8Lh6fXeI01TbtqWtsI2Yp9UrrLpz76Tqgo5QXPsbM5HZ
+	 Nr8yt3aI64zkLE81fE7PBiJsTjcjZiCNBZOz2r+EOo/XfTtm0wDmi561AfGTcKIeMl
+	 pyfXt/at0nvHiHfChVpCIjimaks1WIANldj8qqJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 167/198] mptcp: fix lockdep false positive in mptcp_pm_nl_create_listen_socket()
-Date: Mon, 20 Mar 2023 15:55:05 +0100
-Message-Id: <20230320145514.536525592@linuxfoundation.org>
+	Dmitry Osipenko <digetx@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.2 125/211] memory: tegra20-emc: fix interconnect registration race
+Date: Mon, 20 Mar 2023 15:54:20 +0100
+Message-Id: <20230320145518.617629250@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,69 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit cee4034a3db1d30c3243dd51506a9d4ab1a849fa upstream.
+commit c5587f61ec050f7e9ebb3e2da29d12af63e833d3 upstream.
 
-Christoph reports a lockdep splat in the mptcp_subflow_create_socket()
-error path, when such function is invoked by
-mptcp_pm_nl_create_listen_socket().
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to fail.
 
-Such code path acquires two separates, nested socket lock, with the
-internal lock operation lacking the "nested" annotation. Adding that
-in sock_release() for mptcp's sake only could be confusing.
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
 
-Instead just add a new lockclass to the in-kernel msk socket,
-re-initializing the lockdep infra after the socket creation.
-
-Fixes: ad2171009d96 ("mptcp: fix locking for in-kernel listener creation")
-Cc: stable@vger.kernel.org
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/354
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Tested-by: Christoph Paasch <cpaasch@apple.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d5ef16ba5fbe ("memory: tegra20: Support interconnect framework")
+Cc: stable@vger.kernel.org      # 5.11
+Cc: Dmitry Osipenko <digetx@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-20-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/memory/tegra/tegra20-emc.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -987,9 +987,13 @@ out:
- 	return ret;
- }
+--- a/drivers/memory/tegra/tegra20-emc.c
++++ b/drivers/memory/tegra/tegra20-emc.c
+@@ -1021,15 +1021,13 @@ static int tegra_emc_interconnect_init(s
+ 	emc->provider.aggregate = soc->icc_ops->aggregate;
+ 	emc->provider.xlate_extended = emc_of_icc_xlate_extended;
  
-+static struct lock_class_key mptcp_slock_keys[2];
-+static struct lock_class_key mptcp_keys[2];
-+
- static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
- 					    struct mptcp_pm_addr_entry *entry)
- {
-+	bool is_ipv6 = sk->sk_family == AF_INET6;
- 	int addrlen = sizeof(struct sockaddr_in);
- 	struct sockaddr_storage addr;
- 	struct socket *ssock;
-@@ -1006,6 +1010,18 @@ static int mptcp_pm_nl_create_listen_soc
- 	if (!newsk)
- 		return -EINVAL;
+-	err = icc_provider_add(&emc->provider);
+-	if (err)
+-		goto err_msg;
++	icc_provider_init(&emc->provider);
  
-+	/* The subflow socket lock is acquired in a nested to the msk one
-+	 * in several places, even by the TCP stack, and this msk is a kernel
-+	 * socket: lockdep complains. Instead of propagating the _nested
-+	 * modifiers in several places, re-init the lock class for the msk
-+	 * socket to an mptcp specific one.
-+	 */
-+	sock_lock_init_class_and_name(newsk,
-+				      is_ipv6 ? "mlock-AF_INET6" : "mlock-AF_INET",
-+				      &mptcp_slock_keys[is_ipv6],
-+				      is_ipv6 ? "msk_lock-AF_INET6" : "msk_lock-AF_INET",
-+				      &mptcp_keys[is_ipv6]);
+ 	/* create External Memory Controller node */
+ 	node = icc_node_create(TEGRA_ICC_EMC);
+ 	if (IS_ERR(node)) {
+ 		err = PTR_ERR(node);
+-		goto del_provider;
++		goto err_msg;
+ 	}
+ 
+ 	node->name = "External Memory Controller";
+@@ -1050,12 +1048,14 @@ static int tegra_emc_interconnect_init(s
+ 	node->name = "External Memory (DRAM)";
+ 	icc_node_add(node, &emc->provider);
+ 
++	err = icc_provider_register(&emc->provider);
++	if (err)
++		goto remove_nodes;
 +
- 	lock_sock(newsk);
- 	ssock = __mptcp_nmpc_socket(mptcp_sk(newsk));
- 	release_sock(newsk);
+ 	return 0;
+ 
+ remove_nodes:
+ 	icc_nodes_remove(&emc->provider);
+-del_provider:
+-	icc_provider_del(&emc->provider);
+ err_msg:
+ 	dev_err(emc->dev, "failed to initialize ICC: %d\n", err);
+ 
 
 
