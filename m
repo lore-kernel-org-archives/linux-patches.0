@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAB51C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67269C4339B;
-	Mon, 20 Mar 2023 15:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A851C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425F4C43445;
+	Mon, 20 Mar 2023 15:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326216;
-	bh=rv+GyJiahLQZejHLFzkvnbHOD0LwUBvUB6ioqNnkT6I=;
+	s=korg; t=1679326219;
+	bh=IiFmBwheuAgW44hAoS70uXf0sjnbdYHC+B7x6i5aKXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S72wNURWY9E4Lprvkzl1IC42QZLIqHwFUKIrIXpoDr0UMAa0nlFPXLwXu3ImKtcDM
-	 TJP1bkOGP8mFDVp85vrM8CrgVSWJHdiWapUDUrrS8Pq+4EmgQ9kHVbw5yTW9FrFvUX
-	 xS/FImW98iojyMq3nbg1bOwOPDVWQkh99ddMtLVo=
+	b=ExU4QQ9O66huROpHMsLBXteJF5T3BsT6ID6Eb9MbTfL9PBcdnP1997erCzDpXM8MB
+	 paFgXCU7bbj0i/ch9ivYFgeOvurPJZxGiMkAzjGGmmoXvjpzf2j9U5GY0+s0FdSvps
+	 OyRl8ZodYI4M3jy6jIZiajl8Ce3tOwM+qjWdOJlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.2 202/211] x86/mm: Fix use of uninitialized buffer in sme_enable()
-Date: Mon, 20 Mar 2023 15:55:37 +0100
-Message-Id: <20230320145521.994610810@linuxfoundation.org>
+	Benjamin Cheng <ben@bcheng.me>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.2 172/211] drm/amd/display: Write to correct dirty_rect
+Date: Mon, 20 Mar 2023 15:55:07 +0100
+Message-Id: <20230320145520.645189960@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,40 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Benjamin Cheng <ben@bcheng.me>
 
-commit cbebd68f59f03633469f3ecf9bea99cd6cce3854 upstream.
+commit 751281c55579f0cb0e56c9797d4663f689909681 upstream.
 
-cmdline_find_option() may fail before doing any initialization of
-the buffer array. This may lead to unpredictable results when the same
-buffer is used later in calls to strncmp() function.  Fix the issue by
-returning early if cmdline_find_option() returns an error.
+When FB_DAMAGE_CLIPS are provided in a non-MPO scenario, the loop does
+not use the counter i. This causes the fill_dc_dity_rect() to always
+fill dirty_rects[0], causing graphical artifacts when a damage clip
+aware DRM client sends more than 1 damage clip.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+Instead, use the flip_addrs->dirty_rect_count which is incremented by
+fill_dc_dirty_rect() on a successful fill.
 
-Fixes: aca20d546214 ("x86/mm: Add support to make use of Secure Memory Encryption")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230306160656.14844-1-n.zhandarovich@fintech.ru
+Fixes: 30ebe41582d1 ("drm/amd/display: add FB_DAMAGE_CLIPS support")
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2453
+Signed-off-by: Benjamin Cheng <ben@bcheng.me>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/mem_encrypt_identity.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/mm/mem_encrypt_identity.c
-+++ b/arch/x86/mm/mem_encrypt_identity.c
-@@ -600,7 +600,8 @@ void __init sme_enable(struct boot_param
- 	cmdline_ptr = (const char *)((u64)bp->hdr.cmd_line_ptr |
- 				     ((u64)bp->ext_cmd_line_ptr << 32));
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -4985,9 +4985,9 @@ static void fill_dc_dirty_rects(struct d
  
--	cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer));
-+	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0)
-+		return;
- 
- 	if (!strncmp(buffer, cmdline_on, sizeof(buffer)))
- 		sme_me_mask = me_mask;
+ 		for (; flip_addrs->dirty_rect_count < num_clips; clips++)
+ 			fill_dc_dirty_rect(new_plane_state->plane,
+-					   &dirty_rects[i], clips->x1,
+-					   clips->y1, clips->x2 - clips->x1,
+-					   clips->y2 - clips->y1,
++					   &dirty_rects[flip_addrs->dirty_rect_count],
++					   clips->x1, clips->y1,
++					   clips->x2 - clips->x1, clips->y2 - clips->y1,
+ 					   &flip_addrs->dirty_rect_count,
+ 					   false);
+ 		return;
 
 
