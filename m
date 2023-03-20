@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F8C1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4D0C4339E;
-	Mon, 20 Mar 2023 15:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B531C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B2DC4339B;
+	Mon, 20 Mar 2023 15:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325693;
-	bh=YBvbrQJEaEy8jM6jUSRjD/yFZkav/5OEu3lkUQKcoHk=;
+	s=korg; t=1679325696;
+	bh=RccOOqwkunwDRR3DGr9OHobdgCPvs3w8Vw0P7Ep71rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFYcgewC8V8thaRu4cTyHoEAZAD4Gqg9bliGv4L5tRj85W5AcCeIMloJmhBHV1pin
-	 zeR6dxmTeqceyWkbSYiNgGMfGdcv5KzQsGzebBbsgEzTs1GfK99HKS+JkNqKe5Nbff
-	 e785/K4BP1VSo5UyMmt83oxXVWUWcbtzHR414jXU=
+	b=qwAcKRLp2IleKcx/aA1jzsqGAjhpQsbPUfYi5/WbgMkW7e4UEYuqsvyqlG0qVqfXu
+	 qQfvoITP3Bm/ARjmO9C5YgsSnojgwsmZBBzLixU4HguDcTpfhhwDOoJR5yApsd2E3c
+	 PpiKpTnb9Ffwc8UkxKdESKxd4kCN9WTkE6f65MMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jurica Vukadin <jura@vukad.in>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Maksym Yaremchuk <maksymy@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 099/198] kconfig: Update config changed flag before calling callback
-Date: Mon, 20 Mar 2023 15:53:57 +0100
-Message-Id: <20230320145511.725551611@linuxfoundation.org>
+Subject: [PATCH 6.2 059/211] mlxsw: spectrum: Fix incorrect parsing depth after reload
+Date: Mon, 20 Mar 2023 15:53:14 +0100
+Message-Id: <20230320145515.707530547@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,48 +37,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jurica Vukadin <jura@vukad.in>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit ee06a3ef7e3cddb62b90ac40aa661d3c12f7cabc ]
+[ Upstream commit 35c356924fe3669dfbb1185607ce3b37f70bfa80 ]
 
-Prior to commit 5ee546594025 ("kconfig: change sym_change_count to a
-boolean flag"), the conf_updated flag was set to the new value *before*
-calling the callback. xconfig's save action depends on this behaviour,
-because xconfig calls conf_get_changed() directly from the callback and
-now sees the old value, thus never enabling the save button or the
-shortcut.
+Spectrum ASICs have a configurable limit on how deep into the packet
+they parse. By default, the limit is 96 bytes.
 
-Restore the previous behaviour.
+There are several cases where this parsing depth is not enough and there
+is a need to increase it. For example, timestamping of PTP packets and a
+FIB multipath hash policy that requires hashing on inner fields. The
+driver therefore maintains a reference count that reflects the number of
+consumers that require an increased parsing depth.
 
-Fixes: 5ee546594025 ("kconfig: change sym_change_count to a boolean flag")
-Signed-off-by: Jurica Vukadin <jura@vukad.in>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+During reload_down() the parsing depth reference count does not
+necessarily drop to zero, but the parsing depth itself is restored to
+the default during reload_up() when the firmware is reset. It is
+therefore possible to end up in situations where the driver thinks that
+the parsing depth was increased (reference count is non-zero), when it
+is not.
+
+Fix by making sure that all the consumers that increase the parsing
+depth reference count also decrease it during reload_down().
+Specifically, make sure that when the routing code is de-initialized it
+drops the reference count if it was increased because of a FIB multipath
+hash policy that requires hashing on inner fields.
+
+Add a warning if the reference count is not zero after the driver was
+de-initialized and explicitly reset it to zero during initialization for
+good measures.
+
+Fixes: 2d91f0803b84 ("mlxsw: spectrum: Add infrastructure for parsing configuration")
+Reported-by: Maksym Yaremchuk <maksymy@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://lore.kernel.org/r/9c35e1b3e6c1d8f319a2449d14e2b86373f3b3ba.1678727526.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/confdata.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum.c     |  2 ++
+ .../net/ethernet/mellanox/mlxsw/spectrum_router.c  | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/scripts/kconfig/confdata.c b/scripts/kconfig/confdata.c
-index b7c9f1dd5e422..992575f1e9769 100644
---- a/scripts/kconfig/confdata.c
-+++ b/scripts/kconfig/confdata.c
-@@ -1226,10 +1226,12 @@ static void (*conf_changed_callback)(void);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+index f5b2d965d476d..12540feb45088 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+@@ -2937,6 +2937,7 @@ static int mlxsw_sp_netdevice_event(struct notifier_block *unused,
  
- void conf_set_changed(bool val)
+ static void mlxsw_sp_parsing_init(struct mlxsw_sp *mlxsw_sp)
  {
--	if (conf_changed_callback && conf_changed != val)
--		conf_changed_callback();
-+	bool changed = conf_changed != val;
- 
- 	conf_changed = val;
-+
-+	if (conf_changed_callback && changed)
-+		conf_changed_callback();
++	refcount_set(&mlxsw_sp->parsing.parsing_depth_ref, 0);
+ 	mlxsw_sp->parsing.parsing_depth = MLXSW_SP_DEFAULT_PARSING_DEPTH;
+ 	mlxsw_sp->parsing.vxlan_udp_dport = MLXSW_SP_DEFAULT_VXLAN_UDP_DPORT;
+ 	mutex_init(&mlxsw_sp->parsing.lock);
+@@ -2945,6 +2946,7 @@ static void mlxsw_sp_parsing_init(struct mlxsw_sp *mlxsw_sp)
+ static void mlxsw_sp_parsing_fini(struct mlxsw_sp *mlxsw_sp)
+ {
+ 	mutex_destroy(&mlxsw_sp->parsing.lock);
++	WARN_ON_ONCE(refcount_read(&mlxsw_sp->parsing.parsing_depth_ref));
  }
  
- bool conf_get_changed(void)
+ struct mlxsw_sp_ipv6_addr_node {
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
+index 09e32778b012d..4a73e2fe95ef9 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
+@@ -10381,11 +10381,23 @@ static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)
+ 					      old_inc_parsing_depth);
+ 	return err;
+ }
++
++static void mlxsw_sp_mp_hash_fini(struct mlxsw_sp *mlxsw_sp)
++{
++	bool old_inc_parsing_depth = mlxsw_sp->router->inc_parsing_depth;
++
++	mlxsw_sp_mp_hash_parsing_depth_adjust(mlxsw_sp, old_inc_parsing_depth,
++					      false);
++}
+ #else
+ static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)
+ {
+ 	return 0;
+ }
++
++static void mlxsw_sp_mp_hash_fini(struct mlxsw_sp *mlxsw_sp)
++{
++}
+ #endif
+ 
+ static int mlxsw_sp_dscp_init(struct mlxsw_sp *mlxsw_sp)
+@@ -10615,6 +10627,7 @@ int mlxsw_sp_router_init(struct mlxsw_sp *mlxsw_sp,
+ err_register_inetaddr_notifier:
+ 	mlxsw_core_flush_owq();
+ err_dscp_init:
++	mlxsw_sp_mp_hash_fini(mlxsw_sp);
+ err_mp_hash_init:
+ 	mlxsw_sp_neigh_fini(mlxsw_sp);
+ err_neigh_init:
+@@ -10655,6 +10668,7 @@ void mlxsw_sp_router_fini(struct mlxsw_sp *mlxsw_sp)
+ 	unregister_inet6addr_notifier(&mlxsw_sp->router->inet6addr_nb);
+ 	unregister_inetaddr_notifier(&mlxsw_sp->router->inetaddr_nb);
+ 	mlxsw_core_flush_owq();
++	mlxsw_sp_mp_hash_fini(mlxsw_sp);
+ 	mlxsw_sp_neigh_fini(mlxsw_sp);
+ 	mlxsw_sp_lb_rif_fini(mlxsw_sp);
+ 	mlxsw_sp_vrs_fini(mlxsw_sp);
 -- 
 2.39.2
 
