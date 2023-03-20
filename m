@@ -1,32 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009EA1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAEBC433EF;
-	Mon, 20 Mar 2023 15:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45181C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7549C433A0;
+	Mon, 20 Mar 2023 15:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325116;
-	bh=WWndxHJZNTsrxIc+pwI5u+xjuselPuDq71AsgzwNHd0=;
+	s=korg; t=1679325119;
+	bh=n8INzP9xrlxiMR2igTI6U9yfxcAygakj9Q9XUBxLdlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUE/Ne7RfHQqqmqgBZvr9s5sEkW4Piwn8YjR6WVox4Db//eKwE0T5/N3AMy6Ka8Zv
-	 FJjgm8OexlYMg5G7mUqC1UGG8hE3X3ip+2SMpHLduMYjRaMgi7MLPQl6JpPONtc/zt
-	 8yxKEurjGseRRZNVQfXgu83rx6JMMupWejA+TjIw=
+	b=RMRfzJYxZ6ZrILRR50haD4Vp0SoiZk51zcYrbtu06RF39ksKnE+vUGjXc4i3y2w/u
+	 Zng3QbF6ScW8yvLQ7IaZFcxkLVti4KKLm20wBZQ2iNqjVo+WfsS6vVBowDVcBTH4EC
+	 wcmuxm+O8OcELvu3okBaN02/8s+bJapde/of7wdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/198] PCI: s390: Fix use-after-free of PCI resources with per-function hotplug
-Date: Mon, 20 Mar 2023 15:53:01 +0100
-Message-Id: <20230320145509.272008740@linuxfoundation.org>
+	John Harrison <John.C.Harrison@Intel.com>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	intel-gfx@lists.freedesktop.org,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.10 77/99] drm/i915: Dont use stolen memory for ring buffers with LLC
+Date: Mon, 20 Mar 2023 15:54:55 +0100
+Message-Id: <20230320145446.626338296@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,196 +42,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit ab909509850b27fd39b8ba99e44cda39dbc3858c ]
+commit 690e0ec8e63da9a29b39fedc6ed5da09c7c82651 upstream.
 
-On s390 PCI functions may be hotplugged individually even when they
-belong to a multi-function device. In particular on an SR-IOV device VFs
-may be removed and later re-added.
+Direction from hardware is that stolen memory should never be used for
+ring buffer allocations on platforms with LLC. There are too many
+caching pitfalls due to the way stolen memory accesses are routed. So
+it is safest to just not use it.
 
-In commit a50297cf8235 ("s390/pci: separate zbus creation from
-scanning") it was missed however that struct pci_bus and struct
-zpci_bus's resource list retained a reference to the PCI functions MMIO
-resources even though those resources are released and freed on
-hot-unplug. These stale resources may subsequently be claimed when the
-PCI function re-appears resulting in use-after-free.
-
-One idea of fixing this use-after-free in s390 specific code that was
-investigated was to simply keep resources around from the moment a PCI
-function first appeared until the whole virtual PCI bus created for
-a multi-function device disappears. The problem with this however is
-that due to the requirement of artificial MMIO addreesses (address
-cookies) extra logic is then needed to keep the address cookies
-compatible on re-plug. At the same time the MMIO resources semantically
-belong to the PCI function so tying their lifecycle to the function
-seems more logical.
-
-Instead a simpler approach is to remove the resources of an individually
-hot-unplugged PCI function from the PCI bus's resource list while
-keeping the resources of other PCI functions on the PCI bus untouched.
-
-This is done by introducing pci_bus_remove_resource() to remove an
-individual resource. Similarly the resource also needs to be removed
-from the struct zpci_bus's resource list. It turns out however, that
-there is really no need to add the MMIO resources to the struct
-zpci_bus's resource list at all and instead we can simply use the
-zpci_bar_struct's resource pointer directly.
-
-Fixes: a50297cf8235 ("s390/pci: separate zbus creation from scanning")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20230306151014.60913-2-schnelle@linux.ibm.com
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Fixes: c58b735fc762 ("drm/i915: Allocate rings from stolen")
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v4.9+
+Tested-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230216011101.1909009-2-John.C.Harrison@Intel.com
+(cherry picked from commit f54c1f6c697c4297f7ed94283c184acc338a5cf8)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci.c     | 16 ++++++++++------
- arch/s390/pci/pci_bus.c | 12 +++++-------
- arch/s390/pci/pci_bus.h |  3 +--
- drivers/pci/bus.c       | 21 +++++++++++++++++++++
- include/linux/pci.h     |  1 +
- 5 files changed, 38 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_ring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
-index 73cdc55393847..2c99f9552b2f5 100644
---- a/arch/s390/pci/pci.c
-+++ b/arch/s390/pci/pci.c
-@@ -544,8 +544,7 @@ static struct resource *__alloc_res(struct zpci_dev *zdev, unsigned long start,
- 	return r;
- }
+--- a/drivers/gpu/drm/i915/gt/intel_ring.c
++++ b/drivers/gpu/drm/i915/gt/intel_ring.c
+@@ -108,7 +108,7 @@ static struct i915_vma *create_ring_vma(
+ 	struct i915_vma *vma;
  
--int zpci_setup_bus_resources(struct zpci_dev *zdev,
--			     struct list_head *resources)
-+int zpci_setup_bus_resources(struct zpci_dev *zdev)
- {
- 	unsigned long addr, size, flags;
- 	struct resource *res;
-@@ -581,7 +580,6 @@ int zpci_setup_bus_resources(struct zpci_dev *zdev,
- 			return -ENOMEM;
- 		}
- 		zdev->bars[i].res = res;
--		pci_add_resource(resources, res);
- 	}
- 	zdev->has_resources = 1;
- 
-@@ -590,17 +588,23 @@ int zpci_setup_bus_resources(struct zpci_dev *zdev,
- 
- static void zpci_cleanup_bus_resources(struct zpci_dev *zdev)
- {
-+	struct resource *res;
- 	int i;
- 
-+	pci_lock_rescan_remove();
- 	for (i = 0; i < PCI_STD_NUM_BARS; i++) {
--		if (!zdev->bars[i].size || !zdev->bars[i].res)
-+		res = zdev->bars[i].res;
-+		if (!res)
- 			continue;
- 
-+		release_resource(res);
-+		pci_bus_remove_resource(zdev->zbus->bus, res);
- 		zpci_free_iomap(zdev, zdev->bars[i].map_idx);
--		release_resource(zdev->bars[i].res);
--		kfree(zdev->bars[i].res);
-+		zdev->bars[i].res = NULL;
-+		kfree(res);
- 	}
- 	zdev->has_resources = 0;
-+	pci_unlock_rescan_remove();
- }
- 
- int pcibios_device_add(struct pci_dev *pdev)
-diff --git a/arch/s390/pci/pci_bus.c b/arch/s390/pci/pci_bus.c
-index 6a8da1b742ae5..a99926af2b69a 100644
---- a/arch/s390/pci/pci_bus.c
-+++ b/arch/s390/pci/pci_bus.c
-@@ -41,9 +41,7 @@ static int zpci_nb_devices;
-  */
- static int zpci_bus_prepare_device(struct zpci_dev *zdev)
- {
--	struct resource_entry *window, *n;
--	struct resource *res;
--	int rc;
-+	int rc, i;
- 
- 	if (!zdev_enabled(zdev)) {
- 		rc = zpci_enable_device(zdev);
-@@ -57,10 +55,10 @@ static int zpci_bus_prepare_device(struct zpci_dev *zdev)
- 	}
- 
- 	if (!zdev->has_resources) {
--		zpci_setup_bus_resources(zdev, &zdev->zbus->resources);
--		resource_list_for_each_entry_safe(window, n, &zdev->zbus->resources) {
--			res = window->res;
--			pci_bus_add_resource(zdev->zbus->bus, res, 0);
-+		zpci_setup_bus_resources(zdev);
-+		for (i = 0; i < PCI_STD_NUM_BARS; i++) {
-+			if (zdev->bars[i].res)
-+				pci_bus_add_resource(zdev->zbus->bus, zdev->bars[i].res, 0);
- 		}
- 	}
- 
-diff --git a/arch/s390/pci/pci_bus.h b/arch/s390/pci/pci_bus.h
-index e96c9860e0644..af9f0ac79a1b1 100644
---- a/arch/s390/pci/pci_bus.h
-+++ b/arch/s390/pci/pci_bus.h
-@@ -30,8 +30,7 @@ static inline void zpci_zdev_get(struct zpci_dev *zdev)
- 
- int zpci_alloc_domain(int domain);
- void zpci_free_domain(int domain);
--int zpci_setup_bus_resources(struct zpci_dev *zdev,
--			     struct list_head *resources);
-+int zpci_setup_bus_resources(struct zpci_dev *zdev);
- 
- static inline struct zpci_dev *zdev_from_bus(struct pci_bus *bus,
- 					     unsigned int devfn)
-diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
-index 3cef835b375fd..feafa378bf8ea 100644
---- a/drivers/pci/bus.c
-+++ b/drivers/pci/bus.c
-@@ -76,6 +76,27 @@ struct resource *pci_bus_resource_n(const struct pci_bus *bus, int n)
- }
- EXPORT_SYMBOL_GPL(pci_bus_resource_n);
- 
-+void pci_bus_remove_resource(struct pci_bus *bus, struct resource *res)
-+{
-+	struct pci_bus_resource *bus_res, *tmp;
-+	int i;
-+
-+	for (i = 0; i < PCI_BRIDGE_RESOURCE_NUM; i++) {
-+		if (bus->resource[i] == res) {
-+			bus->resource[i] = NULL;
-+			return;
-+		}
-+	}
-+
-+	list_for_each_entry_safe(bus_res, tmp, &bus->resources, list) {
-+		if (bus_res->res == res) {
-+			list_del(&bus_res->list);
-+			kfree(bus_res);
-+			return;
-+		}
-+	}
-+}
-+
- void pci_bus_remove_resources(struct pci_bus *bus)
- {
- 	int i;
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index cb538bc579710..d20695184e0b9 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1417,6 +1417,7 @@ void pci_bus_add_resource(struct pci_bus *bus, struct resource *res,
- 			  unsigned int flags);
- struct resource *pci_bus_resource_n(const struct pci_bus *bus, int n);
- void pci_bus_remove_resources(struct pci_bus *bus);
-+void pci_bus_remove_resource(struct pci_bus *bus, struct resource *res);
- int devm_request_pci_bus_resources(struct device *dev,
- 				   struct list_head *resources);
- 
--- 
-2.39.2
-
+ 	obj = ERR_PTR(-ENODEV);
+-	if (i915_ggtt_has_aperture(ggtt))
++	if (i915_ggtt_has_aperture(ggtt) && !HAS_LLC(i915))
+ 		obj = i915_gem_object_create_stolen(i915, size);
+ 	if (IS_ERR(obj))
+ 		obj = i915_gem_object_create_internal(i915, size);
 
 
