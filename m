@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6D71C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4CF4C433D2;
-	Mon, 20 Mar 2023 15:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A901C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B52FC433EF;
+	Mon, 20 Mar 2023 15:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325419;
-	bh=v81g5Ju93yPkz3l72tZo5MVgoURquqy4Asl0YshQPVI=;
+	s=korg; t=1679325421;
+	bh=HpZJ47UX+ovf6LOUN69eXK9nALO4gmgXQIvFY1b7F1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIgTmR8PxinSsn6yrTjtrGL6TPv9H9hiLzuhEWy3c8FlTQPjNQGphZw/YYckM12Dz
-	 j3OmbteoBbitzqGrVYmaU1A/dVoziQIpIJU0nsy+Wj0Fb9lgvJwk6sBUqY8HE7oHIb
-	 kvl4ovJgNqPn2X53GgW3wL233RvyWtiWlYJyQb4A=
+	b=eGuso+16hhbhMf1h4nnnGQaEeGgFkfoI77dxepGsOy/lhZHGyEi4q1gArHHHqj2hY
+	 uv8k3ikJTfdvds+jNUYLXi6NDyEFOIBYag4POywctGYJ8xwa+1zp3AFMOWSuJ7/tHc
+	 r+Glim9hjq6SJGUjR5j5k7PHGhyHOCnhxSfKEeGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.15 102/115] fbdev: stifb: Provide valid pixelclock and add fb_check_var() checks
-Date: Mon, 20 Mar 2023 15:55:14 +0100
-Message-Id: <20230320145453.714145338@linuxfoundation.org>
+	Szymon Heidrich <szymon.heidrich@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 083/198] net: usb: smsc75xx: Move packet length check to prevent kernel panic in skb_pull
+Date: Mon, 20 Mar 2023 15:53:41 +0100
+Message-Id: <20230320145511.010308646@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,77 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Szymon Heidrich <szymon.heidrich@gmail.com>
 
-commit 203873a535d627c668f293be0cb73e26c30f9cc7 upstream.
+[ Upstream commit 43ffe6caccc7a1bb9d7442fbab521efbf6c1378c ]
 
-Find a valid modeline depending on the machine graphic card
-configuration and add the fb_check_var() function to validate
-Xorg provided graphics settings.
+Packet length check needs to be located after size and align_count
+calculation to prevent kernel panic in skb_pull() in case
+rx_cmd_a & RX_CMD_A_RED evaluates to true.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d8b228318935 ("net: usb: smsc75xx: Limit packet length to skb->len")
+Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
+Link: https://lore.kernel.org/r/20230316110540.77531-1-szymon.heidrich@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/stifb.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/net/usb/smsc75xx.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/stifb.c
-+++ b/drivers/video/fbdev/stifb.c
-@@ -922,6 +922,28 @@ SETUP_HCRX(struct stifb_info *fb)
- /* ------------------- driver specific functions --------------------------- */
+diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
+index db34f8d1d6051..5d6454fedb3f1 100644
+--- a/drivers/net/usb/smsc75xx.c
++++ b/drivers/net/usb/smsc75xx.c
+@@ -2200,6 +2200,13 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 		size = (rx_cmd_a & RX_CMD_A_LEN) - RXW_PADDING;
+ 		align_count = (4 - ((size + RXW_PADDING) % 4)) % 4;
  
- static int
-+stifb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
-+{
-+	struct stifb_info *fb = container_of(info, struct stifb_info, info);
++		if (unlikely(size > skb->len)) {
++			netif_dbg(dev, rx_err, dev->net,
++				  "size err rx_cmd_a=0x%08x\n",
++				  rx_cmd_a);
++			return 0;
++		}
 +
-+	if (var->xres != fb->info.var.xres ||
-+	    var->yres != fb->info.var.yres ||
-+	    var->bits_per_pixel != fb->info.var.bits_per_pixel)
-+		return -EINVAL;
-+
-+	var->xres_virtual = var->xres;
-+	var->yres_virtual = var->yres;
-+	var->xoffset = 0;
-+	var->yoffset = 0;
-+	var->grayscale = fb->info.var.grayscale;
-+	var->red.length = fb->info.var.red.length;
-+	var->green.length = fb->info.var.green.length;
-+	var->blue.length = fb->info.var.blue.length;
-+
-+	return 0;
-+}
-+
-+static int
- stifb_setcolreg(u_int regno, u_int red, u_int green,
- 	      u_int blue, u_int transp, struct fb_info *info)
- {
-@@ -1145,6 +1167,7 @@ stifb_init_display(struct stifb_info *fb
- 
- static const struct fb_ops stifb_ops = {
- 	.owner		= THIS_MODULE,
-+	.fb_check_var	= stifb_check_var,
- 	.fb_setcolreg	= stifb_setcolreg,
- 	.fb_blank	= stifb_blank,
- 	.fb_fillrect	= stifb_fillrect,
-@@ -1164,6 +1187,7 @@ static int __init stifb_init_fb(struct s
- 	struct stifb_info *fb;
- 	struct fb_info *info;
- 	unsigned long sti_rom_address;
-+	char modestr[32];
- 	char *dev_name;
- 	int bpp, xres, yres;
- 
-@@ -1342,6 +1366,9 @@ static int __init stifb_init_fb(struct s
- 	info->flags = FBINFO_HWACCEL_COPYAREA | FBINFO_HWACCEL_FILLRECT;
- 	info->pseudo_palette = &fb->pseudo_palette;
- 
-+	scnprintf(modestr, sizeof(modestr), "%dx%d-%d", xres, yres, bpp);
-+	fb_find_mode(&info->var, info, modestr, NULL, 0, NULL, bpp);
-+
- 	/* This has to be done !!! */
- 	if (fb_alloc_cmap(&info->cmap, NR_PALETTE, 0))
- 		goto out_err1;
+ 		if (unlikely(rx_cmd_a & RX_CMD_A_RED)) {
+ 			netif_dbg(dev, rx_err, dev->net,
+ 				  "Error rx_cmd_a=0x%08x\n", rx_cmd_a);
+@@ -2212,8 +2219,7 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 				dev->net->stats.rx_frame_errors++;
+ 		} else {
+ 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
+-			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
+-				     size > skb->len)) {
++			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
+ 				netif_dbg(dev, rx_err, dev->net,
+ 					  "size err rx_cmd_a=0x%08x\n",
+ 					  rx_cmd_a);
+-- 
+2.39.2
+
 
 
