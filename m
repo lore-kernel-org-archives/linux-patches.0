@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFFA1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF5AC433D2;
-	Mon, 20 Mar 2023 15:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D7B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF66C433EF;
+	Mon, 20 Mar 2023 15:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324917;
-	bh=L4BPA/j0NaFTaEujZOmx4EUTbVrT7bo2QbPBZ6j0+QY=;
+	s=korg; t=1679324920;
+	bh=sXo8mBoKZYZFAHqbPaF7n1eHMzEnof++Sw1JW5lceJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+XOBNq9keKFXuP8XnqOUK6RaDyBpz9fRSRdNWLohH+tAaIp8oc59jmGApW+evN3J
-	 Aqfc7W+WY1nZCgAxQlOVxC6pQU0r+8xrjl5c0ziZZoFGpaGUbPcTklH1IX+3aneG6n
-	 yNSfZ60IYH0TrPNbLqkWnCjYnHxYkNkOH4v1h2vc=
+	b=ocvup/XL9OXNe561ZS0YkKGpdjRThSUfl415l6MUQdx0AiDtcLhl0Jj/tonegrzY4
+	 YCYSvBCLmOBrtYWjo/zZKvFrw5HIRVseKnJInz1zUH3ERck1VBVF/pVGjx1SMJTH8G
+	 8nS5KhnoJpSgZ7tjvRoYmdt9Dpfr1t1CbGfW1wdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Po-Hsu Lin <po-hsu.lin@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/198] scsi: mpi3mr: Return proper values for failures in firmware init path
-Date: Mon, 20 Mar 2023 15:52:38 +0100
-Message-Id: <20230320145508.345697464@linuxfoundation.org>
+Subject: [PATCH 5.15 048/115] selftests: net: devlink_port_split.py: skip test if no suitable device available
+Date: Mon, 20 Mar 2023 15:54:20 +0100
+Message-Id: <20230320145451.423831209@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,75 +35,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Po-Hsu Lin <po-hsu.lin@canonical.com>
 
-[ Upstream commit ba8a9ba41fbde250fd8b0ed1e5dad0dc9318df46 ]
+[ Upstream commit 24994513ad13ff2c47ba91d2b5df82c3d496c370 ]
 
-Return proper non-zero return values for all the cases when the controller
-initialization and re-initialization fails.
+The `devlink -j port show` command output may not contain the "flavour"
+key, an example from Ubuntu 22.10 s390x LPAR(5.19.0-37-generic), with
+mlx4 driver and iproute2-5.15.0:
+  {"port":{"pci/0001:00:00.0/1":{"type":"eth","netdev":"ens301"},
+           "pci/0001:00:00.0/2":{"type":"eth","netdev":"ens301d1"},
+           "pci/0002:00:00.0/1":{"type":"eth","netdev":"ens317"},
+           "pci/0002:00:00.0/2":{"type":"eth","netdev":"ens317d1"}}}
 
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
-Link: https://lore.kernel.org/r/20230228140835.4075-5-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: c798304470ca ("scsi: mpi3mr: Fix memory leaks in mpi3mr_init_ioc()")
+This will cause a KeyError exception.
+
+Create a validate_devlink_output() to check for this "flavour" from
+devlink command output to avoid this KeyError exception. Also let
+it handle the check for `devlink -j dev show` output in main().
+
+Apart from this, if the test was not started because the max lanes of
+the designated device is 0. The script will still return 0 and thus
+causing a false-negative test result.
+
+Use a found_max_lanes flag to determine if these tests were skipped
+due to this reason and return KSFT_SKIP to make it more clear.
+
+Link: https://bugs.launchpad.net/bugs/1937133
+Fixes: f3348a82e727 ("selftests: net: Add port split test")
+Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
+Link: https://lore.kernel.org/r/20230315165353.229590-1-po-hsu.lin@canonical.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ .../selftests/net/devlink_port_split.py       | 36 ++++++++++++++++---
+ 1 file changed, 31 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index f6b726359a1cc..37aaf8dc65d4d 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -3817,8 +3817,10 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
- 	dprint_init(mrioc, "allocating config page buffers\n");
- 	mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
- 	    MPI3MR_DEFAULT_CFG_PAGE_SZ, &mrioc->cfg_page_dma, GFP_KERNEL);
--	if (!mrioc->cfg_page)
-+	if (!mrioc->cfg_page) {
-+		retval = -1;
- 		goto out_failed_noretry;
-+	}
+diff --git a/tools/testing/selftests/net/devlink_port_split.py b/tools/testing/selftests/net/devlink_port_split.py
+index 2b5d6ff873738..2d84c7a0be6b2 100755
+--- a/tools/testing/selftests/net/devlink_port_split.py
++++ b/tools/testing/selftests/net/devlink_port_split.py
+@@ -59,6 +59,8 @@ class devlink_ports(object):
+         assert stderr == ""
+         ports = json.loads(stdout)['port']
  
- 	mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
++        validate_devlink_output(ports, 'flavour')
++
+         for port in ports:
+             if dev in port:
+                 if ports[port]['flavour'] == 'physical':
+@@ -220,6 +222,27 @@ def split_splittable_port(port, k, lanes, dev):
+     unsplit(port.bus_info)
  
-@@ -3880,8 +3882,10 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
- 		dprint_init(mrioc, "allocating memory for throttle groups\n");
- 		sz = sizeof(struct mpi3mr_throttle_group_info);
- 		mrioc->throttle_groups = kcalloc(mrioc->num_io_throttle_group, sz, GFP_KERNEL);
--		if (!mrioc->throttle_groups)
-+		if (!mrioc->throttle_groups) {
-+			retval = -1;
- 			goto out_failed_noretry;
-+		}
- 	}
  
- 	retval = mpi3mr_enable_events(mrioc);
-@@ -3901,6 +3905,7 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
- 		mpi3mr_memset_buffers(mrioc);
- 		goto retry_init;
- 	}
-+	retval = -1;
- out_failed_noretry:
- 	ioc_err(mrioc, "controller initialization failed\n");
- 	mpi3mr_issue_reset(mrioc, MPI3_SYSIF_HOST_DIAG_RESET_ACTION_DIAG_FAULT,
-@@ -4013,6 +4018,7 @@ int mpi3mr_reinit_ioc(struct mpi3mr_ioc *mrioc, u8 is_resume)
- 		ioc_err(mrioc,
- 		    "cannot create minimum number of operational queues expected:%d created:%d\n",
- 		    mrioc->shost->nr_hw_queues, mrioc->num_op_reply_q);
-+		retval = -1;
- 		goto out_failed_noretry;
- 	}
++def validate_devlink_output(devlink_data, target_property=None):
++    """
++    Determine if test should be skipped by checking:
++      1. devlink_data contains values
++      2. The target_property exist in devlink_data
++    """
++    skip_reason = None
++    if any(devlink_data.values()):
++        if target_property:
++            skip_reason = "{} not found in devlink output, test skipped".format(target_property)
++            for key in devlink_data:
++                if target_property in devlink_data[key]:
++                    skip_reason = None
++    else:
++        skip_reason = 'devlink output is empty, test skipped'
++
++    if skip_reason:
++        print(skip_reason)
++        sys.exit(KSFT_SKIP)
++
++
+ def make_parser():
+     parser = argparse.ArgumentParser(description='A test for port splitting.')
+     parser.add_argument('--dev',
+@@ -240,12 +263,9 @@ def main(cmdline=None):
+         stdout, stderr = run_command(cmd)
+         assert stderr == ""
  
-@@ -4079,6 +4085,7 @@ int mpi3mr_reinit_ioc(struct mpi3mr_ioc *mrioc, u8 is_resume)
- 		mpi3mr_memset_buffers(mrioc);
- 		goto retry_init;
- 	}
-+	retval = -1;
- out_failed_noretry:
- 	ioc_err(mrioc, "controller %s is failed\n",
- 	    (is_resume)?"resume":"re-initialization");
++        validate_devlink_output(json.loads(stdout))
+         devs = json.loads(stdout)['dev']
+-        if devs:
+-            dev = list(devs.keys())[0]
+-        else:
+-            print("no devlink device was found, test skipped")
+-            sys.exit(KSFT_SKIP)
++        dev = list(devs.keys())[0]
+ 
+     cmd = "devlink dev show %s" % dev
+     stdout, stderr = run_command(cmd)
+@@ -255,6 +275,7 @@ def main(cmdline=None):
+ 
+     ports = devlink_ports(dev)
+ 
++    found_max_lanes = False
+     for port in ports.if_names:
+         max_lanes = get_max_lanes(port.name)
+ 
+@@ -277,6 +298,11 @@ def main(cmdline=None):
+                 split_splittable_port(port, lane, max_lanes, dev)
+ 
+                 lane //= 2
++        found_max_lanes = True
++
++    if not found_max_lanes:
++        print(f"Test not started, no port of device {dev} reports max_lanes")
++        sys.exit(KSFT_SKIP)
+ 
+ 
+ if __name__ == "__main__":
 -- 
 2.39.2
 
