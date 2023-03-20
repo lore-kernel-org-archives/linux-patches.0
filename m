@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02441C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525E9C433EF;
-	Mon, 20 Mar 2023 15:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC7C1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2170EC433EF;
+	Mon, 20 Mar 2023 15:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324925;
-	bh=o5u7k0nbL21Q8qrws88vl+I5xOSuwItooO2dh7Gyc8A=;
+	s=korg; t=1679324928;
+	bh=nyD/biSwnmE61lrtW18J5H7Y6qPC96aP9J9xqE3FVJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hhg7kUMUe0K3XECUHkCQQR4iwNmbXMbykAluoZYiqChgdiha8m9Z/5RpDjOxA8RV0
-	 n7ytHgTktAJ5Y4o2+U9J3i2nY8uoaBsraaCL2wf7RgQ+6jaHFDjP74Yixw9JeXS20f
-	 eHKyjCQP+7+GZmtegAtVtPUa6zf9JixDgsqzL/pE=
+	b=vpR27+k22pyXxoX3VT04UeA4ZjVJYq5cJONq5M3vwiP+84uSg0vHKZUVjJeAgcxk/
+	 7Ka1nGkLecOaUvEQTv8BGD3XwnIPkdl96O78pYGnzB7k5AxG4AxxZmijDaYS1fwZTb
+	 v8lWiZOMNtBaZjrPjpwjecci2jltWZgHPl5+6p/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/198] scsi: mpi3mr: Fix memory leaks in mpi3mr_init_ioc()
-Date: Mon, 20 Mar 2023 15:52:39 +0100
-Message-Id: <20230320145508.375216911@linuxfoundation.org>
+Subject: [PATCH 5.15 049/115] qed/qed_mng_tlv: correctly zero out ->min instead of ->hour
+Date: Mon, 20 Mar 2023 15:54:21 +0100
+Message-Id: <20230320145451.462919500@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,79 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit c798304470cab88723d895726d17fcb96472e0e9 ]
+[ Upstream commit 470efd68a4653d9819d391489886432cd31bcd0b ]
 
-Don't allocate memory again when IOC is being reinitialized.
+This fixes an issue where ->hour would erroneously get zeroed out
+instead of ->min because of a bad copy paste.
 
-Fixes: fe6db6151565 ("scsi: mpi3mr: Handle offline FW activation in graceful manner")
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20230302234336.25456-6-thenzl@redhat.com
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
+
+Fixes: f240b6882211 ("qed: Add support for processing fcoe tlv request.")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Link: https://lore.kernel.org/r/20230315194618.579286-1-d-tatianin@yandex-team.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 41 ++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 37aaf8dc65d4d..1a404d71b88cf 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -3814,29 +3814,34 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
- 
- 	mpi3mr_print_ioc_info(mrioc);
- 
--	dprint_init(mrioc, "allocating config page buffers\n");
--	mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
--	    MPI3MR_DEFAULT_CFG_PAGE_SZ, &mrioc->cfg_page_dma, GFP_KERNEL);
- 	if (!mrioc->cfg_page) {
--		retval = -1;
--		goto out_failed_noretry;
-+		dprint_init(mrioc, "allocating config page buffers\n");
-+		mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
-+		mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
-+		    mrioc->cfg_page_sz, &mrioc->cfg_page_dma, GFP_KERNEL);
-+		if (!mrioc->cfg_page) {
-+			retval = -1;
-+			goto out_failed_noretry;
-+		}
- 	}
- 
--	mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
--
--	retval = mpi3mr_alloc_reply_sense_bufs(mrioc);
--	if (retval) {
--		ioc_err(mrioc,
--		    "%s :Failed to allocated reply sense buffers %d\n",
--		    __func__, retval);
--		goto out_failed_noretry;
-+	if (!mrioc->init_cmds.reply) {
-+		retval = mpi3mr_alloc_reply_sense_bufs(mrioc);
-+		if (retval) {
-+			ioc_err(mrioc,
-+			    "%s :Failed to allocated reply sense buffers %d\n",
-+			    __func__, retval);
-+			goto out_failed_noretry;
-+		}
- 	}
- 
--	retval = mpi3mr_alloc_chain_bufs(mrioc);
--	if (retval) {
--		ioc_err(mrioc, "Failed to allocated chain buffers %d\n",
--		    retval);
--		goto out_failed_noretry;
-+	if (!mrioc->chain_sgl_list) {
-+		retval = mpi3mr_alloc_chain_bufs(mrioc);
-+		if (retval) {
-+			ioc_err(mrioc, "Failed to allocated chain buffers %d\n",
-+			    retval);
-+			goto out_failed_noretry;
-+		}
- 	}
- 
- 	retval = mpi3mr_issue_iocinit(mrioc);
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c b/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
+index 6190adf965bca..f55eed092f25d 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
+@@ -422,7 +422,7 @@ qed_mfw_get_tlv_time_value(struct qed_mfw_tlv_time *p_time,
+ 	if (p_time->hour > 23)
+ 		p_time->hour = 0;
+ 	if (p_time->min > 59)
+-		p_time->hour = 0;
++		p_time->min = 0;
+ 	if (p_time->msec > 999)
+ 		p_time->msec = 0;
+ 	if (p_time->usec > 999)
 -- 
 2.39.2
 
