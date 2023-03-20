@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F071C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9905C433D2;
-	Mon, 20 Mar 2023 15:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F051C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7529AC433EF;
+	Mon, 20 Mar 2023 15:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325430;
-	bh=+rgEhBNp+rP7d98kPE1CI3dV00hK44CAysyGGsYin0Y=;
+	s=korg; t=1679325432;
+	bh=kJkK3+l+HP8IxMfE2VAikLE5Y6vW92FODnSE6P8vndQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kmAKuU5aYzLyfNOnW240w5otnqKCGMKNZbtMBrtyeQEZmjZFbuKpk/y+0KVHKnW4l
-	 G7/LgBD4rewx6OyFzxHc8Ct/F5bJH7fK64/YxBqof3NtAOtXFerH8Go+7ZvbsnhKSw
-	 44SoQXLxu+XWuSaetSZAuSE+xuvQDYu2yMHKtXrg=
+	b=1/ZeNzl5Y7jiOd7iAiCVDdM5nchms7v4HhdH3VryPTwd3Q1jX6GJFRv1I+Rd8STA8
+	 p0CdPPe0adFvGmzivSdzkNbdrCuKYVWXOBQbjI+lb1tz/mmnMGR1gQxcb8ZXjTd5W7
+	 JSUQPtLYQGXeEpUMW2GO0EoBR536mKXcU6r1VgMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tero Kristo <tero.kristo@linux.intel.com>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 103/115] trace/hwlat: Do not wipe the contents of per-cpu thread data
-Date: Mon, 20 Mar 2023 15:55:15 +0100
-Message-Id: <20230320145453.761363825@linuxfoundation.org>
+	Freysteinn Alfredsson <Freysteinn.Alfredsson@kau.se>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 084/198] net: atlantic: Fix crash when XDP is enabled but no program is loaded
+Date: Mon, 20 Mar 2023 15:53:42 +0100
+Message-Id: <20230320145511.057934169@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tero Kristo <tero.kristo@linux.intel.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-commit 4c42f5f0d1dd20bddd9f940beb1e6ccad60c4498 upstream.
+[ Upstream commit 37d010399f7552add2b68e2b347901c83562dab8 ]
 
-Do not wipe the contents of the per-cpu kthread data when starting the
-tracer, as this will completely forget about already running instances
-and can later start new additional per-cpu threads.
+The aq_xdp_run_prog() function falls back to the XDP_ABORTED action
+handler (using a goto) if the operations for any of the other actions fail.
+The XDP_ABORTED handler in turn calls the bpf_warn_invalid_xdp_action()
+tracepoint. However, the function also jumps into the XDP_PASS helper if no
+XDP program is loaded on the device, which means the XDP_ABORTED handler
+can be run with a NULL program pointer. This results in a NULL pointer
+deref because the tracepoint dereferences the 'prog' pointer passed to it.
 
-Link: https://lore.kernel.org/all/20230302113654.2984709-1-tero.kristo@linux.intel.com/
-Link: https://lkml.kernel.org/r/20230310100451.3948583-2-tero.kristo@linux.intel.com
+This situation can happen in multiple ways:
+- If a packet arrives between the removal of the program from the interface
+  and the static_branch_dec() in aq_xdp_setup()
+- If there are multiple devices using the same driver in the system and
+  one of them has an XDP program loaded and the other does not.
 
-Cc: stable@vger.kernel.org
-Fixes: f46b16520a087 ("trace/hwlat: Implement the per-cpu mode")
-Signed-off-by: Tero Kristo <tero.kristo@linux.intel.com>
-Acked-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by refactoring the aq_xdp_run_prog() function to remove the 'goto
+pass' handling if there is no XDP program loaded. Instead, factor out the
+skb building in a separate small helper function.
+
+Fixes: 26efaef759a1 ("net: atlantic: Implement xdp data plane")
+Reported-by: Freysteinn Alfredsson <Freysteinn.Alfredsson@kau.se>
+Tested-by: Freysteinn Alfredsson <Freysteinn.Alfredsson@kau.se>
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/r/20230315125539.103319-1-toke@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_hwlat.c |    3 ---
- 1 file changed, 3 deletions(-)
+ .../net/ethernet/aquantia/atlantic/aq_ring.c  | 28 ++++++++++++++-----
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
---- a/kernel/trace/trace_hwlat.c
-+++ b/kernel/trace/trace_hwlat.c
-@@ -588,9 +588,6 @@ static int start_per_cpu_kthreads(struct
- 	 */
- 	cpumask_and(current_mask, cpu_online_mask, tr->tracing_cpumask);
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+index 25129e723b575..2dc8d215a5918 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+@@ -412,6 +412,25 @@ int aq_xdp_xmit(struct net_device *dev, int num_frames,
+ 	return num_frames - drop;
+ }
  
--	for_each_online_cpu(cpu)
--		per_cpu(hwlat_per_cpu_data, cpu).kthread = NULL;
--
- 	for_each_cpu(cpu, current_mask) {
- 		retval = start_cpu_kthread(cpu);
- 		if (retval)
++static struct sk_buff *aq_xdp_build_skb(struct xdp_buff *xdp,
++					struct net_device *dev,
++					struct aq_ring_buff_s *buff)
++{
++	struct xdp_frame *xdpf;
++	struct sk_buff *skb;
++
++	xdpf = xdp_convert_buff_to_frame(xdp);
++	if (unlikely(!xdpf))
++		return NULL;
++
++	skb = xdp_build_skb_from_frame(xdpf, dev);
++	if (!skb)
++		return NULL;
++
++	aq_get_rxpages_xdp(buff, xdp);
++	return skb;
++}
++
+ static struct sk_buff *aq_xdp_run_prog(struct aq_nic_s *aq_nic,
+ 				       struct xdp_buff *xdp,
+ 				       struct aq_ring_s *rx_ring,
+@@ -431,7 +450,7 @@ static struct sk_buff *aq_xdp_run_prog(struct aq_nic_s *aq_nic,
+ 
+ 	prog = READ_ONCE(rx_ring->xdp_prog);
+ 	if (!prog)
+-		goto pass;
++		return aq_xdp_build_skb(xdp, aq_nic->ndev, buff);
+ 
+ 	prefetchw(xdp->data_hard_start); /* xdp_frame write */
+ 
+@@ -442,17 +461,12 @@ static struct sk_buff *aq_xdp_run_prog(struct aq_nic_s *aq_nic,
+ 	act = bpf_prog_run_xdp(prog, xdp);
+ 	switch (act) {
+ 	case XDP_PASS:
+-pass:
+-		xdpf = xdp_convert_buff_to_frame(xdp);
+-		if (unlikely(!xdpf))
+-			goto out_aborted;
+-		skb = xdp_build_skb_from_frame(xdpf, aq_nic->ndev);
++		skb = aq_xdp_build_skb(xdp, aq_nic->ndev, buff);
+ 		if (!skb)
+ 			goto out_aborted;
+ 		u64_stats_update_begin(&rx_ring->stats.rx.syncp);
+ 		++rx_ring->stats.rx.xdp_pass;
+ 		u64_stats_update_end(&rx_ring->stats.rx.syncp);
+-		aq_get_rxpages_xdp(buff, xdp);
+ 		return skb;
+ 	case XDP_TX:
+ 		xdpf = xdp_convert_buff_to_frame(xdp);
+-- 
+2.39.2
+
 
 
