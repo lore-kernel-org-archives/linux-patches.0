@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6F81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A182EC433D2;
-	Mon, 20 Mar 2023 15:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EED1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56EB7C433EF;
+	Mon, 20 Mar 2023 15:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324706;
-	bh=Jx2QPl14+ShWi5OIgi8PyY+0ona4rBLsiOB9GsUBpPc=;
+	s=korg; t=1679324708;
+	bh=V6o0mKdEE6DP4puFvbACNC1IySZkWdo0PgIygbXeUnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ZO9cgfyA/gBA/3P2d2vmS5/iII+tM2ugdN3zXjVaBakC5PIEem1qAMvjvJySTHuV
-	 b9yO3sKURpxAXfEXAIDsCIhcvjFSE5nIbDtAThWymggIQv7h2CAg7vim1ZRWRmA5ti
-	 UUE4HXNviCP1n3mYBKAz1dihZxVkRf0SlBrZhXfg=
+	b=EqUEDbh7mucdMlyXry0mioCnpTOoSv8i6jY6Us0TgUYlrAHV7x1fa1sGtCqdG2Ggn
+	 HrB+CtkgNcq7iuNF+5Zd+nlW5QizvRaLP8OIBhhyRStsQI+j+vzEYmbrYX/v+nVrt7
+	 05b9XhKKVcL3V+incl8iuMRqoXKmf39uTC4J3LI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 020/115] PCI: s390: Fix use-after-free of PCI resources with per-function hotplug
-Date: Mon, 20 Mar 2023 15:53:52 +0100
-Message-Id: <20230320145450.252146065@linuxfoundation.org>
+Subject: [PATCH 5.10 44/99] hwmon: (ucd90320) Add minimum delay between bus accesses
+Date: Mon, 20 Mar 2023 15:54:22 +0100
+Message-Id: <20230320145445.218226317@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,194 +35,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-[ Upstream commit ab909509850b27fd39b8ba99e44cda39dbc3858c ]
+[ Upstream commit 8d655e65237643c48ada2c131b83679bf1105373 ]
 
-On s390 PCI functions may be hotplugged individually even when they
-belong to a multi-function device. In particular on an SR-IOV device VFs
-may be removed and later re-added.
+When probing the ucd90320 access to some of the registers randomly fails.
+Sometimes it NACKs a transfer, sometimes it returns just random data and
+the PEC check fails.
 
-In commit a50297cf8235 ("s390/pci: separate zbus creation from
-scanning") it was missed however that struct pci_bus and struct
-zpci_bus's resource list retained a reference to the PCI functions MMIO
-resources even though those resources are released and freed on
-hot-unplug. These stale resources may subsequently be claimed when the
-PCI function re-appears resulting in use-after-free.
+Experimentation shows that this seems to be triggered by a register access
+directly back to back with a previous register write. Experimentation also
+shows that inserting a small delay after register writes makes the issue go
+away.
 
-One idea of fixing this use-after-free in s390 specific code that was
-investigated was to simply keep resources around from the moment a PCI
-function first appeared until the whole virtual PCI bus created for
-a multi-function device disappears. The problem with this however is
-that due to the requirement of artificial MMIO addreesses (address
-cookies) extra logic is then needed to keep the address cookies
-compatible on re-plug. At the same time the MMIO resources semantically
-belong to the PCI function so tying their lifecycle to the function
-seems more logical.
+Use a similar solution to what the max15301 driver does to solve the same
+problem. Create a custom set of bus read and write functions that make sure
+that the delay is added.
 
-Instead a simpler approach is to remove the resources of an individually
-hot-unplugged PCI function from the PCI bus's resource list while
-keeping the resources of other PCI functions on the PCI bus untouched.
-
-This is done by introducing pci_bus_remove_resource() to remove an
-individual resource. Similarly the resource also needs to be removed
-from the struct zpci_bus's resource list. It turns out however, that
-there is really no need to add the MMIO resources to the struct
-zpci_bus's resource list at all and instead we can simply use the
-zpci_bar_struct's resource pointer directly.
-
-Fixes: a50297cf8235 ("s390/pci: separate zbus creation from scanning")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20230306151014.60913-2-schnelle@linux.ibm.com
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: a470f11c5ba2 ("hwmon: (pmbus/ucd9000) Add support for UCD90320 Power Sequencer")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Link: https://lore.kernel.org/r/20230312160312.2227405-1-lars@metafoo.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci.c     | 16 ++++++++++------
- arch/s390/pci/pci_bus.c | 12 +++++-------
- arch/s390/pci/pci_bus.h |  3 +--
- drivers/pci/bus.c       | 21 +++++++++++++++++++++
- include/linux/pci.h     |  1 +
- 5 files changed, 38 insertions(+), 15 deletions(-)
+ drivers/hwmon/pmbus/ucd9000.c | 75 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
 
-diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
-index 639924d983315..56c4cecdbbf9e 100644
---- a/arch/s390/pci/pci.c
-+++ b/arch/s390/pci/pci.c
-@@ -503,8 +503,7 @@ static struct resource *__alloc_res(struct zpci_dev *zdev, unsigned long start,
- 	return r;
- }
- 
--int zpci_setup_bus_resources(struct zpci_dev *zdev,
--			     struct list_head *resources)
-+int zpci_setup_bus_resources(struct zpci_dev *zdev)
- {
- 	unsigned long addr, size, flags;
- 	struct resource *res;
-@@ -540,7 +539,6 @@ int zpci_setup_bus_resources(struct zpci_dev *zdev,
- 			return -ENOMEM;
- 		}
- 		zdev->bars[i].res = res;
--		pci_add_resource(resources, res);
- 	}
- 	zdev->has_resources = 1;
- 
-@@ -549,17 +547,23 @@ int zpci_setup_bus_resources(struct zpci_dev *zdev,
- 
- static void zpci_cleanup_bus_resources(struct zpci_dev *zdev)
- {
-+	struct resource *res;
- 	int i;
- 
-+	pci_lock_rescan_remove();
- 	for (i = 0; i < PCI_STD_NUM_BARS; i++) {
--		if (!zdev->bars[i].size || !zdev->bars[i].res)
-+		res = zdev->bars[i].res;
-+		if (!res)
- 			continue;
- 
-+		release_resource(res);
-+		pci_bus_remove_resource(zdev->zbus->bus, res);
- 		zpci_free_iomap(zdev, zdev->bars[i].map_idx);
--		release_resource(zdev->bars[i].res);
--		kfree(zdev->bars[i].res);
-+		zdev->bars[i].res = NULL;
-+		kfree(res);
- 	}
- 	zdev->has_resources = 0;
-+	pci_unlock_rescan_remove();
- }
- 
- int pcibios_add_device(struct pci_dev *pdev)
-diff --git a/arch/s390/pci/pci_bus.c b/arch/s390/pci/pci_bus.c
-index 5d77acbd1c872..cc7e5b22ccfb3 100644
---- a/arch/s390/pci/pci_bus.c
-+++ b/arch/s390/pci/pci_bus.c
-@@ -41,9 +41,7 @@ static int zpci_nb_devices;
+diff --git a/drivers/hwmon/pmbus/ucd9000.c b/drivers/hwmon/pmbus/ucd9000.c
+index f8017993e2b4d..9e26cc084a176 100644
+--- a/drivers/hwmon/pmbus/ucd9000.c
++++ b/drivers/hwmon/pmbus/ucd9000.c
+@@ -7,6 +7,7 @@
   */
- static int zpci_bus_prepare_device(struct zpci_dev *zdev)
- {
--	struct resource_entry *window, *n;
--	struct resource *res;
--	int rc;
-+	int rc, i;
  
- 	if (!zdev_enabled(zdev)) {
- 		rc = zpci_enable_device(zdev);
-@@ -57,10 +55,10 @@ static int zpci_bus_prepare_device(struct zpci_dev *zdev)
- 	}
+ #include <linux/debugfs.h>
++#include <linux/delay.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/of_device.h>
+@@ -16,6 +17,7 @@
+ #include <linux/i2c.h>
+ #include <linux/pmbus.h>
+ #include <linux/gpio/driver.h>
++#include <linux/timekeeping.h>
+ #include "pmbus.h"
  
- 	if (!zdev->has_resources) {
--		zpci_setup_bus_resources(zdev, &zdev->zbus->resources);
--		resource_list_for_each_entry_safe(window, n, &zdev->zbus->resources) {
--			res = window->res;
--			pci_bus_add_resource(zdev->zbus->bus, res, 0);
-+		zpci_setup_bus_resources(zdev);
-+		for (i = 0; i < PCI_STD_NUM_BARS; i++) {
-+			if (zdev->bars[i].res)
-+				pci_bus_add_resource(zdev->zbus->bus, zdev->bars[i].res, 0);
- 		}
- 	}
+ enum chips { ucd9000, ucd90120, ucd90124, ucd90160, ucd90320, ucd9090,
+@@ -65,6 +67,7 @@ struct ucd9000_data {
+ 	struct gpio_chip gpio;
+ #endif
+ 	struct dentry *debugfs;
++	ktime_t write_time;
+ };
+ #define to_ucd9000_data(_info) container_of(_info, struct ucd9000_data, info)
  
-diff --git a/arch/s390/pci/pci_bus.h b/arch/s390/pci/pci_bus.h
-index ecef3a9e16c00..c5aa9a2e5e3e5 100644
---- a/arch/s390/pci/pci_bus.h
-+++ b/arch/s390/pci/pci_bus.h
-@@ -30,8 +30,7 @@ static inline void zpci_zdev_get(struct zpci_dev *zdev)
+@@ -73,6 +76,73 @@ struct ucd9000_debugfs_entry {
+ 	u8 index;
+ };
  
- int zpci_alloc_domain(int domain);
- void zpci_free_domain(int domain);
--int zpci_setup_bus_resources(struct zpci_dev *zdev,
--			     struct list_head *resources);
-+int zpci_setup_bus_resources(struct zpci_dev *zdev);
- 
- static inline struct zpci_dev *get_zdev_by_bus(struct pci_bus *bus,
- 					       unsigned int devfn)
-diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
-index 3cef835b375fd..feafa378bf8ea 100644
---- a/drivers/pci/bus.c
-+++ b/drivers/pci/bus.c
-@@ -76,6 +76,27 @@ struct resource *pci_bus_resource_n(const struct pci_bus *bus, int n)
- }
- EXPORT_SYMBOL_GPL(pci_bus_resource_n);
- 
-+void pci_bus_remove_resource(struct pci_bus *bus, struct resource *res)
++/*
++ * It has been observed that the UCD90320 randomly fails register access when
++ * doing another access right on the back of a register write. To mitigate this
++ * make sure that there is a minimum delay between a write access and the
++ * following access. The 250us is based on experimental data. At a delay of
++ * 200us the issue seems to go away. Add a bit of extra margin to allow for
++ * system to system differences.
++ */
++#define UCD90320_WAIT_DELAY_US 250
++
++static inline void ucd90320_wait(const struct ucd9000_data *data)
 +{
-+	struct pci_bus_resource *bus_res, *tmp;
-+	int i;
++	s64 delta = ktime_us_delta(ktime_get(), data->write_time);
 +
-+	for (i = 0; i < PCI_BRIDGE_RESOURCE_NUM; i++) {
-+		if (bus->resource[i] == res) {
-+			bus->resource[i] = NULL;
-+			return;
-+		}
-+	}
-+
-+	list_for_each_entry_safe(bus_res, tmp, &bus->resources, list) {
-+		if (bus_res->res == res) {
-+			list_del(&bus_res->list);
-+			kfree(bus_res);
-+			return;
-+		}
-+	}
++	if (delta < UCD90320_WAIT_DELAY_US)
++		udelay(UCD90320_WAIT_DELAY_US - delta);
 +}
 +
- void pci_bus_remove_resources(struct pci_bus *bus)
++static int ucd90320_read_word_data(struct i2c_client *client, int page,
++				   int phase, int reg)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++
++	if (reg >= PMBUS_VIRT_BASE)
++		return -ENXIO;
++
++	ucd90320_wait(data);
++	return pmbus_read_word_data(client, page, phase, reg);
++}
++
++static int ucd90320_read_byte_data(struct i2c_client *client, int page, int reg)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++
++	ucd90320_wait(data);
++	return pmbus_read_byte_data(client, page, reg);
++}
++
++static int ucd90320_write_word_data(struct i2c_client *client, int page,
++				    int reg, u16 word)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++	int ret;
++
++	ucd90320_wait(data);
++	ret = pmbus_write_word_data(client, page, reg, word);
++	data->write_time = ktime_get();
++
++	return ret;
++}
++
++static int ucd90320_write_byte(struct i2c_client *client, int page, u8 value)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++	int ret;
++
++	ucd90320_wait(data);
++	ret = pmbus_write_byte(client, page, value);
++	data->write_time = ktime_get();
++
++	return ret;
++}
++
+ static int ucd9000_get_fan_config(struct i2c_client *client, int fan)
  {
- 	int i;
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 34dd24c991804..7e471432a998c 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1390,6 +1390,7 @@ void pci_bus_add_resource(struct pci_bus *bus, struct resource *res,
- 			  unsigned int flags);
- struct resource *pci_bus_resource_n(const struct pci_bus *bus, int n);
- void pci_bus_remove_resources(struct pci_bus *bus);
-+void pci_bus_remove_resource(struct pci_bus *bus, struct resource *res);
- int devm_request_pci_bus_resources(struct device *dev,
- 				   struct list_head *resources);
+ 	int fan_config = 0;
+@@ -598,6 +668,11 @@ static int ucd9000_probe(struct i2c_client *client)
+ 		info->read_byte_data = ucd9000_read_byte_data;
+ 		info->func[0] |= PMBUS_HAVE_FAN12 | PMBUS_HAVE_STATUS_FAN12
+ 		  | PMBUS_HAVE_FAN34 | PMBUS_HAVE_STATUS_FAN34;
++	} else if (mid->driver_data == ucd90320) {
++		info->read_byte_data = ucd90320_read_byte_data;
++		info->read_word_data = ucd90320_read_word_data;
++		info->write_byte = ucd90320_write_byte;
++		info->write_word_data = ucd90320_write_word_data;
+ 	}
  
+ 	ucd9000_probe_gpio(client, mid, data);
 -- 
 2.39.2
 
