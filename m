@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657331C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2132C433EF;
-	Mon, 20 Mar 2023 15:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4121C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6729DC433D2;
+	Mon, 20 Mar 2023 15:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326099;
-	bh=1T6WtcvQ1lTuToTui+h3IWyhaagwhESl8MD7v0qj89Q=;
+	s=korg; t=1679326101;
+	bh=7JEzRy99DMpt5DMVhxNFw+mt7bxl/o1gZtqO59tZJ8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OA2PpPCm/CocCeBg2G//82KzeuXecJzruCZLH2UpHUOnzAX9YUiqi0FaBh1IGeLNR
-	 UxsLvOSJY5L0Fe5A12mO/oDmjLJ9X4IjBBjkTJE04r+W3bwFawYEuIr7Ma9lLyRHuf
-	 wHjDBUZTC2YXDGw3W/eBvr7uZXxHz3aUEkxV1uhg=
+	b=rIUnm/NcpSF0owOmaDUiP2DehmeDw5pAt+uLwKw1Hw/Z4zNTt7As/qJkpaI6pCL1J
+	 iW/tSMhZxvA59MPfcf0fTdbi0SuTqjS7D9wQY6t4QItNTNXcFPqIv9yP9zrsJvYrw6
+	 fOJOOfkZOlQEDsUEEA/90eH5V69lfTUxaSAXQnnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong Li <zong.li@sifive.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
+	Guo Ren <guoren@linux.alibaba.com>,
 	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.2 159/211] Revert "riscv: mm: notify remote harts about mmu cache updates"
-Date: Mon, 20 Mar 2023 15:54:54 +0100
-Message-Id: <20230320145520.098439889@linuxfoundation.org>
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Zong Li <zong.li@sifive.com>,
+	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Andrew Jones <ajones@ventanamicro.com>
+Subject: [PATCH 6.2 160/211] riscv: asid: Fixup stale TLB entry cause application crash
+Date: Mon, 20 Mar 2023 15:54:55 +0100
+Message-Id: <20230320145520.148792082@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -37,139 +40,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+From: Guo Ren <guoren@linux.alibaba.com>
 
-commit e921050022f1f12d5029d1487a7dfc46cde15523 upstream.
+commit 82dd33fde0268cc622d3d1ac64971f3f61634142 upstream.
 
-This reverts the remaining bits of commit 4bd1d80efb5a ("riscv: mm:
-notify remote harts harts about mmu cache updates").
+After use_asid_allocator is enabled, the userspace application will
+crash by stale TLB entries. Because only using cpumask_clear_cpu without
+local_flush_tlb_all couldn't guarantee CPU's TLB entries were fresh.
+Then set_mm_asid would cause the user space application to get a stale
+value by stale TLB entry, but set_mm_noasid is okay.
 
-According to bug reports, suggested approach to fix stale TLB entries
-is not sufficient. It needs to be replaced by a more robust solution.
+Here is the symptom of the bug:
+unhandled signal 11 code 0x1 (coredump)
+   0x0000003fd6d22524 <+4>:     auipc   s0,0x70
+   0x0000003fd6d22528 <+8>:     ld      s0,-148(s0) # 0x3fd6d92490
+=> 0x0000003fd6d2252c <+12>:    ld      a5,0(s0)
+(gdb) i r s0
+s0          0x8082ed1cc3198b21       0x8082ed1cc3198b21
+(gdb) x /2x 0x3fd6d92490
+0x3fd6d92490:   0xd80ac8a8      0x0000003f
+The core dump file shows that register s0 is wrong, but the value in
+memory is correct. Because 'ld s0, -148(s0)' used a stale mapping entry
+in TLB and got a wrong result from an incorrect physical address.
 
-Fixes: 4bd1d80efb5a ("riscv: mm: notify remote harts about mmu cache updates")
-Reported-by: Zong Li <zong.li@sifive.com>
-Reported-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+When the task ran on CPU0, which loaded/speculative-loaded the value of
+address(0x3fd6d92490), then the first version of the mapping entry was
+PTWed into CPU0's TLB.
+When the task switched from CPU0 to CPU1 (No local_tlb_flush_all here by
+asid), it happened to write a value on the address (0x3fd6d92490). It
+caused do_page_fault -> wp_page_copy -> ptep_clear_flush ->
+ptep_get_and_clear & flush_tlb_page.
+The flush_tlb_page used mm_cpumask(mm) to determine which CPUs need TLB
+flush, but CPU0 had cleared the CPU0's mm_cpumask in the previous
+switch_mm. So we only flushed the CPU1 TLB and set the second version
+mapping of the PTE. When the task switched from CPU1 to CPU0 again, CPU0
+still used a stale TLB mapping entry which contained a wrong target
+physical address. It raised a bug when the task happened to read that
+value.
+
+   CPU0                               CPU1
+   - switch 'task' in
+   - read addr (Fill stale mapping
+     entry into TLB)
+   - switch 'task' out (no tlb_flush)
+                                      - switch 'task' in (no tlb_flush)
+                                      - write addr cause pagefault
+                                        do_page_fault() (change to
+                                        new addr mapping)
+                                          wp_page_copy()
+                                            ptep_clear_flush()
+                                              ptep_get_and_clear()
+                                              & flush_tlb_page()
+                                        write new value into addr
+                                      - switch 'task' out (no tlb_flush)
+   - switch 'task' in (no tlb_flush)
+   - read addr again (Use stale
+     mapping entry in TLB)
+     get wrong value from old phyical
+     addr, BUG!
+
+The solution is to keep all CPUs' footmarks of cpumask(mm) in switch_mm,
+which could guarantee to invalidate all stale TLB entries during TLB
+flush.
+
+Fixes: 65d4b9c53017 ("RISC-V: Implement ASID allocator")
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Tested-by: Zong Li <zong.li@sifive.com>
+Tested-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+Cc: Anup Patel <apatel@ventanamicro.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230226150137.1919750-2-geomatsi@gmail.com
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20230226150137.1919750-3-geomatsi@gmail.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/mmu.h      |    2 --
- arch/riscv/include/asm/tlbflush.h |   18 ------------------
- arch/riscv/mm/context.c           |   10 ----------
- arch/riscv/mm/tlbflush.c          |   28 +++++++++++++++++-----------
- 4 files changed, 17 insertions(+), 41 deletions(-)
+ arch/riscv/mm/context.c |   30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
---- a/arch/riscv/include/asm/mmu.h
-+++ b/arch/riscv/include/asm/mmu.h
-@@ -19,8 +19,6 @@ typedef struct {
- #ifdef CONFIG_SMP
- 	/* A local icache flush is needed before user execution can resume. */
- 	cpumask_t icache_stale_mask;
--	/* A local tlb flush is needed before user execution can resume. */
--	cpumask_t tlb_stale_mask;
- #endif
- } mm_context_t;
- 
---- a/arch/riscv/include/asm/tlbflush.h
-+++ b/arch/riscv/include/asm/tlbflush.h
-@@ -22,24 +22,6 @@ static inline void local_flush_tlb_page(
- {
- 	ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
- }
--
--static inline void local_flush_tlb_all_asid(unsigned long asid)
--{
--	__asm__ __volatile__ ("sfence.vma x0, %0"
--			:
--			: "r" (asid)
--			: "memory");
--}
--
--static inline void local_flush_tlb_page_asid(unsigned long addr,
--		unsigned long asid)
--{
--	__asm__ __volatile__ ("sfence.vma %0, %1"
--			:
--			: "r" (addr), "r" (asid)
--			: "memory");
--}
--
- #else /* CONFIG_MMU */
- #define local_flush_tlb_all()			do { } while (0)
- #define local_flush_tlb_page(addr)		do { } while (0)
 --- a/arch/riscv/mm/context.c
 +++ b/arch/riscv/mm/context.c
-@@ -196,16 +196,6 @@ switch_mm_fast:
- 
- 	if (need_flush_tlb)
- 		local_flush_tlb_all();
--#ifdef CONFIG_SMP
--	else {
--		cpumask_t *mask = &mm->context.tlb_stale_mask;
--
--		if (cpumask_test_cpu(cpu, mask)) {
--			cpumask_clear_cpu(cpu, mask);
--			local_flush_tlb_all_asid(cntx & asid_mask);
--		}
--	}
--#endif
+@@ -205,12 +205,24 @@ static void set_mm_noasid(struct mm_stru
+ 	local_flush_tlb_all();
  }
  
- static void set_mm_noasid(struct mm_struct *mm)
---- a/arch/riscv/mm/tlbflush.c
-+++ b/arch/riscv/mm/tlbflush.c
-@@ -5,7 +5,23 @@
- #include <linux/sched.h>
- #include <asm/sbi.h>
- #include <asm/mmu_context.h>
--#include <asm/tlbflush.h>
-+
-+static inline void local_flush_tlb_all_asid(unsigned long asid)
-+{
-+	__asm__ __volatile__ ("sfence.vma x0, %0"
-+			:
-+			: "r" (asid)
-+			: "memory");
-+}
-+
-+static inline void local_flush_tlb_page_asid(unsigned long addr,
-+		unsigned long asid)
-+{
-+	__asm__ __volatile__ ("sfence.vma %0, %1"
-+			:
-+			: "r" (addr), "r" (asid)
-+			: "memory");
-+}
- 
- void flush_tlb_all(void)
+-static inline void set_mm(struct mm_struct *mm, unsigned int cpu)
++static inline void set_mm(struct mm_struct *prev,
++			  struct mm_struct *next, unsigned int cpu)
  {
-@@ -15,7 +31,6 @@ void flush_tlb_all(void)
- static void __sbi_tlb_flush_range(struct mm_struct *mm, unsigned long start,
- 				  unsigned long size, unsigned long stride)
- {
--	struct cpumask *pmask = &mm->context.tlb_stale_mask;
- 	struct cpumask *cmask = mm_cpumask(mm);
- 	unsigned int cpuid;
- 	bool broadcast;
-@@ -29,15 +44,6 @@ static void __sbi_tlb_flush_range(struct
- 	if (static_branch_unlikely(&use_asid_allocator)) {
- 		unsigned long asid = atomic_long_read(&mm->context.id);
+-	if (static_branch_unlikely(&use_asid_allocator))
+-		set_mm_asid(mm, cpu);
+-	else
+-		set_mm_noasid(mm);
++	/*
++	 * The mm_cpumask indicates which harts' TLBs contain the virtual
++	 * address mapping of the mm. Compared to noasid, using asid
++	 * can't guarantee that stale TLB entries are invalidated because
++	 * the asid mechanism wouldn't flush TLB for every switch_mm for
++	 * performance. So when using asid, keep all CPUs footmarks in
++	 * cpumask() until mm reset.
++	 */
++	cpumask_set_cpu(cpu, mm_cpumask(next));
++	if (static_branch_unlikely(&use_asid_allocator)) {
++		set_mm_asid(next, cpu);
++	} else {
++		cpumask_clear_cpu(cpu, mm_cpumask(prev));
++		set_mm_noasid(next);
++	}
+ }
  
--		/*
--		 * TLB will be immediately flushed on harts concurrently
--		 * executing this MM context. TLB flush on other harts
--		 * is deferred until this MM context migrates there.
--		 */
--		cpumask_setall(pmask);
--		cpumask_clear_cpu(cpuid, pmask);
--		cpumask_andnot(pmask, pmask, cmask);
+ static int __init asids_init(void)
+@@ -264,7 +276,8 @@ static int __init asids_init(void)
+ }
+ early_initcall(asids_init);
+ #else
+-static inline void set_mm(struct mm_struct *mm, unsigned int cpu)
++static inline void set_mm(struct mm_struct *prev,
++			  struct mm_struct *next, unsigned int cpu)
+ {
+ 	/* Nothing to do here when there is no MMU */
+ }
+@@ -317,10 +330,7 @@ void switch_mm(struct mm_struct *prev, s
+ 	 */
+ 	cpu = smp_processor_id();
+ 
+-	cpumask_clear_cpu(cpu, mm_cpumask(prev));
+-	cpumask_set_cpu(cpu, mm_cpumask(next));
 -
- 		if (broadcast) {
- 			sbi_remote_sfence_vma_asid(cmask, start, size, asid);
- 		} else if (size <= stride) {
+-	set_mm(next, cpu);
++	set_mm(prev, next, cpu);
+ 
+ 	flush_icache_deferred(next, cpu);
+ }
 
 
