@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F8B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989CEC433EF;
-	Mon, 20 Mar 2023 15:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052DF1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A13DC433D2;
+	Mon, 20 Mar 2023 15:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324717;
-	bh=EqRirIe3wSEM13Qk+Ni5ipVtNOSlnkRWbG/B2wN215M=;
+	s=korg; t=1679324719;
+	bh=aP6y2hN6PAY7YGc0CxiCgfE0vpfU317QYCs0eymaevg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igcdRJEIvsuOMfFy7PbuBShCWu2H89Kcgm4cLqAtodn5yqCdOUjcnb9oukgqNtuIu
-	 3xFMkgSutz3BUKrm7qDPejvIUMcDug975hmUmgifQZ+Mt37NCeNxbz/9icZ7gIhELi
-	 RhwgLR6LMPk4feWBWjOzieNs4cIaCcwsLJ66EI7o=
+	b=1gsDVFYsPsYDV7mrwiAI41hQpMrP8Zrf/HY9ECUbcZGIwGgBbx6o2fO1s+loBkjOB
+	 3sywyV3PA3ZbyVKw1kwe8p8YQ03xNZTjH7XbbQ9nwZX0Dm2z9UV+l9f5eC9efzsX2W
+	 6MIXIAGyynOO37EMcv6TEhpjQ3y02N3vvwlxMJBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/115] drm/i915/display/psr: Use drm damage helpers to calculate plane damaged area
-Date: Mon, 20 Mar 2023 15:53:54 +0100
-Message-Id: <20230320145450.339742681@linuxfoundation.org>
+Subject: [PATCH 5.10 46/99] hwmon: (adm1266) Set `can_sleep` flag for GPIO chip
+Date: Mon, 20 Mar 2023 15:54:24 +0100
+Message-Id: <20230320145445.307251122@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,128 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Roberto de Souza <jose.souza@intel.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-[ Upstream commit af7ea1e22afc7ce7773b2e4562df4370c8c711ea ]
+[ Upstream commit a5bb73b3f5db1a4e91402ad132b59b13d2651ed9 ]
 
-drm_atomic_helper_damage_iter_init() + drm_atomic_for_each_plane_damage()
-returns the full plane area in case no damaged area was set by
-userspace or it was discarted by driver.
+The adm1266 driver uses I2C bus access in its GPIO chip `set` and `get`
+implementation. This means these functions can sleep and the GPIO chip
+should set the `can_sleep` property to true.
 
-This is important to fix the rendering of userspace applications that
-does frontbuffer rendering and notify driver about dirty areas but do
-not set any dirty clips.
+This will ensure that a warning is printed when trying to set or get the
+GPIO value from a context that potentially can't sleep.
 
-With this we don't need to worry about to check and mark the whole
-area as damaged in page flips.
-
-Another important change here is the move of
-drm_atomic_add_affected_planes() call, it needs to called late
-otherwise the area of all the planes would be added to pipe_clip and
-not saving power.
-
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
-Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
-Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20210914212507.177511-4-jose.souza@intel.com
-Stable-dep-of: 71c602103c74 ("drm/i915/psr: Use calculated io and fast wake lines")
+Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Link: https://lore.kernel.org/r/20230314093146.2443845-1-lars@metafoo.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 37 +++++++++---------------
- 1 file changed, 13 insertions(+), 24 deletions(-)
+ drivers/hwmon/pmbus/adm1266.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index b4b193c2bc32e..5e7827b076028 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -22,6 +22,7 @@
-  */
- 
- #include <drm/drm_atomic_helper.h>
-+#include <drm/drm_damage_helper.h>
- 
- #include "display/intel_dp.h"
- 
-@@ -1636,10 +1637,6 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 	if (!crtc_state->enable_psr2_sel_fetch)
- 		return 0;
- 
--	ret = drm_atomic_add_affected_planes(&state->base, &crtc->base);
--	if (ret)
--		return ret;
--
- 	/*
- 	 * Calculate minimal selective fetch area of each plane and calculate
- 	 * the pipe damaged area.
-@@ -1649,8 +1646,8 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 	for_each_oldnew_intel_plane_in_state(state, plane, old_plane_state,
- 					     new_plane_state, i) {
- 		struct drm_rect src, damaged_area = { .y1 = -1 };
--		struct drm_mode_rect *damaged_clips;
--		u32 num_clips, j;
-+		struct drm_atomic_helper_damage_iter iter;
-+		struct drm_rect clip;
- 
- 		if (new_plane_state->uapi.crtc != crtc_state->uapi.crtc)
- 			continue;
-@@ -1670,8 +1667,6 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 			break;
- 		}
- 
--		num_clips = drm_plane_get_damage_clips_count(&new_plane_state->uapi);
--
- 		/*
- 		 * If visibility or plane moved, mark the whole plane area as
- 		 * damaged as it needs to be complete redraw in the new and old
-@@ -1695,14 +1690,8 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 			cursor_area_workaround(new_plane_state, &damaged_area,
- 					       &pipe_clip);
- 			continue;
--		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha ||
--			   (!num_clips &&
--			    new_plane_state->uapi.fb != old_plane_state->uapi.fb)) {
--			/*
--			 * If the plane don't have damaged areas but the
--			 * framebuffer changed or alpha changed, mark the whole
--			 * plane area as damaged.
--			 */
-+		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha) {
-+			/* If alpha changed mark the whole plane area as damaged */
- 			damaged_area.y1 = new_plane_state->uapi.dst.y1;
- 			damaged_area.y2 = new_plane_state->uapi.dst.y2;
- 			clip_area_update(&pipe_clip, &damaged_area);
-@@ -1710,15 +1699,11 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 		}
- 
- 		drm_rect_fp_to_int(&src, &new_plane_state->uapi.src);
--		damaged_clips = drm_plane_get_damage_clips(&new_plane_state->uapi);
--
--		for (j = 0; j < num_clips; j++) {
--			struct drm_rect clip;
- 
--			clip.x1 = damaged_clips[j].x1;
--			clip.y1 = damaged_clips[j].y1;
--			clip.x2 = damaged_clips[j].x2;
--			clip.y2 = damaged_clips[j].y2;
-+		drm_atomic_helper_damage_iter_init(&iter,
-+						   &old_plane_state->uapi,
-+						   &new_plane_state->uapi);
-+		drm_atomic_for_each_plane_damage(&iter, &clip) {
- 			if (drm_rect_intersect(&clip, &src))
- 				clip_area_update(&damaged_area, &clip);
- 		}
-@@ -1734,6 +1719,10 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 	if (full_update)
- 		goto skip_sel_fetch_set_loop;
- 
-+	ret = drm_atomic_add_affected_planes(&state->base, &crtc->base);
-+	if (ret)
-+		return ret;
-+
- 	intel_psr2_sel_fetch_pipe_alignment(crtc_state, &pipe_clip);
- 
- 	/*
+diff --git a/drivers/hwmon/pmbus/adm1266.c b/drivers/hwmon/pmbus/adm1266.c
+index c7b373ba92f21..d1b2e936546fd 100644
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -301,6 +301,7 @@ static int adm1266_config_gpio(struct adm1266_data *data)
+ 	data->gc.label = name;
+ 	data->gc.parent = &data->client->dev;
+ 	data->gc.owner = THIS_MODULE;
++	data->gc.can_sleep = true;
+ 	data->gc.base = -1;
+ 	data->gc.names = data->gpio_names;
+ 	data->gc.ngpio = ARRAY_SIZE(data->gpio_names);
 -- 
 2.39.2
 
