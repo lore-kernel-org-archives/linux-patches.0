@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CE01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3DBC433D2;
-	Mon, 20 Mar 2023 15:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34001C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50872C433D2;
+	Mon, 20 Mar 2023 15:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324631;
-	bh=ebagr/tWPnExcIFL3koZdcn4FdASEPrVK5Pk6Vgdv3k=;
+	s=korg; t=1679324634;
+	bh=6mnJ02aYnibZUK89exexsNsvgLET+QSfQH75tsMeHe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQvKkSMxNcRUofye9yt0iTptD9sd3jo+hTtD32waiFJ6vbHgG87hXA8PG1s9W61OZ
-	 28e9vLscOffLrcPozBzhU5r4a4ZU9GkW2mskjY/gY6A+5cYaiObnzUR+ucSqh6/dR3
-	 f4Wv/ZgIkBez4inkHwcCc0HENRE2Oz4BY40/VEec=
+	b=b0lvtqfB4RejOsUGYcNRFQldl3lqI8uwylwRYHPCC09+InV8jPvV0C0WbPpQefwOb
+	 Aez1r7S+PSUCCiSLDfKfi//GkZXVW/KR+tKUmtdoIj7ZJZVyyzSbAlvDW2Dj7GiBrJ
+	 XOzyGjUVICeT+J+bDe+Z/TEY838hDnIrezh/hYPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao2@huawei.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Qu Huang <qu.huang@linux.dev>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 07/99] scsi: mpt3sas: Fix NULL pointer access in mpt3sas_transport_port_add()
-Date: Mon, 20 Mar 2023 15:53:45 +0100
-Message-Id: <20230320145443.673323474@linuxfoundation.org>
+Subject: [PATCH 5.4 42/60] drm/amdkfd: Fix an illegal memory access
+Date: Mon, 20 Mar 2023 15:54:51 +0100
+Message-Id: <20230320145432.659999937@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,74 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenchao Hao <haowenchao2@huawei.com>
+From: Qu Huang <qu.huang@linux.dev>
 
-[ Upstream commit d3c57724f1569311e4b81e98fad0931028b9bdcd ]
+[ Upstream commit 4fc8fff378b2f2039f2a666d9f8c570f4e58352c ]
 
-Port is allocated by sas_port_alloc_num() and rphy is allocated by either
-sas_end_device_alloc() or sas_expander_alloc(), all of which may return
-NULL. So we need to check the rphy to avoid possible NULL pointer access.
+In the kfd_wait_on_events() function, the kfd_event_waiter structure is
+allocated by alloc_event_waiters(), but the event field of the waiter
+structure is not initialized; When copy_from_user() fails in the
+kfd_wait_on_events() function, it will enter exception handling to
+release the previously allocated memory of the waiter structure;
+Due to the event field of the waiters structure being accessed
+in the free_waiters() function, this results in illegal memory access
+and system crash, here is the crash log:
 
-If sas_rphy_add() returned with failure, rphy is set to NULL. We would
-access the rphy in the following lines which would also result NULL pointer
-access.
+localhost kernel: RIP: 0010:native_queued_spin_lock_slowpath+0x185/0x1e0
+localhost kernel: RSP: 0018:ffffaa53c362bd60 EFLAGS: 00010082
+localhost kernel: RAX: ff3d3d6bff4007cb RBX: 0000000000000282 RCX: 00000000002c0000
+localhost kernel: RDX: ffff9e855eeacb80 RSI: 000000000000279c RDI: ffffe7088f6a21d0
+localhost kernel: RBP: ffffe7088f6a21d0 R08: 00000000002c0000 R09: ffffaa53c362be64
+localhost kernel: R10: ffffaa53c362bbd8 R11: 0000000000000001 R12: 0000000000000002
+localhost kernel: R13: ffff9e7ead15d600 R14: 0000000000000000 R15: ffff9e7ead15d698
+localhost kernel: FS:  0000152a3d111700(0000) GS:ffff9e855ee80000(0000) knlGS:0000000000000000
+localhost kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+localhost kernel: CR2: 0000152938000010 CR3: 000000044d7a4000 CR4: 00000000003506e0
+localhost kernel: Call Trace:
+localhost kernel: _raw_spin_lock_irqsave+0x30/0x40
+localhost kernel: remove_wait_queue+0x12/0x50
+localhost kernel: kfd_wait_on_events+0x1b6/0x490 [hydcu]
+localhost kernel: ? ftrace_graph_caller+0xa0/0xa0
+localhost kernel: kfd_ioctl+0x38c/0x4a0 [hydcu]
+localhost kernel: ? kfd_ioctl_set_trap_handler+0x70/0x70 [hydcu]
+localhost kernel: ? kfd_ioctl_create_queue+0x5a0/0x5a0 [hydcu]
+localhost kernel: ? ftrace_graph_caller+0xa0/0xa0
+localhost kernel: __x64_sys_ioctl+0x8e/0xd0
+localhost kernel: ? syscall_trace_enter.isra.18+0x143/0x1b0
+localhost kernel: do_syscall_64+0x33/0x80
+localhost kernel: entry_SYSCALL_64_after_hwframe+0x44/0xa9
+localhost kernel: RIP: 0033:0x152a4dff68d7
 
-Fixes: 78316e9dfc24 ("scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()")
-Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
-Link: https://lore.kernel.org/r/20230225100135.2109330-1-haowenchao2@huawei.com
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Allocate the structure with kcalloc, and remove redundant 0-initialization
+and a redundant loop condition check.
+
+Signed-off-by: Qu Huang <qu.huang@linux.dev>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_transport.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_events.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-index b58f4d9c296a3..326265fd7f91a 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-@@ -670,7 +670,7 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 		goto out_fail;
- 	}
- 	port = sas_port_alloc_num(sas_node->parent_dev);
--	if ((sas_port_add(port))) {
-+	if (!port || (sas_port_add(port))) {
- 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
- 			__FILE__, __LINE__, __func__);
- 		goto out_fail;
-@@ -695,6 +695,12 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 		rphy = sas_expander_alloc(port,
- 		    mpt3sas_port->remote_identify.device_type);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+index adbb2fec2e0f2..4fd7dcef2e382 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+@@ -529,16 +529,13 @@ static struct kfd_event_waiter *alloc_event_waiters(uint32_t num_events)
+ 	struct kfd_event_waiter *event_waiters;
+ 	uint32_t i;
  
-+	if (!rphy) {
-+		ioc_err(ioc, "failure at %s:%d/%s()!\n",
-+			__FILE__, __LINE__, __func__);
-+		goto out_delete_port;
-+	}
-+
- 	rphy->identify = mpt3sas_port->remote_identify;
+-	event_waiters = kmalloc_array(num_events,
+-					sizeof(struct kfd_event_waiter),
+-					GFP_KERNEL);
++	event_waiters = kcalloc(num_events, sizeof(struct kfd_event_waiter),
++				GFP_KERNEL);
+ 	if (!event_waiters)
+ 		return NULL;
  
- 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
-@@ -714,6 +720,7 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 			__FILE__, __LINE__, __func__);
- 		sas_rphy_free(rphy);
- 		rphy = NULL;
-+		goto out_delete_port;
- 	}
+-	for (i = 0; (event_waiters) && (i < num_events) ; i++) {
++	for (i = 0; i < num_events; i++)
+ 		init_wait(&event_waiters[i].wait);
+-		event_waiters[i].activated = false;
+-	}
  
- 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
-@@ -740,7 +747,10 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 		    rphy_to_expander_device(rphy));
- 	return mpt3sas_port;
- 
-- out_fail:
-+out_delete_port:
-+	sas_port_delete(port);
-+
-+out_fail:
- 	list_for_each_entry_safe(mpt3sas_phy, next, &mpt3sas_port->phy_list,
- 	    port_siblings)
- 		list_del(&mpt3sas_phy->port_siblings);
+ 	return event_waiters;
+ }
 -- 
 2.39.2
 
