@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73B81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B44EC433EF;
-	Mon, 20 Mar 2023 15:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFEB1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D1FC433D2;
+	Mon, 20 Mar 2023 15:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325019;
-	bh=2UqcsWWZlR5NDHhMsdvK5FwVny5D1O3lW6TDRKT85rE=;
+	s=korg; t=1679325022;
+	bh=xznpn/lBXF041rg+agX4l3f1k1f1wW6GZlF4vO+4pEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9KZVjm9mogneNtgRjg0ICVBuS0R3jO/vU9Rbxi4CA1qY6+Lrj+445ddX4Xw4qbXN
-	 qRwrUsVkbKV8qvP3nb0VhF+nr9V5z5uwjnfrFhpPkh/GqpNNnaEx0KTPmHstq1jj3O
-	 nAWbhuzYmUnLoatQ6Ek5ciVaqrZXX4EgZqKjq3EQ=
+	b=wyk2f75frqPf4qhrAh3sZYD8HZnn7VYIolhDnfZhpR9Fxiej7woYaNhiIM11JoySi
+	 Z/bIDPU0oQiEi3vj98q0QFds+Iwkdw2g5hwaFLmt0OgOAInW7udHicnaDDeUQXuL8e
+	 taAZszGgpVmERQgvvxFgpluy/1cHROjr9Smcn+xY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/115] hwmon: (ltc2992) Set `can_sleep` flag for GPIO chip
-Date: Mon, 20 Mar 2023 15:54:33 +0100
-Message-Id: <20230320145451.979549449@linuxfoundation.org>
+Subject: [PATCH 6.1 035/198] wifi: cfg80211: fix MLO connection ownership
+Date: Mon, 20 Mar 2023 15:52:53 +0100
+Message-Id: <20230320145508.946396564@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ab00709310eedcd8dae0df1f66d332f9bc64c99e ]
+[ Upstream commit 96c069508377547f913e7265a80fffe9355de592 ]
 
-The ltc2992 drivers uses a mutex and I2C bus access in its GPIO chip `set`
-and `get` implementation. This means these functions can sleep and the GPIO
-chip should set the `can_sleep` property to true.
+When disconnecting from an MLO connection we need the AP
+MLD address, not an arbitrary BSSID. Fix the code to do
+that.
 
-This will ensure that a warning is printed when trying to set or get the
-GPIO value from a context that potentially can't sleep.
-
-Fixes: 9ca26df1ba25 ("hwmon: (ltc2992) Add support for GPIOs.")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20230314093146.2443845-2-lars@metafoo.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 9ecff10e82a5 ("wifi: nl80211: refactor BSS lookup in nl80211_associate()")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230301115906.4c1b3b18980e.I008f070c7f3b8e8bde9278101ef9e40706a82902@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ltc2992.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/nl80211.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/hwmon/ltc2992.c b/drivers/hwmon/ltc2992.c
-index 2a4bed0ab226b..009a0a5af9236 100644
---- a/drivers/hwmon/ltc2992.c
-+++ b/drivers/hwmon/ltc2992.c
-@@ -324,6 +324,7 @@ static int ltc2992_config_gpio(struct ltc2992_state *st)
- 	st->gc.label = name;
- 	st->gc.parent = &st->client->dev;
- 	st->gc.owner = THIS_MODULE;
-+	st->gc.can_sleep = true;
- 	st->gc.base = -1;
- 	st->gc.names = st->gpio_names;
- 	st->gc.ngpio = ARRAY_SIZE(st->gpio_names);
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 4c6748aa6a1c1..7320d676ce3a5 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -10699,8 +10699,7 @@ static int nl80211_crypto_settings(struct cfg80211_registered_device *rdev,
+ 
+ static struct cfg80211_bss *nl80211_assoc_bss(struct cfg80211_registered_device *rdev,
+ 					      const u8 *ssid, int ssid_len,
+-					      struct nlattr **attrs,
+-					      const u8 **bssid_out)
++					      struct nlattr **attrs)
+ {
+ 	struct ieee80211_channel *chan;
+ 	struct cfg80211_bss *bss;
+@@ -10727,7 +10726,6 @@ static struct cfg80211_bss *nl80211_assoc_bss(struct cfg80211_registered_device
+ 	if (!bss)
+ 		return ERR_PTR(-ENOENT);
+ 
+-	*bssid_out = bssid;
+ 	return bss;
+ }
+ 
+@@ -10737,7 +10735,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
+ 	struct net_device *dev = info->user_ptr[1];
+ 	struct cfg80211_assoc_request req = {};
+ 	struct nlattr **attrs = NULL;
+-	const u8 *bssid, *ssid;
++	const u8 *ap_addr, *ssid;
+ 	unsigned int link_id;
+ 	int err, ssid_len;
+ 
+@@ -10874,6 +10872,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
+ 			return -EINVAL;
+ 
+ 		req.ap_mld_addr = nla_data(info->attrs[NL80211_ATTR_MLD_ADDR]);
++		ap_addr = req.ap_mld_addr;
+ 
+ 		attrs = kzalloc(attrsize, GFP_KERNEL);
+ 		if (!attrs)
+@@ -10899,8 +10898,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
+ 				goto free;
+ 			}
+ 			req.links[link_id].bss =
+-				nl80211_assoc_bss(rdev, ssid, ssid_len, attrs,
+-						  &bssid);
++				nl80211_assoc_bss(rdev, ssid, ssid_len, attrs);
+ 			if (IS_ERR(req.links[link_id].bss)) {
+ 				err = PTR_ERR(req.links[link_id].bss);
+ 				req.links[link_id].bss = NULL;
+@@ -10951,10 +10949,10 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
+ 		if (req.link_id >= 0)
+ 			return -EINVAL;
+ 
+-		req.bss = nl80211_assoc_bss(rdev, ssid, ssid_len, info->attrs,
+-					    &bssid);
++		req.bss = nl80211_assoc_bss(rdev, ssid, ssid_len, info->attrs);
+ 		if (IS_ERR(req.bss))
+ 			return PTR_ERR(req.bss);
++		ap_addr = req.bss->bssid;
+ 	}
+ 
+ 	err = nl80211_crypto_settings(rdev, info, &req.crypto, 1);
+@@ -10967,7 +10965,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
+ 			dev->ieee80211_ptr->conn_owner_nlportid =
+ 				info->snd_portid;
+ 			memcpy(dev->ieee80211_ptr->disconnect_bssid,
+-			       bssid, ETH_ALEN);
++			       ap_addr, ETH_ALEN);
+ 		}
+ 
+ 		wdev_unlock(dev->ieee80211_ptr);
 -- 
 2.39.2
 
