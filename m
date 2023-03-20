@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B491C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B25DC433D2;
-	Mon, 20 Mar 2023 15:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF3E1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D531C433D2;
+	Mon, 20 Mar 2023 15:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325454;
-	bh=PK/3hZvwqYSVjzxrOMQXZnQfliKl3x4tSfLN7K9vVhw=;
+	s=korg; t=1679325457;
+	bh=KybEv8xqTLeH2QWdnQbVpYQSe3+YI3q6mmf67zLEscQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nC7m1dDAX1SVwwfrbu5WYZiZCVJXNwWDDVHDXmOWOWOTVvKyiRdRPf/Tu/O60Qi9
-	 o6NGGfj7dBIqFMQ/rfhoKBrsiofJVGFc62vqLmY9SEDJGRODYu5WTOiWhl9x2Li8cL
-	 ky/3w/u0Yx0SPHJ4iotNXG7g0VhGk4UfB3DhAttQ=
+	b=of97//NpThxv3mCe2Mu90rraon6YzMcmm++hIVQjdxmjEYcAYB/PSRcFXJq28fUQz
+	 O3EMQTU1TvYNPhjDshW/IX3wNycm21yS0yvDEZDoLpCjfnGD0YB7hEwwFa3CKLALMY
+	 FBDTczM4MCMMg4EReC7hkL49PyWlu7lS6EciLpU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Kahola <mika.kahola@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Eli Cohen <elic@nvidia.com>,
+	Si-Wei Liu <si-wei.liu@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 045/211] drm/i915/psr: Use calculated io and fast wake lines
-Date: Mon, 20 Mar 2023 15:53:00 +0100
-Message-Id: <20230320145515.121765287@linuxfoundation.org>
+Subject: [PATCH 6.2 034/211] vdpa/mlx5: should not activate virtq object when suspended
+Date: Mon, 20 Mar 2023 15:52:49 +0100
+Message-Id: <20230320145514.687137472@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -38,169 +37,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-[ Upstream commit 71c602103c74b277bef3d20a308874a33ec8326d ]
+[ Upstream commit 09e65ee9059d76b89cb713795748805efd3f50c6 ]
 
-Currently we are using hardcoded 7 for io and fast wake lines.
+Otherwise the virtqueue object to instate could point to invalid address
+that was unmapped from the MTT:
 
-According to Bspec io and fast wake times are both 42us for
-DISPLAY_VER >= 12 and 50us and 32us for older platforms.
+  mlx5_core 0000:41:04.2: mlx5_cmd_out_err:782:(pid 8321):
+  CREATE_GENERAL_OBJECT(0xa00) op_mod(0xd) failed, status
+  bad parameter(0x3), syndrome (0x5fa1c), err(-22)
 
-Calculate line counts for these and configure them into PSR2_CTL
-accordingly
+Fixes: cae15c2ed8e6 ("vdpa/mlx5: Implement susupend virtqueue callback")
+Cc: Eli Cohen <elic@nvidia.com>
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Reviewed-by: Eli Cohen <elic@nvidia.com>
 
-Use 45 us for the fast wake calculation as 42 seems to be too
-tight based on testing.
-
-Bspec: 49274, 4289
-
-Cc: Mika Kahola <mika.kahola@intel.com>
-Cc: José Roberto de Souza <jose.souza@intel.com>
-Fixes: 64cf40a125ff ("drm/i915/psr: Program default IO buffer Wake and Fast Wake")
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7725
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230221085304.3382297-1-jouni.hogander@intel.com
-(cherry picked from commit cb42e8ede5b475c096e473b86c356b1158b4bc3b)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Message-Id: <1676424640-11673-1-git-send-email-si-wei.liu@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/i915/display/intel_display_types.h    |  2 +
- drivers/gpu/drm/i915/display/intel_psr.c      | 78 +++++++++++++++----
- 2 files changed, 63 insertions(+), 17 deletions(-)
+ drivers/vdpa/mlx5/core/mlx5_vdpa.h | 1 +
+ drivers/vdpa/mlx5/net/mlx5_vnet.c  | 6 +++++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display_types.h b/drivers/gpu/drm/i915/display/intel_display_types.h
-index 1b6989001ee2b..af69521bd1e9b 100644
---- a/drivers/gpu/drm/i915/display/intel_display_types.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_types.h
-@@ -1618,6 +1618,8 @@ struct intel_psr {
- 	bool psr2_sel_fetch_cff_enabled;
- 	bool req_psr2_sdp_prior_scanline;
- 	u8 sink_sync_latency;
-+	u8 io_wake_lines;
-+	u8 fast_wake_lines;
- 	ktime_t last_entry_attempt;
- 	ktime_t last_exit;
- 	bool sink_not_reliable;
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 5b678916e6db5..8b984c88fd8b1 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -543,6 +543,14 @@ static void hsw_activate_psr2(struct intel_dp *intel_dp)
- 	val |= EDP_PSR2_FRAME_BEFORE_SU(max_t(u8, intel_dp->psr.sink_sync_latency + 1, 2));
- 	val |= intel_psr2_get_tp_time(intel_dp);
+diff --git a/drivers/vdpa/mlx5/core/mlx5_vdpa.h b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+index 058fbe28107e9..25fc4120b618d 100644
+--- a/drivers/vdpa/mlx5/core/mlx5_vdpa.h
++++ b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+@@ -96,6 +96,7 @@ struct mlx5_vdpa_dev {
+ 	struct mlx5_control_vq cvq;
+ 	struct workqueue_struct *wq;
+ 	unsigned int group2asid[MLX5_VDPA_NUMVQ_GROUPS];
++	bool suspended;
+ };
  
-+	if (DISPLAY_VER(dev_priv) >= 12) {
-+		if (intel_dp->psr.io_wake_lines < 9 &&
-+		    intel_dp->psr.fast_wake_lines < 9)
-+			val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
-+		else
-+			val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_3;
-+	}
+ int mlx5_vdpa_alloc_pd(struct mlx5_vdpa_dev *dev, u32 *pdn, u16 uid);
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+index 3a6dbbc6440d4..daac3ab314785 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+@@ -2411,7 +2411,7 @@ static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev,
+ 	if (err)
+ 		goto err_mr;
+ 
+-	if (!(mvdev->status & VIRTIO_CONFIG_S_DRIVER_OK))
++	if (!(mvdev->status & VIRTIO_CONFIG_S_DRIVER_OK) || mvdev->suspended)
+ 		goto err_mr;
+ 
+ 	restore_channels_info(ndev);
+@@ -2579,6 +2579,7 @@ static int mlx5_vdpa_reset(struct vdpa_device *vdev)
+ 	clear_vqs_ready(ndev);
+ 	mlx5_vdpa_destroy_mr(&ndev->mvdev);
+ 	ndev->mvdev.status = 0;
++	ndev->mvdev.suspended = false;
+ 	ndev->cur_num_vqs = 0;
+ 	ndev->mvdev.cvq.received_desc = 0;
+ 	ndev->mvdev.cvq.completed_desc = 0;
+@@ -2815,6 +2816,8 @@ static int mlx5_vdpa_suspend(struct vdpa_device *vdev)
+ 	struct mlx5_vdpa_virtqueue *mvq;
+ 	int i;
+ 
++	mlx5_vdpa_info(mvdev, "suspending device\n");
 +
- 	/* Wa_22012278275:adl-p */
- 	if (IS_ADLP_DISPLAY_STEP(dev_priv, STEP_A0, STEP_E0)) {
- 		static const u8 map[] = {
-@@ -559,31 +567,21 @@ static void hsw_activate_psr2(struct intel_dp *intel_dp)
- 		 * Still using the default IO_BUFFER_WAKE and FAST_WAKE, see
- 		 * comments bellow for more information
- 		 */
--		u32 tmp, lines = 7;
--
--		val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
-+		u32 tmp;
- 
--		tmp = map[lines - TGL_EDP_PSR2_IO_BUFFER_WAKE_MIN_LINES];
-+		tmp = map[intel_dp->psr.io_wake_lines - TGL_EDP_PSR2_IO_BUFFER_WAKE_MIN_LINES];
- 		tmp = tmp << TGL_EDP_PSR2_IO_BUFFER_WAKE_SHIFT;
- 		val |= tmp;
- 
--		tmp = map[lines - TGL_EDP_PSR2_FAST_WAKE_MIN_LINES];
-+		tmp = map[intel_dp->psr.fast_wake_lines - TGL_EDP_PSR2_FAST_WAKE_MIN_LINES];
- 		tmp = tmp << TGL_EDP_PSR2_FAST_WAKE_MIN_SHIFT;
- 		val |= tmp;
- 	} else if (DISPLAY_VER(dev_priv) >= 12) {
--		/*
--		 * TODO: 7 lines of IO_BUFFER_WAKE and FAST_WAKE are default
--		 * values from BSpec. In order to setting an optimal power
--		 * consumption, lower than 4k resolution mode needs to decrease
--		 * IO_BUFFER_WAKE and FAST_WAKE. And higher than 4K resolution
--		 * mode needs to increase IO_BUFFER_WAKE and FAST_WAKE.
--		 */
--		val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
--		val |= TGL_EDP_PSR2_IO_BUFFER_WAKE(7);
--		val |= TGL_EDP_PSR2_FAST_WAKE(7);
-+		val |= TGL_EDP_PSR2_IO_BUFFER_WAKE(intel_dp->psr.io_wake_lines);
-+		val |= TGL_EDP_PSR2_FAST_WAKE(intel_dp->psr.fast_wake_lines);
- 	} else if (DISPLAY_VER(dev_priv) >= 9) {
--		val |= EDP_PSR2_IO_BUFFER_WAKE(7);
--		val |= EDP_PSR2_FAST_WAKE(7);
-+		val |= EDP_PSR2_IO_BUFFER_WAKE(intel_dp->psr.io_wake_lines);
-+		val |= EDP_PSR2_FAST_WAKE(intel_dp->psr.fast_wake_lines);
+ 	down_write(&ndev->reslock);
+ 	ndev->nb_registered = false;
+ 	mlx5_notifier_unregister(mvdev->mdev, &ndev->nb);
+@@ -2824,6 +2827,7 @@ static int mlx5_vdpa_suspend(struct vdpa_device *vdev)
+ 		suspend_vq(ndev, mvq);
  	}
- 
- 	if (intel_dp->psr.req_psr2_sdp_prior_scanline)
-@@ -843,6 +841,46 @@ static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_d
- 	return true;
+ 	mlx5_vdpa_cvq_suspend(mvdev);
++	mvdev->suspended = true;
+ 	up_write(&ndev->reslock);
+ 	return 0;
  }
- 
-+static bool _compute_psr2_wake_times(struct intel_dp *intel_dp,
-+				     struct intel_crtc_state *crtc_state)
-+{
-+	struct drm_i915_private *i915 = dp_to_i915(intel_dp);
-+	int io_wake_lines, io_wake_time, fast_wake_lines, fast_wake_time;
-+	u8 max_wake_lines;
-+
-+	if (DISPLAY_VER(i915) >= 12) {
-+		io_wake_time = 42;
-+		/*
-+		 * According to Bspec it's 42us, but based on testing
-+		 * it is not enough -> use 45 us.
-+		 */
-+		fast_wake_time = 45;
-+		max_wake_lines = 12;
-+	} else {
-+		io_wake_time = 50;
-+		fast_wake_time = 32;
-+		max_wake_lines = 8;
-+	}
-+
-+	io_wake_lines = intel_usecs_to_scanlines(
-+		&crtc_state->uapi.adjusted_mode, io_wake_time);
-+	fast_wake_lines = intel_usecs_to_scanlines(
-+		&crtc_state->uapi.adjusted_mode, fast_wake_time);
-+
-+	if (io_wake_lines > max_wake_lines ||
-+	    fast_wake_lines > max_wake_lines)
-+		return false;
-+
-+	if (i915->params.psr_safest_params)
-+		io_wake_lines = fast_wake_lines = max_wake_lines;
-+
-+	/* According to Bspec lower limit should be set as 7 lines. */
-+	intel_dp->psr.io_wake_lines = max(io_wake_lines, 7);
-+	intel_dp->psr.fast_wake_lines = max(fast_wake_lines, 7);
-+
-+	return true;
-+}
-+
- static bool intel_psr2_config_valid(struct intel_dp *intel_dp,
- 				    struct intel_crtc_state *crtc_state)
- {
-@@ -937,6 +975,12 @@ static bool intel_psr2_config_valid(struct intel_dp *intel_dp,
- 		return false;
- 	}
- 
-+	if (!_compute_psr2_wake_times(intel_dp, crtc_state)) {
-+		drm_dbg_kms(&dev_priv->drm,
-+			    "PSR2 not enabled, Unable to use long enough wake times\n");
-+		return false;
-+	}
-+
- 	if (HAS_PSR2_SEL_FETCH(dev_priv)) {
- 		if (!intel_psr2_sel_fetch_config_valid(intel_dp, crtc_state) &&
- 		    !HAS_PSR_HW_TRACKING(dev_priv)) {
 -- 
 2.39.2
 
