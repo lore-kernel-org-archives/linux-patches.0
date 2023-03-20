@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9926D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156B9C433EF;
-	Mon, 20 Mar 2023 15:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8F01C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C489EC433EF;
+	Mon, 20 Mar 2023 15:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325202;
-	bh=8oT5Qks2GUmGIWwxRKF0xeqvKQH4iV8Xqvz3XCm+TxI=;
+	s=korg; t=1679325205;
+	bh=g7eLk0dgrMHSZMRUydLwJ7iTR3XUh4/ZboFmQQkTgbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WBJGQ1KZ10vRsjYTDgUV4105tVRgjAsUm1S14ep/A2ROKgdGHDp8LwaUKHkIIhFJz
-	 cg0M6gybd+jp85fKJ8wFCNSaVAkj6wL84Fq5G4MySw29FMUiD8I79ZdoKEO+iiPQ7C
-	 LKD7J9BEZbj58OxGHokQBlS6YL479k3LLXHnUW9I=
+	b=1myXP0xEvf449C3b6t6lLDD0MCzdOsAwMM+LXn5pP+1L0k/SqhrhEVYpagP4OT0dl
+	 u59xSHzx+bccM0K0fWGeXXzJWyz1bkzfI5Ct7umYpi/qV317vB3YLk9UZuH7T4d4Bw
+	 uyxs3P73n8d1SW0oAtQ1lBG9FdRpNKDUfIzZJxus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao2@huawei.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 016/211] scsi: mpt3sas: Fix NULL pointer access in mpt3sas_transport_port_add()
-Date: Mon, 20 Mar 2023 15:52:31 +0100
-Message-Id: <20230320145513.978775071@linuxfoundation.org>
+Subject: [PATCH 6.1 049/198] net: dsa: mt7530: set PLL frequency and trgmii only when trgmii is used
+Date: Mon, 20 Mar 2023 15:53:07 +0100
+Message-Id: <20230320145509.547976837@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,74 +35,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenchao Hao <haowenchao2@huawei.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit d3c57724f1569311e4b81e98fad0931028b9bdcd ]
+[ Upstream commit 0b086d76e7b011772b0ac214c6e5fd5816eff2df ]
 
-Port is allocated by sas_port_alloc_num() and rphy is allocated by either
-sas_end_device_alloc() or sas_expander_alloc(), all of which may return
-NULL. So we need to check the rphy to avoid possible NULL pointer access.
+As my testing on the MCM MT7530 switch on MT7621 SoC shows, setting the PLL
+frequency does not affect MII modes other than trgmii on port 5 and port 6.
+So the assumption is that the operation here called "setting the PLL
+frequency" actually sets the frequency of the TRGMII TX clock.
 
-If sas_rphy_add() returned with failure, rphy is set to NULL. We would
-access the rphy in the following lines which would also result NULL pointer
-access.
+Make it so that it and the rest of the trgmii setup run only when the
+trgmii mode is used.
 
-Fixes: 78316e9dfc24 ("scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()")
-Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
-Link: https://lore.kernel.org/r/20230225100135.2109330-1-haowenchao2@huawei.com
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Tested rgmii and trgmii modes of port 6 on MCM MT7530 on MT7621AT Unielec
+U7621-06 and standalone MT7530 on MT7623NI Bananapi BPI-R2.
+
+Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20230310073338.5836-2-arinc.unal@arinc9.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_transport.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mt7530.c | 62 ++++++++++++++++++++--------------------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-index e5ecd6ada6cdd..e8a4750f6ec47 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-@@ -785,7 +785,7 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 		goto out_fail;
- 	}
- 	port = sas_port_alloc_num(sas_node->parent_dev);
--	if ((sas_port_add(port))) {
-+	if (!port || (sas_port_add(port))) {
- 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
- 			__FILE__, __LINE__, __func__);
- 		goto out_fail;
-@@ -824,6 +824,12 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 			    mpt3sas_port->remote_identify.sas_address;
- 	}
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 4306782bf2257..1757d6a2c72ae 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -430,8 +430,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+ 	switch (interface) {
+ 	case PHY_INTERFACE_MODE_RGMII:
+ 		trgint = 0;
+-		/* PLL frequency: 125MHz */
+-		ncpo1 = 0x0c80;
+ 		break;
+ 	case PHY_INTERFACE_MODE_TRGMII:
+ 		trgint = 1;
+@@ -462,38 +460,40 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+ 	mt7530_rmw(priv, MT7530_P6ECR, P6_INTF_MODE_MASK,
+ 		   P6_INTF_MODE(trgint));
  
-+	if (!rphy) {
-+		ioc_err(ioc, "failure at %s:%d/%s()!\n",
-+			__FILE__, __LINE__, __func__);
-+		goto out_delete_port;
+-	/* Lower Tx Driving for TRGMII path */
+-	for (i = 0 ; i < NUM_TRGMII_CTRL ; i++)
+-		mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
+-			     TD_DM_DRVP(8) | TD_DM_DRVN(8));
+-
+-	/* Disable MT7530 core and TRGMII Tx clocks */
+-	core_clear(priv, CORE_TRGMII_GSW_CLK_CG,
+-		   REG_GSWCK_EN | REG_TRGMIICK_EN);
+-
+-	/* Setup the MT7530 TRGMII Tx Clock */
+-	core_write(priv, CORE_PLL_GROUP5, RG_LCDDS_PCW_NCPO1(ncpo1));
+-	core_write(priv, CORE_PLL_GROUP6, RG_LCDDS_PCW_NCPO0(0));
+-	core_write(priv, CORE_PLL_GROUP10, RG_LCDDS_SSC_DELTA(ssc_delta));
+-	core_write(priv, CORE_PLL_GROUP11, RG_LCDDS_SSC_DELTA1(ssc_delta));
+-	core_write(priv, CORE_PLL_GROUP4,
+-		   RG_SYSPLL_DDSFBK_EN | RG_SYSPLL_BIAS_EN |
+-		   RG_SYSPLL_BIAS_LPF_EN);
+-	core_write(priv, CORE_PLL_GROUP2,
+-		   RG_SYSPLL_EN_NORMAL | RG_SYSPLL_VODEN |
+-		   RG_SYSPLL_POSDIV(1));
+-	core_write(priv, CORE_PLL_GROUP7,
+-		   RG_LCDDS_PCW_NCPO_CHG | RG_LCCDS_C(3) |
+-		   RG_LCDDS_PWDB | RG_LCDDS_ISO_EN);
+-
+-	/* Enable MT7530 core and TRGMII Tx clocks */
+-	core_set(priv, CORE_TRGMII_GSW_CLK_CG,
+-		 REG_GSWCK_EN | REG_TRGMIICK_EN);
+-
+-	if (!trgint)
++	if (trgint) {
++		/* Lower Tx Driving for TRGMII path */
++		for (i = 0 ; i < NUM_TRGMII_CTRL ; i++)
++			mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
++				     TD_DM_DRVP(8) | TD_DM_DRVN(8));
++
++		/* Disable MT7530 core and TRGMII Tx clocks */
++		core_clear(priv, CORE_TRGMII_GSW_CLK_CG,
++			   REG_GSWCK_EN | REG_TRGMIICK_EN);
++
++		/* Setup the MT7530 TRGMII Tx Clock */
++		core_write(priv, CORE_PLL_GROUP5, RG_LCDDS_PCW_NCPO1(ncpo1));
++		core_write(priv, CORE_PLL_GROUP6, RG_LCDDS_PCW_NCPO0(0));
++		core_write(priv, CORE_PLL_GROUP10, RG_LCDDS_SSC_DELTA(ssc_delta));
++		core_write(priv, CORE_PLL_GROUP11, RG_LCDDS_SSC_DELTA1(ssc_delta));
++		core_write(priv, CORE_PLL_GROUP4,
++			   RG_SYSPLL_DDSFBK_EN | RG_SYSPLL_BIAS_EN |
++			   RG_SYSPLL_BIAS_LPF_EN);
++		core_write(priv, CORE_PLL_GROUP2,
++			   RG_SYSPLL_EN_NORMAL | RG_SYSPLL_VODEN |
++			   RG_SYSPLL_POSDIV(1));
++		core_write(priv, CORE_PLL_GROUP7,
++			   RG_LCDDS_PCW_NCPO_CHG | RG_LCCDS_C(3) |
++			   RG_LCDDS_PWDB | RG_LCDDS_ISO_EN);
++
++		/* Enable MT7530 core and TRGMII Tx clocks */
++		core_set(priv, CORE_TRGMII_GSW_CLK_CG,
++			 REG_GSWCK_EN | REG_TRGMIICK_EN);
++	} else {
+ 		for (i = 0 ; i < NUM_TRGMII_CTRL; i++)
+ 			mt7530_rmw(priv, MT7530_TRGMII_RD(i),
+ 				   RD_TAP_MASK, RD_TAP(16));
 +	}
 +
- 	rphy->identify = mpt3sas_port->remote_identify;
+ 	return 0;
+ }
  
- 	if ((sas_rphy_add(rphy))) {
-@@ -831,6 +837,7 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 			__FILE__, __LINE__, __func__);
- 		sas_rphy_free(rphy);
- 		rphy = NULL;
-+		goto out_delete_port;
- 	}
- 
- 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
-@@ -857,7 +864,10 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 		    rphy_to_expander_device(rphy), hba_port->port_id);
- 	return mpt3sas_port;
- 
-- out_fail:
-+out_delete_port:
-+	sas_port_delete(port);
-+
-+out_fail:
- 	list_for_each_entry_safe(mpt3sas_phy, next, &mpt3sas_port->phy_list,
- 	    port_siblings)
- 		list_del(&mpt3sas_phy->port_siblings);
 -- 
 2.39.2
 
