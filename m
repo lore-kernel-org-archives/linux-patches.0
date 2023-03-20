@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4C81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C722C433EF;
-	Mon, 20 Mar 2023 15:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB521C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12098C433EF;
+	Mon, 20 Mar 2023 15:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325608;
-	bh=W2xaRwu29lXGrWYplvesH7lPWne/wjmURsL1F3YUssQ=;
+	s=korg; t=1679325611;
+	bh=WmZbr5/l0T2Zsn13zpb+uweuN0MM3d4DK6rEqxFvhQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6dUxNVQpsO0nkQizYmB+5kbWXCRmhC5j6CBoCSnPfv5DC8O931gUGWupXzdMzgY0
-	 l28fot+NSizBz7iDZHEpq7RymL9CKtAq8eshjSRtIjbTqW1zH9+92QfvQ39Cf5Q9UO
-	 D3puwBpx1SZdIxRMN2Go1sLRnfXEorJlxhTIo/ig=
+	b=yAvowL6OVzMtJioRaod14f3CgOARhXniqGWhRn/rAY98yPtXp+JA7iQFg76ZIecfe
+	 qcRfZiH9f2yhVOI1oNniivGT5k7EnvBV6ZhdiSyv0QmH15Ykb2tdnBcmd2ai1NxCIF
+	 myXBm38k5lKmEnj9FlGMhQ1n7ZCbgqsZhERUTNE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Huang <qu.huang@linux.dev>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/198] drm/amdkfd: Fix an illegal memory access
-Date: Mon, 20 Mar 2023 15:54:08 +0100
-Message-Id: <20230320145512.184960940@linuxfoundation.org>
+Subject: [PATCH 6.2 070/211] block: count ios and sectors when io is done for bio-based device
+Date: Mon, 20 Mar 2023 15:53:25 +0100
+Message-Id: <20230320145516.173215346@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,80 +36,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Huang <qu.huang@linux.dev>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 4fc8fff378b2f2039f2a666d9f8c570f4e58352c ]
+[ Upstream commit 5f27571382ca42daa3e3d40d1b252bf18c2b61d2 ]
 
-In the kfd_wait_on_events() function, the kfd_event_waiter structure is
-allocated by alloc_event_waiters(), but the event field of the waiter
-structure is not initialized; When copy_from_user() fails in the
-kfd_wait_on_events() function, it will enter exception handling to
-release the previously allocated memory of the waiter structure;
-Due to the event field of the waiters structure being accessed
-in the free_waiters() function, this results in illegal memory access
-and system crash, here is the crash log:
+While using iostat for raid, I observed very strange 'await'
+occasionally, and turns out it's due to that 'ios' and 'sectors' is
+counted in bdev_start_io_acct(), while 'nsecs' is counted in
+bdev_end_io_acct(). I'm not sure why they are ccounted like that
+but I think this behaviour is obviously wrong because user will get
+wrong disk stats.
 
-localhost kernel: RIP: 0010:native_queued_spin_lock_slowpath+0x185/0x1e0
-localhost kernel: RSP: 0018:ffffaa53c362bd60 EFLAGS: 00010082
-localhost kernel: RAX: ff3d3d6bff4007cb RBX: 0000000000000282 RCX: 00000000002c0000
-localhost kernel: RDX: ffff9e855eeacb80 RSI: 000000000000279c RDI: ffffe7088f6a21d0
-localhost kernel: RBP: ffffe7088f6a21d0 R08: 00000000002c0000 R09: ffffaa53c362be64
-localhost kernel: R10: ffffaa53c362bbd8 R11: 0000000000000001 R12: 0000000000000002
-localhost kernel: R13: ffff9e7ead15d600 R14: 0000000000000000 R15: ffff9e7ead15d698
-localhost kernel: FS:  0000152a3d111700(0000) GS:ffff9e855ee80000(0000) knlGS:0000000000000000
-localhost kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-localhost kernel: CR2: 0000152938000010 CR3: 000000044d7a4000 CR4: 00000000003506e0
-localhost kernel: Call Trace:
-localhost kernel: _raw_spin_lock_irqsave+0x30/0x40
-localhost kernel: remove_wait_queue+0x12/0x50
-localhost kernel: kfd_wait_on_events+0x1b6/0x490 [hydcu]
-localhost kernel: ? ftrace_graph_caller+0xa0/0xa0
-localhost kernel: kfd_ioctl+0x38c/0x4a0 [hydcu]
-localhost kernel: ? kfd_ioctl_set_trap_handler+0x70/0x70 [hydcu]
-localhost kernel: ? kfd_ioctl_create_queue+0x5a0/0x5a0 [hydcu]
-localhost kernel: ? ftrace_graph_caller+0xa0/0xa0
-localhost kernel: __x64_sys_ioctl+0x8e/0xd0
-localhost kernel: ? syscall_trace_enter.isra.18+0x143/0x1b0
-localhost kernel: do_syscall_64+0x33/0x80
-localhost kernel: entry_SYSCALL_64_after_hwframe+0x44/0xa9
-localhost kernel: RIP: 0033:0x152a4dff68d7
+Fix the problem by counting 'ios' and 'sectors' when io is done, like
+what rq-based device does.
 
-Allocate the structure with kcalloc, and remove redundant 0-initialization
-and a redundant loop condition check.
-
-Signed-off-by: Qu Huang <qu.huang@linux.dev>
-Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 394ffa503bc4 ("blk: introduce generic io stat accounting help function")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230223091226.1135678-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_events.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ block/blk-core.c              | 16 ++++++----------
+ drivers/block/zram/zram_drv.c |  4 ++--
+ drivers/md/dm.c               |  6 +++---
+ drivers/nvme/host/multipath.c |  8 ++++----
+ include/linux/blkdev.h        |  5 ++---
+ 5 files changed, 17 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-index 729d26d648af3..2880ed96ac2e3 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-@@ -778,16 +778,13 @@ static struct kfd_event_waiter *alloc_event_waiters(uint32_t num_events)
- 	struct kfd_event_waiter *event_waiters;
- 	uint32_t i;
- 
--	event_waiters = kmalloc_array(num_events,
--					sizeof(struct kfd_event_waiter),
--					GFP_KERNEL);
-+	event_waiters = kcalloc(num_events, sizeof(struct kfd_event_waiter),
-+				GFP_KERNEL);
- 	if (!event_waiters)
- 		return NULL;
- 
--	for (i = 0; (event_waiters) && (i < num_events) ; i++) {
-+	for (i = 0; i < num_events; i++)
- 		init_wait(&event_waiters[i].wait);
--		event_waiters[i].activated = false;
--	}
- 
- 	return event_waiters;
+diff --git a/block/blk-core.c b/block/blk-core.c
+index 5a0049215ee72..597293151cd11 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -946,16 +946,11 @@ void update_io_ticks(struct block_device *part, unsigned long now, bool end)
+ 	}
  }
+ 
+-unsigned long bdev_start_io_acct(struct block_device *bdev,
+-				 unsigned int sectors, enum req_op op,
++unsigned long bdev_start_io_acct(struct block_device *bdev, enum req_op op,
+ 				 unsigned long start_time)
+ {
+-	const int sgrp = op_stat_group(op);
+-
+ 	part_stat_lock();
+ 	update_io_ticks(bdev, start_time, false);
+-	part_stat_inc(bdev, ios[sgrp]);
+-	part_stat_add(bdev, sectors[sgrp], sectors);
+ 	part_stat_local_inc(bdev, in_flight[op_is_write(op)]);
+ 	part_stat_unlock();
+ 
+@@ -971,13 +966,12 @@ EXPORT_SYMBOL(bdev_start_io_acct);
+  */
+ unsigned long bio_start_io_acct(struct bio *bio)
+ {
+-	return bdev_start_io_acct(bio->bi_bdev, bio_sectors(bio),
+-				  bio_op(bio), jiffies);
++	return bdev_start_io_acct(bio->bi_bdev, bio_op(bio), jiffies);
+ }
+ EXPORT_SYMBOL_GPL(bio_start_io_acct);
+ 
+ void bdev_end_io_acct(struct block_device *bdev, enum req_op op,
+-		      unsigned long start_time)
++		      unsigned int sectors, unsigned long start_time)
+ {
+ 	const int sgrp = op_stat_group(op);
+ 	unsigned long now = READ_ONCE(jiffies);
+@@ -985,6 +979,8 @@ void bdev_end_io_acct(struct block_device *bdev, enum req_op op,
+ 
+ 	part_stat_lock();
+ 	update_io_ticks(bdev, now, true);
++	part_stat_inc(bdev, ios[sgrp]);
++	part_stat_add(bdev, sectors[sgrp], sectors);
+ 	part_stat_add(bdev, nsecs[sgrp], jiffies_to_nsecs(duration));
+ 	part_stat_local_dec(bdev, in_flight[op_is_write(op)]);
+ 	part_stat_unlock();
+@@ -994,7 +990,7 @@ EXPORT_SYMBOL(bdev_end_io_acct);
+ void bio_end_io_acct_remapped(struct bio *bio, unsigned long start_time,
+ 			      struct block_device *orig_bdev)
+ {
+-	bdev_end_io_acct(orig_bdev, bio_op(bio), start_time);
++	bdev_end_io_acct(orig_bdev, bio_op(bio), bio_sectors(bio), start_time);
+ }
+ EXPORT_SYMBOL_GPL(bio_end_io_acct_remapped);
+ 
+diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
+index e290d6d970474..03ef03e10618d 100644
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -2108,9 +2108,9 @@ static int zram_rw_page(struct block_device *bdev, sector_t sector,
+ 	bv.bv_offset = 0;
+ 
+ 	start_time = bdev_start_io_acct(bdev->bd_disk->part0,
+-			SECTORS_PER_PAGE, op, jiffies);
++			op, jiffies);
+ 	ret = zram_bvec_rw(zram, &bv, index, offset, op, NULL);
+-	bdev_end_io_acct(bdev->bd_disk->part0, op, start_time);
++	bdev_end_io_acct(bdev->bd_disk->part0, op, SECTORS_PER_PAGE, start_time);
+ out:
+ 	/*
+ 	 * If I/O fails, just return error(ie, non-zero) without
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index 605662935ce91..fdcf42554e2a9 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -510,10 +510,10 @@ static void dm_io_acct(struct dm_io *io, bool end)
+ 		sectors = io->sectors;
+ 
+ 	if (!end)
+-		bdev_start_io_acct(bio->bi_bdev, sectors, bio_op(bio),
+-				   start_time);
++		bdev_start_io_acct(bio->bi_bdev, bio_op(bio), start_time);
+ 	else
+-		bdev_end_io_acct(bio->bi_bdev, bio_op(bio), start_time);
++		bdev_end_io_acct(bio->bi_bdev, bio_op(bio), sectors,
++				 start_time);
+ 
+ 	if (static_branch_unlikely(&stats_enabled) &&
+ 	    unlikely(dm_stats_used(&md->stats))) {
+diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
+index fc39d01e7b63b..9171452e2f6d4 100644
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -123,9 +123,8 @@ void nvme_mpath_start_request(struct request *rq)
+ 		return;
+ 
+ 	nvme_req(rq)->flags |= NVME_MPATH_IO_STATS;
+-	nvme_req(rq)->start_time = bdev_start_io_acct(disk->part0,
+-					blk_rq_bytes(rq) >> SECTOR_SHIFT,
+-					req_op(rq), jiffies);
++	nvme_req(rq)->start_time = bdev_start_io_acct(disk->part0, req_op(rq),
++						      jiffies);
+ }
+ EXPORT_SYMBOL_GPL(nvme_mpath_start_request);
+ 
+@@ -136,7 +135,8 @@ void nvme_mpath_end_request(struct request *rq)
+ 	if (!(nvme_req(rq)->flags & NVME_MPATH_IO_STATS))
+ 		return;
+ 	bdev_end_io_acct(ns->head->disk->part0, req_op(rq),
+-		nvme_req(rq)->start_time);
++			 blk_rq_bytes(rq) >> SECTOR_SHIFT,
++			 nvme_req(rq)->start_time);
+ }
+ 
+ void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl)
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 43d4e073b1115..c3e066242941d 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -1434,11 +1434,10 @@ static inline void blk_wake_io_task(struct task_struct *waiter)
+ 		wake_up_process(waiter);
+ }
+ 
+-unsigned long bdev_start_io_acct(struct block_device *bdev,
+-				 unsigned int sectors, enum req_op op,
++unsigned long bdev_start_io_acct(struct block_device *bdev, enum req_op op,
+ 				 unsigned long start_time);
+ void bdev_end_io_acct(struct block_device *bdev, enum req_op op,
+-		unsigned long start_time);
++		      unsigned int sectors, unsigned long start_time);
+ 
+ unsigned long bio_start_io_acct(struct bio *bio);
+ void bio_end_io_acct_remapped(struct bio *bio, unsigned long start_time,
 -- 
 2.39.2
 
