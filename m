@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1011C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAC6C433D2;
-	Mon, 20 Mar 2023 15:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4271C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24E1C433EF;
+	Mon, 20 Mar 2023 15:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325778;
-	bh=jiYlifzQ/nQU/22g0bAxSe9qhgfWxDJRdMiz0zNYx50=;
+	s=korg; t=1679325781;
+	bh=KTYWWFvzK9g9XVDLU4q5d6cycX96LXFxNauZDMOY11M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iviBwmDKL5zAQhAPnyJKNDkErQCH8qP3f6IBV/2zz6oWBw12sOn/OR05u+Opd/D5l
-	 psrH8pkTg1WdcEAR4h+zuLtfc4ACzPSvvTVY9DL/3AtAZYgrtMFkQ8pFcd69khmaf5
-	 2BVuQLSFoRQ5e0FknT+Gl/XzFKk74KWjaXKJY8+0=
+	b=PWOETkreCnyu6f0wC3T/QCkKfecXcUHU3G0i4pf2YEQavHU1JsIxrRUBc0OiB4SYC
+	 qnPmlA9UfIj7pXUM2Ut1M4ngyHhV46/X8PayUALxavQcIkvRzhlk9eY8ujgUpF8JAi
+	 wLUEGHdudRM6z8Dt+UhpMFmHiN2F+wR/12TH4HmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.1 141/198] md: select BLOCK_LEGACY_AUTOLOAD
-Date: Mon, 20 Mar 2023 15:54:39 +0100
-Message-Id: <20230320145513.462373612@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 100/211] hwmon: (xgene) Fix use after free bug in xgene_hwmon_remove due to race condition
+Date: Mon, 20 Mar 2023 15:53:55 +0100
+Message-Id: <20230320145517.479971710@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,39 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neilb@suse.de>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-commit 6c0f5898836c05c6d850a750ed7940ba29e4e6c5 upstream.
+[ Upstream commit cb090e64cf25602b9adaf32d5dfc9c8bec493cd1 ]
 
-When BLOCK_LEGACY_AUTOLOAD is not enable, mdadm is not able to
-activate new arrays unless "CREATE names=yes" appears in
-mdadm.conf
+In xgene_hwmon_probe, &ctx->workq is bound with xgene_hwmon_evt_work.
+Then it will be started.
 
-As this is a regression we need to always enable BLOCK_LEGACY_AUTOLOAD
-for when MD is selected - at least until mdadm is updated and the
-updates widely available.
+If we remove the driver which will call xgene_hwmon_remove to clean up,
+there may be unfinished work.
 
-Cc: stable@vger.kernel.org # v5.18+
-Fixes: fbdee71bb5d8 ("block: deprecate autoloading based on dev_t")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The possible sequence is as follows:
+
+Fix it by finishing the work before cleanup in xgene_hwmon_remove.
+
+CPU0                  CPU1
+
+                    |xgene_hwmon_evt_work
+xgene_hwmon_remove   |
+kfifo_free(&ctx->async_msg_fifo);|
+                    |
+                    |kfifo_out_spinlocked
+                    |//use &ctx->async_msg_fifo
+Fixes: 2ca492e22cb7 ("hwmon: (xgene) Fix crash when alarm occurs before driver probe")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Link: https://lore.kernel.org/r/20230310084007.1403388-1-zyytlz.wz@163.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/Kconfig |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hwmon/xgene-hwmon.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/Kconfig
-+++ b/drivers/md/Kconfig
-@@ -16,6 +16,10 @@ if MD
- config BLK_DEV_MD
- 	tristate "RAID support"
- 	select BLOCK_HOLDER_DEPRECATED if SYSFS
-+	# BLOCK_LEGACY_AUTOLOAD requirement should be removed
-+	# after relevant mdadm enhancements - to make "names=yes"
-+	# the default - are widely available.
-+	select BLOCK_LEGACY_AUTOLOAD
- 	help
- 	  This driver lets you combine several hard disk partitions into one
- 	  logical block device. This can be used to simply append one
+diff --git a/drivers/hwmon/xgene-hwmon.c b/drivers/hwmon/xgene-hwmon.c
+index 5cde837bfd094..d1abea49f01be 100644
+--- a/drivers/hwmon/xgene-hwmon.c
++++ b/drivers/hwmon/xgene-hwmon.c
+@@ -761,6 +761,7 @@ static int xgene_hwmon_remove(struct platform_device *pdev)
+ {
+ 	struct xgene_hwmon_dev *ctx = platform_get_drvdata(pdev);
+ 
++	cancel_work_sync(&ctx->workq);
+ 	hwmon_device_unregister(ctx->hwmon_dev);
+ 	kfifo_free(&ctx->async_msg_fifo);
+ 	if (acpi_disabled)
+-- 
+2.39.2
+
 
 
