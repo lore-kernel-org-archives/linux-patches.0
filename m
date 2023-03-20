@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380671C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8DBC433EF;
-	Mon, 20 Mar 2023 15:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE791C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60910C433D2;
+	Mon, 20 Mar 2023 15:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325896;
-	bh=SlaYFFlBBMBmoqmu8kQMPgqqmrCRkjjDtAaLp2obimA=;
+	s=korg; t=1679325898;
+	bh=2HYIgpyknmUWw9lfDLh7sxPXePIIqr+VLNh999ZYNR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D9UyOAqrGC493k8btHWdv7B/re1C12Hj/F3UxwMsQVzGZ7jqQP5nYBWArAjGS4gCQ
-	 2bShDpaTjR4qruzlsAiXYKf/EjFkjyv2qmS4Nmcb5falKuWGAt9NQZ6PCjBBast+F/
-	 BCNBL0uZDyCTKJTDDuHzSJ6APXr2Z0EsUrBZs4TI=
+	b=LvxkM87VAp/+OkeTjiL+hIqAbPr2uNW8GKZI49vBXas7nEpi1wHbIHR2fxfbJ/bJo
+	 GFNftGbu7Jpv9JBnWXW+DbClY4WCh2bG5lIwUv3pMLt7saS7JpRUCaFlfKCRIk3vUs
+	 s1n7Uqurz38eJuuO2W+EOud0fiQUA/jK13NZFzNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 6.2 121/211] serial: 8250_fsl: fix handle_irq locking
-Date: Mon, 20 Mar 2023 15:54:16 +0100
-Message-Id: <20230320145518.417347973@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Paasch <cpaasch@apple.com>
+Subject: [PATCH 6.1 164/198] mptcp: fix possible deadlock in subflow_error_report
+Date: Mon, 20 Mar 2023 15:55:02 +0100
+Message-Id: <20230320145514.414783794@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,55 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 6e01f9a594ee0f69fb52cc8d11971612b4817f0b upstream.
+commit b7a679ba7c652587b85294f4953f33ac0b756d40 upstream.
 
-The 8250 handle_irq callback is not just called from the interrupt
-handler but also from a timer callback when polling (e.g. for ports
-without an interrupt line). Consequently the callback must explicitly
-disable interrupts to avoid a potential deadlock with another interrupt
-in polled mode.
+Christoph reported a possible deadlock while the TCP stack
+destroys an unaccepted subflow due to an incoming reset: the
+MPTCP socket error path tries to acquire the msk-level socket
+lock while TCP still owns the listener socket accept queue
+spinlock, and the reverse dependency already exists in the
+TCP stack.
 
-Fix up the two paths in the freescale callback that failed to re-enable
-interrupts when polling.
+Note that the above is actually a lockdep false positive, as
+the chain involves two separate sockets. A different per-socket
+lockdep key will address the issue, but such a change will be
+quite invasive.
 
-Fixes: 853a9ae29e97 ("serial: 8250: fix handle_irq locking")
-Cc: stable@vger.kernel.org	# 5.13
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/Y/xYzqp4ogmOF5t0@kili
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20230227085046.24282-1-johan@kernel.org
+Instead, we can simply stop earlier the socket error handling
+for orphaned or unaccepted subflows, breaking the critical
+lockdep chain. Error handling in such a scenario is a no-op.
+
+Reported-and-tested-by: Christoph Paasch <cpaasch@apple.com>
+Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/355
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_fsl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mptcp/subflow.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_fsl.c b/drivers/tty/serial/8250/8250_fsl.c
-index 8aad15622a2e..8adfaa183f77 100644
---- a/drivers/tty/serial/8250/8250_fsl.c
-+++ b/drivers/tty/serial/8250/8250_fsl.c
-@@ -34,7 +34,7 @@ int fsl8250_handle_irq(struct uart_port *port)
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1376,6 +1376,13 @@ static void subflow_error_report(struct
+ {
+ 	struct sock *sk = mptcp_subflow_ctx(ssk)->conn;
  
- 	iir = port->serial_in(port, UART_IIR);
- 	if (iir & UART_IIR_NO_INT) {
--		spin_unlock(&up->port.lock);
-+		spin_unlock_irqrestore(&up->port.lock, flags);
- 		return 0;
- 	}
- 
-@@ -42,7 +42,7 @@ int fsl8250_handle_irq(struct uart_port *port)
- 	if (unlikely(up->lsr_saved_flags & UART_LSR_BI)) {
- 		up->lsr_saved_flags &= ~UART_LSR_BI;
- 		port->serial_in(port, UART_RX);
--		spin_unlock(&up->port.lock);
-+		spin_unlock_irqrestore(&up->port.lock, flags);
- 		return 1;
- 	}
- 
--- 
-2.40.0
-
++	/* bail early if this is a no-op, so that we avoid introducing a
++	 * problematic lockdep dependency between TCP accept queue lock
++	 * and msk socket spinlock
++	 */
++	if (!sk->sk_socket)
++		return;
++
+ 	mptcp_data_lock(sk);
+ 	if (!sock_owned_by_user(sk))
+ 		__mptcp_error_report(sk);
 
 
