@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054D01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D23AC433D2;
-	Mon, 20 Mar 2023 15:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24CB1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334CDC4339B;
+	Mon, 20 Mar 2023 15:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325909;
-	bh=1sJRTIdHE0SC+4YuPA6NaIlRKg3NF7xJ4vw459div3U=;
+	s=korg; t=1679325912;
+	bh=Ga9u1H+GEVvBwqwzUZ57KhPcb1wQ+1h/VvDqfU/g4+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xLG+PWxsQhqYi9AH+M1++ZCchYGQsXrOLgvkOEIOuw5hmwmRoOAmWEtI6TS3gSMpf
-	 ZGpeDMA4FrB69LDsYW+IPIonQYH2IRX73imRMKK3Z2vY24SGy7gU2e/Pr2OSZeO7hM
-	 e7+rm4KzAN26ekRiA5RW0d8VMfbRLpdtoIRLEnoU=
+	b=09/yLbJkBy2Odf8V915mYVVziHbUiud/zGBuoW0v4aB461OHqfsLd96MuT1B762GF
+	 WlAtu0MqV5Wjen+wXhgmQMnhW7f+npaAy/Rry53FWlU2MDm8zscDVCJeQisaRStCac
+	 9OWBzBRt9V+aGYNM26+2U3KWHqDIg8HG410Xhd7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 166/198] mptcp: avoid setting TCP_CLOSE state twice
-Date: Mon, 20 Mar 2023 15:55:04 +0100
-Message-Id: <20230320145514.488850949@linuxfoundation.org>
+	Dmitry Osipenko <digetx@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.2 124/211] memory: tegra: fix interconnect registration race
+Date: Mon, 20 Mar 2023 15:54:19 +0100
+Message-Id: <20230320145518.565626701@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 3ba14528684f528566fb7d956bfbfb958b591d86 upstream.
+commit 5553055c62683ce339f9ef5fb2a26c8331485d68 upstream.
 
-tcp_set_state() is called from tcp_done() already.
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to fail.
 
-There is then no need to first set the state to TCP_CLOSE, then call
-tcp_done().
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
 
-Fixes: d582484726c4 ("mptcp: fix fallback for MP_JOIN subflows")
-Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/362
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 06f079816d4c ("memory: tegra-mc: Add interconnect framework")
+Cc: stable@vger.kernel.org      # 5.11
+Cc: Dmitry Osipenko <digetx@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-18-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/memory/tegra/mc.c |   16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -358,7 +358,6 @@ void mptcp_subflow_reset(struct sock *ss
- 	/* must hold: tcp_done() could drop last reference on parent */
- 	sock_hold(sk);
+--- a/drivers/memory/tegra/mc.c
++++ b/drivers/memory/tegra/mc.c
+@@ -794,16 +794,12 @@ static int tegra_mc_interconnect_setup(s
+ 	mc->provider.aggregate = mc->soc->icc_ops->aggregate;
+ 	mc->provider.xlate_extended = mc->soc->icc_ops->xlate_extended;
  
--	tcp_set_state(ssk, TCP_CLOSE);
- 	tcp_send_active_reset(ssk, GFP_ATOMIC);
- 	tcp_done(ssk);
- 	if (!test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &mptcp_sk(sk)->flags) &&
+-	err = icc_provider_add(&mc->provider);
+-	if (err)
+-		return err;
++	icc_provider_init(&mc->provider);
+ 
+ 	/* create Memory Controller node */
+ 	node = icc_node_create(TEGRA_ICC_MC);
+-	if (IS_ERR(node)) {
+-		err = PTR_ERR(node);
+-		goto del_provider;
+-	}
++	if (IS_ERR(node))
++		return PTR_ERR(node);
+ 
+ 	node->name = "Memory Controller";
+ 	icc_node_add(node, &mc->provider);
+@@ -830,12 +826,14 @@ static int tegra_mc_interconnect_setup(s
+ 			goto remove_nodes;
+ 	}
+ 
++	err = icc_provider_register(&mc->provider);
++	if (err)
++		goto remove_nodes;
++
+ 	return 0;
+ 
+ remove_nodes:
+ 	icc_nodes_remove(&mc->provider);
+-del_provider:
+-	icc_provider_del(&mc->provider);
+ 
+ 	return err;
+ }
 
 
