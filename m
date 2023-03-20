@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D10A1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB0AC433D2;
-	Mon, 20 Mar 2023 15:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672FF1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13ABC4339B;
+	Mon, 20 Mar 2023 15:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326011;
-	bh=y7W/45A0TlS0LJ42D4eO2vR+8ofGYvQXr9n7p3Ofd7s=;
+	s=korg; t=1679326014;
+	bh=1T6WtcvQ1lTuToTui+h3IWyhaagwhESl8MD7v0qj89Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1mOPrGRVEWvOCSwFhPm/TkYBaMwCliKvFp3uTndXMwZ25eJelCV2uXRVCECo6tcIZ
-	 8tvsDAlcv1zprugiHfoI9OHxekBeeUtLTS5G73MkTXPqcTu0n/NOdvAjLQwGfWv9fp
-	 5WS6VCG2nG6prvjz06g1U/BZjEYRhscYhB21MLn8=
+	b=vKLg6PUoMihiH+PXzdM23YnLUanmm9jR0aqtNtIGk5xHOy1+ZpERmmeJl6lKGX6pA
+	 wrwzhG4JvRnWSWEfwAoUe2347CxST79hJi/oEAse2vmib/SZ82PwaQCT9PQ/wBHk89
+	 KoWjGdc+SuVTCohKWWdJjxZCOT27UyEjyIloCtVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 158/198] drm/i915/dg2: Add HDMI pixel clock frequencies 267.30 and 319.89 MHz
-Date: Mon, 20 Mar 2023 15:54:56 +0100
-Message-Id: <20230320145514.154465542@linuxfoundation.org>
+	Zong Li <zong.li@sifive.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
+	Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.1 153/198] Revert "riscv: mm: notify remote harts about mmu cache updates"
+Date: Mon, 20 Mar 2023 15:54:51 +0100
+Message-Id: <20230320145513.947046981@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 References: <20230320145507.420176832@linuxfoundation.org>
@@ -35,113 +37,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+From: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
 
-commit 46bc23dcd94569270d02c4c1f7e62ae01ebd53bb upstream.
+commit e921050022f1f12d5029d1487a7dfc46cde15523 upstream.
 
-Add snps phy table values for HDMI pixel clocks 267.30 MHz and
-319.89 MHz. Values are based on the Bspec algorithm for
-PLL programming for HDMI.
+This reverts the remaining bits of commit 4bd1d80efb5a ("riscv: mm:
+notify remote harts harts about mmu cache updates").
 
+According to bug reports, suggested approach to fix stale TLB entries
+is not sufficient. It needs to be replaced by a more robust solution.
+
+Fixes: 4bd1d80efb5a ("riscv: mm: notify remote harts about mmu cache updates")
+Reported-by: Zong Li <zong.li@sifive.com>
+Reported-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
 Cc: stable@vger.kernel.org
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8008
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Signed-off-by: Uma Shankar <uma.shankar@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230223043619.3941382-1-ankit.k.nautiyal@intel.com
-(cherry picked from commit d46746b8b13cbd377ffc733e465d25800459a31b)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Link: https://lore.kernel.org/r/20230226150137.1919750-2-geomatsi@gmail.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_snps_phy.c |   62 ++++++++++++++++++++++++++
- 1 file changed, 62 insertions(+)
+ arch/riscv/include/asm/mmu.h      |    2 --
+ arch/riscv/include/asm/tlbflush.h |   18 ------------------
+ arch/riscv/mm/context.c           |   10 ----------
+ arch/riscv/mm/tlbflush.c          |   28 +++++++++++++++++-----------
+ 4 files changed, 17 insertions(+), 41 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_snps_phy.c
-+++ b/drivers/gpu/drm/i915/display/intel_snps_phy.c
-@@ -1418,6 +1418,36 @@ static const struct intel_mpllb_state dg
- 		REG_FIELD_PREP(SNPS_PHY_MPLLB_SSC_UP_SPREAD, 1),
- };
+--- a/arch/riscv/include/asm/mmu.h
++++ b/arch/riscv/include/asm/mmu.h
+@@ -19,8 +19,6 @@ typedef struct {
+ #ifdef CONFIG_SMP
+ 	/* A local icache flush is needed before user execution can resume. */
+ 	cpumask_t icache_stale_mask;
+-	/* A local tlb flush is needed before user execution can resume. */
+-	cpumask_t tlb_stale_mask;
+ #endif
+ } mm_context_t;
  
-+static const struct intel_mpllb_state dg2_hdmi_267300 = {
-+	.clock = 267300,
-+	.ref_control =
-+		REG_FIELD_PREP(SNPS_PHY_REF_CONTROL_REF_RANGE, 3),
-+	.mpllb_cp =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_INT, 7) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_PROP, 14) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_INT_GS, 64) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_PROP_GS, 124),
-+	.mpllb_div =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_DIV5_CLK_EN, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_TX_CLK_DIV, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_PMIX_EN, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_V2I, 2) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FREQ_VCO, 3),
-+	.mpllb_div2 =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_REF_CLK_DIV, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_MULTIPLIER, 74) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_HDMI_DIV, 1),
-+	.mpllb_fracn1 =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_CGG_UPDATE_EN, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_EN, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_DEN, 65535),
-+	.mpllb_fracn2 =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_QUOT, 30146) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_REM, 36699),
-+	.mpllb_sscen =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_SSC_UP_SPREAD, 1),
-+};
-+
- static const struct intel_mpllb_state dg2_hdmi_268500 = {
- 	.clock = 268500,
- 	.ref_control =
-@@ -1508,6 +1538,36 @@ static const struct intel_mpllb_state dg
- 		REG_FIELD_PREP(SNPS_PHY_MPLLB_SSC_UP_SPREAD, 1),
- };
+--- a/arch/riscv/include/asm/tlbflush.h
++++ b/arch/riscv/include/asm/tlbflush.h
+@@ -22,24 +22,6 @@ static inline void local_flush_tlb_page(
+ {
+ 	ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
+ }
+-
+-static inline void local_flush_tlb_all_asid(unsigned long asid)
+-{
+-	__asm__ __volatile__ ("sfence.vma x0, %0"
+-			:
+-			: "r" (asid)
+-			: "memory");
+-}
+-
+-static inline void local_flush_tlb_page_asid(unsigned long addr,
+-		unsigned long asid)
+-{
+-	__asm__ __volatile__ ("sfence.vma %0, %1"
+-			:
+-			: "r" (addr), "r" (asid)
+-			: "memory");
+-}
+-
+ #else /* CONFIG_MMU */
+ #define local_flush_tlb_all()			do { } while (0)
+ #define local_flush_tlb_page(addr)		do { } while (0)
+--- a/arch/riscv/mm/context.c
++++ b/arch/riscv/mm/context.c
+@@ -196,16 +196,6 @@ switch_mm_fast:
  
-+static const struct intel_mpllb_state dg2_hdmi_319890 = {
-+	.clock = 319890,
-+	.ref_control =
-+		REG_FIELD_PREP(SNPS_PHY_REF_CONTROL_REF_RANGE, 3),
-+	.mpllb_cp =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_INT, 6) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_PROP, 14) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_INT_GS, 64) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_PROP_GS, 124),
-+	.mpllb_div =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_DIV5_CLK_EN, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_TX_CLK_DIV, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_PMIX_EN, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_V2I, 2) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FREQ_VCO, 2),
-+	.mpllb_div2 =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_REF_CLK_DIV, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_MULTIPLIER, 94) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_HDMI_DIV, 1),
-+	.mpllb_fracn1 =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_CGG_UPDATE_EN, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_EN, 1) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_DEN, 65535),
-+	.mpllb_fracn2 =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_QUOT, 64094) |
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_REM, 13631),
-+	.mpllb_sscen =
-+		REG_FIELD_PREP(SNPS_PHY_MPLLB_SSC_UP_SPREAD, 1),
-+};
+ 	if (need_flush_tlb)
+ 		local_flush_tlb_all();
+-#ifdef CONFIG_SMP
+-	else {
+-		cpumask_t *mask = &mm->context.tlb_stale_mask;
+-
+-		if (cpumask_test_cpu(cpu, mask)) {
+-			cpumask_clear_cpu(cpu, mask);
+-			local_flush_tlb_all_asid(cntx & asid_mask);
+-		}
+-	}
+-#endif
+ }
+ 
+ static void set_mm_noasid(struct mm_struct *mm)
+--- a/arch/riscv/mm/tlbflush.c
++++ b/arch/riscv/mm/tlbflush.c
+@@ -5,7 +5,23 @@
+ #include <linux/sched.h>
+ #include <asm/sbi.h>
+ #include <asm/mmu_context.h>
+-#include <asm/tlbflush.h>
 +
- static const struct intel_mpllb_state dg2_hdmi_497750 = {
- 	.clock = 497750,
- 	.ref_control =
-@@ -1695,8 +1755,10 @@ static const struct intel_mpllb_state *
- 	&dg2_hdmi_209800,
- 	&dg2_hdmi_241500,
- 	&dg2_hdmi_262750,
-+	&dg2_hdmi_267300,
- 	&dg2_hdmi_268500,
- 	&dg2_hdmi_296703,
-+	&dg2_hdmi_319890,
- 	&dg2_hdmi_497750,
- 	&dg2_hdmi_592000,
- 	&dg2_hdmi_593407,
++static inline void local_flush_tlb_all_asid(unsigned long asid)
++{
++	__asm__ __volatile__ ("sfence.vma x0, %0"
++			:
++			: "r" (asid)
++			: "memory");
++}
++
++static inline void local_flush_tlb_page_asid(unsigned long addr,
++		unsigned long asid)
++{
++	__asm__ __volatile__ ("sfence.vma %0, %1"
++			:
++			: "r" (addr), "r" (asid)
++			: "memory");
++}
+ 
+ void flush_tlb_all(void)
+ {
+@@ -15,7 +31,6 @@ void flush_tlb_all(void)
+ static void __sbi_tlb_flush_range(struct mm_struct *mm, unsigned long start,
+ 				  unsigned long size, unsigned long stride)
+ {
+-	struct cpumask *pmask = &mm->context.tlb_stale_mask;
+ 	struct cpumask *cmask = mm_cpumask(mm);
+ 	unsigned int cpuid;
+ 	bool broadcast;
+@@ -29,15 +44,6 @@ static void __sbi_tlb_flush_range(struct
+ 	if (static_branch_unlikely(&use_asid_allocator)) {
+ 		unsigned long asid = atomic_long_read(&mm->context.id);
+ 
+-		/*
+-		 * TLB will be immediately flushed on harts concurrently
+-		 * executing this MM context. TLB flush on other harts
+-		 * is deferred until this MM context migrates there.
+-		 */
+-		cpumask_setall(pmask);
+-		cpumask_clear_cpu(cpuid, pmask);
+-		cpumask_andnot(pmask, pmask, cmask);
+-
+ 		if (broadcast) {
+ 			sbi_remote_sfence_vma_asid(cmask, start, size, asid);
+ 		} else if (size <= stride) {
 
 
