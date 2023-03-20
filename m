@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DDF1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8632C433A4;
-	Mon, 20 Mar 2023 15:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADC71C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A03BC433EF;
+	Mon, 20 Mar 2023 15:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325356;
-	bh=43RDQauyGFVaRdKerke8+1dBtn596l0XMDW8DA3/vOs=;
+	s=korg; t=1679325358;
+	bh=0bV14CpeIMk+YDJdnqk7WHg/F4i6Ld/mxbQjtUu1iuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVo8422cUvAgXQdQCylbNXarN5YERY87wkPsrB4qovkXHrrbXVGOD0V6Bpd0G1ndG
-	 UsEf603iNZmSTg//PN40TEpV3X/HNZzgV07BFZiBYg4W8aEk+9uQtfslrafOTlkaDZ
-	 IekCNDTriXnufgxEPYtw40CfokfX9NcRgL+XZ950=
+	b=ztGcuTXTq44ccWWZEi0K7USjC+D9yHsmoxGbOJepLQ/Qau56yQHWMMMZ8wbQGHOti
+	 /Ii1aV7EPov6SsDUS2JQ19b3L8Kb+dMQVQ5wi/TjW28xuu4afZU2YNEuYP0vMrM8m8
+	 J/KJU5wrM/FRnyftfIUml49Vqa9xjl9EvOa8ki9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 013/211] ASOC: SOF: Intel: pci-tgl: Fix device description
-Date: Mon, 20 Mar 2023 15:52:28 +0100
-Message-Id: <20230320145513.849190195@linuxfoundation.org>
+	Sherry Sun <sherry.sun@nxp.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 074/115] tty: serial: fsl_lpuart: skip waiting for transmission complete when UARTCTRL_SBK is asserted
+Date: Mon, 20 Mar 2023 15:54:46 +0100
+Message-Id: <20230320145452.531986076@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,47 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit 376f79bbf521fc37b871b536276319951b5bef3a ]
+commit 2411fd94ceaa6e11326e95d6ebf876cbfed28d23 upstream.
 
-Add the missing ops_free callback.
+According to LPUART RM, Transmission Complete Flag becomes 0 if queuing
+a break character by writing 1 to CTRL[SBK], so here need to skip
+waiting for transmission complete when UARTCTRL_SBK is asserted,
+otherwise the kernel may stuck here.
+And actually set_termios() adds transmission completion waiting to avoid
+data loss or data breakage when changing the baud rate, but we don't
+need to worry about this when queuing break characters.
 
-Fixes: 63d375b9f2a9 ("ASoC: SOF: Intel: pci-tgl: use RPL specific firmware definitions")
-
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230307093914.25409-5-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230223093941.31790-1-sherry.sun@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/intel/pci-tgl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/fsl_lpuart.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/sof/intel/pci-tgl.c b/sound/soc/sof/intel/pci-tgl.c
-index adc7314a1b578..22e769e0831d9 100644
---- a/sound/soc/sof/intel/pci-tgl.c
-+++ b/sound/soc/sof/intel/pci-tgl.c
-@@ -239,6 +239,7 @@ static const struct sof_dev_desc rpls_desc = {
- 	.nocodec_tplg_filename = "sof-rpl-nocodec.tplg",
- 	.ops = &sof_tgl_ops,
- 	.ops_init = sof_tgl_ops_init,
-+	.ops_free = hda_ops_free,
- };
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -2201,9 +2201,15 @@ lpuart32_set_termios(struct uart_port *p
+ 	/* update the per-port timeout */
+ 	uart_update_timeout(port, termios->c_cflag, baud);
  
- static const struct sof_dev_desc rpl_desc = {
-@@ -270,6 +271,7 @@ static const struct sof_dev_desc rpl_desc = {
- 	.nocodec_tplg_filename = "sof-rpl-nocodec.tplg",
- 	.ops = &sof_tgl_ops,
- 	.ops_init = sof_tgl_ops_init,
-+	.ops_free = hda_ops_free,
- };
+-	/* wait transmit engin complete */
+-	lpuart32_write(&sport->port, 0, UARTMODIR);
+-	lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
++	/*
++	 * LPUART Transmission Complete Flag may never be set while queuing a break
++	 * character, so skip waiting for transmission complete when UARTCTRL_SBK is
++	 * asserted.
++	 */
++	if (!(old_ctrl & UARTCTRL_SBK)) {
++		lpuart32_write(&sport->port, 0, UARTMODIR);
++		lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
++	}
  
- /* PCI IDs */
--- 
-2.39.2
-
+ 	/* disable transmit and receive */
+ 	lpuart32_write(&sport->port, old_ctrl & ~(UARTCTRL_TE | UARTCTRL_RE),
 
 
