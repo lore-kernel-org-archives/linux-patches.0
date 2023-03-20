@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C6F1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3ECAC433D2;
-	Mon, 20 Mar 2023 15:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA031C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFC4C43443;
+	Mon, 20 Mar 2023 15:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325589;
-	bh=BuR7NKzkajkPZTvxr6pF9S92otsa5NYAbZzXxo83uRM=;
+	s=korg; t=1679325592;
+	bh=sH9b01NC63yCX24kX2fqUSwg8jkcNDHWvLl1bHqB9Ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qWugfVUa6/NhgK0DFB/FdkCR6GjPPf1NErXKYqECY2Kf7y7FBEWg7M4BgEHV9wQS5
-	 2V0a/UfajmHox2g0vz31wiIOQEvHP4GO2A38A19vR8ZTxX/d5KCd8XP9VL2JyUkVKz
-	 dL//sZ9nAiUAGrIdflqH4MTVKIQTn/ppBtBqZydw=
+	b=MQ7+v9iWS124TgReNEbfOq/3RqupQkK98+6XD+umWLnR3nkxuy+GK/HxcIebXYzzJ
+	 7Rz9eWbV50SUVq6RjDQfBoyTaU4dodpWrBZy8S40MpGG9vWFOlyDxpvXI1qDUimDtx
+	 JU4XLwCBUdy7SXGZVE46z0CbXQw/tphyabE3oK0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
+	Theodore Tso <tytso@mit.edu>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 066/211] block: null_blk: Fix handling of fake timeout request
-Date: Mon, 20 Mar 2023 15:53:21 +0100
-Message-Id: <20230320145515.986021976@linuxfoundation.org>
+Subject: [PATCH 6.1 107/198] ext4: fail ext4_iget if special inode unallocated
+Date: Mon, 20 Mar 2023 15:54:05 +0100
+Message-Id: <20230320145512.081649027@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,55 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 63f886597085f346276e3b3c8974de0100d65f32 ]
+[ Upstream commit 5cd740287ae5e3f9d1c46f5bfe8778972fd6d3fe ]
 
-When injecting a fake timeout into the null_blk driver using
-fail_io_timeout, the request timeout handler does not execute
-blk_mq_complete_request(), so the complete callback is never executed
-for a timedout request.
+In ext4_fill_super(), EXT4_ORPHAN_FS flag is cleared after
+ext4_orphan_cleanup() is executed. Therefore, when __ext4_iget() is
+called to get an inode whose i_nlink is 0 when the flag exists, no error
+is returned. If the inode is a special inode, a null pointer dereference
+may occur. If the value of i_nlink is 0 for any inodes (except boot loader
+inodes) got by using the EXT4_IGET_SPECIAL flag, the current file system
+is corrupted. Therefore, make the ext4_iget() function return an error if
+it gets such an abnormal special inode.
 
-The null_blk driver also has a driver-specific fake timeout mechanism
-which does not have this problem. Fix the problem with fail_io_timeout
-by using the same meachanism as null_blk internal timeout feature, using
-the fake_timeout field of null_blk commands.
-
-Reported-by: Akinobu Mita <akinobu.mita@gmail.com>
-Fixes: de3510e52b0a ("null_blk: fix command timeout completion handling")
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20230314041106.19173-2-damien.lemoal@opensource.wdc.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=199179
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216541
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216539
+Reported-by: Luís Henriques <lhenriques@suse.de>
+Suggested-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230107032126.4165860-2-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ext4/inode.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 7d28e3aa406c2..a200aba02e436 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -1413,8 +1413,7 @@ static inline void nullb_complete_cmd(struct nullb_cmd *cmd)
- 	case NULL_IRQ_SOFTIRQ:
- 		switch (cmd->nq->dev->queue_mode) {
- 		case NULL_Q_MQ:
--			if (likely(!blk_should_fake_timeout(cmd->rq->q)))
--				blk_mq_complete_request(cmd->rq);
-+			blk_mq_complete_request(cmd->rq);
- 			break;
- 		case NULL_Q_BIO:
- 			/*
-@@ -1675,7 +1674,8 @@ static blk_status_t null_queue_rq(struct blk_mq_hw_ctx *hctx,
- 	cmd->rq = bd->rq;
- 	cmd->error = BLK_STS_OK;
- 	cmd->nq = nq;
--	cmd->fake_timeout = should_timeout_request(bd->rq);
-+	cmd->fake_timeout = should_timeout_request(bd->rq) ||
-+		blk_should_fake_timeout(bd->rq->q);
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 34c87fcfd0617..eea11ad84e680 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4807,13 +4807,6 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 		goto bad_inode;
+ 	raw_inode = ext4_raw_inode(&iloc);
  
- 	blk_mq_start_request(bd->rq);
- 
+-	if ((ino == EXT4_ROOT_INO) && (raw_inode->i_links_count == 0)) {
+-		ext4_error_inode(inode, function, line, 0,
+-				 "iget: root inode unallocated");
+-		ret = -EFSCORRUPTED;
+-		goto bad_inode;
+-	}
+-
+ 	if ((flags & EXT4_IGET_HANDLE) &&
+ 	    (raw_inode->i_links_count == 0) && (raw_inode->i_mode == 0)) {
+ 		ret = -ESTALE;
+@@ -4886,11 +4879,16 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 	 * NeilBrown 1999oct15
+ 	 */
+ 	if (inode->i_nlink == 0) {
+-		if ((inode->i_mode == 0 ||
++		if ((inode->i_mode == 0 || flags & EXT4_IGET_SPECIAL ||
+ 		     !(EXT4_SB(inode->i_sb)->s_mount_state & EXT4_ORPHAN_FS)) &&
+ 		    ino != EXT4_BOOT_LOADER_INO) {
+-			/* this inode is deleted */
+-			ret = -ESTALE;
++			/* this inode is deleted or unallocated */
++			if (flags & EXT4_IGET_SPECIAL) {
++				ext4_error_inode(inode, function, line, 0,
++						 "iget: special inode unallocated");
++				ret = -EFSCORRUPTED;
++			} else
++				ret = -ESTALE;
+ 			goto bad_inode;
+ 		}
+ 		/* The only unlinked inodes we let through here have
 -- 
 2.39.2
 
