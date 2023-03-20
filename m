@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAD81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF67C433D2;
-	Mon, 20 Mar 2023 15:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9251C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C00C433EF;
+	Mon, 20 Mar 2023 15:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325152;
-	bh=j1MGEQmNXwRQZbXTFfs+jQOVxqSqFNMBQT1eucoL3Ak=;
+	s=korg; t=1679325155;
+	bh=XlyKjxvn52nhRum6llsWjb1HNdixuZsp/9PSZT/mEJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvowZmDB3Hf8CtjVN+O84A6S4HomVi+Az/5HdXYnVOhD0LJKuukCMKepM/o5S0Mwf
-	 /Wq38s/CrMXfPhXGCTdYi1qxlGPvnhMfxUWPnwA7wY8z8IwZmn1hCMMS58IHGaJ+a2
-	 OK/fH+etoah5d+Td/7mQAbiCiQhEMA+2OehENNps=
+	b=BUxoLzQaPXU9AmNaftgrSICJtrNAi4s4qGLX+CADZZPP2b0EWw8o/ehkbAOjS7xD7
+	 KSx9QtdpEV3blpkF7B13NMptUbUWHvv33c0Rj4ARAwyEhsNt53L0q+fa9YHBUffQcZ
+	 7nnfsm6rrTyLY4ShcPuh6hNSxC+cWxBv9eV77jLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Lei <Jun.Lei@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/115] drm/amd/display: fix shift-out-of-bounds in CalculateVMAndRowBytes
-Date: Mon, 20 Mar 2023 15:54:44 +0100
-Message-Id: <20230320145452.444054242@linuxfoundation.org>
+Subject: [PATCH 6.1 046/198] net/smc: fix NULL sndbuf_desc in smc_cdc_tx_handler()
+Date: Mon, 20 Mar 2023 15:53:04 +0100
+Message-Id: <20230320145509.400064647@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,47 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Hung <alex.hung@amd.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit 031f196d1b1b6d5dfcb0533b431e3ab1750e6189 ]
+[ Upstream commit 22a825c541d775c1dbe7b2402786025acad6727b ]
 
-[WHY]
-When PTEBufferSizeInRequests is zero, UBSAN reports the following
-warning because dml_log2 returns an unexpected negative value:
+When performing a stress test on SMC-R by rmmod mlx5_ib driver
+during the wrk/nginx test, we found that there is a probability
+of triggering a panic while terminating all link groups.
 
-  shift exponent 4294966273 is too large for 32-bit type 'int'
+This issue dues to the race between smc_smcr_terminate_all()
+and smc_buf_create().
 
-[HOW]
+			smc_smcr_terminate_all
 
-In the case PTEBufferSizeInRequests is zero, skip the dml_log2() and
-assign the result directly.
+smc_buf_create
+/* init */
+conn->sndbuf_desc = NULL;
+...
 
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+			__smc_lgr_terminate
+				smc_conn_kill
+					smc_close_abort
+						smc_cdc_get_slot_and_msg_send
+
+			__softirqentry_text_start
+				smc_wr_tx_process_cqe
+					smc_cdc_tx_handler
+						READ(conn->sndbuf_desc->len);
+						/* panic dues to NULL sndbuf_desc */
+
+conn->sndbuf_desc = xxx;
+
+This patch tries to fix the issue by always to check the sndbuf_desc
+before send any cdc msg, to make sure that no null pointer is
+seen during cqe processing.
+
+Fixes: 0b29ec643613 ("net/smc: immediate termination for SMCR link groups")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Link: https://lore.kernel.org/r/1678263432-17329-1-git-send-email-alibuda@linux.alibaba.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c   | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/smc/smc_cdc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-index 518672a2450f4..de0fa87b301a5 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-@@ -1868,7 +1868,10 @@ static unsigned int CalculateVMAndRowBytes(
- 	}
+diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
+index 53f63bfbaf5f9..89105e95b4523 100644
+--- a/net/smc/smc_cdc.c
++++ b/net/smc/smc_cdc.c
+@@ -114,6 +114,9 @@ int smc_cdc_msg_send(struct smc_connection *conn,
+ 	union smc_host_cursor cfed;
+ 	int rc;
  
- 	if (SurfaceTiling == dm_sw_linear) {
--		*dpte_row_height = dml_min(128, 1 << (unsigned int) dml_floor(dml_log2(PTEBufferSizeInRequests * *PixelPTEReqWidth / Pitch), 1));
-+		if (PTEBufferSizeInRequests == 0)
-+			*dpte_row_height = 1;
-+		else
-+			*dpte_row_height = dml_min(128, 1 << (unsigned int) dml_floor(dml_log2(PTEBufferSizeInRequests * *PixelPTEReqWidth / Pitch), 1));
- 		*dpte_row_width_ub = (dml_ceil(((double) SwathWidth - 1) / *PixelPTEReqWidth, 1) + 1) * *PixelPTEReqWidth;
- 		*PixelPTEBytesPerRow = *dpte_row_width_ub / *PixelPTEReqWidth * *PTERequestSize;
- 	} else if (ScanDirection != dm_vert) {
++	if (unlikely(!READ_ONCE(conn->sndbuf_desc)))
++		return -ENOBUFS;
++
+ 	smc_cdc_add_pending_send(conn, pend);
+ 
+ 	conn->tx_cdc_seq++;
 -- 
 2.39.2
 
