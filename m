@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B951C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE86BC4339C;
-	Mon, 20 Mar 2023 15:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F69D1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841CDC433D2;
+	Mon, 20 Mar 2023 15:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325136;
-	bh=rvfbTQmx+MYVRFtgyWmcktrV1sAZDMXwHaKtrVLWxfM=;
+	s=korg; t=1679325138;
+	bh=AY/Ig6/D6B8kAit4w8uSAEvPz3sYAX7+kRJBXfUowsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cgm0xAwgjBPNMjX9tmPafo9UgIyqgiHd4F4lXJkZJWQyZoFsfqW1PUAp9PVRImbva
-	 sWp27ItkhdyS/hMkBtPkYU3cYUFa+P9P4C73KjfX1pM6XBwfO0eAYWNBX8MZhYTl0W
-	 153WyMS4ub3z2kkJeTeNVMSb6FCR+dsRusXctAuw=
+	b=wBQZAd82yv1p5e0zmdOde+valWmxNX0TbJ11knp3Zh75oErU6pwmNO8IWles1+atz
+	 64E5TiVT6vmPSw3NF6NXVh0pnQjoYIcvxgo2TJ34Vze1vE87rhgeaYdxAlOuiYjrhR
+	 0LgZTLRePE6rnWHgOMTGSYHMSJhnhFew1nmB9XY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>
-Subject: [PATCH 5.10 94/99] attr: add setattr_should_drop_sgid()
-Date: Mon, 20 Mar 2023 15:55:12 +0100
-Message-Id: <20230320145447.363902005@linuxfoundation.org>
+	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH 5.15 071/115] sh: intc: Avoid spurious sizeof-pointer-div warning
+Date: Mon, 20 Mar 2023 15:54:43 +0100
+Message-Id: <20230320145452.397206213@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,76 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 
-commit 72ae017c5451860443a16fb2a8c243bff3e396b8 upstream.
+[ Upstream commit 250870824c1cf199b032b1ef889c8e8d69d9123a ]
 
-[backported to 5.10.y, prior to idmapped mounts]
+GCC warns about the pattern sizeof(void*)/sizeof(void), as it looks like
+the abuse of a pattern to calculate the array size. This pattern appears
+in the unevaluated part of the ternary operator in _INTC_ARRAY if the
+parameter is NULL.
 
-The current setgid stripping logic during write and ownership change
-operations is inconsistent and strewn over multiple places. In order to
-consolidate it and make more consistent we'll add a new helper
-setattr_should_drop_sgid(). The function retains the old behavior where
-we remove the S_ISGID bit unconditionally when S_IXGRP is set but also
-when it isn't set and the caller is neither in the group of the inode
-nor privileged over the inode.
+The replacement uses an alternate approach to return 0 in case of NULL
+which does not generate the pattern sizeof(void*)/sizeof(void), but still
+emits the warning if _INTC_ARRAY is called with a nonarray parameter.
 
-We will use this helper both in write operation permission removal such
-as file_remove_privs() as well as in ownership change operations.
+This patch is required for successful compilation with -Werror enabled.
 
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The idea to use _Generic for type distinction is taken from Comment #7
+in https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108483 by Jakub Jelinek
+
+Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Link: https://lore.kernel.org/r/619fa552-c988-35e5-b1d7-fe256c46a272@mkarcher.dialup.fu-berlin.de
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/attr.c     |   25 +++++++++++++++++++++++++
- fs/internal.h |    5 +++++
- 2 files changed, 30 insertions(+)
+ include/linux/sh_intc.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/attr.c
-+++ b/fs/attr.c
-@@ -20,6 +20,31 @@
+diff --git a/include/linux/sh_intc.h b/include/linux/sh_intc.h
+index c255273b02810..37ad81058d6ae 100644
+--- a/include/linux/sh_intc.h
++++ b/include/linux/sh_intc.h
+@@ -97,7 +97,10 @@ struct intc_hw_desc {
+ 	unsigned int nr_subgroups;
+ };
  
- #include "internal.h"
+-#define _INTC_ARRAY(a) a, __same_type(a, NULL) ? 0 : sizeof(a)/sizeof(*a)
++#define _INTC_SIZEOF_OR_ZERO(a) (_Generic(a,                 \
++                                 typeof(NULL):  0,           \
++                                 default:       sizeof(a)))
++#define _INTC_ARRAY(a) a, _INTC_SIZEOF_OR_ZERO(a)/sizeof(*a)
  
-+/**
-+ * setattr_should_drop_sgid - determine whether the setgid bit needs to be
-+ *                            removed
-+ * @inode:	inode to check
-+ *
-+ * This function determines whether the setgid bit needs to be removed.
-+ * We retain backwards compatibility and require setgid bit to be removed
-+ * unconditionally if S_IXGRP is set. Otherwise we have the exact same
-+ * requirements as setattr_prepare() and setattr_copy().
-+ *
-+ * Return: ATTR_KILL_SGID if setgid bit needs to be removed, 0 otherwise.
-+ */
-+int setattr_should_drop_sgid(const struct inode *inode)
-+{
-+	umode_t mode = inode->i_mode;
-+
-+	if (!(mode & S_ISGID))
-+		return 0;
-+	if (mode & S_IXGRP)
-+		return ATTR_KILL_SGID;
-+	if (!in_group_or_capable(inode, inode->i_gid))
-+		return ATTR_KILL_SGID;
-+	return 0;
-+}
-+
- /*
-  * The logic we want is
-  *
---- a/fs/internal.h
-+++ b/fs/internal.h
-@@ -197,3 +197,8 @@ int sb_init_dio_done_wq(struct super_blo
-  */
- int do_statx(int dfd, const char __user *filename, unsigned flags,
- 	     unsigned int mask, struct statx __user *buffer);
-+
-+/*
-+ * fs/attr.c
-+ */
-+int setattr_should_drop_sgid(const struct inode *inode);
+ #define INTC_HW_DESC(vectors, groups, mask_regs,	\
+ 		     prio_regs,	sense_regs, ack_regs)	\
+-- 
+2.39.2
+
 
 
