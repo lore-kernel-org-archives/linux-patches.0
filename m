@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AF21C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45263C433EF;
-	Mon, 20 Mar 2023 15:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869FD1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065ABC433EF;
+	Mon, 20 Mar 2023 15:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325243;
-	bh=FnopRgmivOrI9mpll2HA95oRSrfV9ZY9IOs63XY0C2c=;
+	s=korg; t=1679325246;
+	bh=ctkKQZb+NgfzP5BglC2zreygbsHxkPBU5AP+3z0K7Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7arRS82jPIDEMNl6BoTYT937P2jRt5vKhT35muj/Eg7XJA0Qf5rRqlj2lqhigMll
-	 ExundE1ExLQarcQ+zpqQ6msbKqnmR0xa0M6+UNRrMNScXEeJKsSV1GSrXokz6IGuGl
-	 3c6eaIiAALw1Ed8Pf+lXeVTFJf5K80sGVKSmls4Q=
+	b=zTSHBd569suq1rGQ1cv/Uf1ZIVZrdOJ2YCIt801h2/6vaOohh77im75H7LYDBdWfc
+	 qLwjqvGYPOC1NcUxSGufLt5n2GYcpIB5Ku+djqQZraRb1pSAvW9rUoLaetaAOOnEOY
+	 nnsuke24Du/EwhEKtTyuXzut9Nh5N4wPHhUtRumY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Jan Karcher <jaka@linux.ibm.com>,
-	Karsten Graul <kgraul@linux.ibm.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/198] net/smc: fix deadlock triggered by cancel_delayed_work_syn()
-Date: Mon, 20 Mar 2023 15:53:17 +0100
-Message-Id: <20230320145510.009911205@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 082/115] tracing: Check field value in hist_field_name()
+Date: Mon, 20 Mar 2023 15:54:54 +0100
+Message-Id: <20230320145452.868837389@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,164 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenjia Zhang <wenjia@linux.ibm.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 13085e1b5cab8ad802904d72e6a6dae85ae0cd20 ]
+commit 9f116f76fa8c04c81aef33ad870dbf9a158e5b70 upstream.
 
-The following LOCKDEP was detected:
-		Workqueue: events smc_lgr_free_work [smc]
-		WARNING: possible circular locking dependency detected
-		6.1.0-20221027.rc2.git8.56bc5b569087.300.fc36.s390x+debug #1 Not tainted
-		------------------------------------------------------
-		kworker/3:0/176251 is trying to acquire lock:
-		00000000f1467148 ((wq_completion)smc_tx_wq-00000000#2){+.+.}-{0:0},
-			at: __flush_workqueue+0x7a/0x4f0
-		but task is already holding lock:
-		0000037fffe97dc8 ((work_completion)(&(&lgr->free_work)->work)){+.+.}-{0:0},
-			at: process_one_work+0x232/0x730
-		which lock already depends on the new lock.
-		the existing dependency chain (in reverse order) is:
-		-> #4 ((work_completion)(&(&lgr->free_work)->work)){+.+.}-{0:0}:
-		       __lock_acquire+0x58e/0xbd8
-		       lock_acquire.part.0+0xe2/0x248
-		       lock_acquire+0xac/0x1c8
-		       __flush_work+0x76/0xf0
-		       __cancel_work_timer+0x170/0x220
-		       __smc_lgr_terminate.part.0+0x34/0x1c0 [smc]
-		       smc_connect_rdma+0x15e/0x418 [smc]
-		       __smc_connect+0x234/0x480 [smc]
-		       smc_connect+0x1d6/0x230 [smc]
-		       __sys_connect+0x90/0xc0
-		       __do_sys_socketcall+0x186/0x370
-		       __do_syscall+0x1da/0x208
-		       system_call+0x82/0xb0
-		-> #3 (smc_client_lgr_pending){+.+.}-{3:3}:
-		       __lock_acquire+0x58e/0xbd8
-		       lock_acquire.part.0+0xe2/0x248
-		       lock_acquire+0xac/0x1c8
-		       __mutex_lock+0x96/0x8e8
-		       mutex_lock_nested+0x32/0x40
-		       smc_connect_rdma+0xa4/0x418 [smc]
-		       __smc_connect+0x234/0x480 [smc]
-		       smc_connect+0x1d6/0x230 [smc]
-		       __sys_connect+0x90/0xc0
-		       __do_sys_socketcall+0x186/0x370
-		       __do_syscall+0x1da/0x208
-		       system_call+0x82/0xb0
-		-> #2 (sk_lock-AF_SMC){+.+.}-{0:0}:
-		       __lock_acquire+0x58e/0xbd8
-		       lock_acquire.part.0+0xe2/0x248
-		       lock_acquire+0xac/0x1c8
-		       lock_sock_nested+0x46/0xa8
-		       smc_tx_work+0x34/0x50 [smc]
-		       process_one_work+0x30c/0x730
-		       worker_thread+0x62/0x420
-		       kthread+0x138/0x150
-		       __ret_from_fork+0x3c/0x58
-		       ret_from_fork+0xa/0x40
-		-> #1 ((work_completion)(&(&smc->conn.tx_work)->work)){+.+.}-{0:0}:
-		       __lock_acquire+0x58e/0xbd8
-		       lock_acquire.part.0+0xe2/0x248
-		       lock_acquire+0xac/0x1c8
-		       process_one_work+0x2bc/0x730
-		       worker_thread+0x62/0x420
-		       kthread+0x138/0x150
-		       __ret_from_fork+0x3c/0x58
-		       ret_from_fork+0xa/0x40
-		-> #0 ((wq_completion)smc_tx_wq-00000000#2){+.+.}-{0:0}:
-		       check_prev_add+0xd8/0xe88
-		       validate_chain+0x70c/0xb20
-		       __lock_acquire+0x58e/0xbd8
-		       lock_acquire.part.0+0xe2/0x248
-		       lock_acquire+0xac/0x1c8
-		       __flush_workqueue+0xaa/0x4f0
-		       drain_workqueue+0xaa/0x158
-		       destroy_workqueue+0x44/0x2d8
-		       smc_lgr_free+0x9e/0xf8 [smc]
-		       process_one_work+0x30c/0x730
-		       worker_thread+0x62/0x420
-		       kthread+0x138/0x150
-		       __ret_from_fork+0x3c/0x58
-		       ret_from_fork+0xa/0x40
-		other info that might help us debug this:
-		Chain exists of:
-		  (wq_completion)smc_tx_wq-00000000#2
-	  	  --> smc_client_lgr_pending
-		  --> (work_completion)(&(&lgr->free_work)->work)
-		 Possible unsafe locking scenario:
-		       CPU0                    CPU1
-		       ----                    ----
-		  lock((work_completion)(&(&lgr->free_work)->work));
-		                   lock(smc_client_lgr_pending);
-		                   lock((work_completion)
-					(&(&lgr->free_work)->work));
-		  lock((wq_completion)smc_tx_wq-00000000#2);
-		 *** DEADLOCK ***
-		2 locks held by kworker/3:0/176251:
-		 #0: 0000000080183548
-			((wq_completion)events){+.+.}-{0:0},
-				at: process_one_work+0x232/0x730
-		 #1: 0000037fffe97dc8
-			((work_completion)
-			 (&(&lgr->free_work)->work)){+.+.}-{0:0},
-				at: process_one_work+0x232/0x730
-		stack backtrace:
-		CPU: 3 PID: 176251 Comm: kworker/3:0 Not tainted
-		Hardware name: IBM 8561 T01 701 (z/VM 7.2.0)
-		Call Trace:
-		 [<000000002983c3e4>] dump_stack_lvl+0xac/0x100
-		 [<0000000028b477ae>] check_noncircular+0x13e/0x160
-		 [<0000000028b48808>] check_prev_add+0xd8/0xe88
-		 [<0000000028b49cc4>] validate_chain+0x70c/0xb20
-		 [<0000000028b4bd26>] __lock_acquire+0x58e/0xbd8
-		 [<0000000028b4cf6a>] lock_acquire.part.0+0xe2/0x248
-		 [<0000000028b4d17c>] lock_acquire+0xac/0x1c8
-		 [<0000000028addaaa>] __flush_workqueue+0xaa/0x4f0
-		 [<0000000028addf9a>] drain_workqueue+0xaa/0x158
-		 [<0000000028ae303c>] destroy_workqueue+0x44/0x2d8
-		 [<000003ff8029af26>] smc_lgr_free+0x9e/0xf8 [smc]
-		 [<0000000028adf3d4>] process_one_work+0x30c/0x730
-		 [<0000000028adf85a>] worker_thread+0x62/0x420
-		 [<0000000028aeac50>] kthread+0x138/0x150
-		 [<0000000028a63914>] __ret_from_fork+0x3c/0x58
-		 [<00000000298503da>] ret_from_fork+0xa/0x40
-		INFO: lockdep is turned off.
-===================================================================
+The function hist_field_name() cannot handle being passed a NULL field
+parameter. It should never be NULL, but due to a previous bug, NULL was
+passed to the function and the kernel crashed due to a NULL dereference.
+Mark Rutland reported this to me on IRC.
 
-This deadlock occurs because cancel_delayed_work_sync() waits for
-the work(&lgr->free_work) to finish, while the &lgr->free_work
-waits for the work(lgr->tx_wq), which needs the sk_lock-AF_SMC, that
-is already used under the mutex_lock.
+The bug was fixed, but to prevent future bugs from crashing the kernel,
+check the field and add a WARN_ON() if it is NULL.
 
-The solution is to use cancel_delayed_work() instead, which kills
-off a pending work.
+Link: https://lkml.kernel.org/r/20230302020810.762384440@goodmis.org
 
-Fixes: a52bcc919b14 ("net/smc: improve termination processing")
-Signed-off-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Reviewed-by: Jan Karcher <jaka@linux.ibm.com>
-Reviewed-by: Karsten Graul <kgraul@linux.ibm.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Mark Rutland <mark.rutland@arm.com>
+Fixes: c6afad49d127f ("tracing: Add hist trigger 'sym' and 'sym-offset' modifiers")
+Tested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events_hist.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
-index c19d4b7c1f28a..0208dfb353456 100644
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1459,7 +1459,7 @@ static void __smc_lgr_terminate(struct smc_link_group *lgr, bool soft)
- 	if (lgr->terminating)
- 		return;	/* lgr already terminating */
- 	/* cancel free_work sync, will terminate when lgr->freeing is set */
--	cancel_delayed_work_sync(&lgr->free_work);
-+	cancel_delayed_work(&lgr->free_work);
- 	lgr->terminating = 1;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1127,6 +1127,9 @@ static const char *hist_field_name(struc
+ {
+ 	const char *field_name = "";
  
- 	/* kill remaining link group connections */
--- 
-2.39.2
-
++	if (WARN_ON_ONCE(!field))
++		return field_name;
++
+ 	if (level > 1)
+ 		return field_name;
+ 
 
 
