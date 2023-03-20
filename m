@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEACD1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4123AC433D2;
-	Mon, 20 Mar 2023 15:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8236B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00750C433D2;
+	Mon, 20 Mar 2023 15:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324733;
-	bh=0vGVffKTWvcvF7+SWzA/RlrcWvpEwqtW4CZqnlnVuOo=;
+	s=korg; t=1679324736;
+	bh=GEfrb+5ONX0q7ZCoedmIIX8jolUzN6u2QVFLAC6nq58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFGJnYTW/wkJG8Amoh2XP1B2WmQgFnHEBuMKGckFBd315r3wewmKc+ND2c64g6V5P
-	 YUWWKB2KEOzsVt972EIHSg17Fe9fAmpC//UTWpEiRn3+8YX9P9BVegKEd0vLIlyoZg
-	 SgzDlSAf8AZCv5svzazFlojlm9EUmfVWeOfbjMjA=
+	b=gMjReHSVm5mdx5rYDZkOzQ34IVB7lkGCF1ieFxpYR48IRlKw1yF91PLV227xJEOYA
+	 Iv5FpNMUp7KdppaQq8zi9EeFhNGRewrDLr+fuEV2HCnhWZ0kFc33z7/Jz/oIsrx26y
+	 3EyKwepSLAa2A2V37fBmKvtumcxo2mT/yuUm8KYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Schramm <t.schramm@manjaro.org>,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Mika Kahola <mika.kahola@intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 48/99] mmc: atmel-mci: fix race between stop command and start of next command
-Date: Mon, 20 Mar 2023 15:54:26 +0100
-Message-Id: <20230320145445.396972481@linuxfoundation.org>
+Subject: [PATCH 5.15 025/115] drm/i915/psr: Use calculated io and fast wake lines
+Date: Mon, 20 Mar 2023 15:53:57 +0100
+Message-Id: <20230320145450.486672818@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,55 +38,169 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Schramm <t.schramm@manjaro.org>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit eca5bd666b0aa7dc0bca63292e4778968241134e ]
+[ Upstream commit 71c602103c74b277bef3d20a308874a33ec8326d ]
 
-This commit fixes a race between completion of stop command and start of a
-new command.
-Previously the command ready interrupt was enabled before stop command
-was written to the command register. This caused the command ready
-interrupt to fire immediately since the CMDRDY flag is asserted constantly
-while there is no command in progress.
-Consequently the command state machine will immediately advance to the
-next state when the tasklet function is executed again, no matter
-actual completion state of the stop command.
-Thus a new command can then be dispatched immediately, interrupting and
-corrupting the stop command on the CMD line.
-Fix that by dropping the command ready interrupt enable before calling
-atmci_send_stop_cmd. atmci_send_stop_cmd does already enable the
-command ready interrupt, no further writes to ATMCI_IER are necessary.
+Currently we are using hardcoded 7 for io and fast wake lines.
 
-Signed-off-by: Tobias Schramm <t.schramm@manjaro.org>
-Acked-by: Ludovic Desroches <ludovic.desroches@microchip.com>
-Link: https://lore.kernel.org/r/20221230194315.809903-2-t.schramm@manjaro.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+According to Bspec io and fast wake times are both 42us for
+DISPLAY_VER >= 12 and 50us and 32us for older platforms.
+
+Calculate line counts for these and configure them into PSR2_CTL
+accordingly
+
+Use 45 us for the fast wake calculation as 42 seems to be too
+tight based on testing.
+
+Bspec: 49274, 4289
+
+Cc: Mika Kahola <mika.kahola@intel.com>
+Cc: José Roberto de Souza <jose.souza@intel.com>
+Fixes: 64cf40a125ff ("drm/i915/psr: Program default IO buffer Wake and Fast Wake")
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7725
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230221085304.3382297-1-jouni.hogander@intel.com
+(cherry picked from commit cb42e8ede5b475c096e473b86c356b1158b4bc3b)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/atmel-mci.c | 3 ---
- 1 file changed, 3 deletions(-)
+ .../drm/i915/display/intel_display_types.h    |  2 +
+ drivers/gpu/drm/i915/display/intel_psr.c      | 78 +++++++++++++++----
+ 2 files changed, 63 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
-index af85b32c6c1c8..c468f9a02ef6b 100644
---- a/drivers/mmc/host/atmel-mci.c
-+++ b/drivers/mmc/host/atmel-mci.c
-@@ -1818,7 +1818,6 @@ static void atmci_tasklet_func(unsigned long priv)
- 				atmci_writel(host, ATMCI_IER, ATMCI_NOTBUSY);
- 				state = STATE_WAITING_NOTBUSY;
- 			} else if (host->mrq->stop) {
--				atmci_writel(host, ATMCI_IER, ATMCI_CMDRDY);
- 				atmci_send_stop_cmd(host, data);
- 				state = STATE_SENDING_STOP;
- 			} else {
-@@ -1851,8 +1850,6 @@ static void atmci_tasklet_func(unsigned long priv)
- 				 * command to send.
- 				 */
- 				if (host->mrq->stop) {
--					atmci_writel(host, ATMCI_IER,
--					             ATMCI_CMDRDY);
- 					atmci_send_stop_cmd(host, data);
- 					state = STATE_SENDING_STOP;
- 				} else {
+diff --git a/drivers/gpu/drm/i915/display/intel_display_types.h b/drivers/gpu/drm/i915/display/intel_display_types.h
+index b56850d964919..90e055f056994 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -1520,6 +1520,8 @@ struct intel_psr {
+ 	bool psr2_sel_fetch_enabled;
+ 	bool req_psr2_sdp_prior_scanline;
+ 	u8 sink_sync_latency;
++	u8 io_wake_lines;
++	u8 fast_wake_lines;
+ 	ktime_t last_entry_attempt;
+ 	ktime_t last_exit;
+ 	bool sink_not_reliable;
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 5f9894e3c7aa7..cf1e92486cbc9 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -549,6 +549,14 @@ static void hsw_activate_psr2(struct intel_dp *intel_dp)
+ 	val |= EDP_PSR2_FRAME_BEFORE_SU(intel_dp->psr.sink_sync_latency + 1);
+ 	val |= intel_psr2_get_tp_time(intel_dp);
+ 
++	if (DISPLAY_VER(dev_priv) >= 12) {
++		if (intel_dp->psr.io_wake_lines < 9 &&
++		    intel_dp->psr.fast_wake_lines < 9)
++			val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
++		else
++			val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_3;
++	}
++
+ 	/* Wa_22012278275:adl-p */
+ 	if (IS_ADLP_DISPLAY_STEP(dev_priv, STEP_A0, STEP_E0)) {
+ 		static const u8 map[] = {
+@@ -565,31 +573,21 @@ static void hsw_activate_psr2(struct intel_dp *intel_dp)
+ 		 * Still using the default IO_BUFFER_WAKE and FAST_WAKE, see
+ 		 * comments bellow for more information
+ 		 */
+-		u32 tmp, lines = 7;
++		u32 tmp;
+ 
+-		val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
+-
+-		tmp = map[lines - TGL_EDP_PSR2_IO_BUFFER_WAKE_MIN_LINES];
++		tmp = map[intel_dp->psr.io_wake_lines - TGL_EDP_PSR2_IO_BUFFER_WAKE_MIN_LINES];
+ 		tmp = tmp << TGL_EDP_PSR2_IO_BUFFER_WAKE_SHIFT;
+ 		val |= tmp;
+ 
+-		tmp = map[lines - TGL_EDP_PSR2_FAST_WAKE_MIN_LINES];
++		tmp = map[intel_dp->psr.fast_wake_lines - TGL_EDP_PSR2_FAST_WAKE_MIN_LINES];
+ 		tmp = tmp << TGL_EDP_PSR2_FAST_WAKE_MIN_SHIFT;
+ 		val |= tmp;
+ 	} else if (DISPLAY_VER(dev_priv) >= 12) {
+-		/*
+-		 * TODO: 7 lines of IO_BUFFER_WAKE and FAST_WAKE are default
+-		 * values from BSpec. In order to setting an optimal power
+-		 * consumption, lower than 4k resolution mode needs to decrease
+-		 * IO_BUFFER_WAKE and FAST_WAKE. And higher than 4K resolution
+-		 * mode needs to increase IO_BUFFER_WAKE and FAST_WAKE.
+-		 */
+-		val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
+-		val |= TGL_EDP_PSR2_IO_BUFFER_WAKE(7);
+-		val |= TGL_EDP_PSR2_FAST_WAKE(7);
++		val |= TGL_EDP_PSR2_IO_BUFFER_WAKE(intel_dp->psr.io_wake_lines);
++		val |= TGL_EDP_PSR2_FAST_WAKE(intel_dp->psr.fast_wake_lines);
+ 	} else if (DISPLAY_VER(dev_priv) >= 9) {
+-		val |= EDP_PSR2_IO_BUFFER_WAKE(7);
+-		val |= EDP_PSR2_FAST_WAKE(7);
++		val |= EDP_PSR2_IO_BUFFER_WAKE(intel_dp->psr.io_wake_lines);
++		val |= EDP_PSR2_FAST_WAKE(intel_dp->psr.fast_wake_lines);
+ 	}
+ 
+ 	if (intel_dp->psr.req_psr2_sdp_prior_scanline)
+@@ -842,6 +840,46 @@ static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_d
+ 	return true;
+ }
+ 
++static bool _compute_psr2_wake_times(struct intel_dp *intel_dp,
++				     struct intel_crtc_state *crtc_state)
++{
++	struct drm_i915_private *i915 = dp_to_i915(intel_dp);
++	int io_wake_lines, io_wake_time, fast_wake_lines, fast_wake_time;
++	u8 max_wake_lines;
++
++	if (DISPLAY_VER(i915) >= 12) {
++		io_wake_time = 42;
++		/*
++		 * According to Bspec it's 42us, but based on testing
++		 * it is not enough -> use 45 us.
++		 */
++		fast_wake_time = 45;
++		max_wake_lines = 12;
++	} else {
++		io_wake_time = 50;
++		fast_wake_time = 32;
++		max_wake_lines = 8;
++	}
++
++	io_wake_lines = intel_usecs_to_scanlines(
++		&crtc_state->uapi.adjusted_mode, io_wake_time);
++	fast_wake_lines = intel_usecs_to_scanlines(
++		&crtc_state->uapi.adjusted_mode, fast_wake_time);
++
++	if (io_wake_lines > max_wake_lines ||
++	    fast_wake_lines > max_wake_lines)
++		return false;
++
++	if (i915->params.psr_safest_params)
++		io_wake_lines = fast_wake_lines = max_wake_lines;
++
++	/* According to Bspec lower limit should be set as 7 lines. */
++	intel_dp->psr.io_wake_lines = max(io_wake_lines, 7);
++	intel_dp->psr.fast_wake_lines = max(fast_wake_lines, 7);
++
++	return true;
++}
++
+ static bool intel_psr2_config_valid(struct intel_dp *intel_dp,
+ 				    struct intel_crtc_state *crtc_state)
+ {
+@@ -939,6 +977,12 @@ static bool intel_psr2_config_valid(struct intel_dp *intel_dp,
+ 		return false;
+ 	}
+ 
++	if (!_compute_psr2_wake_times(intel_dp, crtc_state)) {
++		drm_dbg_kms(&dev_priv->drm,
++			    "PSR2 not enabled, Unable to use long enough wake times\n");
++		return false;
++	}
++
+ 	if (HAS_PSR2_SEL_FETCH(dev_priv)) {
+ 		if (!intel_psr2_sel_fetch_config_valid(intel_dp, crtc_state) &&
+ 		    !HAS_PSR_HW_TRACKING(dev_priv)) {
 -- 
 2.39.2
 
