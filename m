@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31691C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FF8C433EF;
-	Mon, 20 Mar 2023 15:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC571C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3214C433EF;
+	Mon, 20 Mar 2023 15:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325660;
-	bh=wlYgujtYhF0I8Xy2sRTaw4wOYDBH6fZW3RtnBQQzXwE=;
+	s=korg; t=1679325663;
+	bh=v3WmhsKYQj2brYwY24PrxhsCZptd76ru0komQ8l7e8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPbVGAKMFAtus0n5vb2SyjHqqNuZq8lfTKEv/mLT4l4D/McANh/qJJhegKOoK3csA
-	 rTrfw+n9nMEqm/dxSf718mxYnbF1JfFV3l/Pdnz3CFW+hwTdT03QStoWFsSYzXevmd
-	 ZpqSSyTa53wUn2tP5hgobx3KBgGIna3hrGEExEXc=
+	b=lKq8uueO7i5I413PteD6xggE5RgcI2r2RqM4ZK4ju5mPAwDHo7Nl3IqPJkEGFc63x
+	 U56VE4sJeYGZZOB9hexJywesz4+F3W2hFeaxOQNqPp4qmzNktLZYyNECupRYlZqCKp
+	 KY2adsWXS8wKvbKzoDUPriE7YTPh4cPQJQLIH2Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 078/211] net/mlx5: Set BREAK_FW_WAIT flag first when removing driver
-Date: Mon, 20 Mar 2023 15:53:33 +0100
-Message-Id: <20230320145516.544467283@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 6.1 119/198] serial: 8250_em: Fix UART port type
+Date: Mon, 20 Mar 2023 15:54:17 +0100
+Message-Id: <20230320145512.546833020@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +33,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 031a163f2c476adcb2c01e27a7d323e66174ac11 ]
+commit 32e293be736b853f168cd065d9cbc1b0c69f545d upstream.
 
-Currently, BREAK_FW_WAIT flag is set after syncing with fw_reset.
-However, fw_reset can call mlx5_load_one() which is waiting for fw
-init bit and BREAK_FW_WAIT flag is intended to stop. e.g.: the driver
-might wait on a loop it should exit.
-Fix it by setting the flag before syncing with fw_reset.
+As per HW manual for  EMEV2 "R19UH0040EJ0400 Rev.4.00", the UART
+IP found on EMMA mobile SoC is Register-compatible with the
+general-purpose 16750 UART chip. Fix UART port type as 16750 and
+enable 64-bytes fifo support.
 
-Fixes: 8324a02c342a ("net/mlx5: Add exit route when waiting for FW")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 22886ee96895 ("serial8250-em: Emma Mobile UART driver V2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230227114152.22265-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_em.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index bb718003d6f49..f4e0431da55b4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1768,11 +1768,11 @@ static void remove_one(struct pci_dev *pdev)
- 	struct mlx5_core_dev *dev  = pci_get_drvdata(pdev);
- 	struct devlink *devlink = priv_to_devlink(dev);
+--- a/drivers/tty/serial/8250/8250_em.c
++++ b/drivers/tty/serial/8250/8250_em.c
+@@ -106,8 +106,8 @@ static int serial8250_em_probe(struct pl
+ 	memset(&up, 0, sizeof(up));
+ 	up.port.mapbase = regs->start;
+ 	up.port.irq = irq;
+-	up.port.type = PORT_UNKNOWN;
+-	up.port.flags = UPF_BOOT_AUTOCONF | UPF_FIXED_PORT | UPF_IOREMAP;
++	up.port.type = PORT_16750;
++	up.port.flags = UPF_FIXED_PORT | UPF_IOREMAP | UPF_FIXED_TYPE;
+ 	up.port.dev = &pdev->dev;
+ 	up.port.private_data = priv;
  
-+	set_bit(MLX5_BREAK_FW_WAIT, &dev->intf_state);
- 	/* mlx5_drain_fw_reset() is using devlink APIs. Hence, we must drain
- 	 * fw_reset before unregistering the devlink.
- 	 */
- 	mlx5_drain_fw_reset(dev);
--	set_bit(MLX5_BREAK_FW_WAIT, &dev->intf_state);
- 	devlink_unregister(devlink);
- 	mlx5_sriov_disable(pdev);
- 	mlx5_crdump_disable(dev);
--- 
-2.39.2
-
 
 
