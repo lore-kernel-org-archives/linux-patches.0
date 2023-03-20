@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221491C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89CC8C433EF;
-	Mon, 20 Mar 2023 15:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF201C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E27EC433D2;
+	Mon, 20 Mar 2023 15:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325676;
-	bh=gbkODAwK/OWLYiSLQQ1vtVK4wzka5QYbDWyqUr7xv/U=;
+	s=korg; t=1679325679;
+	bh=wnXLSYdOtPwWTzOW70MLofEFjxHN6DtpqNqEXo76lb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1cSk3gib5aaPBrfSNymTVNeSpNlTikl2QIr5TXhVYUXYXWaKlT4fPVMQB+oo+LKO
-	 zCgTAad/Gkf9XmmMKUfnTxjB0zibaIpRHHGE/1G9sdT9UeRi5BfxuynihI5A8hhqew
-	 S3G8bo8YOpyRoUXCfFI0lag0n+1EC7XNfHh2WZTs=
+	b=pwaGA04+yRgbZPE/qO0JnViQA6nJvyisNoJvYRjIfckxuzcY2pRFMNE0HuNS+gvHw
+	 NC9DyPJ1tNbS3flR6y+DOt1PmKj9EAmpIxzpQUt1PJfOZuVt036bIDcoUhDoHe4GuT
+	 tbTwJ0JuBfXJUDerqncEYsokx7vtx8nHk1J3WT54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Oskar Senft <osk@google.com>,
-	linux-serial@vger.kernel.org
-Subject: [PATCH 6.1 121/198] serial: 8250: ASPEED_VUART: select REGMAP instead of depending on it
-Date: Mon, 20 Mar 2023 15:54:19 +0100
-Message-Id: <20230320145512.624841943@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 081/211] net: dsa: dont error out when drivers return ETH_DATA_LEN in .port_max_mtu()
+Date: Mon, 20 Mar 2023 15:53:36 +0100
+Message-Id: <20230320145516.687581662@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +37,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit f8086d1a65ac693e3fd863128352b4b11ee7324d upstream.
+[ Upstream commit 636e8adf7878eab3614250234341bde45537f47a ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+Currently, when dsa_slave_change_mtu() is called on a user port where
+dev->max_mtu is 1500 (as returned by ds->ops->port_max_mtu()), the code
+will stumble upon this check:
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
+	if (new_master_mtu > mtu_limit)
+		return -ERANGE;
 
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+because new_master_mtu is adjusted for the tagger overhead but mtu_limit
+is not.
 
-Fixes: 8d310c9107a2 ("drivers/tty/serial/8250: Make Aspeed VUART SIRQ polarity configurable")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Oskar Senft <osk@google.com>
-Cc: linux-serial@vger.kernel.org
-Link: https://lore.kernel.org/r/20230226053953.4681-9-rdunlap@infradead.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+But it would be good if the logic went through, for example if the DSA
+master really depends on an MTU adjustment to accept DSA-tagged frames.
+
+To make the code pass through the check, we need to adjust mtu_limit for
+the overhead as well, if the minimum restriction was caused by the DSA
+user port's MTU (dev->max_mtu). A DSA user port MTU and a DSA master MTU
+are always offset by the protocol overhead.
+
+Currently no drivers return 1500 .port_max_mtu(), but this is only
+temporary and a bug in itself - mv88e6xxx should have done that, but
+since commit b9c587fed61c ("dsa: mv88e6xxx: Include tagger overhead when
+setting MTU for DSA and CPU ports") it no longer does. This is a
+preparation for fixing that.
+
+Fixes: bfcb813203e6 ("net: dsa: configure the MTU for switch ports")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/Kconfig |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/dsa/slave.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/8250/Kconfig
-+++ b/drivers/tty/serial/8250/Kconfig
-@@ -253,8 +253,9 @@ config SERIAL_8250_ASPEED_VUART
- 	tristate "Aspeed Virtual UART"
- 	depends on SERIAL_8250
- 	depends on OF
--	depends on REGMAP && MFD_SYSCON
-+	depends on MFD_SYSCON
- 	depends on ARCH_ASPEED || COMPILE_TEST
-+	select REGMAP
- 	help
- 	  If you want to use the virtual UART (VUART) device on Aspeed
- 	  BMC platforms, enable this option. This enables the 16550A-
+diff --git a/net/dsa/slave.c b/net/dsa/slave.c
+index aab79c3552249..6711ddc0a3c7d 100644
+--- a/net/dsa/slave.c
++++ b/net/dsa/slave.c
+@@ -1899,6 +1899,7 @@ int dsa_slave_change_mtu(struct net_device *dev, int new_mtu)
+ 	int new_master_mtu;
+ 	int old_master_mtu;
+ 	int mtu_limit;
++	int overhead;
+ 	int cpu_mtu;
+ 	int err;
+ 
+@@ -1927,9 +1928,10 @@ int dsa_slave_change_mtu(struct net_device *dev, int new_mtu)
+ 			largest_mtu = slave_mtu;
+ 	}
+ 
+-	mtu_limit = min_t(int, master->max_mtu, dev->max_mtu);
++	overhead = dsa_tag_protocol_overhead(cpu_dp->tag_ops);
++	mtu_limit = min_t(int, master->max_mtu, dev->max_mtu + overhead);
+ 	old_master_mtu = master->mtu;
+-	new_master_mtu = largest_mtu + dsa_tag_protocol_overhead(cpu_dp->tag_ops);
++	new_master_mtu = largest_mtu + overhead;
+ 	if (new_master_mtu > mtu_limit)
+ 		return -ERANGE;
+ 
+@@ -1964,8 +1966,7 @@ int dsa_slave_change_mtu(struct net_device *dev, int new_mtu)
+ 
+ out_port_failed:
+ 	if (new_master_mtu != old_master_mtu)
+-		dsa_port_mtu_change(cpu_dp, old_master_mtu -
+-				    dsa_tag_protocol_overhead(cpu_dp->tag_ops));
++		dsa_port_mtu_change(cpu_dp, old_master_mtu - overhead);
+ out_cpu_failed:
+ 	if (new_master_mtu != old_master_mtu)
+ 		dev_set_mtu(master, old_master_mtu);
+-- 
+2.39.2
+
 
 
