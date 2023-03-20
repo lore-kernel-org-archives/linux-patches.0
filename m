@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682091C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA68C433D2;
-	Mon, 20 Mar 2023 15:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EB11C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4351C433EF;
+	Mon, 20 Mar 2023 15:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325622;
-	bh=lPyjNvz2bCkJaqdrEKRI/V0acTlrg7j5T1U32WQUh5w=;
+	s=korg; t=1679325625;
+	bh=O/wYnWcj3CKwUSaZeq49VUptcgsw2xIYel1RFx/cRYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yD8GH4P8Cfh5LLftsy+9l4HkFFx51g5a6ONRhERn/kiAu/8I1crdWXHAS96i2MsKL
-	 FPVUzQuHywo/FWxIXmRThVHpCCiMheOzlJ5KUj3WzsmTj4hb+DpeqQWmqH1gw2/hIO
-	 lEZbS9sOtneIiBkGEuytANw3Gfz9KoCyyRAhSmWk=
+	b=rVrtid5BkJUibwg1Eq7ILW0VeIpqNQ1XeRy4PxN6U3oPJC/hwYzq+Ohvwix9qYIOx
+	 aP9Y7ODrUr3f/uBkZ0JGQBlQDlEFtv5x+uEe+Zd3d6Sxd1d2TMbxjImbEAysNk+J2y
+	 Lh43iNvquEc/D8kHlmBn4Dy30uuXHQxwJn1u3JcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Parav Pandit <parav@nvidia.com>,
+	Daniel Jurgens <danielj@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/198] LoongArch: Only call get_timer_irq() once in constant_clockevent_init()
-Date: Mon, 20 Mar 2023 15:54:10 +0100
-Message-Id: <20230320145512.269433152@linuxfoundation.org>
+Subject: [PATCH 6.2 072/211] net/mlx5e: Dont cache tunnel offloads capability
+Date: Mon, 20 Mar 2023 15:53:27 +0100
+Message-Id: <20230320145516.266318910@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,100 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Parav Pandit <parav@nvidia.com>
 
-[ Upstream commit bb7a78e343468873bf00b2b181fcfd3c02d8cb56 ]
+[ Upstream commit 9a92fe1db9e57ea94388a1d768e8ee42af858377 ]
 
-Under CONFIG_DEBUG_ATOMIC_SLEEP=y and CONFIG_DEBUG_PREEMPT=y, we can see
-the following messages on LoongArch, this is because using might_sleep()
-in preemption disable context.
+When mlx5e attaches again after device health recovery, the device
+capabilities might have changed by the eswitch manager.
 
-[    0.001127] smp: Bringing up secondary CPUs ...
-[    0.001222] Booting CPU#1...
-[    0.001244] 64-bit Loongson Processor probed (LA464 Core)
-[    0.001247] CPU1 revision is: 0014c012 (Loongson-64bit)
-[    0.001250] FPU1 revision is: 00000000
-[    0.001252] BUG: sleeping function called from invalid context at kernel/locking/mutex.c:283
-[    0.001255] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/1
-[    0.001257] preempt_count: 1, expected: 0
-[    0.001258] RCU nest depth: 0, expected: 0
-[    0.001259] Preemption disabled at:
-[    0.001261] [<9000000000223800>] arch_dup_task_struct+0x20/0x110
-[    0.001272] CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.2.0-rc7+ #43
-[    0.001275] Hardware name: Loongson Loongson-3A5000-7A1000-1w-A2101/Loongson-LS3A5000-7A1000-1w-A2101, BIOS vUDK2018-LoongArch-V4.0.05132-beta10 12/13/202
-[    0.001277] Stack : 0072617764726148 0000000000000000 9000000000222f1c 90000001001e0000
-[    0.001286]         90000001001e3be0 90000001001e3be8 0000000000000000 0000000000000000
-[    0.001292]         90000001001e3be8 0000000000000040 90000001001e3cb8 90000001001e3a50
-[    0.001297]         9000000001642000 90000001001e3be8 be694d10ce4139dd 9000000100174500
-[    0.001303]         0000000000000001 0000000000000001 00000000ffffe0a2 0000000000000020
-[    0.001309]         000000000000002f 9000000001354116 00000000056b0000 ffffffffffffffff
-[    0.001314]         0000000000000000 0000000000000000 90000000014f6e90 9000000001642000
-[    0.001320]         900000000022b69c 0000000000000001 0000000000000000 9000000001736a90
-[    0.001325]         9000000100038000 0000000000000000 9000000000222f34 0000000000000000
-[    0.001331]         00000000000000b0 0000000000000004 0000000000000000 0000000000070000
-[    0.001337]         ...
-[    0.001339] Call Trace:
-[    0.001342] [<9000000000222f34>] show_stack+0x5c/0x180
-[    0.001346] [<90000000010bdd80>] dump_stack_lvl+0x60/0x88
-[    0.001352] [<9000000000266418>] __might_resched+0x180/0x1cc
-[    0.001356] [<90000000010c742c>] mutex_lock+0x20/0x64
-[    0.001359] [<90000000002a8ccc>] irq_find_matching_fwspec+0x48/0x124
-[    0.001364] [<90000000002259c4>] constant_clockevent_init+0x68/0x204
-[    0.001368] [<900000000022acf4>] start_secondary+0x40/0xa8
-[    0.001371] [<90000000010c0124>] smpboot_entry+0x60/0x64
+For example in one flow when ECPF changes the eswitch mode between
+legacy and switchdev, it updates the flow table tunnel capability.
 
-Here are the complete call chains:
+The cached value is only used in one place, so just check the capability
+there instead.
 
-smpboot_entry()
-  start_secondary()
-    constant_clockevent_init()
-      get_timer_irq()
-        irq_find_matching_fwnode()
-          irq_find_matching_fwspec()
-            mutex_lock()
-              might_sleep()
-                __might_sleep()
-                  __might_resched()
-
-In order to avoid the above issue, we should break the call chains,
-using timer_irq_installed variable as check condition to only call
-get_timer_irq() once in constant_clockevent_init() is a simple and
-proper way.
-
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 5bef709d76a2 ("net/mlx5: Enable host PF HCA after eswitch is initialized")
+Signed-off-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/time.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en.h          | 1 -
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c     | 4 +---
+ drivers/net/ethernet/mellanox/mlx5/core/en_rep.c      | 1 -
+ drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c | 1 -
+ 4 files changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/arch/loongarch/kernel/time.c b/arch/loongarch/kernel/time.c
-index 786735dcc8d67..d2b7d5df132a9 100644
---- a/arch/loongarch/kernel/time.c
-+++ b/arch/loongarch/kernel/time.c
-@@ -135,16 +135,17 @@ static int get_timer_irq(void)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+index 2d77fb8a8a015..ae73c9af8f251 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+@@ -313,7 +313,6 @@ struct mlx5e_params {
+ 		} channel;
+ 	} mqprio;
+ 	bool rx_cqe_compress_def;
+-	bool tunneled_offload_en;
+ 	struct dim_cq_moder rx_cq_moderation;
+ 	struct dim_cq_moder tx_cq_moderation;
+ 	struct mlx5e_packet_merge_param packet_merge;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 6c24f33a5ea5c..d6bcbc17151d7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -4923,8 +4923,6 @@ void mlx5e_build_nic_params(struct mlx5e_priv *priv, struct mlx5e_xsk *xsk, u16
+ 	/* TX inline */
+ 	mlx5_query_min_inline(mdev, &params->tx_min_inline_mode);
  
- int constant_clockevent_init(void)
- {
--	int irq;
- 	unsigned int cpu = smp_processor_id();
- 	unsigned long min_delta = 0x600;
- 	unsigned long max_delta = (1UL << 48) - 1;
- 	struct clock_event_device *cd;
--	static int timer_irq_installed = 0;
-+	static int irq = 0, timer_irq_installed = 0;
+-	params->tunneled_offload_en = mlx5_tunnel_inner_ft_supported(mdev);
+-
+ 	/* AF_XDP */
+ 	params->xsk = xsk;
  
--	irq = get_timer_irq();
--	if (irq < 0)
--		pr_err("Failed to map irq %d (timer)\n", irq);
-+	if (!timer_irq_installed) {
-+		irq = get_timer_irq();
-+		if (irq < 0)
-+			pr_err("Failed to map irq %d (timer)\n", irq);
-+	}
+@@ -5223,7 +5221,7 @@ static int mlx5e_init_nic_rx(struct mlx5e_priv *priv)
+ 	}
  
- 	cd = &per_cpu(constant_clockevent_device, cpu);
+ 	features = MLX5E_RX_RES_FEATURE_PTP;
+-	if (priv->channels.params.tunneled_offload_en)
++	if (mlx5_tunnel_inner_ft_supported(mdev))
+ 		features |= MLX5E_RX_RES_FEATURE_INNER_FT;
+ 	err = mlx5e_rx_res_init(priv->rx_res, priv->mdev, features,
+ 				priv->max_nch, priv->drop_rq.rqn,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index 7d90e5b728548..301a734b7c6a7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -752,7 +752,6 @@ static void mlx5e_build_rep_params(struct net_device *netdev)
+ 	mlx5e_set_rx_cq_mode_params(params, cq_period_mode);
  
+ 	params->mqprio.num_tc       = 1;
+-	params->tunneled_offload_en = false;
+ 	if (rep->vport != MLX5_VPORT_UPLINK)
+ 		params->vlan_strip_disable = true;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
+index 911cf4d239645..4285b31fee6c4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
+@@ -70,7 +70,6 @@ static void mlx5i_build_nic_params(struct mlx5_core_dev *mdev,
+ 
+ 	params->packet_merge.type = MLX5E_PACKET_MERGE_NONE;
+ 	params->hard_mtu = MLX5_IB_GRH_BYTES + MLX5_IPOIB_HARD_LEN;
+-	params->tunneled_offload_en = false;
+ 
+ 	/* CQE compression is not supported for IPoIB */
+ 	params->rx_cqe_compress_def = false;
 -- 
 2.39.2
 
