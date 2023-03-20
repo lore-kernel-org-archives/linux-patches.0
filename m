@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84161C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B330C4339C;
-	Mon, 20 Mar 2023 15:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDAE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BD4C433D2;
+	Mon, 20 Mar 2023 15:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325950;
-	bh=OK51pA6AfDny/zyDfCNFG8jKyJLbssprXLRN+gZ2oFY=;
+	s=korg; t=1679325948;
+	bh=7NBaoj5epw2EWaCt3Ia8FlZOBg2J+aRdzIyMQe5D3gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aRbLTkcP55bdLjuuYuuD2WioFjsYzgkvUpuTfG+jnPmmK+fMX2vU1gx0f3ZMeYl7F
-	 EEnvNvv0+VKTCu5eLYarSoY1i9GIsQZO55Gd9hB37YNDggZhwmT1W/m+uDUh9AbuBY
-	 SZneY2oWjT28GuBxC2FtGOeaeVVJyXa2x+20fKzY=
+	b=jvu8JozPhLD82ODlt3sNHXdWNlFYTAiMjMff26N06CuTCyxRB5keF5AufTxLCXOCN
+	 wAccH+I+2d9JtbGKrN3vAJ56HXGAXrENCWYEdbHO5EXKcwdNFihdFtcKn3i0fQTRe8
+	 CvsgJ8wrlx0ahE49D26ItvCz/I74LJ//WGxVUgUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Peter Xu <peterx@redhat.com>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Jerome Glisse <jglisse@redhat.com>,
-	Shaohua Li <shli@fb.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 173/198] mm/userfaultfd: propagate uffd-wp bit when PTE-mapping the huge zeropage
-Date: Mon, 20 Mar 2023 15:55:11 +0100
-Message-Id: <20230320145514.773748187@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.2 130/211] interconnect: fix icc_provider_del() error handling
+Date: Mon, 20 Mar 2023 15:54:25 +0100
+Message-Id: <20230320145518.856678151@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,223 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Hildenbrand <david@redhat.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 42b2af2c9b7eede8ef21d0943f84d135e21a32a3 upstream.
+commit e0e7089bf9a87bc5e3997422e4e24563424f9018 upstream.
 
-Currently, we'd lose the userfaultfd-wp marker when PTE-mapping a huge
-zeropage, resulting in the next write faults in the PMD range not
-triggering uffd-wp events.
+The interconnect framework currently expects that providers are only
+removed when there are no users and after all nodes have been removed.
 
-Various actions (partial MADV_DONTNEED, partial mremap, partial munmap,
-partial mprotect) could trigger this.  However, most importantly,
-un-protecting a single sub-page from the userfaultfd-wp handler when
-processing a uffd-wp event will PTE-map the shared huge zeropage and lose
-the uffd-wp bit for the remainder of the PMD.
+There is currently nothing that guarantees this to be the case and the
+framework does not do any reference counting, but refusing to remove the
+provider is never correct as that would leave a dangling pointer to a
+resource that is about to be released in the global provider list (e.g.
+accessible through debugfs).
 
-Let's properly propagate the uffd-wp bit to the PMDs.
+Replace the current sanity checks with WARN_ON() so that the provider is
+always removed.
 
- #define _GNU_SOURCE
- #include <stdio.h>
- #include <stdlib.h>
- #include <stdint.h>
- #include <stdbool.h>
- #include <inttypes.h>
- #include <fcntl.h>
- #include <unistd.h>
- #include <errno.h>
- #include <poll.h>
- #include <pthread.h>
- #include <sys/mman.h>
- #include <sys/syscall.h>
- #include <sys/ioctl.h>
- #include <linux/userfaultfd.h>
-
- static size_t pagesize;
- static int uffd;
- static volatile bool uffd_triggered;
-
- #define barrier() __asm__ __volatile__("": : :"memory")
-
- static void uffd_wp_range(char *start, size_t size, bool wp)
- {
- 	struct uffdio_writeprotect uffd_writeprotect;
-
- 	uffd_writeprotect.range.start = (unsigned long) start;
- 	uffd_writeprotect.range.len = size;
- 	if (wp) {
- 		uffd_writeprotect.mode = UFFDIO_WRITEPROTECT_MODE_WP;
- 	} else {
- 		uffd_writeprotect.mode = 0;
- 	}
- 	if (ioctl(uffd, UFFDIO_WRITEPROTECT, &uffd_writeprotect)) {
- 		fprintf(stderr, "UFFDIO_WRITEPROTECT failed: %d\n", errno);
- 		exit(1);
- 	}
- }
-
- static void *uffd_thread_fn(void *arg)
- {
- 	static struct uffd_msg msg;
- 	ssize_t nread;
-
- 	while (1) {
- 		struct pollfd pollfd;
- 		int nready;
-
- 		pollfd.fd = uffd;
- 		pollfd.events = POLLIN;
- 		nready = poll(&pollfd, 1, -1);
- 		if (nready == -1) {
- 			fprintf(stderr, "poll() failed: %d\n", errno);
- 			exit(1);
- 		}
-
- 		nread = read(uffd, &msg, sizeof(msg));
- 		if (nread <= 0)
- 			continue;
-
- 		if (msg.event != UFFD_EVENT_PAGEFAULT ||
- 		    !(msg.arg.pagefault.flags & UFFD_PAGEFAULT_FLAG_WP)) {
- 			printf("FAIL: wrong uffd-wp event fired\n");
- 			exit(1);
- 		}
-
- 		/* un-protect the single page. */
- 		uffd_triggered = true;
- 		uffd_wp_range((char *)(uintptr_t)msg.arg.pagefault.address,
- 			      pagesize, false);
- 	}
- 	return arg;
- }
-
- static int setup_uffd(char *map, size_t size)
- {
- 	struct uffdio_api uffdio_api;
- 	struct uffdio_register uffdio_register;
- 	pthread_t thread;
-
- 	uffd = syscall(__NR_userfaultfd,
- 		       O_CLOEXEC | O_NONBLOCK | UFFD_USER_MODE_ONLY);
- 	if (uffd < 0) {
- 		fprintf(stderr, "syscall() failed: %d\n", errno);
- 		return -errno;
- 	}
-
- 	uffdio_api.api = UFFD_API;
- 	uffdio_api.features = UFFD_FEATURE_PAGEFAULT_FLAG_WP;
- 	if (ioctl(uffd, UFFDIO_API, &uffdio_api) < 0) {
- 		fprintf(stderr, "UFFDIO_API failed: %d\n", errno);
- 		return -errno;
- 	}
-
- 	if (!(uffdio_api.features & UFFD_FEATURE_PAGEFAULT_FLAG_WP)) {
- 		fprintf(stderr, "UFFD_FEATURE_WRITEPROTECT missing\n");
- 		return -ENOSYS;
- 	}
-
- 	uffdio_register.range.start = (unsigned long) map;
- 	uffdio_register.range.len = size;
- 	uffdio_register.mode = UFFDIO_REGISTER_MODE_WP;
- 	if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) < 0) {
- 		fprintf(stderr, "UFFDIO_REGISTER failed: %d\n", errno);
- 		return -errno;
- 	}
-
- 	pthread_create(&thread, NULL, uffd_thread_fn, NULL);
-
- 	return 0;
- }
-
- int main(void)
- {
- 	const size_t size = 4 * 1024 * 1024ull;
- 	char *map, *cur;
-
- 	pagesize = getpagesize();
-
- 	map = mmap(NULL, size, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, -1, 0);
- 	if (map == MAP_FAILED) {
- 		fprintf(stderr, "mmap() failed\n");
- 		return -errno;
- 	}
-
- 	if (madvise(map, size, MADV_HUGEPAGE)) {
- 		fprintf(stderr, "MADV_HUGEPAGE failed\n");
- 		return -errno;
- 	}
-
- 	if (setup_uffd(map, size))
- 		return 1;
-
- 	/* Read the whole range, populating zeropages. */
- 	madvise(map, size, MADV_POPULATE_READ);
-
- 	/* Write-protect the whole range. */
- 	uffd_wp_range(map, size, true);
-
- 	/* Make sure uffd-wp triggers on each page. */
- 	for (cur = map; cur < map + size; cur += pagesize) {
- 		uffd_triggered = false;
-
- 		barrier();
- 		/* Trigger a write fault. */
- 		*cur = 1;
- 		barrier();
-
- 		if (!uffd_triggered) {
- 			printf("FAIL: uffd-wp did not trigger\n");
- 			return 1;
- 		}
- 	}
-
- 	printf("PASS: uffd-wp triggered\n");
- 	return 0;
- }
-
-Link: https://lkml.kernel.org/r/20230302175423.589164-1-david@redhat.com
-Fixes: e06f1e1dd499 ("userfaultfd: wp: enabled write protection in userfaultfd API")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Jerome Glisse <jglisse@redhat.com>
-Cc: Shaohua Li <shli@fb.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
+Cc: stable@vger.kernel.org      # 5.1: 680f8666baf6: interconnect: Make icc_provider_del() return void
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
+Link: https://lore.kernel.org/r/20230306075651.2449-3-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/interconnect/core.c |   14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2004,7 +2004,7 @@ static void __split_huge_zero_page_pmd(s
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -1061,18 +1061,8 @@ EXPORT_SYMBOL_GPL(icc_provider_add);
+ void icc_provider_del(struct icc_provider *provider)
  {
- 	struct mm_struct *mm = vma->vm_mm;
- 	pgtable_t pgtable;
--	pmd_t _pmd;
-+	pmd_t _pmd, old_pmd;
- 	int i;
+ 	mutex_lock(&icc_lock);
+-	if (provider->users) {
+-		pr_warn("interconnect provider still has %d users\n",
+-			provider->users);
+-		mutex_unlock(&icc_lock);
+-		return;
+-	}
+-
+-	if (!list_empty(&provider->nodes)) {
+-		pr_warn("interconnect provider still has nodes\n");
+-		mutex_unlock(&icc_lock);
+-		return;
+-	}
++	WARN_ON(provider->users);
++	WARN_ON(!list_empty(&provider->nodes));
  
- 	/*
-@@ -2015,7 +2015,7 @@ static void __split_huge_zero_page_pmd(s
- 	 *
- 	 * See Documentation/mm/mmu_notifier.rst
- 	 */
--	pmdp_huge_clear_flush(vma, haddr, pmd);
-+	old_pmd = pmdp_huge_clear_flush(vma, haddr, pmd);
- 
- 	pgtable = pgtable_trans_huge_withdraw(mm, pmd);
- 	pmd_populate(mm, &_pmd, pgtable);
-@@ -2024,6 +2024,8 @@ static void __split_huge_zero_page_pmd(s
- 		pte_t *pte, entry;
- 		entry = pfn_pte(my_zero_pfn(haddr), vma->vm_page_prot);
- 		entry = pte_mkspecial(entry);
-+		if (pmd_uffd_wp(old_pmd))
-+			entry = pte_mkuffd_wp(entry);
- 		pte = pte_offset_map(&_pmd, haddr);
- 		VM_BUG_ON(!pte_none(*pte));
- 		set_pte_at(mm, haddr, pte, entry);
+ 	list_del(&provider->provider_list);
+ 	mutex_unlock(&icc_lock);
 
 
