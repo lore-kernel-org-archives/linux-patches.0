@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B301C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7606CC4339B;
-	Mon, 20 Mar 2023 15:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEBC1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0C4C433A7;
+	Mon, 20 Mar 2023 15:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325846;
-	bh=VCoUk9Py4cE0Vx0q2TgkNuGt9UilbNTVdSBJTBikMuU=;
+	s=korg; t=1679325849;
+	bh=HpZJ47UX+ovf6LOUN69eXK9nALO4gmgXQIvFY1b7F1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCNAXw9mbburMbj3SZ0Mm0PuDYUWmnCBOKGOEqSl4NAVSNltY2weHjELvqYmOepoV
-	 Xe6j5NpqJrbj5CU3BJaXCFyq6k/B/HzIwS5VJQqY7HVGfHgEhL1fcHLlrfUJsn+hlc
-	 4mCGwM1sc8ZLxMwevtOM3JecSQjMf1OaesmOsELM=
+	b=ABSyhXyzblT0lg0JHJIpXKZE/F6OimW78XHp7KVg/7yuUnFRhJyuUpdt0HhWN8Xi8
+	 Q6R+GIbyF45ZzMcVHYpqojr8qGIZaS7zo/yH9RX7PRx+vxmJUvkBZcZNKe4Reh8ibt
+	 XzWkd4z0uS1H8THGTxs7GxAgzUbDuFgam27TC4Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Van Hensbergen <ericvh@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Szymon Heidrich <szymon.heidrich@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 111/211] net/9p: fix bug in client create for .L
-Date: Mon, 20 Mar 2023 15:54:06 +0100
-Message-Id: <20230320145517.951415715@linuxfoundation.org>
+Subject: [PATCH 6.2 086/211] net: usb: smsc75xx: Move packet length check to prevent kernel panic in skb_pull
+Date: Mon, 20 Mar 2023 15:53:41 +0100
+Message-Id: <20230320145516.907259795@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -35,35 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Van Hensbergen <ericvh@kernel.org>
+From: Szymon Heidrich <szymon.heidrich@gmail.com>
 
-[ Upstream commit 3866584a1c56a2bbc8c0981deb4476d0b801969e ]
+[ Upstream commit 43ffe6caccc7a1bb9d7442fbab521efbf6c1378c ]
 
-We are supposed to set fid->mode to reflect the flags
-that were used to open the file.  We were actually setting
-it to the creation mode which is the default perms of the
-file not the flags the file was opened with.
+Packet length check needs to be located after size and align_count
+calculation to prevent kernel panic in skb_pull() in case
+rx_cmd_a & RX_CMD_A_RED evaluates to true.
 
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
-Reviewed-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: d8b228318935 ("net: usb: smsc75xx: Limit packet length to skb->len")
+Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
+Link: https://lore.kernel.org/r/20230316110540.77531-1-szymon.heidrich@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/client.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/smsc75xx.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/9p/client.c b/net/9p/client.c
-index 622ec6a586eea..00a6d1e348768 100644
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -1289,7 +1289,7 @@ int p9_client_create_dotl(struct p9_fid *ofid, const char *name, u32 flags,
- 		 qid->type, qid->path, qid->version, iounit);
+diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
+index db34f8d1d6051..5d6454fedb3f1 100644
+--- a/drivers/net/usb/smsc75xx.c
++++ b/drivers/net/usb/smsc75xx.c
+@@ -2200,6 +2200,13 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 		size = (rx_cmd_a & RX_CMD_A_LEN) - RXW_PADDING;
+ 		align_count = (4 - ((size + RXW_PADDING) % 4)) % 4;
  
- 	memmove(&ofid->qid, qid, sizeof(struct p9_qid));
--	ofid->mode = mode;
-+	ofid->mode = flags;
- 	ofid->iounit = iounit;
- 
- free_and_error:
++		if (unlikely(size > skb->len)) {
++			netif_dbg(dev, rx_err, dev->net,
++				  "size err rx_cmd_a=0x%08x\n",
++				  rx_cmd_a);
++			return 0;
++		}
++
+ 		if (unlikely(rx_cmd_a & RX_CMD_A_RED)) {
+ 			netif_dbg(dev, rx_err, dev->net,
+ 				  "Error rx_cmd_a=0x%08x\n", rx_cmd_a);
+@@ -2212,8 +2219,7 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 				dev->net->stats.rx_frame_errors++;
+ 		} else {
+ 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
+-			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
+-				     size > skb->len)) {
++			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
+ 				netif_dbg(dev, rx_err, dev->net,
+ 					  "size err rx_cmd_a=0x%08x\n",
+ 					  rx_cmd_a);
 -- 
 2.39.2
 
