@@ -1,34 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1601C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C429FC4339B;
-	Mon, 20 Mar 2023 14:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB8B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A539BC433EF;
+	Mon, 20 Mar 2023 14:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324370;
-	bh=BD/Ng5cDpqjoIJaJKIHVfJ5nPNhywPh+VsgFggzHdVY=;
+	s=korg; t=1679324373;
+	bh=h3y3HH01KgcJq02AOFdV2sZ5v+gM4bqe9amZ6i9IiDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J97KuUf/jxRuAhIfZyH4R2ouHbTY9zMPL8/V5tFuVhu49Jq1nPpnDeOG0L3mFd7/w
-	 xKNjLr+uP3Br/TZ199n2IvUR8dedMAjb5i+y2HGqFUuW9pgEDRefOAiUlT3C+qpo5D
-	 5WQrwzVC3UTLIBxuTxHRi+GlHjlK+eaPy1/C2gEA=
+	b=lJweyox36feac8cXxGmdDvx4EUkN13NvSR9jV5fnnGbkoYcigEPfskf0F/aK1ikXk
+	 3Lgy+WW/Cqg9olbTGFS6P8JFstbFHPUznG3KVJFajro6dUuehaUL245B1JoCgY+MNj
+	 5wK1qFxjOSL8grgl4TJugZlQ6E2UaOLYNh5CJjO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	intel-gfx@lists.freedesktop.org,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 4.19 33/36] drm/i915: Dont use stolen memory for ring buffers with LLC
-Date: Mon, 20 Mar 2023 15:54:59 +0100
-Message-Id: <20230320145425.482482362@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 4.19 34/36] serial: 8250_em: Fix UART port type
+Date: Mon, 20 Mar 2023 15:55:00 +0100
+Message-Id: <20230320145425.513637275@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -42,50 +33,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 690e0ec8e63da9a29b39fedc6ed5da09c7c82651 upstream.
+commit 32e293be736b853f168cd065d9cbc1b0c69f545d upstream.
 
-Direction from hardware is that stolen memory should never be used for
-ring buffer allocations on platforms with LLC. There are too many
-caching pitfalls due to the way stolen memory accesses are routed. So
-it is safest to just not use it.
+As per HW manual for  EMEV2 "R19UH0040EJ0400 Rev.4.00", the UART
+IP found on EMMA mobile SoC is Register-compatible with the
+general-purpose 16750 UART chip. Fix UART port type as 16750 and
+enable 64-bytes fifo support.
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Fixes: c58b735fc762 ("drm/i915: Allocate rings from stolen")
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: intel-gfx@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v4.9+
-Tested-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230216011101.1909009-2-John.C.Harrison@Intel.com
-(cherry picked from commit f54c1f6c697c4297f7ed94283c184acc338a5cf8)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Fixes: 22886ee96895 ("serial8250-em: Emma Mobile UART driver V2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230227114152.22265-2-biju.das.jz@bp.renesas.com
+[biju: manually fixed the conflicts]
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/intel_ringbuffer.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_em.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/intel_ringbuffer.c
-+++ b/drivers/gpu/drm/i915/intel_ringbuffer.c
-@@ -1132,10 +1132,11 @@ static struct i915_vma *
- intel_ring_create_vma(struct drm_i915_private *dev_priv, int size)
- {
- 	struct i915_address_space *vm = &dev_priv->ggtt.vm;
--	struct drm_i915_gem_object *obj;
-+	struct drm_i915_gem_object *obj = NULL;
- 	struct i915_vma *vma;
+--- a/drivers/tty/serial/8250/8250_em.c
++++ b/drivers/tty/serial/8250/8250_em.c
+@@ -102,8 +102,8 @@ static int serial8250_em_probe(struct pl
+ 	memset(&up, 0, sizeof(up));
+ 	up.port.mapbase = regs->start;
+ 	up.port.irq = irq->start;
+-	up.port.type = PORT_UNKNOWN;
+-	up.port.flags = UPF_BOOT_AUTOCONF | UPF_FIXED_PORT | UPF_IOREMAP;
++	up.port.type = PORT_16750;
++	up.port.flags = UPF_FIXED_PORT | UPF_IOREMAP | UPF_FIXED_TYPE;
+ 	up.port.dev = &pdev->dev;
+ 	up.port.private_data = priv;
  
--	obj = i915_gem_object_create_stolen(dev_priv, size);
-+	if (!HAS_LLC(dev_priv))
-+		obj = i915_gem_object_create_stolen(dev_priv, size);
- 	if (!obj)
- 		obj = i915_gem_object_create_internal(dev_priv, size);
- 	if (IS_ERR(obj))
 
 
