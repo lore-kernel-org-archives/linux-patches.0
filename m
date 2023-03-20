@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365221C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF274C4339B;
-	Mon, 20 Mar 2023 15:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265851C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA53C433EF;
+	Mon, 20 Mar 2023 15:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325981;
-	bh=v81g5Ju93yPkz3l72tZo5MVgoURquqy4Asl0YshQPVI=;
+	s=korg; t=1679325983;
+	bh=LpRtXfs3aHQRr8gx0vmr/Po8E1+0VB63pxPkhZZiZN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3KvYiH3+GYO/Q+/+PaW0wZ1beX97O4KQKPnm2eeKdWFpC/Cs9Bzh473QmluQQ38D
-	 N7JT56ys+yaTFNozdzJqnTy1SZ/U/v6B+pMtR7rfp2i2nH9h0vY+4MbfAXF5wNk+kM
-	 YSwbgz/zl6moxBlRuxs6keZMUewAURXo9bwUjOiw=
+	b=IJnkgIztKpw6wnUAGVnkuaFVrxQwr0JIbZwL4aNGJAIcthTPcbrCvfsfAWOxlWoym
+	 JyZsl8TL/sdt4JQCBHeMgx58DnJWObwYW/2jx14LfVg1DtAp5pQ7Iab2eDDC6OUBlx
+	 gWv+B4YZPqp1zrqkyZNozYqsdQXjiX9MCzOK7Ja8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 178/198] fbdev: stifb: Provide valid pixelclock and add fb_check_var() checks
-Date: Mon, 20 Mar 2023 15:55:16 +0100
-Message-Id: <20230320145514.952107318@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Maxime Ripard <maxime@cerno.tech>
+Subject: [PATCH 6.1 156/198] drm/sun4i: fix missing component unbind on bind errors
+Date: Mon, 20 Mar 2023 15:54:54 +0100
+Message-Id: <20230320145514.062468878@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 References: <20230320145507.420176832@linuxfoundation.org>
@@ -33,77 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 203873a535d627c668f293be0cb73e26c30f9cc7 upstream.
+commit c22f2ff8724b49dce2ae797e9fbf4bc0fa91112f upstream.
 
-Find a valid modeline depending on the machine graphic card
-configuration and add the fb_check_var() function to validate
-Xorg provided graphics settings.
+Make sure to unbind all subcomponents when binding the aggregate device
+fails.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
+Fixes: 9026e0d122ac ("drm: Add Allwinner A10 Display Engine support")
+Cc: stable@vger.kernel.org      # 4.7
+Cc: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230306103242.4775-1-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/stifb.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/gpu/drm/sun4i/sun4i_drv.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/stifb.c
-+++ b/drivers/video/fbdev/stifb.c
-@@ -922,6 +922,28 @@ SETUP_HCRX(struct stifb_info *fb)
- /* ------------------- driver specific functions --------------------------- */
+--- a/drivers/gpu/drm/sun4i/sun4i_drv.c
++++ b/drivers/gpu/drm/sun4i/sun4i_drv.c
+@@ -95,12 +95,12 @@ static int sun4i_drv_bind(struct device
+ 	/* drm_vblank_init calls kcalloc, which can fail */
+ 	ret = drm_vblank_init(drm, drm->mode_config.num_crtc);
+ 	if (ret)
+-		goto cleanup_mode_config;
++		goto unbind_all;
  
- static int
-+stifb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
-+{
-+	struct stifb_info *fb = container_of(info, struct stifb_info, info);
-+
-+	if (var->xres != fb->info.var.xres ||
-+	    var->yres != fb->info.var.yres ||
-+	    var->bits_per_pixel != fb->info.var.bits_per_pixel)
-+		return -EINVAL;
-+
-+	var->xres_virtual = var->xres;
-+	var->yres_virtual = var->yres;
-+	var->xoffset = 0;
-+	var->yoffset = 0;
-+	var->grayscale = fb->info.var.grayscale;
-+	var->red.length = fb->info.var.red.length;
-+	var->green.length = fb->info.var.green.length;
-+	var->blue.length = fb->info.var.blue.length;
-+
-+	return 0;
-+}
-+
-+static int
- stifb_setcolreg(u_int regno, u_int red, u_int green,
- 	      u_int blue, u_int transp, struct fb_info *info)
- {
-@@ -1145,6 +1167,7 @@ stifb_init_display(struct stifb_info *fb
+ 	/* Remove early framebuffers (ie. simplefb) */
+ 	ret = drm_aperture_remove_framebuffers(false, &sun4i_drv_driver);
+ 	if (ret)
+-		goto cleanup_mode_config;
++		goto unbind_all;
  
- static const struct fb_ops stifb_ops = {
- 	.owner		= THIS_MODULE,
-+	.fb_check_var	= stifb_check_var,
- 	.fb_setcolreg	= stifb_setcolreg,
- 	.fb_blank	= stifb_blank,
- 	.fb_fillrect	= stifb_fillrect,
-@@ -1164,6 +1187,7 @@ static int __init stifb_init_fb(struct s
- 	struct stifb_info *fb;
- 	struct fb_info *info;
- 	unsigned long sti_rom_address;
-+	char modestr[32];
- 	char *dev_name;
- 	int bpp, xres, yres;
+ 	sun4i_framebuffer_init(drm);
  
-@@ -1342,6 +1366,9 @@ static int __init stifb_init_fb(struct s
- 	info->flags = FBINFO_HWACCEL_COPYAREA | FBINFO_HWACCEL_FILLRECT;
- 	info->pseudo_palette = &fb->pseudo_palette;
+@@ -119,6 +119,8 @@ static int sun4i_drv_bind(struct device
  
-+	scnprintf(modestr, sizeof(modestr), "%dx%d-%d", xres, yres, bpp);
-+	fb_find_mode(&info->var, info, modestr, NULL, 0, NULL, bpp);
-+
- 	/* This has to be done !!! */
- 	if (fb_alloc_cmap(&info->cmap, NR_PALETTE, 0))
- 		goto out_err1;
+ finish_poll:
+ 	drm_kms_helper_poll_fini(drm);
++unbind_all:
++	component_unbind_all(dev, NULL);
+ cleanup_mode_config:
+ 	drm_mode_config_cleanup(drm);
+ 	of_reserved_mem_device_release(dev);
 
 
