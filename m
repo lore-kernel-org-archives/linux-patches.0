@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D475A1C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EBFC4331E;
-	Mon, 20 Mar 2023 15:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0C21C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116A5C433EF;
+	Mon, 20 Mar 2023 15:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325786;
-	bh=BfbbelSLaCNSJMYhQ15Z4eEwqOoOz9Xi5OdDBFvUzYU=;
+	s=korg; t=1679325789;
+	bh=SFLnrdPpk2zHTaeF0/fgroT11We0DBvjC2ruRHfABDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/fbgW4cPRwV2h1T1VgBCXGxnsWfFzNQiajtKB8z/FlWX2iLIeSvvNc8d87m1oDUZ
-	 4n2mjxgEiqrTbgAm8UadOtnyo+qHhc9kfoxJbSFoIZYa7S34HRKMAPe+cfYxllNJNN
-	 AdFdgItrwOuewn3TEIYH/itRADK0gbS7mlBtpkiY=
+	b=juepg941k9/T7eq5JS0o+FAMCryn3LFtoO9G9AP3c0CxALNg1OD67v0uZcDg34sy/
+	 hwCAVBO03liPngy06Lh7eZsACT09OYlF1S6scHofjlpfT9dcJ2CGfgC3gqbVjQYgES
+	 Snp2v9/CbOVy4+P9i1FMLEX5r26t6XMv7wnixzJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Folkesson <marcus.folkesson@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 101/211] hwmon: (ina3221) return prober error code
-Date: Mon, 20 Mar 2023 15:53:56 +0100
-Message-Id: <20230320145517.518238387@linuxfoundation.org>
+	Sung-hun Kim <sfoon.kim@samsung.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 143/198] tracing: Make splice_read available again
+Date: Mon, 20 Mar 2023 15:54:41 +0100
+Message-Id: <20230320145513.559499694@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marcus Folkesson <marcus.folkesson@gmail.com>
+From: Sung-hun Kim <sfoon.kim@samsung.com>
 
-[ Upstream commit c93f5e2ab53243b17febabb9422a697017d3d49a ]
+commit e400be674a1a40e9dcb2e95f84d6c1fd2d88f31d upstream.
 
-ret is set to 0 which do not indicate an error.
-Return -EINVAL instead.
+Since the commit 36e2c7421f02 ("fs: don't allow splice read/write
+without explicit ops") is applied to the kernel, splice() and
+sendfile() calls on the trace file (/sys/kernel/debug/tracing
+/trace) return EINVAL.
 
-Fixes: a9e9dd9c6de5 ("hwmon: (ina3221) Read channel input source info from DT")
-Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
-Link: https://lore.kernel.org/r/20230310075035.246083-1-marcus.folkesson@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch restores these system calls by initializing splice_read
+in file_operations of the trace file. This patch only enables such
+functionalities for the read case.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230314013707.28814-1-sfoon.kim@samsung.com
+
+Cc: stable@vger.kernel.org
+Fixes: 36e2c7421f02 ("fs: don't allow splice read/write without explicit ops")
+Signed-off-by: Sung-hun Kim <sfoon.kim@samsung.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/ina3221.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/ina3221.c b/drivers/hwmon/ina3221.c
-index e06186986444e..f3a4c5633b1ea 100644
---- a/drivers/hwmon/ina3221.c
-+++ b/drivers/hwmon/ina3221.c
-@@ -772,7 +772,7 @@ static int ina3221_probe_child_from_dt(struct device *dev,
- 		return ret;
- 	} else if (val > INA3221_CHANNEL3) {
- 		dev_err(dev, "invalid reg %d of %pOFn\n", val, child);
--		return ret;
-+		return -EINVAL;
- 	}
- 
- 	input = &ina->inputs[val];
--- 
-2.39.2
-
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -5120,6 +5120,8 @@ loff_t tracing_lseek(struct file *file,
+ static const struct file_operations tracing_fops = {
+ 	.open		= tracing_open,
+ 	.read		= seq_read,
++	.read_iter	= seq_read_iter,
++	.splice_read	= generic_file_splice_read,
+ 	.write		= tracing_write_stub,
+ 	.llseek		= tracing_lseek,
+ 	.release	= tracing_release,
 
 
