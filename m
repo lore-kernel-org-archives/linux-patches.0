@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D9B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C344C433EF;
-	Mon, 20 Mar 2023 15:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B52D1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2A0C433EF;
+	Mon, 20 Mar 2023 15:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324505;
-	bh=ZQN08Rvj9vkrfXEuFNFt+YOWfpT0AYb6Ef2EKp6lOWc=;
+	s=korg; t=1679324508;
+	bh=AY/Ig6/D6B8kAit4w8uSAEvPz3sYAX7+kRJBXfUowsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAOzy9DL4ignE4/I684z6lsmOkFOgEI12BLwe/2meRXZ+oDLd2jwQGQIzExn4Hd69
-	 kYZ27PJQevbIfCt9BrAQ6yVM6bTeJicUJFs/3Dq+Ik3W09XKzy12GAYQYfU5Xj7n4L
-	 fLIxFsP/6HYmof1vQCtL+Wi0/kea9WpZ/NzT1WcM=
+	b=WXroi1zxUjppi2sGkr8PSa7fVdV+v1BSnNtYcAKTLPH/puOBFeNdtA4dSxTh/Fy2Z
+	 0QU4o/TAWkjvDcrVxsZr921kMMB+OiQjavNmmT6ULKimqvcAZMbI5J6EYATX1+1W91
+	 q2Gt9+t+J8NS1RymqkH8eM+71AxF6Scq5Nta3+LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 08/99] ALSA: hda: Match only Intel devices with CONTROLLER_IN_GPU()
-Date: Mon, 20 Mar 2023 15:53:46 +0100
-Message-Id: <20230320145443.704928264@linuxfoundation.org>
+	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH 5.4 43/60] sh: intc: Avoid spurious sizeof-pointer-div warning
+Date: Mon, 20 Mar 2023 15:54:52 +0100
+Message-Id: <20230320145432.699009109@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,48 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 
-[ Upstream commit ff447886e675979d66b2bc01810035d3baea1b3a ]
+[ Upstream commit 250870824c1cf199b032b1ef889c8e8d69d9123a ]
 
-CONTROLLER_IN_GPU() is clearly intended to match only Intel devices, but
-previously it checked only the PCI Device ID, not the Vendor ID, so it
-could match devices from other vendors that happened to use the same Device
-ID.
+GCC warns about the pattern sizeof(void*)/sizeof(void), as it looks like
+the abuse of a pattern to calculate the array size. This pattern appears
+in the unevaluated part of the ternary operator in _INTC_ARRAY if the
+parameter is NULL.
 
-Update CONTROLLER_IN_GPU() so it matches only Intel devices.
+The replacement uses an alternate approach to return 0 in case of NULL
+which does not generate the pattern sizeof(void*)/sizeof(void), but still
+emits the warning if _INTC_ARRAY is called with a nonarray parameter.
 
-Fixes: 535115b5ff51 ("ALSA: hda - Abort the probe without i915 binding for HSW/B")
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20230307214054.886721-1-helgaas@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This patch is required for successful compilation with -Werror enabled.
+
+The idea to use _Generic for type distinction is taken from Comment #7
+in https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108483 by Jakub Jelinek
+
+Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Link: https://lore.kernel.org/r/619fa552-c988-35e5-b1d7-fe256c46a272@mkarcher.dialup.fu-berlin.de
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/linux/sh_intc.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 494bfd2135a9e..de1fe604905f3 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -365,14 +365,15 @@ enum {
- #define needs_eld_notify_link(chip)	false
- #endif
+diff --git a/include/linux/sh_intc.h b/include/linux/sh_intc.h
+index c255273b02810..37ad81058d6ae 100644
+--- a/include/linux/sh_intc.h
++++ b/include/linux/sh_intc.h
+@@ -97,7 +97,10 @@ struct intc_hw_desc {
+ 	unsigned int nr_subgroups;
+ };
  
--#define CONTROLLER_IN_GPU(pci) (((pci)->device == 0x0a0c) || \
-+#define CONTROLLER_IN_GPU(pci) (((pci)->vendor == 0x8086) &&         \
-+				       (((pci)->device == 0x0a0c) || \
- 					((pci)->device == 0x0c0c) || \
- 					((pci)->device == 0x0d0c) || \
- 					((pci)->device == 0x160c) || \
- 					((pci)->device == 0x490d) || \
- 					((pci)->device == 0x4f90) || \
- 					((pci)->device == 0x4f91) || \
--					((pci)->device == 0x4f92))
-+					((pci)->device == 0x4f92)))
+-#define _INTC_ARRAY(a) a, __same_type(a, NULL) ? 0 : sizeof(a)/sizeof(*a)
++#define _INTC_SIZEOF_OR_ZERO(a) (_Generic(a,                 \
++                                 typeof(NULL):  0,           \
++                                 default:       sizeof(a)))
++#define _INTC_ARRAY(a) a, _INTC_SIZEOF_OR_ZERO(a)/sizeof(*a)
  
- #define IS_BXT(pci) ((pci)->vendor == 0x8086 && (pci)->device == 0x5a98)
- 
+ #define INTC_HW_DESC(vectors, groups, mask_regs,	\
+ 		     prio_regs,	sense_regs, ack_regs)	\
 -- 
 2.39.2
 
