@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851DE1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0030CC433EF;
-	Mon, 20 Mar 2023 15:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCB61C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF735C433EF;
+	Mon, 20 Mar 2023 15:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324552;
-	bh=QJLwVuDNErX7k56DIxan2XhlAD5BDmmyo3Y0i6Ns834=;
+	s=korg; t=1679324555;
+	bh=ATEnrQL5w3FWRq9chTFV0ZbIetkRdvanc1fVU8ygjNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S4Ylwph/uYQFaeRnpqOpERDbGLkArVlNksaf909zEIDoB85I/qqsoNMibNPWmapWf
-	 DjdgRZmiKi53kf6dR6gcC7Lvtm/7LIkp58xPuaDAVXqHseKiKV8MrIEU0eo6xjLqn9
-	 1NF9Iw5dImE37lLOE4U5dO0XZuvwpp1es3EBz0oE=
+	b=E492sAuQDaMghreT5NNglkXZEtiWuVVrXFkIMfhQNHjGnDoEc6AD48H405iNirL1Q
+	 k/0EUpjTpAKN9zqQmqNBljZh/J2/XOokz0D1GVV2eLm63Tqe5Pdbg/4DoIN5eVn8IP
+	 +9bAvqK+yczXcUhDpFQLjE9vilsCckpWDAU2EDf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 16/99] nfc: pn533: initialize struct pn533_out_arg properly
-Date: Mon, 20 Mar 2023 15:53:54 +0100
-Message-Id: <20230320145444.049514714@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.4 51/60] fbdev: stifb: Provide valid pixelclock and add fb_check_var() checks
+Date: Mon, 20 Mar 2023 15:55:00 +0100
+Message-Id: <20230320145433.041908539@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,65 +33,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 484b7059796e3bc1cb527caa61dfc60da649b4f6 ]
+commit 203873a535d627c668f293be0cb73e26c30f9cc7 upstream.
 
-struct pn533_out_arg used as a temporary context for out_urb is not
-initialized properly. Its uninitialized 'phy' field can be dereferenced in
-error cases inside pn533_out_complete() callback function. It causes the
-following failure:
+Find a valid modeline depending on the machine graphic card
+configuration and add the fb_check_var() function to validate
+Xorg provided graphics settings.
 
-general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.2.0-rc3-next-20230110-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:pn533_out_complete.cold+0x15/0x44 drivers/nfc/pn533/usb.c:441
-Call Trace:
- <IRQ>
- __usb_hcd_giveback_urb+0x2b6/0x5c0 drivers/usb/core/hcd.c:1671
- usb_hcd_giveback_urb+0x384/0x430 drivers/usb/core/hcd.c:1754
- dummy_timer+0x1203/0x32d0 drivers/usb/gadget/udc/dummy_hcd.c:1988
- call_timer_fn+0x1da/0x800 kernel/time/timer.c:1700
- expire_timers+0x234/0x330 kernel/time/timer.c:1751
- __run_timers kernel/time/timer.c:2022 [inline]
- __run_timers kernel/time/timer.c:1995 [inline]
- run_timer_softirq+0x326/0x910 kernel/time/timer.c:2035
- __do_softirq+0x1fb/0xaf6 kernel/softirq.c:571
- invoke_softirq kernel/softirq.c:445 [inline]
- __irq_exit_rcu+0x123/0x180 kernel/softirq.c:650
- irq_exit_rcu+0x9/0x20 kernel/softirq.c:662
- sysvec_apic_timer_interrupt+0x97/0xc0 arch/x86/kernel/apic/apic.c:1107
-
-Initialize the field with the pn533_usb_phy currently used.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 9dab880d675b ("nfc: pn533: Wait for out_urb's completion in pn533_usb_send_frame()")
-Reported-by: syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230309165050.207390-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/pn533/usb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/stifb.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
-index 57b07446bb768..68eb1253f888f 100644
---- a/drivers/nfc/pn533/usb.c
-+++ b/drivers/nfc/pn533/usb.c
-@@ -175,6 +175,7 @@ static int pn533_usb_send_frame(struct pn533 *dev,
- 	print_hex_dump_debug("PN533 TX: ", DUMP_PREFIX_NONE, 16, 1,
- 			     out->data, out->len, false);
+--- a/drivers/video/fbdev/stifb.c
++++ b/drivers/video/fbdev/stifb.c
+@@ -922,6 +922,28 @@ SETUP_HCRX(struct stifb_info *fb)
+ /* ------------------- driver specific functions --------------------------- */
  
-+	arg.phy = phy;
- 	init_completion(&arg.done);
- 	cntx = phy->out_urb->context;
- 	phy->out_urb->context = &arg;
--- 
-2.39.2
-
+ static int
++stifb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
++{
++	struct stifb_info *fb = container_of(info, struct stifb_info, info);
++
++	if (var->xres != fb->info.var.xres ||
++	    var->yres != fb->info.var.yres ||
++	    var->bits_per_pixel != fb->info.var.bits_per_pixel)
++		return -EINVAL;
++
++	var->xres_virtual = var->xres;
++	var->yres_virtual = var->yres;
++	var->xoffset = 0;
++	var->yoffset = 0;
++	var->grayscale = fb->info.var.grayscale;
++	var->red.length = fb->info.var.red.length;
++	var->green.length = fb->info.var.green.length;
++	var->blue.length = fb->info.var.blue.length;
++
++	return 0;
++}
++
++static int
+ stifb_setcolreg(u_int regno, u_int red, u_int green,
+ 	      u_int blue, u_int transp, struct fb_info *info)
+ {
+@@ -1103,6 +1125,7 @@ stifb_init_display(struct stifb_info *fb
+ 
+ static struct fb_ops stifb_ops = {
+ 	.owner		= THIS_MODULE,
++	.fb_check_var	= stifb_check_var,
+ 	.fb_setcolreg	= stifb_setcolreg,
+ 	.fb_blank	= stifb_blank,
+ 	.fb_fillrect	= cfb_fillrect,
+@@ -1122,6 +1145,7 @@ static int __init stifb_init_fb(struct s
+ 	struct stifb_info *fb;
+ 	struct fb_info *info;
+ 	unsigned long sti_rom_address;
++	char modestr[32];
+ 	char *dev_name;
+ 	int bpp, xres, yres;
+ 
+@@ -1300,6 +1324,9 @@ static int __init stifb_init_fb(struct s
+ 	info->flags = FBINFO_DEFAULT | FBINFO_HWACCEL_COPYAREA;
+ 	info->pseudo_palette = &fb->pseudo_palette;
+ 
++	scnprintf(modestr, sizeof(modestr), "%dx%d-%d", xres, yres, bpp);
++	fb_find_mode(&info->var, info, modestr, NULL, 0, NULL, bpp);
++
+ 	/* This has to be done !!! */
+ 	if (fb_alloc_cmap(&info->cmap, NR_PALETTE, 0))
+ 		goto out_err1;
 
 
