@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC2B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0CDAC433EF;
-	Mon, 20 Mar 2023 15:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352D41C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E0CC433D2;
+	Mon, 20 Mar 2023 15:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324434;
-	bh=EDzdYQV2/m8xlKz3HjALn17QRG5oKLZUvH5HUpZ3O8M=;
+	s=korg; t=1679324437;
+	bh=nDIiSvFvZVyxHzY0Fkoiv05LJn7kBC06SQ5OAg0YUeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oIiQ2VFl/y9GRJ8V0euDEaLDeilzpmGq6XkRxFMUmRDelIxhkzLzVuoq0fes15kRb
-	 1LmN+y791d8jOaU4sqRCEv8pbvwn+d4MgzEF+Ein5GZ09HALL3lr7Cnsm1KxzHiVtY
-	 Bi1FYhsRfDVJow5bkEJcL4A9WVWw8l9xXEFOMbeE=
+	b=doe9qnjO/odbArlmM9z8osG7SZ6PxgonZVZecQZUulbrwWhlEAm4/8ZqehK4kz414
+	 BSNe9oU/JxbgAsTGg30rDZCcB2XOlL7YedLMmidgVnlBJMhUJNrd7JS00xVPuwWv9M
+	 oTsmwVvK+9MqoykHNuI3qyCjiY9BHjYqgrsk+5Jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Riku Voipio <riku.voipio@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	linux-clk@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 23/60] net: phy: smsc: bail out in lan87xx_read_status if genphy_read_status fails
-Date: Mon, 20 Mar 2023 15:54:32 +0100
-Message-Id: <20230320145431.876894686@linuxfoundation.org>
+Subject: [PATCH 5.4 06/60] clk: HI655X: select REGMAP instead of depending on it
+Date: Mon, 20 Mar 2023 15:54:15 +0100
+Message-Id: <20230320145431.133109442@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
 References: <20230320145430.861072439@linuxfoundation.org>
@@ -36,41 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit c22c3bbf351e4ce905f082649cffa1ff893ea8c1 ]
+[ Upstream commit 0ffad67784a097beccf34d297ddd1b0773b3b8a3 ]
 
-If genphy_read_status fails then further access to the PHY may result
-in unpredictable behavior. To prevent this bail out immediately if
-genphy_read_status fails.
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-Fixes: 4223dbffed9f ("net: phy: smsc: Re-enable EDPD mode for LAN87xx")
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/026aa4f2-36f5-1c10-ab9f-cdb17dda6ac4@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
+
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+
+Fixes: 3a49afb84ca0 ("clk: enable hi655x common clk automatically")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Riku Voipio <riku.voipio@linaro.org>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: linux-clk@vger.kernel.org
+Link: https://lore.kernel.org/r/20230226053953.4681-3-rdunlap@infradead.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/smsc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
-index b732982507939..e387c219f17d2 100644
---- a/drivers/net/phy/smsc.c
-+++ b/drivers/net/phy/smsc.c
-@@ -108,8 +108,11 @@ static int lan911x_config_init(struct phy_device *phydev)
- static int lan87xx_read_status(struct phy_device *phydev)
- {
- 	struct smsc_phy_priv *priv = phydev->priv;
-+	int err;
- 
--	int err = genphy_read_status(phydev);
-+	err = genphy_read_status(phydev);
-+	if (err)
-+		return err;
- 
- 	if (!phydev->link && priv->energy_enable) {
- 		int i;
+diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+index c44247d0b83e8..cc871ae3a1792 100644
+--- a/drivers/clk/Kconfig
++++ b/drivers/clk/Kconfig
+@@ -63,7 +63,7 @@ config COMMON_CLK_RK808
+ config COMMON_CLK_HI655X
+ 	tristate "Clock driver for Hi655x" if EXPERT
+ 	depends on (MFD_HI655X_PMIC || COMPILE_TEST)
+-	depends on REGMAP
++	select REGMAP
+ 	default MFD_HI655X_PMIC
+ 	---help---
+ 	  This driver supports the hi655x PMIC clock. This
 -- 
 2.39.2
 
