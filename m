@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D7E1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CF9C433D2;
-	Mon, 20 Mar 2023 15:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3311C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E8FC433EF;
+	Mon, 20 Mar 2023 15:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324769;
-	bh=ItlIgBt4X28+o0HDeXfg3I4bYvEL4gWkj7nf80R+dYE=;
+	s=korg; t=1679324771;
+	bh=aZufomS3hbjgX0dD3WTJMxWuWA4SkiioDaf41cQKJ0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iDPy6sWZKmCPLe1V69m5v3UfMQYU33waC8Yp/dTIUrWjZp0DPzxW6nhDd/ZgH3kkZ
-	 M6903aRT/SM4ahin1Zub4y90GGkSULufqFCJZqb/76C/3Y1Pe83aqtUnGLjgWa5xZF
-	 xCEgQRdEoqVgHkk+c86UjZDQuxGk/0KeiC64zMqc=
+	b=ALsrwwcleQqRroZOVVmY5pI97bxOlNKraXWNFeh9ZaBOAADIE285Eu9211M8tzLYu
+	 Cm1p1DWYHNnBnWG+ENhwMsqtYOprJhQrtMFUATjNW9fig++EQZpu8waHEvzkxMCacW
+	 15pxdI4Mxd47mk50b+InAJH1KbAXEPuZ9QSyNAhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jan Kara <jack@suse.cz>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Dan Schatzberg <schatzberg.dan@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Liang He <windhl@126.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/115] loop: Fix use-after-free issues
-Date: Mon, 20 Mar 2023 15:54:02 +0100
-Message-Id: <20230320145450.706752156@linuxfoundation.org>
+Subject: [PATCH 5.10 31/99] block: sunvdc: add check for mdesc_grab() returning NULL
+Date: Mon, 20 Mar 2023 15:54:09 +0100
+Message-Id: <20230320145444.683712661@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -40,99 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 9b0cb770f5d7b1ff40bea7ca385438ee94570eec ]
+[ Upstream commit 6030363199e3a6341afb467ddddbed56640cbf6a ]
 
-do_req_filebacked() calls blk_mq_complete_request() synchronously or
-asynchronously when using asynchronous I/O unless memory allocation fails.
-Hence, modify loop_handle_cmd() such that it does not dereference 'cmd' nor
-'rq' after do_req_filebacked() finished unless we are sure that the request
-has not yet been completed. This patch fixes the following kernel crash:
+In vdc_port_probe(), we should check the return value of mdesc_grab() as
+it may return NULL, which can cause potential NPD bug.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000054
-Call trace:
- css_put.42938+0x1c/0x1ac
- loop_process_work+0xc8c/0xfd4
- loop_rootcg_workfn+0x24/0x34
- process_one_work+0x244/0x558
- worker_thread+0x400/0x8fc
- kthread+0x16c/0x1e0
- ret_from_fork+0x10/0x20
-
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Dan Schatzberg <schatzberg.dan@gmail.com>
-Fixes: c74d40e8b5e2 ("loop: charge i/o to mem and blk cg")
-Fixes: bc07c10a3603 ("block: loop: support DIO & AIO")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230314182155.80625-1-bvanassche@acm.org
+Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
+Signed-off-by: Liang He <windhl@126.com>
+Link: https://lore.kernel.org/r/20230315062032.1741692-1-windhl@126.com
+[axboe: style cleanup]
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/block/sunvdc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index 58a38e61de535..07cf7a35ae502 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -2188,35 +2188,44 @@ static blk_status_t loop_queue_rq(struct blk_mq_hw_ctx *hctx,
+diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
+index 39aeebc6837da..d9e41d3bbe717 100644
+--- a/drivers/block/sunvdc.c
++++ b/drivers/block/sunvdc.c
+@@ -984,6 +984,8 @@ static int vdc_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 	print_version();
  
- static void loop_handle_cmd(struct loop_cmd *cmd)
- {
-+	struct cgroup_subsys_state *cmd_blkcg_css = cmd->blkcg_css;
-+	struct cgroup_subsys_state *cmd_memcg_css = cmd->memcg_css;
- 	struct request *rq = blk_mq_rq_from_pdu(cmd);
- 	const bool write = op_is_write(req_op(rq));
- 	struct loop_device *lo = rq->q->queuedata;
- 	int ret = 0;
- 	struct mem_cgroup *old_memcg = NULL;
-+	const bool use_aio = cmd->use_aio;
+ 	hp = mdesc_grab();
++	if (!hp)
++		return -ENODEV;
  
- 	if (write && (lo->lo_flags & LO_FLAGS_READ_ONLY)) {
- 		ret = -EIO;
- 		goto failed;
- 	}
- 
--	if (cmd->blkcg_css)
--		kthread_associate_blkcg(cmd->blkcg_css);
--	if (cmd->memcg_css)
-+	if (cmd_blkcg_css)
-+		kthread_associate_blkcg(cmd_blkcg_css);
-+	if (cmd_memcg_css)
- 		old_memcg = set_active_memcg(
--			mem_cgroup_from_css(cmd->memcg_css));
-+			mem_cgroup_from_css(cmd_memcg_css));
- 
-+	/*
-+	 * do_req_filebacked() may call blk_mq_complete_request() synchronously
-+	 * or asynchronously if using aio. Hence, do not touch 'cmd' after
-+	 * do_req_filebacked() has returned unless we are sure that 'cmd' has
-+	 * not yet been completed.
-+	 */
- 	ret = do_req_filebacked(lo, rq);
- 
--	if (cmd->blkcg_css)
-+	if (cmd_blkcg_css)
- 		kthread_associate_blkcg(NULL);
- 
--	if (cmd->memcg_css) {
-+	if (cmd_memcg_css) {
- 		set_active_memcg(old_memcg);
--		css_put(cmd->memcg_css);
-+		css_put(cmd_memcg_css);
- 	}
-  failed:
- 	/* complete non-aio request */
--	if (!cmd->use_aio || ret) {
-+	if (!use_aio || ret) {
- 		if (ret == -EOPNOTSUPP)
- 			cmd->ret = ret;
- 		else
+ 	err = -ENODEV;
+ 	if ((vdev->dev_no << PARTITION_SHIFT) & ~(u64)MINORMASK) {
 -- 
 2.39.2
 
