@@ -1,32 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019A61C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711AFC433D2;
-	Mon, 20 Mar 2023 15:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4011C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07778C433EF;
+	Mon, 20 Mar 2023 15:10:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325027;
-	bh=gwi4qgfkSnuoIiJJcxMq7HAed2DLyUpGGxuCINhs1L0=;
+	s=korg; t=1679325030;
+	bh=OPirRprHsrw3ZuNSVSI34UutUEakUdMYqK5UZkwo5DY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FZ98eXx8qp44l4XResvO9y+DZMCsh8f/hWxKh14znkEi5hDrtG3m+AIGr7Da5T+n/
-	 zhjIpHIHczBRWq5KYXWhtXz5BNN/TfaUUK7rHmp00LZNGMomkCLUAqfbb9OAXjEXeJ
-	 LohWf++MrlWQGUFUGpImx18nzpDKxIYSVZ7lv+TY=
+	b=MNgrB4oi1d4aYdSJNNz5fF1QoKQ/P6p7j9eYYCB14Skn6FZgH1kDEqvDLb4lvDVvd
+	 SaLB3rxcY8OznOhQPhOEnRPG54HBpq4bNrc1hG4R6Spzn7v8S9amKEOUPknAUxbh2u
+	 xQxIQCT7FGDfL73AtZS9fJDfl9dr02wiAq8i6aQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <dchinner@redhat.com>,
-	Dave Chinner <david@fromorbit.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 5.10 85/99] xfs: dont leak btree cursor when insrec fails after a split
-Date: Mon, 20 Mar 2023 15:55:03 +0100
-Message-Id: <20230320145446.977379316@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"HeungJun, Kim" <riverful.kim@samsung.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Mauro Carvalho Chehab <mchehab@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	HeungJun
+Subject: [PATCH 5.15 062/115] media: m5mols: fix off-by-one loop termination error
+Date: Mon, 20 Mar 2023 15:54:34 +0100
+Message-Id: <20230320145452.015860201@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,90 +42,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit a54f78def73d847cb060b18c4e4a3d1d26c9ca6d upstream.
+[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
 
-The recent patch to improve btree cycle checking caused a regression
-when I rebased the in-memory btree branch atop the 5.19 for-next branch,
-because in-memory short-pointer btrees do not have AG numbers.  This
-produced the following complaint from kmemleak:
+The __find_restype() function loops over the m5mols_default_ffmt[]
+array, and the termination condition ends up being wrong: instead of
+stopping when the iterator becomes the size of the array it traverses,
+it stops after it has already overshot the array.
 
-unreferenced object 0xffff88803d47dde8 (size 264):
-  comm "xfs_io", pid 4889, jiffies 4294906764 (age 24.072s)
-  hex dump (first 32 bytes):
-    90 4d 0b 0f 80 88 ff ff 00 a0 bd 05 80 88 ff ff  .M..............
-    e0 44 3a a0 ff ff ff ff 00 df 08 06 80 88 ff ff  .D:.............
-  backtrace:
-    [<ffffffffa0388059>] xfbtree_dup_cursor+0x49/0xc0 [xfs]
-    [<ffffffffa029887b>] xfs_btree_dup_cursor+0x3b/0x200 [xfs]
-    [<ffffffffa029af5d>] __xfs_btree_split+0x6ad/0x820 [xfs]
-    [<ffffffffa029b130>] xfs_btree_split+0x60/0x110 [xfs]
-    [<ffffffffa029f6da>] xfs_btree_make_block_unfull+0x19a/0x1f0 [xfs]
-    [<ffffffffa029fada>] xfs_btree_insrec+0x3aa/0x810 [xfs]
-    [<ffffffffa029fff3>] xfs_btree_insert+0xb3/0x240 [xfs]
-    [<ffffffffa02cb729>] xfs_rmap_insert+0x99/0x200 [xfs]
-    [<ffffffffa02cf142>] xfs_rmap_map_shared+0x192/0x5f0 [xfs]
-    [<ffffffffa02cf60b>] xfs_rmap_map_raw+0x6b/0x90 [xfs]
-    [<ffffffffa0384a85>] xrep_rmap_stash+0xd5/0x1d0 [xfs]
-    [<ffffffffa0384dc0>] xrep_rmap_visit_bmbt+0xa0/0xf0 [xfs]
-    [<ffffffffa0384fb6>] xrep_rmap_scan_iext+0x56/0xa0 [xfs]
-    [<ffffffffa03850d8>] xrep_rmap_scan_ifork+0xd8/0x160 [xfs]
-    [<ffffffffa0385195>] xrep_rmap_scan_inode+0x35/0x80 [xfs]
-    [<ffffffffa03852ee>] xrep_rmap_find_rmaps+0x10e/0x270 [xfs]
+Now, in practice this doesn't likely matter, because the code will
+always find the entry it looks for, and will thus return early and never
+hit that last extra iteration.
 
-I noticed that xfs_btree_insrec has a bunch of debug code that return
-out of the function immediately, without freeing the "new" btree cursor
-that can be returned when _make_block_unfull calls xfs_btree_split.  Fix
-the error return in this function to free the btree cursor.
+But it turns out that clang will unroll the loop fully, because it has
+only two iterations (well, three due to the off-by-one bug), and then
+clang will end up just giving up in the middle of the loop unrolling
+when it notices that the code walks past the end of the array.
 
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Signed-off-by: Dave Chinner <david@fromorbit.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+And that made 'objtool' very unhappy indeed, because the generated code
+just falls off the edge of the universe, and ends up falling through to
+the next function, causing this warning:
+
+   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
+
+Fix the loop ending condition.
+
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
+Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
+Cc: HeungJun, Kim <riverful.kim@samsung.com>
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_btree.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_btree.c
-+++ b/fs/xfs/libxfs/xfs_btree.c
-@@ -3190,7 +3190,7 @@ xfs_btree_insrec(
- 	struct xfs_btree_block	*block;	/* btree block */
- 	struct xfs_buf		*bp;	/* buffer for block */
- 	union xfs_btree_ptr	nptr;	/* new block ptr */
--	struct xfs_btree_cur	*ncur;	/* new btree cursor */
-+	struct xfs_btree_cur	*ncur = NULL;	/* new btree cursor */
- 	union xfs_btree_key	nkey;	/* new block key */
- 	union xfs_btree_key	*lkey;
- 	int			optr;	/* old key/record index */
-@@ -3270,7 +3270,7 @@ xfs_btree_insrec(
- #ifdef DEBUG
- 	error = xfs_btree_check_block(cur, block, level, bp);
- 	if (error)
--		return error;
-+		goto error0;
- #endif
+diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
+index e29be0242f078..f4233feb26276 100644
+--- a/drivers/media/i2c/m5mols/m5mols_core.c
++++ b/drivers/media/i2c/m5mols/m5mols_core.c
+@@ -488,7 +488,7 @@ static enum m5mols_restype __find_restype(u32 code)
+ 	do {
+ 		if (code == m5mols_default_ffmt[type].code)
+ 			return type;
+-	} while (type++ != SIZE_DEFAULT_FFMT);
++	} while (++type != SIZE_DEFAULT_FFMT);
  
- 	/*
-@@ -3290,7 +3290,7 @@ xfs_btree_insrec(
- 		for (i = numrecs - ptr; i >= 0; i--) {
- 			error = xfs_btree_debug_check_ptr(cur, pp, i, level);
- 			if (error)
--				return error;
-+				goto error0;
- 		}
- 
- 		xfs_btree_shift_keys(cur, kp, 1, numrecs - ptr + 1);
-@@ -3375,6 +3375,8 @@ xfs_btree_insrec(
  	return 0;
- 
- error0:
-+	if (ncur)
-+		xfs_btree_del_cursor(ncur, error);
- 	return error;
  }
- 
+-- 
+2.39.2
+
 
 
