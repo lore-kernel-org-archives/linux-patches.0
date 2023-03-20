@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF3E1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D531C433D2;
-	Mon, 20 Mar 2023 15:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A997B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B15C433EF;
+	Mon, 20 Mar 2023 15:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325457;
-	bh=KybEv8xqTLeH2QWdnQbVpYQSe3+YI3q6mmf67zLEscQ=;
+	s=korg; t=1679325460;
+	bh=sXo8mBoKZYZFAHqbPaF7n1eHMzEnof++Sw1JW5lceJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=of97//NpThxv3mCe2Mu90rraon6YzMcmm++hIVQjdxmjEYcAYB/PSRcFXJq28fUQz
-	 O3EMQTU1TvYNPhjDshW/IX3wNycm21yS0yvDEZDoLpCjfnGD0YB7hEwwFa3CKLALMY
-	 FBDTczM4MCMMg4EReC7hkL49PyWlu7lS6EciLpU4=
+	b=mRfI7WOZvJuUI6hZV5BKWbLFht5nxi7p4mKf7quJt/wdl55tAwFANVxQgTzJjQod/
+	 XGVTibHbguk8vJLstobOQgSNLlkAfFcpvc23/Zb3gAY9guqk+nSCI9xksaxkB5LFNr
+	 VH43dR5H1gbSSTJHk51zptF8klKSPXVrHmlSJS7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eli Cohen <elic@nvidia.com>,
-	Si-Wei Liu <si-wei.liu@oracle.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Po-Hsu Lin <po-hsu.lin@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 034/211] vdpa/mlx5: should not activate virtq object when suspended
-Date: Mon, 20 Mar 2023 15:52:49 +0100
-Message-Id: <20230320145514.687137472@linuxfoundation.org>
+Subject: [PATCH 6.1 087/198] selftests: net: devlink_port_split.py: skip test if no suitable device available
+Date: Mon, 20 Mar 2023 15:53:45 +0100
+Message-Id: <20230320145511.184355430@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,81 +35,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Si-Wei Liu <si-wei.liu@oracle.com>
+From: Po-Hsu Lin <po-hsu.lin@canonical.com>
 
-[ Upstream commit 09e65ee9059d76b89cb713795748805efd3f50c6 ]
+[ Upstream commit 24994513ad13ff2c47ba91d2b5df82c3d496c370 ]
 
-Otherwise the virtqueue object to instate could point to invalid address
-that was unmapped from the MTT:
+The `devlink -j port show` command output may not contain the "flavour"
+key, an example from Ubuntu 22.10 s390x LPAR(5.19.0-37-generic), with
+mlx4 driver and iproute2-5.15.0:
+  {"port":{"pci/0001:00:00.0/1":{"type":"eth","netdev":"ens301"},
+           "pci/0001:00:00.0/2":{"type":"eth","netdev":"ens301d1"},
+           "pci/0002:00:00.0/1":{"type":"eth","netdev":"ens317"},
+           "pci/0002:00:00.0/2":{"type":"eth","netdev":"ens317d1"}}}
 
-  mlx5_core 0000:41:04.2: mlx5_cmd_out_err:782:(pid 8321):
-  CREATE_GENERAL_OBJECT(0xa00) op_mod(0xd) failed, status
-  bad parameter(0x3), syndrome (0x5fa1c), err(-22)
+This will cause a KeyError exception.
 
-Fixes: cae15c2ed8e6 ("vdpa/mlx5: Implement susupend virtqueue callback")
-Cc: Eli Cohen <elic@nvidia.com>
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Reviewed-by: Eli Cohen <elic@nvidia.com>
+Create a validate_devlink_output() to check for this "flavour" from
+devlink command output to avoid this KeyError exception. Also let
+it handle the check for `devlink -j dev show` output in main().
 
-Message-Id: <1676424640-11673-1-git-send-email-si-wei.liu@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Apart from this, if the test was not started because the max lanes of
+the designated device is 0. The script will still return 0 and thus
+causing a false-negative test result.
+
+Use a found_max_lanes flag to determine if these tests were skipped
+due to this reason and return KSFT_SKIP to make it more clear.
+
+Link: https://bugs.launchpad.net/bugs/1937133
+Fixes: f3348a82e727 ("selftests: net: Add port split test")
+Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
+Link: https://lore.kernel.org/r/20230315165353.229590-1-po-hsu.lin@canonical.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/mlx5/core/mlx5_vdpa.h | 1 +
- drivers/vdpa/mlx5/net/mlx5_vnet.c  | 6 +++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ .../selftests/net/devlink_port_split.py       | 36 ++++++++++++++++---
+ 1 file changed, 31 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/vdpa/mlx5/core/mlx5_vdpa.h b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-index 058fbe28107e9..25fc4120b618d 100644
---- a/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-+++ b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-@@ -96,6 +96,7 @@ struct mlx5_vdpa_dev {
- 	struct mlx5_control_vq cvq;
- 	struct workqueue_struct *wq;
- 	unsigned int group2asid[MLX5_VDPA_NUMVQ_GROUPS];
-+	bool suspended;
- };
+diff --git a/tools/testing/selftests/net/devlink_port_split.py b/tools/testing/selftests/net/devlink_port_split.py
+index 2b5d6ff873738..2d84c7a0be6b2 100755
+--- a/tools/testing/selftests/net/devlink_port_split.py
++++ b/tools/testing/selftests/net/devlink_port_split.py
+@@ -59,6 +59,8 @@ class devlink_ports(object):
+         assert stderr == ""
+         ports = json.loads(stdout)['port']
  
- int mlx5_vdpa_alloc_pd(struct mlx5_vdpa_dev *dev, u32 *pdn, u16 uid);
-diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-index 3a6dbbc6440d4..daac3ab314785 100644
---- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
-+++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-@@ -2411,7 +2411,7 @@ static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev,
- 	if (err)
- 		goto err_mr;
- 
--	if (!(mvdev->status & VIRTIO_CONFIG_S_DRIVER_OK))
-+	if (!(mvdev->status & VIRTIO_CONFIG_S_DRIVER_OK) || mvdev->suspended)
- 		goto err_mr;
- 
- 	restore_channels_info(ndev);
-@@ -2579,6 +2579,7 @@ static int mlx5_vdpa_reset(struct vdpa_device *vdev)
- 	clear_vqs_ready(ndev);
- 	mlx5_vdpa_destroy_mr(&ndev->mvdev);
- 	ndev->mvdev.status = 0;
-+	ndev->mvdev.suspended = false;
- 	ndev->cur_num_vqs = 0;
- 	ndev->mvdev.cvq.received_desc = 0;
- 	ndev->mvdev.cvq.completed_desc = 0;
-@@ -2815,6 +2816,8 @@ static int mlx5_vdpa_suspend(struct vdpa_device *vdev)
- 	struct mlx5_vdpa_virtqueue *mvq;
- 	int i;
- 
-+	mlx5_vdpa_info(mvdev, "suspending device\n");
++        validate_devlink_output(ports, 'flavour')
 +
- 	down_write(&ndev->reslock);
- 	ndev->nb_registered = false;
- 	mlx5_notifier_unregister(mvdev->mdev, &ndev->nb);
-@@ -2824,6 +2827,7 @@ static int mlx5_vdpa_suspend(struct vdpa_device *vdev)
- 		suspend_vq(ndev, mvq);
- 	}
- 	mlx5_vdpa_cvq_suspend(mvdev);
-+	mvdev->suspended = true;
- 	up_write(&ndev->reslock);
- 	return 0;
- }
+         for port in ports:
+             if dev in port:
+                 if ports[port]['flavour'] == 'physical':
+@@ -220,6 +222,27 @@ def split_splittable_port(port, k, lanes, dev):
+     unsplit(port.bus_info)
+ 
+ 
++def validate_devlink_output(devlink_data, target_property=None):
++    """
++    Determine if test should be skipped by checking:
++      1. devlink_data contains values
++      2. The target_property exist in devlink_data
++    """
++    skip_reason = None
++    if any(devlink_data.values()):
++        if target_property:
++            skip_reason = "{} not found in devlink output, test skipped".format(target_property)
++            for key in devlink_data:
++                if target_property in devlink_data[key]:
++                    skip_reason = None
++    else:
++        skip_reason = 'devlink output is empty, test skipped'
++
++    if skip_reason:
++        print(skip_reason)
++        sys.exit(KSFT_SKIP)
++
++
+ def make_parser():
+     parser = argparse.ArgumentParser(description='A test for port splitting.')
+     parser.add_argument('--dev',
+@@ -240,12 +263,9 @@ def main(cmdline=None):
+         stdout, stderr = run_command(cmd)
+         assert stderr == ""
+ 
++        validate_devlink_output(json.loads(stdout))
+         devs = json.loads(stdout)['dev']
+-        if devs:
+-            dev = list(devs.keys())[0]
+-        else:
+-            print("no devlink device was found, test skipped")
+-            sys.exit(KSFT_SKIP)
++        dev = list(devs.keys())[0]
+ 
+     cmd = "devlink dev show %s" % dev
+     stdout, stderr = run_command(cmd)
+@@ -255,6 +275,7 @@ def main(cmdline=None):
+ 
+     ports = devlink_ports(dev)
+ 
++    found_max_lanes = False
+     for port in ports.if_names:
+         max_lanes = get_max_lanes(port.name)
+ 
+@@ -277,6 +298,11 @@ def main(cmdline=None):
+                 split_splittable_port(port, lane, max_lanes, dev)
+ 
+                 lane //= 2
++        found_max_lanes = True
++
++    if not found_max_lanes:
++        print(f"Test not started, no port of device {dev} reports max_lanes")
++        sys.exit(KSFT_SKIP)
+ 
+ 
+ if __name__ == "__main__":
 -- 
 2.39.2
 
