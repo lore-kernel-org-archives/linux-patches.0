@@ -1,37 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD691C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D639CC433A7;
-	Mon, 20 Mar 2023 15:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512211C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57E3C433D2;
+	Mon, 20 Mar 2023 15:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324725;
-	bh=5NVLHIXonwLawaQOp/IdY2KPXsBtefrxB6wCE7yhmS8=;
+	s=korg; t=1679324728;
+	bh=vZeEPlFUIhyls7IQBBIzpmVtBpAtwPe1H1yLz9J0tH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eElyH7X67IJ2sA44weSCKkEjGcIV0H4QuEIBXO2BOeRulfBhYfxxJCaTavj3R8gNZ
-	 M7ANcNVNjKRp9uCkZHLYM1gaMe8M5RDYv/WvII1poVmHhlR/zU1I1FMxPKkEz5bKmi
-	 VpLMGdPxH+946/Y5rkb6IPKjKay6Eexw8CyEBmUM=
+	b=oqX/5buQaxm3kRV+Fjv/N/Nz85XRPc5zFt8B1kglvPVMi2sLAjp/OH0pdi2LvXYqs
+	 TejspuA3ckABdYJLQPCImLGTrxmtlJij3MVI8uKAwn93NzpWEiiCEsVQbeGppmtwzo
+	 4AbjwR0s9Z5VzrO2Xq4exB/LmRcARG7pAfAt1968=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	"HeungJun, Kim" <riverful.kim@samsung.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
-	Mauro Carvalho Chehab <mchehab@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	HeungJun
-Subject: [PATCH 5.10 47/99] media: m5mols: fix off-by-one loop termination error
-Date: Mon, 20 Mar 2023 15:54:25 +0100
-Message-Id: <20230320145445.356264094@linuxfoundation.org>
+	Tom Rix <trix@redhat.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 024/115] drm/i915/display: clean up comments
+Date: Mon, 20 Mar 2023 15:53:56 +0100
+Message-Id: <20230320145450.436481736@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -42,60 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Tom Rix <trix@redhat.com>
 
-[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
+[ Upstream commit 3461b040a90d723c93c9d1c7c11e3464f5cadc0e ]
 
-The __find_restype() function loops over the m5mols_default_ffmt[]
-array, and the termination condition ends up being wrong: instead of
-stopping when the iterator becomes the size of the array it traverses,
-it stops after it has already overshot the array.
+spelling changes
+resoluition -> resolution
+dont        -> don't
+commmit     -> commit
+Invalidade  -> Invalidate
 
-Now, in practice this doesn't likely matter, because the code will
-always find the entry it looks for, and will thus return early and never
-hit that last extra iteration.
-
-But it turns out that clang will unroll the loop fully, because it has
-only two iterations (well, three due to the off-by-one bug), and then
-clang will end up just giving up in the middle of the loop unrolling
-when it notices that the code walks past the end of the array.
-
-And that made 'objtool' very unhappy indeed, because the generated code
-just falls off the edge of the universe, and ends up falling through to
-the next function, causing this warning:
-
-   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
-
-Fix the loop ending condition.
-
-Reported-by: Jens Axboe <axboe@kernel.dk>
-Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
-Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
-Cc: HeungJun, Kim <riverful.kim@samsung.com>
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Tom Rix <trix@redhat.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220701203236.1871668-1-trix@redhat.com
+Stable-dep-of: 71c602103c74 ("drm/i915/psr: Use calculated io and fast wake lines")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_psr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
-index 21666d705e372..dcf9e4d4ee6b8 100644
---- a/drivers/media/i2c/m5mols/m5mols_core.c
-+++ b/drivers/media/i2c/m5mols/m5mols_core.c
-@@ -488,7 +488,7 @@ static enum m5mols_restype __find_restype(u32 code)
- 	do {
- 		if (code == m5mols_default_ffmt[type].code)
- 			return type;
--	} while (type++ != SIZE_DEFAULT_FFMT);
-+	} while (++type != SIZE_DEFAULT_FFMT);
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 21d58d22c82ee..5f9894e3c7aa7 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -580,7 +580,7 @@ static void hsw_activate_psr2(struct intel_dp *intel_dp)
+ 		/*
+ 		 * TODO: 7 lines of IO_BUFFER_WAKE and FAST_WAKE are default
+ 		 * values from BSpec. In order to setting an optimal power
+-		 * consumption, lower than 4k resoluition mode needs to decrese
++		 * consumption, lower than 4k resolution mode needs to decrease
+ 		 * IO_BUFFER_WAKE and FAST_WAKE. And higher than 4K resolution
+ 		 * mode needs to increase IO_BUFFER_WAKE and FAST_WAKE.
+ 		 */
+@@ -986,7 +986,7 @@ void intel_psr_compute_config(struct intel_dp *intel_dp,
+ 	int psr_setup_time;
  
- 	return 0;
+ 	/*
+-	 * Current PSR panels dont work reliably with VRR enabled
++	 * Current PSR panels don't work reliably with VRR enabled
+ 	 * So if VRR is enabled, do not enable PSR.
+ 	 */
+ 	if (crtc_state->vrr.enable)
+@@ -1619,7 +1619,7 @@ static void cursor_area_workaround(const struct intel_plane_state *new_plane_sta
+  *
+  * Plane scaling and rotation is not supported by selective fetch and both
+  * properties can change without a modeset, so need to be check at every
+- * atomic commmit.
++ * atomic commit.
+  */
+ static bool psr2_sel_fetch_plane_state_supported(const struct intel_plane_state *plane_state)
+ {
+@@ -2067,7 +2067,7 @@ static void intel_psr_work(struct work_struct *work)
  }
+ 
+ /**
+- * intel_psr_invalidate - Invalidade PSR
++ * intel_psr_invalidate - Invalidate PSR
+  * @dev_priv: i915 device
+  * @frontbuffer_bits: frontbuffer plane tracking bits
+  * @origin: which operation caused the invalidate
 -- 
 2.39.2
 
