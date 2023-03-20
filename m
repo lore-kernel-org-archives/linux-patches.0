@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011FA1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F1EC433EF;
-	Mon, 20 Mar 2023 15:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A441C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0A6C4339B;
+	Mon, 20 Mar 2023 15:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325300;
-	bh=53QSTYhbqg5gwqWZqzC48RoFd/cE5vtFHcLiG1HOVlI=;
+	s=korg; t=1679325303;
+	bh=zxSa/fNaxWCHjv9WMs3urxH7e71umk+dLt7KS9XkCrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCjlWrIU2XO82BTAUkw4VLAvZajFpXNQPbijNJnvwymrPSCA5UHQvPxEvc3STZvqg
-	 g7mPqHeVnL/hmeQvH0WV24DIxDQp1/41sp20EXHmcOTT5AWfVqGPfdwH1ALUqrbTeQ
-	 k0dcK/RPkZa8vVtRBMhoEkBDnTPf8vZMveFslH2I=
+	b=OaGeCIjlid0ukXUSoNWosxQeg/tzSUv61RB6rYJkdJNHPrGlPHpMPFpAnsOwAHR5C
+	 xSLvIuaXpvwy2xpGTfgAsJh5kYQ3rBQHywfozs4dN7bg/c9iAcBgVII7MyAzhP0Ifi
+	 sF/7+0vxPjq0E7awxTRXvw7EI6GRFGo4yHHgLcWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong Li <zong.li@sifive.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 088/115] Revert "riscv: mm: notify remote harts about mmu cache updates"
-Date: Mon, 20 Mar 2023 15:55:00 +0100
-Message-Id: <20230320145453.099128227@linuxfoundation.org>
+	Liang He <windhl@126.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 066/198] block: sunvdc: add check for mdesc_grab() returning NULL
+Date: Mon, 20 Mar 2023 15:53:24 +0100
+Message-Id: <20230320145510.299379156@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,139 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+From: Liang He <windhl@126.com>
 
-commit e921050022f1f12d5029d1487a7dfc46cde15523 upstream.
+[ Upstream commit 6030363199e3a6341afb467ddddbed56640cbf6a ]
 
-This reverts the remaining bits of commit 4bd1d80efb5a ("riscv: mm:
-notify remote harts harts about mmu cache updates").
+In vdc_port_probe(), we should check the return value of mdesc_grab() as
+it may return NULL, which can cause potential NPD bug.
 
-According to bug reports, suggested approach to fix stale TLB entries
-is not sufficient. It needs to be replaced by a more robust solution.
-
-Fixes: 4bd1d80efb5a ("riscv: mm: notify remote harts about mmu cache updates")
-Reported-by: Zong Li <zong.li@sifive.com>
-Reported-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230226150137.1919750-2-geomatsi@gmail.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
+Signed-off-by: Liang He <windhl@126.com>
+Link: https://lore.kernel.org/r/20230315062032.1741692-1-windhl@126.com
+[axboe: style cleanup]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/mmu.h      |    2 --
- arch/riscv/include/asm/tlbflush.h |   18 ------------------
- arch/riscv/mm/context.c           |   10 ----------
- arch/riscv/mm/tlbflush.c          |   28 +++++++++++++++++-----------
- 4 files changed, 17 insertions(+), 41 deletions(-)
+ drivers/block/sunvdc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/riscv/include/asm/mmu.h
-+++ b/arch/riscv/include/asm/mmu.h
-@@ -19,8 +19,6 @@ typedef struct {
- #ifdef CONFIG_SMP
- 	/* A local icache flush is needed before user execution can resume. */
- 	cpumask_t icache_stale_mask;
--	/* A local tlb flush is needed before user execution can resume. */
--	cpumask_t tlb_stale_mask;
- #endif
- } mm_context_t;
+diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
+index fb855da971ee7..9fa821fa76b07 100644
+--- a/drivers/block/sunvdc.c
++++ b/drivers/block/sunvdc.c
+@@ -972,6 +972,8 @@ static int vdc_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 	print_version();
  
---- a/arch/riscv/include/asm/tlbflush.h
-+++ b/arch/riscv/include/asm/tlbflush.h
-@@ -22,24 +22,6 @@ static inline void local_flush_tlb_page(
- {
- 	ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
- }
--
--static inline void local_flush_tlb_all_asid(unsigned long asid)
--{
--	__asm__ __volatile__ ("sfence.vma x0, %0"
--			:
--			: "r" (asid)
--			: "memory");
--}
--
--static inline void local_flush_tlb_page_asid(unsigned long addr,
--		unsigned long asid)
--{
--	__asm__ __volatile__ ("sfence.vma %0, %1"
--			:
--			: "r" (addr), "r" (asid)
--			: "memory");
--}
--
- #else /* CONFIG_MMU */
- #define local_flush_tlb_all()			do { } while (0)
- #define local_flush_tlb_page(addr)		do { } while (0)
---- a/arch/riscv/mm/context.c
-+++ b/arch/riscv/mm/context.c
-@@ -196,16 +196,6 @@ switch_mm_fast:
+ 	hp = mdesc_grab();
++	if (!hp)
++		return -ENODEV;
  
- 	if (need_flush_tlb)
- 		local_flush_tlb_all();
--#ifdef CONFIG_SMP
--	else {
--		cpumask_t *mask = &mm->context.tlb_stale_mask;
--
--		if (cpumask_test_cpu(cpu, mask)) {
--			cpumask_clear_cpu(cpu, mask);
--			local_flush_tlb_all_asid(cntx & asid_mask);
--		}
--	}
--#endif
- }
- 
- static void set_mm_noasid(struct mm_struct *mm)
---- a/arch/riscv/mm/tlbflush.c
-+++ b/arch/riscv/mm/tlbflush.c
-@@ -5,7 +5,23 @@
- #include <linux/sched.h>
- #include <asm/sbi.h>
- #include <asm/mmu_context.h>
--#include <asm/tlbflush.h>
-+
-+static inline void local_flush_tlb_all_asid(unsigned long asid)
-+{
-+	__asm__ __volatile__ ("sfence.vma x0, %0"
-+			:
-+			: "r" (asid)
-+			: "memory");
-+}
-+
-+static inline void local_flush_tlb_page_asid(unsigned long addr,
-+		unsigned long asid)
-+{
-+	__asm__ __volatile__ ("sfence.vma %0, %1"
-+			:
-+			: "r" (addr), "r" (asid)
-+			: "memory");
-+}
- 
- void flush_tlb_all(void)
- {
-@@ -15,7 +31,6 @@ void flush_tlb_all(void)
- static void __sbi_tlb_flush_range(struct mm_struct *mm, unsigned long start,
- 				  unsigned long size, unsigned long stride)
- {
--	struct cpumask *pmask = &mm->context.tlb_stale_mask;
- 	struct cpumask *cmask = mm_cpumask(mm);
- 	struct cpumask hmask;
- 	unsigned int cpuid;
-@@ -30,15 +45,6 @@ static void __sbi_tlb_flush_range(struct
- 	if (static_branch_unlikely(&use_asid_allocator)) {
- 		unsigned long asid = atomic_long_read(&mm->context.id);
- 
--		/*
--		 * TLB will be immediately flushed on harts concurrently
--		 * executing this MM context. TLB flush on other harts
--		 * is deferred until this MM context migrates there.
--		 */
--		cpumask_setall(pmask);
--		cpumask_clear_cpu(cpuid, pmask);
--		cpumask_andnot(pmask, pmask, cmask);
--
- 		if (broadcast) {
- 			riscv_cpuid_to_hartid_mask(cmask, &hmask);
- 			sbi_remote_sfence_vma_asid(cpumask_bits(&hmask),
+ 	err = -ENODEV;
+ 	if ((vdev->dev_no << PARTITION_SHIFT) & ~(u64)MINORMASK) {
+-- 
+2.39.2
+
 
 
