@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2676F1C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD7AC433D2;
-	Mon, 20 Mar 2023 15:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD511C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C9BC433EF;
+	Mon, 20 Mar 2023 15:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326069;
-	bh=h7vpUiiPtLPLG9a5vWxmrGagwlxo57LGdDJQAc5qikg=;
+	s=korg; t=1679326071;
+	bh=gK2D7IyUjBvRJi3+9oJhwSxSix+/FsT12U/bkIFrVbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2pvEfFDMfKjO1LxXtfKCeUiSegJUQlF29JVekobIMvVpc0rp/pandEZC6VbgGyz/S
-	 0wwcLjQFKLO1d7OInuRtuPF+Rrcro5xu4+E/vtZk01GlneP+DOzx9M8VBLIc7e2aQW
-	 aTNxWq550cQdS+93obFk/UVMKfZaN+xs8AuvLp54=
+	b=im6LOj9uyIwyeX/Znm9mFZghDhfB8pw+YiaUWzxf6kl9CqibM4Eld7TIKohYazFy0
+	 kRrSy3OQ6RenJPPHemCRyU8Tyq3LM9xUeVUhGLckYdipnr6OFot8yf+Umiyxa0rsxt
+	 keUOrqUNiY6CZk9tbV3rYrQT145AlDUQVPAfDhWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PATCH 6.1 195/198] virt/coco/sev-guest: Do some code style cleanups
-Date: Mon, 20 Mar 2023 15:55:33 +0100
-Message-Id: <20230320145515.644058218@linuxfoundation.org>
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.2 153/211] KVM: SVM: Fix a benign off-by-one bug in AVIC physical table mask
+Date: Mon, 20 Mar 2023 15:54:48 +0100
+Message-Id: <20230320145519.859700036@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,44 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Sean Christopherson <seanjc@google.com>
 
-commit d25bae7dc7b0668cb2a1325c64eb32d5fea4e5a9 upstream.
+commit 3ec7a1b2743c07c45f4a0c508114f6cb410ddef3 upstream.
 
-Remove unnecessary linebreaks, make the code more compact.
+Define the "physical table max index mask" as bits 8:0, not 9:0.  x2AVIC
+currently supports a max of 512 entries, i.e. the max index is 511, and
+the inputs to GENMASK_ULL() are inclusive.  The bug is benign as bit 9 is
+reserved and never set by KVM, i.e. KVM is just clearing bits that are
+guaranteed to be zero.
 
-No functional changes.
+Note, as of this writing, APM "Rev. 3.39-October 2022" incorrectly states
+that bits 11:8 are reserved in Table B-1. VMCB Layout, Control Area.  I.e.
+that table wasn't updated when x2AVIC support was added.
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20230307192449.24732-7-bp@alien8.de
+Opportunistically fix the comment for the max AVIC ID to align with the
+code, and clean up comment formatting too.
+
+Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
+Cc: stable@vger.kernel.org
+Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Tested-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Message-Id: <20230207002156.521736-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/coco/sev-guest/sev-guest.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/svm.h |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -414,18 +414,14 @@ static int handle_guest_request(struct s
- 		if (rc == -EIO && *fw_err == SNP_GUEST_REQ_INVALID_LEN)
- 			return rc;
+--- a/arch/x86/include/asm/svm.h
++++ b/arch/x86/include/asm/svm.h
+@@ -261,20 +261,22 @@ enum avic_ipi_failure_cause {
+ 	AVIC_IPI_FAILURE_INVALID_BACKING_PAGE,
+ };
  
--		dev_alert(snp_dev->dev,
--			  "Detected error from ASP request. rc: %d, fw_err: %llu\n",
--			  rc, *fw_err);
-+		dev_alert(snp_dev->dev, "Detected error from ASP request. rc: %d, fw_err: %llu\n", rc, *fw_err);
- 		snp_disable_vmpck(snp_dev);
- 		return rc;
- 	}
+-#define AVIC_PHYSICAL_MAX_INDEX_MASK	GENMASK_ULL(9, 0)
++#define AVIC_PHYSICAL_MAX_INDEX_MASK	GENMASK_ULL(8, 0)
  
- 	rc = verify_and_dec_payload(snp_dev, resp_buf, resp_sz);
- 	if (rc) {
--		dev_alert(snp_dev->dev,
--			  "Detected unexpected decode failure from ASP. rc: %d\n",
--			  rc);
-+		dev_alert(snp_dev->dev, "Detected unexpected decode failure from ASP. rc: %d\n", rc);
- 		snp_disable_vmpck(snp_dev);
- 		return rc;
- 	}
+ /*
+- * For AVIC, the max index allowed for physical APIC ID
+- * table is 0xff (255).
++ * For AVIC, the max index allowed for physical APIC ID table is 0xfe (254), as
++ * 0xff is a broadcast to all CPUs, i.e. can't be targeted individually.
+  */
+ #define AVIC_MAX_PHYSICAL_ID		0XFEULL
+ 
+ /*
+- * For x2AVIC, the max index allowed for physical APIC ID
+- * table is 0x1ff (511).
++ * For x2AVIC, the max index allowed for physical APIC ID table is 0x1ff (511).
+  */
+ #define X2AVIC_MAX_PHYSICAL_ID		0x1FFUL
+ 
++static_assert((AVIC_MAX_PHYSICAL_ID & AVIC_PHYSICAL_MAX_INDEX_MASK) == AVIC_MAX_PHYSICAL_ID);
++static_assert((X2AVIC_MAX_PHYSICAL_ID & AVIC_PHYSICAL_MAX_INDEX_MASK) == X2AVIC_MAX_PHYSICAL_ID);
++
+ #define AVIC_HPA_MASK	~((0xFFFULL << 52) | 0xFFF)
+ #define VMCB_AVIC_APIC_BAR_MASK		0xFFFFFFFFFF000ULL
+ 
 
 
