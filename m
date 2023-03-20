@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891621C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADCFC433EF;
-	Mon, 20 Mar 2023 15:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A051C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3F1C433D2;
+	Mon, 20 Mar 2023 15:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324648;
-	bh=wkZ4z5a0KAt7b9grUGZh1w+J324kLMryXMdJuUEh4SM=;
+	s=korg; t=1679324651;
+	bh=CrlRtSmj+CpAkpqnYplqcn9+dUtNkH6NDMZXSXxVIr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aFJYmXmnb2VdBSiukeIbk6Gir9k3xX+InKj37pYDaHtryUTafoADtJ9rIIcbNV6+X
-	 RqkKSG5JrZX5L5rm8nNi+A8dVQc/TY9UlwCTySsgwAPbLi0B1pmozCvYN6rJx/6l1f
-	 eaYv5T7LwVrZxwdbMxsCiNLxJIPY0+jJc+F3mbak=
+	b=o6ZuQP8jSdoIOUDEaZ1afbzSierw0nqFkh8kvG56O7jBG9rjGBOXNT4XiscPVZuXs
+	 3CkvNyTL7YPcNwOW2IZ2vRb8sfu1datQxlJh9BArbt7bhLlf00fCCpv8LVmTK90dvd
+	 BoJiPaQM6agiXCVLWwnftXwzHm72XeB/H80GpqIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gaoxingwang <gaoxingwang1@huawei.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 34/99] ipv4: Fix incorrect table ID in IOCTL path
-Date: Mon, 20 Mar 2023 15:54:12 +0100
-Message-Id: <20230320145444.807906297@linuxfoundation.org>
+Subject: [PATCH 5.15 011/115] netfilter: nft_redir: correct length for loading protocol registers
+Date: Mon, 20 Mar 2023 15:53:43 +0100
+Message-Id: <20230320145449.846513347@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,72 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit 8a2618e14f81604a9b6ad305d57e0c8da939cd65 ]
+[ Upstream commit 1f617b6b4c7a3d5ea7a56abb83a4c27733b60c2f ]
 
-Commit f96a3d74554d ("ipv4: Fix incorrect route flushing when source
-address is deleted") started to take the table ID field in the FIB info
-structure into account when determining if two structures are identical
-or not. This field is initialized using the 'fc_table' field in the
-route configuration structure, which is not set when adding a route via
-IOCTL.
+The values in the protocol registers are two bytes wide.  However, when
+parsing the register loads, the code currently uses the larger 16-byte
+size of a `union nf_inet_addr`.  Change it to use the (correct) size of
+a `union nf_conntrack_man_proto` instead.
 
-The above can result in user space being able to install two identical
-routes that only differ in the table ID field of their associated FIB
-info.
-
-Fix by initializing the table ID field in the route configuration
-structure in the IOCTL path.
-
-Before the fix:
-
- # ip route add default via 192.0.2.2
- # route add default gw 192.0.2.2
- # ip -4 r show default
- # default via 192.0.2.2 dev dummy10
- # default via 192.0.2.2 dev dummy10
-
-After the fix:
-
- # ip route add default via 192.0.2.2
- # route add default gw 192.0.2.2
- SIOCADDRT: File exists
- # ip -4 r show default
- default via 192.0.2.2 dev dummy10
-
-Audited the code paths to ensure there are no other paths that do not
-properly initialize the route configuration structure when installing a
-route.
-
-Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
-Fixes: f96a3d74554d ("ipv4: Fix incorrect route flushing when source address is deleted")
-Reported-by: gaoxingwang <gaoxingwang1@huawei.com>
-Link: https://lore.kernel.org/netdev/20230314144159.2354729-1-gaoxingwang1@huawei.com/
-Tested-by: gaoxingwang <gaoxingwang1@huawei.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230315124009.4015212-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d07db9884a5f ("netfilter: nf_tables: introduce nft_validate_register_load()")
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_frontend.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/nft_redir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
-index 5f786ef662ead..41f890bf9d4c4 100644
---- a/net/ipv4/fib_frontend.c
-+++ b/net/ipv4/fib_frontend.c
-@@ -573,6 +573,9 @@ static int rtentry_to_fib_config(struct net *net, int cmd, struct rtentry *rt,
- 			cfg->fc_scope = RT_SCOPE_UNIVERSE;
- 	}
+diff --git a/net/netfilter/nft_redir.c b/net/netfilter/nft_redir.c
+index ba09890dddb50..deb7e65c8d82b 100644
+--- a/net/netfilter/nft_redir.c
++++ b/net/netfilter/nft_redir.c
+@@ -48,7 +48,7 @@ static int nft_redir_init(const struct nft_ctx *ctx,
+ 	unsigned int plen;
+ 	int err;
  
-+	if (!cfg->fc_table)
-+		cfg->fc_table = RT_TABLE_MAIN;
-+
- 	if (cmd == SIOCDELRT)
- 		return 0;
- 
+-	plen = sizeof_field(struct nf_nat_range, min_addr.all);
++	plen = sizeof_field(struct nf_nat_range, min_proto.all);
+ 	if (tb[NFTA_REDIR_REG_PROTO_MIN]) {
+ 		err = nft_parse_register_load(tb[NFTA_REDIR_REG_PROTO_MIN],
+ 					      &priv->sreg_proto_min, plen);
 -- 
 2.39.2
 
