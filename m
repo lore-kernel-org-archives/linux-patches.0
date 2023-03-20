@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E60A1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D8CC433EF;
-	Mon, 20 Mar 2023 15:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B441C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77836C433EF;
+	Mon, 20 Mar 2023 15:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324654;
-	bh=6n/AO6oB4K8G96eDyoJehyxlV3S3Hj7R5c/zWrPPdY8=;
+	s=korg; t=1679324656;
+	bh=Ug95ZF0Sr8/9AE2AGsfhk48LZ7cuIuVOz2j+Cl097bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skqEHrZXanI+nvWqHyX6zVjHHj7oJQr75JWtlcT58sbY6x6ZGx7bJqi07BD5Nzx7d
-	 6oJ5OYgSGqEeyll+qcZvkL5+xoq3PdtmACFio3f7AtNT0YYffBCMq8Ne1KpenbV6ly
-	 EKJNfV4lQCNzAqhnwJNZjoa+ZmyOzk6YNBsLqQ+A=
+	b=RBFkJwr/7xYS+43WWP27g8VBgIh1P1lz3osCk9BSEbvFzAeg+1DVeoGB4FjDZ43Uy
+	 g3gB2yiD+czze8OwonJq2HkRcLkpbgaMjgqMfOU8949AXcU7dYgaBCC+XK+n8XA6PB
+	 BKsNJy08wY4NQrEwW1S6F7O8+6b2oZk6nQ6/3QrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Heidrich <szymon.heidrich@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 35/99] net: usb: smsc75xx: Move packet length check to prevent kernel panic in skb_pull
-Date: Mon, 20 Mar 2023 15:54:13 +0100
-Message-Id: <20230320145444.842726461@linuxfoundation.org>
+Subject: [PATCH 5.15 012/115] netfilter: nft_redir: correct value of inet type `.maxattrs`
+Date: Mon, 20 Mar 2023 15:53:44 +0100
+Message-Id: <20230320145449.896192923@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,51 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit 43ffe6caccc7a1bb9d7442fbab521efbf6c1378c ]
+[ Upstream commit 493924519b1fe3faab13ee621a43b0d0939abab1 ]
 
-Packet length check needs to be located after size and align_count
-calculation to prevent kernel panic in skb_pull() in case
-rx_cmd_a & RX_CMD_A_RED evaluates to true.
+`nft_redir_inet_type.maxattrs` was being set, presumably because of a
+cut-and-paste error, to `NFTA_MASQ_MAX`, instead of `NFTA_REDIR_MAX`.
 
-Fixes: d8b228318935 ("net: usb: smsc75xx: Limit packet length to skb->len")
-Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
-Link: https://lore.kernel.org/r/20230316110540.77531-1-szymon.heidrich@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 63ce3940f3ab ("netfilter: nft_redir: add inet support")
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc75xx.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/netfilter/nft_redir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
-index 0b3d11e28faa7..fb1389bd09392 100644
---- a/drivers/net/usb/smsc75xx.c
-+++ b/drivers/net/usb/smsc75xx.c
-@@ -2199,6 +2199,13 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		size = (rx_cmd_a & RX_CMD_A_LEN) - RXW_PADDING;
- 		align_count = (4 - ((size + RXW_PADDING) % 4)) % 4;
+diff --git a/net/netfilter/nft_redir.c b/net/netfilter/nft_redir.c
+index deb7e65c8d82b..e64f531d66cfc 100644
+--- a/net/netfilter/nft_redir.c
++++ b/net/netfilter/nft_redir.c
+@@ -232,7 +232,7 @@ static struct nft_expr_type nft_redir_inet_type __read_mostly = {
+ 	.name		= "redir",
+ 	.ops		= &nft_redir_inet_ops,
+ 	.policy		= nft_redir_policy,
+-	.maxattr	= NFTA_MASQ_MAX,
++	.maxattr	= NFTA_REDIR_MAX,
+ 	.owner		= THIS_MODULE,
+ };
  
-+		if (unlikely(size > skb->len)) {
-+			netif_dbg(dev, rx_err, dev->net,
-+				  "size err rx_cmd_a=0x%08x\n",
-+				  rx_cmd_a);
-+			return 0;
-+		}
-+
- 		if (unlikely(rx_cmd_a & RX_CMD_A_RED)) {
- 			netif_dbg(dev, rx_err, dev->net,
- 				  "Error rx_cmd_a=0x%08x\n", rx_cmd_a);
-@@ -2211,8 +2218,7 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 				dev->net->stats.rx_frame_errors++;
- 		} else {
- 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
--			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
--				     size > skb->len)) {
-+			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
- 				netif_dbg(dev, rx_err, dev->net,
- 					  "size err rx_cmd_a=0x%08x\n",
- 					  rx_cmd_a);
 -- 
 2.39.2
 
