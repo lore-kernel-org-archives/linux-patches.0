@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05A41C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72350C433EF;
-	Mon, 20 Mar 2023 15:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9E71C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3492DC4339E;
+	Mon, 20 Mar 2023 15:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325443;
-	bh=cNQZ9ftb0SQWKViY9vleiOOLSisslUlS21d/t6KwPJ0=;
+	s=korg; t=1679325446;
+	bh=BPyxTzOfe5i2/ejbOf6G0v8zjqalgYSFVTr53iyfp2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+bjuW3Nvqt24/2uV9XtyPUNANOJ1Qy4rEJqkLXfYQoxER8Y8h+iOaLEXFEMAMp2K
-	 kpyWaoJy5N59gtnPThQwkmPwUXUtjljjJOp/32cMIXSRdUh4b/cPnvJsn3+K9kvK5S
-	 NxB26rQmdY1Sfps7ZGyPAW/zCo7HbF4Jr+VvKUZo=
+	b=KNSorB7dvSXJlnQg0t8EZb2bhkbdZj7mPq8vHSe53jkjK/SToAcjpWlfTfAyrrtxW
+	 mweZmpC35XF84ckdCCiu4358fQW7chQTxWjPB42C4okqfJrQuA4oqPqZUM4nGH430m
+	 NW/zuqwgsbrQQvExXomtAB2mX/DgdoVM3K5j84sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Shawn Guo <shawn.guo@linaro.org>,
-	"Rafael J. Wysocki" <rjw@rjwysocki.net>
-Subject: [PATCH 5.15 105/115] cpuidle: psci: Iterate backwards over list in psci_pd_remove()
-Date: Mon, 20 Mar 2023 15:55:17 +0100
-Message-Id: <20230320145453.840088331@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 044/211] PCI: s390: Fix use-after-free of PCI resources with per-function hotplug
+Date: Mon, 20 Mar 2023 15:52:59 +0100
+Message-Id: <20230320145515.075222715@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,62 +37,196 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shawn Guo <shawn.guo@linaro.org>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit 6b0313c2fa3d2cf991c9ffef6fae6e7ef592ce6d upstream.
+[ Upstream commit ab909509850b27fd39b8ba99e44cda39dbc3858c ]
 
-In case that psci_pd_init_topology() fails for some reason,
-psci_pd_remove() will be responsible for deleting provider and removing
-genpd from psci_pd_providers list.  There will be a failure when removing
-the cluster PD, because the cpu (child) PDs haven't been removed.
+On s390 PCI functions may be hotplugged individually even when they
+belong to a multi-function device. In particular on an SR-IOV device VFs
+may be removed and later re-added.
 
-[    0.050232] CPUidle PSCI: init PM domain cpu0
-[    0.050278] CPUidle PSCI: init PM domain cpu1
-[    0.050329] CPUidle PSCI: init PM domain cpu2
-[    0.050370] CPUidle PSCI: init PM domain cpu3
-[    0.050422] CPUidle PSCI: init PM domain cpu-cluster0
-[    0.050475] PM: genpd_remove: unable to remove cpu-cluster0
-[    0.051412] PM: genpd_remove: removed cpu3
-[    0.051449] PM: genpd_remove: removed cpu2
-[    0.051499] PM: genpd_remove: removed cpu1
-[    0.051546] PM: genpd_remove: removed cpu0
+In commit a50297cf8235 ("s390/pci: separate zbus creation from
+scanning") it was missed however that struct pci_bus and struct
+zpci_bus's resource list retained a reference to the PCI functions MMIO
+resources even though those resources are released and freed on
+hot-unplug. These stale resources may subsequently be claimed when the
+PCI function re-appears resulting in use-after-free.
 
-Fix the problem by iterating the provider list reversely, so that parent
-PD gets removed after child's PDs like below.
+One idea of fixing this use-after-free in s390 specific code that was
+investigated was to simply keep resources around from the moment a PCI
+function first appeared until the whole virtual PCI bus created for
+a multi-function device disappears. The problem with this however is
+that due to the requirement of artificial MMIO addreesses (address
+cookies) extra logic is then needed to keep the address cookies
+compatible on re-plug. At the same time the MMIO resources semantically
+belong to the PCI function so tying their lifecycle to the function
+seems more logical.
 
-[    0.029052] CPUidle PSCI: init PM domain cpu0
-[    0.029076] CPUidle PSCI: init PM domain cpu1
-[    0.029103] CPUidle PSCI: init PM domain cpu2
-[    0.029124] CPUidle PSCI: init PM domain cpu3
-[    0.029151] CPUidle PSCI: init PM domain cpu-cluster0
-[    0.029647] PM: genpd_remove: removed cpu0
-[    0.029666] PM: genpd_remove: removed cpu1
-[    0.029690] PM: genpd_remove: removed cpu2
-[    0.029714] PM: genpd_remove: removed cpu3
-[    0.029738] PM: genpd_remove: removed cpu-cluster0
+Instead a simpler approach is to remove the resources of an individually
+hot-unplugged PCI function from the PCI bus's resource list while
+keeping the resources of other PCI functions on the PCI bus untouched.
 
-Fixes: a65a397f2451 ("cpuidle: psci: Add support for PM domains by using genpd")
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
-Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is done by introducing pci_bus_remove_resource() to remove an
+individual resource. Similarly the resource also needs to be removed
+from the struct zpci_bus's resource list. It turns out however, that
+there is really no need to add the MMIO resources to the struct
+zpci_bus's resource list at all and instead we can simply use the
+zpci_bar_struct's resource pointer directly.
+
+Fixes: a50297cf8235 ("s390/pci: separate zbus creation from scanning")
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20230306151014.60913-2-schnelle@linux.ibm.com
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/cpuidle-psci-domain.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/pci/pci.c     | 16 ++++++++++------
+ arch/s390/pci/pci_bus.c | 12 +++++-------
+ arch/s390/pci/pci_bus.h |  3 +--
+ drivers/pci/bus.c       | 21 +++++++++++++++++++++
+ include/linux/pci.h     |  1 +
+ 5 files changed, 38 insertions(+), 15 deletions(-)
 
---- a/drivers/cpuidle/cpuidle-psci-domain.c
-+++ b/drivers/cpuidle/cpuidle-psci-domain.c
-@@ -182,7 +182,8 @@ static void psci_pd_remove(void)
- 	struct psci_pd_provider *pd_provider, *it;
- 	struct generic_pm_domain *genpd;
+diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
+index ef38b1514c77a..e16afacc8fd1b 100644
+--- a/arch/s390/pci/pci.c
++++ b/arch/s390/pci/pci.c
+@@ -544,8 +544,7 @@ static struct resource *__alloc_res(struct zpci_dev *zdev, unsigned long start,
+ 	return r;
+ }
  
--	list_for_each_entry_safe(pd_provider, it, &psci_pd_providers, link) {
-+	list_for_each_entry_safe_reverse(pd_provider, it,
-+					 &psci_pd_providers, link) {
- 		of_genpd_del_provider(pd_provider->node);
+-int zpci_setup_bus_resources(struct zpci_dev *zdev,
+-			     struct list_head *resources)
++int zpci_setup_bus_resources(struct zpci_dev *zdev)
+ {
+ 	unsigned long addr, size, flags;
+ 	struct resource *res;
+@@ -581,7 +580,6 @@ int zpci_setup_bus_resources(struct zpci_dev *zdev,
+ 			return -ENOMEM;
+ 		}
+ 		zdev->bars[i].res = res;
+-		pci_add_resource(resources, res);
+ 	}
+ 	zdev->has_resources = 1;
  
- 		genpd = of_genpd_remove_last(pd_provider->node);
+@@ -590,17 +588,23 @@ int zpci_setup_bus_resources(struct zpci_dev *zdev,
+ 
+ static void zpci_cleanup_bus_resources(struct zpci_dev *zdev)
+ {
++	struct resource *res;
+ 	int i;
+ 
++	pci_lock_rescan_remove();
+ 	for (i = 0; i < PCI_STD_NUM_BARS; i++) {
+-		if (!zdev->bars[i].size || !zdev->bars[i].res)
++		res = zdev->bars[i].res;
++		if (!res)
+ 			continue;
+ 
++		release_resource(res);
++		pci_bus_remove_resource(zdev->zbus->bus, res);
+ 		zpci_free_iomap(zdev, zdev->bars[i].map_idx);
+-		release_resource(zdev->bars[i].res);
+-		kfree(zdev->bars[i].res);
++		zdev->bars[i].res = NULL;
++		kfree(res);
+ 	}
+ 	zdev->has_resources = 0;
++	pci_unlock_rescan_remove();
+ }
+ 
+ int pcibios_device_add(struct pci_dev *pdev)
+diff --git a/arch/s390/pci/pci_bus.c b/arch/s390/pci/pci_bus.c
+index 6a8da1b742ae5..a99926af2b69a 100644
+--- a/arch/s390/pci/pci_bus.c
++++ b/arch/s390/pci/pci_bus.c
+@@ -41,9 +41,7 @@ static int zpci_nb_devices;
+  */
+ static int zpci_bus_prepare_device(struct zpci_dev *zdev)
+ {
+-	struct resource_entry *window, *n;
+-	struct resource *res;
+-	int rc;
++	int rc, i;
+ 
+ 	if (!zdev_enabled(zdev)) {
+ 		rc = zpci_enable_device(zdev);
+@@ -57,10 +55,10 @@ static int zpci_bus_prepare_device(struct zpci_dev *zdev)
+ 	}
+ 
+ 	if (!zdev->has_resources) {
+-		zpci_setup_bus_resources(zdev, &zdev->zbus->resources);
+-		resource_list_for_each_entry_safe(window, n, &zdev->zbus->resources) {
+-			res = window->res;
+-			pci_bus_add_resource(zdev->zbus->bus, res, 0);
++		zpci_setup_bus_resources(zdev);
++		for (i = 0; i < PCI_STD_NUM_BARS; i++) {
++			if (zdev->bars[i].res)
++				pci_bus_add_resource(zdev->zbus->bus, zdev->bars[i].res, 0);
+ 		}
+ 	}
+ 
+diff --git a/arch/s390/pci/pci_bus.h b/arch/s390/pci/pci_bus.h
+index e96c9860e0644..af9f0ac79a1b1 100644
+--- a/arch/s390/pci/pci_bus.h
++++ b/arch/s390/pci/pci_bus.h
+@@ -30,8 +30,7 @@ static inline void zpci_zdev_get(struct zpci_dev *zdev)
+ 
+ int zpci_alloc_domain(int domain);
+ void zpci_free_domain(int domain);
+-int zpci_setup_bus_resources(struct zpci_dev *zdev,
+-			     struct list_head *resources);
++int zpci_setup_bus_resources(struct zpci_dev *zdev);
+ 
+ static inline struct zpci_dev *zdev_from_bus(struct pci_bus *bus,
+ 					     unsigned int devfn)
+diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
+index 83ae838ceb5f0..549c4bd5caeca 100644
+--- a/drivers/pci/bus.c
++++ b/drivers/pci/bus.c
+@@ -76,6 +76,27 @@ struct resource *pci_bus_resource_n(const struct pci_bus *bus, int n)
+ }
+ EXPORT_SYMBOL_GPL(pci_bus_resource_n);
+ 
++void pci_bus_remove_resource(struct pci_bus *bus, struct resource *res)
++{
++	struct pci_bus_resource *bus_res, *tmp;
++	int i;
++
++	for (i = 0; i < PCI_BRIDGE_RESOURCE_NUM; i++) {
++		if (bus->resource[i] == res) {
++			bus->resource[i] = NULL;
++			return;
++		}
++	}
++
++	list_for_each_entry_safe(bus_res, tmp, &bus->resources, list) {
++		if (bus_res->res == res) {
++			list_del(&bus_res->list);
++			kfree(bus_res);
++			return;
++		}
++	}
++}
++
+ void pci_bus_remove_resources(struct pci_bus *bus)
+ {
+ 	int i;
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 50042ea8e0083..db6ec828aa4b2 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1437,6 +1437,7 @@ void pci_bus_add_resource(struct pci_bus *bus, struct resource *res,
+ 			  unsigned int flags);
+ struct resource *pci_bus_resource_n(const struct pci_bus *bus, int n);
+ void pci_bus_remove_resources(struct pci_bus *bus);
++void pci_bus_remove_resource(struct pci_bus *bus, struct resource *res);
+ int devm_request_pci_bus_resources(struct device *dev,
+ 				   struct list_head *resources);
+ 
+-- 
+2.39.2
+
 
 
