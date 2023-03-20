@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DFC1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CAEC433D2;
-	Mon, 20 Mar 2023 15:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD7E1C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AABC4339B;
+	Mon, 20 Mar 2023 15:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326252;
-	bh=JrLqwk2oOijoyvI1VxBRLq6tYhb6femfQQROb1fimjQ=;
+	s=korg; t=1679326255;
+	bh=lWW/VY38AlwU6YHPeRlP42qLae9QEwTaW8/ZpqJFjeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=giMH+KNv+nOi1rK3C+41Un1Y6L7BUbLqNn8/N5hoy7+yUmEhNFIbSmxAlkFpXJAcZ
-	 5siF53Su5lcpIlaoQKLcE4hGcTKfbN6dM2awamRzRZdfbvmC3Mj+DH0cfAC9bCsirw
-	 A3xFHnVuBbANfzK5s14tNGxYb8mP0WDzPux0oKR8=
+	b=WrkxaDDPlnYHGM/c7eZFpJeU++PVPW/rQVNjAnekXnAi+p3ePudkDY5Z5BKFM/TG8
+	 Je1TgoNpWk5/mCuHiciDABmYqQEq3p77pdOoDXM1x9eRSSgnxj8iAmTKULos7VZ5lx
+	 ocl/yR2B+JQchmZPxdLMJ7PjqtLaoO0j55LozczY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PATCH 6.2 209/211] virt/coco/sev-guest: Do some code style cleanups
-Date: Mon, 20 Mar 2023 15:55:44 +0100
-Message-Id: <20230320145522.285836219@linuxfoundation.org>
+Subject: [PATCH 6.2 210/211] virt/coco/sev-guest: Convert the sw_exit_info_2 checking to a switch-case
+Date: Mon, 20 Mar 2023 15:55:45 +0100
+Message-Id: <20230320145522.316229758@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,42 +36,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit d25bae7dc7b0668cb2a1325c64eb32d5fea4e5a9 upstream.
+commit fa4ae42cc60a7dea30e8f2db444b808d80862345 upstream.
 
-Remove unnecessary linebreaks, make the code more compact.
+snp_issue_guest_request() checks the value returned by the hypervisor in
+sw_exit_info_2 and returns a different error depending on it.
+
+Convert those checks into a switch-case to make it more readable when
+more error values are going to be checked in the future.
 
 No functional changes.
 
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20230307192449.24732-7-bp@alien8.de
+Link: https://lore.kernel.org/r/20230307192449.24732-8-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/coco/sev-guest/sev-guest.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ arch/x86/kernel/sev.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -412,18 +412,14 @@ static int handle_guest_request(struct s
- 		if (rc == -EIO && *fw_err == SNP_GUEST_REQ_INVALID_LEN)
- 			return rc;
+--- a/arch/x86/kernel/sev.c
++++ b/arch/x86/kernel/sev.c
+@@ -2210,15 +2210,21 @@ int snp_issue_guest_request(u64 exit_cod
+ 		goto e_put;
  
--		dev_alert(snp_dev->dev,
--			  "Detected error from ASP request. rc: %d, fw_err: %llu\n",
--			  rc, *fw_err);
-+		dev_alert(snp_dev->dev, "Detected error from ASP request. rc: %d, fw_err: %llu\n", rc, *fw_err);
- 		snp_disable_vmpck(snp_dev);
- 		return rc;
+ 	*fw_err = ghcb->save.sw_exit_info_2;
+-	if (ghcb->save.sw_exit_info_2) {
++	switch (*fw_err) {
++	case 0:
++		break;
++
++	case SNP_GUEST_REQ_INVALID_LEN:
+ 		/* Number of expected pages are returned in RBX */
+-		if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST &&
+-		    ghcb->save.sw_exit_info_2 == SNP_GUEST_REQ_INVALID_LEN) {
++		if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST) {
+ 			input->data_npages = ghcb_get_rbx(ghcb);
+ 			ret = -ENOSPC;
+-		} else {
+-			ret = -EIO;
++			break;
+ 		}
++		fallthrough;
++	default:
++		ret = -EIO;
++		break;
  	}
  
- 	rc = verify_and_dec_payload(snp_dev, resp_buf, resp_sz);
- 	if (rc) {
--		dev_alert(snp_dev->dev,
--			  "Detected unexpected decode failure from ASP. rc: %d\n",
--			  rc);
-+		dev_alert(snp_dev->dev, "Detected unexpected decode failure from ASP. rc: %d\n", rc);
- 		snp_disable_vmpck(snp_dev);
- 		return rc;
- 	}
+ e_put:
 
 
