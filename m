@@ -1,31 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8CA1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03E7C433EF;
-	Mon, 20 Mar 2023 15:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E1A1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695D2C4339C;
+	Mon, 20 Mar 2023 15:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325323;
-	bh=sWTMJm0R4WO14S6UjAeluv9V4ay9gPwwX0MN8T/YVA8=;
+	s=korg; t=1679325325;
+	bh=TZUSyvWItKApnQfXQq/1IEbfEQGnXfY9WUpEYtHi5Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2dVarIw1CW6WLzFcdXjV/xcjQBMoRHkAOlg4+kknUTm36JMKhsAG5NaRdvW7AEQ60
-	 rPBhq0M5G6iKHwn6JGiXT1/AVfmJN5iZOMqXeKmH6ORB+6mI8H23DCzCRR3U9F14PK
-	 1LOh/3EDO7sAXDvWA8v7Sa3qo7PMOyIiwUUgZrv8=
+	b=mOsZsgMzDZm7ObmrBVLOA0dVzToLxEQ/hpvK4vm1+sLSWSBN6F8eSDc6ySfLS1wIE
+	 rGtQq3pRSssSJmWBzPCVcakTb5ZWFBozkNM86lJaBOF28geNrGjvU9UeMmJrw3fVSc
+	 VKLXJFuTuJ4EiClk4YLMB45mNfFnTMNgUh7cTULE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Dan Schatzberg <schatzberg.dan@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 029/211] netfilter: nft_redir: correct value of inet type `.maxattrs`
-Date: Mon, 20 Mar 2023 15:52:44 +0100
-Message-Id: <20230320145514.485563444@linuxfoundation.org>
+Subject: [PATCH 6.1 051/198] loop: Fix use-after-free issues
+Date: Mon, 20 Mar 2023 15:53:09 +0100
+Message-Id: <20230320145509.646719436@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,35 +40,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 493924519b1fe3faab13ee621a43b0d0939abab1 ]
+[ Upstream commit 9b0cb770f5d7b1ff40bea7ca385438ee94570eec ]
 
-`nft_redir_inet_type.maxattrs` was being set, presumably because of a
-cut-and-paste error, to `NFTA_MASQ_MAX`, instead of `NFTA_REDIR_MAX`.
+do_req_filebacked() calls blk_mq_complete_request() synchronously or
+asynchronously when using asynchronous I/O unless memory allocation fails.
+Hence, modify loop_handle_cmd() such that it does not dereference 'cmd' nor
+'rq' after do_req_filebacked() finished unless we are sure that the request
+has not yet been completed. This patch fixes the following kernel crash:
 
-Fixes: 63ce3940f3ab ("netfilter: nft_redir: add inet support")
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000054
+Call trace:
+ css_put.42938+0x1c/0x1ac
+ loop_process_work+0xc8c/0xfd4
+ loop_rootcg_workfn+0x24/0x34
+ process_one_work+0x244/0x558
+ worker_thread+0x400/0x8fc
+ kthread+0x16c/0x1e0
+ ret_from_fork+0x10/0x20
+
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Ming Lei <ming.lei@redhat.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Dan Schatzberg <schatzberg.dan@gmail.com>
+Fixes: c74d40e8b5e2 ("loop: charge i/o to mem and blk cg")
+Fixes: bc07c10a3603 ("block: loop: support DIO & AIO")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20230314182155.80625-1-bvanassche@acm.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_redir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/loop.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/net/netfilter/nft_redir.c b/net/netfilter/nft_redir.c
-index dbc642f5d32a3..67cec56bc84a3 100644
---- a/net/netfilter/nft_redir.c
-+++ b/net/netfilter/nft_redir.c
-@@ -236,7 +236,7 @@ static struct nft_expr_type nft_redir_inet_type __read_mostly = {
- 	.name		= "redir",
- 	.ops		= &nft_redir_inet_ops,
- 	.policy		= nft_redir_policy,
--	.maxattr	= NFTA_MASQ_MAX,
-+	.maxattr	= NFTA_REDIR_MAX,
- 	.owner		= THIS_MODULE,
- };
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 981464e561df1..793ae876918ce 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -1853,35 +1853,44 @@ static blk_status_t loop_queue_rq(struct blk_mq_hw_ctx *hctx,
  
+ static void loop_handle_cmd(struct loop_cmd *cmd)
+ {
++	struct cgroup_subsys_state *cmd_blkcg_css = cmd->blkcg_css;
++	struct cgroup_subsys_state *cmd_memcg_css = cmd->memcg_css;
+ 	struct request *rq = blk_mq_rq_from_pdu(cmd);
+ 	const bool write = op_is_write(req_op(rq));
+ 	struct loop_device *lo = rq->q->queuedata;
+ 	int ret = 0;
+ 	struct mem_cgroup *old_memcg = NULL;
++	const bool use_aio = cmd->use_aio;
+ 
+ 	if (write && (lo->lo_flags & LO_FLAGS_READ_ONLY)) {
+ 		ret = -EIO;
+ 		goto failed;
+ 	}
+ 
+-	if (cmd->blkcg_css)
+-		kthread_associate_blkcg(cmd->blkcg_css);
+-	if (cmd->memcg_css)
++	if (cmd_blkcg_css)
++		kthread_associate_blkcg(cmd_blkcg_css);
++	if (cmd_memcg_css)
+ 		old_memcg = set_active_memcg(
+-			mem_cgroup_from_css(cmd->memcg_css));
++			mem_cgroup_from_css(cmd_memcg_css));
+ 
++	/*
++	 * do_req_filebacked() may call blk_mq_complete_request() synchronously
++	 * or asynchronously if using aio. Hence, do not touch 'cmd' after
++	 * do_req_filebacked() has returned unless we are sure that 'cmd' has
++	 * not yet been completed.
++	 */
+ 	ret = do_req_filebacked(lo, rq);
+ 
+-	if (cmd->blkcg_css)
++	if (cmd_blkcg_css)
+ 		kthread_associate_blkcg(NULL);
+ 
+-	if (cmd->memcg_css) {
++	if (cmd_memcg_css) {
+ 		set_active_memcg(old_memcg);
+-		css_put(cmd->memcg_css);
++		css_put(cmd_memcg_css);
+ 	}
+  failed:
+ 	/* complete non-aio request */
+-	if (!cmd->use_aio || ret) {
++	if (!use_aio || ret) {
+ 		if (ret == -EOPNOTSUPP)
+ 			cmd->ret = ret;
+ 		else
 -- 
 2.39.2
 
