@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264CA1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7147FC433D2;
-	Mon, 20 Mar 2023 15:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC82D1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD11C433EF;
+	Mon, 20 Mar 2023 15:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324848;
-	bh=Owlzl6fLV58QQuqeFCW4+OqR5yNd16MI08dh7BVWzgg=;
+	s=korg; t=1679324851;
+	bh=pMg80H108ZnXFkQEBUO+XhK1yVzB2dQGtQ3ly/ZV6Zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2iah76l+wiHhT7oYeXzsdTwxg5bCWW4Q/6P5kolmfG/TVLBb2F1tfrG9q3dSiLJUa
-	 pZS8ZR2WooeIxJUiTc/fioXEw1jj+pTxke4HKj15YG6ykvY8HPxf9/xXy3eQCUUzGF
-	 qhMevwu6ZYWDOgjcbETcj934BqkRFX0i8kONoFkE=
+	b=rOobjPLcmnLeZclREQy0eAQ6PaajC3fCdH8W+PLlG3SMBEdyXSqC6Jd+O5HafuSaQ
+	 JdcxTbWga8kSkVDB4tTD4rtArXkw6Yr10I1h/4Y/Q4vo76twNW/Nh3O4Fn+ya92jP5
+	 VUmrAoN3rZaxvbGgQlTCAhWu19JoEfQxLZj5E1Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 040/115] block: sunvdc: add check for mdesc_grab() returning NULL
-Date: Mon, 20 Mar 2023 15:54:12 +0100
-Message-Id: <20230320145451.138102470@linuxfoundation.org>
+	Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.10 65/99] KVM: nVMX: add missing consistency checks for CR0 and CR4
+Date: Mon, 20 Mar 2023 15:54:43 +0100
+Message-Id: <20230320145446.122864603@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit 6030363199e3a6341afb467ddddbed56640cbf6a ]
+commit 112e66017bff7f2837030f34c2bc19501e9212d5 upstream.
 
-In vdc_port_probe(), we should check the return value of mdesc_grab() as
-it may return NULL, which can cause potential NPD bug.
+The effective values of the guest CR0 and CR4 registers may differ from
+those included in the VMCS12.  In particular, disabling EPT forces
+CR4.PAE=1 and disabling unrestricted guest mode forces CR0.PG=CR0.PE=1.
 
-Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
-Signed-off-by: Liang He <windhl@126.com>
-Link: https://lore.kernel.org/r/20230315062032.1741692-1-windhl@126.com
-[axboe: style cleanup]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Therefore, checks on these bits cannot be delegated to the processor
+and must be performed by KVM.
+
+Reported-by: Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/sunvdc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/vmx/nested.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
-index 4d4bb810c2aea..656d99faf40a2 100644
---- a/drivers/block/sunvdc.c
-+++ b/drivers/block/sunvdc.c
-@@ -964,6 +964,8 @@ static int vdc_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 	print_version();
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -2998,7 +2998,7 @@ static int nested_vmx_check_guest_state(
+ 					struct vmcs12 *vmcs12,
+ 					enum vm_entry_failure_code *entry_failure_code)
+ {
+-	bool ia32e;
++	bool ia32e = !!(vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE);
  
- 	hp = mdesc_grab();
-+	if (!hp)
-+		return -ENODEV;
+ 	*entry_failure_code = ENTRY_FAIL_DEFAULT;
  
- 	err = -ENODEV;
- 	if ((vdev->dev_no << PARTITION_SHIFT) & ~(u64)MINORMASK) {
--- 
-2.39.2
-
+@@ -3024,6 +3024,13 @@ static int nested_vmx_check_guest_state(
+ 					   vmcs12->guest_ia32_perf_global_ctrl)))
+ 		return -EINVAL;
+ 
++	if (CC((vmcs12->guest_cr0 & (X86_CR0_PG | X86_CR0_PE)) == X86_CR0_PG))
++		return -EINVAL;
++
++	if (CC(ia32e && !(vmcs12->guest_cr4 & X86_CR4_PAE)) ||
++	    CC(ia32e && !(vmcs12->guest_cr0 & X86_CR0_PG)))
++		return -EINVAL;
++
+ 	/*
+ 	 * If the load IA32_EFER VM-entry control is 1, the following checks
+ 	 * are performed on the field for the IA32_EFER MSR:
+@@ -3035,7 +3042,6 @@ static int nested_vmx_check_guest_state(
+ 	 */
+ 	if (to_vmx(vcpu)->nested.nested_run_pending &&
+ 	    (vmcs12->vm_entry_controls & VM_ENTRY_LOAD_IA32_EFER)) {
+-		ia32e = (vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE) != 0;
+ 		if (CC(!kvm_valid_efer(vcpu, vmcs12->guest_ia32_efer)) ||
+ 		    CC(ia32e != !!(vmcs12->guest_ia32_efer & EFER_LMA)) ||
+ 		    CC(((vmcs12->guest_cr0 & X86_CR0_PG) &&
 
 
