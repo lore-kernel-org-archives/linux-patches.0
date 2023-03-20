@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517C31C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE7AC433D2;
-	Mon, 20 Mar 2023 15:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3E91C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED17C4339B;
+	Mon, 20 Mar 2023 15:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325375;
-	bh=HkMszIBiciwf2d4Lw0HrTjWlu/rJIyAuWzHz7NRO9PQ=;
+	s=korg; t=1679325377;
+	bh=P4g2CFNdNBvNCMX+K3IV+XVBx8fsIMEksaiICuvU72M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWCJV7DIZQkxut4x52XcjD6wTZpbmw4x2vjvl1YfmWrZ3T/UxpXO2Ag0bPEdG8GuS
-	 NB7pt3TBcVefeXkALdvj1eTo6TX4ZxhGK1/C820OhoDgdMRty0pcpSX2tDx1n3r5aL
-	 oP7dxHb01Sy0CKsQber1ESFk1Ue9JimwLdOj6X8U=
+	b=qCvo3yoCWN2GCMwjHfkWWp8UkoJH/1Y++mG4x9Sp5CR/Wy0JKJ1xF891hTDdoBcwj
+	 1YKFzsSyNk8jIbVOchGgCnN2z0pJ/uz2ZkxegLXivc9/wU1gmUFF/Tb5HsTClq803O
+	 0DkonQf4yPYXcKPDc5Wsb9h+DNvUny3GQE4j5cTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Chen Zhongjin <chenzhongjin@huawei.com>
-Subject: [PATCH 5.15 097/115] ftrace: Fix invalid address access in lookup_rec() when index is 0
-Date: Mon, 20 Mar 2023 15:55:09 +0100
-Message-Id: <20230320145453.501057775@linuxfoundation.org>
+	Guillaume Tucker <guillaume.tucker@collabora.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 037/211] selftests: fix LLVM build for i386 and x86_64
+Date: Mon, 20 Mar 2023 15:52:52 +0100
+Message-Id: <20230320145514.789801291@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,54 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Guillaume Tucker <guillaume.tucker@collabora.com>
 
-commit ee92fa443358f4fc0017c1d0d325c27b37802504 upstream.
+[ Upstream commit 624c60f326c6e5a80b008e8a5c7feffe8c27dc72 ]
 
-KASAN reported follow problem:
+Add missing cases for the i386 and x86_64 architectures when
+determining the LLVM target for building kselftest.
 
- BUG: KASAN: use-after-free in lookup_rec
- Read of size 8 at addr ffff000199270ff0 by task modprobe
- CPU: 2 Comm: modprobe
- Call trace:
-  kasan_report
-  __asan_load8
-  lookup_rec
-  ftrace_location
-  arch_check_ftrace_location
-  check_kprobe_address_safe
-  register_kprobe
-
-When checking pg->records[pg->index - 1].ip in lookup_rec(), it can get a
-pg which is newly added to ftrace_pages_start in ftrace_process_locs().
-Before the first pg->index++, index is 0 and accessing pg->records[-1].ip
-will cause this problem.
-
-Don't check the ip when pg->index is 0.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230309080230.36064-1-chenzhongjin@huawei.com
-
-Cc: stable@vger.kernel.org
-Fixes: 9644302e3315 ("ftrace: Speed up search by skipping pages by address")
-Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 795285ef2425 ("selftests: Fix clang cross compilation")
+Signed-off-by: Guillaume Tucker <guillaume.tucker@collabora.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ftrace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/lib.mk | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -1538,7 +1538,8 @@ static struct dyn_ftrace *lookup_rec(uns
- 	key.flags = end;	/* overload flags, as it is unsigned long */
+diff --git a/tools/testing/selftests/lib.mk b/tools/testing/selftests/lib.mk
+index f7900e75d2306..05400462c7799 100644
+--- a/tools/testing/selftests/lib.mk
++++ b/tools/testing/selftests/lib.mk
+@@ -10,12 +10,14 @@ endif
+ CLANG_TARGET_FLAGS_arm          := arm-linux-gnueabi
+ CLANG_TARGET_FLAGS_arm64        := aarch64-linux-gnu
+ CLANG_TARGET_FLAGS_hexagon      := hexagon-linux-musl
++CLANG_TARGET_FLAGS_i386         := i386-linux-gnu
+ CLANG_TARGET_FLAGS_m68k         := m68k-linux-gnu
+ CLANG_TARGET_FLAGS_mips         := mipsel-linux-gnu
+ CLANG_TARGET_FLAGS_powerpc      := powerpc64le-linux-gnu
+ CLANG_TARGET_FLAGS_riscv        := riscv64-linux-gnu
+ CLANG_TARGET_FLAGS_s390         := s390x-linux-gnu
+ CLANG_TARGET_FLAGS_x86          := x86_64-linux-gnu
++CLANG_TARGET_FLAGS_x86_64       := x86_64-linux-gnu
+ CLANG_TARGET_FLAGS              := $(CLANG_TARGET_FLAGS_$(ARCH))
  
- 	for (pg = ftrace_pages_start; pg; pg = pg->next) {
--		if (end < pg->records[0].ip ||
-+		if (pg->index == 0 ||
-+		    end < pg->records[0].ip ||
- 		    start >= (pg->records[pg->index - 1].ip + MCOUNT_INSN_SIZE))
- 			continue;
- 		rec = bsearch(&key, pg->records, pg->index,
+ ifeq ($(CROSS_COMPILE),)
+-- 
+2.39.2
+
 
 
