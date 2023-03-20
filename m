@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5901C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CABCC433EF;
-	Mon, 20 Mar 2023 14:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542111C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8DC6C433EF;
+	Mon, 20 Mar 2023 14:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324378;
-	bh=KDMjplOHaL1vrt8M3wOdHTbvimStaC3Msltkh1MqHTw=;
+	s=korg; t=1679324381;
+	bh=2nal1f2YV+K9r4IbkchEBBvfr0EKItpmzOAROqb/JlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=akq6SUQWCShySjRCs9K4NiOdWbc3wjDh3EkFfyfletGI/yV+fB5ZX79gk35vxHnGQ
-	 v+yGqrIzV11E1c4fL8VpZJUHHBlgBkV/hfCQQTWLQ7C2gvSzkVrK2up890HIZT2QRv
-	 T+58x+ghZBTFTGRO2ksiuFeh6dvpdBQcRe7cQdE8=
+	b=n9E+wkVZ8BXOBOd9DLEVs9n9XwLLZLZr++r2F8XpA8lFJmHYElf86o9Co/o3RzRVN
+	 0ZhMZ+g8LVrIUPfC5bINZFLL65yYYx+swgV27LB8U/jQJkedJVffTJ1h6mtrHBj3bo
+	 dHyEhCX77e+jK4WYPiF39P7vF67Jqa5tnZD3b9Cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	lee@kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 4.19 35/36] HID: core: Provide new max_buffer_size attribute to over-ride the default
-Date: Mon, 20 Mar 2023 15:55:01 +0100
-Message-Id: <20230320145425.554089645@linuxfoundation.org>
+	Steven Price <steven.price@arm.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 03/60] drm/panfrost: Dont sync rpm suspension after mmu flushing
+Date: Mon, 20 Mar 2023 15:54:12 +0100
+Message-Id: <20230320145431.017870515@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
-References: <20230320145424.191578432@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,107 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-commit b1a37ed00d7908a991c1d0f18a8cba3c2aa99bdc upstream.
+[ Upstream commit ba3be66f11c3c49afaa9f49b99e21d88756229ef ]
 
-Presently, when a report is processed, its proposed size, provided by
-the user of the API (as Report Size * Report Count) is compared against
-the subsystem default HID_MAX_BUFFER_SIZE (16k).  However, some
-low-level HID drivers allocate a reduced amount of memory to their
-buffers (e.g. UHID only allocates UHID_DATA_MAX (4k) buffers), rending
-this check inadequate in some cases.
+Lockdep warns about potential circular locking dependency of devfreq
+with the fs_reclaim caused by immediate device suspension when mapping is
+released by shrinker. Fix it by doing the suspension asynchronously.
 
-In these circumstances, if the received report ends up being smaller
-than the proposed report size, the remainder of the buffer is zeroed.
-That is, the space between sizeof(csize) (size of the current report)
-and the rsize (size proposed i.e. Report Size * Report Count), which can
-be handled up to HID_MAX_BUFFER_SIZE (16k).  Meaning that memset()
-shoots straight past the end of the buffer boundary and starts zeroing
-out in-use values, often resulting in calamity.
-
-This patch introduces a new variable into 'struct hid_ll_driver' where
-individual low-level drivers can over-ride the default maximum value of
-HID_MAX_BUFFER_SIZE (16k) with something more sympathetic to the
-interface.
-
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-[Lee: Backported to v4.19.y]
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Fixes: ec7eba47da86 ("drm/panfrost: Rework page table flushing and runtime PM interaction")
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://lore.kernel.org/all/20230108210445.3948344-3-dmitry.osipenko@collabora.com/
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c |   18 +++++++++++++-----
- include/linux/hid.h    |    3 +++
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_mmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -258,6 +258,7 @@ static int hid_add_field(struct hid_pars
- {
- 	struct hid_report *report;
- 	struct hid_field *field;
-+	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
- 	unsigned int usages;
- 	unsigned int offset;
- 	unsigned int i;
-@@ -288,8 +289,11 @@ static int hid_add_field(struct hid_pars
- 	offset = report->size;
- 	report->size += parser->global.report_size * parser->global.report_count;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+index 8a014dc115712..f1007c50565b6 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+@@ -233,7 +233,7 @@ static void panfrost_mmu_flush_range(struct panfrost_device *pfdev,
+ 	if (pm_runtime_active(pfdev->dev))
+ 		mmu_hw_do_operation(pfdev, mmu, iova, size, AS_COMMAND_FLUSH_PT);
  
-+	if (parser->device->ll_driver->max_buffer_size)
-+		max_buffer_size = parser->device->ll_driver->max_buffer_size;
-+
- 	/* Total size check: Allow for possible report index byte */
--	if (report->size > (HID_MAX_BUFFER_SIZE - 1) << 3) {
-+	if (report->size > (max_buffer_size - 1) << 3) {
- 		hid_err(parser->device, "report is too long\n");
- 		return -1;
- 	}
-@@ -1567,6 +1571,7 @@ int hid_report_raw_event(struct hid_devi
- 	struct hid_report_enum *report_enum = hid->report_enum + type;
- 	struct hid_report *report;
- 	struct hid_driver *hdrv;
-+	int max_buffer_size = HID_MAX_BUFFER_SIZE;
- 	unsigned int a;
- 	u32 rsize, csize = size;
- 	u8 *cdata = data;
-@@ -1583,10 +1588,13 @@ int hid_report_raw_event(struct hid_devi
+-	pm_runtime_put_sync_autosuspend(pfdev->dev);
++	pm_runtime_put_autosuspend(pfdev->dev);
+ }
  
- 	rsize = hid_compute_report_size(report);
- 
--	if (report_enum->numbered && rsize >= HID_MAX_BUFFER_SIZE)
--		rsize = HID_MAX_BUFFER_SIZE - 1;
--	else if (rsize > HID_MAX_BUFFER_SIZE)
--		rsize = HID_MAX_BUFFER_SIZE;
-+	if (hid->ll_driver->max_buffer_size)
-+		max_buffer_size = hid->ll_driver->max_buffer_size;
-+
-+	if (report_enum->numbered && rsize >= max_buffer_size)
-+		rsize = max_buffer_size - 1;
-+	else if (rsize > max_buffer_size)
-+		rsize = max_buffer_size;
- 
- 	if (csize < rsize) {
- 		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -799,6 +799,7 @@ struct hid_driver {
-  * @raw_request: send raw report request to device (e.g. feature report)
-  * @output_report: send output report to device
-  * @idle: send idle request to device
-+ * @max_buffer_size: over-ride maximum data buffer size (default: HID_MAX_BUFFER_SIZE)
-  */
- struct hid_ll_driver {
- 	int (*start)(struct hid_device *hdev);
-@@ -823,6 +824,8 @@ struct hid_ll_driver {
- 	int (*output_report) (struct hid_device *hdev, __u8 *buf, size_t len);
- 
- 	int (*idle)(struct hid_device *hdev, int report, int idle, int reqtype);
-+
-+	unsigned int max_buffer_size;
- };
- 
- extern struct hid_ll_driver i2c_hid_ll_driver;
+ static int mmu_map_sg(struct panfrost_device *pfdev, struct panfrost_mmu *mmu,
+-- 
+2.39.2
+
 
 
