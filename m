@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29B11C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4B8C433D2;
-	Mon, 20 Mar 2023 15:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584911C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE616C433B3;
+	Mon, 20 Mar 2023 15:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326148;
-	bh=gEDx00ZHI1W5+7EmwywD5A7Yth3rsoluJpC1DbAHEeM=;
+	s=korg; t=1679326151;
+	bh=H4I2RdWimPUS/Zk42U0QwdPRgbY0DdDJOPu2pnKimWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iSVt34iwGutOhIUZ5iKRfW2F2nV0/se2eoJKRDkFCTViCMjcjaIoSvTcMCg7tHUPN
-	 a1Y/vIj+udaM0Itgk34d+9gaLpR/d3eSU321r7ypE7U8nKfaAXg0p9Jqky7B3ItxvH
-	 3gghYLR+RPFNXenvuzLXC9dajXJRP98aQYvdLf/Q=
+	b=wvqQA2cg7TgfyvZ1/ppt2FtOKQ2cJG++woPAozP7TQ1RTaFdMUtep+KM1bBa36ODI
+	 JODs6XLfHf3vGK8uE2WlshDSG7XQdqHM8OTMfindPM5+Go8yAnvmRt9QilLHKqK9Dj
+	 2h8I0uZRuAYPQvMTxzM8rBLMukJnCWtRAstQllsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.2 179/211] mptcp: fix lockdep false positive in mptcp_pm_nl_create_listen_socket()
-Date: Mon, 20 Mar 2023 15:55:14 +0100
-Message-Id: <20230320145520.979186221@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>
+Subject: [PATCH 6.2 180/211] ftrace: Fix invalid address access in lookup_rec() when index is 0
+Date: Mon, 20 Mar 2023 15:55:15 +0100
+Message-Id: <20230320145521.016950713@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,69 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-commit cee4034a3db1d30c3243dd51506a9d4ab1a849fa upstream.
+commit ee92fa443358f4fc0017c1d0d325c27b37802504 upstream.
 
-Christoph reports a lockdep splat in the mptcp_subflow_create_socket()
-error path, when such function is invoked by
-mptcp_pm_nl_create_listen_socket().
+KASAN reported follow problem:
 
-Such code path acquires two separates, nested socket lock, with the
-internal lock operation lacking the "nested" annotation. Adding that
-in sock_release() for mptcp's sake only could be confusing.
+ BUG: KASAN: use-after-free in lookup_rec
+ Read of size 8 at addr ffff000199270ff0 by task modprobe
+ CPU: 2 Comm: modprobe
+ Call trace:
+  kasan_report
+  __asan_load8
+  lookup_rec
+  ftrace_location
+  arch_check_ftrace_location
+  check_kprobe_address_safe
+  register_kprobe
 
-Instead just add a new lockclass to the in-kernel msk socket,
-re-initializing the lockdep infra after the socket creation.
+When checking pg->records[pg->index - 1].ip in lookup_rec(), it can get a
+pg which is newly added to ftrace_pages_start in ftrace_process_locs().
+Before the first pg->index++, index is 0 and accessing pg->records[-1].ip
+will cause this problem.
 
-Fixes: ad2171009d96 ("mptcp: fix locking for in-kernel listener creation")
+Don't check the ip when pg->index is 0.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230309080230.36064-1-chenzhongjin@huawei.com
+
 Cc: stable@vger.kernel.org
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/354
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Tested-by: Christoph Paasch <cpaasch@apple.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9644302e3315 ("ftrace: Speed up search by skipping pages by address")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ kernel/trace/ftrace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -993,9 +993,13 @@ out:
- 	return ret;
- }
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1537,7 +1537,8 @@ static struct dyn_ftrace *lookup_rec(uns
+ 	key.flags = end;	/* overload flags, as it is unsigned long */
  
-+static struct lock_class_key mptcp_slock_keys[2];
-+static struct lock_class_key mptcp_keys[2];
-+
- static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
- 					    struct mptcp_pm_addr_entry *entry)
- {
-+	bool is_ipv6 = sk->sk_family == AF_INET6;
- 	int addrlen = sizeof(struct sockaddr_in);
- 	struct sockaddr_storage addr;
- 	struct socket *ssock;
-@@ -1012,6 +1016,18 @@ static int mptcp_pm_nl_create_listen_soc
- 	if (!newsk)
- 		return -EINVAL;
- 
-+	/* The subflow socket lock is acquired in a nested to the msk one
-+	 * in several places, even by the TCP stack, and this msk is a kernel
-+	 * socket: lockdep complains. Instead of propagating the _nested
-+	 * modifiers in several places, re-init the lock class for the msk
-+	 * socket to an mptcp specific one.
-+	 */
-+	sock_lock_init_class_and_name(newsk,
-+				      is_ipv6 ? "mlock-AF_INET6" : "mlock-AF_INET",
-+				      &mptcp_slock_keys[is_ipv6],
-+				      is_ipv6 ? "msk_lock-AF_INET6" : "msk_lock-AF_INET",
-+				      &mptcp_keys[is_ipv6]);
-+
- 	lock_sock(newsk);
- 	ssock = __mptcp_nmpc_socket(mptcp_sk(newsk));
- 	release_sock(newsk);
+ 	for (pg = ftrace_pages_start; pg; pg = pg->next) {
+-		if (end < pg->records[0].ip ||
++		if (pg->index == 0 ||
++		    end < pg->records[0].ip ||
+ 		    start >= (pg->records[pg->index - 1].ip + MCOUNT_INSN_SIZE))
+ 			continue;
+ 		rec = bsearch(&key, pg->records, pg->index,
 
 
