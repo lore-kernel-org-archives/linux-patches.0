@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2821C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27AA5C433EF;
-	Mon, 20 Mar 2023 15:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2401C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD542C433D2;
+	Mon, 20 Mar 2023 15:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326107;
-	bh=Q26zjXntVdQ5OVkgc7P2mfcHN7gf0Ps0kpEz2Z3Ye6I=;
+	s=korg; t=1679326110;
+	bh=F7dkdpTN4iR1V1ivf5qe5HbXs2eZ33zf6n9Nc9wlBAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mpi0vVjjdQez/qCP4hbT9SoWvp4VoMzdr0H2wYTOfmmc2FOUDAA1jJT9wMDuqDFvt
-	 JGjebUUuRpHd60KNdlGfwJmMxWJzObVR9Lhk4VAlnr7bZ73rMMyvEuv4QG9pgTZR5h
-	 Oiz14dUYshUpNZpHA1qdGtr818NVXicVvkXRCmfw=
+	b=be2+na6OVZLreLk2fwFQ/GQkl899kw0w6VVTU5k4nnkRFEz3OZLt+Of8fm6wjN9sQ
+	 DF4zfzhlkO8gWy6ctzwvWDYZeTPjbbzlxPKJuqUPmQa3O1oN0HdTsADhlA2kJvuKkb
+	 f7xc8m7UPE/UTcGFwRz0V56r8xrclqyZ85i9AqSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 6.1 183/198] fbdev: Fix incorrect page mapping clearance at fb_deferred_io_release()
-Date: Mon, 20 Mar 2023 15:55:21 +0100
-Message-Id: <20230320145515.155777427@linuxfoundation.org>
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Rob Clark <robdclark@gmail.com>
+Subject: [PATCH 6.2 162/211] drm/shmem-helper: Remove another errant put in error path
+Date: Mon, 20 Mar 2023 15:54:57 +0100
+Message-Id: <20230320145520.232753889@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,104 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-commit fe9ae05cfbe587dda724fcf537c00bc2f287da62 upstream.
+commit ee9adb7a45516cfa536ca92253d7ae59d56db9e4 upstream.
 
-The recent fix for the deferred I/O by the commit
-  3efc61d95259 ("fbdev: Fix invalid page access after closing deferred I/O devices")
-caused a regression when the same fb device is opened/closed while
-it's being used.  It resulted in a frozen screen even if something
-is redrawn there after the close.  The breakage is because the patch
-was made under a wrong assumption of a single open; in the current
-code, fb_deferred_io_release() cleans up the page mapping of the
-pageref list and it calls cancel_delayed_work_sync() unconditionally,
-where both are no correct behavior for multiple opens.
+drm_gem_shmem_mmap() doesn't own reference in error code path, resulting
+in the dma-buf shmem GEM object getting prematurely freed leading to a
+later use-after-free.
 
-This patch adds a refcount for the opens of the device, and applies
-the cleanup only when all files get closed.
-
-As both fb_deferred_io_open() and _close() are called always in the
-fb_info lock (mutex), it's safe to use the normal int for the
-refcounting.
-
-Also, a useless BUG_ON() is dropped.
-
-Fixes: 3efc61d95259 ("fbdev: Fix invalid page access after closing deferred I/O devices")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Reviewed-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230308105012.1845-1-tiwai@suse.de
+Fixes: f49a51bfdc8e ("drm/shme-helpers: Fix dma_buf_mmap forwarding bug")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230108211311.3950107-1-dmitry.osipenko@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fb_defio.c | 17 +++++++++++++----
- include/linux/fb.h                  |  1 +
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/drm_gem_shmem_helper.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fb_defio.c b/drivers/video/fbdev/core/fb_defio.c
-index 583cbcf09446..a3cf1f764f29 100644
---- a/drivers/video/fbdev/core/fb_defio.c
-+++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -309,17 +309,18 @@ void fb_deferred_io_open(struct fb_info *info,
- 			 struct inode *inode,
- 			 struct file *file)
- {
-+	struct fb_deferred_io *fbdefio = info->fbdefio;
+--- a/drivers/gpu/drm/drm_gem_shmem_helper.c
++++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
+@@ -622,11 +622,14 @@ int drm_gem_shmem_mmap(struct drm_gem_sh
+ 	int ret;
+ 
+ 	if (obj->import_attach) {
+-		/* Drop the reference drm_gem_mmap_obj() acquired.*/
+-		drm_gem_object_put(obj);
+ 		vma->vm_private_data = NULL;
++		ret = dma_buf_mmap(obj->dma_buf, vma, 0);
 +
- 	file->f_mapping->a_ops = &fb_deferred_io_aops;
-+	fbdefio->open_count++;
- }
- EXPORT_SYMBOL_GPL(fb_deferred_io_open);
++		/* Drop the reference drm_gem_mmap_obj() acquired.*/
++		if (!ret)
++			drm_gem_object_put(obj);
  
--void fb_deferred_io_release(struct fb_info *info)
-+static void fb_deferred_io_lastclose(struct fb_info *info)
- {
--	struct fb_deferred_io *fbdefio = info->fbdefio;
- 	struct page *page;
- 	int i;
- 
--	BUG_ON(!fbdefio);
- 	cancel_delayed_work_sync(&info->deferred_work);
- 
- 	/* clear out the mapping that we setup */
-@@ -328,13 +329,21 @@ void fb_deferred_io_release(struct fb_info *info)
- 		page->mapping = NULL;
+-		return dma_buf_mmap(obj->dma_buf, vma, 0);
++		return ret;
  	}
- }
-+
-+void fb_deferred_io_release(struct fb_info *info)
-+{
-+	struct fb_deferred_io *fbdefio = info->fbdefio;
-+
-+	if (!--fbdefio->open_count)
-+		fb_deferred_io_lastclose(info);
-+}
- EXPORT_SYMBOL_GPL(fb_deferred_io_release);
  
- void fb_deferred_io_cleanup(struct fb_info *info)
- {
- 	struct fb_deferred_io *fbdefio = info->fbdefio;
- 
--	fb_deferred_io_release(info);
-+	fb_deferred_io_lastclose(info);
- 
- 	kvfree(info->pagerefs);
- 	mutex_destroy(&fbdefio->lock);
-diff --git a/include/linux/fb.h b/include/linux/fb.h
-index 73eb1f85ea8e..05e40fcc7696 100644
---- a/include/linux/fb.h
-+++ b/include/linux/fb.h
-@@ -212,6 +212,7 @@ struct fb_deferred_io {
- 	/* delay between mkwrite and deferred handler */
- 	unsigned long delay;
- 	bool sort_pagereflist; /* sort pagelist by offset */
-+	int open_count; /* number of opened files; protected by fb_info lock */
- 	struct mutex lock; /* mutex that protects the pageref list */
- 	struct list_head pagereflist; /* list of pagerefs for touched pages */
- 	/* callback */
--- 
-2.40.0
-
+ 	ret = drm_gem_shmem_get_pages(shmem);
 
 
