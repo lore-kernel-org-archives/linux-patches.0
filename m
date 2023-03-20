@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043A91C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74153C433EF;
-	Mon, 20 Mar 2023 15:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C661F1C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7CEC4339B;
+	Mon, 20 Mar 2023 15:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326030;
-	bh=rv+GyJiahLQZejHLFzkvnbHOD0LwUBvUB6ioqNnkT6I=;
+	s=korg; t=1679326033;
+	bh=ItwEZepMiMsvKIPT7E7ZzxgPotXPPqHnsHfZmPbNf5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sl/jKAYKoy/cB0VeJApXKUN7Oai0t5u+oO7cW6vNoQbiZafPHYTf1ujvYsYApYi3L
-	 JHKiljvW92vuZgf/rttffeHRrsvNyFHCU2WzofLvA55ox8kZm9L3v2W2Cj8nlClW8N
-	 J8/IdpI+cW5wYVVRRRe5Yn96yNz/Wjt7HefXYTtc=
+	b=SZ1kEr26iXdpjHw4W9i3+szydJx6dZY2gvMZQ0SfmnloS/8eRMzCbxVitwPjqoBOJ
+	 TJvZUYDLd6a0ITtN6IBi42NYZ9Z5N3VClSOzNWDNTLnpkpO3t6OlpUVZbCzIemKTLm
+	 uM6og22Rcti1PbBJ24uZRSkWBw9eASEWl16NZK9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.1 188/198] x86/mm: Fix use of uninitialized buffer in sme_enable()
-Date: Mon, 20 Mar 2023 15:55:26 +0100
-Message-Id: <20230320145515.348786212@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.2 147/211] tracing: Make tracepoint lockdep check actually test something
+Date: Mon, 20 Mar 2023 15:54:42 +0100
+Message-Id: <20230320145519.587173909@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +39,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit cbebd68f59f03633469f3ecf9bea99cd6cce3854 upstream.
+commit c2679254b9c9980d9045f0f722cf093a2b1f7590 upstream.
 
-cmdline_find_option() may fail before doing any initialization of
-the buffer array. This may lead to unpredictable results when the same
-buffer is used later in calls to strncmp() function.  Fix the issue by
-returning early if cmdline_find_option() returns an error.
+A while ago where the trace events had the following:
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+   rcu_read_lock_sched_notrace();
+   rcu_dereference_sched(...);
+   rcu_read_unlock_sched_notrace();
 
-Fixes: aca20d546214 ("x86/mm: Add support to make use of Secure Memory Encryption")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230306160656.14844-1-n.zhandarovich@fintech.ru
+If the tracepoint is enabled, it could trigger RCU issues if called in
+the wrong place. And this warning was only triggered if lockdep was
+enabled. If the tracepoint was never enabled with lockdep, the bug would
+not be caught. To handle this, the above sequence was done when lockdep
+was enabled regardless if the tracepoint was enabled or not (although the
+always enabled code really didn't do anything, it would still trigger a
+warning).
+
+But a lot has changed since that lockdep code was added. One is, that
+sequence no longer triggers any warning. Another is, the tracepoint when
+enabled doesn't even do that sequence anymore.
+
+The main check we care about today is whether RCU is "watching" or not.
+So if lockdep is enabled, always check if rcu_is_watching() which will
+trigger a warning if it is not (tracepoints require RCU to be watching).
+
+Note, that old sequence did add a bit of overhead when lockdep was enabled,
+and with the latest kernel updates, would cause the system to slow down
+enough to trigger kernel "stalled" warnings.
+
+Link: http://lore.kernel.org/lkml/20140806181801.GA4605@redhat.com
+Link: http://lore.kernel.org/lkml/20140807175204.C257CAC5@viggo.jf.intel.com
+Link: https://lore.kernel.org/lkml/20230307184645.521db5c9@gandalf.local.home/
+Link: https://lore.kernel.org/linux-trace-kernel/20230310172856.77406446@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: e6753f23d961 ("tracepoint: Make rcuidle tracepoint callers use SRCU")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/mem_encrypt_identity.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/tracepoint.h |   15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
---- a/arch/x86/mm/mem_encrypt_identity.c
-+++ b/arch/x86/mm/mem_encrypt_identity.c
-@@ -600,7 +600,8 @@ void __init sme_enable(struct boot_param
- 	cmdline_ptr = (const char *)((u64)bp->hdr.cmd_line_ptr |
- 				     ((u64)bp->ext_cmd_line_ptr << 32));
- 
--	cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer));
-+	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0)
-+		return;
- 
- 	if (!strncmp(buffer, cmdline_on, sizeof(buffer)))
- 		sme_me_mask = me_mask;
+--- a/include/linux/tracepoint.h
++++ b/include/linux/tracepoint.h
+@@ -231,12 +231,11 @@ static inline struct tracepoint *tracepo
+  * not add unwanted padding between the beginning of the section and the
+  * structure. Force alignment to the same alignment as the section start.
+  *
+- * When lockdep is enabled, we make sure to always do the RCU portions of
+- * the tracepoint code, regardless of whether tracing is on. However,
+- * don't check if the condition is false, due to interaction with idle
+- * instrumentation. This lets us find RCU issues triggered with tracepoints
+- * even when this tracepoint is off. This code has no purpose other than
+- * poking RCU a bit.
++ * When lockdep is enabled, we make sure to always test if RCU is
++ * "watching" regardless if the tracepoint is enabled or not. Tracepoints
++ * require RCU to be active, and it should always warn at the tracepoint
++ * site if it is not watching, as it will need to be active when the
++ * tracepoint is enabled.
+  */
+ #define __DECLARE_TRACE(name, proto, args, cond, data_proto)		\
+ 	extern int __traceiter_##name(data_proto);			\
+@@ -249,9 +248,7 @@ static inline struct tracepoint *tracepo
+ 				TP_ARGS(args),				\
+ 				TP_CONDITION(cond), 0);			\
+ 		if (IS_ENABLED(CONFIG_LOCKDEP) && (cond)) {		\
+-			rcu_read_lock_sched_notrace();			\
+-			rcu_dereference_sched(__tracepoint_##name.funcs);\
+-			rcu_read_unlock_sched_notrace();		\
++			WARN_ON_ONCE(!rcu_is_watching());		\
+ 		}							\
+ 	}								\
+ 	__DECLARE_TRACE_RCU(name, PARAMS(proto), PARAMS(args),		\
 
 
