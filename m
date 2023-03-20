@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55341C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C6AC433EF;
-	Mon, 20 Mar 2023 15:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928711C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AD2C433EF;
+	Mon, 20 Mar 2023 15:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326194;
-	bh=g0Y3bHwbUpHEIJrYW+OpGGROrUU4EvSftGOGj7/WUWI=;
+	s=korg; t=1679326197;
+	bh=VJo3hoM7rw25fjMR1e/8yeqq6uNK7j+UmmrgwfD1feE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PhCcIKS9fV8s7ZkYe6PU43RneoJ9Bdsugn31/tbTS3NXJW2GlNS67FECZs6hkS+a/
-	 gOrpDFeQEH4w1zPPobFMviI8QiE5e5+DeoMGRSyXhGtujjWlLHzSO/q/fn/uCYH6EH
-	 JeJljFP59Xoj98EjKPX2zgTMWGcr5jiE5xvZoICM=
+	b=kFJ6/Te8TDVJrWANxjEWAwwAjwab5isuxlvSCrFUp0t+jGLmhF8H4ZQK6MQam7vk6
+	 +XMbHvQQ2wz8Kw2wwsx7T0sQNPHngUq1uyb4FUvUY86Rj46NvkvHok/7tBS0vVwPdJ
+	 syunOWGqlFwX6mBpn5wUfqjOlQtbWCv60jevFrlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 6.2 195/211] fbdev: Fix incorrect page mapping clearance at fb_deferred_io_release()
-Date: Mon, 20 Mar 2023 15:55:30 +0100
-Message-Id: <20230320145521.701607214@linuxfoundation.org>
+	Dylan Jhong <dylan@andestech.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.2 196/211] RISC-V: mm: Support huge page in vmalloc_fault()
+Date: Mon, 20 Mar 2023 15:55:31 +0100
+Message-Id: <20230320145521.748427474@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -35,97 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Dylan Jhong <dylan@andestech.com>
 
-commit fe9ae05cfbe587dda724fcf537c00bc2f287da62 upstream.
+commit 47dd902aaee9b9341808a3a994793199e7eddb88 upstream.
 
-The recent fix for the deferred I/O by the commit
-  3efc61d95259 ("fbdev: Fix invalid page access after closing deferred I/O devices")
-caused a regression when the same fb device is opened/closed while
-it's being used.  It resulted in a frozen screen even if something
-is redrawn there after the close.  The breakage is because the patch
-was made under a wrong assumption of a single open; in the current
-code, fb_deferred_io_release() cleans up the page mapping of the
-pageref list and it calls cancel_delayed_work_sync() unconditionally,
-where both are no correct behavior for multiple opens.
+Since RISC-V supports ioremap() with huge page (pud/pmd) mapping,
+However, vmalloc_fault() assumes that the vmalloc range is limited
+to pte mappings. To complete the vmalloc_fault() function by adding
+huge page support.
 
-This patch adds a refcount for the opens of the device, and applies
-the cleanup only when all files get closed.
-
-As both fb_deferred_io_open() and _close() are called always in the
-fb_info lock (mutex), it's safe to use the normal int for the
-refcounting.
-
-Also, a useless BUG_ON() is dropped.
-
-Fixes: 3efc61d95259 ("fbdev: Fix invalid page access after closing deferred I/O devices")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Reviewed-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230308105012.1845-1-tiwai@suse.de
+Fixes: 310f541a027b ("riscv: Enable HAVE_ARCH_HUGE_VMAP for 64BIT")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dylan Jhong <dylan@andestech.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20230310075021.3919290-1-dylan@andestech.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fb_defio.c |   17 +++++++++++++----
- include/linux/fb.h                  |    1 +
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ arch/riscv/mm/fault.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/video/fbdev/core/fb_defio.c
-+++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -309,17 +309,18 @@ void fb_deferred_io_open(struct fb_info
- 			 struct inode *inode,
- 			 struct file *file)
- {
-+	struct fb_deferred_io *fbdefio = info->fbdefio;
-+
- 	file->f_mapping->a_ops = &fb_deferred_io_aops;
-+	fbdefio->open_count++;
- }
- EXPORT_SYMBOL_GPL(fb_deferred_io_open);
- 
--void fb_deferred_io_release(struct fb_info *info)
-+static void fb_deferred_io_lastclose(struct fb_info *info)
- {
--	struct fb_deferred_io *fbdefio = info->fbdefio;
- 	struct page *page;
- 	int i;
- 
--	BUG_ON(!fbdefio);
- 	cancel_delayed_work_sync(&info->deferred_work);
- 
- 	/* clear out the mapping that we setup */
-@@ -328,13 +329,21 @@ void fb_deferred_io_release(struct fb_in
- 		page->mapping = NULL;
+diff --git a/arch/riscv/mm/fault.c b/arch/riscv/mm/fault.c
+index 460f785f6e09..d5f3e501dffb 100644
+--- a/arch/riscv/mm/fault.c
++++ b/arch/riscv/mm/fault.c
+@@ -143,6 +143,8 @@ static inline void vmalloc_fault(struct pt_regs *regs, int code, unsigned long a
+ 		no_context(regs, addr);
+ 		return;
  	}
++	if (pud_leaf(*pud_k))
++		goto flush_tlb;
+ 
+ 	/*
+ 	 * Since the vmalloc area is global, it is unnecessary
+@@ -153,6 +155,8 @@ static inline void vmalloc_fault(struct pt_regs *regs, int code, unsigned long a
+ 		no_context(regs, addr);
+ 		return;
+ 	}
++	if (pmd_leaf(*pmd_k))
++		goto flush_tlb;
+ 
+ 	/*
+ 	 * Make sure the actual PTE exists as well to
+@@ -172,6 +176,7 @@ static inline void vmalloc_fault(struct pt_regs *regs, int code, unsigned long a
+ 	 * ordering constraint, not a cache flush; it is
+ 	 * necessary even after writing invalid entries.
+ 	 */
++flush_tlb:
+ 	local_flush_tlb_page(addr);
  }
-+
-+void fb_deferred_io_release(struct fb_info *info)
-+{
-+	struct fb_deferred_io *fbdefio = info->fbdefio;
-+
-+	if (!--fbdefio->open_count)
-+		fb_deferred_io_lastclose(info);
-+}
- EXPORT_SYMBOL_GPL(fb_deferred_io_release);
  
- void fb_deferred_io_cleanup(struct fb_info *info)
- {
- 	struct fb_deferred_io *fbdefio = info->fbdefio;
- 
--	fb_deferred_io_release(info);
-+	fb_deferred_io_lastclose(info);
- 
- 	kvfree(info->pagerefs);
- 	mutex_destroy(&fbdefio->lock);
---- a/include/linux/fb.h
-+++ b/include/linux/fb.h
-@@ -212,6 +212,7 @@ struct fb_deferred_io {
- 	/* delay between mkwrite and deferred handler */
- 	unsigned long delay;
- 	bool sort_pagereflist; /* sort pagelist by offset */
-+	int open_count; /* number of opened files; protected by fb_info lock */
- 	struct mutex lock; /* mutex that protects the pageref list */
- 	struct list_head pagereflist; /* list of pagerefs for touched pages */
- 	/* callback */
+-- 
+2.40.0
+
 
 
