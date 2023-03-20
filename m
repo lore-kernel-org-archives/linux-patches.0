@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B891C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:57:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EF2C433A0;
-	Mon, 20 Mar 2023 14:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE881C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:57:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C901C433EF;
+	Mon, 20 Mar 2023 14:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324240;
-	bh=v0uafu2RIETWV2/bC0afztTsBXSYkOI1XkB+wQoi9Zo=;
+	s=korg; t=1679324243;
+	bh=LPTqG6PJB4W/JqXy0gnQJ4ohULvRZavu9EKEHp+2QRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6qMwwc+W9Bxl37YVaCeIsmPrr7+FzFV/wfWygHrCqzjRMW9Z8iNkaAZjZuBmY00E
-	 kimQWhflgJ+Lyv3JIVs07ROTPLuc00pOgJFzqFa61FjV4x08eHNQNzrQ3zQlE2M+zd
-	 EV58uGVoqhh1nENnW0vUxqJ/xl4I+CgE4jva030g=
+	b=JOmfyE/dD9EfrLOSiQyNBJxqZ36gF2QMY8S29F5ibOrHeLF2EBxc6WFaIOAirbsS6
+	 SH+lKdvO3P4EjQbzgYat57bTrM2NA39EiybNg0osEw8bTynhZN4oCuTUUtQLT76rcx
+	 xKMYp2AzRoL+gxueDMKjoX+dhxFgnj/ugepbx5Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <yujie.liu@intel.com>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 4.14 02/30] fs: sysfs_emit_at: Remove PAGE_SIZE alignment check
-Date: Mon, 20 Mar 2023 15:54:26 +0100
-Message-Id: <20230320145420.318285072@linuxfoundation.org>
+	Szymon Heidrich <szymon.heidrich@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 09/30] net: usb: smsc75xx: Limit packet length to skb->len
+Date: Mon, 20 Mar 2023 15:54:33 +0100
+Message-Id: <20230320145420.589208592@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145420.204894191@linuxfoundation.org>
 References: <20230320145420.204894191@linuxfoundation.org>
@@ -34,59 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Szymon Heidrich <szymon.heidrich@gmail.com>
 
-From: Eric Biggers <ebiggers@google.com>
+[ Upstream commit d8b228318935044dafe3a5bc07ee71a1f1424b8d ]
 
-[No upstream commit because this fixes a bug in a backport.]
+Packet length retrieved from skb data may be larger than
+the actual socket buffer length (up to 9026 bytes). In such
+case the cloned skb passed up the network stack will leak
+kernel memory contents.
 
-Before upstream commit 59bb47985c1d ("mm, sl[aou]b: guarantee natural
-alignment for kmalloc(power-of-two)") which went into v5.4, kmalloc did
-*not* always guarantee that PAGE_SIZE allocations are PAGE_SIZE-aligned.
-
-Upstream commit 2efc459d06f1 ("sysfs: Add sysfs_emit and sysfs_emit_at
-to format sysfs output") added two WARN()s that trigger when PAGE_SIZE
-allocations are not PAGE_SIZE-aligned.  This was backported to old
-kernels that don't guarantee PAGE_SIZE alignment.
-
-Commit 10ddfb495232 ("fs: sysfs_emit: Remove PAGE_SIZE alignment check")
-in 4.19.y, and its equivalent in 4.14.y and 4.9.y, tried to fix this
-bug.  However, only it handled sysfs_emit(), not sysfs_emit_at().
-
-Fix it in sysfs_emit_at() too.
-
-A reproducer is to build the kernel with the following options:
-
-	CONFIG_SLUB=y
-	CONFIG_SLUB_DEBUG=y
-	CONFIG_SLUB_DEBUG_ON=y
-	CONFIG_PM=y
-	CONFIG_SUSPEND=y
-	CONFIG_PM_WAKELOCKS=y
-
-Then run:
-
-	echo foo > /sys/power/wake_lock && cat /sys/power/wake_lock
-
-Fixes: cb1f69d53ac8 ("sysfs: Add sysfs_emit and sysfs_emit_at to format sysfs output")
-Reported-by: kernel test robot <yujie.liu@intel.com>
-Link: https://lore.kernel.org/r/202303141634.1e64fd76-yujie.liu@intel.com
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d0cad871703b ("smsc75xx: SMSC LAN75xx USB gigabit ethernet adapter driver")
+Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/sysfs/file.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/smsc75xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/sysfs/file.c
-+++ b/fs/sysfs/file.c
-@@ -592,7 +592,7 @@ int sysfs_emit_at(char *buf, int at, con
- 	va_list args;
- 	int len;
- 
--	if (WARN(!buf || offset_in_page(buf) || at < 0 || at >= PAGE_SIZE,
-+	if (WARN(!buf || at < 0 || at >= PAGE_SIZE,
- 		 "invalid sysfs_emit_at: buf:%p at:%d\n", buf, at))
- 		return 0;
- 
+diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
+index 8b9fd4e071f3d..b4705dee2b751 100644
+--- a/drivers/net/usb/smsc75xx.c
++++ b/drivers/net/usb/smsc75xx.c
+@@ -2225,7 +2225,8 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 				dev->net->stats.rx_frame_errors++;
+ 		} else {
+ 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
+-			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
++			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
++				     size > skb->len)) {
+ 				netif_dbg(dev, rx_err, dev->net,
+ 					  "size err rx_cmd_a=0x%08x\n",
+ 					  rx_cmd_a);
+-- 
+2.39.2
+
 
 
