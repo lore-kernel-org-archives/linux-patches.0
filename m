@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37EA81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9A5C433EF;
-	Mon, 20 Mar 2023 15:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6991C08
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABD3C433EF;
+	Mon, 20 Mar 2023 15:04:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324665;
-	bh=zJPoiUz+eSYowOj0w9IvhiD1PniUzDXyLRXaDGr4xP0=;
+	s=korg; t=1679324667;
+	bh=jDuWyESHNSkwSanRPr4F1dco/CrojfDJYK8D6SIbpCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bhq+9Oj4+wfspDpMCMoQyqsxUBxV00MGRA4DxpjmTzqepDBmMSlOPGD1L61tePP5w
-	 0RSYyxL6PwdD2finHHUy++CBDWpft/PlLKX+qym6z0VWylfczpgsVQpIt07+TC+PUn
-	 39n4Bk4ft2LxmbcQON2C9+fMzDwnlN5WHGQjGb/Q=
+	b=vBw6rzQFrC7JZuGwRORAhCX8w13NPsiRL16pV+99H6TBZpitt2hJy5rEgxS7dRVMz
+	 zdVSZPiKb3k0IbTW08TD0ejPdyh6UtSeGAAXNuo+i3Pq1CFkEtFttRCeQ0nGSpB+uZ
+	 uKC0hCR20ztbourZfMGfKDPskql+YbXEPxBm6ngc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Po-Hsu Lin <po-hsu.lin@canonical.com>,
+	Breno Leitao <leitao@debian.org>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 37/99] selftests: net: devlink_port_split.py: skip test if no suitable device available
-Date: Mon, 20 Mar 2023 15:54:15 +0100
-Message-Id: <20230320145444.920810293@linuxfoundation.org>
+Subject: [PATCH 5.15 014/115] tcp: tcp_make_synack() can be called from process context
+Date: Mon, 20 Mar 2023 15:53:46 +0100
+Message-Id: <20230320145449.985762283@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,110 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Po-Hsu Lin <po-hsu.lin@canonical.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 24994513ad13ff2c47ba91d2b5df82c3d496c370 ]
+[ Upstream commit bced3f7db95ff2e6ca29dc4d1c9751ab5e736a09 ]
 
-The `devlink -j port show` command output may not contain the "flavour"
-key, an example from Ubuntu 22.10 s390x LPAR(5.19.0-37-generic), with
-mlx4 driver and iproute2-5.15.0:
-  {"port":{"pci/0001:00:00.0/1":{"type":"eth","netdev":"ens301"},
-           "pci/0001:00:00.0/2":{"type":"eth","netdev":"ens301d1"},
-           "pci/0002:00:00.0/1":{"type":"eth","netdev":"ens317"},
-           "pci/0002:00:00.0/2":{"type":"eth","netdev":"ens317d1"}}}
+tcp_rtx_synack() now could be called in process context as explained in
+0a375c822497 ("tcp: tcp_rtx_synack() can be called from process
+context").
 
-This will cause a KeyError exception.
+tcp_rtx_synack() might call tcp_make_synack(), which will touch per-CPU
+variables with preemption enabled. This causes the following BUG:
 
-Create a validate_devlink_output() to check for this "flavour" from
-devlink command output to avoid this KeyError exception. Also let
-it handle the check for `devlink -j dev show` output in main().
+    BUG: using __this_cpu_add() in preemptible [00000000] code: ThriftIO1/5464
+    caller is tcp_make_synack+0x841/0xac0
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x10d/0x1a0
+     check_preemption_disabled+0x104/0x110
+     tcp_make_synack+0x841/0xac0
+     tcp_v6_send_synack+0x5c/0x450
+     tcp_rtx_synack+0xeb/0x1f0
+     inet_rtx_syn_ack+0x34/0x60
+     tcp_check_req+0x3af/0x9e0
+     tcp_rcv_state_process+0x59b/0x2030
+     tcp_v6_do_rcv+0x5f5/0x700
+     release_sock+0x3a/0xf0
+     tcp_sendmsg+0x33/0x40
+     ____sys_sendmsg+0x2f2/0x490
+     __sys_sendmsg+0x184/0x230
+     do_syscall_64+0x3d/0x90
 
-Apart from this, if the test was not started because the max lanes of
-the designated device is 0. The script will still return 0 and thus
-causing a false-negative test result.
+Avoid calling __TCP_INC_STATS() with will touch per-cpu variables. Use
+TCP_INC_STATS() which is safe to be called from context switch.
 
-Use a found_max_lanes flag to determine if these tests were skipped
-due to this reason and return KSFT_SKIP to make it more clear.
-
-Link: https://bugs.launchpad.net/bugs/1937133
-Fixes: f3348a82e727 ("selftests: net: Add port split test")
-Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
-Link: https://lore.kernel.org/r/20230315165353.229590-1-po-hsu.lin@canonical.com
+Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230308190745.780221-1-leitao@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/devlink_port_split.py       | 30 +++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ net/ipv4/tcp_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/devlink_port_split.py b/tools/testing/selftests/net/devlink_port_split.py
-index 834066d465fc1..f0fbd7367f4f6 100755
---- a/tools/testing/selftests/net/devlink_port_split.py
-+++ b/tools/testing/selftests/net/devlink_port_split.py
-@@ -57,6 +57,8 @@ class devlink_ports(object):
-         assert stderr == ""
-         ports = json.loads(stdout)['port']
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 33ba1268a111f..1f39b56bbab32 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3610,7 +3610,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
+ 	th->window = htons(min(req->rsk_rcv_wnd, 65535U));
+ 	tcp_options_write((__be32 *)(th + 1), NULL, &opts);
+ 	th->doff = (tcp_header_size >> 2);
+-	__TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
++	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
  
-+        validate_devlink_output(ports, 'flavour')
-+
-         for port in ports:
-             if dev in port:
-                 if ports[port]['flavour'] == 'physical':
-@@ -218,6 +220,27 @@ def split_splittable_port(port, k, lanes, dev):
-     unsplit(port.bus_info)
- 
- 
-+def validate_devlink_output(devlink_data, target_property=None):
-+    """
-+    Determine if test should be skipped by checking:
-+      1. devlink_data contains values
-+      2. The target_property exist in devlink_data
-+    """
-+    skip_reason = None
-+    if any(devlink_data.values()):
-+        if target_property:
-+            skip_reason = "{} not found in devlink output, test skipped".format(target_property)
-+            for key in devlink_data:
-+                if target_property in devlink_data[key]:
-+                    skip_reason = None
-+    else:
-+        skip_reason = 'devlink output is empty, test skipped'
-+
-+    if skip_reason:
-+        print(skip_reason)
-+        sys.exit(KSFT_SKIP)
-+
-+
- def make_parser():
-     parser = argparse.ArgumentParser(description='A test for port splitting.')
-     parser.add_argument('--dev',
-@@ -238,6 +261,7 @@ def main(cmdline=None):
-         stdout, stderr = run_command(cmd)
-         assert stderr == ""
- 
-+        validate_devlink_output(json.loads(stdout))
-         devs = json.loads(stdout)['dev']
-         dev = list(devs.keys())[0]
- 
-@@ -249,6 +273,7 @@ def main(cmdline=None):
- 
-     ports = devlink_ports(dev)
- 
-+    found_max_lanes = False
-     for port in ports.if_names:
-         max_lanes = get_max_lanes(port.name)
- 
-@@ -271,6 +296,11 @@ def main(cmdline=None):
-                 split_splittable_port(port, lane, max_lanes, dev)
- 
-                 lane //= 2
-+        found_max_lanes = True
-+
-+    if not found_max_lanes:
-+        print(f"Test not started, no port of device {dev} reports max_lanes")
-+        sys.exit(KSFT_SKIP)
- 
- 
- if __name__ == "__main__":
+ #ifdef CONFIG_TCP_MD5SIG
+ 	/* Okay, we have all we need - do the md5 hash if needed */
 -- 
 2.39.2
 
