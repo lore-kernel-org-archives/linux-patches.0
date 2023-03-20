@@ -1,30 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190E01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9109FC433EF;
-	Mon, 20 Mar 2023 15:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D651C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252C0C43443;
+	Mon, 20 Mar 2023 15:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324983;
-	bh=Ed3pU383HVMS7+m2FVX1Tx39zViPKwp/B/wTTwKwH/M=;
+	s=korg; t=1679324986;
+	bh=6gw84gSUsLBddofxx460m5N7exbcnWCwe16HmDaEgw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LpQGJsNhJOsQZxEq7nQuF1H5CpzBZpZ8cmp0H1QPUWxhSRQEIzY+aLruNelkPhJuf
-	 WTf2xxp21EQ6sNX761MLfnMVYI47TteJ6GiiXnYC1U9m8pHhvJEVFBtjls1mLbbPMm
-	 VP6DB0gzp5oAIkt2F+/5XalKHnsyBMPY5p63cioY=
+	b=NfXkvurxNh2FYgwt3IgG+G+dKKPmFY671xw7btkXY55s7psLh/iQ5hyOCoh3XjEZA
+	 6PX2OeywRudZ/yNA02KOqPkytrIPoA4ietHUokCynNoIToofqKnjYWv8x3BxO1bK83
+	 hxlOrvYFq9EQurg4Xc9R1JWRLZ54dKHaDt/mi7b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/115] hwmon: (ucd90320) Add minimum delay between bus accesses
-Date: Mon, 20 Mar 2023 15:54:29 +0100
-Message-Id: <20230320145451.817435133@linuxfoundation.org>
+Subject: [PATCH 6.1 031/198] ftrace,kcfi: Define ftrace_stub_graph conditionally
+Date: Mon, 20 Mar 2023 15:52:49 +0100
+Message-Id: <20230320145508.792505331@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,146 +44,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 8d655e65237643c48ada2c131b83679bf1105373 ]
+[ Upstream commit aa69f814920d85a2d4cfd5c294757c3d59d2fba6 ]
 
-When probing the ucd90320 access to some of the registers randomly fails.
-Sometimes it NACKs a transfer, sometimes it returns just random data and
-the PEC check fails.
+When CONFIG_FUNCTION_GRAPH_TRACER is disabled, __kcfi_typeid_ftrace_stub_graph
+is missing, causing a link failure:
 
-Experimentation shows that this seems to be triggered by a register access
-directly back to back with a previous register write. Experimentation also
-shows that inserting a small delay after register writes makes the issue go
-away.
+ ld.lld: error: undefined symbol: __kcfi_typeid_ftrace_stub_graph
+ referenced by arch/x86/kernel/ftrace_64.o:(__cfi_ftrace_stub_graph) in archive vmlinux.a
 
-Use a similar solution to what the max15301 driver does to solve the same
-problem. Create a custom set of bus read and write functions that make sure
-that the delay is added.
+Mark the reference to it as conditional on the same symbol, as
+is done on arm64.
 
-Fixes: a470f11c5ba2 ("hwmon: (pmbus/ucd9000) Add support for UCD90320 Power Sequencer")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20230312160312.2227405-1-lars@metafoo.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/linux-trace-kernel/20230131093643.3850272-1-arnd@kernel.org
+
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Fixes: 883bbbffa5a4 ("ftrace,kcfi: Separate ftrace_stub() and ftrace_stub_graph()")
+See-also: 2598ac6ec493 ("arm64: ftrace: Define ftrace_stub_graph only with FUNCTION_GRAPH_TRACER")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/ucd9000.c | 75 +++++++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
+ arch/x86/kernel/ftrace_64.S | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/pmbus/ucd9000.c b/drivers/hwmon/pmbus/ucd9000.c
-index 75fc770c9e403..3daaf22378322 100644
---- a/drivers/hwmon/pmbus/ucd9000.c
-+++ b/drivers/hwmon/pmbus/ucd9000.c
-@@ -7,6 +7,7 @@
-  */
+diff --git a/arch/x86/kernel/ftrace_64.S b/arch/x86/kernel/ftrace_64.S
+index 2a4be92fd1444..6233c5b4c10b2 100644
+--- a/arch/x86/kernel/ftrace_64.S
++++ b/arch/x86/kernel/ftrace_64.S
+@@ -134,9 +134,11 @@ SYM_TYPED_FUNC_START(ftrace_stub)
+ 	RET
+ SYM_FUNC_END(ftrace_stub)
  
- #include <linux/debugfs.h>
-+#include <linux/delay.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of_device.h>
-@@ -16,6 +17,7 @@
- #include <linux/i2c.h>
- #include <linux/pmbus.h>
- #include <linux/gpio/driver.h>
-+#include <linux/timekeeping.h>
- #include "pmbus.h"
++#ifdef CONFIG_FUNCTION_GRAPH_TRACER
+ SYM_TYPED_FUNC_START(ftrace_stub_graph)
+ 	RET
+ SYM_FUNC_END(ftrace_stub_graph)
++#endif
  
- enum chips { ucd9000, ucd90120, ucd90124, ucd90160, ucd90320, ucd9090,
-@@ -65,6 +67,7 @@ struct ucd9000_data {
- 	struct gpio_chip gpio;
- #endif
- 	struct dentry *debugfs;
-+	ktime_t write_time;
- };
- #define to_ucd9000_data(_info) container_of(_info, struct ucd9000_data, info)
+ #ifdef CONFIG_DYNAMIC_FTRACE
  
-@@ -73,6 +76,73 @@ struct ucd9000_debugfs_entry {
- 	u8 index;
- };
- 
-+/*
-+ * It has been observed that the UCD90320 randomly fails register access when
-+ * doing another access right on the back of a register write. To mitigate this
-+ * make sure that there is a minimum delay between a write access and the
-+ * following access. The 250us is based on experimental data. At a delay of
-+ * 200us the issue seems to go away. Add a bit of extra margin to allow for
-+ * system to system differences.
-+ */
-+#define UCD90320_WAIT_DELAY_US 250
-+
-+static inline void ucd90320_wait(const struct ucd9000_data *data)
-+{
-+	s64 delta = ktime_us_delta(ktime_get(), data->write_time);
-+
-+	if (delta < UCD90320_WAIT_DELAY_US)
-+		udelay(UCD90320_WAIT_DELAY_US - delta);
-+}
-+
-+static int ucd90320_read_word_data(struct i2c_client *client, int page,
-+				   int phase, int reg)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+
-+	if (reg >= PMBUS_VIRT_BASE)
-+		return -ENXIO;
-+
-+	ucd90320_wait(data);
-+	return pmbus_read_word_data(client, page, phase, reg);
-+}
-+
-+static int ucd90320_read_byte_data(struct i2c_client *client, int page, int reg)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+
-+	ucd90320_wait(data);
-+	return pmbus_read_byte_data(client, page, reg);
-+}
-+
-+static int ucd90320_write_word_data(struct i2c_client *client, int page,
-+				    int reg, u16 word)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+	int ret;
-+
-+	ucd90320_wait(data);
-+	ret = pmbus_write_word_data(client, page, reg, word);
-+	data->write_time = ktime_get();
-+
-+	return ret;
-+}
-+
-+static int ucd90320_write_byte(struct i2c_client *client, int page, u8 value)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+	int ret;
-+
-+	ucd90320_wait(data);
-+	ret = pmbus_write_byte(client, page, value);
-+	data->write_time = ktime_get();
-+
-+	return ret;
-+}
-+
- static int ucd9000_get_fan_config(struct i2c_client *client, int fan)
- {
- 	int fan_config = 0;
-@@ -598,6 +668,11 @@ static int ucd9000_probe(struct i2c_client *client)
- 		info->read_byte_data = ucd9000_read_byte_data;
- 		info->func[0] |= PMBUS_HAVE_FAN12 | PMBUS_HAVE_STATUS_FAN12
- 		  | PMBUS_HAVE_FAN34 | PMBUS_HAVE_STATUS_FAN34;
-+	} else if (mid->driver_data == ucd90320) {
-+		info->read_byte_data = ucd90320_read_byte_data;
-+		info->read_word_data = ucd90320_read_word_data;
-+		info->write_byte = ucd90320_write_byte;
-+		info->write_word_data = ucd90320_write_word_data;
- 	}
- 
- 	ucd9000_probe_gpio(client, mid, data);
 -- 
 2.39.2
 
