@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA07C1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D79C433EF;
-	Mon, 20 Mar 2023 15:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BEAF1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0065C4339B;
+	Mon, 20 Mar 2023 15:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325523;
-	bh=bRb6TR5KYwtr9MR7+KocAOUsZL7ovGjeYKku9GQ4Ra4=;
+	s=korg; t=1679325526;
+	bh=ONqPuH44OgCHjBk+EfAFvn2Tubw/YHwpoD4E1LX9Xyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msI87XZXeZWpaWieWYx4NOY5c49/9OCyoloMqyvdm0bKkSy+7ClXTwIMgq2OEIxV0
-	 fG5y+QTfKRQlj1KVOvpUzxadX24ONceP8TgENf0T75ICkWYr2gb15htFnLGAJjMh7X
-	 +oqltOmBa5WW4TCZYPhObbXlcOgBkX6A0y6Hw5v4=
+	b=RSud5cQSV//PrrIjAJb6I32EcHihxO69mWjSZTf53v+BY7D80i1MEMlcsl8zwi3rV
+	 7/rInCqkyeCf7FJ9kM/cgNE53c3YPQcVdizm3+drPr2X1cssvAl76ZDhg4Gmz7nDP4
+	 wsrjf+kZKEJQfkBBBjVeH43Ix1bwr0aMOIf7QLVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony OBrien <tony.obrien@alliedtelesis.co.nz>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/198] hwmon: (adt7475) Fix masking of hysteresis registers
-Date: Mon, 20 Mar 2023 15:53:52 +0100
-Message-Id: <20230320145511.496995149@linuxfoundation.org>
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 5.15 114/115] HID: core: Provide new max_buffer_size attribute to over-ride the default
+Date: Mon, 20 Mar 2023 15:55:26 +0100
+Message-Id: <20230320145454.243539548@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,42 +34,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 48e8186870d9d0902e712d601ccb7098cb220688 ]
+commit b1a37ed00d7908a991c1d0f18a8cba3c2aa99bdc upstream.
 
-The wrong bits are masked in the hysteresis register; indices 0 and 2
-should zero bits [7:4] and preserve bits [3:0], and index 1 should zero
-bits [3:0] and preserve bits [7:4].
+Presently, when a report is processed, its proposed size, provided by
+the user of the API (as Report Size * Report Count) is compared against
+the subsystem default HID_MAX_BUFFER_SIZE (16k).  However, some
+low-level HID drivers allocate a reduced amount of memory to their
+buffers (e.g. UHID only allocates UHID_DATA_MAX (4k) buffers), rending
+this check inadequate in some cases.
 
-Fixes: 1c301fc5394f ("hwmon: Add a driver for the ADT7475 hardware monitoring chip")
-Signed-off-by: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20230222005228.158661-3-tony.obrien@alliedtelesis.co.nz
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In these circumstances, if the received report ends up being smaller
+than the proposed report size, the remainder of the buffer is zeroed.
+That is, the space between sizeof(csize) (size of the current report)
+and the rsize (size proposed i.e. Report Size * Report Count), which can
+be handled up to HID_MAX_BUFFER_SIZE (16k).  Meaning that memset()
+shoots straight past the end of the buffer boundary and starts zeroing
+out in-use values, often resulting in calamity.
+
+This patch introduces a new variable into 'struct hid_ll_driver' where
+individual low-level drivers can over-ride the default maximum value of
+HID_MAX_BUFFER_SIZE (16k) with something more sympathetic to the
+interface.
+
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+[Lee: Backported to v5.15.y]
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/adt7475.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-core.c |   18 +++++++++++++-----
+ include/linux/hid.h    |    3 +++
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
-index 77222c35a38ec..6e4c92b500b8e 100644
---- a/drivers/hwmon/adt7475.c
-+++ b/drivers/hwmon/adt7475.c
-@@ -488,10 +488,10 @@ static ssize_t temp_store(struct device *dev, struct device_attribute *attr,
- 		val = (temp - val) / 1000;
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -258,6 +258,7 @@ static int hid_add_field(struct hid_pars
+ {
+ 	struct hid_report *report;
+ 	struct hid_field *field;
++	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
+ 	unsigned int usages;
+ 	unsigned int offset;
+ 	unsigned int i;
+@@ -288,8 +289,11 @@ static int hid_add_field(struct hid_pars
+ 	offset = report->size;
+ 	report->size += parser->global.report_size * parser->global.report_count;
  
- 		if (sattr->index != 1) {
--			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
-+			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
- 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF) << 4;
- 		} else {
--			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
-+			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
- 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF);
- 		}
++	if (parser->device->ll_driver->max_buffer_size)
++		max_buffer_size = parser->device->ll_driver->max_buffer_size;
++
+ 	/* Total size check: Allow for possible report index byte */
+-	if (report->size > (HID_MAX_BUFFER_SIZE - 1) << 3) {
++	if (report->size > (max_buffer_size - 1) << 3) {
+ 		hid_err(parser->device, "report is too long\n");
+ 		return -1;
+ 	}
+@@ -1752,6 +1756,7 @@ int hid_report_raw_event(struct hid_devi
+ 	struct hid_report_enum *report_enum = hid->report_enum + type;
+ 	struct hid_report *report;
+ 	struct hid_driver *hdrv;
++	int max_buffer_size = HID_MAX_BUFFER_SIZE;
+ 	unsigned int a;
+ 	u32 rsize, csize = size;
+ 	u8 *cdata = data;
+@@ -1768,10 +1773,13 @@ int hid_report_raw_event(struct hid_devi
  
--- 
-2.39.2
-
+ 	rsize = hid_compute_report_size(report);
+ 
+-	if (report_enum->numbered && rsize >= HID_MAX_BUFFER_SIZE)
+-		rsize = HID_MAX_BUFFER_SIZE - 1;
+-	else if (rsize > HID_MAX_BUFFER_SIZE)
+-		rsize = HID_MAX_BUFFER_SIZE;
++	if (hid->ll_driver->max_buffer_size)
++		max_buffer_size = hid->ll_driver->max_buffer_size;
++
++	if (report_enum->numbered && rsize >= max_buffer_size)
++		rsize = max_buffer_size - 1;
++	else if (rsize > max_buffer_size)
++		rsize = max_buffer_size;
+ 
+ 	if (csize < rsize) {
+ 		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -805,6 +805,7 @@ struct hid_driver {
+  * @output_report: send output report to device
+  * @idle: send idle request to device
+  * @may_wakeup: return if device may act as a wakeup source during system-suspend
++ * @max_buffer_size: over-ride maximum data buffer size (default: HID_MAX_BUFFER_SIZE)
+  */
+ struct hid_ll_driver {
+ 	int (*start)(struct hid_device *hdev);
+@@ -830,6 +831,8 @@ struct hid_ll_driver {
+ 
+ 	int (*idle)(struct hid_device *hdev, int report, int idle, int reqtype);
+ 	bool (*may_wakeup)(struct hid_device *hdev);
++
++	unsigned int max_buffer_size;
+ };
+ 
+ extern struct hid_ll_driver i2c_hid_ll_driver;
 
 
