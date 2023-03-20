@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF1B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0270DC433D2;
-	Mon, 20 Mar 2023 15:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2481C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2614C433EF;
+	Mon, 20 Mar 2023 15:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325504;
-	bh=Usr33Q7G7svwxIMW/0o8lW0DeqjhK2SaLNhtz4sFD/0=;
+	s=korg; t=1679325507;
+	bh=8bnz8/RQcB3LXLzt9bw8M7rmF4hdSIMYJguJyFF4PBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jI8lsRwlYbczOyaKhAh8gr3wLOzY1VD8/QXdb/ozQQf/V1TROQbrwSagBldU2ElLi
-	 LrCJ2R3Wk/TRKtiWj38elSxVXPjxW6vwjXco4sgmbK0FEYn4+QCS6rVXGfiKdM90dj
-	 XVa3vWJABcAhoxXjty1P2vqaMwVEPGWVdtlQf/wk=
+	b=c4ATdMNQyN4mhYJGRq2HJyRZ6ifKN6MaN1uTIzqplq0JcJrICG8zHmbAGv7M/Q+Sx
+	 QhimkmpldLppbdNPdpNpb3wglQqCtQUP+LlxsC3bqH4NjyM3lum5G1q/zwE1xRdQAn
+	 Af5CEiM9cLR46Zjm3dMSfVFmFfgVsj8yT8VI0kq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9dfc3f3348729cc82277@syzkaller.appspotmail.com,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jonathan Toppins <jtoppins@redhat.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/198] bonding: restore bonds IFF_SLAVE flag if a non-eth dev enslave fails
-Date: Mon, 20 Mar 2023 15:53:50 +0100
-Message-Id: <20230320145511.399693398@linuxfoundation.org>
+	Sheng Bi <windy.bi.enflame@gmail.com>,
+	Ravi Kishore Koppuravuri <ravi.kishore.koppuravuri@intel.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Subject: [PATCH 5.15 112/115] PCI: Unify delay handling for reset and resume
+Date: Mon, 20 Mar 2023 15:55:24 +0100
+Message-Id: <20230320145454.161207589@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,119 +38,257 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit e667d469098671261d558be0cd93dca4d285ce1e ]
+commit ac91e6980563ed53afadd925fa6585ffd2bc4a2c upstream.
 
-syzbot reported a warning[1] where the bond device itself is a slave and
-we try to enslave a non-ethernet device as the first slave which fails
-but then in the error path when ether_setup() restores the bond device
-it also clears all flags. In my previous fix[2] I restored the
-IFF_MASTER flag, but I didn't consider the case that the bond device
-itself might also be a slave with IFF_SLAVE set, so we need to restore
-that flag as well. Use the bond_ether_setup helper which does the right
-thing and restores the bond's flags properly.
+Sheng Bi reports that pci_bridge_secondary_bus_reset() may fail to wait
+for devices on the secondary bus to become accessible after reset:
 
-Steps to reproduce using a nlmon dev:
- $ ip l add nlmon0 type nlmon
- $ ip l add bond1 type bond
- $ ip l add bond2 type bond
- $ ip l set bond1 master bond2
- $ ip l set dev nlmon0 master bond1
- $ ip -d l sh dev bond1
- 22: bond1: <BROADCAST,MULTICAST,MASTER> mtu 1500 qdisc noqueue master bond2 state DOWN mode DEFAULT group default qlen 1000
- (now bond1's IFF_SLAVE flag is gone and we'll hit a warning[3] if we
-  try to delete it)
+Although it does call pci_dev_wait(), it erroneously passes the bridge's
+pci_dev rather than that of a child.  The bridge of course is always
+accessible while its secondary bus is reset, so pci_dev_wait() returns
+immediately.
 
-[1] https://syzkaller.appspot.com/bug?id=391c7b1f6522182899efba27d891f1743e8eb3ef
-[2] commit 7d5cd2ce5292 ("bonding: correctly handle bonding type change on enslave failure")
-[3] example warning:
- [   27.008664] bond1: (slave nlmon0): The slave device specified does not support setting the MAC address
- [   27.008692] bond1: (slave nlmon0): Error -95 calling set_mac_address
- [   32.464639] bond1 (unregistering): Released all slaves
- [   32.464685] ------------[ cut here ]------------
- [   32.464686] WARNING: CPU: 1 PID: 2004 at net/core/dev.c:10829 unregister_netdevice_many+0x72a/0x780
- [   32.464694] Modules linked in: br_netfilter bridge bonding virtio_net
- [   32.464699] CPU: 1 PID: 2004 Comm: ip Kdump: loaded Not tainted 5.18.0-rc3+ #47
- [   32.464703] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.1-2.fc37 04/01/2014
- [   32.464704] RIP: 0010:unregister_netdevice_many+0x72a/0x780
- [   32.464707] Code: 99 fd ff ff ba 90 1a 00 00 48 c7 c6 f4 02 66 96 48 c7 c7 20 4d 35 96 c6 05 fa c7 2b 02 01 e8 be 6f 4a 00 0f 0b e9 73 fd ff ff <0f> 0b e9 5f fd ff ff 80 3d e3 c7 2b 02 00 0f 85 3b fd ff ff ba 59
- [   32.464710] RSP: 0018:ffffa006422d7820 EFLAGS: 00010206
- [   32.464712] RAX: ffff8f6e077140a0 RBX: ffffa006422d7888 RCX: 0000000000000000
- [   32.464714] RDX: ffff8f6e12edbe58 RSI: 0000000000000296 RDI: ffffffff96d4a520
- [   32.464716] RBP: ffff8f6e07714000 R08: ffffffff96d63600 R09: ffffa006422d7728
- [   32.464717] R10: 0000000000000ec0 R11: ffffffff9698c988 R12: ffff8f6e12edb140
- [   32.464719] R13: dead000000000122 R14: dead000000000100 R15: ffff8f6e12edb140
- [   32.464723] FS:  00007f297c2f1740(0000) GS:ffff8f6e5d900000(0000) knlGS:0000000000000000
- [   32.464725] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- [   32.464726] CR2: 00007f297bf1c800 CR3: 00000000115e8000 CR4: 0000000000350ee0
- [   32.464730] Call Trace:
- [   32.464763]  <TASK>
- [   32.464767]  rtnl_dellink+0x13e/0x380
- [   32.464776]  ? cred_has_capability.isra.0+0x68/0x100
- [   32.464780]  ? __rtnl_unlock+0x33/0x60
- [   32.464783]  ? bpf_lsm_capset+0x10/0x10
- [   32.464786]  ? security_capable+0x36/0x50
- [   32.464790]  rtnetlink_rcv_msg+0x14e/0x3b0
- [   32.464792]  ? _copy_to_iter+0xb1/0x790
- [   32.464796]  ? post_alloc_hook+0xa0/0x160
- [   32.464799]  ? rtnl_calcit.isra.0+0x110/0x110
- [   32.464802]  netlink_rcv_skb+0x50/0xf0
- [   32.464806]  netlink_unicast+0x216/0x340
- [   32.464809]  netlink_sendmsg+0x23f/0x480
- [   32.464812]  sock_sendmsg+0x5e/0x60
- [   32.464815]  ____sys_sendmsg+0x22c/0x270
- [   32.464818]  ? import_iovec+0x17/0x20
- [   32.464821]  ? sendmsg_copy_msghdr+0x59/0x90
- [   32.464823]  ? do_set_pte+0xa0/0xe0
- [   32.464828]  ___sys_sendmsg+0x81/0xc0
- [   32.464832]  ? mod_objcg_state+0xc6/0x300
- [   32.464835]  ? refill_obj_stock+0xa9/0x160
- [   32.464838]  ? memcg_slab_free_hook+0x1a5/0x1f0
- [   32.464842]  __sys_sendmsg+0x49/0x80
- [   32.464847]  do_syscall_64+0x3b/0x90
- [   32.464851]  entry_SYSCALL_64_after_hwframe+0x44/0xae
- [   32.464865] RIP: 0033:0x7f297bf2e5e7
- [   32.464868] Code: 64 89 02 48 c7 c0 ff ff ff ff eb bb 0f 1f 80 00 00 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 89 74 24 10
- [   32.464869] RSP: 002b:00007ffd96c824c8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
- [   32.464872] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f297bf2e5e7
- [   32.464874] RDX: 0000000000000000 RSI: 00007ffd96c82540 RDI: 0000000000000003
- [   32.464875] RBP: 00000000640f19de R08: 0000000000000001 R09: 000000000000007c
- [   32.464876] R10: 00007f297bffabe0 R11: 0000000000000246 R12: 0000000000000001
- [   32.464877] R13: 00007ffd96c82d20 R14: 00007ffd96c82610 R15: 000055bfe38a7020
- [   32.464881]  </TASK>
- [   32.464882] ---[ end trace 0000000000000000 ]---
+Sheng Bi proposes introducing a new pci_bridge_secondary_bus_wait()
+function which is called from pci_bridge_secondary_bus_reset():
 
-Fixes: 7d5cd2ce5292 ("bonding: correctly handle bonding type change on enslave failure")
-Reported-by: syzbot+9dfc3f3348729cc82277@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=391c7b1f6522182899efba27d891f1743e8eb3ef
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Acked-by: Jonathan Toppins <jtoppins@redhat.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+https://lore.kernel.org/linux-pci/20220523171517.32407-1-windy.bi.enflame@gmail.com/
+
+However we already have pci_bridge_wait_for_secondary_bus() which does
+almost exactly what we need.  So far it's only called on resume from
+D3cold (which implies a Fundamental Reset per PCIe r6.0 sec 5.8).
+Re-using it for Secondary Bus Resets is a leaner and more rational
+approach than introducing a new function.
+
+That only requires a few minor tweaks:
+
+- Amend pci_bridge_wait_for_secondary_bus() to await accessibility of
+  the first device on the secondary bus by calling pci_dev_wait() after
+  performing the prescribed delays.  pci_dev_wait() needs two parameters,
+  a reset reason and a timeout, which callers must now pass to
+  pci_bridge_wait_for_secondary_bus().  The timeout is 1 sec for resume
+  (PCIe r6.0 sec 6.6.1) and 60 sec for reset (commit 821cdad5c46c ("PCI:
+  Wait up to 60 seconds for device to become ready after FLR")).
+  Introduce a PCI_RESET_WAIT macro for the 1 sec timeout.
+
+- Amend pci_bridge_wait_for_secondary_bus() to return 0 on success or
+  -ENOTTY on error for consumption by pci_bridge_secondary_bus_reset().
+
+- Drop an unnecessary 1 sec delay from pci_reset_secondary_bus() which
+  is now performed by pci_bridge_wait_for_secondary_bus().  A static
+  delay this long is only necessary for Conventional PCI, so modern
+  PCIe systems benefit from shorter reset times as a side effect.
+
+Fixes: 6b2f1351af56 ("PCI: Wait for device to become ready after secondary bus reset")
+Link: https://lore.kernel.org/r/da77c92796b99ec568bd070cbe4725074a117038.1673769517.git.lukas@wunner.de
+Reported-by: Sheng Bi <windy.bi.enflame@gmail.com>
+Tested-by: Ravi Kishore Koppuravuri <ravi.kishore.koppuravuri@intel.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Cc: stable@vger.kernel.org # v4.17+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/pci/pci-driver.c |    4 +--
+ drivers/pci/pci.c        |   54 ++++++++++++++++++++---------------------------
+ drivers/pci/pci.h        |   10 +++++++-
+ 3 files changed, 35 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 091c430547e7c..45d3cb557de73 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2299,9 +2299,7 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 			eth_hw_addr_random(bond_dev);
- 		if (bond_dev->type != ARPHRD_ETHER) {
- 			dev_close(bond_dev);
--			ether_setup(bond_dev);
--			bond_dev->flags |= IFF_MASTER;
--			bond_dev->priv_flags &= ~IFF_TX_SKB_SHARING;
-+			bond_ether_setup(bond_dev);
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -925,7 +925,7 @@ static int pci_pm_resume_noirq(struct de
+ 	pcie_pme_root_status_cleanup(pci_dev);
+ 
+ 	if (!skip_bus_pm && prev_state == PCI_D3cold)
+-		pci_bridge_wait_for_secondary_bus(pci_dev);
++		pci_bridge_wait_for_secondary_bus(pci_dev, "resume", PCI_RESET_WAIT);
+ 
+ 	if (pci_has_legacy_pm_support(pci_dev))
+ 		return 0;
+@@ -1312,7 +1312,7 @@ static int pci_pm_runtime_resume(struct
+ 	pci_pm_default_resume(pci_dev);
+ 
+ 	if (prev_state == PCI_D3cold)
+-		pci_bridge_wait_for_secondary_bus(pci_dev);
++		pci_bridge_wait_for_secondary_bus(pci_dev, "resume", PCI_RESET_WAIT);
+ 
+ 	if (pm && pm->runtime_resume)
+ 		error = pm->runtime_resume(dev);
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -1255,7 +1255,7 @@ static int pci_dev_wait(struct pci_dev *
+ 			return -ENOTTY;
+ 		}
+ 
+-		if (delay > 1000)
++		if (delay > PCI_RESET_WAIT)
+ 			pci_info(dev, "not ready %dms after %s; waiting\n",
+ 				 delay - 1, reset_type);
+ 
+@@ -1264,7 +1264,7 @@ static int pci_dev_wait(struct pci_dev *
+ 		pci_read_config_dword(dev, PCI_COMMAND, &id);
+ 	}
+ 
+-	if (delay > 1000)
++	if (delay > PCI_RESET_WAIT)
+ 		pci_info(dev, "ready %dms after %s\n", delay - 1,
+ 			 reset_type);
+ 
+@@ -4886,24 +4886,31 @@ static int pci_bus_max_d3cold_delay(cons
+ /**
+  * pci_bridge_wait_for_secondary_bus - Wait for secondary bus to be accessible
+  * @dev: PCI bridge
++ * @reset_type: reset type in human-readable form
++ * @timeout: maximum time to wait for devices on secondary bus (milliseconds)
+  *
+  * Handle necessary delays before access to the devices on the secondary
+- * side of the bridge are permitted after D3cold to D0 transition.
++ * side of the bridge are permitted after D3cold to D0 transition
++ * or Conventional Reset.
+  *
+  * For PCIe this means the delays in PCIe 5.0 section 6.6.1. For
+  * conventional PCI it means Tpvrh + Trhfa specified in PCI 3.0 section
+  * 4.3.2.
++ *
++ * Return 0 on success or -ENOTTY if the first device on the secondary bus
++ * failed to become accessible.
+  */
+-void pci_bridge_wait_for_secondary_bus(struct pci_dev *dev)
++int pci_bridge_wait_for_secondary_bus(struct pci_dev *dev, char *reset_type,
++				      int timeout)
+ {
+ 	struct pci_dev *child;
+ 	int delay;
+ 
+ 	if (pci_dev_is_disconnected(dev))
+-		return;
++		return 0;
+ 
+ 	if (!pci_is_bridge(dev))
+-		return;
++		return 0;
+ 
+ 	down_read(&pci_bus_sem);
+ 
+@@ -4915,14 +4922,14 @@ void pci_bridge_wait_for_secondary_bus(s
+ 	 */
+ 	if (!dev->subordinate || list_empty(&dev->subordinate->devices)) {
+ 		up_read(&pci_bus_sem);
+-		return;
++		return 0;
+ 	}
+ 
+ 	/* Take d3cold_delay requirements into account */
+ 	delay = pci_bus_max_d3cold_delay(dev->subordinate);
+ 	if (!delay) {
+ 		up_read(&pci_bus_sem);
+-		return;
++		return 0;
+ 	}
+ 
+ 	child = list_first_entry(&dev->subordinate->devices, struct pci_dev,
+@@ -4931,14 +4938,12 @@ void pci_bridge_wait_for_secondary_bus(s
+ 
+ 	/*
+ 	 * Conventional PCI and PCI-X we need to wait Tpvrh + Trhfa before
+-	 * accessing the device after reset (that is 1000 ms + 100 ms). In
+-	 * practice this should not be needed because we don't do power
+-	 * management for them (see pci_bridge_d3_possible()).
++	 * accessing the device after reset (that is 1000 ms + 100 ms).
+ 	 */
+ 	if (!pci_is_pcie(dev)) {
+ 		pci_dbg(dev, "waiting %d ms for secondary bus\n", 1000 + delay);
+ 		msleep(1000 + delay);
+-		return;
++		return 0;
+ 	}
+ 
+ 	/*
+@@ -4955,11 +4960,11 @@ void pci_bridge_wait_for_secondary_bus(s
+ 	 * configuration requests if we only wait for 100 ms (see
+ 	 * https://bugzilla.kernel.org/show_bug.cgi?id=203885).
+ 	 *
+-	 * Therefore we wait for 100 ms and check for the device presence.
+-	 * If it is still not present give it an additional 100 ms.
++	 * Therefore we wait for 100 ms and check for the device presence
++	 * until the timeout expires.
+ 	 */
+ 	if (!pcie_downstream_port(dev))
+-		return;
++		return 0;
+ 
+ 	if (pcie_get_speed_cap(dev) <= PCIE_SPEED_5_0GT) {
+ 		pci_dbg(dev, "waiting %d ms for downstream link\n", delay);
+@@ -4970,14 +4975,11 @@ void pci_bridge_wait_for_secondary_bus(s
+ 		if (!pcie_wait_for_link_delay(dev, true, delay)) {
+ 			/* Did not train, no need to wait any further */
+ 			pci_info(dev, "Data Link Layer Link Active not set in 1000 msec\n");
+-			return;
++			return -ENOTTY;
  		}
  	}
  
--- 
-2.39.2
-
+-	if (!pci_device_is_present(child)) {
+-		pci_dbg(child, "waiting additional %d ms to become accessible\n", delay);
+-		msleep(delay);
+-	}
++	return pci_dev_wait(child, reset_type, timeout - delay);
+ }
+ 
+ void pci_reset_secondary_bus(struct pci_dev *dev)
+@@ -4996,15 +4998,6 @@ void pci_reset_secondary_bus(struct pci_
+ 
+ 	ctrl &= ~PCI_BRIDGE_CTL_BUS_RESET;
+ 	pci_write_config_word(dev, PCI_BRIDGE_CONTROL, ctrl);
+-
+-	/*
+-	 * Trhfa for conventional PCI is 2^25 clock cycles.
+-	 * Assuming a minimum 33MHz clock this results in a 1s
+-	 * delay before we can consider subordinate devices to
+-	 * be re-initialized.  PCIe has some ways to shorten this,
+-	 * but we don't make use of them yet.
+-	 */
+-	ssleep(1);
+ }
+ 
+ void __weak pcibios_reset_secondary_bus(struct pci_dev *dev)
+@@ -5023,7 +5016,8 @@ int pci_bridge_secondary_bus_reset(struc
+ {
+ 	pcibios_reset_secondary_bus(dev);
+ 
+-	return pci_dev_wait(dev, "bus reset", PCIE_RESET_READY_POLL_MS);
++	return pci_bridge_wait_for_secondary_bus(dev, "bus reset",
++						 PCIE_RESET_READY_POLL_MS);
+ }
+ EXPORT_SYMBOL_GPL(pci_bridge_secondary_bus_reset);
+ 
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -63,6 +63,13 @@ struct pci_cap_saved_state *pci_find_sav
+ #define PCI_PM_D3HOT_WAIT       10	/* msec */
+ #define PCI_PM_D3COLD_WAIT      100	/* msec */
+ 
++/*
++ * Following exit from Conventional Reset, devices must be ready within 1 sec
++ * (PCIe r6.0 sec 6.6.1).  A D3cold to D0 transition implies a Conventional
++ * Reset (PCIe r6.0 sec 5.8).
++ */
++#define PCI_RESET_WAIT		1000	/* msec */
++
+ /**
+  * struct pci_platform_pm_ops - Firmware PM callbacks
+  *
+@@ -124,7 +131,8 @@ void pci_msi_init(struct pci_dev *dev);
+ void pci_msix_init(struct pci_dev *dev);
+ bool pci_bridge_d3_possible(struct pci_dev *dev);
+ void pci_bridge_d3_update(struct pci_dev *dev);
+-void pci_bridge_wait_for_secondary_bus(struct pci_dev *dev);
++int pci_bridge_wait_for_secondary_bus(struct pci_dev *dev, char *reset_type,
++				      int timeout);
+ 
+ static inline void pci_wakeup_event(struct pci_dev *dev)
+ {
 
 
