@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFEB1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D1FC433D2;
-	Mon, 20 Mar 2023 15:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF591C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B162DC433EF;
+	Mon, 20 Mar 2023 15:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325022;
-	bh=xznpn/lBXF041rg+agX4l3f1k1f1wW6GZlF4vO+4pEQ=;
+	s=korg; t=1679325025;
+	bh=9GAwBgvf3WQf/+27mvDYiZpbjGFD1ES/2tLRn/VvdKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyk2f75frqPf4qhrAh3sZYD8HZnn7VYIolhDnfZhpR9Fxiej7woYaNhiIM11JoySi
-	 Z/bIDPU0oQiEi3vj98q0QFds+Iwkdw2g5hwaFLmt0OgOAInW7udHicnaDDeUQXuL8e
-	 taAZszGgpVmERQgvvxFgpluy/1cHROjr9Smcn+xY=
+	b=jjj0NYvycwFSqGEnyDNLe4AYnFLp1FnslnY2mxIslVao3nUvy50P04t0aPfCYMR5u
+	 XzNO3id7dY80hXmlCRGt/9wBB10shv+aJYKeKpENxTfalX40BBFLGh8+EaWzGwbxaG
+	 r+QugX3Ls3Z5g91691ldUFFu/esxnhLZqnm5rNM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/198] wifi: cfg80211: fix MLO connection ownership
-Date: Mon, 20 Mar 2023 15:52:53 +0100
-Message-Id: <20230320145508.946396564@linuxfoundation.org>
+Subject: [PATCH 6.1 026/198] netfilter: nft_masq: correct length for loading protocol registers
+Date: Mon, 20 Mar 2023 15:52:44 +0100
+Message-Id: <20230320145508.603917002@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 References: <20230320145507.420176832@linuxfoundation.org>
@@ -35,95 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit 96c069508377547f913e7265a80fffe9355de592 ]
+[ Upstream commit ec2c5917eb858428b2083d1c74f445aabbe8316b ]
 
-When disconnecting from an MLO connection we need the AP
-MLD address, not an arbitrary BSSID. Fix the code to do
-that.
+The values in the protocol registers are two bytes wide.  However, when
+parsing the register loads, the code currently uses the larger 16-byte
+size of a `union nf_inet_addr`.  Change it to use the (correct) size of
+a `union nf_conntrack_man_proto` instead.
 
-Fixes: 9ecff10e82a5 ("wifi: nl80211: refactor BSS lookup in nl80211_associate()")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230301115906.4c1b3b18980e.I008f070c7f3b8e8bde9278101ef9e40706a82902@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 8a6bf5da1aef ("netfilter: nft_masq: support port range")
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ net/netfilter/nft_masq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 4c6748aa6a1c1..7320d676ce3a5 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -10699,8 +10699,7 @@ static int nl80211_crypto_settings(struct cfg80211_registered_device *rdev,
- 
- static struct cfg80211_bss *nl80211_assoc_bss(struct cfg80211_registered_device *rdev,
- 					      const u8 *ssid, int ssid_len,
--					      struct nlattr **attrs,
--					      const u8 **bssid_out)
-+					      struct nlattr **attrs)
+diff --git a/net/netfilter/nft_masq.c b/net/netfilter/nft_masq.c
+index 2a0adc497bbb4..026b4f87d96cc 100644
+--- a/net/netfilter/nft_masq.c
++++ b/net/netfilter/nft_masq.c
+@@ -43,7 +43,7 @@ static int nft_masq_init(const struct nft_ctx *ctx,
+ 			 const struct nft_expr *expr,
+ 			 const struct nlattr * const tb[])
  {
- 	struct ieee80211_channel *chan;
- 	struct cfg80211_bss *bss;
-@@ -10727,7 +10726,6 @@ static struct cfg80211_bss *nl80211_assoc_bss(struct cfg80211_registered_device
- 	if (!bss)
- 		return ERR_PTR(-ENOENT);
+-	u32 plen = sizeof_field(struct nf_nat_range, min_addr.all);
++	u32 plen = sizeof_field(struct nf_nat_range, min_proto.all);
+ 	struct nft_masq *priv = nft_expr_priv(expr);
+ 	int err;
  
--	*bssid_out = bssid;
- 	return bss;
- }
- 
-@@ -10737,7 +10735,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 	struct net_device *dev = info->user_ptr[1];
- 	struct cfg80211_assoc_request req = {};
- 	struct nlattr **attrs = NULL;
--	const u8 *bssid, *ssid;
-+	const u8 *ap_addr, *ssid;
- 	unsigned int link_id;
- 	int err, ssid_len;
- 
-@@ -10874,6 +10872,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 			return -EINVAL;
- 
- 		req.ap_mld_addr = nla_data(info->attrs[NL80211_ATTR_MLD_ADDR]);
-+		ap_addr = req.ap_mld_addr;
- 
- 		attrs = kzalloc(attrsize, GFP_KERNEL);
- 		if (!attrs)
-@@ -10899,8 +10898,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 				goto free;
- 			}
- 			req.links[link_id].bss =
--				nl80211_assoc_bss(rdev, ssid, ssid_len, attrs,
--						  &bssid);
-+				nl80211_assoc_bss(rdev, ssid, ssid_len, attrs);
- 			if (IS_ERR(req.links[link_id].bss)) {
- 				err = PTR_ERR(req.links[link_id].bss);
- 				req.links[link_id].bss = NULL;
-@@ -10951,10 +10949,10 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 		if (req.link_id >= 0)
- 			return -EINVAL;
- 
--		req.bss = nl80211_assoc_bss(rdev, ssid, ssid_len, info->attrs,
--					    &bssid);
-+		req.bss = nl80211_assoc_bss(rdev, ssid, ssid_len, info->attrs);
- 		if (IS_ERR(req.bss))
- 			return PTR_ERR(req.bss);
-+		ap_addr = req.bss->bssid;
- 	}
- 
- 	err = nl80211_crypto_settings(rdev, info, &req.crypto, 1);
-@@ -10967,7 +10965,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 			dev->ieee80211_ptr->conn_owner_nlportid =
- 				info->snd_portid;
- 			memcpy(dev->ieee80211_ptr->disconnect_bssid,
--			       bssid, ETH_ALEN);
-+			       ap_addr, ETH_ALEN);
- 		}
- 
- 		wdev_unlock(dev->ieee80211_ptr);
 -- 
 2.39.2
 
