@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B337B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37446C433EF;
-	Mon, 20 Mar 2023 14:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736B11C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E452AC433D2;
+	Mon, 20 Mar 2023 14:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324397;
-	bh=qEOrWhhdLZMXPkBve6GfKd89pHtRMO4xXcLMqrTOr5s=;
+	s=korg; t=1679324400;
+	bh=1WJuO73vAhh6bx+/8PU01IUU9oVPB5dKZSX6RZZVWhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HG10oL+Ie1174zVgxAaF8jilWdXBqR91KCq1/CvdlFzDRjTxtn+Gvotn4HpCXjHeG
-	 R2jj7wNOcHyMn8jQUsd4zH3M00RcwbTwZ8BpyeAWcvTRUMEq9z6b6FATRSSC+V2pzF
-	 x+xouqtBwaECqoHjjY5LQMAtAvWMNxdk6XyxZWGE=
+	b=ZLZOS2/GBGXivMAXJeFt9pmilmN4O/vTZfVUF2rPQ6fYoHs9dcbmF+oqa4LVzr5N8
+	 iKoWGSK3LViJVklA2IUunIUqbejhEG4TYJTnjYx4aBmcXs0bFcUsofqOrc4l2UJGtt
+	 8fTG++U5DWL35A/jUB/RTN8FwMkGDm2Cx7yxm+9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gaoxingwang <gaoxingwang1@huawei.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
+	Szymon Heidrich <szymon.heidrich@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 13/36] ipv4: Fix incorrect table ID in IOCTL path
-Date: Mon, 20 Mar 2023 15:54:39 +0100
-Message-Id: <20230320145424.750640667@linuxfoundation.org>
+Subject: [PATCH 4.19 14/36] net: usb: smsc75xx: Move packet length check to prevent kernel panic in skb_pull
+Date: Mon, 20 Mar 2023 15:54:40 +0100
+Message-Id: <20230320145424.779647777@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -37,72 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Szymon Heidrich <szymon.heidrich@gmail.com>
 
-[ Upstream commit 8a2618e14f81604a9b6ad305d57e0c8da939cd65 ]
+[ Upstream commit 43ffe6caccc7a1bb9d7442fbab521efbf6c1378c ]
 
-Commit f96a3d74554d ("ipv4: Fix incorrect route flushing when source
-address is deleted") started to take the table ID field in the FIB info
-structure into account when determining if two structures are identical
-or not. This field is initialized using the 'fc_table' field in the
-route configuration structure, which is not set when adding a route via
-IOCTL.
+Packet length check needs to be located after size and align_count
+calculation to prevent kernel panic in skb_pull() in case
+rx_cmd_a & RX_CMD_A_RED evaluates to true.
 
-The above can result in user space being able to install two identical
-routes that only differ in the table ID field of their associated FIB
-info.
-
-Fix by initializing the table ID field in the route configuration
-structure in the IOCTL path.
-
-Before the fix:
-
- # ip route add default via 192.0.2.2
- # route add default gw 192.0.2.2
- # ip -4 r show default
- # default via 192.0.2.2 dev dummy10
- # default via 192.0.2.2 dev dummy10
-
-After the fix:
-
- # ip route add default via 192.0.2.2
- # route add default gw 192.0.2.2
- SIOCADDRT: File exists
- # ip -4 r show default
- default via 192.0.2.2 dev dummy10
-
-Audited the code paths to ensure there are no other paths that do not
-properly initialize the route configuration structure when installing a
-route.
-
-Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
-Fixes: f96a3d74554d ("ipv4: Fix incorrect route flushing when source address is deleted")
-Reported-by: gaoxingwang <gaoxingwang1@huawei.com>
-Link: https://lore.kernel.org/netdev/20230314144159.2354729-1-gaoxingwang1@huawei.com/
-Tested-by: gaoxingwang <gaoxingwang1@huawei.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230315124009.4015212-1-idosch@nvidia.com
+Fixes: d8b228318935 ("net: usb: smsc75xx: Limit packet length to skb->len")
+Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
+Link: https://lore.kernel.org/r/20230316110540.77531-1-szymon.heidrich@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_frontend.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/usb/smsc75xx.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
-index 1885a2fbad862..9aa48b4c40960 100644
---- a/net/ipv4/fib_frontend.c
-+++ b/net/ipv4/fib_frontend.c
-@@ -557,6 +557,9 @@ static int rtentry_to_fib_config(struct net *net, int cmd, struct rtentry *rt,
- 			cfg->fc_scope = RT_SCOPE_UNIVERSE;
- 	}
+diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
+index b4705dee2b751..313a4b0edc6b3 100644
+--- a/drivers/net/usb/smsc75xx.c
++++ b/drivers/net/usb/smsc75xx.c
+@@ -2213,6 +2213,13 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 		size = (rx_cmd_a & RX_CMD_A_LEN) - RXW_PADDING;
+ 		align_count = (4 - ((size + RXW_PADDING) % 4)) % 4;
  
-+	if (!cfg->fc_table)
-+		cfg->fc_table = RT_TABLE_MAIN;
++		if (unlikely(size > skb->len)) {
++			netif_dbg(dev, rx_err, dev->net,
++				  "size err rx_cmd_a=0x%08x\n",
++				  rx_cmd_a);
++			return 0;
++		}
 +
- 	if (cmd == SIOCDELRT)
- 		return 0;
- 
+ 		if (unlikely(rx_cmd_a & RX_CMD_A_RED)) {
+ 			netif_dbg(dev, rx_err, dev->net,
+ 				  "Error rx_cmd_a=0x%08x\n", rx_cmd_a);
+@@ -2225,8 +2232,7 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 				dev->net->stats.rx_frame_errors++;
+ 		} else {
+ 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
+-			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
+-				     size > skb->len)) {
++			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
+ 				netif_dbg(dev, rx_err, dev->net,
+ 					  "size err rx_cmd_a=0x%08x\n",
+ 					  rx_cmd_a);
 -- 
 2.39.2
 
