@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4202D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CDCC4339C;
-	Mon, 20 Mar 2023 15:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAD81C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF67C433D2;
+	Mon, 20 Mar 2023 15:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325150;
-	bh=1dmy8v+6t/Q81mRh9oGB2LK5JOqFchzXvLhucNgLVas=;
+	s=korg; t=1679325152;
+	bh=j1MGEQmNXwRQZbXTFfs+jQOVxqSqFNMBQT1eucoL3Ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEZBPYZmO7tbTbPxB0ML95wySbUOEEy1ctTV6zbXD549wd/BDZ2bBlxTRGtezjcM8
-	 O6fjghAmxn37DHu27XYPU2M5hyNtzmqr6c0NzOA+lN9TAQz4klB3eqUHly3Dih9Mpe
-	 DQvybnXKi6dXAYQj4K0UgcSjMjIuE9SCZMvCWAcA=
+	b=mvowZmDB3Hf8CtjVN+O84A6S4HomVi+Az/5HdXYnVOhD0LJKuukCMKepM/o5S0Mwf
+	 /Wq38s/CrMXfPhXGCTdYi1qxlGPvnhMfxUWPnwA7wY8z8IwZmn1hCMMS58IHGaJ+a2
+	 OK/fH+etoah5d+Td/7mQAbiCiQhEMA+2OehENNps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony OBrien <tony.obrien@alliedtelesis.co.nz>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jun Lei <Jun.Lei@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/115] hwmon: (adt7475) Fix masking of hysteresis registers
-Date: Mon, 20 Mar 2023 15:54:26 +0100
-Message-Id: <20230320145451.691211271@linuxfoundation.org>
+Subject: [PATCH 5.15 072/115] drm/amd/display: fix shift-out-of-bounds in CalculateVMAndRowBytes
+Date: Mon, 20 Mar 2023 15:54:44 +0100
+Message-Id: <20230320145452.444054242@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
 References: <20230320145449.336983711@linuxfoundation.org>
@@ -35,40 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 48e8186870d9d0902e712d601ccb7098cb220688 ]
+[ Upstream commit 031f196d1b1b6d5dfcb0533b431e3ab1750e6189 ]
 
-The wrong bits are masked in the hysteresis register; indices 0 and 2
-should zero bits [7:4] and preserve bits [3:0], and index 1 should zero
-bits [3:0] and preserve bits [7:4].
+[WHY]
+When PTEBufferSizeInRequests is zero, UBSAN reports the following
+warning because dml_log2 returns an unexpected negative value:
 
-Fixes: 1c301fc5394f ("hwmon: Add a driver for the ADT7475 hardware monitoring chip")
-Signed-off-by: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20230222005228.158661-3-tony.obrien@alliedtelesis.co.nz
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  shift exponent 4294966273 is too large for 32-bit type 'int'
+
+[HOW]
+
+In the case PTEBufferSizeInRequests is zero, skip the dml_log2() and
+assign the result directly.
+
+Reviewed-by: Jun Lei <Jun.Lei@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7475.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c   | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
-index c7f19a1ca0a59..6b84822e7d93b 100644
---- a/drivers/hwmon/adt7475.c
-+++ b/drivers/hwmon/adt7475.c
-@@ -486,10 +486,10 @@ static ssize_t temp_store(struct device *dev, struct device_attribute *attr,
- 		val = (temp - val) / 1000;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
+index 518672a2450f4..de0fa87b301a5 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
+@@ -1868,7 +1868,10 @@ static unsigned int CalculateVMAndRowBytes(
+ 	}
  
- 		if (sattr->index != 1) {
--			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
-+			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
- 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF) << 4;
- 		} else {
--			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
-+			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
- 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF);
- 		}
- 
+ 	if (SurfaceTiling == dm_sw_linear) {
+-		*dpte_row_height = dml_min(128, 1 << (unsigned int) dml_floor(dml_log2(PTEBufferSizeInRequests * *PixelPTEReqWidth / Pitch), 1));
++		if (PTEBufferSizeInRequests == 0)
++			*dpte_row_height = 1;
++		else
++			*dpte_row_height = dml_min(128, 1 << (unsigned int) dml_floor(dml_log2(PTEBufferSizeInRequests * *PixelPTEReqWidth / Pitch), 1));
+ 		*dpte_row_width_ub = (dml_ceil(((double) SwathWidth - 1) / *PixelPTEReqWidth, 1) + 1) * *PixelPTEReqWidth;
+ 		*PixelPTEBytesPerRow = *dpte_row_width_ub / *PixelPTEReqWidth * *PTERequestSize;
+ 	} else if (ScanDirection != dm_vert) {
 -- 
 2.39.2
 
