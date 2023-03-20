@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539D01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61EBC433D2;
-	Mon, 20 Mar 2023 15:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7261C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FD1C4339C;
+	Mon, 20 Mar 2023 15:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325397;
-	bh=TMe+YEG/jrnwL3TwmcqKzGKtVJVIfWUK1pzvxGYy2tM=;
+	s=korg; t=1679325399;
+	bh=S+v12j4azPgfadyEmIsZ7mUkp4E+LD/c/oGnsJ48BCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lT+zv+XK8UUp3IcE07TSISsi5VHxTtciQ4v+geR9fs+fhqdk2hhrKeS3JOesED3IB
-	 0yqUGjQyVubXlDyI4YaHdi3pOYdcd70fsYwbm2+YW0erXOOC/6GOfgb+cue39OZtwu
-	 27vxp5OSMoT1QMrlb8QaUfRtyMSj8qlasoSlGsq0=
+	b=qp6qF2xg2Nk5X9LW3/0WX76MZz6kw5ThUojg8YcIJ09jId1jFIwU41hlxz94MtD9s
+	 Zkyjjra+YxI9+E/SXgpDB7dgNt4wyS3w3QH9f4DWbg9MNMvehShZx/oVbxwDv1PzZ7
+	 LP5Inh5WSRoEnz7KuY9RVK8zUQcbZqp3QrbnmJD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Eric Dumazet <edumazet@google.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 033/211] tcp: tcp_make_synack() can be called from process context
-Date: Mon, 20 Mar 2023 15:52:48 +0100
-Message-Id: <20230320145514.647565084@linuxfoundation.org>
+Subject: [PATCH 6.1 080/198] ravb: avoid PHY being resumed when interface is not up
+Date: Mon, 20 Mar 2023 15:53:38 +0100
+Message-Id: <20230320145510.882308038@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,62 +39,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Breno Leitao <leitao@debian.org>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit bced3f7db95ff2e6ca29dc4d1c9751ab5e736a09 ]
+[ Upstream commit 7f5ebf5dae42e710162f1c481ebcf28ab7b741c7 ]
 
-tcp_rtx_synack() now could be called in process context as explained in
-0a375c822497 ("tcp: tcp_rtx_synack() can be called from process
-context").
+RAVB doesn't need mdiobus suspend/resume, that's why it sets
+'mac_managed_pm'. However, setting it needs to be moved from init to
+probe, so mdiobus PM functions will really never be called (e.g. when
+the interface is not up yet during suspend/resume).
 
-tcp_rtx_synack() might call tcp_make_synack(), which will touch per-CPU
-variables with preemption enabled. This causes the following BUG:
-
-    BUG: using __this_cpu_add() in preemptible [00000000] code: ThriftIO1/5464
-    caller is tcp_make_synack+0x841/0xac0
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x10d/0x1a0
-     check_preemption_disabled+0x104/0x110
-     tcp_make_synack+0x841/0xac0
-     tcp_v6_send_synack+0x5c/0x450
-     tcp_rtx_synack+0xeb/0x1f0
-     inet_rtx_syn_ack+0x34/0x60
-     tcp_check_req+0x3af/0x9e0
-     tcp_rcv_state_process+0x59b/0x2030
-     tcp_v6_do_rcv+0x5f5/0x700
-     release_sock+0x3a/0xf0
-     tcp_sendmsg+0x33/0x40
-     ____sys_sendmsg+0x2f2/0x490
-     __sys_sendmsg+0x184/0x230
-     do_syscall_64+0x3d/0x90
-
-Avoid calling __TCP_INC_STATS() with will touch per-cpu variables. Use
-TCP_INC_STATS() which is safe to be called from context switch.
-
-Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230308190745.780221-1-leitao@debian.org
+Fixes: 4924c0cdce75 ("net: ravb: Fix PHY state warning splat during system resume")
+Suggested-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 71d01cf3c13eb..ba839e441450f 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3605,7 +3605,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
- 	th->window = htons(min(req->rsk_rcv_wnd, 65535U));
- 	tcp_options_write(th, NULL, &opts);
- 	th->doff = (tcp_header_size >> 2);
--	__TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
-+	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index 0f54849a38235..894e2690c6437 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -1455,8 +1455,6 @@ static int ravb_phy_init(struct net_device *ndev)
+ 		phy_remove_link_mode(phydev, ETHTOOL_LINK_MODE_100baseT_Half_BIT);
+ 	}
  
- #ifdef CONFIG_TCP_MD5SIG
- 	/* Okay, we have all we need - do the md5 hash if needed */
+-	/* Indicate that the MAC is responsible for managing PHY PM */
+-	phydev->mac_managed_pm = true;
+ 	phy_attached_info(phydev);
+ 
+ 	return 0;
+@@ -2379,6 +2377,8 @@ static int ravb_mdio_init(struct ravb_private *priv)
+ {
+ 	struct platform_device *pdev = priv->pdev;
+ 	struct device *dev = &pdev->dev;
++	struct phy_device *phydev;
++	struct device_node *pn;
+ 	int error;
+ 
+ 	/* Bitbang init */
+@@ -2400,6 +2400,14 @@ static int ravb_mdio_init(struct ravb_private *priv)
+ 	if (error)
+ 		goto out_free_bus;
+ 
++	pn = of_parse_phandle(dev->of_node, "phy-handle", 0);
++	phydev = of_phy_find_device(pn);
++	if (phydev) {
++		phydev->mac_managed_pm = true;
++		put_device(&phydev->mdio.dev);
++	}
++	of_node_put(pn);
++
+ 	return 0;
+ 
+ out_free_bus:
 -- 
 2.39.2
 
