@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1791C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3965AC433D2;
-	Mon, 20 Mar 2023 14:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F621C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA18C4339B;
+	Mon, 20 Mar 2023 14:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324290;
-	bh=bG7be6u1IUxAGCMWQxd7ABrj1jSQ8IyDwxb0nc08Qys=;
+	s=korg; t=1679324293;
+	bh=GX590+rc6h6cSFFN3jdUhxeJcIq5jWcbIgqVJEhyEnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOPsWF00s+paekiTVWaU57Ivjs7B2He2ANSbb9rsHFceQIsiknf/CGwf+PQl9YrZo
-	 /6/SO2aRBs4R993k0+N1cZHUWuW7VQ2a2m8OIkO/bGEZNRIfuveTcvGMxMA8fS9YHG
-	 kJ2hXhAQvINIx6lWrRxkusjirBcBLoFxtM/HjmwU=
+	b=K6NNUOHE+NHjwNXKIt23/jtFt9XXdRQZmC7I1U4zEiREyeTP4KP5YrAPiOKW0BBfP
+	 xiI29qHdkKixqX5e0T45ngu0LyLpfEFYNbPsNtFtaOYj+PjavTE8XfWe0dpOjny8OS
+	 gtTpBdUuMr5G+Z57F4qxEWoIu/ltkxTozcciKvok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liang He <windhl@126.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 04/36] tcp: tcp_make_synack() can be called from process context
-Date: Mon, 20 Mar 2023 15:54:30 +0100
-Message-Id: <20230320145424.387496948@linuxfoundation.org>
+Subject: [PATCH 4.14 11/30] block: sunvdc: add check for mdesc_grab() returning NULL
+Date: Mon, 20 Mar 2023 15:54:35 +0100
+Message-Id: <20230320145420.652753238@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
-References: <20230320145424.191578432@linuxfoundation.org>
+In-Reply-To: <20230320145420.204894191@linuxfoundation.org>
+References: <20230320145420.204894191@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,62 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Breno Leitao <leitao@debian.org>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit bced3f7db95ff2e6ca29dc4d1c9751ab5e736a09 ]
+[ Upstream commit 6030363199e3a6341afb467ddddbed56640cbf6a ]
 
-tcp_rtx_synack() now could be called in process context as explained in
-0a375c822497 ("tcp: tcp_rtx_synack() can be called from process
-context").
+In vdc_port_probe(), we should check the return value of mdesc_grab() as
+it may return NULL, which can cause potential NPD bug.
 
-tcp_rtx_synack() might call tcp_make_synack(), which will touch per-CPU
-variables with preemption enabled. This causes the following BUG:
-
-    BUG: using __this_cpu_add() in preemptible [00000000] code: ThriftIO1/5464
-    caller is tcp_make_synack+0x841/0xac0
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x10d/0x1a0
-     check_preemption_disabled+0x104/0x110
-     tcp_make_synack+0x841/0xac0
-     tcp_v6_send_synack+0x5c/0x450
-     tcp_rtx_synack+0xeb/0x1f0
-     inet_rtx_syn_ack+0x34/0x60
-     tcp_check_req+0x3af/0x9e0
-     tcp_rcv_state_process+0x59b/0x2030
-     tcp_v6_do_rcv+0x5f5/0x700
-     release_sock+0x3a/0xf0
-     tcp_sendmsg+0x33/0x40
-     ____sys_sendmsg+0x2f2/0x490
-     __sys_sendmsg+0x184/0x230
-     do_syscall_64+0x3d/0x90
-
-Avoid calling __TCP_INC_STATS() with will touch per-cpu variables. Use
-TCP_INC_STATS() which is safe to be called from context switch.
-
-Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230308190745.780221-1-leitao@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
+Signed-off-by: Liang He <windhl@126.com>
+Link: https://lore.kernel.org/r/20230315062032.1741692-1-windhl@126.com
+[axboe: style cleanup]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/sunvdc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 8962864223b43..9299de0da3514 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3307,7 +3307,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
- 	th->window = htons(min(req->rsk_rcv_wnd, 65535U));
- 	tcp_options_write((__be32 *)(th + 1), NULL, &opts);
- 	th->doff = (tcp_header_size >> 2);
--	__TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
-+	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
+diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
+index ed4d6276e94f3..ebf1e9b7f93b6 100644
+--- a/drivers/block/sunvdc.c
++++ b/drivers/block/sunvdc.c
+@@ -940,6 +940,8 @@ static int vdc_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 	print_version();
  
- #ifdef CONFIG_TCP_MD5SIG
- 	/* Okay, we have all we need - do the md5 hash if needed */
+ 	hp = mdesc_grab();
++	if (!hp)
++		return -ENODEV;
+ 
+ 	err = -ENODEV;
+ 	if ((vdev->dev_no << PARTITION_SHIFT) & ~(u64)MINORMASK) {
 -- 
 2.39.2
 
