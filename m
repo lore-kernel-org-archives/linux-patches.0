@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBAE1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E9AC4339B;
-	Mon, 20 Mar 2023 15:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6421C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B43C433A0;
+	Mon, 20 Mar 2023 15:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325108;
-	bh=S6tEHWndNmSMMQ5WutitFRxVDIVV+AOXs7zwPkBG9T4=;
+	s=korg; t=1679325111;
+	bh=7/l21qbPvL/uLOnO4QYZxpja9Gy/MCZCG6dCrpk+nFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ST4l563Tae8ws4bzI3zV6He60HvttbU8ICH4xPGzMzUytUJn6m0YdktfUTQM/8ja4
-	 d1asHJe3hCogXrKAqJIaae162q7m3cGvSgfJrUdWHR1OFU8nVaCgFEzxjWBiaLYp1s
-	 QnGzhnIJ1WLQBElcdkH5BUy6qUtvImSg5aylSOyQ=
+	b=RO8d4oLS6Zb+ygVXQxchyRlAht2PECyQWgQWPZDvBFH2auXMk/8hmUoX+nDirpySV
+	 at0GkQoStmfyfQjkg8whLcYrWoWkAsbQodSe4tYgENbxYBVVA709WPEruNTxSSo09H
+	 MNLl+iWCsTc0ZDveF56vDAgZ/CwteuyK/XhAqxcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 007/211] drm/meson: fix 1px pink line on GXM when scaling video overlay
-Date: Mon, 20 Mar 2023 15:52:22 +0100
-Message-Id: <20230320145513.601843880@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>
+Subject: [PATCH 5.10 92/99] attr: add in_group_or_capable()
+Date: Mon, 20 Mar 2023 15:55:10 +0100
+Message-Id: <20230320145447.267143971@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,45 +34,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 5c8cf1664f288098a971a1d1e65716a2b6a279e1 ]
+commit 11c2a8700cdcabf9b639b7204a1e38e2a0b6798e upstream.
 
-Playing media with a resolution smaller than the crtc size requires the
-video overlay to be scaled for output and GXM boards display a 1px pink
-line on the bottom of the scaled overlay. Comparing with the downstream
-vendor driver revealed VPP_DUMMY_DATA not being set [0].
+[backported to 5.10.y, prior to idmapped mounts]
 
-Setting VPP_DUMMY_DATA prevents the 1px pink line from being seen.
+In setattr_{copy,prepare}() we need to perform the same permission
+checks to determine whether we need to drop the setgid bit or not.
+Instead of open-coding it twice add a simple helper the encapsulates the
+logic. We will reuse this helpers to make dropping the setgid bit during
+write operations more consistent in a follow up patch.
 
-[0] https://github.com/endlessm/linux-s905x/blob/master/drivers/amlogic/amports/video.c#L7869
-
-Fixes: bbbe775ec5b5 ("drm: Add support for Amlogic Meson Graphic Controller")
-Suggested-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230303123312.155164-1-christianshewitt@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/meson/meson_vpp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/attr.c     |   11 +++++------
+ fs/inode.c    |   25 +++++++++++++++++++++----
+ fs/internal.h |    1 +
+ 3 files changed, 27 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vpp.c b/drivers/gpu/drm/meson/meson_vpp.c
-index 154837688ab0d..5df1957c8e41f 100644
---- a/drivers/gpu/drm/meson/meson_vpp.c
-+++ b/drivers/gpu/drm/meson/meson_vpp.c
-@@ -100,6 +100,8 @@ void meson_vpp_init(struct meson_drm *priv)
- 			       priv->io_base + _REG(VPP_DOLBY_CTRL));
- 		writel_relaxed(0x1020080,
- 				priv->io_base + _REG(VPP_DUMMY_DATA1));
-+		writel_relaxed(0x42020,
-+				priv->io_base + _REG(VPP_DUMMY_DATA));
- 	} else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
- 		writel_relaxed(0xf, priv->io_base + _REG(DOLBY_PATH_CTRL));
+--- a/fs/attr.c
++++ b/fs/attr.c
+@@ -18,6 +18,8 @@
+ #include <linux/evm.h>
+ #include <linux/ima.h>
  
--- 
-2.39.2
-
++#include "internal.h"
++
+ static bool chown_ok(const struct inode *inode, kuid_t uid)
+ {
+ 	if (uid_eq(current_fsuid(), inode->i_uid) &&
+@@ -90,9 +92,8 @@ int setattr_prepare(struct dentry *dentr
+ 		if (!inode_owner_or_capable(inode))
+ 			return -EPERM;
+ 		/* Also check the setgid bit! */
+-		if (!in_group_p((ia_valid & ATTR_GID) ? attr->ia_gid :
+-				inode->i_gid) &&
+-		    !capable_wrt_inode_uidgid(inode, CAP_FSETID))
++		if (!in_group_or_capable(inode, (ia_valid & ATTR_GID) ?
++						attr->ia_gid : inode->i_gid))
+ 			attr->ia_mode &= ~S_ISGID;
+ 	}
+ 
+@@ -193,9 +194,7 @@ void setattr_copy(struct inode *inode, c
+ 		inode->i_ctime = attr->ia_ctime;
+ 	if (ia_valid & ATTR_MODE) {
+ 		umode_t mode = attr->ia_mode;
+-
+-		if (!in_group_p(inode->i_gid) &&
+-		    !capable_wrt_inode_uidgid(inode, CAP_FSETID))
++		if (!in_group_or_capable(inode, inode->i_gid))
+ 			mode &= ~S_ISGID;
+ 		inode->i_mode = mode;
+ 	}
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -2380,6 +2380,26 @@ int vfs_ioc_fssetxattr_check(struct inod
+ EXPORT_SYMBOL(vfs_ioc_fssetxattr_check);
+ 
+ /**
++ * in_group_or_capable - check whether caller is CAP_FSETID privileged
++ * @inode:	inode to check
++ * @gid:	the new/current gid of @inode
++ *
++ * Check wether @gid is in the caller's group list or if the caller is
++ * privileged with CAP_FSETID over @inode. This can be used to determine
++ * whether the setgid bit can be kept or must be dropped.
++ *
++ * Return: true if the caller is sufficiently privileged, false if not.
++ */
++bool in_group_or_capable(const struct inode *inode, kgid_t gid)
++{
++	if (in_group_p(gid))
++		return true;
++	if (capable_wrt_inode_uidgid(inode, CAP_FSETID))
++		return true;
++	return false;
++}
++
++/**
+  * mode_strip_sgid - handle the sgid bit for non-directories
+  * @dir: parent directory inode
+  * @mode: mode of the file to be created in @dir
+@@ -2398,11 +2418,8 @@ umode_t mode_strip_sgid(const struct ino
+ 		return mode;
+ 	if (S_ISDIR(mode) || !dir || !(dir->i_mode & S_ISGID))
+ 		return mode;
+-	if (in_group_p(dir->i_gid))
++	if (in_group_or_capable(dir, dir->i_gid))
+ 		return mode;
+-	if (capable_wrt_inode_uidgid(dir, CAP_FSETID))
+-		return mode;
+-
+ 	return mode & ~S_ISGID;
+ }
+ EXPORT_SYMBOL(mode_strip_sgid);
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -149,6 +149,7 @@ extern int vfs_open(const struct path *,
+ extern long prune_icache_sb(struct super_block *sb, struct shrink_control *sc);
+ extern void inode_add_lru(struct inode *inode);
+ extern int dentry_needs_remove_privs(struct dentry *dentry);
++bool in_group_or_capable(const struct inode *inode, kgid_t gid);
+ 
+ /*
+  * fs-writeback.c
 
 
