@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EF01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC983C433D2;
-	Mon, 20 Mar 2023 14:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E29A1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B240DC4339B;
+	Mon, 20 Mar 2023 14:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324345;
-	bh=+TmRdAX6pVlaNd++A6l7i/nQ/C0CufHWIaMzVDmi048=;
+	s=korg; t=1679324348;
+	bh=aw04quke70lh3HZ6rUaBgUOEbT2nQId2Pnr1fZKmh5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HSihB6cs+w4VODDUEpeIIFgcb9G++nH2isprvnbYOE/6o5hVxsBZPToz+o5qCh658
-	 qysz1GXCRnjUz8rA8lN3PeapKYg49/uUe3S8bu5BrCwq3rQI/YiVYREdswwsGaiSvF
-	 igJyR5oEKXFTY/6SUyyYy/dc82NXVO6gRaXfDopo=
+	b=o6aw6Vb9J2J3BVQN1jwzoROfnJZwNB7KreAxj+rBa2lZX2m4RIomLbYGuuBCSc6KC
+	 zNqGTqL+/PbyhWID73KF/s7UE8JOz4rL5o4iP7ulJ5Qaa8p6xEfclz40f95fz1w0l0
+	 zisiugLZGBxx3k9FIzUJJDaDxdKXByZXSQhkL9dU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+77d6fcc37bbb92f26048@syzkaller.appspotmail.com,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 07/36] net: tunnels: annotate lockless accesses to dev->needed_headroom
-Date: Mon, 20 Mar 2023 15:54:33 +0100
-Message-Id: <20230320145424.513502328@linuxfoundation.org>
+Subject: [PATCH 4.19 25/36] ext4: fix task hung in ext4_xattr_delete_inode
+Date: Mon, 20 Mar 2023 15:54:51 +0100
+Message-Id: <20230320145425.182177185@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -36,250 +37,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 4b397c06cb987935b1b097336532aa6b4210e091 ]
+[ Upstream commit 0f7bfd6f8164be32dbbdf36aa1e5d00485c53cd7 ]
 
-IP tunnels can apparently update dev->needed_headroom
-in their xmit path.
+Syzbot reported a hung task problem:
+==================================================================
+INFO: task syz-executor232:5073 blocked for more than 143 seconds.
+      Not tainted 6.2.0-rc2-syzkaller-00024-g512dee0c00ad #0
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:syz-exec232 state:D stack:21024 pid:5073 ppid:5072 flags:0x00004004
+Call Trace:
+ <TASK>
+ context_switch kernel/sched/core.c:5244 [inline]
+ __schedule+0x995/0xe20 kernel/sched/core.c:6555
+ schedule+0xcb/0x190 kernel/sched/core.c:6631
+ __wait_on_freeing_inode fs/inode.c:2196 [inline]
+ find_inode_fast+0x35a/0x4c0 fs/inode.c:950
+ iget_locked+0xb1/0x830 fs/inode.c:1273
+ __ext4_iget+0x22e/0x3ed0 fs/ext4/inode.c:4861
+ ext4_xattr_inode_iget+0x68/0x4e0 fs/ext4/xattr.c:389
+ ext4_xattr_inode_dec_ref_all+0x1a7/0xe50 fs/ext4/xattr.c:1148
+ ext4_xattr_delete_inode+0xb04/0xcd0 fs/ext4/xattr.c:2880
+ ext4_evict_inode+0xd7c/0x10b0 fs/ext4/inode.c:296
+ evict+0x2a4/0x620 fs/inode.c:664
+ ext4_orphan_cleanup+0xb60/0x1340 fs/ext4/orphan.c:474
+ __ext4_fill_super fs/ext4/super.c:5516 [inline]
+ ext4_fill_super+0x81cd/0x8700 fs/ext4/super.c:5644
+ get_tree_bdev+0x400/0x620 fs/super.c:1282
+ vfs_get_tree+0x88/0x270 fs/super.c:1489
+ do_new_mount+0x289/0xad0 fs/namespace.c:3145
+ do_mount fs/namespace.c:3488 [inline]
+ __do_sys_mount fs/namespace.c:3697 [inline]
+ __se_sys_mount+0x2d3/0x3c0 fs/namespace.c:3674
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fa5406fd5ea
+RSP: 002b:00007ffc7232f968 EFLAGS: 00000202 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007fa5406fd5ea
+RDX: 0000000020000440 RSI: 0000000020000000 RDI: 00007ffc7232f970
+RBP: 00007ffc7232f970 R08: 00007ffc7232f9b0 R09: 0000000000000432
+R10: 0000000000804a03 R11: 0000000000000202 R12: 0000000000000004
+R13: 0000555556a7a2c0 R14: 00007ffc7232f9b0 R15: 0000000000000000
+ </TASK>
+==================================================================
 
-This patch takes care of three tunnels xmit, and also the
-core LL_RESERVED_SPACE() and LL_RESERVED_SPACE_EXTRA()
-helpers.
+The problem is that the inode contains an xattr entry with ea_inum of 15
+when cleaning up an orphan inode <15>. When evict inode <15>, the reference
+counting of the corresponding EA inode is decreased. When EA inode <15> is
+found by find_inode_fast() in __ext4_iget(), it is found that the EA inode
+holds the I_FREEING flag and waits for the EA inode to complete deletion.
+As a result, when inode <15> is being deleted, we wait for inode <15> to
+complete the deletion, resulting in an infinite loop and triggering Hung
+Task. To solve this problem, we only need to check whether the ino of EA
+inode and parent is the same before getting EA inode.
 
-More changes might be needed for completeness.
-
-BUG: KCSAN: data-race in ip_tunnel_xmit / ip_tunnel_xmit
-
-read to 0xffff88815b9da0ec of 2 bytes by task 888 on cpu 1:
-ip_tunnel_xmit+0x1270/0x1730 net/ipv4/ip_tunnel.c:803
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
-__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
-netdev_start_xmit include/linux/netdevice.h:4895 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
-__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3051 [inline]
-neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
-neigh_output include/net/neighbour.h:546 [inline]
-ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
-ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
-NF_HOOK_COND include/linux/netfilter.h:291 [inline]
-ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
-dst_output include/net/dst.h:444 [inline]
-ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
-iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
-ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
-__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
-netdev_start_xmit include/linux/netdevice.h:4895 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
-__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3051 [inline]
-neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
-neigh_output include/net/neighbour.h:546 [inline]
-ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
-ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
-NF_HOOK_COND include/linux/netfilter.h:291 [inline]
-ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
-dst_output include/net/dst.h:444 [inline]
-ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
-iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
-ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
-__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
-netdev_start_xmit include/linux/netdevice.h:4895 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
-__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3051 [inline]
-neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
-neigh_output include/net/neighbour.h:546 [inline]
-ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
-ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
-NF_HOOK_COND include/linux/netfilter.h:291 [inline]
-ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
-dst_output include/net/dst.h:444 [inline]
-ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
-iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
-ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
-__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
-netdev_start_xmit include/linux/netdevice.h:4895 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
-__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3051 [inline]
-neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
-neigh_output include/net/neighbour.h:546 [inline]
-ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
-ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
-NF_HOOK_COND include/linux/netfilter.h:291 [inline]
-ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
-dst_output include/net/dst.h:444 [inline]
-ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
-iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
-ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
-__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
-netdev_start_xmit include/linux/netdevice.h:4895 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
-__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3051 [inline]
-neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
-neigh_output include/net/neighbour.h:546 [inline]
-ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
-ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
-NF_HOOK_COND include/linux/netfilter.h:291 [inline]
-ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
-dst_output include/net/dst.h:444 [inline]
-ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
-iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
-ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
-__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
-netdev_start_xmit include/linux/netdevice.h:4895 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
-__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3051 [inline]
-neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
-neigh_output include/net/neighbour.h:546 [inline]
-ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
-ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
-NF_HOOK_COND include/linux/netfilter.h:291 [inline]
-ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
-dst_output include/net/dst.h:444 [inline]
-ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
-iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
-ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
-__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
-netdev_start_xmit include/linux/netdevice.h:4895 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
-__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
-
-write to 0xffff88815b9da0ec of 2 bytes by task 2379 on cpu 0:
-ip_tunnel_xmit+0x1294/0x1730 net/ipv4/ip_tunnel.c:804
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
-__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
-netdev_start_xmit include/linux/netdevice.h:4895 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
-__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3051 [inline]
-neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
-neigh_output include/net/neighbour.h:546 [inline]
-ip6_finish_output2+0x9bc/0xc50 net/ipv6/ip6_output.c:134
-__ip6_finish_output net/ipv6/ip6_output.c:195 [inline]
-ip6_finish_output+0x39a/0x4e0 net/ipv6/ip6_output.c:206
-NF_HOOK_COND include/linux/netfilter.h:291 [inline]
-ip6_output+0xeb/0x220 net/ipv6/ip6_output.c:227
-dst_output include/net/dst.h:444 [inline]
-NF_HOOK include/linux/netfilter.h:302 [inline]
-mld_sendpack+0x438/0x6a0 net/ipv6/mcast.c:1820
-mld_send_cr net/ipv6/mcast.c:2121 [inline]
-mld_ifc_work+0x519/0x7b0 net/ipv6/mcast.c:2653
-process_one_work+0x3e6/0x750 kernel/workqueue.c:2390
-worker_thread+0x5f2/0xa10 kernel/workqueue.c:2537
-kthread+0x1ac/0x1e0 kernel/kthread.c:376
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
-
-value changed: 0x0dd4 -> 0x0e14
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 2379 Comm: kworker/0:0 Not tainted 6.3.0-rc1-syzkaller-00002-g8ca09d5fa354-dirty #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/02/2023
-Workqueue: mld mld_ifc_work
-
-Fixes: 8eb30be0352d ("ipv6: Create ip6_tnl_xmit")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230310191109.2384387-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://syzkaller.appspot.com/bug?extid=77d6fcc37bbb92f26048
+Reported-by: syzbot+77d6fcc37bbb92f26048@syzkaller.appspotmail.com
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230110133436.996350-1-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  6 ++++--
- net/ipv4/ip_tunnel.c      | 12 ++++++------
- net/ipv6/ip6_tunnel.c     |  4 ++--
- 3 files changed, 12 insertions(+), 10 deletions(-)
+ fs/ext4/xattr.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 8d48b352ee74f..4d0f48e74755d 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -260,9 +260,11 @@ struct hh_cache {
-  * relationship HH alignment <= LL alignment.
-  */
- #define LL_RESERVED_SPACE(dev) \
--	((((dev)->hard_header_len+(dev)->needed_headroom)&~(HH_DATA_MOD - 1)) + HH_DATA_MOD)
-+	((((dev)->hard_header_len + READ_ONCE((dev)->needed_headroom)) \
-+	  & ~(HH_DATA_MOD - 1)) + HH_DATA_MOD)
- #define LL_RESERVED_SPACE_EXTRA(dev,extra) \
--	((((dev)->hard_header_len+(dev)->needed_headroom+(extra))&~(HH_DATA_MOD - 1)) + HH_DATA_MOD)
-+	((((dev)->hard_header_len + READ_ONCE((dev)->needed_headroom) + (extra)) \
-+	  & ~(HH_DATA_MOD - 1)) + HH_DATA_MOD)
+diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
+index 2a70b7556e419..a91b02091b160 100644
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -384,6 +384,17 @@ static int ext4_xattr_inode_iget(struct inode *parent, unsigned long ea_ino,
+ 	struct inode *inode;
+ 	int err;
  
- struct header_ops {
- 	int	(*create) (struct sk_buff *skb, struct net_device *dev,
-diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
-index 30e93b4f831f6..9c2381cf675d6 100644
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -609,10 +609,10 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev, u8 proto)
- 	else if (skb->protocol == htons(ETH_P_IP))
- 		df = inner_iph->frag_off & htons(IP_DF);
- 	headroom += LL_RESERVED_SPACE(rt->dst.dev) + rt->dst.header_len;
--	if (headroom > dev->needed_headroom)
--		dev->needed_headroom = headroom;
-+	if (headroom > READ_ONCE(dev->needed_headroom))
-+		WRITE_ONCE(dev->needed_headroom, headroom);
- 
--	if (skb_cow_head(skb, dev->needed_headroom)) {
-+	if (skb_cow_head(skb, READ_ONCE(dev->needed_headroom))) {
- 		ip_rt_put(rt);
- 		goto tx_dropped;
- 	}
-@@ -777,10 +777,10 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
- 
- 	max_headroom = LL_RESERVED_SPACE(rt->dst.dev) + sizeof(struct iphdr)
- 			+ rt->dst.header_len + ip_encap_hlen(&tunnel->encap);
--	if (max_headroom > dev->needed_headroom)
--		dev->needed_headroom = max_headroom;
-+	if (max_headroom > READ_ONCE(dev->needed_headroom))
-+		WRITE_ONCE(dev->needed_headroom, max_headroom);
- 
--	if (skb_cow_head(skb, dev->needed_headroom)) {
-+	if (skb_cow_head(skb, READ_ONCE(dev->needed_headroom))) {
- 		ip_rt_put(rt);
- 		dev->stats.tx_dropped++;
- 		kfree_skb(skb);
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index 75a1ec2605fca..48a658b541d75 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -1206,8 +1206,8 @@ int ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev, __u8 dsfield,
- 	 */
- 	max_headroom = LL_RESERVED_SPACE(dst->dev) + sizeof(struct ipv6hdr)
- 			+ dst->header_len + t->hlen;
--	if (max_headroom > dev->needed_headroom)
--		dev->needed_headroom = max_headroom;
-+	if (max_headroom > READ_ONCE(dev->needed_headroom))
-+		WRITE_ONCE(dev->needed_headroom, max_headroom);
- 
- 	err = ip6_tnl_encap(skb, t, &proto, fl6);
- 	if (err)
++	/*
++	 * We have to check for this corruption early as otherwise
++	 * iget_locked() could wait indefinitely for the state of our
++	 * parent inode.
++	 */
++	if (parent->i_ino == ea_ino) {
++		ext4_error(parent->i_sb,
++			   "Parent and EA inode have the same ino %lu", ea_ino);
++		return -EFSCORRUPTED;
++	}
++
+ 	inode = ext4_iget(parent->i_sb, ea_ino, EXT4_IGET_NORMAL);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
 -- 
 2.39.2
 
