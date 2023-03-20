@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B681C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C85C433EF;
-	Mon, 20 Mar 2023 15:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B161C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CC4C4339B;
+	Mon, 20 Mar 2023 15:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324837;
-	bh=SpPh+I7xeHftGYBxdbXF0tOKYqDuo1eSbaNd/vs/C0U=;
+	s=korg; t=1679324840;
+	bh=pKCE+gAWLSpBk2qiDtkngOAEj9FxRljqpv3piwhRTss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1Fr0lbY/kN1OZFAX/TcG3HyetajfC576j8Dx84vaWfZzwT7dx0OKwrfciA7rJPdm
-	 iQ/M64gxXz49lDkOkqVAfKzTUFIBDYgL+/g6rySQRDOtrn3lFM7mj4EqCEVxMDUl3P
-	 jrICy9uuY0e/fmLFJEJ6LXIIByDB6+weRNCRCcqg=
+	b=HikWaqmhSqCfisY4NCkQePCMd8jroGPTXJ45CCSMqvTRmmT42AzU039IJHz5XBGwa
+	 yS7uUMzePs0v1CM7P1bnr2D4+58eebRsgOPCe3Of4HHA3ljkmM5/3czENIU+5Zrom4
+	 2Iw7PBcsfJh1aePv/BOPiwV2gm5pYeNK3Cad1Fs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 039/115] nvmet: avoid potential UAF in nvmet_req_complete()
-Date: Mon, 20 Mar 2023 15:54:11 +0100
-Message-Id: <20230320145451.098284126@linuxfoundation.org>
+	Volker Lendecke <vl@samba.org>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.10 64/99] cifs: Fix smb2_set_path_size()
+Date: Mon, 20 Mar 2023 15:54:42 +0100
+Message-Id: <20230320145446.071951006@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Volker Lendecke <vl@samba.org>
 
-[ Upstream commit 6173a77b7e9d3e202bdb9897b23f2a8afe7bf286 ]
+commit 211baef0eabf4169ce4f73ebd917749d1a7edd74 upstream.
 
-An nvme target ->queue_response() operation implementation may free the
-request passed as argument. Such implementation potentially could result
-in a use after free of the request pointer when percpu_ref_put() is
-called in nvmet_req_complete().
+If cifs_get_writable_path() finds a writable file, smb2_compound_op()
+must use that file's FID and not the COMPOUND_FID.
 
-Avoid such problem by using a local variable to save the sq pointer
-before calling __nvmet_req_complete(), thus avoiding dereferencing the
-req pointer after that function call.
-
-Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Volker Lendecke <vl@samba.org>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/cifs/smb2inode.c |   31 ++++++++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index cfd0385511564..4c6d56dd29adc 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -756,8 +756,10 @@ static void __nvmet_req_complete(struct nvmet_req *req, u16 status)
+--- a/fs/cifs/smb2inode.c
++++ b/fs/cifs/smb2inode.c
+@@ -236,15 +236,32 @@ smb2_compound_op(const unsigned int xid,
+ 		size[0] = 8; /* sizeof __le64 */
+ 		data[0] = ptr;
  
- void nvmet_req_complete(struct nvmet_req *req, u16 status)
- {
-+	struct nvmet_sq *sq = req->sq;
-+
- 	__nvmet_req_complete(req, status);
--	percpu_ref_put(&req->sq->ref);
-+	percpu_ref_put(&sq->ref);
- }
- EXPORT_SYMBOL_GPL(nvmet_req_complete);
- 
--- 
-2.39.2
-
+-		rc = SMB2_set_info_init(tcon, server,
+-					&rqst[num_rqst], COMPOUND_FID,
+-					COMPOUND_FID, current->tgid,
+-					FILE_END_OF_FILE_INFORMATION,
+-					SMB2_O_INFO_FILE, 0, data, size);
++		if (cfile) {
++			rc = SMB2_set_info_init(tcon, server,
++						&rqst[num_rqst],
++						cfile->fid.persistent_fid,
++						cfile->fid.volatile_fid,
++						current->tgid,
++						FILE_END_OF_FILE_INFORMATION,
++						SMB2_O_INFO_FILE, 0,
++						data, size);
++		} else {
++			rc = SMB2_set_info_init(tcon, server,
++						&rqst[num_rqst],
++						COMPOUND_FID,
++						COMPOUND_FID,
++						current->tgid,
++						FILE_END_OF_FILE_INFORMATION,
++						SMB2_O_INFO_FILE, 0,
++						data, size);
++			if (!rc) {
++				smb2_set_next_command(tcon, &rqst[num_rqst]);
++				smb2_set_related(&rqst[num_rqst]);
++			}
++		}
+ 		if (rc)
+ 			goto finished;
+-		smb2_set_next_command(tcon, &rqst[num_rqst]);
+-		smb2_set_related(&rqst[num_rqst++]);
++		num_rqst++;
+ 		trace_smb3_set_eof_enter(xid, ses->Suid, tcon->tid, full_path);
+ 		break;
+ 	case SMB2_OP_SET_INFO:
 
 
