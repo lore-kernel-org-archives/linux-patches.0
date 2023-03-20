@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265851C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA53C433EF;
-	Mon, 20 Mar 2023 15:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2751C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8EDC433D2;
+	Mon, 20 Mar 2023 15:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325983;
-	bh=LpRtXfs3aHQRr8gx0vmr/Po8E1+0VB63pxPkhZZiZN4=;
+	s=korg; t=1679325986;
+	bh=O1djjdNeVrIxkJtJm314G+XmCPCTgsiaGGv1SQJOA3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJnkgIztKpw6wnUAGVnkuaFVrxQwr0JIbZwL4aNGJAIcthTPcbrCvfsfAWOxlWoym
-	 JyZsl8TL/sdt4JQCBHeMgx58DnJWObwYW/2jx14LfVg1DtAp5pQ7Iab2eDDC6OUBlx
-	 gWv+B4YZPqp1zrqkyZNozYqsdQXjiX9MCzOK7Ja8=
+	b=k8503njEAxhA4NzV/DFn5SxOqFn4FVT43F14TSIJaZ9rhmziA5HyV21zSGGlsYYRL
+	 tsSrjGJMvzGWQUzxVRDDmZRnE739DaFwocTI6hYypopnPszqnN78PjFUWkjW2XdBbS
+	 sMp3MX03HCBIkrCss8jQC11kFVQzV3LyT1zEZHIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jun Nie <jun.nie@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
-	Maxime Ripard <maxime@cerno.tech>
-Subject: [PATCH 6.1 156/198] drm/sun4i: fix missing component unbind on bind errors
-Date: Mon, 20 Mar 2023 15:54:54 +0100
-Message-Id: <20230320145514.062468878@linuxfoundation.org>
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.2 136/211] interconnect: qcom: rpm: fix registration race
+Date: Mon, 20 Mar 2023 15:54:31 +0100
+Message-Id: <20230320145519.137538212@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,47 +38,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit c22f2ff8724b49dce2ae797e9fbf4bc0fa91112f upstream.
+commit 90ae93d8affc1061cd87ca8ddd9a838c7d31a158 upstream.
 
-Make sure to unbind all subcomponents when binding the aggregate device
-fails.
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to fail.
 
-Fixes: 9026e0d122ac ("drm: Add Allwinner A10 Display Engine support")
-Cc: stable@vger.kernel.org      # 4.7
-Cc: Maxime Ripard <mripard@kernel.org>
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
+
+Fixes: 62feb14ee8a3 ("interconnect: qcom: Consolidate interconnect RPM support")
+Fixes: 30c8fa3ec61a ("interconnect: qcom: Add MSM8916 interconnect provider driver")
+Cc: stable@vger.kernel.org	# 5.7
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Jun Nie <jun.nie@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230306103242.4775-1-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20230306075651.2449-9-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_drv.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/interconnect/qcom/icc-rpm.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/sun4i/sun4i_drv.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_drv.c
-@@ -95,12 +95,12 @@ static int sun4i_drv_bind(struct device
- 	/* drm_vblank_init calls kcalloc, which can fail */
- 	ret = drm_vblank_init(drm, drm->mode_config.num_crtc);
- 	if (ret)
--		goto cleanup_mode_config;
-+		goto unbind_all;
+--- a/drivers/interconnect/qcom/icc-rpm.c
++++ b/drivers/interconnect/qcom/icc-rpm.c
+@@ -503,7 +503,6 @@ regmap_done:
+ 	}
  
- 	/* Remove early framebuffers (ie. simplefb) */
- 	ret = drm_aperture_remove_framebuffers(false, &sun4i_drv_driver);
- 	if (ret)
--		goto cleanup_mode_config;
-+		goto unbind_all;
+ 	provider = &qp->provider;
+-	INIT_LIST_HEAD(&provider->nodes);
+ 	provider->dev = dev;
+ 	provider->set = qcom_icc_set;
+ 	provider->pre_aggregate = qcom_icc_pre_bw_aggregate;
+@@ -511,12 +510,7 @@ regmap_done:
+ 	provider->xlate_extended = qcom_icc_xlate_extended;
+ 	provider->data = data;
  
- 	sun4i_framebuffer_init(drm);
+-	ret = icc_provider_add(provider);
+-	if (ret) {
+-		dev_err(dev, "error adding interconnect provider: %d\n", ret);
+-		clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
+-		return ret;
+-	}
++	icc_provider_init(provider);
  
-@@ -119,6 +119,8 @@ static int sun4i_drv_bind(struct device
+ 	for (i = 0; i < num_nodes; i++) {
+ 		size_t j;
+@@ -524,7 +518,7 @@ regmap_done:
+ 		node = icc_node_create(qnodes[i]->id);
+ 		if (IS_ERR(node)) {
+ 			ret = PTR_ERR(node);
+-			goto err;
++			goto err_remove_nodes;
+ 		}
  
- finish_poll:
- 	drm_kms_helper_poll_fini(drm);
-+unbind_all:
-+	component_unbind_all(dev, NULL);
- cleanup_mode_config:
- 	drm_mode_config_cleanup(drm);
- 	of_reserved_mem_device_release(dev);
+ 		node->name = qnodes[i]->name;
+@@ -538,20 +532,26 @@ regmap_done:
+ 	}
+ 	data->num_nodes = num_nodes;
+ 
++	ret = icc_provider_register(provider);
++	if (ret)
++		goto err_remove_nodes;
++
+ 	platform_set_drvdata(pdev, qp);
+ 
+ 	/* Populate child NoC devices if any */
+ 	if (of_get_child_count(dev->of_node) > 0) {
+ 		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
+ 		if (ret)
+-			goto err;
++			goto err_deregister_provider;
+ 	}
+ 
+ 	return 0;
+-err:
++
++err_deregister_provider:
++	icc_provider_deregister(provider);
++err_remove_nodes:
+ 	icc_nodes_remove(provider);
+ 	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
+-	icc_provider_del(provider);
+ 
+ 	return ret;
+ }
+@@ -561,9 +561,9 @@ int qnoc_remove(struct platform_device *
+ {
+ 	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
+ 
++	icc_provider_deregister(&qp->provider);
+ 	icc_nodes_remove(&qp->provider);
+ 	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
+-	icc_provider_del(&qp->provider);
+ 
+ 	return 0;
+ }
 
 
