@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311871C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B02C433D2;
-	Mon, 20 Mar 2023 15:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E281C1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6409FC433EF;
+	Mon, 20 Mar 2023 15:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325125;
-	bh=36s+yBPCwCNmP3oUrD79pMYSYcEAImGt9TmYyN1OKkU=;
+	s=korg; t=1679325127;
+	bh=u62PHWIrN6HTCJZD7dyHy2je/j/PdhGkuo2ogWvA/hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N92ebbqb2FUI/5pp2Cbyg/rwUVg0oduVyb5aBtrcYYQ90eKpx+2UD7105LtHJ11/Y
-	 5828Nsj8DQm+t2ex51YI8moa+mZqgSuDcLWPvQ5sUfCF/bp9vXn39ukk2s4FJpA45p
-	 Vpkt0OLFH5/CfsQ8N23nQQoBBJwpv+m5PUK3yPDc=
+	b=bi7BII/gYWVhkyxoaCHqLl99TiudyG6ZSSCyPWwAfJQQMh+RcEFQCSVOmvcM70FL+
+	 HsFSIG9PD3iHQsYqyeXnLd/3VUXZVhPG2ty/QyMWRmWm02lq2/qh8oW8sSzf6mfWm7
+	 wE67gvR0JxisnBR4BqdLNUpew8la4Wu99MAwFfRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>
-Subject: [PATCH 5.10 93/99] fs: move should_remove_suid()
-Date: Mon, 20 Mar 2023 15:55:11 +0100
-Message-Id: <20230320145447.317102085@linuxfoundation.org>
+	Eric Van Hensbergen <ericvh@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 070/115] net/9p: fix bug in client create for .L
+Date: Mon, 20 Mar 2023 15:54:42 +0100
+Message-Id: <20230320145452.358993165@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,99 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Eric Van Hensbergen <ericvh@kernel.org>
 
-commit e243e3f94c804ecca9a8241b5babe28f35258ef4 upstream.
+[ Upstream commit 3866584a1c56a2bbc8c0981deb4476d0b801969e ]
 
-Move the helper from inode.c to attr.c. This keeps the the core of the
-set{g,u}id stripping logic in one place when we add follow-up changes.
-It is the better place anyway, since should_remove_suid() returns
-ATTR_KILL_S{G,U}ID flags.
+We are supposed to set fid->mode to reflect the flags
+that were used to open the file.  We were actually setting
+it to the creation mode which is the default perms of the
+file not the flags the file was opened with.
 
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Reviewed-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/attr.c  |   29 +++++++++++++++++++++++++++++
- fs/inode.c |   29 -----------------------------
- 2 files changed, 29 insertions(+), 29 deletions(-)
+ net/9p/client.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/attr.c
-+++ b/fs/attr.c
-@@ -20,6 +20,35 @@
+diff --git a/net/9p/client.c b/net/9p/client.c
+index 08e0c9990af06..c4c1e44cd7ca3 100644
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -1315,7 +1315,7 @@ int p9_client_create_dotl(struct p9_fid *ofid, const char *name, u32 flags,
+ 		 qid->type, qid->path, qid->version, iounit);
  
- #include "internal.h"
+ 	memmove(&ofid->qid, qid, sizeof(struct p9_qid));
+-	ofid->mode = mode;
++	ofid->mode = flags;
+ 	ofid->iounit = iounit;
  
-+/*
-+ * The logic we want is
-+ *
-+ *	if suid or (sgid and xgrp)
-+ *		remove privs
-+ */
-+int should_remove_suid(struct dentry *dentry)
-+{
-+	umode_t mode = d_inode(dentry)->i_mode;
-+	int kill = 0;
-+
-+	/* suid always must be killed */
-+	if (unlikely(mode & S_ISUID))
-+		kill = ATTR_KILL_SUID;
-+
-+	/*
-+	 * sgid without any exec bits is just a mandatory locking mark; leave
-+	 * it alone.  If some exec bits are set, it's a real sgid; kill it.
-+	 */
-+	if (unlikely((mode & S_ISGID) && (mode & S_IXGRP)))
-+		kill |= ATTR_KILL_SGID;
-+
-+	if (unlikely(kill && !capable(CAP_FSETID) && S_ISREG(mode)))
-+		return kill;
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL(should_remove_suid);
-+
- static bool chown_ok(const struct inode *inode, kuid_t uid)
- {
- 	if (uid_eq(current_fsuid(), inode->i_uid) &&
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -1855,35 +1855,6 @@ skip_update:
- EXPORT_SYMBOL(touch_atime);
- 
- /*
-- * The logic we want is
-- *
-- *	if suid or (sgid and xgrp)
-- *		remove privs
-- */
--int should_remove_suid(struct dentry *dentry)
--{
--	umode_t mode = d_inode(dentry)->i_mode;
--	int kill = 0;
--
--	/* suid always must be killed */
--	if (unlikely(mode & S_ISUID))
--		kill = ATTR_KILL_SUID;
--
--	/*
--	 * sgid without any exec bits is just a mandatory locking mark; leave
--	 * it alone.  If some exec bits are set, it's a real sgid; kill it.
--	 */
--	if (unlikely((mode & S_ISGID) && (mode & S_IXGRP)))
--		kill |= ATTR_KILL_SGID;
--
--	if (unlikely(kill && !capable(CAP_FSETID) && S_ISREG(mode)))
--		return kill;
--
--	return 0;
--}
--EXPORT_SYMBOL(should_remove_suid);
--
--/*
-  * Return mask of changes for notify_change() that need to be done as a
-  * response to write or truncate. Return 0 if nothing has to be changed.
-  * Negative value on error (change should be denied).
+ free_and_error:
+-- 
+2.39.2
+
 
 
