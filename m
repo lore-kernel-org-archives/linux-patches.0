@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD721C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3C1C433EF;
-	Mon, 20 Mar 2023 15:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E821C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B948AC433EF;
+	Mon, 20 Mar 2023 15:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325682;
-	bh=whCBsYSpfT8Fg3mVeUSV+UNbIi6U/xFKJGj1jZAxL8c=;
+	s=korg; t=1679325685;
+	bh=rOnMlt3lGbyUCtWHclXGEyhSOGuB3yssdcQSllhdhAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cTayiMx/xf2jdy2P6mQmJpk0IZ/lHMLJbpHx3hyhlm3Xfthsu+XGC2FFGsjCKDLzT
-	 yug8b4F/dAibQdkDeY+91KRQYolz0Oi7bv9AkMuzUGvScEbjNcvb1ZIKJ0+koYUSz6
-	 l8+3YK2rMB+tq99oyeB9RtS7r9DSm81kgOyfFkMg=
+	b=qjomvw1ZyPr1J8QT+LVwkUTlZgxCTe4WGX/+4IDeKneos32YgLoAJ5biFKLrZ5wnX
+	 ZYUS5zMyv3Lt7zSiICEiPpLe+AFYhNpKCLoWom1dttMo4FSZQ6p0ZyXHfsGBJyFXO8
+	 oM9l77rm/oNAHrMO1REokP9pIyIG3W2X5RpsB8eE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Amit Sunil Dhamne <amit.sunil.dhamne@xilinx.com>,
-	Michal Simek <michal.simek@xilinx.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 6.1 122/198] firmware: xilinx: dont make a sleepable memory allocation from an atomic context
-Date: Mon, 20 Mar 2023 15:54:20 +0100
-Message-Id: <20230320145512.662071519@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 082/211] net: dsa: mv88e6xxx: fix max_mtu of 1492 on 6165, 6191, 6220, 6250, 6290
+Date: Mon, 20 Mar 2023 15:53:37 +0100
+Message-Id: <20230320145516.729164203@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,89 +37,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roman Gushchin <roman.gushchin@linux.dev>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit 38ed310c22e7a0fc978b1f8292136a4a4a8b3051 upstream.
+[ Upstream commit 7e9517375a14f44ee830ca1c3278076dd65fcc8f ]
 
-The following issue was discovered using lockdep:
-[    6.691371] BUG: sleeping function called from invalid context at include/linux/sched/mm.h:209
-[    6.694602] in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 1, name: swapper/0
-[    6.702431] 2 locks held by swapper/0/1:
-[    6.706300]  #0: ffffff8800f6f188 (&dev->mutex){....}-{3:3}, at: __device_driver_lock+0x4c/0x90
-[    6.714900]  #1: ffffffc009a2abb8 (enable_lock){....}-{2:2}, at: clk_enable_lock+0x4c/0x140
-[    6.723156] irq event stamp: 304030
-[    6.726596] hardirqs last  enabled at (304029): [<ffffffc008d17ee0>] _raw_spin_unlock_irqrestore+0xc0/0xd0
-[    6.736142] hardirqs last disabled at (304030): [<ffffffc00876bc5c>] clk_enable_lock+0xfc/0x140
-[    6.744742] softirqs last  enabled at (303958): [<ffffffc0080904f0>] _stext+0x4f0/0x894
-[    6.752655] softirqs last disabled at (303951): [<ffffffc0080e53b8>] irq_exit+0x238/0x280
-[    6.760744] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G     U            5.15.36 #2
-[    6.768048] Hardware name: xlnx,zynqmp (DT)
-[    6.772179] Call trace:
-[    6.774584]  dump_backtrace+0x0/0x300
-[    6.778197]  show_stack+0x18/0x30
-[    6.781465]  dump_stack_lvl+0xb8/0xec
-[    6.785077]  dump_stack+0x1c/0x38
-[    6.788345]  ___might_sleep+0x1a8/0x2a0
-[    6.792129]  __might_sleep+0x6c/0xd0
-[    6.795655]  kmem_cache_alloc_trace+0x270/0x3d0
-[    6.800127]  do_feature_check_call+0x100/0x220
-[    6.804513]  zynqmp_pm_invoke_fn+0x8c/0xb0
-[    6.808555]  zynqmp_pm_clock_getstate+0x90/0xe0
-[    6.813027]  zynqmp_pll_is_enabled+0x8c/0x120
-[    6.817327]  zynqmp_pll_enable+0x38/0xc0
-[    6.821197]  clk_core_enable+0x144/0x400
-[    6.825067]  clk_core_enable+0xd4/0x400
-[    6.828851]  clk_core_enable+0xd4/0x400
-[    6.832635]  clk_core_enable+0xd4/0x400
-[    6.836419]  clk_core_enable+0xd4/0x400
-[    6.840203]  clk_core_enable+0xd4/0x400
-[    6.843987]  clk_core_enable+0xd4/0x400
-[    6.847771]  clk_core_enable+0xd4/0x400
-[    6.851555]  clk_core_enable_lock+0x24/0x50
-[    6.855683]  clk_enable+0x24/0x40
-[    6.858952]  fclk_probe+0x84/0xf0
-[    6.862220]  platform_probe+0x8c/0x110
-[    6.865918]  really_probe+0x110/0x5f0
-[    6.869530]  __driver_probe_device+0xcc/0x210
-[    6.873830]  driver_probe_device+0x64/0x140
-[    6.877958]  __driver_attach+0x114/0x1f0
-[    6.881828]  bus_for_each_dev+0xe8/0x160
-[    6.885698]  driver_attach+0x34/0x50
-[    6.889224]  bus_add_driver+0x228/0x300
-[    6.893008]  driver_register+0xc0/0x1e0
-[    6.896792]  __platform_driver_register+0x44/0x60
-[    6.901436]  fclk_driver_init+0x1c/0x28
-[    6.905220]  do_one_initcall+0x104/0x590
-[    6.909091]  kernel_init_freeable+0x254/0x2bc
-[    6.913390]  kernel_init+0x24/0x130
-[    6.916831]  ret_from_fork+0x10/0x20
+There are 3 classes of switch families that the driver is aware of, as
+far as mv88e6xxx_change_mtu() is concerned:
 
-Fix it by passing the GFP_ATOMIC gfp flag for the corresponding
-memory allocation.
+- MTU configuration is available per port. Here, the
+  chip->info->ops->port_set_jumbo_size() method will be present.
 
-Fixes: acfdd18591ea ("firmware: xilinx: Use hash-table for api feature check")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Amit Sunil Dhamne <amit.sunil.dhamne@xilinx.com>
-Cc: Michal Simek <michal.simek@xilinx.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Link: https://lore.kernel.org/r/20230308222602.123866-1-roman.gushchin@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+- MTU configuration is global to the switch. Here, the
+  chip->info->ops->set_max_frame_size() method will be present.
+
+- We don't know how to change the MTU. Here, none of the above methods
+  will be present.
+
+Switch families MV88E6165, MV88E6191, MV88E6220, MV88E6250 and MV88E6290
+fall in category 3.
+
+The blamed commit has adjusted the MTU for all 3 categories by EDSA_HLEN
+(8 bytes), resulting in a new maximum MTU of 1492 being reported by the
+driver for these switches.
+
+I don't have the hardware to test, but I do have a MV88E6390 switch on
+which I can simulate this by commenting out its .port_set_jumbo_size
+definition from mv88e6390_ops. The result is this set of messages at
+probe time:
+
+mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 1
+mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 2
+mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 3
+mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 4
+mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 5
+mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 6
+mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 7
+mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 8
+
+It is highly implausible that there exist Ethernet switches which don't
+support the standard MTU of 1500 octets, and this is what the DSA
+framework says as well - the error comes from dsa_slave_create() ->
+dsa_slave_change_mtu(slave_dev, ETH_DATA_LEN).
+
+But the error messages are alarming, and it would be good to suppress
+them.
+
+As a consequence of this unlikeliness, we reimplement mv88e6xxx_get_max_mtu()
+and mv88e6xxx_change_mtu() on switches from the 3rd category as follows:
+the maximum supported MTU is 1500, and any request to set the MTU to a
+value larger than that fails in dev_validate_mtu().
+
+Fixes: b9c587fed61c ("dsa: mv88e6xxx: Include tagger overhead when setting MTU for DSA and CPU ports")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/xilinx/zynqmp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/firmware/xilinx/zynqmp.c
-+++ b/drivers/firmware/xilinx/zynqmp.c
-@@ -206,7 +206,7 @@ static int do_feature_check_call(const u
- 	}
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 242b8b325504a..89829e0ca8e8f 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -3549,7 +3549,7 @@ static int mv88e6xxx_get_max_mtu(struct dsa_switch *ds, int port)
+ 		return 10240 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
+ 	else if (chip->info->ops->set_max_frame_size)
+ 		return 1632 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
+-	return 1522 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
++	return ETH_DATA_LEN;
+ }
  
- 	/* Add new entry if not present */
--	feature_data = kmalloc(sizeof(*feature_data), GFP_KERNEL);
-+	feature_data = kmalloc(sizeof(*feature_data), GFP_ATOMIC);
- 	if (!feature_data)
- 		return -ENOMEM;
+ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
+@@ -3557,6 +3557,17 @@ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
+ 	struct mv88e6xxx_chip *chip = ds->priv;
+ 	int ret = 0;
  
++	/* For families where we don't know how to alter the MTU,
++	 * just accept any value up to ETH_DATA_LEN
++	 */
++	if (!chip->info->ops->port_set_jumbo_size &&
++	    !chip->info->ops->set_max_frame_size) {
++		if (new_mtu > ETH_DATA_LEN)
++			return -EINVAL;
++
++		return 0;
++	}
++
+ 	if (dsa_is_dsa_port(ds, port) || dsa_is_cpu_port(ds, port))
+ 		new_mtu += EDSA_HLEN;
+ 
+@@ -3565,9 +3576,6 @@ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
+ 		ret = chip->info->ops->port_set_jumbo_size(chip, port, new_mtu);
+ 	else if (chip->info->ops->set_max_frame_size)
+ 		ret = chip->info->ops->set_max_frame_size(chip, new_mtu);
+-	else
+-		if (new_mtu > 1522)
+-			ret = -EINVAL;
+ 	mv88e6xxx_reg_unlock(chip);
+ 
+ 	return ret;
+-- 
+2.39.2
+
 
 
