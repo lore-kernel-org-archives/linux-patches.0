@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6421C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B43C433A0;
-	Mon, 20 Mar 2023 15:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D031C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F57C4339B;
+	Mon, 20 Mar 2023 15:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325111;
-	bh=7/l21qbPvL/uLOnO4QYZxpja9Gy/MCZCG6dCrpk+nFM=;
+	s=korg; t=1679325114;
+	bh=nln24aAnUM8/JK0qHYDCoADTXPsOxScajW06FgTskfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RO8d4oLS6Zb+ygVXQxchyRlAht2PECyQWgQWPZDvBFH2auXMk/8hmUoX+nDirpySV
-	 at0GkQoStmfyfQjkg8whLcYrWoWkAsbQodSe4tYgENbxYBVVA709WPEruNTxSSo09H
-	 MNLl+iWCsTc0ZDveF56vDAgZ/CwteuyK/XhAqxcA=
+	b=w33D4vNummc2s7MMY8t9ErlrZo94UkY+yb2hb/+V0Iz6rL3WDTsonj+Z5qor0sFCu
+	 sJFvTRTQPdX37VgDrme1rKdVPH7kxl7dzV6pgXm3IoMcP5aCBvKyYsAuxhIE6gEOQI
+	 fIfGTDGFmDM0kxBMxvP6UAR6vAUBG5ucT9E8kgjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>
-Subject: [PATCH 5.10 92/99] attr: add in_group_or_capable()
-Date: Mon, 20 Mar 2023 15:55:10 +0100
-Message-Id: <20230320145447.267143971@linuxfoundation.org>
+	Qu Huang <qu.huang@linux.dev>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 069/115] drm/amdkfd: Fix an illegal memory access
+Date: Mon, 20 Mar 2023 15:54:41 +0100
+Message-Id: <20230320145452.311466451@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,113 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Qu Huang <qu.huang@linux.dev>
 
-commit 11c2a8700cdcabf9b639b7204a1e38e2a0b6798e upstream.
+[ Upstream commit 4fc8fff378b2f2039f2a666d9f8c570f4e58352c ]
 
-[backported to 5.10.y, prior to idmapped mounts]
+In the kfd_wait_on_events() function, the kfd_event_waiter structure is
+allocated by alloc_event_waiters(), but the event field of the waiter
+structure is not initialized; When copy_from_user() fails in the
+kfd_wait_on_events() function, it will enter exception handling to
+release the previously allocated memory of the waiter structure;
+Due to the event field of the waiters structure being accessed
+in the free_waiters() function, this results in illegal memory access
+and system crash, here is the crash log:
 
-In setattr_{copy,prepare}() we need to perform the same permission
-checks to determine whether we need to drop the setgid bit or not.
-Instead of open-coding it twice add a simple helper the encapsulates the
-logic. We will reuse this helpers to make dropping the setgid bit during
-write operations more consistent in a follow up patch.
+localhost kernel: RIP: 0010:native_queued_spin_lock_slowpath+0x185/0x1e0
+localhost kernel: RSP: 0018:ffffaa53c362bd60 EFLAGS: 00010082
+localhost kernel: RAX: ff3d3d6bff4007cb RBX: 0000000000000282 RCX: 00000000002c0000
+localhost kernel: RDX: ffff9e855eeacb80 RSI: 000000000000279c RDI: ffffe7088f6a21d0
+localhost kernel: RBP: ffffe7088f6a21d0 R08: 00000000002c0000 R09: ffffaa53c362be64
+localhost kernel: R10: ffffaa53c362bbd8 R11: 0000000000000001 R12: 0000000000000002
+localhost kernel: R13: ffff9e7ead15d600 R14: 0000000000000000 R15: ffff9e7ead15d698
+localhost kernel: FS:  0000152a3d111700(0000) GS:ffff9e855ee80000(0000) knlGS:0000000000000000
+localhost kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+localhost kernel: CR2: 0000152938000010 CR3: 000000044d7a4000 CR4: 00000000003506e0
+localhost kernel: Call Trace:
+localhost kernel: _raw_spin_lock_irqsave+0x30/0x40
+localhost kernel: remove_wait_queue+0x12/0x50
+localhost kernel: kfd_wait_on_events+0x1b6/0x490 [hydcu]
+localhost kernel: ? ftrace_graph_caller+0xa0/0xa0
+localhost kernel: kfd_ioctl+0x38c/0x4a0 [hydcu]
+localhost kernel: ? kfd_ioctl_set_trap_handler+0x70/0x70 [hydcu]
+localhost kernel: ? kfd_ioctl_create_queue+0x5a0/0x5a0 [hydcu]
+localhost kernel: ? ftrace_graph_caller+0xa0/0xa0
+localhost kernel: __x64_sys_ioctl+0x8e/0xd0
+localhost kernel: ? syscall_trace_enter.isra.18+0x143/0x1b0
+localhost kernel: do_syscall_64+0x33/0x80
+localhost kernel: entry_SYSCALL_64_after_hwframe+0x44/0xa9
+localhost kernel: RIP: 0033:0x152a4dff68d7
 
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Allocate the structure with kcalloc, and remove redundant 0-initialization
+and a redundant loop condition check.
+
+Signed-off-by: Qu Huang <qu.huang@linux.dev>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/attr.c     |   11 +++++------
- fs/inode.c    |   25 +++++++++++++++++++++----
- fs/internal.h |    1 +
- 3 files changed, 27 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_events.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/fs/attr.c
-+++ b/fs/attr.c
-@@ -18,6 +18,8 @@
- #include <linux/evm.h>
- #include <linux/ima.h>
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+index b8bdd796cd911..8b5c82af2acd7 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+@@ -528,16 +528,13 @@ static struct kfd_event_waiter *alloc_event_waiters(uint32_t num_events)
+ 	struct kfd_event_waiter *event_waiters;
+ 	uint32_t i;
  
-+#include "internal.h"
-+
- static bool chown_ok(const struct inode *inode, kuid_t uid)
- {
- 	if (uid_eq(current_fsuid(), inode->i_uid) &&
-@@ -90,9 +92,8 @@ int setattr_prepare(struct dentry *dentr
- 		if (!inode_owner_or_capable(inode))
- 			return -EPERM;
- 		/* Also check the setgid bit! */
--		if (!in_group_p((ia_valid & ATTR_GID) ? attr->ia_gid :
--				inode->i_gid) &&
--		    !capable_wrt_inode_uidgid(inode, CAP_FSETID))
-+		if (!in_group_or_capable(inode, (ia_valid & ATTR_GID) ?
-+						attr->ia_gid : inode->i_gid))
- 			attr->ia_mode &= ~S_ISGID;
- 	}
+-	event_waiters = kmalloc_array(num_events,
+-					sizeof(struct kfd_event_waiter),
+-					GFP_KERNEL);
++	event_waiters = kcalloc(num_events, sizeof(struct kfd_event_waiter),
++				GFP_KERNEL);
+ 	if (!event_waiters)
+ 		return NULL;
  
-@@ -193,9 +194,7 @@ void setattr_copy(struct inode *inode, c
- 		inode->i_ctime = attr->ia_ctime;
- 	if (ia_valid & ATTR_MODE) {
- 		umode_t mode = attr->ia_mode;
--
--		if (!in_group_p(inode->i_gid) &&
--		    !capable_wrt_inode_uidgid(inode, CAP_FSETID))
-+		if (!in_group_or_capable(inode, inode->i_gid))
- 			mode &= ~S_ISGID;
- 		inode->i_mode = mode;
- 	}
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -2380,6 +2380,26 @@ int vfs_ioc_fssetxattr_check(struct inod
- EXPORT_SYMBOL(vfs_ioc_fssetxattr_check);
+-	for (i = 0; (event_waiters) && (i < num_events) ; i++) {
++	for (i = 0; i < num_events; i++)
+ 		init_wait(&event_waiters[i].wait);
+-		event_waiters[i].activated = false;
+-	}
  
- /**
-+ * in_group_or_capable - check whether caller is CAP_FSETID privileged
-+ * @inode:	inode to check
-+ * @gid:	the new/current gid of @inode
-+ *
-+ * Check wether @gid is in the caller's group list or if the caller is
-+ * privileged with CAP_FSETID over @inode. This can be used to determine
-+ * whether the setgid bit can be kept or must be dropped.
-+ *
-+ * Return: true if the caller is sufficiently privileged, false if not.
-+ */
-+bool in_group_or_capable(const struct inode *inode, kgid_t gid)
-+{
-+	if (in_group_p(gid))
-+		return true;
-+	if (capable_wrt_inode_uidgid(inode, CAP_FSETID))
-+		return true;
-+	return false;
-+}
-+
-+/**
-  * mode_strip_sgid - handle the sgid bit for non-directories
-  * @dir: parent directory inode
-  * @mode: mode of the file to be created in @dir
-@@ -2398,11 +2418,8 @@ umode_t mode_strip_sgid(const struct ino
- 		return mode;
- 	if (S_ISDIR(mode) || !dir || !(dir->i_mode & S_ISGID))
- 		return mode;
--	if (in_group_p(dir->i_gid))
-+	if (in_group_or_capable(dir, dir->i_gid))
- 		return mode;
--	if (capable_wrt_inode_uidgid(dir, CAP_FSETID))
--		return mode;
--
- 	return mode & ~S_ISGID;
+ 	return event_waiters;
  }
- EXPORT_SYMBOL(mode_strip_sgid);
---- a/fs/internal.h
-+++ b/fs/internal.h
-@@ -149,6 +149,7 @@ extern int vfs_open(const struct path *,
- extern long prune_icache_sb(struct super_block *sb, struct shrink_control *sc);
- extern void inode_add_lru(struct inode *inode);
- extern int dentry_needs_remove_privs(struct dentry *dentry);
-+bool in_group_or_capable(const struct inode *inode, kgid_t gid);
- 
- /*
-  * fs-writeback.c
+-- 
+2.39.2
+
 
 
