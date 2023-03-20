@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7131C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E68FC433EF;
-	Mon, 20 Mar 2023 15:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A6F1C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6750C433D2;
+	Mon, 20 Mar 2023 15:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326025;
-	bh=t10baPFMjYxnBT9DtwzxrADo+aZVsP3beoyuFEEIX1M=;
+	s=korg; t=1679326028;
+	bh=VhqOlS1QgdzmtzoP3EOSXq0Q8q2cekVuITVrREItB0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zaStDLUXp8y7X8IPQhiX1BElbJrwQ+diE8oG72WpmtArWiubnjuoA2vtR6pW2evaM
-	 eeNiDQoB+68gKqejErgR04I4xPrmyFNZTUe4/xmTirTo2UxKdSWRjjlfmWEwMgoxbf
-	 CVcAQgAk/GXuyPRM6zA+43+h9g4smHIfTybx5NUY=
+	b=eHRxV6SrB1EPmKMeQBKqVyWt0snP+CPCIXSFJLSUTeZbLaamZ33VQk3XR7khuE0GW
+	 jSOIa7+YOPWAZgCZbvjHTVqfv73rZcUgcZJiceCStJ5uhXk+ZG6I3wEfZUEYCWxUbb
+	 lCjtHx9LYnnLhWRbjmgHF8KOeUiHjGRDUID/sYdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 6.1 187/198] x86/mce: Make sure logged MCEs are processed after sysfs update
-Date: Mon, 20 Mar 2023 15:55:25 +0100
-Message-Id: <20230320145515.319079456@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.2 146/211] tracing: Check field value in hist_field_name()
+Date: Mon, 20 Mar 2023 15:54:41 +0100
+Message-Id: <20230320145519.545772357@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 4783b9cb374af02d49740e00e2da19fd4ed6dec4 upstream.
+commit 9f116f76fa8c04c81aef33ad870dbf9a158e5b70 upstream.
 
-A recent change introduced a flag to queue up errors found during
-boot-time polling. These errors will be processed during late init once
-the MCE subsystem is fully set up.
+The function hist_field_name() cannot handle being passed a NULL field
+parameter. It should never be NULL, but due to a previous bug, NULL was
+passed to the function and the kernel crashed due to a NULL dereference.
+Mark Rutland reported this to me on IRC.
 
-A number of sysfs updates call mce_restart() which goes through a subset
-of the CPU init flow. This includes polling MCA banks and logging any
-errors found. Since the same function is used as boot-time polling,
-errors will be queued. However, the system is now past late init, so the
-errors will remain queued until another error is found and the workqueue
-is triggered.
+The bug was fixed, but to prevent future bugs from crashing the kernel,
+check the field and add a WARN_ON() if it is NULL.
 
-Call mce_schedule_work() at the end of mce_restart() so that queued
-errors are processed.
+Link: https://lkml.kernel.org/r/20230302020810.762384440@goodmis.org
 
-Fixes: 3bff147b187d ("x86/mce: Defer processing of early errors")
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230301221420.2203184-1-yazen.ghannam@amd.com
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Mark Rutland <mark.rutland@arm.com>
+Fixes: c6afad49d127f ("tracing: Add hist trigger 'sym' and 'sym-offset' modifiers")
+Tested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_events_hist.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -2365,6 +2365,7 @@ static void mce_restart(void)
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1334,6 +1334,9 @@ static const char *hist_field_name(struc
  {
- 	mce_timer_delete_all();
- 	on_each_cpu(mce_cpu_restart, NULL, 1);
-+	mce_schedule_work();
- }
+ 	const char *field_name = "";
  
- /* Toggle features for corrected errors */
++	if (WARN_ON_ONCE(!field))
++		return field_name;
++
+ 	if (level > 1)
+ 		return field_name;
+ 
 
 
