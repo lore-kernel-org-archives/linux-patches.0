@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA7B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62BDC433D2;
-	Mon, 20 Mar 2023 15:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05051C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A45C433EF;
+	Mon, 20 Mar 2023 15:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325172;
-	bh=Yq5xMHiMzweEfu/LfB+RmNNgp5aMAbF9pPi9Rhd7t50=;
+	s=korg; t=1679325174;
+	bh=0TsNUXKV3wLdZrBAng5eK1GLFYZjBydisLq78Y8QHBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VuKfoj+l+nqk49tNSLwbFuhITq/sVck+B+ZGN1QoGOMYRTQirMZ+Qgvf3Y9Kzsl7P
-	 mxvoUqBNrx8QPGoCIUoF6gQew53J18GvWn7Axg7afgTBupsSqIRqWR0LKeYGK9LTx5
-	 Yk9mZWx1Un+rfVQydjgSJvhhkV5S9dyDhfPoUzcg=
+	b=D+letd4U2RtJGYJ8B+D2DRBpwQFsJva8gr+LVKYnxTbAs9S9G/SRMtJJqG5deMv1+
+	 DdsuKTwUR47PfATGKyP9xbo4ujl5PGscfvP3z2GT4JDV4vHgJQMu804tK4gwlJ//EH
+	 PKPSapx4FbQ/xcW6474zjrVQ5Fg+N9TJj1fyVvD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/198] ALSA: hda: Match only Intel devices with CONTROLLER_IN_GPU()
-Date: Mon, 20 Mar 2023 15:52:42 +0100
-Message-Id: <20230320145508.512060818@linuxfoundation.org>
+Subject: [PATCH 6.1 048/198] net: dsa: mt7530: remove now incorrect comment regarding port 5
+Date: Mon, 20 Mar 2023 15:53:06 +0100
+Message-Id: <20230320145509.498950435@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 References: <20230320145507.420176832@linuxfoundation.org>
@@ -35,48 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit ff447886e675979d66b2bc01810035d3baea1b3a ]
+[ Upstream commit feb03fd11c5616f3a47e4714d2f9917d0f1a2edd ]
 
-CONTROLLER_IN_GPU() is clearly intended to match only Intel devices, but
-previously it checked only the PCI Device ID, not the Vendor ID, so it
-could match devices from other vendors that happened to use the same Device
-ID.
+Remove now incorrect comment regarding port 5 as GMAC5. This is supposed to
+be supported since commit 38f790a80560 ("net: dsa: mt7530: Add support for
+port 5") under mt7530_setup_port5().
 
-Update CONTROLLER_IN_GPU() so it matches only Intel devices.
-
-Fixes: 535115b5ff51 ("ALSA: hda - Abort the probe without i915 binding for HSW/B")
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20230307214054.886721-1-helgaas@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 38f790a80560 ("net: dsa: mt7530: Add support for port 5")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20230310073338.5836-1-arinc.unal@arinc9.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mt7530.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 81c4a45254ff2..77a592f219472 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -328,14 +328,15 @@ enum {
- #define needs_eld_notify_link(chip)	false
- #endif
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 1e0b8bcd59e6c..4306782bf2257 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -2206,7 +2206,7 @@ mt7530_setup(struct dsa_switch *ds)
  
--#define CONTROLLER_IN_GPU(pci) (((pci)->device == 0x0a0c) || \
-+#define CONTROLLER_IN_GPU(pci) (((pci)->vendor == 0x8086) &&         \
-+				       (((pci)->device == 0x0a0c) || \
- 					((pci)->device == 0x0c0c) || \
- 					((pci)->device == 0x0d0c) || \
- 					((pci)->device == 0x160c) || \
- 					((pci)->device == 0x490d) || \
- 					((pci)->device == 0x4f90) || \
- 					((pci)->device == 0x4f91) || \
--					((pci)->device == 0x4f92))
-+					((pci)->device == 0x4f92)))
+ 	mt7530_pll_setup(priv);
  
- #define IS_BXT(pci) ((pci)->vendor == 0x8086 && (pci)->device == 0x5a98)
- 
+-	/* Enable Port 6 only; P5 as GMAC5 which currently is not supported */
++	/* Enable port 6 */
+ 	val = mt7530_read(priv, MT7530_MHWTRAP);
+ 	val &= ~MHWTRAP_P6_DIS & ~MHWTRAP_PHY_ACCESS;
+ 	val |= MHWTRAP_MANUAL;
 -- 
 2.39.2
 
