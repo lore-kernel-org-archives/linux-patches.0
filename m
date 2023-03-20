@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0482B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0DBC433EF;
-	Mon, 20 Mar 2023 15:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0DC1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B7FC433A0;
+	Mon, 20 Mar 2023 15:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324741;
-	bh=WzOJYLeRGim+KJC8Ahoz3JAEG6oDb1kPmn4+McRHUxg=;
+	s=korg; t=1679324744;
+	bh=lCLsMt3NL3qouQq0xW8PNLryrGaViEFM5EBTwI63YHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V/4Xst9AmA2N9b01a7acY/L+XthGbp0yc19sd6pBP0oJbgGtBhANZbFduqy2Xk3ch
-	 +bpKL3gbRsjNrYCgh2zW6nBs9a1B3kKwu2tJytq17dYaWymtqpMu/zkIvScxe2/9g3
-	 EIx3DkAcnFbEe79TM1ofFE+ST1hVWHVLmLFB1II4=
+	b=VM/+apA8H9gZe2jU1Tg59o30nOn1DnE7kkYfkk+r2gorisd9Zc37BH7GyyrdUeZ+b
+	 DTbaWLKWqKz2yoanNtI0boO2Lxf5mVww0cKNP4QtH+/Ma30S2d236jF7YvOmK1FVN7
+	 GEhzq7L72kbnaj9HYvpL5CxrLE/AEkwcrysbLQUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Gow <davidgow@google.com>,
+	=?UTF-8?q?Sergio=20Gonz=C3=A1lez=20Collado?= <sergio.collado@gmail.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/115] net/smc: fix NULL sndbuf_desc in smc_cdc_tx_handler()
-Date: Mon, 20 Mar 2023 15:53:58 +0100
-Message-Id: <20230320145450.531238575@linuxfoundation.org>
+Subject: [PATCH 5.10 50/99] rust: arch/um: Disable FP/SIMD instruction to match x86
+Date: Mon, 20 Mar 2023 15:54:28 +0100
+Message-Id: <20230320145445.478231898@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,66 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: David Gow <davidgow@google.com>
 
-[ Upstream commit 22a825c541d775c1dbe7b2402786025acad6727b ]
+[ Upstream commit 8849818679478933dd1d9718741f4daa3f4e8b86 ]
 
-When performing a stress test on SMC-R by rmmod mlx5_ib driver
-during the wrk/nginx test, we found that there is a probability
-of triggering a panic while terminating all link groups.
+The kernel disables all SSE and similar FP/SIMD instructions on
+x86-based architectures (partly because we shouldn't be using floats in
+the kernel, and partly to avoid the need for stack alignment, see:
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53383 )
 
-This issue dues to the race between smc_smcr_terminate_all()
-and smc_buf_create().
+UML does not do the same thing, which isn't in itself a problem, but
+does add to the list of differences between UML and "normal" x86 builds.
 
-			smc_smcr_terminate_all
+In addition, there was a crash bug with LLVM < 15 / rustc < 1.65 when
+building with SSE, so disabling it fixes rust builds with earlier
+compiler versions, see:
+https://github.com/Rust-for-Linux/linux/pull/881
 
-smc_buf_create
-/* init */
-conn->sndbuf_desc = NULL;
-...
-
-			__smc_lgr_terminate
-				smc_conn_kill
-					smc_close_abort
-						smc_cdc_get_slot_and_msg_send
-
-			__softirqentry_text_start
-				smc_wr_tx_process_cqe
-					smc_cdc_tx_handler
-						READ(conn->sndbuf_desc->len);
-						/* panic dues to NULL sndbuf_desc */
-
-conn->sndbuf_desc = xxx;
-
-This patch tries to fix the issue by always to check the sndbuf_desc
-before send any cdc msg, to make sure that no null pointer is
-seen during cqe processing.
-
-Fixes: 0b29ec643613 ("net/smc: immediate termination for SMCR link groups")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Link: https://lore.kernel.org/r/1678263432-17329-1-git-send-email-alibuda@linux.alibaba.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David Gow <davidgow@google.com>
+Reviewed-by: Sergio González Collado <sergio.collado@gmail.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_cdc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/Makefile.um | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
-index 5d180d24cbf1c..41b23f71c29a2 100644
---- a/net/smc/smc_cdc.c
-+++ b/net/smc/smc_cdc.c
-@@ -104,6 +104,9 @@ int smc_cdc_msg_send(struct smc_connection *conn,
- 	union smc_host_cursor cfed;
- 	int rc;
+diff --git a/arch/x86/Makefile.um b/arch/x86/Makefile.um
+index 1db7913795f51..e51c53d10efe7 100644
+--- a/arch/x86/Makefile.um
++++ b/arch/x86/Makefile.um
+@@ -1,6 +1,12 @@
+ # SPDX-License-Identifier: GPL-2.0
+ core-y += arch/x86/crypto/
  
-+	if (unlikely(!READ_ONCE(conn->sndbuf_desc)))
-+		return -ENOBUFS;
++#
++# Disable SSE and other FP/SIMD instructions to match normal x86
++#
++KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
++KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
 +
- 	smc_cdc_add_pending_send(conn, pend);
+ ifeq ($(CONFIG_X86_32),y)
+ START := 0x8048000
  
- 	conn->tx_cdc_seq++;
 -- 
 2.39.2
 
