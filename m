@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383641C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC8CC4339B;
-	Mon, 20 Mar 2023 15:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F016D1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73706C4339B;
+	Mon, 20 Mar 2023 15:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325718;
-	bh=FwEafGK3MCe9FJYti0DvSQD0dVjCiZOHkwLeXBPnFSo=;
+	s=korg; t=1679325720;
+	bh=sXo8mBoKZYZFAHqbPaF7n1eHMzEnof++Sw1JW5lceJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCmxo2drslNnMQT+A5hiMAjDGz2qu4tHSeM2mzTH93Bz+4LNmqj6LwvA/8XqsLzBW
-	 sOkns+yYCM70anquHDr1oE1sGGH6onKE5ylsd3aSYUpWT4WdCtdkocYZsEgi4pu1Ub
-	 kCOo7LKNICfu0D8q/MQJQdVzYHIo3jXsXWvpk+Lk=
+	b=b/Zd5irywwH22lgRM26c1PDYyGTj5LVe8G7zwcgbp4gOlvaGgIo9kdeedtmzuJyAo
+	 djVQnM1ujkoU4WUXOPdjBj0uxJuIAZCS0a1x1f4wLlJ9WwNRgiGmYp2WV7zFsj6xHR
+	 KZRQX2W7yjKZ5dR3+3lhcgDJG8f/sYVnAn4ZviDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Bailon <abailon@baylibre.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.1 131/198] interconnect: imx: fix registration race
-Date: Mon, 20 Mar 2023 15:54:29 +0100
-Message-Id: <20230320145513.033777620@linuxfoundation.org>
+	Po-Hsu Lin <po-hsu.lin@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 090/211] selftests: net: devlink_port_split.py: skip test if no suitable device available
+Date: Mon, 20 Mar 2023 15:53:45 +0100
+Message-Id: <20230320145517.073381213@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,79 +35,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Po-Hsu Lin <po-hsu.lin@canonical.com>
 
-commit 9fbd35520f1f7f3cbe1873939a27ad9b009f21f9 upstream.
+[ Upstream commit 24994513ad13ff2c47ba91d2b5df82c3d496c370 ]
 
-The current interconnect provider registration interface is inherently
-racy as nodes are not added until the after adding the provider. This
-can specifically cause racing DT lookups to fail.
+The `devlink -j port show` command output may not contain the "flavour"
+key, an example from Ubuntu 22.10 s390x LPAR(5.19.0-37-generic), with
+mlx4 driver and iproute2-5.15.0:
+  {"port":{"pci/0001:00:00.0/1":{"type":"eth","netdev":"ens301"},
+           "pci/0001:00:00.0/2":{"type":"eth","netdev":"ens301d1"},
+           "pci/0002:00:00.0/1":{"type":"eth","netdev":"ens317"},
+           "pci/0002:00:00.0/2":{"type":"eth","netdev":"ens317d1"}}}
 
-Switch to using the new API where the provider is not registered until
-after it has been fully initialised.
+This will cause a KeyError exception.
 
-Fixes: f0d8048525d7 ("interconnect: Add imx core driver")
-Cc: stable@vger.kernel.org      # 5.8
-Cc: Alexandre Bailon <abailon@baylibre.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
-Link: https://lore.kernel.org/r/20230306075651.2449-5-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Create a validate_devlink_output() to check for this "flavour" from
+devlink command output to avoid this KeyError exception. Also let
+it handle the check for `devlink -j dev show` output in main().
+
+Apart from this, if the test was not started because the max lanes of
+the designated device is 0. The script will still return 0 and thus
+causing a false-negative test result.
+
+Use a found_max_lanes flag to determine if these tests were skipped
+due to this reason and return KSFT_SKIP to make it more clear.
+
+Link: https://bugs.launchpad.net/bugs/1937133
+Fixes: f3348a82e727 ("selftests: net: Add port split test")
+Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
+Link: https://lore.kernel.org/r/20230315165353.229590-1-po-hsu.lin@canonical.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/imx/imx.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ .../selftests/net/devlink_port_split.py       | 36 ++++++++++++++++---
+ 1 file changed, 31 insertions(+), 5 deletions(-)
 
---- a/drivers/interconnect/imx/imx.c
-+++ b/drivers/interconnect/imx/imx.c
-@@ -295,6 +295,9 @@ int imx_icc_register(struct platform_dev
- 	provider->xlate = of_icc_xlate_onecell;
- 	provider->data = data;
- 	provider->dev = dev->parent;
+diff --git a/tools/testing/selftests/net/devlink_port_split.py b/tools/testing/selftests/net/devlink_port_split.py
+index 2b5d6ff873738..2d84c7a0be6b2 100755
+--- a/tools/testing/selftests/net/devlink_port_split.py
++++ b/tools/testing/selftests/net/devlink_port_split.py
+@@ -59,6 +59,8 @@ class devlink_ports(object):
+         assert stderr == ""
+         ports = json.loads(stdout)['port']
+ 
++        validate_devlink_output(ports, 'flavour')
 +
-+	icc_provider_init(provider);
+         for port in ports:
+             if dev in port:
+                 if ports[port]['flavour'] == 'physical':
+@@ -220,6 +222,27 @@ def split_splittable_port(port, k, lanes, dev):
+     unsplit(port.bus_info)
+ 
+ 
++def validate_devlink_output(devlink_data, target_property=None):
++    """
++    Determine if test should be skipped by checking:
++      1. devlink_data contains values
++      2. The target_property exist in devlink_data
++    """
++    skip_reason = None
++    if any(devlink_data.values()):
++        if target_property:
++            skip_reason = "{} not found in devlink output, test skipped".format(target_property)
++            for key in devlink_data:
++                if target_property in devlink_data[key]:
++                    skip_reason = None
++    else:
++        skip_reason = 'devlink output is empty, test skipped'
 +
- 	platform_set_drvdata(pdev, imx_provider);
++    if skip_reason:
++        print(skip_reason)
++        sys.exit(KSFT_SKIP)
++
++
+ def make_parser():
+     parser = argparse.ArgumentParser(description='A test for port splitting.')
+     parser.add_argument('--dev',
+@@ -240,12 +263,9 @@ def main(cmdline=None):
+         stdout, stderr = run_command(cmd)
+         assert stderr == ""
  
- 	if (settings) {
-@@ -306,20 +309,18 @@ int imx_icc_register(struct platform_dev
- 		}
- 	}
++        validate_devlink_output(json.loads(stdout))
+         devs = json.loads(stdout)['dev']
+-        if devs:
+-            dev = list(devs.keys())[0]
+-        else:
+-            print("no devlink device was found, test skipped")
+-            sys.exit(KSFT_SKIP)
++        dev = list(devs.keys())[0]
  
--	ret = icc_provider_add(provider);
--	if (ret) {
--		dev_err(dev, "error adding interconnect provider: %d\n", ret);
-+	ret = imx_icc_register_nodes(imx_provider, nodes, nodes_count, settings);
-+	if (ret)
- 		return ret;
--	}
+     cmd = "devlink dev show %s" % dev
+     stdout, stderr = run_command(cmd)
+@@ -255,6 +275,7 @@ def main(cmdline=None):
  
--	ret = imx_icc_register_nodes(imx_provider, nodes, nodes_count, settings);
-+	ret = icc_provider_register(provider);
- 	if (ret)
--		goto provider_del;
-+		goto err_unregister_nodes;
+     ports = devlink_ports(dev)
  
- 	return 0;
++    found_max_lanes = False
+     for port in ports.if_names:
+         max_lanes = get_max_lanes(port.name)
  
--provider_del:
--	icc_provider_del(provider);
-+err_unregister_nodes:
-+	imx_icc_unregister_nodes(&imx_provider->provider);
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(imx_icc_register);
-@@ -328,9 +329,8 @@ void imx_icc_unregister(struct platform_
- {
- 	struct imx_icc_provider *imx_provider = platform_get_drvdata(pdev);
+@@ -277,6 +298,11 @@ def main(cmdline=None):
+                 split_splittable_port(port, lane, max_lanes, dev)
  
-+	icc_provider_deregister(&imx_provider->provider);
- 	imx_icc_unregister_nodes(&imx_provider->provider);
--
--	icc_provider_del(&imx_provider->provider);
- }
- EXPORT_SYMBOL_GPL(imx_icc_unregister);
+                 lane //= 2
++        found_max_lanes = True
++
++    if not found_max_lanes:
++        print(f"Test not started, no port of device {dev} reports max_lanes")
++        sys.exit(KSFT_SKIP)
  
+ 
+ if __name__ == "__main__":
+-- 
+2.39.2
+
 
 
