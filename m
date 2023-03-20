@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958801C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C2BC433EF;
-	Mon, 20 Mar 2023 15:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5015C1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39B6C433EF;
+	Mon, 20 Mar 2023 15:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324799;
-	bh=S6tEHWndNmSMMQ5WutitFRxVDIVV+AOXs7zwPkBG9T4=;
+	s=korg; t=1679324802;
+	bh=iCpioOOnlovdx/T3JXD4q5X5tq9PtiYfzxJ6uuoH8yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EoeC8OgAEO9nhUkEiiw6sOXsgm+AZd9jLAgU7gO1VbN0rmuUDr/PCPk5cjNCG0W4Z
-	 d3nw0sd/2tCCnaJ4BFELBQRyvNMwcYDdsdq51ZSurTOiCdquMpmKPstLS6VqhP3U+e
-	 tm7mVjDZds/5aVmibH9aG6HUh04/EDAyXgWNCUvU=
+	b=zmFOtunyGMYCv8LEH9Tepw5bqMhROS1RRefNb4YsEAvW0/sFBFpiUQeZoHmTi4Tno
+	 lrE+Sgb68ijs/+FQSuaZy9hSiAUycik3qdsOZBvcwntbH0OyK3/KQstemAD6hnm//w
+	 qc1Lh+J7m4ePzVFIUdRguHE5vzJ2Ztb3ZrD9/SxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Szymon Heidrich <szymon.heidrich@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/198] drm/meson: fix 1px pink line on GXM when scaling video overlay
-Date: Mon, 20 Mar 2023 15:52:25 +0100
-Message-Id: <20230320145507.764577619@linuxfoundation.org>
+Subject: [PATCH 5.15 035/115] net: usb: smsc75xx: Limit packet length to skb->len
+Date: Mon, 20 Mar 2023 15:54:07 +0100
+Message-Id: <20230320145450.933724779@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Szymon Heidrich <szymon.heidrich@gmail.com>
 
-[ Upstream commit 5c8cf1664f288098a971a1d1e65716a2b6a279e1 ]
+[ Upstream commit d8b228318935044dafe3a5bc07ee71a1f1424b8d ]
 
-Playing media with a resolution smaller than the crtc size requires the
-video overlay to be scaled for output and GXM boards display a 1px pink
-line on the bottom of the scaled overlay. Comparing with the downstream
-vendor driver revealed VPP_DUMMY_DATA not being set [0].
+Packet length retrieved from skb data may be larger than
+the actual socket buffer length (up to 9026 bytes). In such
+case the cloned skb passed up the network stack will leak
+kernel memory contents.
 
-Setting VPP_DUMMY_DATA prevents the 1px pink line from being seen.
-
-[0] https://github.com/endlessm/linux-s905x/blob/master/drivers/amlogic/amports/video.c#L7869
-
-Fixes: bbbe775ec5b5 ("drm: Add support for Amlogic Meson Graphic Controller")
-Suggested-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230303123312.155164-1-christianshewitt@gmail.com
+Fixes: d0cad871703b ("smsc75xx: SMSC LAN75xx USB gigabit ethernet adapter driver")
+Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_vpp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/usb/smsc75xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vpp.c b/drivers/gpu/drm/meson/meson_vpp.c
-index 154837688ab0d..5df1957c8e41f 100644
---- a/drivers/gpu/drm/meson/meson_vpp.c
-+++ b/drivers/gpu/drm/meson/meson_vpp.c
-@@ -100,6 +100,8 @@ void meson_vpp_init(struct meson_drm *priv)
- 			       priv->io_base + _REG(VPP_DOLBY_CTRL));
- 		writel_relaxed(0x1020080,
- 				priv->io_base + _REG(VPP_DUMMY_DATA1));
-+		writel_relaxed(0x42020,
-+				priv->io_base + _REG(VPP_DUMMY_DATA));
- 	} else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
- 		writel_relaxed(0xf, priv->io_base + _REG(DOLBY_PATH_CTRL));
- 
+diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
+index 76f7af1613139..705bd31b18787 100644
+--- a/drivers/net/usb/smsc75xx.c
++++ b/drivers/net/usb/smsc75xx.c
+@@ -2211,7 +2211,8 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 				dev->net->stats.rx_frame_errors++;
+ 		} else {
+ 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
+-			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
++			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
++				     size > skb->len)) {
+ 				netif_dbg(dev, rx_err, dev->net,
+ 					  "size err rx_cmd_a=0x%08x\n",
+ 					  rx_cmd_a);
 -- 
 2.39.2
 
