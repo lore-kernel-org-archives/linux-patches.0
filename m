@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12601C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D0FC433D2;
-	Mon, 20 Mar 2023 15:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBAE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E9AC4339B;
+	Mon, 20 Mar 2023 15:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325105;
-	bh=+4SDLqKtYyc36Kv8dUBvjY7sF/JLdSOcZCb+nFhNOxs=;
+	s=korg; t=1679325108;
+	bh=S6tEHWndNmSMMQ5WutitFRxVDIVV+AOXs7zwPkBG9T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xsqz9oFd4J2iVckknE59Teqg611GpUjTKdd5QqZaYSQ/4R4PXD4PNT6QvRZQt8ZlC
-	 nSYJnW0nq5Ygy9Z4JiaPeJ1o5l7t9poPXYXjwyIgLFMIsjJPPM6D1v6JHqss8jwd6E
-	 C99DeECC4X0ol9t3M7R7nx3X9sgB8UFALIIRbZRM=
+	b=ST4l563Tae8ws4bzI3zV6He60HvttbU8ICH4xPGzMzUytUJn6m0YdktfUTQM/8ja4
+	 d1asHJe3hCogXrKAqJIaae162q7m3cGvSgfJrUdWHR1OFU8nVaCgFEzxjWBiaLYp1s
+	 QnGzhnIJ1WLQBElcdkH5BUy6qUtvImSg5aylSOyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/198] vdpa_sim: set last_used_idx as last_avail_idx in vdpasim_queue_ready
-Date: Mon, 20 Mar 2023 15:53:00 +0100
-Message-Id: <20230320145509.226674068@linuxfoundation.org>
+Subject: [PATCH 6.2 007/211] drm/meson: fix 1px pink line on GXM when scaling video overlay
+Date: Mon, 20 Mar 2023 15:52:22 +0100
+Message-Id: <20230320145513.601843880@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,60 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eugenio Pérez <eperezma@redhat.com>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-[ Upstream commit b4cca6d48eb3fa6f0d9caba4329b1a2b0ff67a77 ]
+[ Upstream commit 5c8cf1664f288098a971a1d1e65716a2b6a279e1 ]
 
-Starting from an used_idx different than 0 is needed in use cases like
-virtual machine migration.  Not doing so and letting the caller set an
-avail idx different than 0 causes destination device to try to use old
-buffers that source driver already recover and are not available
-anymore.
+Playing media with a resolution smaller than the crtc size requires the
+video overlay to be scaled for output and GXM boards display a 1px pink
+line on the bottom of the scaled overlay. Comparing with the downstream
+vendor driver revealed VPP_DUMMY_DATA not being set [0].
 
-Since vdpa_sim does not support receive inflight descriptors as a
-destination of a migration, let's set both avail_idx and used_idx the
-same at vq start.  This is how vhost-user works in a
-VHOST_SET_VRING_BASE call.
+Setting VPP_DUMMY_DATA prevents the 1px pink line from being seen.
 
-Although the simple fix is to set last_used_idx at vdpasim_set_vq_state,
-it would be reset at vdpasim_queue_ready.  The last_avail_idx case is
-fixed with commit 0e84f918fac8 ("vdpa_sim: not reset state in
-vdpasim_queue_ready").  Since the only option is to make it equal to
-last_avail_idx, adding the only change needed here.
+[0] https://github.com/endlessm/linux-s905x/blob/master/drivers/amlogic/amports/video.c#L7869
 
-This was discovered and tested live migrating the vdpa_sim_net device.
-
-Fixes: 2c53d0f64c06 ("vdpasim: vDPA device simulator")
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
-Message-Id: <20230302181857.925374-1-eperezma@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: bbbe775ec5b5 ("drm: Add support for Amlogic Meson Graphic Controller")
+Suggested-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230303123312.155164-1-christianshewitt@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/meson/meson_vpp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-index 8839232a3fcbc..61bde476cf9c8 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-@@ -76,6 +76,17 @@ static void vdpasim_queue_ready(struct vdpasim *vdpasim, unsigned int idx)
- 			  (uintptr_t)vq->device_addr);
- 
- 	vq->vring.last_avail_idx = last_avail_idx;
-+
-+	/*
-+	 * Since vdpa_sim does not support receive inflight descriptors as a
-+	 * destination of a migration, let's set both avail_idx and used_idx
-+	 * the same at vq start.  This is how vhost-user works in a
-+	 * VHOST_SET_VRING_BASE call.
-+	 *
-+	 * Although the simple fix is to set last_used_idx at
-+	 * vdpasim_set_vq_state, it would be reset at vdpasim_queue_ready.
-+	 */
-+	vq->vring.last_used_idx = last_avail_idx;
- 	vq->vring.notify = vdpasim_vq_notify;
- }
+diff --git a/drivers/gpu/drm/meson/meson_vpp.c b/drivers/gpu/drm/meson/meson_vpp.c
+index 154837688ab0d..5df1957c8e41f 100644
+--- a/drivers/gpu/drm/meson/meson_vpp.c
++++ b/drivers/gpu/drm/meson/meson_vpp.c
+@@ -100,6 +100,8 @@ void meson_vpp_init(struct meson_drm *priv)
+ 			       priv->io_base + _REG(VPP_DOLBY_CTRL));
+ 		writel_relaxed(0x1020080,
+ 				priv->io_base + _REG(VPP_DUMMY_DATA1));
++		writel_relaxed(0x42020,
++				priv->io_base + _REG(VPP_DUMMY_DATA));
+ 	} else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
+ 		writel_relaxed(0xf, priv->io_base + _REG(DOLBY_PATH_CTRL));
  
 -- 
 2.39.2
