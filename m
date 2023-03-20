@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829CB1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DA2C433EF;
-	Mon, 20 Mar 2023 15:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FE71C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5137C433EF;
+	Mon, 20 Mar 2023 15:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325053;
-	bh=UZ/pKeFho25nxzsR7ToDZuBnj1qqvUk5s71vj7Pfj7Q=;
+	s=korg; t=1679325056;
+	bh=SFBggJYkVHnCEZcZfLMB/8VKkg2NrKqNkLzN9FgAHNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OsZ0VDaRCnJFwW2kxEKsBrRHwxjymlwz1nKiRY3MsclBYudvHaDGN0s3ZdQJVRxmg
-	 dOSN92l9UOm6NYZvj+kZDOJUtwqI9b8qBq7SkNtB8P8pwmtZ2qxf7lC40TA4VF/AfJ
-	 H1ZOPEeePBb41WSD0rKuS/YKapCV9KU615hj689U=
+	b=YV23UDvYdDBz5IkxDwJuFEDHLZOYrreDPOsJZ5itWUGRW/9bs7AVQvVP2QN21W+FN
+	 0cJs3A56q8+0oWMT8Ium84liqRFhNcR43hD/wCrKDL/fEEBSTylfodilWF8FoqMqDv
+	 uN0LORHuhaijgDbMy6R1Sa4Ml0YrDRf9nMzvF9js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifei Liu <yifeliu@cs.stonybrook.edu>,
-	Erez Zadok <ezk@cs.stonybrook.edu>,
-	Manish Adkar <madkar@cs.stonybrook.edu>,
-	Richard Weinberger <richard@nod.at>,
+	Jianguo Wu <wujianguo@chinatelecom.cn>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 064/115] jffs2: correct logic when creating a hole in jffs2_write_begin
-Date: Mon, 20 Mar 2023 15:54:36 +0100
-Message-Id: <20230320145452.096653872@linuxfoundation.org>
+Subject: [PATCH 6.1 038/198] ipvlan: Make skb->skb_iif track skb->dev for l3s mode
+Date: Mon, 20 Mar 2023 15:52:56 +0100
+Message-Id: <20230320145509.064585439@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,113 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yifei Liu <yifeliu@cs.stonybrook.edu>
+From: Jianguo Wu <wujianguo@chinatelecom.cn>
 
-[ Upstream commit 23892d383bee15b64f5463bd7195615734bb2415 ]
+[ Upstream commit 59a0b022aa249e3f5735d93de0849341722c4754 ]
 
-Bug description and fix:
+For l3s mode, skb->dev is set to ipvlan interface in ipvlan_nf_input():
+  skb->dev = addr->master->dev
+but, skb->skb_iif remain unchanged, this will cause socket lookup failed
+if a target socket is bound to a interface, like the following example:
 
-1. Write data to a file, say all 1s from offset 0 to 16.
+  ip link add ipvlan0 link eth0 type ipvlan mode l3s
+  ip addr add dev ipvlan0 192.168.124.111/24
+  ip link set ipvlan0 up
 
-2. Truncate the file to a smaller size, say 8 bytes.
+  ping -c 1 -I ipvlan0 8.8.8.8
+  100% packet loss
 
-3. Write new bytes (say 2s) from an offset past the original size of the
-file, say at offset 20, for 4 bytes.  This is supposed to create a "hole"
-in the file, meaning that the bytes from offset 8 (where it was truncated
-above) up to the new write at offset 20, should all be 0s (zeros).
+This is because there is no match sk in __raw_v4_lookup() as sk->sk_bound_dev_if != dif(skb->skb_iif).
+Fix this by make skb->skb_iif track skb->dev in ipvlan_nf_input().
 
-4. Flush all caches using "echo 3 > /proc/sys/vm/drop_caches" (or unmount
-and remount) the f/s.
-
-5. Check the content of the file.  It is wrong.  The 1s that used to be
-between bytes 9 and 16, before the truncation, have REAPPEARED (they should
-be 0s).
-
-We wrote a script and helper C program to reproduce the bug
-(reproduce_jffs2_write_begin_issue.sh, write_file.c, and Makefile).  We can
-make them available to anyone.
-
-The above example is shown when writing a small file within the same first
-page.  But the bug happens for larger files, as long as steps 1, 2, and 3
-above all happen within the same page.
-
-The problem was traced to the jffs2_write_begin code, where it goes into an
-'if' statement intended to handle writes past the current EOF (i.e., writes
-that may create a hole).  The code computes a 'pageofs' that is the floor
-of the write position (pos), aligned to the page size boundary.  In other
-words, 'pageofs' will never be larger than 'pos'.  The code then sets the
-internal jffs2_raw_inode->isize to the size of max(current inode size,
-pageofs) but that is wrong: the new file size should be the 'pos', which is
-larger than both the current inode size and pageofs.
-
-Similarly, the code incorrectly sets the internal jffs2_raw_inode->dsize to
-the difference between the pageofs minus current inode size; instead it
-should be the current pos minus the current inode size.  Finally,
-inode->i_size was also set incorrectly.
-
-The patch below fixes this bug.  The bug was discovered using a new tool
-for finding f/s bugs using model checking, called MCFS (Model Checking File
-Systems).
-
-Signed-off-by: Yifei Liu <yifeliu@cs.stonybrook.edu>
-Signed-off-by: Erez Zadok <ezk@cs.stonybrook.edu>
-Signed-off-by: Manish Adkar <madkar@cs.stonybrook.edu>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: c675e06a98a4 ("ipvlan: decouple l3s mode dependencies from other modes")
+Signed-off-by: Jianguo Wu <wujianguo@chinatelecom.cn>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/29865b1f-6db7-c07a-de89-949d3721ea30@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jffs2/file.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/ipvlan/ipvlan_l3s.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/jffs2/file.c b/fs/jffs2/file.c
-index bd7d58d27bfc6..97a3c09fd96b6 100644
---- a/fs/jffs2/file.c
-+++ b/fs/jffs2/file.c
-@@ -138,19 +138,18 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
- 	struct jffs2_inode_info *f = JFFS2_INODE_INFO(inode);
- 	struct jffs2_sb_info *c = JFFS2_SB_INFO(inode->i_sb);
- 	pgoff_t index = pos >> PAGE_SHIFT;
--	uint32_t pageofs = index << PAGE_SHIFT;
- 	int ret = 0;
+diff --git a/drivers/net/ipvlan/ipvlan_l3s.c b/drivers/net/ipvlan/ipvlan_l3s.c
+index 943d26cbf39f5..71712ea25403d 100644
+--- a/drivers/net/ipvlan/ipvlan_l3s.c
++++ b/drivers/net/ipvlan/ipvlan_l3s.c
+@@ -101,6 +101,7 @@ static unsigned int ipvlan_nf_input(void *priv, struct sk_buff *skb,
+ 		goto out;
  
- 	jffs2_dbg(1, "%s()\n", __func__);
- 
--	if (pageofs > inode->i_size) {
--		/* Make new hole frag from old EOF to new page */
-+	if (pos > inode->i_size) {
-+		/* Make new hole frag from old EOF to new position */
- 		struct jffs2_raw_inode ri;
- 		struct jffs2_full_dnode *fn;
- 		uint32_t alloc_len;
- 
--		jffs2_dbg(1, "Writing new hole frag 0x%x-0x%x between current EOF and new page\n",
--			  (unsigned int)inode->i_size, pageofs);
-+		jffs2_dbg(1, "Writing new hole frag 0x%x-0x%x between current EOF and new position\n",
-+			  (unsigned int)inode->i_size, (uint32_t)pos);
- 
- 		ret = jffs2_reserve_space(c, sizeof(ri), &alloc_len,
- 					  ALLOC_NORMAL, JFFS2_SUMMARY_INODE_SIZE);
-@@ -170,10 +169,10 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
- 		ri.mode = cpu_to_jemode(inode->i_mode);
- 		ri.uid = cpu_to_je16(i_uid_read(inode));
- 		ri.gid = cpu_to_je16(i_gid_read(inode));
--		ri.isize = cpu_to_je32(max((uint32_t)inode->i_size, pageofs));
-+		ri.isize = cpu_to_je32((uint32_t)pos);
- 		ri.atime = ri.ctime = ri.mtime = cpu_to_je32(JFFS2_NOW());
- 		ri.offset = cpu_to_je32(inode->i_size);
--		ri.dsize = cpu_to_je32(pageofs - inode->i_size);
-+		ri.dsize = cpu_to_je32((uint32_t)pos - inode->i_size);
- 		ri.csize = cpu_to_je32(0);
- 		ri.compr = JFFS2_COMPR_ZERO;
- 		ri.node_crc = cpu_to_je32(crc32(0, &ri, sizeof(ri)-8));
-@@ -203,7 +202,7 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
- 			goto out_err;
- 		}
- 		jffs2_complete_reservation(c);
--		inode->i_size = pageofs;
-+		inode->i_size = pos;
- 		mutex_unlock(&f->sem);
- 	}
- 
+ 	skb->dev = addr->master->dev;
++	skb->skb_iif = skb->dev->ifindex;
+ 	len = skb->len + ETH_HLEN;
+ 	ipvlan_count_rx(addr->master, len, true, false);
+ out:
 -- 
 2.39.2
 
