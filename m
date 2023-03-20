@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F521C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBE6C433EF;
-	Mon, 20 Mar 2023 15:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF1F1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE4CC433D2;
+	Mon, 20 Mar 2023 15:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325751;
-	bh=sWI+4MtyUPdgD8mkYTVW8jmXJsM3HsMsedSvU+Rvyec=;
+	s=korg; t=1679325753;
+	bh=oinfXLo2mn+fp3UP3KORY6Jo907fJHxz+HjgO9B2WCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w6OdCfPTOP8hg+zrsF9IkFQ2BJWOMMK7NdUoGdluPzYanF/1o5N1I7Ky9a8Ri4wIG
-	 w4zS1fvDqM8Zr92/EL0u6ZTjyfo1zu1Cbc+GADGkMjRmX2/nI5nzTHiHqOOxst+veg
-	 OfK3BLvbfUX6aEjP5gNMpFcnMggtnrnIdN+PPqN0=
+	b=NZdV4+TQ4hJtK+REodj+aKa4781sFE7LRV+v9o9ojRNv42yhSPAie3v3IpihzKqAY
+	 ec/5KLYysbNyZNwMeVZOUUAL+m+RgW28jBqtRKz48RjpInJ9JwlFWCtcNfY6gTp6D8
+	 zfis1+DkkF26jhUk0yOZ4Q03ks1C3rJoeXY/3v48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Volodymyr Babchuk <volodymyr_babchuk@epam.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 095/211] net: renesas: rswitch: Fix the output value of quote from rswitch_rx()
-Date: Mon, 20 Mar 2023 15:53:50 +0100
-Message-Id: <20230320145517.280329328@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.1 137/198] interconnect: qcom: rpmh: fix registration race
+Date: Mon, 20 Mar 2023 15:54:35 +0100
+Message-Id: <20230320145513.298232510@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,64 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit e05bb97d9c9dd4ba5739a27921044c935a7fb3be ]
+commit 74240a5bebd48d8b843c6d0f1acfaa722a5abeb7 upstream.
 
-If the RX descriptor doesn't have any data, the output value of quote
-from rswitch_rx() will be increased unexpectedily. So, fix it.
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to fail.
 
-Reported-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-Fixes: 3590918b5d07 ("net: ethernet: renesas: Add support for "Ethernet Switch"")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
+
+Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
+Cc: stable@vger.kernel.org      # 5.7
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-11-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/rswitch.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/interconnect/qcom/icc-rpmh.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
-index 847b1f161fc66..5118117a17eef 100644
---- a/drivers/net/ethernet/renesas/rswitch.c
-+++ b/drivers/net/ethernet/renesas/rswitch.c
-@@ -673,13 +673,14 @@ static bool rswitch_rx(struct net_device *ndev, int *quota)
- 	u16 pkt_len;
- 	u32 get_ts;
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -192,9 +192,10 @@ int qcom_icc_rpmh_probe(struct platform_
+ 	provider->pre_aggregate = qcom_icc_pre_aggregate;
+ 	provider->aggregate = qcom_icc_aggregate;
+ 	provider->xlate_extended = qcom_icc_xlate_extended;
+-	INIT_LIST_HEAD(&provider->nodes);
+ 	provider->data = data;
  
-+	if (*quota <= 0)
-+		return true;
++	icc_provider_init(provider);
 +
- 	boguscnt = min_t(int, gq->ring_size, *quota);
- 	limit = boguscnt;
+ 	qp->dev = dev;
+ 	qp->bcms = desc->bcms;
+ 	qp->num_bcms = desc->num_bcms;
+@@ -203,10 +204,6 @@ int qcom_icc_rpmh_probe(struct platform_
+ 	if (IS_ERR(qp->voter))
+ 		return PTR_ERR(qp->voter);
  
- 	desc = &gq->rx_ring[gq->cur];
- 	while ((desc->desc.die_dt & DT_MASK) != DT_FEMPTY) {
--		if (--boguscnt < 0)
--			break;
- 		dma_rmb();
- 		pkt_len = le16_to_cpu(desc->desc.info_ds) & RX_DS;
- 		skb = gq->skbs[gq->cur];
-@@ -705,6 +706,9 @@ static bool rswitch_rx(struct net_device *ndev, int *quota)
+-	ret = icc_provider_add(provider);
+-	if (ret)
+-		return ret;
+-
+ 	for (i = 0; i < qp->num_bcms; i++)
+ 		qcom_icc_bcm_init(qp->bcms[i], dev);
  
- 		gq->cur = rswitch_next_queue_index(gq, true, 1);
- 		desc = &gq->rx_ring[gq->cur];
-+
-+		if (--boguscnt <= 0)
-+			break;
+@@ -218,7 +215,7 @@ int qcom_icc_rpmh_probe(struct platform_
+ 		node = icc_node_create(qn->id);
+ 		if (IS_ERR(node)) {
+ 			ret = PTR_ERR(node);
+-			goto err;
++			goto err_remove_nodes;
+ 		}
+ 
+ 		node->name = qn->name;
+@@ -232,19 +229,27 @@ int qcom_icc_rpmh_probe(struct platform_
  	}
  
- 	num = rswitch_get_num_cur_queues(gq);
-@@ -716,7 +720,7 @@ static bool rswitch_rx(struct net_device *ndev, int *quota)
- 		goto err;
- 	gq->dirty = rswitch_next_queue_index(gq, false, num);
+ 	data->num_nodes = num_nodes;
++
++	ret = icc_provider_register(provider);
++	if (ret)
++		goto err_remove_nodes;
++
+ 	platform_set_drvdata(pdev, qp);
  
--	*quota -= limit - (++boguscnt);
-+	*quota -= limit - boguscnt;
+ 	/* Populate child NoC devices if any */
+ 	if (of_get_child_count(dev->of_node) > 0) {
+ 		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
+ 		if (ret)
+-			goto err;
++			goto err_deregister_provider;
+ 	}
  
- 	return boguscnt <= 0;
+ 	return 0;
+-err:
++
++err_deregister_provider:
++	icc_provider_deregister(provider);
++err_remove_nodes:
+ 	icc_nodes_remove(provider);
+-	icc_provider_del(provider);
++
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(qcom_icc_rpmh_probe);
+@@ -253,8 +258,8 @@ int qcom_icc_rpmh_remove(struct platform
+ {
+ 	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
  
--- 
-2.39.2
-
++	icc_provider_deregister(&qp->provider);
+ 	icc_nodes_remove(&qp->provider);
+-	icc_provider_del(&qp->provider);
+ 
+ 	return 0;
+ }
 
 
