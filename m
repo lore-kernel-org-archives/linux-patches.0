@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196971C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B612C433EF;
-	Mon, 20 Mar 2023 15:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A5C1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52647C4339B;
+	Mon, 20 Mar 2023 15:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326016;
-	bh=hRCGny6RTst0Quh3CPsdx1tjLZSo1tA48HZCKGXoM2k=;
+	s=korg; t=1679326019;
+	bh=ba6L21C3hPRAFcDmsnPxAcMMAGQ4TxPfN8sCtncYEAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPMRN/a596ksRrTN8Zuelbe5KGjlEGH9cXPFdx330J8B+79158DhydVhfVhgcXCYe
-	 jnHG6RK68Kk993uK8apyu6v3OSpL/kXi1JZ2b6bqiz9Bm/D9Tjr2WUcGdfAaF4AZCR
-	 p3QVZCi4qUvYw8KJM7euzEPzKMZovUt6dXVEyNeI=
+	b=MdQ93ubC9+T8U0b/Mwu41FVxd8FG+ceTvKBMfnGXpOTBAfqtUaxzNb0nyeJxiwMNl
+	 ylqWnavw5+cSCCHd2EJei6TRd0RKRGrUVKotvx30yiCZPTF+/FTkURNIg+MrRbumFz
+	 q9DPUsyL5bXFg6DKwrTgQCmYwHi3s5lOi3isi8I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.2 140/211] interconnect: exynos: fix node leak in probe PM QoS error path
-Date: Mon, 20 Mar 2023 15:54:35 +0100
-Message-Id: <20230320145519.308493162@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 186/198] ASoC: qcom: q6prm: fix incorrect clk_root passed to ADSP
+Date: Mon, 20 Mar 2023 15:55:24 +0100
+Message-Id: <20230320145515.279275871@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 3aab264875bf3c915ea2517fae1eec213e0b4987 upstream.
+commit 65882134bc622a1e57bd5928ac588855ea2e3ddd upstream.
 
-Make sure to add the newly allocated interconnect node to the provider
-before adding the PM QoS request so that the node is freed on errors.
+The second to last argument is clk_root (root of the clock), however the
+code called q6prm_request_lpass_clock() with clk_attr instead
+(copy-paste error).  This effectively was passing value of 1 as root
+clock which worked on some of the SoCs (e.g. SM8450) but fails on
+others, depending on the ADSP.  For example on SM8550 this "1" as root
+clock is not accepted and results in errors coming from ADSP.
 
-Fixes: 2f95b9d5cf0b ("interconnect: Add generic interconnect driver for Exynos SoCs")
-Cc: stable@vger.kernel.org      # 5.11
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-15-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 2f20640491ed ("ASoC: qdsp6: qdsp6: q6prm: handle clk disable correctly")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230302122908.221398-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/samsung/exynos.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/qcom/qdsp6/q6prm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/interconnect/samsung/exynos.c
-+++ b/drivers/interconnect/samsung/exynos.c
-@@ -149,6 +149,9 @@ static int exynos_generic_icc_probe(stru
- 				 &priv->bus_clk_ratio))
- 		priv->bus_clk_ratio = EXYNOS_ICC_DEFAULT_BUS_CLK_RATIO;
+--- a/sound/soc/qcom/qdsp6/q6prm.c
++++ b/sound/soc/qcom/qdsp6/q6prm.c
+@@ -183,9 +183,9 @@ int q6prm_set_lpass_clock(struct device
+ 			  unsigned int freq)
+ {
+ 	if (freq)
+-		return q6prm_request_lpass_clock(dev, clk_id, clk_attr, clk_attr, freq);
++		return q6prm_request_lpass_clock(dev, clk_id, clk_attr, clk_root, freq);
  
-+	icc_node->data = priv;
-+	icc_node_add(icc_node, provider);
-+
- 	/*
- 	 * Register a PM QoS request for the parent (devfreq) device.
- 	 */
-@@ -157,9 +160,6 @@ static int exynos_generic_icc_probe(stru
- 	if (ret < 0)
- 		goto err_node_del;
+-	return q6prm_release_lpass_clock(dev, clk_id, clk_attr, clk_attr, freq);
++	return q6prm_release_lpass_clock(dev, clk_id, clk_attr, clk_root, freq);
+ }
+ EXPORT_SYMBOL_GPL(q6prm_set_lpass_clock);
  
--	icc_node->data = priv;
--	icc_node_add(icc_node, provider);
--
- 	icc_parent_node = exynos_icc_get_parent(bus_dev->of_node);
- 	if (IS_ERR(icc_parent_node)) {
- 		ret = PTR_ERR(icc_parent_node);
 
 
