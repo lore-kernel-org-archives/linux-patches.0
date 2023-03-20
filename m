@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8C01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29641C433D2;
-	Mon, 20 Mar 2023 15:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63ADA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC769C433EF;
+	Mon, 20 Mar 2023 15:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324670;
-	bh=r4AFh1Z5AoPzx34H47DldwJMaDSmt8xpIpyRrbvQ6so=;
+	s=korg; t=1679324673;
+	bh=X4h6yHXiON1m6XydHEdwYWNbckRAwVJpL1BE2uPA6jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YSpwD/SEQNp5/2e5DsSS7T9yasWsub2x4AGXLvH58tnBi8M1avfi2UkI2LEBxyfME
-	 w1LF67qQ36KzkLsp/YHA5NWKbHHEVLoqUeEovgwnB2et7tWdBfIWo3XLT++kfoakM5
-	 iO0rI5m/gE6t3wxPj1qYD0ykhIEAo4NzMSnWO1aY=
+	b=UMbkDcC57K7egHfEDPfXTWA2w6nkT9OAAuN3sDZHTuq7F0UkTtTn4EQUODWpk/KLy
+	 Qmmanm5Q0WJYA2SFoDklLCKqZ9ExfXUDNnF0J4IGyq/Bj2I/6GVrL9hVxltCyX/pSg
+	 /EgwCThwirHHtRyovwBEq1btSfoRyuS4ApfCCv5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 29/99] nvme: fix handling single range discard request
-Date: Mon, 20 Mar 2023 15:54:07 +0100
-Message-Id: <20230320145444.605564840@linuxfoundation.org>
+Subject: [PATCH 5.10 38/99] qed/qed_mng_tlv: correctly zero out ->min instead of ->hour
+Date: Mon, 20 Mar 2023 15:54:16 +0100
+Message-Id: <20230320145444.970250061@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
 References: <20230320145443.333824603@linuxfoundation.org>
@@ -36,68 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit 37f0dc2ec78af0c3f35dd05578763de059f6fe77 ]
+[ Upstream commit 470efd68a4653d9819d391489886432cd31bcd0b ]
 
-When investigating one customer report on warning in nvme_setup_discard,
-we observed the controller(nvme/tcp) actually exposes
-queue_max_discard_segments(req->q) == 1.
+This fixes an issue where ->hour would erroneously get zeroed out
+instead of ->min because of a bad copy paste.
 
-Obviously the current code can't handle this situation, since contiguity
-merge like normal RW request is taken.
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
 
-Fix the issue by building range from request sector/nr_sectors directly.
-
-Fixes: b35ba01ea697 ("nvme: support ranged discard requests")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: f240b6882211 ("qed: Add support for processing fcoe tlv request.")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Link: https://lore.kernel.org/r/20230315194618.579286-1-d-tatianin@yandex-team.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index e162f1dfbafe9..a4b6aa932a8fe 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -723,16 +723,26 @@ static blk_status_t nvme_setup_discard(struct nvme_ns *ns, struct request *req,
- 		range = page_address(ns->ctrl->discard_page);
- 	}
- 
--	__rq_for_each_bio(bio, req) {
--		u64 slba = nvme_sect_to_lba(ns, bio->bi_iter.bi_sector);
--		u32 nlb = bio->bi_iter.bi_size >> ns->lba_shift;
--
--		if (n < segments) {
--			range[n].cattr = cpu_to_le32(0);
--			range[n].nlb = cpu_to_le32(nlb);
--			range[n].slba = cpu_to_le64(slba);
-+	if (queue_max_discard_segments(req->q) == 1) {
-+		u64 slba = nvme_sect_to_lba(ns, blk_rq_pos(req));
-+		u32 nlb = blk_rq_sectors(req) >> (ns->lba_shift - 9);
-+
-+		range[0].cattr = cpu_to_le32(0);
-+		range[0].nlb = cpu_to_le32(nlb);
-+		range[0].slba = cpu_to_le64(slba);
-+		n = 1;
-+	} else {
-+		__rq_for_each_bio(bio, req) {
-+			u64 slba = nvme_sect_to_lba(ns, bio->bi_iter.bi_sector);
-+			u32 nlb = bio->bi_iter.bi_size >> ns->lba_shift;
-+
-+			if (n < segments) {
-+				range[n].cattr = cpu_to_le32(0);
-+				range[n].nlb = cpu_to_le32(nlb);
-+				range[n].slba = cpu_to_le64(slba);
-+			}
-+			n++;
- 		}
--		n++;
- 	}
- 
- 	if (WARN_ON_ONCE(n != segments)) {
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c b/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
+index 3e3192a3ad9b7..fdbd5f07a1857 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
+@@ -422,7 +422,7 @@ qed_mfw_get_tlv_time_value(struct qed_mfw_tlv_time *p_time,
+ 	if (p_time->hour > 23)
+ 		p_time->hour = 0;
+ 	if (p_time->min > 59)
+-		p_time->hour = 0;
++		p_time->min = 0;
+ 	if (p_time->msec > 999)
+ 		p_time->msec = 0;
+ 	if (p_time->usec > 999)
 -- 
 2.39.2
 
