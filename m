@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692871C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2B3C433EF;
-	Mon, 20 Mar 2023 15:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1951C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D10BC433EF;
+	Mon, 20 Mar 2023 15:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326189;
-	bh=ZGs7l5Ud+ipwYBmxK3XJqmyjDv9jr2SVhfE3o9Fp42E=;
+	s=korg; t=1679326191;
+	bh=WZcpLRaJ38rETLsEeDRuOU7hG1w5FdMNAeoi3tqxS4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uSVayaeu4Gw2F6su3amKBjUV8y7O7TVLQYiGxla3vXG3QwYpFr4n6g85hHgRaFqno
-	 Vzh1+/BQ0ZWAn0RpmYWpF61OfDE8CcTwYQzcl7DFzcw4973rGyGp4VjOwcXcvtGnGj
-	 agGUdUb2ZdFWNF7kO97UjWUrjRwqvZ6pgbZcohFY=
+	b=MXKO18d1gYlR7e49XoUYdqSzqxTPMcIO7Iwx2P0nrksZUTca6Ak3kmuSU7YfgudIl
+	 ACbSph/O/9fo1T/nai5EAKk5Q3DYLl16hnGvx/PMe6WxV46LwoxeJjrK5Y9xaj0gnX
+	 JbW8HuoGZOQw7qht+PasXnNI3z3xUhiNf/EWrjv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aishwarya TCV <aishwarya.tcv@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.2 193/211] ACPI: PPTT: Fix to avoid sleep in the atomic context when PPTT is absent
-Date: Mon, 20 Mar 2023 15:55:28 +0100
-Message-Id: <20230320145521.614391303@linuxfoundation.org>
+	"Radu Pirea (OSS)" <radu-nicolae.pirea@oss.nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.2 194/211] net: phy: nxp-c45-tja11xx: fix MII_BASIC_CONFIG_REV bit
+Date: Mon, 20 Mar 2023 15:55:29 +0100
+Message-Id: <20230320145521.653487824@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,92 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Radu Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
 
-commit 91d7b60a65d9f71230ea09b86d2058a884a3c2af upstream.
+commit 8ba572052a4b8fe5b205854d27e54e3486049b71 upstream.
 
-Commit 0c80f9e165f8 ("ACPI: PPTT: Leave the table mapped for the runtime usage")
-enabled to map PPTT once on the first invocation of acpi_get_pptt() and
-never unmapped the same allowing it to be used at runtime with out the
-hassle of mapping and unmapping the table. This was needed to fetch LLC
-information from the PPTT in the cpuhotplug path which is executed in
-the atomic context as the acpi_get_table() might sleep waiting for a
-mutex.
+According to the TJA1103 user manual, the bit for the reversed role in MII
+or RMII modes is bit 4.
 
-However it missed to handle the case when there is no PPTT on the system
-which results in acpi_get_pptt() being called from all the secondary
-CPUs attempting to fetch the LLC information in the atomic context
-without knowing the absence of PPTT resulting in the splat like below:
-
- | BUG: sleeping function called from invalid context at kernel/locking/semaphore.c:164
- | in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/1
- | preempt_count: 1, expected: 0
- | RCU nest depth: 0, expected: 0
- | no locks held by swapper/1/0.
- | irq event stamp: 0
- | hardirqs last  enabled at (0): 0x0
- | hardirqs last disabled at (0): copy_process+0x61c/0x1b40
- | softirqs last  enabled at (0): copy_process+0x61c/0x1b40
- | softirqs last disabled at (0): 0x0
- | CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.3.0-rc1 #1
- | Call trace:
- |  dump_backtrace+0xac/0x138
- |  show_stack+0x30/0x48
- |  dump_stack_lvl+0x60/0xb0
- |  dump_stack+0x18/0x28
- |  __might_resched+0x160/0x270
- |  __might_sleep+0x58/0xb0
- |  down_timeout+0x34/0x98
- |  acpi_os_wait_semaphore+0x7c/0xc0
- |  acpi_ut_acquire_mutex+0x58/0x108
- |  acpi_get_table+0x40/0xe8
- |  acpi_get_pptt+0x48/0xa0
- |  acpi_get_cache_info+0x38/0x140
- |  init_cache_level+0xf4/0x118
- |  detect_cache_attributes+0x2e4/0x640
- |  update_siblings_masks+0x3c/0x330
- |  store_cpu_topology+0x88/0xf0
- |  secondary_start_kernel+0xd0/0x168
- |  __secondary_switched+0xb8/0xc0
-
-Update acpi_get_pptt() to consider the fact that PPTT is once checked and
-is not available on the system and return NULL avoiding any attempts to
-fetch PPTT and thereby avoiding any possible sleep waiting for a mutex
-in the atomic context.
-
-Fixes: 0c80f9e165f8 ("ACPI: PPTT: Leave the table mapped for the runtime usage")
-Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Tested-by: Pierre Gondois <pierre.gondois@arm.com>
-Cc: 6.0+ <stable@vger.kernel.org> # 6.0+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: <stable@vger.kernel.org> # 5.15+
+Fixes: b050f2f15e04 ("phy: nxp-c45: add driver for tja1103")
+Signed-off-by: Radu Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
+Link: https://lore.kernel.org/r/20230309100111.1246214-1-radu-nicolae.pirea@oss.nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/pptt.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/phy/nxp-c45-tja11xx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/pptt.c
-+++ b/drivers/acpi/pptt.c
-@@ -537,16 +537,19 @@ static int topology_get_acpi_cpu_tag(str
- static struct acpi_table_header *acpi_get_pptt(void)
- {
- 	static struct acpi_table_header *pptt;
-+	static bool is_pptt_checked;
- 	acpi_status status;
+--- a/drivers/net/phy/nxp-c45-tja11xx.c
++++ b/drivers/net/phy/nxp-c45-tja11xx.c
+@@ -79,7 +79,7 @@
+ #define SGMII_ABILITY			BIT(0)
  
- 	/*
- 	 * PPTT will be used at runtime on every CPU hotplug in path, so we
- 	 * don't need to call acpi_put_table() to release the table mapping.
- 	 */
--	if (!pptt) {
-+	if (!pptt && !is_pptt_checked) {
- 		status = acpi_get_table(ACPI_SIG_PPTT, 0, &pptt);
- 		if (ACPI_FAILURE(status))
- 			acpi_pptt_warn_missing();
-+
-+		is_pptt_checked = true;
- 	}
- 
- 	return pptt;
+ #define VEND1_MII_BASIC_CONFIG		0xAFC6
+-#define MII_BASIC_CONFIG_REV		BIT(8)
++#define MII_BASIC_CONFIG_REV		BIT(4)
+ #define MII_BASIC_CONFIG_SGMII		0x9
+ #define MII_BASIC_CONFIG_RGMII		0x7
+ #define MII_BASIC_CONFIG_RMII		0x5
 
 
