@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBCF1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE4DC433EF;
-	Mon, 20 Mar 2023 15:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63281C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246CBC433EF;
+	Mon, 20 Mar 2023 15:28:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326112;
-	bh=LpRtXfs3aHQRr8gx0vmr/Po8E1+0VB63pxPkhZZiZN4=;
+	s=korg; t=1679326115;
+	bh=Lp+Eg4VK8rObcKndcZEw48ieVuAJl9AgoRCjAquKAxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xoeqhsyyuf1eQhzmxENE/M7wHEsc2qrBYyR5+BrBnBul/GFjthPuWjJIHZEdmIyAw
-	 VctVJYhUfL9+fT+l5UXz93yCGNr1oCfiJ1HSPptSvTzqUT9AyglBtBWakavgqyyatr
-	 49E+yNX/7gaypTHKcaHiUTAABukGVUanbdfKXAfE=
+	b=Z4kWmA2TBo2o+CNq0i07NQUINffuHmLsDh4WQf7Cp5G+GkYHVUXd0iUjLhgIbsPGv
+	 D8cbVKy4lJtO31az7RwY8EQkI15FERTTCU9wxv7wfvHBcLDfY7rWr7qripy/k3n+Lu
+	 CefboWhb38FAsdLKa5c5gT715ckLMPuBwpvValWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Maxime Ripard <maxime@cerno.tech>
-Subject: [PATCH 6.2 163/211] drm/sun4i: fix missing component unbind on bind errors
-Date: Mon, 20 Mar 2023 15:54:58 +0100
-Message-Id: <20230320145520.270970327@linuxfoundation.org>
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.2 164/211] drm/i915/active: Fix misuse of non-idle barriers as fence trackers
+Date: Mon, 20 Mar 2023 15:54:59 +0100
+Message-Id: <20230320145520.302249679@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -35,49 +36,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-commit c22f2ff8724b49dce2ae797e9fbf4bc0fa91112f upstream.
+commit e0e6b416b25ee14716f3549e0cbec1011b193809 upstream.
 
-Make sure to unbind all subcomponents when binding the aggregate device
-fails.
+Users reported oopses on list corruptions when using i915 perf with a
+number of concurrently running graphics applications.  Root cause analysis
+pointed at an issue in barrier processing code -- a race among perf open /
+close replacing active barriers with perf requests on kernel context and
+concurrent barrier preallocate / acquire operations performed during user
+context first pin / last unpin.
 
-Fixes: 9026e0d122ac ("drm: Add Allwinner A10 Display Engine support")
-Cc: stable@vger.kernel.org      # 4.7
-Cc: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230306103242.4775-1-johan+linaro@kernel.org
+When adding a request to a composite tracker, we try to reuse an existing
+fence tracker, already allocated and registered with that composite.  The
+tracker we obtain may already track another fence, may be an idle barrier,
+or an active barrier.
+
+If the tracker we get occurs a non-idle barrier then we try to delete that
+barrier from a list of barrier tasks it belongs to.  However, while doing
+that we don't respect return value from a function that performs the
+barrier deletion.  Should the deletion ever fail, we would end up reusing
+the tracker still registered as a barrier task.  Since the same structure
+field is reused with both fence callback lists and barrier tasks list,
+list corruptions would likely occur.
+
+Barriers are now deleted from a barrier tasks list by temporarily removing
+the list content, traversing that content with skip over the node to be
+deleted, then populating the list back with the modified content.  Should
+that intentionally racy concurrent deletion attempts be not serialized,
+one or more of those may fail because of the list being temporary empty.
+
+Related code that ignores the results of barrier deletion was initially
+introduced in v5.4 by commit d8af05ff38ae ("drm/i915: Allow sharing the
+idle-barrier from other kernel requests").  However, all users of the
+barrier deletion routine were apparently serialized at that time, then the
+issue didn't exhibit itself.  Results of git bisect with help of a newly
+developed igt@gem_barrier_race@remote-request IGT test indicate that list
+corruptions might start to appear after commit 311770173fac ("drm/i915/gt:
+Schedule request retirement when timeline idles"), introduced in v5.5.
+
+Respect results of barrier deletion attempts -- mark the barrier as idle
+only if successfully deleted from the list.  Then, before proceeding with
+setting our fence as the one currently tracked, make sure that the tracker
+we've got is not a non-idle barrier.  If that check fails then don't use
+that tracker but go back and try to acquire a new, usable one.
+
+v3: use unlikely() to document what outcome we expect (Andi),
+  - fix bad grammar in commit description.
+v2: no code changes,
+  - blame commit 311770173fac ("drm/i915/gt: Schedule request retirement
+    when timeline idles"), v5.5, not commit d8af05ff38ae ("drm/i915: Allow
+    sharing the idle-barrier from other kernel requests"), v5.4,
+  - reword commit description.
+
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/6333
+Fixes: 311770173fac ("drm/i915/gt: Schedule request retirement when timeline idles")
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: stable@vger.kernel.org # v5.5
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230302120820.48740-1-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit 506006055769b10d1b2b4e22f636f3b45e0e9fc7)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_drv.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/i915_active.c |   27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/sun4i/sun4i_drv.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_drv.c
-@@ -95,12 +95,12 @@ static int sun4i_drv_bind(struct device
- 	/* drm_vblank_init calls kcalloc, which can fail */
- 	ret = drm_vblank_init(drm, drm->mode_config.num_crtc);
- 	if (ret)
--		goto cleanup_mode_config;
-+		goto unbind_all;
+--- a/drivers/gpu/drm/i915/i915_active.c
++++ b/drivers/gpu/drm/i915/i915_active.c
+@@ -422,12 +422,12 @@ replace_barrier(struct i915_active *ref,
+ 	 * we can use it to substitute for the pending idle-barrer
+ 	 * request that we want to emit on the kernel_context.
+ 	 */
+-	__active_del_barrier(ref, node_from_active(active));
+-	return true;
++	return __active_del_barrier(ref, node_from_active(active));
+ }
  
- 	/* Remove early framebuffers (ie. simplefb) */
- 	ret = drm_aperture_remove_framebuffers(false, &sun4i_drv_driver);
- 	if (ret)
--		goto cleanup_mode_config;
-+		goto unbind_all;
+ int i915_active_add_request(struct i915_active *ref, struct i915_request *rq)
+ {
++	u64 idx = i915_request_timeline(rq)->fence_context;
+ 	struct dma_fence *fence = &rq->fence;
+ 	struct i915_active_fence *active;
+ 	int err;
+@@ -437,16 +437,19 @@ int i915_active_add_request(struct i915_
+ 	if (err)
+ 		return err;
  
- 	sun4i_framebuffer_init(drm);
+-	active = active_instance(ref, i915_request_timeline(rq)->fence_context);
+-	if (!active) {
+-		err = -ENOMEM;
+-		goto out;
+-	}
+-
+-	if (replace_barrier(ref, active)) {
+-		RCU_INIT_POINTER(active->fence, NULL);
+-		atomic_dec(&ref->count);
+-	}
++	do {
++		active = active_instance(ref, idx);
++		if (!active) {
++			err = -ENOMEM;
++			goto out;
++		}
++
++		if (replace_barrier(ref, active)) {
++			RCU_INIT_POINTER(active->fence, NULL);
++			atomic_dec(&ref->count);
++		}
++	} while (unlikely(is_barrier(active)));
++
+ 	if (!__i915_active_fence_set(active, fence))
+ 		__i915_active_acquire(ref);
  
-@@ -119,6 +119,8 @@ static int sun4i_drv_bind(struct device
- 
- finish_poll:
- 	drm_kms_helper_poll_fini(drm);
-+unbind_all:
-+	component_unbind_all(dev, NULL);
- cleanup_mode_config:
- 	drm_mode_config_cleanup(drm);
- 	of_reserved_mem_device_release(dev);
 
 
