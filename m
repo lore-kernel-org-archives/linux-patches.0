@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763121C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0EFC433D2;
-	Mon, 20 Mar 2023 15:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC6E1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30A0C433D2;
+	Mon, 20 Mar 2023 15:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325726;
-	bh=nyD/biSwnmE61lrtW18J5H7Y6qPC96aP9J9xqE3FVJI=;
+	s=korg; t=1679325729;
+	bh=g+DRjXjoBUw2VNOh65j3OhpK3jHtzGNrLd0xqTjx23U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8G8NH3hD+NeVNcPZrXkEU5Ku82ZWjAniC9x+S57lf22rLcv7pYZXmwy4RSYGzc9D
-	 8ms4ZEVP2avPEqYu/I/khL4pc5DF7VAVGKitt1+THG7Zti0csLeov2RVuWh53PyZDX
-	 mZZBJTxW0urmMZ48wFYYZWYMO2aH8bDselZJAH2s=
+	b=TgJg9I6cLIaTB9GMxHAQIqICRlpn1cDSmemyeyxGqWH9h2Uv56Qrb5JxxSDgpIFsT
+	 7xjOKjS0V97YaZPfPKonfDQCZb84STaUdKux/ZZWc/rQQBM6Na7JPUYVc2cKqimjI5
+	 9+hegyqxd041Rv4Nji4gEcdTx6whoxzrsxVxa2EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 091/211] qed/qed_mng_tlv: correctly zero out ->min instead of ->hour
-Date: Mon, 20 Mar 2023 15:53:46 +0100
-Message-Id: <20230320145517.112408824@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.1 133/198] interconnect: qcom: osm-l3: fix registration race
+Date: Mon, 20 Mar 2023 15:54:31 +0100
+Message-Id: <20230320145513.114504592@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 470efd68a4653d9819d391489886432cd31bcd0b ]
+commit 174941ed28a3573db075da46d95b4dcf9d4c49c2 upstream.
 
-This fixes an issue where ->hour would erroneously get zeroed out
-instead of ->min because of a bad copy paste.
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to fail:
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
+	of_icc_xlate_onecell: invalid index 0
+	cpu cpu0: error -EINVAL: error finding src node
+	cpu cpu0: dev_pm_opp_of_find_icc_paths: Unable to get path0: -22
+	qcom-cpufreq-hw: probe of 18591000.cpufreq failed with error -22
 
-Fixes: f240b6882211 ("qed: Add support for processing fcoe tlv request.")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Link: https://lore.kernel.org/r/20230315194618.579286-1-d-tatianin@yandex-team.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
+
+Fixes: 5bc9900addaf ("interconnect: qcom: Add OSM L3 interconnect provider support")
+Cc: stable@vger.kernel.org      # 5.7
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-6-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/interconnect/qcom/osm-l3.c |   14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c b/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
-index 6190adf965bca..f55eed092f25d 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
-@@ -422,7 +422,7 @@ qed_mfw_get_tlv_time_value(struct qed_mfw_tlv_time *p_time,
- 	if (p_time->hour > 23)
- 		p_time->hour = 0;
- 	if (p_time->min > 59)
--		p_time->hour = 0;
-+		p_time->min = 0;
- 	if (p_time->msec > 999)
- 		p_time->msec = 0;
- 	if (p_time->usec > 999)
--- 
-2.39.2
-
+--- a/drivers/interconnect/qcom/osm-l3.c
++++ b/drivers/interconnect/qcom/osm-l3.c
+@@ -216,8 +216,8 @@ static int qcom_osm_l3_remove(struct pla
+ {
+ 	struct qcom_osm_l3_icc_provider *qp = platform_get_drvdata(pdev);
+ 
++	icc_provider_deregister(&qp->provider);
+ 	icc_nodes_remove(&qp->provider);
+-	icc_provider_del(&qp->provider);
+ 
+ 	return 0;
+ }
+@@ -303,14 +303,9 @@ static int qcom_osm_l3_probe(struct plat
+ 	provider->set = qcom_osm_l3_set;
+ 	provider->aggregate = icc_std_aggregate;
+ 	provider->xlate = of_icc_xlate_onecell;
+-	INIT_LIST_HEAD(&provider->nodes);
+ 	provider->data = data;
+ 
+-	ret = icc_provider_add(provider);
+-	if (ret) {
+-		dev_err(&pdev->dev, "error adding interconnect provider\n");
+-		return ret;
+-	}
++	icc_provider_init(provider);
+ 
+ 	for (i = 0; i < num_nodes; i++) {
+ 		size_t j;
+@@ -333,12 +328,15 @@ static int qcom_osm_l3_probe(struct plat
+ 	}
+ 	data->num_nodes = num_nodes;
+ 
++	ret = icc_provider_register(provider);
++	if (ret)
++		goto err;
++
+ 	platform_set_drvdata(pdev, qp);
+ 
+ 	return 0;
+ err:
+ 	icc_nodes_remove(provider);
+-	icc_provider_del(provider);
+ 
+ 	return ret;
+ }
 
 
