@@ -1,37 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EB01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6CBC433EF;
-	Mon, 20 Mar 2023 15:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6741C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510CFC433D2;
+	Mon, 20 Mar 2023 15:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325562;
-	bh=svnEGMwOtZy+jrP8rpjpjRoeysd5G0/prnmGyaWfYlc=;
+	s=korg; t=1679325564;
+	bh=Eb5jnuG1Ekz+HQ+52zkkQu/88M0jhTAM6jLx6dtOlQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ta64bPVRRlHFAW5IsoDtyVtiDOsgqyyvlTcb0CGaUqSbaviMzm/Fb8kOuVLb/lgsV
-	 SmozIMoAonMQlfN+Qde3bJuQEBDrOhp0qxCcs6C5mFVfUgtB4t9lNC2mGFtmjmcGZw
-	 I1G63KgkvA1W+Ck9C+gR5TCVVq7274LW6x4pixAc=
+	b=WTjRPTjNT4Dyb7ik4nC/X1grU5N3Upi/XH4/s4DYOnu+rvnuZepFvfHJ6qDyqzLJb
+	 ndgd2JhFPL94zJUZezb08Ntiq4Ia9J3zl5KLlSwAkLB9JwOpqkmYTmZ0QJXcDpq0cv
+	 FCBsmRlAp2XWaJxi2cuxq42Mq3/yo7oVBhMqX7jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	"HeungJun, Kim" <riverful.kim@samsung.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
-	Mauro Carvalho Chehab <mchehab@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	HeungJun
-Subject: [PATCH 6.1 102/198] media: m5mols: fix off-by-one loop termination error
-Date: Mon, 20 Mar 2023 15:54:00 +0100
-Message-Id: <20230320145511.849693940@linuxfoundation.org>
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+	Daniel Golle <daniel@makrotopia.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 062/211] net: ethernet: mtk_eth_soc: reset PCS state
+Date: Mon, 20 Mar 2023 15:53:17 +0100
+Message-Id: <20230320145515.828203504@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -42,60 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
+[ Upstream commit 611e2dabb4b3243d176739fd6a5a34d007fa3f86 ]
 
-The __find_restype() function loops over the m5mols_default_ffmt[]
-array, and the termination condition ends up being wrong: instead of
-stopping when the iterator becomes the size of the array it traverses,
-it stops after it has already overshot the array.
+Reset the internal PCS state machine when changing interface mode.
+This prevents confusing the state machine when changing interface
+modes, e.g. from SGMII to 2500Base-X or vice-versa.
 
-Now, in practice this doesn't likely matter, because the code will
-always find the entry it looks for, and will thus return early and never
-hit that last extra iteration.
-
-But it turns out that clang will unroll the loop fully, because it has
-only two iterations (well, three due to the off-by-one bug), and then
-clang will end up just giving up in the middle of the loop unrolling
-when it notices that the code walks past the end of the array.
-
-And that made 'objtool' very unhappy indeed, because the generated code
-just falls off the edge of the universe, and ends up falling through to
-the next function, causing this warning:
-
-   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
-
-Fix the loop ending condition.
-
-Reported-by: Jens Axboe <axboe@kernel.dk>
-Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
-Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
-Cc: HeungJun, Kim <riverful.kim@samsung.com>
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 7e538372694b ("net: ethernet: mediatek: Re-add support SGMII")
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Tested-by: Bjørn Mork <bjorn@mork.no>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.h | 4 ++++
+ drivers/net/ethernet/mediatek/mtk_sgmii.c   | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
-index 2201d2a26353a..c90442feb6dca 100644
---- a/drivers/media/i2c/m5mols/m5mols_core.c
-+++ b/drivers/media/i2c/m5mols/m5mols_core.c
-@@ -488,7 +488,7 @@ static enum m5mols_restype __find_restype(u32 code)
- 	do {
- 		if (code == m5mols_default_ffmt[type].code)
- 			return type;
--	} while (type++ != SIZE_DEFAULT_FFMT);
-+	} while (++type != SIZE_DEFAULT_FFMT);
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+index b481d0d46bb16..d4b4f9eaa4419 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+@@ -528,6 +528,10 @@
+ #define SGMII_SEND_AN_ERROR_EN		BIT(11)
+ #define SGMII_IF_MODE_MASK		GENMASK(5, 1)
  
- 	return 0;
- }
++/* Register to reset SGMII design */
++#define SGMII_RESERVED_0	0x34
++#define SGMII_SW_RESET		BIT(0)
++
+ /* Register to set SGMII speed, ANA RG_ Control Signals III*/
+ #define SGMSYS_ANA_RG_CS3	0x2028
+ #define RG_PHY_SPEED_MASK	(BIT(2) | BIT(3))
+diff --git a/drivers/net/ethernet/mediatek/mtk_sgmii.c b/drivers/net/ethernet/mediatek/mtk_sgmii.c
+index bb00de1003ac4..612f65bb03454 100644
+--- a/drivers/net/ethernet/mediatek/mtk_sgmii.c
++++ b/drivers/net/ethernet/mediatek/mtk_sgmii.c
+@@ -88,6 +88,10 @@ static int mtk_pcs_config(struct phylink_pcs *pcs, unsigned int mode,
+ 		regmap_update_bits(mpcs->regmap, SGMSYS_QPHY_PWR_STATE_CTRL,
+ 				   SGMII_PHYA_PWD, SGMII_PHYA_PWD);
+ 
++		/* Reset SGMII PCS state */
++		regmap_update_bits(mpcs->regmap, SGMII_RESERVED_0,
++				   SGMII_SW_RESET, SGMII_SW_RESET);
++
+ 		if (interface == PHY_INTERFACE_MODE_2500BASEX)
+ 			rgc3 = RG_PHY_SPEED_3_125G;
+ 		else
 -- 
 2.39.2
 
