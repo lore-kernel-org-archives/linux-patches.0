@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E281C1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6409FC433EF;
-	Mon, 20 Mar 2023 15:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87451C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215A6C4339B;
+	Mon, 20 Mar 2023 15:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325127;
-	bh=u62PHWIrN6HTCJZD7dyHy2je/j/PdhGkuo2ogWvA/hw=;
+	s=korg; t=1679325130;
+	bh=MTswNkIjLREraB0TLEbO3iqOyfcrNeFswkEkeQwDcRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bi7BII/gYWVhkyxoaCHqLl99TiudyG6ZSSCyPWwAfJQQMh+RcEFQCSVOmvcM70FL+
-	 HsFSIG9PD3iHQsYqyeXnLd/3VUXZVhPG2ty/QyMWRmWm02lq2/qh8oW8sSzf6mfWm7
-	 wE67gvR0JxisnBR4BqdLNUpew8la4Wu99MAwFfRE=
+	b=NPsTkPC9Ducnj00JZ9ZQ9dVycEj3oqRMsLYqsHktoioYbGgSFgPCMJarc8emwdEQ/
+	 OXa36yab50yXZJgj/qKDHVhilsFCYUd0Gz2AKiMSHR1ac50boEmt6yRDDvvbZlztby
+	 sSo/Zo4554GRZvLJXS9ojYsKC1urC0vq5yKmRy4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Van Hensbergen <ericvh@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Mika Kahola <mika.kahola@intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/115] net/9p: fix bug in client create for .L
-Date: Mon, 20 Mar 2023 15:54:42 +0100
-Message-Id: <20230320145452.358993165@linuxfoundation.org>
+Subject: [PATCH 6.1 044/198] drm/i915/psr: Use calculated io and fast wake lines
+Date: Mon, 20 Mar 2023 15:53:02 +0100
+Message-Id: <20230320145509.309131907@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +38,169 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Van Hensbergen <ericvh@kernel.org>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit 3866584a1c56a2bbc8c0981deb4476d0b801969e ]
+[ Upstream commit 71c602103c74b277bef3d20a308874a33ec8326d ]
 
-We are supposed to set fid->mode to reflect the flags
-that were used to open the file.  We were actually setting
-it to the creation mode which is the default perms of the
-file not the flags the file was opened with.
+Currently we are using hardcoded 7 for io and fast wake lines.
 
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
-Reviewed-by: Dominique Martinet <asmadeus@codewreck.org>
+According to Bspec io and fast wake times are both 42us for
+DISPLAY_VER >= 12 and 50us and 32us for older platforms.
+
+Calculate line counts for these and configure them into PSR2_CTL
+accordingly
+
+Use 45 us for the fast wake calculation as 42 seems to be too
+tight based on testing.
+
+Bspec: 49274, 4289
+
+Cc: Mika Kahola <mika.kahola@intel.com>
+Cc: José Roberto de Souza <jose.souza@intel.com>
+Fixes: 64cf40a125ff ("drm/i915/psr: Program default IO buffer Wake and Fast Wake")
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7725
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230221085304.3382297-1-jouni.hogander@intel.com
+(cherry picked from commit cb42e8ede5b475c096e473b86c356b1158b4bc3b)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/client.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../drm/i915/display/intel_display_types.h    |  2 +
+ drivers/gpu/drm/i915/display/intel_psr.c      | 78 +++++++++++++++----
+ 2 files changed, 63 insertions(+), 17 deletions(-)
 
-diff --git a/net/9p/client.c b/net/9p/client.c
-index 08e0c9990af06..c4c1e44cd7ca3 100644
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -1315,7 +1315,7 @@ int p9_client_create_dotl(struct p9_fid *ofid, const char *name, u32 flags,
- 		 qid->type, qid->path, qid->version, iounit);
+diff --git a/drivers/gpu/drm/i915/display/intel_display_types.h b/drivers/gpu/drm/i915/display/intel_display_types.h
+index 135dbcab62b28..63b7105e818a6 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -1604,6 +1604,8 @@ struct intel_psr {
+ 	bool psr2_sel_fetch_cff_enabled;
+ 	bool req_psr2_sdp_prior_scanline;
+ 	u8 sink_sync_latency;
++	u8 io_wake_lines;
++	u8 fast_wake_lines;
+ 	ktime_t last_entry_attempt;
+ 	ktime_t last_exit;
+ 	bool sink_not_reliable;
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 15c3e448aa0e6..bf18423c7a005 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -542,6 +542,14 @@ static void hsw_activate_psr2(struct intel_dp *intel_dp)
+ 	val |= EDP_PSR2_FRAME_BEFORE_SU(max_t(u8, intel_dp->psr.sink_sync_latency + 1, 2));
+ 	val |= intel_psr2_get_tp_time(intel_dp);
  
- 	memmove(&ofid->qid, qid, sizeof(struct p9_qid));
--	ofid->mode = mode;
-+	ofid->mode = flags;
- 	ofid->iounit = iounit;
++	if (DISPLAY_VER(dev_priv) >= 12) {
++		if (intel_dp->psr.io_wake_lines < 9 &&
++		    intel_dp->psr.fast_wake_lines < 9)
++			val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
++		else
++			val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_3;
++	}
++
+ 	/* Wa_22012278275:adl-p */
+ 	if (IS_ADLP_DISPLAY_STEP(dev_priv, STEP_A0, STEP_E0)) {
+ 		static const u8 map[] = {
+@@ -558,31 +566,21 @@ static void hsw_activate_psr2(struct intel_dp *intel_dp)
+ 		 * Still using the default IO_BUFFER_WAKE and FAST_WAKE, see
+ 		 * comments bellow for more information
+ 		 */
+-		u32 tmp, lines = 7;
+-
+-		val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
++		u32 tmp;
  
- free_and_error:
+-		tmp = map[lines - TGL_EDP_PSR2_IO_BUFFER_WAKE_MIN_LINES];
++		tmp = map[intel_dp->psr.io_wake_lines - TGL_EDP_PSR2_IO_BUFFER_WAKE_MIN_LINES];
+ 		tmp = tmp << TGL_EDP_PSR2_IO_BUFFER_WAKE_SHIFT;
+ 		val |= tmp;
+ 
+-		tmp = map[lines - TGL_EDP_PSR2_FAST_WAKE_MIN_LINES];
++		tmp = map[intel_dp->psr.fast_wake_lines - TGL_EDP_PSR2_FAST_WAKE_MIN_LINES];
+ 		tmp = tmp << TGL_EDP_PSR2_FAST_WAKE_MIN_SHIFT;
+ 		val |= tmp;
+ 	} else if (DISPLAY_VER(dev_priv) >= 12) {
+-		/*
+-		 * TODO: 7 lines of IO_BUFFER_WAKE and FAST_WAKE are default
+-		 * values from BSpec. In order to setting an optimal power
+-		 * consumption, lower than 4k resolution mode needs to decrease
+-		 * IO_BUFFER_WAKE and FAST_WAKE. And higher than 4K resolution
+-		 * mode needs to increase IO_BUFFER_WAKE and FAST_WAKE.
+-		 */
+-		val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
+-		val |= TGL_EDP_PSR2_IO_BUFFER_WAKE(7);
+-		val |= TGL_EDP_PSR2_FAST_WAKE(7);
++		val |= TGL_EDP_PSR2_IO_BUFFER_WAKE(intel_dp->psr.io_wake_lines);
++		val |= TGL_EDP_PSR2_FAST_WAKE(intel_dp->psr.fast_wake_lines);
+ 	} else if (DISPLAY_VER(dev_priv) >= 9) {
+-		val |= EDP_PSR2_IO_BUFFER_WAKE(7);
+-		val |= EDP_PSR2_FAST_WAKE(7);
++		val |= EDP_PSR2_IO_BUFFER_WAKE(intel_dp->psr.io_wake_lines);
++		val |= EDP_PSR2_FAST_WAKE(intel_dp->psr.fast_wake_lines);
+ 	}
+ 
+ 	if (intel_dp->psr.req_psr2_sdp_prior_scanline)
+@@ -837,6 +835,46 @@ static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_d
+ 	return true;
+ }
+ 
++static bool _compute_psr2_wake_times(struct intel_dp *intel_dp,
++				     struct intel_crtc_state *crtc_state)
++{
++	struct drm_i915_private *i915 = dp_to_i915(intel_dp);
++	int io_wake_lines, io_wake_time, fast_wake_lines, fast_wake_time;
++	u8 max_wake_lines;
++
++	if (DISPLAY_VER(i915) >= 12) {
++		io_wake_time = 42;
++		/*
++		 * According to Bspec it's 42us, but based on testing
++		 * it is not enough -> use 45 us.
++		 */
++		fast_wake_time = 45;
++		max_wake_lines = 12;
++	} else {
++		io_wake_time = 50;
++		fast_wake_time = 32;
++		max_wake_lines = 8;
++	}
++
++	io_wake_lines = intel_usecs_to_scanlines(
++		&crtc_state->uapi.adjusted_mode, io_wake_time);
++	fast_wake_lines = intel_usecs_to_scanlines(
++		&crtc_state->uapi.adjusted_mode, fast_wake_time);
++
++	if (io_wake_lines > max_wake_lines ||
++	    fast_wake_lines > max_wake_lines)
++		return false;
++
++	if (i915->params.psr_safest_params)
++		io_wake_lines = fast_wake_lines = max_wake_lines;
++
++	/* According to Bspec lower limit should be set as 7 lines. */
++	intel_dp->psr.io_wake_lines = max(io_wake_lines, 7);
++	intel_dp->psr.fast_wake_lines = max(fast_wake_lines, 7);
++
++	return true;
++}
++
+ static bool intel_psr2_config_valid(struct intel_dp *intel_dp,
+ 				    struct intel_crtc_state *crtc_state)
+ {
+@@ -930,6 +968,12 @@ static bool intel_psr2_config_valid(struct intel_dp *intel_dp,
+ 		return false;
+ 	}
+ 
++	if (!_compute_psr2_wake_times(intel_dp, crtc_state)) {
++		drm_dbg_kms(&dev_priv->drm,
++			    "PSR2 not enabled, Unable to use long enough wake times\n");
++		return false;
++	}
++
+ 	if (HAS_PSR2_SEL_FETCH(dev_priv)) {
+ 		if (!intel_psr2_sel_fetch_config_valid(intel_dp, crtc_state) &&
+ 		    !HAS_PSR_HW_TRACKING(dev_priv)) {
 -- 
 2.39.2
 
