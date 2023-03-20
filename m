@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDE11C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23466C433EF;
-	Mon, 20 Mar 2023 15:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681AC1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D96C433EF;
+	Mon, 20 Mar 2023 15:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325556;
-	bh=f+ukSv2m3v8o7lzRsmVB/195V/CPiXrA7klvqDt9pbY=;
+	s=korg; t=1679325559;
+	bh=l82DDHCb2EIipPemovtnXp3iydtOICGI14cAsTHFGEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQitRUrIiDo22qbbAI5FnuB9Yu/iydhGCxUmRwh9RfaDOnuhqf7hAXavWr81tDqoq
-	 u1uZ2cfPsFUsWjedddEyk+4jUKICjJwi2wBnYKZxr05Z6ua4gAzC6tcMEkP7wLLRwF
-	 DIxZigMWjYaStBXRbcvATV/bSrjaBfK9D6zS6uAM=
+	b=QQ/H97uccmeLlF1Up5EWWkpf+h1rJUBy9PlZDmGxYH9UhluokguhAuHBrgdnFphb3
+	 XdL/YV3BBcwFGHvrkuW7bYLcKtgsRhFwvKGT/Yspemb7TjqBRkIH3JPf3hCln4DOUC
+	 0/JxH3fLOzHMwNshZpD9su5sPANAfdBMfj9SMBCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Szymon Heidrich <szymon.heidrich@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/198] hwmon: (ltc2992) Set `can_sleep` flag for GPIO chip
-Date: Mon, 20 Mar 2023 15:53:59 +0100
-Message-Id: <20230320145511.811679470@linuxfoundation.org>
+Subject: [PATCH 6.2 061/211] net: usb: smsc75xx: Limit packet length to skb->len
+Date: Mon, 20 Mar 2023 15:53:16 +0100
+Message-Id: <20230320145515.781033666@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Szymon Heidrich <szymon.heidrich@gmail.com>
 
-[ Upstream commit ab00709310eedcd8dae0df1f66d332f9bc64c99e ]
+[ Upstream commit d8b228318935044dafe3a5bc07ee71a1f1424b8d ]
 
-The ltc2992 drivers uses a mutex and I2C bus access in its GPIO chip `set`
-and `get` implementation. This means these functions can sleep and the GPIO
-chip should set the `can_sleep` property to true.
+Packet length retrieved from skb data may be larger than
+the actual socket buffer length (up to 9026 bytes). In such
+case the cloned skb passed up the network stack will leak
+kernel memory contents.
 
-This will ensure that a warning is printed when trying to set or get the
-GPIO value from a context that potentially can't sleep.
-
-Fixes: 9ca26df1ba25 ("hwmon: (ltc2992) Add support for GPIOs.")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20230314093146.2443845-2-lars@metafoo.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: d0cad871703b ("smsc75xx: SMSC LAN75xx USB gigabit ethernet adapter driver")
+Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ltc2992.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/usb/smsc75xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/ltc2992.c b/drivers/hwmon/ltc2992.c
-index 72489d5d7eaf9..d88e883c7492c 100644
---- a/drivers/hwmon/ltc2992.c
-+++ b/drivers/hwmon/ltc2992.c
-@@ -323,6 +323,7 @@ static int ltc2992_config_gpio(struct ltc2992_state *st)
- 	st->gc.label = name;
- 	st->gc.parent = &st->client->dev;
- 	st->gc.owner = THIS_MODULE;
-+	st->gc.can_sleep = true;
- 	st->gc.base = -1;
- 	st->gc.names = st->gpio_names;
- 	st->gc.ngpio = ARRAY_SIZE(st->gpio_names);
+diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
+index 95de452ff4dad..db34f8d1d6051 100644
+--- a/drivers/net/usb/smsc75xx.c
++++ b/drivers/net/usb/smsc75xx.c
+@@ -2212,7 +2212,8 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 				dev->net->stats.rx_frame_errors++;
+ 		} else {
+ 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
+-			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
++			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
++				     size > skb->len)) {
+ 				netif_dbg(dev, rx_err, dev->net,
+ 					  "size err rx_cmd_a=0x%08x\n",
+ 					  rx_cmd_a);
 -- 
 2.39.2
 
