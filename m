@@ -1,37 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E0F1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54CB8C433D2;
-	Mon, 20 Mar 2023 15:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F481C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36689C433EF;
+	Mon, 20 Mar 2023 15:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325479;
-	bh=Ldv6k/1TwC5j1UcwCZIez4KZZrzPuPDzc2xQnIi0j9M=;
+	s=korg; t=1679325482;
+	bh=XlyKjxvn52nhRum6llsWjb1HNdixuZsp/9PSZT/mEJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHdZvbxiOvtMNRwINu4DIRoKag9xmPgrpKQVVkX1nKpaq5lyv3grIL6VbVQY8nqOa
-	 nTYOPTGFE6NAxmBWSFxF3w8aXsTQnFt6iCSKZbkf6UyJL9QHJjUPoxq9MqVnPohQK1
-	 ZIx1uGS+RMgLs3PJO5QkWBi0/cjfjmHU1s+fUT6Y=
+	b=udv/VgdNK8TD+W0HqVUasWt/fTKEMxEzFF243/Aca3ljYIy3czdb8m4ELbRZ5nh2E
+	 AH8SFYBc6ikYvTZ7UCzZejLw45BoRddDslyWrpnF9923TzeWHpV7Ngerlruo1waeCy
+	 BPFAvfaksIJ2r9jgkP+C6OWPSH4GDOuaQjbY3kjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	intel-gfx@lists.freedesktop.org,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 5.15 109/115] drm/i915: Dont use stolen memory for ring buffers with LLC
-Date: Mon, 20 Mar 2023 15:55:21 +0100
-Message-Id: <20230320145454.014250102@linuxfoundation.org>
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 048/211] net/smc: fix NULL sndbuf_desc in smc_cdc_tx_handler()
+Date: Mon, 20 Mar 2023 15:53:03 +0100
+Message-Id: <20230320145515.238270436@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -42,45 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-commit 690e0ec8e63da9a29b39fedc6ed5da09c7c82651 upstream.
+[ Upstream commit 22a825c541d775c1dbe7b2402786025acad6727b ]
 
-Direction from hardware is that stolen memory should never be used for
-ring buffer allocations on platforms with LLC. There are too many
-caching pitfalls due to the way stolen memory accesses are routed. So
-it is safest to just not use it.
+When performing a stress test on SMC-R by rmmod mlx5_ib driver
+during the wrk/nginx test, we found that there is a probability
+of triggering a panic while terminating all link groups.
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Fixes: c58b735fc762 ("drm/i915: Allocate rings from stolen")
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: intel-gfx@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v4.9+
-Tested-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230216011101.1909009-2-John.C.Harrison@Intel.com
-(cherry picked from commit f54c1f6c697c4297f7ed94283c184acc338a5cf8)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This issue dues to the race between smc_smcr_terminate_all()
+and smc_buf_create().
+
+			smc_smcr_terminate_all
+
+smc_buf_create
+/* init */
+conn->sndbuf_desc = NULL;
+...
+
+			__smc_lgr_terminate
+				smc_conn_kill
+					smc_close_abort
+						smc_cdc_get_slot_and_msg_send
+
+			__softirqentry_text_start
+				smc_wr_tx_process_cqe
+					smc_cdc_tx_handler
+						READ(conn->sndbuf_desc->len);
+						/* panic dues to NULL sndbuf_desc */
+
+conn->sndbuf_desc = xxx;
+
+This patch tries to fix the issue by always to check the sndbuf_desc
+before send any cdc msg, to make sure that no null pointer is
+seen during cqe processing.
+
+Fixes: 0b29ec643613 ("net/smc: immediate termination for SMCR link groups")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Link: https://lore.kernel.org/r/1678263432-17329-1-git-send-email-alibuda@linux.alibaba.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_ring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/smc/smc_cdc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/i915/gt/intel_ring.c
-+++ b/drivers/gpu/drm/i915/gt/intel_ring.c
-@@ -113,7 +113,7 @@ static struct i915_vma *create_ring_vma(
- 	struct i915_vma *vma;
+diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
+index 53f63bfbaf5f9..89105e95b4523 100644
+--- a/net/smc/smc_cdc.c
++++ b/net/smc/smc_cdc.c
+@@ -114,6 +114,9 @@ int smc_cdc_msg_send(struct smc_connection *conn,
+ 	union smc_host_cursor cfed;
+ 	int rc;
  
- 	obj = i915_gem_object_create_lmem(i915, size, I915_BO_ALLOC_VOLATILE);
--	if (IS_ERR(obj) && i915_ggtt_has_aperture(ggtt))
-+	if (IS_ERR(obj) && i915_ggtt_has_aperture(ggtt) && !HAS_LLC(i915))
- 		obj = i915_gem_object_create_stolen(i915, size);
- 	if (IS_ERR(obj))
- 		obj = i915_gem_object_create_internal(i915, size);
++	if (unlikely(!READ_ONCE(conn->sndbuf_desc)))
++		return -ENOBUFS;
++
+ 	smc_cdc_add_pending_send(conn, pend);
+ 
+ 	conn->tx_cdc_seq++;
+-- 
+2.39.2
+
 
 
