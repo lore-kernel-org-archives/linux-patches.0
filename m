@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA151C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2625EC433EF;
-	Mon, 20 Mar 2023 15:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4A21C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5AAC433EF;
+	Mon, 20 Mar 2023 15:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325901;
-	bh=gbkODAwK/OWLYiSLQQ1vtVK4wzka5QYbDWyqUr7xv/U=;
+	s=korg; t=1679325904;
+	bh=eVWF+RV6ONMyGgCg6cAAQL1NezYgXiiBN+yWb1EOTjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rXoM7JOHtwnRul3uXUALqxEFuueD4g7mWgFmsbQizkSjBCkdC5Xyxeeg32CXtKdmm
-	 QtvRJR1du5VmBt9FZzXIIFYMHFQ1/bU+dO8BuxDLCs3/leYUqoOYfJ6iPVVCzaN9YJ
-	 KDP1HhKY64Dbhe3ETCaxHJ9WN1t/3zLyZIMwBnzI=
+	b=kcD3T7AjNcUMpNLfUXC2oL/JRJgajJIU0a0sLadhFwAPhYB4HW1CFmwZcWa1gURk+
+	 1Ulq7SPsSCBgZwE+/qj+/RMu/s1pyseD36Uig6ljJi39FEZulYlhD/ji+A6jLH0FsS
+	 tsxZry16mNHGhLnTjuT2/x3wabpsVtQWh6KuxOWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Oskar Senft <osk@google.com>,
-	linux-serial@vger.kernel.org
-Subject: [PATCH 6.2 122/211] serial: 8250: ASPEED_VUART: select REGMAP instead of depending on it
-Date: Mon, 20 Mar 2023 15:54:17 +0100
-Message-Id: <20230320145518.470112216@linuxfoundation.org>
+	Geliang Tang <geliang.tang@suse.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 165/198] mptcp: add ro_after_init for tcp{,v6}_prot_override
+Date: Mon, 20 Mar 2023 15:55:03 +0100
+Message-Id: <20230320145514.453295180@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Geliang Tang <geliang.tang@suse.com>
 
-commit f8086d1a65ac693e3fd863128352b4b11ee7324d upstream.
+commit 822467a48e938e661965d09df5fcac66f7291050 upstream.
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+Add __ro_after_init labels for the variables tcp_prot_override and
+tcpv6_prot_override, just like other variables adjacent to them, to
+indicate that they are initialised from the init hooks and no writes
+occur afterwards.
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
-
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
-
-Fixes: 8d310c9107a2 ("drivers/tty/serial/8250: Make Aspeed VUART SIRQ polarity configurable")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Oskar Senft <osk@google.com>
-Cc: linux-serial@vger.kernel.org
-Link: https://lore.kernel.org/r/20230226053953.4681-9-rdunlap@infradead.org
+Fixes: b19bc2945b40 ("mptcp: implement delegated actions")
+Cc: stable@vger.kernel.org
+Fixes: 51fa7f8ebf0e ("mptcp: mark ops structures as ro_after_init")
+Signed-off-by: Geliang Tang <geliang.tang@suse.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/Kconfig |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mptcp/subflow.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/8250/Kconfig
-+++ b/drivers/tty/serial/8250/Kconfig
-@@ -253,8 +253,9 @@ config SERIAL_8250_ASPEED_VUART
- 	tristate "Aspeed Virtual UART"
- 	depends on SERIAL_8250
- 	depends on OF
--	depends on REGMAP && MFD_SYSCON
-+	depends on MFD_SYSCON
- 	depends on ARCH_ASPEED || COMPILE_TEST
-+	select REGMAP
- 	help
- 	  If you want to use the virtual UART (VUART) device on Aspeed
- 	  BMC platforms, enable this option. This enables the 16550A-
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -560,7 +560,7 @@ static struct request_sock_ops mptcp_sub
+ static struct tcp_request_sock_ops subflow_request_sock_ipv6_ops __ro_after_init;
+ static struct inet_connection_sock_af_ops subflow_v6_specific __ro_after_init;
+ static struct inet_connection_sock_af_ops subflow_v6m_specific __ro_after_init;
+-static struct proto tcpv6_prot_override;
++static struct proto tcpv6_prot_override __ro_after_init;
+ 
+ static int subflow_v6_conn_request(struct sock *sk, struct sk_buff *skb)
+ {
+@@ -846,7 +846,7 @@ dispose_child:
+ }
+ 
+ static struct inet_connection_sock_af_ops subflow_specific __ro_after_init;
+-static struct proto tcp_prot_override;
++static struct proto tcp_prot_override __ro_after_init;
+ 
+ enum mapping_status {
+ 	MAPPING_OK,
 
 
