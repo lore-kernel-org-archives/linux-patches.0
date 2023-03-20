@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9ED1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBE2C4339E;
-	Mon, 20 Mar 2023 14:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1791C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3965AC433D2;
+	Mon, 20 Mar 2023 14:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324287;
-	bh=RYEgoQfy5g2obq3M1OeoK2adxxmexkLppMESHV9PtqY=;
+	s=korg; t=1679324290;
+	bh=bG7be6u1IUxAGCMWQxd7ABrj1jSQ8IyDwxb0nc08Qys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gY/PtiKZbzww4GV88lr2T649mmQ9r/A7X01xOvFP2qH36eBudQaoIFgAetNff6mL2
-	 zuapJFNs8Ufep1Ou/rwkk6RAzS0SMQF5FeKGogradwa8kubIzSRSSOB8it6TJVu9MZ
-	 WwKOaQBHDTCAW5/fSmhrxGptAGJOlCS+RqenPZTc=
+	b=eOPsWF00s+paekiTVWaU57Ivjs7B2He2ANSbb9rsHFceQIsiknf/CGwf+PQl9YrZo
+	 /6/SO2aRBs4R993k0+N1cZHUWuW7VQ2a2m8OIkO/bGEZNRIfuveTcvGMxMA8fS9YHG
+	 kJ2hXhAQvINIx6lWrRxkusjirBcBLoFxtM/HjmwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Riku Voipio <riku.voipio@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	linux-clk@vger.kernel.org,
+	Breno Leitao <leitao@debian.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 03/36] clk: HI655X: select REGMAP instead of depending on it
-Date: Mon, 20 Mar 2023 15:54:29 +0100
-Message-Id: <20230320145424.339190661@linuxfoundation.org>
+Subject: [PATCH 4.19 04/36] tcp: tcp_make_synack() can be called from process context
+Date: Mon, 20 Mar 2023 15:54:30 +0100
+Message-Id: <20230320145424.387496948@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -38,45 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 0ffad67784a097beccf34d297ddd1b0773b3b8a3 ]
+[ Upstream commit bced3f7db95ff2e6ca29dc4d1c9751ab5e736a09 ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+tcp_rtx_synack() now could be called in process context as explained in
+0a375c822497 ("tcp: tcp_rtx_synack() can be called from process
+context").
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
+tcp_rtx_synack() might call tcp_make_synack(), which will touch per-CPU
+variables with preemption enabled. This causes the following BUG:
 
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+    BUG: using __this_cpu_add() in preemptible [00000000] code: ThriftIO1/5464
+    caller is tcp_make_synack+0x841/0xac0
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x10d/0x1a0
+     check_preemption_disabled+0x104/0x110
+     tcp_make_synack+0x841/0xac0
+     tcp_v6_send_synack+0x5c/0x450
+     tcp_rtx_synack+0xeb/0x1f0
+     inet_rtx_syn_ack+0x34/0x60
+     tcp_check_req+0x3af/0x9e0
+     tcp_rcv_state_process+0x59b/0x2030
+     tcp_v6_do_rcv+0x5f5/0x700
+     release_sock+0x3a/0xf0
+     tcp_sendmsg+0x33/0x40
+     ____sys_sendmsg+0x2f2/0x490
+     __sys_sendmsg+0x184/0x230
+     do_syscall_64+0x3d/0x90
 
-Fixes: 3a49afb84ca0 ("clk: enable hi655x common clk automatically")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Riku Voipio <riku.voipio@linaro.org>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: linux-clk@vger.kernel.org
-Link: https://lore.kernel.org/r/20230226053953.4681-3-rdunlap@infradead.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Avoid calling __TCP_INC_STATS() with will touch per-cpu variables. Use
+TCP_INC_STATS() which is safe to be called from context switch.
+
+Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230308190745.780221-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/Kconfig | 2 +-
+ net/ipv4/tcp_output.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
-index 292056bbb30e9..ffe81449ce246 100644
---- a/drivers/clk/Kconfig
-+++ b/drivers/clk/Kconfig
-@@ -63,7 +63,7 @@ config COMMON_CLK_RK808
- config COMMON_CLK_HI655X
- 	tristate "Clock driver for Hi655x" if EXPERT
- 	depends on (MFD_HI655X_PMIC || COMPILE_TEST)
--	depends on REGMAP
-+	select REGMAP
- 	default MFD_HI655X_PMIC
- 	---help---
- 	  This driver supports the hi655x PMIC clock. This
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 8962864223b43..9299de0da3514 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3307,7 +3307,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
+ 	th->window = htons(min(req->rsk_rcv_wnd, 65535U));
+ 	tcp_options_write((__be32 *)(th + 1), NULL, &opts);
+ 	th->doff = (tcp_header_size >> 2);
+-	__TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
++	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
+ 
+ #ifdef CONFIG_TCP_MD5SIG
+ 	/* Okay, we have all we need - do the md5 hash if needed */
 -- 
 2.39.2
 
