@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5631E1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC5BC433D2;
-	Mon, 20 Mar 2023 15:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068591C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B05EC4339E;
+	Mon, 20 Mar 2023 15:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325257;
-	bh=ZEXuUZ6tnyP9XDvjgUq4SWG4Mp0T7Uy/II4sX+pGXlo=;
+	s=korg; t=1679325259;
+	bh=KDyJvZwQ6Jbby6eTS7ddgA4tlvl/NbCzVlisNvgM2vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sjxXYckTdjylsnUCA9Ev1otRRjaItkAHbNJrIhehoQHBjkCp/roZCVI1Q3w/EyD4q
-	 aZt4r2hzghDIA8uTQKP9jvEggWGjDCmf8bv7nhpXrpzt0mk1iF/g7yeZUbX0z3OnzN
-	 lZkAID+hMiQ0euArzLMahDVV9eRBbvs/1dlzpbME=
+	b=MFp8slA+AkJD8bPCbdEmFQ7O0XC5N5qQvnrdTMxi/N6oRCkXcyw8HVfGHBgd+nRi6
+	 ixepnmD5h9Uc2KSpOLnZfsboVrNY6cKtNNw/5f/8k7EKFW1N+p4wKztWbPk4cMAFz1
+	 bD6200UaAgVymBl7ZuDvJEAMrOR907C69L5To/JU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Liu Ying <victor.liu@nxp.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 022/211] scsi: mpi3mr: Fix memory leaks in mpi3mr_init_ioc()
-Date: Mon, 20 Mar 2023 15:52:37 +0100
-Message-Id: <20230320145514.228897123@linuxfoundation.org>
+Subject: [PATCH 6.1 061/198] drm/bridge: Fix returned array size name for atomic_get_input_bus_fmts kdoc
+Date: Mon, 20 Mar 2023 15:53:19 +0100
+Message-Id: <20230320145510.109759326@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,79 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Liu Ying <victor.liu@nxp.com>
 
-[ Upstream commit c798304470cab88723d895726d17fcb96472e0e9 ]
+[ Upstream commit 0d3c9333d976af41d7dbc6bf4d9d2e95fbdf9c89 ]
 
-Don't allocate memory again when IOC is being reinitialized.
+The returned array size for input formats is set through
+atomic_get_input_bus_fmts()'s 'num_input_fmts' argument, so use
+'num_input_fmts' to represent the array size in the function's kdoc,
+not 'num_output_fmts'.
 
-Fixes: fe6db6151565 ("scsi: mpi3mr: Handle offline FW activation in graceful manner")
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20230302234336.25456-6-thenzl@redhat.com
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 91ea83306bfa ("drm/bridge: Fix the bridge kernel doc")
+Fixes: f32df58acc68 ("drm/bridge: Add the necessary bits to support bus format negotiation")
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230314055035.3731179-1-victor.liu@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 41 ++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 18 deletions(-)
+ include/drm/drm_bridge.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index e702911e8e934..4147920afbaee 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -3813,29 +3813,34 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
- 
- 	mpi3mr_print_ioc_info(mrioc);
- 
--	dprint_init(mrioc, "allocating config page buffers\n");
--	mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
--	    MPI3MR_DEFAULT_CFG_PAGE_SZ, &mrioc->cfg_page_dma, GFP_KERNEL);
- 	if (!mrioc->cfg_page) {
--		retval = -1;
--		goto out_failed_noretry;
-+		dprint_init(mrioc, "allocating config page buffers\n");
-+		mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
-+		mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
-+		    mrioc->cfg_page_sz, &mrioc->cfg_page_dma, GFP_KERNEL);
-+		if (!mrioc->cfg_page) {
-+			retval = -1;
-+			goto out_failed_noretry;
-+		}
- 	}
- 
--	mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
--
--	retval = mpi3mr_alloc_reply_sense_bufs(mrioc);
--	if (retval) {
--		ioc_err(mrioc,
--		    "%s :Failed to allocated reply sense buffers %d\n",
--		    __func__, retval);
--		goto out_failed_noretry;
-+	if (!mrioc->init_cmds.reply) {
-+		retval = mpi3mr_alloc_reply_sense_bufs(mrioc);
-+		if (retval) {
-+			ioc_err(mrioc,
-+			    "%s :Failed to allocated reply sense buffers %d\n",
-+			    __func__, retval);
-+			goto out_failed_noretry;
-+		}
- 	}
- 
--	retval = mpi3mr_alloc_chain_bufs(mrioc);
--	if (retval) {
--		ioc_err(mrioc, "Failed to allocated chain buffers %d\n",
--		    retval);
--		goto out_failed_noretry;
-+	if (!mrioc->chain_sgl_list) {
-+		retval = mpi3mr_alloc_chain_bufs(mrioc);
-+		if (retval) {
-+			ioc_err(mrioc, "Failed to allocated chain buffers %d\n",
-+			    retval);
-+			goto out_failed_noretry;
-+		}
- 	}
- 
- 	retval = mpi3mr_issue_iocinit(mrioc);
+diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
+index 6b65b0dfb4fb4..288c6feda5de2 100644
+--- a/include/drm/drm_bridge.h
++++ b/include/drm/drm_bridge.h
+@@ -447,11 +447,11 @@ struct drm_bridge_funcs {
+ 	 *
+ 	 * The returned array must be allocated with kmalloc() and will be
+ 	 * freed by the caller. If the allocation fails, NULL should be
+-	 * returned. num_output_fmts must be set to the returned array size.
++	 * returned. num_input_fmts must be set to the returned array size.
+ 	 * Formats listed in the returned array should be listed in decreasing
+ 	 * preference order (the core will try all formats until it finds one
+ 	 * that works). When the format is not supported NULL should be
+-	 * returned and num_output_fmts should be set to 0.
++	 * returned and num_input_fmts should be set to 0.
+ 	 *
+ 	 * This method is called on all elements of the bridge chain as part of
+ 	 * the bus format negotiation process that happens in
 -- 
 2.39.2
 
