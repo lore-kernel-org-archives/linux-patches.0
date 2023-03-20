@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9D81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EA8C433D2;
-	Mon, 20 Mar 2023 15:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011FA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F1EC433EF;
+	Mon, 20 Mar 2023 15:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325298;
-	bh=7p/td3llk9+XCPHleNjJ1IfPUpoZy1wQZiECXkRzvto=;
+	s=korg; t=1679325300;
+	bh=53QSTYhbqg5gwqWZqzC48RoFd/cE5vtFHcLiG1HOVlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfCQnTVHz19THhXyfjuetIPR75cmv1eXHG85hU7su6tXJETRS4Y6oTCA+X+VEptI7
-	 lS3XmdNo+mfjFfxsmq8zJMzsS2q57hotFsRngWjZZ9OfziSO/jNq/OAjxqiXGzoiZb
-	 CtTRg5/sDR6mapE1X0txXL8EloptzOON7ODw7+8Q=
+	b=cCjlWrIU2XO82BTAUkw4VLAvZajFpXNQPbijNJnvwymrPSCA5UHQvPxEvc3STZvqg
+	 g7mPqHeVnL/hmeQvH0WV24DIxDQp1/41sp20EXHmcOTT5AWfVqGPfdwH1ALUqrbTeQ
+	 k0dcK/RPkZa8vVtRBMhoEkBDnTPf8vZMveFslH2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 026/211] netfilter: nft_nat: correct length for loading protocol registers
-Date: Mon, 20 Mar 2023 15:52:41 +0100
-Message-Id: <20230320145514.374128266@linuxfoundation.org>
+	Zong Li <zong.li@sifive.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
+	Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.15 088/115] Revert "riscv: mm: notify remote harts about mmu cache updates"
+Date: Mon, 20 Mar 2023 15:55:00 +0100
+Message-Id: <20230320145453.099128227@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,39 +37,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
 
-[ Upstream commit 068d82e75d537b444303b8c449a11e51ea659565 ]
+commit e921050022f1f12d5029d1487a7dfc46cde15523 upstream.
 
-The values in the protocol registers are two bytes wide.  However, when
-parsing the register loads, the code currently uses the larger 16-byte
-size of a `union nf_inet_addr`.  Change it to use the (correct) size of
-a `union nf_conntrack_man_proto` instead.
+This reverts the remaining bits of commit 4bd1d80efb5a ("riscv: mm:
+notify remote harts harts about mmu cache updates").
 
-Fixes: d07db9884a5f ("netfilter: nf_tables: introduce nft_validate_register_load()")
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+According to bug reports, suggested approach to fix stale TLB entries
+is not sufficient. It needs to be replaced by a more robust solution.
+
+Fixes: 4bd1d80efb5a ("riscv: mm: notify remote harts about mmu cache updates")
+Reported-by: Zong Li <zong.li@sifive.com>
+Reported-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Link: https://lore.kernel.org/r/20230226150137.1919750-2-geomatsi@gmail.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_nat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/include/asm/mmu.h      |    2 --
+ arch/riscv/include/asm/tlbflush.h |   18 ------------------
+ arch/riscv/mm/context.c           |   10 ----------
+ arch/riscv/mm/tlbflush.c          |   28 +++++++++++++++++-----------
+ 4 files changed, 17 insertions(+), 41 deletions(-)
 
-diff --git a/net/netfilter/nft_nat.c b/net/netfilter/nft_nat.c
-index 0479991503900..5c29915ab0289 100644
---- a/net/netfilter/nft_nat.c
-+++ b/net/netfilter/nft_nat.c
-@@ -226,7 +226,7 @@ static int nft_nat_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
- 		priv->flags |= NF_NAT_RANGE_MAP_IPS;
- 	}
+--- a/arch/riscv/include/asm/mmu.h
++++ b/arch/riscv/include/asm/mmu.h
+@@ -19,8 +19,6 @@ typedef struct {
+ #ifdef CONFIG_SMP
+ 	/* A local icache flush is needed before user execution can resume. */
+ 	cpumask_t icache_stale_mask;
+-	/* A local tlb flush is needed before user execution can resume. */
+-	cpumask_t tlb_stale_mask;
+ #endif
+ } mm_context_t;
  
--	plen = sizeof_field(struct nf_nat_range, min_addr.all);
-+	plen = sizeof_field(struct nf_nat_range, min_proto.all);
- 	if (tb[NFTA_NAT_REG_PROTO_MIN]) {
- 		err = nft_parse_register_load(tb[NFTA_NAT_REG_PROTO_MIN],
- 					      &priv->sreg_proto_min, plen);
--- 
-2.39.2
-
+--- a/arch/riscv/include/asm/tlbflush.h
++++ b/arch/riscv/include/asm/tlbflush.h
+@@ -22,24 +22,6 @@ static inline void local_flush_tlb_page(
+ {
+ 	ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
+ }
+-
+-static inline void local_flush_tlb_all_asid(unsigned long asid)
+-{
+-	__asm__ __volatile__ ("sfence.vma x0, %0"
+-			:
+-			: "r" (asid)
+-			: "memory");
+-}
+-
+-static inline void local_flush_tlb_page_asid(unsigned long addr,
+-		unsigned long asid)
+-{
+-	__asm__ __volatile__ ("sfence.vma %0, %1"
+-			:
+-			: "r" (addr), "r" (asid)
+-			: "memory");
+-}
+-
+ #else /* CONFIG_MMU */
+ #define local_flush_tlb_all()			do { } while (0)
+ #define local_flush_tlb_page(addr)		do { } while (0)
+--- a/arch/riscv/mm/context.c
++++ b/arch/riscv/mm/context.c
+@@ -196,16 +196,6 @@ switch_mm_fast:
+ 
+ 	if (need_flush_tlb)
+ 		local_flush_tlb_all();
+-#ifdef CONFIG_SMP
+-	else {
+-		cpumask_t *mask = &mm->context.tlb_stale_mask;
+-
+-		if (cpumask_test_cpu(cpu, mask)) {
+-			cpumask_clear_cpu(cpu, mask);
+-			local_flush_tlb_all_asid(cntx & asid_mask);
+-		}
+-	}
+-#endif
+ }
+ 
+ static void set_mm_noasid(struct mm_struct *mm)
+--- a/arch/riscv/mm/tlbflush.c
++++ b/arch/riscv/mm/tlbflush.c
+@@ -5,7 +5,23 @@
+ #include <linux/sched.h>
+ #include <asm/sbi.h>
+ #include <asm/mmu_context.h>
+-#include <asm/tlbflush.h>
++
++static inline void local_flush_tlb_all_asid(unsigned long asid)
++{
++	__asm__ __volatile__ ("sfence.vma x0, %0"
++			:
++			: "r" (asid)
++			: "memory");
++}
++
++static inline void local_flush_tlb_page_asid(unsigned long addr,
++		unsigned long asid)
++{
++	__asm__ __volatile__ ("sfence.vma %0, %1"
++			:
++			: "r" (addr), "r" (asid)
++			: "memory");
++}
+ 
+ void flush_tlb_all(void)
+ {
+@@ -15,7 +31,6 @@ void flush_tlb_all(void)
+ static void __sbi_tlb_flush_range(struct mm_struct *mm, unsigned long start,
+ 				  unsigned long size, unsigned long stride)
+ {
+-	struct cpumask *pmask = &mm->context.tlb_stale_mask;
+ 	struct cpumask *cmask = mm_cpumask(mm);
+ 	struct cpumask hmask;
+ 	unsigned int cpuid;
+@@ -30,15 +45,6 @@ static void __sbi_tlb_flush_range(struct
+ 	if (static_branch_unlikely(&use_asid_allocator)) {
+ 		unsigned long asid = atomic_long_read(&mm->context.id);
+ 
+-		/*
+-		 * TLB will be immediately flushed on harts concurrently
+-		 * executing this MM context. TLB flush on other harts
+-		 * is deferred until this MM context migrates there.
+-		 */
+-		cpumask_setall(pmask);
+-		cpumask_clear_cpu(cpuid, pmask);
+-		cpumask_andnot(pmask, pmask, cmask);
+-
+ 		if (broadcast) {
+ 			riscv_cpuid_to_hartid_mask(cmask, &hmask);
+ 			sbi_remote_sfence_vma_asid(cpumask_bits(&hmask),
 
 
