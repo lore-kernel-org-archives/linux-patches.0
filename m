@@ -1,37 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4011C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07778C433EF;
-	Mon, 20 Mar 2023 15:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8932A1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0ABDC433D2;
+	Mon, 20 Mar 2023 15:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325030;
-	bh=OPirRprHsrw3ZuNSVSI34UutUEakUdMYqK5UZkwo5DY=;
+	s=korg; t=1679325033;
+	bh=P4g2CFNdNBvNCMX+K3IV+XVBx8fsIMEksaiICuvU72M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MNgrB4oi1d4aYdSJNNz5fF1QoKQ/P6p7j9eYYCB14Skn6FZgH1kDEqvDLb4lvDVvd
-	 SaLB3rxcY8OznOhQPhOEnRPG54HBpq4bNrc1hG4R6Spzn7v8S9amKEOUPknAUxbh2u
-	 xQxIQCT7FGDfL73AtZS9fJDfl9dr02wiAq8i6aQQ=
+	b=QrbjNrWJxsAVt0KEKgAputq1cZ3RhbkGJMEfdoA44wumVB373MPRW33fkJ7iVlxxi
+	 UPB+IvizBtxP88qJxlQoKSaQWbDgi5oldbjw5FAZeE0tf3Gn3NkFUdhbXND0sY91j/
+	 gh0TRps87YgXyFrJkOtLA2OAbw1cMUhftFv3YHPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	"HeungJun, Kim" <riverful.kim@samsung.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
-	Mauro Carvalho Chehab <mchehab@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	HeungJun
-Subject: [PATCH 5.15 062/115] media: m5mols: fix off-by-one loop termination error
-Date: Mon, 20 Mar 2023 15:54:34 +0100
-Message-Id: <20230320145452.015860201@linuxfoundation.org>
+	Guillaume Tucker <guillaume.tucker@collabora.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 036/198] selftests: fix LLVM build for i386 and x86_64
+Date: Mon, 20 Mar 2023 15:52:54 +0100
+Message-Id: <20230320145508.984728431@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -42,60 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Guillaume Tucker <guillaume.tucker@collabora.com>
 
-[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
+[ Upstream commit 624c60f326c6e5a80b008e8a5c7feffe8c27dc72 ]
 
-The __find_restype() function loops over the m5mols_default_ffmt[]
-array, and the termination condition ends up being wrong: instead of
-stopping when the iterator becomes the size of the array it traverses,
-it stops after it has already overshot the array.
+Add missing cases for the i386 and x86_64 architectures when
+determining the LLVM target for building kselftest.
 
-Now, in practice this doesn't likely matter, because the code will
-always find the entry it looks for, and will thus return early and never
-hit that last extra iteration.
-
-But it turns out that clang will unroll the loop fully, because it has
-only two iterations (well, three due to the off-by-one bug), and then
-clang will end up just giving up in the middle of the loop unrolling
-when it notices that the code walks past the end of the array.
-
-And that made 'objtool' very unhappy indeed, because the generated code
-just falls off the edge of the universe, and ends up falling through to
-the next function, causing this warning:
-
-   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
-
-Fix the loop ending condition.
-
-Reported-by: Jens Axboe <axboe@kernel.dk>
-Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
-Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
-Cc: HeungJun, Kim <riverful.kim@samsung.com>
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 795285ef2425 ("selftests: Fix clang cross compilation")
+Signed-off-by: Guillaume Tucker <guillaume.tucker@collabora.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/lib.mk | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
-index e29be0242f078..f4233feb26276 100644
---- a/drivers/media/i2c/m5mols/m5mols_core.c
-+++ b/drivers/media/i2c/m5mols/m5mols_core.c
-@@ -488,7 +488,7 @@ static enum m5mols_restype __find_restype(u32 code)
- 	do {
- 		if (code == m5mols_default_ffmt[type].code)
- 			return type;
--	} while (type++ != SIZE_DEFAULT_FFMT);
-+	} while (++type != SIZE_DEFAULT_FFMT);
+diff --git a/tools/testing/selftests/lib.mk b/tools/testing/selftests/lib.mk
+index f7900e75d2306..05400462c7799 100644
+--- a/tools/testing/selftests/lib.mk
++++ b/tools/testing/selftests/lib.mk
+@@ -10,12 +10,14 @@ endif
+ CLANG_TARGET_FLAGS_arm          := arm-linux-gnueabi
+ CLANG_TARGET_FLAGS_arm64        := aarch64-linux-gnu
+ CLANG_TARGET_FLAGS_hexagon      := hexagon-linux-musl
++CLANG_TARGET_FLAGS_i386         := i386-linux-gnu
+ CLANG_TARGET_FLAGS_m68k         := m68k-linux-gnu
+ CLANG_TARGET_FLAGS_mips         := mipsel-linux-gnu
+ CLANG_TARGET_FLAGS_powerpc      := powerpc64le-linux-gnu
+ CLANG_TARGET_FLAGS_riscv        := riscv64-linux-gnu
+ CLANG_TARGET_FLAGS_s390         := s390x-linux-gnu
+ CLANG_TARGET_FLAGS_x86          := x86_64-linux-gnu
++CLANG_TARGET_FLAGS_x86_64       := x86_64-linux-gnu
+ CLANG_TARGET_FLAGS              := $(CLANG_TARGET_FLAGS_$(ARCH))
  
- 	return 0;
- }
+ ifeq ($(CROSS_COMPILE),)
 -- 
 2.39.2
 
