@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512C61C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2F4C433EF;
-	Mon, 20 Mar 2023 15:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B681C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C85C433EF;
+	Mon, 20 Mar 2023 15:07:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324835;
-	bh=rkwlp0RnQwFwSrinQ4bN0yAHUfgOWBVnIrAX7S3cYTY=;
+	s=korg; t=1679324837;
+	bh=SpPh+I7xeHftGYBxdbXF0tOKYqDuo1eSbaNd/vs/C0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZjrS5jng0VZbTi8n6i58FL/cpn8FP5SLf/LHpdB7PIT+ne2wO5gDq9uM6zeXcexg
-	 4uY0y5k2IFaV0e9S/jLpStpj1e8/3TUzonMIWGeZpJBvxNtxMrMCUhPeh+8MmEskFT
-	 +BDf/urimIK3ytSXHV/j3LaV2dvXTfQkomAdszdc=
+	b=s1Fr0lbY/kN1OZFAX/TcG3HyetajfC576j8Dx84vaWfZzwT7dx0OKwrfciA7rJPdm
+	 iQ/M64gxXz49lDkOkqVAfKzTUFIBDYgL+/g6rySQRDOtrn3lFM7mj4EqCEVxMDUl3P
+	 jrICy9uuY0e/fmLFJEJ6LXIIByDB6+weRNCRCcqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/198] ASoC: SOF: Intel: SKL: Fix device description
-Date: Mon, 20 Mar 2023 15:52:29 +0100
-Message-Id: <20230320145507.960909636@linuxfoundation.org>
+Subject: [PATCH 5.15 039/115] nvmet: avoid potential UAF in nvmet_req_complete()
+Date: Mon, 20 Mar 2023 15:54:11 +0100
+Message-Id: <20230320145451.098284126@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,45 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit 1f320bdb29b644a2c9fb301a6fb2d6170e6417e9 ]
+[ Upstream commit 6173a77b7e9d3e202bdb9897b23f2a8afe7bf286 ]
 
-Add missing ops_free callback for SKL/KBL platforms.
+An nvme target ->queue_response() operation implementation may free the
+request passed as argument. Such implementation potentially could result
+in a use after free of the request pointer when percpu_ref_put() is
+called in nvmet_req_complete().
 
-Fixes: 52d7939d10f2 ("ASoC: SOF: Intel: add ops for SKL/KBL")
+Avoid such problem by using a local variable to save the sq pointer
+before calling __nvmet_req_complete(), thus avoiding dereferencing the
+req pointer after that function call.
 
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230307093914.25409-4-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/pci-skl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/target/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/intel/pci-skl.c b/sound/soc/sof/intel/pci-skl.c
-index 3a99dc444f92e..5b4bccf819658 100644
---- a/sound/soc/sof/intel/pci-skl.c
-+++ b/sound/soc/sof/intel/pci-skl.c
-@@ -38,6 +38,7 @@ static struct sof_dev_desc skl_desc = {
- 	.nocodec_tplg_filename = "sof-skl-nocodec.tplg",
- 	.ops = &sof_skl_ops,
- 	.ops_init = sof_skl_ops_init,
-+	.ops_free = hda_ops_free,
- };
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index cfd0385511564..4c6d56dd29adc 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -756,8 +756,10 @@ static void __nvmet_req_complete(struct nvmet_req *req, u16 status)
  
- static struct sof_dev_desc kbl_desc = {
-@@ -61,6 +62,7 @@ static struct sof_dev_desc kbl_desc = {
- 	.nocodec_tplg_filename = "sof-kbl-nocodec.tplg",
- 	.ops = &sof_skl_ops,
- 	.ops_init = sof_skl_ops_init,
-+	.ops_free = hda_ops_free,
- };
+ void nvmet_req_complete(struct nvmet_req *req, u16 status)
+ {
++	struct nvmet_sq *sq = req->sq;
++
+ 	__nvmet_req_complete(req, status);
+-	percpu_ref_put(&req->sq->ref);
++	percpu_ref_put(&sq->ref);
+ }
+ EXPORT_SYMBOL_GPL(nvmet_req_complete);
  
- /* PCI IDs */
 -- 
 2.39.2
 
