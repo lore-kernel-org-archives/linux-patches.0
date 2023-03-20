@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E54E1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB21C433EF;
-	Mon, 20 Mar 2023 14:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF74E1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDD5C4339B;
+	Mon, 20 Mar 2023 14:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324383;
-	bh=zRzH58ejUhK6wY3BxAR+pEpxct2xpD07IXcjBjoBI1g=;
+	s=korg; t=1679324386;
+	bh=+uPd2ceKlMvRM79q6r31d+y2t0lNj33XiVpjEp+jsTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZVTuFNjug/1yrzn5YN1p9LXNg3IpBlQfSMonqLDeTwoDiGBhg5NgRZmyNsEmzonF
-	 XjDC1n9vsw57kB+Dilg/7xzAMzQkwBBdmup9eOUaZpvwvM9HYirqXe/8/AZ693XDFc
-	 ZnJEU5z+BpZxEo6BJl5e2jIB0Wczm3VwUsuhaUck=
+	b=vumYuTgv6hcNI/rBewGNyAws9BT4+yS5isiaazzpQolpRHKGfCODFodx0ylGtGC9o
+	 hzUdY7gVt1HKoT0hfthG4FbhhUYISgxwS7vyNyewnoW+NF3pvWv4pa6j8dJu2OMblP
+	 oMwpoxWSBu5kqCjv8YhyGlzZ9UOTQWlj5KHmm+7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	lee@kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 4.19 36/36] HID: uhid: Over-ride the default maximum data buffer value with our own
-Date: Mon, 20 Mar 2023 15:55:02 +0100
-Message-Id: <20230320145425.591476278@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 09/36] nfc: st-nci: Fix use after free bug in ndlc_remove due to race condition
+Date: Mon, 20 Mar 2023 15:54:35 +0100
+Message-Id: <20230320145424.590518098@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -34,32 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-commit 1c5d4221240a233df2440fe75c881465cdf8da07 upstream.
+[ Upstream commit 5000fe6c27827a61d8250a7e4a1d26c3298ef4f6 ]
 
-The default maximum data buffer size for this interface is UHID_DATA_MAX
-(4k).  When data buffers are being processed, ensure this value is used
-when ensuring the sanity, rather than a value between the user provided
-value and HID_MAX_BUFFER_SIZE (16k).
+This bug influences both st_nci_i2c_remove and st_nci_spi_remove.
+Take st_nci_i2c_remove as an example.
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In st_nci_i2c_probe, it called ndlc_probe and bound &ndlc->sm_work
+with llt_ndlc_sm_work.
+
+When it calls ndlc_recv or timeout handler, it will finally call
+schedule_work to start the work.
+
+When we call st_nci_i2c_remove to remove the driver, there
+may be a sequence as follows:
+
+Fix it by finishing the work before cleanup in ndlc_remove
+
+CPU0                  CPU1
+
+                    |llt_ndlc_sm_work
+st_nci_i2c_remove   |
+  ndlc_remove       |
+     st_nci_remove  |
+     nci_free_device|
+     kfree(ndev)    |
+//free ndlc->ndev   |
+                    |llt_ndlc_rcv_queue
+                    |nci_recv_frame
+                    |//use ndlc->ndev
+
+Fixes: 35630df68d60 ("NFC: st21nfcb: Add driver for STMicroelectronics ST21NFCB NFC chip")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230312160837.2040857-1-zyytlz.wz@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/uhid.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nfc/st-nci/ndlc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/uhid.c
-+++ b/drivers/hid/uhid.c
-@@ -398,6 +398,7 @@ struct hid_ll_driver uhid_hid_driver = {
- 	.parse = uhid_hid_parse,
- 	.raw_request = uhid_hid_raw_request,
- 	.output_report = uhid_hid_output_report,
-+	.max_buffer_size = UHID_DATA_MAX,
- };
- EXPORT_SYMBOL_GPL(uhid_hid_driver);
+diff --git a/drivers/nfc/st-nci/ndlc.c b/drivers/nfc/st-nci/ndlc.c
+index f26d938d240f0..12d73f9dbe9f3 100644
+--- a/drivers/nfc/st-nci/ndlc.c
++++ b/drivers/nfc/st-nci/ndlc.c
+@@ -297,13 +297,15 @@ EXPORT_SYMBOL(ndlc_probe);
  
+ void ndlc_remove(struct llt_ndlc *ndlc)
+ {
+-	st_nci_remove(ndlc->ndev);
+-
+ 	/* cancel timers */
+ 	del_timer_sync(&ndlc->t1_timer);
+ 	del_timer_sync(&ndlc->t2_timer);
+ 	ndlc->t2_active = false;
+ 	ndlc->t1_active = false;
++	/* cancel work */
++	cancel_work_sync(&ndlc->sm_work);
++
++	st_nci_remove(ndlc->ndev);
+ 
+ 	skb_queue_purge(&ndlc->rcv_q);
+ 	skb_queue_purge(&ndlc->send_q);
+-- 
+2.39.2
+
 
 
