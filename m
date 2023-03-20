@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33C61C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EFAC4339B;
-	Mon, 20 Mar 2023 14:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26D21C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE478C433EF;
+	Mon, 20 Mar 2023 14:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324328;
-	bh=6am25mk83s35GrcKWPlhCwDLdpvRvjej6QDizOoyUJ8=;
+	s=korg; t=1679324331;
+	bh=k+ieHA1EizOz9DkIxMQtLfnSoTDSSrnyZqcBI3V/4l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZafIMz37CoRfwt2EC9WJv50O2W80WeqUvOKUDhWM6jB+4Yg/dgC1FzPgBbzZB7U70
-	 I5IXbyd++dYpCFwtsz/qPkN00yEF6eQhvWnuHATl8EQ30EbfflACCN7geW1bxsCGmu
-	 WDdDAo+0HdAHNhpGOj/TMcpEw/cM8VW8SIvUwIyY=
+	b=AvHd53O7xu9W6cc/nqU7002DcvMmv1Vj3ii6BOIw5k4Xf7G61iiMO7IMkPfHvplzw
+	 F4/96w1Y3dS99LAKLrkd6/moI25tMNtJ1gJ53qsSUAfoC195Rl4EhkHWU4hbBaw8IV
+	 hfU+6yFT216UMzBo5WZE1mBtHkT0naX3aGj0CTk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 19/36] hwmon: (xgene) Fix use after free bug in xgene_hwmon_remove due to race condition
-Date: Mon, 20 Mar 2023 15:54:45 +0100
-Message-Id: <20230320145424.959979677@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"HeungJun, Kim" <riverful.kim@samsung.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Mauro Carvalho Chehab <mchehab@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	HeungJun
+Subject: [PATCH 4.19 20/36] media: m5mols: fix off-by-one loop termination error
+Date: Mon, 20 Mar 2023 15:54:46 +0100
+Message-Id: <20230320145424.994438883@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -35,49 +42,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit cb090e64cf25602b9adaf32d5dfc9c8bec493cd1 ]
+[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
 
-In xgene_hwmon_probe, &ctx->workq is bound with xgene_hwmon_evt_work.
-Then it will be started.
+The __find_restype() function loops over the m5mols_default_ffmt[]
+array, and the termination condition ends up being wrong: instead of
+stopping when the iterator becomes the size of the array it traverses,
+it stops after it has already overshot the array.
 
-If we remove the driver which will call xgene_hwmon_remove to clean up,
-there may be unfinished work.
+Now, in practice this doesn't likely matter, because the code will
+always find the entry it looks for, and will thus return early and never
+hit that last extra iteration.
 
-The possible sequence is as follows:
+But it turns out that clang will unroll the loop fully, because it has
+only two iterations (well, three due to the off-by-one bug), and then
+clang will end up just giving up in the middle of the loop unrolling
+when it notices that the code walks past the end of the array.
 
-Fix it by finishing the work before cleanup in xgene_hwmon_remove.
+And that made 'objtool' very unhappy indeed, because the generated code
+just falls off the edge of the universe, and ends up falling through to
+the next function, causing this warning:
 
-CPU0                  CPU1
+   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
 
-                    |xgene_hwmon_evt_work
-xgene_hwmon_remove   |
-kfifo_free(&ctx->async_msg_fifo);|
-                    |
-                    |kfifo_out_spinlocked
-                    |//use &ctx->async_msg_fifo
-Fixes: 2ca492e22cb7 ("hwmon: (xgene) Fix crash when alarm occurs before driver probe")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Link: https://lore.kernel.org/r/20230310084007.1403388-1-zyytlz.wz@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fix the loop ending condition.
+
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
+Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
+Cc: HeungJun, Kim <riverful.kim@samsung.com>
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/xgene-hwmon.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/xgene-hwmon.c b/drivers/hwmon/xgene-hwmon.c
-index a3cd91f232679..2dd19a4203052 100644
---- a/drivers/hwmon/xgene-hwmon.c
-+++ b/drivers/hwmon/xgene-hwmon.c
-@@ -780,6 +780,7 @@ static int xgene_hwmon_remove(struct platform_device *pdev)
- {
- 	struct xgene_hwmon_dev *ctx = platform_get_drvdata(pdev);
+diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
+index d9a9644306096..9e6827dedab30 100644
+--- a/drivers/media/i2c/m5mols/m5mols_core.c
++++ b/drivers/media/i2c/m5mols/m5mols_core.c
+@@ -492,7 +492,7 @@ static enum m5mols_restype __find_restype(u32 code)
+ 	do {
+ 		if (code == m5mols_default_ffmt[type].code)
+ 			return type;
+-	} while (type++ != SIZE_DEFAULT_FFMT);
++	} while (++type != SIZE_DEFAULT_FFMT);
  
-+	cancel_work_sync(&ctx->workq);
- 	hwmon_device_unregister(ctx->hwmon_dev);
- 	kfifo_free(&ctx->async_msg_fifo);
- 	if (acpi_disabled)
+ 	return 0;
+ }
 -- 
 2.39.2
 
