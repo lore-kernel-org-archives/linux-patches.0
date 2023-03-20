@@ -1,31 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E59E1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5E4C433EF;
-	Mon, 20 Mar 2023 15:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA1D1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7620C433EF;
+	Mon, 20 Mar 2023 15:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325819;
-	bh=itjs6iFZRt2JynM6LYNqrcpc5v86ZBjvB4BLoUlCYyM=;
+	s=korg; t=1679325822;
+	bh=RTQqVSWx6IE27E7U9ID+JWsW+NdwyRMaZL3l3SDcBLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ilTakTe+orBp9UwDyPs1WZtQIXZfe7ITE8rO9B5Ve04ahdKT41CjmPqJGje7HyCzv
-	 vnDsCDg3pshT4Y7raIZ18p3kWBwVAd5/GVNxAVuoP+iu7Be1foAS+hq6QAhYMyO2y3
-	 q6dlzNnMIkc5OhvtOU+Ypq7XKipLid9gY07e7d1U=
+	b=Ycq+nFw9RW9LOTX1EH3vtWzNXFuXDxfhTJyY9cChiS6J5YxSc3TIzKZr3ZHYJ5qch
+	 vvII/0+TayJuFNMnwLi1ShAzsaCUzXO1EPncSgizy3dBB6BJyDw0SCoYzpMg5UCowB
+	 /nSu5Af5DezetGonhVqdTJBFlfBTQFGtWS3tZ3bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 148/198] KVM: SVM: Modify AVIC GATag to support max number of 512 vCPUs
-Date: Mon, 20 Mar 2023 15:54:46 +0100
-Message-Id: <20230320145513.755489646@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"HeungJun, Kim" <riverful.kim@samsung.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Mauro Carvalho Chehab <mchehab@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	HeungJun
+Subject: [PATCH 6.2 107/211] media: m5mols: fix off-by-one loop termination error
+Date: Mon, 20 Mar 2023 15:54:02 +0100
+Message-Id: <20230320145517.767465808@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,81 +42,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 5999715922c5a3ede5d8fe2a6b17aba58a157d41 upstream.
+[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
 
-Define AVIC_VCPU_ID_MASK based on AVIC_PHYSICAL_MAX_INDEX, i.e. the mask
-that effectively controls the largest guest physical APIC ID supported by
-x2AVIC, instead of hardcoding the number of bits to 8 (and the number of
-VM bits to 24).
+The __find_restype() function loops over the m5mols_default_ffmt[]
+array, and the termination condition ends up being wrong: instead of
+stopping when the iterator becomes the size of the array it traverses,
+it stops after it has already overshot the array.
 
-The AVIC GATag is programmed into the AMD IOMMU IRTE to provide a
-reference back to KVM in case the IOMMU cannot inject an interrupt into a
-non-running vCPU.  In such a case, the IOMMU notifies software by creating
-a GALog entry with the corresponded GATag, and KVM then uses the GATag to
-find the correct VM+vCPU to kick.  Dropping bit 8 from the GATag results
-in kicking the wrong vCPU when targeting vCPUs with x2APIC ID > 255.
+Now, in practice this doesn't likely matter, because the code will
+always find the entry it looks for, and will thus return early and never
+hit that last extra iteration.
 
-Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
-Cc: stable@vger.kernel.org
-Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Co-developed-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Tested-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Message-Id: <20230207002156.521736-3-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+But it turns out that clang will unroll the loop fully, because it has
+only two iterations (well, three due to the off-by-one bug), and then
+clang will end up just giving up in the middle of the loop unrolling
+when it notices that the code walks past the end of the array.
+
+And that made 'objtool' very unhappy indeed, because the generated code
+just falls off the edge of the universe, and ends up falling through to
+the next function, causing this warning:
+
+   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
+
+Fix the loop ending condition.
+
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
+Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
+Cc: HeungJun, Kim <riverful.kim@samsung.com>
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/avic.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/svm/avic.c b/arch/x86/kvm/svm/avic.c
-index ca684979e90d..326341a22153 100644
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -27,19 +27,29 @@
- #include "irq.h"
- #include "svm.h"
+diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
+index 2b01873ba0db5..5c2336f318d9a 100644
+--- a/drivers/media/i2c/m5mols/m5mols_core.c
++++ b/drivers/media/i2c/m5mols/m5mols_core.c
+@@ -488,7 +488,7 @@ static enum m5mols_restype __find_restype(u32 code)
+ 	do {
+ 		if (code == m5mols_default_ffmt[type].code)
+ 			return type;
+-	} while (type++ != SIZE_DEFAULT_FFMT);
++	} while (++type != SIZE_DEFAULT_FFMT);
  
--/* AVIC GATAG is encoded using VM and VCPU IDs */
--#define AVIC_VCPU_ID_BITS		8
--#define AVIC_VCPU_ID_MASK		((1 << AVIC_VCPU_ID_BITS) - 1)
-+/*
-+ * Encode the arbitrary VM ID and the vCPU's default APIC ID, i.e the vCPU ID,
-+ * into the GATag so that KVM can retrieve the correct vCPU from a GALog entry
-+ * if an interrupt can't be delivered, e.g. because the vCPU isn't running.
-+ *
-+ * For the vCPU ID, use however many bits are currently allowed for the max
-+ * guest physical APIC ID (limited by the size of the physical ID table), and
-+ * use whatever bits remain to assign arbitrary AVIC IDs to VMs.  Note, the
-+ * size of the GATag is defined by hardware (32 bits), but is an opaque value
-+ * as far as hardware is concerned.
-+ */
-+#define AVIC_VCPU_ID_MASK		AVIC_PHYSICAL_MAX_INDEX_MASK
- 
--#define AVIC_VM_ID_BITS			24
--#define AVIC_VM_ID_NR			(1 << AVIC_VM_ID_BITS)
--#define AVIC_VM_ID_MASK			((1 << AVIC_VM_ID_BITS) - 1)
-+#define AVIC_VM_ID_SHIFT		HWEIGHT32(AVIC_PHYSICAL_MAX_INDEX_MASK)
-+#define AVIC_VM_ID_MASK			(GENMASK(31, AVIC_VM_ID_SHIFT) >> AVIC_VM_ID_SHIFT)
- 
--#define AVIC_GATAG(x, y)		(((x & AVIC_VM_ID_MASK) << AVIC_VCPU_ID_BITS) | \
-+#define AVIC_GATAG(x, y)		(((x & AVIC_VM_ID_MASK) << AVIC_VM_ID_SHIFT) | \
- 						(y & AVIC_VCPU_ID_MASK))
--#define AVIC_GATAG_TO_VMID(x)		((x >> AVIC_VCPU_ID_BITS) & AVIC_VM_ID_MASK)
-+#define AVIC_GATAG_TO_VMID(x)		((x >> AVIC_VM_ID_SHIFT) & AVIC_VM_ID_MASK)
- #define AVIC_GATAG_TO_VCPUID(x)		(x & AVIC_VCPU_ID_MASK)
- 
-+static_assert(AVIC_GATAG(AVIC_VM_ID_MASK, AVIC_VCPU_ID_MASK) == -1u);
-+
- static bool force_avic;
- module_param_unsafe(force_avic, bool, 0444);
- 
+ 	return 0;
+ }
 -- 
-2.40.0
+2.39.2
 
 
 
