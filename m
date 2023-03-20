@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320AE1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78B9C433EF;
-	Mon, 20 Mar 2023 15:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB581C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E84EC433D2;
+	Mon, 20 Mar 2023 15:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325249;
-	bh=BEv8/iSKoK73RPz9OD7bGTIKJw7pgok0xUVDzJq5W/c=;
+	s=korg; t=1679325251;
+	bh=l82DDHCb2EIipPemovtnXp3iydtOICGI14cAsTHFGEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksiICQi/SdUZYKgJOk+Xd9DCYn3C1da+n0sI+88odif/LIiGn2IBrvRzDQSm6Xx4j
-	 voP9BTNVgxMzLaLitTCcy55aVzKnSM6bdkNBpErvwnkv3YismR3uPujioPGnnoFpIT
-	 z65cYYvfb+MZJtUfmbyyVLOCdMFcYanUc8H9eKe0=
+	b=F0AW66NfHTcWFYgMVKBc65KqVDeODO92jrD8CEjTTowvy1LxUvl/0CelLv4lqaQue
+	 bEYkPaBitVblFU4wJ0/x42+cI6F1oaXpobSA4yY6fsGTcenaTpnm3ifjoRzeIMOJxm
+	 s4vASsxFf+BdrCc3TfNqAwU/GmxES7G+GItKhaC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Szymon Heidrich <szymon.heidrich@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 021/211] scsi: mpi3mr: Return proper values for failures in firmware init path
-Date: Mon, 20 Mar 2023 15:52:36 +0100
-Message-Id: <20230320145514.182483390@linuxfoundation.org>
+Subject: [PATCH 6.1 060/198] net: usb: smsc75xx: Limit packet length to skb->len
+Date: Mon, 20 Mar 2023 15:53:18 +0100
+Message-Id: <20230320145510.057680237@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,75 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Szymon Heidrich <szymon.heidrich@gmail.com>
 
-[ Upstream commit ba8a9ba41fbde250fd8b0ed1e5dad0dc9318df46 ]
+[ Upstream commit d8b228318935044dafe3a5bc07ee71a1f1424b8d ]
 
-Return proper non-zero return values for all the cases when the controller
-initialization and re-initialization fails.
+Packet length retrieved from skb data may be larger than
+the actual socket buffer length (up to 9026 bytes). In such
+case the cloned skb passed up the network stack will leak
+kernel memory contents.
 
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
-Link: https://lore.kernel.org/r/20230228140835.4075-5-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: c798304470ca ("scsi: mpi3mr: Fix memory leaks in mpi3mr_init_ioc()")
+Fixes: d0cad871703b ("smsc75xx: SMSC LAN75xx USB gigabit ethernet adapter driver")
+Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/usb/smsc75xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 77282ad5688da..e702911e8e934 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -3816,8 +3816,10 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
- 	dprint_init(mrioc, "allocating config page buffers\n");
- 	mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
- 	    MPI3MR_DEFAULT_CFG_PAGE_SZ, &mrioc->cfg_page_dma, GFP_KERNEL);
--	if (!mrioc->cfg_page)
-+	if (!mrioc->cfg_page) {
-+		retval = -1;
- 		goto out_failed_noretry;
-+	}
- 
- 	mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
- 
-@@ -3879,8 +3881,10 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
- 		dprint_init(mrioc, "allocating memory for throttle groups\n");
- 		sz = sizeof(struct mpi3mr_throttle_group_info);
- 		mrioc->throttle_groups = kcalloc(mrioc->num_io_throttle_group, sz, GFP_KERNEL);
--		if (!mrioc->throttle_groups)
-+		if (!mrioc->throttle_groups) {
-+			retval = -1;
- 			goto out_failed_noretry;
-+		}
- 	}
- 
- 	retval = mpi3mr_enable_events(mrioc);
-@@ -3900,6 +3904,7 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
- 		mpi3mr_memset_buffers(mrioc);
- 		goto retry_init;
- 	}
-+	retval = -1;
- out_failed_noretry:
- 	ioc_err(mrioc, "controller initialization failed\n");
- 	mpi3mr_issue_reset(mrioc, MPI3_SYSIF_HOST_DIAG_RESET_ACTION_DIAG_FAULT,
-@@ -4012,6 +4017,7 @@ int mpi3mr_reinit_ioc(struct mpi3mr_ioc *mrioc, u8 is_resume)
- 		ioc_err(mrioc,
- 		    "cannot create minimum number of operational queues expected:%d created:%d\n",
- 		    mrioc->shost->nr_hw_queues, mrioc->num_op_reply_q);
-+		retval = -1;
- 		goto out_failed_noretry;
- 	}
- 
-@@ -4078,6 +4084,7 @@ int mpi3mr_reinit_ioc(struct mpi3mr_ioc *mrioc, u8 is_resume)
- 		mpi3mr_memset_buffers(mrioc);
- 		goto retry_init;
- 	}
-+	retval = -1;
- out_failed_noretry:
- 	ioc_err(mrioc, "controller %s is failed\n",
- 	    (is_resume)?"resume":"re-initialization");
+diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
+index 95de452ff4dad..db34f8d1d6051 100644
+--- a/drivers/net/usb/smsc75xx.c
++++ b/drivers/net/usb/smsc75xx.c
+@@ -2212,7 +2212,8 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 				dev->net->stats.rx_frame_errors++;
+ 		} else {
+ 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
+-			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
++			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
++				     size > skb->len)) {
+ 				netif_dbg(dev, rx_err, dev->net,
+ 					  "size err rx_cmd_a=0x%08x\n",
+ 					  rx_cmd_a);
 -- 
 2.39.2
 
