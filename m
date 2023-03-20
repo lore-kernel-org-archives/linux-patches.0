@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B161C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CC4C4339B;
-	Mon, 20 Mar 2023 15:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A89B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BC3C433EF;
+	Mon, 20 Mar 2023 15:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324840;
-	bh=pKCE+gAWLSpBk2qiDtkngOAEj9FxRljqpv3piwhRTss=;
+	s=korg; t=1679324843;
+	bh=9JMFh7fIhp+ZVCsUj7thh5UxF2zDmdZ58+FF8L6uuPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HikWaqmhSqCfisY4NCkQePCMd8jroGPTXJ45CCSMqvTRmmT42AzU039IJHz5XBGwa
-	 yS7uUMzePs0v1CM7P1bnr2D4+58eebRsgOPCe3Of4HHA3ljkmM5/3czENIU+5Zrom4
-	 2Iw7PBcsfJh1aePv/BOPiwV2gm5pYeNK3Cad1Fs4=
+	b=nRnzy3A2X0sAe0xUejbaGN6H3U+hcs48rrcbHIT6h0lGPOFMer4KVqEPiKXzUeAv7
+	 gCNr/R5gUgOKNVrjR6p7H8MwNKv+G/IzdGuNiVYzD1oA1k9AYu6ZQjdt0S9XrWjK8o
+	 wDDH3ObUN3Hk8F8V6Ed48eTobUdrU2z8dQNK6MLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Volker Lendecke <vl@samba.org>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.10 64/99] cifs: Fix smb2_set_path_size()
-Date: Mon, 20 Mar 2023 15:54:42 +0100
-Message-Id: <20230320145446.071951006@linuxfoundation.org>
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 012/198] ASOC: SOF: Intel: pci-tgl: Fix device description
+Date: Mon, 20 Mar 2023 15:52:30 +0100
+Message-Id: <20230320145508.003884416@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,63 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Volker Lendecke <vl@samba.org>
+From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 
-commit 211baef0eabf4169ce4f73ebd917749d1a7edd74 upstream.
+[ Upstream commit 376f79bbf521fc37b871b536276319951b5bef3a ]
 
-If cifs_get_writable_path() finds a writable file, smb2_compound_op()
-must use that file's FID and not the COMPOUND_FID.
+Add the missing ops_free callback.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Volker Lendecke <vl@samba.org>
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 63d375b9f2a9 ("ASoC: SOF: Intel: pci-tgl: use RPL specific firmware definitions")
+
+Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20230307093914.25409-5-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2inode.c |   31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ sound/soc/sof/intel/pci-tgl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/cifs/smb2inode.c
-+++ b/fs/cifs/smb2inode.c
-@@ -236,15 +236,32 @@ smb2_compound_op(const unsigned int xid,
- 		size[0] = 8; /* sizeof __le64 */
- 		data[0] = ptr;
+diff --git a/sound/soc/sof/intel/pci-tgl.c b/sound/soc/sof/intel/pci-tgl.c
+index 19e2d68dcb20a..ccaf0ff9eb1c3 100644
+--- a/sound/soc/sof/intel/pci-tgl.c
++++ b/sound/soc/sof/intel/pci-tgl.c
+@@ -218,6 +218,7 @@ static const struct sof_dev_desc rpls_desc = {
+ 	.nocodec_tplg_filename = "sof-rpl-nocodec.tplg",
+ 	.ops = &sof_tgl_ops,
+ 	.ops_init = sof_tgl_ops_init,
++	.ops_free = hda_ops_free,
+ };
  
--		rc = SMB2_set_info_init(tcon, server,
--					&rqst[num_rqst], COMPOUND_FID,
--					COMPOUND_FID, current->tgid,
--					FILE_END_OF_FILE_INFORMATION,
--					SMB2_O_INFO_FILE, 0, data, size);
-+		if (cfile) {
-+			rc = SMB2_set_info_init(tcon, server,
-+						&rqst[num_rqst],
-+						cfile->fid.persistent_fid,
-+						cfile->fid.volatile_fid,
-+						current->tgid,
-+						FILE_END_OF_FILE_INFORMATION,
-+						SMB2_O_INFO_FILE, 0,
-+						data, size);
-+		} else {
-+			rc = SMB2_set_info_init(tcon, server,
-+						&rqst[num_rqst],
-+						COMPOUND_FID,
-+						COMPOUND_FID,
-+						current->tgid,
-+						FILE_END_OF_FILE_INFORMATION,
-+						SMB2_O_INFO_FILE, 0,
-+						data, size);
-+			if (!rc) {
-+				smb2_set_next_command(tcon, &rqst[num_rqst]);
-+				smb2_set_related(&rqst[num_rqst]);
-+			}
-+		}
- 		if (rc)
- 			goto finished;
--		smb2_set_next_command(tcon, &rqst[num_rqst]);
--		smb2_set_related(&rqst[num_rqst++]);
-+		num_rqst++;
- 		trace_smb3_set_eof_enter(xid, ses->Suid, tcon->tid, full_path);
- 		break;
- 	case SMB2_OP_SET_INFO:
+ static const struct sof_dev_desc rpl_desc = {
+@@ -246,6 +247,7 @@ static const struct sof_dev_desc rpl_desc = {
+ 	.nocodec_tplg_filename = "sof-rpl-nocodec.tplg",
+ 	.ops = &sof_tgl_ops,
+ 	.ops_init = sof_tgl_ops_init,
++	.ops_free = hda_ops_free,
+ };
+ 
+ /* PCI IDs */
+-- 
+2.39.2
+
 
 
