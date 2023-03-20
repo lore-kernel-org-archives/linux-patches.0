@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DE21C35
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87910C433EF;
-	Mon, 20 Mar 2023 15:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD121C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B94AC433EF;
+	Mon, 20 Mar 2023 15:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326120;
-	bh=4XAeS5PnLLJmS01mRlXTESvH5s233f4+GfvSxYBTRTE=;
+	s=korg; t=1679326123;
+	bh=93dlYql7Kh6eCQFq4Q3yrSYnSk1VkiRXwVuihcj4z1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4BvjJIJpPICpJ3u5MJ+Hu24PfC5i3RrlgQjcrA/8tB8Ju/h96Slmvti+VVGKH16a
-	 Sb4a8KEikWK1TVyHAlPKrXlmdsrNeUa7SbInDJiW/Nj2yLj7P2O1qluURM6LLUezt6
-	 X3Yc5xrBE8wOtlHH5+oOZBMbXttn7KvgJ18SaMAQ=
+	b=BVjsjAwGiKVXPU1iGlrxcOl42DdmJjOp/CHbQ11d0pWP7McvGUBugUuyElfZ7yRJq
+	 REZFWyt38L5N66V2KwLwWbpRq9b5MDvW4/WBrn9/AS8pYDLk/j3Wrsm4OktXuPqYPf
+	 RT0eH0z2NujWD81ZUSxWDAm8HMYiEKUWD6T8UIbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fagnani <matt.fagnani@bell.net>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	"Linux regression tracking (Thorsten Leemhuis)" <regressions@leemhuis.info>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Evan Quan <evan.quan@amd.com>,
+	=?UTF-8?q?B=C5=82a=C5=BCej=20Szczygie=C5=82?= <mumei6102@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 166/211] drm/amdgpu: Dont resume IOMMU after incomplete init
-Date: Mon, 20 Mar 2023 15:55:01 +0100
-Message-Id: <20230320145520.387313678@linuxfoundation.org>
+Subject: [PATCH 6.2 167/211] drm/amd/pm: Fix sienna cichlid incorrect OD volage after resume
+Date: Mon, 20 Mar 2023 15:55:02 +0100
+Message-Id: <20230320145520.436296081@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -37,63 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Kuehling <Felix.Kuehling@amd.com>
+From: Błażej Szczygieł <mumei6102@gmail.com>
 
-commit f3921a9a641483784448fb982b2eb738b383d9b9 upstream.
+commit a9386ee9681585794dbab95d4ce6826f73d19af6 upstream.
 
-Check kfd->init_complete in kgd2kfd_iommu_resume, consistent with other
-kgd2kfd calls. This should fix IOMMU errors on resume from suspend when
-KFD IOMMU initialization failed.
+Always setup overdrive tables after resume. Preserve only some
+user-defined settings in user_overdrive_table if they're set.
 
-Reported-by: Matt Fagnani <matt.fagnani@bell.net>
-Link: https://lore.kernel.org/r/4a3b225c-2ffd-e758-4de1-447375e34cad@bell.net/
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217170
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2454
-Cc: Vasant Hegde <vasant.hegde@amd.com>
-Cc: Linux regression tracking (Thorsten Leemhuis) <regressions@leemhuis.info>
-Cc: stable@vger.kernel.org
-Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Matt Fagnani <matt.fagnani@bell.net>
+Copy restored user_overdrive_table into od_table to get correct
+values.
+
+On cold boot, BTC was triggered and GfxVfCurve was calibrated. We
+got VfCurve settings (a). On resuming back, BTC will be triggered
+again and GfxVfCurve will be recalibrated. VfCurve settings (b)
+got may be different from those of cold boot.  So if we reuse
+those VfCurve settings (a) got on cold boot on suspend, we can
+run into discrepencies.
+
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/1897
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2276
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Błażej Szczygieł <mumei6102@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c |   43 ++++++++++++----
+ 1 file changed, 33 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-@@ -59,6 +59,7 @@ static int kfd_gtt_sa_init(struct kfd_de
- 				unsigned int chunk_size);
- static void kfd_gtt_sa_fini(struct kfd_dev *kfd);
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+@@ -2143,16 +2143,9 @@ static int sienna_cichlid_set_default_od
+ 		(OverDriveTable_t *)smu->smu_table.boot_overdrive_table;
+ 	OverDriveTable_t *user_od_table =
+ 		(OverDriveTable_t *)smu->smu_table.user_overdrive_table;
++	OverDriveTable_t user_od_table_bak;
+ 	int ret = 0;
  
-+static int kfd_resume_iommu(struct kfd_dev *kfd);
- static int kfd_resume(struct kfd_dev *kfd);
+-	/*
+-	 * For S3/S4/Runpm resume, no need to setup those overdrive tables again as
+-	 *   - either they already have the default OD settings got during cold bootup
+-	 *   - or they have some user customized OD settings which cannot be overwritten
+-	 */
+-	if (smu->adev->in_suspend)
+-		return 0;
+-
+ 	ret = smu_cmn_update_table(smu, SMU_TABLE_OVERDRIVE,
+ 				   0, (void *)boot_od_table, false);
+ 	if (ret) {
+@@ -2163,7 +2156,23 @@ static int sienna_cichlid_set_default_od
+ 	sienna_cichlid_dump_od_table(smu, boot_od_table);
  
- static void kfd_device_info_set_sdma_info(struct kfd_dev *kfd)
-@@ -635,7 +636,7 @@ bool kgd2kfd_device_init(struct kfd_dev
- 
- 	svm_migrate_init(kfd->adev);
- 
--	if (kgd2kfd_resume_iommu(kfd))
-+	if (kfd_resume_iommu(kfd))
- 		goto device_iommu_error;
- 
- 	if (kfd_resume(kfd))
-@@ -784,6 +785,14 @@ int kgd2kfd_resume(struct kfd_dev *kfd,
- 
- int kgd2kfd_resume_iommu(struct kfd_dev *kfd)
- {
-+	if (!kfd->init_complete)
-+		return 0;
+ 	memcpy(od_table, boot_od_table, sizeof(OverDriveTable_t));
+-	memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
 +
-+	return kfd_resume_iommu(kfd);
++	/*
++	 * For S3/S4/Runpm resume, we need to setup those overdrive tables again,
++	 * but we have to preserve user defined values in "user_od_table".
++	 */
++	if (!smu->adev->in_suspend) {
++		memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
++		smu->user_dpm_profile.user_od = false;
++	} else if (smu->user_dpm_profile.user_od) {
++		memcpy(&user_od_table_bak, user_od_table, sizeof(OverDriveTable_t));
++		memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
++		user_od_table->GfxclkFmin = user_od_table_bak.GfxclkFmin;
++		user_od_table->GfxclkFmax = user_od_table_bak.GfxclkFmax;
++		user_od_table->UclkFmin = user_od_table_bak.UclkFmin;
++		user_od_table->UclkFmax = user_od_table_bak.UclkFmax;
++		user_od_table->VddGfxOffset = user_od_table_bak.VddGfxOffset;
++	}
+ 
+ 	return 0;
+ }
+@@ -2373,6 +2382,20 @@ static int sienna_cichlid_od_edit_dpm_ta
+ 	return ret;
+ }
+ 
++static int sienna_cichlid_restore_user_od_settings(struct smu_context *smu)
++{
++	struct smu_table_context *table_context = &smu->smu_table;
++	OverDriveTable_t *od_table = table_context->overdrive_table;
++	OverDriveTable_t *user_od_table = table_context->user_overdrive_table;
++	int res;
++
++	res = smu_v11_0_restore_user_od_settings(smu);
++	if (res == 0)
++		memcpy(od_table, user_od_table, sizeof(OverDriveTable_t));
++
++	return res;
 +}
 +
-+static int kfd_resume_iommu(struct kfd_dev *kfd)
-+{
- 	int err = 0;
- 
- 	err = kfd_iommu_resume(kfd);
+ static int sienna_cichlid_run_btc(struct smu_context *smu)
+ {
+ 	int res;
+@@ -4400,7 +4423,7 @@ static const struct pptable_funcs sienna
+ 	.set_soft_freq_limited_range = smu_v11_0_set_soft_freq_limited_range,
+ 	.set_default_od_settings = sienna_cichlid_set_default_od_settings,
+ 	.od_edit_dpm_table = sienna_cichlid_od_edit_dpm_table,
+-	.restore_user_od_settings = smu_v11_0_restore_user_od_settings,
++	.restore_user_od_settings = sienna_cichlid_restore_user_od_settings,
+ 	.run_btc = sienna_cichlid_run_btc,
+ 	.set_power_source = smu_v11_0_set_power_source,
+ 	.get_pp_feature_mask = smu_cmn_get_pp_feature_mask,
 
 
