@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FC71C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E57BC433D2;
-	Mon, 20 Mar 2023 15:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6DA61C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AACC433EF;
+	Mon, 20 Mar 2023 15:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324557;
-	bh=SFBggJYkVHnCEZcZfLMB/8VKkg2NrKqNkLzN9FgAHNk=;
+	s=korg; t=1679324560;
+	bh=xF/dmG43/GCzmE8l12Joz7tZr1uvZBB1WbFQAB/nL68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HqsumxbZCbinR39ALTNewXEYvMpPR427CfTLWKSAn2D4ZQFIsMcF79vLE2cYygEas
-	 APPNCXZpDOcuVr+NMCwqeHbkjRDRg73Mt32+pDs4lhB4Y8zMkgZzchqepNSVr1BLS2
-	 bgKDT3XTXkT2K4n+5/WtbdwmgKYQj9xams4z/pbs=
+	b=SbAuRWIMpctAr7Ja2CgjXivY3BpJ4ifZan8yvbDV7S0xR1k2ojdlOU0AnnT5MuJCD
+	 nSjXu+UBPKSWoLrB5n8qcd9gYzCQKkcxpbCQqXvEy+zifBIc4EVSVE/ziay054jZLB
+	 l5NGXjQQ9ZrkVCJA2d30ZYEmPpXwCHmYLfSzsFZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianguo Wu <wujianguo@chinatelecom.cn>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 17/99] ipvlan: Make skb->skb_iif track skb->dev for l3s mode
-Date: Mon, 20 Mar 2023 15:53:55 +0100
-Message-Id: <20230320145444.087576263@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 5.4 52/60] x86/mm: Fix use of uninitialized buffer in sme_enable()
+Date: Mon, 20 Mar 2023 15:55:01 +0100
+Message-Id: <20230320145433.081368157@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,49 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianguo Wu <wujianguo@chinatelecom.cn>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 59a0b022aa249e3f5735d93de0849341722c4754 ]
+commit cbebd68f59f03633469f3ecf9bea99cd6cce3854 upstream.
 
-For l3s mode, skb->dev is set to ipvlan interface in ipvlan_nf_input():
-  skb->dev = addr->master->dev
-but, skb->skb_iif remain unchanged, this will cause socket lookup failed
-if a target socket is bound to a interface, like the following example:
+cmdline_find_option() may fail before doing any initialization of
+the buffer array. This may lead to unpredictable results when the same
+buffer is used later in calls to strncmp() function.  Fix the issue by
+returning early if cmdline_find_option() returns an error.
 
-  ip link add ipvlan0 link eth0 type ipvlan mode l3s
-  ip addr add dev ipvlan0 192.168.124.111/24
-  ip link set ipvlan0 up
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-  ping -c 1 -I ipvlan0 8.8.8.8
-  100% packet loss
-
-This is because there is no match sk in __raw_v4_lookup() as sk->sk_bound_dev_if != dif(skb->skb_iif).
-Fix this by make skb->skb_iif track skb->dev in ipvlan_nf_input().
-
-Fixes: c675e06a98a4 ("ipvlan: decouple l3s mode dependencies from other modes")
-Signed-off-by: Jianguo Wu <wujianguo@chinatelecom.cn>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/29865b1f-6db7-c07a-de89-949d3721ea30@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: aca20d546214 ("x86/mm: Add support to make use of Secure Memory Encryption")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230306160656.14844-1-n.zhandarovich@fintech.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ipvlan/ipvlan_l3s.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/mm/mem_encrypt_identity.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_l3s.c b/drivers/net/ipvlan/ipvlan_l3s.c
-index 943d26cbf39f5..71712ea25403d 100644
---- a/drivers/net/ipvlan/ipvlan_l3s.c
-+++ b/drivers/net/ipvlan/ipvlan_l3s.c
-@@ -101,6 +101,7 @@ static unsigned int ipvlan_nf_input(void *priv, struct sk_buff *skb,
- 		goto out;
+--- a/arch/x86/mm/mem_encrypt_identity.c
++++ b/arch/x86/mm/mem_encrypt_identity.c
+@@ -579,7 +579,8 @@ void __init sme_enable(struct boot_param
+ 	cmdline_ptr = (const char *)((u64)bp->hdr.cmd_line_ptr |
+ 				     ((u64)bp->ext_cmd_line_ptr << 32));
  
- 	skb->dev = addr->master->dev;
-+	skb->skb_iif = skb->dev->ifindex;
- 	len = skb->len + ETH_HLEN;
- 	ipvlan_count_rx(addr->master, len, true, false);
- out:
--- 
-2.39.2
-
+-	cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer));
++	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0)
++		return;
+ 
+ 	if (!strncmp(buffer, cmdline_on, sizeof(buffer)))
+ 		sme_me_mask = me_mask;
 
 
