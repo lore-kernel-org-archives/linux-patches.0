@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA761C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322ADC433EF;
-	Mon, 20 Mar 2023 15:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7102D1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30FEC433EF;
+	Mon, 20 Mar 2023 15:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325638;
-	bh=voqCg8hWNP7CnMJpCaiH8vm9+tbFEmkocUiBXj6O6sA=;
+	s=korg; t=1679325641;
+	bh=I5jKldDth/iDO4Vt3M+thx8228uhQrke/1U5IOLJRaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ry3aXR7VscG/gHqzMPZXaiUkJ+DQBQlAkMnbB0YPlxyWHxgmAfOEo7XQ808+dnmM3
-	 y1YNSxhdfrg1zGNkNbxijQTDrJkszyorrsdrwAD4oLWbfoztEuewkxT6WDKtK/PzcV
-	 7d74GUuRElPm1srqPrBEhAMa+skPLOOcmPYQjCcA=
+	b=huAKB5XbtVKDphBbDKgLya9mx1ig9vrlH9AcaGFIY+hYnwGbnF81ZBXT+dyUWPWeY
+	 gZqapVSJ8csATAsLFreqI3R1WvxD45ckm5QP+8Yfu782bL9twi9G33PRcYqYJwLqBB
+	 EUZ62Blq4Rv72OoQjadJgn+IeGwYRABxFSnNah0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Lei <Jun.Lei@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Maor Dickman <maord@nvidia.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/198] drm/amd/display: fix shift-out-of-bounds in CalculateVMAndRowBytes
-Date: Mon, 20 Mar 2023 15:54:13 +0100
-Message-Id: <20230320145512.387214541@linuxfoundation.org>
+Subject: [PATCH 6.2 075/211] net/mlx5: E-switch, Fix wrong usage of source port rewrite in split rules
+Date: Mon, 20 Mar 2023 15:53:30 +0100
+Message-Id: <20230320145516.402043048@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,47 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Hung <alex.hung@amd.com>
+From: Maor Dickman <maord@nvidia.com>
 
-[ Upstream commit 031f196d1b1b6d5dfcb0533b431e3ab1750e6189 ]
+[ Upstream commit 1313d78ac0c1cfcff7bdece8da54b080e71487c4 ]
 
-[WHY]
-When PTEBufferSizeInRequests is zero, UBSAN reports the following
-warning because dml_log2 returns an unexpected negative value:
+In few cases, rules with mirror use case are split to two FTEs, one which
+do the mirror action and forward to second FTE which do the rest of the rule
+actions and the second redirect action.
+In case of mirror rules which do split and forward to ovs internal port or
+VF stack devices, source port rewrite should be used in the second FTE but
+it is wrongly also set in the first FTE which break the offload.
 
-  shift exponent 4294966273 is too large for 32-bit type 'int'
+Fix this issue by removing the wrong check if source port rewrite is needed to
+be used on the first FTE of the split and instead return EOPNOTSUPP which will
+block offload of rules which mirror to ovs internal port or VF stack devices
+which isn't supported.
 
-[HOW]
-
-In the case PTEBufferSizeInRequests is zero, skip the dml_log2() and
-assign the result directly.
-
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 10742efc20a4 ("net/mlx5e: VF tunnel TX traffic offloading")
+Fixes: a508728a4c8b ("net/mlx5e: VF tunnel RX traffic offloading")
+Signed-off-by: Maor Dickman <maord@nvidia.com>
+Reviewed-by: Roi Dayan <roid@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c   | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../net/ethernet/mellanox/mlx5/core/eswitch_offloads.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-index 479e2c1a13018..49da8119b28e9 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-@@ -1802,7 +1802,10 @@ static unsigned int CalculateVMAndRowBytes(
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index f3b74cb67b71c..3992bf6337ca0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -726,11 +726,11 @@ mlx5_eswitch_add_fwd_rule(struct mlx5_eswitch *esw,
  
- 	if (SurfaceTiling == dm_sw_linear) {
--		*dpte_row_height = dml_min(128, 1 << (unsigned int) dml_floor(dml_log2(PTEBufferSizeInRequests * *PixelPTEReqWidth / Pitch), 1));
-+		if (PTEBufferSizeInRequests == 0)
-+			*dpte_row_height = 1;
-+		else
-+			*dpte_row_height = dml_min(128, 1 << (unsigned int) dml_floor(dml_log2(PTEBufferSizeInRequests * *PixelPTEReqWidth / Pitch), 1));
- 		*dpte_row_width_ub = (dml_ceil(((double) SwathWidth - 1) / *PixelPTEReqWidth, 1) + 1) * *PixelPTEReqWidth;
- 		*PixelPTEBytesPerRow = *dpte_row_width_ub / *PixelPTEReqWidth * *PTERequestSize;
- 	} else if (ScanDirection != dm_vert) {
+ 	flow_act.action = MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
+ 	for (i = 0; i < esw_attr->split_count; i++) {
+-		if (esw_is_indir_table(esw, attr))
+-			err = esw_setup_indir_table(dest, &flow_act, esw, attr, spec, false, &i);
+-		else if (esw_is_chain_src_port_rewrite(esw, esw_attr))
+-			err = esw_setup_chain_src_port_rewrite(dest, &flow_act, esw, chains, attr,
+-							       &i);
++		if (esw_attr->dests[i].flags & MLX5_ESW_DEST_CHAIN_WITH_SRC_PORT_CHANGE)
++			/* Source port rewrite (forward to ovs internal port or statck device) isn't
++			 * supported in the rule of split action.
++			 */
++			err = -EOPNOTSUPP;
+ 		else
+ 			esw_setup_vport_dest(dest, &flow_act, esw, esw_attr, i, i, false);
+ 
 -- 
 2.39.2
 
