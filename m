@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F481C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36689C433EF;
-	Mon, 20 Mar 2023 15:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B5D1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9715C4339B;
+	Mon, 20 Mar 2023 15:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325482;
-	bh=XlyKjxvn52nhRum6llsWjb1HNdixuZsp/9PSZT/mEJE=;
+	s=korg; t=1679325485;
+	bh=zWYayBiE244ZnNCraJMWhAFybST07Qk7k2/oIoWruE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=udv/VgdNK8TD+W0HqVUasWt/fTKEMxEzFF243/Aca3ljYIy3czdb8m4ELbRZ5nh2E
-	 AH8SFYBc6ikYvTZ7UCzZejLw45BoRddDslyWrpnF9923TzeWHpV7Ngerlruo1waeCy
-	 BPFAvfaksIJ2r9jgkP+C6OWPSH4GDOuaQjbY3kjc=
+	b=L+vGiLFTl4qku31jFng1PoSID4VEXehSKGRPZ1/2X20vBU1CV5KtuVsQGvrMjK5z0
+	 MKeKBaoQ2wEICpcXR2rRGi08A0ew9fJm6xru1jBRKvcADCoYOM2+QChpOiaCw3X3Bf
+	 v3gsz7qjqBnlgiBn/J9O/gdQ1dhKqmbizFJHmX+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liang He <windhl@126.com>,
+	Piotr Raczynski <piotr.raczynski@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 048/211] net/smc: fix NULL sndbuf_desc in smc_cdc_tx_handler()
-Date: Mon, 20 Mar 2023 15:53:03 +0100
-Message-Id: <20230320145515.238270436@linuxfoundation.org>
+Subject: [PATCH 6.1 090/198] ethernet: sun: add check for the mdesc_grab()
+Date: Mon, 20 Mar 2023 15:53:48 +0100
+Message-Id: <20230320145511.301572024@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,66 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 22a825c541d775c1dbe7b2402786025acad6727b ]
+[ Upstream commit 90de546d9a0b3c771667af18bb3f80567eabb89b ]
 
-When performing a stress test on SMC-R by rmmod mlx5_ib driver
-during the wrk/nginx test, we found that there is a probability
-of triggering a panic while terminating all link groups.
+In vnet_port_probe() and vsw_port_probe(), we should
+check the return value of mdesc_grab() as it may
+return NULL which can caused NPD bugs.
 
-This issue dues to the race between smc_smcr_terminate_all()
-and smc_buf_create().
-
-			smc_smcr_terminate_all
-
-smc_buf_create
-/* init */
-conn->sndbuf_desc = NULL;
-...
-
-			__smc_lgr_terminate
-				smc_conn_kill
-					smc_close_abort
-						smc_cdc_get_slot_and_msg_send
-
-			__softirqentry_text_start
-				smc_wr_tx_process_cqe
-					smc_cdc_tx_handler
-						READ(conn->sndbuf_desc->len);
-						/* panic dues to NULL sndbuf_desc */
-
-conn->sndbuf_desc = xxx;
-
-This patch tries to fix the issue by always to check the sndbuf_desc
-before send any cdc msg, to make sure that no null pointer is
-seen during cqe processing.
-
-Fixes: 0b29ec643613 ("net/smc: immediate termination for SMCR link groups")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Link: https://lore.kernel.org/r/1678263432-17329-1-git-send-email-alibuda@linux.alibaba.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5d01fa0c6bd8 ("ldmvsw: Add ldmvsw.c driver code")
+Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
+Signed-off-by: Liang He <windhl@126.com>
+Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_cdc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/sun/ldmvsw.c  | 3 +++
+ drivers/net/ethernet/sun/sunvnet.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
-index 53f63bfbaf5f9..89105e95b4523 100644
---- a/net/smc/smc_cdc.c
-+++ b/net/smc/smc_cdc.c
-@@ -114,6 +114,9 @@ int smc_cdc_msg_send(struct smc_connection *conn,
- 	union smc_host_cursor cfed;
- 	int rc;
+diff --git a/drivers/net/ethernet/sun/ldmvsw.c b/drivers/net/ethernet/sun/ldmvsw.c
+index 8addee6d04bd8..734a817d3c945 100644
+--- a/drivers/net/ethernet/sun/ldmvsw.c
++++ b/drivers/net/ethernet/sun/ldmvsw.c
+@@ -287,6 +287,9 @@ static int vsw_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
  
-+	if (unlikely(!READ_ONCE(conn->sndbuf_desc)))
-+		return -ENOBUFS;
+ 	hp = mdesc_grab();
+ 
++	if (!hp)
++		return -ENODEV;
 +
- 	smc_cdc_add_pending_send(conn, pend);
+ 	rmac = mdesc_get_property(hp, vdev->mp, remote_macaddr_prop, &len);
+ 	err = -ENODEV;
+ 	if (!rmac) {
+diff --git a/drivers/net/ethernet/sun/sunvnet.c b/drivers/net/ethernet/sun/sunvnet.c
+index acda6cbd0238d..bdf4c8be2d536 100644
+--- a/drivers/net/ethernet/sun/sunvnet.c
++++ b/drivers/net/ethernet/sun/sunvnet.c
+@@ -433,6 +433,9 @@ static int vnet_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
  
- 	conn->tx_cdc_seq++;
+ 	hp = mdesc_grab();
+ 
++	if (!hp)
++		return -ENODEV;
++
+ 	vp = vnet_find_parent(hp, vdev->mp, vdev);
+ 	if (IS_ERR(vp)) {
+ 		pr_err("Cannot find port parent vnet\n");
 -- 
 2.39.2
 
