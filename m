@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397F81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9D5C433EF;
-	Mon, 20 Mar 2023 15:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84C11C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28176C4339B;
+	Mon, 20 Mar 2023 15:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325268;
-	bh=M/LD27LpbE1RPnCPc2gCGQNbA43HMarMgHfS1QVXdI4=;
+	s=korg; t=1679325273;
+	bh=DxuNAsAhsPi84EKZwwBa3O3NPyV17ENS3kdwmD4AvF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iIEKbAj+mzcqIzMpa32MDQxRRGC2fkQnVSaFmT4omLkKGZjfKsHqefix4YivYEChQ
-	 /Q4Cwiyfvyh5BxOaih2lUYm9p6V+oKp+zrj0p0FxaI83ihkgs7irtT5hTrLUPk/oID
-	 5AD8dxmjkFQQFkAP5C98L04O2M9PRGRV4ZD9X9ck=
+	b=SKL4UrZCMFWVaj6scWJMIAWCkd76WQ3i3oL0jfUOMy9yIEhCKiYb2e1Lwr0xgvGnT
+	 8TBUkoZd/Xo497bL6XYIgXrWVq9gSOgQefcH/F03uxLRbLNR6jFuoqpQ0HTu1YMWR9
+	 GYTi23+yLqlLU86ujGbndIbLvtzdodotpbyFfAXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 023/211] scsi: mpi3mr: ioctl timeout when disabling/enabling interrupt
-Date: Mon, 20 Mar 2023 15:52:38 +0100
-Message-Id: <20230320145514.265927871@linuxfoundation.org>
+	Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.15 085/115] KVM: nVMX: add missing consistency checks for CR0 and CR4
+Date: Mon, 20 Mar 2023 15:54:57 +0100
+Message-Id: <20230320145452.988346384@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,126 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit 02ca7da2919ada525fb424640205110e24646b50 ]
+commit 112e66017bff7f2837030f34c2bc19501e9212d5 upstream.
 
-As part of Task Management handling, the driver will disable and enable the
-MSIx index zero which belongs to the Admin reply queue. During this
-transition the driver loses some interrupts and this leads to Admin request
-and ioctl timeouts.
+The effective values of the guest CR0 and CR4 registers may differ from
+those included in the VMCS12.  In particular, disabling EPT forces
+CR4.PAE=1 and disabling unrestricted guest mode forces CR0.PG=CR0.PE=1.
 
-After enabling the interrupts, poll the Admin reply queue to avoid
-timeouts.
+Therefore, checks on these bits cannot be delegated to the processor
+and must be performed by KVM.
 
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
-Link: https://lore.kernel.org/r/20230228140835.4075-2-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: ce756daa36e1 ("scsi: mpi3mr: Fix expander node leak in mpi3mr_remove()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr.h    |  3 +++
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 12 ++++++++++--
- drivers/scsi/mpi3mr/mpi3mr_os.c |  1 +
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ arch/x86/kvm/vmx/nested.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr.h b/drivers/scsi/mpi3mr/mpi3mr.h
-index 8a438f248a820..68f29ffb05b82 100644
---- a/drivers/scsi/mpi3mr/mpi3mr.h
-+++ b/drivers/scsi/mpi3mr/mpi3mr.h
-@@ -903,6 +903,7 @@ struct scmd_priv {
-  * @admin_reply_ephase:Admin reply queue expected phase
-  * @admin_reply_base: Admin reply queue base virtual address
-  * @admin_reply_dma: Admin reply queue base dma address
-+ * @admin_reply_q_in_use: Queue is handled by poll/ISR
-  * @ready_timeout: Controller ready timeout
-  * @intr_info: Interrupt cookie pointer
-  * @intr_info_count: Number of interrupt cookies
-@@ -1056,6 +1057,7 @@ struct mpi3mr_ioc {
- 	u8 admin_reply_ephase;
- 	void *admin_reply_base;
- 	dma_addr_t admin_reply_dma;
-+	atomic_t admin_reply_q_in_use;
- 
- 	u32 ready_timeout;
- 
-@@ -1391,4 +1393,5 @@ void mpi3mr_add_event_wait_for_device_refresh(struct mpi3mr_ioc *mrioc);
- void mpi3mr_flush_drv_cmds(struct mpi3mr_ioc *mrioc);
- void mpi3mr_flush_cmds_for_unrecovered_controller(struct mpi3mr_ioc *mrioc);
- void mpi3mr_free_enclosure_list(struct mpi3mr_ioc *mrioc);
-+int mpi3mr_process_admin_reply_q(struct mpi3mr_ioc *mrioc);
- #endif /*MPI3MR_H_INCLUDED*/
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 4147920afbaee..28fd90c4b62d0 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -415,7 +415,7 @@ static void mpi3mr_process_admin_reply_desc(struct mpi3mr_ioc *mrioc,
- 		    le64_to_cpu(scsi_reply->sense_data_buffer_address));
- }
- 
--static int mpi3mr_process_admin_reply_q(struct mpi3mr_ioc *mrioc)
-+int mpi3mr_process_admin_reply_q(struct mpi3mr_ioc *mrioc)
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -2991,7 +2991,7 @@ static int nested_vmx_check_guest_state(
+ 					struct vmcs12 *vmcs12,
+ 					enum vm_entry_failure_code *entry_failure_code)
  {
- 	u32 exp_phase = mrioc->admin_reply_ephase;
- 	u32 admin_reply_ci = mrioc->admin_reply_ci;
-@@ -423,12 +423,17 @@ static int mpi3mr_process_admin_reply_q(struct mpi3mr_ioc *mrioc)
- 	u64 reply_dma = 0;
- 	struct mpi3_default_reply_descriptor *reply_desc;
+-	bool ia32e;
++	bool ia32e = !!(vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE);
  
-+	if (!atomic_add_unless(&mrioc->admin_reply_q_in_use, 1, 1))
-+		return 0;
+ 	*entry_failure_code = ENTRY_FAIL_DEFAULT;
+ 
+@@ -3017,6 +3017,13 @@ static int nested_vmx_check_guest_state(
+ 					   vmcs12->guest_ia32_perf_global_ctrl)))
+ 		return -EINVAL;
+ 
++	if (CC((vmcs12->guest_cr0 & (X86_CR0_PG | X86_CR0_PE)) == X86_CR0_PG))
++		return -EINVAL;
 +
- 	reply_desc = (struct mpi3_default_reply_descriptor *)mrioc->admin_reply_base +
- 	    admin_reply_ci;
- 
- 	if ((le16_to_cpu(reply_desc->reply_flags) &
--	    MPI3_REPLY_DESCRIPT_FLAGS_PHASE_MASK) != exp_phase)
-+	    MPI3_REPLY_DESCRIPT_FLAGS_PHASE_MASK) != exp_phase) {
-+		atomic_dec(&mrioc->admin_reply_q_in_use);
- 		return 0;
-+	}
- 
- 	do {
- 		if (mrioc->unrecoverable)
-@@ -454,6 +459,7 @@ static int mpi3mr_process_admin_reply_q(struct mpi3mr_ioc *mrioc)
- 	writel(admin_reply_ci, &mrioc->sysif_regs->admin_reply_queue_ci);
- 	mrioc->admin_reply_ci = admin_reply_ci;
- 	mrioc->admin_reply_ephase = exp_phase;
-+	atomic_dec(&mrioc->admin_reply_q_in_use);
- 
- 	return num_admin_replies;
- }
-@@ -2605,6 +2611,7 @@ static int mpi3mr_setup_admin_qpair(struct mpi3mr_ioc *mrioc)
- 	mrioc->admin_reply_ci = 0;
- 	mrioc->admin_reply_ephase = 1;
- 	mrioc->admin_reply_base = NULL;
-+	atomic_set(&mrioc->admin_reply_q_in_use, 0);
- 
- 	if (!mrioc->admin_req_base) {
- 		mrioc->admin_req_base = dma_alloc_coherent(&mrioc->pdev->dev,
-@@ -4167,6 +4174,7 @@ void mpi3mr_memset_buffers(struct mpi3mr_ioc *mrioc)
- 		memset(mrioc->admin_req_base, 0, mrioc->admin_req_q_sz);
- 	if (mrioc->admin_reply_base)
- 		memset(mrioc->admin_reply_base, 0, mrioc->admin_reply_q_sz);
-+	atomic_set(&mrioc->admin_reply_q_in_use, 0);
- 
- 	if (mrioc->init_cmds.reply) {
- 		memset(mrioc->init_cmds.reply, 0, sizeof(*mrioc->init_cmds.reply));
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 5698e7b90f852..2e546c80d98ce 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -3720,6 +3720,7 @@ int mpi3mr_issue_tm(struct mpi3mr_ioc *mrioc, u8 tm_type,
- 		mpi3mr_poll_pend_io_completions(mrioc);
- 		mpi3mr_ioc_enable_intr(mrioc);
- 		mpi3mr_poll_pend_io_completions(mrioc);
-+		mpi3mr_process_admin_reply_q(mrioc);
- 	}
- 	switch (tm_type) {
- 	case MPI3_SCSITASKMGMT_TASKTYPE_TARGET_RESET:
--- 
-2.39.2
-
++	if (CC(ia32e && !(vmcs12->guest_cr4 & X86_CR4_PAE)) ||
++	    CC(ia32e && !(vmcs12->guest_cr0 & X86_CR0_PG)))
++		return -EINVAL;
++
+ 	/*
+ 	 * If the load IA32_EFER VM-entry control is 1, the following checks
+ 	 * are performed on the field for the IA32_EFER MSR:
+@@ -3028,7 +3035,6 @@ static int nested_vmx_check_guest_state(
+ 	 */
+ 	if (to_vmx(vcpu)->nested.nested_run_pending &&
+ 	    (vmcs12->vm_entry_controls & VM_ENTRY_LOAD_IA32_EFER)) {
+-		ia32e = (vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE) != 0;
+ 		if (CC(!kvm_valid_efer(vcpu, vmcs12->guest_ia32_efer)) ||
+ 		    CC(ia32e != !!(vmcs12->guest_ia32_efer & EFER_LMA)) ||
+ 		    CC(((vmcs12->guest_cr0 & X86_CR0_PG) &&
 
 
