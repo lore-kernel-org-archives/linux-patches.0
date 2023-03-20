@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA8E1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C794AC433D2;
-	Mon, 20 Mar 2023 15:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0269A1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75529C433D2;
+	Mon, 20 Mar 2023 15:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325614;
-	bh=nWuzYXC0jiG5rXcW2RThazfi2ompjBxmahwxU6aSndo=;
+	s=korg; t=1679325616;
+	bh=+c45SjTlnq+NXIqIkShpUo9G/Gb3Q2yw0iHlcuh/bBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTLIo3zJ8tPr3AEMazY5AjtsIH/4ARBqUDRLI7bdg5/75lFNvKacFEzTpQ8aCnwQm
-	 fMoDAEymAqaAo9+S4+gE+QClZW5sPbWgRTe3+87A0sIaeDbllBvhDOxckWOrLrphV0
-	 xMeIkQwNEz2XACzA88BpN132FsySh9cXNHJoQS0g=
+	b=VOVcA0PFskUM33g4pzanVHsmSA6lilFqeWLii1Cka2JMYr4n7yePLChtoXlLRr6UY
+	 Cu7cPRNcJoGVLOK+PrQzOqPESSFAuuERt9rLfArL2GbfH2b761gOv2WFEVWBSvF+Qs
+	 mkjrk7+jhzH5o0VwiRDtrKN/1KK7jyA/MRGjnqKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paul Holzinger <pholzing@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 057/211] tcp: Fix bind() conflict check for dual-stack wildcard address.
-Date: Mon, 20 Mar 2023 15:53:12 +0100
-Message-Id: <20230320145515.617954974@linuxfoundation.org>
+Subject: [PATCH 6.1 111/198] net/9p: fix bug in client create for .L
+Date: Mon, 20 Mar 2023 15:54:09 +0100
+Message-Id: <20230320145512.229499168@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,67 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Eric Van Hensbergen <ericvh@kernel.org>
 
-[ Upstream commit d9ba9934285514f1f95d96326a82398a22dc77f2 ]
+[ Upstream commit 3866584a1c56a2bbc8c0981deb4476d0b801969e ]
 
-Paul Holzinger reported [0] that commit 5456262d2baa ("net: Fix
-incorrect address comparison when searching for a bind2 bucket")
-introduced a bind() regression.  Paul also gave a nice repro that
-calls two types of bind() on the same port, both of which now
-succeed, but the second call should fail:
+We are supposed to set fid->mode to reflect the flags
+that were used to open the file.  We were actually setting
+it to the creation mode which is the default perms of the
+file not the flags the file was opened with.
 
-  bind(fd1, ::, port) + bind(fd2, 127.0.0.1, port)
-
-The cited commit added address family tests in three functions to
-fix the uninit-value KMSAN report. [1]  However, the test added to
-inet_bind2_bucket_match_addr_any() removed a necessary conflict
-check; the dual-stack wildcard address no longer conflicts with
-an IPv4 non-wildcard address.
-
-If tb->family is AF_INET6 and sk->sk_family is AF_INET in
-inet_bind2_bucket_match_addr_any(), we still need to check
-if tb has the dual-stack wildcard address.
-
-Note that the IPv4 wildcard address does not conflict with
-IPv6 non-wildcard addresses.
-
-[0]: https://lore.kernel.org/netdev/e21bf153-80b0-9ec0-15ba-e04a4ad42c34@redhat.com/
-[1]: https://lore.kernel.org/netdev/CAG_fn=Ud3zSW7AZWXc+asfMhZVL5ETnvuY44Pmyv4NPv-ijN-A@mail.gmail.com/
-
-Fixes: 5456262d2baa ("net: Fix incorrect address comparison when searching for a bind2 bucket")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reported-by: Paul Holzinger <pholzing@redhat.com>
-Link: https://lore.kernel.org/netdev/CAG_fn=Ud3zSW7AZWXc+asfMhZVL5ETnvuY44Pmyv4NPv-ijN-A@mail.gmail.com/
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Tested-by: Paul Holzinger <pholzing@redhat.com>
-Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Reviewed-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_hashtables.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/9p/client.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 7a13dd7f546b6..7b05315264b0c 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -828,8 +828,14 @@ bool inet_bind2_bucket_match_addr_any(const struct inet_bind2_bucket *tb, const
- #if IS_ENABLED(CONFIG_IPV6)
- 	struct in6_addr addr_any = {};
+diff --git a/net/9p/client.c b/net/9p/client.c
+index 554a4b11f4fec..af59c3f2ec2e7 100644
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -1284,7 +1284,7 @@ int p9_client_create_dotl(struct p9_fid *ofid, const char *name, u32 flags,
+ 		 qid->type, qid->path, qid->version, iounit);
  
--	if (sk->sk_family != tb->family)
-+	if (sk->sk_family != tb->family) {
-+		if (sk->sk_family == AF_INET)
-+			return net_eq(ib2_net(tb), net) && tb->port == port &&
-+				tb->l3mdev == l3mdev &&
-+				ipv6_addr_equal(&tb->v6_rcv_saddr, &addr_any);
-+
- 		return false;
-+	}
+ 	memmove(&ofid->qid, qid, sizeof(struct p9_qid));
+-	ofid->mode = mode;
++	ofid->mode = flags;
+ 	ofid->iounit = iounit;
  
- 	if (sk->sk_family == AF_INET6)
- 		return net_eq(ib2_net(tb), net) && tb->port == port &&
+ free_and_error:
 -- 
 2.39.2
 
