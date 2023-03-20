@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B6E1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81CFC433A0;
-	Mon, 20 Mar 2023 15:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190E01C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9109FC433EF;
+	Mon, 20 Mar 2023 15:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324981;
-	bh=dPN4NDuHUJybMvzkSTkgEA0jocHVXO9EQNgBzNl2G9w=;
+	s=korg; t=1679324983;
+	bh=Ed3pU383HVMS7+m2FVX1Tx39zViPKwp/B/wTTwKwH/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ltqMCO/zCTazv4HFz1JDSNqREm6oNCVttfieEzWoGJ496vuDlA5q2flBHjDg+pxqt
-	 FUpQQoTRERDGawg3+UlKCc/NECwVQZ/yU30xZ+BY1vwQwNQYSDdqVE2YAshAoHxVbm
-	 l44LG/S98mXTuIkmCoREm7CuYFaTnQg8LQD9e3lw=
+	b=LpQGJsNhJOsQZxEq7nQuF1H5CpzBZpZ8cmp0H1QPUWxhSRQEIzY+aLruNelkPhJuf
+	 WTf2xxp21EQ6sNX761MLfnMVYI47TteJ6GiiXnYC1U9m8pHhvJEVFBtjls1mLbbPMm
+	 VP6DB0gzp5oAIkt2F+/5XalKHnsyBMPY5p63cioY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 5.10 80/99] s390/ipl: add missing intersection check to ipl_report handling
-Date: Mon, 20 Mar 2023 15:54:58 +0100
-Message-Id: <20230320145446.764185324@linuxfoundation.org>
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 057/115] hwmon: (ucd90320) Add minimum delay between bus accesses
+Date: Mon, 20 Mar 2023 15:54:29 +0100
+Message-Id: <20230320145451.817435133@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,51 +35,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-commit a52e5cdbe8016d4e3e6322fd93d71afddb9a5af9 upstream.
+[ Upstream commit 8d655e65237643c48ada2c131b83679bf1105373 ]
 
-The code which handles the ipl report is searching for a free location
-in memory where it could copy the component and certificate entries to.
-It checks for intersection between the sections required for the kernel
-and the component/certificate data area, but fails to check whether
-the data structures linking these data areas together intersect.
+When probing the ucd90320 access to some of the registers randomly fails.
+Sometimes it NACKs a transfer, sometimes it returns just random data and
+the PEC check fails.
 
-This might cause the iplreport copy code to overwrite the iplreport
-itself. Fix this by adding two addtional intersection checks.
+Experimentation shows that this seems to be triggered by a register access
+directly back to back with a previous register write. Experimentation also
+shows that inserting a small delay after register writes makes the issue go
+away.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 9641b8cc733f ("s390/ipl: read IPL report at early boot")
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use a similar solution to what the max15301 driver does to solve the same
+problem. Create a custom set of bus read and write functions that make sure
+that the delay is added.
+
+Fixes: a470f11c5ba2 ("hwmon: (pmbus/ucd9000) Add support for UCD90320 Power Sequencer")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Link: https://lore.kernel.org/r/20230312160312.2227405-1-lars@metafoo.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/ipl_report.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/hwmon/pmbus/ucd9000.c | 75 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
 
---- a/arch/s390/boot/ipl_report.c
-+++ b/arch/s390/boot/ipl_report.c
-@@ -57,11 +57,19 @@ repeat:
- 	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && INITRD_START && INITRD_SIZE &&
- 	    intersects(INITRD_START, INITRD_SIZE, safe_addr, size))
- 		safe_addr = INITRD_START + INITRD_SIZE;
-+	if (intersects(safe_addr, size, (unsigned long)comps, comps->len)) {
-+		safe_addr = (unsigned long)comps + comps->len;
-+		goto repeat;
-+	}
- 	for_each_rb_entry(comp, comps)
- 		if (intersects(safe_addr, size, comp->addr, comp->len)) {
- 			safe_addr = comp->addr + comp->len;
- 			goto repeat;
- 		}
-+	if (intersects(safe_addr, size, (unsigned long)certs, certs->len)) {
-+		safe_addr = (unsigned long)certs + certs->len;
-+		goto repeat;
-+	}
- 	for_each_rb_entry(cert, certs)
- 		if (intersects(safe_addr, size, cert->addr, cert->len)) {
- 			safe_addr = cert->addr + cert->len;
+diff --git a/drivers/hwmon/pmbus/ucd9000.c b/drivers/hwmon/pmbus/ucd9000.c
+index 75fc770c9e403..3daaf22378322 100644
+--- a/drivers/hwmon/pmbus/ucd9000.c
++++ b/drivers/hwmon/pmbus/ucd9000.c
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include <linux/debugfs.h>
++#include <linux/delay.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/of_device.h>
+@@ -16,6 +17,7 @@
+ #include <linux/i2c.h>
+ #include <linux/pmbus.h>
+ #include <linux/gpio/driver.h>
++#include <linux/timekeeping.h>
+ #include "pmbus.h"
+ 
+ enum chips { ucd9000, ucd90120, ucd90124, ucd90160, ucd90320, ucd9090,
+@@ -65,6 +67,7 @@ struct ucd9000_data {
+ 	struct gpio_chip gpio;
+ #endif
+ 	struct dentry *debugfs;
++	ktime_t write_time;
+ };
+ #define to_ucd9000_data(_info) container_of(_info, struct ucd9000_data, info)
+ 
+@@ -73,6 +76,73 @@ struct ucd9000_debugfs_entry {
+ 	u8 index;
+ };
+ 
++/*
++ * It has been observed that the UCD90320 randomly fails register access when
++ * doing another access right on the back of a register write. To mitigate this
++ * make sure that there is a minimum delay between a write access and the
++ * following access. The 250us is based on experimental data. At a delay of
++ * 200us the issue seems to go away. Add a bit of extra margin to allow for
++ * system to system differences.
++ */
++#define UCD90320_WAIT_DELAY_US 250
++
++static inline void ucd90320_wait(const struct ucd9000_data *data)
++{
++	s64 delta = ktime_us_delta(ktime_get(), data->write_time);
++
++	if (delta < UCD90320_WAIT_DELAY_US)
++		udelay(UCD90320_WAIT_DELAY_US - delta);
++}
++
++static int ucd90320_read_word_data(struct i2c_client *client, int page,
++				   int phase, int reg)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++
++	if (reg >= PMBUS_VIRT_BASE)
++		return -ENXIO;
++
++	ucd90320_wait(data);
++	return pmbus_read_word_data(client, page, phase, reg);
++}
++
++static int ucd90320_read_byte_data(struct i2c_client *client, int page, int reg)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++
++	ucd90320_wait(data);
++	return pmbus_read_byte_data(client, page, reg);
++}
++
++static int ucd90320_write_word_data(struct i2c_client *client, int page,
++				    int reg, u16 word)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++	int ret;
++
++	ucd90320_wait(data);
++	ret = pmbus_write_word_data(client, page, reg, word);
++	data->write_time = ktime_get();
++
++	return ret;
++}
++
++static int ucd90320_write_byte(struct i2c_client *client, int page, u8 value)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++	int ret;
++
++	ucd90320_wait(data);
++	ret = pmbus_write_byte(client, page, value);
++	data->write_time = ktime_get();
++
++	return ret;
++}
++
+ static int ucd9000_get_fan_config(struct i2c_client *client, int fan)
+ {
+ 	int fan_config = 0;
+@@ -598,6 +668,11 @@ static int ucd9000_probe(struct i2c_client *client)
+ 		info->read_byte_data = ucd9000_read_byte_data;
+ 		info->func[0] |= PMBUS_HAVE_FAN12 | PMBUS_HAVE_STATUS_FAN12
+ 		  | PMBUS_HAVE_FAN34 | PMBUS_HAVE_STATUS_FAN34;
++	} else if (mid->driver_data == ucd90320) {
++		info->read_byte_data = ucd90320_read_byte_data;
++		info->read_word_data = ucd90320_read_word_data;
++		info->write_byte = ucd90320_write_byte;
++		info->write_word_data = ucd90320_write_word_data;
+ 	}
+ 
+ 	ucd9000_probe_gpio(client, mid, data);
+-- 
+2.39.2
+
 
 
