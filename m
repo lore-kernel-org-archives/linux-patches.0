@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6761C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC62C433EF;
-	Mon, 20 Mar 2023 15:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB1C1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7096DC4339C;
+	Mon, 20 Mar 2023 15:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325918;
-	bh=iKbqb9exd5j6fKs6xHxa7RARfrt2BXyXsMsRsHajGgw=;
+	s=korg; t=1679325920;
+	bh=H4I2RdWimPUS/Zk42U0QwdPRgbY0DdDJOPu2pnKimWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LuMzc2hdsDIYsQN06Pd+c8Lh6fXeI01TbtqWtsI2Yp9UrrLpz76Tqgo5QXPsbM5HZ
-	 Nr8yt3aI64zkLE81fE7PBiJsTjcjZiCNBZOz2r+EOo/XfTtm0wDmi561AfGTcKIeMl
-	 pyfXt/at0nvHiHfChVpCIjimaks1WIANldj8qqJI=
+	b=g0KuUZIG656//sqkcIzWE9CeZlcqvPv0R+a31d5uHtGjStBHbX6WCljjjCrgv5fkT
+	 hdzlRtDC2IpTnWPhOIyGh3q3NzpagUDsSLzicyKzHbTl3Tr/QrOgepTzhSE4MgKLdr
+	 3jIyCaTI+gqYmrhazu9/GYV6oVoOPsyj0dmEwYN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.2 125/211] memory: tegra20-emc: fix interconnect registration race
-Date: Mon, 20 Mar 2023 15:54:20 +0100
-Message-Id: <20230320145518.617629250@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>
+Subject: [PATCH 6.1 168/198] ftrace: Fix invalid address access in lookup_rec() when index is 0
+Date: Mon, 20 Mar 2023 15:55:06 +0100
+Message-Id: <20230320145514.573001254@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,65 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-commit c5587f61ec050f7e9ebb3e2da29d12af63e833d3 upstream.
+commit ee92fa443358f4fc0017c1d0d325c27b37802504 upstream.
 
-The current interconnect provider registration interface is inherently
-racy as nodes are not added until the after adding the provider. This
-can specifically cause racing DT lookups to fail.
+KASAN reported follow problem:
 
-Switch to using the new API where the provider is not registered until
-after it has been fully initialised.
+ BUG: KASAN: use-after-free in lookup_rec
+ Read of size 8 at addr ffff000199270ff0 by task modprobe
+ CPU: 2 Comm: modprobe
+ Call trace:
+  kasan_report
+  __asan_load8
+  lookup_rec
+  ftrace_location
+  arch_check_ftrace_location
+  check_kprobe_address_safe
+  register_kprobe
 
-Fixes: d5ef16ba5fbe ("memory: tegra20: Support interconnect framework")
-Cc: stable@vger.kernel.org      # 5.11
-Cc: Dmitry Osipenko <digetx@gmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-20-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+When checking pg->records[pg->index - 1].ip in lookup_rec(), it can get a
+pg which is newly added to ftrace_pages_start in ftrace_process_locs().
+Before the first pg->index++, index is 0 and accessing pg->records[-1].ip
+will cause this problem.
+
+Don't check the ip when pg->index is 0.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230309080230.36064-1-chenzhongjin@huawei.com
+
+Cc: stable@vger.kernel.org
+Fixes: 9644302e3315 ("ftrace: Speed up search by skipping pages by address")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memory/tegra/tegra20-emc.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/trace/ftrace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/memory/tegra/tegra20-emc.c
-+++ b/drivers/memory/tegra/tegra20-emc.c
-@@ -1021,15 +1021,13 @@ static int tegra_emc_interconnect_init(s
- 	emc->provider.aggregate = soc->icc_ops->aggregate;
- 	emc->provider.xlate_extended = emc_of_icc_xlate_extended;
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1537,7 +1537,8 @@ static struct dyn_ftrace *lookup_rec(uns
+ 	key.flags = end;	/* overload flags, as it is unsigned long */
  
--	err = icc_provider_add(&emc->provider);
--	if (err)
--		goto err_msg;
-+	icc_provider_init(&emc->provider);
- 
- 	/* create External Memory Controller node */
- 	node = icc_node_create(TEGRA_ICC_EMC);
- 	if (IS_ERR(node)) {
- 		err = PTR_ERR(node);
--		goto del_provider;
-+		goto err_msg;
- 	}
- 
- 	node->name = "External Memory Controller";
-@@ -1050,12 +1048,14 @@ static int tegra_emc_interconnect_init(s
- 	node->name = "External Memory (DRAM)";
- 	icc_node_add(node, &emc->provider);
- 
-+	err = icc_provider_register(&emc->provider);
-+	if (err)
-+		goto remove_nodes;
-+
- 	return 0;
- 
- remove_nodes:
- 	icc_nodes_remove(&emc->provider);
--del_provider:
--	icc_provider_del(&emc->provider);
- err_msg:
- 	dev_err(emc->dev, "failed to initialize ICC: %d\n", err);
- 
+ 	for (pg = ftrace_pages_start; pg; pg = pg->next) {
+-		if (end < pg->records[0].ip ||
++		if (pg->index == 0 ||
++		    end < pg->records[0].ip ||
+ 		    start >= (pg->records[pg->index - 1].ip + MCOUNT_INSN_SIZE))
+ 			continue;
+ 		rec = bsearch(&key, pg->records, pg->index,
 
 
