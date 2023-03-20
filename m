@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327061C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8439BC433D2;
-	Mon, 20 Mar 2023 15:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12001C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DCAC4339B;
+	Mon, 20 Mar 2023 15:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324903;
-	bh=q7cKzBeow0OTK15nGb8yLbZsXyaUiWG8LYsBO+NMrNk=;
+	s=korg; t=1679324906;
+	bh=dl3QTd+UtKcU/FC+DFXYJAoSVrWbgV2C49IRHaIEPo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kidvft5d4aqn/oRA7UL09P1h5iDZ1nVTUBxlMQvsdc7e+JdMTWmEY5zsenyGmz3XE
-	 ebeufRMVk2IqyLufT+C9N/YHb3E9HQ7zRuVozKkQXEC0HyUKb1O2CY1FVf2kbI4jCR
-	 o5JthXw9sHewBR86P6CSTHYmCpTOabrewmuXPbyw=
+	b=a0UL9k8rD2Jl894lrZVszqa6hHtSGSoGPkXbysLVPKiIPkh9R/v9pIQW2yi6wNvKb
+	 E7cZUYAjWZU/W1yqfZjkgXAZbP0w8+yGVxpHtyhjdC5k+1714tcvEIbtTXu4zQi5cf
+	 NcyO1p4yhlMhFXIlbD4uEYEiXW25mNs/TIeOGk8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Peter Xu <peterx@redhat.com>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Jerome Glisse <jglisse@redhat.com>,
-	Shaohua Li <shli@fb.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 71/99] mm/userfaultfd: propagate uffd-wp bit when PTE-mapping the huge zeropage
-Date: Mon, 20 Mar 2023 15:54:49 +0100
-Message-Id: <20230320145446.360890387@linuxfoundation.org>
+	Steven Price <steven.price@arm.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 004/198] drm/panfrost: Dont sync rpm suspension after mmu flushing
+Date: Mon, 20 Mar 2023 15:52:22 +0100
+Message-Id: <20230320145507.624863284@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,223 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Hildenbrand <david@redhat.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-commit 42b2af2c9b7eede8ef21d0943f84d135e21a32a3 upstream.
+[ Upstream commit ba3be66f11c3c49afaa9f49b99e21d88756229ef ]
 
-Currently, we'd lose the userfaultfd-wp marker when PTE-mapping a huge
-zeropage, resulting in the next write faults in the PMD range not
-triggering uffd-wp events.
+Lockdep warns about potential circular locking dependency of devfreq
+with the fs_reclaim caused by immediate device suspension when mapping is
+released by shrinker. Fix it by doing the suspension asynchronously.
 
-Various actions (partial MADV_DONTNEED, partial mremap, partial munmap,
-partial mprotect) could trigger this.  However, most importantly,
-un-protecting a single sub-page from the userfaultfd-wp handler when
-processing a uffd-wp event will PTE-map the shared huge zeropage and lose
-the uffd-wp bit for the remainder of the PMD.
-
-Let's properly propagate the uffd-wp bit to the PMDs.
-
- #define _GNU_SOURCE
- #include <stdio.h>
- #include <stdlib.h>
- #include <stdint.h>
- #include <stdbool.h>
- #include <inttypes.h>
- #include <fcntl.h>
- #include <unistd.h>
- #include <errno.h>
- #include <poll.h>
- #include <pthread.h>
- #include <sys/mman.h>
- #include <sys/syscall.h>
- #include <sys/ioctl.h>
- #include <linux/userfaultfd.h>
-
- static size_t pagesize;
- static int uffd;
- static volatile bool uffd_triggered;
-
- #define barrier() __asm__ __volatile__("": : :"memory")
-
- static void uffd_wp_range(char *start, size_t size, bool wp)
- {
- 	struct uffdio_writeprotect uffd_writeprotect;
-
- 	uffd_writeprotect.range.start = (unsigned long) start;
- 	uffd_writeprotect.range.len = size;
- 	if (wp) {
- 		uffd_writeprotect.mode = UFFDIO_WRITEPROTECT_MODE_WP;
- 	} else {
- 		uffd_writeprotect.mode = 0;
- 	}
- 	if (ioctl(uffd, UFFDIO_WRITEPROTECT, &uffd_writeprotect)) {
- 		fprintf(stderr, "UFFDIO_WRITEPROTECT failed: %d\n", errno);
- 		exit(1);
- 	}
- }
-
- static void *uffd_thread_fn(void *arg)
- {
- 	static struct uffd_msg msg;
- 	ssize_t nread;
-
- 	while (1) {
- 		struct pollfd pollfd;
- 		int nready;
-
- 		pollfd.fd = uffd;
- 		pollfd.events = POLLIN;
- 		nready = poll(&pollfd, 1, -1);
- 		if (nready == -1) {
- 			fprintf(stderr, "poll() failed: %d\n", errno);
- 			exit(1);
- 		}
-
- 		nread = read(uffd, &msg, sizeof(msg));
- 		if (nread <= 0)
- 			continue;
-
- 		if (msg.event != UFFD_EVENT_PAGEFAULT ||
- 		    !(msg.arg.pagefault.flags & UFFD_PAGEFAULT_FLAG_WP)) {
- 			printf("FAIL: wrong uffd-wp event fired\n");
- 			exit(1);
- 		}
-
- 		/* un-protect the single page. */
- 		uffd_triggered = true;
- 		uffd_wp_range((char *)(uintptr_t)msg.arg.pagefault.address,
- 			      pagesize, false);
- 	}
- 	return arg;
- }
-
- static int setup_uffd(char *map, size_t size)
- {
- 	struct uffdio_api uffdio_api;
- 	struct uffdio_register uffdio_register;
- 	pthread_t thread;
-
- 	uffd = syscall(__NR_userfaultfd,
- 		       O_CLOEXEC | O_NONBLOCK | UFFD_USER_MODE_ONLY);
- 	if (uffd < 0) {
- 		fprintf(stderr, "syscall() failed: %d\n", errno);
- 		return -errno;
- 	}
-
- 	uffdio_api.api = UFFD_API;
- 	uffdio_api.features = UFFD_FEATURE_PAGEFAULT_FLAG_WP;
- 	if (ioctl(uffd, UFFDIO_API, &uffdio_api) < 0) {
- 		fprintf(stderr, "UFFDIO_API failed: %d\n", errno);
- 		return -errno;
- 	}
-
- 	if (!(uffdio_api.features & UFFD_FEATURE_PAGEFAULT_FLAG_WP)) {
- 		fprintf(stderr, "UFFD_FEATURE_WRITEPROTECT missing\n");
- 		return -ENOSYS;
- 	}
-
- 	uffdio_register.range.start = (unsigned long) map;
- 	uffdio_register.range.len = size;
- 	uffdio_register.mode = UFFDIO_REGISTER_MODE_WP;
- 	if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) < 0) {
- 		fprintf(stderr, "UFFDIO_REGISTER failed: %d\n", errno);
- 		return -errno;
- 	}
-
- 	pthread_create(&thread, NULL, uffd_thread_fn, NULL);
-
- 	return 0;
- }
-
- int main(void)
- {
- 	const size_t size = 4 * 1024 * 1024ull;
- 	char *map, *cur;
-
- 	pagesize = getpagesize();
-
- 	map = mmap(NULL, size, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, -1, 0);
- 	if (map == MAP_FAILED) {
- 		fprintf(stderr, "mmap() failed\n");
- 		return -errno;
- 	}
-
- 	if (madvise(map, size, MADV_HUGEPAGE)) {
- 		fprintf(stderr, "MADV_HUGEPAGE failed\n");
- 		return -errno;
- 	}
-
- 	if (setup_uffd(map, size))
- 		return 1;
-
- 	/* Read the whole range, populating zeropages. */
- 	madvise(map, size, MADV_POPULATE_READ);
-
- 	/* Write-protect the whole range. */
- 	uffd_wp_range(map, size, true);
-
- 	/* Make sure uffd-wp triggers on each page. */
- 	for (cur = map; cur < map + size; cur += pagesize) {
- 		uffd_triggered = false;
-
- 		barrier();
- 		/* Trigger a write fault. */
- 		*cur = 1;
- 		barrier();
-
- 		if (!uffd_triggered) {
- 			printf("FAIL: uffd-wp did not trigger\n");
- 			return 1;
- 		}
- 	}
-
- 	printf("PASS: uffd-wp triggered\n");
- 	return 0;
- }
-
-Link: https://lkml.kernel.org/r/20230302175423.589164-1-david@redhat.com
-Fixes: e06f1e1dd499 ("userfaultfd: wp: enabled write protection in userfaultfd API")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Jerome Glisse <jglisse@redhat.com>
-Cc: Shaohua Li <shli@fb.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Fixes: ec7eba47da86 ("drm/panfrost: Rework page table flushing and runtime PM interaction")
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://lore.kernel.org/all/20230108210445.3948344-3-dmitry.osipenko@collabora.com/
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_mmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -1994,7 +1994,7 @@ static void __split_huge_zero_page_pmd(s
- {
- 	struct mm_struct *mm = vma->vm_mm;
- 	pgtable_t pgtable;
--	pmd_t _pmd;
-+	pmd_t _pmd, old_pmd;
- 	int i;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+index 4e83a1891f3ed..666a5e53fe193 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+@@ -282,7 +282,7 @@ static void panfrost_mmu_flush_range(struct panfrost_device *pfdev,
+ 	if (pm_runtime_active(pfdev->dev))
+ 		mmu_hw_do_operation(pfdev, mmu, iova, size, AS_COMMAND_FLUSH_PT);
  
- 	/*
-@@ -2005,7 +2005,7 @@ static void __split_huge_zero_page_pmd(s
- 	 *
- 	 * See Documentation/vm/mmu_notifier.rst
- 	 */
--	pmdp_huge_clear_flush(vma, haddr, pmd);
-+	old_pmd = pmdp_huge_clear_flush(vma, haddr, pmd);
+-	pm_runtime_put_sync_autosuspend(pfdev->dev);
++	pm_runtime_put_autosuspend(pfdev->dev);
+ }
  
- 	pgtable = pgtable_trans_huge_withdraw(mm, pmd);
- 	pmd_populate(mm, &_pmd, pgtable);
-@@ -2014,6 +2014,8 @@ static void __split_huge_zero_page_pmd(s
- 		pte_t *pte, entry;
- 		entry = pfn_pte(my_zero_pfn(haddr), vma->vm_page_prot);
- 		entry = pte_mkspecial(entry);
-+		if (pmd_uffd_wp(old_pmd))
-+			entry = pte_mkuffd_wp(entry);
- 		pte = pte_offset_map(&_pmd, haddr);
- 		VM_BUG_ON(!pte_none(*pte));
- 		set_pte_at(mm, haddr, pte, entry);
+ static int mmu_map_sg(struct panfrost_device *pfdev, struct panfrost_mmu *mmu,
+-- 
+2.39.2
+
 
 
