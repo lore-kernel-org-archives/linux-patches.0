@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C971C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AF9C433A4;
-	Mon, 20 Mar 2023 15:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C761C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8D4C433A1;
+	Mon, 20 Mar 2023 15:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325852;
-	bh=DOR/OUJcQUzxeUxsGCXdByuSyMzEfLD57lwI9SxAzQ4=;
+	s=korg; t=1679325855;
+	bh=r+kgplJXHjd4tajKtvfGZAuZW/s6s6j+ygIfj0Wv5w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q6Kk6MTRQVOyhVgUA6WimHKGADAk8OSe0/fOXArVkwHk0Yy+qbjOo2hhg4p4uGHiL
-	 //xfVzeg4dJml2QG5miGx0fAfLdnrrMWFw3V7FlY40RnfDv1pmozuiQjWDnImP0jym
-	 BsSptRqiFTZR3SFaYig2F0LB7un5UpROixjtgl8k=
+	b=YEnZHxTkmIyFl1SocbYwZj00rGSiEZqIiPD2JL5wdeyRAND37pxyLOTWm1WAyzPTb
+	 k0dtMGXyZykQ0pKJd5lwZYJwHWZ8dpxHZkxJLrU9MXizN9H93MOThZi2xXi0gql3Fh
+	 +Bk1s4pinPavXPQN4LOxW2LyIQi2KUtilaVJC1ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.1 128/198] s390/ipl: add missing intersection check to ipl_report handling
-Date: Mon, 20 Mar 2023 15:54:26 +0100
-Message-Id: <20230320145512.912191701@linuxfoundation.org>
+	Freysteinn Alfredsson <Freysteinn.Alfredsson@kau.se>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 087/211] net: atlantic: Fix crash when XDP is enabled but no program is loaded
+Date: Mon, 20 Mar 2023 15:53:42 +0100
+Message-Id: <20230320145516.955198486@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,50 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-commit a52e5cdbe8016d4e3e6322fd93d71afddb9a5af9 upstream.
+[ Upstream commit 37d010399f7552add2b68e2b347901c83562dab8 ]
 
-The code which handles the ipl report is searching for a free location
-in memory where it could copy the component and certificate entries to.
-It checks for intersection between the sections required for the kernel
-and the component/certificate data area, but fails to check whether
-the data structures linking these data areas together intersect.
+The aq_xdp_run_prog() function falls back to the XDP_ABORTED action
+handler (using a goto) if the operations for any of the other actions fail.
+The XDP_ABORTED handler in turn calls the bpf_warn_invalid_xdp_action()
+tracepoint. However, the function also jumps into the XDP_PASS helper if no
+XDP program is loaded on the device, which means the XDP_ABORTED handler
+can be run with a NULL program pointer. This results in a NULL pointer
+deref because the tracepoint dereferences the 'prog' pointer passed to it.
 
-This might cause the iplreport copy code to overwrite the iplreport
-itself. Fix this by adding two addtional intersection checks.
+This situation can happen in multiple ways:
+- If a packet arrives between the removal of the program from the interface
+  and the static_branch_dec() in aq_xdp_setup()
+- If there are multiple devices using the same driver in the system and
+  one of them has an XDP program loaded and the other does not.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 9641b8cc733f ("s390/ipl: read IPL report at early boot")
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by refactoring the aq_xdp_run_prog() function to remove the 'goto
+pass' handling if there is no XDP program loaded. Instead, factor out the
+skb building in a separate small helper function.
+
+Fixes: 26efaef759a1 ("net: atlantic: Implement xdp data plane")
+Reported-by: Freysteinn Alfredsson <Freysteinn.Alfredsson@kau.se>
+Tested-by: Freysteinn Alfredsson <Freysteinn.Alfredsson@kau.se>
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/r/20230315125539.103319-1-toke@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/ipl_report.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ .../net/ethernet/aquantia/atlantic/aq_ring.c  | 28 ++++++++++++++-----
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
---- a/arch/s390/boot/ipl_report.c
-+++ b/arch/s390/boot/ipl_report.c
-@@ -57,11 +57,19 @@ repeat:
- 	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && initrd_data.start && initrd_data.size &&
- 	    intersects(initrd_data.start, initrd_data.size, safe_addr, size))
- 		safe_addr = initrd_data.start + initrd_data.size;
-+	if (intersects(safe_addr, size, (unsigned long)comps, comps->len)) {
-+		safe_addr = (unsigned long)comps + comps->len;
-+		goto repeat;
-+	}
- 	for_each_rb_entry(comp, comps)
- 		if (intersects(safe_addr, size, comp->addr, comp->len)) {
- 			safe_addr = comp->addr + comp->len;
- 			goto repeat;
- 		}
-+	if (intersects(safe_addr, size, (unsigned long)certs, certs->len)) {
-+		safe_addr = (unsigned long)certs + certs->len;
-+		goto repeat;
-+	}
- 	for_each_rb_entry(cert, certs)
- 		if (intersects(safe_addr, size, cert->addr, cert->len)) {
- 			safe_addr = cert->addr + cert->len;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+index 1e8d902e1c8ea..7f933175cbdac 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+@@ -412,6 +412,25 @@ int aq_xdp_xmit(struct net_device *dev, int num_frames,
+ 	return num_frames - drop;
+ }
+ 
++static struct sk_buff *aq_xdp_build_skb(struct xdp_buff *xdp,
++					struct net_device *dev,
++					struct aq_ring_buff_s *buff)
++{
++	struct xdp_frame *xdpf;
++	struct sk_buff *skb;
++
++	xdpf = xdp_convert_buff_to_frame(xdp);
++	if (unlikely(!xdpf))
++		return NULL;
++
++	skb = xdp_build_skb_from_frame(xdpf, dev);
++	if (!skb)
++		return NULL;
++
++	aq_get_rxpages_xdp(buff, xdp);
++	return skb;
++}
++
+ static struct sk_buff *aq_xdp_run_prog(struct aq_nic_s *aq_nic,
+ 				       struct xdp_buff *xdp,
+ 				       struct aq_ring_s *rx_ring,
+@@ -431,7 +450,7 @@ static struct sk_buff *aq_xdp_run_prog(struct aq_nic_s *aq_nic,
+ 
+ 	prog = READ_ONCE(rx_ring->xdp_prog);
+ 	if (!prog)
+-		goto pass;
++		return aq_xdp_build_skb(xdp, aq_nic->ndev, buff);
+ 
+ 	prefetchw(xdp->data_hard_start); /* xdp_frame write */
+ 
+@@ -442,17 +461,12 @@ static struct sk_buff *aq_xdp_run_prog(struct aq_nic_s *aq_nic,
+ 	act = bpf_prog_run_xdp(prog, xdp);
+ 	switch (act) {
+ 	case XDP_PASS:
+-pass:
+-		xdpf = xdp_convert_buff_to_frame(xdp);
+-		if (unlikely(!xdpf))
+-			goto out_aborted;
+-		skb = xdp_build_skb_from_frame(xdpf, aq_nic->ndev);
++		skb = aq_xdp_build_skb(xdp, aq_nic->ndev, buff);
+ 		if (!skb)
+ 			goto out_aborted;
+ 		u64_stats_update_begin(&rx_ring->stats.rx.syncp);
+ 		++rx_ring->stats.rx.xdp_pass;
+ 		u64_stats_update_end(&rx_ring->stats.rx.syncp);
+-		aq_get_rxpages_xdp(buff, xdp);
+ 		return skb;
+ 	case XDP_TX:
+ 		xdpf = xdp_convert_buff_to_frame(xdp);
+-- 
+2.39.2
+
 
 
