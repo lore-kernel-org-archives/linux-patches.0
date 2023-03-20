@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326571C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58E9C433D2;
-	Mon, 20 Mar 2023 15:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592421C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE984C43443;
+	Mon, 20 Mar 2023 15:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324953;
-	bh=RCP1RJd5n71d7acfhSvxYuak8hfUndSOVkBNaAzMY2w=;
+	s=korg; t=1679324956;
+	bh=AObmnfC8udOvlyc05tcfi8EbulzijvAyF4oKP9wXM0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o48MHkL+NCGcvexbdwTk5CI482gtB5rkHa73FPEVnm4Z6Z/gt9DU31ODZDRoFFemb
-	 luP0Z7uZmcgilOkkyFf+s1qQCJF2h/i8SrllpAxfoknuyUqiQVFiXWEC04E6MT/kdY
-	 tLmXJTZj3HHYJbOjfHHaFmgTygW/OQ4AF0xS2NXg=
+	b=jsbzOk+FIVzfnOZGDtdvKHUqPN2S0/zkVIR1V95hvGEoiW7+ptOL9ZyIKEe1zd7V9
+	 kRb0F9gF1KIBs8JM9pH0cR2mXAC7Kx6dxdftUHb53+/DZI1mUOieS5DaKEO565OKx6
+	 GUVgNjHpOdz8sjAajtpy/jbyGwnacPQqci61PGGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Sun <sherry.sun@nxp.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 57/99] tty: serial: fsl_lpuart: skip waiting for transmission complete when UARTCTRL_SBK is asserted
-Date: Mon, 20 Mar 2023 15:54:35 +0100
-Message-Id: <20230320145445.771871432@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 005/198] fbdev: chipsfb: Fix error codes in chipsfb_pci_init()
+Date: Mon, 20 Mar 2023 15:52:23 +0100
+Message-Id: <20230320145507.675403035@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,46 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Dan Carpenter <error27@gmail.com>
 
-commit 2411fd94ceaa6e11326e95d6ebf876cbfed28d23 upstream.
+[ Upstream commit 77bc762451c2dc72bdbea07b857c916c9e7f4952 ]
 
-According to LPUART RM, Transmission Complete Flag becomes 0 if queuing
-a break character by writing 1 to CTRL[SBK], so here need to skip
-waiting for transmission complete when UARTCTRL_SBK is asserted,
-otherwise the kernel may stuck here.
-And actually set_termios() adds transmission completion waiting to avoid
-data loss or data breakage when changing the baud rate, but we don't
-need to worry about this when queuing break characters.
+The error codes are not set on these error paths.
 
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230223093941.31790-1-sherry.sun@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 145eed48de27 ("fbdev: Remove conflicting devices on PCI bus")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/Y/yG+sm2mhdJeTZW@kili
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/chipsfb.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -2159,9 +2159,15 @@ lpuart32_set_termios(struct uart_port *p
- 	/* update the per-port timeout */
- 	uart_update_timeout(port, termios->c_cflag, baud);
+diff --git a/drivers/video/fbdev/chipsfb.c b/drivers/video/fbdev/chipsfb.c
+index f1c1c95c1fdf0..2ecb97c619b7c 100644
+--- a/drivers/video/fbdev/chipsfb.c
++++ b/drivers/video/fbdev/chipsfb.c
+@@ -358,16 +358,21 @@ static int chipsfb_pci_init(struct pci_dev *dp, const struct pci_device_id *ent)
+ 	if (rc)
+ 		return rc;
  
--	/* wait transmit engin complete */
--	lpuart32_write(&sport->port, 0, UARTMODIR);
--	lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
-+	/*
-+	 * LPUART Transmission Complete Flag may never be set while queuing a break
-+	 * character, so skip waiting for transmission complete when UARTCTRL_SBK is
-+	 * asserted.
-+	 */
-+	if (!(old_ctrl & UARTCTRL_SBK)) {
-+		lpuart32_write(&sport->port, 0, UARTMODIR);
-+		lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
+-	if (pci_enable_device(dp) < 0) {
++	rc = pci_enable_device(dp);
++	if (rc < 0) {
+ 		dev_err(&dp->dev, "Cannot enable PCI device\n");
+ 		goto err_out;
+ 	}
+ 
+-	if ((dp->resource[0].flags & IORESOURCE_MEM) == 0)
++	if ((dp->resource[0].flags & IORESOURCE_MEM) == 0) {
++		rc = -ENODEV;
+ 		goto err_disable;
++	}
+ 	addr = pci_resource_start(dp, 0);
+-	if (addr == 0)
++	if (addr == 0) {
++		rc = -ENODEV;
+ 		goto err_disable;
 +	}
  
- 	/* disable transmit and receive */
- 	lpuart32_write(&sport->port, old_ctrl & ~(UARTCTRL_TE | UARTCTRL_RE),
+ 	p = framebuffer_alloc(0, &dp->dev);
+ 	if (p == NULL) {
+@@ -417,7 +422,8 @@ static int chipsfb_pci_init(struct pci_dev *dp, const struct pci_device_id *ent)
+ 
+ 	init_chips(p, addr);
+ 
+-	if (register_framebuffer(p) < 0) {
++	rc = register_framebuffer(p);
++	if (rc < 0) {
+ 		dev_err(&dp->dev,"C&T 65550 framebuffer failed to register\n");
+ 		goto err_unmap;
+ 	}
+-- 
+2.39.2
+
 
 
