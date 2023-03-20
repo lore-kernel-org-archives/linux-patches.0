@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8181C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56FEC4339B;
-	Mon, 20 Mar 2023 15:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACBE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC23C433EF;
+	Mon, 20 Mar 2023 15:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325342;
-	bh=OZlJusg9GtHkazQGENwIZTrqCk4r8FHDTY9X5M6MXpc=;
+	s=korg; t=1679325344;
+	bh=xDcV1/srJoF5WCumscxvQSNTMwTYz8+Rs4NROu8Uv88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkZopT79s82JlKCPwDOWPUZ+Is4CxXd4Y4M7k6Njtndpy9e4y/r1QBvPLjPRCgakt
-	 i7HFerznYK9m9Y7sExB/fwhpidgdGVk0+jmd5QKidIYVPaRkd40FGmdaQAxqcnP42c
-	 Z24Tx9nVdRwfwh0QqYNftky5xgTRGVDh5ALLwXMI=
+	b=2SC9e6p9jCQfqovfjwXy7kvMg2CR+3KRFJQHTH728217WFsjXGHsk5jQoew962sOm
+	 pJzEKwEQinML0OjDDCOSkFJQwYo07Pirk12pvjjz/nL6cRawuC5aC1tyo1Eup6zAjk
+	 Ag/w5bbwRqKRb3JDZUeYUJIld2eMdOGOm9TlIfSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	syzbot+645a4616b87a2f10e398@syzkaller.appspotmail.com,
-	Bart Van Assche <bvanassche@acm.org>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 031/211] scsi: core: Fix a procfs host directory removal regression
-Date: Mon, 20 Mar 2023 15:52:46 +0100
-Message-Id: <20230320145514.570166406@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Paasch <cpaasch@apple.com>
+Subject: [PATCH 5.15 093/115] mptcp: fix possible deadlock in subflow_error_report
+Date: Mon, 20 Mar 2023 15:55:05 +0100
+Message-Id: <20230320145453.329372024@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,47 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit be03df3d4bfe7e8866d4aa43d62e648ffe884f5f ]
+commit b7a679ba7c652587b85294f4953f33ac0b756d40 upstream.
 
-scsi_proc_hostdir_rm() decreases a reference counter and hence must only be
-called once per host that is removed. This change does not require a
-scsi_add_host_with_dma() change since scsi_add_host_with_dma() will return
-0 (success) if scsi_proc_host_add() is called.
+Christoph reported a possible deadlock while the TCP stack
+destroys an unaccepted subflow due to an incoming reset: the
+MPTCP socket error path tries to acquire the msk-level socket
+lock while TCP still owns the listener socket accept queue
+spinlock, and the reverse dependency already exists in the
+TCP stack.
 
-Fixes: fc663711b944 ("scsi: core: Remove the /proc/scsi/${proc_name} directory earlier")
-Cc: John Garry <john.g.garry@oracle.com>
-Reported-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/all/ed6b8027-a9d9-1b45-be8e-df4e8c6c4605@oracle.com/
-Reported-by: syzbot+645a4616b87a2f10e398@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-scsi/000000000000890fab05f65342b6@google.com/
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20230307214428.3703498-1-bvanassche@acm.org
-Tested-by: John Garry <john.g.garry@oracle.com>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note that the above is actually a lockdep false positive, as
+the chain involves two separate sockets. A different per-socket
+lockdep key will address the issue, but such a change will be
+quite invasive.
+
+Instead, we can simply stop earlier the socket error handling
+for orphaned or unaccepted subflows, breaking the critical
+lockdep chain. Error handling in such a scenario is a no-op.
+
+Reported-and-tested-by: Christoph Paasch <cpaasch@apple.com>
+Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/355
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hosts.c | 3 ---
- 1 file changed, 3 deletions(-)
+ net/mptcp/subflow.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
-index 8e34bbf44d1f5..2bf8612fa55dd 100644
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -341,9 +341,6 @@ static void scsi_host_dev_release(struct device *dev)
- 	struct Scsi_Host *shost = dev_to_shost(dev);
- 	struct device *parent = dev->parent;
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1316,6 +1316,13 @@ static void subflow_error_report(struct
+ {
+ 	struct sock *sk = mptcp_subflow_ctx(ssk)->conn;
  
--	/* In case scsi_remove_host() has not been called. */
--	scsi_proc_hostdir_rm(shost->hostt);
--
- 	/* Wait for functions invoked through call_rcu(&scmd->rcu, ...) */
- 	rcu_barrier();
- 
--- 
-2.39.2
-
++	/* bail early if this is a no-op, so that we avoid introducing a
++	 * problematic lockdep dependency between TCP accept queue lock
++	 * and msk socket spinlock
++	 */
++	if (!sk->sk_socket)
++		return;
++
+ 	mptcp_data_lock(sk);
+ 	if (!sock_owned_by_user(sk))
+ 		__mptcp_error_report(sk);
 
 
