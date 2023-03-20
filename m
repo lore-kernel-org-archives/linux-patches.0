@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6741C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510CFC433D2;
-	Mon, 20 Mar 2023 15:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864961C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03521C433EF;
+	Mon, 20 Mar 2023 15:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325564;
-	bh=Eb5jnuG1Ekz+HQ+52zkkQu/88M0jhTAM6jLx6dtOlQY=;
+	s=korg; t=1679325567;
+	bh=fXGFdJhYV+PXpv7qzl8L1ATb9+K9VRxi83TYZva0h7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WTjRPTjNT4Dyb7ik4nC/X1grU5N3Upi/XH4/s4DYOnu+rvnuZepFvfHJ6qDyqzLJb
-	 ndgd2JhFPL94zJUZezb08Ntiq4Ia9J3zl5KLlSwAkLB9JwOpqkmYTmZ0QJXcDpq0cv
-	 FCBsmRlAp2XWaJxi2cuxq42Mq3/yo7oVBhMqX7jY=
+	b=1FCiK1W9IuIinR2fz9gAIgmH/S0GS9j7m6tl0xQHUlgwLQdMGAhHiiWScp28c71zO
+	 U3lMCbX7iST5FIAAbJjfzzIMYMQx0kog932VqzQcPuRDVRT5FWaIr9jGNS5UJqV43N
+	 YXfqdWFVizk3M4fzUX4t9IL0tELHDhN3JASar5zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Daniel Golle <daniel@makrotopia.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tobias Schramm <t.schramm@manjaro.org>,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 062/211] net: ethernet: mtk_eth_soc: reset PCS state
-Date: Mon, 20 Mar 2023 15:53:17 +0100
-Message-Id: <20230320145515.828203504@linuxfoundation.org>
+Subject: [PATCH 6.1 103/198] mmc: atmel-mci: fix race between stop command and start of next command
+Date: Mon, 20 Mar 2023 15:54:01 +0100
+Message-Id: <20230320145511.890567097@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,55 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Tobias Schramm <t.schramm@manjaro.org>
 
-[ Upstream commit 611e2dabb4b3243d176739fd6a5a34d007fa3f86 ]
+[ Upstream commit eca5bd666b0aa7dc0bca63292e4778968241134e ]
 
-Reset the internal PCS state machine when changing interface mode.
-This prevents confusing the state machine when changing interface
-modes, e.g. from SGMII to 2500Base-X or vice-versa.
+This commit fixes a race between completion of stop command and start of a
+new command.
+Previously the command ready interrupt was enabled before stop command
+was written to the command register. This caused the command ready
+interrupt to fire immediately since the CMDRDY flag is asserted constantly
+while there is no command in progress.
+Consequently the command state machine will immediately advance to the
+next state when the tasklet function is executed again, no matter
+actual completion state of the stop command.
+Thus a new command can then be dispatched immediately, interrupting and
+corrupting the stop command on the CMD line.
+Fix that by dropping the command ready interrupt enable before calling
+atmci_send_stop_cmd. atmci_send_stop_cmd does already enable the
+command ready interrupt, no further writes to ATMCI_IER are necessary.
 
-Fixes: 7e538372694b ("net: ethernet: mediatek: Re-add support SGMII")
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Tested-by: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Tobias Schramm <t.schramm@manjaro.org>
+Acked-by: Ludovic Desroches <ludovic.desroches@microchip.com>
+Link: https://lore.kernel.org/r/20221230194315.809903-2-t.schramm@manjaro.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.h | 4 ++++
- drivers/net/ethernet/mediatek/mtk_sgmii.c   | 4 ++++
- 2 files changed, 8 insertions(+)
+ drivers/mmc/host/atmel-mci.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index b481d0d46bb16..d4b4f9eaa4419 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -528,6 +528,10 @@
- #define SGMII_SEND_AN_ERROR_EN		BIT(11)
- #define SGMII_IF_MODE_MASK		GENMASK(5, 1)
- 
-+/* Register to reset SGMII design */
-+#define SGMII_RESERVED_0	0x34
-+#define SGMII_SW_RESET		BIT(0)
-+
- /* Register to set SGMII speed, ANA RG_ Control Signals III*/
- #define SGMSYS_ANA_RG_CS3	0x2028
- #define RG_PHY_SPEED_MASK	(BIT(2) | BIT(3))
-diff --git a/drivers/net/ethernet/mediatek/mtk_sgmii.c b/drivers/net/ethernet/mediatek/mtk_sgmii.c
-index bb00de1003ac4..612f65bb03454 100644
---- a/drivers/net/ethernet/mediatek/mtk_sgmii.c
-+++ b/drivers/net/ethernet/mediatek/mtk_sgmii.c
-@@ -88,6 +88,10 @@ static int mtk_pcs_config(struct phylink_pcs *pcs, unsigned int mode,
- 		regmap_update_bits(mpcs->regmap, SGMSYS_QPHY_PWR_STATE_CTRL,
- 				   SGMII_PHYA_PWD, SGMII_PHYA_PWD);
- 
-+		/* Reset SGMII PCS state */
-+		regmap_update_bits(mpcs->regmap, SGMII_RESERVED_0,
-+				   SGMII_SW_RESET, SGMII_SW_RESET);
-+
- 		if (interface == PHY_INTERFACE_MODE_2500BASEX)
- 			rgc3 = RG_PHY_SPEED_3_125G;
- 		else
+diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
+index bb9bbf1c927b6..dd18440a90c58 100644
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -1817,7 +1817,6 @@ static void atmci_tasklet_func(struct tasklet_struct *t)
+ 				atmci_writel(host, ATMCI_IER, ATMCI_NOTBUSY);
+ 				state = STATE_WAITING_NOTBUSY;
+ 			} else if (host->mrq->stop) {
+-				atmci_writel(host, ATMCI_IER, ATMCI_CMDRDY);
+ 				atmci_send_stop_cmd(host, data);
+ 				state = STATE_SENDING_STOP;
+ 			} else {
+@@ -1850,8 +1849,6 @@ static void atmci_tasklet_func(struct tasklet_struct *t)
+ 				 * command to send.
+ 				 */
+ 				if (host->mrq->stop) {
+-					atmci_writel(host, ATMCI_IER,
+-					             ATMCI_CMDRDY);
+ 					atmci_send_stop_cmd(host, data);
+ 					state = STATE_SENDING_STOP;
+ 				} else {
 -- 
 2.39.2
 
