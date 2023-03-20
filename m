@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DEE1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02EAFC433D2;
-	Mon, 20 Mar 2023 15:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512C61C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2F4C433EF;
+	Mon, 20 Mar 2023 15:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324832;
-	bh=IraFu/fq8oG1pTCyMLnNatARRbTw8FwiudOzUZAy4bQ=;
+	s=korg; t=1679324835;
+	bh=rkwlp0RnQwFwSrinQ4bN0yAHUfgOWBVnIrAX7S3cYTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZw4QNNWycxscShav8hIQa6xFE8LMDtpm/rsRgRVQT9juKVji/IPJtuAfrl3w7mRo
-	 v0lfK6cMfoADTCoFZ4S8zYdR/DmXITgfRj/YfYJUQz1Y0hWk43aCR8jB0/cJ9V2+sd
-	 zzqLsOdYwbzPVNY1qdWTknUB5Kbw05iSIzTxUFz8=
+	b=fZjrS5jng0VZbTi8n6i58FL/cpn8FP5SLf/LHpdB7PIT+ne2wO5gDq9uM6zeXcexg
+	 4uY0y5k2IFaV0e9S/jLpStpj1e8/3TUzonMIWGeZpJBvxNtxMrMCUhPeh+8MmEskFT
+	 +BDf/urimIK3ytSXHV/j3LaV2dvXTfQkomAdszdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 63/99] tracing: Make tracepoint lockdep check actually test something
-Date: Mon, 20 Mar 2023 15:54:41 +0100
-Message-Id: <20230320145446.027878085@linuxfoundation.org>
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 011/198] ASoC: SOF: Intel: SKL: Fix device description
+Date: Mon, 20 Mar 2023 15:52:29 +0100
+Message-Id: <20230320145507.960909636@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,86 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 
-commit c2679254b9c9980d9045f0f722cf093a2b1f7590 upstream.
+[ Upstream commit 1f320bdb29b644a2c9fb301a6fb2d6170e6417e9 ]
 
-A while ago where the trace events had the following:
+Add missing ops_free callback for SKL/KBL platforms.
 
-   rcu_read_lock_sched_notrace();
-   rcu_dereference_sched(...);
-   rcu_read_unlock_sched_notrace();
+Fixes: 52d7939d10f2 ("ASoC: SOF: Intel: add ops for SKL/KBL")
 
-If the tracepoint is enabled, it could trigger RCU issues if called in
-the wrong place. And this warning was only triggered if lockdep was
-enabled. If the tracepoint was never enabled with lockdep, the bug would
-not be caught. To handle this, the above sequence was done when lockdep
-was enabled regardless if the tracepoint was enabled or not (although the
-always enabled code really didn't do anything, it would still trigger a
-warning).
-
-But a lot has changed since that lockdep code was added. One is, that
-sequence no longer triggers any warning. Another is, the tracepoint when
-enabled doesn't even do that sequence anymore.
-
-The main check we care about today is whether RCU is "watching" or not.
-So if lockdep is enabled, always check if rcu_is_watching() which will
-trigger a warning if it is not (tracepoints require RCU to be watching).
-
-Note, that old sequence did add a bit of overhead when lockdep was enabled,
-and with the latest kernel updates, would cause the system to slow down
-enough to trigger kernel "stalled" warnings.
-
-Link: http://lore.kernel.org/lkml/20140806181801.GA4605@redhat.com
-Link: http://lore.kernel.org/lkml/20140807175204.C257CAC5@viggo.jf.intel.com
-Link: https://lore.kernel.org/lkml/20230307184645.521db5c9@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20230310172856.77406446@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Paul E. McKenney <paulmck@kernel.org>
-Fixes: e6753f23d961 ("tracepoint: Make rcuidle tracepoint callers use SRCU")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20230307093914.25409-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/tracepoint.h |   15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ sound/soc/sof/intel/pci-skl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/tracepoint.h
-+++ b/include/linux/tracepoint.h
-@@ -234,12 +234,11 @@ static inline struct tracepoint *tracepo
-  * not add unwanted padding between the beginning of the section and the
-  * structure. Force alignment to the same alignment as the section start.
-  *
-- * When lockdep is enabled, we make sure to always do the RCU portions of
-- * the tracepoint code, regardless of whether tracing is on. However,
-- * don't check if the condition is false, due to interaction with idle
-- * instrumentation. This lets us find RCU issues triggered with tracepoints
-- * even when this tracepoint is off. This code has no purpose other than
-- * poking RCU a bit.
-+ * When lockdep is enabled, we make sure to always test if RCU is
-+ * "watching" regardless if the tracepoint is enabled or not. Tracepoints
-+ * require RCU to be active, and it should always warn at the tracepoint
-+ * site if it is not watching, as it will need to be active when the
-+ * tracepoint is enabled.
-  */
- #define __DECLARE_TRACE(name, proto, args, cond, data_proto, data_args) \
- 	extern int __traceiter_##name(data_proto);			\
-@@ -253,9 +252,7 @@ static inline struct tracepoint *tracepo
- 				TP_ARGS(data_args),			\
- 				TP_CONDITION(cond), 0);			\
- 		if (IS_ENABLED(CONFIG_LOCKDEP) && (cond)) {		\
--			rcu_read_lock_sched_notrace();			\
--			rcu_dereference_sched(__tracepoint_##name.funcs);\
--			rcu_read_unlock_sched_notrace();		\
-+			WARN_ON_ONCE(!rcu_is_watching());		\
- 		}							\
- 	}								\
- 	__DECLARE_TRACE_RCU(name, PARAMS(proto), PARAMS(args),		\
+diff --git a/sound/soc/sof/intel/pci-skl.c b/sound/soc/sof/intel/pci-skl.c
+index 3a99dc444f92e..5b4bccf819658 100644
+--- a/sound/soc/sof/intel/pci-skl.c
++++ b/sound/soc/sof/intel/pci-skl.c
+@@ -38,6 +38,7 @@ static struct sof_dev_desc skl_desc = {
+ 	.nocodec_tplg_filename = "sof-skl-nocodec.tplg",
+ 	.ops = &sof_skl_ops,
+ 	.ops_init = sof_skl_ops_init,
++	.ops_free = hda_ops_free,
+ };
+ 
+ static struct sof_dev_desc kbl_desc = {
+@@ -61,6 +62,7 @@ static struct sof_dev_desc kbl_desc = {
+ 	.nocodec_tplg_filename = "sof-kbl-nocodec.tplg",
+ 	.ops = &sof_skl_ops,
+ 	.ops_init = sof_skl_ops_init,
++	.ops_free = hda_ops_free,
+ };
+ 
+ /* PCI IDs */
+-- 
+2.39.2
+
 
 
