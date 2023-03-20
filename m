@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AE91C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D844DC4339E;
-	Mon, 20 Mar 2023 15:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6BB1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFD0C433A7;
+	Mon, 20 Mar 2023 15:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324876;
-	bh=vj++Liol3/oZfKQWh0cXp5p+3jLKcjVYlNdjmUJ2olM=;
+	s=korg; t=1679324879;
+	bh=ZhaUodvzaDk3q7HsrMkxCOwmfxIXplRMFxAl/Yr7aF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ma1rj6fDGpGnB+4eLfhiIWKKbxAy3koxtPlyklVgxc0Bd3DNmocsJSSxqW9wF2HWJ
-	 euwPqFYV7yK5ZkkmHxIvhFSnJvsWMRSj+ckTGaOHcVJoQfO+t7gNWAjUqGh65oShrN
-	 qnS+42chCCM7xTxf/IDW/OWBS5qY39rjA91vVP+E=
+	b=SYVTIfx0N/WLd6uEixAnj6zSsUFaNxXxC3sdtb3XTaKqxghoPAvGbW+WZXeUYiaBR
+	 lKXBVDarRDNcAwP6FcaJC/OrgYEz6jORu3qvmP9si/oonnOE88ED9T795MKprjgFxI
+	 zLPJ5OkIxpQzXVihxhpiP3hd4CZe6Ihqs+VHW+pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	syzbot+0c73d1d8b952c5f3d714@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 56/99] ext4: fix possible double unlock when moving a directory
-Date: Mon, 20 Mar 2023 15:54:34 +0100
-Message-Id: <20230320145445.733339697@linuxfoundation.org>
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Rob Clark <robdclark@gmail.com>
+Subject: [PATCH 5.10 68/99] drm/shmem-helper: Remove another errant put in error path
+Date: Mon, 20 Mar 2023 15:54:46 +0100
+Message-Id: <20230320145446.245023165@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
 References: <20230320145443.333824603@linuxfoundation.org>
@@ -35,33 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-commit 70e42feab2e20618ddd0cbfc4ab4b08628236ecd upstream.
+commit ee9adb7a45516cfa536ca92253d7ae59d56db9e4 upstream.
 
-Fixes: 0813299c586b ("ext4: Fix possible corruption when moving a directory")
-Link: https://lore.kernel.org/r/5efbe1b9-ad8b-4a4f-b422-24824d2b775c@kili.mountain
-Reported-by: Dan Carpenter <error27@gmail.com>
-Reported-by: syzbot+0c73d1d8b952c5f3d714@syzkaller.appspotmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+drm_gem_shmem_mmap() doesn't own reference in error code path, resulting
+in the dma-buf shmem GEM object getting prematurely freed leading to a
+later use-after-free.
+
+Fixes: f49a51bfdc8e ("drm/shme-helpers: Fix dma_buf_mmap forwarding bug")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230108211311.3950107-1-dmitry.osipenko@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/drm_gem_shmem_helper.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3934,10 +3934,8 @@ static int ext4_rename(struct inode *old
- 				goto end_rename;
- 		}
- 		retval = ext4_rename_dir_prepare(handle, &old);
--		if (retval) {
--			inode_unlock(old.inode);
-+		if (retval)
- 			goto end_rename;
--		}
+--- a/drivers/gpu/drm/drm_gem_shmem_helper.c
++++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
+@@ -614,11 +614,14 @@ int drm_gem_shmem_mmap(struct drm_gem_ob
+ 	int ret;
+ 
+ 	if (obj->import_attach) {
+-		/* Drop the reference drm_gem_mmap_obj() acquired.*/
+-		drm_gem_object_put(obj);
+ 		vma->vm_private_data = NULL;
++		ret = dma_buf_mmap(obj->dma_buf, vma, 0);
++
++		/* Drop the reference drm_gem_mmap_obj() acquired.*/
++		if (!ret)
++			drm_gem_object_put(obj);
+ 
+-		return dma_buf_mmap(obj->dma_buf, vma, 0);
++		return ret;
  	}
- 	/*
- 	 * If we're renaming a file within an inline_data dir and adding or
+ 
+ 	shmem = to_drm_gem_shmem_obj(obj);
 
 
