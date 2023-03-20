@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16B31C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FC8C433D2;
-	Mon, 20 Mar 2023 15:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533161C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54F8C433D2;
+	Mon, 20 Mar 2023 15:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326085;
-	bh=SVDwlxeWMEPclTR6lDXapNjdWJA/MP8bT13JdjnxGDU=;
+	s=korg; t=1679326088;
+	bh=N7eoYudBbjL6k7958QC2rfm95vzjkqFZEI3efbhH/C8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lBoE7NAF6GVBUm8AEor+B57OxPSkkY9cwXZ14cWe5iYySmghrdbDA6KZU4Qxq+dYK
-	 +evkXJYhHk2XSXrNXmRty+le6i9jbo6sFPF+HOD4h8UnEXX991sHzqGOo2zgm4tzXA
-	 kWk7uEEEMblPlrkZ4D3D3Dvbx4IjMnivTRJK5P+s=
+	b=fjfPk0sHBU4dDcS26Nq52WkKSxXtORpkxc82JPF6Gz3WWDMoJ3aNwmpz6okYh3Rqf
+	 A38dl+gGxyh0FScPU0CGWM1Ix2iI6ZCPTSj+Y8kDNIgImy4UEIKzHMLhfkFJ4Uoxue
+	 XPxAymYspKkwxE8xPLymXfHFiuxK+A+QkFR3X2/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dionna Glaze <dionnaglaze@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.1 197/198] virt/coco/sev-guest: Add throttling awareness
-Date: Mon, 20 Mar 2023 15:55:35 +0100
-Message-Id: <20230320145515.720561444@linuxfoundation.org>
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Gongjun Song <gongjun.song@intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.2 156/211] ALSA: hda: intel-dsp-config: add MTL PCI id
+Date: Mon, 20 Mar 2023 15:54:51 +0100
+Message-Id: <20230320145519.968681825@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,138 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dionna Glaze <dionnaglaze@google.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-commit 72f7754dcf31c87c92c0c353dcf747814cc5ce10 upstream.
+commit bbdf904b13a62bb8b1272d92a7dde082dff86fbb upstream.
 
-A potentially malicious SEV guest can constantly hammer the hypervisor
-using this driver to send down requests and thus prevent or at least
-considerably hinder other guests from issuing requests to the secure
-processor which is a shared platform resource.
+Use SOF as default audio driver.
 
-Therefore, the host is permitted and encouraged to throttle such guest
-requests.
-
-Add the capability to handle the case when the hypervisor throttles
-excessive numbers of requests issued by the guest. Otherwise, the VM
-platform communication key will be disabled, preventing the guest from
-attesting itself.
-
-Realistically speaking, a well-behaved guest should not even care about
-throttling. During its lifetime, it would end up issuing a handful of
-requests which the hardware can easily handle.
-
-This is more to address the case of a malicious guest. Such guest should
-get throttled and if its VMPCK gets disabled, then that's its own
-wrongdoing and perhaps that guest even deserves it.
-
-To the implementation: the hypervisor signals with SNP_GUEST_REQ_ERR_BUSY
-that the guest requests should be throttled. That error code is returned
-in the upper 32-bit half of exitinfo2 and this is part of the GHCB spec
-v2.
-
-So the guest is given a throttling period of 1 minute in which it
-retries the request every 2 seconds. This is a good default but if it
-turns out to not pan out in practice, it can be tweaked later.
-
-For safety, since the encryption algorithm in GHCBv2 is AES_GCM, control
-must remain in the kernel to complete the request with the current
-sequence number. Returning without finishing the request allows the
-guest to make another request but with different message contents. This
-is IV reuse, and breaks cryptographic protections.
-
-  [ bp:
-    - Rewrite commit message and do a simplified version.
-    - The stable tags are supposed to denote that a cleanup should go
-      upfront before backporting this so that any future fixes to this
-      can preserve the sanity of the backporter(s). ]
-
-Fixes: d5af44dde546 ("x86/sev: Provide support for SNP guest request NAEs")
-Signed-off-by: Dionna Glaze <dionnaglaze@google.com>
-Co-developed-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org> # d6fd48eff750 ("virt/coco/sev-guest: Check SEV_SNP attribute at probe time")
-Cc: <stable@kernel.org> # 970ab823743f (" virt/coco/sev-guest: Simplify extended guest request handling")
-Cc: <stable@kernel.org> # c5a338274bdb ("virt/coco/sev-guest: Remove the disable_vmpck label in handle_guest_request()")
-Cc: <stable@kernel.org> # 0fdb6cc7c89c ("virt/coco/sev-guest: Carve out the request issuing logic into a helper")
-Cc: <stable@kernel.org> # d25bae7dc7b0 ("virt/coco/sev-guest: Do some code style cleanups")
-Cc: <stable@kernel.org> # fa4ae42cc60a ("virt/coco/sev-guest: Convert the sw_exit_info_2 checking to a switch-case")
-Link: https://lore.kernel.org/r/20230214164638.1189804-2-dionnaglaze@google.com
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Gongjun Song <gongjun.song@intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230306074101.3906707-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/sev-common.h       |    3 ++-
- arch/x86/kernel/sev.c                   |    4 ++++
- drivers/virt/coco/sev-guest/sev-guest.c |   19 ++++++++++++++++++-
- 3 files changed, 24 insertions(+), 2 deletions(-)
+ sound/hda/intel-dsp-config.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/x86/include/asm/sev-common.h
-+++ b/arch/x86/include/asm/sev-common.h
-@@ -128,8 +128,9 @@ struct snp_psc_desc {
- 	struct psc_entry entries[VMGEXIT_PSC_MAX_ENTRY];
- } __packed;
+--- a/sound/hda/intel-dsp-config.c
++++ b/sound/hda/intel-dsp-config.c
+@@ -472,6 +472,15 @@ static const struct config_entry config_
+ 	},
+ #endif
  
--/* Guest message request error code */
-+/* Guest message request error codes */
- #define SNP_GUEST_REQ_INVALID_LEN	BIT_ULL(32)
-+#define SNP_GUEST_REQ_ERR_BUSY		BIT_ULL(33)
- 
- #define GHCB_MSR_TERM_REQ		0x100
- #define GHCB_MSR_TERM_REASON_SET_POS	12
---- a/arch/x86/kernel/sev.c
-+++ b/arch/x86/kernel/sev.c
-@@ -2214,6 +2214,10 @@ int snp_issue_guest_request(u64 exit_cod
- 	case 0:
- 		break;
- 
-+	case SNP_GUEST_REQ_ERR_BUSY:
-+		ret = -EAGAIN;
-+		break;
++/* Meteor Lake */
++#if IS_ENABLED(CONFIG_SND_SOC_SOF_METEORLAKE)
++	/* Meteorlake-P */
++	{
++		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
++		.device = 0x7e28,
++	},
++#endif
 +
- 	case SNP_GUEST_REQ_INVALID_LEN:
- 		/* Number of expected pages are returned in RBX */
- 		if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST) {
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -31,6 +31,9 @@
- #define AAD_LEN		48
- #define MSG_HDR_VER	1
+ };
  
-+#define SNP_REQ_MAX_RETRY_DURATION	(60*HZ)
-+#define SNP_REQ_RETRY_DELAY		(2*HZ)
-+
- struct snp_guest_crypto {
- 	struct crypto_aead *tfm;
- 	u8 *iv, *authtag;
-@@ -322,7 +325,8 @@ static int enc_payload(struct snp_guest_
- 
- static int __handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, __u64 *fw_err)
- {
--	unsigned long err, override_err = 0;
-+	unsigned long err = 0xff, override_err = 0;
-+	unsigned long req_start = jiffies;
- 	unsigned int override_npages = 0;
- 	int rc;
- 
-@@ -362,6 +366,19 @@ retry_request:
- 		 * user as an ioctl() return code.
- 		 */
- 		goto retry_request;
-+
-+	/*
-+	 * The host may return SNP_GUEST_REQ_ERR_EBUSY if the request has been
-+	 * throttled. Retry in the driver to avoid returning and reusing the
-+	 * message sequence number on a different message.
-+	 */
-+	case -EAGAIN:
-+		if (jiffies - req_start > SNP_REQ_MAX_RETRY_DURATION) {
-+			rc = -ETIMEDOUT;
-+			break;
-+		}
-+		schedule_timeout_killable(SNP_REQ_RETRY_DELAY);
-+		goto retry_request;
- 	}
- 
- 	/*
+ static const struct config_entry *snd_intel_dsp_find_config
 
 
