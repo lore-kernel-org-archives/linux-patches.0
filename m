@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1D41C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB05C433D2;
-	Mon, 20 Mar 2023 14:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8C61C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC0AC433EF;
+	Mon, 20 Mar 2023 14:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324353;
-	bh=AY/Ig6/D6B8kAit4w8uSAEvPz3sYAX7+kRJBXfUowsI=;
+	s=korg; t=1679324356;
+	bh=odDZ59HtRqLFsXFo8VvIJcuy9Oa6gVUYDqov+SCIfrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cwt2IpuAxolB3Pk7JDV4PpH+oMZCvAF7rfpS7LuSQY6lVySlsEK5cCmkql9v9RMFR
-	 3e/scKzlNjVs7OvfLHnTmSEszRz6H5KxC7zBvSX/ZqD2fnWYBMaCNoccTaF6q6OnZR
-	 2OgHE4aByT0G61fnJ7daAqEmG6jSogtj08OdrdFA=
+	b=dZF1lqP38uvF6/0eTfa5AzJaOPA44KofDmc6Ni778Um4zhJg17xXcFhrfg+DKBNfE
+	 bvTzn1LlPIiNscs/q7ViGxNV7noXhJb0xwTZ5mWy4sU3DCetfm6qDdJgtUden0OR/G
+	 Y8TisxjDPLOeCURirX/TpnKzY9v63azuwfE3l6OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH 4.19 27/36] sh: intc: Avoid spurious sizeof-pointer-div warning
-Date: Mon, 20 Mar 2023 15:54:53 +0100
-Message-Id: <20230320145425.249174463@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 4.19 28/36] tracing: Check field value in hist_field_name()
+Date: Mon, 20 Mar 2023 15:54:54 +0100
+Message-Id: <20230320145425.286206459@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -36,51 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 250870824c1cf199b032b1ef889c8e8d69d9123a ]
+commit 9f116f76fa8c04c81aef33ad870dbf9a158e5b70 upstream.
 
-GCC warns about the pattern sizeof(void*)/sizeof(void), as it looks like
-the abuse of a pattern to calculate the array size. This pattern appears
-in the unevaluated part of the ternary operator in _INTC_ARRAY if the
-parameter is NULL.
+The function hist_field_name() cannot handle being passed a NULL field
+parameter. It should never be NULL, but due to a previous bug, NULL was
+passed to the function and the kernel crashed due to a NULL dereference.
+Mark Rutland reported this to me on IRC.
 
-The replacement uses an alternate approach to return 0 in case of NULL
-which does not generate the pattern sizeof(void*)/sizeof(void), but still
-emits the warning if _INTC_ARRAY is called with a nonarray parameter.
+The bug was fixed, but to prevent future bugs from crashing the kernel,
+check the field and add a WARN_ON() if it is NULL.
 
-This patch is required for successful compilation with -Werror enabled.
+Link: https://lkml.kernel.org/r/20230302020810.762384440@goodmis.org
 
-The idea to use _Generic for type distinction is taken from Comment #7
-in https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108483 by Jakub Jelinek
-
-Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Link: https://lore.kernel.org/r/619fa552-c988-35e5-b1d7-fe256c46a272@mkarcher.dialup.fu-berlin.de
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Mark Rutland <mark.rutland@arm.com>
+Fixes: c6afad49d127f ("tracing: Add hist trigger 'sym' and 'sym-offset' modifiers")
+Tested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sh_intc.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events_hist.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/sh_intc.h b/include/linux/sh_intc.h
-index c255273b02810..37ad81058d6ae 100644
---- a/include/linux/sh_intc.h
-+++ b/include/linux/sh_intc.h
-@@ -97,7 +97,10 @@ struct intc_hw_desc {
- 	unsigned int nr_subgroups;
- };
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1764,6 +1764,9 @@ static const char *hist_field_name(struc
+ {
+ 	const char *field_name = "";
  
--#define _INTC_ARRAY(a) a, __same_type(a, NULL) ? 0 : sizeof(a)/sizeof(*a)
-+#define _INTC_SIZEOF_OR_ZERO(a) (_Generic(a,                 \
-+                                 typeof(NULL):  0,           \
-+                                 default:       sizeof(a)))
-+#define _INTC_ARRAY(a) a, _INTC_SIZEOF_OR_ZERO(a)/sizeof(*a)
++	if (WARN_ON_ONCE(!field))
++		return field_name;
++
+ 	if (level > 1)
+ 		return field_name;
  
- #define INTC_HW_DESC(vectors, groups, mask_regs,	\
- 		     prio_regs,	sense_regs, ack_regs)	\
--- 
-2.39.2
-
 
 
