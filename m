@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EB11C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4351C433EF;
-	Mon, 20 Mar 2023 15:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BA31C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F43C433D2;
+	Mon, 20 Mar 2023 15:20:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325625;
-	bh=O/wYnWcj3CKwUSaZeq49VUptcgsw2xIYel1RFx/cRYw=;
+	s=korg; t=1679325627;
+	bh=AY/Ig6/D6B8kAit4w8uSAEvPz3sYAX7+kRJBXfUowsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rVrtid5BkJUibwg1Eq7ILW0VeIpqNQ1XeRy4PxN6U3oPJC/hwYzq+Ohvwix9qYIOx
-	 aP9Y7ODrUr3f/uBkZ0JGQBlQDlEFtv5x+uEe+Zd3d6Sxd1d2TMbxjImbEAysNk+J2y
-	 Lh43iNvquEc/D8kHlmBn4Dy30uuXHQxwJn1u3JcA=
+	b=IJuPtsha97xyZZDiB+cLpGh3bS6Y7g3SEgnKQAL5bCL7DmE3d1aHcfTsWxqKEX58x
+	 tCS0UiCeCVMb2rpeK7d/LqziymSGfKaAKcSyW93sU0m0piLVPyfmWC3pmVK9sp5N9r
+	 +JOUcv9pVSVEjQuMlzrxrXzg2Svs7T4j+m1lugFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parav Pandit <parav@nvidia.com>,
-	Daniel Jurgens <danielj@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 072/211] net/mlx5e: Dont cache tunnel offloads capability
-Date: Mon, 20 Mar 2023 15:53:27 +0100
-Message-Id: <20230320145516.266318910@linuxfoundation.org>
+	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH 6.1 113/198] sh: intc: Avoid spurious sizeof-pointer-div warning
+Date: Mon, 20 Mar 2023 15:54:11 +0100
+Message-Id: <20230320145512.305140220@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,89 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Parav Pandit <parav@nvidia.com>
+From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 
-[ Upstream commit 9a92fe1db9e57ea94388a1d768e8ee42af858377 ]
+[ Upstream commit 250870824c1cf199b032b1ef889c8e8d69d9123a ]
 
-When mlx5e attaches again after device health recovery, the device
-capabilities might have changed by the eswitch manager.
+GCC warns about the pattern sizeof(void*)/sizeof(void), as it looks like
+the abuse of a pattern to calculate the array size. This pattern appears
+in the unevaluated part of the ternary operator in _INTC_ARRAY if the
+parameter is NULL.
 
-For example in one flow when ECPF changes the eswitch mode between
-legacy and switchdev, it updates the flow table tunnel capability.
+The replacement uses an alternate approach to return 0 in case of NULL
+which does not generate the pattern sizeof(void*)/sizeof(void), but still
+emits the warning if _INTC_ARRAY is called with a nonarray parameter.
 
-The cached value is only used in one place, so just check the capability
-there instead.
+This patch is required for successful compilation with -Werror enabled.
 
-Fixes: 5bef709d76a2 ("net/mlx5: Enable host PF HCA after eswitch is initialized")
-Signed-off-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+The idea to use _Generic for type distinction is taken from Comment #7
+in https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108483 by Jakub Jelinek
+
+Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Link: https://lore.kernel.org/r/619fa552-c988-35e5-b1d7-fe256c46a272@mkarcher.dialup.fu-berlin.de
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en.h          | 1 -
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c     | 4 +---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c      | 1 -
- drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c | 1 -
- 4 files changed, 1 insertion(+), 6 deletions(-)
+ include/linux/sh_intc.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-index 2d77fb8a8a015..ae73c9af8f251 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-@@ -313,7 +313,6 @@ struct mlx5e_params {
- 		} channel;
- 	} mqprio;
- 	bool rx_cqe_compress_def;
--	bool tunneled_offload_en;
- 	struct dim_cq_moder rx_cq_moderation;
- 	struct dim_cq_moder tx_cq_moderation;
- 	struct mlx5e_packet_merge_param packet_merge;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 6c24f33a5ea5c..d6bcbc17151d7 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -4923,8 +4923,6 @@ void mlx5e_build_nic_params(struct mlx5e_priv *priv, struct mlx5e_xsk *xsk, u16
- 	/* TX inline */
- 	mlx5_query_min_inline(mdev, &params->tx_min_inline_mode);
+diff --git a/include/linux/sh_intc.h b/include/linux/sh_intc.h
+index c255273b02810..37ad81058d6ae 100644
+--- a/include/linux/sh_intc.h
++++ b/include/linux/sh_intc.h
+@@ -97,7 +97,10 @@ struct intc_hw_desc {
+ 	unsigned int nr_subgroups;
+ };
  
--	params->tunneled_offload_en = mlx5_tunnel_inner_ft_supported(mdev);
--
- 	/* AF_XDP */
- 	params->xsk = xsk;
+-#define _INTC_ARRAY(a) a, __same_type(a, NULL) ? 0 : sizeof(a)/sizeof(*a)
++#define _INTC_SIZEOF_OR_ZERO(a) (_Generic(a,                 \
++                                 typeof(NULL):  0,           \
++                                 default:       sizeof(a)))
++#define _INTC_ARRAY(a) a, _INTC_SIZEOF_OR_ZERO(a)/sizeof(*a)
  
-@@ -5223,7 +5221,7 @@ static int mlx5e_init_nic_rx(struct mlx5e_priv *priv)
- 	}
- 
- 	features = MLX5E_RX_RES_FEATURE_PTP;
--	if (priv->channels.params.tunneled_offload_en)
-+	if (mlx5_tunnel_inner_ft_supported(mdev))
- 		features |= MLX5E_RX_RES_FEATURE_INNER_FT;
- 	err = mlx5e_rx_res_init(priv->rx_res, priv->mdev, features,
- 				priv->max_nch, priv->drop_rq.rqn,
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 7d90e5b728548..301a734b7c6a7 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -752,7 +752,6 @@ static void mlx5e_build_rep_params(struct net_device *netdev)
- 	mlx5e_set_rx_cq_mode_params(params, cq_period_mode);
- 
- 	params->mqprio.num_tc       = 1;
--	params->tunneled_offload_en = false;
- 	if (rep->vport != MLX5_VPORT_UPLINK)
- 		params->vlan_strip_disable = true;
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
-index 911cf4d239645..4285b31fee6c4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
-@@ -70,7 +70,6 @@ static void mlx5i_build_nic_params(struct mlx5_core_dev *mdev,
- 
- 	params->packet_merge.type = MLX5E_PACKET_MERGE_NONE;
- 	params->hard_mtu = MLX5_IB_GRH_BYTES + MLX5_IPOIB_HARD_LEN;
--	params->tunneled_offload_en = false;
- 
- 	/* CQE compression is not supported for IPoIB */
- 	params->rx_cqe_compress_def = false;
+ #define INTC_HW_DESC(vectors, groups, mask_regs,	\
+ 		     prio_regs,	sense_regs, ack_regs)	\
 -- 
 2.39.2
 
