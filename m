@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A361C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB695C433D2;
-	Mon, 20 Mar 2023 15:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72F41C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9E0C433EF;
+	Mon, 20 Mar 2023 15:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326096;
-	bh=TIQXJjlpa6+QktvqASVdGyu4c9KPKmpcQ1nIF2II6wg=;
+	s=korg; t=1679326093;
+	bh=AKZ64z1DHk/P+g5xaCqoYHPUbKaNLJFromCKoONOZgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e4LYMoh5dA2Fn8vGPcUKImMt3w01d/QDFqfNnq77Z5IRx65XQroxTEgjexWjR3v38
-	 WCHd9v5yh0bDYa/IAz5Ue3YwHC7Bnl4aVocRYG0ryNtEbUE0w1rF2OmhT5MP7/lDf4
-	 VdqxNh+nsmkGJmSCSWcTPtJL/OyYqAVwF0PbPgJ8=
+	b=SGG7v32Ku5yOecLvTvNIuzoMWVjIcl+RWgI2czMKKXJwTlpC7XsbBMcerpaZZO7Ba
+	 gbdJdlpNl2epLAF8rAmCaHFW7HsKJKANCA1fdRrZWL7+4CrqrSjiO6+72J7HAbFTbN
+	 8AJiDQSgQu8zpSzEHPYwOFtsr85zTyN0Tvv27t0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Szu <jeremy.szu@canonical.com>,
+	"Hamidreza H. Fard" <nitocris@posteo.net>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.2 158/211] ALSA: hda/realtek: fix speaker, mute/micmute LEDs not work on a HP platform
-Date: Mon, 20 Mar 2023 15:54:53 +0100
-Message-Id: <20230320145520.047867239@linuxfoundation.org>
+Subject: [PATCH 6.2 157/211] ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book2 Pro
+Date: Mon, 20 Mar 2023 15:54:52 +0100
+Message-Id: <20230320145520.008790797@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -34,16 +34,17 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Szu <jeremy.szu@canonical.com>
+From: Hamidreza H. Fard <nitocris@posteo.net>
 
-commit 7bb62340951a9af20235a3bde8c98e2e292915df upstream.
+commit a86e79e3015f5dd8e1b01ccfa49bd5c6e41047a1 upstream.
 
-There is a HP platform needs ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED quirk to
-make mic-mute/audio-mute/speaker working.
+Samsung Galaxy Book2 Pro (13" 2022 NP930XED-KA1DE) with codec SSID
+144d:c868 requires the same workaround for enabling the speaker amp
+like other Samsung models with ALC298 code.
 
-Signed-off-by: Jeremy Szu <jeremy.szu@canonical.com>
+Signed-off-by: Hamidreza H. Fard <nitocris@posteo.net>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230307135317.37621-1-jeremy.szu@canonical.com
+Link: https://lore.kernel.org/r/20230307163741.3878-1-nitocris@posteo.net
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -52,13 +53,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -9446,6 +9446,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8b8a, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b8b, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b8d, "HP", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8b8f, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b92, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+@@ -9538,6 +9538,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x144d, 0xc830, "Samsung Galaxy Book Ion (NT950XCJ-X716A)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc832, "Samsung Galaxy Book Flex Alpha (NP730QCJ)", ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
+ 	SND_PCI_QUIRK(0x144d, 0xca03, "Samsung Galaxy Book2 Pro 360 (NP930QED)", ALC298_FIXUP_SAMSUNG_AMP),
++	SND_PCI_QUIRK(0x144d, 0xc868, "Samsung Galaxy Book2 Pro (NP930XED)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x1458, 0xfa53, "Gigabyte BXBT-2807", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1462, 0xb120, "MSI Cubi MS-B120", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1462, 0xb171, "Cubi N 8GL (MS-B171)", ALC283_FIXUP_HEADSET_MIC),
 
 
