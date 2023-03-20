@@ -1,31 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C83C1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE10C433D2;
-	Mon, 20 Mar 2023 15:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FBC1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937A3C433D2;
+	Mon, 20 Mar 2023 15:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325306;
-	bh=8x4VWYXcWqcNxMzU6WigeW/7mGU0LrVAQdpsiAJHtqU=;
+	s=korg; t=1679325309;
+	bh=PvOURcex9L9qtIxOXoFT+Yc3ionB4h5WSb8Ur090/mY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U+AzKKpIIVLjecvivX+kL3qXE0YZrtBb0gIO1yRVDNgQLQRNbatb+n45rwkMc7g40
-	 NZ5CemzQvNeZPQXlLheINumkhlx1YmncHh+CyofjIKSG6gux4qWpK6KSJ4r9+9g2Er
-	 QpIDvIdDlhgyqG0ucGF8X6noPSlEDBWn7WnrZJXI=
+	b=Q1sgg3I+CkOKHS1Xq+jeyVYeONYsiQHc5lW4FR22XQujsMA+m3J2TrdZEsw/8fpxG
+	 MH+k9C+lgfiG0wxiIjsQwyPJZagv1mEPxnUmaVudH60kIJd66mPezJQRIaxvx/cv5T
+	 D08Mu1jpAXKfaqnOkWRT20u1oQ0/IXPka5Gm7+n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 027/211] netfilter: nft_masq: correct length for loading protocol registers
-Date: Mon, 20 Mar 2023 15:52:42 +0100
-Message-Id: <20230320145514.414107719@linuxfoundation.org>
+	Guo Ren <guoren@linux.alibaba.com>,
+	Guo Ren <guoren@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Zong Li <zong.li@sifive.com>,
+	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Andrew Jones <ajones@ventanamicro.com>
+Subject: [PATCH 5.15 089/115] riscv: asid: Fixup stale TLB entry cause application crash
+Date: Mon, 20 Mar 2023 15:55:01 +0100
+Message-Id: <20230320145453.136929207@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,39 +40,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: Guo Ren <guoren@linux.alibaba.com>
 
-[ Upstream commit ec2c5917eb858428b2083d1c74f445aabbe8316b ]
+commit 82dd33fde0268cc622d3d1ac64971f3f61634142 upstream.
 
-The values in the protocol registers are two bytes wide.  However, when
-parsing the register loads, the code currently uses the larger 16-byte
-size of a `union nf_inet_addr`.  Change it to use the (correct) size of
-a `union nf_conntrack_man_proto` instead.
+After use_asid_allocator is enabled, the userspace application will
+crash by stale TLB entries. Because only using cpumask_clear_cpu without
+local_flush_tlb_all couldn't guarantee CPU's TLB entries were fresh.
+Then set_mm_asid would cause the user space application to get a stale
+value by stale TLB entry, but set_mm_noasid is okay.
 
-Fixes: 8a6bf5da1aef ("netfilter: nft_masq: support port range")
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Here is the symptom of the bug:
+unhandled signal 11 code 0x1 (coredump)
+   0x0000003fd6d22524 <+4>:     auipc   s0,0x70
+   0x0000003fd6d22528 <+8>:     ld      s0,-148(s0) # 0x3fd6d92490
+=> 0x0000003fd6d2252c <+12>:    ld      a5,0(s0)
+(gdb) i r s0
+s0          0x8082ed1cc3198b21       0x8082ed1cc3198b21
+(gdb) x /2x 0x3fd6d92490
+0x3fd6d92490:   0xd80ac8a8      0x0000003f
+The core dump file shows that register s0 is wrong, but the value in
+memory is correct. Because 'ld s0, -148(s0)' used a stale mapping entry
+in TLB and got a wrong result from an incorrect physical address.
+
+When the task ran on CPU0, which loaded/speculative-loaded the value of
+address(0x3fd6d92490), then the first version of the mapping entry was
+PTWed into CPU0's TLB.
+When the task switched from CPU0 to CPU1 (No local_tlb_flush_all here by
+asid), it happened to write a value on the address (0x3fd6d92490). It
+caused do_page_fault -> wp_page_copy -> ptep_clear_flush ->
+ptep_get_and_clear & flush_tlb_page.
+The flush_tlb_page used mm_cpumask(mm) to determine which CPUs need TLB
+flush, but CPU0 had cleared the CPU0's mm_cpumask in the previous
+switch_mm. So we only flushed the CPU1 TLB and set the second version
+mapping of the PTE. When the task switched from CPU1 to CPU0 again, CPU0
+still used a stale TLB mapping entry which contained a wrong target
+physical address. It raised a bug when the task happened to read that
+value.
+
+   CPU0                               CPU1
+   - switch 'task' in
+   - read addr (Fill stale mapping
+     entry into TLB)
+   - switch 'task' out (no tlb_flush)
+                                      - switch 'task' in (no tlb_flush)
+                                      - write addr cause pagefault
+                                        do_page_fault() (change to
+                                        new addr mapping)
+                                          wp_page_copy()
+                                            ptep_clear_flush()
+                                              ptep_get_and_clear()
+                                              & flush_tlb_page()
+                                        write new value into addr
+                                      - switch 'task' out (no tlb_flush)
+   - switch 'task' in (no tlb_flush)
+   - read addr again (Use stale
+     mapping entry in TLB)
+     get wrong value from old phyical
+     addr, BUG!
+
+The solution is to keep all CPUs' footmarks of cpumask(mm) in switch_mm,
+which could guarantee to invalidate all stale TLB entries during TLB
+flush.
+
+Fixes: 65d4b9c53017 ("RISC-V: Implement ASID allocator")
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Tested-by: Zong Li <zong.li@sifive.com>
+Tested-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+Cc: Anup Patel <apatel@ventanamicro.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20230226150137.1919750-3-geomatsi@gmail.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_masq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/mm/context.c |   30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/net/netfilter/nft_masq.c b/net/netfilter/nft_masq.c
-index e55e455275c48..9544c2f16998b 100644
---- a/net/netfilter/nft_masq.c
-+++ b/net/netfilter/nft_masq.c
-@@ -43,7 +43,7 @@ static int nft_masq_init(const struct nft_ctx *ctx,
- 			 const struct nft_expr *expr,
- 			 const struct nlattr * const tb[])
- {
--	u32 plen = sizeof_field(struct nf_nat_range, min_addr.all);
-+	u32 plen = sizeof_field(struct nf_nat_range, min_proto.all);
- 	struct nft_masq *priv = nft_expr_priv(expr);
- 	int err;
+--- a/arch/riscv/mm/context.c
++++ b/arch/riscv/mm/context.c
+@@ -205,12 +205,24 @@ static void set_mm_noasid(struct mm_stru
+ 	local_flush_tlb_all();
+ }
  
--- 
-2.39.2
-
+-static inline void set_mm(struct mm_struct *mm, unsigned int cpu)
++static inline void set_mm(struct mm_struct *prev,
++			  struct mm_struct *next, unsigned int cpu)
+ {
+-	if (static_branch_unlikely(&use_asid_allocator))
+-		set_mm_asid(mm, cpu);
+-	else
+-		set_mm_noasid(mm);
++	/*
++	 * The mm_cpumask indicates which harts' TLBs contain the virtual
++	 * address mapping of the mm. Compared to noasid, using asid
++	 * can't guarantee that stale TLB entries are invalidated because
++	 * the asid mechanism wouldn't flush TLB for every switch_mm for
++	 * performance. So when using asid, keep all CPUs footmarks in
++	 * cpumask() until mm reset.
++	 */
++	cpumask_set_cpu(cpu, mm_cpumask(next));
++	if (static_branch_unlikely(&use_asid_allocator)) {
++		set_mm_asid(next, cpu);
++	} else {
++		cpumask_clear_cpu(cpu, mm_cpumask(prev));
++		set_mm_noasid(next);
++	}
+ }
+ 
+ static int __init asids_init(void)
+@@ -262,7 +274,8 @@ static int __init asids_init(void)
+ }
+ early_initcall(asids_init);
+ #else
+-static inline void set_mm(struct mm_struct *mm, unsigned int cpu)
++static inline void set_mm(struct mm_struct *prev,
++			  struct mm_struct *next, unsigned int cpu)
+ {
+ 	/* Nothing to do here when there is no MMU */
+ }
+@@ -315,10 +328,7 @@ void switch_mm(struct mm_struct *prev, s
+ 	 */
+ 	cpu = smp_processor_id();
+ 
+-	cpumask_clear_cpu(cpu, mm_cpumask(prev));
+-	cpumask_set_cpu(cpu, mm_cpumask(next));
+-
+-	set_mm(next, cpu);
++	set_mm(prev, next, cpu);
+ 
+ 	flush_icache_deferred(next, cpu);
+ }
 
 
