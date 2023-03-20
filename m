@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6291C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEE4C433D2;
-	Mon, 20 Mar 2023 15:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200FA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900D9C433EF;
+	Mon, 20 Mar 2023 15:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325811;
-	bh=XhpReMj36BlNDK3+s+oxR1RtENo0vBcfeNHemoNRg9o=;
+	s=korg; t=1679325813;
+	bh=892mqqGk4TijR0zOAPhKLqLlU4Wjzy2nPPGSuCwxQ+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UUa3f+xetYmQoGTqyntF9oEE9l0gbhYS3MCaoSYXZHjID9LJX1VAVD2Xrq4298PRr
-	 5WzIyAShEfsziw0Wxmr+GfMtQXLK0zYCHcWKpp90j+4vWKEvGIRQMw20gI+Io0RMYv
-	 ld5qBXMftVQJAO/LjpyShSZ+vKAjoFhCVkphrk9Y=
+	b=RK7FZODxH8S+LyfBtiAiFVXNTd9AYi0m+xE2hJdT/56hfBWt+Js7GipHo3z5AnS3R
+	 qza0Ilz1vW7tOdJ0oK2HBFD9p2XaheAWl4939AKgPUHAZxjvxiNUzO3EJR7ayTha4v
+	 7D9d4mLzNyqYh301HO2RPtiB75m6FB2EACj/kjmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 105/211] hwmon: (adm1266) Set `can_sleep` flag for GPIO chip
-Date: Mon, 20 Mar 2023 15:54:00 +0100
-Message-Id: <20230320145517.685697554@linuxfoundation.org>
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 147/198] KVM: SVM: Fix a benign off-by-one bug in AVIC physical table mask
+Date: Mon, 20 Mar 2023 15:54:45 +0100
+Message-Id: <20230320145513.704582947@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit a5bb73b3f5db1a4e91402ad132b59b13d2651ed9 ]
+commit 3ec7a1b2743c07c45f4a0c508114f6cb410ddef3 upstream.
 
-The adm1266 driver uses I2C bus access in its GPIO chip `set` and `get`
-implementation. This means these functions can sleep and the GPIO chip
-should set the `can_sleep` property to true.
+Define the "physical table max index mask" as bits 8:0, not 9:0.  x2AVIC
+currently supports a max of 512 entries, i.e. the max index is 511, and
+the inputs to GENMASK_ULL() are inclusive.  The bug is benign as bit 9 is
+reserved and never set by KVM, i.e. KVM is just clearing bits that are
+guaranteed to be zero.
 
-This will ensure that a warning is printed when trying to set or get the
-GPIO value from a context that potentially can't sleep.
+Note, as of this writing, APM "Rev. 3.39-October 2022" incorrectly states
+that bits 11:8 are reserved in Table B-1. VMCB Layout, Control Area.  I.e.
+that table wasn't updated when x2AVIC support was added.
 
-Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20230314093146.2443845-1-lars@metafoo.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Opportunistically fix the comment for the max AVIC ID to align with the
+code, and clean up comment formatting too.
+
+Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
+Cc: stable@vger.kernel.org
+Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Tested-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Message-Id: <20230207002156.521736-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/include/asm/svm.h |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/adm1266.c b/drivers/hwmon/pmbus/adm1266.c
-index ec5f932fc6f0f..1ac2b2f4c5705 100644
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -301,6 +301,7 @@ static int adm1266_config_gpio(struct adm1266_data *data)
- 	data->gc.label = name;
- 	data->gc.parent = &data->client->dev;
- 	data->gc.owner = THIS_MODULE;
-+	data->gc.can_sleep = true;
- 	data->gc.base = -1;
- 	data->gc.names = data->gpio_names;
- 	data->gc.ngpio = ARRAY_SIZE(data->gpio_names);
--- 
-2.39.2
-
+--- a/arch/x86/include/asm/svm.h
++++ b/arch/x86/include/asm/svm.h
+@@ -256,20 +256,22 @@ enum avic_ipi_failure_cause {
+ 	AVIC_IPI_FAILURE_INVALID_BACKING_PAGE,
+ };
+ 
+-#define AVIC_PHYSICAL_MAX_INDEX_MASK	GENMASK_ULL(9, 0)
++#define AVIC_PHYSICAL_MAX_INDEX_MASK	GENMASK_ULL(8, 0)
+ 
+ /*
+- * For AVIC, the max index allowed for physical APIC ID
+- * table is 0xff (255).
++ * For AVIC, the max index allowed for physical APIC ID table is 0xfe (254), as
++ * 0xff is a broadcast to all CPUs, i.e. can't be targeted individually.
+  */
+ #define AVIC_MAX_PHYSICAL_ID		0XFEULL
+ 
+ /*
+- * For x2AVIC, the max index allowed for physical APIC ID
+- * table is 0x1ff (511).
++ * For x2AVIC, the max index allowed for physical APIC ID table is 0x1ff (511).
+  */
+ #define X2AVIC_MAX_PHYSICAL_ID		0x1FFUL
+ 
++static_assert((AVIC_MAX_PHYSICAL_ID & AVIC_PHYSICAL_MAX_INDEX_MASK) == AVIC_MAX_PHYSICAL_ID);
++static_assert((X2AVIC_MAX_PHYSICAL_ID & AVIC_PHYSICAL_MAX_INDEX_MASK) == X2AVIC_MAX_PHYSICAL_ID);
++
+ #define AVIC_HPA_MASK	~((0xFFFULL << 52) | 0xFFF)
+ #define VMCB_AVIC_APIC_BAR_MASK		0xFFFFFFFFFF000ULL
+ 
 
 
