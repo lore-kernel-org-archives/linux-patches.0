@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29141C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19035C4339B;
-	Mon, 20 Mar 2023 15:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D766B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5703EC433D2;
+	Mon, 20 Mar 2023 15:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325649;
-	bh=Y9VJDuw6Pu/7exTlBKzxswDlLOxoUi9Nwz60jblsduE=;
+	s=korg; t=1679325646;
+	bh=CrlgYa5+8GUkSasgpBUKSlDHJhu07CrQBRkPfPGcSoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c2J30xbewhsUFUfQATxjTZmDoAPP3+gI3w8ctIdHl6pe/CNVEU84gfuX5b70o3xb/
-	 NMpQMrFsvwxsKhwzCWxzp/MAvHPI4uBAnCzioAGaCdIYnzPCah10LXJfFqTHpcBlZd
-	 quGRtZS9IDyzEDyqlLuXjlL0GEtCkjMgopt66iSE=
+	b=V2DIFMd+QwWVE+UCTX9ZL3xdP1V+6JWuIkzljrKhe/CPzTZWI5LeRGAl9eUMQogJS
+	 EQGvLy/BI604JAhjOfzCvs0plrNPUPtu8UJTf65Yz43bmy0qUcEWQikefpw7lrma5K
+	 JOhVpjwR8Y2HV+pG02XUhIIKSwmkyL55rI3vhFyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maor Dickman <maord@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 076/211] net/mlx5: E-switch, Fix missing set of split_count when forward to ovs internal port
-Date: Mon, 20 Mar 2023 15:53:31 +0100
-Message-Id: <20230320145516.453307703@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	syzbot+0c73d1d8b952c5f3d714@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 116/198] ext4: fix possible double unlock when moving a directory
+Date: Mon, 20 Mar 2023 15:54:14 +0100
+Message-Id: <20230320145512.434945183@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maor Dickman <maord@nvidia.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit 28d3815a629cbdee660dd1c9de28d77cb3d77917 ]
+commit 70e42feab2e20618ddd0cbfc4ab4b08628236ecd upstream.
 
-Rules with mirror actions are split to two FTEs when the actions after the mirror
-action contains pedit, vlan push/pop or ct. Forward to ovs internal port adds
-implicit header rewrite (pedit) but missing trigger to do split.
-
-Fix by setting split_count when forwarding to ovs internal port which
-will trigger split in mirror rules.
-
-Fixes: 27484f7170ed ("net/mlx5e: Offload tc rules that redirect to ovs internal port")
-Signed-off-by: Maor Dickman <maord@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0813299c586b ("ext4: Fix possible corruption when moving a directory")
+Link: https://lore.kernel.org/r/5efbe1b9-ad8b-4a4f-b422-24824d2b775c@kili.mountain
+Reported-by: Dan Carpenter <error27@gmail.com>
+Reported-by: syzbot+0c73d1d8b952c5f3d714@syzkaller.appspotmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/namei.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index 243d5d7750beb..6a07242b5d5ef 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -4240,6 +4240,7 @@ int mlx5e_set_fwd_to_int_port_actions(struct mlx5e_priv *priv,
- 
- 	esw_attr->dest_int_port = dest_int_port;
- 	esw_attr->dests[out_index].flags |= MLX5_ESW_DEST_CHAIN_WITH_SRC_PORT_CHANGE;
-+	esw_attr->split_count = out_index;
- 
- 	/* Forward to root fdb for matching against the new source vport */
- 	attr->dest_chain = 0;
--- 
-2.39.2
-
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -3884,10 +3884,8 @@ static int ext4_rename(struct user_names
+ 				goto end_rename;
+ 		}
+ 		retval = ext4_rename_dir_prepare(handle, &old);
+-		if (retval) {
+-			inode_unlock(old.inode);
++		if (retval)
+ 			goto end_rename;
+-		}
+ 	}
+ 	/*
+ 	 * If we're renaming a file within an inline_data dir and adding or
 
 
