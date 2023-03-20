@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536281C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9944C4339B;
-	Mon, 20 Mar 2023 15:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A801C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89460C433EF;
+	Mon, 20 Mar 2023 15:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324415;
-	bh=h1sONQgw9qZOJu5se/PZZGysohtwrtzMudcWJk/kSmo=;
+	s=korg; t=1679324417;
+	bh=NAfC+89Fccylu2Jlb+unKngKAY1JsXQtXNOwi25qIC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K0irG45P/Nr+sfCPVxcUr+t886SIvzppvF9fryb2FSNfMlPheDEqUQMOFQnj+sZkI
-	 u+qaTQY6YLyzZcxcM+rSkTTDZOtP9wvw1XPh6jWTEhnKoVWFF1pMsPP0zwHftpHwJh
-	 WKZAI8ks9TvwPWIvf4rppC6sdR60h5GzCMR6/7YM=
+	b=JpMGhNveIAOjFZZwj/srKbhPO4wwwz79LXnTuwmXsdjFX4pDHyF9XR5tQlzPCf+kG
+	 2wvmhViUGdEDOh0E6NGVStJHgEas6WWzMd7g3z32MO9k9TysW0pDneJyCUT1EQ5TP0
+	 1wxTDA/d2KCQ+AUK/DNIibqM4cd7A9Al1UxPtppY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	syzbot+645a4616b87a2f10e398@syzkaller.appspotmail.com,
-	Bart Van Assche <bvanassche@acm.org>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Breno Leitao <leitao@debian.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 16/60] scsi: core: Fix a procfs host directory removal regression
-Date: Mon, 20 Mar 2023 15:54:25 +0100
-Message-Id: <20230320145431.569660402@linuxfoundation.org>
+Subject: [PATCH 5.4 17/60] tcp: tcp_make_synack() can be called from process context
+Date: Mon, 20 Mar 2023 15:54:26 +0100
+Message-Id: <20230320145431.599599464@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
 References: <20230320145430.861072439@linuxfoundation.org>
@@ -38,45 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit be03df3d4bfe7e8866d4aa43d62e648ffe884f5f ]
+[ Upstream commit bced3f7db95ff2e6ca29dc4d1c9751ab5e736a09 ]
 
-scsi_proc_hostdir_rm() decreases a reference counter and hence must only be
-called once per host that is removed. This change does not require a
-scsi_add_host_with_dma() change since scsi_add_host_with_dma() will return
-0 (success) if scsi_proc_host_add() is called.
+tcp_rtx_synack() now could be called in process context as explained in
+0a375c822497 ("tcp: tcp_rtx_synack() can be called from process
+context").
 
-Fixes: fc663711b944 ("scsi: core: Remove the /proc/scsi/${proc_name} directory earlier")
-Cc: John Garry <john.g.garry@oracle.com>
-Reported-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/all/ed6b8027-a9d9-1b45-be8e-df4e8c6c4605@oracle.com/
-Reported-by: syzbot+645a4616b87a2f10e398@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-scsi/000000000000890fab05f65342b6@google.com/
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20230307214428.3703498-1-bvanassche@acm.org
-Tested-by: John Garry <john.g.garry@oracle.com>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+tcp_rtx_synack() might call tcp_make_synack(), which will touch per-CPU
+variables with preemption enabled. This causes the following BUG:
+
+    BUG: using __this_cpu_add() in preemptible [00000000] code: ThriftIO1/5464
+    caller is tcp_make_synack+0x841/0xac0
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x10d/0x1a0
+     check_preemption_disabled+0x104/0x110
+     tcp_make_synack+0x841/0xac0
+     tcp_v6_send_synack+0x5c/0x450
+     tcp_rtx_synack+0xeb/0x1f0
+     inet_rtx_syn_ack+0x34/0x60
+     tcp_check_req+0x3af/0x9e0
+     tcp_rcv_state_process+0x59b/0x2030
+     tcp_v6_do_rcv+0x5f5/0x700
+     release_sock+0x3a/0xf0
+     tcp_sendmsg+0x33/0x40
+     ____sys_sendmsg+0x2f2/0x490
+     __sys_sendmsg+0x184/0x230
+     do_syscall_64+0x3d/0x90
+
+Avoid calling __TCP_INC_STATS() with will touch per-cpu variables. Use
+TCP_INC_STATS() which is safe to be called from context switch.
+
+Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230308190745.780221-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hosts.c | 3 ---
- 1 file changed, 3 deletions(-)
+ net/ipv4/tcp_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
-index d3a63961b98a9..b97e046c6a6e1 100644
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -319,9 +319,6 @@ static void scsi_host_dev_release(struct device *dev)
- 	struct Scsi_Host *shost = dev_to_shost(dev);
- 	struct device *parent = dev->parent;
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index b4a9f6948cb52..6ac84b273ffbb 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3374,7 +3374,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
+ 	th->window = htons(min(req->rsk_rcv_wnd, 65535U));
+ 	tcp_options_write((__be32 *)(th + 1), NULL, &opts);
+ 	th->doff = (tcp_header_size >> 2);
+-	__TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
++	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
  
--	/* In case scsi_remove_host() has not been called. */
--	scsi_proc_hostdir_rm(shost->hostt);
--
- 	/* Wait for functions invoked through call_rcu(&scmd->rcu, ...) */
- 	rcu_barrier();
- 
+ #ifdef CONFIG_TCP_MD5SIG
+ 	/* Okay, we have all we need - do the md5 hash if needed */
 -- 
 2.39.2
 
