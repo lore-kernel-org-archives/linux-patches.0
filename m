@@ -1,56 +1,93 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1AD1861
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 13:13:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542EEC433EF;
-	Mon, 20 Mar 2023 13:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E2EE4F3
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 13:24:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B681FC433D2;
+	Mon, 20 Mar 2023 13:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679317981;
-	bh=nrbWlCxJvFS1/77q21NViPL/FvUhle05+wOwcoU6+K4=;
+	s=korg; t=1679318678;
+	bh=yFLYV6SFXFL66IRK4j40d/JTg7URb2DST9yF5agBjjE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sX2RtMZEl43o5ETbXaKhpMRT+gPgOP9osZkghZzBwX5Lpzwuya9EkEbytfWLRH5XW
-	 WTwUmvpRoXPQTntO5zkZiz5VSXSDexLpqDX+mGagSEqcQ8TCLVDtLRqHhCKXO9FWyp
-	 Ka+oH7WJu7ZA3SZvEsrGxR/9CN6oBOLTtNxe2vZA=
-Date: Mon, 20 Mar 2023 14:12:59 +0100
+	b=Lg5gqpoldgluHGiwfn6udLGH0M2jBtUigDQB12N1TxVGAvFvTpEnHWVVUlY3M7iTm
+	 iCea7cFBt3ePBsgywJvvP9vqKeJTyCOLGlJkHdLblHRrZfrmt09P7dtvsuyY6P59hX
+	 9G2kYep9gPDmstJekjuPQNFo2TRpUO5Ow2hyJaVo=
+Date: Mon, 20 Mar 2023 14:24:35 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ben Hutchings <ben@decadent.org.uk>
-Cc: "Borislav Petkov (AMD)" <bp@alien8.de>, patches@lists.linux.dev,
-	stable <stable@vger.kernel.org>
-Subject: Re: [PATCH 4.19 161/252] x86/microcode/amd: Remove
- load_microcode_amd()s bsp parameter
-Message-ID: <ZBhb21/xkOC1dyIH@kroah.com>
-References: <20230310133718.803482157@linuxfoundation.org>
- <20230310133723.713256658@linuxfoundation.org>
- <e2af9b33fb0f6e22146388a186cf0152abbac629.camel@decadent.org.uk>
+To: Tom Saeger <tom.saeger@oracle.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Kees Cook <keescook@chromium.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.4 084/357] treewide: Replace DECLARE_TASKLET() with
+ DECLARE_TASKLET_OLD()
+Message-ID: <ZBhek48t2C6QBUrp@kroah.com>
+References: <20230310133733.973883071@linuxfoundation.org>
+ <20230310133737.692796889@linuxfoundation.org>
+ <20230317182806.owvwdor6qpzp6tve@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e2af9b33fb0f6e22146388a186cf0152abbac629.camel@decadent.org.uk>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230317182806.owvwdor6qpzp6tve@oracle.com>
 
-On Sat, Mar 18, 2023 at 02:49:53AM +0100, Ben Hutchings wrote:
-> On Fri, 2023-03-10 at 14:38 +0100, Greg Kroah-Hartman wrote:
-> > From: Borislav Petkov (AMD) <bp@alien8.de>
+On Fri, Mar 17, 2023 at 12:28:06PM -0600, Tom Saeger wrote:
+> On Fri, Mar 10, 2023 at 02:36:13PM +0100, Greg Kroah-Hartman wrote:
+> > From: Kees Cook <keescook@chromium.org>
 > > 
-> > commit 2355370cd941cbb20882cc3f34460f9f2b8f9a18 upstream.
+> > [ Upstream commit b13fecb1c3a603c4b8e99b306fecf4f668c11b32 ]
 > > 
-> > It is always the BSP.
+> > This converts all the existing DECLARE_TASKLET() (and ...DISABLED)
+> > macros with DECLARE_TASKLET_OLD() in preparation for refactoring the
+> > tasklet callback type. All existing DECLARE_TASKLET() users had a "0"
+> > data argument, it has been removed here as well.
 > > 
-> > No functional changes.
-> > 
+> > Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Acked-by: Thomas Gleixner <tglx@linutronix.de>
+> > Signed-off-by: Kees Cook <keescook@chromium.org>
+> > Stable-dep-of: 1fdeb8b9f29d ("wifi: iwl3945: Add missing check for create_singlethread_workqueue")
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
 > 
-> Does this not depend on commit 2071c0aeda22 "x86/microcode: Simplify
-> init path even more"?  That hasn't been backported to any stable
-> branches.
+> I noticed kernelci.org bot (5.4) reports:
+> 
+>     Build Failures Detected:
+> 
+>     mips:
+>         ip27_defconfig: (gcc-10) FAIL
+>         ip28_defconfig: (gcc-10) FAIL
+>         lasat_defconfig: (gcc-10) FAIL
+> 
+>     Errors summary:
+> 
+>     1    arch/mips/lasat/picvue_proc.c:87:20: error: ‘pvc_display_tasklet’ undeclared (first use in this function)
+>     1    arch/mips/lasat/picvue_proc.c:42:44: error: expected ‘)’ before ‘&’ token
+>     1    arch/mips/lasat/picvue_proc.c:33:13: error: ‘pvc_display’ defined but not used [-Werror=unused-function]
+> 
+> Link: https://lore.kernel.org/stable/64041dda.170a0220.8cc25.79c9@mx.google.com/
+> 
+> Here's what I found...
+> this backport to 5.4.y of:
+> b13fecb1c3a6 ("treewide: Replace DECLARE_TASKLET() with DECLARE_TASKLET_OLD()")
+> changed all locations of DECLARE_TASKLET with DECLARE_TASKLET_OLD,
+> except one, in arch/mips/lasat/pcivue_proc.c.
+> 
+> This is due to:
+> 10760dde9be3 ("MIPS: Remove support for LASAT") preceeding
+> b13fecb1c3a6 ("treewide: Replace DECLARE_TASKLET() with DECLARE_TASKLET_OLD()")
+> upstream and the former not being present in 5.4.y.
+> 
+> I rolled a revert/re-apply with fixes in the attached mbox,
+> however maybe just a revert makes more sense?  Up to you.
+> 
+> I have yet to try building this on mips, just did this by inspection.
 
-It didn't seem to need it to at least build properly.  And it doesn't
-apply to the stable branches, so are you sure it's needed?
+I've taken your patches, let's see how that works...
 
-thanks,
+thanks!
 
 greg k-h
