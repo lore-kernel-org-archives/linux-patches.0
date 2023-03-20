@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A01E1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D036C433D2;
-	Mon, 20 Mar 2023 15:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638E51C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F91C433D2;
+	Mon, 20 Mar 2023 15:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325578;
-	bh=xAJv3dvpOU7NVoRdTyls/Nrdb8fz5MdGxiW/Rt9jAno=;
+	s=korg; t=1679325581;
+	bh=63PtVO4aVd/7ZfOGEWRKpebX0W6pFFeZKrXfWkCLt9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MlNjYQlMcXxxJCmIplVMnj7Hej29AM9zU4DgCWZ6BoUwWHd5J3bmVB1ilP0c4AGdO
-	 ZSRctyzgDxPiMKXBNISKSdBQMg2kipFUAnXH3QzNG4N7C7ioUr/P5ZP4fA108sYToJ
-	 FVJaTBLTWPfkq6/ADuaeGOtLu9qHmELNKZdjCk8U=
+	b=WMSJ5cuJVf1sW4iHXjqHxYf5/tdjcDL2xLb4HHiMwXZbYnR+CqBSXNsBG+E1pcj00
+	 T3N1B3HQ6x7ixsO9sbN03UYjj7WWjnryoyZ8BqHzGrYfE1UTkWl44pHE+mP80f0AXS
+	 Hm6ASfw06Tc+XYlHZD4kkQ3ABH2YHPpbceog1pzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifei Liu <yifeliu@cs.stonybrook.edu>,
-	Erez Zadok <ezk@cs.stonybrook.edu>,
-	Manish Adkar <madkar@cs.stonybrook.edu>,
-	Richard Weinberger <richard@nod.at>,
+	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	Russell Currey <ruscur@russell.cc>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/198] jffs2: correct logic when creating a hole in jffs2_write_begin
-Date: Mon, 20 Mar 2023 15:54:03 +0100
-Message-Id: <20230320145511.988759401@linuxfoundation.org>
+Subject: [PATCH 6.2 065/211] powerpc/mm: Fix false detection of read faults
+Date: Mon, 20 Mar 2023 15:53:20 +0100
+Message-Id: <20230320145515.942987656@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,113 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yifei Liu <yifeliu@cs.stonybrook.edu>
+From: Russell Currey <ruscur@russell.cc>
 
-[ Upstream commit 23892d383bee15b64f5463bd7195615734bb2415 ]
+[ Upstream commit f2c7e3562b4c4f1699acc1538ebf3e75f5cced35 ]
 
-Bug description and fix:
+To support detection of read faults with Radix execute-only memory, the
+vma_is_accessible() check in access_error() (which checks for PROT_NONE)
+was replaced with a check to see if VM_READ was missing, and if so,
+returns true to assert the fault was caused by a bad read.
 
-1. Write data to a file, say all 1s from offset 0 to 16.
+This is incorrect, as it ignores that both VM_WRITE and VM_EXEC imply
+read on powerpc, as defined in protection_map[].  This causes mappings
+containing VM_WRITE or VM_EXEC without VM_READ to misreport the cause of
+page faults, since the MMU is still allowing reads.
 
-2. Truncate the file to a smaller size, say 8 bytes.
+Correct this by restoring the original vma_is_accessible() check for
+PROT_NONE mappings, and adding a separate check for Radix PROT_EXEC-only
+mappings.
 
-3. Write new bytes (say 2s) from an offset past the original size of the
-file, say at offset 20, for 4 bytes.  This is supposed to create a "hole"
-in the file, meaning that the bytes from offset 8 (where it was truncated
-above) up to the new write at offset 20, should all be 0s (zeros).
-
-4. Flush all caches using "echo 3 > /proc/sys/vm/drop_caches" (or unmount
-and remount) the f/s.
-
-5. Check the content of the file.  It is wrong.  The 1s that used to be
-between bytes 9 and 16, before the truncation, have REAPPEARED (they should
-be 0s).
-
-We wrote a script and helper C program to reproduce the bug
-(reproduce_jffs2_write_begin_issue.sh, write_file.c, and Makefile).  We can
-make them available to anyone.
-
-The above example is shown when writing a small file within the same first
-page.  But the bug happens for larger files, as long as steps 1, 2, and 3
-above all happen within the same page.
-
-The problem was traced to the jffs2_write_begin code, where it goes into an
-'if' statement intended to handle writes past the current EOF (i.e., writes
-that may create a hole).  The code computes a 'pageofs' that is the floor
-of the write position (pos), aligned to the page size boundary.  In other
-words, 'pageofs' will never be larger than 'pos'.  The code then sets the
-internal jffs2_raw_inode->isize to the size of max(current inode size,
-pageofs) but that is wrong: the new file size should be the 'pos', which is
-larger than both the current inode size and pageofs.
-
-Similarly, the code incorrectly sets the internal jffs2_raw_inode->dsize to
-the difference between the pageofs minus current inode size; instead it
-should be the current pos minus the current inode size.  Finally,
-inode->i_size was also set incorrectly.
-
-The patch below fixes this bug.  The bug was discovered using a new tool
-for finding f/s bugs using model checking, called MCFS (Model Checking File
-Systems).
-
-Signed-off-by: Yifei Liu <yifeliu@cs.stonybrook.edu>
-Signed-off-by: Erez Zadok <ezk@cs.stonybrook.edu>
-Signed-off-by: Manish Adkar <madkar@cs.stonybrook.edu>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 395cac7752b9 ("powerpc/mm: Support execute-only memory on the Radix MMU")
+Reported-by: Michal Suchánek <msuchanek@suse.de>
+Link: https://lore.kernel.org/r/20230308152702.GR19419@kitsune.suse.cz
+Tested-by: Benjamin Gray <bgray@linux.ibm.com>
+Signed-off-by: Russell Currey <ruscur@russell.cc>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230310050834.63105-1-ruscur@russell.cc
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jffs2/file.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ arch/powerpc/mm/fault.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/fs/jffs2/file.c b/fs/jffs2/file.c
-index ba86acbe12d3f..0479096b96e4c 100644
---- a/fs/jffs2/file.c
-+++ b/fs/jffs2/file.c
-@@ -137,19 +137,18 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
- 	struct jffs2_inode_info *f = JFFS2_INODE_INFO(inode);
- 	struct jffs2_sb_info *c = JFFS2_SB_INFO(inode->i_sb);
- 	pgoff_t index = pos >> PAGE_SHIFT;
--	uint32_t pageofs = index << PAGE_SHIFT;
- 	int ret = 0;
- 
- 	jffs2_dbg(1, "%s()\n", __func__);
- 
--	if (pageofs > inode->i_size) {
--		/* Make new hole frag from old EOF to new page */
-+	if (pos > inode->i_size) {
-+		/* Make new hole frag from old EOF to new position */
- 		struct jffs2_raw_inode ri;
- 		struct jffs2_full_dnode *fn;
- 		uint32_t alloc_len;
- 
--		jffs2_dbg(1, "Writing new hole frag 0x%x-0x%x between current EOF and new page\n",
--			  (unsigned int)inode->i_size, pageofs);
-+		jffs2_dbg(1, "Writing new hole frag 0x%x-0x%x between current EOF and new position\n",
-+			  (unsigned int)inode->i_size, (uint32_t)pos);
- 
- 		ret = jffs2_reserve_space(c, sizeof(ri), &alloc_len,
- 					  ALLOC_NORMAL, JFFS2_SUMMARY_INODE_SIZE);
-@@ -169,10 +168,10 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
- 		ri.mode = cpu_to_jemode(inode->i_mode);
- 		ri.uid = cpu_to_je16(i_uid_read(inode));
- 		ri.gid = cpu_to_je16(i_gid_read(inode));
--		ri.isize = cpu_to_je32(max((uint32_t)inode->i_size, pageofs));
-+		ri.isize = cpu_to_je32((uint32_t)pos);
- 		ri.atime = ri.ctime = ri.mtime = cpu_to_je32(JFFS2_NOW());
- 		ri.offset = cpu_to_je32(inode->i_size);
--		ri.dsize = cpu_to_je32(pageofs - inode->i_size);
-+		ri.dsize = cpu_to_je32((uint32_t)pos - inode->i_size);
- 		ri.csize = cpu_to_je32(0);
- 		ri.compr = JFFS2_COMPR_ZERO;
- 		ri.node_crc = cpu_to_je32(crc32(0, &ri, sizeof(ri)-8));
-@@ -202,7 +201,7 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
- 			goto out_err;
- 		}
- 		jffs2_complete_reservation(c);
--		inode->i_size = pageofs;
-+		inode->i_size = pos;
- 		mutex_unlock(&f->sem);
+diff --git a/arch/powerpc/mm/fault.c b/arch/powerpc/mm/fault.c
+index 2bef19cc1b98c..af46aa88422bf 100644
+--- a/arch/powerpc/mm/fault.c
++++ b/arch/powerpc/mm/fault.c
+@@ -271,11 +271,16 @@ static bool access_error(bool is_write, bool is_exec, struct vm_area_struct *vma
  	}
  
+ 	/*
+-	 * Check for a read fault.  This could be caused by a read on an
+-	 * inaccessible page (i.e. PROT_NONE), or a Radix MMU execute-only page.
++	 * VM_READ, VM_WRITE and VM_EXEC all imply read permissions, as
++	 * defined in protection_map[].  Read faults can only be caused by
++	 * a PROT_NONE mapping, or with a PROT_EXEC-only mapping on Radix.
+ 	 */
+-	if (unlikely(!(vma->vm_flags & VM_READ)))
++	if (unlikely(!vma_is_accessible(vma)))
+ 		return true;
++
++	if (unlikely(radix_enabled() && ((vma->vm_flags & VM_ACCESS_FLAGS) == VM_EXEC)))
++		return true;
++
+ 	/*
+ 	 * We should ideally do the vma pkey access check here. But in the
+ 	 * fault path, handle_mm_fault() also does the same check. To avoid
 -- 
 2.39.2
 
