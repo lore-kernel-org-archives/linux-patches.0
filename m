@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742461C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB3DC433D2;
-	Mon, 20 Mar 2023 15:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326571C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58E9C433D2;
+	Mon, 20 Mar 2023 15:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324950;
-	bh=wsxCaoUF0hhSGtz5fXwqWPw8ulraezA65sGTYhhvfK4=;
+	s=korg; t=1679324953;
+	bh=RCP1RJd5n71d7acfhSvxYuak8hfUndSOVkBNaAzMY2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGzUQfOhQrbsfVgRkIXqdM1VuejtyBV2IyRdYJNNYVGNzOFpifNxljvlUXQHl3Akq
-	 a+x6XgO2sGoFUThi1FbYJVm2xfP/ELieq07b67csqtAXzi+4jeYFCeN5wqoqDAtlmX
-	 aYIXW3FDemztvZ+/Yz0CV0XcHy/VozK/7uiWU9jg=
+	b=o48MHkL+NCGcvexbdwTk5CI482gtB5rkHa73FPEVnm4Z6Z/gt9DU31ODZDRoFFemb
+	 luP0Z7uZmcgilOkkyFf+s1qQCJF2h/i8SrllpAxfoknuyUqiQVFiXWEC04E6MT/kdY
+	 tLmXJTZj3HHYJbOjfHHaFmgTygW/OQ4AF0xS2NXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 5.10 76/99] x86/mm: Fix use of uninitialized buffer in sme_enable()
-Date: Mon, 20 Mar 2023 15:54:54 +0100
-Message-Id: <20230320145446.588074368@linuxfoundation.org>
+	Sherry Sun <sherry.sun@nxp.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 57/99] tty: serial: fsl_lpuart: skip waiting for transmission complete when UARTCTRL_SBK is asserted
+Date: Mon, 20 Mar 2023 15:54:35 +0100
+Message-Id: <20230320145445.771871432@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
 References: <20230320145443.333824603@linuxfoundation.org>
@@ -36,40 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-commit cbebd68f59f03633469f3ecf9bea99cd6cce3854 upstream.
+commit 2411fd94ceaa6e11326e95d6ebf876cbfed28d23 upstream.
 
-cmdline_find_option() may fail before doing any initialization of
-the buffer array. This may lead to unpredictable results when the same
-buffer is used later in calls to strncmp() function.  Fix the issue by
-returning early if cmdline_find_option() returns an error.
+According to LPUART RM, Transmission Complete Flag becomes 0 if queuing
+a break character by writing 1 to CTRL[SBK], so here need to skip
+waiting for transmission complete when UARTCTRL_SBK is asserted,
+otherwise the kernel may stuck here.
+And actually set_termios() adds transmission completion waiting to avoid
+data loss or data breakage when changing the baud rate, but we don't
+need to worry about this when queuing break characters.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: aca20d546214 ("x86/mm: Add support to make use of Secure Memory Encryption")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230306160656.14844-1-n.zhandarovich@fintech.ru
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230223093941.31790-1-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/mem_encrypt_identity.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/serial/fsl_lpuart.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/arch/x86/mm/mem_encrypt_identity.c
-+++ b/arch/x86/mm/mem_encrypt_identity.c
-@@ -586,7 +586,8 @@ void __init sme_enable(struct boot_param
- 	cmdline_ptr = (const char *)((u64)bp->hdr.cmd_line_ptr |
- 				     ((u64)bp->ext_cmd_line_ptr << 32));
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -2159,9 +2159,15 @@ lpuart32_set_termios(struct uart_port *p
+ 	/* update the per-port timeout */
+ 	uart_update_timeout(port, termios->c_cflag, baud);
  
--	cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer));
-+	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0)
-+		return;
+-	/* wait transmit engin complete */
+-	lpuart32_write(&sport->port, 0, UARTMODIR);
+-	lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
++	/*
++	 * LPUART Transmission Complete Flag may never be set while queuing a break
++	 * character, so skip waiting for transmission complete when UARTCTRL_SBK is
++	 * asserted.
++	 */
++	if (!(old_ctrl & UARTCTRL_SBK)) {
++		lpuart32_write(&sport->port, 0, UARTMODIR);
++		lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
++	}
  
- 	if (!strncmp(buffer, cmdline_on, sizeof(buffer)))
- 		sme_me_mask = me_mask;
+ 	/* disable transmit and receive */
+ 	lpuart32_write(&sport->port, old_ctrl & ~(UARTCTRL_TE | UARTCTRL_RE),
 
 
