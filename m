@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4F41C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFAB8C433D2;
-	Mon, 20 Mar 2023 15:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3EE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D19FC433D2;
+	Mon, 20 Mar 2023 15:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324588;
-	bh=dPN4NDuHUJybMvzkSTkgEA0jocHVXO9EQNgBzNl2G9w=;
+	s=korg; t=1679324590;
+	bh=PttVWRAt9WKglCvCl6DcBmILKk/qvRmCBwv3pzOYrqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=juJJT9ypJjF5ksnxXDYlqZDIaB5boSGHJO+k3zYixIpUqaGIK+nYKGBuBnEsCZ7xH
-	 egn2fMjQr6i/fNsbE5/8ZDq/wAoyIaSkhkpC1ju+vV376eKhb1imPrWekv/xatvdNP
-	 VczEXEuNpq7cXaYjOa0YGU7Os6PzOPg6mRRrz0Z0=
+	b=vnunlrm1tt2P2nSq3nbbw+X28CAGyzK3PqqWkwzQgcwF5cQYuppFtdwm2n7A0GuQN
+	 OeERKriCIFiA3n52s0LDh81ryXoNY8axJCHwbKm9Ai/k0YkjTsfA8ebm91D/mJX67c
+	 QrsYAMYyGIyRh36x1azIPdU8WWCF6DfPIRMLZfeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 5.4 57/60] s390/ipl: add missing intersection check to ipl_report handling
-Date: Mon, 20 Mar 2023 15:55:06 +0100
-Message-Id: <20230320145433.293697903@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 22/99] net: phy: smsc: bail out in lan87xx_read_status if genphy_read_status fails
+Date: Mon, 20 Mar 2023 15:54:00 +0100
+Message-Id: <20230320145444.314211438@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
-References: <20230320145430.861072439@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,51 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit a52e5cdbe8016d4e3e6322fd93d71afddb9a5af9 upstream.
+[ Upstream commit c22c3bbf351e4ce905f082649cffa1ff893ea8c1 ]
 
-The code which handles the ipl report is searching for a free location
-in memory where it could copy the component and certificate entries to.
-It checks for intersection between the sections required for the kernel
-and the component/certificate data area, but fails to check whether
-the data structures linking these data areas together intersect.
+If genphy_read_status fails then further access to the PHY may result
+in unpredictable behavior. To prevent this bail out immediately if
+genphy_read_status fails.
 
-This might cause the iplreport copy code to overwrite the iplreport
-itself. Fix this by adding two addtional intersection checks.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 9641b8cc733f ("s390/ipl: read IPL report at early boot")
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4223dbffed9f ("net: phy: smsc: Re-enable EDPD mode for LAN87xx")
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/026aa4f2-36f5-1c10-ab9f-cdb17dda6ac4@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/ipl_report.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/phy/smsc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/s390/boot/ipl_report.c
-+++ b/arch/s390/boot/ipl_report.c
-@@ -57,11 +57,19 @@ repeat:
- 	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && INITRD_START && INITRD_SIZE &&
- 	    intersects(INITRD_START, INITRD_SIZE, safe_addr, size))
- 		safe_addr = INITRD_START + INITRD_SIZE;
-+	if (intersects(safe_addr, size, (unsigned long)comps, comps->len)) {
-+		safe_addr = (unsigned long)comps + comps->len;
-+		goto repeat;
-+	}
- 	for_each_rb_entry(comp, comps)
- 		if (intersects(safe_addr, size, comp->addr, comp->len)) {
- 			safe_addr = comp->addr + comp->len;
- 			goto repeat;
- 		}
-+	if (intersects(safe_addr, size, (unsigned long)certs, certs->len)) {
-+		safe_addr = (unsigned long)certs + certs->len;
-+		goto repeat;
-+	}
- 	for_each_rb_entry(cert, certs)
- 		if (intersects(safe_addr, size, cert->addr, cert->len)) {
- 			safe_addr = cert->addr + cert->len;
+diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
+index caf7291ffaf83..b67de3f9ef186 100644
+--- a/drivers/net/phy/smsc.c
++++ b/drivers/net/phy/smsc.c
+@@ -181,8 +181,11 @@ static int lan95xx_config_aneg_ext(struct phy_device *phydev)
+ static int lan87xx_read_status(struct phy_device *phydev)
+ {
+ 	struct smsc_phy_priv *priv = phydev->priv;
++	int err;
+ 
+-	int err = genphy_read_status(phydev);
++	err = genphy_read_status(phydev);
++	if (err)
++		return err;
+ 
+ 	if (!phydev->link && priv->energy_enable) {
+ 		/* Disable EDPD to wake up PHY */
+-- 
+2.39.2
+
 
 
