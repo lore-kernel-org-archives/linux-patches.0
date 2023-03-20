@@ -1,37 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA1D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7620C433EF;
-	Mon, 20 Mar 2023 15:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB371C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B77CC4339B;
+	Mon, 20 Mar 2023 15:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325822;
-	bh=RTQqVSWx6IE27E7U9ID+JWsW+NdwyRMaZL3l3SDcBLI=;
+	s=korg; t=1679325825;
+	bh=uq28ypyHXCnhKkAPCWvExcHXdkwRSN6lB7C39oNqNDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ycq+nFw9RW9LOTX1EH3vtWzNXFuXDxfhTJyY9cChiS6J5YxSc3TIzKZr3ZHYJ5qch
-	 vvII/0+TayJuFNMnwLi1ShAzsaCUzXO1EPncSgizy3dBB6BJyDw0SCoYzpMg5UCowB
-	 /nSu5Af5DezetGonhVqdTJBFlfBTQFGtWS3tZ3bE=
+	b=iaHlZeeSrnHmg+5erxqEAtKKNd9DKWQ8nKaeYserp3D1F/d9270uo6yLXFsSX5Ajb
+	 puDtFr+/g92lEnxwzdspE//KeSX9FLcxIiUJi9IiVpvGvkW0+V7B1WTleKHf816SIq
+	 6HpxCSdshoCUljepFGjxC7w4+lOBTvs1OthGuWPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	"HeungJun, Kim" <riverful.kim@samsung.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
-	Mauro Carvalho Chehab <mchehab@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	HeungJun
-Subject: [PATCH 6.2 107/211] media: m5mols: fix off-by-one loop termination error
-Date: Mon, 20 Mar 2023 15:54:02 +0100
-Message-Id: <20230320145517.767465808@linuxfoundation.org>
+	Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 149/198] KVM: nVMX: add missing consistency checks for CR0 and CR4
+Date: Mon, 20 Mar 2023 15:54:47 +0100
+Message-Id: <20230320145513.800963566@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -42,62 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
+commit 112e66017bff7f2837030f34c2bc19501e9212d5 upstream.
 
-The __find_restype() function loops over the m5mols_default_ffmt[]
-array, and the termination condition ends up being wrong: instead of
-stopping when the iterator becomes the size of the array it traverses,
-it stops after it has already overshot the array.
+The effective values of the guest CR0 and CR4 registers may differ from
+those included in the VMCS12.  In particular, disabling EPT forces
+CR4.PAE=1 and disabling unrestricted guest mode forces CR0.PG=CR0.PE=1.
 
-Now, in practice this doesn't likely matter, because the code will
-always find the entry it looks for, and will thus return early and never
-hit that last extra iteration.
+Therefore, checks on these bits cannot be delegated to the processor
+and must be performed by KVM.
 
-But it turns out that clang will unroll the loop fully, because it has
-only two iterations (well, three due to the off-by-one bug), and then
-clang will end up just giving up in the middle of the loop unrolling
-when it notices that the code walks past the end of the array.
-
-And that made 'objtool' very unhappy indeed, because the generated code
-just falls off the edge of the universe, and ends up falling through to
-the next function, causing this warning:
-
-   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
-
-Fix the loop ending condition.
-
-Reported-by: Jens Axboe <axboe@kernel.dk>
-Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
-Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
-Cc: HeungJun, Kim <riverful.kim@samsung.com>
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
-index 2b01873ba0db5..5c2336f318d9a 100644
---- a/drivers/media/i2c/m5mols/m5mols_core.c
-+++ b/drivers/media/i2c/m5mols/m5mols_core.c
-@@ -488,7 +488,7 @@ static enum m5mols_restype __find_restype(u32 code)
- 	do {
- 		if (code == m5mols_default_ffmt[type].code)
- 			return type;
--	} while (type++ != SIZE_DEFAULT_FFMT);
-+	} while (++type != SIZE_DEFAULT_FFMT);
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -2999,7 +2999,7 @@ static int nested_vmx_check_guest_state(
+ 					struct vmcs12 *vmcs12,
+ 					enum vm_entry_failure_code *entry_failure_code)
+ {
+-	bool ia32e;
++	bool ia32e = !!(vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE);
  
- 	return 0;
- }
--- 
-2.39.2
-
+ 	*entry_failure_code = ENTRY_FAIL_DEFAULT;
+ 
+@@ -3025,6 +3025,13 @@ static int nested_vmx_check_guest_state(
+ 					   vmcs12->guest_ia32_perf_global_ctrl)))
+ 		return -EINVAL;
+ 
++	if (CC((vmcs12->guest_cr0 & (X86_CR0_PG | X86_CR0_PE)) == X86_CR0_PG))
++		return -EINVAL;
++
++	if (CC(ia32e && !(vmcs12->guest_cr4 & X86_CR4_PAE)) ||
++	    CC(ia32e && !(vmcs12->guest_cr0 & X86_CR0_PG)))
++		return -EINVAL;
++
+ 	/*
+ 	 * If the load IA32_EFER VM-entry control is 1, the following checks
+ 	 * are performed on the field for the IA32_EFER MSR:
+@@ -3036,7 +3043,6 @@ static int nested_vmx_check_guest_state(
+ 	 */
+ 	if (to_vmx(vcpu)->nested.nested_run_pending &&
+ 	    (vmcs12->vm_entry_controls & VM_ENTRY_LOAD_IA32_EFER)) {
+-		ia32e = (vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE) != 0;
+ 		if (CC(!kvm_valid_efer(vcpu, vmcs12->guest_ia32_efer)) ||
+ 		    CC(ia32e != !!(vmcs12->guest_ia32_efer & EFER_LMA)) ||
+ 		    CC(((vmcs12->guest_cr0 & X86_CR0_PG) &&
 
 
