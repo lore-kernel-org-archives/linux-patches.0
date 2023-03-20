@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41401C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3958EC433D2;
-	Mon, 20 Mar 2023 15:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742461C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB3DC433D2;
+	Mon, 20 Mar 2023 15:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324947;
-	bh=S2b6AX0vXQ4ZAW1SspSCFbw7GcHIXNPPW6vsXxINsLU=;
+	s=korg; t=1679324950;
+	bh=wsxCaoUF0hhSGtz5fXwqWPw8ulraezA65sGTYhhvfK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBVBZDte0OTQeEOXga37fxUIZi9E9D3zZ3DPgCuFb7a0uQnkgEowx22rvWF79qZEs
-	 UxyzR3lpVw6VGcrB7GNfIjb/GPJHRiU8XjIqhROsJ57BracobKNwQHaor+5iSS5UK/
-	 wtWJbbhQ9Cgqh4G9hqGiXNJFSpcHq5HScrGOJBXM=
+	b=oGzUQfOhQrbsfVgRkIXqdM1VuejtyBV2IyRdYJNNYVGNzOFpifNxljvlUXQHl3Akq
+	 a+x6XgO2sGoFUThi1FbYJVm2xfP/ELieq07b67csqtAXzi+4jeYFCeN5wqoqDAtlmX
+	 aYIXW3FDemztvZ+/Yz0CV0XcHy/VozK/7uiWU9jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/115] bonding: restore IFF_MASTER/SLAVE flags on bond enslave ether type change
-Date: Mon, 20 Mar 2023 15:54:23 +0100
-Message-Id: <20230320145451.552929366@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 5.10 76/99] x86/mm: Fix use of uninitialized buffer in sme_enable()
+Date: Mon, 20 Mar 2023 15:54:54 +0100
+Message-Id: <20230320145446.588074368@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,79 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 9ec7eb60dcbcb6c41076defbc5df7bbd95ceaba5 ]
+commit cbebd68f59f03633469f3ecf9bea99cd6cce3854 upstream.
 
-Add bond_ether_setup helper which is used to fix ether_setup() calls in the
-bonding driver. It takes care of both IFF_MASTER and IFF_SLAVE flags, the
-former is always restored and the latter only if it was set.
-If the bond enslaves non-ARPHRD_ETHER device (changes its type), then
-releases it and enslaves ARPHRD_ETHER device (changes back) then we
-use ether_setup() to restore the bond device type but it also resets its
-flags and removes IFF_MASTER and IFF_SLAVE[1]. Use the bond_ether_setup
-helper to restore both after such transition.
+cmdline_find_option() may fail before doing any initialization of
+the buffer array. This may lead to unpredictable results when the same
+buffer is used later in calls to strncmp() function.  Fix the issue by
+returning early if cmdline_find_option() returns an error.
 
-[1] reproduce (nlmon is non-ARPHRD_ETHER):
- $ ip l add nlmon0 type nlmon
- $ ip l add bond2 type bond mode active-backup
- $ ip l set nlmon0 master bond2
- $ ip l set nlmon0 nomaster
- $ ip l add bond1 type bond
- (we use bond1 as ARPHRD_ETHER device to restore bond2's mode)
- $ ip l set bond1 master bond2
- $ ip l sh dev bond2
- 37: bond2: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether be:d7:c5:40:5b:cc brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 68 maxmtu 1500
- (notice bond2's IFF_MASTER is missing)
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Fixes: e36b9d16c6a6 ("bonding: clean muticast addresses when device changes type")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: aca20d546214 ("x86/mm: Add support to make use of Secure Memory Encryption")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230306160656.14844-1-n.zhandarovich@fintech.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ arch/x86/mm/mem_encrypt_identity.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 456298919d541..b2db30d5f1f45 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1744,6 +1744,19 @@ void bond_lower_state_changed(struct slave *slave)
- 		slave_err(bond_dev, slave_dev, "Error: %s\n", errmsg);	\
- } while (0)
+--- a/arch/x86/mm/mem_encrypt_identity.c
++++ b/arch/x86/mm/mem_encrypt_identity.c
+@@ -586,7 +586,8 @@ void __init sme_enable(struct boot_param
+ 	cmdline_ptr = (const char *)((u64)bp->hdr.cmd_line_ptr |
+ 				     ((u64)bp->ext_cmd_line_ptr << 32));
  
-+/* The bonding driver uses ether_setup() to convert a master bond device
-+ * to ARPHRD_ETHER, that resets the target netdevice's flags so we always
-+ * have to restore the IFF_MASTER flag, and only restore IFF_SLAVE if it was set
-+ */
-+static void bond_ether_setup(struct net_device *bond_dev)
-+{
-+	unsigned int slave_flag = bond_dev->flags & IFF_SLAVE;
-+
-+	ether_setup(bond_dev);
-+	bond_dev->flags |= IFF_MASTER | slave_flag;
-+	bond_dev->priv_flags &= ~IFF_TX_SKB_SHARING;
-+}
-+
- /* enslave device <slave> to bond device <master> */
- int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 		 struct netlink_ext_ack *extack)
-@@ -1835,10 +1848,8 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+-	cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer));
++	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0)
++		return;
  
- 			if (slave_dev->type != ARPHRD_ETHER)
- 				bond_setup_by_slave(bond_dev, slave_dev);
--			else {
--				ether_setup(bond_dev);
--				bond_dev->priv_flags &= ~IFF_TX_SKB_SHARING;
--			}
-+			else
-+				bond_ether_setup(bond_dev);
- 
- 			call_netdevice_notifiers(NETDEV_POST_TYPE_CHANGE,
- 						 bond_dev);
--- 
-2.39.2
-
+ 	if (!strncmp(buffer, cmdline_on, sizeof(buffer)))
+ 		sme_me_mask = me_mask;
 
 
