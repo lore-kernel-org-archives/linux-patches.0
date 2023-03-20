@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680CE1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE99CC433D2;
-	Mon, 20 Mar 2023 15:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEA11C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9694EC433EF;
+	Mon, 20 Mar 2023 15:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325496;
-	bh=S8qq2MxWljKaNAGo3TXAwWcx4RJOWQ3S4da2Wp3K37E=;
+	s=korg; t=1679325499;
+	bh=yXkIvordsG0FbWFwnoOrwH3060OH0Ok0UgCYxJpM5ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UOL4bAquSazn0TQrZBTbH16uMYoVPAnrM1oVN/ebgJG2r4P8lb9e01iOlwWKh0Y/z
-	 Be29luf5E1KTevHcEOO1sC8sfk4mJFglV/ftwj+H/TjLT7KTq/Lsy1GhCj4TQWa6/O
-	 sGId7Nb2gy4fpNPoU+4nwF+ZQyNmELvKtsPH8X2c=
+	b=S+nOvz8P4qo1+8I1k12C9NIfBUch89CVBRwdjWtmZr/9ioAL/nANRq5o23JiC7lzd
+	 Tv6Mvx2Lkr5+V8ZFCeUi20XcoTs5pZ9SEqkRbJRNk3uKF8Or65R/mVvpBvmDZr+uHb
+	 rM8+SM+Rp6Z6xocwCN7G6Y99iS4VPMN12jRnlQpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/198] bonding: restore IFF_MASTER/SLAVE flags on bond enslave ether type change
-Date: Mon, 20 Mar 2023 15:53:49 +0100
-Message-Id: <20230320145511.352881898@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>
+Subject: [PATCH 5.15 111/115] io_uring: avoid null-ptr-deref in io_arm_poll_handler
+Date: Mon, 20 Mar 2023 15:55:23 +0100
+Message-Id: <20230320145454.109386310@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,79 +33,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 9ec7eb60dcbcb6c41076defbc5df7bbd95ceaba5 ]
+No upstream commit exists for this commit.
 
-Add bond_ether_setup helper which is used to fix ether_setup() calls in the
-bonding driver. It takes care of both IFF_MASTER and IFF_SLAVE flags, the
-former is always restored and the latter only if it was set.
-If the bond enslaves non-ARPHRD_ETHER device (changes its type), then
-releases it and enslaves ARPHRD_ETHER device (changes back) then we
-use ether_setup() to restore the bond device type but it also resets its
-flags and removes IFF_MASTER and IFF_SLAVE[1]. Use the bond_ether_setup
-helper to restore both after such transition.
+The issue was introduced with backporting upstream commit c16bda37594f
+("io_uring/poll: allow some retries for poll triggering spuriously").
 
-[1] reproduce (nlmon is non-ARPHRD_ETHER):
- $ ip l add nlmon0 type nlmon
- $ ip l add bond2 type bond mode active-backup
- $ ip l set nlmon0 master bond2
- $ ip l set nlmon0 nomaster
- $ ip l add bond1 type bond
- (we use bond1 as ARPHRD_ETHER device to restore bond2's mode)
- $ ip l set bond1 master bond2
- $ ip l sh dev bond2
- 37: bond2: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether be:d7:c5:40:5b:cc brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 68 maxmtu 1500
- (notice bond2's IFF_MASTER is missing)
+Memory allocation can possibly fail causing invalid pointer be
+dereferenced just before comparing it to NULL value.
 
-Fixes: e36b9d16c6a6 ("bonding: clean muticast addresses when device changes type")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Move the pointer check in proper place (upstream has the similar location
+of the check). In case the request has REQ_F_POLLED flag up, apoll can't
+be NULL so no need to check there.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ io_uring/io_uring.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index fce9301c8ebbc..091c430547e7c 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1774,6 +1774,19 @@ void bond_lower_state_changed(struct slave *slave)
- 		slave_err(bond_dev, slave_dev, "Error: %s\n", errmsg);	\
- } while (0)
- 
-+/* The bonding driver uses ether_setup() to convert a master bond device
-+ * to ARPHRD_ETHER, that resets the target netdevice's flags so we always
-+ * have to restore the IFF_MASTER flag, and only restore IFF_SLAVE if it was set
-+ */
-+static void bond_ether_setup(struct net_device *bond_dev)
-+{
-+	unsigned int slave_flag = bond_dev->flags & IFF_SLAVE;
-+
-+	ether_setup(bond_dev);
-+	bond_dev->flags |= IFF_MASTER | slave_flag;
-+	bond_dev->priv_flags &= ~IFF_TX_SKB_SHARING;
-+}
-+
- /* enslave device <slave> to bond device <master> */
- int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 		 struct netlink_ext_ack *extack)
-@@ -1865,10 +1878,8 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 
- 			if (slave_dev->type != ARPHRD_ETHER)
- 				bond_setup_by_slave(bond_dev, slave_dev);
--			else {
--				ether_setup(bond_dev);
--				bond_dev->priv_flags &= ~IFF_TX_SKB_SHARING;
--			}
-+			else
-+				bond_ether_setup(bond_dev);
- 
- 			call_netdevice_notifiers(NETDEV_POST_TYPE_CHANGE,
- 						 bond_dev);
--- 
-2.39.2
-
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -5937,10 +5937,10 @@ static int io_arm_poll_handler(struct io
+ 		}
+ 	} else {
+ 		apoll = kmalloc(sizeof(*apoll), GFP_ATOMIC);
++		if (unlikely(!apoll))
++			return IO_APOLL_ABORTED;
+ 		apoll->poll.retries = APOLL_MAX_RETRY;
+ 	}
+-	if (unlikely(!apoll))
+-		return IO_APOLL_ABORTED;
+ 	apoll->double_poll = NULL;
+ 	req->apoll = apoll;
+ 	req->flags |= REQ_F_POLLED;
 
 
