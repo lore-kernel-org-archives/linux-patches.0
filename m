@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42111C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D7DC433EF;
-	Mon, 20 Mar 2023 15:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769F81C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED353C433EF;
+	Mon, 20 Mar 2023 15:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325380;
-	bh=XNO6FNRo6VpeSNRFLv1P8DqjJQ6kZcfjL15csuKJjwI=;
+	s=korg; t=1679325383;
+	bh=nQJufFVZYqWvFqMH4QmXo/vuCuUXUbfTE2O5FfiThXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ui/mcQjF5gQpIh8h69oGkvcRbxl1E5EUzg/K8kakntxZPFrOGp6dKYjS+la4dAKrv
-	 yymnaVFBnyzbpLQ0r3cOhzv4X/jznCnDpUfuICQUpMzLo+uMgRSl4KHRymgnqj8NDN
-	 dNCtCWlgT8hy+Soy9ZCRj6PQdXviUI4hhwErXxO0=
+	b=LGFj1N4COSdWvkN1gqtDaZHqbj7mPQ61/27qd9wcqfNK2AwRD4QSIygsDmT82VZAN
+	 yt0KrKvPSCYubW+foa1ionvcb3Jq0T2hz5eLFGSMwfkMcjN1YIEqODIl18as6sWrho
+	 N9oMFAifq+S1ayayGsshBQHP1pEUk8x35eE+Kr8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/198] net: dsa: dont error out when drivers return ETH_DATA_LEN in .port_max_mtu()
-Date: Mon, 20 Mar 2023 15:53:36 +0100
-Message-Id: <20230320145510.800895802@linuxfoundation.org>
+	Elmer Miroslav Mosher Golovin <miroslav@mishamosher.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 5.15 098/115] nvme-pci: add NVME_QUIRK_BOGUS_NID for Netac NV3000
+Date: Mon, 20 Mar 2023 15:55:10 +0100
+Message-Id: <20230320145453.530300254@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,81 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Elmer Miroslav Mosher Golovin <miroslav@mishamosher.com>
 
-[ Upstream commit 636e8adf7878eab3614250234341bde45537f47a ]
+commit 9630d80655bfe7e62e4aff2889dc4eae7ceeb887 upstream.
 
-Currently, when dsa_slave_change_mtu() is called on a user port where
-dev->max_mtu is 1500 (as returned by ds->ops->port_max_mtu()), the code
-will stumble upon this check:
+Added a quirk to fix the Netac NV3000 SSD reporting duplicate NGUIDs.
 
-	if (new_master_mtu > mtu_limit)
-		return -ERANGE;
-
-because new_master_mtu is adjusted for the tagger overhead but mtu_limit
-is not.
-
-But it would be good if the logic went through, for example if the DSA
-master really depends on an MTU adjustment to accept DSA-tagged frames.
-
-To make the code pass through the check, we need to adjust mtu_limit for
-the overhead as well, if the minimum restriction was caused by the DSA
-user port's MTU (dev->max_mtu). A DSA user port MTU and a DSA master MTU
-are always offset by the protocol overhead.
-
-Currently no drivers return 1500 .port_max_mtu(), but this is only
-temporary and a bug in itself - mv88e6xxx should have done that, but
-since commit b9c587fed61c ("dsa: mv88e6xxx: Include tagger overhead when
-setting MTU for DSA and CPU ports") it no longer does. This is a
-preparation for fixing that.
-
-Fixes: bfcb813203e6 ("net: dsa: configure the MTU for switch ports")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Elmer Miroslav Mosher Golovin <miroslav@mishamosher.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dsa/slave.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/nvme/host/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/dsa/slave.c b/net/dsa/slave.c
-index a9fde48cffd43..5fe075bf479ec 100644
---- a/net/dsa/slave.c
-+++ b/net/dsa/slave.c
-@@ -1852,6 +1852,7 @@ int dsa_slave_change_mtu(struct net_device *dev, int new_mtu)
- 	int new_master_mtu;
- 	int old_master_mtu;
- 	int mtu_limit;
-+	int overhead;
- 	int cpu_mtu;
- 	int err;
- 
-@@ -1880,9 +1881,10 @@ int dsa_slave_change_mtu(struct net_device *dev, int new_mtu)
- 			largest_mtu = slave_mtu;
- 	}
- 
--	mtu_limit = min_t(int, master->max_mtu, dev->max_mtu);
-+	overhead = dsa_tag_protocol_overhead(cpu_dp->tag_ops);
-+	mtu_limit = min_t(int, master->max_mtu, dev->max_mtu + overhead);
- 	old_master_mtu = master->mtu;
--	new_master_mtu = largest_mtu + dsa_tag_protocol_overhead(cpu_dp->tag_ops);
-+	new_master_mtu = largest_mtu + overhead;
- 	if (new_master_mtu > mtu_limit)
- 		return -ERANGE;
- 
-@@ -1917,8 +1919,7 @@ int dsa_slave_change_mtu(struct net_device *dev, int new_mtu)
- 
- out_port_failed:
- 	if (new_master_mtu != old_master_mtu)
--		dsa_port_mtu_change(cpu_dp, old_master_mtu -
--				    dsa_tag_protocol_overhead(cpu_dp->tag_ops));
-+		dsa_port_mtu_change(cpu_dp, old_master_mtu - overhead);
- out_cpu_failed:
- 	if (new_master_mtu != old_master_mtu)
- 		dev_set_mtu(master, old_master_mtu);
--- 
-2.39.2
-
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3378,6 +3378,8 @@ static const struct pci_device_id nvme_i
+ 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
+ 	{ PCI_DEVICE(0x2646, 0x501E),   /* KINGSTON OM3PGP4xxxxQ OS21011 NVMe SSD */
+ 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
++	{ PCI_DEVICE(0x1f40, 0x1202),   /* Netac Technologies Co. NV3000 NVMe SSD */
++		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1f40, 0x5236),   /* Netac Technologies Co. NV7000 NVMe SSD */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1e4B, 0x1001),   /* MAXIO MAP1001 */
 
 
