@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B0C1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD45C433D2;
-	Mon, 20 Mar 2023 15:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9933F1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19176C433EF;
+	Mon, 20 Mar 2023 15:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325160;
-	bh=Hr9VKbCEh5dpIQ9mXWc9ZNs6Ogo1h4vKSR3ROQm6D60=;
+	s=korg; t=1679325166;
+	bh=ZemQgRVVysq2nAzoPbiwRns+Dlk/fzU8maTMni9HQqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ihu0bfqYYdV0fNo0pBIAKuQstuhe11YZHeKJ6KTd8xpbyukb9GYFY2B4jqFQNnpRd
-	 QrTFPAxeBFtJgB6PsenlQhJQ5cvzPQRkitLDffIms6hBpCJyjmgo/atiSS2petYibY
-	 NxDZgpzH6Fq9WZ+3RiI3MRNutG7JGBl+QJSXaCag=
+	b=Edw/snxfByjAU+tgql7ei/xUJI6U2JGsE1UTYc7pBCYfmQReDh6YwnD0h9YvSV0Jm
+	 6IhOwFyONwFWelQluKwqYWp5kw4lEBvjJS2jTkIbmwAgCJxTNJ+1cCISm5Hmlus7N0
+	 36koUV9LK3ng+4GqSSJeDIUh/Oq0Dn6pc0PMCnAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 5.10 96/99] fs: use consistent setgid checks in is_sxid()
-Date: Mon, 20 Mar 2023 15:55:14 +0100
-Message-Id: <20230320145447.445372729@linuxfoundation.org>
+	Jeremy Sowden <jeremy@azazel.net>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 028/198] netfilter: nft_redir: correct value of inet type `.maxattrs`
+Date: Mon, 20 Mar 2023 15:52:46 +0100
+Message-Id: <20230320145508.675409857@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Brauner <brauner@kernel.org>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-commit 8d84e39d76bd83474b26cb44f4b338635676e7e8 upstream.
+[ Upstream commit 493924519b1fe3faab13ee621a43b0d0939abab1 ]
 
-Now that we made the VFS setgid checking consistent an inode can't be
-marked security irrelevant even if the setgid bit is still set. Make
-this function consistent with all other helpers.
+`nft_redir_inet_type.maxattrs` was being set, presumably because of a
+cut-and-paste error, to `NFTA_MASQ_MAX`, instead of `NFTA_REDIR_MAX`.
 
-Note that enforcing consistent setgid stripping checks for file
-modification and mode- and ownership changes will cause the setgid bit
-to be lost in more cases than useed to be the case. If an unprivileged
-user wrote to a non-executable setgid file that they don't have
-privilege over the setgid bit will be dropped. This will lead to
-temporary failures in some xfstests until they have been updated.
-
-Reported-by: Miklos Szeredi <miklos@szeredi.hu>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 63ce3940f3ab ("netfilter: nft_redir: add inet support")
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fs.h |    2 +-
+ net/netfilter/nft_redir.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3408,7 +3408,7 @@ int __init get_filesystem_list(char *buf
+diff --git a/net/netfilter/nft_redir.c b/net/netfilter/nft_redir.c
+index 7ae330d75ac7b..5ed64b2bd15e8 100644
+--- a/net/netfilter/nft_redir.c
++++ b/net/netfilter/nft_redir.c
+@@ -235,7 +235,7 @@ static struct nft_expr_type nft_redir_inet_type __read_mostly = {
+ 	.name		= "redir",
+ 	.ops		= &nft_redir_inet_ops,
+ 	.policy		= nft_redir_policy,
+-	.maxattr	= NFTA_MASQ_MAX,
++	.maxattr	= NFTA_REDIR_MAX,
+ 	.owner		= THIS_MODULE,
+ };
  
- static inline bool is_sxid(umode_t mode)
- {
--	return (mode & S_ISUID) || ((mode & S_ISGID) && (mode & S_IXGRP));
-+	return mode & (S_ISUID | S_ISGID);
- }
- 
- static inline int check_sticky(struct inode *dir, struct inode *inode)
+-- 
+2.39.2
+
 
 
