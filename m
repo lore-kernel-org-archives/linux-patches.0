@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF74E1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDD5C4339B;
-	Mon, 20 Mar 2023 14:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD161C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1758C433EF;
+	Mon, 20 Mar 2023 14:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324386;
-	bh=+uPd2ceKlMvRM79q6r31d+y2t0lNj33XiVpjEp+jsTw=;
+	s=korg; t=1679324389;
+	bh=LPTqG6PJB4W/JqXy0gnQJ4ohULvRZavu9EKEHp+2QRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vumYuTgv6hcNI/rBewGNyAws9BT4+yS5isiaazzpQolpRHKGfCODFodx0ylGtGC9o
-	 hzUdY7gVt1HKoT0hfthG4FbhhUYISgxwS7vyNyewnoW+NF3pvWv4pa6j8dJu2OMblP
-	 oMwpoxWSBu5kqCjv8YhyGlzZ9UOTQWlj5KHmm+7s=
+	b=Ex63RgoR/JGAqjsGjTpDpW1O3JIyJM2h19xlCW4iRGzPI9uLK60vqNFy5sAO0aI/3
+	 iQr+hh+d82VRHFfA1yUfNSVPNX1TuUAaFRV8B9CQGyJDmGfx+rEERAGTMOsJ2gSbYE
+	 gBGfa+rQwZ+stAawW7Ue1ckA/x2+WQPzV6rQNiys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Szymon Heidrich <szymon.heidrich@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 09/36] nfc: st-nci: Fix use after free bug in ndlc_remove due to race condition
-Date: Mon, 20 Mar 2023 15:54:35 +0100
-Message-Id: <20230320145424.590518098@linuxfoundation.org>
+Subject: [PATCH 4.19 10/36] net: usb: smsc75xx: Limit packet length to skb->len
+Date: Mon, 20 Mar 2023 15:54:36 +0100
+Message-Id: <20230320145424.630143213@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -36,69 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Szymon Heidrich <szymon.heidrich@gmail.com>
 
-[ Upstream commit 5000fe6c27827a61d8250a7e4a1d26c3298ef4f6 ]
+[ Upstream commit d8b228318935044dafe3a5bc07ee71a1f1424b8d ]
 
-This bug influences both st_nci_i2c_remove and st_nci_spi_remove.
-Take st_nci_i2c_remove as an example.
+Packet length retrieved from skb data may be larger than
+the actual socket buffer length (up to 9026 bytes). In such
+case the cloned skb passed up the network stack will leak
+kernel memory contents.
 
-In st_nci_i2c_probe, it called ndlc_probe and bound &ndlc->sm_work
-with llt_ndlc_sm_work.
-
-When it calls ndlc_recv or timeout handler, it will finally call
-schedule_work to start the work.
-
-When we call st_nci_i2c_remove to remove the driver, there
-may be a sequence as follows:
-
-Fix it by finishing the work before cleanup in ndlc_remove
-
-CPU0                  CPU1
-
-                    |llt_ndlc_sm_work
-st_nci_i2c_remove   |
-  ndlc_remove       |
-     st_nci_remove  |
-     nci_free_device|
-     kfree(ndev)    |
-//free ndlc->ndev   |
-                    |llt_ndlc_rcv_queue
-                    |nci_recv_frame
-                    |//use ndlc->ndev
-
-Fixes: 35630df68d60 ("NFC: st21nfcb: Add driver for STMicroelectronics ST21NFCB NFC chip")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230312160837.2040857-1-zyytlz.wz@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d0cad871703b ("smsc75xx: SMSC LAN75xx USB gigabit ethernet adapter driver")
+Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/st-nci/ndlc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/usb/smsc75xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/st-nci/ndlc.c b/drivers/nfc/st-nci/ndlc.c
-index f26d938d240f0..12d73f9dbe9f3 100644
---- a/drivers/nfc/st-nci/ndlc.c
-+++ b/drivers/nfc/st-nci/ndlc.c
-@@ -297,13 +297,15 @@ EXPORT_SYMBOL(ndlc_probe);
- 
- void ndlc_remove(struct llt_ndlc *ndlc)
- {
--	st_nci_remove(ndlc->ndev);
--
- 	/* cancel timers */
- 	del_timer_sync(&ndlc->t1_timer);
- 	del_timer_sync(&ndlc->t2_timer);
- 	ndlc->t2_active = false;
- 	ndlc->t1_active = false;
-+	/* cancel work */
-+	cancel_work_sync(&ndlc->sm_work);
-+
-+	st_nci_remove(ndlc->ndev);
- 
- 	skb_queue_purge(&ndlc->rcv_q);
- 	skb_queue_purge(&ndlc->send_q);
+diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
+index 8b9fd4e071f3d..b4705dee2b751 100644
+--- a/drivers/net/usb/smsc75xx.c
++++ b/drivers/net/usb/smsc75xx.c
+@@ -2225,7 +2225,8 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 				dev->net->stats.rx_frame_errors++;
+ 		} else {
+ 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
+-			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
++			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
++				     size > skb->len)) {
+ 				netif_dbg(dev, rx_err, dev->net,
+ 					  "size err rx_cmd_a=0x%08x\n",
+ 					  rx_cmd_a);
 -- 
 2.39.2
 
