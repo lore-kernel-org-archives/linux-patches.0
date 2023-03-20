@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DE21C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EA2C433D2;
-	Mon, 20 Mar 2023 15:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEE61C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3439C433D2;
+	Mon, 20 Mar 2023 15:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324997;
-	bh=trcuAFL+iYqsk1UO+RkcWXqaixLZDg6chV5YMAEqUTw=;
+	s=korg; t=1679325000;
+	bh=qwzzc7IUl5Ap/rYytx2BqjtS/FBf0q1OKaIPdxZcs/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CygQATVGmEpymx+2/Ai+OG+jDGGiWAr7e1tXVH2cO8Jqcr/F1l7CaxlmY9DHwMmms
-	 H9fXN3k0t+zZvpSttPrvEoHcWDPziy4RBXKYuYQB1vfgSGGfcm3Si2N7QhatMlIGiv
-	 3hvy/ST8N/l9CBADUWixIIch98W4zgZ4EV4b5PN0=
+	b=fB+q2ffhNjDfDyW7NTRXCHq+rWG6G9SsQpge5VqxPRtRbGQ+LrBvMXJtUXbuSB4Hw
+	 I/kNg6clw/RzgfZYIYbkvauh+SQWmqS7PBcAueGVr81cTciuT3CkS5AxaVVDip7+Vh
+	 jXQWY+lbZGyM0KpLj4JmR6iyiQeex6jlRIcLZBgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/198] tcp: tcp_make_synack() can be called from process context
-Date: Mon, 20 Mar 2023 15:52:50 +0100
-Message-Id: <20230320145508.832685313@linuxfoundation.org>
+	Ravi Kishore Koppuravuri <ravi.kishore.koppuravuri@intel.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.10 82/99] PCI/DPC: Await readiness of secondary bus after reset
+Date: Mon, 20 Mar 2023 15:55:00 +0100
+Message-Id: <20230320145446.853479416@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,64 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Breno Leitao <leitao@debian.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit bced3f7db95ff2e6ca29dc4d1c9751ab5e736a09 ]
+commit 53b54ad074de1896f8b021615f65b27f557ce874 upstream.
 
-tcp_rtx_synack() now could be called in process context as explained in
-0a375c822497 ("tcp: tcp_rtx_synack() can be called from process
-context").
+pci_bridge_wait_for_secondary_bus() is called after a Secondary Bus
+Reset, but not after a DPC-induced Hot Reset.
 
-tcp_rtx_synack() might call tcp_make_synack(), which will touch per-CPU
-variables with preemption enabled. This causes the following BUG:
+As a result, the delays prescribed by PCIe r6.0 sec 6.6.1 are not
+observed and devices on the secondary bus may be accessed before
+they're ready.
 
-    BUG: using __this_cpu_add() in preemptible [00000000] code: ThriftIO1/5464
-    caller is tcp_make_synack+0x841/0xac0
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x10d/0x1a0
-     check_preemption_disabled+0x104/0x110
-     tcp_make_synack+0x841/0xac0
-     tcp_v6_send_synack+0x5c/0x450
-     tcp_rtx_synack+0xeb/0x1f0
-     inet_rtx_syn_ack+0x34/0x60
-     tcp_check_req+0x3af/0x9e0
-     tcp_rcv_state_process+0x59b/0x2030
-     tcp_v6_do_rcv+0x5f5/0x700
-     release_sock+0x3a/0xf0
-     tcp_sendmsg+0x33/0x40
-     ____sys_sendmsg+0x2f2/0x490
-     __sys_sendmsg+0x184/0x230
-     do_syscall_64+0x3d/0x90
+One affected device is Intel's Ponte Vecchio HPC GPU.  It comprises a
+PCIe switch whose upstream port is not immediately ready after reset.
+Because its config space is restored too early, it remains in
+D0uninitialized, its subordinate devices remain inaccessible and DPC
+recovery fails with messages such as:
 
-Avoid calling __TCP_INC_STATS() with will touch per-cpu variables. Use
-TCP_INC_STATS() which is safe to be called from context switch.
+  i915 0000:8c:00.0: can't change power state from D3cold to D0 (config space inaccessible)
+  intel_vsec 0000:8e:00.1: can't change power state from D3cold to D0 (config space inaccessible)
+  pcieport 0000:89:02.0: AER: device recovery failed
 
-Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230308190745.780221-1-leitao@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix it.
+
+Link: https://lore.kernel.org/r/9f5ff00e1593d8d9a4b452398b98aa14d23fca11.1673769517.git.lukas@wunner.de
+Tested-by: Ravi Kishore Koppuravuri <ravi.kishore.koppuravuri@intel.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pci.c      |    3 ---
+ drivers/pci/pci.h      |    6 ++++++
+ drivers/pci/pcie/dpc.c |    4 ++--
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index c69f4d966024c..925594dbeb929 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3608,7 +3608,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
- 	th->window = htons(min(req->rsk_rcv_wnd, 65535U));
- 	tcp_options_write(th, NULL, &opts);
- 	th->doff = (tcp_header_size >> 2);
--	__TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
-+	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -157,9 +157,6 @@ static int __init pcie_port_pm_setup(cha
+ }
+ __setup("pcie_port_pm=", pcie_port_pm_setup);
  
- #ifdef CONFIG_TCP_MD5SIG
- 	/* Okay, we have all we need - do the md5 hash if needed */
--- 
-2.39.2
-
+-/* Time to wait after a reset for device to become responsive */
+-#define PCIE_RESET_READY_POLL_MS 60000
+-
+ /**
+  * pci_bus_max_busnr - returns maximum PCI bus number of given bus' children
+  * @bus: pointer to PCI bus structure to search
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -53,6 +53,12 @@ int pci_bus_error_reset(struct pci_dev *
+  * Reset (PCIe r6.0 sec 5.8).
+  */
+ #define PCI_RESET_WAIT		1000	/* msec */
++/*
++ * Devices may extend the 1 sec period through Request Retry Status completions
++ * (PCIe r6.0 sec 2.3.1).  The spec does not provide an upper limit, but 60 sec
++ * ought to be enough for any device to become responsive.
++ */
++#define PCIE_RESET_READY_POLL_MS 60000	/* msec */
+ 
+ /**
+  * struct pci_platform_pm_ops - Firmware PM callbacks
+--- a/drivers/pci/pcie/dpc.c
++++ b/drivers/pci/pcie/dpc.c
+@@ -170,8 +170,8 @@ pci_ers_result_t dpc_reset_link(struct p
+ 	pci_write_config_word(pdev, cap + PCI_EXP_DPC_STATUS,
+ 			      PCI_EXP_DPC_STATUS_TRIGGER);
+ 
+-	if (!pcie_wait_for_link(pdev, true)) {
+-		pci_info(pdev, "Data Link Layer Link Active not set in 1000 msec\n");
++	if (pci_bridge_wait_for_secondary_bus(pdev, "DPC",
++					      PCIE_RESET_READY_POLL_MS)) {
+ 		clear_bit(PCI_DPC_RECOVERED, &pdev->priv_flags);
+ 		ret = PCI_ERS_RESULT_DISCONNECT;
+ 	} else {
 
 
