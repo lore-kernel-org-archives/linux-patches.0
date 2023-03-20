@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E1A1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695D2C4339C;
-	Mon, 20 Mar 2023 15:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81C01C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2779CC4339B;
+	Mon, 20 Mar 2023 15:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325325;
-	bh=TZUSyvWItKApnQfXQq/1IEbfEQGnXfY9WUpEYtHi5Uc=;
+	s=korg; t=1679325328;
+	bh=YAq+Bf7ra3cq1nrDi5rHRjehqZChJcH6ijEaUwTFk00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mOsZsgMzDZm7ObmrBVLOA0dVzToLxEQ/hpvK4vm1+sLSWSBN6F8eSDc6ySfLS1wIE
-	 rGtQq3pRSssSJmWBzPCVcakTb5ZWFBozkNM86lJaBOF28geNrGjvU9UeMmJrw3fVSc
-	 VKLXJFuTuJ4EiClk4YLMB45mNfFnTMNgUh7cTULE=
+	b=aDcgsp0Gok/B4h+HWZuIKB/vpEEVVDxih8x0Mk8K3dHuSbFgpxmlggGhz/qC7AxgS
+	 lQu5/bTvhpcujhMpScx6UzX5thcnKkz7xB/PXYCLjf1J9crPjtwvyBUvJ9DtrkU5Be
+	 8sV4UfIxTwjI3psEzc6XyzUfFkWJeaxcieV9+kTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jan Kara <jack@suse.cz>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Dan Schatzberg <schatzberg.dan@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/198] loop: Fix use-after-free issues
-Date: Mon, 20 Mar 2023 15:53:09 +0100
-Message-Id: <20230320145509.646719436@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Maxime Ripard <maxime@cerno.tech>
+Subject: [PATCH 5.15 091/115] drm/sun4i: fix missing component unbind on bind errors
+Date: Mon, 20 Mar 2023 15:55:03 +0100
+Message-Id: <20230320145453.230740845@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -40,101 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 9b0cb770f5d7b1ff40bea7ca385438ee94570eec ]
+commit c22f2ff8724b49dce2ae797e9fbf4bc0fa91112f upstream.
 
-do_req_filebacked() calls blk_mq_complete_request() synchronously or
-asynchronously when using asynchronous I/O unless memory allocation fails.
-Hence, modify loop_handle_cmd() such that it does not dereference 'cmd' nor
-'rq' after do_req_filebacked() finished unless we are sure that the request
-has not yet been completed. This patch fixes the following kernel crash:
+Make sure to unbind all subcomponents when binding the aggregate device
+fails.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000054
-Call trace:
- css_put.42938+0x1c/0x1ac
- loop_process_work+0xc8c/0xfd4
- loop_rootcg_workfn+0x24/0x34
- process_one_work+0x244/0x558
- worker_thread+0x400/0x8fc
- kthread+0x16c/0x1e0
- ret_from_fork+0x10/0x20
-
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Dan Schatzberg <schatzberg.dan@gmail.com>
-Fixes: c74d40e8b5e2 ("loop: charge i/o to mem and blk cg")
-Fixes: bc07c10a3603 ("block: loop: support DIO & AIO")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230314182155.80625-1-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9026e0d122ac ("drm: Add Allwinner A10 Display Engine support")
+Cc: stable@vger.kernel.org      # 4.7
+Cc: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230306103242.4775-1-johan+linaro@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/loop.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/sun4i/sun4i_drv.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index 981464e561df1..793ae876918ce 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1853,35 +1853,44 @@ static blk_status_t loop_queue_rq(struct blk_mq_hw_ctx *hctx,
+--- a/drivers/gpu/drm/sun4i/sun4i_drv.c
++++ b/drivers/gpu/drm/sun4i/sun4i_drv.c
+@@ -94,12 +94,12 @@ static int sun4i_drv_bind(struct device
+ 	/* drm_vblank_init calls kcalloc, which can fail */
+ 	ret = drm_vblank_init(drm, drm->mode_config.num_crtc);
+ 	if (ret)
+-		goto cleanup_mode_config;
++		goto unbind_all;
  
- static void loop_handle_cmd(struct loop_cmd *cmd)
- {
-+	struct cgroup_subsys_state *cmd_blkcg_css = cmd->blkcg_css;
-+	struct cgroup_subsys_state *cmd_memcg_css = cmd->memcg_css;
- 	struct request *rq = blk_mq_rq_from_pdu(cmd);
- 	const bool write = op_is_write(req_op(rq));
- 	struct loop_device *lo = rq->q->queuedata;
- 	int ret = 0;
- 	struct mem_cgroup *old_memcg = NULL;
-+	const bool use_aio = cmd->use_aio;
+ 	/* Remove early framebuffers (ie. simplefb) */
+ 	ret = drm_aperture_remove_framebuffers(false, &sun4i_drv_driver);
+ 	if (ret)
+-		goto cleanup_mode_config;
++		goto unbind_all;
  
- 	if (write && (lo->lo_flags & LO_FLAGS_READ_ONLY)) {
- 		ret = -EIO;
- 		goto failed;
- 	}
+ 	sun4i_framebuffer_init(drm);
  
--	if (cmd->blkcg_css)
--		kthread_associate_blkcg(cmd->blkcg_css);
--	if (cmd->memcg_css)
-+	if (cmd_blkcg_css)
-+		kthread_associate_blkcg(cmd_blkcg_css);
-+	if (cmd_memcg_css)
- 		old_memcg = set_active_memcg(
--			mem_cgroup_from_css(cmd->memcg_css));
-+			mem_cgroup_from_css(cmd_memcg_css));
+@@ -118,6 +118,8 @@ static int sun4i_drv_bind(struct device
  
-+	/*
-+	 * do_req_filebacked() may call blk_mq_complete_request() synchronously
-+	 * or asynchronously if using aio. Hence, do not touch 'cmd' after
-+	 * do_req_filebacked() has returned unless we are sure that 'cmd' has
-+	 * not yet been completed.
-+	 */
- 	ret = do_req_filebacked(lo, rq);
- 
--	if (cmd->blkcg_css)
-+	if (cmd_blkcg_css)
- 		kthread_associate_blkcg(NULL);
- 
--	if (cmd->memcg_css) {
-+	if (cmd_memcg_css) {
- 		set_active_memcg(old_memcg);
--		css_put(cmd->memcg_css);
-+		css_put(cmd_memcg_css);
- 	}
-  failed:
- 	/* complete non-aio request */
--	if (!cmd->use_aio || ret) {
-+	if (!use_aio || ret) {
- 		if (ret == -EOPNOTSUPP)
- 			cmd->ret = ret;
- 		else
--- 
-2.39.2
-
+ finish_poll:
+ 	drm_kms_helper_poll_fini(drm);
++unbind_all:
++	component_unbind_all(dev, NULL);
+ cleanup_mode_config:
+ 	drm_mode_config_cleanup(drm);
+ 	of_reserved_mem_device_release(dev);
 
 
