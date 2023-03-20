@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE791C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60910C433D2;
-	Mon, 20 Mar 2023 15:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA151C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2625EC433EF;
+	Mon, 20 Mar 2023 15:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325898;
-	bh=2HYIgpyknmUWw9lfDLh7sxPXePIIqr+VLNh999ZYNR0=;
+	s=korg; t=1679325901;
+	bh=gbkODAwK/OWLYiSLQQ1vtVK4wzka5QYbDWyqUr7xv/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LvxkM87VAp/+OkeTjiL+hIqAbPr2uNW8GKZI49vBXas7nEpi1wHbIHR2fxfbJ/bJo
-	 GFNftGbu7Jpv9JBnWXW+DbClY4WCh2bG5lIwUv3pMLt7saS7JpRUCaFlfKCRIk3vUs
-	 s1n7Uqurz38eJuuO2W+EOud0fiQUA/jK13NZFzNs=
+	b=rXoM7JOHtwnRul3uXUALqxEFuueD4g7mWgFmsbQizkSjBCkdC5Xyxeeg32CXtKdmm
+	 QtvRJR1du5VmBt9FZzXIIFYMHFQ1/bU+dO8BuxDLCs3/leYUqoOYfJ6iPVVCzaN9YJ
+	 KDP1HhKY64Dbhe3ETCaxHJ9WN1t/3zLyZIMwBnzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Christoph Paasch <cpaasch@apple.com>
-Subject: [PATCH 6.1 164/198] mptcp: fix possible deadlock in subflow_error_report
-Date: Mon, 20 Mar 2023 15:55:02 +0100
-Message-Id: <20230320145514.414783794@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Oskar Senft <osk@google.com>,
+	linux-serial@vger.kernel.org
+Subject: [PATCH 6.2 122/211] serial: 8250: ASPEED_VUART: select REGMAP instead of depending on it
+Date: Mon, 20 Mar 2023 15:54:17 +0100
+Message-Id: <20230320145518.470112216@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,54 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit b7a679ba7c652587b85294f4953f33ac0b756d40 upstream.
+commit f8086d1a65ac693e3fd863128352b4b11ee7324d upstream.
 
-Christoph reported a possible deadlock while the TCP stack
-destroys an unaccepted subflow due to an incoming reset: the
-MPTCP socket error path tries to acquire the msk-level socket
-lock while TCP still owns the listener socket accept queue
-spinlock, and the reverse dependency already exists in the
-TCP stack.
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-Note that the above is actually a lockdep false positive, as
-the chain involves two separate sockets. A different per-socket
-lockdep key will address the issue, but such a change will be
-quite invasive.
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
-Instead, we can simply stop earlier the socket error handling
-for orphaned or unaccepted subflows, breaking the critical
-lockdep chain. Error handling in such a scenario is a no-op.
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
 
-Reported-and-tested-by: Christoph Paasch <cpaasch@apple.com>
-Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
-Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/355
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8d310c9107a2 ("drivers/tty/serial/8250: Make Aspeed VUART SIRQ polarity configurable")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Oskar Senft <osk@google.com>
+Cc: linux-serial@vger.kernel.org
+Link: https://lore.kernel.org/r/20230226053953.4681-9-rdunlap@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/tty/serial/8250/Kconfig |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1376,6 +1376,13 @@ static void subflow_error_report(struct
- {
- 	struct sock *sk = mptcp_subflow_ctx(ssk)->conn;
- 
-+	/* bail early if this is a no-op, so that we avoid introducing a
-+	 * problematic lockdep dependency between TCP accept queue lock
-+	 * and msk socket spinlock
-+	 */
-+	if (!sk->sk_socket)
-+		return;
-+
- 	mptcp_data_lock(sk);
- 	if (!sock_owned_by_user(sk))
- 		__mptcp_error_report(sk);
+--- a/drivers/tty/serial/8250/Kconfig
++++ b/drivers/tty/serial/8250/Kconfig
+@@ -253,8 +253,9 @@ config SERIAL_8250_ASPEED_VUART
+ 	tristate "Aspeed Virtual UART"
+ 	depends on SERIAL_8250
+ 	depends on OF
+-	depends on REGMAP && MFD_SYSCON
++	depends on MFD_SYSCON
+ 	depends on ARCH_ASPEED || COMPILE_TEST
++	select REGMAP
+ 	help
+ 	  If you want to use the virtual UART (VUART) device on Aspeed
+ 	  BMC platforms, enable this option. This enables the 16550A-
 
 
