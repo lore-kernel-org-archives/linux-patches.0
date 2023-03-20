@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C251C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC70C4339B;
-	Mon, 20 Mar 2023 15:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30CC1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482D6C433D2;
+	Mon, 20 Mar 2023 15:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324782;
-	bh=S6tEHWndNmSMMQ5WutitFRxVDIVV+AOXs7zwPkBG9T4=;
+	s=korg; t=1679324785;
+	bh=3DZKPSB3eGEDg/foRv0B/RKMlE+9sgeTdtFENIatV2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OV5uEEToVsNABGRTMb8E/J22STSzbRQhJ/ZiD8bzlLLbbq5mdosyHIXsK9Kxq2M2a
-	 8W0lkVuisJ1rPiWsPEP5PYIg7HPc3oN04Dv90Mewaoji2bRXAq/ueMyTt6VTl0ImnE
-	 5ZTgleBpQkHIEbPj8fQjGDz2TS/yJUQeVUbxkoQo=
+	b=mGO3WYDXQOgFacBpO+AVQ5GBr7cmsHgyM6F7D4nVJB3xTyhfSTQrK0fJfbKD1Fhoy
+	 Ev3f3SSrEijy8W3bGfwCpYyjdwLEvlA6Go9/rXx/utMJFphKlACd9Dz5wtTefGNJNC
+	 g3U1in2EhmU6ZjqjezNKXJoDZYParZ269yg/gdgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jun Lei <Jun.Lei@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/115] drm/meson: fix 1px pink line on GXM when scaling video overlay
-Date: Mon, 20 Mar 2023 15:53:36 +0100
-Message-Id: <20230320145449.537167766@linuxfoundation.org>
+Subject: [PATCH 5.10 55/99] drm/amd/display: fix shift-out-of-bounds in CalculateVMAndRowBytes
+Date: Mon, 20 Mar 2023 15:54:33 +0100
+Message-Id: <20230320145445.683892299@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 5c8cf1664f288098a971a1d1e65716a2b6a279e1 ]
+[ Upstream commit 031f196d1b1b6d5dfcb0533b431e3ab1750e6189 ]
 
-Playing media with a resolution smaller than the crtc size requires the
-video overlay to be scaled for output and GXM boards display a 1px pink
-line on the bottom of the scaled overlay. Comparing with the downstream
-vendor driver revealed VPP_DUMMY_DATA not being set [0].
+[WHY]
+When PTEBufferSizeInRequests is zero, UBSAN reports the following
+warning because dml_log2 returns an unexpected negative value:
 
-Setting VPP_DUMMY_DATA prevents the 1px pink line from being seen.
+  shift exponent 4294966273 is too large for 32-bit type 'int'
 
-[0] https://github.com/endlessm/linux-s905x/blob/master/drivers/amlogic/amports/video.c#L7869
+[HOW]
 
-Fixes: bbbe775ec5b5 ("drm: Add support for Amlogic Meson Graphic Controller")
-Suggested-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230303123312.155164-1-christianshewitt@gmail.com
+In the case PTEBufferSizeInRequests is zero, skip the dml_log2() and
+assign the result directly.
+
+Reviewed-by: Jun Lei <Jun.Lei@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_vpp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c   | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vpp.c b/drivers/gpu/drm/meson/meson_vpp.c
-index 154837688ab0d..5df1957c8e41f 100644
---- a/drivers/gpu/drm/meson/meson_vpp.c
-+++ b/drivers/gpu/drm/meson/meson_vpp.c
-@@ -100,6 +100,8 @@ void meson_vpp_init(struct meson_drm *priv)
- 			       priv->io_base + _REG(VPP_DOLBY_CTRL));
- 		writel_relaxed(0x1020080,
- 				priv->io_base + _REG(VPP_DUMMY_DATA1));
-+		writel_relaxed(0x42020,
-+				priv->io_base + _REG(VPP_DUMMY_DATA));
- 	} else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
- 		writel_relaxed(0xf, priv->io_base + _REG(DOLBY_PATH_CTRL));
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
+index e427f4ffa0807..e5b1002d7f3f0 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
+@@ -1868,7 +1868,10 @@ static unsigned int CalculateVMAndRowBytes(
+ 	}
  
+ 	if (SurfaceTiling == dm_sw_linear) {
+-		*dpte_row_height = dml_min(128, 1 << (unsigned int) dml_floor(dml_log2(PTEBufferSizeInRequests * *PixelPTEReqWidth / Pitch), 1));
++		if (PTEBufferSizeInRequests == 0)
++			*dpte_row_height = 1;
++		else
++			*dpte_row_height = dml_min(128, 1 << (unsigned int) dml_floor(dml_log2(PTEBufferSizeInRequests * *PixelPTEReqWidth / Pitch), 1));
+ 		*dpte_row_width_ub = (dml_ceil(((double) SwathWidth - 1) / *PixelPTEReqWidth, 1) + 1) * *PixelPTEReqWidth;
+ 		*PixelPTEBytesPerRow = *dpte_row_width_ub / *PixelPTEReqWidth * *PTERequestSize;
+ 	} else if (ScanDirection != dm_vert) {
 -- 
 2.39.2
 
