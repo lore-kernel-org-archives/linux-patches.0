@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1651C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E9EC433EF;
-	Mon, 20 Mar 2023 15:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071761C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8F6C433EF;
+	Mon, 20 Mar 2023 15:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325737;
-	bh=dEE6EScu5wy7FVRSUXQsJDJO876k6Yavlg6XkgkwBuY=;
+	s=korg; t=1679325742;
+	bh=6H5ATSg1w+U+u48Y4UkFGYcyVroZrHct+aaq0kLCsCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/PNACtDjmjTjqZ94TFVfLFhtbDbgFLLLg3db/v8P+KCV+f57QhGlPDXR/XycEJjP
-	 WK3VgcjHKy3mTXlFCKxdFtzd7DfwB1j5eAvrw+/nkMSCkvgVf2Hc8l6hPO+alpIiRQ
-	 FvyGs7nzi7HUXqGgVcOOoySAQjNAKQruw8B55S9U=
+	b=NQ21Vf4y1TUJ+Vq417YO7RLNRJk0TgXAjBCU/d7HzcxpiIwwjiUTppMY6BXXAzvtT
+	 uTEi9evVHY6v0EgK8mMHTAUfz+VC4JQkkaM+721VtvhuMd6KwSJH+CepbY0JPQZN5U
+	 FCPI6tFoQi35HFJN9NsDuSUMG6fKlVlKQZFhb0nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 084/211] sh_eth: avoid PHY being resumed when interface is not up
-Date: Mon, 20 Mar 2023 15:53:39 +0100
-Message-Id: <20230320145516.819337041@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jun Nie <jun.nie@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.1 135/198] interconnect: qcom: rpm: fix registration race
+Date: Mon, 20 Mar 2023 15:54:33 +0100
+Message-Id: <20230320145513.202186258@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,65 +36,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit c6be7136afb224a01d4cde2983ddebac8da98693 ]
+commit 90ae93d8affc1061cd87ca8ddd9a838c7d31a158 upstream.
 
-SH_ETH doesn't need mdiobus suspend/resume, that's why it sets
-'mac_managed_pm'. However, setting it needs to be moved from init to
-probe, so mdiobus PM functions will really never be called (e.g. when
-the interface is not up yet during suspend/resume).
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to fail.
 
-Fixes: 6a1dbfefdae4 ("net: sh_eth: Fix PHY state warning splat during system resume")
-Suggested-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
+
+Fixes: 62feb14ee8a3 ("interconnect: qcom: Consolidate interconnect RPM support")
+Fixes: 30c8fa3ec61a ("interconnect: qcom: Add MSM8916 interconnect provider driver")
+Cc: stable@vger.kernel.org	# 5.7
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Jun Nie <jun.nie@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-9-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/sh_eth.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/interconnect/qcom/icc-rpm.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/sh_eth.c b/drivers/net/ethernet/renesas/sh_eth.c
-index 71a4991133080..14dc5833c465c 100644
---- a/drivers/net/ethernet/renesas/sh_eth.c
-+++ b/drivers/net/ethernet/renesas/sh_eth.c
-@@ -2029,8 +2029,6 @@ static int sh_eth_phy_init(struct net_device *ndev)
- 	if (mdp->cd->register_type != SH_ETH_REG_GIGABIT)
- 		phy_set_max_speed(phydev, SPEED_100);
+--- a/drivers/interconnect/qcom/icc-rpm.c
++++ b/drivers/interconnect/qcom/icc-rpm.c
+@@ -506,7 +506,6 @@ regmap_done:
+ 	}
  
--	/* Indicate that the MAC is responsible for managing PHY PM */
--	phydev->mac_managed_pm = true;
- 	phy_attached_info(phydev);
+ 	provider = &qp->provider;
+-	INIT_LIST_HEAD(&provider->nodes);
+ 	provider->dev = dev;
+ 	provider->set = qcom_icc_set;
+ 	provider->pre_aggregate = qcom_icc_pre_bw_aggregate;
+@@ -514,12 +513,7 @@ regmap_done:
+ 	provider->xlate_extended = qcom_icc_xlate_extended;
+ 	provider->data = data;
  
- 	return 0;
-@@ -3074,6 +3072,8 @@ static int sh_mdio_init(struct sh_eth_private *mdp,
- 	struct bb_info *bitbang;
- 	struct platform_device *pdev = mdp->pdev;
- 	struct device *dev = &mdp->pdev->dev;
-+	struct phy_device *phydev;
-+	struct device_node *pn;
+-	ret = icc_provider_add(provider);
+-	if (ret) {
+-		dev_err(dev, "error adding interconnect provider: %d\n", ret);
+-		clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
+-		return ret;
+-	}
++	icc_provider_init(provider);
  
- 	/* create bit control struct for PHY */
- 	bitbang = devm_kzalloc(dev, sizeof(struct bb_info), GFP_KERNEL);
-@@ -3108,6 +3108,14 @@ static int sh_mdio_init(struct sh_eth_private *mdp,
- 	if (ret)
- 		goto out_free_bus;
+ 	for (i = 0; i < num_nodes; i++) {
+ 		size_t j;
+@@ -527,7 +521,7 @@ regmap_done:
+ 		node = icc_node_create(qnodes[i]->id);
+ 		if (IS_ERR(node)) {
+ 			ret = PTR_ERR(node);
+-			goto err;
++			goto err_remove_nodes;
+ 		}
  
-+	pn = of_parse_phandle(dev->of_node, "phy-handle", 0);
-+	phydev = of_phy_find_device(pn);
-+	if (phydev) {
-+		phydev->mac_managed_pm = true;
-+		put_device(&phydev->mdio.dev);
-+	}
-+	of_node_put(pn);
+ 		node->name = qnodes[i]->name;
+@@ -541,20 +535,26 @@ regmap_done:
+ 	}
+ 	data->num_nodes = num_nodes;
+ 
++	ret = icc_provider_register(provider);
++	if (ret)
++		goto err_remove_nodes;
 +
- 	return 0;
+ 	platform_set_drvdata(pdev, qp);
  
- out_free_bus:
--- 
-2.39.2
-
+ 	/* Populate child NoC devices if any */
+ 	if (of_get_child_count(dev->of_node) > 0) {
+ 		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
+ 		if (ret)
+-			goto err;
++			goto err_deregister_provider;
+ 	}
+ 
+ 	return 0;
+-err:
++
++err_deregister_provider:
++	icc_provider_deregister(provider);
++err_remove_nodes:
+ 	icc_nodes_remove(provider);
+ 	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
+-	icc_provider_del(provider);
+ 
+ 	return ret;
+ }
+@@ -564,9 +564,9 @@ int qnoc_remove(struct platform_device *
+ {
+ 	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
+ 
++	icc_provider_deregister(&qp->provider);
+ 	icc_nodes_remove(&qp->provider);
+ 	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
+-	icc_provider_del(&qp->provider);
+ 
+ 	return 0;
+ }
 
 
