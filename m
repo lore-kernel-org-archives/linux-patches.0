@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9E71C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3492DC4339E;
-	Mon, 20 Mar 2023 15:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F211C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A665C433EF;
+	Mon, 20 Mar 2023 15:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325446;
-	bh=BPyxTzOfe5i2/ejbOf6G0v8zjqalgYSFVTr53iyfp2c=;
+	s=korg; t=1679325449;
+	bh=gVDUWofQpGjrvDcWpgA6d4EKOgvTcNdL4WkyriL8SBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNSorB7dvSXJlnQg0t8EZb2bhkbdZj7mPq8vHSe53jkjK/SToAcjpWlfTfAyrrtxW
-	 mweZmpC35XF84ckdCCiu4358fQW7chQTxWjPB42C4okqfJrQuA4oqPqZUM4nGH430m
-	 NW/zuqwgsbrQQvExXomtAB2mX/DgdoVM3K5j84sI=
+	b=wbkmjU09z7vridkDHxj4a7s5IzQbafSjiVH8JNP5BimifUIFcolfS/JQ+u3Z+oxuz
+	 DgyO4ZshV+0K1TcaG6tNZPmeJy0YzwyneF6ldCo5Dm7yO5FxghQRIrgyYt5jlkhNcl
+	 Z7lF+mH/b0Bnf69332p13Fve7swZkmwsDvcshSLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 044/211] PCI: s390: Fix use-after-free of PCI resources with per-function hotplug
-Date: Mon, 20 Mar 2023 15:52:59 +0100
-Message-Id: <20230320145515.075222715@linuxfoundation.org>
+Subject: [PATCH 6.1 086/198] i825xx: sni_82596: use eth_hw_addr_set()
+Date: Mon, 20 Mar 2023 15:53:44 +0100
+Message-Id: <20230320145511.143174676@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,194 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-[ Upstream commit ab909509850b27fd39b8ba99e44cda39dbc3858c ]
+[ Upstream commit f38373345c65529639a01fba3675eb8cb4c579c3 ]
 
-On s390 PCI functions may be hotplugged individually even when they
-belong to a multi-function device. In particular on an SR-IOV device VFs
-may be removed and later re-added.
+netdev->dev_addr is now const, we can't write to it directly.
+Copy scrambled mac address octects into an array then eth_hw_addr_set().
 
-In commit a50297cf8235 ("s390/pci: separate zbus creation from
-scanning") it was missed however that struct pci_bus and struct
-zpci_bus's resource list retained a reference to the PCI functions MMIO
-resources even though those resources are released and freed on
-hot-unplug. These stale resources may subsequently be claimed when the
-PCI function re-appears resulting in use-after-free.
-
-One idea of fixing this use-after-free in s390 specific code that was
-investigated was to simply keep resources around from the moment a PCI
-function first appeared until the whole virtual PCI bus created for
-a multi-function device disappears. The problem with this however is
-that due to the requirement of artificial MMIO addreesses (address
-cookies) extra logic is then needed to keep the address cookies
-compatible on re-plug. At the same time the MMIO resources semantically
-belong to the PCI function so tying their lifecycle to the function
-seems more logical.
-
-Instead a simpler approach is to remove the resources of an individually
-hot-unplugged PCI function from the PCI bus's resource list while
-keeping the resources of other PCI functions on the PCI bus untouched.
-
-This is done by introducing pci_bus_remove_resource() to remove an
-individual resource. Similarly the resource also needs to be removed
-from the struct zpci_bus's resource list. It turns out however, that
-there is really no need to add the MMIO resources to the struct
-zpci_bus's resource list at all and instead we can simply use the
-zpci_bar_struct's resource pointer directly.
-
-Fixes: a50297cf8235 ("s390/pci: separate zbus creation from scanning")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20230306151014.60913-2-schnelle@linux.ibm.com
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: adeef3e32146 ("net: constify netdev->dev_addr")
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Link: https://lore.kernel.org/r/20230315134117.79511-1-tsbogend@alpha.franken.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci.c     | 16 ++++++++++------
- arch/s390/pci/pci_bus.c | 12 +++++-------
- arch/s390/pci/pci_bus.h |  3 +--
- drivers/pci/bus.c       | 21 +++++++++++++++++++++
- include/linux/pci.h     |  1 +
- 5 files changed, 38 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/i825xx/sni_82596.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
-index ef38b1514c77a..e16afacc8fd1b 100644
---- a/arch/s390/pci/pci.c
-+++ b/arch/s390/pci/pci.c
-@@ -544,8 +544,7 @@ static struct resource *__alloc_res(struct zpci_dev *zdev, unsigned long start,
- 	return r;
- }
+diff --git a/drivers/net/ethernet/i825xx/sni_82596.c b/drivers/net/ethernet/i825xx/sni_82596.c
+index daec9ce04531b..54bb4d9a0d1ea 100644
+--- a/drivers/net/ethernet/i825xx/sni_82596.c
++++ b/drivers/net/ethernet/i825xx/sni_82596.c
+@@ -78,6 +78,7 @@ static int sni_82596_probe(struct platform_device *dev)
+ 	void __iomem *mpu_addr;
+ 	void __iomem *ca_addr;
+ 	u8 __iomem *eth_addr;
++	u8 mac[ETH_ALEN];
  
--int zpci_setup_bus_resources(struct zpci_dev *zdev,
--			     struct list_head *resources)
-+int zpci_setup_bus_resources(struct zpci_dev *zdev)
- {
- 	unsigned long addr, size, flags;
- 	struct resource *res;
-@@ -581,7 +580,6 @@ int zpci_setup_bus_resources(struct zpci_dev *zdev,
- 			return -ENOMEM;
- 		}
- 		zdev->bars[i].res = res;
--		pci_add_resource(resources, res);
- 	}
- 	zdev->has_resources = 1;
+ 	res = platform_get_resource(dev, IORESOURCE_MEM, 0);
+ 	ca = platform_get_resource(dev, IORESOURCE_MEM, 1);
+@@ -109,12 +110,13 @@ static int sni_82596_probe(struct platform_device *dev)
+ 		goto probe_failed;
  
-@@ -590,17 +588,23 @@ int zpci_setup_bus_resources(struct zpci_dev *zdev,
+ 	/* someone seems to like messed up stuff */
+-	netdevice->dev_addr[0] = readb(eth_addr + 0x0b);
+-	netdevice->dev_addr[1] = readb(eth_addr + 0x0a);
+-	netdevice->dev_addr[2] = readb(eth_addr + 0x09);
+-	netdevice->dev_addr[3] = readb(eth_addr + 0x08);
+-	netdevice->dev_addr[4] = readb(eth_addr + 0x07);
+-	netdevice->dev_addr[5] = readb(eth_addr + 0x06);
++	mac[0] = readb(eth_addr + 0x0b);
++	mac[1] = readb(eth_addr + 0x0a);
++	mac[2] = readb(eth_addr + 0x09);
++	mac[3] = readb(eth_addr + 0x08);
++	mac[4] = readb(eth_addr + 0x07);
++	mac[5] = readb(eth_addr + 0x06);
++	eth_hw_addr_set(netdevice, mac);
+ 	iounmap(eth_addr);
  
- static void zpci_cleanup_bus_resources(struct zpci_dev *zdev)
- {
-+	struct resource *res;
- 	int i;
- 
-+	pci_lock_rescan_remove();
- 	for (i = 0; i < PCI_STD_NUM_BARS; i++) {
--		if (!zdev->bars[i].size || !zdev->bars[i].res)
-+		res = zdev->bars[i].res;
-+		if (!res)
- 			continue;
- 
-+		release_resource(res);
-+		pci_bus_remove_resource(zdev->zbus->bus, res);
- 		zpci_free_iomap(zdev, zdev->bars[i].map_idx);
--		release_resource(zdev->bars[i].res);
--		kfree(zdev->bars[i].res);
-+		zdev->bars[i].res = NULL;
-+		kfree(res);
- 	}
- 	zdev->has_resources = 0;
-+	pci_unlock_rescan_remove();
- }
- 
- int pcibios_device_add(struct pci_dev *pdev)
-diff --git a/arch/s390/pci/pci_bus.c b/arch/s390/pci/pci_bus.c
-index 6a8da1b742ae5..a99926af2b69a 100644
---- a/arch/s390/pci/pci_bus.c
-+++ b/arch/s390/pci/pci_bus.c
-@@ -41,9 +41,7 @@ static int zpci_nb_devices;
-  */
- static int zpci_bus_prepare_device(struct zpci_dev *zdev)
- {
--	struct resource_entry *window, *n;
--	struct resource *res;
--	int rc;
-+	int rc, i;
- 
- 	if (!zdev_enabled(zdev)) {
- 		rc = zpci_enable_device(zdev);
-@@ -57,10 +55,10 @@ static int zpci_bus_prepare_device(struct zpci_dev *zdev)
- 	}
- 
- 	if (!zdev->has_resources) {
--		zpci_setup_bus_resources(zdev, &zdev->zbus->resources);
--		resource_list_for_each_entry_safe(window, n, &zdev->zbus->resources) {
--			res = window->res;
--			pci_bus_add_resource(zdev->zbus->bus, res, 0);
-+		zpci_setup_bus_resources(zdev);
-+		for (i = 0; i < PCI_STD_NUM_BARS; i++) {
-+			if (zdev->bars[i].res)
-+				pci_bus_add_resource(zdev->zbus->bus, zdev->bars[i].res, 0);
- 		}
- 	}
- 
-diff --git a/arch/s390/pci/pci_bus.h b/arch/s390/pci/pci_bus.h
-index e96c9860e0644..af9f0ac79a1b1 100644
---- a/arch/s390/pci/pci_bus.h
-+++ b/arch/s390/pci/pci_bus.h
-@@ -30,8 +30,7 @@ static inline void zpci_zdev_get(struct zpci_dev *zdev)
- 
- int zpci_alloc_domain(int domain);
- void zpci_free_domain(int domain);
--int zpci_setup_bus_resources(struct zpci_dev *zdev,
--			     struct list_head *resources);
-+int zpci_setup_bus_resources(struct zpci_dev *zdev);
- 
- static inline struct zpci_dev *zdev_from_bus(struct pci_bus *bus,
- 					     unsigned int devfn)
-diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
-index 83ae838ceb5f0..549c4bd5caeca 100644
---- a/drivers/pci/bus.c
-+++ b/drivers/pci/bus.c
-@@ -76,6 +76,27 @@ struct resource *pci_bus_resource_n(const struct pci_bus *bus, int n)
- }
- EXPORT_SYMBOL_GPL(pci_bus_resource_n);
- 
-+void pci_bus_remove_resource(struct pci_bus *bus, struct resource *res)
-+{
-+	struct pci_bus_resource *bus_res, *tmp;
-+	int i;
-+
-+	for (i = 0; i < PCI_BRIDGE_RESOURCE_NUM; i++) {
-+		if (bus->resource[i] == res) {
-+			bus->resource[i] = NULL;
-+			return;
-+		}
-+	}
-+
-+	list_for_each_entry_safe(bus_res, tmp, &bus->resources, list) {
-+		if (bus_res->res == res) {
-+			list_del(&bus_res->list);
-+			kfree(bus_res);
-+			return;
-+		}
-+	}
-+}
-+
- void pci_bus_remove_resources(struct pci_bus *bus)
- {
- 	int i;
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 50042ea8e0083..db6ec828aa4b2 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1437,6 +1437,7 @@ void pci_bus_add_resource(struct pci_bus *bus, struct resource *res,
- 			  unsigned int flags);
- struct resource *pci_bus_resource_n(const struct pci_bus *bus, int n);
- void pci_bus_remove_resources(struct pci_bus *bus);
-+void pci_bus_remove_resource(struct pci_bus *bus, struct resource *res);
- int devm_request_pci_bus_resources(struct device *dev,
- 				   struct list_head *resources);
- 
+ 	if (netdevice->irq < 0) {
 -- 
 2.39.2
 
