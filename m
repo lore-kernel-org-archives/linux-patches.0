@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F280C1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7452BC433EF;
-	Mon, 20 Mar 2023 14:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9ED1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBE2C4339E;
+	Mon, 20 Mar 2023 14:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324284;
-	bh=XyUhfPhNEkwt8xo0Wmx2PNebzxIeLjlrgrO9/ksGCQM=;
+	s=korg; t=1679324287;
+	bh=RYEgoQfy5g2obq3M1OeoK2adxxmexkLppMESHV9PtqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNstYbmLrHbY9Lg8BK6pcciGyex6HAC15NP4eXV9Y4ZJoE25YD5KzwxobnPQoF3ZR
-	 VImuHVE9YxkFS6ioizTdAmNhSFcUMXCa9VsfeeEbyqVsE/mo0S4wj3Et7v/3ZKX0rd
-	 DylQsePC1fYjTPiqIbHhyoDrrVjlgbGjGsKwB2mg=
+	b=gY/PtiKZbzww4GV88lr2T649mmQ9r/A7X01xOvFP2qH36eBudQaoIFgAetNff6mL2
+	 zuapJFNs8Ufep1Ou/rwkk6RAzS0SMQF5FeKGogradwa8kubIzSRSSOB8it6TJVu9MZ
+	 WwKOaQBHDTCAW5/fSmhrxGptAGJOlCS+RqenPZTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <yujie.liu@intel.com>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 4.19 02/36] fs: sysfs_emit_at: Remove PAGE_SIZE alignment check
-Date: Mon, 20 Mar 2023 15:54:28 +0100
-Message-Id: <20230320145424.287346352@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Riku Voipio <riku.voipio@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	linux-clk@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 03/36] clk: HI655X: select REGMAP instead of depending on it
+Date: Mon, 20 Mar 2023 15:54:29 +0100
+Message-Id: <20230320145424.339190661@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -34,59 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-From: Eric Biggers <ebiggers@google.com>
+[ Upstream commit 0ffad67784a097beccf34d297ddd1b0773b3b8a3 ]
 
-[No upstream commit because this fixes a bug in a backport.]
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-Before upstream commit 59bb47985c1d ("mm, sl[aou]b: guarantee natural
-alignment for kmalloc(power-of-two)") which went into v5.4, kmalloc did
-*not* always guarantee that PAGE_SIZE allocations are PAGE_SIZE-aligned.
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
-Upstream commit 2efc459d06f1 ("sysfs: Add sysfs_emit and sysfs_emit_at
-to format sysfs output") added two WARN()s that trigger when PAGE_SIZE
-allocations are not PAGE_SIZE-aligned.  This was backported to old
-kernels that don't guarantee PAGE_SIZE alignment.
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
 
-Commit 10ddfb495232 ("fs: sysfs_emit: Remove PAGE_SIZE alignment check")
-in 4.19.y, and its equivalent in 4.14.y and 4.9.y, tried to fix this
-bug.  However, only it handled sysfs_emit(), not sysfs_emit_at().
-
-Fix it in sysfs_emit_at() too.
-
-A reproducer is to build the kernel with the following options:
-
-	CONFIG_SLUB=y
-	CONFIG_SLUB_DEBUG=y
-	CONFIG_SLUB_DEBUG_ON=y
-	CONFIG_PM=y
-	CONFIG_SUSPEND=y
-	CONFIG_PM_WAKELOCKS=y
-
-Then run:
-
-	echo foo > /sys/power/wake_lock && cat /sys/power/wake_lock
-
-Fixes: cb1f69d53ac8 ("sysfs: Add sysfs_emit and sysfs_emit_at to format sysfs output")
-Reported-by: kernel test robot <yujie.liu@intel.com>
-Link: https://lore.kernel.org/r/202303141634.1e64fd76-yujie.liu@intel.com
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3a49afb84ca0 ("clk: enable hi655x common clk automatically")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Riku Voipio <riku.voipio@linaro.org>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: linux-clk@vger.kernel.org
+Link: https://lore.kernel.org/r/20230226053953.4681-3-rdunlap@infradead.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/sysfs/file.c |    2 +-
+ drivers/clk/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/sysfs/file.c
-+++ b/fs/sysfs/file.c
-@@ -599,7 +599,7 @@ int sysfs_emit_at(char *buf, int at, con
- 	va_list args;
- 	int len;
- 
--	if (WARN(!buf || offset_in_page(buf) || at < 0 || at >= PAGE_SIZE,
-+	if (WARN(!buf || at < 0 || at >= PAGE_SIZE,
- 		 "invalid sysfs_emit_at: buf:%p at:%d\n", buf, at))
- 		return 0;
- 
+diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+index 292056bbb30e9..ffe81449ce246 100644
+--- a/drivers/clk/Kconfig
++++ b/drivers/clk/Kconfig
+@@ -63,7 +63,7 @@ config COMMON_CLK_RK808
+ config COMMON_CLK_HI655X
+ 	tristate "Clock driver for Hi655x" if EXPERT
+ 	depends on (MFD_HI655X_PMIC || COMPILE_TEST)
+-	depends on REGMAP
++	select REGMAP
+ 	default MFD_HI655X_PMIC
+ 	---help---
+ 	  This driver supports the hi655x PMIC clock. This
+-- 
+2.39.2
+
 
 
