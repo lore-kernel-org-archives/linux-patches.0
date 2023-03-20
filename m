@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEBC1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0C4C433A7;
-	Mon, 20 Mar 2023 15:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C971C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AF9C433A4;
+	Mon, 20 Mar 2023 15:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325849;
-	bh=HpZJ47UX+ovf6LOUN69eXK9nALO4gmgXQIvFY1b7F1w=;
+	s=korg; t=1679325852;
+	bh=DOR/OUJcQUzxeUxsGCXdByuSyMzEfLD57lwI9SxAzQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ABSyhXyzblT0lg0JHJIpXKZE/F6OimW78XHp7KVg/7yuUnFRhJyuUpdt0HhWN8Xi8
-	 Q6R+GIbyF45ZzMcVHYpqojr8qGIZaS7zo/yH9RX7PRx+vxmJUvkBZcZNKe4Reh8ibt
-	 XzWkd4z0uS1H8THGTxs7GxAgzUbDuFgam27TC4Zg=
+	b=q6Kk6MTRQVOyhVgUA6WimHKGADAk8OSe0/fOXArVkwHk0Yy+qbjOo2hhg4p4uGHiL
+	 //xfVzeg4dJml2QG5miGx0fAfLdnrrMWFw3V7FlY40RnfDv1pmozuiQjWDnImP0jym
+	 BsSptRqiFTZR3SFaYig2F0LB7un5UpROixjtgl8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Heidrich <szymon.heidrich@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 086/211] net: usb: smsc75xx: Move packet length check to prevent kernel panic in skb_pull
-Date: Mon, 20 Mar 2023 15:53:41 +0100
-Message-Id: <20230320145516.907259795@linuxfoundation.org>
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.1 128/198] s390/ipl: add missing intersection check to ipl_report handling
+Date: Mon, 20 Mar 2023 15:54:26 +0100
+Message-Id: <20230320145512.912191701@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +34,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 43ffe6caccc7a1bb9d7442fbab521efbf6c1378c ]
+commit a52e5cdbe8016d4e3e6322fd93d71afddb9a5af9 upstream.
 
-Packet length check needs to be located after size and align_count
-calculation to prevent kernel panic in skb_pull() in case
-rx_cmd_a & RX_CMD_A_RED evaluates to true.
+The code which handles the ipl report is searching for a free location
+in memory where it could copy the component and certificate entries to.
+It checks for intersection between the sections required for the kernel
+and the component/certificate data area, but fails to check whether
+the data structures linking these data areas together intersect.
 
-Fixes: d8b228318935 ("net: usb: smsc75xx: Limit packet length to skb->len")
-Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
-Link: https://lore.kernel.org/r/20230316110540.77531-1-szymon.heidrich@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This might cause the iplreport copy code to overwrite the iplreport
+itself. Fix this by adding two addtional intersection checks.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 9641b8cc733f ("s390/ipl: read IPL report at early boot")
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/smsc75xx.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/s390/boot/ipl_report.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
-index db34f8d1d6051..5d6454fedb3f1 100644
---- a/drivers/net/usb/smsc75xx.c
-+++ b/drivers/net/usb/smsc75xx.c
-@@ -2200,6 +2200,13 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		size = (rx_cmd_a & RX_CMD_A_LEN) - RXW_PADDING;
- 		align_count = (4 - ((size + RXW_PADDING) % 4)) % 4;
- 
-+		if (unlikely(size > skb->len)) {
-+			netif_dbg(dev, rx_err, dev->net,
-+				  "size err rx_cmd_a=0x%08x\n",
-+				  rx_cmd_a);
-+			return 0;
-+		}
-+
- 		if (unlikely(rx_cmd_a & RX_CMD_A_RED)) {
- 			netif_dbg(dev, rx_err, dev->net,
- 				  "Error rx_cmd_a=0x%08x\n", rx_cmd_a);
-@@ -2212,8 +2219,7 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 				dev->net->stats.rx_frame_errors++;
- 		} else {
- 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
--			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
--				     size > skb->len)) {
-+			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
- 				netif_dbg(dev, rx_err, dev->net,
- 					  "size err rx_cmd_a=0x%08x\n",
- 					  rx_cmd_a);
--- 
-2.39.2
-
+--- a/arch/s390/boot/ipl_report.c
++++ b/arch/s390/boot/ipl_report.c
+@@ -57,11 +57,19 @@ repeat:
+ 	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && initrd_data.start && initrd_data.size &&
+ 	    intersects(initrd_data.start, initrd_data.size, safe_addr, size))
+ 		safe_addr = initrd_data.start + initrd_data.size;
++	if (intersects(safe_addr, size, (unsigned long)comps, comps->len)) {
++		safe_addr = (unsigned long)comps + comps->len;
++		goto repeat;
++	}
+ 	for_each_rb_entry(comp, comps)
+ 		if (intersects(safe_addr, size, comp->addr, comp->len)) {
+ 			safe_addr = comp->addr + comp->len;
+ 			goto repeat;
+ 		}
++	if (intersects(safe_addr, size, (unsigned long)certs, certs->len)) {
++		safe_addr = (unsigned long)certs + certs->len;
++		goto repeat;
++	}
+ 	for_each_rb_entry(cert, certs)
+ 		if (intersects(safe_addr, size, cert->addr, cert->len)) {
+ 			safe_addr = cert->addr + cert->len;
 
 
