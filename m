@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6AB1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0E6C4339B;
-	Mon, 20 Mar 2023 15:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B261C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CD5C433D2;
+	Mon, 20 Mar 2023 15:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324527;
-	bh=Ug95ZF0Sr8/9AE2AGsfhk48LZ7cuIuVOz2j+Cl097bg=;
+	s=korg; t=1679324530;
+	bh=bzkGyetZ5sZm/srGhec0pNnsU4fzF6TlOYijdOQnBmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ArK/H2Ub+EANniGvclwUemSJUKNQxPE/xzuFaxtbRFwICknN6iGgd0V7JnIi6Yy7N
-	 nKJ1tA9dP63l406nRBUdGsp6wqLZgwmcmHK+1zXLVb6b1lAViR3/4iEiDK9Yi7XyNo
-	 grrZHVzPMLxijGNwoDcokvzwzqA/IlIUFRaus6K4=
+	b=hS7exWVOlbjxVmsCb2MdPD3DPt0RU15KFH5XgA6YIPiwAxnTuy6kDRbRnqvQo2YKF
+	 GgQj34aCVkMxyHZVol2U2RNDcQfgC0y/Uvkra422ko3uJsmjKoCJo1UMeLiCmd6znr
+	 rRbL/YWjEsUvTkfMx0O+4wi5JFCxXs/0MKZkSgAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 12/99] netfilter: nft_redir: correct value of inet type `.maxattrs`
-Date: Mon, 20 Mar 2023 15:53:50 +0100
-Message-Id: <20230320145443.863459008@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 47/60] tracing: Check field value in hist_field_name()
+Date: Mon, 20 Mar 2023 15:54:56 +0100
+Message-Id: <20230320145432.878120908@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 493924519b1fe3faab13ee621a43b0d0939abab1 ]
+commit 9f116f76fa8c04c81aef33ad870dbf9a158e5b70 upstream.
 
-`nft_redir_inet_type.maxattrs` was being set, presumably because of a
-cut-and-paste error, to `NFTA_MASQ_MAX`, instead of `NFTA_REDIR_MAX`.
+The function hist_field_name() cannot handle being passed a NULL field
+parameter. It should never be NULL, but due to a previous bug, NULL was
+passed to the function and the kernel crashed due to a NULL dereference.
+Mark Rutland reported this to me on IRC.
 
-Fixes: 63ce3940f3ab ("netfilter: nft_redir: add inet support")
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The bug was fixed, but to prevent future bugs from crashing the kernel,
+check the field and add a WARN_ON() if it is NULL.
+
+Link: https://lkml.kernel.org/r/20230302020810.762384440@goodmis.org
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Mark Rutland <mark.rutland@arm.com>
+Fixes: c6afad49d127f ("tracing: Add hist trigger 'sym' and 'sym-offset' modifiers")
+Tested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_redir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events_hist.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/nft_redir.c b/net/netfilter/nft_redir.c
-index deb7e65c8d82b..e64f531d66cfc 100644
---- a/net/netfilter/nft_redir.c
-+++ b/net/netfilter/nft_redir.c
-@@ -232,7 +232,7 @@ static struct nft_expr_type nft_redir_inet_type __read_mostly = {
- 	.name		= "redir",
- 	.ops		= &nft_redir_inet_ops,
- 	.policy		= nft_redir_policy,
--	.maxattr	= NFTA_MASQ_MAX,
-+	.maxattr	= NFTA_REDIR_MAX,
- 	.owner		= THIS_MODULE,
- };
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1996,6 +1996,9 @@ static const char *hist_field_name(struc
+ {
+ 	const char *field_name = "";
  
--- 
-2.39.2
-
++	if (WARN_ON_ONCE(!field))
++		return field_name;
++
+ 	if (level > 1)
+ 		return field_name;
+ 
 
 
