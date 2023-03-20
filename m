@@ -1,30 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681AC1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D96C433EF;
-	Mon, 20 Mar 2023 15:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EB01C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6CBC433EF;
+	Mon, 20 Mar 2023 15:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325559;
-	bh=l82DDHCb2EIipPemovtnXp3iydtOICGI14cAsTHFGEY=;
+	s=korg; t=1679325562;
+	bh=svnEGMwOtZy+jrP8rpjpjRoeysd5G0/prnmGyaWfYlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQ/H97uccmeLlF1Up5EWWkpf+h1rJUBy9PlZDmGxYH9UhluokguhAuHBrgdnFphb3
-	 XdL/YV3BBcwFGHvrkuW7bYLcKtgsRhFwvKGT/Yspemb7TjqBRkIH3JPf3hCln4DOUC
-	 0/JxH3fLOzHMwNshZpD9su5sPANAfdBMfj9SMBCc=
+	b=Ta64bPVRRlHFAW5IsoDtyVtiDOsgqyyvlTcb0CGaUqSbaviMzm/Fb8kOuVLb/lgsV
+	 SmozIMoAonMQlfN+Qde3bJuQEBDrOhp0qxCcs6C5mFVfUgtB4t9lNC2mGFtmjmcGZw
+	 I1G63KgkvA1W+Ck9C+gR5TCVVq7274LW6x4pixAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Heidrich <szymon.heidrich@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 061/211] net: usb: smsc75xx: Limit packet length to skb->len
-Date: Mon, 20 Mar 2023 15:53:16 +0100
-Message-Id: <20230320145515.781033666@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"HeungJun, Kim" <riverful.kim@samsung.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Mauro Carvalho Chehab <mchehab@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	HeungJun
+Subject: [PATCH 6.1 102/198] media: m5mols: fix off-by-one loop termination error
+Date: Mon, 20 Mar 2023 15:54:00 +0100
+Message-Id: <20230320145511.849693940@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +42,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit d8b228318935044dafe3a5bc07ee71a1f1424b8d ]
+[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
 
-Packet length retrieved from skb data may be larger than
-the actual socket buffer length (up to 9026 bytes). In such
-case the cloned skb passed up the network stack will leak
-kernel memory contents.
+The __find_restype() function loops over the m5mols_default_ffmt[]
+array, and the termination condition ends up being wrong: instead of
+stopping when the iterator becomes the size of the array it traverses,
+it stops after it has already overshot the array.
 
-Fixes: d0cad871703b ("smsc75xx: SMSC LAN75xx USB gigabit ethernet adapter driver")
-Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Now, in practice this doesn't likely matter, because the code will
+always find the entry it looks for, and will thus return early and never
+hit that last extra iteration.
+
+But it turns out that clang will unroll the loop fully, because it has
+only two iterations (well, three due to the off-by-one bug), and then
+clang will end up just giving up in the middle of the loop unrolling
+when it notices that the code walks past the end of the array.
+
+And that made 'objtool' very unhappy indeed, because the generated code
+just falls off the edge of the universe, and ends up falling through to
+the next function, causing this warning:
+
+   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
+
+Fix the loop ending condition.
+
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
+Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
+Cc: HeungJun, Kim <riverful.kim@samsung.com>
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc75xx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
-index 95de452ff4dad..db34f8d1d6051 100644
---- a/drivers/net/usb/smsc75xx.c
-+++ b/drivers/net/usb/smsc75xx.c
-@@ -2212,7 +2212,8 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 				dev->net->stats.rx_frame_errors++;
- 		} else {
- 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
--			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
-+			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
-+				     size > skb->len)) {
- 				netif_dbg(dev, rx_err, dev->net,
- 					  "size err rx_cmd_a=0x%08x\n",
- 					  rx_cmd_a);
+diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
+index 2201d2a26353a..c90442feb6dca 100644
+--- a/drivers/media/i2c/m5mols/m5mols_core.c
++++ b/drivers/media/i2c/m5mols/m5mols_core.c
+@@ -488,7 +488,7 @@ static enum m5mols_restype __find_restype(u32 code)
+ 	do {
+ 		if (code == m5mols_default_ffmt[type].code)
+ 			return type;
+-	} while (type++ != SIZE_DEFAULT_FFMT);
++	} while (++type != SIZE_DEFAULT_FFMT);
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
