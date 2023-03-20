@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEA91C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DE5C433EF;
-	Mon, 20 Mar 2023 15:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451071C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB840C433EF;
+	Mon, 20 Mar 2023 15:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325474;
-	bh=+lkgRQaE4nsE9iMGjMvVg25Rcgn49QxVrJToTJ1I3Y4=;
+	s=korg; t=1679325477;
+	bh=sc+8bTOpCStA4D2vR+9Bw4KTVrkNAROdfhBYVPOpCPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YOyJGY1AgC2UYh3xSV+TohEQPrKYAJzuMP+2+M1/8PDxm6k+wG6sEWgQb++xmLHlS
-	 zRTCFR6ofvfWfQxB/8KrjOET2dNMfxmrt7xa9CVupC/dD5L7D8p7T+Y16AShIvMOPG
-	 kD25BcT7pbmpB4KyrHFoaPV+sMB8kV5eO2XNgNxM=
+	b=jQEDTg7pbQJa3/Rq2/tbG1RlQfvgWWHaamH3munNYTyFpzAtazIhPHwyYg8N0hiaB
+	 XSj0U9AJUSCz+GnfM5+gF5q6Wj5U7MziOqvcagCjHthoVRIMWZRJw1rk37y3gjez51
+	 IAhdeedw9vv2VPGkL5Mx1+bQru4bT+lsGubqRGh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadfed@meta.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Marek Vasut <marex@denx.de>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Arun Ramadoss <arun.ramadoss@microchip.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 047/211] bnxt_en: reset PHC frequency in free-running mode
-Date: Mon, 20 Mar 2023 15:53:02 +0100
-Message-Id: <20230320145515.199436863@linuxfoundation.org>
+Subject: [PATCH 6.1 089/198] net: dsa: microchip: fix RGMII delay configuration on KSZ8765/KSZ8794/KSZ8795
+Date: Mon, 20 Mar 2023 15:53:47 +0100
+Message-Id: <20230320145511.252902978@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,167 +38,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vadim Fedorenko <vadfed@meta.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 131db499162274858bdbd7b5323a639da4aab86c ]
+[ Upstream commit 5ae06327a3a5bad4ee246d81df203b1b00a7b390 ]
 
-When using a PHC in shared between multiple hosts, the previous
-frequency value may not be reset and could lead to host being unable to
-compensate the offset with timecounter adjustments. To avoid such state
-reset the hardware frequency of PHC to zero on init. Some refactoring is
-needed to make code readable.
+The blamed commit has replaced a ksz_write8() call to address
+REG_PORT_5_CTRL_6 (0x56) with a ksz_set_xmii() -> ksz_pwrite8() call to
+regs[P_XMII_CTRL_1], which is also defined as 0x56 for ksz8795_regs[].
 
-Fixes: 85036aee1938 ("bnxt_en: Add a non-real time mode to access NIC clock")
-Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://lore.kernel.org/r/20230310151356.678059-1-vadfed@meta.com
+The trouble is that, when compared to ksz_write8(), ksz_pwrite8() also
+adjusts the register offset with the port base address. So in reality,
+ksz_pwrite8(offset=0x56) accesses register 0x56 + 0x50 = 0xa6, which in
+this switch appears to be unmapped, and the RGMII delay configuration on
+the CPU port does nothing.
+
+So if the switch wasn't fine with the RGMII delay configuration done
+through pin strapping and relied on Linux to apply a different one in
+order to pass traffic, this is now broken.
+
+Using the offset translation logic imposed by ksz_pwrite8(), the correct
+value for regs[P_XMII_CTRL_1] should have been 0x6 on ksz8795_regs[], in
+order to really end up accessing register 0x56.
+
+Static code analysis shows that, despite there being multiple other
+accesses to regs[P_XMII_CTRL_1] in this driver, the only code path that
+is applicable to ksz8795_regs[] and ksz8_dev_ops is ksz_set_xmii().
+Therefore, the problem is isolated to RGMII delays.
+
+In its current form, ksz8795_regs[] contains the same value for
+P_XMII_CTRL_0 and for P_XMII_CTRL_1, and this raises valid suspicions
+that writes made by the driver to regs[P_XMII_CTRL_0] might overwrite
+writes made to regs[P_XMII_CTRL_1] or vice versa.
+
+Again, static analysis shows that the only accesses to P_XMII_CTRL_0
+from the driver are made from code paths which are not reachable with
+ksz8_dev_ops. So the accesses made by ksz_set_xmii() are safe for this
+switch family.
+
+[ vladimiroltean: rewrote commit message ]
+
+Fixes: c476bede4b0f ("net: dsa: microchip: ksz8795: use common xmii function")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230315231916.2998480-1-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     |  6 +-
- drivers/net/ethernet/broadcom/bnxt/bnxt.h     |  2 +
- drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 56 ++++++++++---------
- 3 files changed, 35 insertions(+), 29 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 25d1642c10c3b..b44b2ec5e61a2 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -6991,11 +6991,9 @@ static int bnxt_hwrm_func_qcfg(struct bnxt *bp)
- 		if (flags & FUNC_QCFG_RESP_FLAGS_FW_DCBX_AGENT_ENABLED)
- 			bp->fw_cap |= BNXT_FW_CAP_DCBX_AGENT;
- 	}
--	if (BNXT_PF(bp) && (flags & FUNC_QCFG_RESP_FLAGS_MULTI_HOST)) {
-+	if (BNXT_PF(bp) && (flags & FUNC_QCFG_RESP_FLAGS_MULTI_HOST))
- 		bp->flags |= BNXT_FLAG_MULTI_HOST;
--		if (bp->fw_cap & BNXT_FW_CAP_PTP_RTC)
--			bp->fw_cap &= ~BNXT_FW_CAP_PTP_RTC;
--	}
-+
- 	if (flags & FUNC_QCFG_RESP_FLAGS_RING_MONITOR_ENABLED)
- 		bp->fw_cap |= BNXT_FW_CAP_RING_MONITOR;
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index c68f48cd1ec08..07f6776bba12b 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -272,7 +272,7 @@ static const u16 ksz8795_regs[] = {
+ 	[S_BROADCAST_CTRL]		= 0x06,
+ 	[S_MULTICAST_CTRL]		= 0x04,
+ 	[P_XMII_CTRL_0]			= 0x06,
+-	[P_XMII_CTRL_1]			= 0x56,
++	[P_XMII_CTRL_1]			= 0x06,
+ };
  
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index 5163ef4a49ea3..56355e64815e2 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1992,6 +1992,8 @@ struct bnxt {
- 	u32			fw_dbg_cap;
- 
- #define BNXT_NEW_RM(bp)		((bp)->fw_cap & BNXT_FW_CAP_NEW_RM)
-+#define BNXT_PTP_USE_RTC(bp)	(!BNXT_MH(bp) && \
-+				 ((bp)->fw_cap & BNXT_FW_CAP_PTP_RTC))
- 	u32			hwrm_spec_code;
- 	u16			hwrm_cmd_seq;
- 	u16                     hwrm_cmd_kong_seq;
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-index 4ec8bba18cdd2..a3a3978a4d1c2 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-@@ -63,7 +63,7 @@ static int bnxt_ptp_settime(struct ptp_clock_info *ptp_info,
- 						ptp_info);
- 	u64 ns = timespec64_to_ns(ts);
- 
--	if (ptp->bp->fw_cap & BNXT_FW_CAP_PTP_RTC)
-+	if (BNXT_PTP_USE_RTC(ptp->bp))
- 		return bnxt_ptp_cfg_settime(ptp->bp, ns);
- 
- 	spin_lock_bh(&ptp->ptp_lock);
-@@ -196,7 +196,7 @@ static int bnxt_ptp_adjtime(struct ptp_clock_info *ptp_info, s64 delta)
- 	struct bnxt_ptp_cfg *ptp = container_of(ptp_info, struct bnxt_ptp_cfg,
- 						ptp_info);
- 
--	if (ptp->bp->fw_cap & BNXT_FW_CAP_PTP_RTC)
-+	if (BNXT_PTP_USE_RTC(ptp->bp))
- 		return bnxt_ptp_adjphc(ptp, delta);
- 
- 	spin_lock_bh(&ptp->ptp_lock);
-@@ -205,34 +205,39 @@ static int bnxt_ptp_adjtime(struct ptp_clock_info *ptp_info, s64 delta)
- 	return 0;
- }
- 
-+static int bnxt_ptp_adjfine_rtc(struct bnxt *bp, long scaled_ppm)
-+{
-+	s32 ppb = scaled_ppm_to_ppb(scaled_ppm);
-+	struct hwrm_port_mac_cfg_input *req;
-+	int rc;
-+
-+	rc = hwrm_req_init(bp, req, HWRM_PORT_MAC_CFG);
-+	if (rc)
-+		return rc;
-+
-+	req->ptp_freq_adj_ppb = cpu_to_le32(ppb);
-+	req->enables = cpu_to_le32(PORT_MAC_CFG_REQ_ENABLES_PTP_FREQ_ADJ_PPB);
-+	rc = hwrm_req_send(bp, req);
-+	if (rc)
-+		netdev_err(bp->dev,
-+			   "ptp adjfine failed. rc = %d\n", rc);
-+	return rc;
-+}
-+
- static int bnxt_ptp_adjfine(struct ptp_clock_info *ptp_info, long scaled_ppm)
- {
- 	struct bnxt_ptp_cfg *ptp = container_of(ptp_info, struct bnxt_ptp_cfg,
- 						ptp_info);
--	struct hwrm_port_mac_cfg_input *req;
- 	struct bnxt *bp = ptp->bp;
--	int rc = 0;
- 
--	if (!(ptp->bp->fw_cap & BNXT_FW_CAP_PTP_RTC)) {
--		spin_lock_bh(&ptp->ptp_lock);
--		timecounter_read(&ptp->tc);
--		ptp->cc.mult = adjust_by_scaled_ppm(ptp->cmult, scaled_ppm);
--		spin_unlock_bh(&ptp->ptp_lock);
--	} else {
--		s32 ppb = scaled_ppm_to_ppb(scaled_ppm);
--
--		rc = hwrm_req_init(bp, req, HWRM_PORT_MAC_CFG);
--		if (rc)
--			return rc;
-+	if (BNXT_PTP_USE_RTC(bp))
-+		return bnxt_ptp_adjfine_rtc(bp, scaled_ppm);
- 
--		req->ptp_freq_adj_ppb = cpu_to_le32(ppb);
--		req->enables = cpu_to_le32(PORT_MAC_CFG_REQ_ENABLES_PTP_FREQ_ADJ_PPB);
--		rc = hwrm_req_send(ptp->bp, req);
--		if (rc)
--			netdev_err(ptp->bp->dev,
--				   "ptp adjfine failed. rc = %d\n", rc);
--	}
--	return rc;
-+	spin_lock_bh(&ptp->ptp_lock);
-+	timecounter_read(&ptp->tc);
-+	ptp->cc.mult = adjust_by_scaled_ppm(ptp->cmult, scaled_ppm);
-+	spin_unlock_bh(&ptp->ptp_lock);
-+	return 0;
- }
- 
- void bnxt_ptp_pps_event(struct bnxt *bp, u32 data1, u32 data2)
-@@ -879,7 +884,7 @@ int bnxt_ptp_init_rtc(struct bnxt *bp, bool phc_cfg)
- 	u64 ns;
- 	int rc;
- 
--	if (!bp->ptp_cfg || !(bp->fw_cap & BNXT_FW_CAP_PTP_RTC))
-+	if (!bp->ptp_cfg || !BNXT_PTP_USE_RTC(bp))
- 		return -ENODEV;
- 
- 	if (!phc_cfg) {
-@@ -932,13 +937,14 @@ int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
- 	atomic_set(&ptp->tx_avail, BNXT_MAX_TX_TS);
- 	spin_lock_init(&ptp->ptp_lock);
- 
--	if (bp->fw_cap & BNXT_FW_CAP_PTP_RTC) {
-+	if (BNXT_PTP_USE_RTC(bp)) {
- 		bnxt_ptp_timecounter_init(bp, false);
- 		rc = bnxt_ptp_init_rtc(bp, phc_cfg);
- 		if (rc)
- 			goto out;
- 	} else {
- 		bnxt_ptp_timecounter_init(bp, true);
-+		bnxt_ptp_adjfine_rtc(bp, 0);
- 	}
- 
- 	ptp->ptp_info = bnxt_ptp_caps;
+ static const u32 ksz8795_masks[] = {
 -- 
 2.39.2
 
