@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A997B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B15C433EF;
-	Mon, 20 Mar 2023 15:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CFF1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7DBDC433EF;
+	Mon, 20 Mar 2023 15:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325460;
-	bh=sXo8mBoKZYZFAHqbPaF7n1eHMzEnof++Sw1JW5lceJI=;
+	s=korg; t=1679325463;
+	bh=xIzhPFcVShWQTkBc4XoUjnwew0fc/NhxrqBb4ZXy1O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mRfI7WOZvJuUI6hZV5BKWbLFht5nxi7p4mKf7quJt/wdl55tAwFANVxQgTzJjQod/
-	 XGVTibHbguk8vJLstobOQgSNLlkAfFcpvc23/Zb3gAY9guqk+nSCI9xksaxkB5LFNr
-	 VH43dR5H1gbSSTJHk51zptF8klKSPXVrHmlSJS7c=
+	b=pvt5MFvw0klrEhfRIPap9eJ9tswXR/kNI3B5lhf6T75/0OBOsTdvxmXNxTrvOUAFt
+	 +ZSz0XfwmARYIM28xZMZmdLjEhKUQbUfWvjBdFi+V51WRSxlP/buCd2W7pv3E5NwvK
+	 Bl5fDUKRDzwCN1D0oF3esQ5rVvmDUlRbXib3v82w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Po-Hsu Lin <po-hsu.lin@canonical.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/198] selftests: net: devlink_port_split.py: skip test if no suitable device available
-Date: Mon, 20 Mar 2023 15:53:45 +0100
-Message-Id: <20230320145511.184355430@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 5.15 107/115] x86/mm: Fix use of uninitialized buffer in sme_enable()
+Date: Mon, 20 Mar 2023 15:55:19 +0100
+Message-Id: <20230320145453.928706800@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,119 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Po-Hsu Lin <po-hsu.lin@canonical.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 24994513ad13ff2c47ba91d2b5df82c3d496c370 ]
+commit cbebd68f59f03633469f3ecf9bea99cd6cce3854 upstream.
 
-The `devlink -j port show` command output may not contain the "flavour"
-key, an example from Ubuntu 22.10 s390x LPAR(5.19.0-37-generic), with
-mlx4 driver and iproute2-5.15.0:
-  {"port":{"pci/0001:00:00.0/1":{"type":"eth","netdev":"ens301"},
-           "pci/0001:00:00.0/2":{"type":"eth","netdev":"ens301d1"},
-           "pci/0002:00:00.0/1":{"type":"eth","netdev":"ens317"},
-           "pci/0002:00:00.0/2":{"type":"eth","netdev":"ens317d1"}}}
+cmdline_find_option() may fail before doing any initialization of
+the buffer array. This may lead to unpredictable results when the same
+buffer is used later in calls to strncmp() function.  Fix the issue by
+returning early if cmdline_find_option() returns an error.
 
-This will cause a KeyError exception.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Create a validate_devlink_output() to check for this "flavour" from
-devlink command output to avoid this KeyError exception. Also let
-it handle the check for `devlink -j dev show` output in main().
-
-Apart from this, if the test was not started because the max lanes of
-the designated device is 0. The script will still return 0 and thus
-causing a false-negative test result.
-
-Use a found_max_lanes flag to determine if these tests were skipped
-due to this reason and return KSFT_SKIP to make it more clear.
-
-Link: https://bugs.launchpad.net/bugs/1937133
-Fixes: f3348a82e727 ("selftests: net: Add port split test")
-Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
-Link: https://lore.kernel.org/r/20230315165353.229590-1-po-hsu.lin@canonical.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: aca20d546214 ("x86/mm: Add support to make use of Secure Memory Encryption")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230306160656.14844-1-n.zhandarovich@fintech.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../selftests/net/devlink_port_split.py       | 36 ++++++++++++++++---
- 1 file changed, 31 insertions(+), 5 deletions(-)
+ arch/x86/mm/mem_encrypt_identity.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/devlink_port_split.py b/tools/testing/selftests/net/devlink_port_split.py
-index 2b5d6ff873738..2d84c7a0be6b2 100755
---- a/tools/testing/selftests/net/devlink_port_split.py
-+++ b/tools/testing/selftests/net/devlink_port_split.py
-@@ -59,6 +59,8 @@ class devlink_ports(object):
-         assert stderr == ""
-         ports = json.loads(stdout)['port']
+--- a/arch/x86/mm/mem_encrypt_identity.c
++++ b/arch/x86/mm/mem_encrypt_identity.c
+@@ -585,7 +585,8 @@ void __init sme_enable(struct boot_param
+ 	cmdline_ptr = (const char *)((u64)bp->hdr.cmd_line_ptr |
+ 				     ((u64)bp->ext_cmd_line_ptr << 32));
  
-+        validate_devlink_output(ports, 'flavour')
-+
-         for port in ports:
-             if dev in port:
-                 if ports[port]['flavour'] == 'physical':
-@@ -220,6 +222,27 @@ def split_splittable_port(port, k, lanes, dev):
-     unsplit(port.bus_info)
+-	cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer));
++	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0)
++		return;
  
- 
-+def validate_devlink_output(devlink_data, target_property=None):
-+    """
-+    Determine if test should be skipped by checking:
-+      1. devlink_data contains values
-+      2. The target_property exist in devlink_data
-+    """
-+    skip_reason = None
-+    if any(devlink_data.values()):
-+        if target_property:
-+            skip_reason = "{} not found in devlink output, test skipped".format(target_property)
-+            for key in devlink_data:
-+                if target_property in devlink_data[key]:
-+                    skip_reason = None
-+    else:
-+        skip_reason = 'devlink output is empty, test skipped'
-+
-+    if skip_reason:
-+        print(skip_reason)
-+        sys.exit(KSFT_SKIP)
-+
-+
- def make_parser():
-     parser = argparse.ArgumentParser(description='A test for port splitting.')
-     parser.add_argument('--dev',
-@@ -240,12 +263,9 @@ def main(cmdline=None):
-         stdout, stderr = run_command(cmd)
-         assert stderr == ""
- 
-+        validate_devlink_output(json.loads(stdout))
-         devs = json.loads(stdout)['dev']
--        if devs:
--            dev = list(devs.keys())[0]
--        else:
--            print("no devlink device was found, test skipped")
--            sys.exit(KSFT_SKIP)
-+        dev = list(devs.keys())[0]
- 
-     cmd = "devlink dev show %s" % dev
-     stdout, stderr = run_command(cmd)
-@@ -255,6 +275,7 @@ def main(cmdline=None):
- 
-     ports = devlink_ports(dev)
- 
-+    found_max_lanes = False
-     for port in ports.if_names:
-         max_lanes = get_max_lanes(port.name)
- 
-@@ -277,6 +298,11 @@ def main(cmdline=None):
-                 split_splittable_port(port, lane, max_lanes, dev)
- 
-                 lane //= 2
-+        found_max_lanes = True
-+
-+    if not found_max_lanes:
-+        print(f"Test not started, no port of device {dev} reports max_lanes")
-+        sys.exit(KSFT_SKIP)
- 
- 
- if __name__ == "__main__":
--- 
-2.39.2
-
+ 	if (!strncmp(buffer, cmdline_on, sizeof(buffer)))
+ 		sme_me_mask = me_mask;
 
 
