@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD121C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B94AC433EF;
-	Mon, 20 Mar 2023 15:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0ED1C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01489C433D2;
+	Mon, 20 Mar 2023 15:28:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326123;
-	bh=93dlYql7Kh6eCQFq4Q3yrSYnSk1VkiRXwVuihcj4z1Y=;
+	s=korg; t=1679326126;
+	bh=jiYlifzQ/nQU/22g0bAxSe9qhgfWxDJRdMiz0zNYx50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BVjsjAwGiKVXPU1iGlrxcOl42DdmJjOp/CHbQ11d0pWP7McvGUBugUuyElfZ7yRJq
-	 REZFWyt38L5N66V2KwLwWbpRq9b5MDvW4/WBrn9/AS8pYDLk/j3Wrsm4OktXuPqYPf
-	 RT0eH0z2NujWD81ZUSxWDAm8HMYiEKUWD6T8UIbM=
+	b=SmrDXaG7MYweM6Qw9oYJJIhZ6Mo8Ner/5fzN5Y+BGN30v/6Dc2AO2hlgaLSTHsoYH
+	 R867I0P1Y4qmQy7vzZixKBziwwiVhasKU2CjhQI9bNeXvwDNTh54cRNWSzdiSWcbos
+	 N3VgT/9FfybRQcAb6a0uP9wmsmWoolS2d6WYIMv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	=?UTF-8?q?B=C5=82a=C5=BCej=20Szczygie=C5=82?= <mumei6102@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 167/211] drm/amd/pm: Fix sienna cichlid incorrect OD volage after resume
-Date: Mon, 20 Mar 2023 15:55:02 +0100
-Message-Id: <20230320145520.436296081@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.2 142/211] md: select BLOCK_LEGACY_AUTOLOAD
+Date: Mon, 20 Mar 2023 15:54:37 +0100
+Message-Id: <20230320145519.387946584@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -35,108 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Błażej Szczygieł <mumei6102@gmail.com>
+From: NeilBrown <neilb@suse.de>
 
-commit a9386ee9681585794dbab95d4ce6826f73d19af6 upstream.
+commit 6c0f5898836c05c6d850a750ed7940ba29e4e6c5 upstream.
 
-Always setup overdrive tables after resume. Preserve only some
-user-defined settings in user_overdrive_table if they're set.
+When BLOCK_LEGACY_AUTOLOAD is not enable, mdadm is not able to
+activate new arrays unless "CREATE names=yes" appears in
+mdadm.conf
 
-Copy restored user_overdrive_table into od_table to get correct
-values.
+As this is a regression we need to always enable BLOCK_LEGACY_AUTOLOAD
+for when MD is selected - at least until mdadm is updated and the
+updates widely available.
 
-On cold boot, BTC was triggered and GfxVfCurve was calibrated. We
-got VfCurve settings (a). On resuming back, BTC will be triggered
-again and GfxVfCurve will be recalibrated. VfCurve settings (b)
-got may be different from those of cold boot.  So if we reuse
-those VfCurve settings (a) got on cold boot on suspend, we can
-run into discrepencies.
-
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/1897
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2276
-Reviewed-by: Evan Quan <evan.quan@amd.com>
-Signed-off-by: Błażej Szczygieł <mumei6102@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.18+
+Fixes: fbdee71bb5d8 ("block: deprecate autoloading based on dev_t")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c |   43 ++++++++++++----
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ drivers/md/Kconfig |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-@@ -2143,16 +2143,9 @@ static int sienna_cichlid_set_default_od
- 		(OverDriveTable_t *)smu->smu_table.boot_overdrive_table;
- 	OverDriveTable_t *user_od_table =
- 		(OverDriveTable_t *)smu->smu_table.user_overdrive_table;
-+	OverDriveTable_t user_od_table_bak;
- 	int ret = 0;
- 
--	/*
--	 * For S3/S4/Runpm resume, no need to setup those overdrive tables again as
--	 *   - either they already have the default OD settings got during cold bootup
--	 *   - or they have some user customized OD settings which cannot be overwritten
--	 */
--	if (smu->adev->in_suspend)
--		return 0;
--
- 	ret = smu_cmn_update_table(smu, SMU_TABLE_OVERDRIVE,
- 				   0, (void *)boot_od_table, false);
- 	if (ret) {
-@@ -2163,7 +2156,23 @@ static int sienna_cichlid_set_default_od
- 	sienna_cichlid_dump_od_table(smu, boot_od_table);
- 
- 	memcpy(od_table, boot_od_table, sizeof(OverDriveTable_t));
--	memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
-+
-+	/*
-+	 * For S3/S4/Runpm resume, we need to setup those overdrive tables again,
-+	 * but we have to preserve user defined values in "user_od_table".
-+	 */
-+	if (!smu->adev->in_suspend) {
-+		memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
-+		smu->user_dpm_profile.user_od = false;
-+	} else if (smu->user_dpm_profile.user_od) {
-+		memcpy(&user_od_table_bak, user_od_table, sizeof(OverDriveTable_t));
-+		memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
-+		user_od_table->GfxclkFmin = user_od_table_bak.GfxclkFmin;
-+		user_od_table->GfxclkFmax = user_od_table_bak.GfxclkFmax;
-+		user_od_table->UclkFmin = user_od_table_bak.UclkFmin;
-+		user_od_table->UclkFmax = user_od_table_bak.UclkFmax;
-+		user_od_table->VddGfxOffset = user_od_table_bak.VddGfxOffset;
-+	}
- 
- 	return 0;
- }
-@@ -2373,6 +2382,20 @@ static int sienna_cichlid_od_edit_dpm_ta
- 	return ret;
- }
- 
-+static int sienna_cichlid_restore_user_od_settings(struct smu_context *smu)
-+{
-+	struct smu_table_context *table_context = &smu->smu_table;
-+	OverDriveTable_t *od_table = table_context->overdrive_table;
-+	OverDriveTable_t *user_od_table = table_context->user_overdrive_table;
-+	int res;
-+
-+	res = smu_v11_0_restore_user_od_settings(smu);
-+	if (res == 0)
-+		memcpy(od_table, user_od_table, sizeof(OverDriveTable_t));
-+
-+	return res;
-+}
-+
- static int sienna_cichlid_run_btc(struct smu_context *smu)
- {
- 	int res;
-@@ -4400,7 +4423,7 @@ static const struct pptable_funcs sienna
- 	.set_soft_freq_limited_range = smu_v11_0_set_soft_freq_limited_range,
- 	.set_default_od_settings = sienna_cichlid_set_default_od_settings,
- 	.od_edit_dpm_table = sienna_cichlid_od_edit_dpm_table,
--	.restore_user_od_settings = smu_v11_0_restore_user_od_settings,
-+	.restore_user_od_settings = sienna_cichlid_restore_user_od_settings,
- 	.run_btc = sienna_cichlid_run_btc,
- 	.set_power_source = smu_v11_0_set_power_source,
- 	.get_pp_feature_mask = smu_cmn_get_pp_feature_mask,
+--- a/drivers/md/Kconfig
++++ b/drivers/md/Kconfig
+@@ -16,6 +16,10 @@ if MD
+ config BLK_DEV_MD
+ 	tristate "RAID support"
+ 	select BLOCK_HOLDER_DEPRECATED if SYSFS
++	# BLOCK_LEGACY_AUTOLOAD requirement should be removed
++	# after relevant mdadm enhancements - to make "names=yes"
++	# the default - are widely available.
++	select BLOCK_LEGACY_AUTOLOAD
+ 	help
+ 	  This driver lets you combine several hard disk partitions into one
+ 	  logical block device. This can be used to simply append one
 
 
