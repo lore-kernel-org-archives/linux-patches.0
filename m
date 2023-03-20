@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3B41C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A17C433D2;
-	Mon, 20 Mar 2023 15:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061EA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791C4C433D2;
+	Mon, 20 Mar 2023 15:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324544;
-	bh=hGPIJGWUQFacJe58wfAXGeJZ2kBO+h6j/m4dN2KKEx8=;
+	s=korg; t=1679324546;
+	bh=SY3U3nDwNNAXQUP2mh85m0gk3tTUJK6VDS+bXEml/Xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gp/X9/T57AzqGODNQOM6BUfU5djGpf1s1fdlWk2JaxdRkXdSG1tBiIvIlHVaVPpPC
-	 OdXRk+syM0npdf+9RzUooLolVWl0pyH7yyUk1la1NcKAfU94Kj8KN9P0jkITFOpAV3
-	 SgGtCrC8TOdWAB8pAuzDBuy7FaVii07q9yetN834=
+	b=Ek1JEc7nSsUNWM1EMS81K0XHsGSXEioUrNKxB9zTg9ibBPP65pYlq8u42Z5eYFojU
+	 T2/Tasz69By0OhmEghwNk9wIKid1W8ogF3P1lkyZP88hlaSXX5Bl6olLGFB0wdAMbk
+	 7Fxx7rSQchCciUj9ikLchiWBjtNo7Oj1wHH+JYR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.4 49/60] KVM: nVMX: add missing consistency checks for CR0 and CR4
-Date: Mon, 20 Mar 2023 15:54:58 +0100
-Message-Id: <20230320145432.956767455@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 15/99] tcp: tcp_make_synack() can be called from process context
+Date: Mon, 20 Mar 2023 15:53:53 +0100
+Message-Id: <20230320145444.001760393@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
-References: <20230320145430.861072439@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,57 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 112e66017bff7f2837030f34c2bc19501e9212d5 upstream.
+[ Upstream commit bced3f7db95ff2e6ca29dc4d1c9751ab5e736a09 ]
 
-The effective values of the guest CR0 and CR4 registers may differ from
-those included in the VMCS12.  In particular, disabling EPT forces
-CR4.PAE=1 and disabling unrestricted guest mode forces CR0.PG=CR0.PE=1.
+tcp_rtx_synack() now could be called in process context as explained in
+0a375c822497 ("tcp: tcp_rtx_synack() can be called from process
+context").
 
-Therefore, checks on these bits cannot be delegated to the processor
-and must be performed by KVM.
+tcp_rtx_synack() might call tcp_make_synack(), which will touch per-CPU
+variables with preemption enabled. This causes the following BUG:
 
-Reported-by: Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    BUG: using __this_cpu_add() in preemptible [00000000] code: ThriftIO1/5464
+    caller is tcp_make_synack+0x841/0xac0
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x10d/0x1a0
+     check_preemption_disabled+0x104/0x110
+     tcp_make_synack+0x841/0xac0
+     tcp_v6_send_synack+0x5c/0x450
+     tcp_rtx_synack+0xeb/0x1f0
+     inet_rtx_syn_ack+0x34/0x60
+     tcp_check_req+0x3af/0x9e0
+     tcp_rcv_state_process+0x59b/0x2030
+     tcp_v6_do_rcv+0x5f5/0x700
+     release_sock+0x3a/0xf0
+     tcp_sendmsg+0x33/0x40
+     ____sys_sendmsg+0x2f2/0x490
+     __sys_sendmsg+0x184/0x230
+     do_syscall_64+0x3d/0x90
+
+Avoid calling __TCP_INC_STATS() with will touch per-cpu variables. Use
+TCP_INC_STATS() which is safe to be called from context switch.
+
+Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230308190745.780221-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -2779,7 +2779,7 @@ static int nested_vmx_check_guest_state(
- 					struct vmcs12 *vmcs12,
- 					u32 *exit_qual)
- {
--	bool ia32e;
-+	bool ia32e = !!(vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE);
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index eefd032bc6dbd..e4ad274ec7a30 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3609,7 +3609,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
+ 	th->window = htons(min(req->rsk_rcv_wnd, 65535U));
+ 	tcp_options_write((__be32 *)(th + 1), NULL, &opts);
+ 	th->doff = (tcp_header_size >> 2);
+-	__TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
++	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
  
- 	*exit_qual = ENTRY_FAIL_DEFAULT;
- 
-@@ -2796,6 +2796,13 @@ static int nested_vmx_check_guest_state(
- 		return -EINVAL;
- 	}
- 
-+	if (CC((vmcs12->guest_cr0 & (X86_CR0_PG | X86_CR0_PE)) == X86_CR0_PG))
-+		return -EINVAL;
-+
-+	if (CC(ia32e && !(vmcs12->guest_cr4 & X86_CR4_PAE)) ||
-+	    CC(ia32e && !(vmcs12->guest_cr0 & X86_CR0_PG)))
-+		return -EINVAL;
-+
- 	/*
- 	 * If the load IA32_EFER VM-entry control is 1, the following checks
- 	 * are performed on the field for the IA32_EFER MSR:
-@@ -2807,7 +2814,6 @@ static int nested_vmx_check_guest_state(
- 	 */
- 	if (to_vmx(vcpu)->nested.nested_run_pending &&
- 	    (vmcs12->vm_entry_controls & VM_ENTRY_LOAD_IA32_EFER)) {
--		ia32e = (vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE) != 0;
- 		if (CC(!kvm_valid_efer(vcpu, vmcs12->guest_ia32_efer)) ||
- 		    CC(ia32e != !!(vmcs12->guest_ia32_efer & EFER_LMA)) ||
- 		    CC(((vmcs12->guest_cr0 & X86_CR0_PG) &&
+ #ifdef CONFIG_TCP_MD5SIG
+ 	/* Okay, we have all we need - do the md5 hash if needed */
+-- 
+2.39.2
+
 
 
