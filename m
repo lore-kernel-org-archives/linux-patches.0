@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A041C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF2BC433EF;
-	Mon, 20 Mar 2023 15:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B74E1C35
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADFBC433D2;
+	Mon, 20 Mar 2023 15:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326236;
-	bh=lLXBj/bdFjlolTNbeU1Pf/BTwvc7xwlXeLyYxAFGWso=;
+	s=korg; t=1679326239;
+	bh=JGoVHzgVWqTkRaEk8LYC+vjk6fqlImbqLIvIF5tP868=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnKKgG3mrDLcgINmyDxhy5dNXMqftCuF5lI0vHPbypeqcauy22425+fUkOCC3jK9L
-	 2t5UPXfTN48b4gMNQNglp03vafMboDTWqMNWZhZmDa9+KYooWawXCvVIGS6pcVy3Uf
-	 xuLYvQZboMkJI/tk3aSzrWsvuRPTP6QVIf6sr+tQ=
+	b=ee/hQtfXnVJZ98CzEb0ha8FhfPuIglIRwRrbpPdLtv4aC4uGMbVR3C4+4ofwL6jlV
+	 A+fvnp4qggTWW5faPOn7AQ9D3IH18PbunJL0YNB2UQt+0cZelaVtF0BUVq8Rk7hdF3
+	 MkMfhXwwapZ2F7jegG9rRxkCtcWrrytRAZk6B9to=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Zhu <James.Zhu@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 168/211] drm/amdgpu/vcn: Disable indirect SRAM on Vangogh broken BIOSes
-Date: Mon, 20 Mar 2023 15:55:03 +0100
-Message-Id: <20230320145520.487160109@linuxfoundation.org>
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.2 204/211] powerpc: Pass correct CPU reference to assembler
+Date: Mon, 20 Mar 2023 15:55:39 +0100
+Message-Id: <20230320145522.085152195@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,76 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 542a56e8eb4467ae654eefab31ff194569db39cd upstream.
+commit bfb03af71a3798b5a88a945a9c19ad67e1c4986d upstream.
 
-The VCN firmware loading path enables the indirect SRAM mode if it's
-advertised as supported. We might have some cases of FW issues that
-prevents this mode to working properly though, ending-up in a failed
-probe. An example below, observed in the Steam Deck:
+Jan-Benedict reported issue with building ppc64e_defconfig
+with mainline GCC work:
 
-[...]
-[drm] failed to load ucode VCN0_RAM(0x3A)
-[drm] psp gfx command LOAD_IP_FW(0x6) failed and response status is (0xFFFF0000)
-amdgpu 0000:04:00.0: [drm:amdgpu_ring_test_helper [amdgpu]] *ERROR* ring vcn_dec_0 test failed (-110)
-[drm:amdgpu_device_init.cold [amdgpu]] *ERROR* hw_init of IP block <vcn_v3_0> failed -110
-amdgpu 0000:04:00.0: amdgpu: amdgpu_device_ip_init failed
-amdgpu 0000:04:00.0: amdgpu: Fatal error during GPU init
-[...]
+  powerpc64-linux-gcc -Wp,-MMD,arch/powerpc/kernel/vdso/.gettimeofday-64.o.d -nostdinc -I./arch/powerpc/include -I./arch/powerpc/include/generated  -I./include -I./arch/powerpc/include/uapi -I./arch/powerpc/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/compiler-version.h -include ./include/linux/kconfig.h -D__KERNEL__ -I ./arch/powerpc -DHAVE_AS_ATHIGH=1 -fmacro-prefix-map=./= -D__ASSEMBLY__ -fno-PIE -m64 -Wl,-a64 -mabi=elfv1 -Wa,-me500 -Wa,-me500mc -mabi=elfv1 -mbig-endian    -Wl,-soname=linux-vdso64.so.1 -D__VDSO64__ -s -c -o arch/powerpc/kernel/vdso/gettimeofday-64.o arch/powerpc/kernel/vdso/gettimeofday.S
+	arch/powerpc/kernel/vdso/gettimeofday.S: Assembler messages:
+	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `stdu'
+	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `stdu'
+	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `std'
+	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `std'
+	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `ld'
+	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `ld'
+	...
+	make[1]: *** [arch/powerpc/kernel/vdso/Makefile:76: arch/powerpc/kernel/vdso/gettimeofday-64.o] Error 1
+	make: *** [arch/powerpc/Makefile:387: vdso_prepare] Error 2
 
-Disabling the VCN block circumvents this, but it's a very invasive
-workaround that turns off the entire feature. So, let's add a quirk
-on VCN loading that checks for known problematic BIOSes on Vangogh,
-so we can proactively disable the indirect SRAM mode and allow the
-HW proper probe and VCN IP block to work fine.
+This is due to assembler being called with -me500mc which is
+a 32 bits target.
 
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2385
-Fixes: 82132ecc5432 ("drm/amdgpu: enable Vangogh VCN indirect sram mode")
-Cc: stable@vger.kernel.org
-Cc: James Zhu <James.Zhu@amd.com>
-Cc: Leo Liu <leo.liu@amd.com>
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The problem comes from the fact that CONFIG_PPC_E500MC is selected for
+both the e500mc (32 bits) and the e5500 (64 bits), and therefore the
+following makefile rule is wrong:
+
+  cpu-as-$(CONFIG_PPC_E500MC)    += $(call as-option,-Wa$(comma)-me500mc)
+
+Today we have CONFIG_TARGET_CPU which provides the identification of the
+expected CPU, it is used for GCC. Once GCC knows the target CPU, it adds
+the correct CPU option to assembler, no need to add it explicitly.
+
+With that change (And also commit 45f7091aac35 ("powerpc/64: Set default
+CPU in Kconfig")), it now is:
+
+  powerpc64-linux-gcc -Wp,-MMD,arch/powerpc/kernel/vdso/.gettimeofday-64.o.d -nostdinc -I./arch/powerpc/include -I./arch/powerpc/include/generated  -I./include -I./arch/powerpc/include/uapi -I./arch/powerpc/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/compiler-version.h -include ./include/linux/kconfig.h -D__KERNEL__ -I ./arch/powerpc -DHAVE_AS_ATHIGH=1 -fmacro-prefix-map=./= -D__ASSEMBLY__ -fno-PIE -m64 -Wl,-a64 -mabi=elfv1 -mcpu=e500mc64 -mabi=elfv1 -mbig-endian    -Wl,-soname=linux-vdso64.so.1 -D__VDSO64__ -s -c -o arch/powerpc/kernel/vdso/gettimeofday-64.o arch/powerpc/kernel/vdso/gettimeofday.S
+
+Reported-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Acked-by: Pali Rohár <pali@kernel.org>
+[mpe: Retain -Wa,-mpower4 -Wa,-many for Book3S 64 builds for now]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/758ad54128fa9dd2fdedc4c511592111cbded900.1671475543.git.christophe.leroy@csgroup.eu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ arch/powerpc/Makefile |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
-@@ -26,6 +26,7 @@
+--- a/arch/powerpc/Makefile
++++ b/arch/powerpc/Makefile
+@@ -201,10 +201,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwin
+ # often slow when they are implemented at all
+ KBUILD_CFLAGS		+= $(call cc-option,-mno-string)
  
- #include <linux/firmware.h>
- #include <linux/module.h>
-+#include <linux/dmi.h>
- #include <linux/pci.h>
- #include <linux/debugfs.h>
- #include <drm/drm_drv.h>
-@@ -222,6 +223,24 @@ int amdgpu_vcn_sw_init(struct amdgpu_dev
- 		return r;
- 	}
+-cpu-as-$(CONFIG_40x)		+= -Wa,-m405
+-cpu-as-$(CONFIG_44x)		+= -Wa,-m440
+ cpu-as-$(CONFIG_ALTIVEC)	+= $(call as-option,-Wa$(comma)-maltivec)
+-cpu-as-$(CONFIG_PPC_E500)		+= -Wa,-me500
  
-+	/*
-+	 * Some Steam Deck's BIOS versions are incompatible with the
-+	 * indirect SRAM mode, leading to amdgpu being unable to get
-+	 * properly probed (and even potentially crashing the kernel).
-+	 * Hence, check for these versions here - notice this is
-+	 * restricted to Vangogh (Deck's APU).
-+	 */
-+	if (adev->ip_versions[UVD_HWIP][0] == IP_VERSION(3, 0, 2)) {
-+		const char *bios_ver = dmi_get_system_info(DMI_BIOS_VERSION);
-+
-+		if (bios_ver && (!strncmp("F7A0113", bios_ver, 7) ||
-+		     !strncmp("F7A0114", bios_ver, 7))) {
-+			adev->vcn.indirect_sram = false;
-+			dev_info(adev->dev,
-+				"Steam Deck quirk: indirect SRAM disabled on BIOS %s\n", bios_ver);
-+		}
-+	}
-+
- 	hdr = (const struct common_firmware_header *)adev->vcn.fw->data;
- 	adev->vcn.fw_version = le32_to_cpu(hdr->ucode_version);
+ # When using '-many -mpower4' gas will first try and find a matching power4
+ # mnemonic and failing that it will allow any valid mnemonic that GAS knows
+@@ -212,7 +209,6 @@ cpu-as-$(CONFIG_PPC_E500)		+= -Wa,-me500
+ # LLVM IAS doesn't understand either flag: https://github.com/ClangBuiltLinux/linux/issues/675
+ # but LLVM IAS only supports ISA >= 2.06 for Book3S 64 anyway...
+ cpu-as-$(CONFIG_PPC_BOOK3S_64)	+= $(call as-option,-Wa$(comma)-mpower4) $(call as-option,-Wa$(comma)-many)
+-cpu-as-$(CONFIG_PPC_E500MC)	+= $(call as-option,-Wa$(comma)-me500mc)
  
+ KBUILD_AFLAGS += $(cpu-as-y)
+ KBUILD_CFLAGS += $(cpu-as-y)
 
 
