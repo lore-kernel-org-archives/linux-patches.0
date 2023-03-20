@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55351C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4B1C433EF;
-	Mon, 20 Mar 2023 15:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979D61C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8FFC433D2;
+	Mon, 20 Mar 2023 15:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326230;
-	bh=LDMpgvdSlhBGJEIl7kQbhlWXF5mtM9vNSflgxzvgIKs=;
+	s=korg; t=1679326233;
+	bh=Pf2+Bs1sDNhP8gTIpToRaCRL2XpfbFMn3ho72QN7c14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2WcHFftoF+eJu7kPLKXOqRIzyKGXILw7Fem6hWbNyxsIlHe7sWCBsjY7Gr3zKCsq
-	 Q3CLLlTmAKn6ekJ4cs9FOEUVeD61a4hhgm4qHk7L2xseD4ijPmjrQ46FoX1v8bfRFW
-	 RxwsFWKammqF+k2lPNH1jYrxTifO6jy3F2Bu28pY=
+	b=D+Gc5iMFljdZwdk9L7YGbqI2OXk4Eh6IFlScoWD4mggWPPw5qGeo8M3JpMciOkOSb
+	 CKz8+lNWFg6OCeoBl99KNgWqO9CyA1nh76pTp5wIiQI00TMse5nla1jdka8dgFXgWu
+	 2lckUr+QtTJhBEISPUsawDzGBfXwZq0paxx6UV9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	Geliang Tang <geliang.tang@suse.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Christoph Paasch <cpaasch@apple.com>
-Subject: [PATCH 6.2 176/211] mptcp: fix UaF in listener shutdown
-Date: Mon, 20 Mar 2023 15:55:11 +0100
-Message-Id: <20230320145520.832444601@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.2 177/211] mptcp: add ro_after_init for tcp{,v6}_prot_override
+Date: Mon, 20 Mar 2023 15:55:12 +0100
+Message-Id: <20230320145520.880144454@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,184 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Geliang Tang <geliang.tang@suse.com>
 
-commit 0a3f4f1f9c27215e4ddcd312558342e57b93e518 upstream.
+commit 822467a48e938e661965d09df5fcac66f7291050 upstream.
 
-As reported by Christoph after having refactored the passive
-socket initialization, the mptcp listener shutdown path is prone
-to an UaF issue.
+Add __ro_after_init labels for the variables tcp_prot_override and
+tcpv6_prot_override, just like other variables adjacent to them, to
+indicate that they are initialised from the init hooks and no writes
+occur afterwards.
 
-  BUG: KASAN: use-after-free in _raw_spin_lock_bh+0x73/0xe0
-  Write of size 4 at addr ffff88810cb23098 by task syz-executor731/1266
-
-  CPU: 1 PID: 1266 Comm: syz-executor731 Not tainted 6.2.0-rc59af4eaa31c1f6c00c8f1e448ed99a45c66340dd5 #6
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x6e/0x91
-   print_report+0x16a/0x46f
-   kasan_report+0xad/0x130
-   kasan_check_range+0x14a/0x1a0
-   _raw_spin_lock_bh+0x73/0xe0
-   subflow_error_report+0x6d/0x110
-   sk_error_report+0x3b/0x190
-   tcp_disconnect+0x138c/0x1aa0
-   inet_child_forget+0x6f/0x2e0
-   inet_csk_listen_stop+0x209/0x1060
-   __mptcp_close_ssk+0x52d/0x610
-   mptcp_destroy_common+0x165/0x640
-   mptcp_destroy+0x13/0x80
-   __mptcp_destroy_sock+0xe7/0x270
-   __mptcp_close+0x70e/0x9b0
-   mptcp_close+0x2b/0x150
-   inet_release+0xe9/0x1f0
-   __sock_release+0xd2/0x280
-   sock_close+0x15/0x20
-   __fput+0x252/0xa20
-   task_work_run+0x169/0x250
-   exit_to_user_mode_prepare+0x113/0x120
-   syscall_exit_to_user_mode+0x1d/0x40
-   do_syscall_64+0x48/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-The msk grace period can legitly expire in between the last
-reference count dropped in mptcp_subflow_queue_clean() and
-the later eventual access in inet_csk_listen_stop()
-
-After the previous patch we don't need anymore special-casing
-msk listener socket cleanup: the mptcp worker will process each
-of the unaccepted msk sockets.
-
-Just drop the now unnecessary code.
-
-Please note this commit depends on the two parent ones:
-
-  mptcp: refactor passive socket initialization
-  mptcp: use the workqueue to destroy unaccepted sockets
-
-Fixes: 6aeed9045071 ("mptcp: fix race on unaccepted mptcp sockets")
+Fixes: b19bc2945b40 ("mptcp: implement delegated actions")
 Cc: stable@vger.kernel.org
-Reported-and-tested-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/346
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 51fa7f8ebf0e ("mptcp: mark ops structures as ro_after_init")
+Signed-off-by: Geliang Tang <geliang.tang@suse.com>
 Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    7 +---
- net/mptcp/protocol.h |    1 
- net/mptcp/subflow.c  |   72 ---------------------------------------------------
- 3 files changed, 2 insertions(+), 78 deletions(-)
+ net/mptcp/subflow.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2366,12 +2366,9 @@ static void __mptcp_close_ssk(struct soc
- 		mptcp_subflow_drop_ctx(ssk);
- 	} else {
- 		/* otherwise tcp will dispose of the ssk and subflow ctx */
--		if (ssk->sk_state == TCP_LISTEN) {
--			tcp_set_state(ssk, TCP_CLOSE);
--			mptcp_subflow_queue_clean(sk, ssk);
--			inet_csk_listen_stop(ssk);
-+		if (ssk->sk_state == TCP_LISTEN)
- 			mptcp_event_pm_listener(ssk, MPTCP_EVENT_LISTENER_CLOSED);
--		}
-+
- 		__tcp_close(ssk, 0);
- 
- 		/* close acquired an extra ref */
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -629,7 +629,6 @@ void mptcp_close_ssk(struct sock *sk, st
- 		     struct mptcp_subflow_context *subflow);
- void __mptcp_subflow_send_ack(struct sock *ssk);
- void mptcp_subflow_reset(struct sock *ssk);
--void mptcp_subflow_queue_clean(struct sock *sk, struct sock *ssk);
- void mptcp_sock_graft(struct sock *sk, struct socket *parent);
- struct socket *__mptcp_nmpc_socket(const struct mptcp_sock *msk);
- bool __mptcp_close(struct sock *sk, long timeout);
 --- a/net/mptcp/subflow.c
 +++ b/net/mptcp/subflow.c
-@@ -1823,78 +1823,6 @@ static void subflow_state_change(struct
- 	}
+@@ -627,7 +627,7 @@ static struct request_sock_ops mptcp_sub
+ static struct tcp_request_sock_ops subflow_request_sock_ipv6_ops __ro_after_init;
+ static struct inet_connection_sock_af_ops subflow_v6_specific __ro_after_init;
+ static struct inet_connection_sock_af_ops subflow_v6m_specific __ro_after_init;
+-static struct proto tcpv6_prot_override;
++static struct proto tcpv6_prot_override __ro_after_init;
+ 
+ static int subflow_v6_conn_request(struct sock *sk, struct sk_buff *skb)
+ {
+@@ -925,7 +925,7 @@ dispose_child:
  }
  
--void mptcp_subflow_queue_clean(struct sock *listener_sk, struct sock *listener_ssk)
--{
--	struct request_sock_queue *queue = &inet_csk(listener_ssk)->icsk_accept_queue;
--	struct mptcp_sock *msk, *next, *head = NULL;
--	struct request_sock *req;
--
--	/* build a list of all unaccepted mptcp sockets */
--	spin_lock_bh(&queue->rskq_lock);
--	for (req = queue->rskq_accept_head; req; req = req->dl_next) {
--		struct mptcp_subflow_context *subflow;
--		struct sock *ssk = req->sk;
--		struct mptcp_sock *msk;
--
--		if (!sk_is_mptcp(ssk))
--			continue;
--
--		subflow = mptcp_subflow_ctx(ssk);
--		if (!subflow || !subflow->conn)
--			continue;
--
--		/* skip if already in list */
--		msk = mptcp_sk(subflow->conn);
--		if (msk->dl_next || msk == head)
--			continue;
--
--		msk->dl_next = head;
--		head = msk;
--	}
--	spin_unlock_bh(&queue->rskq_lock);
--	if (!head)
--		return;
--
--	/* can't acquire the msk socket lock under the subflow one,
--	 * or will cause ABBA deadlock
--	 */
--	release_sock(listener_ssk);
--
--	for (msk = head; msk; msk = next) {
--		struct sock *sk = (struct sock *)msk;
--		bool do_cancel_work;
--
--		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
--		next = msk->dl_next;
--		msk->first = NULL;
--		msk->dl_next = NULL;
--
--		do_cancel_work = __mptcp_close(sk, 0);
--		release_sock(sk);
--		if (do_cancel_work) {
--			/* lockdep will report a false positive ABBA deadlock
--			 * between cancel_work_sync and the listener socket.
--			 * The involved locks belong to different sockets WRT
--			 * the existing AB chain.
--			 * Using a per socket key is problematic as key
--			 * deregistration requires process context and must be
--			 * performed at socket disposal time, in atomic
--			 * context.
--			 * Just tell lockdep to consider the listener socket
--			 * released here.
--			 */
--			mutex_release(&listener_sk->sk_lock.dep_map, _RET_IP_);
--			mptcp_cancel_work(sk);
--			mutex_acquire(&listener_sk->sk_lock.dep_map,
--				      SINGLE_DEPTH_NESTING, 0, _RET_IP_);
--		}
--		sock_put(sk);
--	}
--
--	/* we are still under the listener msk socket lock */
--	lock_sock_nested(listener_ssk, SINGLE_DEPTH_NESTING);
--}
--
- static int subflow_ulp_init(struct sock *sk)
- {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
+ static struct inet_connection_sock_af_ops subflow_specific __ro_after_init;
+-static struct proto tcp_prot_override;
++static struct proto tcp_prot_override __ro_after_init;
+ 
+ enum mapping_status {
+ 	MAPPING_OK,
 
 
