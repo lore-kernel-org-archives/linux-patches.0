@@ -1,37 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45181C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7549C433A0;
-	Mon, 20 Mar 2023 15:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737DE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8691C433EF;
+	Mon, 20 Mar 2023 15:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325119;
-	bh=n8INzP9xrlxiMR2igTI6U9yfxcAygakj9Q9XUBxLdlI=;
+	s=korg; t=1679325122;
+	bh=UeW1CQAAoSJChSLO401v/ThGrxNP3MJwVrLenSBvI1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RMRfzJYxZ6ZrILRR50haD4Vp0SoiZk51zcYrbtu06RF39ksKnE+vUGjXc4i3y2w/u
-	 Zng3QbF6ScW8yvLQ7IaZFcxkLVti4KKLm20wBZQ2iNqjVo+WfsS6vVBowDVcBTH4EC
-	 wcmuxm+O8OcELvu3okBaN02/8s+bJapde/of7wdw=
+	b=S8lhUrPYqpOaMHQgpnYyjNZgMdRDGPhv2BfV2U5bCAhjHK2QRVLDHziRis6qXX3hO
+	 IN3utOhtxZI8wzXrPOwsi1mVKD16Sd5z8ek7XRGa/XO+H8kaGRX/5QhQnKGpQmHxqX
+	 jDY1UBukR/5ND3Wg2gA786gbMzC1bj0JNUzVGCuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	intel-gfx@lists.freedesktop.org,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 5.10 77/99] drm/i915: Dont use stolen memory for ring buffers with LLC
-Date: Mon, 20 Mar 2023 15:54:55 +0100
-Message-Id: <20230320145446.626338296@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Riku Voipio <riku.voipio@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	linux-clk@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 008/211] clk: HI655X: select REGMAP instead of depending on it
+Date: Mon, 20 Mar 2023 15:52:23 +0100
+Message-Id: <20230320145513.650732473@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -42,45 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 690e0ec8e63da9a29b39fedc6ed5da09c7c82651 upstream.
+[ Upstream commit 0ffad67784a097beccf34d297ddd1b0773b3b8a3 ]
 
-Direction from hardware is that stolen memory should never be used for
-ring buffer allocations on platforms with LLC. There are too many
-caching pitfalls due to the way stolen memory accesses are routed. So
-it is safest to just not use it.
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Fixes: c58b735fc762 ("drm/i915: Allocate rings from stolen")
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: intel-gfx@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v4.9+
-Tested-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230216011101.1909009-2-John.C.Harrison@Intel.com
-(cherry picked from commit f54c1f6c697c4297f7ed94283c184acc338a5cf8)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
+
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+
+Fixes: 3a49afb84ca0 ("clk: enable hi655x common clk automatically")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Riku Voipio <riku.voipio@linaro.org>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: linux-clk@vger.kernel.org
+Link: https://lore.kernel.org/r/20230226053953.4681-3-rdunlap@infradead.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_ring.c |    2 +-
+ drivers/clk/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_ring.c
-+++ b/drivers/gpu/drm/i915/gt/intel_ring.c
-@@ -108,7 +108,7 @@ static struct i915_vma *create_ring_vma(
- 	struct i915_vma *vma;
- 
- 	obj = ERR_PTR(-ENODEV);
--	if (i915_ggtt_has_aperture(ggtt))
-+	if (i915_ggtt_has_aperture(ggtt) && !HAS_LLC(i915))
- 		obj = i915_gem_object_create_stolen(i915, size);
- 	if (IS_ERR(obj))
- 		obj = i915_gem_object_create_internal(i915, size);
+diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+index d79905f3e1744..5da82f2bdd211 100644
+--- a/drivers/clk/Kconfig
++++ b/drivers/clk/Kconfig
+@@ -92,7 +92,7 @@ config COMMON_CLK_RK808
+ config COMMON_CLK_HI655X
+ 	tristate "Clock driver for Hi655x" if EXPERT
+ 	depends on (MFD_HI655X_PMIC || COMPILE_TEST)
+-	depends on REGMAP
++	select REGMAP
+ 	default MFD_HI655X_PMIC
+ 	help
+ 	  This driver supports the hi655x PMIC clock. This
+-- 
+2.39.2
+
 
 
