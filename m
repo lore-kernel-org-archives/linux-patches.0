@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B261C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CD5C433D2;
-	Mon, 20 Mar 2023 15:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8691C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C00C433EF;
+	Mon, 20 Mar 2023 15:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324530;
-	bh=bzkGyetZ5sZm/srGhec0pNnsU4fzF6TlOYijdOQnBmM=;
+	s=korg; t=1679324533;
+	bh=S6tEHWndNmSMMQ5WutitFRxVDIVV+AOXs7zwPkBG9T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hS7exWVOlbjxVmsCb2MdPD3DPt0RU15KFH5XgA6YIPiwAxnTuy6kDRbRnqvQo2YKF
-	 GgQj34aCVkMxyHZVol2U2RNDcQfgC0y/Uvkra422ko3uJsmjKoCJo1UMeLiCmd6znr
-	 rRbL/YWjEsUvTkfMx0O+4wi5JFCxXs/0MKZkSgAw=
+	b=YgLNpHxGvsoetD2wm418rYR3ZBKsJzty5QxR1iF71aRaiMosJuJbgiz+3XICqEoLr
+	 bLszmgA+EL5quxHb3TDUY3+lGUskl/8YCnMsMk5Bo3m3mVOQJk5OIjiCXGhwxqKvZL
+	 F8R8YfWNS+a+4wDLC99hAuWZAPQVNGgDILNdpsIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 47/60] tracing: Check field value in hist_field_name()
-Date: Mon, 20 Mar 2023 15:54:56 +0100
-Message-Id: <20230320145432.878120908@linuxfoundation.org>
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 04/99] drm/meson: fix 1px pink line on GXM when scaling video overlay
+Date: Mon, 20 Mar 2023 15:53:42 +0100
+Message-Id: <20230320145443.535484626@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
-References: <20230320145430.861072439@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-commit 9f116f76fa8c04c81aef33ad870dbf9a158e5b70 upstream.
+[ Upstream commit 5c8cf1664f288098a971a1d1e65716a2b6a279e1 ]
 
-The function hist_field_name() cannot handle being passed a NULL field
-parameter. It should never be NULL, but due to a previous bug, NULL was
-passed to the function and the kernel crashed due to a NULL dereference.
-Mark Rutland reported this to me on IRC.
+Playing media with a resolution smaller than the crtc size requires the
+video overlay to be scaled for output and GXM boards display a 1px pink
+line on the bottom of the scaled overlay. Comparing with the downstream
+vendor driver revealed VPP_DUMMY_DATA not being set [0].
 
-The bug was fixed, but to prevent future bugs from crashing the kernel,
-check the field and add a WARN_ON() if it is NULL.
+Setting VPP_DUMMY_DATA prevents the 1px pink line from being seen.
 
-Link: https://lkml.kernel.org/r/20230302020810.762384440@goodmis.org
+[0] https://github.com/endlessm/linux-s905x/blob/master/drivers/amlogic/amports/video.c#L7869
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Mark Rutland <mark.rutland@arm.com>
-Fixes: c6afad49d127f ("tracing: Add hist trigger 'sym' and 'sym-offset' modifiers")
-Tested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bbbe775ec5b5 ("drm: Add support for Amlogic Meson Graphic Controller")
+Suggested-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230303123312.155164-1-christianshewitt@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/meson/meson_vpp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1996,6 +1996,9 @@ static const char *hist_field_name(struc
- {
- 	const char *field_name = "";
+diff --git a/drivers/gpu/drm/meson/meson_vpp.c b/drivers/gpu/drm/meson/meson_vpp.c
+index 154837688ab0d..5df1957c8e41f 100644
+--- a/drivers/gpu/drm/meson/meson_vpp.c
++++ b/drivers/gpu/drm/meson/meson_vpp.c
+@@ -100,6 +100,8 @@ void meson_vpp_init(struct meson_drm *priv)
+ 			       priv->io_base + _REG(VPP_DOLBY_CTRL));
+ 		writel_relaxed(0x1020080,
+ 				priv->io_base + _REG(VPP_DUMMY_DATA1));
++		writel_relaxed(0x42020,
++				priv->io_base + _REG(VPP_DUMMY_DATA));
+ 	} else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
+ 		writel_relaxed(0xf, priv->io_base + _REG(DOLBY_PATH_CTRL));
  
-+	if (WARN_ON_ONCE(!field))
-+		return field_name;
-+
- 	if (level > 1)
- 		return field_name;
- 
+-- 
+2.39.2
+
 
 
