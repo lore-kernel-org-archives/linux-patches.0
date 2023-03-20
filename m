@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DAB1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CEAC433EF;
-	Mon, 20 Mar 2023 15:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9FA1C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F192C4339B;
+	Mon, 20 Mar 2023 15:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325803;
-	bh=ItwEZepMiMsvKIPT7E7ZzxgPotXPPqHnsHfZmPbNf5U=;
+	s=korg; t=1679325805;
+	bh=YBvbrQJEaEy8jM6jUSRjD/yFZkav/5OEu3lkUQKcoHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9q+2KIrclFJf4gRoeZW/+XvqSp/jYW65OCz2LMG3/9uWUiwwUWCaZzBxnHyYfZiE
-	 iisxUn+9JI3MPLRmtyQR09Q8gY9n9Bee8hYSYR1ymBBHrOraC4zGjWpZJVMmUVemcl
-	 aywtEefxgjppT84jSztupzqcWXrhpLmvOfr5plfI=
+	b=lnqNVTfatwgcjjxnm13v0IGSLqTVZGaRj3sQmuNRsoTNyU0jf3KyljBR5n+vVQfaE
+	 d9wwRhlWTI4bgi3q7yoR/7NOsrKD9ZhKNE3NIe/01GCClhVSEoGFRRiVxPSHiEiNfl
+	 6Gz0DujzRqBn7jCKR3F945vBfxig0inrilwKez6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 145/198] tracing: Make tracepoint lockdep check actually test something
-Date: Mon, 20 Mar 2023 15:54:43 +0100
-Message-Id: <20230320145513.631340397@linuxfoundation.org>
+	Jurica Vukadin <jura@vukad.in>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 104/211] kconfig: Update config changed flag before calling callback
+Date: Mon, 20 Mar 2023 15:53:59 +0100
+Message-Id: <20230320145517.641381074@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,86 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Jurica Vukadin <jura@vukad.in>
 
-commit c2679254b9c9980d9045f0f722cf093a2b1f7590 upstream.
+[ Upstream commit ee06a3ef7e3cddb62b90ac40aa661d3c12f7cabc ]
 
-A while ago where the trace events had the following:
+Prior to commit 5ee546594025 ("kconfig: change sym_change_count to a
+boolean flag"), the conf_updated flag was set to the new value *before*
+calling the callback. xconfig's save action depends on this behaviour,
+because xconfig calls conf_get_changed() directly from the callback and
+now sees the old value, thus never enabling the save button or the
+shortcut.
 
-   rcu_read_lock_sched_notrace();
-   rcu_dereference_sched(...);
-   rcu_read_unlock_sched_notrace();
+Restore the previous behaviour.
 
-If the tracepoint is enabled, it could trigger RCU issues if called in
-the wrong place. And this warning was only triggered if lockdep was
-enabled. If the tracepoint was never enabled with lockdep, the bug would
-not be caught. To handle this, the above sequence was done when lockdep
-was enabled regardless if the tracepoint was enabled or not (although the
-always enabled code really didn't do anything, it would still trigger a
-warning).
-
-But a lot has changed since that lockdep code was added. One is, that
-sequence no longer triggers any warning. Another is, the tracepoint when
-enabled doesn't even do that sequence anymore.
-
-The main check we care about today is whether RCU is "watching" or not.
-So if lockdep is enabled, always check if rcu_is_watching() which will
-trigger a warning if it is not (tracepoints require RCU to be watching).
-
-Note, that old sequence did add a bit of overhead when lockdep was enabled,
-and with the latest kernel updates, would cause the system to slow down
-enough to trigger kernel "stalled" warnings.
-
-Link: http://lore.kernel.org/lkml/20140806181801.GA4605@redhat.com
-Link: http://lore.kernel.org/lkml/20140807175204.C257CAC5@viggo.jf.intel.com
-Link: https://lore.kernel.org/lkml/20230307184645.521db5c9@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20230310172856.77406446@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Paul E. McKenney <paulmck@kernel.org>
-Fixes: e6753f23d961 ("tracepoint: Make rcuidle tracepoint callers use SRCU")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5ee546594025 ("kconfig: change sym_change_count to a boolean flag")
+Signed-off-by: Jurica Vukadin <jura@vukad.in>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/tracepoint.h |   15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ scripts/kconfig/confdata.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/include/linux/tracepoint.h
-+++ b/include/linux/tracepoint.h
-@@ -231,12 +231,11 @@ static inline struct tracepoint *tracepo
-  * not add unwanted padding between the beginning of the section and the
-  * structure. Force alignment to the same alignment as the section start.
-  *
-- * When lockdep is enabled, we make sure to always do the RCU portions of
-- * the tracepoint code, regardless of whether tracing is on. However,
-- * don't check if the condition is false, due to interaction with idle
-- * instrumentation. This lets us find RCU issues triggered with tracepoints
-- * even when this tracepoint is off. This code has no purpose other than
-- * poking RCU a bit.
-+ * When lockdep is enabled, we make sure to always test if RCU is
-+ * "watching" regardless if the tracepoint is enabled or not. Tracepoints
-+ * require RCU to be active, and it should always warn at the tracepoint
-+ * site if it is not watching, as it will need to be active when the
-+ * tracepoint is enabled.
-  */
- #define __DECLARE_TRACE(name, proto, args, cond, data_proto)		\
- 	extern int __traceiter_##name(data_proto);			\
-@@ -249,9 +248,7 @@ static inline struct tracepoint *tracepo
- 				TP_ARGS(args),				\
- 				TP_CONDITION(cond), 0);			\
- 		if (IS_ENABLED(CONFIG_LOCKDEP) && (cond)) {		\
--			rcu_read_lock_sched_notrace();			\
--			rcu_dereference_sched(__tracepoint_##name.funcs);\
--			rcu_read_unlock_sched_notrace();		\
-+			WARN_ON_ONCE(!rcu_is_watching());		\
- 		}							\
- 	}								\
- 	__DECLARE_TRACE_RCU(name, PARAMS(proto), PARAMS(args),		\
+diff --git a/scripts/kconfig/confdata.c b/scripts/kconfig/confdata.c
+index b7c9f1dd5e422..992575f1e9769 100644
+--- a/scripts/kconfig/confdata.c
++++ b/scripts/kconfig/confdata.c
+@@ -1226,10 +1226,12 @@ static void (*conf_changed_callback)(void);
+ 
+ void conf_set_changed(bool val)
+ {
+-	if (conf_changed_callback && conf_changed != val)
+-		conf_changed_callback();
++	bool changed = conf_changed != val;
+ 
+ 	conf_changed = val;
++
++	if (conf_changed_callback && changed)
++		conf_changed_callback();
+ }
+ 
+ bool conf_get_changed(void)
+-- 
+2.39.2
+
 
 
