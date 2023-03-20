@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061EA1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791C4C433D2;
-	Mon, 20 Mar 2023 15:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4AC1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AED0C4339B;
+	Mon, 20 Mar 2023 15:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324546;
-	bh=SY3U3nDwNNAXQUP2mh85m0gk3tTUJK6VDS+bXEml/Xo=;
+	s=korg; t=1679324549;
+	bh=YygPIafDe5Vo2CbrtKmzGhM4bRtsRn5hsqQUywE4sIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ek1JEc7nSsUNWM1EMS81K0XHsGSXEioUrNKxB9zTg9ibBPP65pYlq8u42Z5eYFojU
-	 T2/Tasz69By0OhmEghwNk9wIKid1W8ogF3P1lkyZP88hlaSXX5Bl6olLGFB0wdAMbk
-	 7Fxx7rSQchCciUj9ikLchiWBjtNo7Oj1wHH+JYR8=
+	b=HyaadSssjzeo4NZ2WOt1CS5azuyBgTdRysYrk6iVP8/I71cHjzp9oS1R5LJW1Uq7/
+	 Gk1IG0ECv/xi//Iuf2oVdNV31+fTZzzcVQgYqTUdJIf7lLLHpe+A2fjW5l7IGxpgZE
+	 jzCngYXac5TpIUa1RX2vUVRZCDkMezJXYOPHsxLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 15/99] tcp: tcp_make_synack() can be called from process context
-Date: Mon, 20 Mar 2023 15:53:53 +0100
-Message-Id: <20230320145444.001760393@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>
+Subject: [PATCH 5.4 50/60] ftrace: Fix invalid address access in lookup_rec() when index is 0
+Date: Mon, 20 Mar 2023 15:54:59 +0100
+Message-Id: <20230320145433.000698337@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,64 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Breno Leitao <leitao@debian.org>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit bced3f7db95ff2e6ca29dc4d1c9751ab5e736a09 ]
+commit ee92fa443358f4fc0017c1d0d325c27b37802504 upstream.
 
-tcp_rtx_synack() now could be called in process context as explained in
-0a375c822497 ("tcp: tcp_rtx_synack() can be called from process
-context").
+KASAN reported follow problem:
 
-tcp_rtx_synack() might call tcp_make_synack(), which will touch per-CPU
-variables with preemption enabled. This causes the following BUG:
+ BUG: KASAN: use-after-free in lookup_rec
+ Read of size 8 at addr ffff000199270ff0 by task modprobe
+ CPU: 2 Comm: modprobe
+ Call trace:
+  kasan_report
+  __asan_load8
+  lookup_rec
+  ftrace_location
+  arch_check_ftrace_location
+  check_kprobe_address_safe
+  register_kprobe
 
-    BUG: using __this_cpu_add() in preemptible [00000000] code: ThriftIO1/5464
-    caller is tcp_make_synack+0x841/0xac0
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x10d/0x1a0
-     check_preemption_disabled+0x104/0x110
-     tcp_make_synack+0x841/0xac0
-     tcp_v6_send_synack+0x5c/0x450
-     tcp_rtx_synack+0xeb/0x1f0
-     inet_rtx_syn_ack+0x34/0x60
-     tcp_check_req+0x3af/0x9e0
-     tcp_rcv_state_process+0x59b/0x2030
-     tcp_v6_do_rcv+0x5f5/0x700
-     release_sock+0x3a/0xf0
-     tcp_sendmsg+0x33/0x40
-     ____sys_sendmsg+0x2f2/0x490
-     __sys_sendmsg+0x184/0x230
-     do_syscall_64+0x3d/0x90
+When checking pg->records[pg->index - 1].ip in lookup_rec(), it can get a
+pg which is newly added to ftrace_pages_start in ftrace_process_locs().
+Before the first pg->index++, index is 0 and accessing pg->records[-1].ip
+will cause this problem.
 
-Avoid calling __TCP_INC_STATS() with will touch per-cpu variables. Use
-TCP_INC_STATS() which is safe to be called from context switch.
+Don't check the ip when pg->index is 0.
 
-Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230308190745.780221-1-leitao@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/linux-trace-kernel/20230309080230.36064-1-chenzhongjin@huawei.com
+
+Cc: stable@vger.kernel.org
+Fixes: 9644302e3315 ("ftrace: Speed up search by skipping pages by address")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ftrace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index eefd032bc6dbd..e4ad274ec7a30 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3609,7 +3609,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
- 	th->window = htons(min(req->rsk_rcv_wnd, 65535U));
- 	tcp_options_write((__be32 *)(th + 1), NULL, &opts);
- 	th->doff = (tcp_header_size >> 2);
--	__TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
-+	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1557,7 +1557,8 @@ unsigned long ftrace_location_range(unsi
+ 	key.flags = end;	/* overload flags, as it is unsigned long */
  
- #ifdef CONFIG_TCP_MD5SIG
- 	/* Okay, we have all we need - do the md5 hash if needed */
--- 
-2.39.2
-
+ 	for (pg = ftrace_pages_start; pg; pg = pg->next) {
+-		if (end < pg->records[0].ip ||
++		if (pg->index == 0 ||
++		    end < pg->records[0].ip ||
+ 		    start >= (pg->records[pg->index - 1].ip + MCOUNT_INSN_SIZE))
+ 			continue;
+ 		rec = bsearch(&key, pg->records, pg->index,
 
 
