@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3040B1C08
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5400C433D2;
-	Mon, 20 Mar 2023 14:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7591C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA7CC433D2;
+	Mon, 20 Mar 2023 14:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324362;
-	bh=/sbV8/U3lzvTQiVjFvqgWvrz8+76hWtMaQJCtTwhqvU=;
+	s=korg; t=1679324364;
+	bh=ATEnrQL5w3FWRq9chTFV0ZbIetkRdvanc1fVU8ygjNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KEPL+XG4tb/yEEuFcZjzTGjZ0hfq/lsuA1F2LOeF4MOU46ftKYHO0dPELt4Hl2q2x
-	 ECOvsJDbffnRhluxi45mAKGQ607sUe3dslALKAqbcRVKzfByT7RZCYOsNwhubzqGP8
-	 U4IYUNamHg/zaHnfA+iZlGWKfLXq+h2GHJC+NIYM=
+	b=G70AGPVzENljkskAw1LiQ+V315NIZLgtZ0VhXy2COK1jjHIhCgO9e0pKoDfvIG7ob
+	 3CjEhBVxdsaltn1Zw1DODtenXAFo12mHVC23peG/3TXGHJCOxytgpbxpGHcSguIx9w
+	 cDRMF4IbannCAGIZmqcmr+NJGLIuM22+nAYuHszQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Chen Zhongjin <chenzhongjin@huawei.com>
-Subject: [PATCH 4.19 30/36] ftrace: Fix invalid address access in lookup_rec() when index is 0
-Date: Mon, 20 Mar 2023 15:54:56 +0100
-Message-Id: <20230320145425.364453359@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 4.19 31/36] fbdev: stifb: Provide valid pixelclock and add fb_check_var() checks
+Date: Mon, 20 Mar 2023 15:54:57 +0100
+Message-Id: <20230320145425.395937538@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -34,54 +33,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Helge Deller <deller@gmx.de>
 
-commit ee92fa443358f4fc0017c1d0d325c27b37802504 upstream.
+commit 203873a535d627c668f293be0cb73e26c30f9cc7 upstream.
 
-KASAN reported follow problem:
+Find a valid modeline depending on the machine graphic card
+configuration and add the fb_check_var() function to validate
+Xorg provided graphics settings.
 
- BUG: KASAN: use-after-free in lookup_rec
- Read of size 8 at addr ffff000199270ff0 by task modprobe
- CPU: 2 Comm: modprobe
- Call trace:
-  kasan_report
-  __asan_load8
-  lookup_rec
-  ftrace_location
-  arch_check_ftrace_location
-  check_kprobe_address_safe
-  register_kprobe
-
-When checking pg->records[pg->index - 1].ip in lookup_rec(), it can get a
-pg which is newly added to ftrace_pages_start in ftrace_process_locs().
-Before the first pg->index++, index is 0 and accessing pg->records[-1].ip
-will cause this problem.
-
-Don't check the ip when pg->index is 0.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230309080230.36064-1-chenzhongjin@huawei.com
-
+Signed-off-by: Helge Deller <deller@gmx.de>
 Cc: stable@vger.kernel.org
-Fixes: 9644302e3315 ("ftrace: Speed up search by skipping pages by address")
-Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/stifb.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -1581,7 +1581,8 @@ unsigned long ftrace_location_range(unsi
- 	key.flags = end;	/* overload flags, as it is unsigned long */
+--- a/drivers/video/fbdev/stifb.c
++++ b/drivers/video/fbdev/stifb.c
+@@ -922,6 +922,28 @@ SETUP_HCRX(struct stifb_info *fb)
+ /* ------------------- driver specific functions --------------------------- */
  
- 	for (pg = ftrace_pages_start; pg; pg = pg->next) {
--		if (end < pg->records[0].ip ||
-+		if (pg->index == 0 ||
-+		    end < pg->records[0].ip ||
- 		    start >= (pg->records[pg->index - 1].ip + MCOUNT_INSN_SIZE))
- 			continue;
- 		rec = bsearch(&key, pg->records, pg->index,
+ static int
++stifb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
++{
++	struct stifb_info *fb = container_of(info, struct stifb_info, info);
++
++	if (var->xres != fb->info.var.xres ||
++	    var->yres != fb->info.var.yres ||
++	    var->bits_per_pixel != fb->info.var.bits_per_pixel)
++		return -EINVAL;
++
++	var->xres_virtual = var->xres;
++	var->yres_virtual = var->yres;
++	var->xoffset = 0;
++	var->yoffset = 0;
++	var->grayscale = fb->info.var.grayscale;
++	var->red.length = fb->info.var.red.length;
++	var->green.length = fb->info.var.green.length;
++	var->blue.length = fb->info.var.blue.length;
++
++	return 0;
++}
++
++static int
+ stifb_setcolreg(u_int regno, u_int red, u_int green,
+ 	      u_int blue, u_int transp, struct fb_info *info)
+ {
+@@ -1103,6 +1125,7 @@ stifb_init_display(struct stifb_info *fb
+ 
+ static struct fb_ops stifb_ops = {
+ 	.owner		= THIS_MODULE,
++	.fb_check_var	= stifb_check_var,
+ 	.fb_setcolreg	= stifb_setcolreg,
+ 	.fb_blank	= stifb_blank,
+ 	.fb_fillrect	= cfb_fillrect,
+@@ -1122,6 +1145,7 @@ static int __init stifb_init_fb(struct s
+ 	struct stifb_info *fb;
+ 	struct fb_info *info;
+ 	unsigned long sti_rom_address;
++	char modestr[32];
+ 	char *dev_name;
+ 	int bpp, xres, yres;
+ 
+@@ -1300,6 +1324,9 @@ static int __init stifb_init_fb(struct s
+ 	info->flags = FBINFO_DEFAULT | FBINFO_HWACCEL_COPYAREA;
+ 	info->pseudo_palette = &fb->pseudo_palette;
+ 
++	scnprintf(modestr, sizeof(modestr), "%dx%d-%d", xres, yres, bpp);
++	fb_find_mode(&info->var, info, modestr, NULL, 0, NULL, bpp);
++
+ 	/* This has to be done !!! */
+ 	if (fb_alloc_cmap(&info->cmap, NR_PALETTE, 0))
+ 		goto out_err1;
 
 
