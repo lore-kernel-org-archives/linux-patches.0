@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2151A1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99612C433D2;
-	Mon, 20 Mar 2023 15:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27671C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53681C4339B;
+	Mon, 20 Mar 2023 15:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326173;
-	bh=NB1Q7IulvQPniPP+4NCmMV/y61f7GD5w4fbuVKrTEzc=;
+	s=korg; t=1679326175;
+	bh=rsc6DeU+Ch57SmvyZGQKPDccSe/DsX+OxfnQCkjRClk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fkGBQX/lf1H7EzOYBtaWcaHz5alkrvjjUFZkOt8B+AOIPS3zzd+c2F8oesMiMViIb
-	 Pgku7HhG7i56VJzvsG5NMW4nrE3OLvlLeC1gpsEPU1gRdfCqkQ1wakwC8CvAvu26kL
-	 pPzRGD+b4nAgCx1BK/X3e1kRth0OeIaDB0cFlYo4=
+	b=BgqrcAqA1dg/URaaQUbzBSIUPniFUtsKnlpfI9qIocq2Lcp8D1H3Cai1FvUG4t4Wf
+	 TeqP4O2BaCQj9FQ+/3dKICPx4VGjIJ7c9/6zW3Dg/DY6s3YYZ2GspBOyaaTrhmBbqs
+	 wScTPvU99Uepl27aTWhRCxjrzr6lV3ea7vOLc6uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Jun Lei <Jun.Lei@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Wesley Chalmers <Wesley.Chalmers@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 170/211] drm/amd/display: Do not set DRR on pipe Commit
-Date: Mon, 20 Mar 2023 15:55:05 +0100
-Message-Id: <20230320145520.564490628@linuxfoundation.org>
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.2 188/211] powerpc/boot: Dont always pass -mcpu=powerpc when building 32-bit uImage
+Date: Mon, 20 Mar 2023 15:55:23 +0100
+Message-Id: <20230320145521.392170709@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -38,36 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Chalmers <Wesley.Chalmers@amd.com>
+From: Pali Rohár <pali@kernel.org>
 
-commit 56574f89dbd84004c3fd6485bcaafb5aa9b8be14 upstream.
+commit ff7c76f66d8bad4e694c264c789249e1d3a8205d upstream.
 
-[WHY]
-Writing to DRR registers such as OTG_V_TOTAL_MIN on the same frame as a
-pipe commit can cause underflow.
+When CONFIG_TARGET_CPU is specified then pass its value to the compiler
+-mcpu option. This fixes following build error when building kernel with
+powerpc e500 SPE capable cross compilers:
 
-Cc: stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+    BOOTAS  arch/powerpc/boot/crt0.o
+  powerpc-linux-gnuspe-gcc: error: unrecognized argument in option ‘-mcpu=powerpc’
+  powerpc-linux-gnuspe-gcc: note: valid arguments to ‘-mcpu=’ are: 8540 8548 native
+  make[1]: *** [arch/powerpc/boot/Makefile:231: arch/powerpc/boot/crt0.o] Error 1
+
+Similar change was already introduced for the main powerpc Makefile in
+commit 446cda1b21d9 ("powerpc/32: Don't always pass -mcpu=powerpc to the
+compiler").
+
+Fixes: 40a75584e526 ("powerpc/boot: Build wrapper for an appropriate CPU")
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/2ae3ae5887babfdacc34435bff0944b3f336100a.1674632329.git.christophe.leroy@csgroup.eu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c |    3 ---
- 1 file changed, 3 deletions(-)
+ arch/powerpc/boot/Makefile |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-@@ -992,8 +992,5 @@ void dcn30_prepare_bandwidth(struct dc *
- 			dc->clk_mgr->funcs->set_max_memclk(dc->clk_mgr, dc->clk_mgr->bw_params->clk_table.entries[dc->clk_mgr->bw_params->clk_table.num_entries - 1].memclk_mhz);
+--- a/arch/powerpc/boot/Makefile
++++ b/arch/powerpc/boot/Makefile
+@@ -39,13 +39,19 @@ BOOTCFLAGS    := -Wall -Wundef -Wstrict-
+ 		 $(LINUXINCLUDE)
  
- 	dcn20_prepare_bandwidth(dc, context);
--
--	dc_dmub_srv_p_state_delegate(dc,
--		context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching, context);
- }
+ ifdef CONFIG_PPC64_BOOT_WRAPPER
+-ifdef CONFIG_CPU_LITTLE_ENDIAN
+-BOOTCFLAGS	+= -m64 -mcpu=powerpc64le
++BOOTCFLAGS	+= -m64
+ else
+-BOOTCFLAGS	+= -m64 -mcpu=powerpc64
++BOOTCFLAGS	+= -m32
+ endif
++
++ifdef CONFIG_TARGET_CPU_BOOL
++BOOTCFLAGS	+= -mcpu=$(CONFIG_TARGET_CPU)
++else ifdef CONFIG_PPC64_BOOT_WRAPPER
++ifdef CONFIG_CPU_LITTLE_ENDIAN
++BOOTCFLAGS	+= -mcpu=powerpc64le
+ else
+-BOOTCFLAGS	+= -m32 -mcpu=powerpc
++BOOTCFLAGS	+= -mcpu=powerpc64
++endif
+ endif
  
+ BOOTCFLAGS	+= -isystem $(shell $(BOOTCC) -print-file-name=include)
 
 
