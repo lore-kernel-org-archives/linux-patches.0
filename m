@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F4C1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD383C433EF;
-	Mon, 20 Mar 2023 15:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E061C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663AEC433EF;
+	Mon, 20 Mar 2023 15:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324695;
-	bh=2cIBWWk+UGGa8Ddj2f57odbXM2mb/Idb5klosJIgAYs=;
+	s=korg; t=1679324697;
+	bh=FMbUqgL0lq5swos4No6ff30OTTxdiyKWbGJBYOaTgj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08mlg+STEWoNZjRjchXnkWFMXmMcg+KlY6vWqhSpqtJynM2wSpqJ+Y345WQbk1po2
-	 upqettxJhe/T/aHckIGinsnsyU76RsGo06u6BhvovtWwmQhvRIynsCDMdvCaF1jXSo
-	 lQl3MIhrMXrtBvXxR16TPIZ7ZJ6V2jrxCtm8PLvM=
+	b=H8gKb0xkspu7PVJHGgsQZOV6m6Emk3ynfzR3Q2wroNjFS0wAEg2H2+KGUaoZqibtM
+	 eLJFyQGXbxpbVoLcBf5IZVEze+2mawm/z54PyiMRuxkedVya9RglFuey9CMMWCxyt9
+	 hdtUKz0FzOtZW6JmqgaWIRRQm9OqDsvTF0A0OJ90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 42/99] hwmon: (xgene) Fix use after free bug in xgene_hwmon_remove due to race condition
-Date: Mon, 20 Mar 2023 15:54:20 +0100
-Message-Id: <20230320145445.128719076@linuxfoundation.org>
+Subject: [PATCH 5.15 019/115] vdpa_sim: set last_used_idx as last_avail_idx in vdpasim_queue_ready
+Date: Mon, 20 Mar 2023 15:53:51 +0100
+Message-Id: <20230320145450.214072736@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,49 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-[ Upstream commit cb090e64cf25602b9adaf32d5dfc9c8bec493cd1 ]
+[ Upstream commit b4cca6d48eb3fa6f0d9caba4329b1a2b0ff67a77 ]
 
-In xgene_hwmon_probe, &ctx->workq is bound with xgene_hwmon_evt_work.
-Then it will be started.
+Starting from an used_idx different than 0 is needed in use cases like
+virtual machine migration.  Not doing so and letting the caller set an
+avail idx different than 0 causes destination device to try to use old
+buffers that source driver already recover and are not available
+anymore.
 
-If we remove the driver which will call xgene_hwmon_remove to clean up,
-there may be unfinished work.
+Since vdpa_sim does not support receive inflight descriptors as a
+destination of a migration, let's set both avail_idx and used_idx the
+same at vq start.  This is how vhost-user works in a
+VHOST_SET_VRING_BASE call.
 
-The possible sequence is as follows:
+Although the simple fix is to set last_used_idx at vdpasim_set_vq_state,
+it would be reset at vdpasim_queue_ready.  The last_avail_idx case is
+fixed with commit 0e84f918fac8 ("vdpa_sim: not reset state in
+vdpasim_queue_ready").  Since the only option is to make it equal to
+last_avail_idx, adding the only change needed here.
 
-Fix it by finishing the work before cleanup in xgene_hwmon_remove.
+This was discovered and tested live migrating the vdpa_sim_net device.
 
-CPU0                  CPU1
-
-                    |xgene_hwmon_evt_work
-xgene_hwmon_remove   |
-kfifo_free(&ctx->async_msg_fifo);|
-                    |
-                    |kfifo_out_spinlocked
-                    |//use &ctx->async_msg_fifo
-Fixes: 2ca492e22cb7 ("hwmon: (xgene) Fix crash when alarm occurs before driver probe")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Link: https://lore.kernel.org/r/20230310084007.1403388-1-zyytlz.wz@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 2c53d0f64c06 ("vdpasim: vDPA device simulator")
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Message-Id: <20230302181857.925374-1-eperezma@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/xgene-hwmon.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vdpa/vdpa_sim/vdpa_sim.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/hwmon/xgene-hwmon.c b/drivers/hwmon/xgene-hwmon.c
-index f2a5af239c956..f5d3cf86753f7 100644
---- a/drivers/hwmon/xgene-hwmon.c
-+++ b/drivers/hwmon/xgene-hwmon.c
-@@ -768,6 +768,7 @@ static int xgene_hwmon_remove(struct platform_device *pdev)
- {
- 	struct xgene_hwmon_dev *ctx = platform_get_drvdata(pdev);
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+index eeda45fbba258..3ccefa58e405c 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+@@ -75,6 +75,17 @@ static void vdpasim_queue_ready(struct vdpasim *vdpasim, unsigned int idx)
+ 			  (uintptr_t)vq->device_addr);
  
-+	cancel_work_sync(&ctx->workq);
- 	hwmon_device_unregister(ctx->hwmon_dev);
- 	kfifo_free(&ctx->async_msg_fifo);
- 	if (acpi_disabled)
+ 	vq->vring.last_avail_idx = last_avail_idx;
++
++	/*
++	 * Since vdpa_sim does not support receive inflight descriptors as a
++	 * destination of a migration, let's set both avail_idx and used_idx
++	 * the same at vq start.  This is how vhost-user works in a
++	 * VHOST_SET_VRING_BASE call.
++	 *
++	 * Although the simple fix is to set last_used_idx at
++	 * vdpasim_set_vq_state, it would be reset at vdpasim_queue_ready.
++	 */
++	vq->vring.last_used_idx = last_avail_idx;
+ 	vq->vring.notify = vdpasim_vq_notify;
+ }
+ 
 -- 
 2.39.2
 
