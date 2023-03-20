@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FE51C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862EDC433D2;
-	Mon, 20 Mar 2023 15:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02441C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525E9C433EF;
+	Mon, 20 Mar 2023 15:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324922;
-	bh=v81g5Ju93yPkz3l72tZo5MVgoURquqy4Asl0YshQPVI=;
+	s=korg; t=1679324925;
+	bh=o5u7k0nbL21Q8qrws88vl+I5xOSuwItooO2dh7Gyc8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GSHcD0VVv3uwp7yqUarDTYB91lNfz/zcUYxfWNLPWfWWK1a1oi64gNHb2gk06PZjY
-	 Kxjtn9zvYLs9th/9xaZi5jKWHFZ+y3t4yCW0IClsI2ci8w6h1JbicVdlNyiBygZR4V
-	 uAViMaSHlYg8S8f8E7246lcdN1U7id99IPr3H6NI=
+	b=Hhg7kUMUe0K3XECUHkCQQR4iwNmbXMbykAluoZYiqChgdiha8m9Z/5RpDjOxA8RV0
+	 n7ytHgTktAJ5Y4o2+U9J3i2nY8uoaBsraaCL2wf7RgQ+6jaHFDjP74Yixw9JeXS20f
+	 eHKyjCQP+7+GZmtegAtVtPUa6zf9JixDgsqzL/pE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 73/99] fbdev: stifb: Provide valid pixelclock and add fb_check_var() checks
-Date: Mon, 20 Mar 2023 15:54:51 +0100
-Message-Id: <20230320145446.460445749@linuxfoundation.org>
+	Tomas Henzl <thenzl@redhat.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 021/198] scsi: mpi3mr: Fix memory leaks in mpi3mr_init_ioc()
+Date: Mon, 20 Mar 2023 15:52:39 +0100
+Message-Id: <20230320145508.375216911@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,77 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Tomas Henzl <thenzl@redhat.com>
 
-commit 203873a535d627c668f293be0cb73e26c30f9cc7 upstream.
+[ Upstream commit c798304470cab88723d895726d17fcb96472e0e9 ]
 
-Find a valid modeline depending on the machine graphic card
-configuration and add the fb_check_var() function to validate
-Xorg provided graphics settings.
+Don't allocate memory again when IOC is being reinitialized.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fe6db6151565 ("scsi: mpi3mr: Handle offline FW activation in graceful manner")
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://lore.kernel.org/r/20230302234336.25456-6-thenzl@redhat.com
+Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/stifb.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 41 ++++++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 18 deletions(-)
 
---- a/drivers/video/fbdev/stifb.c
-+++ b/drivers/video/fbdev/stifb.c
-@@ -922,6 +922,28 @@ SETUP_HCRX(struct stifb_info *fb)
- /* ------------------- driver specific functions --------------------------- */
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index 37aaf8dc65d4d..1a404d71b88cf 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -3814,29 +3814,34 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
  
- static int
-+stifb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
-+{
-+	struct stifb_info *fb = container_of(info, struct stifb_info, info);
-+
-+	if (var->xres != fb->info.var.xres ||
-+	    var->yres != fb->info.var.yres ||
-+	    var->bits_per_pixel != fb->info.var.bits_per_pixel)
-+		return -EINVAL;
-+
-+	var->xres_virtual = var->xres;
-+	var->yres_virtual = var->yres;
-+	var->xoffset = 0;
-+	var->yoffset = 0;
-+	var->grayscale = fb->info.var.grayscale;
-+	var->red.length = fb->info.var.red.length;
-+	var->green.length = fb->info.var.green.length;
-+	var->blue.length = fb->info.var.blue.length;
-+
-+	return 0;
-+}
-+
-+static int
- stifb_setcolreg(u_int regno, u_int red, u_int green,
- 	      u_int blue, u_int transp, struct fb_info *info)
- {
-@@ -1145,6 +1167,7 @@ stifb_init_display(struct stifb_info *fb
+ 	mpi3mr_print_ioc_info(mrioc);
  
- static const struct fb_ops stifb_ops = {
- 	.owner		= THIS_MODULE,
-+	.fb_check_var	= stifb_check_var,
- 	.fb_setcolreg	= stifb_setcolreg,
- 	.fb_blank	= stifb_blank,
- 	.fb_fillrect	= stifb_fillrect,
-@@ -1164,6 +1187,7 @@ static int __init stifb_init_fb(struct s
- 	struct stifb_info *fb;
- 	struct fb_info *info;
- 	unsigned long sti_rom_address;
-+	char modestr[32];
- 	char *dev_name;
- 	int bpp, xres, yres;
+-	dprint_init(mrioc, "allocating config page buffers\n");
+-	mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
+-	    MPI3MR_DEFAULT_CFG_PAGE_SZ, &mrioc->cfg_page_dma, GFP_KERNEL);
+ 	if (!mrioc->cfg_page) {
+-		retval = -1;
+-		goto out_failed_noretry;
++		dprint_init(mrioc, "allocating config page buffers\n");
++		mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
++		mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
++		    mrioc->cfg_page_sz, &mrioc->cfg_page_dma, GFP_KERNEL);
++		if (!mrioc->cfg_page) {
++			retval = -1;
++			goto out_failed_noretry;
++		}
+ 	}
  
-@@ -1342,6 +1366,9 @@ static int __init stifb_init_fb(struct s
- 	info->flags = FBINFO_HWACCEL_COPYAREA | FBINFO_HWACCEL_FILLRECT;
- 	info->pseudo_palette = &fb->pseudo_palette;
+-	mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
+-
+-	retval = mpi3mr_alloc_reply_sense_bufs(mrioc);
+-	if (retval) {
+-		ioc_err(mrioc,
+-		    "%s :Failed to allocated reply sense buffers %d\n",
+-		    __func__, retval);
+-		goto out_failed_noretry;
++	if (!mrioc->init_cmds.reply) {
++		retval = mpi3mr_alloc_reply_sense_bufs(mrioc);
++		if (retval) {
++			ioc_err(mrioc,
++			    "%s :Failed to allocated reply sense buffers %d\n",
++			    __func__, retval);
++			goto out_failed_noretry;
++		}
+ 	}
  
-+	scnprintf(modestr, sizeof(modestr), "%dx%d-%d", xres, yres, bpp);
-+	fb_find_mode(&info->var, info, modestr, NULL, 0, NULL, bpp);
-+
- 	/* This has to be done !!! */
- 	if (fb_alloc_cmap(&info->cmap, NR_PALETTE, 0))
- 		goto out_err1;
+-	retval = mpi3mr_alloc_chain_bufs(mrioc);
+-	if (retval) {
+-		ioc_err(mrioc, "Failed to allocated chain buffers %d\n",
+-		    retval);
+-		goto out_failed_noretry;
++	if (!mrioc->chain_sgl_list) {
++		retval = mpi3mr_alloc_chain_bufs(mrioc);
++		if (retval) {
++			ioc_err(mrioc, "Failed to allocated chain buffers %d\n",
++			    retval);
++			goto out_failed_noretry;
++		}
+ 	}
+ 
+ 	retval = mpi3mr_issue_iocinit(mrioc);
+-- 
+2.39.2
+
 
 
