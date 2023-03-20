@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8CC1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39318C433D2;
-	Mon, 20 Mar 2023 15:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729271C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E3DC433D2;
+	Mon, 20 Mar 2023 15:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325701;
-	bh=FnopRgmivOrI9mpll2HA95oRSrfV9ZY9IOs63XY0C2c=;
+	s=korg; t=1679325704;
+	bh=yQ+QHul7HtaMOfb5jwAbmx7iqqROEMbkkrfqfvxBue8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Du50TcdxntJWUmwF4hmbe1KBSGWh5Mgny5+oHeqcXyrwMczKEKotVI7oR946nlwVp
-	 aljkuA5jD5w7SSqyafHb3KGERlYJnuwOVhERvpr6VeUkI/9Z4yj4ARHZ5yH6XuXlb0
-	 bqZQE+8Mh7iyYXnmhcBJiTCWLETvMO2eiynqmxio=
+	b=jUKsyvZD8SJ1YfV3NzB00STxGMTN0RCOQKmN3fktjPdRJGE1sWcSj8uqHvkR44dXH
+	 GBzG82tpPlL8FWNb5pq6Jl/dGHVTLFogbZ97L/PyFOAGl2PqAd+qPA4WU0BvSNKqd1
+	 CisyMqKFxY+HVnnn5g7FFSNbXWlh1fnrbG196DaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Jan Karcher <jaka@linux.ibm.com>,
-	Karsten Graul <kgraul@linux.ibm.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 060/211] net/smc: fix deadlock triggered by cancel_delayed_work_syn()
-Date: Mon, 20 Mar 2023 15:53:15 +0100
-Message-Id: <20230320145515.744514085@linuxfoundation.org>
+Subject: [PATCH 6.2 055/211] net: tunnels: annotate lockless accesses to dev->needed_headroom
+Date: Mon, 20 Mar 2023 15:53:10 +0100
+Message-Id: <20230320145515.549235788@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -38,162 +36,250 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenjia Zhang <wenjia@linux.ibm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 13085e1b5cab8ad802904d72e6a6dae85ae0cd20 ]
+[ Upstream commit 4b397c06cb987935b1b097336532aa6b4210e091 ]
 
-The following LOCKDEP was detected:
-		Workqueue: events smc_lgr_free_work [smc]
-		WARNING: possible circular locking dependency detected
-		6.1.0-20221027.rc2.git8.56bc5b569087.300.fc36.s390x+debug #1 Not tainted
-		------------------------------------------------------
-		kworker/3:0/176251 is trying to acquire lock:
-		00000000f1467148 ((wq_completion)smc_tx_wq-00000000#2){+.+.}-{0:0},
-			at: __flush_workqueue+0x7a/0x4f0
-		but task is already holding lock:
-		0000037fffe97dc8 ((work_completion)(&(&lgr->free_work)->work)){+.+.}-{0:0},
-			at: process_one_work+0x232/0x730
-		which lock already depends on the new lock.
-		the existing dependency chain (in reverse order) is:
-		-> #4 ((work_completion)(&(&lgr->free_work)->work)){+.+.}-{0:0}:
-		       __lock_acquire+0x58e/0xbd8
-		       lock_acquire.part.0+0xe2/0x248
-		       lock_acquire+0xac/0x1c8
-		       __flush_work+0x76/0xf0
-		       __cancel_work_timer+0x170/0x220
-		       __smc_lgr_terminate.part.0+0x34/0x1c0 [smc]
-		       smc_connect_rdma+0x15e/0x418 [smc]
-		       __smc_connect+0x234/0x480 [smc]
-		       smc_connect+0x1d6/0x230 [smc]
-		       __sys_connect+0x90/0xc0
-		       __do_sys_socketcall+0x186/0x370
-		       __do_syscall+0x1da/0x208
-		       system_call+0x82/0xb0
-		-> #3 (smc_client_lgr_pending){+.+.}-{3:3}:
-		       __lock_acquire+0x58e/0xbd8
-		       lock_acquire.part.0+0xe2/0x248
-		       lock_acquire+0xac/0x1c8
-		       __mutex_lock+0x96/0x8e8
-		       mutex_lock_nested+0x32/0x40
-		       smc_connect_rdma+0xa4/0x418 [smc]
-		       __smc_connect+0x234/0x480 [smc]
-		       smc_connect+0x1d6/0x230 [smc]
-		       __sys_connect+0x90/0xc0
-		       __do_sys_socketcall+0x186/0x370
-		       __do_syscall+0x1da/0x208
-		       system_call+0x82/0xb0
-		-> #2 (sk_lock-AF_SMC){+.+.}-{0:0}:
-		       __lock_acquire+0x58e/0xbd8
-		       lock_acquire.part.0+0xe2/0x248
-		       lock_acquire+0xac/0x1c8
-		       lock_sock_nested+0x46/0xa8
-		       smc_tx_work+0x34/0x50 [smc]
-		       process_one_work+0x30c/0x730
-		       worker_thread+0x62/0x420
-		       kthread+0x138/0x150
-		       __ret_from_fork+0x3c/0x58
-		       ret_from_fork+0xa/0x40
-		-> #1 ((work_completion)(&(&smc->conn.tx_work)->work)){+.+.}-{0:0}:
-		       __lock_acquire+0x58e/0xbd8
-		       lock_acquire.part.0+0xe2/0x248
-		       lock_acquire+0xac/0x1c8
-		       process_one_work+0x2bc/0x730
-		       worker_thread+0x62/0x420
-		       kthread+0x138/0x150
-		       __ret_from_fork+0x3c/0x58
-		       ret_from_fork+0xa/0x40
-		-> #0 ((wq_completion)smc_tx_wq-00000000#2){+.+.}-{0:0}:
-		       check_prev_add+0xd8/0xe88
-		       validate_chain+0x70c/0xb20
-		       __lock_acquire+0x58e/0xbd8
-		       lock_acquire.part.0+0xe2/0x248
-		       lock_acquire+0xac/0x1c8
-		       __flush_workqueue+0xaa/0x4f0
-		       drain_workqueue+0xaa/0x158
-		       destroy_workqueue+0x44/0x2d8
-		       smc_lgr_free+0x9e/0xf8 [smc]
-		       process_one_work+0x30c/0x730
-		       worker_thread+0x62/0x420
-		       kthread+0x138/0x150
-		       __ret_from_fork+0x3c/0x58
-		       ret_from_fork+0xa/0x40
-		other info that might help us debug this:
-		Chain exists of:
-		  (wq_completion)smc_tx_wq-00000000#2
-	  	  --> smc_client_lgr_pending
-		  --> (work_completion)(&(&lgr->free_work)->work)
-		 Possible unsafe locking scenario:
-		       CPU0                    CPU1
-		       ----                    ----
-		  lock((work_completion)(&(&lgr->free_work)->work));
-		                   lock(smc_client_lgr_pending);
-		                   lock((work_completion)
-					(&(&lgr->free_work)->work));
-		  lock((wq_completion)smc_tx_wq-00000000#2);
-		 *** DEADLOCK ***
-		2 locks held by kworker/3:0/176251:
-		 #0: 0000000080183548
-			((wq_completion)events){+.+.}-{0:0},
-				at: process_one_work+0x232/0x730
-		 #1: 0000037fffe97dc8
-			((work_completion)
-			 (&(&lgr->free_work)->work)){+.+.}-{0:0},
-				at: process_one_work+0x232/0x730
-		stack backtrace:
-		CPU: 3 PID: 176251 Comm: kworker/3:0 Not tainted
-		Hardware name: IBM 8561 T01 701 (z/VM 7.2.0)
-		Call Trace:
-		 [<000000002983c3e4>] dump_stack_lvl+0xac/0x100
-		 [<0000000028b477ae>] check_noncircular+0x13e/0x160
-		 [<0000000028b48808>] check_prev_add+0xd8/0xe88
-		 [<0000000028b49cc4>] validate_chain+0x70c/0xb20
-		 [<0000000028b4bd26>] __lock_acquire+0x58e/0xbd8
-		 [<0000000028b4cf6a>] lock_acquire.part.0+0xe2/0x248
-		 [<0000000028b4d17c>] lock_acquire+0xac/0x1c8
-		 [<0000000028addaaa>] __flush_workqueue+0xaa/0x4f0
-		 [<0000000028addf9a>] drain_workqueue+0xaa/0x158
-		 [<0000000028ae303c>] destroy_workqueue+0x44/0x2d8
-		 [<000003ff8029af26>] smc_lgr_free+0x9e/0xf8 [smc]
-		 [<0000000028adf3d4>] process_one_work+0x30c/0x730
-		 [<0000000028adf85a>] worker_thread+0x62/0x420
-		 [<0000000028aeac50>] kthread+0x138/0x150
-		 [<0000000028a63914>] __ret_from_fork+0x3c/0x58
-		 [<00000000298503da>] ret_from_fork+0xa/0x40
-		INFO: lockdep is turned off.
-===================================================================
+IP tunnels can apparently update dev->needed_headroom
+in their xmit path.
 
-This deadlock occurs because cancel_delayed_work_sync() waits for
-the work(&lgr->free_work) to finish, while the &lgr->free_work
-waits for the work(lgr->tx_wq), which needs the sk_lock-AF_SMC, that
-is already used under the mutex_lock.
+This patch takes care of three tunnels xmit, and also the
+core LL_RESERVED_SPACE() and LL_RESERVED_SPACE_EXTRA()
+helpers.
 
-The solution is to use cancel_delayed_work() instead, which kills
-off a pending work.
+More changes might be needed for completeness.
 
-Fixes: a52bcc919b14 ("net/smc: improve termination processing")
-Signed-off-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Reviewed-by: Jan Karcher <jaka@linux.ibm.com>
-Reviewed-by: Karsten Graul <kgraul@linux.ibm.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+BUG: KCSAN: data-race in ip_tunnel_xmit / ip_tunnel_xmit
+
+read to 0xffff88815b9da0ec of 2 bytes by task 888 on cpu 1:
+ip_tunnel_xmit+0x1270/0x1730 net/ipv4/ip_tunnel.c:803
+__gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
+__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
+netdev_start_xmit include/linux/netdevice.h:4895 [inline]
+xmit_one net/core/dev.c:3580 [inline]
+dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
+__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
+dev_queue_xmit include/linux/netdevice.h:3051 [inline]
+neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
+neigh_output include/net/neighbour.h:546 [inline]
+ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
+NF_HOOK_COND include/linux/netfilter.h:291 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
+dst_output include/net/dst.h:444 [inline]
+ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
+iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
+ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
+__gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
+__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
+netdev_start_xmit include/linux/netdevice.h:4895 [inline]
+xmit_one net/core/dev.c:3580 [inline]
+dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
+__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
+dev_queue_xmit include/linux/netdevice.h:3051 [inline]
+neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
+neigh_output include/net/neighbour.h:546 [inline]
+ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
+NF_HOOK_COND include/linux/netfilter.h:291 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
+dst_output include/net/dst.h:444 [inline]
+ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
+iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
+ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
+__gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
+__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
+netdev_start_xmit include/linux/netdevice.h:4895 [inline]
+xmit_one net/core/dev.c:3580 [inline]
+dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
+__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
+dev_queue_xmit include/linux/netdevice.h:3051 [inline]
+neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
+neigh_output include/net/neighbour.h:546 [inline]
+ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
+NF_HOOK_COND include/linux/netfilter.h:291 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
+dst_output include/net/dst.h:444 [inline]
+ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
+iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
+ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
+__gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
+__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
+netdev_start_xmit include/linux/netdevice.h:4895 [inline]
+xmit_one net/core/dev.c:3580 [inline]
+dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
+__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
+dev_queue_xmit include/linux/netdevice.h:3051 [inline]
+neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
+neigh_output include/net/neighbour.h:546 [inline]
+ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
+NF_HOOK_COND include/linux/netfilter.h:291 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
+dst_output include/net/dst.h:444 [inline]
+ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
+iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
+ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
+__gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
+__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
+netdev_start_xmit include/linux/netdevice.h:4895 [inline]
+xmit_one net/core/dev.c:3580 [inline]
+dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
+__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
+dev_queue_xmit include/linux/netdevice.h:3051 [inline]
+neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
+neigh_output include/net/neighbour.h:546 [inline]
+ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
+NF_HOOK_COND include/linux/netfilter.h:291 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
+dst_output include/net/dst.h:444 [inline]
+ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
+iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
+ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
+__gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
+__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
+netdev_start_xmit include/linux/netdevice.h:4895 [inline]
+xmit_one net/core/dev.c:3580 [inline]
+dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
+__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
+dev_queue_xmit include/linux/netdevice.h:3051 [inline]
+neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
+neigh_output include/net/neighbour.h:546 [inline]
+ip_finish_output2+0x740/0x840 net/ipv4/ip_output.c:228
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:316
+NF_HOOK_COND include/linux/netfilter.h:291 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:430
+dst_output include/net/dst.h:444 [inline]
+ip_local_out+0x64/0x80 net/ipv4/ip_output.c:126
+iptunnel_xmit+0x34a/0x4b0 net/ipv4/ip_tunnel_core.c:82
+ip_tunnel_xmit+0x1451/0x1730 net/ipv4/ip_tunnel.c:813
+__gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
+__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
+netdev_start_xmit include/linux/netdevice.h:4895 [inline]
+xmit_one net/core/dev.c:3580 [inline]
+dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
+__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
+
+write to 0xffff88815b9da0ec of 2 bytes by task 2379 on cpu 0:
+ip_tunnel_xmit+0x1294/0x1730 net/ipv4/ip_tunnel.c:804
+__gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:661
+__netdev_start_xmit include/linux/netdevice.h:4881 [inline]
+netdev_start_xmit include/linux/netdevice.h:4895 [inline]
+xmit_one net/core/dev.c:3580 [inline]
+dev_hard_start_xmit+0x127/0x400 net/core/dev.c:3596
+__dev_queue_xmit+0x1007/0x1eb0 net/core/dev.c:4246
+dev_queue_xmit include/linux/netdevice.h:3051 [inline]
+neigh_direct_output+0x17/0x20 net/core/neighbour.c:1623
+neigh_output include/net/neighbour.h:546 [inline]
+ip6_finish_output2+0x9bc/0xc50 net/ipv6/ip6_output.c:134
+__ip6_finish_output net/ipv6/ip6_output.c:195 [inline]
+ip6_finish_output+0x39a/0x4e0 net/ipv6/ip6_output.c:206
+NF_HOOK_COND include/linux/netfilter.h:291 [inline]
+ip6_output+0xeb/0x220 net/ipv6/ip6_output.c:227
+dst_output include/net/dst.h:444 [inline]
+NF_HOOK include/linux/netfilter.h:302 [inline]
+mld_sendpack+0x438/0x6a0 net/ipv6/mcast.c:1820
+mld_send_cr net/ipv6/mcast.c:2121 [inline]
+mld_ifc_work+0x519/0x7b0 net/ipv6/mcast.c:2653
+process_one_work+0x3e6/0x750 kernel/workqueue.c:2390
+worker_thread+0x5f2/0xa10 kernel/workqueue.c:2537
+kthread+0x1ac/0x1e0 kernel/kthread.c:376
+ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+
+value changed: 0x0dd4 -> 0x0e14
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 2379 Comm: kworker/0:0 Not tainted 6.3.0-rc1-syzkaller-00002-g8ca09d5fa354-dirty #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/02/2023
+Workqueue: mld mld_ifc_work
+
+Fixes: 8eb30be0352d ("ipv6: Create ip6_tnl_xmit")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230310191109.2384387-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/netdevice.h |  6 ++++--
+ net/ipv4/ip_tunnel.c      | 12 ++++++------
+ net/ipv6/ip6_tunnel.c     |  4 ++--
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
-index c19d4b7c1f28a..0208dfb353456 100644
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1459,7 +1459,7 @@ static void __smc_lgr_terminate(struct smc_link_group *lgr, bool soft)
- 	if (lgr->terminating)
- 		return;	/* lgr already terminating */
- 	/* cancel free_work sync, will terminate when lgr->freeing is set */
--	cancel_delayed_work_sync(&lgr->free_work);
-+	cancel_delayed_work(&lgr->free_work);
- 	lgr->terminating = 1;
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index e6e02184c25a4..84668547fee63 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -295,9 +295,11 @@ struct hh_cache {
+  * relationship HH alignment <= LL alignment.
+  */
+ #define LL_RESERVED_SPACE(dev) \
+-	((((dev)->hard_header_len+(dev)->needed_headroom)&~(HH_DATA_MOD - 1)) + HH_DATA_MOD)
++	((((dev)->hard_header_len + READ_ONCE((dev)->needed_headroom)) \
++	  & ~(HH_DATA_MOD - 1)) + HH_DATA_MOD)
+ #define LL_RESERVED_SPACE_EXTRA(dev,extra) \
+-	((((dev)->hard_header_len+(dev)->needed_headroom+(extra))&~(HH_DATA_MOD - 1)) + HH_DATA_MOD)
++	((((dev)->hard_header_len + READ_ONCE((dev)->needed_headroom) + (extra)) \
++	  & ~(HH_DATA_MOD - 1)) + HH_DATA_MOD)
  
- 	/* kill remaining link group connections */
+ struct header_ops {
+ 	int	(*create) (struct sk_buff *skb, struct net_device *dev,
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index de90b09dfe78f..2541083d49ad6 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -614,10 +614,10 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 	}
+ 
+ 	headroom += LL_RESERVED_SPACE(rt->dst.dev) + rt->dst.header_len;
+-	if (headroom > dev->needed_headroom)
+-		dev->needed_headroom = headroom;
++	if (headroom > READ_ONCE(dev->needed_headroom))
++		WRITE_ONCE(dev->needed_headroom, headroom);
+ 
+-	if (skb_cow_head(skb, dev->needed_headroom)) {
++	if (skb_cow_head(skb, READ_ONCE(dev->needed_headroom))) {
+ 		ip_rt_put(rt);
+ 		goto tx_dropped;
+ 	}
+@@ -800,10 +800,10 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 
+ 	max_headroom = LL_RESERVED_SPACE(rt->dst.dev) + sizeof(struct iphdr)
+ 			+ rt->dst.header_len + ip_encap_hlen(&tunnel->encap);
+-	if (max_headroom > dev->needed_headroom)
+-		dev->needed_headroom = max_headroom;
++	if (max_headroom > READ_ONCE(dev->needed_headroom))
++		WRITE_ONCE(dev->needed_headroom, max_headroom);
+ 
+-	if (skb_cow_head(skb, dev->needed_headroom)) {
++	if (skb_cow_head(skb, READ_ONCE(dev->needed_headroom))) {
+ 		ip_rt_put(rt);
+ 		DEV_STATS_INC(dev, tx_dropped);
+ 		kfree_skb(skb);
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 47b6607a13706..5e80e517f0710 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1240,8 +1240,8 @@ int ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev, __u8 dsfield,
+ 	 */
+ 	max_headroom = LL_RESERVED_SPACE(dst->dev) + sizeof(struct ipv6hdr)
+ 			+ dst->header_len + t->hlen;
+-	if (max_headroom > dev->needed_headroom)
+-		dev->needed_headroom = max_headroom;
++	if (max_headroom > READ_ONCE(dev->needed_headroom))
++		WRITE_ONCE(dev->needed_headroom, max_headroom);
+ 
+ 	err = ip6_tnl_encap(skb, t, &proto, fl6);
+ 	if (err)
 -- 
 2.39.2
 
