@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865641C08
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079E3C4339B;
-	Mon, 20 Mar 2023 15:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3B41C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A17C433D2;
+	Mon, 20 Mar 2023 15:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324541;
-	bh=St5Ji6FgxOU1wLkYWLknQwVHLTpACLHUrJhOa0TCgEQ=;
+	s=korg; t=1679324544;
+	bh=hGPIJGWUQFacJe58wfAXGeJZ2kBO+h6j/m4dN2KKEx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTtX/HMAZpq/G8xIlvHDFaxoLoaj9mCduTdcUWlLDkwDnQ2WWNdp4EocYU6ZeljmX
-	 aoIJzDnG5beiMp8hVY7SQzKsdhaK0sPQVUe42HZMrvPMiXJ6+66S4TEaoz1RY7uC0k
-	 bjOpztIZWj18EeuE11YQ+1ONWjgPNRK7QbfjwZ+8=
+	b=gp/X9/T57AzqGODNQOM6BUfU5djGpf1s1fdlWk2JaxdRkXdSG1tBiIvIlHVaVPpPC
+	 OdXRk+syM0npdf+9RzUooLolVWl0pyH7yyUk1la1NcKAfU94Kj8KN9P0jkITFOpAV3
+	 SgGtCrC8TOdWAB8pAuzDBuy7FaVii07q9yetN834=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	syzbot+645a4616b87a2f10e398@syzkaller.appspotmail.com,
-	Bart Van Assche <bvanassche@acm.org>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 14/99] scsi: core: Fix a procfs host directory removal regression
-Date: Mon, 20 Mar 2023 15:53:52 +0100
-Message-Id: <20230320145443.951985817@linuxfoundation.org>
+	Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.4 49/60] KVM: nVMX: add missing consistency checks for CR0 and CR4
+Date: Mon, 20 Mar 2023 15:54:58 +0100
+Message-Id: <20230320145432.956767455@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,47 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit be03df3d4bfe7e8866d4aa43d62e648ffe884f5f ]
+commit 112e66017bff7f2837030f34c2bc19501e9212d5 upstream.
 
-scsi_proc_hostdir_rm() decreases a reference counter and hence must only be
-called once per host that is removed. This change does not require a
-scsi_add_host_with_dma() change since scsi_add_host_with_dma() will return
-0 (success) if scsi_proc_host_add() is called.
+The effective values of the guest CR0 and CR4 registers may differ from
+those included in the VMCS12.  In particular, disabling EPT forces
+CR4.PAE=1 and disabling unrestricted guest mode forces CR0.PG=CR0.PE=1.
 
-Fixes: fc663711b944 ("scsi: core: Remove the /proc/scsi/${proc_name} directory earlier")
-Cc: John Garry <john.g.garry@oracle.com>
-Reported-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/all/ed6b8027-a9d9-1b45-be8e-df4e8c6c4605@oracle.com/
-Reported-by: syzbot+645a4616b87a2f10e398@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-scsi/000000000000890fab05f65342b6@google.com/
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20230307214428.3703498-1-bvanassche@acm.org
-Tested-by: John Garry <john.g.garry@oracle.com>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Therefore, checks on these bits cannot be delegated to the processor
+and must be performed by KVM.
+
+Reported-by: Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hosts.c | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/x86/kvm/vmx/nested.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
-index 0fd2487203ff5..18321cf9db5d6 100644
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -322,9 +322,6 @@ static void scsi_host_dev_release(struct device *dev)
- 	struct Scsi_Host *shost = dev_to_shost(dev);
- 	struct device *parent = dev->parent;
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -2779,7 +2779,7 @@ static int nested_vmx_check_guest_state(
+ 					struct vmcs12 *vmcs12,
+ 					u32 *exit_qual)
+ {
+-	bool ia32e;
++	bool ia32e = !!(vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE);
  
--	/* In case scsi_remove_host() has not been called. */
--	scsi_proc_hostdir_rm(shost->hostt);
--
- 	/* Wait for functions invoked through call_rcu(&scmd->rcu, ...) */
- 	rcu_barrier();
+ 	*exit_qual = ENTRY_FAIL_DEFAULT;
  
--- 
-2.39.2
-
+@@ -2796,6 +2796,13 @@ static int nested_vmx_check_guest_state(
+ 		return -EINVAL;
+ 	}
+ 
++	if (CC((vmcs12->guest_cr0 & (X86_CR0_PG | X86_CR0_PE)) == X86_CR0_PG))
++		return -EINVAL;
++
++	if (CC(ia32e && !(vmcs12->guest_cr4 & X86_CR4_PAE)) ||
++	    CC(ia32e && !(vmcs12->guest_cr0 & X86_CR0_PG)))
++		return -EINVAL;
++
+ 	/*
+ 	 * If the load IA32_EFER VM-entry control is 1, the following checks
+ 	 * are performed on the field for the IA32_EFER MSR:
+@@ -2807,7 +2814,6 @@ static int nested_vmx_check_guest_state(
+ 	 */
+ 	if (to_vmx(vcpu)->nested.nested_run_pending &&
+ 	    (vmcs12->vm_entry_controls & VM_ENTRY_LOAD_IA32_EFER)) {
+-		ia32e = (vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE) != 0;
+ 		if (CC(!kvm_valid_efer(vcpu, vmcs12->guest_ia32_efer)) ||
+ 		    CC(ia32e != !!(vmcs12->guest_ia32_efer & EFER_LMA)) ||
+ 		    CC(((vmcs12->guest_cr0 & X86_CR0_PG) &&
 
 
