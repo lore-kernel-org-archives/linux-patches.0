@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2371B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71220C433A0;
-	Mon, 20 Mar 2023 15:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30891C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BECC433D2;
+	Mon, 20 Mar 2023 15:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325005;
-	bh=KybEv8xqTLeH2QWdnQbVpYQSe3+YI3q6mmf67zLEscQ=;
+	s=korg; t=1679325008;
+	bh=Mz6bGC4ZNvI9XpQAN6UiioEOAv0yyJhVmXWhQxp97tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JUGD+gPOZNkTWYiduwZIy1UvjepPgTEyCL2Fsxhv79572vHbnHxwHS5JQ+V6tMAt4
-	 Ev5BVvwIiSXj9b1NvviDRAB1P1pjzCfxZfQfE8IgUi16iV4KRtlSwbh5LLx7MZHr2z
-	 si9Tg35uzIDXwZI1wlR8SpB0gr5coTkyk2yewAlo=
+	b=OH0I4642gFvtWDCDK7eWy/XuGywwsmMi5LFWUEOgBlhRZ8dnqtU5UgmrXMlJxO/u/
+	 FtU3HmKjVHPSciKYm0FvgauX0UQEuzh36HmtcnmK8F1AddcMhi1XfpPRbi3SGdS6yy
+	 Gf995AShMTtBNM4lT+9ROSGD0gygijsLfjf2Qngw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eli Cohen <elic@nvidia.com>,
-	Si-Wei Liu <si-wei.liu@oracle.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/198] vdpa/mlx5: should not activate virtq object when suspended
-Date: Mon, 20 Mar 2023 15:52:51 +0100
-Message-Id: <20230320145508.867430578@linuxfoundation.org>
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <david@fromorbit.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 5.10 83/99] xfs: dont assert fail on perag references on teardown
+Date: Mon, 20 Mar 2023 15:55:01 +0100
+Message-Id: <20230320145446.903286352@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,83 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Si-Wei Liu <si-wei.liu@oracle.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 09e65ee9059d76b89cb713795748805efd3f50c6 ]
+commit 5b55cbc2d72632e874e50d2e36bce608e55aaaea upstream.
 
-Otherwise the virtqueue object to instate could point to invalid address
-that was unmapped from the MTT:
+[backport for 5.10.y, prior to perag refactoring in v5.14]
 
-  mlx5_core 0000:41:04.2: mlx5_cmd_out_err:782:(pid 8321):
-  CREATE_GENERAL_OBJECT(0xa00) op_mod(0xd) failed, status
-  bad parameter(0x3), syndrome (0x5fa1c), err(-22)
+Not fatal, the assert is there to catch developer attention. I'm
+seeing this occasionally during recoveryloop testing after a
+shutdown, and I don't want this to stop an overnight recoveryloop
+run as it is currently doing.
 
-Fixes: cae15c2ed8e6 ("vdpa/mlx5: Implement susupend virtqueue callback")
-Cc: Eli Cohen <elic@nvidia.com>
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Reviewed-by: Eli Cohen <elic@nvidia.com>
+Convert the ASSERT to a XFS_IS_CORRUPT() check so it will dump a
+corruption report into the log and cause a test failure that way,
+but it won't stop the machine dead.
 
-Message-Id: <1676424640-11673-1-git-send-email-si-wei.liu@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Dave Chinner <david@fromorbit.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/mlx5/core/mlx5_vdpa.h | 1 +
- drivers/vdpa/mlx5/net/mlx5_vnet.c  | 6 +++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_mount.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/vdpa/mlx5/core/mlx5_vdpa.h b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-index 058fbe28107e9..25fc4120b618d 100644
---- a/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-+++ b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-@@ -96,6 +96,7 @@ struct mlx5_vdpa_dev {
- 	struct mlx5_control_vq cvq;
- 	struct workqueue_struct *wq;
- 	unsigned int group2asid[MLX5_VDPA_NUMVQ_GROUPS];
-+	bool suspended;
- };
+--- a/fs/xfs/xfs_mount.c
++++ b/fs/xfs/xfs_mount.c
+@@ -126,7 +126,6 @@ __xfs_free_perag(
+ {
+ 	struct xfs_perag *pag = container_of(head, struct xfs_perag, rcu_head);
  
- int mlx5_vdpa_alloc_pd(struct mlx5_vdpa_dev *dev, u32 *pdn, u16 uid);
-diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-index 3a6dbbc6440d4..daac3ab314785 100644
---- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
-+++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-@@ -2411,7 +2411,7 @@ static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev,
- 	if (err)
- 		goto err_mr;
- 
--	if (!(mvdev->status & VIRTIO_CONFIG_S_DRIVER_OK))
-+	if (!(mvdev->status & VIRTIO_CONFIG_S_DRIVER_OK) || mvdev->suspended)
- 		goto err_mr;
- 
- 	restore_channels_info(ndev);
-@@ -2579,6 +2579,7 @@ static int mlx5_vdpa_reset(struct vdpa_device *vdev)
- 	clear_vqs_ready(ndev);
- 	mlx5_vdpa_destroy_mr(&ndev->mvdev);
- 	ndev->mvdev.status = 0;
-+	ndev->mvdev.suspended = false;
- 	ndev->cur_num_vqs = 0;
- 	ndev->mvdev.cvq.received_desc = 0;
- 	ndev->mvdev.cvq.completed_desc = 0;
-@@ -2815,6 +2816,8 @@ static int mlx5_vdpa_suspend(struct vdpa_device *vdev)
- 	struct mlx5_vdpa_virtqueue *mvq;
- 	int i;
- 
-+	mlx5_vdpa_info(mvdev, "suspending device\n");
-+
- 	down_write(&ndev->reslock);
- 	ndev->nb_registered = false;
- 	mlx5_notifier_unregister(mvdev->mdev, &ndev->nb);
-@@ -2824,6 +2827,7 @@ static int mlx5_vdpa_suspend(struct vdpa_device *vdev)
- 		suspend_vq(ndev, mvq);
- 	}
- 	mlx5_vdpa_cvq_suspend(mvdev);
-+	mvdev->suspended = true;
- 	up_write(&ndev->reslock);
- 	return 0;
+-	ASSERT(atomic_read(&pag->pag_ref) == 0);
+ 	kmem_free(pag);
  }
--- 
-2.39.2
-
+ 
+@@ -145,7 +144,7 @@ xfs_free_perag(
+ 		pag = radix_tree_delete(&mp->m_perag_tree, agno);
+ 		spin_unlock(&mp->m_perag_lock);
+ 		ASSERT(pag);
+-		ASSERT(atomic_read(&pag->pag_ref) == 0);
++		XFS_IS_CORRUPT(pag->pag_mount, atomic_read(&pag->pag_ref) != 0);
+ 		xfs_iunlink_destroy(pag);
+ 		xfs_buf_hash_destroy(pag);
+ 		call_rcu(&pag->rcu_head, __xfs_free_perag);
 
 
