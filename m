@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C661F1C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7CEC4339B;
-	Mon, 20 Mar 2023 15:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7681C1C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78B5C433D2;
+	Mon, 20 Mar 2023 15:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326033;
-	bh=ItwEZepMiMsvKIPT7E7ZzxgPotXPPqHnsHfZmPbNf5U=;
+	s=korg; t=1679326036;
+	bh=K32Ip4ckcogBFQaI4xwDfstOw7DQCWszrDIUFAfhSdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZ1kEr26iXdpjHw4W9i3+szydJx6dZY2gvMZQ0SfmnloS/8eRMzCbxVitwPjqoBOJ
-	 TJvZUYDLd6a0ITtN6IBi42NYZ9Z5N3VClSOzNWDNTLnpkpO3t6OlpUVZbCzIemKTLm
-	 uM6og22Rcti1PbBJ24uZRSkWBw9eASEWl16NZK9g=
+	b=c2orvpmmxum7sNl+9GWRgzTL62b/8xy7VnLtsrxAf0RxFQWiQu2LXr4RD9g9IOd39
+	 zUWTlkPeEsAgGHCh+S11roMIl0ti+XbjwfySmmOrbDcg6G+6ZbcR93qfSajeAto26Y
+	 IX8YGBnDEeYzMr3ktu1IbmiXqG6YNzLsx9iD+Pwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.2 147/211] tracing: Make tracepoint lockdep check actually test something
-Date: Mon, 20 Mar 2023 15:54:42 +0100
-Message-Id: <20230320145519.587173909@linuxfoundation.org>
+	Xin Hao <xhao@linux.alibaba.com>,
+	Shawn Wang <shawnwang@linux.alibaba.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.1 189/198] x86/resctrl: Clear staged_config[] before and after it is used
+Date: Mon, 20 Mar 2023 15:55:27 +0100
+Message-Id: <20230320145515.388535907@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,86 +36,165 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Shawn Wang <shawnwang@linux.alibaba.com>
 
-commit c2679254b9c9980d9045f0f722cf093a2b1f7590 upstream.
+commit 0424a7dfe9129b93f29b277511a60e87f052ac6b upstream.
 
-A while ago where the trace events had the following:
+As a temporary storage, staged_config[] in rdt_domain should be cleared
+before and after it is used. The stale value in staged_config[] could
+cause an MSR access error.
 
-   rcu_read_lock_sched_notrace();
-   rcu_dereference_sched(...);
-   rcu_read_unlock_sched_notrace();
+Here is a reproducer on a system with 16 usable CLOSIDs for a 15-way L3
+Cache (MBA should be disabled if the number of CLOSIDs for MB is less than
+16.) :
+	mount -t resctrl resctrl -o cdp /sys/fs/resctrl
+	mkdir /sys/fs/resctrl/p{1..7}
+	umount /sys/fs/resctrl/
+	mount -t resctrl resctrl /sys/fs/resctrl
+	mkdir /sys/fs/resctrl/p{1..8}
 
-If the tracepoint is enabled, it could trigger RCU issues if called in
-the wrong place. And this warning was only triggered if lockdep was
-enabled. If the tracepoint was never enabled with lockdep, the bug would
-not be caught. To handle this, the above sequence was done when lockdep
-was enabled regardless if the tracepoint was enabled or not (although the
-always enabled code really didn't do anything, it would still trigger a
-warning).
+An error occurs when creating resource group named p8:
+    unchecked MSR access error: WRMSR to 0xca0 (tried to write 0x00000000000007ff) at rIP: 0xffffffff82249142 (cat_wrmsr+0x32/0x60)
+    Call Trace:
+     <IRQ>
+     __flush_smp_call_function_queue+0x11d/0x170
+     __sysvec_call_function+0x24/0xd0
+     sysvec_call_function+0x89/0xc0
+     </IRQ>
+     <TASK>
+     asm_sysvec_call_function+0x16/0x20
 
-But a lot has changed since that lockdep code was added. One is, that
-sequence no longer triggers any warning. Another is, the tracepoint when
-enabled doesn't even do that sequence anymore.
+When creating a new resource control group, hardware will be configured
+by the following process:
+    rdtgroup_mkdir()
+      rdtgroup_mkdir_ctrl_mon()
+        rdtgroup_init_alloc()
+          resctrl_arch_update_domains()
 
-The main check we care about today is whether RCU is "watching" or not.
-So if lockdep is enabled, always check if rcu_is_watching() which will
-trigger a warning if it is not (tracepoints require RCU to be watching).
+resctrl_arch_update_domains() iterates and updates all resctrl_conf_type
+whose have_new_ctrl is true. Since staged_config[] holds the same values as
+when CDP was enabled, it will continue to update the CDP_CODE and CDP_DATA
+configurations. When group p8 is created, get_config_index() called in
+resctrl_arch_update_domains() will return 16 and 17 as the CLOSIDs for
+CDP_CODE and CDP_DATA, which will be translated to an invalid register -
+0xca0 in this scenario.
 
-Note, that old sequence did add a bit of overhead when lockdep was enabled,
-and with the latest kernel updates, would cause the system to slow down
-enough to trigger kernel "stalled" warnings.
+Fix it by clearing staged_config[] before and after it is used.
 
-Link: http://lore.kernel.org/lkml/20140806181801.GA4605@redhat.com
-Link: http://lore.kernel.org/lkml/20140807175204.C257CAC5@viggo.jf.intel.com
-Link: https://lore.kernel.org/lkml/20230307184645.521db5c9@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20230310172856.77406446@gandalf.local.home
+[reinette: re-order commit tags]
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Paul E. McKenney <paulmck@kernel.org>
-Fixes: e6753f23d961 ("tracepoint: Make rcuidle tracepoint callers use SRCU")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 75408e43509e ("x86/resctrl: Allow different CODE/DATA configurations to be staged")
+Suggested-by: Xin Hao <xhao@linux.alibaba.com>
+Signed-off-by: Shawn Wang <shawnwang@linux.alibaba.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/2fad13f49fbe89687fc40e9a5a61f23a28d1507a.1673988935.git.reinette.chatre%40intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/tracepoint.h |   15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ arch/x86/kernel/cpu/resctrl/ctrlmondata.c |    7 ++-----
+ arch/x86/kernel/cpu/resctrl/internal.h    |    1 +
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c    |   25 +++++++++++++++++++++----
+ 3 files changed, 24 insertions(+), 9 deletions(-)
 
---- a/include/linux/tracepoint.h
-+++ b/include/linux/tracepoint.h
-@@ -231,12 +231,11 @@ static inline struct tracepoint *tracepo
-  * not add unwanted padding between the beginning of the section and the
-  * structure. Force alignment to the same alignment as the section start.
-  *
-- * When lockdep is enabled, we make sure to always do the RCU portions of
-- * the tracepoint code, regardless of whether tracing is on. However,
-- * don't check if the condition is false, due to interaction with idle
-- * instrumentation. This lets us find RCU issues triggered with tracepoints
-- * even when this tracepoint is off. This code has no purpose other than
-- * poking RCU a bit.
-+ * When lockdep is enabled, we make sure to always test if RCU is
-+ * "watching" regardless if the tracepoint is enabled or not. Tracepoints
-+ * require RCU to be active, and it should always warn at the tracepoint
-+ * site if it is not watching, as it will need to be active when the
-+ * tracepoint is enabled.
-  */
- #define __DECLARE_TRACE(name, proto, args, cond, data_proto)		\
- 	extern int __traceiter_##name(data_proto);			\
-@@ -249,9 +248,7 @@ static inline struct tracepoint *tracepo
- 				TP_ARGS(args),				\
- 				TP_CONDITION(cond), 0);			\
- 		if (IS_ENABLED(CONFIG_LOCKDEP) && (cond)) {		\
--			rcu_read_lock_sched_notrace();			\
--			rcu_dereference_sched(__tracepoint_##name.funcs);\
--			rcu_read_unlock_sched_notrace();		\
-+			WARN_ON_ONCE(!rcu_is_watching());		\
- 		}							\
- 	}								\
- 	__DECLARE_TRACE_RCU(name, PARAMS(proto), PARAMS(args),		\
+--- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
++++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+@@ -374,7 +374,6 @@ ssize_t rdtgroup_schemata_write(struct k
+ {
+ 	struct resctrl_schema *s;
+ 	struct rdtgroup *rdtgrp;
+-	struct rdt_domain *dom;
+ 	struct rdt_resource *r;
+ 	char *tok, *resname;
+ 	int ret = 0;
+@@ -403,10 +402,7 @@ ssize_t rdtgroup_schemata_write(struct k
+ 		goto out;
+ 	}
+ 
+-	list_for_each_entry(s, &resctrl_schema_all, list) {
+-		list_for_each_entry(dom, &s->res->domains, list)
+-			memset(dom->staged_config, 0, sizeof(dom->staged_config));
+-	}
++	rdt_staged_configs_clear();
+ 
+ 	while ((tok = strsep(&buf, "\n")) != NULL) {
+ 		resname = strim(strsep(&tok, ":"));
+@@ -451,6 +447,7 @@ ssize_t rdtgroup_schemata_write(struct k
+ 	}
+ 
+ out:
++	rdt_staged_configs_clear();
+ 	rdtgroup_kn_unlock(of->kn);
+ 	cpus_read_unlock();
+ 	return ret ?: nbytes;
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -537,5 +537,6 @@ bool has_busy_rmid(struct rdt_resource *
+ void __check_limbo(struct rdt_domain *d, bool force_free);
+ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
+ void __init thread_throttle_mode_init(void);
++void rdt_staged_configs_clear(void);
+ 
+ #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -78,6 +78,19 @@ void rdt_last_cmd_printf(const char *fmt
+ 	va_end(ap);
+ }
+ 
++void rdt_staged_configs_clear(void)
++{
++	struct rdt_resource *r;
++	struct rdt_domain *dom;
++
++	lockdep_assert_held(&rdtgroup_mutex);
++
++	for_each_alloc_capable_rdt_resource(r) {
++		list_for_each_entry(dom, &r->domains, list)
++			memset(dom->staged_config, 0, sizeof(dom->staged_config));
++	}
++}
++
+ /*
+  * Trivial allocator for CLOSIDs. Since h/w only supports a small number,
+  * we can keep a bitmap of free CLOSIDs in a single integer.
+@@ -2851,7 +2864,9 @@ static int rdtgroup_init_alloc(struct rd
+ {
+ 	struct resctrl_schema *s;
+ 	struct rdt_resource *r;
+-	int ret;
++	int ret = 0;
++
++	rdt_staged_configs_clear();
+ 
+ 	list_for_each_entry(s, &resctrl_schema_all, list) {
+ 		r = s->res;
+@@ -2862,20 +2877,22 @@ static int rdtgroup_init_alloc(struct rd
+ 		} else {
+ 			ret = rdtgroup_init_cat(s, rdtgrp->closid);
+ 			if (ret < 0)
+-				return ret;
++				goto out;
+ 		}
+ 
+ 		ret = resctrl_arch_update_domains(r, rdtgrp->closid);
+ 		if (ret < 0) {
+ 			rdt_last_cmd_puts("Failed to initialize allocations\n");
+-			return ret;
++			goto out;
+ 		}
+ 
+ 	}
+ 
+ 	rdtgrp->mode = RDT_MODE_SHAREABLE;
+ 
+-	return 0;
++out:
++	rdt_staged_configs_clear();
++	return ret;
+ }
+ 
+ static int mkdir_rdt_prepare(struct kernfs_node *parent_kn,
 
 
