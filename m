@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1F41C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F8E9C433EF;
-	Mon, 20 Mar 2023 15:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5761C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC590C433D2;
+	Mon, 20 Mar 2023 15:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325975;
-	bh=d81WpvGHXcAaGO6+jdo5a6M6e5BWfqqEcbhXTx3AZ70=;
+	s=korg; t=1679325978;
+	bh=/aqFsJCHdW9UaPjqze/Vnzhzi+ssZM7JpgAU3CEntIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=psdq8t8IQuuOqe9BYpXLF08vj8GxcuytjHkavjIk907idSX2Yj6HXUt4lAZtXsNT0
-	 NwzcvvM9E6JWd8bf83UjwH707PSQ/9uLdvpUaXrApRCSq6o5halmjxY4hi6/nD0qaJ
-	 dXzsLRe3X7ewQa0W9mlnlBpMrxhUvzRajJ7dp5cU=
+	b=Zd9xsDcXfSIpvJ06BPmk1Xx+fYJTIRlm8rb+vbLLWtPLI5El4h82uk6+KJid0wwj/
+	 S4SHi49bAfKT1sxAbwH0uxtnp5y7tmfGahg8WCvhTk9Vm2cR+KmA+DqU8qnd14SC2z
+	 IYETcXvbX/kr0ccteQQrRB/rjgURPThf6npkR+MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 177/198] mmc: sdhci_am654: lower power-on failed message severity
-Date: Mon, 20 Mar 2023 15:55:15 +0100
-Message-Id: <20230320145514.922255293@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.2 135/211] interconnect: qcom: rpm: fix probe child-node error handling
+Date: Mon, 20 Mar 2023 15:54:30 +0100
+Message-Id: <20230320145519.099098916@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 11440da77d6020831ee6f9ce4551b545dea789ee upstream.
+commit bc463201f60803fa6bf2741d59441031cd0910e4 upstream.
 
-Lower the power-on failed message severity from warn to info when the
-controller does not power-up. It's normal to have this situation when
-the SD card slot is empty, therefore we should not warn the user about
-it.
+Make sure to clean up and release resources properly also in case probe
+fails when populating child devices.
 
-Fixes: 7ca0f166f5b2 ("mmc: sdhci_am654: Add workaround for card detect debounce timer")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230306162751.163369-1-francesco@dolcini.it
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: e39bf2972c6e ("interconnect: icc-rpm: Support child NoC device probe")
+Cc: stable@vger.kernel.org      # 5.17
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-7-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_am654.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/interconnect/qcom/icc-rpm.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -369,7 +369,7 @@ static void sdhci_am654_write_b(struct s
- 					MAX_POWER_ON_TIMEOUT, false, host, val,
- 					reg);
- 		if (ret)
--			dev_warn(mmc_dev(host->mmc), "Power on failed\n");
-+			dev_info(mmc_dev(host->mmc), "Power on failed\n");
- 	}
- }
+--- a/drivers/interconnect/qcom/icc-rpm.c
++++ b/drivers/interconnect/qcom/icc-rpm.c
+@@ -541,8 +541,11 @@ regmap_done:
+ 	platform_set_drvdata(pdev, qp);
  
+ 	/* Populate child NoC devices if any */
+-	if (of_get_child_count(dev->of_node) > 0)
+-		return of_platform_populate(dev->of_node, NULL, NULL, dev);
++	if (of_get_child_count(dev->of_node) > 0) {
++		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
++		if (ret)
++			goto err;
++	}
+ 
+ 	return 0;
+ err:
 
 
