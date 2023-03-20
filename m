@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060BE1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70944C433EF;
-	Mon, 20 Mar 2023 14:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B337B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37446C433EF;
+	Mon, 20 Mar 2023 14:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324394;
-	bh=utcI07NSYk/VChAJ9f8B0ug29705//maxDCts0fopGo=;
+	s=korg; t=1679324397;
+	bh=qEOrWhhdLZMXPkBve6GfKd89pHtRMO4xXcLMqrTOr5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xvs3x/Uc5DkV+0hsv6T7szFJ8LUij6gr66RuiY5F7gkGKrVwkEiYaUviXGiQrNxH5
-	 CZq0030lO6BdP8Uv7bQgiXuTmMnbl1UL8M1nHOblTFpOYc0z5f02g0fuEagx5WaayV
-	 rkYZZ96fT77Qp1p2sU1rpUNYKXIrHMHER4zmRxf0=
+	b=HG10oL+Ie1174zVgxAaF8jilWdXBqR91KCq1/CvdlFzDRjTxtn+Gvotn4HpCXjHeG
+	 R2jj7wNOcHyMn8jQUsd4zH3M00RcwbTwZ8BpyeAWcvTRUMEq9z6b6FATRSSC+V2pzF
+	 x+xouqtBwaECqoHjjY5LQMAtAvWMNxdk6XyxZWGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	gaoxingwang <gaoxingwang1@huawei.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 12/36] block: sunvdc: add check for mdesc_grab() returning NULL
-Date: Mon, 20 Mar 2023 15:54:38 +0100
-Message-Id: <20230320145424.712171883@linuxfoundation.org>
+Subject: [PATCH 4.19 13/36] ipv4: Fix incorrect table ID in IOCTL path
+Date: Mon, 20 Mar 2023 15:54:39 +0100
+Message-Id: <20230320145424.750640667@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -35,36 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 6030363199e3a6341afb467ddddbed56640cbf6a ]
+[ Upstream commit 8a2618e14f81604a9b6ad305d57e0c8da939cd65 ]
 
-In vdc_port_probe(), we should check the return value of mdesc_grab() as
-it may return NULL, which can cause potential NPD bug.
+Commit f96a3d74554d ("ipv4: Fix incorrect route flushing when source
+address is deleted") started to take the table ID field in the FIB info
+structure into account when determining if two structures are identical
+or not. This field is initialized using the 'fc_table' field in the
+route configuration structure, which is not set when adding a route via
+IOCTL.
 
-Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
-Signed-off-by: Liang He <windhl@126.com>
-Link: https://lore.kernel.org/r/20230315062032.1741692-1-windhl@126.com
-[axboe: style cleanup]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The above can result in user space being able to install two identical
+routes that only differ in the table ID field of their associated FIB
+info.
+
+Fix by initializing the table ID field in the route configuration
+structure in the IOCTL path.
+
+Before the fix:
+
+ # ip route add default via 192.0.2.2
+ # route add default gw 192.0.2.2
+ # ip -4 r show default
+ # default via 192.0.2.2 dev dummy10
+ # default via 192.0.2.2 dev dummy10
+
+After the fix:
+
+ # ip route add default via 192.0.2.2
+ # route add default gw 192.0.2.2
+ SIOCADDRT: File exists
+ # ip -4 r show default
+ default via 192.0.2.2 dev dummy10
+
+Audited the code paths to ensure there are no other paths that do not
+properly initialize the route configuration structure when installing a
+route.
+
+Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
+Fixes: f96a3d74554d ("ipv4: Fix incorrect route flushing when source address is deleted")
+Reported-by: gaoxingwang <gaoxingwang1@huawei.com>
+Link: https://lore.kernel.org/netdev/20230314144159.2354729-1-gaoxingwang1@huawei.com/
+Tested-by: gaoxingwang <gaoxingwang1@huawei.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230315124009.4015212-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/sunvdc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/fib_frontend.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
-index 6b7b0d8a2acbc..d2e9ffd2255f4 100644
---- a/drivers/block/sunvdc.c
-+++ b/drivers/block/sunvdc.c
-@@ -947,6 +947,8 @@ static int vdc_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 	print_version();
+diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
+index 1885a2fbad862..9aa48b4c40960 100644
+--- a/net/ipv4/fib_frontend.c
++++ b/net/ipv4/fib_frontend.c
+@@ -557,6 +557,9 @@ static int rtentry_to_fib_config(struct net *net, int cmd, struct rtentry *rt,
+ 			cfg->fc_scope = RT_SCOPE_UNIVERSE;
+ 	}
  
- 	hp = mdesc_grab();
-+	if (!hp)
-+		return -ENODEV;
++	if (!cfg->fc_table)
++		cfg->fc_table = RT_TABLE_MAIN;
++
+ 	if (cmd == SIOCDELRT)
+ 		return 0;
  
- 	err = -ENODEV;
- 	if ((vdev->dev_no << PARTITION_SHIFT) & ~(u64)MINORMASK) {
 -- 
 2.39.2
 
