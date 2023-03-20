@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F69D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841CDC433D2;
-	Mon, 20 Mar 2023 15:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEEB1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F04C433EF;
+	Mon, 20 Mar 2023 15:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325138;
-	bh=AY/Ig6/D6B8kAit4w8uSAEvPz3sYAX7+kRJBXfUowsI=;
+	s=korg; t=1679325141;
+	bh=7P+Qk8UVbePONM+ocqLe5OYH4QQA7VaeuOo7lQH6DQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wBQZAd82yv1p5e0zmdOde+valWmxNX0TbJ11knp3Zh75oErU6pwmNO8IWles1+atz
-	 64E5TiVT6vmPSw3NF6NXVh0pnQjoYIcvxgo2TJ34Vze1vE87rhgeaYdxAlOuiYjrhR
-	 0LgZTLRePE6rnWHgOMTGSYHMSJhnhFew1nmB9XY0=
+	b=kvmk867j8QR4269Y0iWJjTJdGBbd85NivfkZgBGpDbH3bFP48jYhE7vxasSeoU7Hs
+	 Tnu9NnKQfO5NpnOyX/mD2y5HJATSmQc8c3mkMhgEwgFWqScIQxvxNkKJ4Ztu/CckXQ
+	 HkmQ+SB15c1b1m5HsTIkIvNjNjAnDIruKDgZP0N8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH 5.15 071/115] sh: intc: Avoid spurious sizeof-pointer-div warning
-Date: Mon, 20 Mar 2023 15:54:43 +0100
-Message-Id: <20230320145452.397206213@linuxfoundation.org>
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Andrea Righi <andrea.righi@canonical.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 045/198] drm/i915/sseu: fix max_subslices array-index-out-of-bounds access
+Date: Mon, 20 Mar 2023 15:53:03 +0100
+Message-Id: <20230320145509.352771021@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,49 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+From: Andrea Righi <andrea.righi@canonical.com>
 
-[ Upstream commit 250870824c1cf199b032b1ef889c8e8d69d9123a ]
+[ Upstream commit 193c41926d152761764894f46e23b53c00186a82 ]
 
-GCC warns about the pattern sizeof(void*)/sizeof(void), as it looks like
-the abuse of a pattern to calculate the array size. This pattern appears
-in the unevaluated part of the ternary operator in _INTC_ARRAY if the
-parameter is NULL.
+It seems that commit bc3c5e0809ae ("drm/i915/sseu: Don't try to store EU
+mask internally in UAPI format") exposed a potential out-of-bounds
+access, reported by UBSAN as following on a laptop with a gen 11 i915
+card:
 
-The replacement uses an alternate approach to return 0 in case of NULL
-which does not generate the pattern sizeof(void*)/sizeof(void), but still
-emits the warning if _INTC_ARRAY is called with a nonarray parameter.
+  UBSAN: array-index-out-of-bounds in drivers/gpu/drm/i915/gt/intel_sseu.c:65:27
+  index 6 is out of range for type 'u16 [6]'
+  CPU: 2 PID: 165 Comm: systemd-udevd Not tainted 6.2.0-9-generic #9-Ubuntu
+  Hardware name: Dell Inc. XPS 13 9300/077Y9N, BIOS 1.11.0 03/22/2022
+  Call Trace:
+   <TASK>
+   show_stack+0x4e/0x61
+   dump_stack_lvl+0x4a/0x6f
+   dump_stack+0x10/0x18
+   ubsan_epilogue+0x9/0x3a
+   __ubsan_handle_out_of_bounds.cold+0x42/0x47
+   gen11_compute_sseu_info+0x121/0x130 [i915]
+   intel_sseu_info_init+0x15d/0x2b0 [i915]
+   intel_gt_init_mmio+0x23/0x40 [i915]
+   i915_driver_mmio_probe+0x129/0x400 [i915]
+   ? intel_gt_probe_all+0x91/0x2e0 [i915]
+   i915_driver_probe+0xe1/0x3f0 [i915]
+   ? drm_privacy_screen_get+0x16d/0x190 [drm]
+   ? acpi_dev_found+0x64/0x80
+   i915_pci_probe+0xac/0x1b0 [i915]
+   ...
 
-This patch is required for successful compilation with -Werror enabled.
+According to the definition of sseu_dev_info, eu_mask->hsw is limited to
+a maximum of GEN_MAX_SS_PER_HSW_SLICE (6) sub-slices, but
+gen11_sseu_info_init() can potentially set 8 sub-slices, in the
+!IS_JSL_EHL(gt->i915) case.
 
-The idea to use _Generic for type distinction is taken from Comment #7
-in https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108483 by Jakub Jelinek
+Fix this by reserving up to 8 slots for max_subslices in the eu_mask
+struct.
 
-Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Link: https://lore.kernel.org/r/619fa552-c988-35e5-b1d7-fe256c46a272@mkarcher.dialup.fu-berlin.de
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reported-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Signed-off-by: Andrea Righi <andrea.righi@canonical.com>
+Fixes: bc3c5e0809ae ("drm/i915/sseu: Don't try to store EU mask internally in UAPI format")
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230220171858.131416-1-andrea.righi@canonical.com
+(cherry picked from commit 3cba09a6ac86ea1d456909626eb2685596c07822)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sh_intc.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/intel_sseu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/sh_intc.h b/include/linux/sh_intc.h
-index c255273b02810..37ad81058d6ae 100644
---- a/include/linux/sh_intc.h
-+++ b/include/linux/sh_intc.h
-@@ -97,7 +97,10 @@ struct intc_hw_desc {
- 	unsigned int nr_subgroups;
- };
+diff --git a/drivers/gpu/drm/i915/gt/intel_sseu.h b/drivers/gpu/drm/i915/gt/intel_sseu.h
+index aa87d3832d60d..d7e8c374f153e 100644
+--- a/drivers/gpu/drm/i915/gt/intel_sseu.h
++++ b/drivers/gpu/drm/i915/gt/intel_sseu.h
+@@ -27,7 +27,7 @@ struct drm_printer;
+  * is only relevant to pre-Xe_HP platforms (Xe_HP and beyond use the
+  * I915_MAX_SS_FUSE_BITS value below).
+  */
+-#define GEN_MAX_SS_PER_HSW_SLICE	6
++#define GEN_MAX_SS_PER_HSW_SLICE	8
  
--#define _INTC_ARRAY(a) a, __same_type(a, NULL) ? 0 : sizeof(a)/sizeof(*a)
-+#define _INTC_SIZEOF_OR_ZERO(a) (_Generic(a,                 \
-+                                 typeof(NULL):  0,           \
-+                                 default:       sizeof(a)))
-+#define _INTC_ARRAY(a) a, _INTC_SIZEOF_OR_ZERO(a)/sizeof(*a)
- 
- #define INTC_HW_DESC(vectors, groups, mask_regs,	\
- 		     prio_regs,	sense_regs, ack_regs)	\
+ /*
+  * Maximum number of 32-bit registers used by hardware to express the
 -- 
 2.39.2
 
