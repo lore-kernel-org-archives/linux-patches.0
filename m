@@ -1,31 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6366D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89F7C433D2;
-	Mon, 20 Mar 2023 15:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D9E1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB53C433D2;
+	Mon, 20 Mar 2023 15:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324577;
-	bh=wID0rw8uelrUBAZElXJplUR8J6/9RLxjOfoZd2rHKTo=;
+	s=korg; t=1679324580;
+	bh=9VJM8BcGtmlQCBTDFmNO2zR8Ju3jz/4J98ZMUfQvvHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dxsn0ldDyGkQebwbW5oAsA4oKS0W/rIPpdAtjNdNAYkeHK0LVndOGGqGEazSBZr7J
-	 AqXz4uqCgTC4EULQXyhWMoXMRnI9154Nd7ucAmhf+NsQ/2HCvuaa9IKAh1puyGBYDA
-	 ksOoKJCIjH2AtKIJfa3Wpbr0AoqZZjhySgl7tzt0=
+	b=N1eLVUob07GSL3cjTZGfQYcHqrYsEihjrq9odjh5AUQ/6EcvF4rN0nIg1dT4BPiyy
+	 gyasol5NP2CEF47BFgLh24Zm2pvhzHmdk+dFims83BIQ0O48/9qCuxJMIwn4HkqtsP
+	 RAYEGQ5PPkoWzJthuy2ITwuWsffwQHj/l2+U5Yww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 20/99] qed/qed_dev: guard against a possible division by zero
-Date: Mon, 20 Mar 2023 15:53:58 +0100
-Message-Id: <20230320145444.219735336@linuxfoundation.org>
+	John Harrison <John.C.Harrison@Intel.com>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	intel-gfx@lists.freedesktop.org,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.4 55/60] drm/i915: Dont use stolen memory for ring buffers with LLC
+Date: Mon, 20 Mar 2023 15:55:04 +0100
+Message-Id: <20230320145433.209904548@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +42,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit 1a9dc5610ef89d807acdcfbff93a558f341a44da ]
+commit 690e0ec8e63da9a29b39fedc6ed5da09c7c82651 upstream.
 
-Previously we would divide total_left_rate by zero if num_vports
-happened to be 1 because non_requested_count is calculated as
-num_vports - req_count. Guard against this by validating num_vports at
-the beginning and returning an error otherwise.
+Direction from hardware is that stolen memory should never be used for
+ring buffer allocations on platforms with LLC. There are too many
+caching pitfalls due to the way stolen memory accesses are routed. So
+it is safest to just not use it.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
-
-Fixes: bcd197c81f63 ("qed: Add vport WFQ configuration APIs")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230309201556.191392-1-d-tatianin@yandex-team.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Fixes: c58b735fc762 ("drm/i915: Allocate rings from stolen")
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v4.9+
+Tested-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230216011101.1909009-2-John.C.Harrison@Intel.com
+(cherry picked from commit f54c1f6c697c4297f7ed94283c184acc338a5cf8)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_dev.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/i915/gt/intel_ringbuffer.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_dev.c b/drivers/net/ethernet/qlogic/qed/qed_dev.c
-index d2f5855b2ea79..895b6f0a39841 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_dev.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_dev.c
-@@ -4986,6 +4986,11 @@ static int qed_init_wfq_param(struct qed_hwfn *p_hwfn,
+--- a/drivers/gpu/drm/i915/gt/intel_ringbuffer.c
++++ b/drivers/gpu/drm/i915/gt/intel_ringbuffer.c
+@@ -1268,10 +1268,11 @@ static struct i915_vma *create_ring_vma(
+ {
+ 	struct i915_address_space *vm = &ggtt->vm;
+ 	struct drm_i915_private *i915 = vm->i915;
+-	struct drm_i915_gem_object *obj;
++	struct drm_i915_gem_object *obj = NULL;
+ 	struct i915_vma *vma;
  
- 	num_vports = p_hwfn->qm_info.num_vports;
- 
-+	if (num_vports < 2) {
-+		DP_NOTICE(p_hwfn, "Unexpected num_vports: %d\n", num_vports);
-+		return -EINVAL;
-+	}
-+
- 	/* Accounting for the vports which are configured for WFQ explicitly */
- 	for (i = 0; i < num_vports; i++) {
- 		u32 tmp_speed;
--- 
-2.39.2
-
+-	obj = i915_gem_object_create_stolen(i915, size);
++	if (!HAS_LLC(i915))
++		obj = i915_gem_object_create_stolen(i915, size);
+ 	if (!obj)
+ 		obj = i915_gem_object_create_internal(i915, size);
+ 	if (IS_ERR(obj))
 
 
