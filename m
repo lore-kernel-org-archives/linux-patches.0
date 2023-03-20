@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E6A1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A5DC433EF;
-	Mon, 20 Mar 2023 15:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C673F1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3022DC433EF;
+	Mon, 20 Mar 2023 15:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325857;
-	bh=7NBaoj5epw2EWaCt3Ia8FlZOBg2J+aRdzIyMQe5D3gg=;
+	s=korg; t=1679325860;
+	bh=D6EkapIyWhW4x39keVUwiNunYJGLru/48kj7qxejMvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wptD1muYyVqxYpTtkQ6R6fQWEYC0xjjaa4pygaZrdQk/KPS/heIPTj0xzhyle/pcJ
-	 JYW7wg4k5+CBj1b9bqCPrJO8FxPj2GU9fr/XFhx2lIlsh1O0qd8a0soCpdY6TeDDhh
-	 4FCyplIFxGsfpv01p7wgn3K1XS3WtZTH8UAxoo2E=
+	b=K0Oav7Dw8eqSf1kBSG1/1vAzFFGZAl0J2eyIJFCKFGCwlOz4ILgjp0Tudw/AyqH5+
+	 wNOMRejhfNcyxqJZOb8hGKSLgyGdgR5wRE9ImO1QiOTHq4T4ngSJr6cFP4IEA2PcsK
+	 Hxj3/2bHVmqih7fUtOaQZPtyWqnKcWQKX/Sghx1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Osipenko <digetx@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.1 129/198] interconnect: fix icc_provider_del() error handling
-Date: Mon, 20 Mar 2023 15:54:27 +0100
-Message-Id: <20230320145512.962147006@linuxfoundation.org>
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.1 124/198] memory: tegra20-emc: fix interconnect registration race
+Date: Mon, 20 Mar 2023 15:54:22 +0100
+Message-Id: <20230320145512.749434238@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 References: <20230320145507.420176832@linuxfoundation.org>
@@ -38,54 +38,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit e0e7089bf9a87bc5e3997422e4e24563424f9018 upstream.
+commit c5587f61ec050f7e9ebb3e2da29d12af63e833d3 upstream.
 
-The interconnect framework currently expects that providers are only
-removed when there are no users and after all nodes have been removed.
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to fail.
 
-There is currently nothing that guarantees this to be the case and the
-framework does not do any reference counting, but refusing to remove the
-provider is never correct as that would leave a dangling pointer to a
-resource that is about to be released in the global provider list (e.g.
-accessible through debugfs).
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
 
-Replace the current sanity checks with WARN_ON() so that the provider is
-always removed.
-
-Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
-Cc: stable@vger.kernel.org      # 5.1: 680f8666baf6: interconnect: Make icc_provider_del() return void
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Fixes: d5ef16ba5fbe ("memory: tegra20: Support interconnect framework")
+Cc: stable@vger.kernel.org      # 5.11
+Cc: Dmitry Osipenko <digetx@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
-Link: https://lore.kernel.org/r/20230306075651.2449-3-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20230306075651.2449-20-johan+linaro@kernel.org
 Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/core.c |   14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/memory/tegra/tegra20-emc.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -1061,18 +1061,8 @@ EXPORT_SYMBOL_GPL(icc_provider_add);
- void icc_provider_del(struct icc_provider *provider)
- {
- 	mutex_lock(&icc_lock);
--	if (provider->users) {
--		pr_warn("interconnect provider still has %d users\n",
--			provider->users);
--		mutex_unlock(&icc_lock);
--		return;
--	}
--
--	if (!list_empty(&provider->nodes)) {
--		pr_warn("interconnect provider still has nodes\n");
--		mutex_unlock(&icc_lock);
--		return;
--	}
-+	WARN_ON(provider->users);
-+	WARN_ON(!list_empty(&provider->nodes));
+--- a/drivers/memory/tegra/tegra20-emc.c
++++ b/drivers/memory/tegra/tegra20-emc.c
+@@ -1034,15 +1034,13 @@ static int tegra_emc_interconnect_init(s
+ 	emc->provider.aggregate = soc->icc_ops->aggregate;
+ 	emc->provider.xlate_extended = emc_of_icc_xlate_extended;
  
- 	list_del(&provider->provider_list);
- 	mutex_unlock(&icc_lock);
+-	err = icc_provider_add(&emc->provider);
+-	if (err)
+-		goto err_msg;
++	icc_provider_init(&emc->provider);
+ 
+ 	/* create External Memory Controller node */
+ 	node = icc_node_create(TEGRA_ICC_EMC);
+ 	if (IS_ERR(node)) {
+ 		err = PTR_ERR(node);
+-		goto del_provider;
++		goto err_msg;
+ 	}
+ 
+ 	node->name = "External Memory Controller";
+@@ -1063,12 +1061,14 @@ static int tegra_emc_interconnect_init(s
+ 	node->name = "External Memory (DRAM)";
+ 	icc_node_add(node, &emc->provider);
+ 
++	err = icc_provider_register(&emc->provider);
++	if (err)
++		goto remove_nodes;
++
+ 	return 0;
+ 
+ remove_nodes:
+ 	icc_nodes_remove(&emc->provider);
+-del_provider:
+-	icc_provider_del(&emc->provider);
+ err_msg:
+ 	dev_err(emc->dev, "failed to initialize ICC: %d\n", err);
+ 
 
 
