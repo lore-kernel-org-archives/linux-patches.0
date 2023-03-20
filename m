@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B531C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B2DC4339B;
-	Mon, 20 Mar 2023 15:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B44F1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81956C4339B;
+	Mon, 20 Mar 2023 15:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325696;
-	bh=RccOOqwkunwDRR3DGr9OHobdgCPvs3w8Vw0P7Ep71rc=;
+	s=korg; t=1679325698;
+	bh=XhpReMj36BlNDK3+s+oxR1RtENo0vBcfeNHemoNRg9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwAcKRLp2IleKcx/aA1jzsqGAjhpQsbPUfYi5/WbgMkW7e4UEYuqsvyqlG0qVqfXu
-	 qQfvoITP3Bm/ARjmO9C5YgsSnojgwsmZBBzLixU4HguDcTpfhhwDOoJR5yApsd2E3c
-	 PpiKpTnb9Ffwc8UkxKdESKxd4kCN9WTkE6f65MMI=
+	b=O0zLioNT3cG6jY/zC42Vg/onLbvFl5xFtfD+WbcQN+WXVq81Xsap0/TZZySBv8oLo
+	 xPeAOQWrJqLy/dRrQjB+354hVguxAr6lTqkz+5hBycLAs8lG6HDT739pvZl8a6hWzu
+	 dw4lOYAtWVzXoWK4PgvqcxnrwLDsqn2iRJvqRNVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksym Yaremchuk <maksymy@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 059/211] mlxsw: spectrum: Fix incorrect parsing depth after reload
-Date: Mon, 20 Mar 2023 15:53:14 +0100
-Message-Id: <20230320145515.707530547@linuxfoundation.org>
+Subject: [PATCH 6.1 100/198] hwmon: (adm1266) Set `can_sleep` flag for GPIO chip
+Date: Mon, 20 Mar 2023 15:53:58 +0100
+Message-Id: <20230320145511.763737760@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,112 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-[ Upstream commit 35c356924fe3669dfbb1185607ce3b37f70bfa80 ]
+[ Upstream commit a5bb73b3f5db1a4e91402ad132b59b13d2651ed9 ]
 
-Spectrum ASICs have a configurable limit on how deep into the packet
-they parse. By default, the limit is 96 bytes.
+The adm1266 driver uses I2C bus access in its GPIO chip `set` and `get`
+implementation. This means these functions can sleep and the GPIO chip
+should set the `can_sleep` property to true.
 
-There are several cases where this parsing depth is not enough and there
-is a need to increase it. For example, timestamping of PTP packets and a
-FIB multipath hash policy that requires hashing on inner fields. The
-driver therefore maintains a reference count that reflects the number of
-consumers that require an increased parsing depth.
+This will ensure that a warning is printed when trying to set or get the
+GPIO value from a context that potentially can't sleep.
 
-During reload_down() the parsing depth reference count does not
-necessarily drop to zero, but the parsing depth itself is restored to
-the default during reload_up() when the firmware is reset. It is
-therefore possible to end up in situations where the driver thinks that
-the parsing depth was increased (reference count is non-zero), when it
-is not.
-
-Fix by making sure that all the consumers that increase the parsing
-depth reference count also decrease it during reload_down().
-Specifically, make sure that when the routing code is de-initialized it
-drops the reference count if it was increased because of a FIB multipath
-hash policy that requires hashing on inner fields.
-
-Add a warning if the reference count is not zero after the driver was
-de-initialized and explicitly reset it to zero during initialization for
-good measures.
-
-Fixes: 2d91f0803b84 ("mlxsw: spectrum: Add infrastructure for parsing configuration")
-Reported-by: Maksym Yaremchuk <maksymy@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://lore.kernel.org/r/9c35e1b3e6c1d8f319a2449d14e2b86373f3b3ba.1678727526.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Link: https://lore.kernel.org/r/20230314093146.2443845-1-lars@metafoo.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum.c     |  2 ++
- .../net/ethernet/mellanox/mlxsw/spectrum_router.c  | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
+ drivers/hwmon/pmbus/adm1266.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
-index f5b2d965d476d..12540feb45088 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
-@@ -2937,6 +2937,7 @@ static int mlxsw_sp_netdevice_event(struct notifier_block *unused,
- 
- static void mlxsw_sp_parsing_init(struct mlxsw_sp *mlxsw_sp)
- {
-+	refcount_set(&mlxsw_sp->parsing.parsing_depth_ref, 0);
- 	mlxsw_sp->parsing.parsing_depth = MLXSW_SP_DEFAULT_PARSING_DEPTH;
- 	mlxsw_sp->parsing.vxlan_udp_dport = MLXSW_SP_DEFAULT_VXLAN_UDP_DPORT;
- 	mutex_init(&mlxsw_sp->parsing.lock);
-@@ -2945,6 +2946,7 @@ static void mlxsw_sp_parsing_init(struct mlxsw_sp *mlxsw_sp)
- static void mlxsw_sp_parsing_fini(struct mlxsw_sp *mlxsw_sp)
- {
- 	mutex_destroy(&mlxsw_sp->parsing.lock);
-+	WARN_ON_ONCE(refcount_read(&mlxsw_sp->parsing.parsing_depth_ref));
- }
- 
- struct mlxsw_sp_ipv6_addr_node {
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-index 09e32778b012d..4a73e2fe95ef9 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-@@ -10381,11 +10381,23 @@ static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)
- 					      old_inc_parsing_depth);
- 	return err;
- }
-+
-+static void mlxsw_sp_mp_hash_fini(struct mlxsw_sp *mlxsw_sp)
-+{
-+	bool old_inc_parsing_depth = mlxsw_sp->router->inc_parsing_depth;
-+
-+	mlxsw_sp_mp_hash_parsing_depth_adjust(mlxsw_sp, old_inc_parsing_depth,
-+					      false);
-+}
- #else
- static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)
- {
- 	return 0;
- }
-+
-+static void mlxsw_sp_mp_hash_fini(struct mlxsw_sp *mlxsw_sp)
-+{
-+}
- #endif
- 
- static int mlxsw_sp_dscp_init(struct mlxsw_sp *mlxsw_sp)
-@@ -10615,6 +10627,7 @@ int mlxsw_sp_router_init(struct mlxsw_sp *mlxsw_sp,
- err_register_inetaddr_notifier:
- 	mlxsw_core_flush_owq();
- err_dscp_init:
-+	mlxsw_sp_mp_hash_fini(mlxsw_sp);
- err_mp_hash_init:
- 	mlxsw_sp_neigh_fini(mlxsw_sp);
- err_neigh_init:
-@@ -10655,6 +10668,7 @@ void mlxsw_sp_router_fini(struct mlxsw_sp *mlxsw_sp)
- 	unregister_inet6addr_notifier(&mlxsw_sp->router->inet6addr_nb);
- 	unregister_inetaddr_notifier(&mlxsw_sp->router->inetaddr_nb);
- 	mlxsw_core_flush_owq();
-+	mlxsw_sp_mp_hash_fini(mlxsw_sp);
- 	mlxsw_sp_neigh_fini(mlxsw_sp);
- 	mlxsw_sp_lb_rif_fini(mlxsw_sp);
- 	mlxsw_sp_vrs_fini(mlxsw_sp);
+diff --git a/drivers/hwmon/pmbus/adm1266.c b/drivers/hwmon/pmbus/adm1266.c
+index ec5f932fc6f0f..1ac2b2f4c5705 100644
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -301,6 +301,7 @@ static int adm1266_config_gpio(struct adm1266_data *data)
+ 	data->gc.label = name;
+ 	data->gc.parent = &data->client->dev;
+ 	data->gc.owner = THIS_MODULE;
++	data->gc.can_sleep = true;
+ 	data->gc.base = -1;
+ 	data->gc.names = data->gpio_names;
+ 	data->gc.ngpio = ARRAY_SIZE(data->gpio_names);
 -- 
 2.39.2
 
