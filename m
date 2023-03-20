@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906F01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F25AC433EF;
-	Mon, 20 Mar 2023 15:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540441C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C08C433EF;
+	Mon, 20 Mar 2023 15:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325064;
-	bh=VkHMa47L2h1xX4F8Uw59EGaSfMB79Vyl875/V6L7XXA=;
+	s=korg; t=1679325067;
+	bh=buCx7DgLLXAZXSLEG++4s4YjHOZteRL7W9HfjOAGJsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S4fkOf6XT4GGrTsWNgLNd5+/cFESTJ3M6aMjmh+9OFrf7Vl5SAnwjTM/0Ny+wi5NN
-	 f4M0MlcOjBT2OL9FmxUUeXf68WpDAkUuM3pLlWcyraMNlK+28djOmlYhoBqXRZVsiW
-	 aKWHOxaVyEM9sVNVX8SgRXqWUKs7c7loDas4YBzU=
+	b=BJD3yWlLDId4NwE7BQxnMfuL9j0eI2tPIUZ4PGmnKJOk2m/8iDErUYDPgBMio1sBK
+	 xZRTzBlVuSEga52TXytxDg7AZ63KhnHOGr18MRzZS9Ypf43GQyAQ8ZqmBANeOuOs/s
+	 OOQ3yhhSqsVVyMfIKaurserRzfp/3ZGR3LIr4D94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 5.10 88/99] xfs: set prealloc flag in xfs_alloc_file_space()
-Date: Mon, 20 Mar 2023 15:55:06 +0100
-Message-Id: <20230320145447.101095235@linuxfoundation.org>
+	David Gow <davidgow@google.com>,
+	=?UTF-8?q?Sergio=20Gonz=C3=A1lez=20Collado?= <sergio.collado@gmail.com>,
+	Richard Weinberger <richard@nod.at>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 065/115] rust: arch/um: Disable FP/SIMD instruction to match x86
+Date: Mon, 20 Mar 2023 15:54:37 +0100
+Message-Id: <20230320145452.126054309@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,88 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Chinner <dchinner@redhat.com>
+From: David Gow <davidgow@google.com>
 
-commit 0b02c8c0d75a738c98c35f02efb36217c170d78c upstream.
+[ Upstream commit 8849818679478933dd1d9718741f4daa3f4e8b86 ]
 
-[backport for 5.10.y]
+The kernel disables all SSE and similar FP/SIMD instructions on
+x86-based architectures (partly because we shouldn't be using floats in
+the kernel, and partly to avoid the need for stack alignment, see:
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53383 )
 
-Now that we only call xfs_update_prealloc_flags() from
-xfs_file_fallocate() in the case where we need to set the
-preallocation flag, do this in xfs_alloc_file_space() where we
-already have the inode joined into a transaction and get
-rid of the call to xfs_update_prealloc_flags() from the fallocate
-code.
+UML does not do the same thing, which isn't in itself a problem, but
+does add to the list of differences between UML and "normal" x86 builds.
 
-This also means that we now correctly avoid setting the
-XFS_DIFLAG_PREALLOC flag when xfs_is_always_cow_inode() is true, as
-these inodes will never have preallocated extents.
+In addition, there was a crash bug with LLVM < 15 / rustc < 1.65 when
+building with SSE, so disabling it fixes rust builds with earlier
+compiler versions, see:
+https://github.com/Rust-for-Linux/linux/pull/881
 
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: David Gow <davidgow@google.com>
+Reviewed-by: Sergio González Collado <sergio.collado@gmail.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_bmap_util.c |    9 +++------
- fs/xfs/xfs_file.c      |    8 --------
- 2 files changed, 3 insertions(+), 14 deletions(-)
+ arch/x86/Makefile.um | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/xfs/xfs_bmap_util.c
-+++ b/fs/xfs/xfs_bmap_util.c
-@@ -800,9 +800,6 @@ xfs_alloc_file_space(
- 			quota_flag = XFS_QMOPT_RES_REGBLKS;
- 		}
+diff --git a/arch/x86/Makefile.um b/arch/x86/Makefile.um
+index b3c1ae084180d..d2e95d1d4db77 100644
+--- a/arch/x86/Makefile.um
++++ b/arch/x86/Makefile.um
+@@ -1,6 +1,12 @@
+ # SPDX-License-Identifier: GPL-2.0
+ core-y += arch/x86/crypto/
  
--		/*
--		 * Allocate and setup the transaction.
--		 */
- 		error = xfs_trans_alloc(mp, &M_RES(mp)->tr_write, resblks,
- 				resrtextents, 0, &tp);
- 
-@@ -830,9 +827,9 @@ xfs_alloc_file_space(
- 		if (error)
- 			goto error0;
- 
--		/*
--		 * Complete the transaction
--		 */
-+		ip->i_d.di_flags |= XFS_DIFLAG_PREALLOC;
-+		xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
++#
++# Disable SSE and other FP/SIMD instructions to match normal x86
++#
++KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
++KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
 +
- 		error = xfs_trans_commit(tp);
- 		xfs_iunlock(ip, XFS_ILOCK_EXCL);
- 		if (error)
---- a/fs/xfs/xfs_file.c
-+++ b/fs/xfs/xfs_file.c
-@@ -850,7 +850,6 @@ xfs_file_fallocate(
- 	struct inode		*inode = file_inode(file);
- 	struct xfs_inode	*ip = XFS_I(inode);
- 	long			error;
--	enum xfs_prealloc_flags	flags = 0;
- 	uint			iolock = XFS_IOLOCK_EXCL | XFS_MMAPLOCK_EXCL;
- 	loff_t			new_size = 0;
- 	bool			do_file_insert = false;
-@@ -948,8 +947,6 @@ xfs_file_fallocate(
- 		}
- 		do_file_insert = true;
- 	} else {
--		flags |= XFS_PREALLOC_SET;
--
- 		if (!(mode & FALLOC_FL_KEEP_SIZE) &&
- 		    offset + len > i_size_read(inode)) {
- 			new_size = offset + len;
-@@ -1000,11 +997,6 @@ xfs_file_fallocate(
- 			if (error)
- 				goto out_unlock;
- 		}
--
--		error = xfs_update_prealloc_flags(ip, XFS_PREALLOC_SET);
--		if (error)
--			goto out_unlock;
--
- 	}
+ ifeq ($(CONFIG_X86_32),y)
+ START := 0x8048000
  
- 	/* Change file size if needed */
+-- 
+2.39.2
+
 
 
