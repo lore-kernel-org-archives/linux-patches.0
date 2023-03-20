@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D7B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF66C433EF;
-	Mon, 20 Mar 2023 15:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FE51C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862EDC433D2;
+	Mon, 20 Mar 2023 15:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324920;
-	bh=sXo8mBoKZYZFAHqbPaF7n1eHMzEnof++Sw1JW5lceJI=;
+	s=korg; t=1679324922;
+	bh=v81g5Ju93yPkz3l72tZo5MVgoURquqy4Asl0YshQPVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocvup/XL9OXNe561ZS0YkKGpdjRThSUfl415l6MUQdx0AiDtcLhl0Jj/tonegrzY4
-	 YCYSvBCLmOBrtYWjo/zZKvFrw5HIRVseKnJInz1zUH3ERck1VBVF/pVGjx1SMJTH8G
-	 8nS5KhnoJpSgZ7tjvRoYmdt9Dpfr1t1CbGfW1wdM=
+	b=GSHcD0VVv3uwp7yqUarDTYB91lNfz/zcUYxfWNLPWfWWK1a1oi64gNHb2gk06PZjY
+	 Kxjtn9zvYLs9th/9xaZi5jKWHFZ+y3t4yCW0IClsI2ci8w6h1JbicVdlNyiBygZR4V
+	 uAViMaSHlYg8S8f8E7246lcdN1U7id99IPr3H6NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Po-Hsu Lin <po-hsu.lin@canonical.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 048/115] selftests: net: devlink_port_split.py: skip test if no suitable device available
-Date: Mon, 20 Mar 2023 15:54:20 +0100
-Message-Id: <20230320145451.423831209@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 73/99] fbdev: stifb: Provide valid pixelclock and add fb_check_var() checks
+Date: Mon, 20 Mar 2023 15:54:51 +0100
+Message-Id: <20230320145446.460445749@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,119 +33,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Po-Hsu Lin <po-hsu.lin@canonical.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 24994513ad13ff2c47ba91d2b5df82c3d496c370 ]
+commit 203873a535d627c668f293be0cb73e26c30f9cc7 upstream.
 
-The `devlink -j port show` command output may not contain the "flavour"
-key, an example from Ubuntu 22.10 s390x LPAR(5.19.0-37-generic), with
-mlx4 driver and iproute2-5.15.0:
-  {"port":{"pci/0001:00:00.0/1":{"type":"eth","netdev":"ens301"},
-           "pci/0001:00:00.0/2":{"type":"eth","netdev":"ens301d1"},
-           "pci/0002:00:00.0/1":{"type":"eth","netdev":"ens317"},
-           "pci/0002:00:00.0/2":{"type":"eth","netdev":"ens317d1"}}}
+Find a valid modeline depending on the machine graphic card
+configuration and add the fb_check_var() function to validate
+Xorg provided graphics settings.
 
-This will cause a KeyError exception.
-
-Create a validate_devlink_output() to check for this "flavour" from
-devlink command output to avoid this KeyError exception. Also let
-it handle the check for `devlink -j dev show` output in main().
-
-Apart from this, if the test was not started because the max lanes of
-the designated device is 0. The script will still return 0 and thus
-causing a false-negative test result.
-
-Use a found_max_lanes flag to determine if these tests were skipped
-due to this reason and return KSFT_SKIP to make it more clear.
-
-Link: https://bugs.launchpad.net/bugs/1937133
-Fixes: f3348a82e727 ("selftests: net: Add port split test")
-Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
-Link: https://lore.kernel.org/r/20230315165353.229590-1-po-hsu.lin@canonical.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../selftests/net/devlink_port_split.py       | 36 ++++++++++++++++---
- 1 file changed, 31 insertions(+), 5 deletions(-)
+ drivers/video/fbdev/stifb.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/tools/testing/selftests/net/devlink_port_split.py b/tools/testing/selftests/net/devlink_port_split.py
-index 2b5d6ff873738..2d84c7a0be6b2 100755
---- a/tools/testing/selftests/net/devlink_port_split.py
-+++ b/tools/testing/selftests/net/devlink_port_split.py
-@@ -59,6 +59,8 @@ class devlink_ports(object):
-         assert stderr == ""
-         ports = json.loads(stdout)['port']
+--- a/drivers/video/fbdev/stifb.c
++++ b/drivers/video/fbdev/stifb.c
+@@ -922,6 +922,28 @@ SETUP_HCRX(struct stifb_info *fb)
+ /* ------------------- driver specific functions --------------------------- */
  
-+        validate_devlink_output(ports, 'flavour')
+ static int
++stifb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
++{
++	struct stifb_info *fb = container_of(info, struct stifb_info, info);
 +
-         for port in ports:
-             if dev in port:
-                 if ports[port]['flavour'] == 'physical':
-@@ -220,6 +222,27 @@ def split_splittable_port(port, k, lanes, dev):
-     unsplit(port.bus_info)
- 
- 
-+def validate_devlink_output(devlink_data, target_property=None):
-+    """
-+    Determine if test should be skipped by checking:
-+      1. devlink_data contains values
-+      2. The target_property exist in devlink_data
-+    """
-+    skip_reason = None
-+    if any(devlink_data.values()):
-+        if target_property:
-+            skip_reason = "{} not found in devlink output, test skipped".format(target_property)
-+            for key in devlink_data:
-+                if target_property in devlink_data[key]:
-+                    skip_reason = None
-+    else:
-+        skip_reason = 'devlink output is empty, test skipped'
++	if (var->xres != fb->info.var.xres ||
++	    var->yres != fb->info.var.yres ||
++	    var->bits_per_pixel != fb->info.var.bits_per_pixel)
++		return -EINVAL;
 +
-+    if skip_reason:
-+        print(skip_reason)
-+        sys.exit(KSFT_SKIP)
++	var->xres_virtual = var->xres;
++	var->yres_virtual = var->yres;
++	var->xoffset = 0;
++	var->yoffset = 0;
++	var->grayscale = fb->info.var.grayscale;
++	var->red.length = fb->info.var.red.length;
++	var->green.length = fb->info.var.green.length;
++	var->blue.length = fb->info.var.blue.length;
 +
++	return 0;
++}
 +
- def make_parser():
-     parser = argparse.ArgumentParser(description='A test for port splitting.')
-     parser.add_argument('--dev',
-@@ -240,12 +263,9 @@ def main(cmdline=None):
-         stdout, stderr = run_command(cmd)
-         assert stderr == ""
++static int
+ stifb_setcolreg(u_int regno, u_int red, u_int green,
+ 	      u_int blue, u_int transp, struct fb_info *info)
+ {
+@@ -1145,6 +1167,7 @@ stifb_init_display(struct stifb_info *fb
  
-+        validate_devlink_output(json.loads(stdout))
-         devs = json.loads(stdout)['dev']
--        if devs:
--            dev = list(devs.keys())[0]
--        else:
--            print("no devlink device was found, test skipped")
--            sys.exit(KSFT_SKIP)
-+        dev = list(devs.keys())[0]
+ static const struct fb_ops stifb_ops = {
+ 	.owner		= THIS_MODULE,
++	.fb_check_var	= stifb_check_var,
+ 	.fb_setcolreg	= stifb_setcolreg,
+ 	.fb_blank	= stifb_blank,
+ 	.fb_fillrect	= stifb_fillrect,
+@@ -1164,6 +1187,7 @@ static int __init stifb_init_fb(struct s
+ 	struct stifb_info *fb;
+ 	struct fb_info *info;
+ 	unsigned long sti_rom_address;
++	char modestr[32];
+ 	char *dev_name;
+ 	int bpp, xres, yres;
  
-     cmd = "devlink dev show %s" % dev
-     stdout, stderr = run_command(cmd)
-@@ -255,6 +275,7 @@ def main(cmdline=None):
+@@ -1342,6 +1366,9 @@ static int __init stifb_init_fb(struct s
+ 	info->flags = FBINFO_HWACCEL_COPYAREA | FBINFO_HWACCEL_FILLRECT;
+ 	info->pseudo_palette = &fb->pseudo_palette;
  
-     ports = devlink_ports(dev)
- 
-+    found_max_lanes = False
-     for port in ports.if_names:
-         max_lanes = get_max_lanes(port.name)
- 
-@@ -277,6 +298,11 @@ def main(cmdline=None):
-                 split_splittable_port(port, lane, max_lanes, dev)
- 
-                 lane //= 2
-+        found_max_lanes = True
++	scnprintf(modestr, sizeof(modestr), "%dx%d-%d", xres, yres, bpp);
++	fb_find_mode(&info->var, info, modestr, NULL, 0, NULL, bpp);
 +
-+    if not found_max_lanes:
-+        print(f"Test not started, no port of device {dev} reports max_lanes")
-+        sys.exit(KSFT_SKIP)
- 
- 
- if __name__ == "__main__":
--- 
-2.39.2
-
+ 	/* This has to be done !!! */
+ 	if (fb_alloc_cmap(&info->cmap, NR_PALETTE, 0))
+ 		goto out_err1;
 
 
