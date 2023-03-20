@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19DA1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26642C433EF;
-	Mon, 20 Mar 2023 15:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED951C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AC6C433EF;
+	Mon, 20 Mar 2023 15:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324711;
-	bh=6cxS4m80Ezf2GPjn4+YCuF9rMU5fZ9CAwz9Ntc5fLro=;
+	s=korg; t=1679324714;
+	bh=lTz+5AFy/jELT6czLvUxdm6WsyIvvXg3gLGmy6nRE7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hlHFtwE7z6qNKmai/v5aalhvbxBN+w2gThQoV+HSD2xSv/KkgMRLhElZfG8+etvPj
-	 mVS7idDKtf9dhTUWzGmkWA+Gw6FCh1xG2OM1s2h1dpjITLR1RRoWJpBD/cHbFQneeq
-	 Qs5u8B5KJOSvJNrseLQliU1BJKf5gpZsLBb4gIkc=
+	b=FTWkkvLjs/hL2p50pByXM6YXYu3Mu7umTXI5E8ssi5rXOWPdIRSVATwGAzKPXy1KY
+	 zaCinGVIHaNe1bl+v+relvUNKHrHmZT2FPv+Z84bA9sUW0BhrfIbVdKVhWVPxScWL7
+	 7OmNQ+61xzC4vynqwvWLcoILP1IZZVzRvBGUTuSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/115] drm/i915/display: Workaround cursor left overs with PSR2 selective fetch enabled
-Date: Mon, 20 Mar 2023 15:53:53 +0100
-Message-Id: <20230320145450.300784720@linuxfoundation.org>
+Subject: [PATCH 5.10 45/99] hwmon: tmp512: drop of_match_ptr for ID table
+Date: Mon, 20 Mar 2023 15:54:23 +0100
+Message-Id: <20230320145445.266294906@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,70 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Roberto de Souza <jose.souza@intel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 1f3a11c341ab211d6ba55ef3d58026b7b5319945 ]
+[ Upstream commit 00d85e81796b17a29a0e096c5a4735daa47adef8 ]
 
-Not sure why but when moving the cursor fast it causes some artifacts
-of the cursor to be left in the cursor path, adding some pixels above
-the cursor to the damaged area fixes the issue, so leaving this as a
-workaround until proper fix is found.
+The driver will match mostly by DT table (even thought there is regular
+ID table) so there is little benefit in of_match_ptr (this also allows
+ACPI matching via PRP0001, even though it might not be relevant here).
+This also fixes !CONFIG_OF error:
 
-This is reproducile on TGL and ADL-P.
+  drivers/hwmon/tmp513.c:610:34: error: ‘tmp51x_of_match’ defined but not used [-Werror=unused-const-variable=]
 
-Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
-Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
-Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20210914212507.177511-3-jose.souza@intel.com
-Stable-dep-of: 71c602103c74 ("drm/i915/psr: Use calculated io and fast wake lines")
+Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230312193723.478032-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 25 ++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/hwmon/tmp513.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index a3d0c57ec0f0b..b4b193c2bc32e 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -1601,6 +1601,28 @@ static void intel_psr2_sel_fetch_pipe_alignment(const struct intel_crtc_state *c
- 		drm_warn(&dev_priv->drm, "Missing PSR2 sel fetch alignment with DSC\n");
- }
- 
-+/*
-+ * FIXME: Not sure why but when moving the cursor fast it causes some artifacts
-+ * of the cursor to be left in the cursor path, adding some pixels above the
-+ * cursor to the damaged area fixes the issue.
-+ */
-+static void cursor_area_workaround(const struct intel_plane_state *new_plane_state,
-+				   struct drm_rect *damaged_area,
-+				   struct drm_rect *pipe_clip)
-+{
-+	const struct intel_plane *plane = to_intel_plane(new_plane_state->uapi.plane);
-+	int height;
-+
-+	if (plane->id != PLANE_CURSOR)
-+		return;
-+
-+	height = drm_rect_height(&new_plane_state->uapi.dst) / 2;
-+	damaged_area->y1 -=  height;
-+	damaged_area->y1 = max(damaged_area->y1, 0);
-+
-+	clip_area_update(pipe_clip, damaged_area);
-+}
-+
- int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 				struct intel_crtc *crtc)
- {
-@@ -1669,6 +1691,9 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 				damaged_area.y2 = new_plane_state->uapi.dst.y2;
- 				clip_area_update(&pipe_clip, &damaged_area);
- 			}
-+
-+			cursor_area_workaround(new_plane_state, &damaged_area,
-+					       &pipe_clip);
- 			continue;
- 		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha ||
- 			   (!num_clips &&
+diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
+index 47bbe47e062fd..7d5f7441aceb1 100644
+--- a/drivers/hwmon/tmp513.c
++++ b/drivers/hwmon/tmp513.c
+@@ -758,7 +758,7 @@ static int tmp51x_probe(struct i2c_client *client)
+ static struct i2c_driver tmp51x_driver = {
+ 	.driver = {
+ 		.name	= "tmp51x",
+-		.of_match_table = of_match_ptr(tmp51x_of_match),
++		.of_match_table = tmp51x_of_match,
+ 	},
+ 	.probe_new	= tmp51x_probe,
+ 	.id_table	= tmp51x_id,
 -- 
 2.39.2
 
