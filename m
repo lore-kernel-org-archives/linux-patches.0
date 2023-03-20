@@ -1,39 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5711C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A8EC433EF;
-	Mon, 20 Mar 2023 15:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664201C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA3FC433EF;
+	Mon, 20 Mar 2023 15:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325350;
-	bh=NAJjLb4OCOmN6SI84oARkkVMTdnVCtgzphW6w9SY3js=;
+	s=korg; t=1679325353;
+	bh=nBFT39kU1okH6MAJ+mSTtl4lun+fqT9cNkBlF98xtjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NAocs8CCKw6OmWhA9AikkdYh/dQY4fDaRXcEFlnEpKhpNOAq1A4RiPuXFAtili/O9
-	 mAYhbLu3vYLKegU208nKibYGFMJ7GDFP5H592632j8LepacXGdiPJQsd0vLGuMaqrs
-	 fyZtE9yc1a62PCpQl16cJThHB2r5dTMZ2mQzs+lo=
+	b=aDFJ4OQzKFq3uLhA7jFJl0r0tDceaABc+h8KpatKQ/bu+yR9XciqcAHF/NA12mXiJ
+	 FlSGEgAp3kWQvgifHdm+xWyVDsF7PyRGbmPWolQuIjiYSJb0U5GtCLVFEWUmYBOiIo
+	 Ar1T6TMPaY1iZ8ch+e5NBTnLwJqjPtHFnOMfzaIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 032/211] ftrace,kcfi: Define ftrace_stub_graph conditionally
-Date: Mon, 20 Mar 2023 15:52:47 +0100
-Message-Id: <20230320145514.610567037@linuxfoundation.org>
+	Geliang Tang <geliang.tang@suse.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 094/115] mptcp: add ro_after_init for tcp{,v6}_prot_override
+Date: Mon, 20 Mar 2023 15:55:06 +0100
+Message-Id: <20230320145453.370714087@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,58 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Geliang Tang <geliang.tang@suse.com>
 
-[ Upstream commit aa69f814920d85a2d4cfd5c294757c3d59d2fba6 ]
+commit 822467a48e938e661965d09df5fcac66f7291050 upstream.
 
-When CONFIG_FUNCTION_GRAPH_TRACER is disabled, __kcfi_typeid_ftrace_stub_graph
-is missing, causing a link failure:
+Add __ro_after_init labels for the variables tcp_prot_override and
+tcpv6_prot_override, just like other variables adjacent to them, to
+indicate that they are initialised from the init hooks and no writes
+occur afterwards.
 
- ld.lld: error: undefined symbol: __kcfi_typeid_ftrace_stub_graph
- referenced by arch/x86/kernel/ftrace_64.o:(__cfi_ftrace_stub_graph) in archive vmlinux.a
-
-Mark the reference to it as conditional on the same symbol, as
-is done on arm64.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230131093643.3850272-1-arnd@kernel.org
-
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Fixes: 883bbbffa5a4 ("ftrace,kcfi: Separate ftrace_stub() and ftrace_stub_graph()")
-See-also: 2598ac6ec493 ("arm64: ftrace: Define ftrace_stub_graph only with FUNCTION_GRAPH_TRACER")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b19bc2945b40 ("mptcp: implement delegated actions")
+Cc: stable@vger.kernel.org
+Fixes: 51fa7f8ebf0e ("mptcp: mark ops structures as ro_after_init")
+Signed-off-by: Geliang Tang <geliang.tang@suse.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/ftrace_64.S | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mptcp/subflow.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/ftrace_64.S b/arch/x86/kernel/ftrace_64.S
-index 1265ad519249c..fb4f1e01b64a2 100644
---- a/arch/x86/kernel/ftrace_64.S
-+++ b/arch/x86/kernel/ftrace_64.S
-@@ -136,10 +136,12 @@ SYM_TYPED_FUNC_START(ftrace_stub)
- 	RET
- SYM_FUNC_END(ftrace_stub)
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -514,7 +514,7 @@ static struct request_sock_ops mptcp_sub
+ static struct tcp_request_sock_ops subflow_request_sock_ipv6_ops __ro_after_init;
+ static struct inet_connection_sock_af_ops subflow_v6_specific __ro_after_init;
+ static struct inet_connection_sock_af_ops subflow_v6m_specific __ro_after_init;
+-static struct proto tcpv6_prot_override;
++static struct proto tcpv6_prot_override __ro_after_init;
  
-+#ifdef CONFIG_FUNCTION_GRAPH_TRACER
- SYM_TYPED_FUNC_START(ftrace_stub_graph)
- 	CALL_DEPTH_ACCOUNT
- 	RET
- SYM_FUNC_END(ftrace_stub_graph)
-+#endif
+ static int subflow_v6_conn_request(struct sock *sk, struct sk_buff *skb)
+ {
+@@ -817,7 +817,7 @@ dispose_child:
+ }
  
- #ifdef CONFIG_DYNAMIC_FTRACE
+ static struct inet_connection_sock_af_ops subflow_specific __ro_after_init;
+-static struct proto tcp_prot_override;
++static struct proto tcp_prot_override __ro_after_init;
  
--- 
-2.39.2
-
+ enum mapping_status {
+ 	MAPPING_OK,
 
 
