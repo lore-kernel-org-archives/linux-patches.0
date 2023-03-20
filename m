@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492FA1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB176C433D2;
-	Mon, 20 Mar 2023 15:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F841C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A79C433D2;
+	Mon, 20 Mar 2023 15:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324404;
-	bh=ZVspxuvF/DvmYQ/eLQo1Su9bKKbWjvSX82cmBguc4Dw=;
+	s=korg; t=1679324406;
+	bh=S6tEHWndNmSMMQ5WutitFRxVDIVV+AOXs7zwPkBG9T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yBQvjt0muxgW3tHtbsGo3a4Y9jAQ8AwjXu4Z4llMJnO0PRNJ8SE0zsSAIkDCiNJlx
-	 7RjDYIyurPhkUSOeYQJLjlTulEeRG0RMGL39RYOZIb8sFZmJ6MVGPnDwbGuxrMeIO0
-	 kq3tFthl1zX+97gqp2DSuEltBlJmAlXIu9rWdjxE=
+	b=jJRGuAtcbXEAIV1+HE6thqtZqUJJ6B/50vfFG6Gb8lZeufG2PqUQXJHxGw29qxAq2
+	 2yXGwxfV1iz6d2PmYHjf3Z6A4IwK7eT39Oz2srGTgQW1xvx1XkYFq7vl51Z1C2bXOt
+	 rbZGr65JyMlPGxRax5pNt+HnOZvlzIODNBAJ3dw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 05/36] nfc: pn533: initialize struct pn533_out_arg properly
-Date: Mon, 20 Mar 2023 15:54:31 +0100
-Message-Id: <20230320145424.426252150@linuxfoundation.org>
+Subject: [PATCH 5.4 05/60] drm/meson: fix 1px pink line on GXM when scaling video overlay
+Date: Mon, 20 Mar 2023 15:54:14 +0100
+Message-Id: <20230320145431.093521396@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
-References: <20230320145424.191578432@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,63 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-[ Upstream commit 484b7059796e3bc1cb527caa61dfc60da649b4f6 ]
+[ Upstream commit 5c8cf1664f288098a971a1d1e65716a2b6a279e1 ]
 
-struct pn533_out_arg used as a temporary context for out_urb is not
-initialized properly. Its uninitialized 'phy' field can be dereferenced in
-error cases inside pn533_out_complete() callback function. It causes the
-following failure:
+Playing media with a resolution smaller than the crtc size requires the
+video overlay to be scaled for output and GXM boards display a 1px pink
+line on the bottom of the scaled overlay. Comparing with the downstream
+vendor driver revealed VPP_DUMMY_DATA not being set [0].
 
-general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.2.0-rc3-next-20230110-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:pn533_out_complete.cold+0x15/0x44 drivers/nfc/pn533/usb.c:441
-Call Trace:
- <IRQ>
- __usb_hcd_giveback_urb+0x2b6/0x5c0 drivers/usb/core/hcd.c:1671
- usb_hcd_giveback_urb+0x384/0x430 drivers/usb/core/hcd.c:1754
- dummy_timer+0x1203/0x32d0 drivers/usb/gadget/udc/dummy_hcd.c:1988
- call_timer_fn+0x1da/0x800 kernel/time/timer.c:1700
- expire_timers+0x234/0x330 kernel/time/timer.c:1751
- __run_timers kernel/time/timer.c:2022 [inline]
- __run_timers kernel/time/timer.c:1995 [inline]
- run_timer_softirq+0x326/0x910 kernel/time/timer.c:2035
- __do_softirq+0x1fb/0xaf6 kernel/softirq.c:571
- invoke_softirq kernel/softirq.c:445 [inline]
- __irq_exit_rcu+0x123/0x180 kernel/softirq.c:650
- irq_exit_rcu+0x9/0x20 kernel/softirq.c:662
- sysvec_apic_timer_interrupt+0x97/0xc0 arch/x86/kernel/apic/apic.c:1107
+Setting VPP_DUMMY_DATA prevents the 1px pink line from being seen.
 
-Initialize the field with the pn533_usb_phy currently used.
+[0] https://github.com/endlessm/linux-s905x/blob/master/drivers/amlogic/amports/video.c#L7869
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 9dab880d675b ("nfc: pn533: Wait for out_urb's completion in pn533_usb_send_frame()")
-Reported-by: syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230309165050.207390-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bbbe775ec5b5 ("drm: Add support for Amlogic Meson Graphic Controller")
+Suggested-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230303123312.155164-1-christianshewitt@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/usb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/meson/meson_vpp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
-index c7da364b63584..a2d61d8240246 100644
---- a/drivers/nfc/pn533/usb.c
-+++ b/drivers/nfc/pn533/usb.c
-@@ -187,6 +187,7 @@ static int pn533_usb_send_frame(struct pn533 *dev,
- 	print_hex_dump_debug("PN533 TX: ", DUMP_PREFIX_NONE, 16, 1,
- 			     out->data, out->len, false);
+diff --git a/drivers/gpu/drm/meson/meson_vpp.c b/drivers/gpu/drm/meson/meson_vpp.c
+index 154837688ab0d..5df1957c8e41f 100644
+--- a/drivers/gpu/drm/meson/meson_vpp.c
++++ b/drivers/gpu/drm/meson/meson_vpp.c
+@@ -100,6 +100,8 @@ void meson_vpp_init(struct meson_drm *priv)
+ 			       priv->io_base + _REG(VPP_DOLBY_CTRL));
+ 		writel_relaxed(0x1020080,
+ 				priv->io_base + _REG(VPP_DUMMY_DATA1));
++		writel_relaxed(0x42020,
++				priv->io_base + _REG(VPP_DUMMY_DATA));
+ 	} else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
+ 		writel_relaxed(0xf, priv->io_base + _REG(DOLBY_PATH_CTRL));
  
-+	arg.phy = phy;
- 	init_completion(&arg.done);
- 	cntx = phy->out_urb->context;
- 	phy->out_urb->context = &arg;
 -- 
 2.39.2
 
