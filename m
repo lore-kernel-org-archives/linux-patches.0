@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD521C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FE2C433D2;
-	Mon, 20 Mar 2023 15:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C7F1C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D31C433D2;
+	Mon, 20 Mar 2023 15:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326202;
-	bh=NRA4IWju4ywKzSQuM+EYGtveP6Y/czEy2rMYQFj2xcM=;
+	s=korg; t=1679326205;
+	bh=eii+HW//q40cWz/ofqupX/SE2zqO4kd8s18Jb7fb00k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tv0mtlwCfA/zzUKOMLApm8VW16KvEk3AgqM0jrQb+LWPDsx5e4ssFfzf8lCqTNu2K
-	 vYdMWE6baf98NGrq3otU2qvPdG+iuSu6OW8azwDjXUPpHXRVn0EhnZbWPzfTBwwWrU
-	 PZp+/d3oTmpAPAjDh9F4ZnFKar8Zui83QTT+F4Jo=
+	b=SI4ZSwebx94uMCTGc6/r/WpUPZK6I8g2hToPp7KBkbL0kTOTmnhn6H0Bzofo3NsZI
+	 tPH7wMlmTKHKh8XfjaChOwoEEZIwv45wVG6pZJv7ofytsLe6dAom2efJrS1DCnPQxu
+	 XMhnZz5eOoJEtTjPqoVqCLxHqIMzpjH4L3gnQV2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Ayush Gupta <ayugupta@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 171/211] drm/amd/display: disconnect MPCC only on OTG change
-Date: Mon, 20 Mar 2023 15:55:06 +0100
-Message-Id: <20230320145520.602206870@linuxfoundation.org>
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Shawn Guo <shawn.guo@linaro.org>,
+	"Rafael J. Wysocki" <rjw@rjwysocki.net>
+Subject: [PATCH 6.2 198/211] cpuidle: psci: Iterate backwards over list in psci_pd_remove()
+Date: Mon, 20 Mar 2023 15:55:33 +0100
+Message-Id: <20230320145521.828048686@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -38,56 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ayush Gupta <ayugupta@amd.com>
+From: Shawn Guo <shawn.guo@linaro.org>
 
-commit 7304ee979b6b6422f41a1312391a5e505fc29ccd upstream.
+commit 6b0313c2fa3d2cf991c9ffef6fae6e7ef592ce6d upstream.
 
-[Why]
-Framedrops are observed while playing Vp9 and Av1 10 bit
-video on 8k resolution using VSR while playback controls
-are disappeared/appeared
+In case that psci_pd_init_topology() fails for some reason,
+psci_pd_remove() will be responsible for deleting provider and removing
+genpd from psci_pd_providers list.  There will be a failure when removing
+the cluster PD, because the cpu (child) PDs haven't been removed.
 
-[How]
-Now ODM 2 to 1 is disabled for 5k or greater resolutions on VSR.
+[    0.050232] CPUidle PSCI: init PM domain cpu0
+[    0.050278] CPUidle PSCI: init PM domain cpu1
+[    0.050329] CPUidle PSCI: init PM domain cpu2
+[    0.050370] CPUidle PSCI: init PM domain cpu3
+[    0.050422] CPUidle PSCI: init PM domain cpu-cluster0
+[    0.050475] PM: genpd_remove: unable to remove cpu-cluster0
+[    0.051412] PM: genpd_remove: removed cpu3
+[    0.051449] PM: genpd_remove: removed cpu2
+[    0.051499] PM: genpd_remove: removed cpu1
+[    0.051546] PM: genpd_remove: removed cpu0
 
-Cc: stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Ayush Gupta <ayugupta@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix the problem by iterating the provider list reversely, so that parent
+PD gets removed after child's PDs like below.
+
+[    0.029052] CPUidle PSCI: init PM domain cpu0
+[    0.029076] CPUidle PSCI: init PM domain cpu1
+[    0.029103] CPUidle PSCI: init PM domain cpu2
+[    0.029124] CPUidle PSCI: init PM domain cpu3
+[    0.029151] CPUidle PSCI: init PM domain cpu-cluster0
+[    0.029647] PM: genpd_remove: removed cpu0
+[    0.029666] PM: genpd_remove: removed cpu1
+[    0.029690] PM: genpd_remove: removed cpu2
+[    0.029714] PM: genpd_remove: removed cpu3
+[    0.029738] PM: genpd_remove: removed cpu-cluster0
+
+Fixes: a65a397f2451 ("cpuidle: psci: Add support for PM domains by using genpd")
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
+Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/cpuidle/cpuidle-psci-domain.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-@@ -1915,6 +1915,7 @@ int dcn32_populate_dml_pipes_from_contex
- 	bool subvp_in_use = false;
- 	uint8_t is_pipe_split_expected[MAX_PIPES] = {0};
- 	struct dc_crtc_timing *timing;
-+	bool vsr_odm_support = false;
+--- a/drivers/cpuidle/cpuidle-psci-domain.c
++++ b/drivers/cpuidle/cpuidle-psci-domain.c
+@@ -103,7 +103,8 @@ static void psci_pd_remove(void)
+ 	struct psci_pd_provider *pd_provider, *it;
+ 	struct generic_pm_domain *genpd;
  
- 	dcn20_populate_dml_pipes_from_context(dc, context, pipes, fast_validate);
+-	list_for_each_entry_safe(pd_provider, it, &psci_pd_providers, link) {
++	list_for_each_entry_safe_reverse(pd_provider, it,
++					 &psci_pd_providers, link) {
+ 		of_genpd_del_provider(pd_provider->node);
  
-@@ -1932,12 +1933,15 @@ int dcn32_populate_dml_pipes_from_contex
- 		timing = &pipe->stream->timing;
- 
- 		pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_dal;
-+		vsr_odm_support = (res_ctx->pipe_ctx[i].stream->src.width >= 5120 &&
-+				res_ctx->pipe_ctx[i].stream->src.width > res_ctx->pipe_ctx[i].stream->dst.width);
- 		if (context->stream_count == 1 &&
- 				context->stream_status[0].plane_count == 1 &&
- 				!dc_is_hdmi_signal(res_ctx->pipe_ctx[i].stream->signal) &&
- 				is_h_timing_divisible_by_2(res_ctx->pipe_ctx[i].stream) &&
- 				pipe->stream->timing.pix_clk_100hz * 100 > DCN3_2_VMIN_DISPCLK_HZ &&
--				dc->debug.enable_single_display_2to1_odm_policy) {
-+				dc->debug.enable_single_display_2to1_odm_policy &&
-+				!vsr_odm_support) { //excluding 2to1 ODM combine on >= 5k vsr
- 			pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_2to1;
- 		}
- 		pipe_cnt++;
+ 		genpd = of_genpd_remove_last(pd_provider->node);
 
 
