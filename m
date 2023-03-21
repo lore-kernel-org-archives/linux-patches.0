@@ -1,90 +1,100 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0553379C7
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 08:47:35 +0000 (UTC)
-Received: by mail-wr1-f54.google.com with SMTP id y14so12796672wrq.4
-        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 01:47:35 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB0E8BE1
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 10:15:15 +0000 (UTC)
+Received: by mail-ed1-f46.google.com with SMTP id y4so57577085edo.2
+        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 03:15:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679388454;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XtHqZkEWuTahdTsop/BgtjQDbajvxIKZBkyXXuaB/ds=;
-        b=BmXRwHDNMULR3xIqdzZ2p+gUZ6VX4mh7cM1N3bYfEC2lm9hA75LBXEhmQ3p/pqpx0Q
-         jqvx83a30zPxizH5IQUHyQH0bZz+1V1PgfLjoJP6p5p3o7AGt11vwJgZn5UkAWLCcePd
-         AGg5MEN9Fv0K7wTnMg/jWVzahMcKQ4iEuoSkZ/EpG1+y0hsLWoEmAZCPsSxZT0xOUPrr
-         juLH+FUIbYAgCNLG6OunwSr+Dd8R7XDRpkE97VlqNFbgA8x94ewFh1/+wk0Ngk+gHKUc
-         Z1cWt6XOIkfhI3UaGK3gDG5FEjVCnY8f8MjLHmkuej461qdy0YEhwRKPiNimDryIQyYS
-         nAjg==
+        d=futuring-girl-com.20210112.gappssmtp.com; s=20210112; t=1679393713;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VPZLwXOZRcorVd7q1GAEZgbB1jSiFy3d5LtXDMLqkRI=;
+        b=cbNkG895Ge9ZG6hIzcUdiWc975KbpPoHxxRn6s0LR6QKaQInX7QA3FicGIE/Ebd/Eh
+         dBFnlFDe6jJjlSkw/b7Ss6hWH6f+WWSsYSXyzBegp8OIb3T+ysm/9k2CZUyaqwBXhbPS
+         Yw2loxVV2E8v2tlyYlBjeg6CzzIwoBrPR2BjFSo2w08Np7otnklbUN1ttVxQmThEK2ys
+         9wQJ00i9bGNMmnuzmVMW2yaoIzeLPIn/2v06cJ5tyU9yhcam4k2k8Nua/U2NDT/LXItu
+         AltEuPA2za8JMxSaybK0SaouOeP9FPXoyU/c2+sBh+BOS2uERyiA1dONuzAdE0daGYa4
+         0ACg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679388454;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XtHqZkEWuTahdTsop/BgtjQDbajvxIKZBkyXXuaB/ds=;
-        b=Pc1FB8u3B2g6Rcj8/Tg1lXkhpo7zA82+I2h8kgdfYItqOCHoPY2mKTdrXZU+qSPtVn
-         YRaw2nwhsbV5h/r6TdJgDnbg691m4+Z2vFrAA0qZ3PGukIOFx8ij59rMuGdVzd+1ouOO
-         hBTGeRXEeGWPkcS/2Wd+VnWnZdA0r59ByhjMIscqizcXUuoHnAnLoeTfVdw7LmwcoMXU
-         s4Dd7B0F9JqdYL3w1+US+YBfdSvKg/CX9DoxMLLDkyoLvlIIlOj7tCfQVn9Yf1YNGHzq
-         DYst3JOobpFm4XSVBw0ONad19m9TE5M3QSSCvfa0Ndr7MwmfXYgLWMucJP8M/THnX6pb
-         z+IA==
-X-Gm-Message-State: AO0yUKXuzrJBGqoMdpLriKPR+7v3oVDz8jORTox5U7x2Cj77mzVeTG2f
-	nnvFpkdStswYtIaNT1KeZ8w=
-X-Google-Smtp-Source: AK7set8J2CvTMs3v7VYwtR9kJTgmjPkUwPYEW1kTBsVsLD7LBfou73qPtnITJr4oCdgBqdjharedpw==
-X-Received: by 2002:a5d:6a08:0:b0:2d0:bba8:3901 with SMTP id m8-20020a5d6a08000000b002d0bba83901mr1744754wru.62.1679388454164;
-        Tue, 21 Mar 2023 01:47:34 -0700 (PDT)
-Received: from [192.168.0.210] (cpc154979-craw9-2-0-cust193.16-3.cable.virginm.net. [80.193.200.194])
-        by smtp.googlemail.com with ESMTPSA id q4-20020a05600c46c400b003eb2e33f327sm1924022wmo.2.2023.03.21.01.47.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 01:47:33 -0700 (PDT)
-Message-ID: <b36aa25a-7cbd-6926-1ee3-ab9b2bf76111@gmail.com>
-Date: Tue, 21 Mar 2023 08:47:32 +0000
+        d=1e100.net; s=20210112; t=1679393713;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VPZLwXOZRcorVd7q1GAEZgbB1jSiFy3d5LtXDMLqkRI=;
+        b=RBTczZzRCQ0fdlZPXU2OG+XSzUP5Fw+ay7lauWQpqO1OMWwu/WvYrdZ/h5+Jz0QUUx
+         a4djMyUiDq6nvlfAFI9M/uZ/mB4uidWKxnS62sONMNlXpRks/e3Huv8WN5gmHkNxiTpn
+         8lIkpeQ7SI6uwl1jy/GJfMEAaqKEn5fwIyxZH16BLz53lhfw0IEw548TDHSIewLKpnFn
+         /ZOBgaVR9X/vPzJyrWidfWoUW8c9h2PdYur/dzufuBtu46iMWILgkg/i3HytmRoGgej1
+         8ghAGPrQ9NS7nW//0iQMdYTFOA8aX97718MDPJfZfk8jTj+ogG0fOKeYgVZ8kn6Q3DFy
+         6ImA==
+X-Gm-Message-State: AO0yUKXynd2PzJvG9qo16cX6YCEB47/MYsiRGD747OiwFbjuugptT0hY
+	/0VIiVYR9BBnxW9/3yjWTXuBBrXEieO2+EopqtegZg==
+X-Google-Smtp-Source: AK7set/THFJZheYTOTejcWWnHCm6ePuf/4HAQH9Mt/K09wQzWDjcnxlvoDo7Vhr6Cce3pY2xwfRwy5fCgDija2Fier8=
+X-Received: by 2002:a17:906:a054:b0:933:2bb9:7c98 with SMTP id
+ bg20-20020a170906a05400b009332bb97c98mr1437532ejb.6.1679393713576; Tue, 21
+ Mar 2023 03:15:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2] stress-module: stress finit_module() and
- delete_module()
-Content-Language: en-US
-To: Luis Chamberlain <mcgrof@kernel.org>,
- Lucas De Marchi <lucas.de.marchi@gmail.com>
-Cc: patches@lists.linux.dev, linux-modules@vger.kernel.org,
- linux-kernel@vger.kernel.org, pmladek@suse.com, david@redhat.com,
- petr.pavlu@suse.com, prarit@redhat.com, christophe.leroy@csgroup.eu,
- song@kernel.org
-References: <ZBUA6E3kYh0Xuu/c@bombadil.infradead.org>
- <ZBkClVqkTp5b+gut@bombadil.infradead.org>
-From: "Colin King (gmail)" <colin.i.king@gmail.com>
-In-Reply-To: <ZBkClVqkTp5b+gut@bombadil.infradead.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230321080705.245176209@linuxfoundation.org>
+In-Reply-To: <20230321080705.245176209@linuxfoundation.org>
+From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 21 Mar 2023 19:15:02 +0900
+Message-ID: <CAKL4bV6TDsxGLtKSSWE+je6yK4Y-8v7Q-ymf6OSVW2CzJDNdpQ@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/198] 6.1.21-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 21/03/2023 01:04, Luis Chamberlain wrote:
-> On Fri, Mar 17, 2023 at 05:08:08PM -0700, Luis Chamberlain wrote:
->> I'm not sure yet why we don't see the module delete work, I guess
->> because it's refcnt is still not 0 and so the unload probably won't
->> help at all unless we have a loop just dedicated to that.
-> 
-> <insert self deprecating humor>
-> The reason was because the module_name is the full path, and the system
-> call wants just the module name.
-> </end self deprecating humor>
+Hi Greg
 
-Ah, that explains it.
+On Tue, Mar 21, 2023 at 5:39=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.21 release.
+> There are 198 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 23 Mar 2023 08:06:28 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.21-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-> 
-> I'll fix.
-> 
->    Luis
+6.1.21-rc2 tested.
 
-OK, I'll wait for a v3.
+x86_64
 
-Thank you,
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-Colin
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P, arch linux)
 
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
