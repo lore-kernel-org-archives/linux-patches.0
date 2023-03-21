@@ -1,158 +1,90 @@
-Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com [66.111.4.229])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E7B944D
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 14:33:01 +0000 (UTC)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailnew.nyi.internal (Postfix) with ESMTP id 2F777582194;
-	Tue, 21 Mar 2023 10:33:00 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Tue, 21 Mar 2023 10:33:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1679409180; x=1679416380; bh=T/
-	lq0wdl5waDK7GJCv2ptAX5Xsg9I9oRktyonRsh2Ok=; b=nSQeM/hAbtbjunm3+l
-	9m0ACRX5pcJaI4mDgqc3K84iYdrOkpWyhiivRFGddhBnNafT5tIoYwX0pOKg2/r2
-	d0AREqYUPBAnPjyugOIN8SdCGJ5DLL7KISvulndfWgfqsEsKKKArdTJ72QG0ezyJ
-	4oMmHbQYFFK3UhUvVy9evNiYJrAY+iPwA1HL6OOwMtIYq4msJtNrcR3o4PKPsIHj
-	Kty9Csv3mzjyUMehWpPB5RriaZ77gwU5fVLJXT3wRu4YMMkNNeDWM/IXnWO9RCMn
-	rZERZ4TDdS8g5Ux/IOJR3oXbPFCyXkWOJEQ1+b3x+gvYXHz+KzM/vFSAqzBpPlfe
-	AKCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1679409180; x=1679416380; bh=T/lq0wdl5waDK
-	7GJCv2ptAX5Xsg9I9oRktyonRsh2Ok=; b=WkTdIj36fxYe9ZB98EK6mienufLrF
-	qeZoTxB5+dougAHWFmQH32QWx12UioQ12q5M2JLS2WS1Kr7xwhBRKkQR2QpqVrw2
-	hiMqLBUR1Plzw97VXOJOPMeUjY03KWodhVVRlHatQmFQ2WezHqtoZI4h6YPwMKZH
-	ZPbf5C2KfjpCXB1Fyu2SsJ0TaD9YSTVdYsgGB+5Ebz03LHezG1LKtF5yQb6CjTmN
-	4jUvzz0B/Lj2B0i7vPJujZbH8yGXsEawU7ZPc1Rpc4yWK+WcfEHSHweiP0S6CbI8
-	/gKKIQe7ZeUgg18lTzYQQxnZ11jXsJT9aPRjoSpd2uzOxkUXgoK6elABg==
-X-ME-Sender: <xms:G8AZZLgSQPHKhlV50q8TO3b-YscRkC9yQ7lc6TnjJh3KXHLYTAIoBw>
-    <xme:G8AZZIBkr2JChgYJTsTYbi8KEuTIK3nbfoAys_uyDwo6kwBEqioF6pJqiS6PK0GA7
-    LGno9h1qEJDq5duAws>
-X-ME-Received: <xmr:G8AZZLEiWTYxlKntBJX_Dbfee0v_Ar8edQcJPjs3c9Cl_2MWZ1WJrd3s9dB2l-8aAeOCNJ10YVlIV2qs9a2EOTRy_d9uno0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdegtddgieehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpeetfefffefgkedtfefgledugfdtjeefjedvtddtkeetieffjedvgfehheff
-    hfevudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hmrgigihhmvgestggvrhhnohdrthgvtghh
-X-ME-Proxy: <xmx:G8AZZIQ3LvdGLv99ngFCGTO6-hTz02yJFTBVzDt_NQDAqd12r6Cx-A>
-    <xmx:G8AZZIz_gaZiOALKNSZFvA5p-bS7GlshX4IHWG3o1ksbDtqfeafejg>
-    <xmx:G8AZZO4y6C4PkPoN8Zjyt2N7JuF9PlRNG7idrZua3C8HEm9UgYCm4w>
-    <xmx:HMAZZIEv6AY65hhQlNCWwIlZEXqiIg197-nyQfcGi_cisbYAWFZd0A>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Mar 2023 10:32:58 -0400 (EDT)
-Date: Tue, 21 Mar 2023 15:32:56 +0100
-From: Maxime Ripard <maxime@cerno.tech>
-To: David Gow <davidgow@google.com>
-Cc: Stephen Boyd <sboyd@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Vincent Whitchurch <vincent.whitchurch@axis.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	devicetree@vger.kernel.org, linux-um@lists.infradead.org,
-	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com
-Subject: Re: [PATCH 4/8] clk: Add test managed clk provider/consumer APIs
-Message-ID: <20230321143256.ybr6c6kstcv5lnbk@houat>
-References: <20230302013822.1808711-1-sboyd@kernel.org>
- <20230302013822.1808711-5-sboyd@kernel.org>
- <CABVgOSkahumU6T+rCVx+k7Y9=iMszveseVYE0wfKjXwkNJpFxQ@mail.gmail.com>
- <77b315f6b89eb256c516ee08b1c17312.sboyd@kernel.org>
- <CABVgOSk4gEob3rokKF_p2Bcd_Sj3ikUN4R-HPHyTR0Eoo==85g@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D864C952
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 15:22:03 +0000 (UTC)
+Received: by mail-pl1-f170.google.com with SMTP id o2so8972877plg.4
+        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 08:22:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=heitbaum.com; s=google; t=1679412123;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6gWfY3tQUtshjFSkcAdDgcrIWsk+2YKijGy43yiViKk=;
+        b=EaR2/n2qw+RyvpiZ1yCsIKAcdWm37lT15zD0Eq+LIDerzkbF29Qpc8oGElyy34NZPr
+         l4Lx4DuvMJaS34Sfd//GyLDGUbt8pzJbBd7BfQqMSiFz8uKPAWKWu+xXZJotGnqfFatR
+         lz2shj9+DWX2Gb3sbL/SHkaPBtR/Wxz3SLytg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679412123;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6gWfY3tQUtshjFSkcAdDgcrIWsk+2YKijGy43yiViKk=;
+        b=sNR8g36P3LGKVK3h7pVW+wNAs2hBAWnnsIdfIuIFACOhWnME8SJgmZPf+UsTe8+YYe
+         Yyjqr4NerGILAy7IbdeXxwmPYxNEtsTYftLzUic93Ulq835qS65MeutMuAO8rVvCAItx
+         9WwZnWrNhVUYq47JQrx1qTCc1kWty5j0y/U5ShZXDFcaYjdk0qWb1E0FcA5t/BwwbuAc
+         2nNxAibCMRxF3oct+ryp84aFNR7HvJpqQ0Sa1P66jVT3+34ykcUK+PD0h8EsQUXMOYdn
+         Ru1vJExTeTIjZ+6DnAXYywRLKkLELf+yMBvHyJUzyC5wU89r1LOqIGoENsRuTZWZrg8J
+         BBoQ==
+X-Gm-Message-State: AO0yUKXaGeUHkgsYXzZ5fzfvu/1QDljYIfdKDMLqsln/9Ay2/J8/oCgR
+	9mJTzKZpswYJ9r8LZIZbOuNBoA==
+X-Google-Smtp-Source: AK7set+kulQ7RY0SJLZceDsuQd7Xg4twQsw+0TsI21QGPHuCcuIHG7WMoLXcFTf0NePX91aMu6DBLA==
+X-Received: by 2002:a17:90b:3a8d:b0:237:ae7c:1594 with SMTP id om13-20020a17090b3a8d00b00237ae7c1594mr247406pjb.8.1679412122531;
+        Tue, 21 Mar 2023 08:22:02 -0700 (PDT)
+Received: from b1f8169a9f5c (124-148-239-102.tpgi.com.au. [124.148.239.102])
+        by smtp.gmail.com with ESMTPSA id s61-20020a17090a69c300b00230cbb4b6e8sm8129524pjj.24.2023.03.21.08.21.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 08:22:01 -0700 (PDT)
+Date: Tue, 21 Mar 2023 15:21:53 +0000
+From: Rudi Heitbaum <rudi@heitbaum.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/198] 6.1.21-rc2 review
+Message-ID: <20230321152153.GA8@b1f8169a9f5c>
+References: <20230321080705.245176209@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kn4g64rogn4yrwmy"
-Content-Disposition: inline
-In-Reply-To: <CABVgOSk4gEob3rokKF_p2Bcd_Sj3ikUN4R-HPHyTR0Eoo==85g@mail.gmail.com>
-
-
---kn4g64rogn4yrwmy
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230321080705.245176209@linuxfoundation.org>
 
-On Sat, Mar 11, 2023 at 02:32:04PM +0800, David Gow wrote:
-> > > > diff --git a/drivers/clk/clk-kunit.c b/drivers/clk/clk-kunit.c
-> > > > new file mode 100644
-> > > > index 000000000000..78d85b3a7a4a
-> > > > --- /dev/null
-> > > > +++ b/drivers/clk/clk-kunit.c
-> > > > @@ -0,0 +1,204 @@
-> > > > +// SPDX-License-Identifier: GPL-2.0
-> > > > +/*
-> > > > + * KUnit helpers for clk tests
-> > > > + */
-> > > > +#include <linux/clk.h>
-> > > > +#include <linux/clk-provider.h>
-> > > > +#include <linux/err.h>
-> > > > +#include <linux/kernel.h>
-> > > > +#include <linux/slab.h>
-> > > > +
-> > > > +#include <kunit/resource.h>
-> > > > +
-> > > > +#include "clk-kunit.h"
-> > > > +
-> > > > +static void kunit_clk_disable_unprepare(struct kunit_resource *res)
-> > >
-> > > We need to decide on the naming scheme of these, and in particular if
-> > > they should be kunit_clk or clk_kunit (or something else).
-> > >
-> > > I'd lean to clk_kunit, if only to match DRM's KUnit helpers being
-> > > drm_kunit_helper better, and so that these are more tightly bound to
-> > > the subsystem being tested.
-> > > (i.e., so I don't have to scroll through every subsystem's helpers
-> > > when autocompleting kunit_).
-> >
-> > Ok, got it. I was trying to match kunit_kzalloc() style. It makes it
-> > easy to slap the 'kunit_' prefix on existing auto-completed function
-> > names like kzalloc() or clk_prepare_enable().
->=20
-> Yeah: my rule of thumb at the moment is to keep the kunit_ prefix for
-> things which are generic across the whole kernel (and tend to be
-> implemented in lib/kunit), and to use suffixes or infixes (whichever
-> works best) for things which are subsystem-specific.
+On Tue, Mar 21, 2023 at 09:39:14AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.21 release.
+> There are 198 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 23 Mar 2023 08:06:28 +0000.
+> Anything received after that time might be too late.
 
-A suffix is kind of weird though when any other managed call is using a
-prefix: devm is always using a prefix including for clocks, kunit for
-some calls too (like kzalloc).
+Hi Greg,
 
-Having clk_get vs devm_clk_get vs clk_get_kunit would be very
-inconsistent and throws me off completely :)
+6.1.21-rc2 tested.
 
-Maxime
+Run tested on:
+- Allwinner H6 (Tanix TX6)
+- Intel Alder Lake x86_64 (nuc12 i7-1260P)
 
---kn4g64rogn4yrwmy
-Content-Type: application/pgp-signature; name="signature.asc"
+In addition - build tested for:
+- Allwinner A64
+- Allwinner H3
+- Allwinner H5
+- NXP iMX6
+- NXP iMX8
+- Qualcomm Dragonboard
+- Rockchip RK3288
+- Rockchip RK3328
+- Rockchip RK3399pro
+- Samsung Exynos
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZBnAGAAKCRDj7w1vZxhR
-xcCXAPwJeWrqE0jAwByKsB4bICizCU+z39K0DcfRrOCvNgqcfwD8DHaZSDnzz/ky
-XhKIRMR9Jm58Oeu5HdXIKxO3zDFyWQU=
-=1Uxg
------END PGP SIGNATURE-----
-
---kn4g64rogn4yrwmy--
+Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
+--
+Rudi
