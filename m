@@ -1,90 +1,132 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D864C952
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 15:22:03 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id o2so8972877plg.4
-        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 08:22:03 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236B6C976
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 15:56:41 +0000 (UTC)
+Received: by mail-vs1-f43.google.com with SMTP id s1so13805143vsk.5
+        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 08:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google; t=1679412123;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6gWfY3tQUtshjFSkcAdDgcrIWsk+2YKijGy43yiViKk=;
-        b=EaR2/n2qw+RyvpiZ1yCsIKAcdWm37lT15zD0Eq+LIDerzkbF29Qpc8oGElyy34NZPr
-         l4Lx4DuvMJaS34Sfd//GyLDGUbt8pzJbBd7BfQqMSiFz8uKPAWKWu+xXZJotGnqfFatR
-         lz2shj9+DWX2Gb3sbL/SHkaPBtR/Wxz3SLytg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679412123;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1679414200;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6gWfY3tQUtshjFSkcAdDgcrIWsk+2YKijGy43yiViKk=;
-        b=sNR8g36P3LGKVK3h7pVW+wNAs2hBAWnnsIdfIuIFACOhWnME8SJgmZPf+UsTe8+YYe
-         Yyjqr4NerGILAy7IbdeXxwmPYxNEtsTYftLzUic93Ulq835qS65MeutMuAO8rVvCAItx
-         9WwZnWrNhVUYq47JQrx1qTCc1kWty5j0y/U5ShZXDFcaYjdk0qWb1E0FcA5t/BwwbuAc
-         2nNxAibCMRxF3oct+ryp84aFNR7HvJpqQ0Sa1P66jVT3+34ykcUK+PD0h8EsQUXMOYdn
-         Ru1vJExTeTIjZ+6DnAXYywRLKkLELf+yMBvHyJUzyC5wU89r1LOqIGoENsRuTZWZrg8J
-         BBoQ==
-X-Gm-Message-State: AO0yUKXaGeUHkgsYXzZ5fzfvu/1QDljYIfdKDMLqsln/9Ay2/J8/oCgR
-	9mJTzKZpswYJ9r8LZIZbOuNBoA==
-X-Google-Smtp-Source: AK7set+kulQ7RY0SJLZceDsuQd7Xg4twQsw+0TsI21QGPHuCcuIHG7WMoLXcFTf0NePX91aMu6DBLA==
-X-Received: by 2002:a17:90b:3a8d:b0:237:ae7c:1594 with SMTP id om13-20020a17090b3a8d00b00237ae7c1594mr247406pjb.8.1679412122531;
-        Tue, 21 Mar 2023 08:22:02 -0700 (PDT)
-Received: from b1f8169a9f5c (124-148-239-102.tpgi.com.au. [124.148.239.102])
-        by smtp.gmail.com with ESMTPSA id s61-20020a17090a69c300b00230cbb4b6e8sm8129524pjj.24.2023.03.21.08.21.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 08:22:01 -0700 (PDT)
-Date: Tue, 21 Mar 2023 15:21:53 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/198] 6.1.21-rc2 review
-Message-ID: <20230321152153.GA8@b1f8169a9f5c>
-References: <20230321080705.245176209@linuxfoundation.org>
+        bh=OHA0cbdS1dEyb0KuPSwVES+1ODSyv2r98Cp2t9mhxB8=;
+        b=yar+ksCzoZkluxr+vs0ZiQVsF7HNpXYgn8MTm4RndKU9Fo9SxqinqibYQ+b6EAe3TG
+         NCy/89MkYu56pqRngTI6LdM54Mi0lEBqmjZNeNNZkVjj7q7r5FH9fvsFoFGmPpuXwa4a
+         VDLyqm+gxBA2N7ihubkc6XwAdfFPAC/ceNVjOqC7+hS0wQSlFASt80Dm1YKeWXceTQTn
+         JDEqvP8HmcOHjPEwk1gJd7eHpojkdGh5uM4cvf9RNDJHKwsENKO+iMy0ais+/VGpX173
+         ACGyR4G02X8UUrNCCD9BDNdqqudS69NqtZYdyhCH0zGpK6CDBH+vj0/tbzOPo4kE/ynt
+         YecQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679414200;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OHA0cbdS1dEyb0KuPSwVES+1ODSyv2r98Cp2t9mhxB8=;
+        b=g7Em1wSoZFSf4b1g9mgthQMrPCxAhr0olEeiUa/L3crkPoGztp0qNMWNtZU4rq/W97
+         V0Ej9TRMdB2/UhrFsgHWLA5vSPO2eZxXwRmKVSBaDgkcdMgU32+0fHaIdbfkP5d9SVDT
+         o8+Y6ccPZUOGZ2FoXFcEbeHVYj/TuNJT7lksbzttEG7bFX02pm5Ow3KIhkw4d6r7hGtq
+         0ZeOooQvJqLd6YvMorZGUoR8RqC/+hsZCQHyjs95tFKujzSi9vwig8njbbXtOGWMpPsv
+         j+tGsqUAkh86eLz4Sg07TIykP8Y0ZE41buPgNvpZR2Q2C/pA3LkYdJRmLcY6Ma6Duq3O
+         jLIw==
+X-Gm-Message-State: AO0yUKUELGD+MMbbaCNC8gM9bIXeXsV1EaZYsS3UqTtzxwINCgrTUsVc
+	qIW7RmPfYbC5k4n73vZ5032RasTCutgFN9f3eT/oww==
+X-Google-Smtp-Source: AK7set/6uZ4VQJHCSPEmC6Kx2n6cqlS8YV4W7n02P4n11z6JEfRsyN55Trd6Z4oD/280pdj9aUGBapt6Wv6iGdPSt7w=
+X-Received: by 2002:a67:e00b:0:b0:425:d255:dd38 with SMTP id
+ c11-20020a67e00b000000b00425d255dd38mr1765286vsl.1.1679414199753; Tue, 21 Mar
+ 2023 08:56:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230321080705.245176209@linuxfoundation.org>
+References: <20230321080604.493429263@linuxfoundation.org>
+In-Reply-To: <20230321080604.493429263@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 21 Mar 2023 21:26:28 +0530
+Message-ID: <CA+G9fYtC86ZEBq=qT7ZymtGVKfUurebVGXtTo3JbKYRS_4+B=Q@mail.gmail.com>
+Subject: Re: [PATCH 6.2 000/213] 6.2.8-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Christophe Leroy <christophe.leroy@csgroup.eu>, Nathan Chancellor <nathan@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, llvm@lists.linux.dev, 
+	=?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>, 
+	Michael Ellerman <mpe@ellerman.id.au>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 21, 2023 at 09:39:14AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.21 release.
-> There are 198 patches in this series, all will be posted as a response
+On Tue, 21 Mar 2023 at 14:09, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.2.8 release.
+> There are 213 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Thu, 23 Mar 2023 08:06:28 +0000.
+>
+> Responses should be made by Thu, 23 Mar 2023 08:05:23 +0000.
 > Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.2.8-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.2.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Hi Greg,
+Powerpc builds need more commits,
+RC1 to RC2 the
+  - Build  clang-16 tqm8xx_defconfig got passed.
 
-6.1.21-rc2 tested.
+But still following build failures noticed on RC2 with
+  - Build clang-16 ppc64e_defconfig failed
 
-Run tested on:
-- Allwinner H6 (Tanix TX6)
-- Intel Alder Lake x86_64 (nuc12 i7-1260P)
+---
+error: unknown target CPU 'e500mc64'
+note: valid target CPU values are: generic, 440, 450, 601, 602, 603,
+603e, 603ev, 604, 604e, 620, 630, g3, 7400, g4, 7450, g4+, 750, 8548,
+970, g5, a2, e500, e500mc, e5500, power3, pwr3, power4, pwr4, power5,
+pwr5, power5x, pwr5x, power6, pwr6, power6x, pwr6x, power7, pwr7,
+power8, pwr8, power9, pwr9, power10, pwr10, powerpc, ppc, ppc32,
+powerpc64, ppc64, powerpc64le, ppc64le, future
+error: unknown target CPU 'e500mc64'
 
-In addition - build tested for:
-- Allwinner A64
-- Allwinner H3
-- Allwinner H5
-- NXP iMX6
-- NXP iMX8
-- Qualcomm Dragonboard
-- Rockchip RK3288
-- Rockchip RK3328
-- Rockchip RK3399pro
-- Samsung Exynos
+---
 
-Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
+> Christophe Leroy <christophe.leroy@csgroup.eu>
+>     powerpc: Disable CPU unknown by CLANG when CC_IS_CLANG
+
+> Christophe Leroy <christophe.leroy@csgroup.eu>
+>     powerpc/64: Set default CPU in Kconfig
+
+following commit also missing fixes:
 --
-Rudi
+From 77e82fa1f9781a958a6ea4aed7aec41239a5a22f Mon Sep 17 00:00:00 2001
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
+Date: Mon, 19 Dec 2022 19:45:58 +0100
+Subject: powerpc/64: Replace -mcpu=3De500mc64 by -mcpu=3De5500
+
+E500MC64 is a processor pre-dating E5500 that has never been
+commercialised. Use -mcpu=3De5500 for E5500 core.
+
+More details at https://gcc.gnu.org/PR108149
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Acked-by: Pali Roh=C3=A1r <pali@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/fa71ed20d22c156225436374f0ab847daac893bc.16=
+71475543.git.christophe.leroy@csgroup.eu
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
