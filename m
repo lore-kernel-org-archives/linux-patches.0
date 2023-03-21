@@ -1,100 +1,74 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out199-18.us.a.mail.aliyun.com (out199-18.us.a.mail.aliyun.com [47.90.199.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB0E8BE1
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 10:15:15 +0000 (UTC)
-Received: by mail-ed1-f46.google.com with SMTP id y4so57577085edo.2
-        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 03:15:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20210112.gappssmtp.com; s=20210112; t=1679393713;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VPZLwXOZRcorVd7q1GAEZgbB1jSiFy3d5LtXDMLqkRI=;
-        b=cbNkG895Ge9ZG6hIzcUdiWc975KbpPoHxxRn6s0LR6QKaQInX7QA3FicGIE/Ebd/Eh
-         dBFnlFDe6jJjlSkw/b7Ss6hWH6f+WWSsYSXyzBegp8OIb3T+ysm/9k2CZUyaqwBXhbPS
-         Yw2loxVV2E8v2tlyYlBjeg6CzzIwoBrPR2BjFSo2w08Np7otnklbUN1ttVxQmThEK2ys
-         9wQJ00i9bGNMmnuzmVMW2yaoIzeLPIn/2v06cJ5tyU9yhcam4k2k8Nua/U2NDT/LXItu
-         AltEuPA2za8JMxSaybK0SaouOeP9FPXoyU/c2+sBh+BOS2uERyiA1dONuzAdE0daGYa4
-         0ACg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679393713;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VPZLwXOZRcorVd7q1GAEZgbB1jSiFy3d5LtXDMLqkRI=;
-        b=RBTczZzRCQ0fdlZPXU2OG+XSzUP5Fw+ay7lauWQpqO1OMWwu/WvYrdZ/h5+Jz0QUUx
-         a4djMyUiDq6nvlfAFI9M/uZ/mB4uidWKxnS62sONMNlXpRks/e3Huv8WN5gmHkNxiTpn
-         8lIkpeQ7SI6uwl1jy/GJfMEAaqKEn5fwIyxZH16BLz53lhfw0IEw548TDHSIewLKpnFn
-         /ZOBgaVR9X/vPzJyrWidfWoUW8c9h2PdYur/dzufuBtu46iMWILgkg/i3HytmRoGgej1
-         8ghAGPrQ9NS7nW//0iQMdYTFOA8aX97718MDPJfZfk8jTj+ogG0fOKeYgVZ8kn6Q3DFy
-         6ImA==
-X-Gm-Message-State: AO0yUKXynd2PzJvG9qo16cX6YCEB47/MYsiRGD747OiwFbjuugptT0hY
-	/0VIiVYR9BBnxW9/3yjWTXuBBrXEieO2+EopqtegZg==
-X-Google-Smtp-Source: AK7set/THFJZheYTOTejcWWnHCm6ePuf/4HAQH9Mt/K09wQzWDjcnxlvoDo7Vhr6Cce3pY2xwfRwy5fCgDija2Fier8=
-X-Received: by 2002:a17:906:a054:b0:933:2bb9:7c98 with SMTP id
- bg20-20020a170906a05400b009332bb97c98mr1437532ejb.6.1679393713576; Tue, 21
- Mar 2023 03:15:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559998C04
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 11:38:04 +0000 (UTC)
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R161e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046051;MF=xhao@linux.alibaba.com;NM=1;PH=DS;RN=14;SR=0;TI=SMTPD_---0VeMvco6_1679398665;
+Received: from 30.240.99.2(mailfrom:xhao@linux.alibaba.com fp:SMTPD_---0VeMvco6_1679398665)
+          by smtp.aliyun-inc.com;
+          Tue, 21 Mar 2023 19:37:46 +0800
+Message-ID: <4102154a-1e49-54d9-b18f-c41da84e643e@linux.alibaba.com>
+Date: Tue, 21 Mar 2023 19:37:45 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230321080705.245176209@linuxfoundation.org>
-In-Reply-To: <20230321080705.245176209@linuxfoundation.org>
-From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 21 Mar 2023 19:15:02 +0900
-Message-ID: <CAKL4bV6TDsxGLtKSSWE+je6yK4Y-8v7Q-ymf6OSVW2CzJDNdpQ@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/198] 6.1.21-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.0
+Subject: Re: [PATCH v2 0/6] tmpfs: add the option to disable swap
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: hughd@google.com, akpm@linux-foundation.org, willy@infradead.org,
+ brauner@kernel.org, linux-mm@kvack.org, p.raghav@samsung.com,
+ da.gomez@samsung.com, a.manzanares@samsung.com, dave@stgolabs.net,
+ yosryahmed@google.com, keescook@chromium.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20230309230545.2930737-1-mcgrof@kernel.org>
+ <e1de614b-25e1-5c21-933a-880412ac7421@linux.alibaba.com>
+ <ZBdxWsrYfPgBG6NX@bombadil.infradead.org>
+ <edb78eea-a9a2-5c62-d203-6f2be39757d2@linux.alibaba.com>
+ <ZBjR15Tr1o98crup@bombadil.infradead.org>
+From: haoxin <xhao@linux.alibaba.com>
+In-Reply-To: <ZBjR15Tr1o98crup@bombadil.infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Greg
 
-On Tue, Mar 21, 2023 at 5:39=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+在 2023/3/21 上午5:36, Luis Chamberlain 写道:
+> On Mon, Mar 20, 2023 at 07:14:22PM +0800, haoxin wrote:
+>> 在 2023/3/20 上午4:32, Luis Chamberlain 写道:
+>>> On Tue, Mar 14, 2023 at 10:46:28AM +0800, haoxin wrote:
+>>>> All these series looks good to me and i do some test on my virtual machine
+>>>> it works well.
+>>>>
+>>>> so please add Tested-by: Xin Hao<xhao@linux.alibaba.com>  .
+>>>>
+>>>> just one question, if tmpfs pagecache occupies a large amount of memory, how
+>>>> can we ensure successful memory reclamation in case of memory shortage?
+>>> If you're disabling swap then you know the only thing you can do is
+>>> unmount if you want to help the VM, otherwise the pressure is just
+>>> greater for the VM.
+>> Un, what i mean is can we add a priority so that this type of pagecache is
+>> reclaimed last ?
+> That seems to be a classifier request for something much less aggressive
+> than mapping_set_unevictable(). My patches *prior* to using mapping_set_unevictable()
+> are I think closer to what it seems you want, but as noted before by
+> folks, that also puts unecessary stress on the VM because just fail
+> reclaim on our writepage().
 >
-> This is the start of the stable review cycle for the 6.1.21 release.
-> There are 198 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+>> Instead of just setting the parameter noswap to make it unreclaimed, because
+>> if such pagecache which occupy big part of memory which can not be
+>> reclaimed, it will cause OOM.
+> You can't simultaneously retain possession of a cake and eat it, too,
+> once you eat it, its gone and noswap eats the cake because of the
+> suggestion / decision to follow through with mapping_set_unevictable().
 >
-> Responses should be made by Thu, 23 Mar 2023 08:06:28 +0000.
-> Anything received after that time might be too late.
+> It sounds like you want to make mapping_set_unevictable() optional and
+> deal with the possible stress incurred writepage() failing?
+Yes, Just a personal idea, in any way, the current patch is an excellent 
+implementation,  thank you very much.
+>   Not quite
+> sure what else to recommend here.
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.21-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-
-6.1.21-rc2 tested.
-
-x86_64
-
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P, arch linux)
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+>    Luis
