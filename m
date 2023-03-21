@@ -1,119 +1,94 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E610D530
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 20:14:49 +0000 (UTC)
-Received: by mail-ot1-f47.google.com with SMTP id d22-20020a9d5e16000000b0069b5252ced7so9205667oti.13
-        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 13:14:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679429688;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1iyMeXtw28xdDxjAf1Mr9Ugy13ikhgamAMQijRmwaUg=;
-        b=DVd8abRt+peZ7i9xZbjDP59cADBeFZppyXqxRaw70ebayWfA4sKbMKfT+2TIYG6ivE
-         kCc+popwc9h518o6vTUhodAmngOuBBLkmXcTPN2AfjLO8Og3rjK75SjYDZwB4ut/AkhY
-         r1ynVGqPNRrsEp6IsDuveXpRgfc1GiQJCVxCRRA257jK/XfVEMX/dYwp3Cki3hJi7GR3
-         dqFEZqmn6WoMy56f0T/AT+QurcuUXGkbezOWLdpznIK1IEEtT+7lMA1oxxiRdblDg6Cw
-         Ix8+M2KfkTGLZFpiLxk+7gi7AS3YpwrC1JkolWmu91zgQ3/93CoS4EApx8SznStdoA6O
-         g7Gw==
-X-Gm-Message-State: AO0yUKXlHRwCMVRXXUSvLqk6dY4wolYEvEJ3rx6JFcA9Ew8YXt4h0URX
-	Ur8Vd5ZWFTR+X+rWAQ3veQ==
-X-Google-Smtp-Source: AK7set9I74btpUJ+yTSu/rYcbUzo5Thb6TU9525KAhdsVfwO1Eocyf9B4D4yAB3OlE5rvi7eizLHvg==
-X-Received: by 2002:a9d:6654:0:b0:69f:8d0f:9a1e with SMTP id q20-20020a9d6654000000b0069f8d0f9a1emr276389otm.7.1679429688137;
-        Tue, 21 Mar 2023 13:14:48 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id v8-20020a9d69c8000000b0069f951899e1sm223475oto.24.2023.03.21.13.14.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 13:14:47 -0700 (PDT)
-Received: (nullmailer pid 1434710 invoked by uid 1000);
-	Tue, 21 Mar 2023 20:14:46 -0000
-Date: Tue, 21 Mar 2023 15:14:46 -0500
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J . Wysocki" <rafael@kernel.org>, Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, Maxime Ripard <maxime@cerno.tech>
-Subject: Re: [PATCH v2 07/11] dt-bindings: kunit: Add fixed rate clk consumer
- test
-Message-ID: <20230321201446.GA1401650-robh@kernel.org>
-References: <20230315183729.2376178-1-sboyd@kernel.org>
- <20230315183729.2376178-8-sboyd@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AC6D530
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 20:23:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0894C433EF;
+	Tue, 21 Mar 2023 20:23:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1679430218;
+	bh=EDfXUG+E1EZk+5BCveQ844rTK7Bhe+UE1QVatYkNmAg=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=qXFxJuLZyWtwZ4LS0WrsEQSY1r/dx5Ib+d49jY/PHgmxHP8uBGZ/BX+gftM4VOLYy
+	 VKyzOOd3f05DS3murzRd3o5PJeZRH8CWl5NY3wtPx0tG0KcojHPU4w1e/6sZbtRyQh
+	 hbuPgtTI5F0ml0sEEm3Zwvm2oPQfSpewiNNY8ee0anOVRLZFhjll5M6WLziZ7JY15i
+	 qU8BDNZ7LqcLrQLIP6XrFo+oNDkcoFfIYHpSWz56i2rtuqU+2Q4jVDiLs5WSsS0iM+
+	 iRb9vtLac0hVrtOl1HgCrq5rFiUIc5WtSAZhMB92CrzUx15pXA71RWOfAXRoHeHUXR
+	 O2lydpuk9gvIw==
+Message-ID: <ebac292d86a91151037f67f6d8738c06.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230315183729.2376178-8-sboyd@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230321201446.GA1401650-robh@kernel.org>
+References: <20230315183729.2376178-1-sboyd@kernel.org> <20230315183729.2376178-8-sboyd@kernel.org> <20230321201446.GA1401650-robh@kernel.org>
+Subject: Re: [PATCH v2 07/11] dt-bindings: kunit: Add fixed rate clk consumer test
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, Maxime Ripard <maxime@cerno.tech>
+To: Rob Herring <robh@kernel.org>
+Date: Tue, 21 Mar 2023 13:23:35 -0700
+User-Agent: alot/0.10
 
-On Wed, Mar 15, 2023 at 11:37:24AM -0700, Stephen Boyd wrote:
-> Describe a binding for a device that consumes a fixed rate clk in DT so
-> that a KUnit test can get the clk registered by of_fixed_clk_setup() and
-> test that it is setup properly.
-> 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: Brendan Higgins <brendan.higgins@linux.dev>
-> Cc: David Gow <davidgow@google.com>
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> ---
->  .../kunit/test,clk-kunit-fixed-rate.yaml      | 35 +++++++++++++++++++
+Quoting Rob Herring (2023-03-21 13:14:46)
+> On Wed, Mar 15, 2023 at 11:37:24AM -0700, Stephen Boyd wrote:
+> > Describe a binding for a device that consumes a fixed rate clk in DT so
+> > that a KUnit test can get the clk registered by of_fixed_clk_setup() and
+> > test that it is setup properly.
+> >=20
+> > Cc: Rob Herring <robh+dt@kernel.org>
+> > Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> > Cc: Brendan Higgins <brendan.higgins@linux.dev>
+> > Cc: David Gow <davidgow@google.com>
+> > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> > ---
+> >  .../kunit/test,clk-kunit-fixed-rate.yaml      | 35 +++++++++++++++++++
+>=20
+> Some stuff in test and some in kunit? I prefer 'test'.
 
-Some stuff in test and some in kunit? I prefer 'test'.
+So only a test directory? Ok.
 
->  1 file changed, 35 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate.yaml b/Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate.yaml
-> new file mode 100644
-> index 000000000000..58d7826d9c14
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate.yaml
-> @@ -0,0 +1,35 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/kunit/test,clk-kunit-fixed-rate.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: KUnit clk fixed rate test clk consumer
-> +
-> +maintainers:
-> +  - Stephen Boyd <sboyd@kernel.org>
-> +
-> +description: |
+>=20
+> >  1 file changed, 35 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/kunit/test,clk-ku=
+nit-fixed-rate.yaml
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/kunit/test,clk-kunit-fix=
+ed-rate.yaml b/Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed=
+-rate.yaml
+> > new file mode 100644
+> > index 000000000000..58d7826d9c14
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate=
+.yaml
+> > @@ -0,0 +1,35 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/kunit/test,clk-kunit-fixed-rate.yam=
+l#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: KUnit clk fixed rate test clk consumer
+> > +
+> > +maintainers:
+> > +  - Stephen Boyd <sboyd@kernel.org>
+> > +
+> > +description: |
+>=20
+> Drop '|'
+>=20
+> > +  A clk consumer of a fixed rate clk used to test the fixed rate clk
+> > +  implementation in the Linux kernel.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: test,clk-kunit-fixed-rate
+>=20
+> I tend to think we should drop 'kunit' from these bindings. You could=20
+> use this for different test frameworks.=20
 
-Drop '|'
-
-> +  A clk consumer of a fixed rate clk used to test the fixed rate clk
-> +  implementation in the Linux kernel.
-> +
-> +properties:
-> +  compatible:
-> +    const: test,clk-kunit-fixed-rate
-
-I tend to think we should drop 'kunit' from these bindings. You could 
-use this for different test frameworks. 
-
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - clocks
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    clock-consumer {
-> +      compatible = "test,clk-kunit-fixed-rate";
-> +      clocks = <&fixed_clk>;
-> +    };
-> +...
-> -- 
-> https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-> https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
-> 
+Sure.
