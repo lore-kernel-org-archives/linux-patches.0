@@ -1,41 +1,42 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA16D530
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 20:09:33 +0000 (UTC)
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-17e140619fdso8928098fac.11
-        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 13:09:33 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E610D530
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 20:14:49 +0000 (UTC)
+Received: by mail-ot1-f47.google.com with SMTP id d22-20020a9d5e16000000b0069b5252ced7so9205667oti.13
+        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 13:14:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679429373;
+        d=1e100.net; s=20210112; t=1679429688;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7IoD7Q9QgP9epdBdXgrVu+8obbfapCzV9cQyqFydqE4=;
-        b=a4ENMVaPUX+7boNECUGISoVI3Bs8JgZJGN9UlAlt2bqutFdxP/2MNbw7J9qYhPvbro
-         2J0e3yCLIqGlRWM1sNwXtktPmD9FjgvFtBq9QireIE2Fpmn1v+sbCuncmpI5u5cJismn
-         JyGmxvgg3LFP6BBneIyndHmoJwWR/ih7j9EjOb6WsNTQPusRRjbwqu4icPircrZEkUFo
-         bSox65kx/e9ulPORR/2ZraPyZkpO7zf8f7zdrZiThGAN4Bw+Ei3vZ2lFGHqoqiJmMO9S
-         sHqkCVpbGiVESsKKY0qHbzx8LWBnSMqxYNZ9dc6wfO7ublpiabGd/PDd8MkL2lYGKyxU
-         SC6w==
-X-Gm-Message-State: AO0yUKWwbfdQlVvIHac12tf/3IZUNCaxpJECvnOxdy4r/DG/mAjWwFE5
-	/vAtUbI7iA9F+ZaLFPMeug==
-X-Google-Smtp-Source: AK7set+pWW0vALEw83DoZDfRZdCvrXXnxgvVR/oSATJR6uJ8gLmhh0iJscB+wyFEqdciz39XeohXEA==
-X-Received: by 2002:a05:6871:413:b0:179:d821:b911 with SMTP id d19-20020a056871041300b00179d821b911mr165631oag.21.1679429372840;
-        Tue, 21 Mar 2023 13:09:32 -0700 (PDT)
+        bh=1iyMeXtw28xdDxjAf1Mr9Ugy13ikhgamAMQijRmwaUg=;
+        b=DVd8abRt+peZ7i9xZbjDP59cADBeFZppyXqxRaw70ebayWfA4sKbMKfT+2TIYG6ivE
+         kCc+popwc9h518o6vTUhodAmngOuBBLkmXcTPN2AfjLO8Og3rjK75SjYDZwB4ut/AkhY
+         r1ynVGqPNRrsEp6IsDuveXpRgfc1GiQJCVxCRRA257jK/XfVEMX/dYwp3Cki3hJi7GR3
+         dqFEZqmn6WoMy56f0T/AT+QurcuUXGkbezOWLdpznIK1IEEtT+7lMA1oxxiRdblDg6Cw
+         Ix8+M2KfkTGLZFpiLxk+7gi7AS3YpwrC1JkolWmu91zgQ3/93CoS4EApx8SznStdoA6O
+         g7Gw==
+X-Gm-Message-State: AO0yUKXlHRwCMVRXXUSvLqk6dY4wolYEvEJ3rx6JFcA9Ew8YXt4h0URX
+	Ur8Vd5ZWFTR+X+rWAQ3veQ==
+X-Google-Smtp-Source: AK7set9I74btpUJ+yTSu/rYcbUzo5Thb6TU9525KAhdsVfwO1Eocyf9B4D4yAB3OlE5rvi7eizLHvg==
+X-Received: by 2002:a9d:6654:0:b0:69f:8d0f:9a1e with SMTP id q20-20020a9d6654000000b0069f8d0f9a1emr276389otm.7.1679429688137;
+        Tue, 21 Mar 2023 13:14:48 -0700 (PDT)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id wl24-20020a056871a81800b0017255c79736sm4541598oab.43.2023.03.21.13.09.31
+        by smtp.gmail.com with ESMTPSA id v8-20020a9d69c8000000b0069f951899e1sm223475oto.24.2023.03.21.13.14.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 13:09:32 -0700 (PDT)
-Received: (nullmailer pid 1397876 invoked by uid 1000);
-	Tue, 21 Mar 2023 20:09:31 -0000
-Date: Tue, 21 Mar 2023 15:09:31 -0500
+        Tue, 21 Mar 2023 13:14:47 -0700 (PDT)
+Received: (nullmailer pid 1434710 invoked by uid 1000);
+	Tue, 21 Mar 2023 20:14:46 -0000
+Date: Tue, 21 Mar 2023 15:14:46 -0500
 From: Rob Herring <robh@kernel.org>
 To: Stephen Boyd <sboyd@kernel.org>
 Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J . Wysocki" <rafael@kernel.org>, Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, Maxime Ripard <maxime@cerno.tech>
-Subject: Re: [PATCH v2 04/11] dt-bindings: test: Add KUnit empty node binding
-Message-ID: <20230321200931.GA1367503-robh@kernel.org>
+Subject: Re: [PATCH v2 07/11] dt-bindings: kunit: Add fixed rate clk consumer
+ test
+Message-ID: <20230321201446.GA1401650-robh@kernel.org>
 References: <20230315183729.2376178-1-sboyd@kernel.org>
- <20230315183729.2376178-5-sboyd@kernel.org>
+ <20230315183729.2376178-8-sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,11 +45,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230315183729.2376178-5-sboyd@kernel.org>
+In-Reply-To: <20230315183729.2376178-8-sboyd@kernel.org>
 
-On Wed, Mar 15, 2023 at 11:37:21AM -0700, Stephen Boyd wrote:
-> Describe a binding for an empty device node used by KUnit tests to
-> confirm overlays load properly.
+On Wed, Mar 15, 2023 at 11:37:24AM -0700, Stephen Boyd wrote:
+> Describe a binding for a device that consumes a fixed rate clk in DT so
+> that a KUnit test can get the clk registered by of_fixed_clk_setup() and
+> test that it is setup properly.
 > 
 > Cc: Rob Herring <robh+dt@kernel.org>
 > Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
@@ -56,52 +58,59 @@ On Wed, Mar 15, 2023 at 11:37:21AM -0700, Stephen Boyd wrote:
 > Cc: David Gow <davidgow@google.com>
 > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 > ---
->  .../bindings/test/test,kunit-empty.yaml       | 30 +++++++++++++++++++
->  1 file changed, 30 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/test/test,kunit-empty.yaml
+>  .../kunit/test,clk-kunit-fixed-rate.yaml      | 35 +++++++++++++++++++
+
+Some stuff in test and some in kunit? I prefer 'test'.
+
+>  1 file changed, 35 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/test/test,kunit-empty.yaml b/Documentation/devicetree/bindings/test/test,kunit-empty.yaml
+> diff --git a/Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate.yaml b/Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate.yaml
 > new file mode 100644
-> index 000000000000..592fd06031b8
+> index 000000000000..58d7826d9c14
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/test/test,kunit-empty.yaml
-> @@ -0,0 +1,30 @@
+> +++ b/Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate.yaml
+> @@ -0,0 +1,35 @@
 > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 > +%YAML 1.2
 > +---
-> +$id: http://devicetree.org/schemas/clock/test,kunit-empty.yaml#
-
-s/clock/test/
-
-'make dt_binding_check' will tell you this.
-
+> +$id: http://devicetree.org/schemas/kunit/test,clk-kunit-fixed-rate.yaml#
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: KUnit empty node
+> +title: KUnit clk fixed rate test clk consumer
 > +
 > +maintainers:
-> +  - David Gow <davidgow@google.com>
-> +  - Brendan Higgins <brendanhiggins@google.com>
+> +  - Stephen Boyd <sboyd@kernel.org>
 > +
 > +description: |
 
-Don't need '|'
+Drop '|'
 
-> +  An empty node to confirm KUnit can load device tree overlays.
+> +  A clk consumer of a fixed rate clk used to test the fixed rate clk
+> +  implementation in the Linux kernel.
 > +
 > +properties:
 > +  compatible:
-> +    const: test,kunit-empty
+> +    const: test,clk-kunit-fixed-rate
+
+I tend to think we should drop 'kunit' from these bindings. You could 
+use this for different test frameworks. 
+
+> +
+> +  clocks:
+> +    maxItems: 1
 > +
 > +required:
 > +  - compatible
+> +  - clocks
 > +
 > +additionalProperties: false
 > +
 > +examples:
 > +  - |
-> +    kunit-node {
-> +      compatible = "test,kunit-empty";
+> +    clock-consumer {
+> +      compatible = "test,clk-kunit-fixed-rate";
+> +      clocks = <&fixed_clk>;
 > +    };
 > +...
 > -- 
