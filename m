@@ -1,74 +1,150 @@
-Received: from out199-18.us.a.mail.aliyun.com (out199-18.us.a.mail.aliyun.com [47.90.199.18])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2066.outbound.protection.outlook.com [40.107.243.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559998C04
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 11:38:04 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R161e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046051;MF=xhao@linux.alibaba.com;NM=1;PH=DS;RN=14;SR=0;TI=SMTPD_---0VeMvco6_1679398665;
-Received: from 30.240.99.2(mailfrom:xhao@linux.alibaba.com fp:SMTPD_---0VeMvco6_1679398665)
-          by smtp.aliyun-inc.com;
-          Tue, 21 Mar 2023 19:37:46 +0800
-Message-ID: <4102154a-1e49-54d9-b18f-c41da84e643e@linux.alibaba.com>
-Date: Tue, 21 Mar 2023 19:37:45 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069959440
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 11:51:23 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=XYBWZyInl3FwLXDIs0d4xVd7ViI1KXi4DdGVe0lnMpfG8uYq3ChGo47+uYGUdnCNY9ayoBEkW+TiShXEmJXOWVTQHUq1uuhN3I47VioNNv84QnuxbhgvXIZTnLbiYnmI527rx0qWzWu24qg8NnrdHujNYPMKO0DLpYiRxd/dNkZ+GDHN1Fuspzq4DI2mfV39geSPMAI4m+g5IkJxX94kB9cddgQNhiH2awKZ3hA9aK4ZtuiPGbAF8sn0M6dyJmEEr38w9oVUnE8Ynst4x5jnd605NyyygUc+5/QB6lZaf3j2j8zfTjz4TCo+LFE16oEttJ+BnX2Yvf5coxokW46fuA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tg/GB6ZJi6FpSnHgytRJtHBwrZo6Iqod1Y2oHaaQn5g=;
+ b=VQKDGY+kvC33/kF0HVAwLAjtzbbODYGDRzG4/BeprN1AaNIhGL4g+npGTOJYvLo3TgzUtwFtM6kyP8tHpweBJbZ/kHB5NLdy9FgI+sDzg30WuWw+d9bAgEtMKOAQAo5/tCOOMqP+11rkGXXGyrrXO3CnpSiVCl0/cXpKWsyQHiPgvJeJQVMuw/XeOuMyUv/4VFuVSwgYy7ZwW/7xU8dc5z8t6PP8tlc9gTzuvWOlw1IoxR5clxh9356puDhg0GHY/DYk98eQMwoVS21QgyOyRKHBH2ZWpQhrOW25EHB9BLacNnx4hCwpNrZRbCvds7gv6wdpFOv2Q5yil947ze1mMQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tg/GB6ZJi6FpSnHgytRJtHBwrZo6Iqod1Y2oHaaQn5g=;
+ b=SxGMXrg8YSXiVZ6F0mcE82uKuliCZ/MDaVwLOIfrm50idRRvMOEGScK5lfL3ZAJUDdcrrnfkYIsWIh29PZJVt94x7dBJew50asRvOUqAtsIRg/UGz07R2W4KsuWXU9SUh6Khy3Im6PCy6hAxpKV7adie8JlSVg1bu4bWhmY1KX2OEavseb6oiTn13KkjWHPAAxSCtNPijyEVSzOPkBU3h0pormaWRjzdyhkml5t5zegOMyQepoNlnu9HS/QqwUI67WgzuinSnfSZMgwy655CfODIwK9Y+8C/GI80ZcN59LOAUZYibCTbCUMzjFJ7zbUtND8uPurdFglqbyZNzITl8A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
+ PH7PR12MB7164.namprd12.prod.outlook.com (2603:10b6:510:203::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.37; Tue, 21 Mar
+ 2023 11:51:21 +0000
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::5464:997b:389:4b07]) by CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::5464:997b:389:4b07%9]) with mapi id 15.20.6178.037; Tue, 21 Mar 2023
+ 11:51:20 +0000
+Message-ID: <a3b0a8f8-6b00-2489-921d-3485da6f30a0@nvidia.com>
+Date: Tue, 21 Mar 2023 11:51:11 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 4.14 00/30] 4.14.311-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+References: <20230320145420.204894191@linuxfoundation.org>
+From: Jon Hunter <jonathanh@nvidia.com>
+In-Reply-To: <20230320145420.204894191@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0199.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:1a5::6) To CO6PR12MB5444.namprd12.prod.outlook.com
+ (2603:10b6:5:35e::8)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.0
-Subject: Re: [PATCH v2 0/6] tmpfs: add the option to disable swap
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: hughd@google.com, akpm@linux-foundation.org, willy@infradead.org,
- brauner@kernel.org, linux-mm@kvack.org, p.raghav@samsung.com,
- da.gomez@samsung.com, a.manzanares@samsung.com, dave@stgolabs.net,
- yosryahmed@google.com, keescook@chromium.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20230309230545.2930737-1-mcgrof@kernel.org>
- <e1de614b-25e1-5c21-933a-880412ac7421@linux.alibaba.com>
- <ZBdxWsrYfPgBG6NX@bombadil.infradead.org>
- <edb78eea-a9a2-5c62-d203-6f2be39757d2@linux.alibaba.com>
- <ZBjR15Tr1o98crup@bombadil.infradead.org>
-From: haoxin <xhao@linux.alibaba.com>
-In-Reply-To: <ZBjR15Tr1o98crup@bombadil.infradead.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|PH7PR12MB7164:EE_
+X-MS-Office365-Filtering-Correlation-Id: 17d6b1b5-4232-4ec0-44ec-08db2a029667
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	073w+gRqe/5w3l8ypP7ZqZgALxwen1G4oi0qYVHpvjbbNYXeb3/uBpec2fq7i1/gjZ4haSYoAIZu/Y3lZWBqL2HEeGHiiUGwCg72AU4b4qHx5f++a+obnwTy2i7+tJbV9S4J8gPo0ntWqA3Rdr1KIyxFeoX0HNMwZ0iqwoqmMEWmNgZiAtB7GOHyjCukSS8aPXGWLqy4facPpQ6NnQ1lp2auZVuzW1vMroW8ym4qjCSPbajiIGeGZLRupXoECxU77hOgRDPLLh+oRIz6+QQ5bDhgYKpG3ASvqMsDFN49EaflgBLKK///G82jvKSIioBsZ9D4VIOi3Yn30bF9XqFsw4mkW6LH0QQscUaMFwCwhpQeaBlWVK2O0RuNh+KcKSKcufaN0O4N8WQSFMr4Jze5AysiOqfdhddOwwxqLgf9FpWib7Ub0C0+QJQmMYcSPoBMQ1kKv+EmoeUWJF1Jd+/o7EpaPtHsqcg0tocoYQDA79Rm83x0Ks6b+FAf6Q56Ed5QdesA85pqOV/0UGE5e1L4sNnh8ogECMl2bhZow6yilAD5wdvJ/J8LzPCQJWZMc2Oq3tqbRf9XfmRp1LhYbJzZUJculHSyrV6l7O6+yCwme3H+onhY3ko4+bpkl4z/GwlHe+El21XK5Eo7a431ZmFeYqNDltHmGJxLpGG1PDX2L8b29iSd3qPnfmxqT2lRBQeLFDL8TXiO644z5OOWXJ6UDWhDcrjlCUNvTASTK9YmYaXnjzq5pwjSOJOJTBTdYVZcqXf+ZRx/Ta0UdNWi3NyPfw==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(396003)(376002)(346002)(366004)(136003)(39860400002)(451199018)(66556008)(2616005)(6506007)(6512007)(55236004)(6486002)(186003)(26005)(966005)(31686004)(6666004)(8676002)(4326008)(53546011)(66476007)(66946007)(316002)(478600001)(4744005)(7416002)(5660300002)(8936002)(2906002)(41300700001)(38100700002)(31696002)(86362001)(36756003)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?T2kwVTdaZzNCSnhlNWlBeWloM3pLQzQ0Tkg4UTVwRmVNNDdHVkc5aktsMU9O?=
+ =?utf-8?B?Tk0vTHlwWG9DTUJuREJDa2ZjTW4yKzdBM0hKeW0xd2VMYVRscENkOHZWR2s3?=
+ =?utf-8?B?OVg3NWluVTVLUHZGZHRjM0pEbldMY21mcStGY2Y2RWxTY1VTWHhPbjNBVlRk?=
+ =?utf-8?B?VDNYWm9MSCsyYWRiSmM1b0ZCcWFna0ZaQ3pWaUlvTUhibDJaWDBZeEhNSmxq?=
+ =?utf-8?B?WWFxZlhtWkthMFVBbXp1WFlncVpaQ3pRWXp6TERMQ3VRQVhUVkdrRW5VbklX?=
+ =?utf-8?B?c0ZGQW9JVGVqc0NDWVg5OXZtb2xqUmhKSWMwUUZma2NycUhIRW5mWHdwMFJB?=
+ =?utf-8?B?a0R4TEREM0h3RXFzY0Z4cXFtWlVqSmZVNk1sNmZ2RHJIZGZlS0pSTS9WNUdo?=
+ =?utf-8?B?c0ttZVRQVmFrQW1jSytnK3llcEwwTDMxa1laQnN5MGRicGRFMjFXSFgxSUwv?=
+ =?utf-8?B?YXlLNHRaRnRib3JrQ1VjTFR3c1VlSzFJOHhySzRRNTdIMTBFTEswVzRMbjdo?=
+ =?utf-8?B?YlN3UDVWd0treVJkUGNOY1lUM3IwdkZrNTFneUlDSzlIY01JOU5Fc0ZZeVNu?=
+ =?utf-8?B?RVFvSGY1TXMzSmtiUEJZbXdpWVI4cUtlNVloTGNhcmwyUHUwYmVVVWx1RVhM?=
+ =?utf-8?B?am5QTlJlb0R0TGh0RFVtUVAxeGhJYjdkeERoYUNDU1pYTmxYQ0tCbmlSbWhE?=
+ =?utf-8?B?S1lGekFoWDFFYkkzNWVidmNNMGNISUUyM0NDZzc4d0dsTjlaM0xPYnVhTjBP?=
+ =?utf-8?B?MTJmRWhHOVFBRHRRd2tzSXk5d05rVHYyTlVnMW02Mk5ma1A4SVZBQ2lDNkgv?=
+ =?utf-8?B?RldmeVgrVFZvTlN4NklMK0xVbHZ2RzJXcVZTNVh3aWZCL05QaWxmSjJ6aWQy?=
+ =?utf-8?B?UkZaQlpCZWxTZ3Qvc2dmVnFQYTR3V2FqSnZEa3VoMDhjZlZRZVNTZmpFTGRC?=
+ =?utf-8?B?bnVKUGd1WWM5TjNkTEZoQTlZai84dkJ3cGJyZ1ZSNG5mWHNseW9MWlg1ZS9N?=
+ =?utf-8?B?V3kvNXk5d2xGZmdBblVJc2pnTjRWd0Y2TmdkSU1IdDE4S0Ryc1JhdnhFaW5V?=
+ =?utf-8?B?MkdsK3NXNWFYUlkzODgzckVJaldmeGdtWnp2SkVQOS9zemkwWFY2M2oyQ1BN?=
+ =?utf-8?B?SWZRb0Y4SURpRmhXSml0N0QvSjl0dUtuTXM0M1oxTWJCYWI0RVVjSEJtZmcz?=
+ =?utf-8?B?RXZWcGhFSVJrS2ZPRVZJN21LR2JDSFU3alhQR0JGOTZDVkYvazd6UDVIYVBB?=
+ =?utf-8?B?dXR0RkdNem1pNGU1WEVMZmF2NFAxTzBrVVg5aUhjdjR2M1dmT21ZUktyb1dp?=
+ =?utf-8?B?WmY5eURIS0NkZmpwWkExN2g4TzZwMm84aVNPc3JzMmhCYmpFMUFDT01GQzRm?=
+ =?utf-8?B?V3g3RjBjTG9HVTRLaHY4d09MdzFEbStLY09vUFk2MlpFeGJJeGhQYUtkcU5O?=
+ =?utf-8?B?d00vckhNVHdpRTg1TEd3ZkllSkJBbnVkU29vQkRlZHA2UU80K25nZ2ZtdjRF?=
+ =?utf-8?B?N2JBMkQ3dGRwZjFOMU9taHNlY3haR1BFdHpTRnlENXFDVTNGaEw5RXhnY2Rr?=
+ =?utf-8?B?cEpVQUJWMlpwcmdoRGRIVlAxbGdWR0ljV1ZleHJMVTlLZmdWTCtUSm9sTzJx?=
+ =?utf-8?B?YStTelJOeGczMVpTbkk2ejViOEN2MFRjWEkxbWU1RVpOanlINHJBYWlhL3gw?=
+ =?utf-8?B?MGhnSzZFZDhBOVFDR2VVNDVxWEVnV0EycnpON1Z4QVpPNGhHSjYzYWJHdnpI?=
+ =?utf-8?B?Yk5WZmYrbnAvRzczSTc2SWN2U1pQOUJhS3VCNEtYU1pFNnFDdzRtRU03ai9M?=
+ =?utf-8?B?V1l5T1RDc2tPNXZScjVBUFhJT3hkeHhWd3RVbndnZUs0ekVQa2hKeGxKazBN?=
+ =?utf-8?B?YW5ndGtmVE1KdXVmK1gvanZYRWJwKzdreEZJWU5ZMmlSTjdjUTQ0ekpTNDRu?=
+ =?utf-8?B?RjdjdU51U0NDZmQyQVRrSlBJZm9xQ2NlLzdQZnpzMnBGYzl3eUEvUnU1RjZV?=
+ =?utf-8?B?Sk5ITC9NNXU3MGZiQ3ovSjVtdCtwZWRrMENXcU0wTTFKS2g2aXNyS0xXcXQr?=
+ =?utf-8?B?RmhzTjBlUjlYQ3dWTW9nM2FsWDBzWWpZRUVxbjhkR2dxanJyUjNPZnBWdy8r?=
+ =?utf-8?B?NkZxa3p2dFBlTUM3c0NHK29hdFQyeFlSYnZDY3ZQdFg1WVo5bXRNRUYvbzlO?=
+ =?utf-8?B?N1E9PQ==?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 17d6b1b5-4232-4ec0-44ec-08db2a029667
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2023 11:51:20.7375
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: bmMrULvWqnCjr3qp+pJtBh4EteuYa4mqgyjgoNQ6EkYlXHgHW1HMY3kZaN1XJDTxlilBxx1nXVFAIo0cE0GpIA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7164
 
 
-在 2023/3/21 上午5:36, Luis Chamberlain 写道:
-> On Mon, Mar 20, 2023 at 07:14:22PM +0800, haoxin wrote:
->> 在 2023/3/20 上午4:32, Luis Chamberlain 写道:
->>> On Tue, Mar 14, 2023 at 10:46:28AM +0800, haoxin wrote:
->>>> All these series looks good to me and i do some test on my virtual machine
->>>> it works well.
->>>>
->>>> so please add Tested-by: Xin Hao<xhao@linux.alibaba.com>  .
->>>>
->>>> just one question, if tmpfs pagecache occupies a large amount of memory, how
->>>> can we ensure successful memory reclamation in case of memory shortage?
->>> If you're disabling swap then you know the only thing you can do is
->>> unmount if you want to help the VM, otherwise the pressure is just
->>> greater for the VM.
->> Un, what i mean is can we add a priority so that this type of pagecache is
->> reclaimed last ?
-> That seems to be a classifier request for something much less aggressive
-> than mapping_set_unevictable(). My patches *prior* to using mapping_set_unevictable()
-> are I think closer to what it seems you want, but as noted before by
-> folks, that also puts unecessary stress on the VM because just fail
-> reclaim on our writepage().
->
->> Instead of just setting the parameter noswap to make it unreclaimed, because
->> if such pagecache which occupy big part of memory which can not be
->> reclaimed, it will cause OOM.
-> You can't simultaneously retain possession of a cake and eat it, too,
-> once you eat it, its gone and noswap eats the cake because of the
-> suggestion / decision to follow through with mapping_set_unevictable().
->
-> It sounds like you want to make mapping_set_unevictable() optional and
-> deal with the possible stress incurred writepage() failing?
-Yes, Just a personal idea, in any way, the current patch is an excellent 
-implementation,  thank you very much.
->   Not quite
-> sure what else to recommend here.
->
->    Luis
+On 20/03/2023 14:54, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.311 release.
+> There are 30 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 22 Mar 2023 14:54:08 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.311-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+All tests passing for Tegra.
+
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+We are having infrastructure issues and so I can't pull the test report 
+at the moment, but I can see the tests are passing.
+
+Jon
+
+-- 
+nvpublic
