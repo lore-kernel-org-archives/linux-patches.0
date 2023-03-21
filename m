@@ -1,90 +1,230 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F37D516
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 19:20:39 +0000 (UTC)
-Received: by mail-qt1-f171.google.com with SMTP id fg19so2655813qtb.6
-        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 12:20:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679426438;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4A1X8DSIXCYAuOVZx3RnCB5u8at26anAgkpP7Mq9w28=;
-        b=fsdsLU8DCXjJVvgFV85Ke4ZB7uwjYESWn4NK2Grj772hkmFIsvvJpZxP29vNUanffA
-         pSYuR62rztsntYmQdyJQIZ+5a5bxZA+Cc9wZT+ioPlslSZcx5RjakzHxiLAisIL6YJVW
-         vPQw+H2cYMK203jM5zenY2eeKbYNlA5AbTtet2vVjDWTUBQEJFDej/SeOSxjeq7b+9yr
-         d078vyjbtTbK3tCOBk0m0AgFsh4pFmskHtGNC8mKJdsOMvd4ZEY/G6dsT1oXCMt7F/1I
-         jdvUL/sl42crEAOY7wpWRySDvRvNQBWEUxNQzmuppqxoE+JClRMt4ck3YChHrqpoU42Z
-         E/Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679426438;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4A1X8DSIXCYAuOVZx3RnCB5u8at26anAgkpP7Mq9w28=;
-        b=YbV0qQUq22S8qcc11lyz7Ho4QDaNAOLNAECqSIiRUDkKLlli4qz0Zck8vd4d2z309j
-         XyflV7uCJK3E1cKW8r//pvjKltsP+3IYrvbwL5bzYTinw0Z61H24rWNSJxT00ZrvUZ9e
-         dwl03VJSifHq8RwB+Z+sBBCHx9F9jmYcDFT6FYwlyYpx4tewgM4StT2msXiQADJ6lCcp
-         wffnALULWFivBjYaIbgNS01thjcuQLrAifCCFZqeQf1DoumDfkE/jcP6d/q39SaJgQGO
-         9ob5pASpwleJtMaj8eikKgw5GrR9QMxHO66CuuZWKGG5nOq7kLQ/u0p3JdCR7M7UG9gr
-         WIMg==
-X-Gm-Message-State: AO0yUKVJCI+8EBcF2UjVA8wd0ceCXnC5Bxuq+jxleQDxF6LJB+1SNN0+
-	XkWJfjOs0chxY8MINgEIIM0=
-X-Google-Smtp-Source: AK7set8loF1+hW+VViWeDj7w2xu00cQHiNQqltuCYAYPi2E5wn965efpgQpenrkn6vyIk508/ACg/A==
-X-Received: by 2002:ac8:7f10:0:b0:3ba:18c2:99e7 with SMTP id f16-20020ac87f10000000b003ba18c299e7mr1726278qtk.45.1679426438541;
-        Tue, 21 Mar 2023 12:20:38 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id o16-20020ac86990000000b003bf9f9f1844sm8701774qtq.71.2023.03.21.12.20.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 12:20:37 -0700 (PDT)
-Message-ID: <8f95d89f-ce6d-5067-bcdd-158fffb8f0ab@gmail.com>
-Date: Tue, 21 Mar 2023 12:20:30 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06050D516
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 19:50:06 +0000 (UTC)
+Date: Tue, 21 Mar 2023 19:49:50 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1679428196; x=1679687396;
+	bh=G5OcfJ1sRCppIjvccB3dNK4jRstnIpG0oGXnr2BMLSs=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=bHvk1Ac6pHL1Afyx6ou/eLGrvVaRYvERQsJeRAoexo24UmVJqgmqvvdOXPZPrFOrd
+	 GCM0mZBrWS+WbSjx1EK1rf5EAyhWxLCGo02NsFUgf48HdZiEiW3Od+d/oFo7P1zE68
+	 WJoztjM+mAl51Ou63bBjHuh1I+ButYNT2pYoG4KcwNukLo4C77VifWr+yL3GRezN7J
+	 8QkOauGfoSnv/Zr+cl/ybjMTuCgb4ZJJ4O+aT7tbgHzIvCW8ccBeQxcDSnyZCnrYrs
+	 iQp6vcWcaY3sAoWsGC1GeM/nhVseJKJ1YVO8yZBY30bq9U/bnSUtc2t3ohM22CMlkE
+	 T2VnyFRGIC77Q==
+To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+From: Benno Lossin <y86-dev@protonmail.com>
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: [PATCH v2 1/5] rust: macros: add `quote!` macro
+Message-ID: <20230321194934.908891-2-y86-dev@protonmail.com>
+In-Reply-To: <20230321194934.908891-1-y86-dev@protonmail.com>
+References: <20230321194934.908891-1-y86-dev@protonmail.com>
+Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 6.2 000/214] 6.2.8-rc3 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230321180749.921141176@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230321180749.921141176@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 3/21/23 11:08, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.8 release.
-> There are 214 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 23 Mar 2023 18:07:09 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.8-rc3.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+From: Gary Guo <gary@garyguo.net>
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Add the `quote!` macro for creating `TokenStream`s directly via the
+given Rust tokens. It also supports repetitions using iterators.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+It will be used by the pin-init API proc-macros to generate code.
+
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+---
+ rust/macros/lib.rs   |   2 +
+ rust/macros/quote.rs | 143 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 145 insertions(+)
+ create mode 100644 rust/macros/quote.rs
+
+diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+index c1d385e345b9..82b520f024dd 100644
+--- a/rust/macros/lib.rs
++++ b/rust/macros/lib.rs
+@@ -2,6 +2,8 @@
+
+ //! Crate for all kernel procedural macros.
+
++#[macro_use]
++mod quote;
+ mod concat_idents;
+ mod helpers;
+ mod module;
+diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
+new file mode 100644
+index 000000000000..00fc75fecd03
+--- /dev/null
++++ b/rust/macros/quote.rs
+@@ -0,0 +1,143 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
++use proc_macro::{TokenStream, TokenTree};
++
++pub(crate) trait ToTokens {
++    fn to_tokens(&self, tokens: &mut TokenStream);
++}
++
++impl<T: ToTokens> ToTokens for Option<T> {
++    fn to_tokens(&self, tokens: &mut TokenStream) {
++        if let Some(v) =3D self {
++            v.to_tokens(tokens);
++        }
++    }
++}
++
++impl ToTokens for proc_macro::Group {
++    fn to_tokens(&self, tokens: &mut TokenStream) {
++        tokens.extend([TokenTree::from(self.clone())]);
++    }
++}
++
++impl ToTokens for TokenTree {
++    fn to_tokens(&self, tokens: &mut TokenStream) {
++        tokens.extend([self.clone()]);
++    }
++}
++
++impl ToTokens for TokenStream {
++    fn to_tokens(&self, tokens: &mut TokenStream) {
++        tokens.extend(self.clone());
++    }
++}
++
++/// Converts tokens into [`proc_macro::TokenStream`] and performs variable=
+ interpolations with
++/// the given span.
++///
++/// This is a similar to the
++/// [`quote_spanned!`](https://docs.rs/quote/latest/quote/macro.quote_span=
+ned.html) macro from the
++/// `quote` crate but provides only just enough functionality needed by th=
+e current `macros` crate.
++macro_rules! quote_spanned {
++    ($span:expr =3D> $($tt:tt)*) =3D> {
++    #[allow(clippy::vec_init_then_push)]
++    {
++        let mut tokens =3D Vec::new();
++        let span =3D $span;
++        quote_spanned!(@proc tokens span $($tt)*);
++        proc_macro::TokenStream::from_iter(tokens)
++    }};
++    (@proc $v:ident $span:ident) =3D> {};
++    (@proc $v:ident $span:ident #$id:ident $($tt:tt)*) =3D> {
++        let mut ts =3D proc_macro::TokenStream::new();
++        crate::quote::ToTokens::to_tokens(&$id, &mut ts);
++        $v.extend(ts.into_iter());
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++    (@proc $v:ident $span:ident #(#$id:ident)* $($tt:tt)*) =3D> {
++        for token in $id {
++            let mut ts =3D proc_macro::TokenStream::new();
++            crate::quote::ToTokens::to_tokens(&token, &mut ts);
++            $v.extend(ts.into_iter());
++        }
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++    (@proc $v:ident $span:ident ( $($inner:tt)* ) $($tt:tt)*) =3D> {
++        let mut tokens =3D Vec::new();
++        quote_spanned!(@proc tokens $span $($inner)*);
++        $v.push(proc_macro::TokenTree::Group(proc_macro::Group::new(
++            proc_macro::Delimiter::Parenthesis,
++            proc_macro::TokenStream::from_iter(tokens)
++        )));
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++    (@proc $v:ident $span:ident [ $($inner:tt)* ] $($tt:tt)*) =3D> {
++        let mut tokens =3D Vec::new();
++        quote_spanned!(@proc tokens $span $($inner)*);
++        $v.push(proc_macro::TokenTree::Group(proc_macro::Group::new(
++            proc_macro::Delimiter::Bracket,
++            proc_macro::TokenStream::from_iter(tokens)
++        )));
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++    (@proc $v:ident $span:ident { $($inner:tt)* } $($tt:tt)*) =3D> {
++        let mut tokens =3D Vec::new();
++        quote_spanned!(@proc tokens $span $($inner)*);
++        $v.push(proc_macro::TokenTree::Group(proc_macro::Group::new(
++            proc_macro::Delimiter::Brace,
++            proc_macro::TokenStream::from_iter(tokens)
++        )));
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++    (@proc $v:ident $span:ident :: $($tt:tt)*) =3D> {
++        $v.push(
++            proc_macro::TokenTree::Punct(proc_macro::Punct::new(':', proc_=
+macro::Spacing::Joint))
++        );
++        $v.push(
++            proc_macro::TokenTree::Punct(proc_macro::Punct::new(':', proc_=
+macro::Spacing::Alone))
++        );
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++    (@proc $v:ident $span:ident : $($tt:tt)*) =3D> {
++        $v.push(
++            proc_macro::TokenTree::Punct(proc_macro::Punct::new(':', proc_=
+macro::Spacing::Alone))
++        );
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++    (@proc $v:ident $span:ident , $($tt:tt)*) =3D> {
++        $v.push(
++            proc_macro::TokenTree::Punct(proc_macro::Punct::new(',', proc_=
+macro::Spacing::Alone))
++        );
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++    (@proc $v:ident $span:ident @ $($tt:tt)*) =3D> {
++        $v.push(
++            proc_macro::TokenTree::Punct(proc_macro::Punct::new('@', proc_=
+macro::Spacing::Alone))
++        );
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++    (@proc $v:ident $span:ident ! $($tt:tt)*) =3D> {
++        $v.push(
++            proc_macro::TokenTree::Punct(proc_macro::Punct::new('!', proc_=
+macro::Spacing::Alone))
++        );
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++    (@proc $v:ident $span:ident $id:ident $($tt:tt)*) =3D> {
++        $v.push(proc_macro::TokenTree::Ident(proc_macro::Ident::new(string=
+ify!($id), $span)));
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
++}
++
++/// Converts tokens into [`proc_macro::TokenStream`] and performs variable=
+ interpolations with
++/// mixed site span ([`Span::mixed_site()`]).
++///
++/// This is a similar to the [`quote!`](https://docs.rs/quote/latest/quote=
+/macro.quote.html) macro
++/// from the `quote` crate but provides only just enough functionality nee=
+ded by the current
++/// `macros` crate.
++///
++/// [`Span::mixed_site()`]: https://doc.rust-lang.org/proc_macro/struct.Sp=
+an.html#method.mixed_site
++macro_rules! quote {
++    ($($tt:tt)*) =3D> {
++        quote_spanned!(proc_macro::Span::mixed_site() =3D> $($tt)*)
++    }
++}
+--
+2.39.2
+
 
