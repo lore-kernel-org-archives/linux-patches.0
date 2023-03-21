@@ -1,104 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51671FB8
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 07:41:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0979C433D2;
-	Tue, 21 Mar 2023 07:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A2F1FB8
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 07:43:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F95C433EF;
+	Tue, 21 Mar 2023 07:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679384516;
-	bh=S3VRznWfLjiX2cURb1ka41cuQW6iu8yamzLmbX5Ffvw=;
+	s=korg; t=1679384626;
+	bh=+o5mi4UIlI7dJ8Bt06aDjLVpQCulxpfSxXJkInsWqL4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LbDVat/iaY44uLuqSki39bNGeFM+OX/Kz89uIko3CginJZv3xTvEcuJZmPPaOPsrt
-	 4oWvU6aZ/Aj55B1IVxrqE2dmAETcK5NCBCOL333o6AETUxfzRnPmmo+4P6bCdfAAcX
-	 /wNxDUU6AQhcQxI5tJLUv1Q2DAEqm46cV31msGh8=
-Date: Tue, 21 Mar 2023 08:41:53 +0100
+	b=2I7dfgQJYCuIzpdv7aOusjOkwd9MBtNn33RAdKt+dIEwNChIwdKiDMJtaNPgLKNGs
+	 AZUPM4Jhf2laVPALd5l6dW2/7fFMO0g6oFElG7aSrLpm+ovOsd5xoPFQjGtHgeU0zZ
+	 3vdl+CA20awLquhewaWZ2+7VOjoUcvfrobeaO3xw=
+Date: Tue, 21 Mar 2023 08:43:44 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Tom Saeger <tom.saeger@oracle.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Kees Cook <keescook@chromium.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.4 084/357] treewide: Replace DECLARE_TASKLET() with
- DECLARE_TASKLET_OLD()
-Message-ID: <ZBlfwfpCPVy4lHE9@kroah.com>
-References: <20230310133733.973883071@linuxfoundation.org>
- <20230310133737.692796889@linuxfoundation.org>
- <20230317182806.owvwdor6qpzp6tve@oracle.com>
- <ZBhek48t2C6QBUrp@kroah.com>
- <20230320164800.mtiol2cbrtr4jfsy@oracle.com>
+To: David Gow <davidgow@google.com>
+Cc: Pavel Machek <pavel@denx.de>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 00/99] 5.10.176-rc1 review
+Message-ID: <ZBlgMNnD2BR1Yvac@kroah.com>
+References: <20230320145443.333824603@linuxfoundation.org>
+ <ZBi2y4cQRKnTAAFS@duo.ucw.cz>
+ <CABVgOSnfMXd4Q=GXvq8Ma26wpaM6E=LOYLxXn83YQEV-Yn2sBg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230320164800.mtiol2cbrtr4jfsy@oracle.com>
+In-Reply-To: <CABVgOSnfMXd4Q=GXvq8Ma26wpaM6E=LOYLxXn83YQEV-Yn2sBg@mail.gmail.com>
 
-On Mon, Mar 20, 2023 at 11:48:00AM -0500, Tom Saeger wrote:
-> On Mon, Mar 20, 2023 at 02:24:35PM +0100, Greg Kroah-Hartman wrote:
-> > On Fri, Mar 17, 2023 at 12:28:06PM -0600, Tom Saeger wrote:
-> > > On Fri, Mar 10, 2023 at 02:36:13PM +0100, Greg Kroah-Hartman wrote:
-> > > > From: Kees Cook <keescook@chromium.org>
-> > > > 
-> > > > [ Upstream commit b13fecb1c3a603c4b8e99b306fecf4f668c11b32 ]
-> > > > 
-> > > > This converts all the existing DECLARE_TASKLET() (and ...DISABLED)
-> > > > macros with DECLARE_TASKLET_OLD() in preparation for refactoring the
-> > > > tasklet callback type. All existing DECLARE_TASKLET() users had a "0"
-> > > > data argument, it has been removed here as well.
-> > > > 
-> > > > Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > > Acked-by: Thomas Gleixner <tglx@linutronix.de>
-> > > > Signed-off-by: Kees Cook <keescook@chromium.org>
-> > > > Stable-dep-of: 1fdeb8b9f29d ("wifi: iwl3945: Add missing check for create_singlethread_workqueue")
-> > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > > ---
-> > > 
-> > > I noticed kernelci.org bot (5.4) reports:
-> > > 
-> > >     Build Failures Detected:
-> > > 
-> > >     mips:
-> > >         ip27_defconfig: (gcc-10) FAIL
-> > >         ip28_defconfig: (gcc-10) FAIL
-> > >         lasat_defconfig: (gcc-10) FAIL
-> > > 
-> > >     Errors summary:
-> > > 
-> > >     1    arch/mips/lasat/picvue_proc.c:87:20: error: ‘pvc_display_tasklet’ undeclared (first use in this function)
-> > >     1    arch/mips/lasat/picvue_proc.c:42:44: error: expected ‘)’ before ‘&’ token
-> > >     1    arch/mips/lasat/picvue_proc.c:33:13: error: ‘pvc_display’ defined but not used [-Werror=unused-function]
-> > > 
-> > > Link: https://lore.kernel.org/stable/64041dda.170a0220.8cc25.79c9@mx.google.com/
-> > > 
-> > > Here's what I found...
-> > > this backport to 5.4.y of:
-> > > b13fecb1c3a6 ("treewide: Replace DECLARE_TASKLET() with DECLARE_TASKLET_OLD()")
-> > > changed all locations of DECLARE_TASKLET with DECLARE_TASKLET_OLD,
-> > > except one, in arch/mips/lasat/pcivue_proc.c.
-> > > 
-> > > This is due to:
-> > > 10760dde9be3 ("MIPS: Remove support for LASAT") preceeding
-> > > b13fecb1c3a6 ("treewide: Replace DECLARE_TASKLET() with DECLARE_TASKLET_OLD()")
-> > > upstream and the former not being present in 5.4.y.
-> > > 
-> > > I rolled a revert/re-apply with fixes in the attached mbox,
-> > > however maybe just a revert makes more sense?  Up to you.
-> > > 
-> > > I have yet to try building this on mips, just did this by inspection.
-> > 
-> > I've taken your patches, let's see how that works...
-> > 
+On Tue, Mar 21, 2023 at 12:02:30PM +0800, David Gow wrote:
+> On Tue, 21 Mar 2023 at 03:41, Pavel Machek <pavel@denx.de> wrote:
+> >
+> > Hi!
+> >
+> > > This is the start of the stable review cycle for the 5.10.176 release.
+> > > There are 99 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> >
+> > > David Gow <davidgow@google.com>
+> > >     rust: arch/um: Disable FP/SIMD instruction to match x86
+> >
+> > Why is this patch here? It does not make sense for stable, it was only
+> > in AUTOSEL for less than a week, and I already explained why it is
+> > bad.
+> >
+> > "git grep KBUILD_RUSTFLAGS" if in doubt.
 > 
-> Ugh, It didn't go well.  I now see a problem.  The change to DECLARE_TASKLET_OLD also
-> removed the last parameter.  I missed that.  I'll spin-up a mips build.
+> I agree: let's exclude this patch from -stable.
+> 
+> While the CFLAGS part of it is still _technically_ valid without Rust,
+> it turns out it triggers a bug in gcc <11, so is probably best
+> avoided. See:
+> - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99652
+> - https://lore.kernel.org/linux-um/20230318041555.4192172-1-davidgow@google.com/
 
-Ick, ok, let me go drop both of these patches from the tree and we can
-try again the next round of releases...
-
-thanks,
+Thanks, I've now dropped this from kernels 5.15 and older.
 
 greg k-h
