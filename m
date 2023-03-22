@@ -1,55 +1,78 @@
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4698F4A
-	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 16:19:04 +0000 (UTC)
-Date: Wed, 22 Mar 2023 16:18:47 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1679501942; x=1679761142;
-	bh=5ALAy5pala/Uch3PDmDpaH5urLbdFuosVmerjiirmy4=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=FcblW/U6YDpSVX88KRGptcsTah8DZLGUshKfFv4z/KKtKVfaQW6aKiAfGdkD4DoDU
-	 bHKMeNW5mrNgC15uJuuT3jWxDx62jemwO+5dpLMi+119jFMkmw+CkRlxRj86bTHykv
-	 BuKVpvE7bqgA6L8L31gPB0zQlhOm4p9wMEq8XahVGKTv3ycg8ItoOHl6s3Gk6m7REO
-	 pofN8WNJwETtJMO6Cp0BYYHs9tb74E/cVp+7sHpsbbXKKOTF/rT6qTP1YRl6xwmHMg
-	 N5WQ8bEP+xukdqbN8nzl7U6godJQd8uR+RlfQrJkRhAAUKMvEOZHFou6xGk6Ye8AUt
-	 MkcgMtkWhbMmA==
-To: Boqun Feng <boqun.feng@gmail.com>, Benno Lossin <y86-dev@protonmail.com>
-From: Benno Lossin <y86-dev@protonmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v2 4/5] rust: init: add common init-helper functions for `Opaque`
-Message-ID: <7f2af153-0537-ab64-81c3-a15714d8afd7@proton.me>
-In-Reply-To: <ZBoONi8oMO4X7DWy@boqun-archlinux>
-References: <20230321194934.908891-1-y86-dev@protonmail.com> <20230321194934.908891-5-y86-dev@protonmail.com> <ZBoONi8oMO4X7DWy@boqun-archlinux>
-Feedback-ID: 40624463:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0138F58
+	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 18:04:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=pneM1iKBldwm07CiyE2tReaQ4kBY/JdcBsq7MfQvOl0=; b=dfhdcJmmA9LPV0Q6VSEifeeuBi
+	3sIu352OsPIwgGuf4hkJ6WqcaRnTDtxGNMr6RiT520TD3OvsNbSknwDkdxufBa31SUmbY1bNKPvbn
+	mNIv4vzGKw/KjJe/FxrAu4MHtYxviDbL0MdvMH9mtk8yzRkGPXUFq7ipnr78DoivZfylCmBpQFM1F
+	czoADtwM3JV/0v4Zf74uSDKnC7/qJ5sI+H6QmbMAe7GcOYLiZ2juJYE9F45FVU3Yw6dG3m0Fzh/lh
+	pHTqn/Ds6EnqglkcZi08kehpIWEz4kX7XSIupFLZo7yK88BFsbjOYXj6lURNY55CtS/qJ6J5BI3TQ
+	CkX3kY8Q==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1pf2pW-00Gx8K-0g;
+	Wed, 22 Mar 2023 18:04:58 +0000
+Date: Wed, 22 Mar 2023 11:04:58 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: colin.i.king@gmail.com, patches@lists.linux.dev,
+	linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
+	pmladek@suse.com, david@redhat.com, petr.pavlu@suse.com,
+	prarit@redhat.com
+Cc: christophe.leroy@csgroup.eu, song@kernel.org, dave@stgolabs.net,
+	a.manzanares@samsung.com, fan.ni@samsung.com,
+	vincent.fu@samsung.com
+Subject: Re: [PATCH v3] stress-module: stress finit_module() and
+ delete_module()
+Message-ID: <ZBtDSh6f+rWqFLtC@bombadil.infradead.org>
+References: <20230322032350.3439056-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230322032350.3439056-1-mcgrof@kernel.org>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On 21.03.23 21:06, Boqun Feng wrote:
-> I wonder whether it's better to make these as methods of Opaque<T>, i.e.
->
-> =09impl<T> Opaque<T> {
-> =09    pub unsafe fn ffi_init(...) -> impl PinInit<Self> {
-> =09    =09...
-> =09    }
-> =09    ...
-> =09}
->
-> then it's a little more obvious to users that these methods are for
-> Opaque type pin init.
->
-> Thoughts?
+On Tue, Mar 21, 2023 at 08:23:50PM -0700, Luis Chamberlain wrote:
+> Example uses:
+> 
+> sudo ./stress-ng --module 1 --module-name xfs
+> sudo ./stress-ng --module 1 --module-name xfs --module-sharedfd
 
-That would work, will add it to v3.
+The use case with --module 8192 was causing some errors from
+stress-ng having unexpected bail out messages before ramp up.
 
-Cheers,
-Benno
+> diff --git a/stress-module.c b/stress-module.c
+> new file mode 100644
+> index 00000000..cee581bd
+> --- /dev/null
+> +++ b/stress-module.c
+> +			//snprintf(module_path, strlen(module_path), "%s/%s/%s",
+> +			snprintf(module_path, PATH_MAX*2, "%s/%s/%s",
+> +				 dirname_default_prefix,
+> +				 u.release, module);
+> +			ret = 0;
 
+I forgot to remove this stray comment.
+
+> +	/*
+> +	 * We're not stressing the modules.dep --> module path lookup,
+> +	 * just the finit_module() calls and so only do the lookup once.
+> +	 */
+> +	if (args->instance != 0) {
+> +		if (!module_path_found)
+> +			return EXIT_SUCCESS;
+> +	}
+
+So here was the reason for the complaints, Although changing this to
+return just EXIT_NO_RESOURCE cures the warning, I don't think the
+non instance 0 workers are doing anything then. Is that right Collin?
+
+  Luis
