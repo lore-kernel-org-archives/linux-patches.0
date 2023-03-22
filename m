@@ -1,81 +1,142 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281C41078E
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 23:15:01 +0000 (UTC)
-Received: by mail-io1-f51.google.com with SMTP id bl9so1253791iob.8
-        for <patches@lists.linux.dev>; Tue, 21 Mar 2023 16:15:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679440501;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KUohlEdy7/4ZYtxVhTsecipCyP9fVzhQ1K4SYmUTUGI=;
-        b=KQ2BSDcxxAz4bTSPz9F0nUlTXdflKOgugaCfNNP9RhwGDUYn/q6dmS5DA3cdGKIcBB
-         OdnOUgBWmbMugaR/aIOMMkTI7Xosax/DFzvwQ7pIU6E2m/ZsoxdlwhVCCpBbbnp/bEXA
-         SstTq7ZL1Ou019liaHx9R3lhBt4INv/S0algm2/CiCGdZFcBOx4w/2rTgCKFpp1DFTwE
-         MLc9zeLlSBWy/L1qg52W3N2+BWtxHrPP22XDWRRubppWwgdi4CNQaamKOWQLWOJr6BQ1
-         ukf21nS1hkeZ6tCGkd5vfMw22szxBWKv6wVxUB64SDiwXCDPZ/cD16SoPFRPt4tOr+Pc
-         BO6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679440501;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KUohlEdy7/4ZYtxVhTsecipCyP9fVzhQ1K4SYmUTUGI=;
-        b=uLzcI3jm3yq8vMjYrFIVLb1BtgDaHYqVr3kXJBq/sxEP2k2gt5gyQXiHQgYkAb0QDe
-         tfhAlelLLZi6k7P/+0rW3J3tgWNXXY0ZTUYfiDJbiV8ApfZnJZZcXYkbx1SALFEkmg1X
-         g8DjyU7kSkISRTNbnPwIIxFDgyLIb9aRkZRIDdnX9BRZrX8nQB4V0pqIhmrjJfY2RWSf
-         RlL7+F0/syE7wyvlP9JOenbTZC8V7AqXtCsTBuO7moLbcvwRPiw8p2UTuiSza4WqvjYE
-         7SeNAQNPJM+Zk7aG+9MZWidQpYsJqgE2ySlLCHN2E+GmNBRMI0msbrQr+hwXSBxsDauK
-         KYHQ==
-X-Gm-Message-State: AO0yUKXlT4yHCkBDul1YhhTasYmRlSU7pEYc64ST1KMpOr9o99whfDhk
-	/mAvXjT0wB52qYj5veRclnM=
-X-Google-Smtp-Source: AK7set/acvO1NK8C51l/vLQVh58CKec92FoYICHGOu4gQqGJ4NvnJb/OEnmSI1rFCpwh2ggG5l6vHA==
-X-Received: by 2002:a6b:fc19:0:b0:74c:8c3c:b71 with SMTP id r25-20020a6bfc19000000b0074c8c3c0b71mr3052736ioh.12.1679440501055;
-        Tue, 21 Mar 2023 16:15:01 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id f102-20020a0284ef000000b0040631e8bf89sm4505352jai.38.2023.03.21.16.15.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 16:15:00 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Tue, 21 Mar 2023 16:14:59 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.15 000/115] 5.15.104-rc1 review
-Message-ID: <c6162d13-68a1-492c-89b9-a12fd34b81d6@roeck-us.net>
-References: <20230320145449.336983711@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6106AEBE
+	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 00:38:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679445482; x=1710981482;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=ZxB32O6Iv7U5Jbftu+YxAK0tBw87zvrNYtcPargQ4lY=;
+  b=aAS4uWqrj5ZmyQF+DxuvebDmCk/Y/8i4xrTqfXmx4o7mdN8v3CTPbfX8
+   Gt4kHX9JSqxZcKyaqbCKrplv+wLnlXv8mQ1RFXw8NxxJKPa8GOjZeIsXN
+   H8o+w6DObsAUWKLBZuNQrIw13vIY0hjVk4U9Wh2p7fopsTXjdfV0d0OK3
+   sXxWShk6hAckkadN3CrTPoE3ccIBtHK3xoWhRjf0L1bmxuTHRwdXBfyXM
+   t+gBVe57U3UGprDtyx4tk+FU9RRDlBT8i8H2ntsPpvyGUajj8zZqUjMxk
+   +7Xzdow2QXnabyc8HfWl4iV/8qYgy1GYkM9+lPW/TVWZbC2JdPy9I1mav
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10656"; a="322934877"
+X-IronPort-AV: E=Sophos;i="5.98,280,1673942400"; 
+   d="scan'208";a="322934877"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2023 17:38:01 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10656"; a="675076024"
+X-IronPort-AV: E=Sophos;i="5.98,280,1673942400"; 
+   d="scan'208";a="675076024"
+Received: from jithujos.sc.intel.com ([172.25.103.66])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2023 17:38:00 -0700
+From: Jithu Joseph <jithu.joseph@intel.com>
+To: hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	hpa@zytor.com,
+	gregkh@linuxfoundation.org,
+	rostedt@goodmis.org,
+	jithu.joseph@intel.com,
+	ashok.raj@intel.com,
+	tony.luck@intel.com,
+	linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev,
+	ravi.v.shankar@intel.com,
+	thiago.macieira@intel.com,
+	athenas.jimenez.gonzalez@intel.com,
+	sohil.mehta@intel.com
+Subject: [PATCH v4 0/9] Add Array BIST test support to IFS
+Date: Tue, 21 Mar 2023 17:33:50 -0700
+Message-Id: <20230322003359.213046-1-jithu.joseph@intel.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230301015942.462799-1-jithu.joseph@intel.com>
+References: <20230301015942.462799-1-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 20, 2023 at 03:53:32PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.104 release.
-> There are 115 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 22 Mar 2023 14:54:26 +0000.
-> Anything received after that time might be too late.
-> 
+Changes in v4
+ - Hans de Goede
+     - Separate patch 1/9 (Separate ifs_pkg_auth) from reorganize
+        driver data patch
+     - Rework patch 2/9 (Reorganize driver data) to define const
+       ifs_test_caps struct and associate its pointer to miscdevice
+       and to remove dynamic allocation for ifs_data as was done in v3
+     - Move load check from run_test_store to do_core_test()
+     - Expand ABI doc to qualify which devices support which attribrutes
+       and the device instance to test mapping
 
-Build results:
-total: 160 pass: 160 fail: 0
-Qemu test results:
-total: 499 pass: 499 fail: 0
+V3 submission:
+Link: https://lore.kernel.org/lkml/20230301015942.462799-1-jithu.joseph@intel.com/
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+Changes in v3
+ - GregKH 
+    -  Separating read-only fields from rw fields in
+       struct ifs_device (patch 1/8)
+    -  Remove the subdirectory intel_ifs/<n> for devicenode (patch 2/8)
+    -  Replaced an enum with #define (patch 4/8)
+ - Dave Hansen
+    - Remove tracing patch
+    - ifs_array_test_core() (patch 6/8)
+        - fix an initialization bug
+        - other suggested changes
+    - Use basic types in ifs_array for first two fields. (kept
+      the union to avoid type castings)
 
-Guenter
+v2 submission:
+Link: https://lore.kernel.org/lkml/20230214234426.344960-1-jithu.joseph@intel.com/
+
+Changes in v2
+ - remove duplicate initializations from ifs_array_test_core()
+   (Dave Hansen, patch 4/7)
+ - remove bit parsing from tracing fast path to tracing 
+   output (Steven Rostedt, patch 5/7)
+ - move "ATTRIBUTE_GROUPS(plat_ifs_array)" to core.c and remove
+   exporting function ifs_get_array_groups() (Greg KH, patch 3/7)
+ - Generalized doc and ABI doc (Greg KH, patches 6/7 and 7/7)
+
+v1 submission:
+Link: https://lore.kernel.org/lkml/20230131234302.3997223-1-jithu.joseph@intel.com/
+
+Array BIST is a new type of core test introduced under the Intel Infield
+Scan (IFS) suite of tests.
+
+Emerald Rapids (EMR) is the first CPU to support Array BIST.
+Array BIST performs tests on some portions of the core logic such as
+caches and register files. These are different portions of the silicon
+compared to the parts tested by Scan at Field (SAF).
+
+Unlike SAF, Array BIST doesn't require any test content to be loaded.
+
+Jithu Joseph (9):
+  platform/x86/intel/ifs: Separate ifs_pkg_auth from ifs_data
+  platform/x86/intel/ifs: Reorganize driver data
+  platform/x86/intel/ifs: IFS cleanup
+  x86/include/asm/msr-index.h: Add IFS Array test bits
+  platform/x86/intel/ifs: Introduce Array Scan test to IFS
+  platform/x86/intel/ifs: Sysfs interface for Array BIST
+  platform/x86/intel/ifs: Implement Array BIST test
+  platform/x86/intel/ifs: Update IFS doc
+  Documentation/ABI: Update IFS ABI doc
+
+ arch/x86/include/asm/msr-index.h              |  2 +
+ drivers/platform/x86/intel/ifs/ifs.h          | 68 ++++++++++----
+ drivers/platform/x86/intel/ifs/core.c         | 81 +++++++++++-----
+ drivers/platform/x86/intel/ifs/load.c         |  9 +-
+ drivers/platform/x86/intel/ifs/runtest.c      | 94 ++++++++++++++++++-
+ drivers/platform/x86/intel/ifs/sysfs.c        | 21 ++---
+ .../ABI/testing/sysfs-platform-intel-ifs      | 17 +++-
+ 7 files changed, 229 insertions(+), 63 deletions(-)
+
+
+base-commit: e8d018dd0257f744ca50a729e3d042cf2ec9da65
+-- 
+2.25.1
+
