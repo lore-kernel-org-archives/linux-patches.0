@@ -1,109 +1,134 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87869476
-	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 18:11:54 +0000 (UTC)
-Received: by mail-wm1-f45.google.com with SMTP id o32so5691764wms.1
-        for <patches@lists.linux.dev>; Wed, 22 Mar 2023 11:11:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679508713;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wH9gz+uMM82vCmnLttArcGg6W9CwxF2l6yihMvMNQwM=;
-        b=YiGAJ1zflo1QS4PsNbTOmua7Q+uSsVMaUMSruW1QNVW1ikgt8HoUCgM8TgXWoAjSBz
-         FkL//ytmdorCrCfmGGMAkpehPWjmBppCxEWT4THazv+EkThGuiQLkkfkTjUfO39bwgcf
-         8XrRTiLW5IIf40t70D9LqOdJhc8+H+WHtZQILMZQuUYIS+6mQMVIeqKlGvbxr5Zh6+f1
-         7wTM69agtP8cuJPg5e3wlINEU5elWzpPHiemwicZ7mX5BHPLlHfwh5i0OQlVmRuPZTiS
-         xbyAj3+1k7ehqU6HQfCtxs1NA2pckKqidsjJgVbkOcG4M+/d2Xa9+ZuIuNRVLp1KvdGu
-         T/Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679508713;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wH9gz+uMM82vCmnLttArcGg6W9CwxF2l6yihMvMNQwM=;
-        b=HdPqosC5EvogpIV3VFJsvYzaeDRJrnTsxBD0Rq3kLGnhwDccGgvDRxpbNmChuwGTM0
-         w2uEu7SochbVyIvcSyfEgyXKC6QCiJeohdmA/PKem8jLWWhavzC1WOkljD3H3IL0ZuTn
-         qMr0KgclYObSKtfSraGIAWdT4AdQdqZnpoaPqbB9CTCxwry6RO/1cwDem3f0zz+3IAB1
-         1lnUoRRk9jugKAuecOSNcY+6WruDpsUtEAEum4G9dtys+B3YJUQxbNmogN0DCRrt2zfZ
-         fGaZfAnEiuGjdqFM+2gOlYWNqfmddmClJN6HDyNCgKhtXBk+JoA3v7SEL18vyPHzhLWE
-         RKxg==
-X-Gm-Message-State: AO0yUKWGhuLet6f4hNeViLtOKjZLKaz1b9J2EvEpnnLSDLZbdhE2pQ+Y
-	GFNkRJSTSCkg/C9kHF9n7Rc=
-X-Google-Smtp-Source: AK7set+GDmjksRoXYfoH2H1YV/xncp5rkqdyO6qld78vYYrfz0Lza0R/8Wk31rvQzQmWq2hAM4OjkA==
-X-Received: by 2002:a1c:f709:0:b0:3ed:c763:2765 with SMTP id v9-20020a1cf709000000b003edc7632765mr354755wmh.7.1679508712828;
-        Wed, 22 Mar 2023 11:11:52 -0700 (PDT)
-Received: from [192.168.0.210] (cpc154979-craw9-2-0-cust193.16-3.cable.virginm.net. [80.193.200.194])
-        by smtp.googlemail.com with ESMTPSA id f9-20020a05600c154900b003ede03e4369sm12070729wmg.33.2023.03.22.11.11.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 11:11:51 -0700 (PDT)
-Message-ID: <bf1c475c-b98c-7381-33c0-602c2ab6349a@gmail.com>
-Date: Wed, 22 Mar 2023 18:11:50 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD06A2F37
+	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 18:48:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D7FC433D2
+	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 18:48:11 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ey9GA/9N"
+Resent-From: Mark Brown <broonie@sirena.org.uk>
+Resent-Date: Wed, 22 Mar 2023 18:48:08 +0000
+Resent-Message-ID: <ZBtNaAPb8A6Z8FHY@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Wed, 22 Mar 2023 18:19:27 +0000
+Received: from ams.source.kernel.org ([145.40.68.75])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=3V8i=7O=linux.intel.com=jyri.sarha@kernel.org>)
+	id 1pf33U-008QdH-NK
+	for broonie@sirena.co.uk; Wed, 22 Mar 2023 18:19:27 +0000
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ams.source.kernel.org (Postfix) with ESMTPS id C3A02B81D96
+	for <broonie@sirena.co.uk>; Wed, 22 Mar 2023 18:19:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id A396BC4339E; Wed, 22 Mar 2023 18:19:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6B04AC433D2
+	for <broonie@kernel.org>; Wed, 22 Mar 2023 18:19:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 6B04AC433D2
+Authentication-Results: smtp.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679509162; x=1711045162;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=kfN9SenAdQDA4pArUtorjPOHqmMemYP6aWKfJD2B1Ec=;
+  b=Ey9GA/9NFUcBpX7HjigyF3uJLklmO7ofNJpc7QuiGdcFgqh6u0iauFzT
+   t9TXBKKrjUeXICWzCekqDNmwnURhxIxicKfnUQUvpx6jrddzmLUxotSmH
+   LkYKPTzk/bxU65tGF2Qzwbo8VAmgiK3C5qTmJ2VlLMxrWDNgOI7FJ7u4A
+   hawUhGMNYpJalHW9AoRJnewsVvW5cSaHSBMzl+HpJtd9oNZYM2VIwBr+j
+   NZ2HpdLpbW18DeVHilnMa1Ewwv02VhX4M8KX91WPo1BZeGRtO7ct4Z31G
+   UwXKadd9SjLtWh77Vn+hRgTfUgGJ5DTzK3Q2lXU+B6O5oq9Xc+eoZYA+B
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10657"; a="425586040"
+X-IronPort-AV: E=Sophos;i="5.98,282,1673942400"; 
+   d="scan'208";a="425586040"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2023 11:19:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10657"; a="1011471742"
+X-IronPort-AV: E=Sophos;i="5.98,282,1673942400"; 
+   d="scan'208";a="1011471742"
+Received: from harith2x-mobl1.gar.corp.intel.com (HELO jsarha-desk.intel.com) ([10.249.254.178])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2023 11:18:57 -0700
+From: Jyri Sarha <jyri.sarha@linux.intel.com>
+To: lgirdwood@gmail.com,
+	broonie@kernel.org
+Cc: alsa-devel@alsa-project.org,
+	pierre-louis.bossart@linux.intel.com,
+	ranjani.sridharan@linux.intel.com,
+	kai.vehmanen@linux.intel.com,
+	peter.ujfalusi@linux.intel.com,
+	rander.wang@intel.com,
+	error27@gmail.com
+Date: Wed, 22 Mar 2023 20:18:30 +0200
+Message-Id: <20230322181830.574635-1-jyri.sarha@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3] stress-module: stress finit_module() and
- delete_module()
-To: Luis Chamberlain <mcgrof@kernel.org>, patches@lists.linux.dev,
- linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
- pmladek@suse.com, david@redhat.com, petr.pavlu@suse.com, prarit@redhat.com
-Cc: christophe.leroy@csgroup.eu, song@kernel.org, dave@stgolabs.net,
- a.manzanares@samsung.com, fan.ni@samsung.com, vincent.fu@samsung.com
-References: <20230322032350.3439056-1-mcgrof@kernel.org>
- <ZBtDSh6f+rWqFLtC@bombadil.infradead.org>
-Content-Language: en-US
-From: "Colin King (gmail)" <colin.i.king@gmail.com>
-In-Reply-To: <ZBtDSh6f+rWqFLtC@bombadil.infradead.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 145.40.68.75
+X-SA-Exim-Mail-From: SRS0=3V8i=7O=linux.intel.com=jyri.sarha@kernel.org
+Subject: [PATCH] ASoC: SOF: ipc4/intel: Add missing mutex_unlock()
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: OFZWXJ26hBEN
 
-On 22/03/2023 18:04, Luis Chamberlain wrote:
-> On Tue, Mar 21, 2023 at 08:23:50PM -0700, Luis Chamberlain wrote:
->> Example uses:
->>
->> sudo ./stress-ng --module 1 --module-name xfs
->> sudo ./stress-ng --module 1 --module-name xfs --module-sharedfd
-> 
-> The use case with --module 8192 was causing some errors from
-> stress-ng having unexpected bail out messages before ramp up.
-> 
->> diff --git a/stress-module.c b/stress-module.c
->> new file mode 100644
->> index 00000000..cee581bd
->> --- /dev/null
->> +++ b/stress-module.c
->> +			//snprintf(module_path, strlen(module_path), "%s/%s/%s",
->> +			snprintf(module_path, PATH_MAX*2, "%s/%s/%s",
->> +				 dirname_default_prefix,
->> +				 u.release, module);
->> +			ret = 0;
-> 
-> I forgot to remove this stray comment.
+There was a missing mutex_unlock() in sof_ipc4_widget_free()
+use_chain_dma if-branch that caused a static analysis error. The
+branch should not be used in a normal working configuration and if its
+used its an indication of a bad topology. Add missing mutex_unlock()
+and a warning print if the if-branch is taken, and another warning
+print to a symmetric place in sof_ipc4_widget_setup().
 
-No worries, I can fix that up when I apply the patch.
+Fixes: ca5ce0caa67fa9 ("ASoC: SOF: ipc4/intel: Add support for chained DMA")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/202303222050.dCw0fPCW-lkp@intel.com/
+Signed-off-by: Jyri Sarha <jyri.sarha@linux.intel.com>
+---
+ sound/soc/sof/ipc4-topology.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-> 
->> +	/*
->> +	 * We're not stressing the modules.dep --> module path lookup,
->> +	 * just the finit_module() calls and so only do the lookup once.
->> +	 */
->> +	if (args->instance != 0) {
->> +		if (!module_path_found)
->> +			return EXIT_SUCCESS;
->> +	}
-> 
-> So here was the reason for the complaints, Although changing this to
-> return just EXIT_NO_RESOURCE cures the warning, I don't think the
-> non instance 0 workers are doing anything then. Is that right Colin?
-
-I'll have a look at that when I test this out later tonight.
-
-> 
->    Luis
+diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
+index f1e1aed94da4..12775fcb6b54 100644
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -1989,8 +1989,11 @@ static int sof_ipc4_widget_setup(struct snd_sof_dev *sdev, struct snd_sof_widget
+ 	case snd_soc_dapm_scheduler:
+ 		pipeline = swidget->private;
+ 
+-		if (pipeline->use_chain_dma)
++		if (pipeline->use_chain_dma) {
++			dev_warn(sdev->dev, "use_chain_dma set for schduler %s",
++				 swidget->widget->name);
+ 			return 0;
++		}
+ 
+ 		dev_dbg(sdev->dev, "pipeline: %d memory pages: %d\n", swidget->pipeline_id,
+ 			pipeline->mem_usage);
+@@ -2145,8 +2148,12 @@ static int sof_ipc4_widget_free(struct snd_sof_dev *sdev, struct snd_sof_widget
+ 		struct sof_ipc4_msg msg = {{ 0 }};
+ 		u32 header;
+ 
+-		if (pipeline->use_chain_dma)
++		if (pipeline->use_chain_dma) {
++			dev_warn(sdev->dev, "use_chain_dma set for schduler %s",
++				 swidget->widget->name);
++			mutex_unlock(&ipc4_data->pipeline_state_mutex);
+ 			return 0;
++		}
+ 
+ 		header = SOF_IPC4_GLB_PIPE_INSTANCE_ID(swidget->instance_id);
+ 		header |= SOF_IPC4_MSG_TYPE_SET(SOF_IPC4_GLB_DELETE_PIPELINE);
+-- 
+2.34.1
 
