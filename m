@@ -1,46 +1,119 @@
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8717C
-	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 12:33:59 +0000 (UTC)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4PhSR23Twmz4xFZ;
-	Wed, 22 Mar 2023 23:27:26 +1100 (AEDT)
-From: Michael Ellerman <patch-notifications@ellerman.id.au>
-To: mpe@ellerman.id.au, npiggin@gmail.com, christophe.leroy@csgroup.eu, Luis Chamberlain <mcgrof@kernel.org>
-Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com, j.granados@samsung.com, patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
-In-Reply-To: <20230310232850.3960676-1-mcgrof@kernel.org>
-References: <20230310232850.3960676-1-mcgrof@kernel.org>
-Subject: Re: [PATCH 0/2] ppc: simplify sysctl registration
-Message-Id: <167948793444.559204.3802967683451092052.b4-ty@ellerman.id.au>
-Date: Wed, 22 Mar 2023 23:25:34 +1100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D830728FC
+	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 13:24:59 +0000 (UTC)
+Received: by mail-qt1-f180.google.com with SMTP id c19so22487170qtn.13
+        for <patches@lists.linux.dev>; Wed, 22 Mar 2023 06:24:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679491498;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ktOzcvKmmhLIzoXczCp5MfAlx870gRd58nh3sh76UaA=;
+        b=iHFgprdTUOe5MtVRqVMc3gdMI5qKcs2hivdULK2xESoLn+RZeMqW2uvicUwEm+0Zlp
+         KVcY/mbPTBn9pEHHLXsuQr1ELJWC6wR26loeRvrABTP4ZMctpndFDvSmpGW65mrbbllc
+         wGc+XbydSChrs46l5WpnqYJMW8hW1Ym4N27zflZClsmxUFii4AGUMV+g0NHP9dEk1Ufb
+         knXYLaxlE1oT/W+3FL/ulr1FHVaueLgDLXV3rVhu5qSpLCdv+pdCD1AhSRbTkXXjm1nf
+         tzshia7tIu2M00PwpG+bVXj8OhdCI2M+3EgwYedYXaV6USXa06QBTpsCWxghFXRZRjE2
+         PIJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679491498;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ktOzcvKmmhLIzoXczCp5MfAlx870gRd58nh3sh76UaA=;
+        b=tQoehACcT9+u4HKjeO8XYV6qZeQKlz2Ug/iPd9LSq5c4Oh5LDouM57nJt7JYvziYzM
+         aXJPyPaGbYspEneJt9wPMZhsyhE0V5VrF9kcHUmUx6yCwNs4cymiMnrY4WkmoeX1CUmB
+         0e9ZuOY7WTa6Et1DuMoGmZJBbwQv41Ub9+tPqELHWlcUmEZCkn2uUROfJolB+5UNXqdl
+         wFe8BibfBzZaiLWMY4LgsYC6ssLdYz6j4yzBTpla2PnekPkSNBH4tV4kLHPYAUqH+VU8
+         z9p6/hk8EUwOT9ZBCe0ivaVUPhhYR/t7OlqNRnVNxwdF+4Z03gOyXPWN0McsV2uhf0OG
+         MW2w==
+X-Gm-Message-State: AO0yUKVYjx1qk9OA5rAh3JcwlzNvlxXod6d9nDaVQZq33wOs7xJPllzA
+	5DCONC9zgmFotTYVBuX1WW8=
+X-Google-Smtp-Source: AK7set8atlErkr+308KUlHlMjqaGKyuDTrinp8qCUhCK5mYVwIZ4EK/FM5hkwurWeUPUrR0WhEuqvQ==
+X-Received: by 2002:a05:622a:1055:b0:3b9:2c3:675a with SMTP id f21-20020a05622a105500b003b902c3675amr4951678qte.62.1679491498576;
+        Wed, 22 Mar 2023 06:24:58 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id bl28-20020a05620a1a9c00b007339c5114a9sm11330311qkb.103.2023.03.22.06.24.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Mar 2023 06:24:58 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Wed, 22 Mar 2023 06:24:56 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 4.19 00/27] 4.19.278-rc3 review
+Message-ID: <d08b2e27-32e0-4cf8-ab15-74deb887f64d@roeck-us.net>
+References: <20230316094129.846802350@linuxfoundation.org>
+ <ZBQ/rhv9nP+i8Pyc@debian>
+ <ZBRjTid0Hc4V7bwB@kroah.com>
+ <CADVatmOU9nJQDo7OGDNGppU8eci98yqsJzxYLjT=NPXqv8BbDg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CADVatmOU9nJQDo7OGDNGppU8eci98yqsJzxYLjT=NPXqv8BbDg@mail.gmail.com>
 
-On Fri, 10 Mar 2023 15:28:48 -0800, Luis Chamberlain wrote:
-> We can simplify the way we do sysctl registration both by
-> reducing the number of lines and also avoiding calllers which
-> could do recursion. The docs are being updated to help reflect
-> this better [0].
+On Fri, Mar 17, 2023 at 01:21:03PM +0000, Sudip Mukherjee wrote:
+> Hi Greg,
 > 
-> [0] https://lore.kernel.org/all/20230310223947.3917711-1-mcgrof@kernel.org/T/#u
+> On Fri, 17 Mar 2023 at 12:55, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Fri, Mar 17, 2023 at 10:23:42AM +0000, Sudip Mukherjee wrote:
+> > > Hi Greg,
+> > >
+> > > On Thu, Mar 16, 2023 at 10:42:14AM +0100, Greg Kroah-Hartman wrote:
+> > > > This is the start of the stable review cycle for the 4.19.278 release.
+> > > > There are 27 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > >
+> > > > Responses should be made by Sat, 18 Mar 2023 09:41:20 +0000.
+> > > > Anything received after that time might be too late.
+> > >
+> > > Build test (gcc version 11.3.1 20230311):
+> > > mips: 63 configs -> no  failure
+> > > arm: 115 configs -> no failure
+> > > arm64: 2 configs -> no failure
+> > > x86_64: 4 configs -> no failure
+> > > alpha allmodconfig -> no failure
+> > > powerpc allmodconfig -> no failure
+> > > riscv allmodconfig -> no failure
+> > > s390 allmodconfig -> no failure
+> > > xtensa allmodconfig -> no failure
+> > >
+> > > Boot test:
+> > > x86_64: Booted on qemu. No regression. [1]
+> > >
+> > > Boot Regression on test laptop:
+> > > Only black screen but ssh worked, so from the dmesg it seems i915 failed.
+> >
+> > Can you bisect this?
 > 
-> [...]
+> There was no need to bisect. Only one i915 related commit was there
+> and reverting that has fixed it for me.
+> 
+> 9a0789a26289 ("drm/i915: Don't use BAR mappings for ring buffers with LLC")
+> commit 85636167e3206c3fbd52254fc432991cc4e90194 upstream.
+> 
 
-Applied to powerpc/next.
+Unfortunately, the bad patch made it into v4.19.278 anyway, breaking that
+release for all affected users (i915 with LLC support). That has been fixed
+in v4.19.279, but it is still unfortunate that the patch made it into the
+release even though it was reported that it is problematic.
 
-[1/2] ppc: simplify one-level sysctl registration for powersave_nap_ctl_table
-      https://git.kernel.org/powerpc/c/bfedee5dc406ddcd70d667be1501659f1b232b7f
-[2/2] ppc: simplify one-level sysctl registration for nmi_wd_lpm_factor_ctl_table
-      https://git.kernel.org/powerpc/c/3a713753d3cb52e4e3039cdb906ef00f0b574219
+I don't know what went wrong here, but it would be great if that kind of
+problem could be avoided in the future.
 
-cheers
+Guenter
