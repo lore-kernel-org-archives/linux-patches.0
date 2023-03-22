@@ -1,59 +1,56 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D830728FC
-	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 13:24:59 +0000 (UTC)
-Received: by mail-qt1-f180.google.com with SMTP id c19so22487170qtn.13
-        for <patches@lists.linux.dev>; Wed, 22 Mar 2023 06:24:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5F88C01
+	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 15:02:14 +0000 (UTC)
+Received: by mail-qt1-f178.google.com with SMTP id n2so22999939qtp.0
+        for <patches@lists.linux.dev>; Wed, 22 Mar 2023 08:02:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679491498;
+        d=gmail.com; s=20210112; t=1679497333;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ktOzcvKmmhLIzoXczCp5MfAlx870gRd58nh3sh76UaA=;
-        b=iHFgprdTUOe5MtVRqVMc3gdMI5qKcs2hivdULK2xESoLn+RZeMqW2uvicUwEm+0Zlp
-         KVcY/mbPTBn9pEHHLXsuQr1ELJWC6wR26loeRvrABTP4ZMctpndFDvSmpGW65mrbbllc
-         wGc+XbydSChrs46l5WpnqYJMW8hW1Ym4N27zflZClsmxUFii4AGUMV+g0NHP9dEk1Ufb
-         knXYLaxlE1oT/W+3FL/ulr1FHVaueLgDLXV3rVhu5qSpLCdv+pdCD1AhSRbTkXXjm1nf
-         tzshia7tIu2M00PwpG+bVXj8OhdCI2M+3EgwYedYXaV6USXa06QBTpsCWxghFXRZRjE2
-         PIJw==
+        bh=oYQM2jTlS604YN00nsC6X2GY/6e0UfH9fOU0JivRqjA=;
+        b=BepWEHbj3mt2tBk5UbRdoICuoZOmlUmehPOK+rh8KH6n7Gkz3nDN6yexr1uFBBCN08
+         n93JvWdYsFafoBStPlqo7Pfh2+dm6S3wgmHXiRf8EPgjomkKbXnRMWkD+T+9MZ/L9y7f
+         keA59Fx/mRmtKbiefe/YRaJL8tq99rW6rsHVf5pKq1dE0fOKaS7QfthYIdv3MOCOfoiv
+         dFyBizEhGxWmjyLPygxqW/tLFjKFhub+UAVsofox9zIGFV4H+QEmP9t/V12hN8d3bzY2
+         TOq7dLlK/9EdNk259OqeXrnrRCWLZg74+kSBn8lUWYvcCmqMj74T/+yur75BVJFJMjp4
+         FczA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679491498;
+        d=1e100.net; s=20210112; t=1679497333;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ktOzcvKmmhLIzoXczCp5MfAlx870gRd58nh3sh76UaA=;
-        b=tQoehACcT9+u4HKjeO8XYV6qZeQKlz2Ug/iPd9LSq5c4Oh5LDouM57nJt7JYvziYzM
-         aXJPyPaGbYspEneJt9wPMZhsyhE0V5VrF9kcHUmUx6yCwNs4cymiMnrY4WkmoeX1CUmB
-         0e9ZuOY7WTa6Et1DuMoGmZJBbwQv41Ub9+tPqELHWlcUmEZCkn2uUROfJolB+5UNXqdl
-         wFe8BibfBzZaiLWMY4LgsYC6ssLdYz6j4yzBTpla2PnekPkSNBH4tV4kLHPYAUqH+VU8
-         z9p6/hk8EUwOT9ZBCe0ivaVUPhhYR/t7OlqNRnVNxwdF+4Z03gOyXPWN0McsV2uhf0OG
-         MW2w==
-X-Gm-Message-State: AO0yUKVYjx1qk9OA5rAh3JcwlzNvlxXod6d9nDaVQZq33wOs7xJPllzA
-	5DCONC9zgmFotTYVBuX1WW8=
-X-Google-Smtp-Source: AK7set8atlErkr+308KUlHlMjqaGKyuDTrinp8qCUhCK5mYVwIZ4EK/FM5hkwurWeUPUrR0WhEuqvQ==
-X-Received: by 2002:a05:622a:1055:b0:3b9:2c3:675a with SMTP id f21-20020a05622a105500b003b902c3675amr4951678qte.62.1679491498576;
-        Wed, 22 Mar 2023 06:24:58 -0700 (PDT)
+        bh=oYQM2jTlS604YN00nsC6X2GY/6e0UfH9fOU0JivRqjA=;
+        b=wXfCkheTzyP9SPwdhJdij8uoieyIWuLH0PoeJPPGTjAb8k62Ihr+pI5orezzSdDxPj
+         uhsrirjprvduoxWskaTkdEQL8GHUC2ilHTwcyVVV9Lj20nXFzGl8wsykbPWXftMOYtOA
+         VwBtRVjdKUhkbzJxDzkovEJbOslCAPIFY1E1WS20B4QiuEkq+Ehw+yyyMxRa1BKuSh+b
+         53QjL0zCgvL9dGBCiDSTFr/G9b7Hp1ivHGQfIc/I6y7buX23g7jEmfnHP/t49FWGZ+GG
+         inOCUK8xq0glVMKN8/9syP+fem4nuKbRnrv05xupuK/RU7vykTih8hTNEbxxFWm7qhgP
+         I+1g==
+X-Gm-Message-State: AO0yUKVrnZmqLY0vYLwhaT66D2Uxl3aqCSmdTGseAPPcA6Sf//aYZIIj
+	r0i4Yck/F2gTETX6hsfTwac=
+X-Google-Smtp-Source: AK7set+VSdynk8EYuC29vErScyxFanU8Uii9XxtvdSxj02AVCP1dgudhg6cXvrFOxzfMt0SkyJCcBw==
+X-Received: by 2002:a05:622a:314:b0:3bf:cfe8:f8f5 with SMTP id q20-20020a05622a031400b003bfcfe8f8f5mr6794567qtw.41.1679497333222;
+        Wed, 22 Mar 2023 08:02:13 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id bl28-20020a05620a1a9c00b007339c5114a9sm11330311qkb.103.2023.03.22.06.24.57
+        by smtp.gmail.com with ESMTPSA id d3-20020ac851c3000000b003e37d646221sm3990901qtn.96.2023.03.22.08.02.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 06:24:58 -0700 (PDT)
+        Wed, 22 Mar 2023 08:02:12 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 22 Mar 2023 06:24:56 -0700
+Date: Wed, 22 Mar 2023 08:02:10 -0700
 From: Guenter Roeck <linux@roeck-us.net>
-To: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 4.19 00/27] 4.19.278-rc3 review
-Message-ID: <d08b2e27-32e0-4cf8-ab15-74deb887f64d@roeck-us.net>
-References: <20230316094129.846802350@linuxfoundation.org>
- <ZBQ/rhv9nP+i8Pyc@debian>
- <ZBRjTid0Hc4V7bwB@kroah.com>
- <CADVatmOU9nJQDo7OGDNGppU8eci98yqsJzxYLjT=NPXqv8BbDg@mail.gmail.com>
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/199] 6.1.21-rc3 review
+Message-ID: <ea7d76f4-806d-4643-8339-aced5bf4b858@roeck-us.net>
+References: <20230321180747.474321236@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,58 +59,21 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CADVatmOU9nJQDo7OGDNGppU8eci98yqsJzxYLjT=NPXqv8BbDg@mail.gmail.com>
+In-Reply-To: <20230321180747.474321236@linuxfoundation.org>
 
-On Fri, Mar 17, 2023 at 01:21:03PM +0000, Sudip Mukherjee wrote:
-> Hi Greg,
+On Tue, Mar 21, 2023 at 07:08:16PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.21 release.
+> There are 199 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> On Fri, 17 Mar 2023 at 12:55, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > On Fri, Mar 17, 2023 at 10:23:42AM +0000, Sudip Mukherjee wrote:
-> > > Hi Greg,
-> > >
-> > > On Thu, Mar 16, 2023 at 10:42:14AM +0100, Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 4.19.278 release.
-> > > > There are 27 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > >
-> > > > Responses should be made by Sat, 18 Mar 2023 09:41:20 +0000.
-> > > > Anything received after that time might be too late.
-> > >
-> > > Build test (gcc version 11.3.1 20230311):
-> > > mips: 63 configs -> no  failure
-> > > arm: 115 configs -> no failure
-> > > arm64: 2 configs -> no failure
-> > > x86_64: 4 configs -> no failure
-> > > alpha allmodconfig -> no failure
-> > > powerpc allmodconfig -> no failure
-> > > riscv allmodconfig -> no failure
-> > > s390 allmodconfig -> no failure
-> > > xtensa allmodconfig -> no failure
-> > >
-> > > Boot test:
-> > > x86_64: Booted on qemu. No regression. [1]
-> > >
-> > > Boot Regression on test laptop:
-> > > Only black screen but ssh worked, so from the dmesg it seems i915 failed.
-> >
-> > Can you bisect this?
-> 
-> There was no need to bisect. Only one i915 related commit was there
-> and reverting that has fixed it for me.
-> 
-> 9a0789a26289 ("drm/i915: Don't use BAR mappings for ring buffers with LLC")
-> commit 85636167e3206c3fbd52254fc432991cc4e90194 upstream.
+> Responses should be made by Thu, 23 Mar 2023 18:07:05 +0000.
+> Anything received after that time might be too late.
 > 
 
-Unfortunately, the bad patch made it into v4.19.278 anyway, breaking that
-release for all affected users (i915 with LLC support). That has been fixed
-in v4.19.279, but it is still unfortunate that the patch made it into the
-release even though it was reported that it is problematic.
-
-I don't know what went wrong here, but it would be great if that kind of
-problem could be avoided in the future.
+It is still Wednesday here, but v6.1.21 has already been released.
+Sorry, my test bed isn't that fast. No issues reported yet, but
+it seems pointless to send final results at this point. I'll only
+report if there is a problem. Same for v6.2.8.
 
 Guenter
