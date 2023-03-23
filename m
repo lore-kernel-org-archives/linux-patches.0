@@ -1,134 +1,156 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD06A2F37
-	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 18:48:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D7FC433D2
-	for <patches@lists.linux.dev>; Wed, 22 Mar 2023 18:48:11 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ey9GA/9N"
-Resent-From: Mark Brown <broonie@sirena.org.uk>
-Resent-Date: Wed, 22 Mar 2023 18:48:08 +0000
-Resent-Message-ID: <ZBtNaAPb8A6Z8FHY@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Wed, 22 Mar 2023 18:19:27 +0000
-Received: from ams.source.kernel.org ([145.40.68.75])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=3V8i=7O=linux.intel.com=jyri.sarha@kernel.org>)
-	id 1pf33U-008QdH-NK
-	for broonie@sirena.co.uk; Wed, 22 Mar 2023 18:19:27 +0000
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id C3A02B81D96
-	for <broonie@sirena.co.uk>; Wed, 22 Mar 2023 18:19:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id A396BC4339E; Wed, 22 Mar 2023 18:19:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6B04AC433D2
-	for <broonie@kernel.org>; Wed, 22 Mar 2023 18:19:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 6B04AC433D2
-Authentication-Results: smtp.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679509162; x=1711045162;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=kfN9SenAdQDA4pArUtorjPOHqmMemYP6aWKfJD2B1Ec=;
-  b=Ey9GA/9NFUcBpX7HjigyF3uJLklmO7ofNJpc7QuiGdcFgqh6u0iauFzT
-   t9TXBKKrjUeXICWzCekqDNmwnURhxIxicKfnUQUvpx6jrddzmLUxotSmH
-   LkYKPTzk/bxU65tGF2Qzwbo8VAmgiK3C5qTmJ2VlLMxrWDNgOI7FJ7u4A
-   hawUhGMNYpJalHW9AoRJnewsVvW5cSaHSBMzl+HpJtd9oNZYM2VIwBr+j
-   NZ2HpdLpbW18DeVHilnMa1Ewwv02VhX4M8KX91WPo1BZeGRtO7ct4Z31G
-   UwXKadd9SjLtWh77Vn+hRgTfUgGJ5DTzK3Q2lXU+B6O5oq9Xc+eoZYA+B
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10657"; a="425586040"
-X-IronPort-AV: E=Sophos;i="5.98,282,1673942400"; 
-   d="scan'208";a="425586040"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2023 11:19:00 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10657"; a="1011471742"
-X-IronPort-AV: E=Sophos;i="5.98,282,1673942400"; 
-   d="scan'208";a="1011471742"
-Received: from harith2x-mobl1.gar.corp.intel.com (HELO jsarha-desk.intel.com) ([10.249.254.178])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2023 11:18:57 -0700
-From: Jyri Sarha <jyri.sarha@linux.intel.com>
-To: lgirdwood@gmail.com,
-	broonie@kernel.org
-Cc: alsa-devel@alsa-project.org,
-	pierre-louis.bossart@linux.intel.com,
-	ranjani.sridharan@linux.intel.com,
-	kai.vehmanen@linux.intel.com,
-	peter.ujfalusi@linux.intel.com,
-	rander.wang@intel.com,
-	error27@gmail.com
-Date: Wed, 22 Mar 2023 20:18:30 +0200
-Message-Id: <20230322181830.574635-1-jyri.sarha@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82904179
+	for <patches@lists.linux.dev>; Thu, 23 Mar 2023 06:30:40 +0000 (UTC)
+Received: by mail-qt1-f174.google.com with SMTP id x1so25486096qtr.7
+        for <patches@lists.linux.dev>; Wed, 22 Mar 2023 23:30:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679553039;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UhAsUoztmuqWCk/RtYU7Y/jxMQ5MJV8LTqU+TgYM9HY=;
+        b=hwDGhhlh6syM0F4yaWNb8x1cpO/Jc4yO+gXKVUvY6q3eRVhOeToTLDRFyTxLvYylWE
+         6xNKez48OYQ3qfZxVu/hJ0XcPi/OYZNBEnsGUL1C6enfahBISDGHQLY++i5KxWR1/orN
+         85e28RzplkD4xs2jZbmeN5M9FcH056ug8Ux6i/eaOkd71Kl/DruZynOoQPoal4QtVhtf
+         rIyfhMZwt43j1yK7UyvflW+dm6jN1CCYbKAMeRsvCC8LdZ9ZZ3AUKlbjFpMXCFVnX2a/
+         nFBAZHbF49e5M76jyK6R4fpFCSC8Q9puthy9E1jsYgtKB+bev0dxIM3Z9iuAMUO1laYP
+         xPPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679553039;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UhAsUoztmuqWCk/RtYU7Y/jxMQ5MJV8LTqU+TgYM9HY=;
+        b=tnOAgnBN8KCVkychZdqi0fN18+GaGHyU21fJS9s+n27P+kCs2+GeNGw2uYNHZ7/J0t
+         YHmlJgQRzd8A+hMCrkVVxCRT0x/DYEoYs0Da2vW/c4/MEWIq65wZChUQgezb9YBs6cng
+         Un4eZUbAYLBRToQcwSqzMhNgYzHBfTwt1NCaRa3nW5VcFqXYjJ9VlqtdXIwkXJ2jkedB
+         gf6/IIsmiAEavUTmuTPbWTLSGoW/V4cE6cMp2ZuP2mFCl97irZ84z7XvzJVM4SloeIU0
+         nCINnyeaMvtTUp5YdRop0MkXsTO7VQ03Gh3S9a0t7W4w5zAnJ3zGMO0hKPQfueB7J02U
+         VXFg==
+X-Gm-Message-State: AO0yUKVsEEQj0Z3rszzu7mBCEfRJMJfdwBiogNHXb7NIU5GUKE2QnqPJ
+	+EQKi+HhN8quJgDzMWb3/Yo=
+X-Google-Smtp-Source: AK7set+0KKR4/NmJEyqFywo22jUgVMyDBi0HZWSJWqGnddEUGYnPWIYZiLAjObxr23aJ7Gi4gO4F8A==
+X-Received: by 2002:a05:622a:103:b0:3e1:5060:5c8f with SMTP id u3-20020a05622a010300b003e150605c8fmr10159361qtw.33.1679553039284;
+        Wed, 22 Mar 2023 23:30:39 -0700 (PDT)
+Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com. [66.111.4.228])
+        by smtp.gmail.com with ESMTPSA id p11-20020a05620a22ab00b0074583bda590sm12668492qkh.10.2023.03.22.23.30.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Mar 2023 23:30:38 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailauth.nyi.internal (Postfix) with ESMTP id 1F28A27C0054;
+	Thu, 23 Mar 2023 02:30:37 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Thu, 23 Mar 2023 02:30:38 -0400
+X-ME-Sender: <xms:DfIbZC9lYqPVL80QXhH3ktDG-LsjzmRrvw1AefDd-LGAl9F864bk2Q>
+    <xme:DfIbZCtrF0nvn7Ongo8hKSvsLO-Mb9su-RoLEERyuF5WzooTpo9fbyKUOPnQuYvOx
+    OTxsUm4x9zr93mc4A>
+X-ME-Received: <xmr:DfIbZICbRTbmpjRkBsbGdpknEeB0G1djOTm76p9OmuprhsEzdnvfx4NYqWaOSwo6ucti6tjifyzakLzo9oMuOBipcVtFs9xnY2w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdegfedgleehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehoqhhu
+    nhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeehudfgudffffetuedtvdehueevledvhfelleeivedtgeeuhfegueeviedu
+    ffeivdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    gsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdeiledvgeehtdei
+    gedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmhgrihhlrdgtohhmsehfih
+    igmhgvrdhnrghmvg
+X-ME-Proxy: <xmx:DfIbZKehO0R-rQVDEW-n6rz0ktcrf2wWHI9ifT4SIV5cKMATyfhPSg>
+    <xmx:DfIbZHOi17Q9_FlgceWWbdG_BQTZwaOA7weaaMbuNoYw__i2VU7Owg>
+    <xmx:DfIbZEkZrrj2REwG5vTHYiXoa_oLrbw2hqTT7dSjy2mg77N89MHFSA>
+    <xmx:DfIbZAhkkgDT5lI95X66r3BKKE415vZ6mr-ejrkoH8csde3oO2gOrA>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 23 Mar 2023 02:30:37 -0400 (EDT)
+Date: Wed, 22 Mar 2023 23:30:35 -0700
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Benno Lossin <y86-dev@protonmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v2 3/5] rust: add pin-init API
+Message-ID: <ZBvyCwPcpTnk2R7h@Boquns-Mac-mini.local>
+References: <20230321194934.908891-1-y86-dev@protonmail.com>
+ <20230321194934.908891-4-y86-dev@protonmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 145.40.68.75
-X-SA-Exim-Mail-From: SRS0=3V8i=7O=linux.intel.com=jyri.sarha@kernel.org
-Subject: [PATCH] ASoC: SOF: ipc4/intel: Add missing mutex_unlock()
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: OFZWXJ26hBEN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230321194934.908891-4-y86-dev@protonmail.com>
 
-There was a missing mutex_unlock() in sof_ipc4_widget_free()
-use_chain_dma if-branch that caused a static analysis error. The
-branch should not be used in a normal working configuration and if its
-used its an indication of a bad topology. Add missing mutex_unlock()
-and a warning print if the if-branch is taken, and another warning
-print to a symmetric place in sof_ipc4_widget_setup().
+On Tue, Mar 21, 2023 at 07:50:00PM +0000, Benno Lossin wrote:
+[...]
+> +/// # Syntax
+> +///
+> +/// As already mentioned in the examples above, inside of `pin_init!` a `struct` initializer with
+> +/// the following modifications is expected:
+> +/// - Fields that you want to initialize in-place have to use `<-` instead of `:`.
+> +/// - In front of the initializer you can write `&this in` to have access to a [`NonNull<Self>`]
+> +///   pointer named `this` inside of the initializer.
+> +///
+> +/// For instance:
+> +///
+> +/// ```rust
+> +/// # use kernel::pin_init;
+> +/// # use macros::pin_data;
+> +/// # use core::{ptr::addr_of_mut, marker::PhantomPinned};
+> +/// #[pin_data]
+> +/// struct Buf {
+> +///     ptr: *mut u8,
+> +///     buf: [u8; 64],
 
-Fixes: ca5ce0caa67fa9 ("ASoC: SOF: ipc4/intel: Add support for chained DMA")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/202303222050.dCw0fPCW-lkp@intel.com/
-Signed-off-by: Jyri Sarha <jyri.sarha@linux.intel.com>
----
- sound/soc/sof/ipc4-topology.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+Say we have an extra field,
 
-diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
-index f1e1aed94da4..12775fcb6b54 100644
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -1989,8 +1989,11 @@ static int sof_ipc4_widget_setup(struct snd_sof_dev *sdev, struct snd_sof_widget
- 	case snd_soc_dapm_scheduler:
- 		pipeline = swidget->private;
- 
--		if (pipeline->use_chain_dma)
-+		if (pipeline->use_chain_dma) {
-+			dev_warn(sdev->dev, "use_chain_dma set for schduler %s",
-+				 swidget->widget->name);
- 			return 0;
-+		}
- 
- 		dev_dbg(sdev->dev, "pipeline: %d memory pages: %d\n", swidget->pipeline_id,
- 			pipeline->mem_usage);
-@@ -2145,8 +2148,12 @@ static int sof_ipc4_widget_free(struct snd_sof_dev *sdev, struct snd_sof_widget
- 		struct sof_ipc4_msg msg = {{ 0 }};
- 		u32 header;
- 
--		if (pipeline->use_chain_dma)
-+		if (pipeline->use_chain_dma) {
-+			dev_warn(sdev->dev, "use_chain_dma set for schduler %s",
-+				 swidget->widget->name);
-+			mutex_unlock(&ipc4_data->pipeline_state_mutex);
- 			return 0;
-+		}
- 
- 		header = SOF_IPC4_GLB_PIPE_INSTANCE_ID(swidget->instance_id);
- 		header |= SOF_IPC4_MSG_TYPE_SET(SOF_IPC4_GLB_DELETE_PIPELINE);
--- 
-2.34.1
+           a: u8,
 
+> +///     #[pin]
+> +///     pin: PhantomPinned,
+> +/// }
+> +/// pin_init!(&this in Buf {
+> +///     buf: [0; 64],
+> +///     ptr: unsafe { addr_of_mut!((*this.as_ptr()).buf).cast() },
+
+And I think we want to disallow:
+
+           a: unsafe { (*addr_of!(*this.as_ptr().buf))[0] }
+
+, right? Because we don't want `pin_init!` to provide any initialization
+order guarantee? If so, maybe add one or two sentences to call it out.
+
+If not sure, I think we can leave it as it is, until someone really uses
+this pattern ;-)
+
+Regards,
+Boqun
+
+> +///     pin: PhantomPinned,
+> +/// });
+> +/// ```
+> +///
+> +/// [`try_pin_init!`]: kernel::try_pin_init
+> +/// [`NonNull<Self>`]: core::ptr::NonNull
+> +#[macro_export]
+> +macro_rules! pin_init {
+> +    ($(&$this:ident in)? $t:ident $(::<$($generics:ty),* $(,)?>)? {
+> +        $($fields:tt)*
+> +    }) => {
+> +        $crate::try_pin_init!(
+> +            @this($($this)?),
+> +            @type_name($t),
+> +            @typ($t $(<$($generics),*>)?),
+> +            @fields($($fields)*),
+> +            @error(::core::convert::Infallible),
+> +        )
+> +    };
+> +}
+> +
+[...]
