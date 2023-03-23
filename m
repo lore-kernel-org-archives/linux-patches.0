@@ -1,141 +1,57 @@
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49619BA54
-	for <patches@lists.linux.dev>; Thu, 23 Mar 2023 18:01:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679594460; x=1711130460;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=v0ftauUrjiaR6pvZo2Poj+0io1VoaItaW/Z2mkjM9AU=;
-  b=f3TU0B/yxJULIcy/UVJErCUfHQApoe/MqiIk9Q7jbqG5HMgqrOsGk6Pw
-   LeNFAi7EXSo0g43Mwmlq3wG86NrbLjZd3O0pvzV/zkzzdI8cKuUIXEC+v
-   jBruVpbkjEXblJ0hDaAcj9GDo0VGwLa7V/rrIZlRoVdxEjhrFrU79P70Q
-   B2dna41R6tgJHPLz6BZeycB5rAw4oVn+IdDAmkEmYFe1iWkszML3b6HY0
-   9whYv4sKziJlFa0qItoWNtlA/GIKS1VfF7vbP/umxGaELI7CRK4sbwETV
-   yhnNCQgriONjMzHlCVRTh7MkglNTuNhp90tZbn/i4YMNyV2P9+feYXBb/
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10658"; a="402156739"
-X-IronPort-AV: E=Sophos;i="5.98,285,1673942400"; 
-   d="scan'208";a="402156739"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2023 11:00:57 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10658"; a="856583768"
-X-IronPort-AV: E=Sophos;i="5.98,285,1673942400"; 
-   d="scan'208";a="856583768"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2023 11:00:56 -0700
-Date: Thu, 23 Mar 2023 11:00:55 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Yazen Ghannam <yazen.ghannam@amd.com>
-Cc: Borislav Petkov <bp@alien8.de>, Smita.KoralahalliChannabasappa@amd.com,
-	dave.hansen@linux.intel.com, hpa@zytor.com,
-	linux-edac@vger.kernel.org, linux-kernel@vger.kernel.org,
-	x86@kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v3 3/5] x86/mce: Introduce mce_handle_storm() to deal
- with begin/end of storms
-Message-ID: <ZByT1x+WFBU0jjRb@agluck-desk3.sc.intel.com>
-References: <ZBR+GMH0olGoDMGs@yaz-fattaah>
- <20230317172042.117201-1-tony.luck@intel.com>
- <20230317172042.117201-4-tony.luck@intel.com>
- <ZBxurh8ZC39pzZ0a@yaz-khff.amd.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1435BA54
+	for <patches@lists.linux.dev>; Thu, 23 Mar 2023 18:03:11 +0000 (UTC)
+Received: from localhost (unknown [IPv6:2601:281:8300:73::5f6])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ms.lwn.net (Postfix) with ESMTPSA id D941F44A;
+	Thu, 23 Mar 2023 18:03:10 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net D941F44A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1679594591; bh=+xHHWQp8VXbDvAJBU4F2A9md5mJ9aPYLwDogCK11j40=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=ngXfyF8kIpi28nfKM9CzDsGW2P0coVdaYmX4c29ISSY6TRre9q8bBTZ0t/rNmO9a7
+	 o0zpAhPm4hnzCCJLB2cCqPd/aHSoYLbtAAnp4K4Z4cCPz6xpMnm93hGVZwY+Xu0JO9
+	 btlvkmmhT6SEaKPM+sqaac7WpUFtyncacKZz4HMXIoGPIJmVW9jcxgpY4xPp2J3vKK
+	 s85ViORlQiOIGxgLJFqkj7166Fr1jh3uxJnqvdfr1Qgz5g+NUZHIYcTGaNp7/E9nQY
+	 ifmz518iIIhPkM4IltITlMN4TCPu/tokX8esbOuER5jpvDaOS4+uLwqWKxMJivMrBS
+	 gQZXFTuIaNo3Q==
+From: Jonathan Corbet <corbet@lwn.net>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>, "Guilherme G. Piccoli"
+ <gpiccoli@igalia.com>, x86@kernel.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev, Tony Luck
+ <tony.luck@intel.com>
+Subject: Re: [PATCH] Documentation/x86: Update split lock documentation
+In-Reply-To: <20230315225722.104607-1-tony.luck@intel.com>
+References: <20230315225722.104607-1-tony.luck@intel.com>
+Date: Thu, 23 Mar 2023 12:03:10 -0600
+Message-ID: <87ttybbb1d.fsf@meer.lwn.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZBxurh8ZC39pzZ0a@yaz-khff.amd.com>
+Content-Type: text/plain
 
-On Thu, Mar 23, 2023 at 11:22:22AM -0400, Yazen Ghannam wrote:
-> On Fri, Mar 17, 2023 at 10:20:40AM -0700, Tony Luck wrote:
-> > +void mce_intel_handle_storm(int bank, bool on)
-> > +{
-> > +	if (on)
-> > +		cmci_set_threshold(bank, cmci_threshold[bank]);
-> > +	else
-> > +		cmci_set_threshold(bank, CMCI_STORM_THRESHOLD);
-> 
-> I think these conditions are reversed. When storm handling is 'on' we should
-> use CMCI_STORM_THRESHOLD, and when off use the saved bank threshold.
-> 
-> > +}
-> > +
-> >  static void cmci_storm_begin(int bank)
-> >  {
-> >  	__set_bit(bank, this_cpu_ptr(mce_poll_banks));
-> > @@ -211,13 +219,13 @@ void track_cmci_storm(int bank, u64 status)
-> >  		if (history & GENMASK_ULL(STORM_END_POLL_THRESHOLD - 1, 0))
-> >  			return;
-> >  		pr_notice("CPU%d BANK%d CMCI storm subsided\n", smp_processor_id(), bank);
-> > -		cmci_set_threshold(bank, cmci_threshold[bank]);
-> > +		mce_handle_storm(bank, true);
-> 
-> Should be 'false' when the storm subsides.
-> 
-> >  		cmci_storm_end(bank);
-> >  	} else {
-> >  		if (hweight64(history) < STORM_BEGIN_THRESHOLD)
-> >  			return;
-> >  		pr_notice("CPU%d BANK%d CMCI storm detected\n", smp_processor_id(), bank);
-> > -		cmci_set_threshold(bank, CMCI_STORM_THRESHOLD);
-> > +		mce_handle_storm(bank, false);
-> 
-> Should be 'true' when the storm starts.
-> 
-> >  		cmci_storm_begin(bank);
-> >  	}
-> >  }
+Tony Luck <tony.luck@intel.com> writes:
 
-There's a saying that two wrongs do not make a right (but three lefts do).
+> commit b041b525dab9 ("x86/split_lock: Make life miserable for split
+> lockers") added a delay and serialization of cplit locks. Commit
+> 727209376f49 ("x86/split_lock: Add sysctl to control the misery mode")
+> provided a sysctl to turn off the misery.
+>
+> Update the split lock documentation to describe the current state of
+> the code.
+>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  Documentation/x86/buslock.rst | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 
-My code was working, but only because the second mistake cancelled
-out the first.
+Applied (with the typo pointed out by Fenghua fixed), thanks.
 
-Changing them both as you suggest (diff below) and the code still
-works, and makes sense too!
-
-Thanks
-
--Tony
-
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index 74b560476424..c3e1bb790680 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -677,13 +677,13 @@ void track_cmci_storm(int bank, u64 status)
- 		if (history & GENMASK_ULL(STORM_END_POLL_THRESHOLD - 1, 0))
- 			return;
- 		pr_notice("CPU%d BANK%d CMCI storm subsided\n", smp_processor_id(), bank);
--		mce_handle_storm(bank, true);
-+		mce_handle_storm(bank, false);
- 		cmci_storm_end(bank);
- 	} else {
- 		if (hweight64(history) < STORM_BEGIN_THRESHOLD)
- 			return;
- 		pr_notice("CPU%d BANK%d CMCI storm detected\n", smp_processor_id(), bank);
--		mce_handle_storm(bank, false);
-+		mce_handle_storm(bank, true);
- 		cmci_storm_begin(bank);
- 	}
- }
-diff --git a/arch/x86/kernel/cpu/mce/intel.c b/arch/x86/kernel/cpu/mce/intel.c
-index 6cc9aa97c092..20c2143a68c1 100644
---- a/arch/x86/kernel/cpu/mce/intel.c
-+++ b/arch/x86/kernel/cpu/mce/intel.c
-@@ -134,9 +134,9 @@ static void cmci_set_threshold(int bank, int thresh)
- void mce_intel_handle_storm(int bank, bool on)
- {
- 	if (on)
--		cmci_set_threshold(bank, cmci_threshold[bank]);
--	else
- 		cmci_set_threshold(bank, CMCI_STORM_THRESHOLD);
-+	else
-+		cmci_set_threshold(bank, cmci_threshold[bank]);
- }
- 
- /*
+jon
