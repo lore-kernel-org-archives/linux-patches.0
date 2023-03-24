@@ -1,68 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5A4D2E2;
-	Thu, 23 Mar 2023 21:00:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 09242C4339B;
-	Thu, 23 Mar 2023 21:00:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1679605221;
-	bh=qz9uUNeJqZdiJlk66x6Wzj9ssG31ZuZs/3b6NtQinPE=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=VQDGvG0nMfeA/pF4tJWDj0mxY0iow9oifsGHClP9HZgYgROWBf1LBJ1mkJQvjYMwm
-	 sZyDqUoQReYbPP81QT/S5AjcBasEEXxUV43ftrRrMcYsGUQKJ2qphI80iHmc0F1TG1
-	 JvCy/2e4rS4FUPpT2QD+f71ixU+K0K5c7JA0ghzuahIMDH0j2qKpOSlTDr3wQH8cdO
-	 aliTjnwoIAZ8ZmqexUo4kP4OBq5cIuhgjE2TXjgKZc4rt03mMWAWihQqNTNFAVDf1h
-	 fV4wz9gNsJvnfDHtPS8p92eKBvNREv/nNbZ9QzWkqkBM7SlvjzaWkErMZEtcxTnQZ7
-	 tQMvaHAFoKb8A==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DD26BE61B87;
-	Thu, 23 Mar 2023 21:00:20 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EA128EA
+	for <patches@lists.linux.dev>; Fri, 24 Mar 2023 08:39:48 +0000 (UTC)
+Date: Fri, 24 Mar 2023 08:39:35 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1679647185; x=1679906385;
+	bh=I8/f3JO/VA5KWyLN4wKp4hGSRAS0uOmn5BtDka1Qfpo=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=e1OidOwma+seobgitoxy4TukCO+qj4IBs36t91OuEhT4JbWavof1KoVj/j28ytLU0
+	 hIbvgvfRf4lbyL0lFIEnuMFSUeNAwvnZWCwHO/QBPBFsX+/8wedn4Cz5slKHxVWbfY
+	 rMuc26kQSIHXkdpt4PFYJuY/1+5PyfTNqyEmsqVZUV5A8tO40LQRHUoMvrPIj9ZBpD
+	 wxF0758GJJ5aUXpoqqQKpN+23XTPyQg8X5qqPxFZPVQmk4Y4vATeuv2Zj/sKK47viF
+	 bgadAFbZJXBRolAEpj33dG0zFGtEed+pV2bPLmMXJ2YrJmg3tvthIaRYwBIh4zWfw3
+	 //uFrPn/NLtew==
+To: Boqun Feng <boqun.feng@gmail.com>
+From: Benno Lossin <y86-dev@protonmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v2 3/5] rust: add pin-init API
+Message-ID: <15f01078-4756-8f87-fe3c-ab9f433ebe7a@protonmail.com>
+In-Reply-To: <ZBvyCwPcpTnk2R7h@Boquns-Mac-mini.local>
+References: <20230321194934.908891-1-y86-dev@protonmail.com> <20230321194934.908891-4-y86-dev@protonmail.com> <ZBvyCwPcpTnk2R7h@Boquns-Mac-mini.local>
+Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] riscv: Handle zicsr/zifencei issues between clang and
- binutils
-From: patchwork-bot+linux-riscv@kernel.org
-Message-Id: 
- <167960522090.10481.16047974592958596683.git-patchwork-notify@kernel.org>
-Date: Thu, 23 Mar 2023 21:00:20 +0000
-References: <20230313-riscv-zicsr-zifencei-fiasco-v1-1-dd1b7840a551@kernel.org>
-In-Reply-To: <20230313-riscv-zicsr-zifencei-fiasco-v1-1-dd1b7840a551@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: linux-riscv@lists.infradead.org, paul.walmsley@sifive.com,
- palmer@dabbelt.com, aou@eecs.berkeley.edu, conor.dooley@microchip.com,
- ndesaulniers@google.com, trix@redhat.com, linux-kernel@vger.kernel.org,
- llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hello:
-
-This patch was applied to riscv/linux.git (fixes)
-by Palmer Dabbelt <palmer@rivosinc.com>:
-
-On Mon, 13 Mar 2023 16:00:23 -0700 you wrote:
-> There are two related issues that appear in certain combinations with
-> clang and GNU binutils.
-> 
-> The first occurs when a version of clang that supports zicsr or zifencei
-> via '-march=' [1] (i.e, >= 17.x) is used in combination with a version
-> of GNU binutils that do not recognize zicsr and zifencei in the
-> '-march=' value (i.e., < 2.36):
-> 
+On 23.03.23 07:30, Boqun Feng wrote:
+> On Tue, Mar 21, 2023 at 07:50:00PM +0000, Benno Lossin wrote:
 > [...]
+>> +/// # Syntax
+>> +///
+>> +/// As already mentioned in the examples above, inside of `pin_init!` a=
+ `struct` initializer with
+>> +/// the following modifications is expected:
+>> +/// - Fields that you want to initialize in-place have to use `<-` inst=
+ead of `:`.
+>> +/// - In front of the initializer you can write `&this in` to have acce=
+ss to a [`NonNull<Self>`]
+>> +///   pointer named `this` inside of the initializer.
+>> +///
+>> +/// For instance:
+>> +///
+>> +/// ```rust
+>> +/// # use kernel::pin_init;
+>> +/// # use macros::pin_data;
+>> +/// # use core::{ptr::addr_of_mut, marker::PhantomPinned};
+>> +/// #[pin_data]
+>> +/// struct Buf {
+>> +///     ptr: *mut u8,
+>> +///     buf: [u8; 64],
+>
+> Say we have an extra field,
+>
+>             a: u8,
+>
+>> +///     #[pin]
+>> +///     pin: PhantomPinned,
+>> +/// }
+>> +/// pin_init!(&this in Buf {
+>> +///     buf: [0; 64],
+>> +///     ptr: unsafe { addr_of_mut!((*this.as_ptr()).buf).cast() },
+>
+> And I think we want to disallow:
+>
+>             a: unsafe { (*addr_of!(*this.as_ptr().buf))[0] }
+>
+> , right? Because we don't want `pin_init!` to provide any initialization
+> order guarantee? If so, maybe add one or two sentences to call it out.
+>
+> If not sure, I think we can leave it as it is, until someone really uses
+> this pattern ;-)
 
-Here is the summary with links:
-  - riscv: Handle zicsr/zifencei issues between clang and binutils
-    https://git.kernel.org/riscv/c/e89c2e815e76
+The `pin_init!` macro initializes everything in the order specified, so
+if `a` is the last field you initialize, the code above is fine. I think
+we could guarantee this. I will add a comment.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+--
+Cheers,
+Benno
 
 
