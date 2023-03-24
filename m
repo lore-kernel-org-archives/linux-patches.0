@@ -1,97 +1,53 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [95.217.213.242])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C7E7471
-	for <patches@lists.linux.dev>; Fri, 24 Mar 2023 16:04:19 +0000 (UTC)
-Received: from [213.219.167.32] (helo=deadeye)
-	by maynard with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1pfjtj-0007wN-3A; Fri, 24 Mar 2023 17:04:11 +0100
-Received: from ben by deadeye with local (Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1pfjth-006hhE-2P;
-	Fri, 24 Mar 2023 17:04:09 +0100
-Message-ID: <b646aaccc85b06c63c824bfd5c5c2249d8ce1de0.camel@decadent.org.uk>
-Subject: Re: [PATCH 4.19 161/252] x86/microcode/amd: Remove
- load_microcode_amd()s bsp parameter
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: "Borislav Petkov (AMD)" <bp@alien8.de>, patches@lists.linux.dev, stable
-	 <stable@vger.kernel.org>
-Date: Fri, 24 Mar 2023 17:04:05 +0100
-In-Reply-To: <ZBhb21/xkOC1dyIH@kroah.com>
-References: <20230310133718.803482157@linuxfoundation.org>
-	 <20230310133723.713256658@linuxfoundation.org>
-	 <e2af9b33fb0f6e22146388a186cf0152abbac629.camel@decadent.org.uk>
-	 <ZBhb21/xkOC1dyIH@kroah.com>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-ueSA0XmjEF5wmV+RdF4D"
-User-Agent: Evolution 3.46.4-1 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53574C950
+	for <patches@lists.linux.dev>; Fri, 24 Mar 2023 17:15:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DDAEAC4339E;
+	Fri, 24 Mar 2023 17:15:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1679678149;
+	bh=KrjiDQaOUAvwQXctCJJ1xKGvf9WKffnW0brnRQ1xCp4=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=FpYVh15XZKhcENjTUinTA3SnkEZhZtMO+IzkRhPQeCet962agA2JUefL3CRitm0oA
+	 xlxyYEOatzUTDERPDc/uNvYV68grV745yvzrW1EBBk/d92M3f18+A4PXJj0uehexVj
+	 bDeKw01zwMXcvZG5SwTcxoPGnxPeyglIp+VlgAllqlPKPQ90RVK1yseNLcb3BA4s8i
+	 MOmP3UJ3MqWmSMVFIeWUmGm44b3JOGtj/MKdTAUoN2OwO/zWJ2TVWJQV8AjaoAprDf
+	 4i+5615NSxR0JQAFhr08Zq14dC8/cFnVrFOI1AyB6Ex2VEyw8tIK+2k0V4sYm9oAt2
+	 FHc9p0OS9XSXw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C9756C41612;
+	Fri, 24 Mar 2023 17:15:48 +0000 (UTC)
+Subject: Re: [GIT PULL] slab fix for 6.3-rc4
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <a329d2a9-9617-e00f-3bb8-3f5dcf07329f@suse.cz>
+References: <a329d2a9-9617-e00f-3bb8-3f5dcf07329f@suse.cz>
+X-PR-Tracked-List-Id: <linux-mm.kvack.org>
+X-PR-Tracked-Message-Id: <a329d2a9-9617-e00f-3bb8-3f5dcf07329f@suse.cz>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-fix-for-6.3-rc4
+X-PR-Tracked-Commit-Id: 66a1c22b709178e7b823d44465d0c2e5ed7492fb
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: cb7f5b41f8341148050fe63e27cf52aa4f1519ad
+Message-Id: <167967814881.905.634782433585733452.pr-tracker-bot@kernel.org>
+Date: Fri, 24 Mar 2023 17:15:48 +0000
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 213.219.167.32
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
+The pull request you sent on Fri, 24 Mar 2023 16:04:53 +0100:
 
---=-ueSA0XmjEF5wmV+RdF4D
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-fix-for-6.3-rc4
 
-On Mon, 2023-03-20 at 14:12 +0100, Greg Kroah-Hartman wrote:
-> On Sat, Mar 18, 2023 at 02:49:53AM +0100, Ben Hutchings wrote:
-> > On Fri, 2023-03-10 at 14:38 +0100, Greg Kroah-Hartman wrote:
-> > > From: Borislav Petkov (AMD) <bp@alien8.de>
-> > >=20
-> > > commit 2355370cd941cbb20882cc3f34460f9f2b8f9a18 upstream.
-> > >=20
-> > > It is always the BSP.
-> > >=20
-> > > No functional changes.
-> > >=20
-> >=20
-> > Does this not depend on commit 2071c0aeda22 "x86/microcode: Simplify
-> > init path even more"?  That hasn't been backported to any stable
-> > branches.
->=20
-> It didn't seem to need it to at least build properly.  And it doesn't
-> apply to the stable branches, so are you sure it's needed?
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/cb7f5b41f8341148050fe63e27cf52aa4f1519ad
 
-This commit message says that load_microcode_amd() is always called
-with bsp=3Dtrue.  That doesn't seem to have been true before commit
-2071c0aeda22, though I haven't tested it.
+Thank you!
 
-Ben.
-
---=20
-Ben Hutchings
-Usenet is essentially a HUGE group of people passing notes in class.
-                 - Rachel Kadel, `A Quick Guide to Newsgroup Etiquette'
-
---=-ueSA0XmjEF5wmV+RdF4D
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmQdyfUACgkQ57/I7JWG
-EQmVFQ/+LphgpHWx619d4sYkxJa3dPtWckBWaMVSRtKofBc90Wl4c91uXo13N7pe
-SmeClsvobLsnmDX46542DW1JJx3L0KFlNXBPC8+3PnjOVfyDYdpKmdcqUB/Ht0TN
-Fpv7fnYYcHxriopb/OOXQPcpLZAQ2kPP4RakVwgvcmG119IQOE8dE/HXuiw0ytO3
-rAStqlACcoudlRAcNh5VbZSTolXr3CG+3T+GxCl5ZM1bZb6KQ7YHPCzUir44AVXe
-t5OM6WjQ1weaoWNPdSo0bydkqkHIUOktNRPoBl5WyNdeguFAbLEAjLDfgahb6Iss
-hqjiMr5/QGw3uymagMinITZSqV+QKfMf24M1izjgzb94T2cROx3wcg91eP4nt+Vx
-5DP0SWqrwG4Skqn0B14Fg2AJtbDaFsM1nJoc9NdXF4kmWPMyh2sMYv3lWTJ6/Gk8
-A+ebP7xe0sDbrfJ5IMX9NLg8impMknt379PIzf9xKYWFmJU/QqWFm4hU54jSzV43
-2I+a6XJVzIXLssKL3lKGpngsi/2dxPR7Byv1MWrOQ/4oIzjlrp/XWsTdMmO3KBHd
-M0LHxUOrmhBDQjOXgLbjMG82Jmn/OA0lvaCRQNnQQRN7Cx/zNtAcjg37yzakO5zL
-ty/9TzdpKgC6Zf/F8FiWlPWrDocGTgRPMr2wFoPK4uAu+R/J4bA=
-=IAmY
------END PGP SIGNATURE-----
-
---=-ueSA0XmjEF5wmV+RdF4D--
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
