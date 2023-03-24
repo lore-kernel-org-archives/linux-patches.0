@@ -1,53 +1,70 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53574C950
-	for <patches@lists.linux.dev>; Fri, 24 Mar 2023 17:15:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DDAEAC4339E;
-	Fri, 24 Mar 2023 17:15:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1679678149;
-	bh=KrjiDQaOUAvwQXctCJJ1xKGvf9WKffnW0brnRQ1xCp4=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=FpYVh15XZKhcENjTUinTA3SnkEZhZtMO+IzkRhPQeCet962agA2JUefL3CRitm0oA
-	 xlxyYEOatzUTDERPDc/uNvYV68grV745yvzrW1EBBk/d92M3f18+A4PXJj0uehexVj
-	 bDeKw01zwMXcvZG5SwTcxoPGnxPeyglIp+VlgAllqlPKPQ90RVK1yseNLcb3BA4s8i
-	 MOmP3UJ3MqWmSMVFIeWUmGm44b3JOGtj/MKdTAUoN2OwO/zWJ2TVWJQV8AjaoAprDf
-	 4i+5615NSxR0JQAFhr08Zq14dC8/cFnVrFOI1AyB6Ex2VEyw8tIK+2k0V4sYm9oAt2
-	 FHc9p0OS9XSXw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C9756C41612;
-	Fri, 24 Mar 2023 17:15:48 +0000 (UTC)
-Subject: Re: [GIT PULL] slab fix for 6.3-rc4
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <a329d2a9-9617-e00f-3bb8-3f5dcf07329f@suse.cz>
-References: <a329d2a9-9617-e00f-3bb8-3f5dcf07329f@suse.cz>
-X-PR-Tracked-List-Id: <linux-mm.kvack.org>
-X-PR-Tracked-Message-Id: <a329d2a9-9617-e00f-3bb8-3f5dcf07329f@suse.cz>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-fix-for-6.3-rc4
-X-PR-Tracked-Commit-Id: 66a1c22b709178e7b823d44465d0c2e5ed7492fb
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: cb7f5b41f8341148050fe63e27cf52aa4f1519ad
-Message-Id: <167967814881.905.634782433585733452.pr-tracker-bot@kernel.org>
-Date: Fri, 24 Mar 2023 17:15:48 +0000
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF87A107BB
+	for <patches@lists.linux.dev>; Fri, 24 Mar 2023 19:59:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679687978; x=1711223978;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=sNVllBtmU8q7PqMLUiVSP/EAmHPB6Rm0X9oOm1Judio=;
+  b=HPOoHj5+zCEg8MzZLEVWkUIDu2oVKQ+IQXK9NMEsEn7lucKEyy3/4nMe
+   h3HvTLCQc9M7XPHl11jd9LqtWLQV8nZHJciqrl85S9EivRZ2QtqbZ9G50
+   ZJdE+JMjKzQ7JMNp7EmewxERfkDxWobQpAde/XIcAlwqi4qdM6NAUnZfr
+   /20vJGk9ZrWF2N6UsDrdhqgCl+x0Yr8WiNDe/bylcfdMf/kguSvbH0zWn
+   fEEbuMKY7tpilRzIM3uWBtDEe+xyxZam1ttlCe4THtMXnfZHakdazUiaD
+   QMM0eHl0/svLgU37viqm9mhXKU3RliW0IZOMdRBIeT+yYh4rPUxmSr0b2
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10659"; a="341443994"
+X-IronPort-AV: E=Sophos;i="5.98,288,1673942400"; 
+   d="scan'208";a="341443994"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Mar 2023 12:59:38 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10659"; a="685298887"
+X-IronPort-AV: E=Sophos;i="5.98,288,1673942400"; 
+   d="scan'208";a="685298887"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Mar 2023 12:59:37 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: x86@kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] x86/cpu: Add model number for Intel Arrow Lake processor
+Date: Fri, 24 Mar 2023 12:59:32 -0700
+Message-Id: <20230324195932.241441-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-The pull request you sent on Fri, 24 Mar 2023 16:04:53 +0100:
+https://www.intel.com/content/www/us/en/newsroom/news/intel-technology-roadmaps-milestones.html
+says this will be built on Intel 20A tiles and launch in 2024.
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-fix-for-6.3-rc4
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ arch/x86/include/asm/intel-family.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/cb7f5b41f8341148050fe63e27cf52aa4f1519ad
-
-Thank you!
-
+diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
+index cbaf174d8efd..b3af2d45bbbb 100644
+--- a/arch/x86/include/asm/intel-family.h
++++ b/arch/x86/include/asm/intel-family.h
+@@ -125,6 +125,8 @@
+ 
+ #define INTEL_FAM6_LUNARLAKE_M		0xBD
+ 
++#define INTEL_FAM6_ARROWLAKE		0xC6
++
+ /* "Small Core" Processors (Atom/E-Core) */
+ 
+ #define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+2.39.2
+
