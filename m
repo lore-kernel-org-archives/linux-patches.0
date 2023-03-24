@@ -1,83 +1,97 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [95.217.213.242])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF94C6FA1
-	for <patches@lists.linux.dev>; Fri, 24 Mar 2023 15:04:55 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 1D5371FE75;
-	Fri, 24 Mar 2023 15:04:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1679670294; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Xjkqv3qq9lK96uvcM7L0CVxArtqI/M2tYrb00mpOZgs=;
-	b=XJmQhelex9Pe558wjy7zSA5HVTx9K5GMSp/7YFlYBWIVLCA4lRe+gwMEl3QiQ7yhmhnmPH
-	sEcBYVWSqPsw88GeWH9CCxL0d4e/SfEPUaasN4mThWh6vdV+c398lCrDpImNsTCMod/DpR
-	6FwHuuNOzGaGeJDH7GdfJGmkGVXlZBs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1679670294;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Xjkqv3qq9lK96uvcM7L0CVxArtqI/M2tYrb00mpOZgs=;
-	b=3LNK4UHNz0nq73vpRKyQECwfTyjCgucIkqWQTI1qZKK7/ikw9rfRXSN0i1lz2KF6Q5PLCC
-	pfx6Vnew1MNFNPAA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id DF28D138ED;
-	Fri, 24 Mar 2023 15:04:53 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id NBjWNRW8HWRcYAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 24 Mar 2023 15:04:53 +0000
-Message-ID: <a329d2a9-9617-e00f-3bb8-3f5dcf07329f@suse.cz>
-Date: Fri, 24 Mar 2023 16:04:53 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C7E7471
+	for <patches@lists.linux.dev>; Fri, 24 Mar 2023 16:04:19 +0000 (UTC)
+Received: from [213.219.167.32] (helo=deadeye)
+	by maynard with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1pfjtj-0007wN-3A; Fri, 24 Mar 2023 17:04:11 +0100
+Received: from ben by deadeye with local (Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1pfjth-006hhE-2P;
+	Fri, 24 Mar 2023 17:04:09 +0100
+Message-ID: <b646aaccc85b06c63c824bfd5c5c2249d8ce1de0.camel@decadent.org.uk>
+Subject: Re: [PATCH 4.19 161/252] x86/microcode/amd: Remove
+ load_microcode_amd()s bsp parameter
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "Borislav Petkov (AMD)" <bp@alien8.de>, patches@lists.linux.dev, stable
+	 <stable@vger.kernel.org>
+Date: Fri, 24 Mar 2023 17:04:05 +0100
+In-Reply-To: <ZBhb21/xkOC1dyIH@kroah.com>
+References: <20230310133718.803482157@linuxfoundation.org>
+	 <20230310133723.713256658@linuxfoundation.org>
+	 <e2af9b33fb0f6e22146388a186cf0152abbac629.camel@decadent.org.uk>
+	 <ZBhb21/xkOC1dyIH@kroah.com>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-ueSA0XmjEF5wmV+RdF4D"
+User-Agent: Evolution 3.46.4-1 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: [GIT PULL] slab fix for 6.3-rc4
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 213.219.167.32
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
-Linus,
 
-please pull the latest slab fix from:
+--=-ueSA0XmjEF5wmV+RdF4D
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-fix-for-6.3-rc4
+On Mon, 2023-03-20 at 14:12 +0100, Greg Kroah-Hartman wrote:
+> On Sat, Mar 18, 2023 at 02:49:53AM +0100, Ben Hutchings wrote:
+> > On Fri, 2023-03-10 at 14:38 +0100, Greg Kroah-Hartman wrote:
+> > > From: Borislav Petkov (AMD) <bp@alien8.de>
+> > >=20
+> > > commit 2355370cd941cbb20882cc3f34460f9f2b8f9a18 upstream.
+> > >=20
+> > > It is always the BSP.
+> > >=20
+> > > No functional changes.
+> > >=20
+> >=20
+> > Does this not depend on commit 2071c0aeda22 "x86/microcode: Simplify
+> > init path even more"?  That hasn't been backported to any stable
+> > branches.
+>=20
+> It didn't seem to need it to at least build properly.  And it doesn't
+> apply to the stable branches, so are you sure it's needed?
 
-Note the tag was signed with a new subkey (of same gpg key). I'm not sure if
-it's transparent for your tooling or not. It was uploaded to korg-pgpkeys git
-(also ubuntu and keys.openpgp.org keyservers) a few weeks ago. The timing
-with github ssh key rotation is pre coincidence :)
+This commit message says that load_microcode_amd() is always called
+with bsp=3Dtrue.  That doesn't seem to have been true before commit
+2071c0aeda22, though I haven't tested it.
 
-======================================
+Ben.
 
-There's a single build fix for a corner case configuration that is
-apparently possible to achieve on some arches, from Geert.
+--=20
+Ben Hutchings
+Usenet is essentially a HUGE group of people passing notes in class.
+                 - Rachel Kadel, `A Quick Guide to Newsgroup Etiquette'
 
-----------------------------------------------------------------
-Geert Uytterhoeven (1):
-      mm/slab: Fix undefined init_cache_node_node() for NUMA and !SMP
+--=-ueSA0XmjEF5wmV+RdF4D
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
- mm/slab.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmQdyfUACgkQ57/I7JWG
+EQmVFQ/+LphgpHWx619d4sYkxJa3dPtWckBWaMVSRtKofBc90Wl4c91uXo13N7pe
+SmeClsvobLsnmDX46542DW1JJx3L0KFlNXBPC8+3PnjOVfyDYdpKmdcqUB/Ht0TN
+Fpv7fnYYcHxriopb/OOXQPcpLZAQ2kPP4RakVwgvcmG119IQOE8dE/HXuiw0ytO3
+rAStqlACcoudlRAcNh5VbZSTolXr3CG+3T+GxCl5ZM1bZb6KQ7YHPCzUir44AVXe
+t5OM6WjQ1weaoWNPdSo0bydkqkHIUOktNRPoBl5WyNdeguFAbLEAjLDfgahb6Iss
+hqjiMr5/QGw3uymagMinITZSqV+QKfMf24M1izjgzb94T2cROx3wcg91eP4nt+Vx
+5DP0SWqrwG4Skqn0B14Fg2AJtbDaFsM1nJoc9NdXF4kmWPMyh2sMYv3lWTJ6/Gk8
+A+ebP7xe0sDbrfJ5IMX9NLg8impMknt379PIzf9xKYWFmJU/QqWFm4hU54jSzV43
+2I+a6XJVzIXLssKL3lKGpngsi/2dxPR7Byv1MWrOQ/4oIzjlrp/XWsTdMmO3KBHd
+M0LHxUOrmhBDQjOXgLbjMG82Jmn/OA0lvaCRQNnQQRN7Cx/zNtAcjg37yzakO5zL
+ty/9TzdpKgC6Zf/F8FiWlPWrDocGTgRPMr2wFoPK4uAu+R/J4bA=
+=IAmY
+-----END PGP SIGNATURE-----
+
+--=-ueSA0XmjEF5wmV+RdF4D--
