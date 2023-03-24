@@ -1,90 +1,83 @@
-Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EA128EA
-	for <patches@lists.linux.dev>; Fri, 24 Mar 2023 08:39:48 +0000 (UTC)
-Date: Fri, 24 Mar 2023 08:39:35 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1679647185; x=1679906385;
-	bh=I8/f3JO/VA5KWyLN4wKp4hGSRAS0uOmn5BtDka1Qfpo=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=e1OidOwma+seobgitoxy4TukCO+qj4IBs36t91OuEhT4JbWavof1KoVj/j28ytLU0
-	 hIbvgvfRf4lbyL0lFIEnuMFSUeNAwvnZWCwHO/QBPBFsX+/8wedn4Cz5slKHxVWbfY
-	 rMuc26kQSIHXkdpt4PFYJuY/1+5PyfTNqyEmsqVZUV5A8tO40LQRHUoMvrPIj9ZBpD
-	 wxF0758GJJ5aUXpoqqQKpN+23XTPyQg8X5qqPxFZPVQmk4Y4vATeuv2Zj/sKK47viF
-	 bgadAFbZJXBRolAEpj33dG0zFGtEed+pV2bPLmMXJ2YrJmg3tvthIaRYwBIh4zWfw3
-	 //uFrPn/NLtew==
-To: Boqun Feng <boqun.feng@gmail.com>
-From: Benno Lossin <y86-dev@protonmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v2 3/5] rust: add pin-init API
-Message-ID: <15f01078-4756-8f87-fe3c-ab9f433ebe7a@protonmail.com>
-In-Reply-To: <ZBvyCwPcpTnk2R7h@Boquns-Mac-mini.local>
-References: <20230321194934.908891-1-y86-dev@protonmail.com> <20230321194934.908891-4-y86-dev@protonmail.com> <ZBvyCwPcpTnk2R7h@Boquns-Mac-mini.local>
-Feedback-ID: 40624463:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF94C6FA1
+	for <patches@lists.linux.dev>; Fri, 24 Mar 2023 15:04:55 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 1D5371FE75;
+	Fri, 24 Mar 2023 15:04:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1679670294; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Xjkqv3qq9lK96uvcM7L0CVxArtqI/M2tYrb00mpOZgs=;
+	b=XJmQhelex9Pe558wjy7zSA5HVTx9K5GMSp/7YFlYBWIVLCA4lRe+gwMEl3QiQ7yhmhnmPH
+	sEcBYVWSqPsw88GeWH9CCxL0d4e/SfEPUaasN4mThWh6vdV+c398lCrDpImNsTCMod/DpR
+	6FwHuuNOzGaGeJDH7GdfJGmkGVXlZBs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1679670294;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Xjkqv3qq9lK96uvcM7L0CVxArtqI/M2tYrb00mpOZgs=;
+	b=3LNK4UHNz0nq73vpRKyQECwfTyjCgucIkqWQTI1qZKK7/ikw9rfRXSN0i1lz2KF6Q5PLCC
+	pfx6Vnew1MNFNPAA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id DF28D138ED;
+	Fri, 24 Mar 2023 15:04:53 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id NBjWNRW8HWRcYAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 24 Mar 2023 15:04:53 +0000
+Message-ID: <a329d2a9-9617-e00f-3bb8-3f5dcf07329f@suse.cz>
+Date: Fri, 24 Mar 2023 16:04:53 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: [GIT PULL] slab fix for 6.3-rc4
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 23.03.23 07:30, Boqun Feng wrote:
-> On Tue, Mar 21, 2023 at 07:50:00PM +0000, Benno Lossin wrote:
-> [...]
->> +/// # Syntax
->> +///
->> +/// As already mentioned in the examples above, inside of `pin_init!` a=
- `struct` initializer with
->> +/// the following modifications is expected:
->> +/// - Fields that you want to initialize in-place have to use `<-` inst=
-ead of `:`.
->> +/// - In front of the initializer you can write `&this in` to have acce=
-ss to a [`NonNull<Self>`]
->> +///   pointer named `this` inside of the initializer.
->> +///
->> +/// For instance:
->> +///
->> +/// ```rust
->> +/// # use kernel::pin_init;
->> +/// # use macros::pin_data;
->> +/// # use core::{ptr::addr_of_mut, marker::PhantomPinned};
->> +/// #[pin_data]
->> +/// struct Buf {
->> +///     ptr: *mut u8,
->> +///     buf: [u8; 64],
->
-> Say we have an extra field,
->
->             a: u8,
->
->> +///     #[pin]
->> +///     pin: PhantomPinned,
->> +/// }
->> +/// pin_init!(&this in Buf {
->> +///     buf: [0; 64],
->> +///     ptr: unsafe { addr_of_mut!((*this.as_ptr()).buf).cast() },
->
-> And I think we want to disallow:
->
->             a: unsafe { (*addr_of!(*this.as_ptr().buf))[0] }
->
-> , right? Because we don't want `pin_init!` to provide any initialization
-> order guarantee? If so, maybe add one or two sentences to call it out.
->
-> If not sure, I think we can leave it as it is, until someone really uses
-> this pattern ;-)
+Linus,
 
-The `pin_init!` macro initializes everything in the order specified, so
-if `a` is the last field you initialize, the code above is fine. I think
-we could guarantee this. I will add a comment.
+please pull the latest slab fix from:
 
---
-Cheers,
-Benno
+  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-fix-for-6.3-rc4
 
+Note the tag was signed with a new subkey (of same gpg key). I'm not sure if
+it's transparent for your tooling or not. It was uploaded to korg-pgpkeys git
+(also ubuntu and keys.openpgp.org keyservers) a few weeks ago. The timing
+with github ssh key rotation is pre coincidence :)
 
+======================================
+
+There's a single build fix for a corner case configuration that is
+apparently possible to achieve on some arches, from Geert.
+
+----------------------------------------------------------------
+Geert Uytterhoeven (1):
+      mm/slab: Fix undefined init_cache_node_node() for NUMA and !SMP
+
+ mm/slab.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
