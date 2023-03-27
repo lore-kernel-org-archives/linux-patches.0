@@ -1,174 +1,153 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEA12102
-	for <patches@lists.linux.dev>; Mon, 27 Mar 2023 13:10:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1679922650;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/rJWR6N70Bb+OBzD3QtO0I9WNX7bLRShDPYahmlJY5Q=;
-	b=NgDJj6tKrL1gu9a5EfdvnKd28KUkNVdXiqMsKfk09Bv0BuNa+0ULHFnCMuBm+gm0XrEGs7
-	9bJvQA/hMjVVjrarTr81N+w8qVOx+5KQZOBP6YTVDcrJYLIuGTHtJhRC2861Rs1HLknPki
-	jXO4YnE2GssIFkAkO0vJ7QdVKN3eaR8=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-mPFhNvetNeaxijEeA0WHhQ-1; Mon, 27 Mar 2023 09:10:49 -0400
-X-MC-Unique: mPFhNvetNeaxijEeA0WHhQ-1
-Received: by mail-ed1-f71.google.com with SMTP id i22-20020a05640242d600b004f5962985f4so12757907edc.12
-        for <patches@lists.linux.dev>; Mon, 27 Mar 2023 06:10:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679922648;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/rJWR6N70Bb+OBzD3QtO0I9WNX7bLRShDPYahmlJY5Q=;
-        b=VD3sGPE+lW0ovjlaWBp62vSP3uuh9TQgyN+wLlBuSCNnW0KuMfXlB1My4LYU247WKW
-         SM3ASWkbqXfcWhrm9kiglzDGDwb/xCMoEmLeePSTYB3/OM63RKFAVMyHhRic5hG6DcqS
-         nqIuPKbFXHgot22Vmwo1d5VfuG6X7GQ4U3Augv4iHF8zTcTY2yaUTRySFGXk0ej+SpYx
-         KlG5kejLXg82cSRl2aJz+PWkiGlOcpiA7mPKn4hZriYRjH0sgj5r8/mQnyEwWsXnPt9R
-         ks2sMvVSyiGVC6jkbPIoJVkVM326G2rgjs+mT+KFHLZAxi8cHwTmFPnlqsIauBc8Ifw6
-         y5jQ==
-X-Gm-Message-State: AAQBX9fAGcoa7NdeJinj+NmWp/FMM516ZnnWiJZpT3oabTHZEQfWgAiI
-	i9v7rKYHVpf9ptWOePt1xzOUSw0TwlRrhgGKQm5LwBY5iKjTGRzlimeO6NT/BNGDI1YXw50dNU+
-	CDGtTFJMEKEZLGdgRvA==
-X-Received: by 2002:a17:906:341a:b0:931:de76:c2e8 with SMTP id c26-20020a170906341a00b00931de76c2e8mr13349489ejb.9.1679922648047;
-        Mon, 27 Mar 2023 06:10:48 -0700 (PDT)
-X-Google-Smtp-Source: AKy350aB29/5iaE0NAyBAJvdzJkZEbWcVqIjAphp8OhATqxxdTcyJL7WxoUABN0PaPnNFhZde5qYnQ==
-X-Received: by 2002:a17:906:341a:b0:931:de76:c2e8 with SMTP id c26-20020a170906341a00b00931de76c2e8mr13349458ejb.9.1679922647711;
-        Mon, 27 Mar 2023 06:10:47 -0700 (PDT)
-Received: from [10.40.98.142] ([78.108.130.194])
-        by smtp.gmail.com with ESMTPSA id l6-20020a50d6c6000000b004af62273b66sm14534168edj.18.2023.03.27.06.10.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 06:10:46 -0700 (PDT)
-Message-ID: <49a3b712-bb17-0ec8-4598-fc40ae2ba15d@redhat.com>
-Date: Mon, 27 Mar 2023 15:10:45 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F63579DD
+	for <patches@lists.linux.dev>; Mon, 27 Mar 2023 22:22:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4EA5C433D2;
+	Mon, 27 Mar 2023 22:22:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1679955721;
+	bh=eKuJITkoxqhZCZOC1IuQzXCvD8LrADrZd8fL1T4iFng=;
+	h=From:To:Cc:Subject:Date:From;
+	b=NIyZrCk80QtRzROOaNAhNosmAmA3W3l1Z/dpiP2TrP48iz/L06X4ZByXtXeDP0M9v
+	 1Q1pukhLTGU1eNRDo6UXUSmhqo29bLrn+Dzlw2d5CcrwsqTLEGeGYlMqOgdgCVahFf
+	 gvrdMQDmwR9p1KMUosgqAx5ROY7qvRHlCLFH36I6GRoOzJoWOnA0duGqLJKKZWVx/Q
+	 RQFf51PFdHQ6Rl00FKb8o2tBmRmhg1U4LzrP+BtdAlCL+z04PlPd7gI2upBcV82VbF
+	 r8pQN2vWlxXtxlxuFsTxtRXtf8EEtIpXQLmTjyKStvcCsU7vcbvS8t2g4Ewg6Ow1LE
+	 dwphmNKuTjOmg==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	devicetree@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	kunit-dev@googlegroups.com,
+	Maxime Ripard <maxime@cerno.tech>
+Subject: [PATCH v3 00/11] clk: Add kunit tests for fixed rate and parent data
+Date: Mon, 27 Mar 2023 15:21:48 -0700
+Message-Id: <20230327222159.3509818-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.40.0.348.gf938b09366-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v4 0/9] Add Array BIST test support to IFS
-To: Jithu Joseph <jithu.joseph@intel.com>, markgross@kernel.org
-Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
- gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
- tony.luck@intel.com, linux-kernel@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
- ravi.v.shankar@intel.com, thiago.macieira@intel.com,
- athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
-References: <20230301015942.462799-1-jithu.joseph@intel.com>
- <20230322003359.213046-1-jithu.joseph@intel.com>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20230322003359.213046-1-jithu.joseph@intel.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi,
+This patch series adds unit tests for the clk fixed rate basic type and
+the clk registration functions that use struct clk_parent_data. To get
+there, we add support for loading device tree overlays onto the live DTB
+along with probing platform drivers to bind to device nodes in the
+overlays. With this series, we're able to exercise some of the code in
+the common clk framework that uses devicetree lookups to find parents
+and the fixed rate clk code that scans device tree directly and creates
+clks. Please review.
 
-On 3/22/23 01:33, Jithu Joseph wrote:
-> Changes in v4
->  - Hans de Goede
->      - Separate patch 1/9 (Separate ifs_pkg_auth) from reorganize
->         driver data patch
->      - Rework patch 2/9 (Reorganize driver data) to define const
->        ifs_test_caps struct and associate its pointer to miscdevice
->        and to remove dynamic allocation for ifs_data as was done in v3
->      - Move load check from run_test_store to do_core_test()
->      - Expand ABI doc to qualify which devices support which attribrutes
->        and the device instance to test mapping
-> 
-> V3 submission:
-> Link: https://lore.kernel.org/lkml/20230301015942.462799-1-jithu.joseph@intel.com/
-> 
-> Changes in v3
->  - GregKH 
->     -  Separating read-only fields from rw fields in
->        struct ifs_device (patch 1/8)
->     -  Remove the subdirectory intel_ifs/<n> for devicenode (patch 2/8)
->     -  Replaced an enum with #define (patch 4/8)
->  - Dave Hansen
->     - Remove tracing patch
->     - ifs_array_test_core() (patch 6/8)
->         - fix an initialization bug
->         - other suggested changes
->     - Use basic types in ifs_array for first two fields. (kept
->       the union to avoid type castings)
-> 
-> v2 submission:
-> Link: https://lore.kernel.org/lkml/20230214234426.344960-1-jithu.joseph@intel.com/
-> 
-> Changes in v2
->  - remove duplicate initializations from ifs_array_test_core()
->    (Dave Hansen, patch 4/7)
->  - remove bit parsing from tracing fast path to tracing 
->    output (Steven Rostedt, patch 5/7)
->  - move "ATTRIBUTE_GROUPS(plat_ifs_array)" to core.c and remove
->    exporting function ifs_get_array_groups() (Greg KH, patch 3/7)
->  - Generalized doc and ABI doc (Greg KH, patches 6/7 and 7/7)
-> 
-> v1 submission:
-> Link: https://lore.kernel.org/lkml/20230131234302.3997223-1-jithu.joseph@intel.com/
-> 
-> Array BIST is a new type of core test introduced under the Intel Infield
-> Scan (IFS) suite of tests.
-> 
-> Emerald Rapids (EMR) is the first CPU to support Array BIST.
-> Array BIST performs tests on some portions of the core logic such as
-> caches and register files. These are different portions of the silicon
-> compared to the parts tested by Scan at Field (SAF).
-> 
-> Unlike SAF, Array BIST doesn't require any test content to be loaded.
+I Cced everyone to all the patches so they get the full context. I'm
+hoping I can take the whole pile through the clk tree as they almost all
+depend on each other.
 
-Thank you for your patch-series, I've applied the series to my
-review-hans branch:
-https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git/log/?h=review-hans
+Changes from v2 (https://lore.kernel.org/r/20230315183729.2376178-1-sboyd@kernel.org):
+ * Overlays don't depend on __symbols__ node
+ * Depend on Frank's always create root node if CONFIG_OF series[1]
+ * Added kernel-doc to KUnit API doc
+ * Fixed some kernel-doc on functions
+ * More test cases for fixed rate clk
 
-Note it will show up in my review-hans branch once I've pushed my
-local branch there, which might take a while.
+Changes from v1 (https://lore.kernel.org/r/20230302013822.1808711-1-sboyd@kernel.org):
+ * Don't depend on UML, use unittest data approach to attach nodes
+ * Introduce overlay loading API for KUnit
+ * Move platform_device KUnit code to drivers/base/test
+ * Use #define macros for constants shared between unit tests and
+   overlays
+ * Settle on "test" as a vendor prefix
+ * Make KUnit wrappers have "_kunit" postfix
 
-Once I've run some tests on this branch the patches there will be
-added to the platform-drivers-x86/for-next branch and eventually
-will be included in the pdx86 pull-request to Linus for the next
-merge-window.
+Stephen Boyd (11):
+  of: Add KUnit test to confirm DTB is loaded
+  of: Add test managed wrappers for of_overlay_apply()/of_node_put()
+  dt-bindings: vendor-prefixes: Add "test" vendor for KUnit and friends
+  dt-bindings: test: Add KUnit empty node binding
+  of: Add a KUnit test for overlays and test managed APIs
+  platform: Add test managed platform_device/driver APIs
+  dt-bindings: kunit: Add fixed rate clk consumer test
+  clk: Add test managed clk provider/consumer APIs
+  clk: Add KUnit tests for clk fixed rate basic type
+  dt-bindings: clk: Add KUnit clk_parent_data test
+  clk: Add KUnit tests for clks registered with struct clk_parent_data
 
-Regards,
+ Documentation/dev-tools/kunit/api/clk.rst     |  10 +
+ Documentation/dev-tools/kunit/api/index.rst   |  22 +
+ Documentation/dev-tools/kunit/api/of.rst      |  13 +
+ .../dev-tools/kunit/api/platformdevice.rst    |  10 +
+ .../bindings/clock/test,clk-parent-data.yaml  |  47 ++
+ .../bindings/test/test,clk-fixed-rate.yaml    |  35 ++
+ .../devicetree/bindings/test/test,empty.yaml  |  30 ++
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ drivers/base/test/Makefile                    |   3 +
+ drivers/base/test/platform_kunit-test.c       | 140 ++++++
+ drivers/base/test/platform_kunit.c            | 215 ++++++++
+ drivers/clk/.kunitconfig                      |   3 +
+ drivers/clk/Kconfig                           |   7 +
+ drivers/clk/Makefile                          |   9 +-
+ drivers/clk/clk-fixed-rate_test.c             | 374 ++++++++++++++
+ drivers/clk/clk-fixed-rate_test.h             |   8 +
+ drivers/clk/clk_kunit.c                       | 224 +++++++++
+ drivers/clk/clk_parent_data_test.h            |  10 +
+ drivers/clk/clk_test.c                        | 459 +++++++++++++++++-
+ drivers/clk/kunit_clk_fixed_rate_test.dtso    |  19 +
+ drivers/clk/kunit_clk_parent_data_test.dtso   |  28 ++
+ drivers/of/.kunitconfig                       |   5 +
+ drivers/of/Kconfig                            |  19 +
+ drivers/of/Makefile                           |   4 +
+ drivers/of/kunit_overlay_test.dtso            |   9 +
+ drivers/of/of_kunit.c                         | 125 +++++
+ drivers/of/of_test.c                          |  34 ++
+ drivers/of/overlay_test.c                     | 110 +++++
+ include/kunit/clk.h                           |  28 ++
+ include/kunit/of.h                            |  94 ++++
+ include/kunit/platform_device.h               |  15 +
+ 31 files changed, 2109 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/dev-tools/kunit/api/clk.rst
+ create mode 100644 Documentation/dev-tools/kunit/api/of.rst
+ create mode 100644 Documentation/dev-tools/kunit/api/platformdevice.rst
+ create mode 100644 Documentation/devicetree/bindings/clock/test,clk-parent-data.yaml
+ create mode 100644 Documentation/devicetree/bindings/test/test,clk-fixed-rate.yaml
+ create mode 100644 Documentation/devicetree/bindings/test/test,empty.yaml
+ create mode 100644 drivers/base/test/platform_kunit-test.c
+ create mode 100644 drivers/base/test/platform_kunit.c
+ create mode 100644 drivers/clk/clk-fixed-rate_test.c
+ create mode 100644 drivers/clk/clk-fixed-rate_test.h
+ create mode 100644 drivers/clk/clk_kunit.c
+ create mode 100644 drivers/clk/clk_parent_data_test.h
+ create mode 100644 drivers/clk/kunit_clk_fixed_rate_test.dtso
+ create mode 100644 drivers/clk/kunit_clk_parent_data_test.dtso
+ create mode 100644 drivers/of/.kunitconfig
+ create mode 100644 drivers/of/kunit_overlay_test.dtso
+ create mode 100644 drivers/of/of_kunit.c
+ create mode 100644 drivers/of/of_test.c
+ create mode 100644 drivers/of/overlay_test.c
+ create mode 100644 include/kunit/clk.h
+ create mode 100644 include/kunit/of.h
+ create mode 100644 include/kunit/platform_device.h
 
-Hans
+[1] https://lore.kernel.org/r/20230317053415.2254616-1-frowand.list@gmail.com
 
-
-
-
-> 
-> Jithu Joseph (9):
->   platform/x86/intel/ifs: Separate ifs_pkg_auth from ifs_data
->   platform/x86/intel/ifs: Reorganize driver data
->   platform/x86/intel/ifs: IFS cleanup
->   x86/include/asm/msr-index.h: Add IFS Array test bits
->   platform/x86/intel/ifs: Introduce Array Scan test to IFS
->   platform/x86/intel/ifs: Sysfs interface for Array BIST
->   platform/x86/intel/ifs: Implement Array BIST test
->   platform/x86/intel/ifs: Update IFS doc
->   Documentation/ABI: Update IFS ABI doc
-> 
->  arch/x86/include/asm/msr-index.h              |  2 +
->  drivers/platform/x86/intel/ifs/ifs.h          | 68 ++++++++++----
->  drivers/platform/x86/intel/ifs/core.c         | 81 +++++++++++-----
->  drivers/platform/x86/intel/ifs/load.c         |  9 +-
->  drivers/platform/x86/intel/ifs/runtest.c      | 94 ++++++++++++++++++-
->  drivers/platform/x86/intel/ifs/sysfs.c        | 21 ++---
->  .../ABI/testing/sysfs-platform-intel-ifs      | 17 +++-
->  7 files changed, 229 insertions(+), 63 deletions(-)
-> 
-> 
-> base-commit: e8d018dd0257f744ca50a729e3d042cf2ec9da65
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+prerequisite-patch-id: 33517b96dd0768ab9c265f5721629786354ee320
+prerequisite-patch-id: 909221815eeca0a2b0cdd385c76f57e185fb9e33
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
