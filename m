@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052678BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7981BC433EF;
-	Tue, 28 Mar 2023 14:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77648BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E2AC433EF;
+	Tue, 28 Mar 2023 14:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015390;
-	bh=NmPC/IbYsiCIboUzhU8tgd3NWjpBJgWKgOox4hjERVM=;
+	s=korg; t=1680015393;
+	bh=JBnIcdhdbT2au5uCwynSbRY4PmUIGoPGDsboYpLwM1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWRAlx6It2oA63RjzwksONd6lEqPkkKCXvD1Eq+V4dgtgArLlWRu6jd9q8uKreQqm
-	 DXkfznGQDFZna412v1k23NKpxFQd3dTR0qCwwaXLztNrkkOWW3WRvGTIqr6dh/lVGI
-	 69sjkPdrF63jwsfOJhyroTGGPzZZkOgELWsR2wLI=
+	b=eqzB0VN3Bimv3IpejR+dhbNdWwiSMhex+Xl8S9eU6wLdLSxZXRqTGYjz0NOGQLWnw
+	 YkGW6FCrRDDRpS19Ggy4GUena5VQEIaQu82N3+VGhDXV60YE2WAzsxnGlQMx0Xp3la
+	 C3v4idZakMFRkuC7MyfVeWC1j3gSdyWfdWJ3bUbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/224] arm64: dts: qcom: sm8450: Mark UFS controller as cache coherent
-Date: Tue, 28 Mar 2023 16:40:10 +0200
-Message-Id: <20230328142617.859456348@linuxfoundation.org>
+Subject: [PATCH 6.1 032/224] i2c: imx-lpi2c: check only for enabled interrupt flags
+Date: Tue, 28 Mar 2023 16:40:28 +0200
+Message-Id: <20230328142618.675225945@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -36,35 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 8ba961d4339c5db0e69ff6627606fe1f34c838e5 ]
+[ Upstream commit 1c7885004567e8951d65a983be095f254dd20bef ]
 
-The UFS controller on SM8450 supports cache coherency, hence add the
-"dma-coherent" property to mark it as such.
+When reading from I2C, the Tx watermark is set to 0. Unfortunately the
+TDF (transmit data flag) is enabled when Tx FIFO entries is equal or less
+than watermark. So it is set in every case, hence the reset default of 1.
+This results in the MSR_RDF _and_ MSR_TDF flags to be set thus trying
+to send Tx data on a read message.
+Mask the IRQ status to filter for wanted flags only.
 
-Fixes: 07fa917a335e ("arm64: dts: qcom: sm8450: add ufs nodes")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230307153201.180626-2-manivannan.sadhasivam@linaro.org
+Fixes: a55fa9d0e42e ("i2c: imx-lpi2c: add low power i2c bus driver")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Tested-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-imx-lpi2c.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index df0d888ffc008..4714d7bf03b9f 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -3104,6 +3104,7 @@ ufs_mem_hc: ufshc@1d84000 {
- 			power-domains = <&gcc UFS_PHY_GDSC>;
+diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+index 188f2a36d2fd6..9b2f9544c5681 100644
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -503,10 +503,14 @@ static int lpi2c_imx_xfer(struct i2c_adapter *adapter,
+ static irqreturn_t lpi2c_imx_isr(int irq, void *dev_id)
+ {
+ 	struct lpi2c_imx_struct *lpi2c_imx = dev_id;
++	unsigned int enabled;
+ 	unsigned int temp;
  
- 			iommus = <&apps_smmu 0xe0 0x0>;
-+			dma-coherent;
++	enabled = readl(lpi2c_imx->base + LPI2C_MIER);
++
+ 	lpi2c_imx_intctrl(lpi2c_imx, 0);
+ 	temp = readl(lpi2c_imx->base + LPI2C_MSR);
++	temp &= enabled;
  
- 			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
- 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
+ 	if (temp & MSR_RDF)
+ 		lpi2c_imx_read_rxfifo(lpi2c_imx);
 -- 
 2.39.2
 
