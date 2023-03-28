@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF138BEB
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06945C4339B;
-	Tue, 28 Mar 2023 14:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AFE8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597AAC433EF;
+	Tue, 28 Mar 2023 14:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015472;
-	bh=XsZhYHmXJmA4h41p/H8hecSOUZXRODcED0Dj5+fXnsw=;
+	s=korg; t=1680015469;
+	bh=FiT/JfvoP3X1mBUGDPC61PK/LHxYLhOs8zAYZG1wrR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZV2e/h14u2Y61oNNSOm3cHigC/xEL238HGNc4yL0gJrzUMFi01vkcNTLELVXbMDsk
-	 3zKr/qPKIKHX4ve8IQTpwA3nnwkwDavH6InNWlTQCCkObmQoNJ8570DqYzQd00+NcU
-	 DgR++yacANns59XyjUI9qcAWOo6a0wLyunQuhBVs=
+	b=tyqHktSDFYnj40BBYhHISmf/eU5ZjmDHGjO5TLWhvM5veFAlCy3yHN6guZSRHtibo
+	 KR1xTVfJjKL3FvVVKBLlZAQvwICLUCvavzG4livwfQX6NIjb8wP8KJgqBsTLmzdLEj
+	 zWaKChK+V/4tqsM2PZsTFeDyU36G7U0hKOPJxMsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radoslaw Tyl <radoslawx.tyl@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Marius Cornea <mcornea@redhat.com>,
+	Stefan Assmann <sassmann@kpanic.de>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 6.1 062/224] i40e: fix flow director packet filter programming
-Date: Tue, 28 Mar 2023 16:40:58 +0200
-Message-Id: <20230328142619.929071230@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 061/224] iavf: fix hang on reboot with ice
+Date: Tue, 28 Mar 2023 16:40:57 +0200
+Message-Id: <20230328142619.894359659@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,42 +38,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Radoslaw Tyl <radoslawx.tyl@intel.com>
+From: Stefan Assmann <sassmann@kpanic.de>
 
-[ Upstream commit c672297bbc0e86dbf88396b8053e2fbb173f16ff ]
+[ Upstream commit 4e264be98b88a6d6f476c11087fe865696e8bef5 ]
 
-Initialize to zero structures to build a valid
-Tx Packet used for the filter programming.
+When a system with E810 with existing VFs gets rebooted the following
+hang may be observed.
 
-Fixes: a9219b332f52 ("i40e: VLAN field for flow director")
-Signed-off-by: Radoslaw Tyl <radoslawx.tyl@intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+ Pid 1 is hung in iavf_remove(), part of a network driver:
+ PID: 1        TASK: ffff965400e5a340  CPU: 24   COMMAND: "systemd-shutdow"
+  #0 [ffffaad04005fa50] __schedule at ffffffff8b3239cb
+  #1 [ffffaad04005fae8] schedule at ffffffff8b323e2d
+  #2 [ffffaad04005fb00] schedule_hrtimeout_range_clock at ffffffff8b32cebc
+  #3 [ffffaad04005fb80] usleep_range_state at ffffffff8b32c930
+  #4 [ffffaad04005fbb0] iavf_remove at ffffffffc12b9b4c [iavf]
+  #5 [ffffaad04005fbf0] pci_device_remove at ffffffff8add7513
+  #6 [ffffaad04005fc10] device_release_driver_internal at ffffffff8af08baa
+  #7 [ffffaad04005fc40] pci_stop_bus_device at ffffffff8adcc5fc
+  #8 [ffffaad04005fc60] pci_stop_and_remove_bus_device at ffffffff8adcc81e
+  #9 [ffffaad04005fc70] pci_iov_remove_virtfn at ffffffff8adf9429
+ #10 [ffffaad04005fca8] sriov_disable at ffffffff8adf98e4
+ #11 [ffffaad04005fcc8] ice_free_vfs at ffffffffc04bb2c8 [ice]
+ #12 [ffffaad04005fd10] ice_remove at ffffffffc04778fe [ice]
+ #13 [ffffaad04005fd38] ice_shutdown at ffffffffc0477946 [ice]
+ #14 [ffffaad04005fd50] pci_device_shutdown at ffffffff8add58f1
+ #15 [ffffaad04005fd70] device_shutdown at ffffffff8af05386
+ #16 [ffffaad04005fd98] kernel_restart at ffffffff8a92a870
+ #17 [ffffaad04005fda8] __do_sys_reboot at ffffffff8a92abd6
+ #18 [ffffaad04005fee0] do_syscall_64 at ffffffff8b317159
+ #19 [ffffaad04005ff08] __context_tracking_enter at ffffffff8b31b6fc
+ #20 [ffffaad04005ff18] syscall_exit_to_user_mode at ffffffff8b31b50d
+ #21 [ffffaad04005ff28] do_syscall_64 at ffffffff8b317169
+ #22 [ffffaad04005ff50] entry_SYSCALL_64_after_hwframe at ffffffff8b40009b
+     RIP: 00007f1baa5c13d7  RSP: 00007fffbcc55a98  RFLAGS: 00000202
+     RAX: ffffffffffffffda  RBX: 0000000000000000  RCX: 00007f1baa5c13d7
+     RDX: 0000000001234567  RSI: 0000000028121969  RDI: 00000000fee1dead
+     RBP: 00007fffbcc55ca0   R8: 0000000000000000   R9: 00007fffbcc54e90
+     R10: 00007fffbcc55050  R11: 0000000000000202  R12: 0000000000000005
+     R13: 0000000000000000  R14: 00007fffbcc55af0  R15: 0000000000000000
+     ORIG_RAX: 00000000000000a9  CS: 0033  SS: 002b
+
+During reboot all drivers PM shutdown callbacks are invoked.
+In iavf_shutdown() the adapter state is changed to __IAVF_REMOVE.
+In ice_shutdown() the call chain above is executed, which at some point
+calls iavf_remove(). However iavf_remove() expects the VF to be in one
+of the states __IAVF_RUNNING, __IAVF_DOWN or __IAVF_INIT_FAILED. If
+that's not the case it sleeps forever.
+So if iavf_shutdown() gets invoked before iavf_remove() the system will
+hang indefinitely because the adapter is already in state __IAVF_REMOVE.
+
+Fix this by returning from iavf_remove() if the state is __IAVF_REMOVE,
+as we already went through iavf_shutdown().
+
+Fixes: 974578017fc1 ("iavf: Add waiting so the port is initialized in remove")
+Fixes: a8417330f8a5 ("iavf: Fix race condition between iavf_shutdown and iavf_remove")
+Reported-by: Marius Cornea <mcornea@redhat.com>
+Signed-off-by: Stefan Assmann <sassmann@kpanic.de>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_txrx.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-index b97c95f89fa02..494775d65bf28 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-@@ -171,10 +171,10 @@ static char *i40e_create_dummy_packet(u8 *dummy_packet, bool ipv4, u8 l4proto,
- 				      struct i40e_fdir_filter *data)
- {
- 	bool is_vlan = !!data->vlan_tag;
--	struct vlan_hdr vlan;
--	struct ipv6hdr ipv6;
--	struct ethhdr eth;
--	struct iphdr ip;
-+	struct vlan_hdr vlan = {};
-+	struct ipv6hdr ipv6 = {};
-+	struct ethhdr eth = {};
-+	struct iphdr ip = {};
- 	u8 *tmp;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 41edcf9e154a3..5f8fff6c701fc 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -5086,6 +5086,11 @@ static void iavf_remove(struct pci_dev *pdev)
+ 			mutex_unlock(&adapter->crit_lock);
+ 			break;
+ 		}
++		/* Simply return if we already went through iavf_shutdown */
++		if (adapter->state == __IAVF_REMOVE) {
++			mutex_unlock(&adapter->crit_lock);
++			return;
++		}
  
- 	if (ipv4) {
+ 		mutex_unlock(&adapter->crit_lock);
+ 		usleep_range(500, 1000);
 -- 
 2.39.2
 
