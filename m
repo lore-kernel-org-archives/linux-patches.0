@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AD58BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:12:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229BFC433D2;
-	Tue, 28 Mar 2023 15:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6AB8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:12:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6677C433EF;
+	Tue, 28 Mar 2023 15:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016320;
-	bh=Katqdh3J45/YQa7ilCW2WWUvioq35WJL1/032E7FIuo=;
+	s=korg; t=1680016323;
+	bh=vRyFBwNhcDi7cMYVB4cj89hAwan4PzUH8OIorURPEFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oerxu3r/FVEokSZNLoB5ZXKrW6tT1DWzZvi3+TonA4zkV7buAWFFgBwhCKmPSjkFe
-	 8vNHIuGtIZMXvdMUyEcKF5gHZmFwX/BmWhvkplncoXSoizeBYY5hC2M0XiFate+AZg
-	 nPGyh7/ItrfRVyHj42VFFq/5X0GKJreWDxQ4tkPQ=
+	b=krWpZc5rrRJRAb9BPFNnPADeJrmbRKWUDD7uYST94RGUmKaFgCyFW5lT83qTDV2s5
+	 2gW9Y9cuvbRA73ICOxQlYso0USl3zzLyLYA7tIdxWBUkXKnnw54keeCV3TAp+Cn8Vh
+	 fMx3zvqhy5/uHwlpVT59/oqAlwHJvtHw/5JbFjqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyuan Mo <hdthky0@gmail.com>,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Ovidiu Panait <ovidiu.panait@windriver.com>
-Subject: [PATCH 5.15 146/146] NFSD: fix use-after-free in __nfs42_ssc_open()
-Date: Tue, 28 Mar 2023 16:43:55 +0200
-Message-Id: <20230328142608.792258388@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 5.15 131/146] drm/amdgpu/nv: Apply ASPM quirk on Intel ADL + AMD Navi
+Date: Tue, 28 Mar 2023 16:43:40 +0200
+Message-Id: <20230328142608.122097088@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -36,90 +35,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Kai-Heng Feng <kai.heng.feng@canonical.com>
 
-commit 75333d48f92256a0dec91dbf07835e804fc411c0 upstream.
+commit 2b072442f4962231a8516485012bb2d2551ef2fe upstream.
 
-Problem caused by source's vfsmount being unmounted but remains
-on the delayed unmount list. This happens when nfs42_ssc_open()
-return errors.
+S2idle resume freeze can be observed on Intel ADL + AMD WX5500. This is
+caused by commit 0064b0ce85bb ("drm/amd/pm: enable ASPM by default").
 
-Fixed by removing nfsd4_interssc_connect(), leave the vfsmount
-for the laundromat to unmount when idle time expires.
+The root cause is still not clear for now.
 
-We don't need to call nfs_do_sb_deactive when nfs42_ssc_open
-return errors since the file was not opened so nfs_server->active
-was not incremented. Same as in nfsd4_copy, if we fail to
-launch nfsd4_do_async_copy thread then there's no need to
-call nfs_do_sb_deactive
+So extend and apply the ASPM quirk from commit e02fe3bc7aba
+("drm/amdgpu: vi: disable ASPM on Intel Alder Lake based systems"), to
+workaround the issue on Navi cards too.
 
-Reported-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Tested-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Fixes: 0064b0ce85bb ("drm/amd/pm: enable ASPM by default")
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2458
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |   22 ++++++----------------
- 1 file changed, 6 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h        |    1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   15 +++++++++++++++
+ drivers/gpu/drm/amd/amdgpu/nv.c            |    2 +-
+ drivers/gpu/drm/amd/amdgpu/vi.c            |   17 +----------------
+ 4 files changed, 18 insertions(+), 17 deletions(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1351,13 +1351,6 @@ out_err:
- 	return status;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -1286,6 +1286,7 @@ void amdgpu_device_pci_config_reset(stru
+ int amdgpu_device_pci_reset(struct amdgpu_device *adev);
+ bool amdgpu_device_need_post(struct amdgpu_device *adev);
+ bool amdgpu_device_should_use_aspm(struct amdgpu_device *adev);
++bool amdgpu_device_aspm_support_quirk(void);
+ 
+ void amdgpu_cs_report_moved_bytes(struct amdgpu_device *adev, u64 num_bytes,
+ 				  u64 num_vis_bytes);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -75,6 +75,10 @@
+ 
+ #include <drm/drm_drv.h>
+ 
++#if IS_ENABLED(CONFIG_X86)
++#include <asm/intel-family.h>
++#endif
++
+ MODULE_FIRMWARE("amdgpu/vega10_gpu_info.bin");
+ MODULE_FIRMWARE("amdgpu/vega12_gpu_info.bin");
+ MODULE_FIRMWARE("amdgpu/raven_gpu_info.bin");
+@@ -1337,6 +1341,17 @@ bool amdgpu_device_should_use_aspm(struc
+ 	return pcie_aspm_enabled(adev->pdev);
  }
  
--static void
--nfsd4_interssc_disconnect(struct vfsmount *ss_mnt)
--{
--	nfs_do_sb_deactive(ss_mnt->mnt_sb);
--	mntput(ss_mnt);
--}
--
- /*
-  * Verify COPY destination stateid.
-  *
-@@ -1460,11 +1453,6 @@ nfsd4_cleanup_inter_ssc(struct vfsmount
++bool amdgpu_device_aspm_support_quirk(void)
++{
++#if IS_ENABLED(CONFIG_X86)
++	struct cpuinfo_x86 *c = &cpu_data(0);
++
++	return !(c->x86 == 6 && c->x86_model == INTEL_FAM6_ALDERLAKE);
++#else
++	return true;
++#endif
++}
++
+ /* if we get transitioned to only one device, take VGA back */
+ /**
+  * amdgpu_device_vga_set_decode - enable/disable vga decode
+--- a/drivers/gpu/drm/amd/amdgpu/nv.c
++++ b/drivers/gpu/drm/amd/amdgpu/nv.c
+@@ -584,7 +584,7 @@ static void nv_pcie_gen3_enable(struct a
+ 
+ static void nv_program_aspm(struct amdgpu_device *adev)
  {
+-	if (!amdgpu_device_should_use_aspm(adev))
++	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_aspm_support_quirk())
+ 		return;
+ 
+ 	if (!(adev->flags & AMD_IS_APU) &&
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -81,10 +81,6 @@
+ #include "mxgpu_vi.h"
+ #include "amdgpu_dm.h"
+ 
+-#if IS_ENABLED(CONFIG_X86)
+-#include <asm/intel-family.h>
+-#endif
+-
+ #define ixPCIE_LC_L1_PM_SUBSTATE	0x100100C6
+ #define PCIE_LC_L1_PM_SUBSTATE__LC_L1_SUBSTATES_OVERRIDE_EN_MASK	0x00000001L
+ #define PCIE_LC_L1_PM_SUBSTATE__LC_PCI_PM_L1_2_OVERRIDE_MASK	0x00000002L
+@@ -1138,24 +1134,13 @@ static void vi_enable_aspm(struct amdgpu
+ 		WREG32_PCIE(ixPCIE_LC_CNTL, data);
  }
  
--static void
--nfsd4_interssc_disconnect(struct vfsmount *ss_mnt)
+-static bool aspm_support_quirk_check(void)
 -{
+-#if IS_ENABLED(CONFIG_X86)
+-	struct cpuinfo_x86 *c = &cpu_data(0);
+-
+-	return !(c->x86 == 6 && c->x86_model == INTEL_FAM6_ALDERLAKE);
+-#else
+-	return true;
+-#endif
 -}
 -
- static struct file *nfs42_ssc_open(struct vfsmount *ss_mnt,
- 				   struct nfs_fh *src_fh,
- 				   nfs4_stateid *stateid)
-@@ -1622,14 +1610,14 @@ static int nfsd4_do_async_copy(void *dat
- 		copy->nf_src = kzalloc(sizeof(struct nfsd_file), GFP_KERNEL);
- 		if (!copy->nf_src) {
- 			copy->nfserr = nfserr_serverfault;
--			nfsd4_interssc_disconnect(copy->ss_mnt);
-+			/* ss_mnt will be unmounted by the laundromat */
- 			goto do_callback;
- 		}
- 		copy->nf_src->nf_file = nfs42_ssc_open(copy->ss_mnt, &copy->c_fh,
- 					      &copy->stateid);
- 		if (IS_ERR(copy->nf_src->nf_file)) {
- 			copy->nfserr = nfserr_offload_denied;
--			nfsd4_interssc_disconnect(copy->ss_mnt);
-+			/* ss_mnt will be unmounted by the laundromat */
- 			goto do_callback;
- 		}
- 	}
-@@ -1714,8 +1702,10 @@ out_err:
- 	if (async_copy)
- 		cleanup_async_copy(async_copy);
- 	status = nfserrno(-ENOMEM);
--	if (!copy->cp_intra)
--		nfsd4_interssc_disconnect(copy->ss_mnt);
-+	/*
-+	 * source's vfsmount of inter-copy will be unmounted
-+	 * by the laundromat
-+	 */
- 	goto out;
- }
+ static void vi_program_aspm(struct amdgpu_device *adev)
+ {
+ 	u32 data, data1, orig;
+ 	bool bL1SS = false;
+ 	bool bClkReqSupport = true;
  
+-	if (!amdgpu_device_should_use_aspm(adev) || !aspm_support_quirk_check())
++	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_aspm_support_quirk())
+ 		return;
+ 
+ 	if (adev->flags & AMD_IS_APU ||
 
 
