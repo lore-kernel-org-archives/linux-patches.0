@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8092B8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:08:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02946C433D2;
-	Tue, 28 Mar 2023 15:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BFD8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:08:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FECC433D2;
+	Tue, 28 Mar 2023 15:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016101;
-	bh=Bf8r+lBaYO4Qd16Br9uPru4EPAgU/2weusegXFFDtlg=;
+	s=korg; t=1680016104;
+	bh=dfcJxRdwi97DURGZw6AJmVUz5zTp5wloNFFGzlzenaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8c9u9GokaaBa+ffgp9Sf1hsKaXTjgO5upQH2yZyGWE5okNik5pClGZs4Gj5o3Jrr
-	 5pvPxxvzTUHBeCj0oQQ1ZBpqD0+u7CYz4oVzgrX27vM5GbgfVFM44G7dArD6UYGETv
-	 4DxOeRDXkXpiIsx+xqGZtWeTayZDEUbYwUdDxxIg=
+	b=F5LO7Uex2dcr9DaLzz2tCzk8wRzOEfzLcDfdQ8vLQZr2Jv9LDzkOYazyRftZ3yBTm
+	 XhueVTUmOMT8iIrmWtiqq0efKtgoF5cF0MRp1OgJ+d9AG4m4BiXPsap0GwcoVQtXnD
+	 hsyqI4L8ddw6scyBEQhL+u6R+boNAFu7DKktQfjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Bizon <mbizon@freebox.fr>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/146] net: mdio: fix owner field for mdio buses registered using ACPI
-Date: Tue, 28 Mar 2023 16:42:04 +0200
-Message-Id: <20230328142604.160739331@linuxfoundation.org>
+Subject: [PATCH 5.15 036/146] drm/i915/gt: perform uc late init after probe error injection
+Date: Tue, 28 Mar 2023 16:42:05 +0200
+Message-Id: <20230328142604.202424423@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -37,85 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Andrzej Hajda <andrzej.hajda@intel.com>
 
-[ Upstream commit 30b605b8501e321f79e19c3238aa6ca31da6087c ]
+[ Upstream commit 150784f9285e656373cf3953ef4a7663f1e1a0f2 ]
 
-Bus ownership is wrong when using acpi_mdiobus_register() to register an
-mdio bus. That function is not inline, so when it calls
-mdiobus_register() the wrong THIS_MODULE value is captured.
+Probe pseudo errors should be injected only in places where real errors
+can be encountered, otherwise unwinding code can be broken.
+Placing intel_uc_init_late before i915_inject_probe_error violated
+this rule, resulting in following bug:
+__intel_gt_disable:655 GEM_BUG_ON(intel_gt_pm_is_awake(gt))
 
-CC: Maxime Bizon <mbizon@freebox.fr>
-Fixes: 803ca24d2f92 ("net: mdio: Add ACPI support code for mdio")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 481d458caede ("drm/i915/guc: Add golden context to GuC ADS")
+Acked-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230314151920.1065847-1-andrzej.hajda@intel.com
+(cherry picked from commit c4252a11131c7f27a158294241466e2a4e7ff94e)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/acpi_mdio.c | 10 ++++++----
- include/linux/acpi_mdio.h    |  9 ++++++++-
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_gt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/mdio/acpi_mdio.c b/drivers/net/mdio/acpi_mdio.c
-index d77c987fda9cd..4630dde019749 100644
---- a/drivers/net/mdio/acpi_mdio.c
-+++ b/drivers/net/mdio/acpi_mdio.c
-@@ -18,16 +18,18 @@ MODULE_AUTHOR("Calvin Johnson <calvin.johnson@oss.nxp.com>");
- MODULE_LICENSE("GPL");
+diff --git a/drivers/gpu/drm/i915/gt/intel_gt.c b/drivers/gpu/drm/i915/gt/intel_gt.c
+index 952e7177409ba..b2a003127d319 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gt.c
++++ b/drivers/gpu/drm/i915/gt/intel_gt.c
+@@ -709,12 +709,12 @@ int intel_gt_init(struct intel_gt *gt)
+ 	if (err)
+ 		goto err_gt;
  
- /**
-- * acpi_mdiobus_register - Register mii_bus and create PHYs from the ACPI ASL.
-+ * __acpi_mdiobus_register - Register mii_bus and create PHYs from the ACPI ASL.
-  * @mdio: pointer to mii_bus structure
-  * @fwnode: pointer to fwnode of MDIO bus. This fwnode is expected to represent
-+ * @owner: module owning this @mdio object.
-  * an ACPI device object corresponding to the MDIO bus and its children are
-  * expected to correspond to the PHY devices on that bus.
-  *
-  * This function registers the mii_bus structure and registers a phy_device
-  * for each child node of @fwnode.
-  */
--int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
-+int __acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode,
-+			    struct module *owner)
- {
- 	struct fwnode_handle *child;
- 	u32 addr;
-@@ -35,7 +37,7 @@ int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
+-	intel_uc_init_late(&gt->uc);
+-
+ 	err = i915_inject_probe_error(gt->i915, -EIO);
+ 	if (err)
+ 		goto err_gt;
  
- 	/* Mask out all PHYs from auto probing. */
- 	mdio->phy_mask = GENMASK(31, 0);
--	ret = mdiobus_register(mdio);
-+	ret = __mdiobus_register(mdio, owner);
- 	if (ret)
- 		return ret;
- 
-@@ -55,4 +57,4 @@ int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
- 	}
- 	return 0;
- }
--EXPORT_SYMBOL(acpi_mdiobus_register);
-+EXPORT_SYMBOL(__acpi_mdiobus_register);
-diff --git a/include/linux/acpi_mdio.h b/include/linux/acpi_mdio.h
-index 0a24ab7cb66fa..8e2eefa9fbc0f 100644
---- a/include/linux/acpi_mdio.h
-+++ b/include/linux/acpi_mdio.h
-@@ -9,7 +9,14 @@
- #include <linux/phy.h>
- 
- #if IS_ENABLED(CONFIG_ACPI_MDIO)
--int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode);
-+int __acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode,
-+			    struct module *owner);
++	intel_uc_init_late(&gt->uc);
 +
-+static inline int
-+acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *handle)
-+{
-+	return __acpi_mdiobus_register(mdio, handle, THIS_MODULE);
-+}
- #else /* CONFIG_ACPI_MDIO */
- static inline int
- acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
+ 	intel_migrate_init(&gt->migrate, gt);
+ 
+ 	goto out_fw;
 -- 
 2.39.2
 
