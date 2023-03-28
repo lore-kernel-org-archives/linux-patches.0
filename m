@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E74A8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:08:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CC8C433D2;
-	Tue, 28 Mar 2023 15:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BB08BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:08:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE90C433EF;
+	Tue, 28 Mar 2023 15:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016085;
-	bh=R1zRr2EJy9Wv5fr1GIPxfmQgwsee4XkJvJPAu864KeQ=;
+	s=korg; t=1680016087;
+	bh=uuM4XBtYW5w9jZkoNWMYEJHVqnGUNgx3ZCZryf/qqIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhN38WX6LUDoxxEJ/Tq369Z0VP+vaeoa9aSoUnzYbfvp5UlmDuYVn0WiL8nX4YeGs
-	 yuu5NIPHm26wZEArvaFsrB7dQPPG3PK1aqTBIlO1yup14rHiTVQeSa1DDeZAYkD4a8
-	 8P7ibxtFmmNPZVAFRqGTYEeqSkWRlG8GcmpaWnY0=
+	b=B0KRCP/X2slm09GBitI8yI5KXiHkP9z16uViVM1AlBWjRKcvCBxPBrlKPF19RXbBV
+	 le1uvOVLDiUlmGEZsAHBPCBRwlYathpA5c96NG45/fSgu1P60JtsQGLcXczCM9mavv
+	 lyidC+Bjpz6hIvy3AxYM0xbEyDRuDB9FLzBW36z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Joshua Washington <joshwash@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/146] xirc2ps_cs: Fix use after free bug in xirc2ps_detach
-Date: Tue, 28 Mar 2023 16:42:01 +0200
-Message-Id: <20230328142604.051316436@linuxfoundation.org>
+Subject: [PATCH 5.15 059/146] gve: Cache link_speed value from device
+Date: Tue, 28 Mar 2023 16:42:28 +0200
+Message-Id: <20230328142605.173330538@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -35,56 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Joshua Washington <joshwash@google.com>
 
-[ Upstream commit e8d20c3ded59a092532513c9bd030d1ea66f5f44 ]
+[ Upstream commit 68c3e4fc8628b1487c965aabb29207249657eb5f ]
 
-In xirc2ps_probe, the local->tx_timeout_task was bounded
-with xirc2ps_tx_timeout_task. When timeout occurs,
-it will call xirc_tx_timeout->schedule_work to start the
-work.
+The link speed is never changed for the uptime of a VM, and the current
+implementation sends an admin queue command for each call. Admin queue
+command invocations have nontrivial overhead (e.g., VM exits), which can
+be disruptive to users if triggered frequently. Our telemetry data shows
+that there are VMs that make frequent calls to this admin queue command.
+Caching the result of the original admin queue command would eliminate
+the need to send multiple admin queue commands on subsequent calls to
+retrieve link speed.
 
-When we call xirc2ps_detach to remove the driver, there
-may be a sequence as follows:
-
-Stop responding to timeout tasks and complete scheduled
-tasks before cleanup in xirc2ps_detach, which will fix
-the problem.
-
-CPU0                  CPU1
-
-                    |xirc2ps_tx_timeout_task
-xirc2ps_detach      |
-  free_netdev       |
-    kfree(dev);     |
-                    |
-                    | do_reset
-                    |   //use dev
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 7e074d5a76ca ("gve: Enable Link Speed Reporting in the driver.")
+Signed-off-by: Joshua Washington <joshwash@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230321172332.91678-1-joshwash@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xircom/xirc2ps_cs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/google/gve/gve_ethtool.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/xircom/xirc2ps_cs.c b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-index ae611e46da6af..f8bbd1489af15 100644
---- a/drivers/net/ethernet/xircom/xirc2ps_cs.c
-+++ b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-@@ -503,6 +503,11 @@ static void
- xirc2ps_detach(struct pcmcia_device *link)
+diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
+index 878329ddcf8df..6a0663aadd1e9 100644
+--- a/drivers/net/ethernet/google/gve/gve_ethtool.c
++++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
+@@ -526,7 +526,10 @@ static int gve_get_link_ksettings(struct net_device *netdev,
+ 				  struct ethtool_link_ksettings *cmd)
  {
-     struct net_device *dev = link->priv;
-+    struct local_info *local = netdev_priv(dev);
+ 	struct gve_priv *priv = netdev_priv(netdev);
+-	int err = gve_adminq_report_link_speed(priv);
++	int err = 0;
 +
-+    netif_carrier_off(dev);
-+    netif_tx_disable(dev);
-+    cancel_work_sync(&local->tx_timeout_task);
++	if (priv->link_speed == 0)
++		err = gve_adminq_report_link_speed(priv);
  
-     dev_dbg(&link->dev, "detach\n");
- 
+ 	cmd->base.speed = priv->link_speed;
+ 	return err;
 -- 
 2.39.2
 
