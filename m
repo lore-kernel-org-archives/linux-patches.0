@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3A78BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316A1C433EF;
-	Tue, 28 Mar 2023 15:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC348BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5391C433EF;
+	Tue, 28 Mar 2023 15:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015779;
-	bh=nzBpbAX6GUHoyDmkTBMF6QoSW4vYSZx7G+9QiY7sN40=;
+	s=korg; t=1680015782;
+	bh=sRGFf43QbpCOhF8T3iMsrGAGJcquxPawIyZ9s16t4aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zz4S2Kz5v4P7a56hvUX4xu/RFnnAXO0+1rd2FLJalYnq0sBrgJNuGCdibpKb3cVPr
-	 kYFneWO0o95oxVhs3ZFPpIWDWw7EE3Q9ADsAme4ZmFv6wuT32fZCYdOWYVFLmp+bUJ
-	 +oJz90lLXuJ5Cv6pwqcWXQbHcD2gKHbUsPqvckdw=
+	b=iTCes5hSXbD+44i3KC1ioDvLLt+QrLeEwxgIypvzhda+oV2MgPtZx7bRgcqyut1Ap
+	 9FHjWs0XY2Y0SiEPs174M2xXNoBJW9DM36ye/2HhJ4CQKUdyCu9fMQmwxGmAo5qAhR
+	 3FriqKlp5ySUiPWhSJUIO8GypLmGgJeQTH9FFAIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corinna Vinschen <vinschen@redhat.com>,
-	Lin Ma <linma@zju.edu.cn>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.1 172/224] igb: revert rtnl_lock() that causes deadlock
-Date: Tue, 28 Mar 2023 16:42:48 +0200
-Message-Id: <20230328142624.544319515@linuxfoundation.org>
+	Coly Li <colyli@suse.de>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.1 173/224] dm thin: fix deadlock when swapping to thin device
+Date: Tue, 28 Mar 2023 16:42:49 +0200
+Message-Id: <20230328142624.584577982@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -38,87 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Coly Li <colyli@suse.de>
 
-commit 65f69851e44d71248b952a687e44759a7abb5016 upstream.
+commit 9bbf5feecc7eab2c370496c1c161bbfe62084028 upstream.
 
-The commit 6faee3d4ee8b ("igb: Add lock to avoid data race") adds
-rtnl_lock to eliminate a false data race shown below
+This is an already known issue that dm-thin volume cannot be used as
+swap, otherwise a deadlock may happen when dm-thin internal memory
+demand triggers swap I/O on the dm-thin volume itself.
 
- (FREE from device detaching)      |   (USE from netdev core)
-igb_remove                         |  igb_ndo_get_vf_config
- igb_disable_sriov                 |  vf >= adapter->vfs_allocated_count?
-  kfree(adapter->vf_data)          |
-  adapter->vfs_allocated_count = 0 |
-                                   |    memcpy(... adapter->vf_data[vf]
+But thanks to commit a666e5c05e7c ("dm: fix deadlock when swapping to
+encrypted device"), the limit_swap_bios target flag can also be used
+for dm-thin to avoid the recursive I/O when it is used as swap.
 
-The above race will never happen and the extra rtnl_lock causes deadlock
-below
+Fix is to simply set ti->limit_swap_bios to true in both pool_ctr()
+and thin_ctr().
 
-[  141.420169]  <TASK>
-[  141.420672]  __schedule+0x2dd/0x840
-[  141.421427]  schedule+0x50/0xc0
-[  141.422041]  schedule_preempt_disabled+0x11/0x20
-[  141.422678]  __mutex_lock.isra.13+0x431/0x6b0
-[  141.423324]  unregister_netdev+0xe/0x20
-[  141.423578]  igbvf_remove+0x45/0xe0 [igbvf]
-[  141.423791]  pci_device_remove+0x36/0xb0
-[  141.423990]  device_release_driver_internal+0xc1/0x160
-[  141.424270]  pci_stop_bus_device+0x6d/0x90
-[  141.424507]  pci_stop_and_remove_bus_device+0xe/0x20
-[  141.424789]  pci_iov_remove_virtfn+0xba/0x120
-[  141.425452]  sriov_disable+0x2f/0xf0
-[  141.425679]  igb_disable_sriov+0x4e/0x100 [igb]
-[  141.426353]  igb_remove+0xa0/0x130 [igb]
-[  141.426599]  pci_device_remove+0x36/0xb0
-[  141.426796]  device_release_driver_internal+0xc1/0x160
-[  141.427060]  driver_detach+0x44/0x90
-[  141.427253]  bus_remove_driver+0x55/0xe0
-[  141.427477]  pci_unregister_driver+0x2a/0xa0
-[  141.428296]  __x64_sys_delete_module+0x141/0x2b0
-[  141.429126]  ? mntput_no_expire+0x4a/0x240
-[  141.429363]  ? syscall_trace_enter.isra.19+0x126/0x1a0
-[  141.429653]  do_syscall_64+0x5b/0x80
-[  141.429847]  ? exit_to_user_mode_prepare+0x14d/0x1c0
-[  141.430109]  ? syscall_exit_to_user_mode+0x12/0x30
-[  141.430849]  ? do_syscall_64+0x67/0x80
-[  141.431083]  ? syscall_exit_to_user_mode_prepare+0x183/0x1b0
-[  141.431770]  ? syscall_exit_to_user_mode+0x12/0x30
-[  141.432482]  ? do_syscall_64+0x67/0x80
-[  141.432714]  ? exc_page_fault+0x64/0x140
-[  141.432911]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+In my test, I create a dm-thin volume /dev/vg/swap and use it as swap
+device. Then I run fio on another dm-thin volume /dev/vg/main and use
+large --blocksize to trigger swap I/O onto /dev/vg/swap.
 
-Since the igb_disable_sriov() will call pci_disable_sriov() before
-releasing any resources, the netdev core will synchronize the cleanup to
-avoid any races. This patch removes the useless rtnl_(un)lock to guarantee
-correctness.
+The following fio command line is used in my test,
+  fio --name recursive-swap-io --lockmem 1 --iodepth 128 \
+     --ioengine libaio --filename /dev/vg/main --rw randrw \
+    --blocksize 1M --numjobs 32 --time_based --runtime=12h
 
-CC: stable@vger.kernel.org
-Fixes: 6faee3d4ee8b ("igb: Add lock to avoid data race")
-Reported-by: Corinna Vinschen <vinschen@redhat.com>
-Link: https://lore.kernel.org/intel-wired-lan/ZAcJvkEPqWeJHO2r@calimero.vinschen.de/
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Tested-by: Corinna Vinschen <vinschen@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Without this fix, the whole system can be locked up within 15 seconds.
+
+With this fix, there is no any deadlock or hung task observed after
+2 hours of running fio.
+
+Furthermore, if blocksize is changed from 1M to 128M, after around 30
+seconds fio has no visible I/O, and the out-of-memory killer message
+shows up in kernel message. After around 20 minutes all fio processes
+are killed and the whole system is back to being alive.
+
+This is exactly what is expected when recursive I/O happens on dm-thin
+volume when it is used as swap.
+
+Depends-on: a666e5c05e7c ("dm: fix deadlock when swapping to encrypted device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Coly Li <colyli@suse.de>
+Acked-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/md/dm-thin.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -3841,9 +3841,7 @@ static void igb_remove(struct pci_dev *p
- 	igb_release_hw_control(adapter);
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -3357,6 +3357,7 @@ static int pool_ctr(struct dm_target *ti
+ 	pt->low_water_blocks = low_water_blocks;
+ 	pt->adjusted_pf = pt->requested_pf = pf;
+ 	ti->num_flush_bios = 1;
++	ti->limit_swap_bios = true;
  
- #ifdef CONFIG_PCI_IOV
--	rtnl_lock();
- 	igb_disable_sriov(pdev);
--	rtnl_unlock();
- #endif
+ 	/*
+ 	 * Only need to enable discards if the pool should pass
+@@ -4235,6 +4236,7 @@ static int thin_ctr(struct dm_target *ti
+ 		goto bad;
  
- 	unregister_netdev(netdev);
+ 	ti->num_flush_bios = 1;
++	ti->limit_swap_bios = true;
+ 	ti->flush_supported = true;
+ 	ti->accounts_remapped_io = true;
+ 	ti->per_io_data_size = sizeof(struct dm_thin_endio_hook);
 
 
