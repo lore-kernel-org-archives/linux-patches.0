@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BFD8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:08:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FECC433D2;
-	Tue, 28 Mar 2023 15:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C528BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:08:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5365EC433D2;
+	Tue, 28 Mar 2023 15:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016104;
-	bh=dfcJxRdwi97DURGZw6AJmVUz5zTp5wloNFFGzlzenaI=;
+	s=korg; t=1680016106;
+	bh=sQiJ3KTX0RasQIC4UbRwbrFdCPGZNgyjY1f/m3rR00w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5LO7Uex2dcr9DaLzz2tCzk8wRzOEfzLcDfdQ8vLQZr2Jv9LDzkOYazyRftZ3yBTm
-	 XhueVTUmOMT8iIrmWtiqq0efKtgoF5cF0MRp1OgJ+d9AG4m4BiXPsap0GwcoVQtXnD
-	 hsyqI4L8ddw6scyBEQhL+u6R+boNAFu7DKktQfjI=
+	b=1z4MOR18nJnqX/QUqCHjqkvfUK9N1bMDwMjdfQp9RKv1APUdp5etN+hQCWqxScPSb
+	 jxX9NHg4MZy6o9TGHtnNhh0QztIt0dYZavmx0S/BbiWsb9e1tp5Qrfrlqygqd29BbJ
+	 xmF3yFuuDh1onk1n4fchNeBNv9xl2yOYgW7fc0QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/146] drm/i915/gt: perform uc late init after probe error injection
-Date: Tue, 28 Mar 2023 16:42:05 +0200
-Message-Id: <20230328142604.202424423@linuxfoundation.org>
+Subject: [PATCH 5.15 037/146] net: qcom/emac: Fix use after free bug in emac_remove due to race condition
+Date: Tue, 28 Mar 2023 16:42:06 +0200
+Message-Id: <20230328142604.249339352@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -37,47 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrzej Hajda <andrzej.hajda@intel.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 150784f9285e656373cf3953ef4a7663f1e1a0f2 ]
+[ Upstream commit 6b6bc5b8bd2d4ca9e1efa9ae0f98a0b0687ace75 ]
 
-Probe pseudo errors should be injected only in places where real errors
-can be encountered, otherwise unwinding code can be broken.
-Placing intel_uc_init_late before i915_inject_probe_error violated
-this rule, resulting in following bug:
-__intel_gt_disable:655 GEM_BUG_ON(intel_gt_pm_is_awake(gt))
+In emac_probe, &adpt->work_thread is bound with
+emac_work_thread. Then it will be started by timeout
+handler emac_tx_timeout or a IRQ handler emac_isr.
 
-Fixes: 481d458caede ("drm/i915/guc: Add golden context to GuC ADS")
-Acked-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230314151920.1065847-1-andrzej.hajda@intel.com
-(cherry picked from commit c4252a11131c7f27a158294241466e2a4e7ff94e)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+If we remove the driver which will call emac_remove
+  to make cleanup, there may be a unfinished work.
+
+The possible sequence is as follows:
+
+Fix it by finishing the work before cleanup in the emac_remove
+and disable timeout response.
+
+CPU0                  CPU1
+
+                    |emac_work_thread
+emac_remove         |
+free_netdev         |
+kfree(netdev);      |
+                    |emac_reinit_locked
+                    |emac_mac_down
+                    |//use netdev
+Fixes: b9b17debc69d ("net: emac: emac gigabit ethernet controller driver")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/qualcomm/emac/emac.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt.c b/drivers/gpu/drm/i915/gt/intel_gt.c
-index 952e7177409ba..b2a003127d319 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt.c
-+++ b/drivers/gpu/drm/i915/gt/intel_gt.c
-@@ -709,12 +709,12 @@ int intel_gt_init(struct intel_gt *gt)
- 	if (err)
- 		goto err_gt;
+diff --git a/drivers/net/ethernet/qualcomm/emac/emac.c b/drivers/net/ethernet/qualcomm/emac/emac.c
+index 9015a38eaced8..bb7f3286824f4 100644
+--- a/drivers/net/ethernet/qualcomm/emac/emac.c
++++ b/drivers/net/ethernet/qualcomm/emac/emac.c
+@@ -728,9 +728,15 @@ static int emac_remove(struct platform_device *pdev)
+ 	struct net_device *netdev = dev_get_drvdata(&pdev->dev);
+ 	struct emac_adapter *adpt = netdev_priv(netdev);
  
--	intel_uc_init_late(&gt->uc);
--
- 	err = i915_inject_probe_error(gt->i915, -EIO);
- 	if (err)
- 		goto err_gt;
- 
-+	intel_uc_init_late(&gt->uc);
++	netif_carrier_off(netdev);
++	netif_tx_disable(netdev);
 +
- 	intel_migrate_init(&gt->migrate, gt);
+ 	unregister_netdev(netdev);
+ 	netif_napi_del(&adpt->rx_q.napi);
  
- 	goto out_fw;
++	free_irq(adpt->irq.irq, &adpt->irq);
++	cancel_work_sync(&adpt->work_thread);
++
+ 	emac_clks_teardown(adpt);
+ 
+ 	put_device(&adpt->phydev->mdio.dev);
 -- 
 2.39.2
 
