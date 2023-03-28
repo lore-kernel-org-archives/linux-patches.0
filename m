@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234508BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:58:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D34CC433EF;
-	Tue, 28 Mar 2023 14:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93AB8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:58:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC99C433EF;
+	Tue, 28 Mar 2023 14:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015536;
-	bh=QZPAApuX+LVsCm0tyNzXqx5blc3z/ObEqubVn4tB2Sk=;
+	s=korg; t=1680015538;
+	bh=BVtxsmtcpvbvJZQxTRNlHwtbhkWm99TROxK6CHRu3Fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kS3qH+wUK83Y2krpcPRvVWRVkA8433zBzXrWRQQj5tXZDvqOdlTfSxZ7/pmsO9Cxu
-	 p7IYNdRQgMrUaRF3+qSy/KIh1FQD9x+2Wxe9c9qzE/nh8AGdaqyPkNzjlQq4E8y3by
-	 Xe11hVv5iB7fPBU9biR4dye8eCOPdyzg3aVjGA5k=
+	b=1xnVflY4FZik8P4kISFm1NlIEzpSWOTa3sTOSwy3bqfWtWPUIMvfQQqP2vJifaa8I
+	 UJFRqBozUXn23IZTFEzEBMYr/gaw4LM+zScIqhbzlJzjcTY9ZMPyL1GKlfb+xh3DGs
+	 Yo6mTAaLlvqAd8+svtwFU3zSgN5FfgCcKCZfAjIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
+	Szymon Heidrich <szymon.heidrich@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/224] net: qcom/emac: Fix use after free bug in emac_remove due to race condition
-Date: Tue, 28 Mar 2023 16:40:49 +0200
-Message-Id: <20230328142619.585170025@linuxfoundation.org>
+Subject: [PATCH 6.1 054/224] net: usb: lan78xx: Limit packet length to skb->len
+Date: Tue, 28 Mar 2023 16:40:50 +0200
+Message-Id: <20230328142619.624950807@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,60 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Szymon Heidrich <szymon.heidrich@gmail.com>
 
-[ Upstream commit 6b6bc5b8bd2d4ca9e1efa9ae0f98a0b0687ace75 ]
+[ Upstream commit 7f247f5a2c18b3f21206cdd51193df4f38e1b9f5 ]
 
-In emac_probe, &adpt->work_thread is bound with
-emac_work_thread. Then it will be started by timeout
-handler emac_tx_timeout or a IRQ handler emac_isr.
+Packet length retrieved from descriptor may be larger than
+the actual socket buffer length. In such case the cloned
+skb passed up the network stack will leak kernel memory contents.
 
-If we remove the driver which will call emac_remove
-  to make cleanup, there may be a unfinished work.
+Additionally prevent integer underflow when size is less than
+ETH_FCS_LEN.
 
-The possible sequence is as follows:
-
-Fix it by finishing the work before cleanup in the emac_remove
-and disable timeout response.
-
-CPU0                  CPU1
-
-                    |emac_work_thread
-emac_remove         |
-free_netdev         |
-kfree(netdev);      |
-                    |emac_reinit_locked
-                    |emac_mac_down
-                    |//use netdev
-Fixes: b9b17debc69d ("net: emac: emac gigabit ethernet controller driver")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-
+Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
+Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/emac/emac.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/usb/lan78xx.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/emac/emac.c b/drivers/net/ethernet/qualcomm/emac/emac.c
-index 3115b2c128980..eaa50050aa0b7 100644
---- a/drivers/net/ethernet/qualcomm/emac/emac.c
-+++ b/drivers/net/ethernet/qualcomm/emac/emac.c
-@@ -724,9 +724,15 @@ static int emac_remove(struct platform_device *pdev)
- 	struct net_device *netdev = dev_get_drvdata(&pdev->dev);
- 	struct emac_adapter *adpt = netdev_priv(netdev);
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 068488890d57b..c458c030fadf6 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -3579,13 +3579,29 @@ static int lan78xx_rx(struct lan78xx_net *dev, struct sk_buff *skb,
+ 		size = (rx_cmd_a & RX_CMD_A_LEN_MASK_);
+ 		align_count = (4 - ((size + RXW_PADDING) % 4)) % 4;
  
-+	netif_carrier_off(netdev);
-+	netif_tx_disable(netdev);
++		if (unlikely(size > skb->len)) {
++			netif_dbg(dev, rx_err, dev->net,
++				  "size err rx_cmd_a=0x%08x\n",
++				  rx_cmd_a);
++			return 0;
++		}
 +
- 	unregister_netdev(netdev);
- 	netif_napi_del(&adpt->rx_q.napi);
+ 		if (unlikely(rx_cmd_a & RX_CMD_A_RED_)) {
+ 			netif_dbg(dev, rx_err, dev->net,
+ 				  "Error rx_cmd_a=0x%08x", rx_cmd_a);
+ 		} else {
+-			u32 frame_len = size - ETH_FCS_LEN;
++			u32 frame_len;
+ 			struct sk_buff *skb2;
  
-+	free_irq(adpt->irq.irq, &adpt->irq);
-+	cancel_work_sync(&adpt->work_thread);
++			if (unlikely(size < ETH_FCS_LEN)) {
++				netif_dbg(dev, rx_err, dev->net,
++					  "size err rx_cmd_a=0x%08x\n",
++					  rx_cmd_a);
++				return 0;
++			}
 +
- 	emac_clks_teardown(adpt);
- 
- 	put_device(&adpt->phydev->mdio.dev);
++			frame_len = size - ETH_FCS_LEN;
++
+ 			skb2 = napi_alloc_skb(&dev->napi, frame_len);
+ 			if (!skb2)
+ 				return 0;
 -- 
 2.39.2
 
