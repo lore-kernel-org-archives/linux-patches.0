@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB23F8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C18EC433D2;
-	Tue, 28 Mar 2023 14:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3718BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E231C433D2;
+	Tue, 28 Mar 2023 14:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015420;
-	bh=dEGTYd5h/mthWoggGZqA8yP97QRfq6qADAyuWCJ4NJQ=;
+	s=korg; t=1680015423;
+	bh=4YSGVucTc4FNBx4DKokzJFA57itY5DOtYEmaCnwuB3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kkAHf2M0CRGqmIXk3StO5MlPeaHbtaZrEop60W4ipL3OF02Wzlwb1jqMpFmrLrq2X
-	 lGoh0PeMroqAGw8u1kXp9fIsj2FACKamab80x7SJIE9LpvuoVQGa5t7pvhJlFMJVdP
-	 JYvev+tV8CLtdbwIhHS9oSLPqLQVxU1BZqqtIZfA=
+	b=RAZDcNLGHh0sXExJ4tvoGEBnBNqVhy8+1NOoiMzceOcH+/IInK5K0HQmA30fk5sLR
+	 h1/lo4MUplo4OyAmzT+fna4yJuCZCyYGkpp4vGikZjDNJMX9AU7W4Klc3JNiZxdwb5
+	 inBkCbLhINqBxYg4ThlngojYmSbQwbUpuAvBKRkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/224] power: supply: bq24190: Fix use after free bug in bq24190_remove due to race condition
-Date: Tue, 28 Mar 2023 16:40:11 +0200
-Message-Id: <20230328142617.901326549@linuxfoundation.org>
+Subject: [PATCH 6.1 042/224] net: phy: Ensure state transitions are processed from phy_stop()
+Date: Tue, 28 Mar 2023 16:40:38 +0200
+Message-Id: <20230328142619.107097200@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,53 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 47c29d69212911f50bdcdd0564b5999a559010d4 ]
+[ Upstream commit 4203d84032e28f893594a453bd8bc9c3b15c7334 ]
 
-In bq24190_probe, &bdi->input_current_limit_work is bound
-with bq24190_input_current_limit_work. When external power
-changed, it will call bq24190_charger_external_power_changed
- to start the work.
+In the phy_disconnect() -> phy_stop() path, we will be forcibly setting
+the PHY state machine to PHY_HALTED. This invalidates the old_state !=
+phydev->state condition in phy_state_machine() such that we will neither
+display the state change for debugging, nor will we invoke the
+link_change_notify() callback.
 
-If we remove the module which will call bq24190_remove to make
-cleanup, there may be a unfinished work. The possible
-sequence is as follows:
+Factor the code by introducing phy_process_state_change(), and ensure
+that we process the state change from phy_stop() as well.
 
-CPU0                  CPUc1
-
-                    |bq24190_input_current_limit_work
-bq24190_remove      |
-power_supply_unregister  |
-device_unregister   |
-power_supply_dev_release|
-kfree(psy)          |
-                    |
-                    | power_supply_get_property_from_supplier
-                    |   //use
-
-Fix it by finishing the work before cleanup in the bq24190_remove
-
-Fixes: 97774672573a ("power_supply: Initialize changed_work before calling device_add")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 5c5f626bcace ("net: phy: improve handling link_change_notify callback")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq24190_charger.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/phy/phy.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
-index 2274679c5ddd2..d7400b56820d6 100644
---- a/drivers/power/supply/bq24190_charger.c
-+++ b/drivers/power/supply/bq24190_charger.c
-@@ -1906,6 +1906,7 @@ static void bq24190_remove(struct i2c_client *client)
- 	struct bq24190_dev_info *bdi = i2c_get_clientdata(client);
- 	int error;
+diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
+index e741d8aebffe1..d1aea767ed09f 100644
+--- a/drivers/net/phy/phy.c
++++ b/drivers/net/phy/phy.c
+@@ -57,6 +57,18 @@ static const char *phy_state_to_str(enum phy_state st)
+ 	return NULL;
+ }
  
-+	cancel_delayed_work_sync(&bdi->input_current_limit_work);
- 	error = pm_runtime_resume_and_get(bdi->dev);
- 	if (error < 0)
- 		dev_warn(bdi->dev, "pm_runtime_get failed: %i\n", error);
++static void phy_process_state_change(struct phy_device *phydev,
++				     enum phy_state old_state)
++{
++	if (old_state != phydev->state) {
++		phydev_dbg(phydev, "PHY state change %s -> %s\n",
++			   phy_state_to_str(old_state),
++			   phy_state_to_str(phydev->state));
++		if (phydev->drv && phydev->drv->link_change_notify)
++			phydev->drv->link_change_notify(phydev);
++	}
++}
++
+ static void phy_link_up(struct phy_device *phydev)
+ {
+ 	phydev->phy_link_change(phydev, true);
+@@ -1093,6 +1105,7 @@ EXPORT_SYMBOL(phy_free_interrupt);
+ void phy_stop(struct phy_device *phydev)
+ {
+ 	struct net_device *dev = phydev->attached_dev;
++	enum phy_state old_state;
+ 
+ 	if (!phy_is_started(phydev) && phydev->state != PHY_DOWN) {
+ 		WARN(1, "called from state %s\n",
+@@ -1101,6 +1114,7 @@ void phy_stop(struct phy_device *phydev)
+ 	}
+ 
+ 	mutex_lock(&phydev->lock);
++	old_state = phydev->state;
+ 
+ 	if (phydev->state == PHY_CABLETEST) {
+ 		phy_abort_cable_test(phydev);
+@@ -1111,6 +1125,7 @@ void phy_stop(struct phy_device *phydev)
+ 		sfp_upstream_stop(phydev->sfp_bus);
+ 
+ 	phydev->state = PHY_HALTED;
++	phy_process_state_change(phydev, old_state);
+ 
+ 	mutex_unlock(&phydev->lock);
+ 
+@@ -1228,13 +1243,7 @@ void phy_state_machine(struct work_struct *work)
+ 	if (err < 0)
+ 		phy_error(phydev);
+ 
+-	if (old_state != phydev->state) {
+-		phydev_dbg(phydev, "PHY state change %s -> %s\n",
+-			   phy_state_to_str(old_state),
+-			   phy_state_to_str(phydev->state));
+-		if (phydev->drv && phydev->drv->link_change_notify)
+-			phydev->drv->link_change_notify(phydev);
+-	}
++	phy_process_state_change(phydev, old_state);
+ 
+ 	/* Only re-schedule a PHY state machine change if we are polling the
+ 	 * PHY, if PHY_MAC_INTERRUPT is set, then we will be moving
 -- 
 2.39.2
 
