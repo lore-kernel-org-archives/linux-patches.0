@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E642D8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68230C433D2;
-	Tue, 28 Mar 2023 14:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA738BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D424C433D2;
+	Tue, 28 Mar 2023 14:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014960;
-	bh=FMlprNX8hPo/gJqoM7YfxZkBpN0TAI3lenpNYjq9jNw=;
+	s=korg; t=1680014963;
+	bh=upTXbOOZyD5jfy1RwA+Q/zsGtT9gImRRhm1yjOvbTFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PoE5NW3X65Ac0XErVG3UKxcj8sVqmWRCgSFg+wTwv0eK2HmvSIOXQf4c01mOTjNc2
-	 5tWTd9VRXruo/JAT6ulq5onL0H//BLKqnDYZ7OuB2MpAFTDqEfniGn5e4vDWGmTCfI
-	 TOSUpLWitjxk77CmSun0EgB9lSwgCpHsKYQVPZj0=
+	b=cEctDsJnNtN/cniNtBW/Sm2vv/nUiojzRPOXmvBxoB6dQzUezNfMIyzUOqYtY8Ajj
+	 dL7ZOuAYsCU70i8PsBsrCQQeGt60nf8Pja2Kj+y9+osySkQD/wWpzOoiwXcJ97lWtl
+	 LVIYEUSvJE29XRBRzOYUDr/r/UbHLfVYFACCl9Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.2 116/240] smb3: fix unusable share after force unmount failure
-Date: Tue, 28 Mar 2023 16:41:19 +0200
-Message-Id: <20230328142624.634920893@linuxfoundation.org>
+	Liang He <windhl@126.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 099/240] net: mdio: thunder: Add missing fwnode_handle_put()
+Date: Tue, 28 Mar 2023 16:41:02 +0200
+Message-Id: <20230328142623.901442984@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,104 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Liang He <windhl@126.com>
 
-commit 491eafce1a51c457701351a4bf40733799745314 upstream.
+[ Upstream commit b1de5c78ebe9858ccec9d49af2f76724f1d47e3e ]
 
-If user does forced unmount ("umount -f") while files are still open
-on the share (as was seen in a Kubernetes example running on SMB3.1.1
-mount) then we were marking the share as "TID_EXITING" in umount_begin()
-which caused all subsequent operations (except write) to fail ... but
-unfortunately when umount_begin() is called we do not know yet that
-there are open files or active references on the share that would prevent
-unmount from succeeding.  Kubernetes had example when they were doing
-umount -f when files were open which caused the share to become
-unusable until the files were closed (and the umount retried).
+In device_for_each_child_node(), we should add fwnode_handle_put()
+when break out of the iteration device_for_each_child_node()
+as it will automatically increase and decrease the refcounter.
 
-Fix this so that TID_EXITING is not set until we are about to send
-the tree disconnect (not at the beginning of forced umounts in
-umount_begin) so that if "umount -f" fails (due to open files or
-references) the mount is still usable.
-
-Cc: stable@vger.kernel.org
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 379d7ac7ca31 ("phy: mdio-thunder: Add driver for Cavium Thunder SoC MDIO buses.")
+Signed-off-by: Liang He <windhl@126.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsfs.c  |    9 ++++++---
- fs/cifs/cifssmb.c |    6 ++----
- fs/cifs/connect.c |    1 +
- fs/cifs/smb2pdu.c |    8 ++------
- 4 files changed, 11 insertions(+), 13 deletions(-)
+ drivers/net/mdio/mdio-thunder.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -730,13 +730,16 @@ static void cifs_umount_begin(struct sup
- 	spin_lock(&tcon->tc_lock);
- 	if ((tcon->tc_count > 1) || (tcon->status == TID_EXITING)) {
- 		/* we have other mounts to same share or we have
--		   already tried to force umount this and woken up
-+		   already tried to umount this and woken up
- 		   all waiting network requests, nothing to do */
- 		spin_unlock(&tcon->tc_lock);
- 		spin_unlock(&cifs_tcp_ses_lock);
- 		return;
--	} else if (tcon->tc_count == 1)
--		tcon->status = TID_EXITING;
-+	}
-+	/*
-+	 * can not set tcon->status to TID_EXITING yet since we don't know if umount -f will
-+	 * fail later (e.g. due to open files).  TID_EXITING will be set just before tdis req sent
-+	 */
- 	spin_unlock(&tcon->tc_lock);
- 	spin_unlock(&cifs_tcp_ses_lock);
+diff --git a/drivers/net/mdio/mdio-thunder.c b/drivers/net/mdio/mdio-thunder.c
+index 822d2cdd2f359..394b864aaa372 100644
+--- a/drivers/net/mdio/mdio-thunder.c
++++ b/drivers/net/mdio/mdio-thunder.c
+@@ -104,6 +104,7 @@ static int thunder_mdiobus_pci_probe(struct pci_dev *pdev,
+ 		if (i >= ARRAY_SIZE(nexus->buses))
+ 			break;
+ 	}
++	fwnode_handle_put(fwn);
+ 	return 0;
  
---- a/fs/cifs/cifssmb.c
-+++ b/fs/cifs/cifssmb.c
-@@ -85,13 +85,11 @@ cifs_reconnect_tcon(struct cifs_tcon *tc
- 
- 	/*
- 	 * only tree disconnect, open, and write, (and ulogoff which does not
--	 * have tcon) are allowed as we start force umount
-+	 * have tcon) are allowed as we start umount
- 	 */
- 	spin_lock(&tcon->tc_lock);
- 	if (tcon->status == TID_EXITING) {
--		if (smb_command != SMB_COM_WRITE_ANDX &&
--		    smb_command != SMB_COM_OPEN_ANDX &&
--		    smb_command != SMB_COM_TREE_DISCONNECT) {
-+		if (smb_command != SMB_COM_TREE_DISCONNECT) {
- 			spin_unlock(&tcon->tc_lock);
- 			cifs_dbg(FYI, "can not send cmd %d while umounting\n",
- 				 smb_command);
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -2363,6 +2363,7 @@ cifs_put_tcon(struct cifs_tcon *tcon)
- 	WARN_ON(tcon->tc_count < 0);
- 
- 	list_del_init(&tcon->tcon_list);
-+	tcon->status = TID_EXITING;
- 	spin_unlock(&tcon->tc_lock);
- 	spin_unlock(&cifs_tcp_ses_lock);
- 
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -225,13 +225,9 @@ smb2_reconnect(__le16 smb2_command, stru
- 	spin_lock(&tcon->tc_lock);
- 	if (tcon->status == TID_EXITING) {
- 		/*
--		 * only tree disconnect, open, and write,
--		 * (and ulogoff which does not have tcon)
--		 * are allowed as we start force umount.
-+		 * only tree disconnect allowed when disconnecting ...
- 		 */
--		if ((smb2_command != SMB2_WRITE) &&
--		   (smb2_command != SMB2_CREATE) &&
--		   (smb2_command != SMB2_TREE_DISCONNECT)) {
-+		if (smb2_command != SMB2_TREE_DISCONNECT) {
- 			spin_unlock(&tcon->tc_lock);
- 			cifs_dbg(FYI, "can not send cmd %d while umounting\n",
- 				 smb2_command);
+ err_release_regions:
+-- 
+2.39.2
+
 
 
