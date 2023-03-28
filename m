@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769938BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:10:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE50CC433EF;
-	Tue, 28 Mar 2023 15:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2875C8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:10:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9DBC433EF;
+	Tue, 28 Mar 2023 15:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016208;
-	bh=61zLZ2kjXqSlHW7kza0ZfZ6p6MoqxE6veYzqJYjLeTY=;
+	s=korg; t=1680016211;
+	bh=OIQgs3wl+xCQMgSnsW/GHkga3djyDt7KRSbbxH0Q/04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=px/w17Z74ndTs5D1K6q+K6GRk/ieXApN/iZQlD4O+Rr8HsUU7pbfANm89F7xmYrqg
-	 msgU90l+GF30s/9oWV2Rmq5pFvQ/lo3zVNCMkfuPj3/5lV5Gm6XJjuQcLfXrUxuhaM
-	 bWtI7JA/q9L94zpPTqYnFovFjDGztB5oweBQQ6Ks=
+	b=DTlcg0v7UrDY+iH8AgOtnOsOhUlBSiVKwr6XDMdxFA1rmtmyUq9I2at/7SXE2PimL
+	 g92JcQ71OgMqu1+L2aCtqWGtHWEdIlrEcblVtzIePfeWhvvd8CWwluxJKQ+SzYyaOq
+	 f3qxGX9T3ucaIYBtb0pEwGXn4xfGeYK2H3MAdmlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Subject: [PATCH 5.15 105/146] usb: dwc2: fix a devres leak in hw_enable upon suspend resume
-Date: Tue, 28 Mar 2023 16:43:14 +0200
-Message-Id: <20230328142607.068104444@linuxfoundation.org>
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Ruslan Bilovol <ruslan.bilovol@gmail.com>,
+	John Keeping <john@metanate.com>
+Subject: [PATCH 5.15 106/146] usb: gadget: u_audio: dont let userspace block driver unbind
+Date: Tue, 28 Mar 2023 16:43:15 +0200
+Message-Id: <20230328142607.108241860@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -34,100 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Alvin Šipraga <alsi@bang-olufsen.dk>
 
-commit f747313249b74f323ddf841a9c8db14d989f296a upstream.
+commit 6c67ed9ad9b83e453e808f9b31a931a20a25629b upstream.
 
-Each time the platform goes to low power, PM suspend / resume routines
-call: __dwc2_lowlevel_hw_enable -> devm_add_action_or_reset().
-This adds a new devres each time.
-This may also happen at runtime, as dwc2_lowlevel_hw_enable() can be
-called from udc_start().
+In the unbind callback for f_uac1 and f_uac2, a call to snd_card_free()
+via g_audio_cleanup() will disconnect the card and then wait for all
+resources to be released, which happens when the refcount falls to zero.
+Since userspace can keep the refcount incremented by not closing the
+relevant file descriptor, the call to unbind may block indefinitely.
+This can cause a deadlock during reboot, as evidenced by the following
+blocked task observed on my machine:
 
-This can be seen with tracing:
-- echo 1 > /sys/kernel/debug/tracing/events/dev/devres_log/enable
-- go to low power
-- cat /sys/kernel/debug/tracing/trace
+  task:reboot  state:D stack:0   pid:2827  ppid:569    flags:0x0000000c
+  Call trace:
+   __switch_to+0xc8/0x140
+   __schedule+0x2f0/0x7c0
+   schedule+0x60/0xd0
+   schedule_timeout+0x180/0x1d4
+   wait_for_completion+0x78/0x180
+   snd_card_free+0x90/0xa0
+   g_audio_cleanup+0x2c/0x64
+   afunc_unbind+0x28/0x60
+   ...
+   kernel_restart+0x4c/0xac
+   __do_sys_reboot+0xcc/0x1ec
+   __arm64_sys_reboot+0x28/0x30
+   invoke_syscall+0x4c/0x110
+   ...
 
-A new "ADD" entry is found upon each low power cycle:
-... devres_log: 49000000.usb-otg ADD 82a13bba devm_action_release (8 bytes)
-... devres_log: 49000000.usb-otg ADD 49889daf devm_action_release (8 bytes)
-...
+The issue can also be observed by opening the card with arecord and
+then stopping the process through the shell before unbinding:
 
-A second issue is addressed here:
-- regulator_bulk_enable() is called upon each PM cycle (suspend/resume).
-- regulator_bulk_disable() never gets called.
+  # arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
+  Recording WAVE '/dev/null' : Signed 32 bit Little Endian, Rate 48000 Hz, Stereo
+  ^Z[1]+  Stopped                    arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
+  # echo gadget.0 > /sys/bus/gadget/drivers/configfs-gadget/unbind
+  (observe that the unbind command never finishes)
 
-So the reference count for these regulators constantly increase, by one
-upon each low power cycle, due to missing regulator_bulk_disable() call
-in __dwc2_lowlevel_hw_disable().
+Fix the problem by using snd_card_free_when_closed() instead, which will
+still disconnect the card as desired, but defer the task of freeing the
+resources to the core once userspace closes its file descriptor.
 
-The original fix that introduced the devm_add_action_or_reset() call,
-fixed an issue during probe, that happens due to other errors in
-dwc2_driver_probe() -> dwc2_core_reset(). Then the probe fails without
-disabling regulators, when dr_mode == USB_DR_MODE_PERIPHERAL.
-
-Rather fix the error path: disable all the low level hardware in the
-error path, by using the "hsotg->ll_hw_enabled" flag. Checking dr_mode
-has been introduced to avoid a dual call to dwc2_lowlevel_hw_disable().
-"ll_hw_enabled" should achieve the same (and is used currently in the
-remove() routine).
-
-Fixes: 54c196060510 ("usb: dwc2: Always disable regulators on driver teardown")
-Fixes: 33a06f1300a7 ("usb: dwc2: Fix error path in gadget registration")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/r/20230316084127.126084-1-fabrice.gasnier@foss.st.com
+Fixes: 132fcb460839 ("usb: gadget: Add Audio Class 2.0 Driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Reviewed-by: Ruslan Bilovol <ruslan.bilovol@gmail.com>
+Reviewed-by: John Keeping <john@metanate.com>
+Link: https://lore.kernel.org/r/20230302163648.3349669-1-alvin@pqrs.dk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/platform.c |   16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
+ drivers/usb/gadget/function/u_audio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc2/platform.c
-+++ b/drivers/usb/dwc2/platform.c
-@@ -121,13 +121,6 @@ static int dwc2_get_dr_mode(struct dwc2_
- 	return 0;
- }
+--- a/drivers/usb/gadget/function/u_audio.c
++++ b/drivers/usb/gadget/function/u_audio.c
+@@ -1174,7 +1174,7 @@ void g_audio_cleanup(struct g_audio *g_a
+ 	uac = g_audio->uac;
+ 	card = uac->card;
+ 	if (card)
+-		snd_card_free(card);
++		snd_card_free_when_closed(card);
  
--static void __dwc2_disable_regulators(void *data)
--{
--	struct dwc2_hsotg *hsotg = data;
--
--	regulator_bulk_disable(ARRAY_SIZE(hsotg->supplies), hsotg->supplies);
--}
--
- static int __dwc2_lowlevel_hw_enable(struct dwc2_hsotg *hsotg)
- {
- 	struct platform_device *pdev = to_platform_device(hsotg->dev);
-@@ -138,11 +131,6 @@ static int __dwc2_lowlevel_hw_enable(str
- 	if (ret)
- 		return ret;
- 
--	ret = devm_add_action_or_reset(&pdev->dev,
--				       __dwc2_disable_regulators, hsotg);
--	if (ret)
--		return ret;
--
- 	if (hsotg->clk) {
- 		ret = clk_prepare_enable(hsotg->clk);
- 		if (ret)
-@@ -198,7 +186,7 @@ static int __dwc2_lowlevel_hw_disable(st
- 	if (hsotg->clk)
- 		clk_disable_unprepare(hsotg->clk);
- 
--	return 0;
-+	return regulator_bulk_disable(ARRAY_SIZE(hsotg->supplies), hsotg->supplies);
- }
- 
- /**
-@@ -658,7 +646,7 @@ error_init:
- 	if (hsotg->params.activate_stm_id_vb_detection)
- 		regulator_disable(hsotg->usb33d);
- error:
--	if (hsotg->dr_mode != USB_DR_MODE_PERIPHERAL)
-+	if (hsotg->ll_hw_enabled)
- 		dwc2_lowlevel_hw_disable(hsotg);
- 	return retval;
- }
+ 	kfree(uac->p_prm.reqs);
+ 	kfree(uac->c_prm.reqs);
 
 
