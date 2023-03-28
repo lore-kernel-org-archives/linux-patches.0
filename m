@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F848BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:46:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081B2C433D2;
-	Tue, 28 Mar 2023 14:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809788BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:46:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0297AC433D2;
+	Tue, 28 Mar 2023 14:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014777;
-	bh=Bf8r+lBaYO4Qd16Br9uPru4EPAgU/2weusegXFFDtlg=;
+	s=korg; t=1680014780;
+	bh=vI0ZBlt0hgsZL3mD8Pj1euGCk+TpPxWpADYRNmIHHHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RbED6D7oj1VFbhxC+ZIhVrxrVcdokzjhNkRqVPLCECToxLmYRkhVnLxt56YZACebI
-	 FfwLEbHalpBTHVCtXTc6lELNwFt8leIFzRSRPcO0JkPY3dRZdIWEHwNwLa/7hIN/6Q
-	 YbwTBZtYQe4KNYnoUanOQ3KIFqnhbJhH4TMEjR/Q=
+	b=c8HZdj9VOrzHmhhmX3yAeW7Tyj10nmOJhpTumE2Utb/nvQ0PTlzfPc6E3NGvpUlR4
+	 68uyQCLFQgBT3e0tjuLyv9KEMUhWpCGtBy67eXVHkyjKwDHSpZ1ZMLDlNtqch1CaBy
+	 +F1HbPBEw0/K7TBpqON/AiCLCdI2rYGWPS5dNEKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Bizon <mbizon@freebox.fr>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Jochen Henneberg <jh@henneberg-systemdesign.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 049/240] net: mdio: fix owner field for mdio buses registered using ACPI
-Date: Tue, 28 Mar 2023 16:40:12 +0200
-Message-Id: <20230328142621.746202151@linuxfoundation.org>
+Subject: [PATCH 6.2 050/240] net: stmmac: Fix for mismatched host/device DMA address width
+Date: Tue, 28 Mar 2023 16:40:13 +0200
+Message-Id: <20230328142621.795335283@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -37,85 +35,192 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Jochen Henneberg <jh@henneberg-systemdesign.com>
 
-[ Upstream commit 30b605b8501e321f79e19c3238aa6ca31da6087c ]
+[ Upstream commit 070246e4674b125860d311c18ce2623e73e2bd51 ]
 
-Bus ownership is wrong when using acpi_mdiobus_register() to register an
-mdio bus. That function is not inline, so when it calls
-mdiobus_register() the wrong THIS_MODULE value is captured.
+Currently DMA address width is either read from a RO device register
+or force set from the platform data. This breaks DMA when the host DMA
+address width is <=32it but the device is >32bit.
 
-CC: Maxime Bizon <mbizon@freebox.fr>
-Fixes: 803ca24d2f92 ("net: mdio: Add ACPI support code for mdio")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Right now the driver may decide to use a 2nd DMA descriptor for
+another buffer (happens in case of TSO xmit) assuming that 32bit
+addressing is used due to platform configuration but the device will
+still use both descriptor addresses as one address.
+
+This can be observed with the Intel EHL platform driver that sets
+32bit for addr64 but the MAC reports 40bit. The TX queue gets stuck in
+case of TCP with iptables NAT configuration on TSO packets.
+
+The logic should be like this: Whatever we do on the host side (memory
+allocation GFP flags) should happen with the host DMA width, whenever
+we decide how to set addresses on the device registers we must use the
+device DMA address width.
+
+This patch renames the platform address width field from addr64 (term
+used in device datasheet) to host_addr and uses this value exclusively
+for host side operations while all chip operations consider the device
+DMA width as read from the device register.
+
+Fixes: 7cfc4486e7ea ("stmmac: intel: Configure EHL PSE0 GbE and PSE1 GbE to 32 bits DMA addressing")
+Signed-off-by: Jochen Henneberg <jh@henneberg-systemdesign.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/acpi_mdio.c | 10 ++++++----
- include/linux/acpi_mdio.h    |  9 ++++++++-
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/common.h  |  1 +
+ .../net/ethernet/stmicro/stmmac/dwmac-imx.c   |  2 +-
+ .../net/ethernet/stmicro/stmmac/dwmac-intel.c |  4 +--
+ .../ethernet/stmicro/stmmac/dwmac-mediatek.c  |  2 +-
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 30 ++++++++++---------
+ include/linux/stmmac.h                        |  2 +-
+ 6 files changed, 22 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/mdio/acpi_mdio.c b/drivers/net/mdio/acpi_mdio.c
-index d77c987fda9cd..4630dde019749 100644
---- a/drivers/net/mdio/acpi_mdio.c
-+++ b/drivers/net/mdio/acpi_mdio.c
-@@ -18,16 +18,18 @@ MODULE_AUTHOR("Calvin Johnson <calvin.johnson@oss.nxp.com>");
- MODULE_LICENSE("GPL");
- 
- /**
-- * acpi_mdiobus_register - Register mii_bus and create PHYs from the ACPI ASL.
-+ * __acpi_mdiobus_register - Register mii_bus and create PHYs from the ACPI ASL.
-  * @mdio: pointer to mii_bus structure
-  * @fwnode: pointer to fwnode of MDIO bus. This fwnode is expected to represent
-+ * @owner: module owning this @mdio object.
-  * an ACPI device object corresponding to the MDIO bus and its children are
-  * expected to correspond to the PHY devices on that bus.
-  *
-  * This function registers the mii_bus structure and registers a phy_device
-  * for each child node of @fwnode.
-  */
--int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
-+int __acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode,
-+			    struct module *owner)
- {
- 	struct fwnode_handle *child;
- 	u32 addr;
-@@ -35,7 +37,7 @@ int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
- 
- 	/* Mask out all PHYs from auto probing. */
- 	mdio->phy_mask = GENMASK(31, 0);
--	ret = mdiobus_register(mdio);
-+	ret = __mdiobus_register(mdio, owner);
- 	if (ret)
- 		return ret;
- 
-@@ -55,4 +57,4 @@ int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
+index 6b5d96bced475..ec9c130276d89 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/common.h
++++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+@@ -418,6 +418,7 @@ struct dma_features {
+ 	unsigned int frpbs;
+ 	unsigned int frpes;
+ 	unsigned int addr64;
++	unsigned int host_dma_width;
+ 	unsigned int rssen;
+ 	unsigned int vlhash;
+ 	unsigned int sphen;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c
+index bd52fb7cf4860..0d6a84199fd8a 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c
+@@ -251,7 +251,7 @@ static int imx_dwmac_probe(struct platform_device *pdev)
+ 		goto err_parse_dt;
  	}
- 	return 0;
- }
--EXPORT_SYMBOL(acpi_mdiobus_register);
-+EXPORT_SYMBOL(__acpi_mdiobus_register);
-diff --git a/include/linux/acpi_mdio.h b/include/linux/acpi_mdio.h
-index 0a24ab7cb66fa..8e2eefa9fbc0f 100644
---- a/include/linux/acpi_mdio.h
-+++ b/include/linux/acpi_mdio.h
-@@ -9,7 +9,14 @@
- #include <linux/phy.h>
  
- #if IS_ENABLED(CONFIG_ACPI_MDIO)
--int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode);
-+int __acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode,
-+			    struct module *owner);
-+
-+static inline int
-+acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *handle)
-+{
-+	return __acpi_mdiobus_register(mdio, handle, THIS_MODULE);
-+}
- #else /* CONFIG_ACPI_MDIO */
- static inline int
- acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
+-	plat_dat->addr64 = dwmac->ops->addr_width;
++	plat_dat->host_dma_width = dwmac->ops->addr_width;
+ 	plat_dat->init = imx_dwmac_init;
+ 	plat_dat->exit = imx_dwmac_exit;
+ 	plat_dat->clks_config = imx_dwmac_clks_config;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
+index 7deb1f817dacc..13aa919633b47 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
+@@ -684,7 +684,7 @@ static int ehl_pse0_common_data(struct pci_dev *pdev,
+ 
+ 	intel_priv->is_pse = true;
+ 	plat->bus_id = 2;
+-	plat->addr64 = 32;
++	plat->host_dma_width = 32;
+ 
+ 	plat->clk_ptp_rate = 200000000;
+ 
+@@ -725,7 +725,7 @@ static int ehl_pse1_common_data(struct pci_dev *pdev,
+ 
+ 	intel_priv->is_pse = true;
+ 	plat->bus_id = 3;
+-	plat->addr64 = 32;
++	plat->host_dma_width = 32;
+ 
+ 	plat->clk_ptp_rate = 200000000;
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
+index 2f7d8e4561d92..9ae31e3dc8218 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
+@@ -591,7 +591,7 @@ static int mediatek_dwmac_common_data(struct platform_device *pdev,
+ 	plat->use_phy_wol = priv_plat->mac_wol ? 0 : 1;
+ 	plat->riwt_off = 1;
+ 	plat->maxmtu = ETH_DATA_LEN;
+-	plat->addr64 = priv_plat->variant->dma_bit_mask;
++	plat->host_dma_width = priv_plat->variant->dma_bit_mask;
+ 	plat->bsp_priv = priv_plat;
+ 	plat->init = mediatek_dwmac_init;
+ 	plat->clks_config = mediatek_dwmac_clks_config;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 01f7e19a2ca8b..7389718b4797b 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1431,7 +1431,7 @@ static int stmmac_init_rx_buffers(struct stmmac_priv *priv,
+ 	struct stmmac_rx_buffer *buf = &rx_q->buf_pool[i];
+ 	gfp_t gfp = (GFP_ATOMIC | __GFP_NOWARN);
+ 
+-	if (priv->dma_cap.addr64 <= 32)
++	if (priv->dma_cap.host_dma_width <= 32)
+ 		gfp |= GFP_DMA32;
+ 
+ 	if (!buf->page) {
+@@ -4587,7 +4587,7 @@ static inline void stmmac_rx_refill(struct stmmac_priv *priv, u32 queue)
+ 	unsigned int entry = rx_q->dirty_rx;
+ 	gfp_t gfp = (GFP_ATOMIC | __GFP_NOWARN);
+ 
+-	if (priv->dma_cap.addr64 <= 32)
++	if (priv->dma_cap.host_dma_width <= 32)
+ 		gfp |= GFP_DMA32;
+ 
+ 	while (dirty-- > 0) {
+@@ -6203,7 +6203,7 @@ static int stmmac_dma_cap_show(struct seq_file *seq, void *v)
+ 	seq_printf(seq, "\tFlexible RX Parser: %s\n",
+ 		   priv->dma_cap.frpsel ? "Y" : "N");
+ 	seq_printf(seq, "\tEnhanced Addressing: %d\n",
+-		   priv->dma_cap.addr64);
++		   priv->dma_cap.host_dma_width);
+ 	seq_printf(seq, "\tReceive Side Scaling: %s\n",
+ 		   priv->dma_cap.rssen ? "Y" : "N");
+ 	seq_printf(seq, "\tVLAN Hash Filtering: %s\n",
+@@ -7173,20 +7173,22 @@ int stmmac_dvr_probe(struct device *device,
+ 		dev_info(priv->device, "SPH feature enabled\n");
+ 	}
+ 
+-	/* The current IP register MAC_HW_Feature1[ADDR64] only define
+-	 * 32/40/64 bit width, but some SOC support others like i.MX8MP
+-	 * support 34 bits but it map to 40 bits width in MAC_HW_Feature1[ADDR64].
+-	 * So overwrite dma_cap.addr64 according to HW real design.
++	/* Ideally our host DMA address width is the same as for the
++	 * device. However, it may differ and then we have to use our
++	 * host DMA width for allocation and the device DMA width for
++	 * register handling.
+ 	 */
+-	if (priv->plat->addr64)
+-		priv->dma_cap.addr64 = priv->plat->addr64;
++	if (priv->plat->host_dma_width)
++		priv->dma_cap.host_dma_width = priv->plat->host_dma_width;
++	else
++		priv->dma_cap.host_dma_width = priv->dma_cap.addr64;
+ 
+-	if (priv->dma_cap.addr64) {
++	if (priv->dma_cap.host_dma_width) {
+ 		ret = dma_set_mask_and_coherent(device,
+-				DMA_BIT_MASK(priv->dma_cap.addr64));
++				DMA_BIT_MASK(priv->dma_cap.host_dma_width));
+ 		if (!ret) {
+-			dev_info(priv->device, "Using %d bits DMA width\n",
+-				 priv->dma_cap.addr64);
++			dev_info(priv->device, "Using %d/%d bits DMA host/device width\n",
++				 priv->dma_cap.host_dma_width, priv->dma_cap.addr64);
+ 
+ 			/*
+ 			 * If more than 32 bits can be addressed, make sure to
+@@ -7201,7 +7203,7 @@ int stmmac_dvr_probe(struct device *device,
+ 				goto error_hw_init;
+ 			}
+ 
+-			priv->dma_cap.addr64 = 32;
++			priv->dma_cap.host_dma_width = 32;
+ 		}
+ 	}
+ 
+diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+index a152678b82b71..a2414c1874837 100644
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -215,7 +215,7 @@ struct plat_stmmacenet_data {
+ 	int unicast_filter_entries;
+ 	int tx_fifo_size;
+ 	int rx_fifo_size;
+-	u32 addr64;
++	u32 host_dma_width;
+ 	u32 rx_queues_to_use;
+ 	u32 tx_queues_to_use;
+ 	u8 rx_sched_algorithm;
 -- 
 2.39.2
 
