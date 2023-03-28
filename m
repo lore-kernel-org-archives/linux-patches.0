@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA09F8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE79C433EF;
-	Tue, 28 Mar 2023 14:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9258B8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1283AC433EF;
+	Tue, 28 Mar 2023 14:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014941;
-	bh=rBkdW1y5B7zp6feinD9rC2EV8ecq3IfIX2h2UfbawzY=;
+	s=korg; t=1680014944;
+	bh=80Mseo0q45mvjqk1imPxIxXna6YySEIBIg0bNuP8Ek0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w5LwDrAsFE6eo8PpHm8X4cvsio2jrnmMNEpJGzXOv7auc+WxOUbbWjWWUs8drHnS7
-	 PoFbBSLszkGgS8GkrzUmFTer4OoabPpklcqRTxiOsPe4lqwRObHIKCwW99eAoKwVA9
-	 b11qIDm/8yjagqNcUgzBwBK60O1Oxg1DI7nZpz/w=
+	b=duiXnkvohr9GsZcBS3I47bAswun/P24rJtYEwT0lpX8RthHGIsl8zRNYR5WsmU6Dv
+	 8lLKY6/lFeaXrvYZhR+D6GZGF0dUvLcPVybjexRfoAF0k+0Nr4nYG9ItcDU+4CIx73
+	 LyzXjhdM3g+2uICRaYDylDNrn4rsQe5oyqS/ID/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sandipan Das <sandipan.das@amd.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 109/240] perf/x86/amd/core: Always clear status for idx
-Date: Tue, 28 Mar 2023 16:41:12 +0200
-Message-Id: <20230328142624.327351397@linuxfoundation.org>
+Subject: [PATCH 6.2 110/240] entry/rcu: Check TIF_RESCHED _after_ delayed RCU wake-up
+Date: Tue, 28 Mar 2023 16:41:13 +0200
+Message-Id: <20230328142624.360682782@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,55 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Breno Leitao <leitao@debian.org>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 263f5ecaf7080513efc248ec739b6d9e00f4129f ]
+[ Upstream commit b416514054810cf2d2cc348ae477cea619b64da7 ]
 
-The variable 'status' (which contains the unhandled overflow bits) is
-not being properly masked in some cases, displaying the following
-warning:
+RCU sometimes needs to perform a delayed wake up for specific kthreads
+handling offloaded callbacks (RCU_NOCB).  These wakeups are performed
+by timers and upon entry to idle (also to guest and to user on nohz_full).
 
-  WARNING: CPU: 156 PID: 475601 at arch/x86/events/amd/core.c:972 amd_pmu_v2_handle_irq+0x216/0x270
+However the delayed wake-up on kernel exit is actually performed after
+the thread flags are fetched towards the fast path check for work to
+do on exit to user. As a result, and if there is no other pending work
+to do upon that kernel exit, the current task will resume to userspace
+with TIF_RESCHED set and the pending wake up ignored.
 
-This seems to be happening because the loop is being continued before
-the status bit being unset, in case x86_perf_event_set_period()
-returns 0. This is also causing an inconsistency because the "handled"
-counter is incremented, but the status bit is not cleaned.
+Fix this with fetching the thread flags _after_ the delayed RCU-nocb
+kthread wake-up.
 
-Move the bit cleaning together above, together when the "handled"
-counter is incremented.
-
-Fixes: 7685665c390d ("perf/x86/amd/core: Add PerfMonV2 overflow handling")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sandipan Das <sandipan.das@amd.com>
-Link: https://lore.kernel.org/r/20230321113338.1669660-1-leitao@debian.org
+Fixes: 47b8ff194c1f ("entry: Explicitly flush pending rcuog wakeup before last rescheduling point")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20230315194349.10798-3-joel@joelfernandes.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/entry/common.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
-index 4386b10682ce4..8ca5e827f30b2 100644
---- a/arch/x86/events/amd/core.c
-+++ b/arch/x86/events/amd/core.c
-@@ -923,6 +923,7 @@ static int amd_pmu_v2_handle_irq(struct pt_regs *regs)
+diff --git a/kernel/entry/common.c b/kernel/entry/common.c
+index 1314894d2efad..be61332c66b54 100644
+--- a/kernel/entry/common.c
++++ b/kernel/entry/common.c
+@@ -192,13 +192,14 @@ static unsigned long exit_to_user_mode_loop(struct pt_regs *regs,
  
- 		/* Event overflow */
- 		handled++;
-+		status &= ~mask;
- 		perf_sample_data_init(&data, 0, hwc->last_period);
+ static void exit_to_user_mode_prepare(struct pt_regs *regs)
+ {
+-	unsigned long ti_work = read_thread_flags();
++	unsigned long ti_work;
  
- 		if (!x86_perf_event_set_period(event))
-@@ -935,8 +936,6 @@ static int amd_pmu_v2_handle_irq(struct pt_regs *regs)
+ 	lockdep_assert_irqs_disabled();
  
- 		if (perf_event_overflow(event, &data, regs))
- 			x86_pmu_stop(event, 0);
--
--		status &= ~mask;
- 	}
+ 	/* Flush pending rcuog wakeup before the last need_resched() check */
+ 	tick_nohz_user_enter_prepare();
  
- 	/*
++	ti_work = read_thread_flags();
+ 	if (unlikely(ti_work & EXIT_TO_USER_MODE_WORK))
+ 		ti_work = exit_to_user_mode_loop(regs, ti_work);
+ 
 -- 
 2.39.2
 
