@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6870F8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E7BC4339E;
-	Tue, 28 Mar 2023 14:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111068BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B1EC433D2;
+	Tue, 28 Mar 2023 14:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015369;
-	bh=zfPODjKtu3HdiMjTnIcccTGnyDmY7ImOHYYbBZV6DX0=;
+	s=korg; t=1680015371;
+	bh=1T4oCbpL4olymy5HHnM3R8wtulupV3PZ+9Z8tnpU6Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XzexpjaICx8UZKIo/y2dWiue9jLmQC0qHWH+AXWTw8Lby4jyNWXMx/z8gDcaRmzEI
-	 RMtF8VCvm2GjSKOuUmfJkNOggHZnXr0LjLlx/KwKhT47ETNPGcxXUQB4yoaj/uc+Wt
-	 eNDsE+fuP8sZOOHjbKl3sL3F0Zop/yVMXaHbmJ3s=
+	b=ffGVuPTXV4Q5O5yp43ztJLIFlSk0FgQlsgpfOohvCaGgnafq/NYhOxU4kgk+Kc1pA
+	 Ppg+D5370RO0N21dYK+imPX/i0Ho59g5HNR9LQJhphyvVzYITffKb1ipNkUiT0r9vL
+	 4o3hwqw5dVwV8Pvos0GHg2ljEEv2xrrf9qXnH5do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Wysochanski <dwysocha@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Kal Conley <kal.conley@dectris.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/224] NFS: Fix /proc/PID/io read_bytes for buffered reads
-Date: Tue, 28 Mar 2023 16:40:20 +0200
-Message-Id: <20230328142618.294176884@linuxfoundation.org>
+Subject: [PATCH 6.1 025/224] xsk: Add missing overflow check in xdp_umem_reg
+Date: Tue, 28 Mar 2023 16:40:21 +0200
+Message-Id: <20230328142618.337941867@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,56 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Wysochanski <dwysocha@redhat.com>
+From: Kal Conley <kal.conley@dectris.com>
 
-[ Upstream commit 9c88ea00fef03031ce6554531e89be82f6a42835 ]
+[ Upstream commit c7df4813b149362248d6ef7be41a311e27bf75fe ]
 
-Prior to commit 8786fde8421c ("Convert NFS from readpages to
-readahead"), nfs_readpages() used the old mm interface read_cache_pages()
-which called task_io_account_read() for each NFS page read.  After
-this commit, nfs_readpages() is converted to nfs_readahead(), which
-now uses the new mm interface readahead_page().  The new interface
-requires callers to call task_io_account_read() themselves.
-In addition, to nfs_readahead() task_io_account_read() should also
-be called from nfs_read_folio().
+The number of chunks can overflow u32. Make sure to return -EINVAL on
+overflow. Also remove a redundant u32 cast assigning umem->npgs.
 
-Fixes: 8786fde8421c ("Convert NFS from readpages to readahead")
-Link: https://lore.kernel.org/linux-nfs/CAPt2mGNEYUk5u8V4abe=5MM5msZqmvzCVrtCP4Qw1n=gCHCnww@mail.gmail.com/
-Signed-off-by: Dave Wysochanski <dwysocha@redhat.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: bbff2f321a86 ("xsk: new descriptor addressing scheme")
+Signed-off-by: Kal Conley <kal.conley@dectris.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Link: https://lore.kernel.org/bpf/20230308174013.1114745-1-kal.conley@dectris.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/read.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/xdp/xdp_umem.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfs/read.c b/fs/nfs/read.c
-index 8ae2c8d1219d8..cd970ce62786b 100644
---- a/fs/nfs/read.c
-+++ b/fs/nfs/read.c
-@@ -15,6 +15,7 @@
- #include <linux/stat.h>
- #include <linux/mm.h>
- #include <linux/slab.h>
-+#include <linux/task_io_accounting_ops.h>
- #include <linux/pagemap.h>
- #include <linux/sunrpc/clnt.h>
- #include <linux/nfs_fs.h>
-@@ -338,6 +339,7 @@ int nfs_read_folio(struct file *file, struct folio *folio)
+diff --git a/net/xdp/xdp_umem.c b/net/xdp/xdp_umem.c
+index 4681e8e8ad943..02207e852d796 100644
+--- a/net/xdp/xdp_umem.c
++++ b/net/xdp/xdp_umem.c
+@@ -150,10 +150,11 @@ static int xdp_umem_account_pages(struct xdp_umem *umem)
  
- 	trace_nfs_aop_readpage(inode, page);
- 	nfs_inc_stats(inode, NFSIOS_VFSREADPAGE);
-+	task_io_account_read(folio_size(folio));
+ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
+ {
+-	u32 npgs_rem, chunk_size = mr->chunk_size, headroom = mr->headroom;
+ 	bool unaligned_chunks = mr->flags & XDP_UMEM_UNALIGNED_CHUNK_FLAG;
+-	u64 npgs, addr = mr->addr, size = mr->len;
+-	unsigned int chunks, chunks_rem;
++	u32 chunk_size = mr->chunk_size, headroom = mr->headroom;
++	u64 addr = mr->addr, size = mr->len;
++	u32 chunks_rem, npgs_rem;
++	u64 chunks, npgs;
+ 	int err;
  
- 	/*
- 	 * Try to flush any pending writes to the file..
-@@ -400,6 +402,7 @@ void nfs_readahead(struct readahead_control *ractl)
+ 	if (chunk_size < XDP_UMEM_MIN_CHUNK_SIZE || chunk_size > PAGE_SIZE) {
+@@ -188,8 +189,8 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
+ 	if (npgs > U32_MAX)
+ 		return -EINVAL;
  
- 	trace_nfs_aop_readahead(inode, readahead_pos(ractl), nr_pages);
- 	nfs_inc_stats(inode, NFSIOS_VFSREADPAGES);
-+	task_io_account_read(readahead_length(ractl));
+-	chunks = (unsigned int)div_u64_rem(size, chunk_size, &chunks_rem);
+-	if (chunks == 0)
++	chunks = div_u64_rem(size, chunk_size, &chunks_rem);
++	if (!chunks || chunks > U32_MAX)
+ 		return -EINVAL;
  
- 	ret = -ESTALE;
- 	if (NFS_STALE(inode))
+ 	if (!unaligned_chunks && chunks_rem)
+@@ -202,7 +203,7 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
+ 	umem->headroom = headroom;
+ 	umem->chunk_size = chunk_size;
+ 	umem->chunks = chunks;
+-	umem->npgs = (u32)npgs;
++	umem->npgs = npgs;
+ 	umem->pgs = NULL;
+ 	umem->user = NULL;
+ 	umem->flags = mr->flags;
 -- 
 2.39.2
 
