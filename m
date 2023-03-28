@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613B68BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C929EC433EF;
-	Tue, 28 Mar 2023 14:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31598BEB
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D25C433EF;
+	Tue, 28 Mar 2023 14:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015566;
-	bh=p41CkkPmZW2j4bKb9Xnxz45L+bjCf0WowwuqH4CMj4c=;
+	s=korg; t=1680015571;
+	bh=d1Gu4I77URN5QEaJHGjPJI+hx44zSke0jWWcjYI015Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u36B/p0TDZ61XouZiwy0hRwlYG7XEvRDYQkNIlJEQf3ZHmDqQIqotmqt+2gUJYZBr
-	 FV0CV4kHmSwxnmZBHqpCGQibFQCNRKx1/4nhUjZmabcECqF17zn/kxVXBsUtGuihVd
-	 cnsM53pNYfmYTwV81z3z1O601e+GUEXsm0nq8pLQ=
+	b=l6amN3Dlpn1fOh3aT+qEpFSoJ7bDxQD3N7AIAVkVmWjKL3vSYUAfw27cRbaNl7rYa
+	 tvO5Rerf07KsHyOxJzjSDKrLkosFWHGCmExzYuxwPHqGWOPAXDa50jQ6pHoJgvJh8h
+	 TeouHd+ToXtakV6E3lWxYeaF1B8oo2NpLGNZ2KQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Simon Horman <simon.horman@corigine.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/224] Bluetooth: HCI: Fix global-out-of-bounds
-Date: Tue, 28 Mar 2023 16:41:32 +0200
-Message-Id: <20230328142621.223518457@linuxfoundation.org>
+Subject: [PATCH 6.1 098/224] entry: Fix noinstr warning in __enter_from_user_mode()
+Date: Tue, 28 Mar 2023 16:41:34 +0200
+Message-Id: <20230328142621.427726926@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -36,121 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit bce56405201111807cc8e4f47c6de3e10b17c1ac ]
+[ Upstream commit f87d28673b71b35b248231a2086f9404afbb7f28 ]
 
-To loop a variable-length array, hci_init_stage_sync(stage) considers
-that stage[i] is valid as long as stage[i-1].func is valid.
-Thus, the last element of stage[].func should be intentionally invalid
-as hci_init0[], le_init2[], and others did.
-However, amp_init1[] and amp_init2[] have no invalid element, letting
-hci_init_stage_sync() keep accessing amp_init1[] over its valid range.
-This patch fixes this by adding {} in the last of amp_init1[] and
-amp_init2[].
+__enter_from_user_mode() is triggering noinstr warnings with
+CONFIG_DEBUG_PREEMPT due to its call of preempt_count_add() via
+ct_state().
 
-==================================================================
-BUG: KASAN: global-out-of-bounds in hci_dev_open_sync (
-/v6.2-bzimage/net/bluetooth/hci_sync.c:3154
-/v6.2-bzimage/net/bluetooth/hci_sync.c:3343
-/v6.2-bzimage/net/bluetooth/hci_sync.c:4418
-/v6.2-bzimage/net/bluetooth/hci_sync.c:4609
-/v6.2-bzimage/net/bluetooth/hci_sync.c:4689)
-Read of size 8 at addr ffffffffaed1ab70 by task kworker/u5:0/1032
-CPU: 0 PID: 1032 Comm: kworker/u5:0 Not tainted 6.2.0 #3
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04
-Workqueue: hci1 hci_power_on
-Call Trace:
- <TASK>
-dump_stack_lvl (/v6.2-bzimage/lib/dump_stack.c:107 (discriminator 1))
-print_report (/v6.2-bzimage/mm/kasan/report.c:307
-  /v6.2-bzimage/mm/kasan/report.c:417)
-? hci_dev_open_sync (/v6.2-bzimage/net/bluetooth/hci_sync.c:3154
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:3343
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:4418
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:4609
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:4689)
-kasan_report (/v6.2-bzimage/mm/kasan/report.c:184
-  /v6.2-bzimage/mm/kasan/report.c:519)
-? hci_dev_open_sync (/v6.2-bzimage/net/bluetooth/hci_sync.c:3154
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:3343
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:4418
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:4609
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:4689)
-hci_dev_open_sync (/v6.2-bzimage/net/bluetooth/hci_sync.c:3154
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:3343
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:4418
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:4609
-  /v6.2-bzimage/net/bluetooth/hci_sync.c:4689)
-? __pfx_hci_dev_open_sync (/v6.2-bzimage/net/bluetooth/hci_sync.c:4635)
-? mutex_lock (/v6.2-bzimage/./arch/x86/include/asm/atomic64_64.h:190
-  /v6.2-bzimage/./include/linux/atomic/atomic-long.h:443
-  /v6.2-bzimage/./include/linux/atomic/atomic-instrumented.h:1781
-  /v6.2-bzimage/kernel/locking/mutex.c:171
-  /v6.2-bzimage/kernel/locking/mutex.c:285)
-? __pfx_mutex_lock (/v6.2-bzimage/kernel/locking/mutex.c:282)
-hci_power_on (/v6.2-bzimage/net/bluetooth/hci_core.c:485
-  /v6.2-bzimage/net/bluetooth/hci_core.c:984)
-? __pfx_hci_power_on (/v6.2-bzimage/net/bluetooth/hci_core.c:969)
-? read_word_at_a_time (/v6.2-bzimage/./include/asm-generic/rwonce.h:85)
-? strscpy (/v6.2-bzimage/./arch/x86/include/asm/word-at-a-time.h:62
-  /v6.2-bzimage/lib/string.c:161)
-process_one_work (/v6.2-bzimage/kernel/workqueue.c:2294)
-worker_thread (/v6.2-bzimage/./include/linux/list.h:292
-  /v6.2-bzimage/kernel/workqueue.c:2437)
-? __pfx_worker_thread (/v6.2-bzimage/kernel/workqueue.c:2379)
-kthread (/v6.2-bzimage/kernel/kthread.c:376)
-? __pfx_kthread (/v6.2-bzimage/kernel/kthread.c:331)
-ret_from_fork (/v6.2-bzimage/arch/x86/entry/entry_64.S:314)
- </TASK>
-The buggy address belongs to the variable:
-amp_init1+0x30/0x60
-The buggy address belongs to the physical page:
-page:000000003a157ec6 refcount:1 mapcount:0 mapping:0000000000000000 ia
-flags: 0x200000000001000(reserved|node=0|zone=2)
-raw: 0200000000001000 ffffea0005054688 ffffea0005054688 000000000000000
-raw: 0000000000000000 0000000000000000 00000001ffffffff 000000000000000
-page dumped because: kasan: bad access detected
-Memory state around the buggy address:
- ffffffffaed1aa00: f9 f9 f9 f9 00 00 00 00 f9 f9 f9 f9 00 00 00 00
- ffffffffaed1aa80: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
->ffffffffaed1ab00: 00 f9 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 f9 f9
-                                                             ^
- ffffffffaed1ab80: f9 f9 f9 f9 00 00 00 00 f9 f9 f9 f9 00 00 00 f9
- ffffffffaed1ac00: f9 f9 f9 f9 00 06 f9 f9 f9 f9 f9 f9 00 00 02 f9
+The preemption disable isn't needed as interrupts are already disabled.
+And the context_tracking_enabled() check in ct_state() also isn't needed
+as that's already being done by the CT_WARN_ON().
 
-This bug is found by FuzzBT, a modified version of Syzkaller.
-Other contributors for this bug are Ruoyu Wu and Peng Hui.
+Just use __ct_state() instead.
 
-Fixes: d0b137062b2d ("Bluetooth: hci_sync: Rework init stages")
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes the following warnings:
+
+  vmlinux.o: warning: objtool: enter_from_user_mode+0xba: call to preempt_count_add() leaves .noinstr.text section
+  vmlinux.o: warning: objtool: syscall_enter_from_user_mode+0xf9: call to preempt_count_add() leaves .noinstr.text section
+  vmlinux.o: warning: objtool: syscall_enter_from_user_mode_prepare+0xc7: call to preempt_count_add() leaves .noinstr.text section
+  vmlinux.o: warning: objtool: irqentry_enter_from_user_mode+0xba: call to preempt_count_add() leaves .noinstr.text section
+
+Fixes: 171476775d32 ("context_tracking: Convert state to atomic_t")
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/d8955fa6d68dc955dda19baf13ae014ae27926f5.1677369694.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/context_tracking.h       | 1 +
+ include/linux/context_tracking_state.h | 2 ++
+ kernel/entry/common.c                  | 2 +-
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 13ec3c86a0dcf..f886c1d05c882 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3340,6 +3340,7 @@ static const struct hci_init_stage amp_init1[] = {
- 	HCI_INIT(hci_read_flow_control_mode_sync),
- 	/* HCI_OP_READ_LOCATION_DATA */
- 	HCI_INIT(hci_read_location_data_sync),
-+	{}
- };
+diff --git a/include/linux/context_tracking.h b/include/linux/context_tracking.h
+index d4afa8508a806..3a7909ed54980 100644
+--- a/include/linux/context_tracking.h
++++ b/include/linux/context_tracking.h
+@@ -96,6 +96,7 @@ static inline void user_exit_irqoff(void) { }
+ static inline int exception_enter(void) { return 0; }
+ static inline void exception_exit(enum ctx_state prev_ctx) { }
+ static inline int ct_state(void) { return -1; }
++static inline int __ct_state(void) { return -1; }
+ static __always_inline bool context_tracking_guest_enter(void) { return false; }
+ static inline void context_tracking_guest_exit(void) { }
+ #define CT_WARN_ON(cond) do { } while (0)
+diff --git a/include/linux/context_tracking_state.h b/include/linux/context_tracking_state.h
+index 4a4d56f771802..fdd537ea513ff 100644
+--- a/include/linux/context_tracking_state.h
++++ b/include/linux/context_tracking_state.h
+@@ -46,7 +46,9 @@ struct context_tracking {
  
- static int hci_init1_sync(struct hci_dev *hdev)
-@@ -3374,6 +3375,7 @@ static int hci_init1_sync(struct hci_dev *hdev)
- static const struct hci_init_stage amp_init2[] = {
- 	/* HCI_OP_READ_LOCAL_FEATURES */
- 	HCI_INIT(hci_read_local_features_sync),
-+	{}
- };
+ #ifdef CONFIG_CONTEXT_TRACKING
+ DECLARE_PER_CPU(struct context_tracking, context_tracking);
++#endif
  
- /* Read Buffer Size (ACL mtu, max pkt, etc.) */
++#ifdef CONFIG_CONTEXT_TRACKING_USER
+ static __always_inline int __ct_state(void)
+ {
+ 	return arch_atomic_read(this_cpu_ptr(&context_tracking.state)) & CT_STATE_MASK;
+diff --git a/kernel/entry/common.c b/kernel/entry/common.c
+index 846add8394c41..1314894d2efad 100644
+--- a/kernel/entry/common.c
++++ b/kernel/entry/common.c
+@@ -21,7 +21,7 @@ static __always_inline void __enter_from_user_mode(struct pt_regs *regs)
+ 	arch_enter_from_user_mode(regs);
+ 	lockdep_hardirqs_off(CALLER_ADDR0);
+ 
+-	CT_WARN_ON(ct_state() != CONTEXT_USER);
++	CT_WARN_ON(__ct_state() != CONTEXT_USER);
+ 	user_exit_irqoff();
+ 
+ 	instrumentation_begin();
 -- 
 2.39.2
 
