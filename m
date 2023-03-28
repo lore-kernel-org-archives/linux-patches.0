@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253B18BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A828C433EF;
-	Tue, 28 Mar 2023 14:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B318BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5EDC433D2;
+	Tue, 28 Mar 2023 14:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014928;
-	bh=52sTTnBBVvZk6CrQQStaDGojKif3biqZ83KX+0jZBJs=;
+	s=korg; t=1680014930;
+	bh=Wjtgmh6xp8S3VHXvxyTI4dkfmF9xauyJqPXlSRI2/aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UxHnMVHvXEJi5a2HLgv1dHlEKhOr6AAkoujydPtsJeUDDE5V4oa8PmFNKKnFuDinL
-	 SDkb9gQgPveBuZHfL7OqPrtGOmMw7SBv+IDWQv2MwyBBuMyH046yCbAM7RSTFh1H5e
-	 1+lQlisCklzOYIqgTh9tOxJDGEgxVXjSAMT8YA8M=
+	b=Aw7wHbsuNHrJuw10C35VLYeJw2SAti+/5qzeyOS0KKjLOTHxNqW3BHf4PWNlf0c9U
+	 LblB8upxmmSFjc3VG+9cGpLWPafZybL8cpNE1XXTqykcblfqhuP5HjmqfMP58MrcaV
+	 FYlBsSowaaW3bz9UjZG683pu+niBUPHoTBoARWpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Li <gavinl@nvidia.com>,
-	Gavi Teitz <gavi@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Geoff Levand <geoff@infradead.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 073/240] net/mlx5e: Block entering switchdev mode with ns inconsistency
-Date: Tue, 28 Mar 2023 16:40:36 +0200
-Message-Id: <20230328142622.800485158@linuxfoundation.org>
+Subject: [PATCH 6.2 064/240] net/ps3_gelic_net: Use dma_mapping_error
+Date: Tue, 28 Mar 2023 16:40:27 +0200
+Message-Id: <20230328142622.392575012@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,67 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gavin Li <gavinl@nvidia.com>
+From: Geoff Levand <geoff@infradead.org>
 
-[ Upstream commit 662404b24a4c4d839839ed25e3097571f5938b9b ]
+[ Upstream commit bebe933d35a63d4f042fbf4dce4f22e689ba0fcd ]
 
-Upon entering switchdev mode, VF/SF representors are spawned in the
-devlink instance's net namespace, whereas the PF net device transforms
-into the uplink representor, remaining in the net namespace the PF net
-device was in. Therefore, if a PF net device's namespace is different from
-its parent devlink net namespace, entering switchdev mode can create an
-illegal situation where all representors sharing the same core device
-are NOT in the same net namespace.
+The current Gelic Etherenet driver was checking the return value of its
+dma_map_single call, and not using the dma_mapping_error() routine.
 
-To avoid this issue, block entering switchdev mode for devices whose child
-netdev net namespace has diverged from the parent devlink's.
+Fixes runtime problems like these:
 
-Fixes: 7768d1971de6 ("net/mlx5: E-Switch, Add control for encapsulation")
-Signed-off-by: Gavin Li <gavinl@nvidia.com>
-Reviewed-by: Gavi Teitz <gavi@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+  DMA-API: ps3_gelic_driver sb_05: device driver failed to check map error
+  WARNING: CPU: 0 PID: 0 at kernel/dma/debug.c:1027 .check_unmap+0x888/0x8dc
+
+Fixes: 02c1889166b4 ("ps3: gigabit ethernet driver for PS3, take3")
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Geoff Levand <geoff@infradead.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/eswitch_offloads.c     | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/net/ethernet/toshiba/ps3_gelic_net.c | 24 +++++++++++---------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index 3992bf6337ca0..0facc709f0e74 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -3518,6 +3518,18 @@ static int esw_inline_mode_to_devlink(u8 mlx5_mode, u8 *mode)
- 	return 0;
- }
+diff --git a/drivers/net/ethernet/toshiba/ps3_gelic_net.c b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
+index dffd664e65f4e..9d535ae596266 100644
+--- a/drivers/net/ethernet/toshiba/ps3_gelic_net.c
++++ b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
+@@ -317,15 +317,17 @@ static int gelic_card_init_chain(struct gelic_card *card,
  
-+static bool esw_offloads_devlink_ns_eq_netdev_ns(struct devlink *devlink)
-+{
-+	struct net *devl_net, *netdev_net;
-+	struct mlx5_eswitch *esw;
+ 	/* set up the hardware pointers in each descriptor */
+ 	for (i = 0; i < no; i++, descr++) {
++		dma_addr_t cpu_addr;
 +
-+	esw = mlx5_devlink_eswitch_get(devlink);
-+	netdev_net = dev_net(esw->dev->mlx5e_res.uplink_netdev);
-+	devl_net = devlink_net(devlink);
-+
-+	return net_eq(devl_net, netdev_net);
-+}
-+
- int mlx5_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
- 				  struct netlink_ext_ack *extack)
- {
-@@ -3532,6 +3544,13 @@ int mlx5_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
- 	if (esw_mode_from_devlink(mode, &mlx5_mode))
- 		return -EINVAL;
+ 		gelic_descr_set_status(descr, GELIC_DESCR_DMA_NOT_IN_USE);
+-		descr->bus_addr =
+-			dma_map_single(ctodev(card), descr,
+-				       GELIC_DESCR_SIZE,
+-				       DMA_BIDIRECTIONAL);
  
-+	if (mode == DEVLINK_ESWITCH_MODE_SWITCHDEV &&
-+	    !esw_offloads_devlink_ns_eq_netdev_ns(devlink)) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Can't change E-Switch mode to switchdev when netdev net namespace has diverged from the devlink's.");
-+		return -EPERM;
-+	}
+-		if (!descr->bus_addr)
++		cpu_addr = dma_map_single(ctodev(card), descr,
++					  GELIC_DESCR_SIZE, DMA_BIDIRECTIONAL);
 +
- 	mlx5_lag_disable_change(esw->dev);
- 	err = mlx5_esw_try_lock(esw);
- 	if (err < 0) {
++		if (dma_mapping_error(ctodev(card), cpu_addr))
+ 			goto iommu_error;
+ 
++		descr->bus_addr = cpu_to_be32(cpu_addr);
+ 		descr->next = descr + 1;
+ 		descr->prev = descr - 1;
+ 	}
+@@ -375,6 +377,7 @@ static int gelic_descr_prepare_rx(struct gelic_card *card,
+ 	static const unsigned int rx_skb_size =
+ 		ALIGN(GELIC_NET_MAX_FRAME, GELIC_NET_RXBUF_ALIGN) +
+ 		GELIC_NET_RXBUF_ALIGN - 1;
++	dma_addr_t cpu_addr;
+ 	int offset;
+ 
+ 	if (gelic_descr_get_status(descr) !=  GELIC_DESCR_DMA_NOT_IN_USE)
+@@ -396,11 +399,10 @@ static int gelic_descr_prepare_rx(struct gelic_card *card,
+ 	if (offset)
+ 		skb_reserve(descr->skb, GELIC_NET_RXBUF_ALIGN - offset);
+ 	/* io-mmu-map the skb */
+-	descr->buf_addr = cpu_to_be32(dma_map_single(ctodev(card),
+-						     descr->skb->data,
+-						     GELIC_NET_MAX_FRAME,
+-						     DMA_FROM_DEVICE));
+-	if (!descr->buf_addr) {
++	cpu_addr = dma_map_single(ctodev(card), descr->skb->data,
++				  GELIC_NET_MAX_FRAME, DMA_FROM_DEVICE);
++	descr->buf_addr = cpu_to_be32(cpu_addr);
++	if (dma_mapping_error(ctodev(card), cpu_addr)) {
+ 		dev_kfree_skb_any(descr->skb);
+ 		descr->skb = NULL;
+ 		dev_info(ctodev(card),
+@@ -780,7 +782,7 @@ static int gelic_descr_prepare_tx(struct gelic_card *card,
+ 
+ 	buf = dma_map_single(ctodev(card), skb->data, skb->len, DMA_TO_DEVICE);
+ 
+-	if (!buf) {
++	if (dma_mapping_error(ctodev(card), buf)) {
+ 		dev_err(ctodev(card),
+ 			"dma map 2 failed (%p, %i). Dropping packet\n",
+ 			skb->data, skb->len);
 -- 
 2.39.2
 
