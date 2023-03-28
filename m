@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A529D8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29070C433D2;
-	Tue, 28 Mar 2023 15:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602FC8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D981FC433D2;
+	Tue, 28 Mar 2023 15:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015839;
-	bh=kZ0lxMcCD2KgU5i3G2fiSNndQERm1XYuJUfZUivf2N0=;
+	s=korg; t=1680015842;
+	bh=krcJGkZi4RJZjKega/0+ZmOPsT4ybSeAqxSoh2Cleak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+UT92u8wYx/ikeSBS396Bgeqksu1cJusWqGLJcRXkUO/uh0TjjGv3TxYsZ+e3N7k
-	 XBjLbdWcsPiTJXx9RJBpPL41zmy9FYrqJEFzI9Va9FZOCQol17arJNTXjwEhLtTres
-	 wELxBfBwtoGloKu/WCqmfTKS2UVqBzLkPGF5sAjw=
+	b=AH7vH5DSGhVU24WkWfW8ZhunG0pConeH/VAiN9y8udt9xmrfBFxUsHmraEwV9Fx7E
+	 cDvYH2gsHWXMSMnr+8+kTmscHN5QCf37B/PjFE+PmVpA6idOR+AYtsATAMmhBLpGrr
+	 GqTLtc2wqaNgDqpvPVvi0btxm+6sdHPPDzqFPT6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.1 195/224] ksmbd: return unsupported error on smb1 mount
-Date: Tue, 28 Mar 2023 16:43:11 +0200
-Message-Id: <20230328142625.506236842@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 196/224] wifi: mac80211: fix qos on mesh interfaces
+Date: Tue, 28 Mar 2023 16:43:12 +0200
+Message-Id: <20230328142625.549589550@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,124 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 39b291b86b5988bf8753c3874d5c773399d09b96 upstream.
+commit 4e348c6c6e23491ae6eb5e077848a42d0562339c upstream.
 
-ksmbd disconnect connection when mounting with vers=smb1.
-ksmbd should send smb1 negotiate response to client for correct
-unsupported error return. This patch add needed SMB1 macros and fill
-NegProt part of the response for smb1 negotiate response.
+When ieee80211_select_queue is called for mesh, the sta pointer is usually
+NULL, since the nexthop is looked up much later in the tx path.
+Explicitly check for unicast address in that case in order to make qos work
+again.
 
 Cc: stable@vger.kernel.org
-Reported-by: Steve French <stfrench@microsoft.com>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 50e2ab392919 ("wifi: mac80211: fix queue selection for mesh/OCB interfaces")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20230314095956.62085-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c |    7 ++-----
- fs/ksmbd/smb_common.c |   23 ++++++++++++++++++++---
- fs/ksmbd/smb_common.h |   30 ++++++++----------------------
- 3 files changed, 30 insertions(+), 30 deletions(-)
+ net/mac80211/wme.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -319,13 +319,10 @@ int ksmbd_conn_handler_loop(void *p)
- 		}
- 
- 		/*
--		 * Check if pdu size is valid (min : smb header size,
--		 * max : 0x00FFFFFF).
-+		 * Check maximum pdu size(0x00FFFFFF).
- 		 */
--		if (pdu_size < __SMB2_HEADER_STRUCTURE_SIZE ||
--		    pdu_size > MAX_STREAM_PROT_LEN) {
-+		if (pdu_size > MAX_STREAM_PROT_LEN)
- 			break;
--		}
- 
- 		/* 4 for rfc1002 length field */
- 		size = pdu_size + 4;
---- a/fs/ksmbd/smb_common.c
-+++ b/fs/ksmbd/smb_common.c
-@@ -442,9 +442,26 @@ static int smb_handle_negotiate(struct k
+--- a/net/mac80211/wme.c
++++ b/net/mac80211/wme.c
+@@ -144,12 +144,14 @@ u16 ieee80211_select_queue_80211(struct
+ u16 __ieee80211_select_queue(struct ieee80211_sub_if_data *sdata,
+ 			     struct sta_info *sta, struct sk_buff *skb)
  {
- 	struct smb_negotiate_rsp *neg_rsp = work->response_buf;
++	const struct ethhdr *eth = (void *)skb->data;
+ 	struct mac80211_qos_map *qos_map;
+ 	bool qos;
  
--	ksmbd_debug(SMB, "Unsupported SMB protocol\n");
--	neg_rsp->hdr.Status.CifsError = STATUS_INVALID_LOGON_TYPE;
--	return -EINVAL;
-+	ksmbd_debug(SMB, "Unsupported SMB1 protocol\n");
-+
-+	/*
-+	 * Remove 4 byte direct TCP header, add 2 byte bcc and
-+	 * 2 byte DialectIndex.
-+	 */
-+	*(__be32 *)work->response_buf =
-+		cpu_to_be32(sizeof(struct smb_hdr) - 4 + 2 + 2);
-+	neg_rsp->hdr.Status.CifsError = STATUS_SUCCESS;
-+
-+	neg_rsp->hdr.Command = SMB_COM_NEGOTIATE;
-+	*(__le32 *)neg_rsp->hdr.Protocol = SMB1_PROTO_NUMBER;
-+	neg_rsp->hdr.Flags = SMBFLG_RESPONSE;
-+	neg_rsp->hdr.Flags2 = SMBFLG2_UNICODE | SMBFLG2_ERR_STATUS |
-+		SMBFLG2_EXT_SEC | SMBFLG2_IS_LONG_NAME;
-+
-+	neg_rsp->hdr.WordCount = 1;
-+	neg_rsp->DialectIndex = cpu_to_le16(work->conn->dialect);
-+	neg_rsp->ByteCount = 0;
-+	return 0;
- }
- 
- int ksmbd_smb_negotiate_common(struct ksmbd_work *work, unsigned int command)
---- a/fs/ksmbd/smb_common.h
-+++ b/fs/ksmbd/smb_common.h
-@@ -158,8 +158,15 @@
- 
- #define SMB1_PROTO_NUMBER		cpu_to_le32(0x424d53ff)
- #define SMB_COM_NEGOTIATE		0x72
--
- #define SMB1_CLIENT_GUID_SIZE		(16)
-+
-+#define SMBFLG_RESPONSE 0x80	/* this PDU is a response from server */
-+
-+#define SMBFLG2_IS_LONG_NAME	cpu_to_le16(0x40)
-+#define SMBFLG2_EXT_SEC		cpu_to_le16(0x800)
-+#define SMBFLG2_ERR_STATUS	cpu_to_le16(0x4000)
-+#define SMBFLG2_UNICODE		cpu_to_le16(0x8000)
-+
- struct smb_hdr {
- 	__be32 smb_buf_length;
- 	__u8 Protocol[4];
-@@ -199,28 +206,7 @@ struct smb_negotiate_req {
- struct smb_negotiate_rsp {
- 	struct smb_hdr hdr;     /* wct = 17 */
- 	__le16 DialectIndex; /* 0xFFFF = no dialect acceptable */
--	__u8 SecurityMode;
--	__le16 MaxMpxCount;
--	__le16 MaxNumberVcs;
--	__le32 MaxBufferSize;
--	__le32 MaxRawSize;
--	__le32 SessionKey;
--	__le32 Capabilities;    /* see below */
--	__le32 SystemTimeLow;
--	__le32 SystemTimeHigh;
--	__le16 ServerTimeZone;
--	__u8 EncryptionKeyLength;
- 	__le16 ByteCount;
--	union {
--		unsigned char EncryptionKey[8]; /* cap extended security off */
--		/* followed by Domain name - if extended security is off */
--		/* followed by 16 bytes of server GUID */
--		/* then security blob if cap_extended_security negotiated */
--		struct {
--			unsigned char GUID[SMB1_CLIENT_GUID_SIZE];
--			unsigned char SecurityBlob[1];
--		} __packed extended_response;
--	} __packed u;
- } __packed;
- 
- struct filesystem_attribute_info {
+ 	/* all mesh/ocb stations are required to support WME */
+-	if (sta && (sdata->vif.type == NL80211_IFTYPE_MESH_POINT ||
+-		    sdata->vif.type == NL80211_IFTYPE_OCB))
++	if ((sdata->vif.type == NL80211_IFTYPE_MESH_POINT &&
++	    !is_multicast_ether_addr(eth->h_dest)) ||
++	    (sdata->vif.type == NL80211_IFTYPE_OCB && sta))
+ 		qos = true;
+ 	else if (sta)
+ 		qos = sta->sta.wme;
 
 
