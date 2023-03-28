@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016BD8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:06:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744ACC433D2;
-	Tue, 28 Mar 2023 15:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92048BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:06:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39043C433D2;
+	Tue, 28 Mar 2023 15:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015971;
-	bh=RZr8306DY+9xcyADv6hoJ0Xfw9DnmlE+zsEg+C7RNDk=;
+	s=korg; t=1680015974;
+	bh=3+OC53VmlSjB+FErs7Gh2U5LXgoD/9f1/oDB4o+tCLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cLcbTO+4juI0+aSeb+axNeUQ1JfDQoPi/t9R+aMEVIGQr2UyU3RwPLkRnQ6QBD8RG
-	 diS6IGh88tlgm7p90f8a68jSArS0AgfagOHQiGXgjKjDsMMccym9fktcA3TjcP51PW
-	 t3VOYmHm7SDQIR5FlnvvVdf615brGdJl9Izr5hA8=
+	b=Gwd9ReltihhXd6gwo3vpPtUo85LyZkbSwJv/ya+zY4DlZnRIoYBrTMKMA9gYDt/nI
+	 VVEBx1bWYjNiJsDJfwyBvF/JxbaLjAfjw8svyZohjzwAugtAS1S3xFrpkWQgklXekB
+	 svRcXxA2bEHZe0KZRynboweGu03TpdbvZ1Pk9T9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Marek Vasut <marex@denx.de>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/146] arm64: dts: imx8mn: specify #sound-dai-cells for SAI nodes
-Date: Tue, 28 Mar 2023 16:41:48 +0200
-Message-Id: <20230328142603.521877637@linuxfoundation.org>
+Subject: [PATCH 5.15 002/146] perf/core: Fix perf_output_begin parameter is incorrectly invoked in perf_event_bpf_output
+Date: Tue, 28 Mar 2023 16:41:31 +0200
+Message-Id: <20230328142602.770171953@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -38,67 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit 62fb54148cd6eb456ff031be8fb447c98cf0bd9b ]
+[ Upstream commit eb81a2ed4f52be831c9fb879752d89645a312c13 ]
 
-Add #sound-dai-cells properties to SAI nodes.
+syzkaller reportes a KASAN issue with stack-out-of-bounds.
+The call trace is as follows:
+  dump_stack+0x9c/0xd3
+  print_address_description.constprop.0+0x19/0x170
+  __kasan_report.cold+0x6c/0x84
+  kasan_report+0x3a/0x50
+  __perf_event_header__init_id+0x34/0x290
+  perf_event_header__init_id+0x48/0x60
+  perf_output_begin+0x4a4/0x560
+  perf_event_bpf_output+0x161/0x1e0
+  perf_iterate_sb_cpu+0x29e/0x340
+  perf_iterate_sb+0x4c/0xc0
+  perf_event_bpf_event+0x194/0x2c0
+  __bpf_prog_put.constprop.0+0x55/0xf0
+  __cls_bpf_delete_prog+0xea/0x120 [cls_bpf]
+  cls_bpf_delete_prog_work+0x1c/0x30 [cls_bpf]
+  process_one_work+0x3c2/0x730
+  worker_thread+0x93/0x650
+  kthread+0x1b8/0x210
+  ret_from_fork+0x1f/0x30
 
-Reviewed-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Fixes: 9e9860069725 ("arm64: dts: imx8mn: Add SAI nodes")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+commit 267fb27352b6 ("perf: Reduce stack usage of perf_output_begin()")
+use on-stack struct perf_sample_data of the caller function.
+
+However, perf_event_bpf_output uses incorrect parameter to convert
+small-sized data (struct perf_bpf_event) into large-sized data
+(struct perf_sample_data), which causes memory overwriting occurs in
+__perf_event_header__init_id.
+
+Fixes: 267fb27352b6 ("perf: Reduce stack usage of perf_output_begin()")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20230314044735.56551-1-yangjihong1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/events/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn.dtsi b/arch/arm64/boot/dts/freescale/imx8mn.dtsi
-index 0c47ff2426410..16a5efba17f39 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mn.dtsi
-@@ -265,6 +265,7 @@ spba2: spba-bus@30000000 {
- 				sai2: sai@30020000 {
- 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
- 					reg = <0x30020000 0x10000>;
-+					#sound-dai-cells = <0>;
- 					interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
- 					clocks = <&clk IMX8MN_CLK_SAI2_IPG>,
- 						<&clk IMX8MN_CLK_DUMMY>,
-@@ -279,6 +280,7 @@ sai2: sai@30020000 {
- 				sai3: sai@30030000 {
- 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
- 					reg = <0x30030000 0x10000>;
-+					#sound-dai-cells = <0>;
- 					interrupts = <GIC_SPI 50 IRQ_TYPE_LEVEL_HIGH>;
- 					clocks = <&clk IMX8MN_CLK_SAI3_IPG>,
- 						 <&clk IMX8MN_CLK_DUMMY>,
-@@ -293,6 +295,7 @@ sai3: sai@30030000 {
- 				sai5: sai@30050000 {
- 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
- 					reg = <0x30050000 0x10000>;
-+					#sound-dai-cells = <0>;
- 					interrupts = <GIC_SPI 90 IRQ_TYPE_LEVEL_HIGH>;
- 					clocks = <&clk IMX8MN_CLK_SAI5_IPG>,
- 						 <&clk IMX8MN_CLK_DUMMY>,
-@@ -309,6 +312,7 @@ sai5: sai@30050000 {
- 				sai6: sai@30060000 {
- 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
- 					reg = <0x30060000  0x10000>;
-+					#sound-dai-cells = <0>;
- 					interrupts = <GIC_SPI 90 IRQ_TYPE_LEVEL_HIGH>;
- 					clocks = <&clk IMX8MN_CLK_SAI6_IPG>,
- 						 <&clk IMX8MN_CLK_DUMMY>,
-@@ -366,6 +370,7 @@ spdif1: spdif@30090000 {
- 				sai7: sai@300b0000 {
- 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
- 					reg = <0x300b0000 0x10000>;
-+					#sound-dai-cells = <0>;
- 					interrupts = <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>;
- 					clocks = <&clk IMX8MN_CLK_SAI7_IPG>,
- 						 <&clk IMX8MN_CLK_DUMMY>,
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index d2b415820183d..3a17a68cf41ad 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -9056,7 +9056,7 @@ static void perf_event_bpf_output(struct perf_event *event, void *data)
+ 
+ 	perf_event_header__init_id(&bpf_event->event_id.header,
+ 				   &sample, event);
+-	ret = perf_output_begin(&handle, data, event,
++	ret = perf_output_begin(&handle, &sample, event,
+ 				bpf_event->event_id.header.size);
+ 	if (ret)
+ 		return;
 -- 
 2.39.2
 
