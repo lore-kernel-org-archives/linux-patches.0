@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57738BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3840CC433D2;
-	Tue, 28 Mar 2023 14:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701BF8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AB6C433D2;
+	Tue, 28 Mar 2023 14:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015121;
-	bh=tG20YixPuNghNz3iwWiDToG04WFpYWr1dNhJyvgw0ss=;
+	s=korg; t=1680015124;
+	bh=nmnE+C/7SeTa5kfh1ckVOyQkfPvx48ePwk17onKQgtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFOBrvW55QlUG8pOL3OtQ0g4iQqOjF8nimw948qpVf9T/HEOhAeH4fDUCF3R7hmmV
-	 0szDdIBL5yJpErLHrOwcT1sy45ftlC0h6+heQrSrzIb9baRvMXD1N6wCwN2SJ6BfA7
-	 WKxI4cOxHIMJZ1xgML+JEqyulbFwNleFEMM4o3dY=
+	b=wabEfsK0La8o1xJF5BVDoktud6K76LP78ZRmXAr0Gx3tJgTaSk3wnL/1wGA1iTQsB
+	 mcAAN+y6L6zSgXUzWcexK8tzWzc5uUcSlQ5gLnnscF27afECE7233SwKSjwzS3C6dV
+	 hcDWPI1tl22bVJP8zLROosd6bNwqePfnXCEH2NFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
+	Ziyang Huang <hzyitc@outlook.com>,
 	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Subject: [PATCH 6.2 174/240] usb: dwc2: fix a race, dont power off/on phy for dual-role mode
-Date: Tue, 28 Mar 2023 16:42:17 +0200
-Message-Id: <20230328142626.881393183@linuxfoundation.org>
+	Minas Harutyunyan <hminas@synopsys.com>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>
+Subject: [PATCH 6.2 175/240] usb: dwc2: drd: fix inconsistent mode if role-switch-default-mode="host"
+Date: Tue, 28 Mar 2023 16:42:18 +0200
+Message-Id: <20230328142626.926018449@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,100 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Ziyang Huang <hzyitc@outlook.com>
 
-commit 5021383242ada277a38bd052a4c12ed4707faccb upstream.
+commit 82f5332d3b9872ab5b287e85c57b76d8bb640cd1 upstream.
 
-When in dual role mode (dr_mode == USB_DR_MODE_OTG), platform probe
-successively basically calls:
-- dwc2_gadget_init()
-- dwc2_hcd_init()
-- dwc2_lowlevel_hw_disable() since recent change [1]
-- usb_add_gadget_udc()
+Some boards might use USB-A female connector for USB ports, however,
+the port could be connected to a dual-mode USB controller, making it
+also behaves as a peripheral device if male-to-male cable is connected.
 
-The PHYs (and so the clocks it may provide) shouldn't be disabled for all
-SoCs, in OTG mode, as the HCD part has been initialized.
+In this case, the dts looks like this:
 
-On STM32 this creates some weird race condition upon boot, when:
-- initially attached as a device, to a HOST
-- and there is a gadget script invoked to setup the device part.
-Below issue becomes systematic, as long as the gadget script isn't
-started by userland: the hardware PHYs (and so the clocks provided by the
-PHYs) remains disabled.
-It ends up in having an endless interrupt storm, before the watchdog
-resets the platform.
+	&usb0 {
+		status = "okay";
+		dr_mode = "otg";
+		usb-role-switch;
+		role-switch-default-mode = "host";
+	};
 
-[   16.924163] dwc2 49000000.usb-otg: EPs: 9, dedicated fifos, 952 entries in SPRAM
-[   16.962704] dwc2 49000000.usb-otg: DWC OTG Controller
-[   16.966488] dwc2 49000000.usb-otg: new USB bus registered, assigned bus number 2
-[   16.974051] dwc2 49000000.usb-otg: irq 77, io mem 0x49000000
-[   17.032170] hub 2-0:1.0: USB hub found
-[   17.042299] hub 2-0:1.0: 1 port detected
-[   17.175408] dwc2 49000000.usb-otg: Mode Mismatch Interrupt: currently in Host mode
-[   17.181741] dwc2 49000000.usb-otg: Mode Mismatch Interrupt: currently in Host mode
-[   17.189303] dwc2 49000000.usb-otg: Mode Mismatch Interrupt: currently in Host mode
-...
+After boot, dwc2_ovr_init() sets GOTGCTL to GOTGCTL_AVALOVAL and call
+dwc2_force_mode() with parameter host=false, which causes inconsistent
+mode - The hardware is in peripheral mode while the kernel status is
+in host mode.
 
-The host part is also not functional, until the gadget part is configured.
+What we can do now is to call dwc2_drd_role_sw_set() to switch to
+device mode, and everything should work just fine now, even switching
+back to none(default) mode afterwards.
 
-The HW may only be disabled for peripheral mode (original init), e.g.
-dr_mode == USB_DR_MODE_PERIPHERAL, until the gadget driver initializes.
-
-But when in USB_DR_MODE_OTG, the HW should remain enabled, as the HCD part
-is able to run, while the gadget part isn't necessarily configured.
-
-I don't fully get the of purpose the original change, that claims disabling
-the hardware is missing. It creates conditions on SOCs using the PHY
-initialization to be completely non working in OTG mode. Original
-change [1] should be reworked to be platform specific.
-
-[1] https://lore.kernel.org/r/20221206-dwc2-gadget-dual-role-v1-2-36515e1092cd@theobroma-systems.com
-
-Fixes: ade23d7b7ec5 ("usb: dwc2: power on/off phy for peripheral mode in dual-role mode")
+Fixes: e14acb876985 ("usb: dwc2: drd: add role-switch-default-node support")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Reviewed-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Tested-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Link: https://lore.kernel.org/r/20230315144433.3095859-1-fabrice.gasnier@foss.st.com
+Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
+Tested-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Acked-by: Minas Harutyunyan <hminas@synopsys.com>
+Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/SG2PR01MB204837BF68EDB0E343D2A375C9A59@SG2PR01MB2048.apcprd01.prod.exchangelabs.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/gadget.c   |    6 ++----
- drivers/usb/dwc2/platform.c |    3 +--
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ drivers/usb/dwc2/drd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -4549,8 +4549,7 @@ static int dwc2_hsotg_udc_start(struct u
- 	hsotg->gadget.dev.of_node = hsotg->dev->of_node;
- 	hsotg->gadget.speed = USB_SPEED_UNKNOWN;
+--- a/drivers/usb/dwc2/drd.c
++++ b/drivers/usb/dwc2/drd.c
+@@ -35,7 +35,8 @@ static void dwc2_ovr_init(struct dwc2_hs
  
--	if (hsotg->dr_mode == USB_DR_MODE_PERIPHERAL ||
--	    (hsotg->dr_mode == USB_DR_MODE_OTG && dwc2_is_device_mode(hsotg))) {
-+	if (hsotg->dr_mode == USB_DR_MODE_PERIPHERAL) {
- 		ret = dwc2_lowlevel_hw_enable(hsotg);
- 		if (ret)
- 			goto err;
-@@ -4612,8 +4611,7 @@ static int dwc2_hsotg_udc_stop(struct us
- 	if (!IS_ERR_OR_NULL(hsotg->uphy))
- 		otg_set_peripheral(hsotg->uphy->otg, NULL);
+ 	spin_unlock_irqrestore(&hsotg->lock, flags);
  
--	if (hsotg->dr_mode == USB_DR_MODE_PERIPHERAL ||
--	    (hsotg->dr_mode == USB_DR_MODE_OTG && dwc2_is_device_mode(hsotg)))
-+	if (hsotg->dr_mode == USB_DR_MODE_PERIPHERAL)
- 		dwc2_lowlevel_hw_disable(hsotg);
+-	dwc2_force_mode(hsotg, (hsotg->dr_mode == USB_DR_MODE_HOST));
++	dwc2_force_mode(hsotg, (hsotg->dr_mode == USB_DR_MODE_HOST) ||
++				(hsotg->role_sw_default_mode == USB_DR_MODE_HOST));
+ }
  
- 	return 0;
---- a/drivers/usb/dwc2/platform.c
-+++ b/drivers/usb/dwc2/platform.c
-@@ -576,8 +576,7 @@ static int dwc2_driver_probe(struct plat
- 	dwc2_debugfs_init(hsotg);
- 
- 	/* Gadget code manages lowlevel hw on its own */
--	if (hsotg->dr_mode == USB_DR_MODE_PERIPHERAL ||
--	    (hsotg->dr_mode == USB_DR_MODE_OTG && dwc2_is_device_mode(hsotg)))
-+	if (hsotg->dr_mode == USB_DR_MODE_PERIPHERAL)
- 		dwc2_lowlevel_hw_disable(hsotg);
- 
- #if IS_ENABLED(CONFIG_USB_DWC2_PERIPHERAL) || \
+ static int dwc2_ovr_avalid(struct dwc2_hsotg *hsotg, bool valid)
 
 
