@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8818A8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097EDC433D2;
-	Tue, 28 Mar 2023 15:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF038BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94C9C433D2;
+	Tue, 28 Mar 2023 15:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015893;
-	bh=hfkwdnjVedKZy1WtpIMYj59846lbO69acDp25JRkYtc=;
+	s=korg; t=1680015896;
+	bh=yKt3/aQWkdaBiordIdPNQ9ot6DI5eRTmxt+Mt8gdIYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XTsunAE0xblLM10EdsfKLrU8z61SBDbRdtlV30CHr/Wv+GSoWBXljQhP4pTInOxiI
-	 85JPJFqrd/DOY3zY9oJ0QAVC1H0wPQGgHgcnz63yAmO++z5nuKGkkjWd80xdNhW3P/
-	 Tx2LlGYy518TUb5IXYNsOIzNE/OEgBVCRL8hFI9I=
+	b=hvENgL9EXulRdnpNNz7i712r0JKdLqPuLVMENE4pHI11xBgKAFpPlkbPaK5qu2WDG
+	 vnKqtABXUG+/WOquITVt3+D2hSbxRiwlgilfi15Nxin6SEuJrJRJdy+4zbzkZa5AEA
+	 sM/rVRVMq/0eyF83lfAVCFEmgAM2NgBsaeFzwKcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
 	Marco Elver <elver@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Alexander Potapenko <glider@google.com>,
 	Dmitry Vyukov <dvyukov@google.com>,
-	Jann Horn <jannh@google.com>,
-	SeongJae Park <sjpark@amazon.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 184/224] mm: kfence: fix using kfence_metadata without initialization in show_object()
-Date: Tue, 28 Mar 2023 16:43:00 +0200
-Message-Id: <20230328142625.051128231@linuxfoundation.org>
+Subject: [PATCH 6.1 185/224] kfence: avoid passing -g for test
+Date: Tue, 28 Mar 2023 16:43:01 +0200
+Message-Id: <20230328142625.090921073@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -39,60 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Marco Elver <elver@google.com>
 
-commit 1c86a188e03156223a34d09ce290b49bd4dd0403 upstream.
+commit 2e08ca1802441224f5b7cc6bffbb687f7406de95 upstream.
 
-The variable kfence_metadata is initialized in kfence_init_pool(), then,
-it is not initialized if kfence is disabled after booting.  In this case,
-kfence_metadata will be used (e.g.  ->lock and ->state fields) without
-initialization when reading /sys/kernel/debug/kfence/objects.  There will
-be a warning if you enable CONFIG_DEBUG_SPINLOCK.  Fix it by creating
-debugfs files when necessary.
+Nathan reported that when building with GNU as and a version of clang that
+defaults to DWARF5:
 
-Link: https://lkml.kernel.org/r/20230315034441.44321-1-songmuchun@bytedance.com
-Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Tested-by: Marco Elver <elver@google.com>
-Reviewed-by: Marco Elver <elver@google.com>
+  $ make -skj"$(nproc)" ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- \
+			LLVM=1 LLVM_IAS=0 O=build \
+			mrproper allmodconfig mm/kfence/kfence_test.o
+  /tmp/kfence_test-08a0a0.s: Assembler messages:
+  /tmp/kfence_test-08a0a0.s:14627: Error: non-constant .uleb128 is not supported
+  /tmp/kfence_test-08a0a0.s:14628: Error: non-constant .uleb128 is not supported
+  /tmp/kfence_test-08a0a0.s:14632: Error: non-constant .uleb128 is not supported
+  /tmp/kfence_test-08a0a0.s:14633: Error: non-constant .uleb128 is not supported
+  /tmp/kfence_test-08a0a0.s:14639: Error: non-constant .uleb128 is not supported
+  ...
+
+This is because `-g` defaults to the compiler debug info default.  If the
+assembler does not support some of the directives used, the above errors
+occur.  To fix, remove the explicit passing of `-g`.
+
+All the test wants is that stack traces print valid function names, and
+debug info is not required for that.  (I currently cannot recall why I
+added the explicit `-g`.)
+
+Link: https://lkml.kernel.org/r/20230316224705.709984-1-elver@google.com
+Fixes: bc8fbc5f305a ("kfence: add test suite")
+Signed-off-by: Marco Elver <elver@google.com>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
 Cc: Alexander Potapenko <glider@google.com>
 Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: SeongJae Park <sjpark@amazon.de>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ mm/kfence/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/kfence/core.c
-+++ b/mm/kfence/core.c
-@@ -727,10 +727,14 @@ static const struct seq_operations objec
- };
- DEFINE_SEQ_ATTRIBUTE(objects);
+--- a/mm/kfence/Makefile
++++ b/mm/kfence/Makefile
+@@ -2,5 +2,5 @@
  
--static int __init kfence_debugfs_init(void)
-+static int kfence_debugfs_init(void)
- {
--	struct dentry *kfence_dir = debugfs_create_dir("kfence", NULL);
-+	struct dentry *kfence_dir;
+ obj-y := core.o report.o
  
-+	if (!READ_ONCE(kfence_enabled))
-+		return 0;
-+
-+	kfence_dir = debugfs_create_dir("kfence", NULL);
- 	debugfs_create_file("stats", 0444, kfence_dir, NULL, &stats_fops);
- 	debugfs_create_file("objects", 0400, kfence_dir, NULL, &objects_fops);
- 	return 0;
-@@ -893,6 +897,8 @@ static int kfence_init_late(void)
- 	}
- 
- 	kfence_init_enable();
-+	kfence_debugfs_init();
-+
- 	return 0;
- }
- 
+-CFLAGS_kfence_test.o := -g -fno-omit-frame-pointer -fno-optimize-sibling-calls
++CFLAGS_kfence_test.o := -fno-omit-frame-pointer -fno-optimize-sibling-calls
+ obj-$(CONFIG_KFENCE_KUNIT_TEST) += kfence_test.o
 
 
