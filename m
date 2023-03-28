@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC2C8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:09:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18245C433EF;
-	Tue, 28 Mar 2023 15:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560398BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:09:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B81C433D2;
+	Tue, 28 Mar 2023 15:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016175;
-	bh=Clf6H/MORuMn2r5+Yge2Q+pwrX+mSS6BpF51Si+s26s=;
+	s=korg; t=1680016178;
+	bh=VnTPf/szTOud0X6FMxF6YhZTKnb4cW1BG76NA4zbN4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G8ItO6LOC/NbdsZcWgTNZlGF6IubGYGlVtm42e14r93zEUvovj7U9VFsdGWfuuZx6
-	 QWHqLIvRwKJ9W4o+qU6XAoNeVo2UFORDwYxb+nahUZIyWS1BkTBwcROzlGpuWaUoYf
-	 2na13CPHFHWXTO/xplxLegoK/1N9AHShL2JL4BzA=
+	b=qz+Hkevyf8NlSalLfnSGVJS9boxXTDjw0SL5px4UDF1bQxvG/cRg0H0JaaA4mRo2p
+	 QI03wLHeaIF7lXRf6Oc+sHQEUaeC2j6tJnwsue/48PBksvbpTmGpF32E6/DUtU3iDp
+	 OW57+ATOzSoQAOsVaaDgd73+Kbzzz+ICUWRtaq6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kang Chen <void0red@gmail.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/146] Bluetooth: L2CAP: Fix responding with wrong PDU type
-Date: Tue, 28 Mar 2023 16:42:34 +0200
-Message-Id: <20230328142605.423250816@linuxfoundation.org>
+Subject: [PATCH 5.15 092/146] scsi: hisi_sas: Check devm_add_action() return value
+Date: Tue, 28 Mar 2023 16:43:01 +0200
+Message-Id: <20230328142606.539827338@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -34,224 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Kang Chen <void0red@gmail.com>
 
-[ Upstream commit 9aa9d9473f1550d1936c31259720b3f1f4690576 ]
+[ Upstream commit 06d1a90de60208054cca15ef200138cfdbb642a9 ]
 
-L2CAP_ECRED_CONN_REQ shall be responded with L2CAP_ECRED_CONN_RSP not
-L2CAP_LE_CONN_RSP:
+In case devm_add_action() fails, check it in the caller of
+interrupt_preinit_v3_hw().
 
-L2CAP LE EATT Server - Reject - run
-  Listening for connections
-  New client connection with handle 0x002a
-  Sending L2CAP Request from client
-  Client received response code 0x15
-  Unexpected L2CAP response code (expected 0x18)
-L2CAP LE EATT Server - Reject - test failed
-
-> ACL Data RX: Handle 42 flags 0x02 dlen 26
-      LE L2CAP: Enhanced Credit Connection Request (0x17) ident 1 len 18
-        PSM: 39 (0x0027)
-        MTU: 64
-        MPS: 64
-        Credits: 5
-        Source CID: 65
-        Source CID: 66
-        Source CID: 67
-        Source CID: 68
-        Source CID: 69
-< ACL Data TX: Handle 42 flags 0x00 dlen 16
-      LE L2CAP: LE Connection Response (0x15) ident 1 len 8
-        invalid size
-        00 00 00 00 00 00 06 00
-
-L2CAP LE EATT Server - Reject - run
-  Listening for connections
-  New client connection with handle 0x002a
-  Sending L2CAP Request from client
-  Client received response code 0x18
-L2CAP LE EATT Server - Reject - test passed
-
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lore.kernel.org/r/20230227031030.893324-1-void0red@gmail.com
+Signed-off-by: Kang Chen <void0red@gmail.com>
+Acked-by: Xiang Chen <chenxiang66@hisilicon.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 117 +++++++++++++++++++++++++------------
- 1 file changed, 79 insertions(+), 38 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index a21e086d69d0e..0194c25b8dc57 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -708,6 +708,17 @@ void l2cap_chan_del(struct l2cap_chan *chan, int err)
- }
- EXPORT_SYMBOL_GPL(l2cap_chan_del);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index fa22cb712be5a..9515ab66a7789 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -2424,8 +2424,7 @@ static int interrupt_preinit_v3_hw(struct hisi_hba *hisi_hba)
+ 	hisi_hba->cq_nvecs = vectors - BASE_VECTORS_V3_HW;
+ 	shost->nr_hw_queues = hisi_hba->cq_nvecs;
  
-+static void __l2cap_chan_list_id(struct l2cap_conn *conn, u16 id,
-+				 l2cap_chan_func_t func, void *data)
-+{
-+	struct l2cap_chan *chan, *l;
-+
-+	list_for_each_entry_safe(chan, l, &conn->chan_l, list) {
-+		if (chan->ident == id)
-+			func(chan, data);
-+	}
-+}
-+
- static void __l2cap_chan_list(struct l2cap_conn *conn, l2cap_chan_func_t func,
- 			      void *data)
- {
-@@ -775,23 +786,9 @@ static void l2cap_chan_le_connect_reject(struct l2cap_chan *chan)
- 
- static void l2cap_chan_ecred_connect_reject(struct l2cap_chan *chan)
- {
--	struct l2cap_conn *conn = chan->conn;
--	struct l2cap_ecred_conn_rsp rsp;
--	u16 result;
--
--	if (test_bit(FLAG_DEFER_SETUP, &chan->flags))
--		result = L2CAP_CR_LE_AUTHORIZATION;
--	else
--		result = L2CAP_CR_LE_BAD_PSM;
--
- 	l2cap_state_change(chan, BT_DISCONN);
- 
--	memset(&rsp, 0, sizeof(rsp));
--
--	rsp.result  = cpu_to_le16(result);
--
--	l2cap_send_cmd(conn, chan->ident, L2CAP_LE_CONN_RSP, sizeof(rsp),
--		       &rsp);
-+	__l2cap_ecred_conn_rsp_defer(chan);
+-	devm_add_action(&pdev->dev, hisi_sas_v3_free_vectors, pdev);
+-	return 0;
++	return devm_add_action(&pdev->dev, hisi_sas_v3_free_vectors, pdev);
  }
  
- static void l2cap_chan_connect_reject(struct l2cap_chan *chan)
-@@ -846,7 +843,7 @@ void l2cap_chan_close(struct l2cap_chan *chan, int reason)
- 					break;
- 				case L2CAP_MODE_EXT_FLOWCTL:
- 					l2cap_chan_ecred_connect_reject(chan);
--					break;
-+					return;
- 				}
- 			}
- 		}
-@@ -3938,43 +3935,86 @@ void __l2cap_le_connect_rsp_defer(struct l2cap_chan *chan)
- 		       &rsp);
- }
- 
--void __l2cap_ecred_conn_rsp_defer(struct l2cap_chan *chan)
-+static void l2cap_ecred_list_defer(struct l2cap_chan *chan, void *data)
- {
-+	int *result = data;
-+
-+	if (*result || test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
-+		return;
-+
-+	switch (chan->state) {
-+	case BT_CONNECT2:
-+		/* If channel still pending accept add to result */
-+		(*result)++;
-+		return;
-+	case BT_CONNECTED:
-+		return;
-+	default:
-+		/* If not connected or pending accept it has been refused */
-+		*result = -ECONNREFUSED;
-+		return;
-+	}
-+}
-+
-+struct l2cap_ecred_rsp_data {
- 	struct {
- 		struct l2cap_ecred_conn_rsp rsp;
--		__le16 dcid[5];
-+		__le16 scid[L2CAP_ECRED_MAX_CID];
- 	} __packed pdu;
-+	int count;
-+};
-+
-+static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
-+{
-+	struct l2cap_ecred_rsp_data *rsp = data;
-+
-+	if (test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
-+		return;
-+
-+	/* Reset ident so only one response is sent */
-+	chan->ident = 0;
-+
-+	/* Include all channels pending with the same ident */
-+	if (!rsp->pdu.rsp.result)
-+		rsp->pdu.rsp.dcid[rsp->count++] = cpu_to_le16(chan->scid);
-+	else
-+		l2cap_chan_del(chan, ECONNRESET);
-+}
-+
-+void __l2cap_ecred_conn_rsp_defer(struct l2cap_chan *chan)
-+{
- 	struct l2cap_conn *conn = chan->conn;
--	u16 ident = chan->ident;
--	int i = 0;
-+	struct l2cap_ecred_rsp_data data;
-+	u16 id = chan->ident;
-+	int result = 0;
- 
--	if (!ident)
-+	if (!id)
- 		return;
- 
--	BT_DBG("chan %p ident %d", chan, ident);
-+	BT_DBG("chan %p id %d", chan, id);
- 
--	pdu.rsp.mtu     = cpu_to_le16(chan->imtu);
--	pdu.rsp.mps     = cpu_to_le16(chan->mps);
--	pdu.rsp.credits = cpu_to_le16(chan->rx_credits);
--	pdu.rsp.result  = cpu_to_le16(L2CAP_CR_LE_SUCCESS);
-+	memset(&data, 0, sizeof(data));
- 
--	mutex_lock(&conn->chan_lock);
-+	data.pdu.rsp.mtu     = cpu_to_le16(chan->imtu);
-+	data.pdu.rsp.mps     = cpu_to_le16(chan->mps);
-+	data.pdu.rsp.credits = cpu_to_le16(chan->rx_credits);
-+	data.pdu.rsp.result  = cpu_to_le16(L2CAP_CR_LE_SUCCESS);
- 
--	list_for_each_entry(chan, &conn->chan_l, list) {
--		if (chan->ident != ident)
--			continue;
-+	/* Verify that all channels are ready */
-+	__l2cap_chan_list_id(conn, id, l2cap_ecred_list_defer, &result);
- 
--		/* Reset ident so only one response is sent */
--		chan->ident = 0;
-+	if (result > 0)
-+		return;
- 
--		/* Include all channels pending with the same ident */
--		pdu.dcid[i++] = cpu_to_le16(chan->scid);
--	}
-+	if (result < 0)
-+		data.pdu.rsp.result = cpu_to_le16(L2CAP_CR_LE_AUTHORIZATION);
- 
--	mutex_unlock(&conn->chan_lock);
-+	/* Build response */
-+	__l2cap_chan_list_id(conn, id, l2cap_ecred_rsp_defer, &data);
- 
--	l2cap_send_cmd(conn, ident, L2CAP_ECRED_CONN_RSP,
--			sizeof(pdu.rsp) + i * sizeof(__le16), &pdu);
-+	l2cap_send_cmd(conn, id, L2CAP_ECRED_CONN_RSP,
-+		       sizeof(data.pdu.rsp) + (data.count * sizeof(__le16)),
-+		       &data.pdu);
- }
- 
- void __l2cap_connect_rsp_defer(struct l2cap_chan *chan)
-@@ -6078,6 +6118,7 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
- 		__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
- 
- 		chan->ident = cmd->ident;
-+		chan->mode = L2CAP_MODE_EXT_FLOWCTL;
- 
- 		if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
- 			l2cap_state_change(chan, BT_CONNECT2);
+ static int interrupt_init_v3_hw(struct hisi_hba *hisi_hba)
 -- 
 2.39.2
 
