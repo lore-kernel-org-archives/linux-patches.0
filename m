@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3382C8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4D6C433EF;
-	Tue, 28 Mar 2023 14:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A798476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6864BC433EF;
+	Tue, 28 Mar 2023 14:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015258;
-	bh=58D9NaggtejgQVA9VOqwJuLtgerLB+e2QFO7NZOCwsU=;
+	s=korg; t=1680015260;
+	bh=yA91FB4HV4FiJRK/RU1vkyv44403zYFEYXc2y91qqsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rxK6VQnP6T8lZz4QHKhWlx9jayTFk96DsDJ8Y2JkxMsoeFCQL+A8WdDN8E+T8/CUM
-	 wqtDfTMtcQDiVN6bm6Zaa7hKFu4VPPTTCkiRJoCHxEp1OVzdS6uI/VGwbuB+Pxn8AH
-	 +urmdw+mBgq+SJr457tE6ofIWYPI8uqPYVLZXwz8=
+	b=ZoCj4MbmoXjtZHMrRAMKDKy0R3hjN2BFX50NOFxfipfoMDNUlIX6/qHkQXl+BgfSi
+	 dpSdDFBDOK16ZF8CgQRoYA/R1B/4af7o5aQ4w0k6OrKaUHEldqyz1JnRAEQhsQBZBL
+	 Gzf2p00Ff/T2+lkcl22OvxQwx1JL9k/w3VNAFQAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tim Huang <tim.huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 223/240] drm/amdgpu: skip ASIC reset for APUs when go to S4
-Date: Tue, 28 Mar 2023 16:43:06 +0200
-Message-Id: <20230328142629.017900983@linuxfoundation.org>
+Subject: [PATCH 6.2 224/240] drm/amdgpu: reposition the gpu reset checking for reuse
+Date: Tue, 28 Mar 2023 16:43:07 +0200
+Message-Id: <20230328142629.066094754@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,22 +36,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Tim Huang <tim.huang@amd.com>
 
-commit b589626674de94d977e81c99bf7905872b991197 upstream.
+commit aaee0ce460b954e08b6e630d7e54b2abb672feb8 upstream.
 
-For GC IP v11.0.4/11, PSP TMR need to be reserved
-for ASIC mode2 reset. But for S4, when psp suspend,
-it will destroy the TMR that fails the ASIC reset.
-
-[  96.006101] amdgpu 0000:62:00.0: amdgpu: MODE2 reset
-[  100.409717] amdgpu 0000:62:00.0: amdgpu: SMU: I'm not done with your previous command: SMN_C2PMSG_66:0x00000011 SMN_C2PMSG_82:0x00000002
-[  100.411593] amdgpu 0000:62:00.0: amdgpu: Mode2 reset failed!
-[  100.412470] amdgpu 0000:62:00.0: PM: pci_pm_freeze(): amdgpu_pmops_freeze+0x0/0x50 [amdgpu] returns -62
-[  100.414020] amdgpu 0000:62:00.0: PM: dpm_run_callback(): pci_pm_freeze+0x0/0xd0 returns -62
-[  100.415311] amdgpu 0000:62:00.0: PM: pci_pm_freeze+0x0/0xd0 returned -62 after 4623202 usecs
-[  100.416608] amdgpu 0000:62:00.0: PM: failed to freeze async: error -62
-
-We can skip the reset on APUs, assuming we can resume them
-properly. Verified on some GFX11, GFX10 and old GFX9 APUs.
+Move the amdgpu_acpi_should_gpu_reset out of
+CONFIG_SUSPEND to share it with hibernate case.
 
 Signed-off-by: Tim Huang <tim.huang@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
@@ -59,22 +47,93 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h      |    4 +--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |   41 +++++++++++++++++--------------
+ 2 files changed, 25 insertions(+), 20 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2457,7 +2457,10 @@ static int amdgpu_pmops_freeze(struct de
- 	adev->in_s4 = false;
- 	if (r)
- 		return r;
--	return amdgpu_asic_reset(adev);
-+
-+	if (amdgpu_acpi_should_gpu_reset(adev))
-+		return amdgpu_asic_reset(adev);
-+	return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -1388,10 +1388,12 @@ int amdgpu_acpi_smart_shift_update(struc
+ int amdgpu_acpi_pcie_notify_device_ready(struct amdgpu_device *adev);
+ 
+ void amdgpu_acpi_get_backlight_caps(struct amdgpu_dm_backlight_caps *caps);
++bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev);
+ void amdgpu_acpi_detect(void);
+ #else
+ static inline int amdgpu_acpi_init(struct amdgpu_device *adev) { return 0; }
+ static inline void amdgpu_acpi_fini(struct amdgpu_device *adev) { }
++static inline bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev) { return false; }
+ static inline void amdgpu_acpi_detect(void) { }
+ static inline bool amdgpu_acpi_is_power_shift_control_supported(void) { return false; }
+ static inline int amdgpu_acpi_power_shift_control(struct amdgpu_device *adev,
+@@ -1402,11 +1404,9 @@ static inline int amdgpu_acpi_smart_shif
+ 
+ #if defined(CONFIG_ACPI) && defined(CONFIG_SUSPEND)
+ bool amdgpu_acpi_is_s3_active(struct amdgpu_device *adev);
+-bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev);
+ bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev);
+ #else
+ static inline bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev) { return false; }
+-static inline bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev) { return false; }
+ static inline bool amdgpu_acpi_is_s3_active(struct amdgpu_device *adev) { return false; }
+ #endif
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+@@ -971,6 +971,29 @@ static bool amdgpu_atcs_pci_probe_handle
+ 	return true;
  }
  
- static int amdgpu_pmops_thaw(struct device *dev)
++
++/**
++ * amdgpu_acpi_should_gpu_reset
++ *
++ * @adev: amdgpu_device_pointer
++ *
++ * returns true if should reset GPU, false if not
++ */
++bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev)
++{
++	if (adev->flags & AMD_IS_APU)
++		return false;
++
++	if (amdgpu_sriov_vf(adev))
++		return false;
++
++#if IS_ENABLED(CONFIG_SUSPEND)
++	return pm_suspend_target_state != PM_SUSPEND_TO_IDLE;
++#else
++	return true;
++#endif
++}
++
+ /*
+  * amdgpu_acpi_detect - detect ACPI ATIF/ATCS methods
+  *
+@@ -1043,24 +1066,6 @@ bool amdgpu_acpi_is_s3_active(struct amd
+ }
+ 
+ /**
+- * amdgpu_acpi_should_gpu_reset
+- *
+- * @adev: amdgpu_device_pointer
+- *
+- * returns true if should reset GPU, false if not
+- */
+-bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev)
+-{
+-	if (adev->flags & AMD_IS_APU)
+-		return false;
+-
+-	if (amdgpu_sriov_vf(adev))
+-		return false;
+-
+-	return pm_suspend_target_state != PM_SUSPEND_TO_IDLE;
+-}
+-
+-/**
+  * amdgpu_acpi_is_s0ix_active
+  *
+  * @adev: amdgpu_device_pointer
 
 
