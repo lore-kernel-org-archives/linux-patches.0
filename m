@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B318BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5EDC433D2;
-	Tue, 28 Mar 2023 14:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8361E8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099B4C4339E;
+	Tue, 28 Mar 2023 14:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014930;
-	bh=Wjtgmh6xp8S3VHXvxyTI4dkfmF9xauyJqPXlSRI2/aQ=;
+	s=korg; t=1680014933;
+	bh=QQGD4vS3oXg+Cpry5cuJxE5dN6sg2kiSatWSlv9MhPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aw7wHbsuNHrJuw10C35VLYeJw2SAti+/5qzeyOS0KKjLOTHxNqW3BHf4PWNlf0c9U
-	 LblB8upxmmSFjc3VG+9cGpLWPafZybL8cpNE1XXTqykcblfqhuP5HjmqfMP58MrcaV
-	 FYlBsSowaaW3bz9UjZG683pu+niBUPHoTBoARWpg=
+	b=wIqNnYffVVCdV1lilpqSWWQ7zYCqEzMxiu+JxTkZr7xvYxiOE7uJyAPUu4kNFHpdO
+	 2m9w0Zbt0Et3lVUbwgJcMBaWl9tYLM+PjN7mH0AsGDHF9bZAVu0vofWWleiFvxaaBi
+	 n3+Wc32Bxq1auVXCfZVXUee2V2qiMLESqZj3mcHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Geoff Levand <geoff@infradead.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 064/240] net/ps3_gelic_net: Use dma_mapping_error
-Date: Tue, 28 Mar 2023 16:40:27 +0200
-Message-Id: <20230328142622.392575012@linuxfoundation.org>
+Subject: [PATCH 6.2 098/240] net: dsa: mt7530: move setting ssc_delta to PHY_INTERFACE_MODE_TRGMII case
+Date: Tue, 28 Mar 2023 16:41:01 +0200
+Message-Id: <20230328142623.852872836@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,87 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geoff Levand <geoff@infradead.org>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit bebe933d35a63d4f042fbf4dce4f22e689ba0fcd ]
+[ Upstream commit 407b508bdd70b6848993843d96ed49ac4108fb52 ]
 
-The current Gelic Etherenet driver was checking the return value of its
-dma_map_single call, and not using the dma_mapping_error() routine.
+Move setting the ssc_delta variable to under the PHY_INTERFACE_MODE_TRGMII
+case as it's only needed when trgmii is used.
 
-Fixes runtime problems like these:
-
-  DMA-API: ps3_gelic_driver sb_05: device driver failed to check map error
-  WARNING: CPU: 0 PID: 0 at kernel/dma/debug.c:1027 .check_unmap+0x888/0x8dc
-
-Fixes: 02c1889166b4 ("ps3: gigabit ethernet driver for PS3, take3")
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: Geoff Levand <geoff@infradead.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20230320190520.124513-3-arinc.unal@arinc9.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/toshiba/ps3_gelic_net.c | 24 +++++++++++---------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/net/dsa/mt7530.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/toshiba/ps3_gelic_net.c b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
-index dffd664e65f4e..9d535ae596266 100644
---- a/drivers/net/ethernet/toshiba/ps3_gelic_net.c
-+++ b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
-@@ -317,15 +317,17 @@ static int gelic_card_init_chain(struct gelic_card *card,
- 
- 	/* set up the hardware pointers in each descriptor */
- 	for (i = 0; i < no; i++, descr++) {
-+		dma_addr_t cpu_addr;
-+
- 		gelic_descr_set_status(descr, GELIC_DESCR_DMA_NOT_IN_USE);
--		descr->bus_addr =
--			dma_map_single(ctodev(card), descr,
--				       GELIC_DESCR_SIZE,
--				       DMA_BIDIRECTIONAL);
- 
--		if (!descr->bus_addr)
-+		cpu_addr = dma_map_single(ctodev(card), descr,
-+					  GELIC_DESCR_SIZE, DMA_BIDIRECTIONAL);
-+
-+		if (dma_mapping_error(ctodev(card), cpu_addr))
- 			goto iommu_error;
- 
-+		descr->bus_addr = cpu_to_be32(cpu_addr);
- 		descr->next = descr + 1;
- 		descr->prev = descr - 1;
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index b0d6ca18ec2f3..326f992536a7e 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -441,6 +441,10 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+ 		break;
+ 	case PHY_INTERFACE_MODE_TRGMII:
+ 		trgint = 1;
++		if (xtal == HWTRAP_XTAL_25MHZ)
++			ssc_delta = 0x57;
++		else
++			ssc_delta = 0x87;
+ 		if (priv->id == ID_MT7621) {
+ 			/* PLL frequency: 150MHz: 1.2GBit */
+ 			if (xtal == HWTRAP_XTAL_40MHZ)
+@@ -460,11 +464,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+ 		return -EINVAL;
  	}
-@@ -375,6 +377,7 @@ static int gelic_descr_prepare_rx(struct gelic_card *card,
- 	static const unsigned int rx_skb_size =
- 		ALIGN(GELIC_NET_MAX_FRAME, GELIC_NET_RXBUF_ALIGN) +
- 		GELIC_NET_RXBUF_ALIGN - 1;
-+	dma_addr_t cpu_addr;
- 	int offset;
  
- 	if (gelic_descr_get_status(descr) !=  GELIC_DESCR_DMA_NOT_IN_USE)
-@@ -396,11 +399,10 @@ static int gelic_descr_prepare_rx(struct gelic_card *card,
- 	if (offset)
- 		skb_reserve(descr->skb, GELIC_NET_RXBUF_ALIGN - offset);
- 	/* io-mmu-map the skb */
--	descr->buf_addr = cpu_to_be32(dma_map_single(ctodev(card),
--						     descr->skb->data,
--						     GELIC_NET_MAX_FRAME,
--						     DMA_FROM_DEVICE));
--	if (!descr->buf_addr) {
-+	cpu_addr = dma_map_single(ctodev(card), descr->skb->data,
-+				  GELIC_NET_MAX_FRAME, DMA_FROM_DEVICE);
-+	descr->buf_addr = cpu_to_be32(cpu_addr);
-+	if (dma_mapping_error(ctodev(card), cpu_addr)) {
- 		dev_kfree_skb_any(descr->skb);
- 		descr->skb = NULL;
- 		dev_info(ctodev(card),
-@@ -780,7 +782,7 @@ static int gelic_descr_prepare_tx(struct gelic_card *card,
+-	if (xtal == HWTRAP_XTAL_25MHZ)
+-		ssc_delta = 0x57;
+-	else
+-		ssc_delta = 0x87;
+-
+ 	mt7530_rmw(priv, MT7530_P6ECR, P6_INTF_MODE_MASK,
+ 		   P6_INTF_MODE(trgint));
  
- 	buf = dma_map_single(ctodev(card), skb->data, skb->len, DMA_TO_DEVICE);
- 
--	if (!buf) {
-+	if (dma_mapping_error(ctodev(card), buf)) {
- 		dev_err(ctodev(card),
- 			"dma map 2 failed (%p, %i). Dropping packet\n",
- 			skb->data, skb->len);
 -- 
 2.39.2
 
