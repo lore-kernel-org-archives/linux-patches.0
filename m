@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59C28BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CFFC433D2;
-	Tue, 28 Mar 2023 14:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0A48BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E261FC433D2;
+	Tue, 28 Mar 2023 14:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014922;
-	bh=Xw5FWLhqprpPOsUiCYr3m3HTYwubwJ+cnBCtKnp8la4=;
+	s=korg; t=1680014925;
+	bh=pCfDifIlXn7o0pP7hzXI60RoIiPJKug0HBSKioeEceQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmKzYOica9wxGgQ1pZfr++6paToUgEb6Ej7yjeB36OWsFJE4RidX/+wdtVz/PLWPz
-	 FmXTnw+r0fpjpuZ8qY8NmYun5fmvwGV5kt6u2VbWLUBOunnMXDjGLbd1O9urpJDKN4
-	 C7toeR57p59s1yL/sTwwicZZa1xysGSw6B85aLLc=
+	b=tN0jE1YGpDAXra/8qX2vR/mW8ZWpdUM3oD1xvyghgVHhU4qvX7uTaTlJE3y5Pcdqj
+	 abgW+8ioclCUQqlxQUVGh1hNMZ7gsPNwRVjHMa7vyXKCZxnQZ2ENb7aJiRNEq3pjxu
+	 eKJLo+q9Gj/knqYWG2u/ooUZXzZKtFzHEPORB7s4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Haynes <sh@synk.net>,
-	Lefteris Alexakis <lefteris.alexakis@kpn.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Gavin Li <gavinl@nvidia.com>,
+	Gavi Teitz <gavi@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 071/240] bpf: Adjust insufficient default bpf_jit_limit
-Date: Tue, 28 Mar 2023 16:40:34 +0200
-Message-Id: <20230328142622.710796792@linuxfoundation.org>
+Subject: [PATCH 6.2 072/240] net/mlx5e: Set uplink rep as NETNS_LOCAL
+Date: Tue, 28 Mar 2023 16:40:35 +0200
+Message-Id: <20230328142622.753178489@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -38,76 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Gavin Li <gavinl@nvidia.com>
 
-[ Upstream commit 10ec8ca8ec1a2f04c4ed90897225231c58c124a7 ]
+[ Upstream commit c83172b0639c8a005c0dd3b36252dc22ddd9f19c ]
 
-We've seen recent AWS EKS (Kubernetes) user reports like the following:
+Previously, NETNS_LOCAL was not set for uplink representors, inconsistent
+with VF representors, and allowed the uplink representor to be moved
+between net namespaces and separated from the VF representors it shares
+the core device with. Such usage would break the isolation model of
+namespaces, as devices in different namespaces would have access to
+shared memory.
 
-  After upgrading EKS nodes from v20230203 to v20230217 on our 1.24 EKS
-  clusters after a few days a number of the nodes have containers stuck
-  in ContainerCreating state or liveness/readiness probes reporting the
-  following error:
+To solve this issue, set NETNS_LOCAL for uplink representors if eswitch is
+in switchdev mode.
 
-    Readiness probe errored: rpc error: code = Unknown desc = failed to
-    exec in container: failed to start exec "4a11039f730203ffc003b7[...]":
-    OCI runtime exec failed: exec failed: unable to start container process:
-    unable to init seccomp: error loading seccomp filter into kernel:
-    error loading seccomp filter: errno 524: unknown
-
-  However, we had not been seeing this issue on previous AMIs and it only
-  started to occur on v20230217 (following the upgrade from kernel 5.4 to
-  5.10) with no other changes to the underlying cluster or workloads.
-
-  We tried the suggestions from that issue (sysctl net.core.bpf_jit_limit=452534528)
-  which helped to immediately allow containers to be created and probes to
-  execute but after approximately a day the issue returned and the value
-  returned by cat /proc/vmallocinfo | grep bpf_jit | awk '{s+=$2} END {print s}'
-  was steadily increasing.
-
-I tested bpf tree to observe bpf_jit_charge_modmem, bpf_jit_uncharge_modmem
-their sizes passed in as well as bpf_jit_current under tcpdump BPF filter,
-seccomp BPF and native (e)BPF programs, and the behavior all looks sane
-and expected, that is nothing "leaking" from an upstream perspective.
-
-The bpf_jit_limit knob was originally added in order to avoid a situation
-where unprivileged applications loading BPF programs (e.g. seccomp BPF
-policies) consuming all the module memory space via BPF JIT such that loading
-of kernel modules would be prevented. The default limit was defined back in
-2018 and while good enough back then, we are generally seeing far more BPF
-consumers today.
-
-Adjust the limit for the BPF JIT pool from originally 1/4 to now 1/2 of the
-module memory space to better reflect today's needs and avoid more users
-running into potentially hard to debug issues.
-
-Fixes: fdadd04931c2 ("bpf: fix bpf_jit_limit knob for PAGE_SIZE >= 64K")
-Reported-by: Stephen Haynes <sh@synk.net>
-Reported-by: Lefteris Alexakis <lefteris.alexakis@kpn.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://github.com/awslabs/amazon-eks-ami/issues/1179
-Link: https://github.com/awslabs/amazon-eks-ami/issues/1219
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230320143725.8394-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 7a9fb35e8c3a ("net/mlx5e: Do not reload ethernet ports when changing eswitch mode")
+Signed-off-by: Gavin Li <gavinl@nvidia.com>
+Reviewed-by: Gavi Teitz <gavi@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index f9c3b1033ec39..00d25e8ea9e3c 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -971,7 +971,7 @@ static int __init bpf_jit_charge_init(void)
- {
- 	/* Only used as heuristic here to derive limit. */
- 	bpf_jit_limit_max = bpf_jit_alloc_exec_limit();
--	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 2,
-+	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 1,
- 					    PAGE_SIZE), LONG_MAX);
- 	return 0;
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index d6bcbc17151d7..47d4b54d15634 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -4094,8 +4094,12 @@ static netdev_features_t mlx5e_fix_features(struct net_device *netdev,
+ 		}
+ 	}
+ 
+-	if (mlx5e_is_uplink_rep(priv))
++	if (mlx5e_is_uplink_rep(priv)) {
+ 		features = mlx5e_fix_uplink_rep_features(netdev, features);
++		features |= NETIF_F_NETNS_LOCAL;
++	} else {
++		features &= ~NETIF_F_NETNS_LOCAL;
++	}
+ 
+ 	mutex_unlock(&priv->state_lock);
+ 
 -- 
 2.39.2
 
