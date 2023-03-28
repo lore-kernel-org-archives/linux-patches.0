@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EDE8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6999CC4339B;
-	Tue, 28 Mar 2023 14:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C9B8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6FBC433D2;
+	Tue, 28 Mar 2023 14:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015287;
-	bh=NLvOwBAmfmEKC/d6fA8LZ3/lkBqO3t1YDa/zE/o3dBA=;
+	s=korg; t=1680015290;
+	bh=stprJ4Ok6iOxRao5KYE4oaQuciwWQTRlYZK94PRhwNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cg/LOAfnc21XynP5q28K6KWcQ4q+HUl+/K6QcVMtE/syKJJdBa0mtS2gjNmKWknTS
-	 IdDrX5HOv+EZj2UpyRCYn9hkTj3B2eIlxk+mqCyCOSD/rbmVWBIXrdk9zMTrxDCLJy
-	 Il3xe66Njsh490O+APAX1qxTW6eKPCR+CWTCY7m4=
+	b=M9WxxO8lbzeRu4T7vPeJjoTl0jWdywHgz9gzx36yuV4ylRkIr/ojBwSVg0hY2fO/K
+	 1bz4i+AJYqVWpjdiFh+VXKnvuzc8sgFRuSVY+9TZt+v3oSz3+dqbn6BaedF+gBQ9n/
+	 vJVklK85Tbp73Bjv1Mqo5A/NtF/8Jlr0Bnxb1u/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Savino Dicanosa <sd7.dev@pm.me>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 204/240] io_uring/rsrc: fix null-ptr-deref in io_file_bitmap_get()
-Date: Tue, 28 Mar 2023 16:42:47 +0200
-Message-Id: <20230328142628.182813129@linuxfoundation.org>
+	Peter Collingbourne <pcc@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Evgenii Stepanov <eugenis@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.2 205/240] Revert "kasan: drop skip_kasan_poison variable in free_pages_prepare"
+Date: Tue, 28 Mar 2023 16:42:48 +0200
+Message-Id: <20230328142628.223011878@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,69 +40,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Savino Dicanosa <sd7.dev@pm.me>
+From: Peter Collingbourne <pcc@google.com>
 
-commit 02a4d923e4400a36d340ea12d8058f69ebf3a383 upstream.
+commit f446883d12b8bfa486f7c98d403054d61d38c989 upstream.
 
-When fixed files are unregistered, file_alloc_end and alloc_hint
-are not cleared. This can later cause a NULL pointer dereference in
-io_file_bitmap_get() if auto index selection is enabled via
-IORING_FILE_INDEX_ALLOC:
+This reverts commit 487a32ec24be819e747af8c2ab0d5c515508086a.
 
-[    6.519129] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[...]
-[    6.541468] RIP: 0010:_find_next_zero_bit+0x1a/0x70
-[...]
-[    6.560906] Call Trace:
-[    6.561322]  <TASK>
-[    6.561672]  io_file_bitmap_get+0x38/0x60
-[    6.562281]  io_fixed_fd_install+0x63/0xb0
-[    6.562851]  ? __pfx_io_socket+0x10/0x10
-[    6.563396]  io_socket+0x93/0xf0
-[    6.563855]  ? __pfx_io_socket+0x10/0x10
-[    6.564411]  io_issue_sqe+0x5b/0x3d0
-[    6.564914]  io_submit_sqes+0x1de/0x650
-[    6.565452]  __do_sys_io_uring_enter+0x4fc/0xb20
-[    6.566083]  ? __do_sys_io_uring_register+0x11e/0xd80
-[    6.566779]  do_syscall_64+0x3c/0x90
-[    6.567247]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[...]
+should_skip_kasan_poison() reads the PG_skip_kasan_poison flag from
+page->flags.  However, this line of code in free_pages_prepare():
 
-To fix the issue, set file alloc range and alloc_hint to zero after
-file tables are freed.
+	page->flags &= ~PAGE_FLAGS_CHECK_AT_PREP;
 
-Cc: stable@vger.kernel.org
-Fixes: 4278a0deb1f6 ("io_uring: defer alloc_hint update to io_file_bitmap_set()")
-Signed-off-by: Savino Dicanosa <sd7.dev@pm.me>
-[axboe: add explicit bitmap == NULL check as well]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+clears most of page->flags, including PG_skip_kasan_poison, before calling
+should_skip_kasan_poison(), which meant that it would never return true as
+a result of the page flag being set.  Therefore, fix the code to call
+should_skip_kasan_poison() before clearing the flags, as we were doing
+before the reverted patch.
+
+This fixes a measurable performance regression introduced in the reverted
+commit, where munmap() takes longer than intended if HW tags KASAN is
+supported and enabled at runtime.  Without this patch, we see a
+single-digit percentage performance regression in a particular
+mmap()-heavy benchmark when enabling HW tags KASAN, and with the patch,
+there is no statistically significant performance impact when enabling HW
+tags KASAN.
+
+Link: https://lkml.kernel.org/r/20230310042914.3805818-2-pcc@google.com
+Fixes: 487a32ec24be ("kasan: drop skip_kasan_poison variable in free_pages_prepare")
+  Link: https://linux-review.googlesource.com/id/Ic4f13affeebd20548758438bb9ed9ca40e312b79
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com> [arm64]
+Cc: Evgenii Stepanov <eugenis@google.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>	[6.1]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/filetable.c |    3 +++
- io_uring/rsrc.c      |    1 +
- 2 files changed, 4 insertions(+)
+ mm/page_alloc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/io_uring/filetable.c
-+++ b/io_uring/filetable.c
-@@ -19,6 +19,9 @@ static int io_file_bitmap_get(struct io_
- 	unsigned long nr = ctx->file_alloc_end;
- 	int ret;
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -1391,6 +1391,7 @@ static __always_inline bool free_pages_p
+ 			unsigned int order, bool check_free, fpi_t fpi_flags)
+ {
+ 	int bad = 0;
++	bool skip_kasan_poison = should_skip_kasan_poison(page, fpi_flags);
+ 	bool init = want_init_on_free();
  
-+	if (!table->bitmap)
-+		return -ENFILE;
-+
- 	do {
- 		ret = find_next_zero_bit(table->bitmap, nr, table->alloc_hint);
- 		if (ret != nr)
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -794,6 +794,7 @@ void __io_sqe_files_unregister(struct io
- 	}
- #endif
- 	io_free_file_tables(&ctx->file_table);
-+	io_file_table_set_alloc_range(ctx, 0, 0);
- 	io_rsrc_data_free(ctx->file_data);
- 	ctx->file_data = NULL;
- 	ctx->nr_user_files = 0;
+ 	VM_BUG_ON_PAGE(PageTail(page), page);
+@@ -1463,7 +1464,7 @@ static __always_inline bool free_pages_p
+ 	 * With hardware tag-based KASAN, memory tags must be set before the
+ 	 * page becomes unavailable via debug_pagealloc or arch_free_page.
+ 	 */
+-	if (!should_skip_kasan_poison(page, fpi_flags)) {
++	if (!skip_kasan_poison) {
+ 		kasan_poison_pages(page, order, init);
+ 
+ 		/* Memory is already initialized if KASAN did it internally. */
 
 
