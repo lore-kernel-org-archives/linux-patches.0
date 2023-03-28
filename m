@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AEA8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:45:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B263EC433D2;
-	Tue, 28 Mar 2023 14:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FAB8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:45:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABD7C433EF;
+	Tue, 28 Mar 2023 14:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014730;
-	bh=MHLp96SbHz4REgQwloBCdqcQQ3cNDhkZrxjD27//ncY=;
+	s=korg; t=1680014732;
+	bh=4ps7Zo5K0dht4GzdieFK7ocgpxx8xJeSnw87NTgYZgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WBHRIwjjszQ2QtaJkcoyHq6OuWbTMs8MAtsd8Z7ntVFVHvZfQ2iqt/OjHeqeHqhn8
-	 lA0D8bG/4fLz4jLFpn5ARvMYTl2xfqCF0Ro94Y766aEBVPYPnJCprPpkVGwwulTnr3
-	 UKSOzoWgYP7pVxVO0eOfy+r5uWWWB73sxz10/0EM=
+	b=as6GAyjhFWQ8Ycrlu7YjAQ7bIjw+JUM60RAo86qkg52PdomtSSNJagYzGnuKLdV8O
+	 HC5d3W+iiJte7rQalOINgN4nzndNiyw+IBlATwLZoEXZO4RxCroc83XyugX8aTPjy9
+	 DpkPXXX+9RQHEZ4xbGfqTuBCBVnD+gVzpWTPrNZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 030/240] iavf: fix inverted Rx hash condition leading to disabled hash
-Date: Tue, 28 Mar 2023 16:39:53 +0200
-Message-Id: <20230328142620.883430253@linuxfoundation.org>
+Subject: [PATCH 6.2 004/240] perf/core: Fix perf_output_begin parameter is incorrectly invoked in perf_event_bpf_output
+Date: Tue, 28 Mar 2023 16:39:27 +0200
+Message-Id: <20230328142619.834691321@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -39,42 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit 32d57f667f871bc5a8babbe27ea4c5e668ee0ea8 ]
+[ Upstream commit eb81a2ed4f52be831c9fb879752d89645a312c13 ]
 
-Condition, which checks whether the netdev has hashing enabled is
-inverted. Basically, the tagged commit effectively disabled passing flow
-hash from descriptor to skb, unless user *disables* it via Ethtool.
-Commit a876c3ba59a6 ("i40e/i40evf: properly report Rx packet hash")
-fixed this problem, but only for i40e.
-Invert the condition now in iavf and unblock passing hash to skbs again.
+syzkaller reportes a KASAN issue with stack-out-of-bounds.
+The call trace is as follows:
+  dump_stack+0x9c/0xd3
+  print_address_description.constprop.0+0x19/0x170
+  __kasan_report.cold+0x6c/0x84
+  kasan_report+0x3a/0x50
+  __perf_event_header__init_id+0x34/0x290
+  perf_event_header__init_id+0x48/0x60
+  perf_output_begin+0x4a4/0x560
+  perf_event_bpf_output+0x161/0x1e0
+  perf_iterate_sb_cpu+0x29e/0x340
+  perf_iterate_sb+0x4c/0xc0
+  perf_event_bpf_event+0x194/0x2c0
+  __bpf_prog_put.constprop.0+0x55/0xf0
+  __cls_bpf_delete_prog+0xea/0x120 [cls_bpf]
+  cls_bpf_delete_prog_work+0x1c/0x30 [cls_bpf]
+  process_one_work+0x3c2/0x730
+  worker_thread+0x93/0x650
+  kthread+0x1b8/0x210
+  ret_from_fork+0x1f/0x30
 
-Fixes: 857942fd1aa1 ("i40e: Fix Rx hash reported to the stack by our driver")
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+commit 267fb27352b6 ("perf: Reduce stack usage of perf_output_begin()")
+use on-stack struct perf_sample_data of the caller function.
+
+However, perf_event_bpf_output uses incorrect parameter to convert
+small-sized data (struct perf_bpf_event) into large-sized data
+(struct perf_sample_data), which causes memory overwriting occurs in
+__perf_event_header__init_id.
+
+Fixes: 267fb27352b6 ("perf: Reduce stack usage of perf_output_begin()")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20230314044735.56551-1-yangjihong1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_txrx.c | 2 +-
+ kernel/events/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_txrx.c b/drivers/net/ethernet/intel/iavf/iavf_txrx.c
-index 18b6a702a1d6d..e989feda133c1 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_txrx.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_txrx.c
-@@ -1096,7 +1096,7 @@ static inline void iavf_rx_hash(struct iavf_ring *ring,
- 		cpu_to_le64((u64)IAVF_RX_DESC_FLTSTAT_RSS_HASH <<
- 			    IAVF_RX_DESC_STATUS_FLTSTAT_SHIFT);
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 8ae8a5055e205..002eb9b9faa09 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -9163,7 +9163,7 @@ static void perf_event_bpf_output(struct perf_event *event, void *data)
  
--	if (ring->netdev->features & NETIF_F_RXHASH)
-+	if (!(ring->netdev->features & NETIF_F_RXHASH))
+ 	perf_event_header__init_id(&bpf_event->event_id.header,
+ 				   &sample, event);
+-	ret = perf_output_begin(&handle, data, event,
++	ret = perf_output_begin(&handle, &sample, event,
+ 				bpf_event->event_id.header.size);
+ 	if (ret)
  		return;
- 
- 	if ((rx_desc->wb.qword1.status_error_len & rss_mask) == rss_mask) {
 -- 
 2.39.2
 
