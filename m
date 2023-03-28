@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B1D8474
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:44:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73702C433D2;
-	Tue, 28 Mar 2023 14:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE95F8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:44:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DAE8C4339E;
+	Tue, 28 Mar 2023 14:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014688;
-	bh=DlFBxN07Mly2tY7satYdvNbvdLJqgvzYt73UN4R24Hw=;
+	s=korg; t=1680014694;
+	bh=udEl2j5YVWeEbUuQRN9FybKotgtF6vf/q4Y+qacbC7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RIo4UJsEpHG32YkhCB6tk0AU+Raj5vFMsoVCfkRKWPPprjBtsE+haexhksr7Ske9S
-	 vAf7WV82RG9+1cJKu1je108Bs5lkmko7p1mJ+PihLPicidSL5USLJ/6wBZB8ZVIvUP
-	 +QEYZmRnSbtTwgvSxQlWCuqqqwm1SQwquL45XVck=
+	b=NmVfRbJQ4ZZig0LQjd3foQ2yzJ9rgfaKodcjy3SIWLL3NJKEzQjerKwjPQUR3Fn80
+	 e7rEDCh9sNSIsUmFGgcKNyTt4mowifEhCs965Hvf8erOL3FzrlpoDi/dU8c2pU7vH/
+	 Ol6Kt74tlWLz1heO1xzMz+zQZCCiQ+81qoWKQHBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
-	Helmut Grohne <helmut@freexian.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Shawn Guo <shawn.guo@linaro.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 017/240] wifi: mt76: do not run mt76_unregister_device() on unregistered hw
-Date: Tue, 28 Mar 2023 16:39:40 +0200
-Message-Id: <20230328142620.362151866@linuxfoundation.org>
+Subject: [PATCH 6.2 019/240] efi: earlycon: Reprobe after parsing config tables
+Date: Tue, 28 Mar 2023 16:39:42 +0200
+Message-Id: <20230328142620.456101490@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -37,83 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 41130c32f3a18fcc930316da17f3a5f3bc326aa1 ]
+[ Upstream commit 8b3a149db461d3286d1e211112de3b44ccaeaf71 ]
 
-Trying to probe a mt7921e pci card without firmware results in a
-successful probe where ieee80211_register_hw hasn't been called. When
-removing the driver, ieee802111_unregister_hw is called unconditionally
-leading to a kernel NULL pointer dereference.
-Fix the issue running mt76_unregister_device routine just for registered
-hw.
+Commit 732ea9db9d8a ("efi: libstub: Move screen_info handling to common
+code") reorganized the earlycon handling so that all architectures pass
+the screen_info data via a EFI config table instead of populating struct
+screen_info directly, as the latter is only possible when the EFI stub
+is baked into the kernel (and not into the decompressor).
 
-Link: https://bugs.debian.org/1029116
-Link: https://bugs.kali.org/view.php?id=8140
-Reported-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
-Fixes: 1c71e03afe4b ("mt76: mt7921: move mt7921_init_hw in a dedicated work")
-Tested-by: Helmut Grohne <helmut@freexian.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/be3457d82f4e44bb71a22b2b5db27b644a37b1e1.1677107277.git.lorenzo@kernel.org
+However, this means that struct screen_info may not have been populated
+yet by the time the earlycon probe takes place, and this results in a
+non-functional early console.
+
+So let's probe again right after parsing the config tables and
+populating struct screen_info. Note that this means that earlycon output
+starts a bit later than before, and so it may fail to capture issues
+that occur while doing the early EFI initialization.
+
+Fixes: 732ea9db9d8a ("efi: libstub: Move screen_info handling to common code")
+Reported-by: Shawn Guo <shawn.guo@linaro.org>
+Tested-by: Shawn Guo <shawn.guo@linaro.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 8 ++++++++
- drivers/net/wireless/mediatek/mt76/mt76.h     | 1 +
- 2 files changed, 9 insertions(+)
+ drivers/firmware/efi/earlycon.c | 16 +++++++++++++---
+ drivers/firmware/efi/efi-init.c |  3 +++
+ include/linux/efi.h             |  1 +
+ 3 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index fc608b369b3cc..d75e999a80e1f 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -526,6 +526,7 @@ int mt76_register_phy(struct mt76_phy *phy, bool vht,
- 	if (ret)
- 		return ret;
+diff --git a/drivers/firmware/efi/earlycon.c b/drivers/firmware/efi/earlycon.c
+index 4d6c5327471ac..1bc6328646944 100644
+--- a/drivers/firmware/efi/earlycon.c
++++ b/drivers/firmware/efi/earlycon.c
+@@ -204,6 +204,14 @@ efi_earlycon_write(struct console *con, const char *str, unsigned int num)
+ 	}
+ }
  
-+	set_bit(MT76_STATE_REGISTERED, &phy->state);
- 	phy->dev->phys[phy->band_idx] = phy;
- 
- 	return 0;
-@@ -536,6 +537,9 @@ void mt76_unregister_phy(struct mt76_phy *phy)
- {
- 	struct mt76_dev *dev = phy->dev;
- 
-+	if (!test_bit(MT76_STATE_REGISTERED, &phy->state))
-+		return;
++static bool __initdata fb_probed;
 +
- 	mt76_tx_status_check(dev, true);
- 	ieee80211_unregister_hw(phy->hw);
- 	dev->phys[phy->band_idx] = NULL;
-@@ -663,6 +667,7 @@ int mt76_register_device(struct mt76_dev *dev, bool vht,
- 		return ret;
- 
- 	WARN_ON(mt76_worker_setup(hw, &dev->tx_worker, NULL, "tx"));
-+	set_bit(MT76_STATE_REGISTERED, &phy->state);
- 	sched_set_fifo_low(dev->tx_worker.task);
- 
- 	return 0;
-@@ -673,6 +678,9 @@ void mt76_unregister_device(struct mt76_dev *dev)
- {
- 	struct ieee80211_hw *hw = dev->hw;
- 
-+	if (!test_bit(MT76_STATE_REGISTERED, &dev->phy.state))
-+		return;
++void __init efi_earlycon_reprobe(void)
++{
++	if (fb_probed)
++		setup_earlycon("efifb");
++}
 +
- 	if (IS_ENABLED(CONFIG_MT76_LEDS))
- 		mt76_led_cleanup(dev);
- 	mt76_tx_status_check(dev, true);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index 32a77a0ae9da9..d8216243b0224 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -399,6 +399,7 @@ struct mt76_tx_cb {
+ static int __init efi_earlycon_setup(struct earlycon_device *device,
+ 				     const char *opt)
+ {
+@@ -211,15 +219,17 @@ static int __init efi_earlycon_setup(struct earlycon_device *device,
+ 	u16 xres, yres;
+ 	u32 i;
  
- enum {
- 	MT76_STATE_INITIALIZED,
-+	MT76_STATE_REGISTERED,
- 	MT76_STATE_RUNNING,
- 	MT76_STATE_MCU_RUNNING,
- 	MT76_SCANNING,
+-	if (screen_info.orig_video_isVGA != VIDEO_TYPE_EFI)
++	fb_wb = opt && !strcmp(opt, "ram");
++
++	if (screen_info.orig_video_isVGA != VIDEO_TYPE_EFI) {
++		fb_probed = true;
+ 		return -ENODEV;
++	}
+ 
+ 	fb_base = screen_info.lfb_base;
+ 	if (screen_info.capabilities & VIDEO_CAPABILITY_64BIT_BASE)
+ 		fb_base |= (u64)screen_info.ext_lfb_base << 32;
+ 
+-	fb_wb = opt && !strcmp(opt, "ram");
+-
+ 	si = &screen_info;
+ 	xres = si->lfb_width;
+ 	yres = si->lfb_height;
+diff --git a/drivers/firmware/efi/efi-init.c b/drivers/firmware/efi/efi-init.c
+index 1639159493e3e..5cb7fb4549f0c 100644
+--- a/drivers/firmware/efi/efi-init.c
++++ b/drivers/firmware/efi/efi-init.c
+@@ -72,6 +72,9 @@ static void __init init_screen_info(void)
+ 		if (memblock_is_map_memory(screen_info.lfb_base))
+ 			memblock_mark_nomap(screen_info.lfb_base,
+ 					    screen_info.lfb_size);
++
++		if (IS_ENABLED(CONFIG_EFI_EARLYCON))
++			efi_earlycon_reprobe();
+ 	}
+ }
+ 
+diff --git a/include/linux/efi.h b/include/linux/efi.h
+index 98598bd1d2fa5..ac22f7ca195a4 100644
+--- a/include/linux/efi.h
++++ b/include/linux/efi.h
+@@ -688,6 +688,7 @@ efi_guid_to_str(efi_guid_t *guid, char *out)
+ }
+ 
+ extern void efi_init (void);
++extern void efi_earlycon_reprobe(void);
+ #ifdef CONFIG_EFI
+ extern void efi_enter_virtual_mode (void);	/* switch EFI to virtual mode, if possible */
+ #else
 -- 
 2.39.2
 
