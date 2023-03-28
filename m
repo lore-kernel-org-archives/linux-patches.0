@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E645F8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FCEC433D2;
-	Tue, 28 Mar 2023 14:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5908BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA19C4339B;
+	Tue, 28 Mar 2023 14:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015107;
-	bh=Bnhu3uAZwJlCimmYXMQJu4knoTcdvlXJCCfOl0ez2L8=;
+	s=korg; t=1680015110;
+	bh=CWlBYcUlEtV2WK9oxcnRHyaRYGfQvTSR1XBD+I+3xUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjoyEcRXqxtn8VP04LR0/DoNFphkyvhmzqFQI9lNkBEYBPO60kx6FXpV/mqGxRB10
-	 cJGi/UKYI8/dHb2htha8q4BpJ0tkk+B7TiqL+vsw/eeqCAXG+uc65oA/FirOD1DHh/
-	 CzlA2U/aZGZTrlRI2gdwFqW7xMQ8OKkEBMdio6Yw=
+	b=BA6sWbHapOxXA8817LMVQxNkAgBfjlAqcvCBU+vsBx+vP5HOODYWBO9dicKCgYVEq
+	 Gb39tT2FntFJtQSL/OpCg+JDqaSW9Oz8I1V/2mcNWujH8Anu7qdpBXzzenljfvDB4o
+	 V08HObasBHL7KMYcXNbErg4JHXcj2ilktAlB0QDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reka Norman <rekanorman@chromium.org>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Kars de Jong <jongk@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 137/240] HID: intel-ish-hid: ipc: Fix potential use-after-free in work function
-Date: Tue, 28 Mar 2023 16:41:40 +0200
-Message-Id: <20230328142625.476991656@linuxfoundation.org>
+Subject: [PATCH 6.2 138/240] m68k: mm: Fix systems with memory at end of 32-bit address space
+Date: Tue, 28 Mar 2023 16:41:41 +0200
+Message-Id: <20230328142625.506327581@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,67 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reka Norman <rekanorman@chromium.org>
+From: Kars de Jong <jongk@linux-m68k.org>
 
-[ Upstream commit 8ae2f2b0a28416ed2f6d8478ac8b9f7862f36785 ]
+[ Upstream commit 0d9fad91abfd723ea5070a46d98a9f4496c93ba9 ]
 
-When a reset notify IPC message is received, the ISR schedules a work
-function and passes the ISHTP device to it via a global pointer
-ishtp_dev. If ish_probe() fails, the devm-managed device resources
-including ishtp_dev are freed, but the work is not cancelled, causing a
-use-after-free when the work function tries to access ishtp_dev. Use
-devm_work_autocancel() instead, so that the work is automatically
-cancelled if probe fails.
+The calculation of end addresses of memory chunks overflowed to 0 when
+a memory chunk is located at the end of 32-bit address space.
+This is the case for the HP300 architecture.
 
-Signed-off-by: Reka Norman <rekanorman@chromium.org>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Link: https://lore.kernel.org/linux-m68k/CACz-3rhUo5pgNwdWHaPWmz+30Qo9xCg70wNxdf7o5x-6tXq8QQ@mail.gmail.com/
+Signed-off-by: Kars de Jong <jongk@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20230223112349.26675-1-jongk@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ipc/ipc.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/m68k/mm/motorola.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/ipc.c b/drivers/hid/intel-ish-hid/ipc/ipc.c
-index 15e14239af829..a49c6affd7c4c 100644
---- a/drivers/hid/intel-ish-hid/ipc/ipc.c
-+++ b/drivers/hid/intel-ish-hid/ipc/ipc.c
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2014-2016, Intel Corporation.
-  */
- 
-+#include <linux/devm-helpers.h>
- #include <linux/sched.h>
- #include <linux/spinlock.h>
- #include <linux/delay.h>
-@@ -621,7 +622,6 @@ static void	recv_ipc(struct ishtp_device *dev, uint32_t doorbell_val)
- 	case MNG_RESET_NOTIFY:
- 		if (!ishtp_dev) {
- 			ishtp_dev = dev;
--			INIT_WORK(&fw_reset_work, fw_reset_work_fn);
- 		}
- 		schedule_work(&fw_reset_work);
- 		break;
-@@ -940,6 +940,7 @@ struct ishtp_device *ish_dev_init(struct pci_dev *pdev)
- {
- 	struct ishtp_device *dev;
- 	int	i;
-+	int	ret;
- 
- 	dev = devm_kzalloc(&pdev->dev,
- 			   sizeof(struct ishtp_device) + sizeof(struct ish_hw),
-@@ -975,6 +976,12 @@ struct ishtp_device *ish_dev_init(struct pci_dev *pdev)
- 		list_add_tail(&tx_buf->link, &dev->wr_free_list);
+diff --git a/arch/m68k/mm/motorola.c b/arch/m68k/mm/motorola.c
+index 2a375637e0077..9113012240789 100644
+--- a/arch/m68k/mm/motorola.c
++++ b/arch/m68k/mm/motorola.c
+@@ -437,7 +437,7 @@ void __init paging_init(void)
  	}
  
-+	ret = devm_work_autocancel(&pdev->dev, &fw_reset_work, fw_reset_work_fn);
-+	if (ret) {
-+		dev_err(dev->devc, "Failed to initialise FW reset work\n");
-+		return NULL;
-+	}
-+
- 	dev->ops = &ish_hw_ops;
- 	dev->devc = &pdev->dev;
- 	dev->mtu = IPC_PAYLOAD_SIZE - sizeof(struct ishtp_msg_hdr);
+ 	min_addr = m68k_memory[0].addr;
+-	max_addr = min_addr + m68k_memory[0].size;
++	max_addr = min_addr + m68k_memory[0].size - 1;
+ 	memblock_add_node(m68k_memory[0].addr, m68k_memory[0].size, 0,
+ 			  MEMBLOCK_NONE);
+ 	for (i = 1; i < m68k_num_memory;) {
+@@ -452,21 +452,21 @@ void __init paging_init(void)
+ 		}
+ 		memblock_add_node(m68k_memory[i].addr, m68k_memory[i].size, i,
+ 				  MEMBLOCK_NONE);
+-		addr = m68k_memory[i].addr + m68k_memory[i].size;
++		addr = m68k_memory[i].addr + m68k_memory[i].size - 1;
+ 		if (addr > max_addr)
+ 			max_addr = addr;
+ 		i++;
+ 	}
+ 	m68k_memoffset = min_addr - PAGE_OFFSET;
+-	m68k_virt_to_node_shift = fls(max_addr - min_addr - 1) - 6;
++	m68k_virt_to_node_shift = fls(max_addr - min_addr) - 6;
+ 
+ 	module_fixup(NULL, __start_fixup, __stop_fixup);
+ 	flush_icache();
+ 
+-	high_memory = phys_to_virt(max_addr);
++	high_memory = phys_to_virt(max_addr) + 1;
+ 
+ 	min_low_pfn = availmem >> PAGE_SHIFT;
+-	max_pfn = max_low_pfn = max_addr >> PAGE_SHIFT;
++	max_pfn = max_low_pfn = (max_addr >> PAGE_SHIFT) + 1;
+ 
+ 	/* Reserve kernel text/data/bss and the memory allocated in head.S */
+ 	memblock_reserve(m68k_memory[0].addr, availmem - m68k_memory[0].addr);
 -- 
 2.39.2
 
