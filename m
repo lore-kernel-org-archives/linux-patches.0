@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1398476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCFCC433D2;
-	Tue, 28 Mar 2023 14:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822108476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E35C433D2;
+	Tue, 28 Mar 2023 14:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015208;
-	bh=QjPEhXJyRBTWMJpyQNqTg4xSZEMThoR2XajJf/Pnwz8=;
+	s=korg; t=1680015211;
+	bh=K8t67b16RduZcT58uCm49L3jtQMJIYiIG6ht8UGyt+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJIawhi8WAcj8knVDhTeOOM/fN6vYsYs8mpJlJHYC2X5uvb/lronirw5O5wCtlTJE
-	 tNkbFQ2kS5YaCz92gqwb7k8Y5NcRbWkb5QrvkJf0d+Tm0z5J5Iuyacc7cFNcQoCsQz
-	 7ZGR17KlJwa9FK+uv2rSnMvcIxDNe9+gJ9C2Kp1E=
+	b=ZwNX2fAtEB3/IM+be7qWx0i9u9ulVXsrpLV4WNGz6qkj9V1gT+IMe+7CnK4P+9eec
+	 k4fPOBjZ1k2u/vE+Pqs3EkNa7ocThi+r3l3UgHicCDKtHFgFQvYy5uQSGIaCL5gRF9
+	 FbkI9xXO9D14+HaZ0re2+vosLO6JBucquytaJ1dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.2 164/240] cifs: do not poll server interfaces too regularly
-Date: Tue, 28 Mar 2023 16:42:07 +0200
-Message-Id: <20230328142626.507642599@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.2 199/240] usb: ucsi: Fix NULL pointer deref in ucsi_connector_change()
+Date: Tue, 28 Mar 2023 16:42:42 +0200
+Message-Id: <20230328142627.959981775@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,56 +34,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 072a28c8907c841f7d4b56c78bce46d3ee211e73 upstream.
+commit f87fb985452ab2083967103ac00bfd68fb182764 upstream.
 
-We have the server interface list hanging off the tcon
-structure today for reasons unknown. So each tcon which is
-connected to a file server can query them separately,
-which is really unnecessary. To avoid this, in the query
-function, we will check the time of last update of the
-interface list, and avoid querying the server if it is
-within a certain range.
+When ucsi_init() fails, ucsi->connector is NULL, yet in case of
+ucsi_acpi we may still get events which cause the ucs_acpi code to call
+ucsi_connector_change(), which then derefs the NULL ucsi->connector
+pointer.
 
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Fix this by not setting ucsi->ntfy inside ucsi_init() until ucsi_init()
+has succeeded, so that ucsi_connector_change() ignores the events
+because UCSI_ENABLE_NTFY_CONNECTOR_CHANGE is not set in the ntfy mask.
+
+Fixes: bdc62f2bae8f ("usb: typec: ucsi: Simplified registration and I/O API")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217106
 Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230308154244.722337-2-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/usb/typec/ucsi/ucsi.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -530,6 +530,14 @@ parse_server_interfaces(struct network_i
- 	p = buf;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1205,7 +1205,7 @@ out_unlock:
+ static int ucsi_init(struct ucsi *ucsi)
+ {
+ 	struct ucsi_connector *con;
+-	u64 command;
++	u64 command, ntfy;
+ 	int ret;
+ 	int i;
  
- 	spin_lock(&ses->iface_lock);
-+	/* do not query too frequently, this time with lock held */
-+	if (ses->iface_last_update &&
-+	    time_before(jiffies, ses->iface_last_update +
-+			(SMB_INTERFACE_POLL_INTERVAL * HZ))) {
-+		spin_unlock(&ses->iface_lock);
-+		return 0;
-+	}
-+
- 	/*
- 	 * Go through iface_list and do kref_put to remove
- 	 * any unused ifaces. ifaces in use will be removed
-@@ -696,6 +704,12 @@ SMB3_request_interfaces(const unsigned i
- 	struct network_interface_info_ioctl_rsp *out_buf = NULL;
- 	struct cifs_ses *ses = tcon->ses;
+@@ -1217,8 +1217,8 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	}
  
-+	/* do not query too frequently */
-+	if (ses->iface_last_update &&
-+	    time_before(jiffies, ses->iface_last_update +
-+			(SMB_INTERFACE_POLL_INTERVAL * HZ)))
-+		return 0;
-+
- 	rc = SMB2_ioctl(xid, tcon, NO_FILE_ID, NO_FILE_ID,
- 			FSCTL_QUERY_NETWORK_INTERFACE_INFO,
- 			NULL /* no data input */, 0 /* no data input */,
+ 	/* Enable basic notifications */
+-	ucsi->ntfy = UCSI_ENABLE_NTFY_CMD_COMPLETE | UCSI_ENABLE_NTFY_ERROR;
+-	command = UCSI_SET_NOTIFICATION_ENABLE | ucsi->ntfy;
++	ntfy = UCSI_ENABLE_NTFY_CMD_COMPLETE | UCSI_ENABLE_NTFY_ERROR;
++	command = UCSI_SET_NOTIFICATION_ENABLE | ntfy;
+ 	ret = ucsi_send_command(ucsi, command, NULL, 0);
+ 	if (ret < 0)
+ 		goto err_reset;
+@@ -1250,12 +1250,13 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	}
+ 
+ 	/* Enable all notifications */
+-	ucsi->ntfy = UCSI_ENABLE_NTFY_ALL;
+-	command = UCSI_SET_NOTIFICATION_ENABLE | ucsi->ntfy;
++	ntfy = UCSI_ENABLE_NTFY_ALL;
++	command = UCSI_SET_NOTIFICATION_ENABLE | ntfy;
+ 	ret = ucsi_send_command(ucsi, command, NULL, 0);
+ 	if (ret < 0)
+ 		goto err_unregister;
+ 
++	ucsi->ntfy = ntfy;
+ 	return 0;
+ 
+ err_unregister:
 
 
