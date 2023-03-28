@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138948BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5CCC433EF;
-	Tue, 28 Mar 2023 14:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA09F8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE79C433EF;
+	Tue, 28 Mar 2023 14:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014938;
-	bh=d1Gu4I77URN5QEaJHGjPJI+hx44zSke0jWWcjYI015Q=;
+	s=korg; t=1680014941;
+	bh=rBkdW1y5B7zp6feinD9rC2EV8ecq3IfIX2h2UfbawzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qURA6tKRgfHCMDZBT8G2FNYvNq2AWDzBEhqX7rjzUgive8rokwTQN4Trjl+PRQyYQ
-	 tatyrYkHCQIki/j10NdER7ntoTpUYxx3JOZNrcT6RkdUaY5+ROr/AZYF+vobF30CJ+
-	 82t7vREnTJ5+5uB/IwzyzKlC5ws2Ms4bkt11QZug=
+	b=w5LwDrAsFE6eo8PpHm8X4cvsio2jrnmMNEpJGzXOv7auc+WxOUbbWjWWUs8drHnS7
+	 PoFbBSLszkGgS8GkrzUmFTer4OoabPpklcqRTxiOsPe4lqwRObHIKCwW99eAoKwVA9
+	 b11qIDm/8yjagqNcUgzBwBK60O1Oxg1DI7nZpz/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Breno Leitao <leitao@debian.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sandipan Das <sandipan.das@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 108/240] entry: Fix noinstr warning in __enter_from_user_mode()
-Date: Tue, 28 Mar 2023 16:41:11 +0200
-Message-Id: <20230328142624.285278136@linuxfoundation.org>
+Subject: [PATCH 6.2 109/240] perf/x86/amd/core: Always clear status for idx
+Date: Tue, 28 Mar 2023 16:41:12 +0200
+Message-Id: <20230328142624.327351397@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,77 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit f87d28673b71b35b248231a2086f9404afbb7f28 ]
+[ Upstream commit 263f5ecaf7080513efc248ec739b6d9e00f4129f ]
 
-__enter_from_user_mode() is triggering noinstr warnings with
-CONFIG_DEBUG_PREEMPT due to its call of preempt_count_add() via
-ct_state().
+The variable 'status' (which contains the unhandled overflow bits) is
+not being properly masked in some cases, displaying the following
+warning:
 
-The preemption disable isn't needed as interrupts are already disabled.
-And the context_tracking_enabled() check in ct_state() also isn't needed
-as that's already being done by the CT_WARN_ON().
+  WARNING: CPU: 156 PID: 475601 at arch/x86/events/amd/core.c:972 amd_pmu_v2_handle_irq+0x216/0x270
 
-Just use __ct_state() instead.
+This seems to be happening because the loop is being continued before
+the status bit being unset, in case x86_perf_event_set_period()
+returns 0. This is also causing an inconsistency because the "handled"
+counter is incremented, but the status bit is not cleaned.
 
-Fixes the following warnings:
+Move the bit cleaning together above, together when the "handled"
+counter is incremented.
 
-  vmlinux.o: warning: objtool: enter_from_user_mode+0xba: call to preempt_count_add() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: syscall_enter_from_user_mode+0xf9: call to preempt_count_add() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: syscall_enter_from_user_mode_prepare+0xc7: call to preempt_count_add() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: irqentry_enter_from_user_mode+0xba: call to preempt_count_add() leaves .noinstr.text section
-
-Fixes: 171476775d32 ("context_tracking: Convert state to atomic_t")
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/d8955fa6d68dc955dda19baf13ae014ae27926f5.1677369694.git.jpoimboe@kernel.org
+Fixes: 7685665c390d ("perf/x86/amd/core: Add PerfMonV2 overflow handling")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Sandipan Das <sandipan.das@amd.com>
+Link: https://lore.kernel.org/r/20230321113338.1669660-1-leitao@debian.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/context_tracking.h       | 1 +
- include/linux/context_tracking_state.h | 2 ++
- kernel/entry/common.c                  | 2 +-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/events/amd/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/linux/context_tracking.h b/include/linux/context_tracking.h
-index d4afa8508a806..3a7909ed54980 100644
---- a/include/linux/context_tracking.h
-+++ b/include/linux/context_tracking.h
-@@ -96,6 +96,7 @@ static inline void user_exit_irqoff(void) { }
- static inline int exception_enter(void) { return 0; }
- static inline void exception_exit(enum ctx_state prev_ctx) { }
- static inline int ct_state(void) { return -1; }
-+static inline int __ct_state(void) { return -1; }
- static __always_inline bool context_tracking_guest_enter(void) { return false; }
- static inline void context_tracking_guest_exit(void) { }
- #define CT_WARN_ON(cond) do { } while (0)
-diff --git a/include/linux/context_tracking_state.h b/include/linux/context_tracking_state.h
-index 4a4d56f771802..fdd537ea513ff 100644
---- a/include/linux/context_tracking_state.h
-+++ b/include/linux/context_tracking_state.h
-@@ -46,7 +46,9 @@ struct context_tracking {
+diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
+index 4386b10682ce4..8ca5e827f30b2 100644
+--- a/arch/x86/events/amd/core.c
++++ b/arch/x86/events/amd/core.c
+@@ -923,6 +923,7 @@ static int amd_pmu_v2_handle_irq(struct pt_regs *regs)
  
- #ifdef CONFIG_CONTEXT_TRACKING
- DECLARE_PER_CPU(struct context_tracking, context_tracking);
-+#endif
+ 		/* Event overflow */
+ 		handled++;
++		status &= ~mask;
+ 		perf_sample_data_init(&data, 0, hwc->last_period);
  
-+#ifdef CONFIG_CONTEXT_TRACKING_USER
- static __always_inline int __ct_state(void)
- {
- 	return arch_atomic_read(this_cpu_ptr(&context_tracking.state)) & CT_STATE_MASK;
-diff --git a/kernel/entry/common.c b/kernel/entry/common.c
-index 846add8394c41..1314894d2efad 100644
---- a/kernel/entry/common.c
-+++ b/kernel/entry/common.c
-@@ -21,7 +21,7 @@ static __always_inline void __enter_from_user_mode(struct pt_regs *regs)
- 	arch_enter_from_user_mode(regs);
- 	lockdep_hardirqs_off(CALLER_ADDR0);
+ 		if (!x86_perf_event_set_period(event))
+@@ -935,8 +936,6 @@ static int amd_pmu_v2_handle_irq(struct pt_regs *regs)
  
--	CT_WARN_ON(ct_state() != CONTEXT_USER);
-+	CT_WARN_ON(__ct_state() != CONTEXT_USER);
- 	user_exit_irqoff();
+ 		if (perf_event_overflow(event, &data, regs))
+ 			x86_pmu_stop(event, 0);
+-
+-		status &= ~mask;
+ 	}
  
- 	instrumentation_begin();
+ 	/*
 -- 
 2.39.2
 
