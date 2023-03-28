@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3488BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:46:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E20C4339E;
-	Tue, 28 Mar 2023 14:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112568BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:46:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EE9C433EF;
+	Tue, 28 Mar 2023 14:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014791;
-	bh=GLn6uLyg/YHSLgv4CYzx9/3mIpNnYAMKdHRBFSAylBc=;
+	s=korg; t=1680014793;
+	bh=FYkuUBMAd/7uNUhkt0DBP5K4FPPU/LDpCkKi8+0Kk/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yO8JOpQuGiRUV1H+nXDKx1AGiTkDSj81BNlZRydN21YdWHIY2Vixg3XC8gKY+CQdp
-	 wesvcypPR5RSpZ27GgJ8BY9c+h0WXjiWZZAl9H6+eQ8/bh3DuWlJQ8y5qzB/BlzU5i
-	 Q9SjkXIZs5ksfRzWxtdPRSMTOmiHZGMG+PinTftI=
+	b=VkTBQ3Fvmtw6JkfrdEDhKHwIUJjHu+IeJ+2lyXMbztOFBOzyAPEnNAh169aFQFPAL
+	 keQBt6eYyPZxBg8FBwfp/bLrnbvl39EQIZqktYPNyc/oHxo5cCnac1QcLhve3rZmDZ
+	 Z01BUpPyYdElFWRWrqh/6/DkxLBscteMo4NcMZ6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris.p.wilson@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Badal Nilawar <badal.nilawar@intel.com>,
+	Anshuman Gupta <anshuman.gupta@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 053/240] drm/i915/fbdev: lock the fbdev obj before vma pin
-Date: Tue, 28 Mar 2023 16:40:16 +0200
-Message-Id: <20230328142621.924737301@linuxfoundation.org>
+Subject: [PATCH 6.2 054/240] drm/i915/mtl: Disable MC6 for MTL A step
+Date: Tue, 28 Mar 2023 16:40:17 +0200
+Message-Id: <20230328142621.963423625@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -40,75 +37,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tejas Upadhyay <tejas.upadhyay@intel.com>
+From: Badal Nilawar <badal.nilawar@intel.com>
 
-[ Upstream commit ed00eba03474adbf525ff03d69705d8c78b76456 ]
+[ Upstream commit 088a422c3fa3ee9268d400078626b0c202cfe9dd ]
 
-lock the fbdev obj before calling into
-i915_vma_pin_iomap(). This helps to solve below :
+The Wa_14017073508 require to send Media Busy/Idle mailbox while
+accessing Media tile. As of now it is getting handled while __gt_unpark,
+__gt_park. But there are various corner cases where forcewakes are taken
+without __gt_unpark i.e. without sending Busy Mailbox especially during
+register reads. Forcewakes are taken without busy mailbox leads to
+GPU HANG. So bringing mailbox calls under forcewake calls are no feasible
+option as forcewake calls are atomic and mailbox calls are blocking.
+The issue already fixed in B step so disabling MC6 on A step and
+reverting previous commit which handles Wa_14017073508
 
-<7>[   93.563308] i915 0000:00:02.0: [drm:intelfb_create [i915]] no BIOS fb, allocating a new one
-<4>[   93.581844] ------------[ cut here ]------------
-<4>[   93.581855] WARNING: CPU: 12 PID: 625 at drivers/gpu/drm/i915/gem/i915_gem_pages.c:424 i915_gem_object_pin_map+0x152/0x1c0 [i915]
-
-Fixes: f0b6b01b3efe ("drm/i915: Add ww context to intel_dpt_pin, v2.")
-Cc: Chris Wilson <chris.p.wilson@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Signed-off-by: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230301201053.928709-5-radhakrishna.sripada@intel.com
-(cherry picked from commit 561b31acfd65502a2cda2067513240fc57ccdbdc)
+Fixes: 8f70f1ec587d ("drm/i915/mtl: Add Wa_14017073508 for SAMedia")
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Badal Nilawar <badal.nilawar@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Anshuman Gupta <anshuman.gupta@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230310061339.2495416-2-badal.nilawar@intel.com
+(cherry picked from commit 038a24835ab68f341eaa7a0e3bcc6ce0f9b22e17)
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_fbdev.c | 24 ++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_gt_pm.c     | 27 -----------------------
+ drivers/gpu/drm/i915/gt/intel_rc6.c       |  8 +++++++
+ drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c | 13 +----------
+ drivers/gpu/drm/i915/i915_reg.h           |  9 --------
+ 4 files changed, 9 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
-index 17e8bf2ac0e51..3a708bd73a000 100644
---- a/drivers/gpu/drm/i915/display/intel_fbdev.c
-+++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-@@ -210,6 +210,7 @@ static int intelfb_create(struct drm_fb_helper *helper,
- 	bool prealloc = false;
- 	void __iomem *vaddr;
- 	struct drm_i915_gem_object *obj;
-+	struct i915_gem_ww_ctx ww;
- 	int ret;
+diff --git a/drivers/gpu/drm/i915/gt/intel_gt_pm.c b/drivers/gpu/drm/i915/gt/intel_gt_pm.c
+index 16db85fab0b19..3fbf70a587474 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gt_pm.c
++++ b/drivers/gpu/drm/i915/gt/intel_gt_pm.c
+@@ -20,31 +20,10 @@
+ #include "intel_rc6.h"
+ #include "intel_rps.h"
+ #include "intel_wakeref.h"
+-#include "intel_pcode.h"
+ #include "pxp/intel_pxp_pm.h"
  
- 	mutex_lock(&ifbdev->hpd_lock);
-@@ -290,13 +291,24 @@ static int intelfb_create(struct drm_fb_helper *helper,
- 		info->fix.smem_len = vma->size;
+ #define I915_GT_SUSPEND_IDLE_TIMEOUT (HZ / 2)
+ 
+-static void mtl_media_busy(struct intel_gt *gt)
+-{
+-	/* Wa_14017073508: mtl */
+-	if (IS_MTL_GRAPHICS_STEP(gt->i915, P, STEP_A0, STEP_B0) &&
+-	    gt->type == GT_MEDIA)
+-		snb_pcode_write_p(gt->uncore, PCODE_MBOX_GT_STATE,
+-				  PCODE_MBOX_GT_STATE_MEDIA_BUSY,
+-				  PCODE_MBOX_GT_STATE_DOMAIN_MEDIA, 0);
+-}
+-
+-static void mtl_media_idle(struct intel_gt *gt)
+-{
+-	/* Wa_14017073508: mtl */
+-	if (IS_MTL_GRAPHICS_STEP(gt->i915, P, STEP_A0, STEP_B0) &&
+-	    gt->type == GT_MEDIA)
+-		snb_pcode_write_p(gt->uncore, PCODE_MBOX_GT_STATE,
+-				  PCODE_MBOX_GT_STATE_MEDIA_NOT_BUSY,
+-				  PCODE_MBOX_GT_STATE_DOMAIN_MEDIA, 0);
+-}
+-
+ static void user_forcewake(struct intel_gt *gt, bool suspend)
+ {
+ 	int count = atomic_read(&gt->user_wakeref);
+@@ -92,9 +71,6 @@ static int __gt_unpark(struct intel_wakeref *wf)
+ 
+ 	GT_TRACE(gt, "\n");
+ 
+-	/* Wa_14017073508: mtl */
+-	mtl_media_busy(gt);
+-
+ 	/*
+ 	 * It seems that the DMC likes to transition between the DC states a lot
+ 	 * when there are no connected displays (no active power domains) during
+@@ -144,9 +120,6 @@ static int __gt_park(struct intel_wakeref *wf)
+ 	GEM_BUG_ON(!wakeref);
+ 	intel_display_power_put_async(i915, POWER_DOMAIN_GT_IRQ, wakeref);
+ 
+-	/* Wa_14017073508: mtl */
+-	mtl_media_idle(gt);
+-
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/i915/gt/intel_rc6.c b/drivers/gpu/drm/i915/gt/intel_rc6.c
+index 2ee4051e4d961..6184fcc169877 100644
+--- a/drivers/gpu/drm/i915/gt/intel_rc6.c
++++ b/drivers/gpu/drm/i915/gt/intel_rc6.c
+@@ -486,6 +486,7 @@ static bool bxt_check_bios_rc6_setup(struct intel_rc6 *rc6)
+ static bool rc6_supported(struct intel_rc6 *rc6)
+ {
+ 	struct drm_i915_private *i915 = rc6_to_i915(rc6);
++	struct intel_gt *gt = rc6_to_gt(rc6);
+ 
+ 	if (!HAS_RC6(i915))
+ 		return false;
+@@ -502,6 +503,13 @@ static bool rc6_supported(struct intel_rc6 *rc6)
+ 		return false;
  	}
  
--	vaddr = i915_vma_pin_iomap(vma);
--	if (IS_ERR(vaddr)) {
--		drm_err(&dev_priv->drm,
--			"Failed to remap framebuffer into virtual memory (%pe)\n", vaddr);
--		ret = PTR_ERR(vaddr);
--		goto out_unpin;
-+	for_i915_gem_ww(&ww, ret, false) {
-+		ret = i915_gem_object_lock(vma->obj, &ww);
++	if (IS_MTL_MEDIA_STEP(gt->i915, STEP_A0, STEP_B0) &&
++	    gt->type == GT_MEDIA) {
++		drm_notice(&i915->drm,
++			   "Media RC6 disabled on A step\n");
++		return false;
++	}
 +
-+		if (ret)
-+			continue;
-+
-+		vaddr = i915_vma_pin_iomap(vma);
-+		if (IS_ERR(vaddr)) {
-+			drm_err(&dev_priv->drm,
-+				"Failed to remap framebuffer into virtual memory (%pe)\n", vaddr);
-+			ret = PTR_ERR(vaddr);
-+			continue;
-+		}
- 	}
-+
-+	if (ret)
-+		goto out_unpin;
-+
- 	info->screen_base = vaddr;
- 	info->screen_size = vma->size;
+ 	return true;
+ }
  
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c
+index b5855091cf6a9..8f8dd05835c5a 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c
+@@ -11,20 +11,9 @@
+ 
+ static bool __guc_rc_supported(struct intel_guc *guc)
+ {
+-	struct intel_gt *gt = guc_to_gt(guc);
+-
+-	/*
+-	 * Wa_14017073508: mtl
+-	 * Do not enable gucrc to avoid additional interrupts which
+-	 * may disrupt pcode wa.
+-	 */
+-	if (IS_MTL_GRAPHICS_STEP(gt->i915, P, STEP_A0, STEP_B0) &&
+-	    gt->type == GT_MEDIA)
+-		return false;
+-
+ 	/* GuC RC is unavailable for pre-Gen12 */
+ 	return guc->submission_supported &&
+-		GRAPHICS_VER(gt->i915) >= 12;
++		GRAPHICS_VER(guc_to_gt(guc)->i915) >= 12;
+ }
+ 
+ static bool __guc_rc_selected(struct intel_guc *guc)
+diff --git a/drivers/gpu/drm/i915/i915_reg.h b/drivers/gpu/drm/i915/i915_reg.h
+index 9161768725449..4f84cda3f9b5e 100644
+--- a/drivers/gpu/drm/i915/i915_reg.h
++++ b/drivers/gpu/drm/i915/i915_reg.h
+@@ -6616,15 +6616,6 @@
+ /*   XEHP_PCODE_FREQUENCY_CONFIG param2 */
+ #define     PCODE_MBOX_DOMAIN_NONE		0x0
+ #define     PCODE_MBOX_DOMAIN_MEDIAFF		0x3
+-
+-/* Wa_14017210380: mtl */
+-#define   PCODE_MBOX_GT_STATE			0x50
+-/* sub-commands (param1) */
+-#define     PCODE_MBOX_GT_STATE_MEDIA_BUSY	0x1
+-#define     PCODE_MBOX_GT_STATE_MEDIA_NOT_BUSY	0x2
+-/* param2 */
+-#define     PCODE_MBOX_GT_STATE_DOMAIN_MEDIA	0x1
+-
+ #define GEN6_PCODE_DATA				_MMIO(0x138128)
+ #define   GEN6_PCODE_FREQ_IA_RATIO_SHIFT	8
+ #define   GEN6_PCODE_FREQ_RING_RATIO_SHIFT	16
 -- 
 2.39.2
 
