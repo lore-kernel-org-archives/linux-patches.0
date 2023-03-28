@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2499E8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:50:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE45C433EF;
-	Tue, 28 Mar 2023 14:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB928BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:50:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40CD7C433EF;
+	Tue, 28 Mar 2023 14:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015030;
-	bh=ymHo4xqSlXI+y30Wq1XO9baK0xek3CKTl4Oe3cPo/Ks=;
+	s=korg; t=1680015032;
+	bh=dedyIN+QCvBkCBfVWpXsX2Tzfh/6ufEr3d4L7AHy/PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9sdDqqffwfs6bN8lVQJug9Ejg2vOkSKvOAtHhOyEurgpSP+SnIItnXI4lWReao80
-	 RGUMF1mK+/B9y3i96U3BEtxcmGluX7Y72vxxH9Y7TqpyD+cqrrctNILaI99jp3YHY4
-	 xEW48xfb3nURuqOkirrEpqqG05Uz46KJVwkz5g6U=
+	b=lHm7YnbaLuuZpwMDb5EKRiAv43UIMVjATJTgo7f2U65BuE+eCVfYEApof8Sxel5YM
+	 axPeWoQkqAlnhov3vAKmsyZdqHxjRoPVUqyM1dJ7y14dc8pCstmeF8NsJdtvRy+sQ1
+	 iPY98bZTov9Sxr7BT1Mfqx4SPTygw4LVDsrF9FW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vernon Yang <vernon2gm@gmail.com>,
-	Yury Norov <yury.norov@gmail.com>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 6.2 141/240] cpumask: fix incorrect cpumask scanning result checks
-Date: Tue, 28 Mar 2023 16:41:44 +0200
-Message-Id: <20230328142625.618976755@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 142/240] scsi: target: iscsi: Fix an error message in iscsi_check_key()
+Date: Tue, 28 Mar 2023 16:41:45 +0200
+Message-Id: <20230328142625.659112464@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -39,187 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 8ca09d5fa3549d142c2080a72a4c70ce389163cd ]
+[ Upstream commit 6cc55c969b7ce8d85e09a636693d4126c3676c11 ]
 
-It turns out that commit 596ff4a09b89 ("cpumask: re-introduce
-constant-sized cpumask optimizations") exposed a number of cases of
-drivers not checking the result of "cpumask_next()" and friends
-correctly.
+The first half of the error message is printed by pr_err(), the second half
+is printed by pr_debug(). The user will therefore see only the first part
+of the message and will miss some useful information.
 
-The documented correct check for "no more cpus in the cpumask" is to
-check for the result being equal or larger than the number of possible
-CPU ids, exactly _because_ we've always done those constant-sized
-cpumask scans using a widened type before.  So the return value of a
-cpumask scan should be checked with
-
-	if (cpu >= nr_cpu_ids)
-		...
-
-because the cpumask scan did not necessarily stop exactly *at* that
-maximum CPU id.
-
-But a few cases ended up instead using checks like
-
-	if (cpu == nr_cpumask_bits)
-		...
-
-which used that internal "widened" number of bits.  And that used to
-work pretty much by accident (ok, in this case "by accident" is simply
-because it matched the historical internal implementation of the cpumask
-scanning, so it was more of a "intentionally using implementation
-details rather than an accident").
-
-But the extended constant-sized optimizations then did that internal
-implementation differently, and now that code that did things wrong but
-matched the old implementation no longer worked at all.
-
-Which then causes subsequent odd problems due to using what ends up
-being an invalid CPU ID.
-
-Most of these cases require either unusual hardware or special uses to
-hit, but the random.c one triggers quite easily.
-
-All you really need is to have a sufficiently small CONFIG_NR_CPUS value
-for the bit scanning optimization to be triggered, but not enough CPUs
-to then actually fill that widened cpumask.  At that point, the cpumask
-scanning will return the NR_CPUS constant, which is _not_ the same as
-nr_cpumask_bits.
-
-This just does the mindless fix with
-
-   sed -i 's/== nr_cpumask_bits/>= nr_cpu_ids/'
-
-to fix the incorrect uses.
-
-The ones in the SCSI lpfc driver in particular could probably be fixed
-more cleanly by just removing that repeated pattern entirely, but I am
-not emptionally invested enough in that driver to care.
-
-Reported-and-tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/lkml/481b19b5-83a0-4793-b4fd-194ad7b978c3@roeck-us.net/
-Reported-and-tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/lkml/CAMuHMdUKo_Sf7TjKzcNDa8Ve+6QrK+P8nSQrSQ=6LTRmcBKNww@mail.gmail.com/
-Reported-by: Vernon Yang <vernon2gm@gmail.com>
-Link: https://lore.kernel.org/lkml/20230306160651.2016767-1-vernon2gm@gmail.com/
-Cc: Yury Norov <yury.norov@gmail.com>
-Cc: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20230214141556.762047-1-mlombard@redhat.com
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/xmon/xmon.c         |  2 +-
- drivers/char/random.c            |  2 +-
- drivers/net/wireguard/queueing.h |  2 +-
- drivers/scsi/lpfc/lpfc_init.c    | 14 +++++++-------
- 4 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/target/iscsi/iscsi_target_parameters.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
-index 0da66bc4823d4..3b4e2475fc4ef 100644
---- a/arch/powerpc/xmon/xmon.c
-+++ b/arch/powerpc/xmon/xmon.c
-@@ -1277,7 +1277,7 @@ static int xmon_batch_next_cpu(void)
- 	while (!cpumask_empty(&xmon_batch_cpus)) {
- 		cpu = cpumask_next_wrap(smp_processor_id(), &xmon_batch_cpus,
- 					xmon_batch_start_cpu, true);
--		if (cpu == nr_cpumask_bits)
-+		if (cpu >= nr_cpu_ids)
+diff --git a/drivers/target/iscsi/iscsi_target_parameters.c b/drivers/target/iscsi/iscsi_target_parameters.c
+index 2317fb077db0e..557516c642c3b 100644
+--- a/drivers/target/iscsi/iscsi_target_parameters.c
++++ b/drivers/target/iscsi/iscsi_target_parameters.c
+@@ -1262,18 +1262,20 @@ static struct iscsi_param *iscsi_check_key(
+ 		return param;
+ 
+ 	if (!(param->phase & phase)) {
+-		pr_err("Key \"%s\" may not be negotiated during ",
+-				param->name);
++		char *phase_name;
++
+ 		switch (phase) {
+ 		case PHASE_SECURITY:
+-			pr_debug("Security phase.\n");
++			phase_name = "Security";
  			break;
- 		if (xmon_batch_start_cpu == -1)
- 			xmon_batch_start_cpu = cpu;
-diff --git a/drivers/char/random.c b/drivers/char/random.c
-index ce3ccd172cc86..253f2ddb89130 100644
---- a/drivers/char/random.c
-+++ b/drivers/char/random.c
-@@ -1311,7 +1311,7 @@ static void __cold try_to_generate_entropy(void)
- 			/* Basic CPU round-robin, which avoids the current CPU. */
- 			do {
- 				cpu = cpumask_next(cpu, &timer_cpus);
--				if (cpu == nr_cpumask_bits)
-+				if (cpu >= nr_cpu_ids)
- 					cpu = cpumask_first(&timer_cpus);
- 			} while (cpu == smp_processor_id() && num_cpus > 1);
- 
-diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
-index 583adb37ee1e3..125284b346a77 100644
---- a/drivers/net/wireguard/queueing.h
-+++ b/drivers/net/wireguard/queueing.h
-@@ -106,7 +106,7 @@ static inline int wg_cpumask_choose_online(int *stored_cpu, unsigned int id)
- {
- 	unsigned int cpu = *stored_cpu, cpu_index, i;
- 
--	if (unlikely(cpu == nr_cpumask_bits ||
-+	if (unlikely(cpu >= nr_cpu_ids ||
- 		     !cpumask_test_cpu(cpu, cpu_online_mask))) {
- 		cpu_index = id % cpumask_weight(cpu_online_mask);
- 		cpu = cpumask_first(cpu_online_mask);
-diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
-index 25ba20e428255..3fbd3bec26fc1 100644
---- a/drivers/scsi/lpfc/lpfc_init.c
-+++ b/drivers/scsi/lpfc/lpfc_init.c
-@@ -12507,7 +12507,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
- 					goto found_same;
- 				new_cpu = cpumask_next(
- 					new_cpu, cpu_present_mask);
--				if (new_cpu == nr_cpumask_bits)
-+				if (new_cpu >= nr_cpu_ids)
- 					new_cpu = first_cpu;
- 			}
- 			/* At this point, we leave the CPU as unassigned */
-@@ -12521,7 +12521,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
- 			 * selecting the same IRQ.
- 			 */
- 			start_cpu = cpumask_next(new_cpu, cpu_present_mask);
--			if (start_cpu == nr_cpumask_bits)
-+			if (start_cpu >= nr_cpu_ids)
- 				start_cpu = first_cpu;
- 
- 			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
-@@ -12557,7 +12557,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
- 					goto found_any;
- 				new_cpu = cpumask_next(
- 					new_cpu, cpu_present_mask);
--				if (new_cpu == nr_cpumask_bits)
-+				if (new_cpu >= nr_cpu_ids)
- 					new_cpu = first_cpu;
- 			}
- 			/* We should never leave an entry unassigned */
-@@ -12575,7 +12575,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
- 			 * selecting the same IRQ.
- 			 */
- 			start_cpu = cpumask_next(new_cpu, cpu_present_mask);
--			if (start_cpu == nr_cpumask_bits)
-+			if (start_cpu >= nr_cpu_ids)
- 				start_cpu = first_cpu;
- 
- 			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
-@@ -12648,7 +12648,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
- 				goto found_hdwq;
- 			}
- 			new_cpu = cpumask_next(new_cpu, cpu_present_mask);
--			if (new_cpu == nr_cpumask_bits)
-+			if (new_cpu >= nr_cpu_ids)
- 				new_cpu = first_cpu;
+ 		case PHASE_OPERATIONAL:
+-			pr_debug("Operational phase.\n");
++			phase_name = "Operational";
+ 			break;
+ 		default:
+-			pr_debug("Unknown phase.\n");
++			phase_name = "Unknown";
  		}
++		pr_err("Key \"%s\" may not be negotiated during %s phase.\n",
++				param->name, phase_name);
+ 		return NULL;
+ 	}
  
-@@ -12663,7 +12663,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
- 				goto found_hdwq;
- 
- 			new_cpu = cpumask_next(new_cpu, cpu_present_mask);
--			if (new_cpu == nr_cpumask_bits)
-+			if (new_cpu >= nr_cpu_ids)
- 				new_cpu = first_cpu;
- 		}
- 
-@@ -12674,7 +12674,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
-  found_hdwq:
- 		/* We found an available entry, copy the IRQ info */
- 		start_cpu = cpumask_next(new_cpu, cpu_present_mask);
--		if (start_cpu == nr_cpumask_bits)
-+		if (start_cpu >= nr_cpu_ids)
- 			start_cpu = first_cpu;
- 		cpup->hdwq = new_cpup->hdwq;
-  logit:
 -- 
 2.39.2
 
