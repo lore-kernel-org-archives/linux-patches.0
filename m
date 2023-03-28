@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1598BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DF8C4339C;
-	Tue, 28 Mar 2023 15:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB468BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941A1C433D2;
+	Tue, 28 Mar 2023 15:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015912;
-	bh=86f1pvuyY5a/USY7jbAohKe72v3zX8VEGSpnECTcB30=;
+	s=korg; t=1680015915;
+	bh=OeeU9YgiFx8fz9MuFWqWfSigrs8q2ZzOsr+sISGjjM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/XxsETCRGFHpjM8CIvi/IJL0tdtl4XXiphRHa+0m1kKQF21Pxu5Ti6rFVxBiF4//
-	 lGd32IU6218vTY69rBVsZx2aa8bWwMPCJmlppB2UQGzCfeD8LkttfDrTmTvK47SnkY
-	 MojSFuLPK3CKYZj88dPkgzXKvHgF6fjdsXgXB2dQ=
+	b=Cq3n87cN3LNR7sNiTgoZlXg6b+6IYymYd4rsbJ/n84mJ3w6qrb+BUz2hEKLo4nStK
+	 k087GXwIN8snWzdzLoRa1s9ZE87YU8c+DJV8yaQ6WdUuKX53So+xqmvHpz6TWzq8F2
+	 8Iv24IiBzQ1sTVFypc17+8GcBx5xgW9ggciyK5As=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Bornyakov <i.bornyakov@metrotek.ru>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.1 214/224] bus: imx-weim: fix branch condition evaluates to a garbage value
-Date: Tue, 28 Mar 2023 16:43:30 +0200
-Message-Id: <20230328142626.255823898@linuxfoundation.org>
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Aaron Liu <aaron.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Limonciello, Mario" <Mario.Limonciello@amd.com>
+Subject: [PATCH 6.1 223/224] drm/amdkfd: add GC 11.0.4 KFD support
+Date: Tue, 28 Mar 2023 16:43:39 +0200
+Message-Id: <20230328142626.579706827@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,39 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Bornyakov <i.bornyakov@metrotek.ru>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-commit 1adab2922c58e7ff4fa9f0b43695079402cce876 upstream.
+commit 88c21c2b56aa21dd34290d43ada74033dc3bfe35 upstream.
 
-If bus type is other than imx50_weim_devtype and have no child devices,
-variable 'ret' in function weim_parse_dt() will not be initialized, but
-will be used as branch condition and return value. Fix this by
-initializing 'ret' with 0.
+Add initial support for GC 11.0.4 in KFD compute driver.
 
-This was discovered with help of clang-analyzer, but the situation is
-quite possible in real life.
-
-Fixes: 52c47b63412b ("bus: imx-weim: improve error handling upon child probe-failure")
-Signed-off-by: Ivan Bornyakov <i.bornyakov@metrotek.ru>
-Cc: stable@vger.kernel.org
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Aaron Liu <aaron.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/imx-weim.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_crat.c   |    1 +
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c |    2 ++
+ 2 files changed, 3 insertions(+)
 
---- a/drivers/bus/imx-weim.c
-+++ b/drivers/bus/imx-weim.c
-@@ -204,8 +204,8 @@ static int weim_parse_dt(struct platform
- 	const struct of_device_id *of_id = of_match_device(weim_id_table,
- 							   &pdev->dev);
- 	const struct imx_weim_devtype *devtype = of_id->data;
-+	int ret = 0, have_child = 0;
- 	struct device_node *child;
--	int ret, have_child = 0;
- 	struct weim_priv *priv;
- 	void __iomem *base;
- 	u32 reg;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
+@@ -1522,6 +1522,7 @@ int kfd_get_gpu_cache_info(struct kfd_de
+ 		case IP_VERSION(11, 0, 1):
+ 		case IP_VERSION(11, 0, 2):
+ 		case IP_VERSION(11, 0, 3):
++		case IP_VERSION(11, 0, 4):
+ 			num_of_cache_types =
+ 				kfd_fill_gpu_cache_info_from_gfx_config(kdev, *pcache_info);
+ 			break;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -154,6 +154,7 @@ static void kfd_device_info_set_event_in
+ 	case IP_VERSION(11, 0, 1):
+ 	case IP_VERSION(11, 0, 2):
+ 	case IP_VERSION(11, 0, 3):
++	case IP_VERSION(11, 0, 4):
+ 		kfd->device_info.event_interrupt_class = &event_interrupt_class_v11;
+ 		break;
+ 	default:
+@@ -396,6 +397,7 @@ struct kfd_dev *kgd2kfd_probe(struct amd
+ 			f2g = &gfx_v11_kfd2kgd;
+ 			break;
+ 		case IP_VERSION(11, 0, 1):
++		case IP_VERSION(11, 0, 4):
+ 			gfx_target_version = 110003;
+ 			f2g = &gfx_v11_kfd2kgd;
+ 			break;
 
 
