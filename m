@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D878BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:10:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2D7C433D2;
-	Tue, 28 Mar 2023 15:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A4F8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:11:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF44C433EF;
+	Tue, 28 Mar 2023 15:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016257;
-	bh=IpVQWStGWpAA4YBFvSmmF5phDL8sSFbVTPqF2IFBM3w=;
+	s=korg; t=1680016260;
+	bh=IVvsUdyz116ejvlveiGeYlwNf13FbIOeU5v8ez6r6JM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UInCVtyT9mPqAQSAD7IwzUkM0Q94rD2Y9kxRpSnZK+v8vRqUP4IYKvv/rS3BcdRfP
-	 kMqwYfIxnoTWVxbdzYztk/qVJeUmLyUQbj9T5xeE9aDA9cQVEXfH8iKQhZGmTpZdPD
-	 Dc33okXuWO666Kw4DnET+NRyJfdNCqa25yqH7yr8=
+	b=md/xfAFl0j/KzzA14ZD5KpP4avZJOQRqJvKJLkcMp4sE7cA+0IOtfAnNLz/ZQYUo4
+	 m4X0oAhcImwnYp+v343OjV88LTDS/YqCkJfiPnnj5qr9euTYtD7xtvTDK1fkaO3rL+
+	 5DJx13YRCvs9ECgHxbeC+0Y+Hkt41ZDHSDl9Sdlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 122/146] kfence: avoid passing -g for test
-Date: Tue, 28 Mar 2023 16:43:31 +0200
-Message-Id: <20230328142607.731244791@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Mathias Krause <minipli@grsecurity.net>
+Subject: [PATCH 5.15 123/146] KVM: x86: hyper-v: Avoid calling kvm_make_vcpus_request_mask() with vcpu_mask==NULL
+Date: Tue, 28 Mar 2023 16:43:32 +0200
+Message-Id: <20230328142607.771592784@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -37,53 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Elver <elver@google.com>
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
 
-commit 2e08ca1802441224f5b7cc6bffbb687f7406de95 upstream.
+commit 6470accc7ba948b0b3aca22b273fe84ec638a116 upstream.
 
-Nathan reported that when building with GNU as and a version of clang that
-defaults to DWARF5:
+In preparation to making kvm_make_vcpus_request_mask() use for_each_set_bit()
+switch kvm_hv_flush_tlb() to calling kvm_make_all_cpus_request() for 'all cpus'
+case.
 
-  $ make -skj"$(nproc)" ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- \
-			LLVM=1 LLVM_IAS=0 O=build \
-			mrproper allmodconfig mm/kfence/kfence_test.o
-  /tmp/kfence_test-08a0a0.s: Assembler messages:
-  /tmp/kfence_test-08a0a0.s:14627: Error: non-constant .uleb128 is not supported
-  /tmp/kfence_test-08a0a0.s:14628: Error: non-constant .uleb128 is not supported
-  /tmp/kfence_test-08a0a0.s:14632: Error: non-constant .uleb128 is not supported
-  /tmp/kfence_test-08a0a0.s:14633: Error: non-constant .uleb128 is not supported
-  /tmp/kfence_test-08a0a0.s:14639: Error: non-constant .uleb128 is not supported
-  ...
+Note: kvm_make_all_cpus_request() (unlike kvm_make_vcpus_request_mask())
+currently dynamically allocates cpumask on each call and this is suboptimal.
+Both kvm_make_all_cpus_request() and kvm_make_vcpus_request_mask() are
+going to be switched to using pre-allocated per-cpu masks.
 
-This is because `-g` defaults to the compiler debug info default.  If the
-assembler does not support some of the directives used, the above errors
-occur.  To fix, remove the explicit passing of `-g`.
-
-All the test wants is that stack traces print valid function names, and
-debug info is not required for that.  (I currently cannot recall why I
-added the explicit `-g`.)
-
-Link: https://lkml.kernel.org/r/20230316224705.709984-1-elver@google.com
-Fixes: bc8fbc5f305a ("kfence: add test suite")
-Signed-off-by: Marco Elver <elver@google.com>
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-Id: <20210903075141.403071-4-vkuznets@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Mathias Krause <minipli@grsecurity.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/hyperv.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/mm/kfence/Makefile
-+++ b/mm/kfence/Makefile
-@@ -2,5 +2,5 @@
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -1846,16 +1846,19 @@ static u64 kvm_hv_flush_tlb(struct kvm_v
  
- obj-$(CONFIG_KFENCE) := core.o report.o
+ 	cpumask_clear(&hv_vcpu->tlb_flush);
  
--CFLAGS_kfence_test.o := -g -fno-omit-frame-pointer -fno-optimize-sibling-calls
-+CFLAGS_kfence_test.o := -fno-omit-frame-pointer -fno-optimize-sibling-calls
- obj-$(CONFIG_KFENCE_KUNIT_TEST) += kfence_test.o
+-	vcpu_mask = all_cpus ? NULL :
+-		sparse_set_to_vcpu_mask(kvm, sparse_banks, valid_bank_mask,
+-					vp_bitmap, vcpu_bitmap);
+-
+ 	/*
+ 	 * vcpu->arch.cr3 may not be up-to-date for running vCPUs so we can't
+ 	 * analyze it here, flush TLB regardless of the specified address space.
+ 	 */
+-	kvm_make_vcpus_request_mask(kvm, KVM_REQ_TLB_FLUSH_GUEST,
+-				    NULL, vcpu_mask, &hv_vcpu->tlb_flush);
++	if (all_cpus) {
++		kvm_make_all_cpus_request(kvm, KVM_REQ_TLB_FLUSH_GUEST);
++	} else {
++		vcpu_mask = sparse_set_to_vcpu_mask(kvm, sparse_banks, valid_bank_mask,
++						    vp_bitmap, vcpu_bitmap);
++
++		kvm_make_vcpus_request_mask(kvm, KVM_REQ_TLB_FLUSH_GUEST,
++					    NULL, vcpu_mask, &hv_vcpu->tlb_flush);
++	}
+ 
+ ret_success:
+ 	/* We always do full TLB flush, set 'Reps completed' = 'Rep Count' */
 
 
