@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620968476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA67EC433EF;
-	Tue, 28 Mar 2023 14:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA208476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091F8C433D2;
+	Tue, 28 Mar 2023 14:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015328;
-	bh=Mr5oUpzcgpJCGJTBWkRitKf3/9W94I+NWa5yzqWVaF4=;
+	s=korg; t=1680015331;
+	bh=LxMGGz1kAXIghgWkZNUO6czi932sb0ePI7XH8FgmJIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gODQBJsDKgRvOWJwH9h1odm4r8SQmuVRiQbKjc85wy/UQB78HRGEeYJ34jTwpi6UG
-	 UrcpcVd2A+gyxnZspg1teixGa9Gw+vdxlS3eqxoNj8nAjJupSOAtuMr7lUzByi7qlc
-	 HUl+NdJt55sUqS86Vrx6jf2OAgqCCeFQ3wAOu0X0=
+	b=Q1aTnpXnK6px0GrhwrpN2zQNE1uqcsK4ex6P/DXzQ9ttOspU2m1lUSmJ1JM1dt6rW
+	 2TrVOW8Ef3JeT5yq5a5EvfwU8AWZ0f/uACIK4uzjKbalHDnFyqzXZJX8Hvj7woPXtW
+	 DDLzADGz4uHpc4Rd32uxBcyRI3TdCD3OlbYVgCb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Christoph Paasch <cpaasch@apple.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/224] interconnect: qcom: osm-l3: fix icc_onecell_data allocation
-Date: Tue, 28 Mar 2023 16:39:57 +0200
-Message-Id: <20230328142617.268508378@linuxfoundation.org>
+Subject: [PATCH 6.1 010/224] mptcp: refactor passive socket initialization
+Date: Tue, 28 Mar 2023 16:40:06 +0200
+Message-Id: <20230328142617.671181426@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,41 +37,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit f77ebdda0ee652124061c2ac42399bb6c367e729 ]
+[ Upstream commit 3a236aef280ed5122b2d47087eb514d0921ae033 ]
 
-This is a struct with a trailing zero-length array of icc_node pointers
-but it's allocated as if it were a single array of icc_nodes instead.
+After commit 30e51b923e43 ("mptcp: fix unreleased socket in accept queue")
+unaccepted msk sockets go throu complete shutdown, we don't need anymore
+to delay inserting the first subflow into the subflow lists.
 
-Fortunately this overallocates memory rather then allocating less memory
-than required.
+The reference counting deserve some extra care, as __mptcp_close() is
+unaware of the request socket linkage to the first subflow.
 
-Fix by replacing devm_kcalloc() with devm_kzalloc() and struct_size()
-macro.
+Please note that this is more a refactoring than a fix but because this
+modification is needed to include other corrections, see the following
+commits. Then a Fixes tag has been added here to help the stable team.
 
-Fixes: 5bc9900addaf ("interconnect: qcom: Add OSM L3 interconnect provider support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230105002221.1416479-2-dmitry.baryshkov@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 30e51b923e43 ("mptcp: fix unreleased socket in accept queue")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/osm-l3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/protocol.c | 17 -----------------
+ net/mptcp/subflow.c  | 27 +++++++++++++++++++++------
+ 2 files changed, 21 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-index 333adb21e7176..46b538e6c07b6 100644
---- a/drivers/interconnect/qcom/osm-l3.c
-+++ b/drivers/interconnect/qcom/osm-l3.c
-@@ -294,7 +294,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
- 	qnodes = desc->nodes;
- 	num_nodes = desc->num_nodes;
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 938cccab331dd..777f795246ed2 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -834,7 +834,6 @@ static bool __mptcp_finish_join(struct mptcp_sock *msk, struct sock *ssk)
+ 	if (sk->sk_socket && !ssk->sk_socket)
+ 		mptcp_sock_graft(ssk, sk->sk_socket);
  
--	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
-+	data = devm_kzalloc(&pdev->dev, struct_size(data, nodes, num_nodes), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
+-	mptcp_propagate_sndbuf((struct sock *)msk, ssk);
+ 	mptcp_sockopt_sync_locked(msk, ssk);
+ 	return true;
+ }
+@@ -3729,22 +3728,6 @@ static int mptcp_stream_accept(struct socket *sock, struct socket *newsock,
  
+ 		lock_sock(newsk);
+ 
+-		/* PM/worker can now acquire the first subflow socket
+-		 * lock without racing with listener queue cleanup,
+-		 * we can notify it, if needed.
+-		 *
+-		 * Even if remote has reset the initial subflow by now
+-		 * the refcnt is still at least one.
+-		 */
+-		subflow = mptcp_subflow_ctx(msk->first);
+-		list_add(&subflow->node, &msk->conn_list);
+-		sock_hold(msk->first);
+-		if (mptcp_is_fully_established(newsk))
+-			mptcp_pm_fully_established(msk, msk->first, GFP_KERNEL);
+-
+-		mptcp_rcv_space_init(msk, msk->first);
+-		mptcp_propagate_sndbuf(newsk, msk->first);
+-
+ 		/* set ssk->sk_socket of accept()ed flows to mptcp socket.
+ 		 * This is needed so NOSPACE flag can be set from tcp stack.
+ 		 */
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index 1e10a38ccf9d0..fe815103060c6 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -355,6 +355,12 @@ void mptcp_subflow_reset(struct sock *ssk)
+ 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
+ 	struct sock *sk = subflow->conn;
+ 
++	/* mptcp_mp_fail_no_response() can reach here on an already closed
++	 * socket
++	 */
++	if (ssk->sk_state == TCP_CLOSE)
++		return;
++
+ 	/* must hold: tcp_done() could drop last reference on parent */
+ 	sock_hold(sk);
+ 
+@@ -685,6 +691,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 	struct mptcp_options_received mp_opt;
+ 	bool fallback, fallback_is_fatal;
+ 	struct sock *new_msk = NULL;
++	struct mptcp_sock *owner;
+ 	struct sock *child;
+ 
+ 	pr_debug("listener=%p, req=%p, conn=%p", listener, req, listener->conn);
+@@ -759,6 +766,8 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 		ctx->setsockopt_seq = listener->setsockopt_seq;
+ 
+ 		if (ctx->mp_capable) {
++			owner = mptcp_sk(new_msk);
++
+ 			/* this can't race with mptcp_close(), as the msk is
+ 			 * not yet exposted to user-space
+ 			 */
+@@ -767,14 +776,14 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 			/* record the newly created socket as the first msk
+ 			 * subflow, but don't link it yet into conn_list
+ 			 */
+-			WRITE_ONCE(mptcp_sk(new_msk)->first, child);
++			WRITE_ONCE(owner->first, child);
+ 
+ 			/* new mpc subflow takes ownership of the newly
+ 			 * created mptcp socket
+ 			 */
+ 			mptcp_sk(new_msk)->setsockopt_seq = ctx->setsockopt_seq;
+-			mptcp_pm_new_connection(mptcp_sk(new_msk), child, 1);
+-			mptcp_token_accept(subflow_req, mptcp_sk(new_msk));
++			mptcp_pm_new_connection(owner, child, 1);
++			mptcp_token_accept(subflow_req, owner);
+ 			ctx->conn = new_msk;
+ 			new_msk = NULL;
+ 
+@@ -782,15 +791,21 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 			 * uses the correct data
+ 			 */
+ 			mptcp_copy_inaddrs(ctx->conn, child);
++			mptcp_propagate_sndbuf(ctx->conn, child);
++
++			mptcp_rcv_space_init(owner, child);
++			list_add(&ctx->node, &owner->conn_list);
++			sock_hold(child);
+ 
+ 			/* with OoO packets we can reach here without ingress
+ 			 * mpc option
+ 			 */
+-			if (mp_opt.suboptions & OPTIONS_MPTCP_MPC)
++			if (mp_opt.suboptions & OPTIONS_MPTCP_MPC) {
+ 				mptcp_subflow_fully_established(ctx, &mp_opt);
++				mptcp_pm_fully_established(owner, child, GFP_ATOMIC);
++				ctx->pm_notified = 1;
++			}
+ 		} else if (ctx->mp_join) {
+-			struct mptcp_sock *owner;
+-
+ 			owner = subflow_req->msk;
+ 			if (!owner) {
+ 				subflow_add_reset_reason(skb, MPTCP_RST_EPROHIBIT);
 -- 
 2.39.2
 
