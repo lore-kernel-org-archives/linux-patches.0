@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E08D8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:01:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C05C433EF;
-	Tue, 28 Mar 2023 15:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF08A8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:01:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDBDC433D2;
+	Tue, 28 Mar 2023 15:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015706;
-	bh=dP8MKAIz+hzlwbkB+IquFyYQGS6Da7JzwgrSPP86ulE=;
+	s=korg; t=1680015708;
+	bh=wIMMwK89KStOb42+4eP014hy8v2pJD2GJYpw7okucq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AcH4veltdh66uHp8DBxDH8B10noxJToZKEuu02ij8SEUU+jBMfnTwqdD+utjBWSV0
-	 6FhAXCqblkJL2HzkjmZso536TXAN24TAkOYpXSW3+iJGjYA/P61PgRdpC4lMQ3EGoz
-	 yWY1KdGrn9P2uvP9oLQgsf2UL+aaTlEY/wWz7DaE=
+	b=QnVWHrKQElEzFPoBi+S7+X2sC0L13pLFuj25kW5KQRl7O2aL/PAo9IXdjC54GzmIj
+	 Mg8lBZVo78twTwZaQJL5iJOC8zMFdU1G39vkf/99w7rSxhQDsDBiuQHXEBdwPoTnyz
+	 WBA0X2hwME5X/JKUJp9AFYQwvkUfUw0VZvouO3to=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavle Kotarac <pavle.kotarac@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Swapnil Patel <Swapnil.Patel@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Rich Felker <dalias@libc.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/224] drm/amd/display: Update clock table to include highest clock setting
-Date: Tue, 28 Mar 2023 16:42:20 +0200
-Message-Id: <20230328142623.379275829@linuxfoundation.org>
+Subject: [PATCH 6.1 145/224] sh: sanitize the flags on sigreturn
+Date: Tue, 28 Mar 2023 16:42:21 +0200
+Message-Id: <20230328142623.414652645@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,73 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Swapnil Patel <Swapnil.Patel@amd.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 2d99a7ec25cf456cd3680eb314d6454138e5aa64 ]
+[ Upstream commit 573b22ccb7ce9ab7f0539a2e11a9d3609a8783f5 ]
 
-[Why]
-Currently, the clk manager matches SocVoltage with voltage from
-fused settings (dfPstate clock table). And then corresponding clocks
-are selected.
+We fetch %SR value from sigframe; it might have been modified by signal
+handler, so we can't trust it with any bits that are not modifiable in
+user mode.
 
-However in certain situations, this leads to clk manager not
-including at least one entry with highest supported clock setting.
-
-[How]
-Update the clk manager to include at least one entry with highest
-supported clock setting.
-
-Reviewed-by: Pavle Kotarac <pavle.kotarac@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Swapnil Patel <Swapnil.Patel@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Rich Felker <dalias@libc.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../display/dc/clk_mgr/dcn301/vg_clk_mgr.c    | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ arch/sh/include/asm/processor_32.h | 1 +
+ arch/sh/kernel/signal_32.c         | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn301/vg_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn301/vg_clk_mgr.c
-index 24715ca2fa944..01383aac6b419 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn301/vg_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn301/vg_clk_mgr.c
-@@ -529,6 +529,19 @@ static struct clk_bw_params vg_bw_params = {
+diff --git a/arch/sh/include/asm/processor_32.h b/arch/sh/include/asm/processor_32.h
+index 27aebf1e75a20..3ef7adf739c83 100644
+--- a/arch/sh/include/asm/processor_32.h
++++ b/arch/sh/include/asm/processor_32.h
+@@ -50,6 +50,7 @@
+ #define SR_FD		0x00008000
+ #define SR_MD		0x40000000
  
- };
- 
-+static uint32_t find_max_clk_value(const uint32_t clocks[], uint32_t num_clocks)
-+{
-+	uint32_t max = 0;
-+	int i;
-+
-+	for (i = 0; i < num_clocks; ++i) {
-+		if (clocks[i] > max)
-+			max = clocks[i];
-+	}
-+
-+	return max;
-+}
-+
- static unsigned int find_dcfclk_for_voltage(const struct vg_dpm_clocks *clock_table,
- 		unsigned int voltage)
++#define SR_USER_MASK	0x00000303	// M, Q, S, T bits
+ /*
+  * DSP structure and data
+  */
+diff --git a/arch/sh/kernel/signal_32.c b/arch/sh/kernel/signal_32.c
+index 90f495d35db29..a6bfc6f374911 100644
+--- a/arch/sh/kernel/signal_32.c
++++ b/arch/sh/kernel/signal_32.c
+@@ -115,6 +115,7 @@ static int
+ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p)
  {
-@@ -572,12 +585,16 @@ static void vg_clk_mgr_helper_populate_bw_params(
+ 	unsigned int err = 0;
++	unsigned int sr = regs->sr & ~SR_USER_MASK;
  
- 	bw_params->clk_table.num_entries = j + 1;
+ #define COPY(x)		err |= __get_user(regs->x, &sc->sc_##x)
+ 			COPY(regs[1]);
+@@ -130,6 +131,8 @@ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p
+ 	COPY(sr);	COPY(pc);
+ #undef COPY
  
--	for (i = 0; i < bw_params->clk_table.num_entries; i++, j--) {
-+	for (i = 0; i < bw_params->clk_table.num_entries - 1; i++, j--) {
- 		bw_params->clk_table.entries[i].fclk_mhz = clock_table->DfPstateTable[j].fclk;
- 		bw_params->clk_table.entries[i].memclk_mhz = clock_table->DfPstateTable[j].memclk;
- 		bw_params->clk_table.entries[i].voltage = clock_table->DfPstateTable[j].voltage;
- 		bw_params->clk_table.entries[i].dcfclk_mhz = find_dcfclk_for_voltage(clock_table, clock_table->DfPstateTable[j].voltage);
- 	}
-+	bw_params->clk_table.entries[i].fclk_mhz = clock_table->DfPstateTable[j].fclk;
-+	bw_params->clk_table.entries[i].memclk_mhz = clock_table->DfPstateTable[j].memclk;
-+	bw_params->clk_table.entries[i].voltage = clock_table->DfPstateTable[j].voltage;
-+	bw_params->clk_table.entries[i].dcfclk_mhz = find_max_clk_value(clock_table->DcfClocks, VG_NUM_DCFCLK_DPM_LEVELS);
- 
- 	bw_params->vram_type = bios_info->memory_type;
- 	bw_params->num_channels = bios_info->ma_channel_number;
++	regs->sr = (regs->sr & SR_USER_MASK) | sr;
++
+ #ifdef CONFIG_SH_FPU
+ 	if (boot_cpu_data.flags & CPU_HAS_FPU) {
+ 		int owned_fp;
 -- 
 2.39.2
 
