@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570038BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB180C4339B;
-	Tue, 28 Mar 2023 15:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221238BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C82C433D2;
+	Tue, 28 Mar 2023 15:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015828;
-	bh=zJDjHXIzK7gDXWGT/oi+MHk0J7JQH6deLI5FX2BAhSw=;
+	s=korg; t=1680015831;
+	bh=PxJrrQ9FG7EzxvS52Ir8afBB5c9uOMVZBBHfDzOZzgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZyLUMJ62LDUBDKuLJ7tj5rBj4Kxrr3ejrQycCcgFi7/RoJXCLB4EiVzOCoUuOprI
-	 MQF0yFFE5CW6XAW8pPADMl23sDF8DxcYxJcujXEHv2bKVmk81YyCvepfct987Q7kwx
-	 rx28Gmn+YSFKrEIWyuj43krsPL2Zhpo+ZVw79kzU=
+	b=g6nl1x6GmMmAQskbE3HFxvRcAeDpW+cRZ00OCKs1PYwuDYFY1drMj7njAzRIP9t5K
+	 vEBlDJJrApF5KD0LGVF2jzZj8JjbH56hgENhh8PEYwa5zqBxjnnXjB1RfC6tV+dUEK
+	 9lzvQwQM3nHX7OFN69f/KrMvIFQwJKoeQGb/On1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Miao Lihua <441884205@qq.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 191/224] ksmbd: fix wrong signingkey creation when encryption is AES256
-Date: Tue, 28 Mar 2023 16:43:07 +0200
-Message-Id: <20230328142625.337435374@linuxfoundation.org>
+Subject: [PATCH 6.1 192/224] ksmbd: set FILE_NAMED_STREAMS attribute in FS_ATTRIBUTE_INFORMATION
+Date: Tue, 28 Mar 2023 16:43:08 +0200
+Message-Id: <20230328142625.375998320@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,16 +37,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 7a891d4b62d62566323676cb0e922ded4f37afe1 upstream.
+commit 728f14c72b71a19623df329c1c7c9d1452e56f1e upstream.
 
-MacOS and Win11 support AES256 encrytion and it is included in the cipher
-array of encryption context. Especially on macOS, The most preferred
-cipher is AES256. Connecting to ksmbd fails on newer MacOS clients that
-support AES256 encryption. MacOS send disconnect request after receiving
-final session setup response from ksmbd. Because final session setup is
-signed with signing key was generated incorrectly.
-For signging key, 'L' value should be initialized to 128 if key size is
-16bytes.
+If vfs objects = streams_xattr in ksmbd.conf FILE_NAMED_STREAMS should
+be set to Attributes in FS_ATTRIBUTE_INFORMATION. MacOS client show
+"Format: SMB (Unknown)" on faked NTFS and no streams support.
 
 Cc: stable@vger.kernel.org
 Reported-by: Miao Lihua <441884205@qq.com>
@@ -55,22 +50,21 @@ Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/auth.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ksmbd/smb2pdu.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ksmbd/auth.c
-+++ b/fs/ksmbd/auth.c
-@@ -727,8 +727,9 @@ static int generate_key(struct ksmbd_con
- 		goto smb3signkey_ret;
- 	}
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -4954,6 +4954,10 @@ static int smb2_get_info_filesystem(stru
  
--	if (conn->cipher_type == SMB2_ENCRYPTION_AES256_CCM ||
--	    conn->cipher_type == SMB2_ENCRYPTION_AES256_GCM)
-+	if (key_size == SMB3_ENC_DEC_KEY_SIZE &&
-+	    (conn->cipher_type == SMB2_ENCRYPTION_AES256_CCM ||
-+	     conn->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
- 		rc = crypto_shash_update(CRYPTO_HMACSHA256(ctx), L256, 4);
- 	else
- 		rc = crypto_shash_update(CRYPTO_HMACSHA256(ctx), L128, 4);
+ 		info->Attributes |= cpu_to_le32(server_conf.share_fake_fscaps);
+ 
++		if (test_share_config_flag(work->tcon->share_conf,
++		    KSMBD_SHARE_FLAG_STREAMS))
++			info->Attributes |= cpu_to_le32(FILE_NAMED_STREAMS);
++
+ 		info->MaxPathNameComponentLength = cpu_to_le32(stfs.f_namelen);
+ 		len = smbConvertToUTF16((__le16 *)info->FileSystemName,
+ 					"NTFS", PATH_MAX, conn->local_nls, 0);
 
 
