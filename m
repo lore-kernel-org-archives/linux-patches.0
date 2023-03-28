@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834BA8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF45BC433EF;
-	Tue, 28 Mar 2023 14:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457F78BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0860C433D2;
+	Tue, 28 Mar 2023 14:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015541;
-	bh=A9rMXkyJGvInhKI2p3zauWRhOYOAJsB+iaGMj0QsrWA=;
+	s=korg; t=1680015544;
+	bh=GbMGvHHssXCzj1Gv6+sWtWintr4GB62GtgwP7GEyPUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QPkYw5QTXQg651nGrv2YikjdjBNkT7yQ9g2EN+t91Y62bipMpY8BlSR93Oq/uHOkT
-	 6r54F8vnsAgJFmmENI/a1V6bVjBjvLVX00iuuyQ9FLjc5mLbJUSYkbbjw757h5D9Bd
-	 V0JmIQscke/zhhXryfLjrUCilb2eK9RsJahRTOYY=
+	b=VC1XoUs+JVzNyyTiu7Zo5KmvlaHVyideF8GlzaaTFuiUpWYAnkfSiClmIdubmbwB4
+	 SO63vlDhPF4LdgdlqsRBaNd9yrQi6bb+rJvjCjnuFJCy3EOBhRZHpkQDSocO6jFqZo
+	 eXZ1HzqwMVSXWBb1bktBUUMhw231Q6yFNvJ6iawk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jochen Henneberg <jh@henneberg-systemdesign.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zhengping Jiang <jiangzp@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/224] net: stmmac: Fix for mismatched host/device DMA address width
-Date: Tue, 28 Mar 2023 16:40:41 +0200
-Message-Id: <20230328142619.249006376@linuxfoundation.org>
+Subject: [PATCH 6.1 080/224] Bluetooth: hci_sync: Resume adv with no RPA when active scan
+Date: Tue, 28 Mar 2023 16:41:16 +0200
+Message-Id: <20230328142620.642194936@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,192 +35,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jochen Henneberg <jh@henneberg-systemdesign.com>
+From: Zhengping Jiang <jiangzp@google.com>
 
-[ Upstream commit 070246e4674b125860d311c18ce2623e73e2bd51 ]
+[ Upstream commit 3c44a431d62bf4a20d7b901f98266ae3f4676d48 ]
 
-Currently DMA address width is either read from a RO device register
-or force set from the platform data. This breaks DMA when the host DMA
-address width is <=32it but the device is >32bit.
+The address resolution should be disabled during the active scan,
+so all the advertisements can reach the host. The advertising
+has to be paused before disabling the address resolution,
+because the advertising will prevent any changes to the resolving
+list and the address resolution status. Skipping this will cause
+the hci error and the discovery failure.
 
-Right now the driver may decide to use a 2nd DMA descriptor for
-another buffer (happens in case of TSO xmit) assuming that 32bit
-addressing is used due to platform configuration but the device will
-still use both descriptor addresses as one address.
+According to the bluetooth specification:
+"7.8.44 LE Set Address Resolution Enable command
 
-This can be observed with the Intel EHL platform driver that sets
-32bit for addr64 but the MAC reports 40bit. The TX queue gets stuck in
-case of TCP with iptables NAT configuration on TSO packets.
+This command shall not be used when:
+- Advertising (other than periodic advertising) is enabled,
+- Scanning is enabled, or
+- an HCI_LE_Create_Connection, HCI_LE_Extended_Create_Connection, or
+  HCI_LE_Periodic_Advertising_Create_Sync command is outstanding."
 
-The logic should be like this: Whatever we do on the host side (memory
-allocation GFP flags) should happen with the host DMA width, whenever
-we decide how to set addresses on the device registers we must use the
-device DMA address width.
+If the host is using RPA, the controller needs to generate RPA for
+the advertising, so the advertising must remain paused during the
+active scan.
 
-This patch renames the platform address width field from addr64 (term
-used in device datasheet) to host_addr and uses this value exclusively
-for host side operations while all chip operations consider the device
-DMA width as read from the device register.
+If the host is not using RPA, the advertising can be resumed after
+disabling the address resolution.
 
-Fixes: 7cfc4486e7ea ("stmmac: intel: Configure EHL PSE0 GbE and PSE1 GbE to 32 bits DMA addressing")
-Signed-off-by: Jochen Henneberg <jh@henneberg-systemdesign.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9afc675edeeb ("Bluetooth: hci_sync: allow advertise when scan without RPA")
+Signed-off-by: Zhengping Jiang <jiangzp@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/common.h  |  1 +
- .../net/ethernet/stmicro/stmmac/dwmac-imx.c   |  2 +-
- .../net/ethernet/stmicro/stmmac/dwmac-intel.c |  4 +--
- .../ethernet/stmicro/stmmac/dwmac-mediatek.c  |  2 +-
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 30 ++++++++++---------
- include/linux/stmmac.h                        |  2 +-
- 6 files changed, 22 insertions(+), 19 deletions(-)
+ net/bluetooth/hci_sync.c | 64 +++++++++++++++++++++++++++-------------
+ 1 file changed, 44 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
-index 6b5d96bced475..ec9c130276d89 100644
---- a/drivers/net/ethernet/stmicro/stmmac/common.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/common.h
-@@ -418,6 +418,7 @@ struct dma_features {
- 	unsigned int frpbs;
- 	unsigned int frpes;
- 	unsigned int addr64;
-+	unsigned int host_dma_width;
- 	unsigned int rssen;
- 	unsigned int vlhash;
- 	unsigned int sphen;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c
-index bd52fb7cf4860..0d6a84199fd8a 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c
-@@ -251,7 +251,7 @@ static int imx_dwmac_probe(struct platform_device *pdev)
- 		goto err_parse_dt;
- 	}
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 3eec688a88a92..13ec3c86a0dcf 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2367,6 +2367,45 @@ static int hci_resume_advertising_sync(struct hci_dev *hdev)
+ 	return err;
+ }
  
--	plat_dat->addr64 = dwmac->ops->addr_width;
-+	plat_dat->host_dma_width = dwmac->ops->addr_width;
- 	plat_dat->init = imx_dwmac_init;
- 	plat_dat->exit = imx_dwmac_exit;
- 	plat_dat->clks_config = imx_dwmac_clks_config;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-index 7deb1f817dacc..13aa919633b47 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-@@ -684,7 +684,7 @@ static int ehl_pse0_common_data(struct pci_dev *pdev,
++static int hci_pause_addr_resolution(struct hci_dev *hdev)
++{
++	int err;
++
++	if (!use_ll_privacy(hdev))
++		return 0;
++
++	if (!hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION))
++		return 0;
++
++	/* Cannot disable addr resolution if scanning is enabled or
++	 * when initiating an LE connection.
++	 */
++	if (hci_dev_test_flag(hdev, HCI_LE_SCAN) ||
++	    hci_lookup_le_connect(hdev)) {
++		bt_dev_err(hdev, "Command not allowed when scan/LE connect");
++		return -EPERM;
++	}
++
++	/* Cannot disable addr resolution if advertising is enabled. */
++	err = hci_pause_advertising_sync(hdev);
++	if (err) {
++		bt_dev_err(hdev, "Pause advertising failed: %d", err);
++		return err;
++	}
++
++	err = hci_le_set_addr_resolution_enable_sync(hdev, 0x00);
++	if (err)
++		bt_dev_err(hdev, "Unable to disable Address Resolution: %d",
++			   err);
++
++	/* Return if address resolution is disabled and RPA is not used. */
++	if (!err && scan_use_rpa(hdev))
++		return err;
++
++	hci_resume_advertising_sync(hdev);
++	return err;
++}
++
+ struct sk_buff *hci_read_local_oob_data_sync(struct hci_dev *hdev,
+ 					     bool extended, struct sock *sk)
+ {
+@@ -2402,7 +2441,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 	u8 filter_policy;
+ 	int err;
  
- 	intel_priv->is_pse = true;
- 	plat->bus_id = 2;
--	plat->addr64 = 32;
-+	plat->host_dma_width = 32;
- 
- 	plat->clk_ptp_rate = 200000000;
- 
-@@ -725,7 +725,7 @@ static int ehl_pse1_common_data(struct pci_dev *pdev,
- 
- 	intel_priv->is_pse = true;
- 	plat->bus_id = 3;
--	plat->addr64 = 32;
-+	plat->host_dma_width = 32;
- 
- 	plat->clk_ptp_rate = 200000000;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
-index 2f7d8e4561d92..9ae31e3dc8218 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
-@@ -591,7 +591,7 @@ static int mediatek_dwmac_common_data(struct platform_device *pdev,
- 	plat->use_phy_wol = priv_plat->mac_wol ? 0 : 1;
- 	plat->riwt_off = 1;
- 	plat->maxmtu = ETH_DATA_LEN;
--	plat->addr64 = priv_plat->variant->dma_bit_mask;
-+	plat->host_dma_width = priv_plat->variant->dma_bit_mask;
- 	plat->bsp_priv = priv_plat;
- 	plat->init = mediatek_dwmac_init;
- 	plat->clks_config = mediatek_dwmac_clks_config;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 3c1d4b27668fe..93321437f0933 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1429,7 +1429,7 @@ static int stmmac_init_rx_buffers(struct stmmac_priv *priv,
- 	struct stmmac_rx_buffer *buf = &rx_q->buf_pool[i];
- 	gfp_t gfp = (GFP_ATOMIC | __GFP_NOWARN);
- 
--	if (priv->dma_cap.addr64 <= 32)
-+	if (priv->dma_cap.host_dma_width <= 32)
- 		gfp |= GFP_DMA32;
- 
- 	if (!buf->page) {
-@@ -4585,7 +4585,7 @@ static inline void stmmac_rx_refill(struct stmmac_priv *priv, u32 queue)
- 	unsigned int entry = rx_q->dirty_rx;
- 	gfp_t gfp = (GFP_ATOMIC | __GFP_NOWARN);
- 
--	if (priv->dma_cap.addr64 <= 32)
-+	if (priv->dma_cap.host_dma_width <= 32)
- 		gfp |= GFP_DMA32;
- 
- 	while (dirty-- > 0) {
-@@ -6201,7 +6201,7 @@ static int stmmac_dma_cap_show(struct seq_file *seq, void *v)
- 	seq_printf(seq, "\tFlexible RX Parser: %s\n",
- 		   priv->dma_cap.frpsel ? "Y" : "N");
- 	seq_printf(seq, "\tEnhanced Addressing: %d\n",
--		   priv->dma_cap.addr64);
-+		   priv->dma_cap.host_dma_width);
- 	seq_printf(seq, "\tReceive Side Scaling: %s\n",
- 		   priv->dma_cap.rssen ? "Y" : "N");
- 	seq_printf(seq, "\tVLAN Hash Filtering: %s\n",
-@@ -7171,20 +7171,22 @@ int stmmac_dvr_probe(struct device *device,
- 		dev_info(priv->device, "SPH feature enabled\n");
- 	}
- 
--	/* The current IP register MAC_HW_Feature1[ADDR64] only define
--	 * 32/40/64 bit width, but some SOC support others like i.MX8MP
--	 * support 34 bits but it map to 40 bits width in MAC_HW_Feature1[ADDR64].
--	 * So overwrite dma_cap.addr64 according to HW real design.
-+	/* Ideally our host DMA address width is the same as for the
-+	 * device. However, it may differ and then we have to use our
-+	 * host DMA width for allocation and the device DMA width for
-+	 * register handling.
+-	/* Pause advertising if resolving list can be used as controllers are
++	/* Pause advertising if resolving list can be used as controllers
+ 	 * cannot accept resolving list modifications while advertising.
  	 */
--	if (priv->plat->addr64)
--		priv->dma_cap.addr64 = priv->plat->addr64;
-+	if (priv->plat->host_dma_width)
-+		priv->dma_cap.host_dma_width = priv->plat->host_dma_width;
-+	else
-+		priv->dma_cap.host_dma_width = priv->dma_cap.addr64;
+ 	if (use_ll_privacy(hdev)) {
+@@ -5376,27 +5415,12 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
  
--	if (priv->dma_cap.addr64) {
-+	if (priv->dma_cap.host_dma_width) {
- 		ret = dma_set_mask_and_coherent(device,
--				DMA_BIT_MASK(priv->dma_cap.addr64));
-+				DMA_BIT_MASK(priv->dma_cap.host_dma_width));
- 		if (!ret) {
--			dev_info(priv->device, "Using %d bits DMA width\n",
--				 priv->dma_cap.addr64);
-+			dev_info(priv->device, "Using %d/%d bits DMA host/device width\n",
-+				 priv->dma_cap.host_dma_width, priv->dma_cap.addr64);
+ 	cancel_interleave_scan(hdev);
  
- 			/*
- 			 * If more than 32 bits can be addressed, make sure to
-@@ -7199,7 +7201,7 @@ int stmmac_dvr_probe(struct device *device,
- 				goto error_hw_init;
- 			}
+-	/* Pause advertising since active scanning disables address resolution
+-	 * which advertising depend on in order to generate its RPAs.
+-	 */
+-	if (use_ll_privacy(hdev) && hci_dev_test_flag(hdev, HCI_PRIVACY)) {
+-		err = hci_pause_advertising_sync(hdev);
+-		if (err) {
+-			bt_dev_err(hdev, "pause advertising failed: %d", err);
+-			goto failed;
+-		}
+-	}
+-
+-	/* Disable address resolution while doing active scanning since the
+-	 * accept list shall not be used and all reports shall reach the host
+-	 * anyway.
++	/* Pause address resolution for active scan and stop advertising if
++	 * privacy is enabled.
+ 	 */
+-	err = hci_le_set_addr_resolution_enable_sync(hdev, 0x00);
+-	if (err) {
+-		bt_dev_err(hdev, "Unable to disable Address Resolution: %d",
+-			   err);
++	err = hci_pause_addr_resolution(hdev);
++	if (err)
+ 		goto failed;
+-	}
  
--			priv->dma_cap.addr64 = 32;
-+			priv->dma_cap.host_dma_width = 32;
- 		}
- 	}
- 
-diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
-index 313edd19bf545..d82ff9fa1a6e8 100644
---- a/include/linux/stmmac.h
-+++ b/include/linux/stmmac.h
-@@ -215,7 +215,7 @@ struct plat_stmmacenet_data {
- 	int unicast_filter_entries;
- 	int tx_fifo_size;
- 	int rx_fifo_size;
--	u32 addr64;
-+	u32 host_dma_width;
- 	u32 rx_queues_to_use;
- 	u32 tx_queues_to_use;
- 	u8 rx_sched_algorithm;
+ 	/* All active scans will be done with either a resolvable private
+ 	 * address (when privacy feature has been enabled) or non-resolvable
 -- 
 2.39.2
 
