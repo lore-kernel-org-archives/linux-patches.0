@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2875C8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:10:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9DBC433EF;
-	Tue, 28 Mar 2023 15:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A4B8BEB
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:10:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5572CC433D2;
+	Tue, 28 Mar 2023 15:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016211;
-	bh=OIQgs3wl+xCQMgSnsW/GHkga3djyDt7KRSbbxH0Q/04=;
+	s=korg; t=1680016213;
+	bh=+3IOEgtbXr+cxot6lBfvpe0EV/vUYpbIZpuV21F7yQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DTlcg0v7UrDY+iH8AgOtnOsOhUlBSiVKwr6XDMdxFA1rmtmyUq9I2at/7SXE2PimL
-	 g92JcQ71OgMqu1+L2aCtqWGtHWEdIlrEcblVtzIePfeWhvvd8CWwluxJKQ+SzYyaOq
-	 f3qxGX9T3ucaIYBtb0pEwGXn4xfGeYK2H3MAdmlI=
+	b=JJSfJF/ad/o9KQCUevZcMcRa4XW/KXIiyrG+jDiEvU+TZ+PXfPb3owhRg13uXB6h6
+	 HraDtDQulhYilRKwdUegKNfUP9rynATiGXpTYSvdO6Vue81KcNjx22yxbIZ2Hp7tfu
+	 wCYEAdTMaxBHX2lR4Ff5kAm/GomVN0QX6+IXfTAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Ruslan Bilovol <ruslan.bilovol@gmail.com>,
-	John Keeping <john@metanate.com>
-Subject: [PATCH 5.15 106/146] usb: gadget: u_audio: dont let userspace block driver unbind
-Date: Tue, 28 Mar 2023 16:43:15 +0200
-Message-Id: <20230328142607.108241860@linuxfoundation.org>
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.15 107/146] efi: sysfb_efi: Fix DMI quirks not working for simpledrm
+Date: Tue, 28 Mar 2023 16:43:16 +0200
+Message-Id: <20230328142607.137325505@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -35,69 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvin Šipraga <alsi@bang-olufsen.dk>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 6c67ed9ad9b83e453e808f9b31a931a20a25629b upstream.
+commit 3615c78673c332b69aaacefbcde5937c5c706686 upstream.
 
-In the unbind callback for f_uac1 and f_uac2, a call to snd_card_free()
-via g_audio_cleanup() will disconnect the card and then wait for all
-resources to be released, which happens when the refcount falls to zero.
-Since userspace can keep the refcount incremented by not closing the
-relevant file descriptor, the call to unbind may block indefinitely.
-This can cause a deadlock during reboot, as evidenced by the following
-blocked task observed on my machine:
+Commit 8633ef82f101 ("drivers/firmware: consolidate EFI framebuffer setup
+for all arches") moved the sysfb_apply_efi_quirks() call in sysfb_init()
+from before the [sysfb_]parse_mode() call to after it.
+But sysfb_apply_efi_quirks() modifies the global screen_info struct which
+[sysfb_]parse_mode() parses, so doing it later is too late.
 
-  task:reboot  state:D stack:0   pid:2827  ppid:569    flags:0x0000000c
-  Call trace:
-   __switch_to+0xc8/0x140
-   __schedule+0x2f0/0x7c0
-   schedule+0x60/0xd0
-   schedule_timeout+0x180/0x1d4
-   wait_for_completion+0x78/0x180
-   snd_card_free+0x90/0xa0
-   g_audio_cleanup+0x2c/0x64
-   afunc_unbind+0x28/0x60
-   ...
-   kernel_restart+0x4c/0xac
-   __do_sys_reboot+0xcc/0x1ec
-   __arm64_sys_reboot+0x28/0x30
-   invoke_syscall+0x4c/0x110
-   ...
+This has broken all DMI based quirks for correcting wrong firmware efifb
+settings when simpledrm is used.
 
-The issue can also be observed by opening the card with arecord and
-then stopping the process through the shell before unbinding:
+To fix this move the sysfb_apply_efi_quirks() call back to its old place
+and split the new setup of the efifb_fwnode (which requires
+the platform_device) into its own function and call that at
+the place of the moved sysfb_apply_efi_quirks(pd) calls.
 
-  # arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
-  Recording WAVE '/dev/null' : Signed 32 bit Little Endian, Rate 48000 Hz, Stereo
-  ^Z[1]+  Stopped                    arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
-  # echo gadget.0 > /sys/bus/gadget/drivers/configfs-gadget/unbind
-  (observe that the unbind command never finishes)
-
-Fix the problem by using snd_card_free_when_closed() instead, which will
-still disconnect the card as desired, but defer the task of freeing the
-resources to the core once userspace closes its file descriptor.
-
-Fixes: 132fcb460839 ("usb: gadget: Add Audio Class 2.0 Driver")
+Fixes: 8633ef82f101 ("drivers/firmware: consolidate EFI framebuffer setup for all arches")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Reviewed-by: Ruslan Bilovol <ruslan.bilovol@gmail.com>
-Reviewed-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20230302163648.3349669-1-alvin@pqrs.dk
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_audio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/efi/sysfb_efi.c  |    5 ++++-
+ drivers/firmware/sysfb.c          |    4 +++-
+ drivers/firmware/sysfb_simplefb.c |    2 +-
+ include/linux/sysfb.h             |    9 +++++++--
+ 4 files changed, 15 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/gadget/function/u_audio.c
-+++ b/drivers/usb/gadget/function/u_audio.c
-@@ -1174,7 +1174,7 @@ void g_audio_cleanup(struct g_audio *g_a
- 	uac = g_audio->uac;
- 	card = uac->card;
- 	if (card)
--		snd_card_free(card);
-+		snd_card_free_when_closed(card);
+--- a/drivers/firmware/efi/sysfb_efi.c
++++ b/drivers/firmware/efi/sysfb_efi.c
+@@ -343,7 +343,7 @@ static const struct fwnode_operations ef
+ #ifdef CONFIG_EFI
+ static struct fwnode_handle efifb_fwnode;
  
- 	kfree(uac->p_prm.reqs);
- 	kfree(uac->c_prm.reqs);
+-__init void sysfb_apply_efi_quirks(struct platform_device *pd)
++__init void sysfb_apply_efi_quirks(void)
+ {
+ 	if (screen_info.orig_video_isVGA != VIDEO_TYPE_EFI ||
+ 	    !(screen_info.capabilities & VIDEO_CAPABILITY_SKIP_QUIRKS))
+@@ -357,7 +357,10 @@ __init void sysfb_apply_efi_quirks(struc
+ 		screen_info.lfb_height = temp;
+ 		screen_info.lfb_linelength = 4 * screen_info.lfb_width;
+ 	}
++}
+ 
++__init void sysfb_set_efifb_fwnode(struct platform_device *pd)
++{
+ 	if (screen_info.orig_video_isVGA == VIDEO_TYPE_EFI && IS_ENABLED(CONFIG_PCI)) {
+ 		fwnode_init(&efifb_fwnode, &efifb_fwnode_ops);
+ 		pd->dev.fwnode = &efifb_fwnode;
+--- a/drivers/firmware/sysfb.c
++++ b/drivers/firmware/sysfb.c
+@@ -81,6 +81,8 @@ static __init int sysfb_init(void)
+ 	if (disabled)
+ 		goto unlock_mutex;
+ 
++	sysfb_apply_efi_quirks();
++
+ 	/* try to create a simple-framebuffer device */
+ 	compatible = sysfb_parse_mode(si, &mode);
+ 	if (compatible) {
+@@ -103,7 +105,7 @@ static __init int sysfb_init(void)
+ 		goto unlock_mutex;
+ 	}
+ 
+-	sysfb_apply_efi_quirks(pd);
++	sysfb_set_efifb_fwnode(pd);
+ 
+ 	ret = platform_device_add_data(pd, si, sizeof(*si));
+ 	if (ret)
+--- a/drivers/firmware/sysfb_simplefb.c
++++ b/drivers/firmware/sysfb_simplefb.c
+@@ -110,7 +110,7 @@ __init struct platform_device *sysfb_cre
+ 	if (!pd)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	sysfb_apply_efi_quirks(pd);
++	sysfb_set_efifb_fwnode(pd);
+ 
+ 	ret = platform_device_add_resources(pd, &res, 1);
+ 	if (ret)
+--- a/include/linux/sysfb.h
++++ b/include/linux/sysfb.h
+@@ -70,11 +70,16 @@ static inline void sysfb_disable(void)
+ #ifdef CONFIG_EFI
+ 
+ extern struct efifb_dmi_info efifb_dmi_list[];
+-void sysfb_apply_efi_quirks(struct platform_device *pd);
++void sysfb_apply_efi_quirks(void);
++void sysfb_set_efifb_fwnode(struct platform_device *pd);
+ 
+ #else /* CONFIG_EFI */
+ 
+-static inline void sysfb_apply_efi_quirks(struct platform_device *pd)
++static inline void sysfb_apply_efi_quirks(void)
++{
++}
++
++static inline void sysfb_set_efifb_fwnode(struct platform_device *pd)
+ {
+ }
+ 
 
 
