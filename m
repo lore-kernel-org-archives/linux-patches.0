@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE828476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36B4C433EF;
-	Tue, 28 Mar 2023 14:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1AB8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F24FC433D2;
+	Tue, 28 Mar 2023 14:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015350;
-	bh=O/eds6V2mcFlVVMI8/cD3unQ4FomvvzlyV5Cpknbhk4=;
+	s=korg; t=1680015352;
+	bh=Rrj4f8qp1xCOcqGl3RhSG3kzcaY+hYlg3gq1oaWvCow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPMMqicCuV4XZzB7V+soO7H4rzZCbjtOlT+7RfZJSb7x5Xf0ZZQGz2kHn11xPvwvE
-	 C6eMQF7iRtc4l1qlLgchT1qB4EUtx7yagLFMBnRnmlqOCF6Z+6exwyhZkY7G7WqnVz
-	 4UaSh24yNJY7BOoSC6kwO5mis5494c1pSEOfBhAI=
+	b=GxEs7P/355dLyBvO6Uj9xJf0T1FPz0d1dsl12R0sDmLKom3ogsPy+Ogf1cuiWnpNk
+	 UszUAyew5fCpQ3Rafc526BRLlmc1aIJVj42F3KWQBh6YyGYQlvKWrplaUKbxTSj+Ch
+	 UQljdLWp9YkJx13/Q2AtlA55BOisoiN54X8lK+qY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Eric Bernstein <eric.bernstein@amd.com>,
-	Mark Broadworth <mark.broadworth@amd.com>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/224] drm/amd/display: Include virtual signal to set k1 and k2 values
-Date: Tue, 28 Mar 2023 16:40:03 +0200
-Message-Id: <20230328142617.534384452@linuxfoundation.org>
+Subject: [PATCH 6.1 008/224] drm/amd/display: fix k1 k2 divider programming for phantom streams
+Date: Tue, 28 Mar 2023 16:40:04 +0200
+Message-Id: <20230328142617.586973888@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -38,31 +38,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Bernstein <eric.bernstein@amd.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit 368307cef69ccd9bf5511f25e58e3a103be169fb ]
+[ Upstream commit 3b214bb7185d8284d7d4c53e15127f69a375abf6 ]
 
-Reviewed-by: Charlene Liu <Charlene.Liu@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Eric Bernstein <eric.bernstein@amd.com>
-Tested-by: Mark Broadworth <mark.broadworth@amd.com>
+[Why & How]
+When k1 and k2 divider programming logic is executed for a phantom
+stream, the corresponding master stream should be used for the
+calculation. Fix the if condition to use the master stream for checking
+signal type instead of the phantom stream.
+
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 709671ffb15d ("drm/amd/display: Remove OTG DIV register write for Virtual signals.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-index d0b46a3e01551..f31d8efadeb75 100644
+index f31d8efadeb75..f108e82e70c8b 100644
 --- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
 +++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-@@ -1180,7 +1180,7 @@ unsigned int dcn32_calculate_dccg_k1_k2_values(struct pipe_ctx *pipe_ctx, unsign
+@@ -1174,13 +1174,13 @@ unsigned int dcn32_calculate_dccg_k1_k2_values(struct pipe_ctx *pipe_ctx, unsign
+ 	if (is_dp_128b_132b_signal(pipe_ctx)) {
+ 		*k1_div = PIXEL_RATE_DIV_BY_1;
+ 		*k2_div = PIXEL_RATE_DIV_BY_1;
+-	} else if (dc_is_hdmi_tmds_signal(pipe_ctx->stream->signal) || dc_is_dvi_signal(pipe_ctx->stream->signal)) {
++	} else if (dc_is_hdmi_tmds_signal(stream->signal) || dc_is_dvi_signal(stream->signal)) {
+ 		*k1_div = PIXEL_RATE_DIV_BY_1;
+ 		if (stream->timing.pixel_encoding == PIXEL_ENCODING_YCBCR420)
  			*k2_div = PIXEL_RATE_DIV_BY_2;
  		else
  			*k2_div = PIXEL_RATE_DIV_BY_4;
--	} else if (dc_is_dp_signal(pipe_ctx->stream->signal)) {
-+	} else if (dc_is_dp_signal(pipe_ctx->stream->signal) || dc_is_virtual_signal(pipe_ctx->stream->signal)) {
+-	} else if (dc_is_dp_signal(pipe_ctx->stream->signal) || dc_is_virtual_signal(pipe_ctx->stream->signal)) {
++	} else if (dc_is_dp_signal(stream->signal) || dc_is_virtual_signal(stream->signal)) {
  		if (two_pix_per_container) {
  			*k1_div = PIXEL_RATE_DIV_BY_1;
  			*k2_div = PIXEL_RATE_DIV_BY_2;
