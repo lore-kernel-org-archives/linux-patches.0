@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEE48BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:07:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8FBC433EF;
-	Tue, 28 Mar 2023 15:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25D28BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:07:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C8BC433D2;
+	Tue, 28 Mar 2023 15:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016036;
-	bh=4Y8/xJhwU7aJXJUzYvMwx8jzSFFEXA9tPwndwM5aX+Q=;
+	s=korg; t=1680016038;
+	bh=6Nqa+qwPwxkgF8UeBErng6+VQx2MC5FGAbfYfb1BuNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5Y+TpE6hjj3sm4q2AuPOiJE/7kSEZiwBm+APHLfU8F4CxTIjRpKxxBbU4aKzjS16
-	 EENvVB/U9Wnv7e0kaLUV9hi9EmKtQU0zcLFzbCIHx2UIJCMyt2Y8WhwEiQkShosaS6
-	 ukqsDiEb01MK5JCATzAiUZkhLG0qKbrlMDm+NCFw=
+	b=aw0jV3YjHBqn75iOlfU2bvyc7/7zVBjEWwGY3ic7T0Q+kvJN5v27CN1ui2DtkMZkd
+	 79M1fg/mkGsZF7mx/eYW2hLc/gM4N7vNIUNat0K33BEsND6qHoBs7ZffBVVpgMXkGm
+	 zvfdlLM8NbxRBR3TpqLSDf+f42lD1lAL7tkJetDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharath SM <bharathsm@microsoft.com>,
-	David Howells <dhowells@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Steve French <smfrench@gmail.com>,
-	keyrings@vger.kernel.org,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
+	Marius Cornea <mcornea@redhat.com>,
+	Stefan Assmann <sassmann@kpanic.de>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/146] keys: Do not cache key in task struct if key is requested from kernel thread
-Date: Tue, 28 Mar 2023 16:42:11 +0200
-Message-Id: <20230328142604.463872344@linuxfoundation.org>
+Subject: [PATCH 5.15 043/146] iavf: fix hang on reboot with ice
+Date: Tue, 28 Mar 2023 16:42:12 +0200
+Message-Id: <20230328142604.513721146@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -41,61 +38,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Stefan Assmann <sassmann@kpanic.de>
 
-[ Upstream commit 47f9e4c924025c5be87959d3335e66fcbb7f6b5c ]
+[ Upstream commit 4e264be98b88a6d6f476c11087fe865696e8bef5 ]
 
-The key which gets cached in task structure from a kernel thread does not
-get invalidated even after expiry.  Due to which, a new key request from
-kernel thread will be served with the cached key if it's present in task
-struct irrespective of the key validity.  The change is to not cache key in
-task_struct when key requested from kernel thread so that kernel thread
-gets a valid key on every key request.
+When a system with E810 with existing VFs gets rebooted the following
+hang may be observed.
 
-The problem has been seen with the cifs module doing DNS lookups from a
-kernel thread and the results getting pinned by being attached to that
-kernel thread's cache - and thus not something that can be easily got rid
-of.  The cache would ordinarily be cleared by notify-resume, but kernel
-threads don't do that.
+ Pid 1 is hung in iavf_remove(), part of a network driver:
+ PID: 1        TASK: ffff965400e5a340  CPU: 24   COMMAND: "systemd-shutdow"
+  #0 [ffffaad04005fa50] __schedule at ffffffff8b3239cb
+  #1 [ffffaad04005fae8] schedule at ffffffff8b323e2d
+  #2 [ffffaad04005fb00] schedule_hrtimeout_range_clock at ffffffff8b32cebc
+  #3 [ffffaad04005fb80] usleep_range_state at ffffffff8b32c930
+  #4 [ffffaad04005fbb0] iavf_remove at ffffffffc12b9b4c [iavf]
+  #5 [ffffaad04005fbf0] pci_device_remove at ffffffff8add7513
+  #6 [ffffaad04005fc10] device_release_driver_internal at ffffffff8af08baa
+  #7 [ffffaad04005fc40] pci_stop_bus_device at ffffffff8adcc5fc
+  #8 [ffffaad04005fc60] pci_stop_and_remove_bus_device at ffffffff8adcc81e
+  #9 [ffffaad04005fc70] pci_iov_remove_virtfn at ffffffff8adf9429
+ #10 [ffffaad04005fca8] sriov_disable at ffffffff8adf98e4
+ #11 [ffffaad04005fcc8] ice_free_vfs at ffffffffc04bb2c8 [ice]
+ #12 [ffffaad04005fd10] ice_remove at ffffffffc04778fe [ice]
+ #13 [ffffaad04005fd38] ice_shutdown at ffffffffc0477946 [ice]
+ #14 [ffffaad04005fd50] pci_device_shutdown at ffffffff8add58f1
+ #15 [ffffaad04005fd70] device_shutdown at ffffffff8af05386
+ #16 [ffffaad04005fd98] kernel_restart at ffffffff8a92a870
+ #17 [ffffaad04005fda8] __do_sys_reboot at ffffffff8a92abd6
+ #18 [ffffaad04005fee0] do_syscall_64 at ffffffff8b317159
+ #19 [ffffaad04005ff08] __context_tracking_enter at ffffffff8b31b6fc
+ #20 [ffffaad04005ff18] syscall_exit_to_user_mode at ffffffff8b31b50d
+ #21 [ffffaad04005ff28] do_syscall_64 at ffffffff8b317169
+ #22 [ffffaad04005ff50] entry_SYSCALL_64_after_hwframe at ffffffff8b40009b
+     RIP: 00007f1baa5c13d7  RSP: 00007fffbcc55a98  RFLAGS: 00000202
+     RAX: ffffffffffffffda  RBX: 0000000000000000  RCX: 00007f1baa5c13d7
+     RDX: 0000000001234567  RSI: 0000000028121969  RDI: 00000000fee1dead
+     RBP: 00007fffbcc55ca0   R8: 0000000000000000   R9: 00007fffbcc54e90
+     R10: 00007fffbcc55050  R11: 0000000000000202  R12: 0000000000000005
+     R13: 0000000000000000  R14: 00007fffbcc55af0  R15: 0000000000000000
+     ORIG_RAX: 00000000000000a9  CS: 0033  SS: 002b
 
-This isn't seen with AFS because AFS is doing request_key() within the
-kernel half of a user thread - which will do notify-resume.
+During reboot all drivers PM shutdown callbacks are invoked.
+In iavf_shutdown() the adapter state is changed to __IAVF_REMOVE.
+In ice_shutdown() the call chain above is executed, which at some point
+calls iavf_remove(). However iavf_remove() expects the VF to be in one
+of the states __IAVF_RUNNING, __IAVF_DOWN or __IAVF_INIT_FAILED. If
+that's not the case it sleeps forever.
+So if iavf_shutdown() gets invoked before iavf_remove() the system will
+hang indefinitely because the adapter is already in state __IAVF_REMOVE.
 
-Fixes: 7743c48e54ee ("keys: Cache result of request_key*() temporarily in task_struct")
-Signed-off-by: Bharath SM <bharathsm@microsoft.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Steve French <smfrench@gmail.com>
-cc: keyrings@vger.kernel.org
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/CAGypqWw951d=zYRbdgNR4snUDvJhWL=q3=WOyh7HhSJupjz2vA@mail.gmail.com/
+Fix this by returning from iavf_remove() if the state is __IAVF_REMOVE,
+as we already went through iavf_shutdown().
+
+Fixes: 974578017fc1 ("iavf: Add waiting so the port is initialized in remove")
+Fixes: a8417330f8a5 ("iavf: Fix race condition between iavf_shutdown and iavf_remove")
+Reported-by: Marius Cornea <mcornea@redhat.com>
+Signed-off-by: Stefan Assmann <sassmann@kpanic.de>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/request_key.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/security/keys/request_key.c b/security/keys/request_key.c
-index 2da4404276f0f..07a0ef2baacd8 100644
---- a/security/keys/request_key.c
-+++ b/security/keys/request_key.c
-@@ -38,9 +38,12 @@ static void cache_requested_key(struct key *key)
- #ifdef CONFIG_KEYS_REQUEST_CACHE
- 	struct task_struct *t = current;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 82c4f1190e41c..f5e6ae2c683f4 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -4213,6 +4213,11 @@ static void iavf_remove(struct pci_dev *pdev)
+ 			mutex_unlock(&adapter->crit_lock);
+ 			break;
+ 		}
++		/* Simply return if we already went through iavf_shutdown */
++		if (adapter->state == __IAVF_REMOVE) {
++			mutex_unlock(&adapter->crit_lock);
++			return;
++		}
  
--	key_put(t->cached_requested_key);
--	t->cached_requested_key = key_get(key);
--	set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
-+	/* Do not cache key if it is a kernel thread */
-+	if (!(t->flags & PF_KTHREAD)) {
-+		key_put(t->cached_requested_key);
-+		t->cached_requested_key = key_get(key);
-+		set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
-+	}
- #endif
- }
- 
+ 		mutex_unlock(&adapter->crit_lock);
+ 		usleep_range(500, 1000);
 -- 
 2.39.2
 
