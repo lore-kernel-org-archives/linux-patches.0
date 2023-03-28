@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CC38BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87702C433EF;
-	Tue, 28 Mar 2023 14:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB168BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3244FC433D2;
+	Tue, 28 Mar 2023 14:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014993;
-	bh=pSMiX2rHKJCPkFdCK4tKUID+GbpZO3gXUGYAUf+VHHw=;
+	s=korg; t=1680014996;
+	bh=iLYn7fUPQoL79Hhb87FYGS6W39Tsmi/c4goOmDED8z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n31paQuYxMs83ZOrakJuTevJTKGBbhXNwnDM+o0GQCP6jGG0LbyuaPhAefpAFFZjV
-	 21Q/1N1j2qyiSAEvtBneNMzRYd6QaYlFJ0jfPZOQyUfFiVxUNTUQyHA7a/VdYp1RmL
-	 8Mp41+ud+QccXro9pnjreUMTwJNI2OtLaB3LypiM=
+	b=GZO1000aZCcAYEuctYKoNnySNrfB8/8tv+O677aAjsx5EzVorwsAkMk9xQVAsdb5D
+	 ec183xXov7A6MQoO3kGkXtNIDmy98vjFMvNtwFZICS8kLH15Uz0Q9ihSgBDnVGH27M
+	 O0Q+PnRHG7ZjfvL7E1uLVwgCmYsTJ59u5yc7wb9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	"Dharageswari.R" <dharageswari.r@intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 100/240] efi/libstub: Use relocated version of kernels struct screen_info
-Date: Tue, 28 Mar 2023 16:41:03 +0200
-Message-Id: <20230328142623.936352253@linuxfoundation.org>
+Subject: [PATCH 6.2 127/240] ASoC: Intel: sof_rt5682: Add quirk for Rex board with mx98360a amplifier
+Date: Tue, 28 Mar 2023 16:41:30 +0200
+Message-Id: <20230328142625.078456185@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,156 +38,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Dharageswari.R <dharageswari.r@intel.com>
 
-[ Upstream commit fc3608aaa5751318837e4bbe0282b3836bca5080 ]
+[ Upstream commit 7e43b75d6a062197b3bf39ddd1b10ce2e2d2a9b0 ]
 
-In some cases, we expose the kernel's struct screen_info to the EFI stub
-directly, so it gets populated before even entering the kernel.  This
-means the early console is available as soon as the early param parsing
-happens, which is nice. It also means we need two different ways to pass
-this information, as this trick only works if the EFI stub is baked into
-the core kernel image, which is not always the case.
+Add mtl_mx98360a_rt5682 driver data for Chrome Rex board support.
 
-Huacai reports that the preparatory refactoring that was needed to
-implement this alternative method for zboot resulted in a non-functional
-efifb earlycon for other cases as well, due to the reordering of the
-kernel image relocation with the population of the screen_info struct,
-and the latter now takes place after copying the image to its new
-location, which means we copy the old, uninitialized state.
-
-So let's ensure that the same-image version of alloc_screen_info()
-produces the correct screen_info pointer, by taking the displacement of
-the loaded image into account.
-
-Reported-by: Huacai Chen <chenhuacai@loongson.cn>
-Tested-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://lore.kernel.org/linux-efi/20230310021749.921041-1-chenhuacai@loongson.cn/
-Fixes: 42c8ea3dca094ab8 ("efi: libstub: Factor out EFI stub entrypoint into separate file")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Dharageswari.R <dharageswari.r@intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20230220080652.23136-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/arm64-stub.c     |  4 +++-
- drivers/firmware/efi/libstub/efi-stub-entry.c | 11 +++++++++++
- drivers/firmware/efi/libstub/efi-stub.c       |  5 -----
- drivers/firmware/efi/libstub/efistub.h        |  1 +
- drivers/firmware/efi/libstub/screen_info.c    |  9 +--------
- drivers/firmware/efi/libstub/zboot.c          |  5 +++++
- 6 files changed, 21 insertions(+), 14 deletions(-)
+ sound/soc/intel/boards/sof_rt5682.c           | 23 +++++++++++++++++++
+ .../intel/common/soc-acpi-intel-mtl-match.c   | 12 ++++++++++
+ 2 files changed, 35 insertions(+)
 
-diff --git a/drivers/firmware/efi/libstub/arm64-stub.c b/drivers/firmware/efi/libstub/arm64-stub.c
-index 7327b98d8e3fe..7c502dafe6f91 100644
---- a/drivers/firmware/efi/libstub/arm64-stub.c
-+++ b/drivers/firmware/efi/libstub/arm64-stub.c
-@@ -85,8 +85,10 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
- 		}
- 	}
+diff --git a/sound/soc/intel/boards/sof_rt5682.c b/sound/soc/intel/boards/sof_rt5682.c
+index 71a11d747622a..4fe448295a902 100644
+--- a/sound/soc/intel/boards/sof_rt5682.c
++++ b/sound/soc/intel/boards/sof_rt5682.c
+@@ -223,6 +223,20 @@ static const struct dmi_system_id sof_rt5682_quirk_table[] = {
+ 					SOF_RT5682_SSP_AMP(2) |
+ 					SOF_RT5682_NUM_HDMIDEV(4)),
+ 	},
++	{
++		.callback = sof_rt5682_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_PRODUCT_FAMILY, "Google_Rex"),
++			DMI_MATCH(DMI_OEM_STRING, "AUDIO-MAX98360_ALC5682I_I2S"),
++		},
++		.driver_data = (void *)(SOF_RT5682_MCLK_EN |
++					SOF_RT5682_SSP_CODEC(2) |
++					SOF_SPEAKER_AMP_PRESENT |
++					SOF_MAX98360A_SPEAKER_AMP_PRESENT |
++					SOF_RT5682_SSP_AMP(0) |
++					SOF_RT5682_NUM_HDMIDEV(4)
++					),
++	},
+ 	{
+ 		.callback = sof_rt5682_quirk_cb,
+ 		.matches = {
+@@ -1105,6 +1119,15 @@ static const struct platform_device_id board_ids[] = {
+ 					SOF_RT5682_SSP_AMP(1) |
+ 					SOF_RT5682_NUM_HDMIDEV(4)),
+ 	},
++	{
++		.name = "mtl_mx98360_rt5682",
++		.driver_data = (kernel_ulong_t)(SOF_RT5682_MCLK_EN |
++					SOF_RT5682_SSP_CODEC(0) |
++					SOF_SPEAKER_AMP_PRESENT |
++					SOF_MAX98360A_SPEAKER_AMP_PRESENT |
++					SOF_RT5682_SSP_AMP(1) |
++					SOF_RT5682_NUM_HDMIDEV(4)),
++	},
+ 	{
+ 		.name = "jsl_rt5682",
+ 		.driver_data = (kernel_ulong_t)(SOF_RT5682_MCLK_EN |
+diff --git a/sound/soc/intel/common/soc-acpi-intel-mtl-match.c b/sound/soc/intel/common/soc-acpi-intel-mtl-match.c
+index b1a66a0f68181..7911c3af8071f 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-mtl-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-mtl-match.c
+@@ -15,6 +15,11 @@ static const struct snd_soc_acpi_codecs mtl_max98357a_amp = {
+ 	.codecs = {"MX98357A"}
+ };
  
--	if (image->image_base != _text)
-+	if (image->image_base != _text) {
- 		efi_err("FIRMWARE BUG: efi_loaded_image_t::image_base has bogus value\n");
-+		image->image_base = _text;
-+	}
- 
- 	if (!IS_ALIGNED((u64)_text, SEGMENT_ALIGN))
- 		efi_err("FIRMWARE BUG: kernel image not aligned on %dk boundary\n",
-diff --git a/drivers/firmware/efi/libstub/efi-stub-entry.c b/drivers/firmware/efi/libstub/efi-stub-entry.c
-index 5245c4f031c0a..cc4dcaea67fa6 100644
---- a/drivers/firmware/efi/libstub/efi-stub-entry.c
-+++ b/drivers/firmware/efi/libstub/efi-stub-entry.c
-@@ -5,6 +5,15 @@
- 
- #include "efistub.h"
- 
-+static unsigned long screen_info_offset;
++static const struct snd_soc_acpi_codecs mtl_max98360a_amp = {
++	.num_codecs = 1,
++	.codecs = {"MX98360A"}
++};
 +
-+struct screen_info *alloc_screen_info(void)
-+{
-+	if (IS_ENABLED(CONFIG_ARM))
-+		return __alloc_screen_info();
-+	return (void *)&screen_info + screen_info_offset;
-+}
-+
- /*
-  * EFI entry point for the generic EFI stub used by ARM, arm64, RISC-V and
-  * LoongArch. This is the entrypoint that is described in the PE/COFF header
-@@ -56,6 +65,8 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 		return status;
- 	}
- 
-+	screen_info_offset = image_addr - (unsigned long)image->image_base;
-+
- 	status = efi_stub_common(handle, image, image_addr, cmdline_ptr);
- 
- 	efi_free(image_size, image_addr);
-diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
-index 2955c1ac6a36e..f9c1e8a2bd1d3 100644
---- a/drivers/firmware/efi/libstub/efi-stub.c
-+++ b/drivers/firmware/efi/libstub/efi-stub.c
-@@ -47,11 +47,6 @@
- static u64 virtmap_base = EFI_RT_VIRTUAL_BASE;
- static bool flat_va_mapping = (EFI_RT_VIRTUAL_OFFSET != 0);
- 
--struct screen_info * __weak alloc_screen_info(void)
--{
--	return &screen_info;
--}
--
- void __weak free_screen_info(struct screen_info *si)
- {
- }
-diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
-index f527816abab3e..1926644b43dea 100644
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -1042,6 +1042,7 @@ efi_enable_reset_attack_mitigation(void) { }
- void efi_retrieve_tpm2_eventlog(void);
- 
- struct screen_info *alloc_screen_info(void);
-+struct screen_info *__alloc_screen_info(void);
- void free_screen_info(struct screen_info *si);
- 
- void efi_cache_sync_image(unsigned long image_base,
-diff --git a/drivers/firmware/efi/libstub/screen_info.c b/drivers/firmware/efi/libstub/screen_info.c
-index 8e76a8b384ba1..4be1c4d1f922b 100644
---- a/drivers/firmware/efi/libstub/screen_info.c
-+++ b/drivers/firmware/efi/libstub/screen_info.c
-@@ -15,18 +15,11 @@
-  * early, but it only works if the EFI stub is part of the core kernel image
-  * itself. The zboot decompressor can only use the configuration table
-  * approach.
-- *
-- * In order to support both methods from the same build of the EFI stub
-- * library, provide this dummy global definition of struct screen_info. If it
-- * is required to satisfy a link dependency, it means we need to override the
-- * __weak alloc and free methods with the ones below, and those will be pulled
-- * in as well.
-  */
--struct screen_info screen_info;
- 
- static efi_guid_t screen_info_guid = LINUX_EFI_SCREEN_INFO_TABLE_GUID;
- 
--struct screen_info *alloc_screen_info(void)
-+struct screen_info *__alloc_screen_info(void)
- {
- 	struct screen_info *si;
- 	efi_status_t status;
-diff --git a/drivers/firmware/efi/libstub/zboot.c b/drivers/firmware/efi/libstub/zboot.c
-index 66be5fdc6b588..22c2cf38ccc20 100644
---- a/drivers/firmware/efi/libstub/zboot.c
-+++ b/drivers/firmware/efi/libstub/zboot.c
-@@ -57,6 +57,11 @@ void __weak efi_cache_sync_image(unsigned long image_base,
- 	// executable code loaded into memory to be safe for execution.
- }
- 
-+struct screen_info *alloc_screen_info(void)
-+{
-+	return __alloc_screen_info();
-+}
-+
- asmlinkage efi_status_t __efiapi
- efi_zboot_entry(efi_handle_t handle, efi_system_table_t *systab)
- {
+ static const struct snd_soc_acpi_codecs mtl_rt5682_rt5682s_hp = {
+ 	.num_codecs = 2,
+ 	.codecs = {"10EC5682", "RTL5682"},
+@@ -28,6 +33,13 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_machines[] = {
+ 		.quirk_data = &mtl_max98357a_amp,
+ 		.sof_tplg_filename = "sof-mtl-max98357a-rt5682.tplg",
+ 	},
++	{
++		.comp_ids = &mtl_rt5682_rt5682s_hp,
++		.drv_name = "mtl_mx98360_rt5682",
++		.machine_quirk = snd_soc_acpi_codec_list,
++		.quirk_data = &mtl_max98360a_amp,
++		.sof_tplg_filename = "sof-mtl-max98360a-rt5682.tplg",
++	},
+ 	{},
+ };
+ EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_mtl_machines);
 -- 
 2.39.2
 
