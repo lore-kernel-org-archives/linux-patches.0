@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E718BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96834C433D2;
-	Tue, 28 Mar 2023 14:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC678BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F59EC433EF;
+	Tue, 28 Mar 2023 14:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015085;
-	bh=jSUNIjL8GeyeDz0d1ATeTeuULRx6zQ5sbGxW0nJ5JMc=;
+	s=korg; t=1680015087;
+	bh=Tg8DkBi4WlHDZvMU6oTCttJNH47f14druQBbTEbxZ9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=of2kEPUq9ucpTue6M5tq62Fg5NWBov4PMBntdjQQRf+ud+OtWogfjKDlbvckomTt1
-	 gca8ebpvqiiaZxWM2TW6DTpLyoJxtvCTsf8v0ZG21yigNUHCo6UARvgpihC7UG3MyN
-	 hcugVImTmUi9p2u/b+y0dcACivz0DZ3u292VFiQE=
+	b=fXxCIkd56U37ozK8YA90ByGD/4xyeBlBZ8xBOz9LEXhN/2PiCDEIuXn8lkyiSYQgA
+	 hz6RaUJHI6Nmoy5rVhB5A3wyO6Ko5NE0ZVNEZL/9xez7QBclgGHvxWZwbBypDlYLa1
+	 s33he5FjaQ/+mjP9i1AOjHF9QFixUyQcGSmxdAyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandr Sapozhnikov <alsp705@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 133/240] drm/cirrus: NULL-check pipe->plane.state->fb in cirrus_pipe_update()
-Date: Tue, 28 Mar 2023 16:41:36 +0200
-Message-Id: <20230328142625.315219310@linuxfoundation.org>
+Subject: [PATCH 6.2 160/240] net/sched: act_mirred: better wording on protection against excessive stack growth
+Date: Tue, 28 Mar 2023 16:42:03 +0200
+Message-Id: <20230328142626.336239526@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,42 +37,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandr Sapozhnikov <alsp705@gmail.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-[ Upstream commit 7245e629dcaaf308f1868aeffa218e9849c77893 ]
+[ Upstream commit 78dcdffe0418ac8f3f057f26fe71ccf4d8ed851f ]
 
-After having been compared to NULL value at cirrus.c:455, pointer
-'pipe->plane.state->fb' is passed as 1st parameter in call to function
-'cirrus_fb_blit_rect' at cirrus.c:461, where it is dereferenced at
-cirrus.c:316.
+with commit e2ca070f89ec ("net: sched: protect against stack overflow in
+TC act_mirred"), act_mirred protected itself against excessive stack growth
+using per_cpu counter of nested calls to tcf_mirred_act(), and capping it
+to MIRRED_RECURSION_LIMIT. However, such protection does not detect
+recursion/loops in case the packet is enqueued to the backlog (for example,
+when the mirred target device has RPS or skb timestamping enabled). Change
+the wording from "recursion" to "nesting" to make it more clear to readers.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-v2:
-	* aligned commit message to line-length limits
-
-Signed-off-by: Alexandr Sapozhnikov <alsp705@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230215171549.16305-1-alsp705@gmail.com
+CC: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/cirrus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/act_mirred.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/tiny/cirrus.c b/drivers/gpu/drm/tiny/cirrus.c
-index 678c2ef1cae70..ffa7e61dd1835 100644
---- a/drivers/gpu/drm/tiny/cirrus.c
-+++ b/drivers/gpu/drm/tiny/cirrus.c
-@@ -455,7 +455,7 @@ static void cirrus_pipe_update(struct drm_simple_display_pipe *pipe,
- 	if (state->fb && cirrus->cpp != cirrus_cpp(state->fb))
- 		cirrus_mode_set(cirrus, &crtc->mode, state->fb);
+diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
+index 7284bcea7b0b1..c8abb51364917 100644
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -29,8 +29,8 @@
+ static LIST_HEAD(mirred_list);
+ static DEFINE_SPINLOCK(mirred_list_lock);
  
--	if (drm_atomic_helper_damage_merged(old_state, state, &rect))
-+	if (state->fb && drm_atomic_helper_damage_merged(old_state, state, &rect))
- 		cirrus_fb_blit_rect(state->fb, &shadow_plane_state->data[0], &rect);
+-#define MIRRED_RECURSION_LIMIT    4
+-static DEFINE_PER_CPU(unsigned int, mirred_rec_level);
++#define MIRRED_NEST_LIMIT    4
++static DEFINE_PER_CPU(unsigned int, mirred_nest_level);
+ 
+ static bool tcf_mirred_is_act_redirect(int action)
+ {
+@@ -226,7 +226,7 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ 	struct sk_buff *skb2 = skb;
+ 	bool m_mac_header_xmit;
+ 	struct net_device *dev;
+-	unsigned int rec_level;
++	unsigned int nest_level;
+ 	int retval, err = 0;
+ 	bool use_reinsert;
+ 	bool want_ingress;
+@@ -237,11 +237,11 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ 	int mac_len;
+ 	bool at_nh;
+ 
+-	rec_level = __this_cpu_inc_return(mirred_rec_level);
+-	if (unlikely(rec_level > MIRRED_RECURSION_LIMIT)) {
++	nest_level = __this_cpu_inc_return(mirred_nest_level);
++	if (unlikely(nest_level > MIRRED_NEST_LIMIT)) {
+ 		net_warn_ratelimited("Packet exceeded mirred recursion limit on dev %s\n",
+ 				     netdev_name(skb->dev));
+-		__this_cpu_dec(mirred_rec_level);
++		__this_cpu_dec(mirred_nest_level);
+ 		return TC_ACT_SHOT;
+ 	}
+ 
+@@ -310,7 +310,7 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ 			err = tcf_mirred_forward(want_ingress, skb);
+ 			if (err)
+ 				tcf_action_inc_overlimit_qstats(&m->common);
+-			__this_cpu_dec(mirred_rec_level);
++			__this_cpu_dec(mirred_nest_level);
+ 			return TC_ACT_CONSUMED;
+ 		}
+ 	}
+@@ -322,7 +322,7 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ 		if (tcf_mirred_is_act_redirect(m_eaction))
+ 			retval = TC_ACT_SHOT;
+ 	}
+-	__this_cpu_dec(mirred_rec_level);
++	__this_cpu_dec(mirred_nest_level);
+ 
+ 	return retval;
  }
- 
 -- 
 2.39.2
 
