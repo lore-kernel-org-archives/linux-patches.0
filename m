@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F38A8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CEAC433D2;
-	Tue, 28 Mar 2023 15:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E118BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554C3C433EF;
+	Tue, 28 Mar 2023 15:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015904;
-	bh=8szuFSn+1/2BU78FwlwZVoatWFKalpG7TAEWzPOE/vs=;
+	s=korg; t=1680015906;
+	bh=tx3Tgu7vQHll2Pkn5DHn5d+ikcMhPZGybTvWXh+Rtao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLlf58mtHrDC1VDrFMSl/RjN5r6/qUOmuq0zfv+Ar4dQR1bgln6AavJqVdARFw6Gp
-	 bB6ssVdNbUzhX5bP5dHmbRCmG/VJgNhJZB/6NCmCm23j91bb3YV8lKwosr86/pa6Sk
-	 9IBVt/6y/KZNHCyXEKcL70pqBnU+Mrfm1EXdLamA=
+	b=0bAURtkRmNLGvy1pV+tXaIDcHFKD1WgqwH7YwpRrCKhmauY9K3fUSD8VMmIbyTQo3
+	 /moWy6gdX+WJZmrTC9zWlS7/vIOGLpV6e2BanemFpKREjmUIY/CWiABVrqG7j812kx
+	 kvcoJf88z6gRjkbN/JKhdj/GfIic6uFr63GrLeL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Collingbourne <pcc@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Evgenii Stepanov <eugenis@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.1 188/224] Revert "kasan: drop skip_kasan_poison variable in free_pages_prepare"
-Date: Tue, 28 Mar 2023 16:43:04 +0200
-Message-Id: <20230328142625.209358830@linuxfoundation.org>
+	Snild Dolkow <snild@sony.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Peng Zhang <zhangpeng.00@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 189/224] test_maple_tree: add more testing for mas_empty_area()
+Date: Tue, 28 Mar 2023 16:43:05 +0200
+Message-Id: <20230328142625.258552841@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -40,66 +36,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Collingbourne <pcc@google.com>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-commit f446883d12b8bfa486f7c98d403054d61d38c989 upstream.
+commit 4bd6dded6318dc8e2514d74868c1f8fb38b61a60 upstream.
 
-This reverts commit 487a32ec24be819e747af8c2ab0d5c515508086a.
+Test robust filling of an entire area of the tree, then test one beyond.
+This is to test the walking back up the tree at the end of nodes and error
+condition.  Test inspired by the reproducer code provided by Snild Dolkow.
 
-should_skip_kasan_poison() reads the PG_skip_kasan_poison flag from
-page->flags.  However, this line of code in free_pages_prepare():
+The last test in the function tests for the case of a corrupted maple
+state caused by the incorrect limits set during mas_skip_node().  There
+needs to be a gap in the second last child and last child, but the search
+must rule out the second last child's gap.  This would avoid correcting
+the maple state to the correct max limit and return an error.
 
-	page->flags &= ~PAGE_FLAGS_CHECK_AT_PREP;
-
-clears most of page->flags, including PG_skip_kasan_poison, before calling
-should_skip_kasan_poison(), which meant that it would never return true as
-a result of the page flag being set.  Therefore, fix the code to call
-should_skip_kasan_poison() before clearing the flags, as we were doing
-before the reverted patch.
-
-This fixes a measurable performance regression introduced in the reverted
-commit, where munmap() takes longer than intended if HW tags KASAN is
-supported and enabled at runtime.  Without this patch, we see a
-single-digit percentage performance regression in a particular
-mmap()-heavy benchmark when enabling HW tags KASAN, and with the patch,
-there is no statistically significant performance impact when enabling HW
-tags KASAN.
-
-Link: https://lkml.kernel.org/r/20230310042914.3805818-2-pcc@google.com
-Fixes: 487a32ec24be ("kasan: drop skip_kasan_poison variable in free_pages_prepare")
-  Link: https://linux-review.googlesource.com/id/Ic4f13affeebd20548758438bb9ed9ca40e312b79
-Signed-off-by: Peter Collingbourne <pcc@google.com>
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com> [arm64]
-Cc: Evgenii Stepanov <eugenis@google.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.1]
+Link: https://lkml.kernel.org/r/20230307180247.2220303-3-Liam.Howlett@oracle.com
+Cc: Snild Dolkow <snild@sony.com>
+Link: https://lore.kernel.org/linux-mm/cb8dc31a-fef2-1d09-f133-e9f7b9f9e77a@sony.com/
+Fixes: e15e06a83923 ("lib/test_maple_tree: add testing for maple tree")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Peng Zhang <zhangpeng.00@bytedance.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ lib/test_maple_tree.c |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -1402,6 +1402,7 @@ static __always_inline bool free_pages_p
- 			unsigned int order, bool check_free, fpi_t fpi_flags)
+--- a/lib/test_maple_tree.c
++++ b/lib/test_maple_tree.c
+@@ -2602,6 +2602,49 @@ static noinline void check_empty_area_wi
+ 	rcu_read_unlock();
+ }
+ 
++static noinline void check_empty_area_fill(struct maple_tree *mt)
++{
++	const unsigned long max = 0x25D78000;
++	unsigned long size;
++	int loop, shift;
++	MA_STATE(mas, mt, 0, 0);
++
++	mt_set_non_kernel(99999);
++	for (shift = 12; shift <= 16; shift++) {
++		loop = 5000;
++		size = 1 << shift;
++		while (loop--) {
++			mas_set(&mas, 0);
++			mas_lock(&mas);
++			MT_BUG_ON(mt, mas_empty_area(&mas, 0, max, size) != 0);
++			MT_BUG_ON(mt, mas.last != mas.index + size - 1);
++			mas_store_gfp(&mas, (void *)size, GFP_KERNEL);
++			mas_unlock(&mas);
++			mas_reset(&mas);
++		}
++	}
++
++	/* No space left. */
++	size = 0x1000;
++	rcu_read_lock();
++	MT_BUG_ON(mt, mas_empty_area(&mas, 0, max, size) != -EBUSY);
++	rcu_read_unlock();
++
++	/* Fill a depth 3 node to the maximum */
++	for (unsigned long i = 629440511; i <= 629440800; i += 6)
++		mtree_store_range(mt, i, i + 5, (void *)i, GFP_KERNEL);
++	/* Make space in the second-last depth 4 node */
++	mtree_erase(mt, 631668735);
++	/* Make space in the last depth 4 node */
++	mtree_erase(mt, 629506047);
++	mas_reset(&mas);
++	/* Search from just after the gap in the second-last depth 4 */
++	rcu_read_lock();
++	MT_BUG_ON(mt, mas_empty_area(&mas, 629506048, 690000000, 0x5000) != 0);
++	rcu_read_unlock();
++	mt_set_non_kernel(0);
++}
++
+ static DEFINE_MTREE(tree);
+ static int maple_tree_seed(void)
  {
- 	int bad = 0;
-+	bool skip_kasan_poison = should_skip_kasan_poison(page, fpi_flags);
- 	bool init = want_init_on_free();
+@@ -2854,6 +2897,11 @@ static int maple_tree_seed(void)
+ 	check_empty_area_window(&tree);
+ 	mtree_destroy(&tree);
  
- 	VM_BUG_ON_PAGE(PageTail(page), page);
-@@ -1476,7 +1477,7 @@ static __always_inline bool free_pages_p
- 	 * With hardware tag-based KASAN, memory tags must be set before the
- 	 * page becomes unavailable via debug_pagealloc or arch_free_page.
- 	 */
--	if (!should_skip_kasan_poison(page, fpi_flags)) {
-+	if (!skip_kasan_poison) {
- 		kasan_poison_pages(page, order, init);
- 
- 		/* Memory is already initialized if KASAN did it internally. */
++	mt_init_flags(&tree, MT_FLAGS_ALLOC_RANGE);
++	check_empty_area_fill(&tree);
++	mtree_destroy(&tree);
++
++
+ #if defined(BENCH)
+ skip:
+ #endif
 
 
