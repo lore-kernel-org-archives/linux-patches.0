@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EA58BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:01:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DED6C4339B;
-	Tue, 28 Mar 2023 15:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A5E8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:01:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2931BC433EF;
+	Tue, 28 Mar 2023 15:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015697;
-	bh=jgqAc7iZHAa0GR2DPbVeeL1gHqNdIY3gDSJ9wzC7zxU=;
+	s=korg; t=1680015700;
+	bh=ioD3xUhnDD/kN66mIEPreBlmwTQml2JuCHXZJ35GMJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1tUcTUvinygl8ae5I11jnkOOXD8B9/VlL73VLo38FcCD4glA+0QS4fllg1YFICPYZ
-	 L3zkwE5BukBi04QaXlDt6gJBlkyTlGgzztBgqqk5AV12iK0VQpFFxi3P8EZ3UJMnKi
-	 fxIRLOp64gthbU9AoiO0LGunUbvhObcTNhMh2U+8=
+	b=JbtBxPepWFPE08nfZTYJAf64jT/72V4iJPo9wWYIBny4fgnHJMgLBQ1yPcOWQH0wV
+	 sll1SaghMkAC5EtJc0iSoSZ+XTMnKgtnAPAibp4qpkPnO3PVX3xj+HX44jENz3OJk3
+	 NyAhefZ/cOjUJJlgdMViTBoTluP+cRo7dEYcvtVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrico Sau <enrico.sau@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Joseph Hunkeler <jhunkeler@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/224] net: usb: cdc_mbim: avoid altsetting toggling for Telit FE990
-Date: Tue, 28 Mar 2023 16:42:18 +0200
-Message-Id: <20230328142623.308337311@linuxfoundation.org>
+Subject: [PATCH 6.1 116/224] ASoC: amd: yp: Add OMEN by HP Gaming Laptop 16z-n000 to quirks
+Date: Tue, 28 Mar 2023 16:41:52 +0200
+Message-Id: <20230328142622.194331575@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,37 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Enrico Sau <enrico.sau@gmail.com>
+From: Joseph Hunkeler <jhunkeler@gmail.com>
 
-[ Upstream commit 418383e6ed6b4624a54ec05c535f13d184fbf33b ]
+[ Upstream commit 22ce6843abec19270bf69b176d7ee0a4ef781da5 ]
 
-Add quirk CDC_MBIM_FLAG_AVOID_ALTSETTING_TOGGLE for Telit FE990
-0x1081 composition in order to avoid bind error.
+Enables display microphone on the HP OMEN 16z-n000 (8A42) laptop
 
-Signed-off-by: Enrico Sau <enrico.sau@gmail.com>
-Link: https://lore.kernel.org/r/20230306115933.198259-1-enrico.sau@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Joseph Hunkeler <jhunkeler@gmail.com>
+Link: https://lore.kernel.org/r/20230216155007.26143-1-jhunkeler@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_mbim.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/usb/cdc_mbim.c b/drivers/net/usb/cdc_mbim.c
-index c89639381eca3..cd4083e0b3b9e 100644
---- a/drivers/net/usb/cdc_mbim.c
-+++ b/drivers/net/usb/cdc_mbim.c
-@@ -665,6 +665,11 @@ static const struct usb_device_id mbim_devs[] = {
- 	  .driver_info = (unsigned long)&cdc_mbim_info_avoid_altsetting_toggle,
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 36314753923b8..4e681e9c08fe5 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -255,6 +255,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "15NBC1011"),
+ 		}
  	},
- 
-+	/* Telit FE990 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x1bc7, 0x1081, USB_CLASS_COMM, USB_CDC_SUBCLASS_MBIM, USB_CDC_PROTO_NONE),
-+	  .driver_info = (unsigned long)&cdc_mbim_info_avoid_altsetting_toggle,
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
++		}
 +	},
-+
- 	/* default entry */
- 	{ USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_MBIM, USB_CDC_PROTO_NONE),
- 	  .driver_info = (unsigned long)&cdc_mbim_info_zlp,
+ 	{}
+ };
+ 
 -- 
 2.39.2
 
