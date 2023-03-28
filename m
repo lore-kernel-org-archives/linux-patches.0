@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D148BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B478C433EF;
-	Tue, 28 Mar 2023 14:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA798BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FE8C4339B;
+	Tue, 28 Mar 2023 14:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014831;
-	bh=Ro01yHkj9Yt6ZaFmtZ2dNvqxD6A/0MxbW4UClH76OEM=;
+	s=korg; t=1680014834;
+	bh=u1SOcmjcEUoyehPfL5NNa9sNWC3Z8/i06NDkex4f/sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9PLnpODsxX4G0VRs5sCXuUBRqMDdeOHrcNmB3aTgxPwy9OqckI1PUq2C/Cg4JrQX
-	 AGxV8mcauI6McCD0eYMgeBMEElYnfmsPNdTFe0eB7b/RbdwXyDi5f9h+z5mimKKtnO
-	 qoCBSYEvVXEQHUU2l/2Ne/Zz73PxfE+Je3mZTwho=
+	b=ZAGJDTNQW2yRLk/iSgI35VtYo+nb4w6HG+YplwYIsUfjoWXaheF0NiiiCuGqLOqgH
+	 P6V4XlNplW9KzHfmRwkoczsCucgvGo7MQUBbWtN8raPGEk4sJZ+JjnTK7X77sXXfOi
+	 RaPN4i9MtSfTA+GTOiET20AGKSlIZD3i1yMyQ0yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheng Feng <fengsheng5@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 038/240] i2c: hisi: Only use the completion interrupt to finish the transfer
-Date: Tue, 28 Mar 2023 16:40:01 +0200
-Message-Id: <20230328142621.185116641@linuxfoundation.org>
+Subject: [PATCH 6.2 039/240] scsi: scsi_dh_alua: Fix memleak for qdata in alua_activate()
+Date: Tue, 28 Mar 2023 16:40:02 +0200
+Message-Id: <20230328142621.223188670@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,45 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit d98263512684a47e81bcb72a5408958ecd1e60b0 ]
+[ Upstream commit a13faca032acbf2699293587085293bdfaafc8ae ]
 
-The controller will always generate a completion interrupt when the
-transfer is finished normally or not. Currently we use either error or
-completion interrupt to finish, this may result the completion
-interrupt unhandled and corrupt the next transfer, especially at low
-speed mode. Since on error case, the error interrupt will come first
-then is the completion interrupt. So only use the completion interrupt
-to finish the whole transfer process.
+If alua_rtpg_queue() failed from alua_activate(), then 'qdata' is not
+freed, which will cause following memleak:
 
-Fixes: d62fbdb99a85 ("i2c: add support for HiSilicon I2C controller")
-Reported-by: Sheng Feng <fengsheng5@huawei.com>
-Signed-off-by: Sheng Feng <fengsheng5@huawei.com>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+unreferenced object 0xffff88810b2c6980 (size 32):
+  comm "kworker/u16:2", pid 635322, jiffies 4355801099 (age 1216426.076s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    40 39 24 c1 ff ff ff ff 00 f8 ea 0a 81 88 ff ff  @9$.............
+  backtrace:
+    [<0000000098f3a26d>] alua_activate+0xb0/0x320
+    [<000000003b529641>] scsi_dh_activate+0xb2/0x140
+    [<000000007b296db3>] activate_path_work+0xc6/0xe0 [dm_multipath]
+    [<000000007adc9ace>] process_one_work+0x3c5/0x730
+    [<00000000c457a985>] worker_thread+0x93/0x650
+    [<00000000cb80e628>] kthread+0x1ba/0x210
+    [<00000000a1e61077>] ret_from_fork+0x22/0x30
+
+Fix the problem by freeing 'qdata' in error path.
+
+Fixes: 625fe857e4fa ("scsi: scsi_dh_alua: Check scsi_device_get() return value")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20230315062154.668812-1-yukuai1@huaweicloud.com
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-hisi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/scsi/device_handler/scsi_dh_alua.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-hisi.c b/drivers/i2c/busses/i2c-hisi.c
-index 8c6c7075c765c..f5c37d2f536bc 100644
---- a/drivers/i2c/busses/i2c-hisi.c
-+++ b/drivers/i2c/busses/i2c-hisi.c
-@@ -341,7 +341,11 @@ static irqreturn_t hisi_i2c_irq(int irq, void *context)
- 		hisi_i2c_read_rx_fifo(ctlr);
+diff --git a/drivers/scsi/device_handler/scsi_dh_alua.c b/drivers/scsi/device_handler/scsi_dh_alua.c
+index 29a2865b8e2e1..e436eaa3a9071 100644
+--- a/drivers/scsi/device_handler/scsi_dh_alua.c
++++ b/drivers/scsi/device_handler/scsi_dh_alua.c
+@@ -1139,10 +1139,12 @@ static int alua_activate(struct scsi_device *sdev,
+ 	rcu_read_unlock();
+ 	mutex_unlock(&h->init_mutex);
  
+-	if (alua_rtpg_queue(pg, sdev, qdata, true))
++	if (alua_rtpg_queue(pg, sdev, qdata, true)) {
+ 		fn = NULL;
+-	else
++	} else {
++		kfree(qdata);
+ 		err = SCSI_DH_DEV_OFFLINED;
++	}
+ 	kref_put(&pg->kref, release_port_group);
  out:
--	if (int_stat & HISI_I2C_INT_TRANS_CPLT || ctlr->xfer_err) {
-+	/*
-+	 * Only use TRANS_CPLT to indicate the completion. On error cases we'll
-+	 * get two interrupts, INT_ERR first then TRANS_CPLT.
-+	 */
-+	if (int_stat & HISI_I2C_INT_TRANS_CPLT) {
- 		hisi_i2c_disable_int(ctlr, HISI_I2C_INT_ALL);
- 		hisi_i2c_clear_int(ctlr, HISI_I2C_INT_ALL);
- 		complete(ctlr->completion);
+ 	if (fn)
 -- 
 2.39.2
 
