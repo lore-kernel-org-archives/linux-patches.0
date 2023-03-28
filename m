@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417548BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A71C433D2;
-	Tue, 28 Mar 2023 14:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C5C8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5A0C433EF;
+	Tue, 28 Mar 2023 14:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014977;
-	bh=EBuVphMgO07SvHhHw7Hw5mLeatlRJ3L+6J6Gr0C28cg=;
+	s=korg; t=1680014979;
+	bh=QIox3PDiauGmOK4hmJGqYYUaN1ZL8e8dfdE8L+u3644=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSFHZPtq6cE78nQt5MMZFKCwkn1nIgwTqEexZSDkb3WND/b55/qAjme5UnVg/4VwX
-	 uh365Ikt+o71qGIn1F4vanJmcKcz8+0EKPMbyB3oJlOFT8hd2F8y6iC6nKIWdOr6Pt
-	 YGEi4o7qv8aDYeuzQn8XFrafDKFkEyap1LWT2uOo=
+	b=cEb1zEmUn8hOn61eoGhdOabtWCINkMkmKpGdjHr8MlsWd3mMkf8plZDWv+N133H0j
+	 wLGfUphq/YLkg/hNKhki32hrIYMKSjyjy8q5jRKpkXWuoyvtjI8uL4CohChZpwKkaC
+	 4NzyzXK78lLEMfQDCS8oJ/JgEp+89BVNotjKI/eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sanju Mehta <Sanju.Mehta@amd.com>,
+	Anson Tsao <anson.tsao@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.2 121/240] thunderbolt: Fix memory leak in margining
-Date: Tue, 28 Mar 2023 16:41:24 +0200
-Message-Id: <20230328142624.826282340@linuxfoundation.org>
+Subject: [PATCH 6.2 122/240] thunderbolt: Disable interrupt auto clear for rings
+Date: Tue, 28 Mar 2023 16:41:25 +0200
+Message-Id: <20230328142624.876794498@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -33,57 +36,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit acec726473822bc6b585961f4ca2a11fa7f28341 upstream.
+commit 468c49f44759720a312e52d44a71c3949ed63d7c upstream.
 
-Memory for the usb4->margining needs to be relased for the upstream port
-of the router as well, even though the debugfs directory gets released
-with the router device removal. Fix this.
+When interrupt auto clear is programmed, any read to the interrupt
+status register will clear all interrupts.  If two interrupts have
+come in before one can be serviced then this will cause lost interrupts.
 
-Fixes: d0f1e0c2a699 ("thunderbolt: Add support for receiver lane margining")
+On AMD USB4 routers this has manifested in odd problems particularly
+with long strings of control tranfers such as reading the DROM via bit
+banging.
+
+Instead of clearing interrupts automatically, clear the bit corresponding
+to the given ring's interrupt in the ISR.
+
+Fixes: 7a1808f82a37 ("thunderbolt: Handle ring interrupt by reading interrupt status register")
+Cc: Sanju Mehta <Sanju.Mehta@amd.com>
 Cc: stable@vger.kernel.org
+Tested-by: Anson Tsao <anson.tsao@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/debugfs.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/thunderbolt/nhi.c      |   40 +++++++++++++++++++++++++---------------
+ drivers/thunderbolt/nhi_regs.h |    6 ++++--
+ 2 files changed, 29 insertions(+), 17 deletions(-)
 
---- a/drivers/thunderbolt/debugfs.c
-+++ b/drivers/thunderbolt/debugfs.c
-@@ -942,7 +942,8 @@ static void margining_port_remove(struct
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -71,24 +71,31 @@ static void ring_interrupt_active(struct
+ 		u32 step, shift, ivr, misc;
+ 		void __iomem *ivr_base;
+ 		int index;
++		int bit;
  
- 	snprintf(dir_name, sizeof(dir_name), "port%d", port->port);
- 	parent = debugfs_lookup(dir_name, port->sw->debugfs_dir);
--	debugfs_remove_recursive(debugfs_lookup("margining", parent));
-+	if (parent)
-+		debugfs_remove_recursive(debugfs_lookup("margining", parent));
+ 		if (ring->is_tx)
+ 			index = ring->hop;
+ 		else
+ 			index = ring->hop + ring->nhi->hop_count;
  
- 	kfree(port->usb4->margining);
- 	port->usb4->margining = NULL;
-@@ -967,19 +968,18 @@ static void margining_switch_init(struct
+-		if (ring->nhi->quirks & QUIRK_AUTO_CLEAR_INT) {
+-			/*
+-			 * Ask the hardware to clear interrupt status
+-			 * bits automatically since we already know
+-			 * which interrupt was triggered.
+-			 */
+-			misc = ioread32(ring->nhi->iobase + REG_DMA_MISC);
+-			if (!(misc & REG_DMA_MISC_INT_AUTO_CLEAR)) {
+-				misc |= REG_DMA_MISC_INT_AUTO_CLEAR;
+-				iowrite32(misc, ring->nhi->iobase + REG_DMA_MISC);
+-			}
+-		}
++		/*
++		 * Intel routers support a bit that isn't part of
++		 * the USB4 spec to ask the hardware to clear
++		 * interrupt status bits automatically since
++		 * we already know which interrupt was triggered.
++		 *
++		 * Other routers explicitly disable auto-clear
++		 * to prevent conditions that may occur where two
++		 * MSIX interrupts are simultaneously active and
++		 * reading the register clears both of them.
++		 */
++		misc = ioread32(ring->nhi->iobase + REG_DMA_MISC);
++		if (ring->nhi->quirks & QUIRK_AUTO_CLEAR_INT)
++			bit = REG_DMA_MISC_INT_AUTO_CLEAR;
++		else
++			bit = REG_DMA_MISC_DISABLE_AUTO_CLEAR;
++		if (!(misc & bit))
++			iowrite32(misc | bit, ring->nhi->iobase + REG_DMA_MISC);
  
- static void margining_switch_remove(struct tb_switch *sw)
+ 		ivr_base = ring->nhi->iobase + REG_INT_VEC_ALLOC_BASE;
+ 		step = index / REG_INT_VEC_ALLOC_REGS * REG_INT_VEC_ALLOC_BITS;
+@@ -393,14 +400,17 @@ EXPORT_SYMBOL_GPL(tb_ring_poll_complete)
+ 
+ static void ring_clear_msix(const struct tb_ring *ring)
  {
-+	struct tb_port *upstream, *downstream;
- 	struct tb_switch *parent_sw;
--	struct tb_port *downstream;
- 	u64 route = tb_route(sw);
- 
- 	if (!route)
++	int bit;
++
+ 	if (ring->nhi->quirks & QUIRK_AUTO_CLEAR_INT)
  		return;
  
--	/*
--	 * Upstream is removed with the router itself but we need to
--	 * remove the downstream port margining directory.
--	 */
-+	upstream = tb_upstream_port(sw);
- 	parent_sw = tb_switch_parent(sw);
- 	downstream = tb_port_at(route, parent_sw);
-+
-+	margining_port_remove(upstream);
- 	margining_port_remove(downstream);
++	bit = ring_interrupt_index(ring) & 31;
+ 	if (ring->is_tx)
+-		ioread32(ring->nhi->iobase + REG_RING_NOTIFY_BASE);
++		iowrite32(BIT(bit), ring->nhi->iobase + REG_RING_INT_CLEAR);
+ 	else
+-		ioread32(ring->nhi->iobase + REG_RING_NOTIFY_BASE +
+-			 4 * (ring->nhi->hop_count / 32));
++		iowrite32(BIT(bit), ring->nhi->iobase + REG_RING_INT_CLEAR +
++			  4 * (ring->nhi->hop_count / 32));
  }
+ 
+ static irqreturn_t ring_msix(int irq, void *data)
+--- a/drivers/thunderbolt/nhi_regs.h
++++ b/drivers/thunderbolt/nhi_regs.h
+@@ -77,12 +77,13 @@ struct ring_desc {
+ 
+ /*
+  * three bitfields: tx, rx, rx overflow
+- * Every bitfield contains one bit for every hop (REG_HOP_COUNT). Registers are
+- * cleared on read. New interrupts are fired only after ALL registers have been
++ * Every bitfield contains one bit for every hop (REG_HOP_COUNT).
++ * New interrupts are fired only after ALL registers have been
+  * read (even those containing only disabled rings).
+  */
+ #define REG_RING_NOTIFY_BASE	0x37800
+ #define RING_NOTIFY_REG_COUNT(nhi) ((31 + 3 * nhi->hop_count) / 32)
++#define REG_RING_INT_CLEAR	0x37808
+ 
+ /*
+  * two bitfields: rx, tx
+@@ -105,6 +106,7 @@ struct ring_desc {
+ 
+ #define REG_DMA_MISC			0x39864
+ #define REG_DMA_MISC_INT_AUTO_CLEAR     BIT(2)
++#define REG_DMA_MISC_DISABLE_AUTO_CLEAR	BIT(17)
+ 
+ #define REG_INMAIL_DATA			0x39900
  
 
 
