@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DA68BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C1FC4339B;
-	Tue, 28 Mar 2023 15:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8818A8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097EDC433D2;
+	Tue, 28 Mar 2023 15:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015890;
-	bh=mbIzHkiaAQOOrpoXx0Hyr4bt1NUGwDC3TDowZwr5NtY=;
+	s=korg; t=1680015893;
+	bh=hfkwdnjVedKZy1WtpIMYj59846lbO69acDp25JRkYtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3cr2WP1roup/hqhUR3dM6m9s+L3jopKjC0+wTevWNtlGRYoaO9Fj6ApJOdZmaMx7
-	 Cu5cm1NqGR3E0/mHYLlZFSDV5QvNF0fn0j397u44NOWWPIRO8xCxdifhokUpTlIDlo
-	 r8UB54gPPuLblDAM0dsomfGMtYujg0/5FMmZahHE=
+	b=XTsunAE0xblLM10EdsfKLrU8z61SBDbRdtlV30CHr/Wv+GSoWBXljQhP4pTInOxiI
+	 85JPJFqrd/DOY3zY9oJ0QAVC1H0wPQGgHgcnz63yAmO++z5nuKGkkjWd80xdNhW3P/
+	 Tx2LlGYy518TUb5IXYNsOIzNE/OEgBVCRL8hFI9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Juerg Haefliger <juerg.haefliger@canonical.com>,
-	Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 212/224] soc: qcom: llcc: Fix slice configuration values for SC8280XP
-Date: Tue, 28 Mar 2023 16:43:28 +0200
-Message-Id: <20230328142626.171432179@linuxfoundation.org>
+	Muchun Song <songmuchun@bytedance.com>,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Jann Horn <jannh@google.com>,
+	SeongJae Park <sjpark@amazon.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 184/224] mm: kfence: fix using kfence_metadata without initialization in show_object()
+Date: Tue, 28 Mar 2023 16:43:00 +0200
+Message-Id: <20230328142625.051128231@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -38,45 +39,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit 77bf4b3ed42e31d29b255fcd6530fb7a1e217e89 upstream.
+commit 1c86a188e03156223a34d09ce290b49bd4dd0403 upstream.
 
-The slice IDs for CVPFW, CPUSS1 and CPUWHT currently overflow the 32bit
-LLCC config registers, which means it is writing beyond the upper limit
-of the ATTR0_CFGn and ATTR1_CFGn range of registers. But the most obvious
-impact is the fact that the mentioned slices do not get configured at all,
-which will result in reduced performance. Fix that by using the slice ID
-values taken from the latest LLCC SC table.
+The variable kfence_metadata is initialized in kfence_init_pool(), then,
+it is not initialized if kfence is disabled after booting.  In this case,
+kfence_metadata will be used (e.g.  ->lock and ->state fields) without
+initialization when reading /sys/kernel/debug/kfence/objects.  There will
+be a warning if you enable CONFIG_DEBUG_SPINLOCK.  Fix it by creating
+debugfs files when necessary.
 
-Fixes: ec69dfbdc426 ("soc: qcom: llcc: Add sc8180x and sc8280xp configurations")
-Cc: stable@vger.kernel.org	# 5.19+
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Tested-by: Juerg Haefliger <juerg.haefliger@canonical.com>
-Reviewed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230306135527.509796-1-abel.vesa@linaro.org
+Link: https://lkml.kernel.org/r/20230315034441.44321-1-songmuchun@bytedance.com
+Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Tested-by: Marco Elver <elver@google.com>
+Reviewed-by: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: SeongJae Park <sjpark@amazon.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/llcc-qcom.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/kfence/core.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -170,9 +170,9 @@ static const struct llcc_slice_config sc
- 	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
- 	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 1, 0, 0 },
- 	{ LLCC_WRCACHE,  31, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
--	{ LLCC_CVPFW,    32, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
--	{ LLCC_CPUSS1,   33, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
--	{ LLCC_CPUHWT,   36, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_CVPFW,    17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-+	{ LLCC_CPUSS1,   3, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-+	{ LLCC_CPUHWT,   5, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -727,10 +727,14 @@ static const struct seq_operations objec
  };
+ DEFINE_SEQ_ATTRIBUTE(objects);
  
- static const struct llcc_slice_config sdm845_data[] =  {
+-static int __init kfence_debugfs_init(void)
++static int kfence_debugfs_init(void)
+ {
+-	struct dentry *kfence_dir = debugfs_create_dir("kfence", NULL);
++	struct dentry *kfence_dir;
+ 
++	if (!READ_ONCE(kfence_enabled))
++		return 0;
++
++	kfence_dir = debugfs_create_dir("kfence", NULL);
+ 	debugfs_create_file("stats", 0444, kfence_dir, NULL, &stats_fops);
+ 	debugfs_create_file("objects", 0400, kfence_dir, NULL, &objects_fops);
+ 	return 0;
+@@ -893,6 +897,8 @@ static int kfence_init_late(void)
+ 	}
+ 
+ 	kfence_init_enable();
++	kfence_debugfs_init();
++
+ 	return 0;
+ }
+ 
 
 
