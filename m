@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5285B8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE20C433EF;
-	Tue, 28 Mar 2023 14:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDA68BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826ECC433EF;
+	Tue, 28 Mar 2023 14:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015445;
-	bh=9bNd+SvYKWz1q6tOqdWGY8VrVTBIVfnRTM6qYmzIQAY=;
+	s=korg; t=1680015447;
+	bh=7asAExpVOg3Y9AiJWOCpRDu//3s1mhX9EipNzxSNzkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mM6Ta+gXE1k7AvpzRSmceElwflMO8U/qnM3XJll/NOYbyMYsDWmC45FtFh7yQtZaV
-	 6ZG4vWB7p3JICaljGobSv64gTfPqc77b17OcK54ZqG8w/Wo1J9J45/4Qn7thEhJt8v
-	 LexTj9VYQ6okv0GmAJAsi5kPzxm9WFmG9QSxb4SY=
+	b=br9HrC8XTst5hgO6bT8Oq0p0AW/d6koQdSU+FhQgJXr0kCcTcgvia38lBRU6sgxFk
+	 AjGHGHar/P15WG9X/IDQsggXyzBk9hEN0fDHO+8s3VwmA0TzBl+Iac0tbGcddJZC8i
+	 7ocWvfd2OCsjq+pa647lFVH25Pr8c2tVbewMBZ5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/224] ARM: dts: imx6sl: tolino-shine2hd: fix usbotg1 pinctrl
-Date: Tue, 28 Mar 2023 16:40:17 +0200
-Message-Id: <20230328142618.172140135@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Christoph Paasch <cpaasch@apple.com>
+Subject: [PATCH 6.1 012/224] mptcp: fix UaF in listener shutdown
+Date: Tue, 28 Mar 2023 16:40:08 +0200
+Message-Id: <20230328142617.759388566@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,32 +37,197 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 1cd489e1ada1cffa56bd06fd4609f5a60a985d43 ]
+[ Upstream commit 0a3f4f1f9c27215e4ddcd312558342e57b93e518 ]
 
-usb@2184000: 'pinctrl-0' is a dependency of 'pinctrl-names'
+  Backports notes: one simple conflict in net/mptcp/protocol.c with:
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Fixes: 9c7016f1ca6d ("ARM: dts: imx: add devicetree for Tolino Shine 2 HD")
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+    commit f8c9dfbd875b ("mptcp: add pm listener events")
+
+  Where one commit removes code in __mptcp_close_ssk() while the other
+  one adds one line at the same place. We can simply remove the whole
+  condition because this extra instruction is not present in v6.1.
+
+As reported by Christoph after having refactored the passive
+socket initialization, the mptcp listener shutdown path is prone
+to an UaF issue.
+
+  BUG: KASAN: use-after-free in _raw_spin_lock_bh+0x73/0xe0
+  Write of size 4 at addr ffff88810cb23098 by task syz-executor731/1266
+
+  CPU: 1 PID: 1266 Comm: syz-executor731 Not tainted 6.2.0-rc59af4eaa31c1f6c00c8f1e448ed99a45c66340dd5 #6
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x6e/0x91
+   print_report+0x16a/0x46f
+   kasan_report+0xad/0x130
+   kasan_check_range+0x14a/0x1a0
+   _raw_spin_lock_bh+0x73/0xe0
+   subflow_error_report+0x6d/0x110
+   sk_error_report+0x3b/0x190
+   tcp_disconnect+0x138c/0x1aa0
+   inet_child_forget+0x6f/0x2e0
+   inet_csk_listen_stop+0x209/0x1060
+   __mptcp_close_ssk+0x52d/0x610
+   mptcp_destroy_common+0x165/0x640
+   mptcp_destroy+0x13/0x80
+   __mptcp_destroy_sock+0xe7/0x270
+   __mptcp_close+0x70e/0x9b0
+   mptcp_close+0x2b/0x150
+   inet_release+0xe9/0x1f0
+   __sock_release+0xd2/0x280
+   sock_close+0x15/0x20
+   __fput+0x252/0xa20
+   task_work_run+0x169/0x250
+   exit_to_user_mode_prepare+0x113/0x120
+   syscall_exit_to_user_mode+0x1d/0x40
+   do_syscall_64+0x48/0x90
+   entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+The msk grace period can legitly expire in between the last
+reference count dropped in mptcp_subflow_queue_clean() and
+the later eventual access in inet_csk_listen_stop()
+
+After the previous patch we don't need anymore special-casing
+msk listener socket cleanup: the mptcp worker will process each
+of the unaccepted msk sockets.
+
+Just drop the now unnecessary code.
+
+Please note this commit depends on the two parent ones:
+
+  mptcp: refactor passive socket initialization
+  mptcp: use the workqueue to destroy unaccepted sockets
+
+Fixes: 6aeed9045071 ("mptcp: fix race on unaccepted mptcp sockets")
+Cc: stable@vger.kernel.org
+Reported-and-tested-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/346
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts | 1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/protocol.c |  5 ---
+ net/mptcp/protocol.h |  1 -
+ net/mptcp/subflow.c  | 72 --------------------------------------------
+ 3 files changed, 78 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts b/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts
-index 663ee9df79e67..d6eee157c63b7 100644
---- a/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts
-+++ b/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts
-@@ -597,6 +597,7 @@ &usdhc3 {
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index b679e8a430a83..f0cde2d7233dc 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2380,11 +2380,6 @@ static void __mptcp_close_ssk(struct sock *sk, struct sock *ssk,
+ 		mptcp_subflow_drop_ctx(ssk);
+ 	} else {
+ 		/* otherwise tcp will dispose of the ssk and subflow ctx */
+-		if (ssk->sk_state == TCP_LISTEN) {
+-			tcp_set_state(ssk, TCP_CLOSE);
+-			mptcp_subflow_queue_clean(sk, ssk);
+-			inet_csk_listen_stop(ssk);
+-		}
+ 		__tcp_close(ssk, 0);
  
- &usbotg1 {
- 	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_usbotg1>;
- 	disable-over-current;
- 	srp-disable;
- 	hnp-disable;
+ 		/* close acquired an extra ref */
+diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
+index 2cddd5b52e8fa..051e8022d6611 100644
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -615,7 +615,6 @@ void mptcp_close_ssk(struct sock *sk, struct sock *ssk,
+ 		     struct mptcp_subflow_context *subflow);
+ void __mptcp_subflow_send_ack(struct sock *ssk);
+ void mptcp_subflow_reset(struct sock *ssk);
+-void mptcp_subflow_queue_clean(struct sock *sk, struct sock *ssk);
+ void mptcp_sock_graft(struct sock *sk, struct socket *parent);
+ struct socket *__mptcp_nmpc_socket(const struct mptcp_sock *msk);
+ bool __mptcp_close(struct sock *sk, long timeout);
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index 459621a0410cd..fc876c2480029 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1764,78 +1764,6 @@ static void subflow_state_change(struct sock *sk)
+ 	}
+ }
+ 
+-void mptcp_subflow_queue_clean(struct sock *listener_sk, struct sock *listener_ssk)
+-{
+-	struct request_sock_queue *queue = &inet_csk(listener_ssk)->icsk_accept_queue;
+-	struct mptcp_sock *msk, *next, *head = NULL;
+-	struct request_sock *req;
+-
+-	/* build a list of all unaccepted mptcp sockets */
+-	spin_lock_bh(&queue->rskq_lock);
+-	for (req = queue->rskq_accept_head; req; req = req->dl_next) {
+-		struct mptcp_subflow_context *subflow;
+-		struct sock *ssk = req->sk;
+-		struct mptcp_sock *msk;
+-
+-		if (!sk_is_mptcp(ssk))
+-			continue;
+-
+-		subflow = mptcp_subflow_ctx(ssk);
+-		if (!subflow || !subflow->conn)
+-			continue;
+-
+-		/* skip if already in list */
+-		msk = mptcp_sk(subflow->conn);
+-		if (msk->dl_next || msk == head)
+-			continue;
+-
+-		msk->dl_next = head;
+-		head = msk;
+-	}
+-	spin_unlock_bh(&queue->rskq_lock);
+-	if (!head)
+-		return;
+-
+-	/* can't acquire the msk socket lock under the subflow one,
+-	 * or will cause ABBA deadlock
+-	 */
+-	release_sock(listener_ssk);
+-
+-	for (msk = head; msk; msk = next) {
+-		struct sock *sk = (struct sock *)msk;
+-		bool do_cancel_work;
+-
+-		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
+-		next = msk->dl_next;
+-		msk->first = NULL;
+-		msk->dl_next = NULL;
+-
+-		do_cancel_work = __mptcp_close(sk, 0);
+-		release_sock(sk);
+-		if (do_cancel_work) {
+-			/* lockdep will report a false positive ABBA deadlock
+-			 * between cancel_work_sync and the listener socket.
+-			 * The involved locks belong to different sockets WRT
+-			 * the existing AB chain.
+-			 * Using a per socket key is problematic as key
+-			 * deregistration requires process context and must be
+-			 * performed at socket disposal time, in atomic
+-			 * context.
+-			 * Just tell lockdep to consider the listener socket
+-			 * released here.
+-			 */
+-			mutex_release(&listener_sk->sk_lock.dep_map, _RET_IP_);
+-			mptcp_cancel_work(sk);
+-			mutex_acquire(&listener_sk->sk_lock.dep_map,
+-				      SINGLE_DEPTH_NESTING, 0, _RET_IP_);
+-		}
+-		sock_put(sk);
+-	}
+-
+-	/* we are still under the listener msk socket lock */
+-	lock_sock_nested(listener_ssk, SINGLE_DEPTH_NESTING);
+-}
+-
+ static int subflow_ulp_init(struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
 -- 
 2.39.2
 
