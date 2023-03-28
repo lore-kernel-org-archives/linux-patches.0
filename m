@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1C18BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD04C433EF;
-	Tue, 28 Mar 2023 15:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D128BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147F2C433EF;
+	Tue, 28 Mar 2023 15:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015757;
-	bh=gavlMGtxXSwrJ/ohFz/ESjITzjNT/6pLtOqjllQPSKY=;
+	s=korg; t=1680015760;
+	bh=nnS8ynulsXOIo7/oz6jzSHL85+Xh6cvIqdqHlkubFLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8P8bOm84uJl1bZwXCIoojuZL+kS1IJFoYmky7fWAlkFAdBtMV2ccuPS3cvAhFWAs
-	 cLy/vhz9yYn+j6iAB64DUpRbOCq5iFk6A/K9ZXKkygHnTZoJUTuZTi4qkK5pn8GJsu
-	 CrhUW4ofIqZkKIvGQWkR4LJ3U7ZqT3QUYhtV8neA=
+	b=gYVMHaJorRwjhxB6JB3Rx3kft0pZfOVT3zGnaDEyIPQ4XyS/TREwUyl37Krj5LFxs
+	 dnRymGJsXSq2/7YTbyGrWt87zk6ifLKdE0ALb3ybesJzJA+8UjOBv5pN9MnAckW3nt
+	 ramyLYS2qXHwV0Dfj6wtbbxSw1Cw2zYksCBf5FtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 165/224] Bluetooth: Fix race condition in hci_cmd_sync_clear
-Date: Tue, 28 Mar 2023 16:42:41 +0200
-Message-Id: <20230328142624.250251738@linuxfoundation.org>
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 148/224] net/sched: act_mirred: better wording on protection against excessive stack growth
+Date: Tue, 28 Mar 2023 16:42:24 +0200
+Message-Id: <20230328142623.531394338@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -34,99 +37,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Min Li <lm0963hack@gmail.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-commit 1c66bee492a5fe00ae3fe890bb693bfc99f994c6 upstream.
+[ Upstream commit 78dcdffe0418ac8f3f057f26fe71ccf4d8ed851f ]
 
-There is a potential race condition in hci_cmd_sync_work and
-hci_cmd_sync_clear, and could lead to use-after-free. For instance,
-hci_cmd_sync_work is added to the 'req_workqueue' after cancel_work_sync
-The entry of 'cmd_sync_work_list' may be freed in hci_cmd_sync_clear, and
-causing kernel panic when it is used in 'hci_cmd_sync_work'.
+with commit e2ca070f89ec ("net: sched: protect against stack overflow in
+TC act_mirred"), act_mirred protected itself against excessive stack growth
+using per_cpu counter of nested calls to tcf_mirred_act(), and capping it
+to MIRRED_RECURSION_LIMIT. However, such protection does not detect
+recursion/loops in case the packet is enqueued to the backlog (for example,
+when the mirred target device has RPS or skb timestamping enabled). Change
+the wording from "recursion" to "nesting" to make it more clear to readers.
 
-Here's the call trace:
-
-dump_stack_lvl+0x49/0x63
-print_report.cold+0x5e/0x5d3
-? hci_cmd_sync_work+0x282/0x320
-kasan_report+0xaa/0x120
-? hci_cmd_sync_work+0x282/0x320
-__asan_report_load8_noabort+0x14/0x20
-hci_cmd_sync_work+0x282/0x320
-process_one_work+0x77b/0x11c0
-? _raw_spin_lock_irq+0x8e/0xf0
-worker_thread+0x544/0x1180
-? poll_idle+0x1e0/0x1e0
-kthread+0x285/0x320
-? process_one_work+0x11c0/0x11c0
-? kthread_complete_and_exit+0x30/0x30
-ret_from_fork+0x22/0x30
-</TASK>
-
-Allocated by task 266:
-kasan_save_stack+0x26/0x50
-__kasan_kmalloc+0xae/0xe0
-kmem_cache_alloc_trace+0x191/0x350
-hci_cmd_sync_queue+0x97/0x2b0
-hci_update_passive_scan+0x176/0x1d0
-le_conn_complete_evt+0x1b5/0x1a00
-hci_le_conn_complete_evt+0x234/0x340
-hci_le_meta_evt+0x231/0x4e0
-hci_event_packet+0x4c5/0xf00
-hci_rx_work+0x37d/0x880
-process_one_work+0x77b/0x11c0
-worker_thread+0x544/0x1180
-kthread+0x285/0x320
-ret_from_fork+0x22/0x30
-
-Freed by task 269:
-kasan_save_stack+0x26/0x50
-kasan_set_track+0x25/0x40
-kasan_set_free_info+0x24/0x40
-____kasan_slab_free+0x176/0x1c0
-__kasan_slab_free+0x12/0x20
-slab_free_freelist_hook+0x95/0x1a0
-kfree+0xba/0x2f0
-hci_cmd_sync_clear+0x14c/0x210
-hci_unregister_dev+0xff/0x440
-vhci_release+0x7b/0xf0
-__fput+0x1f3/0x970
-____fput+0xe/0x20
-task_work_run+0xd4/0x160
-do_exit+0x8b0/0x22a0
-do_group_exit+0xba/0x2a0
-get_signal+0x1e4a/0x25b0
-arch_do_signal_or_restart+0x93/0x1f80
-exit_to_user_mode_prepare+0xf5/0x1a0
-syscall_exit_to_user_mode+0x26/0x50
-ret_from_fork+0x15/0x30
-
-Fixes: 6a98e3836fa2 ("Bluetooth: Add helper for serialized HCI command execution")
-Cc: stable@vger.kernel.org
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/sched/act_mirred.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -643,6 +643,7 @@ void hci_cmd_sync_clear(struct hci_dev *
- 	cancel_work_sync(&hdev->cmd_sync_work);
- 	cancel_work_sync(&hdev->reenable_adv_work);
+diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
+index b8ad6ae282c02..ded6ee054be14 100644
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -28,8 +28,8 @@
+ static LIST_HEAD(mirred_list);
+ static DEFINE_SPINLOCK(mirred_list_lock);
  
-+	mutex_lock(&hdev->cmd_sync_work_lock);
- 	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list) {
- 		if (entry->destroy)
- 			entry->destroy(hdev, entry->data, -ECANCELED);
-@@ -650,6 +651,7 @@ void hci_cmd_sync_clear(struct hci_dev *
- 		list_del(&entry->list);
- 		kfree(entry);
+-#define MIRRED_RECURSION_LIMIT    4
+-static DEFINE_PER_CPU(unsigned int, mirred_rec_level);
++#define MIRRED_NEST_LIMIT    4
++static DEFINE_PER_CPU(unsigned int, mirred_nest_level);
+ 
+ static bool tcf_mirred_is_act_redirect(int action)
+ {
+@@ -224,7 +224,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
+ 	struct sk_buff *skb2 = skb;
+ 	bool m_mac_header_xmit;
+ 	struct net_device *dev;
+-	unsigned int rec_level;
++	unsigned int nest_level;
+ 	int retval, err = 0;
+ 	bool use_reinsert;
+ 	bool want_ingress;
+@@ -235,11 +235,11 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
+ 	int mac_len;
+ 	bool at_nh;
+ 
+-	rec_level = __this_cpu_inc_return(mirred_rec_level);
+-	if (unlikely(rec_level > MIRRED_RECURSION_LIMIT)) {
++	nest_level = __this_cpu_inc_return(mirred_nest_level);
++	if (unlikely(nest_level > MIRRED_NEST_LIMIT)) {
+ 		net_warn_ratelimited("Packet exceeded mirred recursion limit on dev %s\n",
+ 				     netdev_name(skb->dev));
+-		__this_cpu_dec(mirred_rec_level);
++		__this_cpu_dec(mirred_nest_level);
+ 		return TC_ACT_SHOT;
  	}
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
- }
  
- void __hci_cmd_sync_cancel(struct hci_dev *hdev, int err)
+@@ -308,7 +308,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
+ 			err = tcf_mirred_forward(want_ingress, skb);
+ 			if (err)
+ 				tcf_action_inc_overlimit_qstats(&m->common);
+-			__this_cpu_dec(mirred_rec_level);
++			__this_cpu_dec(mirred_nest_level);
+ 			return TC_ACT_CONSUMED;
+ 		}
+ 	}
+@@ -320,7 +320,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
+ 		if (tcf_mirred_is_act_redirect(m_eaction))
+ 			retval = TC_ACT_SHOT;
+ 	}
+-	__this_cpu_dec(mirred_rec_level);
++	__this_cpu_dec(mirred_nest_level);
+ 
+ 	return retval;
+ }
+-- 
+2.39.2
+
 
 
