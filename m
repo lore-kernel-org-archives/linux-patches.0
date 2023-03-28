@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD138BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:00:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8D4C433EF;
-	Tue, 28 Mar 2023 15:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021C58BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:00:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3C7C433D2;
+	Tue, 28 Mar 2023 15:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015635;
-	bh=EfU18cy2MEJSYYxeCIYZf95z1hcmR0+CfSl3Ibna7/8=;
+	s=korg; t=1680015637;
+	bh=nY5wMEAjf17Cj3Bkpkgam5vh8mcfisWNVi/j51Izv0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H503SRDBjir0fb8WQMsj48RIpWLsLZlIrxXN8NG/jDuzeOKOzKITLiut6be87/i5K
-	 9B8yA1NxtxHoPJTy/TmV3+LQhss57KZwYzvBacNFGxuZ3ffOqZnDuWMeA+aU4viDLQ
-	 DYLLYFQNmhzGaP9t+nbNqC2ak1PwG/zi0livipPo=
+	b=iZ+J2vSbbgg2ArRoFnexuXrvicpmZZ/r3TFOfRaxtoebVYak/AmTYvrg6F5GCbpGc
+	 /NIoES+S70LncIEudPwe0ZeKceHFBJZUEubLYNSaVGrHWvA+VUnabulOB9h9wvVocs
+	 wxIS46XpJ1WMc3Uq/SEAR2KexGrKopPK0Ztbf9V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	ChenXiaoSong <chenxiaosong2@huawei.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/224] net: dsa: mt7530: move lowering TRGMII driving to mt7530_setup()
-Date: Tue, 28 Mar 2023 16:41:24 +0200
-Message-Id: <20230328142620.931010859@linuxfoundation.org>
+Subject: [PATCH 6.1 079/224] ksmbd: fix possible refcount leak in smb2_open()
+Date: Tue, 28 Mar 2023 16:41:15 +0200
+Message-Id: <20230328142620.612271657@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,95 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: ChenXiaoSong <chenxiaosong2@huawei.com>
 
-[ Upstream commit fdcc8ccd823740c18e803b886cec461bc0e64201 ]
+[ Upstream commit 2624b445544ffc1472ccabfb6ec867c199d4c95c ]
 
-Move lowering the TRGMII Tx clock driving to mt7530_setup(), after setting
-the core clock, as seen on the U-Boot MediaTek ethernet driver.
+Reference count of acls will leak when memory allocation fails. Fix this
+by adding the missing posix_acl_release().
 
-Move the code which looks like it lowers the TRGMII Rx clock driving to
-after the TRGMII Tx clock driving is lowered. This is run after lowering
-the Tx clock driving on the U-Boot MediaTek ethernet driver as well.
-
-This way, the switch should consume less power regardless of port 6 being
-used.
-
-Update the comment explaining mt7530_pad_clk_setup().
-
-Tested rgmii and trgmii modes of port 6 and rgmii mode of port 5 on MCM
-MT7530 on MT7621AT Unielec U7621-06 and standalone MT7530 on MT7623NI
-Bananapi BPI-R2.
-
-Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
-Link: https://source.denx.de/u-boot/u-boot/-/blob/29a48bf9ccba45a5e560bb564bbe76e42629325f/drivers/net/mtk_eth.c#L682
-Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Link: https://lore.kernel.org/r/20230320190520.124513-2-arinc.unal@arinc9.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ fs/ksmbd/smb2pdu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 2c0387dd3f359..b4a679cbc95cf 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -419,12 +419,12 @@ static void mt7530_pll_setup(struct mt7530_priv *priv)
- 	core_set(priv, CORE_TRGMII_GSW_CLK_CG, REG_GSWCK_EN);
- }
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 61d12eab0be15..e8c051a3329ec 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -2994,8 +2994,11 @@ int smb2_open(struct ksmbd_work *work)
+ 							sizeof(struct smb_acl) +
+ 							sizeof(struct smb_ace) * ace_num * 2,
+ 							GFP_KERNEL);
+-					if (!pntsd)
++					if (!pntsd) {
++						posix_acl_release(fattr.cf_acls);
++						posix_acl_release(fattr.cf_dacls);
+ 						goto err_out;
++					}
  
--/* Setup TX circuit including relevant PAD and driving */
-+/* Setup port 6 interface mode and TRGMII TX circuit */
- static int
- mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- {
- 	struct mt7530_priv *priv = ds->priv;
--	u32 ncpo1, ssc_delta, trgint, i, xtal;
-+	u32 ncpo1, ssc_delta, trgint, xtal;
- 
- 	xtal = mt7530_read(priv, MT7530_MHWTRAP) & HWTRAP_XTAL_MASK;
- 
-@@ -469,11 +469,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- 		   P6_INTF_MODE(trgint));
- 
- 	if (trgint) {
--		/* Lower Tx Driving for TRGMII path */
--		for (i = 0 ; i < NUM_TRGMII_CTRL ; i++)
--			mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
--				     TD_DM_DRVP(8) | TD_DM_DRVN(8));
--
- 		/* Disable the MT7530 TRGMII clocks */
- 		core_clear(priv, CORE_TRGMII_GSW_CLK_CG, REG_TRGMIICK_EN);
- 
-@@ -494,10 +489,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- 
- 		/* Enable the MT7530 TRGMII clocks */
- 		core_set(priv, CORE_TRGMII_GSW_CLK_CG, REG_TRGMIICK_EN);
--	} else {
--		for (i = 0 ; i < NUM_TRGMII_CTRL; i++)
--			mt7530_rmw(priv, MT7530_TRGMII_RD(i),
--				   RD_TAP_MASK, RD_TAP(16));
- 	}
- 
- 	return 0;
-@@ -2212,6 +2203,15 @@ mt7530_setup(struct dsa_switch *ds)
- 
- 	mt7530_pll_setup(priv);
- 
-+	/* Lower Tx driving for TRGMII path */
-+	for (i = 0; i < NUM_TRGMII_CTRL; i++)
-+		mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
-+			     TD_DM_DRVP(8) | TD_DM_DRVN(8));
-+
-+	for (i = 0; i < NUM_TRGMII_CTRL; i++)
-+		mt7530_rmw(priv, MT7530_TRGMII_RD(i),
-+			   RD_TAP_MASK, RD_TAP(16));
-+
- 	/* Enable port 6 */
- 	val = mt7530_read(priv, MT7530_MHWTRAP);
- 	val &= ~MHWTRAP_P6_DIS & ~MHWTRAP_PHY_ACCESS;
+ 					rc = build_sec_desc(user_ns,
+ 							    pntsd, NULL, 0,
 -- 
 2.39.2
 
