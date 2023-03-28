@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC348BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5391C433EF;
-	Tue, 28 Mar 2023 15:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0338BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E14CC433EF;
+	Tue, 28 Mar 2023 15:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015782;
-	bh=sRGFf43QbpCOhF8T3iMsrGAGJcquxPawIyZ9s16t4aU=;
+	s=korg; t=1680015784;
+	bh=6xKV1IegHjiXEHUs7HhfNhN/Bsm0ZPS2qRjBo0cH1H0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iTCes5hSXbD+44i3KC1ioDvLLt+QrLeEwxgIypvzhda+oV2MgPtZx7bRgcqyut1Ap
-	 9FHjWs0XY2Y0SiEPs174M2xXNoBJW9DM36ye/2HhJ4CQKUdyCu9fMQmwxGmAo5qAhR
-	 3FriqKlp5ySUiPWhSJUIO8GypLmGgJeQTH9FFAIA=
+	b=UZfA2dYRaVq7xBBPwy6ni4mMWZZQ8T9XBOXY1wVtBeDk3b8J6Hn3vTDNiI2//Sogg
+	 VFi/9DhXiAXJXDCEIZNa/Njfc0l6eJb52IuN1aAe6DZ9LbBv6D7UGSSRDZDuKhP4/S
+	 28fXmTN07HaM8Qgu44DiLVzCpSNWEzHU5z+h6cSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coly Li <colyli@suse.de>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 173/224] dm thin: fix deadlock when swapping to thin device
-Date: Tue, 28 Mar 2023 16:42:49 +0200
-Message-Id: <20230328142624.584577982@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 174/224] usb: typec: tcpm: fix create duplicate source-capabilities file
+Date: Tue, 28 Mar 2023 16:42:50 +0200
+Message-Id: <20230328142624.635737075@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,70 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Coly Li <colyli@suse.de>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 9bbf5feecc7eab2c370496c1c161bbfe62084028 upstream.
+commit a826492fc9dfe32afd70fff93955ae8174bbf14b upstream.
 
-This is an already known issue that dm-thin volume cannot be used as
-swap, otherwise a deadlock may happen when dm-thin internal memory
-demand triggers swap I/O on the dm-thin volume itself.
+The kernel will dump in the below cases:
+sysfs: cannot create duplicate filename
+'/devices/virtual/usb_power_delivery/pd1/source-capabilities'
 
-But thanks to commit a666e5c05e7c ("dm: fix deadlock when swapping to
-encrypted device"), the limit_swap_bios target flag can also be used
-for dm-thin to avoid the recursive I/O when it is used as swap.
+1. After soft reset has completed, an Explicit Contract negotiation occurs.
+The sink device will receive source capabilitys again. This will cause
+a duplicate source-capabilities file be created.
+2. Power swap twice on a device that is initailly sink role.
 
-Fix is to simply set ti->limit_swap_bios to true in both pool_ctr()
-and thin_ctr().
+This will unregister existing capabilities when above cases occurs.
 
-In my test, I create a dm-thin volume /dev/vg/swap and use it as swap
-device. Then I run fio on another dm-thin volume /dev/vg/main and use
-large --blocksize to trigger swap I/O onto /dev/vg/swap.
-
-The following fio command line is used in my test,
-  fio --name recursive-swap-io --lockmem 1 --iodepth 128 \
-     --ioengine libaio --filename /dev/vg/main --rw randrw \
-    --blocksize 1M --numjobs 32 --time_based --runtime=12h
-
-Without this fix, the whole system can be locked up within 15 seconds.
-
-With this fix, there is no any deadlock or hung task observed after
-2 hours of running fio.
-
-Furthermore, if blocksize is changed from 1M to 128M, after around 30
-seconds fio has no visible I/O, and the out-of-memory killer message
-shows up in kernel message. After around 20 minutes all fio processes
-are killed and the whole system is back to being alive.
-
-This is exactly what is expected when recursive I/O happens on dm-thin
-volume when it is used as swap.
-
-Depends-on: a666e5c05e7c ("dm: fix deadlock when swapping to encrypted device")
-Cc: stable@vger.kernel.org
-Signed-off-by: Coly Li <colyli@suse.de>
-Acked-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: 8203d26905ee ("usb: typec: tcpm: Register USB Power Delivery Capabilities")
+cc: <stable@vger.kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230215054951.238394-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/typec/tcpm/tcpm.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -3357,6 +3357,7 @@ static int pool_ctr(struct dm_target *ti
- 	pt->low_water_blocks = low_water_blocks;
- 	pt->adjusted_pf = pt->requested_pf = pf;
- 	ti->num_flush_bios = 1;
-+	ti->limit_swap_bios = true;
- 
- 	/*
- 	 * Only need to enable discards if the pool should pass
-@@ -4235,6 +4236,7 @@ static int thin_ctr(struct dm_target *ti
- 		goto bad;
- 
- 	ti->num_flush_bios = 1;
-+	ti->limit_swap_bios = true;
- 	ti->flush_supported = true;
- 	ti->accounts_remapped_io = true;
- 	ti->per_io_data_size = sizeof(struct dm_thin_endio_hook);
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -4547,6 +4547,9 @@ static void run_state_machine(struct tcp
+ 	case SOFT_RESET:
+ 		port->message_id = 0;
+ 		port->rx_msgid = -1;
++		/* remove existing capabilities */
++		usb_power_delivery_unregister_capabilities(port->partner_source_caps);
++		port->partner_source_caps = NULL;
+ 		tcpm_pd_send_control(port, PD_CTRL_ACCEPT);
+ 		tcpm_ams_finish(port);
+ 		if (port->pwr_role == TYPEC_SOURCE) {
+@@ -4566,6 +4569,9 @@ static void run_state_machine(struct tcp
+ 	case SOFT_RESET_SEND:
+ 		port->message_id = 0;
+ 		port->rx_msgid = -1;
++		/* remove existing capabilities */
++		usb_power_delivery_unregister_capabilities(port->partner_source_caps);
++		port->partner_source_caps = NULL;
+ 		if (tcpm_pd_send_control(port, PD_CTRL_SOFT_RESET))
+ 			tcpm_set_state_cond(port, hard_reset_state(port), 0);
+ 		else
+@@ -4695,6 +4701,9 @@ static void run_state_machine(struct tcp
+ 		tcpm_set_state(port, SNK_STARTUP, 0);
+ 		break;
+ 	case PR_SWAP_SNK_SRC_SINK_OFF:
++		/* will be source, remove existing capabilities */
++		usb_power_delivery_unregister_capabilities(port->partner_source_caps);
++		port->partner_source_caps = NULL;
+ 		/*
+ 		 * Prevent vbus discharge circuit from turning on during PR_SWAP
+ 		 * as this is not a disconnect.
 
 
