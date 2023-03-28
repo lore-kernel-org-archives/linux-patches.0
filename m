@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936638801
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F96C433D2;
-	Tue, 28 Mar 2023 15:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7360C8826
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC674C433D2;
+	Tue, 28 Mar 2023 15:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015798;
-	bh=d/9EOLIiiI/GnsauOvtlKg9EtD0gkyqczBBR/U0lNKU=;
+	s=korg; t=1680015801;
+	bh=pmBW/rnseKJIT9k+UunUl4XrEZuv0Z7V9rhs4qj0enY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cVRE3yOpLUk/SiOMioj8F+MQKuw+EOmIEk13uniRCs0LJtZ+a7G2Iqdyp99Z3CZ1O
-	 6EcraXdPA4BKQP0SrZTwPm4T80fkGQHgmq1Co/0ciNcqIErYh8NlHAR5eOUParKdP5
-	 PBgDaGF08Y+4sO71jqKLjyqtU5KoAmmCl8bBbJOM=
+	b=G8qzSjF1duRfY0Jk2IL+V+RbsI0dbJiZTyOQxtyQWe7ygT9c4Ns5mn5g+dapPPnFT
+	 uop6LtGSQ3V4DegtDGwMIE2DS7GIyF9JN7N8R2vNh76tSmOpzqfJCD6UMGhM81hTpV
+	 rsIBW1yXc9ywLhZ+C7rRjJmAY1/dRSzN6k9ggq50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>
-Subject: [PATCH 6.1 178/224] usb: cdnsp: changes PCI Device ID to fix conflict with CNDS3 driver
-Date: Tue, 28 Mar 2023 16:42:54 +0200
-Message-Id: <20230328142624.820341717@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.1 179/224] usb: chipdea: core: fix return -EINVAL if request role is the same with current role
+Date: Tue, 28 Mar 2023 16:42:55 +0200
+Message-Id: <20230328142624.851328206@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -33,72 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 96b96b2a567fb34dd41c87e6cf01f6902ce8cae4 upstream.
+commit 3670de80678961eda7fa2220883fc77c16868951 upstream.
 
-Patch changes CDNS_DEVICE_ID in USBSSP PCI Glue driver to remove
-the conflict with Cadence USBSS driver.
+It should not return -EINVAL if the request role is the same with current
+role, return non-error and without do anything instead.
 
+Fixes: a932a8041ff9 ("usb: chipidea: core: add sysfs group")
 cc: <stable@vger.kernel.org>
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Link: https://lore.kernel.org/r/20230309063048.299378-1-pawell@cadence.com
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20230317061516.2451728-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-pci.c |   27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ drivers/usb/chipidea/core.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdnsp-pci.c
-+++ b/drivers/usb/cdns3/cdnsp-pci.c
-@@ -29,30 +29,23 @@
- #define PLAT_DRIVER_NAME	"cdns-usbssp"
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -977,9 +977,12 @@ static ssize_t role_store(struct device
+ 			     strlen(ci->roles[role]->name)))
+ 			break;
  
- #define CDNS_VENDOR_ID		0x17cd
--#define CDNS_DEVICE_ID		0x0100
-+#define CDNS_DEVICE_ID		0x0200
-+#define CDNS_DRD_ID		0x0100
- #define CDNS_DRD_IF		(PCI_CLASS_SERIAL_USB << 8 | 0x80)
+-	if (role == CI_ROLE_END || role == ci->role)
++	if (role == CI_ROLE_END)
+ 		return -EINVAL;
  
- static struct pci_dev *cdnsp_get_second_fun(struct pci_dev *pdev)
- {
--	struct pci_dev *func;
--
- 	/*
- 	 * Gets the second function.
--	 * It's little tricky, but this platform has two function.
--	 * The fist keeps resources for Host/Device while the second
--	 * keeps resources for DRD/OTG.
-+	 * Platform has two function. The fist keeps resources for
-+	 * Host/Device while the secon keeps resources for DRD/OTG.
- 	 */
--	func = pci_get_device(pdev->vendor, pdev->device, NULL);
--	if (!func)
--		return NULL;
-+	if (pdev->device == CDNS_DEVICE_ID)
-+		return  pci_get_device(pdev->vendor, CDNS_DRD_ID, NULL);
-+	else if (pdev->device == CDNS_DRD_ID)
-+		return pci_get_device(pdev->vendor, CDNS_DEVICE_ID, NULL);
- 
--	if (func->devfn == pdev->devfn) {
--		func = pci_get_device(pdev->vendor, pdev->device, func);
--		if (!func)
--			return NULL;
--	}
--
--	return func;
-+	return NULL;
- }
- 
- static int cdnsp_pci_probe(struct pci_dev *pdev,
-@@ -232,6 +225,8 @@ static const struct pci_device_id cdnsp_
- 	  PCI_CLASS_SERIAL_USB_DEVICE, PCI_ANY_ID },
- 	{ PCI_VENDOR_ID_CDNS, CDNS_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
- 	  CDNS_DRD_IF, PCI_ANY_ID },
-+	{ PCI_VENDOR_ID_CDNS, CDNS_DRD_ID, PCI_ANY_ID, PCI_ANY_ID,
-+	  CDNS_DRD_IF, PCI_ANY_ID },
- 	{ 0, }
- };
- 
++	if (role == ci->role)
++		return n;
++
+ 	pm_runtime_get_sync(dev);
+ 	disable_irq(ci->irq);
+ 	ci_role_stop(ci);
 
 
