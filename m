@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4208476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ADFC433EF;
-	Tue, 28 Mar 2023 14:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F147E8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7684CC433D2;
+	Tue, 28 Mar 2023 14:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015293;
-	bh=pOE7kJfBxV6Ic2Yvp0mIVOtqq6SUp3Pv9colA2dmgb8=;
+	s=korg; t=1680015295;
+	bh=tx3Tgu7vQHll2Pkn5DHn5d+ikcMhPZGybTvWXh+Rtao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6j97hV7OC3hk+PLY8l/811rTRQwPGmj3iuYKWXhtijLZ+4OvZrYHKoVrgx0WdGx0
-	 jTE7gr+g38hB1HKr7eHZnPlq8xhE8rGJ+eNqGG28VUUyo5VQpvn/Vwn3X2r5ruA4ln
-	 r+WqNZOIVsppCad8a0mqSDEy640/hdZLA4y/Kn9c=
+	b=2AnXbh0JDySAo14oiW0S2dJynJg8YYpO/tmVAwYcNMQhLPw+dTpUYF7TxpqqVpLD1
+	 2W0yXTNaECbwKR0z+32FNuGoTBsQaDV1bjN+t0i5URc++taiGS3Gy5/LEmU77I1aw1
+	 6HMNrjkdZI4K81A1iijxFU7NTFi/cEVntGRcLRZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
+	Snild Dolkow <snild@sony.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Peng Zhang <zhangpeng.00@bytedance.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 206/240] kcsan: avoid passing -g for test
-Date: Tue, 28 Mar 2023 16:42:49 +0200
-Message-Id: <20230328142628.264195698@linuxfoundation.org>
+Subject: [PATCH 6.2 207/240] test_maple_tree: add more testing for mas_empty_area()
+Date: Tue, 28 Mar 2023 16:42:50 +0200
+Message-Id: <20230328142628.306829114@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -37,45 +36,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Elver <elver@google.com>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-commit 5eb39cde1e2487ba5ec1802dc5e58a77e700d99e upstream.
+commit 4bd6dded6318dc8e2514d74868c1f8fb38b61a60 upstream.
 
-Nathan reported that when building with GNU as and a version of clang that
-defaults to DWARF5, the assembler will complain with:
+Test robust filling of an entire area of the tree, then test one beyond.
+This is to test the walking back up the tree at the end of nodes and error
+condition.  Test inspired by the reproducer code provided by Snild Dolkow.
 
-  Error: non-constant .uleb128 is not supported
+The last test in the function tests for the case of a corrupted maple
+state caused by the incorrect limits set during mas_skip_node().  There
+needs to be a gap in the second last child and last child, but the search
+must rule out the second last child's gap.  This would avoid correcting
+the maple state to the correct max limit and return an error.
 
-This is because `-g` defaults to the compiler debug info default. If the
-assembler does not support some of the directives used, the above errors
-occur. To fix, remove the explicit passing of `-g`.
-
-All the test wants is that stack traces print valid function names, and
-debug info is not required for that. (I currently cannot recall why I
-added the explicit `-g`.)
-
-Link: https://lkml.kernel.org/r/20230316224705.709984-2-elver@google.com
-Fixes: 1fe84fd4a402 ("kcsan: Add test suite")
-Signed-off-by: Marco Elver <elver@google.com>
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
+Link: https://lkml.kernel.org/r/20230307180247.2220303-3-Liam.Howlett@oracle.com
+Cc: Snild Dolkow <snild@sony.com>
+Link: https://lore.kernel.org/linux-mm/cb8dc31a-fef2-1d09-f133-e9f7b9f9e77a@sony.com/
+Fixes: e15e06a83923 ("lib/test_maple_tree: add testing for maple tree")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Peng Zhang <zhangpeng.00@bytedance.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcsan/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/test_maple_tree.c |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
---- a/kernel/kcsan/Makefile
-+++ b/kernel/kcsan/Makefile
-@@ -16,6 +16,6 @@ obj-y := core.o debugfs.o report.o
- KCSAN_INSTRUMENT_BARRIERS_selftest.o := y
- obj-$(CONFIG_KCSAN_SELFTEST) += selftest.o
+--- a/lib/test_maple_tree.c
++++ b/lib/test_maple_tree.c
+@@ -2602,6 +2602,49 @@ static noinline void check_empty_area_wi
+ 	rcu_read_unlock();
+ }
  
--CFLAGS_kcsan_test.o := $(CFLAGS_KCSAN) -g -fno-omit-frame-pointer
-+CFLAGS_kcsan_test.o := $(CFLAGS_KCSAN) -fno-omit-frame-pointer
- CFLAGS_kcsan_test.o += $(DISABLE_STRUCTLEAK_PLUGIN)
- obj-$(CONFIG_KCSAN_KUNIT_TEST) += kcsan_test.o
++static noinline void check_empty_area_fill(struct maple_tree *mt)
++{
++	const unsigned long max = 0x25D78000;
++	unsigned long size;
++	int loop, shift;
++	MA_STATE(mas, mt, 0, 0);
++
++	mt_set_non_kernel(99999);
++	for (shift = 12; shift <= 16; shift++) {
++		loop = 5000;
++		size = 1 << shift;
++		while (loop--) {
++			mas_set(&mas, 0);
++			mas_lock(&mas);
++			MT_BUG_ON(mt, mas_empty_area(&mas, 0, max, size) != 0);
++			MT_BUG_ON(mt, mas.last != mas.index + size - 1);
++			mas_store_gfp(&mas, (void *)size, GFP_KERNEL);
++			mas_unlock(&mas);
++			mas_reset(&mas);
++		}
++	}
++
++	/* No space left. */
++	size = 0x1000;
++	rcu_read_lock();
++	MT_BUG_ON(mt, mas_empty_area(&mas, 0, max, size) != -EBUSY);
++	rcu_read_unlock();
++
++	/* Fill a depth 3 node to the maximum */
++	for (unsigned long i = 629440511; i <= 629440800; i += 6)
++		mtree_store_range(mt, i, i + 5, (void *)i, GFP_KERNEL);
++	/* Make space in the second-last depth 4 node */
++	mtree_erase(mt, 631668735);
++	/* Make space in the last depth 4 node */
++	mtree_erase(mt, 629506047);
++	mas_reset(&mas);
++	/* Search from just after the gap in the second-last depth 4 */
++	rcu_read_lock();
++	MT_BUG_ON(mt, mas_empty_area(&mas, 629506048, 690000000, 0x5000) != 0);
++	rcu_read_unlock();
++	mt_set_non_kernel(0);
++}
++
+ static DEFINE_MTREE(tree);
+ static int maple_tree_seed(void)
+ {
+@@ -2854,6 +2897,11 @@ static int maple_tree_seed(void)
+ 	check_empty_area_window(&tree);
+ 	mtree_destroy(&tree);
+ 
++	mt_init_flags(&tree, MT_FLAGS_ALLOC_RANGE);
++	check_empty_area_fill(&tree);
++	mtree_destroy(&tree);
++
++
+ #if defined(BENCH)
+ skip:
+ #endif
 
 
