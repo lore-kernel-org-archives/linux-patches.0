@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD1B8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF834C4339B;
-	Tue, 28 Mar 2023 14:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010418BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794C9C4339B;
+	Tue, 28 Mar 2023 14:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015160;
-	bh=4pfe9ujTtxhS2oU8noD4A2p/eRJ6k9CTzO3xoHOuNQs=;
+	s=korg; t=1680015162;
+	bh=PRtLUM+zgybqSlW1JB0nIIr0vSASBJDGrzukTx/77Z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v3X4VzzX4hkdBaTYFbTO0eJwL4MtcWiEZkOFH/3RK8ve0aV8BIC4c63d1t7duU79s
-	 88CwC28riUvnGMVTQeBhyWAULUDxRYqLCAz0W0o0u2gKyV6YecH5Wl9bcbue4ctz06
-	 QJPDkjDd8J1SI+QsJUrouJF58NvseqeUU+o80dNU=
+	b=tKFm6qYfTve0hpo7bwEH78EK+giFZi65d3XrT4sOgBjaDHFFeTxxZfHy488gysCN7
+	 D8mRfuCJ+v1iwEZNGzy1HrcHMiRwnCA4dngTc0mzbOvuz6XrK0OjJMXE4T3iF9PZEW
+	 DDgOX6YeaakYaUUbj3Zj3kHQ5ynES9f4m3s39dIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 6.2 187/240] lockd: set file_lock start and end when decoding nlm4 testargs
-Date: Tue, 28 Mar 2023 16:42:30 +0200
-Message-Id: <20230328142627.428115646@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.2 188/240] arm64: dts: imx8mm-nitrogen-r2: fix WM8960 clock name
+Date: Tue, 28 Mar 2023 16:42:31 +0200
+Message-Id: <20230328142627.468965699@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,95 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 7ff84910c66c9144cc0de9d9deed9fb84c03aff0 upstream.
+commit 32f86da7c86b27ebed31c24453a0713f612e43fb upstream.
 
-Commit 6930bcbfb6ce dropped the setting of the file_lock range when
-decoding a nlm_lock off the wire. This causes the client side grant
-callback to miss matching blocks and reject the lock, only to rerequest
-it 30s later.
+The WM8960 Linux driver expects the clock to be named "mclk".  Otherwise
+the clock will be ignored and not prepared/enabled by the driver.
 
-Add a helper function to set the file_lock range from the start and end
-values that the protocol uses, and have the nlm_lock decoder call that to
-set up the file_lock args properly.
-
-Fixes: 6930bcbfb6ce ("lockd: detect and reject lock arguments that overflow")
-Reported-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Amir Goldstein <amir73il@gmail.com>
-Cc: stable@vger.kernel.org #6.0
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: 40ba2eda0a7b ("arm64: dts: imx8mm-nitrogen-r2: add audio")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/clnt4xdr.c        |    9 +--------
- fs/lockd/xdr4.c            |   13 ++++++++++++-
- include/linux/lockd/xdr4.h |    1 +
- 3 files changed, 14 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mm-nitrogen-r2.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/lockd/clnt4xdr.c
-+++ b/fs/lockd/clnt4xdr.c
-@@ -261,7 +261,6 @@ static int decode_nlm4_holder(struct xdr
- 	u32 exclusive;
- 	int error;
- 	__be32 *p;
--	s32 end;
- 
- 	memset(lock, 0, sizeof(*lock));
- 	locks_init_lock(fl);
-@@ -285,13 +284,7 @@ static int decode_nlm4_holder(struct xdr
- 	fl->fl_type  = exclusive != 0 ? F_WRLCK : F_RDLCK;
- 	p = xdr_decode_hyper(p, &l_offset);
- 	xdr_decode_hyper(p, &l_len);
--	end = l_offset + l_len - 1;
--
--	fl->fl_start = (loff_t)l_offset;
--	if (l_len == 0 || end < 0)
--		fl->fl_end = OFFSET_MAX;
--	else
--		fl->fl_end = (loff_t)end;
-+	nlm4svc_set_file_lock_range(fl, l_offset, l_len);
- 	error = 0;
- out:
- 	return error;
---- a/fs/lockd/xdr4.c
-+++ b/fs/lockd/xdr4.c
-@@ -33,6 +33,17 @@ loff_t_to_s64(loff_t offset)
- 	return res;
- }
- 
-+void nlm4svc_set_file_lock_range(struct file_lock *fl, u64 off, u64 len)
-+{
-+	s64 end = off + len - 1;
-+
-+	fl->fl_start = off;
-+	if (len == 0 || end < 0)
-+		fl->fl_end = OFFSET_MAX;
-+	else
-+		fl->fl_end = end;
-+}
-+
- /*
-  * NLM file handles are defined by specification to be a variable-length
-  * XDR opaque no longer than 1024 bytes. However, this implementation
-@@ -80,7 +91,7 @@ svcxdr_decode_lock(struct xdr_stream *xd
- 	locks_init_lock(fl);
- 	fl->fl_flags = FL_POSIX;
- 	fl->fl_type  = F_RDLCK;
--
-+	nlm4svc_set_file_lock_range(fl, lock->lock_start, lock->lock_len);
- 	return true;
- }
- 
---- a/include/linux/lockd/xdr4.h
-+++ b/include/linux/lockd/xdr4.h
-@@ -22,6 +22,7 @@
- #define	nlm4_fbig		cpu_to_be32(NLM_FBIG)
- #define	nlm4_failed		cpu_to_be32(NLM_FAILED)
- 
-+void	nlm4svc_set_file_lock_range(struct file_lock *fl, u64 off, u64 len);
- bool	nlm4svc_decode_void(struct svc_rqst *rqstp, struct xdr_stream *xdr);
- bool	nlm4svc_decode_testargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
- bool	nlm4svc_decode_lockargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
+--- a/arch/arm64/boot/dts/freescale/imx8mm-nitrogen-r2.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mm-nitrogen-r2.dts
+@@ -247,7 +247,7 @@
+ 		compatible = "wlf,wm8960";
+ 		reg = <0x1a>;
+ 		clocks = <&clk IMX8MM_CLK_SAI1_ROOT>;
+-		clock-names = "mclk1";
++		clock-names = "mclk";
+ 		wlf,shared-lrclk;
+ 		#sound-dai-cells = <0>;
+ 	};
 
 
