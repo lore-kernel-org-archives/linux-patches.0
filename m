@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE4A8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:01:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA61C433EF;
-	Tue, 28 Mar 2023 15:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D438BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:01:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDAEC433D2;
+	Tue, 28 Mar 2023 15:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015675;
-	bh=x8V2g7ZD+Au9PDGMbS/5phCngMePeOQTK1SYJlN3vCo=;
+	s=korg; t=1680015678;
+	bh=S92CcyWhvxH5rDjNGNtndcNeQr7FnAOumVDxLSX/x6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9itobJPq70UHx/AQbZbYy3M8f7SkUMQEjXi5TTA2ax7vMFM4i9bwEQehIshX+2kf
-	 9leHs9tW7S9zQuJLQvBlYj0gKvfUOA/ENPWDx9Ik0rIL9SUQD2hElDi4zB0TPIj5I4
-	 0hzH5KeRYtcW+noUTax7RHjj+ttAI6ZYsjFHIZZg=
+	b=tU5tX8ZqI4zFhfE/6RMCD+J7/gbPUqQ6ceFATQzqZwZAWIr40y5iqajlMKMgYIWnq
+	 islbk/+W385LzdZydm1xrsRQr3lNCjAijJzJ9lbIIyxP1Ryun32A0WtqZnRT44h8Rp
+	 A4nFee8mBWaYxPZb00NXW2kCOOcW9Tw8q0cJcSLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Chen <void0red@gmail.com>,
+	Jakob Koschel <jkl820.git@gmail.com>,
 	Justin Tee <justin.tee@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/224] scsi: lpfc: Check kzalloc() in lpfc_sli4_cgn_params_read()
-Date: Tue, 28 Mar 2023 16:42:10 +0200
-Message-Id: <20230328142622.969327992@linuxfoundation.org>
+Subject: [PATCH 6.1 135/224] scsi: lpfc: Avoid usage of list iterator variable after loop
+Date: Tue, 28 Mar 2023 16:42:11 +0200
+Message-Id: <20230328142623.008779468@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -36,57 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Jakob Koschel <jkl820.git@gmail.com>
 
-[ Upstream commit 312320b0e0ec21249a17645683fe5304d796aec1 ]
+[ Upstream commit 2850b23e9f9ae3696e472d2883ea1b43aafa884e ]
 
-If kzalloc() fails in lpfc_sli4_cgn_params_read(), then we rely on
-lpfc_read_object()'s routine to NULL check pdata.
+If the &epd_pool->list is empty when executing
+lpfc_get_io_buf_from_expedite_pool() the function would return an invalid
+pointer. Even in the case if the list is guaranteed to be populated, the
+iterator variable should not be used after the loop to be more robust for
+future changes.
 
-Currently, an early return error is thrown from lpfc_read_object() to
-protect us from NULL ptr dereference, but the errno code is -ENODEV.
+Linus proposed to avoid any use of the list iterator variable after the
+loop, in the attempt to move the list iterator variable declaration into
+the macro to avoid any potential misuse after the loop [1].
 
-Change the errno code to a more appropriate -ENOMEM.
-
-Reported-by: Kang Chen <void0red@gmail.com>
-Link: https://lore.kernel.org/all/20230226102338.3362585-1-void0red@gmail.com
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20230228044336.5195-1-justintee8345@gmail.com
+Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/ [1]
+Signed-off-by: Jakob Koschel <jkl820.git@gmail.com>
+Link: https://lore.kernel.org/r/20230301-scsi-lpfc-avoid-list-iterator-after-loop-v1-1-325578ae7561@gmail.com
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_init.c | 2 ++
- drivers/scsi/lpfc/lpfc_sli.c  | 4 ----
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/scsi/lpfc/lpfc_sli.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
-index b535f1fd30100..2f38c8d5a48a9 100644
---- a/drivers/scsi/lpfc/lpfc_init.c
-+++ b/drivers/scsi/lpfc/lpfc_init.c
-@@ -7234,6 +7234,8 @@ lpfc_sli4_cgn_params_read(struct lpfc_hba *phba)
- 	/* Find out if the FW has a new set of congestion parameters. */
- 	len = sizeof(struct lpfc_cgn_param);
- 	pdata = kzalloc(len, GFP_KERNEL);
-+	if (!pdata)
-+		return -ENOMEM;
- 	ret = lpfc_read_object(phba, (char *)LPFC_PORT_CFG_NAME,
- 			       pdata, len);
- 
 diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index b93c948c4fcc4..43e06bb917e77 100644
+index 43e06bb917e77..b44bb3ae22ad9 100644
 --- a/drivers/scsi/lpfc/lpfc_sli.c
 +++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -22096,10 +22096,6 @@ lpfc_read_object(struct lpfc_hba *phba, char *rdobject, uint32_t *datap,
- 	struct lpfc_dmabuf *pcmd;
- 	u32 rd_object_name[LPFC_MBX_OBJECT_NAME_LEN_DW] = {0};
+@@ -21886,20 +21886,20 @@ lpfc_get_io_buf_from_private_pool(struct lpfc_hba *phba,
+ static struct lpfc_io_buf *
+ lpfc_get_io_buf_from_expedite_pool(struct lpfc_hba *phba)
+ {
+-	struct lpfc_io_buf *lpfc_ncmd;
++	struct lpfc_io_buf *lpfc_ncmd = NULL, *iter;
+ 	struct lpfc_io_buf *lpfc_ncmd_next;
+ 	unsigned long iflag;
+ 	struct lpfc_epd_pool *epd_pool;
  
--	/* sanity check on queue memory */
--	if (!datap)
--		return -ENODEV;
--
- 	mbox = mempool_alloc(phba->mbox_mem_pool, GFP_KERNEL);
- 	if (!mbox)
- 		return -ENOMEM;
+ 	epd_pool = &phba->epd_pool;
+-	lpfc_ncmd = NULL;
+ 
+ 	spin_lock_irqsave(&epd_pool->lock, iflag);
+ 	if (epd_pool->count > 0) {
+-		list_for_each_entry_safe(lpfc_ncmd, lpfc_ncmd_next,
++		list_for_each_entry_safe(iter, lpfc_ncmd_next,
+ 					 &epd_pool->list, list) {
+-			list_del(&lpfc_ncmd->list);
++			list_del(&iter->list);
+ 			epd_pool->count--;
++			lpfc_ncmd = iter;
+ 			break;
+ 		}
+ 	}
 -- 
 2.39.2
 
