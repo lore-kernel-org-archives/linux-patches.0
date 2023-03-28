@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F71C8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:09:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99B7C433EF;
-	Tue, 28 Mar 2023 15:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7128BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:09:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9CAC433D2;
+	Tue, 28 Mar 2023 15:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016156;
-	bh=+hI0EX1Y/j+AMA/T6C5h+0aoDUP1nfK6Qa6Evui8qmM=;
+	s=korg; t=1680016158;
+	bh=P4CzGikgM7jVUFgJYP7iZJQTknwuEyOTArmUon2XDVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xK6XxKw6XVY91uz0fPzmChPZldGXMfAHhxNbg3b8BVL89KHokaI+IWIt5dZZKxFcH
-	 K62kroN1nfWu35jobd4rMjTYaBAIgwRLqanGsS7Hye4uaeCO5j952clyX+E0BURTUF
-	 QYxglODj4rBdA19xdzmv+6uItjU66FlMcM+fJnoQ=
+	b=1UBWdIowDqzyM0wEo1O9w9QzgAzvDVtNYe3iU282F/HB3iNCWepTV27JKVl8h1iNP
+	 GSWuGqH3PgZYOclYufTB3gxZFN1l/aLqbDU2P9RRZMJAwSrJzyhQBuo/5OCXziC7XI
+	 M/kvbzXujqjejRGwXsjkN+hfULmZCqAUhSKlYkgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandr Sapozhnikov <alsp705@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Danny Kaehn <kaehndan@gmail.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/146] drm/cirrus: NULL-check pipe->plane.state->fb in cirrus_pipe_update()
-Date: Tue, 28 Mar 2023 16:42:54 +0200
-Message-Id: <20230328142606.222203364@linuxfoundation.org>
+Subject: [PATCH 5.15 086/146] HID: cp2112: Fix driver not registering GPIO IRQ chip as threaded
+Date: Tue, 28 Mar 2023 16:42:55 +0200
+Message-Id: <20230328142606.272190043@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -35,42 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandr Sapozhnikov <alsp705@gmail.com>
+From: Danny Kaehn <kaehndan@gmail.com>
 
-[ Upstream commit 7245e629dcaaf308f1868aeffa218e9849c77893 ]
+[ Upstream commit 37f5b858a66543b2b67c0288280af623985abc29 ]
 
-After having been compared to NULL value at cirrus.c:455, pointer
-'pipe->plane.state->fb' is passed as 1st parameter in call to function
-'cirrus_fb_blit_rect' at cirrus.c:461, where it is dereferenced at
-cirrus.c:316.
+The CP2112 generates interrupts from a polling routine on a thread,
+and can only support threaded interrupts. This patch configures the
+gpiochip irq chip with this flag, disallowing consumers to request
+a hard IRQ from this driver, which resulted in a segfault previously.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-v2:
-	* aligned commit message to line-length limits
-
-Signed-off-by: Alexandr Sapozhnikov <alsp705@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230215171549.16305-1-alsp705@gmail.com
+Signed-off-by: Danny Kaehn <kaehndan@gmail.com>
+Link: https://lore.kernel.org/r/20230210170044.11835-1-kaehndan@gmail.com
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/cirrus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-cp2112.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/tiny/cirrus.c b/drivers/gpu/drm/tiny/cirrus.c
-index 4611ec408506b..2a81311b22172 100644
---- a/drivers/gpu/drm/tiny/cirrus.c
-+++ b/drivers/gpu/drm/tiny/cirrus.c
-@@ -450,7 +450,7 @@ static void cirrus_pipe_update(struct drm_simple_display_pipe *pipe,
- 	if (state->fb && cirrus->cpp != cirrus_cpp(state->fb))
- 		cirrus_mode_set(cirrus, &crtc->mode, state->fb);
+diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
+index 172f20e88c6c9..d902fe43cb818 100644
+--- a/drivers/hid/hid-cp2112.c
++++ b/drivers/hid/hid-cp2112.c
+@@ -1352,6 +1352,7 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	girq->parents = NULL;
+ 	girq->default_type = IRQ_TYPE_NONE;
+ 	girq->handler = handle_simple_irq;
++	girq->threaded = true;
  
--	if (drm_atomic_helper_damage_merged(old_state, state, &rect))
-+	if (state->fb && drm_atomic_helper_damage_merged(old_state, state, &rect))
- 		cirrus_fb_blit_rect(state->fb, &shadow_plane_state->data[0], &rect);
- }
- 
+ 	ret = gpiochip_add_data(&dev->gc, dev);
+ 	if (ret < 0) {
 -- 
 2.39.2
 
