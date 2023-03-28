@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4988BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7032CC433D2;
-	Tue, 28 Mar 2023 14:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD938BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EC6C433D2;
+	Tue, 28 Mar 2023 14:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015401;
-	bh=JI8kMYP+9oIVzhBXxCV9MxFa1AGOMPsJjgD09Vpna0w=;
+	s=korg; t=1680015404;
+	bh=DmaVV7jGxjG0d4G2n1lFi9tL5s5lJwLPa1YCvsO5V90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VfryY2RhMDx9xoZKp/wqRPZJstbN/FZqIpvQgTzhjYQezSzox7SK46PbbHSGeUOkj
-	 c0y1DNTaSBYNNjZN17WJQIWDHBn+Kguw2k+Hy72/G6qrLNxSP6DijYMLIDb1qsAizW
-	 9I0UzEifdHb/3L46C+JNTAf/cy+PChxAsSwVaGrw=
+	b=jE8Xy81Ge7Fajt9LPlpsFDzLYnMagUoGh3kDiUlLDCKgp8Pp12CnfR6B1Qca/A41s
+	 /X6/7m98KGfPw8jyvDXN+7CVMRZscJx/Pb3ypEKWlH1OLvk7ln8Vmu1qV/17+Ed5e4
+	 y871D+oWVPL2HE2qG83qeF6E51R/dKvk0jSYsR68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Dario Lesca <d.lesca@solinos.it>,
+	David Critch <dcritch@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/224] scsi: scsi_dh_alua: Fix memleak for qdata in alua_activate()
-Date: Tue, 28 Mar 2023 16:40:31 +0200
-Message-Id: <20230328142618.797457462@linuxfoundation.org>
+Subject: [PATCH 6.1 036/224] nfsd: dont replace page in rq_pages if its a continuation of last page
+Date: Tue, 28 Mar 2023 16:40:32 +0200
+Message-Id: <20230328142618.841062246@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,59 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit a13faca032acbf2699293587085293bdfaafc8ae ]
+[ Upstream commit 27c934dd8832dd40fd34776f916dc201e18b319b ]
 
-If alua_rtpg_queue() failed from alua_activate(), then 'qdata' is not
-freed, which will cause following memleak:
+The splice read calls nfsd_splice_actor to put the pages containing file
+data into the svc_rqst->rq_pages array. It's possible however to get a
+splice result that only has a partial page at the end, if (e.g.) the
+filesystem hands back a short read that doesn't cover the whole page.
 
-unreferenced object 0xffff88810b2c6980 (size 32):
-  comm "kworker/u16:2", pid 635322, jiffies 4355801099 (age 1216426.076s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    40 39 24 c1 ff ff ff ff 00 f8 ea 0a 81 88 ff ff  @9$.............
-  backtrace:
-    [<0000000098f3a26d>] alua_activate+0xb0/0x320
-    [<000000003b529641>] scsi_dh_activate+0xb2/0x140
-    [<000000007b296db3>] activate_path_work+0xc6/0xe0 [dm_multipath]
-    [<000000007adc9ace>] process_one_work+0x3c5/0x730
-    [<00000000c457a985>] worker_thread+0x93/0x650
-    [<00000000cb80e628>] kthread+0x1ba/0x210
-    [<00000000a1e61077>] ret_from_fork+0x22/0x30
+nfsd_splice_actor will plop the partial page into its rq_pages array and
+return. Then later, when nfsd_splice_actor is called again, the
+remainder of the page may end up being filled out. At this point,
+nfsd_splice_actor will put the page into the array _again_ corrupting
+the reply. If this is done enough times, rq_next_page will overrun the
+array and corrupt the trailing fields -- the rq_respages and
+rq_next_page pointers themselves.
 
-Fix the problem by freeing 'qdata' in error path.
+If we've already added the page to the array in the last pass, don't add
+it to the array a second time when dealing with a splice continuation.
+This was originally handled properly in nfsd_splice_actor, but commit
+91e23b1c3982 ("NFSD: Clean up nfsd_splice_actor()") removed the check
+for it.
 
-Fixes: 625fe857e4fa ("scsi: scsi_dh_alua: Check scsi_device_get() return value")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230315062154.668812-1-yukuai1@huaweicloud.com
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 91e23b1c3982 ("NFSD: Clean up nfsd_splice_actor()")
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Reported-by: Dario Lesca <d.lesca@solinos.it>
+Tested-by: David Critch <dcritch@redhat.com>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2150630
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/device_handler/scsi_dh_alua.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/nfsd/vfs.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/device_handler/scsi_dh_alua.c b/drivers/scsi/device_handler/scsi_dh_alua.c
-index 610a51538f034..0781f991e7845 100644
---- a/drivers/scsi/device_handler/scsi_dh_alua.c
-+++ b/drivers/scsi/device_handler/scsi_dh_alua.c
-@@ -1117,10 +1117,12 @@ static int alua_activate(struct scsi_device *sdev,
- 	rcu_read_unlock();
- 	mutex_unlock(&h->init_mutex);
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 59f9a8cee012a..dc3ba13546dd6 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -874,8 +874,15 @@ nfsd_splice_actor(struct pipe_inode_info *pipe, struct pipe_buffer *buf,
+ 	struct page *last_page;
  
--	if (alua_rtpg_queue(pg, sdev, qdata, true))
-+	if (alua_rtpg_queue(pg, sdev, qdata, true)) {
- 		fn = NULL;
--	else
-+	} else {
-+		kfree(qdata);
- 		err = SCSI_DH_DEV_OFFLINED;
+ 	last_page = page + (offset + sd->len - 1) / PAGE_SIZE;
+-	for (page += offset / PAGE_SIZE; page <= last_page; page++)
++	for (page += offset / PAGE_SIZE; page <= last_page; page++) {
++		/*
++		 * Skip page replacement when extending the contents
++		 * of the current page.
++		 */
++		if (page == *(rqstp->rq_next_page - 1))
++			continue;
+ 		svc_rqst_replace_page(rqstp, page);
 +	}
- 	kref_put(&pg->kref, release_port_group);
- out:
- 	if (fn)
+ 	if (rqstp->rq_res.page_len == 0)	// first call
+ 		rqstp->rq_res.page_base = offset % PAGE_SIZE;
+ 	rqstp->rq_res.page_len += sd->len;
 -- 
 2.39.2
 
