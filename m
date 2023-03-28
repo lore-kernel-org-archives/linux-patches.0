@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9BC8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:45:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06147C4339B;
-	Tue, 28 Mar 2023 14:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AEA8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:45:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B263EC433D2;
+	Tue, 28 Mar 2023 14:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014727;
-	bh=AhKZeW1kP5KyMlZufFL9M2/BCDQj5XPVmrPtge7ixa4=;
+	s=korg; t=1680014730;
+	bh=MHLp96SbHz4REgQwloBCdqcQQ3cNDhkZrxjD27//ncY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXkGG1GWvsLQIseI6gsQm+XwWPuz665vuES9hRUM/2HyDLMMQ2WYhWmmgQNM0Ydis
-	 2bJU4PBlAypPB4OvajN2naOTDkczgU4rRWEffk2FJ8L1uN5SSfIfpyvjfEciBzhIZc
-	 g7S3sxznPodZUnpHFqxGToKH3W8Q3lcdvzxa+6Q8=
+	b=WBHRIwjjszQ2QtaJkcoyHq6OuWbTMs8MAtsd8Z7ntVFVHvZfQ2iqt/OjHeqeHqhn8
+	 lA0D8bG/4fLz4jLFpn5ARvMYTl2xfqCF0Ro94Y766aEBVPYPnJCprPpkVGwwulTnr3
+	 UKSOzoWgYP7pVxVO0eOfy+r5uWWWB73sxz10/0EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Shawn Guo <shawn.guo@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 003/240] interconnect: qcom: qcm2290: Fix MASTER_SNOC_BIMC_NRT
-Date: Tue, 28 Mar 2023 16:39:26 +0200
-Message-Id: <20230328142619.789674960@linuxfoundation.org>
+Subject: [PATCH 6.2 030/240] iavf: fix inverted Rx hash condition leading to disabled hash
+Date: Tue, 28 Mar 2023 16:39:53 +0200
+Message-Id: <20230328142620.883430253@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,41 +39,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-[ Upstream commit 633a12fda6536a1a17bcea29502e777e86a4547e ]
+[ Upstream commit 32d57f667f871bc5a8babbe27ea4c5e668ee0ea8 ]
 
-Due to what seems to be a copy-paste error, the _NRT master was
-identical to the _RT master, which should not be the case.. Fix it
-using the values available from the downstream kernel [1].
+Condition, which checks whether the netdev has hashing enabled is
+inverted. Basically, the tagged commit effectively disabled passing flow
+hash from descriptor to skb, unless user *disables* it via Ethtool.
+Commit a876c3ba59a6 ("i40e/i40evf: properly report Rx packet hash")
+fixed this problem, but only for i40e.
+Invert the condition now in iavf and unblock passing hash to skbs again.
 
-[1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/scuba-bus.dtsi#127
-Fixes: 1a14b1ac3935 ("interconnect: qcom: Add QCM2290 driver support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Shawn Guo <shawn.guo@linaro.org>
-Link: https://lore.kernel.org/r/20230103142120.15605-1-konrad.dybcio@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 857942fd1aa1 ("i40e: Fix Rx hash reported to the stack by our driver")
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/qcm2290.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_txrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
-index 0da612d6398c5..a29cdb4fac03f 100644
---- a/drivers/interconnect/qcom/qcm2290.c
-+++ b/drivers/interconnect/qcom/qcm2290.c
-@@ -147,9 +147,9 @@ static struct qcom_icc_node mas_snoc_bimc_nrt = {
- 	.name = "mas_snoc_bimc_nrt",
- 	.buswidth = 16,
- 	.qos.ap_owned = true,
--	.qos.qos_port = 2,
-+	.qos.qos_port = 3,
- 	.qos.qos_mode = NOC_QOS_MODE_BYPASS,
--	.mas_rpm_id = 163,
-+	.mas_rpm_id = 164,
- 	.slv_rpm_id = -1,
- 	.num_links = ARRAY_SIZE(mas_snoc_bimc_nrt_links),
- 	.links = mas_snoc_bimc_nrt_links,
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_txrx.c b/drivers/net/ethernet/intel/iavf/iavf_txrx.c
+index 18b6a702a1d6d..e989feda133c1 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_txrx.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_txrx.c
+@@ -1096,7 +1096,7 @@ static inline void iavf_rx_hash(struct iavf_ring *ring,
+ 		cpu_to_le64((u64)IAVF_RX_DESC_FLTSTAT_RSS_HASH <<
+ 			    IAVF_RX_DESC_STATUS_FLTSTAT_SHIFT);
+ 
+-	if (ring->netdev->features & NETIF_F_RXHASH)
++	if (!(ring->netdev->features & NETIF_F_RXHASH))
+ 		return;
+ 
+ 	if ((rx_desc->wb.qword1.status_error_len & rss_mask) == rss_mask) {
 -- 
 2.39.2
 
