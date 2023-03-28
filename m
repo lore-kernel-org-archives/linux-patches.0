@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07108476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51308C4339B;
-	Tue, 28 Mar 2023 14:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB7C8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F26C433D2;
+	Tue, 28 Mar 2023 14:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015189;
-	bh=nGtLg67O8dMCGSO/jfVs9elCVnbhqXczJgjQafb3XtM=;
+	s=korg; t=1680015192;
+	bh=UCOUbbinkANOkKeBF2oBYAEPjBNp5ACM0g1MCyUk5RY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIZPcWQP6pz3Z8e/4oV2goBvLt2cHSVO8eDVGtIUPR+O9C/UlcEpxeF0QOpWSocRg
-	 Duotpt5HJ/Y8etk2iH2iimFph4qpBt6G2Iv9TiVSm3cm+Paj/I0xjbkjIvQRffx9iE
-	 nKAmuK1p784r83wdcUXplesQuxOeHIhKS3Gvgqho=
+	b=At3aSNNzUZokVrF8ANXcEVw54RvK96fjIyBe2cDfO6UOGmlAd80Pl2uBcNJ6+G5Nt
+	 pY06TizUbf55h7BFvSAXn7+H+e4z0fCUE9831c24tkMcFSC0SX6hhlKOR+k9ApBk4z
+	 inkrUcnb8OnVirh7hQncbrZCZ41cL2fZIS2BuJf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.2 197/240] usb: chipidea: core: fix possible concurrent when switch role
-Date: Tue, 28 Mar 2023 16:42:40 +0200
-Message-Id: <20230328142627.871113709@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 168/240] cifs: fix dentry lookups in directory handle cache
+Date: Tue, 28 Mar 2023 16:42:11 +0200
+Message-Id: <20230328142626.654309912@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,107 +34,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit 451b15ed138ec15bffbebb58a00ebdd884c3e659 upstream.
+commit be4fde79812f02914e350bde0bc4cfeae8429378 upstream.
 
-The user may call role_store() when driver is handling
-ci_handle_id_switch() which is triggerred by otg event or power lost
-event. Unfortunately, the controller may go into chaos in this case.
-Fix this by protecting it with mutex lock.
+Get rid of any prefix paths in @path before lookup_positive_unlocked()
+as it will call ->lookup() which already adds those prefix paths
+through build_path_from_dentry().
 
-Fixes: a932a8041ff9 ("usb: chipidea: core: add sysfs group")
-cc: <stable@vger.kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20230317061516.2451728-2-xu.yang_2@nxp.com
+This has caused a performance regression when mounting shares with a
+prefix path where readdir(2) would end up retrying several times to
+open bad directory names that contained duplicate prefix paths.
+
+Fix this by skipping any prefix paths in @path before calling
+lookup_positive_unlocked().
+
+Fixes: e4029e072673 ("cifs: find and use the dentry for cached non-root directories also")
+Cc: stable@vger.kernel.org # 6.1+
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/ci.h   | 2 ++
- drivers/usb/chipidea/core.c | 8 +++++++-
- drivers/usb/chipidea/otg.c  | 5 ++++-
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ fs/cifs/cached_dir.c |   36 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/chipidea/ci.h b/drivers/usb/chipidea/ci.h
-index 005c67cb3afb..f210b7489fd5 100644
---- a/drivers/usb/chipidea/ci.h
-+++ b/drivers/usb/chipidea/ci.h
-@@ -208,6 +208,7 @@ struct hw_bank {
-  * @in_lpm: if the core in low power mode
-  * @wakeup_int: if wakeup interrupt occur
-  * @rev: The revision number for controller
-+ * @mutex: protect code from concorrent running when doing role switch
-  */
- struct ci_hdrc {
- 	struct device			*dev;
-@@ -260,6 +261,7 @@ struct ci_hdrc {
- 	bool				in_lpm;
- 	bool				wakeup_int;
- 	enum ci_revision		rev;
-+	struct mutex                    mutex;
- };
+--- a/fs/cifs/cached_dir.c
++++ b/fs/cifs/cached_dir.c
+@@ -99,6 +99,23 @@ path_to_dentry(struct cifs_sb_info *cifs
+ 	return dentry;
+ }
  
- static inline struct ci_role_driver *ci_role(struct ci_hdrc *ci)
-diff --git a/drivers/usb/chipidea/core.c b/drivers/usb/chipidea/core.c
-index b6f2a41de20e..281fc51720ce 100644
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -987,8 +987,12 @@ static ssize_t role_store(struct device *dev,
- 	if (role == CI_ROLE_END)
- 		return -EINVAL;
- 
--	if (role == ci->role)
-+	mutex_lock(&ci->mutex);
++static const char *path_no_prefix(struct cifs_sb_info *cifs_sb,
++				  const char *path)
++{
++	size_t len = 0;
 +
-+	if (role == ci->role) {
-+		mutex_unlock(&ci->mutex);
- 		return n;
++	if (!*path)
++		return path;
++
++	if ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_USE_PREFIX_PATH) &&
++	    cifs_sb->prepath) {
++		len = strlen(cifs_sb->prepath) + 1;
++		if (unlikely(len > strlen(path)))
++			return ERR_PTR(-EINVAL);
 +	}
++	return path + len;
++}
++
+ /*
+  * Open the and cache a directory handle.
+  * If error then *cfid is not initialized.
+@@ -125,6 +142,7 @@ int open_cached_dir(unsigned int xid, st
+ 	struct dentry *dentry = NULL;
+ 	struct cached_fid *cfid;
+ 	struct cached_fids *cfids;
++	const char *npath;
  
- 	pm_runtime_get_sync(dev);
- 	disable_irq(ci->irq);
-@@ -998,6 +1002,7 @@ static ssize_t role_store(struct device *dev,
- 		ci_handle_vbus_change(ci);
- 	enable_irq(ci->irq);
- 	pm_runtime_put_sync(dev);
-+	mutex_unlock(&ci->mutex);
- 
- 	return (ret == 0) ? n : ret;
- }
-@@ -1033,6 +1038,7 @@ static int ci_hdrc_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	spin_lock_init(&ci->lock);
-+	mutex_init(&ci->mutex);
- 	ci->dev = dev;
- 	ci->platdata = dev_get_platdata(dev);
- 	ci->imx28_write_fix = !!(ci->platdata->flags &
-diff --git a/drivers/usb/chipidea/otg.c b/drivers/usb/chipidea/otg.c
-index 622c3b68aa1e..f5490f2a5b6b 100644
---- a/drivers/usb/chipidea/otg.c
-+++ b/drivers/usb/chipidea/otg.c
-@@ -167,8 +167,10 @@ static int hw_wait_vbus_lower_bsv(struct ci_hdrc *ci)
- 
- void ci_handle_id_switch(struct ci_hdrc *ci)
- {
--	enum ci_role role = ci_otg_role(ci);
-+	enum ci_role role;
- 
-+	mutex_lock(&ci->mutex);
-+	role = ci_otg_role(ci);
- 	if (role != ci->role) {
- 		dev_dbg(ci->dev, "switching from %s to %s\n",
- 			ci_role(ci)->name, ci->roles[role]->name);
-@@ -198,6 +200,7 @@ void ci_handle_id_switch(struct ci_hdrc *ci)
- 		if (role == CI_ROLE_GADGET)
- 			ci_handle_vbus_change(ci);
+ 	if (tcon == NULL || tcon->cfids == NULL || tcon->nohandlecache ||
+ 	    is_smb1_server(tcon->ses->server))
+@@ -161,6 +179,20 @@ int open_cached_dir(unsigned int xid, st
  	}
-+	mutex_unlock(&ci->mutex);
- }
- /**
-  * ci_otg_work - perform otg (vbus/id) event handle
--- 
-2.40.0
-
+ 
+ 	/*
++	 * Skip any prefix paths in @path as lookup_positive_unlocked() ends up
++	 * calling ->lookup() which already adds those through
++	 * build_path_from_dentry().  Also, do it earlier as we might reconnect
++	 * below when trying to send compounded request and then potentially
++	 * having a different prefix path (e.g. after DFS failover).
++	 */
++	npath = path_no_prefix(cifs_sb, path);
++	if (IS_ERR(npath)) {
++		rc = PTR_ERR(npath);
++		kfree(utf16_path);
++		return rc;
++	}
++
++	/*
+ 	 * We do not hold the lock for the open because in case
+ 	 * SMB2_open needs to reconnect.
+ 	 * This is safe because no other thread will be able to get a ref
+@@ -252,10 +284,10 @@ int open_cached_dir(unsigned int xid, st
+ 				(char *)&cfid->file_all_info))
+ 		cfid->file_all_info_is_valid = true;
+ 
+-	if (!path[0])
++	if (!npath[0])
+ 		dentry = dget(cifs_sb->root);
+ 	else {
+-		dentry = path_to_dentry(cifs_sb, path);
++		dentry = path_to_dentry(cifs_sb, npath);
+ 		if (IS_ERR(dentry)) {
+ 			rc = -ENOENT;
+ 			goto oshr_free;
 
 
