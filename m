@@ -1,33 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9D28BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701D6C433EF;
-	Tue, 28 Mar 2023 15:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB3A8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3100C433D2;
+	Tue, 28 Mar 2023 15:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015944;
-	bh=wIKM0z+LyDwlrYyXrbt8QirIxb/dK6PLLzCMNgp14/g=;
+	s=korg; t=1680015947;
+	bh=EKNkXs3KI+JyqnL2A6TufqGRUkqvz7h1ZLXxzAwmyqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KgZ/qVyvX5CL5kT1y6wmDVvCPf2fcr9Q05dEmOizLsnXF39ZuqNiUfdi19nuR9uIN
-	 RnK2it6RkF7apepJsVLsKIwlrq1vXvwtcbQVzd7LgV7gr5HbHCCd7Ih3w9GDuxrf0o
-	 +3I/5YejcmaF9/Jib9a6tBwiQE41qMvg7DqmrQLI=
+	b=0DfIpA2Tlynut/C8pZwd6XRuNUFEQrIZKOlPe4CO96Y0J5azvly4NcPz6WRsRZIhk
+	 vTa62sj0JccpuEfkq8Uxqlx7y3nrGMMZg8RaEmi1eLaD5ftBpOd/RPhnsa4Rg7qp6o
+	 aYpVIrypXYkQfRA0d1yJwshz+zQXE8dFolPQp/gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Cai Huoqing <caihuoqing@baidu.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Daniel Bristot de Oliveira <bristot@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Doug Ledford <dledford@redhat.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/146] interconnect: qcom: osm-l3: fix icc_onecell_data allocation
-Date: Tue, 28 Mar 2023 16:41:30 +0200
-Message-Id: <20230328142602.739147159@linuxfoundation.org>
+Subject: [PATCH 5.15 010/146] kthread: add the helper function kthread_run_on_cpu()
+Date: Tue, 28 Mar 2023 16:41:39 +0200
+Message-Id: <20230328142603.128392443@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,41 +48,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Cai Huoqing <caihuoqing@baidu.com>
 
-[ Upstream commit f77ebdda0ee652124061c2ac42399bb6c367e729 ]
+[ Upstream commit 800977f6f32e452cba6b04ef21d2f5383ca29209 ]
 
-This is a struct with a trailing zero-length array of icc_node pointers
-but it's allocated as if it were a single array of icc_nodes instead.
+Add a new helper function kthread_run_on_cpu(), which includes
+kthread_create_on_cpu/wake_up_process().
 
-Fortunately this overallocates memory rather then allocating less memory
-than required.
+In some cases, use kthread_run_on_cpu() directly instead of
+kthread_create_on_node/kthread_bind/wake_up_process() or
+kthread_create_on_cpu/wake_up_process() or
+kthreadd_create/kthread_bind/wake_up_process() to simplify the code.
 
-Fix by replacing devm_kcalloc() with devm_kzalloc() and struct_size()
-macro.
+[akpm@linux-foundation.org: export kthread_create_on_cpu to modules]
 
-Fixes: 5bc9900addaf ("interconnect: qcom: Add OSM L3 interconnect provider support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230105002221.1416479-2-dmitry.baryshkov@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Link: https://lkml.kernel.org/r/20211022025711.3673-2-caihuoqing@baidu.com
+Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
+Cc: Bernard Metzler <bmt@zurich.ibm.com>
+Cc: Cai Huoqing <caihuoqing@baidu.com>
+Cc: Daniel Bristot de Oliveira <bristot@kernel.org>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Doug Ledford <dledford@redhat.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Joel Fernandes (Google) <joel@joelfernandes.org>
+Cc: Josh Triplett <josh@joshtriplett.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: "Paul E . McKenney" <paulmck@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 08697bca9bbb ("trace/hwlat: Do not start per-cpu thread if it is already running")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/osm-l3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/kthread.h | 25 +++++++++++++++++++++++++
+ kernel/kthread.c        |  1 +
+ 2 files changed, 26 insertions(+)
 
-diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-index c7af143980de4..87edab1bf987b 100644
---- a/drivers/interconnect/qcom/osm-l3.c
-+++ b/drivers/interconnect/qcom/osm-l3.c
-@@ -275,7 +275,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
- 	qnodes = desc->nodes;
- 	num_nodes = desc->num_nodes;
+diff --git a/include/linux/kthread.h b/include/linux/kthread.h
+index 346b0f269161a..db47aae7c481b 100644
+--- a/include/linux/kthread.h
++++ b/include/linux/kthread.h
+@@ -56,6 +56,31 @@ bool kthread_is_per_cpu(struct task_struct *k);
+ 	__k;								   \
+ })
  
--	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
-+	data = devm_kzalloc(&pdev->dev, struct_size(data, nodes, num_nodes), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
++/**
++ * kthread_run_on_cpu - create and wake a cpu bound thread.
++ * @threadfn: the function to run until signal_pending(current).
++ * @data: data ptr for @threadfn.
++ * @cpu: The cpu on which the thread should be bound,
++ * @namefmt: printf-style name for the thread. Format is restricted
++ *	     to "name.*%u". Code fills in cpu number.
++ *
++ * Description: Convenient wrapper for kthread_create_on_cpu()
++ * followed by wake_up_process().  Returns the kthread or
++ * ERR_PTR(-ENOMEM).
++ */
++static inline struct task_struct *
++kthread_run_on_cpu(int (*threadfn)(void *data), void *data,
++			unsigned int cpu, const char *namefmt)
++{
++	struct task_struct *p;
++
++	p = kthread_create_on_cpu(threadfn, data, cpu, namefmt);
++	if (!IS_ERR(p))
++		wake_up_process(p);
++
++	return p;
++}
++
+ void free_kthread_struct(struct task_struct *k);
+ void kthread_bind(struct task_struct *k, unsigned int cpu);
+ void kthread_bind_mask(struct task_struct *k, const struct cpumask *mask);
+diff --git a/kernel/kthread.c b/kernel/kthread.c
+index 5b37a8567168b..e319a1b62586e 100644
+--- a/kernel/kthread.c
++++ b/kernel/kthread.c
+@@ -523,6 +523,7 @@ struct task_struct *kthread_create_on_cpu(int (*threadfn)(void *data),
+ 	to_kthread(p)->cpu = cpu;
+ 	return p;
+ }
++EXPORT_SYMBOL(kthread_create_on_cpu);
  
+ void kthread_set_per_cpu(struct task_struct *k, int cpu)
+ {
 -- 
 2.39.2
 
