@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0371F8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49996C433EF;
-	Tue, 28 Mar 2023 14:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D3D8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC5FC433EF;
+	Tue, 28 Mar 2023 14:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015306;
-	bh=86f1pvuyY5a/USY7jbAohKe72v3zX8VEGSpnECTcB30=;
+	s=korg; t=1680015309;
+	bh=Tn9J1rkF8CqebWI3HPjC16L/ibAVABXU/64SeSXTrBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8YSY1hOS5H1jIB4NbslolpQWkR3fsGPw7MtlqaV3fuQmYkRbP3SiJ6k9rJPnY9O0
-	 x8/zRvbqBMgT+bfjSiFOQtOAYSDPtn5OS6uZ6oScV+9jLxIl7gnubc9uJyEGVKFKe+
-	 jK++S+UAdo6pAyyxZgOYaEj19w1I9gfCLsa5z6BM=
+	b=cRcI9ftXOr2zDLci1yfjuraRnErFz0Vl3HwVAkI16OsOpeNjH0pVnRKEbfnMCHseE
+	 K608GGkFE9EtsaxkS76JZrM8+BeZ5Fo23dbhaR+wOVpOuRctxlRLXjt/M5Vlxca11Q
+	 JPSCHyDX4RyKlRAnWuCborDnCH1qmh88LJcG0rRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Bornyakov <i.bornyakov@metrotek.ru>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.2 234/240] bus: imx-weim: fix branch condition evaluates to a garbage value
-Date: Tue, 28 Mar 2023 16:43:17 +0200
-Message-Id: <20230328142629.454423362@linuxfoundation.org>
+	Wei Chen <harperchen1110@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.2 235/240] i2c: xgene-slimpro: Fix out-of-bounds bug in xgene_slimpro_i2c_xfer()
+Date: Tue, 28 Mar 2023 16:43:18 +0200
+Message-Id: <20230328142629.486874597@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,39 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Bornyakov <i.bornyakov@metrotek.ru>
+From: Wei Chen <harperchen1110@gmail.com>
 
-commit 1adab2922c58e7ff4fa9f0b43695079402cce876 upstream.
+commit 92fbb6d1296f81f41f65effd7f5f8c0f74943d15 upstream.
 
-If bus type is other than imx50_weim_devtype and have no child devices,
-variable 'ret' in function weim_parse_dt() will not be initialized, but
-will be used as branch condition and return value. Fix this by
-initializing 'ret' with 0.
+The data->block[0] variable comes from user and is a number between
+0-255. Without proper check, the variable may be very large to cause
+an out-of-bounds when performing memcpy in slimpro_i2c_blkwr.
 
-This was discovered with help of clang-analyzer, but the situation is
-quite possible in real life.
+Fix this bug by checking the value of writelen.
 
-Fixes: 52c47b63412b ("bus: imx-weim: improve error handling upon child probe-failure")
-Signed-off-by: Ivan Bornyakov <i.bornyakov@metrotek.ru>
+Fixes: f6505fbabc42 ("i2c: add SLIMpro I2C device driver on APM X-Gene platform")
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/imx-weim.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xgene-slimpro.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/bus/imx-weim.c
-+++ b/drivers/bus/imx-weim.c
-@@ -204,8 +204,8 @@ static int weim_parse_dt(struct platform
- 	const struct of_device_id *of_id = of_match_device(weim_id_table,
- 							   &pdev->dev);
- 	const struct imx_weim_devtype *devtype = of_id->data;
-+	int ret = 0, have_child = 0;
- 	struct device_node *child;
--	int ret, have_child = 0;
- 	struct weim_priv *priv;
- 	void __iomem *base;
- 	u32 reg;
+--- a/drivers/i2c/busses/i2c-xgene-slimpro.c
++++ b/drivers/i2c/busses/i2c-xgene-slimpro.c
+@@ -308,6 +308,9 @@ static int slimpro_i2c_blkwr(struct slim
+ 	u32 msg[3];
+ 	int rc;
+ 
++	if (writelen > I2C_SMBUS_BLOCK_MAX)
++		return -EINVAL;
++
+ 	memcpy(ctx->dma_buffer, data, writelen);
+ 	paddr = dma_map_single(ctx->dev, ctx->dma_buffer, writelen,
+ 			       DMA_TO_DEVICE);
 
 
