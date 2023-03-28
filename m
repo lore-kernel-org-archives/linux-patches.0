@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7F48BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:45:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC40C433D2;
-	Tue, 28 Mar 2023 14:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66AA8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:45:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A0DC433EF;
+	Tue, 28 Mar 2023 14:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014738;
-	bh=OaLfNVnSKxJGTvMM1xZVmH7wGbNtgiQQwms+TJS9bLc=;
+	s=korg; t=1680014740;
+	bh=24mkFbCUIXECyTzZL+0rLx5b5fymqAVu66TJ/KOYf/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arVqbKgT1IzLA2FAOTAO+Z69k4KT5DWiAneASwW5YWNVH7588xyS1vkz9po/JDRvk
-	 hl/BjLAN2PMiVivNpLybPiqOA9y5Yok46z684vcMJHSMFhoXnGWJKlPKreLXGgf4K4
-	 YSZeQ67pE+MA6GLiYQnADDRlUFxlQ9MIy41l/yOE=
+	b=XEALRDkvES13AshFuqd25xdgY0xfO4GEuN9R5760tM8yqdWKvh1xUtQ0MBDlmLeFO
+	 3Mz9yOmtv9Za7Qj+PADqBJT42Ims2+zB40iF9q+3frOtcwTaS7mdAtHtXbu4/yB8dm
+	 +f1DR/22MEP8JO7UO/o54Xuu1bvac8S+694jDryY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Costa Shulyupin <costa.shul@redhat.com>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 006/240] tracing/hwlat: Replace sched_setaffinity with set_cpus_allowed_ptr
-Date: Tue, 28 Mar 2023 16:39:29 +0200
-Message-Id: <20230328142619.914734290@linuxfoundation.org>
+Subject: [PATCH 6.2 007/240] drm/amd/display: fix k1 k2 divider programming for phantom streams
+Date: Tue, 28 Mar 2023 16:39:30 +0200
+Message-Id: <20230328142619.959314875@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -37,68 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Costa Shulyupin <costa.shul@redhat.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit 71c7a30442b724717a30d5e7d1662ba4904eb3d4 ]
+[ Upstream commit 3b214bb7185d8284d7d4c53e15127f69a375abf6 ]
 
-There is a problem with the behavior of hwlat in a container,
-resulting in incorrect output. A warning message is generated:
-"cpumask changed while in round-robin mode, switching to mode none",
-and the tracing_cpumask is ignored. This issue arises because
-the kernel thread, hwlatd, is not a part of the container, and
-the function sched_setaffinity is unable to locate it using its PID.
-Additionally, the task_struct of hwlatd is already known.
-Ultimately, the function set_cpus_allowed_ptr achieves
-the same outcome as sched_setaffinity, but employs task_struct
-instead of PID.
+[Why & How]
+When k1 and k2 divider programming logic is executed for a phantom
+stream, the corresponding master stream should be used for the
+calculation. Fix the if condition to use the master stream for checking
+signal type instead of the phantom stream.
 
-Test case:
-
-  # cd /sys/kernel/tracing
-  # echo 0 > tracing_on
-  # echo round-robin > hwlat_detector/mode
-  # echo hwlat > current_tracer
-  # unshare --fork --pid bash -c 'echo 1 > tracing_on'
-  # dmesg -c
-
-Actual behavior:
-
-[573502.809060] hwlat_detector: cpumask changed while in round-robin mode, switching to mode none
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230316144535.1004952-1-costa.shul@redhat.com
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Fixes: 0330f7aa8ee63 ("tracing: Have hwlat trace migrate across tracing_cpumask CPUs")
-Signed-off-by: Costa Shulyupin <costa.shul@redhat.com>
-Acked-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 709671ffb15d ("drm/amd/display: Remove OTG DIV register write for Virtual signals.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_hwlat.c | 4 ++--
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace_hwlat.c b/kernel/trace/trace_hwlat.c
-index c4945f8adc119..2f37a6e68aa9f 100644
---- a/kernel/trace/trace_hwlat.c
-+++ b/kernel/trace/trace_hwlat.c
-@@ -339,7 +339,7 @@ static void move_to_next_cpu(void)
- 	cpumask_clear(current_mask);
- 	cpumask_set_cpu(next_cpu, current_mask);
- 
--	sched_setaffinity(0, current_mask);
-+	set_cpus_allowed_ptr(current, current_mask);
- 	return;
- 
-  change_mode:
-@@ -446,7 +446,7 @@ static int start_single_kthread(struct trace_array *tr)
- 
- 	}
- 
--	sched_setaffinity(kthread->pid, current_mask);
-+	set_cpus_allowed_ptr(kthread, current_mask);
- 
- 	kdata->kthread = kthread;
- 	wake_up_process(kthread);
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
+index b8767be1e4c55..e119f4f76fdc8 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
+@@ -1178,13 +1178,13 @@ unsigned int dcn32_calculate_dccg_k1_k2_values(struct pipe_ctx *pipe_ctx, unsign
+ 	if (is_dp_128b_132b_signal(pipe_ctx)) {
+ 		*k1_div = PIXEL_RATE_DIV_BY_1;
+ 		*k2_div = PIXEL_RATE_DIV_BY_1;
+-	} else if (dc_is_hdmi_tmds_signal(pipe_ctx->stream->signal) || dc_is_dvi_signal(pipe_ctx->stream->signal)) {
++	} else if (dc_is_hdmi_tmds_signal(stream->signal) || dc_is_dvi_signal(stream->signal)) {
+ 		*k1_div = PIXEL_RATE_DIV_BY_1;
+ 		if (stream->timing.pixel_encoding == PIXEL_ENCODING_YCBCR420)
+ 			*k2_div = PIXEL_RATE_DIV_BY_2;
+ 		else
+ 			*k2_div = PIXEL_RATE_DIV_BY_4;
+-	} else if (dc_is_dp_signal(pipe_ctx->stream->signal) || dc_is_virtual_signal(pipe_ctx->stream->signal)) {
++	} else if (dc_is_dp_signal(stream->signal) || dc_is_virtual_signal(stream->signal)) {
+ 		if (two_pix_per_container) {
+ 			*k1_div = PIXEL_RATE_DIV_BY_1;
+ 			*k2_div = PIXEL_RATE_DIV_BY_2;
 -- 
 2.39.2
 
