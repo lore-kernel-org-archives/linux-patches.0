@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C14E8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6054C433EF;
-	Tue, 28 Mar 2023 14:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076018BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835E2C433D2;
+	Tue, 28 Mar 2023 14:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014903;
-	bh=4Y8/xJhwU7aJXJUzYvMwx8jzSFFEXA9tPwndwM5aX+Q=;
+	s=korg; t=1680014905;
+	bh=tF9hNMggqwY4JTq0kFbGrQs8ag6SuPvphM4PvJ3bPSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fqIVVzpUm8m4ymi6Elj0QtIKmvFzparOAcowwKp9uAsfxPw8hFuwVrNgPucmCEJHK
-	 veXDll+HlwuntJktcxeR/MLXTzNqcjf7G+gftu4bQdMftEmxcLh78IrDY7XmX+RvF3
-	 g+3O4nO1kkbtbyFm9EurTHWsWw++W7EAj6seKUzI=
+	b=PPhHXxJsngiAaAyYwqLgww2m4PT6P1nSXwWOwuAzinTc1W27mYg4XmrRBBjoY8L0e
+	 LOq89gPX2vkKY9cmDwjRXGfY2TK+0SPm7+hqeX1QqJX8KQCcyAJgLtP50u1bAUfSjI
+	 CnjqqmovBHvOd4JtZMowC7GSSncq+vw09iRH9gS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharath SM <bharathsm@microsoft.com>,
-	David Howells <dhowells@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Steve French <smfrench@gmail.com>,
-	keyrings@vger.kernel.org,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
+	Joshua Washington <joshwash@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 067/240] keys: Do not cache key in task struct if key is requested from kernel thread
-Date: Tue, 28 Mar 2023 16:40:30 +0200
-Message-Id: <20230328142622.530564908@linuxfoundation.org>
+Subject: [PATCH 6.2 094/240] gve: Cache link_speed value from device
+Date: Tue, 28 Mar 2023 16:40:57 +0200
+Message-Id: <20230328142623.683823014@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -41,61 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Joshua Washington <joshwash@google.com>
 
-[ Upstream commit 47f9e4c924025c5be87959d3335e66fcbb7f6b5c ]
+[ Upstream commit 68c3e4fc8628b1487c965aabb29207249657eb5f ]
 
-The key which gets cached in task structure from a kernel thread does not
-get invalidated even after expiry.  Due to which, a new key request from
-kernel thread will be served with the cached key if it's present in task
-struct irrespective of the key validity.  The change is to not cache key in
-task_struct when key requested from kernel thread so that kernel thread
-gets a valid key on every key request.
+The link speed is never changed for the uptime of a VM, and the current
+implementation sends an admin queue command for each call. Admin queue
+command invocations have nontrivial overhead (e.g., VM exits), which can
+be disruptive to users if triggered frequently. Our telemetry data shows
+that there are VMs that make frequent calls to this admin queue command.
+Caching the result of the original admin queue command would eliminate
+the need to send multiple admin queue commands on subsequent calls to
+retrieve link speed.
 
-The problem has been seen with the cifs module doing DNS lookups from a
-kernel thread and the results getting pinned by being attached to that
-kernel thread's cache - and thus not something that can be easily got rid
-of.  The cache would ordinarily be cleared by notify-resume, but kernel
-threads don't do that.
-
-This isn't seen with AFS because AFS is doing request_key() within the
-kernel half of a user thread - which will do notify-resume.
-
-Fixes: 7743c48e54ee ("keys: Cache result of request_key*() temporarily in task_struct")
-Signed-off-by: Bharath SM <bharathsm@microsoft.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Steve French <smfrench@gmail.com>
-cc: keyrings@vger.kernel.org
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/CAGypqWw951d=zYRbdgNR4snUDvJhWL=q3=WOyh7HhSJupjz2vA@mail.gmail.com/
+Fixes: 7e074d5a76ca ("gve: Enable Link Speed Reporting in the driver.")
+Signed-off-by: Joshua Washington <joshwash@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230321172332.91678-1-joshwash@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/request_key.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/google/gve/gve_ethtool.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/security/keys/request_key.c b/security/keys/request_key.c
-index 2da4404276f0f..07a0ef2baacd8 100644
---- a/security/keys/request_key.c
-+++ b/security/keys/request_key.c
-@@ -38,9 +38,12 @@ static void cache_requested_key(struct key *key)
- #ifdef CONFIG_KEYS_REQUEST_CACHE
- 	struct task_struct *t = current;
+diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
+index ce574d097e280..5f81470843b49 100644
+--- a/drivers/net/ethernet/google/gve/gve_ethtool.c
++++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
+@@ -537,7 +537,10 @@ static int gve_get_link_ksettings(struct net_device *netdev,
+ 				  struct ethtool_link_ksettings *cmd)
+ {
+ 	struct gve_priv *priv = netdev_priv(netdev);
+-	int err = gve_adminq_report_link_speed(priv);
++	int err = 0;
++
++	if (priv->link_speed == 0)
++		err = gve_adminq_report_link_speed(priv);
  
--	key_put(t->cached_requested_key);
--	t->cached_requested_key = key_get(key);
--	set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
-+	/* Do not cache key if it is a kernel thread */
-+	if (!(t->flags & PF_KTHREAD)) {
-+		key_put(t->cached_requested_key);
-+		t->cached_requested_key = key_get(key);
-+		set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
-+	}
- #endif
- }
- 
+ 	cmd->base.speed = priv->link_speed;
+ 	return err;
 -- 
 2.39.2
 
