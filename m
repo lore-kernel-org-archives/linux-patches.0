@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309B78BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:08:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83E1C433EF;
-	Tue, 28 Mar 2023 15:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94978BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:08:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A9FC4339B;
+	Tue, 28 Mar 2023 15:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016112;
-	bh=LmappESJ9s/SsRZUO7+Zvq3AkB/kUjo4+Aopwqvujrs=;
+	s=korg; t=1680016114;
+	bh=upTXbOOZyD5jfy1RwA+Q/zsGtT9gImRRhm1yjOvbTFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jecmUiGTWswapjuNXGjziLWYtInAeZdzGoMyHcfFXz+tpERvzldIJZA6eDpoNOxtB
-	 7EqBxEknHuGIZIsX+S7vBRg6TPtiggfjtzKlk4OZbzn/yDcp9BQ/rLylrRt9OFfLS7
-	 HgSNywCcw15Vc4xi34HK6hNTIbsnNS4v+RDvcyaY=
+	b=AWvph9+WLXNmcb1EC8hF8R6uCgDA+tkN1EwsdpklVo2UqHvcQYFeG6MA58hRCZcW0
+	 VX71q4oyOOouD5Pd08s+SBhXBH5Pygv3Pxm+XW9pc+I+5hbrYT0FfCbeYhytkNR+2T
+	 dth1RPGpAiFdYu/tIIHFJ0Ek/PrJX6xVvl9V95qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liang He <windhl@126.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/146] net: dsa: b53: mmap: fix device tree support
-Date: Tue, 28 Mar 2023 16:41:58 +0200
-Message-Id: <20230328142603.938097039@linuxfoundation.org>
+Subject: [PATCH 5.15 063/146] net: mdio: thunder: Add missing fwnode_handle_put()
+Date: Tue, 28 Mar 2023 16:42:32 +0200
+Message-Id: <20230328142605.342341489@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -36,35 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Álvaro Fernández Rojas <noltari@gmail.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 30796d0dcb6e41c6558a07950f2ce60c209da867 ]
+[ Upstream commit b1de5c78ebe9858ccec9d49af2f76724f1d47e3e ]
 
-CPU port should also be enabled in order to get a working switch.
+In device_for_each_child_node(), we should add fwnode_handle_put()
+when break out of the iteration device_for_each_child_node()
+as it will automatically increase and decrease the refcounter.
 
-Fixes: a5538a777b73 ("net: dsa: b53: mmap: Add device tree support")
-Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230316172807.460146-1-noltari@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 379d7ac7ca31 ("phy: mdio-thunder: Add driver for Cavium Thunder SoC MDIO buses.")
+Signed-off-by: Liang He <windhl@126.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_mmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/mdio/mdio-thunder.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/dsa/b53/b53_mmap.c b/drivers/net/dsa/b53/b53_mmap.c
-index ae4c79d39bc04..3388f620fac99 100644
---- a/drivers/net/dsa/b53/b53_mmap.c
-+++ b/drivers/net/dsa/b53/b53_mmap.c
-@@ -263,7 +263,7 @@ static int b53_mmap_probe_of(struct platform_device *pdev,
- 		if (of_property_read_u32(of_port, "reg", &reg))
- 			continue;
- 
--		if (reg < B53_CPU_PORT)
-+		if (reg < B53_N_PORTS)
- 			pdata->enabled_ports |= BIT(reg);
+diff --git a/drivers/net/mdio/mdio-thunder.c b/drivers/net/mdio/mdio-thunder.c
+index 822d2cdd2f359..394b864aaa372 100644
+--- a/drivers/net/mdio/mdio-thunder.c
++++ b/drivers/net/mdio/mdio-thunder.c
+@@ -104,6 +104,7 @@ static int thunder_mdiobus_pci_probe(struct pci_dev *pdev,
+ 		if (i >= ARRAY_SIZE(nexus->buses))
+ 			break;
  	}
++	fwnode_handle_put(fwn);
+ 	return 0;
  
+ err_release_regions:
 -- 
 2.39.2
 
