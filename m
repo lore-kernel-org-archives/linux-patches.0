@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F147E8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7684CC433D2;
-	Tue, 28 Mar 2023 14:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE468476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA8DC433EF;
+	Tue, 28 Mar 2023 14:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015295;
-	bh=tx3Tgu7vQHll2Pkn5DHn5d+ikcMhPZGybTvWXh+Rtao=;
+	s=korg; t=1680015298;
+	bh=nNNxBxk8U3XuI+6Z3YrfyQ9YMBGXdAkNlYbdEg+5uYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2AnXbh0JDySAo14oiW0S2dJynJg8YYpO/tmVAwYcNMQhLPw+dTpUYF7TxpqqVpLD1
-	 2W0yXTNaECbwKR0z+32FNuGoTBsQaDV1bjN+t0i5URc++taiGS3Gy5/LEmU77I1aw1
-	 6HMNrjkdZI4K81A1iijxFU7NTFi/cEVntGRcLRZY=
+	b=wuxT8r0RneO1gxZb5v2qZvYW4S213fSISOkZcx5XNudOYmRJjMPNLyaFD8Fo47jJB
+	 VXaFsdIDF4oC+L/XvxnsME9s5oG8A7RwUlsPZiKfZEqirvPnJhSmT23qTn57uIB9XO
+	 Zq8YGdrIKwvJI1Oi6SKxJ+1fnC55W2xsLVLf6kFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Snild Dolkow <snild@sony.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 207/240] test_maple_tree: add more testing for mas_empty_area()
-Date: Tue, 28 Mar 2023 16:42:50 +0200
-Message-Id: <20230328142628.306829114@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.2 198/240] usb: dwc3: gadget: Add 1ms delay after end transfer command without IOC
+Date: Tue, 28 Mar 2023 16:42:41 +0200
+Message-Id: <20230328142627.918339819@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,96 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-commit 4bd6dded6318dc8e2514d74868c1f8fb38b61a60 upstream.
+commit d8a2bb4eb75866275b5cf7de2e593ac3449643e2 upstream.
 
-Test robust filling of an entire area of the tree, then test one beyond.
-This is to test the walking back up the tree at the end of nodes and error
-condition.  Test inspired by the reproducer code provided by Snild Dolkow.
+Previously, there was a 100uS delay inserted after issuing an end transfer
+command for specific controller revisions.  This was due to the fact that
+there was a GUCTL2 bit field which enabled synchronous completion of the
+end transfer command once the CMDACT bit was cleared in the DEPCMD
+register.  Since this bit does not exist for all controller revisions and
+the current implementation heavily relies on utizling the EndTransfer
+command completion interrupt, add the delay back in for uses where the
+interrupt on completion bit is not set, and increase the duration to 1ms
+for the controller to complete the command.
 
-The last test in the function tests for the case of a corrupted maple
-state caused by the incorrect limits set during mas_skip_node().  There
-needs to be a gap in the second last child and last child, but the search
-must rule out the second last child's gap.  This would avoid correcting
-the maple state to the correct max limit and return an error.
+An issue was seen where the USB request buffer was unmapped while the DWC3
+controller was still accessing the TRB.  However, it was confirmed that the
+end transfer command was successfully submitted. (no end transfer timeout)
+In situations, such as dwc3_gadget_soft_disconnect() and
+__dwc3_gadget_ep_disable(), the dwc3_remove_request() is utilized, which
+will issue the end transfer command, and follow up with
+dwc3_gadget_giveback().  At least for the USB ep disable path, it is
+required for any pending and started requests to be completed and returned
+to the function driver in the same context of the disable call.  Without
+the GUCTL2 bit, it is not ensured that the end transfer is completed before
+the buffers are unmapped.
 
-Link: https://lkml.kernel.org/r/20230307180247.2220303-3-Liam.Howlett@oracle.com
-Cc: Snild Dolkow <snild@sony.com>
-Link: https://lore.kernel.org/linux-mm/cb8dc31a-fef2-1d09-f133-e9f7b9f9e77a@sony.com/
-Fixes: e15e06a83923 ("lib/test_maple_tree: add testing for maple tree")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Peng Zhang <zhangpeng.00@bytedance.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: cf2f8b63f7f1 ("usb: dwc3: gadget: Remove END_TRANSFER delay")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20230306200557.29387-1-quic_wcheng@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_maple_tree.c |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ drivers/usb/dwc3/gadget.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/lib/test_maple_tree.c
-+++ b/lib/test_maple_tree.c
-@@ -2602,6 +2602,49 @@ static noinline void check_empty_area_wi
- 	rcu_read_unlock();
- }
- 
-+static noinline void check_empty_area_fill(struct maple_tree *mt)
-+{
-+	const unsigned long max = 0x25D78000;
-+	unsigned long size;
-+	int loop, shift;
-+	MA_STATE(mas, mt, 0, 0);
-+
-+	mt_set_non_kernel(99999);
-+	for (shift = 12; shift <= 16; shift++) {
-+		loop = 5000;
-+		size = 1 << shift;
-+		while (loop--) {
-+			mas_set(&mas, 0);
-+			mas_lock(&mas);
-+			MT_BUG_ON(mt, mas_empty_area(&mas, 0, max, size) != 0);
-+			MT_BUG_ON(mt, mas.last != mas.index + size - 1);
-+			mas_store_gfp(&mas, (void *)size, GFP_KERNEL);
-+			mas_unlock(&mas);
-+			mas_reset(&mas);
-+		}
-+	}
-+
-+	/* No space left. */
-+	size = 0x1000;
-+	rcu_read_lock();
-+	MT_BUG_ON(mt, mas_empty_area(&mas, 0, max, size) != -EBUSY);
-+	rcu_read_unlock();
-+
-+	/* Fill a depth 3 node to the maximum */
-+	for (unsigned long i = 629440511; i <= 629440800; i += 6)
-+		mtree_store_range(mt, i, i + 5, (void *)i, GFP_KERNEL);
-+	/* Make space in the second-last depth 4 node */
-+	mtree_erase(mt, 631668735);
-+	/* Make space in the last depth 4 node */
-+	mtree_erase(mt, 629506047);
-+	mas_reset(&mas);
-+	/* Search from just after the gap in the second-last depth 4 */
-+	rcu_read_lock();
-+	MT_BUG_ON(mt, mas_empty_area(&mas, 629506048, 690000000, 0x5000) != 0);
-+	rcu_read_unlock();
-+	mt_set_non_kernel(0);
-+}
-+
- static DEFINE_MTREE(tree);
- static int maple_tree_seed(void)
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1699,6 +1699,7 @@ static int __dwc3_gadget_get_frame(struc
+  */
+ static int __dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force, bool interrupt)
  {
-@@ -2854,6 +2897,11 @@ static int maple_tree_seed(void)
- 	check_empty_area_window(&tree);
- 	mtree_destroy(&tree);
++	struct dwc3 *dwc = dep->dwc;
+ 	struct dwc3_gadget_ep_cmd_params params;
+ 	u32 cmd;
+ 	int ret;
+@@ -1722,10 +1723,13 @@ static int __dwc3_stop_active_transfer(s
+ 	WARN_ON_ONCE(ret);
+ 	dep->resource_index = 0;
  
-+	mt_init_flags(&tree, MT_FLAGS_ALLOC_RANGE);
-+	check_empty_area_fill(&tree);
-+	mtree_destroy(&tree);
-+
-+
- #if defined(BENCH)
- skip:
- #endif
+-	if (!interrupt)
++	if (!interrupt) {
++		if (!DWC3_IP_IS(DWC3) || DWC3_VER_IS_PRIOR(DWC3, 310A))
++			mdelay(1);
+ 		dep->flags &= ~DWC3_EP_TRANSFER_STARTED;
+-	else if (!ret)
++	} else if (!ret) {
+ 		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
++	}
+ 
+ 	dep->flags &= ~DWC3_EP_DELAY_STOP;
+ 	return ret;
+@@ -3774,7 +3778,11 @@ void dwc3_stop_active_transfer(struct dw
+ 	 * enabled, the EndTransfer command will have completed upon
+ 	 * returning from this function.
+ 	 *
+-	 * This mode is NOT available on the DWC_usb31 IP.
++	 * This mode is NOT available on the DWC_usb31 IP.  In this
++	 * case, if the IOC bit is not set, then delay by 1ms
++	 * after issuing the EndTransfer command.  This allows for the
++	 * controller to handle the command completely before DWC3
++	 * remove requests attempts to unmap USB request buffers.
+ 	 */
+ 
+ 	__dwc3_stop_active_transfer(dep, force, interrupt);
 
 
