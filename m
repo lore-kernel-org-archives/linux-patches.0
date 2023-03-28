@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C0D8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:11:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45435C433EF;
-	Tue, 28 Mar 2023 15:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF1D8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:11:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F324CC433D2;
+	Tue, 28 Mar 2023 15:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016298;
-	bh=yQ0Ge7p9JCA0oPIsS/0OgwLaxmWF6udpQtKMDhzeyw4=;
+	s=korg; t=1680016301;
+	bh=pye1PK5dzUlO9UgCMGq7Xa3au9/2Q3hZylfisLuieKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uycTu3fztMwBrl7wyX/xDYQ/RQCcdsNw1FLB8QPp8YAzvNhwOVMUH3AdwKXXS/llD
-	 z6lV2jIyy0n3UfUkAuwO2AYziAGNVF4A23dUyZ45HI9akzNSov4rfGgBfxTn4lFcyW
-	 5mQbIEpVED2Allt5yaR9yD/e92eq3AlF3saCoMAM=
+	b=UOdSdBnqvP0k7Kxp5ybERdpOmNj60mO8ri0ijO4QZBBhsLVbN2IbkmwflbhSKhCt2
+	 hFy9CWRoRWA7yVrgGfzgJK06jdi62XslEr/1BDoJjYpmst5DxnQE3cMPkGUC3puct1
+	 I8kDMSFwPQTTXzdmgpb6Pi71HxsDWOaedprz6tp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 5.15 130/146] drm/meson: fix missing component unbind on bind errors
-Date: Tue, 28 Mar 2023 16:43:39 +0200
-Message-Id: <20230328142608.078150228@linuxfoundation.org>
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.15 139/146] dm stats: check for and propagate alloc_percpu failure
+Date: Tue, 28 Mar 2023 16:43:48 +0200
+Message-Id: <20230328142608.468491242@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -34,65 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-commit ba98413bf45edbf33672e2539e321b851b2cfbd1 upstream.
+commit d3aa3e060c4a80827eb801fc448debc9daa7c46b upstream.
 
-Make sure to unbind all subcomponents when binding the aggregate device
-fails.
+Check alloc_precpu()'s return value and return an error from
+dm_stats_init() if it fails. Update alloc_dev() to fail if
+dm_stats_init() does.
 
-Fixes: a41e82e6c457 ("drm/meson: Add support for components")
-Cc: stable@vger.kernel.org      # 4.12
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230306103533.4915-1-johan+linaro@kernel.org
+Otherwise, a NULL pointer dereference will occur in dm_stats_cleanup()
+even if dm-stats isn't being actively used.
+
+Fixes: fd2ed4d25270 ("dm: add statistics support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/meson/meson_drv.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/md/dm-stats.c |    7 ++++++-
+ drivers/md/dm-stats.h |    2 +-
+ drivers/md/dm.c       |    4 +++-
+ 3 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/meson/meson_drv.c
-+++ b/drivers/gpu/drm/meson/meson_drv.c
-@@ -324,23 +324,23 @@ static int meson_drv_bind_master(struct
+--- a/drivers/md/dm-stats.c
++++ b/drivers/md/dm-stats.c
+@@ -188,7 +188,7 @@ static int dm_stat_in_flight(struct dm_s
+ 	       atomic_read(&shared->in_flight[WRITE]);
+ }
  
- 	ret = meson_encoder_hdmi_init(priv);
- 	if (ret)
--		goto exit_afbcd;
-+		goto unbind_all;
+-void dm_stats_init(struct dm_stats *stats)
++int dm_stats_init(struct dm_stats *stats)
+ {
+ 	int cpu;
+ 	struct dm_stats_last_position *last;
+@@ -197,11 +197,16 @@ void dm_stats_init(struct dm_stats *stat
+ 	INIT_LIST_HEAD(&stats->list);
+ 	stats->precise_timestamps = false;
+ 	stats->last = alloc_percpu(struct dm_stats_last_position);
++	if (!stats->last)
++		return -ENOMEM;
++
+ 	for_each_possible_cpu(cpu) {
+ 		last = per_cpu_ptr(stats->last, cpu);
+ 		last->last_sector = (sector_t)ULLONG_MAX;
+ 		last->last_rw = UINT_MAX;
+ 	}
++
++	return 0;
+ }
  
- 	ret = meson_plane_create(priv);
- 	if (ret)
--		goto exit_afbcd;
-+		goto unbind_all;
+ void dm_stats_cleanup(struct dm_stats *stats)
+--- a/drivers/md/dm-stats.h
++++ b/drivers/md/dm-stats.h
+@@ -21,7 +21,7 @@ struct dm_stats_aux {
+ 	unsigned long long duration_ns;
+ };
  
- 	ret = meson_overlay_create(priv);
- 	if (ret)
--		goto exit_afbcd;
-+		goto unbind_all;
+-void dm_stats_init(struct dm_stats *st);
++int dm_stats_init(struct dm_stats *st);
+ void dm_stats_cleanup(struct dm_stats *st);
  
- 	ret = meson_crtc_create(priv);
- 	if (ret)
--		goto exit_afbcd;
-+		goto unbind_all;
+ struct mapped_device;
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1818,7 +1818,9 @@ static struct mapped_device *alloc_dev(i
+ 	if (!md->pending_io)
+ 		goto bad;
  
- 	ret = request_irq(priv->vsync_irq, meson_irq, 0, drm->driver->name, drm);
- 	if (ret)
--		goto exit_afbcd;
-+		goto unbind_all;
+-	dm_stats_init(&md->stats);
++	r = dm_stats_init(&md->stats);
++	if (r < 0)
++		goto bad;
  
- 	drm_mode_config_reset(drm);
- 
-@@ -358,6 +358,9 @@ static int meson_drv_bind_master(struct
- 
- uninstall_irq:
- 	free_irq(priv->vsync_irq, drm);
-+unbind_all:
-+	if (has_components)
-+		component_unbind_all(drm->dev, drm);
- exit_afbcd:
- 	if (priv->afbcd.ops)
- 		priv->afbcd.ops->exit(priv);
+ 	/* Populate the mapping, nobody knows we exist yet */
+ 	spin_lock(&_minor_lock);
 
 
