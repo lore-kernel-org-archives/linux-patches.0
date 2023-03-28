@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5B18476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031CDC433D2;
-	Tue, 28 Mar 2023 14:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D49E8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F38AC433D2;
+	Tue, 28 Mar 2023 14:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015238;
-	bh=nYN8+71foBTiqgYHHhcWxzxib4C6f8/REBE4g+lz67w=;
+	s=korg; t=1680015241;
+	bh=Jv4CbOcyhvGdX6l/WfwMoIKeOceYc/RF2tBccbRgETo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zct/yuzcgPp0OoNopvBqfQK+gJh+XPGYtH04iyiZhUdcdEs5QEhhFagXuz6EeX7vB
-	 KsFYlbpKWLOXnUL0j4VgK0TWIXPmVFTL036V5vEQPFk901XOvMzq6yEKfu2WbO/3ZE
-	 HnYsjwhgf1zIF7oAjyQdOIKH3pRrwJw2r6qT5i/g=
+	b=qbtzmwyW2g//ObNEhK3hrAhY9DyCXvJGa5I2qV6+tFIy4mV5e42wPZnjj1EAlj1Wi
+	 1TaJFRBvpc/Kn0bJ6Vsr18crh1QJif8IvhkK0L0OUEybaqcCPW78sEDBZYyiakBtxn
+	 /zXagGbdecxqqRQ5FaS50BfDnn1LKdKQ2zO7GcDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matheus Castello <matheus.castello@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.2 217/240] drm/bridge: lt8912b: return EPROBE_DEFER if bridge is not found
-Date: Tue, 28 Mar 2023 16:43:00 +0200
-Message-Id: <20230328142628.753042927@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.2 200/240] usb: ucsi_acpi: Increase the command completion timeout
+Date: Tue, 28 Mar 2023 16:42:43 +0200
+Message-Id: <20230328142627.990664417@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -37,40 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matheus Castello <matheus.castello@toradex.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 1a70ca89d59c7c8af006d29b965a95ede0abb0da upstream.
+commit 02d210f434249a7edbc160969b75df030dc6934d upstream.
 
-Returns EPROBE_DEFER when of_drm_find_bridge() fails, this is consistent
-with what all the other DRM bridge drivers are doing and this is
-required since the bridge might not be there when the driver is probed
-and this should not be a fatal failure.
+Commit 130a96d698d7 ("usb: typec: ucsi: acpi: Increase command
+completion timeout value") increased the timeout from 5 seconds
+to 60 seconds due to issues related to alternate mode discovery.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
-Signed-off-by: Matheus Castello <matheus.castello@toradex.com>
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230322143821.109744-1-francesco@dolcini.it
+After the alternate mode discovery switch to polled mode
+the timeout was reduced, but instead of being set back to
+5 seconds it was reduced to 1 second.
+
+This is causing problems when using a Lenovo ThinkPad X1 yoga gen7
+connected over Type-C to a LG 27UL850-W (charging DP over Type-C).
+
+When the monitor is already connected at boot the following error
+is logged: "PPM init failed (-110)", /sys/class/typec is empty and
+on unplugging the NULL pointer deref fixed earlier in this series
+happens.
+
+When the monitor is connected after boot the following error
+is logged instead: "GET_CONNECTOR_STATUS failed (-110)".
+
+Setting the timeout back to 5 seconds fixes both cases.
+
+Fixes: e08065069fc7 ("usb: typec: ucsi: acpi: Reduce the command completion timeout")
+Cc: stable@vger.kernel.org
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230308154244.722337-4-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_acpi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -659,8 +659,8 @@ static int lt8912_parse_dt(struct lt8912
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -78,7 +78,7 @@ static int ucsi_acpi_sync_write(struct u
+ 	if (ret)
+ 		goto out_clear_bit;
  
- 	lt->hdmi_port = of_drm_find_bridge(port_node);
- 	if (!lt->hdmi_port) {
--		dev_err(lt->dev, "%s: Failed to get hdmi port\n", __func__);
--		ret = -ENODEV;
-+		ret = -EPROBE_DEFER;
-+		dev_err_probe(lt->dev, ret, "%s: Failed to get hdmi port\n", __func__);
- 		goto err_free_host_node;
- 	}
+-	if (!wait_for_completion_timeout(&ua->complete, HZ))
++	if (!wait_for_completion_timeout(&ua->complete, 5 * HZ))
+ 		ret = -ETIMEDOUT;
  
+ out_clear_bit:
 
 
