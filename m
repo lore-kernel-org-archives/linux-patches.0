@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E668BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:06:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC4DC433EF;
-	Tue, 28 Mar 2023 15:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D6B8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:06:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B93CC433D2;
+	Tue, 28 Mar 2023 15:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016000;
-	bh=umgBD0YqjAUxnURtdFPsfO72O3qBoFFFgPXhwT95kdg=;
+	s=korg; t=1680016002;
+	bh=uTkH6Wq9aoPkG777WnB+l5KX57dNAwOM//6bcukBN/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C4ZKk6eGrIZefKx043nluL/y27snV11cArZ2RXtPTY1l4tPQIW0D3MNd5PeHA0Mf5
-	 0qZorhOVqjc7vwVUmf2tM2flTmDfuJG7JgDCsKbavEv8DpxhGMI7b8VS2Xf7NPisp+
-	 7T+PtbAhXWOmTews6Ml2g0WKrzozVIPJpC+S6L+o=
+	b=Xq2iStdEee380VGaNcb1eUeBbXD3VHeEp5BZ580nl91GOCrenBnLbMIN0cVm1HJRr
+	 yQzIQG/q3DJElWlqlwf5Ais0ZBY34owX9xtib30aYf4AWv0pv8r5LUcYNMs9RbSgJQ
+	 g3sHtfTohUDrHy+cS5xN4ZAYkJPXfYxb4+yY2cuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Song Liu <song@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/146] scsi: scsi_dh_alua: Fix memleak for qdata in alua_activate()
-Date: Tue, 28 Mar 2023 16:41:57 +0200
-Message-Id: <20230328142603.898036782@linuxfoundation.org>
+Subject: [PATCH 5.15 003/146] perf: fix perf_event_context->time
+Date: Tue, 28 Mar 2023 16:41:32 +0200
+Message-Id: <20230328142602.810101611@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -37,59 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Song Liu <song@kernel.org>
 
-[ Upstream commit a13faca032acbf2699293587085293bdfaafc8ae ]
+[ Upstream commit baf1b12a67f5b24f395baca03e442ce27cab0c18 ]
 
-If alua_rtpg_queue() failed from alua_activate(), then 'qdata' is not
-freed, which will cause following memleak:
+Time readers rely on perf_event_context->[time|timestamp|timeoffset] to get
+accurate time_enabled and time_running for an event. The difference between
+ctx->timestamp and ctx->time is the among of time when the context is not
+enabled. __update_context_time(ctx, false) is used to increase timestamp,
+but not time. Therefore, it should only be called in ctx_sched_in() when
+EVENT_TIME was not enabled.
 
-unreferenced object 0xffff88810b2c6980 (size 32):
-  comm "kworker/u16:2", pid 635322, jiffies 4355801099 (age 1216426.076s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    40 39 24 c1 ff ff ff ff 00 f8 ea 0a 81 88 ff ff  @9$.............
-  backtrace:
-    [<0000000098f3a26d>] alua_activate+0xb0/0x320
-    [<000000003b529641>] scsi_dh_activate+0xb2/0x140
-    [<000000007b296db3>] activate_path_work+0xc6/0xe0 [dm_multipath]
-    [<000000007adc9ace>] process_one_work+0x3c5/0x730
-    [<00000000c457a985>] worker_thread+0x93/0x650
-    [<00000000cb80e628>] kthread+0x1ba/0x210
-    [<00000000a1e61077>] ret_from_fork+0x22/0x30
-
-Fix the problem by freeing 'qdata' in error path.
-
-Fixes: 625fe857e4fa ("scsi: scsi_dh_alua: Check scsi_device_get() return value")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230315062154.668812-1-yukuai1@huaweicloud.com
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 09f5e7dc7ad7 ("perf: Fix perf_event_read_local() time")
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lkml.kernel.org/r/20230313171608.298734-1-song@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/device_handler/scsi_dh_alua.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/events/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/device_handler/scsi_dh_alua.c b/drivers/scsi/device_handler/scsi_dh_alua.c
-index 1d9be771f3ee0..a9c4a5e2ccb90 100644
---- a/drivers/scsi/device_handler/scsi_dh_alua.c
-+++ b/drivers/scsi/device_handler/scsi_dh_alua.c
-@@ -1117,10 +1117,12 @@ static int alua_activate(struct scsi_device *sdev,
- 	rcu_read_unlock();
- 	mutex_unlock(&h->init_mutex);
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 3a17a68cf41ad..2cdee62c3de73 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -3909,7 +3909,7 @@ ctx_sched_in(struct perf_event_context *ctx,
+ 	if (likely(!ctx->nr_events))
+ 		return;
  
--	if (alua_rtpg_queue(pg, sdev, qdata, true))
-+	if (alua_rtpg_queue(pg, sdev, qdata, true)) {
- 		fn = NULL;
--	else
-+	} else {
-+		kfree(qdata);
- 		err = SCSI_DH_DEV_OFFLINED;
-+	}
- 	kref_put(&pg->kref, release_port_group);
- out:
- 	if (fn)
+-	if (is_active ^ EVENT_TIME) {
++	if (!(is_active & EVENT_TIME)) {
+ 		/* start ctx time */
+ 		__update_context_time(ctx, false);
+ 		perf_cgroup_set_timestamp(task, ctx);
 -- 
 2.39.2
 
