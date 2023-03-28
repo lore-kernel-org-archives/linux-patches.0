@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7128BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:09:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9CAC433D2;
-	Tue, 28 Mar 2023 15:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CF28BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:09:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35601C433EF;
+	Tue, 28 Mar 2023 15:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016158;
-	bh=P4CzGikgM7jVUFgJYP7iZJQTknwuEyOTArmUon2XDVo=;
+	s=korg; t=1680016161;
+	bh=mOFnK39nTnfrFT3jQSzhgey0Tg79FNj4N/ndzPnBFzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1UBWdIowDqzyM0wEo1O9w9QzgAzvDVtNYe3iU282F/HB3iNCWepTV27JKVl8h1iNP
-	 GSWuGqH3PgZYOclYufTB3gxZFN1l/aLqbDU2P9RRZMJAwSrJzyhQBuo/5OCXziC7XI
-	 M/kvbzXujqjejRGwXsjkN+hfULmZCqAUhSKlYkgA=
+	b=UEs/swgEx+az2dMwkHUMZnrm3PRig8VPSXSVnTMwfzdIGnvqaeB7pc+jNIVSA3xaY
+	 JsvT7D9+LsZH4sS/rLoqNRpb5roHgGEfETrPQBn8ul35yj/cU+fBiXI2AH8/SntDr/
+	 ngdC5h3irsYWZ+DO9kjPCuGYa1eJv/2aEWjoPp3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danny Kaehn <kaehndan@gmail.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	lianhui tang <bluetlh@gmail.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/146] HID: cp2112: Fix driver not registering GPIO IRQ chip as threaded
-Date: Tue, 28 Mar 2023 16:42:55 +0200
-Message-Id: <20230328142606.272190043@linuxfoundation.org>
+Subject: [PATCH 5.15 087/146] ca8210: fix mac_len negative array access
+Date: Tue, 28 Mar 2023 16:42:56 +0200
+Message-Id: <20230328142606.314325030@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -35,35 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Danny Kaehn <kaehndan@gmail.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 37f5b858a66543b2b67c0288280af623985abc29 ]
+[ Upstream commit 6c993779ea1d0cccdb3a5d7d45446dd229e610a3 ]
 
-The CP2112 generates interrupts from a polling routine on a thread,
-and can only support threaded interrupts. This patch configures the
-gpiochip irq chip with this flag, disallowing consumers to request
-a hard IRQ from this driver, which resulted in a segfault previously.
+This patch fixes a buffer overflow access of skb->data if
+ieee802154_hdr_peek_addrs() fails.
 
-Signed-off-by: Danny Kaehn <kaehndan@gmail.com>
-Link: https://lore.kernel.org/r/20230210170044.11835-1-kaehndan@gmail.com
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Reported-by: lianhui tang <bluetlh@gmail.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Link: https://lore.kernel.org/r/20230217042504.3303396-1-aahringo@redhat.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-cp2112.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ieee802154/ca8210.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
-index 172f20e88c6c9..d902fe43cb818 100644
---- a/drivers/hid/hid-cp2112.c
-+++ b/drivers/hid/hid-cp2112.c
-@@ -1352,6 +1352,7 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	girq->parents = NULL;
- 	girq->default_type = IRQ_TYPE_NONE;
- 	girq->handler = handle_simple_irq;
-+	girq->threaded = true;
+diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
+index 0362917fce7a9..e2322bc3a4e9a 100644
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -1956,6 +1956,8 @@ static int ca8210_skb_tx(
+ 	 * packet
+ 	 */
+ 	mac_len = ieee802154_hdr_peek_addrs(skb, &header);
++	if (mac_len < 0)
++		return mac_len;
  
- 	ret = gpiochip_add_data(&dev->gc, dev);
- 	if (ret < 0) {
+ 	secspec.security_level = header.sec.level;
+ 	secspec.key_id_mode = header.sec.key_id_mode;
 -- 
 2.39.2
 
