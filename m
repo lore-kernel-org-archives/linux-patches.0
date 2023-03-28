@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1F68BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB64C433D2;
-	Tue, 28 Mar 2023 15:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63838BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A117C4339B;
+	Tue, 28 Mar 2023 15:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015819;
-	bh=f9FdH9zwOoW1vm4Ust8+KYJDSMeinCSbsWbTMuDnivI=;
+	s=korg; t=1680015822;
+	bh=ChpjfO0lnDMdohsOgjQPpdfo4+9Va/xcI/rE1tYNFd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtdkqQlwlMLmRp7FxVLHafAzwA5Z0biAf262vlEOh8CfB7+ITIkhlQFObE4ncXjQU
-	 9FrbsFU2Y3RKJAKSGKeKbHj2Lecv4Ww4klqk7b9NQQRFQwdFWspMFY+/cWabrxpKT/
-	 87WKezx55x/CpcZ2w0xbZIuEKq4GxsriZbKoI5lE=
+	b=nHfJe4vQd/LfWn4xRZgBijdhWSwkkBXbXHlCqi4l0mHxQ6v8Julaior9JhFYHmPk6
+	 HQU8HK0YAop9MwvH0SXp3G0OcTOZ6gMzqG3yF7y76sqvpe2hu1s02n3M4slQUFxJ9b
+	 owERBdM1wEH06o0tzWQaqjfo1xpmVMgQ3WQ26hqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lyndonli <Lyndon.Li@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 146/224] drm/amdgpu: Fix call trace warning and hang when removing amdgpu device
-Date: Tue, 28 Mar 2023 16:42:22 +0200
-Message-Id: <20230328142623.453599655@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 181/224] usb: dwc3: gadget: Add 1ms delay after end transfer command without IOC
+Date: Tue, 28 Mar 2023 16:42:57 +0200
+Message-Id: <20230328142624.923513373@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,62 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: lyndonli <Lyndon.Li@amd.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-[ Upstream commit 93bb18d2a873d2fa9625c8ea927723660a868b95 ]
+commit d8a2bb4eb75866275b5cf7de2e593ac3449643e2 upstream.
 
-On GPUs with RAS enabled, below call trace and hang are observed when
-shutting down device.
+Previously, there was a 100uS delay inserted after issuing an end transfer
+command for specific controller revisions.  This was due to the fact that
+there was a GUCTL2 bit field which enabled synchronous completion of the
+end transfer command once the CMDACT bit was cleared in the DEPCMD
+register.  Since this bit does not exist for all controller revisions and
+the current implementation heavily relies on utizling the EndTransfer
+command completion interrupt, add the delay back in for uses where the
+interrupt on completion bit is not set, and increase the duration to 1ms
+for the controller to complete the command.
 
-v2: use DRM device unplugged flag instead of shutdown flag as the check to
-prevent memory wipe in shutdown stage.
+An issue was seen where the USB request buffer was unmapped while the DWC3
+controller was still accessing the TRB.  However, it was confirmed that the
+end transfer command was successfully submitted. (no end transfer timeout)
+In situations, such as dwc3_gadget_soft_disconnect() and
+__dwc3_gadget_ep_disable(), the dwc3_remove_request() is utilized, which
+will issue the end transfer command, and follow up with
+dwc3_gadget_giveback().  At least for the USB ep disable path, it is
+required for any pending and started requests to be completed and returned
+to the function driver in the same context of the disable call.  Without
+the GUCTL2 bit, it is not ensured that the end transfer is completed before
+the buffers are unmapped.
 
-[ +0.000000] RIP: 0010:amdgpu_vram_mgr_fini+0x18d/0x1c0 [amdgpu]
-[ +0.000001] PKRU: 55555554
-[ +0.000001] Call Trace:
-[ +0.000001] <TASK>
-[ +0.000002] amdgpu_ttm_fini+0x140/0x1c0 [amdgpu]
-[ +0.000183] amdgpu_bo_fini+0x27/0xa0 [amdgpu]
-[ +0.000184] gmc_v11_0_sw_fini+0x2b/0x40 [amdgpu]
-[ +0.000163] amdgpu_device_fini_sw+0xb6/0x510 [amdgpu]
-[ +0.000152] amdgpu_driver_release_kms+0x16/0x30 [amdgpu]
-[ +0.000090] drm_dev_release+0x28/0x50 [drm]
-[ +0.000016] devm_drm_dev_init_release+0x38/0x60 [drm]
-[ +0.000011] devm_action_release+0x15/0x20
-[ +0.000003] release_nodes+0x40/0xc0
-[ +0.000001] devres_release_all+0x9e/0xe0
-[ +0.000001] device_unbind_cleanup+0x12/0x80
-[ +0.000003] device_release_driver_internal+0xff/0x160
-[ +0.000001] driver_detach+0x4a/0x90
-[ +0.000001] bus_remove_driver+0x6c/0xf0
-[ +0.000001] driver_unregister+0x31/0x50
-[ +0.000001] pci_unregister_driver+0x40/0x90
-[ +0.000003] amdgpu_exit+0x15/0x120 [amdgpu]
-
-Signed-off-by: lyndonli <Lyndon.Li@amd.com>
-Reviewed-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: cf2f8b63f7f1 ("usb: dwc3: gadget: Remove END_TRANSFER delay")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20230306200557.29387-1-quic_wcheng@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-index cfd78c4a45baa..4feedf518a191 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-@@ -1312,7 +1312,7 @@ void amdgpu_bo_release_notify(struct ttm_buffer_object *bo)
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1689,6 +1689,7 @@ static int __dwc3_gadget_get_frame(struc
+  */
+ static int __dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force, bool interrupt)
+ {
++	struct dwc3 *dwc = dep->dwc;
+ 	struct dwc3_gadget_ep_cmd_params params;
+ 	u32 cmd;
+ 	int ret;
+@@ -1712,10 +1713,13 @@ static int __dwc3_stop_active_transfer(s
+ 	WARN_ON_ONCE(ret);
+ 	dep->resource_index = 0;
  
- 	if (!bo->resource || bo->resource->mem_type != TTM_PL_VRAM ||
- 	    !(abo->flags & AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE) ||
--	    adev->in_suspend || adev->shutdown)
-+	    adev->in_suspend || drm_dev_is_unplugged(adev_to_drm(adev)))
- 		return;
+-	if (!interrupt)
++	if (!interrupt) {
++		if (!DWC3_IP_IS(DWC3) || DWC3_VER_IS_PRIOR(DWC3, 310A))
++			mdelay(1);
+ 		dep->flags &= ~DWC3_EP_TRANSFER_STARTED;
+-	else if (!ret)
++	} else if (!ret) {
+ 		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
++	}
  
- 	if (WARN_ON_ONCE(!dma_resv_trylock(bo->base.resv)))
--- 
-2.39.2
-
+ 	dep->flags &= ~DWC3_EP_DELAY_STOP;
+ 	return ret;
+@@ -3764,7 +3768,11 @@ void dwc3_stop_active_transfer(struct dw
+ 	 * enabled, the EndTransfer command will have completed upon
+ 	 * returning from this function.
+ 	 *
+-	 * This mode is NOT available on the DWC_usb31 IP.
++	 * This mode is NOT available on the DWC_usb31 IP.  In this
++	 * case, if the IOC bit is not set, then delay by 1ms
++	 * after issuing the EndTransfer command.  This allows for the
++	 * controller to handle the command completely before DWC3
++	 * remove requests attempts to unmap USB request buffers.
+ 	 */
+ 
+ 	__dwc3_stop_active_transfer(dep, force, interrupt);
 
 
