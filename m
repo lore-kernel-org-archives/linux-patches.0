@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C448BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:45:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463D2C433EF;
-	Tue, 28 Mar 2023 14:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9BC8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:45:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06147C4339B;
+	Tue, 28 Mar 2023 14:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014724;
-	bh=1T4oCbpL4olymy5HHnM3R8wtulupV3PZ+9Z8tnpU6Q0=;
+	s=korg; t=1680014727;
+	bh=AhKZeW1kP5KyMlZufFL9M2/BCDQj5XPVmrPtge7ixa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSE2VEKo90giiLruTkIOph8VrERkU2v29Hn/xYaagA04aRm/abPQ4/5Ndo7C+AaD0
-	 SIu0H93rHs5Ah/kHkj0FrjjVcri+bT0j3ctZN+U9p8aMyVy5eYtK6k045ZsLpXNXJn
-	 wlHWck/6E53zVrLdovukOTaSTSoduif6cT8uN2TU=
+	b=wXkGG1GWvsLQIseI6gsQm+XwWPuz665vuES9hRUM/2HyDLMMQ2WYhWmmgQNM0Ydis
+	 2bJU4PBlAypPB4OvajN2naOTDkczgU4rRWEffk2FJ8L1uN5SSfIfpyvjfEciBzhIZc
+	 g7S3sxznPodZUnpHFqxGToKH3W8Q3lcdvzxa+6Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kal Conley <kal.conley@dectris.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Shawn Guo <shawn.guo@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 029/240] xsk: Add missing overflow check in xdp_umem_reg
-Date: Tue, 28 Mar 2023 16:39:52 +0200
-Message-Id: <20230328142620.846680251@linuxfoundation.org>
+Subject: [PATCH 6.2 003/240] interconnect: qcom: qcm2290: Fix MASTER_SNOC_BIMC_NRT
+Date: Tue, 28 Mar 2023 16:39:26 +0200
+Message-Id: <20230328142619.789674960@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,62 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kal Conley <kal.conley@dectris.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit c7df4813b149362248d6ef7be41a311e27bf75fe ]
+[ Upstream commit 633a12fda6536a1a17bcea29502e777e86a4547e ]
 
-The number of chunks can overflow u32. Make sure to return -EINVAL on
-overflow. Also remove a redundant u32 cast assigning umem->npgs.
+Due to what seems to be a copy-paste error, the _NRT master was
+identical to the _RT master, which should not be the case.. Fix it
+using the values available from the downstream kernel [1].
 
-Fixes: bbff2f321a86 ("xsk: new descriptor addressing scheme")
-Signed-off-by: Kal Conley <kal.conley@dectris.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Link: https://lore.kernel.org/bpf/20230308174013.1114745-1-kal.conley@dectris.com
+[1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/scuba-bus.dtsi#127
+Fixes: 1a14b1ac3935 ("interconnect: qcom: Add QCM2290 driver support")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Acked-by: Shawn Guo <shawn.guo@linaro.org>
+Link: https://lore.kernel.org/r/20230103142120.15605-1-konrad.dybcio@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xdp_umem.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/interconnect/qcom/qcm2290.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/xdp/xdp_umem.c b/net/xdp/xdp_umem.c
-index 4681e8e8ad943..02207e852d796 100644
---- a/net/xdp/xdp_umem.c
-+++ b/net/xdp/xdp_umem.c
-@@ -150,10 +150,11 @@ static int xdp_umem_account_pages(struct xdp_umem *umem)
- 
- static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
- {
--	u32 npgs_rem, chunk_size = mr->chunk_size, headroom = mr->headroom;
- 	bool unaligned_chunks = mr->flags & XDP_UMEM_UNALIGNED_CHUNK_FLAG;
--	u64 npgs, addr = mr->addr, size = mr->len;
--	unsigned int chunks, chunks_rem;
-+	u32 chunk_size = mr->chunk_size, headroom = mr->headroom;
-+	u64 addr = mr->addr, size = mr->len;
-+	u32 chunks_rem, npgs_rem;
-+	u64 chunks, npgs;
- 	int err;
- 
- 	if (chunk_size < XDP_UMEM_MIN_CHUNK_SIZE || chunk_size > PAGE_SIZE) {
-@@ -188,8 +189,8 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
- 	if (npgs > U32_MAX)
- 		return -EINVAL;
- 
--	chunks = (unsigned int)div_u64_rem(size, chunk_size, &chunks_rem);
--	if (chunks == 0)
-+	chunks = div_u64_rem(size, chunk_size, &chunks_rem);
-+	if (!chunks || chunks > U32_MAX)
- 		return -EINVAL;
- 
- 	if (!unaligned_chunks && chunks_rem)
-@@ -202,7 +203,7 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
- 	umem->headroom = headroom;
- 	umem->chunk_size = chunk_size;
- 	umem->chunks = chunks;
--	umem->npgs = (u32)npgs;
-+	umem->npgs = npgs;
- 	umem->pgs = NULL;
- 	umem->user = NULL;
- 	umem->flags = mr->flags;
+diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
+index 0da612d6398c5..a29cdb4fac03f 100644
+--- a/drivers/interconnect/qcom/qcm2290.c
++++ b/drivers/interconnect/qcom/qcm2290.c
+@@ -147,9 +147,9 @@ static struct qcom_icc_node mas_snoc_bimc_nrt = {
+ 	.name = "mas_snoc_bimc_nrt",
+ 	.buswidth = 16,
+ 	.qos.ap_owned = true,
+-	.qos.qos_port = 2,
++	.qos.qos_port = 3,
+ 	.qos.qos_mode = NOC_QOS_MODE_BYPASS,
+-	.mas_rpm_id = 163,
++	.mas_rpm_id = 164,
+ 	.slv_rpm_id = -1,
+ 	.num_links = ARRAY_SIZE(mas_snoc_bimc_nrt_links),
+ 	.links = mas_snoc_bimc_nrt_links,
 -- 
 2.39.2
 
