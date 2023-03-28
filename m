@@ -1,41 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CA78BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:46:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4858C433EF;
-	Tue, 28 Mar 2023 14:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D068BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:46:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCBFC433D2;
+	Tue, 28 Mar 2023 14:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014799;
-	bh=UlRK//Qc6V0DgzUuLVpQtfcfRn/yLSljGaaKQ0xlYE0=;
+	s=korg; t=1680014802;
+	bh=h+rM9Ro5SWa307yziHccNUDK8JRR76SfqOnp9Wtk7vQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nEwVnbIiF10LsKFDCKgllsDBSg10d3TftQlK5dfiCMe/hRj11Gpg2dfbyG+5SfgWa
-	 6g94ws/TlfV1J4cK22bY1WBjfCzLGmassjeao0t+Tx+rFdQjQwXMCmCZbh4eN5aUVH
-	 3Ls7NJJbTGeekfbSIB8oiNfsB/TRDd+as88r1eUw=
+	b=kBnROsskiclqiAk9HbhnSxMgmvXJPxS1Yrhg0Hi2XwaQNKUBFTiO+mSQAN5rkN4Rl
+	 liTbO8Hz/N3VLstTz69iHsyBADZQpjCdn5Zjjp8Q47/I2uZ54yWsPBCY4xcQDdcuCn
+	 enbw4gV5gxiRr3hT8a35/TgWd9Y8huHrZoUgRLd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Aravind Iddamsetty <aravind.iddamsetty@intel.com>,
-	Michael Cheng <michael.cheng@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Bruce Chang <yu.bruce.chang@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 056/240] drm/i915/guc: Fix missing ecodes
-Date: Tue, 28 Mar 2023 16:40:19 +0200
-Message-Id: <20230328142622.055991962@linuxfoundation.org>
+Subject: [PATCH 6.2 057/240] drm/i915/gt: perform uc late init after probe error injection
+Date: Tue, 28 Mar 2023 16:40:20 +0200
+Message-Id: <20230328142622.091001181@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -49,86 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Andrzej Hajda <andrzej.hajda@intel.com>
 
-[ Upstream commit 8df23e4c4f72f4e201c28e6fb0a67e2dbf30628a ]
+[ Upstream commit 150784f9285e656373cf3953ef4a7663f1e1a0f2 ]
 
-Error captures are tagged with an 'ecode'. This is a pseduo-unique magic
-number that is meant to distinguish similar seeming bugs with
-different underlying signatures. It is a combination of two ring state
-registers. Unfortunately, the register state being used is only valid
-in execlist mode. In GuC mode, the register state exists in a separate
-list of arbitrary register address/value pairs rather than the named
-entry structure. So, search through that list to find the two exciting
-registers and copy them over to the structure's named members.
+Probe pseudo errors should be injected only in places where real errors
+can be encountered, otherwise unwinding code can be broken.
+Placing intel_uc_init_late before i915_inject_probe_error violated
+this rule, resulting in following bug:
+__intel_gt_disable:655 GEM_BUG_ON(intel_gt_pm_is_awake(gt))
 
-v2: if else if instead of if if (Alan)
-
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
-Fixes: a6f0f9cf330a ("drm/i915/guc: Plumb GuC-capture into gpu_coredump")
-Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
-Cc: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Aravind Iddamsetty <aravind.iddamsetty@intel.com>
-Cc: Michael Cheng <michael.cheng@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Bruce Chang <yu.bruce.chang@intel.com>
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230311063714.570389-2-John.C.Harrison@Intel.com
-(cherry picked from commit 9724ecdbb9ddd6da3260e4a442574b90fc75188a)
+Fixes: 481d458caede ("drm/i915/guc: Add golden context to GuC ADS")
+Acked-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230314151920.1065847-1-andrzej.hajda@intel.com
+(cherry picked from commit c4252a11131c7f27a158294241466e2a4e7ff94e)
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/i915/gt/uc/intel_guc_capture.c    | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/gpu/drm/i915/gt/intel_gt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-index fc3b994626a4f..710999d7189ee 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-@@ -1571,6 +1571,27 @@ int intel_guc_capture_print_engine_node(struct drm_i915_error_state_buf *ebuf,
+diff --git a/drivers/gpu/drm/i915/gt/intel_gt.c b/drivers/gpu/drm/i915/gt/intel_gt.c
+index 9c18b5f2e7892..7868da20d5ea3 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gt.c
++++ b/drivers/gpu/drm/i915/gt/intel_gt.c
+@@ -745,12 +745,12 @@ int intel_gt_init(struct intel_gt *gt)
+ 	if (err)
+ 		goto err_gt;
  
- #endif //CONFIG_DRM_I915_CAPTURE_ERROR
+-	intel_uc_init_late(&gt->uc);
+-
+ 	err = i915_inject_probe_error(gt->i915, -EIO);
+ 	if (err)
+ 		goto err_gt;
  
-+static void guc_capture_find_ecode(struct intel_engine_coredump *ee)
-+{
-+	struct gcap_reg_list_info *reginfo;
-+	struct guc_mmio_reg *regs;
-+	i915_reg_t reg_ipehr = RING_IPEHR(0);
-+	i915_reg_t reg_instdone = RING_INSTDONE(0);
-+	int i;
++	intel_uc_init_late(&gt->uc);
 +
-+	if (!ee->guc_capture_node)
-+		return;
-+
-+	reginfo = ee->guc_capture_node->reginfo + GUC_CAPTURE_LIST_TYPE_ENGINE_INSTANCE;
-+	regs = reginfo->regs;
-+	for (i = 0; i < reginfo->num_regs; i++) {
-+		if (regs[i].offset == reg_ipehr.reg)
-+			ee->ipehr = regs[i].value;
-+		else if (regs[i].offset == reg_instdone.reg)
-+			ee->instdone.instdone = regs[i].value;
-+	}
-+}
-+
- void intel_guc_capture_free_node(struct intel_engine_coredump *ee)
- {
- 	if (!ee || !ee->guc_capture_node)
-@@ -1612,6 +1633,7 @@ void intel_guc_capture_get_matching_node(struct intel_gt *gt,
- 			list_del(&n->link);
- 			ee->guc_capture_node = n;
- 			ee->guc_capture = guc->capture;
-+			guc_capture_find_ecode(ee);
- 			return;
- 		}
- 	}
+ 	intel_migrate_init(&gt->migrate, gt);
+ 
+ 	intel_pxp_init(&gt->pxp);
 -- 
 2.39.2
 
