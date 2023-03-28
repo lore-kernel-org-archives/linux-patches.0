@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1793A8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C837C433EF;
-	Tue, 28 Mar 2023 14:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C073A8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43489C433D2;
+	Tue, 28 Mar 2023 14:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015409;
-	bh=wlhbqFtoERqWL/M7yPD7+9cywiy3LE2UZ6bt7j9ScuA=;
+	s=korg; t=1680015412;
+	bh=Enun6d4xQjyUVhxu99y03YhiyEY1HIyer8NPEq/2RIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SYsPP6W54y0naww8pqzZwD7fLFATWEV2pELOdaJ1AKE7hZqub4NByrQ4/2b+SfHYw
-	 E22otA8UdBKkhhWCc4q5kwkBvd2+UfZ4AItNJKV/KBvRQhbup8U0txSGcFq0KuLuZ9
-	 SWlcO6NsQ+Bxh25MJIRE/wK/5i+z+CSSz/0WNyS4=
+	b=WzG+73Nx7pcEpV2gw4twZmNKsCl/QLUF/pMtmunH9jDihpBn7G3JPUBPaylWXR7k3
+	 mptbaU6gkovHpjR8dSRK7vOTuXWIOyYFsM3FCtY0OaoHV33pYB+/VQ9KQvJOvFHJ1Y
+	 jNP4DfKS/pJdJ4Qe5/iyWZHNlK3lr1Wg6sssbunU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Heidrich <szymon.heidrich@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/224] net: usb: smsc95xx: Limit packet length to skb->len
-Date: Tue, 28 Mar 2023 16:40:34 +0200
-Message-Id: <20230328142618.936133838@linuxfoundation.org>
+Subject: [PATCH 6.1 039/224] efi/libstub: smbios: Use length member instead of record struct size
+Date: Tue, 28 Mar 2023 16:40:35 +0200
+Message-Id: <20230328142618.978873211@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,41 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit ff821092cf02a70c2bccd2d19269f01e29aa52cf ]
+[ Upstream commit 34343eb06afc04af9178a9883d9354dc12beede0 ]
 
-Packet length retrieved from descriptor may be larger than
-the actual socket buffer length. In such case the cloned
-skb passed up the network stack will leak kernel memory contents.
+The type 1 SMBIOS record happens to always be the same size, but there
+are other record types which have been augmented over time, and so we
+should really use the length field in the header to decide where the
+string table starts.
 
-Fixes: 2f7ca802bdae ("net: Add SMSC LAN9500 USB2.0 10/100 ethernet adapter driver")
-Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20230316101954.75836-1-szymon.heidrich@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 550b33cfd4452968 ("arm64: efi: Force the use of ...")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc95xx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/firmware/efi/libstub/smbios.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
-index 32d2c60d334dc..563ecd27b93ea 100644
---- a/drivers/net/usb/smsc95xx.c
-+++ b/drivers/net/usb/smsc95xx.c
-@@ -1833,6 +1833,12 @@ static int smsc95xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		size = (u16)((header & RX_STS_FL_) >> 16);
- 		align_count = (4 - ((size + NET_IP_ALIGN) % 4)) % 4;
+diff --git a/drivers/firmware/efi/libstub/smbios.c b/drivers/firmware/efi/libstub/smbios.c
+index 460418b7f5f5e..aadb422b9637d 100644
+--- a/drivers/firmware/efi/libstub/smbios.c
++++ b/drivers/firmware/efi/libstub/smbios.c
+@@ -36,7 +36,7 @@ const u8 *__efi_get_smbios_string(u8 type, int offset, int recsize)
+ 	if (status != EFI_SUCCESS)
+ 		return NULL;
  
-+		if (unlikely(size > skb->len)) {
-+			netif_dbg(dev, rx_err, dev->net,
-+				  "size err header=0x%08x\n", header);
-+			return 0;
-+		}
-+
- 		if (unlikely(header & RX_STS_ES_)) {
- 			netif_dbg(dev, rx_err, dev->net,
- 				  "Error header=0x%08x\n", header);
+-	strtable = (u8 *)record + recsize;
++	strtable = (u8 *)record + record->length;
+ 	for (int i = 1; i < ((u8 *)record)[offset]; i++) {
+ 		int len = strlen(strtable);
+ 
 -- 
 2.39.2
 
