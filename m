@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C9B8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7B2C433EF;
-	Tue, 28 Mar 2023 14:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DBE8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814FBC433EF;
+	Tue, 28 Mar 2023 14:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015437;
-	bh=6PzF22KeicrrdyoEVT6KdM0Qb4ODHtE99hoY+gMW4OU=;
+	s=korg; t=1680015439;
+	bh=xP7nSp9eV98Qnkf7CTqbpoDHS4UhTgVPbD/j/d5lWv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPieMxNbZI54mZwk2+VCBaUO2UOj4ncGS0PgMcTyTcjj0MKvxk1w/3eF+/ikidwyC
-	 SfsF7sBtiyCl6TEQ6p8N2Qf0C/Rmx/TWqFq9TxTIfROzM+dP39FP/VQEKoTYAJB8/D
-	 rfDoea2oGNObMMSUwvDE+lVTbu3jb+pj0IYLJvP8=
+	b=UqwqNPEdZ4ZX6SKHgNdSkYOFHDNXLCXvc97DsaSsq+fVOtBsjWx+IpHAedh5Y7gEj
+	 t8W07ehpyBKjeeNix/lyB5vXas5Z9EJw3/azioWPSSrACo86Qdl6LDAy8hOSXQO0eW
+	 oYi3i5RBhHTtUixaRv45arIbx6hhP/3Il2tiNbKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Peng Fan <peng.fan@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/224] arm64: dts: imx8dxl-evk: Fix eqos phy reset gpio
-Date: Tue, 28 Mar 2023 16:40:14 +0200
-Message-Id: <20230328142618.025827374@linuxfoundation.org>
+Subject: [PATCH 6.1 019/224] ARM: dts: imx6sll: e70k02: fix usbotg1 pinctrl
+Date: Tue, 28 Mar 2023 16:40:15 +0200
+Message-Id: <20230328142618.077330281@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -36,54 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit feafeb53140af3cde3fba46b292b15b3a0c0635c ]
+[ Upstream commit 3d37f7685d525e58674c23d607020e66d501dcd1 ]
 
-The deprecated property is named snps,reset-gpio, but this devicetree
-used snps,reset-gpios instead which results in the reset not being used
-and the following make dtbs_check error:
+usb@2184000: 'pinctrl-0' is a dependency of 'pinctrl-names'
 
-    ./arch/arm64/boot/dts/freescale/imx8dxl-evk.dtb: ethernet@5b050000: 'snps,reset-gpio' is a dependency of 'snps,reset-delays-us'
-        From schema: ./Documentation/devicetree/bindings/net/snps,dwmac.yaml
-
-Use the preferred method of defining the reset gpio in the phy node
-itself. Note that this drops the 10 us pre-delay, but prior this wasn't
-used at all and a pre-delay doesn't make much sense in this context so
-it should be fine.
-
-Fixes: 8dd495d12374 ("arm64: dts: freescale: add support for i.MX8DXL EVK board")
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Fixes: 3bb3fd856505 ("ARM: dts: add Netronix E70K02 board common file")
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8dxl-evk.dts | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/e70k02.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts b/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
-index 96f5947ed5f41..3af4c76369741 100644
---- a/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
-@@ -99,8 +99,6 @@ &eqos {
- 	phy-handle = <&ethphy0>;
- 	nvmem-cells = <&fec_mac1>;
- 	nvmem-cell-names = "mac-address";
--	snps,reset-gpios = <&pca6416_1 2 GPIO_ACTIVE_LOW>;
--	snps,reset-delays-us = <10 20 200000>;
- 	status = "okay";
+diff --git a/arch/arm/boot/dts/e70k02.dtsi b/arch/arm/boot/dts/e70k02.dtsi
+index 27ef9a62b23cf..a1f9fbd6004aa 100644
+--- a/arch/arm/boot/dts/e70k02.dtsi
++++ b/arch/arm/boot/dts/e70k02.dtsi
+@@ -312,6 +312,7 @@ &usdhc3 {
  
- 	mdio {
-@@ -114,6 +112,9 @@ ethphy0: ethernet-phy@0 {
- 			eee-broken-1000t;
- 			qca,disable-smarteee;
- 			qca,disable-hibernation-mode;
-+			reset-gpios = <&pca6416_1 2 GPIO_ACTIVE_LOW>;
-+			reset-assert-us = <20>;
-+			reset-deassert-us = <200000>;
- 			vddio-supply = <&vddio0>;
- 
- 			vddio0: vddio-regulator {
+ &usbotg1 {
+ 	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_usbotg1>;
+ 	disable-over-current;
+ 	srp-disable;
+ 	hnp-disable;
 -- 
 2.39.2
 
