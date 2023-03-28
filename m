@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036048476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77578C433EF;
-	Tue, 28 Mar 2023 14:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB5A8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22772C433EF;
+	Tue, 28 Mar 2023 14:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015279;
-	bh=3ZIwN6KbEMpPOCvyllHWBacuYVV6VxMMXYl3zHWKP+I=;
+	s=korg; t=1680015282;
+	bh=yKt3/aQWkdaBiordIdPNQ9ot6DI5eRTmxt+Mt8gdIYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2mawEzaaWCxEFAkVS3NGfCfhjyek3wqobPo2XkzpqsD2H3xxggEwFuBjw0tBXBJuX
-	 GA3hs6m0AJCTQwnvki2B7emV61ritJy+PTJKFTqz/kHaLw9bxKdRgSdpA/6xt2rR6Z
-	 mxFKr3nVqyblZGVXmyB2UxyhuGHBQw/PF9u74i6Y=
+	b=oZ3C2teYY+iD7I54oBzTWS1Al5LAwrnMfbfi4Mcrb5LaV7wKbeqaIpkR9Wsse/PBN
+	 koiWbqWAhHavsKW6/ZwFLR2U58WojLkDjENxS2c/WciDtP2Vh6s5l2J98DSUFY3ZvU
+	 Nlyr2WJF/WOJZUrPDeuqC65VXpiPwh5T5wfKmqLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.2 230/240] arm64: dts: qcom: sc7280: Mark PCIe controller as cache coherent
-Date: Tue, 28 Mar 2023 16:43:13 +0200
-Message-Id: <20230328142629.298255699@linuxfoundation.org>
+	Marco Elver <elver@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.2 202/240] kfence: avoid passing -g for test
+Date: Tue, 28 Mar 2023 16:42:45 +0200
+Message-Id: <20230328142628.094495448@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,35 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+From: Marco Elver <elver@google.com>
 
-commit 8a63441e83724fee1ef3fd37b237d40d90780766 upstream.
+commit 2e08ca1802441224f5b7cc6bffbb687f7406de95 upstream.
 
-If the controller is not marked as cache coherent, then kernel will
-try to ensure coherency during dma-ops and that may cause data corruption.
-So, mark the PCIe node as dma-coherent as the devices on PCIe bus are
-cache coherent.
+Nathan reported that when building with GNU as and a version of clang that
+defaults to DWARF5:
 
-Cc: stable@vger.kernel.org
-Fixes: 92e0ee9f83b3 ("arm64: dts: qcom: sc7280: Add PCIe and PHY related node")
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/1677584952-17496-1-git-send-email-quic_krichai@quicinc.com
+  $ make -skj"$(nproc)" ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- \
+			LLVM=1 LLVM_IAS=0 O=build \
+			mrproper allmodconfig mm/kfence/kfence_test.o
+  /tmp/kfence_test-08a0a0.s: Assembler messages:
+  /tmp/kfence_test-08a0a0.s:14627: Error: non-constant .uleb128 is not supported
+  /tmp/kfence_test-08a0a0.s:14628: Error: non-constant .uleb128 is not supported
+  /tmp/kfence_test-08a0a0.s:14632: Error: non-constant .uleb128 is not supported
+  /tmp/kfence_test-08a0a0.s:14633: Error: non-constant .uleb128 is not supported
+  /tmp/kfence_test-08a0a0.s:14639: Error: non-constant .uleb128 is not supported
+  ...
+
+This is because `-g` defaults to the compiler debug info default.  If the
+assembler does not support some of the directives used, the above errors
+occur.  To fix, remove the explicit passing of `-g`.
+
+All the test wants is that stack traces print valid function names, and
+debug info is not required for that.  (I currently cannot recall why I
+added the explicit `-g`.)
+
+Link: https://lkml.kernel.org/r/20230316224705.709984-1-elver@google.com
+Fixes: bc8fbc5f305a ("kfence: add test suite")
+Signed-off-by: Marco Elver <elver@google.com>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/kfence/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2122,6 +2122,8 @@
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&pcie1_clkreq_n>;
+--- a/mm/kfence/Makefile
++++ b/mm/kfence/Makefile
+@@ -2,5 +2,5 @@
  
-+			dma-coherent;
-+
- 			iommus = <&apps_smmu 0x1c80 0x1>;
+ obj-y := core.o report.o
  
- 			iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
+-CFLAGS_kfence_test.o := -g -fno-omit-frame-pointer -fno-optimize-sibling-calls
++CFLAGS_kfence_test.o := -fno-omit-frame-pointer -fno-optimize-sibling-calls
+ obj-$(CONFIG_KFENCE_KUNIT_TEST) += kfence_test.o
 
 
