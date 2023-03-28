@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361AF8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AABC1C4339B;
-	Tue, 28 Mar 2023 14:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114AD8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A41C4339B;
+	Tue, 28 Mar 2023 14:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015195;
-	bh=yWPBRrFI/oYaXjmv3+o4pmMnCU+y0h1oA5LCrzYs3pg=;
+	s=korg; t=1680015197;
+	bh=UbuUN3KSzDuMN6TkFM0V/FPldvR4d6VQ/uFQrR0BVew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdErljGFpi28qoCZbRZCliFS7R+2uccfjiCkAzbZ83/9rRngF3dTlYTR3PLhYUNpx
-	 3kxdwof2Wp1C/u4mxH47e10bdV7p6qlEzRU01P73P6f2uLucdl4SJOZ5RVr8VNsGSI
-	 BugY/Fp+GOJRw2rsW9/n8oAb6egeD2AeJ1z9Aaak=
+	b=u0HvRe9eQcF63M+JfpTS15SxlFBiErWa6zR6p4Or5nGLNDA6TRsGvQ1UXuPQiKx2r
+	 fUEm8mXlJi7hlNBDxqHa7eqCC5C2tP1L6bKoXAIOmuG4y1m7E9Ky5iiknoRWyUyzUt
+	 CeNQ8r3sgqKX1B1lpFgMvEqWSzbWVTCCo8hPFpF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Mingwei Zhang <mizhang@google.com>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.2 169/240] x86/mm: Do not shuffle CPU entry areas without KASLR
-Date: Tue, 28 Mar 2023 16:42:12 +0200
-Message-Id: <20230328142626.702956348@linuxfoundation.org>
+Subject: [PATCH 6.2 170/240] x86/fpu/xstate: Prevent false-positive warning in __copy_xstate_uabi_buf()
+Date: Tue, 28 Mar 2023 16:42:13 +0200
+Message-Id: <20230328142626.742801691@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,59 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Koutný <mkoutny@suse.com>
+From: Chang S. Bae <chang.seok.bae@intel.com>
 
-commit a3f547addcaa10df5a226526bc9e2d9a94542344 upstream.
+commit b15888840207c2bfe678dd1f68a32db54315e71f upstream.
 
-The commit 97e3d26b5e5f ("x86/mm: Randomize per-cpu entry area") fixed
-an omission of KASLR on CPU entry areas. It doesn't take into account
-KASLR switches though, which may result in unintended non-determinism
-when a user wants to avoid it (e.g. debugging, benchmarking).
+__copy_xstate_to_uabi_buf() copies either from the tasks XSAVE buffer
+or from init_fpstate into the ptrace buffer. Dynamic features, like
+XTILEDATA, have an all zeroes init state and are not saved in
+init_fpstate, which means the corresponding bit is not set in the
+xfeatures bitmap of the init_fpstate header.
 
-Generate only a single combination of CPU entry areas offsets -- the
-linear array that existed prior randomization when KASLR is turned off.
+But __copy_xstate_to_uabi_buf() retrieves addresses for both the tasks
+xstate and init_fpstate unconditionally via __raw_xsave_addr().
 
-Since we have 3f148f331814 ("x86/kasan: Map shadow for percpu pages on
-demand") and followups, we can use the more relaxed guard
-kasrl_enabled() (in contrast to kaslr_memory_enabled()).
+So if the tasks XSAVE buffer has a dynamic feature set, then the
+address retrieval for init_fpstate triggers the warning in
+__raw_xsave_addr() which checks the feature bit in the init_fpstate
+header.
 
-Fixes: 97e3d26b5e5f ("x86/mm: Randomize per-cpu entry area")
-Signed-off-by: Michal Koutný <mkoutny@suse.com>
+Remove the address retrieval from init_fpstate for extended features.
+They have an all zeroes init state so init_fpstate has zeros for them.
+Then zeroing the user buffer for the init state is the same as copying
+them from init_fpstate.
+
+Fixes: 2308ee57d93d ("x86/fpu/amx: Enable the AMX feature in 64-bit mode")
+Reported-by: Mingwei Zhang <mizhang@google.com>
+Link: https://lore.kernel.org/kvm/20230221163655.920289-2-mizhang@google.com/
+Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Mingwei Zhang <mizhang@google.com>
+Link: https://lore.kernel.org/all/20230227210504.18520-2-chang.seok.bae%40intel.com
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20230306193144.24605-1-mkoutny%40suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/cpu_entry_area.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/kernel/fpu/xstate.c |   30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
-diff --git a/arch/x86/mm/cpu_entry_area.c b/arch/x86/mm/cpu_entry_area.c
-index 7316a8224259..e91500a80963 100644
---- a/arch/x86/mm/cpu_entry_area.c
-+++ b/arch/x86/mm/cpu_entry_area.c
-@@ -10,6 +10,7 @@
- #include <asm/fixmap.h>
- #include <asm/desc.h>
- #include <asm/kasan.h>
-+#include <asm/setup.h>
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -1118,21 +1118,20 @@ void __copy_xstate_to_uabi_buf(struct me
+ 	zerofrom = offsetof(struct xregs_state, extended_state_area);
  
- static DEFINE_PER_CPU_PAGE_ALIGNED(struct entry_stack_page, entry_stack_storage);
+ 	/*
+-	 * The ptrace buffer is in non-compacted XSAVE format.  In
+-	 * non-compacted format disabled features still occupy state space,
+-	 * but there is no state to copy from in the compacted
+-	 * init_fpstate. The gap tracking will zero these states.
++	 * This 'mask' indicates which states to copy from fpstate.
++	 * Those extended states that are not present in fpstate are
++	 * either disabled or initialized:
++	 *
++	 * In non-compacted format, disabled features still occupy
++	 * state space but there is no state to copy from in the
++	 * compacted init_fpstate. The gap tracking will zero these
++	 * states.
++	 *
++	 * The extended features have an all zeroes init state. Thus,
++	 * remove them from 'mask' to zero those features in the user
++	 * buffer instead of retrieving them from init_fpstate.
+ 	 */
+-	mask = fpstate->user_xfeatures;
+-
+-	/*
+-	 * Dynamic features are not present in init_fpstate. When they are
+-	 * in an all zeros init state, remove those from 'mask' to zero
+-	 * those features in the user buffer instead of retrieving them
+-	 * from init_fpstate.
+-	 */
+-	if (fpu_state_size_dynamic())
+-		mask &= (header.xfeatures | xinit->header.xcomp_bv);
++	mask = header.xfeatures;
  
-@@ -29,6 +30,12 @@ static __init void init_cea_offsets(void)
- 	unsigned int max_cea;
- 	unsigned int i, j;
- 
-+	if (!kaslr_enabled()) {
-+		for_each_possible_cpu(i)
-+			per_cpu(_cea_offset, i) = i;
-+		return;
-+	}
-+
- 	max_cea = (CPU_ENTRY_AREA_MAP_SIZE - PAGE_SIZE) / CPU_ENTRY_AREA_SIZE;
- 
- 	/* O(sodding terrible) */
--- 
-2.40.0
-
+ 	for_each_extended_xfeature(i, mask) {
+ 		/*
+@@ -1151,9 +1150,8 @@ void __copy_xstate_to_uabi_buf(struct me
+ 			pkru.pkru = pkru_val;
+ 			membuf_write(&to, &pkru, sizeof(pkru));
+ 		} else {
+-			copy_feature(header.xfeatures & BIT_ULL(i), &to,
++			membuf_write(&to,
+ 				     __raw_xsave_addr(xsave, i),
+-				     __raw_xsave_addr(xinit, i),
+ 				     xstate_sizes[i]);
+ 		}
+ 		/*
 
 
