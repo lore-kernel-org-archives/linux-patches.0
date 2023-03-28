@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D5D8474
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:44:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6231C433EF;
-	Tue, 28 Mar 2023 14:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B60D8474
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:44:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC875C433EF;
+	Tue, 28 Mar 2023 14:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014666;
-	bh=v/3LkMJ6Yj03+kGGsAzqvp9UoXGUKgnXcpHymRpBQrc=;
+	s=korg; t=1680014669;
+	bh=4PmghaiQzSnprY71YjOHpZQd8m/rxGKANb7/JxO9T8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWu3j/JUw2ESJUlpID2jb1CpAnSQ+7/hg6gMX2IlVmQkY0b66WUWHr6/rGGbg5pZf
-	 lXiOM20IOivvlTyTYOjeBX4h8VDJ7OKPzyXZ6F9b+G3u4P02Zw29LrGVjqV+SEZj8O
-	 Oowbolg9DJqxctcTMlWXPOKIzvPxAiS+ULz2kW70=
+	b=kVwjyRC4N772/pLGrCTAiAZDC6GgTHI/BKrqpMJ9VqzRzUyPzYD+tp+Vsi1mTM3qg
+	 QSKLTq66+zajwGwiIvNDRbGWhNxDV37DGVzr+unPvJAmJqTU5Fqs0m3UdJU7ZGKlAv
+	 0VZCFdUnPr/vwwnEuaBngG6cAHB14rZOFlEJ8cIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 001/240] interconnect: qcom: osm-l3: fix icc_onecell_data allocation
-Date: Tue, 28 Mar 2023 16:39:24 +0200
-Message-Id: <20230328142619.710865759@linuxfoundation.org>
+Subject: [PATCH 6.2 010/240] arm64: dts: freescale: imx8-ss-lsio: Fix flexspi clock order
+Date: Tue, 28 Mar 2023 16:39:33 +0200
+Message-Id: <20230328142620.082821620@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,41 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit f77ebdda0ee652124061c2ac42399bb6c367e729 ]
+[ Upstream commit fd4334a06d452ce89a0bb831b03130c51331d927 ]
 
-This is a struct with a trailing zero-length array of icc_node pointers
-but it's allocated as if it were a single array of icc_nodes instead.
+The correct clock order is "fspi_en" and "fspi". As they are identical
+just reordering the names is sufficient.
 
-Fortunately this overallocates memory rather then allocating less memory
-than required.
-
-Fix by replacing devm_kcalloc() with devm_kzalloc() and struct_size()
-macro.
-
-Fixes: 5bc9900addaf ("interconnect: qcom: Add OSM L3 interconnect provider support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230105002221.1416479-2-dmitry.baryshkov@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 6276d66984e9 ("arm64: dts: imx8dxl: add flexspi0 support")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/osm-l3.c | 2 +-
+ arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-index 3a1cbfe3e481f..1bafb54f14329 100644
---- a/drivers/interconnect/qcom/osm-l3.c
-+++ b/drivers/interconnect/qcom/osm-l3.c
-@@ -236,7 +236,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
- 	qnodes = desc->nodes;
- 	num_nodes = desc->num_nodes;
- 
--	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
-+	data = devm_kzalloc(&pdev->dev, struct_size(data, nodes, num_nodes), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
- 
+diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi
+index 1f3d225e64ece..06b94bbc2b97d 100644
+--- a/arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi
+@@ -117,7 +117,7 @@ flexspi0: spi@5d120000 {
+ 		interrupts = <GIC_SPI 92 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&clk IMX_SC_R_FSPI_0 IMX_SC_PM_CLK_PER>,
+ 			 <&clk IMX_SC_R_FSPI_0 IMX_SC_PM_CLK_PER>;
+-		clock-names = "fspi", "fspi_en";
++		clock-names = "fspi_en", "fspi";
+ 		power-domains = <&pd IMX_SC_R_FSPI_0>;
+ 		status = "disabled";
+ 	};
 -- 
 2.39.2
 
