@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A638D8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:07:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B46C433EF;
-	Tue, 28 Mar 2023 15:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5026D8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:07:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0ECDC433EF;
+	Tue, 28 Mar 2023 15:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016027;
-	bh=Y3TWu/DsfrK/R9LpCxN+kLjbkR0WP09mroSqPCLV/W8=;
+	s=korg; t=1680016030;
+	bh=dMbu8502bYiXgDXGifEtfDnNYZyIZyc8TR2o/Qxok1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=elxfuT20fWEE27As4X83Ri9cDsAif+hpQDChncaHWLlMO+USU336H1Nl8Ym5qGCAc
-	 ze0uNrb7htKE1pIUlWH9mwSjVF33m3dhw0vWWnZR5E5JXZDKjdu6sk/zYKK9i+yZBg
-	 Og9iOH94R0OGof39JuVzk7soyxKY4dJsPoy8G5FA=
+	b=LZyjGEsI+kvkeKeq43hY04EsHtD2JyfRbVcdw8wirh6xg8+WWrKVpNqVrXh8qtJCS
+	 Hm93MJ0yVD21myalE2/OCB+G3vNU8EaiOQo0TYatwOkNQyAvSMhXV0kvgFKL3b5ae2
+	 ujF7v5mRKPJr+lathtIUU5Y0vXtnFw4606ZiFV3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Geoff Levand <geoff@infradead.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Geethasowjanya Akula <gakula@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 039/146] net/ps3_gelic_net: Use dma_mapping_error
-Date: Tue, 28 Mar 2023 16:42:08 +0200
-Message-Id: <20230328142604.327248617@linuxfoundation.org>
+Subject: [PATCH 5.15 040/146] octeontx2-vf: Add missing free for alloc_percpu
+Date: Tue, 28 Mar 2023 16:42:09 +0200
+Message-Id: <20230328142604.365837538@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -36,87 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geoff Levand <geoff@infradead.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit bebe933d35a63d4f042fbf4dce4f22e689ba0fcd ]
+[ Upstream commit f038f3917baf04835ba2b7bcf2a04ac93fbf8a9c ]
 
-The current Gelic Etherenet driver was checking the return value of its
-dma_map_single call, and not using the dma_mapping_error() routine.
+Add the free_percpu for the allocated "vf->hw.lmt_info" in order to avoid
+memory leak, same as the "pf->hw.lmt_info" in
+`drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c`.
 
-Fixes runtime problems like these:
-
-  DMA-API: ps3_gelic_driver sb_05: device driver failed to check map error
-  WARNING: CPU: 0 PID: 0 at kernel/dma/debug.c:1027 .check_unmap+0x888/0x8dc
-
-Fixes: 02c1889166b4 ("ps3: gigabit ethernet driver for PS3, take3")
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: Geoff Levand <geoff@infradead.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 5c0512072f65 ("octeontx2-pf: cn10k: Use runtime allocated LMTLINE region")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Acked-by: Geethasowjanya Akula <gakula@marvell.com>
+Link: https://lore.kernel.org/r/20230317064337.18198-1-jiasheng@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/toshiba/ps3_gelic_net.c | 24 +++++++++++---------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/toshiba/ps3_gelic_net.c b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
-index bd1316db2d944..78e484ea279bc 100644
---- a/drivers/net/ethernet/toshiba/ps3_gelic_net.c
-+++ b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
-@@ -317,15 +317,17 @@ static int gelic_card_init_chain(struct gelic_card *card,
- 
- 	/* set up the hardware pointers in each descriptor */
- 	for (i = 0; i < no; i++, descr++) {
-+		dma_addr_t cpu_addr;
-+
- 		gelic_descr_set_status(descr, GELIC_DESCR_DMA_NOT_IN_USE);
--		descr->bus_addr =
--			dma_map_single(ctodev(card), descr,
--				       GELIC_DESCR_SIZE,
--				       DMA_BIDIRECTIONAL);
- 
--		if (!descr->bus_addr)
-+		cpu_addr = dma_map_single(ctodev(card), descr,
-+					  GELIC_DESCR_SIZE, DMA_BIDIRECTIONAL);
-+
-+		if (dma_mapping_error(ctodev(card), cpu_addr))
- 			goto iommu_error;
- 
-+		descr->bus_addr = cpu_to_be32(cpu_addr);
- 		descr->next = descr + 1;
- 		descr->prev = descr - 1;
- 	}
-@@ -375,6 +377,7 @@ static int gelic_descr_prepare_rx(struct gelic_card *card,
- 	static const unsigned int rx_skb_size =
- 		ALIGN(GELIC_NET_MAX_FRAME, GELIC_NET_RXBUF_ALIGN) +
- 		GELIC_NET_RXBUF_ALIGN - 1;
-+	dma_addr_t cpu_addr;
- 	int offset;
- 
- 	if (gelic_descr_get_status(descr) !=  GELIC_DESCR_DMA_NOT_IN_USE)
-@@ -396,11 +399,10 @@ static int gelic_descr_prepare_rx(struct gelic_card *card,
- 	if (offset)
- 		skb_reserve(descr->skb, GELIC_NET_RXBUF_ALIGN - offset);
- 	/* io-mmu-map the skb */
--	descr->buf_addr = cpu_to_be32(dma_map_single(ctodev(card),
--						     descr->skb->data,
--						     GELIC_NET_MAX_FRAME,
--						     DMA_FROM_DEVICE));
--	if (!descr->buf_addr) {
-+	cpu_addr = dma_map_single(ctodev(card), descr->skb->data,
-+				  GELIC_NET_MAX_FRAME, DMA_FROM_DEVICE);
-+	descr->buf_addr = cpu_to_be32(cpu_addr);
-+	if (dma_mapping_error(ctodev(card), cpu_addr)) {
- 		dev_kfree_skb_any(descr->skb);
- 		descr->skb = NULL;
- 		dev_info(ctodev(card),
-@@ -780,7 +782,7 @@ static int gelic_descr_prepare_tx(struct gelic_card *card,
- 
- 	buf = dma_map_single(ctodev(card), skb->data, skb->len, DMA_TO_DEVICE);
- 
--	if (!buf) {
-+	if (dma_mapping_error(ctodev(card), buf)) {
- 		dev_err(ctodev(card),
- 			"dma map 2 failed (%p, %i). Dropping packet\n",
- 			skb->data, skb->len);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
+index 03b4ec630432b..9822db362c88e 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
+@@ -704,6 +704,7 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ err_unreg_netdev:
+ 	unregister_netdev(netdev);
+ err_detach_rsrc:
++	free_percpu(vf->hw.lmt_info);
+ 	if (test_bit(CN10K_LMTST, &vf->hw.cap_flag))
+ 		qmem_free(vf->dev, vf->dync_lmt);
+ 	otx2_detach_resources(&vf->mbox);
+@@ -738,6 +739,7 @@ static void otx2vf_remove(struct pci_dev *pdev)
+ 		destroy_workqueue(vf->otx2_wq);
+ 	otx2vf_disable_mbox_intr(vf);
+ 	otx2_detach_resources(&vf->mbox);
++	free_percpu(vf->hw.lmt_info);
+ 	if (test_bit(CN10K_LMTST, &vf->hw.cap_flag))
+ 		qmem_free(vf->dev, vf->dync_lmt);
+ 	otx2vf_vfaf_mbox_destroy(vf);
 -- 
 2.39.2
 
