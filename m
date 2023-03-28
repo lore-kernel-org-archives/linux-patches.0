@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB468BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941A1C433D2;
-	Tue, 28 Mar 2023 15:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED488BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F6FC433EF;
+	Tue, 28 Mar 2023 15:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015915;
-	bh=OeeU9YgiFx8fz9MuFWqWfSigrs8q2ZzOsr+sISGjjM8=;
+	s=korg; t=1680015917;
+	bh=rgbxGXgtBGzX2TXTlLFoE5MhmnQh0pJ0IQKb8hN1d8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cq3n87cN3LNR7sNiTgoZlXg6b+6IYymYd4rsbJ/n84mJ3w6qrb+BUz2hEKLo4nStK
-	 k087GXwIN8snWzdzLoRa1s9ZE87YU8c+DJV8yaQ6WdUuKX53So+xqmvHpz6TWzq8F2
-	 8Iv24IiBzQ1sTVFypc17+8GcBx5xgW9ggciyK5As=
+	b=xTcgmqzr1ptw77pTROlNIVwnPlItE3lxfy+dIbbEVrb27GpWw1qSCvfLcZfutqrFL
+	 wPCLP5xnhssHVo0UVcqP13H76OrWeY3vTOh9TUa6ZFFYU8wWHF6Z3KkrfOlZf03Ijh
+	 twaZ9x0b4qt54soJQowDAVBR72QyPC2f0mvGmcKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Aaron Liu <aaron.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Limonciello, Mario" <Mario.Limonciello@amd.com>
-Subject: [PATCH 6.1 223/224] drm/amdkfd: add GC 11.0.4 KFD support
-Date: Tue, 28 Mar 2023 16:43:39 +0200
-Message-Id: <20230328142626.579706827@linuxfoundation.org>
+	Ma Jun <Jun.Ma2@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	coverity-bot <keescook+coverity-bot@chromium.org>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 224/224] drm/amdkfd: Fix the memory overrun
+Date: Tue, 28 Mar 2023 16:43:40 +0200
+Message-Id: <20230328142626.610524578@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -36,49 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yifan Zhang <yifan1.zhang@amd.com>
+From: Ma Jun <Jun.Ma2@amd.com>
 
-commit 88c21c2b56aa21dd34290d43ada74033dc3bfe35 upstream.
+commit 4cc16d64b6cdb179a26fb389cae9dce788e88f5d upstream.
 
-Add initial support for GC 11.0.4 in KFD compute driver.
+Fix the memory overrun issue caused by wrong array size.
 
-Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reviewed-by: Aaron Liu <aaron.liu@amd.com>
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reported-by: coverity-bot <keescook+coverity-bot@chromium.org>
+Addresses-Coverity-ID: 1527133 ("Memory - corruptions")
+Fixes: c0cc999f3c32e6 ("drm/amdkfd: Fix the warning of array-index-out-of-bounds")
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.c   |    1 +
- drivers/gpu/drm/amd/amdkfd/kfd_device.c |    2 ++
- 2 files changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_crat.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
 +++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-@@ -1522,6 +1522,7 @@ int kfd_get_gpu_cache_info(struct kfd_de
- 		case IP_VERSION(11, 0, 1):
- 		case IP_VERSION(11, 0, 2):
- 		case IP_VERSION(11, 0, 3):
-+		case IP_VERSION(11, 0, 4):
- 			num_of_cache_types =
- 				kfd_fill_gpu_cache_info_from_gfx_config(kdev, *pcache_info);
- 			break;
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-@@ -154,6 +154,7 @@ static void kfd_device_info_set_event_in
- 	case IP_VERSION(11, 0, 1):
- 	case IP_VERSION(11, 0, 2):
- 	case IP_VERSION(11, 0, 3):
-+	case IP_VERSION(11, 0, 4):
- 		kfd->device_info.event_interrupt_class = &event_interrupt_class_v11;
- 		break;
- 	default:
-@@ -396,6 +397,7 @@ struct kfd_dev *kgd2kfd_probe(struct amd
- 			f2g = &gfx_v11_kfd2kgd;
- 			break;
- 		case IP_VERSION(11, 0, 1):
-+		case IP_VERSION(11, 0, 4):
- 			gfx_target_version = 110003;
- 			f2g = &gfx_v11_kfd2kgd;
- 			break;
+@@ -1111,7 +1111,7 @@ static int kfd_parse_subtype_cache(struc
+ 			props->cache_latency = cache->cache_latency;
+ 
+ 			memcpy(props->sibling_map, cache->sibling_map,
+-					sizeof(props->sibling_map));
++					CRAT_SIBLINGMAP_SIZE);
+ 
+ 			/* set the sibling_map_size as 32 for CRAT from ACPI */
+ 			props->sibling_map_size = CRAT_SIBLINGMAP_SIZE;
 
 
