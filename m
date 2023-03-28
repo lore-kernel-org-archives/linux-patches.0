@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED58BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921D0C433D2;
-	Tue, 28 Mar 2023 15:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4A08BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D49C433EF;
+	Tue, 28 Mar 2023 15:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015743;
-	bh=c0hHdco8kUZIHXhR8Xl10SVaLlnPVh8gFB30rmT5fLM=;
+	s=korg; t=1680015746;
+	bh=nmnE+C/7SeTa5kfh1ckVOyQkfPvx48ePwk17onKQgtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1tQTqbHy0uL96cR+2sJ87x9uIEEe8cLBiKZl7WjHMrd+QCCJstUIjrJGuBfmlV9lp
-	 HbzEIcxuFQyZWqo1nkpqh4xtnO2I4DHSULdyl5LGWHc4DIIvbeJVEsGkdkVnJamXFf
-	 JtEF4xeglLJqFBPfkrsXVY4+SVpT+QQTF6ISRHVE=
+	b=PSmMs42Y8iLAGFYKnawWjhwl4BmkQ6y3jIMMn4bT+yumiuOMwtmTzfaC+iY1S8NVP
+	 18T0I62RZb9zYRJRsuH0G0lz0PvSKWxX1pVAJZprdLz3gR2KCTN1n9Xm/UGxSY4sSH
+	 gM7E9ZvwEwKu5vluLrade9q89Pa+sEcAUQMpuUZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	stable <stable@kernel.org>,
-	Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH 6.1 160/224] usb: misc: onboard-hub: add support for Microchip USB2517 USB 2.0 hub
-Date: Tue, 28 Mar 2023 16:42:36 +0200
-Message-Id: <20230328142624.036363969@linuxfoundation.org>
+	Ziyang Huang <hzyitc@outlook.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Minas Harutyunyan <hminas@synopsys.com>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>
+Subject: [PATCH 6.1 161/224] usb: dwc2: drd: fix inconsistent mode if role-switch-default-mode="host"
+Date: Tue, 28 Mar 2023 16:42:37 +0200
+Message-Id: <20230328142624.080520830@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,44 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Ziyang Huang <hzyitc@outlook.com>
 
-commit f7c13cb48e85538709850589b496c4ddb3d3898e upstream.
+commit 82f5332d3b9872ab5b287e85c57b76d8bb640cd1 upstream.
 
-Add support for Microchip USB2517 USB 2.0 hub to the onboard usb hub
-driver. Adopt the generic usb-device compatible ("usbVID,PID").
-This hub has the same reset timings as USB2514, so reuse that one.
-There is also an USB2517I which just has industrial temperature range.
+Some boards might use USB-A female connector for USB ports, however,
+the port could be connected to a dual-mode USB controller, making it
+also behaves as a peripheral device if male-to-male cable is connected.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+In this case, the dts looks like this:
+
+	&usb0 {
+		status = "okay";
+		dr_mode = "otg";
+		usb-role-switch;
+		role-switch-default-mode = "host";
+	};
+
+After boot, dwc2_ovr_init() sets GOTGCTL to GOTGCTL_AVALOVAL and call
+dwc2_force_mode() with parameter host=false, which causes inconsistent
+mode - The hardware is in peripheral mode while the kernel status is
+in host mode.
+
+What we can do now is to call dwc2_drd_role_sw_set() to switch to
+device mode, and everything should work just fine now, even switching
+back to none(default) mode afterwards.
+
+Fixes: e14acb876985 ("usb: dwc2: drd: add role-switch-default-node support")
 Cc: stable <stable@kernel.org>
-Acked-by: Matthias Kaehlcke <mka@chromium.org>
-Link: https://lore.kernel.org/r/20230223073920.2912298-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
+Tested-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Acked-by: Minas Harutyunyan <hminas@synopsys.com>
+Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/SG2PR01MB204837BF68EDB0E343D2A375C9A59@SG2PR01MB2048.apcprd01.prod.exchangelabs.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/onboard_usb_hub.c |    1 +
- drivers/usb/misc/onboard_usb_hub.h |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/usb/dwc2/drd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/misc/onboard_usb_hub.c
-+++ b/drivers/usb/misc/onboard_usb_hub.c
-@@ -406,6 +406,7 @@ static void onboard_hub_usbdev_disconnec
+--- a/drivers/usb/dwc2/drd.c
++++ b/drivers/usb/dwc2/drd.c
+@@ -35,7 +35,8 @@ static void dwc2_ovr_init(struct dwc2_hs
  
- static const struct usb_device_id onboard_hub_id_table[] = {
- 	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2514) }, /* USB2514B USB 2.0 */
-+	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2517) }, /* USB2517 USB 2.0 */
- 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0411) }, /* RTS5411 USB 3.1 */
- 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x5411) }, /* RTS5411 USB 2.1 */
- 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0414) }, /* RTS5414 USB 3.2 */
---- a/drivers/usb/misc/onboard_usb_hub.h
-+++ b/drivers/usb/misc/onboard_usb_hub.h
-@@ -24,6 +24,7 @@ static const struct onboard_hub_pdata ti
+ 	spin_unlock_irqrestore(&hsotg->lock, flags);
  
- static const struct of_device_id onboard_hub_match[] = {
- 	{ .compatible = "usb424,2514", .data = &microchip_usb424_data, },
-+	{ .compatible = "usb424,2517", .data = &microchip_usb424_data, },
- 	{ .compatible = "usb451,8140", .data = &ti_tusb8041_data, },
- 	{ .compatible = "usb451,8142", .data = &ti_tusb8041_data, },
- 	{ .compatible = "usbbda,411", .data = &realtek_rts5411_data, },
+-	dwc2_force_mode(hsotg, (hsotg->dr_mode == USB_DR_MODE_HOST));
++	dwc2_force_mode(hsotg, (hsotg->dr_mode == USB_DR_MODE_HOST) ||
++				(hsotg->role_sw_default_mode == USB_DR_MODE_HOST));
+ }
+ 
+ static int dwc2_ovr_avalid(struct dwc2_hsotg *hsotg, bool valid)
 
 
