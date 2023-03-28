@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DE18BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5778EC433EF;
-	Tue, 28 Mar 2023 14:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6838BEB
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168BBC4339B;
+	Tue, 28 Mar 2023 14:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014897;
-	bh=7aZkUTZ/Knwr5i5ptz64TfiTRMbWRrnZmysVfju2/4M=;
+	s=korg; t=1680014900;
+	bh=sl8fodqyPyil+UwMfvdzP6rQuO0LdTnkkPudQJLTjyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ipkjOO5LzpyUE9vruGN9NEJkNJEMJUg/aKuX9DfNd5/TXv3P+QPDgBkmeJzMFSsJp
-	 urPoyXhjIUfgdn+8Ic9IWF/ybqnUmy6dTUE/gyzGKoAbXVI6Sw8otkCRxOFJcYRddj
-	 M+NNRSJG2Tqruj6xTTrMCFKEiVXfpq0wzS+Ss99Q=
+	b=HDu+o22G26UoTKPEzQSvYnhWEne5InR4r6EKhu4Ok5IZwbn1sLUKt+gQZGoHrMELh
+	 /X9X3x2+ZtJZxHgoHwH9TSibxEFpsT+nAH9SElJbZL6/GBNGHk0RqHgFU3+IYiBpV8
+	 OjA/WFDxBarq6zaKo3HgN0huE5Dp0Y1im8dRdMyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Brian Gix <brian.gix@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 092/240] Bluetooth: ISO: fix timestamped HCI ISO data packet parsing
-Date: Tue, 28 Mar 2023 16:40:55 +0200
-Message-Id: <20230328142623.606553127@linuxfoundation.org>
+Subject: [PATCH 6.2 093/240] Bluetooth: Remove "Power-on" check from Mesh feature
+Date: Tue, 28 Mar 2023 16:40:56 +0200
+Message-Id: <20230328142623.646321969@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,64 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Brian Gix <brian.gix@gmail.com>
 
-[ Upstream commit 2f10e40a948e8a2abe7f983df3959a333ca8955f ]
+[ Upstream commit 52dd5e964a55c98c1b0bcf5fc737a5ddd00e7d4d ]
 
-Use correct HCI ISO data packet header struct when the packet has
-timestamp. The timestamp, when present, goes before the other fields
-(Core v5.3 4E 5.4.5), so the structs are not compatible.
+The Bluetooth mesh experimental feature enable was requiring the
+controller to be powered off in order for the Enable to work. Mesh is
+supposed to be enablable regardless of the controller state, and created
+an unintended requirement that the mesh daemon be started before the
+classic bluetoothd daemon.
 
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: af6bcc1921ff ("Bluetooth: Add experimental wrapper for MGMT based mesh")
+Signed-off-by: Brian Gix <brian.gix@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/bluetooth/mgmt.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 24444b502e586..8d136a7301630 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1620,7 +1620,6 @@ static void iso_disconn_cfm(struct hci_conn *hcon, __u8 reason)
- void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- {
- 	struct iso_conn *conn = hcon->iso_data;
--	struct hci_iso_data_hdr *hdr;
- 	__u16 pb, ts, len;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index d2ea8e19aa1b5..71b65ac6343a0 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -4627,12 +4627,6 @@ static int set_mgmt_mesh_func(struct sock *sk, struct hci_dev *hdev,
+ 				       MGMT_OP_SET_EXP_FEATURE,
+ 				       MGMT_STATUS_INVALID_INDEX);
  
- 	if (!conn)
-@@ -1642,6 +1641,8 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 		}
- 
- 		if (ts) {
-+			struct hci_iso_ts_data_hdr *hdr;
-+
- 			/* TODO: add timestamp to the packet? */
- 			hdr = skb_pull_data(skb, HCI_ISO_TS_DATA_HDR_SIZE);
- 			if (!hdr) {
-@@ -1649,15 +1650,19 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 				goto drop;
- 			}
- 
-+			len = __le16_to_cpu(hdr->slen);
- 		} else {
-+			struct hci_iso_data_hdr *hdr;
-+
- 			hdr = skb_pull_data(skb, HCI_ISO_DATA_HDR_SIZE);
- 			if (!hdr) {
- 				BT_ERR("Frame is too short (len %d)", skb->len);
- 				goto drop;
- 			}
-+
-+			len = __le16_to_cpu(hdr->slen);
- 		}
- 
--		len    = __le16_to_cpu(hdr->slen);
- 		flags  = hci_iso_data_flags(len);
- 		len    = hci_iso_data_len(len);
- 
+-	/* Changes can only be made when controller is powered down */
+-	if (hdev_is_powered(hdev))
+-		return mgmt_cmd_status(sk, hdev->id,
+-				       MGMT_OP_SET_EXP_FEATURE,
+-				       MGMT_STATUS_REJECTED);
+-
+ 	/* Parameters are limited to a single octet */
+ 	if (data_len != MGMT_SET_EXP_FEATURE_SIZE + 1)
+ 		return mgmt_cmd_status(sk, hdev->id,
 -- 
 2.39.2
 
