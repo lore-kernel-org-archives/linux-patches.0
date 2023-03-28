@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D3A8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF7CC433EF;
-	Tue, 28 Mar 2023 14:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB4F8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59A6C4339E;
+	Tue, 28 Mar 2023 14:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015200;
-	bh=Rws4IoTyzMXKlSKdC9oln+/HmUZ+0VC8t40sNPeVbIc=;
+	s=korg; t=1680015203;
+	bh=9hsS/okGxwCBR+WOx4ZbRSqYvE2dmW31JTytB/zOLpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gb6xxPGGIpCViXqD26Aht1vhR5xcX2282R5GksIPJWnJeNxAxWwbBkUU+WWJgB/AS
-	 BEXWU6pgQ2NP78PPlGBGBo84b+rfZyVoVGAyP9EXU0/9l+hwVk7tp6rQGgQXLTUW+X
-	 9hU/Qr55ObS8wUCVT7pxVfTSZzBHxRAFmXLMQGsM=
+	b=FP9FlxZOcs7maLETeWMwUjmtZ2WMexvHPHlpuhl53eWxQeftcYc7zb1edCkdhR56A
+	 2T9AdHIwRm+T1sXRtoIYx+Uu5BZ6hJRbCgy9YOalQ4SVXiuhooPVUWFEu6PKsPzKJO
+	 phTsDLoBVKACVNt8gb4rl4loXLbxXUvzAv1a/dKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chang S. Bae" <chang.seok.bae@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.2 171/240] selftests/x86/amx: Add a ptrace test
-Date: Tue, 28 Mar 2023 16:42:14 +0200
-Message-Id: <20230328142626.776861250@linuxfoundation.org>
+	Joel Selvaraj <joelselvaraj.oss@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.2 172/240] scsi: core: Add BLIST_SKIP_VPD_PAGES for SKhynix H28U74301AMR
+Date: Tue, 28 Mar 2023 16:42:15 +0200
+Message-Id: <20230328142626.806645010@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,172 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chang S. Bae <chang.seok.bae@intel.com>
+From: Joel Selvaraj <joelselvaraj.oss@gmail.com>
 
-commit 62faca1ca10cc84e99ae7f38aa28df2bc945369b upstream.
+commit a204b490595de71016b2360a1886ec8c12d0afac upstream.
 
-Include a test case to validate the XTILEDATA injection to the target.
+Xiaomi Poco F1 (qcom/sdm845-xiaomi-beryllium*.dts) comes with a SKhynix
+H28U74301AMR UFS. The sd_read_cpr() operation leads to a 120 second
+timeout, making the device bootup very slow:
 
-Also, it ensures the kernel's ability to copy states between different
-XSAVE formats.
+[  121.457736] sd 0:0:0:1: [sdb] tag#23 timing out command, waited 120s
 
-Refactor the memcmp() code to be usable for the state validation.
+Setting the BLIST_SKIP_VPD_PAGES allows the device to skip the failing
+sd_read_cpr operation and boot normally.
 
-Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Link: https://lore.kernel.org/r/20230313041402.39330-1-joelselvaraj.oss@gmail.com
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20230227210504.18520-3-chang.seok.bae%40intel.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/x86/amx.c |  108 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 105 insertions(+), 3 deletions(-)
+ drivers/scsi/scsi_devinfo.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/x86/amx.c
-+++ b/tools/testing/selftests/x86/amx.c
-@@ -14,8 +14,10 @@
- #include <sys/auxv.h>
- #include <sys/mman.h>
- #include <sys/shm.h>
-+#include <sys/ptrace.h>
- #include <sys/syscall.h>
- #include <sys/wait.h>
-+#include <sys/uio.h>
- 
- #include "../kselftest.h" /* For __cpuid_count() */
- 
-@@ -583,6 +585,13 @@ static void test_dynamic_state(void)
- 	_exit(0);
- }
- 
-+static inline int __compare_tiledata_state(struct xsave_buffer *xbuf1, struct xsave_buffer *xbuf2)
-+{
-+	return memcmp(&xbuf1->bytes[xtiledata.xbuf_offset],
-+		      &xbuf2->bytes[xtiledata.xbuf_offset],
-+		      xtiledata.size);
-+}
-+
- /*
-  * Save current register state and compare it to @xbuf1.'
-  *
-@@ -599,9 +608,7 @@ static inline bool __validate_tiledata_r
- 		fatal_error("failed to allocate XSAVE buffer\n");
- 
- 	xsave(xbuf2, XFEATURE_MASK_XTILEDATA);
--	ret = memcmp(&xbuf1->bytes[xtiledata.xbuf_offset],
--		     &xbuf2->bytes[xtiledata.xbuf_offset],
--		     xtiledata.size);
-+	ret = __compare_tiledata_state(xbuf1, xbuf2);
- 
- 	free(xbuf2);
- 
-@@ -826,6 +833,99 @@ static void test_context_switch(void)
- 	free(finfo);
- }
- 
-+/* Ptrace test */
-+
-+/*
-+ * Make sure the ptracee has the expanded kernel buffer on the first
-+ * use. Then, initialize the state before performing the state
-+ * injection from the ptracer.
-+ */
-+static inline void ptracee_firstuse_tiledata(void)
-+{
-+	load_rand_tiledata(stashed_xsave);
-+	init_xtiledata();
-+}
-+
-+/*
-+ * Ptracer injects the randomized tile data state. It also reads
-+ * before and after that, which will execute the kernel's state copy
-+ * functions. So, the tester is advised to double-check any emitted
-+ * kernel messages.
-+ */
-+static void ptracer_inject_tiledata(pid_t target)
-+{
-+	struct xsave_buffer *xbuf;
-+	struct iovec iov;
-+
-+	xbuf = alloc_xbuf();
-+	if (!xbuf)
-+		fatal_error("unable to allocate XSAVE buffer");
-+
-+	printf("\tRead the init'ed tiledata via ptrace().\n");
-+
-+	iov.iov_base = xbuf;
-+	iov.iov_len = xbuf_size;
-+
-+	memset(stashed_xsave, 0, xbuf_size);
-+
-+	if (ptrace(PTRACE_GETREGSET, target, (uint32_t)NT_X86_XSTATE, &iov))
-+		fatal_error("PTRACE_GETREGSET");
-+
-+	if (!__compare_tiledata_state(stashed_xsave, xbuf))
-+		printf("[OK]\tThe init'ed tiledata was read from ptracee.\n");
-+	else
-+		printf("[FAIL]\tThe init'ed tiledata was not read from ptracee.\n");
-+
-+	printf("\tInject tiledata via ptrace().\n");
-+
-+	load_rand_tiledata(xbuf);
-+
-+	memcpy(&stashed_xsave->bytes[xtiledata.xbuf_offset],
-+	       &xbuf->bytes[xtiledata.xbuf_offset],
-+	       xtiledata.size);
-+
-+	if (ptrace(PTRACE_SETREGSET, target, (uint32_t)NT_X86_XSTATE, &iov))
-+		fatal_error("PTRACE_SETREGSET");
-+
-+	if (ptrace(PTRACE_GETREGSET, target, (uint32_t)NT_X86_XSTATE, &iov))
-+		fatal_error("PTRACE_GETREGSET");
-+
-+	if (!__compare_tiledata_state(stashed_xsave, xbuf))
-+		printf("[OK]\tTiledata was correctly written to ptracee.\n");
-+	else
-+		printf("[FAIL]\tTiledata was not correctly written to ptracee.\n");
-+}
-+
-+static void test_ptrace(void)
-+{
-+	pid_t child;
-+	int status;
-+
-+	child = fork();
-+	if (child < 0) {
-+		err(1, "fork");
-+	} else if (!child) {
-+		if (ptrace(PTRACE_TRACEME, 0, NULL, NULL))
-+			err(1, "PTRACE_TRACEME");
-+
-+		ptracee_firstuse_tiledata();
-+
-+		raise(SIGTRAP);
-+		_exit(0);
-+	}
-+
-+	do {
-+		wait(&status);
-+	} while (WSTOPSIG(status) != SIGTRAP);
-+
-+	ptracer_inject_tiledata(child);
-+
-+	ptrace(PTRACE_DETACH, child, NULL, NULL);
-+	wait(&status);
-+	if (!WIFEXITED(status) || WEXITSTATUS(status))
-+		err(1, "ptrace test");
-+}
-+
- int main(void)
- {
- 	/* Check hardware availability at first */
-@@ -846,6 +946,8 @@ int main(void)
- 	ctxtswtest_config.num_threads = 5;
- 	test_context_switch();
- 
-+	test_ptrace();
-+
- 	clearhandler(SIGILL);
- 	free_stashed_xsave();
- 
+--- a/drivers/scsi/scsi_devinfo.c
++++ b/drivers/scsi/scsi_devinfo.c
+@@ -234,6 +234,7 @@ static struct {
+ 	{"SGI", "RAID5", "*", BLIST_SPARSELUN},
+ 	{"SGI", "TP9100", "*", BLIST_REPORTLUN2},
+ 	{"SGI", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
++	{"SKhynix", "H28U74301AMR", NULL, BLIST_SKIP_VPD_PAGES},
+ 	{"IBM", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
+ 	{"SUN", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
+ 	{"DELL", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
 
 
