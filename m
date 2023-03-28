@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6FA8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85D2C433D2;
-	Tue, 28 Mar 2023 14:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4354B8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E8EC433D2;
+	Tue, 28 Mar 2023 14:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015464;
-	bh=4Y8/xJhwU7aJXJUzYvMwx8jzSFFEXA9tPwndwM5aX+Q=;
+	s=korg; t=1680015467;
+	bh=ISMggMAqZfVE8egSemnM++tBJ/ydcvQ+e/J19MumQ5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQDX/C51XOYwN1TMB5U+LmIiDMk2MI3UD1a/XeM/DfY020HJ/EyZHuyvFlz0p4WJN
-	 gmwv12xLeuY6gBeAdqmnNtWoHQKdnysdS6rUluHlD39E6bRajgF40i2NjIkGWGWjXs
-	 VxvcnADrJyw/FJFY16o6zRbxRn7e4iOiBCj7E5Yo=
+	b=i+EoQt5QX9D+Jc05ZGxeu+x0Hahn7VV1mTWSm2HEt9kBPsXOqyRPmCfR9fIVC24MG
+	 IeBl/RyrgxqI9ClAps9WkYpngC9uduRBtw/E4Le+B9SxJpShlZrSCuv8p5s2zHM8EG
+	 8M9jBGVSuBy/1Z23rMhm7D5A0GOB8xV635nDh7UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharath SM <bharathsm@microsoft.com>,
-	David Howells <dhowells@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Steve French <smfrench@gmail.com>,
-	keyrings@vger.kernel.org,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
+	Michal Swiatkowski <michal.swiatkowski@intel.com>,
+	Kalyan Kodamagula <kalyan.kodamagula@intel.com>,
+	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/224] keys: Do not cache key in task struct if key is requested from kernel thread
-Date: Tue, 28 Mar 2023 16:40:55 +0200
-Message-Id: <20230328142619.827206364@linuxfoundation.org>
+Subject: [PATCH 6.1 060/224] ice: check if VF exists before mode check
+Date: Tue, 28 Mar 2023 16:40:56 +0200
+Message-Id: <20230328142619.859265291@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -41,61 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Michal Swiatkowski <michal.swiatkowski@intel.com>
 
-[ Upstream commit 47f9e4c924025c5be87959d3335e66fcbb7f6b5c ]
+[ Upstream commit 83b49e7f63da88a1544cba2b2e40bfabb24bd203 ]
 
-The key which gets cached in task structure from a kernel thread does not
-get invalidated even after expiry.  Due to which, a new key request from
-kernel thread will be served with the cached key if it's present in task
-struct irrespective of the key validity.  The change is to not cache key in
-task_struct when key requested from kernel thread so that kernel thread
-gets a valid key on every key request.
+Setting trust on VF should return EINVAL when there is no VF. Move
+checking for switchdev mode after checking if VF exists.
 
-The problem has been seen with the cifs module doing DNS lookups from a
-kernel thread and the results getting pinned by being attached to that
-kernel thread's cache - and thus not something that can be easily got rid
-of.  The cache would ordinarily be cleared by notify-resume, but kernel
-threads don't do that.
-
-This isn't seen with AFS because AFS is doing request_key() within the
-kernel half of a user thread - which will do notify-resume.
-
-Fixes: 7743c48e54ee ("keys: Cache result of request_key*() temporarily in task_struct")
-Signed-off-by: Bharath SM <bharathsm@microsoft.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Steve French <smfrench@gmail.com>
-cc: keyrings@vger.kernel.org
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/CAGypqWw951d=zYRbdgNR4snUDvJhWL=q3=WOyh7HhSJupjz2vA@mail.gmail.com/
+Fixes: c54d209c78b8 ("ice: Wait for VF to be reset/ready before configuration")
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@intel.com>
+Signed-off-by: Kalyan Kodamagula <kalyan.kodamagula@intel.com>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/request_key.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_sriov.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/security/keys/request_key.c b/security/keys/request_key.c
-index 2da4404276f0f..07a0ef2baacd8 100644
---- a/security/keys/request_key.c
-+++ b/security/keys/request_key.c
-@@ -38,9 +38,12 @@ static void cache_requested_key(struct key *key)
- #ifdef CONFIG_KEYS_REQUEST_CACHE
- 	struct task_struct *t = current;
+diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
+index 3ba1408c56a9a..b3849bc3d4fc6 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sriov.c
++++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
+@@ -1384,15 +1384,15 @@ int ice_set_vf_trust(struct net_device *netdev, int vf_id, bool trusted)
+ 	struct ice_vf *vf;
+ 	int ret;
  
--	key_put(t->cached_requested_key);
--	t->cached_requested_key = key_get(key);
--	set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
-+	/* Do not cache key if it is a kernel thread */
-+	if (!(t->flags & PF_KTHREAD)) {
-+		key_put(t->cached_requested_key);
-+		t->cached_requested_key = key_get(key);
-+		set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
-+	}
- #endif
- }
++	vf = ice_get_vf_by_id(pf, vf_id);
++	if (!vf)
++		return -EINVAL;
++
+ 	if (ice_is_eswitch_mode_switchdev(pf)) {
+ 		dev_info(ice_pf_to_dev(pf), "Trusted VF is forbidden in switchdev mode\n");
+ 		return -EOPNOTSUPP;
+ 	}
  
+-	vf = ice_get_vf_by_id(pf, vf_id);
+-	if (!vf)
+-		return -EINVAL;
+-
+ 	ret = ice_check_vf_ready_for_cfg(vf);
+ 	if (ret)
+ 		goto out_put_vf;
 -- 
 2.39.2
 
