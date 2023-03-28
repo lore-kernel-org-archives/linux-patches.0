@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87168476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67167C433EF;
-	Tue, 28 Mar 2023 14:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988798476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192B0C433EF;
+	Tue, 28 Mar 2023 14:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015336;
-	bh=UNy7alHGGbVyn/tPZNs5FvFam3JZZAFua2nS+eSlX8U=;
+	s=korg; t=1680015339;
+	bh=AhKZeW1kP5KyMlZufFL9M2/BCDQj5XPVmrPtge7ixa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FllwpMeZM18z30vrSr8cneaWkp8M711udo/pHOIJG3cUCAkzyIlgXWIeHWbms6fiS
-	 0gh7CNauqXKI//06rkZ7N+l6Tf7LRpFvxveLFYQmG8IKa+/lp3zBIh2glXdRe2ETUl
-	 9sfR6ONP80lh9r0/yXSS+z+Z+fNFndB2jSH/w4ok=
+	b=AxTkDtbEo331B7CcRBgrUNtcn0dADhc4zNSO6p4Hv11NZal6BMBTQOoPDkvVPB5is
+	 FI7X9fItDAytT/0z+DRpo4YSyBTMiTsLe2CPJlgtrTMR8Yj06wygJoU081AM9u4wv7
+	 C3mj3Cp2d0ZTztktSnGQsMwE9/ZMxSLhoacPB6d8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Shawn Guo <shawn.guo@linaro.org>,
 	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/224] interconnect: qcom: sm8450: switch to qcom_icc_rpmh_* function
-Date: Tue, 28 Mar 2023 16:39:58 +0200
-Message-Id: <20230328142617.313218842@linuxfoundation.org>
+Subject: [PATCH 6.1 003/224] interconnect: qcom: qcm2290: Fix MASTER_SNOC_BIMC_NRT
+Date: Tue, 28 Mar 2023 16:39:59 +0200
+Message-Id: <20230328142617.351911604@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,139 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 87e8fab1917a2b3f6e3dedfd1cdf22a1416e6676 ]
+[ Upstream commit 633a12fda6536a1a17bcea29502e777e86a4547e ]
 
-Change sm8450 interconnect driver to use generic qcom_icc_rpmh_*
-functions rather than embedding a copy of thema. This also fixes an
-overallocation of memory for icc_onecell_data structure.
+Due to what seems to be a copy-paste error, the _NRT master was
+identical to the _RT master, which should not be the case.. Fix it
+using the values available from the downstream kernel [1].
 
-Fixes: fafc114a468e ("interconnect: qcom: Add SM8450 interconnect provider driver")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230105002221.1416479-3-dmitry.baryshkov@linaro.org
+[1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/scuba-bus.dtsi#127
+Fixes: 1a14b1ac3935 ("interconnect: qcom: Add QCM2290 driver support")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Acked-by: Shawn Guo <shawn.guo@linaro.org>
+Link: https://lore.kernel.org/r/20230103142120.15605-1-konrad.dybcio@linaro.org
 Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/sm8450.c | 98 +-----------------------------
- 1 file changed, 2 insertions(+), 96 deletions(-)
+ drivers/interconnect/qcom/qcm2290.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
-index e3a12e3d6e061..2d7a8e7b85ec2 100644
---- a/drivers/interconnect/qcom/sm8450.c
-+++ b/drivers/interconnect/qcom/sm8450.c
-@@ -1844,100 +1844,6 @@ static const struct qcom_icc_desc sm8450_system_noc = {
- 	.num_bcms = ARRAY_SIZE(system_noc_bcms),
- };
- 
--static int qnoc_probe(struct platform_device *pdev)
--{
--	const struct qcom_icc_desc *desc;
--	struct icc_onecell_data *data;
--	struct icc_provider *provider;
--	struct qcom_icc_node * const *qnodes;
--	struct qcom_icc_provider *qp;
--	struct icc_node *node;
--	size_t num_nodes, i;
--	int ret;
--
--	desc = device_get_match_data(&pdev->dev);
--	if (!desc)
--		return -EINVAL;
--
--	qnodes = desc->nodes;
--	num_nodes = desc->num_nodes;
--
--	qp = devm_kzalloc(&pdev->dev, sizeof(*qp), GFP_KERNEL);
--	if (!qp)
--		return -ENOMEM;
--
--	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
--	if (!data)
--		return -ENOMEM;
--
--	provider = &qp->provider;
--	provider->dev = &pdev->dev;
--	provider->set = qcom_icc_set;
--	provider->pre_aggregate = qcom_icc_pre_aggregate;
--	provider->aggregate = qcom_icc_aggregate;
--	provider->xlate_extended = qcom_icc_xlate_extended;
--	INIT_LIST_HEAD(&provider->nodes);
--	provider->data = data;
--
--	qp->dev = &pdev->dev;
--	qp->bcms = desc->bcms;
--	qp->num_bcms = desc->num_bcms;
--
--	qp->voter = of_bcm_voter_get(qp->dev, NULL);
--	if (IS_ERR(qp->voter))
--		return PTR_ERR(qp->voter);
--
--	ret = icc_provider_add(provider);
--	if (ret) {
--		dev_err(&pdev->dev, "error adding interconnect provider\n");
--		return ret;
--	}
--
--	for (i = 0; i < qp->num_bcms; i++)
--		qcom_icc_bcm_init(qp->bcms[i], &pdev->dev);
--
--	for (i = 0; i < num_nodes; i++) {
--		size_t j;
--
--		if (!qnodes[i])
--			continue;
--
--		node = icc_node_create(qnodes[i]->id);
--		if (IS_ERR(node)) {
--			ret = PTR_ERR(node);
--			goto err;
--		}
--
--		node->name = qnodes[i]->name;
--		node->data = qnodes[i];
--		icc_node_add(node, provider);
--
--		for (j = 0; j < qnodes[i]->num_links; j++)
--			icc_link_create(node, qnodes[i]->links[j]);
--
--		data->nodes[i] = node;
--	}
--	data->num_nodes = num_nodes;
--
--	platform_set_drvdata(pdev, qp);
--
--	return 0;
--err:
--	icc_nodes_remove(provider);
--	icc_provider_del(provider);
--	return ret;
--}
--
--static int qnoc_remove(struct platform_device *pdev)
--{
--	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
--
--	icc_nodes_remove(&qp->provider);
--	icc_provider_del(&qp->provider);
--
--	return 0;
--}
--
- static const struct of_device_id qnoc_of_match[] = {
- 	{ .compatible = "qcom,sm8450-aggre1-noc",
- 	  .data = &sm8450_aggre1_noc},
-@@ -1966,8 +1872,8 @@ static const struct of_device_id qnoc_of_match[] = {
- MODULE_DEVICE_TABLE(of, qnoc_of_match);
- 
- static struct platform_driver qnoc_driver = {
--	.probe = qnoc_probe,
--	.remove = qnoc_remove,
-+	.probe = qcom_icc_rpmh_probe,
-+	.remove = qcom_icc_rpmh_remove,
- 	.driver = {
- 		.name = "qnoc-sm8450",
- 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
+index 0da612d6398c5..a29cdb4fac03f 100644
+--- a/drivers/interconnect/qcom/qcm2290.c
++++ b/drivers/interconnect/qcom/qcm2290.c
+@@ -147,9 +147,9 @@ static struct qcom_icc_node mas_snoc_bimc_nrt = {
+ 	.name = "mas_snoc_bimc_nrt",
+ 	.buswidth = 16,
+ 	.qos.ap_owned = true,
+-	.qos.qos_port = 2,
++	.qos.qos_port = 3,
+ 	.qos.qos_mode = NOC_QOS_MODE_BYPASS,
+-	.mas_rpm_id = 163,
++	.mas_rpm_id = 164,
+ 	.slv_rpm_id = -1,
+ 	.num_links = ARRAY_SIZE(mas_snoc_bimc_nrt_links),
+ 	.links = mas_snoc_bimc_nrt_links,
 -- 
 2.39.2
 
