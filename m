@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D418476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE65C433EF;
-	Tue, 28 Mar 2023 14:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B388476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F38C4339B;
+	Tue, 28 Mar 2023 14:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015312;
-	bh=i/7NCOQFGnREnK+V8fpg8lblfdC66RbA3XvI4u6ePIQ=;
+	s=korg; t=1680015314;
+	bh=xvku7KTGDzRFy4ccL0e8V2lFj3/LsgT4YJuHM8n+pIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wC3VgmcJonczWTlBRd2y+UkwPMb7wat6Sk3Nem9NnyPGrWqaol2WRcvVIKFJic9t1
-	 zqHlZpjS8CeBuP/slfx/7FAH5kO8baBFmA7CjtifX8o79pQwzZZnPEa70IXoGvClrT
-	 kBZEJgkZcoDjcdAGo4JmVNEaiA26XhwsK3PAOxYw=
+	b=rcuy3V5Sz9YYcP3CJdWiRMzAWwfZtMNW5AWOA71tvVu8Ph6E675TIUwWH0MyBniMx
+	 IqKmKzM2fa0lVDxKQcWqOEbyEn2AE8PV//OSoFRobfmNT8ouxtyR2geB0sTwrkwR/4
+	 6VXIifWYLa37cwChKd7LHZ0Yl1vJ4b8YO2p1i5/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	yangerkun <yangerkun@huawei.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.2 236/240] dm stats: check for and propagate alloc_percpu failure
-Date: Tue, 28 Mar 2023 16:43:19 +0200
-Message-Id: <20230328142629.527222185@linuxfoundation.org>
+Subject: [PATCH 6.2 237/240] dm crypt: add cond_resched() to dmcrypt_write()
+Date: Tue, 28 Mar 2023 16:43:20 +0200
+Message-Id: <20230328142629.566386494@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,79 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit d3aa3e060c4a80827eb801fc448debc9daa7c46b upstream.
+commit fb294b1c0ba982144ca467a75e7d01ff26304e2b upstream.
 
-Check alloc_precpu()'s return value and return an error from
-dm_stats_init() if it fails. Update alloc_dev() to fail if
-dm_stats_init() does.
+The loop in dmcrypt_write may be running for unbounded amount of time,
+thus we need cond_resched() in it.
 
-Otherwise, a NULL pointer dereference will occur in dm_stats_cleanup()
-even if dm-stats isn't being actively used.
+This commit fixes the following warning:
 
-Fixes: fd2ed4d25270 ("dm: add statistics support")
+[ 3391.153255][   C12] watchdog: BUG: soft lockup - CPU#12 stuck for 23s! [dmcrypt_write/2:2897]
+...
+[ 3391.387210][   C12] Call trace:
+[ 3391.390338][   C12]  blk_attempt_bio_merge.part.6+0x38/0x158
+[ 3391.395970][   C12]  blk_attempt_plug_merge+0xc0/0x1b0
+[ 3391.401085][   C12]  blk_mq_submit_bio+0x398/0x550
+[ 3391.405856][   C12]  submit_bio_noacct+0x308/0x380
+[ 3391.410630][   C12]  dmcrypt_write+0x1e4/0x208 [dm_crypt]
+[ 3391.416005][   C12]  kthread+0x130/0x138
+[ 3391.419911][   C12]  ret_from_fork+0x10/0x18
+
+Reported-by: yangerkun <yangerkun@huawei.com>
+Fixes: dc2676210c42 ("dm crypt: offload writes to thread")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-stats.c |    7 ++++++-
- drivers/md/dm-stats.h |    2 +-
- drivers/md/dm.c       |    4 +++-
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/md/dm-crypt.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-stats.c
-+++ b/drivers/md/dm-stats.c
-@@ -188,7 +188,7 @@ static int dm_stat_in_flight(struct dm_s
- 	       atomic_read(&shared->in_flight[WRITE]);
- }
- 
--void dm_stats_init(struct dm_stats *stats)
-+int dm_stats_init(struct dm_stats *stats)
- {
- 	int cpu;
- 	struct dm_stats_last_position *last;
-@@ -197,11 +197,16 @@ void dm_stats_init(struct dm_stats *stat
- 	INIT_LIST_HEAD(&stats->list);
- 	stats->precise_timestamps = false;
- 	stats->last = alloc_percpu(struct dm_stats_last_position);
-+	if (!stats->last)
-+		return -ENOMEM;
-+
- 	for_each_possible_cpu(cpu) {
- 		last = per_cpu_ptr(stats->last, cpu);
- 		last->last_sector = (sector_t)ULLONG_MAX;
- 		last->last_rw = UINT_MAX;
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -1933,6 +1933,7 @@ pop_from_list:
+ 			io = crypt_io_from_node(rb_first(&write_tree));
+ 			rb_erase(&io->rb_node, &write_tree);
+ 			kcryptd_io_write(io);
++			cond_resched();
+ 		} while (!RB_EMPTY_ROOT(&write_tree));
+ 		blk_finish_plug(&plug);
  	}
-+
-+	return 0;
- }
- 
- void dm_stats_cleanup(struct dm_stats *stats)
---- a/drivers/md/dm-stats.h
-+++ b/drivers/md/dm-stats.h
-@@ -21,7 +21,7 @@ struct dm_stats_aux {
- 	unsigned long long duration_ns;
- };
- 
--void dm_stats_init(struct dm_stats *st);
-+int dm_stats_init(struct dm_stats *st);
- void dm_stats_cleanup(struct dm_stats *st);
- 
- struct mapped_device;
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2092,7 +2092,9 @@ static struct mapped_device *alloc_dev(i
- 	if (!md->pending_io)
- 		goto bad;
- 
--	dm_stats_init(&md->stats);
-+	r = dm_stats_init(&md->stats);
-+	if (r < 0)
-+		goto bad;
- 
- 	/* Populate the mapping, nobody knows we exist yet */
- 	spin_lock(&_minor_lock);
 
 
