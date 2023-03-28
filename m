@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50638BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:07:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2419EC433D2;
-	Tue, 28 Mar 2023 15:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6947E8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:07:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE15C4339B;
+	Tue, 28 Mar 2023 15:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016049;
-	bh=Q32/6+TsZJJ3KK0x8gxFd/V0r3DKGMRhewgyufDP76s=;
+	s=korg; t=1680016052;
+	bh=gDazqCfYlmT63LLSMGrAM8sD95u7eEUJQQL2xLBZcQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mxjKpime95txerNvthUHtTDQGqHpxy6UQIWnhZEly3uqi/oryZ/GhgX3mkXtL4wjX
-	 BQqj2dkb/ev/MHZdYA5JbfU1BHK5yQrjAU7r5fBGnm71jqbY3AduY+TQtcs/ueVY86
-	 3dhsH/1HmNU6mDWIQ9VuTQgTn6YII50pc6/juYZM=
+	b=yfDy7V1f0tCbzYUYSnonqlARWg2kSbxceHHIt/lW2LFsOwPaQ+Nrme37F/8Mklqzz
+	 NosCvppPFqUdgX5ljJCugeASD2CXdqL1nKuGotxNW91nASUb/w9Sn+Dmgo+ugv6qu2
+	 MunQLDYv1/ERoaFMpBYYPqbj1BR5Cl4X0uilU+rQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huy Nguyen <huyn@mellanox.com>,
-	Lama Kayal <lkayal@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Maor Dickman <maord@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/146] net/mlx5: Fix steering rules cleanup
-Date: Tue, 28 Mar 2023 16:42:16 +0200
-Message-Id: <20230328142604.658311025@linuxfoundation.org>
+Subject: [PATCH 5.15 048/146] net/mlx5: Read the TC mapping of all priorities on ETS query
+Date: Tue, 28 Mar 2023 16:42:17 +0200
+Message-Id: <20230328142604.703849889@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -38,63 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lama Kayal <lkayal@nvidia.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 922f56e9a795d6f3dd72d3428ebdd7ee040fa855 ]
+[ Upstream commit 44d553188c38ac74b799dfdcebafef2f7bb70942 ]
 
-vport's mc, uc and multicast rules are not deleted in teardown path when
-EEH happens. Since the vport's promisc settings(uc, mc and all) in
-firmware are reset after EEH, mlx5 driver will try to delete the above
-rules in the initialization path. This cause kernel crash because these
-software rules are no longer valid.
+When ETS configurations are queried by the user to get the mapping
+assignment between packet priority and traffic class, only priorities up
+to maximum TCs are queried from QTCT register in FW to retrieve their
+assigned TC, leaving the rest of the priorities mapped to the default
+TC #0 which might be misleading.
 
-Fix by nullifying these rules right after delete to avoid accessing any dangling
-pointers.
+Fix by querying the TC mapping of all priorities on each ETS query,
+regardless of the maximum number of TCs configured in FW.
 
-Call Trace:
-__list_del_entry_valid+0xcc/0x100 (unreliable)
-tree_put_node+0xf4/0x1b0 [mlx5_core]
-tree_remove_node+0x30/0x70 [mlx5_core]
-mlx5_del_flow_rules+0x14c/0x1f0 [mlx5_core]
-esw_apply_vport_rx_mode+0x10c/0x200 [mlx5_core]
-esw_update_vport_rx_mode+0xb4/0x180 [mlx5_core]
-esw_vport_change_handle_locked+0x1ec/0x230 [mlx5_core]
-esw_enable_vport+0x130/0x260 [mlx5_core]
-mlx5_eswitch_enable_sriov+0x2a0/0x2f0 [mlx5_core]
-mlx5_device_enable_sriov+0x74/0x440 [mlx5_core]
-mlx5_load_one+0x114c/0x1550 [mlx5_core]
-mlx5_pci_resume+0x68/0xf0 [mlx5_core]
-eeh_report_resume+0x1a4/0x230
-eeh_pe_dev_traverse+0x98/0x170
-eeh_handle_normal_event+0x3e4/0x640
-eeh_handle_event+0x4c/0x370
-eeh_event_handler+0x14c/0x210
-kthread+0x168/0x1b0
-ret_from_kernel_thread+0x5c/0x84
-
-Fixes: a35f71f27a61 ("net/mlx5: E-Switch, Implement promiscuous rx modes vf request handling")
-Signed-off-by: Huy Nguyen <huyn@mellanox.com>
-Signed-off-by: Lama Kayal <lkayal@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Maor Dickman <maord@nvidia.com>
+Fixes: 820c2c5e773d ("net/mlx5e: Read ETS settings directly from firmware")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/eswitch.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-index 2b9278002354c..7315bf447e061 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-@@ -918,6 +918,7 @@ void mlx5_esw_vport_disable(struct mlx5_eswitch *esw, u16 vport_num)
- 	 */
- 	esw_vport_change_handle_locked(vport);
- 	vport->enabled_events = 0;
-+	esw_apply_vport_rx_mode(esw, vport, false, false);
- 	esw_vport_cleanup(esw, vport);
- 	esw->enabled_vports--;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index 72e08559e0d05..f2862100d1a2e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -117,12 +117,14 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
+ 	if (!MLX5_CAP_GEN(priv->mdev, ets))
+ 		return -EOPNOTSUPP;
  
+-	ets->ets_cap = mlx5_max_tc(priv->mdev) + 1;
+-	for (i = 0; i < ets->ets_cap; i++) {
++	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
+ 		err = mlx5_query_port_prio_tc(mdev, i, &ets->prio_tc[i]);
+ 		if (err)
+ 			return err;
++	}
+ 
++	ets->ets_cap = mlx5_max_tc(priv->mdev) + 1;
++	for (i = 0; i < ets->ets_cap; i++) {
+ 		err = mlx5_query_port_tc_group(mdev, i, &tc_group[i]);
+ 		if (err)
+ 			return err;
 -- 
 2.39.2
 
