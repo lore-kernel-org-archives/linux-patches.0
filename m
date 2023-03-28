@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FB68BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E96C433D2;
-	Tue, 28 Mar 2023 14:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849CA8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032E1C433EF;
+	Tue, 28 Mar 2023 14:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015143;
-	bh=d8hX0/KZrx5W90ZU4YeAvPTp1aGZ5DfYQNaBWyUr2nQ=;
+	s=korg; t=1680015146;
+	bh=EQQ0+9tjZqU6nDVpS/pF1WKirGnP8BA+IkCOA/qUuO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LeVjuKsiHqDsMTAEaAKGOoszidCtKFDY7L1EYwFyrQMarRg/J1Ev+g73FtxygPNch
-	 J4WD8/D+yFgfk7nd5FpIZNdPMv2K6g1Sznt8IsmCgxkBDWvIXlhHyy1NLEBfDwpZkW
-	 py9VA/eYinnJsNojFHXXYJ83ydtYuEe3rL3bIDNI=
+	b=CPSxnCNrpvCHoLRG5cfvWyIoDzcpsTi35S3nu1ZaXckOiQ+SpGZaO6YqFROTiW/pd
+	 3I0EfuToyEu6LW5BVQ8o8GUYB93C9ymvZ4MypWWvpnwDhxQb5zwvphEOAINU/Xfx0r
+	 efCNgEmJlxKME/HQCDE7oP/eqQE4zCe2dEOniAog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.2 182/240] mm/slab: Fix undefined init_cache_node_node() for NUMA and !SMP
-Date: Tue, 28 Mar 2023 16:42:25 +0200
-Message-Id: <20230328142627.211424423@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.2 183/240] efi/libstub: zboot: Mark zboot EFI application as NX compatible
+Date: Tue, 28 Mar 2023 16:42:26 +0200
+Message-Id: <20230328142627.260590436@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,46 +33,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 66a1c22b709178e7b823d44465d0c2e5ed7492fb upstream.
+commit c7d9e628b8ff4d52a365a441bdacb3209ee83c81 upstream.
 
-sh/migor_defconfig:
+Now that the zboot loader will invoke the EFI memory attributes protocol
+to remap the decompressed code and rodata as read-only/executable, we
+can set the PE/COFF header flag that indicates to the firmware that the
+application does not rely on writable memory being executable at the
+same time.
 
-    mm/slab.c: In function ‘slab_memory_callback’:
-    mm/slab.c:1127:23: error: implicit declaration of function ‘init_cache_node_node’; did you mean ‘drain_cache_node_node’? [-Werror=implicit-function-declaration]
-     1127 |                 ret = init_cache_node_node(nid);
-	  |                       ^~~~~~~~~~~~~~~~~~~~
-	  |                       drain_cache_node_node
-
-The #ifdef condition protecting the definition of init_cache_node_node()
-no longer matches the conditions protecting the (multiple) users.
-
-Fix this by syncing the conditions.
-
-Fixes: 76af6a054da40553 ("mm/migrate: add CPU hotplug to demotion #ifdef")
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/b5bdea22-ed2f-3187-6efe-0c72330270a4@infradead.org
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org> # v6.2+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slab.c |    2 +-
+ drivers/firmware/efi/libstub/zboot-header.S |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/slab.c
-+++ b/mm/slab.c
-@@ -840,7 +840,7 @@ static int init_cache_node(struct kmem_c
- 	return 0;
- }
- 
--#if (defined(CONFIG_NUMA) && defined(CONFIG_MEMORY_HOTPLUG)) || defined(CONFIG_SMP)
-+#if defined(CONFIG_NUMA) || defined(CONFIG_SMP)
- /*
-  * Allocates and initializes node for a node on each slab cache, used for
-  * either memory or cpu hotplug.  If memory is being hot-added, the kmem_cache_node
+--- a/drivers/firmware/efi/libstub/zboot-header.S
++++ b/drivers/firmware/efi/libstub/zboot-header.S
+@@ -63,7 +63,7 @@ __efistub_efi_zboot_header:
+ 	.long		.Lefi_header_end - .Ldoshdr
+ 	.long		0
+ 	.short		IMAGE_SUBSYSTEM_EFI_APPLICATION
+-	.short		0
++	.short		IMAGE_DLL_CHARACTERISTICS_NX_COMPAT
+ #ifdef CONFIG_64BIT
+ 	.quad		0, 0, 0, 0
+ #else
 
 
