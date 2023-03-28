@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511998BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C927FC433D2;
-	Tue, 28 Mar 2023 14:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052678BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7981BC433EF;
+	Tue, 28 Mar 2023 14:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015388;
-	bh=ShM8rhpIS7d8KYHvsrTKmotHe6UzQ2D5zG3bDft8kLg=;
+	s=korg; t=1680015390;
+	bh=NmPC/IbYsiCIboUzhU8tgd3NWjpBJgWKgOox4hjERVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0DAEzMaToXixheuBiuwGbyWfioALdvzgpTKmbWi0MN8cJMaJCqbDYwf7pSZwk9TXl
-	 fLSDfsoLme65QqFoqo4R932RpXhsDgDfYvzP/83cqKzcktAyho8V5ritbgB9Qya/NW
-	 kVHJp2LwmceDF9sIWOHUNRGDCF8r3JPKlVZl4Vc4=
+	b=vWRAlx6It2oA63RjzwksONd6lEqPkkKCXvD1Eq+V4dgtgArLlWRu6jd9q8uKreQqm
+	 DXkfznGQDFZna412v1k23NKpxFQd3dTR0qCwwaXLztNrkkOWW3WRvGTIqr6dh/lVGI
+	 69sjkPdrF63jwsfOJhyroTGGPzZZkOgELWsR2wLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AKASHI Takahiro <takahiro.akashi@linaro.org>,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/224] igc: fix the validation logic for taprios gate list
-Date: Tue, 28 Mar 2023 16:40:27 +0200
-Message-Id: <20230328142618.626768558@linuxfoundation.org>
+Subject: [PATCH 6.1 014/224] arm64: dts: qcom: sm8450: Mark UFS controller as cache coherent
+Date: Tue, 28 Mar 2023 16:40:10 +0200
+Message-Id: <20230328142617.859456348@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -38,74 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AKASHI Takahiro <takahiro.akashi@linaro.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 2b4cc3d3f4d8ec42961e98568a0afeee96a943ab ]
+[ Upstream commit 8ba961d4339c5db0e69ff6627606fe1f34c838e5 ]
 
-The check introduced in the commit a5fd39464a40 ("igc: Lift TAPRIO schedule
-restriction") can detect a false positive error in some corner case.
-For instance,
-    tc qdisc replace ... taprio num_tc 4
-	...
-	sched-entry S 0x01 100000	# slot#1
-	sched-entry S 0x03 100000	# slot#2
-	sched-entry S 0x04 100000	# slot#3
-	sched-entry S 0x08 200000	# slot#4
-	flags 0x02			# hardware offload
+The UFS controller on SM8450 supports cache coherency, hence add the
+"dma-coherent" property to mark it as such.
 
-Here the queue#0 (the first queue) is on at the slot#1 and #2,
-and off at the slot#3 and #4. Under the current logic, when the slot#4
-is examined, validate_schedule() returns *false* since the enablement
-count for the queue#0 is two and it is already off at the previous slot
-(i.e. #3). But this definition is truely correct.
-
-Let's fix the logic to enforce a strict validation for consecutively-opened
-slots.
-
-Fixes: a5fd39464a40 ("igc: Lift TAPRIO schedule restriction")
-Signed-off-by: AKASHI Takahiro <takahiro.akashi@linaro.org>
-Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 07fa917a335e ("arm64: dts: qcom: sm8450: add ufs nodes")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230307153201.180626-2-manivannan.sadhasivam@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 3b5b36206c44b..1d9b70e0ff67f 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6000,18 +6000,18 @@ static bool validate_schedule(struct igc_adapter *adapter,
- 		if (e->command != TC_TAPRIO_CMD_SET_GATES)
- 			return false;
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index df0d888ffc008..4714d7bf03b9f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -3104,6 +3104,7 @@ ufs_mem_hc: ufshc@1d84000 {
+ 			power-domains = <&gcc UFS_PHY_GDSC>;
  
--		for (i = 0; i < adapter->num_tx_queues; i++) {
--			if (e->gate_mask & BIT(i))
-+		for (i = 0; i < adapter->num_tx_queues; i++)
-+			if (e->gate_mask & BIT(i)) {
- 				queue_uses[i]++;
+ 			iommus = <&apps_smmu 0xe0 0x0>;
++			dma-coherent;
  
--			/* There are limitations: A single queue cannot be
--			 * opened and closed multiple times per cycle unless the
--			 * gate stays open. Check for it.
--			 */
--			if (queue_uses[i] > 1 &&
--			    !(prev->gate_mask & BIT(i)))
--				return false;
--		}
-+				/* There are limitations: A single queue cannot
-+				 * be opened and closed multiple times per cycle
-+				 * unless the gate stays open. Check for it.
-+				 */
-+				if (queue_uses[i] > 1 &&
-+				    !(prev->gate_mask & BIT(i)))
-+					return false;
-+			}
- 	}
- 
- 	return true;
+ 			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
+ 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
 -- 
 2.39.2
 
