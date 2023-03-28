@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B98C8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A5CC433D2;
-	Tue, 28 Mar 2023 14:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001158BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C8BC433D2;
+	Tue, 28 Mar 2023 14:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015113;
-	bh=F0ukMBHO/kPpbe6k3DjTflDUCcbuGBOy15vOvYd6NWE=;
+	s=korg; t=1680015115;
+	bh=NP0Ls7B1aIxpGe0fZTWet09qyPVhMgouoYrI9T3wV+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VyOfjE8L0cz32XsnbUi4F+ehLJxv/OlDQ88bSAnEkL3bPBvM40eFGHnNKXtTc5QL9
-	 LaVKPCZAKvZmBPCBTR4pYQOdWaiy34O0fT5vB4SytzdIiKobeB/vUidG3IhTByv/Rs
-	 5rD/PZzPHaHwdmPTkrP515W89ImqwxoK36FZoFDo=
+	b=W/6KSFzBnSbnOIoxIyK0cIjkzhleVVbmpRf6idlyv7Z/2Q/ZwZ4LRJbWptluAzxOe
+	 Uq5nEYnfheK+g/CnEI4Ndam0jpWCnS2QR26gBtT9FwSyZ3rM/TynQFINb5awVEJWsD
+	 yBE3wC9doBCi11sBJs90enKHxWMhO/YufGQdMN4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eero Tamminen <oak@helsinkinet.fi>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Anson Tsao <anson.tsao@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 139/240] m68k: Only force 030 bus error if PC not in exception table
-Date: Tue, 28 Mar 2023 16:41:42 +0200
-Message-Id: <20230328142625.541034353@linuxfoundation.org>
+Subject: [PATCH 6.2 130/240] ACPI: x86: Drop quirk for HP Elitebook
+Date: Tue, 28 Mar 2023 16:41:33 +0200
+Message-Id: <20230328142625.191331946@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,73 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit e36a82bebbf7da814530d5a179bef9df5934b717 ]
+[ Upstream commit e32d546c483a2a0f607687f5b521c2a2f942ffbe ]
 
-__get_kernel_nofault() does copy data in supervisor mode when
-forcing a task backtrace log through /proc/sysrq_trigger.
-This is expected cause a bus error exception on e.g. NULL
-pointer dereferencing when logging a kernel task has no
-workqueue associated. This bus error ought to be ignored.
+There was a quirk in `acpi/x86/s2idle.c` for an HP Elitebook G9
+platforms to force AMD GUID codepath instead of Microsoft codepath.
 
-Our 030 bus error handler is ill equipped to deal with this:
+This was due to a bug with WCN6855 WLAN firmware interaction with
+the system.
 
-Whenever ssw indicates a kernel mode access on a data fault,
-we don't even attempt to handle the fault and instead always
-send a SEGV signal (or panic). As a result, the check
-for exception handling at the fault PC (buried in
-send_sig_fault() which gets called from do_page_fault()
-eventually) is never used.
+This bug is fixed by WCN6855 firmware:
+WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.23
 
-In contrast, both 040 and 060 access error handlers do not
-care whether a fault happened on supervisor mode access,
-and will call do_page_fault() on those, ultimately honoring
-the exception table.
+Remove the quirk as it's no longer necessary with this firmware.
 
-Add a check in bus_error030 to call do_page_fault() in case
-we do have an entry for the fault PC in our exception table.
-
-I had attempted a fix for this earlier in 2019 that did rely
-on testing pagefault_disabled() (see link below) to achieve
-the same thing, but this patch should be more generic.
-
-Tested on 030 Atari Falcon.
-
-Reported-by: Eero Tamminen <oak@helsinkinet.fi>
-Link: https://lore.kernel.org/r/alpine.LNX.2.21.1904091023540.25@nippy.intranet
-Link: https://lore.kernel.org/r/63130691-1984-c423-c1f2-73bfd8d3dcd3@gmail.com
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230301021107.26307-1-schmitzmic@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=c7a57ef688f7d99d8338a5d8edddc8836ff0e6de
+Tested-by: Anson Tsao <anson.tsao@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/kernel/traps.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/acpi/x86/s2idle.c | 24 ------------------------
+ 1 file changed, 24 deletions(-)
 
-diff --git a/arch/m68k/kernel/traps.c b/arch/m68k/kernel/traps.c
-index 5c8cba0efc63e..a700807c9b6d9 100644
---- a/arch/m68k/kernel/traps.c
-+++ b/arch/m68k/kernel/traps.c
-@@ -30,6 +30,7 @@
- #include <linux/init.h>
- #include <linux/ptrace.h>
- #include <linux/kallsyms.h>
-+#include <linux/extable.h>
+diff --git a/drivers/acpi/x86/s2idle.c b/drivers/acpi/x86/s2idle.c
+index c7afce465a071..e499c60c45791 100644
+--- a/drivers/acpi/x86/s2idle.c
++++ b/drivers/acpi/x86/s2idle.c
+@@ -384,29 +384,6 @@ static const struct acpi_device_id amd_hid_ids[] = {
+ 	{}
+ };
  
- #include <asm/setup.h>
- #include <asm/fpu.h>
-@@ -545,7 +546,8 @@ static inline void bus_error030 (struct frame *fp)
- 			errorcode |= 2;
+-static int lps0_prefer_amd(const struct dmi_system_id *id)
+-{
+-	pr_debug("Using AMD GUID w/ _REV 2.\n");
+-	rev_id = 2;
+-	return 0;
+-}
+-static const struct dmi_system_id s2idle_dmi_table[] __initconst = {
+-	{
+-		/*
+-		 * AMD Rembrandt based HP EliteBook 835/845/865 G9
+-		 * Contains specialized AML in AMD/_REV 2 path to avoid
+-		 * triggering a bug in Qualcomm WLAN firmware. This may be
+-		 * removed in the future if that firmware is fixed.
+-		 */
+-		.callback = lps0_prefer_amd,
+-		.matches = {
+-			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
+-			DMI_MATCH(DMI_BOARD_NAME, "8990"),
+-		},
+-	},
+-	{}
+-};
+-
+ static int lps0_device_attach(struct acpi_device *adev,
+ 			      const struct acpi_device_id *not_used)
+ {
+@@ -586,7 +563,6 @@ static const struct platform_s2idle_ops acpi_s2idle_ops_lps0 = {
  
- 		if (mmusr & (MMU_I | MMU_WP)) {
--			if (ssw & 4) {
-+			/* We might have an exception table for this PC */
-+			if (ssw & 4 && !search_exception_tables(fp->ptregs.pc)) {
- 				pr_err("Data %s fault at %#010lx in %s (pc=%#lx)\n",
- 				       ssw & RW ? "read" : "write",
- 				       fp->un.fmtb.daddr,
+ void __init acpi_s2idle_setup(void)
+ {
+-	dmi_check_system(s2idle_dmi_table);
+ 	acpi_scan_add_handler(&lps0_handler);
+ 	s2idle_set_ops(&acpi_s2idle_ops_lps0);
+ }
 -- 
 2.39.2
 
