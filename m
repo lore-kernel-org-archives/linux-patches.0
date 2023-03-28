@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EF18BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE69C433EF;
-	Tue, 28 Mar 2023 14:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DE48BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEE4C433EF;
+	Tue, 28 Mar 2023 14:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015076;
-	bh=wIMMwK89KStOb42+4eP014hy8v2pJD2GJYpw7okucq8=;
+	s=korg; t=1680015079;
+	bh=obqkoNb62PsRjF2yf7nUVQjnq9ted1J5Oc+NeWU/zgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y4DUefW8cSAy/35JLbppZXf/KL/J/hs9CLKif0qQZuMXkllHhHhgSAwkGt3kj25Ve
-	 Ke0wSwh+ut0/FbQcR/tjM1pgKwlxUkdipDXjt3SAwgxUt8k+Dx/xsKbb9Gncze5Pbe
-	 vnmzMO5Me2KVbKXmrur6U0o8oegze3nz7L0m3aBs=
+	b=sgVeoOROTqXgOzXxGbrT8rHh93k5Y/8zW3inGvT2KJprZXkbX9Dbm+eBGektAwFUR
+	 SAQkSQtTir48cKnS5U0nvdUI10f/auAzFG5e+MqaIC794+fLFmRpvULSjBeSiRHOPq
+	 gvlRQw8W3aY3GF9TXjQAIuVN9ifKlw9VJYqdTYpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Rich Felker <dalias@libc.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	lyndonli <Lyndon.Li@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 157/240] sh: sanitize the flags on sigreturn
-Date: Tue, 28 Mar 2023 16:42:00 +0200
-Message-Id: <20230328142626.234411797@linuxfoundation.org>
+Subject: [PATCH 6.2 158/240] drm/amdgpu: Fix call trace warning and hang when removing amdgpu device
+Date: Tue, 28 Mar 2023 16:42:01 +0200
+Message-Id: <20230328142626.265192007@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,56 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: lyndonli <Lyndon.Li@amd.com>
 
-[ Upstream commit 573b22ccb7ce9ab7f0539a2e11a9d3609a8783f5 ]
+[ Upstream commit 93bb18d2a873d2fa9625c8ea927723660a868b95 ]
 
-We fetch %SR value from sigframe; it might have been modified by signal
-handler, so we can't trust it with any bits that are not modifiable in
-user mode.
+On GPUs with RAS enabled, below call trace and hang are observed when
+shutting down device.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Rich Felker <dalias@libc.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+v2: use DRM device unplugged flag instead of shutdown flag as the check to
+prevent memory wipe in shutdown stage.
+
+[ +0.000000] RIP: 0010:amdgpu_vram_mgr_fini+0x18d/0x1c0 [amdgpu]
+[ +0.000001] PKRU: 55555554
+[ +0.000001] Call Trace:
+[ +0.000001] <TASK>
+[ +0.000002] amdgpu_ttm_fini+0x140/0x1c0 [amdgpu]
+[ +0.000183] amdgpu_bo_fini+0x27/0xa0 [amdgpu]
+[ +0.000184] gmc_v11_0_sw_fini+0x2b/0x40 [amdgpu]
+[ +0.000163] amdgpu_device_fini_sw+0xb6/0x510 [amdgpu]
+[ +0.000152] amdgpu_driver_release_kms+0x16/0x30 [amdgpu]
+[ +0.000090] drm_dev_release+0x28/0x50 [drm]
+[ +0.000016] devm_drm_dev_init_release+0x38/0x60 [drm]
+[ +0.000011] devm_action_release+0x15/0x20
+[ +0.000003] release_nodes+0x40/0xc0
+[ +0.000001] devres_release_all+0x9e/0xe0
+[ +0.000001] device_unbind_cleanup+0x12/0x80
+[ +0.000003] device_release_driver_internal+0xff/0x160
+[ +0.000001] driver_detach+0x4a/0x90
+[ +0.000001] bus_remove_driver+0x6c/0xf0
+[ +0.000001] driver_unregister+0x31/0x50
+[ +0.000001] pci_unregister_driver+0x40/0x90
+[ +0.000003] amdgpu_exit+0x15/0x120 [amdgpu]
+
+Signed-off-by: lyndonli <Lyndon.Li@amd.com>
+Reviewed-by: Guchun Chen <guchun.chen@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/include/asm/processor_32.h | 1 +
- arch/sh/kernel/signal_32.c         | 3 +++
- 2 files changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/sh/include/asm/processor_32.h b/arch/sh/include/asm/processor_32.h
-index 27aebf1e75a20..3ef7adf739c83 100644
---- a/arch/sh/include/asm/processor_32.h
-+++ b/arch/sh/include/asm/processor_32.h
-@@ -50,6 +50,7 @@
- #define SR_FD		0x00008000
- #define SR_MD		0x40000000
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+index 25a68d8888e0d..5d4649b8bfd33 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -1315,7 +1315,7 @@ void amdgpu_bo_release_notify(struct ttm_buffer_object *bo)
  
-+#define SR_USER_MASK	0x00000303	// M, Q, S, T bits
- /*
-  * DSP structure and data
-  */
-diff --git a/arch/sh/kernel/signal_32.c b/arch/sh/kernel/signal_32.c
-index 90f495d35db29..a6bfc6f374911 100644
---- a/arch/sh/kernel/signal_32.c
-+++ b/arch/sh/kernel/signal_32.c
-@@ -115,6 +115,7 @@ static int
- restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p)
- {
- 	unsigned int err = 0;
-+	unsigned int sr = regs->sr & ~SR_USER_MASK;
+ 	if (!bo->resource || bo->resource->mem_type != TTM_PL_VRAM ||
+ 	    !(abo->flags & AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE) ||
+-	    adev->in_suspend || adev->shutdown)
++	    adev->in_suspend || drm_dev_is_unplugged(adev_to_drm(adev)))
+ 		return;
  
- #define COPY(x)		err |= __get_user(regs->x, &sc->sc_##x)
- 			COPY(regs[1]);
-@@ -130,6 +131,8 @@ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p
- 	COPY(sr);	COPY(pc);
- #undef COPY
- 
-+	regs->sr = (regs->sr & SR_USER_MASK) | sr;
-+
- #ifdef CONFIG_SH_FPU
- 	if (boot_cpu_data.flags & CPU_HAS_FPU) {
- 		int owned_fp;
+ 	if (WARN_ON_ONCE(!dma_resv_trylock(bo->base.resv)))
 -- 
 2.39.2
 
