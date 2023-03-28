@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC5C8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:11:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C9BC433EF;
-	Tue, 28 Mar 2023 15:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4E28BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:11:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B620C4339B;
+	Tue, 28 Mar 2023 15:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016282;
-	bh=9pqy6cm2pliud712t3PhK4bvOEz6Syd+QExKEaPjr6M=;
+	s=korg; t=1680016285;
+	bh=qMnWrXKuighu+RvNAWQ0RgPUA/UjUR4mXIfUB3Us8nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDUh2y3dtHxmhQsn7f4nsjaXj90N3ugCDgndEhxA1SSXqfx8ksP7e4wNr2WvGFbwW
-	 GG2Ogh+h0F9K/zeBlQnwjz8OiMJaeubSVzXxVdkuJh5E/4BBc31fyr2vOhJwa5TUuJ
-	 FchJ1pdAx6M0hXdPwUaZ4yyaK8jjUlteYFPyux74=
+	b=d8Wa/cR+3pxU1LYsBmfPkqm3RjN9Smz70lRLApiE4zEOlWoqxpc3V73GKIxXn4vYg
+	 dKdF1DkPyjxjBsmQtodDY/Z5TrL1pzfD6H73GQxjSU70x2XqX/E9Hrejofk1EN6DVv
+	 ANb/dKurucQloZg/nz4y3M2tuNFyEnR0TgXmBF1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	William Zhao <wizhao@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Davide Caratti <dcaratti@redhat.com>,
 	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 100/146] net/sched: act_mirred: better wording on protection against excessive stack growth
-Date: Tue, 28 Mar 2023 16:43:09 +0200
-Message-Id: <20230328142606.850741197@linuxfoundation.org>
+Subject: [PATCH 5.15 101/146] act_mirred: use the backlog for nested calls to mirred ingress
+Date: Tue, 28 Mar 2023 16:43:10 +0200
+Message-Id: <20230328142606.885501276@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -39,84 +41,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Davide Caratti <dcaratti@redhat.com>
 
-[ Upstream commit 78dcdffe0418ac8f3f057f26fe71ccf4d8ed851f ]
+[ Upstream commit ca22da2fbd693b54dc8e3b7b54ccc9f7e9ba3640 ]
 
-with commit e2ca070f89ec ("net: sched: protect against stack overflow in
-TC act_mirred"), act_mirred protected itself against excessive stack growth
-using per_cpu counter of nested calls to tcf_mirred_act(), and capping it
-to MIRRED_RECURSION_LIMIT. However, such protection does not detect
-recursion/loops in case the packet is enqueued to the backlog (for example,
-when the mirred target device has RPS or skb timestamping enabled). Change
-the wording from "recursion" to "nesting" to make it more clear to readers.
+William reports kernel soft-lockups on some OVS topologies when TC mirred
+egress->ingress action is hit by local TCP traffic [1].
+The same can also be reproduced with SCTP (thanks Xin for verifying), when
+client and server reach themselves through mirred egress to ingress, and
+one of the two peers sends a "heartbeat" packet (from within a timer).
 
-CC: Jamal Hadi Salim <jhs@mojatatu.com>
+Enqueueing to backlog proved to fix this soft lockup; however, as Cong
+noticed [2], we should preserve - when possible - the current mirred
+behavior that counts as "overlimits" any eventual packet drop subsequent to
+the mirred forwarding action [3]. A compromise solution might use the
+backlog only when tcf_mirred_act() has a nest level greater than one:
+change tcf_mirred_forward() accordingly.
+
+Also, add a kselftest that can reproduce the lockup and verifies TC mirred
+ability to account for further packet drops after TC mirred egress->ingress
+(when the nest level is 1).
+
+ [1] https://lore.kernel.org/netdev/33dc43f587ec1388ba456b4915c75f02a8aae226.1663945716.git.dcaratti@redhat.com/
+ [2] https://lore.kernel.org/netdev/Y0w%2FWWY60gqrtGLp@pop-os.localdomain/
+ [3] such behavior is not guaranteed: for example, if RPS or skb RX
+     timestamping is enabled on the mirred target device, the kernel
+     can defer receiving the skb and return NET_RX_SUCCESS inside
+     tcf_mirred_forward().
+
+Reported-by: William Zhao <wizhao@redhat.com>
+CC: Xin Long <lucien.xin@gmail.com>
 Signed-off-by: Davide Caratti <dcaratti@redhat.com>
 Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
 Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_mirred.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/sched/act_mirred.c                        |  7 +++
+ .../selftests/net/forwarding/tc_actions.sh    | 49 ++++++++++++++++++-
+ 2 files changed, 55 insertions(+), 1 deletion(-)
 
 diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index efc963ab995a3..b28d49495de09 100644
+index b28d49495de09..6f39789d9d14b 100644
 --- a/net/sched/act_mirred.c
 +++ b/net/sched/act_mirred.c
-@@ -28,8 +28,8 @@
- static LIST_HEAD(mirred_list);
- static DEFINE_SPINLOCK(mirred_list_lock);
- 
--#define MIRRED_RECURSION_LIMIT    4
--static DEFINE_PER_CPU(unsigned int, mirred_rec_level);
-+#define MIRRED_NEST_LIMIT    4
-+static DEFINE_PER_CPU(unsigned int, mirred_nest_level);
- 
- static bool tcf_mirred_is_act_redirect(int action)
- {
-@@ -223,7 +223,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 	struct sk_buff *skb2 = skb;
- 	bool m_mac_header_xmit;
- 	struct net_device *dev;
--	unsigned int rec_level;
-+	unsigned int nest_level;
- 	int retval, err = 0;
- 	bool use_reinsert;
- 	bool want_ingress;
-@@ -234,11 +234,11 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 	int mac_len;
- 	bool at_nh;
- 
--	rec_level = __this_cpu_inc_return(mirred_rec_level);
--	if (unlikely(rec_level > MIRRED_RECURSION_LIMIT)) {
-+	nest_level = __this_cpu_inc_return(mirred_nest_level);
-+	if (unlikely(nest_level > MIRRED_NEST_LIMIT)) {
- 		net_warn_ratelimited("Packet exceeded mirred recursion limit on dev %s\n",
- 				     netdev_name(skb->dev));
--		__this_cpu_dec(mirred_rec_level);
-+		__this_cpu_dec(mirred_nest_level);
- 		return TC_ACT_SHOT;
- 	}
- 
-@@ -308,7 +308,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 			err = tcf_mirred_forward(res->ingress, skb);
- 			if (err)
- 				tcf_action_inc_overlimit_qstats(&m->common);
--			__this_cpu_dec(mirred_rec_level);
-+			__this_cpu_dec(mirred_nest_level);
- 			return TC_ACT_CONSUMED;
- 		}
- 	}
-@@ -320,7 +320,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 		if (tcf_mirred_is_act_redirect(m_eaction))
- 			retval = TC_ACT_SHOT;
- 	}
--	__this_cpu_dec(mirred_rec_level);
-+	__this_cpu_dec(mirred_nest_level);
- 
- 	return retval;
+@@ -204,12 +204,19 @@ static int tcf_mirred_init(struct net *net, struct nlattr *nla,
+ 	return err;
  }
+ 
++static bool is_mirred_nested(void)
++{
++	return unlikely(__this_cpu_read(mirred_nest_level) > 1);
++}
++
+ static int tcf_mirred_forward(bool want_ingress, struct sk_buff *skb)
+ {
+ 	int err;
+ 
+ 	if (!want_ingress)
+ 		err = tcf_dev_queue_xmit(skb, dev_queue_xmit);
++	else if (is_mirred_nested())
++		err = netif_rx(skb);
+ 	else
+ 		err = netif_receive_skb(skb);
+ 
+diff --git a/tools/testing/selftests/net/forwarding/tc_actions.sh b/tools/testing/selftests/net/forwarding/tc_actions.sh
+index d9eca227136bb..22a1e4c9553a3 100755
+--- a/tools/testing/selftests/net/forwarding/tc_actions.sh
++++ b/tools/testing/selftests/net/forwarding/tc_actions.sh
+@@ -3,7 +3,7 @@
+ 
+ ALL_TESTS="gact_drop_and_ok_test mirred_egress_redirect_test \
+ 	mirred_egress_mirror_test matchall_mirred_egress_mirror_test \
+-	gact_trap_test"
++	gact_trap_test mirred_egress_to_ingress_tcp_test"
+ NUM_NETIFS=4
+ source tc_common.sh
+ source lib.sh
+@@ -153,6 +153,53 @@ gact_trap_test()
+ 	log_test "trap ($tcflags)"
+ }
+ 
++mirred_egress_to_ingress_tcp_test()
++{
++	local tmpfile=$(mktemp) tmpfile1=$(mktemp)
++
++	RET=0
++	dd conv=sparse status=none if=/dev/zero bs=1M count=2 of=$tmpfile
++	tc filter add dev $h1 protocol ip pref 100 handle 100 egress flower \
++		$tcflags ip_proto tcp src_ip 192.0.2.1 dst_ip 192.0.2.2 \
++			action ct commit nat src addr 192.0.2.2 pipe \
++			action ct clear pipe \
++			action ct commit nat dst addr 192.0.2.1 pipe \
++			action ct clear pipe \
++			action skbedit ptype host pipe \
++			action mirred ingress redirect dev $h1
++	tc filter add dev $h1 protocol ip pref 101 handle 101 egress flower \
++		$tcflags ip_proto icmp \
++			action mirred ingress redirect dev $h1
++	tc filter add dev $h1 protocol ip pref 102 handle 102 ingress flower \
++		ip_proto icmp \
++			action drop
++
++	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $tmpfile1  &
++	local rpid=$!
++	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$tmpfile
++	wait -n $rpid
++	cmp -s $tmpfile $tmpfile1
++	check_err $? "server output check failed"
++
++	$MZ $h1 -c 10 -p 64 -a $h1mac -b $h1mac -A 192.0.2.1 -B 192.0.2.1 \
++		-t icmp "ping,id=42,seq=5" -q
++	tc_check_packets "dev $h1 egress" 101 10
++	check_err $? "didn't mirred redirect ICMP"
++	tc_check_packets "dev $h1 ingress" 102 10
++	check_err $? "didn't drop mirred ICMP"
++	local overlimits=$(tc_rule_stats_get ${h1} 101 egress .overlimits)
++	test ${overlimits} = 10
++	check_err $? "wrong overlimits, expected 10 got ${overlimits}"
++
++	tc filter del dev $h1 egress protocol ip pref 100 handle 100 flower
++	tc filter del dev $h1 egress protocol ip pref 101 handle 101 flower
++	tc filter del dev $h1 ingress protocol ip pref 102 handle 102 flower
++
++	rm -f $tmpfile $tmpfile1
++	log_test "mirred_egress_to_ingress_tcp ($tcflags)"
++}
++
++>>>>>>> e921d05033293 (act_mirred: use the backlog for nested calls to mirred ingress)
+ setup_prepare()
+ {
+ 	h1=${NETIFS[p1]}
 -- 
 2.39.2
 
