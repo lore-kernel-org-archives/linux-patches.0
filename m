@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FB48BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FFBC4339B;
-	Tue, 28 Mar 2023 14:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFC58BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCB8C433D2;
+	Tue, 28 Mar 2023 14:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014873;
-	bh=PhObNGJPHGlYcK6PumO1SHpmmjeshhIaCthePBXbGTI=;
+	s=korg; t=1680014876;
+	bh=KDDxBnEe8PyQ9UZWZq/QsN2uO1AnDwNhjF+8EoXVacU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrNARCe6IQ9bkSwTRbxUNBVQO2flBBe/gjHAxRZ1RIxjBf5LqobadKsCGke0vzAfp
-	 ogGT0qmxyXbU5pp7aUUUDSPiY7MDj2scACBX8ve44pC8jUYGtTW3MT9TR+9Dk0h6Jy
-	 RRZP07Ju+oMbdd1+hjuBeqoaoJm3hBRESDKQig1k=
+	b=BclgouGEasGk3BZ4U+GgBChscRziqD/UyQ1OD16ElpFvu0y8keGNdRSKAlSISc0Kr
+	 5JLnCDmFCrawbodX9AzG0XiuTJev3U2ncBvFevNv28M1S8or9mwx6TtdF1d2zvViPl
+	 +AR9KRuao3+zDutzcfEAf3ZaaXF2ckbfAZ03wOOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heinz Wiesinger <pprkut@slackware.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Danielle Ratson <danieller@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 066/240] bootconfig: Fix testcase to increase max node
-Date: Tue, 28 Mar 2023 16:40:29 +0200
-Message-Id: <20230328142622.490007613@linuxfoundation.org>
+Subject: [PATCH 6.2 084/240] mlxsw: spectrum_fid: Fix incorrect local port type
+Date: Tue, 28 Mar 2023 16:40:47 +0200
+Message-Id: <20230328142623.271886866@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,57 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit b69245126a48e50882021180fa5d264dc7149ccc ]
+[ Upstream commit bb765a743377d46d8da8e7f7e5128022504741b9 ]
 
-Since commit 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig
-from 1024 to 8192 for DCC support") increased the max number of bootconfig
-node to 8192, the bootconfig testcase of the max number of nodes fails.
-To fix this issue, we can not simply increase the number in the test script
-because the test bootconfig file becomes too big (>32KB). To fix that, we
-can use a combination of three alphabets (26^3 = 17576). But with that,
-we can not express the 8193 (just one exceed from the limitation) because
-it also exceeds the max size of bootconfig. So, the first 26 nodes will just
-use one alphabet.
+Local port is a 10-bit number, but it was mistakenly stored in a u8,
+resulting in firmware errors when using a netdev corresponding to a
+local port higher than 255.
 
-With this fix, test-bootconfig.sh passes all tests.
+Fix by storing the local port in u16, as is done in the rest of the
+code.
 
-Link: https://lore.kernel.org/all/167888844790.791176.670805252426835131.stgit@devnote2/
-
-Reported-by: Heinz Wiesinger <pprkut@slackware.com>
-Link: https://lore.kernel.org/all/2463802.XAFRqVoOGU@amaterasu.liwjatan.org
-Fixes: 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig from 1024 to 8192 for DCC support")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: bf73904f5fba ("mlxsw: Add support for 802.1Q FID family")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Danielle Ratson <danieller@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/eace1f9d96545ab8a2775db857cb7e291a9b166b.1679398549.git.petrm@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bootconfig/test-bootconfig.sh | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_fid.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/bootconfig/test-bootconfig.sh b/tools/bootconfig/test-bootconfig.sh
-index f68e2e9eef8b2..a2c484c243f5d 100755
---- a/tools/bootconfig/test-bootconfig.sh
-+++ b/tools/bootconfig/test-bootconfig.sh
-@@ -87,10 +87,14 @@ xfail grep -i "error" $OUTFILE
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_fid.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_fid.c
+index 045a24cacfa51..b6ee2d658b0c4 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_fid.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_fid.c
+@@ -1354,7 +1354,7 @@ static int mlxsw_sp_fid_8021q_port_vid_map(struct mlxsw_sp_fid *fid,
+ 					   u16 vid)
+ {
+ 	struct mlxsw_sp *mlxsw_sp = mlxsw_sp_port->mlxsw_sp;
+-	u8 local_port = mlxsw_sp_port->local_port;
++	u16 local_port = mlxsw_sp_port->local_port;
+ 	int err;
  
- echo "Max node number check"
+ 	/* In case there are no {Port, VID} => FID mappings on the port,
+@@ -1391,7 +1391,7 @@ mlxsw_sp_fid_8021q_port_vid_unmap(struct mlxsw_sp_fid *fid,
+ 				  struct mlxsw_sp_port *mlxsw_sp_port, u16 vid)
+ {
+ 	struct mlxsw_sp *mlxsw_sp = mlxsw_sp_port->mlxsw_sp;
+-	u8 local_port = mlxsw_sp_port->local_port;
++	u16 local_port = mlxsw_sp_port->local_port;
  
--echo -n > $TEMPCONF
--for i in `seq 1 1024` ; do
--   echo "node$i" >> $TEMPCONF
--done
-+awk '
-+BEGIN {
-+  for (i = 0; i < 26; i += 1)
-+      printf("%c\n", 65 + i % 26)
-+  for (i = 26; i < 8192; i += 1)
-+      printf("%c%c%c\n", 65 + i % 26, 65 + (i / 26) % 26, 65 + (i / 26 / 26))
-+}
-+' > $TEMPCONF
- xpass $BOOTCONF -a $TEMPCONF $INITRD
- 
- echo "badnode" >> $TEMPCONF
+ 	mlxsw_sp_fid_port_vid_list_del(fid, mlxsw_sp_port->local_port, vid);
+ 	mlxsw_sp_fid_evid_map(fid, local_port, vid, false);
 -- 
 2.39.2
 
