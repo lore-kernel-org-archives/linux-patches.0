@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021C58BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:00:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3C7C433D2;
-	Tue, 28 Mar 2023 15:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C418BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:00:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D58C433D2;
+	Tue, 28 Mar 2023 15:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015637;
-	bh=nY5wMEAjf17Cj3Bkpkgam5vh8mcfisWNVi/j51Izv0U=;
+	s=korg; t=1680015640;
+	bh=4JbvwgLsdez8/IaGYiQmqfm5rp3xYPNMDHGBv9/YG58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZ+J2vSbbgg2ArRoFnexuXrvicpmZZ/r3TFOfRaxtoebVYak/AmTYvrg6F5GCbpGc
-	 /NIoES+S70LncIEudPwe0ZeKceHFBJZUEubLYNSaVGrHWvA+VUnabulOB9h9wvVocs
-	 wxIS46XpJ1WMc3Uq/SEAR2KexGrKopPK0Ztbf9V4=
+	b=y0YkjCdLsRSfBqmUOmA2PKlNhEelx3kv7Fn/43m3aMEK0jLY4X0J2PSXhZP4O6yXq
+	 K18dKERv0zPm6b5cIYpGK19Ay8m2i0rhQMgrlmnbCPKlPthFwTEExQ4ZbDJlHr2fhx
+	 r+VNa5ZqDmDbhU3+x5K6bvZMC7+fF6igQp1Lgam4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong2@huawei.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/224] ksmbd: fix possible refcount leak in smb2_open()
-Date: Tue, 28 Mar 2023 16:41:15 +0200
-Message-Id: <20230328142620.612271657@linuxfoundation.org>
+	Sanju Mehta <Sanju.Mehta@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 114/224] thunderbolt: Use const qualifier for `ring_interrupt_index`
+Date: Tue, 28 Mar 2023 16:41:50 +0200
+Message-Id: <20230328142622.103452410@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -36,41 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ChenXiaoSong <chenxiaosong2@huawei.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 2624b445544ffc1472ccabfb6ec867c199d4c95c ]
+commit 1716efdb07938bd6510e1127d02012799112c433 upstream.
 
-Reference count of acls will leak when memory allocation fails. Fix this
-by adding the missing posix_acl_release().
+`ring_interrupt_index` doesn't change the data for `ring` so mark it as
+const. This is needed by the following patch that disables interrupt
+auto clear for rings.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Sanju Mehta <Sanju.Mehta@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/thunderbolt/nhi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index 61d12eab0be15..e8c051a3329ec 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -2994,8 +2994,11 @@ int smb2_open(struct ksmbd_work *work)
- 							sizeof(struct smb_acl) +
- 							sizeof(struct smb_ace) * ace_num * 2,
- 							GFP_KERNEL);
--					if (!pntsd)
-+					if (!pntsd) {
-+						posix_acl_release(fattr.cf_acls);
-+						posix_acl_release(fattr.cf_dacls);
- 						goto err_out;
-+					}
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -46,7 +46,7 @@
+ #define QUIRK_AUTO_CLEAR_INT	BIT(0)
+ #define QUIRK_E2E		BIT(1)
  
- 					rc = build_sec_desc(user_ns,
- 							    pntsd, NULL, 0,
--- 
-2.39.2
-
+-static int ring_interrupt_index(struct tb_ring *ring)
++static int ring_interrupt_index(const struct tb_ring *ring)
+ {
+ 	int bit = ring->hop;
+ 	if (!ring->is_tx)
 
 
