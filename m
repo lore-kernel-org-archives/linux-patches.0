@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063D38BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB7EC433EF;
-	Tue, 28 Mar 2023 14:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5B38BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417A9C433EF;
+	Tue, 28 Mar 2023 14:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015151;
-	bh=s3bRgndL89e/1bOnmRYGS/2HTbSB7Igb/vaP0Vnr+ec=;
+	s=korg; t=1680015154;
+	bh=HoMNsw6UlowiAYEmI88oP29EGcRvRfm5df9nnuX9fZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0twptOEheYlhwekAKi8NaOPtYx9oQpe2BHmimDFoyIARDwdLDRfi50+jXcMDrMVN
-	 geBydIcFon4d9Su3M+48B/H0JnzOy/mSqpTP+bgBVTq/D0/npEKTS4EnnyOHXIetLM
-	 wgQ2R8kN6D6NuGSOIZkOxi1tAt72byjk+GwSXlHU=
+	b=2dj91Ob+pUSkj6aJ9xdedO9QA8mCvMr3mt+7ela0pDi/vheuUmYJItkN5V3St7EjH
+	 TpvhH5488kC+kGHvwpsIYV+5OgYA3UT22WCQaam6/HN3IrV6/54t8g1ko2kCIVkMeF
+	 cJHzAopQTXQSaW4gJvoKLg9vbLTmk88yTZW3hbM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.2 184/240] arm64: efi: Set NX compat flag in PE/COFF header
-Date: Tue, 28 Mar 2023 16:42:27 +0200
-Message-Id: <20230328142627.301399999@linuxfoundation.org>
+	syzbot+93e495f6a4f748827c88@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 6.2 185/240] fscrypt: destroy keyring after security_sb_delete()
+Date: Tue, 28 Mar 2023 16:42:28 +0200
+Message-Id: <20230328142627.341200811@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -33,44 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 3c66bb1918c262dd52fb4221a8d372619c5da70a upstream.
+commit ccb820dc7d2236b1af0d54ae038a27b5b6d5ae5a upstream.
 
-The PE/COFF header has a NX compat flag which informs the firmware that
-the application does not rely on memory regions being mapped with both
-executable and writable permissions at the same time.
+fscrypt_destroy_keyring() must be called after all potentially-encrypted
+inodes were evicted; otherwise it cannot safely destroy the keyring.
+Since inodes that are in-use by the Landlock LSM don't get evicted until
+security_sb_delete(), this means that fscrypt_destroy_keyring() must be
+called *after* security_sb_delete().
 
-This is typically used by the firmware to decide whether it can set the
-NX attribute on all allocations it returns, but going forward, it may be
-used to enforce a policy that only permits applications with the NX flag
-set to be loaded to begin wiht in some configurations, e.g., when Secure
-Boot is in effect.
+This fixes a WARN_ON followed by a NULL dereference, only possible if
+Landlock was being used on encrypted files.
 
-Even though the arm64 version of the EFI stub may relocate the kernel
-before executing it, it always did so after disabling the MMU, and so we
-were always in line with what the NX compat flag conveys, we just never
-bothered to set it.
-
-So let's set the flag now.
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: d7e7b9af104c ("fscrypt: stop using keyrings subsystem for fscrypt_master_key")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+93e495f6a4f748827c88@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/00000000000044651705f6ca1e30@google.com
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Link: https://lore.kernel.org/r/20230313221231.272498-2-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/efi-header.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/super.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/kernel/efi-header.S
-+++ b/arch/arm64/kernel/efi-header.S
-@@ -66,7 +66,7 @@
- 	.long	.Lefi_header_end - .L_head		// SizeOfHeaders
- 	.long	0					// CheckSum
- 	.short	IMAGE_SUBSYSTEM_EFI_APPLICATION		// Subsystem
--	.short	0					// DllCharacteristics
-+	.short	IMAGE_DLL_CHARACTERISTICS_NX_COMPAT	// DllCharacteristics
- 	.quad	0					// SizeOfStackReserve
- 	.quad	0					// SizeOfStackCommit
- 	.quad	0					// SizeOfHeapReserve
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -476,13 +476,22 @@ void generic_shutdown_super(struct super
+ 
+ 		cgroup_writeback_umount();
+ 
+-		/* evict all inodes with zero refcount */
++		/* Evict all inodes with zero refcount. */
+ 		evict_inodes(sb);
+-		/* only nonzero refcount inodes can have marks */
++
++		/*
++		 * Clean up and evict any inodes that still have references due
++		 * to fsnotify or the security policy.
++		 */
+ 		fsnotify_sb_delete(sb);
+-		fscrypt_destroy_keyring(sb);
+ 		security_sb_delete(sb);
+ 
++		/*
++		 * Now that all potentially-encrypted inodes have been evicted,
++		 * the fscrypt keyring can be destroyed.
++		 */
++		fscrypt_destroy_keyring(sb);
++
+ 		if (sb->s_dio_done_wq) {
+ 			destroy_workqueue(sb->s_dio_done_wq);
+ 			sb->s_dio_done_wq = NULL;
 
 
