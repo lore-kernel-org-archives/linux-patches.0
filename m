@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED008BEB
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70796C433EF;
-	Tue, 28 Mar 2023 14:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE7D8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C391FC433D2;
+	Tue, 28 Mar 2023 14:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014886;
-	bh=UWNUTyopbp++PSvDH2A9A01OLLgAwQsEiVnamn+KmYU=;
+	s=korg; t=1680014884;
+	bh=SvsT3LJ93mp/9QSQJ/xhqWMvY75Cvq9Hvb98wVl3j+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6fLGYRjb7KUqqQGBTo4UZSzTprFBDwhR3xJjVbz5hbAKsHd2i+VJ/N3hLmdxqaTz
-	 UoM2grMYs+ZRdgdgO/RWe37OfeJyY2OIHyAEX/1Thl4R4rjAiUhVDtG13tXtmKwhNB
-	 rGlW2XidA6fGx/FTnxVqV7z0Hf1ZAlZDb5k18qvw=
+	b=W0UGbh20Emeuzdj1gDIGqKqecONFvDvRZ4tAjKtGRLpSt+iYJMyrwGIKyEOqakmQh
+	 H7R4dg7PeiZO8isnucfgOyAAElWHX59VWcVK8WHIpFXcc9fIwnOP9WRDFHUuP0avoj
+	 1G7mJMJZuR1Dqxd2XU9EJZWOC5E/64birwGcMIE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong2@huawei.com>,
+	Dan Carpenter <error27@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 088/240] ksmbd: fix possible refcount leak in smb2_open()
-Date: Tue, 28 Mar 2023 16:40:51 +0200
-Message-Id: <20230328142623.442467184@linuxfoundation.org>
+Subject: [PATCH 6.2 087/240] ksmbd: add low bound validation to FSCTL_QUERY_ALLOCATED_RANGES
+Date: Tue, 28 Mar 2023 16:40:50 +0200
+Message-Id: <20230328142623.402735421@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,39 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ChenXiaoSong <chenxiaosong2@huawei.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 2624b445544ffc1472ccabfb6ec867c199d4c95c ]
+[ Upstream commit 342edb60dcda7a409430359b0cac2864bb9dfe44 ]
 
-Reference count of acls will leak when memory allocation fails. Fix this
-by adding the missing posix_acl_release().
+Smatch static checker warning:
+ fs/ksmbd/vfs.c:1040 ksmbd_vfs_fqar_lseek() warn: no lower bound on 'length'
+ fs/ksmbd/vfs.c:1041 ksmbd_vfs_fqar_lseek() warn: no lower bound on 'start'
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Fix unexpected result that could caused from negative start and length.
+
+Fixes: f44158485826 ("cifsd: add file operations")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index b553d93a94eb5..89724cc62299c 100644
+index abe7ea1c8a2f5..b553d93a94eb5 100644
 --- a/fs/ksmbd/smb2pdu.c
 +++ b/fs/ksmbd/smb2pdu.c
-@@ -2996,8 +2996,11 @@ int smb2_open(struct ksmbd_work *work)
- 							sizeof(struct smb_acl) +
- 							sizeof(struct smb_ace) * ace_num * 2,
- 							GFP_KERNEL);
--					if (!pntsd)
-+					if (!pntsd) {
-+						posix_acl_release(fattr.cf_acls);
-+						posix_acl_release(fattr.cf_dacls);
- 						goto err_out;
-+					}
+@@ -7463,13 +7463,16 @@ static int fsctl_query_allocated_ranges(struct ksmbd_work *work, u64 id,
+ 	if (in_count == 0)
+ 		return -EINVAL;
  
- 					rc = build_sec_desc(user_ns,
- 							    pntsd, NULL, 0,
++	start = le64_to_cpu(qar_req->file_offset);
++	length = le64_to_cpu(qar_req->length);
++
++	if (start < 0 || length < 0)
++		return -EINVAL;
++
+ 	fp = ksmbd_lookup_fd_fast(work, id);
+ 	if (!fp)
+ 		return -ENOENT;
+ 
+-	start = le64_to_cpu(qar_req->file_offset);
+-	length = le64_to_cpu(qar_req->length);
+-
+ 	ret = ksmbd_vfs_fqar_lseek(fp, start, length,
+ 				   qar_rsp, in_count, out_count);
+ 	if (ret && ret != -E2BIG)
 -- 
 2.39.2
 
