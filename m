@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D888BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A8FC433EF;
-	Tue, 28 Mar 2023 14:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085AD8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D12C433D2;
+	Tue, 28 Mar 2023 14:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015090;
-	bh=9gYcN3lVaQrRM29ni5o4pkLv0F3O8QJBXKqb3RYbhCk=;
+	s=korg; t=1680015093;
+	bh=bhLU6mwpDf4aty68f90LQgPlMyE8nF2YZdFvGqe6Qos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPZNG7TsdHJiTlwrjqV/K1Gi6SlpxfXoJyfMulXCWP3KEyUjuWXSs8Cd9bQ85k17K
-	 xH+RKKGMHdIG6JztyKUU9TM081uCJb2ywJRR/BTmSpJLvI1fQuXun5MXcK/f6wJVIL
-	 zk0X/pS5vjEeNr1oyat2Vc89noR1/ZAZmVMb8O8A=
+	b=C1NLFxRxFVWmQWAJ28CCRyjRcjsu3wA8U6pP8H+CDXtmcBv1QQHG88xpKgMQo4aCf
+	 Zx1mT+tsmYa981EFKh5KutUWuvdb/6OTDzAJaHkkHVOlnsDFAazENoC+dZZItQqUNE
+	 ZJww2gTW22J8io+lX1oetolUOa6w8Zlk0dhGuEp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhao <wizhao@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 161/240] act_mirred: use the backlog for nested calls to mirred ingress
-Date: Tue, 28 Mar 2023 16:42:04 +0200
-Message-Id: <20230328142626.385345768@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 162/240] cifs: lock chan_lock outside match_session
+Date: Tue, 28 Mar 2023 16:42:05 +0200
+Message-Id: <20230328142626.430679137@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -39,139 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit ca22da2fbd693b54dc8e3b7b54ccc9f7e9ba3640 ]
+commit 2f4e429c846972c8405951a9ff7a82aceeca7461 upstream.
 
-William reports kernel soft-lockups on some OVS topologies when TC mirred
-egress->ingress action is hit by local TCP traffic [1].
-The same can also be reproduced with SCTP (thanks Xin for verifying), when
-client and server reach themselves through mirred egress to ingress, and
-one of the two peers sends a "heartbeat" packet (from within a timer).
+Coverity had rightly indicated a possible deadlock
+due to chan_lock being done inside match_session.
+All callers of match_* functions should pick up the
+necessary locks and call them.
 
-Enqueueing to backlog proved to fix this soft lockup; however, as Cong
-noticed [2], we should preserve - when possible - the current mirred
-behavior that counts as "overlimits" any eventual packet drop subsequent to
-the mirred forwarding action [3]. A compromise solution might use the
-backlog only when tcf_mirred_act() has a nest level greater than one:
-change tcf_mirred_forward() accordingly.
-
-Also, add a kselftest that can reproduce the lockup and verifies TC mirred
-ability to account for further packet drops after TC mirred egress->ingress
-(when the nest level is 1).
-
- [1] https://lore.kernel.org/netdev/33dc43f587ec1388ba456b4915c75f02a8aae226.1663945716.git.dcaratti@redhat.com/
- [2] https://lore.kernel.org/netdev/Y0w%2FWWY60gqrtGLp@pop-os.localdomain/
- [3] such behavior is not guaranteed: for example, if RPS or skb RX
-     timestamping is enabled on the mirred target device, the kernel
-     can defer receiving the skb and return NET_RX_SUCCESS inside
-     tcf_mirred_forward().
-
-Reported-by: William Zhao <wizhao@redhat.com>
-CC: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Cc: stable@vger.kernel.org
+Fixes: 724244cdb382 ("cifs: protect session channel fields with chan_lock")
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_mirred.c                        |  7 +++
- .../selftests/net/forwarding/tc_actions.sh    | 49 ++++++++++++++++++-
- 2 files changed, 55 insertions(+), 1 deletion(-)
+ fs/cifs/connect.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index c8abb51364917..8037ec9b1d311 100644
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -206,12 +206,19 @@ static int tcf_mirred_init(struct net *net, struct nlattr *nla,
- 	return err;
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -1770,7 +1770,7 @@ out_err:
+ 	return ERR_PTR(rc);
  }
  
-+static bool is_mirred_nested(void)
-+{
-+	return unlikely(__this_cpu_read(mirred_nest_level) > 1);
-+}
-+
- static int tcf_mirred_forward(bool want_ingress, struct sk_buff *skb)
+-/* this function must be called with ses_lock held */
++/* this function must be called with ses_lock and chan_lock held */
+ static int match_session(struct cifs_ses *ses, struct smb3_fs_context *ctx)
  {
- 	int err;
+ 	if (ctx->sectype != Unspecified &&
+@@ -1781,12 +1781,8 @@ static int match_session(struct cifs_ses
+ 	 * If an existing session is limited to less channels than
+ 	 * requested, it should not be reused
+ 	 */
+-	spin_lock(&ses->chan_lock);
+-	if (ses->chan_max < ctx->max_channels) {
+-		spin_unlock(&ses->chan_lock);
++	if (ses->chan_max < ctx->max_channels)
+ 		return 0;
+-	}
+-	spin_unlock(&ses->chan_lock);
  
- 	if (!want_ingress)
- 		err = tcf_dev_queue_xmit(skb, dev_queue_xmit);
-+	else if (is_mirred_nested())
-+		err = netif_rx(skb);
- 	else
- 		err = netif_receive_skb(skb);
+ 	switch (ses->sectype) {
+ 	case Kerberos:
+@@ -1914,10 +1910,13 @@ cifs_find_smb_ses(struct TCP_Server_Info
+ 			spin_unlock(&ses->ses_lock);
+ 			continue;
+ 		}
++		spin_lock(&ses->chan_lock);
+ 		if (!match_session(ses, ctx)) {
++			spin_unlock(&ses->chan_lock);
+ 			spin_unlock(&ses->ses_lock);
+ 			continue;
+ 		}
++		spin_unlock(&ses->chan_lock);
+ 		spin_unlock(&ses->ses_lock);
  
-diff --git a/tools/testing/selftests/net/forwarding/tc_actions.sh b/tools/testing/selftests/net/forwarding/tc_actions.sh
-index 1e0a62f638fec..919c0dd9fe4bc 100755
---- a/tools/testing/selftests/net/forwarding/tc_actions.sh
-+++ b/tools/testing/selftests/net/forwarding/tc_actions.sh
-@@ -3,7 +3,8 @@
+ 		++ses->ses_count;
+@@ -2743,6 +2742,7 @@ cifs_match_super(struct super_block *sb,
  
- ALL_TESTS="gact_drop_and_ok_test mirred_egress_redirect_test \
- 	mirred_egress_mirror_test matchall_mirred_egress_mirror_test \
--	gact_trap_test mirred_egress_to_ingress_test"
-+	gact_trap_test mirred_egress_to_ingress_test \
-+	mirred_egress_to_ingress_tcp_test"
- NUM_NETIFS=4
- source tc_common.sh
- source lib.sh
-@@ -198,6 +199,52 @@ mirred_egress_to_ingress_test()
- 	log_test "mirred_egress_to_ingress ($tcflags)"
- }
+ 	spin_lock(&tcp_srv->srv_lock);
+ 	spin_lock(&ses->ses_lock);
++	spin_lock(&ses->chan_lock);
+ 	spin_lock(&tcon->tc_lock);
+ 	if (!match_server(tcp_srv, ctx, dfs_super_cmp) ||
+ 	    !match_session(ses, ctx) ||
+@@ -2755,6 +2755,7 @@ cifs_match_super(struct super_block *sb,
+ 	rc = compare_mount_options(sb, mnt_data);
+ out:
+ 	spin_unlock(&tcon->tc_lock);
++	spin_unlock(&ses->chan_lock);
+ 	spin_unlock(&ses->ses_lock);
+ 	spin_unlock(&tcp_srv->srv_lock);
  
-+mirred_egress_to_ingress_tcp_test()
-+{
-+	local tmpfile=$(mktemp) tmpfile1=$(mktemp)
-+
-+	RET=0
-+	dd conv=sparse status=none if=/dev/zero bs=1M count=2 of=$tmpfile
-+	tc filter add dev $h1 protocol ip pref 100 handle 100 egress flower \
-+		$tcflags ip_proto tcp src_ip 192.0.2.1 dst_ip 192.0.2.2 \
-+			action ct commit nat src addr 192.0.2.2 pipe \
-+			action ct clear pipe \
-+			action ct commit nat dst addr 192.0.2.1 pipe \
-+			action ct clear pipe \
-+			action skbedit ptype host pipe \
-+			action mirred ingress redirect dev $h1
-+	tc filter add dev $h1 protocol ip pref 101 handle 101 egress flower \
-+		$tcflags ip_proto icmp \
-+			action mirred ingress redirect dev $h1
-+	tc filter add dev $h1 protocol ip pref 102 handle 102 ingress flower \
-+		ip_proto icmp \
-+			action drop
-+
-+	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $tmpfile1  &
-+	local rpid=$!
-+	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$tmpfile
-+	wait -n $rpid
-+	cmp -s $tmpfile $tmpfile1
-+	check_err $? "server output check failed"
-+
-+	$MZ $h1 -c 10 -p 64 -a $h1mac -b $h1mac -A 192.0.2.1 -B 192.0.2.1 \
-+		-t icmp "ping,id=42,seq=5" -q
-+	tc_check_packets "dev $h1 egress" 101 10
-+	check_err $? "didn't mirred redirect ICMP"
-+	tc_check_packets "dev $h1 ingress" 102 10
-+	check_err $? "didn't drop mirred ICMP"
-+	local overlimits=$(tc_rule_stats_get ${h1} 101 egress .overlimits)
-+	test ${overlimits} = 10
-+	check_err $? "wrong overlimits, expected 10 got ${overlimits}"
-+
-+	tc filter del dev $h1 egress protocol ip pref 100 handle 100 flower
-+	tc filter del dev $h1 egress protocol ip pref 101 handle 101 flower
-+	tc filter del dev $h1 ingress protocol ip pref 102 handle 102 flower
-+
-+	rm -f $tmpfile $tmpfile1
-+	log_test "mirred_egress_to_ingress_tcp ($tcflags)"
-+}
-+
- setup_prepare()
- {
- 	h1=${NETIFS[p1]}
--- 
-2.39.2
-
 
 
