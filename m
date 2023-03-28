@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BD58BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E34C433EF;
-	Tue, 28 Mar 2023 15:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDBA8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A659BC433D2;
+	Tue, 28 Mar 2023 15:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015920;
-	bh=Tn9J1rkF8CqebWI3HPjC16L/ibAVABXU/64SeSXTrBk=;
+	s=korg; t=1680015923;
+	bh=z2gkB8yvrfNSrtRIIsJ1Z8vM9S7nvl3gsuAsqB9cgNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ObHa2NMG5i4BL8aLIK/LjOHL0R8ibYiC3RDolXB/P2u5cU95Lvr9dsHuX8JW5u9Cj
-	 N04M0JJOXZa3QOlqEuHgkwjVAp+kxCEeM+HOHyhvy3fsYH5hxN4WoebKjAsYMm2eNK
-	 rg8VdT5gm6VCEHrRwA0QZWhyupYzgiOFukScBh7o=
+	b=c9G2yDgK9XG+eIEE60e421HyQzCtha3N/dbYde1etIbjyBcQJQoiPdVRQEcwMJj6/
+	 EVHR2OLf8G9Zz+DV7asEKgG/TIq1l6alHsDkvejAALoHgzyfVSBBxZB8xvf5AopAfS
+	 G/jc/UN6gZ/shL9ARWfyLoMFmt3ToBxS3bMjfQwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.1 215/224] i2c: xgene-slimpro: Fix out-of-bounds bug in xgene_slimpro_i2c_xfer()
-Date: Tue, 28 Mar 2023 16:43:31 +0200
-Message-Id: <20230328142626.293592911@linuxfoundation.org>
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.1 216/224] dm stats: check for and propagate alloc_percpu failure
+Date: Tue, 28 Mar 2023 16:43:32 +0200
+Message-Id: <20230328142626.331813089@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,37 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-commit 92fbb6d1296f81f41f65effd7f5f8c0f74943d15 upstream.
+commit d3aa3e060c4a80827eb801fc448debc9daa7c46b upstream.
 
-The data->block[0] variable comes from user and is a number between
-0-255. Without proper check, the variable may be very large to cause
-an out-of-bounds when performing memcpy in slimpro_i2c_blkwr.
+Check alloc_precpu()'s return value and return an error from
+dm_stats_init() if it fails. Update alloc_dev() to fail if
+dm_stats_init() does.
 
-Fix this bug by checking the value of writelen.
+Otherwise, a NULL pointer dereference will occur in dm_stats_cleanup()
+even if dm-stats isn't being actively used.
 
-Fixes: f6505fbabc42 ("i2c: add SLIMpro I2C device driver on APM X-Gene platform")
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Fixes: fd2ed4d25270 ("dm: add statistics support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-xgene-slimpro.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/dm-stats.c |    7 ++++++-
+ drivers/md/dm-stats.h |    2 +-
+ drivers/md/dm.c       |    4 +++-
+ 3 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/i2c/busses/i2c-xgene-slimpro.c
-+++ b/drivers/i2c/busses/i2c-xgene-slimpro.c
-@@ -308,6 +308,9 @@ static int slimpro_i2c_blkwr(struct slim
- 	u32 msg[3];
- 	int rc;
+--- a/drivers/md/dm-stats.c
++++ b/drivers/md/dm-stats.c
+@@ -188,7 +188,7 @@ static int dm_stat_in_flight(struct dm_s
+ 	       atomic_read(&shared->in_flight[WRITE]);
+ }
  
-+	if (writelen > I2C_SMBUS_BLOCK_MAX)
-+		return -EINVAL;
+-void dm_stats_init(struct dm_stats *stats)
++int dm_stats_init(struct dm_stats *stats)
+ {
+ 	int cpu;
+ 	struct dm_stats_last_position *last;
+@@ -197,11 +197,16 @@ void dm_stats_init(struct dm_stats *stat
+ 	INIT_LIST_HEAD(&stats->list);
+ 	stats->precise_timestamps = false;
+ 	stats->last = alloc_percpu(struct dm_stats_last_position);
++	if (!stats->last)
++		return -ENOMEM;
 +
- 	memcpy(ctx->dma_buffer, data, writelen);
- 	paddr = dma_map_single(ctx->dev, ctx->dma_buffer, writelen,
- 			       DMA_TO_DEVICE);
+ 	for_each_possible_cpu(cpu) {
+ 		last = per_cpu_ptr(stats->last, cpu);
+ 		last->last_sector = (sector_t)ULLONG_MAX;
+ 		last->last_rw = UINT_MAX;
+ 	}
++
++	return 0;
+ }
+ 
+ void dm_stats_cleanup(struct dm_stats *stats)
+--- a/drivers/md/dm-stats.h
++++ b/drivers/md/dm-stats.h
+@@ -21,7 +21,7 @@ struct dm_stats_aux {
+ 	unsigned long long duration_ns;
+ };
+ 
+-void dm_stats_init(struct dm_stats *st);
++int dm_stats_init(struct dm_stats *st);
+ void dm_stats_cleanup(struct dm_stats *st);
+ 
+ struct mapped_device;
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2105,7 +2105,9 @@ static struct mapped_device *alloc_dev(i
+ 	if (!md->pending_io)
+ 		goto bad;
+ 
+-	dm_stats_init(&md->stats);
++	r = dm_stats_init(&md->stats);
++	if (r < 0)
++		goto bad;
+ 
+ 	/* Populate the mapping, nobody knows we exist yet */
+ 	spin_lock(&_minor_lock);
 
 
