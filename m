@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EDB8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E759C433EF;
-	Tue, 28 Mar 2023 14:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FA78BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0562CC433D2;
+	Tue, 28 Mar 2023 14:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014971;
-	bh=6533pZA8P+3NraJqqN7msuAhzPQsnUM19RaSYFVyKUQ=;
+	s=korg; t=1680014974;
+	bh=NjmRWM0xEXG/zUQcEE7zhOg6Fqc4ekjsfjN1lv+duH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o6HGbJyaCKL3/B4tIK0NPNQNHgllDI+4ug0YXN2MaMjPLNQFaeSafOg7r+ObSpD+d
-	 yG34RYrZ8LfLEm0tEUr8zYAjnPMFgG4/voZN0HflH4D8IkMC1hw3YdV+dSHDDCgdkq
-	 zYD9erdYuZvYvL0Q65FoP3idp9kXLZuWgPotpOis=
+	b=L3nNujwbSGy3EmG4u7PrUVWBj65bpYHYQABD1ohoKaGAGQ3dB+XHn6KrS3/NAzYA7
+	 WtuJrIzIORHGmvrECKuX1zBSdh9/Q1uAiQntcmlLAzq/7oUTXAsXkMo1irNHYITjEO
+	 dCP5UUOcElWaLKbHUJ79xlCf46PL9t0bJhvj9zYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sanjay R Mehta <sanju.mehta@amd.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.2 119/240] thunderbolt: Call tb_check_quirks() after initializing adapters
-Date: Tue, 28 Mar 2023 16:41:22 +0200
-Message-Id: <20230328142624.741474656@linuxfoundation.org>
+Subject: [PATCH 6.2 120/240] thunderbolt: Add quirk to disable CLx
+Date: Tue, 28 Mar 2023 16:41:23 +0200
+Message-Id: <20230328142624.787603286@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -33,40 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Sanjay R Mehta <sanju.mehta@amd.com>
 
-commit d2d6ddf188f609861489d5d188d545856a3ed399 upstream.
+commit 7af9da8ce8f9a16221ecd8ba4280582f5bd452fc upstream.
 
-In order to apply quirks based on certain adapter types move call to
-tb_check_quirks() happen after the adapters are initialized. This should
-not affect the existing quirks.
+Add QUIRK_NO_CLX to disable the CLx state for hardware which
+doesn't supports it.
+
+AMD Yellow Carp and Pink Sardine don't support CLx state,
+hence disabling it using QUIRK_NO_CLX.
 
 Cc: stable@vger.kernel.org
+Signed-off-by: Sanjay R Mehta <sanju.mehta@amd.com>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+[mw: added debug log when the quirk is run]
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/switch.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thunderbolt/quirks.c |   13 +++++++++++++
+ drivers/thunderbolt/tb.h     |   11 ++++++++---
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
---- a/drivers/thunderbolt/switch.c
-+++ b/drivers/thunderbolt/switch.c
-@@ -2960,8 +2960,6 @@ int tb_switch_add(struct tb_switch *sw)
- 			dev_warn(&sw->dev, "reading DROM failed: %d\n", ret);
- 		tb_sw_dbg(sw, "uid: %#llx\n", sw->uid);
+--- a/drivers/thunderbolt/quirks.c
++++ b/drivers/thunderbolt/quirks.c
+@@ -20,6 +20,12 @@ static void quirk_dp_credit_allocation(s
+ 	}
+ }
  
--		tb_check_quirks(sw);
--
- 		ret = tb_switch_set_uuid(sw);
- 		if (ret) {
- 			dev_err(&sw->dev, "failed to set UUID\n");
-@@ -2980,6 +2978,8 @@ int tb_switch_add(struct tb_switch *sw)
- 			}
- 		}
- 
-+		tb_check_quirks(sw);
++static void quirk_clx_disable(struct tb_switch *sw)
++{
++	sw->quirks |= QUIRK_NO_CLX;
++	tb_sw_dbg(sw, "disabling CL states\n");
++}
 +
- 		tb_switch_default_link_ports(sw);
+ struct tb_quirk {
+ 	u16 hw_vendor_id;
+ 	u16 hw_device_id;
+@@ -37,6 +43,13 @@ static const struct tb_quirk tb_quirks[]
+ 	 * DP buffers.
+ 	 */
+ 	{ 0x8087, 0x0b26, 0x0000, 0x0000, quirk_dp_credit_allocation },
++	/*
++	 * CLx is not supported on AMD USB4 Yellow Carp and Pink Sardine platforms.
++	 */
++	{ 0x0438, 0x0208, 0x0000, 0x0000, quirk_clx_disable },
++	{ 0x0438, 0x0209, 0x0000, 0x0000, quirk_clx_disable },
++	{ 0x0438, 0x020a, 0x0000, 0x0000, quirk_clx_disable },
++	{ 0x0438, 0x020b, 0x0000, 0x0000, quirk_clx_disable },
+ };
  
- 		ret = tb_switch_update_link_attributes(sw);
+ /**
+--- a/drivers/thunderbolt/tb.h
++++ b/drivers/thunderbolt/tb.h
+@@ -23,6 +23,11 @@
+ #define NVM_MAX_SIZE		SZ_512K
+ #define NVM_DATA_DWORDS		16
+ 
++/* Keep link controller awake during update */
++#define QUIRK_FORCE_POWER_LINK_CONTROLLER		BIT(0)
++/* Disable CLx if not supported */
++#define QUIRK_NO_CLX					BIT(1)
++
+ /**
+  * struct tb_nvm - Structure holding NVM information
+  * @dev: Owner of the NVM
+@@ -997,6 +1002,9 @@ static inline bool tb_switch_is_clx_enab
+  */
+ static inline bool tb_switch_is_clx_supported(const struct tb_switch *sw)
+ {
++	if (sw->quirks & QUIRK_NO_CLX)
++		return false;
++
+ 	return tb_switch_is_usb4(sw) || tb_switch_is_titan_ridge(sw);
+ }
+ 
+@@ -1254,9 +1262,6 @@ struct usb4_port *usb4_port_device_add(s
+ void usb4_port_device_remove(struct usb4_port *usb4);
+ int usb4_port_device_resume(struct usb4_port *usb4);
+ 
+-/* Keep link controller awake during update */
+-#define QUIRK_FORCE_POWER_LINK_CONTROLLER		BIT(0)
+-
+ void tb_check_quirks(struct tb_switch *sw);
+ 
+ #ifdef CONFIG_ACPI
 
 
