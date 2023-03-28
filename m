@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAA68BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5D2C4339B;
-	Tue, 28 Mar 2023 14:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF088BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:49:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6224BC433EF;
+	Tue, 28 Mar 2023 14:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014988;
-	bh=Uo00w2b32SJxQ1uXwsEE97fU+6AWMek0yjJTPkMCJJs=;
+	s=korg; t=1680014990;
+	bh=ioD3xUhnDD/kN66mIEPreBlmwTQml2JuCHXZJ35GMJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZsX2lPKrIys/SPbEuWfP55ESLjBVAmG9/fv+FuPmoV9crySycPcG5/MjntfOFF7+
-	 gt61s1GhAlW1kblzsuXHma+oONoD9LnohQ39xGkE5S4/Y68rH/9gOBypEr363yX1il
-	 hDlVdb1oNy3YrGBWukFzyxyM6d1VjqAHAC3nqNtk=
+	b=vzfTpUD3k20vWeucEYeCKbCw5zW0GDcCI4/+AeGi8lpRiv0a7bjr7gpHZj4VFbCwJ
+	 nwGO8uJPvZv8Cn1WgMtHEaOWVBJZa67wB34ffrn/8MgX0Yug2rCeFOMS25pYcK16Br
+	 Z9On8VpmYILEgL43pMG4ZuVJza46k9kr2zIvMgpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rix <trix@redhat.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.2 125/240] thunderbolt: Rename shadowed variables bit to interrupt_bit and auto_clear_bit
-Date: Tue, 28 Mar 2023 16:41:28 +0200
-Message-Id: <20230328142624.991819037@linuxfoundation.org>
+	Joseph Hunkeler <jhunkeler@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 126/240] ASoC: amd: yp: Add OMEN by HP Gaming Laptop 16z-n000 to quirks
+Date: Tue, 28 Mar 2023 16:41:29 +0200
+Message-Id: <20230328142625.040865270@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,78 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Rix <trix@redhat.com>
+From: Joseph Hunkeler <jhunkeler@gmail.com>
 
-commit 58cdfe6f58b35f17f56386f5fcf937168a423ad1 upstream.
+[ Upstream commit 22ce6843abec19270bf69b176d7ee0a4ef781da5 ]
 
-cppcheck reports
-drivers/thunderbolt/nhi.c:74:7: style: Local variable 'bit' shadows outer variable [shadowVariable]
-  int bit;
-      ^
-drivers/thunderbolt/nhi.c:66:6: note: Shadowed declaration
- int bit = ring_interrupt_index(ring) & 31;
-     ^
-drivers/thunderbolt/nhi.c:74:7: note: Shadow variable
-  int bit;
-      ^
-For readablity rename the outer to interrupt_bit and the innner
-to auto_clear_bit.
+Enables display microphone on the HP OMEN 16z-n000 (8A42) laptop
 
-Fixes: 468c49f44759 ("thunderbolt: Disable interrupt auto clear for ring")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tom Rix <trix@redhat.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Joseph Hunkeler <jhunkeler@gmail.com>
+Link: https://lore.kernel.org/r/20230216155007.26143-1-jhunkeler@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/nhi.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -63,15 +63,15 @@ static void ring_interrupt_active(struct
- {
- 	int reg = REG_RING_INTERRUPT_BASE +
- 		  ring_interrupt_index(ring) / 32 * 4;
--	int bit = ring_interrupt_index(ring) & 31;
--	int mask = 1 << bit;
-+	int interrupt_bit = ring_interrupt_index(ring) & 31;
-+	int mask = 1 << interrupt_bit;
- 	u32 old, new;
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 36314753923b8..4e681e9c08fe5 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -255,6 +255,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "15NBC1011"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
++		}
++	},
+ 	{}
+ };
  
- 	if (ring->irq > 0) {
- 		u32 step, shift, ivr, misc;
- 		void __iomem *ivr_base;
-+		int auto_clear_bit;
- 		int index;
--		int bit;
- 
- 		if (ring->is_tx)
- 			index = ring->hop;
-@@ -91,11 +91,12 @@ static void ring_interrupt_active(struct
- 		 */
- 		misc = ioread32(ring->nhi->iobase + REG_DMA_MISC);
- 		if (ring->nhi->quirks & QUIRK_AUTO_CLEAR_INT)
--			bit = REG_DMA_MISC_INT_AUTO_CLEAR;
-+			auto_clear_bit = REG_DMA_MISC_INT_AUTO_CLEAR;
- 		else
--			bit = REG_DMA_MISC_DISABLE_AUTO_CLEAR;
--		if (!(misc & bit))
--			iowrite32(misc | bit, ring->nhi->iobase + REG_DMA_MISC);
-+			auto_clear_bit = REG_DMA_MISC_DISABLE_AUTO_CLEAR;
-+		if (!(misc & auto_clear_bit))
-+			iowrite32(misc | auto_clear_bit,
-+				  ring->nhi->iobase + REG_DMA_MISC);
- 
- 		ivr_base = ring->nhi->iobase + REG_INT_VEC_ALLOC_BASE;
- 		step = index / REG_INT_VEC_ALLOC_REGS * REG_INT_VEC_ALLOC_BITS;
-@@ -115,7 +116,7 @@ static void ring_interrupt_active(struct
- 
- 	dev_dbg(&ring->nhi->pdev->dev,
- 		"%s interrupt at register %#x bit %d (%#x -> %#x)\n",
--		active ? "enabling" : "disabling", reg, bit, old, new);
-+		active ? "enabling" : "disabling", reg, interrupt_bit, old, new);
- 
- 	if (new == old)
- 		dev_WARN(&ring->nhi->pdev->dev,
+-- 
+2.39.2
+
 
 
