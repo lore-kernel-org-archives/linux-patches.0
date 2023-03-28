@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5E98BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:50:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3861C433D2;
-	Tue, 28 Mar 2023 14:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E06A8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:50:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FF9C433D2;
+	Tue, 28 Mar 2023 14:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015021;
-	bh=yr3FB4cYBFikAWAHRX6wt5vVzS20zesZ5Z0cRfud/2Q=;
+	s=korg; t=1680015024;
+	bh=O60AlAK0dYuFe6kh+EJ3AfCHCZSame9FzEHfiT+hQ9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWvKdlFVhAXbScL7xL+1fEFaRHqbzTyZXpPzD1hX1wD3P40VMauIQXbzdtZjsuAy7
-	 SUvUS3IidLB9UsUD4/pvYMRYeUu7Ayeq2sIUrdBQArqEzBmBCCl9FZbJeqAP9+KrlD
-	 i7M7lVfEd68RwYUEFQkQ99Ec27Fm8ee65JZURB6w=
+	b=WvIiwL8woHH3ORcYy5MT5hGHWUYMjVkv+FEBOR6EHeY+RcFCWun3knurNzlD5yYAT
+	 +/bESjipgykzZdJw0q30KooKSvslV7PVNXvoTfA7mjVQHmvO95bzpj7GcrAl7IS625
+	 yuWwvmmo66RJtyy/MyVWrKoi9YRky3KB9f8k2YN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 097/240] net: dsa: mt7530: move lowering TRGMII driving to mt7530_setup()
-Date: Tue, 28 Mar 2023 16:41:00 +0200
-Message-Id: <20230328142623.814630650@linuxfoundation.org>
+	David Alvarez Lombardi <dqalombardi@proton.me>,
+	dbilios@stdio.gr,
+	victor.bonnelle@proton.me,
+	hurricanepootis@protonmail.com,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Elvis Angelaccio <elvis.angelaccio@kde.org>
+Subject: [PATCH 6.2 131/240] ACPI: x86: utils: Add Cezanne to the list for forcing StorageD3Enable
+Date: Tue, 28 Mar 2023 16:41:34 +0200
+Message-Id: <20230328142625.234129319@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,95 +40,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit fdcc8ccd823740c18e803b886cec461bc0e64201 ]
+[ Upstream commit e2a56364485e7789e7b8f342637c7f3a219f7ede ]
 
-Move lowering the TRGMII Tx clock driving to mt7530_setup(), after setting
-the core clock, as seen on the U-Boot MediaTek ethernet driver.
+commit 018d6711c26e4 ("ACPI: x86: Add a quirk for Dell Inspiron 14 2-in-1
+for StorageD3Enable") introduced a quirk to allow a system with ambiguous
+use of _ADR 0 to force StorageD3Enable.
 
-Move the code which looks like it lowers the TRGMII Rx clock driving to
-after the TRGMII Tx clock driving is lowered. This is run after lowering
-the Tx clock driving on the U-Boot MediaTek ethernet driver as well.
+It was reported that several more Dell systems suffered the same symptoms.
+As the list is continuing to grow but these are all Cezanne systems,
+instead add Cezanne to the CPU list to apply the StorageD3Enable property
+and remove the whole list.
 
-This way, the switch should consume less power regardless of port 6 being
-used.
+It was also reported that an HP system only has StorageD3Enable on the ACPI
+device for the first NVME disk, not the second.
 
-Update the comment explaining mt7530_pad_clk_setup().
-
-Tested rgmii and trgmii modes of port 6 and rgmii mode of port 5 on MCM
-MT7530 on MT7621AT Unielec U7621-06 and standalone MT7530 on MT7623NI
-Bananapi BPI-R2.
-
-Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
-Link: https://source.denx.de/u-boot/u-boot/-/blob/29a48bf9ccba45a5e560bb564bbe76e42629325f/drivers/net/mtk_eth.c#L682
-Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Link: https://lore.kernel.org/r/20230320190520.124513-2-arinc.unal@arinc9.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217003
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216773
+Reported-by: David Alvarez Lombardi <dqalombardi@proton.me>
+Reported-by: dbilios@stdio.gr
+Reported-and-tested-by: Elvis Angelaccio <elvis.angelaccio@kde.org>
+Tested-by: victor.bonnelle@proton.me
+Tested-by: hurricanepootis@protonmail.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/acpi/x86/utils.c | 37 +++++++++++++------------------------
+ 1 file changed, 13 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index cd0ea03c071f0..b0d6ca18ec2f3 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -419,12 +419,12 @@ static void mt7530_pll_setup(struct mt7530_priv *priv)
- 	core_set(priv, CORE_TRGMII_GSW_CLK_CG, REG_GSWCK_EN);
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index 4e816bb402f68..e45285d4e62a4 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -200,39 +200,28 @@ bool acpi_device_override_status(struct acpi_device *adev, unsigned long long *s
+  * a hardcoded allowlist for D3 support, which was used for these platforms.
+  *
+  * This allows quirking on Linux in a similar fashion.
++ *
++ * Cezanne systems shouldn't *normally* need this as the BIOS includes
++ * StorageD3Enable.  But for two reasons we have added it.
++ * 1) The BIOS on a number of Dell systems have ambiguity
++ *    between the same value used for _ADR on ACPI nodes GPP1.DEV0 and GPP1.NVME.
++ *    GPP1.NVME is needed to get StorageD3Enable node set properly.
++ *    https://bugzilla.kernel.org/show_bug.cgi?id=216440
++ *    https://bugzilla.kernel.org/show_bug.cgi?id=216773
++ *    https://bugzilla.kernel.org/show_bug.cgi?id=217003
++ * 2) On at least one HP system StorageD3Enable is missing on the second NVME
++      disk in the system.
+  */
+ static const struct x86_cpu_id storage_d3_cpu_ids[] = {
+ 	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 96, NULL),	/* Renoir */
+ 	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 104, NULL),	/* Lucienne */
+-	{}
+-};
+-
+-static const struct dmi_system_id force_storage_d3_dmi[] = {
+-	{
+-		/*
+-		 * _ADR is ambiguous between GPP1.DEV0 and GPP1.NVME
+-		 * but .NVME is needed to get StorageD3Enable node
+-		 * https://bugzilla.kernel.org/show_bug.cgi?id=216440
+-		 */
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Inspiron 14 7425 2-in-1"),
+-		}
+-	},
+-	{
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Inspiron 16 5625"),
+-		}
+-	},
++	X86_MATCH_VENDOR_FAM_MODEL(AMD, 25, 80, NULL),	/* Cezanne */
+ 	{}
+ };
+ 
+ bool force_storage_d3(void)
+ {
+-	const struct dmi_system_id *dmi_id = dmi_first_match(force_storage_d3_dmi);
+-
+-	return dmi_id || x86_match_cpu(storage_d3_cpu_ids);
++	return x86_match_cpu(storage_d3_cpu_ids);
  }
  
--/* Setup TX circuit including relevant PAD and driving */
-+/* Setup port 6 interface mode and TRGMII TX circuit */
- static int
- mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- {
- 	struct mt7530_priv *priv = ds->priv;
--	u32 ncpo1, ssc_delta, trgint, i, xtal;
-+	u32 ncpo1, ssc_delta, trgint, xtal;
- 
- 	xtal = mt7530_read(priv, MT7530_MHWTRAP) & HWTRAP_XTAL_MASK;
- 
-@@ -469,11 +469,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- 		   P6_INTF_MODE(trgint));
- 
- 	if (trgint) {
--		/* Lower Tx Driving for TRGMII path */
--		for (i = 0 ; i < NUM_TRGMII_CTRL ; i++)
--			mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
--				     TD_DM_DRVP(8) | TD_DM_DRVN(8));
--
- 		/* Disable the MT7530 TRGMII clocks */
- 		core_clear(priv, CORE_TRGMII_GSW_CLK_CG, REG_TRGMIICK_EN);
- 
-@@ -494,10 +489,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- 
- 		/* Enable the MT7530 TRGMII clocks */
- 		core_set(priv, CORE_TRGMII_GSW_CLK_CG, REG_TRGMIICK_EN);
--	} else {
--		for (i = 0 ; i < NUM_TRGMII_CTRL; i++)
--			mt7530_rmw(priv, MT7530_TRGMII_RD(i),
--				   RD_TAP_MASK, RD_TAP(16));
- 	}
- 
- 	return 0;
-@@ -2212,6 +2203,15 @@ mt7530_setup(struct dsa_switch *ds)
- 
- 	mt7530_pll_setup(priv);
- 
-+	/* Lower Tx driving for TRGMII path */
-+	for (i = 0; i < NUM_TRGMII_CTRL; i++)
-+		mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
-+			     TD_DM_DRVP(8) | TD_DM_DRVN(8));
-+
-+	for (i = 0; i < NUM_TRGMII_CTRL; i++)
-+		mt7530_rmw(priv, MT7530_TRGMII_RD(i),
-+			   RD_TAP_MASK, RD_TAP(16));
-+
- 	/* Enable port 6 */
- 	val = mt7530_read(priv, MT7530_MHWTRAP);
- 	val &= ~MHWTRAP_P6_DIS & ~MHWTRAP_PHY_ACCESS;
+ /*
 -- 
 2.39.2
 
