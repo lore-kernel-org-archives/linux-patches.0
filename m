@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910118BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C88C433EF;
-	Tue, 28 Mar 2023 15:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE2D8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A628DC433EF;
+	Tue, 28 Mar 2023 15:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015730;
-	bh=o2hSVSgxLu9H00c5eClJaIkDhqs030/SP8ijcu8C2BU=;
+	s=korg; t=1680015733;
+	bh=UCOUbbinkANOkKeBF2oBYAEPjBNp5ACM0g1MCyUk5RY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jdu1SWWBH/7myCWS7yC40Et6vgP3qbNz4y3GOftcGvjF/67id/+pKNr/cs+JZbcJT
-	 yTnM1cmSJWdBjyS4YadFKUYRBoWHWYxvzkIUlNa5pC+3dQYKX0NW4YjgP0DCayswbU
-	 SgtrEdAKuurIULquX4YN4v7qQqWvuh8kylai8O3M=
+	b=JzeJKYtlOBTktfUH027uGTMTCIzdU22uCwsaQDO6R5SP67GuhmvT7P7p40uruvwqD
+	 AGJ5srnu1XnqWPDZiKoPdTfz5TRde7tcb0phPXvJJ+NHQamZLRluizbLGRE0PzdeQU
+	 fdp3f4Lctygqdq89Kewkct1BMCJ5h+57TLSpoBis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Glanzmann <thomas@glanzmann.de>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 147/224] drm/amd: Fix initialization mistake for NBIO 7.3.0
-Date: Tue, 28 Mar 2023 16:42:23 +0200
-Message-Id: <20230328142623.483002770@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 156/224] cifs: fix dentry lookups in directory handle cache
+Date: Tue, 28 Mar 2023 16:42:32 +0200
+Message-Id: <20230328142623.885551538@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,63 +34,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 1717cc5f2962a4652c76ed3858b499ccae6c277c ]
+commit be4fde79812f02914e350bde0bc4cfeae8429378 upstream.
 
-The same strapping initialization issue that happened on NBIO 7.5.1
-appears to be happening on NBIO 7.3.0.
-Apply the same fix to 7.3.0 as well.
+Get rid of any prefix paths in @path before lookup_positive_unlocked()
+as it will call ->lookup() which already adds those prefix paths
+through build_path_from_dentry().
 
-Note: This workaround relies upon the integrated GPU being enabled
-in BIOS. If the integrated GPU is disabled in BIOS a different
-workaround will be required.
+This has caused a performance regression when mounting shares with a
+prefix path where readdir(2) would end up retrying several times to
+open bad directory names that contained duplicate prefix paths.
 
-Reported-by: Thomas Glanzmann <thomas@glanzmann.de>
-Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Link: https://lore.kernel.org/linux-usb/Y%2Fz9GdHjPyF2rNG3@glanzmann.de/T/#u
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by skipping any prefix paths in @path before calling
+lookup_positive_unlocked().
+
+Fixes: e4029e072673 ("cifs: find and use the dentry for cached non-root directories also")
+Cc: stable@vger.kernel.org # 6.1+
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ fs/cifs/cached_dir.c |   36 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c
-index 4b0d563c6522c..4ef1fa4603c8e 100644
---- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c
-@@ -382,11 +382,6 @@ static void nbio_v7_2_init_registers(struct amdgpu_device *adev)
- 		if (def != data)
- 			WREG32_PCIE_PORT(SOC15_REG_OFFSET(NBIO, 0, regBIF1_PCIE_MST_CTRL_3), data);
- 		break;
--	case IP_VERSION(7, 5, 1):
--		data = RREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2);
--		data &= ~RCC_DEV2_EPF0_STRAP2__STRAP_NO_SOFT_RESET_DEV2_F0_MASK;
--		WREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2, data);
--		fallthrough;
- 	default:
- 		def = data = RREG32_PCIE_PORT(SOC15_REG_OFFSET(NBIO, 0, regPCIE_CONFIG_CNTL));
- 		data = REG_SET_FIELD(data, PCIE_CONFIG_CNTL,
-@@ -399,6 +394,15 @@ static void nbio_v7_2_init_registers(struct amdgpu_device *adev)
- 		break;
+--- a/fs/cifs/cached_dir.c
++++ b/fs/cifs/cached_dir.c
+@@ -99,6 +99,23 @@ path_to_dentry(struct cifs_sb_info *cifs
+ 	return dentry;
+ }
+ 
++static const char *path_no_prefix(struct cifs_sb_info *cifs_sb,
++				  const char *path)
++{
++	size_t len = 0;
++
++	if (!*path)
++		return path;
++
++	if ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_USE_PREFIX_PATH) &&
++	    cifs_sb->prepath) {
++		len = strlen(cifs_sb->prepath) + 1;
++		if (unlikely(len > strlen(path)))
++			return ERR_PTR(-EINVAL);
++	}
++	return path + len;
++}
++
+ /*
+  * Open the and cache a directory handle.
+  * If error then *cfid is not initialized.
+@@ -125,6 +142,7 @@ int open_cached_dir(unsigned int xid, st
+ 	struct dentry *dentry = NULL;
+ 	struct cached_fid *cfid;
+ 	struct cached_fids *cfids;
++	const char *npath;
+ 
+ 	if (tcon == NULL || tcon->cfids == NULL || tcon->nohandlecache ||
+ 	    is_smb1_server(tcon->ses->server))
+@@ -161,6 +179,20 @@ int open_cached_dir(unsigned int xid, st
  	}
  
-+	switch (adev->ip_versions[NBIO_HWIP][0]) {
-+	case IP_VERSION(7, 3, 0):
-+	case IP_VERSION(7, 5, 1):
-+		data = RREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2);
-+		data &= ~RCC_DEV2_EPF0_STRAP2__STRAP_NO_SOFT_RESET_DEV2_F0_MASK;
-+		WREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2, data);
-+		break;
+ 	/*
++	 * Skip any prefix paths in @path as lookup_positive_unlocked() ends up
++	 * calling ->lookup() which already adds those through
++	 * build_path_from_dentry().  Also, do it earlier as we might reconnect
++	 * below when trying to send compounded request and then potentially
++	 * having a different prefix path (e.g. after DFS failover).
++	 */
++	npath = path_no_prefix(cifs_sb, path);
++	if (IS_ERR(npath)) {
++		rc = PTR_ERR(npath);
++		kfree(utf16_path);
++		return rc;
 +	}
 +
- 	if (amdgpu_sriov_vf(adev))
- 		adev->rmmio_remap.reg_offset = SOC15_REG_OFFSET(NBIO, 0,
- 			regBIF_BX_PF0_HDP_MEM_COHERENCY_FLUSH_CNTL) << 2;
--- 
-2.39.2
-
++	/*
+ 	 * We do not hold the lock for the open because in case
+ 	 * SMB2_open needs to reconnect.
+ 	 * This is safe because no other thread will be able to get a ref
+@@ -252,10 +284,10 @@ int open_cached_dir(unsigned int xid, st
+ 				(char *)&cfid->file_all_info))
+ 		cfid->file_all_info_is_valid = true;
+ 
+-	if (!path[0])
++	if (!npath[0])
+ 		dentry = dget(cifs_sb->root);
+ 	else {
+-		dentry = path_to_dentry(cifs_sb, path);
++		dentry = path_to_dentry(cifs_sb, npath);
+ 		if (IS_ERR(dentry)) {
+ 			rc = -ENOENT;
+ 			goto oshr_free;
 
 
