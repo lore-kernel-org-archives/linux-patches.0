@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5908BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA19C4339B;
-	Tue, 28 Mar 2023 14:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B98C8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A5CC433D2;
+	Tue, 28 Mar 2023 14:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015110;
-	bh=CWlBYcUlEtV2WK9oxcnRHyaRYGfQvTSR1XBD+I+3xUE=;
+	s=korg; t=1680015113;
+	bh=F0ukMBHO/kPpbe6k3DjTflDUCcbuGBOy15vOvYd6NWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BA6sWbHapOxXA8817LMVQxNkAgBfjlAqcvCBU+vsBx+vP5HOODYWBO9dicKCgYVEq
-	 Gb39tT2FntFJtQSL/OpCg+JDqaSW9Oz8I1V/2mcNWujH8Anu7qdpBXzzenljfvDB4o
-	 V08HObasBHL7KMYcXNbErg4JHXcj2ilktAlB0QDw=
+	b=VyOfjE8L0cz32XsnbUi4F+ehLJxv/OlDQ88bSAnEkL3bPBvM40eFGHnNKXtTc5QL9
+	 LaVKPCZAKvZmBPCBTR4pYQOdWaiy34O0fT5vB4SytzdIiKobeB/vUidG3IhTByv/Rs
+	 5rD/PZzPHaHwdmPTkrP515W89ImqwxoK36FZoFDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kars de Jong <jongk@linux-m68k.org>,
+	Eero Tamminen <oak@helsinkinet.fi>,
+	Michael Schmitz <schmitzmic@gmail.com>,
 	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 138/240] m68k: mm: Fix systems with memory at end of 32-bit address space
-Date: Tue, 28 Mar 2023 16:41:41 +0200
-Message-Id: <20230328142625.506327581@linuxfoundation.org>
+Subject: [PATCH 6.2 139/240] m68k: Only force 030 bus error if PC not in exception table
+Date: Tue, 28 Mar 2023 16:41:42 +0200
+Message-Id: <20230328142625.541034353@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,63 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kars de Jong <jongk@linux-m68k.org>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-[ Upstream commit 0d9fad91abfd723ea5070a46d98a9f4496c93ba9 ]
+[ Upstream commit e36a82bebbf7da814530d5a179bef9df5934b717 ]
 
-The calculation of end addresses of memory chunks overflowed to 0 when
-a memory chunk is located at the end of 32-bit address space.
-This is the case for the HP300 architecture.
+__get_kernel_nofault() does copy data in supervisor mode when
+forcing a task backtrace log through /proc/sysrq_trigger.
+This is expected cause a bus error exception on e.g. NULL
+pointer dereferencing when logging a kernel task has no
+workqueue associated. This bus error ought to be ignored.
 
-Link: https://lore.kernel.org/linux-m68k/CACz-3rhUo5pgNwdWHaPWmz+30Qo9xCg70wNxdf7o5x-6tXq8QQ@mail.gmail.com/
-Signed-off-by: Kars de Jong <jongk@linux-m68k.org>
+Our 030 bus error handler is ill equipped to deal with this:
+
+Whenever ssw indicates a kernel mode access on a data fault,
+we don't even attempt to handle the fault and instead always
+send a SEGV signal (or panic). As a result, the check
+for exception handling at the fault PC (buried in
+send_sig_fault() which gets called from do_page_fault()
+eventually) is never used.
+
+In contrast, both 040 and 060 access error handlers do not
+care whether a fault happened on supervisor mode access,
+and will call do_page_fault() on those, ultimately honoring
+the exception table.
+
+Add a check in bus_error030 to call do_page_fault() in case
+we do have an entry for the fault PC in our exception table.
+
+I had attempted a fix for this earlier in 2019 that did rely
+on testing pagefault_disabled() (see link below) to achieve
+the same thing, but this patch should be more generic.
+
+Tested on 030 Atari Falcon.
+
+Reported-by: Eero Tamminen <oak@helsinkinet.fi>
+Link: https://lore.kernel.org/r/alpine.LNX.2.21.1904091023540.25@nippy.intranet
+Link: https://lore.kernel.org/r/63130691-1984-c423-c1f2-73bfd8d3dcd3@gmail.com
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
 Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230223112349.26675-1-jongk@linux-m68k.org
+Link: https://lore.kernel.org/r/20230301021107.26307-1-schmitzmic@gmail.com
 Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/mm/motorola.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/m68k/kernel/traps.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/m68k/mm/motorola.c b/arch/m68k/mm/motorola.c
-index 2a375637e0077..9113012240789 100644
---- a/arch/m68k/mm/motorola.c
-+++ b/arch/m68k/mm/motorola.c
-@@ -437,7 +437,7 @@ void __init paging_init(void)
- 	}
+diff --git a/arch/m68k/kernel/traps.c b/arch/m68k/kernel/traps.c
+index 5c8cba0efc63e..a700807c9b6d9 100644
+--- a/arch/m68k/kernel/traps.c
++++ b/arch/m68k/kernel/traps.c
+@@ -30,6 +30,7 @@
+ #include <linux/init.h>
+ #include <linux/ptrace.h>
+ #include <linux/kallsyms.h>
++#include <linux/extable.h>
  
- 	min_addr = m68k_memory[0].addr;
--	max_addr = min_addr + m68k_memory[0].size;
-+	max_addr = min_addr + m68k_memory[0].size - 1;
- 	memblock_add_node(m68k_memory[0].addr, m68k_memory[0].size, 0,
- 			  MEMBLOCK_NONE);
- 	for (i = 1; i < m68k_num_memory;) {
-@@ -452,21 +452,21 @@ void __init paging_init(void)
- 		}
- 		memblock_add_node(m68k_memory[i].addr, m68k_memory[i].size, i,
- 				  MEMBLOCK_NONE);
--		addr = m68k_memory[i].addr + m68k_memory[i].size;
-+		addr = m68k_memory[i].addr + m68k_memory[i].size - 1;
- 		if (addr > max_addr)
- 			max_addr = addr;
- 		i++;
- 	}
- 	m68k_memoffset = min_addr - PAGE_OFFSET;
--	m68k_virt_to_node_shift = fls(max_addr - min_addr - 1) - 6;
-+	m68k_virt_to_node_shift = fls(max_addr - min_addr) - 6;
+ #include <asm/setup.h>
+ #include <asm/fpu.h>
+@@ -545,7 +546,8 @@ static inline void bus_error030 (struct frame *fp)
+ 			errorcode |= 2;
  
- 	module_fixup(NULL, __start_fixup, __stop_fixup);
- 	flush_icache();
- 
--	high_memory = phys_to_virt(max_addr);
-+	high_memory = phys_to_virt(max_addr) + 1;
- 
- 	min_low_pfn = availmem >> PAGE_SHIFT;
--	max_pfn = max_low_pfn = max_addr >> PAGE_SHIFT;
-+	max_pfn = max_low_pfn = (max_addr >> PAGE_SHIFT) + 1;
- 
- 	/* Reserve kernel text/data/bss and the memory allocated in head.S */
- 	memblock_reserve(m68k_memory[0].addr, availmem - m68k_memory[0].addr);
+ 		if (mmusr & (MMU_I | MMU_WP)) {
+-			if (ssw & 4) {
++			/* We might have an exception table for this PC */
++			if (ssw & 4 && !search_exception_tables(fp->ptregs.pc)) {
+ 				pr_err("Data %s fault at %#010lx in %s (pc=%#lx)\n",
+ 				       ssw & RW ? "read" : "write",
+ 				       fp->un.fmtb.daddr,
 -- 
 2.39.2
 
