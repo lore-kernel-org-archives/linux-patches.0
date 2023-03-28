@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D128BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147F2C433EF;
-	Tue, 28 Mar 2023 15:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440AD8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5E5C433EF;
+	Tue, 28 Mar 2023 15:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015760;
-	bh=nnS8ynulsXOIo7/oz6jzSHL85+Xh6cvIqdqHlkubFLU=;
+	s=korg; t=1680015763;
+	bh=y7TT18OqeEh5SRtmCxn5WnkaCLIuzAnGnu3VDtfrb5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYVMHaJorRwjhxB6JB3Rx3kft0pZfOVT3zGnaDEyIPQ4XyS/TREwUyl37Krj5LFxs
-	 dnRymGJsXSq2/7YTbyGrWt87zk6ifLKdE0ALb3ybesJzJA+8UjOBv5pN9MnAckW3nt
-	 ramyLYS2qXHwV0Dfj6wtbbxSw1Cw2zYksCBf5FtU=
+	b=KQR/HpzZr2I8JqibbVXR8q1xUJklHbNiBy3Mf4jXGCpH89x7ebctVNUqf9A4Tbk61
+	 v3/Fju4B199bjcZHjB6ST7JuOwnpATpph/PmBReul8s1RCP2gYdlLUlasPvGGVb4Oa
+	 cSOlqVcfl2WdrrYkEU+3uTBhA9Ch65Sn3HXtlqT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 148/224] net/sched: act_mirred: better wording on protection against excessive stack growth
-Date: Tue, 28 Mar 2023 16:42:24 +0200
-Message-Id: <20230328142623.531394338@linuxfoundation.org>
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 166/224] efi: sysfb_efi: Fix DMI quirks not working for simpledrm
+Date: Tue, 28 Mar 2023 16:42:42 +0200
+Message-Id: <20230328142624.297501907@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,88 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 78dcdffe0418ac8f3f057f26fe71ccf4d8ed851f ]
+commit 3615c78673c332b69aaacefbcde5937c5c706686 upstream.
 
-with commit e2ca070f89ec ("net: sched: protect against stack overflow in
-TC act_mirred"), act_mirred protected itself against excessive stack growth
-using per_cpu counter of nested calls to tcf_mirred_act(), and capping it
-to MIRRED_RECURSION_LIMIT. However, such protection does not detect
-recursion/loops in case the packet is enqueued to the backlog (for example,
-when the mirred target device has RPS or skb timestamping enabled). Change
-the wording from "recursion" to "nesting" to make it more clear to readers.
+Commit 8633ef82f101 ("drivers/firmware: consolidate EFI framebuffer setup
+for all arches") moved the sysfb_apply_efi_quirks() call in sysfb_init()
+from before the [sysfb_]parse_mode() call to after it.
+But sysfb_apply_efi_quirks() modifies the global screen_info struct which
+[sysfb_]parse_mode() parses, so doing it later is too late.
 
-CC: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This has broken all DMI based quirks for correcting wrong firmware efifb
+settings when simpledrm is used.
+
+To fix this move the sysfb_apply_efi_quirks() call back to its old place
+and split the new setup of the efifb_fwnode (which requires
+the platform_device) into its own function and call that at
+the place of the moved sysfb_apply_efi_quirks(pd) calls.
+
+Fixes: 8633ef82f101 ("drivers/firmware: consolidate EFI framebuffer setup for all arches")
+Cc: stable@vger.kernel.org
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_mirred.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/firmware/efi/sysfb_efi.c  |    5 ++++-
+ drivers/firmware/sysfb.c          |    4 +++-
+ drivers/firmware/sysfb_simplefb.c |    2 +-
+ include/linux/sysfb.h             |    9 +++++++--
+ 4 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index b8ad6ae282c02..ded6ee054be14 100644
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -28,8 +28,8 @@
- static LIST_HEAD(mirred_list);
- static DEFINE_SPINLOCK(mirred_list_lock);
+--- a/drivers/firmware/efi/sysfb_efi.c
++++ b/drivers/firmware/efi/sysfb_efi.c
+@@ -341,7 +341,7 @@ static const struct fwnode_operations ef
+ #ifdef CONFIG_EFI
+ static struct fwnode_handle efifb_fwnode;
  
--#define MIRRED_RECURSION_LIMIT    4
--static DEFINE_PER_CPU(unsigned int, mirred_rec_level);
-+#define MIRRED_NEST_LIMIT    4
-+static DEFINE_PER_CPU(unsigned int, mirred_nest_level);
- 
- static bool tcf_mirred_is_act_redirect(int action)
+-__init void sysfb_apply_efi_quirks(struct platform_device *pd)
++__init void sysfb_apply_efi_quirks(void)
  {
-@@ -224,7 +224,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 	struct sk_buff *skb2 = skb;
- 	bool m_mac_header_xmit;
- 	struct net_device *dev;
--	unsigned int rec_level;
-+	unsigned int nest_level;
- 	int retval, err = 0;
- 	bool use_reinsert;
- 	bool want_ingress;
-@@ -235,11 +235,11 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 	int mac_len;
- 	bool at_nh;
+ 	if (screen_info.orig_video_isVGA != VIDEO_TYPE_EFI ||
+ 	    !(screen_info.capabilities & VIDEO_CAPABILITY_SKIP_QUIRKS))
+@@ -355,7 +355,10 @@ __init void sysfb_apply_efi_quirks(struc
+ 		screen_info.lfb_height = temp;
+ 		screen_info.lfb_linelength = 4 * screen_info.lfb_width;
+ 	}
++}
  
--	rec_level = __this_cpu_inc_return(mirred_rec_level);
--	if (unlikely(rec_level > MIRRED_RECURSION_LIMIT)) {
-+	nest_level = __this_cpu_inc_return(mirred_nest_level);
-+	if (unlikely(nest_level > MIRRED_NEST_LIMIT)) {
- 		net_warn_ratelimited("Packet exceeded mirred recursion limit on dev %s\n",
- 				     netdev_name(skb->dev));
--		__this_cpu_dec(mirred_rec_level);
-+		__this_cpu_dec(mirred_nest_level);
- 		return TC_ACT_SHOT;
++__init void sysfb_set_efifb_fwnode(struct platform_device *pd)
++{
+ 	if (screen_info.orig_video_isVGA == VIDEO_TYPE_EFI && IS_ENABLED(CONFIG_PCI)) {
+ 		fwnode_init(&efifb_fwnode, &efifb_fwnode_ops);
+ 		pd->dev.fwnode = &efifb_fwnode;
+--- a/drivers/firmware/sysfb.c
++++ b/drivers/firmware/sysfb.c
+@@ -81,6 +81,8 @@ static __init int sysfb_init(void)
+ 	if (disabled)
+ 		goto unlock_mutex;
+ 
++	sysfb_apply_efi_quirks();
++
+ 	/* try to create a simple-framebuffer device */
+ 	compatible = sysfb_parse_mode(si, &mode);
+ 	if (compatible) {
+@@ -107,7 +109,7 @@ static __init int sysfb_init(void)
+ 		goto unlock_mutex;
  	}
  
-@@ -308,7 +308,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 			err = tcf_mirred_forward(want_ingress, skb);
- 			if (err)
- 				tcf_action_inc_overlimit_qstats(&m->common);
--			__this_cpu_dec(mirred_rec_level);
-+			__this_cpu_dec(mirred_nest_level);
- 			return TC_ACT_CONSUMED;
- 		}
- 	}
-@@ -320,7 +320,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 		if (tcf_mirred_is_act_redirect(m_eaction))
- 			retval = TC_ACT_SHOT;
- 	}
--	__this_cpu_dec(mirred_rec_level);
-+	__this_cpu_dec(mirred_nest_level);
+-	sysfb_apply_efi_quirks(pd);
++	sysfb_set_efifb_fwnode(pd);
  
- 	return retval;
+ 	ret = platform_device_add_data(pd, si, sizeof(*si));
+ 	if (ret)
+--- a/drivers/firmware/sysfb_simplefb.c
++++ b/drivers/firmware/sysfb_simplefb.c
+@@ -110,7 +110,7 @@ __init struct platform_device *sysfb_cre
+ 	if (!pd)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	sysfb_apply_efi_quirks(pd);
++	sysfb_set_efifb_fwnode(pd);
+ 
+ 	ret = platform_device_add_resources(pd, &res, 1);
+ 	if (ret)
+--- a/include/linux/sysfb.h
++++ b/include/linux/sysfb.h
+@@ -70,11 +70,16 @@ static inline void sysfb_disable(void)
+ #ifdef CONFIG_EFI
+ 
+ extern struct efifb_dmi_info efifb_dmi_list[];
+-void sysfb_apply_efi_quirks(struct platform_device *pd);
++void sysfb_apply_efi_quirks(void);
++void sysfb_set_efifb_fwnode(struct platform_device *pd);
+ 
+ #else /* CONFIG_EFI */
+ 
+-static inline void sysfb_apply_efi_quirks(struct platform_device *pd)
++static inline void sysfb_apply_efi_quirks(void)
++{
++}
++
++static inline void sysfb_set_efifb_fwnode(struct platform_device *pd)
+ {
  }
--- 
-2.39.2
-
+ 
 
 
