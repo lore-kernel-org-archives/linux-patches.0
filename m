@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E118BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554C3C433EF;
-	Tue, 28 Mar 2023 15:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60F78BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133F3C433EF;
+	Tue, 28 Mar 2023 15:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015906;
-	bh=tx3Tgu7vQHll2Pkn5DHn5d+ikcMhPZGybTvWXh+Rtao=;
+	s=korg; t=1680015909;
+	bh=3QHxX+0/FN1xzbDlUuuRRlK7MiWuszpVSoEAT+0buPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bAURtkRmNLGvy1pV+tXaIDcHFKD1WgqwH7YwpRrCKhmauY9K3fUSD8VMmIbyTQo3
-	 /moWy6gdX+WJZmrTC9zWlS7/vIOGLpV6e2BanemFpKREjmUIY/CWiABVrqG7j812kx
-	 kvcoJf88z6gRjkbN/JKhdj/GfIic6uFr63GrLeL4=
+	b=X1IjqYPvJSqwGH6JnNJs3Sw3r5mYU6heVQVOgB4bY+WxYtYHUFLxjf+1uFoSmwwtj
+	 RIdmlgqkGTryEACXOLBmawGQ9HQ+QNVHZSzlKsjwzGqCpsbm3y4pggtK7om00FcX2D
+	 Uc8e2FoNNc4zCfxy7fEpzIrD4/EjZIv33fJMEaNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Snild Dolkow <snild@sony.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 189/224] test_maple_tree: add more testing for mas_empty_area()
-Date: Tue, 28 Mar 2023 16:43:05 +0200
-Message-Id: <20230328142625.258552841@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.1 180/224] usb: chipidea: core: fix possible concurrent when switch role
+Date: Tue, 28 Mar 2023 16:42:56 +0200
+Message-Id: <20230328142624.892710263@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -36,96 +34,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 4bd6dded6318dc8e2514d74868c1f8fb38b61a60 upstream.
+commit 451b15ed138ec15bffbebb58a00ebdd884c3e659 upstream.
 
-Test robust filling of an entire area of the tree, then test one beyond.
-This is to test the walking back up the tree at the end of nodes and error
-condition.  Test inspired by the reproducer code provided by Snild Dolkow.
+The user may call role_store() when driver is handling
+ci_handle_id_switch() which is triggerred by otg event or power lost
+event. Unfortunately, the controller may go into chaos in this case.
+Fix this by protecting it with mutex lock.
 
-The last test in the function tests for the case of a corrupted maple
-state caused by the incorrect limits set during mas_skip_node().  There
-needs to be a gap in the second last child and last child, but the search
-must rule out the second last child's gap.  This would avoid correcting
-the maple state to the correct max limit and return an error.
-
-Link: https://lkml.kernel.org/r/20230307180247.2220303-3-Liam.Howlett@oracle.com
-Cc: Snild Dolkow <snild@sony.com>
-Link: https://lore.kernel.org/linux-mm/cb8dc31a-fef2-1d09-f133-e9f7b9f9e77a@sony.com/
-Fixes: e15e06a83923 ("lib/test_maple_tree: add testing for maple tree")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Peng Zhang <zhangpeng.00@bytedance.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: a932a8041ff9 ("usb: chipidea: core: add sysfs group")
+cc: <stable@vger.kernel.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20230317061516.2451728-2-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_maple_tree.c |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ drivers/usb/chipidea/ci.h   |    2 ++
+ drivers/usb/chipidea/core.c |    8 +++++++-
+ drivers/usb/chipidea/otg.c  |    5 ++++-
+ 3 files changed, 13 insertions(+), 2 deletions(-)
 
---- a/lib/test_maple_tree.c
-+++ b/lib/test_maple_tree.c
-@@ -2602,6 +2602,49 @@ static noinline void check_empty_area_wi
- 	rcu_read_unlock();
- }
+--- a/drivers/usb/chipidea/ci.h
++++ b/drivers/usb/chipidea/ci.h
+@@ -204,6 +204,7 @@ struct hw_bank {
+  * @in_lpm: if the core in low power mode
+  * @wakeup_int: if wakeup interrupt occur
+  * @rev: The revision number for controller
++ * @mutex: protect code from concorrent running when doing role switch
+  */
+ struct ci_hdrc {
+ 	struct device			*dev;
+@@ -256,6 +257,7 @@ struct ci_hdrc {
+ 	bool				in_lpm;
+ 	bool				wakeup_int;
+ 	enum ci_revision		rev;
++	struct mutex                    mutex;
+ };
  
-+static noinline void check_empty_area_fill(struct maple_tree *mt)
-+{
-+	const unsigned long max = 0x25D78000;
-+	unsigned long size;
-+	int loop, shift;
-+	MA_STATE(mas, mt, 0, 0);
+ static inline struct ci_role_driver *ci_role(struct ci_hdrc *ci)
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -980,8 +980,12 @@ static ssize_t role_store(struct device
+ 	if (role == CI_ROLE_END)
+ 		return -EINVAL;
+ 
+-	if (role == ci->role)
++	mutex_lock(&ci->mutex);
 +
-+	mt_set_non_kernel(99999);
-+	for (shift = 12; shift <= 16; shift++) {
-+		loop = 5000;
-+		size = 1 << shift;
-+		while (loop--) {
-+			mas_set(&mas, 0);
-+			mas_lock(&mas);
-+			MT_BUG_ON(mt, mas_empty_area(&mas, 0, max, size) != 0);
-+			MT_BUG_ON(mt, mas.last != mas.index + size - 1);
-+			mas_store_gfp(&mas, (void *)size, GFP_KERNEL);
-+			mas_unlock(&mas);
-+			mas_reset(&mas);
-+		}
++	if (role == ci->role) {
++		mutex_unlock(&ci->mutex);
+ 		return n;
 +	}
-+
-+	/* No space left. */
-+	size = 0x1000;
-+	rcu_read_lock();
-+	MT_BUG_ON(mt, mas_empty_area(&mas, 0, max, size) != -EBUSY);
-+	rcu_read_unlock();
-+
-+	/* Fill a depth 3 node to the maximum */
-+	for (unsigned long i = 629440511; i <= 629440800; i += 6)
-+		mtree_store_range(mt, i, i + 5, (void *)i, GFP_KERNEL);
-+	/* Make space in the second-last depth 4 node */
-+	mtree_erase(mt, 631668735);
-+	/* Make space in the last depth 4 node */
-+	mtree_erase(mt, 629506047);
-+	mas_reset(&mas);
-+	/* Search from just after the gap in the second-last depth 4 */
-+	rcu_read_lock();
-+	MT_BUG_ON(mt, mas_empty_area(&mas, 629506048, 690000000, 0x5000) != 0);
-+	rcu_read_unlock();
-+	mt_set_non_kernel(0);
-+}
-+
- static DEFINE_MTREE(tree);
- static int maple_tree_seed(void)
- {
-@@ -2854,6 +2897,11 @@ static int maple_tree_seed(void)
- 	check_empty_area_window(&tree);
- 	mtree_destroy(&tree);
  
-+	mt_init_flags(&tree, MT_FLAGS_ALLOC_RANGE);
-+	check_empty_area_fill(&tree);
-+	mtree_destroy(&tree);
-+
-+
- #if defined(BENCH)
- skip:
- #endif
+ 	pm_runtime_get_sync(dev);
+ 	disable_irq(ci->irq);
+@@ -991,6 +995,7 @@ static ssize_t role_store(struct device
+ 		ci_handle_vbus_change(ci);
+ 	enable_irq(ci->irq);
+ 	pm_runtime_put_sync(dev);
++	mutex_unlock(&ci->mutex);
+ 
+ 	return (ret == 0) ? n : ret;
+ }
+@@ -1026,6 +1031,7 @@ static int ci_hdrc_probe(struct platform
+ 		return -ENOMEM;
+ 
+ 	spin_lock_init(&ci->lock);
++	mutex_init(&ci->mutex);
+ 	ci->dev = dev;
+ 	ci->platdata = dev_get_platdata(dev);
+ 	ci->imx28_write_fix = !!(ci->platdata->flags &
+--- a/drivers/usb/chipidea/otg.c
++++ b/drivers/usb/chipidea/otg.c
+@@ -167,8 +167,10 @@ static int hw_wait_vbus_lower_bsv(struct
+ 
+ static void ci_handle_id_switch(struct ci_hdrc *ci)
+ {
+-	enum ci_role role = ci_otg_role(ci);
++	enum ci_role role;
+ 
++	mutex_lock(&ci->mutex);
++	role = ci_otg_role(ci);
+ 	if (role != ci->role) {
+ 		dev_dbg(ci->dev, "switching from %s to %s\n",
+ 			ci_role(ci)->name, ci->roles[role]->name);
+@@ -198,6 +200,7 @@ static void ci_handle_id_switch(struct c
+ 		if (role == CI_ROLE_GADGET)
+ 			ci_handle_vbus_change(ci);
+ 	}
++	mutex_unlock(&ci->mutex);
+ }
+ /**
+  * ci_otg_work - perform otg (vbus/id) event handle
 
 
