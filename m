@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9B48476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9180AC433EF;
-	Tue, 28 Mar 2023 14:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E018476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBF5C433EF;
+	Tue, 28 Mar 2023 14:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015232;
-	bh=PV+tvnKdvEhsHAe82HDs99P5304QtIouqIXnmnVL7U0=;
+	s=korg; t=1680015235;
+	bh=9Cqg7EE6fgIcy0MD/+BAdo15L4uXU/3cjC18T5fXqZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0SUllZsQvjORS6nnLPstKD6yCmfASQtw2n/UmtqnbB2TM/cxW1HXAIKMvw+UL37Z7
-	 1Gw9QZvoFZSwHcWwYBxdXYQKCGqo6x25xSllf8F6Pk2InxRcgbjZiu4HZPRLkqhqBf
-	 4luoq5qoi0rsil0PGjhm25ZZ25XPLfK9obmmnM6Y=
+	b=wGSpDFhHqU0GvoXqGHmnkUjyXUnW3PMXKs2iTOZhIgWyTzTiEenY0pxVJF3gh2UFS
+	 eGxna0vUjuiRlICC2gKSuHLQs5jOQQEQqcfx3AP5/m7F0niiW63rQ6zdmuK0ZiXxZU
+	 A0kdGJb/6ZFxpwkxzCYXTSGs81+ExE+P/XP319i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Mann <rauchwolke@gmx.net>,
-	Alexander Wetzel <alexander@wetzel-home.de>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.2 215/240] wifi: mac80211: Serialize ieee80211_handle_wake_tx_queue()
-Date: Tue, 28 Mar 2023 16:42:58 +0200
-Message-Id: <20230328142628.651705812@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+132fdd2f1e1805fdc591@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.2 216/240] nilfs2: fix kernel-infoleak in nilfs_ioctl_wrap_copy()
+Date: Tue, 28 Mar 2023 16:42:59 +0200
+Message-Id: <20230328142628.700611797@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,81 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Wetzel <alexander@wetzel-home.de>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 007ae9b268ba7553e479608cf9735d3c4672a2ab upstream.
+commit 003587000276f81d0114b5ce773d80c119d8cb30 upstream.
 
-ieee80211_handle_wake_tx_queue must not run concurrent multiple times.
-It calls ieee80211_txq_schedule_start() and the drivers migrated to iTXQ
-do not expect overlapping drv_tx() calls.
+The ioctl helper function nilfs_ioctl_wrap_copy(), which exchanges a
+metadata array to/from user space, may copy uninitialized buffer regions
+to user space memory for read-only ioctl commands NILFS_IOCTL_GET_SUINFO
+and NILFS_IOCTL_GET_CPINFO.
 
-This fixes 'c850e31f79f0 ("wifi: mac80211: add internal handler for
-wake_tx_queue")', which introduced ieee80211_handle_wake_tx_queue.
-Drivers started to use it with 'a790cc3a4fad ("wifi: mac80211: add
-wake_tx_queue callback to drivers")'.
-But only after fixing an independent bug with
-'4444bc2116ae ("wifi: mac80211: Proper mark iTXQs for resumption")'
-problematic concurrent calls really happened and exposed the initial
-issue.
+This can occur when the element size of the user space metadata given by
+the v_size member of the argument nilfs_argv structure is larger than the
+size of the metadata element (nilfs_suinfo structure or nilfs_cpinfo
+structure) on the file system side.
 
-Fixes: c850e31f79f0 ("wifi: mac80211: add internal handler for wake_tx_queue")
-Reported-by: Thomas Mann <rauchwolke@gmx.net>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217119
-Link: https://lore.kernel.org/r/b8efebc6-4399-d0b8-b2a0-66843314616b@leemhuis.info/
-Link: https://lore.kernel.org/r/b7445607128a6b9ed7c17fcdcf3679bfaf4aaea.camel@sipsolutions.net>
-CC: <stable@vger.kernel.org>
-Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
-Link: https://lore.kernel.org/r/20230314211122.111688-1-alexander@wetzel-home.de
-[add missing spin_lock_init() noticed by Felix]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+KMSAN-enabled kernels detect this issue as follows:
+
+ BUG: KMSAN: kernel-infoleak in instrument_copy_to_user
+ include/linux/instrumented.h:121 [inline]
+ BUG: KMSAN: kernel-infoleak in _copy_to_user+0xc0/0x100 lib/usercopy.c:33
+  instrument_copy_to_user include/linux/instrumented.h:121 [inline]
+  _copy_to_user+0xc0/0x100 lib/usercopy.c:33
+  copy_to_user include/linux/uaccess.h:169 [inline]
+  nilfs_ioctl_wrap_copy+0x6fa/0xc10 fs/nilfs2/ioctl.c:99
+  nilfs_ioctl_get_info fs/nilfs2/ioctl.c:1173 [inline]
+  nilfs_ioctl+0x2402/0x4450 fs/nilfs2/ioctl.c:1290
+  nilfs_compat_ioctl+0x1b8/0x200 fs/nilfs2/ioctl.c:1343
+  __do_compat_sys_ioctl fs/ioctl.c:968 [inline]
+  __se_compat_sys_ioctl+0x7dd/0x1000 fs/ioctl.c:910
+  __ia32_compat_sys_ioctl+0x93/0xd0 fs/ioctl.c:910
+  do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+  __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+  do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+  do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+  entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+ Uninit was created at:
+  __alloc_pages+0x9f6/0xe90 mm/page_alloc.c:5572
+  alloc_pages+0xab0/0xd80 mm/mempolicy.c:2287
+  __get_free_pages+0x34/0xc0 mm/page_alloc.c:5599
+  nilfs_ioctl_wrap_copy+0x223/0xc10 fs/nilfs2/ioctl.c:74
+  nilfs_ioctl_get_info fs/nilfs2/ioctl.c:1173 [inline]
+  nilfs_ioctl+0x2402/0x4450 fs/nilfs2/ioctl.c:1290
+  nilfs_compat_ioctl+0x1b8/0x200 fs/nilfs2/ioctl.c:1343
+  __do_compat_sys_ioctl fs/ioctl.c:968 [inline]
+  __se_compat_sys_ioctl+0x7dd/0x1000 fs/ioctl.c:910
+  __ia32_compat_sys_ioctl+0x93/0xd0 fs/ioctl.c:910
+  do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+  __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+  do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+  do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+  entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+ Bytes 16-127 of 3968 are uninitialized
+ ...
+
+This eliminates the leak issue by initializing the page allocated as
+buffer using get_zeroed_page().
+
+Link: https://lkml.kernel.org/r/20230307085548.6290-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+132fdd2f1e1805fdc591@syzkaller.appspotmail.com
+  Link: https://lkml.kernel.org/r/000000000000a5bd2d05f63f04ae@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/ieee80211_i.h |    3 +++
- net/mac80211/main.c        |    2 ++
- net/mac80211/util.c        |    3 +++
- 3 files changed, 8 insertions(+)
+ fs/nilfs2/ioctl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -1285,6 +1285,9 @@ struct ieee80211_local {
- 	struct list_head active_txqs[IEEE80211_NUM_ACS];
- 	u16 schedule_round[IEEE80211_NUM_ACS];
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -71,7 +71,7 @@ static int nilfs_ioctl_wrap_copy(struct
+ 	if (argv->v_index > ~(__u64)0 - argv->v_nmembs)
+ 		return -EINVAL;
  
-+	/* serializes ieee80211_handle_wake_tx_queue */
-+	spinlock_t handle_wake_tx_queue_lock;
-+
- 	u16 airtime_flags;
- 	u32 aql_txq_limit_low[IEEE80211_NUM_ACS];
- 	u32 aql_txq_limit_high[IEEE80211_NUM_ACS];
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -802,6 +802,8 @@ struct ieee80211_hw *ieee80211_alloc_hw_
- 	local->aql_threshold = IEEE80211_AQL_THRESHOLD;
- 	atomic_set(&local->aql_total_pending_airtime, 0);
- 
-+	spin_lock_init(&local->handle_wake_tx_queue_lock);
-+
- 	INIT_LIST_HEAD(&local->chanctx_list);
- 	mutex_init(&local->chanctx_mtx);
- 
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -314,6 +314,8 @@ void ieee80211_handle_wake_tx_queue(stru
- 	struct ieee80211_sub_if_data *sdata = vif_to_sdata(txq->vif);
- 	struct ieee80211_txq *queue;
- 
-+	spin_lock(&local->handle_wake_tx_queue_lock);
-+
- 	/* Use ieee80211_next_txq() for airtime fairness accounting */
- 	ieee80211_txq_schedule_start(hw, txq->ac);
- 	while ((queue = ieee80211_next_txq(hw, txq->ac))) {
-@@ -321,6 +323,7 @@ void ieee80211_handle_wake_tx_queue(stru
- 		ieee80211_return_txq(hw, queue, false);
- 	}
- 	ieee80211_txq_schedule_end(hw, txq->ac);
-+	spin_unlock(&local->handle_wake_tx_queue_lock);
- }
- EXPORT_SYMBOL(ieee80211_handle_wake_tx_queue);
- 
+-	buf = (void *)__get_free_pages(GFP_NOFS, 0);
++	buf = (void *)get_zeroed_page(GFP_NOFS);
+ 	if (unlikely(!buf))
+ 		return -ENOMEM;
+ 	maxmembs = PAGE_SIZE / argv->v_size;
 
 
