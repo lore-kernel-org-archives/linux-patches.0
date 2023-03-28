@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92048BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:06:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39043C433D2;
-	Tue, 28 Mar 2023 15:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E278BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:06:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBA4C433D2;
+	Tue, 28 Mar 2023 15:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015974;
-	bh=3+OC53VmlSjB+FErs7Gh2U5LXgoD/9f1/oDB4o+tCLs=;
+	s=korg; t=1680015977;
+	bh=sGnIvYdELQv5V2VLnwd8QUZMto+EbJO+GNc7pHQqWVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gwd9ReltihhXd6gwo3vpPtUo85LyZkbSwJv/ya+zY4DlZnRIoYBrTMKMA9gYDt/nI
-	 VVEBx1bWYjNiJsDJfwyBvF/JxbaLjAfjw8svyZohjzwAugtAS1S3xFrpkWQgklXekB
-	 svRcXxA2bEHZe0KZRynboweGu03TpdbvZ1Pk9T9A=
+	b=UN6vp3HhwgGbkMJbrtED2DGZfV4pVfXtU4UNNVr7qTnu04h1oBecI5Sg+owlaXIYx
+	 PyXx7IcqoYxJuMBGh1vxY7muJYCvx+NwnJga6k+IkjcWfv6th1tg+msU29JEG9XQX9
+	 7jcuo/2y4gqjZnAjLp+2JJpPOWiVNu/zoJxhAZCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kal Conley <kal.conley@dectris.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/146] perf/core: Fix perf_output_begin parameter is incorrectly invoked in perf_event_bpf_output
-Date: Tue, 28 Mar 2023 16:41:31 +0200
-Message-Id: <20230328142602.770171953@linuxfoundation.org>
+Subject: [PATCH 5.15 020/146] xsk: Add missing overflow check in xdp_umem_reg
+Date: Tue, 28 Mar 2023 16:41:49 +0200
+Message-Id: <20230328142603.565651287@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -35,61 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Kal Conley <kal.conley@dectris.com>
 
-[ Upstream commit eb81a2ed4f52be831c9fb879752d89645a312c13 ]
+[ Upstream commit c7df4813b149362248d6ef7be41a311e27bf75fe ]
 
-syzkaller reportes a KASAN issue with stack-out-of-bounds.
-The call trace is as follows:
-  dump_stack+0x9c/0xd3
-  print_address_description.constprop.0+0x19/0x170
-  __kasan_report.cold+0x6c/0x84
-  kasan_report+0x3a/0x50
-  __perf_event_header__init_id+0x34/0x290
-  perf_event_header__init_id+0x48/0x60
-  perf_output_begin+0x4a4/0x560
-  perf_event_bpf_output+0x161/0x1e0
-  perf_iterate_sb_cpu+0x29e/0x340
-  perf_iterate_sb+0x4c/0xc0
-  perf_event_bpf_event+0x194/0x2c0
-  __bpf_prog_put.constprop.0+0x55/0xf0
-  __cls_bpf_delete_prog+0xea/0x120 [cls_bpf]
-  cls_bpf_delete_prog_work+0x1c/0x30 [cls_bpf]
-  process_one_work+0x3c2/0x730
-  worker_thread+0x93/0x650
-  kthread+0x1b8/0x210
-  ret_from_fork+0x1f/0x30
+The number of chunks can overflow u32. Make sure to return -EINVAL on
+overflow. Also remove a redundant u32 cast assigning umem->npgs.
 
-commit 267fb27352b6 ("perf: Reduce stack usage of perf_output_begin()")
-use on-stack struct perf_sample_data of the caller function.
-
-However, perf_event_bpf_output uses incorrect parameter to convert
-small-sized data (struct perf_bpf_event) into large-sized data
-(struct perf_sample_data), which causes memory overwriting occurs in
-__perf_event_header__init_id.
-
-Fixes: 267fb27352b6 ("perf: Reduce stack usage of perf_output_begin()")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20230314044735.56551-1-yangjihong1@huawei.com
+Fixes: bbff2f321a86 ("xsk: new descriptor addressing scheme")
+Signed-off-by: Kal Conley <kal.conley@dectris.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Link: https://lore.kernel.org/bpf/20230308174013.1114745-1-kal.conley@dectris.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/xdp/xdp_umem.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index d2b415820183d..3a17a68cf41ad 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -9056,7 +9056,7 @@ static void perf_event_bpf_output(struct perf_event *event, void *data)
+diff --git a/net/xdp/xdp_umem.c b/net/xdp/xdp_umem.c
+index f01ef6bda3909..65f918d29531d 100644
+--- a/net/xdp/xdp_umem.c
++++ b/net/xdp/xdp_umem.c
+@@ -152,10 +152,11 @@ static int xdp_umem_account_pages(struct xdp_umem *umem)
  
- 	perf_event_header__init_id(&bpf_event->event_id.header,
- 				   &sample, event);
--	ret = perf_output_begin(&handle, data, event,
-+	ret = perf_output_begin(&handle, &sample, event,
- 				bpf_event->event_id.header.size);
- 	if (ret)
- 		return;
+ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
+ {
+-	u32 npgs_rem, chunk_size = mr->chunk_size, headroom = mr->headroom;
+ 	bool unaligned_chunks = mr->flags & XDP_UMEM_UNALIGNED_CHUNK_FLAG;
+-	u64 npgs, addr = mr->addr, size = mr->len;
+-	unsigned int chunks, chunks_rem;
++	u32 chunk_size = mr->chunk_size, headroom = mr->headroom;
++	u64 addr = mr->addr, size = mr->len;
++	u32 chunks_rem, npgs_rem;
++	u64 chunks, npgs;
+ 	int err;
+ 
+ 	if (chunk_size < XDP_UMEM_MIN_CHUNK_SIZE || chunk_size > PAGE_SIZE) {
+@@ -190,8 +191,8 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
+ 	if (npgs > U32_MAX)
+ 		return -EINVAL;
+ 
+-	chunks = (unsigned int)div_u64_rem(size, chunk_size, &chunks_rem);
+-	if (chunks == 0)
++	chunks = div_u64_rem(size, chunk_size, &chunks_rem);
++	if (!chunks || chunks > U32_MAX)
+ 		return -EINVAL;
+ 
+ 	if (!unaligned_chunks && chunks_rem)
+@@ -204,7 +205,7 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
+ 	umem->headroom = headroom;
+ 	umem->chunk_size = chunk_size;
+ 	umem->chunks = chunks;
+-	umem->npgs = (u32)npgs;
++	umem->npgs = npgs;
+ 	umem->pgs = NULL;
+ 	umem->user = NULL;
+ 	umem->flags = mr->flags;
 -- 
 2.39.2
 
