@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBA88476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31386C433EF;
-	Tue, 28 Mar 2023 14:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620968476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA67EC433EF;
+	Tue, 28 Mar 2023 14:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015325;
-	bh=QVjj/vfjbCAUi1PV50kQhPCpBKKxPA4fNWeXQXS1Q+s=;
+	s=korg; t=1680015328;
+	bh=Mr5oUpzcgpJCGJTBWkRitKf3/9W94I+NWa5yzqWVaF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DIeUycQbopropVoBFm3cfu/EHuET2OcjkYwT9wOVWdHVqxY/gbqK7LBzOGbQoYpkk
-	 +nqOpF9lwPIFGeYOmtjsRjqLvn6b8rZ+6/ViYynJLvVO9aBPKMuGelWBIujcM/uo/f
-	 s2L/P/tOtX5+QdQP/2QnM+Yb4VJ00EMftEGSWvxY=
+	b=gODQBJsDKgRvOWJwH9h1odm4r8SQmuVRiQbKjc85wy/UQB78HRGEeYJ34jTwpi6UG
+	 UrcpcVd2A+gyxnZspg1teixGa9Gw+vdxlS3eqxoNj8nAjJupSOAtuMr7lUzByi7qlc
+	 HUl+NdJt55sUqS86Vrx6jf2OAgqCCeFQ3wAOu0X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.2 231/240] arm64: dts: qcom: sm8150: Fix the iommu mask used for PCIe controllers
-Date: Tue, 28 Mar 2023 16:43:14 +0200
-Message-Id: <20230328142629.337326060@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/224] interconnect: qcom: osm-l3: fix icc_onecell_data allocation
+Date: Tue, 28 Mar 2023 16:39:57 +0200
+Message-Id: <20230328142617.268508378@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
-References: <20230328142619.643313678@linuxfoundation.org>
+In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
+References: <20230328142617.205414124@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,45 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 672a58fc7c477e59981653a11241566870fff852 upstream.
+[ Upstream commit f77ebdda0ee652124061c2ac42399bb6c367e729 ]
 
-The iommu mask should be 0x3f as per Qualcomm internal documentation.
-Without the correct mask, the PCIe transactions from the endpoint will
-result in SMMU faults. Hence, fix it!
+This is a struct with a trailing zero-length array of icc_node pointers
+but it's allocated as if it were a single array of icc_nodes instead.
 
-Cc: stable@vger.kernel.org # 5.19
-Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230224080045.6577-1-manivannan.sadhasivam@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fortunately this overallocates memory rather then allocating less memory
+than required.
+
+Fix by replacing devm_kcalloc() with devm_kzalloc() and struct_size()
+macro.
+
+Fixes: 5bc9900addaf ("interconnect: qcom: Add OSM L3 interconnect provider support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230105002221.1416479-2-dmitry.baryshkov@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/interconnect/qcom/osm-l3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1810,7 +1810,7 @@
- 				      "slave_q2a",
- 				      "tbu";
+diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
+index 333adb21e7176..46b538e6c07b6 100644
+--- a/drivers/interconnect/qcom/osm-l3.c
++++ b/drivers/interconnect/qcom/osm-l3.c
+@@ -294,7 +294,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
+ 	qnodes = desc->nodes;
+ 	num_nodes = desc->num_nodes;
  
--			iommus = <&apps_smmu 0x1d80 0x7f>;
-+			iommus = <&apps_smmu 0x1d80 0x3f>;
- 			iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
- 				    <0x100 &apps_smmu 0x1d81 0x1>;
+-	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
++	data = devm_kzalloc(&pdev->dev, struct_size(data, nodes, num_nodes), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
  
-@@ -1909,7 +1909,7 @@
- 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
- 			assigned-clock-rates = <19200000>;
- 
--			iommus = <&apps_smmu 0x1e00 0x7f>;
-+			iommus = <&apps_smmu 0x1e00 0x3f>;
- 			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
- 				    <0x100 &apps_smmu 0x1e01 0x1>;
- 
+-- 
+2.39.2
+
 
 
