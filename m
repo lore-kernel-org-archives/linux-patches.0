@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8C28BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:50:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BAEC433D2;
-	Tue, 28 Mar 2023 14:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC8A8BEB
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:50:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBDCC433EF;
+	Tue, 28 Mar 2023 14:50:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015013;
-	bh=Z+ffrNsXd1kDz7CpRmVJX+wjYCkr24qoYdWsHHM6+DY=;
+	s=korg; t=1680015016;
+	bh=UQFD8R+r7pyyQLu/jbUUZOAgGbz+gYUu6CMUJSSLKCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zrLxuD/6VsJlwuzPgX0daI5cZk3c6Su/XnXY7Ozx32Nr09xIBiYtIFQojifDEdAJ7
-	 HZ9jParTuczNLS5NlNj8jSsKtHYAYyKM5tmYp/fOt9VBPuQiNs8+QPOmTX9Jm9NRVP
-	 qj5HEmwyde+EDQboil6l/9j65yTNKGCzF0ev5lOk=
+	b=XXzo7LciFgXusNnn8TNfl7aoCRpQcxG2O6YU2C+xZ5MZ8SjCcpajZvEhS6+2UFi7s
+	 W9nzdHNVr/VXJ7+yxw84h8MWq9E8gk6GlxoRkNgx2qLoU18YkBCtlSJOpclFd0DJTA
+	 UVsbROJ/RYsh0k7rgzvUltJvlgo+DsHfhzh/vA7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
+	Archie Pusaka <apusaka@chromium.org>,
+	Howard Chung <howardchung@google.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 104/240] Bluetooth: btsdio: fix use after free bug in btsdio_remove due to unfinished work
-Date: Tue, 28 Mar 2023 16:41:07 +0200
-Message-Id: <20230328142624.113723487@linuxfoundation.org>
+Subject: [PATCH 6.2 105/240] Bluetooth: mgmt: Fix MGMT add advmon with RSSI command
+Date: Tue, 28 Mar 2023 16:41:08 +0200
+Message-Id: <20230328142624.148883345@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,36 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Howard Chung <howardchung@google.com>
 
-[ Upstream commit 1e9ac114c4428fdb7ff4635b45d4f46017e8916f ]
+[ Upstream commit 1a0291f81529e8044fb29845a0196ba47af894ce ]
 
-In btsdio_probe, &data->work was bound with btsdio_work.In
-btsdio_send_frame, it was started by schedule_work.
+The MGMT command: MGMT_OP_ADD_ADV_PATTERNS_MONITOR_RSSI uses variable
+length argument. This causes host not able to register advmon with rssi.
 
-If we call btsdio_remove with an unfinished job, there may
-be a race condition and cause UAF bug on hdev.
+This patch has been locally tested by adding monitor with rssi via
+btmgmt on a kernel 6.1 machine.
 
-Fixes: ddbaf13e3609 ("[Bluetooth] Add generic driver for Bluetooth SDIO devices")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Archie Pusaka <apusaka@chromium.org>
+Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
+Signed-off-by: Howard Chung <howardchung@google.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btsdio.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/mgmt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btsdio.c b/drivers/bluetooth/btsdio.c
-index 795be33f2892d..02893600db390 100644
---- a/drivers/bluetooth/btsdio.c
-+++ b/drivers/bluetooth/btsdio.c
-@@ -354,6 +354,7 @@ static void btsdio_remove(struct sdio_func *func)
- 
- 	BT_DBG("func %p", func);
- 
-+	cancel_work_sync(&data->work);
- 	if (!data)
- 		return;
- 
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 71b65ac6343a0..c4a7627b380da 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -9345,7 +9345,8 @@ static const struct hci_mgmt_handler mgmt_handlers[] = {
+ 	{ add_ext_adv_data,        MGMT_ADD_EXT_ADV_DATA_SIZE,
+ 						HCI_MGMT_VAR_LEN },
+ 	{ add_adv_patterns_monitor_rssi,
+-				   MGMT_ADD_ADV_PATTERNS_MONITOR_RSSI_SIZE },
++				   MGMT_ADD_ADV_PATTERNS_MONITOR_RSSI_SIZE,
++						HCI_MGMT_VAR_LEN },
+ 	{ set_mesh,                MGMT_SET_MESH_RECEIVER_SIZE,
+ 						HCI_MGMT_VAR_LEN },
+ 	{ mesh_features,           MGMT_MESH_READ_FEATURES_SIZE },
 -- 
 2.39.2
 
