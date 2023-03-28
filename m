@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A4B8BEB
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:10:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5572CC433D2;
-	Tue, 28 Mar 2023 15:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9382A8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:10:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137EDC4339B;
+	Tue, 28 Mar 2023 15:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016213;
-	bh=+3IOEgtbXr+cxot6lBfvpe0EV/vUYpbIZpuV21F7yQA=;
+	s=korg; t=1680016216;
+	bh=bNX5Q5ZX2Wf+VzNfulH80A+P/xI0GIEDFFnLJp1ZmuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJSfJF/ad/o9KQCUevZcMcRa4XW/KXIiyrG+jDiEvU+TZ+PXfPb3owhRg13uXB6h6
-	 HraDtDQulhYilRKwdUegKNfUP9rynATiGXpTYSvdO6Vue81KcNjx22yxbIZ2Hp7tfu
-	 wCYEAdTMaxBHX2lR4Ff5kAm/GomVN0QX6+IXfTAg=
+	b=eD6Vtn+GSHd9O2ZF1FE18yzoN8LCRB9+dSvcxAjeKWot+ddbrRSNOwnz0MUiticfe
+	 VC3pq5AMvOZmMgrUsPtjIeCICWwfqRgKOZuQOLrlKNH+yK2qGKnJKtsmbUq9SFp9a8
+	 U5W0zBVKEaprX34y5jhsxBa+iXI5g3cGR7oDnKnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 5.15 107/146] efi: sysfb_efi: Fix DMI quirks not working for simpledrm
-Date: Tue, 28 Mar 2023 16:43:16 +0200
-Message-Id: <20230328142607.137325505@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 5.15 108/146] mm/slab: Fix undefined init_cache_node_node() for NUMA and !SMP
+Date: Tue, 28 Mar 2023 16:43:17 +0200
+Message-Id: <20230328142607.178715480@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -36,112 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 3615c78673c332b69aaacefbcde5937c5c706686 upstream.
+commit 66a1c22b709178e7b823d44465d0c2e5ed7492fb upstream.
 
-Commit 8633ef82f101 ("drivers/firmware: consolidate EFI framebuffer setup
-for all arches") moved the sysfb_apply_efi_quirks() call in sysfb_init()
-from before the [sysfb_]parse_mode() call to after it.
-But sysfb_apply_efi_quirks() modifies the global screen_info struct which
-[sysfb_]parse_mode() parses, so doing it later is too late.
+sh/migor_defconfig:
 
-This has broken all DMI based quirks for correcting wrong firmware efifb
-settings when simpledrm is used.
+    mm/slab.c: In function ‘slab_memory_callback’:
+    mm/slab.c:1127:23: error: implicit declaration of function ‘init_cache_node_node’; did you mean ‘drain_cache_node_node’? [-Werror=implicit-function-declaration]
+     1127 |                 ret = init_cache_node_node(nid);
+	  |                       ^~~~~~~~~~~~~~~~~~~~
+	  |                       drain_cache_node_node
 
-To fix this move the sysfb_apply_efi_quirks() call back to its old place
-and split the new setup of the efifb_fwnode (which requires
-the platform_device) into its own function and call that at
-the place of the moved sysfb_apply_efi_quirks(pd) calls.
+The #ifdef condition protecting the definition of init_cache_node_node()
+no longer matches the conditions protecting the (multiple) users.
 
-Fixes: 8633ef82f101 ("drivers/firmware: consolidate EFI framebuffer setup for all arches")
-Cc: stable@vger.kernel.org
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fix this by syncing the conditions.
+
+Fixes: 76af6a054da40553 ("mm/migrate: add CPU hotplug to demotion #ifdef")
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/b5bdea22-ed2f-3187-6efe-0c72330270a4@infradead.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/sysfb_efi.c  |    5 ++++-
- drivers/firmware/sysfb.c          |    4 +++-
- drivers/firmware/sysfb_simplefb.c |    2 +-
- include/linux/sysfb.h             |    9 +++++++--
- 4 files changed, 15 insertions(+), 5 deletions(-)
+ mm/slab.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/efi/sysfb_efi.c
-+++ b/drivers/firmware/efi/sysfb_efi.c
-@@ -343,7 +343,7 @@ static const struct fwnode_operations ef
- #ifdef CONFIG_EFI
- static struct fwnode_handle efifb_fwnode;
- 
--__init void sysfb_apply_efi_quirks(struct platform_device *pd)
-+__init void sysfb_apply_efi_quirks(void)
- {
- 	if (screen_info.orig_video_isVGA != VIDEO_TYPE_EFI ||
- 	    !(screen_info.capabilities & VIDEO_CAPABILITY_SKIP_QUIRKS))
-@@ -357,7 +357,10 @@ __init void sysfb_apply_efi_quirks(struc
- 		screen_info.lfb_height = temp;
- 		screen_info.lfb_linelength = 4 * screen_info.lfb_width;
- 	}
-+}
- 
-+__init void sysfb_set_efifb_fwnode(struct platform_device *pd)
-+{
- 	if (screen_info.orig_video_isVGA == VIDEO_TYPE_EFI && IS_ENABLED(CONFIG_PCI)) {
- 		fwnode_init(&efifb_fwnode, &efifb_fwnode_ops);
- 		pd->dev.fwnode = &efifb_fwnode;
---- a/drivers/firmware/sysfb.c
-+++ b/drivers/firmware/sysfb.c
-@@ -81,6 +81,8 @@ static __init int sysfb_init(void)
- 	if (disabled)
- 		goto unlock_mutex;
- 
-+	sysfb_apply_efi_quirks();
-+
- 	/* try to create a simple-framebuffer device */
- 	compatible = sysfb_parse_mode(si, &mode);
- 	if (compatible) {
-@@ -103,7 +105,7 @@ static __init int sysfb_init(void)
- 		goto unlock_mutex;
- 	}
- 
--	sysfb_apply_efi_quirks(pd);
-+	sysfb_set_efifb_fwnode(pd);
- 
- 	ret = platform_device_add_data(pd, si, sizeof(*si));
- 	if (ret)
---- a/drivers/firmware/sysfb_simplefb.c
-+++ b/drivers/firmware/sysfb_simplefb.c
-@@ -110,7 +110,7 @@ __init struct platform_device *sysfb_cre
- 	if (!pd)
- 		return ERR_PTR(-ENOMEM);
- 
--	sysfb_apply_efi_quirks(pd);
-+	sysfb_set_efifb_fwnode(pd);
- 
- 	ret = platform_device_add_resources(pd, &res, 1);
- 	if (ret)
---- a/include/linux/sysfb.h
-+++ b/include/linux/sysfb.h
-@@ -70,11 +70,16 @@ static inline void sysfb_disable(void)
- #ifdef CONFIG_EFI
- 
- extern struct efifb_dmi_info efifb_dmi_list[];
--void sysfb_apply_efi_quirks(struct platform_device *pd);
-+void sysfb_apply_efi_quirks(void);
-+void sysfb_set_efifb_fwnode(struct platform_device *pd);
- 
- #else /* CONFIG_EFI */
- 
--static inline void sysfb_apply_efi_quirks(struct platform_device *pd)
-+static inline void sysfb_apply_efi_quirks(void)
-+{
-+}
-+
-+static inline void sysfb_set_efifb_fwnode(struct platform_device *pd)
- {
+--- a/mm/slab.c
++++ b/mm/slab.c
+@@ -855,7 +855,7 @@ static int init_cache_node(struct kmem_c
+ 	return 0;
  }
  
+-#if (defined(CONFIG_NUMA) && defined(CONFIG_MEMORY_HOTPLUG)) || defined(CONFIG_SMP)
++#if defined(CONFIG_NUMA) || defined(CONFIG_SMP)
+ /*
+  * Allocates and initializes node for a node on each slab cache, used for
+  * either memory or cpu hotplug.  If memory is being hot-added, the kmem_cache_node
 
 
