@@ -1,35 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3188BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5468C433D2;
-	Tue, 28 Mar 2023 15:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9D28BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701D6C433EF;
+	Tue, 28 Mar 2023 15:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015942;
-	bh=2do8PrF2cN1I2smgIzvvf5xkFz8VjuNjvUXB3mZuE94=;
+	s=korg; t=1680015944;
+	bh=wIKM0z+LyDwlrYyXrbt8QirIxb/dK6PLLzCMNgp14/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6SKHZm5nbMiM5PSvnvmN2QA16haLHFqQwmXNGr/sZxTU7pMpAPzRAUIcVHoJVsr2
-	 JAuUkPhh/mnPLayvBs68icJujWI3KyZmdZiweVgnYCHc9WlGOipsx+UwnmVBsFlF+J
-	 YJHBnyyamvrue1KOzEi2QlYouBRwvAF5O5C2IU7M=
+	b=KgZ/qVyvX5CL5kT1y6wmDVvCPf2fcr9Q05dEmOizLsnXF39ZuqNiUfdi19nuR9uIN
+	 RnK2it6RkF7apepJsVLsKIwlrq1vXvwtcbQVzd7LgV7gr5HbHCCd7Ih3w9GDuxrf0o
+	 +3I/5YejcmaF9/Jib9a6tBwiQE41qMvg7DqmrQLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	syzbot+2ee18845e89ae76342c5@syzkaller.appspotmail.com,
-	David Hildenbrand <david@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	heng.su@intel.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 213/224] mm/ksm: fix race with VMA iteration and mm_struct teardown
-Date: Tue, 28 Mar 2023 16:43:29 +0200
-Message-Id: <20230328142626.215642889@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/146] interconnect: qcom: osm-l3: fix icc_onecell_data allocation
+Date: Tue, 28 Mar 2023 16:41:30 +0200
+Message-Id: <20230328142602.739147159@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
-References: <20230328142617.205414124@linuxfoundation.org>
+In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
+References: <20230328142602.660084725@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,64 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 6db504ce55bdbc575723938fc480713c9183f6a2 upstream.
+[ Upstream commit f77ebdda0ee652124061c2ac42399bb6c367e729 ]
 
-exit_mmap() will tear down the VMAs and maple tree with the mmap_lock held
-in write mode.  Ensure that the maple tree is still valid by checking
-ksm_test_exit() after taking the mmap_lock in read mode, but before the
-for_each_vma() iterator dereferences a destroyed maple tree.
+This is a struct with a trailing zero-length array of icc_node pointers
+but it's allocated as if it were a single array of icc_nodes instead.
 
-Since the maple tree is destroyed, the flags telling lockdep to check an
-external lock has been cleared.  Skip the for_each_vma() iterator to avoid
-dereferencing a maple tree without the external lock flag, which would
-create a lockdep warning.
+Fortunately this overallocates memory rather then allocating less memory
+than required.
 
-Link: https://lkml.kernel.org/r/20230308220310.3119196-1-Liam.Howlett@oracle.com
-Fixes: a5f18ba07276 ("mm/ksm: use vma iterators instead of vma linked list")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-  Link: https://lore.kernel.org/lkml/ZAdUUhSbaa6fHS36@xpf.sh.intel.com/
-Reported-by: syzbot+2ee18845e89ae76342c5@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?id=64a3e95957cd3deab99df7cd7b5a9475af92c93e
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <heng.su@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix by replacing devm_kcalloc() with devm_kzalloc() and struct_size()
+macro.
+
+Fixes: 5bc9900addaf ("interconnect: qcom: Add OSM L3 interconnect provider support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230105002221.1416479-2-dmitry.baryshkov@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/ksm.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/interconnect/qcom/osm-l3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/ksm.c
-+++ b/mm/ksm.c
-@@ -960,9 +960,15 @@ static int unmerge_and_remove_all_rmap_i
+diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
+index c7af143980de4..87edab1bf987b 100644
+--- a/drivers/interconnect/qcom/osm-l3.c
++++ b/drivers/interconnect/qcom/osm-l3.c
+@@ -275,7 +275,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
+ 	qnodes = desc->nodes;
+ 	num_nodes = desc->num_nodes;
  
- 		mm = mm_slot->slot.mm;
- 		mmap_read_lock(mm);
-+
-+		/*
-+		 * Exit right away if mm is exiting to avoid lockdep issue in
-+		 * the maple tree
-+		 */
-+		if (ksm_test_exit(mm))
-+			goto mm_exiting;
-+
- 		for_each_vma(vmi, vma) {
--			if (ksm_test_exit(mm))
--				break;
- 			if (!(vma->vm_flags & VM_MERGEABLE) || !vma->anon_vma)
- 				continue;
- 			err = unmerge_ksm_pages(vma,
-@@ -971,6 +977,7 @@ static int unmerge_and_remove_all_rmap_i
- 				goto error;
- 		}
+-	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
++	data = devm_kzalloc(&pdev->dev, struct_size(data, nodes, num_nodes), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
  
-+mm_exiting:
- 		remove_trailing_rmap_items(&mm_slot->rmap_list);
- 		mmap_read_unlock(mm);
- 
+-- 
+2.39.2
+
 
 
