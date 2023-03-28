@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326F28BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9681C4339E;
-	Tue, 28 Mar 2023 14:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95398BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F257C4339B;
+	Tue, 28 Mar 2023 14:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014837;
-	bh=OjCHyWVB1kb32huPEFPJqNwW1O4zE+vHGvq+hU5r4Kg=;
+	s=korg; t=1680014839;
+	bh=0ARCpOhLGtVRr+rqdLn1hctzGayywTB4N+7lZ3STPRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opSlqdS2aulIJblp1/75zlkv/4ViIIQKsOGL7R4eXtIMqK5sZ6PCU41ThOor667Oy
-	 +AJknv1rPp0S1FFrmPAJD1yjqJih6TFObQyVxC//gECTlqxgmhDs0Us2r8NCBrkE4r
-	 IFrVE/OtrdNiWJmZE7x02EUTMlUJNyD3tuCaUGME=
+	b=0emGZQzfxw7JdDqwg9xs7u4QuMqqfE3nu/PL9Ioq1tCZTnAyQV0wZp6bx5u5xqJMZ
+	 nNOgb3g3o/BLqZxMShE457YYW/FF74uMGlLUrycLOzhR1SAAJdJORJEpZGl3Nam4RV
+	 d8TMAUlT6tgNXyc60dEgbJi6BW/GNitcCk3GpX+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Dario Lesca <d.lesca@solinos.it>,
-	David Critch <dcritch@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 040/240] nfsd: dont replace page in rq_pages if its a continuation of last page
-Date: Tue, 28 Mar 2023 16:40:03 +0200
-Message-Id: <20230328142621.260573786@linuxfoundation.org>
+Subject: [PATCH 6.2 031/240] iavf: fix non-tunneled IPv6 UDP packet type and hashing
+Date: Tue, 28 Mar 2023 16:39:54 +0200
+Message-Id: <20230328142620.913692777@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -38,62 +39,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-[ Upstream commit 27c934dd8832dd40fd34776f916dc201e18b319b ]
+[ Upstream commit de58647b4301fe181f9c38e8b46f7021584ae427 ]
 
-The splice read calls nfsd_splice_actor to put the pages containing file
-data into the svc_rqst->rq_pages array. It's possible however to get a
-splice result that only has a partial page at the end, if (e.g.) the
-filesystem hands back a short read that doesn't cover the whole page.
+Currently, IAVF's decode_rx_desc_ptype() correctly reports payload type
+of L4 for IPv4 UDP packets and IPv{4,6} TCP, but only L3 for IPv6 UDP.
+Originally, i40e, ice and iavf were affected.
+Commit 73df8c9e3e3d ("i40e: Correct UDP packet header for non_tunnel-ipv6")
+fixed that in i40e, then
+commit 638a0c8c8861 ("ice: fix incorrect payload indicator on PTYPE")
+fixed that for ice.
+IPv6 UDP is L4 obviously. Fix it and make iavf report correct L4 hash
+type for such packets, so that the stack won't calculate it on CPU when
+needs it.
 
-nfsd_splice_actor will plop the partial page into its rq_pages array and
-return. Then later, when nfsd_splice_actor is called again, the
-remainder of the page may end up being filled out. At this point,
-nfsd_splice_actor will put the page into the array _again_ corrupting
-the reply. If this is done enough times, rq_next_page will overrun the
-array and corrupt the trailing fields -- the rq_respages and
-rq_next_page pointers themselves.
-
-If we've already added the page to the array in the last pass, don't add
-it to the array a second time when dealing with a splice continuation.
-This was originally handled properly in nfsd_splice_actor, but commit
-91e23b1c3982 ("NFSD: Clean up nfsd_splice_actor()") removed the check
-for it.
-
-Fixes: 91e23b1c3982 ("NFSD: Clean up nfsd_splice_actor()")
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Reported-by: Dario Lesca <d.lesca@solinos.it>
-Tested-by: David Critch <dcritch@redhat.com>
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2150630
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 206812b5fccb ("i40e/i40evf: i40e implementation for skb_set_hash")
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/vfs.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/iavf/iavf_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index bb1e85586dfdd..5308070a47f38 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -937,8 +937,15 @@ nfsd_splice_actor(struct pipe_inode_info *pipe, struct pipe_buffer *buf,
- 	struct page *last_page;
- 
- 	last_page = page + (offset + sd->len - 1) / PAGE_SIZE;
--	for (page += offset / PAGE_SIZE; page <= last_page; page++)
-+	for (page += offset / PAGE_SIZE; page <= last_page; page++) {
-+		/*
-+		 * Skip page replacement when extending the contents
-+		 * of the current page.
-+		 */
-+		if (page == *(rqstp->rq_next_page - 1))
-+			continue;
- 		svc_rqst_replace_page(rqstp, page);
-+	}
- 	if (rqstp->rq_res.page_len == 0)	// first call
- 		rqstp->rq_res.page_base = offset % PAGE_SIZE;
- 	rqstp->rq_res.page_len += sd->len;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_common.c b/drivers/net/ethernet/intel/iavf/iavf_common.c
+index 34e46a23894f4..43148c07459f8 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_common.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_common.c
+@@ -661,7 +661,7 @@ struct iavf_rx_ptype_decoded iavf_ptype_lookup[BIT(8)] = {
+ 	/* Non Tunneled IPv6 */
+ 	IAVF_PTT(88, IP, IPV6, FRG, NONE, NONE, NOF, NONE, PAY3),
+ 	IAVF_PTT(89, IP, IPV6, NOF, NONE, NONE, NOF, NONE, PAY3),
+-	IAVF_PTT(90, IP, IPV6, NOF, NONE, NONE, NOF, UDP,  PAY3),
++	IAVF_PTT(90, IP, IPV6, NOF, NONE, NONE, NOF, UDP,  PAY4),
+ 	IAVF_PTT_UNUSED_ENTRY(91),
+ 	IAVF_PTT(92, IP, IPV6, NOF, NONE, NONE, NOF, TCP,  PAY4),
+ 	IAVF_PTT(93, IP, IPV6, NOF, NONE, NONE, NOF, SCTP, PAY4),
 -- 
 2.39.2
 
