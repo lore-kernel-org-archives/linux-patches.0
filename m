@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C9B8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6FBC433D2;
-	Tue, 28 Mar 2023 14:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4208476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ADFC433EF;
+	Tue, 28 Mar 2023 14:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015290;
-	bh=stprJ4Ok6iOxRao5KYE4oaQuciwWQTRlYZK94PRhwNI=;
+	s=korg; t=1680015293;
+	bh=pOE7kJfBxV6Ic2Yvp0mIVOtqq6SUp3Pv9colA2dmgb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9WxxO8lbzeRu4T7vPeJjoTl0jWdywHgz9gzx36yuV4ylRkIr/ojBwSVg0hY2fO/K
-	 1bz4i+AJYqVWpjdiFh+VXKnvuzc8sgFRuSVY+9TZt+v3oSz3+dqbn6BaedF+gBQ9n/
-	 vJVklK85Tbp73Bjv1Mqo5A/NtF/8Jlr0Bnxb1u/g=
+	b=Q6j97hV7OC3hk+PLY8l/811rTRQwPGmj3iuYKWXhtijLZ+4OvZrYHKoVrgx0WdGx0
+	 jTE7gr+g38hB1HKr7eHZnPlq8xhE8rGJ+eNqGG28VUUyo5VQpvn/Vwn3X2r5ruA4ln
+	 r+WqNZOIVsppCad8a0mqSDEy640/hdZLA4y/Kn9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Collingbourne <pcc@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Evgenii Stepanov <eugenis@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.2 205/240] Revert "kasan: drop skip_kasan_poison variable in free_pages_prepare"
-Date: Tue, 28 Mar 2023 16:42:48 +0200
-Message-Id: <20230328142628.223011878@linuxfoundation.org>
+	Marco Elver <elver@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.2 206/240] kcsan: avoid passing -g for test
+Date: Tue, 28 Mar 2023 16:42:49 +0200
+Message-Id: <20230328142628.264195698@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -40,66 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Collingbourne <pcc@google.com>
+From: Marco Elver <elver@google.com>
 
-commit f446883d12b8bfa486f7c98d403054d61d38c989 upstream.
+commit 5eb39cde1e2487ba5ec1802dc5e58a77e700d99e upstream.
 
-This reverts commit 487a32ec24be819e747af8c2ab0d5c515508086a.
+Nathan reported that when building with GNU as and a version of clang that
+defaults to DWARF5, the assembler will complain with:
 
-should_skip_kasan_poison() reads the PG_skip_kasan_poison flag from
-page->flags.  However, this line of code in free_pages_prepare():
+  Error: non-constant .uleb128 is not supported
 
-	page->flags &= ~PAGE_FLAGS_CHECK_AT_PREP;
+This is because `-g` defaults to the compiler debug info default. If the
+assembler does not support some of the directives used, the above errors
+occur. To fix, remove the explicit passing of `-g`.
 
-clears most of page->flags, including PG_skip_kasan_poison, before calling
-should_skip_kasan_poison(), which meant that it would never return true as
-a result of the page flag being set.  Therefore, fix the code to call
-should_skip_kasan_poison() before clearing the flags, as we were doing
-before the reverted patch.
+All the test wants is that stack traces print valid function names, and
+debug info is not required for that. (I currently cannot recall why I
+added the explicit `-g`.)
 
-This fixes a measurable performance regression introduced in the reverted
-commit, where munmap() takes longer than intended if HW tags KASAN is
-supported and enabled at runtime.  Without this patch, we see a
-single-digit percentage performance regression in a particular
-mmap()-heavy benchmark when enabling HW tags KASAN, and with the patch,
-there is no statistically significant performance impact when enabling HW
-tags KASAN.
-
-Link: https://lkml.kernel.org/r/20230310042914.3805818-2-pcc@google.com
-Fixes: 487a32ec24be ("kasan: drop skip_kasan_poison variable in free_pages_prepare")
-  Link: https://linux-review.googlesource.com/id/Ic4f13affeebd20548758438bb9ed9ca40e312b79
-Signed-off-by: Peter Collingbourne <pcc@google.com>
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com> [arm64]
-Cc: Evgenii Stepanov <eugenis@google.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.1]
+Link: https://lkml.kernel.org/r/20230316224705.709984-2-elver@google.com
+Fixes: 1fe84fd4a402 ("kcsan: Add test suite")
+Signed-off-by: Marco Elver <elver@google.com>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/kcsan/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -1391,6 +1391,7 @@ static __always_inline bool free_pages_p
- 			unsigned int order, bool check_free, fpi_t fpi_flags)
- {
- 	int bad = 0;
-+	bool skip_kasan_poison = should_skip_kasan_poison(page, fpi_flags);
- 	bool init = want_init_on_free();
+--- a/kernel/kcsan/Makefile
++++ b/kernel/kcsan/Makefile
+@@ -16,6 +16,6 @@ obj-y := core.o debugfs.o report.o
+ KCSAN_INSTRUMENT_BARRIERS_selftest.o := y
+ obj-$(CONFIG_KCSAN_SELFTEST) += selftest.o
  
- 	VM_BUG_ON_PAGE(PageTail(page), page);
-@@ -1463,7 +1464,7 @@ static __always_inline bool free_pages_p
- 	 * With hardware tag-based KASAN, memory tags must be set before the
- 	 * page becomes unavailable via debug_pagealloc or arch_free_page.
- 	 */
--	if (!should_skip_kasan_poison(page, fpi_flags)) {
-+	if (!skip_kasan_poison) {
- 		kasan_poison_pages(page, order, init);
- 
- 		/* Memory is already initialized if KASAN did it internally. */
+-CFLAGS_kcsan_test.o := $(CFLAGS_KCSAN) -g -fno-omit-frame-pointer
++CFLAGS_kcsan_test.o := $(CFLAGS_KCSAN) -fno-omit-frame-pointer
+ CFLAGS_kcsan_test.o += $(DISABLE_STRUCTLEAK_PLUGIN)
+ obj-$(CONFIG_KCSAN_KUNIT_TEST) += kcsan_test.o
 
 
