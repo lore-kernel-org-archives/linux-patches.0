@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F099C8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F3EC433D2;
-	Tue, 28 Mar 2023 15:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAF48BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF92C433EF;
+	Tue, 28 Mar 2023 15:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015765;
-	bh=d8hX0/KZrx5W90ZU4YeAvPTp1aGZ5DfYQNaBWyUr2nQ=;
+	s=korg; t=1680015768;
+	bh=HoMNsw6UlowiAYEmI88oP29EGcRvRfm5df9nnuX9fZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FDmgN+WB45S6Bg+3PGDSPG1HhQm8RhaCogZT/vnYT3nv0nN4gnnweoFpKSGgslzfI
-	 r1NRDbJ+ay1Xpdw7r7RhzQbK/0v+DsG115+lYWTg7r2vaFDPFnWDejoNNA7eLph7fm
-	 bPNkRH3x+Dnb6rBO6CdVlJTPt7Jx31EgeWyBZ77k=
+	b=IDeG4zURGSPGFNxmoss+c1GgN/ATuVnlPgklepymfdQfPidXCMOGo01zinrnKEANr
+	 Jy0YO8H0PDahqhg4gfRe4cqFN8SNUYy1BD5RLKtDxbtqmc0HCzX8u78dbcE0+jg6q0
+	 FQmDnDknOf+Ewyuv2bnlwVFvTSwyO1A3mx3Vumws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.1 167/224] mm/slab: Fix undefined init_cache_node_node() for NUMA and !SMP
-Date: Tue, 28 Mar 2023 16:42:43 +0200
-Message-Id: <20230328142624.344075954@linuxfoundation.org>
+	syzbot+93e495f6a4f748827c88@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 6.1 168/224] fscrypt: destroy keyring after security_sb_delete()
+Date: Tue, 28 Mar 2023 16:42:44 +0200
+Message-Id: <20230328142624.380552969@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -36,46 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 66a1c22b709178e7b823d44465d0c2e5ed7492fb upstream.
+commit ccb820dc7d2236b1af0d54ae038a27b5b6d5ae5a upstream.
 
-sh/migor_defconfig:
+fscrypt_destroy_keyring() must be called after all potentially-encrypted
+inodes were evicted; otherwise it cannot safely destroy the keyring.
+Since inodes that are in-use by the Landlock LSM don't get evicted until
+security_sb_delete(), this means that fscrypt_destroy_keyring() must be
+called *after* security_sb_delete().
 
-    mm/slab.c: In function ‘slab_memory_callback’:
-    mm/slab.c:1127:23: error: implicit declaration of function ‘init_cache_node_node’; did you mean ‘drain_cache_node_node’? [-Werror=implicit-function-declaration]
-     1127 |                 ret = init_cache_node_node(nid);
-	  |                       ^~~~~~~~~~~~~~~~~~~~
-	  |                       drain_cache_node_node
+This fixes a WARN_ON followed by a NULL dereference, only possible if
+Landlock was being used on encrypted files.
 
-The #ifdef condition protecting the definition of init_cache_node_node()
-no longer matches the conditions protecting the (multiple) users.
-
-Fix this by syncing the conditions.
-
-Fixes: 76af6a054da40553 ("mm/migrate: add CPU hotplug to demotion #ifdef")
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/b5bdea22-ed2f-3187-6efe-0c72330270a4@infradead.org
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Fixes: d7e7b9af104c ("fscrypt: stop using keyrings subsystem for fscrypt_master_key")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+93e495f6a4f748827c88@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/00000000000044651705f6ca1e30@google.com
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Link: https://lore.kernel.org/r/20230313221231.272498-2-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slab.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/super.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/mm/slab.c
-+++ b/mm/slab.c
-@@ -840,7 +840,7 @@ static int init_cache_node(struct kmem_c
- 	return 0;
- }
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -476,13 +476,22 @@ void generic_shutdown_super(struct super
  
--#if (defined(CONFIG_NUMA) && defined(CONFIG_MEMORY_HOTPLUG)) || defined(CONFIG_SMP)
-+#if defined(CONFIG_NUMA) || defined(CONFIG_SMP)
- /*
-  * Allocates and initializes node for a node on each slab cache, used for
-  * either memory or cpu hotplug.  If memory is being hot-added, the kmem_cache_node
+ 		cgroup_writeback_umount();
+ 
+-		/* evict all inodes with zero refcount */
++		/* Evict all inodes with zero refcount. */
+ 		evict_inodes(sb);
+-		/* only nonzero refcount inodes can have marks */
++
++		/*
++		 * Clean up and evict any inodes that still have references due
++		 * to fsnotify or the security policy.
++		 */
+ 		fsnotify_sb_delete(sb);
+-		fscrypt_destroy_keyring(sb);
+ 		security_sb_delete(sb);
+ 
++		/*
++		 * Now that all potentially-encrypted inodes have been evicted,
++		 * the fscrypt keyring can be destroyed.
++		 */
++		fscrypt_destroy_keyring(sb);
++
+ 		if (sb->s_dio_done_wq) {
+ 			destroy_workqueue(sb->s_dio_done_wq);
+ 			sb->s_dio_done_wq = NULL;
 
 
