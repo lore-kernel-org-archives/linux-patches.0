@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31598BEB
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D25C433EF;
-	Tue, 28 Mar 2023 14:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032878BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A802C433D2;
+	Tue, 28 Mar 2023 14:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015571;
-	bh=d1Gu4I77URN5QEaJHGjPJI+hx44zSke0jWWcjYI015Q=;
+	s=korg; t=1680015568;
+	bh=1oxUom6yZBsD5bhDWZ+GhCNF0prAnTjRbDDGMpAXb1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6amN3Dlpn1fOh3aT+qEpFSoJ7bDxQD3N7AIAVkVmWjKL3vSYUAfw27cRbaNl7rYa
-	 tvO5Rerf07KsHyOxJzjSDKrLkosFWHGCmExzYuxwPHqGWOPAXDa50jQ6pHoJgvJh8h
-	 TeouHd+ToXtakV6E3lWxYeaF1B8oo2NpLGNZ2KQY=
+	b=yr3e6XVa96VSnUF81F/f7tBvzCT0QY7QcxiFhuOxE5/lqaCz2r0xxvR6sF+3f7FuX
+	 BVzaEbjRVizNRcbH4ji0MKGB5YmjA1oq4tQYzkjHYOV/WptgWnfpSbQ0KMCELhizfX
+	 Th3UmKoDP6T5GVDiQm4CXGYvfUv9GnYm9NDWWP/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <groeck@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/224] entry: Fix noinstr warning in __enter_from_user_mode()
-Date: Tue, 28 Mar 2023 16:41:34 +0200
-Message-Id: <20230328142621.427726926@linuxfoundation.org>
+Subject: [PATCH 6.1 097/224] platform/chrome: cros_ec_chardev: fix kernel data leak from ioctl
+Date: Tue, 28 Mar 2023 16:41:33 +0200
+Message-Id: <20230328142621.268852416@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,77 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit f87d28673b71b35b248231a2086f9404afbb7f28 ]
+[ Upstream commit b20cf3f89c56b5f6a38b7f76a8128bf9f291bbd3 ]
 
-__enter_from_user_mode() is triggering noinstr warnings with
-CONFIG_DEBUG_PREEMPT due to its call of preempt_count_add() via
-ct_state().
+It is possible to peep kernel page's data by providing larger `insize`
+in struct cros_ec_command[1] when invoking EC host commands.
 
-The preemption disable isn't needed as interrupts are already disabled.
-And the context_tracking_enabled() check in ct_state() also isn't needed
-as that's already being done by the CT_WARN_ON().
+Fix it by using zeroed memory.
 
-Just use __ct_state() instead.
+[1]: https://elixir.bootlin.com/linux/v6.2/source/include/linux/platform_data/cros_ec_proto.h#L74
 
-Fixes the following warnings:
-
-  vmlinux.o: warning: objtool: enter_from_user_mode+0xba: call to preempt_count_add() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: syscall_enter_from_user_mode+0xf9: call to preempt_count_add() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: syscall_enter_from_user_mode_prepare+0xc7: call to preempt_count_add() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: irqentry_enter_from_user_mode+0xba: call to preempt_count_add() leaves .noinstr.text section
-
-Fixes: 171476775d32 ("context_tracking: Convert state to atomic_t")
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/d8955fa6d68dc955dda19baf13ae014ae27926f5.1677369694.git.jpoimboe@kernel.org
+Fixes: eda2e30c6684 ("mfd / platform: cros_ec: Miscellaneous character device to talk with the EC")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Link: https://lore.kernel.org/r/20230324010658.1082361-1-tzungbi@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/context_tracking.h       | 1 +
- include/linux/context_tracking_state.h | 2 ++
- kernel/entry/common.c                  | 2 +-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_chardev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/context_tracking.h b/include/linux/context_tracking.h
-index d4afa8508a806..3a7909ed54980 100644
---- a/include/linux/context_tracking.h
-+++ b/include/linux/context_tracking.h
-@@ -96,6 +96,7 @@ static inline void user_exit_irqoff(void) { }
- static inline int exception_enter(void) { return 0; }
- static inline void exception_exit(enum ctx_state prev_ctx) { }
- static inline int ct_state(void) { return -1; }
-+static inline int __ct_state(void) { return -1; }
- static __always_inline bool context_tracking_guest_enter(void) { return false; }
- static inline void context_tracking_guest_exit(void) { }
- #define CT_WARN_ON(cond) do { } while (0)
-diff --git a/include/linux/context_tracking_state.h b/include/linux/context_tracking_state.h
-index 4a4d56f771802..fdd537ea513ff 100644
---- a/include/linux/context_tracking_state.h
-+++ b/include/linux/context_tracking_state.h
-@@ -46,7 +46,9 @@ struct context_tracking {
+diff --git a/drivers/platform/chrome/cros_ec_chardev.c b/drivers/platform/chrome/cros_ec_chardev.c
+index 0de7c255254e0..d6de5a2941282 100644
+--- a/drivers/platform/chrome/cros_ec_chardev.c
++++ b/drivers/platform/chrome/cros_ec_chardev.c
+@@ -284,7 +284,7 @@ static long cros_ec_chardev_ioctl_xcmd(struct cros_ec_dev *ec, void __user *arg)
+ 	    u_cmd.insize > EC_MAX_MSG_BYTES)
+ 		return -EINVAL;
  
- #ifdef CONFIG_CONTEXT_TRACKING
- DECLARE_PER_CPU(struct context_tracking, context_tracking);
-+#endif
- 
-+#ifdef CONFIG_CONTEXT_TRACKING_USER
- static __always_inline int __ct_state(void)
- {
- 	return arch_atomic_read(this_cpu_ptr(&context_tracking.state)) & CT_STATE_MASK;
-diff --git a/kernel/entry/common.c b/kernel/entry/common.c
-index 846add8394c41..1314894d2efad 100644
---- a/kernel/entry/common.c
-+++ b/kernel/entry/common.c
-@@ -21,7 +21,7 @@ static __always_inline void __enter_from_user_mode(struct pt_regs *regs)
- 	arch_enter_from_user_mode(regs);
- 	lockdep_hardirqs_off(CALLER_ADDR0);
- 
--	CT_WARN_ON(ct_state() != CONTEXT_USER);
-+	CT_WARN_ON(__ct_state() != CONTEXT_USER);
- 	user_exit_irqoff();
- 
- 	instrumentation_begin();
+-	s_cmd = kmalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize),
++	s_cmd = kzalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize),
+ 			GFP_KERNEL);
+ 	if (!s_cmd)
+ 		return -ENOMEM;
 -- 
 2.39.2
 
