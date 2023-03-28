@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C666A8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C88C433D2;
-	Tue, 28 Mar 2023 14:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349AF8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD50FC433EF;
+	Tue, 28 Mar 2023 14:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014859;
-	bh=NSB+4cwHX1IFz6OfEB3sA125ME+yxqFMKkvvqSCbLHk=;
+	s=korg; t=1680014865;
+	bh=7lP/VRoNWVcy1jqaDY8c6O3gRN6aTI3Jrz5tmN3v1cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YsMEaG7ecgqTw/p3hhv0p3k3iQN2DXQpl+QRRelHRwYpB6jayKl9Sgf+SGgI1NW4T
-	 N175GFFwR+8d+HDyAdG6DyT93QYzY/meeyQqNs5BYNcjuRy+lXd6nU0e58N4d1dr6I
-	 kXmF1HsF73U8coWr0KGRbKPBh030PtdPxDQlTa5I=
+	b=lBdDR2fvulAvCzodj5Xf3E25Dw4xgTulbygzN++UbjPBLuAZ+KdABPBiCentOln0P
+	 4EncmL3C2eEEgCAvGhxkm69Vlzrf3F9ezMbAhHVdBtYmC9QIsfL2InYpY8SdlRt0+G
+	 L6zUDWzBwfMadsIpqRc5FjYW8X3B0FtHmjz8J8i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Francois Romieu <romieu@fr.zoreil.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Colin Foster <colin.foster@in-advantage.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 079/240] atm: idt77252: fix kmemleak when rmmod idt77252
-Date: Tue, 28 Mar 2023 16:40:42 +0200
-Message-Id: <20230328142623.073732955@linuxfoundation.org>
+Subject: [PATCH 6.2 081/240] net: mscc: ocelot: fix stats region batching
+Date: Tue, 28 Mar 2023 16:40:44 +0200
+Message-Id: <20230328142623.153789306@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,90 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 4fe3c88552a3fbe1944426a4506a18cdeb457b5a ]
+[ Upstream commit 6acc72a43eac78a309160d0a7512bbc59bcdd757 ]
 
-There are memory leaks reported by kmemleak:
+The blamed commit changed struct ocelot_stat_layout :: "u32 offset" to
+"u32 reg".
 
-  unreferenced object 0xffff888106500800 (size 128):
-    comm "modprobe", pid 1017, jiffies 4297787785 (age 67.152s)
-    hex dump (first 32 bytes):
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<00000000970ce626>] __kmem_cache_alloc_node+0x20c/0x380
-      [<00000000fb5f78d9>] kmalloc_trace+0x2f/0xb0
-      [<000000000e947e2a>] idt77252_init_one+0x2847/0x3c90 [idt77252]
-      [<000000006efb048e>] local_pci_probe+0xeb/0x1a0
-    ...
+However, "u32 reg" is not quite a register address, but an enum
+ocelot_reg, which in itself encodes an enum ocelot_target target in the
+upper bits, and an index into the ocelot->map[target][] array in the
+lower bits.
 
-  unreferenced object 0xffff888106500b00 (size 128):
-    comm "modprobe", pid 1017, jiffies 4297787785 (age 67.152s)
-    hex dump (first 32 bytes):
-      00 20 3d 01 80 88 ff ff 00 20 3d 01 80 88 ff ff  . =...... =.....
-      f0 23 3d 01 80 88 ff ff 00 20 3d 01 00 00 00 00  .#=...... =.....
-    backtrace:
-      [<00000000970ce626>] __kmem_cache_alloc_node+0x20c/0x380
-      [<00000000fb5f78d9>] kmalloc_trace+0x2f/0xb0
-      [<00000000f451c5be>] alloc_scq.constprop.0+0x4a/0x400 [idt77252]
-      [<00000000e6313849>] idt77252_init_one+0x28cf/0x3c90 [idt77252]
+So, whereas the previous code comparison between stats_layout[i].offset
+and last + 1 was correct (because those "offsets" at the time were
+32-bit relative addresses), the new code, comparing layout[i].reg to
+last + 4 is not correct, because the "reg" here is an enum/index, not an
+actual register address.
 
-The root cause is traced to the vc_maps which alloced in open_card_oam()
-are not freed in close_card_oam(). The vc_maps are used to record
-open connections, so when close a vc_map in close_card_oam(), the memory
-should be freed. Moreover, the ubr0 is not closed when close a idt77252
-device, leading to the memory leak of vc_map and scq_info.
+What we want to compare are indeed register addresses, but to do that,
+we need to actually go through the same motions as
+__ocelot_bulk_read_ix() itself.
 
-Fix them by adding kfree in close_card_oam() and implementing new
-close_card_ubr0() to close ubr0.
+With this bug, all statistics counters are deemed by
+ocelot_prepare_stats_regions() as constituting their own region.
+(Truncated) log on VSC9959 (Felix) below (prints added by me):
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Francois Romieu <romieu@fr.zoreil.com>
-Link: https://lore.kernel.org/r/20230320143318.2644630-1-lizetao1@huawei.com
+Before:
+
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x000]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x001]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x002]
+...
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x041]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x042]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x080]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x081]
+...
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x0ac]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x100]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x101]
+...
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x111]
+
+After:
+
+region of 67 contiguous counters starting with SYS:STAT:CNT[0x000]
+region of 45 contiguous counters starting with SYS:STAT:CNT[0x080]
+region of 18 contiguous counters starting with SYS:STAT:CNT[0x100]
+
+Since commit d87b1c08f38a ("net: mscc: ocelot: use bulk reads for
+stats") intended bulking as a performance improvement, and since now,
+with trivial-sized regions, performance is even worse than without
+bulking at all, this could easily qualify as a performance regression.
+
+Fixes: d4c367650704 ("net: mscc: ocelot: keep ocelot_stat_layout by reg address, not offset")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Acked-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/atm/idt77252.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/ethernet/mscc/ocelot_stats.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
-index eec0cc2144e02..e327a0229dc17 100644
---- a/drivers/atm/idt77252.c
-+++ b/drivers/atm/idt77252.c
-@@ -2909,6 +2909,7 @@ close_card_oam(struct idt77252_dev *card)
+diff --git a/drivers/net/ethernet/mscc/ocelot_stats.c b/drivers/net/ethernet/mscc/ocelot_stats.c
+index 1478c3b21af15..cb196775489e2 100644
+--- a/drivers/net/ethernet/mscc/ocelot_stats.c
++++ b/drivers/net/ethernet/mscc/ocelot_stats.c
+@@ -611,7 +611,8 @@ static int ocelot_prepare_stats_regions(struct ocelot *ocelot)
+ 		if (!ocelot_stats_layout[i].reg)
+ 			continue;
  
- 				recycle_rx_pool_skb(card, &vc->rcv.rx_pool);
- 			}
-+			kfree(vc);
- 		}
- 	}
- }
-@@ -2952,6 +2953,15 @@ open_card_ubr0(struct idt77252_dev *card)
- 	return 0;
- }
- 
-+static void
-+close_card_ubr0(struct idt77252_dev *card)
-+{
-+	struct vc_map *vc = card->vcs[0];
-+
-+	free_scq(card, vc->scq);
-+	kfree(vc);
-+}
-+
- static int
- idt77252_dev_open(struct idt77252_dev *card)
- {
-@@ -3001,6 +3011,7 @@ static void idt77252_dev_close(struct atm_dev *dev)
- 	struct idt77252_dev *card = dev->dev_data;
- 	u32 conf;
- 
-+	close_card_ubr0(card);
- 	close_card_oam(card);
- 
- 	conf = SAR_CFG_RXPTH |	/* enable receive path           */
+-		if (region && ocelot_stats_layout[i].reg == last + 4) {
++		if (region && ocelot->map[SYS][ocelot_stats_layout[i].reg & REG_MASK] ==
++		    ocelot->map[SYS][last & REG_MASK] + 4) {
+ 			region->count++;
+ 		} else {
+ 			region = devm_kzalloc(ocelot->dev, sizeof(*region),
 -- 
 2.39.2
 
