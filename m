@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0338BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E14CC433EF;
-	Tue, 28 Mar 2023 15:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29AF8498
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404BDC433EF;
+	Tue, 28 Mar 2023 15:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015784;
-	bh=6xKV1IegHjiXEHUs7HhfNhN/Bsm0ZPS2qRjBo0cH1H0=;
+	s=korg; t=1680015787;
+	bh=a6Fu+jjriIfI9gO65n8vG7vbRhw9y6LeVU1j7vW45C8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZfA2dYRaVq7xBBPwy6ni4mMWZZQ8T9XBOXY1wVtBeDk3b8J6Hn3vTDNiI2//Sogg
-	 VFi/9DhXiAXJXDCEIZNa/Njfc0l6eJb52IuN1aAe6DZ9LbBv6D7UGSSRDZDuKhP4/S
-	 28fXmTN07HaM8Qgu44DiLVzCpSNWEzHU5z+h6cSc=
+	b=yyJUCpvojuI12GlhA0/dm0+0PGNNhsydjzU2hdKqUj1TtTxSc7+XjIvTX4V16qmVF
+	 D6736CLBgXkpko/wJHHBmgpSx/UsibIwigDh/GsKy1AwXwKr6+JBXPELN+ePw1iTPu
+	 g9GraKVsrIyXnWsMhkplFKHbOg2lYLzWp5E9jTvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xu Yang <xu.yang_2@nxp.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 174/224] usb: typec: tcpm: fix create duplicate source-capabilities file
-Date: Tue, 28 Mar 2023 16:42:50 +0200
-Message-Id: <20230328142624.635737075@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 175/224] usb: typec: tcpm: fix warning when handle discover_identity message
+Date: Tue, 28 Mar 2023 16:42:51 +0200
+Message-Id: <20230328142624.675659326@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,61 +37,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Xu Yang <xu.yang_2@nxp.com>
 
-commit a826492fc9dfe32afd70fff93955ae8174bbf14b upstream.
+commit abfc4fa28f0160df61c7149567da4f6494dfb488 upstream.
 
-The kernel will dump in the below cases:
-sysfs: cannot create duplicate filename
-'/devices/virtual/usb_power_delivery/pd1/source-capabilities'
+Since both source and sink device can send discover_identity message in
+PD3, kernel may dump below warning:
 
-1. After soft reset has completed, an Explicit Contract negotiation occurs.
-The sink device will receive source capabilitys again. This will cause
-a duplicate source-capabilities file be created.
-2. Power swap twice on a device that is initailly sink role.
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 169 at drivers/usb/typec/tcpm/tcpm.c:1446 tcpm_queue_vdm+0xe0/0xf0
+Modules linked in:
+CPU: 0 PID: 169 Comm: 1-0050 Not tainted 6.1.1-00038-g6a3c36cf1da2-dirty #567
+Hardware name: NXP i.MX8MPlus EVK board (DT)
+pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : tcpm_queue_vdm+0xe0/0xf0
+lr : tcpm_queue_vdm+0x2c/0xf0
+sp : ffff80000c19bcd0
+x29: ffff80000c19bcd0 x28: 0000000000000001 x27: ffff0000d11c8ab8
+x26: ffff0000d11cc000 x25: 0000000000000000 x24: 00000000ff008081
+x23: 0000000000000001 x22: 00000000ff00a081 x21: ffff80000c19bdbc
+x20: 0000000000000000 x19: ffff0000d11c8080 x18: ffffffffffffffff
+x17: 0000000000000000 x16: 0000000000000000 x15: ffff0000d716f580
+x14: 0000000000000001 x13: ffff0000d716f507 x12: 0000000000000001
+x11: 0000000000000000 x10: 0000000000000020 x9 : 00000000000ee098
+x8 : 00000000ffffffff x7 : 000000000000001c x6 : ffff0000d716f580
+x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
+x2 : ffff80000c19bdbc x1 : 00000000ff00a081 x0 : 0000000000000004
+Call trace:
+tcpm_queue_vdm+0xe0/0xf0
+tcpm_pd_rx_handler+0x340/0x1ab0
+kthread_worker_fn+0xcc/0x18c
+kthread+0x10c/0x110
+ret_from_fork+0x10/0x20
+---[ end trace 0000000000000000 ]---
 
-This will unregister existing capabilities when above cases occurs.
+Below sequences may trigger this warning:
 
-Fixes: 8203d26905ee ("usb: typec: tcpm: Register USB Power Delivery Capabilities")
+tcpm_send_discover_work(work)
+  tcpm_send_vdm(port, USB_SID_PD, CMD_DISCOVER_IDENT, NULL, 0);
+   tcpm_queue_vdm(port, header, data, count);
+    port->vdm_state = VDM_STATE_READY;
+
+vdm_state_machine_work(work);
+			<-- received discover_identity from partner
+ vdm_run_state_machine(port);
+  port->vdm_state = VDM_STATE_SEND_MESSAGE;
+   mod_vdm_delayed_work(port, x);
+
+tcpm_pd_rx_handler(work);
+ tcpm_pd_data_request(port, msg);
+  tcpm_handle_vdm_request(port, msg->payload, cnt);
+   tcpm_queue_vdm(port, response[0], &response[1], rlen - 1);
+--> WARN_ON(port->vdm_state > VDM_STATE_DONE);
+
+For this case, the state machine could still send out discover
+identity message later if we skip current discover_identity message.
+So we should handle the received message firstly and override the pending
+discover_identity message without warning in this case. Then, a delayed
+send_discover work will send discover_identity message again.
+
+Fixes: e00943e91678 ("usb: typec: tcpm: PD3.0 sinks can send Discover Identity even in device mode")
 cc: <stable@vger.kernel.org>
 Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230215054951.238394-1-xu.yang_2@nxp.com
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20230216031515.4151117-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/typec/tcpm/tcpm.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -4547,6 +4547,9 @@ static void run_state_machine(struct tcp
- 	case SOFT_RESET:
- 		port->message_id = 0;
- 		port->rx_msgid = -1;
-+		/* remove existing capabilities */
-+		usb_power_delivery_unregister_capabilities(port->partner_source_caps);
-+		port->partner_source_caps = NULL;
- 		tcpm_pd_send_control(port, PD_CTRL_ACCEPT);
- 		tcpm_ams_finish(port);
- 		if (port->pwr_role == TYPEC_SOURCE) {
-@@ -4566,6 +4569,9 @@ static void run_state_machine(struct tcp
- 	case SOFT_RESET_SEND:
- 		port->message_id = 0;
- 		port->rx_msgid = -1;
-+		/* remove existing capabilities */
-+		usb_power_delivery_unregister_capabilities(port->partner_source_caps);
-+		port->partner_source_caps = NULL;
- 		if (tcpm_pd_send_control(port, PD_CTRL_SOFT_RESET))
- 			tcpm_set_state_cond(port, hard_reset_state(port), 0);
- 		else
-@@ -4695,6 +4701,9 @@ static void run_state_machine(struct tcp
- 		tcpm_set_state(port, SNK_STARTUP, 0);
- 		break;
- 	case PR_SWAP_SNK_SRC_SINK_OFF:
-+		/* will be source, remove existing capabilities */
-+		usb_power_delivery_unregister_capabilities(port->partner_source_caps);
-+		port->partner_source_caps = NULL;
- 		/*
- 		 * Prevent vbus discharge circuit from turning on during PR_SWAP
- 		 * as this is not a disconnect.
+@@ -1436,10 +1436,18 @@ static int tcpm_ams_start(struct tcpm_po
+ static void tcpm_queue_vdm(struct tcpm_port *port, const u32 header,
+ 			   const u32 *data, int cnt)
+ {
++	u32 vdo_hdr = port->vdo_data[0];
++
+ 	WARN_ON(!mutex_is_locked(&port->lock));
+ 
+-	/* Make sure we are not still processing a previous VDM packet */
+-	WARN_ON(port->vdm_state > VDM_STATE_DONE);
++	/* If is sending discover_identity, handle received message first */
++	if (PD_VDO_SVDM(vdo_hdr) && PD_VDO_CMD(vdo_hdr) == CMD_DISCOVER_IDENT) {
++		port->send_discover = true;
++		mod_send_discover_delayed_work(port, SEND_DISCOVER_RETRY_MS);
++	} else {
++		/* Make sure we are not still processing a previous VDM packet */
++		WARN_ON(port->vdm_state > VDM_STATE_DONE);
++	}
+ 
+ 	port->vdo_count = cnt + 1;
+ 	port->vdo_data[0] = header;
+@@ -1942,11 +1950,13 @@ static void vdm_run_state_machine(struct
+ 			switch (PD_VDO_CMD(vdo_hdr)) {
+ 			case CMD_DISCOVER_IDENT:
+ 				res = tcpm_ams_start(port, DISCOVER_IDENTITY);
+-				if (res == 0)
++				if (res == 0) {
+ 					port->send_discover = false;
+-				else if (res == -EAGAIN)
++				} else if (res == -EAGAIN) {
++					port->vdo_data[0] = 0;
+ 					mod_send_discover_delayed_work(port,
+ 								       SEND_DISCOVER_RETRY_MS);
++				}
+ 				break;
+ 			case CMD_DISCOVER_SVID:
+ 				res = tcpm_ams_start(port, DISCOVER_SVIDS);
+@@ -2029,6 +2039,7 @@ static void vdm_run_state_machine(struct
+ 			unsigned long timeout;
+ 
+ 			port->vdm_retries = 0;
++			port->vdo_data[0] = 0;
+ 			port->vdm_state = VDM_STATE_BUSY;
+ 			timeout = vdm_ready_timeout(vdo_hdr);
+ 			mod_vdm_delayed_work(port, timeout);
 
 
