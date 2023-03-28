@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457F78BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0860C433D2;
-	Tue, 28 Mar 2023 14:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3BD8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93227C433EF;
+	Tue, 28 Mar 2023 14:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015544;
-	bh=GbMGvHHssXCzj1Gv6+sWtWintr4GB62GtgwP7GEyPUw=;
+	s=korg; t=1680015547;
+	bh=vDTJRaet6dAszCJ5AtdeEmawHSAnhRinlRq9MNzWsRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VC1XoUs+JVzNyyTiu7Zo5KmvlaHVyideF8GlzaaTFuiUpWYAnkfSiClmIdubmbwB4
-	 SO63vlDhPF4LdgdlqsRBaNd9yrQi6bb+rJvjCjnuFJCy3EOBhRZHpkQDSocO6jFqZo
-	 eXZ1HzqwMVSXWBb1bktBUUMhw231Q6yFNvJ6iawk=
+	b=KS2leAMFrrO7UOVHFGifmYgO09jqEIzxTKupGgerdOvLB3vcHeAaInQb3Ru871uso
+	 yiSa12zu9SB65JIMaQQ+pl/JbbLgZokNdyAwnKku8Vh8IdIeBt7mY6ZVvE2GpMaMvW
+	 xOYt7b3D0E/T/3Mei1skqcy+70ckNCndPVQEevEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengping Jiang <jiangzp@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/224] Bluetooth: hci_sync: Resume adv with no RPA when active scan
-Date: Tue, 28 Mar 2023 16:41:16 +0200
-Message-Id: <20230328142620.642194936@linuxfoundation.org>
+Subject: [PATCH 6.1 089/224] net: dsa: mt7530: move setting ssc_delta to PHY_INTERFACE_MODE_TRGMII case
+Date: Tue, 28 Mar 2023 16:41:25 +0200
+Message-Id: <20230328142620.973196087@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,132 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengping Jiang <jiangzp@google.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit 3c44a431d62bf4a20d7b901f98266ae3f4676d48 ]
+[ Upstream commit 407b508bdd70b6848993843d96ed49ac4108fb52 ]
 
-The address resolution should be disabled during the active scan,
-so all the advertisements can reach the host. The advertising
-has to be paused before disabling the address resolution,
-because the advertising will prevent any changes to the resolving
-list and the address resolution status. Skipping this will cause
-the hci error and the discovery failure.
+Move setting the ssc_delta variable to under the PHY_INTERFACE_MODE_TRGMII
+case as it's only needed when trgmii is used.
 
-According to the bluetooth specification:
-"7.8.44 LE Set Address Resolution Enable command
-
-This command shall not be used when:
-- Advertising (other than periodic advertising) is enabled,
-- Scanning is enabled, or
-- an HCI_LE_Create_Connection, HCI_LE_Extended_Create_Connection, or
-  HCI_LE_Periodic_Advertising_Create_Sync command is outstanding."
-
-If the host is using RPA, the controller needs to generate RPA for
-the advertising, so the advertising must remain paused during the
-active scan.
-
-If the host is not using RPA, the advertising can be resumed after
-disabling the address resolution.
-
-Fixes: 9afc675edeeb ("Bluetooth: hci_sync: allow advertise when scan without RPA")
-Signed-off-by: Zhengping Jiang <jiangzp@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20230320190520.124513-3-arinc.unal@arinc9.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 64 +++++++++++++++++++++++++++-------------
- 1 file changed, 44 insertions(+), 20 deletions(-)
+ drivers/net/dsa/mt7530.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 3eec688a88a92..13ec3c86a0dcf 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2367,6 +2367,45 @@ static int hci_resume_advertising_sync(struct hci_dev *hdev)
- 	return err;
- }
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index b4a679cbc95cf..38bf760b5b5ee 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -441,6 +441,10 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+ 		break;
+ 	case PHY_INTERFACE_MODE_TRGMII:
+ 		trgint = 1;
++		if (xtal == HWTRAP_XTAL_25MHZ)
++			ssc_delta = 0x57;
++		else
++			ssc_delta = 0x87;
+ 		if (priv->id == ID_MT7621) {
+ 			/* PLL frequency: 150MHz: 1.2GBit */
+ 			if (xtal == HWTRAP_XTAL_40MHZ)
+@@ -460,11 +464,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+ 		return -EINVAL;
+ 	}
  
-+static int hci_pause_addr_resolution(struct hci_dev *hdev)
-+{
-+	int err;
-+
-+	if (!use_ll_privacy(hdev))
-+		return 0;
-+
-+	if (!hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION))
-+		return 0;
-+
-+	/* Cannot disable addr resolution if scanning is enabled or
-+	 * when initiating an LE connection.
-+	 */
-+	if (hci_dev_test_flag(hdev, HCI_LE_SCAN) ||
-+	    hci_lookup_le_connect(hdev)) {
-+		bt_dev_err(hdev, "Command not allowed when scan/LE connect");
-+		return -EPERM;
-+	}
-+
-+	/* Cannot disable addr resolution if advertising is enabled. */
-+	err = hci_pause_advertising_sync(hdev);
-+	if (err) {
-+		bt_dev_err(hdev, "Pause advertising failed: %d", err);
-+		return err;
-+	}
-+
-+	err = hci_le_set_addr_resolution_enable_sync(hdev, 0x00);
-+	if (err)
-+		bt_dev_err(hdev, "Unable to disable Address Resolution: %d",
-+			   err);
-+
-+	/* Return if address resolution is disabled and RPA is not used. */
-+	if (!err && scan_use_rpa(hdev))
-+		return err;
-+
-+	hci_resume_advertising_sync(hdev);
-+	return err;
-+}
-+
- struct sk_buff *hci_read_local_oob_data_sync(struct hci_dev *hdev,
- 					     bool extended, struct sock *sk)
- {
-@@ -2402,7 +2441,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 	u8 filter_policy;
- 	int err;
- 
--	/* Pause advertising if resolving list can be used as controllers are
-+	/* Pause advertising if resolving list can be used as controllers
- 	 * cannot accept resolving list modifications while advertising.
- 	 */
- 	if (use_ll_privacy(hdev)) {
-@@ -5376,27 +5415,12 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
- 
- 	cancel_interleave_scan(hdev);
- 
--	/* Pause advertising since active scanning disables address resolution
--	 * which advertising depend on in order to generate its RPAs.
--	 */
--	if (use_ll_privacy(hdev) && hci_dev_test_flag(hdev, HCI_PRIVACY)) {
--		err = hci_pause_advertising_sync(hdev);
--		if (err) {
--			bt_dev_err(hdev, "pause advertising failed: %d", err);
--			goto failed;
--		}
--	}
+-	if (xtal == HWTRAP_XTAL_25MHZ)
+-		ssc_delta = 0x57;
+-	else
+-		ssc_delta = 0x87;
 -
--	/* Disable address resolution while doing active scanning since the
--	 * accept list shall not be used and all reports shall reach the host
--	 * anyway.
-+	/* Pause address resolution for active scan and stop advertising if
-+	 * privacy is enabled.
- 	 */
--	err = hci_le_set_addr_resolution_enable_sync(hdev, 0x00);
--	if (err) {
--		bt_dev_err(hdev, "Unable to disable Address Resolution: %d",
--			   err);
-+	err = hci_pause_addr_resolution(hdev);
-+	if (err)
- 		goto failed;
--	}
+ 	mt7530_rmw(priv, MT7530_P6ECR, P6_INTF_MODE_MASK,
+ 		   P6_INTF_MODE(trgint));
  
- 	/* All active scans will be done with either a resolvable private
- 	 * address (when privacy feature has been enabled) or non-resolvable
 -- 
 2.39.2
 
