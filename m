@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8361E8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099B4C4339E;
-	Tue, 28 Mar 2023 14:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEB28BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B25C433EF;
+	Tue, 28 Mar 2023 14:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014933;
-	bh=QQGD4vS3oXg+Cpry5cuJxE5dN6sg2kiSatWSlv9MhPA=;
+	s=korg; t=1680014936;
+	bh=1oxUom6yZBsD5bhDWZ+GhCNF0prAnTjRbDDGMpAXb1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wIqNnYffVVCdV1lilpqSWWQ7zYCqEzMxiu+JxTkZr7xvYxiOE7uJyAPUu4kNFHpdO
-	 2m9w0Zbt0Et3lVUbwgJcMBaWl9tYLM+PjN7mH0AsGDHF9bZAVu0vofWWleiFvxaaBi
-	 n3+Wc32Bxq1auVXCfZVXUee2V2qiMLESqZj3mcHU=
+	b=xBag6MiP27zeCbIpburHVyah5PJdJAKd2xyZkNZlW6dfn6pnn4yxoW9hdaHU4EO0A
+	 jStwzHODS53Avx0id4hRBQpQOKW+SsmZX+4ECiHiXlINgozgYXQyVlzF+2C1JMlqcR
+	 PoA7EDugJEr7cUeuqguxV2xv0oGaraBNZWfyueBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <groeck@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 098/240] net: dsa: mt7530: move setting ssc_delta to PHY_INTERFACE_MODE_TRGMII case
-Date: Tue, 28 Mar 2023 16:41:01 +0200
-Message-Id: <20230328142623.852872836@linuxfoundation.org>
+Subject: [PATCH 6.2 107/240] platform/chrome: cros_ec_chardev: fix kernel data leak from ioctl
+Date: Tue, 28 Mar 2023 16:41:10 +0200
+Message-Id: <20230328142624.233826657@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,49 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 407b508bdd70b6848993843d96ed49ac4108fb52 ]
+[ Upstream commit b20cf3f89c56b5f6a38b7f76a8128bf9f291bbd3 ]
 
-Move setting the ssc_delta variable to under the PHY_INTERFACE_MODE_TRGMII
-case as it's only needed when trgmii is used.
+It is possible to peep kernel page's data by providing larger `insize`
+in struct cros_ec_command[1] when invoking EC host commands.
 
-Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Link: https://lore.kernel.org/r/20230320190520.124513-3-arinc.unal@arinc9.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix it by using zeroed memory.
+
+[1]: https://elixir.bootlin.com/linux/v6.2/source/include/linux/platform_data/cros_ec_proto.h#L74
+
+Fixes: eda2e30c6684 ("mfd / platform: cros_ec: Miscellaneous character device to talk with the EC")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Link: https://lore.kernel.org/r/20230324010658.1082361-1-tzungbi@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/platform/chrome/cros_ec_chardev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index b0d6ca18ec2f3..326f992536a7e 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -441,6 +441,10 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- 		break;
- 	case PHY_INTERFACE_MODE_TRGMII:
- 		trgint = 1;
-+		if (xtal == HWTRAP_XTAL_25MHZ)
-+			ssc_delta = 0x57;
-+		else
-+			ssc_delta = 0x87;
- 		if (priv->id == ID_MT7621) {
- 			/* PLL frequency: 150MHz: 1.2GBit */
- 			if (xtal == HWTRAP_XTAL_40MHZ)
-@@ -460,11 +464,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+diff --git a/drivers/platform/chrome/cros_ec_chardev.c b/drivers/platform/chrome/cros_ec_chardev.c
+index 0de7c255254e0..d6de5a2941282 100644
+--- a/drivers/platform/chrome/cros_ec_chardev.c
++++ b/drivers/platform/chrome/cros_ec_chardev.c
+@@ -284,7 +284,7 @@ static long cros_ec_chardev_ioctl_xcmd(struct cros_ec_dev *ec, void __user *arg)
+ 	    u_cmd.insize > EC_MAX_MSG_BYTES)
  		return -EINVAL;
- 	}
  
--	if (xtal == HWTRAP_XTAL_25MHZ)
--		ssc_delta = 0x57;
--	else
--		ssc_delta = 0x87;
--
- 	mt7530_rmw(priv, MT7530_P6ECR, P6_INTF_MODE_MASK,
- 		   P6_INTF_MODE(trgint));
- 
+-	s_cmd = kmalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize),
++	s_cmd = kzalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize),
+ 			GFP_KERNEL);
+ 	if (!s_cmd)
+ 		return -ENOMEM;
 -- 
 2.39.2
 
