@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECC88BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:07:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62099C433EF;
-	Tue, 28 Mar 2023 15:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50638BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:07:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2419EC433D2;
+	Tue, 28 Mar 2023 15:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016046;
-	bh=mXnPgjWTnVAe09K07QCNXeL0UOgCM9osOUCddhzIDVg=;
+	s=korg; t=1680016049;
+	bh=Q32/6+TsZJJ3KK0x8gxFd/V0r3DKGMRhewgyufDP76s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wj57buNGaCGoGo49kEayfeHsuev3Y3Uxl+H6eth1zf7AovJBJg560U1S+HoO9LJYh
-	 SowoVX4+UhZSQmT6EGx5+awo2uoBKVHvFFGc8355F4i5NeQdrgAy/mU5wyaXdORaLq
-	 lekNwlomy8qmiupKe12BwhnBCgiD+Naf/otpoMyM=
+	b=mxjKpime95txerNvthUHtTDQGqHpxy6UQIWnhZEly3uqi/oryZ/GhgX3mkXtL4wjX
+	 BQqj2dkb/ev/MHZdYA5JbfU1BHK5yQrjAU7r5fBGnm71jqbY3AduY+TQtcs/ueVY86
+	 3dhsH/1HmNU6mDWIQ9VuTQgTn6YII50pc6/juYZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Li <gavinl@nvidia.com>,
-	Gavi Teitz <gavi@nvidia.com>,
+	Huy Nguyen <huyn@mellanox.com>,
+	Lama Kayal <lkayal@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/146] net/mlx5e: Set uplink rep as NETNS_LOCAL
-Date: Tue, 28 Mar 2023 16:42:15 +0200
-Message-Id: <20230328142604.627049693@linuxfoundation.org>
+Subject: [PATCH 5.15 047/146] net/mlx5: Fix steering rules cleanup
+Date: Tue, 28 Mar 2023 16:42:16 +0200
+Message-Id: <20230328142604.658311025@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -36,46 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gavin Li <gavinl@nvidia.com>
+From: Lama Kayal <lkayal@nvidia.com>
 
-[ Upstream commit c83172b0639c8a005c0dd3b36252dc22ddd9f19c ]
+[ Upstream commit 922f56e9a795d6f3dd72d3428ebdd7ee040fa855 ]
 
-Previously, NETNS_LOCAL was not set for uplink representors, inconsistent
-with VF representors, and allowed the uplink representor to be moved
-between net namespaces and separated from the VF representors it shares
-the core device with. Such usage would break the isolation model of
-namespaces, as devices in different namespaces would have access to
-shared memory.
+vport's mc, uc and multicast rules are not deleted in teardown path when
+EEH happens. Since the vport's promisc settings(uc, mc and all) in
+firmware are reset after EEH, mlx5 driver will try to delete the above
+rules in the initialization path. This cause kernel crash because these
+software rules are no longer valid.
 
-To solve this issue, set NETNS_LOCAL for uplink representors if eswitch is
-in switchdev mode.
+Fix by nullifying these rules right after delete to avoid accessing any dangling
+pointers.
 
-Fixes: 7a9fb35e8c3a ("net/mlx5e: Do not reload ethernet ports when changing eswitch mode")
-Signed-off-by: Gavin Li <gavinl@nvidia.com>
-Reviewed-by: Gavi Teitz <gavi@nvidia.com>
+Call Trace:
+__list_del_entry_valid+0xcc/0x100 (unreliable)
+tree_put_node+0xf4/0x1b0 [mlx5_core]
+tree_remove_node+0x30/0x70 [mlx5_core]
+mlx5_del_flow_rules+0x14c/0x1f0 [mlx5_core]
+esw_apply_vport_rx_mode+0x10c/0x200 [mlx5_core]
+esw_update_vport_rx_mode+0xb4/0x180 [mlx5_core]
+esw_vport_change_handle_locked+0x1ec/0x230 [mlx5_core]
+esw_enable_vport+0x130/0x260 [mlx5_core]
+mlx5_eswitch_enable_sriov+0x2a0/0x2f0 [mlx5_core]
+mlx5_device_enable_sriov+0x74/0x440 [mlx5_core]
+mlx5_load_one+0x114c/0x1550 [mlx5_core]
+mlx5_pci_resume+0x68/0xf0 [mlx5_core]
+eeh_report_resume+0x1a4/0x230
+eeh_pe_dev_traverse+0x98/0x170
+eeh_handle_normal_event+0x3e4/0x640
+eeh_handle_event+0x4c/0x370
+eeh_event_handler+0x14c/0x210
+kthread+0x168/0x1b0
+ret_from_kernel_thread+0x5c/0x84
+
+Fixes: a35f71f27a61 ("net/mlx5: E-Switch, Implement promiscuous rx modes vf request handling")
+Signed-off-by: Huy Nguyen <huyn@mellanox.com>
+Signed-off-by: Lama Kayal <lkayal@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index f1dd966e2bdbf..ec1c667bd145a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -3527,8 +3527,12 @@ static netdev_features_t mlx5e_fix_features(struct net_device *netdev,
- 			netdev_warn(netdev, "Disabling rxhash, not supported when CQE compress is active\n");
- 	}
- 
--	if (mlx5e_is_uplink_rep(priv))
-+	if (mlx5e_is_uplink_rep(priv)) {
- 		features = mlx5e_fix_uplink_rep_features(netdev, features);
-+		features |= NETIF_F_NETNS_LOCAL;
-+	} else {
-+		features &= ~NETIF_F_NETNS_LOCAL;
-+	}
- 
- 	mutex_unlock(&priv->state_lock);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index 2b9278002354c..7315bf447e061 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -918,6 +918,7 @@ void mlx5_esw_vport_disable(struct mlx5_eswitch *esw, u16 vport_num)
+ 	 */
+ 	esw_vport_change_handle_locked(vport);
+ 	vport->enabled_events = 0;
++	esw_apply_vport_rx_mode(esw, vport, false, false);
+ 	esw_vport_cleanup(esw, vport);
+ 	esw->enabled_vports--;
  
 -- 
 2.39.2
