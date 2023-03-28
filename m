@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB7C8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F26C433D2;
-	Tue, 28 Mar 2023 14:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361AF8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AABC1C4339B;
+	Tue, 28 Mar 2023 14:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015192;
-	bh=UCOUbbinkANOkKeBF2oBYAEPjBNp5ACM0g1MCyUk5RY=;
+	s=korg; t=1680015195;
+	bh=yWPBRrFI/oYaXjmv3+o4pmMnCU+y0h1oA5LCrzYs3pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=At3aSNNzUZokVrF8ANXcEVw54RvK96fjIyBe2cDfO6UOGmlAd80Pl2uBcNJ6+G5Nt
-	 pY06TizUbf55h7BFvSAXn7+H+e4z0fCUE9831c24tkMcFSC0SX6hhlKOR+k9ApBk4z
-	 inkrUcnb8OnVirh7hQncbrZCZ41cL2fZIS2BuJf8=
+	b=sdErljGFpi28qoCZbRZCliFS7R+2uccfjiCkAzbZ83/9rRngF3dTlYTR3PLhYUNpx
+	 3kxdwof2Wp1C/u4mxH47e10bdV7p6qlEzRU01P73P6f2uLucdl4SJOZ5RVr8VNsGSI
+	 BugY/Fp+GOJRw2rsW9/n8oAb6egeD2AeJ1z9Aaak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.2 168/240] cifs: fix dentry lookups in directory handle cache
-Date: Tue, 28 Mar 2023 16:42:11 +0200
-Message-Id: <20230328142626.654309912@linuxfoundation.org>
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.2 169/240] x86/mm: Do not shuffle CPU entry areas without KASLR
+Date: Tue, 28 Mar 2023 16:42:12 +0200
+Message-Id: <20230328142626.702956348@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,97 +34,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Michal Koutný <mkoutny@suse.com>
 
-commit be4fde79812f02914e350bde0bc4cfeae8429378 upstream.
+commit a3f547addcaa10df5a226526bc9e2d9a94542344 upstream.
 
-Get rid of any prefix paths in @path before lookup_positive_unlocked()
-as it will call ->lookup() which already adds those prefix paths
-through build_path_from_dentry().
+The commit 97e3d26b5e5f ("x86/mm: Randomize per-cpu entry area") fixed
+an omission of KASLR on CPU entry areas. It doesn't take into account
+KASLR switches though, which may result in unintended non-determinism
+when a user wants to avoid it (e.g. debugging, benchmarking).
 
-This has caused a performance regression when mounting shares with a
-prefix path where readdir(2) would end up retrying several times to
-open bad directory names that contained duplicate prefix paths.
+Generate only a single combination of CPU entry areas offsets -- the
+linear array that existed prior randomization when KASLR is turned off.
 
-Fix this by skipping any prefix paths in @path before calling
-lookup_positive_unlocked().
+Since we have 3f148f331814 ("x86/kasan: Map shadow for percpu pages on
+demand") and followups, we can use the more relaxed guard
+kasrl_enabled() (in contrast to kaslr_memory_enabled()).
 
-Fixes: e4029e072673 ("cifs: find and use the dentry for cached non-root directories also")
-Cc: stable@vger.kernel.org # 6.1+
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 97e3d26b5e5f ("x86/mm: Randomize per-cpu entry area")
+Signed-off-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20230306193144.24605-1-mkoutny%40suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cached_dir.c |   36 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 34 insertions(+), 2 deletions(-)
+ arch/x86/mm/cpu_entry_area.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/cifs/cached_dir.c
-+++ b/fs/cifs/cached_dir.c
-@@ -99,6 +99,23 @@ path_to_dentry(struct cifs_sb_info *cifs
- 	return dentry;
- }
+diff --git a/arch/x86/mm/cpu_entry_area.c b/arch/x86/mm/cpu_entry_area.c
+index 7316a8224259..e91500a80963 100644
+--- a/arch/x86/mm/cpu_entry_area.c
++++ b/arch/x86/mm/cpu_entry_area.c
+@@ -10,6 +10,7 @@
+ #include <asm/fixmap.h>
+ #include <asm/desc.h>
+ #include <asm/kasan.h>
++#include <asm/setup.h>
  
-+static const char *path_no_prefix(struct cifs_sb_info *cifs_sb,
-+				  const char *path)
-+{
-+	size_t len = 0;
-+
-+	if (!*path)
-+		return path;
-+
-+	if ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_USE_PREFIX_PATH) &&
-+	    cifs_sb->prepath) {
-+		len = strlen(cifs_sb->prepath) + 1;
-+		if (unlikely(len > strlen(path)))
-+			return ERR_PTR(-EINVAL);
-+	}
-+	return path + len;
-+}
-+
- /*
-  * Open the and cache a directory handle.
-  * If error then *cfid is not initialized.
-@@ -125,6 +142,7 @@ int open_cached_dir(unsigned int xid, st
- 	struct dentry *dentry = NULL;
- 	struct cached_fid *cfid;
- 	struct cached_fids *cfids;
-+	const char *npath;
+ static DEFINE_PER_CPU_PAGE_ALIGNED(struct entry_stack_page, entry_stack_storage);
  
- 	if (tcon == NULL || tcon->cfids == NULL || tcon->nohandlecache ||
- 	    is_smb1_server(tcon->ses->server))
-@@ -161,6 +179,20 @@ int open_cached_dir(unsigned int xid, st
- 	}
+@@ -29,6 +30,12 @@ static __init void init_cea_offsets(void)
+ 	unsigned int max_cea;
+ 	unsigned int i, j;
  
- 	/*
-+	 * Skip any prefix paths in @path as lookup_positive_unlocked() ends up
-+	 * calling ->lookup() which already adds those through
-+	 * build_path_from_dentry().  Also, do it earlier as we might reconnect
-+	 * below when trying to send compounded request and then potentially
-+	 * having a different prefix path (e.g. after DFS failover).
-+	 */
-+	npath = path_no_prefix(cifs_sb, path);
-+	if (IS_ERR(npath)) {
-+		rc = PTR_ERR(npath);
-+		kfree(utf16_path);
-+		return rc;
++	if (!kaslr_enabled()) {
++		for_each_possible_cpu(i)
++			per_cpu(_cea_offset, i) = i;
++		return;
 +	}
 +
-+	/*
- 	 * We do not hold the lock for the open because in case
- 	 * SMB2_open needs to reconnect.
- 	 * This is safe because no other thread will be able to get a ref
-@@ -252,10 +284,10 @@ int open_cached_dir(unsigned int xid, st
- 				(char *)&cfid->file_all_info))
- 		cfid->file_all_info_is_valid = true;
+ 	max_cea = (CPU_ENTRY_AREA_MAP_SIZE - PAGE_SIZE) / CPU_ENTRY_AREA_SIZE;
  
--	if (!path[0])
-+	if (!npath[0])
- 		dentry = dget(cifs_sb->root);
- 	else {
--		dentry = path_to_dentry(cifs_sb, path);
-+		dentry = path_to_dentry(cifs_sb, npath);
- 		if (IS_ERR(dentry)) {
- 			rc = -ENOENT;
- 			goto oshr_free;
+ 	/* O(sodding terrible) */
+-- 
+2.40.0
+
 
 
