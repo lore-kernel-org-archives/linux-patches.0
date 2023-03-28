@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6E28BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A570CC433A0;
-	Tue, 28 Mar 2023 14:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542318BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB21FC433EF;
+	Tue, 28 Mar 2023 14:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014914;
-	bh=ISMggMAqZfVE8egSemnM++tBJ/ydcvQ+e/J19MumQ5U=;
+	s=korg; t=1680014917;
+	bh=EydeCLB8FjyCicOm0pnbk15Kd/Sb7EVWzecQdGIiJ6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0Z6Dgd5aqPGaIo6er3UVjtjPTOuVgOnYJLzUv/wB6o7nC5BVI4sJFUs0RHcyvLu/
-	 cUStIYgrkh54gWpu6b/Ua1S+a656JfjlqVNocS7v6gxtgNFYzov7MC4hTgpghKBZLe
-	 luvci45g/x9mG4cCM0jsmAfu6xeknVlKsKgiVWms=
+	b=AbNmh//zivBJkVP5wwtncoaJGqQJoKsHfjKcngRqbU7/hnMZ7pD+jWJYbSV3PLsVD
+	 GzZ7TZ92xUwdokdbzXCyMQlst3GfjJIqhdd09SSsdLjH22rnhTkAGNLO3X1T9cpZeu
+	 jzYA1umGHls2+CmucMmnaeDv8PxHwl9AM1+w20Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Swiatkowski <michal.swiatkowski@intel.com>,
-	Kalyan Kodamagula <kalyan.kodamagula@intel.com>,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
+	Marius Cornea <mcornea@redhat.com>,
+	Stefan Assmann <sassmann@kpanic.de>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 068/240] ice: check if VF exists before mode check
-Date: Tue, 28 Mar 2023 16:40:31 +0200
-Message-Id: <20230328142622.570231611@linuxfoundation.org>
+Subject: [PATCH 6.2 069/240] iavf: fix hang on reboot with ice
+Date: Tue, 28 Mar 2023 16:40:32 +0200
+Message-Id: <20230328142622.621287034@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -37,47 +38,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Swiatkowski <michal.swiatkowski@intel.com>
+From: Stefan Assmann <sassmann@kpanic.de>
 
-[ Upstream commit 83b49e7f63da88a1544cba2b2e40bfabb24bd203 ]
+[ Upstream commit 4e264be98b88a6d6f476c11087fe865696e8bef5 ]
 
-Setting trust on VF should return EINVAL when there is no VF. Move
-checking for switchdev mode after checking if VF exists.
+When a system with E810 with existing VFs gets rebooted the following
+hang may be observed.
 
-Fixes: c54d209c78b8 ("ice: Wait for VF to be reset/ready before configuration")
-Signed-off-by: Michal Swiatkowski <michal.swiatkowski@intel.com>
-Signed-off-by: Kalyan Kodamagula <kalyan.kodamagula@intel.com>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+ Pid 1 is hung in iavf_remove(), part of a network driver:
+ PID: 1        TASK: ffff965400e5a340  CPU: 24   COMMAND: "systemd-shutdow"
+  #0 [ffffaad04005fa50] __schedule at ffffffff8b3239cb
+  #1 [ffffaad04005fae8] schedule at ffffffff8b323e2d
+  #2 [ffffaad04005fb00] schedule_hrtimeout_range_clock at ffffffff8b32cebc
+  #3 [ffffaad04005fb80] usleep_range_state at ffffffff8b32c930
+  #4 [ffffaad04005fbb0] iavf_remove at ffffffffc12b9b4c [iavf]
+  #5 [ffffaad04005fbf0] pci_device_remove at ffffffff8add7513
+  #6 [ffffaad04005fc10] device_release_driver_internal at ffffffff8af08baa
+  #7 [ffffaad04005fc40] pci_stop_bus_device at ffffffff8adcc5fc
+  #8 [ffffaad04005fc60] pci_stop_and_remove_bus_device at ffffffff8adcc81e
+  #9 [ffffaad04005fc70] pci_iov_remove_virtfn at ffffffff8adf9429
+ #10 [ffffaad04005fca8] sriov_disable at ffffffff8adf98e4
+ #11 [ffffaad04005fcc8] ice_free_vfs at ffffffffc04bb2c8 [ice]
+ #12 [ffffaad04005fd10] ice_remove at ffffffffc04778fe [ice]
+ #13 [ffffaad04005fd38] ice_shutdown at ffffffffc0477946 [ice]
+ #14 [ffffaad04005fd50] pci_device_shutdown at ffffffff8add58f1
+ #15 [ffffaad04005fd70] device_shutdown at ffffffff8af05386
+ #16 [ffffaad04005fd98] kernel_restart at ffffffff8a92a870
+ #17 [ffffaad04005fda8] __do_sys_reboot at ffffffff8a92abd6
+ #18 [ffffaad04005fee0] do_syscall_64 at ffffffff8b317159
+ #19 [ffffaad04005ff08] __context_tracking_enter at ffffffff8b31b6fc
+ #20 [ffffaad04005ff18] syscall_exit_to_user_mode at ffffffff8b31b50d
+ #21 [ffffaad04005ff28] do_syscall_64 at ffffffff8b317169
+ #22 [ffffaad04005ff50] entry_SYSCALL_64_after_hwframe at ffffffff8b40009b
+     RIP: 00007f1baa5c13d7  RSP: 00007fffbcc55a98  RFLAGS: 00000202
+     RAX: ffffffffffffffda  RBX: 0000000000000000  RCX: 00007f1baa5c13d7
+     RDX: 0000000001234567  RSI: 0000000028121969  RDI: 00000000fee1dead
+     RBP: 00007fffbcc55ca0   R8: 0000000000000000   R9: 00007fffbcc54e90
+     R10: 00007fffbcc55050  R11: 0000000000000202  R12: 0000000000000005
+     R13: 0000000000000000  R14: 00007fffbcc55af0  R15: 0000000000000000
+     ORIG_RAX: 00000000000000a9  CS: 0033  SS: 002b
+
+During reboot all drivers PM shutdown callbacks are invoked.
+In iavf_shutdown() the adapter state is changed to __IAVF_REMOVE.
+In ice_shutdown() the call chain above is executed, which at some point
+calls iavf_remove(). However iavf_remove() expects the VF to be in one
+of the states __IAVF_RUNNING, __IAVF_DOWN or __IAVF_INIT_FAILED. If
+that's not the case it sleeps forever.
+So if iavf_shutdown() gets invoked before iavf_remove() the system will
+hang indefinitely because the adapter is already in state __IAVF_REMOVE.
+
+Fix this by returning from iavf_remove() if the state is __IAVF_REMOVE,
+as we already went through iavf_shutdown().
+
+Fixes: 974578017fc1 ("iavf: Add waiting so the port is initialized in remove")
+Fixes: a8417330f8a5 ("iavf: Fix race condition between iavf_shutdown and iavf_remove")
+Reported-by: Marius Cornea <mcornea@redhat.com>
+Signed-off-by: Stefan Assmann <sassmann@kpanic.de>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_sriov.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
-index 3ba1408c56a9a..b3849bc3d4fc6 100644
---- a/drivers/net/ethernet/intel/ice/ice_sriov.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
-@@ -1384,15 +1384,15 @@ int ice_set_vf_trust(struct net_device *netdev, int vf_id, bool trusted)
- 	struct ice_vf *vf;
- 	int ret;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 01e73415dec5c..8bbdf66c51f6a 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -5077,6 +5077,11 @@ static void iavf_remove(struct pci_dev *pdev)
+ 			mutex_unlock(&adapter->crit_lock);
+ 			break;
+ 		}
++		/* Simply return if we already went through iavf_shutdown */
++		if (adapter->state == __IAVF_REMOVE) {
++			mutex_unlock(&adapter->crit_lock);
++			return;
++		}
  
-+	vf = ice_get_vf_by_id(pf, vf_id);
-+	if (!vf)
-+		return -EINVAL;
-+
- 	if (ice_is_eswitch_mode_switchdev(pf)) {
- 		dev_info(ice_pf_to_dev(pf), "Trusted VF is forbidden in switchdev mode\n");
- 		return -EOPNOTSUPP;
- 	}
- 
--	vf = ice_get_vf_by_id(pf, vf_id);
--	if (!vf)
--		return -EINVAL;
--
- 	ret = ice_check_vf_ready_for_cfg(vf);
- 	if (ret)
- 		goto out_put_vf;
+ 		mutex_unlock(&adapter->crit_lock);
+ 		usleep_range(500, 1000);
 -- 
 2.39.2
 
