@@ -1,40 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1658BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF8BC433D2;
-	Tue, 28 Mar 2023 15:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04078BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:05:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31651C433EF;
+	Tue, 28 Mar 2023 15:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015950;
-	bh=TDK7C4tBc1XL02w3YdJ1crK36dwWk55XRLALtQ6RWm8=;
+	s=korg; t=1680015955;
+	bh=sF4JtdhAkP2X8bP9AJZquH0HwKQiFrcNHO9KddCJFLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUdElOrIchfJ3wMre3O9CNbjKbGNTltks25tJ64rY/B3HScebnRA9UP2rqQK27ORd
-	 xd8HfY/MqzOsfek9LdWnFKK/ZPGq251VsdvbK0/BCdQJDGXwJl9aeWGi5W/MgOELnX
-	 T2YcQ7sCva573HBnUKkcvO1qFljT00TMJVEZIEUk=
+	b=T28q/SNicgcFchqjGYjgK7E1W1QIHfMLsOFmDzQHL1gNswG9bbOm01kfLGZq1zJGO
+	 2+w20EDJs0Co94TuM94OCuF1MXewQsEDChAsRAAAEPhgqdZCH2Sw2T6cbeQLb4pvJX
+	 FZrZCxQob8uc7lJTTgNRyUrYhCxWhuOlsv2ZMWUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cai Huoqing <caihuoqing@baidu.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Doug Ledford <dledford@redhat.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Meena Shanmugam <meenashanmugam@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/146] trace/hwlat: make use of the helper function kthread_run_on_cpu()
-Date: Tue, 28 Mar 2023 16:41:40 +0200
-Message-Id: <20230328142603.170881386@linuxfoundation.org>
+Subject: [PATCH 5.15 013/146] net: tls: fix possible race condition between do_tls_getsockopt_conf() and do_tls_setsockopt_conf()
+Date: Tue, 28 Mar 2023 16:41:42 +0200
+Message-Id: <20230328142603.270573226@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -48,59 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cai Huoqing <caihuoqing@baidu.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit ff78f6679d2e223e073fcbdc8f70b6bc0abadf99 ]
+commit 49c47cc21b5b7a3d8deb18fc57b0aa2ab1286962 upstream.
 
-Replace kthread_create_on_cpu/wake_up_process() with kthread_run_on_cpu()
-to simplify the code.
+ctx->crypto_send.info is not protected by lock_sock in
+do_tls_getsockopt_conf(). A race condition between do_tls_getsockopt_conf()
+and error paths of do_tls_setsockopt_conf() may lead to a use-after-free
+or null-deref.
 
-Link: https://lkml.kernel.org/r/20211022025711.3673-7-caihuoqing@baidu.com
-Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
-Cc: Bernard Metzler <bmt@zurich.ibm.com>
-Cc: Daniel Bristot de Oliveira <bristot@kernel.org>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Doug Ledford <dledford@redhat.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Joel Fernandes (Google) <joel@joelfernandes.org>
-Cc: Josh Triplett <josh@joshtriplett.org>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: "Paul E . McKenney" <paulmck@kernel.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: 08697bca9bbb ("trace/hwlat: Do not start per-cpu thread if it is already running")
+More discussion:  https://lore.kernel.org/all/Y/ht6gQL+u6fj3dG@hog/
+
+Fixes: 3c4d7559159b ("tls: kernel TLS support")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Link: https://lore.kernel.org/r/20230228023344.9623-1-hbh25y@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Meena Shanmugam <meenashanmugam@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_hwlat.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/tls/tls_main.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace_hwlat.c b/kernel/trace/trace_hwlat.c
-index 455f5edf008b8..72eeab938f1de 100644
---- a/kernel/trace/trace_hwlat.c
-+++ b/kernel/trace/trace_hwlat.c
-@@ -491,18 +491,14 @@ static void stop_per_cpu_kthreads(void)
- static int start_cpu_kthread(unsigned int cpu)
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index a947cfb100bda..abd0c4557cb93 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -386,13 +386,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aes_gcm_128->iv,
+ 		       cctx->iv + TLS_CIPHER_AES_GCM_128_SALT_SIZE,
+ 		       TLS_CIPHER_AES_GCM_128_IV_SIZE);
+ 		memcpy(crypto_info_aes_gcm_128->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_AES_GCM_128_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aes_gcm_128,
+ 				 sizeof(*crypto_info_aes_gcm_128)))
+@@ -410,13 +408,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aes_gcm_256->iv,
+ 		       cctx->iv + TLS_CIPHER_AES_GCM_256_SALT_SIZE,
+ 		       TLS_CIPHER_AES_GCM_256_IV_SIZE);
+ 		memcpy(crypto_info_aes_gcm_256->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_AES_GCM_256_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aes_gcm_256,
+ 				 sizeof(*crypto_info_aes_gcm_256)))
+@@ -436,6 +432,8 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
  {
- 	struct task_struct *kthread;
--	char comm[24];
+ 	int rc = 0;
  
--	snprintf(comm, 24, "hwlatd/%d", cpu);
--
--	kthread = kthread_create_on_cpu(kthread_fn, NULL, cpu, comm);
-+	kthread = kthread_run_on_cpu(kthread_fn, NULL, cpu, "hwlatd/%u");
- 	if (IS_ERR(kthread)) {
- 		pr_err(BANNER "could not start sampling thread\n");
- 		return -ENOMEM;
++	lock_sock(sk);
++
+ 	switch (optname) {
+ 	case TLS_TX:
+ 	case TLS_RX:
+@@ -446,6 +444,9 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
+ 		rc = -ENOPROTOOPT;
+ 		break;
  	}
- 
- 	per_cpu(hwlat_per_cpu_data, cpu).kthread = kthread;
--	wake_up_process(kthread);
- 
- 	return 0;
++
++	release_sock(sk);
++
+ 	return rc;
  }
+ 
 -- 
 2.39.2
 
