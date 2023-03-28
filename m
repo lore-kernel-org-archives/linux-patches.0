@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F758BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:00:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E965DC433D2;
-	Tue, 28 Mar 2023 15:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B50D8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:00:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3EAC4339E;
+	Tue, 28 Mar 2023 15:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015618;
-	bh=QIox3PDiauGmOK4hmJGqYYUaN1ZL8e8dfdE8L+u3644=;
+	s=korg; t=1680015621;
+	bh=MB7WDN5adSUha9q65zFW4jVt0mM2k89/hQamKyAk090=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gu4R2/njOyE/FglYYOxoNwCBqpop3jUatdYRlRhxKbHscVvis80xHgKQ86E3bD6NO
-	 D8skWP8fU5oYaZA0r97sssiP9TorGR8ddCWDFHP24Vlu0u70PLuvA+4Tbv9IMIxxGE
-	 v4ogo6+8kHNQXypWKZlVD3o80mcZKwyxhdcJYk0E=
+	b=InE72qcH1OuWEY+SlhSw9JlCkTeBRfZlOnaA6nNDGzCDQwZHh2tMD+RUoMi57oLfE
+	 Vkzx9D+G1QloMJEp1PqNvo0fPPTkUPwyk1SI62LKxk4P3t3aac2Tx/rSlT2Ja/C6XN
+	 AAbcbqipDWtvRuhpyosw9oHlgTn+NtKGCy+6BIqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanju Mehta <Sanju.Mehta@amd.com>,
-	Anson Tsao <anson.tsao@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 112/224] thunderbolt: Disable interrupt auto clear for rings
-Date: Tue, 28 Mar 2023 16:41:48 +0200
-Message-Id: <20230328142622.014309369@linuxfoundation.org>
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 083/224] Bluetooth: ISO: fix timestamped HCI ISO data packet parsing
+Date: Tue, 28 Mar 2023 16:41:19 +0200
+Message-Id: <20230328142620.737702704@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -36,125 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-commit 468c49f44759720a312e52d44a71c3949ed63d7c upstream.
+[ Upstream commit 2f10e40a948e8a2abe7f983df3959a333ca8955f ]
 
-When interrupt auto clear is programmed, any read to the interrupt
-status register will clear all interrupts.  If two interrupts have
-come in before one can be serviced then this will cause lost interrupts.
+Use correct HCI ISO data packet header struct when the packet has
+timestamp. The timestamp, when present, goes before the other fields
+(Core v5.3 4E 5.4.5), so the structs are not compatible.
 
-On AMD USB4 routers this has manifested in odd problems particularly
-with long strings of control tranfers such as reading the DROM via bit
-banging.
-
-Instead of clearing interrupts automatically, clear the bit corresponding
-to the given ring's interrupt in the ISR.
-
-Fixes: 7a1808f82a37 ("thunderbolt: Handle ring interrupt by reading interrupt status register")
-Cc: Sanju Mehta <Sanju.Mehta@amd.com>
-Cc: stable@vger.kernel.org
-Tested-by: Anson Tsao <anson.tsao@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/nhi.c      |   40 +++++++++++++++++++++++++---------------
- drivers/thunderbolt/nhi_regs.h |    6 ++++--
- 2 files changed, 29 insertions(+), 17 deletions(-)
+ net/bluetooth/iso.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -71,24 +71,31 @@ static void ring_interrupt_active(struct
- 		u32 step, shift, ivr, misc;
- 		void __iomem *ivr_base;
- 		int index;
-+		int bit;
- 
- 		if (ring->is_tx)
- 			index = ring->hop;
- 		else
- 			index = ring->hop + ring->nhi->hop_count;
- 
--		if (ring->nhi->quirks & QUIRK_AUTO_CLEAR_INT) {
--			/*
--			 * Ask the hardware to clear interrupt status
--			 * bits automatically since we already know
--			 * which interrupt was triggered.
--			 */
--			misc = ioread32(ring->nhi->iobase + REG_DMA_MISC);
--			if (!(misc & REG_DMA_MISC_INT_AUTO_CLEAR)) {
--				misc |= REG_DMA_MISC_INT_AUTO_CLEAR;
--				iowrite32(misc, ring->nhi->iobase + REG_DMA_MISC);
--			}
--		}
-+		/*
-+		 * Intel routers support a bit that isn't part of
-+		 * the USB4 spec to ask the hardware to clear
-+		 * interrupt status bits automatically since
-+		 * we already know which interrupt was triggered.
-+		 *
-+		 * Other routers explicitly disable auto-clear
-+		 * to prevent conditions that may occur where two
-+		 * MSIX interrupts are simultaneously active and
-+		 * reading the register clears both of them.
-+		 */
-+		misc = ioread32(ring->nhi->iobase + REG_DMA_MISC);
-+		if (ring->nhi->quirks & QUIRK_AUTO_CLEAR_INT)
-+			bit = REG_DMA_MISC_INT_AUTO_CLEAR;
-+		else
-+			bit = REG_DMA_MISC_DISABLE_AUTO_CLEAR;
-+		if (!(misc & bit))
-+			iowrite32(misc | bit, ring->nhi->iobase + REG_DMA_MISC);
- 
- 		ivr_base = ring->nhi->iobase + REG_INT_VEC_ALLOC_BASE;
- 		step = index / REG_INT_VEC_ALLOC_REGS * REG_INT_VEC_ALLOC_BITS;
-@@ -393,14 +400,17 @@ EXPORT_SYMBOL_GPL(tb_ring_poll_complete)
- 
- static void ring_clear_msix(const struct tb_ring *ring)
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 2dabef488eaae..cb959e8eac185 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1621,7 +1621,6 @@ static void iso_disconn_cfm(struct hci_conn *hcon, __u8 reason)
+ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
  {
-+	int bit;
+ 	struct iso_conn *conn = hcon->iso_data;
+-	struct hci_iso_data_hdr *hdr;
+ 	__u16 pb, ts, len;
+ 
+ 	if (!conn)
+@@ -1643,6 +1642,8 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 		}
+ 
+ 		if (ts) {
++			struct hci_iso_ts_data_hdr *hdr;
 +
- 	if (ring->nhi->quirks & QUIRK_AUTO_CLEAR_INT)
- 		return;
+ 			/* TODO: add timestamp to the packet? */
+ 			hdr = skb_pull_data(skb, HCI_ISO_TS_DATA_HDR_SIZE);
+ 			if (!hdr) {
+@@ -1650,15 +1651,19 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 				goto drop;
+ 			}
  
-+	bit = ring_interrupt_index(ring) & 31;
- 	if (ring->is_tx)
--		ioread32(ring->nhi->iobase + REG_RING_NOTIFY_BASE);
-+		iowrite32(BIT(bit), ring->nhi->iobase + REG_RING_INT_CLEAR);
- 	else
--		ioread32(ring->nhi->iobase + REG_RING_NOTIFY_BASE +
--			 4 * (ring->nhi->hop_count / 32));
-+		iowrite32(BIT(bit), ring->nhi->iobase + REG_RING_INT_CLEAR +
-+			  4 * (ring->nhi->hop_count / 32));
- }
++			len = __le16_to_cpu(hdr->slen);
+ 		} else {
++			struct hci_iso_data_hdr *hdr;
++
+ 			hdr = skb_pull_data(skb, HCI_ISO_DATA_HDR_SIZE);
+ 			if (!hdr) {
+ 				BT_ERR("Frame is too short (len %d)", skb->len);
+ 				goto drop;
+ 			}
++
++			len = __le16_to_cpu(hdr->slen);
+ 		}
  
- static irqreturn_t ring_msix(int irq, void *data)
---- a/drivers/thunderbolt/nhi_regs.h
-+++ b/drivers/thunderbolt/nhi_regs.h
-@@ -77,12 +77,13 @@ struct ring_desc {
+-		len    = __le16_to_cpu(hdr->slen);
+ 		flags  = hci_iso_data_flags(len);
+ 		len    = hci_iso_data_len(len);
  
- /*
-  * three bitfields: tx, rx, rx overflow
-- * Every bitfield contains one bit for every hop (REG_HOP_COUNT). Registers are
-- * cleared on read. New interrupts are fired only after ALL registers have been
-+ * Every bitfield contains one bit for every hop (REG_HOP_COUNT).
-+ * New interrupts are fired only after ALL registers have been
-  * read (even those containing only disabled rings).
-  */
- #define REG_RING_NOTIFY_BASE	0x37800
- #define RING_NOTIFY_REG_COUNT(nhi) ((31 + 3 * nhi->hop_count) / 32)
-+#define REG_RING_INT_CLEAR	0x37808
- 
- /*
-  * two bitfields: rx, tx
-@@ -105,6 +106,7 @@ struct ring_desc {
- 
- #define REG_DMA_MISC			0x39864
- #define REG_DMA_MISC_INT_AUTO_CLEAR     BIT(2)
-+#define REG_DMA_MISC_DISABLE_AUTO_CLEAR	BIT(17)
- 
- #define REG_INMAIL_DATA			0x39900
- 
+-- 
+2.39.2
+
 
 
