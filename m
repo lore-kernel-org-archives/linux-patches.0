@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82BB8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:58:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587FFC433D2;
-	Tue, 28 Mar 2023 14:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD2D8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:58:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07829C433EF;
+	Tue, 28 Mar 2023 14:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015508;
-	bh=0IUXgK7/dHVxPwjwJoaOsFqx+zR1jF+V2KTemtsJvCw=;
+	s=korg; t=1680015511;
+	bh=Ld89raY8Rvv136vl4jhY7EUToqD9arrbiDe/fMnC/wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1FSHKi6hMuqIVeIKkOnoCquXhdigSmgXznb9L6E0TWNP6NJddcygBTGjAkTRkLga
-	 f/mBIzQijEwn0Hiwsa/nPgINIM3yG7jziZdBFnoWPY97+wSq2GL2q3aHFks/aQTjcg
-	 tkshYUqmgD7/DAsT3K2HkirX+bFmeVH9oTCI/Eaw=
+	b=UasOHcf8S31h467rgTM5X221hOJPQVCTYh4E10WXQOvL0E611+zhSbPnCcdI6Vvot
+	 qnmuS+hK/2ypJjbPuRNsly7wkHLuIFdnxkF2MQ4+/9Q5SXTwacVZUCqrdPAMzCNoSH
+	 WoHwKNv7X13kOnOIBmGYJRRDsS+95itQmKwpGzr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Caleb Sander <csander@purestorage.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/224] nvme-tcp: fix nvme_tcp_term_pdu to match spec
-Date: Tue, 28 Mar 2023 16:41:10 +0200
-Message-Id: <20230328142620.430962875@linuxfoundation.org>
+Subject: [PATCH 6.1 048/224] drm/i915: Print return value on error
+Date: Tue, 28 Mar 2023 16:40:44 +0200
+Message-Id: <20230328142619.390173078@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,42 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Caleb Sander <csander@purestorage.com>
+From: Nirmoy Das <nirmoy.das@intel.com>
 
-[ Upstream commit aa01c67de5926fdb276793180564f172c55fb0d7 ]
+[ Upstream commit 20c68127e8e9d7899001c47465d0b79581f5fdc1 ]
 
-The FEI field of C2HTermReq/H2CTermReq is 4 bytes but not 4-byte-aligned
-in the NVMe/TCP specification (it is located at offset 10 in the PDU).
-Split it into two 16-bit integers in struct nvme_tcp_term_pdu
-so no padding is inserted. There should also be 10 reserved bytes after.
-There are currently no users of this type.
+Print returned error code for better debuggability.
 
-Fixes: fc221d05447aa6db ("nvme-tcp: Add protocol header")
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Caleb Sander <csander@purestorage.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221014154655.14075-1-nirmoy.das@intel.com
+Stable-dep-of: ed00eba03474 ("drm/i915/fbdev: lock the fbdev obj before vma pin")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nvme-tcp.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_fbdev.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/nvme-tcp.h b/include/linux/nvme-tcp.h
-index 75470159a194d..57ebe1267f7fb 100644
---- a/include/linux/nvme-tcp.h
-+++ b/include/linux/nvme-tcp.h
-@@ -115,8 +115,9 @@ struct nvme_tcp_icresp_pdu {
- struct nvme_tcp_term_pdu {
- 	struct nvme_tcp_hdr	hdr;
- 	__le16			fes;
--	__le32			fei;
--	__u8			rsvd[8];
-+	__le16			feil;
-+	__le16			feiu;
-+	__u8			rsvd[10];
- };
+diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
+index 9899b5dcd291d..d9b42905bad84 100644
+--- a/drivers/gpu/drm/i915/display/intel_fbdev.c
++++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
+@@ -175,7 +175,7 @@ static int intelfb_alloc(struct drm_fb_helper *helper,
+ 	}
  
- /**
+ 	if (IS_ERR(obj)) {
+-		drm_err(&dev_priv->drm, "failed to allocate framebuffer\n");
++		drm_err(&dev_priv->drm, "failed to allocate framebuffer (%pe)\n", obj);
+ 		return PTR_ERR(obj);
+ 	}
+ 
+@@ -256,7 +256,7 @@ static int intelfb_create(struct drm_fb_helper *helper,
+ 
+ 	info = drm_fb_helper_alloc_fbi(helper);
+ 	if (IS_ERR(info)) {
+-		drm_err(&dev_priv->drm, "Failed to allocate fb_info\n");
++		drm_err(&dev_priv->drm, "Failed to allocate fb_info (%pe)\n", info);
+ 		ret = PTR_ERR(info);
+ 		goto out_unpin;
+ 	}
+@@ -291,7 +291,7 @@ static int intelfb_create(struct drm_fb_helper *helper,
+ 	vaddr = i915_vma_pin_iomap(vma);
+ 	if (IS_ERR(vaddr)) {
+ 		drm_err(&dev_priv->drm,
+-			"Failed to remap framebuffer into virtual memory\n");
++			"Failed to remap framebuffer into virtual memory (%pe)\n", vaddr);
+ 		ret = PTR_ERR(vaddr);
+ 		goto out_unpin;
+ 	}
 -- 
 2.39.2
 
