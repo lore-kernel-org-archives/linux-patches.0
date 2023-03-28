@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2538BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:09:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60FCC433EF;
-	Tue, 28 Mar 2023 15:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786838BEB
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:10:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E034CC4339C;
+	Tue, 28 Mar 2023 15:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016197;
-	bh=Qjx1EiROzE6BWsPu5sIvNO1eV3m9ZMi8GdHqgzM09h0=;
+	s=korg; t=1680016200;
+	bh=vIhqaCU7zOCUzUahRx9xB4y84re/+TIYi1y25eQWDGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOIVtI9RKY1O/m9tpQuyONv5vyMyg5wu7UXtjX86T/V2IV8/L8qaytF2HmZv7XbGA
-	 gPteQA4zFb98BvGuDVaZ352GvnhtfX/wrnN+lzwZt75tlPbvKDckcks2zXyJWejAhn
-	 fppj7HLlyWoFGltLAMFymE5CUw0Xqoix7nSktWPw=
+	b=m2Er01VEmEfKanSVYtUOURKVnNsix4BZDbJTz1rL1TZUbSIzZRTEOxz+uYdsD1NCb
+	 e/ANIeRwZ4PRxxOOVJ8h2jurDZ+JM46k5vCbjGhzMFAcDxt5C998iClzHonNqxlFKI
+	 0xTjWWXR3675sPKFk36kf4VgJ3uX3zEPXBSVXVkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Phinex Hung <phinex@realtek.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/146] entry/rcu: Check TIF_RESCHED _after_ delayed RCU wake-up
-Date: Tue, 28 Mar 2023 16:42:39 +0200
-Message-Id: <20230328142605.636137446@linuxfoundation.org>
+Subject: [PATCH 5.15 071/146] hwmon: fix potential sensor registration fail if of_node is missing
+Date: Tue, 28 Mar 2023 16:42:40 +0200
+Message-Id: <20230328142605.685400601@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -37,54 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Phinex Hung <phinex@realtek.com>
 
-[ Upstream commit b416514054810cf2d2cc348ae477cea619b64da7 ]
+[ Upstream commit 2315332efcbe7124252f080e03b57d3d2f1f4771 ]
 
-RCU sometimes needs to perform a delayed wake up for specific kthreads
-handling offloaded callbacks (RCU_NOCB).  These wakeups are performed
-by timers and upon entry to idle (also to guest and to user on nohz_full).
+It is not sufficient to check of_node in current device.
+In some cases, this would cause the sensor registration to fail.
 
-However the delayed wake-up on kernel exit is actually performed after
-the thread flags are fetched towards the fast path check for work to
-do on exit to user. As a result, and if there is no other pending work
-to do upon that kernel exit, the current task will resume to userspace
-with TIF_RESCHED set and the pending wake up ignored.
+This patch looks for device's ancestors to find a valid of_node if any.
 
-Fix this with fetching the thread flags _after_ the delayed RCU-nocb
-kthread wake-up.
-
-Fixes: 47b8ff194c1f ("entry: Explicitly flush pending rcuog wakeup before last rescheduling point")
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20230315194349.10798-3-joel@joelfernandes.org
+Fixes: d560168b5d0f ("hwmon: (core) New hwmon registration API")
+Signed-off-by: Phinex Hung <phinex@realtek.com>
+Link: https://lore.kernel.org/r/20230321060224.3819-1-phinex@realtek.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/entry/common.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/hwmon.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/entry/common.c b/kernel/entry/common.c
-index 3ce3a0a6c762e..e002bea6b4be3 100644
---- a/kernel/entry/common.c
-+++ b/kernel/entry/common.c
-@@ -196,13 +196,14 @@ static unsigned long exit_to_user_mode_loop(struct pt_regs *regs,
- 
- static void exit_to_user_mode_prepare(struct pt_regs *regs)
+diff --git a/drivers/hwmon/hwmon.c b/drivers/hwmon/hwmon.c
+index 3ae961986fc31..fd3b277d340a9 100644
+--- a/drivers/hwmon/hwmon.c
++++ b/drivers/hwmon/hwmon.c
+@@ -736,6 +736,7 @@ __hwmon_device_register(struct device *dev, const char *name, void *drvdata,
  {
--	unsigned long ti_work = read_thread_flags();
-+	unsigned long ti_work;
+ 	struct hwmon_device *hwdev;
+ 	struct device *hdev;
++	struct device *tdev = dev;
+ 	int i, err, id;
  
- 	lockdep_assert_irqs_disabled();
+ 	/* Complain about invalid characters in hwmon name attribute */
+@@ -793,7 +794,9 @@ __hwmon_device_register(struct device *dev, const char *name, void *drvdata,
+ 	hwdev->name = name;
+ 	hdev->class = &hwmon_class;
+ 	hdev->parent = dev;
+-	hdev->of_node = dev ? dev->of_node : NULL;
++	while (tdev && !tdev->of_node)
++		tdev = tdev->parent;
++	hdev->of_node = tdev ? tdev->of_node : NULL;
+ 	hwdev->chip = chip;
+ 	dev_set_drvdata(hdev, drvdata);
+ 	dev_set_name(hdev, HWMON_ID_FORMAT, id);
+@@ -805,7 +808,7 @@ __hwmon_device_register(struct device *dev, const char *name, void *drvdata,
  
- 	/* Flush pending rcuog wakeup before the last need_resched() check */
- 	tick_nohz_user_enter_prepare();
+ 	INIT_LIST_HEAD(&hwdev->tzdata);
  
-+	ti_work = read_thread_flags();
- 	if (unlikely(ti_work & EXIT_TO_USER_MODE_WORK))
- 		ti_work = exit_to_user_mode_loop(regs, ti_work);
- 
+-	if (dev && dev->of_node && chip && chip->ops->read &&
++	if (hdev->of_node && chip && chip->ops->read &&
+ 	    chip->info[0]->type == hwmon_chip &&
+ 	    (chip->info[0]->config[0] & HWMON_C_REGISTER_TZ)) {
+ 		err = hwmon_thermal_register_sensors(hdev);
 -- 
 2.39.2
 
