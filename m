@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1857F8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:11:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA9CC433EF;
-	Tue, 28 Mar 2023 15:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE938BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:11:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348CCC433EF;
+	Tue, 28 Mar 2023 15:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016276;
-	bh=9Cqg7EE6fgIcy0MD/+BAdo15L4uXU/3cjC18T5fXqZk=;
+	s=korg; t=1680016279;
+	bh=P6vD6BAEdEhDdhlgw4psgjaRokQKZmpTxdO+jiaYJFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B/fOOmEPVtfHMrPsttDQgRAdJtnJD9OLiMUTjkviS8c4ulqIQNyelb5RjrAOn/xNe
-	 L2cdT8vvbWmCtk5jnGL0dNlp5d42xIDZAAOsDTpqZquYt6t+Hh/UH6iEsWDiSxbdWS
-	 gbMs5PIf/TTYWNSj8G0RIbr90koJik9jWt6BP71Q=
+	b=GcI+clxKMqplqGW1G36CGIcdVNzMdWnVNloCeN8uajc+pp2/sP7QwrmLrMzhefeBz
+	 cBZ3P03JW0tCXLEargAZAASuBFiz94eBxhGRe6hABUIbFD4K4BY5Rp3k6r8AUUv2KE
+	 Tt6ed6ZMEEmzuyY+r9pp/WyvK9AbVClcMOC/V5tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+132fdd2f1e1805fdc591@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 128/146] nilfs2: fix kernel-infoleak in nilfs_ioctl_wrap_copy()
-Date: Tue, 28 Mar 2023 16:43:37 +0200
-Message-Id: <20230328142607.996667697@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Rich Felker <dalias@libc.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 099/146] sh: sanitize the flags on sigreturn
+Date: Tue, 28 Mar 2023 16:43:08 +0200
+Message-Id: <20230328142606.814940608@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -35,86 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 003587000276f81d0114b5ce773d80c119d8cb30 upstream.
+[ Upstream commit 573b22ccb7ce9ab7f0539a2e11a9d3609a8783f5 ]
 
-The ioctl helper function nilfs_ioctl_wrap_copy(), which exchanges a
-metadata array to/from user space, may copy uninitialized buffer regions
-to user space memory for read-only ioctl commands NILFS_IOCTL_GET_SUINFO
-and NILFS_IOCTL_GET_CPINFO.
+We fetch %SR value from sigframe; it might have been modified by signal
+handler, so we can't trust it with any bits that are not modifiable in
+user mode.
 
-This can occur when the element size of the user space metadata given by
-the v_size member of the argument nilfs_argv structure is larger than the
-size of the metadata element (nilfs_suinfo structure or nilfs_cpinfo
-structure) on the file system side.
-
-KMSAN-enabled kernels detect this issue as follows:
-
- BUG: KMSAN: kernel-infoleak in instrument_copy_to_user
- include/linux/instrumented.h:121 [inline]
- BUG: KMSAN: kernel-infoleak in _copy_to_user+0xc0/0x100 lib/usercopy.c:33
-  instrument_copy_to_user include/linux/instrumented.h:121 [inline]
-  _copy_to_user+0xc0/0x100 lib/usercopy.c:33
-  copy_to_user include/linux/uaccess.h:169 [inline]
-  nilfs_ioctl_wrap_copy+0x6fa/0xc10 fs/nilfs2/ioctl.c:99
-  nilfs_ioctl_get_info fs/nilfs2/ioctl.c:1173 [inline]
-  nilfs_ioctl+0x2402/0x4450 fs/nilfs2/ioctl.c:1290
-  nilfs_compat_ioctl+0x1b8/0x200 fs/nilfs2/ioctl.c:1343
-  __do_compat_sys_ioctl fs/ioctl.c:968 [inline]
-  __se_compat_sys_ioctl+0x7dd/0x1000 fs/ioctl.c:910
-  __ia32_compat_sys_ioctl+0x93/0xd0 fs/ioctl.c:910
-  do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
-  __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
-  do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
-  do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
-  entry_SYSENTER_compat_after_hwframe+0x70/0x82
-
- Uninit was created at:
-  __alloc_pages+0x9f6/0xe90 mm/page_alloc.c:5572
-  alloc_pages+0xab0/0xd80 mm/mempolicy.c:2287
-  __get_free_pages+0x34/0xc0 mm/page_alloc.c:5599
-  nilfs_ioctl_wrap_copy+0x223/0xc10 fs/nilfs2/ioctl.c:74
-  nilfs_ioctl_get_info fs/nilfs2/ioctl.c:1173 [inline]
-  nilfs_ioctl+0x2402/0x4450 fs/nilfs2/ioctl.c:1290
-  nilfs_compat_ioctl+0x1b8/0x200 fs/nilfs2/ioctl.c:1343
-  __do_compat_sys_ioctl fs/ioctl.c:968 [inline]
-  __se_compat_sys_ioctl+0x7dd/0x1000 fs/ioctl.c:910
-  __ia32_compat_sys_ioctl+0x93/0xd0 fs/ioctl.c:910
-  do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
-  __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
-  do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
-  do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
-  entry_SYSENTER_compat_after_hwframe+0x70/0x82
-
- Bytes 16-127 of 3968 are uninitialized
- ...
-
-This eliminates the leak issue by initializing the page allocated as
-buffer using get_zeroed_page().
-
-Link: https://lkml.kernel.org/r/20230307085548.6290-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+132fdd2f1e1805fdc591@syzkaller.appspotmail.com
-  Link: https://lkml.kernel.org/r/000000000000a5bd2d05f63f04ae@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Rich Felker <dalias@libc.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/ioctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/sh/include/asm/processor_32.h | 1 +
+ arch/sh/kernel/signal_32.c         | 3 +++
+ 2 files changed, 4 insertions(+)
 
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -71,7 +71,7 @@ static int nilfs_ioctl_wrap_copy(struct
- 	if (argv->v_index > ~(__u64)0 - argv->v_nmembs)
- 		return -EINVAL;
+diff --git a/arch/sh/include/asm/processor_32.h b/arch/sh/include/asm/processor_32.h
+index aa92cc933889d..6c7966e627758 100644
+--- a/arch/sh/include/asm/processor_32.h
++++ b/arch/sh/include/asm/processor_32.h
+@@ -50,6 +50,7 @@
+ #define SR_FD		0x00008000
+ #define SR_MD		0x40000000
  
--	buf = (void *)__get_free_pages(GFP_NOFS, 0);
-+	buf = (void *)get_zeroed_page(GFP_NOFS);
- 	if (unlikely(!buf))
- 		return -ENOMEM;
- 	maxmembs = PAGE_SIZE / argv->v_size;
++#define SR_USER_MASK	0x00000303	// M, Q, S, T bits
+ /*
+  * DSP structure and data
+  */
+diff --git a/arch/sh/kernel/signal_32.c b/arch/sh/kernel/signal_32.c
+index dd3092911efad..dc13702003f0f 100644
+--- a/arch/sh/kernel/signal_32.c
++++ b/arch/sh/kernel/signal_32.c
+@@ -115,6 +115,7 @@ static int
+ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p)
+ {
+ 	unsigned int err = 0;
++	unsigned int sr = regs->sr & ~SR_USER_MASK;
+ 
+ #define COPY(x)		err |= __get_user(regs->x, &sc->sc_##x)
+ 			COPY(regs[1]);
+@@ -130,6 +131,8 @@ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p
+ 	COPY(sr);	COPY(pc);
+ #undef COPY
+ 
++	regs->sr = (regs->sr & SR_USER_MASK) | sr;
++
+ #ifdef CONFIG_SH_FPU
+ 	if (boot_cpu_data.flags & CPU_HAS_FPU) {
+ 		int owned_fp;
+-- 
+2.39.2
+
 
 
