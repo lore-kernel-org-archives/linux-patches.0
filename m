@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBB98BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:10:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D684C4339B;
-	Tue, 28 Mar 2023 15:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769938BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:10:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE50CC433EF;
+	Tue, 28 Mar 2023 15:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016205;
-	bh=/rOIPUIJVVqX8BCQsHKfvDVez8rQz4LkR4WUutn+/4Q=;
+	s=korg; t=1680016208;
+	bh=61zLZ2kjXqSlHW7kza0ZfZ6p6MoqxE6veYzqJYjLeTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1d0N/GIBCbS/7h6Aw7QkMS00dWGDyrokc04csDQRTKnYCBOFz3f+KEF4bAICPizFK
-	 aCRGcwZgzPxTHE70NNMKMSjaJcjS5FLF8JyFKDCRsoeDE2wdXfmdmL23mYWHXyYe6O
-	 hmKHrC0Hu9TWBmj4xW3i0J2yHt+t/TvMHWx2+CKY=
+	b=px/w17Z74ndTs5D1K6q+K6GRk/ieXApN/iZQlD4O+Rr8HsUU7pbfANm89F7xmYrqg
+	 msgU90l+GF30s/9oWV2Rmq5pFvQ/lo3zVNCMkfuPj3/5lV5Gm6XJjuQcLfXrUxuhaM
+	 bWtI7JA/q9L94zpPTqYnFovFjDGztB5oweBQQ6Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/146] scsi: storvsc: Handle BlockSize change in Hyper-V VHD/VHDX file
-Date: Tue, 28 Mar 2023 16:43:05 +0200
-Message-Id: <20230328142606.711795310@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Subject: [PATCH 5.15 105/146] usb: dwc2: fix a devres leak in hw_enable upon suspend resume
+Date: Tue, 28 Mar 2023 16:43:14 +0200
+Message-Id: <20230328142607.068104444@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -35,89 +34,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-[ Upstream commit 11d9874c4204a785f43d899a1ab12f9dc8d9de3e ]
+commit f747313249b74f323ddf841a9c8db14d989f296a upstream.
 
-Hyper-V uses a VHD or VHDX file on the host as the underlying storage for a
-virtual disk.  The VHD/VHDX file format is a sparse format where real disk
-space on the host is assigned in chunks that the VHD/VHDX file format calls
-the BlockSize.  This BlockSize is not to be confused with the 512-byte (or
-4096-byte) sector size of the underlying storage device.  The default block
-size for a new VHD/VHDX file is 32 Mbytes.  When a guest VM touches any
-disk space within a 32 Mbyte chunk of the VHD/VHDX file, Hyper-V allocates
-32 Mbytes of real disk space for that section of the VHD/VHDX. Similarly,
-if a discard operation is done that covers an entire 32 Mbyte chunk,
-Hyper-V will free the real disk space for that portion of the VHD/VHDX.
-This BlockSize is surfaced in Linux as the "discard_granularity" in
-/sys/block/sd<x>/queue, which makes sense.
+Each time the platform goes to low power, PM suspend / resume routines
+call: __dwc2_lowlevel_hw_enable -> devm_add_action_or_reset().
+This adds a new devres each time.
+This may also happen at runtime, as dwc2_lowlevel_hw_enable() can be
+called from udc_start().
 
-Hyper-V also has differencing disks that can overlay a VHD/VHDX file to
-capture changes to the VHD/VHDX while preserving the original VHD/VHDX.
-One example of this differencing functionality is for VM snapshots.  When a
-snapshot is created, a differencing disk is created.  If the snapshot is
-rolled back, Hyper-V can just delete the differencing disk, and the VM will
-see the original disk contents at the time the snapshot was taken.
-Differencing disks are used in other scenarios as well.
+This can be seen with tracing:
+- echo 1 > /sys/kernel/debug/tracing/events/dev/devres_log/enable
+- go to low power
+- cat /sys/kernel/debug/tracing/trace
 
-The BlockSize for a differencing disk defaults to 2 Mbytes, not 32 Mbytes.
-The smaller default is used because changes to differencing disks are
-typically scattered all over, and Hyper-V doesn't want to allocate 32
-Mbytes of real disk space for a stray write here or there.  The smaller
-BlockSize provides more efficient use of real disk space.
+A new "ADD" entry is found upon each low power cycle:
+... devres_log: 49000000.usb-otg ADD 82a13bba devm_action_release (8 bytes)
+... devres_log: 49000000.usb-otg ADD 49889daf devm_action_release (8 bytes)
+...
 
-When a differencing disk is added to a VHD/VHDX, Hyper-V reports
-UNIT_ATTENTION with a sense code indicating "Operating parameters have
-changed", because the value of discard_granularity should be changed to 2
-Mbytes. When the differencing disk is removed, discard_granularity should
-be changed back to 32 Mbytes.  However, current code simply reports a
-message from scsi_report_sense() and the value of
-/sys/block/sd<x>/queue/discard_granularity is not updated. The message
-isn't very actionable by a sysadmin.
+A second issue is addressed here:
+- regulator_bulk_enable() is called upon each PM cycle (suspend/resume).
+- regulator_bulk_disable() never gets called.
 
-Fix this by having the storvsc driver check for the sense code indicating
-that the underly VHD/VHDX block size has changed, and do a rescan of the
-device to pick up the new discard_granularity.  With this change the entire
-transition to/from differencing disks is handled automatically and
-transparently, with no confusing messages being output.
+So the reference count for these regulators constantly increase, by one
+upon each low power cycle, due to missing regulator_bulk_disable() call
+in __dwc2_lowlevel_hw_disable().
 
-Link: https://lore.kernel.org/r/1677516514-86060-1-git-send-email-mikelley@microsoft.com
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The original fix that introduced the devm_add_action_or_reset() call,
+fixed an issue during probe, that happens due to other errors in
+dwc2_driver_probe() -> dwc2_core_reset(). Then the probe fails without
+disabling regulators, when dr_mode == USB_DR_MODE_PERIPHERAL.
+
+Rather fix the error path: disable all the low level hardware in the
+error path, by using the "hsotg->ll_hw_enabled" flag. Checking dr_mode
+has been introduced to avoid a dual call to dwc2_lowlevel_hw_disable().
+"ll_hw_enabled" should achieve the same (and is used currently in the
+remove() routine).
+
+Fixes: 54c196060510 ("usb: dwc2: Always disable regulators on driver teardown")
+Fixes: 33a06f1300a7 ("usb: dwc2: Fix error path in gadget registration")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/r/20230316084127.126084-1-fabrice.gasnier@foss.st.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/usb/dwc2/platform.c |   16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index 6110dfd903f74..83a3d9f085d84 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1050,6 +1050,22 @@ static void storvsc_handle_error(struct vmscsi_request *vm_srb,
- 				goto do_work;
- 			}
+--- a/drivers/usb/dwc2/platform.c
++++ b/drivers/usb/dwc2/platform.c
+@@ -121,13 +121,6 @@ static int dwc2_get_dr_mode(struct dwc2_
+ 	return 0;
+ }
  
-+			/*
-+			 * Check for "Operating parameters have changed"
-+			 * due to Hyper-V changing the VHD/VHDX BlockSize
-+			 * when adding/removing a differencing disk. This
-+			 * causes discard_granularity to change, so do a
-+			 * rescan to pick up the new granularity. We don't
-+			 * want scsi_report_sense() to output a message
-+			 * that a sysadmin wouldn't know what to do with.
-+			 */
-+			if ((asc == 0x3f) && (ascq != 0x03) &&
-+					(ascq != 0x0e)) {
-+				process_err_fn = storvsc_device_scan;
-+				set_host_byte(scmnd, DID_REQUEUE);
-+				goto do_work;
-+			}
-+
- 			/*
- 			 * Otherwise, let upper layer deal with the
- 			 * error when sense message is present
--- 
-2.39.2
-
+-static void __dwc2_disable_regulators(void *data)
+-{
+-	struct dwc2_hsotg *hsotg = data;
+-
+-	regulator_bulk_disable(ARRAY_SIZE(hsotg->supplies), hsotg->supplies);
+-}
+-
+ static int __dwc2_lowlevel_hw_enable(struct dwc2_hsotg *hsotg)
+ {
+ 	struct platform_device *pdev = to_platform_device(hsotg->dev);
+@@ -138,11 +131,6 @@ static int __dwc2_lowlevel_hw_enable(str
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = devm_add_action_or_reset(&pdev->dev,
+-				       __dwc2_disable_regulators, hsotg);
+-	if (ret)
+-		return ret;
+-
+ 	if (hsotg->clk) {
+ 		ret = clk_prepare_enable(hsotg->clk);
+ 		if (ret)
+@@ -198,7 +186,7 @@ static int __dwc2_lowlevel_hw_disable(st
+ 	if (hsotg->clk)
+ 		clk_disable_unprepare(hsotg->clk);
+ 
+-	return 0;
++	return regulator_bulk_disable(ARRAY_SIZE(hsotg->supplies), hsotg->supplies);
+ }
+ 
+ /**
+@@ -658,7 +646,7 @@ error_init:
+ 	if (hsotg->params.activate_stm_id_vb_detection)
+ 		regulator_disable(hsotg->usb33d);
+ error:
+-	if (hsotg->dr_mode != USB_DR_MODE_PERIPHERAL)
++	if (hsotg->ll_hw_enabled)
+ 		dwc2_lowlevel_hw_disable(hsotg);
+ 	return retval;
+ }
 
 
