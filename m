@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C428BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:11:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68714C433EF;
-	Tue, 28 Mar 2023 15:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C0D8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:11:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45435C433EF;
+	Tue, 28 Mar 2023 15:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016296;
-	bh=JMuotiYhQZ1D2/JpJmP0dz52A6CEWCyf8t2vwXN+fNw=;
+	s=korg; t=1680016298;
+	bh=yQ0Ge7p9JCA0oPIsS/0OgwLaxmWF6udpQtKMDhzeyw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=woi7H0jNOUoURu88EL0c9/HLYvmk7W/kd1l/n6CcDMR2F9rMqjyzMl7Zv9JIBmT2n
-	 WR6kXz21hqhBJfGJl/oQWWCZes5ATJExpJvEB4Cd6tcAmEcsa26Eby8hJ6An8t5S7g
-	 ZoTS5/casaIk4VA2SRw3sy4mdv7z/QZvE/FldkjI=
+	b=uycTu3fztMwBrl7wyX/xDYQ/RQCcdsNw1FLB8QPp8YAzvNhwOVMUH3AdwKXXS/llD
+	 z6lV2jIyy0n3UfUkAuwO2AYziAGNVF4A23dUyZ45HI9akzNSov4rfGgBfxTn4lFcyW
+	 5mQbIEpVED2Allt5yaR9yD/e92eq3AlF3saCoMAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Koschel <jkl820.git@gmail.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 095/146] scsi: lpfc: Avoid usage of list iterator variable after loop
-Date: Tue, 28 Mar 2023 16:43:04 +0200
-Message-Id: <20230328142606.671449896@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 5.15 130/146] drm/meson: fix missing component unbind on bind errors
+Date: Tue, 28 Mar 2023 16:43:39 +0200
+Message-Id: <20230328142608.078150228@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -36,61 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakob Koschel <jkl820.git@gmail.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 2850b23e9f9ae3696e472d2883ea1b43aafa884e ]
+commit ba98413bf45edbf33672e2539e321b851b2cfbd1 upstream.
 
-If the &epd_pool->list is empty when executing
-lpfc_get_io_buf_from_expedite_pool() the function would return an invalid
-pointer. Even in the case if the list is guaranteed to be populated, the
-iterator variable should not be used after the loop to be more robust for
-future changes.
+Make sure to unbind all subcomponents when binding the aggregate device
+fails.
 
-Linus proposed to avoid any use of the list iterator variable after the
-loop, in the attempt to move the list iterator variable declaration into
-the macro to avoid any potential misuse after the loop [1].
-
-Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/ [1]
-Signed-off-by: Jakob Koschel <jkl820.git@gmail.com>
-Link: https://lore.kernel.org/r/20230301-scsi-lpfc-avoid-list-iterator-after-loop-v1-1-325578ae7561@gmail.com
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a41e82e6c457 ("drm/meson: Add support for components")
+Cc: stable@vger.kernel.org      # 4.12
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230306103533.4915-1-johan+linaro@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_sli.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/meson/meson_drv.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 1f1d346adc038..30bc72324f068 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -22166,20 +22166,20 @@ lpfc_get_io_buf_from_private_pool(struct lpfc_hba *phba,
- static struct lpfc_io_buf *
- lpfc_get_io_buf_from_expedite_pool(struct lpfc_hba *phba)
- {
--	struct lpfc_io_buf *lpfc_ncmd;
-+	struct lpfc_io_buf *lpfc_ncmd = NULL, *iter;
- 	struct lpfc_io_buf *lpfc_ncmd_next;
- 	unsigned long iflag;
- 	struct lpfc_epd_pool *epd_pool;
+--- a/drivers/gpu/drm/meson/meson_drv.c
++++ b/drivers/gpu/drm/meson/meson_drv.c
+@@ -324,23 +324,23 @@ static int meson_drv_bind_master(struct
  
- 	epd_pool = &phba->epd_pool;
--	lpfc_ncmd = NULL;
+ 	ret = meson_encoder_hdmi_init(priv);
+ 	if (ret)
+-		goto exit_afbcd;
++		goto unbind_all;
  
- 	spin_lock_irqsave(&epd_pool->lock, iflag);
- 	if (epd_pool->count > 0) {
--		list_for_each_entry_safe(lpfc_ncmd, lpfc_ncmd_next,
-+		list_for_each_entry_safe(iter, lpfc_ncmd_next,
- 					 &epd_pool->list, list) {
--			list_del(&lpfc_ncmd->list);
-+			list_del(&iter->list);
- 			epd_pool->count--;
-+			lpfc_ncmd = iter;
- 			break;
- 		}
- 	}
--- 
-2.39.2
-
+ 	ret = meson_plane_create(priv);
+ 	if (ret)
+-		goto exit_afbcd;
++		goto unbind_all;
+ 
+ 	ret = meson_overlay_create(priv);
+ 	if (ret)
+-		goto exit_afbcd;
++		goto unbind_all;
+ 
+ 	ret = meson_crtc_create(priv);
+ 	if (ret)
+-		goto exit_afbcd;
++		goto unbind_all;
+ 
+ 	ret = request_irq(priv->vsync_irq, meson_irq, 0, drm->driver->name, drm);
+ 	if (ret)
+-		goto exit_afbcd;
++		goto unbind_all;
+ 
+ 	drm_mode_config_reset(drm);
+ 
+@@ -358,6 +358,9 @@ static int meson_drv_bind_master(struct
+ 
+ uninstall_irq:
+ 	free_irq(priv->vsync_irq, drm);
++unbind_all:
++	if (has_components)
++		component_unbind_all(drm->dev, drm);
+ exit_afbcd:
+ 	if (priv->afbcd.ops)
+ 		priv->afbcd.ops->exit(priv);
 
 
