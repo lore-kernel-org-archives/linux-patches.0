@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB928BEB
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:58:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010F5C4339B;
-	Tue, 28 Mar 2023 14:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DC68BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:58:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE06C433D2;
+	Tue, 28 Mar 2023 14:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015480;
-	bh=mD7KZHSfmn2TfzY1Qb/wzUpkBEpQ5uZNDJJgY+CzLFc=;
+	s=korg; t=1680015483;
+	bh=OLpg/fofh7xVcZZzTKj8UkknWGqOgGMautab5OLQqoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cKaigR64ZuPyIde+WOKFPA09ehsrbkrdyntbXGUQnMuzwP4DsHHTK4h4cXNBpFnRa
-	 +J4qEN3D1fqAC/qfeXeXx1d/M63DAWrCUrZQua0wpHGWtEpHnbxZLxoV+3FfR4U7yG
-	 BNvmXITNybVc1/d4SZetpxrgFzgndAIQ28Dr29cQ=
+	b=tGIwMMFtrNOVPUMU4ZvLjbEeMkdXvf3PSdGoP6ocohguuReUidbLIOavNaW4hzSHo
+	 8mAs8q3l5+D7JKmZt4Q+uSQ6BGPzfTrqh4TFj3USg9wxQYldyzA4bUkxDo0zk6RPgW
+	 GxAMWsU7XuVTGr0ohkh+89640PKqJ1znUxM7kYh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Gavin Li <gavinl@nvidia.com>,
+	Gavi Teitz <gavi@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/224] mlxsw: core_thermal: Fix fan speed in maximum cooling state
-Date: Tue, 28 Mar 2023 16:40:43 +0200
-Message-Id: <20230328142619.348214828@linuxfoundation.org>
+Subject: [PATCH 6.1 065/224] net/mlx5e: Block entering switchdev mode with ns inconsistency
+Date: Tue, 28 Mar 2023 16:41:01 +0200
+Message-Id: <20230328142620.055155380@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,93 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Gavin Li <gavinl@nvidia.com>
 
-[ Upstream commit 6d206b1ea9f48433a96edec7028586db1d947911 ]
+[ Upstream commit 662404b24a4c4d839839ed25e3097571f5938b9b ]
 
-The cooling levels array is supposed to prevent the system fans from
-being configured below a 20% duty cycle as otherwise some of them get
-stuck at 0 RPM.
+Upon entering switchdev mode, VF/SF representors are spawned in the
+devlink instance's net namespace, whereas the PF net device transforms
+into the uplink representor, remaining in the net namespace the PF net
+device was in. Therefore, if a PF net device's namespace is different from
+its parent devlink net namespace, entering switchdev mode can create an
+illegal situation where all representors sharing the same core device
+are NOT in the same net namespace.
 
-Due to an off-by-one error, the last element in the array was not
-initialized, causing it to be set to zero, which in turn lead to fans
-being configured with a 0% duty cycle in maximum cooling state.
+To avoid this issue, block entering switchdev mode for devices whose child
+netdev net namespace has diverged from the parent devlink's.
 
-Since commit 332fdf951df8 ("mlxsw: thermal: Fix out-of-bounds memory
-accesses") the contents of the array are static. Therefore, instead of
-fixing the initialization of the array, simply remove it and adjust
-thermal_cooling_device_ops::set_cur_state() so that the configured duty
-cycle is never set below 20%.
-
-Before:
-
- # cat /sys/class/thermal/thermal_zone0/cdev0/type
- mlxsw_fan
- # echo 10 > /sys/class/thermal/thermal_zone0/cdev0/cur_state
- # cat /sys/class/hwmon/hwmon0/name
- mlxsw
- # cat /sys/class/hwmon/hwmon0/pwm1
- 0
-
-After:
-
- # cat /sys/class/thermal/thermal_zone0/cdev0/type
- mlxsw_fan
- # echo 10 > /sys/class/thermal/thermal_zone0/cdev0/cur_state
- # cat /sys/class/hwmon/hwmon0/name
- mlxsw
- # cat /sys/class/hwmon/hwmon0/pwm1
- 255
-
-This bug was uncovered when the thermal subsystem repeatedly tried to
-configure the cooling devices to their maximum state due to another
-issue [1]. This resulted in the fans being stuck at 0 RPM, which
-eventually lead to the system undergoing thermal shutdown.
-
-[1] https://lore.kernel.org/netdev/ZA3CFNhU4AbtsP4G@shredder/
-
-Fixes: a421ce088ac8 ("mlxsw: core: Extend cooling device with cooling levels")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 7768d1971de6 ("net/mlx5: E-Switch, Add control for encapsulation")
+Signed-off-by: Gavin Li <gavinl@nvidia.com>
+Reviewed-by: Gavi Teitz <gavi@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/core_thermal.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ .../mellanox/mlx5/core/eswitch_offloads.c     | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_thermal.c b/drivers/net/ethernet/mellanox/mlxsw/core_thermal.c
-index c5240d38c9dbd..09ed6e5fa6c34 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core_thermal.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core_thermal.c
-@@ -105,7 +105,6 @@ struct mlxsw_thermal {
- 	struct thermal_zone_device *tzdev;
- 	int polling_delay;
- 	struct thermal_cooling_device *cdevs[MLXSW_MFCR_PWMS_MAX];
--	u8 cooling_levels[MLXSW_THERMAL_MAX_STATE + 1];
- 	struct thermal_trip trips[MLXSW_THERMAL_NUM_TRIPS];
- 	struct mlxsw_cooling_states cooling_states[MLXSW_THERMAL_NUM_TRIPS];
- 	struct mlxsw_thermal_area line_cards[];
-@@ -468,7 +467,7 @@ static int mlxsw_thermal_set_cur_state(struct thermal_cooling_device *cdev,
- 		return idx;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index 34790a82a0976..64e5b9f29206e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -3488,6 +3488,18 @@ static int esw_inline_mode_to_devlink(u8 mlx5_mode, u8 *mode)
+ 	return 0;
+ }
  
- 	/* Normalize the state to the valid speed range. */
--	state = thermal->cooling_levels[state];
-+	state = max_t(unsigned long, MLXSW_THERMAL_MIN_STATE, state);
- 	mlxsw_reg_mfsc_pack(mfsc_pl, idx, mlxsw_state_to_duty(state));
- 	err = mlxsw_reg_write(thermal->core, MLXSW_REG(mfsc), mfsc_pl);
- 	if (err) {
-@@ -859,10 +858,6 @@ int mlxsw_thermal_init(struct mlxsw_core *core,
- 		}
- 	}
++static bool esw_offloads_devlink_ns_eq_netdev_ns(struct devlink *devlink)
++{
++	struct net *devl_net, *netdev_net;
++	struct mlx5_eswitch *esw;
++
++	esw = mlx5_devlink_eswitch_get(devlink);
++	netdev_net = dev_net(esw->dev->mlx5e_res.uplink_netdev);
++	devl_net = devlink_net(devlink);
++
++	return net_eq(devl_net, netdev_net);
++}
++
+ int mlx5_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
+ 				  struct netlink_ext_ack *extack)
+ {
+@@ -3502,6 +3514,13 @@ int mlx5_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
+ 	if (esw_mode_from_devlink(mode, &mlx5_mode))
+ 		return -EINVAL;
  
--	/* Initialize cooling levels per PWM state. */
--	for (i = 0; i < MLXSW_THERMAL_MAX_STATE; i++)
--		thermal->cooling_levels[i] = max(MLXSW_THERMAL_MIN_STATE, i);
--
- 	thermal->polling_delay = bus_info->low_frequency ?
- 				 MLXSW_THERMAL_SLOW_POLL_INT :
- 				 MLXSW_THERMAL_POLL_INT;
++	if (mode == DEVLINK_ESWITCH_MODE_SWITCHDEV &&
++	    !esw_offloads_devlink_ns_eq_netdev_ns(devlink)) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Can't change E-Switch mode to switchdev when netdev net namespace has diverged from the devlink's.");
++		return -EPERM;
++	}
++
+ 	mlx5_lag_disable_change(esw->dev);
+ 	err = mlx5_esw_try_lock(esw);
+ 	if (err < 0) {
 -- 
 2.39.2
 
