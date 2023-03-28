@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FED8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D28C4339E;
-	Tue, 28 Mar 2023 14:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5488BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D3BC433D2;
+	Tue, 28 Mar 2023 14:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015102;
-	bh=eG+a1Q+h3eRWaHORW/ALPgQfchAXi4bvlCKXTEmWzoc=;
+	s=korg; t=1680015105;
+	bh=Xsolz83rCXsNcwOTYnTFqWA0Fsn4iBJ44RuNqsIKNGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XbPDEfceCs5hjVmLGERAkfxcAvyMsnwW/uQBMpsEV1tgfoSvvnPzrltcI7R19NXEm
-	 t41x5jTINJtaDH07mFQsxrUIJRYEGJq6HEdj9V5HJUNzily7dmXf3t8Fjxrcwm8llg
-	 17f0P3ISPLgqN/uqO9KraYfpj7qynnGX3fKcn8sU=
+	b=RnxbHdd27QRQ7DNqaAWRYeRkSlzfYqlsg+ftRS60SWgGiDiud5ONUjRIDtmTbEtbK
+	 qtQ3FDfdU3Mp9ZaoyDiIFFTDDa/QfWmhtY0iBBLOLP/0YUaFNzwdEPUtf8NKr1sZwi
+	 BtI7mn21iqNO3qyeG4nIoMbuTvevuC2WihS9MhMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lianhui tang <bluetlh@gmail.com>,
-	Alexander Aring <aahringo@redhat.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	=?UTF-8?q?Rafa=C5=82=20Szalecki?= <perexist7@gmail.com>,
+	Bastien Nocera <hadess@hadess.net>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 135/240] ca8210: fix mac_len negative array access
-Date: Tue, 28 Mar 2023 16:41:38 +0200
-Message-Id: <20230328142625.393984304@linuxfoundation.org>
+Subject: [PATCH 6.2 136/240] HID: logitech-hidpp: Add support for Logitech MX Master 3S mouse
+Date: Tue, 28 Mar 2023 16:41:39 +0200
+Message-Id: <20230328142625.438226384@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,35 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Rafał Szalecki <perexist7@gmail.com>
 
-[ Upstream commit 6c993779ea1d0cccdb3a5d7d45446dd229e610a3 ]
+[ Upstream commit db50f7a3983f0154e730f1147ef729e0c5c2f90c ]
 
-This patch fixes a buffer overflow access of skb->data if
-ieee802154_hdr_peek_addrs() fails.
+Add signature for the Logitech MX Master 3S mouse over Bluetooth.
 
-Reported-by: lianhui tang <bluetlh@gmail.com>
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Link: https://lore.kernel.org/r/20230217042504.3303396-1-aahringo@redhat.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Signed-off-by: Rafał Szalecki <perexist7@gmail.com>
+Reviewed-by: Bastien Nocera <hadess@hadess.net>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/ca8210.c | 2 ++
+ drivers/hid/hid-logitech-hidpp.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
-index e1a569b99e4a6..0b0c6c0764fe9 100644
---- a/drivers/net/ieee802154/ca8210.c
-+++ b/drivers/net/ieee802154/ca8210.c
-@@ -1913,6 +1913,8 @@ static int ca8210_skb_tx(
- 	 * packet
- 	 */
- 	mac_len = ieee802154_hdr_peek_addrs(skb, &header);
-+	if (mac_len < 0)
-+		return mac_len;
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 5efc591a02a03..3c00e6ac8e76a 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4378,6 +4378,8 @@ static const struct hid_device_id hidpp_devices[] = {
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb01e) },
+ 	{ /* MX Master 3 mouse over Bluetooth */
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb023) },
++	{ /* MX Master 3S mouse over Bluetooth */
++	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb034) },
+ 	{}
+ };
  
- 	secspec.security_level = header.sec.level;
- 	secspec.key_id_mode = header.sec.key_id_mode;
 -- 
 2.39.2
 
