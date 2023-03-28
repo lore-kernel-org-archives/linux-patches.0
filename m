@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A798476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6864BC433EF;
-	Tue, 28 Mar 2023 14:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FB88476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19246C433D2;
+	Tue, 28 Mar 2023 14:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015260;
-	bh=yA91FB4HV4FiJRK/RU1vkyv44403zYFEYXc2y91qqsg=;
+	s=korg; t=1680015263;
+	bh=DJ0CbK1NqKRNGloDc3w5YezRfW2KvfTJEJX1fXL9Vs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZoCj4MbmoXjtZHMrRAMKDKy0R3hjN2BFX50NOFxfipfoMDNUlIX6/qHkQXl+BgfSi
-	 dpSdDFBDOK16ZF8CgQRoYA/R1B/4af7o5aQ4w0k6OrKaUHEldqyz1JnRAEQhsQBZBL
-	 Gzf2p00Ff/T2+lkcl22OvxQwx1JL9k/w3VNAFQAc=
+	b=xl/Agg5JTkNkb1BMqe68pEjs8l/QivoGvnG367N61mrgXkpwMLcns23/GZ715oSZT
+	 7kSVHZGIJqUTw52Sx7NQ9iwhzn4kyKS4sulhwEjrVyYvS0lZMZXGcUe0wQ6AYi/6eb
+	 YFbZ9So2+1YktI+y1QLKJIZJZXgkcWGJqCeGLxc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <tim.huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 224/240] drm/amdgpu: reposition the gpu reset checking for reuse
-Date: Tue, 28 Mar 2023 16:43:07 +0200
-Message-Id: <20230328142629.066094754@linuxfoundation.org>
+	Dylan Jhong <dylan@andestech.com>,
+	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.2 225/240] riscv: mm: Fix incorrect ASID argument when flushing TLB
+Date: Tue, 28 Mar 2023 16:43:08 +0200
+Message-Id: <20230328142629.107774069@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,106 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <tim.huang@amd.com>
+From: Dylan Jhong <dylan@andestech.com>
 
-commit aaee0ce460b954e08b6e630d7e54b2abb672feb8 upstream.
+commit 9a801afd3eb95e1a89aba17321062df06fb49d98 upstream.
 
-Move the amdgpu_acpi_should_gpu_reset out of
-CONFIG_SUSPEND to share it with hibernate case.
+Currently, we pass the CONTEXTID instead of the ASID to the TLB flush
+function. We should only take the ASID field to prevent from touching
+the reserved bit field.
 
-Signed-off-by: Tim Huang <tim.huang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+Fixes: 3f1e782998cd ("riscv: add ASID-based tlbflushing methods")
+Signed-off-by: Dylan Jhong <dylan@andestech.com>
+Reviewed-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+Link: https://lore.kernel.org/r/20230313034906.2401730-1-dylan@andestech.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h      |    4 +--
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |   41 +++++++++++++++++--------------
- 2 files changed, 25 insertions(+), 20 deletions(-)
+ arch/riscv/include/asm/tlbflush.h |    2 ++
+ arch/riscv/mm/context.c           |    2 +-
+ arch/riscv/mm/tlbflush.c          |    2 +-
+ 3 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -1388,10 +1388,12 @@ int amdgpu_acpi_smart_shift_update(struc
- int amdgpu_acpi_pcie_notify_device_ready(struct amdgpu_device *adev);
+--- a/arch/riscv/include/asm/tlbflush.h
++++ b/arch/riscv/include/asm/tlbflush.h
+@@ -12,6 +12,8 @@
+ #include <asm/errata_list.h>
  
- void amdgpu_acpi_get_backlight_caps(struct amdgpu_dm_backlight_caps *caps);
-+bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev);
- void amdgpu_acpi_detect(void);
- #else
- static inline int amdgpu_acpi_init(struct amdgpu_device *adev) { return 0; }
- static inline void amdgpu_acpi_fini(struct amdgpu_device *adev) { }
-+static inline bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev) { return false; }
- static inline void amdgpu_acpi_detect(void) { }
- static inline bool amdgpu_acpi_is_power_shift_control_supported(void) { return false; }
- static inline int amdgpu_acpi_power_shift_control(struct amdgpu_device *adev,
-@@ -1402,11 +1404,9 @@ static inline int amdgpu_acpi_smart_shif
- 
- #if defined(CONFIG_ACPI) && defined(CONFIG_SUSPEND)
- bool amdgpu_acpi_is_s3_active(struct amdgpu_device *adev);
--bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev);
- bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev);
- #else
- static inline bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev) { return false; }
--static inline bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev) { return false; }
- static inline bool amdgpu_acpi_is_s3_active(struct amdgpu_device *adev) { return false; }
- #endif
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-@@ -971,6 +971,29 @@ static bool amdgpu_atcs_pci_probe_handle
- 	return true;
- }
- 
+ #ifdef CONFIG_MMU
++extern unsigned long asid_mask;
 +
-+/**
-+ * amdgpu_acpi_should_gpu_reset
-+ *
-+ * @adev: amdgpu_device_pointer
-+ *
-+ * returns true if should reset GPU, false if not
-+ */
-+bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev)
-+{
-+	if (adev->flags & AMD_IS_APU)
-+		return false;
-+
-+	if (amdgpu_sriov_vf(adev))
-+		return false;
-+
-+#if IS_ENABLED(CONFIG_SUSPEND)
-+	return pm_suspend_target_state != PM_SUSPEND_TO_IDLE;
-+#else
-+	return true;
-+#endif
-+}
-+
- /*
-  * amdgpu_acpi_detect - detect ACPI ATIF/ATCS methods
-  *
-@@ -1043,24 +1066,6 @@ bool amdgpu_acpi_is_s3_active(struct amd
- }
+ static inline void local_flush_tlb_all(void)
+ {
+ 	__asm__ __volatile__ ("sfence.vma" : : : "memory");
+--- a/arch/riscv/mm/context.c
++++ b/arch/riscv/mm/context.c
+@@ -22,7 +22,7 @@ DEFINE_STATIC_KEY_FALSE(use_asid_allocat
  
- /**
-- * amdgpu_acpi_should_gpu_reset
-- *
-- * @adev: amdgpu_device_pointer
-- *
-- * returns true if should reset GPU, false if not
-- */
--bool amdgpu_acpi_should_gpu_reset(struct amdgpu_device *adev)
--{
--	if (adev->flags & AMD_IS_APU)
--		return false;
--
--	if (amdgpu_sriov_vf(adev))
--		return false;
--
--	return pm_suspend_target_state != PM_SUSPEND_TO_IDLE;
--}
--
--/**
-  * amdgpu_acpi_is_s0ix_active
-  *
-  * @adev: amdgpu_device_pointer
+ static unsigned long asid_bits;
+ static unsigned long num_asids;
+-static unsigned long asid_mask;
++unsigned long asid_mask;
+ 
+ static atomic_long_t current_version;
+ 
+--- a/arch/riscv/mm/tlbflush.c
++++ b/arch/riscv/mm/tlbflush.c
+@@ -42,7 +42,7 @@ static void __sbi_tlb_flush_range(struct
+ 	/* check if the tlbflush needs to be sent to other CPUs */
+ 	broadcast = cpumask_any_but(cmask, cpuid) < nr_cpu_ids;
+ 	if (static_branch_unlikely(&use_asid_allocator)) {
+-		unsigned long asid = atomic_long_read(&mm->context.id);
++		unsigned long asid = atomic_long_read(&mm->context.id) & asid_mask;
+ 
+ 		if (broadcast) {
+ 			sbi_remote_sfence_vma_asid(cmask, start, size, asid);
 
 
