@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDA68BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826ECC433EF;
-	Tue, 28 Mar 2023 14:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A358BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38361C433EF;
+	Tue, 28 Mar 2023 14:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015447;
-	bh=7asAExpVOg3Y9AiJWOCpRDu//3s1mhX9EipNzxSNzkE=;
+	s=korg; t=1680015450;
+	bh=PSX9IbicK7Q1cpjgYoVmy0xKXDvHTCbZOZACXDfQ+BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=br9HrC8XTst5hgO6bT8Oq0p0AW/d6koQdSU+FhQgJXr0kCcTcgvia38lBRU6sgxFk
-	 AjGHGHar/P15WG9X/IDQsggXyzBk9hEN0fDHO+8s3VwmA0TzBl+Iac0tbGcddJZC8i
-	 7ocWvfd2OCsjq+pa647lFVH25Pr8c2tVbewMBZ5U=
+	b=e9mHs+yvjEJyxf4h7gYhsuJv04R/W5wbHF9TUHGAW8AtJEsoP0aHA+5d6od62i+Gd
+	 7qFJEccNpDabQ1jN5RSgR7BbD2XwV6c0xp/su6WawChXLcDXSy5fu+3TSEUUsLMACE
+	 S+cj3/Hwuwc2Agq5JmK1NtjXOS6d1nOd+nC7OKY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Christoph Paasch <cpaasch@apple.com>
-Subject: [PATCH 6.1 012/224] mptcp: fix UaF in listener shutdown
-Date: Tue, 28 Mar 2023 16:40:08 +0200
-Message-Id: <20230328142617.759388566@linuxfoundation.org>
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 046/224] thermal/drivers/mellanox: Use generic thermal_zone_get_trip() function
+Date: Tue, 28 Mar 2023 16:40:42 +0200
+Message-Id: <20230328142619.297795189@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,197 +35,381 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
 
-[ Upstream commit 0a3f4f1f9c27215e4ddcd312558342e57b93e518 ]
+[ Upstream commit 44a29a4dab73411671e0b84817a5f07e291b1501 ]
 
-  Backports notes: one simple conflict in net/mptcp/protocol.c with:
+The thermal framework gives the possibility to register the trip
+points with the thermal zone. When that is done, no get_trip_* ops are
+needed and they can be removed.
 
-    commit f8c9dfbd875b ("mptcp: add pm listener events")
+Convert ops content logic into generic trip points and register them with the
+thermal zone.
 
-  Where one commit removes code in __mptcp_close_ssk() while the other
-  one adds one line at the same place. We can simply remove the whole
-  condition because this extra instruction is not present in v6.1.
-
-As reported by Christoph after having refactored the passive
-socket initialization, the mptcp listener shutdown path is prone
-to an UaF issue.
-
-  BUG: KASAN: use-after-free in _raw_spin_lock_bh+0x73/0xe0
-  Write of size 4 at addr ffff88810cb23098 by task syz-executor731/1266
-
-  CPU: 1 PID: 1266 Comm: syz-executor731 Not tainted 6.2.0-rc59af4eaa31c1f6c00c8f1e448ed99a45c66340dd5 #6
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x6e/0x91
-   print_report+0x16a/0x46f
-   kasan_report+0xad/0x130
-   kasan_check_range+0x14a/0x1a0
-   _raw_spin_lock_bh+0x73/0xe0
-   subflow_error_report+0x6d/0x110
-   sk_error_report+0x3b/0x190
-   tcp_disconnect+0x138c/0x1aa0
-   inet_child_forget+0x6f/0x2e0
-   inet_csk_listen_stop+0x209/0x1060
-   __mptcp_close_ssk+0x52d/0x610
-   mptcp_destroy_common+0x165/0x640
-   mptcp_destroy+0x13/0x80
-   __mptcp_destroy_sock+0xe7/0x270
-   __mptcp_close+0x70e/0x9b0
-   mptcp_close+0x2b/0x150
-   inet_release+0xe9/0x1f0
-   __sock_release+0xd2/0x280
-   sock_close+0x15/0x20
-   __fput+0x252/0xa20
-   task_work_run+0x169/0x250
-   exit_to_user_mode_prepare+0x113/0x120
-   syscall_exit_to_user_mode+0x1d/0x40
-   do_syscall_64+0x48/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-The msk grace period can legitly expire in between the last
-reference count dropped in mptcp_subflow_queue_clean() and
-the later eventual access in inet_csk_listen_stop()
-
-After the previous patch we don't need anymore special-casing
-msk listener socket cleanup: the mptcp worker will process each
-of the unaccepted msk sockets.
-
-Just drop the now unnecessary code.
-
-Please note this commit depends on the two parent ones:
-
-  mptcp: refactor passive socket initialization
-  mptcp: use the workqueue to destroy unaccepted sockets
-
-Fixes: 6aeed9045071 ("mptcp: fix race on unaccepted mptcp sockets")
-Cc: stable@vger.kernel.org
-Reported-and-tested-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/346
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20221014073253.3719911-2-daniel.lezcano@linaro.org
+Stable-dep-of: 6d206b1ea9f4 ("mlxsw: core_thermal: Fix fan speed in maximum cooling state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c |  5 ---
- net/mptcp/protocol.h |  1 -
- net/mptcp/subflow.c  | 72 --------------------------------------------
- 3 files changed, 78 deletions(-)
+ .../ethernet/mellanox/mlxsw/core_thermal.c    | 209 ++++--------------
+ 1 file changed, 48 insertions(+), 161 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index b679e8a430a83..f0cde2d7233dc 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2380,11 +2380,6 @@ static void __mptcp_close_ssk(struct sock *sk, struct sock *ssk,
- 		mptcp_subflow_drop_ctx(ssk);
- 	} else {
- 		/* otherwise tcp will dispose of the ssk and subflow ctx */
--		if (ssk->sk_state == TCP_LISTEN) {
--			tcp_set_state(ssk, TCP_CLOSE);
--			mptcp_subflow_queue_clean(sk, ssk);
--			inet_csk_listen_stop(ssk);
--		}
- 		__tcp_close(ssk, 0);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_thermal.c b/drivers/net/ethernet/mellanox/mlxsw/core_thermal.c
+index 987fe5c9d5a36..c5240d38c9dbd 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core_thermal.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core_thermal.c
+@@ -36,33 +36,39 @@ enum mlxsw_thermal_trips {
+ 	MLXSW_THERMAL_TEMP_TRIP_HOT,
+ };
  
- 		/* close acquired an extra ref */
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 2cddd5b52e8fa..051e8022d6611 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -615,7 +615,6 @@ void mptcp_close_ssk(struct sock *sk, struct sock *ssk,
- 		     struct mptcp_subflow_context *subflow);
- void __mptcp_subflow_send_ack(struct sock *ssk);
- void mptcp_subflow_reset(struct sock *ssk);
--void mptcp_subflow_queue_clean(struct sock *sk, struct sock *ssk);
- void mptcp_sock_graft(struct sock *sk, struct socket *parent);
- struct socket *__mptcp_nmpc_socket(const struct mptcp_sock *msk);
- bool __mptcp_close(struct sock *sk, long timeout);
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 459621a0410cd..fc876c2480029 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1764,78 +1764,6 @@ static void subflow_state_change(struct sock *sk)
- 	}
+-struct mlxsw_thermal_trip {
+-	int	type;
+-	int	temp;
+-	int	hyst;
++struct mlxsw_cooling_states {
+ 	int	min_state;
+ 	int	max_state;
+ };
+ 
+-static const struct mlxsw_thermal_trip default_thermal_trips[] = {
++static const struct thermal_trip default_thermal_trips[] = {
+ 	{	/* In range - 0-40% PWM */
+ 		.type		= THERMAL_TRIP_ACTIVE,
+-		.temp		= MLXSW_THERMAL_ASIC_TEMP_NORM,
+-		.hyst		= MLXSW_THERMAL_HYSTERESIS_TEMP,
+-		.min_state	= 0,
+-		.max_state	= (4 * MLXSW_THERMAL_MAX_STATE) / 10,
++		.temperature	= MLXSW_THERMAL_ASIC_TEMP_NORM,
++		.hysteresis	= MLXSW_THERMAL_HYSTERESIS_TEMP,
+ 	},
+ 	{
+ 		/* In range - 40-100% PWM */
+ 		.type		= THERMAL_TRIP_ACTIVE,
+-		.temp		= MLXSW_THERMAL_ASIC_TEMP_HIGH,
+-		.hyst		= MLXSW_THERMAL_HYSTERESIS_TEMP,
+-		.min_state	= (4 * MLXSW_THERMAL_MAX_STATE) / 10,
+-		.max_state	= MLXSW_THERMAL_MAX_STATE,
++		.temperature	= MLXSW_THERMAL_ASIC_TEMP_HIGH,
++		.hysteresis	= MLXSW_THERMAL_HYSTERESIS_TEMP,
+ 	},
+ 	{	/* Warning */
+ 		.type		= THERMAL_TRIP_HOT,
+-		.temp		= MLXSW_THERMAL_ASIC_TEMP_HOT,
++		.temperature	= MLXSW_THERMAL_ASIC_TEMP_HOT,
++	},
++};
++
++static const struct mlxsw_cooling_states default_cooling_states[] = {
++	{
++		.min_state	= 0,
++		.max_state	= (4 * MLXSW_THERMAL_MAX_STATE) / 10,
++	},
++	{
++		.min_state	= (4 * MLXSW_THERMAL_MAX_STATE) / 10,
++		.max_state	= MLXSW_THERMAL_MAX_STATE,
++	},
++	{
+ 		.min_state	= MLXSW_THERMAL_MAX_STATE,
+ 		.max_state	= MLXSW_THERMAL_MAX_STATE,
+ 	},
+@@ -78,7 +84,8 @@ struct mlxsw_thermal;
+ struct mlxsw_thermal_module {
+ 	struct mlxsw_thermal *parent;
+ 	struct thermal_zone_device *tzdev;
+-	struct mlxsw_thermal_trip trips[MLXSW_THERMAL_NUM_TRIPS];
++	struct thermal_trip trips[MLXSW_THERMAL_NUM_TRIPS];
++	struct mlxsw_cooling_states cooling_states[MLXSW_THERMAL_NUM_TRIPS];
+ 	int module; /* Module or gearbox number */
+ 	u8 slot_index;
+ };
+@@ -99,7 +106,8 @@ struct mlxsw_thermal {
+ 	int polling_delay;
+ 	struct thermal_cooling_device *cdevs[MLXSW_MFCR_PWMS_MAX];
+ 	u8 cooling_levels[MLXSW_THERMAL_MAX_STATE + 1];
+-	struct mlxsw_thermal_trip trips[MLXSW_THERMAL_NUM_TRIPS];
++	struct thermal_trip trips[MLXSW_THERMAL_NUM_TRIPS];
++	struct mlxsw_cooling_states cooling_states[MLXSW_THERMAL_NUM_TRIPS];
+ 	struct mlxsw_thermal_area line_cards[];
+ };
+ 
+@@ -136,9 +144,9 @@ static int mlxsw_get_cooling_device_idx(struct mlxsw_thermal *thermal,
+ static void
+ mlxsw_thermal_module_trips_reset(struct mlxsw_thermal_module *tz)
+ {
+-	tz->trips[MLXSW_THERMAL_TEMP_TRIP_NORM].temp = 0;
+-	tz->trips[MLXSW_THERMAL_TEMP_TRIP_HIGH].temp = 0;
+-	tz->trips[MLXSW_THERMAL_TEMP_TRIP_HOT].temp = 0;
++	tz->trips[MLXSW_THERMAL_TEMP_TRIP_NORM].temperature = 0;
++	tz->trips[MLXSW_THERMAL_TEMP_TRIP_HIGH].temperature = 0;
++	tz->trips[MLXSW_THERMAL_TEMP_TRIP_HOT].temperature = 0;
  }
  
--void mptcp_subflow_queue_clean(struct sock *listener_sk, struct sock *listener_ssk)
+ static int
+@@ -180,12 +188,12 @@ mlxsw_thermal_module_trips_update(struct device *dev, struct mlxsw_core *core,
+ 	 * by subtracting double hysteresis value.
+ 	 */
+ 	if (crit_temp >= MLXSW_THERMAL_MODULE_TEMP_SHIFT)
+-		tz->trips[MLXSW_THERMAL_TEMP_TRIP_NORM].temp = crit_temp -
++		tz->trips[MLXSW_THERMAL_TEMP_TRIP_NORM].temperature = crit_temp -
+ 					MLXSW_THERMAL_MODULE_TEMP_SHIFT;
+ 	else
+-		tz->trips[MLXSW_THERMAL_TEMP_TRIP_NORM].temp = crit_temp;
+-	tz->trips[MLXSW_THERMAL_TEMP_TRIP_HIGH].temp = crit_temp;
+-	tz->trips[MLXSW_THERMAL_TEMP_TRIP_HOT].temp = emerg_temp;
++		tz->trips[MLXSW_THERMAL_TEMP_TRIP_NORM].temperature = crit_temp;
++	tz->trips[MLXSW_THERMAL_TEMP_TRIP_HIGH].temperature = crit_temp;
++	tz->trips[MLXSW_THERMAL_TEMP_TRIP_HOT].temperature = emerg_temp;
+ 
+ 	return 0;
+ }
+@@ -202,11 +210,11 @@ static int mlxsw_thermal_bind(struct thermal_zone_device *tzdev,
+ 		return 0;
+ 
+ 	for (i = 0; i < MLXSW_THERMAL_NUM_TRIPS; i++) {
+-		const struct mlxsw_thermal_trip *trip = &thermal->trips[i];
++		const struct mlxsw_cooling_states *state = &thermal->cooling_states[i];
+ 
+ 		err = thermal_zone_bind_cooling_device(tzdev, i, cdev,
+-						       trip->max_state,
+-						       trip->min_state,
++						       state->max_state,
++						       state->min_state,
+ 						       THERMAL_WEIGHT_DEFAULT);
+ 		if (err < 0) {
+ 			dev_err(dev, "Failed to bind cooling device to trip %d\n", i);
+@@ -260,61 +268,6 @@ static int mlxsw_thermal_get_temp(struct thermal_zone_device *tzdev,
+ 	return 0;
+ }
+ 
+-static int mlxsw_thermal_get_trip_type(struct thermal_zone_device *tzdev,
+-				       int trip,
+-				       enum thermal_trip_type *p_type)
 -{
--	struct request_sock_queue *queue = &inet_csk(listener_ssk)->icsk_accept_queue;
--	struct mptcp_sock *msk, *next, *head = NULL;
--	struct request_sock *req;
+-	struct mlxsw_thermal *thermal = tzdev->devdata;
 -
--	/* build a list of all unaccepted mptcp sockets */
--	spin_lock_bh(&queue->rskq_lock);
--	for (req = queue->rskq_accept_head; req; req = req->dl_next) {
--		struct mptcp_subflow_context *subflow;
--		struct sock *ssk = req->sk;
--		struct mptcp_sock *msk;
+-	if (trip < 0 || trip >= MLXSW_THERMAL_NUM_TRIPS)
+-		return -EINVAL;
 -
--		if (!sk_is_mptcp(ssk))
--			continue;
--
--		subflow = mptcp_subflow_ctx(ssk);
--		if (!subflow || !subflow->conn)
--			continue;
--
--		/* skip if already in list */
--		msk = mptcp_sk(subflow->conn);
--		if (msk->dl_next || msk == head)
--			continue;
--
--		msk->dl_next = head;
--		head = msk;
--	}
--	spin_unlock_bh(&queue->rskq_lock);
--	if (!head)
--		return;
--
--	/* can't acquire the msk socket lock under the subflow one,
--	 * or will cause ABBA deadlock
--	 */
--	release_sock(listener_ssk);
--
--	for (msk = head; msk; msk = next) {
--		struct sock *sk = (struct sock *)msk;
--		bool do_cancel_work;
--
--		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
--		next = msk->dl_next;
--		msk->first = NULL;
--		msk->dl_next = NULL;
--
--		do_cancel_work = __mptcp_close(sk, 0);
--		release_sock(sk);
--		if (do_cancel_work) {
--			/* lockdep will report a false positive ABBA deadlock
--			 * between cancel_work_sync and the listener socket.
--			 * The involved locks belong to different sockets WRT
--			 * the existing AB chain.
--			 * Using a per socket key is problematic as key
--			 * deregistration requires process context and must be
--			 * performed at socket disposal time, in atomic
--			 * context.
--			 * Just tell lockdep to consider the listener socket
--			 * released here.
--			 */
--			mutex_release(&listener_sk->sk_lock.dep_map, _RET_IP_);
--			mptcp_cancel_work(sk);
--			mutex_acquire(&listener_sk->sk_lock.dep_map,
--				      SINGLE_DEPTH_NESTING, 0, _RET_IP_);
--		}
--		sock_put(sk);
--	}
--
--	/* we are still under the listener msk socket lock */
--	lock_sock_nested(listener_ssk, SINGLE_DEPTH_NESTING);
+-	*p_type = thermal->trips[trip].type;
+-	return 0;
 -}
 -
- static int subflow_ulp_init(struct sock *sk)
- {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
+-static int mlxsw_thermal_get_trip_temp(struct thermal_zone_device *tzdev,
+-				       int trip, int *p_temp)
+-{
+-	struct mlxsw_thermal *thermal = tzdev->devdata;
+-
+-	if (trip < 0 || trip >= MLXSW_THERMAL_NUM_TRIPS)
+-		return -EINVAL;
+-
+-	*p_temp = thermal->trips[trip].temp;
+-	return 0;
+-}
+-
+-static int mlxsw_thermal_set_trip_temp(struct thermal_zone_device *tzdev,
+-				       int trip, int temp)
+-{
+-	struct mlxsw_thermal *thermal = tzdev->devdata;
+-
+-	if (trip < 0 || trip >= MLXSW_THERMAL_NUM_TRIPS)
+-		return -EINVAL;
+-
+-	thermal->trips[trip].temp = temp;
+-	return 0;
+-}
+-
+-static int mlxsw_thermal_get_trip_hyst(struct thermal_zone_device *tzdev,
+-				       int trip, int *p_hyst)
+-{
+-	struct mlxsw_thermal *thermal = tzdev->devdata;
+-
+-	*p_hyst = thermal->trips[trip].hyst;
+-	return 0;
+-}
+-
+-static int mlxsw_thermal_set_trip_hyst(struct thermal_zone_device *tzdev,
+-				       int trip, int hyst)
+-{
+-	struct mlxsw_thermal *thermal = tzdev->devdata;
+-
+-	thermal->trips[trip].hyst = hyst;
+-	return 0;
+-}
+-
+ static struct thermal_zone_params mlxsw_thermal_params = {
+ 	.no_hwmon = true,
+ };
+@@ -323,11 +276,6 @@ static struct thermal_zone_device_ops mlxsw_thermal_ops = {
+ 	.bind = mlxsw_thermal_bind,
+ 	.unbind = mlxsw_thermal_unbind,
+ 	.get_temp = mlxsw_thermal_get_temp,
+-	.get_trip_type	= mlxsw_thermal_get_trip_type,
+-	.get_trip_temp	= mlxsw_thermal_get_trip_temp,
+-	.set_trip_temp	= mlxsw_thermal_set_trip_temp,
+-	.get_trip_hyst	= mlxsw_thermal_get_trip_hyst,
+-	.set_trip_hyst	= mlxsw_thermal_set_trip_hyst,
+ };
+ 
+ static int mlxsw_thermal_module_bind(struct thermal_zone_device *tzdev,
+@@ -342,11 +290,11 @@ static int mlxsw_thermal_module_bind(struct thermal_zone_device *tzdev,
+ 		return 0;
+ 
+ 	for (i = 0; i < MLXSW_THERMAL_NUM_TRIPS; i++) {
+-		const struct mlxsw_thermal_trip *trip = &tz->trips[i];
++		const struct mlxsw_cooling_states *state = &tz->cooling_states[i];
+ 
+ 		err = thermal_zone_bind_cooling_device(tzdev, i, cdev,
+-						       trip->max_state,
+-						       trip->min_state,
++						       state->max_state,
++						       state->min_state,
+ 						       THERMAL_WEIGHT_DEFAULT);
+ 		if (err < 0)
+ 			goto err_thermal_zone_bind_cooling_device;
+@@ -434,74 +382,10 @@ static int mlxsw_thermal_module_temp_get(struct thermal_zone_device *tzdev,
+ 	return 0;
+ }
+ 
+-static int
+-mlxsw_thermal_module_trip_type_get(struct thermal_zone_device *tzdev, int trip,
+-				   enum thermal_trip_type *p_type)
+-{
+-	struct mlxsw_thermal_module *tz = tzdev->devdata;
+-
+-	if (trip < 0 || trip >= MLXSW_THERMAL_NUM_TRIPS)
+-		return -EINVAL;
+-
+-	*p_type = tz->trips[trip].type;
+-	return 0;
+-}
+-
+-static int
+-mlxsw_thermal_module_trip_temp_get(struct thermal_zone_device *tzdev,
+-				   int trip, int *p_temp)
+-{
+-	struct mlxsw_thermal_module *tz = tzdev->devdata;
+-
+-	if (trip < 0 || trip >= MLXSW_THERMAL_NUM_TRIPS)
+-		return -EINVAL;
+-
+-	*p_temp = tz->trips[trip].temp;
+-	return 0;
+-}
+-
+-static int
+-mlxsw_thermal_module_trip_temp_set(struct thermal_zone_device *tzdev,
+-				   int trip, int temp)
+-{
+-	struct mlxsw_thermal_module *tz = tzdev->devdata;
+-
+-	if (trip < 0 || trip >= MLXSW_THERMAL_NUM_TRIPS)
+-		return -EINVAL;
+-
+-	tz->trips[trip].temp = temp;
+-	return 0;
+-}
+-
+-static int
+-mlxsw_thermal_module_trip_hyst_get(struct thermal_zone_device *tzdev, int trip,
+-				   int *p_hyst)
+-{
+-	struct mlxsw_thermal_module *tz = tzdev->devdata;
+-
+-	*p_hyst = tz->trips[trip].hyst;
+-	return 0;
+-}
+-
+-static int
+-mlxsw_thermal_module_trip_hyst_set(struct thermal_zone_device *tzdev, int trip,
+-				   int hyst)
+-{
+-	struct mlxsw_thermal_module *tz = tzdev->devdata;
+-
+-	tz->trips[trip].hyst = hyst;
+-	return 0;
+-}
+-
+ static struct thermal_zone_device_ops mlxsw_thermal_module_ops = {
+ 	.bind		= mlxsw_thermal_module_bind,
+ 	.unbind		= mlxsw_thermal_module_unbind,
+ 	.get_temp	= mlxsw_thermal_module_temp_get,
+-	.get_trip_type	= mlxsw_thermal_module_trip_type_get,
+-	.get_trip_temp	= mlxsw_thermal_module_trip_temp_get,
+-	.set_trip_temp	= mlxsw_thermal_module_trip_temp_set,
+-	.get_trip_hyst	= mlxsw_thermal_module_trip_hyst_get,
+-	.set_trip_hyst	= mlxsw_thermal_module_trip_hyst_set,
+ };
+ 
+ static int mlxsw_thermal_gearbox_temp_get(struct thermal_zone_device *tzdev,
+@@ -531,11 +415,6 @@ static struct thermal_zone_device_ops mlxsw_thermal_gearbox_ops = {
+ 	.bind		= mlxsw_thermal_module_bind,
+ 	.unbind		= mlxsw_thermal_module_unbind,
+ 	.get_temp	= mlxsw_thermal_gearbox_temp_get,
+-	.get_trip_type	= mlxsw_thermal_module_trip_type_get,
+-	.get_trip_temp	= mlxsw_thermal_module_trip_temp_get,
+-	.set_trip_temp	= mlxsw_thermal_module_trip_temp_set,
+-	.get_trip_hyst	= mlxsw_thermal_module_trip_hyst_get,
+-	.set_trip_hyst	= mlxsw_thermal_module_trip_hyst_set,
+ };
+ 
+ static int mlxsw_thermal_get_max_state(struct thermal_cooling_device *cdev,
+@@ -617,7 +496,8 @@ mlxsw_thermal_module_tz_init(struct mlxsw_thermal_module *module_tz)
+ 	else
+ 		snprintf(tz_name, sizeof(tz_name), "mlxsw-module%d",
+ 			 module_tz->module + 1);
+-	module_tz->tzdev = thermal_zone_device_register(tz_name,
++	module_tz->tzdev = thermal_zone_device_register_with_trips(tz_name,
++							module_tz->trips,
+ 							MLXSW_THERMAL_NUM_TRIPS,
+ 							MLXSW_THERMAL_TRIP_MASK,
+ 							module_tz,
+@@ -661,6 +541,8 @@ mlxsw_thermal_module_init(struct device *dev, struct mlxsw_core *core,
+ 	module_tz->parent = thermal;
+ 	memcpy(module_tz->trips, default_thermal_trips,
+ 	       sizeof(thermal->trips));
++	memcpy(module_tz->cooling_states, default_cooling_states,
++	       sizeof(thermal->cooling_states));
+ 	/* Initialize all trip point. */
+ 	mlxsw_thermal_module_trips_reset(module_tz);
+ 	/* Read module temperature and thresholds. */
+@@ -756,7 +638,8 @@ mlxsw_thermal_gearbox_tz_init(struct mlxsw_thermal_module *gearbox_tz)
+ 	else
+ 		snprintf(tz_name, sizeof(tz_name), "mlxsw-gearbox%d",
+ 			 gearbox_tz->module + 1);
+-	gearbox_tz->tzdev = thermal_zone_device_register(tz_name,
++	gearbox_tz->tzdev = thermal_zone_device_register_with_trips(tz_name,
++						gearbox_tz->trips,
+ 						MLXSW_THERMAL_NUM_TRIPS,
+ 						MLXSW_THERMAL_TRIP_MASK,
+ 						gearbox_tz,
+@@ -813,6 +696,8 @@ mlxsw_thermal_gearboxes_init(struct device *dev, struct mlxsw_core *core,
+ 		gearbox_tz = &area->tz_gearbox_arr[i];
+ 		memcpy(gearbox_tz->trips, default_thermal_trips,
+ 		       sizeof(thermal->trips));
++		memcpy(gearbox_tz->cooling_states, default_cooling_states,
++		       sizeof(thermal->cooling_states));
+ 		gearbox_tz->module = i;
+ 		gearbox_tz->parent = thermal;
+ 		gearbox_tz->slot_index = area->slot_index;
+@@ -928,6 +813,7 @@ int mlxsw_thermal_init(struct mlxsw_core *core,
+ 	thermal->core = core;
+ 	thermal->bus_info = bus_info;
+ 	memcpy(thermal->trips, default_thermal_trips, sizeof(thermal->trips));
++	memcpy(thermal->cooling_states, default_cooling_states, sizeof(thermal->cooling_states));
+ 	thermal->line_cards[0].slot_index = 0;
+ 
+ 	err = mlxsw_reg_query(thermal->core, MLXSW_REG(mfcr), mfcr_pl);
+@@ -981,7 +867,8 @@ int mlxsw_thermal_init(struct mlxsw_core *core,
+ 				 MLXSW_THERMAL_SLOW_POLL_INT :
+ 				 MLXSW_THERMAL_POLL_INT;
+ 
+-	thermal->tzdev = thermal_zone_device_register("mlxsw",
++	thermal->tzdev = thermal_zone_device_register_with_trips("mlxsw",
++						      thermal->trips,
+ 						      MLXSW_THERMAL_NUM_TRIPS,
+ 						      MLXSW_THERMAL_TRIP_MASK,
+ 						      thermal,
 -- 
 2.39.2
 
