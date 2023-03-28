@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA458476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30E2C433D2;
-	Tue, 28 Mar 2023 14:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87168476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67167C433EF;
+	Tue, 28 Mar 2023 14:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015334;
-	bh=jcn7xGy3ML1plwlG7eNRMarFTunyohy3LJQXiEiDJDc=;
+	s=korg; t=1680015336;
+	bh=UNy7alHGGbVyn/tPZNs5FvFam3JZZAFua2nS+eSlX8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5DE5Ow+DqxSYxzeORAiSrfQIi2d557MC8L/zMOYFKSRp6p8XOiWGqAl5GmAnVew/
-	 KTOsBi/BMttW3iS6LVV/U4LKrl80nN4U3kzDiO4601yHRDk3m5sxepKYsc7F+Zocv/
-	 M/SIUVPcXIeVI01Ldfi1bBUJx2ht6YV3wt6CeFVE=
+	b=FllwpMeZM18z30vrSr8cneaWkp8M711udo/pHOIJG3cUCAkzyIlgXWIeHWbms6fiS
+	 0gh7CNauqXKI//06rkZ7N+l6Tf7LRpFvxveLFYQmG8IKa+/lp3zBIh2glXdRe2ETUl
+	 9sfR6ONP80lh9r0/yXSS+z+Z+fNFndB2jSH/w4ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Christoph Paasch <cpaasch@apple.com>
-Subject: [PATCH 6.1 011/224] mptcp: use the workqueue to destroy unaccepted sockets
-Date: Tue, 28 Mar 2023 16:40:07 +0200
-Message-Id: <20230328142617.712530283@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 002/224] interconnect: qcom: sm8450: switch to qcom_icc_rpmh_* function
+Date: Tue, 28 Mar 2023 16:39:58 +0200
+Message-Id: <20230328142617.313218842@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,282 +35,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit b6985b9b82954caa53f862d6059d06c0526254f0 ]
+[ Upstream commit 87e8fab1917a2b3f6e3dedfd1cdf22a1416e6676 ]
 
-  Backports notes: one simple conflict in net/mptcp/protocol.c with:
+Change sm8450 interconnect driver to use generic qcom_icc_rpmh_*
+functions rather than embedding a copy of thema. This also fixes an
+overallocation of memory for icc_onecell_data structure.
 
-    commit a5ef058dc4d9 ("net: introduce and use custom sockopt socket flag")
-
-  Where the two commits add a new line for different actions in the same
-  context in mptcp_stream_accept().
-
-Christoph reported a UaF at token lookup time after having
-refactored the passive socket initialization part:
-
-  BUG: KASAN: use-after-free in __token_bucket_busy+0x253/0x260
-  Read of size 4 at addr ffff88810698d5b0 by task syz-executor653/3198
-
-  CPU: 1 PID: 3198 Comm: syz-executor653 Not tainted 6.2.0-rc59af4eaa31c1f6c00c8f1e448ed99a45c66340dd5 #6
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x6e/0x91
-   print_report+0x16a/0x46f
-   kasan_report+0xad/0x130
-   __token_bucket_busy+0x253/0x260
-   mptcp_token_new_connect+0x13d/0x490
-   mptcp_connect+0x4ed/0x860
-   __inet_stream_connect+0x80e/0xd90
-   tcp_sendmsg_fastopen+0x3ce/0x710
-   mptcp_sendmsg+0xff1/0x1a20
-   inet_sendmsg+0x11d/0x140
-   __sys_sendto+0x405/0x490
-   __x64_sys_sendto+0xdc/0x1b0
-   do_syscall_64+0x3b/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-We need to properly clean-up all the paired MPTCP-level
-resources and be sure to release the msk last, even when
-the unaccepted subflow is destroyed by the TCP internals
-via inet_child_forget().
-
-We can re-use the existing MPTCP_WORK_CLOSE_SUBFLOW infra,
-explicitly checking that for the critical scenario: the
-closed subflow is the MPC one, the msk is not accepted and
-eventually going through full cleanup.
-
-With such change, __mptcp_destroy_sock() is always called
-on msk sockets, even on accepted ones. We don't need anymore
-to transiently drop one sk reference at msk clone time.
-
-Please note this commit depends on the parent one:
-
-  mptcp: refactor passive socket initialization
-
-Fixes: 58b09919626b ("mptcp: create msk early")
-Cc: stable@vger.kernel.org
-Reported-and-tested-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/347
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Fixes: fafc114a468e ("interconnect: qcom: Add SM8450 interconnect provider driver")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230105002221.1416479-3-dmitry.baryshkov@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 41 +++++++++++++++++++++++++++++++----------
- net/mptcp/protocol.h |  5 ++++-
- net/mptcp/subflow.c  | 17 ++++++++++++-----
- 3 files changed, 47 insertions(+), 16 deletions(-)
+ drivers/interconnect/qcom/sm8450.c | 98 +-----------------------------
+ 1 file changed, 2 insertions(+), 96 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 777f795246ed2..b679e8a430a83 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2357,7 +2357,6 @@ static void __mptcp_close_ssk(struct sock *sk, struct sock *ssk,
- 		goto out;
- 	}
+diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
+index e3a12e3d6e061..2d7a8e7b85ec2 100644
+--- a/drivers/interconnect/qcom/sm8450.c
++++ b/drivers/interconnect/qcom/sm8450.c
+@@ -1844,100 +1844,6 @@ static const struct qcom_icc_desc sm8450_system_noc = {
+ 	.num_bcms = ARRAY_SIZE(system_noc_bcms),
+ };
  
--	sock_orphan(ssk);
- 	subflow->disposable = 1;
- 
- 	/* if ssk hit tcp_done(), tcp_cleanup_ulp() cleared the related ops
-@@ -2365,7 +2364,20 @@ static void __mptcp_close_ssk(struct sock *sk, struct sock *ssk,
- 	 * reference owned by msk;
- 	 */
- 	if (!inet_csk(ssk)->icsk_ulp_ops) {
-+		WARN_ON_ONCE(!sock_flag(ssk, SOCK_DEAD));
- 		kfree_rcu(subflow, rcu);
-+	} else if (msk->in_accept_queue && msk->first == ssk) {
-+		/* if the first subflow moved to a close state, e.g. due to
-+		 * incoming reset and we reach here before inet_child_forget()
-+		 * the TCP stack could later try to close it via
-+		 * inet_csk_listen_stop(), or deliver it to the user space via
-+		 * accept().
-+		 * We can't delete the subflow - or risk a double free - nor let
-+		 * the msk survive - or will be leaked in the non accept scenario:
-+		 * fallback and let TCP cope with the subflow cleanup.
-+		 */
-+		WARN_ON_ONCE(sock_flag(ssk, SOCK_DEAD));
-+		mptcp_subflow_drop_ctx(ssk);
- 	} else {
- 		/* otherwise tcp will dispose of the ssk and subflow ctx */
- 		if (ssk->sk_state == TCP_LISTEN) {
-@@ -2412,9 +2424,10 @@ static unsigned int mptcp_sync_mss(struct sock *sk, u32 pmtu)
- 	return 0;
- }
- 
--static void __mptcp_close_subflow(struct mptcp_sock *msk)
-+static void __mptcp_close_subflow(struct sock *sk)
- {
- 	struct mptcp_subflow_context *subflow, *tmp;
-+	struct mptcp_sock *msk = mptcp_sk(sk);
- 
- 	might_sleep();
- 
-@@ -2428,7 +2441,15 @@ static void __mptcp_close_subflow(struct mptcp_sock *msk)
- 		if (!skb_queue_empty_lockless(&ssk->sk_receive_queue))
- 			continue;
- 
--		mptcp_close_ssk((struct sock *)msk, ssk, subflow);
-+		mptcp_close_ssk(sk, ssk, subflow);
-+	}
-+
-+	/* if the MPC subflow has been closed before the msk is accepted,
-+	 * msk will never be accept-ed, close it now
-+	 */
-+	if (!msk->first && msk->in_accept_queue) {
-+		sock_set_flag(sk, SOCK_DEAD);
-+		inet_sk_state_store(sk, TCP_CLOSE);
- 	}
- }
- 
-@@ -2637,6 +2658,9 @@ static void mptcp_worker(struct work_struct *work)
- 	__mptcp_check_send_data_fin(sk);
- 	mptcp_check_data_fin(sk);
- 
-+	if (test_and_clear_bit(MPTCP_WORK_CLOSE_SUBFLOW, &msk->flags))
-+		__mptcp_close_subflow(sk);
-+
- 	/* There is no point in keeping around an orphaned sk timedout or
- 	 * closed, but we need the msk around to reply to incoming DATA_FIN,
- 	 * even if it is orphaned and in FIN_WAIT2 state
-@@ -2652,9 +2676,6 @@ static void mptcp_worker(struct work_struct *work)
- 		}
- 	}
- 
--	if (test_and_clear_bit(MPTCP_WORK_CLOSE_SUBFLOW, &msk->flags))
--		__mptcp_close_subflow(msk);
+-static int qnoc_probe(struct platform_device *pdev)
+-{
+-	const struct qcom_icc_desc *desc;
+-	struct icc_onecell_data *data;
+-	struct icc_provider *provider;
+-	struct qcom_icc_node * const *qnodes;
+-	struct qcom_icc_provider *qp;
+-	struct icc_node *node;
+-	size_t num_nodes, i;
+-	int ret;
 -
- 	if (test_and_clear_bit(MPTCP_WORK_RTX, &msk->flags))
- 		__mptcp_retrans(sk);
+-	desc = device_get_match_data(&pdev->dev);
+-	if (!desc)
+-		return -EINVAL;
+-
+-	qnodes = desc->nodes;
+-	num_nodes = desc->num_nodes;
+-
+-	qp = devm_kzalloc(&pdev->dev, sizeof(*qp), GFP_KERNEL);
+-	if (!qp)
+-		return -ENOMEM;
+-
+-	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
+-	if (!data)
+-		return -ENOMEM;
+-
+-	provider = &qp->provider;
+-	provider->dev = &pdev->dev;
+-	provider->set = qcom_icc_set;
+-	provider->pre_aggregate = qcom_icc_pre_aggregate;
+-	provider->aggregate = qcom_icc_aggregate;
+-	provider->xlate_extended = qcom_icc_xlate_extended;
+-	INIT_LIST_HEAD(&provider->nodes);
+-	provider->data = data;
+-
+-	qp->dev = &pdev->dev;
+-	qp->bcms = desc->bcms;
+-	qp->num_bcms = desc->num_bcms;
+-
+-	qp->voter = of_bcm_voter_get(qp->dev, NULL);
+-	if (IS_ERR(qp->voter))
+-		return PTR_ERR(qp->voter);
+-
+-	ret = icc_provider_add(provider);
+-	if (ret) {
+-		dev_err(&pdev->dev, "error adding interconnect provider\n");
+-		return ret;
+-	}
+-
+-	for (i = 0; i < qp->num_bcms; i++)
+-		qcom_icc_bcm_init(qp->bcms[i], &pdev->dev);
+-
+-	for (i = 0; i < num_nodes; i++) {
+-		size_t j;
+-
+-		if (!qnodes[i])
+-			continue;
+-
+-		node = icc_node_create(qnodes[i]->id);
+-		if (IS_ERR(node)) {
+-			ret = PTR_ERR(node);
+-			goto err;
+-		}
+-
+-		node->name = qnodes[i]->name;
+-		node->data = qnodes[i];
+-		icc_node_add(node, provider);
+-
+-		for (j = 0; j < qnodes[i]->num_links; j++)
+-			icc_link_create(node, qnodes[i]->links[j]);
+-
+-		data->nodes[i] = node;
+-	}
+-	data->num_nodes = num_nodes;
+-
+-	platform_set_drvdata(pdev, qp);
+-
+-	return 0;
+-err:
+-	icc_nodes_remove(provider);
+-	icc_provider_del(provider);
+-	return ret;
+-}
+-
+-static int qnoc_remove(struct platform_device *pdev)
+-{
+-	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
+-
+-	icc_nodes_remove(&qp->provider);
+-	icc_provider_del(&qp->provider);
+-
+-	return 0;
+-}
+-
+ static const struct of_device_id qnoc_of_match[] = {
+ 	{ .compatible = "qcom,sm8450-aggre1-noc",
+ 	  .data = &sm8450_aggre1_noc},
+@@ -1966,8 +1872,8 @@ static const struct of_device_id qnoc_of_match[] = {
+ MODULE_DEVICE_TABLE(of, qnoc_of_match);
  
-@@ -3084,6 +3105,7 @@ struct sock *mptcp_sk_clone(const struct sock *sk,
- 	msk->local_key = subflow_req->local_key;
- 	msk->token = subflow_req->token;
- 	msk->subflow = NULL;
-+	msk->in_accept_queue = 1;
- 	WRITE_ONCE(msk->fully_established, false);
- 	if (mp_opt->suboptions & OPTION_MPTCP_CSUMREQD)
- 		WRITE_ONCE(msk->csum_enabled, true);
-@@ -3110,8 +3132,7 @@ struct sock *mptcp_sk_clone(const struct sock *sk,
- 	security_inet_csk_clone(nsk, req);
- 	bh_unlock_sock(nsk);
- 
--	/* keep a single reference */
--	__sock_put(nsk);
-+	/* note: the newly allocated socket refcount is 2 now */
- 	return nsk;
- }
- 
-@@ -3167,8 +3188,6 @@ static struct sock *mptcp_accept(struct sock *sk, int flags, int *err,
- 			goto out;
- 		}
- 
--		/* acquire the 2nd reference for the owning socket */
--		sock_hold(new_mptcp_sock);
- 		newsk = new_mptcp_sock;
- 		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_MPCAPABLEPASSIVEACK);
- 	} else {
-@@ -3726,6 +3745,8 @@ static int mptcp_stream_accept(struct socket *sock, struct socket *newsock,
- 		struct mptcp_subflow_context *subflow;
- 		struct sock *newsk = newsock->sk;
- 
-+		msk->in_accept_queue = 0;
-+
- 		lock_sock(newsk);
- 
- 		/* set ssk->sk_socket of accept()ed flows to mptcp socket.
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 6f22ae13c9848..2cddd5b52e8fa 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -286,7 +286,8 @@ struct mptcp_sock {
- 	u8		recvmsg_inq:1,
- 			cork:1,
- 			nodelay:1,
--			fastopening:1;
-+			fastopening:1,
-+			in_accept_queue:1;
- 	int		connect_flags;
- 	struct work_struct work;
- 	struct sk_buff  *ooo_last_skb;
-@@ -651,6 +652,8 @@ void mptcp_subflow_set_active(struct mptcp_subflow_context *subflow);
- 
- bool mptcp_subflow_active(struct mptcp_subflow_context *subflow);
- 
-+void mptcp_subflow_drop_ctx(struct sock *ssk);
-+
- static inline void mptcp_subflow_tcp_fallback(struct sock *sk,
- 					      struct mptcp_subflow_context *ctx)
- {
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index fe815103060c6..459621a0410cd 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -636,9 +636,10 @@ static bool subflow_hmac_valid(const struct request_sock *req,
- 
- static void mptcp_force_close(struct sock *sk)
- {
--	/* the msk is not yet exposed to user-space */
-+	/* the msk is not yet exposed to user-space, and refcount is 2 */
- 	inet_sk_state_store(sk, TCP_CLOSE);
- 	sk_common_release(sk);
-+	sock_put(sk);
- }
- 
- static void subflow_ulp_fallback(struct sock *sk,
-@@ -654,7 +655,7 @@ static void subflow_ulp_fallback(struct sock *sk,
- 	mptcp_subflow_ops_undo_override(sk);
- }
- 
--static void subflow_drop_ctx(struct sock *ssk)
-+void mptcp_subflow_drop_ctx(struct sock *ssk)
- {
- 	struct mptcp_subflow_context *ctx = mptcp_subflow_ctx(ssk);
- 
-@@ -758,7 +759,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 
- 			if (new_msk)
- 				mptcp_copy_inaddrs(new_msk, child);
--			subflow_drop_ctx(child);
-+			mptcp_subflow_drop_ctx(child);
- 			goto out;
- 		}
- 
-@@ -849,7 +850,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 	return child;
- 
- dispose_child:
--	subflow_drop_ctx(child);
-+	mptcp_subflow_drop_ctx(child);
- 	tcp_rsk(req)->drop_req = true;
- 	inet_csk_prepare_for_destroy_sock(child);
- 	tcp_done(child);
-@@ -1804,7 +1805,6 @@ void mptcp_subflow_queue_clean(struct sock *listener_sk, struct sock *listener_s
- 		struct sock *sk = (struct sock *)msk;
- 		bool do_cancel_work;
- 
--		sock_hold(sk);
- 		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
- 		next = msk->dl_next;
- 		msk->first = NULL;
-@@ -1892,6 +1892,13 @@ static void subflow_ulp_release(struct sock *ssk)
- 		 * when the subflow is still unaccepted
- 		 */
- 		release = ctx->disposable || list_empty(&ctx->node);
-+
-+		/* inet_child_forget() does not call sk_state_change(),
-+		 * explicitly trigger the socket close machinery
-+		 */
-+		if (!release && !test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW,
-+						  &mptcp_sk(sk)->flags))
-+			mptcp_schedule_work(sk);
- 		sock_put(sk);
- 	}
- 
+ static struct platform_driver qnoc_driver = {
+-	.probe = qnoc_probe,
+-	.remove = qnoc_remove,
++	.probe = qcom_icc_rpmh_probe,
++	.remove = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sm8450",
+ 		.of_match_table = qnoc_of_match,
 -- 
 2.39.2
 
