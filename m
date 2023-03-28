@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B75C8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:12:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C473DC433D2;
-	Tue, 28 Mar 2023 15:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E8C8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:12:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9F8C433D2;
+	Tue, 28 Mar 2023 15:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016342;
-	bh=WNvdnmiOO71jnJlHG7XWb8h3c0Ed1X41bES/gBJpDl8=;
+	s=korg; t=1680016344;
+	bh=OjNn6WSh4hs9Cyx0kFZzTNIWrb45m0nTCMTXC8Z3TLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eMcV4REBffFxGB21bHKVBq7zZhptfSYSSsea07SH0/dYjmx8Ofka6804tKm6p/Kaz
-	 KQ53a1jKZjGrzNHSrY8jZxW8hw7nOTecAkj+xzk95InIr6bdwWZFSKD58FMjgqcqfA
-	 UsYXNpoGKLSYbxYqneA8h8FeyZGgCMnZi+pGC4b8=
+	b=hAaSk8uTgz6JtaQzQGCtjOsxrPWe6DPBV4wDnpYsn09sPQgklcAiRLa2gnOWpIsz9
+	 ebS5kXi3ECjbNQ5KO/9MO60sG28k0jJt5ipLUAl8wKtVm6HQAV0XFZ8QF8TXyff3Oz
+	 L6YMeq5IvjJH4YM0a5DT6ds8e3T3xZ2RPRHfzT4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.15 138/146] i2c: xgene-slimpro: Fix out-of-bounds bug in xgene_slimpro_i2c_xfer()
-Date: Tue, 28 Mar 2023 16:43:47 +0200
-Message-Id: <20230328142608.429981660@linuxfoundation.org>
+	Matheus Castello <matheus.castello@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.15 129/146] drm/bridge: lt8912b: return EPROBE_DEFER if bridge is not found
+Date: Tue, 28 Mar 2023 16:43:38 +0200
+Message-Id: <20230328142608.038704916@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -35,37 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Matheus Castello <matheus.castello@toradex.com>
 
-commit 92fbb6d1296f81f41f65effd7f5f8c0f74943d15 upstream.
+commit 1a70ca89d59c7c8af006d29b965a95ede0abb0da upstream.
 
-The data->block[0] variable comes from user and is a number between
-0-255. Without proper check, the variable may be very large to cause
-an out-of-bounds when performing memcpy in slimpro_i2c_blkwr.
+Returns EPROBE_DEFER when of_drm_find_bridge() fails, this is consistent
+with what all the other DRM bridge drivers are doing and this is
+required since the bridge might not be there when the driver is probed
+and this should not be a fatal failure.
 
-Fix this bug by checking the value of writelen.
-
-Fixes: f6505fbabc42 ("i2c: add SLIMpro I2C device driver on APM X-Gene platform")
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Cc: <stable@vger.kernel.org>
+Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
+Signed-off-by: Matheus Castello <matheus.castello@toradex.com>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230322143821.109744-1-francesco@dolcini.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-xgene-slimpro.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-xgene-slimpro.c
-+++ b/drivers/i2c/busses/i2c-xgene-slimpro.c
-@@ -307,6 +307,9 @@ static int slimpro_i2c_blkwr(struct slim
- 	u32 msg[3];
- 	int rc;
+--- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
++++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+@@ -670,8 +670,8 @@ static int lt8912_parse_dt(struct lt8912
  
-+	if (writelen > I2C_SMBUS_BLOCK_MAX)
-+		return -EINVAL;
-+
- 	memcpy(ctx->dma_buffer, data, writelen);
- 	paddr = dma_map_single(ctx->dev, ctx->dma_buffer, writelen,
- 			       DMA_TO_DEVICE);
+ 	lt->hdmi_port = of_drm_find_bridge(port_node);
+ 	if (!lt->hdmi_port) {
+-		dev_err(lt->dev, "%s: Failed to get hdmi port\n", __func__);
+-		ret = -ENODEV;
++		ret = -EPROBE_DEFER;
++		dev_err_probe(lt->dev, ret, "%s: Failed to get hdmi port\n", __func__);
+ 		goto err_free_host_node;
+ 	}
+ 
 
 
