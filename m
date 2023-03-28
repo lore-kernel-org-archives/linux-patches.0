@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29AF8498
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404BDC433EF;
-	Tue, 28 Mar 2023 15:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725AD8498
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6092C433D2;
+	Tue, 28 Mar 2023 15:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015787;
-	bh=a6Fu+jjriIfI9gO65n8vG7vbRhw9y6LeVU1j7vW45C8=;
+	s=korg; t=1680015790;
+	bh=XTIM+Qyo8wMHLVfLZ//BtSyD/3pvrdOcXJ60tPOx1R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yyJUCpvojuI12GlhA0/dm0+0PGNNhsydjzU2hdKqUj1TtTxSc7+XjIvTX4V16qmVF
-	 D6736CLBgXkpko/wJHHBmgpSx/UsibIwigDh/GsKy1AwXwKr6+JBXPELN+ePw1iTPu
-	 g9GraKVsrIyXnWsMhkplFKHbOg2lYLzWp5E9jTvI=
+	b=kxTq6JKxx8l2LlkyG13y1qTrVTZaIJ2UVwHhspNGqoemP4VYuXJ2bI0/zawyR+T1N
+	 rLrFzwKhR0K+E/jZfFJ/gb4tJ7z+79ge8JXzxEijfK2IsKc/9cnDLrbMqpFSMwfcI3
+	 Oz/N3Y5EByz1Br28N4ffAgoCgW/hEShh+ZpWmdKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 175/224] usb: typec: tcpm: fix warning when handle discover_identity message
-Date: Tue, 28 Mar 2023 16:42:51 +0200
-Message-Id: <20230328142624.675659326@linuxfoundation.org>
+	William Zhao <wizhao@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 149/224] act_mirred: use the backlog for nested calls to mirred ingress
+Date: Tue, 28 Mar 2023 16:42:25 +0200
+Message-Id: <20230328142623.579541439@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,122 +39,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-commit abfc4fa28f0160df61c7149567da4f6494dfb488 upstream.
+[ Upstream commit ca22da2fbd693b54dc8e3b7b54ccc9f7e9ba3640 ]
 
-Since both source and sink device can send discover_identity message in
-PD3, kernel may dump below warning:
+William reports kernel soft-lockups on some OVS topologies when TC mirred
+egress->ingress action is hit by local TCP traffic [1].
+The same can also be reproduced with SCTP (thanks Xin for verifying), when
+client and server reach themselves through mirred egress to ingress, and
+one of the two peers sends a "heartbeat" packet (from within a timer).
 
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 169 at drivers/usb/typec/tcpm/tcpm.c:1446 tcpm_queue_vdm+0xe0/0xf0
-Modules linked in:
-CPU: 0 PID: 169 Comm: 1-0050 Not tainted 6.1.1-00038-g6a3c36cf1da2-dirty #567
-Hardware name: NXP i.MX8MPlus EVK board (DT)
-pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : tcpm_queue_vdm+0xe0/0xf0
-lr : tcpm_queue_vdm+0x2c/0xf0
-sp : ffff80000c19bcd0
-x29: ffff80000c19bcd0 x28: 0000000000000001 x27: ffff0000d11c8ab8
-x26: ffff0000d11cc000 x25: 0000000000000000 x24: 00000000ff008081
-x23: 0000000000000001 x22: 00000000ff00a081 x21: ffff80000c19bdbc
-x20: 0000000000000000 x19: ffff0000d11c8080 x18: ffffffffffffffff
-x17: 0000000000000000 x16: 0000000000000000 x15: ffff0000d716f580
-x14: 0000000000000001 x13: ffff0000d716f507 x12: 0000000000000001
-x11: 0000000000000000 x10: 0000000000000020 x9 : 00000000000ee098
-x8 : 00000000ffffffff x7 : 000000000000001c x6 : ffff0000d716f580
-x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
-x2 : ffff80000c19bdbc x1 : 00000000ff00a081 x0 : 0000000000000004
-Call trace:
-tcpm_queue_vdm+0xe0/0xf0
-tcpm_pd_rx_handler+0x340/0x1ab0
-kthread_worker_fn+0xcc/0x18c
-kthread+0x10c/0x110
-ret_from_fork+0x10/0x20
----[ end trace 0000000000000000 ]---
+Enqueueing to backlog proved to fix this soft lockup; however, as Cong
+noticed [2], we should preserve - when possible - the current mirred
+behavior that counts as "overlimits" any eventual packet drop subsequent to
+the mirred forwarding action [3]. A compromise solution might use the
+backlog only when tcf_mirred_act() has a nest level greater than one:
+change tcf_mirred_forward() accordingly.
 
-Below sequences may trigger this warning:
+Also, add a kselftest that can reproduce the lockup and verifies TC mirred
+ability to account for further packet drops after TC mirred egress->ingress
+(when the nest level is 1).
 
-tcpm_send_discover_work(work)
-  tcpm_send_vdm(port, USB_SID_PD, CMD_DISCOVER_IDENT, NULL, 0);
-   tcpm_queue_vdm(port, header, data, count);
-    port->vdm_state = VDM_STATE_READY;
+ [1] https://lore.kernel.org/netdev/33dc43f587ec1388ba456b4915c75f02a8aae226.1663945716.git.dcaratti@redhat.com/
+ [2] https://lore.kernel.org/netdev/Y0w%2FWWY60gqrtGLp@pop-os.localdomain/
+ [3] such behavior is not guaranteed: for example, if RPS or skb RX
+     timestamping is enabled on the mirred target device, the kernel
+     can defer receiving the skb and return NET_RX_SUCCESS inside
+     tcf_mirred_forward().
 
-vdm_state_machine_work(work);
-			<-- received discover_identity from partner
- vdm_run_state_machine(port);
-  port->vdm_state = VDM_STATE_SEND_MESSAGE;
-   mod_vdm_delayed_work(port, x);
-
-tcpm_pd_rx_handler(work);
- tcpm_pd_data_request(port, msg);
-  tcpm_handle_vdm_request(port, msg->payload, cnt);
-   tcpm_queue_vdm(port, response[0], &response[1], rlen - 1);
---> WARN_ON(port->vdm_state > VDM_STATE_DONE);
-
-For this case, the state machine could still send out discover
-identity message later if we skip current discover_identity message.
-So we should handle the received message firstly and override the pending
-discover_identity message without warning in this case. Then, a delayed
-send_discover work will send discover_identity message again.
-
-Fixes: e00943e91678 ("usb: typec: tcpm: PD3.0 sinks can send Discover Identity even in device mode")
-cc: <stable@vger.kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230216031515.4151117-1-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: William Zhao <wizhao@redhat.com>
+CC: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ net/sched/act_mirred.c                        |  7 +++
+ .../selftests/net/forwarding/tc_actions.sh    | 49 ++++++++++++++++++-
+ 2 files changed, 55 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1436,10 +1436,18 @@ static int tcpm_ams_start(struct tcpm_po
- static void tcpm_queue_vdm(struct tcpm_port *port, const u32 header,
- 			   const u32 *data, int cnt)
- {
-+	u32 vdo_hdr = port->vdo_data[0];
+diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
+index ded6ee054be14..baeae5e5c8f0c 100644
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -205,12 +205,19 @@ static int tcf_mirred_init(struct net *net, struct nlattr *nla,
+ 	return err;
+ }
+ 
++static bool is_mirred_nested(void)
++{
++	return unlikely(__this_cpu_read(mirred_nest_level) > 1);
++}
 +
- 	WARN_ON(!mutex_is_locked(&port->lock));
+ static int tcf_mirred_forward(bool want_ingress, struct sk_buff *skb)
+ {
+ 	int err;
  
--	/* Make sure we are not still processing a previous VDM packet */
--	WARN_ON(port->vdm_state > VDM_STATE_DONE);
-+	/* If is sending discover_identity, handle received message first */
-+	if (PD_VDO_SVDM(vdo_hdr) && PD_VDO_CMD(vdo_hdr) == CMD_DISCOVER_IDENT) {
-+		port->send_discover = true;
-+		mod_send_discover_delayed_work(port, SEND_DISCOVER_RETRY_MS);
-+	} else {
-+		/* Make sure we are not still processing a previous VDM packet */
-+		WARN_ON(port->vdm_state > VDM_STATE_DONE);
-+	}
+ 	if (!want_ingress)
+ 		err = tcf_dev_queue_xmit(skb, dev_queue_xmit);
++	else if (is_mirred_nested())
++		err = netif_rx(skb);
+ 	else
+ 		err = netif_receive_skb(skb);
  
- 	port->vdo_count = cnt + 1;
- 	port->vdo_data[0] = header;
-@@ -1942,11 +1950,13 @@ static void vdm_run_state_machine(struct
- 			switch (PD_VDO_CMD(vdo_hdr)) {
- 			case CMD_DISCOVER_IDENT:
- 				res = tcpm_ams_start(port, DISCOVER_IDENTITY);
--				if (res == 0)
-+				if (res == 0) {
- 					port->send_discover = false;
--				else if (res == -EAGAIN)
-+				} else if (res == -EAGAIN) {
-+					port->vdo_data[0] = 0;
- 					mod_send_discover_delayed_work(port,
- 								       SEND_DISCOVER_RETRY_MS);
-+				}
- 				break;
- 			case CMD_DISCOVER_SVID:
- 				res = tcpm_ams_start(port, DISCOVER_SVIDS);
-@@ -2029,6 +2039,7 @@ static void vdm_run_state_machine(struct
- 			unsigned long timeout;
+diff --git a/tools/testing/selftests/net/forwarding/tc_actions.sh b/tools/testing/selftests/net/forwarding/tc_actions.sh
+index 1e0a62f638fec..919c0dd9fe4bc 100755
+--- a/tools/testing/selftests/net/forwarding/tc_actions.sh
++++ b/tools/testing/selftests/net/forwarding/tc_actions.sh
+@@ -3,7 +3,8 @@
  
- 			port->vdm_retries = 0;
-+			port->vdo_data[0] = 0;
- 			port->vdm_state = VDM_STATE_BUSY;
- 			timeout = vdm_ready_timeout(vdo_hdr);
- 			mod_vdm_delayed_work(port, timeout);
+ ALL_TESTS="gact_drop_and_ok_test mirred_egress_redirect_test \
+ 	mirred_egress_mirror_test matchall_mirred_egress_mirror_test \
+-	gact_trap_test mirred_egress_to_ingress_test"
++	gact_trap_test mirred_egress_to_ingress_test \
++	mirred_egress_to_ingress_tcp_test"
+ NUM_NETIFS=4
+ source tc_common.sh
+ source lib.sh
+@@ -198,6 +199,52 @@ mirred_egress_to_ingress_test()
+ 	log_test "mirred_egress_to_ingress ($tcflags)"
+ }
+ 
++mirred_egress_to_ingress_tcp_test()
++{
++	local tmpfile=$(mktemp) tmpfile1=$(mktemp)
++
++	RET=0
++	dd conv=sparse status=none if=/dev/zero bs=1M count=2 of=$tmpfile
++	tc filter add dev $h1 protocol ip pref 100 handle 100 egress flower \
++		$tcflags ip_proto tcp src_ip 192.0.2.1 dst_ip 192.0.2.2 \
++			action ct commit nat src addr 192.0.2.2 pipe \
++			action ct clear pipe \
++			action ct commit nat dst addr 192.0.2.1 pipe \
++			action ct clear pipe \
++			action skbedit ptype host pipe \
++			action mirred ingress redirect dev $h1
++	tc filter add dev $h1 protocol ip pref 101 handle 101 egress flower \
++		$tcflags ip_proto icmp \
++			action mirred ingress redirect dev $h1
++	tc filter add dev $h1 protocol ip pref 102 handle 102 ingress flower \
++		ip_proto icmp \
++			action drop
++
++	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $tmpfile1  &
++	local rpid=$!
++	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$tmpfile
++	wait -n $rpid
++	cmp -s $tmpfile $tmpfile1
++	check_err $? "server output check failed"
++
++	$MZ $h1 -c 10 -p 64 -a $h1mac -b $h1mac -A 192.0.2.1 -B 192.0.2.1 \
++		-t icmp "ping,id=42,seq=5" -q
++	tc_check_packets "dev $h1 egress" 101 10
++	check_err $? "didn't mirred redirect ICMP"
++	tc_check_packets "dev $h1 ingress" 102 10
++	check_err $? "didn't drop mirred ICMP"
++	local overlimits=$(tc_rule_stats_get ${h1} 101 egress .overlimits)
++	test ${overlimits} = 10
++	check_err $? "wrong overlimits, expected 10 got ${overlimits}"
++
++	tc filter del dev $h1 egress protocol ip pref 100 handle 100 flower
++	tc filter del dev $h1 egress protocol ip pref 101 handle 101 flower
++	tc filter del dev $h1 ingress protocol ip pref 102 handle 102 flower
++
++	rm -f $tmpfile $tmpfile1
++	log_test "mirred_egress_to_ingress_tcp ($tcflags)"
++}
++
+ setup_prepare()
+ {
+ 	h1=${NETIFS[p1]}
+-- 
+2.39.2
+
 
 
