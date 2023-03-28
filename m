@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082858BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:12:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584F1C433EF;
-	Tue, 28 Mar 2023 15:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20998BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:12:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43862C4339B;
+	Tue, 28 Mar 2023 15:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016325;
-	bh=dU4cXv3GN5nyO7RK1N6UM13F/DcpChRh/3UE/JMFQWw=;
+	s=korg; t=1680016328;
+	bh=2Beohv/Ise8l7rERofP6leh2ccQxnhi7kMJ1uFFlQlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UT8zNHOW9W58in444r0YNAMHXT/mBiMs3+M5oScFsj/czBV2H4b2TjpVpHSk0UpFA
-	 yVKC4oapnLVW/+yRiJS+ETZT3//Ele2zuJnLekNhW3x0gGP4Nobzklbc+5q/r9O4bg
-	 2hN7zmoDRX9/ar//Ga4UlPPK23xKyvLyEuaL5t2s=
+	b=FvWxwm8Akn2iwBneRfJ2uQ1QnOxGEXqSDXUT1dvVsYfi2j6dKrjYGOa8ot8JB/HeV
+	 KUKpH/FzIpsmuND1EExqQf8lsDemcjTfvoLnGbfDBESBNF/PzHJzH7z6zxV+3BiVBB
+	 YqIIpYblNuarX42z6L4TfSVJqZCulnhWLInAgO9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	intel-gfx@lists.freedesktop.org,
-	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Lee Shawn C <shawn.c.lee@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 5.15 132/146] drm/i915/active: Fix missing debug object activation
-Date: Tue, 28 Mar 2023 16:43:41 +0200
-Message-Id: <20230328142608.175023979@linuxfoundation.org>
+Subject: [PATCH 5.15 133/146] drm/i915: Preserve crtc_state->inherited during state clearing
+Date: Tue, 28 Mar 2023 16:43:42 +0200
+Message-Id: <20230328142608.216734321@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -41,47 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nirmoy Das <nirmoy.das@intel.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit e92eb246feb9019b0b137706c934b8891cdfe3c2 upstream.
+commit 3a84f2c6c9558c554a90ec26ad25df92fc5e05b7 upstream.
 
-debug_active_activate() expected ref->count to be zero
-which is not true anymore as __i915_active_activate() calls
-debug_active_activate() after incrementing the count.
+intel_crtc_prepare_cleared_state() is unintentionally losing
+the "inherited" flag. This will happen if intel_initial_commit()
+is forced to go through the full modeset calculations for
+whatever reason.
 
-v2: No need to check for "ref->count == 1" as __i915_active_activate()
-already make sure of that(Janusz).
+Afterwards the first real commit from userspace will not get
+forced to the full modeset path, and thus eg. audio state may
+not get recomputed properly. So if the monitor was already
+enabled during boot audio will not work until userspace itself
+does an explicit full modeset.
 
-Fixes: 04240e30ed06 ("drm/i915: Skip taking acquire mutex for no ref->active callback")
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@intel.com>
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: intel-gfx@lists.freedesktop.org
-Cc: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v5.10+
-Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230313114613.9874-1-nirmoy.das@intel.com
-(cherry picked from commit bfad380c542438a9b642f8190b7fd37bc77e2723)
+Cc: stable@vger.kernel.org
+Tested-by: Lee Shawn C <shawn.c.lee@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230223152048.20878-1-ville.syrjala@linux.intel.com
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+(cherry picked from commit 2553bacaf953b48c59357f5a622282bc0c45adae)
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_active.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/i915/i915_active.c
-+++ b/drivers/gpu/drm/i915/i915_active.c
-@@ -92,8 +92,7 @@ static void debug_active_init(struct i91
- static void debug_active_activate(struct i915_active *ref)
- {
- 	lockdep_assert_held(&ref->tree_lock);
--	if (!atomic_read(&ref->count)) /* before the first inc */
--		debug_object_activate(ref, &active_debug_desc);
-+	debug_object_activate(ref, &active_debug_desc);
- }
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -7824,6 +7824,7 @@ intel_crtc_prepare_cleared_state(struct
+ 	 * only fields that are know to not cause problems are preserved. */
  
- static void debug_active_deactivate(struct i915_active *ref)
+ 	saved_state->uapi = crtc_state->uapi;
++	saved_state->inherited = crtc_state->inherited;
+ 	saved_state->scaler_state = crtc_state->scaler_state;
+ 	saved_state->shared_dpll = crtc_state->shared_dpll;
+ 	saved_state->dpll_hw_state = crtc_state->dpll_hw_state;
 
 
