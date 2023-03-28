@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9358F8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C0FC433D2;
-	Tue, 28 Mar 2023 14:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FB48BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FFBC4339B;
+	Tue, 28 Mar 2023 14:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014870;
-	bh=0IUXgK7/dHVxPwjwJoaOsFqx+zR1jF+V2KTemtsJvCw=;
+	s=korg; t=1680014873;
+	bh=PhObNGJPHGlYcK6PumO1SHpmmjeshhIaCthePBXbGTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uqTXL9Z0yywfOcCzgRA5ydfBtC/1U8jnDod43vXDusrdGVc/z7r54RYao4/gRpwty
-	 QbyHLLlyBXSlplqx41nqQbKJazZHFK6iNtyjTwrzpjr1ptIYfY/IlswagA4LhLXUtq
-	 uZYMmkauNhMosmUaTgUo87vOkipK0AkSYN/a9wic=
+	b=IrNARCe6IQ9bkSwTRbxUNBVQO2flBBe/gjHAxRZ1RIxjBf5LqobadKsCGke0vzAfp
+	 ogGT0qmxyXbU5pp7aUUUDSPiY7MDj2scACBX8ve44pC8jUYGtTW3MT9TR+9Dk0h6Jy
+	 RRZP07Ju+oMbdd1+hjuBeqoaoJm3hBRESDKQig1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Caleb Sander <csander@purestorage.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
+	Heinz Wiesinger <pprkut@slackware.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 083/240] nvme-tcp: fix nvme_tcp_term_pdu to match spec
-Date: Tue, 28 Mar 2023 16:40:46 +0200
-Message-Id: <20230328142623.241867278@linuxfoundation.org>
+Subject: [PATCH 6.2 066/240] bootconfig: Fix testcase to increase max node
+Date: Tue, 28 Mar 2023 16:40:29 +0200
+Message-Id: <20230328142622.490007613@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -37,42 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Caleb Sander <csander@purestorage.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit aa01c67de5926fdb276793180564f172c55fb0d7 ]
+[ Upstream commit b69245126a48e50882021180fa5d264dc7149ccc ]
 
-The FEI field of C2HTermReq/H2CTermReq is 4 bytes but not 4-byte-aligned
-in the NVMe/TCP specification (it is located at offset 10 in the PDU).
-Split it into two 16-bit integers in struct nvme_tcp_term_pdu
-so no padding is inserted. There should also be 10 reserved bytes after.
-There are currently no users of this type.
+Since commit 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig
+from 1024 to 8192 for DCC support") increased the max number of bootconfig
+node to 8192, the bootconfig testcase of the max number of nodes fails.
+To fix this issue, we can not simply increase the number in the test script
+because the test bootconfig file becomes too big (>32KB). To fix that, we
+can use a combination of three alphabets (26^3 = 17576). But with that,
+we can not express the 8193 (just one exceed from the limitation) because
+it also exceeds the max size of bootconfig. So, the first 26 nodes will just
+use one alphabet.
 
-Fixes: fc221d05447aa6db ("nvme-tcp: Add protocol header")
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Caleb Sander <csander@purestorage.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+With this fix, test-bootconfig.sh passes all tests.
+
+Link: https://lore.kernel.org/all/167888844790.791176.670805252426835131.stgit@devnote2/
+
+Reported-by: Heinz Wiesinger <pprkut@slackware.com>
+Link: https://lore.kernel.org/all/2463802.XAFRqVoOGU@amaterasu.liwjatan.org
+Fixes: 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig from 1024 to 8192 for DCC support")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nvme-tcp.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/bootconfig/test-bootconfig.sh | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/nvme-tcp.h b/include/linux/nvme-tcp.h
-index 75470159a194d..57ebe1267f7fb 100644
---- a/include/linux/nvme-tcp.h
-+++ b/include/linux/nvme-tcp.h
-@@ -115,8 +115,9 @@ struct nvme_tcp_icresp_pdu {
- struct nvme_tcp_term_pdu {
- 	struct nvme_tcp_hdr	hdr;
- 	__le16			fes;
--	__le32			fei;
--	__u8			rsvd[8];
-+	__le16			feil;
-+	__le16			feiu;
-+	__u8			rsvd[10];
- };
+diff --git a/tools/bootconfig/test-bootconfig.sh b/tools/bootconfig/test-bootconfig.sh
+index f68e2e9eef8b2..a2c484c243f5d 100755
+--- a/tools/bootconfig/test-bootconfig.sh
++++ b/tools/bootconfig/test-bootconfig.sh
+@@ -87,10 +87,14 @@ xfail grep -i "error" $OUTFILE
  
- /**
+ echo "Max node number check"
+ 
+-echo -n > $TEMPCONF
+-for i in `seq 1 1024` ; do
+-   echo "node$i" >> $TEMPCONF
+-done
++awk '
++BEGIN {
++  for (i = 0; i < 26; i += 1)
++      printf("%c\n", 65 + i % 26)
++  for (i = 26; i < 8192; i += 1)
++      printf("%c%c%c\n", 65 + i % 26, 65 + (i / 26) % 26, 65 + (i / 26 / 26))
++}
++' > $TEMPCONF
+ xpass $BOOTCONF -a $TEMPCONF $INITRD
+ 
+ echo "badnode" >> $TEMPCONF
 -- 
 2.39.2
 
