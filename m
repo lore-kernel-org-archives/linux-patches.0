@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2054F8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9605DC433EF;
-	Tue, 28 Mar 2023 14:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0371F8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:55:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49996C433EF;
+	Tue, 28 Mar 2023 14:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015304;
-	bh=Wp80y6qkWdGclHopOQLWUaD39UWzDDeZr//99EKIod0=;
+	s=korg; t=1680015306;
+	bh=86f1pvuyY5a/USY7jbAohKe72v3zX8VEGSpnECTcB30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z1HuSL2B0xsWy868MSzTyeQatWSMlFkDMI8HVrkvKN65sV3MnvESKOdObwm/RicgS
-	 x6igARfElnwN++YjnpTVWRaVA+JyHe6RgE+kmIVmEX887StTP+EtUAtCc7t9+tktFl
-	 rlXU/Zru9xXnXnn8UdoZVfJqGW4LbNtc3EytlYKc=
+	b=L8YSY1hOS5H1jIB4NbslolpQWkR3fsGPw7MtlqaV3fuQmYkRbP3SiJ6k9rJPnY9O0
+	 x8/zRvbqBMgT+bfjSiFOQtOAYSDPtn5OS6uZ6oScV+9jLxIl7gnubc9uJyEGVKFKe+
+	 jK++S+UAdo6pAyyxZgOYaEj19w1I9gfCLsa5z6BM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	syzbot+2ee18845e89ae76342c5@syzkaller.appspotmail.com,
-	David Hildenbrand <david@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	heng.su@intel.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 233/240] mm/ksm: fix race with VMA iteration and mm_struct teardown
-Date: Tue, 28 Mar 2023 16:43:16 +0200
-Message-Id: <20230328142629.418356442@linuxfoundation.org>
+	Ivan Bornyakov <i.bornyakov@metrotek.ru>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.2 234/240] bus: imx-weim: fix branch condition evaluates to a garbage value
+Date: Tue, 28 Mar 2023 16:43:17 +0200
+Message-Id: <20230328142629.454423362@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -39,64 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Ivan Bornyakov <i.bornyakov@metrotek.ru>
 
-commit 6db504ce55bdbc575723938fc480713c9183f6a2 upstream.
+commit 1adab2922c58e7ff4fa9f0b43695079402cce876 upstream.
 
-exit_mmap() will tear down the VMAs and maple tree with the mmap_lock held
-in write mode.  Ensure that the maple tree is still valid by checking
-ksm_test_exit() after taking the mmap_lock in read mode, but before the
-for_each_vma() iterator dereferences a destroyed maple tree.
+If bus type is other than imx50_weim_devtype and have no child devices,
+variable 'ret' in function weim_parse_dt() will not be initialized, but
+will be used as branch condition and return value. Fix this by
+initializing 'ret' with 0.
 
-Since the maple tree is destroyed, the flags telling lockdep to check an
-external lock has been cleared.  Skip the for_each_vma() iterator to avoid
-dereferencing a maple tree without the external lock flag, which would
-create a lockdep warning.
+This was discovered with help of clang-analyzer, but the situation is
+quite possible in real life.
 
-Link: https://lkml.kernel.org/r/20230308220310.3119196-1-Liam.Howlett@oracle.com
-Fixes: a5f18ba07276 ("mm/ksm: use vma iterators instead of vma linked list")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-  Link: https://lore.kernel.org/lkml/ZAdUUhSbaa6fHS36@xpf.sh.intel.com/
-Reported-by: syzbot+2ee18845e89ae76342c5@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?id=64a3e95957cd3deab99df7cd7b5a9475af92c93e
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <heng.su@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 52c47b63412b ("bus: imx-weim: improve error handling upon child probe-failure")
+Signed-off-by: Ivan Bornyakov <i.bornyakov@metrotek.ru>
+Cc: stable@vger.kernel.org
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/ksm.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/bus/imx-weim.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/ksm.c
-+++ b/mm/ksm.c
-@@ -988,9 +988,15 @@ static int unmerge_and_remove_all_rmap_i
- 
- 		mm = mm_slot->slot.mm;
- 		mmap_read_lock(mm);
-+
-+		/*
-+		 * Exit right away if mm is exiting to avoid lockdep issue in
-+		 * the maple tree
-+		 */
-+		if (ksm_test_exit(mm))
-+			goto mm_exiting;
-+
- 		for_each_vma(vmi, vma) {
--			if (ksm_test_exit(mm))
--				break;
- 			if (!(vma->vm_flags & VM_MERGEABLE) || !vma->anon_vma)
- 				continue;
- 			err = unmerge_ksm_pages(vma,
-@@ -999,6 +1005,7 @@ static int unmerge_and_remove_all_rmap_i
- 				goto error;
- 		}
- 
-+mm_exiting:
- 		remove_trailing_rmap_items(&mm_slot->rmap_list);
- 		mmap_read_unlock(mm);
- 
+--- a/drivers/bus/imx-weim.c
++++ b/drivers/bus/imx-weim.c
+@@ -204,8 +204,8 @@ static int weim_parse_dt(struct platform
+ 	const struct of_device_id *of_id = of_match_device(weim_id_table,
+ 							   &pdev->dev);
+ 	const struct imx_weim_devtype *devtype = of_id->data;
++	int ret = 0, have_child = 0;
+ 	struct device_node *child;
+-	int ret, have_child = 0;
+ 	struct weim_priv *priv;
+ 	void __iomem *base;
+ 	u32 reg;
 
 
