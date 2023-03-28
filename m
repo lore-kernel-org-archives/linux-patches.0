@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF918476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41E7C4339B;
-	Tue, 28 Mar 2023 14:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D30E8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3383C433EF;
+	Tue, 28 Mar 2023 14:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015219;
-	bh=bZs2l0LpMuRs8IYfsVN2edPTMCbeJoRtCneFFHKZ4TA=;
+	s=korg; t=1680015222;
+	bh=IcPqGMhvHTalH1PfA6xanNWPq+lGcIvvWJDn6QEKnqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrC7brVTsVEXbLEwHS1372Xaxz2fR8dfDOsBf3QTttVQz9cQjeO8kC/lXDVc5+R40
-	 Aqru1f9DtKLVyj0qlLUjaT1edJCnNeGdJn8vP9RJC4nfzaOBNsf27w8EqNMB8n6jRb
-	 ThOgjFeE/bHo27QMsgsHthlwY6YZaW1TQjTsV1Wk=
+	b=1qUUt3kV4Jv34DurbSL3pqDTYc61BgVUTj15BYeGlX1tuJpDRwtwW1r4yviBdaISK
+	 gFogI5dY+CSE9/1fpkdP2sT7qQr/KIYiOGA/xp/YIkU5t6iD/Y3xW4xBcLDlo47p1z
+	 8fQ2dEJaGbo/wMCyC9Ykorrmi5zeAPtddaeC5Ofo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Lihua <441884205@qq.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.2 210/240] ksmbd: set FILE_NAMED_STREAMS attribute in FS_ATTRIBUTE_INFORMATION
-Date: Tue, 28 Mar 2023 16:42:53 +0200
-Message-Id: <20230328142628.434248285@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.2 211/240] ksmbd: dont terminate inactive sessions after a few seconds
+Date: Tue, 28 Mar 2023 16:42:54 +0200
+Message-Id: <20230328142628.484816994@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -37,34 +36,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 728f14c72b71a19623df329c1c7c9d1452e56f1e upstream.
+commit be6f42fad5f5fd1fea9d562df82c38ad6ed3bfe9 upstream.
 
-If vfs objects = streams_xattr in ksmbd.conf FILE_NAMED_STREAMS should
-be set to Attributes in FS_ATTRIBUTE_INFORMATION. MacOS client show
-"Format: SMB (Unknown)" on faked NTFS and no streams support.
+Steve reported that inactive sessions are terminated after a few
+seconds. ksmbd terminate when receiving -EAGAIN error from
+kernel_recvmsg(). -EAGAIN means there is no data available in timeout.
+So ksmbd should keep connection with unlimited retries instead of
+terminating inactive sessions.
 
 Cc: stable@vger.kernel.org
-Reported-by: Miao Lihua <441884205@qq.com>
-Tested-by: Miao Lihua <441884205@qq.com>
+Reported-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ksmbd/connection.c     |    4 ++--
+ fs/ksmbd/connection.h     |    3 ++-
+ fs/ksmbd/transport_rdma.c |    2 +-
+ fs/ksmbd/transport_tcp.c  |   35 +++++++++++++++++++++++------------
+ 4 files changed, 28 insertions(+), 16 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -4956,6 +4956,10 @@ static int smb2_get_info_filesystem(stru
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -298,7 +298,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 		kvfree(conn->request_buf);
+ 		conn->request_buf = NULL;
  
- 		info->Attributes |= cpu_to_le32(server_conf.share_fake_fscaps);
+-		size = t->ops->read(t, hdr_buf, sizeof(hdr_buf));
++		size = t->ops->read(t, hdr_buf, sizeof(hdr_buf), -1);
+ 		if (size != sizeof(hdr_buf))
+ 			break;
  
-+		if (test_share_config_flag(work->tcon->share_conf,
-+		    KSMBD_SHARE_FLAG_STREAMS))
-+			info->Attributes |= cpu_to_le32(FILE_NAMED_STREAMS);
+@@ -344,7 +344,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 		 * We already read 4 bytes to find out PDU size, now
+ 		 * read in PDU
+ 		 */
+-		size = t->ops->read(t, conn->request_buf + 4, pdu_size);
++		size = t->ops->read(t, conn->request_buf + 4, pdu_size, 2);
+ 		if (size < 0) {
+ 			pr_err("sock_read failed: %d\n", size);
+ 			break;
+--- a/fs/ksmbd/connection.h
++++ b/fs/ksmbd/connection.h
+@@ -114,7 +114,8 @@ struct ksmbd_transport_ops {
+ 	int (*prepare)(struct ksmbd_transport *t);
+ 	void (*disconnect)(struct ksmbd_transport *t);
+ 	void (*shutdown)(struct ksmbd_transport *t);
+-	int (*read)(struct ksmbd_transport *t, char *buf, unsigned int size);
++	int (*read)(struct ksmbd_transport *t, char *buf,
++		    unsigned int size, int max_retries);
+ 	int (*writev)(struct ksmbd_transport *t, struct kvec *iovs, int niov,
+ 		      int size, bool need_invalidate_rkey,
+ 		      unsigned int remote_key);
+--- a/fs/ksmbd/transport_rdma.c
++++ b/fs/ksmbd/transport_rdma.c
+@@ -670,7 +670,7 @@ static int smb_direct_post_recv(struct s
+ }
+ 
+ static int smb_direct_read(struct ksmbd_transport *t, char *buf,
+-			   unsigned int size)
++			   unsigned int size, int unused)
+ {
+ 	struct smb_direct_recvmsg *recvmsg;
+ 	struct smb_direct_data_transfer *data_transfer;
+--- a/fs/ksmbd/transport_tcp.c
++++ b/fs/ksmbd/transport_tcp.c
+@@ -291,16 +291,18 @@ static int ksmbd_tcp_run_kthread(struct
+ 
+ /**
+  * ksmbd_tcp_readv() - read data from socket in given iovec
+- * @t:		TCP transport instance
+- * @iov_orig:	base IO vector
+- * @nr_segs:	number of segments in base iov
+- * @to_read:	number of bytes to read from socket
++ * @t:			TCP transport instance
++ * @iov_orig:		base IO vector
++ * @nr_segs:		number of segments in base iov
++ * @to_read:		number of bytes to read from socket
++ * @max_retries:	maximum retry count
+  *
+  * Return:	on success return number of bytes read from socket,
+  *		otherwise return error number
+  */
+ static int ksmbd_tcp_readv(struct tcp_transport *t, struct kvec *iov_orig,
+-			   unsigned int nr_segs, unsigned int to_read)
++			   unsigned int nr_segs, unsigned int to_read,
++			   int max_retries)
+ {
+ 	int length = 0;
+ 	int total_read;
+@@ -308,7 +310,6 @@ static int ksmbd_tcp_readv(struct tcp_tr
+ 	struct msghdr ksmbd_msg;
+ 	struct kvec *iov;
+ 	struct ksmbd_conn *conn = KSMBD_TRANS(t)->conn;
+-	int max_retry = 2;
+ 
+ 	iov = get_conn_iovec(t, nr_segs);
+ 	if (!iov)
+@@ -335,14 +336,23 @@ static int ksmbd_tcp_readv(struct tcp_tr
+ 		} else if (conn->status == KSMBD_SESS_NEED_RECONNECT) {
+ 			total_read = -EAGAIN;
+ 			break;
+-		} else if ((length == -ERESTARTSYS || length == -EAGAIN) &&
+-			   max_retry) {
++		} else if (length == -ERESTARTSYS || length == -EAGAIN) {
++			/*
++			 * If max_retries is negative, Allow unlimited
++			 * retries to keep connection with inactive sessions.
++			 */
++			if (max_retries == 0) {
++				total_read = length;
++				break;
++			} else if (max_retries > 0) {
++				max_retries--;
++			}
 +
- 		info->MaxPathNameComponentLength = cpu_to_le32(stfs.f_namelen);
- 		len = smbConvertToUTF16((__le16 *)info->FileSystemName,
- 					"NTFS", PATH_MAX, conn->local_nls, 0);
+ 			usleep_range(1000, 2000);
+ 			length = 0;
+-			max_retry--;
+ 			continue;
+ 		} else if (length <= 0) {
+-			total_read = -EAGAIN;
++			total_read = length;
+ 			break;
+ 		}
+ 	}
+@@ -358,14 +368,15 @@ static int ksmbd_tcp_readv(struct tcp_tr
+  * Return:	on success return number of bytes read from socket,
+  *		otherwise return error number
+  */
+-static int ksmbd_tcp_read(struct ksmbd_transport *t, char *buf, unsigned int to_read)
++static int ksmbd_tcp_read(struct ksmbd_transport *t, char *buf,
++			  unsigned int to_read, int max_retries)
+ {
+ 	struct kvec iov;
+ 
+ 	iov.iov_base = buf;
+ 	iov.iov_len = to_read;
+ 
+-	return ksmbd_tcp_readv(TCP_TRANS(t), &iov, 1, to_read);
++	return ksmbd_tcp_readv(TCP_TRANS(t), &iov, 1, to_read, max_retries);
+ }
+ 
+ static int ksmbd_tcp_writev(struct ksmbd_transport *t, struct kvec *iov,
 
 
