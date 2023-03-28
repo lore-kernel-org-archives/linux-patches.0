@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AFE8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597AAC433EF;
-	Tue, 28 Mar 2023 14:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1AC8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:57:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0DAAC433EF;
+	Tue, 28 Mar 2023 14:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015469;
-	bh=FiT/JfvoP3X1mBUGDPC61PK/LHxYLhOs8zAYZG1wrR8=;
+	s=korg; t=1680015475;
+	bh=EB8MP707IK1h8A5qoAA3H4Z4W9BHzlgOoywHT3lmuYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tyqHktSDFYnj40BBYhHISmf/eU5ZjmDHGjO5TLWhvM5veFAlCy3yHN6guZSRHtibo
-	 KR1xTVfJjKL3FvVVKBLlZAQvwICLUCvavzG4livwfQX6NIjb8wP8KJgqBsTLmzdLEj
-	 zWaKChK+V/4tqsM2PZsTFeDyU36G7U0hKOPJxMsw=
+	b=vrO9LEEjeJiRB4efaKGAexpxWsdepYx9gnpVmShJ+Cen4BSk/4zOj+EPsS4XQwfCg
+	 /H5vnYnVUD8exYVPaGeEX6XhYiZY78oyP1awTyetMbRl1BQq/MfSD4lB4dki8rsnBm
+	 6QY/YrivqcRZUG04eZizQ0iUaM+sdhwo0ZxEaGz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marius Cornea <mcornea@redhat.com>,
-	Stefan Assmann <sassmann@kpanic.de>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Stephen Haynes <sh@synk.net>,
+	Lefteris Alexakis <lefteris.alexakis@kpn.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/224] iavf: fix hang on reboot with ice
-Date: Tue, 28 Mar 2023 16:40:57 +0200
-Message-Id: <20230328142619.894359659@linuxfoundation.org>
+Subject: [PATCH 6.1 063/224] bpf: Adjust insufficient default bpf_jit_limit
+Date: Tue, 28 Mar 2023 16:40:59 +0200
+Message-Id: <20230328142619.969708984@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -38,86 +38,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Assmann <sassmann@kpanic.de>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 4e264be98b88a6d6f476c11087fe865696e8bef5 ]
+[ Upstream commit 10ec8ca8ec1a2f04c4ed90897225231c58c124a7 ]
 
-When a system with E810 with existing VFs gets rebooted the following
-hang may be observed.
+We've seen recent AWS EKS (Kubernetes) user reports like the following:
 
- Pid 1 is hung in iavf_remove(), part of a network driver:
- PID: 1        TASK: ffff965400e5a340  CPU: 24   COMMAND: "systemd-shutdow"
-  #0 [ffffaad04005fa50] __schedule at ffffffff8b3239cb
-  #1 [ffffaad04005fae8] schedule at ffffffff8b323e2d
-  #2 [ffffaad04005fb00] schedule_hrtimeout_range_clock at ffffffff8b32cebc
-  #3 [ffffaad04005fb80] usleep_range_state at ffffffff8b32c930
-  #4 [ffffaad04005fbb0] iavf_remove at ffffffffc12b9b4c [iavf]
-  #5 [ffffaad04005fbf0] pci_device_remove at ffffffff8add7513
-  #6 [ffffaad04005fc10] device_release_driver_internal at ffffffff8af08baa
-  #7 [ffffaad04005fc40] pci_stop_bus_device at ffffffff8adcc5fc
-  #8 [ffffaad04005fc60] pci_stop_and_remove_bus_device at ffffffff8adcc81e
-  #9 [ffffaad04005fc70] pci_iov_remove_virtfn at ffffffff8adf9429
- #10 [ffffaad04005fca8] sriov_disable at ffffffff8adf98e4
- #11 [ffffaad04005fcc8] ice_free_vfs at ffffffffc04bb2c8 [ice]
- #12 [ffffaad04005fd10] ice_remove at ffffffffc04778fe [ice]
- #13 [ffffaad04005fd38] ice_shutdown at ffffffffc0477946 [ice]
- #14 [ffffaad04005fd50] pci_device_shutdown at ffffffff8add58f1
- #15 [ffffaad04005fd70] device_shutdown at ffffffff8af05386
- #16 [ffffaad04005fd98] kernel_restart at ffffffff8a92a870
- #17 [ffffaad04005fda8] __do_sys_reboot at ffffffff8a92abd6
- #18 [ffffaad04005fee0] do_syscall_64 at ffffffff8b317159
- #19 [ffffaad04005ff08] __context_tracking_enter at ffffffff8b31b6fc
- #20 [ffffaad04005ff18] syscall_exit_to_user_mode at ffffffff8b31b50d
- #21 [ffffaad04005ff28] do_syscall_64 at ffffffff8b317169
- #22 [ffffaad04005ff50] entry_SYSCALL_64_after_hwframe at ffffffff8b40009b
-     RIP: 00007f1baa5c13d7  RSP: 00007fffbcc55a98  RFLAGS: 00000202
-     RAX: ffffffffffffffda  RBX: 0000000000000000  RCX: 00007f1baa5c13d7
-     RDX: 0000000001234567  RSI: 0000000028121969  RDI: 00000000fee1dead
-     RBP: 00007fffbcc55ca0   R8: 0000000000000000   R9: 00007fffbcc54e90
-     R10: 00007fffbcc55050  R11: 0000000000000202  R12: 0000000000000005
-     R13: 0000000000000000  R14: 00007fffbcc55af0  R15: 0000000000000000
-     ORIG_RAX: 00000000000000a9  CS: 0033  SS: 002b
+  After upgrading EKS nodes from v20230203 to v20230217 on our 1.24 EKS
+  clusters after a few days a number of the nodes have containers stuck
+  in ContainerCreating state or liveness/readiness probes reporting the
+  following error:
 
-During reboot all drivers PM shutdown callbacks are invoked.
-In iavf_shutdown() the adapter state is changed to __IAVF_REMOVE.
-In ice_shutdown() the call chain above is executed, which at some point
-calls iavf_remove(). However iavf_remove() expects the VF to be in one
-of the states __IAVF_RUNNING, __IAVF_DOWN or __IAVF_INIT_FAILED. If
-that's not the case it sleeps forever.
-So if iavf_shutdown() gets invoked before iavf_remove() the system will
-hang indefinitely because the adapter is already in state __IAVF_REMOVE.
+    Readiness probe errored: rpc error: code = Unknown desc = failed to
+    exec in container: failed to start exec "4a11039f730203ffc003b7[...]":
+    OCI runtime exec failed: exec failed: unable to start container process:
+    unable to init seccomp: error loading seccomp filter into kernel:
+    error loading seccomp filter: errno 524: unknown
 
-Fix this by returning from iavf_remove() if the state is __IAVF_REMOVE,
-as we already went through iavf_shutdown().
+  However, we had not been seeing this issue on previous AMIs and it only
+  started to occur on v20230217 (following the upgrade from kernel 5.4 to
+  5.10) with no other changes to the underlying cluster or workloads.
 
-Fixes: 974578017fc1 ("iavf: Add waiting so the port is initialized in remove")
-Fixes: a8417330f8a5 ("iavf: Fix race condition between iavf_shutdown and iavf_remove")
-Reported-by: Marius Cornea <mcornea@redhat.com>
-Signed-off-by: Stefan Assmann <sassmann@kpanic.de>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+  We tried the suggestions from that issue (sysctl net.core.bpf_jit_limit=452534528)
+  which helped to immediately allow containers to be created and probes to
+  execute but after approximately a day the issue returned and the value
+  returned by cat /proc/vmallocinfo | grep bpf_jit | awk '{s+=$2} END {print s}'
+  was steadily increasing.
+
+I tested bpf tree to observe bpf_jit_charge_modmem, bpf_jit_uncharge_modmem
+their sizes passed in as well as bpf_jit_current under tcpdump BPF filter,
+seccomp BPF and native (e)BPF programs, and the behavior all looks sane
+and expected, that is nothing "leaking" from an upstream perspective.
+
+The bpf_jit_limit knob was originally added in order to avoid a situation
+where unprivileged applications loading BPF programs (e.g. seccomp BPF
+policies) consuming all the module memory space via BPF JIT such that loading
+of kernel modules would be prevented. The default limit was defined back in
+2018 and while good enough back then, we are generally seeing far more BPF
+consumers today.
+
+Adjust the limit for the BPF JIT pool from originally 1/4 to now 1/2 of the
+module memory space to better reflect today's needs and avoid more users
+running into potentially hard to debug issues.
+
+Fixes: fdadd04931c2 ("bpf: fix bpf_jit_limit knob for PAGE_SIZE >= 64K")
+Reported-by: Stephen Haynes <sh@synk.net>
+Reported-by: Lefteris Alexakis <lefteris.alexakis@kpn.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://github.com/awslabs/amazon-eks-ami/issues/1179
+Link: https://github.com/awslabs/amazon-eks-ami/issues/1219
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230320143725.8394-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/bpf/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 41edcf9e154a3..5f8fff6c701fc 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -5086,6 +5086,11 @@ static void iavf_remove(struct pci_dev *pdev)
- 			mutex_unlock(&adapter->crit_lock);
- 			break;
- 		}
-+		/* Simply return if we already went through iavf_shutdown */
-+		if (adapter->state == __IAVF_REMOVE) {
-+			mutex_unlock(&adapter->crit_lock);
-+			return;
-+		}
- 
- 		mutex_unlock(&adapter->crit_lock);
- 		usleep_range(500, 1000);
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 211f63e87c637..64706723624b9 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -969,7 +969,7 @@ static int __init bpf_jit_charge_init(void)
+ {
+ 	/* Only used as heuristic here to derive limit. */
+ 	bpf_jit_limit_max = bpf_jit_alloc_exec_limit();
+-	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 2,
++	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 1,
+ 					    PAGE_SIZE), LONG_MAX);
+ 	return 0;
+ }
 -- 
 2.39.2
 
