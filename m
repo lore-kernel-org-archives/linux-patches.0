@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E02E8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259F8C433D2;
-	Tue, 28 Mar 2023 14:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F84E8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DACC433EF;
+	Tue, 28 Mar 2023 14:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015396;
-	bh=RNFwa18Oo4RwKvSJdNGd4MX+4jvZTzgq3AWMHP9L8ys=;
+	s=korg; t=1680015399;
+	bh=hlujoLXWxnN8F554mrWZ0ZDnICvfhhTyzshLYwelEp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hawNZTQDHGF13UpmEGFvV9PmlWtcJUQj0LTmf89SK9flXpm1C3eaj97Xi2NpHC7Fs
-	 W+j2xa91iakuloJh3pOXzf67nUhloxkFcGmq1MWVkGjn8UvPP73oYFIPeG15KYDNwP
-	 5NFWJ6fwnaJ1iPAmee+hOHJtVtjRFfQEYgfm8i30=
+	b=rJZ/+YxCXiPapHe4lhgehjmrzAcoXQ7zhucjcXTtYrLyh761TKEAtzxDfOFEMbHV2
+	 Zf9ESQfjHL9jsZkSkxo54qz6OhcJVcBZDL2c+AzZozOMIm4N4NcVScaZj/eQy2DJ40
+	 xABseIWDZN+OD2yjylM/iq7sXhCe3RTiQ9PtuDEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Sheng Feng <fengsheng5@huawei.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/224] i2c: mxs: ensure that DMA buffers are safe for DMA
-Date: Tue, 28 Mar 2023 16:40:29 +0200
-Message-Id: <20230328142618.711452761@linuxfoundation.org>
+Subject: [PATCH 6.1 034/224] i2c: hisi: Only use the completion interrupt to finish the transfer
+Date: Tue, 28 Mar 2023 16:40:30 +0200
+Message-Id: <20230328142618.750864797@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,91 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit 5190417bdf72c71b65bd9892103c6186816a6e8b ]
+[ Upstream commit d98263512684a47e81bcb72a5408958ecd1e60b0 ]
 
-We found that after commit 9c46929e7989
-("ARM: implement THREAD_INFO_IN_TASK for uniprocessor systems"), the
-PCF85063 RTC driver stopped working on i.MX28 due to regmap_bulk_read()
-reading bogus data into a stack buffer. This is caused by the i2c-mxs
-driver using DMA transfers even for messages without the I2C_M_DMA_SAFE
-flag, and the aforementioned commit enabling vmapped stacks.
+The controller will always generate a completion interrupt when the
+transfer is finished normally or not. Currently we use either error or
+completion interrupt to finish, this may result the completion
+interrupt unhandled and corrupt the next transfer, especially at low
+speed mode. Since on error case, the error interrupt will come first
+then is the completion interrupt. So only use the completion interrupt
+to finish the whole transfer process.
 
-As the MXS I2C controller requires DMA for reads of >4 bytes, DMA can't be
-disabled, so the issue is fixed by using i2c_get_dma_safe_msg_buf() to
-create a bounce buffer when needed.
-
-Fixes: 9c46929e7989 ("ARM: implement THREAD_INFO_IN_TASK for uniprocessor systems")
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Fixes: d62fbdb99a85 ("i2c: add support for HiSilicon I2C controller")
+Reported-by: Sheng Feng <fengsheng5@huawei.com>
+Signed-off-by: Sheng Feng <fengsheng5@huawei.com>
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-mxs.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/i2c/busses/i2c-hisi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-mxs.c b/drivers/i2c/busses/i2c-mxs.c
-index d113bed795452..e0f3b3545cfe4 100644
---- a/drivers/i2c/busses/i2c-mxs.c
-+++ b/drivers/i2c/busses/i2c-mxs.c
-@@ -171,7 +171,7 @@ static void mxs_i2c_dma_irq_callback(void *param)
- }
+diff --git a/drivers/i2c/busses/i2c-hisi.c b/drivers/i2c/busses/i2c-hisi.c
+index 76c3d8f6fc3c6..d30071f299879 100644
+--- a/drivers/i2c/busses/i2c-hisi.c
++++ b/drivers/i2c/busses/i2c-hisi.c
+@@ -339,7 +339,11 @@ static irqreturn_t hisi_i2c_irq(int irq, void *context)
+ 		hisi_i2c_read_rx_fifo(ctlr);
  
- static int mxs_i2c_dma_setup_xfer(struct i2c_adapter *adap,
--			struct i2c_msg *msg, uint32_t flags)
-+			struct i2c_msg *msg, u8 *buf, uint32_t flags)
- {
- 	struct dma_async_tx_descriptor *desc;
- 	struct mxs_i2c_dev *i2c = i2c_get_adapdata(adap);
-@@ -226,7 +226,7 @@ static int mxs_i2c_dma_setup_xfer(struct i2c_adapter *adap,
- 		}
- 
- 		/* Queue the DMA data transfer. */
--		sg_init_one(&i2c->sg_io[1], msg->buf, msg->len);
-+		sg_init_one(&i2c->sg_io[1], buf, msg->len);
- 		dma_map_sg(i2c->dev, &i2c->sg_io[1], 1, DMA_FROM_DEVICE);
- 		desc = dmaengine_prep_slave_sg(i2c->dmach, &i2c->sg_io[1], 1,
- 					DMA_DEV_TO_MEM,
-@@ -259,7 +259,7 @@ static int mxs_i2c_dma_setup_xfer(struct i2c_adapter *adap,
- 		/* Queue the DMA data transfer. */
- 		sg_init_table(i2c->sg_io, 2);
- 		sg_set_buf(&i2c->sg_io[0], &i2c->addr_data, 1);
--		sg_set_buf(&i2c->sg_io[1], msg->buf, msg->len);
-+		sg_set_buf(&i2c->sg_io[1], buf, msg->len);
- 		dma_map_sg(i2c->dev, i2c->sg_io, 2, DMA_TO_DEVICE);
- 		desc = dmaengine_prep_slave_sg(i2c->dmach, i2c->sg_io, 2,
- 					DMA_MEM_TO_DEV,
-@@ -563,6 +563,7 @@ static int mxs_i2c_xfer_msg(struct i2c_adapter *adap, struct i2c_msg *msg,
- 	struct mxs_i2c_dev *i2c = i2c_get_adapdata(adap);
- 	int ret;
- 	int flags;
-+	u8 *dma_buf;
- 	int use_pio = 0;
- 	unsigned long time_left;
- 
-@@ -588,13 +589,20 @@ static int mxs_i2c_xfer_msg(struct i2c_adapter *adap, struct i2c_msg *msg,
- 		if (ret && (ret != -ENXIO))
- 			mxs_i2c_reset(i2c);
- 	} else {
-+		dma_buf = i2c_get_dma_safe_msg_buf(msg, 1);
-+		if (!dma_buf)
-+			return -ENOMEM;
-+
- 		reinit_completion(&i2c->cmd_complete);
--		ret = mxs_i2c_dma_setup_xfer(adap, msg, flags);
--		if (ret)
-+		ret = mxs_i2c_dma_setup_xfer(adap, msg, dma_buf, flags);
-+		if (ret) {
-+			i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
- 			return ret;
-+		}
- 
- 		time_left = wait_for_completion_timeout(&i2c->cmd_complete,
- 						msecs_to_jiffies(1000));
-+		i2c_put_dma_safe_msg_buf(dma_buf, msg, true);
- 		if (!time_left)
- 			goto timeout;
- 
+ out:
+-	if (int_stat & HISI_I2C_INT_TRANS_CPLT || ctlr->xfer_err) {
++	/*
++	 * Only use TRANS_CPLT to indicate the completion. On error cases we'll
++	 * get two interrupts, INT_ERR first then TRANS_CPLT.
++	 */
++	if (int_stat & HISI_I2C_INT_TRANS_CPLT) {
+ 		hisi_i2c_disable_int(ctlr, HISI_I2C_INT_ALL);
+ 		hisi_i2c_clear_int(ctlr, HISI_I2C_INT_ALL);
+ 		complete(ctlr->completion);
 -- 
 2.39.2
 
