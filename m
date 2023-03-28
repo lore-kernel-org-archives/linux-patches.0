@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4393E8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEDDC433D2;
-	Tue, 28 Mar 2023 14:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C9B8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:54:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684B1C4339B;
+	Tue, 28 Mar 2023 14:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015266;
-	bh=oIPVSdDWj0s1LZ5PA1tpuuY9uDLqMxYaTQGIkENTLIA=;
+	s=korg; t=1680015268;
+	bh=auzT78B8sTYFbmdAMJSvXW38zALVULSPkuQHYRo5wJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i+S6V70M98ci1dbDZKKeWeAaf9nHHdbcmK1NtOdKpTg4lcVb683YYp5r7mb8/ux58
-	 ztwIgYQH15XWRV1I94o5hXOUjMbTg9hAV/1/UToSiPii/Nt5KkZCGyRu/Offpn0J/m
-	 vrjgoeVtL72nNQgjVLzDXhOZ3UfbavrzhbgENgJU=
+	b=l/FQuIMqHRy4fIwa2BuHBtqy+Ky1tJ+mfhqLS74qgkMlnyZ7oFUoYyl6RRWe2bM8X
+	 xAf1nkbOUEuwmG/WSz0yQjJwMuwIqpdOCG15CgPQTvmJN4fqLAa98ZXhaA9OvD5Jts
+	 RL6eNDZ13BoUNvgcG2E+uB6g+n48DetSDBvJXMKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.2 226/240] riscv: Handle zicsr/zifencei issues between clang and binutils
-Date: Tue, 28 Mar 2023 16:43:09 +0200
-Message-Id: <20230328142629.148777741@linuxfoundation.org>
+	Rijo Thomas <Rijo-john.Thomas@amd.com>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 6.2 227/240] tee: amdtee: fix race condition in amdtee_open_session
+Date: Tue, 28 Mar 2023 16:43:10 +0200
+Message-Id: <20230328142629.187600434@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,122 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Rijo Thomas <Rijo-john.Thomas@amd.com>
 
-commit e89c2e815e76471cb507bd95728bf26da7976430 upstream.
+commit f8502fba45bd30e1a6a354d9d898bc99d1a11e6d upstream.
 
-There are two related issues that appear in certain combinations with
-clang and GNU binutils.
+There is a potential race condition in amdtee_open_session that may
+lead to use-after-free. For instance, in amdtee_open_session() after
+sess->sess_mask is set, and before setting:
 
-The first occurs when a version of clang that supports zicsr or zifencei
-via '-march=' [1] (i.e, >= 17.x) is used in combination with a version
-of GNU binutils that do not recognize zicsr and zifencei in the
-'-march=' value (i.e., < 2.36):
+    sess->session_info[i] = session_info;
 
-  riscv64-linux-gnu-ld: -march=rv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifencei2p0: Invalid or unknown z ISA extension: 'zifencei'
-  riscv64-linux-gnu-ld: failed to merge target specific data of file fs/efivarfs/file.o
-  riscv64-linux-gnu-ld: -march=rv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifencei2p0: Invalid or unknown z ISA extension: 'zifencei'
-  riscv64-linux-gnu-ld: failed to merge target specific data of file fs/efivarfs/super.o
+if amdtee_close_session() closes this same session, then 'sess' data
+structure will be released, causing kernel panic when 'sess' is
+accessed within amdtee_open_session().
 
-The second occurs when a version of clang that does not support zicsr or
-zifencei via '-march=' (i.e., <= 16.x) is used in combination with a
-version of GNU as that defaults to a newer ISA base spec, which requires
-specifying zicsr and zifencei in the '-march=' value explicitly (i.e, >=
-2.38):
+The solution is to set the bit sess->sess_mask as the last step in
+amdtee_open_session().
 
-  ../arch/riscv/kernel/kexec_relocate.S: Assembler messages:
-  ../arch/riscv/kernel/kexec_relocate.S:147: Error: unrecognized opcode `fence.i', extension `zifencei' required
-  clang-12: error: assembler command failed with exit code 1 (use -v to see invocation)
-
-This is the same issue addressed by commit 6df2a016c0c8 ("riscv: fix
-build with binutils 2.38") (see [2] for additional information) but
-older versions of clang miss out on it because the cc-option check
-fails:
-
-  clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupported standard user-level extension 'zicsr'
-  clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupported standard user-level extension 'zicsr'
-
-To resolve the first issue, only attempt to add zicsr and zifencei to
-the march string when using the GNU assembler 2.38 or newer, which is
-when the default ISA spec was updated, requiring these extensions to be
-specified explicitly. LLVM implements an older version of the base
-specification for all currently released versions, so these instructions
-are available as part of the 'i' extension. If LLVM's implementation is
-updated in the future, a CONFIG_AS_IS_LLVM condition can be added to
-CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI.
-
-To resolve the second issue, use version 2.2 of the base ISA spec when
-using an older version of clang that does not support zicsr or zifencei
-via '-march=', as that is the spec version most compatible with the one
-clang/LLVM implements and avoids the need to specify zicsr and zifencei
-explicitly due to still being a part of 'i'.
-
-[1]: https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d4498694e15bf8a16
-[2]: https://lore.kernel.org/ZAxT7T9Xy1Fo3d5W@aurel32.net/
-
+Fixes: 757cc3e9ff1d ("tee: add AMD-TEE driver")
 Cc: stable@vger.kernel.org
-Link: https://github.com/ClangBuiltLinux/linux/issues/1808
-Co-developed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230313-riscv-zicsr-zifencei-fiasco-v1-1-dd1b7840a551@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Rijo Thomas <Rijo-john.Thomas@amd.com>
+Acked-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Kconfig  |   22 ++++++++++++++++++++++
- arch/riscv/Makefile |   10 ++++++----
- 2 files changed, 28 insertions(+), 4 deletions(-)
+ drivers/tee/amdtee/core.c |   29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -447,6 +447,28 @@ config TOOLCHAIN_HAS_ZIHINTPAUSE
- 	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32ima_zihintpause)
- 	depends on LLD_VERSION >= 150000 || LD_VERSION >= 23600
+--- a/drivers/tee/amdtee/core.c
++++ b/drivers/tee/amdtee/core.c
+@@ -267,35 +267,34 @@ int amdtee_open_session(struct tee_conte
+ 		goto out;
+ 	}
  
-+config TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
-+	def_bool y
-+	# https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=aed44286efa8ae8717a77d94b51ac3614e2ca6dc
-+	depends on AS_IS_GNU && AS_VERSION >= 23800
-+	help
-+	  Newer binutils versions default to ISA spec version 20191213 which
-+	  moves some instructions from the I extension to the Zicsr and Zifencei
-+	  extensions.
++	/* Open session with loaded TA */
++	handle_open_session(arg, &session_info, param);
++	if (arg->ret != TEEC_SUCCESS) {
++		pr_err("open_session failed %d\n", arg->ret);
++		handle_unload_ta(ta_handle);
++		kref_put(&sess->refcount, destroy_session);
++		goto out;
++	}
 +
-+config TOOLCHAIN_NEEDS_OLD_ISA_SPEC
-+	def_bool y
-+	depends on TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
-+	# https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d4498694e15bf8a16
-+	depends on CC_IS_CLANG && CLANG_VERSION < 170000
-+	help
-+	  Certain versions of clang do not support zicsr and zifencei via -march
-+	  but newer versions of binutils require it for the reasons noted in the
-+	  help text of CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI. This
-+	  option causes an older ISA spec compatible with these older versions
-+	  of clang to be passed to GAS, which has the same result as passing zicsr
-+	  and zifencei to -march.
-+
- config FPU
- 	bool "FPU support"
- 	default y
---- a/arch/riscv/Makefile
-+++ b/arch/riscv/Makefile
-@@ -57,10 +57,12 @@ riscv-march-$(CONFIG_ARCH_RV64I)	:= rv64
- riscv-march-$(CONFIG_FPU)		:= $(riscv-march-y)fd
- riscv-march-$(CONFIG_RISCV_ISA_C)	:= $(riscv-march-y)c
+ 	/* Find an empty session index for the given TA */
+ 	spin_lock(&sess->lock);
+ 	i = find_first_zero_bit(sess->sess_mask, TEE_NUM_SESSIONS);
+-	if (i < TEE_NUM_SESSIONS)
++	if (i < TEE_NUM_SESSIONS) {
++		sess->session_info[i] = session_info;
++		set_session_id(ta_handle, i, &arg->session);
+ 		set_bit(i, sess->sess_mask);
++	}
+ 	spin_unlock(&sess->lock);
  
--# Newer binutils versions default to ISA spec version 20191213 which moves some
--# instructions from the I extension to the Zicsr and Zifencei extensions.
--toolchain-need-zicsr-zifencei := $(call cc-option-yn, -march=$(riscv-march-y)_zicsr_zifencei)
--riscv-march-$(toolchain-need-zicsr-zifencei) := $(riscv-march-y)_zicsr_zifencei
-+ifdef CONFIG_TOOLCHAIN_NEEDS_OLD_ISA_SPEC
-+KBUILD_CFLAGS += -Wa,-misa-spec=2.2
-+KBUILD_AFLAGS += -Wa,-misa-spec=2.2
-+else
-+riscv-march-$(CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI) := $(riscv-march-y)_zicsr_zifencei
-+endif
+ 	if (i >= TEE_NUM_SESSIONS) {
+ 		pr_err("reached maximum session count %d\n", TEE_NUM_SESSIONS);
++		handle_close_session(ta_handle, session_info);
+ 		handle_unload_ta(ta_handle);
+ 		kref_put(&sess->refcount, destroy_session);
+ 		rc = -ENOMEM;
+ 		goto out;
+ 	}
  
- # Check if the toolchain supports Zicbom extension
- riscv-march-$(CONFIG_TOOLCHAIN_HAS_ZICBOM) := $(riscv-march-y)_zicbom
+-	/* Open session with loaded TA */
+-	handle_open_session(arg, &session_info, param);
+-	if (arg->ret != TEEC_SUCCESS) {
+-		pr_err("open_session failed %d\n", arg->ret);
+-		spin_lock(&sess->lock);
+-		clear_bit(i, sess->sess_mask);
+-		spin_unlock(&sess->lock);
+-		handle_unload_ta(ta_handle);
+-		kref_put(&sess->refcount, destroy_session);
+-		goto out;
+-	}
+-
+-	sess->session_info[i] = session_info;
+-	set_session_id(ta_handle, i, &arg->session);
+ out:
+ 	free_pages((u64)ta, get_order(ta_size));
+ 	return rc;
 
 
