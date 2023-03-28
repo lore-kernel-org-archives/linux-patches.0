@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E9D8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:00:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A55C433EF;
-	Tue, 28 Mar 2023 15:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1488BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:00:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51DA1C433EF;
+	Tue, 28 Mar 2023 15:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015606;
-	bh=qmDcTsJAyzVhJMt0yZYUrZe6Lfl2jaFQf34TksOTO18=;
+	s=korg; t=1680015609;
+	bh=fBz92v9YhjUdwzznze4CNEBjdFnvqCppo2AMjOgJZeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZoxrKfOwy9nlp80gcMUxsE1VnV+mESTxlaFnTv9QRm4lrH1xThFB7YZa5z1GQ4qm
-	 xN1KptnCViM9pbsldAEaNyn0+Rh6tD2KOdO5WO3A5J4OgbpXpik1ENAXTBgE7jrglf
-	 bM9y71gM19c5rS4231i6bnfcQQc0S5UflKr5dK8w=
+	b=h4g+q6LPlS8AsXNoGglKc5G3bgCoyx59Fehl6ukusUHd7SE+D9o0Zz+GlqpbPCSbc
+	 rfjz/NmZfko/OZBKZnQy/CTtuXy9T9CS9y6c+xwzQzXxjUsYxd781jeIrEvafAVcdQ
+	 Po4rljwwk8iRsoVSW7sDhEJyHETr6Aa8MImZVFJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/224] Bluetooth: btusb: Remove detection of ISO packets over bulk
-Date: Tue, 28 Mar 2023 16:41:18 +0200
-Message-Id: <20230328142620.700858164@linuxfoundation.org>
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 109/224] thunderbolt: Call tb_check_quirks() after initializing adapters
+Date: Tue, 28 Mar 2023 16:41:45 +0200
+Message-Id: <20230328142621.884972129@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -34,49 +33,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit efe375b716c1c1c9b52a816f5b933a95421020a2 ]
+commit d2d6ddf188f609861489d5d188d545856a3ed399 upstream.
 
-This removes the code introduced by
-14202eff214e1e941fefa0366d4c3bc4b1a0d500 as hci_recv_frame is now able
-to detect ACL packets that are in fact ISO packets.
+In order to apply quirks based on certain adapter types move call to
+tb_check_quirks() happen after the adapters are initialized. This should
+not affect the existing quirks.
 
-Fixes: 14202eff214e ("Bluetooth: btusb: Detect if an ACL packet is in fact an ISO packet")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/thunderbolt/switch.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 952dc9d2404ed..90b85dcb138df 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -1020,21 +1020,11 @@ static int btusb_recv_bulk(struct btusb_data *data, void *buffer, int count)
- 		hci_skb_expect(skb) -= len;
+--- a/drivers/thunderbolt/switch.c
++++ b/drivers/thunderbolt/switch.c
+@@ -2959,8 +2959,6 @@ int tb_switch_add(struct tb_switch *sw)
+ 			dev_warn(&sw->dev, "reading DROM failed: %d\n", ret);
+ 		tb_sw_dbg(sw, "uid: %#llx\n", sw->uid);
  
- 		if (skb->len == HCI_ACL_HDR_SIZE) {
--			__u16 handle = __le16_to_cpu(hci_acl_hdr(skb)->handle);
- 			__le16 dlen = hci_acl_hdr(skb)->dlen;
--			__u8 type;
- 
- 			/* Complete ACL header */
- 			hci_skb_expect(skb) = __le16_to_cpu(dlen);
- 
--			/* Detect if ISO packet has been sent over bulk */
--			if (hci_conn_num(data->hdev, ISO_LINK)) {
--				type = hci_conn_lookup_type(data->hdev,
--							    hci_handle(handle));
--				if (type == ISO_LINK)
--					hci_skb_pkt_type(skb) = HCI_ISODATA_PKT;
--			}
+-		tb_check_quirks(sw);
 -
- 			if (skb_tailroom(skb) < hci_skb_expect(skb)) {
- 				kfree_skb(skb);
- 				skb = NULL;
--- 
-2.39.2
-
+ 		ret = tb_switch_set_uuid(sw);
+ 		if (ret) {
+ 			dev_err(&sw->dev, "failed to set UUID\n");
+@@ -2979,6 +2977,8 @@ int tb_switch_add(struct tb_switch *sw)
+ 			}
+ 		}
+ 
++		tb_check_quirks(sw);
++
+ 		tb_switch_default_link_ports(sw);
+ 
+ 		ret = tb_switch_update_link_attributes(sw);
 
 
