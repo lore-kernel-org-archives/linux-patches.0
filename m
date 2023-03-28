@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE2D8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A628DC433EF;
-	Tue, 28 Mar 2023 15:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9F38BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52570C433EF;
+	Tue, 28 Mar 2023 15:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015733;
-	bh=UCOUbbinkANOkKeBF2oBYAEPjBNp5ACM0g1MCyUk5RY=;
+	s=korg; t=1680015735;
+	bh=UbuUN3KSzDuMN6TkFM0V/FPldvR4d6VQ/uFQrR0BVew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JzeJKYtlOBTktfUH027uGTMTCIzdU22uCwsaQDO6R5SP67GuhmvT7P7p40uruvwqD
-	 AGJ5srnu1XnqWPDZiKoPdTfz5TRde7tcb0phPXvJJ+NHQamZLRluizbLGRE0PzdeQU
-	 fdp3f4Lctygqdq89Kewkct1BMCJ5h+57TLSpoBis=
+	b=0488ah5maDANX3GtnXW12wvsiyS9eQ6rXAVL9+rSEjl+IXoiF1v/AKJ0y4KxR3AZ4
+	 LMYdMfd9kfijJUEpfgecaMa+q3sQpzmlR/aLl7Wd2/bDH54hY08vn2WbNv1eFsGU1X
+	 xfLx3sZ5+FhbDDXHAMGczeGlVCHldRVf+Je6sEj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 156/224] cifs: fix dentry lookups in directory handle cache
-Date: Tue, 28 Mar 2023 16:42:32 +0200
-Message-Id: <20230328142623.885551538@linuxfoundation.org>
+	Mingwei Zhang <mizhang@google.com>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.1 157/224] x86/fpu/xstate: Prevent false-positive warning in __copy_xstate_uabi_buf()
+Date: Tue, 28 Mar 2023 16:42:33 +0200
+Message-Id: <20230328142623.925787486@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -34,97 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Chang S. Bae <chang.seok.bae@intel.com>
 
-commit be4fde79812f02914e350bde0bc4cfeae8429378 upstream.
+commit b15888840207c2bfe678dd1f68a32db54315e71f upstream.
 
-Get rid of any prefix paths in @path before lookup_positive_unlocked()
-as it will call ->lookup() which already adds those prefix paths
-through build_path_from_dentry().
+__copy_xstate_to_uabi_buf() copies either from the tasks XSAVE buffer
+or from init_fpstate into the ptrace buffer. Dynamic features, like
+XTILEDATA, have an all zeroes init state and are not saved in
+init_fpstate, which means the corresponding bit is not set in the
+xfeatures bitmap of the init_fpstate header.
 
-This has caused a performance regression when mounting shares with a
-prefix path where readdir(2) would end up retrying several times to
-open bad directory names that contained duplicate prefix paths.
+But __copy_xstate_to_uabi_buf() retrieves addresses for both the tasks
+xstate and init_fpstate unconditionally via __raw_xsave_addr().
 
-Fix this by skipping any prefix paths in @path before calling
-lookup_positive_unlocked().
+So if the tasks XSAVE buffer has a dynamic feature set, then the
+address retrieval for init_fpstate triggers the warning in
+__raw_xsave_addr() which checks the feature bit in the init_fpstate
+header.
 
-Fixes: e4029e072673 ("cifs: find and use the dentry for cached non-root directories also")
-Cc: stable@vger.kernel.org # 6.1+
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Remove the address retrieval from init_fpstate for extended features.
+They have an all zeroes init state so init_fpstate has zeros for them.
+Then zeroing the user buffer for the init state is the same as copying
+them from init_fpstate.
+
+Fixes: 2308ee57d93d ("x86/fpu/amx: Enable the AMX feature in 64-bit mode")
+Reported-by: Mingwei Zhang <mizhang@google.com>
+Link: https://lore.kernel.org/kvm/20230221163655.920289-2-mizhang@google.com/
+Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Mingwei Zhang <mizhang@google.com>
+Link: https://lore.kernel.org/all/20230227210504.18520-2-chang.seok.bae%40intel.com
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cached_dir.c |   36 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 34 insertions(+), 2 deletions(-)
+ arch/x86/kernel/fpu/xstate.c |   30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
---- a/fs/cifs/cached_dir.c
-+++ b/fs/cifs/cached_dir.c
-@@ -99,6 +99,23 @@ path_to_dentry(struct cifs_sb_info *cifs
- 	return dentry;
- }
- 
-+static const char *path_no_prefix(struct cifs_sb_info *cifs_sb,
-+				  const char *path)
-+{
-+	size_t len = 0;
-+
-+	if (!*path)
-+		return path;
-+
-+	if ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_USE_PREFIX_PATH) &&
-+	    cifs_sb->prepath) {
-+		len = strlen(cifs_sb->prepath) + 1;
-+		if (unlikely(len > strlen(path)))
-+			return ERR_PTR(-EINVAL);
-+	}
-+	return path + len;
-+}
-+
- /*
-  * Open the and cache a directory handle.
-  * If error then *cfid is not initialized.
-@@ -125,6 +142,7 @@ int open_cached_dir(unsigned int xid, st
- 	struct dentry *dentry = NULL;
- 	struct cached_fid *cfid;
- 	struct cached_fids *cfids;
-+	const char *npath;
- 
- 	if (tcon == NULL || tcon->cfids == NULL || tcon->nohandlecache ||
- 	    is_smb1_server(tcon->ses->server))
-@@ -161,6 +179,20 @@ int open_cached_dir(unsigned int xid, st
- 	}
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -1118,21 +1118,20 @@ void __copy_xstate_to_uabi_buf(struct me
+ 	zerofrom = offsetof(struct xregs_state, extended_state_area);
  
  	/*
-+	 * Skip any prefix paths in @path as lookup_positive_unlocked() ends up
-+	 * calling ->lookup() which already adds those through
-+	 * build_path_from_dentry().  Also, do it earlier as we might reconnect
-+	 * below when trying to send compounded request and then potentially
-+	 * having a different prefix path (e.g. after DFS failover).
-+	 */
-+	npath = path_no_prefix(cifs_sb, path);
-+	if (IS_ERR(npath)) {
-+		rc = PTR_ERR(npath);
-+		kfree(utf16_path);
-+		return rc;
-+	}
-+
-+	/*
- 	 * We do not hold the lock for the open because in case
- 	 * SMB2_open needs to reconnect.
- 	 * This is safe because no other thread will be able to get a ref
-@@ -252,10 +284,10 @@ int open_cached_dir(unsigned int xid, st
- 				(char *)&cfid->file_all_info))
- 		cfid->file_all_info_is_valid = true;
+-	 * The ptrace buffer is in non-compacted XSAVE format.  In
+-	 * non-compacted format disabled features still occupy state space,
+-	 * but there is no state to copy from in the compacted
+-	 * init_fpstate. The gap tracking will zero these states.
++	 * This 'mask' indicates which states to copy from fpstate.
++	 * Those extended states that are not present in fpstate are
++	 * either disabled or initialized:
++	 *
++	 * In non-compacted format, disabled features still occupy
++	 * state space but there is no state to copy from in the
++	 * compacted init_fpstate. The gap tracking will zero these
++	 * states.
++	 *
++	 * The extended features have an all zeroes init state. Thus,
++	 * remove them from 'mask' to zero those features in the user
++	 * buffer instead of retrieving them from init_fpstate.
+ 	 */
+-	mask = fpstate->user_xfeatures;
+-
+-	/*
+-	 * Dynamic features are not present in init_fpstate. When they are
+-	 * in an all zeros init state, remove those from 'mask' to zero
+-	 * those features in the user buffer instead of retrieving them
+-	 * from init_fpstate.
+-	 */
+-	if (fpu_state_size_dynamic())
+-		mask &= (header.xfeatures | xinit->header.xcomp_bv);
++	mask = header.xfeatures;
  
--	if (!path[0])
-+	if (!npath[0])
- 		dentry = dget(cifs_sb->root);
- 	else {
--		dentry = path_to_dentry(cifs_sb, path);
-+		dentry = path_to_dentry(cifs_sb, npath);
- 		if (IS_ERR(dentry)) {
- 			rc = -ENOENT;
- 			goto oshr_free;
+ 	for_each_extended_xfeature(i, mask) {
+ 		/*
+@@ -1151,9 +1150,8 @@ void __copy_xstate_to_uabi_buf(struct me
+ 			pkru.pkru = pkru_val;
+ 			membuf_write(&to, &pkru, sizeof(pkru));
+ 		} else {
+-			copy_feature(header.xfeatures & BIT_ULL(i), &to,
++			membuf_write(&to,
+ 				     __raw_xsave_addr(xsave, i),
+-				     __raw_xsave_addr(xinit, i),
+ 				     xstate_sizes[i]);
+ 		}
+ 		/*
 
 
