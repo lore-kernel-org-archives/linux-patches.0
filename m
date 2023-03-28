@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4A08BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D49C433EF;
-	Tue, 28 Mar 2023 15:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BF28BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD6FC433EF;
+	Tue, 28 Mar 2023 15:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015746;
-	bh=nmnE+C/7SeTa5kfh1ckVOyQkfPvx48ePwk17onKQgtw=;
+	s=korg; t=1680015749;
+	bh=ifmrUBFPf/r7wdc0/9GqPYIDEGZnjFzjv8eq4qDJV/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSmMs42Y8iLAGFYKnawWjhwl4BmkQ6y3jIMMn4bT+yumiuOMwtmTzfaC+iY1S8NVP
-	 18T0I62RZb9zYRJRsuH0G0lz0PvSKWxX1pVAJZprdLz3gR2KCTN1n9Xm/UGxSY4sSH
-	 gM7E9ZvwEwKu5vluLrade9q89Pa+sEcAUQMpuUZ0=
+	b=Dn21EeC1KkUs0kFygIbcUpVKdZxWSV9hdw4GtnqPpdvzWg0DRHvHn7LN4mlQ7nZnb
+	 Con/1gQLrSBbfAUR0UDYb2O7pQYFO1gPb0jBfiCjfWs0jyfBOsdB+Eebg6GngD0LUk
+	 /okfDVNKmjguDEzoZ3taXzVPAdAvTIaP0/OkfyaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ziyang Huang <hzyitc@outlook.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Minas Harutyunyan <hminas@synopsys.com>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>
-Subject: [PATCH 6.1 161/224] usb: dwc2: drd: fix inconsistent mode if role-switch-default-mode="host"
-Date: Tue, 28 Mar 2023 16:42:37 +0200
-Message-Id: <20230328142624.080520830@linuxfoundation.org>
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Subject: [PATCH 6.1 162/224] usb: dwc2: fix a devres leak in hw_enable upon suspend resume
+Date: Tue, 28 Mar 2023 16:42:38 +0200
+Message-Id: <20230328142624.124305974@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,55 +34,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Huang <hzyitc@outlook.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-commit 82f5332d3b9872ab5b287e85c57b76d8bb640cd1 upstream.
+commit f747313249b74f323ddf841a9c8db14d989f296a upstream.
 
-Some boards might use USB-A female connector for USB ports, however,
-the port could be connected to a dual-mode USB controller, making it
-also behaves as a peripheral device if male-to-male cable is connected.
+Each time the platform goes to low power, PM suspend / resume routines
+call: __dwc2_lowlevel_hw_enable -> devm_add_action_or_reset().
+This adds a new devres each time.
+This may also happen at runtime, as dwc2_lowlevel_hw_enable() can be
+called from udc_start().
 
-In this case, the dts looks like this:
+This can be seen with tracing:
+- echo 1 > /sys/kernel/debug/tracing/events/dev/devres_log/enable
+- go to low power
+- cat /sys/kernel/debug/tracing/trace
 
-	&usb0 {
-		status = "okay";
-		dr_mode = "otg";
-		usb-role-switch;
-		role-switch-default-mode = "host";
-	};
+A new "ADD" entry is found upon each low power cycle:
+... devres_log: 49000000.usb-otg ADD 82a13bba devm_action_release (8 bytes)
+... devres_log: 49000000.usb-otg ADD 49889daf devm_action_release (8 bytes)
+...
 
-After boot, dwc2_ovr_init() sets GOTGCTL to GOTGCTL_AVALOVAL and call
-dwc2_force_mode() with parameter host=false, which causes inconsistent
-mode - The hardware is in peripheral mode while the kernel status is
-in host mode.
+A second issue is addressed here:
+- regulator_bulk_enable() is called upon each PM cycle (suspend/resume).
+- regulator_bulk_disable() never gets called.
 
-What we can do now is to call dwc2_drd_role_sw_set() to switch to
-device mode, and everything should work just fine now, even switching
-back to none(default) mode afterwards.
+So the reference count for these regulators constantly increase, by one
+upon each low power cycle, due to missing regulator_bulk_disable() call
+in __dwc2_lowlevel_hw_disable().
 
-Fixes: e14acb876985 ("usb: dwc2: drd: add role-switch-default-node support")
+The original fix that introduced the devm_add_action_or_reset() call,
+fixed an issue during probe, that happens due to other errors in
+dwc2_driver_probe() -> dwc2_core_reset(). Then the probe fails without
+disabling regulators, when dr_mode == USB_DR_MODE_PERIPHERAL.
+
+Rather fix the error path: disable all the low level hardware in the
+error path, by using the "hsotg->ll_hw_enabled" flag. Checking dr_mode
+has been introduced to avoid a dual call to dwc2_lowlevel_hw_disable().
+"ll_hw_enabled" should achieve the same (and is used currently in the
+remove() routine).
+
+Fixes: 54c196060510 ("usb: dwc2: Always disable regulators on driver teardown")
+Fixes: 33a06f1300a7 ("usb: dwc2: Fix error path in gadget registration")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
-Tested-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Acked-by: Minas Harutyunyan <hminas@synopsys.com>
-Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://lore.kernel.org/r/SG2PR01MB204837BF68EDB0E343D2A375C9A59@SG2PR01MB2048.apcprd01.prod.exchangelabs.com
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/r/20230316084127.126084-1-fabrice.gasnier@foss.st.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/drd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/dwc2/platform.c |   16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
---- a/drivers/usb/dwc2/drd.c
-+++ b/drivers/usb/dwc2/drd.c
-@@ -35,7 +35,8 @@ static void dwc2_ovr_init(struct dwc2_hs
- 
- 	spin_unlock_irqrestore(&hsotg->lock, flags);
- 
--	dwc2_force_mode(hsotg, (hsotg->dr_mode == USB_DR_MODE_HOST));
-+	dwc2_force_mode(hsotg, (hsotg->dr_mode == USB_DR_MODE_HOST) ||
-+				(hsotg->role_sw_default_mode == USB_DR_MODE_HOST));
+--- a/drivers/usb/dwc2/platform.c
++++ b/drivers/usb/dwc2/platform.c
+@@ -91,13 +91,6 @@ static int dwc2_get_dr_mode(struct dwc2_
+ 	return 0;
  }
  
- static int dwc2_ovr_avalid(struct dwc2_hsotg *hsotg, bool valid)
+-static void __dwc2_disable_regulators(void *data)
+-{
+-	struct dwc2_hsotg *hsotg = data;
+-
+-	regulator_bulk_disable(ARRAY_SIZE(hsotg->supplies), hsotg->supplies);
+-}
+-
+ static int __dwc2_lowlevel_hw_enable(struct dwc2_hsotg *hsotg)
+ {
+ 	struct platform_device *pdev = to_platform_device(hsotg->dev);
+@@ -108,11 +101,6 @@ static int __dwc2_lowlevel_hw_enable(str
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = devm_add_action_or_reset(&pdev->dev,
+-				       __dwc2_disable_regulators, hsotg);
+-	if (ret)
+-		return ret;
+-
+ 	if (hsotg->clk) {
+ 		ret = clk_prepare_enable(hsotg->clk);
+ 		if (ret)
+@@ -168,7 +156,7 @@ static int __dwc2_lowlevel_hw_disable(st
+ 	if (hsotg->clk)
+ 		clk_disable_unprepare(hsotg->clk);
+ 
+-	return 0;
++	return regulator_bulk_disable(ARRAY_SIZE(hsotg->supplies), hsotg->supplies);
+ }
+ 
+ /**
+@@ -607,7 +595,7 @@ error_init:
+ 	if (hsotg->params.activate_stm_id_vb_detection)
+ 		regulator_disable(hsotg->usb33d);
+ error:
+-	if (hsotg->dr_mode != USB_DR_MODE_PERIPHERAL)
++	if (hsotg->ll_hw_enabled)
+ 		dwc2_lowlevel_hw_disable(hsotg);
+ 	return retval;
+ }
 
 
