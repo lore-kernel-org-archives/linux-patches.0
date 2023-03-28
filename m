@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B198BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:07:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF3FC433EF;
-	Tue, 28 Mar 2023 15:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD88A8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:07:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F697C433EF;
+	Tue, 28 Mar 2023 15:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016054;
-	bh=jo9kQ5ygQfoK0N2d3Rz4/2jYseiKz7W+XG0vfg/2K6c=;
+	s=korg; t=1680016057;
+	bh=o4v7KK1w+iiB5ffWcIbt3HtJHhbF2k75kO7ns1P550M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wxx0DyRlaUHIAvcx/cluIEsymVgaMTFRLSE1Q50m0y5TlRXsDrtg+viQsc+EUntHz
-	 ZiPpgNh0p7NgtKN+bYeGRHKxvTcDOc+keEnXMwJo1rqZW8wHlWC+rxPx5hTHpmjJ+l
-	 nLrSPeC8nJqqE1Ta8PgM04y/7lIOKoPfwc2/Uxb8=
+	b=caKCibfp9JnLvIJjWqgBqUwQBBmNbx/pnSsXF8vO02Yf2/3jBKWPW1jBk5DSdHhTQ
+	 SI7U6qYBmNNGCdgz/LZRaQyu55PHktODF11aQCff4z8BcSPhwHmU0oVieBKtYy4Lgq
+	 bDdFLs9PzqXBl+RxjdKnNOuR3vmaN3U2jgHiyKhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dan Carpenter <error27@gmail.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/146] qed/qed_sriov: guard against NULL derefs from qed_iov_get_vf_info
-Date: Tue, 28 Mar 2023 16:42:00 +0200
-Message-Id: <20230328142604.011526807@linuxfoundation.org>
+Subject: [PATCH 5.15 049/146] net/mlx5: E-Switch, Fix an Oops in error handling code
+Date: Tue, 28 Mar 2023 16:42:18 +0200
+Message-Id: <20230328142604.745460690@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -36,49 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 25143b6a01d0cc5319edd3de22ffa2578b045550 ]
+[ Upstream commit 640fcdbcf27fc62de9223f958ceb4e897a00e791 ]
 
-We have to make sure that the info returned by the helper is valid
-before using it.
+The error handling dereferences "vport".  There is nothing we can do if
+it is an error pointer except returning the error code.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
-
-Fixes: f990c82c385b ("qed*: Add support for ndo_set_vf_trust")
-Fixes: 733def6a04bf ("qed*: IOV link control")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 133dcfc577ea ("net/mlx5: E-Switch, Alloc and free unique metadata for match")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Roi Dayan <roid@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_sriov.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_sriov.c b/drivers/net/ethernet/qlogic/qed/qed_sriov.c
-index 3eb05376e7c3e..bf0ba3855da1d 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_sriov.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_sriov.c
-@@ -4378,6 +4378,9 @@ qed_iov_configure_min_tx_rate(struct qed_dev *cdev, int vfid, u32 rate)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
+index 39e948bc12041..34a6542c03f61 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
+@@ -301,8 +301,7 @@ int mlx5_esw_acl_ingress_vport_bond_update(struct mlx5_eswitch *esw, u16 vport_n
+ 
+ 	if (WARN_ON_ONCE(IS_ERR(vport))) {
+ 		esw_warn(esw->dev, "vport(%d) invalid!\n", vport_num);
+-		err = PTR_ERR(vport);
+-		goto out;
++		return PTR_ERR(vport);
  	}
  
- 	vf = qed_iov_get_vf_info(QED_LEADING_HWFN(cdev), (u16)vfid, true);
-+	if (!vf)
-+		return -EINVAL;
-+
- 	vport_id = vf->vport_id;
- 
- 	return qed_configure_vport_wfq(cdev, vport_id, rate);
-@@ -5124,7 +5127,7 @@ static void qed_iov_handle_trust_change(struct qed_hwfn *hwfn)
- 
- 		/* Validate that the VF has a configured vport */
- 		vf = qed_iov_get_vf_info(hwfn, i, true);
--		if (!vf->vport_instance)
-+		if (!vf || !vf->vport_instance)
- 			continue;
- 
- 		memset(&params, 0, sizeof(params));
+ 	esw_acl_ingress_ofld_rules_destroy(esw, vport);
 -- 
 2.39.2
 
