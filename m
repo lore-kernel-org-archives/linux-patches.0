@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02C58BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A3AC433D2;
-	Tue, 28 Mar 2023 15:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9DD8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B09C433EF;
+	Tue, 28 Mar 2023 15:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015724;
-	bh=sDkruBFyfQL22Bvsy8QT47HOFCYwklASkPBiGar2oVc=;
+	s=korg; t=1680015727;
+	bh=SA9icH61OklZzYsLD5DT3rllQEHjo7Yesr5GXBeG2sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZVa6yTxaWt9DUrvTqbQKC1HI65io1vh5kBd5Jep0AfthRA1TQBxJYgOMJAtOqU/x
-	 QQNpWFoGdR0hfJ3fX0sk/LVDkdDaqWPCkOIizDpW7Ju4NP2CmXQX1s53Y50ljta0VW
-	 pYylK3P0YzmupzYzT+ousoql3sY6bFJKCHzk4X4o=
+	b=tyEYebGqpMH0CqcKN2FM4lGwiuq0L0Dgz98Wf0B7neTPTb5nHoF+yzEB/7gLHZthn
+	 hsh4XwGtb22yQVGY1q7+2m8KMHAi7lHw+hta+6xrzfBUXPM4VGYwr5o1WecO9QchBo
+	 GgSAgY1IuN7M0H5c4O0u4HhyLOPanrbGLFPUTnf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandr Sapozhnikov <alsp705@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 122/224] drm/cirrus: NULL-check pipe->plane.state->fb in cirrus_pipe_update()
-Date: Tue, 28 Mar 2023 16:41:58 +0200
-Message-Id: <20230328142622.443658164@linuxfoundation.org>
+	=?UTF-8?q?Christian=20Schaubschl=C3=A4ger?= <christian.schaubschlaeger@gmx.at>,
+	Gil Fine <gil.fine@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 113/224] thunderbolt: Add missing UNSET_INBOUND_SBTX for retimer access
+Date: Tue, 28 Mar 2023 16:41:49 +0200
+Message-Id: <20230328142622.054802454@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,44 +35,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandr Sapozhnikov <alsp705@gmail.com>
+From: Gil Fine <gil.fine@linux.intel.com>
 
-[ Upstream commit 7245e629dcaaf308f1868aeffa218e9849c77893 ]
+commit cd0c1e582b055dea615001b8bd8eccaf6f69f7ce upstream.
 
-After having been compared to NULL value at cirrus.c:455, pointer
-'pipe->plane.state->fb' is passed as 1st parameter in call to function
-'cirrus_fb_blit_rect' at cirrus.c:461, where it is dereferenced at
-cirrus.c:316.
+According to USB4 retimer specification, the process of firmware update
+sequence requires issuing a SET_INBOUND_SBTX port operation that later
+shall be followed by UNSET_INBOUND_SBTX port operation. This last step
+is not currently issued by the driver but it is necessary to make sure
+the retimers are put back to passthrough mode even during enumeration.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+If this step is missing the link may not come up properly after
+soft-reboot for example.
 
-v2:
-	* aligned commit message to line-length limits
+For this reason issue UNSET_INBOUND_SBTX after SET_INBOUND_SBTX for
+enumeration and also when the NVM upgrade is run.
 
-Signed-off-by: Alexandr Sapozhnikov <alsp705@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230215171549.16305-1-alsp705@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Christian Schaubschläger <christian.schaubschlaeger@gmx.at>
+Link: https://lore.kernel.org/linux-usb/b556f5ed-5ee8-9990-9910-afd60db93310@gmx.at/
+Cc: stable@vger.kernel.org
+Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tiny/cirrus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thunderbolt/retimer.c |   23 +++++++++++++++++++++--
+ drivers/thunderbolt/sb_regs.h |    1 +
+ drivers/thunderbolt/tb.h      |    1 +
+ drivers/thunderbolt/usb4.c    |   14 ++++++++++++++
+ 4 files changed, 37 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/tiny/cirrus.c b/drivers/gpu/drm/tiny/cirrus.c
-index 354d5e854a6f0..b27e469e90217 100644
---- a/drivers/gpu/drm/tiny/cirrus.c
-+++ b/drivers/gpu/drm/tiny/cirrus.c
-@@ -455,7 +455,7 @@ static void cirrus_pipe_update(struct drm_simple_display_pipe *pipe,
- 	if (state->fb && cirrus->cpp != cirrus_cpp(state->fb))
- 		cirrus_mode_set(cirrus, &crtc->mode, state->fb);
- 
--	if (drm_atomic_helper_damage_merged(old_state, state, &rect))
-+	if (state->fb && drm_atomic_helper_damage_merged(old_state, state, &rect))
- 		cirrus_fb_blit_rect(state->fb, &shadow_plane_state->data[0], &rect);
+--- a/drivers/thunderbolt/retimer.c
++++ b/drivers/thunderbolt/retimer.c
+@@ -187,6 +187,22 @@ static ssize_t nvm_authenticate_show(str
+ 	return ret;
  }
  
--- 
-2.39.2
-
++static void tb_retimer_set_inbound_sbtx(struct tb_port *port)
++{
++	int i;
++
++	for (i = 1; i <= TB_MAX_RETIMER_INDEX; i++)
++		usb4_port_retimer_set_inbound_sbtx(port, i);
++}
++
++static void tb_retimer_unset_inbound_sbtx(struct tb_port *port)
++{
++	int i;
++
++	for (i = TB_MAX_RETIMER_INDEX; i >= 1; i--)
++		usb4_port_retimer_unset_inbound_sbtx(port, i);
++}
++
+ static ssize_t nvm_authenticate_store(struct device *dev,
+ 	struct device_attribute *attr, const char *buf, size_t count)
+ {
+@@ -213,6 +229,7 @@ static ssize_t nvm_authenticate_store(st
+ 	rt->auth_status = 0;
+ 
+ 	if (val) {
++		tb_retimer_set_inbound_sbtx(rt->port);
+ 		if (val == AUTHENTICATE_ONLY) {
+ 			ret = tb_retimer_nvm_authenticate(rt, true);
+ 		} else {
+@@ -232,6 +249,7 @@ static ssize_t nvm_authenticate_store(st
+ 	}
+ 
+ exit_unlock:
++	tb_retimer_unset_inbound_sbtx(rt->port);
+ 	mutex_unlock(&rt->tb->lock);
+ exit_rpm:
+ 	pm_runtime_mark_last_busy(&rt->dev);
+@@ -440,8 +458,7 @@ int tb_retimer_scan(struct tb_port *port
+ 	 * Enable sideband channel for each retimer. We can do this
+ 	 * regardless whether there is device connected or not.
+ 	 */
+-	for (i = 1; i <= TB_MAX_RETIMER_INDEX; i++)
+-		usb4_port_retimer_set_inbound_sbtx(port, i);
++	tb_retimer_set_inbound_sbtx(port);
+ 
+ 	/*
+ 	 * Before doing anything else, read the authentication status.
+@@ -464,6 +481,8 @@ int tb_retimer_scan(struct tb_port *port
+ 			break;
+ 	}
+ 
++	tb_retimer_unset_inbound_sbtx(port);
++
+ 	if (!last_idx)
+ 		return 0;
+ 
+--- a/drivers/thunderbolt/sb_regs.h
++++ b/drivers/thunderbolt/sb_regs.h
+@@ -20,6 +20,7 @@ enum usb4_sb_opcode {
+ 	USB4_SB_OPCODE_ROUTER_OFFLINE = 0x4e45534c,		/* "LSEN" */
+ 	USB4_SB_OPCODE_ENUMERATE_RETIMERS = 0x4d554e45,		/* "ENUM" */
+ 	USB4_SB_OPCODE_SET_INBOUND_SBTX = 0x5055534c,		/* "LSUP" */
++	USB4_SB_OPCODE_UNSET_INBOUND_SBTX = 0x50555355,		/* "USUP" */
+ 	USB4_SB_OPCODE_QUERY_LAST_RETIMER = 0x5453414c,		/* "LAST" */
+ 	USB4_SB_OPCODE_GET_NVM_SECTOR_SIZE = 0x53534e47,	/* "GNSS" */
+ 	USB4_SB_OPCODE_NVM_SET_OFFSET = 0x53504f42,		/* "BOPS" */
+--- a/drivers/thunderbolt/tb.h
++++ b/drivers/thunderbolt/tb.h
+@@ -1220,6 +1220,7 @@ int usb4_port_sw_margin(struct tb_port *
+ int usb4_port_sw_margin_errors(struct tb_port *port, u32 *errors);
+ 
+ int usb4_port_retimer_set_inbound_sbtx(struct tb_port *port, u8 index);
++int usb4_port_retimer_unset_inbound_sbtx(struct tb_port *port, u8 index);
+ int usb4_port_retimer_read(struct tb_port *port, u8 index, u8 reg, void *buf,
+ 			   u8 size);
+ int usb4_port_retimer_write(struct tb_port *port, u8 index, u8 reg,
+--- a/drivers/thunderbolt/usb4.c
++++ b/drivers/thunderbolt/usb4.c
+@@ -1562,6 +1562,20 @@ int usb4_port_retimer_set_inbound_sbtx(s
+ }
+ 
+ /**
++ * usb4_port_retimer_unset_inbound_sbtx() - Disable sideband channel transactions
++ * @port: USB4 port
++ * @index: Retimer index
++ *
++ * Disables sideband channel transations on SBTX. The reverse of
++ * usb4_port_retimer_set_inbound_sbtx().
++ */
++int usb4_port_retimer_unset_inbound_sbtx(struct tb_port *port, u8 index)
++{
++	return usb4_port_retimer_op(port, index,
++				    USB4_SB_OPCODE_UNSET_INBOUND_SBTX, 500);
++}
++
++/**
+  * usb4_port_retimer_read() - Read from retimer sideband registers
+  * @port: USB4 port
+  * @index: Retimer index
 
 
