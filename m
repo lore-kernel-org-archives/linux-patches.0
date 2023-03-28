@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF128BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:08:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA05BC433EF;
-	Tue, 28 Mar 2023 15:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E5E8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:08:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67644C433D2;
+	Tue, 28 Mar 2023 15:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016093;
-	bh=2ugIpgZWfoczCcji9FGaE/sx8krgUjPvMbqUA8GKhl4=;
+	s=korg; t=1680016095;
+	bh=cLOIroqt9BcPPln3W/TQwTBXgfBEf+GG/pepPI16hmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jGaIUiKaEDHuRFVOYg5d+pQln2doVat5ikcFIyxmf0JVCu0HEIfPhfeV5s4b1fEih
-	 XAad6P6Zpr0nLS0nInNkUj3Z2rAk4ps2usA1iozd/MK2Gr0t/qXFOdoqO+5WEoNuK0
-	 EcyXGiXRpMHFixyleVkNUD72YZNtB6+8TzEO8giE=
+	b=andwLvAfdaFjNO9lu254xklvQbFSCw+j3K2LKI1h5KLml6I5bNkLyh/B+GREZuguu
+	 3vF39OG+JMCTeTSkt5+FHFHfvD1OBpn0L9rVosoZ5EscPxKKn5rQRQR89+6yYGW01g
+	 0Z6lFGZIUj+IY4i+dqWSmPrvUOMnjoWpdKcFeEMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/146] net: dsa: mt7530: move lowering TRGMII driving to mt7530_setup()
-Date: Tue, 28 Mar 2023 16:42:30 +0200
-Message-Id: <20230328142605.261778620@linuxfoundation.org>
+Subject: [PATCH 5.15 033/146] net: phy: Ensure state transitions are processed from phy_stop()
+Date: Tue, 28 Mar 2023 16:42:02 +0200
+Message-Id: <20230328142604.089684240@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -35,95 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit fdcc8ccd823740c18e803b886cec461bc0e64201 ]
+[ Upstream commit 4203d84032e28f893594a453bd8bc9c3b15c7334 ]
 
-Move lowering the TRGMII Tx clock driving to mt7530_setup(), after setting
-the core clock, as seen on the U-Boot MediaTek ethernet driver.
+In the phy_disconnect() -> phy_stop() path, we will be forcibly setting
+the PHY state machine to PHY_HALTED. This invalidates the old_state !=
+phydev->state condition in phy_state_machine() such that we will neither
+display the state change for debugging, nor will we invoke the
+link_change_notify() callback.
 
-Move the code which looks like it lowers the TRGMII Rx clock driving to
-after the TRGMII Tx clock driving is lowered. This is run after lowering
-the Tx clock driving on the U-Boot MediaTek ethernet driver as well.
+Factor the code by introducing phy_process_state_change(), and ensure
+that we process the state change from phy_stop() as well.
 
-This way, the switch should consume less power regardless of port 6 being
-used.
-
-Update the comment explaining mt7530_pad_clk_setup().
-
-Tested rgmii and trgmii modes of port 6 and rgmii mode of port 5 on MCM
-MT7530 on MT7621AT Unielec U7621-06 and standalone MT7530 on MT7623NI
-Bananapi BPI-R2.
-
-Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
-Link: https://source.denx.de/u-boot/u-boot/-/blob/29a48bf9ccba45a5e560bb564bbe76e42629325f/drivers/net/mtk_eth.c#L682
-Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Link: https://lore.kernel.org/r/20230320190520.124513-2-arinc.unal@arinc9.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5c5f626bcace ("net: phy: improve handling link_change_notify callback")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/net/phy/phy.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 1ad6c8b44183c..314770515018c 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -414,12 +414,12 @@ static void mt7530_pll_setup(struct mt7530_priv *priv)
- 	core_set(priv, CORE_TRGMII_GSW_CLK_CG, REG_GSWCK_EN);
+diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
+index 2fc851082e7b4..1135e63a4a76e 100644
+--- a/drivers/net/phy/phy.c
++++ b/drivers/net/phy/phy.c
+@@ -57,6 +57,18 @@ static const char *phy_state_to_str(enum phy_state st)
+ 	return NULL;
  }
  
--/* Setup TX circuit including relevant PAD and driving */
-+/* Setup port 6 interface mode and TRGMII TX circuit */
- static int
- mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
++static void phy_process_state_change(struct phy_device *phydev,
++				     enum phy_state old_state)
++{
++	if (old_state != phydev->state) {
++		phydev_dbg(phydev, "PHY state change %s -> %s\n",
++			   phy_state_to_str(old_state),
++			   phy_state_to_str(phydev->state));
++		if (phydev->drv && phydev->drv->link_change_notify)
++			phydev->drv->link_change_notify(phydev);
++	}
++}
++
+ static void phy_link_up(struct phy_device *phydev)
  {
- 	struct mt7530_priv *priv = ds->priv;
--	u32 ncpo1, ssc_delta, trgint, i, xtal;
-+	u32 ncpo1, ssc_delta, trgint, xtal;
+ 	phydev->phy_link_change(phydev, true);
+@@ -1061,6 +1073,7 @@ EXPORT_SYMBOL(phy_free_interrupt);
+ void phy_stop(struct phy_device *phydev)
+ {
+ 	struct net_device *dev = phydev->attached_dev;
++	enum phy_state old_state;
  
- 	xtal = mt7530_read(priv, MT7530_MHWTRAP) & HWTRAP_XTAL_MASK;
- 
-@@ -464,11 +464,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- 		   P6_INTF_MODE(trgint));
- 
- 	if (trgint) {
--		/* Lower Tx Driving for TRGMII path */
--		for (i = 0 ; i < NUM_TRGMII_CTRL ; i++)
--			mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
--				     TD_DM_DRVP(8) | TD_DM_DRVN(8));
--
- 		/* Disable the MT7530 TRGMII clocks */
- 		core_clear(priv, CORE_TRGMII_GSW_CLK_CG, REG_TRGMIICK_EN);
- 
-@@ -489,10 +484,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- 
- 		/* Enable the MT7530 TRGMII clocks */
- 		core_set(priv, CORE_TRGMII_GSW_CLK_CG, REG_TRGMIICK_EN);
--	} else {
--		for (i = 0 ; i < NUM_TRGMII_CTRL; i++)
--			mt7530_rmw(priv, MT7530_TRGMII_RD(i),
--				   RD_TAP_MASK, RD_TAP(16));
+ 	if (!phy_is_started(phydev) && phydev->state != PHY_DOWN) {
+ 		WARN(1, "called from state %s\n",
+@@ -1069,6 +1082,7 @@ void phy_stop(struct phy_device *phydev)
  	}
  
- 	return 0;
-@@ -2174,6 +2165,15 @@ mt7530_setup(struct dsa_switch *ds)
+ 	mutex_lock(&phydev->lock);
++	old_state = phydev->state;
  
- 	mt7530_pll_setup(priv);
+ 	if (phydev->state == PHY_CABLETEST) {
+ 		phy_abort_cable_test(phydev);
+@@ -1079,6 +1093,7 @@ void phy_stop(struct phy_device *phydev)
+ 		sfp_upstream_stop(phydev->sfp_bus);
  
-+	/* Lower Tx driving for TRGMII path */
-+	for (i = 0; i < NUM_TRGMII_CTRL; i++)
-+		mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
-+			     TD_DM_DRVP(8) | TD_DM_DRVN(8));
-+
-+	for (i = 0; i < NUM_TRGMII_CTRL; i++)
-+		mt7530_rmw(priv, MT7530_TRGMII_RD(i),
-+			   RD_TAP_MASK, RD_TAP(16));
-+
- 	/* Enable port 6 */
- 	val = mt7530_read(priv, MT7530_MHWTRAP);
- 	val &= ~MHWTRAP_P6_DIS & ~MHWTRAP_PHY_ACCESS;
+ 	phydev->state = PHY_HALTED;
++	phy_process_state_change(phydev, old_state);
+ 
+ 	mutex_unlock(&phydev->lock);
+ 
+@@ -1196,13 +1211,7 @@ void phy_state_machine(struct work_struct *work)
+ 	if (err < 0)
+ 		phy_error(phydev);
+ 
+-	if (old_state != phydev->state) {
+-		phydev_dbg(phydev, "PHY state change %s -> %s\n",
+-			   phy_state_to_str(old_state),
+-			   phy_state_to_str(phydev->state));
+-		if (phydev->drv && phydev->drv->link_change_notify)
+-			phydev->drv->link_change_notify(phydev);
+-	}
++	phy_process_state_change(phydev, old_state);
+ 
+ 	/* Only re-schedule a PHY state machine change if we are polling the
+ 	 * PHY, if PHY_MAC_INTERRUPT is set, then we will be moving
 -- 
 2.39.2
 
