@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75D78BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:46:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1B6C433D2;
-	Tue, 28 Mar 2023 14:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE1D8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:46:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59B9C4339B;
+	Tue, 28 Mar 2023 14:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014807;
-	bh=gQxc+3WKPVTBXitOCBuOXHUTTuLHFnQGH+NYDA+012c=;
+	s=korg; t=1680014810;
+	bh=O7QVPbE0xq5jOwrACmNR6ofwUb7EHygjsID5IcW4PWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1RLskUJKJnBGfAsaxSBcN1B9YMri5c7aC2LW+EwYCBn2hVcEN1tF3/x25UuoqrK2k
-	 ejEK3MF1Kq74V6p4YBpmScgGaVFskIJQkY5RXzIw+dqOhIN06Yz8BOc9xgEXwzIsF3
-	 hqF4n7BgyWsP0jq8g5IghpN9G7AO07+W6WhIHuq0=
+	b=QfBLS4jhs6kI2i2fOu5mZ91GLx5Vr6oMnxibjP8GsBiYNOICD5CyM8U6XL6H2Ntbq
+	 Oc93t50QVtyAKa5w4mQYIN7HWnBNEKMT7a9ptQ8WysXvBSPpwIcuMgnevXyDDximNJ
+	 vb/3NxB5+WmjxtuL1eewSzUeY6NnofUEJIShHhFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 059/240] drm/i915: Update vblank timestamping stuff on seamless M/N change
-Date: Tue, 28 Mar 2023 16:40:22 +0200
-Message-Id: <20230328142622.178499619@linuxfoundation.org>
+Subject: [PATCH 6.2 060/240] net: dsa: report rx_bytes unadjusted for ETH_HLEN
+Date: Tue, 28 Mar 2023 16:40:23 +0200
+Message-Id: <20230328142622.222558129@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -36,66 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 59ad01c786a4c94afacc7feb0ab97bf8d6672a46 ]
+[ Upstream commit a8eff03545d4cef12ae66a1905627c1818a0f81a ]
 
-When we change the M/N values seamlessly during a fastset we should
-also update the vblank timestamping stuff to make sure the vblank
-timestamp corrections/guesstimations come out exact.
+We collect the software statistics counters for RX bytes (reported to
+/proc/net/dev and to ethtool -S $dev | grep 'rx_bytes: ") at a time when
+skb->len has already been adjusted by the eth_type_trans() ->
+skb_pull_inline(skb, ETH_HLEN) call to exclude the L2 header.
 
-Note that only crtc_clock and framedur_ns can actually end up
-changing here during fastsets. Everything else we touch can
-only change during full modesets.
+This means that when connecting 2 DSA interfaces back to back and
+sending 1 packet with length 100, the sending interface will report
+tx_bytes as incrementing by 100, and the receiving interface will report
+rx_bytes as incrementing by 86.
 
-Technically we should try to do this exactly at the start of
-vblank, but that would require some kind of double buffering
-scheme. Let's skip that for now and just update things right
-after the commit has been submitted to the hardware. This
-means the information will be properly up to date when the
-vblank irq handler goes to work. Only if someone ends up
-querying some vblanky stuff in between the commit and start
-of vblank may we see a slight discrepancy.
+Since accounting for that in scripts is quirky and is something that
+would be DSA-specific behavior (requiring users to know that they are
+running on a DSA interface in the first place), the proposal is that we
+treat it as a bug and fix it.
 
-Also this same problem really exists for the DRRS downclocking
-stuff. But as that is supposed to be more or less transparent
-to the user, and it only drops to low gear after a long delay
-(1 sec currently) we probably don't have to worry about it.
-Any time something is actively submitting updates DRRS will
-remain in high gear and so the timestamping constants will
-match the hardware state.
+This design bug has always existed in DSA, according to my analysis:
+commit 91da11f870f0 ("net: Distributed Switch Architecture protocol
+support") also updates skb->dev->stats.rx_bytes += skb->len after the
+eth_type_trans() call. Technically, prior to Florian's commit
+a86d8becc3f0 ("net: dsa: Factor bottom tag receive functions"), each and
+every vendor-specific tagging protocol driver open-coded the same bug,
+until the buggy code was consolidated into something resembling what can
+be seen now. So each and every driver should have its own Fixes: tag,
+because of their different histories until the convergence point.
+I'm not going to do that, for the sake of simplicity, but just blame the
+oldest appearance of buggy code.
 
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
-Fixes: e6f29923c048 ("drm/i915: Allow M/N change during fastset on bdw+")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230310235828.17439-1-ville.syrjala@linux.intel.com
-(cherry picked from commit 8cb1f95cca68421b08333175719fdd3615372ca8)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+There are 2 ways to fix the problem. One is the obvious way, and the
+other is how I ended up doing it. Obvious would have been to move
+dev_sw_netstats_rx_add() one line above eth_type_trans(), and below
+skb_push(skb, ETH_HLEN). But DSA processing is not as simple as that.
+We count the bytes after removing everything DSA-related from the
+packet, to emulate what the packet's length was, on the wire, when the
+user port received it.
+
+When eth_type_trans() executes, dsa_untag_bridge_pvid() has not run yet,
+so in case the switch driver requests this behavior - commit
+412a1526d067 ("net: dsa: untag the bridge pvid from rx skbs") has the
+details - the obvious variant of the fix wouldn't have worked, because
+the positioning there would have also counted the not-yet-stripped VLAN
+header length, something which is absent from the packet as seen on the
+wire (there it may be untagged, whereas software will see it as
+PVID-tagged).
+
+Fixes: f613ed665bb3 ("net: dsa: Add support for 64-bit statistics")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_crtc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/dsa/tag.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_crtc.c b/drivers/gpu/drm/i915/display/intel_crtc.c
-index 037fc140b585c..098acef59c10f 100644
---- a/drivers/gpu/drm/i915/display/intel_crtc.c
-+++ b/drivers/gpu/drm/i915/display/intel_crtc.c
-@@ -682,6 +682,14 @@ void intel_pipe_update_end(struct intel_crtc_state *new_crtc_state)
- 	 */
- 	intel_vrr_send_push(new_crtc_state);
+diff --git a/net/dsa/tag.c b/net/dsa/tag.c
+index b2fba1a003ce3..5105a5ff58fa2 100644
+--- a/net/dsa/tag.c
++++ b/net/dsa/tag.c
+@@ -114,7 +114,7 @@ static int dsa_switch_rcv(struct sk_buff *skb, struct net_device *dev,
+ 		skb = nskb;
+ 	}
  
-+	/*
-+	 * Seamless M/N update may need to update frame timings.
-+	 *
-+	 * FIXME Should be synchronized with the start of vblank somehow...
-+	 */
-+	if (new_crtc_state->seamless_m_n && intel_crtc_needs_fastset(new_crtc_state))
-+		intel_crtc_update_active_timings(new_crtc_state);
-+
- 	local_irq_enable();
+-	dev_sw_netstats_rx_add(skb->dev, skb->len);
++	dev_sw_netstats_rx_add(skb->dev, skb->len + ETH_HLEN);
  
- 	if (intel_vgpu_active(dev_priv))
+ 	if (dsa_skb_defer_rx_timestamp(p, skb))
+ 		return 0;
 -- 
 2.39.2
 
