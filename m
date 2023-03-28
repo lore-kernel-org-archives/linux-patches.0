@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A518BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:50:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A679DC4339B;
-	Tue, 28 Mar 2023 14:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F388BEB
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:50:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD2FC433D2;
+	Tue, 28 Mar 2023 14:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015057;
-	bh=5VMwDl1Jsw26GjyXU8bTq4Dwad0lh0CCc32p19PzZOs=;
+	s=korg; t=1680015059;
+	bh=+bdDLXbg/4kSaIDVp+qPHQ+/SL0tYWETilpGbIUdebw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpqeR8Tkp2EVPbGZcc1J0Ut2v+Z4FdhxKQ8hIaXH7sjEUuJ0fq1kJDxeAL+dxG96j
-	 mUDUn+fMSoUsbKdn6jc3eSliQzxrwnuURQRlL2YMiXOL2CbKAwEgTuFXcGveeuc9k0
-	 77cSKVFWRPIefX+JggHIy9DKYgOjUti8kUJKKQAw=
+	b=zAX20XX9I+ZMBr/K8YLrDAMT1cSDMUlY7qrYvHhiO5kUIehdbqdiJ3It6jaUKhXAd
+	 2HTnH1MCn+xywewslbSSBkGRYjrLnVxnvWsSJEHKv1amQFu54RzqEXlXYfWePezA3I
+	 MMtwWG2F5mY7KzrNI8cPdKKqI6umPDtxA6rwvGdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 150/240] scsi: mpi3mr: NVMe command size greater than 8K fails
-Date: Tue, 28 Mar 2023 16:41:53 +0200
-Message-Id: <20230328142625.961962476@linuxfoundation.org>
+Subject: [PATCH 6.2 151/240] scsi: mpi3mr: Bad drive in topology results kernel crash
+Date: Tue, 28 Mar 2023 16:41:54 +0200
+Message-Id: <20230328142625.997998765@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -38,44 +38,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit 4f297e856a7b5da2f2c66a12e739666e23943560 ]
+[ Upstream commit 8e45183978d64699df639e795235433a60f35047 ]
 
-A wrong variable is checked while populating PRP entries in the PRP page
-and this results in failure. No PRP entries in the PRP page were
-successfully created and any NVMe Encapsulated commands with PRP of size
-greater than 8K failed.
+When the SAS Transport Layer support is enabled and a device exposed to
+the OS by the driver fails INQUIRY commands, the driver frees up the memory
+allocated for an internal HBA port data structure. However, in some places,
+the reference to the freed memory is not cleared. When the firmware sends
+the Device Info change event for the same device again, the freed memory is
+accessed and that leads to memory corruption and OS crash.
 
 Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
 Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
-Link: https://lore.kernel.org/r/20230228140835.4075-6-ranjan.kumar@broadcom.com
+Link: https://lore.kernel.org/r/20230228140835.4075-7-ranjan.kumar@broadcom.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_transport.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index bff6377023979..d10c6afb7f9cd 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -886,7 +886,7 @@ static int mpi3mr_build_nvme_prp(struct mpi3mr_ioc *mrioc,
- 			 * each time through the loop.
- 			 */
- 			*prp_entry = cpu_to_le64(dma_addr);
--			if (*prp1_entry & sgemod_mask) {
-+			if (*prp_entry & sgemod_mask) {
- 				dprint_bsg_err(mrioc,
- 				    "%s: PRP address collides with SGE modifier\n",
- 				    __func__);
-@@ -895,7 +895,7 @@ static int mpi3mr_build_nvme_prp(struct mpi3mr_ioc *mrioc,
- 			*prp_entry &= ~sgemod_mask;
- 			*prp_entry |= sgemod_val;
- 			prp_entry++;
--			prp_entry_dma++;
-+			prp_entry_dma += prp_size;
- 		}
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+index 90f61a0a8f4ef..5748bd9369ff7 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+@@ -2355,15 +2355,16 @@ int mpi3mr_report_tgtdev_to_sas_transport(struct mpi3mr_ioc *mrioc,
+ 	tgtdev->host_exposed = 1;
+ 	if (!mpi3mr_sas_port_add(mrioc, tgtdev->dev_handle,
+ 	    sas_address_parent, hba_port)) {
+-		tgtdev->host_exposed = 0;
+ 		retval = -1;
+-	} else if ((!tgtdev->starget)) {
+-		if (!mrioc->is_driver_loading)
++		} else if ((!tgtdev->starget) && (!mrioc->is_driver_loading)) {
+ 			mpi3mr_sas_port_remove(mrioc, sas_address,
+ 			    sas_address_parent, hba_port);
+-		tgtdev->host_exposed = 0;
+ 		retval = -1;
+ 	}
++	if (retval) {
++		tgtdev->dev_spec.sas_sata_inf.hba_port = NULL;
++		tgtdev->host_exposed = 0;
++	}
+ 	return retval;
+ }
  
- 		/*
+@@ -2392,6 +2393,7 @@ void mpi3mr_remove_tgtdev_from_sas_transport(struct mpi3mr_ioc *mrioc,
+ 	mpi3mr_sas_port_remove(mrioc, sas_address, sas_address_parent,
+ 	    hba_port);
+ 	tgtdev->host_exposed = 0;
++	tgtdev->dev_spec.sas_sata_inf.hba_port = NULL;
+ }
+ 
+ /**
+@@ -2448,7 +2450,7 @@ static u8 mpi3mr_get_port_id_by_rphy(struct mpi3mr_ioc *mrioc, struct sas_rphy *
+ 
+ 		tgtdev = __mpi3mr_get_tgtdev_by_addr_and_rphy(mrioc,
+ 			    rphy->identify.sas_address, rphy);
+-		if (tgtdev) {
++		if (tgtdev && tgtdev->dev_spec.sas_sata_inf.hba_port) {
+ 			port_id =
+ 				tgtdev->dev_spec.sas_sata_inf.hba_port->port_id;
+ 			mpi3mr_tgtdev_put(tgtdev);
 -- 
 2.39.2
 
