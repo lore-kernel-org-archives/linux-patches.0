@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB4F8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59A6C4339E;
-	Tue, 28 Mar 2023 14:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C68D8476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E6FC4339B;
+	Tue, 28 Mar 2023 14:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015203;
-	bh=9hsS/okGxwCBR+WOx4ZbRSqYvE2dmW31JTytB/zOLpA=;
+	s=korg; t=1680015205;
+	bh=YqFKyco7U1I0gYHgjJ+6l4kOwci7DgZctRHp6Yk+tuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FP9FlxZOcs7maLETeWMwUjmtZ2WMexvHPHlpuhl53eWxQeftcYc7zb1edCkdhR56A
-	 2T9AdHIwRm+T1sXRtoIYx+Uu5BZ6hJRbCgy9YOalQ4SVXiuhooPVUWFEu6PKsPzKJO
-	 phTsDLoBVKACVNt8gb4rl4loXLbxXUvzAv1a/dKw=
+	b=bvlacOXsxPooJIhs/FenhVK9UOtb8j1nGbFNBqUchR2t+QFrXgVWDhVd7AYf+io02
+	 f4B2rHHFH5MIpEjuuorB+2gZLj3u/pKZsuo3TQciTyj3/eNexBsUfIWCR0uD7Z375U
+	 6191IPAOzHK5NLsxTitiDlTuQfVOTR0V+333feXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Selvaraj <joelselvaraj.oss@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.2 172/240] scsi: core: Add BLIST_SKIP_VPD_PAGES for SKhynix H28U74301AMR
-Date: Tue, 28 Mar 2023 16:42:15 +0200
-Message-Id: <20230328142626.806645010@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	stable <stable@kernel.org>,
+	Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH 6.2 173/240] usb: misc: onboard-hub: add support for Microchip USB2517 USB 2.0 hub
+Date: Tue, 28 Mar 2023 16:42:16 +0200
+Message-Id: <20230328142626.844317794@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,37 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit a204b490595de71016b2360a1886ec8c12d0afac upstream.
+commit f7c13cb48e85538709850589b496c4ddb3d3898e upstream.
 
-Xiaomi Poco F1 (qcom/sdm845-xiaomi-beryllium*.dts) comes with a SKhynix
-H28U74301AMR UFS. The sd_read_cpr() operation leads to a 120 second
-timeout, making the device bootup very slow:
+Add support for Microchip USB2517 USB 2.0 hub to the onboard usb hub
+driver. Adopt the generic usb-device compatible ("usbVID,PID").
+This hub has the same reset timings as USB2514, so reuse that one.
+There is also an USB2517I which just has industrial temperature range.
 
-[  121.457736] sd 0:0:0:1: [sdb] tag#23 timing out command, waited 120s
-
-Setting the BLIST_SKIP_VPD_PAGES allows the device to skip the failing
-sd_read_cpr operation and boot normally.
-
-Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
-Link: https://lore.kernel.org/r/20230313041402.39330-1-joelselvaraj.oss@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Cc: stable <stable@kernel.org>
+Acked-by: Matthias Kaehlcke <mka@chromium.org>
+Link: https://lore.kernel.org/r/20230223073920.2912298-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_devinfo.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/misc/onboard_usb_hub.c |    1 +
+ drivers/usb/misc/onboard_usb_hub.h |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/scsi/scsi_devinfo.c
-+++ b/drivers/scsi/scsi_devinfo.c
-@@ -234,6 +234,7 @@ static struct {
- 	{"SGI", "RAID5", "*", BLIST_SPARSELUN},
- 	{"SGI", "TP9100", "*", BLIST_REPORTLUN2},
- 	{"SGI", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
-+	{"SKhynix", "H28U74301AMR", NULL, BLIST_SKIP_VPD_PAGES},
- 	{"IBM", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
- 	{"SUN", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
- 	{"DELL", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
+--- a/drivers/usb/misc/onboard_usb_hub.c
++++ b/drivers/usb/misc/onboard_usb_hub.c
+@@ -408,6 +408,7 @@ static void onboard_hub_usbdev_disconnec
+ static const struct usb_device_id onboard_hub_id_table[] = {
+ 	{ USB_DEVICE(VENDOR_ID_GENESYS, 0x0608) }, /* Genesys Logic GL850G USB 2.0 */
+ 	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2514) }, /* USB2514B USB 2.0 */
++	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2517) }, /* USB2517 USB 2.0 */
+ 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0411) }, /* RTS5411 USB 3.1 */
+ 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x5411) }, /* RTS5411 USB 2.1 */
+ 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0414) }, /* RTS5414 USB 3.2 */
+--- a/drivers/usb/misc/onboard_usb_hub.h
++++ b/drivers/usb/misc/onboard_usb_hub.h
+@@ -28,6 +28,7 @@ static const struct onboard_hub_pdata ge
+ 
+ static const struct of_device_id onboard_hub_match[] = {
+ 	{ .compatible = "usb424,2514", .data = &microchip_usb424_data, },
++	{ .compatible = "usb424,2517", .data = &microchip_usb424_data, },
+ 	{ .compatible = "usb451,8140", .data = &ti_tusb8041_data, },
+ 	{ .compatible = "usb451,8142", .data = &ti_tusb8041_data, },
+ 	{ .compatible = "usb5e3,608", .data = &genesys_gl850g_data, },
 
 
