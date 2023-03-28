@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9DD8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B09C433EF;
-	Tue, 28 Mar 2023 15:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910118BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C88C433EF;
+	Tue, 28 Mar 2023 15:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015727;
-	bh=SA9icH61OklZzYsLD5DT3rllQEHjo7Yesr5GXBeG2sE=;
+	s=korg; t=1680015730;
+	bh=o2hSVSgxLu9H00c5eClJaIkDhqs030/SP8ijcu8C2BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tyEYebGqpMH0CqcKN2FM4lGwiuq0L0Dgz98Wf0B7neTPTb5nHoF+yzEB/7gLHZthn
-	 hsh4XwGtb22yQVGY1q7+2m8KMHAi7lHw+hta+6xrzfBUXPM4VGYwr5o1WecO9QchBo
-	 GgSAgY1IuN7M0H5c4O0u4HhyLOPanrbGLFPUTnf8=
+	b=jdu1SWWBH/7myCWS7yC40Et6vgP3qbNz4y3GOftcGvjF/67id/+pKNr/cs+JZbcJT
+	 yTnM1cmSJWdBjyS4YadFKUYRBoWHWYxvzkIUlNa5pC+3dQYKX0NW4YjgP0DCayswbU
+	 SgtrEdAKuurIULquX4YN4v7qQqWvuh8kylai8O3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20Schaubschl=C3=A4ger?= <christian.schaubschlaeger@gmx.at>,
-	Gil Fine <gil.fine@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 113/224] thunderbolt: Add missing UNSET_INBOUND_SBTX for retimer access
-Date: Tue, 28 Mar 2023 16:41:49 +0200
-Message-Id: <20230328142622.054802454@linuxfoundation.org>
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 147/224] drm/amd: Fix initialization mistake for NBIO 7.3.0
+Date: Tue, 28 Mar 2023 16:42:23 +0200
+Message-Id: <20230328142623.483002770@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,137 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gil Fine <gil.fine@linux.intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit cd0c1e582b055dea615001b8bd8eccaf6f69f7ce upstream.
+[ Upstream commit 1717cc5f2962a4652c76ed3858b499ccae6c277c ]
 
-According to USB4 retimer specification, the process of firmware update
-sequence requires issuing a SET_INBOUND_SBTX port operation that later
-shall be followed by UNSET_INBOUND_SBTX port operation. This last step
-is not currently issued by the driver but it is necessary to make sure
-the retimers are put back to passthrough mode even during enumeration.
+The same strapping initialization issue that happened on NBIO 7.5.1
+appears to be happening on NBIO 7.3.0.
+Apply the same fix to 7.3.0 as well.
 
-If this step is missing the link may not come up properly after
-soft-reboot for example.
+Note: This workaround relies upon the integrated GPU being enabled
+in BIOS. If the integrated GPU is disabled in BIOS a different
+workaround will be required.
 
-For this reason issue UNSET_INBOUND_SBTX after SET_INBOUND_SBTX for
-enumeration and also when the NVM upgrade is run.
-
-Reported-by: Christian Schaubschläger <christian.schaubschlaeger@gmx.at>
-Link: https://lore.kernel.org/linux-usb/b556f5ed-5ee8-9990-9910-afd60db93310@gmx.at/
-Cc: stable@vger.kernel.org
-Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Thomas Glanzmann <thomas@glanzmann.de>
+Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Link: https://lore.kernel.org/linux-usb/Y%2Fz9GdHjPyF2rNG3@glanzmann.de/T/#u
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/retimer.c |   23 +++++++++++++++++++++--
- drivers/thunderbolt/sb_regs.h |    1 +
- drivers/thunderbolt/tb.h      |    1 +
- drivers/thunderbolt/usb4.c    |   14 ++++++++++++++
- 4 files changed, 37 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/thunderbolt/retimer.c
-+++ b/drivers/thunderbolt/retimer.c
-@@ -187,6 +187,22 @@ static ssize_t nvm_authenticate_show(str
- 	return ret;
- }
- 
-+static void tb_retimer_set_inbound_sbtx(struct tb_port *port)
-+{
-+	int i;
-+
-+	for (i = 1; i <= TB_MAX_RETIMER_INDEX; i++)
-+		usb4_port_retimer_set_inbound_sbtx(port, i);
-+}
-+
-+static void tb_retimer_unset_inbound_sbtx(struct tb_port *port)
-+{
-+	int i;
-+
-+	for (i = TB_MAX_RETIMER_INDEX; i >= 1; i--)
-+		usb4_port_retimer_unset_inbound_sbtx(port, i);
-+}
-+
- static ssize_t nvm_authenticate_store(struct device *dev,
- 	struct device_attribute *attr, const char *buf, size_t count)
- {
-@@ -213,6 +229,7 @@ static ssize_t nvm_authenticate_store(st
- 	rt->auth_status = 0;
- 
- 	if (val) {
-+		tb_retimer_set_inbound_sbtx(rt->port);
- 		if (val == AUTHENTICATE_ONLY) {
- 			ret = tb_retimer_nvm_authenticate(rt, true);
- 		} else {
-@@ -232,6 +249,7 @@ static ssize_t nvm_authenticate_store(st
+diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c
+index 4b0d563c6522c..4ef1fa4603c8e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c
+@@ -382,11 +382,6 @@ static void nbio_v7_2_init_registers(struct amdgpu_device *adev)
+ 		if (def != data)
+ 			WREG32_PCIE_PORT(SOC15_REG_OFFSET(NBIO, 0, regBIF1_PCIE_MST_CTRL_3), data);
+ 		break;
+-	case IP_VERSION(7, 5, 1):
+-		data = RREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2);
+-		data &= ~RCC_DEV2_EPF0_STRAP2__STRAP_NO_SOFT_RESET_DEV2_F0_MASK;
+-		WREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2, data);
+-		fallthrough;
+ 	default:
+ 		def = data = RREG32_PCIE_PORT(SOC15_REG_OFFSET(NBIO, 0, regPCIE_CONFIG_CNTL));
+ 		data = REG_SET_FIELD(data, PCIE_CONFIG_CNTL,
+@@ -399,6 +394,15 @@ static void nbio_v7_2_init_registers(struct amdgpu_device *adev)
+ 		break;
  	}
  
- exit_unlock:
-+	tb_retimer_unset_inbound_sbtx(rt->port);
- 	mutex_unlock(&rt->tb->lock);
- exit_rpm:
- 	pm_runtime_mark_last_busy(&rt->dev);
-@@ -440,8 +458,7 @@ int tb_retimer_scan(struct tb_port *port
- 	 * Enable sideband channel for each retimer. We can do this
- 	 * regardless whether there is device connected or not.
- 	 */
--	for (i = 1; i <= TB_MAX_RETIMER_INDEX; i++)
--		usb4_port_retimer_set_inbound_sbtx(port, i);
-+	tb_retimer_set_inbound_sbtx(port);
- 
- 	/*
- 	 * Before doing anything else, read the authentication status.
-@@ -464,6 +481,8 @@ int tb_retimer_scan(struct tb_port *port
- 			break;
- 	}
- 
-+	tb_retimer_unset_inbound_sbtx(port);
++	switch (adev->ip_versions[NBIO_HWIP][0]) {
++	case IP_VERSION(7, 3, 0):
++	case IP_VERSION(7, 5, 1):
++		data = RREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2);
++		data &= ~RCC_DEV2_EPF0_STRAP2__STRAP_NO_SOFT_RESET_DEV2_F0_MASK;
++		WREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2, data);
++		break;
++	}
 +
- 	if (!last_idx)
- 		return 0;
- 
---- a/drivers/thunderbolt/sb_regs.h
-+++ b/drivers/thunderbolt/sb_regs.h
-@@ -20,6 +20,7 @@ enum usb4_sb_opcode {
- 	USB4_SB_OPCODE_ROUTER_OFFLINE = 0x4e45534c,		/* "LSEN" */
- 	USB4_SB_OPCODE_ENUMERATE_RETIMERS = 0x4d554e45,		/* "ENUM" */
- 	USB4_SB_OPCODE_SET_INBOUND_SBTX = 0x5055534c,		/* "LSUP" */
-+	USB4_SB_OPCODE_UNSET_INBOUND_SBTX = 0x50555355,		/* "USUP" */
- 	USB4_SB_OPCODE_QUERY_LAST_RETIMER = 0x5453414c,		/* "LAST" */
- 	USB4_SB_OPCODE_GET_NVM_SECTOR_SIZE = 0x53534e47,	/* "GNSS" */
- 	USB4_SB_OPCODE_NVM_SET_OFFSET = 0x53504f42,		/* "BOPS" */
---- a/drivers/thunderbolt/tb.h
-+++ b/drivers/thunderbolt/tb.h
-@@ -1220,6 +1220,7 @@ int usb4_port_sw_margin(struct tb_port *
- int usb4_port_sw_margin_errors(struct tb_port *port, u32 *errors);
- 
- int usb4_port_retimer_set_inbound_sbtx(struct tb_port *port, u8 index);
-+int usb4_port_retimer_unset_inbound_sbtx(struct tb_port *port, u8 index);
- int usb4_port_retimer_read(struct tb_port *port, u8 index, u8 reg, void *buf,
- 			   u8 size);
- int usb4_port_retimer_write(struct tb_port *port, u8 index, u8 reg,
---- a/drivers/thunderbolt/usb4.c
-+++ b/drivers/thunderbolt/usb4.c
-@@ -1562,6 +1562,20 @@ int usb4_port_retimer_set_inbound_sbtx(s
- }
- 
- /**
-+ * usb4_port_retimer_unset_inbound_sbtx() - Disable sideband channel transactions
-+ * @port: USB4 port
-+ * @index: Retimer index
-+ *
-+ * Disables sideband channel transations on SBTX. The reverse of
-+ * usb4_port_retimer_set_inbound_sbtx().
-+ */
-+int usb4_port_retimer_unset_inbound_sbtx(struct tb_port *port, u8 index)
-+{
-+	return usb4_port_retimer_op(port, index,
-+				    USB4_SB_OPCODE_UNSET_INBOUND_SBTX, 500);
-+}
-+
-+/**
-  * usb4_port_retimer_read() - Read from retimer sideband registers
-  * @port: USB4 port
-  * @index: Retimer index
+ 	if (amdgpu_sriov_vf(adev))
+ 		adev->rmmio_remap.reg_offset = SOC15_REG_OFFSET(NBIO, 0,
+ 			regBIF_BX_PF0_HDP_MEM_COHERENCY_FLUSH_CNTL) << 2;
+-- 
+2.39.2
+
 
 
