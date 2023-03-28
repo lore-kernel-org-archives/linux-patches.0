@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C68D8476
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E6FC4339B;
-	Tue, 28 Mar 2023 14:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1398476
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:53:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCFCC433D2;
+	Tue, 28 Mar 2023 14:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015205;
-	bh=YqFKyco7U1I0gYHgjJ+6l4kOwci7DgZctRHp6Yk+tuk=;
+	s=korg; t=1680015208;
+	bh=QjPEhXJyRBTWMJpyQNqTg4xSZEMThoR2XajJf/Pnwz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvlacOXsxPooJIhs/FenhVK9UOtb8j1nGbFNBqUchR2t+QFrXgVWDhVd7AYf+io02
-	 f4B2rHHFH5MIpEjuuorB+2gZLj3u/pKZsuo3TQciTyj3/eNexBsUfIWCR0uD7Z375U
-	 6191IPAOzHK5NLsxTitiDlTuQfVOTR0V+333feXs=
+	b=cJIawhi8WAcj8knVDhTeOOM/fN6vYsYs8mpJlJHYC2X5uvb/lronirw5O5wCtlTJE
+	 tNkbFQ2kS5YaCz92gqwb7k8Y5NcRbWkb5QrvkJf0d+Tm0z5J5Iuyacc7cFNcQoCsQz
+	 7ZGR17KlJwa9FK+uv2rSnMvcIxDNe9+gJ9C2Kp1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	stable <stable@kernel.org>,
-	Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH 6.2 173/240] usb: misc: onboard-hub: add support for Microchip USB2517 USB 2.0 hub
-Date: Tue, 28 Mar 2023 16:42:16 +0200
-Message-Id: <20230328142626.844317794@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 164/240] cifs: do not poll server interfaces too regularly
+Date: Tue, 28 Mar 2023 16:42:07 +0200
+Message-Id: <20230328142626.507642599@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,44 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit f7c13cb48e85538709850589b496c4ddb3d3898e upstream.
+commit 072a28c8907c841f7d4b56c78bce46d3ee211e73 upstream.
 
-Add support for Microchip USB2517 USB 2.0 hub to the onboard usb hub
-driver. Adopt the generic usb-device compatible ("usbVID,PID").
-This hub has the same reset timings as USB2514, so reuse that one.
-There is also an USB2517I which just has industrial temperature range.
+We have the server interface list hanging off the tcon
+structure today for reasons unknown. So each tcon which is
+connected to a file server can query them separately,
+which is really unnecessary. To avoid this, in the query
+function, we will check the time of last update of the
+interface list, and avoid querying the server if it is
+within a certain range.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Cc: stable <stable@kernel.org>
-Acked-by: Matthias Kaehlcke <mka@chromium.org>
-Link: https://lore.kernel.org/r/20230223073920.2912298-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/onboard_usb_hub.c |    1 +
- drivers/usb/misc/onboard_usb_hub.h |    1 +
- 2 files changed, 2 insertions(+)
+ fs/cifs/smb2ops.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/usb/misc/onboard_usb_hub.c
-+++ b/drivers/usb/misc/onboard_usb_hub.c
-@@ -408,6 +408,7 @@ static void onboard_hub_usbdev_disconnec
- static const struct usb_device_id onboard_hub_id_table[] = {
- 	{ USB_DEVICE(VENDOR_ID_GENESYS, 0x0608) }, /* Genesys Logic GL850G USB 2.0 */
- 	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2514) }, /* USB2514B USB 2.0 */
-+	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2517) }, /* USB2517 USB 2.0 */
- 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0411) }, /* RTS5411 USB 3.1 */
- 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x5411) }, /* RTS5411 USB 2.1 */
- 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0414) }, /* RTS5414 USB 3.2 */
---- a/drivers/usb/misc/onboard_usb_hub.h
-+++ b/drivers/usb/misc/onboard_usb_hub.h
-@@ -28,6 +28,7 @@ static const struct onboard_hub_pdata ge
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -530,6 +530,14 @@ parse_server_interfaces(struct network_i
+ 	p = buf;
  
- static const struct of_device_id onboard_hub_match[] = {
- 	{ .compatible = "usb424,2514", .data = &microchip_usb424_data, },
-+	{ .compatible = "usb424,2517", .data = &microchip_usb424_data, },
- 	{ .compatible = "usb451,8140", .data = &ti_tusb8041_data, },
- 	{ .compatible = "usb451,8142", .data = &ti_tusb8041_data, },
- 	{ .compatible = "usb5e3,608", .data = &genesys_gl850g_data, },
+ 	spin_lock(&ses->iface_lock);
++	/* do not query too frequently, this time with lock held */
++	if (ses->iface_last_update &&
++	    time_before(jiffies, ses->iface_last_update +
++			(SMB_INTERFACE_POLL_INTERVAL * HZ))) {
++		spin_unlock(&ses->iface_lock);
++		return 0;
++	}
++
+ 	/*
+ 	 * Go through iface_list and do kref_put to remove
+ 	 * any unused ifaces. ifaces in use will be removed
+@@ -696,6 +704,12 @@ SMB3_request_interfaces(const unsigned i
+ 	struct network_interface_info_ioctl_rsp *out_buf = NULL;
+ 	struct cifs_ses *ses = tcon->ses;
+ 
++	/* do not query too frequently */
++	if (ses->iface_last_update &&
++	    time_before(jiffies, ses->iface_last_update +
++			(SMB_INTERFACE_POLL_INTERVAL * HZ)))
++		return 0;
++
+ 	rc = SMB2_ioctl(xid, tcon, NO_FILE_ID, NO_FILE_ID,
+ 			FSCTL_QUERY_NETWORK_INTERFACE_INFO,
+ 			NULL /* no data input */, 0 /* no data input */,
 
 
