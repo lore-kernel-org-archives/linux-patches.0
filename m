@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD058BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4799C433D2;
-	Tue, 28 Mar 2023 14:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D718BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A383C433D2;
+	Tue, 28 Mar 2023 14:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015589;
-	bh=x8AgsQu8GYGCpqM1PVSZ9CqgQIRwmLc/sOLomaCepug=;
+	s=korg; t=1680015591;
+	bh=nhMFUjjMJEejkzYjAXfcZ54TkUZzKKQ+USxK6zZsWm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Im50FoTapJ0eBAhkwSHE+F/IAtI4sr9h1E5l2hciLUdV1CWF44gCQI/3ivlaigzc
-	 CVH/50IwIMIohts+ibeFji1+Kc1J7a1W+i2wE77dmrBGffbqOpqoOiil6wbl5MAL5U
-	 e56cNpNqZ27tFwec8Qa2bFTrMhczebaIZ98Dm9zk=
+	b=CCLfo3QtCHnjjmKePAVpMUF52Eb6VLz0vLwKNbvz3Rzr9CGZ4tSC1UBpm6Wcag06j
+	 kwxlPfTD9ZV8S/OFLp+elk9RmiwWvhwr8tGwElPiXcjbIMHelUWvt9DgUQQkD0Aae8
+	 tu2plRLp+EdFwQtbuEaVWFDgblorF+DEI4HcsSak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
+	Lin Li <lilin@redhat.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	John Meneghini <jmeneghi@redhat.com>,
-	Lin Li <lilin@redhat.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 103/224] scsi: qla2xxx: Synchronize the IOCB count to be in order
-Date: Tue, 28 Mar 2023 16:41:39 +0200
-Message-Id: <20230328142621.644523863@linuxfoundation.org>
+Subject: [PATCH 6.1 104/224] scsi: qla2xxx: Perform lockless command completion in abort path
+Date: Tue, 28 Mar 2023 16:41:40 +0200
+Message-Id: <20230328142621.688824411@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -38,94 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quinn Tran <qutran@marvell.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit d3affdeb400f3adc925bd996f3839481f5291839 upstream.
+commit 0367076b0817d5c75dfb83001ce7ce5c64d803a9 upstream.
 
-A system hang was observed with the following call trace:
+While adding and removing the controller, the following call trace was
+observed:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 15 PID: 86747 Comm: nvme Kdump: loaded Not tainted 6.2.0+ #1
-Hardware name: Dell Inc. PowerEdge R6515/04F3CJ, BIOS 2.7.3 03/31/2022
-RIP: 0010:__wake_up_common+0x55/0x190
-Code: 41 f6 01 04 0f 85 b2 00 00 00 48 8b 43 08 4c 8d
-      40 e8 48 8d 43 08 48 89 04 24 48 89 c6\
-      49 8d 40 18 48 39 c6 0f 84 e9 00 00 00 <49> 8b 40 18 89 6c 24 14 31
-      ed 4c 8d 60 e8 41 8b 18 f6 c3 04 75 5d
-RSP: 0018:ffffb05a82afbba0 EFLAGS: 00010082
-RAX: 0000000000000000 RBX: ffff8f9b83a00018 RCX: 0000000000000000
-RDX: 0000000000000001 RSI: ffff8f9b83a00020 RDI: ffff8f9b83a00018
-RBP: 0000000000000001 R08: ffffffffffffffe8 R09: ffffb05a82afbbf8
-R10: 70735f7472617473 R11: 5f30307832616c71 R12: 0000000000000001
-R13: 0000000000000003 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007f815cf4c740(0000) GS:ffff8f9eeed80000(0000)
-	knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000000 CR3: 000000010633a000 CR4: 0000000000350ee0
+WARNING: CPU: 3 PID: 623596 at kernel/dma/mapping.c:532 dma_free_attrs+0x33/0x50
+CPU: 3 PID: 623596 Comm: sh Kdump: loaded Not tainted 5.14.0-96.el9.x86_64 #1
+RIP: 0010:dma_free_attrs+0x33/0x50
+
 Call Trace:
-    <TASK>
-    __wake_up_common_lock+0x83/0xd0
-    qla_nvme_ls_req+0x21b/0x2b0 [qla2xxx]
-    __nvme_fc_send_ls_req+0x1b5/0x350 [nvme_fc]
-    nvme_fc_xmt_disconnect_assoc+0xca/0x110 [nvme_fc]
-    nvme_fc_delete_association+0x1bf/0x220 [nvme_fc]
-    ? nvme_remove_namespaces+0x9f/0x140 [nvme_core]
-    nvme_do_delete_ctrl+0x5b/0xa0 [nvme_core]
-    nvme_sysfs_delete+0x5f/0x70 [nvme_core]
-    kernfs_fop_write_iter+0x12b/0x1c0
-    vfs_write+0x2a3/0x3b0
-    ksys_write+0x5f/0xe0
-    do_syscall_64+0x5c/0x90
-    ? syscall_exit_work+0x103/0x130
-    ? syscall_exit_to_user_mode+0x12/0x30
-    ? do_syscall_64+0x69/0x90
-    ? exit_to_user_mode_loop+0xd0/0x130
-    ? exit_to_user_mode_prepare+0xec/0x100
-    ? syscall_exit_to_user_mode+0x12/0x30
-    ? do_syscall_64+0x69/0x90
-    ? syscall_exit_to_user_mode+0x12/0x30
-    ? do_syscall_64+0x69/0x90
-    entry_SYSCALL_64_after_hwframe+0x72/0xdc
-    RIP: 0033:0x7f815cd3eb97
+   qla2x00_async_sns_sp_done+0x107/0x1b0 [qla2xxx]
+   qla2x00_abort_srb+0x8e/0x250 [qla2xxx]
+   ? ql_dbg+0x70/0x100 [qla2xxx]
+   __qla2x00_abort_all_cmds+0x108/0x190 [qla2xxx]
+   qla2x00_abort_all_cmds+0x24/0x70 [qla2xxx]
+   qla2x00_abort_isp_cleanup+0x305/0x3e0 [qla2xxx]
+   qla2x00_remove_one+0x364/0x400 [qla2xxx]
+   pci_device_remove+0x36/0xa0
+   __device_release_driver+0x17a/0x230
+   device_release_driver+0x24/0x30
+   pci_stop_bus_device+0x68/0x90
+   pci_stop_and_remove_bus_device_locked+0x16/0x30
+   remove_store+0x75/0x90
+   kernfs_fop_write_iter+0x11c/0x1b0
+   new_sync_write+0x11f/0x1b0
+   vfs_write+0x1eb/0x280
+   ksys_write+0x5f/0xe0
+   do_syscall_64+0x5c/0x80
+   ? do_user_addr_fault+0x1d8/0x680
+   ? do_syscall_64+0x69/0x80
+   ? exc_page_fault+0x62/0x140
+   ? asm_exc_page_fault+0x8/0x30
+   entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-The IOCB counts are out of order and that would block any commands from
-going out and subsequently hang the system. Synchronize the IOCB count to
-be in correct order.
+The command was completed in the abort path during driver unload with a
+lock held, causing the warning in abort path. Hence complete the command
+without any lock held.
 
-Fixes: 5f63a163ed2f ("scsi: qla2xxx: Fix exchange oversubscription for management commands")
+Reported-by: Lin Li <lilin@redhat.com>
+Tested-by: Lin Li <lilin@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230313043711.13500-3-njavali@marvell.com
+Link: https://lore.kernel.org/r/20230313043711.13500-2-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Reviewed-by: John Meneghini <jmeneghi@redhat.com>
-Tested-by: Lin Li <lilin@redhat.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_isr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_os.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -1900,6 +1900,8 @@ qla2x00_get_sp_from_handle(scsi_qla_host
- 	}
- 
- 	req->outstanding_cmds[index] = NULL;
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -1848,6 +1848,17 @@ __qla2x00_abort_all_cmds(struct qla_qpai
+ 	for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
+ 		sp = req->outstanding_cmds[cnt];
+ 		if (sp) {
++			/*
++			 * perform lockless completion during driver unload
++			 */
++			if (qla2x00_chip_is_down(vha)) {
++				req->outstanding_cmds[cnt] = NULL;
++				spin_unlock_irqrestore(qp->qp_lock_ptr, flags);
++				sp->done(sp, res);
++				spin_lock_irqsave(qp->qp_lock_ptr, flags);
++				continue;
++			}
 +
-+	qla_put_fw_resources(sp->qpair, &sp->iores);
- 	return sp;
- }
- 
-@@ -3112,7 +3114,6 @@ qla25xx_process_bidir_status_iocb(scsi_q
- 	}
- 	bsg_reply->reply_payload_rcv_len = 0;
- 
--	qla_put_fw_resources(sp->qpair, &sp->iores);
- done:
- 	/* Return the vendor specific reply to API */
- 	bsg_reply->reply_data.vendor_reply.vendor_rsp[0] = rval;
+ 			switch (sp->cmd_type) {
+ 			case TYPE_SRB:
+ 				qla2x00_abort_srb(qp, sp, res, &flags);
 
 
