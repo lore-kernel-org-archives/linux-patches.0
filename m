@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7456F8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:01:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC069C433EF;
-	Tue, 28 Mar 2023 15:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB9F8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:01:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C78C433EF;
+	Tue, 28 Mar 2023 15:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015670;
-	bh=Uo00w2b32SJxQ1uXwsEE97fU+6AWMek0yjJTPkMCJJs=;
+	s=korg; t=1680015673;
+	bh=2MH0APQfdC6ypK8RDTWEYp0RThws/SwAK+GNv8GAvxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oZRjZuJ2cDQ6oEkOLOclWkaUcYVTx9u4bVTCNDsSliT18h+BtqEuTZLJSwqDX9fgw
-	 iemmDlxIaTIwuikjto6YBhP7UyBv71ybTCejTI+Fu9hjuSDtIyKjjL8z16bCl7Lcjy
-	 jwYqpBYAAqHZiZi/Cl5Hs5c78cw90py69DoyDD68=
+	b=ep9Aa1CuYXut+9cm7fu49elxHtbxLZTzd8yjTH/fzjdj/v7Cu4hGE+91p0qCourcU
+	 NtH/w7XHbvda7QSZYUgDd8hHBQ0P1JrUtqkgBetA4tmwqj1lWgxiWT5zAbcWUCnUay
+	 fYf8US1467xaant2Z6gftJ3bk0rslUsK5UfbllpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rix <trix@redhat.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 115/224] thunderbolt: Rename shadowed variables bit to interrupt_bit and auto_clear_bit
-Date: Tue, 28 Mar 2023 16:41:51 +0200
-Message-Id: <20230328142622.148545360@linuxfoundation.org>
+	Adrien Thierry <athierry@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 133/224] scsi: ufs: core: Add soft dependency on governor_simpleondemand
+Date: Tue, 28 Mar 2023 16:42:09 +0200
+Message-Id: <20230328142622.928993406@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -34,78 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Rix <trix@redhat.com>
+From: Adrien Thierry <athierry@redhat.com>
 
-commit 58cdfe6f58b35f17f56386f5fcf937168a423ad1 upstream.
+[ Upstream commit 2ebe16155dc8bd4e602cad5b5f65458d2eaa1a75 ]
 
-cppcheck reports
-drivers/thunderbolt/nhi.c:74:7: style: Local variable 'bit' shadows outer variable [shadowVariable]
-  int bit;
-      ^
-drivers/thunderbolt/nhi.c:66:6: note: Shadowed declaration
- int bit = ring_interrupt_index(ring) & 31;
-     ^
-drivers/thunderbolt/nhi.c:74:7: note: Shadow variable
-  int bit;
-      ^
-For readablity rename the outer to interrupt_bit and the innner
-to auto_clear_bit.
+The ufshcd driver uses simpleondemand governor for devfreq. Add it to the
+list of ufshcd softdeps to allow userspace initramfs tools like dracut to
+automatically pull the governor module into the initramfs together with UFS
+drivers.
 
-Fixes: 468c49f44759 ("thunderbolt: Disable interrupt auto clear for ring")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tom Rix <trix@redhat.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230220140740.14379-1-athierry@redhat.com
+Signed-off-by: Adrien Thierry <athierry@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/nhi.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/ufs/core/ufshcd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -63,15 +63,15 @@ static void ring_interrupt_active(struct
- {
- 	int reg = REG_RING_INTERRUPT_BASE +
- 		  ring_interrupt_index(ring) / 32 * 4;
--	int bit = ring_interrupt_index(ring) & 31;
--	int mask = 1 << bit;
-+	int interrupt_bit = ring_interrupt_index(ring) & 31;
-+	int mask = 1 << interrupt_bit;
- 	u32 old, new;
- 
- 	if (ring->irq > 0) {
- 		u32 step, shift, ivr, misc;
- 		void __iomem *ivr_base;
-+		int auto_clear_bit;
- 		int index;
--		int bit;
- 
- 		if (ring->is_tx)
- 			index = ring->hop;
-@@ -91,11 +91,12 @@ static void ring_interrupt_active(struct
- 		 */
- 		misc = ioread32(ring->nhi->iobase + REG_DMA_MISC);
- 		if (ring->nhi->quirks & QUIRK_AUTO_CLEAR_INT)
--			bit = REG_DMA_MISC_INT_AUTO_CLEAR;
-+			auto_clear_bit = REG_DMA_MISC_INT_AUTO_CLEAR;
- 		else
--			bit = REG_DMA_MISC_DISABLE_AUTO_CLEAR;
--		if (!(misc & bit))
--			iowrite32(misc | bit, ring->nhi->iobase + REG_DMA_MISC);
-+			auto_clear_bit = REG_DMA_MISC_DISABLE_AUTO_CLEAR;
-+		if (!(misc & auto_clear_bit))
-+			iowrite32(misc | auto_clear_bit,
-+				  ring->nhi->iobase + REG_DMA_MISC);
- 
- 		ivr_base = ring->nhi->iobase + REG_INT_VEC_ALLOC_BASE;
- 		step = index / REG_INT_VEC_ALLOC_REGS * REG_INT_VEC_ALLOC_BITS;
-@@ -115,7 +116,7 @@ static void ring_interrupt_active(struct
- 
- 	dev_dbg(&ring->nhi->pdev->dev,
- 		"%s interrupt at register %#x bit %d (%#x -> %#x)\n",
--		active ? "enabling" : "disabling", reg, bit, old, new);
-+		active ? "enabling" : "disabling", reg, interrupt_bit, old, new);
- 
- 	if (new == old)
- 		dev_WARN(&ring->nhi->pdev->dev,
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index e652624c449a9..82ecf776f9054 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -10089,4 +10089,5 @@ module_exit(ufshcd_core_exit);
+ MODULE_AUTHOR("Santosh Yaragnavi <santosh.sy@samsung.com>");
+ MODULE_AUTHOR("Vinayak Holikatti <h.vinayak@samsung.com>");
+ MODULE_DESCRIPTION("Generic UFS host controller driver Core");
++MODULE_SOFTDEP("pre: governor_simpleondemand");
+ MODULE_LICENSE("GPL");
+-- 
+2.39.2
+
 
 
