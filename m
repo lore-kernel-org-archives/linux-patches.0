@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE1D8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:46:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59B9C4339B;
-	Tue, 28 Mar 2023 14:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2973A8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:46:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFD5C433D2;
+	Tue, 28 Mar 2023 14:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014810;
-	bh=O7QVPbE0xq5jOwrACmNR6ofwUb7EHygjsID5IcW4PWk=;
+	s=korg; t=1680014813;
+	bh=b4spq8Czsca3Uo/N+P+UUW1qaQeHQR9qXgPauPYZP2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QfBLS4jhs6kI2i2fOu5mZ91GLx5Vr6oMnxibjP8GsBiYNOICD5CyM8U6XL6H2Ntbq
-	 Oc93t50QVtyAKa5w4mQYIN7HWnBNEKMT7a9ptQ8WysXvBSPpwIcuMgnevXyDDximNJ
-	 vb/3NxB5+WmjxtuL1eewSzUeY6NnofUEJIShHhFY=
+	b=003ucw1vaasSXjHVqOJFduutcqhSMm9JpVJlUFvhV8dwShjUyQpjvcMTp38PfKOsK
+	 1ezKztp4aXOjg3Ckp4gX5QAZVeCE5n9ZuQeJX/lzVZyjiwISjg/hkDA8AkAOX8fOlw
+	 1TcbuBn55SZv3Jq4opLOJD9oLzm3lMUnJ43r9VeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Akihiko Odaki <akihiko.odaki@daynix.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Marek Szlosek <marek.szlosek@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 060/240] net: dsa: report rx_bytes unadjusted for ETH_HLEN
-Date: Tue, 28 Mar 2023 16:40:23 +0200
-Message-Id: <20230328142622.222558129@linuxfoundation.org>
+Subject: [PATCH 6.2 034/240] igbvf: Regard vf reset nack as success
+Date: Tue, 28 Mar 2023 16:39:57 +0200
+Message-Id: <20230328142621.026166460@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,75 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-[ Upstream commit a8eff03545d4cef12ae66a1905627c1818a0f81a ]
+[ Upstream commit 02c83791ef969c6a8a150b4927193d0d0e50fb23 ]
 
-We collect the software statistics counters for RX bytes (reported to
-/proc/net/dev and to ethtool -S $dev | grep 'rx_bytes: ") at a time when
-skb->len has already been adjusted by the eth_type_trans() ->
-skb_pull_inline(skb, ETH_HLEN) call to exclude the L2 header.
+vf reset nack actually represents the reset operation itself is
+performed but no address is assigned. Therefore, e1000_reset_hw_vf
+should fill the "perm_addr" with the zero address and return success on
+such an occasion. This prevents its callers in netdev.c from saying PF
+still resetting, and instead allows them to correctly report that no
+address is assigned.
 
-This means that when connecting 2 DSA interfaces back to back and
-sending 1 packet with length 100, the sending interface will report
-tx_bytes as incrementing by 100, and the receiving interface will report
-rx_bytes as incrementing by 86.
-
-Since accounting for that in scripts is quirky and is something that
-would be DSA-specific behavior (requiring users to know that they are
-running on a DSA interface in the first place), the proposal is that we
-treat it as a bug and fix it.
-
-This design bug has always existed in DSA, according to my analysis:
-commit 91da11f870f0 ("net: Distributed Switch Architecture protocol
-support") also updates skb->dev->stats.rx_bytes += skb->len after the
-eth_type_trans() call. Technically, prior to Florian's commit
-a86d8becc3f0 ("net: dsa: Factor bottom tag receive functions"), each and
-every vendor-specific tagging protocol driver open-coded the same bug,
-until the buggy code was consolidated into something resembling what can
-be seen now. So each and every driver should have its own Fixes: tag,
-because of their different histories until the convergence point.
-I'm not going to do that, for the sake of simplicity, but just blame the
-oldest appearance of buggy code.
-
-There are 2 ways to fix the problem. One is the obvious way, and the
-other is how I ended up doing it. Obvious would have been to move
-dev_sw_netstats_rx_add() one line above eth_type_trans(), and below
-skb_push(skb, ETH_HLEN). But DSA processing is not as simple as that.
-We count the bytes after removing everything DSA-related from the
-packet, to emulate what the packet's length was, on the wire, when the
-user port received it.
-
-When eth_type_trans() executes, dsa_untag_bridge_pvid() has not run yet,
-so in case the switch driver requests this behavior - commit
-412a1526d067 ("net: dsa: untag the bridge pvid from rx skbs") has the
-details - the obvious variant of the fix wouldn't have worked, because
-the positioning there would have also counted the not-yet-stripped VLAN
-header length, something which is absent from the packet as seen on the
-wire (there it may be untagged, whereas software will see it as
-PVID-tagged).
-
-Fixes: f613ed665bb3 ("net: dsa: Add support for 64-bit statistics")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 6ddbc4cf1f4d ("igb: Indicate failure on vf reset for empty mac address")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Tested-by: Marek Szlosek <marek.szlosek@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/tag.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igbvf/vf.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/dsa/tag.c b/net/dsa/tag.c
-index b2fba1a003ce3..5105a5ff58fa2 100644
---- a/net/dsa/tag.c
-+++ b/net/dsa/tag.c
-@@ -114,7 +114,7 @@ static int dsa_switch_rcv(struct sk_buff *skb, struct net_device *dev,
- 		skb = nskb;
+diff --git a/drivers/net/ethernet/intel/igbvf/vf.c b/drivers/net/ethernet/intel/igbvf/vf.c
+index b8ba3f94c3632..a47a2e3e548cf 100644
+--- a/drivers/net/ethernet/intel/igbvf/vf.c
++++ b/drivers/net/ethernet/intel/igbvf/vf.c
+@@ -1,6 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /* Copyright(c) 2009 - 2018 Intel Corporation. */
+ 
++#include <linux/etherdevice.h>
++
+ #include "vf.h"
+ 
+ static s32 e1000_check_for_link_vf(struct e1000_hw *hw);
+@@ -131,11 +133,16 @@ static s32 e1000_reset_hw_vf(struct e1000_hw *hw)
+ 		/* set our "perm_addr" based on info provided by PF */
+ 		ret_val = mbx->ops.read_posted(hw, msgbuf, 3);
+ 		if (!ret_val) {
+-			if (msgbuf[0] == (E1000_VF_RESET |
+-					  E1000_VT_MSGTYPE_ACK))
++			switch (msgbuf[0]) {
++			case E1000_VF_RESET | E1000_VT_MSGTYPE_ACK:
+ 				memcpy(hw->mac.perm_addr, addr, ETH_ALEN);
+-			else
++				break;
++			case E1000_VF_RESET | E1000_VT_MSGTYPE_NACK:
++				eth_zero_addr(hw->mac.perm_addr);
++				break;
++			default:
+ 				ret_val = -E1000_ERR_MAC_INIT;
++			}
+ 		}
  	}
  
--	dev_sw_netstats_rx_add(skb->dev, skb->len);
-+	dev_sw_netstats_rx_add(skb->dev, skb->len + ETH_HLEN);
- 
- 	if (dsa_skb_defer_rx_timestamp(p, skb))
- 		return 0;
 -- 
 2.39.2
 
