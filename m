@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2668BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CC9C433D2;
-	Tue, 28 Mar 2023 14:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E718BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:51:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96834C433D2;
+	Tue, 28 Mar 2023 14:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015082;
-	bh=o2hSVSgxLu9H00c5eClJaIkDhqs030/SP8ijcu8C2BU=;
+	s=korg; t=1680015085;
+	bh=jSUNIjL8GeyeDz0d1ATeTeuULRx6zQ5sbGxW0nJ5JMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Avgb22Z+u/y798YhSSMxjW78ARHMtCnlshA2knVAb8CjvAEqRB2IRKVbKpmjafMYw
-	 X8Y2lcIaFhAzna4lGCIIGJLir+MEIhuPCc5OjVDefEdmA84eCVsVng86zn7zi9RaeN
-	 G0REla1qWdJWTCOwELXSERatmWXzbcmvktXy5GZQ=
+	b=of2kEPUq9ucpTue6M5tq62Fg5NWBov4PMBntdjQQRf+ud+OtWogfjKDlbvckomTt1
+	 gca8ebpvqiiaZxWM2TW6DTpLyoJxtvCTsf8v0ZG21yigNUHCo6UARvgpihC7UG3MyN
+	 hcugVImTmUi9p2u/b+y0dcACivz0DZ3u292VFiQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Glanzmann <thomas@glanzmann.de>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Alexandr Sapozhnikov <alsp705@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 159/240] drm/amd: Fix initialization mistake for NBIO 7.3.0
-Date: Tue, 28 Mar 2023 16:42:02 +0200
-Message-Id: <20230328142626.304899161@linuxfoundation.org>
+Subject: [PATCH 6.2 133/240] drm/cirrus: NULL-check pipe->plane.state->fb in cirrus_pipe_update()
+Date: Tue, 28 Mar 2023 16:41:36 +0200
+Message-Id: <20230328142625.315219310@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -37,61 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Alexandr Sapozhnikov <alsp705@gmail.com>
 
-[ Upstream commit 1717cc5f2962a4652c76ed3858b499ccae6c277c ]
+[ Upstream commit 7245e629dcaaf308f1868aeffa218e9849c77893 ]
 
-The same strapping initialization issue that happened on NBIO 7.5.1
-appears to be happening on NBIO 7.3.0.
-Apply the same fix to 7.3.0 as well.
+After having been compared to NULL value at cirrus.c:455, pointer
+'pipe->plane.state->fb' is passed as 1st parameter in call to function
+'cirrus_fb_blit_rect' at cirrus.c:461, where it is dereferenced at
+cirrus.c:316.
 
-Note: This workaround relies upon the integrated GPU being enabled
-in BIOS. If the integrated GPU is disabled in BIOS a different
-workaround will be required.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Reported-by: Thomas Glanzmann <thomas@glanzmann.de>
-Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Link: https://lore.kernel.org/linux-usb/Y%2Fz9GdHjPyF2rNG3@glanzmann.de/T/#u
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+v2:
+	* aligned commit message to line-length limits
+
+Signed-off-by: Alexandr Sapozhnikov <alsp705@gmail.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230215171549.16305-1-alsp705@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/tiny/cirrus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c
-index 4b0d563c6522c..4ef1fa4603c8e 100644
---- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_2.c
-@@ -382,11 +382,6 @@ static void nbio_v7_2_init_registers(struct amdgpu_device *adev)
- 		if (def != data)
- 			WREG32_PCIE_PORT(SOC15_REG_OFFSET(NBIO, 0, regBIF1_PCIE_MST_CTRL_3), data);
- 		break;
--	case IP_VERSION(7, 5, 1):
--		data = RREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2);
--		data &= ~RCC_DEV2_EPF0_STRAP2__STRAP_NO_SOFT_RESET_DEV2_F0_MASK;
--		WREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2, data);
--		fallthrough;
- 	default:
- 		def = data = RREG32_PCIE_PORT(SOC15_REG_OFFSET(NBIO, 0, regPCIE_CONFIG_CNTL));
- 		data = REG_SET_FIELD(data, PCIE_CONFIG_CNTL,
-@@ -399,6 +394,15 @@ static void nbio_v7_2_init_registers(struct amdgpu_device *adev)
- 		break;
- 	}
+diff --git a/drivers/gpu/drm/tiny/cirrus.c b/drivers/gpu/drm/tiny/cirrus.c
+index 678c2ef1cae70..ffa7e61dd1835 100644
+--- a/drivers/gpu/drm/tiny/cirrus.c
++++ b/drivers/gpu/drm/tiny/cirrus.c
+@@ -455,7 +455,7 @@ static void cirrus_pipe_update(struct drm_simple_display_pipe *pipe,
+ 	if (state->fb && cirrus->cpp != cirrus_cpp(state->fb))
+ 		cirrus_mode_set(cirrus, &crtc->mode, state->fb);
  
-+	switch (adev->ip_versions[NBIO_HWIP][0]) {
-+	case IP_VERSION(7, 3, 0):
-+	case IP_VERSION(7, 5, 1):
-+		data = RREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2);
-+		data &= ~RCC_DEV2_EPF0_STRAP2__STRAP_NO_SOFT_RESET_DEV2_F0_MASK;
-+		WREG32_SOC15(NBIO, 0, regRCC_DEV2_EPF0_STRAP2, data);
-+		break;
-+	}
-+
- 	if (amdgpu_sriov_vf(adev))
- 		adev->rmmio_remap.reg_offset = SOC15_REG_OFFSET(NBIO, 0,
- 			regBIF_BX_PF0_HDP_MEM_COHERENCY_FLUSH_CNTL) << 2;
+-	if (drm_atomic_helper_damage_merged(old_state, state, &rect))
++	if (state->fb && drm_atomic_helper_damage_merged(old_state, state, &rect))
+ 		cirrus_fb_blit_rect(state->fb, &shadow_plane_state->data[0], &rect);
+ }
+ 
 -- 
 2.39.2
 
