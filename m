@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5B38BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417A9C433EF;
-	Tue, 28 Mar 2023 14:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843DA8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00701C433EF;
+	Tue, 28 Mar 2023 14:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015154;
-	bh=HoMNsw6UlowiAYEmI88oP29EGcRvRfm5df9nnuX9fZc=;
+	s=korg; t=1680015157;
+	bh=gdEm5J4Mtqm5LqsYok6JRVjOpH96rzPv4a0zcCmHN1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2dj91Ob+pUSkj6aJ9xdedO9QA8mCvMr3mt+7ela0pDi/vheuUmYJItkN5V3St7EjH
-	 TpvhH5488kC+kGHvwpsIYV+5OgYA3UT22WCQaam6/HN3IrV6/54t8g1ko2kCIVkMeF
-	 cJHzAopQTXQSaW4gJvoKLg9vbLTmk88yTZW3hbM0=
+	b=uKRioAgMwjuQ/381kiTaHlOfTZxxtUK+tTiyxovl1Uz7XTKFdyU6LgOe5yJoa+MXX
+	 0QXqbeWF4bF4J2YtYd4LQ6XUp+06GUMuiJaLI/MtFDXZrsNI8QgmizBZ0QJZGAD4/H
+	 j5cqKTzsaFTUgTVs7f8dA5bPBHPvOkR154nrizFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+93e495f6a4f748827c88@syzkaller.appspotmail.com,
-	Christian Brauner <brauner@kernel.org>,
+	Nathan Huckleberry <nhuck@google.com>,
 	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 6.2 185/240] fscrypt: destroy keyring after security_sb_delete()
-Date: Tue, 28 Mar 2023 16:42:28 +0200
-Message-Id: <20230328142627.341200811@linuxfoundation.org>
+Subject: [PATCH 6.2 186/240] fsverity: Remove WQ_UNBOUND from fsverity read workqueue
+Date: Tue, 28 Mar 2023 16:42:29 +0200
+Message-Id: <20230328142627.388577531@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,58 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Nathan Huckleberry <nhuck@google.com>
 
-commit ccb820dc7d2236b1af0d54ae038a27b5b6d5ae5a upstream.
+commit f959325e6ac3f499450088b8d9c626d1177be160 upstream.
 
-fscrypt_destroy_keyring() must be called after all potentially-encrypted
-inodes were evicted; otherwise it cannot safely destroy the keyring.
-Since inodes that are in-use by the Landlock LSM don't get evicted until
-security_sb_delete(), this means that fscrypt_destroy_keyring() must be
-called *after* security_sb_delete().
+WQ_UNBOUND causes significant scheduler latency on ARM64/Android.  This
+is problematic for latency sensitive workloads, like I/O
+post-processing.
 
-This fixes a WARN_ON followed by a NULL dereference, only possible if
-Landlock was being used on encrypted files.
+Removing WQ_UNBOUND gives a 96% reduction in fsverity workqueue related
+scheduler latency and improves app cold startup times by ~30ms.
+WQ_UNBOUND was also removed from the dm-verity workqueue for the same
+reason [1].
 
-Fixes: d7e7b9af104c ("fscrypt: stop using keyrings subsystem for fscrypt_master_key")
+This code was tested by running Android app startup benchmarks and
+measuring how long the fsverity workqueue spent in the runnable state.
+
+Before
+Total workqueue scheduler latency: 553800us
+After
+Total workqueue scheduler latency: 18962us
+
+[1]: https://lore.kernel.org/all/20230202012348.885402-1-nhuck@google.com/
+
+Signed-off-by: Nathan Huckleberry <nhuck@google.com>
+Fixes: 8a1d0f9cacc9 ("fs-verity: add data verification hooks for ->readpages()")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+93e495f6a4f748827c88@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/00000000000044651705f6ca1e30@google.com
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Link: https://lore.kernel.org/r/20230313221231.272498-2-ebiggers@kernel.org
+Link: https://lore.kernel.org/r/20230310193325.620493-1-nhuck@google.com
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ fs/verity/verify.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -476,13 +476,22 @@ void generic_shutdown_super(struct super
- 
- 		cgroup_writeback_umount();
- 
--		/* evict all inodes with zero refcount */
-+		/* Evict all inodes with zero refcount. */
- 		evict_inodes(sb);
--		/* only nonzero refcount inodes can have marks */
-+
-+		/*
-+		 * Clean up and evict any inodes that still have references due
-+		 * to fsnotify or the security policy.
-+		 */
- 		fsnotify_sb_delete(sb);
--		fscrypt_destroy_keyring(sb);
- 		security_sb_delete(sb);
- 
-+		/*
-+		 * Now that all potentially-encrypted inodes have been evicted,
-+		 * the fscrypt keyring can be destroyed.
-+		 */
-+		fscrypt_destroy_keyring(sb);
-+
- 		if (sb->s_dio_done_wq) {
- 			destroy_workqueue(sb->s_dio_done_wq);
- 			sb->s_dio_done_wq = NULL;
+--- a/fs/verity/verify.c
++++ b/fs/verity/verify.c
+@@ -269,15 +269,15 @@ EXPORT_SYMBOL_GPL(fsverity_enqueue_verif
+ int __init fsverity_init_workqueue(void)
+ {
+ 	/*
+-	 * Use an unbound workqueue to allow bios to be verified in parallel
+-	 * even when they happen to complete on the same CPU.  This sacrifices
+-	 * locality, but it's worthwhile since hashing is CPU-intensive.
++	 * Use a high-priority workqueue to prioritize verification work, which
++	 * blocks reads from completing, over regular application tasks.
+ 	 *
+-	 * Also use a high-priority workqueue to prioritize verification work,
+-	 * which blocks reads from completing, over regular application tasks.
++	 * For performance reasons, don't use an unbound workqueue.  Using an
++	 * unbound workqueue for crypto operations causes excessive scheduler
++	 * latency on ARM64.
+ 	 */
+ 	fsverity_read_workqueue = alloc_workqueue("fsverity_read_queue",
+-						  WQ_UNBOUND | WQ_HIGHPRI,
++						  WQ_HIGHPRI,
+ 						  num_online_cpus());
+ 	if (!fsverity_read_workqueue)
+ 		return -ENOMEM;
 
 
