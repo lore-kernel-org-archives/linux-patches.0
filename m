@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B1B8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6977BC4339B;
-	Tue, 28 Mar 2023 14:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9358F8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:47:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C0FC433D2;
+	Tue, 28 Mar 2023 14:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014867;
-	bh=6ZIG/AaYFRe4Ziajz/NcQxFcvyNcXM3LuH1cO7y+XfE=;
+	s=korg; t=1680014870;
+	bh=0IUXgK7/dHVxPwjwJoaOsFqx+zR1jF+V2KTemtsJvCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLzkpky21j1AcYnNo91oinyfedjo1aAWOhSuBOWOmNP5S64ukVv6Na8+GvG/Kxnjc
-	 FUMjb1tU2FfVtt3pqWJD2NBTLVg9LQB9CvXmAUmhyIHHQUAEKpMxjVxi1lpNHEOX9E
-	 /NXIySoRYg5PEsU7acMsvd6s052J6hIhLNdzyL9E=
+	b=uqTXL9Z0yywfOcCzgRA5ydfBtC/1U8jnDod43vXDusrdGVc/z7r54RYao4/gRpwty
+	 QbyHLLlyBXSlplqx41nqQbKJazZHFK6iNtyjTwrzpjr1ptIYfY/IlswagA4LhLXUtq
+	 uZYMmkauNhMosmUaTgUo87vOkipK0AkSYN/a9wic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Stan Johnson <userm57@yahoo.com>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Caleb Sander <csander@purestorage.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 082/240] net/sonic: use dma_mapping_error() for error check
-Date: Tue, 28 Mar 2023 16:40:45 +0200
-Message-Id: <20230328142623.193498319@linuxfoundation.org>
+Subject: [PATCH 6.2 083/240] nvme-tcp: fix nvme_tcp_term_pdu to match spec
+Date: Tue, 28 Mar 2023 16:40:46 +0200
+Message-Id: <20230328142623.241867278@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -38,47 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Caleb Sander <csander@purestorage.com>
 
-[ Upstream commit 4107b8746d93ace135b8c4da4f19bbae81db785f ]
+[ Upstream commit aa01c67de5926fdb276793180564f172c55fb0d7 ]
 
-The DMA address returned by dma_map_single() should be checked with
-dma_mapping_error(). Fix it accordingly.
+The FEI field of C2HTermReq/H2CTermReq is 4 bytes but not 4-byte-aligned
+in the NVMe/TCP specification (it is located at offset 10 in the PDU).
+Split it into two 16-bit integers in struct nvme_tcp_term_pdu
+so no padding is inserted. There should also be 10 reserved bytes after.
+There are currently no users of this type.
 
-Fixes: efcce839360f ("[PATCH] macsonic/jazzsonic network drivers update")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/6645a4b5c1e364312103f48b7b36783b94e197a2.1679370343.git.fthain@linux-m68k.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fc221d05447aa6db ("nvme-tcp: Add protocol header")
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Caleb Sander <csander@purestorage.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/natsemi/sonic.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/nvme-tcp.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/natsemi/sonic.c b/drivers/net/ethernet/natsemi/sonic.c
-index d17d1b4f2585f..825356ee3492e 100644
---- a/drivers/net/ethernet/natsemi/sonic.c
-+++ b/drivers/net/ethernet/natsemi/sonic.c
-@@ -292,7 +292,7 @@ static int sonic_send_packet(struct sk_buff *skb, struct net_device *dev)
- 	 */
+diff --git a/include/linux/nvme-tcp.h b/include/linux/nvme-tcp.h
+index 75470159a194d..57ebe1267f7fb 100644
+--- a/include/linux/nvme-tcp.h
++++ b/include/linux/nvme-tcp.h
+@@ -115,8 +115,9 @@ struct nvme_tcp_icresp_pdu {
+ struct nvme_tcp_term_pdu {
+ 	struct nvme_tcp_hdr	hdr;
+ 	__le16			fes;
+-	__le32			fei;
+-	__u8			rsvd[8];
++	__le16			feil;
++	__le16			feiu;
++	__u8			rsvd[10];
+ };
  
- 	laddr = dma_map_single(lp->device, skb->data, length, DMA_TO_DEVICE);
--	if (!laddr) {
-+	if (dma_mapping_error(lp->device, laddr)) {
- 		pr_err_ratelimited("%s: failed to map tx DMA buffer.\n", dev->name);
- 		dev_kfree_skb_any(skb);
- 		return NETDEV_TX_OK;
-@@ -509,7 +509,7 @@ static bool sonic_alloc_rb(struct net_device *dev, struct sonic_local *lp,
- 
- 	*new_addr = dma_map_single(lp->device, skb_put(*new_skb, SONIC_RBSIZE),
- 				   SONIC_RBSIZE, DMA_FROM_DEVICE);
--	if (!*new_addr) {
-+	if (dma_mapping_error(lp->device, *new_addr)) {
- 		dev_kfree_skb(*new_skb);
- 		*new_skb = NULL;
- 		return false;
+ /**
 -- 
 2.39.2
 
