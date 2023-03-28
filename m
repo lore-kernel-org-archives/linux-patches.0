@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032878BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A802C433D2;
-	Tue, 28 Mar 2023 14:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C988BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D94C433EF;
+	Tue, 28 Mar 2023 14:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015568;
-	bh=1oxUom6yZBsD5bhDWZ+GhCNF0prAnTjRbDDGMpAXb1Y=;
+	s=korg; t=1680015574;
+	bh=3HSw5GrGlb8OURGcOqdLBKiuJyTlo9z7n7kfG/EjQfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yr3e6XVa96VSnUF81F/f7tBvzCT0QY7QcxiFhuOxE5/lqaCz2r0xxvR6sF+3f7FuX
-	 BVzaEbjRVizNRcbH4ji0MKGB5YmjA1oq4tQYzkjHYOV/WptgWnfpSbQ0KMCELhizfX
-	 Th3UmKoDP6T5GVDiQm4CXGYvfUv9GnYm9NDWWP/Q=
+	b=F/24uIXzHyIlxkX3GYZBl3Yjg4azHmHRNqCobkr78RahVc8wz+IbCR0zcnrGdlpTR
+	 JY/Ppww5qrau3gV4c2eEyqFQSYkqDoW7aHbFcdoZ4pbv4tHBMqw6sdEvWqgBOWPs93
+	 uuzZ0AZGb6fpQwB2b8Dex5g80/uRhaV5GnBlz2YU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <groeck@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/224] platform/chrome: cros_ec_chardev: fix kernel data leak from ioctl
-Date: Tue, 28 Mar 2023 16:41:33 +0200
-Message-Id: <20230328142621.268852416@linuxfoundation.org>
+Subject: [PATCH 6.1 081/224] Bluetooth: hci_core: Detect if an ACL packet is in fact an ISO packet
+Date: Tue, 28 Mar 2023 16:41:17 +0200
+Message-Id: <20230328142620.670805916@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,39 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit b20cf3f89c56b5f6a38b7f76a8128bf9f291bbd3 ]
+[ Upstream commit 876e78104f23ce9267822757a63562a609b126c3 ]
 
-It is possible to peep kernel page's data by providing larger `insize`
-in struct cros_ec_command[1] when invoking EC host commands.
+Because some transports don't have a dedicated type for ISO packets
+(see 14202eff214e1e941fefa0366d4c3bc4b1a0d500) they may use ACL type
+when in fact they are ISO packets.
 
-Fix it by using zeroed memory.
+In the past this was left for the driver to detect such thing but it
+creates a problem when using the likes of btproxy when used by a VM as
+the host would not be aware of the connection the guest is doing it
+won't be able to detect such behavior, so this make bt_recv_frame
+detect when it happens as it is the common interface to all drivers
+including guest VMs.
 
-[1]: https://elixir.bootlin.com/linux/v6.2/source/include/linux/platform_data/cros_ec_proto.h#L74
-
-Fixes: eda2e30c6684 ("mfd / platform: cros_ec: Miscellaneous character device to talk with the EC")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Link: https://lore.kernel.org/r/20230324010658.1082361-1-tzungbi@kernel.org
+Fixes: 14202eff214e ("Bluetooth: btusb: Detect if an ACL packet is in fact an ISO packet")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_chardev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_core.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_chardev.c b/drivers/platform/chrome/cros_ec_chardev.c
-index 0de7c255254e0..d6de5a2941282 100644
---- a/drivers/platform/chrome/cros_ec_chardev.c
-+++ b/drivers/platform/chrome/cros_ec_chardev.c
-@@ -284,7 +284,7 @@ static long cros_ec_chardev_ioctl_xcmd(struct cros_ec_dev *ec, void __user *arg)
- 	    u_cmd.insize > EC_MAX_MSG_BYTES)
- 		return -EINVAL;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index b65c3aabcd536..334e308451f53 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2871,10 +2871,25 @@ int hci_recv_frame(struct hci_dev *hdev, struct sk_buff *skb)
+ 		return -ENXIO;
+ 	}
  
--	s_cmd = kmalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize),
-+	s_cmd = kzalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize),
- 			GFP_KERNEL);
- 	if (!s_cmd)
- 		return -ENOMEM;
+-	if (hci_skb_pkt_type(skb) != HCI_EVENT_PKT &&
+-	    hci_skb_pkt_type(skb) != HCI_ACLDATA_PKT &&
+-	    hci_skb_pkt_type(skb) != HCI_SCODATA_PKT &&
+-	    hci_skb_pkt_type(skb) != HCI_ISODATA_PKT) {
++	switch (hci_skb_pkt_type(skb)) {
++	case HCI_EVENT_PKT:
++		break;
++	case HCI_ACLDATA_PKT:
++		/* Detect if ISO packet has been sent as ACL */
++		if (hci_conn_num(hdev, ISO_LINK)) {
++			__u16 handle = __le16_to_cpu(hci_acl_hdr(skb)->handle);
++			__u8 type;
++
++			type = hci_conn_lookup_type(hdev, hci_handle(handle));
++			if (type == ISO_LINK)
++				hci_skb_pkt_type(skb) = HCI_ISODATA_PKT;
++		}
++		break;
++	case HCI_SCODATA_PKT:
++		break;
++	case HCI_ISODATA_PKT:
++		break;
++	default:
+ 		kfree_skb(skb);
+ 		return -EINVAL;
+ 	}
 -- 
 2.39.2
 
