@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9374C8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:01:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A07C433D2;
-	Tue, 28 Mar 2023 15:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489788BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:02:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE391C433D2;
+	Tue, 28 Mar 2023 15:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015719;
-	bh=O60AlAK0dYuFe6kh+EJ3AfCHCZSame9FzEHfiT+hQ9U=;
+	s=korg; t=1680015722;
+	bh=mjOBt0hwl4VEkVOuBgR29W11lOITYRPWxwYwBi1U/4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKjesIDxPtTAV5Q5KrdidygDjotKYXqSOMsA8VHAHYEKnlT7jdRD2b6fKmewffZ3w
-	 Y8uCWrB6Pb2KCDxbMe5WB6/HmVf6bqnSDpNV5RNk9rzuKoDkXAwAATotJWty2xTqZ2
-	 +vA56RCxL2n3Go8BXMa+w6q4K/R/ZYiQ0GO4/vs0=
+	b=w+B7AXl4HSYPBd4dcaSQhcf6rfoJbhLCdI7tko3725IZzmv4KCtrLzqsavOJtl9Uk
+	 s/gtnIaT+Xi2yyhw+sExhQUh/zdjxSGzJ6gLCs3BN+9DYBI3jNjPqCfhT2+pq2bpeE
+	 pE4lRNE2OVZs0M/pxoUa/vv68q1/b/weMS6vHbmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Alvarez Lombardi <dqalombardi@proton.me>,
-	dbilios@stdio.gr,
-	victor.bonnelle@proton.me,
-	hurricanepootis@protonmail.com,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Elvis Angelaccio <elvis.angelaccio@kde.org>
-Subject: [PATCH 6.1 120/224] ACPI: x86: utils: Add Cezanne to the list for forcing StorageD3Enable
-Date: Tue, 28 Mar 2023 16:41:56 +0200
-Message-Id: <20230328142622.366302608@linuxfoundation.org>
+	Dmitry Vyukov <dvyukov@google.com>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 121/224] riscv: Bump COMMAND_LINE_SIZE value to 1024
+Date: Tue, 28 Mar 2023 16:41:57 +0200
+Message-Id: <20230328142622.406537616@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -40,93 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Alexandre Ghiti <alex@ghiti.fr>
 
-[ Upstream commit e2a56364485e7789e7b8f342637c7f3a219f7ede ]
+[ Upstream commit 61fc1ee8be26bc192d691932b0a67eabee45d12f ]
 
-commit 018d6711c26e4 ("ACPI: x86: Add a quirk for Dell Inspiron 14 2-in-1
-for StorageD3Enable") introduced a quirk to allow a system with ambiguous
-use of _ADR 0 to force StorageD3Enable.
+Increase COMMAND_LINE_SIZE as the current default value is too low
+for syzbot kernel command line.
 
-It was reported that several more Dell systems suffered the same symptoms.
-As the list is continuing to grow but these are all Cezanne systems,
-instead add Cezanne to the CPU list to apply the StorageD3Enable property
-and remove the whole list.
+There has been considerable discussion on this patch that has led to a
+larger patch set removing COMMAND_LINE_SIZE from the uapi headers on all
+ports.  That's not quite done yet, but it's gotten far enough we're
+confident this is not a uABI change so this is safe.
 
-It was also reported that an HP system only has StorageD3Enable on the ACPI
-device for the first NVME disk, not the second.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217003
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216773
-Reported-by: David Alvarez Lombardi <dqalombardi@proton.me>
-Reported-by: dbilios@stdio.gr
-Reported-and-tested-by: Elvis Angelaccio <elvis.angelaccio@kde.org>
-Tested-by: victor.bonnelle@proton.me
-Tested-by: hurricanepootis@protonmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Alexandre Ghiti <alex@ghiti.fr>
+Link: https://lore.kernel.org/r/20210316193420.904-1-alex@ghiti.fr
+[Palmer: it's not uabi]
+Link: https://lore.kernel.org/linux-riscv/874b8076-b0d1-4aaa-bcd8-05d523060152@app.fastmail.com/#t
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/x86/utils.c | 37 +++++++++++++------------------------
- 1 file changed, 13 insertions(+), 24 deletions(-)
+ arch/riscv/include/uapi/asm/setup.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+ create mode 100644 arch/riscv/include/uapi/asm/setup.h
 
-diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
-index 4e816bb402f68..e45285d4e62a4 100644
---- a/drivers/acpi/x86/utils.c
-+++ b/drivers/acpi/x86/utils.c
-@@ -200,39 +200,28 @@ bool acpi_device_override_status(struct acpi_device *adev, unsigned long long *s
-  * a hardcoded allowlist for D3 support, which was used for these platforms.
-  *
-  * This allows quirking on Linux in a similar fashion.
-+ *
-+ * Cezanne systems shouldn't *normally* need this as the BIOS includes
-+ * StorageD3Enable.  But for two reasons we have added it.
-+ * 1) The BIOS on a number of Dell systems have ambiguity
-+ *    between the same value used for _ADR on ACPI nodes GPP1.DEV0 and GPP1.NVME.
-+ *    GPP1.NVME is needed to get StorageD3Enable node set properly.
-+ *    https://bugzilla.kernel.org/show_bug.cgi?id=216440
-+ *    https://bugzilla.kernel.org/show_bug.cgi?id=216773
-+ *    https://bugzilla.kernel.org/show_bug.cgi?id=217003
-+ * 2) On at least one HP system StorageD3Enable is missing on the second NVME
-+      disk in the system.
-  */
- static const struct x86_cpu_id storage_d3_cpu_ids[] = {
- 	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 96, NULL),	/* Renoir */
- 	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 104, NULL),	/* Lucienne */
--	{}
--};
--
--static const struct dmi_system_id force_storage_d3_dmi[] = {
--	{
--		/*
--		 * _ADR is ambiguous between GPP1.DEV0 and GPP1.NVME
--		 * but .NVME is needed to get StorageD3Enable node
--		 * https://bugzilla.kernel.org/show_bug.cgi?id=216440
--		 */
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "Inspiron 14 7425 2-in-1"),
--		}
--	},
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "Inspiron 16 5625"),
--		}
--	},
-+	X86_MATCH_VENDOR_FAM_MODEL(AMD, 25, 80, NULL),	/* Cezanne */
- 	{}
- };
- 
- bool force_storage_d3(void)
- {
--	const struct dmi_system_id *dmi_id = dmi_first_match(force_storage_d3_dmi);
--
--	return dmi_id || x86_match_cpu(storage_d3_cpu_ids);
-+	return x86_match_cpu(storage_d3_cpu_ids);
- }
- 
- /*
+diff --git a/arch/riscv/include/uapi/asm/setup.h b/arch/riscv/include/uapi/asm/setup.h
+new file mode 100644
+index 0000000000000..66b13a5228808
+--- /dev/null
++++ b/arch/riscv/include/uapi/asm/setup.h
+@@ -0,0 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
++
++#ifndef _UAPI_ASM_RISCV_SETUP_H
++#define _UAPI_ASM_RISCV_SETUP_H
++
++#define COMMAND_LINE_SIZE	1024
++
++#endif /* _UAPI_ASM_RISCV_SETUP_H */
 -- 
 2.39.2
 
