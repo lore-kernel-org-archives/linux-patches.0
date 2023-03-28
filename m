@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A9D8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651D2C433D2;
-	Tue, 28 Mar 2023 15:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9436F8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1713AC433D2;
+	Tue, 28 Mar 2023 15:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015863;
-	bh=djg/kJb+7ExLg+RZyn5wZFsnJKlp7uo97RYGEwceSpI=;
+	s=korg; t=1680015866;
+	bh=pngvrPoAZ5sQwovWrZ2Et43HlzAY7YmPaBid4d9jo+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxdqCTnatCWtVFZJ9sEfMCo/bwiY/QwTGSJvzmqsv5ikoe1ZqXZIlJPbeDxydQfqQ
-	 H5O13CgFaYFKGVxCm/h0k9SchkvpqHvxPrhOfl1hVjVgmOMZSUycG5wIzxXA3ET8MN
-	 Qw7Qoiz7qQY0E7enn9ID4JKrqw8zI7fL5FRpTCYk=
+	b=W0RQpqa55RirlQFbQjMcfuAl8tyQlXoJL1po4rClvCwRXLuVTxTPF/y4EZl8RBEW+
+	 gBWHN3rfRqxHBymTIyarWot3ubsnQaoj7soiDcpGBo0LmRcjjiS6DM6bwNNM3a/i7J
+	 93q4BW/Eof6sUJb0lhADC1at5PoJlL86ENQHcEfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Shawn C <shawn.c.lee@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 203/224] drm/i915: Preserve crtc_state->inherited during state clearing
-Date: Tue, 28 Mar 2023 16:43:19 +0200
-Message-Id: <20230328142625.831027231@linuxfoundation.org>
+	Tim Huang <tim.huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 204/224] drm/amdgpu: skip ASIC reset for APUs when go to S4
+Date: Tue, 28 Mar 2023 16:43:20 +0200
+Message-Id: <20230328142625.861872541@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -36,42 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Tim Huang <tim.huang@amd.com>
 
-commit 3a84f2c6c9558c554a90ec26ad25df92fc5e05b7 upstream.
+commit b589626674de94d977e81c99bf7905872b991197 upstream.
 
-intel_crtc_prepare_cleared_state() is unintentionally losing
-the "inherited" flag. This will happen if intel_initial_commit()
-is forced to go through the full modeset calculations for
-whatever reason.
+For GC IP v11.0.4/11, PSP TMR need to be reserved
+for ASIC mode2 reset. But for S4, when psp suspend,
+it will destroy the TMR that fails the ASIC reset.
 
-Afterwards the first real commit from userspace will not get
-forced to the full modeset path, and thus eg. audio state may
-not get recomputed properly. So if the monitor was already
-enabled during boot audio will not work until userspace itself
-does an explicit full modeset.
+[  96.006101] amdgpu 0000:62:00.0: amdgpu: MODE2 reset
+[  100.409717] amdgpu 0000:62:00.0: amdgpu: SMU: I'm not done with your previous command: SMN_C2PMSG_66:0x00000011 SMN_C2PMSG_82:0x00000002
+[  100.411593] amdgpu 0000:62:00.0: amdgpu: Mode2 reset failed!
+[  100.412470] amdgpu 0000:62:00.0: PM: pci_pm_freeze(): amdgpu_pmops_freeze+0x0/0x50 [amdgpu] returns -62
+[  100.414020] amdgpu 0000:62:00.0: PM: dpm_run_callback(): pci_pm_freeze+0x0/0xd0 returns -62
+[  100.415311] amdgpu 0000:62:00.0: PM: pci_pm_freeze+0x0/0xd0 returned -62 after 4623202 usecs
+[  100.416608] amdgpu 0000:62:00.0: PM: failed to freeze async: error -62
 
-Cc: stable@vger.kernel.org
-Tested-by: Lee Shawn C <shawn.c.lee@intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230223152048.20878-1-ville.syrjala@linux.intel.com
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-(cherry picked from commit 2553bacaf953b48c59357f5a622282bc0c45adae)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+We can skip the reset on APUs, assuming we can resume them
+properly. Verified on some GFX11, GFX10 and old GFX9 APUs.
+
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -5186,6 +5186,7 @@ intel_crtc_prepare_cleared_state(struct
- 	 * only fields that are know to not cause problems are preserved. */
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2447,7 +2447,10 @@ static int amdgpu_pmops_freeze(struct de
+ 	adev->in_s4 = false;
+ 	if (r)
+ 		return r;
+-	return amdgpu_asic_reset(adev);
++
++	if (amdgpu_acpi_should_gpu_reset(adev))
++		return amdgpu_asic_reset(adev);
++	return 0;
+ }
  
- 	saved_state->uapi = crtc_state->uapi;
-+	saved_state->inherited = crtc_state->inherited;
- 	saved_state->scaler_state = crtc_state->scaler_state;
- 	saved_state->shared_dpll = crtc_state->shared_dpll;
- 	saved_state->dpll_hw_state = crtc_state->dpll_hw_state;
+ static int amdgpu_pmops_thaw(struct device *dev)
 
 
