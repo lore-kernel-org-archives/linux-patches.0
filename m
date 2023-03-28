@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E06A8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:50:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FF9C433D2;
-	Tue, 28 Mar 2023 14:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750508BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:50:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF06C433D2;
+	Tue, 28 Mar 2023 14:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015024;
-	bh=O60AlAK0dYuFe6kh+EJ3AfCHCZSame9FzEHfiT+hQ9U=;
+	s=korg; t=1680015027;
+	bh=kd3I86PrIC7k51nBbmX2aqW4UrtqO59BZXYJM5ujk2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvIiwL8woHH3ORcYy5MT5hGHWUYMjVkv+FEBOR6EHeY+RcFCWun3knurNzlD5yYAT
-	 +/bESjipgykzZdJw0q30KooKSvslV7PVNXvoTfA7mjVQHmvO95bzpj7GcrAl7IS625
-	 yuWwvmmo66RJtyy/MyVWrKoi9YRky3KB9f8k2YN8=
+	b=uAEBN6FkFtb3JljxSL0N2PhyltUelrZl2opebGaZyHC17VKhmN1dFsrGlFXhAcGK4
+	 6My0YIbMAs4kPXADEeOs9QpguxhqNH1sWgkAo69qmDcAC2zg0ycOuRUUAcJ8e3ZIuw
+	 U8XQmsedg4uWR7JUn9FkKWZt+UpcsnkDxnctmtsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Alvarez Lombardi <dqalombardi@proton.me>,
-	dbilios@stdio.gr,
-	victor.bonnelle@proton.me,
-	hurricanepootis@protonmail.com,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Elvis Angelaccio <elvis.angelaccio@kde.org>
-Subject: [PATCH 6.2 131/240] ACPI: x86: utils: Add Cezanne to the list for forcing StorageD3Enable
-Date: Tue, 28 Mar 2023 16:41:34 +0200
-Message-Id: <20230328142625.234129319@linuxfoundation.org>
+	Lorenz Bauer <lmb@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 140/240] selftests/bpf: check that modifier resolves after pointer
+Date: Tue, 28 Mar 2023 16:41:43 +0200
+Message-Id: <20230328142625.579625167@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -40,93 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Lorenz Bauer <lorenz.bauer@isovalent.com>
 
-[ Upstream commit e2a56364485e7789e7b8f342637c7f3a219f7ede ]
+[ Upstream commit dfdd608c3b365f0fd49d7e13911ebcde06b9865b ]
 
-commit 018d6711c26e4 ("ACPI: x86: Add a quirk for Dell Inspiron 14 2-in-1
-for StorageD3Enable") introduced a quirk to allow a system with ambiguous
-use of _ADR 0 to force StorageD3Enable.
+Add a regression test that ensures that a VAR pointing at a
+modifier which follows a PTR (or STRUCT or ARRAY) is resolved
+correctly by the datasec validator.
 
-It was reported that several more Dell systems suffered the same symptoms.
-As the list is continuing to grow but these are all Cezanne systems,
-instead add Cezanne to the CPU list to apply the StorageD3Enable property
-and remove the whole list.
-
-It was also reported that an HP system only has StorageD3Enable on the ACPI
-device for the first NVME disk, not the second.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217003
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216773
-Reported-by: David Alvarez Lombardi <dqalombardi@proton.me>
-Reported-by: dbilios@stdio.gr
-Reported-and-tested-by: Elvis Angelaccio <elvis.angelaccio@kde.org>
-Tested-by: victor.bonnelle@proton.me
-Tested-by: hurricanepootis@protonmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Link: https://lore.kernel.org/r/20230306112138.155352-3-lmb@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/x86/utils.c | 37 +++++++++++++------------------------
- 1 file changed, 13 insertions(+), 24 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/btf.c | 28 ++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
-index 4e816bb402f68..e45285d4e62a4 100644
---- a/drivers/acpi/x86/utils.c
-+++ b/drivers/acpi/x86/utils.c
-@@ -200,39 +200,28 @@ bool acpi_device_override_status(struct acpi_device *adev, unsigned long long *s
-  * a hardcoded allowlist for D3 support, which was used for these platforms.
+diff --git a/tools/testing/selftests/bpf/prog_tests/btf.c b/tools/testing/selftests/bpf/prog_tests/btf.c
+index de1b5b9eb93a8..d8d1292e73b53 100644
+--- a/tools/testing/selftests/bpf/prog_tests/btf.c
++++ b/tools/testing/selftests/bpf/prog_tests/btf.c
+@@ -879,6 +879,34 @@ static struct btf_raw_test raw_tests[] = {
+ 	.btf_load_err = true,
+ 	.err_str = "Invalid elem",
+ },
++{
++	.descr = "var after datasec, ptr followed by modifier",
++	.raw_types = {
++		/* .bss section */				/* [1] */
++		BTF_TYPE_ENC(NAME_TBD, BTF_INFO_ENC(BTF_KIND_DATASEC, 0, 2),
++			sizeof(void*)+4),
++		BTF_VAR_SECINFO_ENC(4, 0, sizeof(void*)),
++		BTF_VAR_SECINFO_ENC(6, sizeof(void*), 4),
++		/* int */					/* [2] */
++		BTF_TYPE_INT_ENC(0, BTF_INT_SIGNED, 0, 32, 4),
++		/* int* */					/* [3] */
++		BTF_TYPE_ENC(0, BTF_INFO_ENC(BTF_KIND_PTR, 0, 0), 2),
++		BTF_VAR_ENC(NAME_TBD, 3, 0),			/* [4] */
++		/* const int */					/* [5] */
++		BTF_TYPE_ENC(0, BTF_INFO_ENC(BTF_KIND_CONST, 0, 0), 2),
++		BTF_VAR_ENC(NAME_TBD, 5, 0),			/* [6] */
++		BTF_END_RAW,
++	},
++	.str_sec = "\0a\0b\0c\0",
++	.str_sec_size = sizeof("\0a\0b\0c\0"),
++	.map_type = BPF_MAP_TYPE_ARRAY,
++	.map_name = ".bss",
++	.key_size = sizeof(int),
++	.value_size = sizeof(void*)+4,
++	.key_type_id = 0,
++	.value_type_id = 1,
++	.max_entries = 1,
++},
+ /* Test member exceeds the size of struct.
   *
-  * This allows quirking on Linux in a similar fashion.
-+ *
-+ * Cezanne systems shouldn't *normally* need this as the BIOS includes
-+ * StorageD3Enable.  But for two reasons we have added it.
-+ * 1) The BIOS on a number of Dell systems have ambiguity
-+ *    between the same value used for _ADR on ACPI nodes GPP1.DEV0 and GPP1.NVME.
-+ *    GPP1.NVME is needed to get StorageD3Enable node set properly.
-+ *    https://bugzilla.kernel.org/show_bug.cgi?id=216440
-+ *    https://bugzilla.kernel.org/show_bug.cgi?id=216773
-+ *    https://bugzilla.kernel.org/show_bug.cgi?id=217003
-+ * 2) On at least one HP system StorageD3Enable is missing on the second NVME
-+      disk in the system.
-  */
- static const struct x86_cpu_id storage_d3_cpu_ids[] = {
- 	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 96, NULL),	/* Renoir */
- 	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 104, NULL),	/* Lucienne */
--	{}
--};
--
--static const struct dmi_system_id force_storage_d3_dmi[] = {
--	{
--		/*
--		 * _ADR is ambiguous between GPP1.DEV0 and GPP1.NVME
--		 * but .NVME is needed to get StorageD3Enable node
--		 * https://bugzilla.kernel.org/show_bug.cgi?id=216440
--		 */
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "Inspiron 14 7425 2-in-1"),
--		}
--	},
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "Inspiron 16 5625"),
--		}
--	},
-+	X86_MATCH_VENDOR_FAM_MODEL(AMD, 25, 80, NULL),	/* Cezanne */
- 	{}
- };
- 
- bool force_storage_d3(void)
- {
--	const struct dmi_system_id *dmi_id = dmi_first_match(force_storage_d3_dmi);
--
--	return dmi_id || x86_match_cpu(storage_d3_cpu_ids);
-+	return x86_match_cpu(storage_d3_cpu_ids);
- }
- 
- /*
+  * struct A {
 -- 
 2.39.2
 
