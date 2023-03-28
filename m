@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8E98BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DE3C4339B;
-	Tue, 28 Mar 2023 14:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790BA8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:59:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31C5C433D2;
+	Tue, 28 Mar 2023 14:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015583;
-	bh=LT3Y4nXNbsWaoUbpo3BnNXrl8QY7WSnU6S+Y+j8zIlE=;
+	s=korg; t=1680015586;
+	bh=UK97T5PmoVCotjuwCVgiixwxJJu6uqXEcy8gW9ybzvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJvXsC9hPL4mU7zRf5PKxK6vgPfdgR6NAi27Z45rYRZj/dDt834E3pMUyjV2X6xIQ
-	 D1HqYuBOVluXwy/ty8TklY0vJBik0y4TykE2pr09N/ua9DgbMW8fXl5iMWAyLXMVx/
-	 zSrzG3gmnGB1CnhyXJ1ERweHFNw8vMonbqyXusKs=
+	b=BTBoI9KOX77okmGfuYXG8RBdnHTXFENxKmhgotG4n9IpFWUtXi6gaJmo9//UblisZ
+	 seSNi/jUl/vyi1F1eugc2puiKR1eBVnVW3Z0P0KAn5fNPDgSmTlgoJ3gy76pT9RvxV
+	 ZNSmrlj+05ISPlSPA+HpwtNZr830bJ3kFQwSDi2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phinex Hung <phinex@realtek.com>,
+	Frank Crawford <frank@crawford.emu.id.au>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/224] hwmon: fix potential sensor registration fail if of_node is missing
-Date: Tue, 28 Mar 2023 16:41:37 +0200
-Message-Id: <20230328142621.556577070@linuxfoundation.org>
+Subject: [PATCH 6.1 102/224] hwmon (it87): Fix voltage scaling for chips with 10.9mV  ADCs
+Date: Tue, 28 Mar 2023 16:41:38 +0200
+Message-Id: <20230328142621.603758881@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -35,56 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Phinex Hung <phinex@realtek.com>
+From: Frank Crawford <frank@crawford.emu.id.au>
 
-[ Upstream commit 2315332efcbe7124252f080e03b57d3d2f1f4771 ]
+[ Upstream commit 968b66ffeb7956acc72836a7797aeb7b2444ec51 ]
 
-It is not sufficient to check of_node in current device.
-In some cases, this would cause the sensor registration to fail.
+Fix voltage scaling for chips that have 10.9mV ADCs, where scaling was
+not performed.
 
-This patch looks for device's ancestors to find a valid of_node if any.
-
-Fixes: d560168b5d0f ("hwmon: (core) New hwmon registration API")
-Signed-off-by: Phinex Hung <phinex@realtek.com>
-Link: https://lore.kernel.org/r/20230321060224.3819-1-phinex@realtek.com
+Fixes: ead8080351c9 ("hwmon: (it87) Add support for IT8732F")
+Signed-off-by: Frank Crawford <frank@crawford.emu.id.au>
+Link: https://lore.kernel.org/r/20230318080543.1226700-2-frank@crawford.emu.id.au
+[groeck: Update subject and description to focus on bug fix]
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/hwmon.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/hwmon/it87.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/hwmon.c b/drivers/hwmon/hwmon.c
-index 4218750d5a66b..9ed34b2e1f499 100644
---- a/drivers/hwmon/hwmon.c
-+++ b/drivers/hwmon/hwmon.c
-@@ -756,6 +756,7 @@ __hwmon_device_register(struct device *dev, const char *name, void *drvdata,
- 	struct hwmon_device *hwdev;
- 	const char *label;
- 	struct device *hdev;
-+	struct device *tdev = dev;
- 	int i, err, id;
+diff --git a/drivers/hwmon/it87.c b/drivers/hwmon/it87.c
+index 7bd154ba351b9..b45bd3aa5a653 100644
+--- a/drivers/hwmon/it87.c
++++ b/drivers/hwmon/it87.c
+@@ -486,6 +486,8 @@ static const struct it87_devices it87_devices[] = {
+ #define has_pwm_freq2(data)	((data)->features & FEAT_PWM_FREQ2)
+ #define has_six_temp(data)	((data)->features & FEAT_SIX_TEMP)
+ #define has_vin3_5v(data)	((data)->features & FEAT_VIN3_5V)
++#define has_scaling(data)	((data)->features & (FEAT_12MV_ADC | \
++						     FEAT_10_9MV_ADC))
  
- 	/* Complain about invalid characters in hwmon name attribute */
-@@ -825,7 +826,9 @@ __hwmon_device_register(struct device *dev, const char *name, void *drvdata,
- 	hwdev->name = name;
- 	hdev->class = &hwmon_class;
- 	hdev->parent = dev;
--	hdev->of_node = dev ? dev->of_node : NULL;
-+	while (tdev && !tdev->of_node)
-+		tdev = tdev->parent;
-+	hdev->of_node = tdev ? tdev->of_node : NULL;
- 	hwdev->chip = chip;
- 	dev_set_drvdata(hdev, drvdata);
- 	dev_set_name(hdev, HWMON_ID_FORMAT, id);
-@@ -837,7 +840,7 @@ __hwmon_device_register(struct device *dev, const char *name, void *drvdata,
+ struct it87_sio_data {
+ 	int sioaddr;
+@@ -3098,7 +3100,7 @@ static int it87_probe(struct platform_device *pdev)
+ 			 "Detected broken BIOS defaults, disabling PWM interface\n");
  
- 	INIT_LIST_HEAD(&hwdev->tzdata);
- 
--	if (dev && dev->of_node && chip && chip->ops->read &&
-+	if (hdev->of_node && chip && chip->ops->read &&
- 	    chip->info[0]->type == hwmon_chip &&
- 	    (chip->info[0]->config[0] & HWMON_C_REGISTER_TZ)) {
- 		err = hwmon_thermal_register_sensors(hdev);
+ 	/* Starting with IT8721F, we handle scaling of internal voltages */
+-	if (has_12mv_adc(data)) {
++	if (has_scaling(data)) {
+ 		if (sio_data->internal & BIT(0))
+ 			data->in_scaled |= BIT(3);	/* in3 is AVCC */
+ 		if (sio_data->internal & BIT(1))
 -- 
 2.39.2
 
