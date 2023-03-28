@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7268474
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:44:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2545C433D2;
-	Tue, 28 Mar 2023 14:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAEA8474
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:45:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A53C433EF;
+	Tue, 28 Mar 2023 14:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014697;
-	bh=UNy7alHGGbVyn/tPZNs5FvFam3JZZAFua2nS+eSlX8U=;
+	s=korg; t=1680014700;
+	bh=0VVFZBmv0NFrwioYNSCHljYCfnPQe5YZM8rYXqQRThw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KStCZXWpXfldzaoroj2MTilEriPp1/BwmV+FbCvEXerSOAaNfq4xXOEzY8LF+YOSU
-	 0mrnXqpKIkmcEmpVTdUeZDYAc3Vli3C0UeQn3l44M2jqWL1YgYwgvDT4cvZNPodkUx
-	 prHAdu0wqcYVBis0kQvWhS4L+VjWiso2lBa92d8s=
+	b=yTNLyvqSiI2h9yFFYJd9+kryCxKPOQ2jF1ODzvgiX+slda3orsbQ7sNIxKnliOyij
+	 CisIWVcShiXnCc5B9aGoT6hEqwdKH3FvLkDJxNSU5rgi9FkxOukZmjc2juf14gfBUH
+	 1zZvf54moan4P0LCiRnuTGazc9u1rLnVvfUULTds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 002/240] interconnect: qcom: sm8450: switch to qcom_icc_rpmh_* function
-Date: Tue, 28 Mar 2023 16:39:25 +0200
-Message-Id: <20230328142619.751814230@linuxfoundation.org>
+Subject: [PATCH 6.2 020/240] arm64: dts: imx8dxl-evk: Disable hibernation mode of AR8031 for EQOS
+Date: Tue, 28 Mar 2023 16:39:43 +0200
+Message-Id: <20230328142620.499592486@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -35,139 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 87e8fab1917a2b3f6e3dedfd1cdf22a1416e6676 ]
+[ Upstream commit 0deefb5bd1382aae0aed7c8b266d5088a5308a26 ]
 
-Change sm8450 interconnect driver to use generic qcom_icc_rpmh_*
-functions rather than embedding a copy of thema. This also fixes an
-overallocation of memory for icc_onecell_data structure.
+The hibernation mode of AR8031 PHY defaults to be enabled after hardware
+reset. When the cable is unplugged, the PHY will enter hibernation mode
+after about 10 senconds and the PHY clocks will be stopped to save
+power. However, due to the design of EQOS, the mac needs the RX_CLK of
+PHY for software reset to complete. Otherwise the software reset of EQOS
+will be failed and do not work correctly. The only way is to disable
+hibernation mode of AR8031 PHY for EQOS, the "qca,disable-hibernation-mode"
+property is used for this purpose and has already been submitted to the
+upstream, for more details please refer to the below link:
+https://lore.kernel.org/netdev/20220818030054.1010660-2-wei.fang@nxp.com/
 
-Fixes: fafc114a468e ("interconnect: qcom: Add SM8450 interconnect provider driver")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230105002221.1416479-3-dmitry.baryshkov@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+This issue is easy to reproduce, just unplug the cable and "ifconfig eth0
+down", after about 10 senconds, then "ifconfig eth0 up", you will see
+failure log on the serial port. The log is shown as following:
+root@imx8dxlevk:~#
+[34.941970] imx-dwmac 5b050000.ethernet eth0: Link is Down
+root@imx8dxlevk:~# ifconfig eth0 down
+[35.437814] imx-dwmac 5b050000.ethernet eth0: FPE workqueue stop
+[35.507913] imx-dwmac 5b050000.ethernet eth0: PHY [stmmac-1:00] driver [Qualcomm Atheros AR8031/AR8033] (irq=POLL)
+[35.518613] imx-dwmac 5b050000.ethernet eth0: configuring for phy/rgmii-id link mode
+root@imx8dxlevk:~# ifconfig eth0 up
+[71.143044] imx-dwmac 5b050000.ethernet eth0: Register MEM_TYPE_PAGE_POOL RxQ-0
+[71.215855] imx-dwmac 5b050000.ethernet eth0: PHY [stmmac-1:00] driver [Qualcomm Atheros AR8031/AR8033] (irq=POLL)
+[72.230417] imx-dwmac 5b050000.ethernet: Failed to reset the dma
+[72.236512] imx-dwmac 5b050000.ethernet eth0: stmmac_hw_setup: DMA engine initialization failed
+[72.245258] imx-dwmac 5b050000.ethernet eth0: __stmmac_open: Hw setup failed
+SIOCSIFFLAGS: Connection timed out
+
+After applying this patch, the software reset of EQOS will be
+successful. And the log is shown as below.
+root@imx8dxlevk:~# ifconfig eth0 up
+[96.114344] imx-dwmac 5b050000.ethernet eth0: Register MEM_TYPE_PAGE_POOL RxQ-0
+[96.171466] imx-dwmac 5b050000.ethernet eth0: PHY [stmmac-1:00] driver [Qualcomm Atheros AR8031/AR8033] (irq=POLL)
+[96.188883] imx-dwmac 5b050000.ethernet eth0: No Safety Features support found
+[96.196221] imx-dwmac 5b050000.ethernet eth0: IEEE 1588-2008 Advanced Timestamp supported
+[96.204846] imx-dwmac 5b050000.ethernet eth0: registered PTP clock
+[96.225558] imx-dwmac 5b050000.ethernet eth0: FPE workqueue start
+[96.236858] imx-dwmac 5b050000.ethernet eth0: configuring for phy/rgmii-id link mode
+[96.249358] 8021q: adding VLAN 0 to HW filter on device eth0
+
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Clark Wang <xiaoning.wang@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: feafeb53140a ("arm64: dts: imx8dxl-evk: Fix eqos phy reset gpio")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/sm8450.c | 98 +-----------------------------
- 1 file changed, 2 insertions(+), 96 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8dxl-evk.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
-index e3a12e3d6e061..2d7a8e7b85ec2 100644
---- a/drivers/interconnect/qcom/sm8450.c
-+++ b/drivers/interconnect/qcom/sm8450.c
-@@ -1844,100 +1844,6 @@ static const struct qcom_icc_desc sm8450_system_noc = {
- 	.num_bcms = ARRAY_SIZE(system_noc_bcms),
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts b/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
+index 280a9c9d8bd98..1bcf228a22b8b 100644
+--- a/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
+@@ -135,6 +135,7 @@ ethphy0: ethernet-phy@0 {
+ 			reg = <0>;
+ 			eee-broken-1000t;
+ 			qca,disable-smarteee;
++			qca,disable-hibernation-mode;
+ 			vddio-supply = <&vddio0>;
  
--static int qnoc_probe(struct platform_device *pdev)
--{
--	const struct qcom_icc_desc *desc;
--	struct icc_onecell_data *data;
--	struct icc_provider *provider;
--	struct qcom_icc_node * const *qnodes;
--	struct qcom_icc_provider *qp;
--	struct icc_node *node;
--	size_t num_nodes, i;
--	int ret;
--
--	desc = device_get_match_data(&pdev->dev);
--	if (!desc)
--		return -EINVAL;
--
--	qnodes = desc->nodes;
--	num_nodes = desc->num_nodes;
--
--	qp = devm_kzalloc(&pdev->dev, sizeof(*qp), GFP_KERNEL);
--	if (!qp)
--		return -ENOMEM;
--
--	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
--	if (!data)
--		return -ENOMEM;
--
--	provider = &qp->provider;
--	provider->dev = &pdev->dev;
--	provider->set = qcom_icc_set;
--	provider->pre_aggregate = qcom_icc_pre_aggregate;
--	provider->aggregate = qcom_icc_aggregate;
--	provider->xlate_extended = qcom_icc_xlate_extended;
--	INIT_LIST_HEAD(&provider->nodes);
--	provider->data = data;
--
--	qp->dev = &pdev->dev;
--	qp->bcms = desc->bcms;
--	qp->num_bcms = desc->num_bcms;
--
--	qp->voter = of_bcm_voter_get(qp->dev, NULL);
--	if (IS_ERR(qp->voter))
--		return PTR_ERR(qp->voter);
--
--	ret = icc_provider_add(provider);
--	if (ret) {
--		dev_err(&pdev->dev, "error adding interconnect provider\n");
--		return ret;
--	}
--
--	for (i = 0; i < qp->num_bcms; i++)
--		qcom_icc_bcm_init(qp->bcms[i], &pdev->dev);
--
--	for (i = 0; i < num_nodes; i++) {
--		size_t j;
--
--		if (!qnodes[i])
--			continue;
--
--		node = icc_node_create(qnodes[i]->id);
--		if (IS_ERR(node)) {
--			ret = PTR_ERR(node);
--			goto err;
--		}
--
--		node->name = qnodes[i]->name;
--		node->data = qnodes[i];
--		icc_node_add(node, provider);
--
--		for (j = 0; j < qnodes[i]->num_links; j++)
--			icc_link_create(node, qnodes[i]->links[j]);
--
--		data->nodes[i] = node;
--	}
--	data->num_nodes = num_nodes;
--
--	platform_set_drvdata(pdev, qp);
--
--	return 0;
--err:
--	icc_nodes_remove(provider);
--	icc_provider_del(provider);
--	return ret;
--}
--
--static int qnoc_remove(struct platform_device *pdev)
--{
--	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
--
--	icc_nodes_remove(&qp->provider);
--	icc_provider_del(&qp->provider);
--
--	return 0;
--}
--
- static const struct of_device_id qnoc_of_match[] = {
- 	{ .compatible = "qcom,sm8450-aggre1-noc",
- 	  .data = &sm8450_aggre1_noc},
-@@ -1966,8 +1872,8 @@ static const struct of_device_id qnoc_of_match[] = {
- MODULE_DEVICE_TABLE(of, qnoc_of_match);
- 
- static struct platform_driver qnoc_driver = {
--	.probe = qnoc_probe,
--	.remove = qnoc_remove,
-+	.probe = qcom_icc_rpmh_probe,
-+	.remove = qcom_icc_rpmh_remove,
- 	.driver = {
- 		.name = "qnoc-sm8450",
- 		.of_match_table = qnoc_of_match,
+ 			vddio0: vddio-regulator {
 -- 
 2.39.2
 
