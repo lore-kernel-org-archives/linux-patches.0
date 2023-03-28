@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9568BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CB4C433EF;
-	Tue, 28 Mar 2023 14:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59C28BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:48:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CFFC433D2;
+	Tue, 28 Mar 2023 14:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680014919;
-	bh=mip/8Iemk/8giVKDB/7Km65HqvbAIpTh/K22v0mbVo8=;
+	s=korg; t=1680014922;
+	bh=Xw5FWLhqprpPOsUiCYr3m3HTYwubwJ+cnBCtKnp8la4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jm8Iw4NlPX8gBNzF35eC1n40Li840gp4u26gVCPWeH+qJ1BWajeZoH+Rm0K82ax+M
-	 n89jvKlfvPD8+Z/DaopahTN1noJBdpoU8vSitL5U/5KTm/bDq2s4ORniWQ2zDM2WBG
-	 tlepbFTFPsdFfGIX5rGKxrQtqn2PDLb8K9wkTlXU=
+	b=fmKzYOica9wxGgQ1pZfr++6paToUgEb6Ej7yjeB36OWsFJE4RidX/+wdtVz/PLWPz
+	 FmXTnw+r0fpjpuZ8qY8NmYun5fmvwGV5kt6u2VbWLUBOunnMXDjGLbd1O9urpJDKN4
+	 C7toeR57p59s1yL/sTwwicZZa1xysGSw6B85aLLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radoslaw Tyl <radoslawx.tyl@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 6.2 070/240] i40e: fix flow director packet filter programming
-Date: Tue, 28 Mar 2023 16:40:33 +0200
-Message-Id: <20230328142622.667911800@linuxfoundation.org>
+	Stephen Haynes <sh@synk.net>,
+	Lefteris Alexakis <lefteris.alexakis@kpn.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 071/240] bpf: Adjust insufficient default bpf_jit_limit
+Date: Tue, 28 Mar 2023 16:40:34 +0200
+Message-Id: <20230328142622.710796792@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -37,42 +38,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Radoslaw Tyl <radoslawx.tyl@intel.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit c672297bbc0e86dbf88396b8053e2fbb173f16ff ]
+[ Upstream commit 10ec8ca8ec1a2f04c4ed90897225231c58c124a7 ]
 
-Initialize to zero structures to build a valid
-Tx Packet used for the filter programming.
+We've seen recent AWS EKS (Kubernetes) user reports like the following:
 
-Fixes: a9219b332f52 ("i40e: VLAN field for flow director")
-Signed-off-by: Radoslaw Tyl <radoslawx.tyl@intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+  After upgrading EKS nodes from v20230203 to v20230217 on our 1.24 EKS
+  clusters after a few days a number of the nodes have containers stuck
+  in ContainerCreating state or liveness/readiness probes reporting the
+  following error:
+
+    Readiness probe errored: rpc error: code = Unknown desc = failed to
+    exec in container: failed to start exec "4a11039f730203ffc003b7[...]":
+    OCI runtime exec failed: exec failed: unable to start container process:
+    unable to init seccomp: error loading seccomp filter into kernel:
+    error loading seccomp filter: errno 524: unknown
+
+  However, we had not been seeing this issue on previous AMIs and it only
+  started to occur on v20230217 (following the upgrade from kernel 5.4 to
+  5.10) with no other changes to the underlying cluster or workloads.
+
+  We tried the suggestions from that issue (sysctl net.core.bpf_jit_limit=452534528)
+  which helped to immediately allow containers to be created and probes to
+  execute but after approximately a day the issue returned and the value
+  returned by cat /proc/vmallocinfo | grep bpf_jit | awk '{s+=$2} END {print s}'
+  was steadily increasing.
+
+I tested bpf tree to observe bpf_jit_charge_modmem, bpf_jit_uncharge_modmem
+their sizes passed in as well as bpf_jit_current under tcpdump BPF filter,
+seccomp BPF and native (e)BPF programs, and the behavior all looks sane
+and expected, that is nothing "leaking" from an upstream perspective.
+
+The bpf_jit_limit knob was originally added in order to avoid a situation
+where unprivileged applications loading BPF programs (e.g. seccomp BPF
+policies) consuming all the module memory space via BPF JIT such that loading
+of kernel modules would be prevented. The default limit was defined back in
+2018 and while good enough back then, we are generally seeing far more BPF
+consumers today.
+
+Adjust the limit for the BPF JIT pool from originally 1/4 to now 1/2 of the
+module memory space to better reflect today's needs and avoid more users
+running into potentially hard to debug issues.
+
+Fixes: fdadd04931c2 ("bpf: fix bpf_jit_limit knob for PAGE_SIZE >= 64K")
+Reported-by: Stephen Haynes <sh@synk.net>
+Reported-by: Lefteris Alexakis <lefteris.alexakis@kpn.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://github.com/awslabs/amazon-eks-ami/issues/1179
+Link: https://github.com/awslabs/amazon-eks-ami/issues/1219
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230320143725.8394-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_txrx.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/bpf/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-index 924f972b91faf..72b091f2509d8 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-@@ -171,10 +171,10 @@ static char *i40e_create_dummy_packet(u8 *dummy_packet, bool ipv4, u8 l4proto,
- 				      struct i40e_fdir_filter *data)
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index f9c3b1033ec39..00d25e8ea9e3c 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -971,7 +971,7 @@ static int __init bpf_jit_charge_init(void)
  {
- 	bool is_vlan = !!data->vlan_tag;
--	struct vlan_hdr vlan;
--	struct ipv6hdr ipv6;
--	struct ethhdr eth;
--	struct iphdr ip;
-+	struct vlan_hdr vlan = {};
-+	struct ipv6hdr ipv6 = {};
-+	struct ethhdr eth = {};
-+	struct iphdr ip = {};
- 	u8 *tmp;
- 
- 	if (ipv4) {
+ 	/* Only used as heuristic here to derive limit. */
+ 	bpf_jit_limit_max = bpf_jit_alloc_exec_limit();
+-	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 2,
++	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 1,
+ 					    PAGE_SIZE), LONG_MAX);
+ 	return 0;
+ }
 -- 
 2.39.2
 
