@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EA38BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9F6C433EF;
-	Tue, 28 Mar 2023 15:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BE88BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE09C433D2;
+	Tue, 28 Mar 2023 15:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015882;
-	bh=Jv4CbOcyhvGdX6l/WfwMoIKeOceYc/RF2tBccbRgETo=;
+	s=korg; t=1680015885;
+	bh=ri310TNQZ0iwgcAG9yZjwZxQ1eVID1iW+e5DPdfxJB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1SeHiE6hBoSHS0qQeTF+6a3wyICr0vKGVBmlN3g/2/Q1QbQn0PQKF00Ykc5XWu8kl
-	 KKM0lBO9zGppdpdnLl2qySGmlrC6JO5nZD4NoXBSm6GZ6MRNh2qmwPemdDvQh0eoSU
-	 +Tk3Qo9pnxCCWEKZiNnAiVHATjRQc2oYyb5U4/8A=
+	b=Grso+CEboq/R9K3MEMJf4HSpDdM+4YTswatzHPneHKLWUfVCnUSjCsxv3j0soUPmh
+	 0NtnLjo5cRAOpX/JfdH+EruaG4C4NZgvnQclI3TCkxO6HUmHH76TbNybGpe6K5iaTk
+	 5buzj9DgHomey/qCSK4wyxUsN4AkefQDE/H46Bgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 183/224] usb: ucsi_acpi: Increase the command completion timeout
-Date: Tue, 28 Mar 2023 16:42:59 +0200
-Message-Id: <20230328142625.011204179@linuxfoundation.org>
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 210/224] arm64: dts: qcom: sc7280: Mark PCIe controller as cache coherent
+Date: Tue, 28 Mar 2023 16:43:26 +0200
+Message-Id: <20230328142626.097841314@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -34,51 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-commit 02d210f434249a7edbc160969b75df030dc6934d upstream.
+commit 8a63441e83724fee1ef3fd37b237d40d90780766 upstream.
 
-Commit 130a96d698d7 ("usb: typec: ucsi: acpi: Increase command
-completion timeout value") increased the timeout from 5 seconds
-to 60 seconds due to issues related to alternate mode discovery.
+If the controller is not marked as cache coherent, then kernel will
+try to ensure coherency during dma-ops and that may cause data corruption.
+So, mark the PCIe node as dma-coherent as the devices on PCIe bus are
+cache coherent.
 
-After the alternate mode discovery switch to polled mode
-the timeout was reduced, but instead of being set back to
-5 seconds it was reduced to 1 second.
-
-This is causing problems when using a Lenovo ThinkPad X1 yoga gen7
-connected over Type-C to a LG 27UL850-W (charging DP over Type-C).
-
-When the monitor is already connected at boot the following error
-is logged: "PPM init failed (-110)", /sys/class/typec is empty and
-on unplugging the NULL pointer deref fixed earlier in this series
-happens.
-
-When the monitor is connected after boot the following error
-is logged instead: "GET_CONNECTOR_STATUS failed (-110)".
-
-Setting the timeout back to 5 seconds fixes both cases.
-
-Fixes: e08065069fc7 ("usb: typec: ucsi: acpi: Reduce the command completion timeout")
 Cc: stable@vger.kernel.org
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230308154244.722337-4-hdegoede@redhat.com
+Fixes: 92e0ee9f83b3 ("arm64: dts: qcom: sc7280: Add PCIe and PHY related node")
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/1677584952-17496-1-git-send-email-quic_krichai@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_acpi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/typec/ucsi/ucsi_acpi.c
-+++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
-@@ -78,7 +78,7 @@ static int ucsi_acpi_sync_write(struct u
- 	if (ret)
- 		goto out_clear_bit;
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2077,6 +2077,8 @@
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&pcie1_clkreq_n>;
  
--	if (!wait_for_completion_timeout(&ua->complete, HZ))
-+	if (!wait_for_completion_timeout(&ua->complete, 5 * HZ))
- 		ret = -ETIMEDOUT;
++			dma-coherent;
++
+ 			iommus = <&apps_smmu 0x1c80 0x1>;
  
- out_clear_bit:
+ 			iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
 
 
