@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056918BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD8EC433EF;
-	Tue, 28 Mar 2023 14:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDE28BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:52:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F6DCC433D2;
+	Tue, 28 Mar 2023 14:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015137;
-	bh=gavlMGtxXSwrJ/ohFz/ESjITzjNT/6pLtOqjllQPSKY=;
+	s=korg; t=1680015140;
+	bh=y7TT18OqeEh5SRtmCxn5WnkaCLIuzAnGnu3VDtfrb5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tEGRs33f+I7h5KIsnDUuY1+b6l+EX+zzv2Gef9wxDkQ70kTwnzolIASo1G1cTzTO3
-	 iFqIbx9GrHQAImZBiMTv5iam6a5FYUwTBVtjinaOEAZH8dTO6s8g9bTWuAIV1YSUs+
-	 ytWl8IWXTB75ndw6Zdv7YVk17+1By85ECcDpLJt0=
+	b=CfYvgWzjfWM7o2O0vP/zGtvp7/aKysQUKXm9KraOol5wrBCBPxRnUNHSQJTXcbvnP
+	 RHSqVp6B1pTiZu996793BL0Lp6zHHKb5DDXs5xsoX4Pvu3IG4HP3GvR0hFmMdNM0Qd
+	 1hOmfUIKsGc99SmydkvWmPQd2vhKB3tGQA9fxUT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.2 180/240] Bluetooth: Fix race condition in hci_cmd_sync_clear
-Date: Tue, 28 Mar 2023 16:42:23 +0200
-Message-Id: <20230328142627.125460499@linuxfoundation.org>
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.2 181/240] efi: sysfb_efi: Fix DMI quirks not working for simpledrm
+Date: Tue, 28 Mar 2023 16:42:24 +0200
+Message-Id: <20230328142627.172614381@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
 References: <20230328142619.643313678@linuxfoundation.org>
@@ -34,99 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Min Li <lm0963hack@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 1c66bee492a5fe00ae3fe890bb693bfc99f994c6 upstream.
+commit 3615c78673c332b69aaacefbcde5937c5c706686 upstream.
 
-There is a potential race condition in hci_cmd_sync_work and
-hci_cmd_sync_clear, and could lead to use-after-free. For instance,
-hci_cmd_sync_work is added to the 'req_workqueue' after cancel_work_sync
-The entry of 'cmd_sync_work_list' may be freed in hci_cmd_sync_clear, and
-causing kernel panic when it is used in 'hci_cmd_sync_work'.
+Commit 8633ef82f101 ("drivers/firmware: consolidate EFI framebuffer setup
+for all arches") moved the sysfb_apply_efi_quirks() call in sysfb_init()
+from before the [sysfb_]parse_mode() call to after it.
+But sysfb_apply_efi_quirks() modifies the global screen_info struct which
+[sysfb_]parse_mode() parses, so doing it later is too late.
 
-Here's the call trace:
+This has broken all DMI based quirks for correcting wrong firmware efifb
+settings when simpledrm is used.
 
-dump_stack_lvl+0x49/0x63
-print_report.cold+0x5e/0x5d3
-? hci_cmd_sync_work+0x282/0x320
-kasan_report+0xaa/0x120
-? hci_cmd_sync_work+0x282/0x320
-__asan_report_load8_noabort+0x14/0x20
-hci_cmd_sync_work+0x282/0x320
-process_one_work+0x77b/0x11c0
-? _raw_spin_lock_irq+0x8e/0xf0
-worker_thread+0x544/0x1180
-? poll_idle+0x1e0/0x1e0
-kthread+0x285/0x320
-? process_one_work+0x11c0/0x11c0
-? kthread_complete_and_exit+0x30/0x30
-ret_from_fork+0x22/0x30
-</TASK>
+To fix this move the sysfb_apply_efi_quirks() call back to its old place
+and split the new setup of the efifb_fwnode (which requires
+the platform_device) into its own function and call that at
+the place of the moved sysfb_apply_efi_quirks(pd) calls.
 
-Allocated by task 266:
-kasan_save_stack+0x26/0x50
-__kasan_kmalloc+0xae/0xe0
-kmem_cache_alloc_trace+0x191/0x350
-hci_cmd_sync_queue+0x97/0x2b0
-hci_update_passive_scan+0x176/0x1d0
-le_conn_complete_evt+0x1b5/0x1a00
-hci_le_conn_complete_evt+0x234/0x340
-hci_le_meta_evt+0x231/0x4e0
-hci_event_packet+0x4c5/0xf00
-hci_rx_work+0x37d/0x880
-process_one_work+0x77b/0x11c0
-worker_thread+0x544/0x1180
-kthread+0x285/0x320
-ret_from_fork+0x22/0x30
-
-Freed by task 269:
-kasan_save_stack+0x26/0x50
-kasan_set_track+0x25/0x40
-kasan_set_free_info+0x24/0x40
-____kasan_slab_free+0x176/0x1c0
-__kasan_slab_free+0x12/0x20
-slab_free_freelist_hook+0x95/0x1a0
-kfree+0xba/0x2f0
-hci_cmd_sync_clear+0x14c/0x210
-hci_unregister_dev+0xff/0x440
-vhci_release+0x7b/0xf0
-__fput+0x1f3/0x970
-____fput+0xe/0x20
-task_work_run+0xd4/0x160
-do_exit+0x8b0/0x22a0
-do_group_exit+0xba/0x2a0
-get_signal+0x1e4a/0x25b0
-arch_do_signal_or_restart+0x93/0x1f80
-exit_to_user_mode_prepare+0xf5/0x1a0
-syscall_exit_to_user_mode+0x26/0x50
-ret_from_fork+0x15/0x30
-
-Fixes: 6a98e3836fa2 ("Bluetooth: Add helper for serialized HCI command execution")
+Fixes: 8633ef82f101 ("drivers/firmware: consolidate EFI framebuffer setup for all arches")
 Cc: stable@vger.kernel.org
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firmware/efi/sysfb_efi.c  |    5 ++++-
+ drivers/firmware/sysfb.c          |    4 +++-
+ drivers/firmware/sysfb_simplefb.c |    2 +-
+ include/linux/sysfb.h             |    9 +++++++--
+ 4 files changed, 15 insertions(+), 5 deletions(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -643,6 +643,7 @@ void hci_cmd_sync_clear(struct hci_dev *
- 	cancel_work_sync(&hdev->cmd_sync_work);
- 	cancel_work_sync(&hdev->reenable_adv_work);
+--- a/drivers/firmware/efi/sysfb_efi.c
++++ b/drivers/firmware/efi/sysfb_efi.c
+@@ -341,7 +341,7 @@ static const struct fwnode_operations ef
+ #ifdef CONFIG_EFI
+ static struct fwnode_handle efifb_fwnode;
  
-+	mutex_lock(&hdev->cmd_sync_work_lock);
- 	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list) {
- 		if (entry->destroy)
- 			entry->destroy(hdev, entry->data, -ECANCELED);
-@@ -650,6 +651,7 @@ void hci_cmd_sync_clear(struct hci_dev *
- 		list_del(&entry->list);
- 		kfree(entry);
+-__init void sysfb_apply_efi_quirks(struct platform_device *pd)
++__init void sysfb_apply_efi_quirks(void)
+ {
+ 	if (screen_info.orig_video_isVGA != VIDEO_TYPE_EFI ||
+ 	    !(screen_info.capabilities & VIDEO_CAPABILITY_SKIP_QUIRKS))
+@@ -355,7 +355,10 @@ __init void sysfb_apply_efi_quirks(struc
+ 		screen_info.lfb_height = temp;
+ 		screen_info.lfb_linelength = 4 * screen_info.lfb_width;
  	}
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
++}
+ 
++__init void sysfb_set_efifb_fwnode(struct platform_device *pd)
++{
+ 	if (screen_info.orig_video_isVGA == VIDEO_TYPE_EFI && IS_ENABLED(CONFIG_PCI)) {
+ 		fwnode_init(&efifb_fwnode, &efifb_fwnode_ops);
+ 		pd->dev.fwnode = &efifb_fwnode;
+--- a/drivers/firmware/sysfb.c
++++ b/drivers/firmware/sysfb.c
+@@ -81,6 +81,8 @@ static __init int sysfb_init(void)
+ 	if (disabled)
+ 		goto unlock_mutex;
+ 
++	sysfb_apply_efi_quirks();
++
+ 	/* try to create a simple-framebuffer device */
+ 	compatible = sysfb_parse_mode(si, &mode);
+ 	if (compatible) {
+@@ -107,7 +109,7 @@ static __init int sysfb_init(void)
+ 		goto unlock_mutex;
+ 	}
+ 
+-	sysfb_apply_efi_quirks(pd);
++	sysfb_set_efifb_fwnode(pd);
+ 
+ 	ret = platform_device_add_data(pd, si, sizeof(*si));
+ 	if (ret)
+--- a/drivers/firmware/sysfb_simplefb.c
++++ b/drivers/firmware/sysfb_simplefb.c
+@@ -110,7 +110,7 @@ __init struct platform_device *sysfb_cre
+ 	if (!pd)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	sysfb_apply_efi_quirks(pd);
++	sysfb_set_efifb_fwnode(pd);
+ 
+ 	ret = platform_device_add_resources(pd, &res, 1);
+ 	if (ret)
+--- a/include/linux/sysfb.h
++++ b/include/linux/sysfb.h
+@@ -70,11 +70,16 @@ static inline void sysfb_disable(void)
+ #ifdef CONFIG_EFI
+ 
+ extern struct efifb_dmi_info efifb_dmi_list[];
+-void sysfb_apply_efi_quirks(struct platform_device *pd);
++void sysfb_apply_efi_quirks(void);
++void sysfb_set_efifb_fwnode(struct platform_device *pd);
+ 
+ #else /* CONFIG_EFI */
+ 
+-static inline void sysfb_apply_efi_quirks(struct platform_device *pd)
++static inline void sysfb_apply_efi_quirks(void)
++{
++}
++
++static inline void sysfb_set_efifb_fwnode(struct platform_device *pd)
+ {
  }
  
- void __hci_cmd_sync_cancel(struct hci_dev *hdev, int err)
 
 
