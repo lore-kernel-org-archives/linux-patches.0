@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576DD8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1EA7C433D2;
-	Tue, 28 Mar 2023 15:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095328BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:03:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B5BC433EF;
+	Tue, 28 Mar 2023 15:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015809;
-	bh=QjPEhXJyRBTWMJpyQNqTg4xSZEMThoR2XajJf/Pnwz8=;
+	s=korg; t=1680015811;
+	bh=fU+/5WrZwYJwMCKb6EdYeKNx4M1eiPsjd7FUh0LOzqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1NLnU3mTtB8YViLdz/p9A5/5uJvqr35/5qXm0bzQ/uJfg7+SVVVBB8pBh39h2nReX
-	 xIMrANY77gtvlbeakTny3S4XbAMykFuGYozhjRU8AkTqi6GSFzdqORKLYnlB0F1tLq
-	 jmoFgOfCABTGY8YJ5KdO01qY1OVY1VRiYJA/Vbj4=
+	b=fnWhyYBNmlWsEIAUviMRDed5HgC4dHLEERsYbiOkIMBtQGU7lI/Z/7zkYmPwN4Qsj
+	 sirAH2aZMZsXYkWV+zT60JsCPg1Gj1m3SSfT+Fm6ZzYrPiTFKHAhjHkAQErcUqahzX
+	 QQWDY6kG398DmMVrvCmnLyQYBkFivi3DEl9YV8GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 152/224] cifs: do not poll server interfaces too regularly
-Date: Tue, 28 Mar 2023 16:42:28 +0200
-Message-Id: <20230328142623.711398925@linuxfoundation.org>
+Subject: [PATCH 6.1 153/224] cifs: empty interface list when server doesnt support query interfaces
+Date: Tue, 28 Mar 2023 16:42:29 +0200
+Message-Id: <20230328142623.754940691@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -37,15 +37,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit 072a28c8907c841f7d4b56c78bce46d3ee211e73 upstream.
+commit 896cd316b841053f6df95ab77b5f1322c16a8e18 upstream.
 
-We have the server interface list hanging off the tcon
-structure today for reasons unknown. So each tcon which is
-connected to a file server can query them separately,
-which is really unnecessary. To avoid this, in the query
-function, we will check the time of last update of the
-interface list, and avoid querying the server if it is
-within a certain range.
+When querying server interfaces returns -EOPNOTSUPP,
+clear the list of interfaces. Assumption is that multichannel
+would be disabled too.
 
 Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
 Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
@@ -53,38 +49,19 @@ Cc: stable@vger.kernel.org
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/cifs/smb2ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/fs/cifs/smb2ops.c
 +++ b/fs/cifs/smb2ops.c
-@@ -530,6 +530,14 @@ parse_server_interfaces(struct network_i
- 	p = buf;
- 
- 	spin_lock(&ses->iface_lock);
-+	/* do not query too frequently, this time with lock held */
-+	if (ses->iface_last_update &&
-+	    time_before(jiffies, ses->iface_last_update +
-+			(SMB_INTERFACE_POLL_INTERVAL * HZ))) {
-+		spin_unlock(&ses->iface_lock);
-+		return 0;
-+	}
-+
- 	/*
- 	 * Go through iface_list and do kref_put to remove
- 	 * any unused ifaces. ifaces in use will be removed
-@@ -696,6 +704,12 @@ SMB3_request_interfaces(const unsigned i
- 	struct network_interface_info_ioctl_rsp *out_buf = NULL;
- 	struct cifs_ses *ses = tcon->ses;
- 
-+	/* do not query too frequently */
-+	if (ses->iface_last_update &&
-+	    time_before(jiffies, ses->iface_last_update +
-+			(SMB_INTERFACE_POLL_INTERVAL * HZ)))
-+		return 0;
-+
- 	rc = SMB2_ioctl(xid, tcon, NO_FILE_ID, NO_FILE_ID,
- 			FSCTL_QUERY_NETWORK_INTERFACE_INFO,
- 			NULL /* no data input */, 0 /* no data input */,
+@@ -717,7 +717,7 @@ SMB3_request_interfaces(const unsigned i
+ 	if (rc == -EOPNOTSUPP) {
+ 		cifs_dbg(FYI,
+ 			 "server does not support query network interfaces\n");
+-		goto out;
++		ret_data_len = 0;
+ 	} else if (rc != 0) {
+ 		cifs_tcon_dbg(VFS, "error %d on ioctl to get interface list\n", rc);
+ 		goto out;
 
 
