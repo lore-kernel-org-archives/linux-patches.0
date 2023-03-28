@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310E48BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8343C433D2;
-	Tue, 28 Mar 2023 14:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08038BEB
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 14:56:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B88C433D2;
+	Tue, 28 Mar 2023 14:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015361;
-	bh=XbwN+S4KYNpS5LdLYhLJPSHq8DBwjVmLhxw6O7R1Rxo=;
+	s=korg; t=1680015363;
+	bh=eydkitcIVuv74w82AH3FvKPqb9LaLFmKYGhW8h7faEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lqui/8YjKmEET+jhSI/pJXrziOXzQRaC7yR/6AdmhODxKOrYOHFwrnXd+SpnGDZ2s
-	 1dk9a0LVfp2TD92y1ktMfnXbpFqKR5h/0ueGKbU1PP/csyKnG/Nv2GmKiR7tUIR2k/
-	 +0jMGtPa/5iic7FJxITMSwpgZ3UO+Uuu681dwCMo=
+	b=XuJPcMBB5PrQaxxAGVU5WpiZS75UkfIHvDSQ+tzYZJ1rkdz3iLcr81DVJMBu7G4hA
+	 XkdRMwcmWOAVyK9oO+ivWz+fdxMFhF2ZOy3oVzQ4UMl2TIZsFXbFlIAjz44+Um31zK
+	 hRRtifP3P2LUzxsc/Kx9r4QpqSzeoQPcW2QJax2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Wenjing Liu <Wenjing.Liu@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Cruise Hung <Cruise.Hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Adam Ford <aford173@gmail.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Marek Vasut <marex@denx.de>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/224] drm/amd/display: Fix DP MST sinks removal issue
-Date: Tue, 28 Mar 2023 16:40:09 +0200
-Message-Id: <20230328142617.811427477@linuxfoundation.org>
+Subject: [PATCH 6.1 022/224] arm64: dts: imx8mn: specify #sound-dai-cells for SAI nodes
+Date: Tue, 28 Mar 2023 16:40:18 +0200
+Message-Id: <20230328142618.212964727@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -39,77 +38,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cruise Hung <Cruise.Hung@amd.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit cbd6c1b17d3b42b7935526a86ad5f66838767d03 ]
+[ Upstream commit 62fb54148cd6eb456ff031be8fb447c98cf0bd9b ]
 
-[Why]
-In USB4 DP tunneling, it's possible to have this scenario that
-the path becomes unavailable and CM tears down the path a little bit late.
-So, in this case, the HPD is high but fails to read any DPCD register.
-That causes the link connection type to be set to sst.
-And not all sinks are removed behind the MST branch.
+Add #sound-dai-cells properties to SAI nodes.
 
-[How]
-Restore the link connection type if it fails to read DPCD register.
-
-Cc: stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Wenjing Liu <Wenjing.Liu@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Cruise Hung <Cruise.Hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit cbd6c1b17d3b42b7935526a86ad5f66838767d03)
-Modified for stable backport as a lot of the code in this file was moved
-in 6.3 to drivers/gpu/drm/amd/display/dc/link/link_detection.c.
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Fixes: 9e9860069725 ("arm64: dts: imx8mn: Add SAI nodes")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_link.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8mn.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link.c b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-index 328c5e33cc66b..bf7fcd268cb47 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-@@ -1016,6 +1016,7 @@ static bool detect_link_and_local_sink(struct dc_link *link,
- 	struct dc_sink *prev_sink = NULL;
- 	struct dpcd_caps prev_dpcd_caps;
- 	enum dc_connection_type new_connection_type = dc_connection_none;
-+	enum dc_connection_type pre_connection_type = link->type;
- 	const uint32_t post_oui_delay = 30; // 30ms
- 
- 	DC_LOGGER_INIT(link->ctx->logger);
-@@ -1118,6 +1119,8 @@ static bool detect_link_and_local_sink(struct dc_link *link,
- 			}
- 
- 			if (!detect_dp(link, &sink_caps, reason)) {
-+				link->type = pre_connection_type;
-+
- 				if (prev_sink)
- 					dc_sink_release(prev_sink);
- 				return false;
-@@ -1349,6 +1352,8 @@ bool dc_link_detect(struct dc_link *link, enum dc_detect_reason reason)
- 	bool is_delegated_to_mst_top_mgr = false;
- 	enum dc_connection_type pre_link_type = link->type;
- 
-+	DC_LOGGER_INIT(link->ctx->logger);
-+
- 	is_local_sink_detect_success = detect_link_and_local_sink(link, reason);
- 
- 	if (is_local_sink_detect_success && link->local_sink)
-@@ -1359,6 +1364,10 @@ bool dc_link_detect(struct dc_link *link, enum dc_detect_reason reason)
- 			link->dpcd_caps.is_mst_capable)
- 		is_delegated_to_mst_top_mgr = discover_dp_mst_topology(link, reason);
- 
-+	DC_LOG_DC("%s: link_index=%d is_local_sink_detect_success=%d pre_link_type=%d link_type=%d\n", __func__,
-+		 link->link_index, is_local_sink_detect_success, pre_link_type, link->type);
-+
-+
- 	if (is_local_sink_detect_success &&
- 			pre_link_type == dc_connection_mst_branch &&
- 			link->type != dc_connection_mst_branch)
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn.dtsi b/arch/arm64/boot/dts/freescale/imx8mn.dtsi
+index ba29b5b556ffa..37246ca9d9075 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn.dtsi
+@@ -295,6 +295,7 @@ spba2: spba-bus@30000000 {
+ 				sai2: sai@30020000 {
+ 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
+ 					reg = <0x30020000 0x10000>;
++					#sound-dai-cells = <0>;
+ 					interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clk IMX8MN_CLK_SAI2_IPG>,
+ 						<&clk IMX8MN_CLK_DUMMY>,
+@@ -309,6 +310,7 @@ sai2: sai@30020000 {
+ 				sai3: sai@30030000 {
+ 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
+ 					reg = <0x30030000 0x10000>;
++					#sound-dai-cells = <0>;
+ 					interrupts = <GIC_SPI 50 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clk IMX8MN_CLK_SAI3_IPG>,
+ 						 <&clk IMX8MN_CLK_DUMMY>,
+@@ -323,6 +325,7 @@ sai3: sai@30030000 {
+ 				sai5: sai@30050000 {
+ 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
+ 					reg = <0x30050000 0x10000>;
++					#sound-dai-cells = <0>;
+ 					interrupts = <GIC_SPI 90 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clk IMX8MN_CLK_SAI5_IPG>,
+ 						 <&clk IMX8MN_CLK_DUMMY>,
+@@ -339,6 +342,7 @@ sai5: sai@30050000 {
+ 				sai6: sai@30060000 {
+ 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
+ 					reg = <0x30060000  0x10000>;
++					#sound-dai-cells = <0>;
+ 					interrupts = <GIC_SPI 90 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clk IMX8MN_CLK_SAI6_IPG>,
+ 						 <&clk IMX8MN_CLK_DUMMY>,
+@@ -396,6 +400,7 @@ spdif1: spdif@30090000 {
+ 				sai7: sai@300b0000 {
+ 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
+ 					reg = <0x300b0000 0x10000>;
++					#sound-dai-cells = <0>;
+ 					interrupts = <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clk IMX8MN_CLK_SAI7_IPG>,
+ 						 <&clk IMX8MN_CLK_DUMMY>,
 -- 
 2.39.2
 
