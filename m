@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D4E8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:06:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB08C433EF;
-	Tue, 28 Mar 2023 15:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016BD8BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:06:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744ACC433D2;
+	Tue, 28 Mar 2023 15:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015969;
-	bh=jEd4lwlknR72hJ4HJpOPTxv9Cb4vk20t0U6zbpIMi+g=;
+	s=korg; t=1680015971;
+	bh=RZr8306DY+9xcyADv6hoJ0Xfw9DnmlE+zsEg+C7RNDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNJNgamoK7ApVS8KYhoSUu/2gjFQlDZlghrmr6S7Wt42G8j3ZEBfNlxHo5Hq2c0Ij
-	 FRO1/Dm4AeIfrxvT2+JQYADeQGYm0wV091vCct8UsaN+NCLSinV1S0jhF2CrsyKwvI
-	 XCkS2KrlTAHhtAgYrZzx0y7QpfKyvthxmauzepJU=
+	b=cLcbTO+4juI0+aSeb+axNeUQ1JfDQoPi/t9R+aMEVIGQr2UyU3RwPLkRnQ6QBD8RG
+	 diS6IGh88tlgm7p90f8a68jSArS0AgfagOHQiGXgjKjDsMMccym9fktcA3TjcP51PW
+	 t3VOYmHm7SDQIR5FlnvvVdf615brGdJl9Izr5hA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
+	Adam Ford <aford173@gmail.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Marek Vasut <marex@denx.de>,
+	Marco Felsch <m.felsch@pengutronix.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/146] ARM: dts: imx6sl: tolino-shine2hd: fix usbotg1 pinctrl
-Date: Tue, 28 Mar 2023 16:41:47 +0200
-Message-Id: <20230328142603.490499665@linuxfoundation.org>
+Subject: [PATCH 5.15 019/146] arm64: dts: imx8mn: specify #sound-dai-cells for SAI nodes
+Date: Tue, 28 Mar 2023 16:41:48 +0200
+Message-Id: <20230328142603.521877637@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -35,32 +38,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 1cd489e1ada1cffa56bd06fd4609f5a60a985d43 ]
+[ Upstream commit 62fb54148cd6eb456ff031be8fb447c98cf0bd9b ]
 
-usb@2184000: 'pinctrl-0' is a dependency of 'pinctrl-names'
+Add #sound-dai-cells properties to SAI nodes.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Fixes: 9c7016f1ca6d ("ARM: dts: imx: add devicetree for Tolino Shine 2 HD")
+Reviewed-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Fixes: 9e9860069725 ("arm64: dts: imx8mn: Add SAI nodes")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/freescale/imx8mn.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts b/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts
-index a17b8bbbdb956..f2231cb1e32df 100644
---- a/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts
-+++ b/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts
-@@ -597,6 +597,7 @@ &usdhc3 {
- 
- &usbotg1 {
- 	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_usbotg1>;
- 	disable-over-current;
- 	srp-disable;
- 	hnp-disable;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn.dtsi b/arch/arm64/boot/dts/freescale/imx8mn.dtsi
+index 0c47ff2426410..16a5efba17f39 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn.dtsi
+@@ -265,6 +265,7 @@ spba2: spba-bus@30000000 {
+ 				sai2: sai@30020000 {
+ 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
+ 					reg = <0x30020000 0x10000>;
++					#sound-dai-cells = <0>;
+ 					interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clk IMX8MN_CLK_SAI2_IPG>,
+ 						<&clk IMX8MN_CLK_DUMMY>,
+@@ -279,6 +280,7 @@ sai2: sai@30020000 {
+ 				sai3: sai@30030000 {
+ 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
+ 					reg = <0x30030000 0x10000>;
++					#sound-dai-cells = <0>;
+ 					interrupts = <GIC_SPI 50 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clk IMX8MN_CLK_SAI3_IPG>,
+ 						 <&clk IMX8MN_CLK_DUMMY>,
+@@ -293,6 +295,7 @@ sai3: sai@30030000 {
+ 				sai5: sai@30050000 {
+ 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
+ 					reg = <0x30050000 0x10000>;
++					#sound-dai-cells = <0>;
+ 					interrupts = <GIC_SPI 90 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clk IMX8MN_CLK_SAI5_IPG>,
+ 						 <&clk IMX8MN_CLK_DUMMY>,
+@@ -309,6 +312,7 @@ sai5: sai@30050000 {
+ 				sai6: sai@30060000 {
+ 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
+ 					reg = <0x30060000  0x10000>;
++					#sound-dai-cells = <0>;
+ 					interrupts = <GIC_SPI 90 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clk IMX8MN_CLK_SAI6_IPG>,
+ 						 <&clk IMX8MN_CLK_DUMMY>,
+@@ -366,6 +370,7 @@ spdif1: spdif@30090000 {
+ 				sai7: sai@300b0000 {
+ 					compatible = "fsl,imx8mn-sai", "fsl,imx8mq-sai";
+ 					reg = <0x300b0000 0x10000>;
++					#sound-dai-cells = <0>;
+ 					interrupts = <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clk IMX8MN_CLK_SAI7_IPG>,
+ 						 <&clk IMX8MN_CLK_DUMMY>,
 -- 
 2.39.2
 
