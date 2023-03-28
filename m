@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB5C8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:11:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B35C4339B;
-	Tue, 28 Mar 2023 15:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AD58BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:12:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229BFC433D2;
+	Tue, 28 Mar 2023 15:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680016317;
-	bh=Gbj7fZm1sQbW8DFSbFESRXPneuWsi6roUnhXjd20M5I=;
+	s=korg; t=1680016320;
+	bh=Katqdh3J45/YQa7ilCW2WWUvioq35WJL1/032E7FIuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eF1/wqiyqzHypA0iqlfT32g1PWm5VGt5ScFkOm9zvf8Gwg1jlZMzCJPeChnt92Bh9
-	 2oAe2ZfUrsTPNwKdJD4Fs2irQlzOvUU1KioISQBNzzWeaj9mJqcQb76Z1YuBCo1rXx
-	 CoKnkW03osM8N/9BRmOydb0TFQj/RH8LuqqFQ7m4=
+	b=oerxu3r/FVEokSZNLoB5ZXKrW6tT1DWzZvi3+TonA4zkV7buAWFFgBwhCKmPSjkFe
+	 8vNHIuGtIZMXvdMUyEcKF5gHZmFwX/BmWhvkplncoXSoizeBYY5hC2M0XiFate+AZg
+	 nPGyh7/ItrfRVyHj42VFFq/5X0GKJreWDxQ4tkPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 145/146] ocfs2: fix data corruption after failed write
-Date: Tue, 28 Mar 2023 16:43:54 +0200
-Message-Id: <20230328142608.750409009@linuxfoundation.org>
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>
+Subject: [PATCH 5.15 146/146] NFSD: fix use-after-free in __nfs42_ssc_open()
+Date: Tue, 28 Mar 2023 16:43:55 +0200
+Message-Id: <20230328142608.792258388@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
 References: <20230328142602.660084725@linuxfoundation.org>
@@ -41,67 +36,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit 90410bcf873cf05f54a32183afff0161f44f9715 upstream.
+commit 75333d48f92256a0dec91dbf07835e804fc411c0 upstream.
 
-When buffered write fails to copy data into underlying page cache page,
-ocfs2_write_end_nolock() just zeroes out and dirties the page.  This can
-leave dirty page beyond EOF and if page writeback tries to write this page
-before write succeeds and expands i_size, page gets into inconsistent
-state where page dirty bit is clear but buffer dirty bits stay set
-resulting in page data never getting written and so data copied to the
-page is lost.  Fix the problem by invalidating page beyond EOF after
-failed write.
+Problem caused by source's vfsmount being unmounted but remains
+on the delayed unmount list. This happens when nfs42_ssc_open()
+return errors.
 
-Link: https://lkml.kernel.org/r/20230302153843.18499-1-jack@suse.cz
-Fixes: 6dbf7bb55598 ("fs: Don't invalidate page buffers in block_write_full_page()")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ replace block_invalidate_folio to block_invalidatepage ]
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Fixed by removing nfsd4_interssc_connect(), leave the vfsmount
+for the laundromat to unmount when idle time expires.
+
+We don't need to call nfs_do_sb_deactive when nfs42_ssc_open
+return errors since the file was not opened so nfs_server->active
+was not incremented. Same as in nfsd4_copy, if we fail to
+launch nfsd4_do_async_copy thread then there's no need to
+call nfs_do_sb_deactive
+
+Reported-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Tested-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4proc.c |   22 ++++++----------------
+ 1 file changed, 6 insertions(+), 16 deletions(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -1978,11 +1978,25 @@ int ocfs2_write_end_nolock(struct addres
- 	}
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1351,13 +1351,6 @@ out_err:
+ 	return status;
+ }
  
- 	if (unlikely(copied < len) && wc->w_target_page) {
-+		loff_t new_isize;
-+
- 		if (!PageUptodate(wc->w_target_page))
- 			copied = 0;
+-static void
+-nfsd4_interssc_disconnect(struct vfsmount *ss_mnt)
+-{
+-	nfs_do_sb_deactive(ss_mnt->mnt_sb);
+-	mntput(ss_mnt);
+-}
+-
+ /*
+  * Verify COPY destination stateid.
+  *
+@@ -1460,11 +1453,6 @@ nfsd4_cleanup_inter_ssc(struct vfsmount
+ {
+ }
  
--		ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
--				       start+len);
-+		new_isize = max_t(loff_t, i_size_read(inode), pos + copied);
-+		if (new_isize > page_offset(wc->w_target_page))
-+			ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
-+					       start+len);
-+		else {
-+			/*
-+			 * When page is fully beyond new isize (data copy
-+			 * failed), do not bother zeroing the page. Invalidate
-+			 * it instead so that writeback does not get confused
-+			 * put page & buffer dirty bits into inconsistent
-+			 * state.
-+			 */
-+			block_invalidatepage(wc->w_target_page, 0, PAGE_SIZE);
-+		}
+-static void
+-nfsd4_interssc_disconnect(struct vfsmount *ss_mnt)
+-{
+-}
+-
+ static struct file *nfs42_ssc_open(struct vfsmount *ss_mnt,
+ 				   struct nfs_fh *src_fh,
+ 				   nfs4_stateid *stateid)
+@@ -1622,14 +1610,14 @@ static int nfsd4_do_async_copy(void *dat
+ 		copy->nf_src = kzalloc(sizeof(struct nfsd_file), GFP_KERNEL);
+ 		if (!copy->nf_src) {
+ 			copy->nfserr = nfserr_serverfault;
+-			nfsd4_interssc_disconnect(copy->ss_mnt);
++			/* ss_mnt will be unmounted by the laundromat */
+ 			goto do_callback;
+ 		}
+ 		copy->nf_src->nf_file = nfs42_ssc_open(copy->ss_mnt, &copy->c_fh,
+ 					      &copy->stateid);
+ 		if (IS_ERR(copy->nf_src->nf_file)) {
+ 			copy->nfserr = nfserr_offload_denied;
+-			nfsd4_interssc_disconnect(copy->ss_mnt);
++			/* ss_mnt will be unmounted by the laundromat */
+ 			goto do_callback;
+ 		}
  	}
- 	if (wc->w_target_page)
- 		flush_dcache_page(wc->w_target_page);
+@@ -1714,8 +1702,10 @@ out_err:
+ 	if (async_copy)
+ 		cleanup_async_copy(async_copy);
+ 	status = nfserrno(-ENOMEM);
+-	if (!copy->cp_intra)
+-		nfsd4_interssc_disconnect(copy->ss_mnt);
++	/*
++	 * source's vfsmount of inter-copy will be unmounted
++	 * by the laundromat
++	 */
+ 	goto out;
+ }
+ 
 
 
