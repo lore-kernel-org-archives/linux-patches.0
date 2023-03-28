@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1163D8BE0
-	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2C1C433EF;
-	Tue, 28 Mar 2023 15:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EA38BE0
+	for <patches@lists.linux.dev>; Tue, 28 Mar 2023 15:04:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9F6C433EF;
+	Tue, 28 Mar 2023 15:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680015879;
-	bh=DvhQgBvwcv5YSThhC09mPUGjr/dGWRvO+3jO04ceCFY=;
+	s=korg; t=1680015882;
+	bh=Jv4CbOcyhvGdX6l/WfwMoIKeOceYc/RF2tBccbRgETo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/Ui938bC4c2/sjV0CxldQChUG7Ly5cfgvRiLrjdTz6mb0ybrjSPXWIJDlFHSHpV3
-	 7x37s3eZEN8C3PxVd3VBbvlF7JwQ5Vwsz7KTxpvB8Grx0uOSDUc6J4fxRt2bUhKsI+
-	 rBTvOqm9heswdRDwdC3bhAYkhtWNSjTT4DxJF7f0=
+	b=1SeHiE6hBoSHS0qQeTF+6a3wyICr0vKGVBmlN3g/2/Q1QbQn0PQKF00Ykc5XWu8kl
+	 KKM0lBO9zGppdpdnLl2qySGmlrC6JO5nZD4NoXBSm6GZ6MRNh2qmwPemdDvQh0eoSU
+	 +Tk3Qo9pnxCCWEKZiNnAiVHATjRQc2oYyb5U4/8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.1 209/224] firmware: arm_scmi: Fix device node validation for mailbox transport
-Date: Tue, 28 Mar 2023 16:43:25 +0200
-Message-Id: <20230328142626.067430591@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.1 183/224] usb: ucsi_acpi: Increase the command completion timeout
+Date: Tue, 28 Mar 2023 16:42:59 +0200
+Message-Id: <20230328142625.011204179@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 References: <20230328142617.205414124@linuxfoundation.org>
@@ -34,79 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 2ab4f4018cb6b8010ca5002c3bdc37783b5d28c2 upstream.
+commit 02d210f434249a7edbc160969b75df030dc6934d upstream.
 
-When mailboxes are used as a transport it is possible to setup the SCMI
-transport layer, depending on the underlying channels configuration, to use
-one or two mailboxes, associated, respectively, to one or two, distinct,
-shared memory areas: any other combination should be treated as invalid.
+Commit 130a96d698d7 ("usb: typec: ucsi: acpi: Increase command
+completion timeout value") increased the timeout from 5 seconds
+to 60 seconds due to issues related to alternate mode discovery.
 
-Add more strict checking of SCMI mailbox transport device node descriptors.
+After the alternate mode discovery switch to polled mode
+the timeout was reduced, but instead of being set back to
+5 seconds it was reduced to 1 second.
 
-Fixes: 5c8a47a5a91d ("firmware: arm_scmi: Make scmi core independent of the transport type")
-Cc: <stable@vger.kernel.org> # 4.19
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20230307162324.891866-1-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+This is causing problems when using a Lenovo ThinkPad X1 yoga gen7
+connected over Type-C to a LG 27UL850-W (charging DP over Type-C).
+
+When the monitor is already connected at boot the following error
+is logged: "PPM init failed (-110)", /sys/class/typec is empty and
+on unplugging the NULL pointer deref fixed earlier in this series
+happens.
+
+When the monitor is connected after boot the following error
+is logged instead: "GET_CONNECTOR_STATUS failed (-110)".
+
+Setting the timeout back to 5 seconds fixes both cases.
+
+Fixes: e08065069fc7 ("usb: typec: ucsi: acpi: Reduce the command completion timeout")
+Cc: stable@vger.kernel.org
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230308154244.722337-4-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/mailbox.c |   37 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ drivers/usb/typec/ucsi/ucsi_acpi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/arm_scmi/mailbox.c
-+++ b/drivers/firmware/arm_scmi/mailbox.c
-@@ -52,6 +52,39 @@ static bool mailbox_chan_available(struc
- 					   "#mbox-cells", idx, NULL);
- }
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -78,7 +78,7 @@ static int ucsi_acpi_sync_write(struct u
+ 	if (ret)
+ 		goto out_clear_bit;
  
-+static int mailbox_chan_validate(struct device *cdev)
-+{
-+	int num_mb, num_sh, ret = 0;
-+	struct device_node *np = cdev->of_node;
-+
-+	num_mb = of_count_phandle_with_args(np, "mboxes", "#mbox-cells");
-+	num_sh = of_count_phandle_with_args(np, "shmem", NULL);
-+	/* Bail out if mboxes and shmem descriptors are inconsistent */
-+	if (num_mb <= 0 || num_sh > 2 || num_mb != num_sh) {
-+		dev_warn(cdev, "Invalid channel descriptor for '%s'\n",
-+			 of_node_full_name(np));
-+		return -EINVAL;
-+	}
-+
-+	if (num_sh > 1) {
-+		struct device_node *np_tx, *np_rx;
-+
-+		np_tx = of_parse_phandle(np, "shmem", 0);
-+		np_rx = of_parse_phandle(np, "shmem", 1);
-+		/* SCMI Tx and Rx shared mem areas have to be distinct */
-+		if (!np_tx || !np_rx || np_tx == np_rx) {
-+			dev_warn(cdev, "Invalid shmem descriptor for '%s'\n",
-+				 of_node_full_name(np));
-+			ret = -EINVAL;
-+		}
-+
-+		of_node_put(np_tx);
-+		of_node_put(np_rx);
-+	}
-+
-+	return ret;
-+}
-+
- static int mailbox_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 			      bool tx)
- {
-@@ -64,6 +97,10 @@ static int mailbox_chan_setup(struct scm
- 	resource_size_t size;
- 	struct resource res;
+-	if (!wait_for_completion_timeout(&ua->complete, HZ))
++	if (!wait_for_completion_timeout(&ua->complete, 5 * HZ))
+ 		ret = -ETIMEDOUT;
  
-+	ret = mailbox_chan_validate(cdev);
-+	if (ret)
-+		return ret;
-+
- 	smbox = devm_kzalloc(dev, sizeof(*smbox), GFP_KERNEL);
- 	if (!smbox)
- 		return -ENOMEM;
+ out_clear_bit:
 
 
