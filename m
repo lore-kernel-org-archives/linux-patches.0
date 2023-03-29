@@ -1,79 +1,105 @@
-Received: from sipsolutions.net (s3.sipsolutions.net [144.76.43.62])
+Received: from qproxy4-pub.mail.unifiedlayer.com (qproxy4-pub.mail.unifiedlayer.com [66.147.248.250])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D546FA2;
-	Wed, 29 Mar 2023 19:00:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-	Resent-Cc:Resent-Message-ID; bh=V3nhz2pvP7h7Cz23MObcCMnl1WaF8f98/d7AXl1BRts=;
-	t=1680116458; x=1681326058; b=yTH0zi43MAqnpdDBRBlCXVbDq7Y2Bi9Ia2KY97WSaLiyerA
-	6+J+lhehT8L2cRJ8RcYAfbLCMB5VESx7mWnPIXwVd6bkTBvwzsOVhE4XpU9u5iGsV3udBKmBvlKjw
-	lMhpM/+UBwX8MdHLZHUG42Dj3Kgams0aufExQMrvUb7oaZlpDhiHfcjovG6YHpRSGw9yBuCJxxNFk
-	aMzB4W2d/MKC8ssFPayCly75xa3svV2OCuEV56BkDcfmyCicoAaFLCCPr1TX+hk5vSpeD0hQtkm+H
-	pcwa4bp3Vgj9YOLUXYTweCQ20tvyM65rZJ3s52j5k+QRwXD7K9LmjjCIfuoFwjJg==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.96)
-	(envelope-from <johannes@sipsolutions.net>)
-	id 1phb2O-000CaR-0l;
-	Wed, 29 Mar 2023 21:00:48 +0200
-Message-ID: <465e2312486da2c68f26811884474d080e906d87.camel@sipsolutions.net>
-Subject: Re: [PATCH wireless-next] wifi: iwlwifi: mvm: Avoid 64-bit division
- in iwl_mvm_get_crosstimestamp_fw()
-From: Johannes Berg <johannes@sipsolutions.net>
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, gregory.greenman@intel.com, 
- kvalo@kernel.org, trix@redhat.com, avraham.stern@intel.com, 
- krishnanand.prabhu@intel.com, linux-wireless@vger.kernel.org, 
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-  patches@lists.linux.dev, Arnd Bergmann <arnd@arndb.de>, "kernelci.org bot"
- <bot@kernelci.org>, Craig Topper <craig.topper@sifive.com>
-Date: Wed, 29 Mar 2023 21:00:47 +0200
-In-Reply-To: <CAKwvOdnQ9feXGYV2CUyVwg-FNAOmb4HBmDxMg243v28DzSfLuA@mail.gmail.com>
-References: 
-	<20230329-iwlwifi-ptp-avoid-64-bit-div-v1-1-ad8db8d66bc2@kernel.org>
-	 <9058a032c177e9b04adbf944ad34c5ed8090d9d6.camel@sipsolutions.net>
-	 <CAKwvOdnQ9feXGYV2CUyVwg-FNAOmb4HBmDxMg243v28DzSfLuA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4 (3.46.4-1.fc37) 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C28881F
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 21:31:15 +0000 (UTC)
+Received: from gproxy3-pub.mail.unifiedlayer.com (gproxy3-pub.mail.unifiedlayer.com [69.89.30.42])
+	by qproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id 6FAC180350F5
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 21:07:57 +0000 (UTC)
+Received: from cmgw11.mail.unifiedlayer.com (unknown [10.0.90.126])
+	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id BAA151003F369
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 21:07:49 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id hd1JpMwkEaaYZhd1Jpwy5B; Wed, 29 Mar 2023 21:07:49 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=b813XvKx c=1 sm=1 tr=0 ts=6424a8a5
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=k__wU0fu6RkA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=/lDL3BpcdL46wlI081mASr81hr3JNcssgOy/eiRoXgQ=; b=Tlp+QveqU4Ce3oAU58l+QRvAGB
+	9EFtJGAxQ8znSmksJyVOhVsjlCifM0om54lG9sdcitOMiUSsN5W1msEW8/XzPjA7B0mdx7HM1JE94
+	5tQ3m/jAkQuXj6AFDuxZyANw1sR2VU9ZYVLD4vfeabdTfpcwf00Ti6RC3jwGxUfDbYUz1RX9mWOD/
+	eDa3wxkiFPxDUFCaCxK/66uyNn2BYlo/hAXDpigCJ7NOxRKxhi5bVRdZ1/WEBGfIyNCD7bzaHDVUK
+	Np6WfUJ/AN0YaNqbc50BoF87E3W0wJ6Rci8d6BNLffmqSfTTCwUqcoARq5QqrmtfGHoHqo0jsxmAT
+	PRvA0r+A==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:33644 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1phd1H-0019P9-Ss;
+	Wed, 29 Mar 2023 15:07:47 -0600
+Subject: Re: [PATCH 6.1 000/224] 6.1.22-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230328142617.205414124@linuxfoundation.org>
+In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <90995f3c-2f60-b291-37f9-2fd8991a8c00@w6rz.net>
+Date: Wed, 29 Mar 2023 14:07:42 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-malware-bazaar: not-scanned
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1phd1H-0019P9-Ss
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:33644
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Wed, 2023-03-29 at 10:30 -0700, Nick Desaulniers wrote:
-> >=20
-> > > Nick pointed out that the result of this division is being
-> > > stored to a 32-bit type anyways, so truncate gp2_10ns first then do t=
-he
-> > > division, which elides the need for libcalls.
-> >=20
-> > That loses ~7 top bits though, no? I'd be more worried about that, than
-> > the time div_u64() takes.
->=20
-> The result is still stored in a u32; there is a loss of precision
-> regardless of use of div_u64 or open coded binary operator /. =C2=A0
->=20
+On 3/28/23 7:39 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.22 release.
+> There are 224 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 30 Mar 2023 14:25:33 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.22-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Right, obviously.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-> So is
-> the loss of precision before the division as tolerable as after the
-> division?
+Tested-by: Ron Economos <re@w6rz.net>
 
-For all I can tell this is meant to be 'gp2' with an additional lower
-bits to reach a unit/granularity of 10ns, basically in FW something like
-
-  gp2_10ns =3D gp2 * 100 + subsampling_10ns_unit
-
-(and gp2 in FW is a 32-bit value, so it rolls over eventually).
-
-But I _think_ we want to make a proper division by 100 to obtain back
-the original 'gp2' value here.
-
-johannes
