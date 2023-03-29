@@ -1,50 +1,44 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BDF7B
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 10:34:14 +0000 (UTC)
-Received: by mail-pj1-f49.google.com with SMTP id fy10-20020a17090b020a00b0023b4bcf0727so15718579pjb.0
-        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 03:34:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google; t=1680086054;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+G0x4df8nN5k7A1CedGNXaYeU9br6DP1S70P25KOU3Q=;
-        b=leicsZUabtl/b04clZPzdxhIVtE92NjsAby5skkmC4BOrHrwDbqMDxyNy7EYxS/KMO
-         pEfo1a6DcBrFeFSzXBkyZigB2nsKXlYpwMHc+X552mssmZFgNZuHXRal13MypE8FXa+q
-         0R2JXsv0JPohslv6/ObMVaQDVHWIAAa3gwQ6Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680086054;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+G0x4df8nN5k7A1CedGNXaYeU9br6DP1S70P25KOU3Q=;
-        b=4tG0ZCN5fIuQ3OwDJugLd5Gu9iLMn1u2LtbagJUVZruNBwYjVzbq8WG3DadLI1Hn4V
-         BrcidIiUyBTzfQzjcPC10xJh+ZeK+WPtMXV7kLRD+a1OSYaa9SYwwGa1jAKH4dYfpa+K
-         Y2D1zfk+/TmohEZEFRKXJI45H7THVHnuW5CVeNrPygCfI1oWwUD8cp7dochAWe946st1
-         TVIiW2ih7BIUCJTWafTrRE5iWtZmTm5RmxMJqCJy2tNXPgltQiVEI/ZnBShOKYBXLoq0
-         79A0QWOsVgCvHo6xeBVgwZ883frATaYFV7Q6SmShVYIQgl7TR5Y/1o1q6mKE/jNjAAmd
-         9o6w==
-X-Gm-Message-State: AAQBX9dngAmUDp2K4hrhMaiACyPGEve89VgyPNt24ndZaVfDrLHqyEso
-	9BbYQT2VQzzAMKkGQSIgdQM/Bw==
-X-Google-Smtp-Source: AKy350Z7IkUvnWfi8bjLMEeSSg/1XJxBZz8APPh8P42x16gp4l7TciaEW0XJpMJcStPFJvhfLDdnIQ==
-X-Received: by 2002:a17:90a:1de:b0:234:b964:5703 with SMTP id 30-20020a17090a01de00b00234b9645703mr20022640pjd.18.1680086054136;
-        Wed, 29 Mar 2023 03:34:14 -0700 (PDT)
-Received: from 67ca92301206 (124-148-239-102.tpgi.com.au. [124.148.239.102])
-        by smtp.gmail.com with ESMTPSA id lt15-20020a17090b354f00b0023b2bc8ebc4sm1160182pjb.9.2023.03.29.03.34.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 03:34:13 -0700 (PDT)
-Date: Wed, 29 Mar 2023 10:34:05 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100567B
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 10:42:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1680086531; x=1711622531;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=VdBcrgySIdL/WPuWoMsxsQA2x/dh18nj8WQEpF5gTGI=;
+  b=B0a27AtQ8gFCosbbguXoasdCHaGiU9wxk7oK7WrucwbNqp6gwKO51J0Z
+   PyftkZEAOSy/Ikk6NWEyp7c5yp511kpO6NvYFhs+y6D+Qd+rysNvTJSVW
+   KaFJsVdbrE3Y+NxwadePwTIUCzEc+qCbnHfvLZs1zA3qsNk4iiSZiRryp
+   5i2HJ86CjDZXXqiXopBgv4JceFYPGzo9LRIhDE7Kj2yfybYLKxiM16FEs
+   mIA7k1bJUuWSWLrAvvZiMruDFQVcdc4QzwGjbzetcaD2cuJKEhHc4e46b
+   xnDutmkQvsVMoAEgDPuJ0SlzzjJmiU4A8iS7xuOiqHEFkXwFzI0yEwla7
+   w==;
+X-IronPort-AV: E=Sophos;i="5.98,300,1673938800"; 
+   d="asc'?scan'208";a="203988039"
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa4.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 29 Mar 2023 03:41:02 -0700
+Received: from chn-vm-ex04.mchp-main.com (10.10.85.152) by
+ chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Wed, 29 Mar 2023 03:40:59 -0700
+Received: from wendy (10.10.115.15) by chn-vm-ex04.mchp-main.com
+ (10.10.85.152) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
+ Transport; Wed, 29 Mar 2023 03:40:56 -0700
+Date: Wed, 29 Mar 2023 11:40:43 +0100
+From: Conor Dooley <conor.dooley@microchip.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
+	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
+	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+	<srw@sladewatkins.net>, <rwarsow@gmx.de>
 Subject: Re: [PATCH 6.1 000/224] 6.1.22-rc1 review
-Message-ID: <20230329103405.GA8@67ca92301206>
+Message-ID: <fc8625b8-ce07-4089-8d03-512914aa1bad@spud>
 References: <20230328142617.205414124@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -52,39 +46,33 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="gry5cg9km3M0xT/2"
 Content-Disposition: inline
 In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
+
+--gry5cg9km3M0xT/2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
 On Tue, Mar 28, 2023 at 04:39:56PM +0200, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.22 release.
 > There are 224 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Thu, 30 Mar 2023 14:25:33 +0000.
-> Anything received after that time might be too late.
 
-Hi Greg,
+Looks grand on our RISC-V stuff, thanks.
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-6.1.22-rc1 tested.
+--gry5cg9km3M0xT/2
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Run tested on:
-- Allwinner H6 (Tanix TX6)
-- Intel Alder Lake x86_64 (nuc12 i7-1260P)
+-----BEGIN PGP SIGNATURE-----
 
-In addition - build tested for:
-- Allwinner A64
-- Allwinner H3
-- Allwinner H5
-- NXP iMX6
-- NXP iMX8
-- Qualcomm Dragonboard
-- Rockchip RK3288
-- Rockchip RK3328
-- Rockchip RK3399pro
-- Samsung Exynos
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZCQVqwAKCRB4tDGHoIJi
+0iOxAQCab9SurRZBZIuLt6aBKrvXH3xW0zTSp3rRTtrvjc3PFwEApJuDc7pVVvFH
+6FOEiPQkOGlYDkMcO0r+ra5XMIIPIQQ=
+=PXbV
+-----END PGP SIGNATURE-----
 
-Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
---
-Rudi
+--gry5cg9km3M0xT/2--
