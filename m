@@ -1,49 +1,51 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B2BAFD4
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 10:14:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=XD6f5bOaCAyYBS+M+TP/wCO7dC9gfBN3tBFXovXbVLc=; b=XZBBf4PrIjHEFWyGER0jptEarY
-	kws9DLGDVI7fOiPMxmdFrTY6RqGGxEfMl4K8jq9s4Sevi/zJkYWjvm2UuUTDZ9nqlHwVgm+leRJVc
-	YwxCPqCnTujlpnNb3RNh3zfoThf4H/c4avmeo9KvfNtvI553TcFKAbacLxteFkPaeY7NYDBDPJeDk
-	PgvLKxUxosd7SXO+5B+Ql4yq1UGreP4xJpzkXP45t8v9VB3EOdFBLZHc42raluYAFREmgC4014Atu
-	5i/cVms+z0Bosd7TRDmA20Hm34AXO6GZfkEYTMMiclcHK8MkiFO2jtpzh0SSpqgqfDMr1I0YG6Jae
-	G/KO6Ukw==;
-Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-	id 1phSpH-006p42-2e;
-	Wed, 29 Mar 2023 10:14:45 +0000
-Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 8CE5C300379;
-	Wed, 29 Mar 2023 12:14:42 +0200 (CEST)
-Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 6AA9C2622EC50; Wed, 29 Mar 2023 12:14:42 +0200 (CEST)
-Date: Wed, 29 Mar 2023 12:14:42 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: david@redhat.com, patches@lists.linux.dev,
-	linux-modules@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
-	prarit@redhat.com, torvalds@linux-foundation.org,
-	gregkh@linuxfoundation.org, rafael@kernel.org,
-	christophe.leroy@csgroup.eu, tglx@linutronix.de, song@kernel.org,
-	rppt@kernel.org, willy@infradead.org, vbabka@suse.cz,
-	mhocko@suse.com, dave.hansen@linux.intel.com
-Subject: Re: [PATCH 4/7] sempahore: add a helper for a concurrency limiter
-Message-ID: <20230329101442.GQ4253@hirez.programming.kicks-ass.net>
-References: <20230329053149.3976378-1-mcgrof@kernel.org>
- <20230329053149.3976378-5-mcgrof@kernel.org>
- <20230329072112.GG4253@hirez.programming.kicks-ass.net>
- <ZCPuFLDgU5fBFtug@bombadil.infradead.org>
- <20230329091935.GP4253@hirez.programming.kicks-ass.net>
- <ZCQJtz/P+/Mog3Wm@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BDF7B
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 10:34:14 +0000 (UTC)
+Received: by mail-pj1-f49.google.com with SMTP id fy10-20020a17090b020a00b0023b4bcf0727so15718579pjb.0
+        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 03:34:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=heitbaum.com; s=google; t=1680086054;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+G0x4df8nN5k7A1CedGNXaYeU9br6DP1S70P25KOU3Q=;
+        b=leicsZUabtl/b04clZPzdxhIVtE92NjsAby5skkmC4BOrHrwDbqMDxyNy7EYxS/KMO
+         pEfo1a6DcBrFeFSzXBkyZigB2nsKXlYpwMHc+X552mssmZFgNZuHXRal13MypE8FXa+q
+         0R2JXsv0JPohslv6/ObMVaQDVHWIAAa3gwQ6Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680086054;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+G0x4df8nN5k7A1CedGNXaYeU9br6DP1S70P25KOU3Q=;
+        b=4tG0ZCN5fIuQ3OwDJugLd5Gu9iLMn1u2LtbagJUVZruNBwYjVzbq8WG3DadLI1Hn4V
+         BrcidIiUyBTzfQzjcPC10xJh+ZeK+WPtMXV7kLRD+a1OSYaa9SYwwGa1jAKH4dYfpa+K
+         Y2D1zfk+/TmohEZEFRKXJI45H7THVHnuW5CVeNrPygCfI1oWwUD8cp7dochAWe946st1
+         TVIiW2ih7BIUCJTWafTrRE5iWtZmTm5RmxMJqCJy2tNXPgltQiVEI/ZnBShOKYBXLoq0
+         79A0QWOsVgCvHo6xeBVgwZ883frATaYFV7Q6SmShVYIQgl7TR5Y/1o1q6mKE/jNjAAmd
+         9o6w==
+X-Gm-Message-State: AAQBX9dngAmUDp2K4hrhMaiACyPGEve89VgyPNt24ndZaVfDrLHqyEso
+	9BbYQT2VQzzAMKkGQSIgdQM/Bw==
+X-Google-Smtp-Source: AKy350Z7IkUvnWfi8bjLMEeSSg/1XJxBZz8APPh8P42x16gp4l7TciaEW0XJpMJcStPFJvhfLDdnIQ==
+X-Received: by 2002:a17:90a:1de:b0:234:b964:5703 with SMTP id 30-20020a17090a01de00b00234b9645703mr20022640pjd.18.1680086054136;
+        Wed, 29 Mar 2023 03:34:14 -0700 (PDT)
+Received: from 67ca92301206 (124-148-239-102.tpgi.com.au. [124.148.239.102])
+        by smtp.gmail.com with ESMTPSA id lt15-20020a17090b354f00b0023b2bc8ebc4sm1160182pjb.9.2023.03.29.03.34.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Mar 2023 03:34:13 -0700 (PDT)
+Date: Wed, 29 Mar 2023 10:34:05 +0000
+From: Rudi Heitbaum <rudi@heitbaum.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/224] 6.1.22-rc1 review
+Message-ID: <20230329103405.GA8@67ca92301206>
+References: <20230328142617.205414124@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,182 +54,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZCQJtz/P+/Mog3Wm@bombadil.infradead.org>
+In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 
-On Wed, Mar 29, 2023 at 02:49:43AM -0700, Luis Chamberlain wrote:
-> Seems OK to me. Either way works. Should I carry a patch from you for this
-> series?
+On Tue, Mar 28, 2023 at 04:39:56PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.22 release.
+> There are 224 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 30 Mar 2023 14:25:33 +0000.
+> Anything received after that time might be too late.
 
-Sure, here goes (still not even compile tested, but what can go wrong,
-right :-)
+Hi Greg,
 
----
-Subject: semaphore: Change DEFINE_SEMAPHORE() to take a number argument
-From: Peter Zijlstra <peterz@infradead.org>
-Date: Wed Mar 29 12:06:08 CEST 2023
+6.1.22-rc1 tested.
 
-Fundamentally semaphores are a counted primitive, but
-DEFINE_SEMAPHORE() does not expose this and explicitly creates a
-binary semaphore.
+Run tested on:
+- Allwinner H6 (Tanix TX6)
+- Intel Alder Lake x86_64 (nuc12 i7-1260P)
 
-Provide DEFINE_BINARY_SEMAPHORE() for this case and change
-DEFINE_SEMAPHORE() to take a number argument and use that in the few
-places that open-coded it using __SEMAPHORE_INITIALIZER().
+In addition - build tested for:
+- Allwinner A64
+- Allwinner H3
+- Allwinner H5
+- NXP iMX6
+- NXP iMX8
+- Qualcomm Dragonboard
+- Rockchip RK3288
+- Rockchip RK3328
+- Rockchip RK3399pro
+- Samsung Exynos
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
----
- arch/mips/cavium-octeon/setup.c                               |    2 +-
- arch/x86/kernel/cpu/intel.c                                   |    2 +-
- drivers/firmware/efi/runtime-wrappers.c                       |    2 +-
- drivers/firmware/efi/vars.c                                   |    2 +-
- drivers/macintosh/adb.c                                       |    2 +-
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c              |    2 +-
- drivers/platform/x86/intel/ifs/sysfs.c                        |    2 +-
- drivers/scsi/esas2r/esas2r_ioctl.c                            |    2 +-
- drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c |    2 +-
- include/linux/semaphore.h                                     |    7 +++++--
- kernel/printk/printk.c                                        |    2 +-
- net/rxrpc/call_object.c                                       |    6 ++----
- 12 files changed, 17 insertions(+), 16 deletions(-)
-
---- a/arch/mips/cavium-octeon/setup.c
-+++ b/arch/mips/cavium-octeon/setup.c
-@@ -72,7 +72,7 @@ extern void pci_console_init(const char
- static unsigned long long max_memory = ULLONG_MAX;
- static unsigned long long reserve_low_mem;
- 
--DEFINE_SEMAPHORE(octeon_bootbus_sem);
-+DEFINE_BINARY_SEMAPHORE(octeon_bootbus_sem);
- EXPORT_SYMBOL(octeon_bootbus_sem);
- 
- static struct octeon_boot_descriptor *octeon_boot_desc_ptr;
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -1177,7 +1177,7 @@ static const struct {
- static struct ratelimit_state bld_ratelimit;
- 
- static unsigned int sysctl_sld_mitigate = 1;
--static DEFINE_SEMAPHORE(buslock_sem);
-+static DEFINE_BINARY_SEMAPHORE(buslock_sem);
- 
- #ifdef CONFIG_PROC_SYSCTL
- static struct ctl_table sld_sysctls[] = {
---- a/drivers/firmware/efi/runtime-wrappers.c
-+++ b/drivers/firmware/efi/runtime-wrappers.c
-@@ -158,7 +158,7 @@ void efi_call_virt_check_flags(unsigned
-  * none of the remaining functions are actually ever called at runtime.
-  * So let's just use a single lock to serialize all Runtime Services calls.
-  */
--static DEFINE_SEMAPHORE(efi_runtime_lock);
-+static DEFINE_BINARY_SEMAPHORE(efi_runtime_lock);
- 
- /*
-  * Expose the EFI runtime lock to the UV platform
---- a/drivers/firmware/efi/vars.c
-+++ b/drivers/firmware/efi/vars.c
-@@ -21,7 +21,7 @@
- /* Private pointer to registered efivars */
- static struct efivars *__efivars;
- 
--static DEFINE_SEMAPHORE(efivars_lock);
-+static DEFINE_BINARY_SEMAPHORE(efivars_lock);
- 
- static efi_status_t check_var_size(bool nonblocking, u32 attributes,
- 				   unsigned long size)
---- a/drivers/macintosh/adb.c
-+++ b/drivers/macintosh/adb.c
-@@ -80,7 +80,7 @@ static struct adb_driver *adb_controller
- BLOCKING_NOTIFIER_HEAD(adb_client_list);
- static int adb_got_sleep;
- static int adb_inited;
--static DEFINE_SEMAPHORE(adb_probe_mutex);
-+static DEFINE_BINARY_SEMAPHORE(adb_probe_mutex);
- static int sleepy_trackpad;
- static int autopoll_devs;
- int __adb_probe_sync;
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-@@ -298,7 +298,7 @@ const u32 dmae_reg_go_c[] = {
- 
- /* Global resources for unloading a previously loaded device */
- #define BNX2X_PREV_WAIT_NEEDED 1
--static DEFINE_SEMAPHORE(bnx2x_prev_sem);
-+static DEFINE_BINARY_SEMAPHORE(bnx2x_prev_sem);
- static LIST_HEAD(bnx2x_prev_list);
- 
- /* Forward declaration */
---- a/drivers/platform/x86/intel/ifs/sysfs.c
-+++ b/drivers/platform/x86/intel/ifs/sysfs.c
-@@ -13,7 +13,7 @@
-  * Protects against simultaneous tests on multiple cores, or
-  * reloading can file while a test is in progress
-  */
--static DEFINE_SEMAPHORE(ifs_sem);
-+static DEFINE_BINARY_SEMAPHORE(ifs_sem);
- 
- /*
-  * The sysfs interface to check additional details of last test
---- a/drivers/scsi/esas2r/esas2r_ioctl.c
-+++ b/drivers/scsi/esas2r/esas2r_ioctl.c
-@@ -56,7 +56,7 @@ dma_addr_t esas2r_buffered_ioctl_addr;
- u32 esas2r_buffered_ioctl_size;
- struct pci_dev *esas2r_buffered_ioctl_pcid;
- 
--static DEFINE_SEMAPHORE(buffered_ioctl_semaphore);
-+static DEFINE_BINARY_SEMAPHORE(buffered_ioctl_semaphore);
- typedef int (*BUFFERED_IOCTL_CALLBACK)(struct esas2r_adapter *,
- 				       struct esas2r_request *,
- 				       struct esas2r_sg_context *,
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-@@ -149,7 +149,7 @@ static char *g_fragments_base;
- static char *g_free_fragments;
- static struct semaphore g_free_fragments_sema;
- 
--static DEFINE_SEMAPHORE(g_free_fragments_mutex);
-+static DEFINE_BINARY_SEMAPHORE(g_free_fragments_mutex);
- 
- static int
- vchiq_blocking_bulk_transfer(struct vchiq_instance *instance, unsigned int handle, void *data,
---- a/include/linux/semaphore.h
-+++ b/include/linux/semaphore.h
-@@ -25,8 +25,11 @@ struct semaphore {
- 	.wait_list	= LIST_HEAD_INIT((name).wait_list),		\
- }
- 
--#define DEFINE_SEMAPHORE(name)	\
--	struct semaphore name = __SEMAPHORE_INITIALIZER(name, 1)
-+#define DEFINE_SEMAPHORE(_name, _n)	\
-+	struct semaphore _name = __SEMAPHORE_INITIALIZER(_name, _n)
-+
-+#define DEFINE_BINARY_SEMAPHORE(_name)	\
-+	DEFINE_SEMAPHORE(_name, 1)
- 
- static inline void sema_init(struct semaphore *sem, int val)
- {
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -89,7 +89,7 @@ static DEFINE_MUTEX(console_mutex);
-  * console_sem protects updates to console->seq and console_suspended,
-  * and also provides serialization for console printing.
-  */
--static DEFINE_SEMAPHORE(console_sem);
-+static DEFINE_BINARY_SEMAPHORE(console_sem);
- HLIST_HEAD(console_list);
- EXPORT_SYMBOL_GPL(console_list);
- DEFINE_STATIC_SRCU(console_srcu);
---- a/net/rxrpc/call_object.c
-+++ b/net/rxrpc/call_object.c
-@@ -40,10 +40,8 @@ const char *const rxrpc_call_completions
- 
- struct kmem_cache *rxrpc_call_jar;
- 
--static struct semaphore rxrpc_call_limiter =
--	__SEMAPHORE_INITIALIZER(rxrpc_call_limiter, 1000);
--static struct semaphore rxrpc_kernel_call_limiter =
--	__SEMAPHORE_INITIALIZER(rxrpc_kernel_call_limiter, 1000);
-+static DEFINE_SEMAPHORE(rxrpc_call_limiter, 1000);
-+static DEFINE_SEMAPHORE(rxrpc_kernel_call_limiter, 1000);
- 
- void rxrpc_poke_call(struct rxrpc_call *call, enum rxrpc_call_poke_trace what)
- {
+Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
+--
+Rudi
