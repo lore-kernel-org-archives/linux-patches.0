@@ -1,45 +1,45 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D4E882B
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 21:47:41 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id p203so21187058ybb.13
-        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 14:47:41 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC393882B
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 21:54:28 +0000 (UTC)
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-545cb3c9898so244399317b3.7
+        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 14:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680126460;
+        d=gmail.com; s=20210112; t=1680126867;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=x6b7CKS209zMdBnHZLVLNcY2yh2aKCBJcpnImw7wREA=;
-        b=mSIAhN7r6i6Pj6ULQWJFhhCnun70kb9gj9b28YPMUFWFjWGYiQTu/NgVd87w4HzoRW
-         hBJ3P+RcIQHliRw7bzO+JkytRkCg7MNbHxrjv7LEMn0vRzazN9OOR/NBBpjthleHDXnt
-         pPrafHRYASGiLndJ4pDlQiawr2omphfuoJZuZofNiBQPvilumt7VmD3e+5qIyI4/OAqO
-         BEzlnBf05oxQqSW4UOr/T/lTFdDETrk8NCZX2oQfbdwLpHeXSJYu9dXyDkpeCfSjWrex
-         W+v4f+hKJluJZ+tyEoI4CbbOUkGXyPe563wQYoml1qm3M6pkcAUgAvAY+cUpsEhIVvDu
-         b01Q==
+        bh=wuJnhqOglm39EigVBOorfLFET4EJvRI41CYQanO44wE=;
+        b=RR7FRCugnk5U51rg3Y0p5oRleymdIcY3kRaH41wkygg/t7izHSgVSqpiOOlLqo0q3p
+         lp+FFjkF2hXhFKtua4KcjqxOGgnkMFiNy6ea5u497E554KmNIyY6xDeu6ceI+U4HPLGE
+         iTIeoMgZCdrQ3BYNTi6l2TrELklRlSuEDyrTB3+M+6XZV6zuuCeEQoEKLbf9AqCP9RQN
+         aQttkXbUHWfiy4l3lyIru146D49LXUkbCiCk54XMlrRnmmIhyblFBIWk8gBHiiRKHy/R
+         NGhk1+TKyEXLECw2JxuFWDsjlK79hfO4ZdB4TOmQL8WsMZ09CkB2WRcQryQaLqYxffFa
+         3umg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680126460;
+        d=1e100.net; s=20210112; t=1680126867;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=x6b7CKS209zMdBnHZLVLNcY2yh2aKCBJcpnImw7wREA=;
-        b=pW5Kl7T7cWLWhLd+OV37Axn3uX2tAdqBb4UqchXKYVxRVVyvM5S29ihCvWH5yheEue
-         Hi1Ia+XxSgvG97ARBLPayPvnJfkXKdoS30PuTguhKPpblN/yWOZkrOTefgmGuoVLoTOn
-         5ly/Y+QvKA25ef1AOjORYjJVt4/oyq9d5Q9D9eviW4muUKRxH+dOJgQe8LuXhxmqtmiB
-         j+HLbsTflNDoUuzzEJDeiQZPhZZ49K3DUPILCKl3bnydYTRrNs4HL3UulcgpquAqkKv6
-         g6lyqp6DB2MfewmJeCy/TSEL/iyyQz0O7N1zc7+Wrnnhh8fkPdJUtEP/7ILcxPC5HPcK
-         v2NQ==
-X-Gm-Message-State: AAQBX9f3N6tnXmNpvJoiRk3vAggeu3cWJfaMKbfF+DWmUlFmYEgECbOC
-	qMzU0+RO4ORiKL34gJJTWk0=
-X-Google-Smtp-Source: AKy350YN/zLVsUee9gX7Mk1DBoxF7uvlpor0UeqiZPvZV8sbKueE7xlvN6nBCQRF3tVJuowwep3Q1Q==
-X-Received: by 2002:a25:1f87:0:b0:b73:bdc5:948f with SMTP id f129-20020a251f87000000b00b73bdc5948fmr18919680ybf.15.1680126460112;
-        Wed, 29 Mar 2023 14:47:40 -0700 (PDT)
+        bh=wuJnhqOglm39EigVBOorfLFET4EJvRI41CYQanO44wE=;
+        b=Q16K8HCXdeLNjjahT9s7RKaCXkOh1InOJeO3tTeHsmhDPC4iTR3B4WgiasTBmMvqrC
+         G6JzkbaT+oGHQ1moDP1ea0ZdrhHnzxTBGjR0azJF/bV2GeZe/ld/NI+yDPIvvOdatrJ+
+         HiH7QgDabHfzf89gBFnzzhfVJVLm4q8FESp5DxKqAwnkffJgVBSt6A/IXqZR7Gqhmul6
+         X5DQ8CCb74X0aPgMgkFsO7bkP23giVtfrLF2YLMQZuNA7xOhWK7yBR5VjrqaQifhhoKv
+         ZBgtK22EsPghUfjf/Po6B8pwkEpR40Xcxb52QvVImdxYE1mnYFFGgiaSyr3RQOmBDhEx
+         S+fQ==
+X-Gm-Message-State: AAQBX9dDEO8HgtfHkzz5UcXoL2d9Cv7Jb2xCbLe616y9+aS44NxUdiEF
+	/5fwpAr52JLlDaY0VDdaZK8=
+X-Google-Smtp-Source: AKy350bJRteG/ORlYIW4b6bWV9t0iBvfTo+73hIctNo2CSCTcOD0C9HvwPFtn1vOfm5LoswRNSXRxA==
+X-Received: by 2002:a81:4ecc:0:b0:544:4d3d:4231 with SMTP id c195-20020a814ecc000000b005444d3d4231mr21168821ywb.47.1680126867682;
+        Wed, 29 Mar 2023 14:54:27 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id 79-20020a250452000000b00b7767ca748asm3716520ybe.39.2023.03.29.14.47.39
+        by smtp.gmail.com with ESMTPSA id by1-20020a05690c082100b00545a08184f5sm3195290ywb.133.2023.03.29.14.54.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 14:47:39 -0700 (PDT)
+        Wed, 29 Mar 2023 14:54:27 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 29 Mar 2023 14:47:38 -0700
+Date: Wed, 29 Mar 2023 14:54:26 -0700
 From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -48,9 +48,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.15 000/146] 5.15.105-rc1 review
-Message-ID: <d8a7a58f-cb32-4bdf-b2f6-507be8ac09ab@roeck-us.net>
-References: <20230328142602.660084725@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/224] 6.1.22-rc1 review
+Message-ID: <232b80c4-e885-43f4-8f77-924cd1b763fe@roeck-us.net>
+References: <20230328142617.205414124@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,11 +59,11 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
+In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
 
-On Tue, Mar 28, 2023 at 04:41:29PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.105 release.
-> There are 146 patches in this series, all will be posted as a response
+On Tue, Mar 28, 2023 at 04:39:56PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.22 release.
+> There are 224 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -74,7 +74,7 @@ On Tue, Mar 28, 2023 at 04:41:29PM +0200, Greg Kroah-Hartman wrote:
 Build results:
 	total: 155 pass: 155 fail: 0
 Qemu test results:
-	total: 499 pass: 499 fail: 0
+	total: 519 pass: 519 fail: 0
 
 Tested-by: Guenter Roeck <linux@roeck-us.net>
 
