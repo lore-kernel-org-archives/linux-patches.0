@@ -1,136 +1,122 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2068.outbound.protection.outlook.com [40.107.237.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA85AFFB
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 15:26:21 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Vm32pyWYUzH67wCLx7frsuqp/bejG2u8XPyGdmIljYcaIoZGDxouvGEERO2Eb2aScwOqFdYjrGD9a3KdLqX54lBbHwqEcUvRxsxgTVzffvYaMqffU74ZBECPlEnCBU/0UTenFO/I2pqNIt2LWv1S/L3Gv7+o65ayZ+FfWk4HMt8CLOn+QAZERUGD2PbKYb5vdAplFfYqjsD2pPYm+f//Ts0rVvVNsClRuRBtPdb9iHwj0RHBuSbBedqfe0xEozvSGJ6CVSGmsZk/WpeHdkDltJ/odT3Gb7pGx1xQkKSPSBXmhM1HF03XlzqDLnIxheUt0XBHHS8vTuwHFuWH7RTGzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sQGBeU2mY1GkNGJKu6ksubOaWnxXFQY6SqRuSavfV/4=;
- b=RGIN+guVLZ1vAmwDm6EasV7iGFkz1VXUQi5UAHT6M5BY+zcRm6F2YFez/sdkWlJE8hq9X0JGMxP03TPGyZOkySTAu7UWftNaoWTTNBIkRi78vcgOl56pa/hItAo6agGEhlAEUieCzeyAlYrk1Ojq0adlVY0I18YSZMYdot1XsTxuC5+Rydav/NXW9KopZnZWWQttIYAJjCIzqMjrbsXweuqiwNy20/9tHTMQxs/9oPpEKtDnRpeakxB8w6JUKLqc/D2ccOHP8jAvqvF0CN6i+RviOD52kbGyLgRIjl+fQngRJH2JVk76l0tziPJ6LTrLXwGYoPAXmzrwfO/qvxG5dQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sQGBeU2mY1GkNGJKu6ksubOaWnxXFQY6SqRuSavfV/4=;
- b=h2NXNgsZxp2Vfjw2ADzSaRH/bS8Fltcr6yBny+xqKMbPCLdbiMpnG4f6HRauw8ue+3G9G79M+x27w6mQwVxl2/cMH+9ayTsEshp2OHlrPSZ6ohU2HqMeEgUHUFJl6PHgrtw2DqseYg5JKn3qco9pKTT+JGQ3zJk6NDfdKPsoPlE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BN8PR12MB3108.namprd12.prod.outlook.com (2603:10b6:408:40::20)
- by CY5PR12MB6129.namprd12.prod.outlook.com (2603:10b6:930:27::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.41; Wed, 29 Mar
- 2023 15:26:18 +0000
-Received: from BN8PR12MB3108.namprd12.prod.outlook.com
- ([fe80::e62f:89e5:df27:9e45]) by BN8PR12MB3108.namprd12.prod.outlook.com
- ([fe80::e62f:89e5:df27:9e45%6]) with mapi id 15.20.6222.030; Wed, 29 Mar 2023
- 15:26:18 +0000
-Date: Wed, 29 Mar 2023 15:26:15 +0000
-From: Yazen Ghannam <yazen.ghannam@amd.com>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>,
-	"Smita.KoralahalliChannabasappa@amd.com" <Smita.KoralahalliChannabasappa@amd.com>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"hpa@zytor.com" <hpa@zytor.com>,
-	"linux-edac@vger.kernel.org" <linux-edac@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v3 4/5] x86/mce: Move storm handling to core.
-Message-ID: <ZCRYl9c7xgIJ+pJe@yaz-sghr>
-References: <ZBR+GMH0olGoDMGs@yaz-fattaah>
- <20230317172042.117201-1-tony.luck@intel.com>
- <20230317172042.117201-5-tony.luck@intel.com>
- <ZBxvyqb5Mnt13341@yaz-khff.amd.com>
- <SJ1PR11MB60835D7F85097FEF454DD74CFC879@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <SJ1PR11MB6083D33BC6860AB9FE2A292BFC879@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <SJ1PR11MB6083D33BC6860AB9FE2A292BFC879@SJ1PR11MB6083.namprd11.prod.outlook.com>
-X-ClientProxiedBy: BN9PR03CA0513.namprd03.prod.outlook.com
- (2603:10b6:408:131::8) To BN8PR12MB3108.namprd12.prod.outlook.com
- (2603:10b6:408:40::20)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767CE7E5
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 16:51:00 +0000 (UTC)
+Received: by mail-ed1-f41.google.com with SMTP id t10so65791385edd.12
+        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 09:51:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1680108658; x=1682700658;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fuabhBI/cJhvDusEUPo+YOaR3W7tGSIZ44NN+9mu0w0=;
+        b=WPU7CQZXsHT2W6o+O27Wpj5VLxahEGVYuFGJ09lWVVUb6Uog7j2W3oCfdskI6i1Ubk
+         gOKt3sOlvhKigmmF1pAoCh6e/zApTuFMSDe/1Ogb06wgZ5eTbVWDjmqb/YOcqB8hVtud
+         n9GOwJeinQ3x7aNVLHZ7ZSgZ/qGs4xL/xImVo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680108658; x=1682700658;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fuabhBI/cJhvDusEUPo+YOaR3W7tGSIZ44NN+9mu0w0=;
+        b=LxduCGOa4aMXulzJP61hFpqjmEYPmJVwu1u3htl9/ilPyh1eBudOlfU932p6leoMoJ
+         d07PbCSkJeoSKb9DbbZJw/fteIhhcUXYorpKlT/qrybvn70ttB3vcrowd1pMSImBIQYb
+         jEJ5ynpliIQRaUzDbemiZlNJsOnesakagVBe5t6XoeHTyXcR86WCzpgAK1KZkcjvsbgN
+         PESXzkzbKR4fd6c/7zJHaijvaGjvr40nWdbaTPlhBZ71mpuhOPQ/Lbfm4RbZQpJMOHeB
+         IdottQ6IzqqKlEM2xqzBG/59+vJSOTegMmi/CXe3D6WyBWhFMjSEjOuArnrGy9HP7Zej
+         XC1g==
+X-Gm-Message-State: AAQBX9f3NdtKRfSY+wFCpCXF+cr1TTh/+ciyqrdx+dimnaO597EbURpr
+	vQF6scd0IqgWzdrfhyE8UL3Nu0Y5keESpUpM6B/AAA==
+X-Google-Smtp-Source: AKy350bidbYJ4w7Db0HBn0FzrUvPdt1uzKfpicugFpewBCla4qqkReMpEykMHrcInJb3fB5z7UBFag==
+X-Received: by 2002:aa7:c248:0:b0:4fb:5fe1:bc3b with SMTP id y8-20020aa7c248000000b004fb5fe1bc3bmr3041190edo.0.1680108658363;
+        Wed, 29 Mar 2023 09:50:58 -0700 (PDT)
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com. [209.85.208.49])
+        by smtp.gmail.com with ESMTPSA id b44-20020a509f2f000000b004c09527d62dsm17233041edf.30.2023.03.29.09.50.56
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Mar 2023 09:50:56 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id i5so66153937eda.0
+        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 09:50:56 -0700 (PDT)
+X-Received: by 2002:a17:906:eec7:b0:93e:186f:ea0d with SMTP id
+ wu7-20020a170906eec700b0093e186fea0dmr9808123ejb.15.1680108655974; Wed, 29
+ Mar 2023 09:50:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8PR12MB3108:EE_|CY5PR12MB6129:EE_
-X-MS-Office365-Filtering-Correlation-Id: d2181773-c306-4620-201e-08db3069f183
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	Rsme/N1YmxNx3bRm3COy24WiUNEKtGj0z4dMvZrhA0OAbWcH+xxN6cWORvWXS8L4xVGW0/Rsha50qfy1JwKDg9fiDjybpOSTexDFbnuOdQQfymhDFUDRCZPgOEQyai0iMCT4hWeVCiraP8ZhZtggOuyvAZMf9DzmhDhKsrKuPA21rJzpAalhsy7Yojo286jPgve8Ne5y04NfsngiFSrd/fnCR8Gb+Eeexe02nXTVidhUo34TDEJbPU+xDKI2CX29b4h5Dg8Wp/P0DFdl8HZM/rYyxhoIner6oVgAKstZ1ih9gK0JpoOMRvMwq2mE7HbQSRUCrQAFfKR11RQFrW7U8RfPTnaYPSid3nSEdHaHAsLanCSwvTR1WKWEA+6efoZ+EP++jPy7fX/PaHUh9euuM2MorTxY1qLYlZKxTlrVLCoqCec/ri+vBuwM5OYXAEPPCohPvsiN0tK6ZKBN4PvnP68YFQAWK1YptyqpI+Sgal2VNLcYhN2owKaTRbtcvEMcqLWYY/Fza1U9Vhm3CiCEUHYYYjHk60/yHAng8ifj2ht9jlri4qJa+UTku/XiPibSy2JeQNjmxqAgTSfJdBuYIB99y58mSsL0b+GdTZ5yTPk=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3108.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(7916004)(136003)(396003)(366004)(346002)(39860400002)(376002)(451199021)(8676002)(66946007)(66476007)(6916009)(66556008)(41300700001)(2906002)(5660300002)(186003)(4744005)(38100700002)(44832011)(33716001)(86362001)(4326008)(478600001)(54906003)(6666004)(6486002)(8936002)(26005)(9686003)(6506007)(6512007)(316002)(67856001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?ACPZiYKqEO9dLEd7zdBfNItwGkkS3jNMrURjtqxK2l1sqgIPVxEoLyC6gfw7?=
- =?us-ascii?Q?Ae7GJ0pWn1F6nw/1LGopn7NoZBDl3cOEqllhH6G9ZaxQuFLoLX/KJUFPCcMm?=
- =?us-ascii?Q?F7dWmkMdlRx5boCnJJTx42sjDs0JSF7XQ6wRN3QXdtGG30ZkcI5oz5IICam7?=
- =?us-ascii?Q?y5ZX4JeQ0GAhDGh6fYK38+MzuHGcobF+0c42zQU8BLDGSRtll3LmIWYovp+U?=
- =?us-ascii?Q?x4V4Gm+0Q7/YFzWEK8PZI4BpUCM/LTB0fM3wlKpvWO4bkFV3wlywQmo1q3g8?=
- =?us-ascii?Q?6h045sEU8neItDvx69Kf5N628L5NGq9TRTRTZhT2WSbvlwx/GywmtT0nsuFi?=
- =?us-ascii?Q?h8wTFS20xRF+IaDNObTSIqt2ysJv8DhYP7J/ZCP5PB0UpRlHPCUTpjk9beoQ?=
- =?us-ascii?Q?iFyayPjA20C0BotPTyJQpmrfn32ImKg+Unv/3LmZyBGjttpC+ay+JbTFj6MB?=
- =?us-ascii?Q?SWHQffdw62y4s3Fd7cf3OMGhR6DTR+hqp4tXR5pt7OQCuOjEVF+a/+ePppx7?=
- =?us-ascii?Q?SxuI/wCL/t0F2f8TCwrFDe3kuRP8cRQKCTidCeW6VxYd+DqgKSD1ORdik1m6?=
- =?us-ascii?Q?FxmH8Xxy9hQTwXqd+TamSed9+853L9qyjIhfRbtiCyn3zc1GUDWY4u1z2B83?=
- =?us-ascii?Q?TVAtODex3kZkrSbL04s12/TQU0nnP4zZ88cJCxDSR0DJrSFpSl6T6ifNmeCr?=
- =?us-ascii?Q?TRlwuYY60ndBM1CJhKsY9Iu3bFAr0REJF9yd3qB4sreB208aQbZPcbyUq8Fr?=
- =?us-ascii?Q?UXPLWvS6hCwr5406B+am/fOjjKoMYqwtMignjOafrJvsWegwBiiH7aocDctQ?=
- =?us-ascii?Q?dEYXoHdgGKvu6tXGDRjARqMnAAKC2RAGvC+Vy4dA2aJPxEX9bB/rP48dVcNQ?=
- =?us-ascii?Q?F9XMeUx6zQzchE9nM38y2N1NVYyIl2X9qdBE9mdHtwaiy7dFFqzkEbx1t9oX?=
- =?us-ascii?Q?GK76EG7i2na/aG/clLspgT3x+9HfZlXA/Yqai+l6eZfU2mcYgMKCotzBH4Li?=
- =?us-ascii?Q?mVXhD/u/B2dD7fcNZAg1elDRDzl0ME02nrpuqg9/bjnvgegzIGogN90uk8gw?=
- =?us-ascii?Q?+BZdrZhGmdMNo2jkklfDD4DxJ7sZP0miIBSaMgPdpZp8teyzAaMcoxmvH2h3?=
- =?us-ascii?Q?ENhS0kj4QaSfXlPPr3IGa8RfoVDK4XJlI0bmYsvefem5DdiziqPHOdImlJZF?=
- =?us-ascii?Q?2Vywz6suVaq3hO+VzX0QFbtGT7l266QD67Monk01VaAMy9lXwKjnrH9PywqG?=
- =?us-ascii?Q?RM+R8v6ZvuACNvc0sg+6fB2WWYl4wANJoMqyNftdfRv74T/b5Za4mVs9cXnX?=
- =?us-ascii?Q?VS1C/6Cym/McnS5jZZlUN8hwdhvZCEiCeNZ86ZwkLAUM7xLRXwf1mLLhh3Pv?=
- =?us-ascii?Q?+UdSaLzGNnqqWi+Q3Rqk3a9mxkaFD2MLkt8CMqkAQeyLC7peDu8EKBACmGM6?=
- =?us-ascii?Q?m04JN7BHDAWgyeShenXlsxkSdUK14KKkSgdMmjyMpWNQw9Jg2au/1SFQS5P3?=
- =?us-ascii?Q?4ltsLLCv1pejgTftaOL1TCmvcIdbTrn6z9uM0dT0/VTClkD2le/yPnUSzig/?=
- =?us-ascii?Q?B3lYd5hGqbQRzpIifBbcggXxL8uvHaWFanOAkmK2?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d2181773-c306-4620-201e-08db3069f183
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3108.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Mar 2023 15:26:18.6355
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: f++RFcvJT3nBcnQ1Edrztxuv3NpcKLIxKUINEWcV3J9um537fVcp/i4gvggRYPl0lalyXkYfjf+6PmNoGMqD5g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6129
+References: <20230329053149.3976378-1-mcgrof@kernel.org> <20230329053149.3976378-5-mcgrof@kernel.org>
+ <20230329072112.GG4253@hirez.programming.kicks-ass.net> <ZCPuFLDgU5fBFtug@bombadil.infradead.org>
+ <20230329091935.GP4253@hirez.programming.kicks-ass.net>
+In-Reply-To: <20230329091935.GP4253@hirez.programming.kicks-ass.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 29 Mar 2023 09:50:39 -0700
+X-Gmail-Original-Message-ID: <CAHk-=whF6Ta_KcJP2eC78+Mstv+vAku8ATRMbv98sf9VhdvySQ@mail.gmail.com>
+Message-ID: <CAHk-=whF6Ta_KcJP2eC78+Mstv+vAku8ATRMbv98sf9VhdvySQ@mail.gmail.com>
+Subject: Re: [PATCH 4/7] sempahore: add a helper for a concurrency limiter
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, david@redhat.com, patches@lists.linux.dev, 
+	linux-modules@vger.kernel.org, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com, 
+	prarit@redhat.com, gregkh@linuxfoundation.org, rafael@kernel.org, 
+	christophe.leroy@csgroup.eu, tglx@linutronix.de, song@kernel.org, 
+	rppt@kernel.org, willy@infradead.org, vbabka@suse.cz, mhocko@suse.com, 
+	dave.hansen@linux.intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 23, 2023 at 08:26:02PM +0000, Luck, Tony wrote:
-> Yazen,
-> 
-> I folded the fixes for the issues you pointed to in patch 3/5 into the series and rebased to v6.3-rc3
-> 
-> Resulting tree pushed here:
-> 
-> git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git     try-storm-on6-3
-> 
-> Builds, boots, and passes my storm tests here.
-> 
-> How is testing going on the AMD side of this series?
+On Wed, Mar 29, 2023 at 2:19=E2=80=AFAM Peter Zijlstra <peterz@infradead.or=
+g> wrote:
 >
+> Arguably DEFINE_SEMAPHORE() should have the argument, as binary
+> semaphores are a special case, but then we gotta go and fix up all
+> users.
 
-Hi Tony,
+Using semaphores for just pure mutual exclusion used to be *the* most
+common use of it, which is why we didn't have an argument.
 
-Builds, boots, and passes my tests here too.
+Then we got the mutexes, and now semaphores are almost entirely a legacy th=
+ing.
 
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Tested-by: Yazen Ghannam <yazen.ghannam@amd.com>
+I think we should just make DEFINE_SEMAPHORE() take the number, and
+people who want a mutex should either put in the "1", or they should
+just use a mutex.
 
-Thanks!
+> /me git-greps a little.. Hmm, not too bad.
+>
+> How's this?
 
--Yazen
+I'd actually prefer to not have that DEFINE_BINARY_SEMAPHORE() at all.
+It really shouldn't exist in this day and age.
+
+It's not even less typing, ie
+
+    static DEFINE_SEMAPHORE(efivars_lock, 1);
+
+is actually shorter than
+
+    static DEFINE_BINARY_SEMAPHORE(efivars_lock);
+
+And what you actually *want* is
+
+    static DEFINE_MUTEX(efivars_lock);
+
+and converting the up/down to mutex_unlock/mutex_lock.
+
+So let's just make it clear that the only reason to use semaphores
+these days is for counting semaphores, and just make
+DEFINE_SEMAPHORE() take the number.
+
+Strangely, sema_init() already does that, but I guess that's because
+some people really *do* use semaphores for concurrency control (ie I
+see things like
+
+        sema_init(&dc->in_flight, 64);
+
+which is clearly using a semaphore in that very traditional way).
+
+So ack on your patch, but don't bother with DEFINE_BINARY_SEMAPHORE().
+
+               Linus
