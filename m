@@ -1,86 +1,78 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DFD538F
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 17:41:24 +0000 (UTC)
-Received: by mail-pg1-f177.google.com with SMTP id d10so9748220pgt.12
-        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 10:41:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1680111684;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0HLyYeKV3If5cAiJw/VAQ1aNDVNCtxxtUuMyZtuuZJs=;
-        b=nQ50QFq2oQaeue7g99fWt3LYzim4DoP351259h+OjISIxFL0HSrYifEKZzXFuCp4kN
-         zTW0fp74XQOcA+AdBe1zlS2XRP/dwwYuBxzYxeW0v82hYny2ieOa/OyagiJ5Ywv89bio
-         XrdEWRYp4ly32ewX9Idj0Uco/qe5sPNgwQrJsvpE7biD19aa18AZbECJz9fxhUpVAIiF
-         nNQb6rHy3NeYphBgnwH8GrUpjunTe2C903BYSgRvhfydQv993BSE1QofQ1mkyzJRL7Pp
-         UmpH7UsQrajnVeY0Z6lmWgkUoPG6XgfuOxZxvkujKcRJ4dOrGb/yFEBixEW/+jkrPEZ5
-         MTcg==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6139D538F
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 17:46:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1680111977;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IONsVIcn8kbwJf2seRI8PrEqiqdrN9HzkrIGpJGRGFc=;
+	b=cNvuWGpgZkJmjBDUtxOPFCg6DkCMVb0peB/ZfT87TLkyxjsC/lUzfc6Q4aFJLs8MsFnqkt
+	j6qzk7nyisq0E/CJy5lkqEWCztW/vwi80K/cvxmh7Ie8RnkbZXEGEx5J+bMFv+woo/xsw3
+	XcNZNLGpXovPcG8wXxhGla64oIhWdJQ=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-290-q6gbGASUNbeypRMcw7c1gQ-1; Wed, 29 Mar 2023 13:46:16 -0400
+X-MC-Unique: q6gbGASUNbeypRMcw7c1gQ-1
+Received: by mail-qv1-f72.google.com with SMTP id y19-20020ad445b3000000b005a5123cb627so6925827qvu.20
+        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 10:46:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680111684;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0HLyYeKV3If5cAiJw/VAQ1aNDVNCtxxtUuMyZtuuZJs=;
-        b=J0LyMCgJ/O4ZUQ5SPd8RAUj1x8qaEAWSqm+WbVMvuxTRkgFtvSGwznVNeobH0aFe8m
-         iQL9D3BjJhkxkMAnQ9qTvcUOCOoMDsayWRGI1e3yBKeCMDB2yCVs5+7vDDxhlnnzCHae
-         bNq4IUCRJSrOFQYftk4SPRxzdjh4ZJzGxvBwifkseczBkPWGYYL2EDSOT58ei2l0eDjc
-         vGVWmhMcYwPrymhsTNAcEkA2kR3soioDWxQC66STEHwXp2QMQ7pvMLdE3dMEfEyu5c9Q
-         YrO3Da4HNXPLezso6vZEE5YWLNhSqSZXqhP7Zy9fHY/UJTb5L/PD2rZu+vD7yDTUbYnq
-         N72w==
-X-Gm-Message-State: AAQBX9fD0YE+T3WFoKKknMMj1OGEygmkg6nC2Uu3Y/JG8ZCKfBtcYvXn
-	+rzCE18xV2CB77hryGAPCFdP3czStgidfL0AGFL4xw==
-X-Google-Smtp-Source: AKy350abXbUxEEXq3i9xDxZykzGOBVliqLi4/3uqla2IzGu82Yr8XzrqWZiHLqLlPTBfgnN87bOKeaoqYkUT7RT3ee4=
-X-Received: by 2002:a05:6a00:894:b0:606:a4bd:8dde with SMTP id
- q20-20020a056a00089400b00606a4bd8ddemr10983778pfj.4.1680111684131; Wed, 29
- Mar 2023 10:41:24 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680111976;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IONsVIcn8kbwJf2seRI8PrEqiqdrN9HzkrIGpJGRGFc=;
+        b=AC76Ooeov0bGab4zjGwNzNDnEgiyIue+nlm2ySmm82dBpvDv+LS3Q6w4GBIkcHffjm
+         zwEFk8+m22W/8pEv4cFTfwkX1OpYm0Hze4gCXcNTyPobBJuDcDskUnPyd0tz2z5LNkcY
+         pK3Fhe7w1b8V8/dWaqqutEWB5Z00zExQAqGRCZHZ7YkItxT1uVNqmcGdV2aL7ginuiZ6
+         1VOmu+hQaIdxly5ShfUB7ghHRuZXvl3bcRkiAmLRRtHItvjYFZV1NSs8TAfj4zD08abK
+         FEKLgTwWcNkYHKtoWpSgDqGqj7PfKrgeQGcePL72364eiZ/60kPWFJtUUmpE3Cb8/y6l
+         bGSw==
+X-Gm-Message-State: AAQBX9cfdYDBCw11AZ9AC0xPZix0cieJqoZLNGoh3BhTee0WK5UohZkC
+	w3n/3738oWKbkAADTmG1n+LdtweyExrpMWDo4UEeEt8OK90YEBv5IFgu6MZty2E6jO5iAmWYezK
+	SMfpppLGhEmWeQ4X2vg==
+X-Received: by 2002:a05:622a:188:b0:3e4:eb8f:8a7b with SMTP id s8-20020a05622a018800b003e4eb8f8a7bmr4376573qtw.29.1680111975891;
+        Wed, 29 Mar 2023 10:46:15 -0700 (PDT)
+X-Google-Smtp-Source: AKy350Z1kJwhD5xCTJat8Q4ohGC869VT82gZmyP61KC92Wq3+k/cmmICrDwvYCiuz1nI/CkWFS+EiQ==
+X-Received: by 2002:a05:622a:188:b0:3e4:eb8f:8a7b with SMTP id s8-20020a05622a018800b003e4eb8f8a7bmr4376550qtw.29.1680111975633;
+        Wed, 29 Mar 2023 10:46:15 -0700 (PDT)
+Received: from fedora (modemcable181.5-202-24.mc.videotron.ca. [24.202.5.181])
+        by smtp.gmail.com with ESMTPSA id j68-20020a37b947000000b0074577e835f2sm18758803qkf.48.2023.03.29.10.46.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Mar 2023 10:46:15 -0700 (PDT)
+Date: Wed, 29 Mar 2023 13:46:13 -0400
+From: Adrien Thierry <athierry@redhat.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Stanley Chu <chu.stanley@gmail.com>
+Subject: Re: [PATCH 5.15 082/146] scsi: ufs: core: Initialize devfreq
+ synchronously
+Message-ID: <ZCR5Zef4oHYFkAss@fedora>
+References: <20230328142602.660084725@linuxfoundation.org>
+ <20230328142606.118680029@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230329-net-ethernet-ti-wformat-v1-1-83d0f799b553@kernel.org> <CAKwvOdmcpESfN-9X2pzuxyj5q0wkH=kFwhaAhbaEJHwatyQLQA@mail.gmail.com>
-In-Reply-To: <CAKwvOdmcpESfN-9X2pzuxyj5q0wkH=kFwhaAhbaEJHwatyQLQA@mail.gmail.com>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Wed, 29 Mar 2023 10:41:13 -0700
-Message-ID: <CAKwvOdk0wgGrMLrebTcHU078Kjtgb_xR3ghnEgQeS3PxgxNzag@mail.gmail.com>
-Subject: Re: [PATCH net-next] net: ethernet: ti: Fix format specifier in netcp_create_interface()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org, 
-	pabeni@redhat.com, trix@redhat.com, razor@blackwall.org, 
-	kerneljasonxing@gmail.com, netdev@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230328142606.118680029@linuxfoundation.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Wed, Mar 29, 2023 at 10:10=E2=80=AFAM Nick Desaulniers
-<ndesaulniers@google.com> wrote:
->
-> Because integer literals in C are signed, the cast is necessary to
-> avoid the format specifier from warning about the wrong signedness.
-> It would be preferable to have a `U` suffix on the literal value, then
-> the cast would be unnecessary.
->
-> Untested:
-> ```
-> diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-> index 494a23a976b0..67cb6bfc4056 100644
-> --- a/include/linux/skbuff.h
-> +++ b/include/linux/skbuff.h
-> @@ -349,7 +349,7 @@ struct sk_buff;
->  # define CONFIG_MAX_SKB_FRAGS 17
->  #endif
->
-> -#define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS
-> +#define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS ## U
+A possible regression was found with this patch [1]
 
-Or rather this trick.
-https://godbolt.org/z/81aPxf39b
-I forget what that's called (it's not xmacros); we definitely have a
-macro for that in the kernel.
+[1] https://lore.kernel.org/all/CAGaU9a_PMZhqv+YJ0r3w-hJMsR922oxW6Kg59vw+oen-NZ6Otw@mail.gmail.com
 
---=20
-Thanks,
-~Nick Desaulniers
+Best,
+
+Adrien
+
