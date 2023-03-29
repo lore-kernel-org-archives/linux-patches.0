@@ -1,90 +1,86 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986A5538F
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 17:39:27 +0000 (UTC)
-Received: by mail-pj1-f43.google.com with SMTP id f6-20020a17090ac28600b0023b9bf9eb63so16916607pjt.5
-        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 10:39:27 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DFD538F
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 17:41:24 +0000 (UTC)
+Received: by mail-pg1-f177.google.com with SMTP id d10so9748220pgt.12
+        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 10:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680111567; x=1682703567;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GJULAV3PbN4FnqmxwFMDn3XyWjJWjBIFfbT8YfLubVo=;
-        b=ANDEjhsxkLHdkNemQmaTdmQL914V/yC70ynHk/xDVUo5X569qD3wj7KEJk34SYkmvJ
-         DlrZfkQL4tCfxYAvs3B8hNqbZvpJ3PxiByqoDedp+0UsXFdkMeY0vS3pXpOTNRDYoab8
-         3YoAcSCVqmG4Y9/ikxLD6QUUrN3r7gUntz5sg3g3Qq3+4eHgDsqxuHSHLF32QNCo1RLf
-         qMCeCdRK1XMk6QGqgKQlAZl+CY3Ycjlm9MVmyXZBUJGppWa2ge9RgARo1ylLNAWRpzUb
-         +dUcXGmfDjs0HznWjPdx8JKT+LuSr8V+FR1mEWvZ1s+BINR7u+cCh5w3HtYkxC/wQjRz
-         L7TA==
+        d=google.com; s=20210112; t=1680111684;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0HLyYeKV3If5cAiJw/VAQ1aNDVNCtxxtUuMyZtuuZJs=;
+        b=nQ50QFq2oQaeue7g99fWt3LYzim4DoP351259h+OjISIxFL0HSrYifEKZzXFuCp4kN
+         zTW0fp74XQOcA+AdBe1zlS2XRP/dwwYuBxzYxeW0v82hYny2ieOa/OyagiJ5Ywv89bio
+         XrdEWRYp4ly32ewX9Idj0Uco/qe5sPNgwQrJsvpE7biD19aa18AZbECJz9fxhUpVAIiF
+         nNQb6rHy3NeYphBgnwH8GrUpjunTe2C903BYSgRvhfydQv993BSE1QofQ1mkyzJRL7Pp
+         UmpH7UsQrajnVeY0Z6lmWgkUoPG6XgfuOxZxvkujKcRJ4dOrGb/yFEBixEW/+jkrPEZ5
+         MTcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680111567; x=1682703567;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GJULAV3PbN4FnqmxwFMDn3XyWjJWjBIFfbT8YfLubVo=;
-        b=Q2eQjiP4vtadugJTsUYRp72QtoTPBM/cY7bOXZGm1S9t5TAlek45IL0fC+jreBBHZ7
-         eLNl2XteZhKjAAQutDZW7wvCPylxmFuiwrDVDip4UP0jCp2tp2uxnBjV1LEj20gt3vd+
-         xunfHj4pxmIw95WUtH9MD0/Sio+Wto214q86STBf0vY3YPl72i3y+2jKbVrvODWa2YpD
-         MKRAmnQd3GdAFEtCg7E/sz1kuwPGhBf+y8IYmJfbkNUmyZo8i5x/X/9DDMN3NDrhKPlD
-         t/oKw235ISSwi0Ie79RBn8zXEfJVlmQYCICFN3ilhzMmDZj6k6BJ5EUmfANmlG+YVoVn
-         bf3w==
-X-Gm-Message-State: AO0yUKUThGHZCw36Eq6NfHYDdOrNmPh863VMd0zxHb/Q1V1PFKDvymKx
-	ZUcB6NHwu2QSSHnGea/ll1w=
-X-Google-Smtp-Source: AK7set+mv58GLURbqqEBEOlP8HNi/SCv9weIowBe7YGjNAJOhVQrfRkGiIblzjHUdEScToXe0Ylibg==
-X-Received: by 2002:a05:6a20:b191:b0:c2:b6cf:96db with SMTP id ee17-20020a056a20b19100b000c2b6cf96dbmr15411398pzb.39.1680111566969;
-        Wed, 29 Mar 2023 10:39:26 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id b11-20020aa7870b000000b005ac419804d5sm14718708pfo.98.2023.03.29.10.39.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Mar 2023 10:39:26 -0700 (PDT)
-Message-ID: <c2a6c37c-fbfd-ac2e-9754-bc388fa00878@gmail.com>
-Date: Wed, 29 Mar 2023 10:39:22 -0700
+        d=1e100.net; s=20210112; t=1680111684;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0HLyYeKV3If5cAiJw/VAQ1aNDVNCtxxtUuMyZtuuZJs=;
+        b=J0LyMCgJ/O4ZUQ5SPd8RAUj1x8qaEAWSqm+WbVMvuxTRkgFtvSGwznVNeobH0aFe8m
+         iQL9D3BjJhkxkMAnQ9qTvcUOCOoMDsayWRGI1e3yBKeCMDB2yCVs5+7vDDxhlnnzCHae
+         bNq4IUCRJSrOFQYftk4SPRxzdjh4ZJzGxvBwifkseczBkPWGYYL2EDSOT58ei2l0eDjc
+         vGVWmhMcYwPrymhsTNAcEkA2kR3soioDWxQC66STEHwXp2QMQ7pvMLdE3dMEfEyu5c9Q
+         YrO3Da4HNXPLezso6vZEE5YWLNhSqSZXqhP7Zy9fHY/UJTb5L/PD2rZu+vD7yDTUbYnq
+         N72w==
+X-Gm-Message-State: AAQBX9fD0YE+T3WFoKKknMMj1OGEygmkg6nC2Uu3Y/JG8ZCKfBtcYvXn
+	+rzCE18xV2CB77hryGAPCFdP3czStgidfL0AGFL4xw==
+X-Google-Smtp-Source: AKy350abXbUxEEXq3i9xDxZykzGOBVliqLi4/3uqla2IzGu82Yr8XzrqWZiHLqLlPTBfgnN87bOKeaoqYkUT7RT3ee4=
+X-Received: by 2002:a05:6a00:894:b0:606:a4bd:8dde with SMTP id
+ q20-20020a056a00089400b00606a4bd8ddemr10983778pfj.4.1680111684131; Wed, 29
+ Mar 2023 10:41:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 6.1 000/224] 6.1.22-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230328142617.205414124@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230329-net-ethernet-ti-wformat-v1-1-83d0f799b553@kernel.org> <CAKwvOdmcpESfN-9X2pzuxyj5q0wkH=kFwhaAhbaEJHwatyQLQA@mail.gmail.com>
+In-Reply-To: <CAKwvOdmcpESfN-9X2pzuxyj5q0wkH=kFwhaAhbaEJHwatyQLQA@mail.gmail.com>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Wed, 29 Mar 2023 10:41:13 -0700
+Message-ID: <CAKwvOdk0wgGrMLrebTcHU078Kjtgb_xR3ghnEgQeS3PxgxNzag@mail.gmail.com>
+Subject: Re: [PATCH net-next] net: ethernet: ti: Fix format specifier in netcp_create_interface()
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org, 
+	pabeni@redhat.com, trix@redhat.com, razor@blackwall.org, 
+	kerneljasonxing@gmail.com, netdev@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 3/28/23 07:39, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.22 release.
-> There are 224 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 30 Mar 2023 14:25:33 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.22-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Wed, Mar 29, 2023 at 10:10=E2=80=AFAM Nick Desaulniers
+<ndesaulniers@google.com> wrote:
+>
+> Because integer literals in C are signed, the cast is necessary to
+> avoid the format specifier from warning about the wrong signedness.
+> It would be preferable to have a `U` suffix on the literal value, then
+> the cast would be unnecessary.
+>
+> Untested:
+> ```
+> diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+> index 494a23a976b0..67cb6bfc4056 100644
+> --- a/include/linux/skbuff.h
+> +++ b/include/linux/skbuff.h
+> @@ -349,7 +349,7 @@ struct sk_buff;
+>  # define CONFIG_MAX_SKB_FRAGS 17
+>  #endif
+>
+> -#define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS
+> +#define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS ## U
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Or rather this trick.
+https://godbolt.org/z/81aPxf39b
+I forget what that's called (it's not xmacros); we definitely have a
+macro for that in the kernel.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
-
+--=20
+Thanks,
+~Nick Desaulniers
