@@ -1,99 +1,171 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735A45382;
-	Wed, 29 Mar 2023 17:05:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF38C433D2;
-	Wed, 29 Mar 2023 17:05:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1680109556;
-	bh=T8fWhplWPwZ4OAqvqYb8gn/VvxXqZQz97l6qax8Uj7g=;
-	h=From:Date:Subject:To:Cc:From;
-	b=hmanBQH2TMYgNyzPakCCdf9Vpmc2yZbH/90wWZQ+yRhqDxy8ni75gnIbnheY+EJef
-	 Q7TV1K1uGDRUKacpZMlbtIZ3XCMgZYAKJ+wvBTIz9irP1HXsG3w32RxqlucQy7/t+l
-	 lin6oHBx62zHTxjoOC7F1MyAW/AJP7Fdddf6vbUYD4X3SonPCKR/HXCMuAk+n6KXF4
-	 KrozPxbuiiKMa6YngzOO0Qyc1jnxjpVjoaOZ4AGp/0Ut7Paca3EZpvwZFxInuW7SRk
-	 xKWE3QvW+Dw/7+a+ldHPVNLUQAnAfeVUEdGsZzox2BJKR+h+0sQOnLO+k1pjk5chRY
-	 TKN66xj6UQj6g==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 29 Mar 2023 10:05:44 -0700
-Subject: [PATCH wireless-next] wifi: iwlwifi: mvm: Avoid 64-bit division in
- iwl_mvm_get_crosstimestamp_fw()
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888485382
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 17:10:32 +0000 (UTC)
+Received: by mail-pg1-f179.google.com with SMTP id d22so9702910pgw.2
+        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 10:10:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112; t=1680109832;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vDmi5nIzQ70fO+hjyQnBiw9NgsY6gNFOjMjgjeQVLyY=;
+        b=KXcn6zmbpN1M3gcya4O4ccYSiYOSrk7sCFSQ28QSSpmhG6AybjJemKXpkAj4MT0Dhr
+         ywToksTDJF+/QQUfgaEizigYWE+PbHAJlyPL+6ierR+AVCqQ1t0oUeA6VTstfK8FxODV
+         ofYz+eNYRzLMgeVGCcvu0B05EoSEhQCk9HWCFJOxMErywO0TczUw+u77tHfMxS0EjMKH
+         hLNbic8bLfJ4lz2SbU/MOkWzuR733LyncrFdyqhtxOSTvOpaXhQ1jYnd3ovruWm1HytI
+         e81yUWDcbmDLAn8V93ozWx1zcempx0O/RTsLTGtKORwQ06z8RoxGboIj69sjNpZ6M1No
+         6CKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680109832;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vDmi5nIzQ70fO+hjyQnBiw9NgsY6gNFOjMjgjeQVLyY=;
+        b=0KotlBW3dOhedA0DqZ+FKnWHZ62EDjBxXlRguGGGvesJdW/jDckEXoTiytMMuuutIl
+         EVlHqn7f5QSHRP/9WEZWLH77PtW6vpteITQw1htEZgZjpRCzGNLrZ0nh0HiK+A6yGnjT
+         s6o4dZGwGMiHRzt/xqbLuVG4JgC8RqKfIwR5U1FOstt/T4gxz4WDRP/yLmWF1G4JSJnr
+         /rp9JVRPZCDTqUV/kkr4nSgV5P1rGVMLcztXygrBEYjzwLT292nOkRj762uv+YIv/mte
+         8YY/u67Of5WuBt+PAhf6ElAPu4j8/ijZY7tsvlsVBG/cYtzX9AqSF2DelLHRWTlxD9Re
+         xHRg==
+X-Gm-Message-State: AAQBX9d6aVIshWf3JxPrGm51lrZEn1/tJI34/tdS4MT2KTFCvNCgsdz8
+	Zd308pPAe4S//Hco9TGnIFNKzxe7cxOB4T/uH6wThw==
+X-Google-Smtp-Source: AKy350bWZdIG/SMXJ5jjXgQ+jvkVz1QEcKUw/EApMWnq33HK+hbMlilKegbYaO56L4/yrJAlzF34bRvpT1yKWbXyjCQ=
+X-Received: by 2002:a63:444:0:b0:513:6b94:8907 with SMTP id
+ 65-20020a630444000000b005136b948907mr2794117pge.1.1680109831654; Wed, 29 Mar
+ 2023 10:10:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230329-iwlwifi-ptp-avoid-64-bit-div-v1-1-ad8db8d66bc2@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAOdvJGQC/x2NQQqDMBAAvyJ77oIaadp+pXiIcVMXbAzZkAji3
- xt7HAZmDhCKTAKv5oBImYU3X6G7NWAX4z+EPFeGvu1Vq/onclkLO8aQApq88Yz3ASdOOHPGzg6
- 6004r9zBQE5MRwikab5cr8jWSKF4iRHK8/79vKBxpJRH0tCcYz/MHJo1DDpYAAAA=
-To: gregory.greenman@intel.com, kvalo@kernel.org
-Cc: nathan@kernel.org, ndesaulniers@google.com, trix@redhat.com, 
- johannes.berg@intel.com, avraham.stern@intel.com, 
- krishnanand.prabhu@intel.com, linux-wireless@vger.kernel.org, 
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Arnd Bergmann <arnd@arndb.de>, 
- "kernelci.org bot" <bot@kernelci.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2173; i=nathan@kernel.org;
- h=from:subject:message-id; bh=T8fWhplWPwZ4OAqvqYb8gn/VvxXqZQz97l6qax8Uj7g=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCkq+Z8LY5R4Zhl+kzx7097ULsrCx6khcu6LA/Vai7dn2
- LgXrZ7VUcrCIMbBICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACbyaS/D/6S05Gc5R7PWHD4n
- /c76AfsNz7VqB5O8q4vO5k2Z0HT42HFGhp5iLfktC3dI9rBknItMn/AzbZOpCmOLzyKG7zWyfcV
- yvAA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20230329-net-ethernet-ti-wformat-v1-1-83d0f799b553@kernel.org>
+In-Reply-To: <20230329-net-ethernet-ti-wformat-v1-1-83d0f799b553@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Wed, 29 Mar 2023 10:10:20 -0700
+Message-ID: <CAKwvOdmcpESfN-9X2pzuxyj5q0wkH=kFwhaAhbaEJHwatyQLQA@mail.gmail.com>
+Subject: Re: [PATCH net-next] net: ethernet: ti: Fix format specifier in netcp_create_interface()
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org, 
+	pabeni@redhat.com, trix@redhat.com, razor@blackwall.org, 
+	kerneljasonxing@gmail.com, netdev@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-There is a 64-bit division in iwl_mvm_get_crosstimestamp_fw(), which
-results in a link failure when building 32-bit architectures with clang:
+On Wed, Mar 29, 2023 at 8:08=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
+g> wrote:
+>
+> After commit 3948b05950fd ("net: introduce a config option to tweak
+> MAX_SKB_FRAGS"), clang warns:
+>
+>   drivers/net/ethernet/ti/netcp_core.c:2085:4: warning: format specifies =
+type 'long' but the argument has type 'int' [-Wformat]
+>                           MAX_SKB_FRAGS);
+>                           ^~~~~~~~~~~~~
+>   include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
+>           dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##=
+__VA_ARGS__)
+>                                                                  ~~~     =
+^~~~~~~~~~~
+>   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_print=
+k_index_wrap'
+>                   _p_func(dev, fmt, ##__VA_ARGS__);                      =
+ \
+>                                ~~~    ^~~~~~~~~~~
+>   include/linux/skbuff.h:352:23: note: expanded from macro 'MAX_SKB_FRAGS=
+'
+>   #define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS
+>                         ^~~~~~~~~~~~~~~~~~~~
+>   ./include/generated/autoconf.h:11789:30: note: expanded from macro 'CON=
+FIG_MAX_SKB_FRAGS'
+>   #define CONFIG_MAX_SKB_FRAGS 17
+>                                ^~
+>   1 warning generated.
+>
+> Follow the pattern of the rest of the tree by changing the specifier to
+> '%u' and casting MAX_SKB_FRAGS explicitly to 'unsigned int', which
+> eliminates the warning.
+>
+> Fixes: 3948b05950fd ("net: introduce a config option to tweak MAX_SKB_FRA=
+GS")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> I am a little confused as to why the solution for this warning is
+> casting to 'unsigned int' rather than just updating all the specifiers
+> to be '%d', as I do not see how MAX_SKB_FRAGS can be any type other than
+> just 'int' but I figured I would be consistent with the other fixes I
+> have seen around this issue.
 
-  ld.lld: error: undefined symbol: __udivdi3
-  >>> referenced by ptp.c
-  >>>               drivers/net/wireless/intel/iwlwifi/mvm/ptp.o:(iwl_mvm_phc_get_crosstimestamp) in archive vmlinux.a
+MAX_SKB_FRAGS might be defined by Kconfig, see:
+ 352 #define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS
+in include/linux/skbuff.h. The Kconfig is declared in
+net/Kconfig:254.
 
-GCC has optimizations for division by a constant that clang does not
-implement, so this issue is not visible when building with GCC.
+Because integer literals in C are signed, the cast is necessary to
+avoid the format specifier from warning about the wrong signedness.
+It would be preferable to have a `U` suffix on the literal value, then
+the cast would be unnecessary.
 
-Using div_u64() would resolve this issue, but Arnd points out that this
-can be quite expensive and the timestamp is being read at nanosecond
-granularity. Nick pointed out that the result of this division is being
-stored to a 32-bit type anyways, so truncate gp2_10ns first then do the
-division, which elides the need for libcalls.
+Untested:
+```
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 494a23a976b0..67cb6bfc4056 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -349,7 +349,7 @@ struct sk_buff;
+ # define CONFIG_MAX_SKB_FRAGS 17
+ #endif
 
-Fixes: 21fb8da6ebe4 ("wifi: iwlwifi: mvm: read synced time from firmware if supported")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://github.com/ClangBuiltLinux/linux/issues/1826
-Reported-by: "kernelci.org bot" <bot@kernelci.org>
-Link: https://lore.kernel.org/6423173a.620a0220.3d5cc.6358@mx.google.com/
-Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/net/wireless/intel/iwlwifi/mvm/ptp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+-#define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS
++#define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS ## U
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c b/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-index 5c2bfc8ed88d..cdd6d69c5b68 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-@@ -116,7 +116,7 @@ iwl_mvm_get_crosstimestamp_fw(struct iwl_mvm *mvm, u32 *gp2, u64 *sys_time)
- 
- 	gp2_10ns = (u64)le32_to_cpu(resp->gp2_timestamp_hi) << 32 |
- 		le32_to_cpu(resp->gp2_timestamp_lo);
--	*gp2 = gp2_10ns / 100;
-+	*gp2 = (u32)gp2_10ns / 100;
- 
- 	*sys_time = (u64)le32_to_cpu(resp->platform_timestamp_hi) << 32 |
- 		le32_to_cpu(resp->platform_timestamp_lo);
+ extern int sysctl_max_skb_frags;
+```
+Perhaps other code using MAX_SKB_FRAGS might have to worry about
+signedness and conversions.
 
----
-base-commit: 2af3b2a631b194a43551ce119cb71559d8f6b54b
-change-id: 20230329-iwlwifi-ptp-avoid-64-bit-div-1c4717f73f8a
+But I think what you have is fine for now.
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Though the above might be a longer-term solution since this might pop up ag=
+ain.
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+> ---
+>  drivers/net/ethernet/ti/netcp_core.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/=
+ti/netcp_core.c
+> index 1bb596a9d8a2..d829113c16ee 100644
+> --- a/drivers/net/ethernet/ti/netcp_core.c
+> +++ b/drivers/net/ethernet/ti/netcp_core.c
+> @@ -2081,8 +2081,8 @@ static int netcp_create_interface(struct netcp_devi=
+ce *netcp_device,
+>         netcp->tx_pool_region_id =3D temp[1];
+>
+>         if (netcp->tx_pool_size < MAX_SKB_FRAGS) {
+> -               dev_err(dev, "tx-pool size too small, must be at least %l=
+d\n",
+> -                       MAX_SKB_FRAGS);
+> +               dev_err(dev, "tx-pool size too small, must be at least %u=
+\n",
+> +                       (unsigned int)MAX_SKB_FRAGS);
+>                 ret =3D -ENODEV;
+>                 goto quit;
+>         }
+>
+> ---
+> base-commit: 3b064f541be822dc095991c6dda20a75eb51db5e
+> change-id: 20230329-net-ethernet-ti-wformat-acaa86350657
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
 
+
+--=20
+Thanks,
+~Nick Desaulniers
