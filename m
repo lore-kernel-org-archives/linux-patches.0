@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA7B1100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0BD10E3
 	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 05:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=RbshZVKDekPDOboeHnEAcgErH9krvuwQN7TysZlnIZw=; b=GyXZwQdzvgM7yhc8r+C5Vhai/9
-	IOpEs0a2tDWNEdfprqiEIcZ2E8v1vexNsaoG9ZN2e1ZBToe1wdV9OPP21g4oLpqbMgEuo3fyX/8r2
-	z8ZG617RPED8eMv9RVJgKv6yxZsjZikUTsRsoepiIWpblLpufupifKeeB2RZS9hCVfFLS5Qi/zaPs
-	wbXqYiFQNVQ9NpGD3zNYkWbEk7J5CwMo3VeJ2PMxGIbDq6flmPN4cv/e7EzAP13A/ztHYle/wUwUP
-	pdzO68cb4rR6+2D/EtIoNOIRkfU1dIvlJhCsfV4cOL31V/agcdygbpFFjQy9YclM9/4eqvm8S4zQH
-	/GKQHogQ==;
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=KLOfytIcH4rEmrgbqWZrqXW6JlCkVbvgRIm3hytVuTY=; b=SKXkmQeCEpgQZFnKkN5jdqmQYh
+	40jq1pxRb3voL7778sBrMGEoSewmZSXoGUfZrB6wUK5nKoXSPw36MkaWBrYWszHlUIQqwXVVCUVCt
+	IyMnqjGzt8GX8Pu2hFTRLiM0viFXqDvIkhHt5owme+jhbjQXGSDIqF7lbmtoaiS4lp5XhenvJfNrW
+	ThblqC87znpBanq7PlA3vgqizKFHQmVFE+ZetKq2g+VimLRHoX9DXwbJdX8iXGmYqq7civwLsSvTc
+	xgRc2rPq21dHnPvqDjXbbuIMsPnhrVCqtKXJOHk8DUupKVu2uwUCWdD8gQdFl8khfl+eycLmOdtcK
+	Kfh2WKIA==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1phOPW-00GgRY-2D;
+	id 1phOPW-00GgRQ-1m;
 	Wed, 29 Mar 2023 05:31:50 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: david@redhat.com,
@@ -38,12 +38,10 @@ Cc: christophe.leroy@csgroup.eu,
 	mhocko@suse.com,
 	dave.hansen@linux.intel.com,
 	mcgrof@kernel.org
-Subject: [PATCH 3/7] module: avoid allocation if module is already present and ready
-Date: Tue, 28 Mar 2023 22:31:45 -0700
-Message-Id: <20230329053149.3976378-4-mcgrof@kernel.org>
+Subject: [PATCH 0/7] module: avoid userspace pressure on unwanted allocations
+Date: Tue, 28 Mar 2023 22:31:42 -0700
+Message-Id: <20230329053149.3976378-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230329053149.3976378-1-mcgrof@kernel.org>
-References: <20230329053149.3976378-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,239 +51,56 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-load_module() will allocate a struct module before even checking
-if the module is already loaded. This can create unecessary memory
-pressure since we can easily just check if the module is already
-present early with the copy of the module information from userspace
-after we've validated it a bit.
+This patch set addresses a fix to the vmap allocation presure issues which
+David Hildenbrand had reported last year in October. While at it,
+I've simplified the kmod concurrency delimiter using Linus' suggestion,
+and added debugfs stats to help us keep sane in doing analysis for memory
+pressure issues on the finit_module() side of things. That should *also*
+help do an empirical evaluation of module .text sizes *actually* present
+on systems, given userspace makes it a bit tricky to get that right.
 
-This can only be an issue if a system is getting hammered with userspace
-loading modules. Note that there are two ways to load modules, one is
-kernel moduile auto-loading (request_module() calls in-kernel) and the
-other is modprobe calls from userspace. The auto-loading is in-kernel, that
-pings back to userspace to just call modprobe. We already have a way to
-restrict the amount of concurrent kernel auto-loads in a given time, however
-that does not stop a system from issuing tons of system calls to load a
-module and for the races to exist. Userspace itself *is* supposed to check
-if a module is present before loading it. But we're observing situations
-where tons of the same module are in effect being loaded. Although some of
-these are acknolwedged as in-kernel bugs such as the ACPI frequency
-modules, issues for which we already have fixes merged or are working
-towards, but we can also help a bit more in the modules side to avoid
-those dramatic situations. All that is just memory being allocated to then
-be thrown away.
+All this would not have been possible without stress-ng and Colin Ian King's
+help to getting a modules ops in shape so to reproduce a situation only
+reported so far on a system with over 400 CPUs.
 
-To avoid memory pressure for such stupid cases put a stop gap for them.
-We now check for the module being present *before* allocation, and then
-right after we are going to add it to the system.
+I *think* the degugfs stats *should* probably be used to help identify
+areas where we perhaps need *more work* to try to mitigate vmalloc()
+space, as in the worst case we can end up using vmap space 3 times for
+a single module, two just as big as the module, and if you are enabling
+compression one with the compressed module size. That's significant memory
+pressure on vmalloc() / vmap() space.
 
-On a 8vcpu 8 GiB RAM system using kdevops and testing against selftests
-kmod.sh -t 0008 I see a saving in the *highest* side of memory
-consumption of up to ~ 84 MiB with the Linux kernel selftests kmod
-test 0008. With the new stress-ng module test I see a 145 MiB difference
-in max memory consumption with 100 ops. The stress-ng module ops tests can be
-pretty pathalogical -- it is not realistic, however it was used to
-finally successfully reproduce issues which are only reported to happen on
-system with over 400 CPUs [0] by just usign 100 ops on a 8vcpu 8 GiB RAM
-system.
-
-This can be observed and visualized below. The time it takes to run the
-test is also not affected.
-
-The kmod tests 0008:
-
-The gnuplot is set to a range from 400000 KiB (390 Mib) - 580000 (566 Mib)
-given the tests peak around that range.
-
-cat kmod.plot
-set term dumb
-set output fileout
-set yrange [400000:580000]
-plot filein with linespoints title "Memory usage (KiB)"
-
-Before:
-root@kmod ~ # /data/linux-next/tools/testing/selftests/kmod/kmod.sh -t 0008
-root@kmod ~ # free -k -s 1 -c 40 | grep Mem | awk '{print $3}' > log-0008-before.txt ^C
-root@kmod ~ # sort -n -r log-0008-before.txt | head -1
-528732
-
-So ~516.33 MiB
-
-After:
-
-root@kmod ~ # /data/linux-next/tools/testing/selftests/kmod/kmod.sh -t 0008
-root@kmod ~ # free -k -s 1 -c 40 | grep Mem | awk '{print $3}' > log-0008-after.txt ^C
-
-root@kmod ~ # sort -n -r log-0008-after.txt | head -1
-442516
-
-So ~432.14 MiB
-
-That's about 84 ~MiB in savings in the worst case. The graphs:
-
-root@kmod ~ # gnuplot -e "filein='log-0008-before.txt'; fileout='graph-0008-before.txt'" kmod.plot
-root@kmod ~ # gnuplot -e "filein='log-0008-after.txt';  fileout='graph-0008-after.txt'"  kmod.plot
-
-root@kmod ~ # cat graph-0008-before.txt
-
-  580000 +-----------------------------------------------------------------+
-         |       +        +       +       +       +        +       +       |
-  560000 |-+                                    Memory usage (KiB) ***A***-|
-         |                                                                 |
-  540000 |-+                                                             +-|
-         |                                                                 |
-         |        *A     *AA*AA*A*AA          *A*AA    A*A*A *AA*A*AA*A  A |
-  520000 |-+A*A*AA  *AA*A           *A*AA*A*AA     *A*A     A          *A+-|
-         |*A                                                               |
-  500000 |-+                                                             +-|
-         |                                                                 |
-  480000 |-+                                                             +-|
-         |                                                                 |
-  460000 |-+                                                             +-|
-         |                                                                 |
-         |                                                                 |
-  440000 |-+                                                             +-|
-         |                                                                 |
-  420000 |-+                                                             +-|
-         |       +        +       +       +       +        +       +       |
-  400000 +-----------------------------------------------------------------+
-         0       5        10      15      20      25       30      35      40
-
-root@kmod ~ # cat graph-0008-after.txt
-
-  580000 +-----------------------------------------------------------------+
-         |       +        +       +       +       +        +       +       |
-  560000 |-+                                    Memory usage (KiB) ***A***-|
-         |                                                                 |
-  540000 |-+                                                             +-|
-         |                                                                 |
-         |                                                                 |
-  520000 |-+                                                             +-|
-         |                                                                 |
-  500000 |-+                                                             +-|
-         |                                                                 |
-  480000 |-+                                                             +-|
-         |                                                                 |
-  460000 |-+                                                             +-|
-         |                                                                 |
-         |          *A              *A*A                                   |
-  440000 |-+A*A*AA*A  A       A*A*AA    A*A*AA*A*AA*A*AA*A*AA*AA*A*AA*A*AA-|
-         |*A           *A*AA*A                                             |
-  420000 |-+                                                             +-|
-         |       +        +       +       +       +        +       +       |
-  400000 +-----------------------------------------------------------------+
-         0       5        10      15      20      25       30      35      40
-
-The stress-ng module tests:
-
-This is used to run the test to try to reproduce the vmap issues
-reported by David:
-
-  echo 0 > /proc/sys/vm/oom_dump_tasks
-  ./stress-ng --module 100 --module-name xfs
-
-Prior to this commit:
-root@kmod ~ # free -k -s 1 -c 40 | grep Mem | awk '{print $3}' > baseline-stress-ng.txt
-root@kmod ~ # sort -n -r baseline-stress-ng.txt | head -1
-5046456
-
-After this commit:
-root@kmod ~ # free -k -s 1 -c 40 | grep Mem | awk '{print $3}' > after-stress-ng.txt
-root@kmod ~ # sort -n -r after-stress-ng.txt | head -1
-4896972
-
-5046456 - 4896972
-149484
-149484/1024
-145.98046875000000000000
-
-So this commit using stress-ng reveals saving about 145 MiB in memory
-using 100 ops from stress-ng which reproduced the vmap issue reported.
-
-cat kmod.plot
-set term dumb
-set output fileout
-set yrange [4700000:5070000]
-plot filein with linespoints title "Memory usage (KiB)"
-
-root@kmod ~ # gnuplot -e "filein='baseline-stress-ng.txt'; fileout='graph-stress-ng-before.txt'"  kmod-simple-stress-ng.plot
-root@kmod ~ # gnuplot -e "filein='after-stress-ng.txt'; fileout='graph-stress-ng-after.txt'"  kmod-simple-stress-ng.plot
-
-root@kmod ~ # cat graph-stress-ng-before.txt
-
-           +---------------------------------------------------------------+
-  5.05e+06 |-+     + A     +       +       +       +       +       +     +-|
-           |         *                          Memory usage (KiB) ***A*** |
-           |         *                             A                       |
-     5e+06 |-+      **                            **                     +-|
-           |        **                            * *    A                 |
-  4.95e+06 |-+      * *                          A  *   A*               +-|
-           |        * *      A       A           *  *  *  *             A  |
-           |       *  *     * *     * *        *A   *  *  *      A      *  |
-   4.9e+06 |-+     *  *     * A*A   * A*AA*A  A      *A    **A   **A*A  *+-|
-           |       A  A*A  A    *  A       *  *      A     A *  A    * **  |
-           |      *      **      **         * *              *  *    * * * |
-  4.85e+06 |-+   A       A       A          **               *  *     ** *-|
-           |     *                           *               * *      ** * |
-           |     *                           A               * *      *  * |
-   4.8e+06 |-+   *                                           * *      A  A-|
-           |     *                                           * *           |
-  4.75e+06 |-+  *                                            * *         +-|
-           |    *                                            **            |
-           |    *  +       +       +       +       +       + **    +       |
-   4.7e+06 +---------------------------------------------------------------+
-           0       5       10      15      20      25      30      35      40
-
-root@kmod ~ # cat graph-stress-ng-after.txt
-
-           +---------------------------------------------------------------+
-  5.05e+06 |-+     +       +       +       +       +       +       +     +-|
-           |                                    Memory usage (KiB) ***A*** |
-           |                                                               |
-     5e+06 |-+                                                           +-|
-           |                                                               |
-  4.95e+06 |-+                                                           +-|
-           |                                                               |
-           |                                                               |
-   4.9e+06 |-+                                      *AA                  +-|
-           |  A*AA*A*A  A  A*AA*AA*A*AA*A  A  A  A*A   *AA*A*A  A  A*AA*AA |
-           |  *      * **  *            *  *  ** *            ***  *       |
-  4.85e+06 |-+*       ***  *            * * * ***             A *  *     +-|
-           |  *       A *  *             ** * * A               *  *       |
-           |  *         *  *             *  **                  *  *       |
-   4.8e+06 |-+*         *  *             A   *                  *  *     +-|
-           | *          * *                  A                  * *        |
-  4.75e+06 |-*          * *                                     * *      +-|
-           | *          * *                                     * *        |
-           | *     +    * *+       +       +       +       +    * *+       |
-   4.7e+06 +---------------------------------------------------------------+
-           0       5       10      15      20      25      30      35      40
+If you'd like to give this a spin this is available on my branch based on
+modules-next 20230328-module-alloc-opts [2].
 
 [0] https://lkml.kernel.org/r/20221013180518.217405-1-david@redhat.com
+[1] https://github.com/ColinIanKing/stress-ng
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/log/?h=20230328-module-alloc-opts
 
-Reported-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- kernel/module/main.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Luis Chamberlain (7):
+  module: move finished_loading()
+  module: extract patient module check into helper
+  module: avoid allocation if module is already present and ready
+  sempahore: add a helper for a concurrency limiter
+  modules/kmod: replace implementation with a sempahore
+  debugfs: add debugfs_create_atomic64_t for atomic64_t
+  module: add debug stats to help identify memory pressure
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 77c2e7a60f2e..145e15f19576 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -2785,7 +2785,11 @@ static int early_mod_check(struct load_info *info, int flags)
- 	if (err)
- 		return err;
- 
--	return 0;
-+	mutex_lock(&module_mutex);
-+	err = module_patient_check_exists(info->mod->name);
-+	mutex_unlock(&module_mutex);
-+
-+	return err;
- }
- 
- /*
+ fs/debugfs/file.c         |  36 +++++++
+ include/linux/debugfs.h   |   2 +
+ include/linux/semaphore.h |   3 +
+ kernel/module/Kconfig     |  32 ++++++
+ kernel/module/Makefile    |   4 +
+ kernel/module/debug.c     |  16 +++
+ kernel/module/internal.h  |  35 +++++++
+ kernel/module/kmod.c      |  26 ++---
+ kernel/module/main.c      | 164 ++++++++++++++++++++-----------
+ kernel/module/stats.c     | 200 ++++++++++++++++++++++++++++++++++++++
+ kernel/module/tracking.c  |   7 +-
+ 11 files changed, 445 insertions(+), 80 deletions(-)
+ create mode 100644 kernel/module/debug.c
+ create mode 100644 kernel/module/stats.c
+
 -- 
 2.39.2
 
