@@ -1,26 +1,26 @@
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82463AD24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E54AD30
 	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 22:33:36 +0000 (UTC)
-Date: Wed, 29 Mar 2023 22:33:29 +0000
+Date: Wed, 29 Mar 2023 22:33:18 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680129214; x=1680388414;
-	bh=Scrd8f8EDEvabnhRamoSHtqijjSxy4jp1Z9S+dx9Byo=;
+	s=protonmail3; t=1680129209; x=1680388409;
+	bh=+Jgo8YMLidWi9F/tttnsA/dAW+fcatX0DCsuPc2iOP8=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=d0qQmAswlFDeibO7yaTXVFAid60RtqEpL2h34keMorDev0IH/5MhVWtuEwDdkMeg+
-	 DqNg2wNRRaQAEeBvtGHI1nSWtcnqep6TOlTIZKu39ZWRTpKp4s6KiKl74dmJvs+ziV
-	 kMiV9NnjuXlP9LCl7H94jbvHDeweSMqU70QbwU7YEQCYJ55iB1YJlpcTmo3llugp/Z
-	 7YqvTm3Pf9OI/gkgi1Qtq5XVsfhcNpal+1A1NM9iApvT+YwbGvkJ68s8YL46Zqp3HB
-	 AeMaDOi087H2m4/aRIx04dTmiMpSQjZKs4uLzTdr3kXOAUEVzCI2oCu1dpq0o887R4
-	 6ul82DZPIGH8w==
+	b=WxNvUDrX3yHHzIhQch5hrDo1Gpugmjzl3wEk73FYRTDYV5m+BvQjawfkqaKrHbaNf
+	 Iu+GcCh5ef1qF0WveOxPzTGSoSdhb+ah8UNPXjB38Ig6/pB2vPdEkMpFk1b+DFwS9F
+	 Cw6y3Sozfy9u905yezyC2HLQGmBBjIc1BBIWRRpxHOfp408PxCFiE1KuUsZKrWVnYj
+	 bYBcAAMT+8gMkvleDq0/0XVXiAuhhDEO84x5mCJktsephHh+/pQWLOkNxtnV/4l+yL
+	 AvqSQIzZ6pbEfvHYQ8zFTCx3UUy7Xq6B6A+lbu289IavnjwZ3HH0anVWnRsUa2pLIA
+	 SW43lBEoskCDQ==
 To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>
 From: y86-dev@protonmail.com
 Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: [PATCH v3 08/13] rust: init: add `stack_pin_init!` macro
-Message-ID: <20230329223239.138757-9-y86-dev@protonmail.com>
+Subject: [PATCH v3 06/13] rust: init/sync: add `InPlaceInit` trait to pin-initialize smart pointers
+Message-ID: <20230329223239.138757-7-y86-dev@protonmail.com>
 In-Reply-To: <20230329223239.138757-1-y86-dev@protonmail.com>
 References: <20230329223239.138757-1-y86-dev@protonmail.com>
 Feedback-ID: 40624463:user:proton
@@ -35,214 +35,253 @@ Content-Transfer-Encoding: quoted-printable
 
 From: Benno Lossin <y86-dev@protonmail.com>
 
-The `stack_pin_init!` macro allows pin-initializing a value on the
-stack. It accepts a `impl PinInit<T, E>` to initialize a `T`. It allows
-propagating any errors via `?` or handling it normally via `match`.
+The `InPlaceInit` trait that provides two functions, for initializing
+using `PinInit<T, E>` and `Init<T>`. It is implemented by `Arc<T>`,
+`UniqueArc<T>` and `Box<T>`.
 
 Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
 ---
- rust/kernel/init.rs            | 70 +++++++++++++++++++++++++++++++---
- rust/kernel/init/__internal.rs | 46 ++++++++++++++++++++++
- 2 files changed, 110 insertions(+), 6 deletions(-)
+ rust/kernel/init.rs     | 97 +++++++++++++++++++++++++++++++++++------
+ rust/kernel/sync/arc.rs | 25 ++++++++++-
+ 2 files changed, 108 insertions(+), 14 deletions(-)
 
 diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-index 428b5c2ac516..3358f14beffb 100644
+index 85e8d5f41b60..3d89c7e3bdb5 100644
 --- a/rust/kernel/init.rs
 +++ b/rust/kernel/init.rs
-@@ -12,7 +12,8 @@
- //!
- //! To initialize a `struct` with an in-place constructor you will need tw=
-o things:
- //! - an in-place constructor,
--//! - a memory location that can hold your `struct`.
-+//! - a memory location that can hold your `struct` (this can be the [stac=
-k], an [`Arc<T>`],
-+//!   [`UniqueArc<T>`], [`Box<T>`] or any other smart pointer that impleme=
-nts [`InPlaceInit`]).
- //!
- //! To get an in-place constructor there are generally three options:
- //! - directly creating an in-place constructor using the [`pin_init!`] ma=
-cro,
-@@ -180,6 +181,7 @@
- //! [pinning]: https://doc.rust-lang.org/std/pin/index.html
- //! [structurally pinned fields]:
- //!     https://doc.rust-lang.org/std/pin/index.html#pinning-is-structural=
--for-field
-+//! [stack]: crate::stack_pin_init
- //! [`Arc<T>`]: crate::sync::Arc
- //! [`impl PinInit<Foo>`]: PinInit
- //! [`impl PinInit<T, E>`]: PinInit
-@@ -199,6 +201,62 @@ pub mod __internal;
- #[doc(hidden)]
- pub mod macros;
+@@ -114,10 +114,13 @@
+ //! [`impl Init<T, E>`]: Init
+ //! [`Opaque`]: kernel::types::Opaque
+ //! [`pin_data`]: ::macros::pin_data
+-//! [`UniqueArc<T>`]: kernel::sync::UniqueArc
 
-+/// Initialize and pin a type directly on the stack.
-+///
-+/// # Examples
-+///
-+/// ```rust
-+/// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
-+/// # use kernel::{init, pin_init, stack_pin_init, init::*, sync::Mutex, n=
-ew_mutex};
-+/// # use macros::pin_data;
-+/// # use core::pin::Pin;
-+/// #[pin_data]
-+/// struct Foo {
-+///     #[pin]
-+///     a: Mutex<usize>,
-+///     b: Bar,
-+/// }
-+///
-+/// #[pin_data]
-+/// struct Bar {
-+///     x: u32,
-+/// }
-+///
-+/// let a =3D new_mutex!(42, "Foo::a");
-+///
-+/// stack_pin_init!(let foo =3D? pin_init!(Foo {
-+///     a,
-+///     b: Bar {
-+///         x: 64,
-+///     },
-+/// }));
-+/// let foo: Pin<&mut Foo> =3D foo;
-+/// # Ok::<(), core::convert::Infallible>(())
-+/// ```
-+///
-+/// # Syntax
-+///
-+/// A normal `let` binding with optional type annotation. The expression i=
-s expected to implement
-+/// [`PinInit`]. Additionally a `?` can be put after the `=3D`, this will =
-assign `Pin<&mut T>` to the
-+/// variable instead of `Result<Pin<&mut T>, E>`.
-+#[macro_export]
-+macro_rules! stack_pin_init {
-+    (let $var:ident $(: $t:ty)? =3D $val:expr) =3D> {
-+        let mut $var =3D $crate::init::__internal::StackInit$(::<$t>)?::un=
-init();
-+        let mut $var =3D {
-+            let val =3D $val;
-+            unsafe { $crate::init::__internal::StackInit::init(&mut $var, =
-val) }
-+        };
-+    };
-+    (let $var:ident $(: $t:ty)? =3D? $val:expr) =3D> {
-+        let mut $var =3D $crate::init::__internal::StackInit$(::<$t>)?::un=
-init();
-+        let mut $var =3D {
-+            let val =3D $val;
-+            unsafe { $crate::init::__internal::StackInit::init(&mut $var, =
-val)? }
-+        };
-+    };
-+}
-+
- /// Construct an in-place, pinned initializer for `struct`s.
++use crate::{
++    error::{self, Error},
++    sync::UniqueArc,
++};
+ use alloc::boxed::Box;
+-use core::{cell::Cell, convert::Infallible, marker::PhantomData, mem::Mayb=
+eUninit, ptr};
++use core::{cell::Cell, convert::Infallible, marker::PhantomData, mem::Mayb=
+eUninit, pin::Pin, ptr};
+
+ #[doc(hidden)]
+ pub mod __internal;
+@@ -309,7 +312,6 @@ pub mod macros;
  ///
- /// This macro defaults the error to [`Infallible`]. If you need [`Error`]=
-, then use
-@@ -916,8 +974,8 @@ macro_rules! try_init {
+ /// [`try_pin_init!`]: kernel::try_pin_init
+ /// [`NonNull<Self>`]: core::ptr::NonNull
+-/// [`Error`]: kernel::error::Error
+ // For a detailed example of how this macro works, see the module document=
+ation of the hidden
+ // module `__internal` inside of `init/__internal.rs`.
+ #[macro_export]
+@@ -366,8 +368,6 @@ macro_rules! pin_init {
+ ///     }
+ /// }
+ /// ```
+-///
+-/// [`Error`]: kernel::error::Error
+ // For a detailed example of how this macro works, see the module document=
+ation of the hidden
+ // module `__internal` inside of `init/__internal.rs`.
+ #[macro_export]
+@@ -589,8 +589,6 @@ macro_rules! try_pin_init {
+ ///
+ /// This initializer is for initializing data in-place that might later be=
+ moved. If you want to
+ /// pin-initialize, use [`pin_init!`].
+-///
+-/// [`Error`]: kernel::error::Error
+ // For a detailed example of how this macro works, see the module document=
+ation of the hidden
+ // module `__internal` inside of `init/__internal.rs`.
+ #[macro_export]
+@@ -641,8 +639,6 @@ macro_rules! init {
+ ///     }
+ /// }
+ /// ```
+-///
+-/// [`Error`]: kernel::error::Error
+ // For a detailed example of how this macro works, see the module document=
+ation of the hidden
+ // module `__internal` inside of `init/__internal.rs`.
+ #[macro_export]
+@@ -848,7 +844,8 @@ macro_rules! try_init {
  /// A pinned initializer for `T`.
  ///
  /// To use this initializer, you will need a suitable memory location that=
  can hold a `T`. This can
--/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::pi=
+-/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`].
++/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::pi=
 n_init`] function of a
--/// smart pointer like [`Arc<T>`] on this.
-+/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`] or even the stack (see [`s=
-tack_pin_init!`]). Use the
-+/// [`InPlaceInit::pin_init`] function of a smart pointer like [`Arc<T>`] =
-on this.
++/// smart pointer like [`Arc<T>`] on this.
  ///
  /// Also see the [module description](self).
  ///
-@@ -952,9 +1010,9 @@ pub unsafe trait PinInit<T: ?Sized, E =3D Infallible>:=
- Sized {
+@@ -867,7 +864,6 @@ macro_rules! try_init {
+ ///
+ /// [`Arc<T>`]: crate::sync::Arc
+ /// [`Arc::pin_init`]: crate::sync::Arc::pin_init
+-/// [`UniqueArc<T>`]: kernel::sync::UniqueArc
+ #[must_use =3D "An initializer must be used in order to create its value."=
+]
+ pub unsafe trait PinInit<T: ?Sized, E =3D Infallible>: Sized {
+     /// Initializes `slot`.
+@@ -884,7 +880,8 @@ pub unsafe trait PinInit<T: ?Sized, E =3D Infallible>: =
+Sized {
  /// An initializer for `T`.
  ///
  /// To use this initializer, you will need a suitable memory location that=
  can hold a `T`. This can
--/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::in=
+-/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Because [`PinInit<T, E>`]=
+ is a super trait, you can
++/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::in=
 it`] function of a smart
--/// pointer like [`Arc<T>`] on this. Because [`PinInit<T, E>`] is a super =
++/// pointer like [`Arc<T>`] on this. Because [`PinInit<T, E>`] is a super =
 trait, you can
--/// use every function that takes it as well.
-+/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`] or even the stack (see [`s=
-tack_pin_init!`]). Use the
-+/// [`InPlaceInit::init`] function of a smart pointer like [`Arc<T>`] on t=
-his. Because
-+/// [`PinInit<T, E>`] is a super trait, you can use every function that ta=
-kes it as well.
+ /// use every function that takes it as well.
  ///
  /// Also see the [module description](self).
+@@ -909,7 +906,6 @@ pub unsafe trait PinInit<T: ?Sized, E =3D Infallible>: =
+Sized {
+ /// move the pointee after initialization.
  ///
-diff --git a/rust/kernel/init/__internal.rs b/rust/kernel/init/__internal.r=
-s
-index 4a3c7bf27a06..bf33c8e96e6d 100644
---- a/rust/kernel/init/__internal.rs
-+++ b/rust/kernel/init/__internal.rs
-@@ -89,6 +89,52 @@ unsafe impl<T: ?Sized> HasInitData for T {
+ /// [`Arc<T>`]: crate::sync::Arc
+-/// [`UniqueArc<T>`]: kernel::sync::UniqueArc
+ #[must_use =3D "An initializer must be used in order to create its value."=
+]
+ pub unsafe trait Init<T: ?Sized, E =3D Infallible>: PinInit<T, E> {
+     /// Initializes `slot`.
+@@ -1014,3 +1010,78 @@ unsafe impl<T> Init<T> for T {
+         Ok(())
      }
  }
++
++/// Smart pointer that can initialize memory in-place.
++pub trait InPlaceInit<T>: Sized {
++    /// Use the given initializer to in-place initialize a `T`.
++    ///
++    /// If `T: !Unpin` it will not be able to move afterwards.
++    fn pin_init<E>(init: impl PinInit<T, E>) -> error::Result<Pin<Self>>
++    where
++        Error: From<E>;
++
++    /// Use the given initializer to in-place initialize a `T`.
++    fn init<E>(init: impl Init<T, E>) -> error::Result<Self>
++    where
++        Error: From<E>;
++}
++
++impl<T> InPlaceInit<T> for Box<T> {
++    #[inline]
++    fn pin_init<E>(init: impl PinInit<T, E>) -> error::Result<Pin<Self>>
++    where
++        Error: From<E>,
++    {
++        let mut this =3D Box::try_new_uninit()?;
++        let slot =3D this.as_mut_ptr();
++        // SAFETY: When init errors/panics, slot will get deallocated but =
+not dropped,
++        // slot is valid and will not be moved because of the `Pin::new_un=
+checked`
++        unsafe { init.__pinned_init(slot)? };
++        // SAFETY: All fields have been initialized.
++        Ok(unsafe { Pin::new_unchecked(this.assume_init()) })
++    }
++
++    #[inline]
++    fn init<E>(init: impl Init<T, E>) -> error::Result<Self>
++    where
++        Error: From<E>,
++    {
++        let mut this =3D Box::try_new_uninit()?;
++        let slot =3D this.as_mut_ptr();
++        // SAFETY: When init errors/panics, slot will get deallocated but =
+not dropped,
++        // slot is valid
++        unsafe { init.__init(slot)? };
++        // SAFETY: All fields have been initialized.
++        Ok(unsafe { this.assume_init() })
++    }
++}
++
++impl<T> InPlaceInit<T> for UniqueArc<T> {
++    #[inline]
++    fn pin_init<E>(init: impl PinInit<T, E>) -> error::Result<Pin<Self>>
++    where
++        Error: From<E>,
++    {
++        let mut this =3D UniqueArc::try_new_uninit()?;
++        let slot =3D this.as_mut_ptr();
++        // SAFETY: When init errors/panics, slot will get deallocated but =
+not dropped,
++        // slot is valid and will not be moved because of the `Pin::new_un=
+checked`.
++        unsafe { init.__pinned_init(slot)? };
++        // SAFETY: All fields have been initialized.
++        Ok(unsafe { Pin::new_unchecked(this.assume_init()) })
++    }
++
++    #[inline]
++    fn init<E>(init: impl Init<T, E>) -> error::Result<Self>
++    where
++        Error: From<E>,
++    {
++        let mut this =3D UniqueArc::try_new_uninit()?;
++        let slot =3D this.as_mut_ptr();
++        // SAFETY: When init errors/panics, slot will get deallocated but =
+not dropped,
++        // slot is valid.
++        unsafe { init.__init(slot)? };
++        // SAFETY: All fields have been initialized.
++        Ok(unsafe { this.assume_init() })
++    }
++}
+diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+index 16ec174637b2..77a3833cc265 100644
+--- a/rust/kernel/sync/arc.rs
++++ b/rust/kernel/sync/arc.rs
+@@ -17,7 +17,8 @@
 
-+/// Stack initializer helper type. Use [`stack_pin_init`] instead of this =
-primitive.
-+///
-+/// # Invariants
-+///
-+/// If `self.1` is true, then `self.0` is initialized.
-+///
-+/// [`stack_pin_init`]: kernel::stack_pin_init
-+pub struct StackInit<T>(MaybeUninit<T>, bool);
+ use crate::{
+     bindings,
+-    error::Result,
++    error::{Error, Result},
++    init::{InPlaceInit, Init, PinInit},
+     types::{ForeignOwnable, Opaque},
+ };
+ use alloc::boxed::Box;
+@@ -163,6 +164,28 @@ impl<T> Arc<T> {
+         // `Arc` object.
+         Ok(unsafe { Self::from_inner(Box::leak(inner).into()) })
+     }
 +
-+impl<T> Drop for StackInit<T> {
-+    #[inline]
-+    fn drop(&mut self) {
-+        if self.1 {
-+            // SAFETY: As we are being dropped, we only call this once. An=
-d since `self.1 =3D=3D true`,
-+            // `self.0` has to be initialized.
-+            unsafe { self.0.assume_init_drop() };
-+        }
-+    }
-+}
-+
-+impl<T> StackInit<T> {
-+    /// Creates a new [`StackInit<T>`] that is uninitialized. Use [`stack_=
-pin_init`] instead of this
-+    /// primitive.
++    /// Use the given initializer to in-place initialize a `T`.
 +    ///
-+    /// [`stack_pin_init`]: kernel::stack_pin_init
++    /// If `T: !Unpin` it will not be able to move afterwards.
 +    #[inline]
-+    pub fn uninit() -> Self {
-+        Self(MaybeUninit::uninit(), false)
++    pub fn pin_init<E>(init: impl PinInit<T, E>) -> Result<Self>
++    where
++        Error: From<E>,
++    {
++        UniqueArc::pin_init(init).map(|u| u.into())
 +    }
 +
-+    /// Initializes the contents and returns the result.
++    /// Use the given initializer to in-place initialize a `T`.
 +    ///
-+    /// # Safety
-+    ///
-+    /// The caller ensures that `self` is on the stack and not accessible =
-in any other way, if this
-+    /// function returns `Ok`.
++    /// This is equivalent to [`pin_init`], since an [`Arc`] is always pin=
+ned.
 +    #[inline]
-+    pub unsafe fn init<E>(&mut self, init: impl PinInit<T, E>) -> Result<P=
-in<&mut T>, E> {
-+        // SAFETY: The memory slot is valid and this type ensures that it =
-will stay pinned.
-+        unsafe { init.__pinned_init(self.0.as_mut_ptr())? };
-+        self.1 =3D true;
-+        // SAFETY: The slot is now pinned, since we will never give access=
- to `&mut T`.
-+        Ok(unsafe { Pin::new_unchecked(self.0.assume_init_mut()) })
++    pub fn init<E>(init: impl Init<T, E>) -> Result<Self>
++    where
++        Error: From<E>,
++    {
++        UniqueArc::init(init).map(|u| u.into())
 +    }
-+}
-+
- /// When a value of this type is dropped, it drops a `T`.
- ///
- /// Can be forgotton to prevent the drop.
+ }
+
+ impl<T: ?Sized> Arc<T> {
 --
 2.39.2
 
