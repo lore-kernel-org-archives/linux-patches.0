@@ -1,38 +1,45 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B7E10E3
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 06:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92C91102
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 07:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=aNAy4SkGOGqn/8SCjHiEfeWwyWn89H5Tz+V43gHoZjQ=; b=K/J8IBFH1dwSafahsbzjA5DGva
-	/WZmU+2EOfztohNxfTV71mSWZwFUEPQWarWp1I4Y9h1bgQHBzZocxyKsMbTu0Rr15rE4BzusazLNL
-	ulo/wxJNdrBjYuA5U1G71HRfHCYTugoMIheTjiMlXaYm4QsXjH0yu0CCsqZJsI3m48M/S/z5Ik7ix
-	eCv2yDWywLtzXWLpXXtcBCk71/CkOER1OVgbFISpnKUJ8WG3o1SVTmXUATBKJy8nIVAurxCWVz9hL
-	QGVlnAr6SUc/+wxr/hD3pMsXNL73PVuFH4hpF0xVi/69wdsrmLPeUgOJLZB3XXHQvxllAbTqti8+8
-	X7llhk1A==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1phOuz-00Glg9-0h;
-	Wed, 29 Mar 2023 06:04:21 +0000
-Date: Tue, 28 Mar 2023 23:04:21 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Greg KH <gregkh@linuxfoundation.org>
+	bh=TigSEg1djEXPrkuxPW2lyV2vRmsAR0uM58cPep7eGHs=; b=ObN04MAy6fhCJk24L8ngDoXvMu
+	nvkYITrwohLM7kYn3MXEIUjcG7ORTAtlI2QgHVdv1vSRyMlkYRJqGvXhKZUaLPf+CsyITZbhDV4Ih
+	/AYbnQy1jDHS6D4I3GAOrxhcBndmdNFmVAznHtq+h/skdTYYNTvO15l7AbuNZwdt7nc2fLaS+0LK8
+	FD3eIfo6Q+znZLU2e+F/8CHxA1NTqtMOX+A3kMj/b4RR+CQ1nggTsS/aiHGlc8mxhTF8WzsR/CuFv
+	f7A9Ym6NlMNB4Ho2wBZ9Gphb37kBMCyC11jdRhxaUpLpCSiNWDeRkH9kR3kaRHQBMA5XjfvbWO/TH
+	jzinN9aw==;
+Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+	id 1phQ7O-006msJ-22;
+	Wed, 29 Mar 2023 07:21:15 +0000
+Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(Client did not present a certificate)
+	by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 89D5C3002A3;
+	Wed, 29 Mar 2023 09:21:12 +0200 (CEST)
+Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 2C6962CBE6E9B; Wed, 29 Mar 2023 09:21:12 +0200 (CEST)
+Date: Wed, 29 Mar 2023 09:21:12 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
 Cc: david@redhat.com, patches@lists.linux.dev,
 	linux-modules@vger.kernel.org, linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
-	prarit@redhat.com, torvalds@linux-foundation.org, rafael@kernel.org,
-	christophe.leroy@csgroup.eu, tglx@linutronix.de,
-	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
-	willy@infradead.org, vbabka@suse.cz, mhocko@suse.com,
-	dave.hansen@linux.intel.com
-Subject: Re: [PATCH 7/7] module: add debug stats to help identify memory
- pressure
-Message-ID: <ZCPU5T1PD+BwI9ri@bombadil.infradead.org>
+	prarit@redhat.com, torvalds@linux-foundation.org,
+	gregkh@linuxfoundation.org, rafael@kernel.org,
+	christophe.leroy@csgroup.eu, tglx@linutronix.de, song@kernel.org,
+	rppt@kernel.org, willy@infradead.org, vbabka@suse.cz,
+	mhocko@suse.com, dave.hansen@linux.intel.com
+Subject: Re: [PATCH 4/7] sempahore: add a helper for a concurrency limiter
+Message-ID: <20230329072112.GG4253@hirez.programming.kicks-ass.net>
 References: <20230329053149.3976378-1-mcgrof@kernel.org>
- <20230329053149.3976378-8-mcgrof@kernel.org>
- <ZCPQrouSMQbFc8D0@kroah.com>
+ <20230329053149.3976378-5-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,103 +48,33 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZCPQrouSMQbFc8D0@kroah.com>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+In-Reply-To: <20230329053149.3976378-5-mcgrof@kernel.org>
 
-On Wed, Mar 29, 2023 at 07:46:22AM +0200, Greg KH wrote:
-> On Tue, Mar 28, 2023 at 10:31:49PM -0700, Luis Chamberlain wrote:
-> > Loading modules with finit_module() can end up using vmalloc(), vmap()
-> > and vmalloc() again, for a total of up to 3 separate allocations in the
-> > worse case for a single module. We always kernel_read*() the module,
-> > that's a vmalloc(). Then vmap() is used for the module decompression,
-> > and if so the last read buffer is freed as we use the now decompressed
-> > module buffer to stuff data into our copy module. The last one is
-> > specific to architectures but pretty much that's generally a series
-> > of vmalloc() for different ELF sections...
-> > 
-> > Evaluation with new stress-ng module support [1] with just 100 ops
-> > us proving that you can end up using GiBs of data easily even if
-> > we are trying to be very careful not to load modules which are already
-> > loaded. 100 ops seems to resemble the sort of pressure a system with
-> > about 400 CPUs can create on modules. Although those issues for so
-> > many concurrent loads per CPU is silly and are being fixed, we lack
-> > proper tooling to help diagnose easily what happened, when it happened
-> > and what likely are the culprits -- userspace or kernel module
-> > autoloading.
-> > 
-> > Provide an initial set of stats for debugfs which let us easily scrape
-> > post-boot information about failed loads. This sort of information can
-> > be used on production worklaods to try to optimize *avoiding* redundant
-> > memory pressure using finit_module().
-> > 
-> > Screen shot:
-> > 
-> > root@kmod ~ # cat /sys/kernel/debug/modules/stats
-> >            Modules loaded       67
+On Tue, Mar 28, 2023 at 10:31:46PM -0700, Luis Chamberlain wrote:
+> While I looked at re-using the old kernel/kmod.c (now kernel/module/kmod.c)
+> concurrency delimiter methodology for another place in the kernel Linus
+> noted that this could be simply replaced with a sempahore [0].
 > 
-> Is this "loaded now", or "ever successfully loaded"?  As in a
-> modprobe/rmmod/modprobe would bump this by 2, right?
-
-Ah, the later, so "how modules have I ever loaded". Maybe
-
-Modules ever loaded
-
-?
-
-Will fix the nits, thanks!
-
-> > diff --git a/kernel/module/debug.c b/kernel/module/debug.c
+> So add that so we we don't re-invent the wheel and make it obvious to use.
 > 
-> Why is this a whole separate file?
-
-It's just a style preference, no real hard reason other than
-module.c was huge before and now its split up. I find that
-easier to review / manage. Certainly overkill for such as
-simple thing but if its debug I think I rather see that
-then some ifdef eyesore. But that's just preference.
-
-> And as MODULE_DEBUG does not reference debugfs,
-
-That should be fixed thanks.
-
-> > diff --git a/kernel/module/internal.h b/kernel/module/internal.h
-> > index 6ae29bb8836f..a645cb3fafc7 100644
-> > --- a/kernel/module/internal.h
-> > +++ b/kernel/module/internal.h
-> > @@ -143,6 +143,41 @@ static inline bool set_livepatch_module(struct module *mod)
-> >  #endif
-> >  }
-> >  
-> > +#ifdef CONFIG_MODULE_STATS
-> > +
-> > +#define mod_stat_add64(count, var) atomic64_add(count, var)
-> > +#define mod_stat_inc(name) atomic_inc(name)
+> [0] https://lore.kernel.org/all/CAHk-=whkj6=wyi201JXkw9iT_eTUTsSx+Yb9d4OgmZFjDJA18g@mail.gmail.com/
 > 
-> Ok, but:
+> Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
+>  include/linux/semaphore.h | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> > +#define mod_stat_inc(name) atomic_inc(name)
-> 
-> Why do you still increment the variable here if the option is not
-> enabled?
+> diff --git a/include/linux/semaphore.h b/include/linux/semaphore.h
+> index 6694d0019a68..2ecdffdb9814 100644
+> --- a/include/linux/semaphore.h
+> +++ b/include/linux/semaphore.h
+> @@ -28,6 +28,9 @@ struct semaphore {
+>  #define DEFINE_SEMAPHORE(name)	\
+>  	struct semaphore name = __SEMAPHORE_INITIALIZER(name, 1)
+>  
+> +#define CONCURRENCY_LIMITER(name, n) \
+> +	struct semaphore name = __SEMAPHORE_INITIALIZER(name, n)
+> +
 
-Whoops, will fix!
-
-> Also, didn't we have some sort of "we want to use an atomic variable as
-> statistics" type somewhere in the kernel? 
-
-I didn't get the memo, nor do I recall, so it's not on my radar.
-
-> Or did that never get accepted?
-
-Not sure.
-
-> And do all of these really need to be atomic variables?  Don't you have
-> locks for some of this to not need the atomic-ness of them?  I guess it
-> doesn't matter much as this isn't that fast of a code-path.
-
-That was actually intentional, as this only *grows* I just care its not 0
-so to help divide by the total number of modules to get average module
-length and average module .text length. I used atomics and made it only
-grow precisely to not have to lock anywhere.
-
-  Luis
+Why should this live in semaphore.h?
