@@ -1,81 +1,108 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF1DAFE2
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 12:45:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1680093931; x=1711629931;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=cukQmgxAG+VTZdX0jlNhMge1f4ECwtBcvqgzQqaFGj0=;
-  b=imr8iq4Vr10xyPm5HX+Q/X4DwtabexpC350dsRsFLLpi6sC779SIXW0r
-   kNshEwNFCFbvR+DUd3VXB9DZpVVlnInrvch/w3St7mYB/oJYzehsxdaVh
-   BgOniFYWYHItYcvmRvUsXQ/6GV5NnHu8nmKpdN8nliDb0MavZRoTgnXCI
-   /xziUIOdTUMg6T+3kaE0+RbsExXge5kou31w+69aqpeQmtkx9yjnOLy67
-   DIVnnSBPaxBw6zU7WWL6xEOMiGxkIyB0VZ+iom2a3dsBTKwxM9KYEa/nK
-   q8ao8mBiVDIaeHsJAi9va/flyd8YtxyJckySRlk6I96SzTMz8P4snyTeQ
-   g==;
-X-IronPort-AV: E=Sophos;i="5.98,300,1673938800"; 
-   d="asc'?scan'208";a="144483518"
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa6.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 29 Mar 2023 05:45:28 -0700
-Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
- chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Wed, 29 Mar 2023 05:45:28 -0700
-Received: from wendy (10.10.115.15) by chn-vm-ex01.mchp-main.com
- (10.10.85.143) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
- Transport; Wed, 29 Mar 2023 05:45:25 -0700
-Date: Wed, 29 Mar 2023 13:45:12 +0100
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
-	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
-	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>
-Subject: Re: [PATCH 6.2 000/240] 6.2.9-rc1 review
-Message-ID: <3d21953f-7b60-4650-b9e9-438f45cde8d0@spud>
-References: <20230328142619.643313678@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFA3AFF7;
+	Wed, 29 Mar 2023 15:08:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2ED3C433EF;
+	Wed, 29 Mar 2023 15:08:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1680102483;
+	bh=sqyJuVOPn12HXs42svFyLzzMir/9VKtRH5dGYB/kq/A=;
+	h=From:Date:Subject:To:Cc:From;
+	b=ecM66mq11hK3JVb5LbtYd2UcdYMEaT6WOpUIGju10bPLRuZXUoC5+7LFGLHf61/Rm
+	 NBDC6y1FYpYt7WDsCrzCRpaBwelMHT0bgO4DnKq+eN7UoNsjAwHYbpwxnx47BqZ/Su
+	 cpLJJyVI4h2wWNG14Ev1nNF8qXOyjjKG0MEbJsHOnSplHXSJsl7IuMls/Ygurb6gMC
+	 SMjgQkDSI1rgxI4sF49G0e2XL+r09bzGzL4CnDNt7mFrtKUApvSQsR4VbJJWa8JKw2
+	 vdOrxQ6R6Q09fZfv/0al2y21rmlN9bEai1TLGwsuNCOBt27DTyI2mPIyOiJvg1/J/l
+	 /GGSXAtiXQnVQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 29 Mar 2023 08:08:01 -0700
+Subject: [PATCH net-next] net: ethernet: ti: Fix format specifier in
+ netcp_create_interface()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="FAzB7HwGpvW87Uc5"
-Content-Disposition: inline
-In-Reply-To: <20230328142619.643313678@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230329-net-ethernet-ti-wformat-v1-1-83d0f799b553@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAFBUJGQC/x2NSwrDMAxErxK0rsC1Sfq5SulCcZVaizhFFmkg5
+ O61u5vH8GZ2KKzCBe7dDsqrFFlyhfOpg5govxnlVRm888EFf8PMhmyJtQUT/E6LzmRIkeg6hN4
+ N/QWqPVJhHJVyTM2fqRhrKz7Kk2z/ywe0kcybwfM4fuMEsgGMAAAA
+To: davem@davemloft.net, edumazet@google.com, kuba@kernel.org, 
+ pabeni@redhat.com
+Cc: nathan@kernel.org, ndesaulniers@google.com, trix@redhat.com, 
+ razor@blackwall.org, kerneljasonxing@gmail.com, netdev@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2668; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=sqyJuVOPn12HXs42svFyLzzMir/9VKtRH5dGYB/kq/A=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCkqIUEb55980mla2v5HXet9VBKL975fT6fvv5d29ZNYk
+ soyzz3tHaUsDGIcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiG6sYGS6/PJbdt6nv6u9a
+ 7XvB99JdxeYFtS/efudjJqOriOW/8z4M/6yqXKrWPQg7JhvKk1aZ/0Tu38+q1JgVL/Q8nRQUbJe
+ 85gUA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
---FAzB7HwGpvW87Uc5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+After commit 3948b05950fd ("net: introduce a config option to tweak
+MAX_SKB_FRAGS"), clang warns:
 
-On Tue, Mar 28, 2023 at 04:39:23PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.9 release.
-> There are 240 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+  drivers/net/ethernet/ti/netcp_core.c:2085:4: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+                          MAX_SKB_FRAGS);
+                          ^~~~~~~~~~~~~
+  include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
+          dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+                                                                 ~~~     ^~~~~~~~~~~
+  include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
+                  _p_func(dev, fmt, ##__VA_ARGS__);                       \
+                               ~~~    ^~~~~~~~~~~
+  include/linux/skbuff.h:352:23: note: expanded from macro 'MAX_SKB_FRAGS'
+  #define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS
+                        ^~~~~~~~~~~~~~~~~~~~
+  ./include/generated/autoconf.h:11789:30: note: expanded from macro 'CONFIG_MAX_SKB_FRAGS'
+  #define CONFIG_MAX_SKB_FRAGS 17
+                               ^~
+  1 warning generated.
 
-Nothing unexpected testing wise on our RISC-V stuff..
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Follow the pattern of the rest of the tree by changing the specifier to
+'%u' and casting MAX_SKB_FRAGS explicitly to 'unsigned int', which
+eliminates the warning.
 
-Thanks,
-Conor.
+Fixes: 3948b05950fd ("net: introduce a config option to tweak MAX_SKB_FRAGS")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+I am a little confused as to why the solution for this warning is
+casting to 'unsigned int' rather than just updating all the specifiers
+to be '%d', as I do not see how MAX_SKB_FRAGS can be any type other than
+just 'int' but I figured I would be consistent with the other fixes I
+have seen around this issue.
+---
+ drivers/net/ethernet/ti/netcp_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---FAzB7HwGpvW87Uc5
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
+index 1bb596a9d8a2..d829113c16ee 100644
+--- a/drivers/net/ethernet/ti/netcp_core.c
++++ b/drivers/net/ethernet/ti/netcp_core.c
+@@ -2081,8 +2081,8 @@ static int netcp_create_interface(struct netcp_device *netcp_device,
+ 	netcp->tx_pool_region_id = temp[1];
+ 
+ 	if (netcp->tx_pool_size < MAX_SKB_FRAGS) {
+-		dev_err(dev, "tx-pool size too small, must be at least %ld\n",
+-			MAX_SKB_FRAGS);
++		dev_err(dev, "tx-pool size too small, must be at least %u\n",
++			(unsigned int)MAX_SKB_FRAGS);
+ 		ret = -ENODEV;
+ 		goto quit;
+ 	}
 
------BEGIN PGP SIGNATURE-----
+---
+base-commit: 3b064f541be822dc095991c6dda20a75eb51db5e
+change-id: 20230329-net-ethernet-ti-wformat-acaa86350657
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZCQy2AAKCRB4tDGHoIJi
-0vY1AP9wJpeSfm3cEuOrHzfqbzErLpYa9f9/3zAy1MlW3k+gFQEAiFOwWKhMsVfi
-trse0uh+JRoFe8yoiv4MHLWjRjhNmQA=
-=OLmW
------END PGP SIGNATURE-----
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
---FAzB7HwGpvW87Uc5--
