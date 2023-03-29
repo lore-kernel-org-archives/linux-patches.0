@@ -1,81 +1,76 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC393882B
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 21:54:28 +0000 (UTC)
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-545cb3c9898so244399317b3.7
-        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 14:54:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680126867;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wuJnhqOglm39EigVBOorfLFET4EJvRI41CYQanO44wE=;
-        b=RR7FRCugnk5U51rg3Y0p5oRleymdIcY3kRaH41wkygg/t7izHSgVSqpiOOlLqo0q3p
-         lp+FFjkF2hXhFKtua4KcjqxOGgnkMFiNy6ea5u497E554KmNIyY6xDeu6ceI+U4HPLGE
-         iTIeoMgZCdrQ3BYNTi6l2TrELklRlSuEDyrTB3+M+6XZV6zuuCeEQoEKLbf9AqCP9RQN
-         aQttkXbUHWfiy4l3lyIru146D49LXUkbCiCk54XMlrRnmmIhyblFBIWk8gBHiiRKHy/R
-         NGhk1+TKyEXLECw2JxuFWDsjlK79hfO4ZdB4TOmQL8WsMZ09CkB2WRcQryQaLqYxffFa
-         3umg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680126867;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wuJnhqOglm39EigVBOorfLFET4EJvRI41CYQanO44wE=;
-        b=Q16K8HCXdeLNjjahT9s7RKaCXkOh1InOJeO3tTeHsmhDPC4iTR3B4WgiasTBmMvqrC
-         G6JzkbaT+oGHQ1moDP1ea0ZdrhHnzxTBGjR0azJF/bV2GeZe/ld/NI+yDPIvvOdatrJ+
-         HiH7QgDabHfzf89gBFnzzhfVJVLm4q8FESp5DxKqAwnkffJgVBSt6A/IXqZR7Gqhmul6
-         X5DQ8CCb74X0aPgMgkFsO7bkP23giVtfrLF2YLMQZuNA7xOhWK7yBR5VjrqaQifhhoKv
-         ZBgtK22EsPghUfjf/Po6B8pwkEpR40Xcxb52QvVImdxYE1mnYFFGgiaSyr3RQOmBDhEx
-         S+fQ==
-X-Gm-Message-State: AAQBX9dDEO8HgtfHkzz5UcXoL2d9Cv7Jb2xCbLe616y9+aS44NxUdiEF
-	/5fwpAr52JLlDaY0VDdaZK8=
-X-Google-Smtp-Source: AKy350bJRteG/ORlYIW4b6bWV9t0iBvfTo+73hIctNo2CSCTcOD0C9HvwPFtn1vOfm5LoswRNSXRxA==
-X-Received: by 2002:a81:4ecc:0:b0:544:4d3d:4231 with SMTP id c195-20020a814ecc000000b005444d3d4231mr21168821ywb.47.1680126867682;
-        Wed, 29 Mar 2023 14:54:27 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id by1-20020a05690c082100b00545a08184f5sm3195290ywb.133.2023.03.29.14.54.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 14:54:27 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 29 Mar 2023 14:54:26 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/224] 6.1.22-rc1 review
-Message-ID: <232b80c4-e885-43f4-8f77-924cd1b763fe@roeck-us.net>
-References: <20230328142617.205414124@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664F929A0
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 22:33:14 +0000 (UTC)
+Date: Wed, 29 Mar 2023 22:32:58 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1680129186; x=1680388386;
+	bh=sT/rlttzNSF7UJt0mIvVFloU5vc3XfQjYu+rGHSgh10=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=Tn7sB5nJn4N2i7HWNE/zjhOZpRWOd6S0DMu6MgG5akvtvuHDXIMQntUfXxB7q8YFV
+	 ww54eUY7myQqcAwFR7VLBnTJTYefMwwIJUSd+2AvdYeIzSkTteD8eSVbrwMy0TkhKX
+	 bm6D5yLgYepYQXtfCdLvSC/u8be2ZT1Il99R8/invz9CO7ra4RUXBVVKTI1+W/eZV0
+	 0GULkuJc0PI+XbKrRe06xlv447qC+Wd5YlyjG3y+uesNyVLx/41cwZmwPKvNUSg3d0
+	 yjgz38rp3F0VIWeivFzxTGKsqB/1Sk1y44SEDCduZiTPdsjZ4RsqMtPW3Z7rHkVwU2
+	 8adQcBLMH0gHg==
+To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>
+From: y86-dev@protonmail.com
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: [PATCH v3 02/13] rust: sync: add `assume_init` to `UniqueArc`
+Message-ID: <20230329223239.138757-3-y86-dev@protonmail.com>
+In-Reply-To: <20230329223239.138757-1-y86-dev@protonmail.com>
+References: <20230329223239.138757-1-y86-dev@protonmail.com>
+Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230328142617.205414124@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 28, 2023 at 04:39:56PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.22 release.
-> There are 224 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 30 Mar 2023 14:25:33 +0000.
-> Anything received after that time might be too late.
-> 
+From: Benno Lossin <y86-dev@protonmail.com>
 
-Build results:
-	total: 155 pass: 155 fail: 0
-Qemu test results:
-	total: 519 pass: 519 fail: 0
+Adds the `assume_init` function to `UniqueArc<MaybeUninit<T>>` that
+unsafely assumes the value to be initialized and yields a value of type
+`UniqueArc<T>`. This function is used when manually initializing the
+pointee of an `UniqueArc`.
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+---
+ rust/kernel/sync/arc.rs | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-Guenter
+diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+index f2f1c83d72ba..16ec174637b2 100644
+--- a/rust/kernel/sync/arc.rs
++++ b/rust/kernel/sync/arc.rs
+@@ -489,6 +489,17 @@ impl<T> UniqueArc<MaybeUninit<T>> {
+     /// Converts a `UniqueArc<MaybeUninit<T>>` into a `UniqueArc<T>` by wr=
+iting a value into it.
+     pub fn write(mut self, value: T) -> UniqueArc<T> {
+         self.deref_mut().write(value);
++        // SAFETY: We just wrote the value to be initialized.
++        unsafe { self.assume_init() }
++    }
++
++    /// Unsafely assume that `self` is initialized.
++    ///
++    /// # Safety
++    ///
++    /// The caller guarantees that the value behind this pointer has been =
+initialized. It is
++    /// *immediate* UB to call this when the value is not initialized.
++    pub unsafe fn assume_init(self) -> UniqueArc<T> {
+         let inner =3D ManuallyDrop::new(self).inner.ptr;
+         UniqueArc {
+             // SAFETY: The new `Arc` is taking over `ptr` from `self.inner=
+` (which won't be
+--
+2.39.2
+
+
