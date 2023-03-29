@@ -1,25 +1,25 @@
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6FCE4C8
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 22:34:00 +0000 (UTC)
-Date: Wed, 29 Mar 2023 22:33:49 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FDEE4CB
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 22:34:01 +0000 (UTC)
+Date: Wed, 29 Mar 2023 22:33:40 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680129238; x=1680388438;
-	bh=sxLceGSRcRRyUDLrAQ3TsPyF0muTqsPNCkcHAqeAS3Y=;
+	s=protonmail3; t=1680129240; x=1680388440;
+	bh=WBq9Qox9RYulnSw9oc/MGso5/S0eX4nkpu/+y4M+6as=;
 	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
 	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=Zwb1MUx0yFoVE9sf9Mb1tWUXfmh2qVpyjWSLpofWZdfMidwMRgbwK6j4js7H30ZOn
-	 blYDhGfDJAyc8p99nIdH+KopD/vrdi+3JUmIDevsR2jEkgvPTq1wDmTlhoEAL1gPgh
-	 MQipP6aGvkNdpzcpVvTWmfiCN57Bemt5dm/ayMF7HV5c29RF+ldIsAgWYuQJQSHcO+
-	 QW0HjHotWaWJ3MbboE6J2l3a1dPFzqIiOhfjlCOrJlf9kILO1YsXSVuBIND185TWLU
-	 n5qo/ZQzDtNp0RouDoSeKI0FvS82yN0SfU5MLppM08yhy3jsk4aEyrPOjdJojGsnim
-	 vTlaZqNbEYA5g==
+	b=J0V9SVh1KtaWFwjveTDKp+0NCuN4siA12pgB9f0jXBxXKUd2CYMTN8WxeLyy3AXw2
+	 Rxu4x25pGOSzXCwcnvHL3voDdw8cPcqnMf14tGv7kmNOJYwuTeksOIIhy8uKqWY1Lr
+	 2IlmLEccE5DPrNzujrRTD/+963tKd/+2XLo4RhYz9Nm3nwDWqTgOTiLbeMk2hkOmx8
+	 bjf3LlAU5vp+1z5ltRi84yZdIVwOSiQqS/t35tJdaU58lNfqYM6WbCEtK1JiKMXkeg
+	 LCK7ol3OjeMcCY3G5enM7jha0pX0v/QiZ1966SH5Ci6TzkQnOnxqkII7wqSFWtWMTH
+	 ANnJrvM1T8UzQ==
 To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>
 From: y86-dev@protonmail.com
 Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: [PATCH v3 12/13] rust: sync: reduce stack usage of `UniqueArc::try_new_uninit`
-Message-ID: <20230329223239.138757-13-y86-dev@protonmail.com>
+Subject: [PATCH v3 10/13] rust: prelude: add `pin-init` API items to prelude
+Message-ID: <20230329223239.138757-11-y86-dev@protonmail.com>
 Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -32,83 +32,40 @@ Content-Transfer-Encoding: quoted-printable
 
 From: Benno Lossin <y86-dev@protonmail.com>
 
-`UniqueArc::try_new_uninit` calls `Arc::try_new(MaybeUninit::uninit())`.
-This results in the uninitialized memory being placed on the stack,
-which may be arbitrarily large due to the generic `T` and thus could
-cause a stack overflow for large types.
-
-Change the implementation to use the pin-init API which enables in-place
-initialization. In particular it avoids having to first construct and
-then move the uninitialized memory from the stack into the final location.
+Add `pin-init` API macros and traits to the prelude.
 
 Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
 ---
- rust/kernel/lib.rs      |  1 -
- rust/kernel/sync/arc.rs | 14 ++++++++++++--
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ rust/kernel/prelude.rs | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-index 3e2777d26ff5..d9df77132fa2 100644
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -27,7 +27,6 @@
- #[cfg(not(CONFIG_RUST))]
- compile_error!("Missing kernel configuration for conditional compilation")=
-;
+diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
+index 0bc1c97e5604..fcdc511d2ce8 100644
+--- a/rust/kernel/prelude.rs
++++ b/rust/kernel/prelude.rs
+@@ -18,7 +18,7 @@ pub use core::pin::Pin;
+ pub use alloc::{boxed::Box, vec::Vec};
 
--#[allow(unused_extern_crates)]
- // Allow proc-macros to refer to `::kernel` inside the `kernel` crate (thi=
-s crate).
- extern crate self as kernel;
+ #[doc(no_inline)]
+-pub use macros::{module, vtable};
++pub use macros::{module, pin_data, pinned_drop, vtable};
 
-diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-index 77a3833cc265..4ed6329a5e5f 100644
---- a/rust/kernel/sync/arc.rs
-+++ b/rust/kernel/sync/arc.rs
-@@ -18,6 +18,7 @@
- use crate::{
-     bindings,
-     error::{Error, Result},
-+    init,
-     init::{InPlaceInit, Init, PinInit},
-     types::{ForeignOwnable, Opaque},
- };
-@@ -29,6 +30,7 @@ use core::{
-     pin::Pin,
-     ptr::NonNull,
- };
-+use macros::pin_data;
+ pub use super::build_assert;
 
- /// A reference-counted pointer to an instance of `T`.
- ///
-@@ -121,6 +123,7 @@ pub struct Arc<T: ?Sized> {
-     _p: PhantomData<ArcInner<T>>,
- }
+@@ -27,8 +27,12 @@ pub use super::build_assert;
+ pub use super::dbg;
+ pub use super::{pr_alert, pr_crit, pr_debug, pr_emerg, pr_err, pr_info, pr=
+_notice, pr_warn};
 
-+#[pin_data]
- #[repr(C)]
- struct ArcInner<T: ?Sized> {
-     refcount: Opaque<bindings::refcount_t>,
-@@ -501,9 +504,16 @@ impl<T> UniqueArc<T> {
++pub use super::{init, pin_init, try_init, try_pin_init};
++
+ pub use super::static_assert;
 
-     /// Tries to allocate a new [`UniqueArc`] instance whose contents are =
-not initialised yet.
-     pub fn try_new_uninit() -> Result<UniqueArc<MaybeUninit<T>>> {
--        Ok(UniqueArc::<MaybeUninit<T>> {
-+        // INVARIANT: The refcount is initialised to a non-zero value.
-+        let inner =3D Box::init(init!(ArcInner {
-+            // SAFETY: There are no safety requirements for this FFI call.
-+            refcount: Opaque::new(unsafe { bindings::REFCOUNT_INIT(1) }),
-+            data <- init::uninit(),
-+        }))?;
-+        Ok(UniqueArc {
-             // INVARIANT: The newly-created object has a ref-count of 1.
--            inner: Arc::try_new(MaybeUninit::uninit())?,
-+            // SAFETY: The pointer from the `Box` is valid.
-+            inner: unsafe { Arc::from_inner(Box::leak(inner).into()) },
-         })
-     }
- }
+ pub use super::error::{code::*, Error, Result};
+
+ pub use super::{str::CStr, ThisModule};
++
++pub use super::init::{InPlaceInit, Init, PinInit};
 --
 2.39.2
 
