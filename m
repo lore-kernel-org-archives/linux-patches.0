@@ -1,25 +1,25 @@
-Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3DCAD30
-	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 22:33:50 +0000 (UTC)
-Date: Wed, 29 Mar 2023 22:33:44 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8487FBA20
+	for <patches@lists.linux.dev>; Wed, 29 Mar 2023 22:33:59 +0000 (UTC)
+Date: Wed, 29 Mar 2023 22:33:53 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680129227; x=1680388427;
-	bh=Bdc006Fpq8n7WyytZe9I903nLq3Fv9jO+Q4yAlMCUQY=;
+	s=protonmail3; t=1680129237; x=1680388437;
+	bh=YF0KQdg01n5qzHolAR22LM31sPRu0U9EL2Fgy7BvhWY=;
 	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
 	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=w5ZUkhdmGEPDEY/1o6VefbNUusRzKSfHdwn7YLG0PZcAudrlpoUNyKpn+xGayAbJB
-	 p4pWCHvD1FuTc/ntKfgTwYgcW/FQ3j3f+axtcMtYy4FS8gqEJ9UEdMQ3aCpNt2P8VZ
-	 WBXDYIbHqYymKfUnt/5bd31fcxsTezM1nOd8RWf+Y7nAHaetKED2LTXptMZ6gBWQ8P
-	 fwdhpe4kURLsv8QGapI+q0v29B8wZdhJCswUrlN8aYJssWBc2QWdsLmZ0zMAuieycv
-	 kjBdd07o9HPGfYTAL5JJqZfQet9SyemuTcc45d+Fbb6B0Pby7D5TWXrE9Nwdz9O6Kx
-	 nJdIVjozJb01g==
+	b=K9Mcc2lgyAmLApQ1FKC5qh6AYqyIwn0z69T0ipfKpv9PzSGlJ6nZCEm9X8+lCGn+5
+	 ThpO2yyOmgEQmeLNXPSMIvWa0B7ZjDqiVcH6AK8Uvxjvo2hzHpzeL94RkO1dfQ5/oC
+	 M5teL0DzerQKN4/EXPZWJm9VyfhbrfSQjdfPBtoHWEw7Uv9+VRgxnbgMhONhPTuARe
+	 PKmjwAfroRqXsSzwqLMTr3sTESGEUwacs6jny3JlQkdgKR3IP9ifxXrRQoMj3xVpbW
+	 Tw/DVhXp51T0Kr41EfIK8addT277VjnnnH9JAFjFgfA7JAxdWD14CsB2P7edEUDRLJ
+	 vQ4MIN7biMu4w==
 To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>
 From: y86-dev@protonmail.com
 Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: [PATCH v3 11/13] rust: types: add common init-helper functions for `Opaque`
-Message-ID: <20230329223239.138757-12-y86-dev@protonmail.com>
+Subject: [PATCH v3 13/13] rust: sync: add functions for initializing `UniqueArc<MaybeUninit<T>>`
+Message-ID: <20230329223239.138757-14-y86-dev@protonmail.com>
 Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -32,126 +32,54 @@ Content-Transfer-Encoding: quoted-printable
 
 From: Benno Lossin <y86-dev@protonmail.com>
 
-Add helper functions to more easily initialize `Opaque<T>` via FFI and
-rust raw initializer functions.
-These functions take a function pointer to the FFI/raw initialization
-function and take between 0-4 other arguments. It then returns an
-initializer that uses the FFI/raw initialization function along with the
-given arguments to initialize an `Opaque<T>`.
+Add two functions `init_with` and `pin_init_with` to
+`UniqueArc<MaybeUninit<T>>` to initialize the memory of already allocated
+`UniqueArc`s. This is useful when you want to allocate memory check some
+condition inside of a context where allocation is forbidden and then
+conditionally initialize an object.
 
 Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
 ---
- rust/kernel/init.rs  |  9 +++++++++
- rust/kernel/types.rs | 47 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 56 insertions(+)
+ rust/kernel/sync/arc.rs | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-index a923546696ce..485970b6522d 100644
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -177,6 +177,14 @@
- //! }
- //! ```
- //!
-+//! For the special case where initializing a field is a single FFI-functi=
-on call that cannot fail,
-+//! there exist helper functions [`Opaque::ffi_init`]. These functions ini=
-tialize a single
-+//! [`Opaque`] field by just delegating to the FFI-function. You can use t=
-hese in combination with
-+//! [`pin_init!`].
-+//!
-+//! For more information on how to use [`pin_init_from_closure()`], take a=
- look at the uses inside
-+//! the `kernel` crate. The [`sync`] module is a good starting point.
-+//!
- //! [`sync`]: kernel::sync
- //! [pinning]: https://doc.rust-lang.org/std/pin/index.html
- //! [structurally pinned fields]:
-@@ -187,6 +195,7 @@
- //! [`impl PinInit<T, E>`]: PinInit
- //! [`impl Init<T, E>`]: Init
- //! [`Opaque`]: kernel::types::Opaque
-+//! [`Opaque::ffi_init`]: kernel::types::Opaque::ffi_init
- //! [`pin_data`]: ::macros::pin_data
-
- use crate::{
-diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-index ff2b2fac951d..dbfae9bb97ce 100644
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -2,6 +2,7 @@
-
- //! Kernel types.
-
-+use crate::init::{self, PinInit};
- use alloc::boxed::Box;
- use core::{
-     cell::UnsafeCell,
-@@ -248,6 +249,52 @@ impl<T> Opaque<T> {
+diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+index 4ed6329a5e5f..64b0e9d67025 100644
+--- a/rust/kernel/sync/arc.rs
++++ b/rust/kernel/sync/arc.rs
+@@ -540,6 +540,30 @@ impl<T> UniqueArc<MaybeUninit<T>> {
+             inner: unsafe { Arc::from_inner(inner.cast()) },
+         }
      }
- }
-
-+macro_rules! opaque_init_funcs {
-+    ($($abi:literal $name:ident($($arg_name:ident: $arg_typ:ident),*);)*) =
-=3D> {
-+        impl<T> Opaque<T> {
-+            $(
-+                /// Create an initializer using the given initializer func=
-tion.
-+                ///
-+                /// # Safety
-+                ///
-+                /// The given function **must** under all circumstances in=
-itialize the memory
-+                /// location to a valid `T`. If it fails to do so it resul=
-ts in UB.
-+                ///
-+                /// If any parameters are given, those need to be valid fo=
-r the function. Valid
-+                /// means that calling the function with those parameters =
-complies with the above
-+                /// requirement **and** every other requirement on the fun=
-ction itself.
-+                pub unsafe fn $name<$($arg_typ),*>(
-+                    init_func: unsafe extern $abi fn(*mut T $(, $arg_typ)*=
-),
-+                    $($arg_name: $arg_typ,)*
-+                ) -> impl PinInit<Self> {
-+                    // SAFETY: The safety contract of this function ensure=
-s that `init_func` fully
-+                    // initializes `slot`.
-+                    unsafe {
-+                        init::pin_init_from_closure(move |slot| {
-+                            init_func(Self::raw_get(slot) $(, $arg_name)*)=
-;
-+                            Ok(())
-+                        })
-+                    }
-+                }
-+            )*
++
++    /// Initialize `self` using the given initializer.
++    pub fn init_with<E>(mut self, init: impl Init<T, E>) -> core::result::=
+Result<UniqueArc<T>, E> {
++        // SAFETY: The supplied pointer is valid for initialization.
++        match unsafe { init.__init(self.as_mut_ptr()) } {
++            // SAFETY: Initialization completed successfully.
++            Ok(()) =3D> Ok(unsafe { self.assume_init() }),
++            Err(err) =3D> Err(err),
 +        }
 +    }
-+}
 +
-+opaque_init_funcs! {
-+    "C" ffi_init();
-+    "C" ffi_init1(arg1: A1);
-+    "C" ffi_init2(arg1: A1, arg2: A2);
-+    "C" ffi_init3(arg1: A1, arg2: A2, arg3: A3);
-+    "C" ffi_init4(arg1: A1, arg2: A2, arg3: A3, arg4: A4);
-+
-+    "Rust" manual_init();
-+    "Rust" manual_init1(arg1: A1);
-+    "Rust" manual_init2(arg1: A1, arg2: A2);
-+    "Rust" manual_init3(arg1: A1, arg2: A2, arg3: A3);
-+    "Rust" manual_init4(arg1: A1, arg2: A2, arg3: A3, arg4: A4);
-+}
-+
- /// A sum type that always holds either a value of type `L` or `R`.
- pub enum Either<L, R> {
-     /// Constructs an instance of [`Either`] containing a value of type `L=
-`.
++    /// Pin-initialize `self` using the given pin-initializer.
++    pub fn pin_init_with<E>(
++        mut self,
++        init: impl PinInit<T, E>,
++    ) -> core::result::Result<Pin<UniqueArc<T>>, E> {
++        // SAFETY: The supplied pointer is valid for initialization and we=
+ will later pin the value
++        // to ensure it does not move.
++        match unsafe { init.__pinned_init(self.as_mut_ptr()) } {
++            // SAFETY: Initialization completed successfully.
++            Ok(()) =3D> Ok(unsafe { self.assume_init() }.into()),
++            Err(err) =3D> Err(err),
++        }
++    }
+ }
+
+ impl<T: ?Sized> From<UniqueArc<T>> for Pin<UniqueArc<T>> {
 --
 2.39.2
 
