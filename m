@@ -1,28 +1,28 @@
 Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943EE79C6
-	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 15:20:01 +0000 (UTC)
-Date: Thu, 30 Mar 2023 15:19:51 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D064379C6
+	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 15:28:24 +0000 (UTC)
+Date: Thu, 30 Mar 2023 15:28:17 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680189597; x=1680448797;
-	bh=Z3JCbWaaWUMZEyUU5ytYZUzOcZ8CnK3JDGgkqkS7+eI=;
+	s=protonmail3; t=1680190102; x=1680449302;
+	bh=kpaOTyrKqsw1XHAwXmaqpibdDWFN/5HsmHgDh0lZUrg=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=EWfJX+CKcZmbhRYtFful5fvUIEi+TDwouuLODz7hj1r1918HfMDyWmRZFA7CEdBGa
-	 MFSu1v9YXcYEHVMI5dI7lkiMhcjF3LTeMNPQRxUIOHo17qwuyX1Twuza49DxD4U+i7
-	 JjL/CScn6HFXql4n8Cj5Vozl9xDbIulns4ebrZVUpSD7po9J9WmoHeJ1TKlXL/ZCmz
-	 js4+NtwWITHIShFuzwi1eZ0e9c/WfErbn4klebzYePWA61DNiUL3TNT4KHrtMC8eEr
-	 YYicgA9rE6pVOKM5FOa27XbxXKsM9hAtPIcPT52BTt8gGo1ItxzZWaD+07p8CYqnTW
-	 57va7nW5NWcSQ==
+	b=odsQp3kuPYH79BQTdgIjYANBF/X5AwTkHo+Rx+bFHO+jN8jDLzyn/3n3aV3s5tX+S
+	 bUUbfGNFYEz9U7kyM7IJxHptVFFoh9xJC4OzG2tvcX1aPlBVT/Og0t42oiFq7VX4bg
+	 ZNv1QBD/PHk8n6EFgpLYq9lECnxEvb2FZUPbXGr84UXs82YAm34zWk/lDWt2B0CjX5
+	 5bdOAOi5zwpCtvpYrEonpP296gvgJRfTzA5j6qTMwkcV8tsfo5j2vikdhtAGEuEIvb
+	 NctaMjaE+N187DL9lX+jQES9OGdzCMkWerxcpRStLoDW5fuvSgc/KxVGiz72rdeSv9
+	 h3hthoAXLcpPA==
 To: Alice Ryhl <alice@ryhl.io>
 From: Benno Lossin <y86-dev@protonmail.com>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Gary Guo <gary@garyguo.net>
-Subject: Re: [PATCH v3 08/13] rust: init: add `stack_pin_init!` macro
-Message-ID: <4b048bfc-e4fe-8c2f-ebfe-9b6a410cd8b8@protonmail.com>
-In-Reply-To: <ada8307d-5177-2094-683f-bce619f1ea44@ryhl.io>
-References: <20230329223239.138757-1-y86-dev@protonmail.com> <20230329223239.138757-9-y86-dev@protonmail.com> <ada8307d-5177-2094-683f-bce619f1ea44@ryhl.io>
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+Subject: Re: [PATCH v3 06/13] rust: init/sync: add `InPlaceInit` trait to pin-initialize smart pointers
+Message-ID: <3ea5cd8d-84ca-59bd-de50-fef185233a50@protonmail.com>
+In-Reply-To: <1f93a045-5bd8-e07f-cf1b-7b1196c8ab54@ryhl.io>
+References: <20230329223239.138757-1-y86-dev@protonmail.com> <20230329223239.138757-7-y86-dev@protonmail.com> <1f93a045-5bd8-e07f-cf1b-7b1196c8ab54@ryhl.io>
 Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,56 +33,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On 30.03.23 17:00, Alice Ryhl wrote:
+On 30.03.23 16:37, Alice Ryhl wrote:
 > On 3/30/23 00:33, y86-dev@protonmail.com wrote:
 >> From: Benno Lossin <y86-dev@protonmail.com>
 >>
->> The `stack_pin_init!` macro allows pin-initializing a value on the
->> stack. It accepts a `impl PinInit<T, E>` to initialize a `T`. It allows
->> propagating any errors via `?` or handling it normally via `match`.
+>> The `InPlaceInit` trait that provides two functions, for initializing
+>> using `PinInit<T, E>` and `Init<T>`. It is implemented by `Arc<T>`,
+>> `UniqueArc<T>` and `Box<T>`.
 >>
 >> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+>   > ---
+>   >
+>> +/// Smart pointer that can initialize memory in-place.
+>> +pub trait InPlaceInit<T>: Sized {
+>> +    /// Use the given initializer to in-place initialize a `T`.
+>> +    ///
+>> +    /// If `T: !Unpin` it will not be able to move afterwards.
+>> +    fn pin_init<E>(init: impl PinInit<T, E>) -> error::Result<Pin<Self>=
 >
-> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
->
->> ---
->> +#[macro_export]
->> +macro_rules! stack_pin_init {
->> +    (let $var:ident $(: $t:ty)? =3D $val:expr) =3D> {
->> +        let mut $var =3D $crate::init::__internal::StackInit$(::<$t>)?:=
-:uninit();
->> +        let mut $var =3D {
->> +            let val =3D $val;
->> +            unsafe { $crate::init::__internal::StackInit::init(&mut $va=
-r, val) }
->> +        };
->> +    };
->> +    (let $var:ident $(: $t:ty)? =3D? $val:expr) =3D> {
->> +        let mut $var =3D $crate::init::__internal::StackInit$(::<$t>)?:=
-:uninit();
->> +        let mut $var =3D {
->> +            let val =3D $val;
->> +            unsafe { $crate::init::__internal::StackInit::init(&mut $va=
-r, val)? }
->> +        };
->> +    };
+>> +    where
+>> +        Error: From<E>;
+>> +
+>> +    /// Use the given initializer to in-place initialize a `T`.
+>> +    fn init<E>(init: impl Init<T, E>) -> error::Result<Self>
+>> +    where
+>> +        Error: From<E>;
 >> +}
 >
-> This will be inconvenient to use if the initializer is infallible and is
-> used inside an infallible function. However, I'm not sure what a better
-> alternative would be. Perhaps we should have three variants?
+> This definition is potentially rather limiting, because it can only be
+> used with error types that can be converted into a `kernel::Error`. What
+> do you think of this alternative?
+>
+> pub trait InPlaceInit<T>: Sized {
+>       fn pin_init<E>(init: impl PinInit<T, E>) -> Result<Pin<Self>, E>
+>       where
+>           E: From<AllocError>;
+>
+>       fn init<E>(init: impl Init<T, E>) -> Result<Self, E>
+>       where
+>           E: From<AllocError>;
+> }
 
-That could be an option, any ideas for the syntax though? Or should it
-be a different macro like `stack_pin_init!` and `try_stack_pin_init!`?
+I initially implemented it like this, but it required almost always that
+`E` is specified, I will try and see if the situation is any different now,
+but I do not think so. In the user-space version of this API (see [1]) I
+have four functions, normal variants that return an `AllocError` and `try`
+variants that look exactly like what you suggested. In the kernel, we could
+make the normal variants as they are now and add the `try` variants as you
+described.
 
-> Also, maybe a `<-` rather than `=3D` would be more consistent?
-
-That is sadly not possible, since `<-` is not allowed after `ty` fragments.
-
-> Anyway, I don't think this should block the PR. We can revisit it later
-> if it becomes a problem.
-
-Sure.
+[1]: https://docs.rs/pinned-init/0.0.5/pinned_init/trait.InPlaceInit.html
 
 --
 Cheers,
