@@ -1,42 +1,42 @@
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A753201
-	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 14:36:53 +0000 (UTC)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 5C848320092D;
-	Thu, 30 Mar 2023 10:36:52 -0400 (EDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287196FB1
+	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 14:45:04 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id 879B1320093E;
+	Thu, 30 Mar 2023 10:45:03 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Thu, 30 Mar 2023 10:36:53 -0400
+  by compute3.internal (MEProxy); Thu, 30 Mar 2023 10:45:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1680187011; x=1680273411; bh=mEU0nion2muXlTfUR8cesDV/AWMQCwWe/7k
-	pJqZM+CM=; b=lOcePaeEvFUwkff08Ll9SURQYawK4c3C361GvZCwPNO8rSTU1vg
-	srgt5wYHN1Yy40ktgnBGN0nd3E3TsYANDXNm9/Ozsp55ZAoFXN4VZ3Z2QkbhL6jN
-	hdWhhPsgTK/DBP8IEvRTtPD1VsIKmszGKwp21ztfYvT4sWTWLUyIJ8CjdynUooII
-	g7KufWKRbsCK4z+CVq0dUPvraGm8nGf5vU8R2FpDFI+RYwEiFzkQ+9HT/bBNFdCU
-	AxeH8n1EkukN7daXHS4H8FpOOVPKr+08KlXq28/ENZIMDzWQlkqaOZblQ9qD3U39
-	oJNz4/eioT5pmdrZdgYlKcvdrcHjObCryqA==
+	1680187503; x=1680273903; bh=eEEZ+8AfxYs0SGGK+yrFh1itzbAaHrsVMFs
+	UFFMshlo=; b=pfxN3IQjKzzMo0Ixa0+GXvS7zmYXHkbJBNrNDYsCCs30dB1EIv2
+	vzO/B6wa06tdi8ZFO70TBX/8CpP8a66//bO3CF316ALp6O+gQyOOnHS2wETx4xlP
+	DUNa+Rlx+JOEUBeatPX8Jb9jcKg1+toPj6PXFEHmSHn1JIbwnIAvHeF4u/u/nkaf
+	x70N1rBGhYuGH0TWiwnAeTtFS2QD82qmUnWKviC2+iiJoUor/HFUNQaSr71tTAul
+	KkGnDPjEUkH+vif4yn7Bz9vOFFUwEmiQMG/LRUUPOJ4Nlwi/czrOTxwzHwkz/Gpy
+	RqdHs2+oyf5y6arkAIG884+pT7siHbDUoFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
 	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1680187011; x=1680273411; bh=mEU0nion2muXlTfUR8cesDV/AWMQCwWe/7k
-	pJqZM+CM=; b=U+1Ihw8g8cVw3w0tdthGsHQW7Sg73ShV9oapDg+bYlxpaITQJpF
-	fOzcy6YWltiSJp9TFqtLRiS1R/PA20uF8f2t/j9oadz1isaD6OvLQ78TdlWRdYk9
-	KrCAfDgJlou6E8VcCM/VNnLpfqal0YXiD1WyH6E/C2mLRc5dTpzsyDl9WCn9B5jk
-	/kMZKcQjkM82Eb5yfrKFMZexfgV3jBChJXpnS7YC/P7asXQV2p5edjEZHOISA+eo
-	AdYqnlQiRiERUpgPa7eubr1Pb/Wgdw7nkFgl8QKsIECfbQARGi5yW6JgrXd2dU1+
-	Fa2accxo1rTadDmsrOUb2mUXjxJ0HO2akdw==
-X-ME-Sender: <xms:g54lZOB8RWwbfUdP-D5bdUHz7zOyDrUybfCnvvu--9FMsli_EVmbHQ>
-    <xme:g54lZIiHPS6I74Wp0Dh7Jq7xXPXpWwBN6ZFcL-ksCIuij_12u6j9DJF202M9Ou3Xu
-    hZCi3edGxwvKr-sxQ>
-X-ME-Received: <xmr:g54lZBk9t9Ao68W-pCXjJtsXJcL5u_F0ADlMyDtQ0_WH1viM1C4SRU3ftULEIMABppQ3byGBXy2kI0h4fD8Y6ELdzw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdehkedgjeejucetufdoteggodetrfdotf
+	1680187503; x=1680273903; bh=eEEZ+8AfxYs0SGGK+yrFh1itzbAaHrsVMFs
+	UFFMshlo=; b=Dd1oKzSkUlSptfN3q8E81cbrplV2+wGgYzYTmsa+KYKJlu3AfJ6
+	3tISYeksof/Ekt7lNAnOSGIjhnZvvsjzyZYWBS0ToQgq2qUqZ6Cq0YmGbSMOqGaw
+	V37TDr4psdRb6aYJnQSRW2LCjQGdwzDFnWLV8JsC6K0X/Ce2sgbWOMoqyAyWzZAj
+	Rep3y5UVerTAVHABpBlRY1c5ZHW9F7JPXMdgqo1zuDol0lbemLF4d/xykcQKhg4L
+	h5koENzeteiz+7/DWuNBbiPSUGf9kJQ2mztBBwX0tdAMMHwcVJgmsk32SxRl1gYj
+	6GJw4sY0qdVmd5me352RBlTQcEn/ii5VZwQ==
+X-ME-Sender: <xms:bqAlZNd1BgzlxjB0BWTut3AqYlH1jBKy_Q2-QTAP3Oy7tQrI0QOzRQ>
+    <xme:bqAlZLNyyUh-Rt4gTZql8fUVOK8J8SAS1bi9NPSmjTa2unqKYa1BX5T0BlAeTyM-E
+    6wUUaMCkXUXbZ_Y2A>
+X-ME-Received: <xmr:bqAlZGgAN-n5qfb8mG0KolhUvTXzNDot2PEdUOS8riF29EuWMJZTrMqmgAtpBjIvnvfw_5pE0YxCyB4rpPB95nKWvw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdehkedgjeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtfeejnecuhfhrohhmpeetlhhi
@@ -44,15 +44,15 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdehkedgjeejucetufdoteggod
     ehudduvdetkedvkedtudeludfgfffhudegjeeguedvvedtteevjeehheeiffefgeenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrlhhitggvse
     hrhihhlhdrihho
-X-ME-Proxy: <xmx:g54lZMzl2MQKpXrn4Wletjsbn7txpcmKyElTTielHY319dlscAOaQA>
-    <xmx:g54lZDTkIqtNEKVGhmUfiqhf2Sq8TorCRlfOT3kLjyyPaB2DY-tTkA>
-    <xmx:g54lZHZ-uC-atbcq6IGYswS_zopJwyERLc00TctXQr1l-4U9bRRxNQ>
-    <xmx:g54lZOGdA7QC66m6Firw3oWfIqCU-FJH5ikTynN7TOaPNNg9bbFZnw>
+X-ME-Proxy: <xmx:b6AlZG8IjIsS-t5IHzWxFJ-mwIfNBfyJ8H2juHjnBtdkwmVthw-NRg>
+    <xmx:b6AlZJsVy36bplWAHqxFP_Zd5KQERPF5e0Fma9yW_khj3EHOJtlguw>
+    <xmx:b6AlZFERrEce4MrwEvlivLNYeGFahM5Bpm8G_6mH9HncoAZaf7kkzg>
+    <xmx:b6AlZPDSxgveiF_p_M5LKhFJ3DouKldEJG0nsItMJhy8kHRzp3O8UA>
 Feedback-ID: i56684263:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Mar 2023 10:36:49 -0400 (EDT)
-Message-ID: <1f93a045-5bd8-e07f-cf1b-7b1196c8ab54@ryhl.io>
-Date: Thu, 30 Mar 2023 16:37:01 +0200
+ 30 Mar 2023 10:45:01 -0400 (EDT)
+Message-ID: <a31d0ea3-710d-8ac9-5be1-fa268a7aa36c@ryhl.io>
+Date: Thu, 30 Mar 2023 16:45:14 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,8 +61,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v3 06/13] rust: init/sync: add `InPlaceInit` trait to
- pin-initialize smart pointers
+Subject: Re: [PATCH v3 07/13] rust: init: add `PinnedDrop` trait and macros
 Content-Language: en-US
 To: y86-dev@protonmail.com
 Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -72,47 +71,25 @@ Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
  <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
  =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
 References: <20230329223239.138757-1-y86-dev@protonmail.com>
- <20230329223239.138757-7-y86-dev@protonmail.com>
+ <20230329223239.138757-8-y86-dev@protonmail.com>
 From: Alice Ryhl <alice@ryhl.io>
-In-Reply-To: <20230329223239.138757-7-y86-dev@protonmail.com>
+In-Reply-To: <20230329223239.138757-8-y86-dev@protonmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 3/30/23 00:33, y86-dev@protonmail.com wrote:
 > From: Benno Lossin <y86-dev@protonmail.com>
 > 
-> The `InPlaceInit` trait that provides two functions, for initializing
-> using `PinInit<T, E>` and `Init<T>`. It is implemented by `Arc<T>`,
-> `UniqueArc<T>` and `Box<T>`.
+> The `PinnedDrop` trait that facilitates destruction of pinned types.
+> It has to be implemented via the `#[pinned_drop]` macro, since the
+> `drop` function should not be called by normal code, only by other
+> destructors. It also only works on structs that are annotated with
+> `#[pin_data(PinnedDrop)]`.
 > 
+> Co-developed-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
 > Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
- > ---
- >
-> +/// Smart pointer that can initialize memory in-place.
-> +pub trait InPlaceInit<T>: Sized {
-> +    /// Use the given initializer to in-place initialize a `T`.
-> +    ///
-> +    /// If `T: !Unpin` it will not be able to move afterwards.
-> +    fn pin_init<E>(init: impl PinInit<T, E>) -> error::Result<Pin<Self>>
-> +    where
-> +        Error: From<E>;
-> +
-> +    /// Use the given initializer to in-place initialize a `T`.
-> +    fn init<E>(init: impl Init<T, E>) -> error::Result<Self>
-> +    where
-> +        Error: From<E>;
-> +}
 
-This definition is potentially rather limiting, because it can only be 
-used with error types that can be converted into a `kernel::Error`. What 
-do you think of this alternative?
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 
-pub trait InPlaceInit<T>: Sized {
-     fn pin_init<E>(init: impl PinInit<T, E>) -> Result<Pin<Self>, E>
-     where
-         E: From<AllocError>;
-
-     fn init<E>(init: impl Init<T, E>) -> Result<Self, E>
-     where
-         E: From<AllocError>;
-}
+I noticed the same thing as Gary with the name `create`, but otherwise LGTM.
