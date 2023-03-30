@@ -1,101 +1,211 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2108.outbound.protection.outlook.com [40.107.11.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C081C1FC4
-	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 12:49:51 +0000 (UTC)
-Received: by mail-wm1-f54.google.com with SMTP id u11-20020a05600c19cb00b003edcc414997so11680648wmq.3
-        for <patches@lists.linux.dev>; Thu, 30 Mar 2023 05:49:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20210112.gappssmtp.com; s=20210112; t=1680180589;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=9+K5/0WWDeVeEe+OTVzrXk5PiHrboI0Tjgq0g0AOhqY=;
-        b=LkAtv5oslcUMu1ahCRkvL4bj6CO/s2xK7gDrkZliP+k14ycQCTxe4y1p4uqMny88/k
-         Q69dmgwDRN9rJa+CkFIQ0e2ZDjcdI5sly3atK+TanUI/hlDoVAWQdky+oubsbKeq6uhm
-         ZioWh/6lnwhMIjzwcIVlN4NVgwp9jIBrBOeR+Hed/gwGo3+uFIdTqBqVHq/gJsbC0lsJ
-         HZCGmra7G7xYsn3EURw7Hm17EbfM0XHZKUPJLwa/2b9afH03sXUbkDwahtF/rCzaAKbv
-         /WaFxGdkES/Z60jQiNaSqDgKAUinYLs1wUXmCBEFu2kgRquPXxq3qcilQ5fYt5ib28Ad
-         59pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680180590;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9+K5/0WWDeVeEe+OTVzrXk5PiHrboI0Tjgq0g0AOhqY=;
-        b=4iXCJNLdFO1FEzocrLyv+F1rnDf/rxnrB+gn4WDzpWQc/pJVAI4Hr64iK/qnN8mxum
-         p/7XM1QhpXCOQGATjjPOrNnHdSCB4wcbxQreJn9gQADdkaEFeA8mMZwLMzUaUy1I3jLw
-         J999BPa8XgO4JpRz8MzL8+IWINT4DfLS2jLOqac54TXoB8gjRlkvuxMoBJrd/UDicTXM
-         mM92E8u9AOtkswG23QWaCduNkQ3ad5b3ocDuF/eSR5WdBI4+hrb0FMhulk+BE0W9CqYk
-         96JDGQwLclRV9HrQfLawiH1arhXVgBykvONCSnh47ke9JTQQerIkuJZ1TNe/JxOjK8QM
-         Mf9w==
-X-Gm-Message-State: AAQBX9fDgdtytyqVVtAPM7gY0wOpLYtF2NyFd1BB75vw/4LzB3NZY0nC
-	JPExaGQLvEfK5tstRvj+fiRDAA==
-X-Google-Smtp-Source: AKy350YVrGbxE3Bd4v1m+F3ok9Nrusg2V+E0fusX9dtc6+f5OdSxphjAN8y5r7KCDqNoGUKoYKHcGw==
-X-Received: by 2002:a1c:f20e:0:b0:3ef:6ae7:89bd with SMTP id s14-20020a1cf20e000000b003ef6ae789bdmr11318687wmc.6.1680180589697;
-        Thu, 30 Mar 2023 05:49:49 -0700 (PDT)
-Received: from localhost ([194.62.217.4])
-        by smtp.gmail.com with ESMTPSA id h16-20020a05600c315000b003eda46d6792sm6175846wmo.32.2023.03.30.05.49.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 05:49:49 -0700 (PDT)
-References: <20230329223239.138757-1-y86-dev@protonmail.com>
- <20230329223239.138757-4-y86-dev@protonmail.com>
-User-agent: mu4e 1.9.18; emacs 28.2.50
-From: Andreas Hindborg <nmi@metaspace.dk>
-To: y86-dev@protonmail.com
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn?=
- Roy Baron
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B651FC4
+	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 13:12:14 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=b+DO4IVEXKwUC5aTt7ZyIHmIM3ujwVWRwXsHqVh3G495tW0cJcrWrRvPm9dZvAFkHmN7Xz4YQ6Nxsh1k42+96D0MhV7FuSRBvArqfwmb0ZJrPh8Iu3yaW9DV1hHOYFvPfIDYZpdPl4wTToD/pkzCCt06fht/wQkqfMserTN2yqeymF2aleeq740RUm6J/crwHixj7mZSl4TQljJeW5Qd7ZxWuyoYDqTeYSFyrUJeYnbL6pFlM5dd6zWv/zw5LpODGrSJnwwU0PTmgK6in7nm0paalUYQj1B4TnE6Y6V7/X/Vf+wKSCENJlFEqC38BiF4mu4xrzaLJKH2JvbbFTvShQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fDmbHx9nMFKvqLWtDIhPn9iXjpJUtmra1+iXb848A+U=;
+ b=HgComkvBK0a71RFUGmM6nhQVaf0NSxv7tFkjPRpfpj1awWOreJeJnW9cod6TWKPZ0s+Gn49/jmAqqYDaJztp1wrzaeKNdJkmlxOyFFC7Tq3ymEdTiiCG9+XTeLv04WPXVoR+5N7JlA2l3vRUNn68RTwXiJPqJfjwJp6fCuO5kuP9YGvgc5O7otjrlFHSejmYqNqYAED81aZprDoYh05emVwJqcriDKNwv+ArsUd5y6B7r5BdAit7OtBRXkD6r3C6eTJcexedTckWwpUnVnmXSW6J/wF+gb4O355UklmRkfULt6/Rrw6h7h4M4rbZagXaBQhuJ0srLqgNNFDWhILmFA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
+ dkim=pass header.d=garyguo.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fDmbHx9nMFKvqLWtDIhPn9iXjpJUtmra1+iXb848A+U=;
+ b=zWjAzQNwQZGCk0RxMHs0uXInWlcMfP8BsIwrApzL9Q3nVeo+EfKfujfcii/9dDmRiK7viAtWwuL0TxPIKPacrk9d6kvr8S9ozwFNCZj7nwuAm0ZrEYGqEHa/ZXapIpycMTbQqt3uGM3h5213VwHBElobVE7EvJsU1UyhLdutVQk=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=garyguo.net;
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
+ by CWLP265MB1764.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:50::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6254.21; Thu, 30 Mar
+ 2023 13:12:12 +0000
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::2f2a:55d4:ea1d:dece]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::2f2a:55d4:ea1d:dece%4]) with mapi id 15.20.6222.035; Thu, 30 Mar 2023
+ 13:12:12 +0000
+Date: Thu, 30 Mar 2023 14:11:34 +0100
+From: Gary Guo <gary@garyguo.net>
+To: Andreas Hindborg <nmi@metaspace.dk>
+Cc: y86-dev@protonmail.com, Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor
+ <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun
+ Feng <boqun.feng@gmail.com>, =?UTF-8?B?QmrDtnJu?= Roy Baron
  <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>,
  rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Andreas Hindborg <a.hindborg@samsung.com>
-Subject: Re: [PATCH v3 03/13] rust: types: add `Opaque::raw_get`
-Date: Thu, 30 Mar 2023 14:32:19 +0200
-In-reply-to: <20230329223239.138757-4-y86-dev@protonmail.com>
-Message-ID: <87leje4d5f.fsf@metaspace.dk>
+ patches@lists.linux.dev
+Subject: Re: [PATCH v3 01/13] rust: macros: add `quote!` macro
+Message-ID: <20230330141134.6d13090d.gary@garyguo.net>
+In-Reply-To: <877cuy5ur2.fsf@metaspace.dk>
+References: <20230329223239.138757-1-y86-dev@protonmail.com>
+	<20230329223239.138757-2-y86-dev@protonmail.com>
+	<877cuy5ur2.fsf@metaspace.dk>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0609.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:314::11) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|CWLP265MB1764:EE_
+X-MS-Office365-Filtering-Correlation-Id: 88601aaa-56dc-4059-2720-08db31205fdf
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	BFSHT5TzT1awJ4YFv0+jSETCadHAfKL7trvRJD6cuci0KyZXo9+z+oaAC85nnjG/OAW+vEhjn8fFPNkeTl/2KH1MkFQaCjH5RdpbVVquWMFzUGbv70sIKHptyv6rr42ApXy28UZHSug0JyAd9bJ6c5lr/tEhJ/jjuEoWqQ+yyIiz5scG86FbivS82Mpz78IwEoMP/qtt5MTGXt81l9g3FGRQgwm4bj5MZnHd5YghJtmDE+Cqqq1hsjJT6NEQ/KwiaKBFnVZncT5bbMA4nNN6fKAK/w40NXbspsQN2xxn2ucvjkVvrxExpI5+7OtcRGjSvG4XzFTVCG5DWtJgMcIHSyOr3eIYHN+Unep7IZtsm/XG/gM7DbN2Fuu9SR2SJIQnH0BOo29IKIDniE17o9u44BxGDMOdx726VaUkbZk8/84LBe6RKy7mz1RfWzPOSvYu/WkKD1+HH0gz8e+sTGQbkKhokicDiPNy/qfQwIC0MYp7+v3OeMxhvDfR2y2P/HtSaAYbvr90oy0Npa8vqAb+J1Hbstgl4CNx6BmFvUNrX10plJyNWoZFdCjfSeoxNEWAYdAZPQwfWOnteSfhgvfFfR4rNgoaK3j8JqFwA0pZ4Ho=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(39840400004)(136003)(396003)(376002)(366004)(346002)(451199021)(2616005)(36756003)(86362001)(2906002)(6486002)(478600001)(186003)(6506007)(1076003)(6666004)(26005)(6512007)(66556008)(66476007)(6916009)(66946007)(316002)(8676002)(8936002)(7416002)(41300700001)(4326008)(38100700002)(54906003)(5660300002)(81973001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?RDXf3vmCxjkxuEZZqpzKlmT0ulZP3vB29X1aVnATizFcI6ZuVsaccKRtpLP/?=
+ =?us-ascii?Q?GAd6kw2i8nSWHjxiRd7CiNIuzIJFcsKoSnp3OXw7bnCD7S23F+d5jwpCsLiN?=
+ =?us-ascii?Q?vs7pLe6tqyELi4VyWwOghiXk9Fpsgo4B1XLFuOyQjY+wJJOjN9cl4FNI06NM?=
+ =?us-ascii?Q?dchLnczqI7RPDylpaP++blTlIN1+oVQt3J47GRkxSHVcYs0Z93nSRrAYOatG?=
+ =?us-ascii?Q?5aB8eVlXs+OMLMVJ3LLm39V909I9ASAw5CXzPDmDfmEMziCv9pt2pHR65Csv?=
+ =?us-ascii?Q?w6BXqfIIakc0MhFXMj9PKmCDAHs0qs0WR4CKK27pu5UZNuuTIjCcA74/cKgL?=
+ =?us-ascii?Q?cDcCMliQALGftnou+TuDp2T9SX9/ph9il6juhRuAVHH/vKfWiJR7/xCrFzRt?=
+ =?us-ascii?Q?/Jr1ZjsjB2+U1cZM41tooDd5Qpo4Sfdf+dR/Tg7oEzvyaivnoCle9FIAsip2?=
+ =?us-ascii?Q?1oljCohSZIl5l8mNQGBcErAdG4lFIxKpqcBYZ4/S1kAbLzNrVs0TeVZhfttF?=
+ =?us-ascii?Q?VdV0PmE1stPcbrIMUdGUDnTiBG2G5KfwkTnpbchSI6jjuN6NfwmoYVpYb95p?=
+ =?us-ascii?Q?/swqe832S4l+bVtIceM/fPMUSTgCCSfJtUGQPHT8oUonKP1FLqjDJgE/kiiA?=
+ =?us-ascii?Q?St+sTyVqcaBBlw3IdqOaelU9IApA3/O5ui2AluvlXhcMsoMOO1JzJjDTiKnp?=
+ =?us-ascii?Q?/200LZ0G7dXztjzfn6qrkkRDJp1lwziAllQdlZ6Fvdh2HF92jI5lZBrZx6x/?=
+ =?us-ascii?Q?ZfvpAY4MvW2x5wPbid++PC/sEjigkXB84gwU5jhgBv9wTolnJvYHS/4uVyZ/?=
+ =?us-ascii?Q?NnGHAAhCfT8GdtWPjMPFNdwBcXcyfloezbf0LSDFklXkE6I423MoYreCjFVx?=
+ =?us-ascii?Q?Y3xPw6pa5bySokIyGc/GFbtJIEW/YvWSnulBQ5U3Djb3hkAJQ3DUtqz2nB1Y?=
+ =?us-ascii?Q?32UpSvf8pjUngfYN2rYhYarw0K2KoijFaVGYjPsqCCqI8iyQSoAYPg84gZNe?=
+ =?us-ascii?Q?JWm9k/+TyeRy5sWKjN/wLQfBLxNYZfyHse8GkKBPBx/NCfDMkYSlDEVWLuwm?=
+ =?us-ascii?Q?ZexeVg3Za7Ggkh17BgIrOLxlZCVitdRfwWluqCR9yFzdvfRCxdC86wOSElrK?=
+ =?us-ascii?Q?EJEay7R9gwa7hLvx5BfGDHwmeX7fcm4XkjCTy8/5oGdQ1p/oUhMsM/Q30k2y?=
+ =?us-ascii?Q?R6NlZHneI7pzM0tM+h05UUt2edE+9RhoW1yabUbYG3My3g9/WpwDXZHHKG6M?=
+ =?us-ascii?Q?vjJnd/d/VfzFqyxAaHa5pQbm3K4sE++JaW/KxLwOLRNeECyDpStlbrO3r9Jg?=
+ =?us-ascii?Q?B3pwCiyKVOc7Bs95NKnZ1Eg2PTr416CksSYipXeVOdkbbdyCcHOUgi1rHgfk?=
+ =?us-ascii?Q?dM/a3IaiklG13Ar5ham7GRKUdwx4Co4TGVRrB9su3L0mhVGZ12Qo9rmPhdmb?=
+ =?us-ascii?Q?m9jODhJgqs4tkfaBNinfp0buOnHkyax7IPw1uqqAddgDHZkGYlCF43+gcmAo?=
+ =?us-ascii?Q?rrQa+QXX8ezbTviM1zbxKxTG9T0ViescLiipJWKm9v7+lwuyZUgpVzQtWdfo?=
+ =?us-ascii?Q?n4TX39VrwhyeZuoyK3wvo3+82MN0sXFpehC3IVlW?=
+X-OriginatorOrg: garyguo.net
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88601aaa-56dc-4059-2720-08db31205fdf
+X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Mar 2023 13:12:12.1595
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: uJ7XgMjt5GMr+TFo30adYp2S6xAI/7+KKn2dW6lvps0eSB+qFcWSrmW61cyaWxW0RCt/DNaDiK0gIIw0P/YTEg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWLP265MB1764
 
+On Thu, 30 Mar 2023 13:42:29 +0200
+Andreas Hindborg <nmi@metaspace.dk> wrote:
 
-y86-dev@protonmail.com writes:
+> y86-dev@protonmail.com writes:
+> 
+> > From: Gary Guo <gary@garyguo.net>
+> >
+> > Add the `quote!` macro for creating `TokenStream`s directly via the
+> > given Rust tokens. It also supports repetitions using iterators.
+> >
+> > It will be used by the pin-init API proc-macros to generate code.
+> >
+> > Signed-off-by: Gary Guo <gary@garyguo.net>
+> > Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+> > ---
+> >  rust/macros/lib.rs   |   2 +
+> >  rust/macros/quote.rs | 145 +++++++++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 147 insertions(+)
+> >  create mode 100644 rust/macros/quote.rs
+> >
+> > diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+> > index c1d385e345b9..82b520f024dd 100644
+> > --- a/rust/macros/lib.rs
+> > +++ b/rust/macros/lib.rs
+> > @@ -2,6 +2,8 @@
+> >
+> >  //! Crate for all kernel procedural macros.
+> >
+> > +#[macro_use]
+> > +mod quote;
+> >  mod concat_idents;
+> >  mod helpers;
+> >  mod module;
+> > diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
+> > new file mode 100644
+> > index 000000000000..7efb009c25a9
+> > --- /dev/null
+> > +++ b/rust/macros/quote.rs
+> > @@ -0,0 +1,145 @@
+> > +// SPDX-License-Identifier: Apache-2.0 OR MIT
+> > +
+> > +use proc_macro::{TokenStream, TokenTree};
+> > +
+> > +pub(crate) trait ToTokens {
+> > +    fn to_tokens(&self, tokens: &mut TokenStream);
+> > +}
+> > +
+> > +impl<T: ToTokens> ToTokens for Option<T> {
+> > +    fn to_tokens(&self, tokens: &mut TokenStream) {
+> > +        if let Some(v) = self {
+> > +            v.to_tokens(tokens);
+> > +        }
+> > +    }
+> > +}
+> > +
+> > +impl ToTokens for proc_macro::Group {
+> > +    fn to_tokens(&self, tokens: &mut TokenStream) {
+> > +        tokens.extend([TokenTree::from(self.clone())]);
+> > +    }
+> > +}
+> > +
+> > +impl ToTokens for TokenTree {
+> > +    fn to_tokens(&self, tokens: &mut TokenStream) {
+> > +        tokens.extend([self.clone()]);
+> > +    }
+> > +}
+> > +
+> > +impl ToTokens for TokenStream {
+> > +    fn to_tokens(&self, tokens: &mut TokenStream) {
+> > +        tokens.extend(self.clone());
+> > +    }
+> > +}
+> > +
+> > +/// Converts tokens into [`proc_macro::TokenStream`] and performs variable interpolations with
+> > +/// the given span.
+> > +///
+> > +/// This is a similar to the
+> > +/// [`quote_spanned!`](https://docs.rs/quote/latest/quote/macro.quote_spanned.html) macro from the
+> > +/// `quote` crate but provides only just enough functionality needed by the current `macros` crate.
+> > +#[allow(unused_macros)]
+> > +macro_rules! quote_spanned {
+> > +    ($span:expr => $($tt:tt)*) => {
+> > +    #[allow(clippy::vec_init_then_push)]
+> > +    {
+> > +        let mut tokens = Vec::new();
+> > +        let span = $span;
+> > +        quote_spanned!(@proc tokens span $($tt)*);
+> > +        proc_macro::TokenStream::from_iter(tokens)  
+> 
+> Should this be `::alloc::vec::Vec` and
+> `::proc_macro::TokenStream::from_iter` ?
+> 
+> Best regards,
+> Andreas
 
-> From: Benno Lossin <y86-dev@protonmail.com>
->
-> This function mirrors `UnsafeCell::raw_get`. It avoids creating a
-> reference and allows solely using raw pointers.
-> The `pin-init` API will be using this, since uninitialized memory
-> requires raw pointers.
->
-> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
-> ---
+Hi Andres,
 
-Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
+This macro is used only internally, so I didn't really bother to fully
+qualify all the names.
 
->  rust/kernel/types.rs | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-> index 9d0fdbc55843..ff2b2fac951d 100644
-> --- a/rust/kernel/types.rs
-> +++ b/rust/kernel/types.rs
-> @@ -238,6 +238,14 @@ impl<T> Opaque<T> {
->      pub fn get(&self) -> *mut T {
->          UnsafeCell::raw_get(self.0.as_ptr())
->      }
-> +
-> +    /// Gets the value behind `this`.
-> +    ///
-> +    /// This function is useful to get access to the value without creating intermediate
-> +    /// references.
-> +    pub const fn raw_get(this: *const Self) -> *mut T {
-> +        UnsafeCell::raw_get(this.cast::<UnsafeCell<T>>())
-> +    }
->  }
->
->  /// A sum type that always holds either a value of type `L` or `R`.
-
+Best,
+Gary
