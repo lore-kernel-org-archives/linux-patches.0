@@ -1,68 +1,105 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from qproxy6-pub.mail.unifiedlayer.com (qproxy6-pub.mail.unifiedlayer.com [69.89.23.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9EB1854
-	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 04:13:43 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id e65so21952393ybh.10
-        for <patches@lists.linux.dev>; Wed, 29 Mar 2023 21:13:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680149622;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KJJx5iancqfU2xP6aCcU6aFC/gwsLXj0cw8Dg1r4APw=;
-        b=qD2R+eHRuovgMaImQFjOnZhrTXDoFRtXFpQ4Bs/vlHCbI0U5sYPKI9KCxSHdB12zUb
-         ddj+zmouaWz/vCth+2gz8b1HR1p1GJa/omGuk9rNUv4t0P1VIew7udHJjzo9FGCtGhHg
-         kGfW/CfHYMPjCeSHtfrfKgUFFtqdyHgWsvFq+B2N5IVHEd2d5RWScb8KGeNLXbH+5abv
-         VyAl8VvHWj+PHHadPWqaGzuWnyyQwO0wMdr1FhDkP8TRNC+2MFnXZ6YCTUWL+5Ad+Ada
-         mc7tXp+sRbs10uFt7fYrQIYLmVSR27/Jb1ie1e1Szw+QLNvZWkztv2yzmnUkHb5SfZJs
-         ln0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680149622;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KJJx5iancqfU2xP6aCcU6aFC/gwsLXj0cw8Dg1r4APw=;
-        b=cn94RRNFGkjnjbyBTMw5ty+wxnAnZYgseml8ThK6sjg8tlfWEJ4CUHI1qv8Z0xU7Ca
-         NZ0Qy0ztoDy2sbJFMs5u6TVXeHhxOQ2cPAMq8G97VdkCFnvvQHW+Zn3HV4d/CjdIS+IW
-         As4sN5WWI3iE91lGBgCF9rJAj85DNx0E6UCPZP7wlyuRrElsi6jWJgI9lp44xOLa7fVI
-         tE6f5MffTz3yH44mnNQDk5AA9hol+RhnlFSzYpVQurZb6Cs0YOsMJxQzQ1IlOQ628sTA
-         SbPnPF1daeKONGgDsiUg+Ce3+73xP2CB/4T1+fDLw70Z73EggkgA76R9hI2WoBkJzxpG
-         YcTw==
-X-Gm-Message-State: AAQBX9f4lGP34vSyKm8kgug53O1k8XkvZJya4PfGbE1cDWxKnxbrFVTT
-	g/+KPNiSTjDAt9MlLZi1kpHQsbEYb0V0MCtDXTk=
-X-Google-Smtp-Source: AKy350YVT/flqSFBvFxTZR2FoNaRxvExziTKKNo8YLQm0TU2WQWj4bq5x2eOF38rCggnH11dWohhHNjx5L9VarDX89k=
-X-Received: by 2002:a25:2d7:0:b0:997:c919:4484 with SMTP id
- 206-20020a2502d7000000b00997c9194484mr11425853ybc.6.1680149622452; Wed, 29
- Mar 2023 21:13:42 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479261C31
+	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 08:04:02 +0000 (UTC)
+Received: from gproxy3-pub.mail.unifiedlayer.com (unknown [69.89.30.42])
+	by qproxy6.mail.unifiedlayer.com (Postfix) with ESMTP id 3E991802ABB6
+	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 07:40:57 +0000 (UTC)
+Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
+	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id AAA9E100406E9
+	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 07:40:26 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id hmtWpd8ZSNX2ahmtWpI2T9; Thu, 30 Mar 2023 07:40:26 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=NMAQR22g c=1 sm=1 tr=0 ts=64253cea
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=k__wU0fu6RkA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=PqiCKZqhoxXZXdxUJgXaniL/P5m3NeYeSl0q1E2m6JE=; b=Iig6KSQFTDANLsq+M04WZCoCqJ
+	1mFPU4jmy91OXme+so6VVVdVLwH1Lx0/SdAc1UydhsC1Oj5vKUQV+TmUi761A6sz6dcz7LArc6H34
+	7/6O7GdE1n7SmT2i21YbRc43gJFkEYjBO6Bbc2bZ5zPN8ib74hRddV1Olp+SUCziObfoi1ethhk5V
+	4H7Opui7yawyRN/5h27dQgDT7vCnO+MfsITOfHUicWkKVrYOlV0jk/R557NxzUJqGeBGwcI8GcaI9
+	p/DMq8x7xEkI4P3SLZ0IGpjzFXz7Xj+a+F40RrgjaHToIXWZrWwkjb3rRbXW9Gpxn7NN3bKl259J2
+	ztkdV31w==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:33706 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1phmtV-000kGq-CN;
+	Thu, 30 Mar 2023 01:40:25 -0600
+Subject: Re: [PATCH 5.15 000/146] 5.15.105-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230328142602.660084725@linuxfoundation.org>
+In-Reply-To: <20230328142602.660084725@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <d2e33121-4bf4-2af5-d578-2b1d214a7e07@w6rz.net>
+Date: Thu, 30 Mar 2023 00:40:20 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230329223239.138757-1-y86-dev@protonmail.com> <20230329223239.138757-3-y86-dev@protonmail.com>
-In-Reply-To: <20230329223239.138757-3-y86-dev@protonmail.com>
-From: Wedson Almeida Filho <wedsonaf@gmail.com>
-Date: Thu, 30 Mar 2023 01:13:31 -0300
-Message-ID: <CANeycqprth29MGQsAYHkQKAoCBr_C0J010VTvs1YK-Yg+pY+0Q@mail.gmail.com>
-Subject: Re: [PATCH v3 02/13] rust: sync: add `assume_init` to `UniqueArc`
-To: y86-dev@protonmail.com
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Alice Ryhl <alice@ryhl.io>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1phmtV-000kGq-CN
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:33706
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Wed, 29 Mar 2023 at 19:33, <y86-dev@protonmail.com> wrote:
+On 3/28/23 7:41 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.105 release.
+> There are 146 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> From: Benno Lossin <y86-dev@protonmail.com>
+> Responses should be made by Thu, 30 Mar 2023 14:25:33 +0000.
+> Anything received after that time might be too late.
 >
-> Adds the `assume_init` function to `UniqueArc<MaybeUninit<T>>` that
-> unsafely assumes the value to be initialized and yields a value of type
-> `UniqueArc<T>`. This function is used when manually initializing the
-> pointee of an `UniqueArc`.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.105-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 >
-> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+> thanks,
+>
+> greg k-h
 
-Reviewed-by: Wedson Almeida Filho <walmeida@microsoft.com>
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+
+Tested-by: Ron Economos <re@w6rz.net>
+
