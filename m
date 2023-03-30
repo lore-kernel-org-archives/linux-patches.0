@@ -1,138 +1,215 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+Received: from mailout2.w2.samsung.com (mailout2.w2.samsung.com [211.189.100.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B3C9455
-	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 20:28:30 +0000 (UTC)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 1907D3200959;
-	Thu, 30 Mar 2023 16:28:29 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 30 Mar 2023 16:28:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1680208108; x=1680294508; bh=vQs4ynDb5KaPKtPAzLl0Rc9EXZoECrk6bMr
-	SAt43TCw=; b=DV2BCGAEYE89/0qB9BCxZL65j8OujS0AqVHYgP6geTlizxxKs+a
-	n+h1/Rq0qDKGEvXlhQ3O/WNsnR1iUWY5opFs1bthRv66hQkp2mSUsBFhJ365fqrc
-	uWVQjDkLbzhI9GwllS5MMma21dc+SJjKS91l+tC9sSGHCPWo+8H6n/Vxj9+whEwL
-	q/U2I1Cy3UsFHQyuS8n8rolINuuX/p0H5US0IQtqQh4QJRA3IUX6RgaOWaYVkxQA
-	nda80+Px8RfxpltFBmJn98UEWFHA8DLkegrG7PBbgVMF/vH9fzzreLw3H6EASD79
-	z3Mf3fHhdb1gpToC6TpqWN2+xHZPmk8jrwg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1680208108; x=1680294508; bh=vQs4ynDb5KaPKtPAzLl0Rc9EXZoECrk6bMr
-	SAt43TCw=; b=bRz94HWqUtIeSEAzn9WBi4BZ43hv/ArbNIhDIIKZl6nL1zBd+Mp
-	Ny0EEMvuLcADVBfXvTvp4W4uT+lwMvjIz0CqAGyLB2j0hItCZIGMgUPK+6v8lzim
-	bNwZV/CR4DhR+pQDW08TC71bTSu//+oOs6BcbDH5gN248SatJxg/YxaDUB28s38Z
-	Z+4sG4kLIFAajLDA1HQEuat345FU4SBVXUdnmubK0VvGgAYTmLdAeBtCBtPS1xYE
-	ss5nvUNvlxpc+q6yCElrDpKQhZNFkw3y/cn8PbyvXVD0yrvzYHKR38Cy+ucnLDj3
-	iHzRN/qeEno8Zs8jHNmGDCCAkqGJS02kfCA==
-X-ME-Sender: <xms:7PAlZE4LdH6MfIWcK86D0nh3fEvpWyFbRVGPpqGqP4gM9PNddOetaQ>
-    <xme:7PAlZF4Ab3G-ixntqtRu8jRr-L8KdvGcBd7SDwWZxJTWxVDYa2tIrN2kz3chSSHcA
-    -yIRgpsWCU2_GNJsQ>
-X-ME-Received: <xmr:7PAlZDf0n9iBXwebCjcjH9hi2yNN6uhQwSLdMPSGALw0L6Sp_lzGL-aDOePtKwxrjI4Q34-GZZ-vc5qvklokLLJPeQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdehledgheekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtfeejnecuhfhrohhmpeetlhhi
-    tggvucfthihhlhcuoegrlhhitggvsehrhihhlhdrihhoqeenucggtffrrghtthgvrhhnpe
-    ehudduvdetkedvkedtudeludfgfffhudegjeeguedvvedtteevjeehheeiffefgeenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrlhhitggvse
-    hrhihhlhdrihho
-X-ME-Proxy: <xmx:7PAlZJLRGwv-m5P859fhegQuoC4OXi1gbj8brIte6NvQJY-KQtCrGg>
-    <xmx:7PAlZIIr_cPRw5ujzGZp5TORke02iXhHqjz4pOJ5zsSajB-4k_HCQQ>
-    <xmx:7PAlZKzuoEDQkDo2dJDJamRTY6LRmmV2ICj127z9ifJA3RJZMzjVEA>
-    <xmx:7PAlZH9YIMHufS8oLxuw1Bwk8GgPgl_dhOnQAiRd9gsClXYKvvHwuA>
-Feedback-ID: i56684263:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Mar 2023 16:28:26 -0400 (EDT)
-Message-ID: <ae53994a-aaa5-8a57-4284-85000229249d@ryhl.io>
-Date: Thu, 30 Mar 2023 22:28:25 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B479C97D
+	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 21:49:07 +0000 (UTC)
+Received: from uscas1p1.samsung.com (unknown [182.198.245.206])
+	by mailout2.w2.samsung.com (KnoxPortal) with ESMTP id 20230330214200usoutp02462ea44fb1a7afcb25704602e53711e4~RUGKUlCqm0586405864usoutp02W;
+	Thu, 30 Mar 2023 21:42:00 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w2.samsung.com 20230330214200usoutp02462ea44fb1a7afcb25704602e53711e4~RUGKUlCqm0586405864usoutp02W
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1680212520;
+	bh=Biy0jl9qLbwZXRDPrFyYv6C5iXTSr8418v34owutgqA=;
+	h=From:To:CC:Subject:Date:References:From;
+	b=cjdYAiJRppQOZmd59TXKjvQFvz1nBe6SOdE5ZMYkVBlob6rlL8yajVB1yKQSLM49A
+	 JaglYgr2qku8a41FcBkQvEZjRevDapaxf/agLMhxyUioFCHJvzmUQz1cbkd6cSDagq
+	 +1X74vZO2jMQUwPU2++8MeRg9u/RnnSEL6UDC6uw=
+Received: from ussmges3new.samsung.com (u112.gpu85.samsung.co.kr
+	[203.254.195.112]) by uscas1p2.samsung.com (KnoxPortal) with ESMTP id
+	20230330214200uscas1p2ea443751c7e1e6ce280bc4cec0444f3c~RUGKOQhWE3235232352uscas1p22;
+	Thu, 30 Mar 2023 21:42:00 +0000 (GMT)
+Received: from uscas1p2.samsung.com ( [182.198.245.207]) by
+	ussmges3new.samsung.com (USCPEMTA) with SMTP id E0.92.09547.82206246; Thu,
+	30 Mar 2023 17:42:00 -0400 (EDT)
+Received: from ussmgxs2new.samsung.com (u91.gpu85.samsung.co.kr
+	[203.254.195.91]) by uscas1p1.samsung.com (KnoxPortal) with ESMTP id
+	20230330214200uscas1p12bfa2436a1a5b2fc7650d7671b628d8a~RUGKDBrHy0941309413uscas1p1C;
+	Thu, 30 Mar 2023 21:42:00 +0000 (GMT)
+X-AuditID: cbfec370-a01fe7000000254b-5f-64260228e6d8
+Received: from SSI-EX2.ssi.samsung.com ( [105.128.2.145]) by
+	ussmgxs2new.samsung.com (USCPEXMTA) with SMTP id 50.49.09579.72206246; Thu,
+	30 Mar 2023 17:41:59 -0400 (EDT)
+Received: from SSI-EX3.ssi.samsung.com (105.128.2.228) by
+	SSI-EX2.ssi.samsung.com (105.128.2.227) with Microsoft SMTP Server
+	(version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+	15.1.2375.24; Thu, 30 Mar 2023 14:41:56 -0700
+Received: from SSI-EX3.ssi.samsung.com ([105.128.5.228]) by
+	SSI-EX3.ssi.samsung.com ([105.128.5.228]) with mapi id 15.01.2375.024; Thu,
+	30 Mar 2023 14:41:56 -0700
+From: Adam Manzanares <a.manzanares@samsung.com>
+To: "mcgrof@kernel.org" <mcgrof@kernel.org>, Fan Ni <fan.ni@samsung.com>,
+	"jlayton@kernel.org" <jlayton@kernel.org>
+CC: "patches@lists.linux.dev" <patches@lists.linux.dev>, Adam Manzanares
+	<a.manzanares@samsung.com>
+Subject: [PATCH] build_qemu: Build and use target arch qemu
+Thread-Topic: [PATCH] build_qemu: Build and use target arch qemu
+Thread-Index: AQHZY1ByaDRdvY6Or0Kxsh+yWFHsSA==
+Date: Thu, 30 Mar 2023 21:41:56 +0000
+Message-ID: <20230330214146.614373-1-a.manzanares@samsung.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [105.128.2.176]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 08/13] rust: init: add `stack_pin_init!` macro
-Content-Language: en-US-large
-To: Benno Lossin <y86-dev@protonmail.com>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>,
- Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Gary Guo <gary@garyguo.net>
-References: <20230329223239.138757-1-y86-dev@protonmail.com>
- <20230329223239.138757-9-y86-dev@protonmail.com>
- <ada8307d-5177-2094-683f-bce619f1ea44@ryhl.io>
- <4b048bfc-e4fe-8c2f-ebfe-9b6a410cd8b8@protonmail.com>
-From: Alice Ryhl <alice@ryhl.io>
-In-Reply-To: <4b048bfc-e4fe-8c2f-ebfe-9b6a410cd8b8@protonmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-CFilter-Loop: Reflected
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLIsWRmVeSWpSXmKPExsWy7djX87oaTGopBlO3cVn8XLaK3eLGhKeM
+	FpdPXGJ0YPbYtKqTzePF5pmMAUxRXDYpqTmZZalF+nYJXBkvDm1kL5itULG56w9zA+Mm6S5G
+	Tg4JAROJ93+nM3UxcnEICaxklHjZP5kdwmllkpi4azobTFXPmjlQibWMEkvPfmWBcD4xSsy4
+	/J8NwlnGKNG3oI8FpIVNwEDi9/GNzCC2iECpxPauH2BxZoFUiW2nfoCNFRawlti97gxUjYPE
+	7f9zWSFsPYnP8y4DHcXBwSKgKvHuiDJImFfATuLD7tlgrYwCYhLfT61hghgpLnHryXwmiEsF
+	JRbN3sMMYYtJ/Nv1EOoDRYn731+yQ9TrSdyYOoUNwtaWWLbwNTPEfEGJkzOfsEDUS0ocXHED
+	7EkJgZ/sEidfL2GHSLhIrDt2jxHClpb4e3cZ1OJ8iV1tV6AWV0hcfd0NtdhaYuGf9VCH8kn8
+	/fWIEeQvCQFeiY42oQmMSrOQvDALyXmzkJw3C8l5CxhZVjGKlxYX56anFhvnpZbrFSfmFpfm
+	pesl5+duYgSmkNP/DhfsYLx166PeIUYmDsZDjBIczEoivIXGqilCvCmJlVWpRfnxRaU5qcWH
+	GKU5WJTEeQ1tTyYLCaQnlqRmp6YWpBbBZJk4OKUamBbZObVHGtya98i6XtPzPtPqTy5MU48K
+	7gyf+a+7+iL/vXM9ItavmR7t0a9Pv7EmxHLK9aeX+z+VzL5aGc+oGbxjAlfHStWdDlpxjct1
+	jIKSnwW2xtlfvrbceGbF4lbdysVXlxnnfTofdHSfY1SUhul+v2P3+92k689H62atzJzMmifP
+	NjdRsNv6+b2DSRIr/bbu1W1rONm1ROy2TvbLTJv1B1tjeedqXX5wImf90uPf1z6zspVKDFp/
+	RS/k3dVX2ovyQgvueZj5vlFysFlc5nh4jhlPP1eMkMn7+IVq3v8DUz/nu1bJbOSOvvHmiV+j
+	24TAdX6L7goY3bH7VnduG5Oc2P8f9xyl1a4fV55Uo8RSnJFoqMVcVJwIAAPB97CQAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOLMWRmVeSWpSXmKPExsWS2cA0UVedSS3FoLvRwuLnslXsFjcmPGW0
+	uHziEqMDs8emVZ1sHi82z2QMYIrisklJzcksSy3St0vgynhxaCN7wWyFis1df5gbGDdJdzFy
+	ckgImEj0rJnD3sXIxSEksJpR4uny/UwQzidGidVzNkA5yxglWm9PZgRpYRMwkPh9fCMziC0i
+	UCqxvesHC4jNLJAqse3UDzYQW1jAWmL3ujNQNQ4St//PZYWw9SQ+z7sMNJSDg0VAVeLdEWWQ
+	MK+AncSH3bPBWhkFxCS+n1rDBDFSXOLWk/lMEJcKSCzZc54ZwhaVePn4HyuErShx//tLdoh6
+	PYkbU6ewQdjaEssWvmaGmC8ocXLmExaIekmJgytusExgFJ2FZMUsJO2zkLTPQtK+gJFlFaN4
+	aXFxbnpFsVFearlecWJucWleul5yfu4mRmDcnP53OHoH4+1bH/UOMTJxMB5ilOBgVhLhLTRW
+	TRHiTUmsrEotyo8vKs1JLT7EKM3BoiTO+zJqYryQQHpiSWp2ampBahFMlomDU6qBaYf5Kun8
+	2T57VT+9ceLikpr/ulbmocGb5DOsa6Zv8JVISnmukmqXx3dIxq5w1pz0WMFf2Str3HmCHqrv
+	V7ugvFSW2f9bxIwfm0xMRSd/tz0fceykdPrxV88N/7z//vHGGqENwXPXfOf5lOs4Lzv4d+Z2
+	Ket1C3L4UzasWFr3u0z7lWO0SJNKyMzOfXfcn9+fWuvMtFhCmKl7YmHb0s/T92XYPOq/YK8t
+	1sZkfIo79cyhf29OOAef2rzgzjTHIjsB8x/JMi2zv2efuWKt3Sx3YcE2ftFzl7s5Lz6q41I4
+	dPb9fjvWG6GPOZUkN4ow8jWz33V7zLpR79R3y70Z9z+UXoyVCuSxdnqmKvNRd+fMr0osxRmJ
+	hlrMRcWJAPb0QCQKAwAA
+X-CMS-MailID: 20230330214200uscas1p12bfa2436a1a5b2fc7650d7671b628d8a
+CMS-TYPE: 301P
+X-CMS-RootMailID: 20230330214200uscas1p12bfa2436a1a5b2fc7650d7671b628d8a
+References: <CGME20230330214200uscas1p12bfa2436a1a5b2fc7650d7671b628d8a@uscas1p1.samsung.com>
 
-On 3/30/23 17:19, Benno Lossin wrote:
-> On 30.03.23 17:00, Alice Ryhl wrote:
->> On 3/30/23 00:33, y86-dev@protonmail.com wrote:
->>> From: Benno Lossin <y86-dev@protonmail.com>
->>>
->>> The `stack_pin_init!` macro allows pin-initializing a value on the
->>> stack. It accepts a `impl PinInit<T, E>` to initialize a `T`. It allows
->>> propagating any errors via `?` or handling it normally via `match`.
->>>
->>> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
->>
->> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
->>
->>> ---
->>> +#[macro_export]
->>> +macro_rules! stack_pin_init {
->>> +    (let $var:ident $(: $t:ty)? = $val:expr) => {
->>> +        let mut $var = $crate::init::__internal::StackInit$(::<$t>)?::uninit();
->>> +        let mut $var = {
->>> +            let val = $val;
->>> +            unsafe { $crate::init::__internal::StackInit::init(&mut $var, val) }
->>> +        };
->>> +    };
->>> +    (let $var:ident $(: $t:ty)? =? $val:expr) => {
->>> +        let mut $var = $crate::init::__internal::StackInit$(::<$t>)?::uninit();
->>> +        let mut $var = {
->>> +            let val = $val;
->>> +            unsafe { $crate::init::__internal::StackInit::init(&mut $var, val)? }
->>> +        };
->>> +    };
->>> +}
->>
->> This will be inconvenient to use if the initializer is infallible and is
->> used inside an infallible function. However, I'm not sure what a better
->> alternative would be. Perhaps we should have three variants?
-> 
-> That could be an option, any ideas for the syntax though? Or should it
-> be a different macro like `stack_pin_init!` and `try_stack_pin_init!`?
+Assume the target Linux architecture is also the assumed architecture
+to build and use for QEMU
 
-You've also split up the other macros into a fallible and infallible 
-version, so I think the same would be fine here. Perhaps use 
-`stack_pin_try_init!` as the name?
+Time to build qemu on an x86_64 system before this patch:
 
->> Also, maybe a `<-` rather than `=` would be more consistent?
-> 
-> That is sadly not possible, since `<-` is not allowed after `ty` fragments.
-> 
->> Anyway, I don't think this should block the PR. We can revisit it later
->> if it becomes a problem.
-> 
-> Sure.
-> 
-> --
-> Cheers,
-> Benno
-> 
-> 
+real    6m45.901s
+user    105m18.576s
+sys     12m16.630s
+
+Time to build qmeu on the same x86_64 system after applying this patch:
+
+real    2m11.166s
+user    14m32.722s
+sys     2m19.130s
+
+Signed-off-by: Adam Manzanares <a.manzanares@samsung.com>
+---
+ Makefile.build_qemu                          |  8 ++++++++
+ playbooks/roles/build_qemu/defaults/main.yml |  1 +
+ playbooks/roles/build_qemu/tasks/main.yml    |  2 +-
+ scripts/gen-nodes.Makefile                   | 13 +++++++++++++
+ vagrant/Kconfig                              |  5 +++++
+ 5 files changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile.build_qemu b/Makefile.build_qemu
+index 68faf8e..b44464d 100644
+--- a/Makefile.build_qemu
++++ b/Makefile.build_qemu
+@@ -11,6 +11,14 @@ QEMU_BUILD_SETUP_ARGS +=3D qemu_git=3D$(QEMU_GIT)
+ QEMU_BUILD_SETUP_ARGS +=3D qemu_data=3D\"$(QEMU_DATA)\"
+ QEMU_BUILD_SETUP_ARGS +=3D qemu_version=3D'$(QEMU_GIT_VERSION)'
+=20
++ifeq (y,$(CONFIG_TARGET_ARCH_X86_64))
++QEMU_BUILD_SETUP_ARGS +=3D qemu_target=3D"x86_64-softmmu"
++endif
++
++ifeq (y,$(CONFIG_TARGET_ARCH_PPC64LE))
++QEMU_BUILD_SETUP_ARGS +=3D qemu_target=3D"ppc64-softmmu"
++endif
++
+ qemu: $(KDEVOPS_EXTRA_VARS)
+ 	@$(Q)ansible-playbook --connection=3Dlocal \
+ 		--inventory localhost, \
+diff --git a/playbooks/roles/build_qemu/defaults/main.yml b/playbooks/roles=
+/build_qemu/defaults/main.yml
+index bd7c258..006d669 100644
+--- a/playbooks/roles/build_qemu/defaults/main.yml
++++ b/playbooks/roles/build_qemu/defaults/main.yml
+@@ -11,3 +11,4 @@ qemu_data: "{{ data_path }}/qemu"
+ qemu_git: "https://github.com/qemu/qemu.git"
+ qemu_version: "v7.2.0-rc4"
+ qemu_build_dir: "{{ qemu_data }}/build"
++qemu_target: "x86_64-softmmu"
+diff --git a/playbooks/roles/build_qemu/tasks/main.yml b/playbooks/roles/bu=
+ild_qemu/tasks/main.yml
+index 445fdb6..0488ddd 100644
+--- a/playbooks/roles/build_qemu/tasks/main.yml
++++ b/playbooks/roles/build_qemu/tasks/main.yml
+@@ -66,7 +66,7 @@
+     - build_qemu_now|bool
+=20
+ - name: run configure for qemu
+-  command: "./configure"
++  command: "./configure --target-list=3D{{ qemu_target }}"
+   tags: [ 'qemu', 'configure' ]
+   args:
+     chdir: "{{ qemu_data }}"
+diff --git a/scripts/gen-nodes.Makefile b/scripts/gen-nodes.Makefile
+index 760316d..146af46 100644
+--- a/scripts/gen-nodes.Makefile
++++ b/scripts/gen-nodes.Makefile
+@@ -9,7 +9,20 @@ GEN_NODES_EXTRA_ARGS +=3D vagrant_box_version=3D'$(subst "=
+,,$(CONFIG_VAGRANT_BOX_VER
+ GEN_NODES_EXTRA_ARGS +=3D vagrant_vcpus_count=3D'$(subst ",,$(CONFIG_VAGRA=
+NT_VCPUS_COUNT))'
+ GEN_NODES_EXTRA_ARGS +=3D vagrant_mem_mb=3D'$(subst ",,$(CONFIG_VAGRANT_ME=
+M_MB))'
+=20
++ifeq (y,$(CONFIG_QEMU_BUILD))
++
++  ifeq (y,$(CONFIG_TARGET_ARCH_X86_64))
++  GEN_NODES_EXTRA_ARGS +=3D qemu_bin_path=3D'$(subst ",,$(CONFIG_QEMU_INST=
+ALL_DIR_LIBVIRT))/qemu-system-x86_64'
++  endif
++
++  ifeq (y,$(CONFIG_TARGET_ARCH_PPC64LE))
++  GEN_NODES_EXTRA_ARGS +=3D qemu_bin_path=3D'$(subst ",,$(CONFIG_QEMU_INST=
+ALL_DIR_LIBVIRT))/qemu-system-ppc64'
++  endif
++
++else
+ GEN_NODES_EXTRA_ARGS +=3D qemu_bin_path=3D'$(subst ",,$(CONFIG_QEMU_BIN_PA=
+TH))'
++endif
++
+=20
+ GEN_NODES_EXTRA_ARGS +=3D libvirt_uri=3D'$(subst ",,$(CONFIG_LIBVIRT_URI))=
+'
+ GEN_NODES_EXTRA_ARGS +=3D libvirt_system_uri=3D'$(subst ",,$(CONFIG_LIBVIR=
+T_SYSTEM_URI))'
+diff --git a/vagrant/Kconfig b/vagrant/Kconfig
+index 13fd6c4..6573d6f 100644
+--- a/vagrant/Kconfig
++++ b/vagrant/Kconfig
+@@ -258,6 +258,11 @@ config QEMU_BIN_PATH_LIBVIRT
+ 	default "/usr/local/bin/qemu-system-x86_64" if QEMU_USE_DEVELOPMENT_VERSI=
+ON
+ 	default "/usr/bin/qemu-system-x86_64" if !QEMU_USE_DEVELOPMENT_VERSION
+=20
++config QEMU_INSTALL_DIR_LIBVIRT
++	string "Path to install QEMU "
++	default "/usr/local/bin" if QEMU_USE_DEVELOPMENT_VERSION
++	default "/usr/bin" if !QEMU_USE_DEVELOPMENT_VERSION
++
+ config QEMU_VIRSH_CAN_SUDO
+ 	bool
+ 	default $(shell, ./scripts/get_libvirsh_can_sudo.sh)
+--=20
+2.39.0
