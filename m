@@ -1,253 +1,226 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CE41FAD
-	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 11:44:20 +0000 (UTC)
-Received: by mail-wm1-f44.google.com with SMTP id v20-20020a05600c471400b003ed8826253aso3288691wmo.0
-        for <patches@lists.linux.dev>; Thu, 30 Mar 2023 04:44:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20210112.gappssmtp.com; s=20210112; t=1680176658;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=g0JdgbhClOFYZkBIrmVYKwypeprdaD8BQ3RAt+KP9Fs=;
-        b=UGQs1w6ZJO+wmBd9qR0yAZA5IBTIe62IsjIs/jWOm2AoRAOmFSeGY973sd6WoW1ERC
-         pg1FLyq0GqIlIl0lDQ5kX+yLMT8purlrGX3jHIqR9D2kGtmQMoBFNHy1rz9Pu6IWf+1B
-         JvIvOWNJUKwf0AbZSsO0bj3BOcQ1H5FewikKJ7KAGFiuks+XOPuvICDrZdX4uTT0qjZb
-         jzQKs4in03r0HM8NGlJg9VCu7QYn7gESWvNtrO2rokhnJASDOltY6KSqEvXJKsAkn/uc
-         mhqdt0BSEbvp0jBdSGQZQb7re9ZsUjV0joOKZbWuOD5BLX1q0z7+UUIv3L63fV5QBYlI
-         UBmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680176658;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g0JdgbhClOFYZkBIrmVYKwypeprdaD8BQ3RAt+KP9Fs=;
-        b=KlPUyiCjULP74HqPXLK9MnbSFsXnMYuQES88GJuRl90zzbgvJZNsMLRXCocV8YGwS3
-         orVOi8JZGIojEse2Z7Hfv4WLGf5780aWlxzbdq520tD96hQPieFmIycb0RFX3ebD0kd5
-         /ZFpJ3EL9F5Gd4hBgl60kOvvV8LTEQXKbqlpJgSIMiG7ZVkkqYNAon8fgFpNxzWldt9h
-         NmB2c9idDh7Hk6n57zi1XXU4MbaCA9G9EJQmTUHOaS6kWchu8AgzbIPwU4K8d2DhQabV
-         uzc2V6oYHhAJYnOR0ifnqAZ2w7FM9PiOI+gEi9InQW1T0e8yAbW0nYg4nqvaz1ZvSzFI
-         NWnA==
-X-Gm-Message-State: AO0yUKXUmekXHWs/nCXCBRnn1qk4qhaTYcqWhyxK9rXsiPo8rfEUW3Y0
-	j7s/g+S98rZNHmn0cxiKaHP7Ew==
-X-Google-Smtp-Source: AK7set86Se45lU8RiKxEAJPVjl82rkHkBCzt88SKrtkidgTB0cn034DBzdmyHV1BF4ygXgTH+MThNg==
-X-Received: by 2002:a7b:c38a:0:b0:3ee:1acd:b039 with SMTP id s10-20020a7bc38a000000b003ee1acdb039mr17418382wmj.34.1680176658316;
-        Thu, 30 Mar 2023 04:44:18 -0700 (PDT)
-Received: from localhost ([147.161.155.91])
-        by smtp.gmail.com with ESMTPSA id o5-20020a05600c510500b003ef5bb63f13sm6025059wms.10.2023.03.30.04.44.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 04:44:17 -0700 (PDT)
-References: <20230329223239.138757-1-y86-dev@protonmail.com>
- <20230329223239.138757-2-y86-dev@protonmail.com>
-User-agent: mu4e 1.9.18; emacs 28.2.50
-From: Andreas Hindborg <nmi@metaspace.dk>
-To: y86-dev@protonmail.com
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn?=
- Roy Baron
- <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-Subject: Re: [PATCH v3 01/13] rust: macros: add `quote!` macro
-Date: Thu, 30 Mar 2023 13:42:29 +0200
-In-reply-to: <20230329223239.138757-2-y86-dev@protonmail.com>
-Message-ID: <877cuy5ur2.fsf@metaspace.dk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2441FAD
+	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 11:57:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=k7uaT+sMnmeDWcjQU/N6p9lwO5v20LsnKAG8porccmM=; b=bKGHblLxGK5HyB9nqT1iZNN8IZ
+	Jwito8ISCxvONnPiJog41gh0/xiv7+Jr9a+RNjRX4fIvDUXNpAMXuDzjdxZiPH2bE/T4GiOyJZuEz
+	uPstI2+e99KjsP8XnUsWohuERcczDzOwwKt85tANyMCCTzf4P2WcXR5K5Kc5SDj/xuXwWlqDKKQDl
+	WxkhhKhMVFQUzSOY5HgmDQdmi03mOHGJHcMvCRQqUgbgVlC9s87CMizLxdEwF5NCmvCCN0zsFn08W
+	DwR9NDzy3fkGdpNS93mHwCzMZNuQr0v1MoLUc2UAjnU3AGEUlmie7i/MhPkLNAXcK+XHxw2ux0G2k
+	Vdeh4uuQ==;
+Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+	id 1phqtJ-007B4v-2x;
+	Thu, 30 Mar 2023 11:56:30 +0000
+Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id AD71E3002A3;
+	Thu, 30 Mar 2023 13:56:26 +0200 (CEST)
+Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 5B9402421D7A0; Thu, 30 Mar 2023 13:56:26 +0200 (CEST)
+Date: Thu, 30 Mar 2023 13:56:26 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, david@redhat.com,
+	patches@lists.linux.dev, linux-modules@vger.kernel.org,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org, pmladek@suse.com,
+	petr.pavlu@suse.com, prarit@redhat.com, gregkh@linuxfoundation.org,
+	rafael@kernel.org, christophe.leroy@csgroup.eu, tglx@linutronix.de,
+	song@kernel.org, rppt@kernel.org, willy@infradead.org,
+	vbabka@suse.cz, mhocko@suse.com, dave.hansen@linux.intel.com
+Subject: Re: [PATCH 4/7] sempahore: add a helper for a concurrency limiter
+Message-ID: <20230330115626.GA124812@hirez.programming.kicks-ass.net>
+References: <20230329053149.3976378-1-mcgrof@kernel.org>
+ <20230329053149.3976378-5-mcgrof@kernel.org>
+ <20230329072112.GG4253@hirez.programming.kicks-ass.net>
+ <ZCPuFLDgU5fBFtug@bombadil.infradead.org>
+ <20230329091935.GP4253@hirez.programming.kicks-ass.net>
+ <CAHk-=whF6Ta_KcJP2eC78+Mstv+vAku8ATRMbv98sf9VhdvySQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHk-=whF6Ta_KcJP2eC78+Mstv+vAku8ATRMbv98sf9VhdvySQ@mail.gmail.com>
 
+On Wed, Mar 29, 2023 at 09:50:39AM -0700, Linus Torvalds wrote:
+> So ack on your patch, but don't bother with DEFINE_BINARY_SEMAPHORE().
 
-y86-dev@protonmail.com writes:
+Sure thing; still completely untested...
 
-> From: Gary Guo <gary@garyguo.net>
->
-> Add the `quote!` macro for creating `TokenStream`s directly via the
-> given Rust tokens. It also supports repetitions using iterators.
->
-> It will be used by the pin-init API proc-macros to generate code.
->
-> Signed-off-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
-> ---
->  rust/macros/lib.rs   |   2 +
->  rust/macros/quote.rs | 145 +++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 147 insertions(+)
->  create mode 100644 rust/macros/quote.rs
->
-> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
-> index c1d385e345b9..82b520f024dd 100644
-> --- a/rust/macros/lib.rs
-> +++ b/rust/macros/lib.rs
-> @@ -2,6 +2,8 @@
->
->  //! Crate for all kernel procedural macros.
->
-> +#[macro_use]
-> +mod quote;
->  mod concat_idents;
->  mod helpers;
->  mod module;
-> diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
-> new file mode 100644
-> index 000000000000..7efb009c25a9
-> --- /dev/null
-> +++ b/rust/macros/quote.rs
-> @@ -0,0 +1,145 @@
-> +// SPDX-License-Identifier: Apache-2.0 OR MIT
-> +
-> +use proc_macro::{TokenStream, TokenTree};
-> +
-> +pub(crate) trait ToTokens {
-> +    fn to_tokens(&self, tokens: &mut TokenStream);
-> +}
-> +
-> +impl<T: ToTokens> ToTokens for Option<T> {
-> +    fn to_tokens(&self, tokens: &mut TokenStream) {
-> +        if let Some(v) = self {
-> +            v.to_tokens(tokens);
-> +        }
-> +    }
-> +}
-> +
-> +impl ToTokens for proc_macro::Group {
-> +    fn to_tokens(&self, tokens: &mut TokenStream) {
-> +        tokens.extend([TokenTree::from(self.clone())]);
-> +    }
-> +}
-> +
-> +impl ToTokens for TokenTree {
-> +    fn to_tokens(&self, tokens: &mut TokenStream) {
-> +        tokens.extend([self.clone()]);
-> +    }
-> +}
-> +
-> +impl ToTokens for TokenStream {
-> +    fn to_tokens(&self, tokens: &mut TokenStream) {
-> +        tokens.extend(self.clone());
-> +    }
-> +}
-> +
-> +/// Converts tokens into [`proc_macro::TokenStream`] and performs variable interpolations with
-> +/// the given span.
-> +///
-> +/// This is a similar to the
-> +/// [`quote_spanned!`](https://docs.rs/quote/latest/quote/macro.quote_spanned.html) macro from the
-> +/// `quote` crate but provides only just enough functionality needed by the current `macros` crate.
-> +#[allow(unused_macros)]
-> +macro_rules! quote_spanned {
-> +    ($span:expr => $($tt:tt)*) => {
-> +    #[allow(clippy::vec_init_then_push)]
-> +    {
-> +        let mut tokens = Vec::new();
-> +        let span = $span;
-> +        quote_spanned!(@proc tokens span $($tt)*);
-> +        proc_macro::TokenStream::from_iter(tokens)
+---
+Subject: Change DEFINE_SEMAPHORE() to take a number argument
+From: Peter Zijlstra <peterz@infradead.org>
+Date: Wed, 29 Mar 2023 12:14:42 +0200
 
-Should this be `::alloc::vec::Vec` and
-`::proc_macro::TokenStream::from_iter` ?
+Fundamentally semaphores are a counted primitive, but
+DEFINE_SEMAPHORE() does not expose this and explicitly creates a
+binary semaphore.
 
-Best regards,
-Andreas
+Change DEFINE_SEMAPHORE() to take a number argument and use that in the
+few places that open-coded it using __SEMAPHORE_INITIALIZER().
 
-> +    }};
-> +    (@proc $v:ident $span:ident) => {};
-> +    (@proc $v:ident $span:ident #$id:ident $($tt:tt)*) => {
-> +        let mut ts = proc_macro::TokenStream::new();
-> +        crate::quote::ToTokens::to_tokens(&$id, &mut ts);
-> +        $v.extend(ts.into_iter());
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +    (@proc $v:ident $span:ident #(#$id:ident)* $($tt:tt)*) => {
-> +        for token in $id {
-> +            let mut ts = proc_macro::TokenStream::new();
-> +            crate::quote::ToTokens::to_tokens(&token, &mut ts);
-> +            $v.extend(ts.into_iter());
-> +        }
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +    (@proc $v:ident $span:ident ( $($inner:tt)* ) $($tt:tt)*) => {
-> +        let mut tokens = Vec::new();
-> +        quote_spanned!(@proc tokens $span $($inner)*);
-> +        $v.push(proc_macro::TokenTree::Group(proc_macro::Group::new(
-> +            proc_macro::Delimiter::Parenthesis,
-> +            proc_macro::TokenStream::from_iter(tokens)
-> +        )));
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +    (@proc $v:ident $span:ident [ $($inner:tt)* ] $($tt:tt)*) => {
-> +        let mut tokens = Vec::new();
-> +        quote_spanned!(@proc tokens $span $($inner)*);
-> +        $v.push(proc_macro::TokenTree::Group(proc_macro::Group::new(
-> +            proc_macro::Delimiter::Bracket,
-> +            proc_macro::TokenStream::from_iter(tokens)
-> +        )));
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +    (@proc $v:ident $span:ident { $($inner:tt)* } $($tt:tt)*) => {
-> +        let mut tokens = Vec::new();
-> +        quote_spanned!(@proc tokens $span $($inner)*);
-> +        $v.push(proc_macro::TokenTree::Group(proc_macro::Group::new(
-> +            proc_macro::Delimiter::Brace,
-> +            proc_macro::TokenStream::from_iter(tokens)
-> +        )));
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +    (@proc $v:ident $span:ident :: $($tt:tt)*) => {
-> +        $v.push(
-> +            proc_macro::TokenTree::Punct(proc_macro::Punct::new(':', proc_macro::Spacing::Joint))
-> +        );
-> +        $v.push(
-> +            proc_macro::TokenTree::Punct(proc_macro::Punct::new(':', proc_macro::Spacing::Alone))
-> +        );
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +    (@proc $v:ident $span:ident : $($tt:tt)*) => {
-> +        $v.push(
-> +            proc_macro::TokenTree::Punct(proc_macro::Punct::new(':', proc_macro::Spacing::Alone))
-> +        );
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +    (@proc $v:ident $span:ident , $($tt:tt)*) => {
-> +        $v.push(
-> +            proc_macro::TokenTree::Punct(proc_macro::Punct::new(',', proc_macro::Spacing::Alone))
-> +        );
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +    (@proc $v:ident $span:ident @ $($tt:tt)*) => {
-> +        $v.push(
-> +            proc_macro::TokenTree::Punct(proc_macro::Punct::new('@', proc_macro::Spacing::Alone))
-> +        );
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +    (@proc $v:ident $span:ident ! $($tt:tt)*) => {
-> +        $v.push(
-> +            proc_macro::TokenTree::Punct(proc_macro::Punct::new('!', proc_macro::Spacing::Alone))
-> +        );
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +    (@proc $v:ident $span:ident $id:ident $($tt:tt)*) => {
-> +        $v.push(proc_macro::TokenTree::Ident(proc_macro::Ident::new(stringify!($id), $span)));
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
-> +}
-> +
-> +/// Converts tokens into [`proc_macro::TokenStream`] and performs variable interpolations with
-> +/// mixed site span ([`Span::mixed_site()`]).
-> +///
-> +/// This is a similar to the [`quote!`](https://docs.rs/quote/latest/quote/macro.quote.html) macro
-> +/// from the `quote` crate but provides only just enough functionality needed by the current
-> +/// `macros` crate.
-> +///
-> +/// [`Span::mixed_site()`]: https://doc.rust-lang.org/proc_macro/struct.Span.html#method.mixed_site
-> +#[allow(unused_macros)]
-> +macro_rules! quote {
-> +    ($($tt:tt)*) => {
-> +        quote_spanned!(proc_macro::Span::mixed_site() => $($tt)*)
-> +    }
-> +}
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+---
+ arch/mips/cavium-octeon/setup.c                               |    2 +-
+ arch/x86/kernel/cpu/intel.c                                   |    2 +-
+ drivers/firmware/efi/runtime-wrappers.c                       |    2 +-
+ drivers/firmware/efi/vars.c                                   |    2 +-
+ drivers/macintosh/adb.c                                       |    2 +-
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c              |    2 +-
+ drivers/platform/x86/intel/ifs/sysfs.c                        |    2 +-
+ drivers/scsi/esas2r/esas2r_ioctl.c                            |    2 +-
+ drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c |    2 +-
+ include/linux/semaphore.h                                     |    4 ++--
+ kernel/printk/printk.c                                        |    2 +-
+ net/rxrpc/call_object.c                                       |    6 ++----
+ 12 files changed, 14 insertions(+), 16 deletions(-)
 
+--- a/arch/mips/cavium-octeon/setup.c
++++ b/arch/mips/cavium-octeon/setup.c
+@@ -72,7 +72,7 @@ extern void pci_console_init(const char
+ static unsigned long long max_memory = ULLONG_MAX;
+ static unsigned long long reserve_low_mem;
+ 
+-DEFINE_SEMAPHORE(octeon_bootbus_sem);
++DEFINE_SEMAPHORE(octeon_bootbus_sem, 1);
+ EXPORT_SYMBOL(octeon_bootbus_sem);
+ 
+ static struct octeon_boot_descriptor *octeon_boot_desc_ptr;
+--- a/arch/x86/kernel/cpu/intel.c
++++ b/arch/x86/kernel/cpu/intel.c
+@@ -1177,7 +1177,7 @@ static const struct {
+ static struct ratelimit_state bld_ratelimit;
+ 
+ static unsigned int sysctl_sld_mitigate = 1;
+-static DEFINE_SEMAPHORE(buslock_sem);
++static DEFINE_SEMAPHORE(buslock_sem, 1);
+ 
+ #ifdef CONFIG_PROC_SYSCTL
+ static struct ctl_table sld_sysctls[] = {
+--- a/drivers/firmware/efi/runtime-wrappers.c
++++ b/drivers/firmware/efi/runtime-wrappers.c
+@@ -158,7 +158,7 @@ void efi_call_virt_check_flags(unsigned
+  * none of the remaining functions are actually ever called at runtime.
+  * So let's just use a single lock to serialize all Runtime Services calls.
+  */
+-static DEFINE_SEMAPHORE(efi_runtime_lock);
++static DEFINE_SEMAPHORE(efi_runtime_lock, 1);
+ 
+ /*
+  * Expose the EFI runtime lock to the UV platform
+--- a/drivers/firmware/efi/vars.c
++++ b/drivers/firmware/efi/vars.c
+@@ -21,7 +21,7 @@
+ /* Private pointer to registered efivars */
+ static struct efivars *__efivars;
+ 
+-static DEFINE_SEMAPHORE(efivars_lock);
++static DEFINE_SEMAPHORE(efivars_lock, 1);
+ 
+ static efi_status_t check_var_size(bool nonblocking, u32 attributes,
+ 				   unsigned long size)
+--- a/drivers/macintosh/adb.c
++++ b/drivers/macintosh/adb.c
+@@ -80,7 +80,7 @@ static struct adb_driver *adb_controller
+ BLOCKING_NOTIFIER_HEAD(adb_client_list);
+ static int adb_got_sleep;
+ static int adb_inited;
+-static DEFINE_SEMAPHORE(adb_probe_mutex);
++static DEFINE_SEMAPHORE(adb_probe_mutex, 1);
+ static int sleepy_trackpad;
+ static int autopoll_devs;
+ int __adb_probe_sync;
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
+@@ -298,7 +298,7 @@ const u32 dmae_reg_go_c[] = {
+ 
+ /* Global resources for unloading a previously loaded device */
+ #define BNX2X_PREV_WAIT_NEEDED 1
+-static DEFINE_SEMAPHORE(bnx2x_prev_sem);
++static DEFINE_SEMAPHORE(bnx2x_prev_sem, 1);
+ static LIST_HEAD(bnx2x_prev_list);
+ 
+ /* Forward declaration */
+--- a/drivers/platform/x86/intel/ifs/sysfs.c
++++ b/drivers/platform/x86/intel/ifs/sysfs.c
+@@ -13,7 +13,7 @@
+  * Protects against simultaneous tests on multiple cores, or
+  * reloading can file while a test is in progress
+  */
+-static DEFINE_SEMAPHORE(ifs_sem);
++static DEFINE_SEMAPHORE(ifs_sem, 1);
+ 
+ /*
+  * The sysfs interface to check additional details of last test
+--- a/drivers/scsi/esas2r/esas2r_ioctl.c
++++ b/drivers/scsi/esas2r/esas2r_ioctl.c
+@@ -56,7 +56,7 @@ dma_addr_t esas2r_buffered_ioctl_addr;
+ u32 esas2r_buffered_ioctl_size;
+ struct pci_dev *esas2r_buffered_ioctl_pcid;
+ 
+-static DEFINE_SEMAPHORE(buffered_ioctl_semaphore);
++static DEFINE_SEMAPHORE(buffered_ioctl_semaphore, 1);
+ typedef int (*BUFFERED_IOCTL_CALLBACK)(struct esas2r_adapter *,
+ 				       struct esas2r_request *,
+ 				       struct esas2r_sg_context *,
+--- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
++++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
+@@ -149,7 +149,7 @@ static char *g_fragments_base;
+ static char *g_free_fragments;
+ static struct semaphore g_free_fragments_sema;
+ 
+-static DEFINE_SEMAPHORE(g_free_fragments_mutex);
++static DEFINE_SEMAPHORE(g_free_fragments_mutex, 1);
+ 
+ static int
+ vchiq_blocking_bulk_transfer(struct vchiq_instance *instance, unsigned int handle, void *data,
+--- a/include/linux/semaphore.h
++++ b/include/linux/semaphore.h
+@@ -25,8 +25,8 @@ struct semaphore {
+ 	.wait_list	= LIST_HEAD_INIT((name).wait_list),		\
+ }
+ 
+-#define DEFINE_SEMAPHORE(name)	\
+-	struct semaphore name = __SEMAPHORE_INITIALIZER(name, 1)
++#define DEFINE_SEMAPHORE(_name, _n)	\
++	struct semaphore _name = __SEMAPHORE_INITIALIZER(_name, _n)
+ 
+ static inline void sema_init(struct semaphore *sem, int val)
+ {
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -89,7 +89,7 @@ static DEFINE_MUTEX(console_mutex);
+  * console_sem protects updates to console->seq and console_suspended,
+  * and also provides serialization for console printing.
+  */
+-static DEFINE_SEMAPHORE(console_sem);
++static DEFINE_SEMAPHORE(console_sem, 1);
+ HLIST_HEAD(console_list);
+ EXPORT_SYMBOL_GPL(console_list);
+ DEFINE_STATIC_SRCU(console_srcu);
+--- a/net/rxrpc/call_object.c
++++ b/net/rxrpc/call_object.c
+@@ -40,10 +40,8 @@ const char *const rxrpc_call_completions
+ 
+ struct kmem_cache *rxrpc_call_jar;
+ 
+-static struct semaphore rxrpc_call_limiter =
+-	__SEMAPHORE_INITIALIZER(rxrpc_call_limiter, 1000);
+-static struct semaphore rxrpc_kernel_call_limiter =
+-	__SEMAPHORE_INITIALIZER(rxrpc_kernel_call_limiter, 1000);
++static DEFINE_SEMAPHORE(rxrpc_call_limiter, 1000);
++static DEFINE_SEMAPHORE(rxrpc_kernel_call_limiter, 1000);
+ 
+ void rxrpc_poke_call(struct rxrpc_call *call, enum rxrpc_call_poke_trace what)
+ {
