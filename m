@@ -1,59 +1,58 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F372F3E
-	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 13:39:55 +0000 (UTC)
-Received: by mail-wm1-f50.google.com with SMTP id o24-20020a05600c511800b003ef59905f26so11764972wms.2
-        for <patches@lists.linux.dev>; Thu, 30 Mar 2023 06:39:55 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17366D24
+	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 14:17:15 +0000 (UTC)
+Received: by mail-wm1-f43.google.com with SMTP id m6-20020a05600c3b0600b003ee6e324b19so11888794wms.1
+        for <patches@lists.linux.dev>; Thu, 30 Mar 2023 07:17:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20210112.gappssmtp.com; s=20210112; t=1680183593;
+        d=metaspace-dk.20210112.gappssmtp.com; s=20210112; t=1680185834;
         h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
          :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=JM8HKL3778vUQkbWShLT/DOaNAA+BeiO2MSEIcKh1es=;
-        b=lrsXoKtwc5CT99FxrJAn4K/hioQwQhZrvDjS0r++gn+JrXlTHEc965i/+u0ZLtsxos
-         OFXwAnjnAStfkXedcwa3Mh/buf2gYTn5fRkG4rmF/sIfpVsC8/639Zw4/yDQxqZ+UrXg
-         o89jqWzNZOKHwEljKC4ggty61cWJoXWsOKtOVCe0hEi3I4duZvJ8M6XRqfLGDXGzFqwO
-         tJZKtBs636Jp0tPvvvDtYQeEbdPznRxEZ1ufYCwyVC2EYY16fzYZeClPc7LI3qMSZ1qx
-         lhlbNkLCOJHp3pKiRieRfRiwEZzQnq9Q3++xmfBEE05wTsCKSICFosMtPQfhsuT68p7x
-         /H1g==
+        bh=V3w4/MoUcTVEnZSoDDuIRGwZ4uXMTJFYF6lNB23fCPk=;
+        b=jZto7yzee4mHExZhJYL8EBHaZ6kim1/ImNBRIxf6WnHEB/vfwpDG8HHF19HwOgGoFk
+         Unpwei39GNh2Cck7ne7iQyiMONqo2bhkqe7txxOMh38OBbcpgPs3nEBWiPrVZR4Uvpqq
+         1MUkJQQA/IjSoweErLKrTPAS6o9lBl0NVyP9QkjRYseuJiMakuYSwt0pf90ZZWu6N8oq
+         HhfYUat9G5hFKKTQo2hxzAYW6IkZr37fG8DzCSCeuUxPxkd5Lzyd4PcpmOQ9HtYYvilE
+         8q5Hi/KSH14T1siemr7507LrIZgmOEfVz9aw80Pc5tmt8Sg3bbGMsM69cK5MGowQabF6
+         UCOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680183593;
+        d=1e100.net; s=20210112; t=1680185834;
         h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
          :user-agent:references:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JM8HKL3778vUQkbWShLT/DOaNAA+BeiO2MSEIcKh1es=;
-        b=rwRrYxFsNktb4LvaRk3hpoL9Nq4THAJqlffkaglY3M924YK9W8ziyMHmO3P1c8KMeH
-         Sfamxkqm3aP1rOsEmZ+JbVKS8LILffqH4Ic8BBflsZxW2Yk5sKomMN2aJ/rZbswp8hPU
-         JrmVBIQmFVEqPY6gZV2gzcBOKAF2NigpbzQZwzbUMF7xN0aOo/5fPTjeYiSYHQu0/j/f
-         uolOUVwVghq0kTFLUkoBj72mmCuw8NSXe/8CfkP7LfrqjrJAxmrR8Ek3MU4JdxjvpJNX
-         OAsVmDAzaeaksfev9rWy4khPO7kpoG3rdY3eVL+u4luBNCc5FiZGwENtddaSZpS2Uvt5
-         n+HA==
-X-Gm-Message-State: AO0yUKVJwRl+piEfv9GYkqCISCBp4VQNZ9dCqb7Rj4vnltS5rpTyV9Xo
-	PCMeRWE3NsTqOVM0Omh0zxSzrA==
-X-Google-Smtp-Source: AK7set+k2PrWvan4zfb9OG6ybBURZnKDsRVl/hovKJ4Xp/T6XF5Jk/uqVgLrxo6+urwaOhXX/cPV7Q==
-X-Received: by 2002:a1c:7516:0:b0:3ef:3ce6:7c69 with SMTP id o22-20020a1c7516000000b003ef3ce67c69mr17784934wmc.8.1680183593259;
-        Thu, 30 Mar 2023 06:39:53 -0700 (PDT)
-Received: from localhost ([194.62.217.4])
-        by smtp.gmail.com with ESMTPSA id 7-20020a05600c024700b003ef5db16176sm5877756wmj.32.2023.03.30.06.39.52
+        bh=V3w4/MoUcTVEnZSoDDuIRGwZ4uXMTJFYF6lNB23fCPk=;
+        b=Dul9+p//rXMa3B/aLhGVLdzAVij5KYXxhXqtpzq4fHMoI5EeglQMyK7DA0C/SuGE4V
+         z1msYI2OAHFcPaQ8HuknZWxj1wmT9mSaSHJP+D80jIFq+AKqK1HYOo4wnPlseq6nWfhQ
+         FODmxclM68Nyo9G8hyQZhPFogGZU/3Gc/DQP0K7DOVsN5/T1vORm0ff9Pp8j3lazHWox
+         TwKKO4FK6qPErArQmFdhWTmITcVF1pAMLPBq9c7JMlV9V/IC5cKSPnB7YhlgCilTlAH4
+         ZryUVsXFtHIxOxJHlfmpgxIwgoiz3X96oS2HbrAj7ZdAsqV2AHRhaJpQ3X3Vl4v3sK7H
+         fCqg==
+X-Gm-Message-State: AAQBX9cE6VWuGE/8f3oBlJhI7QFkEp3FHBz2sqaD6LhnQ7UdezB+Swzv
+	jzVI9STavv9QgqAUOQnnwlaf0w==
+X-Google-Smtp-Source: AKy350bUobZJlvGg3INFY05R6/8uEgvZI6Llp4W7q1vO27xygsDmmZw61af5XrgjBmoSBx3Cv1ghcA==
+X-Received: by 2002:a05:600c:4591:b0:3f0:3070:f4ea with SMTP id r17-20020a05600c459100b003f03070f4eamr3689550wmo.11.1680185834017;
+        Thu, 30 Mar 2023 07:17:14 -0700 (PDT)
+Received: from localhost ([147.161.155.82])
+        by smtp.gmail.com with ESMTPSA id o39-20020a05600c512700b003edddae1068sm6455975wms.9.2023.03.30.07.17.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 06:39:52 -0700 (PDT)
+        Thu, 30 Mar 2023 07:17:13 -0700 (PDT)
 References: <20230329223239.138757-1-y86-dev@protonmail.com>
- <20230329223239.138757-7-y86-dev@protonmail.com>
+ <20230329223239.138757-5-y86-dev@protonmail.com>
+ <ce17f68e-521f-f55e-8ae2-35bcd6ebd709@ryhl.io>
 User-agent: mu4e 1.9.18; emacs 28.2.50
 From: Andreas Hindborg <nmi@metaspace.dk>
-To: y86-dev@protonmail.com
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn?=
- Roy Baron
- <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-Subject: Re: [PATCH v3 06/13] rust: init/sync: add `InPlaceInit` trait to
- pin-initialize smart pointers
-Date: Thu, 30 Mar 2023 15:39:20 +0200
-In-reply-to: <20230329223239.138757-7-y86-dev@protonmail.com>
-Message-ID: <87cz4q4atz.fsf@metaspace.dk>
+To: Alice Ryhl <alice@ryhl.io>
+Cc: y86-dev@protonmail.com, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev, Miguel Ojeda
+ <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida
+ Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo
+ <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn?= Roy Baron
+ <bjorn3_gh@protonmail.com>
+Subject: Re: [PATCH v3 04/13] rust: add pin-init API core
+Date: Thu, 30 Mar 2023 16:16:31 +0200
+In-reply-to: <ce17f68e-521f-f55e-8ae2-35bcd6ebd709@ryhl.io>
+Message-ID: <878rfe493r.fsf@metaspace.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,234 +62,56 @@ MIME-Version: 1.0
 Content-Type: text/plain
 
 
-y86-dev@protonmail.com writes:
+Alice Ryhl <alice@ryhl.io> writes:
 
-> From: Benno Lossin <y86-dev@protonmail.com>
+> On 3/30/23 00:33, y86-dev@protonmail.com wrote:
+>> From: Benno Lossin <y86-dev@protonmail.com>
+>> This API is used to facilitate safe pinned initialization of structs. It
+>> replaces cumbersome `unsafe` manual initialization with elegant safe macro
+>> invocations.
+>> Due to the size of this change it has been split into six commits:
+>> 1. This commit introducing the basic public interface: traits and
+>>     functions to represent and create initializers.
+>> 2. Adds the `#[pin_data]`, `pin_init!`, `try_pin_init!`, `init!` and
+>>     `try_init!` macros along with their internal types.
+>> 3. Adds the `InPlaceInit` trait that allows using an initializer to create
+>>     an object inside of a `Box<T>` and other smart pointers.
+>> 4. Adds the `PinnedDrop` trait and adds macro support for it in
+>>     the `#[pin_data]` macro.
+>> 5. Adds the `stack_pin_init!` macro allowing to pin-initialize a struct on
+>>     the stack.
+>> 6. Adds the `Zeroable` trait and `init::zeroed` function to initialize
+>>     types that have `0x00` in all bytes as a valid bit pattern.
+>> Co-developed-by: Gary Guo <gary@garyguo.net>
+>> Signed-off-by: Gary Guo <gary@garyguo.net>
+>> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
 >
-> The `InPlaceInit` trait that provides two functions, for initializing
-> using `PinInit<T, E>` and `Init<T>`. It is implemented by `Arc<T>`,
-> `UniqueArc<T>` and `Box<T>`.
+> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 >
-> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
-> ---
+>> +//! Aside from pinned initialization, this API also supports in-place construction without pinning,
+>> +//! the marcos/types/functions are generally named like the pinned variants without the `pin`
+>> +//! prefix.
+>
+> Typo: Should be "macros".
+>
+>> +type Invariant<T> = PhantomData<fn(*mut T) -> *mut T>;
+>
+> I think it would make sense to include a link to the nomicon on the
+> documentation for the Invariant type.
+>
+> E.g. this link: https://doc.rust-lang.org/nomicon/subtyping.html
 
-Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
+That would be nice. I think this also applies: https://doc.rust-lang.org/nomicon/phantom-data.html#table-of-phantomdata-patterns
 
->  rust/kernel/init.rs     | 97 +++++++++++++++++++++++++++++++++++------
->  rust/kernel/sync/arc.rs | 25 ++++++++++-
->  2 files changed, 108 insertions(+), 14 deletions(-)
 >
-> diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-> index 85e8d5f41b60..3d89c7e3bdb5 100644
-> --- a/rust/kernel/init.rs
-> +++ b/rust/kernel/init.rs
-> @@ -114,10 +114,13 @@
->  //! [`impl Init<T, E>`]: Init
->  //! [`Opaque`]: kernel::types::Opaque
->  //! [`pin_data`]: ::macros::pin_data
-> -//! [`UniqueArc<T>`]: kernel::sync::UniqueArc
+>> +// This is the module-internal type implementing `PinInit` and `Init`. It is unsafe to create this
+>> +// type, since the closure needs to fulfill the same safety requirement as the
+>> +// `__pinned_init`/`__init` functions.
+>> +struct InitClosure<F, T: ?Sized, E>(F, Invariant<(E, T)>);
 >
-> +use crate::{
-> +    error::{self, Error},
-> +    sync::UniqueArc,
-> +};
->  use alloc::boxed::Box;
-> -use core::{cell::Cell, convert::Infallible, marker::PhantomData, mem::MaybeUninit, ptr};
-> +use core::{cell::Cell, convert::Infallible, marker::PhantomData, mem::MaybeUninit, pin::Pin, ptr};
+> Documentation for a type should use /// rather than //.
 >
->  #[doc(hidden)]
->  pub mod __internal;
-> @@ -309,7 +312,6 @@ pub mod macros;
->  ///
->  /// [`try_pin_init!`]: kernel::try_pin_init
->  /// [`NonNull<Self>`]: core::ptr::NonNull
-> -/// [`Error`]: kernel::error::Error
->  // For a detailed example of how this macro works, see the module documentation of the hidden
->  // module `__internal` inside of `init/__internal.rs`.
->  #[macro_export]
-> @@ -366,8 +368,6 @@ macro_rules! pin_init {
->  ///     }
->  /// }
->  /// ```
-> -///
-> -/// [`Error`]: kernel::error::Error
->  // For a detailed example of how this macro works, see the module documentation of the hidden
->  // module `__internal` inside of `init/__internal.rs`.
->  #[macro_export]
-> @@ -589,8 +589,6 @@ macro_rules! try_pin_init {
->  ///
->  /// This initializer is for initializing data in-place that might later be moved. If you want to
->  /// pin-initialize, use [`pin_init!`].
-> -///
-> -/// [`Error`]: kernel::error::Error
->  // For a detailed example of how this macro works, see the module documentation of the hidden
->  // module `__internal` inside of `init/__internal.rs`.
->  #[macro_export]
-> @@ -641,8 +639,6 @@ macro_rules! init {
->  ///     }
->  /// }
->  /// ```
-> -///
-> -/// [`Error`]: kernel::error::Error
->  // For a detailed example of how this macro works, see the module documentation of the hidden
->  // module `__internal` inside of `init/__internal.rs`.
->  #[macro_export]
-> @@ -848,7 +844,8 @@ macro_rules! try_init {
->  /// A pinned initializer for `T`.
->  ///
->  /// To use this initializer, you will need a suitable memory location that can hold a `T`. This can
-> -/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`].
-> +/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::pin_init`] function of a
-> +/// smart pointer like [`Arc<T>`] on this.
->  ///
->  /// Also see the [module description](self).
->  ///
-> @@ -867,7 +864,6 @@ macro_rules! try_init {
->  ///
->  /// [`Arc<T>`]: crate::sync::Arc
->  /// [`Arc::pin_init`]: crate::sync::Arc::pin_init
-> -/// [`UniqueArc<T>`]: kernel::sync::UniqueArc
->  #[must_use = "An initializer must be used in order to create its value."]
->  pub unsafe trait PinInit<T: ?Sized, E = Infallible>: Sized {
->      /// Initializes `slot`.
-> @@ -884,7 +880,8 @@ pub unsafe trait PinInit<T: ?Sized, E = Infallible>: Sized {
->  /// An initializer for `T`.
->  ///
->  /// To use this initializer, you will need a suitable memory location that can hold a `T`. This can
-> -/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Because [`PinInit<T, E>`] is a super trait, you can
-> +/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::init`] function of a smart
-> +/// pointer like [`Arc<T>`] on this. Because [`PinInit<T, E>`] is a super trait, you can
->  /// use every function that takes it as well.
->  ///
->  /// Also see the [module description](self).
-> @@ -909,7 +906,6 @@ pub unsafe trait PinInit<T: ?Sized, E = Infallible>: Sized {
->  /// move the pointee after initialization.
->  ///
->  /// [`Arc<T>`]: crate::sync::Arc
-> -/// [`UniqueArc<T>`]: kernel::sync::UniqueArc
->  #[must_use = "An initializer must be used in order to create its value."]
->  pub unsafe trait Init<T: ?Sized, E = Infallible>: PinInit<T, E> {
->      /// Initializes `slot`.
-> @@ -1014,3 +1010,78 @@ unsafe impl<T> Init<T> for T {
->          Ok(())
->      }
->  }
-> +
-> +/// Smart pointer that can initialize memory in-place.
-> +pub trait InPlaceInit<T>: Sized {
-> +    /// Use the given initializer to in-place initialize a `T`.
-> +    ///
-> +    /// If `T: !Unpin` it will not be able to move afterwards.
-> +    fn pin_init<E>(init: impl PinInit<T, E>) -> error::Result<Pin<Self>>
-> +    where
-> +        Error: From<E>;
-> +
-> +    /// Use the given initializer to in-place initialize a `T`.
-> +    fn init<E>(init: impl Init<T, E>) -> error::Result<Self>
-> +    where
-> +        Error: From<E>;
-> +}
-> +
-> +impl<T> InPlaceInit<T> for Box<T> {
-> +    #[inline]
-> +    fn pin_init<E>(init: impl PinInit<T, E>) -> error::Result<Pin<Self>>
-> +    where
-> +        Error: From<E>,
-> +    {
-> +        let mut this = Box::try_new_uninit()?;
-> +        let slot = this.as_mut_ptr();
-> +        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
-> +        // slot is valid and will not be moved because of the `Pin::new_unchecked`
-> +        unsafe { init.__pinned_init(slot)? };
-> +        // SAFETY: All fields have been initialized.
-> +        Ok(unsafe { Pin::new_unchecked(this.assume_init()) })
-> +    }
-> +
-> +    #[inline]
-> +    fn init<E>(init: impl Init<T, E>) -> error::Result<Self>
-> +    where
-> +        Error: From<E>,
-> +    {
-> +        let mut this = Box::try_new_uninit()?;
-> +        let slot = this.as_mut_ptr();
-> +        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
-> +        // slot is valid
-> +        unsafe { init.__init(slot)? };
-> +        // SAFETY: All fields have been initialized.
-> +        Ok(unsafe { this.assume_init() })
-> +    }
-> +}
-> +
-> +impl<T> InPlaceInit<T> for UniqueArc<T> {
-> +    #[inline]
-> +    fn pin_init<E>(init: impl PinInit<T, E>) -> error::Result<Pin<Self>>
-> +    where
-> +        Error: From<E>,
-> +    {
-> +        let mut this = UniqueArc::try_new_uninit()?;
-> +        let slot = this.as_mut_ptr();
-> +        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
-> +        // slot is valid and will not be moved because of the `Pin::new_unchecked`.
-> +        unsafe { init.__pinned_init(slot)? };
-> +        // SAFETY: All fields have been initialized.
-> +        Ok(unsafe { Pin::new_unchecked(this.assume_init()) })
-> +    }
-> +
-> +    #[inline]
-> +    fn init<E>(init: impl Init<T, E>) -> error::Result<Self>
-> +    where
-> +        Error: From<E>,
-> +    {
-> +        let mut this = UniqueArc::try_new_uninit()?;
-> +        let slot = this.as_mut_ptr();
-> +        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
-> +        // slot is valid.
-> +        unsafe { init.__init(slot)? };
-> +        // SAFETY: All fields have been initialized.
-> +        Ok(unsafe { this.assume_init() })
-> +    }
-> +}
-> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-> index 16ec174637b2..77a3833cc265 100644
-> --- a/rust/kernel/sync/arc.rs
-> +++ b/rust/kernel/sync/arc.rs
-> @@ -17,7 +17,8 @@
->
->  use crate::{
->      bindings,
-> -    error::Result,
-> +    error::{Error, Result},
-> +    init::{InPlaceInit, Init, PinInit},
->      types::{ForeignOwnable, Opaque},
->  };
->  use alloc::boxed::Box;
-> @@ -163,6 +164,28 @@ impl<T> Arc<T> {
->          // `Arc` object.
->          Ok(unsafe { Self::from_inner(Box::leak(inner).into()) })
->      }
-> +
-> +    /// Use the given initializer to in-place initialize a `T`.
-> +    ///
-> +    /// If `T: !Unpin` it will not be able to move afterwards.
-> +    #[inline]
-> +    pub fn pin_init<E>(init: impl PinInit<T, E>) -> Result<Self>
-> +    where
-> +        Error: From<E>,
-> +    {
-> +        UniqueArc::pin_init(init).map(|u| u.into())
-> +    }
-> +
-> +    /// Use the given initializer to in-place initialize a `T`.
-> +    ///
-> +    /// This is equivalent to [`pin_init`], since an [`Arc`] is always pinned.
-> +    #[inline]
-> +    pub fn init<E>(init: impl Init<T, E>) -> Result<Self>
-> +    where
-> +        Error: From<E>,
-> +    {
-> +        UniqueArc::init(init).map(|u| u.into())
-> +    }
->  }
->
->  impl<T: ?Sized> Arc<T> {
+> I think it would help to call out explicitly in the documentation on this type
+> that it is an implementation detail of the pin_init_from_closure and
+> init_from_closure methods.
 
