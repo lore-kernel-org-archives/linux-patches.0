@@ -1,95 +1,62 @@
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.85.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287196FB1
-	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 14:45:04 +0000 (UTC)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 879B1320093E;
-	Thu, 30 Mar 2023 10:45:03 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 30 Mar 2023 10:45:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1680187503; x=1680273903; bh=eEEZ+8AfxYs0SGGK+yrFh1itzbAaHrsVMFs
-	UFFMshlo=; b=pfxN3IQjKzzMo0Ixa0+GXvS7zmYXHkbJBNrNDYsCCs30dB1EIv2
-	vzO/B6wa06tdi8ZFO70TBX/8CpP8a66//bO3CF316ALp6O+gQyOOnHS2wETx4xlP
-	DUNa+Rlx+JOEUBeatPX8Jb9jcKg1+toPj6PXFEHmSHn1JIbwnIAvHeF4u/u/nkaf
-	x70N1rBGhYuGH0TWiwnAeTtFS2QD82qmUnWKviC2+iiJoUor/HFUNQaSr71tTAul
-	KkGnDPjEUkH+vif4yn7Bz9vOFFUwEmiQMG/LRUUPOJ4Nlwi/czrOTxwzHwkz/Gpy
-	RqdHs2+oyf5y6arkAIG884+pT7siHbDUoFQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1680187503; x=1680273903; bh=eEEZ+8AfxYs0SGGK+yrFh1itzbAaHrsVMFs
-	UFFMshlo=; b=Dd1oKzSkUlSptfN3q8E81cbrplV2+wGgYzYTmsa+KYKJlu3AfJ6
-	3tISYeksof/Ekt7lNAnOSGIjhnZvvsjzyZYWBS0ToQgq2qUqZ6Cq0YmGbSMOqGaw
-	V37TDr4psdRb6aYJnQSRW2LCjQGdwzDFnWLV8JsC6K0X/Ce2sgbWOMoqyAyWzZAj
-	Rep3y5UVerTAVHABpBlRY1c5ZHW9F7JPXMdgqo1zuDol0lbemLF4d/xykcQKhg4L
-	h5koENzeteiz+7/DWuNBbiPSUGf9kJQ2mztBBwX0tdAMMHwcVJgmsk32SxRl1gYj
-	6GJw4sY0qdVmd5me352RBlTQcEn/ii5VZwQ==
-X-ME-Sender: <xms:bqAlZNd1BgzlxjB0BWTut3AqYlH1jBKy_Q2-QTAP3Oy7tQrI0QOzRQ>
-    <xme:bqAlZLNyyUh-Rt4gTZql8fUVOK8J8SAS1bi9NPSmjTa2unqKYa1BX5T0BlAeTyM-E
-    6wUUaMCkXUXbZ_Y2A>
-X-ME-Received: <xmr:bqAlZGgAN-n5qfb8mG0KolhUvTXzNDot2PEdUOS8riF29EuWMJZTrMqmgAtpBjIvnvfw_5pE0YxCyB4rpPB95nKWvw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdehkedgjeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtfeejnecuhfhrohhmpeetlhhi
-    tggvucfthihhlhcuoegrlhhitggvsehrhihhlhdrihhoqeenucggtffrrghtthgvrhhnpe
-    ehudduvdetkedvkedtudeludfgfffhudegjeeguedvvedtteevjeehheeiffefgeenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrlhhitggvse
-    hrhihhlhdrihho
-X-ME-Proxy: <xmx:b6AlZG8IjIsS-t5IHzWxFJ-mwIfNBfyJ8H2juHjnBtdkwmVthw-NRg>
-    <xmx:b6AlZJsVy36bplWAHqxFP_Zd5KQERPF5e0Fma9yW_khj3EHOJtlguw>
-    <xmx:b6AlZFERrEce4MrwEvlivLNYeGFahM5Bpm8G_6mH9HncoAZaf7kkzg>
-    <xmx:b6AlZPDSxgveiF_p_M5LKhFJ3DouKldEJG0nsItMJhy8kHRzp3O8UA>
-Feedback-ID: i56684263:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Mar 2023 10:45:01 -0400 (EDT)
-Message-ID: <a31d0ea3-710d-8ac9-5be1-fa268a7aa36c@ryhl.io>
-Date: Thu, 30 Mar 2023 16:45:14 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3926FB1
+	for <patches@lists.linux.dev>; Thu, 30 Mar 2023 14:58:28 +0000 (UTC)
+Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
+ relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ uk-mta-194-oEK8kR7MNXufi6_5iMJJKw-1; Thu, 30 Mar 2023 15:58:25 +0100
+X-MC-Unique: oEK8kR7MNXufi6_5iMJJKw-1
+Received: from AcuMS.Aculab.com (10.202.163.4) by AcuMS.aculab.com
+ (10.202.163.4) with Microsoft SMTP Server (TLS) id 15.0.1497.48; Thu, 30 Mar
+ 2023 15:58:24 +0100
+Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
+ id 15.00.1497.048; Thu, 30 Mar 2023 15:58:24 +0100
+From: David Laight <David.Laight@ACULAB.COM>
+To: "'y86-dev@protonmail.com'" <y86-dev@protonmail.com>, Miguel Ojeda
+	<ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho
+	<wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo
+	<gary@garyguo.net>, =?utf-8?B?QmrDtnJuIFJveSBCYXJvbg==?=
+	<bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>
+CC: "rust-for-linux@vger.kernel.org" <rust-for-linux@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH v3 12/13] rust: sync: reduce stack usage of
+ `UniqueArc::try_new_uninit`
+Thread-Topic: [PATCH v3 12/13] rust: sync: reduce stack usage of
+ `UniqueArc::try_new_uninit`
+Thread-Index: AQHZYo67xiEDbSa93U2SiSHlQgdRKq8TaqBw
+Date: Thu, 30 Mar 2023 14:58:24 +0000
+Message-ID: <7f55875c46ab4c4989323ede57f6e46d@AcuMS.aculab.com>
+References: <20230329223239.138757-13-y86-dev@protonmail.com>
+In-Reply-To: <20230329223239.138757-13-y86-dev@protonmail.com>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 07/13] rust: init: add `PinnedDrop` trait and macros
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
 Content-Language: en-US
-To: y86-dev@protonmail.com
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>,
- Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-References: <20230329223239.138757-1-y86-dev@protonmail.com>
- <20230329223239.138757-8-y86-dev@protonmail.com>
-From: Alice Ryhl <alice@ryhl.io>
-In-Reply-To: <20230329223239.138757-8-y86-dev@protonmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-On 3/30/23 00:33, y86-dev@protonmail.com wrote:
-> From: Benno Lossin <y86-dev@protonmail.com>
-> 
-> The `PinnedDrop` trait that facilitates destruction of pinned types.
-> It has to be implemented via the `#[pinned_drop]` macro, since the
-> `drop` function should not be called by normal code, only by other
-> destructors. It also only works on structs that are annotated with
-> `#[pin_data(PinnedDrop)]`.
-> 
-> Co-developed-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+RnJvbTogeTg2LWRldkBwcm90b25tYWlsLmNvbQ0KPiBTZW50OiAyOSBNYXJjaCAyMDIzIDIzOjM0
+DQo+IA0KPiBgVW5pcXVlQXJjOjp0cnlfbmV3X3VuaW5pdGAgY2FsbHMgYEFyYzo6dHJ5X25ldyhN
+YXliZVVuaW5pdDo6dW5pbml0KCkpYC4NCj4gVGhpcyByZXN1bHRzIGluIHRoZSB1bmluaXRpYWxp
+emVkIG1lbW9yeSBiZWluZyBwbGFjZWQgb24gdGhlIHN0YWNrLA0KPiB3aGljaCBtYXkgYmUgYXJi
+aXRyYXJpbHkgbGFyZ2UgZHVlIHRvIHRoZSBnZW5lcmljIGBUYCBhbmQgdGh1cyBjb3VsZA0KPiBj
+YXVzZSBhIHN0YWNrIG92ZXJmbG93IGZvciBsYXJnZSB0eXBlcy4NCg0KRG9lcyB0aGF0IG1lYW4g
+cnVzdCBpcyB1c2luZyAodGhlIGVxdWl2YWxlbnQgb2YpIGFsbG9jYSgpID8NCg0KVGhhdCBpcyBi
+YW5uZWQgZm9yIEMgY29kZSBpbiB0aGUga2VybmVsIGZvciBhbnkgc2l6ZXMuDQoNCglEYXZpZA0K
+DQotDQpSZWdpc3RlcmVkIEFkZHJlc3MgTGFrZXNpZGUsIEJyYW1sZXkgUm9hZCwgTW91bnQgRmFy
+bSwgTWlsdG9uIEtleW5lcywgTUsxIDFQVCwgVUsNClJlZ2lzdHJhdGlvbiBObzogMTM5NzM4NiAo
+V2FsZXMpDQo=
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-
-I noticed the same thing as Gary with the name `create`, but otherwise LGTM.
