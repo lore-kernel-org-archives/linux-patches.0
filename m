@@ -1,42 +1,42 @@
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D33C1FB1
-	for <patches@lists.linux.dev>; Fri, 31 Mar 2023 06:58:10 +0000 (UTC)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id E691D5C0069;
-	Fri, 31 Mar 2023 02:58:09 -0400 (EDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D561FB1
+	for <patches@lists.linux.dev>; Fri, 31 Mar 2023 07:02:04 +0000 (UTC)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id C6C165C00EA;
+	Fri, 31 Mar 2023 03:02:03 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 31 Mar 2023 02:58:09 -0400
+  by compute5.internal (MEProxy); Fri, 31 Mar 2023 03:02:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1680245889; x=1680332289; bh=8IpmWURAGLXzpk2/68wVTrU3Oyo9uKazty3
-	0tpmDzO8=; b=akT/HpRjKbLjMjGic77CXRJ5Yi+oFj9PN4me1PCdCMOMc4hrbKz
-	pon9d19Ui6iwjn2Bt0C9/dldJDdu2BvcS+zblwdCuGATk+6/oubPGOUwQzbShp18
-	PdHo6tUCf8iNI0xRTF+TpKCtJaCOM5rmlo6QQHlP4BTEUTCnmGIr8K0qy2RC+nLY
-	7xzTCRGRzYZ8oGXiCnc9sI+UW2w7XsqlVLDiPRPfj3UmCnVzwu7igAwAJikxZNCc
-	ZaQocA4mY3C+/oNghQu8nC4aUteiOlxp8SqEViGzXhFvHlnRCx6zg70T8oSaM9bk
-	QDLxcgBe7stGsVFVZ9Ic8j6uHg9ivM4/PEg==
+	1680246123; x=1680332523; bh=shvdN2nfnBWD0iXHq3tvXVrBe0NNSqWsfGz
+	SZUWzcEw=; b=eqn++UeMd//IXWXBTpJ5urhnqaOBFYchAzzK5f4MHCOljSDDV14
+	VWmsRjbi4uaNcZ2xiYEAEZ4iIdT1qdZB9GCk7jYN/zeXWfFG3OBygcT2CBLLBBYM
+	uxc+wFfIWzif9oLx1UxnZ6o6GEDRgGMe+isQj9Fn4H7OeR8seWTOkcW0h5+ZaIqF
+	F1mJMJsdJkWrasufxkTVoqVxlBtKzGdg4pn0zKIX+uhYWs5qK7GUeIqt5Ty8Gfdb
+	Oj+WcpPKEY8WGTJYApn1RO/O2D8y2qCcIaZESX4alZEGTXpp0+At0zfHJJ8rB1m6
+	SIk7vWEmfZOFRu9QshUs+46mE1qrDgmotnA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
 	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1680245889; x=1680332289; bh=8IpmWURAGLXzpk2/68wVTrU3Oyo9uKazty3
-	0tpmDzO8=; b=uQWSX4t0M2WL3SHmjSkDwV9Q5JVgB5CcJnwnd7EG0kenju0YRXV
-	Rb+jnQ5W47pKUgunSPOaca61D27Aq6r1LpeRUGeSv2wUM3breBX5tnIF1pPjwVyk
-	G4bKzcptdQL2M0xF/9eX3dpSLJukIlm8e5IJhgeSnfKsSgKeoEwZmRxd2QvKbKD6
-	G6hwjTIUPDoCwmmyQQg/yXA78zr5UhCZGm9QGLOenySs56hHxy5yi34O+28yuTSu
-	XZ/qxdQbpEqvY5kv62nqUROCQgMz02OM3xdGMZq682EXiXVXDZQxe/NgVj1Rrn3n
-	FzJI55UvOONClqei6vQUnEJHGwF+PLw1gnw==
-X-ME-Sender: <xms:gYQmZMXUUG8_5v5RJFJaosFUjuCCJmAe8yBoGS0Dkfr-4GOeW17xfA>
-    <xme:gYQmZAmyJUg0Z0bKMjPxh8YxwhpptWyLrxQ6DKrmsD-Laxu_JsSuarH9do9-db0jC
-    uUIGVZT6ZBsDdYZ4g>
-X-ME-Received: <xmr:gYQmZAY8rXt8SruSDyXnjWYhoGCS8uR-xcIHoabkvsXfH13yMf0E7ysngIfW8HoaI23RC4J2nLxY7dt_3bwb_2b3zA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeitddguddufecutefuodetggdotefrod
+	1680246123; x=1680332523; bh=shvdN2nfnBWD0iXHq3tvXVrBe0NNSqWsfGz
+	SZUWzcEw=; b=kC6xXnlWez/V4qx5MUmqoGwWHQjroCB9LbfBXcNvzNOLDLvePuM
+	Q1Z68fmjl1/1LuLHS2p0NWJ5QK/26kceH0hfCpe6FQ0H0y3vkR1lU2PIwiwxyoEn
+	7zhek1TPgg5FXZf1M5eIZiPOVq7X3HFHjTKtwv9biO6FfI9XlavgZ1lFCbo0pSc1
+	g6hy8VbMJVP9MDmNhpyA/YW0WyxZELe7xiSwg3CP5dpI3YCptwV2UgLJPx7fLrMc
+	5tP/Ve+uS4FDZaLiE1YNwrBvd6IpcfG2hPrh5bFjypYAZ85LcBoBSJaWZNTOC7H8
+	tvuuEuhvTS3IslTk09IhTaYXCP9SJNifTqQ==
+X-ME-Sender: <xms:a4UmZNYyK8nLbHhOMysfC4B5JP-mTTqUApXnZ3GHjpWOUrlG1o-kaA>
+    <xme:a4UmZEYFTzDattSmwWDoy5TsLomAlQdUi9p0Ld_VXIUyCkPIop00sWY24BRFxk5jr
+    cSGr7_n4nsqNKZyJw>
+X-ME-Received: <xmr:a4UmZP96Shjf5LtfZCKhj6MIk8QyVHKguMajBKGVz8Fct1E98eZAYAiDVvVMXb9VlPll2-jnroZGS5cSZiZIqC1dwA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeitddguddugecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheptehl
@@ -44,15 +44,15 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeitddguddufecutefuodetgg
     epheduuddvteekvdektdduledugfffhfdugeejgeeuvdevtdetveejheehiefffeegnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlihgtvg
     esrhihhhhlrdhioh
-X-ME-Proxy: <xmx:gYQmZLVeGxufjlbym8N4cWhhbRKTaPuI8lmNDOjRp6t3o-zk5ZAMEg>
-    <xmx:gYQmZGm13aKEv4Xx2F6TarPsU_0hwnj4Nwt1FS_No4uZnP1W7GT7RA>
-    <xmx:gYQmZAcwFVViOP5hBpQYnt9PzSLhy3IEVVp7IaotYN6jYA3fHHQ8MQ>
-    <xmx:gYQmZA4y22s5LxhIz7KjE6haUnSiFhRAR8Yg2X2Qpg7uyV44nosVXg>
+X-ME-Proxy: <xmx:a4UmZLrkLgwnxpzod9x9vdN8GwRXCl-rHjWd0BoKB1W9B4s4JhxheA>
+    <xmx:a4UmZIpDMrXyYJ6WY1Sp9Bm_JLFU4L55L7ZbUmW5g0EVVdGtAjzFhw>
+    <xmx:a4UmZBRaM79oSXcfThqZjgtmMxdVCMVjcfY8MCCbx_HrBKu-E5VG5A>
+    <xmx:a4UmZEchGlP1AmlpC5WDulvOOQskBIsfdsnb0PXownhbISg4xaP_Ew>
 Feedback-ID: i56684263:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Mar 2023 02:58:07 -0400 (EDT)
-Message-ID: <e93426bb-cc4a-c52b-5a9b-3416f9012b45@ryhl.io>
-Date: Fri, 31 Mar 2023 08:58:17 +0200
+ 31 Mar 2023 03:02:01 -0400 (EDT)
+Message-ID: <1e2a3b59-cb50-9c78-a7a0-829c2d500e4f@ryhl.io>
+Date: Fri, 31 Mar 2023 09:02:14 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,26 +61,32 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v3 10/13] rust: prelude: add `pin-init` API items to
- prelude
+Subject: Re: [PATCH v3 11/13] rust: types: add common init-helper functions
+ for `Opaque`
 Content-Language: en-US
 To: y86-dev@protonmail.com
 Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Alex Gaynor <alex.gaynor@gmail.com>,
- Boqun Feng <boqun.feng@gmail.com>, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Miguel Ojeda <ojeda@kernel.org>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>
-References: <20230329223239.138757-11-y86-dev@protonmail.com>
+ patches@lists.linux.dev, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, Gary Guo <gary@garyguo.net>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
+ <boqun.feng@gmail.com>, Miguel Ojeda <ojeda@kernel.org>,
+ Alex Gaynor <alex.gaynor@gmail.com>
+References: <20230329223239.138757-12-y86-dev@protonmail.com>
 From: Alice Ryhl <alice@ryhl.io>
-In-Reply-To: <20230329223239.138757-11-y86-dev@protonmail.com>
+In-Reply-To: <20230329223239.138757-12-y86-dev@protonmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 3/30/23 00:33, y86-dev@protonmail.com wrote:
 > From: Benno Lossin <y86-dev@protonmail.com>
 > 
-> Add `pin-init` API macros and traits to the prelude.
+> Add helper functions to more easily initialize `Opaque<T>` via FFI and
+> rust raw initializer functions.
+> These functions take a function pointer to the FFI/raw initialization
+> function and take between 0-4 other arguments. It then returns an
+> initializer that uses the FFI/raw initialization function along with the
+> given arguments to initialize an `Opaque<T>`.
 > 
 > Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviwed-by: Alice Ryhl <aliceryhl@google.com>
