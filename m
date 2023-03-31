@@ -1,89 +1,137 @@
-Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98828F54
-	for <patches@lists.linux.dev>; Fri, 31 Mar 2023 21:54:59 +0000 (UTC)
-Date: Fri, 31 Mar 2023 21:54:52 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680299697; x=1680558897;
-	bh=KCurfW5Y+j7R5fMbjmPJwPW9L2YVYu9q3k1eOHB2SiI=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=wxkdvrmXC/k4XiTyxLpBUK+Cqntvv+0ZjbikRImKsmvixU+eA6ryqIS9apKPmgana
-	 Ez+zL/wUyzlotdDxsXXe6U1I1SzleZvchId1yRlFa84YWxfolCXFFxyrXvHrvYdZuV
-	 Ox28mr33BMaizAA1dwxWFip6LQBuGhlFUpJmfNBNBJzlGLyc9DSlDLpJPWDp9Yju1R
-	 KZveNXe7wfAE1ukEJ8/KtRn0IxqwP7zGAaCqHhUQmPj13oI5t4hJzmhXsTUmepU3FP
-	 A0gyw27n11yAPgKQrz7gWFlfUI8QfSfhDAHm3imB5edueXzruT809K3erxWCPhlvjb
-	 iLNbQbj//iRQw==
-To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>
-From: y86-dev@protonmail.com
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <y86-dev@protonmail.com>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <a.hindborg@samsung.com>
-Subject: [PATCH v4 15/15] rust: sync: add functions for initializing `UniqueArc<MaybeUninit<T>>`
-Message-ID: <20230331215053.585759-16-y86-dev@protonmail.com>
-Feedback-ID: 40624463:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CCC8F54
+	for <patches@lists.linux.dev>; Fri, 31 Mar 2023 22:24:07 +0000 (UTC)
+Received: by mail-qv1-f50.google.com with SMTP id dw2so240067qvb.11
+        for <patches@lists.linux.dev>; Fri, 31 Mar 2023 15:24:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680301446;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WtftlvxQJ039HPxSLQblKHBrwyQ77QzbzDmRY3gJhwU=;
+        b=Ctn+GnX1rq1Z7HSzKakAN5zxRYXrz1UW4nISkjn0Vnb4KaVx+Ycx+g7RWTQ2ZW7Uw9
+         IizLYZ5zcA7xeP8wr7jSn6Fd5BlZdHJIwUabFbnC+tZ1ddWK+TfLXnIkty6d+9vg1bvC
+         bDAqtDu31uLhWoqDX2B75cO+Pqo4C120ZoGCytBzTgsSo20w9qa5/IL1RqM+gqn8vrSu
+         q4LBsvjd2x1IN2QzifFIM/E8WUbPDmBokkaR+0ZamLEc+F8Q1GrsPqn4DXhzPAeHUeOY
+         Z8+LT7OI0khd9kXHlVoTI5di2vSsNr0ApgqJvjm5p22eYdrZtti+gIaJ/o4bWoI4Yatj
+         6xCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680301446;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WtftlvxQJ039HPxSLQblKHBrwyQ77QzbzDmRY3gJhwU=;
+        b=y4dqpFkg0nqCYXuTO7YAUn2NTiElEOF2NLLfD7h8idsWvEz7OPhPVVFw15gB+KBSH1
+         BP2TQ4JD9Bk1f8Y/MrNsl5uhFHmjzpda75RVL7XB8WAJgBm/7QnagSwb+C+EehNC3fBN
+         oFOcQ0V5EiUzO4toytXHt5YXw6g+wdiQ3utdht54L2fbAon7/ToAAp3ISyvlvCdXltSx
+         ByN47r17/Hej3VK2rkgZ6IuJQFCNL/3Hl9a1D32vFzgdehWlju3C9DcmSzXUe3M0XFo8
+         qaokOvC3QX6BWBXff0dZ9BOreTbM4w9mOP8rEe7vgb/K2ZYJcfJFlQO1AKPu+0fO1j3e
+         bBGA==
+X-Gm-Message-State: AAQBX9cRJZaJcVX68WL5z9HnAQzcubV+pZDEce5LBKHzBENSbg8QI4jF
+	1TAAeLAAJFKiWBCWv04GikI=
+X-Google-Smtp-Source: AKy350aYKxU1nt9CaIHh9UA5sMMVmy62LYl/MTSN9NDTiDP/B3htWeBAUOlUh6tpfYXRtuzh/jLq9w==
+X-Received: by 2002:ad4:5ca7:0:b0:5cc:e059:efa3 with SMTP id q7-20020ad45ca7000000b005cce059efa3mr47450729qvh.23.1680301446517;
+        Fri, 31 Mar 2023 15:24:06 -0700 (PDT)
+Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com. [66.111.4.228])
+        by smtp.gmail.com with ESMTPSA id g10-20020a0cfdca000000b005dd8b9345d2sm873652qvs.106.2023.03.31.15.24.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Mar 2023 15:24:06 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailauth.nyi.internal (Postfix) with ESMTP id 8C69427C0054;
+	Fri, 31 Mar 2023 18:24:05 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Fri, 31 Mar 2023 18:24:05 -0400
+X-ME-Sender: <xms:hV0nZA_ferdFOrQoFRFaXmBcjljGfG01srEMtk6iut8YnymAUOELMg>
+    <xme:hV0nZIuPgm8ETE9ojbKeoVAcrKfsmos19wt0ZVIGW-u1nnjqN-X9FX08yfE_yQgl9
+    ei_RjavxkmXwKOtLw>
+X-ME-Received: <xmr:hV0nZGBYEp3yk6VcqgNYoTC5zPl9ry0NfzQyONlvUiA6C6P6TD8vPKXDSiUyKQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeivddgudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehoqhhu
+    nhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeehudfgudffffetuedtvdehueevledvhfelleeivedtgeeuhfegueeviedu
+    ffeivdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    gsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdeiledvgeehtdei
+    gedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmhgrihhlrdgtohhmsehfih
+    igmhgvrdhnrghmvg
+X-ME-Proxy: <xmx:hV0nZAdNmVkF3mgkB9c6PMxVuYkkH7ozusQwKnT8WL6a5d9ZL8HPhQ>
+    <xmx:hV0nZFPaMTKoe1zhdOda5PwubWlA0wD2oWMrFA0iA2LDwOIphRfCUQ>
+    <xmx:hV0nZKkjy-jDU_xxl2-qxRAFmhIidHvX7qUx0eMCv38L5j3iy7DrSA>
+    <xmx:hV0nZKlyBXk5RDqo7MnSxNtSCSm71vyvHNNVWTL65KY4LZVsNV6f_w>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 31 Mar 2023 18:24:04 -0400 (EDT)
+Date: Fri, 31 Mar 2023 15:23:17 -0700
+From: Boqun Feng <boqun.feng@gmail.com>
+To: y86-dev@protonmail.com
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Alice Ryhl <alice@ryhl.io>, rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: Re: [PATCH v4 01/15] rust: enable the `pin_macro` feature
+Message-ID: <ZCddVfb9vUw8j7u/@boqun-archlinux>
+References: <20230331215053.585759-1-y86-dev@protonmail.com>
+ <20230331215053.585759-2-y86-dev@protonmail.com>
+ <ZCdWErZLBFl205UP@boqun-archlinux>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZCdWErZLBFl205UP@boqun-archlinux>
 
-From: Benno Lossin <y86-dev@protonmail.com>
+On Fri, Mar 31, 2023 at 02:52:18PM -0700, Boqun Feng wrote:
+> On Fri, Mar 31, 2023 at 09:51:35PM +0000, y86-dev@protonmail.com wrote:
+> > From: Benno Lossin <y86-dev@protonmail.com>
+> > 
+> > This feature enables the use of the `pin!` macro for the `stack_pin_init!`
+> > macro. This feature is already stabilized in Rust version 1.68.
+> > 
+> > Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+> > Cc: Gary Guo <gary@garyguo.net>
+> > Cc: Andreas Hindborg <a.hindborg@samsung.com>
+> > Cc: Alice Ryhl <aliceryhl@google.com>
+> 
+> Acked-by: Boqun Feng <boqun.feng@gmail.com>
+> 
 
-Add two functions `init_with` and `pin_init_with` to
-`UniqueArc<MaybeUninit<T>>` to initialize the memory of already allocated
-`UniqueArc`s. This is useful when you want to allocate memory check some
-condition inside of a context where allocation is forbidden and then
-conditionally initialize an object.
+Hmm.. actually I think you will need to add this in the
+scripts/Makefile.build, because the user (stack_pin_init!()) is a macro,
+feel free to add my acked-by after that.
 
-Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
----
- rust/kernel/sync/arc.rs | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+Regards,
+Boqun
 
-diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-index 5f64affd8f33..fddb7a2b1890 100644
---- a/rust/kernel/sync/arc.rs
-+++ b/rust/kernel/sync/arc.rs
-@@ -540,6 +540,30 @@ impl<T> UniqueArc<MaybeUninit<T>> {
-             inner: unsafe { Arc::from_inner(inner.cast()) },
-         }
-     }
-+
-+    /// Initialize `self` using the given initializer.
-+    pub fn init_with<E>(mut self, init: impl Init<T, E>) -> core::result::=
-Result<UniqueArc<T>, E> {
-+        // SAFETY: The supplied pointer is valid for initialization.
-+        match unsafe { init.__init(self.as_mut_ptr()) } {
-+            // SAFETY: Initialization completed successfully.
-+            Ok(()) =3D> Ok(unsafe { self.assume_init() }),
-+            Err(err) =3D> Err(err),
-+        }
-+    }
-+
-+    /// Pin-initialize `self` using the given pin-initializer.
-+    pub fn pin_init_with<E>(
-+        mut self,
-+        init: impl PinInit<T, E>,
-+    ) -> core::result::Result<Pin<UniqueArc<T>>, E> {
-+        // SAFETY: The supplied pointer is valid for initialization and we=
- will later pin the value
-+        // to ensure it does not move.
-+        match unsafe { init.__pinned_init(self.as_mut_ptr()) } {
-+            // SAFETY: Initialization completed successfully.
-+            Ok(()) =3D> Ok(unsafe { self.assume_init() }.into()),
-+            Err(err) =3D> Err(err),
-+        }
-+    }
- }
-
- impl<T: ?Sized> From<UniqueArc<T>> for Pin<UniqueArc<T>> {
---
-2.39.2
-
-
+> Regards,
+> Boqun
+> 
+> > ---
+> >  rust/kernel/lib.rs | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
+> > index 223564f9f0cc..4317b6d5f50b 100644
+> > --- a/rust/kernel/lib.rs
+> > +++ b/rust/kernel/lib.rs
+> > @@ -17,6 +17,7 @@
+> >  #![feature(core_ffi_c)]
+> >  #![feature(dispatch_from_dyn)]
+> >  #![feature(generic_associated_types)]
+> > +#![feature(pin_macro)]
+> >  #![feature(receiver_trait)]
+> >  #![feature(unsize)]
+> > 
+> > --
+> > 2.39.2
+> > 
+> > 
