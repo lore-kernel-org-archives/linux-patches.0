@@ -1,80 +1,86 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE287ED8;
-	Fri, 31 Mar 2023 06:30:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 54A24C4339C;
-	Fri, 31 Mar 2023 06:30:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1680244220;
-	bh=oVNrIse3VEoOTwiJCZSaD19tmzueBrN/XPGjwvdI2fQ=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=obV1cb54LwI/ig5zUv5OjGv5bgPZatX/pcn1cwoEvj5DJReOh06kNZlkf03iazlAu
-	 M1ptqUnRz5ZPihbtmWSfMHUnO+xDINmr/Z9AKKvjuGBVsFig6UdPhAn8LDnIfBEhBt
-	 WLTWnwzI4JYVt5mEcE5fFbsjAv6HSRvttjWKDUpIrLLWkEtWNy01xwazWkzhApPLCd
-	 tGOkQLBxtyxMAPnvblsE0N+YWt8o0GZWCGic9yNKLGwwibEqQnuKb+M8AQNXQPqqvg
-	 tUJ0e1FmDBolx/LyBV3Rjk/JqFuGz3QaTwY0TNHI0eBpbiu0mC0JVvC5BiuLpzVtxT
-	 zwZJ9th+ePurQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2B776C0C40E;
-	Fri, 31 Mar 2023 06:30:20 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D33C1FB1
+	for <patches@lists.linux.dev>; Fri, 31 Mar 2023 06:58:10 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id E691D5C0069;
+	Fri, 31 Mar 2023 02:58:09 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Fri, 31 Mar 2023 02:58:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
+	1680245889; x=1680332289; bh=8IpmWURAGLXzpk2/68wVTrU3Oyo9uKazty3
+	0tpmDzO8=; b=akT/HpRjKbLjMjGic77CXRJ5Yi+oFj9PN4me1PCdCMOMc4hrbKz
+	pon9d19Ui6iwjn2Bt0C9/dldJDdu2BvcS+zblwdCuGATk+6/oubPGOUwQzbShp18
+	PdHo6tUCf8iNI0xRTF+TpKCtJaCOM5rmlo6QQHlP4BTEUTCnmGIr8K0qy2RC+nLY
+	7xzTCRGRzYZ8oGXiCnc9sI+UW2w7XsqlVLDiPRPfj3UmCnVzwu7igAwAJikxZNCc
+	ZaQocA4mY3C+/oNghQu8nC4aUteiOlxp8SqEViGzXhFvHlnRCx6zg70T8oSaM9bk
+	QDLxcgBe7stGsVFVZ9Ic8j6uHg9ivM4/PEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1680245889; x=1680332289; bh=8IpmWURAGLXzpk2/68wVTrU3Oyo9uKazty3
+	0tpmDzO8=; b=uQWSX4t0M2WL3SHmjSkDwV9Q5JVgB5CcJnwnd7EG0kenju0YRXV
+	Rb+jnQ5W47pKUgunSPOaca61D27Aq6r1LpeRUGeSv2wUM3breBX5tnIF1pPjwVyk
+	G4bKzcptdQL2M0xF/9eX3dpSLJukIlm8e5IJhgeSnfKsSgKeoEwZmRxd2QvKbKD6
+	G6hwjTIUPDoCwmmyQQg/yXA78zr5UhCZGm9QGLOenySs56hHxy5yi34O+28yuTSu
+	XZ/qxdQbpEqvY5kv62nqUROCQgMz02OM3xdGMZq682EXiXVXDZQxe/NgVj1Rrn3n
+	FzJI55UvOONClqei6vQUnEJHGwF+PLw1gnw==
+X-ME-Sender: <xms:gYQmZMXUUG8_5v5RJFJaosFUjuCCJmAe8yBoGS0Dkfr-4GOeW17xfA>
+    <xme:gYQmZAmyJUg0Z0bKMjPxh8YxwhpptWyLrxQ6DKrmsD-Laxu_JsSuarH9do9-db0jC
+    uUIGVZT6ZBsDdYZ4g>
+X-ME-Received: <xmr:gYQmZAY8rXt8SruSDyXnjWYhoGCS8uR-xcIHoabkvsXfH13yMf0E7ysngIfW8HoaI23RC4J2nLxY7dt_3bwb_2b3zA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeitddguddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheptehl
+    ihgtvgcutfihhhhluceorghlihgtvgesrhihhhhlrdhioheqnecuggftrfgrthhtvghrnh
+    epheduuddvteekvdektdduledugfffhfdugeejgeeuvdevtdetveejheehiefffeegnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlihgtvg
+    esrhihhhhlrdhioh
+X-ME-Proxy: <xmx:gYQmZLVeGxufjlbym8N4cWhhbRKTaPuI8lmNDOjRp6t3o-zk5ZAMEg>
+    <xmx:gYQmZGm13aKEv4Xx2F6TarPsU_0hwnj4Nwt1FS_No4uZnP1W7GT7RA>
+    <xmx:gYQmZAcwFVViOP5hBpQYnt9PzSLhy3IEVVp7IaotYN6jYA3fHHQ8MQ>
+    <xmx:gYQmZA4y22s5LxhIz7KjE6haUnSiFhRAR8Yg2X2Qpg7uyV44nosVXg>
+Feedback-ID: i56684263:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 31 Mar 2023 02:58:07 -0400 (EDT)
+Message-ID: <e93426bb-cc4a-c52b-5a9b-3416f9012b45@ryhl.io>
+Date: Fri, 31 Mar 2023 08:58:17 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next] net: ethernet: ti: Fix format specifier in
- netcp_create_interface()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <168024422016.32019.3404856022157277759.git-patchwork-notify@kernel.org>
-Date: Fri, 31 Mar 2023 06:30:20 +0000
-References: <20230329-net-ethernet-ti-wformat-v1-1-83d0f799b553@kernel.org>
-In-Reply-To: <20230329-net-ethernet-ti-wformat-v1-1-83d0f799b553@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, ndesaulniers@google.com, trix@redhat.com,
- razor@blackwall.org, kerneljasonxing@gmail.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 10/13] rust: prelude: add `pin-init` API items to
+ prelude
+Content-Language: en-US
+To: y86-dev@protonmail.com
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, Alex Gaynor <alex.gaynor@gmail.com>,
+ Boqun Feng <boqun.feng@gmail.com>, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, Miguel Ojeda <ojeda@kernel.org>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>
+References: <20230329223239.138757-11-y86-dev@protonmail.com>
+From: Alice Ryhl <alice@ryhl.io>
+In-Reply-To: <20230329223239.138757-11-y86-dev@protonmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello:
-
-This patch was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Wed, 29 Mar 2023 08:08:01 -0700 you wrote:
-> After commit 3948b05950fd ("net: introduce a config option to tweak
-> MAX_SKB_FRAGS"), clang warns:
+On 3/30/23 00:33, y86-dev@protonmail.com wrote:
+> From: Benno Lossin <y86-dev@protonmail.com>
 > 
->   drivers/net/ethernet/ti/netcp_core.c:2085:4: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
->                           MAX_SKB_FRAGS);
->                           ^~~~~~~~~~~~~
->   include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
->           dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
->                                                                  ~~~     ^~~~~~~~~~~
->   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
->                   _p_func(dev, fmt, ##__VA_ARGS__);                       \
->                                ~~~    ^~~~~~~~~~~
->   include/linux/skbuff.h:352:23: note: expanded from macro 'MAX_SKB_FRAGS'
->   #define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS
->                         ^~~~~~~~~~~~~~~~~~~~
->   ./include/generated/autoconf.h:11789:30: note: expanded from macro 'CONFIG_MAX_SKB_FRAGS'
->   #define CONFIG_MAX_SKB_FRAGS 17
->                                ^~
->   1 warning generated.
+> Add `pin-init` API macros and traits to the prelude.
 > 
-> [...]
+> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
 
-Here is the summary with links:
-  - [net-next] net: ethernet: ti: Fix format specifier in netcp_create_interface()
-    https://git.kernel.org/netdev/net-next/c/3292004c90c8
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
