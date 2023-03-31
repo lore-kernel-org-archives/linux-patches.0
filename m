@@ -1,69 +1,74 @@
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A1A1FB1
+	for <patches@lists.linux.dev>; Fri, 31 Mar 2023 08:05:54 +0000 (UTC)
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+	by smtp-out2.suse.de (Postfix) with ESMTP id 8F0681FE3F;
+	Fri, 31 Mar 2023 08:05:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1680249952; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+yE/ElG/1JpRXabfjyDkXIDLPL4NCS4hNuektaT+pZc=;
+	b=pBGRzBhCwblY4cH5PfbPazP0AAH8fDx/EeOAVNkAAR9AfzJF0UKffpv6nfN8JLc0wKK8nq
+	MdioBBmsdz4Tlk/WdgrZG6RgICd9lF91+9CXZtjciNUwCZ71K9WM2BWqZdu8KA6OKRjhxR
+	HY18hGaovwsWjLT5L3MM5FgmY+idds0=
+Received: from suse.cz (unknown [10.100.208.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE0F1FB1
-	for <patches@lists.linux.dev>; Fri, 31 Mar 2023 07:09:45 +0000 (UTC)
-Date: Fri, 31 Mar 2023 07:09:30 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680246578; x=1680505778;
-	bh=yc7pszNaS5MbnHhdKhl5ZeYs5tmQLP8mPSrXEB1Pfk4=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=P77Mw4qMdqZYI2RdWmjZNTsGKTQyZ77FieQWyPBpdBBmiAqwn7bM0hYslj+c7jbPc
-	 4/UkSxuVIWihc8PVv+QsXkBOkSiQhk9IDPczy8+kO/AYbK3ZG1ZEFCB9qkr5iMgixU
-	 jrW4bSSBPQwEc1Ck3bTBS9YAk/qI9HTraRRN9o0vSsOnbhAQGQARKE6r8OuMmKCiAh
-	 afZlEO2dX17N/zaQKYEbO+XfQ65sfB6FswvnGw/6da6+cgIgsn5u/SDPSX4QYDPwQR
-	 xlaQm3ZYPwI7ItkJ0SUqanHEc7cxGns7nzWfu13woHHx9sKmh2MGBlKCmtaWOh6TMJ
-	 A8BIO+WjxIqkw==
-To: Alice Ryhl <alice@ryhl.io>, Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-From: Benno Lossin <y86-dev@protonmail.com>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v3 09/13] rust: init: add `Zeroable` trait and `init::zeroed` function
-Message-ID: <06e72e1f-af49-d952-7dd5-c80b9e3f27ee@protonmail.com>
-In-Reply-To: <19db6213-297b-a33d-7331-3c1a5b72fad9@ryhl.io>
-References: <20230329223239.138757-10-y86-dev@protonmail.com> <19db6213-297b-a33d-7331-3c1a5b72fad9@ryhl.io>
-Feedback-ID: 40624463:user:proton
+	by relay2.suse.de (Postfix) with ESMTPS id A179D2C141;
+	Fri, 31 Mar 2023 08:05:51 +0000 (UTC)
+Date: Fri, 31 Mar 2023 10:05:48 +0200
+From: Petr Mladek <pmladek@suse.com>
+To: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Luis Chamberlain <mcgrof@kernel.org>, david@redhat.com,
+	patches@lists.linux.dev, linux-modules@vger.kernel.org,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+	petr.pavlu@suse.com, prarit@redhat.com, gregkh@linuxfoundation.org,
+	rafael@kernel.org, christophe.leroy@csgroup.eu, tglx@linutronix.de,
+	song@kernel.org, rppt@kernel.org, willy@infradead.org,
+	vbabka@suse.cz, mhocko@suse.com, dave.hansen@linux.intel.com
+Subject: Re: [PATCH 4/7] sempahore: add a helper for a concurrency limiter
+Message-ID: <ZCaUXHxYiPolI/lu@alley>
+References: <20230329053149.3976378-1-mcgrof@kernel.org>
+ <20230329053149.3976378-5-mcgrof@kernel.org>
+ <20230329072112.GG4253@hirez.programming.kicks-ass.net>
+ <ZCPuFLDgU5fBFtug@bombadil.infradead.org>
+ <20230329091935.GP4253@hirez.programming.kicks-ass.net>
+ <CAHk-=whF6Ta_KcJP2eC78+Mstv+vAku8ATRMbv98sf9VhdvySQ@mail.gmail.com>
+ <20230330115626.GA124812@hirez.programming.kicks-ass.net>
+ <CAHk-=wgF34MkhZnM_Kc1zggTWCAQ=BzEgAaAbE5wDM07bWiYeg@mail.gmail.com>
+ <20230331034209.GA12892@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230331034209.GA12892@google.com>
 
-On 31.03.23 00:40, Alice Ryhl wrote:
-> On 3/30/23 00:33, y86-dev@protonmail.com wrote:
->> From: Benno Lossin <y86-dev@protonmail.com>
->>
->> Add the `Zeroable` trait which marks types that can be initialized by
->> writing `0x00` to every byte of the type. Also add the `init::zeroed`
->> function that creates an initializer for a `Zeroable` type that writes
->> `0x00` to every byte.
->>
->> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
->> ---
->> +// SAFETY: `null` pointer is valid.
->> +unsafe impl<T: ?Sized> Zeroable for *mut T {}
->> +unsafe impl<T: ?Sized> Zeroable for *const T {}
->
-> Actually, I just realized that this is not ok for unsized types. When T
-> is unsized, the raw pointer is a fat pointer with a vtable, and the
-> vtable part is not necessarily zeroable.
->
-> However, it would be ok to do it for `*const [T]` since the fat part of
-> the pointer is just the length in this case, and a length of zero is fine=
-.
->
-> See more here:
-> https://github.com/Lokathor/bytemuck/blob/8391afa876ba2e99dffb0c991cc7fa7=
-75287d106/src/zeroable.rs#L56-L65
+On Fri 2023-03-31 12:42:09, Sergey Senozhatsky wrote:
+> On (23/03/30 09:23), Linus Torvalds wrote:
+> > Although we also do have some other issues - I think down_trylock() is
+> > ok in irq contexts, but mutex_trylock() is not. Maybe that's why
+> > printk uses semaphores? I forget.
+> 
+> Yes, correct. IIRC we also cannot safely call mutex_unlock() from IRQ
+> context because it takes some internal mutex spin_lock in a non-IRQ-safe
+> manner. Semaphore is OK in this regard, both semaphore try_lock() and
+> unlock() can be called from IRQ.
 
-Wow I forgot about fat pointers completely! Good catch!
+One more reason is that mutex must be released in the same context
+that took it. And printk() tries to pass console_sem() to another context.
 
---
-Cheers,
-Benno
+It was added by the commit dbdda842fe96 ("printk: Add console owner
+and waiter logic to load balance console writes"). It was relatively
+effective in reducing the risk of soft lockups.
 
-
+Best Regards,
+Petr
