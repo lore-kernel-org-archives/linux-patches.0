@@ -1,93 +1,69 @@
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9141FB1
-	for <patches@lists.linux.dev>; Fri, 31 Mar 2023 07:07:28 +0000 (UTC)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id AA8D85C0154;
-	Fri, 31 Mar 2023 03:07:27 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Fri, 31 Mar 2023 03:07:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1680246447; x=1680332847; bh=rxemviTxQCpkhXo4VLRQYc4IouO2iUewwIc
-	BnZ0fzzg=; b=AkSQ0A72qoPHTG95ZzvlksyUwHzzQHUad2CTA62UEYRhlccy+AD
-	PyXmxTmKrbQSqaJRZT+4Y+3W6ofmlhxciNtn+EHuPoJ3lYom6dlrGo3dUcgDr+us
-	xkonW9fYGRHLP+gBU84gQQuN4l9eNqliVImcivHhKqpQJirzGEuZL6qzt+mVXBlk
-	7BoSfxx+HR0Bj0AsYz6l86qRueLOHgKLRiTT9xAXJaktj3qImbSTXKFmyASRt0G9
-	LpxVsDSC+v09i8uThYVh/YiAaurRGhrKisoTplqeks2wkQqqP+YDbvOKMqz2urp8
-	qFGYiaCRkyumBUI+447P7+wM+zfiden5ObA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1680246447; x=1680332847; bh=rxemviTxQCpkhXo4VLRQYc4IouO2iUewwIc
-	BnZ0fzzg=; b=W04vL5WmfTRCudlEXPwluwZ0CSsMYsIZBTDnuoaSUzKL77QiJCP
-	MNd3YoKPt/7ZfuzxeoxiZTabs1Lzfb7vpwImDhRUZdE5x4noo+TH+K0oHgRD3gxF
-	jkt7cAKoGFH+YbVcflUKf1cSulewjGA1n+oiZhXkGBoxY1OQeLNX446U1q5GubOF
-	BC/J66HyBMlifbsBX5iAz/hwx2OmV6cWyF1c7c180FQr8SCWyzSHUruhKe9NRumb
-	Nky9X8iEMpUZ2Bh+vciSGhhsiy15XvNLdm6nXRjWq8Qv6rfR/Q0y4p5Opn6s9T5k
-	jePtaogMp+LGzqJtceYiEMWlAkTldWuL3Iw==
-X-ME-Sender: <xms:r4YmZLwLQWJqcGE-Ay_e9Tn4wfoiPyYr52mX7i2-jwF_oFYQ_7SyDQ>
-    <xme:r4YmZDQDg2d7Y-klJM12gex_S6B6U9LQv47f2LvBci0-9seMJrun9KvzOx_o3lBi3
-    T9PGlPBPaUdGd_o7g>
-X-ME-Received: <xmr:r4YmZFVt-cqxpr1qj4mHI10h79_JQ5YnFgdHWuMQmV1F7coIJGWWv9pdy3t0U7Tf0eoNb0Wsk-mvKqxU8ZFgZ5gOgQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeitddgudduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheptehl
-    ihgtvgcutfihhhhluceorghlihgtvgesrhihhhhlrdhioheqnecuggftrfgrthhtvghrnh
-    epheduuddvteekvdektdduledugfffhfdugeejgeeuvdevtdetveejheehiefffeegnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlihgtvg
-    esrhihhhhlrdhioh
-X-ME-Proxy: <xmx:r4YmZFhXrUlKswsRqOM0QORQcvND2pq_6M6iJDRkyYEZPbEITeKrWg>
-    <xmx:r4YmZNAEqywi8cUrl59SQoa23C7RVl1aRL1g5yJj5YSCrZEIa84CuQ>
-    <xmx:r4YmZOKIyvtPevjN23xaaRVFjnymKqNpvsXmwcoCsOkQjBSCdbPlRA>
-    <xmx:r4YmZB1VYh457RROXCbrYS8n9TmZ_xOV2H6YY-J8enYsGjmEC6sKLg>
-Feedback-ID: i56684263:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Mar 2023 03:07:25 -0400 (EDT)
-Message-ID: <2943263c-4a6f-4d5f-c841-6fc638d5eb87@ryhl.io>
-Date: Fri, 31 Mar 2023 09:07:37 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE0F1FB1
+	for <patches@lists.linux.dev>; Fri, 31 Mar 2023 07:09:45 +0000 (UTC)
+Date: Fri, 31 Mar 2023 07:09:30 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1680246578; x=1680505778;
+	bh=yc7pszNaS5MbnHhdKhl5ZeYs5tmQLP8mPSrXEB1Pfk4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=P77Mw4qMdqZYI2RdWmjZNTsGKTQyZ77FieQWyPBpdBBmiAqwn7bM0hYslj+c7jbPc
+	 4/UkSxuVIWihc8PVv+QsXkBOkSiQhk9IDPczy8+kO/AYbK3ZG1ZEFCB9qkr5iMgixU
+	 jrW4bSSBPQwEc1Ck3bTBS9YAk/qI9HTraRRN9o0vSsOnbhAQGQARKE6r8OuMmKCiAh
+	 afZlEO2dX17N/zaQKYEbO+XfQ65sfB6FswvnGw/6da6+cgIgsn5u/SDPSX4QYDPwQR
+	 xlaQm3ZYPwI7ItkJ0SUqanHEc7cxGns7nzWfu13woHHx9sKmh2MGBlKCmtaWOh6TMJ
+	 A8BIO+WjxIqkw==
+To: Alice Ryhl <alice@ryhl.io>, Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+From: Benno Lossin <y86-dev@protonmail.com>
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v3 09/13] rust: init: add `Zeroable` trait and `init::zeroed` function
+Message-ID: <06e72e1f-af49-d952-7dd5-c80b9e3f27ee@protonmail.com>
+In-Reply-To: <19db6213-297b-a33d-7331-3c1a5b72fad9@ryhl.io>
+References: <20230329223239.138757-10-y86-dev@protonmail.com> <19db6213-297b-a33d-7331-3c1a5b72fad9@ryhl.io>
+Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 13/13] rust: sync: add functions for initializing
- `UniqueArc<MaybeUninit<T>>`
-Content-Language: en-US
-To: y86-dev@protonmail.com
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>,
- Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-References: <20230329223239.138757-14-y86-dev@protonmail.com>
-From: Alice Ryhl <alice@ryhl.io>
-In-Reply-To: <20230329223239.138757-14-y86-dev@protonmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 3/30/23 00:33, y86-dev@protonmail.com wrote:
-> From: Benno Lossin <y86-dev@protonmail.com>
-> 
-> Add two functions `init_with` and `pin_init_with` to
-> `UniqueArc<MaybeUninit<T>>` to initialize the memory of already allocated
-> `UniqueArc`s. This is useful when you want to allocate memory check some
-> condition inside of a context where allocation is forbidden and then
-> conditionally initialize an object.
-> 
-> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+On 31.03.23 00:40, Alice Ryhl wrote:
+> On 3/30/23 00:33, y86-dev@protonmail.com wrote:
+>> From: Benno Lossin <y86-dev@protonmail.com>
+>>
+>> Add the `Zeroable` trait which marks types that can be initialized by
+>> writing `0x00` to every byte of the type. Also add the `init::zeroed`
+>> function that creates an initializer for a `Zeroable` type that writes
+>> `0x00` to every byte.
+>>
+>> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+>> ---
+>> +// SAFETY: `null` pointer is valid.
+>> +unsafe impl<T: ?Sized> Zeroable for *mut T {}
+>> +unsafe impl<T: ?Sized> Zeroable for *const T {}
+>
+> Actually, I just realized that this is not ok for unsized types. When T
+> is unsized, the raw pointer is a fat pointer with a vtable, and the
+> vtable part is not necessarily zeroable.
+>
+> However, it would be ok to do it for `*const [T]` since the fat part of
+> the pointer is just the length in this case, and a length of zero is fine=
+.
+>
+> See more here:
+> https://github.com/Lokathor/bytemuck/blob/8391afa876ba2e99dffb0c991cc7fa7=
+75287d106/src/zeroable.rs#L56-L65
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Wow I forgot about fat pointers completely! Good catch!
 
-I asked for this one because we will need it in the binder driver.
+--
+Cheers,
+Benno
+
+
