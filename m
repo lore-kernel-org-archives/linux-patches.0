@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8955683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D5EC433EF;
-	Mon,  3 Apr 2023 14:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2015683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E775EC433D2;
+	Mon,  3 Apr 2023 14:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531142;
-	bh=093Ln/iEyLKR+YvR8754BBR390+vfJDo299p2kacPec=;
+	s=korg; t=1680531145;
+	bh=RP6y+Id1OQBK6p8YpNMT1vkhWQR+KWxDMinrRBlcPXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SSFJY0rGwE5lB2ZBQzgxZ1l7kp0sb9az6FHc63fbDyQQ9wqfkZdwP/goLq6mn+8aJ
-	 4u2TfmDge3SzhbwTHMXOnfVkfB/3VTgj4kE5Lr0AAvmO9KR4AIhSfSIeapArhwtfJT
-	 KkwRY+3iTY9ykhOv1E1+XJq0qndTC+3JAJa2L2ys=
+	b=tDEG0xete/4Vl/qrPqT3A4tJ74TXBcKgPyRu9QKi95FOJOro2elSSh9QOVU9n27XW
+	 seWcCKRI7g/gJvVxW0KugiPe0t38ADxwofINMzdDz+YyjYIVEmjsdsfdWueO4bfVOQ
+	 KRLPJmt6BrT/ihv8oD4dnYNPzoXxgPNEDxtE/WU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 4.14 35/66] usb: chipidea: core: fix possible concurrent when switch role
-Date: Mon,  3 Apr 2023 16:08:43 +0200
-Message-Id: <20230403140353.124956140@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+132fdd2f1e1805fdc591@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.14 36/66] nilfs2: fix kernel-infoleak in nilfs_ioctl_wrap_copy()
+Date: Mon,  3 Apr 2023 16:08:44 +0200
+Message-Id: <20230403140353.155571558@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -34,98 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 451b15ed138ec15bffbebb58a00ebdd884c3e659 upstream.
+commit 003587000276f81d0114b5ce773d80c119d8cb30 upstream.
 
-The user may call role_store() when driver is handling
-ci_handle_id_switch() which is triggerred by otg event or power lost
-event. Unfortunately, the controller may go into chaos in this case.
-Fix this by protecting it with mutex lock.
+The ioctl helper function nilfs_ioctl_wrap_copy(), which exchanges a
+metadata array to/from user space, may copy uninitialized buffer regions
+to user space memory for read-only ioctl commands NILFS_IOCTL_GET_SUINFO
+and NILFS_IOCTL_GET_CPINFO.
 
-Fixes: a932a8041ff9 ("usb: chipidea: core: add sysfs group")
-cc: <stable@vger.kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20230317061516.2451728-2-xu.yang_2@nxp.com
+This can occur when the element size of the user space metadata given by
+the v_size member of the argument nilfs_argv structure is larger than the
+size of the metadata element (nilfs_suinfo structure or nilfs_cpinfo
+structure) on the file system side.
+
+KMSAN-enabled kernels detect this issue as follows:
+
+ BUG: KMSAN: kernel-infoleak in instrument_copy_to_user
+ include/linux/instrumented.h:121 [inline]
+ BUG: KMSAN: kernel-infoleak in _copy_to_user+0xc0/0x100 lib/usercopy.c:33
+  instrument_copy_to_user include/linux/instrumented.h:121 [inline]
+  _copy_to_user+0xc0/0x100 lib/usercopy.c:33
+  copy_to_user include/linux/uaccess.h:169 [inline]
+  nilfs_ioctl_wrap_copy+0x6fa/0xc10 fs/nilfs2/ioctl.c:99
+  nilfs_ioctl_get_info fs/nilfs2/ioctl.c:1173 [inline]
+  nilfs_ioctl+0x2402/0x4450 fs/nilfs2/ioctl.c:1290
+  nilfs_compat_ioctl+0x1b8/0x200 fs/nilfs2/ioctl.c:1343
+  __do_compat_sys_ioctl fs/ioctl.c:968 [inline]
+  __se_compat_sys_ioctl+0x7dd/0x1000 fs/ioctl.c:910
+  __ia32_compat_sys_ioctl+0x93/0xd0 fs/ioctl.c:910
+  do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+  __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+  do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+  do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+  entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+ Uninit was created at:
+  __alloc_pages+0x9f6/0xe90 mm/page_alloc.c:5572
+  alloc_pages+0xab0/0xd80 mm/mempolicy.c:2287
+  __get_free_pages+0x34/0xc0 mm/page_alloc.c:5599
+  nilfs_ioctl_wrap_copy+0x223/0xc10 fs/nilfs2/ioctl.c:74
+  nilfs_ioctl_get_info fs/nilfs2/ioctl.c:1173 [inline]
+  nilfs_ioctl+0x2402/0x4450 fs/nilfs2/ioctl.c:1290
+  nilfs_compat_ioctl+0x1b8/0x200 fs/nilfs2/ioctl.c:1343
+  __do_compat_sys_ioctl fs/ioctl.c:968 [inline]
+  __se_compat_sys_ioctl+0x7dd/0x1000 fs/ioctl.c:910
+  __ia32_compat_sys_ioctl+0x93/0xd0 fs/ioctl.c:910
+  do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+  __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+  do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+  do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+  entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+ Bytes 16-127 of 3968 are uninitialized
+ ...
+
+This eliminates the leak issue by initializing the page allocated as
+buffer using get_zeroed_page().
+
+Link: https://lkml.kernel.org/r/20230307085548.6290-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+132fdd2f1e1805fdc591@syzkaller.appspotmail.com
+  Link: https://lkml.kernel.org/r/000000000000a5bd2d05f63f04ae@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/ci.h   |    2 ++
- drivers/usb/chipidea/core.c |    8 +++++++-
- drivers/usb/chipidea/otg.c  |    5 ++++-
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ fs/nilfs2/ioctl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/chipidea/ci.h
-+++ b/drivers/usb/chipidea/ci.h
-@@ -205,6 +205,7 @@ struct hw_bank {
-  * @in_lpm: if the core in low power mode
-  * @wakeup_int: if wakeup interrupt occur
-  * @rev: The revision number for controller
-+ * @mutex: protect code from concorrent running when doing role switch
-  */
- struct ci_hdrc {
- 	struct device			*dev;
-@@ -259,6 +260,7 @@ struct ci_hdrc {
- 	bool				in_lpm;
- 	bool				wakeup_int;
- 	enum ci_revision		rev;
-+	struct mutex                    mutex;
- };
- 
- static inline struct ci_role_driver *ci_role(struct ci_hdrc *ci)
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -878,8 +878,12 @@ static ssize_t ci_role_store(struct devi
- 	if (role == CI_ROLE_END)
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -79,7 +79,7 @@ static int nilfs_ioctl_wrap_copy(struct
+ 	if (argv->v_index > ~(__u64)0 - argv->v_nmembs)
  		return -EINVAL;
  
--	if (role == ci->role)
-+	mutex_lock(&ci->mutex);
-+
-+	if (role == ci->role) {
-+		mutex_unlock(&ci->mutex);
- 		return n;
-+	}
- 
- 	pm_runtime_get_sync(dev);
- 	disable_irq(ci->irq);
-@@ -889,6 +893,7 @@ static ssize_t ci_role_store(struct devi
- 		ci_handle_vbus_change(ci);
- 	enable_irq(ci->irq);
- 	pm_runtime_put_sync(dev);
-+	mutex_unlock(&ci->mutex);
- 
- 	return (ret == 0) ? n : ret;
- }
-@@ -927,6 +932,7 @@ static int ci_hdrc_probe(struct platform
+-	buf = (void *)__get_free_pages(GFP_NOFS, 0);
++	buf = (void *)get_zeroed_page(GFP_NOFS);
+ 	if (unlikely(!buf))
  		return -ENOMEM;
- 
- 	spin_lock_init(&ci->lock);
-+	mutex_init(&ci->mutex);
- 	ci->dev = dev;
- 	ci->platdata = dev_get_platdata(dev);
- 	ci->imx28_write_fix = !!(ci->platdata->flags &
---- a/drivers/usb/chipidea/otg.c
-+++ b/drivers/usb/chipidea/otg.c
-@@ -167,8 +167,10 @@ static int hw_wait_vbus_lower_bsv(struct
- 
- static void ci_handle_id_switch(struct ci_hdrc *ci)
- {
--	enum ci_role role = ci_otg_role(ci);
-+	enum ci_role role;
- 
-+	mutex_lock(&ci->mutex);
-+	role = ci_otg_role(ci);
- 	if (role != ci->role) {
- 		dev_dbg(ci->dev, "switching from %s to %s\n",
- 			ci_role(ci)->name, ci->roles[role]->name);
-@@ -191,6 +193,7 @@ static void ci_handle_id_switch(struct c
- 		if (role == CI_ROLE_GADGET)
- 			ci_handle_vbus_change(ci);
- 	}
-+	mutex_unlock(&ci->mutex);
- }
- /**
-  * ci_otg_work - perform otg (vbus/id) event handle
+ 	maxmembs = PAGE_SIZE / argv->v_size;
 
 
