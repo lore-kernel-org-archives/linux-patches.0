@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67476FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:39:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE23C433EF;
-	Mon,  3 Apr 2023 14:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B6E6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:39:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23F7C4339B;
+	Mon,  3 Apr 2023 14:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532776;
-	bh=X4oTvbT9FkrNnnpIhQ0poaCOHxsrpNNklJe/1WLkPrs=;
+	s=korg; t=1680532779;
+	bh=noVZb804vuPDQVTQr3X92/tFr/DAUTuTMhxnNHqblGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8HfKUIL6ptdCdYSlR6Dt3MCdKwHTXiaFRJswkfZqx5pFkSMkR7NbvUejvRvQWNrp
-	 cVQjN4Ajjey8gzb1fjkMqISi1FmgLWhEix4ummrwLWqafefP24g8mwZ3H4CPjzn7i5
-	 mwLPlwaSP/OuIO5aYcji85bImoUN2EaF+PRukBBY=
+	b=0ieWcyMmy9s781Xb33mWbDMyqHjPC9SAXpaknIHbOAju8al9BqqbDm65ux1P3qbfR
+	 cmSQ0e6Dp5wDNgiDt+AupwarCsEtFawS8FqTTz3mIoDDUYx3MPGY9+Z6BRwvmhbvx1
+	 UldVcONk5gmMw31eT40dTbFpiiPecczdxTBtvRzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Alex Elder <elder@linaro.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	SongJingyi <u201912584@hust.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/181] net: ipa: compute DMA pool size properly
-Date: Mon,  3 Apr 2023 16:09:07 +0200
-Message-Id: <20230403140418.737475735@linuxfoundation.org>
+Subject: [PATCH 6.1 086/181] ptp_qoriq: fix memory leak in probe()
+Date: Mon,  3 Apr 2023 16:08:41 +0200
+Message-Id: <20230403140417.920265012@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -38,54 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Elder <elder@linaro.org>
+From: SongJingyi <u201912584@hust.edu.cn>
 
-[ Upstream commit 6c75dc94f2b27fff57b305af9236eea181a00b6c ]
+[ Upstream commit f33642224e38d7e0d59336e10e7b4e370b1c4506 ]
 
-In gsi_trans_pool_init_dma(), the total size of a pool of memory
-used for DMA transactions is calculated.  However the calculation is
-done incorrectly.
+Smatch complains that:
+drivers/ptp/ptp_qoriq.c ptp_qoriq_probe()
+warn: 'base' from ioremap() not released.
 
-For 4KB pages, this total size is currently always more than one
-page, and as a result, the calculation produces a positive (though
-incorrect) total size.  The code still works in this case; we just
-end up with fewer DMA pool entries than we intended.
+Fix this by revising the parameter from 'ptp_qoriq->base' to 'base'.
+This is only a bug if ptp_qoriq_init() returns on the
+first -ENODEV error path.
+For other error paths ptp_qoriq->base and base are the same.
+And this change makes the code more readable.
 
-Bjorn Andersson tested booting a kernel with 16KB pages, and hit a
-null pointer derereference in sg_alloc_append_table_from_pages(),
-descending from gsi_trans_pool_init_dma().  The cause of this was
-that a 16KB total size was going to be allocated, and with 16KB
-pages the order of that allocation is 0.  The total_size calculation
-yielded 0, which eventually led to the crash.
-
-Correcting the total_size calculation fixes the problem.
-
-Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Tested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Fixes: 9dd441e4ed57 ("soc: qcom: ipa: GSI transactions")
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Alex Elder <elder@linaro.org>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230328162751.2861791-1-elder@linaro.org
+Fixes: 7f4399ba405b ("ptp_qoriq: fix NULL access if ptp dt node missing")
+Signed-off-by: SongJingyi <u201912584@hust.edu.cn>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230324031406.1895159-1-u201912584@hust.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/gsi_trans.c | 2 +-
+ drivers/ptp/ptp_qoriq.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
-index 26b7f683a3e17..fa6863c265eb9 100644
---- a/drivers/net/ipa/gsi_trans.c
-+++ b/drivers/net/ipa/gsi_trans.c
-@@ -153,7 +153,7 @@ int gsi_trans_pool_init_dma(struct device *dev, struct gsi_trans_pool *pool,
- 	 * gsi_trans_pool_exit_dma() can assume the total allocated
- 	 * size is exactly (count * size).
- 	 */
--	total_size = get_order(total_size) << PAGE_SHIFT;
-+	total_size = PAGE_SIZE << get_order(total_size);
+diff --git a/drivers/ptp/ptp_qoriq.c b/drivers/ptp/ptp_qoriq.c
+index 08f4cf0ad9e3c..8fa9772acf79b 100644
+--- a/drivers/ptp/ptp_qoriq.c
++++ b/drivers/ptp/ptp_qoriq.c
+@@ -601,7 +601,7 @@ static int ptp_qoriq_probe(struct platform_device *dev)
+ 	return 0;
  
- 	virt = dma_alloc_coherent(dev, total_size, &addr, GFP_KERNEL);
- 	if (!virt)
+ no_clock:
+-	iounmap(ptp_qoriq->base);
++	iounmap(base);
+ no_ioremap:
+ 	release_resource(ptp_qoriq->rsrc);
+ no_resource:
 -- 
 2.39.2
 
