@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F55612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778E1C433EF;
-	Mon,  3 Apr 2023 14:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91191612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179EEC4339C;
+	Mon,  3 Apr 2023 14:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531609;
-	bh=Q/0sdqO0FiJ7V7rS205kadL9fntsC5T3cXvcgQCejSk=;
+	s=korg; t=1680531612;
+	bh=9d7Anayty8RhvVuNsOs31H6y62ZkLu4OYTN4Le6kfuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sM6ushCpEWakE8ZfxejJWpAbaLMPJtd0bjDY9mDiYBycerxglPdd/FaeDIUNI+Tt6
-	 j97Sh5byRx3x6dKNN5Xp5Sj6kQlJnPygNjaACy08Mcrjj7IZFkovfeKuHRE8fPc9SC
-	 EIcW6I2u197w3LjzPgOzPHN4yq8mKRGriEuzWa9o=
+	b=GbbsFGRI1K92c/CA+ADqwx0Qz/86XvClUUND5G1kanggcsc8LKsYm+EqREEcK+zzI
+	 6VpRxYgXbqVauiKmSoAL7OBnJNKBQfRwr5qZiZ9MsWjbyI0LSMgs6XmWSrFemPnbQw
+	 bA+5EAav5bwofTbAZMi6JthhgtG3+P11pSR5by6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Ruslan Bilovol <ruslan.bilovol@gmail.com>,
-	John Keeping <john@metanate.com>
-Subject: [PATCH 5.4 044/104] usb: gadget: u_audio: dont let userspace block driver unbind
-Date: Mon,  3 Apr 2023 16:08:36 +0200
-Message-Id: <20230403140406.122930071@linuxfoundation.org>
+	Nathan Huckleberry <nhuck@google.com>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 5.4 045/104] fsverity: Remove WQ_UNBOUND from fsverity read workqueue
+Date: Mon,  3 Apr 2023 16:08:37 +0200
+Message-Id: <20230403140406.159854304@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,69 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvin Šipraga <alsi@bang-olufsen.dk>
+From: Nathan Huckleberry <nhuck@google.com>
 
-commit 6c67ed9ad9b83e453e808f9b31a931a20a25629b upstream.
+commit f959325e6ac3f499450088b8d9c626d1177be160 upstream.
 
-In the unbind callback for f_uac1 and f_uac2, a call to snd_card_free()
-via g_audio_cleanup() will disconnect the card and then wait for all
-resources to be released, which happens when the refcount falls to zero.
-Since userspace can keep the refcount incremented by not closing the
-relevant file descriptor, the call to unbind may block indefinitely.
-This can cause a deadlock during reboot, as evidenced by the following
-blocked task observed on my machine:
+WQ_UNBOUND causes significant scheduler latency on ARM64/Android.  This
+is problematic for latency sensitive workloads, like I/O
+post-processing.
 
-  task:reboot  state:D stack:0   pid:2827  ppid:569    flags:0x0000000c
-  Call trace:
-   __switch_to+0xc8/0x140
-   __schedule+0x2f0/0x7c0
-   schedule+0x60/0xd0
-   schedule_timeout+0x180/0x1d4
-   wait_for_completion+0x78/0x180
-   snd_card_free+0x90/0xa0
-   g_audio_cleanup+0x2c/0x64
-   afunc_unbind+0x28/0x60
-   ...
-   kernel_restart+0x4c/0xac
-   __do_sys_reboot+0xcc/0x1ec
-   __arm64_sys_reboot+0x28/0x30
-   invoke_syscall+0x4c/0x110
-   ...
+Removing WQ_UNBOUND gives a 96% reduction in fsverity workqueue related
+scheduler latency and improves app cold startup times by ~30ms.
+WQ_UNBOUND was also removed from the dm-verity workqueue for the same
+reason [1].
 
-The issue can also be observed by opening the card with arecord and
-then stopping the process through the shell before unbinding:
+This code was tested by running Android app startup benchmarks and
+measuring how long the fsverity workqueue spent in the runnable state.
 
-  # arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
-  Recording WAVE '/dev/null' : Signed 32 bit Little Endian, Rate 48000 Hz, Stereo
-  ^Z[1]+  Stopped                    arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
-  # echo gadget.0 > /sys/bus/gadget/drivers/configfs-gadget/unbind
-  (observe that the unbind command never finishes)
+Before
+Total workqueue scheduler latency: 553800us
+After
+Total workqueue scheduler latency: 18962us
 
-Fix the problem by using snd_card_free_when_closed() instead, which will
-still disconnect the card as desired, but defer the task of freeing the
-resources to the core once userspace closes its file descriptor.
+[1]: https://lore.kernel.org/all/20230202012348.885402-1-nhuck@google.com/
 
-Fixes: 132fcb460839 ("usb: gadget: Add Audio Class 2.0 Driver")
+Signed-off-by: Nathan Huckleberry <nhuck@google.com>
+Fixes: 8a1d0f9cacc9 ("fs-verity: add data verification hooks for ->readpages()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Reviewed-by: Ruslan Bilovol <ruslan.bilovol@gmail.com>
-Reviewed-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20230302163648.3349669-1-alvin@pqrs.dk
+Link: https://lore.kernel.org/r/20230310193325.620493-1-nhuck@google.com
+Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_audio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/verity/verify.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/gadget/function/u_audio.c
-+++ b/drivers/usb/gadget/function/u_audio.c
-@@ -626,7 +626,7 @@ void g_audio_cleanup(struct g_audio *g_a
- 	uac = g_audio->uac;
- 	card = uac->card;
- 	if (card)
--		snd_card_free(card);
-+		snd_card_free_when_closed(card);
- 
- 	kfree(uac->p_prm.ureq);
- 	kfree(uac->c_prm.ureq);
+--- a/fs/verity/verify.c
++++ b/fs/verity/verify.c
+@@ -259,15 +259,15 @@ EXPORT_SYMBOL_GPL(fsverity_enqueue_verif
+ int __init fsverity_init_workqueue(void)
+ {
+ 	/*
+-	 * Use an unbound workqueue to allow bios to be verified in parallel
+-	 * even when they happen to complete on the same CPU.  This sacrifices
+-	 * locality, but it's worthwhile since hashing is CPU-intensive.
++	 * Use a high-priority workqueue to prioritize verification work, which
++	 * blocks reads from completing, over regular application tasks.
+ 	 *
+-	 * Also use a high-priority workqueue to prioritize verification work,
+-	 * which blocks reads from completing, over regular application tasks.
++	 * For performance reasons, don't use an unbound workqueue.  Using an
++	 * unbound workqueue for crypto operations causes excessive scheduler
++	 * latency on ARM64.
+ 	 */
+ 	fsverity_read_workqueue = alloc_workqueue("fsverity_read_queue",
+-						  WQ_UNBOUND | WQ_HIGHPRI,
++						  WQ_HIGHPRI,
+ 						  num_online_cpus());
+ 	if (!fsverity_read_workqueue)
+ 		return -ENOMEM;
 
 
