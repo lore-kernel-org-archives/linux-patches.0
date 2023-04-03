@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D7B6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7D8C4339B;
-	Mon,  3 Apr 2023 14:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165456FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920D6C433EF;
+	Mon,  3 Apr 2023 14:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532133;
-	bh=9PijvkHIQR/yALhDbI/rDe7aUW99n6nJ/iPMYgpW6NA=;
+	s=korg; t=1680532135;
+	bh=7ndKNZWViU2f84b78ppPFmwaLXby3ksYxtK1B8Y+UM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EapRPu4h6N2RbH56pDTuptHzsl7Zpkr4Nrab2IxCB+NH2HvVOudtRlGUNiaysaU+I
-	 Fj3tJ5B0LzkIqf6y68t7gqklKdJPIegqJjt5q8v6f7bMpkPwWVwZymk4rAJ2+10tdF
-	 CXfjJJ31MRPs5IypWnt4XZuxLNE604VNmciL2pY0=
+	b=yLi0ShKRTncncRoDBxE3w3bn2H3yWENiNDUAOEfLlcaf1HqdB56VZjb+WD0aqItaA
+	 l74fhnPO6qexuAgFn2ZehegZwbFZNJRBKcypiIaiW+lvkUCwED91TNzGoa3vK3dv+t
+	 YwzEjlKWO+4QhH8iTOGw2bHd+EHaKosSinesyZmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Alex Elder <elder@linaro.org>,
+	Radoslaw Tyl <radoslawx.tyl@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 139/173] net: ipa: compute DMA pool size properly
-Date: Mon,  3 Apr 2023 16:09:14 +0200
-Message-Id: <20230403140418.969279841@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 5.10 140/173] i40e: fix registers dump after run ethtool adapter self test
+Date: Mon,  3 Apr 2023 16:09:15 +0200
+Message-Id: <20230403140418.997910851@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -38,54 +39,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Elder <elder@linaro.org>
+From: Radoslaw Tyl <radoslawx.tyl@intel.com>
 
-[ Upstream commit 6c75dc94f2b27fff57b305af9236eea181a00b6c ]
+[ Upstream commit c5cff16f461a4a434a9915a7be7ac9ced861a8a4 ]
 
-In gsi_trans_pool_init_dma(), the total size of a pool of memory
-used for DMA transactions is calculated.  However the calculation is
-done incorrectly.
+Fix invalid registers dump from ethtool -d ethX after adapter self test
+by ethtool -t ethY. It causes invalid data display.
 
-For 4KB pages, this total size is currently always more than one
-page, and as a result, the calculation produces a positive (though
-incorrect) total size.  The code still works in this case; we just
-end up with fewer DMA pool entries than we intended.
+The problem was caused by overwriting i40e_reg_list[].elements
+which is common for ethtool self test and dump.
 
-Bjorn Andersson tested booting a kernel with 16KB pages, and hit a
-null pointer derereference in sg_alloc_append_table_from_pages(),
-descending from gsi_trans_pool_init_dma().  The cause of this was
-that a 16KB total size was going to be allocated, and with 16KB
-pages the order of that allocation is 0.  The total_size calculation
-yielded 0, which eventually led to the crash.
-
-Correcting the total_size calculation fixes the problem.
-
-Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Tested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Fixes: 9dd441e4ed57 ("soc: qcom: ipa: GSI transactions")
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Alex Elder <elder@linaro.org>
+Fixes: 22dd9ae8afcc ("i40e: Rework register diagnostic")
+Signed-off-by: Radoslaw Tyl <radoslawx.tyl@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230328162751.2861791-1-elder@linaro.org
+Link: https://lore.kernel.org/r/20230328172659.3906413-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/gsi_trans.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_diag.c | 11 ++++++-----
+ drivers/net/ethernet/intel/i40e/i40e_diag.h |  2 +-
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
-index 70c2b585f98d6..1e0d626393012 100644
---- a/drivers/net/ipa/gsi_trans.c
-+++ b/drivers/net/ipa/gsi_trans.c
-@@ -159,7 +159,7 @@ int gsi_trans_pool_init_dma(struct device *dev, struct gsi_trans_pool *pool,
- 	 * gsi_trans_pool_exit_dma() can assume the total allocated
- 	 * size is exactly (count * size).
- 	 */
--	total_size = get_order(total_size) << PAGE_SHIFT;
-+	total_size = PAGE_SIZE << get_order(total_size);
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_diag.c b/drivers/net/ethernet/intel/i40e/i40e_diag.c
+index ef4d3762bf371..ca229b0efeb65 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_diag.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_diag.c
+@@ -44,7 +44,7 @@ static i40e_status i40e_diag_reg_pattern_test(struct i40e_hw *hw,
+ 	return 0;
+ }
  
- 	virt = dma_alloc_coherent(dev, total_size, &addr, GFP_KERNEL);
- 	if (!virt)
+-struct i40e_diag_reg_test_info i40e_reg_list[] = {
++const struct i40e_diag_reg_test_info i40e_reg_list[] = {
+ 	/* offset               mask         elements   stride */
+ 	{I40E_QTX_CTL(0),       0x0000FFBF, 1,
+ 		I40E_QTX_CTL(1) - I40E_QTX_CTL(0)},
+@@ -78,27 +78,28 @@ i40e_status i40e_diag_reg_test(struct i40e_hw *hw)
+ {
+ 	i40e_status ret_code = 0;
+ 	u32 reg, mask;
++	u32 elements;
+ 	u32 i, j;
+ 
+ 	for (i = 0; i40e_reg_list[i].offset != 0 &&
+ 					     !ret_code; i++) {
+ 
++		elements = i40e_reg_list[i].elements;
+ 		/* set actual reg range for dynamically allocated resources */
+ 		if (i40e_reg_list[i].offset == I40E_QTX_CTL(0) &&
+ 		    hw->func_caps.num_tx_qp != 0)
+-			i40e_reg_list[i].elements = hw->func_caps.num_tx_qp;
++			elements = hw->func_caps.num_tx_qp;
+ 		if ((i40e_reg_list[i].offset == I40E_PFINT_ITRN(0, 0) ||
+ 		     i40e_reg_list[i].offset == I40E_PFINT_ITRN(1, 0) ||
+ 		     i40e_reg_list[i].offset == I40E_PFINT_ITRN(2, 0) ||
+ 		     i40e_reg_list[i].offset == I40E_QINT_TQCTL(0) ||
+ 		     i40e_reg_list[i].offset == I40E_QINT_RQCTL(0)) &&
+ 		    hw->func_caps.num_msix_vectors != 0)
+-			i40e_reg_list[i].elements =
+-				hw->func_caps.num_msix_vectors - 1;
++			elements = hw->func_caps.num_msix_vectors - 1;
+ 
+ 		/* test register access */
+ 		mask = i40e_reg_list[i].mask;
+-		for (j = 0; j < i40e_reg_list[i].elements && !ret_code; j++) {
++		for (j = 0; j < elements && !ret_code; j++) {
+ 			reg = i40e_reg_list[i].offset +
+ 			      (j * i40e_reg_list[i].stride);
+ 			ret_code = i40e_diag_reg_pattern_test(hw, reg, mask);
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_diag.h b/drivers/net/ethernet/intel/i40e/i40e_diag.h
+index c3340f320a18c..1db7c6d572311 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_diag.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_diag.h
+@@ -20,7 +20,7 @@ struct i40e_diag_reg_test_info {
+ 	u32 stride;	/* bytes between each element */
+ };
+ 
+-extern struct i40e_diag_reg_test_info i40e_reg_list[];
++extern const struct i40e_diag_reg_test_info i40e_reg_list[];
+ 
+ i40e_status i40e_diag_reg_test(struct i40e_hw *hw);
+ i40e_status i40e_diag_eeprom_test(struct i40e_hw *hw);
 -- 
 2.39.2
 
