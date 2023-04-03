@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18816FAA
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:32:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680D8C433D2;
-	Mon,  3 Apr 2023 14:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299B66FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:32:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C24C433EF;
+	Mon,  3 Apr 2023 14:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532364;
-	bh=2pa5qYOH99HejMlK7P61qqxdiYP9eVCz52UkJjVO/bc=;
+	s=korg; t=1680532362;
+	bh=iIimPAl3W7sA8efoe/qBB54Hy/DRWY0cczHHWIEH6Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y3GDhJ/IgEu6L0iM7y2k1mbd3pFZPj8oyNVUFVOkf0I6FcJuPZ47uKC6VhMTN95BU
-	 jSukjjvSxHjOuKPKwd6zuqinLkrjZT2cUeUv2ymDZB92boUaINXVxYzNRnJYHbv2hB
-	 GYYLpPb35aqiVsdqA8XTuNoNjOHtJDwpksBCGMms=
+	b=v5PxZenHkCTkBk7K9Uh5judD4QgVSce2KPBw3d1q5Su+5BfyeoyYCEjr1Ikp0UEOA
+	 M+s8GKLaajhDaoXazV1a2YjZlZN4Y7/UMOx+WiYhIrwY+w0phEJfo+4hGWvLPzHxv9
+	 5XDF4O+W0rLr6rjrNfe7NjwpjlPyLEYDibx7gZP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Anton Gusev <aagusev@ispras.ru>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 14/99] ALSA: hda/ca0132: fixup buffer overrun at tuning_ctl_set()
-Date: Mon,  3 Apr 2023 16:08:37 +0200
-Message-Id: <20230403140358.021934279@linuxfoundation.org>
+Subject: [PATCH 5.15 23/99] tracing: Fix wrong return in kprobe_event_gen_test.c
+Date: Mon,  3 Apr 2023 16:08:46 +0200
+Message-Id: <20230403140403.096311281@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -35,60 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Anton Gusev <aagusev@ispras.ru>
 
-[ Upstream commit 98e5eb110095ec77cb6d775051d181edbf9cd3cf ]
+[ Upstream commit bc4f359b3b607daac0290d0038561237a86b38cb ]
 
-tuning_ctl_set() might have buffer overrun at (X) if it didn't break
-from loop by matching (A).
+Overwriting the error code with the deletion result may cause the
+function to return 0 despite encountering an error. Commit b111545d26c0
+("tracing: Remove the useless value assignment in
+test_create_synth_event()") solves a similar issue by
+returning the original error code, so this patch does the same.
 
-	static int tuning_ctl_set(...)
-	{
-		for (i = 0; i < TUNING_CTLS_COUNT; i++)
-(A)			if (nid == ca0132_tuning_ctls[i].nid)
-				break;
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-		snd_hda_power_up(...);
-(X)		dspio_set_param(..., ca0132_tuning_ctls[i].mid, ...);
-		snd_hda_power_down(...);                ^
+Link: https://lore.kernel.org/linux-trace-kernel/20230131075818.5322-1-aagusev@ispras.ru
 
-		return 1;
-	}
-
-We will get below error by cppcheck
-
-	sound/pci/hda/patch_ca0132.c:4229:2: note: After for loop, i has value 12
-	 for (i = 0; i < TUNING_CTLS_COUNT; i++)
-	 ^
-	sound/pci/hda/patch_ca0132.c:4234:43: note: Array index out of bounds
-	 dspio_set_param(codec, ca0132_tuning_ctls[i].mid, 0x20,
-	                                           ^
-This patch cares non match case.
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87sfe9eap7.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Anton Gusev <aagusev@ispras.ru>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_ca0132.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/kprobe_event_gen_test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index c0cb6e49a9b65..2646663e03426 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -4231,8 +4231,10 @@ static int tuning_ctl_set(struct hda_codec *codec, hda_nid_t nid,
+diff --git a/kernel/trace/kprobe_event_gen_test.c b/kernel/trace/kprobe_event_gen_test.c
+index c736487fc0e48..e0c420eb0b2b4 100644
+--- a/kernel/trace/kprobe_event_gen_test.c
++++ b/kernel/trace/kprobe_event_gen_test.c
+@@ -146,7 +146,7 @@ static int __init test_gen_kprobe_cmd(void)
+ 	if (trace_event_file_is_valid(gen_kprobe_test))
+ 		gen_kprobe_test = NULL;
+ 	/* We got an error after creating the event, delete it */
+-	ret = kprobe_event_delete("gen_kprobe_test");
++	kprobe_event_delete("gen_kprobe_test");
+ 	goto out;
+ }
  
- 	for (i = 0; i < TUNING_CTLS_COUNT; i++)
- 		if (nid == ca0132_tuning_ctls[i].nid)
--			break;
-+			goto found;
+@@ -211,7 +211,7 @@ static int __init test_gen_kretprobe_cmd(void)
+ 	if (trace_event_file_is_valid(gen_kretprobe_test))
+ 		gen_kretprobe_test = NULL;
+ 	/* We got an error after creating the event, delete it */
+-	ret = kprobe_event_delete("gen_kretprobe_test");
++	kprobe_event_delete("gen_kretprobe_test");
+ 	goto out;
+ }
  
-+	return -EINVAL;
-+found:
- 	snd_hda_power_up(codec);
- 	dspio_set_param(codec, ca0132_tuning_ctls[i].mid, 0x20,
- 			ca0132_tuning_ctls[i].req,
 -- 
 2.39.2
 
