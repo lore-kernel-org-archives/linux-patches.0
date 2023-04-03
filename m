@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E50D6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:36:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C284EC4339B;
-	Mon,  3 Apr 2023 14:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170736FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:36:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903C0C433EF;
+	Mon,  3 Apr 2023 14:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532576;
-	bh=9S1fCicaRG3d3lX/No9ATx7sKBwV0UjVkrklEWUwE18=;
+	s=korg; t=1680532578;
+	bh=vuW0vUuDsrbF6EdZBmyISlMkpcKD10t+InuXT0eDUMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n3t6mHRQbK8fFI7b0SsI+l1OiSaeDOxfXFV1W0BZV+xR2flu6CjkvZkaKgIPnJBOJ
-	 AcjUIR8VdO2FzxAT/ewDwQi8wd8Ynth3cSxhEGYmwsIhYnH8TGRY6RJJnCiO0um23i
-	 qQ84ZNhweNZo59RZJTePXndGi5WPIdqcUdCvD+4Q=
+	b=WbjqjpEAoKeaa1NHBf+8DoSLqM/YutoDe6bkxwdk2a8e0gXgzE6QKfqfnSwXsyDz6
+	 nn92ihK99L4Bcagji7dkBKxoyz+D22YkPu5re38xsIKUVcoivnXoIBHAGotEgz1SUK
+	 AcPV4UgM4VnLEhPaAeRnfUaDo8PGH1wQn3hX11ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Nick Terrell <terrelln@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/181] ASoC: Intel: avs: nau8825: Adjust clock control
-Date: Mon,  3 Apr 2023 16:07:51 +0200
-Message-Id: <20230403140416.337639066@linuxfoundation.org>
+Subject: [PATCH 6.1 037/181] zstd: Fix definition of assert()
+Date: Mon,  3 Apr 2023 16:07:52 +0200
+Message-Id: <20230403140416.370578318@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,49 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 
-[ Upstream commit 6206b2e787da2ed567922c37bb588a44f6fb6705 ]
+[ Upstream commit 6906598f1ce93761716d780b6e3f171e13f0f4ce ]
 
-Internal clock shall be adjusted also in cases when DAPM event other
-than 'ON' is triggered.
+assert(x) should emit a warning if x is false. WARN_ON(x) emits a
+warning if x is true. Thus, assert(x) should be defined as WARN_ON(!x)
+rather than WARN_ON(x).
 
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://lore.kernel.org/r/20230303134854.2277146-6-amadeuszx.slawinski@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+Signed-off-by: Nick Terrell <terrelln@fb.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/boards/nau8825.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ lib/zstd/common/zstd_deps.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/avs/boards/nau8825.c b/sound/soc/intel/avs/boards/nau8825.c
-index f76909e9f990a..8392d8fac8f9c 100644
---- a/sound/soc/intel/avs/boards/nau8825.c
-+++ b/sound/soc/intel/avs/boards/nau8825.c
-@@ -33,15 +33,15 @@ avs_nau8825_clock_control(struct snd_soc_dapm_widget *w, struct snd_kcontrol *co
- 		return -EINVAL;
- 	}
+diff --git a/lib/zstd/common/zstd_deps.h b/lib/zstd/common/zstd_deps.h
+index 7a5bf44839c9c..f06df065dec01 100644
+--- a/lib/zstd/common/zstd_deps.h
++++ b/lib/zstd/common/zstd_deps.h
+@@ -84,7 +84,7 @@ static uint64_t ZSTD_div64(uint64_t dividend, uint32_t divisor) {
  
--	if (!SND_SOC_DAPM_EVENT_ON(event)) {
-+	if (SND_SOC_DAPM_EVENT_ON(event))
-+		ret = snd_soc_dai_set_sysclk(codec_dai, NAU8825_CLK_MCLK, 24000000,
-+					     SND_SOC_CLOCK_IN);
-+	else
- 		ret = snd_soc_dai_set_sysclk(codec_dai, NAU8825_CLK_INTERNAL, 0, SND_SOC_CLOCK_IN);
--		if (ret < 0) {
--			dev_err(card->dev, "set sysclk err = %d\n", ret);
--			return ret;
--		}
--	}
-+	if (ret < 0)
-+		dev_err(card->dev, "Set sysclk failed: %d\n", ret);
+ #include <linux/kernel.h>
  
--	return 0;
-+	return ret;
- }
+-#define assert(x) WARN_ON((x))
++#define assert(x) WARN_ON(!(x))
  
- static const struct snd_kcontrol_new card_controls[] = {
+ #endif /* ZSTD_DEPS_ASSERT */
+ #endif /* ZSTD_DEPS_NEED_ASSERT */
 -- 
 2.39.2
 
