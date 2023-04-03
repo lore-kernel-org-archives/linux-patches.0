@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910426FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6C2C433D2;
-	Mon,  3 Apr 2023 14:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCB26FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB422C433D2;
+	Mon,  3 Apr 2023 14:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533250;
-	bh=hC3hSOEkwIzy9efsheKlHFY4fiD1g1yw28jKqQZmX6I=;
+	s=korg; t=1680533253;
+	bh=TwjAGmQyaL72zUmNQ2AO6XRnCVJzTD/CIfzCShG5lic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L321YBU75igKsUPo/x8G/FMWnOfheunQJLQgRwEMZ7g0j4jy1TqgeECEm57CFn+oR
-	 9awNUI2s38VMjdPyZ3HnJCHSSaD+NssKcVLoWyLUofDeM16Z0iClnRya+PGAq/tH3d
-	 sUXD0UOG32YJ2JBFyV/kwAN+s/us2EDIC0MRiYWw=
+	b=U9zLJwKjE0E5i7W3Mi2uxKoIgERj4kO+h/P8paaBfs2C/WnToATNT+mATjzA43G5A
+	 aXbGqIk9EX+7UHRD8DD9yfCxrc/v8QjzmRgjLwSi2okNQX5bGNpnfBjYJuHcXGKKKq
+	 fAyt8qWh4gD9Kx8/VnABUhyS1CGbOOJFJLqSs0W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	M Chetan Kumar <m.chetan.kumar@linux.intel.com>,
-	Shane Parslow <shaneparslow808@gmail.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Arun Ramadoss <arun.ramadoss@microchip.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Martin <mwolf@adiumentum.com>
-Subject: [PATCH 6.2 111/187] net: wwan: iosm: fixes 7560 modem crash
-Date: Mon,  3 Apr 2023 16:09:16 +0200
-Message-Id: <20230403140419.630259679@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 085/187] net: dsa: microchip: ksz8: fix offset for the timestamp filed
+Date: Mon,  3 Apr 2023 16:08:50 +0200
+Message-Id: <20230403140418.756707220@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -37,46 +37,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 5f70bcbca469a087b54ad2d934185ed69a098576 ]
+[ Upstream commit b3177aab89be540dc50d2328427b073361093e38 ]
 
-ModemManger/Apps probing the wwan0xmmrpc0 port for 7560 Modem results in
-modem crash.
+We are using wrong offset, so we will get not a timestamp.
 
-7560 Modem FW uses the MBIM interface for control command communication
-whereas 7360 uses Intel RPC interface so disable wwan0xmmrpc0 port for
-7560.
-
-Fixes: d08b0f8f46e4 ("net: wwan: iosm: add rpc interface for xmm modems")
-Reported-and-tested-by: Martin <mwolf@adiumentum.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217200
-Signed-off-by: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
-Signed-off-by: Shane Parslow <shaneparslow808@gmail.com>
+Fixes: 4b20a07e103f ("net: dsa: microchip: ksz8795: add support for ksz88xx chips")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/iosm/iosm_ipc_imem.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/dsa/microchip/ksz_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wwan/iosm/iosm_ipc_imem.c b/drivers/net/wwan/iosm/iosm_ipc_imem.c
-index 1e6a479766429..c066b0040a3fe 100644
---- a/drivers/net/wwan/iosm/iosm_ipc_imem.c
-+++ b/drivers/net/wwan/iosm/iosm_ipc_imem.c
-@@ -587,6 +587,13 @@ static void ipc_imem_run_state_worker(struct work_struct *instance)
- 	while (ctrl_chl_idx < IPC_MEM_MAX_CHANNELS) {
- 		if (!ipc_chnl_cfg_get(&chnl_cfg_port, ctrl_chl_idx)) {
- 			ipc_imem->ipc_port[ctrl_chl_idx] = NULL;
-+
-+			if (ipc_imem->pcie->pci->device == INTEL_CP_DEVICE_7560_ID &&
-+			    chnl_cfg_port.wwan_port_type == WWAN_PORT_XMMRPC) {
-+				ctrl_chl_idx++;
-+				continue;
-+			}
-+
- 			if (ipc_imem->pcie->pci->device == INTEL_CP_DEVICE_7360_ID &&
- 			    chnl_cfg_port.wwan_port_type == WWAN_PORT_MBIM) {
- 				ctrl_chl_idx++;
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index 725a868b76f7e..9da2b3afce26e 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -414,7 +414,7 @@ static u8 ksz8863_shifts[] = {
+ 	[DYNAMIC_MAC_ENTRIES_H]		= 8,
+ 	[DYNAMIC_MAC_ENTRIES]		= 24,
+ 	[DYNAMIC_MAC_FID]		= 16,
+-	[DYNAMIC_MAC_TIMESTAMP]		= 24,
++	[DYNAMIC_MAC_TIMESTAMP]		= 22,
+ 	[DYNAMIC_MAC_SRC_PORT]		= 20,
+ };
+ 
 -- 
 2.39.2
 
