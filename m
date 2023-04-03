@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429686FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBA8C433D2;
-	Mon,  3 Apr 2023 14:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E486FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D14C433EF;
+	Mon,  3 Apr 2023 14:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532863;
-	bh=2qD1tchNQGHnzuaiNCPCzxaT3c1+eZmS5FrYmbzT+vM=;
+	s=korg; t=1680532865;
+	bh=YUMXNElqIwE2I0iAMb/yuF4EvmvuxAtA7akQRqkdNYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2g9q+FdDn3nwZNPGh81dPZfRkRgDlfe5lllA69DkGvZrakG+omNWL2di6eg5PXYja
-	 UyDG0p1/eyqrN64NPWsmgWfSGy1Aw27kIgX/5Z7PwxYv5CCrsgwsvQr+I8IhtCGITL
-	 1z394MWpQq0ANt9iPbrEhs85HZsL6M4ztd/PJCxc=
+	b=qHNfkFqKvvHpZ9enaD4bZ36bis9Kqux8kYIPTTfVnkB/3PkrqXaSN9McCiddKNgTS
+	 +Om6tCtg9o32LCjnwaLlz74n2z+S2niuO7v+wW9IFTMff7LNJisJzyaie5Pls2jPzf
+	 zE66qsiA4IWQTp5D5Nx+XITbgnPIxqIIUTYi5cH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@chromium.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.1 145/181] pinctrl: amd: Disable and mask interrupts on resume
-Date: Mon,  3 Apr 2023 16:09:40 +0200
-Message-Id: <20230403140419.774177506@linuxfoundation.org>
+	Simon Horman <simon.horman@corigine.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 119/181] net: ethernet: mtk_eth_soc: add missing ppe cache flush when deleting a flow
+Date: Mon,  3 Apr 2023 16:09:14 +0200
+Message-Id: <20230403140418.957999939@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -34,94 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kornel Dulęba <korneld@chromium.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit b26cd9325be4c1fcd331b77f10acb627c560d4d7 upstream.
+[ Upstream commit 924531326e2dd4ceabe7240f2b55a88e7d894ec2 ]
 
-This fixes a similar problem to the one observed in:
-commit 4e5a04be88fe ("pinctrl: amd: disable and mask interrupts on probe").
+The cache needs to be flushed to ensure that the hardware stops offloading
+the flow immediately.
 
-On some systems, during suspend/resume cycle firmware leaves
-an interrupt enabled on a pin that is not used by the kernel.
-This confuses the AMD pinctrl driver and causes spurious interrupts.
-
-The driver already has logic to detect if a pin is used by the kernel.
-Leverage it to re-initialize interrupt fields of a pin only if it's not
-used by us.
-
-Cc: stable@vger.kernel.org
-Fixes: dbad75dd1f25 ("pinctrl: add AMD GPIO driver support.")
-Signed-off-by: Kornel Dulęba <korneld@chromium.org>
-Link: https://lore.kernel.org/r/20230320093259.845178-1-korneld@chromium.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 33fc42de3327 ("net: ethernet: mtk_eth_soc: support creating mac address based offload entries")
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230330120840.52079-3-nbd@nbd.name
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |   36 ++++++++++++++++++++----------------
- 1 file changed, 20 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_ppe.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -865,32 +865,34 @@ static const struct pinconf_ops amd_pinc
- 	.pin_config_group_set = amd_pinconf_group_set,
- };
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
+index 34ea8af48c3d0..d6eed204574a9 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe.c
++++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
+@@ -438,6 +438,7 @@ __mtk_foe_entry_clear(struct mtk_ppe *ppe, struct mtk_flow_entry *entry)
+ 		hwe->ib1 &= ~MTK_FOE_IB1_STATE;
+ 		hwe->ib1 |= FIELD_PREP(MTK_FOE_IB1_STATE, MTK_FOE_STATE_INVALID);
+ 		dma_wmb();
++		mtk_ppe_cache_clear(ppe);
+ 	}
+ 	entry->hash = 0xffff;
  
--static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
-+static void amd_gpio_irq_init_pin(struct amd_gpio *gpio_dev, int pin)
- {
--	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
-+	const struct pin_desc *pd;
- 	unsigned long flags;
- 	u32 pin_reg, mask;
--	int i;
- 
- 	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
- 		BIT(INTERRUPT_MASK_OFF) | BIT(INTERRUPT_ENABLE_OFF) |
- 		BIT(WAKE_CNTRL_OFF_S4);
- 
--	for (i = 0; i < desc->npins; i++) {
--		int pin = desc->pins[i].number;
--		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
--
--		if (!pd)
--			continue;
-+	pd = pin_desc_get(gpio_dev->pctrl, pin);
-+	if (!pd)
-+		return;
- 
--		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
-+	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
-+	pin_reg = readl(gpio_dev->base + pin * 4);
-+	pin_reg &= ~mask;
-+	writel(pin_reg, gpio_dev->base + pin * 4);
-+	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
-+}
- 
--		pin_reg = readl(gpio_dev->base + i * 4);
--		pin_reg &= ~mask;
--		writel(pin_reg, gpio_dev->base + i * 4);
-+static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
-+{
-+	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
-+	int i;
- 
--		raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
--	}
-+	for (i = 0; i < desc->npins; i++)
-+		amd_gpio_irq_init_pin(gpio_dev, i);
- }
- 
- #ifdef CONFIG_PM_SLEEP
-@@ -943,8 +945,10 @@ static int amd_gpio_resume(struct device
- 	for (i = 0; i < desc->npins; i++) {
- 		int pin = desc->pins[i].number;
- 
--		if (!amd_gpio_should_save(gpio_dev, pin))
-+		if (!amd_gpio_should_save(gpio_dev, pin)) {
-+			amd_gpio_irq_init_pin(gpio_dev, pin);
- 			continue;
-+		}
- 
- 		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
- 		gpio_dev->saved_regs[i] |= readl(gpio_dev->base + pin * 4) & PIN_IRQ_PENDING;
+-- 
+2.39.2
+
 
 
