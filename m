@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5745683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26465C433EF;
-	Mon,  3 Apr 2023 14:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE175683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E1DC433D2;
+	Mon,  3 Apr 2023 14:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531491;
-	bh=W6/FOF23wlOM8VXu4zc1Vocn6jOs6uwApoOig0HW8cA=;
+	s=korg; t=1680531494;
+	bh=oh7bUmYU8BvxO0wWyyaYbmFA3o0shhnjHA/vDXs+hfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kYnzSb7sZg5MTH1U8jsLCm2ieiYaaoecpEyiq3bNXS0GLLnz6wIQaxxdymHwfHmF5
-	 B6chMz8lvNmvkZsqh2DJijKlhLh7I+zC+uv57qPOf956XJ6sTKk0w177n5nu04s8XP
-	 P7Xjd8xki1xvnbQcgRqWyD3lZQ4nU0cYFxjuNFQY=
+	b=PQQPPBFV19eBabzv9ad1X2WtsjjkllUa7kRGYC2wpXUWs+KApHNdjUVYI2WuJVJji
+	 iWdkv5Y9YH6f/g3p/LStxYnEj3b8k7kdMelY8ByjvgbUG4YUKf17JNjjkCrMsdsAO+
+	 0LlkXGbsUefrsujZaXOUWPcN8UUMSOnbsLxGYg8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzbot+29d3a3b4d86c8136ad9e@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Tejun Heo <tj@kernel.org>,
-	Cai Xinchen <caixinchen1@huawei.com>,
-	Imran Khan <imran.f.khan@oracle.com>,
-	Xuewen Yan <xuewen.yan@unisoc.com>
-Subject: [PATCH 4.19 83/84] cgroup: Fix threadgroup_rwsem <-> cpus_read_lock() deadlock
-Date: Mon,  3 Apr 2023 16:09:24 +0200
-Message-Id: <20230403140356.258072954@linuxfoundation.org>
+	Cai Xinchen <caixinchen1@huawei.com>
+Subject: [PATCH 4.19 84/84] cgroup: Add missing cpus_read_lock() to cgroup_attach_task_all()
+Date: Mon,  3 Apr 2023 16:09:25 +0200
+Message-Id: <20230403140356.288473954@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -36,168 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tejun Heo <tj@kernel.org>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 4f7e7236435ca0abe005c674ebd6892c6e83aeb3 upstream.
+commit 43626dade36fa74d3329046f4ae2d7fdefe401c6 upstream.
 
-Add #include <linux/cpu.h> to avoid compile error on some architectures.
+syzbot is hitting percpu_rwsem_assert_held(&cpu_hotplug_lock) warning at
+cpuset_attach() [1], for commit 4f7e7236435ca0ab ("cgroup: Fix
+threadgroup_rwsem <-> cpus_read_lock() deadlock") missed that
+cpuset_attach() is also called from cgroup_attach_task_all().
+Add cpus_read_lock() like what cgroup_procs_write_start() does.
 
-commit 9a3284fad42f6 ("cgroup: Optimize single thread migration") and
-commit 671c11f0619e5 ("cgroup: Elide write-locking threadgroup_rwsem
-when updating csses on an empty subtree") are not backport. So ignore the
-input parameter of cgroup_attach_lock/cgroup_attach_unlock.
-
-original commit message:
-
-Bringing up a CPU may involve creating and destroying tasks which requires
-read-locking threadgroup_rwsem, so threadgroup_rwsem nests inside
-cpus_read_lock(). However, cpuset's ->attach(), which may be called with
-thredagroup_rwsem write-locked, also wants to disable CPU hotplug and
-acquires cpus_read_lock(), leading to a deadlock.
-
-Fix it by guaranteeing that ->attach() is always called with CPU hotplug
-disabled and removing cpus_read_lock() call from cpuset_attach().
-
+Link: https://syzkaller.appspot.com/bug?extid=29d3a3b4d86c8136ad9e [1]
+Reported-by: syzbot <syzbot+29d3a3b4d86c8136ad9e@syzkaller.appspotmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Fixes: 4f7e7236435ca0ab ("cgroup: Fix threadgroup_rwsem <-> cpus_read_lock() deadlock")
 Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-and-tested-by: Imran Khan <imran.f.khan@oracle.com>
-Reported-and-tested-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Fixes: 05c7b7a92cc8 ("cgroup/cpuset: Fix a race between cpuset_attach() and cpu hotplug")
-Cc: stable@vger.kernel.org # v5.17+
 Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-v2:
- - Add #include <linux/cpu.h> in kernel/cgroup/cgroup.c to avoid compile
-   error on some architectures
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- kernel/cgroup/cgroup.c |   50 ++++++++++++++++++++++++++++++++++++++++++++-----
- kernel/cgroup/cpuset.c |    7 ------
- 2 files changed, 46 insertions(+), 11 deletions(-)
+ kernel/cgroup/cgroup-v1.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -55,6 +55,7 @@
- #include <linux/nsproxy.h>
- #include <linux/file.h>
- #include <linux/sched/cputime.h>
+--- a/kernel/cgroup/cgroup-v1.c
++++ b/kernel/cgroup/cgroup-v1.c
+@@ -13,6 +13,7 @@
+ #include <linux/delayacct.h>
+ #include <linux/pid_namespace.h>
+ #include <linux/cgroupstats.h>
 +#include <linux/cpu.h>
- #include <net/sock.h>
  
- #define CREATE_TRACE_POINTS
-@@ -2210,6 +2211,45 @@ int task_cgroup_path(struct task_struct
- EXPORT_SYMBOL_GPL(task_cgroup_path);
+ #include <trace/events/cgroup.h>
  
- /**
-+ * cgroup_attach_lock - Lock for ->attach()
-+ * @lock_threadgroup: whether to down_write cgroup_threadgroup_rwsem
-+ *
-+ * cgroup migration sometimes needs to stabilize threadgroups against forks and
-+ * exits by write-locking cgroup_threadgroup_rwsem. However, some ->attach()
-+ * implementations (e.g. cpuset), also need to disable CPU hotplug.
-+ * Unfortunately, letting ->attach() operations acquire cpus_read_lock() can
-+ * lead to deadlocks.
-+ *
-+ * Bringing up a CPU may involve creating and destroying tasks which requires
-+ * read-locking threadgroup_rwsem, so threadgroup_rwsem nests inside
-+ * cpus_read_lock(). If we call an ->attach() which acquires the cpus lock while
-+ * write-locking threadgroup_rwsem, the locking order is reversed and we end up
-+ * waiting for an on-going CPU hotplug operation which in turn is waiting for
-+ * the threadgroup_rwsem to be released to create new tasks. For more details:
-+ *
-+ *   http://lkml.kernel.org/r/20220711174629.uehfmqegcwn2lqzu@wubuntu
-+ *
-+ * Resolve the situation by always acquiring cpus_read_lock() before optionally
-+ * write-locking cgroup_threadgroup_rwsem. This allows ->attach() to assume that
-+ * CPU hotplug is disabled on entry.
-+ */
-+static void cgroup_attach_lock(void)
-+{
+@@ -55,6 +56,7 @@ int cgroup_attach_task_all(struct task_s
+ 	int retval = 0;
+ 
+ 	mutex_lock(&cgroup_mutex);
 +	get_online_cpus();
-+	percpu_down_write(&cgroup_threadgroup_rwsem);
-+}
-+
-+/**
-+ * cgroup_attach_unlock - Undo cgroup_attach_lock()
-+ * @lock_threadgroup: whether to up_write cgroup_threadgroup_rwsem
-+ */
-+static void cgroup_attach_unlock(void)
-+{
-+	percpu_up_write(&cgroup_threadgroup_rwsem);
+ 	percpu_down_write(&cgroup_threadgroup_rwsem);
+ 	for_each_root(root) {
+ 		struct cgroup *from_cgrp;
+@@ -71,6 +73,7 @@ int cgroup_attach_task_all(struct task_s
+ 			break;
+ 	}
+ 	percpu_up_write(&cgroup_threadgroup_rwsem);
 +	put_online_cpus();
-+}
-+
-+/**
-  * cgroup_migrate_add_task - add a migration target task to a migration context
-  * @task: target task
-  * @mgctx: target migration context
-@@ -2694,7 +2734,7 @@ struct task_struct *cgroup_procs_write_s
- 	if (kstrtoint(strstrip(buf), 0, &pid) || pid < 0)
- 		return ERR_PTR(-EINVAL);
+ 	mutex_unlock(&cgroup_mutex);
  
--	percpu_down_write(&cgroup_threadgroup_rwsem);
-+	cgroup_attach_lock();
- 
- 	rcu_read_lock();
- 	if (pid) {
-@@ -2725,7 +2765,7 @@ struct task_struct *cgroup_procs_write_s
- 	goto out_unlock_rcu;
- 
- out_unlock_threadgroup:
--	percpu_up_write(&cgroup_threadgroup_rwsem);
-+	cgroup_attach_unlock();
- out_unlock_rcu:
- 	rcu_read_unlock();
- 	return tsk;
-@@ -2740,7 +2780,7 @@ void cgroup_procs_write_finish(struct ta
- 	/* release reference from cgroup_procs_write_start() */
- 	put_task_struct(task);
- 
--	percpu_up_write(&cgroup_threadgroup_rwsem);
-+	cgroup_attach_unlock();
- 	for_each_subsys(ss, ssid)
- 		if (ss->post_attach)
- 			ss->post_attach();
-@@ -2799,7 +2839,7 @@ static int cgroup_update_dfl_csses(struc
- 
- 	lockdep_assert_held(&cgroup_mutex);
- 
--	percpu_down_write(&cgroup_threadgroup_rwsem);
-+	cgroup_attach_lock();
- 
- 	/* look up all csses currently attached to @cgrp's subtree */
- 	spin_lock_irq(&css_set_lock);
-@@ -2830,7 +2870,7 @@ static int cgroup_update_dfl_csses(struc
- 	ret = cgroup_migrate_execute(&mgctx);
- out_finish:
- 	cgroup_migrate_finish(&mgctx);
--	percpu_up_write(&cgroup_threadgroup_rwsem);
-+	cgroup_attach_unlock();
- 	return ret;
- }
- 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1528,11 +1528,7 @@ static void cpuset_attach(struct cgroup_
- 	cgroup_taskset_first(tset, &css);
- 	cs = css_cs(css);
- 
--	/*
--	 * It should hold cpus lock because a cpu offline event can
--	 * cause set_cpus_allowed_ptr() failed.
--	 */
--	get_online_cpus();
-+	lockdep_assert_cpus_held();     /* see cgroup_attach_lock() */
- 	mutex_lock(&cpuset_mutex);
- 
- 	/* prepare for attach */
-@@ -1588,7 +1584,6 @@ static void cpuset_attach(struct cgroup_
- 		wake_up(&cpuset_attach_wq);
- 
- 	mutex_unlock(&cpuset_mutex);
--	put_online_cpus();
- }
- 
- /* The various types of files and directories in a cpuset file system */
+ 	return retval;
 
 
