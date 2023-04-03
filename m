@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2EE6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64070C433EF;
-	Mon,  3 Apr 2023 14:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7720E6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3664C433D2;
+	Mon,  3 Apr 2023 14:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532693;
-	bh=8VjH1txRsIhO2gzSw0U+DtvfThkQVvyRcfsMN7FFHKQ=;
+	s=korg; t=1680532696;
+	bh=ABnhbDGWfBt8mGRuIKSsDNSpVJaBjaFkHFq+dTO2OC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sBAeWksf7R5aCddA14CzpZlD/37xuuH8r+K9s+gsicbydXHga0NMmtWczOZyoRE+r
-	 WCij/IbGOKnID9vkw9vP1Y7ZUMYHmri7XKSlK0g6SvdZRceDPMtn6I+kp1bLvGHht1
-	 ip6QHlsShyDIOUKVPvsuXyoz0E7JUpPkuuqLe+sQ=
+	b=xrKMpZF8SKQs3GcLfpHqC9i+QkVLCm7S2ALjjtREGy4/M+MCj/cUZ5qMLp5Jm+xxo
+	 7d1617OCcWWdDcGPSaQlqzziI38Khn73JKNJdYDKxAlSdK92MiNyzgHqO9UnAI63Xr
+	 Ofb3vUlmPfcPr30p8Vt6M/nUkIBjgYg52J9vqMnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Yury Norov <yury.norov@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/181] sched_getaffinity: dont assume cpumask_size() is fully initialized
-Date: Mon,  3 Apr 2023 16:08:08 +0200
-Message-Id: <20230403140416.883002461@linuxfoundation.org>
+Subject: [PATCH 6.1 080/181] mtd: rawnand: meson: invalidate cache on polling ECC bit
+Date: Mon,  3 Apr 2023 16:08:35 +0200
+Message-Id: <20230403140417.738415058@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,80 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Arseniy Krasnov <avkrasnov@sberdevices.ru>
 
-[ Upstream commit 6015b1aca1a233379625385feb01dd014aca60b5 ]
+[ Upstream commit e732e39ed9929c05fd219035bc9653ba4100d4fa ]
 
-The getaffinity() system call uses 'cpumask_size()' to decide how big
-the CPU mask is - so far so good.  It is indeed the allocation size of a
-cpumask.
+'info_buf' memory is cached and driver polls ECC bit in it. This bit
+is set by the NAND controller. If 'usleep_range()' returns before device
+sets this bit, 'info_buf' will be cached and driver won't see update of
+this bit and will loop forever.
 
-But the code also assumes that the whole allocation is initialized
-without actually doing so itself.  That's wrong, because we might have
-fixed-size allocations (making copying and clearing more efficient), but
-not all of it is then necessarily used if 'nr_cpu_ids' is smaller.
-
-Having checked other users of 'cpumask_size()', they all seem to be ok,
-either using it purely for the allocation size, or explicitly zeroing
-the cpumask before using the size in bytes to copy it.
-
-See for example the ublk_ctrl_get_queue_affinity() function that uses
-the proper 'zalloc_cpumask_var()' to make sure that the whole mask is
-cleared, whether the storage is on the stack or if it was an external
-allocation.
-
-Fix this by just zeroing the allocation before using it.  Do the same
-for the compat version of sched_getaffinity(), which had the same logic.
-
-Also, for consistency, make sched_getaffinity() use 'cpumask_bits()' to
-access the bits.  For a cpumask_var_t, it ends up being a pointer to the
-same data either way, but it's just a good idea to treat it like you
-would a 'cpumask_t'.  The compat case already did that.
-
-Reported-by: Ryan Roberts <ryan.roberts@arm.com>
-Link: https://lore.kernel.org/lkml/7d026744-6bd6-6827-0471-b5e8eae0be3f@arm.com/
-Cc: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
+Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/d4ef0bd6-816e-f6fa-9385-f05f775f0ae2@sberdevices.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/compat.c     | 2 +-
- kernel/sched/core.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/mtd/nand/raw/meson_nand.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/compat.c b/kernel/compat.c
-index 55551989d9da5..fb50f29d9b361 100644
---- a/kernel/compat.c
-+++ b/kernel/compat.c
-@@ -152,7 +152,7 @@ COMPAT_SYSCALL_DEFINE3(sched_getaffinity, compat_pid_t,  pid, unsigned int, len,
- 	if (len & (sizeof(compat_ulong_t)-1))
- 		return -EINVAL;
+diff --git a/drivers/mtd/nand/raw/meson_nand.c b/drivers/mtd/nand/raw/meson_nand.c
+index 30e326adabfc1..a28574c009003 100644
+--- a/drivers/mtd/nand/raw/meson_nand.c
++++ b/drivers/mtd/nand/raw/meson_nand.c
+@@ -176,6 +176,7 @@ struct meson_nfc {
  
--	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
- 		return -ENOMEM;
+ 	dma_addr_t daddr;
+ 	dma_addr_t iaddr;
++	u32 info_bytes;
  
- 	ret = sched_getaffinity(pid, mask);
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 9ebfd484189b3..b23dcbeacdf33 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8304,14 +8304,14 @@ SYSCALL_DEFINE3(sched_getaffinity, pid_t, pid, unsigned int, len,
- 	if (len & (sizeof(unsigned long)-1))
- 		return -EINVAL;
+ 	unsigned long assigned_cs;
+ };
+@@ -503,6 +504,7 @@ static int meson_nfc_dma_buffer_setup(struct nand_chip *nand, void *databuf,
+ 					 nfc->daddr, datalen, dir);
+ 			return ret;
+ 		}
++		nfc->info_bytes = infolen;
+ 		cmd = GENCMDIADDRL(NFC_CMD_AIL, nfc->iaddr);
+ 		writel(cmd, nfc->reg_base + NFC_REG_CMD);
  
--	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
- 		return -ENOMEM;
+@@ -520,8 +522,10 @@ static void meson_nfc_dma_buffer_release(struct nand_chip *nand,
+ 	struct meson_nfc *nfc = nand_get_controller_data(nand);
  
- 	ret = sched_getaffinity(pid, mask);
- 	if (ret == 0) {
- 		unsigned int retlen = min(len, cpumask_size());
+ 	dma_unmap_single(nfc->dev, nfc->daddr, datalen, dir);
+-	if (infolen)
++	if (infolen) {
+ 		dma_unmap_single(nfc->dev, nfc->iaddr, infolen, dir);
++		nfc->info_bytes = 0;
++	}
+ }
  
--		if (copy_to_user(user_mask_ptr, mask, retlen))
-+		if (copy_to_user(user_mask_ptr, cpumask_bits(mask), retlen))
- 			ret = -EFAULT;
- 		else
- 			ret = retlen;
+ static int meson_nfc_read_buf(struct nand_chip *nand, u8 *buf, int len)
+@@ -710,6 +714,8 @@ static void meson_nfc_check_ecc_pages_valid(struct meson_nfc *nfc,
+ 		usleep_range(10, 15);
+ 		/* info is updated by nfc dma engine*/
+ 		smp_rmb();
++		dma_sync_single_for_cpu(nfc->dev, nfc->iaddr, nfc->info_bytes,
++					DMA_FROM_DEVICE);
+ 		ret = *info & ECC_COMPLETE;
+ 	} while (!ret);
+ }
 -- 
 2.39.2
 
