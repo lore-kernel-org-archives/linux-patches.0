@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339356FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9FAC433EF;
-	Mon,  3 Apr 2023 14:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE4C6FAF
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51485C4339B;
+	Mon,  3 Apr 2023 14:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533279;
-	bh=7ndKNZWViU2f84b78ppPFmwaLXby3ksYxtK1B8Y+UM8=;
+	s=korg; t=1680533281;
+	bh=F4KNePg/MmJM+Txh6oJMUhtmeMpDvCVtoWS6SsR2cCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DkIUnNrK1YNN+YcikqKEsLEtdFjEDXAj2G0puSUjDKDYEn/G+eWYFYVeiLDRGJ97J
-	 K9hefX6rS6qwUqxh7lUeZl7MMACJKGUSYf8VF+QhtxdqrjKHrXlwjT4eZcVNClBbmG
-	 mIjTpUaggv93EgByZ1uh+wbjF/8ugotydzGwiezg=
+	b=0JtI/krqKPA8I4xE432IVDOMs/0aGOb81qafmymvF4Wokxc65BfRKw16jJyqob9i5
+	 RGfhda5Y+8TM1bnHD8zNFdCMZ7Z49cdW+YDfW1lPwygP3tBzcV7Gu0g1HvdS3HLFiT
+	 4PdEqhTJcs8OkZel3SaHO2XT9vTqOe7HNK4zKJW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radoslaw Tyl <radoslawx.tyl@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 6.2 115/187] i40e: fix registers dump after run ethtool adapter self test
-Date: Mon,  3 Apr 2023 16:09:20 +0200
-Message-Id: <20230403140419.756353660@linuxfoundation.org>
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 124/187] pinctrl: ocelot: Fix alt mode for ocelot
+Date: Mon,  3 Apr 2023 16:09:29 +0200
+Message-Id: <20230403140420.046861308@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -39,89 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Radoslaw Tyl <radoslawx.tyl@intel.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit c5cff16f461a4a434a9915a7be7ac9ced861a8a4 ]
+[ Upstream commit 657fd9da2d4b4aa0a384105b236baa22fa0233bf ]
 
-Fix invalid registers dump from ethtool -d ethX after adapter self test
-by ethtool -t ethY. It causes invalid data display.
+In case the driver was trying to set an alternate mode for gpio
+0 or 32 then the mode was not set correctly. The reason is that
+there is computation error inside the function ocelot_pinmux_set_mux
+because in this case it was trying to shift to left by -1.
+Fix this by actually shifting the function bits and not the position.
 
-The problem was caused by overwriting i40e_reg_list[].elements
-which is common for ethtool self test and dump.
-
-Fixes: 22dd9ae8afcc ("i40e: Rework register diagnostic")
-Signed-off-by: Radoslaw Tyl <radoslawx.tyl@intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230328172659.3906413-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4b36082e2e09 ("pinctrl: ocelot: fix pinmuxing for pins after 31")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://lore.kernel.org/r/20230206203720.1177718-1-horatiu.vultur@microchip.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_diag.c | 11 ++++++-----
- drivers/net/ethernet/intel/i40e/i40e_diag.h |  2 +-
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/pinctrl/pinctrl-ocelot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_diag.c b/drivers/net/ethernet/intel/i40e/i40e_diag.c
-index ef4d3762bf371..ca229b0efeb65 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_diag.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_diag.c
-@@ -44,7 +44,7 @@ static i40e_status i40e_diag_reg_pattern_test(struct i40e_hw *hw,
+diff --git a/drivers/pinctrl/pinctrl-ocelot.c b/drivers/pinctrl/pinctrl-ocelot.c
+index 29e4a6282a641..1dcbd0937ef5a 100644
+--- a/drivers/pinctrl/pinctrl-ocelot.c
++++ b/drivers/pinctrl/pinctrl-ocelot.c
+@@ -1204,7 +1204,7 @@ static int ocelot_pinmux_set_mux(struct pinctrl_dev *pctldev,
+ 	regmap_update_bits(info->map, REG_ALT(0, info, pin->pin),
+ 			   BIT(p), f << p);
+ 	regmap_update_bits(info->map, REG_ALT(1, info, pin->pin),
+-			   BIT(p), f << (p - 1));
++			   BIT(p), (f >> 1) << p);
+ 
  	return 0;
  }
- 
--struct i40e_diag_reg_test_info i40e_reg_list[] = {
-+const struct i40e_diag_reg_test_info i40e_reg_list[] = {
- 	/* offset               mask         elements   stride */
- 	{I40E_QTX_CTL(0),       0x0000FFBF, 1,
- 		I40E_QTX_CTL(1) - I40E_QTX_CTL(0)},
-@@ -78,27 +78,28 @@ i40e_status i40e_diag_reg_test(struct i40e_hw *hw)
- {
- 	i40e_status ret_code = 0;
- 	u32 reg, mask;
-+	u32 elements;
- 	u32 i, j;
- 
- 	for (i = 0; i40e_reg_list[i].offset != 0 &&
- 					     !ret_code; i++) {
- 
-+		elements = i40e_reg_list[i].elements;
- 		/* set actual reg range for dynamically allocated resources */
- 		if (i40e_reg_list[i].offset == I40E_QTX_CTL(0) &&
- 		    hw->func_caps.num_tx_qp != 0)
--			i40e_reg_list[i].elements = hw->func_caps.num_tx_qp;
-+			elements = hw->func_caps.num_tx_qp;
- 		if ((i40e_reg_list[i].offset == I40E_PFINT_ITRN(0, 0) ||
- 		     i40e_reg_list[i].offset == I40E_PFINT_ITRN(1, 0) ||
- 		     i40e_reg_list[i].offset == I40E_PFINT_ITRN(2, 0) ||
- 		     i40e_reg_list[i].offset == I40E_QINT_TQCTL(0) ||
- 		     i40e_reg_list[i].offset == I40E_QINT_RQCTL(0)) &&
- 		    hw->func_caps.num_msix_vectors != 0)
--			i40e_reg_list[i].elements =
--				hw->func_caps.num_msix_vectors - 1;
-+			elements = hw->func_caps.num_msix_vectors - 1;
- 
- 		/* test register access */
- 		mask = i40e_reg_list[i].mask;
--		for (j = 0; j < i40e_reg_list[i].elements && !ret_code; j++) {
-+		for (j = 0; j < elements && !ret_code; j++) {
- 			reg = i40e_reg_list[i].offset +
- 			      (j * i40e_reg_list[i].stride);
- 			ret_code = i40e_diag_reg_pattern_test(hw, reg, mask);
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_diag.h b/drivers/net/ethernet/intel/i40e/i40e_diag.h
-index c3340f320a18c..1db7c6d572311 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_diag.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_diag.h
-@@ -20,7 +20,7 @@ struct i40e_diag_reg_test_info {
- 	u32 stride;	/* bytes between each element */
- };
- 
--extern struct i40e_diag_reg_test_info i40e_reg_list[];
-+extern const struct i40e_diag_reg_test_info i40e_reg_list[];
- 
- i40e_status i40e_diag_reg_test(struct i40e_hw *hw);
- i40e_status i40e_diag_eeprom_test(struct i40e_hw *hw);
 -- 
 2.39.2
 
