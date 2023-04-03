@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081596FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836F7C433EF;
-	Mon,  3 Apr 2023 14:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6F26FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10932C4339B;
+	Mon,  3 Apr 2023 14:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532408;
-	bh=jzKs/L7fQQH1SNLrtLePASuflTrmr6yh7QSHbuAW07I=;
+	s=korg; t=1680532411;
+	bh=SmcftsvKCxIdYP4tVoqBlQNnERCk8DK4sxTkUc/xlvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dNSDFCL174B40tWLGpC9kYa1Bwj+goSOguvV+qt0zyTqD6a8b3EWNPyvNtR6z2kFG
-	 s6pLYbVDyhHmaLdwU0YPIyxgLuSimvCtc2CV+KF3ghENV7M/FrJ6Y6UL/hLtKc2m71
-	 aDkZmNyyous+tBZ99SqcSTAnH/KvgSUu2Ngrw/og=
+	b=w1uTalXuinv0m/iebr0Ev5SctiEikiRsRH090GlaP5iD4genBom+vdJvvkDNQh8u7
+	 3KYEYUnzL8x6NHfbblGduiCsLXD4ZIZWdWTwjE926Qkkr6nflp+YrHxVSqDOIlbrw6
+	 JigcY/nQc38o3QgzwctP+2Rzl6EUwqDxZh9xDArQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Yang <sherry.yang@oracle.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 71/99] btrfs: scan device in non-exclusive mode
-Date: Mon,  3 Apr 2023 16:09:34 +0200
-Message-Id: <20230403140406.157804109@linuxfoundation.org>
+	Hans Holmberg <Hans.Holmberg@wdc.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Hans Holmberg <hans.holmberg@wdc.com>
+Subject: [PATCH 5.15 72/99] zonefs: Always invalidate last cached page on append write
+Date: Mon,  3 Apr 2023 16:09:35 +0200
+Message-Id: <20230403140406.192229761@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,87 +37,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-commit 50d281fc434cb8e2497f5e70a309ccca6b1a09f0 upstream.
+commit c1976bd8f23016d8706973908f2bb0ac0d852a8f upstream.
 
-This fixes mkfs/mount/check failures due to race with systemd-udevd
-scan.
+When a direct append write is executed, the append offset may correspond
+to the last page of a sequential file inode which might have been cached
+already by buffered reads, page faults with mmap-read or non-direct
+readahead. To ensure that the on-disk and cached data is consistant for
+such last cached page, make sure to always invalidate it in
+zonefs_file_dio_append(). If the invalidation fails, return -EBUSY to
+userspace to differentiate from IO errors.
 
-During the device scan initiated by systemd-udevd, other user space
-EXCL operations such as mkfs, mount, or check may get blocked and result
-in a "Device or resource busy" error. This is because the device
-scan process opens the device with the EXCL flag in the kernel.
+This invalidation will always be a no-op when the FS block size (device
+zone write granularity) is equal to the page size (e.g. 4K).
 
-Two reports were received:
-
- - btrfs/179 test case, where the fsck command failed with the -EBUSY
-   error
-
- - LTP pwritev03 test case, where mkfs.vfs failed with
-   the -EBUSY error, when mkfs.vfs tried to overwrite old btrfs filesystem
-   on the device.
-
-In both cases, fsck and mkfs (respectively) were racing with a
-systemd-udevd device scan, and systemd-udevd won, resulting in the
--EBUSY error for fsck and mkfs.
-
-Reproducing the problem has been difficult because there is a very
-small window during which these userspace threads can race to
-acquire the exclusive device open. Even on the system where the problem
-was observed, the problem occurrences were anywhere between 10 to 400
-iterations and chances of reproducing decreases with debug printk()s.
-
-However, an exclusive device open is unnecessary for the scan process,
-as there are no write operations on the device during scan. Furthermore,
-during the mount process, the superblock is re-read in the below
-function call chain:
-
-  btrfs_mount_root
-   btrfs_open_devices
-    open_fs_devices
-     btrfs_open_one_device
-       btrfs_get_bdev_and_sb
-
-So, to fix this issue, removes the FMODE_EXCL flag from the scan
-operation, and add a comment.
-
-The case where mkfs may still write to the device and a scan is running,
-the btrfs signature is not written at that time so scan will not
-recognize such device.
-
-Reported-by: Sherry Yang <sherry.yang@oracle.com>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Link: https://lore.kernel.org/oe-lkp/202303170839.fdf23068-oliver.sang@intel.com
-CC: stable@vger.kernel.org # 5.4+
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Hans Holmberg <Hans.Holmberg@wdc.com>
+Fixes: 02ef12a663c7 ("zonefs: use REQ_OP_ZONE_APPEND for sync DIO")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Tested-by: Hans Holmberg <hans.holmberg@wdc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/zonefs/super.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -1406,8 +1406,17 @@ struct btrfs_device *btrfs_scan_one_devi
- 	 * So, we need to add a special mount option to scan for
- 	 * later supers, using BTRFS_SUPER_MIRROR_MAX instead
- 	 */
--	flags |= FMODE_EXCL;
+--- a/fs/zonefs/super.c
++++ b/fs/zonefs/super.c
+@@ -736,6 +736,7 @@ static ssize_t zonefs_file_dio_append(st
+ 	struct zonefs_inode_info *zi = ZONEFS_I(inode);
+ 	struct block_device *bdev = inode->i_sb->s_bdev;
+ 	unsigned int max = bdev_max_zone_append_sectors(bdev);
++	pgoff_t start, end;
+ 	struct bio *bio;
+ 	ssize_t size;
+ 	int nr_pages;
+@@ -744,6 +745,19 @@ static ssize_t zonefs_file_dio_append(st
+ 	max = ALIGN_DOWN(max << SECTOR_SHIFT, inode->i_sb->s_blocksize);
+ 	iov_iter_truncate(from, max);
  
 +	/*
-+	 * Avoid using flag |= FMODE_EXCL here, as the systemd-udev may
-+	 * initiate the device scan which may race with the user's mount
-+	 * or mkfs command, resulting in failure.
-+	 * Since the device scan is solely for reading purposes, there is
-+	 * no need for FMODE_EXCL. Additionally, the devices are read again
-+	 * during the mount process. It is ok to get some inconsistent
-+	 * values temporarily, as the device paths of the fsid are the only
-+	 * required information for assembling the volume.
++	 * If the inode block size (zone write granularity) is smaller than the
++	 * page size, we may be appending data belonging to the last page of the
++	 * inode straddling inode->i_size, with that page already cached due to
++	 * a buffered read or readahead. So make sure to invalidate that page.
++	 * This will always be a no-op for the case where the block size is
++	 * equal to the page size.
 +	 */
- 	bdev = blkdev_get_by_path(path, flags, holder);
- 	if (IS_ERR(bdev))
- 		return ERR_CAST(bdev);
++	start = iocb->ki_pos >> PAGE_SHIFT;
++	end = (iocb->ki_pos + iov_iter_count(from) - 1) >> PAGE_SHIFT;
++	if (invalidate_inode_pages2_range(inode->i_mapping, start, end))
++		return -EBUSY;
++
+ 	nr_pages = iov_iter_npages(from, BIO_MAX_VECS);
+ 	if (!nr_pages)
+ 		return 0;
 
 
