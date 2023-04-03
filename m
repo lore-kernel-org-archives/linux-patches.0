@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A73612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2860C433D2;
-	Mon,  3 Apr 2023 14:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C22612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C63C433EF;
+	Mon,  3 Apr 2023 14:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531591;
-	bh=vr3ErC4QQkjRp453fOpCHGj6sjYaosQoe01rumPdWXU=;
+	s=korg; t=1680531594;
+	bh=75h4lD0mk5zmLz+UDOKXhH8iMe3itMJ/s4s7lr3PM7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zj7LVqKmdgq6IjNhBKaLk4+ZgDprVYRxCpKF+MSh3WJX/gbzL3qWNhCDDclYinaNU
-	 FKB9dMdV0p/zyFQg27tgVOawjnULgGyF8cjcyxh8/F2Eyt8fe+v4VSFfblA1X6mW5u
-	 KR/iEyIc10ST41lNB3IL1s5mT6RcZONCLWWAKw4s=
+	b=UIG8EPpKOetaDltcyOqaxA9+ly2QugSHXBprHkTpTWS9ldrX5tiFeMvC0E2vzfwam
+	 umQej31+wx5n4xmLCfj7D2TeR5fPE88Imhhw5uLh+UM2jjExm3/VR99H2I/bEVSzfc
+	 uBc4zBpkdhoKudcVb2hy+ho6Lr0vhAiSx3Of/Udc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrien Thierry <athierry@redhat.com>,
+	Jakob Koschel <jkl820.git@gmail.com>,
+	Justin Tee <justin.tee@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 037/104] scsi: ufs: core: Add soft dependency on governor_simpleondemand
-Date: Mon,  3 Apr 2023 16:08:29 +0200
-Message-Id: <20230403140405.814323434@linuxfoundation.org>
+Subject: [PATCH 5.4 038/104] scsi: lpfc: Avoid usage of list iterator variable after loop
+Date: Mon,  3 Apr 2023 16:08:30 +0200
+Message-Id: <20230403140405.860636053@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,34 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrien Thierry <athierry@redhat.com>
+From: Jakob Koschel <jkl820.git@gmail.com>
 
-[ Upstream commit 2ebe16155dc8bd4e602cad5b5f65458d2eaa1a75 ]
+[ Upstream commit 2850b23e9f9ae3696e472d2883ea1b43aafa884e ]
 
-The ufshcd driver uses simpleondemand governor for devfreq. Add it to the
-list of ufshcd softdeps to allow userspace initramfs tools like dracut to
-automatically pull the governor module into the initramfs together with UFS
-drivers.
+If the &epd_pool->list is empty when executing
+lpfc_get_io_buf_from_expedite_pool() the function would return an invalid
+pointer. Even in the case if the list is guaranteed to be populated, the
+iterator variable should not be used after the loop to be more robust for
+future changes.
 
-Link: https://lore.kernel.org/r/20230220140740.14379-1-athierry@redhat.com
-Signed-off-by: Adrien Thierry <athierry@redhat.com>
+Linus proposed to avoid any use of the list iterator variable after the
+loop, in the attempt to move the list iterator variable declaration into
+the macro to avoid any potential misuse after the loop [1].
+
+Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/ [1]
+Signed-off-by: Jakob Koschel <jkl820.git@gmail.com>
+Link: https://lore.kernel.org/r/20230301-scsi-lpfc-avoid-list-iterator-after-loop-v1-1-325578ae7561@gmail.com
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufshcd.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/lpfc/lpfc_sli.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index 670f4c7934f85..9d13226d2324a 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -8530,5 +8530,6 @@ EXPORT_SYMBOL_GPL(ufshcd_init);
- MODULE_AUTHOR("Santosh Yaragnavi <santosh.sy@samsung.com>");
- MODULE_AUTHOR("Vinayak Holikatti <h.vinayak@samsung.com>");
- MODULE_DESCRIPTION("Generic UFS host controller driver Core");
-+MODULE_SOFTDEP("pre: governor_simpleondemand");
- MODULE_LICENSE("GPL");
- MODULE_VERSION(UFSHCD_DRIVER_VERSION);
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index bd908dd273078..e489c68cfb631 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -20407,20 +20407,20 @@ lpfc_get_io_buf_from_private_pool(struct lpfc_hba *phba,
+ static struct lpfc_io_buf *
+ lpfc_get_io_buf_from_expedite_pool(struct lpfc_hba *phba)
+ {
+-	struct lpfc_io_buf *lpfc_ncmd;
++	struct lpfc_io_buf *lpfc_ncmd = NULL, *iter;
+ 	struct lpfc_io_buf *lpfc_ncmd_next;
+ 	unsigned long iflag;
+ 	struct lpfc_epd_pool *epd_pool;
+ 
+ 	epd_pool = &phba->epd_pool;
+-	lpfc_ncmd = NULL;
+ 
+ 	spin_lock_irqsave(&epd_pool->lock, iflag);
+ 	if (epd_pool->count > 0) {
+-		list_for_each_entry_safe(lpfc_ncmd, lpfc_ncmd_next,
++		list_for_each_entry_safe(iter, lpfc_ncmd_next,
+ 					 &epd_pool->list, list) {
+-			list_del(&lpfc_ncmd->list);
++			list_del(&iter->list);
+ 			epd_pool->count--;
++			lpfc_ncmd = iter;
+ 			break;
+ 		}
+ 	}
 -- 
 2.39.2
 
