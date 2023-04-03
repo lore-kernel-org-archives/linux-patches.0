@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA1B5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BEEC4339B;
-	Mon,  3 Apr 2023 14:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AC65683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3D3C433EF;
+	Mon,  3 Apr 2023 14:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531420;
-	bh=UIRTW82BtS3G/f1+nUIbaYT/AsYjsGqRfpWtwN4GVXk=;
+	s=korg; t=1680531423;
+	bh=K0x3SRRa4HXHn+EKwSF6/erKOQgcKi+VGbc7NR6slpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kc0awzFJua6CKvK0h//34vmAE9MO7zaXlXiVGtxWTlvlYwBqCX0CsyElwXJu/ufcO
-	 sfhpyIErGciubon/jNohzwsLD2UiGZxGFO5he0ANzcKPnfP+Eh2gq64PY6LVrl5ozt
-	 PLhZD4sEaQ+HziBecYHgA3eCOXFhsF0Fwp7207vI=
+	b=YUKD5+MglZYb5z5GRZ+8usaAbybx4ej/EJ219aZtNQtylbVsmrv7wxD18YOVHa71/
+	 /nY9psvLTX4OxmHckUjd9KPhmzs1ZLkDKstSfEJKy0wa+m+p1B/6Wt/fdRJS8DhY/f
+	 78LJebui6sOvpnV0KYEXP4MOqF/ywr8e0pG2LTvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Yury Norov <yury.norov@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 56/84] sched_getaffinity: dont assume cpumask_size() is fully initialized
-Date: Mon,  3 Apr 2023 16:08:57 +0200
-Message-Id: <20230403140355.353153335@linuxfoundation.org>
+Subject: [PATCH 4.19 57/84] fbdev: nvidia: Fix potential divide by zero
+Date: Mon,  3 Apr 2023 16:08:58 +0200
+Message-Id: <20230403140355.388761058@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -36,80 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 6015b1aca1a233379625385feb01dd014aca60b5 ]
+[ Upstream commit 92e2a00f2987483e1f9253625828622edd442e61 ]
 
-The getaffinity() system call uses 'cpumask_size()' to decide how big
-the CPU mask is - so far so good.  It is indeed the allocation size of a
-cpumask.
+variable var->pixclock can be set by user. In case it
+equals to zero, divide by zero would occur in nvidiafb_set_par.
 
-But the code also assumes that the whole allocation is initialized
-without actually doing so itself.  That's wrong, because we might have
-fixed-size allocations (making copying and clearing more efficient), but
-not all of it is then necessarily used if 'nr_cpu_ids' is smaller.
+Similar crashes have happened in other fbdev drivers. There
+is no check and modification on var->pixclock along the call
+chain to nvidia_check_var and nvidiafb_set_par. We believe it
+could also be triggered in driver nvidia from user site.
 
-Having checked other users of 'cpumask_size()', they all seem to be ok,
-either using it purely for the allocation size, or explicitly zeroing
-the cpumask before using the size in bytes to copy it.
-
-See for example the ublk_ctrl_get_queue_affinity() function that uses
-the proper 'zalloc_cpumask_var()' to make sure that the whole mask is
-cleared, whether the storage is on the stack or if it was an external
-allocation.
-
-Fix this by just zeroing the allocation before using it.  Do the same
-for the compat version of sched_getaffinity(), which had the same logic.
-
-Also, for consistency, make sched_getaffinity() use 'cpumask_bits()' to
-access the bits.  For a cpumask_var_t, it ends up being a pointer to the
-same data either way, but it's just a good idea to treat it like you
-would a 'cpumask_t'.  The compat case already did that.
-
-Reported-by: Ryan Roberts <ryan.roberts@arm.com>
-Link: https://lore.kernel.org/lkml/7d026744-6bd6-6827-0471-b5e8eae0be3f@arm.com/
-Cc: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/compat.c     | 2 +-
- kernel/sched/core.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/nvidia/nvidia.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/compat.c b/kernel/compat.c
-index e4548a9e9c52c..5f320b0db8d09 100644
---- a/kernel/compat.c
-+++ b/kernel/compat.c
-@@ -307,7 +307,7 @@ COMPAT_SYSCALL_DEFINE3(sched_getaffinity, compat_pid_t,  pid, unsigned int, len,
- 	if (len & (sizeof(compat_ulong_t)-1))
- 		return -EINVAL;
+diff --git a/drivers/video/fbdev/nvidia/nvidia.c b/drivers/video/fbdev/nvidia/nvidia.c
+index fbeeed5afe350..aa502b3ba25ae 100644
+--- a/drivers/video/fbdev/nvidia/nvidia.c
++++ b/drivers/video/fbdev/nvidia/nvidia.c
+@@ -766,6 +766,8 @@ static int nvidiafb_check_var(struct fb_var_screeninfo *var,
+ 	int pitch, err = 0;
  
--	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
- 		return -ENOMEM;
+ 	NVTRACE_ENTER();
++	if (!var->pixclock)
++		return -EINVAL;
  
- 	ret = sched_getaffinity(pid, mask);
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 207cd446b9d36..8d5a9fa8a951c 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -4953,14 +4953,14 @@ SYSCALL_DEFINE3(sched_getaffinity, pid_t, pid, unsigned int, len,
- 	if (len & (sizeof(unsigned long)-1))
- 		return -EINVAL;
- 
--	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
- 		return -ENOMEM;
- 
- 	ret = sched_getaffinity(pid, mask);
- 	if (ret == 0) {
- 		unsigned int retlen = min(len, cpumask_size());
- 
--		if (copy_to_user(user_mask_ptr, mask, retlen))
-+		if (copy_to_user(user_mask_ptr, cpumask_bits(mask), retlen))
- 			ret = -EFAULT;
- 		else
- 			ret = retlen;
+ 	var->transp.offset = 0;
+ 	var->transp.length = 0;
 -- 
 2.39.2
 
