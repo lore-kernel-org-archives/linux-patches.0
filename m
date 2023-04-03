@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC92D612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC49C433D2;
-	Mon,  3 Apr 2023 14:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677D5612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DCEC433EF;
+	Mon,  3 Apr 2023 14:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531787;
-	bh=IwMWYdBKl/+HaUW9L4ptr4zcnq2wc7KRXzW9GDpR7Wo=;
+	s=korg; t=1680531790;
+	bh=2aIhFII3eIVmS73uoFi9gINRR136PU1L00WNnJmuWXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TEfpHT5lGSuqqWDEUG6wx8v7+HxB8AskgtBMZUlhje6qzggWzq/vGvGBc5SSS5xEa
-	 ijVgY9DAYmuUnCbIAyzpjJGd1eEJea1fi51OoajJdBYUlNwpOEZuus/YcOrBv4/4wQ
-	 v3EbqB7Fs6Wolk/q7mGTevxs1ckUUVc8MtbbKxSM=
+	b=Vmpci7pekawbb6ZxcDJw7ERctunC+DMvNzXXdZATNNeIMDQ652TlBHh1kTjdyQ3LS
+	 uRf4YWC5YjcTuajgTfP7OP9tj2v+FP04r/BGq0nGm9QUTXIFEIUoMhfkbraLb77DZE
+	 TpJfCJP/MP79yCHDisF+XKbJWmZ4s5qR6K+S/GB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Vlad Buslov <vladbu@mellanox.com>,
-	syzbot <syzkaller@googlegroups.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jiri Pirko <jiri@resnulli.us>,
-	"David S. Miller" <davem@davemloft.net>,
-	Zubin Mithra <zsm@google.com>
-Subject: [PATCH 5.4 101/104] net_sched: add __rcu annotation to netdev->qdisc
-Date: Mon,  3 Apr 2023 16:09:33 +0200
-Message-Id: <20230403140408.129342136@linuxfoundation.org>
+	Juergen Gross <jgross@suse.com>,
+	Paul Durrant <paul@xen.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.4 092/104] xen/netback: dont do grant copy across page boundary
+Date: Mon,  3 Apr 2023 16:09:24 +0200
+Message-Id: <20230403140407.766876083@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -40,312 +35,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Juergen Gross <jgross@suse.com>
 
-commit 5891cd5ec46c2c2eb6427cb54d214b149635dd0e upstream.
+commit 05310f31ca74673a96567fb14637b7d5d6c82ea5 upstream.
 
-syzbot found a data-race [1] which lead me to add __rcu
-annotations to netdev->qdisc, and proper accessors
-to get LOCKDEP support.
+Fix xenvif_get_requests() not to do grant copy operations across local
+page boundaries. This requires to double the maximum number of copy
+operations per queue, as each copy could now be split into 2.
 
-[1]
-BUG: KCSAN: data-race in dev_activate / qdisc_lookup_rcu
+Make sure that struct xenvif_tx_cb doesn't grow too large.
 
-write to 0xffff888168ad6410 of 8 bytes by task 13559 on cpu 1:
- attach_default_qdiscs net/sched/sch_generic.c:1167 [inline]
- dev_activate+0x2ed/0x8f0 net/sched/sch_generic.c:1221
- __dev_open+0x2e9/0x3a0 net/core/dev.c:1416
- __dev_change_flags+0x167/0x3f0 net/core/dev.c:8139
- rtnl_configure_link+0xc2/0x150 net/core/rtnetlink.c:3150
- __rtnl_newlink net/core/rtnetlink.c:3489 [inline]
- rtnl_newlink+0xf4d/0x13e0 net/core/rtnetlink.c:3529
- rtnetlink_rcv_msg+0x745/0x7e0 net/core/rtnetlink.c:5594
- netlink_rcv_skb+0x14e/0x250 net/netlink/af_netlink.c:2494
- rtnetlink_rcv+0x18/0x20 net/core/rtnetlink.c:5612
- netlink_unicast_kernel net/netlink/af_netlink.c:1317 [inline]
- netlink_unicast+0x602/0x6d0 net/netlink/af_netlink.c:1343
- netlink_sendmsg+0x728/0x850 net/netlink/af_netlink.c:1919
- sock_sendmsg_nosec net/socket.c:705 [inline]
- sock_sendmsg net/socket.c:725 [inline]
- ____sys_sendmsg+0x39a/0x510 net/socket.c:2413
- ___sys_sendmsg net/socket.c:2467 [inline]
- __sys_sendmsg+0x195/0x230 net/socket.c:2496
- __do_sys_sendmsg net/socket.c:2505 [inline]
- __se_sys_sendmsg net/socket.c:2503 [inline]
- __x64_sys_sendmsg+0x42/0x50 net/socket.c:2503
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x44/0xd0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x44/0xae
-
-read to 0xffff888168ad6410 of 8 bytes by task 13560 on cpu 0:
- qdisc_lookup_rcu+0x30/0x2e0 net/sched/sch_api.c:323
- __tcf_qdisc_find+0x74/0x3a0 net/sched/cls_api.c:1050
- tc_del_tfilter+0x1c7/0x1350 net/sched/cls_api.c:2211
- rtnetlink_rcv_msg+0x5ba/0x7e0 net/core/rtnetlink.c:5585
- netlink_rcv_skb+0x14e/0x250 net/netlink/af_netlink.c:2494
- rtnetlink_rcv+0x18/0x20 net/core/rtnetlink.c:5612
- netlink_unicast_kernel net/netlink/af_netlink.c:1317 [inline]
- netlink_unicast+0x602/0x6d0 net/netlink/af_netlink.c:1343
- netlink_sendmsg+0x728/0x850 net/netlink/af_netlink.c:1919
- sock_sendmsg_nosec net/socket.c:705 [inline]
- sock_sendmsg net/socket.c:725 [inline]
- ____sys_sendmsg+0x39a/0x510 net/socket.c:2413
- ___sys_sendmsg net/socket.c:2467 [inline]
- __sys_sendmsg+0x195/0x230 net/socket.c:2496
- __do_sys_sendmsg net/socket.c:2505 [inline]
- __se_sys_sendmsg net/socket.c:2503 [inline]
- __x64_sys_sendmsg+0x42/0x50 net/socket.c:2503
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x44/0xd0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x44/0xae
-
-value changed: 0xffffffff85dee080 -> 0xffff88815d96ec00
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 13560 Comm: syz-executor.2 Not tainted 5.17.0-rc3-syzkaller-00116-gf1baf68e1383-dirty #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-
-Fixes: 470502de5bdb ("net: sched: unlock rules update API")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Vlad Buslov <vladbu@mellanox.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Cong Wang <xiyou.wangcong@gmail.com>
-Cc: Jiri Pirko <jiri@resnulli.us>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Zubin Mithra <zsm@google.com>
+Cc: stable@vger.kernel.org
+Fixes: ad7f402ae4f4 ("xen/netback: Ensure protocol headers don't fall in the non-linear area")
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/netdevice.h |    2 +-
- net/core/rtnetlink.c      |    6 ++++--
- net/sched/cls_api.c       |    6 +++---
- net/sched/sch_api.c       |   22 ++++++++++++----------
- net/sched/sch_generic.c   |   22 ++++++++++++----------
- 5 files changed, 32 insertions(+), 26 deletions(-)
+ drivers/net/xen-netback/common.h  |    2 +-
+ drivers/net/xen-netback/netback.c |   25 +++++++++++++++++++++++--
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -1986,7 +1986,7 @@ struct net_device {
- 	struct netdev_queue	*_tx ____cacheline_aligned_in_smp;
- 	unsigned int		num_tx_queues;
- 	unsigned int		real_num_tx_queues;
--	struct Qdisc		*qdisc;
-+	struct Qdisc __rcu	*qdisc;
- #ifdef CONFIG_NET_SCHED
- 	DECLARE_HASHTABLE	(qdisc_hash, 4);
- #endif
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -1593,6 +1593,7 @@ static int rtnl_fill_ifinfo(struct sk_bu
- {
- 	struct ifinfomsg *ifm;
- 	struct nlmsghdr *nlh;
-+	struct Qdisc *qdisc;
+--- a/drivers/net/xen-netback/common.h
++++ b/drivers/net/xen-netback/common.h
+@@ -166,7 +166,7 @@ struct xenvif_queue { /* Per-queue data
+ 	struct pending_tx_info pending_tx_info[MAX_PENDING_REQS];
+ 	grant_handle_t grant_tx_handle[MAX_PENDING_REQS];
  
- 	ASSERT_RTNL();
- 	nlh = nlmsg_put(skb, pid, seq, type, sizeof(*ifm), flags);
-@@ -1610,6 +1611,7 @@ static int rtnl_fill_ifinfo(struct sk_bu
- 	if (tgt_netnsid >= 0 && nla_put_s32(skb, IFLA_TARGET_NETNSID, tgt_netnsid))
- 		goto nla_put_failure;
+-	struct gnttab_copy tx_copy_ops[MAX_PENDING_REQS];
++	struct gnttab_copy tx_copy_ops[2 * MAX_PENDING_REQS];
+ 	struct gnttab_map_grant_ref tx_map_ops[MAX_PENDING_REQS];
+ 	struct gnttab_unmap_grant_ref tx_unmap_ops[MAX_PENDING_REQS];
+ 	/* passed to gnttab_[un]map_refs with pages under (un)mapping */
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -327,6 +327,7 @@ static int xenvif_count_requests(struct
+ struct xenvif_tx_cb {
+ 	u16 copy_pending_idx[XEN_NETBK_LEGACY_SLOTS_MAX + 1];
+ 	u8 copy_count;
++	u32 split_mask;
+ };
  
-+	qdisc = rtnl_dereference(dev->qdisc);
- 	if (nla_put_string(skb, IFLA_IFNAME, dev->name) ||
- 	    nla_put_u32(skb, IFLA_TXQLEN, dev->tx_queue_len) ||
- 	    nla_put_u8(skb, IFLA_OPERSTATE,
-@@ -1628,8 +1630,8 @@ static int rtnl_fill_ifinfo(struct sk_bu
- #endif
- 	    put_master_ifindex(skb, dev) ||
- 	    nla_put_u8(skb, IFLA_CARRIER, netif_carrier_ok(dev)) ||
--	    (dev->qdisc &&
--	     nla_put_string(skb, IFLA_QDISC, dev->qdisc->ops->id)) ||
-+	    (qdisc &&
-+	     nla_put_string(skb, IFLA_QDISC, qdisc->ops->id)) ||
- 	    nla_put_ifalias(skb, dev) ||
- 	    nla_put_u32(skb, IFLA_CARRIER_CHANGES,
- 			atomic_read(&dev->carrier_up_count) +
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -1079,7 +1079,7 @@ static int __tcf_qdisc_find(struct net *
- 
- 	/* Find qdisc */
- 	if (!*parent) {
--		*q = dev->qdisc;
-+		*q = rcu_dereference(dev->qdisc);
- 		*parent = (*q)->handle;
- 	} else {
- 		*q = qdisc_lookup_rcu(dev, TC_H_MAJ(*parent));
-@@ -2552,7 +2552,7 @@ static int tc_dump_tfilter(struct sk_buf
- 
- 		parent = tcm->tcm_parent;
- 		if (!parent)
--			q = dev->qdisc;
-+			q = rtnl_dereference(dev->qdisc);
- 		else
- 			q = qdisc_lookup(dev, TC_H_MAJ(tcm->tcm_parent));
- 		if (!q)
-@@ -2938,7 +2938,7 @@ static int tc_dump_chain(struct sk_buff
- 
- 		parent = tcm->tcm_parent;
- 		if (!parent) {
--			q = dev->qdisc;
-+			q = rtnl_dereference(dev->qdisc);
- 			parent = q->handle;
- 		} else {
- 			q = qdisc_lookup(dev, TC_H_MAJ(tcm->tcm_parent));
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -298,7 +298,7 @@ struct Qdisc *qdisc_lookup(struct net_de
- 
- 	if (!handle)
- 		return NULL;
--	q = qdisc_match_from_root(dev->qdisc, handle);
-+	q = qdisc_match_from_root(rtnl_dereference(dev->qdisc), handle);
- 	if (q)
- 		goto out;
- 
-@@ -317,7 +317,7 @@ struct Qdisc *qdisc_lookup_rcu(struct ne
- 
- 	if (!handle)
- 		return NULL;
--	q = qdisc_match_from_root(dev->qdisc, handle);
-+	q = qdisc_match_from_root(rcu_dereference(dev->qdisc), handle);
- 	if (q)
- 		goto out;
- 
-@@ -1072,10 +1072,10 @@ static int qdisc_graft(struct net_device
- skip:
- 		if (!ingress) {
- 			notify_and_destroy(net, skb, n, classid,
--					   dev->qdisc, new);
-+					   rtnl_dereference(dev->qdisc), new);
- 			if (new && !new->ops->attach)
- 				qdisc_refcount_inc(new);
--			dev->qdisc = new ? : &noop_qdisc;
-+			rcu_assign_pointer(dev->qdisc, new ? : &noop_qdisc);
- 
- 			if (new && new->ops->attach)
- 				new->ops->attach(new);
-@@ -1455,7 +1455,7 @@ static int tc_get_qdisc(struct sk_buff *
- 				q = dev_ingress_queue(dev)->qdisc_sleeping;
- 			}
- 		} else {
--			q = dev->qdisc;
-+			q = rtnl_dereference(dev->qdisc);
- 		}
- 		if (!q) {
- 			NL_SET_ERR_MSG(extack, "Cannot find specified qdisc on specified device");
-@@ -1544,7 +1544,7 @@ replay:
- 				q = dev_ingress_queue(dev)->qdisc_sleeping;
- 			}
- 		} else {
--			q = dev->qdisc;
-+			q = rtnl_dereference(dev->qdisc);
- 		}
- 
- 		/* It may be default qdisc, ignore it */
-@@ -1766,7 +1766,8 @@ static int tc_dump_qdisc(struct sk_buff
- 			s_q_idx = 0;
- 		q_idx = 0;
- 
--		if (tc_dump_qdisc_root(dev->qdisc, skb, cb, &q_idx, s_q_idx,
-+		if (tc_dump_qdisc_root(rtnl_dereference(dev->qdisc),
-+				       skb, cb, &q_idx, s_q_idx,
- 				       true, tca[TCA_DUMP_INVISIBLE]) < 0)
- 			goto done;
- 
-@@ -2042,7 +2043,7 @@ static int tc_ctl_tclass(struct sk_buff
- 		} else if (qid1) {
- 			qid = qid1;
- 		} else if (qid == 0)
--			qid = dev->qdisc->handle;
-+			qid = rtnl_dereference(dev->qdisc)->handle;
- 
- 		/* Now qid is genuine qdisc handle consistent
- 		 * both with parent and child.
-@@ -2053,7 +2054,7 @@ static int tc_ctl_tclass(struct sk_buff
- 			portid = TC_H_MAKE(qid, portid);
- 	} else {
- 		if (qid == 0)
--			qid = dev->qdisc->handle;
-+			qid = rtnl_dereference(dev->qdisc)->handle;
- 	}
- 
- 	/* OK. Locate qdisc */
-@@ -2214,7 +2215,8 @@ static int tc_dump_tclass(struct sk_buff
- 	s_t = cb->args[0];
- 	t = 0;
- 
--	if (tc_dump_tclass_root(dev->qdisc, skb, tcm, cb, &t, s_t, true) < 0)
-+	if (tc_dump_tclass_root(rtnl_dereference(dev->qdisc),
-+				skb, tcm, cb, &t, s_t, true) < 0)
- 		goto done;
- 
- 	dev_queue = dev_ingress_queue(dev);
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -1106,18 +1106,20 @@ static void attach_default_qdiscs(struct
- 	if (!netif_is_multiqueue(dev) ||
- 	    dev->priv_flags & IFF_NO_QUEUE) {
- 		netdev_for_each_tx_queue(dev, attach_one_default_qdisc, NULL);
--		dev->qdisc = txq->qdisc_sleeping;
--		qdisc_refcount_inc(dev->qdisc);
-+		qdisc = txq->qdisc_sleeping;
-+		rcu_assign_pointer(dev->qdisc, qdisc);
-+		qdisc_refcount_inc(qdisc);
- 	} else {
- 		qdisc = qdisc_create_dflt(txq, &mq_qdisc_ops, TC_H_ROOT, NULL);
- 		if (qdisc) {
--			dev->qdisc = qdisc;
-+			rcu_assign_pointer(dev->qdisc, qdisc);
- 			qdisc->ops->attach(qdisc);
- 		}
- 	}
+ #define XENVIF_TX_CB(skb) ((struct xenvif_tx_cb *)(skb)->cb)
+@@ -354,6 +355,8 @@ static inline struct sk_buff *xenvif_all
+ 	struct sk_buff *skb =
+ 		alloc_skb(size + NET_SKB_PAD + NET_IP_ALIGN,
+ 			  GFP_ATOMIC | __GFP_NOWARN);
 +
- #ifdef CONFIG_NET_SCHED
--	if (dev->qdisc != &noop_qdisc)
--		qdisc_hash_add(dev->qdisc, false);
-+	if (qdisc != &noop_qdisc)
-+		qdisc_hash_add(qdisc, false);
- #endif
- }
++	BUILD_BUG_ON(sizeof(*XENVIF_TX_CB(skb)) > sizeof(skb->cb));
+ 	if (unlikely(skb == NULL))
+ 		return NULL;
  
-@@ -1147,7 +1149,7 @@ void dev_activate(struct net_device *dev
- 	 * and noqueue_qdisc for virtual interfaces
- 	 */
+@@ -389,11 +392,13 @@ static void xenvif_get_requests(struct x
+ 	nr_slots = shinfo->nr_frags + 1;
  
--	if (dev->qdisc == &noop_qdisc)
-+	if (rtnl_dereference(dev->qdisc) == &noop_qdisc)
- 		attach_default_qdiscs(dev);
+ 	copy_count(skb) = 0;
++	XENVIF_TX_CB(skb)->split_mask = 0;
  
- 	if (!netif_carrier_ok(dev))
-@@ -1316,7 +1318,7 @@ static int qdisc_change_tx_queue_len(str
- void dev_qdisc_change_real_num_tx(struct net_device *dev,
- 				  unsigned int new_real_tx)
- {
--	struct Qdisc *qdisc = dev->qdisc;
-+	struct Qdisc *qdisc = rtnl_dereference(dev->qdisc);
+ 	/* Create copy ops for exactly data_len bytes into the skb head. */
+ 	__skb_put(skb, data_len);
+ 	while (data_len > 0) {
+ 		int amount = data_len > txp->size ? txp->size : data_len;
++		bool split = false;
  
- 	if (qdisc->ops->change_real_num_tx)
- 		qdisc->ops->change_real_num_tx(qdisc, new_real_tx);
-@@ -1356,7 +1358,7 @@ static void dev_init_scheduler_queue(str
+ 		cop->source.u.ref = txp->gref;
+ 		cop->source.domid = queue->vif->domid;
+@@ -406,6 +411,13 @@ static void xenvif_get_requests(struct x
+ 		cop->dest.u.gmfn = virt_to_gfn(skb->data + skb_headlen(skb)
+ 				               - data_len);
  
- void dev_init_scheduler(struct net_device *dev)
- {
--	dev->qdisc = &noop_qdisc;
-+	rcu_assign_pointer(dev->qdisc, &noop_qdisc);
- 	netdev_for_each_tx_queue(dev, dev_init_scheduler_queue, &noop_qdisc);
- 	if (dev_ingress_queue(dev))
- 		dev_init_scheduler_queue(dev, dev_ingress_queue(dev), &noop_qdisc);
-@@ -1384,8 +1386,8 @@ void dev_shutdown(struct net_device *dev
- 	netdev_for_each_tx_queue(dev, shutdown_scheduler_queue, &noop_qdisc);
- 	if (dev_ingress_queue(dev))
- 		shutdown_scheduler_queue(dev, dev_ingress_queue(dev), &noop_qdisc);
--	qdisc_put(dev->qdisc);
--	dev->qdisc = &noop_qdisc;
-+	qdisc_put(rtnl_dereference(dev->qdisc));
-+	rcu_assign_pointer(dev->qdisc, &noop_qdisc);
++		/* Don't cross local page boundary! */
++		if (cop->dest.offset + amount > XEN_PAGE_SIZE) {
++			amount = XEN_PAGE_SIZE - cop->dest.offset;
++			XENVIF_TX_CB(skb)->split_mask |= 1U << copy_count(skb);
++			split = true;
++		}
++
+ 		cop->len = amount;
+ 		cop->flags = GNTCOPY_source_gref;
  
- 	WARN_ON(timer_pending(&dev->watchdog_timer));
- }
+@@ -413,7 +425,8 @@ static void xenvif_get_requests(struct x
+ 		pending_idx = queue->pending_ring[index];
+ 		callback_param(queue, pending_idx).ctx = NULL;
+ 		copy_pending_idx(skb, copy_count(skb)) = pending_idx;
+-		copy_count(skb)++;
++		if (!split)
++			copy_count(skb)++;
+ 
+ 		cop++;
+ 		data_len -= amount;
+@@ -434,7 +447,8 @@ static void xenvif_get_requests(struct x
+ 			nr_slots--;
+ 		} else {
+ 			/* The copy op partially covered the tx_request.
+-			 * The remainder will be mapped.
++			 * The remainder will be mapped or copied in the next
++			 * iteration.
+ 			 */
+ 			txp->offset += amount;
+ 			txp->size -= amount;
+@@ -532,6 +546,13 @@ static int xenvif_tx_check_gop(struct xe
+ 		pending_idx = copy_pending_idx(skb, i);
+ 
+ 		newerr = (*gopp_copy)->status;
++
++		/* Split copies need to be handled together. */
++		if (XENVIF_TX_CB(skb)->split_mask & (1U << i)) {
++			(*gopp_copy)++;
++			if (!newerr)
++				newerr = (*gopp_copy)->status;
++		}
+ 		if (likely(!newerr)) {
+ 			/* The first frag might still have this slot mapped */
+ 			if (i < copy_count(skb) - 1 || !sharedslot)
 
 
