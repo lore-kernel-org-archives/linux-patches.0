@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DFC6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2CEC433EF;
-	Mon,  3 Apr 2023 14:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2F36FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E984FC433D2;
+	Mon,  3 Apr 2023 14:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532447;
-	bh=Cf/o0bEiMRTLEgap42Hv0ZhNah3vV8pQgOHzcbc0JJ4=;
+	s=korg; t=1680532450;
+	bh=C4eCLZ8Ae9m6I4MZapff2h/VH3WAMMzfAwFxs6YuczQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o7zX6i32SMg2nRtqIeN9ZW5tHqoOLtMRErUmXQNXSZjfhsq+4tLYD3eOTpzh7jiTo
-	 Z63h1ucpsH01gHDqIhmviJSMjbLyIvzkqEUifK4SuAo7Bessl0v6FyueoDC9urgwOB
-	 fFo0Hb8oFc4MzaV1oqXQTzh4jV5V+8HgYTqH40bU=
+	b=KRt6a3QQvF5c+kbJ9tZa7BX8iXM9Xk5FC3aow60Vq125aru4bz5tyLlT79Y6hCBrO
+	 O+H72DCoVcoZ3DTggxE5OkT54E7a89ChawAzxqL2FFKZpITc6qpjMDgCuqPBFdNpAy
+	 ae/yX64mjdwg/hjEhr8gAjDhTUSiKiQeAAlketM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alyssa Ross <hi@alyssa.is>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 47/99] loop: LOOP_CONFIGURE: send uevents for partitions
-Date: Mon,  3 Apr 2023 16:09:10 +0200
-Message-Id: <20230403140405.063368378@linuxfoundation.org>
+	Jetro Jormalainen <jje-lxkl@jetro.fi>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 80/99] ALSA: hda/conexant: Partial revert of a quirk for Lenovo
+Date: Mon,  3 Apr 2023 16:09:43 +0200
+Message-Id: <20230403140406.438610508@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,100 +34,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alyssa Ross <hi@alyssa.is>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit bb430b69422640891b0b8db762885730579a4145 ]
+commit b871cb971c683f7f212e7ca3c9a6709a75785116 upstream.
 
-LOOP_CONFIGURE is, as far as I understand it, supposed to be a way to
-combine LOOP_SET_FD and LOOP_SET_STATUS64 into a single syscall.  When
-using LOOP_SET_FD+LOOP_SET_STATUS64, a single uevent would be sent for
-each partition found on the loop device after the second ioctl(), but
-when using LOOP_CONFIGURE, no such uevent was being sent.
+The recent commit f83bb2592482 ("ALSA: hda/conexant: Add quirk for
+LENOVO 20149 Notebook model") introduced a quirk for the device with
+17aa:3977, but this caused a regression on another model (Lenovo
+Ideadpad U31) with the very same PCI SSID.  And, through skimming over
+the net, it seems that this PCI SSID is used for multiple different
+models, so it's no good idea to apply the quirk with the SSID.
 
-In the old setup, uevents are disabled for LOOP_SET_FD, but not for
-LOOP_SET_STATUS64.  This makes sense, as it prevents uevents being
-sent for a partially configured device during LOOP_SET_FD - they're
-only sent at the end of LOOP_SET_STATUS64.  But for LOOP_CONFIGURE,
-uevents were disabled for the entire operation, so that final
-notification was never issued.  To fix this, reduce the critical
-section to exclude the loop_reread_partitions() call, which causes
-the uevents to be issued, to after uevents are re-enabled, matching
-the behaviour of the LOOP_SET_FD+LOOP_SET_STATUS64 combination.
+Although we may take a different ID check (e.g. the codec SSID instead
+of the PCI SSID), unfortunately, the original patch author couldn't
+identify the hardware details any longer as the machine was returned,
+and we can't develop the further proper fix.
 
-I noticed this because Busybox's losetup program recently changed from
-using LOOP_SET_FD+LOOP_SET_STATUS64 to LOOP_CONFIGURE, and this broke
-my setup, for which I want a notification from the kernel any time a
-new partition becomes available.
+In this patch, instead, we partially revert the change so that the
+quirk won't be applied as default for addressing the regression.
+Meanwhile, the quirk function itself is kept, and it's now made to be
+applicable via the explicit model=lenovo-20149 option.
 
-Signed-off-by: Alyssa Ross <hi@alyssa.is>
-[hch: reduced the critical section]
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Fixes: 3448914e8cc5 ("loop: Add LOOP_CONFIGURE ioctl")
-Link: https://lore.kernel.org/r/20230320125430.55367-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f83bb2592482 ("ALSA: hda/conexant: Add quirk for LENOVO 20149 Notebook model")
+Reported-by: Jetro Jormalainen <jje-lxkl@jetro.fi>
+Link: https://lore.kernel.org/r/20230308215009.4d3e58a6@mopti
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230320140954.31154-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/loop.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ sound/pci/hda/patch_conexant.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index 032862cce6e4e..c96bdb3e7ac52 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1212,9 +1212,6 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
- 	/* This is safe, since we have a reference from open(). */
- 	__module_get(THIS_MODULE);
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -980,7 +980,10 @@ static const struct snd_pci_quirk cxt506
+ 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
+-	SND_PCI_QUIRK(0x17aa, 0x3977, "Lenovo IdeaPad U310", CXT_PINCFG_LENOVO_NOTEBOOK),
++	/* NOTE: we'd need to extend the quirk for 17aa:3977 as the same
++	 * PCI SSID is used on multiple Lenovo models
++	 */
++	SND_PCI_QUIRK(0x17aa, 0x3977, "Lenovo IdeaPad U310", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo G50-70", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x397b, "Lenovo S205", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad", CXT_FIXUP_THINKPAD_ACPI),
+@@ -1003,6 +1006,7 @@ static const struct hda_model_fixup cxt5
+ 	{ .id = CXT_FIXUP_MUTE_LED_GPIO, .name = "mute-led-gpio" },
+ 	{ .id = CXT_FIXUP_HP_ZBOOK_MUTE_LED, .name = "hp-zbook-mute-led" },
+ 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
++	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
+ 	{}
+ };
  
--	/* suppress uevents while reconfiguring the device */
--	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 1);
--
- 	/*
- 	 * If we don't hold exclusive handle for the device, upgrade to it
- 	 * here to avoid changing device under exclusive owner.
-@@ -1268,6 +1265,9 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
- 		goto out_unlock;
- 	}
- 
-+	/* suppress uevents while reconfiguring the device */
-+	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 1);
-+
- 	disk_force_media_change(lo->lo_disk, DISK_EVENT_MEDIA_CHANGE);
- 	set_disk_ro(lo->lo_disk, (lo->lo_flags & LO_FLAGS_READ_ONLY) != 0);
- 
-@@ -1316,17 +1316,17 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
- 	if (partscan)
- 		lo->lo_disk->flags &= ~GENHD_FL_NO_PART_SCAN;
- 
-+	/* enable and uncork uevent now that we are done */
-+	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
-+
- 	loop_global_unlock(lo, is_loop);
- 	if (partscan)
- 		loop_reread_partitions(lo);
-+
- 	if (!(mode & FMODE_EXCL))
- 		bd_abort_claiming(bdev, loop_configure);
- 
--	error = 0;
--done:
--	/* enable and uncork uevent now that we are done */
--	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
--	return error;
-+	return 0;
- 
- out_unlock:
- 	loop_global_unlock(lo, is_loop);
-@@ -1337,7 +1337,7 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
- 	fput(file);
- 	/* This is safe: open() is still holding a reference. */
- 	module_put(THIS_MODULE);
--	goto done;
-+	return error;
- }
- 
- static int __loop_clr_fd(struct loop_device *lo, bool release)
--- 
-2.39.2
-
 
 
