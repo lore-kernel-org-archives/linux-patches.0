@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA70612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:21:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F341DC433A7;
-	Mon,  3 Apr 2023 14:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C835612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:21:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99879C433D2;
+	Mon,  3 Apr 2023 14:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531667;
-	bh=gbU0/p+naJTF87VAq0Y+j/X26qPrBHaLhiOF58Btm+k=;
+	s=korg; t=1680531669;
+	bh=AfG34DsN1616X0x9ZR2N96lwTwgm9iUcT8fle88h2+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ecxRtYHwA0q+7MZUSK3X9RtAv8xw1hVEbIhc2KmethaurmTu1fJQqwhqm//nVqqr+
-	 i9O0fG8GCoNNffX3ux6N45rLa38nYvgevrT0GA1GzEiJF5QuXNvdmXJ8pmB38XH6Au
-	 oV1oS5l41kiiTpWpuGY3Iw1mmaQCrqdt+LPYD6fM=
+	b=GJEwkEkdO4acHnghv04lDVdRQCLBboO+DtFkQXwrtcEZ5pKEGBYg6dztRaSKfCjLO
+	 ceIvWETf5lg8vEirKHz83dx99bC21BS/T4Hpq6Tg3QUahRF4UOag/nw8naug0cuZfc
+	 JkXFKUBwE4C4+7DzUK4T7BtdLiLh0EMD7XtQcics=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenz Bauer <lmb@isovalent.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 035/104] selftests/bpf: check that modifier resolves after pointer
-Date: Mon,  3 Apr 2023 16:08:27 +0200
-Message-Id: <20230403140405.723893492@linuxfoundation.org>
+Subject: [PATCH 5.4 026/104] Bluetooth: btsdio: fix use after free bug in btsdio_remove due to unfinished work
+Date: Mon,  3 Apr 2023 16:08:18 +0200
+Message-Id: <20230403140405.296074433@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,61 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenz Bauer <lorenz.bauer@isovalent.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit dfdd608c3b365f0fd49d7e13911ebcde06b9865b ]
+[ Upstream commit 1e9ac114c4428fdb7ff4635b45d4f46017e8916f ]
 
-Add a regression test that ensures that a VAR pointing at a
-modifier which follows a PTR (or STRUCT or ARRAY) is resolved
-correctly by the datasec validator.
+In btsdio_probe, &data->work was bound with btsdio_work.In
+btsdio_send_frame, it was started by schedule_work.
 
-Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
-Link: https://lore.kernel.org/r/20230306112138.155352-3-lmb@isovalent.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+If we call btsdio_remove with an unfinished job, there may
+be a race condition and cause UAF bug on hdev.
+
+Fixes: ddbaf13e3609 ("[Bluetooth] Add generic driver for Bluetooth SDIO devices")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_btf.c | 28 ++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/bluetooth/btsdio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/test_btf.c b/tools/testing/selftests/bpf/test_btf.c
-index 996eca57bc977..f641eb292a885 100644
---- a/tools/testing/selftests/bpf/test_btf.c
-+++ b/tools/testing/selftests/bpf/test_btf.c
-@@ -920,6 +920,34 @@ static struct btf_raw_test raw_tests[] = {
- 	.btf_load_err = true,
- 	.err_str = "Invalid elem",
- },
-+{
-+	.descr = "var after datasec, ptr followed by modifier",
-+	.raw_types = {
-+		/* .bss section */				/* [1] */
-+		BTF_TYPE_ENC(NAME_TBD, BTF_INFO_ENC(BTF_KIND_DATASEC, 0, 2),
-+			sizeof(void*)+4),
-+		BTF_VAR_SECINFO_ENC(4, 0, sizeof(void*)),
-+		BTF_VAR_SECINFO_ENC(6, sizeof(void*), 4),
-+		/* int */					/* [2] */
-+		BTF_TYPE_INT_ENC(0, BTF_INT_SIGNED, 0, 32, 4),
-+		/* int* */					/* [3] */
-+		BTF_TYPE_ENC(0, BTF_INFO_ENC(BTF_KIND_PTR, 0, 0), 2),
-+		BTF_VAR_ENC(NAME_TBD, 3, 0),			/* [4] */
-+		/* const int */					/* [5] */
-+		BTF_TYPE_ENC(0, BTF_INFO_ENC(BTF_KIND_CONST, 0, 0), 2),
-+		BTF_VAR_ENC(NAME_TBD, 5, 0),			/* [6] */
-+		BTF_END_RAW,
-+	},
-+	.str_sec = "\0a\0b\0c\0",
-+	.str_sec_size = sizeof("\0a\0b\0c\0"),
-+	.map_type = BPF_MAP_TYPE_ARRAY,
-+	.map_name = ".bss",
-+	.key_size = sizeof(int),
-+	.value_size = sizeof(void*)+4,
-+	.key_type_id = 0,
-+	.value_type_id = 1,
-+	.max_entries = 1,
-+},
- /* Test member exceeds the size of struct.
-  *
-  * struct A {
+diff --git a/drivers/bluetooth/btsdio.c b/drivers/bluetooth/btsdio.c
+index fd9571d5fdac9..81125fb180351 100644
+--- a/drivers/bluetooth/btsdio.c
++++ b/drivers/bluetooth/btsdio.c
+@@ -343,6 +343,7 @@ static void btsdio_remove(struct sdio_func *func)
+ 
+ 	BT_DBG("func %p", func);
+ 
++	cancel_work_sync(&data->work);
+ 	if (!data)
+ 		return;
+ 
 -- 
 2.39.2
 
