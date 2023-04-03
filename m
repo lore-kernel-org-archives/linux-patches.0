@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C126FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B22BC433EF;
-	Mon,  3 Apr 2023 14:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6C06FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24827C433D2;
+	Mon,  3 Apr 2023 14:35:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532499;
-	bh=Pe/ab0Mk67lxo83ur4Liwhu+v3Z6539B/P+VYR4gFbk=;
+	s=korg; t=1680532502;
+	bh=dglRV7JqahOpmNOCBhiaZfQxX3dOLUNnRQA7ENMbweg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7xc6N425uc0SzVo6QwrxT6tZgxqNYYBYn2p7GzBr1fg2E85QPswuoGUtlpXq04wk
-	 y3KPMO3fTuDTSt7454gme6q6i2tqEtAPUsinHT4KcyxLy0jhWy1L01/HL2igORbf7i
-	 vR/8O8+7niB/qHUhw2KlV6BuNbCW6iSWbSBqJ774=
+	b=BAJA3yUrVPiRyFVyb9t86f/LzS0atXLXtn9hcSc2yNB157zSzX2TzhXJfJN6E4Nx5
+	 jQQS9M7DIndXfLg+T7Cqt3LROHg1VIb3aB+sq8zX+RivdjulEqjFmf3lxWhDfGrjcT
+	 VOo+Kp6DpvKsGkymDQIJ4/jdORmq7/00V32rVCG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 5.15 88/99] KVM: arm64: Disable interrupts while walking userspace PTs
-Date: Mon,  3 Apr 2023 16:09:51 +0200
-Message-Id: <20230403140406.686699946@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 5.15 79/99] NFSv4: Fix hangs when recovering open state after a server reboot
+Date: Mon,  3 Apr 2023 16:09:42 +0200
+Message-Id: <20230403140406.409503581@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -34,119 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit e86fc1a3a3e9b4850fe74d738e3cfcf4297d8bba upstream.
+commit 6165a16a5ad9b237bb3131cff4d3c601ccb8f9a3 upstream.
 
-We walk the userspace PTs to discover what mapping size was
-used there. However, this can race against the userspace tables
-being freed, and we end-up in the weeds.
+When we're using a cached open stateid or a delegation in order to avoid
+sending a CLAIM_PREVIOUS open RPC call to the server, we don't have a
+new open stateid to present to update_open_stateid().
+Instead rely on nfs4_try_open_cached(), just as if we were doing a
+normal open.
 
-Thankfully, the mm code is being generous and will IPI us when
-doing so. So let's implement our part of the bargain and disable
-interrupts around the walk. This ensures that nothing terrible
-happens during that time.
-
-We still need to handle the removal of the page tables before
-the walk. For that, allow get_user_mapping_size() to return an
-error, and make sure this error can be propagated all the way
-to the the exit handler.
-
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: d2bfda2e7aa0 ("NFSv4: don't reprocess cached open CLAIM_PREVIOUS")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230316174546.3777507-2-maz@kernel.org
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/mmu.c |   45 ++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 7 deletions(-)
+ fs/nfs/nfs4proc.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -468,14 +468,33 @@ static int get_user_mapping_size(struct
- 				   CONFIG_PGTABLE_LEVELS),
- 		.mm_ops		= &kvm_user_mm_ops,
- 	};
-+	unsigned long flags;
- 	kvm_pte_t pte = 0;	/* Keep GCC quiet... */
- 	u32 level = ~0;
- 	int ret;
- 
-+	/*
-+	 * Disable IRQs so that we hazard against a concurrent
-+	 * teardown of the userspace page tables (which relies on
-+	 * IPI-ing threads).
-+	 */
-+	local_irq_save(flags);
- 	ret = kvm_pgtable_get_leaf(&pgt, addr, &pte, &level);
--	VM_BUG_ON(ret);
--	VM_BUG_ON(level >= KVM_PGTABLE_MAX_LEVELS);
--	VM_BUG_ON(!(pte & PTE_VALID));
-+	local_irq_restore(flags);
-+
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Not seeing an error, but not updating level? Something went
-+	 * deeply wrong...
-+	 */
-+	if (WARN_ON(level >= KVM_PGTABLE_MAX_LEVELS))
-+		return -EFAULT;
-+
-+	/* Oops, the userspace PTs are gone... Replay the fault */
-+	if (!kvm_pte_valid(pte))
-+		return -EAGAIN;
- 
- 	return BIT(ARM64_HW_PGTABLE_LEVEL_SHIFT(level));
- }
-@@ -826,7 +845,7 @@ static bool fault_supports_stage2_huge_m
-  *
-  * Returns the size of the mapping.
-  */
--static unsigned long
-+static long
- transparent_hugepage_adjust(struct kvm *kvm, struct kvm_memory_slot *memslot,
- 			    unsigned long hva, kvm_pfn_t *pfnp,
- 			    phys_addr_t *ipap)
-@@ -838,8 +857,15 @@ transparent_hugepage_adjust(struct kvm *
- 	 * sure that the HVA and IPA are sufficiently aligned and that the
- 	 * block map is contained within the memslot.
- 	 */
--	if (fault_supports_stage2_huge_mapping(memslot, hva, PMD_SIZE) &&
--	    get_user_mapping_size(kvm, hva) >= PMD_SIZE) {
-+	if (fault_supports_stage2_huge_mapping(memslot, hva, PMD_SIZE)) {
-+		int sz = get_user_mapping_size(kvm, hva);
-+
-+		if (sz < 0)
-+			return sz;
-+
-+		if (sz < PMD_SIZE)
-+			return PAGE_SIZE;
-+
- 		/*
- 		 * The address we faulted on is backed by a transparent huge
- 		 * page.  However, because we map the compound huge page and
-@@ -957,7 +983,7 @@ static int user_mem_abort(struct kvm_vcp
- 	kvm_pfn_t pfn;
- 	bool logging_active = memslot_is_logging(memslot);
- 	unsigned long fault_level = kvm_vcpu_trap_get_fault_level(vcpu);
--	unsigned long vma_pagesize, fault_granule;
-+	long vma_pagesize, fault_granule;
- 	enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
- 	struct kvm_pgtable *pgt;
- 
-@@ -1104,6 +1130,11 @@ static int user_mem_abort(struct kvm_vcp
- 			vma_pagesize = transparent_hugepage_adjust(kvm, memslot,
- 								   hva, &pfn,
- 								   &fault_ipa);
-+
-+		if (vma_pagesize < 0) {
-+			ret = vma_pagesize;
-+			goto out_unlock;
-+		}
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -1993,8 +1993,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(str
+ 	if (!data->rpc_done) {
+ 		if (data->rpc_status)
+ 			return ERR_PTR(data->rpc_status);
+-		/* cached opens have already been processed */
+-		goto update;
++		return nfs4_try_open_cached(data);
  	}
  
- 	if (fault_status != FSC_PERM && !device && kvm_has_mte(kvm)) {
+ 	ret = nfs_refresh_inode(inode, &data->f_attr);
+@@ -2003,7 +2002,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(str
+ 
+ 	if (data->o_res.delegation_type != 0)
+ 		nfs4_opendata_check_deleg(data, state);
+-update:
++
+ 	if (!update_open_stateid(state, &data->o_res.stateid,
+ 				NULL, data->o_arg.fmode))
+ 		return ERR_PTR(-EAGAIN);
 
 
