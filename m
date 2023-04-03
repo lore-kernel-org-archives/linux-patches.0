@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D47D6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88E32C433D2;
-	Mon,  3 Apr 2023 14:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1C76FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB7DC433D2;
+	Mon,  3 Apr 2023 14:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532473;
-	bh=weylttnCsggi67NAc3cWScvE2yytwLdUj2FQH3oRJIo=;
+	s=korg; t=1680532476;
+	bh=jgbxPkBy0l+qezlVBJw6st/RMic61XUFAO8ECw2wxMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVOPyCbaABBu+GX7+SwD5aOWwZ4Tk9yauqYTtQqES7uPF545gdsWeZdTbBUt86Yl4
-	 XRNRBzZZIfL1de9Miec6hsGk2youq1bmfOBIx4FgJ+fALAVL3MYD35eJfMWRzyCYDb
-	 /qWHclltZLXdZIq9d+LEAjZ82W25n0y/M1vjGz5Q=
+	b=mH+BU7kBosjPeniw++SHbzYNSSk1X/9+CKtmwofIogL29XVFo2WUcKGGrkkIlSFYf
+	 9EZY/gY3B43Sr5ugvn+7297iAl8jdeWw8Xj3d7I4uMMrndq1L+HoBzJAqRuJv7/0DB
+	 7pvV5ne7/t69GevavyOqrIdNGJd0YtG3gcKMGaSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 97/99] libbpf: Fix btf_dumps packed struct determination
-Date: Mon,  3 Apr 2023 16:10:00 +0200
-Message-Id: <20230403140406.964617466@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 98/99] hsr: ratelimit only when errors are printed
+Date: Mon,  3 Apr 2023 16:10:01 +0200
+Message-Id: <20230403140406.994234800@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,132 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-[ Upstream commit 4fb877aaa179dcdb1676d55216482febaada457e ]
+commit 1b0120e4db0bf2838d1ce741195ce4b7cc100b91 upstream.
 
-Fix bug in btf_dump's logic of determining if a given struct type is
-packed or not. The notion of "natural alignment" is not needed and is
-even harmful in this case, so drop it altogether. The biggest difference
-in btf_is_struct_packed() compared to its original implementation is
-that we don't really use btf__align_of() to determine overall alignment
-of a struct type (because it could be 1 for both packed and non-packed
-struct, depending on specifci field definitions), and just use field's
-actual alignment to calculate whether any field is requiring packing or
-struct's size overall necessitates packing.
+Recently, when automatically merging -net and net-next in MPTCP devel
+tree, our CI reported [1] a conflict in hsr, the same as the one
+reported by Stephen in netdev [2].
 
-Add two simple test cases that demonstrate the difference this change
-would make.
+When looking at the conflict, I noticed it is in fact the v1 [3] that
+has been applied in -net and the v2 [4] in net-next. Maybe the v1 was
+applied by accident.
 
-Fixes: ea2ce1ba99aa ("libbpf: Fix BTF-to-C converter's padding logic")
-Reported-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20221215183605.4149488-1-andrii@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+As mentioned by Jakub Kicinski [5], the new condition makes more sense
+before the net_ratelimit(), not to update net_ratelimit's state which is
+unnecessary if we're not going to print either way.
+
+Here, this modification applies the v2 but in -net.
+
+Link: https://github.com/multipath-tcp/mptcp_net-next/actions/runs/4423171069 [1]
+Link: https://lore.kernel.org/netdev/20230315100914.53fc1760@canb.auug.org.au/ [2]
+Link: https://lore.kernel.org/netdev/20230307133229.127442-1-koverskeid@gmail.com/ [3]
+Link: https://lore.kernel.org/netdev/20230309092302.179586-1-koverskeid@gmail.com/ [4]
+Link: https://lore.kernel.org/netdev/20230308232001.2fb62013@kernel.org/ [5]
+Fixes: 28e8cabe80f3 ("net: hsr: Don't log netdev_err message on unknown prp dst node")
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Reviewed-by: Steen Hegelund <Steen.Hegelund@microchip.com>
+Link: https://lore.kernel.org/r/20230315-net-20230315-hsr_framereg-ratelimit-v1-1-61d2ef176d11@tessares.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/btf_dump.c                      | 33 ++++---------------
- .../bpf/progs/btf_dump_test_case_packing.c    | 19 +++++++++++
- 2 files changed, 25 insertions(+), 27 deletions(-)
+ net/hsr/hsr_framereg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index 77fcc5883a954..8b1ba4b725e31 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -817,47 +817,26 @@ static void btf_dump_emit_type(struct btf_dump *d, __u32 id, __u32 cont_id)
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -385,7 +385,7 @@ void hsr_addr_subst_dest(struct hsr_node
+ 	node_dst = find_node_by_addr_A(&port->hsr->node_db,
+ 				       eth_hdr(skb)->h_dest);
+ 	if (!node_dst) {
+-		if (net_ratelimit() && port->hsr->prot_version != PRP_V1)
++		if (port->hsr->prot_version != PRP_V1 && net_ratelimit())
+ 			netdev_err(skb->dev, "%s: Unknown node\n", __func__);
+ 		return;
  	}
- }
- 
--static int btf_natural_align_of(const struct btf *btf, __u32 id)
--{
--	const struct btf_type *t = btf__type_by_id(btf, id);
--	int i, align, vlen;
--	const struct btf_member *m;
--
--	if (!btf_is_composite(t))
--		return btf__align_of(btf, id);
--
--	align = 1;
--	m = btf_members(t);
--	vlen = btf_vlen(t);
--	for (i = 0; i < vlen; i++, m++) {
--		align = max(align, btf__align_of(btf, m->type));
--	}
--
--	return align;
--}
--
- static bool btf_is_struct_packed(const struct btf *btf, __u32 id,
- 				 const struct btf_type *t)
- {
- 	const struct btf_member *m;
--	int align, i, bit_sz;
-+	int max_align = 1, align, i, bit_sz;
- 	__u16 vlen;
- 
--	align = btf_natural_align_of(btf, id);
--	/* size of a non-packed struct has to be a multiple of its alignment */
--	if (align && (t->size % align) != 0)
--		return true;
--
- 	m = btf_members(t);
- 	vlen = btf_vlen(t);
- 	/* all non-bitfield fields have to be naturally aligned */
- 	for (i = 0; i < vlen; i++, m++) {
--		align = btf_natural_align_of(btf, m->type);
-+		align = btf__align_of(btf, m->type);
- 		bit_sz = btf_member_bitfield_size(t, i);
- 		if (align && bit_sz == 0 && m->offset % (8 * align) != 0)
- 			return true;
-+		max_align = max(align, max_align);
- 	}
--
-+	/* size of a non-packed struct has to be a multiple of its alignment */
-+	if (t->size % max_align != 0)
-+		return true;
- 	/*
- 	 * if original struct was marked as packed, but its layout is
- 	 * naturally aligned, we'll detect that it's not packed
-diff --git a/tools/testing/selftests/bpf/progs/btf_dump_test_case_packing.c b/tools/testing/selftests/bpf/progs/btf_dump_test_case_packing.c
-index 3f7755247591c..22dbd12134347 100644
---- a/tools/testing/selftests/bpf/progs/btf_dump_test_case_packing.c
-+++ b/tools/testing/selftests/bpf/progs/btf_dump_test_case_packing.c
-@@ -116,6 +116,23 @@ struct usb_host_endpoint {
- 	long: 0;
- };
- 
-+/* ----- START-EXPECTED-OUTPUT ----- */
-+struct nested_packed_struct {
-+	int a;
-+	char b;
-+} __attribute__((packed));
-+
-+struct outer_nonpacked_struct {
-+	short a;
-+	struct nested_packed_struct b;
-+};
-+
-+struct outer_packed_struct {
-+	short a;
-+	struct nested_packed_struct b;
-+} __attribute__((packed));
-+
-+/* ------ END-EXPECTED-OUTPUT ------ */
- 
- int f(struct {
- 	struct packed_trailing_space _1;
-@@ -128,6 +145,8 @@ int f(struct {
- 	union jump_code_union _8;
- 	struct outer_implicitly_packed_struct _9;
- 	struct usb_host_endpoint _10;
-+	struct outer_nonpacked_struct _11;
-+	struct outer_packed_struct _12;
- } *_)
- {
- 	return 0;
--- 
-2.39.2
-
 
 
