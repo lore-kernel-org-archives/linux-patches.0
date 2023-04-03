@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A20612F
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5EAC433EF;
-	Mon,  3 Apr 2023 14:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D4B612F
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F193CC433D2;
+	Mon,  3 Apr 2023 14:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531982;
-	bh=tjm/U7i24MHyqPtM//YMujeXxw3SWUAK2We33sTj+m8=;
+	s=korg; t=1680531985;
+	bh=61t6bE5gI67tV0D83BcwIxzshoLdbE60Pp1Rxvkib1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpHdh7IO2eCh6IPo4pyTFHnIn46/8SkQ1/t6vNjhj6kd5jWTzB4AI6VdYjAs9mO2K
-	 34sa3LzAH+C6vuHWFE/C8D5rt8mnwr7b9dK6YPJgH7p9DSJGPB2ELc8x+kVUwuspYM
-	 wyw+zT0nUd+x/FtC8u4rTmrQIXJA+z8DOI0dFz/Q=
+	b=y81leJ7cstgQWV8b8LBCuqpi/MaY2+Vd5+e0uFvKeAmdcflKKKWBU9I6s0xhvNFKA
+	 5iOe0hc9xeQcGkHqOnb8Nz4nZ8AhsCWG8DnciQ9uvAyZDRZ575XsNCdxBhswF4sxgh
+	 KrJgucgNb/CGBaICh7PCXGXqGKt7YbLY36DPhszk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Washington <joshwash@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 050/173] gve: Cache link_speed value from device
-Date: Mon,  3 Apr 2023 16:07:45 +0200
-Message-Id: <20230403140416.057694864@linuxfoundation.org>
+Subject: [PATCH 5.10 051/173] net: dsa: mt7530: move setting ssc_delta to PHY_INTERFACE_MODE_TRGMII case
+Date: Mon,  3 Apr 2023 16:07:46 +0200
+Message-Id: <20230403140416.096716862@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,45 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joshua Washington <joshwash@google.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit 68c3e4fc8628b1487c965aabb29207249657eb5f ]
+[ Upstream commit 407b508bdd70b6848993843d96ed49ac4108fb52 ]
 
-The link speed is never changed for the uptime of a VM, and the current
-implementation sends an admin queue command for each call. Admin queue
-command invocations have nontrivial overhead (e.g., VM exits), which can
-be disruptive to users if triggered frequently. Our telemetry data shows
-that there are VMs that make frequent calls to this admin queue command.
-Caching the result of the original admin queue command would eliminate
-the need to send multiple admin queue commands on subsequent calls to
-retrieve link speed.
+Move setting the ssc_delta variable to under the PHY_INTERFACE_MODE_TRGMII
+case as it's only needed when trgmii is used.
 
-Fixes: 7e074d5a76ca ("gve: Enable Link Speed Reporting in the driver.")
-Signed-off-by: Joshua Washington <joshwash@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230321172332.91678-1-joshwash@google.com
+Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20230320190520.124513-3-arinc.unal@arinc9.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mt7530.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
-index c53a043139446..e0449cc24fbdb 100644
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -510,7 +510,10 @@ static int gve_get_link_ksettings(struct net_device *netdev,
- 				  struct ethtool_link_ksettings *cmd)
- {
- 	struct gve_priv *priv = netdev_priv(netdev);
--	int err = gve_adminq_report_link_speed(priv);
-+	int err = 0;
-+
-+	if (priv->link_speed == 0)
-+		err = gve_adminq_report_link_speed(priv);
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 70155e996f7d7..821ac2984282b 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -403,6 +403,10 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+ 		break;
+ 	case PHY_INTERFACE_MODE_TRGMII:
+ 		trgint = 1;
++		if (xtal == HWTRAP_XTAL_25MHZ)
++			ssc_delta = 0x57;
++		else
++			ssc_delta = 0x87;
+ 		if (priv->id == ID_MT7621) {
+ 			/* PLL frequency: 150MHz: 1.2GBit */
+ 			if (xtal == HWTRAP_XTAL_40MHZ)
+@@ -422,11 +426,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+ 		return -EINVAL;
+ 	}
  
- 	cmd->base.speed = priv->link_speed;
- 	return err;
+-	if (xtal == HWTRAP_XTAL_25MHZ)
+-		ssc_delta = 0x57;
+-	else
+-		ssc_delta = 0x87;
+-
+ 	mt7530_rmw(priv, MT7530_P6ECR, P6_INTF_MODE_MASK,
+ 		   P6_INTF_MODE(trgint));
+ 
 -- 
 2.39.2
 
