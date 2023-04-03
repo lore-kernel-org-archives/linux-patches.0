@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893D75683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:13:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B1AC433EF;
-	Mon,  3 Apr 2023 14:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199055683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:13:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95115C433EF;
+	Mon,  3 Apr 2023 14:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531189;
-	bh=kS8Elmb2mA7rR8Vs+DZCfYpgsSYr+LwTrHNkyoKtaew=;
+	s=korg; t=1680531191;
+	bh=zjEk9E6e7qe1JmkTXMOwfLHd9Pot19JP8A+Cy+lz/Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JUHMASVYOfYgDfashxIxGX/MPv1JSH5OwB6SZFmErheFxHsCQEh2VEAB8JtafAewg
-	 p6KFrrVwYnvx7IcSh1A/iRXmmx9PvJwlvy0XjfB/KAdwUxRDaOObDOngDJHjAsrzbp
-	 qZa/rx/v81ONhlGUc7rUK07p9ovt40E9guuzLq2A=
+	b=hwy4brekZgpA5mHKTP5wvT1OZ589LzBpHCMZ1Mtm1S8PhATHEqZ+uJRjUrMF4KbkM
+	 ZmeAe7UUtikwLhp8ZQ1NvywQZMxPuThqbvRxPP24QUAhhW61iDPQQeau27SH6d8kRn
+	 tJozYmDw1HWkzPmtZXIhua7HXB91q49OEm33v+KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radoslaw Tyl <radoslawx.tyl@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 4.14 54/66] i40e: fix registers dump after run ethtool adapter self test
-Date: Mon,  3 Apr 2023 16:09:02 +0200
-Message-Id: <20230403140353.699449712@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 4.14 55/66] Input: focaltech - use explicitly signed char type
+Date: Mon,  3 Apr 2023 16:09:03 +0200
+Message-Id: <20230403140353.728767819@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -39,91 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Radoslaw Tyl <radoslawx.tyl@intel.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-[ Upstream commit c5cff16f461a4a434a9915a7be7ac9ced861a8a4 ]
+commit 8980f190947ba29f23110408e712444884b74251 upstream.
 
-Fix invalid registers dump from ethtool -d ethX after adapter self test
-by ethtool -t ethY. It causes invalid data display.
+The recent change of -funsigned-char causes additions of negative
+numbers to become additions of large positive numbers, leading to wrong
+calculations of mouse movement. Change these casts to be explicitly
+signed, to take into account negative offsets.
 
-The problem was caused by overwriting i40e_reg_list[].elements
-which is common for ethtool self test and dump.
-
-Fixes: 22dd9ae8afcc ("i40e: Rework register diagnostic")
-Signed-off-by: Radoslaw Tyl <radoslawx.tyl@intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230328172659.3906413-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Cc: stable@vger.kernel.org
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217211
+Link: https://lore.kernel.org/r/20230318133010.1285202-1-Jason@zx2c4.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_diag.c | 11 ++++++-----
- drivers/net/ethernet/intel/i40e/i40e_diag.h |  2 +-
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/input/mouse/focaltech.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_diag.c b/drivers/net/ethernet/intel/i40e/i40e_diag.c
-index f141e78d409e5..793dcaae27ef4 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_diag.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_diag.c
-@@ -65,7 +65,7 @@ static i40e_status i40e_diag_reg_pattern_test(struct i40e_hw *hw,
- 	return 0;
+--- a/drivers/input/mouse/focaltech.c
++++ b/drivers/input/mouse/focaltech.c
+@@ -206,8 +206,8 @@ static void focaltech_process_rel_packet
+ 	state->pressed = packet[0] >> 7;
+ 	finger1 = ((packet[0] >> 4) & 0x7) - 1;
+ 	if (finger1 < FOC_MAX_FINGERS) {
+-		state->fingers[finger1].x += (char)packet[1];
+-		state->fingers[finger1].y += (char)packet[2];
++		state->fingers[finger1].x += (s8)packet[1];
++		state->fingers[finger1].y += (s8)packet[2];
+ 	} else {
+ 		psmouse_err(psmouse, "First finger in rel packet invalid: %d\n",
+ 			    finger1);
+@@ -222,8 +222,8 @@ static void focaltech_process_rel_packet
+ 	 */
+ 	finger2 = ((packet[3] >> 4) & 0x7) - 1;
+ 	if (finger2 < FOC_MAX_FINGERS) {
+-		state->fingers[finger2].x += (char)packet[4];
+-		state->fingers[finger2].y += (char)packet[5];
++		state->fingers[finger2].x += (s8)packet[4];
++		state->fingers[finger2].y += (s8)packet[5];
+ 	}
  }
  
--struct i40e_diag_reg_test_info i40e_reg_list[] = {
-+const struct i40e_diag_reg_test_info i40e_reg_list[] = {
- 	/* offset               mask         elements   stride */
- 	{I40E_QTX_CTL(0),       0x0000FFBF, 1,
- 		I40E_QTX_CTL(1) - I40E_QTX_CTL(0)},
-@@ -99,27 +99,28 @@ i40e_status i40e_diag_reg_test(struct i40e_hw *hw)
- {
- 	i40e_status ret_code = 0;
- 	u32 reg, mask;
-+	u32 elements;
- 	u32 i, j;
- 
- 	for (i = 0; i40e_reg_list[i].offset != 0 &&
- 					     !ret_code; i++) {
- 
-+		elements = i40e_reg_list[i].elements;
- 		/* set actual reg range for dynamically allocated resources */
- 		if (i40e_reg_list[i].offset == I40E_QTX_CTL(0) &&
- 		    hw->func_caps.num_tx_qp != 0)
--			i40e_reg_list[i].elements = hw->func_caps.num_tx_qp;
-+			elements = hw->func_caps.num_tx_qp;
- 		if ((i40e_reg_list[i].offset == I40E_PFINT_ITRN(0, 0) ||
- 		     i40e_reg_list[i].offset == I40E_PFINT_ITRN(1, 0) ||
- 		     i40e_reg_list[i].offset == I40E_PFINT_ITRN(2, 0) ||
- 		     i40e_reg_list[i].offset == I40E_QINT_TQCTL(0) ||
- 		     i40e_reg_list[i].offset == I40E_QINT_RQCTL(0)) &&
- 		    hw->func_caps.num_msix_vectors != 0)
--			i40e_reg_list[i].elements =
--				hw->func_caps.num_msix_vectors - 1;
-+			elements = hw->func_caps.num_msix_vectors - 1;
- 
- 		/* test register access */
- 		mask = i40e_reg_list[i].mask;
--		for (j = 0; j < i40e_reg_list[i].elements && !ret_code; j++) {
-+		for (j = 0; j < elements && !ret_code; j++) {
- 			reg = i40e_reg_list[i].offset +
- 			      (j * i40e_reg_list[i].stride);
- 			ret_code = i40e_diag_reg_pattern_test(hw, reg, mask);
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_diag.h b/drivers/net/ethernet/intel/i40e/i40e_diag.h
-index 0b59116520847..e5af68e770c6a 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_diag.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_diag.h
-@@ -43,7 +43,7 @@ struct i40e_diag_reg_test_info {
- 	u32 stride;	/* bytes between each element */
- };
- 
--extern struct i40e_diag_reg_test_info i40e_reg_list[];
-+extern const struct i40e_diag_reg_test_info i40e_reg_list[];
- 
- i40e_status i40e_diag_reg_test(struct i40e_hw *hw);
- i40e_status i40e_diag_eeprom_test(struct i40e_hw *hw);
--- 
-2.39.2
-
 
 
