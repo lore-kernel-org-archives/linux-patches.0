@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D971612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C9CC4339B;
-	Mon,  3 Apr 2023 14:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F5D612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34B4C433EF;
+	Mon,  3 Apr 2023 14:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531722;
-	bh=Wt/kTBu2NIVbnrTBG30OXnfyXtjOjXirjcLHtSwkLeM=;
+	s=korg; t=1680531725;
+	bh=5TLepZfTZcVzGwlNZ9AnecpuYx2zr+cY2SAA8r2FtMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pahm8Uy09XHP7uiLE5Dk+sotJJ7uk1ZUi6DCVgfWC6O+VhBmRDfQdgmhNtyneJulG
-	 eFwClRE2stBBAKpcIqdPrS7NtGf+7mYEedyKzsZoMjknzyX3DJYP1L/M6D/rFkBvpu
-	 W5ZQW/Yr2tuyd+rS26gBP9IlsYzWsgZFPy2mS0mo=
+	b=woGBeNkps6CT2ISJzE/LNOxFoD2afdgfOCBv/802e44fLvxiB+7GdnxAZOjXS1zd9
+	 SZoRzcWT0W/AqfKneJTFWgi7rcQl8umvGpvJMPR+wTa2t5UDC3GLlf1T0RwQg9KHug
+	 hardzTK/YIxd5s1xT7520AbSVJYm5apcnDoZYNVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 086/104] pinctrl: ocelot: Fix alt mode for ocelot
-Date: Mon,  3 Apr 2023 16:09:18 +0200
-Message-Id: <20230403140407.515378220@linuxfoundation.org>
+	msizanoen <msizanoen@qtmlabs.xyz>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.4 087/104] Input: alps - fix compatibility with -funsigned-char
+Date: Mon,  3 Apr 2023 16:09:19 +0200
+Message-Id: <20230403140407.562706261@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,40 +34,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: msizanoen <msizanoen@qtmlabs.xyz>
 
-[ Upstream commit 657fd9da2d4b4aa0a384105b236baa22fa0233bf ]
+commit 754ff5060daf5a1cf4474eff9b4edeb6c17ef7ab upstream.
 
-In case the driver was trying to set an alternate mode for gpio
-0 or 32 then the mode was not set correctly. The reason is that
-there is computation error inside the function ocelot_pinmux_set_mux
-because in this case it was trying to shift to left by -1.
-Fix this by actually shifting the function bits and not the position.
+The AlpsPS/2 code previously relied on the assumption that `char` is a
+signed type, which was true on x86 platforms (the only place where this
+driver is used) before kernel 6.2. However, on 6.2 and later, this
+assumption is broken due to the introduction of -funsigned-char as a new
+global compiler flag.
 
-Fixes: 4b36082e2e09 ("pinctrl: ocelot: fix pinmuxing for pins after 31")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://lore.kernel.org/r/20230206203720.1177718-1-horatiu.vultur@microchip.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by explicitly specifying the signedness of `char` when sign
+extending the values received from the device.
+
+Fixes: f3f33c677699 ("Input: alps - Rushmore and v7 resolution support")
+Signed-off-by: msizanoen <msizanoen@qtmlabs.xyz>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230320045228.182259-1-msizanoen@qtmlabs.xyz
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-ocelot.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/mouse/alps.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-ocelot.c b/drivers/pinctrl/pinctrl-ocelot.c
-index 0a951a75c82b3..cccf1cc8736c6 100644
---- a/drivers/pinctrl/pinctrl-ocelot.c
-+++ b/drivers/pinctrl/pinctrl-ocelot.c
-@@ -420,7 +420,7 @@ static int ocelot_pinmux_set_mux(struct pinctrl_dev *pctldev,
- 	regmap_update_bits(info->map, REG_ALT(0, info, pin->pin),
- 			   BIT(p), f << p);
- 	regmap_update_bits(info->map, REG_ALT(1, info, pin->pin),
--			   BIT(p), f << (p - 1));
-+			   BIT(p), (f >> 1) << p);
+--- a/drivers/input/mouse/alps.c
++++ b/drivers/input/mouse/alps.c
+@@ -852,8 +852,8 @@ static void alps_process_packet_v6(struc
+ 			x = y = z = 0;
  
- 	return 0;
- }
--- 
-2.39.2
-
+ 		/* Divide 4 since trackpoint's speed is too fast */
+-		input_report_rel(dev2, REL_X, (char)x / 4);
+-		input_report_rel(dev2, REL_Y, -((char)y / 4));
++		input_report_rel(dev2, REL_X, (s8)x / 4);
++		input_report_rel(dev2, REL_Y, -((s8)y / 4));
+ 
+ 		psmouse_report_standard_buttons(dev2, packet[3]);
+ 
+@@ -1104,8 +1104,8 @@ static void alps_process_trackstick_pack
+ 	    ((packet[3] & 0x20) << 1);
+ 	z = (packet[5] & 0x3f) | ((packet[3] & 0x80) >> 1);
+ 
+-	input_report_rel(dev2, REL_X, (char)x);
+-	input_report_rel(dev2, REL_Y, -((char)y));
++	input_report_rel(dev2, REL_X, (s8)x);
++	input_report_rel(dev2, REL_Y, -((s8)y));
+ 	input_report_abs(dev2, ABS_PRESSURE, z);
+ 
+ 	psmouse_report_standard_buttons(dev2, packet[1]);
+@@ -2294,20 +2294,20 @@ static int alps_get_v3_v7_resolution(str
+ 	if (reg < 0)
+ 		return reg;
+ 
+-	x_pitch = (char)(reg << 4) >> 4; /* sign extend lower 4 bits */
++	x_pitch = (s8)(reg << 4) >> 4; /* sign extend lower 4 bits */
+ 	x_pitch = 50 + 2 * x_pitch; /* In 0.1 mm units */
+ 
+-	y_pitch = (char)reg >> 4; /* sign extend upper 4 bits */
++	y_pitch = (s8)reg >> 4; /* sign extend upper 4 bits */
+ 	y_pitch = 36 + 2 * y_pitch; /* In 0.1 mm units */
+ 
+ 	reg = alps_command_mode_read_reg(psmouse, reg_pitch + 1);
+ 	if (reg < 0)
+ 		return reg;
+ 
+-	x_electrode = (char)(reg << 4) >> 4; /* sign extend lower 4 bits */
++	x_electrode = (s8)(reg << 4) >> 4; /* sign extend lower 4 bits */
+ 	x_electrode = 17 + x_electrode;
+ 
+-	y_electrode = (char)reg >> 4; /* sign extend upper 4 bits */
++	y_electrode = (s8)reg >> 4; /* sign extend upper 4 bits */
+ 	y_electrode = 13 + y_electrode;
+ 
+ 	x_phys = x_pitch * (x_electrode - 1); /* In 0.1 mm units */
 
 
