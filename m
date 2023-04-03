@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896346FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11587C433EF;
-	Mon,  3 Apr 2023 14:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3D16FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7F1C433D2;
+	Mon,  3 Apr 2023 14:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533344;
-	bh=lqCj2IrxJRiHvfJNpW0pIk9HAiPYPcQsC53d06/2DPU=;
+	s=korg; t=1680533347;
+	bh=o+J+h/Pf6H4iY4wyfLOfx223YbGFHOC8o6OrZ8khBYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zy6evZha8YA1Ciz1Vk88GG9qA6qtXhu+6Rb5IJj8b6hR798+x5TQtn8O1J8bcXaGu
-	 4iorBIMaTiw7Fu1dDHk5wb0G7l/azfPzxymlDQ9cFzHetseMmUHxRp/ObOJ0MzJ5pU
-	 i3aORmj1ZurfSM1g9HsGHfCgW1ViUvY4862hAyJ4=
+	b=LWFlUDbHHPJN+s9d0rQ9z0SH1+fSx1jGxbfFcYuzfF9LZX7m+F5KkrxdxKYDrMrdJ
+	 8kLsV4/PMrjBnvamNxJYcy+bGqeWG6J+lODxtIUnbWNDOZfQAKcvi1xY0zBIdVpw1i
+	 YZ/u1MQK75NIc51Dpw0DNt/0i4Oyr2XZ3m3ZAi80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ee1cd780f69483a8616b@syzkaller.appspotmail.com,
-	Hillf Danton <hdanton@sina.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.2 146/187] can: j1939: prevent deadlock by moving j1939_sk_errqueue()
-Date: Mon,  3 Apr 2023 16:09:51 +0200
-Message-Id: <20230403140420.825634834@linuxfoundation.org>
+	Michael Chan <michael.chan@broadcom.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 118/187] bnxt_en: Add missing 200G link speed reporting
+Date: Mon,  3 Apr 2023 16:09:23 +0200
+Message-Id: <20230403140419.850054128@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,88 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Michael Chan <michael.chan@broadcom.com>
 
-commit d1366b283d94ac4537a4b3a1e8668da4df7ce7e9 upstream.
+[ Upstream commit 581bce7bcb7e7f100908728e7b292e266c76895b ]
 
-This commit addresses a deadlock situation that can occur in certain
-scenarios, such as when running data TP/ETP transfer and subscribing to
-the error queue while receiving a net down event. The deadlock involves
-locks in the following order:
+bnxt_fw_to_ethtool_speed() is missing the case statement for 200G
+link speed reported by firmware.  As a result, ethtool will report
+unknown speed when the firmware reports 200G link speed.
 
-3
-  j1939_session_list_lock ->  active_session_list_lock
-  j1939_session_activate
-  ...
-  j1939_sk_queue_activate_next -> sk_session_queue_lock
-  ...
-  j1939_xtp_rx_eoma_one
-
-2
-  j1939_sk_queue_drop_all  ->  sk_session_queue_lock
-  ...
-  j1939_sk_netdev_event_netdown -> j1939_socks_lock
-  j1939_netdev_notify
-
-1
-  j1939_sk_errqueue -> j1939_socks_lock
-  __j1939_session_cancel -> active_session_list_lock
-  j1939_tp_rxtimer
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&priv->active_session_list_lock);
-                               lock(&jsk->sk_session_queue_lock);
-                               lock(&priv->active_session_list_lock);
-  lock(&priv->j1939_socks_lock);
-
-The solution implemented in this commit is to move the
-j1939_sk_errqueue() call out of the active_session_list_lock context,
-thus preventing the deadlock situation.
-
-Reported-by: syzbot+ee1cd780f69483a8616b@syzkaller.appspotmail.com
-Fixes: 5b9272e93f2e ("can: j1939: extend UAPI to notify about RX status")
-Co-developed-by: Hillf Danton <hdanton@sina.com>
-Signed-off-by: Hillf Danton <hdanton@sina.com>
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/all/20230324130141.2132787-1-o.rempel@pengutronix.de
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 532262ba3b84 ("bnxt_en: ethtool: support PAM4 link speeds up to 200G")
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/j1939/transport.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h         | 1 +
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -1124,8 +1124,6 @@ static void __j1939_session_cancel(struc
- 
- 	if (session->sk)
- 		j1939_sk_send_loop_abort(session->sk, session->err);
--	else
--		j1939_sk_errqueue(session, J1939_ERRQUEUE_RX_ABORT);
- }
- 
- static void j1939_session_cancel(struct j1939_session *session,
-@@ -1140,6 +1138,9 @@ static void j1939_session_cancel(struct
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 56355e64815e2..3056e5bb7d6fa 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1225,6 +1225,7 @@ struct bnxt_link_info {
+ #define BNXT_LINK_SPEED_40GB	PORT_PHY_QCFG_RESP_LINK_SPEED_40GB
+ #define BNXT_LINK_SPEED_50GB	PORT_PHY_QCFG_RESP_LINK_SPEED_50GB
+ #define BNXT_LINK_SPEED_100GB	PORT_PHY_QCFG_RESP_LINK_SPEED_100GB
++#define BNXT_LINK_SPEED_200GB	PORT_PHY_QCFG_RESP_LINK_SPEED_200GB
+ 	u16			support_speeds;
+ 	u16			support_pam4_speeds;
+ 	u16			auto_link_speeds;	/* fw adv setting */
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 7658a06b8d059..6bd18eb5137f4 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -1714,6 +1714,8 @@ u32 bnxt_fw_to_ethtool_speed(u16 fw_link_speed)
+ 		return SPEED_50000;
+ 	case BNXT_LINK_SPEED_100GB:
+ 		return SPEED_100000;
++	case BNXT_LINK_SPEED_200GB:
++		return SPEED_200000;
+ 	default:
+ 		return SPEED_UNKNOWN;
  	}
- 
- 	j1939_session_list_unlock(session->priv);
-+
-+	if (!session->sk)
-+		j1939_sk_errqueue(session, J1939_ERRQUEUE_RX_ABORT);
- }
- 
- static enum hrtimer_restart j1939_tp_txtimer(struct hrtimer *hrtimer)
-@@ -1253,6 +1254,9 @@ static enum hrtimer_restart j1939_tp_rxt
- 			__j1939_session_cancel(session, J1939_XTP_ABORT_TIMEOUT);
- 		}
- 		j1939_session_list_unlock(session->priv);
-+
-+		if (!session->sk)
-+			j1939_sk_errqueue(session, J1939_ERRQUEUE_RX_ABORT);
- 	}
- 
- 	j1939_session_put(session);
+-- 
+2.39.2
+
 
 
