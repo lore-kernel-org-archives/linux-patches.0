@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3D16FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7F1C433D2;
-	Mon,  3 Apr 2023 14:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4ED6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B08C433A0;
+	Mon,  3 Apr 2023 14:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533347;
-	bh=o+J+h/Pf6H4iY4wyfLOfx223YbGFHOC8o6OrZ8khBYw=;
+	s=korg; t=1680533349;
+	bh=LRmFP0FDQbLLrIDAXHsdoRYg7oHBIe8Od2IL2LdS9pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWFlUDbHHPJN+s9d0rQ9z0SH1+fSx1jGxbfFcYuzfF9LZX7m+F5KkrxdxKYDrMrdJ
-	 8kLsV4/PMrjBnvamNxJYcy+bGqeWG6J+lODxtIUnbWNDOZfQAKcvi1xY0zBIdVpw1i
-	 YZ/u1MQK75NIc51Dpw0DNt/0i4Oyr2XZ3m3ZAi80=
+	b=VHm9BY2QpgyDAhJQgNuZDuchyMgQkoLzuuhNtN00tDtWTVFKOKuuA/88glpdmF+nP
+	 jH8z6XpUoJwtMxHUJin+czlgRcXutV6YSzrz/GYUZC0ILcECL/buzVnuu+lXbMKpG/
+	 tN1BQoPpyxC2exYSOzhBtPteWxez5ujsr40VQGe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	=?UTF-8?q?Steffen=20B=C3=A4tz?= <steffen@innosonix.de>,
+	Fabio Estevam <festevam@denx.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 118/187] bnxt_en: Add missing 200G link speed reporting
-Date: Mon,  3 Apr 2023 16:09:23 +0200
-Message-Id: <20230403140419.850054128@linuxfoundation.org>
+Subject: [PATCH 6.2 119/187] net: dsa: mv88e6xxx: Enable IGMP snooping on user ports only
+Date: Mon,  3 Apr 2023 16:09:24 +0200
+Message-Id: <20230403140419.883772364@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,49 +39,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Steffen Bätz <steffen@innosonix.de>
 
-[ Upstream commit 581bce7bcb7e7f100908728e7b292e266c76895b ]
+[ Upstream commit 7bcad0f0e6fbc1d613e49e0ee35c8e5f2e685bb0 ]
 
-bnxt_fw_to_ethtool_speed() is missing the case statement for 200G
-link speed reported by firmware.  As a result, ethtool will report
-unknown speed when the firmware reports 200G link speed.
+Do not set the MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP bit on CPU or DSA ports.
 
-Fixes: 532262ba3b84 ("bnxt_en: ethtool: support PAM4 link speeds up to 200G")
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+This allows the host CPU port to be a regular IGMP listener by sending out
+IGMP Membership Reports, which would otherwise not be forwarded by the
+mv88exxx chip, but directly looped back to the CPU port itself.
+
+Fixes: 54d792f257c6 ("net: dsa: Centralise global and port setup code into mv88e6xxx.")
+Signed-off-by: Steffen Bätz <steffen@innosonix.de>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230329150140.701559-1-festevam@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.h         | 1 +
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index 56355e64815e2..3056e5bb7d6fa 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1225,6 +1225,7 @@ struct bnxt_link_info {
- #define BNXT_LINK_SPEED_40GB	PORT_PHY_QCFG_RESP_LINK_SPEED_40GB
- #define BNXT_LINK_SPEED_50GB	PORT_PHY_QCFG_RESP_LINK_SPEED_50GB
- #define BNXT_LINK_SPEED_100GB	PORT_PHY_QCFG_RESP_LINK_SPEED_100GB
-+#define BNXT_LINK_SPEED_200GB	PORT_PHY_QCFG_RESP_LINK_SPEED_200GB
- 	u16			support_speeds;
- 	u16			support_pam4_speeds;
- 	u16			auto_link_speeds;	/* fw adv setting */
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index 7658a06b8d059..6bd18eb5137f4 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -1714,6 +1714,8 @@ u32 bnxt_fw_to_ethtool_speed(u16 fw_link_speed)
- 		return SPEED_50000;
- 	case BNXT_LINK_SPEED_100GB:
- 		return SPEED_100000;
-+	case BNXT_LINK_SPEED_200GB:
-+		return SPEED_200000;
- 	default:
- 		return SPEED_UNKNOWN;
- 	}
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 89829e0ca8e8f..8211a4d373e81 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -3354,9 +3354,14 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
+ 	 * If this is the upstream port for this switch, enable
+ 	 * forwarding of unknown unicasts and multicasts.
+ 	 */
+-	reg = MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP |
+-		MV88E6185_PORT_CTL0_USE_TAG | MV88E6185_PORT_CTL0_USE_IP |
++	reg = MV88E6185_PORT_CTL0_USE_TAG | MV88E6185_PORT_CTL0_USE_IP |
+ 		MV88E6XXX_PORT_CTL0_STATE_FORWARDING;
++	/* Forward any IPv4 IGMP or IPv6 MLD frames received
++	 * by a USER port to the CPU port to allow snooping.
++	 */
++	if (dsa_is_user_port(ds, port))
++		reg |= MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP;
++
+ 	err = mv88e6xxx_port_write(chip, port, MV88E6XXX_PORT_CTL0, reg);
+ 	if (err)
+ 		return err;
 -- 
 2.39.2
 
