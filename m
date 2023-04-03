@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E02612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D11FC433EF;
-	Mon,  3 Apr 2023 14:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A20612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA72C433EF;
+	Mon,  3 Apr 2023 14:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531727;
-	bh=XTDuqyjgti2NWC470q43ZVMqGzKewYj4dalnHhFmmH0=;
+	s=korg; t=1680531730;
+	bh=RuYnVTJwWCkgS5pZsTRyfgbm1jPX/9A6YF9I++YlZ7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQl6UgSKdmAg4r/3IkJNO+FDL9XppF8y4rEHfOLm8gIzoZ3Zi9z6blCMdWYZEM47+
-	 X90CRBC4MPWY0xbWH2km16i5jS2Qu85r2wAYmQdOoUzQx6GK2ua98WmVkPI424AO/q
-	 08Qvsb4fBQufjmjLgGuqNVXK4FuhmJvshsEP2wYI=
+	b=v/AoAcL6EcbkustODWHvPwUsLshbrIgBvjr1ufw6WvpLAtFqJcpWIOf5YfUojoS1y
+	 TDGJQQS9nPYpodigjHNaMZ/nh5pjYiA6ctwc1+H0LhFLSBcWux1LJ9apymPlkOliLp
+	 64tvevt5BBK/b0ONa6NfLK0ACjJ6SSCtdDxUk/BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.4 088/104] Input: focaltech - use explicitly signed char type
-Date: Mon,  3 Apr 2023 16:09:20 +0200
-Message-Id: <20230403140407.603872516@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	NeilBrown <neilb@suse.de>,
+	Song Liu <song@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 062/104] md: avoid signed overflow in slot_store()
+Date: Mon,  3 Apr 2023 16:08:54 +0200
+Message-Id: <20230403140406.686598036@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,50 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: NeilBrown <neilb@suse.de>
 
-commit 8980f190947ba29f23110408e712444884b74251 upstream.
+[ Upstream commit 3bc57292278a0b6ac4656cad94c14f2453344b57 ]
 
-The recent change of -funsigned-char causes additions of negative
-numbers to become additions of large positive numbers, leading to wrong
-calculations of mouse movement. Change these casts to be explicitly
-signed, to take into account negative offsets.
+slot_store() uses kstrtouint() to get a slot number, but stores the
+result in an "int" variable (by casting a pointer).
+This can result in a negative slot number if the unsigned int value is
+very large.
 
-Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217211
-Link: https://lore.kernel.org/r/20230318133010.1285202-1-Jason@zx2c4.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+A negative number means that the slot is empty, but setting a negative
+slot number this way will not remove the device from the array.  I don't
+think this is a serious problem, but it could cause confusion and it is
+best to fix it.
+
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/focaltech.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/md/md.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/input/mouse/focaltech.c
-+++ b/drivers/input/mouse/focaltech.c
-@@ -202,8 +202,8 @@ static void focaltech_process_rel_packet
- 	state->pressed = packet[0] >> 7;
- 	finger1 = ((packet[0] >> 4) & 0x7) - 1;
- 	if (finger1 < FOC_MAX_FINGERS) {
--		state->fingers[finger1].x += (char)packet[1];
--		state->fingers[finger1].y += (char)packet[2];
-+		state->fingers[finger1].x += (s8)packet[1];
-+		state->fingers[finger1].y += (s8)packet[2];
- 	} else {
- 		psmouse_err(psmouse, "First finger in rel packet invalid: %d\n",
- 			    finger1);
-@@ -218,8 +218,8 @@ static void focaltech_process_rel_packet
- 	 */
- 	finger2 = ((packet[3] >> 4) & 0x7) - 1;
- 	if (finger2 < FOC_MAX_FINGERS) {
--		state->fingers[finger2].x += (char)packet[4];
--		state->fingers[finger2].y += (char)packet[5];
-+		state->fingers[finger2].x += (s8)packet[4];
-+		state->fingers[finger2].y += (s8)packet[5];
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index aa2993d5d5d38..64558991ce0a0 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -3082,6 +3082,9 @@ slot_store(struct md_rdev *rdev, const char *buf, size_t len)
+ 		err = kstrtouint(buf, 10, (unsigned int *)&slot);
+ 		if (err < 0)
+ 			return err;
++		if (slot < 0)
++			/* overflow */
++			return -ENOSPC;
  	}
- }
- 
+ 	if (rdev->mddev->pers && slot == -1) {
+ 		/* Setting 'slot' on an active array requires also
+-- 
+2.39.2
+
 
 
