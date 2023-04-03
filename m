@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AD4612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5946DC4339B;
-	Mon,  3 Apr 2023 14:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754F9612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DC8C433D2;
+	Mon,  3 Apr 2023 14:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531753;
-	bh=H2fvv6Sn/nwtQj7JD929f6vx9acoQ8RQKgq2U3QvaLY=;
+	s=korg; t=1680531756;
+	bh=pcyFUqqJ3kufGxK/PEmiPPQ7THibp5zgaJKmm1fflV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QFjd0YxNi7eYZ8PuohX6RJawYUAXnlAGbkUqZle05sOckGF16026PZEBF2wpS3k8S
-	 jh/nn5EKjm7aaSOrTaBHdj430AGyQDXNWvWmobND5qiXFF3rnRvR18ww3qkksRzHMf
-	 i3OdxCe41wH8lnQz7qf+k7yTIkKwgIH8KGTup9RM=
+	b=nXnl1H2nU9/45l9UjTDqflgL7fSxUpusmE3BOjYF8nLnhKBDHprC+yw0IGmz/CKmQ
+	 m6id3yEPCLRs0ayjLJE6l6xvQ/e/5xjZYlnETEm7QbF9pAnAe7Ix3ycqx0WEAfTHes
+	 CBO/NcVcm+8YczerLVFq30GcTfDIKN4XxV8XfQe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 068/104] fbdev: intelfb: Fix potential divide by zero
-Date: Mon,  3 Apr 2023 16:09:00 +0200
-Message-Id: <20230403140406.866765166@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 059/104] ocfs2: fix data corruption after failed write
+Date: Mon,  3 Apr 2023 16:08:51 +0200
+Message-Id: <20230403140406.594951613@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,39 +41,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Jan Kara via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
 
-[ Upstream commit d823685486a3446d061fed7c7d2f80af984f119a ]
+commit 90410bcf873cf05f54a32183afff0161f44f9715 upstream.
 
-Variable var->pixclock is controlled by user and can be assigned
-to zero. Without proper check, divide by zero would occur in
-intelfbhw_validate_mode and intelfbhw_mode_to_hw.
+When buffered write fails to copy data into underlying page cache page,
+ocfs2_write_end_nolock() just zeroes out and dirties the page.  This can
+leave dirty page beyond EOF and if page writeback tries to write this page
+before write succeeds and expands i_size, page gets into inconsistent
+state where page dirty bit is clear but buffer dirty bits stay set
+resulting in page data never getting written and so data copied to the
+page is lost.  Fix the problem by invalidating page beyond EOF after
+failed write.
 
-Error out if var->pixclock is zero.
-
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230302153843.18499-1-jack@suse.cz
+Fixes: 6dbf7bb55598 ("fs: Don't invalidate page buffers in block_write_full_page()")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ replace block_invalidate_folio to block_invalidatepage ]
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/intelfb/intelfbdrv.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ocfs2/aops.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/intelfb/intelfbdrv.c b/drivers/video/fbdev/intelfb/intelfbdrv.c
-index a76c61512c608..274e6bb4a9610 100644
---- a/drivers/video/fbdev/intelfb/intelfbdrv.c
-+++ b/drivers/video/fbdev/intelfb/intelfbdrv.c
-@@ -1214,6 +1214,9 @@ static int intelfb_check_var(struct fb_var_screeninfo *var,
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -1990,11 +1990,25 @@ int ocfs2_write_end_nolock(struct addres
+ 	}
  
- 	dinfo = GET_DINFO(info);
- 
-+	if (!var->pixclock)
-+		return -EINVAL;
+ 	if (unlikely(copied < len) && wc->w_target_page) {
++		loff_t new_isize;
 +
- 	/* update the pitch */
- 	if (intelfbhw_validate_mode(dinfo, var) != 0)
- 		return -EINVAL;
--- 
-2.39.2
-
+ 		if (!PageUptodate(wc->w_target_page))
+ 			copied = 0;
+ 
+-		ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
+-				       start+len);
++		new_isize = max_t(loff_t, i_size_read(inode), pos + copied);
++		if (new_isize > page_offset(wc->w_target_page))
++			ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
++					       start+len);
++		else {
++			/*
++			 * When page is fully beyond new isize (data copy
++			 * failed), do not bother zeroing the page. Invalidate
++			 * it instead so that writeback does not get confused
++			 * put page & buffer dirty bits into inconsistent
++			 * state.
++			 */
++			block_invalidatepage(wc->w_target_page, 0, PAGE_SIZE);
++		}
+ 	}
+ 	if (wc->w_target_page)
+ 		flush_dcache_page(wc->w_target_page);
 
 
