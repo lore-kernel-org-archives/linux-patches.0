@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77A86FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31079C433EF;
-	Mon,  3 Apr 2023 14:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88596FAA
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD37C4339C;
+	Mon,  3 Apr 2023 14:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532886;
-	bh=5TLepZfTZcVzGwlNZ9AnecpuYx2zr+cY2SAA8r2FtMA=;
+	s=korg; t=1680532891;
+	bh=V6PvJt+e/NDgDW3OtoxNnENGlwdjX7qdvNUe4+/Vzgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ThNaFzmKtndENZMR5udM8lhZwGBUPzoNsUuKfz2gGNdXlSz02uDt1Grm4rl5KKEQs
-	 1i/1aKraLtT2BvSevPKSP8EzIlLiDx5dYX8G1pyMhMgBnMYu3oDyHWzmadJirzpkER
-	 tycOu0wVMSmnv4+DQN5OsLF4gRXMj8s8Ll2KpLnk=
+	b=Ac+8Hf9AluMBU3r4AyJbyeGkKU6Ic36Q0I0mU5Dsz+0cuWZ4IkJsLZdyMq2BGfWX6
+	 p2e6rrNEbP/EPRxACo1H2Ham+zM9VXRrPlrpgZE39ZTPgug4an72PUpZoJ9mL3B0dg
+	 ayOd7pxuHQlYQo7VZdxQ09+5GwiIfKgdPGFKGjfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	msizanoen <msizanoen@qtmlabs.xyz>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 124/181] Input: alps - fix compatibility with -funsigned-char
-Date: Mon,  3 Apr 2023 16:09:19 +0200
-Message-Id: <20230403140419.106696254@linuxfoundation.org>
+	Michael Chan <michael.chan@broadcom.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 116/181] bnxt_en: Add missing 200G link speed reporting
+Date: Mon,  3 Apr 2023 16:09:11 +0200
+Message-Id: <20230403140418.863292159@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -34,77 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: msizanoen <msizanoen@qtmlabs.xyz>
+From: Michael Chan <michael.chan@broadcom.com>
 
-commit 754ff5060daf5a1cf4474eff9b4edeb6c17ef7ab upstream.
+[ Upstream commit 581bce7bcb7e7f100908728e7b292e266c76895b ]
 
-The AlpsPS/2 code previously relied on the assumption that `char` is a
-signed type, which was true on x86 platforms (the only place where this
-driver is used) before kernel 6.2. However, on 6.2 and later, this
-assumption is broken due to the introduction of -funsigned-char as a new
-global compiler flag.
+bnxt_fw_to_ethtool_speed() is missing the case statement for 200G
+link speed reported by firmware.  As a result, ethtool will report
+unknown speed when the firmware reports 200G link speed.
 
-Fix this by explicitly specifying the signedness of `char` when sign
-extending the values received from the device.
-
-Fixes: f3f33c677699 ("Input: alps - Rushmore and v7 resolution support")
-Signed-off-by: msizanoen <msizanoen@qtmlabs.xyz>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230320045228.182259-1-msizanoen@qtmlabs.xyz
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 532262ba3b84 ("bnxt_en: ethtool: support PAM4 link speeds up to 200G")
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/alps.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h         | 1 +
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
---- a/drivers/input/mouse/alps.c
-+++ b/drivers/input/mouse/alps.c
-@@ -852,8 +852,8 @@ static void alps_process_packet_v6(struc
- 			x = y = z = 0;
- 
- 		/* Divide 4 since trackpoint's speed is too fast */
--		input_report_rel(dev2, REL_X, (char)x / 4);
--		input_report_rel(dev2, REL_Y, -((char)y / 4));
-+		input_report_rel(dev2, REL_X, (s8)x / 4);
-+		input_report_rel(dev2, REL_Y, -((s8)y / 4));
- 
- 		psmouse_report_standard_buttons(dev2, packet[3]);
- 
-@@ -1104,8 +1104,8 @@ static void alps_process_trackstick_pack
- 	    ((packet[3] & 0x20) << 1);
- 	z = (packet[5] & 0x3f) | ((packet[3] & 0x80) >> 1);
- 
--	input_report_rel(dev2, REL_X, (char)x);
--	input_report_rel(dev2, REL_Y, -((char)y));
-+	input_report_rel(dev2, REL_X, (s8)x);
-+	input_report_rel(dev2, REL_Y, -((s8)y));
- 	input_report_abs(dev2, ABS_PRESSURE, z);
- 
- 	psmouse_report_standard_buttons(dev2, packet[1]);
-@@ -2294,20 +2294,20 @@ static int alps_get_v3_v7_resolution(str
- 	if (reg < 0)
- 		return reg;
- 
--	x_pitch = (char)(reg << 4) >> 4; /* sign extend lower 4 bits */
-+	x_pitch = (s8)(reg << 4) >> 4; /* sign extend lower 4 bits */
- 	x_pitch = 50 + 2 * x_pitch; /* In 0.1 mm units */
- 
--	y_pitch = (char)reg >> 4; /* sign extend upper 4 bits */
-+	y_pitch = (s8)reg >> 4; /* sign extend upper 4 bits */
- 	y_pitch = 36 + 2 * y_pitch; /* In 0.1 mm units */
- 
- 	reg = alps_command_mode_read_reg(psmouse, reg_pitch + 1);
- 	if (reg < 0)
- 		return reg;
- 
--	x_electrode = (char)(reg << 4) >> 4; /* sign extend lower 4 bits */
-+	x_electrode = (s8)(reg << 4) >> 4; /* sign extend lower 4 bits */
- 	x_electrode = 17 + x_electrode;
- 
--	y_electrode = (char)reg >> 4; /* sign extend upper 4 bits */
-+	y_electrode = (s8)reg >> 4; /* sign extend upper 4 bits */
- 	y_electrode = 13 + y_electrode;
- 
- 	x_phys = x_pitch * (x_electrode - 1); /* In 0.1 mm units */
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 02741d499bf4a..1d2588c92977e 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1225,6 +1225,7 @@ struct bnxt_link_info {
+ #define BNXT_LINK_SPEED_40GB	PORT_PHY_QCFG_RESP_LINK_SPEED_40GB
+ #define BNXT_LINK_SPEED_50GB	PORT_PHY_QCFG_RESP_LINK_SPEED_50GB
+ #define BNXT_LINK_SPEED_100GB	PORT_PHY_QCFG_RESP_LINK_SPEED_100GB
++#define BNXT_LINK_SPEED_200GB	PORT_PHY_QCFG_RESP_LINK_SPEED_200GB
+ 	u16			support_speeds;
+ 	u16			support_pam4_speeds;
+ 	u16			auto_link_speeds;	/* fw adv setting */
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index cdbc62ad659cb..01b973bc509f5 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -1712,6 +1712,8 @@ u32 bnxt_fw_to_ethtool_speed(u16 fw_link_speed)
+ 		return SPEED_50000;
+ 	case BNXT_LINK_SPEED_100GB:
+ 		return SPEED_100000;
++	case BNXT_LINK_SPEED_200GB:
++		return SPEED_200000;
+ 	default:
+ 		return SPEED_UNKNOWN;
+ 	}
+-- 
+2.39.2
+
 
 
