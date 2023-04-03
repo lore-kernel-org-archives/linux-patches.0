@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B345683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:14:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF4CC433D2;
-	Mon,  3 Apr 2023 14:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A745683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:14:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CA0C433D2;
+	Mon,  3 Apr 2023 14:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531257;
-	bh=b3xUJ3CHzKreqPtwmmm1OCpRW47rOOCdiKK3YIYwziI=;
+	s=korg; t=1680531260;
+	bh=V8Cnp7mWO1npmzBnymg65OpPHeOqxYWxYwfyPHsytAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jzY1Xm7HixdvMxllBugRG/PqxraP2SHqh5R/NeHX4A7pLpnqXRi4jmjHWBRcft+kf
-	 fRnyVpKgDqGrV+Vg0WL2yBOIjN+VGv+EA8HOo0IgLo7vg74jBfuS2ZpXlpL4xzwuRL
-	 p0advn3ESvVsm4QFvWnBSw7iLaRCI0eoGkuSYqck=
+	b=kFuh0pwehG7KdKyJToNnBVkr+EeKpnrO0gwTbwYGpAydUoHWpXaFbdON6ROfc5Cy1
+	 JBW7qu6eAi/KpHV1W8dZJW9PB52VmrmJnQVK6nssz3SVLjhuH3fWRBZfw8EUmZs3y3
+	 LWV5mrtP4IAK6QoSpHQGac4xyqBrN1BVqDyv5Zh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Christian Gmeiner <christian.gmeiner@gmail.com>
-Subject: [PATCH 4.14 61/66] drm/etnaviv: fix reference leak when mmaping imported buffer
-Date: Mon,  3 Apr 2023 16:09:09 +0200
-Message-Id: <20230403140353.906930864@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 4.14 62/66] s390/uaccess: add missing earlyclobber annotations to __clear_user()
+Date: Mon,  3 Apr 2023 16:09:10 +0200
+Message-Id: <20230403140353.944974011@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -34,41 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 963b2e8c428f79489ceeb058e8314554ec9cbe6f upstream.
+commit 89aba4c26fae4e459f755a18912845c348ee48f3 upstream.
 
-drm_gem_prime_mmap() takes a reference on the GEM object, but before that
-drm_gem_mmap_obj() already takes a reference, which will be leaked as only
-one reference is dropped when the mapping is closed. Drop the extra
-reference when dma_buf_mmap() succeeds.
+Add missing earlyclobber annotation to size, to, and tmp2 operands of the
+__clear_user() inline assembly since they are modified or written to before
+the last usage of all input operands. This can lead to incorrect register
+allocation for the inline assembly.
 
+Fixes: 6c2a9e6df604 ("[S390] Use alternative user-copy operations for new hardware.")
+Reported-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/all/20230321122514.1743889-3-mark.rutland@arm.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Christian Gmeiner <christian.gmeiner@gmail.com>
+Reviewed-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/s390/lib/uaccess.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
-@@ -102,7 +102,15 @@ static void *etnaviv_gem_prime_vmap_impl
- static int etnaviv_gem_prime_mmap_obj(struct etnaviv_gem_object *etnaviv_obj,
- 		struct vm_area_struct *vma)
- {
--	return dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
-+	int ret;
-+
-+	ret = dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
-+	if (!ret) {
-+		/* Drop the reference acquired by drm_gem_mmap_obj(). */
-+		drm_gem_object_put(&etnaviv_obj->base);
-+	}
-+
-+	return ret;
+--- a/arch/s390/lib/uaccess.c
++++ b/arch/s390/lib/uaccess.c
+@@ -272,7 +272,7 @@ static inline unsigned long clear_user_m
+ 		"4: slgr  %0,%0\n"
+ 		"5:\n"
+ 		EX_TABLE(0b,2b) EX_TABLE(3b,5b)
+-		: "+a" (size), "+a" (to), "+a" (tmp1), "=a" (tmp2)
++		: "+&a" (size), "+&a" (to), "+a" (tmp1), "=&a" (tmp2)
+ 		: "a" (empty_zero_page), "d" (reg0) : "cc", "memory");
+ 	return size;
  }
- 
- static const struct etnaviv_gem_ops etnaviv_gem_prime_ops = {
 
 
