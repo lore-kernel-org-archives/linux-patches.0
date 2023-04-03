@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE246FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC52C433D2;
-	Mon,  3 Apr 2023 14:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C717A6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDBEC4339B;
+	Mon,  3 Apr 2023 14:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532923;
-	bh=jyRttOi/+1GUQiXflH/H+fTtTJy0fN3XLyD5v4JQOY8=;
+	s=korg; t=1680532925;
+	bh=cFr06l2Tn5CLKkR5WYLH+cc7IAZdw8aEQ7+IH/MbG/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G0B6xouZGyBtWYNyB127MZsw/f+a6NbuZV9e9tfk2lh40N2hkPuZgqP9FCGquDjpu
-	 SGiwh3XT7fQ4K7VfvSeGomLKa0QdvfYXHgGG25sigrwRuEym0UkpAiZ5vKbqumXMIY
-	 UN8z6tvQPNBUbVTXSvdN0hIWtc9GXRyHNTgMbC+U=
+	b=eZ0h6RPlGJWcPNmoER+giv8wzLPOPzC2NRx7Mx8J9VJI4V5nd/JLfbWMgiRfwnHE2
+	 Zh1c42po3yBsdROjE0+h0jNys9dc6ZkyHmzt7xkWzll/I+0fAmdGqDqZ2hCbrXsaOK
+	 7ly2fG8Pf/ey4JU89LY3PWIgVX9aZLXwoiIzpFvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 6.1 151/181] NFSv4: Fix hangs when recovering open state after a server reboot
-Date: Mon,  3 Apr 2023 16:09:46 +0200
-Message-Id: <20230403140419.967494531@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Reiji Watanabe <reijiw@google.com>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.1 169/181] KVM: arm64: PMU: Fix GET_ONE_REG for vPMC regs to return the current value
+Date: Mon,  3 Apr 2023 16:10:04 +0200
+Message-Id: <20230403140420.618744195@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -34,45 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Reiji Watanabe <reijiw@google.com>
 
-commit 6165a16a5ad9b237bb3131cff4d3c601ccb8f9a3 upstream.
+commit 9228b26194d1cc00449f12f306f53ef2e234a55b upstream.
 
-When we're using a cached open stateid or a delegation in order to avoid
-sending a CLAIM_PREVIOUS open RPC call to the server, we don't have a
-new open stateid to present to update_open_stateid().
-Instead rely on nfs4_try_open_cached(), just as if we were doing a
-normal open.
+Have KVM_GET_ONE_REG for vPMU counter (vPMC) registers (PMCCNTR_EL0
+and PMEVCNTR<n>_EL0) return the sum of the register value in the sysreg
+file and the current perf event counter value.
 
-Fixes: d2bfda2e7aa0 ("NFSv4: don't reprocess cached open CLAIM_PREVIOUS")
+Values of vPMC registers are saved in sysreg files on certain occasions.
+These saved values don't represent the current values of the vPMC
+registers if the perf events for the vPMCs count events after the save.
+The current values of those registers are the sum of the sysreg file
+value and the current perf event counter value.  But, when userspace
+reads those registers (using KVM_GET_ONE_REG), KVM returns the sysreg
+file value to userspace (not the sum value).
+
+Fix this to return the sum value for KVM_GET_ONE_REG.
+
+Fixes: 051ff581ce70 ("arm64: KVM: Add access handler for event counter register")
 Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Reiji Watanabe <reijiw@google.com>
+Link: https://lore.kernel.org/r/20230313033208.1475499-1-reijiw@google.com
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4proc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/sys_regs.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -1980,8 +1980,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(str
- 	if (!data->rpc_done) {
- 		if (data->rpc_status)
- 			return ERR_PTR(data->rpc_status);
--		/* cached opens have already been processed */
--		goto update;
-+		return nfs4_try_open_cached(data);
- 	}
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -767,6 +767,22 @@ static bool pmu_counter_idx_valid(struct
+ 	return true;
+ }
  
- 	ret = nfs_refresh_inode(inode, &data->f_attr);
-@@ -1990,7 +1989,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(str
- 
- 	if (data->o_res.delegation_type != 0)
- 		nfs4_opendata_check_deleg(data, state);
--update:
++static int get_pmu_evcntr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r,
++			  u64 *val)
++{
++	u64 idx;
 +
- 	if (!update_open_stateid(state, &data->o_res.stateid,
- 				NULL, data->o_arg.fmode))
- 		return ERR_PTR(-EAGAIN);
++	if (r->CRn == 9 && r->CRm == 13 && r->Op2 == 0)
++		/* PMCCNTR_EL0 */
++		idx = ARMV8_PMU_CYCLE_IDX;
++	else
++		/* PMEVCNTRn_EL0 */
++		idx = ((r->CRm & 3) << 3) | (r->Op2 & 7);
++
++	*val = kvm_pmu_get_counter_value(vcpu, idx);
++	return 0;
++}
++
+ static bool access_pmu_evcntr(struct kvm_vcpu *vcpu,
+ 			      struct sys_reg_params *p,
+ 			      const struct sys_reg_desc *r)
+@@ -983,7 +999,7 @@ static bool access_pmuserenr(struct kvm_
+ /* Macro to expand the PMEVCNTRn_EL0 register */
+ #define PMU_PMEVCNTR_EL0(n)						\
+ 	{ PMU_SYS_REG(SYS_PMEVCNTRn_EL0(n)),				\
+-	  .reset = reset_pmevcntr,					\
++	  .reset = reset_pmevcntr, .get_user = get_pmu_evcntr,		\
+ 	  .access = access_pmu_evcntr, .reg = (PMEVCNTR0_EL0 + n), }
+ 
+ /* Macro to expand the PMEVTYPERn_EL0 register */
+@@ -1632,7 +1648,8 @@ static const struct sys_reg_desc sys_reg
+ 	{ PMU_SYS_REG(SYS_PMCEID1_EL0),
+ 	  .access = access_pmceid, .reset = NULL },
+ 	{ PMU_SYS_REG(SYS_PMCCNTR_EL0),
+-	  .access = access_pmu_evcntr, .reset = reset_unknown, .reg = PMCCNTR_EL0 },
++	  .access = access_pmu_evcntr, .reset = reset_unknown,
++	  .reg = PMCCNTR_EL0, .get_user = get_pmu_evcntr},
+ 	{ PMU_SYS_REG(SYS_PMXEVTYPER_EL0),
+ 	  .access = access_pmu_evtyper, .reset = NULL },
+ 	{ PMU_SYS_REG(SYS_PMXEVCNTR_EL0),
 
 
