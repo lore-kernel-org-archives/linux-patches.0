@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6138F6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:25:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF0AC433D2;
-	Mon,  3 Apr 2023 14:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062796FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:25:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82010C433D2;
+	Mon,  3 Apr 2023 14:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531915;
-	bh=yd9XK92dBvylX5xDPEBYWBCxoYN3rgxRUCTi1OyXLkA=;
+	s=korg; t=1680531917;
+	bh=1oxUom6yZBsD5bhDWZ+GhCNF0prAnTjRbDDGMpAXb1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/qlAPN/vnH7Z1QhIsvAlzSBbNa4TOt1+DrngbJD+FOiYHLkIM8vugtJc9iiK41cV
-	 Ne1kETJZ4QIs5Xy/sIqGHAMpNvsVXf6rlz62Bx8Aaa1GN/OPZOVTxVmDv4mhpLE57h
-	 UMrSL08nJNn9LhJQIvt61Tl+zrE7xStz2gN2V26Y=
+	b=OpxINuVtQI7iXb/fVEIo7blFIkqn0nvCQ3jaFszJvBX6XtHBddKU280++J8xojL37
+	 RlhnlUfELM6oWye2RUB6GIB1SWhVEO1eaKaXrMV1m63DJBNVBQU80Z7GIRvGi2wHkB
+	 W3c8NfvHMD7EOQojWlBBffGQIEmGKq1x5M9aF8Js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <groeck@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 056/173] Bluetooth: btsdio: fix use after free bug in btsdio_remove due to unfinished work
-Date: Mon,  3 Apr 2023 16:07:51 +0200
-Message-Id: <20230403140416.270425064@linuxfoundation.org>
+Subject: [PATCH 5.10 057/173] platform/chrome: cros_ec_chardev: fix kernel data leak from ioctl
+Date: Mon,  3 Apr 2023 16:07:52 +0200
+Message-Id: <20230403140416.309318523@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,36 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 1e9ac114c4428fdb7ff4635b45d4f46017e8916f ]
+[ Upstream commit b20cf3f89c56b5f6a38b7f76a8128bf9f291bbd3 ]
 
-In btsdio_probe, &data->work was bound with btsdio_work.In
-btsdio_send_frame, it was started by schedule_work.
+It is possible to peep kernel page's data by providing larger `insize`
+in struct cros_ec_command[1] when invoking EC host commands.
 
-If we call btsdio_remove with an unfinished job, there may
-be a race condition and cause UAF bug on hdev.
+Fix it by using zeroed memory.
 
-Fixes: ddbaf13e3609 ("[Bluetooth] Add generic driver for Bluetooth SDIO devices")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[1]: https://elixir.bootlin.com/linux/v6.2/source/include/linux/platform_data/cros_ec_proto.h#L74
+
+Fixes: eda2e30c6684 ("mfd / platform: cros_ec: Miscellaneous character device to talk with the EC")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Link: https://lore.kernel.org/r/20230324010658.1082361-1-tzungbi@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btsdio.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/chrome/cros_ec_chardev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btsdio.c b/drivers/bluetooth/btsdio.c
-index 199e8f7d426d9..7050a16e7efeb 100644
---- a/drivers/bluetooth/btsdio.c
-+++ b/drivers/bluetooth/btsdio.c
-@@ -352,6 +352,7 @@ static void btsdio_remove(struct sdio_func *func)
+diff --git a/drivers/platform/chrome/cros_ec_chardev.c b/drivers/platform/chrome/cros_ec_chardev.c
+index 0de7c255254e0..d6de5a2941282 100644
+--- a/drivers/platform/chrome/cros_ec_chardev.c
++++ b/drivers/platform/chrome/cros_ec_chardev.c
+@@ -284,7 +284,7 @@ static long cros_ec_chardev_ioctl_xcmd(struct cros_ec_dev *ec, void __user *arg)
+ 	    u_cmd.insize > EC_MAX_MSG_BYTES)
+ 		return -EINVAL;
  
- 	BT_DBG("func %p", func);
- 
-+	cancel_work_sync(&data->work);
- 	if (!data)
- 		return;
- 
+-	s_cmd = kmalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize),
++	s_cmd = kzalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize),
+ 			GFP_KERNEL);
+ 	if (!s_cmd)
+ 		return -ENOMEM;
 -- 
 2.39.2
 
