@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCC56FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD813C433EF;
-	Mon,  3 Apr 2023 14:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E471E6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C897C433D2;
+	Mon,  3 Apr 2023 14:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533339;
-	bh=qAyAT3Te9onZUsww9VPY0vLWsDiE3qYQbgYPKPQkrGc=;
+	s=korg; t=1680533341;
+	bh=sUKIpC1lspCTLiAyt6y0+uYQoyWOdPIewRENe9rZxgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msUarF/oAm157jLnPch9zX+7GAJ6bJp7ViON530kFnE6z6aHsqZyjSKjmobR9BfaO
-	 P/rqJN0eYuPsj4KFGGBbDdXpSE3RKzxX172y+xqVB3+C84XWpGEv+BJ0/lQSicm/NW
-	 SyQA7FCOOoLx+2yAzCjGmkHWZn/ciPXSS62FovSQ=
+	b=wBtFgejuu97j9CIY3TRsXsL/f/ZMZ7zLO+nVZXVw7KXMJH/xW00SBZJ8cxcGkGltB
+	 XeGq3mANVPEsl0gu6ZFkjk11T+NwT2v7ZtHMU2WMujxKbY7FODcpZ3s6w1KZ1B+2xC
+	 hsqJPBL6zYKOLjlUZZ6xKTzawVGZemcPaO6YnpRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Holmberg <Hans.Holmberg@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Hans Holmberg <hans.holmberg@wdc.com>
-Subject: [PATCH 6.2 144/187] zonefs: Always invalidate last cached page on append write
-Date: Mon,  3 Apr 2023 16:09:49 +0200
-Message-Id: <20230403140420.749811062@linuxfoundation.org>
+	Orange Kao <orange@aiven.io>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.2 145/187] dm: fix __send_duplicate_bios() to always allow for splitting IO
+Date: Mon,  3 Apr 2023 16:09:50 +0200
+Message-Id: <20230403140420.779314896@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -37,62 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit c1976bd8f23016d8706973908f2bb0ac0d852a8f upstream.
+commit 666eed46769d929c3e13636134ecfc67d75ef548 upstream.
 
-When a direct append write is executed, the append offset may correspond
-to the last page of a sequential file inode which might have been cached
-already by buffered reads, page faults with mmap-read or non-direct
-readahead. To ensure that the on-disk and cached data is consistant for
-such last cached page, make sure to always invalidate it in
-zonefs_file_dio_append(). If the invalidation fails, return -EBUSY to
-userspace to differentiate from IO errors.
+Commit 7dd76d1feec70 ("dm: improve bio splitting and associated IO
+accounting") only called setup_split_accounting() from
+__send_duplicate_bios() if a single bio were being issued. But the case
+where duplicate bios are issued must call it too.
 
-This invalidation will always be a no-op when the FS block size (device
-zone write granularity) is equal to the page size (e.g. 4K).
+Otherwise the bio won't be split and resubmitted (via recursion through
+block core back to DM) to submit the later portions of a bio (which may
+map to an entirely different target).
 
-Reported-by: Hans Holmberg <Hans.Holmberg@wdc.com>
-Fixes: 02ef12a663c7 ("zonefs: use REQ_OP_ZONE_APPEND for sync DIO")
+For example, when discarding an entire DM striped device with the
+following DM table:
+ vg-lvol0: 0 159744 striped 2 128 7:0 2048 7:1 2048
+ vg-lvol0: 159744 45056 striped 2 128 7:2 2048 7:3 2048
+
+Before (broken, discards the first striped target's devices twice):
+ device-mapper: striped: target_stripe=0, bdev=7:0, start=2048 len=79872
+ device-mapper: striped: target_stripe=1, bdev=7:1, start=2048 len=79872
+ device-mapper: striped: target_stripe=0, bdev=7:0, start=2049 len=22528
+ device-mapper: striped: target_stripe=1, bdev=7:1, start=2048 len=22528
+
+After (works as expected):
+ device-mapper: striped: target_stripe=0, bdev=7:0, start=2048 len=79872
+ device-mapper: striped: target_stripe=1, bdev=7:1, start=2048 len=79872
+ device-mapper: striped: target_stripe=0, bdev=7:2, start=2048 len=22528
+ device-mapper: striped: target_stripe=1, bdev=7:3, start=2048 len=22528
+
+Fixes: 7dd76d1feec70 ("dm: improve bio splitting and associated IO accounting")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Tested-by: Hans Holmberg <hans.holmberg@wdc.com>
+Reported-by: Orange Kao <orange@aiven.io>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/zonefs/file.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/md/dm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/zonefs/file.c
-+++ b/fs/zonefs/file.c
-@@ -382,6 +382,7 @@ static ssize_t zonefs_file_dio_append(st
- 	struct zonefs_zone *z = zonefs_inode_zone(inode);
- 	struct block_device *bdev = inode->i_sb->s_bdev;
- 	unsigned int max = bdev_max_zone_append_sectors(bdev);
-+	pgoff_t start, end;
- 	struct bio *bio;
- 	ssize_t size;
- 	int nr_pages;
-@@ -390,6 +391,19 @@ static ssize_t zonefs_file_dio_append(st
- 	max = ALIGN_DOWN(max << SECTOR_SHIFT, inode->i_sb->s_blocksize);
- 	iov_iter_truncate(from, max);
- 
-+	/*
-+	 * If the inode block size (zone write granularity) is smaller than the
-+	 * page size, we may be appending data belonging to the last page of the
-+	 * inode straddling inode->i_size, with that page already cached due to
-+	 * a buffered read or readahead. So make sure to invalidate that page.
-+	 * This will always be a no-op for the case where the block size is
-+	 * equal to the page size.
-+	 */
-+	start = iocb->ki_pos >> PAGE_SHIFT;
-+	end = (iocb->ki_pos + iov_iter_count(from) - 1) >> PAGE_SHIFT;
-+	if (invalidate_inode_pages2_range(inode->i_mapping, start, end))
-+		return -EBUSY;
-+
- 	nr_pages = iov_iter_npages(from, BIO_MAX_VECS);
- 	if (!nr_pages)
- 		return 0;
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1509,6 +1509,8 @@ static int __send_duplicate_bios(struct
+ 		ret = 1;
+ 		break;
+ 	default:
++		if (len)
++			setup_split_accounting(ci, *len);
+ 		/* dm_accept_partial_bio() is not supported with shared tio->len_ptr */
+ 		alloc_multiple_bios(&blist, ci, ti, num_bios);
+ 		while ((clone = bio_list_pop(&blist))) {
 
 
