@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD14D5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:13:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6677CC433EF;
-	Mon,  3 Apr 2023 14:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893D75683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:13:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B1AC433EF;
+	Mon,  3 Apr 2023 14:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531186;
-	bh=0pcnAPk7KVX0m1AoVQaXciKsc/upwtQT4Qp00maFANk=;
+	s=korg; t=1680531189;
+	bh=kS8Elmb2mA7rR8Vs+DZCfYpgsSYr+LwTrHNkyoKtaew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sG7qopLwfSMpvci0AyknzVOagAvWqAF62KuSroA98y21t23H/T/9hQ/n3Ae3N8j67
-	 TxHntb/AR6yu/2iOkHmxG5v1EkGz2nxX3nJVGeS3ni7Iwid5Zy+r8/JydAVA7PfiNz
-	 FHDYZvwCIgmRLFS/811wxmD+JbZCbOUe9kCJblts=
+	b=JUHMASVYOfYgDfashxIxGX/MPv1JSH5OwB6SZFmErheFxHsCQEh2VEAB8JtafAewg
+	 p6KFrrVwYnvx7IcSh1A/iRXmmx9PvJwlvy0XjfB/KAdwUxRDaOObDOngDJHjAsrzbp
+	 qZa/rx/v81ONhlGUc7rUK07p9ovt40E9guuzLq2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c9bfd85eca611ebf5db1@syzkaller.appspotmail.com,
-	Ivan Orlov <ivan.orlov0322@gmail.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 53/66] can: bcm: bcm_tx_setup(): fix KMSAN uninit-value in vfs_write
-Date: Mon,  3 Apr 2023 16:09:01 +0200
-Message-Id: <20230403140353.669847416@linuxfoundation.org>
+	Radoslaw Tyl <radoslawx.tyl@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 4.14 54/66] i40e: fix registers dump after run ethtool adapter self test
+Date: Mon,  3 Apr 2023 16:09:02 +0200
+Message-Id: <20230403140353.699449712@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -37,116 +39,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Orlov <ivan.orlov0322@gmail.com>
+From: Radoslaw Tyl <radoslawx.tyl@intel.com>
 
-[ Upstream commit 2b4c99f7d9a57ecd644eda9b1fb0a1072414959f ]
+[ Upstream commit c5cff16f461a4a434a9915a7be7ac9ced861a8a4 ]
 
-Syzkaller reported the following issue:
+Fix invalid registers dump from ethtool -d ethX after adapter self test
+by ethtool -t ethY. It causes invalid data display.
 
-=====================================================
-BUG: KMSAN: uninit-value in aio_rw_done fs/aio.c:1520 [inline]
-BUG: KMSAN: uninit-value in aio_write+0x899/0x950 fs/aio.c:1600
- aio_rw_done fs/aio.c:1520 [inline]
- aio_write+0x899/0x950 fs/aio.c:1600
- io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
- __do_sys_io_submit fs/aio.c:2078 [inline]
- __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
- __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+The problem was caused by overwriting i40e_reg_list[].elements
+which is common for ethtool self test and dump.
 
-Uninit was created at:
- slab_post_alloc_hook mm/slab.h:766 [inline]
- slab_alloc_node mm/slub.c:3452 [inline]
- __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
- __do_kmalloc_node mm/slab_common.c:967 [inline]
- __kmalloc+0x11d/0x3b0 mm/slab_common.c:981
- kmalloc_array include/linux/slab.h:636 [inline]
- bcm_tx_setup+0x80e/0x29d0 net/can/bcm.c:930
- bcm_sendmsg+0x3a2/0xce0 net/can/bcm.c:1351
- sock_sendmsg_nosec net/socket.c:714 [inline]
- sock_sendmsg net/socket.c:734 [inline]
- sock_write_iter+0x495/0x5e0 net/socket.c:1108
- call_write_iter include/linux/fs.h:2189 [inline]
- aio_write+0x63a/0x950 fs/aio.c:1600
- io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
- __do_sys_io_submit fs/aio.c:2078 [inline]
- __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
- __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-CPU: 1 PID: 5034 Comm: syz-executor350 Not tainted 6.2.0-rc6-syzkaller-80422-geda666ff2276 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
-=====================================================
-
-We can follow the call chain and find that 'bcm_tx_setup' function
-calls 'memcpy_from_msg' to copy some content to the newly allocated
-frame of 'op->frames'. After that the 'len' field of copied structure
-being compared with some constant value (64 or 8). However, if
-'memcpy_from_msg' returns an error, we will compare some uninitialized
-memory. This triggers 'uninit-value' issue.
-
-This patch will add 'memcpy_from_msg' possible errors processing to
-avoid uninit-value issue.
-
-Tested via syzkaller
-
-Reported-by: syzbot+c9bfd85eca611ebf5db1@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=47f897f8ad958bbde5790ebf389b5e7e0a345089
-Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
-Fixes: 6f3b911d5f29b ("can: bcm: add support for CAN FD frames")
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20230314120445.12407-1-ivan.orlov0322@gmail.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 22dd9ae8afcc ("i40e: Rework register diagnostic")
+Signed-off-by: Radoslaw Tyl <radoslawx.tyl@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230328172659.3906413-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_diag.c | 11 ++++++-----
+ drivers/net/ethernet/intel/i40e/i40e_diag.h |  2 +-
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 89b955ef75d1d..32db244ba2c01 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -981,6 +981,8 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 
- 			cf = op->frames + op->cfsiz * i;
- 			err = memcpy_from_msg((u8 *)cf, msg, op->cfsiz);
-+			if (err < 0)
-+				goto free_op;
- 
- 			if (op->flags & CAN_FD_FRAME) {
- 				if (cf->len > 64)
-@@ -990,12 +992,8 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 					err = -EINVAL;
- 			}
- 
--			if (err < 0) {
--				if (op->frames != &op->sframe)
--					kfree(op->frames);
--				kfree(op);
--				return err;
--			}
-+			if (err < 0)
-+				goto free_op;
- 
- 			if (msg_head->flags & TX_CP_CAN_ID) {
- 				/* copy can_id into frame */
-@@ -1068,6 +1066,12 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		bcm_tx_start_timer(op);
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
-+
-+free_op:
-+	if (op->frames != &op->sframe)
-+		kfree(op->frames);
-+	kfree(op);
-+	return err;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_diag.c b/drivers/net/ethernet/intel/i40e/i40e_diag.c
+index f141e78d409e5..793dcaae27ef4 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_diag.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_diag.c
+@@ -65,7 +65,7 @@ static i40e_status i40e_diag_reg_pattern_test(struct i40e_hw *hw,
+ 	return 0;
  }
  
- /*
+-struct i40e_diag_reg_test_info i40e_reg_list[] = {
++const struct i40e_diag_reg_test_info i40e_reg_list[] = {
+ 	/* offset               mask         elements   stride */
+ 	{I40E_QTX_CTL(0),       0x0000FFBF, 1,
+ 		I40E_QTX_CTL(1) - I40E_QTX_CTL(0)},
+@@ -99,27 +99,28 @@ i40e_status i40e_diag_reg_test(struct i40e_hw *hw)
+ {
+ 	i40e_status ret_code = 0;
+ 	u32 reg, mask;
++	u32 elements;
+ 	u32 i, j;
+ 
+ 	for (i = 0; i40e_reg_list[i].offset != 0 &&
+ 					     !ret_code; i++) {
+ 
++		elements = i40e_reg_list[i].elements;
+ 		/* set actual reg range for dynamically allocated resources */
+ 		if (i40e_reg_list[i].offset == I40E_QTX_CTL(0) &&
+ 		    hw->func_caps.num_tx_qp != 0)
+-			i40e_reg_list[i].elements = hw->func_caps.num_tx_qp;
++			elements = hw->func_caps.num_tx_qp;
+ 		if ((i40e_reg_list[i].offset == I40E_PFINT_ITRN(0, 0) ||
+ 		     i40e_reg_list[i].offset == I40E_PFINT_ITRN(1, 0) ||
+ 		     i40e_reg_list[i].offset == I40E_PFINT_ITRN(2, 0) ||
+ 		     i40e_reg_list[i].offset == I40E_QINT_TQCTL(0) ||
+ 		     i40e_reg_list[i].offset == I40E_QINT_RQCTL(0)) &&
+ 		    hw->func_caps.num_msix_vectors != 0)
+-			i40e_reg_list[i].elements =
+-				hw->func_caps.num_msix_vectors - 1;
++			elements = hw->func_caps.num_msix_vectors - 1;
+ 
+ 		/* test register access */
+ 		mask = i40e_reg_list[i].mask;
+-		for (j = 0; j < i40e_reg_list[i].elements && !ret_code; j++) {
++		for (j = 0; j < elements && !ret_code; j++) {
+ 			reg = i40e_reg_list[i].offset +
+ 			      (j * i40e_reg_list[i].stride);
+ 			ret_code = i40e_diag_reg_pattern_test(hw, reg, mask);
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_diag.h b/drivers/net/ethernet/intel/i40e/i40e_diag.h
+index 0b59116520847..e5af68e770c6a 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_diag.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_diag.h
+@@ -43,7 +43,7 @@ struct i40e_diag_reg_test_info {
+ 	u32 stride;	/* bytes between each element */
+ };
+ 
+-extern struct i40e_diag_reg_test_info i40e_reg_list[];
++extern const struct i40e_diag_reg_test_info i40e_reg_list[];
+ 
+ i40e_status i40e_diag_reg_test(struct i40e_hw *hw);
+ i40e_status i40e_diag_eeprom_test(struct i40e_hw *hw);
 -- 
 2.39.2
 
