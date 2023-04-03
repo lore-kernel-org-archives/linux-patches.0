@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E486FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D14C433EF;
-	Mon,  3 Apr 2023 14:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB006FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB35C433D2;
+	Mon,  3 Apr 2023 14:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532865;
-	bh=YUMXNElqIwE2I0iAMb/yuF4EvmvuxAtA7akQRqkdNYE=;
+	s=korg; t=1680532868;
+	bh=JK+h7A8/H9DZnVUWUqwS0lzrCuY6GQegW1COxR4aRII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qHNfkFqKvvHpZ9enaD4bZ36bis9Kqux8kYIPTTfVnkB/3PkrqXaSN9McCiddKNgTS
-	 +Om6tCtg9o32LCjnwaLlz74n2z+S2niuO7v+wW9IFTMff7LNJisJzyaie5Pls2jPzf
-	 zE66qsiA4IWQTp5D5Nx+XITbgnPIxqIIUTYi5cH4=
+	b=kuXxcxKm6rYLdodFvzXHFeIWNK5PIp8Gglv1+biQQlIfpYu62ZFEEMmxbfcD1DTcN
+	 b4D/Blfa5Ev0jPUbpPSxAN7nmQRn+1671TP67PmCIF9+Z9OWUOO1FiiInTLifwh1nD
+	 ZZ0MoQnTzpV4WeoiX08S5HpYG0uaOqFp3dFUtE5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <simon.horman@corigine.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/181] net: ethernet: mtk_eth_soc: add missing ppe cache flush when deleting a flow
-Date: Mon,  3 Apr 2023 16:09:14 +0200
-Message-Id: <20230403140418.957999939@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 146/181] pinctrl: at91-pio4: fix domain name assignment
+Date: Mon,  3 Apr 2023 16:09:41 +0200
+Message-Id: <20230403140419.803271734@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -37,38 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 924531326e2dd4ceabe7240f2b55a88e7d894ec2 ]
+commit 7bb97e360acdd38b68ad0a1defb89c6e89c85596 upstream.
 
-The cache needs to be flushed to ensure that the hardware stops offloading
-the flow immediately.
+Since commit d59f6617eef0 ("genirq: Allow fwnode to carry name
+information only") an IRQ domain is always given a name during
+allocation (e.g. used for the debugfs entry).
 
-Fixes: 33fc42de3327 ("net: ethernet: mtk_eth_soc: support creating mac address based offload entries")
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230330120840.52079-3-nbd@nbd.name
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Drop the no longer valid name assignment, which would lead to an attempt
+to free a string constant when removing the domain on late probe
+failures (e.g. probe deferral).
+
+Fixes: d59f6617eef0 ("genirq: Allow fwnode to carry name information only")
+Cc: stable@vger.kernel.org	# 4.13
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com> # on SAMA7G5
+Link: https://lore.kernel.org/r/20230224130828.27985-1-johan+linaro@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/mtk_ppe.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pinctrl/pinctrl-at91-pio4.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
-index 34ea8af48c3d0..d6eed204574a9 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe.c
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
-@@ -438,6 +438,7 @@ __mtk_foe_entry_clear(struct mtk_ppe *ppe, struct mtk_flow_entry *entry)
- 		hwe->ib1 &= ~MTK_FOE_IB1_STATE;
- 		hwe->ib1 |= FIELD_PREP(MTK_FOE_IB1_STATE, MTK_FOE_STATE_INVALID);
- 		dma_wmb();
-+		mtk_ppe_cache_clear(ppe);
+--- a/drivers/pinctrl/pinctrl-at91-pio4.c
++++ b/drivers/pinctrl/pinctrl-at91-pio4.c
+@@ -1176,7 +1176,6 @@ static int atmel_pinctrl_probe(struct pl
+ 		dev_err(dev, "can't add the irq domain\n");
+ 		return -ENODEV;
  	}
- 	entry->hash = 0xffff;
+-	atmel_pioctrl->irq_domain->name = "atmel gpio";
  
--- 
-2.39.2
-
+ 	for (i = 0; i < atmel_pioctrl->npins; i++) {
+ 		int irq = irq_create_mapping(atmel_pioctrl->irq_domain, i);
 
 
