@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF055683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81BFC433D2;
-	Mon,  3 Apr 2023 14:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118695683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0ADC433EF;
+	Mon,  3 Apr 2023 14:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531079;
-	bh=PKgOHJ8YgUUpIj745gDQhMjuKvp10yGNvhk2qbe1YMI=;
+	s=korg; t=1680531081;
+	bh=ygSp+g4Y+Ab1hDgl4rqv7mauQJdy7Fttff9lMibTLK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZgVPaQX3TvmTRMOVDb5ze6dL22zMLZbVP86egRvNnmCT0K9thU/IPNitUBWOMHV9b
-	 WmXLu2Ec3cCaNaIX215CEACf3UOMTgr3tpO7E4cxT4qFYLlDXZ9cNkvckrx74CU5j2
-	 n2DesnkPQffu5gaaIZYFESEA96f/TyiKgl1lij2Y=
+	b=dKKIm9Jm1EUivHAJb4wDvgrNN2OwlwT9xu5TBJ5Cp8NkIFDW8JMq1iKPuzjG03bHA
+	 n2/DuANwx1R3AFa5ZqwQgOCGO47+4nfVhU+kOlWWqsKlI5bPfGtG70GEQ8Hyl9l/+g
+	 4+SJ8aiNTC+kxL/DcxPifu02sD+A1SfXlp1gYDKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akihiko Odaki <akihiko.odaki@daynix.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Marek Szlosek <marek.szlosek@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 04/66] igbvf: Regard vf reset nack as success
-Date: Mon,  3 Apr 2023 16:08:12 +0200
-Message-Id: <20230403140351.889429767@linuxfoundation.org>
+Subject: [PATCH 4.14 05/66] i2c: imx-lpi2c: check only for enabled interrupt flags
+Date: Mon,  3 Apr 2023 16:08:13 +0200
+Message-Id: <20230403140351.940895159@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -37,60 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 02c83791ef969c6a8a150b4927193d0d0e50fb23 ]
+[ Upstream commit 1c7885004567e8951d65a983be095f254dd20bef ]
 
-vf reset nack actually represents the reset operation itself is
-performed but no address is assigned. Therefore, e1000_reset_hw_vf
-should fill the "perm_addr" with the zero address and return success on
-such an occasion. This prevents its callers in netdev.c from saying PF
-still resetting, and instead allows them to correctly report that no
-address is assigned.
+When reading from I2C, the Tx watermark is set to 0. Unfortunately the
+TDF (transmit data flag) is enabled when Tx FIFO entries is equal or less
+than watermark. So it is set in every case, hence the reset default of 1.
+This results in the MSR_RDF _and_ MSR_TDF flags to be set thus trying
+to send Tx data on a read message.
+Mask the IRQ status to filter for wanted flags only.
 
-Fixes: 6ddbc4cf1f4d ("igb: Indicate failure on vf reset for empty mac address")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Tested-by: Marek Szlosek <marek.szlosek@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: a55fa9d0e42e ("i2c: imx-lpi2c: add low power i2c bus driver")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Tested-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igbvf/vf.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-imx-lpi2c.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/igbvf/vf.c b/drivers/net/ethernet/intel/igbvf/vf.c
-index 9577ccf4b26ad..7156684337e56 100644
---- a/drivers/net/ethernet/intel/igbvf/vf.c
-+++ b/drivers/net/ethernet/intel/igbvf/vf.c
-@@ -24,6 +24,8 @@
+diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+index e86801a631206..ca4d554126579 100644
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -515,10 +515,14 @@ static int lpi2c_imx_xfer(struct i2c_adapter *adapter,
+ static irqreturn_t lpi2c_imx_isr(int irq, void *dev_id)
+ {
+ 	struct lpi2c_imx_struct *lpi2c_imx = dev_id;
++	unsigned int enabled;
+ 	unsigned int temp;
  
- *******************************************************************************/
- 
-+#include <linux/etherdevice.h>
++	enabled = readl(lpi2c_imx->base + LPI2C_MIER);
 +
- #include "vf.h"
+ 	lpi2c_imx_intctrl(lpi2c_imx, 0);
+ 	temp = readl(lpi2c_imx->base + LPI2C_MSR);
++	temp &= enabled;
  
- static s32 e1000_check_for_link_vf(struct e1000_hw *hw);
-@@ -154,11 +156,16 @@ static s32 e1000_reset_hw_vf(struct e1000_hw *hw)
- 		/* set our "perm_addr" based on info provided by PF */
- 		ret_val = mbx->ops.read_posted(hw, msgbuf, 3);
- 		if (!ret_val) {
--			if (msgbuf[0] == (E1000_VF_RESET |
--					  E1000_VT_MSGTYPE_ACK))
-+			switch (msgbuf[0]) {
-+			case E1000_VF_RESET | E1000_VT_MSGTYPE_ACK:
- 				memcpy(hw->mac.perm_addr, addr, ETH_ALEN);
--			else
-+				break;
-+			case E1000_VF_RESET | E1000_VT_MSGTYPE_NACK:
-+				eth_zero_addr(hw->mac.perm_addr);
-+				break;
-+			default:
- 				ret_val = -E1000_ERR_MAC_INIT;
-+			}
- 		}
- 	}
- 
+ 	if (temp & MSR_RDF)
+ 		lpi2c_imx_read_rxfifo(lpi2c_imx);
 -- 
 2.39.2
 
