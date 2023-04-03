@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219F86FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:29:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA80C433D2;
-	Mon,  3 Apr 2023 14:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58056FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:29:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4BFC4339B;
+	Mon,  3 Apr 2023 14:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532154;
-	bh=XTDuqyjgti2NWC470q43ZVMqGzKewYj4dalnHhFmmH0=;
+	s=korg; t=1680532156;
+	bh=YLBdz2v1uElE0kuD27DV7pKAhTOP5ex0ZFJTftOa3/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hRkGFu75WUKfINh6T6Z8uomcjCgGgV6JzwhoeeBIYkyScSGAq6I40E7r7hoHJqA7P
-	 AWemvRcdx8QVCKqgV+CPRBCKnGWHAiCcp8A4AQFWSo9fvuLcKWZ6hOZYuvEs+srcF+
-	 D8iRHuVVpXUDJbGfHyH0/qama1neIB0r97zlta78=
+	b=VUaM88yHrHylbJlcSAX2ayiE8cqrGaSPK6D4zgm4IPa/khqJkz7y29H9MO/huH8Hg
+	 sI1UozYbFCc8sP/lzq5tqE1dOCYQSBCW7hveOLDGs06ReUwzLhLqukfwaP8ypTz6nc
+	 qN8gRTj7029qzkHgSPdSWTnh1fDVcGPYPm+E07GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 146/173] Input: focaltech - use explicitly signed char type
-Date: Mon,  3 Apr 2023 16:09:21 +0200
-Message-Id: <20230403140419.183768277@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 118/173] sched_getaffinity: dont assume cpumask_size() is fully initialized
+Date: Mon,  3 Apr 2023 16:08:53 +0200
+Message-Id: <20230403140418.276826321@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,50 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 8980f190947ba29f23110408e712444884b74251 upstream.
+[ Upstream commit 6015b1aca1a233379625385feb01dd014aca60b5 ]
 
-The recent change of -funsigned-char causes additions of negative
-numbers to become additions of large positive numbers, leading to wrong
-calculations of mouse movement. Change these casts to be explicitly
-signed, to take into account negative offsets.
+The getaffinity() system call uses 'cpumask_size()' to decide how big
+the CPU mask is - so far so good.  It is indeed the allocation size of a
+cpumask.
 
-Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217211
-Link: https://lore.kernel.org/r/20230318133010.1285202-1-Jason@zx2c4.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+But the code also assumes that the whole allocation is initialized
+without actually doing so itself.  That's wrong, because we might have
+fixed-size allocations (making copying and clearing more efficient), but
+not all of it is then necessarily used if 'nr_cpu_ids' is smaller.
+
+Having checked other users of 'cpumask_size()', they all seem to be ok,
+either using it purely for the allocation size, or explicitly zeroing
+the cpumask before using the size in bytes to copy it.
+
+See for example the ublk_ctrl_get_queue_affinity() function that uses
+the proper 'zalloc_cpumask_var()' to make sure that the whole mask is
+cleared, whether the storage is on the stack or if it was an external
+allocation.
+
+Fix this by just zeroing the allocation before using it.  Do the same
+for the compat version of sched_getaffinity(), which had the same logic.
+
+Also, for consistency, make sched_getaffinity() use 'cpumask_bits()' to
+access the bits.  For a cpumask_var_t, it ends up being a pointer to the
+same data either way, but it's just a good idea to treat it like you
+would a 'cpumask_t'.  The compat case already did that.
+
+Reported-by: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://lore.kernel.org/lkml/7d026744-6bd6-6827-0471-b5e8eae0be3f@arm.com/
+Cc: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/focaltech.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/compat.c     | 2 +-
+ kernel/sched/core.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/input/mouse/focaltech.c
-+++ b/drivers/input/mouse/focaltech.c
-@@ -202,8 +202,8 @@ static void focaltech_process_rel_packet
- 	state->pressed = packet[0] >> 7;
- 	finger1 = ((packet[0] >> 4) & 0x7) - 1;
- 	if (finger1 < FOC_MAX_FINGERS) {
--		state->fingers[finger1].x += (char)packet[1];
--		state->fingers[finger1].y += (char)packet[2];
-+		state->fingers[finger1].x += (s8)packet[1];
-+		state->fingers[finger1].y += (s8)packet[2];
- 	} else {
- 		psmouse_err(psmouse, "First finger in rel packet invalid: %d\n",
- 			    finger1);
-@@ -218,8 +218,8 @@ static void focaltech_process_rel_packet
- 	 */
- 	finger2 = ((packet[3] >> 4) & 0x7) - 1;
- 	if (finger2 < FOC_MAX_FINGERS) {
--		state->fingers[finger2].x += (char)packet[4];
--		state->fingers[finger2].y += (char)packet[5];
-+		state->fingers[finger2].x += (s8)packet[4];
-+		state->fingers[finger2].y += (s8)packet[5];
- 	}
- }
+diff --git a/kernel/compat.c b/kernel/compat.c
+index 05adfd6fa8bf9..f9f7a79e07c5f 100644
+--- a/kernel/compat.c
++++ b/kernel/compat.c
+@@ -152,7 +152,7 @@ COMPAT_SYSCALL_DEFINE3(sched_getaffinity, compat_pid_t,  pid, unsigned int, len,
+ 	if (len & (sizeof(compat_ulong_t)-1))
+ 		return -EINVAL;
  
+-	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
+ 		return -ENOMEM;
+ 
+ 	ret = sched_getaffinity(pid, mask);
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index abea8fb7bdd16..b4bd02d68185e 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -6067,14 +6067,14 @@ SYSCALL_DEFINE3(sched_getaffinity, pid_t, pid, unsigned int, len,
+ 	if (len & (sizeof(unsigned long)-1))
+ 		return -EINVAL;
+ 
+-	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
+ 		return -ENOMEM;
+ 
+ 	ret = sched_getaffinity(pid, mask);
+ 	if (ret == 0) {
+ 		unsigned int retlen = min(len, cpumask_size());
+ 
+-		if (copy_to_user(user_mask_ptr, mask, retlen))
++		if (copy_to_user(user_mask_ptr, cpumask_bits(mask), retlen))
+ 			ret = -EFAULT;
+ 		else
+ 			ret = retlen;
+-- 
+2.39.2
+
 
 
