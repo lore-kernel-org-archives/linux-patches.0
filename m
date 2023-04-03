@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D56B6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:25:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DDAC433D2;
-	Mon,  3 Apr 2023 14:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3766FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:25:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24335C433EF;
+	Mon,  3 Apr 2023 14:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531904;
-	bh=AYQK/nW9l4cl/DtggUNloxtu/0Ez46kxbDH+CvduZ00=;
+	s=korg; t=1680531907;
+	bh=UCpq3p4y9HOpyW9T0FxPhk460RAyAEjtbjYbwJGBuN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jg4s1tHekMjBg5VpPeSPVf8YDR6lUgg3iCTC8YcnD65Q2VTL9sDsI6dD+A0c7BhH/
-	 k8axZ7WtBVArplICeFw/qdzyeKoN68rs3Fv4eump2BDxpN03GHU2IyV6GcamVF5IhN
-	 apa852eR11vHn46z6c9Q+0mftkls36yFLKGk97JE=
+	b=KDFW5tWAXqL0YPi5QPrLKZMo2PENe1gKBY6pufsrjwW8U7sSrRMUwq1vcztYoSftM
+	 /0ihOXlFE/CNLL3vPZGk/ZbT/ernV32N1nRRabT3oB0GpRfncWg7e+Z9JuPbQ9jIir
+	 AaRf3EPvuwiN4XjEA4P6Aq5TTCbrhI0qJcuIGLsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/173] power: supply: da9150: Fix use after free bug in da9150_charger_remove due to race condition
-Date: Mon,  3 Apr 2023 16:07:16 +0200
-Message-Id: <20230403140415.015500735@linuxfoundation.org>
+Subject: [PATCH 5.10 022/173] ARM: dts: imx6sll: e60k02: fix usbotg1 pinctrl
+Date: Mon,  3 Apr 2023 16:07:17 +0200
+Message-Id: <20230403140415.053417941@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,52 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 06615d11cc78162dfd5116efb71f29eb29502d37 ]
+[ Upstream commit 957c04e9784c7c757e8cc293d7fb2a60cdf461b6 ]
 
-In da9150_charger_probe, &charger->otg_work is bound with
-da9150_charger_otg_work. da9150_charger_otg_ncb may be
-called to start the work.
+usb@2184000: 'pinctrl-0' is a dependency of 'pinctrl-names'
 
-If we remove the module which will call da9150_charger_remove
-to make cleanup, there may be a unfinished work. The possible
-sequence is as follows:
-
-Fix it by canceling the work before cleanup in the da9150_charger_remove
-
-CPU0                  CPUc1
-
-                    |da9150_charger_otg_work
-da9150_charger_remove      |
-power_supply_unregister  |
-device_unregister   |
-power_supply_dev_release|
-kfree(psy)          |
-                    |
-                    | 	power_supply_changed(charger->usb);
-                    |   //use
-
-Fixes: c1a281e34dae ("power: Add support for DA9150 Charger")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Fixes: c100ea86e6ab ("ARM: dts: add Netronix E60K02 board common file")
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/da9150-charger.c | 1 +
+ arch/arm/boot/dts/e60k02.dtsi | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/da9150-charger.c b/drivers/power/supply/da9150-charger.c
-index f9314cc0cd75f..6b987da586556 100644
---- a/drivers/power/supply/da9150-charger.c
-+++ b/drivers/power/supply/da9150-charger.c
-@@ -662,6 +662,7 @@ static int da9150_charger_remove(struct platform_device *pdev)
+diff --git a/arch/arm/boot/dts/e60k02.dtsi b/arch/arm/boot/dts/e60k02.dtsi
+index 3af1ab4458ef5..bd1f58ae23743 100644
+--- a/arch/arm/boot/dts/e60k02.dtsi
++++ b/arch/arm/boot/dts/e60k02.dtsi
+@@ -296,6 +296,7 @@ &usdhc3 {
  
- 	if (!IS_ERR_OR_NULL(charger->usb_phy))
- 		usb_unregister_notifier(charger->usb_phy, &charger->otg_nb);
-+	cancel_work_sync(&charger->otg_work);
- 
- 	power_supply_unregister(charger->battery);
- 	power_supply_unregister(charger->usb);
+ &usbotg1 {
+ 	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_usbotg1>;
+ 	disable-over-current;
+ 	srp-disable;
+ 	hnp-disable;
 -- 
 2.39.2
 
