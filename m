@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE6B612F
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B5CC433D2;
-	Mon,  3 Apr 2023 14:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A20612F
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5EAC433EF;
+	Mon,  3 Apr 2023 14:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531980;
-	bh=3daxzkFPuxbdjUbhKZ1aw70KQY+g7Qxap4qxrQBIIOQ=;
+	s=korg; t=1680531982;
+	bh=tjm/U7i24MHyqPtM//YMujeXxw3SWUAK2We33sTj+m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ux2CDzw2rnPQ7JXjsOwk92gx+5yJLo1ATmj0WsgMx2G/RF8Uzg1ssKU+XfaIXm2ve
-	 gfLyUw2bUtJ7TWCpAzEszn1x3V+iYbtteoFJWaQy+RGQ6wFfLV0Z9yMmq7ByfmEvcK
-	 2EcAeaDvXo3+0ckkqf/GVVa5LyRdRQPgS3u94uN4=
+	b=XpHdh7IO2eCh6IPo4pyTFHnIn46/8SkQ1/t6vNjhj6kd5jWTzB4AI6VdYjAs9mO2K
+	 34sa3LzAH+C6vuHWFE/C8D5rt8mnwr7b9dK6YPJgH7p9DSJGPB2ELc8x+kVUwuspYM
+	 wyw+zT0nUd+x/FtC8u4rTmrQIXJA+z8DOI0dFz/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Subject: [PATCH 5.10 079/173] usb: dwc2: fix a devres leak in hw_enable upon suspend resume
-Date: Mon,  3 Apr 2023 16:08:14 +0200
-Message-Id: <20230403140416.975398068@linuxfoundation.org>
+	Joshua Washington <joshwash@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 050/173] gve: Cache link_speed value from device
+Date: Mon,  3 Apr 2023 16:07:45 +0200
+Message-Id: <20230403140416.057694864@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -34,100 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Joshua Washington <joshwash@google.com>
 
-commit f747313249b74f323ddf841a9c8db14d989f296a upstream.
+[ Upstream commit 68c3e4fc8628b1487c965aabb29207249657eb5f ]
 
-Each time the platform goes to low power, PM suspend / resume routines
-call: __dwc2_lowlevel_hw_enable -> devm_add_action_or_reset().
-This adds a new devres each time.
-This may also happen at runtime, as dwc2_lowlevel_hw_enable() can be
-called from udc_start().
+The link speed is never changed for the uptime of a VM, and the current
+implementation sends an admin queue command for each call. Admin queue
+command invocations have nontrivial overhead (e.g., VM exits), which can
+be disruptive to users if triggered frequently. Our telemetry data shows
+that there are VMs that make frequent calls to this admin queue command.
+Caching the result of the original admin queue command would eliminate
+the need to send multiple admin queue commands on subsequent calls to
+retrieve link speed.
 
-This can be seen with tracing:
-- echo 1 > /sys/kernel/debug/tracing/events/dev/devres_log/enable
-- go to low power
-- cat /sys/kernel/debug/tracing/trace
-
-A new "ADD" entry is found upon each low power cycle:
-... devres_log: 49000000.usb-otg ADD 82a13bba devm_action_release (8 bytes)
-... devres_log: 49000000.usb-otg ADD 49889daf devm_action_release (8 bytes)
-...
-
-A second issue is addressed here:
-- regulator_bulk_enable() is called upon each PM cycle (suspend/resume).
-- regulator_bulk_disable() never gets called.
-
-So the reference count for these regulators constantly increase, by one
-upon each low power cycle, due to missing regulator_bulk_disable() call
-in __dwc2_lowlevel_hw_disable().
-
-The original fix that introduced the devm_add_action_or_reset() call,
-fixed an issue during probe, that happens due to other errors in
-dwc2_driver_probe() -> dwc2_core_reset(). Then the probe fails without
-disabling regulators, when dr_mode == USB_DR_MODE_PERIPHERAL.
-
-Rather fix the error path: disable all the low level hardware in the
-error path, by using the "hsotg->ll_hw_enabled" flag. Checking dr_mode
-has been introduced to avoid a dual call to dwc2_lowlevel_hw_disable().
-"ll_hw_enabled" should achieve the same (and is used currently in the
-remove() routine).
-
-Fixes: 54c196060510 ("usb: dwc2: Always disable regulators on driver teardown")
-Fixes: 33a06f1300a7 ("usb: dwc2: Fix error path in gadget registration")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/r/20230316084127.126084-1-fabrice.gasnier@foss.st.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7e074d5a76ca ("gve: Enable Link Speed Reporting in the driver.")
+Signed-off-by: Joshua Washington <joshwash@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230321172332.91678-1-joshwash@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/platform.c |   16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/google/gve/gve_ethtool.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc2/platform.c
-+++ b/drivers/usb/dwc2/platform.c
-@@ -121,13 +121,6 @@ static int dwc2_get_dr_mode(struct dwc2_
- 	return 0;
- }
- 
--static void __dwc2_disable_regulators(void *data)
--{
--	struct dwc2_hsotg *hsotg = data;
--
--	regulator_bulk_disable(ARRAY_SIZE(hsotg->supplies), hsotg->supplies);
--}
--
- static int __dwc2_lowlevel_hw_enable(struct dwc2_hsotg *hsotg)
+diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
+index c53a043139446..e0449cc24fbdb 100644
+--- a/drivers/net/ethernet/google/gve/gve_ethtool.c
++++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
+@@ -510,7 +510,10 @@ static int gve_get_link_ksettings(struct net_device *netdev,
+ 				  struct ethtool_link_ksettings *cmd)
  {
- 	struct platform_device *pdev = to_platform_device(hsotg->dev);
-@@ -138,11 +131,6 @@ static int __dwc2_lowlevel_hw_enable(str
- 	if (ret)
- 		return ret;
+ 	struct gve_priv *priv = netdev_priv(netdev);
+-	int err = gve_adminq_report_link_speed(priv);
++	int err = 0;
++
++	if (priv->link_speed == 0)
++		err = gve_adminq_report_link_speed(priv);
  
--	ret = devm_add_action_or_reset(&pdev->dev,
--				       __dwc2_disable_regulators, hsotg);
--	if (ret)
--		return ret;
--
- 	if (hsotg->clk) {
- 		ret = clk_prepare_enable(hsotg->clk);
- 		if (ret)
-@@ -198,7 +186,7 @@ static int __dwc2_lowlevel_hw_disable(st
- 	if (hsotg->clk)
- 		clk_disable_unprepare(hsotg->clk);
- 
--	return 0;
-+	return regulator_bulk_disable(ARRAY_SIZE(hsotg->supplies), hsotg->supplies);
- }
- 
- /**
-@@ -625,7 +613,7 @@ error_init:
- 	if (hsotg->params.activate_stm_id_vb_detection)
- 		regulator_disable(hsotg->usb33d);
- error:
--	if (hsotg->dr_mode != USB_DR_MODE_PERIPHERAL)
-+	if (hsotg->ll_hw_enabled)
- 		dwc2_lowlevel_hw_disable(hsotg);
- 	return retval;
- }
+ 	cmd->base.speed = priv->link_speed;
+ 	return err;
+-- 
+2.39.2
+
 
 
