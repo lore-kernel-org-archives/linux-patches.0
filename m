@@ -1,28 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F3C5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7B1C433EF;
-	Mon,  3 Apr 2023 14:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B9E5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2C0C433EF;
+	Mon,  3 Apr 2023 14:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531483;
-	bh=bRpzjpdLKer8zuXcMgodwmlIVyfKR2UFssVqcMyAImY=;
+	s=korg; t=1680531486;
+	bh=oeMo3j+UO3Ar8tYDF+vJ038dMcLrp5HC9ppOEsU7aVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CA28sGZYATr6g2Bf9kLGIjWzbcrUecM1Uj7xRYoWLI6mzIBPfru1xq5UQMl0wOYUW
-	 9NV4sZlLH/C0B5wpEXzchdYJ0DkX4zl6a6SestGG4i5O9KwkSN7y99pKjo6mCZrc68
-	 e5S69THBL8wxJcmNcd/eeYfWE1Tf9apfqi0h9qu4=
+	b=Yas05GD891bWaGYlzJMtHMgPAtaIEd0rywayUO9pYAY7X2nBd5TBjZm5eyGXJs8Nw
+	 CbNDHaXRGHGYLS1BgrDg3Swdzaewj3tOszXtuRhY3tmATiK7ZUqZQBcoOTsIoj/fd6
+	 xYx6RhgvcsvxIpQ1oazPXEBORcftFYwDnQcpPcfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <zengyhkyle@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 4.19 81/84] net: sched: cbq: dont intepret cls results when asked to drop
-Date: Mon,  3 Apr 2023 16:09:22 +0200
-Message-Id: <20230403140356.198646877@linuxfoundation.org>
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	bristot@redhat.com,
+	claudio@evidence.eu.com,
+	lizefan@huawei.com,
+	longman@redhat.com,
+	luca.abeni@santannapisa.it,
+	mathieu.poirier@linaro.org,
+	rostedt@goodmis.org,
+	tj@kernel.org,
+	tommaso.cucinotta@santannapisa.it,
+	Ingo Molnar <mingo@kernel.org>,
+	Cai Xinchen <caixinchen1@huawei.com>
+Subject: [PATCH 4.19 82/84] cgroup/cpuset: Change cpuset_rwsem and hotplug lock order
+Date: Mon,  3 Apr 2023 16:09:23 +0200
+Message-Id: <20230403140356.228152282@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -36,143 +48,231 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Juri Lelli <juri.lelli@redhat.com>
 
-commit caa4b35b4317d5147b3ab0fbdc9c075c7d2e9c12 upstream.
+commit d74b27d63a8bebe2fe634944e4ebdc7b10db7a39 upstream.
 
-If asked to drop a packet via TC_ACT_SHOT it is unsafe to assume that
-res.class contains a valid pointer
+commit 1243dc518c9da ("cgroup/cpuset: Convert cpuset_mutex to
+percpu_rwsem") is performance patch which is not backport. So
+convert percpu_rwsem to cpuset_mutex.
 
-Sample splat reported by Kyle Zeng
+commit aa44002e7db25 ("cpuset: Fix unsafe lock order between
+cpuset lock and cpuslock") makes lock order keep cpuset_mutex
+->cpu_hotplug_lock. We should change lock order in cpuset_attach.
 
-[    5.405624] 0: reclassify loop, rule prio 0, protocol 800
-[    5.406326] ==================================================================
-[    5.407240] BUG: KASAN: slab-out-of-bounds in cbq_enqueue+0x54b/0xea0
-[    5.407987] Read of size 1 at addr ffff88800e3122aa by task poc/299
-[    5.408731]
-[    5.408897] CPU: 0 PID: 299 Comm: poc Not tainted 5.10.155+ #15
-[    5.409516] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-BIOS 1.15.0-1 04/01/2014
-[    5.410439] Call Trace:
-[    5.410764]  dump_stack+0x87/0xcd
-[    5.411153]  print_address_description+0x7a/0x6b0
-[    5.411687]  ? vprintk_func+0xb9/0xc0
-[    5.411905]  ? printk+0x76/0x96
-[    5.412110]  ? cbq_enqueue+0x54b/0xea0
-[    5.412323]  kasan_report+0x17d/0x220
-[    5.412591]  ? cbq_enqueue+0x54b/0xea0
-[    5.412803]  __asan_report_load1_noabort+0x10/0x20
-[    5.413119]  cbq_enqueue+0x54b/0xea0
-[    5.413400]  ? __kasan_check_write+0x10/0x20
-[    5.413679]  __dev_queue_xmit+0x9c0/0x1db0
-[    5.413922]  dev_queue_xmit+0xc/0x10
-[    5.414136]  ip_finish_output2+0x8bc/0xcd0
-[    5.414436]  __ip_finish_output+0x472/0x7a0
-[    5.414692]  ip_finish_output+0x5c/0x190
-[    5.414940]  ip_output+0x2d8/0x3c0
-[    5.415150]  ? ip_mc_finish_output+0x320/0x320
-[    5.415429]  __ip_queue_xmit+0x753/0x1760
-[    5.415664]  ip_queue_xmit+0x47/0x60
-[    5.415874]  __tcp_transmit_skb+0x1ef9/0x34c0
-[    5.416129]  tcp_connect+0x1f5e/0x4cb0
-[    5.416347]  tcp_v4_connect+0xc8d/0x18c0
-[    5.416577]  __inet_stream_connect+0x1ae/0xb40
-[    5.416836]  ? local_bh_enable+0x11/0x20
-[    5.417066]  ? lock_sock_nested+0x175/0x1d0
-[    5.417309]  inet_stream_connect+0x5d/0x90
-[    5.417548]  ? __inet_stream_connect+0xb40/0xb40
-[    5.417817]  __sys_connect+0x260/0x2b0
-[    5.418037]  __x64_sys_connect+0x76/0x80
-[    5.418267]  do_syscall_64+0x31/0x50
-[    5.418477]  entry_SYSCALL_64_after_hwframe+0x61/0xc6
-[    5.418770] RIP: 0033:0x473bb7
-[    5.418952] Code: 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00
-00 00 90 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2a 00 00
-00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 18 89 54 24 0c 48 89 34
-24 89
-[    5.420046] RSP: 002b:00007fffd20eb0f8 EFLAGS: 00000246 ORIG_RAX:
-000000000000002a
-[    5.420472] RAX: ffffffffffffffda RBX: 00007fffd20eb578 RCX: 0000000000473bb7
-[    5.420872] RDX: 0000000000000010 RSI: 00007fffd20eb110 RDI: 0000000000000007
-[    5.421271] RBP: 00007fffd20eb150 R08: 0000000000000001 R09: 0000000000000004
-[    5.421671] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
-[    5.422071] R13: 00007fffd20eb568 R14: 00000000004fc740 R15: 0000000000000002
-[    5.422471]
-[    5.422562] Allocated by task 299:
-[    5.422782]  __kasan_kmalloc+0x12d/0x160
-[    5.423007]  kasan_kmalloc+0x5/0x10
-[    5.423208]  kmem_cache_alloc_trace+0x201/0x2e0
-[    5.423492]  tcf_proto_create+0x65/0x290
-[    5.423721]  tc_new_tfilter+0x137e/0x1830
-[    5.423957]  rtnetlink_rcv_msg+0x730/0x9f0
-[    5.424197]  netlink_rcv_skb+0x166/0x300
-[    5.424428]  rtnetlink_rcv+0x11/0x20
-[    5.424639]  netlink_unicast+0x673/0x860
-[    5.424870]  netlink_sendmsg+0x6af/0x9f0
-[    5.425100]  __sys_sendto+0x58d/0x5a0
-[    5.425315]  __x64_sys_sendto+0xda/0xf0
-[    5.425539]  do_syscall_64+0x31/0x50
-[    5.425764]  entry_SYSCALL_64_after_hwframe+0x61/0xc6
-[    5.426065]
-[    5.426157] The buggy address belongs to the object at ffff88800e312200
-[    5.426157]  which belongs to the cache kmalloc-128 of size 128
-[    5.426955] The buggy address is located 42 bytes to the right of
-[    5.426955]  128-byte region [ffff88800e312200, ffff88800e312280)
-[    5.427688] The buggy address belongs to the page:
-[    5.427992] page:000000009875fabc refcount:1 mapcount:0
-mapping:0000000000000000 index:0x0 pfn:0xe312
-[    5.428562] flags: 0x100000000000200(slab)
-[    5.428812] raw: 0100000000000200 dead000000000100 dead000000000122
-ffff888007843680
-[    5.429325] raw: 0000000000000000 0000000000100010 00000001ffffffff
-ffff88800e312401
-[    5.429875] page dumped because: kasan: bad access detected
-[    5.430214] page->mem_cgroup:ffff88800e312401
-[    5.430471]
-[    5.430564] Memory state around the buggy address:
-[    5.430846]  ffff88800e312180: fc fc fc fc fc fc fc fc fc fc fc fc
-fc fc fc fc
-[    5.431267]  ffff88800e312200: 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 fc
-[    5.431705] >ffff88800e312280: fc fc fc fc fc fc fc fc fc fc fc fc
-fc fc fc fc
-[    5.432123]                                   ^
-[    5.432391]  ffff88800e312300: 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 fc
-[    5.432810]  ffff88800e312380: fc fc fc fc fc fc fc fc fc fc fc fc
-fc fc fc fc
-[    5.433229] ==================================================================
-[    5.433648] Disabling lock debugging due to kernel taint
+original commit message:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+cpuset_rwsem is going to be acquired from sched_setscheduler() with a
+following patch. There are however paths (e.g., spawn_ksoftirqd) in
+which sched_scheduler() is eventually called while holding hotplug lock;
+this creates a dependecy between hotplug lock (to be always acquired
+first) and cpuset_rwsem (to be always acquired after hotplug lock).
+
+Fix paths which currently take the two locks in the wrong order (after
+a following patch is applied).
+
+Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: bristot@redhat.com
+Cc: claudio@evidence.eu.com
+Cc: lizefan@huawei.com
+Cc: longman@redhat.com
+Cc: luca.abeni@santannapisa.it
+Cc: mathieu.poirier@linaro.org
+Cc: rostedt@goodmis.org
+Cc: tj@kernel.org
+Cc: tommaso.cucinotta@santannapisa.it
+Link: https://lkml.kernel.org/r/20190719140000.31694-7-juri.lelli@redhat.com
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_cbq.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+v2:
+ * Change get_online_cpus/put_online_cpus lock order in cpuset_attach
+   to keep cpuset_mutex and hotplug lock order
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ include/linux/cpuset.h |    8 ++++----
+ kernel/cgroup/cpuset.c |   24 +++++++++++++++++-------
+ 2 files changed, 21 insertions(+), 11 deletions(-)
 
---- a/net/sched/sch_cbq.c
-+++ b/net/sched/sch_cbq.c
-@@ -236,6 +236,8 @@ cbq_classify(struct sk_buff *skb, struct
- 		result = tcf_classify(skb, fl, &res, true);
- 		if (!fl || result < 0)
- 			goto fallback;
-+		if (result == TC_ACT_SHOT)
-+			return NULL;
+--- a/include/linux/cpuset.h
++++ b/include/linux/cpuset.h
+@@ -40,14 +40,14 @@ static inline bool cpusets_enabled(void)
  
- 		cl = (void *)res.class;
- 		if (!cl) {
-@@ -256,8 +258,6 @@ cbq_classify(struct sk_buff *skb, struct
- 		case TC_ACT_TRAP:
- 			*qerr = NET_XMIT_SUCCESS | __NET_XMIT_STOLEN;
- 			/* fall through */
--		case TC_ACT_SHOT:
--			return NULL;
- 		case TC_ACT_RECLASSIFY:
- 			return cbq_reclassify(skb, cl);
- 		}
+ static inline void cpuset_inc(void)
+ {
+-	static_branch_inc(&cpusets_pre_enable_key);
+-	static_branch_inc(&cpusets_enabled_key);
++	static_branch_inc_cpuslocked(&cpusets_pre_enable_key);
++	static_branch_inc_cpuslocked(&cpusets_enabled_key);
+ }
+ 
+ static inline void cpuset_dec(void)
+ {
+-	static_branch_dec(&cpusets_enabled_key);
+-	static_branch_dec(&cpusets_pre_enable_key);
++	static_branch_dec_cpuslocked(&cpusets_enabled_key);
++	static_branch_dec_cpuslocked(&cpusets_pre_enable_key);
+ }
+ 
+ extern int cpuset_init(void);
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -830,8 +830,8 @@ static void rebuild_sched_domains_locked
+ 	cpumask_var_t *doms;
+ 	int ndoms;
+ 
++	lockdep_assert_cpus_held();
+ 	lockdep_assert_held(&cpuset_mutex);
+-	get_online_cpus();
+ 
+ 	/*
+ 	 * We have raced with CPU hotplug. Don't do anything to avoid
+@@ -839,15 +839,13 @@ static void rebuild_sched_domains_locked
+ 	 * Anyways, hotplug work item will rebuild sched domains.
+ 	 */
+ 	if (!cpumask_equal(top_cpuset.effective_cpus, cpu_active_mask))
+-		goto out;
++		return;
+ 
+ 	/* Generate domain masks and attrs */
+ 	ndoms = generate_sched_domains(&doms, &attr);
+ 
+ 	/* Have scheduler rebuild the domains */
+ 	partition_sched_domains(ndoms, doms, attr);
+-out:
+-	put_online_cpus();
+ }
+ #else /* !CONFIG_SMP */
+ static void rebuild_sched_domains_locked(void)
+@@ -857,9 +855,11 @@ static void rebuild_sched_domains_locked
+ 
+ void rebuild_sched_domains(void)
+ {
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 	rebuild_sched_domains_locked();
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ }
+ 
+ /**
+@@ -1528,13 +1528,13 @@ static void cpuset_attach(struct cgroup_
+ 	cgroup_taskset_first(tset, &css);
+ 	cs = css_cs(css);
+ 
+-	mutex_lock(&cpuset_mutex);
+-
+ 	/*
+ 	 * It should hold cpus lock because a cpu offline event can
+ 	 * cause set_cpus_allowed_ptr() failed.
+ 	 */
+ 	get_online_cpus();
++	mutex_lock(&cpuset_mutex);
++
+ 	/* prepare for attach */
+ 	if (cs == &top_cpuset)
+ 		cpumask_copy(cpus_attach, cpu_possible_mask);
+@@ -1553,7 +1553,6 @@ static void cpuset_attach(struct cgroup_
+ 		cpuset_change_task_nodemask(task, &cpuset_attach_nodemask_to);
+ 		cpuset_update_task_spread_flag(cs, task);
+ 	}
+-       put_online_cpus();
+ 
+ 	/*
+ 	 * Change mm for all threadgroup leaders. This is expensive and may
+@@ -1589,6 +1588,7 @@ static void cpuset_attach(struct cgroup_
+ 		wake_up(&cpuset_attach_wq);
+ 
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ }
+ 
+ /* The various types of files and directories in a cpuset file system */
+@@ -1617,6 +1617,7 @@ static int cpuset_write_u64(struct cgrou
+ 	cpuset_filetype_t type = cft->private;
+ 	int retval = 0;
+ 
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 	if (!is_cpuset_online(cs)) {
+ 		retval = -ENODEV;
+@@ -1654,6 +1655,7 @@ static int cpuset_write_u64(struct cgrou
+ 	}
+ out_unlock:
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ 	return retval;
+ }
+ 
+@@ -1664,6 +1666,7 @@ static int cpuset_write_s64(struct cgrou
+ 	cpuset_filetype_t type = cft->private;
+ 	int retval = -ENODEV;
+ 
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 	if (!is_cpuset_online(cs))
+ 		goto out_unlock;
+@@ -1678,6 +1681,7 @@ static int cpuset_write_s64(struct cgrou
+ 	}
+ out_unlock:
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ 	return retval;
+ }
+ 
+@@ -1716,6 +1720,7 @@ static ssize_t cpuset_write_resmask(stru
+ 	kernfs_break_active_protection(of->kn);
+ 	flush_work(&cpuset_hotplug_work);
+ 
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 	if (!is_cpuset_online(cs))
+ 		goto out_unlock;
+@@ -1741,6 +1746,7 @@ static ssize_t cpuset_write_resmask(stru
+ 	free_trial_cpuset(trialcs);
+ out_unlock:
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ 	kernfs_unbreak_active_protection(of->kn);
+ 	css_put(&cs->css);
+ 	flush_workqueue(cpuset_migrate_mm_wq);
+@@ -1985,6 +1991,7 @@ static int cpuset_css_online(struct cgro
+ 	if (!parent)
+ 		return 0;
+ 
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 
+ 	set_bit(CS_ONLINE, &cs->flags);
+@@ -2035,6 +2042,7 @@ static int cpuset_css_online(struct cgro
+ 	spin_unlock_irq(&callback_lock);
+ out_unlock:
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ 	return 0;
+ }
+ 
+@@ -2048,6 +2056,7 @@ static void cpuset_css_offline(struct cg
+ {
+ 	struct cpuset *cs = css_cs(css);
+ 
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 
+ 	if (is_sched_load_balance(cs))
+@@ -2057,6 +2066,7 @@ static void cpuset_css_offline(struct cg
+ 	clear_bit(CS_ONLINE, &cs->flags);
+ 
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ }
+ 
+ static void cpuset_css_free(struct cgroup_subsys_state *css)
 
 
