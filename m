@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5506FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551E1C433EF;
-	Mon,  3 Apr 2023 14:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CE56FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2A9C433EF;
+	Mon,  3 Apr 2023 14:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532494;
-	bh=BVclvr4EGedUuGLmRzihaQUqZTZ46qI3OJEKv0FvIxU=;
+	s=korg; t=1680532497;
+	bh=5FPc0ijyBXW32b3L14EMC6PyEHv3lMrKTwqE0xp0Yus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ncVXJwnThnwCmMlRlQHAVLtj08/pHP3Wx1BTHGXIAg5WvZ2iH3qWXZsHfnnbTfIOg
-	 FMoyFUtQbjcv0tdaFeh5MoclemzABrtQV9LluzLfEfwRG7+T8fIK0xrGQjpS21fKZK
-	 rroiXvy4+K6KAj6WztL+n7+gQLCkoTpak2iKLOJc=
+	b=KP+F3KYcM9dUGXa/oRkjZEDBUUdpi1uvFk5ibiY7cgbEE/tfBGPD67DMmLKvNVK35
+	 pKoCyK6faRLjJnlw28T4eVoipbqhapGaWlhQhw2UDPset7FE2fRvVT3CU/cw2p4HR8
+	 jVUZ9KE9yP380nxvfjuxAMYfZUbprQs3bO0Am6+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Christian Gmeiner <christian.gmeiner@gmail.com>
-Subject: [PATCH 5.15 86/99] drm/etnaviv: fix reference leak when mmaping imported buffer
-Date: Mon,  3 Apr 2023 16:09:49 +0200
-Message-Id: <20230403140406.626488994@linuxfoundation.org>
+	Hersen Wu <hersenxs.wu@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 87/99] drm/amd/display: Add DSC Support for Synaptics Cascaded MST Hub
+Date: Mon,  3 Apr 2023 16:09:50 +0200
+Message-Id: <20230403140406.655946380@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -34,41 +37,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Fangzhi Zuo <Jerry.Zuo@amd.com>
 
-commit 963b2e8c428f79489ceeb058e8314554ec9cbe6f upstream.
+commit f4f3b7dedbe849e780c779ba67365bb1db0d8637 upstream.
 
-drm_gem_prime_mmap() takes a reference on the GEM object, but before that
-drm_gem_mmap_obj() already takes a reference, which will be leaked as only
-one reference is dropped when the mapping is closed. Drop the extra
-reference when dma_buf_mmap() succeeds.
+Traditional synaptics hub has one MST branch device without virtual dpcd.
+Synaptics cascaded hub has two chained MST branch devices. DSC decoding
+is performed via root MST branch device, instead of the second MST branch
+device.
 
+Reviewed-by: Hersen Wu <hersenxs.wu@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Christian Gmeiner <christian.gmeiner@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   19 ++++++++++++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.h |   12 +++++++
+ 2 files changed, 31 insertions(+)
 
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
-@@ -88,7 +88,15 @@ static void *etnaviv_gem_prime_vmap_impl
- static int etnaviv_gem_prime_mmap_obj(struct etnaviv_gem_object *etnaviv_obj,
- 		struct vm_area_struct *vma)
- {
--	return dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
-+	int ret;
-+
-+	ret = dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
-+	if (!ret) {
-+		/* Drop the reference acquired by drm_gem_mmap_obj(). */
-+		drm_gem_object_put(&etnaviv_obj->base);
-+	}
-+
-+	return ret;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -184,6 +184,21 @@ static bool needs_dsc_aux_workaround(str
+ 	return false;
  }
  
- static const struct etnaviv_gem_ops etnaviv_gem_prime_ops = {
++bool is_synaptics_cascaded_panamera(struct dc_link *link, struct drm_dp_mst_port *port)
++{
++	u8 branch_vendor_data[4] = { 0 }; // Vendor data 0x50C ~ 0x50F
++
++	if (drm_dp_dpcd_read(port->mgr->aux, DP_BRANCH_VENDOR_SPECIFIC_START, &branch_vendor_data, 4) == 4) {
++		if (link->dpcd_caps.branch_dev_id == DP_BRANCH_DEVICE_ID_90CC24 &&
++				IS_SYNAPTICS_CASCADED_PANAMERA(link->dpcd_caps.branch_dev_name, branch_vendor_data)) {
++			DRM_INFO("Synaptics Cascaded MST hub\n");
++			return true;
++		}
++	}
++
++	return false;
++}
++
+ static bool validate_dsc_caps_on_connector(struct amdgpu_dm_connector *aconnector)
+ {
+ 	struct dc_sink *dc_sink = aconnector->dc_sink;
+@@ -207,6 +222,10 @@ static bool validate_dsc_caps_on_connect
+ 	    needs_dsc_aux_workaround(aconnector->dc_link))
+ 		aconnector->dsc_aux = &aconnector->mst_port->dm_dp_aux.aux;
+ 
++	/* synaptics cascaded MST hub case */
++	if (!aconnector->dsc_aux && is_synaptics_cascaded_panamera(aconnector->dc_link, port))
++		aconnector->dsc_aux = port->mgr->aux;
++
+ 	if (!aconnector->dsc_aux)
+ 		return false;
+ 
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.h
+@@ -26,6 +26,18 @@
+ #ifndef __DAL_AMDGPU_DM_MST_TYPES_H__
+ #define __DAL_AMDGPU_DM_MST_TYPES_H__
+ 
++#define DP_BRANCH_VENDOR_SPECIFIC_START 0x50C
++
++/**
++ * Panamera MST Hub detection
++ * Offset DPCD 050Eh == 0x5A indicates cascaded MST hub case
++ * Check from beginning of branch device vendor specific field (050Ch)
++ */
++#define IS_SYNAPTICS_PANAMERA(branchDevName) (((int)branchDevName[4] & 0xF0) == 0x50 ? 1 : 0)
++#define BRANCH_HW_REVISION_PANAMERA_A2 0x10
++#define SYNAPTICS_CASCADED_HUB_ID  0x5A
++#define IS_SYNAPTICS_CASCADED_PANAMERA(devName, data) ((IS_SYNAPTICS_PANAMERA(devName) && ((int)data[2] == SYNAPTICS_CASCADED_HUB_ID)) ? 1 : 0)
++
+ struct amdgpu_display_manager;
+ struct amdgpu_dm_connector;
+ 
 
 
