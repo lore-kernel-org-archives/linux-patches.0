@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C7B5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852E0C4339B;
-	Mon,  3 Apr 2023 14:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE085683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F36C433EF;
+	Mon,  3 Apr 2023 14:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531517;
-	bh=VPNXqtJay/NDsyz6ETXPJ12aCdP/GFaBQ9c43DwefPk=;
+	s=korg; t=1680531520;
+	bh=Q9x5Kde58VKF6BpxpNMbI4yLxu0G7kji2W/H/sd1o8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xRu4quTs6mqrhLWWnIBDvePlTc2GlVayB/6N3yz6YVoOIJ9hQ6matCk40uxrzzS3f
-	 NaSNsamlDUWURHVm+34DV/x3vNyaAteFfV/h0tgXdIGREYxiSYyDiu4uxkmPO3l4Yh
-	 u0VfC2AFdcRqc9j2RmnPfaGa3IhWbeuzz3XZf+S8=
+	b=F+hUgUYLLj0xyxGsNxSFkC6jhi9vThUjRgeu2BtCJ/cyBp6mKNVCNEdDjtQzSnUuk
+	 R3ldN2hmhLdS53mr4T1MAqRoISsvn41xLjPnpWp9aZiGX4SAJn4yv++sGDVQuSIh7b
+	 In2j3yXMCCASXg+QjWhOvS8u2++wfhn3SOwLKwH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Meena Shanmugam <meenashanmugam@google.com>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 001/104] net: tls: fix possible race condition between do_tls_getsockopt_conf() and do_tls_setsockopt_conf()
-Date: Mon,  3 Apr 2023 16:07:53 +0200
-Message-Id: <20230403140403.847323570@linuxfoundation.org>
+Subject: [PATCH 5.4 010/104] qed/qed_sriov: guard against NULL derefs from qed_iov_get_vf_info
+Date: Mon,  3 Apr 2023 16:08:02 +0200
+Message-Id: <20230403140404.539136588@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,78 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-commit 49c47cc21b5b7a3d8deb18fc57b0aa2ab1286962 upstream.
+[ Upstream commit 25143b6a01d0cc5319edd3de22ffa2578b045550 ]
 
-ctx->crypto_send.info is not protected by lock_sock in
-do_tls_getsockopt_conf(). A race condition between do_tls_getsockopt_conf()
-and error paths of do_tls_setsockopt_conf() may lead to a use-after-free
-or null-deref.
+We have to make sure that the info returned by the helper is valid
+before using it.
 
-More discussion:  https://lore.kernel.org/all/Y/ht6gQL+u6fj3dG@hog/
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
 
-Fixes: 3c4d7559159b ("tls: kernel TLS support")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Link: https://lore.kernel.org/r/20230228023344.9623-1-hbh25y@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Meena Shanmugam <meenashanmugam@google.com>
+Fixes: f990c82c385b ("qed*: Add support for ndo_set_vf_trust")
+Fixes: 733def6a04bf ("qed*: IOV link control")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_main.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_sriov.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index 7aba4ee77aba3..cb51a2f46b11d 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -371,13 +371,11 @@ static int do_tls_getsockopt_tx(struct sock *sk, char __user *optval,
- 			rc = -EINVAL;
- 			goto out;
- 		}
--		lock_sock(sk);
- 		memcpy(crypto_info_aes_gcm_128->iv,
- 		       ctx->tx.iv + TLS_CIPHER_AES_GCM_128_SALT_SIZE,
- 		       TLS_CIPHER_AES_GCM_128_IV_SIZE);
- 		memcpy(crypto_info_aes_gcm_128->rec_seq, ctx->tx.rec_seq,
- 		       TLS_CIPHER_AES_GCM_128_REC_SEQ_SIZE);
--		release_sock(sk);
- 		if (copy_to_user(optval,
- 				 crypto_info_aes_gcm_128,
- 				 sizeof(*crypto_info_aes_gcm_128)))
-@@ -395,13 +393,11 @@ static int do_tls_getsockopt_tx(struct sock *sk, char __user *optval,
- 			rc = -EINVAL;
- 			goto out;
- 		}
--		lock_sock(sk);
- 		memcpy(crypto_info_aes_gcm_256->iv,
- 		       ctx->tx.iv + TLS_CIPHER_AES_GCM_256_SALT_SIZE,
- 		       TLS_CIPHER_AES_GCM_256_IV_SIZE);
- 		memcpy(crypto_info_aes_gcm_256->rec_seq, ctx->tx.rec_seq,
- 		       TLS_CIPHER_AES_GCM_256_REC_SEQ_SIZE);
--		release_sock(sk);
- 		if (copy_to_user(optval,
- 				 crypto_info_aes_gcm_256,
- 				 sizeof(*crypto_info_aes_gcm_256)))
-@@ -421,6 +417,8 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
- {
- 	int rc = 0;
- 
-+	lock_sock(sk);
-+
- 	switch (optname) {
- 	case TLS_TX:
- 		rc = do_tls_getsockopt_tx(sk, optval, optlen);
-@@ -429,6 +427,9 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
- 		rc = -ENOPROTOOPT;
- 		break;
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_sriov.c b/drivers/net/ethernet/qlogic/qed/qed_sriov.c
+index 20f840ea05030..caa0468df4b53 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_sriov.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_sriov.c
+@@ -4404,6 +4404,9 @@ qed_iov_configure_min_tx_rate(struct qed_dev *cdev, int vfid, u32 rate)
  	}
-+
-+	release_sock(sk);
-+
- 	return rc;
- }
  
+ 	vf = qed_iov_get_vf_info(QED_LEADING_HWFN(cdev), (u16)vfid, true);
++	if (!vf)
++		return -EINVAL;
++
+ 	vport_id = vf->vport_id;
+ 
+ 	return qed_configure_vport_wfq(cdev, vport_id, rate);
+@@ -5150,7 +5153,7 @@ static void qed_iov_handle_trust_change(struct qed_hwfn *hwfn)
+ 
+ 		/* Validate that the VF has a configured vport */
+ 		vf = qed_iov_get_vf_info(hwfn, i, true);
+-		if (!vf->vport_instance)
++		if (!vf || !vf->vport_instance)
+ 			continue;
+ 
+ 		memset(&params, 0, sizeof(params));
 -- 
 2.39.2
 
