@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B814F6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F221C433EF;
-	Mon,  3 Apr 2023 14:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB746FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2A8C433D2;
+	Mon,  3 Apr 2023 14:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532714;
-	bh=S459jdWER1xni9Yo2llF8OrfMcVLtymX+EffCGcFIIQ=;
+	s=korg; t=1680532717;
+	bh=OzFtwA7If/Wya3jhnsAa+8xL/Wy2+Y3Rx8WMX1aLFYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bCUsQmPNLJZbqWZch1B/jArEDINz92OYWHRZ+bDE1ziUKhPRJ5QaetL8VwL5Ror4T
-	 2NfHnNoOqrqBrnwvp8+L4leStoWNMq5DVXq9e7gKUJyvzz8ezzrcu9AAVLzwFucjS7
-	 8DhwTF8u1bnMbzB/Rd7byaKIij7yQxX4suz6O4Lc=
+	b=fByY9BH/2U5pgHWlp0Z4rMYxdKwp1hS26QUehhnEzS6xouWHPh6vrRzR5dTPA8mL/
+	 ay9OEqijofWpxemkuZzeO/bthcHSw4feicVyWeCTIeoFQzMpKfTDZ43ibiDYg9kHrX
+	 j7Nnq1XdFogS+su4Cct4csB6YO8mxNeCz8t63e2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wei Chen <harperchen1110@gmail.com>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/181] fbdev: intelfb: Fix potential divide by zero
-Date: Mon,  3 Apr 2023 16:08:13 +0200
-Message-Id: <20230403140417.032439192@linuxfoundation.org>
+Subject: [PATCH 6.1 059/181] fbdev: lxfb: Fix potential divide by zero
+Date: Mon,  3 Apr 2023 16:08:14 +0200
+Message-Id: <20230403140417.061958756@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -37,11 +37,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit d823685486a3446d061fed7c7d2f80af984f119a ]
+[ Upstream commit 61ac4b86a4c047c20d5cb423ddd87496f14d9868 ]
 
-Variable var->pixclock is controlled by user and can be assigned
-to zero. Without proper check, divide by zero would occur in
-intelfbhw_validate_mode and intelfbhw_mode_to_hw.
+var->pixclock can be assigned to zero by user. Without proper
+check, divide by zero would occur in lx_set_clock.
 
 Error out if var->pixclock is zero.
 
@@ -49,23 +48,23 @@ Signed-off-by: Wei Chen <harperchen1110@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/intelfb/intelfbdrv.c | 3 +++
+ drivers/video/fbdev/geode/lxfb_core.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/video/fbdev/intelfb/intelfbdrv.c b/drivers/video/fbdev/intelfb/intelfbdrv.c
-index d4a2891a9a7ac..a93dd531d00df 100644
---- a/drivers/video/fbdev/intelfb/intelfbdrv.c
-+++ b/drivers/video/fbdev/intelfb/intelfbdrv.c
-@@ -1219,6 +1219,9 @@ static int intelfb_check_var(struct fb_var_screeninfo *var,
+diff --git a/drivers/video/fbdev/geode/lxfb_core.c b/drivers/video/fbdev/geode/lxfb_core.c
+index 9d26592dbfce9..41fda498406c1 100644
+--- a/drivers/video/fbdev/geode/lxfb_core.c
++++ b/drivers/video/fbdev/geode/lxfb_core.c
+@@ -235,6 +235,9 @@ static void get_modedb(struct fb_videomode **modedb, unsigned int *size)
  
- 	dinfo = GET_DINFO(info);
- 
+ static int lxfb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
+ {
 +	if (!var->pixclock)
 +		return -EINVAL;
 +
- 	/* update the pitch */
- 	if (intelfbhw_validate_mode(dinfo, var) != 0)
+ 	if (var->xres > 1920 || var->yres > 1440)
  		return -EINVAL;
+ 
 -- 
 2.39.2
 
