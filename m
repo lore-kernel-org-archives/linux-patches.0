@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867C55683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE55C433D2;
-	Mon,  3 Apr 2023 14:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344235683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC204C433D2;
+	Mon,  3 Apr 2023 14:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531150;
-	bh=jUtanx+6zdb4641vsVyUtAiOI+JEQIlqff9G3GMLqBk=;
+	s=korg; t=1680531153;
+	bh=5Aj1WDgmJuiy/Os2qodk5equlpRlTUvzFYYPHGKMqwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vGkDmVMayK+lF2Oor9BPPuvlMoY1TJpf5azrhqXEaiu5oE2w2RPT3p14tfBKdKDXr
-	 F+OaTIlHBUPLyoIzqXXmaJdL2oWEZqwQDsGODzsH1esnxNkMaf+cgZhgirGtDIBsxb
-	 3x+LZ6HxIaKx++atG4qNtJixsxp0L2OApUw4gvcQ=
+	b=fj2RMdmABe6OC0T4ofteTx5E//KVgDFz2KHPPXAcWCq8C7pF+IB+XGO7wH+JAOA5n
+	 N0n01MsXcJYK73WhD8t5akcyLVJ86jRusDl8ztUcyCYbyrc1qnDLKOk97bTkMhRx9I
+	 TdEzXIHxK2qPzR9ApVA9kV0/3BWHDE9JTuo8pI+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geoff Levand <geoff@infradead.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 11/66] net/ps3_gelic_net: Fix RX sk_buff length
-Date: Mon,  3 Apr 2023 16:08:19 +0200
-Message-Id: <20230403140352.223531213@linuxfoundation.org>
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 4.14 38/66] dm stats: check for and propagate alloc_percpu failure
+Date: Mon,  3 Apr 2023 16:08:46 +0200
+Message-Id: <20230403140353.217296171@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -35,108 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geoff Levand <geoff@infradead.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 19b3bb51c3bc288b3f2c6f8c4450b0f548320625 ]
+commit d3aa3e060c4a80827eb801fc448debc9daa7c46b upstream.
 
-The Gelic Ethernet device needs to have the RX sk_buffs aligned to
-GELIC_NET_RXBUF_ALIGN, and also the length of the RX sk_buffs must
-be a multiple of GELIC_NET_RXBUF_ALIGN.
+Check alloc_precpu()'s return value and return an error from
+dm_stats_init() if it fails. Update alloc_dev() to fail if
+dm_stats_init() does.
 
-The current Gelic Ethernet driver was not allocating sk_buffs large
-enough to allow for this alignment.
+Otherwise, a NULL pointer dereference will occur in dm_stats_cleanup()
+even if dm-stats isn't being actively used.
 
-Also, correct the maximum and minimum MTU sizes, and add a new
-preprocessor macro for the maximum frame size, GELIC_NET_MAX_FRAME.
-
-Fixes various randomly occurring runtime network errors.
-
-Fixes: 02c1889166b4 ("ps3: gigabit ethernet driver for PS3, take3")
-Signed-off-by: Geoff Levand <geoff@infradead.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: fd2ed4d25270 ("dm: add statistics support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/toshiba/ps3_gelic_net.c | 19 ++++++++++---------
- drivers/net/ethernet/toshiba/ps3_gelic_net.h |  5 +++--
- 2 files changed, 13 insertions(+), 11 deletions(-)
+ drivers/md/dm-stats.c |    7 ++++++-
+ drivers/md/dm-stats.h |    2 +-
+ drivers/md/dm.c       |    4 +++-
+ 3 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/toshiba/ps3_gelic_net.c b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
-index 75237c81c63d6..67f61379ba672 100644
---- a/drivers/net/ethernet/toshiba/ps3_gelic_net.c
-+++ b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
-@@ -378,28 +378,29 @@ static int gelic_card_init_chain(struct gelic_card *card,
-  *
-  * allocates a new rx skb, iommu-maps it and attaches it to the descriptor.
-  * Activate the descriptor state-wise
-+ *
-+ * Gelic RX sk_buffs must be aligned to GELIC_NET_RXBUF_ALIGN and the length
-+ * must be a multiple of GELIC_NET_RXBUF_ALIGN.
-  */
- static int gelic_descr_prepare_rx(struct gelic_card *card,
- 				  struct gelic_descr *descr)
+--- a/drivers/md/dm-stats.c
++++ b/drivers/md/dm-stats.c
+@@ -188,7 +188,7 @@ static int dm_stat_in_flight(struct dm_s
+ 	       atomic_read(&shared->in_flight[WRITE]);
+ }
+ 
+-void dm_stats_init(struct dm_stats *stats)
++int dm_stats_init(struct dm_stats *stats)
  {
-+	static const unsigned int rx_skb_size =
-+		ALIGN(GELIC_NET_MAX_FRAME, GELIC_NET_RXBUF_ALIGN) +
-+		GELIC_NET_RXBUF_ALIGN - 1;
- 	int offset;
--	unsigned int bufsize;
- 
- 	if (gelic_descr_get_status(descr) !=  GELIC_DESCR_DMA_NOT_IN_USE)
- 		dev_info(ctodev(card), "%s: ERROR status\n", __func__);
--	/* we need to round up the buffer size to a multiple of 128 */
--	bufsize = ALIGN(GELIC_NET_MAX_MTU, GELIC_NET_RXBUF_ALIGN);
- 
--	/* and we need to have it 128 byte aligned, therefore we allocate a
--	 * bit more */
--	descr->skb = dev_alloc_skb(bufsize + GELIC_NET_RXBUF_ALIGN - 1);
-+	descr->skb = netdev_alloc_skb(*card->netdev, rx_skb_size);
- 	if (!descr->skb) {
- 		descr->buf_addr = 0; /* tell DMAC don't touch memory */
- 		dev_info(ctodev(card),
- 			 "%s:allocate skb failed !!\n", __func__);
- 		return -ENOMEM;
+ 	int cpu;
+ 	struct dm_stats_last_position *last;
+@@ -196,11 +196,16 @@ void dm_stats_init(struct dm_stats *stat
+ 	mutex_init(&stats->mutex);
+ 	INIT_LIST_HEAD(&stats->list);
+ 	stats->last = alloc_percpu(struct dm_stats_last_position);
++	if (!stats->last)
++		return -ENOMEM;
++
+ 	for_each_possible_cpu(cpu) {
+ 		last = per_cpu_ptr(stats->last, cpu);
+ 		last->last_sector = (sector_t)ULLONG_MAX;
+ 		last->last_rw = UINT_MAX;
  	}
--	descr->buf_size = cpu_to_be32(bufsize);
-+	descr->buf_size = cpu_to_be32(rx_skb_size);
- 	descr->dmac_cmd_status = 0;
- 	descr->result_size = 0;
- 	descr->valid_size = 0;
-@@ -412,7 +413,7 @@ static int gelic_descr_prepare_rx(struct gelic_card *card,
- 	/* io-mmu-map the skb */
- 	descr->buf_addr = cpu_to_be32(dma_map_single(ctodev(card),
- 						     descr->skb->data,
--						     GELIC_NET_MAX_MTU,
-+						     GELIC_NET_MAX_FRAME,
- 						     DMA_FROM_DEVICE));
- 	if (!descr->buf_addr) {
- 		dev_kfree_skb_any(descr->skb);
-@@ -930,7 +931,7 @@ static void gelic_net_pass_skb_up(struct gelic_descr *descr,
- 	data_error = be32_to_cpu(descr->data_error);
- 	/* unmap skb buffer */
- 	dma_unmap_single(ctodev(card), be32_to_cpu(descr->buf_addr),
--			 GELIC_NET_MAX_MTU,
-+			 GELIC_NET_MAX_FRAME,
- 			 DMA_FROM_DEVICE);
++
++	return 0;
+ }
  
- 	skb_put(skb, be32_to_cpu(descr->valid_size)?
-diff --git a/drivers/net/ethernet/toshiba/ps3_gelic_net.h b/drivers/net/ethernet/toshiba/ps3_gelic_net.h
-index fbbf9b54b173b..0e592fc19f6c5 100644
---- a/drivers/net/ethernet/toshiba/ps3_gelic_net.h
-+++ b/drivers/net/ethernet/toshiba/ps3_gelic_net.h
-@@ -32,8 +32,9 @@
- #define GELIC_NET_RX_DESCRIPTORS        128 /* num of descriptors */
- #define GELIC_NET_TX_DESCRIPTORS        128 /* num of descriptors */
+ void dm_stats_cleanup(struct dm_stats *stats)
+--- a/drivers/md/dm-stats.h
++++ b/drivers/md/dm-stats.h
+@@ -22,7 +22,7 @@ struct dm_stats_aux {
+ 	unsigned long long duration_ns;
+ };
  
--#define GELIC_NET_MAX_MTU               VLAN_ETH_FRAME_LEN
--#define GELIC_NET_MIN_MTU               VLAN_ETH_ZLEN
-+#define GELIC_NET_MAX_FRAME             2312
-+#define GELIC_NET_MAX_MTU               2294
-+#define GELIC_NET_MIN_MTU               64
- #define GELIC_NET_RXBUF_ALIGN           128
- #define GELIC_CARD_RX_CSUM_DEFAULT      1 /* hw chksum */
- #define GELIC_NET_WATCHDOG_TIMEOUT      5*HZ
--- 
-2.39.2
-
+-void dm_stats_init(struct dm_stats *st);
++int dm_stats_init(struct dm_stats *st);
+ void dm_stats_cleanup(struct dm_stats *st);
+ 
+ struct mapped_device;
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1799,7 +1799,9 @@ static struct mapped_device *alloc_dev(i
+ 	bio_set_dev(&md->flush_bio, md->bdev);
+ 	md->flush_bio.bi_opf = REQ_OP_WRITE | REQ_PREFLUSH | REQ_SYNC;
+ 
+-	dm_stats_init(&md->stats);
++	r = dm_stats_init(&md->stats);
++	if (r < 0)
++		goto bad;
+ 
+ 	/* Populate the mapping, nobody knows we exist yet */
+ 	spin_lock(&_minor_lock);
 
 
