@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703F8612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:21:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC396C433EF;
-	Mon,  3 Apr 2023 14:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1268C612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C663C4339B;
+	Mon,  3 Apr 2023 14:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531717;
-	bh=rdiOb6aB6IMXNSRwUVLojaJ0MoxQY4JfMOqOQjjqpiM=;
+	s=korg; t=1680531719;
+	bh=bkYkUBQq9L+2XTJs4SGMNKZf8XHThfh2of+zZKyLF0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ji7uYws04fMHsgI3GcM+H8IsA0ITC3YUT4iAhsdIuRRIijjVxxVkoHKEuSZomhOW/
-	 ipf/zu9X95K1CWp3f6sfPZNZm7oHYm9CmfDYok4NfsgxfgyDLRiUwjvrlAnTCxNX+C
-	 ajCtqK5FN4re8S36F59qJtKizwPC96tFzcaWHcB0=
+	b=P1wHwQRfkFpMWywmmpKtYiXe2Pb+FT/Z77dzdbLq278GWafhI/qnvlztEYWNXCMXx
+	 W8ElFVDhpFDj8R1s+1KLnZ3eH4I50e6F1hbofkjh2kjtLXfX0OVZhQt3qb6DYyaBVr
+	 No032BadCwO6y2z2F7v90Om+uV5/BbpmjZQHzYY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Steffen=20B=C3=A4tz?= <steffen@innosonix.de>,
-	Fabio Estevam <festevam@denx.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 084/104] net: dsa: mv88e6xxx: Enable IGMP snooping on user ports only
-Date: Mon,  3 Apr 2023 16:09:16 +0200
-Message-Id: <20230403140407.429960034@linuxfoundation.org>
+Subject: [PATCH 5.4 085/104] net: mvneta: make tx buffer array agnostic
+Date: Mon,  3 Apr 2023 16:09:17 +0200
+Message-Id: <20230403140407.465688356@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -39,50 +35,219 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steffen Bätz <steffen@innosonix.de>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 7bcad0f0e6fbc1d613e49e0ee35c8e5f2e685bb0 ]
+[ Upstream commit 9e58c8b410650b5a6eb5b8fad8474bd8425a4023 ]
 
-Do not set the MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP bit on CPU or DSA ports.
+Allow tx buffer array to contain both skb and xdp buffers in order to
+enable xdp frame recycling adding XDP_TX verdict support
 
-This allows the host CPU port to be a regular IGMP listener by sending out
-IGMP Membership Reports, which would otherwise not be forwarded by the
-mv88exxx chip, but directly looped back to the CPU port itself.
-
-Fixes: 54d792f257c6 ("net: dsa: Centralise global and port setup code into mv88e6xxx.")
-Signed-off-by: Steffen Bätz <steffen@innosonix.de>
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230329150140.701559-1-festevam@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 2960a2d33b02 ("net: mvneta: fix potential double-frees in mvneta_txq_sw_deinit()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/mvneta.c | 66 +++++++++++++++++----------
+ 1 file changed, 43 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index b336ed071fa89..ea32be579e7b1 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -2433,9 +2433,14 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
- 	 * If this is the upstream port for this switch, enable
- 	 * forwarding of unknown unicasts and multicasts.
- 	 */
--	reg = MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP |
--		MV88E6185_PORT_CTL0_USE_TAG | MV88E6185_PORT_CTL0_USE_IP |
-+	reg = MV88E6185_PORT_CTL0_USE_TAG | MV88E6185_PORT_CTL0_USE_IP |
- 		MV88E6XXX_PORT_CTL0_STATE_FORWARDING;
-+	/* Forward any IPv4 IGMP or IPv6 MLD frames received
-+	 * by a USER port to the CPU port to allow snooping.
-+	 */
-+	if (dsa_is_user_port(ds, port))
-+		reg |= MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP;
+diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
+index 2c1ee32684988..977c2961aa2c2 100644
+--- a/drivers/net/ethernet/marvell/mvneta.c
++++ b/drivers/net/ethernet/marvell/mvneta.c
+@@ -549,6 +549,20 @@ struct mvneta_rx_desc {
+ };
+ #endif
+ 
++enum mvneta_tx_buf_type {
++	MVNETA_TYPE_SKB,
++	MVNETA_TYPE_XDP_TX,
++	MVNETA_TYPE_XDP_NDO,
++};
 +
- 	err = mv88e6xxx_port_write(chip, port, MV88E6XXX_PORT_CTL0, reg);
- 	if (err)
- 		return err;
++struct mvneta_tx_buf {
++	enum mvneta_tx_buf_type type;
++	union {
++		struct xdp_frame *xdpf;
++		struct sk_buff *skb;
++	};
++};
++
+ struct mvneta_tx_queue {
+ 	/* Number of this TX queue, in the range 0-7 */
+ 	u8 id;
+@@ -564,8 +578,8 @@ struct mvneta_tx_queue {
+ 	int tx_stop_threshold;
+ 	int tx_wake_threshold;
+ 
+-	/* Array of transmitted skb */
+-	struct sk_buff **tx_skb;
++	/* Array of transmitted buffers */
++	struct mvneta_tx_buf *buf;
+ 
+ 	/* Index of last TX DMA descriptor that was inserted */
+ 	int txq_put_index;
+@@ -1774,14 +1788,9 @@ static void mvneta_txq_bufs_free(struct mvneta_port *pp,
+ 	int i;
+ 
+ 	for (i = 0; i < num; i++) {
++		struct mvneta_tx_buf *buf = &txq->buf[txq->txq_get_index];
+ 		struct mvneta_tx_desc *tx_desc = txq->descs +
+ 			txq->txq_get_index;
+-		struct sk_buff *skb = txq->tx_skb[txq->txq_get_index];
+-
+-		if (skb) {
+-			bytes_compl += skb->len;
+-			pkts_compl++;
+-		}
+ 
+ 		mvneta_txq_inc_get(txq);
+ 
+@@ -1789,9 +1798,12 @@ static void mvneta_txq_bufs_free(struct mvneta_port *pp,
+ 			dma_unmap_single(pp->dev->dev.parent,
+ 					 tx_desc->buf_phys_addr,
+ 					 tx_desc->data_size, DMA_TO_DEVICE);
+-		if (!skb)
++		if (!buf->skb)
+ 			continue;
+-		dev_kfree_skb_any(skb);
++
++		bytes_compl += buf->skb->len;
++		pkts_compl++;
++		dev_kfree_skb_any(buf->skb);
+ 	}
+ 
+ 	netdev_tx_completed_queue(nq, pkts_compl, bytes_compl);
+@@ -2242,16 +2254,19 @@ static inline void
+ mvneta_tso_put_hdr(struct sk_buff *skb,
+ 		   struct mvneta_port *pp, struct mvneta_tx_queue *txq)
+ {
+-	struct mvneta_tx_desc *tx_desc;
+ 	int hdr_len = skb_transport_offset(skb) + tcp_hdrlen(skb);
++	struct mvneta_tx_buf *buf = &txq->buf[txq->txq_put_index];
++	struct mvneta_tx_desc *tx_desc;
+ 
+-	txq->tx_skb[txq->txq_put_index] = NULL;
+ 	tx_desc = mvneta_txq_next_desc_get(txq);
+ 	tx_desc->data_size = hdr_len;
+ 	tx_desc->command = mvneta_skb_tx_csum(pp, skb);
+ 	tx_desc->command |= MVNETA_TXD_F_DESC;
+ 	tx_desc->buf_phys_addr = txq->tso_hdrs_phys +
+ 				 txq->txq_put_index * TSO_HEADER_SIZE;
++	buf->type = MVNETA_TYPE_SKB;
++	buf->skb = NULL;
++
+ 	mvneta_txq_inc_put(txq);
+ }
+ 
+@@ -2260,6 +2275,7 @@ mvneta_tso_put_data(struct net_device *dev, struct mvneta_tx_queue *txq,
+ 		    struct sk_buff *skb, char *data, int size,
+ 		    bool last_tcp, bool is_last)
+ {
++	struct mvneta_tx_buf *buf = &txq->buf[txq->txq_put_index];
+ 	struct mvneta_tx_desc *tx_desc;
+ 
+ 	tx_desc = mvneta_txq_next_desc_get(txq);
+@@ -2273,7 +2289,8 @@ mvneta_tso_put_data(struct net_device *dev, struct mvneta_tx_queue *txq,
+ 	}
+ 
+ 	tx_desc->command = 0;
+-	txq->tx_skb[txq->txq_put_index] = NULL;
++	buf->type = MVNETA_TYPE_SKB;
++	buf->skb = NULL;
+ 
+ 	if (last_tcp) {
+ 		/* last descriptor in the TCP packet */
+@@ -2281,7 +2298,7 @@ mvneta_tso_put_data(struct net_device *dev, struct mvneta_tx_queue *txq,
+ 
+ 		/* last descriptor in SKB */
+ 		if (is_last)
+-			txq->tx_skb[txq->txq_put_index] = skb;
++			buf->skb = skb;
+ 	}
+ 	mvneta_txq_inc_put(txq);
+ 	return 0;
+@@ -2366,6 +2383,7 @@ static int mvneta_tx_frag_process(struct mvneta_port *pp, struct sk_buff *skb,
+ 	int i, nr_frags = skb_shinfo(skb)->nr_frags;
+ 
+ 	for (i = 0; i < nr_frags; i++) {
++		struct mvneta_tx_buf *buf = &txq->buf[txq->txq_put_index];
+ 		skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
+ 		void *addr = skb_frag_address(frag);
+ 
+@@ -2385,12 +2403,13 @@ static int mvneta_tx_frag_process(struct mvneta_port *pp, struct sk_buff *skb,
+ 		if (i == nr_frags - 1) {
+ 			/* Last descriptor */
+ 			tx_desc->command = MVNETA_TXD_L_DESC | MVNETA_TXD_Z_PAD;
+-			txq->tx_skb[txq->txq_put_index] = skb;
++			buf->skb = skb;
+ 		} else {
+ 			/* Descriptor in the middle: Not First, Not Last */
+ 			tx_desc->command = 0;
+-			txq->tx_skb[txq->txq_put_index] = NULL;
++			buf->skb = NULL;
+ 		}
++		buf->type = MVNETA_TYPE_SKB;
+ 		mvneta_txq_inc_put(txq);
+ 	}
+ 
+@@ -2418,6 +2437,7 @@ static netdev_tx_t mvneta_tx(struct sk_buff *skb, struct net_device *dev)
+ 	struct mvneta_port *pp = netdev_priv(dev);
+ 	u16 txq_id = skb_get_queue_mapping(skb);
+ 	struct mvneta_tx_queue *txq = &pp->txqs[txq_id];
++	struct mvneta_tx_buf *buf = &txq->buf[txq->txq_put_index];
+ 	struct mvneta_tx_desc *tx_desc;
+ 	int len = skb->len;
+ 	int frags = 0;
+@@ -2450,16 +2470,17 @@ static netdev_tx_t mvneta_tx(struct sk_buff *skb, struct net_device *dev)
+ 		goto out;
+ 	}
+ 
++	buf->type = MVNETA_TYPE_SKB;
+ 	if (frags == 1) {
+ 		/* First and Last descriptor */
+ 		tx_cmd |= MVNETA_TXD_FLZ_DESC;
+ 		tx_desc->command = tx_cmd;
+-		txq->tx_skb[txq->txq_put_index] = skb;
++		buf->skb = skb;
+ 		mvneta_txq_inc_put(txq);
+ 	} else {
+ 		/* First but not Last */
+ 		tx_cmd |= MVNETA_TXD_F_DESC;
+-		txq->tx_skb[txq->txq_put_index] = NULL;
++		buf->skb = NULL;
+ 		mvneta_txq_inc_put(txq);
+ 		tx_desc->command = tx_cmd;
+ 		/* Continue with other skb fragments */
+@@ -3005,9 +3026,8 @@ static int mvneta_txq_sw_init(struct mvneta_port *pp,
+ 
+ 	txq->last_desc = txq->size - 1;
+ 
+-	txq->tx_skb = kmalloc_array(txq->size, sizeof(*txq->tx_skb),
+-				    GFP_KERNEL);
+-	if (!txq->tx_skb) {
++	txq->buf = kmalloc_array(txq->size, sizeof(*txq->buf), GFP_KERNEL);
++	if (!txq->buf) {
+ 		dma_free_coherent(pp->dev->dev.parent,
+ 				  txq->size * MVNETA_DESC_ALIGNED_SIZE,
+ 				  txq->descs, txq->descs_phys);
+@@ -3019,7 +3039,7 @@ static int mvneta_txq_sw_init(struct mvneta_port *pp,
+ 					   txq->size * TSO_HEADER_SIZE,
+ 					   &txq->tso_hdrs_phys, GFP_KERNEL);
+ 	if (!txq->tso_hdrs) {
+-		kfree(txq->tx_skb);
++		kfree(txq->buf);
+ 		dma_free_coherent(pp->dev->dev.parent,
+ 				  txq->size * MVNETA_DESC_ALIGNED_SIZE,
+ 				  txq->descs, txq->descs_phys);
+@@ -3074,7 +3094,7 @@ static void mvneta_txq_sw_deinit(struct mvneta_port *pp,
+ {
+ 	struct netdev_queue *nq = netdev_get_tx_queue(pp->dev, txq->id);
+ 
+-	kfree(txq->tx_skb);
++	kfree(txq->buf);
+ 
+ 	if (txq->tso_hdrs)
+ 		dma_free_coherent(pp->dev->dev.parent,
 -- 
 2.39.2
 
