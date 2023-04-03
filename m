@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2F36FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E984FC433D2;
-	Mon,  3 Apr 2023 14:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E786FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849CEC433D2;
+	Mon,  3 Apr 2023 14:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532450;
-	bh=C4eCLZ8Ae9m6I4MZapff2h/VH3WAMMzfAwFxs6YuczQ=;
+	s=korg; t=1680532452;
+	bh=TjMptBs9lwH1Y7OaUDJQ52Tv9RLGQb/zzsBQfNHbGR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KRt6a3QQvF5c+kbJ9tZa7BX8iXM9Xk5FC3aow60Vq125aru4bz5tyLlT79Y6hCBrO
-	 O+H72DCoVcoZ3DTggxE5OkT54E7a89ChawAzxqL2FFKZpITc6qpjMDgCuqPBFdNpAy
-	 ae/yX64mjdwg/hjEhr8gAjDhTUSiKiQeAAlketM4=
+	b=B3FeE1nE84AMdTGKkuwIk7ba5wDNnpTwrMVbVbZO9FA+UVbRkZSrePAKvDhPAXDbx
+	 qO/CD9NuVZHwiLK8a6WKdV0qc4y5yHpYnbkTxt4OqkDs7rMvGhMjAxJ1RlXQMpaH8u
+	 aIyunCHnjo/tbNYG7sRAIYJQouT/N+svWD20Xm/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jetro Jormalainen <jje-lxkl@jetro.fi>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 80/99] ALSA: hda/conexant: Partial revert of a quirk for Lenovo
-Date: Mon,  3 Apr 2023 16:09:43 +0200
-Message-Id: <20230403140406.438610508@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 5.15 89/99] s390/uaccess: add missing earlyclobber annotations to __clear_user()
+Date: Mon,  3 Apr 2023 16:09:52 +0200
+Message-Id: <20230403140406.719391018@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -34,59 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit b871cb971c683f7f212e7ca3c9a6709a75785116 upstream.
+commit 89aba4c26fae4e459f755a18912845c348ee48f3 upstream.
 
-The recent commit f83bb2592482 ("ALSA: hda/conexant: Add quirk for
-LENOVO 20149 Notebook model") introduced a quirk for the device with
-17aa:3977, but this caused a regression on another model (Lenovo
-Ideadpad U31) with the very same PCI SSID.  And, through skimming over
-the net, it seems that this PCI SSID is used for multiple different
-models, so it's no good idea to apply the quirk with the SSID.
+Add missing earlyclobber annotation to size, to, and tmp2 operands of the
+__clear_user() inline assembly since they are modified or written to before
+the last usage of all input operands. This can lead to incorrect register
+allocation for the inline assembly.
 
-Although we may take a different ID check (e.g. the codec SSID instead
-of the PCI SSID), unfortunately, the original patch author couldn't
-identify the hardware details any longer as the machine was returned,
-and we can't develop the further proper fix.
-
-In this patch, instead, we partially revert the change so that the
-quirk won't be applied as default for addressing the regression.
-Meanwhile, the quirk function itself is kept, and it's now made to be
-applicable via the explicit model=lenovo-20149 option.
-
-Fixes: f83bb2592482 ("ALSA: hda/conexant: Add quirk for LENOVO 20149 Notebook model")
-Reported-by: Jetro Jormalainen <jje-lxkl@jetro.fi>
-Link: https://lore.kernel.org/r/20230308215009.4d3e58a6@mopti
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230320140954.31154-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 6c2a9e6df604 ("[S390] Use alternative user-copy operations for new hardware.")
+Reported-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/all/20230321122514.1743889-3-mark.rutland@arm.com/
+Cc: stable@vger.kernel.org
+Reviewed-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_conexant.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/s390/lib/uaccess.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -980,7 +980,10 @@ static const struct snd_pci_quirk cxt506
- 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
--	SND_PCI_QUIRK(0x17aa, 0x3977, "Lenovo IdeaPad U310", CXT_PINCFG_LENOVO_NOTEBOOK),
-+	/* NOTE: we'd need to extend the quirk for 17aa:3977 as the same
-+	 * PCI SSID is used on multiple Lenovo models
-+	 */
-+	SND_PCI_QUIRK(0x17aa, 0x3977, "Lenovo IdeaPad U310", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo G50-70", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x397b, "Lenovo S205", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad", CXT_FIXUP_THINKPAD_ACPI),
-@@ -1003,6 +1006,7 @@ static const struct hda_model_fixup cxt5
- 	{ .id = CXT_FIXUP_MUTE_LED_GPIO, .name = "mute-led-gpio" },
- 	{ .id = CXT_FIXUP_HP_ZBOOK_MUTE_LED, .name = "hp-zbook-mute-led" },
- 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
-+	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
- 	{}
- };
- 
+--- a/arch/s390/lib/uaccess.c
++++ b/arch/s390/lib/uaccess.c
+@@ -227,7 +227,7 @@ static inline unsigned long clear_user_m
+ 		"4: slgr  %0,%0\n"
+ 		"5:\n"
+ 		EX_TABLE(0b,2b) EX_TABLE(6b,2b) EX_TABLE(3b,5b) EX_TABLE(7b,5b)
+-		: "+a" (size), "+a" (to), "+a" (tmp1), "=a" (tmp2)
++		: "+&a" (size), "+&a" (to), "+a" (tmp1), "=&a" (tmp2)
+ 		: "a" (empty_zero_page), [spec] "K" (0x81UL)
+ 		: "cc", "memory", "0");
+ 	return size;
 
 
