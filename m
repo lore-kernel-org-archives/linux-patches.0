@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99555683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:16:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4121CC433D2;
-	Mon,  3 Apr 2023 14:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F9A5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:16:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B05C433D2;
+	Mon,  3 Apr 2023 14:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531376;
-	bh=zOkYDjAQuRFrp1oxtGAWrnY29wRhNEqF6ieSs24r4zo=;
+	s=korg; t=1680531379;
+	bh=gqBs6u1uq3XP3qLdDqQO+mfTeSfnMU488vbDoIcARWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQOX3jP2aQJPU/bUy75oE6j6fDC6QJaoK8tnVGyq7zzTbPGTnuTJXBGdTLn5UQ8Wa
-	 USyJYu17dggb4sIBjsc81tvCw48EWKJ9sULCsz8YRr0yyruSm65+o/wiITiie9i1VG
-	 Yju5J5Xze7JxEOs5eEjp4PuP9d17OZqqOcFcMdz0=
+	b=E7xGkHKUldQ6dIrVQyB+CGLmsKW7pf485Zv45lSjRKd89ufyx6vVxzl/R0z13TC8r
+	 d0Us1I+BeSZ99l4Xxa4hMVS3u8GC/1WyFXkE4/J0vQwxz28mHDkikeL6PloJvIUpmi
+	 MVOfw3wGY/Av2HUFOsKSAgF3qxsD+muA31Ui+Xds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coly Li <colyli@suse.de>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.19 40/84] dm thin: fix deadlock when swapping to thin device
-Date: Mon,  3 Apr 2023 16:08:41 +0200
-Message-Id: <20230403140354.747407882@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 4.19 41/84] usb: chipdea: core: fix return -EINVAL if request role is the same with current role
+Date: Mon,  3 Apr 2023 16:08:42 +0200
+Message-Id: <20230403140354.790551843@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,70 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Coly Li <colyli@suse.de>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 9bbf5feecc7eab2c370496c1c161bbfe62084028 upstream.
+commit 3670de80678961eda7fa2220883fc77c16868951 upstream.
 
-This is an already known issue that dm-thin volume cannot be used as
-swap, otherwise a deadlock may happen when dm-thin internal memory
-demand triggers swap I/O on the dm-thin volume itself.
+It should not return -EINVAL if the request role is the same with current
+role, return non-error and without do anything instead.
 
-But thanks to commit a666e5c05e7c ("dm: fix deadlock when swapping to
-encrypted device"), the limit_swap_bios target flag can also be used
-for dm-thin to avoid the recursive I/O when it is used as swap.
-
-Fix is to simply set ti->limit_swap_bios to true in both pool_ctr()
-and thin_ctr().
-
-In my test, I create a dm-thin volume /dev/vg/swap and use it as swap
-device. Then I run fio on another dm-thin volume /dev/vg/main and use
-large --blocksize to trigger swap I/O onto /dev/vg/swap.
-
-The following fio command line is used in my test,
-  fio --name recursive-swap-io --lockmem 1 --iodepth 128 \
-     --ioengine libaio --filename /dev/vg/main --rw randrw \
-    --blocksize 1M --numjobs 32 --time_based --runtime=12h
-
-Without this fix, the whole system can be locked up within 15 seconds.
-
-With this fix, there is no any deadlock or hung task observed after
-2 hours of running fio.
-
-Furthermore, if blocksize is changed from 1M to 128M, after around 30
-seconds fio has no visible I/O, and the out-of-memory killer message
-shows up in kernel message. After around 20 minutes all fio processes
-are killed and the whole system is back to being alive.
-
-This is exactly what is expected when recursive I/O happens on dm-thin
-volume when it is used as swap.
-
-Depends-on: a666e5c05e7c ("dm: fix deadlock when swapping to encrypted device")
-Cc: stable@vger.kernel.org
-Signed-off-by: Coly Li <colyli@suse.de>
-Acked-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: a932a8041ff9 ("usb: chipidea: core: add sysfs group")
+cc: <stable@vger.kernel.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20230317061516.2451728-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/chipidea/core.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -3365,6 +3365,7 @@ static int pool_ctr(struct dm_target *ti
- 	pt->low_water_blocks = low_water_blocks;
- 	pt->adjusted_pf = pt->requested_pf = pf;
- 	ti->num_flush_bios = 1;
-+	ti->limit_swap_bios = true;
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -872,9 +872,12 @@ static ssize_t role_store(struct device
+ 			     strlen(ci->roles[role]->name)))
+ 			break;
  
- 	/*
- 	 * Only need to enable discards if the pool should pass
-@@ -4245,6 +4246,7 @@ static int thin_ctr(struct dm_target *ti
- 		goto bad;
+-	if (role == CI_ROLE_END || role == ci->role)
++	if (role == CI_ROLE_END)
+ 		return -EINVAL;
  
- 	ti->num_flush_bios = 1;
-+	ti->limit_swap_bios = true;
- 	ti->flush_supported = true;
- 	ti->per_io_data_size = sizeof(struct dm_thin_endio_hook);
- 
++	if (role == ci->role)
++		return n;
++
+ 	pm_runtime_get_sync(dev);
+ 	disable_irq(ci->irq);
+ 	ci_role_stop(ci);
 
 
