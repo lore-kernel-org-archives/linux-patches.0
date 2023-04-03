@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681855683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:15:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CB3C433EF;
-	Mon,  3 Apr 2023 14:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD35A5698
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:15:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52835C4339B;
+	Mon,  3 Apr 2023 14:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531318;
-	bh=6dt7vG+0XfgAqvg4V5nPT83NkdixZ0PQLO199Lgp2LM=;
+	s=korg; t=1680531323;
+	bh=xoYnR4n68PX8w5dMyu+b2oRPsBIZKfQ3h8fN8Vh8khc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ATXNHWL4lguZgR2G8vH2Vg3jQFCanbPhRESu2rFcxpDvxSURyMmNNKMVV/SQsTaFT
-	 bMLapQnfq1PNvqGFyaTLVPchXXWd+UAHqf/4Bf3tY6l2DOMozKYbW0+1N+IoRJi5vf
-	 PSMlqFgzoaVVme1K3YTBvsiZWTNjN0KbU7k6fJhM=
+	b=wnnNz+wOnIOQsn742FFvgw3U1Z1xRSoaJMn6UzmPctpgT4m+J2YnR5HjsmdNgIhsy
+	 1N2fYL+iLXS65rdlbkjZZAmQxOYYdRYaKeEvdnRZfV4Mu1xomfJ9bMl2y6j90gOfy1
+	 ngo82aMmkfFugivZXIbCE2wXh+ddzei3iwzz8ze4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Francois Romieu <romieu@fr.zoreil.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Pawe=C5=82=20Jab=C5=82o=C5=84ski?= <pawel.jablonski@intel.com>,
+	Andrew Bowers <andrewx.bowers@intel.com>,
+	Jeff Kirsher <jeffrey.t.kirsher@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 18/84] atm: idt77252: fix kmemleak when rmmod idt77252
-Date: Mon,  3 Apr 2023 16:08:19 +0200
-Message-Id: <20230403140353.994164970@linuxfoundation.org>
+Subject: [PATCH 4.19 02/84] i40evf: Change a VF mac without reloading the VF driver
+Date: Mon,  3 Apr 2023 16:08:03 +0200
+Message-Id: <20230403140353.493716936@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -36,90 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Paweł Jabłoński <pawel.jablonski@intel.com>
 
-[ Upstream commit 4fe3c88552a3fbe1944426a4506a18cdeb457b5a ]
+[ Upstream commit ae1e29f671b467f3e9e9aa2b82ee40e4300ea810 ]
 
-There are memory leaks reported by kmemleak:
+Add possibility to change a VF mac address from host side
+without reloading the VF driver on the guest side. Without
+this patch it is not possible to change the VF mac because
+executing i40evf_virtchnl_completion function with
+VIRTCHNL_OP_GET_VF_RESOURCES opcode resets the VF mac
+address to previous value.
 
-  unreferenced object 0xffff888106500800 (size 128):
-    comm "modprobe", pid 1017, jiffies 4297787785 (age 67.152s)
-    hex dump (first 32 bytes):
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<00000000970ce626>] __kmem_cache_alloc_node+0x20c/0x380
-      [<00000000fb5f78d9>] kmalloc_trace+0x2f/0xb0
-      [<000000000e947e2a>] idt77252_init_one+0x2847/0x3c90 [idt77252]
-      [<000000006efb048e>] local_pci_probe+0xeb/0x1a0
-    ...
-
-  unreferenced object 0xffff888106500b00 (size 128):
-    comm "modprobe", pid 1017, jiffies 4297787785 (age 67.152s)
-    hex dump (first 32 bytes):
-      00 20 3d 01 80 88 ff ff 00 20 3d 01 80 88 ff ff  . =...... =.....
-      f0 23 3d 01 80 88 ff ff 00 20 3d 01 00 00 00 00  .#=...... =.....
-    backtrace:
-      [<00000000970ce626>] __kmem_cache_alloc_node+0x20c/0x380
-      [<00000000fb5f78d9>] kmalloc_trace+0x2f/0xb0
-      [<00000000f451c5be>] alloc_scq.constprop.0+0x4a/0x400 [idt77252]
-      [<00000000e6313849>] idt77252_init_one+0x28cf/0x3c90 [idt77252]
-
-The root cause is traced to the vc_maps which alloced in open_card_oam()
-are not freed in close_card_oam(). The vc_maps are used to record
-open connections, so when close a vc_map in close_card_oam(), the memory
-should be freed. Moreover, the ubr0 is not closed when close a idt77252
-device, leading to the memory leak of vc_map and scq_info.
-
-Fix them by adding kfree in close_card_oam() and implementing new
-close_card_ubr0() to close ubr0.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Francois Romieu <romieu@fr.zoreil.com>
-Link: https://lore.kernel.org/r/20230320143318.2644630-1-lizetao1@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paweł Jabłoński <pawel.jablonski@intel.com>
+Tested-by: Andrew Bowers <andrewx.bowers@intel.com>
+Signed-off-by: Jeff Kirsher <jeffrey.t.kirsher@intel.com>
+Stable-dep-of: 32d57f667f87 ("iavf: fix inverted Rx hash condition leading to disabled hash")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/atm/idt77252.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c  |  8 +++++---
+ drivers/net/ethernet/intel/i40evf/i40evf_virtchnl.c | 11 +++++++++--
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
-index bc06f5919839c..3380322df98e0 100644
---- a/drivers/atm/idt77252.c
-+++ b/drivers/atm/idt77252.c
-@@ -2915,6 +2915,7 @@ close_card_oam(struct idt77252_dev *card)
- 
- 				recycle_rx_pool_skb(card, &vc->rcv.rx_pool);
- 			}
-+			kfree(vc);
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 240083201dbf4..1527c67b487b2 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -2595,7 +2595,7 @@ static inline int i40e_check_vf_permission(struct i40e_vf *vf,
+ 		    !is_multicast_ether_addr(addr) && vf->pf_set_mac &&
+ 		    !ether_addr_equal(addr, vf->default_lan_addr.addr)) {
+ 			dev_err(&pf->pdev->dev,
+-				"VF attempting to override administratively set MAC address, reload the VF driver to resume normal operation\n");
++				"VF attempting to override administratively set MAC address, bring down and up the VF interface to resume normal operation\n");
+ 			return -EPERM;
  		}
  	}
- }
-@@ -2958,6 +2959,15 @@ open_card_ubr0(struct idt77252_dev *card)
- 	return 0;
- }
+@@ -4019,9 +4019,11 @@ int i40e_ndo_set_vf_mac(struct net_device *netdev, int vf_id, u8 *mac)
+ 			 mac, vf_id);
+ 	}
  
-+static void
-+close_card_ubr0(struct idt77252_dev *card)
-+{
-+	struct vc_map *vc = card->vcs[0];
-+
-+	free_scq(card, vc->scq);
-+	kfree(vc);
-+}
-+
- static int
- idt77252_dev_open(struct idt77252_dev *card)
- {
-@@ -3007,6 +3017,7 @@ static void idt77252_dev_close(struct atm_dev *dev)
- 	struct idt77252_dev *card = dev->dev_data;
- 	u32 conf;
+-	/* Force the VF driver stop so it has to reload with new MAC address */
++	/* Force the VF interface down so it has to bring up with new MAC
++	 * address
++	 */
+ 	i40e_vc_disable_vf(vf);
+-	dev_info(&pf->pdev->dev, "Reload the VF driver to make this change effective.\n");
++	dev_info(&pf->pdev->dev, "Bring down and up the VF interface to make this change effective.\n");
  
-+	close_card_ubr0(card);
- 	close_card_oam(card);
- 
- 	conf = SAR_CFG_RXPTH |	/* enable receive path           */
+ error_param:
+ 	return ret;
+diff --git a/drivers/net/ethernet/intel/i40evf/i40evf_virtchnl.c b/drivers/net/ethernet/intel/i40evf/i40evf_virtchnl.c
+index 94dabc9d89f73..6579dabab78cf 100644
+--- a/drivers/net/ethernet/intel/i40evf/i40evf_virtchnl.c
++++ b/drivers/net/ethernet/intel/i40evf/i40evf_virtchnl.c
+@@ -1362,8 +1362,15 @@ void i40evf_virtchnl_completion(struct i40evf_adapter *adapter,
+ 		memcpy(adapter->vf_res, msg, min(msglen, len));
+ 		i40evf_validate_num_queues(adapter);
+ 		i40e_vf_parse_hw_config(&adapter->hw, adapter->vf_res);
+-		/* restore current mac address */
+-		ether_addr_copy(adapter->hw.mac.addr, netdev->dev_addr);
++		if (is_zero_ether_addr(adapter->hw.mac.addr)) {
++			/* restore current mac address */
++			ether_addr_copy(adapter->hw.mac.addr, netdev->dev_addr);
++		} else {
++			/* refresh current mac address if changed */
++			ether_addr_copy(netdev->dev_addr, adapter->hw.mac.addr);
++			ether_addr_copy(netdev->perm_addr,
++					adapter->hw.mac.addr);
++		}
+ 		i40evf_process_config(adapter);
+ 		}
+ 		break;
 -- 
 2.39.2
 
