@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F325698
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6D6C4339B;
-	Mon,  3 Apr 2023 14:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E4D5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29480C433D2;
+	Mon,  3 Apr 2023 14:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531496;
-	bh=vEXh1YAAv9JMy7o34MReeF1LygzVoP25tEa9unUH980=;
+	s=korg; t=1680531499;
+	bh=0Smb4QBuAw+p2vpfDH6R5AGMEtDODAPQEEWPWaCioig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nsixlexX+S60stXG41aRtKQQk7IzqsWcYns+h+cBvzM4vAFMhDmqhe0RtmpebMxIp
-	 W/6xY/FCDXFLBIs594BA7YLVgMH92Hi+SEWOIW40yXguhHbjevgjxYguLN0hL+BUQt
-	 aUeLdnw+1n5UXnGG5C/ZeX+QNQAhlAxyMw8nGmWU=
+	b=yApRJ9hF5K36mUnp8ie9rGve+XzuUzAwPMRy7qmfw+Ev+UYqChPcjUW2YPJsc3J34
+	 50XCoP0EqMpVnfCqRNWrxSBNmui7mBo4wdavkLa8guo9AULRu5u38KPyjH/v8FbEza
+	 rP76BoFMmDRt8ueIhd8GGMTdjPGyBu7yEwVjMfvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 66/84] net: mvneta: make tx buffer array agnostic
-Date: Mon,  3 Apr 2023 16:09:07 +0200
-Message-Id: <20230403140355.713056581@linuxfoundation.org>
+	msizanoen <msizanoen@qtmlabs.xyz>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 4.19 67/84] Input: alps - fix compatibility with -funsigned-char
+Date: Mon,  3 Apr 2023 16:09:08 +0200
+Message-Id: <20230403140355.751200267@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,221 +34,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: msizanoen <msizanoen@qtmlabs.xyz>
 
-[ Upstream commit 9e58c8b410650b5a6eb5b8fad8474bd8425a4023 ]
+commit 754ff5060daf5a1cf4474eff9b4edeb6c17ef7ab upstream.
 
-Allow tx buffer array to contain both skb and xdp buffers in order to
-enable xdp frame recycling adding XDP_TX verdict support
+The AlpsPS/2 code previously relied on the assumption that `char` is a
+signed type, which was true on x86 platforms (the only place where this
+driver is used) before kernel 6.2. However, on 6.2 and later, this
+assumption is broken due to the introduction of -funsigned-char as a new
+global compiler flag.
 
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 2960a2d33b02 ("net: mvneta: fix potential double-frees in mvneta_txq_sw_deinit()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by explicitly specifying the signedness of `char` when sign
+extending the values received from the device.
+
+Fixes: f3f33c677699 ("Input: alps - Rushmore and v7 resolution support")
+Signed-off-by: msizanoen <msizanoen@qtmlabs.xyz>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230320045228.182259-1-msizanoen@qtmlabs.xyz
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 66 +++++++++++++++++----------
- 1 file changed, 43 insertions(+), 23 deletions(-)
+ drivers/input/mouse/alps.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index fd13116812006..f1a4b11ce0d19 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -542,6 +542,20 @@ struct mvneta_rx_desc {
- };
- #endif
+--- a/drivers/input/mouse/alps.c
++++ b/drivers/input/mouse/alps.c
+@@ -855,8 +855,8 @@ static void alps_process_packet_v6(struc
+ 			x = y = z = 0;
  
-+enum mvneta_tx_buf_type {
-+	MVNETA_TYPE_SKB,
-+	MVNETA_TYPE_XDP_TX,
-+	MVNETA_TYPE_XDP_NDO,
-+};
-+
-+struct mvneta_tx_buf {
-+	enum mvneta_tx_buf_type type;
-+	union {
-+		struct xdp_frame *xdpf;
-+		struct sk_buff *skb;
-+	};
-+};
-+
- struct mvneta_tx_queue {
- 	/* Number of this TX queue, in the range 0-7 */
- 	u8 id;
-@@ -557,8 +571,8 @@ struct mvneta_tx_queue {
- 	int tx_stop_threshold;
- 	int tx_wake_threshold;
+ 		/* Divide 4 since trackpoint's speed is too fast */
+-		input_report_rel(dev2, REL_X, (char)x / 4);
+-		input_report_rel(dev2, REL_Y, -((char)y / 4));
++		input_report_rel(dev2, REL_X, (s8)x / 4);
++		input_report_rel(dev2, REL_Y, -((s8)y / 4));
  
--	/* Array of transmitted skb */
--	struct sk_buff **tx_skb;
-+	/* Array of transmitted buffers */
-+	struct mvneta_tx_buf *buf;
+ 		psmouse_report_standard_buttons(dev2, packet[3]);
  
- 	/* Index of last TX DMA descriptor that was inserted */
- 	int txq_put_index;
-@@ -1767,14 +1781,9 @@ static void mvneta_txq_bufs_free(struct mvneta_port *pp,
- 	int i;
+@@ -1107,8 +1107,8 @@ static void alps_process_trackstick_pack
+ 	    ((packet[3] & 0x20) << 1);
+ 	z = (packet[5] & 0x3f) | ((packet[3] & 0x80) >> 1);
  
- 	for (i = 0; i < num; i++) {
-+		struct mvneta_tx_buf *buf = &txq->buf[txq->txq_get_index];
- 		struct mvneta_tx_desc *tx_desc = txq->descs +
- 			txq->txq_get_index;
--		struct sk_buff *skb = txq->tx_skb[txq->txq_get_index];
--
--		if (skb) {
--			bytes_compl += skb->len;
--			pkts_compl++;
--		}
+-	input_report_rel(dev2, REL_X, (char)x);
+-	input_report_rel(dev2, REL_Y, -((char)y));
++	input_report_rel(dev2, REL_X, (s8)x);
++	input_report_rel(dev2, REL_Y, -((s8)y));
+ 	input_report_abs(dev2, ABS_PRESSURE, z);
  
- 		mvneta_txq_inc_get(txq);
+ 	psmouse_report_standard_buttons(dev2, packet[1]);
+@@ -2297,20 +2297,20 @@ static int alps_get_v3_v7_resolution(str
+ 	if (reg < 0)
+ 		return reg;
  
-@@ -1782,9 +1791,12 @@ static void mvneta_txq_bufs_free(struct mvneta_port *pp,
- 			dma_unmap_single(pp->dev->dev.parent,
- 					 tx_desc->buf_phys_addr,
- 					 tx_desc->data_size, DMA_TO_DEVICE);
--		if (!skb)
-+		if (!buf->skb)
- 			continue;
--		dev_kfree_skb_any(skb);
-+
-+		bytes_compl += buf->skb->len;
-+		pkts_compl++;
-+		dev_kfree_skb_any(buf->skb);
- 	}
+-	x_pitch = (char)(reg << 4) >> 4; /* sign extend lower 4 bits */
++	x_pitch = (s8)(reg << 4) >> 4; /* sign extend lower 4 bits */
+ 	x_pitch = 50 + 2 * x_pitch; /* In 0.1 mm units */
  
- 	netdev_tx_completed_queue(nq, pkts_compl, bytes_compl);
-@@ -2238,16 +2250,19 @@ static inline void
- mvneta_tso_put_hdr(struct sk_buff *skb,
- 		   struct mvneta_port *pp, struct mvneta_tx_queue *txq)
- {
--	struct mvneta_tx_desc *tx_desc;
- 	int hdr_len = skb_transport_offset(skb) + tcp_hdrlen(skb);
-+	struct mvneta_tx_buf *buf = &txq->buf[txq->txq_put_index];
-+	struct mvneta_tx_desc *tx_desc;
+-	y_pitch = (char)reg >> 4; /* sign extend upper 4 bits */
++	y_pitch = (s8)reg >> 4; /* sign extend upper 4 bits */
+ 	y_pitch = 36 + 2 * y_pitch; /* In 0.1 mm units */
  
--	txq->tx_skb[txq->txq_put_index] = NULL;
- 	tx_desc = mvneta_txq_next_desc_get(txq);
- 	tx_desc->data_size = hdr_len;
- 	tx_desc->command = mvneta_skb_tx_csum(pp, skb);
- 	tx_desc->command |= MVNETA_TXD_F_DESC;
- 	tx_desc->buf_phys_addr = txq->tso_hdrs_phys +
- 				 txq->txq_put_index * TSO_HEADER_SIZE;
-+	buf->type = MVNETA_TYPE_SKB;
-+	buf->skb = NULL;
-+
- 	mvneta_txq_inc_put(txq);
- }
+ 	reg = alps_command_mode_read_reg(psmouse, reg_pitch + 1);
+ 	if (reg < 0)
+ 		return reg;
  
-@@ -2256,6 +2271,7 @@ mvneta_tso_put_data(struct net_device *dev, struct mvneta_tx_queue *txq,
- 		    struct sk_buff *skb, char *data, int size,
- 		    bool last_tcp, bool is_last)
- {
-+	struct mvneta_tx_buf *buf = &txq->buf[txq->txq_put_index];
- 	struct mvneta_tx_desc *tx_desc;
+-	x_electrode = (char)(reg << 4) >> 4; /* sign extend lower 4 bits */
++	x_electrode = (s8)(reg << 4) >> 4; /* sign extend lower 4 bits */
+ 	x_electrode = 17 + x_electrode;
  
- 	tx_desc = mvneta_txq_next_desc_get(txq);
-@@ -2269,7 +2285,8 @@ mvneta_tso_put_data(struct net_device *dev, struct mvneta_tx_queue *txq,
- 	}
+-	y_electrode = (char)reg >> 4; /* sign extend upper 4 bits */
++	y_electrode = (s8)reg >> 4; /* sign extend upper 4 bits */
+ 	y_electrode = 13 + y_electrode;
  
- 	tx_desc->command = 0;
--	txq->tx_skb[txq->txq_put_index] = NULL;
-+	buf->type = MVNETA_TYPE_SKB;
-+	buf->skb = NULL;
- 
- 	if (last_tcp) {
- 		/* last descriptor in the TCP packet */
-@@ -2277,7 +2294,7 @@ mvneta_tso_put_data(struct net_device *dev, struct mvneta_tx_queue *txq,
- 
- 		/* last descriptor in SKB */
- 		if (is_last)
--			txq->tx_skb[txq->txq_put_index] = skb;
-+			buf->skb = skb;
- 	}
- 	mvneta_txq_inc_put(txq);
- 	return 0;
-@@ -2362,6 +2379,7 @@ static int mvneta_tx_frag_process(struct mvneta_port *pp, struct sk_buff *skb,
- 	int i, nr_frags = skb_shinfo(skb)->nr_frags;
- 
- 	for (i = 0; i < nr_frags; i++) {
-+		struct mvneta_tx_buf *buf = &txq->buf[txq->txq_put_index];
- 		skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
- 		void *addr = page_address(frag->page.p) + frag->page_offset;
- 
-@@ -2381,12 +2399,13 @@ static int mvneta_tx_frag_process(struct mvneta_port *pp, struct sk_buff *skb,
- 		if (i == nr_frags - 1) {
- 			/* Last descriptor */
- 			tx_desc->command = MVNETA_TXD_L_DESC | MVNETA_TXD_Z_PAD;
--			txq->tx_skb[txq->txq_put_index] = skb;
-+			buf->skb = skb;
- 		} else {
- 			/* Descriptor in the middle: Not First, Not Last */
- 			tx_desc->command = 0;
--			txq->tx_skb[txq->txq_put_index] = NULL;
-+			buf->skb = NULL;
- 		}
-+		buf->type = MVNETA_TYPE_SKB;
- 		mvneta_txq_inc_put(txq);
- 	}
- 
-@@ -2414,6 +2433,7 @@ static netdev_tx_t mvneta_tx(struct sk_buff *skb, struct net_device *dev)
- 	struct mvneta_port *pp = netdev_priv(dev);
- 	u16 txq_id = skb_get_queue_mapping(skb);
- 	struct mvneta_tx_queue *txq = &pp->txqs[txq_id];
-+	struct mvneta_tx_buf *buf = &txq->buf[txq->txq_put_index];
- 	struct mvneta_tx_desc *tx_desc;
- 	int len = skb->len;
- 	int frags = 0;
-@@ -2446,16 +2466,17 @@ static netdev_tx_t mvneta_tx(struct sk_buff *skb, struct net_device *dev)
- 		goto out;
- 	}
- 
-+	buf->type = MVNETA_TYPE_SKB;
- 	if (frags == 1) {
- 		/* First and Last descriptor */
- 		tx_cmd |= MVNETA_TXD_FLZ_DESC;
- 		tx_desc->command = tx_cmd;
--		txq->tx_skb[txq->txq_put_index] = skb;
-+		buf->skb = skb;
- 		mvneta_txq_inc_put(txq);
- 	} else {
- 		/* First but not Last */
- 		tx_cmd |= MVNETA_TXD_F_DESC;
--		txq->tx_skb[txq->txq_put_index] = NULL;
-+		buf->skb = NULL;
- 		mvneta_txq_inc_put(txq);
- 		tx_desc->command = tx_cmd;
- 		/* Continue with other skb fragments */
-@@ -3000,9 +3021,8 @@ static int mvneta_txq_sw_init(struct mvneta_port *pp,
- 
- 	txq->last_desc = txq->size - 1;
- 
--	txq->tx_skb = kmalloc_array(txq->size, sizeof(*txq->tx_skb),
--				    GFP_KERNEL);
--	if (!txq->tx_skb) {
-+	txq->buf = kmalloc_array(txq->size, sizeof(*txq->buf), GFP_KERNEL);
-+	if (!txq->buf) {
- 		dma_free_coherent(pp->dev->dev.parent,
- 				  txq->size * MVNETA_DESC_ALIGNED_SIZE,
- 				  txq->descs, txq->descs_phys);
-@@ -3014,7 +3034,7 @@ static int mvneta_txq_sw_init(struct mvneta_port *pp,
- 					   txq->size * TSO_HEADER_SIZE,
- 					   &txq->tso_hdrs_phys, GFP_KERNEL);
- 	if (!txq->tso_hdrs) {
--		kfree(txq->tx_skb);
-+		kfree(txq->buf);
- 		dma_free_coherent(pp->dev->dev.parent,
- 				  txq->size * MVNETA_DESC_ALIGNED_SIZE,
- 				  txq->descs, txq->descs_phys);
-@@ -3069,7 +3089,7 @@ static void mvneta_txq_sw_deinit(struct mvneta_port *pp,
- {
- 	struct netdev_queue *nq = netdev_get_tx_queue(pp->dev, txq->id);
- 
--	kfree(txq->tx_skb);
-+	kfree(txq->buf);
- 
- 	if (txq->tso_hdrs)
- 		dma_free_coherent(pp->dev->dev.parent,
--- 
-2.39.2
-
+ 	x_phys = x_pitch * (x_electrode - 1); /* In 0.1 mm units */
 
 
