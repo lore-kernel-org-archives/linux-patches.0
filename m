@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5656FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5ECC4339B;
-	Mon,  3 Apr 2023 14:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28936FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77865C433D2;
+	Mon,  3 Apr 2023 14:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532115;
-	bh=/obK6rDWHUQIau/qAmj3wPsGAbebbDit7OWGuRgYVQY=;
+	s=korg; t=1680532117;
+	bh=ist7WuapNg5kr7wsA8uxyE/FnPgbh4z43JdsF8oAOD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKO7YRnODedTxWRyuJMEIQenrK5UbabKvgMD+MtAjB6+XTq7uHcAyCS556pPy7PnQ
-	 UrH8FN4/ZxORNT1HzsX9xvQf0/rVWAzJZxiHrCAz05LlTJi8V0BdP6q7pcUyID0V+Z
-	 gjAtK7JfBGISf8TD6ZtD09QkT8zkTtpIf58yr9Tk=
+	b=2P0jRglOliz3E12JBsXlTAmKO0R4WxXskxFbdtLyB85F3DbA2jp2wJOzixCo8lZ5K
+	 GMsR6QncBazPgPQS7Gra7uZ2FE++ugXGm9KVnmVQSLuVpORXi+IcnI7jsmltuD6KZO
+	 /SifEykkXWOmsfVYzP1E2zOPgsEna1+Spc4hVOAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faicker Mo <faicker.mo@ucloud.cn>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 133/173] net/net_failover: fix txq exceeding warning
-Date: Mon,  3 Apr 2023 16:09:08 +0200
-Message-Id: <20230403140418.777496876@linuxfoundation.org>
+Subject: [PATCH 5.10 116/173] ALSA: hda/ca0132: fixup buffer overrun at tuning_ctl_set()
+Date: Mon,  3 Apr 2023 16:08:51 +0200
+Message-Id: <20230403140418.208860944@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,88 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Faicker Mo <faicker.mo@ucloud.cn>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit e3cbdcb0fbb61045ef3ce0e072927cc41737f787 ]
+[ Upstream commit 98e5eb110095ec77cb6d775051d181edbf9cd3cf ]
 
-The failover txq is inited as 16 queues.
-when a packet is transmitted from the failover device firstly,
-the failover device will select the queue which is returned from
-the primary device if the primary device is UP and running.
-If the primary device txq is bigger than the default 16,
-it can lead to the following warning:
-eth0 selects TX queue 18, but real number of TX queues is 16
+tuning_ctl_set() might have buffer overrun at (X) if it didn't break
+from loop by matching (A).
 
-The warning backtrace is:
-[   32.146376] CPU: 18 PID: 9134 Comm: chronyd Tainted: G            E      6.2.8-1.el7.centos.x86_64 #1
-[   32.147175] Hardware name: Red Hat KVM, BIOS 1.10.2-3.el7_4.1 04/01/2014
-[   32.147730] Call Trace:
-[   32.147971]  <TASK>
-[   32.148183]  dump_stack_lvl+0x48/0x70
-[   32.148514]  dump_stack+0x10/0x20
-[   32.148820]  netdev_core_pick_tx+0xb1/0xe0
-[   32.149180]  __dev_queue_xmit+0x529/0xcf0
-[   32.149533]  ? __check_object_size.part.0+0x21c/0x2c0
-[   32.149967]  ip_finish_output2+0x278/0x560
-[   32.150327]  __ip_finish_output+0x1fe/0x2f0
-[   32.150690]  ip_finish_output+0x2a/0xd0
-[   32.151032]  ip_output+0x7a/0x110
-[   32.151337]  ? __pfx_ip_finish_output+0x10/0x10
-[   32.151733]  ip_local_out+0x5e/0x70
-[   32.152054]  ip_send_skb+0x19/0x50
-[   32.152366]  udp_send_skb.isra.0+0x163/0x3a0
-[   32.152736]  udp_sendmsg+0xba8/0xec0
-[   32.153060]  ? __folio_memcg_unlock+0x25/0x60
-[   32.153445]  ? __pfx_ip_generic_getfrag+0x10/0x10
-[   32.153854]  ? sock_has_perm+0x85/0xa0
-[   32.154190]  inet_sendmsg+0x6d/0x80
-[   32.154508]  ? inet_sendmsg+0x6d/0x80
-[   32.154838]  sock_sendmsg+0x62/0x70
-[   32.155152]  ____sys_sendmsg+0x134/0x290
-[   32.155499]  ___sys_sendmsg+0x81/0xc0
-[   32.155828]  ? _get_random_bytes.part.0+0x79/0x1a0
-[   32.156240]  ? ip4_datagram_release_cb+0x5f/0x1e0
-[   32.156649]  ? get_random_u16+0x69/0xf0
-[   32.156989]  ? __fget_light+0xcf/0x110
-[   32.157326]  __sys_sendmmsg+0xc4/0x210
-[   32.157657]  ? __sys_connect+0xb7/0xe0
-[   32.157995]  ? __audit_syscall_entry+0xce/0x140
-[   32.158388]  ? syscall_trace_enter.isra.0+0x12c/0x1a0
-[   32.158820]  __x64_sys_sendmmsg+0x24/0x30
-[   32.159171]  do_syscall_64+0x38/0x90
-[   32.159493]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+	static int tuning_ctl_set(...)
+	{
+		for (i = 0; i < TUNING_CTLS_COUNT; i++)
+(A)			if (nid == ca0132_tuning_ctls[i].nid)
+				break;
 
-Fix that by reducing txq number as the non-existent primary-dev does.
+		snd_hda_power_up(...);
+(X)		dspio_set_param(..., ca0132_tuning_ctls[i].mid, ...);
+		snd_hda_power_down(...);                ^
 
-Fixes: cfc80d9a1163 ("net: Introduce net_failover driver")
-Signed-off-by: Faicker Mo <faicker.mo@ucloud.cn>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+		return 1;
+	}
+
+We will get below error by cppcheck
+
+	sound/pci/hda/patch_ca0132.c:4229:2: note: After for loop, i has value 12
+	 for (i = 0; i < TUNING_CTLS_COUNT; i++)
+	 ^
+	sound/pci/hda/patch_ca0132.c:4234:43: note: Array index out of bounds
+	 dspio_set_param(codec, ca0132_tuning_ctls[i].mid, 0x20,
+	                                           ^
+This patch cares non match case.
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87sfe9eap7.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/net_failover.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ sound/pci/hda/patch_ca0132.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/net_failover.c b/drivers/net/net_failover.c
-index fb182bec8f062..6b7bba720d8c7 100644
---- a/drivers/net/net_failover.c
-+++ b/drivers/net/net_failover.c
-@@ -130,14 +130,10 @@ static u16 net_failover_select_queue(struct net_device *dev,
- 			txq = ops->ndo_select_queue(primary_dev, skb, sb_dev);
- 		else
- 			txq = netdev_pick_tx(primary_dev, skb, NULL);
--
--		qdisc_skb_cb(skb)->slave_dev_queue_mapping = skb->queue_mapping;
--
--		return txq;
-+	} else {
-+		txq = skb_rx_queue_recorded(skb) ? skb_get_rx_queue(skb) : 0;
- 	}
+diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
+index 24c2638cde376..6057084da4cf8 100644
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -4108,8 +4108,10 @@ static int tuning_ctl_set(struct hda_codec *codec, hda_nid_t nid,
  
--	txq = skb_rx_queue_recorded(skb) ? skb_get_rx_queue(skb) : 0;
--
- 	/* Save the original txq to restore before passing to the driver */
- 	qdisc_skb_cb(skb)->slave_dev_queue_mapping = skb->queue_mapping;
+ 	for (i = 0; i < TUNING_CTLS_COUNT; i++)
+ 		if (nid == ca0132_tuning_ctls[i].nid)
+-			break;
++			goto found;
  
++	return -EINVAL;
++found:
+ 	snd_hda_power_up(codec);
+ 	dspio_set_param(codec, ca0132_tuning_ctls[i].mid, 0x20,
+ 			ca0132_tuning_ctls[i].req,
 -- 
 2.39.2
 
