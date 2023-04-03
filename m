@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E276FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A24FC433EF;
-	Mon,  3 Apr 2023 14:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA6B6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D2CC4339E;
+	Mon,  3 Apr 2023 14:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532424;
-	bh=eIbs2gPg3C58QXDt3BxX3RfWhOV282cG4sJxTZaF/P8=;
+	s=korg; t=1680532427;
+	bh=j5sSzTa/zp5UsRVhEYmf0cJqsobbURgNFixKpMnxhRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBKAyBm3Szp48f2NFOIn/x9UBAnhKO3NyyuN3ZHBLBygBB15mv+emC9FQKeYKxpG6
-	 8B8+VKozqZJv3x/ytqkopR7qtpQnHiaIuiMZbF1KRXGy8HnQi5vN9v3o+yCECpgTyx
-	 AXyFrENfxfk2JOQXxyMLfgQbHD6fTJ/47v2A/ZHQ=
+	b=f1Rm1JC0QPQvAElLE7QRRpU+pyW8oKKT173/ZBrdkdMIZuaxkJkWSY33bPRsirBTG
+	 QIqTOz+zdChTaZsjM1fFDxv6ajUQganp/5kWw5zSSx+pOUNHEqsBcNUo4zqs3WN4yk
+	 bVFfAw4A09vcY36kkKqlGDS527vLcRftg4OynFio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Auhagen <sven.auhagen@voleatech.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 50/99] net: mvpp2: parser fix PPPoE
-Date: Mon,  3 Apr 2023 16:09:13 +0200
-Message-Id: <20230403140405.199993480@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.15 77/99] pinctrl: at91-pio4: fix domain name assignment
+Date: Mon,  3 Apr 2023 16:09:40 +0200
+Message-Id: <20230403140406.349413408@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -35,123 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Auhagen <sven.auhagen@voleatech.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 031a416c2170866be5132ae42e14453d669b0cb1 ]
+commit 7bb97e360acdd38b68ad0a1defb89c6e89c85596 upstream.
 
-In PPPoE add all IPv4 header option length to the parser
-and adjust the L3 and L4 offset accordingly.
-Currently the L4 match does not work with PPPoE and
-all packets are matched as L3 IP4 OPT.
+Since commit d59f6617eef0 ("genirq: Allow fwnode to carry name
+information only") an IRQ domain is always given a name during
+allocation (e.g. used for the debugfs entry).
 
-Fixes: 3f518509dedc ("ethernet: Add new driver for Marvell Armada 375 network unit")
-Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Drop the no longer valid name assignment, which would lead to an attempt
+to free a string constant when removing the domain on late probe
+failures (e.g. probe deferral).
+
+Fixes: d59f6617eef0 ("genirq: Allow fwnode to carry name information only")
+Cc: stable@vger.kernel.org	# 4.13
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com> # on SAMA7G5
+Link: https://lore.kernel.org/r/20230224130828.27985-1-johan+linaro@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/marvell/mvpp2/mvpp2_prs.c    | 82 ++++++++-----------
- 1 file changed, 34 insertions(+), 48 deletions(-)
+ drivers/pinctrl/pinctrl-at91-pio4.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
-index 34d2714205977..a8188b972ccbc 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
-@@ -1607,59 +1607,45 @@ static int mvpp2_prs_vlan_init(struct platform_device *pdev, struct mvpp2 *priv)
- static int mvpp2_prs_pppoe_init(struct mvpp2 *priv)
- {
- 	struct mvpp2_prs_entry pe;
--	int tid;
--
--	/* IPv4 over PPPoE with options */
--	tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
--					MVPP2_PE_LAST_FREE_TID);
--	if (tid < 0)
--		return tid;
--
--	memset(&pe, 0, sizeof(pe));
--	mvpp2_prs_tcam_lu_set(&pe, MVPP2_PRS_LU_PPPOE);
--	pe.index = tid;
--
--	mvpp2_prs_match_etype(&pe, 0, PPP_IP);
--
--	mvpp2_prs_sram_next_lu_set(&pe, MVPP2_PRS_LU_IP4);
--	mvpp2_prs_sram_ri_update(&pe, MVPP2_PRS_RI_L3_IP4_OPT,
--				 MVPP2_PRS_RI_L3_PROTO_MASK);
--	/* goto ipv4 dest-address (skip eth_type + IP-header-size - 4) */
--	mvpp2_prs_sram_shift_set(&pe, MVPP2_ETH_TYPE_LEN +
--				 sizeof(struct iphdr) - 4,
--				 MVPP2_PRS_SRAM_OP_SEL_SHIFT_ADD);
--	/* Set L3 offset */
--	mvpp2_prs_sram_offset_set(&pe, MVPP2_PRS_SRAM_UDF_TYPE_L3,
--				  MVPP2_ETH_TYPE_LEN,
--				  MVPP2_PRS_SRAM_OP_SEL_UDF_ADD);
--
--	/* Update shadow table and hw entry */
--	mvpp2_prs_shadow_set(priv, pe.index, MVPP2_PRS_LU_PPPOE);
--	mvpp2_prs_hw_write(priv, &pe);
-+	int tid, ihl;
+--- a/drivers/pinctrl/pinctrl-at91-pio4.c
++++ b/drivers/pinctrl/pinctrl-at91-pio4.c
+@@ -1184,7 +1184,6 @@ static int atmel_pinctrl_probe(struct pl
+ 		dev_err(dev, "can't add the irq domain\n");
+ 		return -ENODEV;
+ 	}
+-	atmel_pioctrl->irq_domain->name = "atmel gpio";
  
--	/* IPv4 over PPPoE without options */
--	tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
--					MVPP2_PE_LAST_FREE_TID);
--	if (tid < 0)
--		return tid;
-+	/* IPv4 over PPPoE with header length >= 5 */
-+	for (ihl = MVPP2_PRS_IPV4_IHL_MIN; ihl <= MVPP2_PRS_IPV4_IHL_MAX; ihl++) {
-+		tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
-+						MVPP2_PE_LAST_FREE_TID);
-+		if (tid < 0)
-+			return tid;
- 
--	pe.index = tid;
-+		memset(&pe, 0, sizeof(pe));
-+		mvpp2_prs_tcam_lu_set(&pe, MVPP2_PRS_LU_PPPOE);
-+		pe.index = tid;
- 
--	mvpp2_prs_tcam_data_byte_set(&pe, MVPP2_ETH_TYPE_LEN,
--				     MVPP2_PRS_IPV4_HEAD |
--				     MVPP2_PRS_IPV4_IHL_MIN,
--				     MVPP2_PRS_IPV4_HEAD_MASK |
--				     MVPP2_PRS_IPV4_IHL_MASK);
-+		mvpp2_prs_match_etype(&pe, 0, PPP_IP);
-+		mvpp2_prs_tcam_data_byte_set(&pe, MVPP2_ETH_TYPE_LEN,
-+					     MVPP2_PRS_IPV4_HEAD | ihl,
-+					     MVPP2_PRS_IPV4_HEAD_MASK |
-+					     MVPP2_PRS_IPV4_IHL_MASK);
- 
--	/* Clear ri before updating */
--	pe.sram[MVPP2_PRS_SRAM_RI_WORD] = 0x0;
--	pe.sram[MVPP2_PRS_SRAM_RI_CTRL_WORD] = 0x0;
--	mvpp2_prs_sram_ri_update(&pe, MVPP2_PRS_RI_L3_IP4,
--				 MVPP2_PRS_RI_L3_PROTO_MASK);
-+		mvpp2_prs_sram_next_lu_set(&pe, MVPP2_PRS_LU_IP4);
-+		mvpp2_prs_sram_ri_update(&pe, MVPP2_PRS_RI_L3_IP4,
-+					 MVPP2_PRS_RI_L3_PROTO_MASK);
-+		/* goto ipv4 dst-address (skip eth_type + IP-header-size - 4) */
-+		mvpp2_prs_sram_shift_set(&pe, MVPP2_ETH_TYPE_LEN +
-+					 sizeof(struct iphdr) - 4,
-+					 MVPP2_PRS_SRAM_OP_SEL_SHIFT_ADD);
-+		/* Set L3 offset */
-+		mvpp2_prs_sram_offset_set(&pe, MVPP2_PRS_SRAM_UDF_TYPE_L3,
-+					  MVPP2_ETH_TYPE_LEN,
-+					  MVPP2_PRS_SRAM_OP_SEL_UDF_ADD);
-+		/* Set L4 offset */
-+		mvpp2_prs_sram_offset_set(&pe, MVPP2_PRS_SRAM_UDF_TYPE_L4,
-+					  MVPP2_ETH_TYPE_LEN + (ihl * 4),
-+					  MVPP2_PRS_SRAM_OP_SEL_UDF_ADD);
- 
--	/* Update shadow table and hw entry */
--	mvpp2_prs_shadow_set(priv, pe.index, MVPP2_PRS_LU_PPPOE);
--	mvpp2_prs_hw_write(priv, &pe);
-+		/* Update shadow table and hw entry */
-+		mvpp2_prs_shadow_set(priv, pe.index, MVPP2_PRS_LU_PPPOE);
-+		mvpp2_prs_hw_write(priv, &pe);
-+	}
- 
- 	/* IPv6 over PPPoE */
- 	tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
--- 
-2.39.2
-
+ 	for (i = 0; i < atmel_pioctrl->npins; i++) {
+ 		int irq = irq_create_mapping(atmel_pioctrl->irq_domain, i);
 
 
