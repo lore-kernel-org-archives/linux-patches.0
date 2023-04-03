@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0AC6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88ADEC4339B;
-	Mon,  3 Apr 2023 14:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD716FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2194AC433D2;
+	Mon,  3 Apr 2023 14:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532039;
-	bh=FbWs3/rnsgWgG4PG1OBE6yvXyVbm/3yff3q5d1C6b+Y=;
+	s=korg; t=1680532042;
+	bh=cuFszrW0mcZGvaoN6MMj2FTUJjBL5BTHu6an0b1zQt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C9oFyz1oANotCrkVHnrrRaiu5/rbgQGnkcqgFrzTf4fL8XJwNdTi3P17FcMzCtb2j
-	 F2LP1eKWvS1FS7A+cwv8gIyGaMokk0P+bZhGtQgXk93M1fXePZmpEdty4iKsSvXLPA
-	 25+hYA55bdUqaAmmMzE5h8mtafyJPS1Ac1Sg4Fvk=
+	b=cfQfzgfmmvtPoDbg+myicrdAhFvH9rQrOElAD76zzzsVEPvEZfqwwzCBJQTlMMXGS
+	 8yMiD5y3Y1U4fYVL1QwZhUomyDN+hA84J/v/yk8blPJa0cChtGMax/PTwv5Y6WPXm/
+	 FodZBVQul04gYYoNTv4WZ26JOIggI3cRaTc0WbiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyuan Mo <hdthky0@gmail.com>,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Ovidiu Panait <ovidiu.panait@windriver.com>
-Subject: [PATCH 5.10 103/173] NFSD: fix use-after-free in __nfs42_ssc_open()
-Date: Mon,  3 Apr 2023 16:08:38 +0200
-Message-Id: <20230403140417.773920681@linuxfoundation.org>
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 104/173] usb: dwc3: gadget: move cmd_endtransfer to extra function
+Date: Mon,  3 Apr 2023 16:08:39 +0200
+Message-Id: <20230403140417.812011796@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,90 +34,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-commit 75333d48f92256a0dec91dbf07835e804fc411c0 upstream.
+[ Upstream commit e192cc7b52399d1b073f88cd3ba128b74d3a57f1 ]
 
-Problem caused by source's vfsmount being unmounted but remains
-on the delayed unmount list. This happens when nfs42_ssc_open()
-return errors.
+This patch adds the extra function __dwc3_stop_active_transfer to
+consolidate the same codepath.
 
-Fixed by removing nfsd4_interssc_connect(), leave the vfsmount
-for the laundromat to unmount when idle time expires.
-
-We don't need to call nfs_do_sb_deactive when nfs42_ssc_open
-return errors since the file was not opened so nfs_server->active
-was not incremented. Same as in nfsd4_copy, if we fail to
-launch nfsd4_do_async_copy thread then there's no need to
-call nfs_do_sb_deactive
-
-Reported-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Tested-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
+Link: https://lore.kernel.org/r/20220306211251.2281335-3-m.grzeschik@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: d8a2bb4eb758 ("usb: dwc3: gadget: Add 1ms delay after end transfer command without IOC")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c |   22 ++++++----------------
- 1 file changed, 6 insertions(+), 16 deletions(-)
+ drivers/usb/dwc3/gadget.c | 69 +++++++++++++++++++++------------------
+ 1 file changed, 37 insertions(+), 32 deletions(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1248,13 +1248,6 @@ out_err:
- 	return status;
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index 28a1194f849fc..ce5131ccd60a9 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1440,6 +1440,40 @@ static int __dwc3_gadget_get_frame(struct dwc3 *dwc)
+ 	return DWC3_DSTS_SOFFN(reg);
  }
  
--static void
--nfsd4_interssc_disconnect(struct vfsmount *ss_mnt)
--{
--	nfs_do_sb_deactive(ss_mnt->mnt_sb);
--	mntput(ss_mnt);
--}
++/**
++ * __dwc3_stop_active_transfer - stop the current active transfer
++ * @dep: isoc endpoint
++ * @force: set forcerm bit in the command
++ * @interrupt: command complete interrupt after End Transfer command
++ *
++ * When setting force, the ForceRM bit will be set. In that case
++ * the controller won't update the TRB progress on command
++ * completion. It also won't clear the HWO bit in the TRB.
++ * The command will also not complete immediately in that case.
++ */
++static int __dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force, bool interrupt)
++{
++	struct dwc3_gadget_ep_cmd_params params;
++	u32 cmd;
++	int ret;
++
++	cmd = DWC3_DEPCMD_ENDTRANSFER;
++	cmd |= force ? DWC3_DEPCMD_HIPRI_FORCERM : 0;
++	cmd |= interrupt ? DWC3_DEPCMD_CMDIOC : 0;
++	cmd |= DWC3_DEPCMD_PARAM(dep->resource_index);
++	memset(&params, 0, sizeof(params));
++	ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
++	WARN_ON_ONCE(ret);
++	dep->resource_index = 0;
++
++	if (!interrupt)
++		dep->flags &= ~DWC3_EP_TRANSFER_STARTED;
++	else if (!ret)
++		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
++
++	return ret;
++}
++
+ /**
+  * dwc3_gadget_start_isoc_quirk - workaround invalid frame number
+  * @dep: isoc endpoint
+@@ -1609,21 +1643,8 @@ static int __dwc3_gadget_start_isoc(struct dwc3_ep *dep)
+ 	 * status, issue END_TRANSFER command and retry on the next XferNotReady
+ 	 * event.
+ 	 */
+-	if (ret == -EAGAIN) {
+-		struct dwc3_gadget_ep_cmd_params params;
+-		u32 cmd;
 -
- /*
-  * Verify COPY destination stateid.
-  *
-@@ -1325,11 +1318,6 @@ nfsd4_cleanup_inter_ssc(struct vfsmount
+-		cmd = DWC3_DEPCMD_ENDTRANSFER |
+-			DWC3_DEPCMD_CMDIOC |
+-			DWC3_DEPCMD_PARAM(dep->resource_index);
+-
+-		dep->resource_index = 0;
+-		memset(&params, 0, sizeof(params));
+-
+-		ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
+-		if (!ret)
+-			dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
+-	}
++	if (ret == -EAGAIN)
++		ret = __dwc3_stop_active_transfer(dep, false, true);
+ 
+ 	return ret;
+ }
+@@ -3250,10 +3271,6 @@ static void dwc3_reset_gadget(struct dwc3 *dwc)
+ static void dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force,
+ 	bool interrupt)
  {
- }
- 
--static void
--nfsd4_interssc_disconnect(struct vfsmount *ss_mnt)
--{
--}
+-	struct dwc3_gadget_ep_cmd_params params;
+-	u32 cmd;
+-	int ret;
 -
- static struct file *nfs42_ssc_open(struct vfsmount *ss_mnt,
- 				   struct nfs_fh *src_fh,
- 				   nfs4_stateid *stateid)
-@@ -1471,14 +1459,14 @@ static int nfsd4_do_async_copy(void *dat
- 		copy->nf_src = kzalloc(sizeof(struct nfsd_file), GFP_KERNEL);
- 		if (!copy->nf_src) {
- 			copy->nfserr = nfserr_serverfault;
--			nfsd4_interssc_disconnect(copy->ss_mnt);
-+			/* ss_mnt will be unmounted by the laundromat */
- 			goto do_callback;
- 		}
- 		copy->nf_src->nf_file = nfs42_ssc_open(copy->ss_mnt, &copy->c_fh,
- 					      &copy->stateid);
- 		if (IS_ERR(copy->nf_src->nf_file)) {
- 			copy->nfserr = nfserr_offload_denied;
--			nfsd4_interssc_disconnect(copy->ss_mnt);
-+			/* ss_mnt will be unmounted by the laundromat */
- 			goto do_callback;
- 		}
- 	}
-@@ -1561,8 +1549,10 @@ out_err:
- 	if (async_copy)
- 		cleanup_async_copy(async_copy);
- 	status = nfserrno(-ENOMEM);
--	if (!copy->cp_intra)
--		nfsd4_interssc_disconnect(copy->ss_mnt);
-+	/*
-+	 * source's vfsmount of inter-copy will be unmounted
-+	 * by the laundromat
-+	 */
- 	goto out;
+ 	if (!(dep->flags & DWC3_EP_TRANSFER_STARTED) ||
+ 	    (dep->flags & DWC3_EP_END_TRANSFER_PENDING))
+ 		return;
+@@ -3285,19 +3302,7 @@ static void dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force,
+ 	 * This mode is NOT available on the DWC_usb31 IP.
+ 	 */
+ 
+-	cmd = DWC3_DEPCMD_ENDTRANSFER;
+-	cmd |= force ? DWC3_DEPCMD_HIPRI_FORCERM : 0;
+-	cmd |= interrupt ? DWC3_DEPCMD_CMDIOC : 0;
+-	cmd |= DWC3_DEPCMD_PARAM(dep->resource_index);
+-	memset(&params, 0, sizeof(params));
+-	ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
+-	WARN_ON_ONCE(ret);
+-	dep->resource_index = 0;
+-
+-	if (!interrupt)
+-		dep->flags &= ~DWC3_EP_TRANSFER_STARTED;
+-	else
+-		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
++	__dwc3_stop_active_transfer(dep, force, interrupt);
  }
  
+ static void dwc3_clear_stall_all_ep(struct dwc3 *dwc)
+-- 
+2.39.2
+
 
 
