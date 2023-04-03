@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F2C6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78804C433D2;
-	Mon,  3 Apr 2023 14:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CB76FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F647C433D2;
+	Mon,  3 Apr 2023 14:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533333;
-	bh=KBfox2g9YW2SB/t/K3p4p2tza976T6QzWywv6Vl+qWU=;
+	s=korg; t=1680533336;
+	bh=r0qPG9AVwV8MCeUOEbJH5imDFdSYCagOeFMWt+brQv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jjOIhWCdt8cwWrG3Olo9KHiDxS7X0UNt16U47zxBRO29uWk3l9RSSJle2j14CUSbg
-	 lSPgsoet2yZH7TJzoc7ZspN+RC1eRTto/P26KRrH7Dm8ASzMzqW2QtJPvy8y5DoF1k
-	 H14e3CXXqzQhE1LMgN4An0gDHllTpPiUY6p/NfYI=
+	b=Gdw9Up98MNDL2wRmMSZF5ixdM7QhGCEKyB5xSdRgcgi29qjJMg8GFPQiayVF0YGEg
+	 mDQuODgy6tRimlxxC8LcD0t8TxE9Jb0qwVopBuEPRf2FxwHPBxfLDD1qetx//Ahx76
+	 TqhZf+INAKRz38Ad9JYhQ7O5ARCExUTY3jaQguw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronak Doshi <doshir@vmware.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.2 143/187] vmxnet3: use gro callback when UPT is enabled
-Date: Mon,  3 Apr 2023 16:09:48 +0200
-Message-Id: <20230403140420.715359883@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 117/187] bnxt_en: Fix typo in PCI id to device description string mapping
+Date: Mon,  3 Apr 2023 16:09:22 +0200
+Message-Id: <20230403140419.821206999@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,48 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ronak Doshi <doshir@vmware.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-commit 3bced313b9a5a237c347e0f079c8c2fe4b3935aa upstream.
+[ Upstream commit 62aad36ed31abc80f35db11e187e690448a79f7d ]
 
-Currently, vmxnet3 uses GRO callback only if LRO is disabled. However,
-on smartNic based setups where UPT is supported, LRO can be enabled
-from guest VM but UPT devicve does not support LRO as of now. In such
-cases, there can be performance degradation as GRO is not being done.
+Fix 57502 and 57508 NPAR description string entries.  The typos
+caused these devices to not match up with lspci output.
 
-This patch fixes this issue by calling GRO API when UPT is enabled. We
-use updateRxProd to determine if UPT mode is active or not.
-
-To clarify few things discussed over the thread:
-The patch is not neglecting any feature bits nor disabling GRO. It uses
-GRO callback when UPT is active as LRO is not available in UPT.
-GRO callback cannot be used as default for all cases as it degrades
-performance for non-UPT cases or for cases when LRO is already done in
-ESXi.
-
-Cc: stable@vger.kernel.org
-Fixes: 6f91f4ba046e ("vmxnet3: add support for capability registers")
-Signed-off-by: Ronak Doshi <doshir@vmware.com>
+Fixes: 49c98421e6ab ("bnxt_en: Add PCI IDs for 57500 series NPAR devices.")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230323200721.27622-1-doshir@vmware.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1688,7 +1688,9 @@ not_lro:
- 			if (unlikely(rcd->ts))
- 				__vlan_hwaccel_put_tag(skb, htons(ETH_P_8021Q), rcd->tci);
- 
--			if (adapter->netdev->features & NETIF_F_LRO)
-+			/* Use GRO callback if UPT is enabled */
-+			if ((adapter->netdev->features & NETIF_F_LRO) &&
-+			    !rq->shared->updateRxProd)
- 				netif_receive_skb(skb);
- 			else
- 				napi_gro_receive(&rq->napi, skb);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index b44b2ec5e61a2..015b5848b9583 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -175,12 +175,12 @@ static const struct pci_device_id bnxt_pci_tbl[] = {
+ 	{ PCI_VDEVICE(BROADCOM, 0x1750), .driver_data = BCM57508 },
+ 	{ PCI_VDEVICE(BROADCOM, 0x1751), .driver_data = BCM57504 },
+ 	{ PCI_VDEVICE(BROADCOM, 0x1752), .driver_data = BCM57502 },
+-	{ PCI_VDEVICE(BROADCOM, 0x1800), .driver_data = BCM57508_NPAR },
++	{ PCI_VDEVICE(BROADCOM, 0x1800), .driver_data = BCM57502_NPAR },
+ 	{ PCI_VDEVICE(BROADCOM, 0x1801), .driver_data = BCM57504_NPAR },
+-	{ PCI_VDEVICE(BROADCOM, 0x1802), .driver_data = BCM57502_NPAR },
+-	{ PCI_VDEVICE(BROADCOM, 0x1803), .driver_data = BCM57508_NPAR },
++	{ PCI_VDEVICE(BROADCOM, 0x1802), .driver_data = BCM57508_NPAR },
++	{ PCI_VDEVICE(BROADCOM, 0x1803), .driver_data = BCM57502_NPAR },
+ 	{ PCI_VDEVICE(BROADCOM, 0x1804), .driver_data = BCM57504_NPAR },
+-	{ PCI_VDEVICE(BROADCOM, 0x1805), .driver_data = BCM57502_NPAR },
++	{ PCI_VDEVICE(BROADCOM, 0x1805), .driver_data = BCM57508_NPAR },
+ 	{ PCI_VDEVICE(BROADCOM, 0xd802), .driver_data = BCM58802 },
+ 	{ PCI_VDEVICE(BROADCOM, 0xd804), .driver_data = BCM58804 },
+ #ifdef CONFIG_BNXT_SRIOV
+-- 
+2.39.2
+
 
 
