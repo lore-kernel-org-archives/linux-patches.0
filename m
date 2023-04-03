@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4322612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDEFC433EF;
-	Mon,  3 Apr 2023 14:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76ED8612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BD0C433EF;
+	Mon,  3 Apr 2023 14:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531643;
-	bh=v9t4ZPFPKj+zh/iatTmM84GOhvXIbbZekGkbHi3HKM4=;
+	s=korg; t=1680531646;
+	bh=G7LSSRoHa3o5x+mUN5YLL63FpHLw8VRIA0LkyNNtO6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qd0H9MtwpC6lcTbyXMhKbUpWht5/X17q5d4/DRDn6H3pUC1eR71Pfqzl+5Eh/FyfI
-	 GR7aoq9+2VLwveyg/ey6IjL82nadkRpr8kx9bDQuTTZODmCUT+99HreFnc+Id0fKcJ
-	 8r65uK1cWH4zp3wSSmxvOlr6ZJunHFtGVCa/PvQM=
+	b=VWrN5hUP3EwP+MO0IGnLPfttKv1sl5hk0BieTuliFQF2/MG5gwMQSw6UL3blzpfk2
+	 qKB5HzUEIWzAq8Ncs9uXaIzluiWomNvrBp5mDt5NM3au8RoaEvy7Y1ORqaa5EqhBxr
+	 NP4sKanfa0PoTEreUCTk1Y8OdS4pNke4CN+ijd8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Li <lilin@redhat.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	John Meneghini <jmeneghi@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 029/104] scsi: qla2xxx: Perform lockless command completion in abort path
-Date: Mon,  3 Apr 2023 16:08:21 +0200
-Message-Id: <20230403140405.437688589@linuxfoundation.org>
+	Zhang Qiao <zhangqiao22@huawei.com>,
+	Roman Kagan <rkagan@amazon.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.4 056/104] sched/fair: sanitize vruntime of entity being placed
+Date: Mon,  3 Apr 2023 16:08:48 +0200
+Message-Id: <20230403140406.500673368@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -37,78 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Zhang Qiao <zhangqiao22@huawei.com>
 
-commit 0367076b0817d5c75dfb83001ce7ce5c64d803a9 upstream.
+commit 829c1651e9c4a6f78398d3e67651cef9bb6b42cc upstream.
 
-While adding and removing the controller, the following call trace was
-observed:
+When a scheduling entity is placed onto cfs_rq, its vruntime is pulled
+to the base level (around cfs_rq->min_vruntime), so that the entity
+doesn't gain extra boost when placed backwards.
 
-WARNING: CPU: 3 PID: 623596 at kernel/dma/mapping.c:532 dma_free_attrs+0x33/0x50
-CPU: 3 PID: 623596 Comm: sh Kdump: loaded Not tainted 5.14.0-96.el9.x86_64 #1
-RIP: 0010:dma_free_attrs+0x33/0x50
+However, if the entity being placed wasn't executed for a long time, its
+vruntime may get too far behind (e.g. while cfs_rq was executing a
+low-weight hog), which can inverse the vruntime comparison due to s64
+overflow.  This results in the entity being placed with its original
+vruntime way forwards, so that it will effectively never get to the cpu.
 
-Call Trace:
-   qla2x00_async_sns_sp_done+0x107/0x1b0 [qla2xxx]
-   qla2x00_abort_srb+0x8e/0x250 [qla2xxx]
-   ? ql_dbg+0x70/0x100 [qla2xxx]
-   __qla2x00_abort_all_cmds+0x108/0x190 [qla2xxx]
-   qla2x00_abort_all_cmds+0x24/0x70 [qla2xxx]
-   qla2x00_abort_isp_cleanup+0x305/0x3e0 [qla2xxx]
-   qla2x00_remove_one+0x364/0x400 [qla2xxx]
-   pci_device_remove+0x36/0xa0
-   __device_release_driver+0x17a/0x230
-   device_release_driver+0x24/0x30
-   pci_stop_bus_device+0x68/0x90
-   pci_stop_and_remove_bus_device_locked+0x16/0x30
-   remove_store+0x75/0x90
-   kernfs_fop_write_iter+0x11c/0x1b0
-   new_sync_write+0x11f/0x1b0
-   vfs_write+0x1eb/0x280
-   ksys_write+0x5f/0xe0
-   do_syscall_64+0x5c/0x80
-   ? do_user_addr_fault+0x1d8/0x680
-   ? do_syscall_64+0x69/0x80
-   ? exc_page_fault+0x62/0x140
-   ? asm_exc_page_fault+0x8/0x30
-   entry_SYSCALL_64_after_hwframe+0x44/0xae
+To prevent that, ignore the vruntime of the entity being placed if it
+didn't execute for much longer than the characteristic sheduler time
+scale.
 
-The command was completed in the abort path during driver unload with a
-lock held, causing the warning in abort path. Hence complete the command
-without any lock held.
-
-Reported-by: Lin Li <lilin@redhat.com>
-Tested-by: Lin Li <lilin@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230313043711.13500-2-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Reviewed-by: John Meneghini <jmeneghi@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[rkagan: formatted, adjusted commit log, comments, cutoff value]
+Signed-off-by: Zhang Qiao <zhangqiao22@huawei.com>
+Co-developed-by: Roman Kagan <rkagan@amazon.de>
+Signed-off-by: Roman Kagan <rkagan@amazon.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20230130122216.3555094-1-rkagan@amazon.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ kernel/sched/fair.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -1738,6 +1738,17 @@ __qla2x00_abort_all_cmds(struct qla_qpai
- 	for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
- 		sp = req->outstanding_cmds[cnt];
- 		if (sp) {
-+			/*
-+			 * perform lockless completion during driver unload
-+			 */
-+			if (qla2x00_chip_is_down(vha)) {
-+				req->outstanding_cmds[cnt] = NULL;
-+				spin_unlock_irqrestore(qp->qp_lock_ptr, flags);
-+				sp->done(sp, res);
-+				spin_lock_irqsave(qp->qp_lock_ptr, flags);
-+				continue;
-+			}
-+
- 			switch (sp->cmd_type) {
- 			case TYPE_SRB:
- 				qla2x00_abort_srb(qp, sp, res, &flags);
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -3881,6 +3881,7 @@ static void
+ place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int initial)
+ {
+ 	u64 vruntime = cfs_rq->min_vruntime;
++	u64 sleep_time;
+ 
+ 	/*
+ 	 * The 'current' period is already promised to the current tasks,
+@@ -3905,8 +3906,18 @@ place_entity(struct cfs_rq *cfs_rq, stru
+ 		vruntime -= thresh;
+ 	}
+ 
+-	/* ensure we never gain time by being placed backwards. */
+-	se->vruntime = max_vruntime(se->vruntime, vruntime);
++	/*
++	 * Pull vruntime of the entity being placed to the base level of
++	 * cfs_rq, to prevent boosting it if placed backwards.  If the entity
++	 * slept for a long time, don't even try to compare its vruntime with
++	 * the base as it may be too far off and the comparison may get
++	 * inversed due to s64 overflow.
++	 */
++	sleep_time = rq_clock_task(rq_of(cfs_rq)) - se->exec_start;
++	if ((s64)sleep_time > 60LL * NSEC_PER_SEC)
++		se->vruntime = vruntime;
++	else
++		se->vruntime = max_vruntime(se->vruntime, vruntime);
+ }
+ 
+ static void check_enqueue_throttle(struct cfs_rq *cfs_rq);
 
 
