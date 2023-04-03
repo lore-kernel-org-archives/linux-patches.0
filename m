@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAE16FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25990C433EF;
-	Mon,  3 Apr 2023 14:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465E16FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FF0C433EF;
+	Mon,  3 Apr 2023 14:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533289;
-	bh=//lb1NvM2T0ckJjYGmS1UZFhO1E7RtGtZoey5OEoRLQ=;
+	s=korg; t=1680533292;
+	bh=b433K2IxkgY2T+vFMSNzzrQicmbc2Ss7MekLP91B3c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FU1Jvc8M6xGzo4RLTOl41HI+bCW+jd4WJWR4QfbuBph6nSeMORTeKVrWGismjNA9M
-	 nImQ8dFNEr5SunrDly8zeajnzD3SVy/uUE6ba0uzZ0NKkIS66MaErmONsD1Z8DGP/K
-	 iYsrPWuq/0Nn47a4UCyM1Eb9QZvIJvTlHRsJUSqA=
+	b=Dcoe1AZ5vG6MHIn9xsGivXfQsm0hatMCPNNbZP0VAjhZJjxoPc8H/XDj17lRsPEeU
+	 Y4RmurNVK1yvPYZZQPGYs2RF5zbFkRFnonvZiKTLJnouM30t0RQV9k8x6lDYSF/ESj
+	 nlSRtOQGzBxHFugNxd++759qYDPsu2Q02Pc2cO9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 127/187] Revert "venus: firmware: Correct non-pix start and end addresses"
-Date: Mon,  3 Apr 2023 16:09:32 +0200
-Message-Id: <20230403140420.161479149@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.2 128/187] Input: i8042 - add TUXEDO devices to i8042 quirk tables for partial fix
+Date: Mon,  3 Apr 2023 16:09:33 +0200
+Message-Id: <20230403140420.199630345@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,48 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Javier Martinez Canillas <javierm@redhat.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit f95b8ea79c47c0ad3d18f45ad538f9970e414d1f ]
+commit cbedf1a33970c9b825ae75b81fbd3e88e224a418 upstream.
 
-This reverts commit a837e5161cff, which broke probing of the venus
-driver, at least on the SC7180 SoC HP X2 Chromebook:
+A lot of modern Clevo barebones have touchpad and/or keyboard issues after
+suspend fixable with nomux + reset + noloop + nopnp. Luckily, none of them
+have an external PS/2 port so this can safely be set for all of them.
 
-  qcom-venus aa00000.video-codec: Adding to iommu group 11
-  qcom-venus aa00000.video-codec: non legacy binding
-  qcom-venus aa00000.video-codec: failed to reset venus core
-  qcom-venus: probe of aa00000.video-codec failed with error -110
+I'm not entirely sure if every device listed really needs all four quirks,
+but after testing and production use, no negative effects could be
+observed when setting all four.
 
-Matthias Kaehlcke also reported that the same change caused a regression
-in SC7180 and sc7280, that prevents AOSS from entering sleep mode during
-system suspend.  So let's revert this commit for now to fix both issues.
+Setting SERIO_QUIRK_NOMUX or SERIO_QUIRK_RESET_ALWAYS on the Clevo N150CU
+and the Clevo NHxxRZQ makes the keyboard very laggy for ~5 seconds after
+boot and sometimes also after resume. However both are required for the
+keyboard to not fail completely sometimes after boot or resume.
 
-Fixes: a837e5161cff ("venus: firmware: Correct non-pix start and end addresses")
-Reported-by: Matthias Kaehlcke <mka@chromium.org>
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230321191619.647911-1-wse@tuxedocomputers.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/firmware.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index 142d4c74017c0..d59ecf776715c 100644
---- a/drivers/media/platform/qcom/venus/firmware.c
-+++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -38,8 +38,8 @@ static void venus_reset_cpu(struct venus_core *core)
- 	writel(fw_size, wrapper_base + WRAPPER_FW_END_ADDR);
- 	writel(0, wrapper_base + WRAPPER_CPA_START_ADDR);
- 	writel(fw_size, wrapper_base + WRAPPER_CPA_END_ADDR);
--	writel(0, wrapper_base + WRAPPER_NONPIX_START_ADDR);
--	writel(0, wrapper_base + WRAPPER_NONPIX_END_ADDR);
-+	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
-+	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
- 
- 	if (IS_V6(core)) {
- 		/* Bring XTSS out of reset */
--- 
-2.39.2
-
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1117,11 +1117,39 @@ static const struct dmi_system_id i8042_
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
+ 	{
++		/*
++		 * Setting SERIO_QUIRK_NOMUX or SERIO_QUIRK_RESET_ALWAYS makes
++		 * the keyboard very laggy for ~5 seconds after boot and
++		 * sometimes also after resume.
++		 * However both are required for the keyboard to not fail
++		 * completely sometimes after boot or resume.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "N150CU"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "NH5xAx"),
+ 		},
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	{
++		/*
++		 * Setting SERIO_QUIRK_NOMUX or SERIO_QUIRK_RESET_ALWAYS makes
++		 * the keyboard very laggy for ~5 seconds after boot and
++		 * sometimes also after resume.
++		 * However both are required for the keyboard to not fail
++		 * completely sometimes after boot or resume.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "NHxxRZQ"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
+ 	{
+ 		.matches = {
 
 
