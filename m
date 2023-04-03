@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03635683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265A8C433D2;
-	Mon,  3 Apr 2023 14:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A4A5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2D2C433D2;
+	Mon,  3 Apr 2023 14:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531129;
-	bh=26Y/ITEHPD8UFn8hEpEzsEFYiG8MOno/GFQpeNSP190=;
+	s=korg; t=1680531132;
+	bh=racrdeC06ukuu1fSvkjbs9AJFAptKDnohO4OTEYO99I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYYOXGtBkVRQqsITBiMWIhPz2oBVMaXotbp8r98fno+GXi190EsqGFWm9p7jpo3El
-	 THQjX4qjaR29H8nQccZ9wbC/U9HEgyjAKBN+l+/yf/VrPg8pSDRMEcxay7KAcsTnhu
-	 9AOKgE8sej3En2g2dD53N68MRPG5jR6u+wSZTK7w=
+	b=pecY4c8LndIi+BmtQ2yKwDguIrey+seDKRQyi74NMYR05SAZ3poXtxf+Uxlud2qk1
+	 E2YHtYYbskENQcJyG2HWEPDF45i1+jWXRt9yWjTD3S514zG4biJqdh3b5LnimSPgbH
+	 5cWb1x4yzPLYi2s66S277YRV2R2/M/B+9kcDixyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Rich Felker <dalias@libc.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 30/66] sh: sanitize the flags on sigreturn
-Date: Mon,  3 Apr 2023 16:08:38 +0200
-Message-Id: <20230403140352.974721431@linuxfoundation.org>
+	Joel Selvaraj <joelselvaraj.oss@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 4.14 31/66] scsi: core: Add BLIST_SKIP_VPD_PAGES for SKhynix H28U74301AMR
+Date: Mon,  3 Apr 2023 16:08:39 +0200
+Message-Id: <20230403140353.004220736@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -36,51 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Joel Selvaraj <joelselvaraj.oss@gmail.com>
 
-[ Upstream commit 573b22ccb7ce9ab7f0539a2e11a9d3609a8783f5 ]
+commit a204b490595de71016b2360a1886ec8c12d0afac upstream.
 
-We fetch %SR value from sigframe; it might have been modified by signal
-handler, so we can't trust it with any bits that are not modifiable in
-user mode.
+Xiaomi Poco F1 (qcom/sdm845-xiaomi-beryllium*.dts) comes with a SKhynix
+H28U74301AMR UFS. The sd_read_cpr() operation leads to a 120 second
+timeout, making the device bootup very slow:
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Rich Felker <dalias@libc.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[  121.457736] sd 0:0:0:1: [sdb] tag#23 timing out command, waited 120s
+
+Setting the BLIST_SKIP_VPD_PAGES allows the device to skip the failing
+sd_read_cpr operation and boot normally.
+
+Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Link: https://lore.kernel.org/r/20230313041402.39330-1-joelselvaraj.oss@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/include/asm/processor_32.h |    1 +
- arch/sh/kernel/signal_32.c         |    3 +++
- 2 files changed, 4 insertions(+)
+ drivers/scsi/scsi_devinfo.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/sh/include/asm/processor_32.h
-+++ b/arch/sh/include/asm/processor_32.h
-@@ -57,6 +57,7 @@
- #define SR_FD		0x00008000
- #define SR_MD		0x40000000
- 
-+#define SR_USER_MASK	0x00000303	// M, Q, S, T bits
- /*
-  * DSP structure and data
-  */
---- a/arch/sh/kernel/signal_32.c
-+++ b/arch/sh/kernel/signal_32.c
-@@ -116,6 +116,7 @@ static int
- restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p)
- {
- 	unsigned int err = 0;
-+	unsigned int sr = regs->sr & ~SR_USER_MASK;
- 
- #define COPY(x)		err |= __get_user(regs->x, &sc->sc_##x)
- 			COPY(regs[1]);
-@@ -131,6 +132,8 @@ restore_sigcontext(struct pt_regs *regs,
- 	COPY(sr);	COPY(pc);
- #undef COPY
- 
-+	regs->sr = (regs->sr & SR_USER_MASK) | sr;
-+
- #ifdef CONFIG_SH_FPU
- 	if (boot_cpu_data.flags & CPU_HAS_FPU) {
- 		int owned_fp;
+--- a/drivers/scsi/scsi_devinfo.c
++++ b/drivers/scsi/scsi_devinfo.c
+@@ -241,6 +241,7 @@ static struct {
+ 	{"SGI", "RAID5", "*", BLIST_SPARSELUN},
+ 	{"SGI", "TP9100", "*", BLIST_REPORTLUN2},
+ 	{"SGI", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
++	{"SKhynix", "H28U74301AMR", NULL, BLIST_SKIP_VPD_PAGES},
+ 	{"IBM", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
+ 	{"SUN", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
+ 	{"DELL", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
 
 
