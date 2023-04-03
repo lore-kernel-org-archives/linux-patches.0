@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CC96FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B085C433D2;
-	Mon,  3 Apr 2023 14:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328816FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A411CC433D2;
+	Mon,  3 Apr 2023 14:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532675;
-	bh=Sq6EyJ89k30liJXZj/iji5UKTuBj2qIgu1GpiNL4H3Q=;
+	s=korg; t=1680532678;
+	bh=08OWbfiWPJSbxDnAwXss/74HZV+xVfgvzDUcsYqfuCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oZZcFXxDDAgA46BUQAMdx+gubyiEhghNzC/iEDywmuVnbuJpyO9Qj6gCvyv8j/jok
-	 Asee503GwWETXUnhriP0L0rP8DaR7upOLikpa00NUfQ213Sj3M4wiQDPDZMsD0nZDN
-	 LkZqrxvr4egrmyHUpd65VJKcc0tVjyFmfEGhVlZo=
+	b=VmFOkz6SqoO3S7Ka+CR0GEtITBc9y7P6YjtckuNQazUT51O4Fs9e9TXKv5McH8CPG
+	 ez066i1vu/+SXzDCg5Yw7kvSiAb3ZonC61O8pKEBh1Sw6ztydWN2R8tQuAVZMmj4GA
+	 OEUEwODrKVOfC6ulurswZdB+l7YkYTe9p4O2CdHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
+	Petr Tesarik <petr.tesarik.ext@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/181] PCI: dwc: Fix PORT_LINK_CONTROL update when CDM check enabled
-Date: Mon,  3 Apr 2023 16:08:28 +0200
-Message-Id: <20230403140417.506764370@linuxfoundation.org>
+Subject: [PATCH 6.1 074/181] swiotlb: fix slot alignment checks
+Date: Mon,  3 Apr 2023 16:08:29 +0200
+Message-Id: <20230403140417.540659835@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,58 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Petr Tesarik <petr.tesarik.ext@huawei.com>
 
-[ Upstream commit cdce67099117ece371582f706c6eff7d3a65326d ]
+[ Upstream commit 0eee5ae1025699ea93d44fdb6ef2365505082103 ]
 
-If CDM_CHECK is enabled (by the DT "snps,enable-cdm-check" property), 'val'
-is overwritten by PCIE_PL_CHK_REG_CONTROL_STATUS initialization.  Commit
-ec7b952f453c ("PCI: dwc: Always enable CDM check if "snps,enable-cdm-check"
-exists") did not account for further usage of 'val', so we wrote improper
-values to PCIE_PORT_LINK_CONTROL when the CDM check is enabled.
+Explicit alignment and page alignment are used only to calculate
+the stride, not when checking actual slot physical address.
 
-Move the PCIE_PORT_LINK_CONTROL update to be completely after the
-PCIE_PL_CHK_REG_CONTROL_STATUS register initialization.
+Originally, only page alignment was implemented, and that worked,
+because the whole SWIOTLB is allocated on a page boundary, so
+aligning the start index was sufficient to ensure a page-aligned
+slot.
 
-[bhelgaas: commit log adapted from Serge's version]
-Fixes: ec7b952f453c ("PCI: dwc: Always enable CDM check if "snps,enable-cdm-check" exists")
-Link: https://lore.kernel.org/r/20230310123510.675685-2-yoshihiro.shimoda.uh@renesas.com
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+When commit 1f221a0d0dbf ("swiotlb: respect min_align_mask") added
+support for min_align_mask, the index could be incremented in the
+search loop, potentially finding an unaligned slot if minimum device
+alignment is between IO_TLB_SIZE and PAGE_SIZE.  The bug could go
+unnoticed, because the slot size is 2 KiB, and the most common page
+size is 4 KiB, so there is no alignment value in between.
+
+IIUC the intention has been to find a slot that conforms to all
+alignment constraints: device minimum alignment, an explicit
+alignment (given as function parameter) and optionally page
+alignment (if allocation size is >= PAGE_SIZE). The most
+restrictive mask can be trivially computed with logical AND. The
+rest can stay.
+
+Fixes: 1f221a0d0dbf ("swiotlb: respect min_align_mask")
+Fixes: e81e99bacc9f ("swiotlb: Support aligned swiotlb buffers")
+Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ kernel/dma/swiotlb.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 9e4d96e5a3f5a..575834cae3b9e 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -645,11 +645,6 @@ void dw_pcie_setup(struct dw_pcie *pci)
- 		dw_pcie_writel_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL, val);
- 	}
+diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+index 1ecd0d1f7231a..eeb5695c3f286 100644
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -626,22 +626,26 @@ static int swiotlb_do_find_slots(struct device *dev, int area_index,
+ 	BUG_ON(!nslots);
+ 	BUG_ON(area_index >= mem->nareas);
  
--	val = dw_pcie_readl_dbi(pci, PCIE_PORT_LINK_CONTROL);
--	val &= ~PORT_LINK_FAST_LINK_MODE;
--	val |= PORT_LINK_DLL_LINK_EN;
--	dw_pcie_writel_dbi(pci, PCIE_PORT_LINK_CONTROL, val);
--
- 	if (of_property_read_bool(np, "snps,enable-cdm-check")) {
- 		val = dw_pcie_readl_dbi(pci, PCIE_PL_CHK_REG_CONTROL_STATUS);
- 		val |= PCIE_PL_CHK_REG_CHK_REG_CONTINUOUS |
-@@ -657,6 +652,11 @@ void dw_pcie_setup(struct dw_pcie *pci)
- 		dw_pcie_writel_dbi(pci, PCIE_PL_CHK_REG_CONTROL_STATUS, val);
- 	}
- 
-+	val = dw_pcie_readl_dbi(pci, PCIE_PORT_LINK_CONTROL);
-+	val &= ~PORT_LINK_FAST_LINK_MODE;
-+	val |= PORT_LINK_DLL_LINK_EN;
-+	dw_pcie_writel_dbi(pci, PCIE_PORT_LINK_CONTROL, val);
++	/*
++	 * For allocations of PAGE_SIZE or larger only look for page aligned
++	 * allocations.
++	 */
++	if (alloc_size >= PAGE_SIZE)
++		iotlb_align_mask &= PAGE_MASK;
++	iotlb_align_mask &= alloc_align_mask;
 +
- 	of_property_read_u32(np, "num-lanes", &pci->num_lanes);
- 	if (!pci->num_lanes) {
- 		dev_dbg(pci->dev, "Using h/w default number of lanes\n");
+ 	/*
+ 	 * For mappings with an alignment requirement don't bother looping to
+-	 * unaligned slots once we found an aligned one.  For allocations of
+-	 * PAGE_SIZE or larger only look for page aligned allocations.
++	 * unaligned slots once we found an aligned one.
+ 	 */
+ 	stride = (iotlb_align_mask >> IO_TLB_SHIFT) + 1;
+-	if (alloc_size >= PAGE_SIZE)
+-		stride = max(stride, stride << (PAGE_SHIFT - IO_TLB_SHIFT));
+-	stride = max(stride, (alloc_align_mask >> IO_TLB_SHIFT) + 1);
+ 
+ 	spin_lock_irqsave(&area->lock, flags);
+ 	if (unlikely(nslots > mem->area_nslabs - area->used))
+ 		goto not_found;
+ 
+ 	slot_base = area_index * mem->area_nslabs;
+-	index = wrap_area_index(mem, ALIGN(area->index, stride));
++	index = area->index;
+ 
+ 	for (slots_checked = 0; slots_checked < mem->area_nslabs; ) {
+ 		slot_index = slot_base + index;
 -- 
 2.39.2
 
