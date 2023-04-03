@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D7A6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74927C433D2;
-	Mon,  3 Apr 2023 14:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904FC6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E4AC4339B;
+	Mon,  3 Apr 2023 14:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533126;
-	bh=JcILdQd0OmJT9lXLLAMILCz+XMba2aucdyQ7Wd+IxDI=;
+	s=korg; t=1680533129;
+	bh=frooMqeOYLIanJo4b1tpQmiXxHgvaZ8rKYC5kHxBHOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k8mCmgG7th6KHUWlKaWBqnamjtrRKp7GTya7LVI6MuuKKnbRI1Ps42bCnBBts4EBh
-	 mnYcDbpznpUGbgvQMWO2w4G7ZZsJMwU350TyVOJcClnrwlANAxrC/JrplQ+U4U7fzm
-	 1D+xQLo6n+Uh0apjNANJ6Ol0EFCzxhUhAwHox0DY=
+	b=c07POUvwgS7zTYfVzVVJbcad7fYx+mG8NfhzPuzee009H5CJjz13/rMQxJhQK3vxv
+	 Zdf2VfIgUCKf15irGeoVBTZ2HigXSez8Bp3MXqbul149an5ZmhEic9ZGESCrlnJTvf
+	 IjBKvkqaTljLdSOPkL9tsf3brBAxUTMWxJTzcxgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Alexander Aring <aahringo@redhat.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Rajnesh Kanwal <rkanwal@rivosinc.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 065/187] ca8210: Fix unsigned mac_len comparison with zero in ca8210_skb_tx()
-Date: Mon,  3 Apr 2023 16:08:30 +0200
-Message-Id: <20230403140418.095824431@linuxfoundation.org>
+Subject: [PATCH 6.2 066/187] riscv/kvm: Fix VM hang in case of timer delta being zero.
+Date: Mon,  3 Apr 2023 16:08:31 +0200
+Message-Id: <20230403140418.129082930@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -37,46 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Rajnesh Kanwal <rkanwal@rivosinc.com>
 
-[ Upstream commit 748b2f5e82d17480404b3e2895388fc2925f7caf ]
+[ Upstream commit 6eff38048944cadc3cddcf117acfa5199ec32490 ]
 
-mac_len is of type unsigned, which can never be less than zero.
+In case when VCPU is blocked due to WFI, we schedule the timer
+from `kvm_riscv_vcpu_timer_blocking()` to keep timer interrupt
+ticking.
 
-	mac_len = ieee802154_hdr_peek_addrs(skb, &header);
-	if (mac_len < 0)
-		return mac_len;
+But in case when delta_ns comes to be zero, we never schedule
+the timer and VCPU keeps sleeping indefinitely until any activity
+is done with VM console.
 
-Change this to type int as ieee802154_hdr_peek_addrs() can return negative
-integers, this is found by static analysis with smatch.
+This is easily reproduce-able using kvmtool.
+./lkvm-static run -c1 --console virtio -p "earlycon root=/dev/vda" \
+         -k ./Image -d rootfs.ext4
 
-Fixes: 6c993779ea1d ("ca8210: fix mac_len negative array access")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230306191824.4115839-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Also, just add a print in kvm_riscv_vcpu_vstimer_expired() to
+check the interrupt delivery and run `top` or similar auto-upating
+cmd from guest. Within sometime one can notice that print from
+timer expiry routine stops and the `top` cmd output will stop
+updating.
+
+This change fixes this by making sure we schedule the timer even
+with delta_ns being zero to bring the VCPU out of sleep immediately.
+
+Fixes: 8f5cb44b1bae ("RISC-V: KVM: Support sstc extension")
+Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/ca8210.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/riscv/kvm/vcpu_timer.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
-index 0b0c6c0764fe9..d0b5129439ed6 100644
---- a/drivers/net/ieee802154/ca8210.c
-+++ b/drivers/net/ieee802154/ca8210.c
-@@ -1902,10 +1902,9 @@ static int ca8210_skb_tx(
- 	struct ca8210_priv  *priv
- )
- {
--	int status;
- 	struct ieee802154_hdr header = { };
- 	struct secspec secspec;
--	unsigned int mac_len;
-+	int mac_len, status;
+diff --git a/arch/riscv/kvm/vcpu_timer.c b/arch/riscv/kvm/vcpu_timer.c
+index ad34519c8a13d..3ac2ff6a65dac 100644
+--- a/arch/riscv/kvm/vcpu_timer.c
++++ b/arch/riscv/kvm/vcpu_timer.c
+@@ -147,10 +147,8 @@ static void kvm_riscv_vcpu_timer_blocking(struct kvm_vcpu *vcpu)
+ 		return;
  
- 	dev_dbg(&priv->spi->dev, "%s called\n", __func__);
+ 	delta_ns = kvm_riscv_delta_cycles2ns(t->next_cycles, gt, t);
+-	if (delta_ns) {
+-		hrtimer_start(&t->hrt, ktime_set(0, delta_ns), HRTIMER_MODE_REL);
+-		t->next_set = true;
+-	}
++	hrtimer_start(&t->hrt, ktime_set(0, delta_ns), HRTIMER_MODE_REL);
++	t->next_set = true;
+ }
  
+ static void kvm_riscv_vcpu_timer_unblocking(struct kvm_vcpu *vcpu)
 -- 
 2.39.2
 
