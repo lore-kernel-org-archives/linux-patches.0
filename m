@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A37D6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C91C433EF;
-	Mon,  3 Apr 2023 14:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5B66FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224BFC433D2;
+	Mon,  3 Apr 2023 14:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533110;
-	bh=iIimPAl3W7sA8efoe/qBB54Hy/DRWY0cczHHWIEH6Vk=;
+	s=korg; t=1680533113;
+	bh=DV0cOeSX8PNOFn5ooCFW/+sKVpj7bKAX1Y/CH1juOtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANOQYAhRGSB0a7GiW4wk7VbTYNCPaPq++1yIEc5glUh9NKTFZQijzib1w003HEcQQ
-	 RM86nT7UGvZ7Jp+u6cwmlB3Ntcsz9BUWOzwJ6q3b7qEsVcQ5RS82d8gbDrma1O2BAJ
-	 jBv4Knh5bJ/FdCkCGscxhcEXED7RzdAQGwFnqQmM=
+	b=xSQ439UuOqvdvKQQUG97Ex0MbN0qJwQ8V6jjZeyVxq9ehpwuD1LDvFa+ykeM1bgc+
+	 /nnpQFDbCLprOq2VsgZ+Rd46chxsxkrxvkZ4T1qBk1iKxJQl2oN2YMxW7aUR3ikmNb
+	 aWYW1QF0i8ZNoyERKoWE2HOWPV5lNTtp8ZuNtMc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Gusev <aagusev@ispras.ru>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 059/187] tracing: Fix wrong return in kprobe_event_gen_test.c
-Date: Mon,  3 Apr 2023 16:08:24 +0200
-Message-Id: <20230403140417.896971875@linuxfoundation.org>
+Subject: [PATCH 6.2 060/187] btrfs: fix uninitialized variable warning in btrfs_update_block_group
+Date: Mon,  3 Apr 2023 16:08:25 +0200
+Message-Id: <20230403140417.935627566@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,51 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anton Gusev <aagusev@ispras.ru>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit bc4f359b3b607daac0290d0038561237a86b38cb ]
+[ Upstream commit efbf35a102b20246cfe4409c6ae92e72ecb67ab8 ]
 
-Overwriting the error code with the deletion result may cause the
-function to return 0 despite encountering an error. Commit b111545d26c0
-("tracing: Remove the useless value assignment in
-test_create_synth_event()") solves a similar issue by
-returning the original error code, so this patch does the same.
+reclaim isn't set in the alloc case, however we only care about
+reclaim in the !alloc case.  This isn't an actual problem, however
+-Wmaybe-uninitialized will complain, so initialize reclaim to quiet the
+compiler.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230131075818.5322-1-aagusev@ispras.ru
-
-Signed-off-by: Anton Gusev <aagusev@ispras.ru>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: df384da5a49c ("btrfs: use temporary variable for space_info in btrfs_update_block_group")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/kprobe_event_gen_test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/block-group.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/kprobe_event_gen_test.c b/kernel/trace/kprobe_event_gen_test.c
-index c736487fc0e48..e0c420eb0b2b4 100644
---- a/kernel/trace/kprobe_event_gen_test.c
-+++ b/kernel/trace/kprobe_event_gen_test.c
-@@ -146,7 +146,7 @@ static int __init test_gen_kprobe_cmd(void)
- 	if (trace_event_file_is_valid(gen_kprobe_test))
- 		gen_kprobe_test = NULL;
- 	/* We got an error after creating the event, delete it */
--	ret = kprobe_event_delete("gen_kprobe_test");
-+	kprobe_event_delete("gen_kprobe_test");
- 	goto out;
- }
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index 8eb625318e785..f40e56d44276d 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -3336,7 +3336,7 @@ int btrfs_update_block_group(struct btrfs_trans_handle *trans,
+ 	spin_unlock(&info->delalloc_root_lock);
  
-@@ -211,7 +211,7 @@ static int __init test_gen_kretprobe_cmd(void)
- 	if (trace_event_file_is_valid(gen_kretprobe_test))
- 		gen_kretprobe_test = NULL;
- 	/* We got an error after creating the event, delete it */
--	ret = kprobe_event_delete("gen_kretprobe_test");
-+	kprobe_event_delete("gen_kretprobe_test");
- 	goto out;
- }
+ 	while (total) {
+-		bool reclaim;
++		bool reclaim = false;
  
+ 		cache = btrfs_lookup_block_group(info, bytenr);
+ 		if (!cache) {
 -- 
 2.39.2
 
