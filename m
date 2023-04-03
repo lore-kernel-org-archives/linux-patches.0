@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5F85683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:15:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FF1C4339C;
-	Mon,  3 Apr 2023 14:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CD95683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:15:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E52C433D2;
+	Mon,  3 Apr 2023 14:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531344;
-	bh=elm+YIuYB1h0vRw9Tw6xtnf3/u3yo11apVUZqf9lJVY=;
+	s=korg; t=1680531347;
+	bh=mjOBt0hwl4VEkVOuBgR29W11lOITYRPWxwYwBi1U/4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOJb0siH1P7OOdxmxTFG5r7sDwqPsAfkWGNh1NzZjMGXGFEQPLaxjs0UwhYfq7lh1
-	 NNKR/g2KL6ypCTqcvrjeBzMclrZfoAVERWJ/KDtLe49yDogdHqbjXMgADQSNj9wmAv
-	 VTVr14T2c64yoJBLlWDZG8SE5Kjph932y25V0Wc0=
+	b=WmGjzw+/a6CCR7uNP8H0zyuVxVrxp9af+s2RWpNvcE3ehtPYVNut8Yn8sDx30eYMY
+	 KXJW7E+OQdGDyyrlXuZWxx6KFV7isFGpAf1VTCdCJmAab8A/r7nN/hA9/6e1S3Pl7n
+	 FaC/xq/g1UL/Hu6MyxYYyu9A5LUWCGQ0cistMte8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanju Mehta <Sanju.Mehta@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 4.19 27/84] thunderbolt: Use const qualifier for `ring_interrupt_index`
-Date: Mon,  3 Apr 2023 16:08:28 +0200
-Message-Id: <20230403140354.298984248@linuxfoundation.org>
+	Dmitry Vyukov <dvyukov@google.com>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 28/84] riscv: Bump COMMAND_LINE_SIZE value to 1024
+Date: Mon,  3 Apr 2023 16:08:29 +0200
+Message-Id: <20230403140354.333191002@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,33 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Alexandre Ghiti <alex@ghiti.fr>
 
-commit 1716efdb07938bd6510e1127d02012799112c433 upstream.
+[ Upstream commit 61fc1ee8be26bc192d691932b0a67eabee45d12f ]
 
-`ring_interrupt_index` doesn't change the data for `ring` so mark it as
-const. This is needed by the following patch that disables interrupt
-auto clear for rings.
+Increase COMMAND_LINE_SIZE as the current default value is too low
+for syzbot kernel command line.
 
-Cc: Sanju Mehta <Sanju.Mehta@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+There has been considerable discussion on this patch that has led to a
+larger patch set removing COMMAND_LINE_SIZE from the uapi headers on all
+ports.  That's not quite done yet, but it's gotten far enough we're
+confident this is not a uABI change so this is safe.
+
+Reported-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Alexandre Ghiti <alex@ghiti.fr>
+Link: https://lore.kernel.org/r/20210316193420.904-1-alex@ghiti.fr
+[Palmer: it's not uabi]
+Link: https://lore.kernel.org/linux-riscv/874b8076-b0d1-4aaa-bcd8-05d523060152@app.fastmail.com/#t
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/nhi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/include/uapi/asm/setup.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+ create mode 100644 arch/riscv/include/uapi/asm/setup.h
 
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -38,7 +38,7 @@
- 
- #define NHI_MAILBOX_TIMEOUT	500 /* ms */
- 
--static int ring_interrupt_index(struct tb_ring *ring)
-+static int ring_interrupt_index(const struct tb_ring *ring)
- {
- 	int bit = ring->hop;
- 	if (!ring->is_tx)
+diff --git a/arch/riscv/include/uapi/asm/setup.h b/arch/riscv/include/uapi/asm/setup.h
+new file mode 100644
+index 0000000000000..66b13a5228808
+--- /dev/null
++++ b/arch/riscv/include/uapi/asm/setup.h
+@@ -0,0 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
++
++#ifndef _UAPI_ASM_RISCV_SETUP_H
++#define _UAPI_ASM_RISCV_SETUP_H
++
++#define COMMAND_LINE_SIZE	1024
++
++#endif /* _UAPI_ASM_RISCV_SETUP_H */
+-- 
+2.39.2
+
 
 
