@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2DE6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:40:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1496BC433D2;
-	Mon,  3 Apr 2023 14:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B446FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:40:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3294C4339B;
+	Mon,  3 Apr 2023 14:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532810;
-	bh=n4BZOnVH0vyjAq10MGm3aPcUiheVOdpKnNU2BEWMxjU=;
+	s=korg; t=1680532813;
+	bh=blv3SW+RxsWGacT544sbFgefBCcLM8E7IYPNXmNLpPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pun6Z0K3S/QbAh0A2eOHwaOn+pmgpQd2ibNr6bTb3w6FLhe4oPi3XevK9lkUegpIY
-	 F7mzRtp3Fb62Bs8Znfk1w77L1DkSv/CWqGBfO11rCmzJK9s4uOS1sRw5Rie/HsQTqq
-	 GzfoaIaMgccuinsjEg7hTitsODIPlWL2uzUa45EQ=
+	b=NbX+6iiXCLuYpJDq4XWTV6vNlqBFNCQlQC7oPMcvQ6MFY5wCF73vP8+bq3yjyXgin
+	 t3ODhrpyA7mtSQwNbuH092yv1v3CHiRZiT/aBanowP1YfIx3Ke72/xKZj2UNWguCJx
+	 GbmG4qFVgs4ex8CiNF+KCsFEShCj7avF+kvi4sWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Disseldorp <ddiss@suse.de>,
 	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Ronnie Sahlberg <lsahlber@redhat.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 126/181] cifs: prevent infinite recursion in CIFSGetDFSRefer()
-Date: Mon,  3 Apr 2023 16:09:21 +0200
-Message-Id: <20230403140419.168409614@linuxfoundation.org>
+Subject: [PATCH 6.1 127/181] cifs: fix DFS traversal oops without CONFIG_CIFS_DFS_UPCALL
+Date: Mon,  3 Apr 2023 16:09:22 +0200
+Message-Id: <20230403140419.200558991@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -35,40 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: David Disseldorp <ddiss@suse.de>
 
-commit 09ba47b44d26b475bbdf9c80db9e0193d2b58956 upstream.
+commit 179a88a8558bbf42991d361595281f3e45d7edfc upstream.
 
-We can't call smb_init() in CIFSGetDFSRefer() as cifs_reconnect_tcon()
-may end up calling CIFSGetDFSRefer() again to get new DFS referrals
-and thus causing an infinite recursion.
+When compiled with CONFIG_CIFS_DFS_UPCALL disabled, cifs_dfs_d_automount
+is NULL. cifs.ko logic for mapping CIFS_FATTR_DFS_REFERRAL attributes to
+S_AUTOMOUNT and corresponding dentry flags is retained regardless of
+CONFIG_CIFS_DFS_UPCALL, leading to a NULL pointer dereference in
+VFS follow_automount() when traversing a DFS referral link:
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  ...
+  Call Trace:
+   <TASK>
+   __traverse_mounts+0xb5/0x220
+   ? cifs_revalidate_mapping+0x65/0xc0 [cifs]
+   step_into+0x195/0x610
+   ? lookup_fast+0xe2/0xf0
+   path_lookupat+0x64/0x140
+   filename_lookup+0xc2/0x140
+   ? __create_object+0x299/0x380
+   ? kmem_cache_alloc+0x119/0x220
+   ? user_path_at_empty+0x31/0x50
+   user_path_at_empty+0x31/0x50
+   __x64_sys_chdir+0x2a/0xd0
+   ? exit_to_user_mode_prepare+0xca/0x100
+   do_syscall_64+0x42/0x90
+   entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+This fix adds an inline cifs_dfs_d_automount() {return -EREMOTE} handler
+when CONFIG_CIFS_DFS_UPCALL is disabled. An alternative would be to
+avoid flagging S_AUTOMOUNT, etc. without CONFIG_CIFS_DFS_UPCALL. This
+approach was chosen as it provides more control over the error path.
+
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Cc: stable@vger.kernel.org
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
 Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
-Cc: stable@vger.kernel.org # 6.2
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifssmb.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/cifs/cifsfs.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/cifs/cifssmb.c
-+++ b/fs/cifs/cifssmb.c
-@@ -4319,8 +4319,13 @@ CIFSGetDFSRefer(const unsigned int xid,
- 		return -ENODEV;
+--- a/fs/cifs/cifsfs.h
++++ b/fs/cifs/cifsfs.h
+@@ -118,7 +118,10 @@ extern const struct dentry_operations ci
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+ extern struct vfsmount *cifs_dfs_d_automount(struct path *path);
+ #else
+-#define cifs_dfs_d_automount NULL
++static inline struct vfsmount *cifs_dfs_d_automount(struct path *path)
++{
++	return ERR_PTR(-EREMOTE);
++}
+ #endif
  
- getDFSRetry:
--	rc = smb_init(SMB_COM_TRANSACTION2, 15, ses->tcon_ipc, (void **) &pSMB,
--		      (void **) &pSMBr);
-+	/*
-+	 * Use smb_init_no_reconnect() instead of smb_init() as
-+	 * CIFSGetDFSRefer() may be called from cifs_reconnect_tcon() and thus
-+	 * causing an infinite recursion.
-+	 */
-+	rc = smb_init_no_reconnect(SMB_COM_TRANSACTION2, 15, ses->tcon_ipc,
-+				   (void **)&pSMB, (void **)&pSMBr);
- 	if (rc)
- 		return rc;
- 
+ /* Functions related to symlinks */
 
 
