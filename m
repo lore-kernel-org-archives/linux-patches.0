@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18F66FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:39:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294B2C4339B;
-	Mon,  3 Apr 2023 14:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B956FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:39:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C61C433D2;
+	Mon,  3 Apr 2023 14:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532784;
-	bh=yaYpCtLRfmjUuIvNWvHTFxbYboZFUz5YJPZyLEtAs1c=;
+	s=korg; t=1680532787;
+	bh=2RXm2wa3A9FC+yqYtJ4MiGv0GflYG/3NkCVxITDf+1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PuX4wx7P+C5ENnKIf/m4GjrOgkhOjtJo3+GGGMOEACZS9gXCoyMr7HV351pPkhBQw
-	 /MqhWpy0CkDIxDqlNo52gDE871oKI2wvPSkAmg/hgHW1wYy8kBf7Xr0BTyqjw7gFWP
-	 zCRiWK/JrmvSVClmX9iCEaDa3z4NU10AK7Jqiy2I=
+	b=MYPGZfTxjb6WJnV66j/5R8SzZYULocx+ad4C83eSGyC+x9sSssbx5JGctOvVhtLis
+	 yVGuYAt0hFnuGtbFaP1ip4tOPf0wzWSnVy9pENomCGyromwWQfjvFF7EZjP1iWmHPS
+	 zE0Qu1Ltow34/JAX910+e0tI98vExNBykA7cuEZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
 	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/181] bnxt_en: Fix reporting of test result in ethtool selftest
-Date: Mon,  3 Apr 2023 16:09:09 +0200
-Message-Id: <20230403140418.804293319@linuxfoundation.org>
+Subject: [PATCH 6.1 115/181] bnxt_en: Fix typo in PCI id to device description string mapping
+Date: Mon,  3 Apr 2023 16:09:10 +0200
+Message-Id: <20230403140418.833260598@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -41,35 +40,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 83714dc3db0e4a088673601bc8099b079bc1a077 ]
+[ Upstream commit 62aad36ed31abc80f35db11e187e690448a79f7d ]
 
-When the selftest command fails, driver is not reporting the failure
-by updating the "test->flags" when bnxt_close_nic() fails.
+Fix 57502 and 57508 NPAR description string entries.  The typos
+caused these devices to not match up with lspci output.
 
-Fixes: eb51365846bc ("bnxt_en: Add basic ethtool -t selftest support.")
+Fixes: 49c98421e6ab ("bnxt_en: Add PCI IDs for 57500 series NPAR devices.")
 Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
 Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index 703fc163235f9..cdbc62ad659cb 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -3634,6 +3634,7 @@ static void bnxt_self_test(struct net_device *dev, struct ethtool_test *etest,
- 		bnxt_ulp_stop(bp);
- 		rc = bnxt_close_nic(bp, true, false);
- 		if (rc) {
-+			etest->flags |= ETH_TEST_FL_FAILED;
- 			bnxt_ulp_start(bp, rc);
- 			return;
- 		}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 251b102d2792b..c6e36603bd2db 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -175,12 +175,12 @@ static const struct pci_device_id bnxt_pci_tbl[] = {
+ 	{ PCI_VDEVICE(BROADCOM, 0x1750), .driver_data = BCM57508 },
+ 	{ PCI_VDEVICE(BROADCOM, 0x1751), .driver_data = BCM57504 },
+ 	{ PCI_VDEVICE(BROADCOM, 0x1752), .driver_data = BCM57502 },
+-	{ PCI_VDEVICE(BROADCOM, 0x1800), .driver_data = BCM57508_NPAR },
++	{ PCI_VDEVICE(BROADCOM, 0x1800), .driver_data = BCM57502_NPAR },
+ 	{ PCI_VDEVICE(BROADCOM, 0x1801), .driver_data = BCM57504_NPAR },
+-	{ PCI_VDEVICE(BROADCOM, 0x1802), .driver_data = BCM57502_NPAR },
+-	{ PCI_VDEVICE(BROADCOM, 0x1803), .driver_data = BCM57508_NPAR },
++	{ PCI_VDEVICE(BROADCOM, 0x1802), .driver_data = BCM57508_NPAR },
++	{ PCI_VDEVICE(BROADCOM, 0x1803), .driver_data = BCM57502_NPAR },
+ 	{ PCI_VDEVICE(BROADCOM, 0x1804), .driver_data = BCM57504_NPAR },
+-	{ PCI_VDEVICE(BROADCOM, 0x1805), .driver_data = BCM57502_NPAR },
++	{ PCI_VDEVICE(BROADCOM, 0x1805), .driver_data = BCM57508_NPAR },
+ 	{ PCI_VDEVICE(BROADCOM, 0xd802), .driver_data = BCM58802 },
+ 	{ PCI_VDEVICE(BROADCOM, 0xd804), .driver_data = BCM58804 },
+ #ifdef CONFIG_BNXT_SRIOV
 -- 
 2.39.2
 
