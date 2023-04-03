@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CF26FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C91C4339B;
-	Mon,  3 Apr 2023 14:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DEC6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE5AC4339B;
+	Mon,  3 Apr 2023 14:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532463;
-	bh=FR5u52SBigRcZgh7KOyPkM9hKkygE68XFcNclaEP+NI=;
+	s=korg; t=1680532465;
+	bh=iVDkv8kGe/IQdtLp0iSlgIIPgrNQvSUUR42GMN+nEuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rM1POfUX4Je//MVTIrMFa2HtawHF73Ekh9mKDFaRkmEQZv3+QInWEC6fqYD37C7wV
-	 Los9iP/d5OunOs/1HTkAUneJ/tG0KyqVNH5eYP8YYeAY7wiuy2lcSTPRlFvvdaA8PJ
-	 Eib+/XJSCaf2Zt3b6wWFa+RDsMVWcYbfpr9cohC8=
+	b=KR4a2Gi+qoR8IKLpg1ei6ct3ZOX3tdJEfSeuMZQTw6Gn+Fu46oGTsOn7WrwZnES16
+	 4IcIxKiGIKtq3VufCPVzWfQTD2e6FAzg8aNT5pYFMoxzHC6QE8lry3pRV0+ryGRgay
+	 ak3c5nN82FMVwAvVe1s/Evm8WFhRYlD+FAkqVTww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>
-Subject: [PATCH 5.15 93/99] zonefs: Fix error message in zonefs_file_dio_append()
-Date: Mon,  3 Apr 2023 16:09:56 +0200
-Message-Id: <20230403140406.844147242@linuxfoundation.org>
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 94/99] selftests/bpf: Test btf dump for struct with padding only fields
+Date: Mon,  3 Apr 2023 16:09:57 +0200
+Message-Id: <20230403140406.875007168@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,36 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-commit 88b170088ad2c3e27086fe35769aa49f8a512564 upstream.
+[ Upstream commit d503f1176b14f722a40ea5110312614982f9a80b ]
 
-Since the expected write location in a sequential file is always at the
-end of the file (append write), when an invalid write append location is
-detected in zonefs_file_dio_append(), print the invalid written location
-instead of the expected write location.
+Structures with zero regular fields but some padding constitute a
+special case in btf_dump.c:btf_dump_emit_struct_def with regards to
+newline before closing '}'.
 
-Fixes: a608da3bd730 ("zonefs: Detect append writes at invalid locations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20221001104425.415768-2-eddyz87@gmail.com
+Stable-dep-of: ea2ce1ba99aa ("libbpf: Fix BTF-to-C converter's padding logic")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/zonefs/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../selftests/bpf/progs/btf_dump_test_case_padding.c     | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/zonefs/super.c
-+++ b/fs/zonefs/super.c
-@@ -796,7 +796,7 @@ static ssize_t zonefs_file_dio_append(st
- 		if (bio->bi_iter.bi_sector != wpsector) {
- 			zonefs_warn(inode->i_sb,
- 				"Corrupted write pointer %llu for zone at %llu\n",
--				wpsector, zi->i_zsector);
-+				bio->bi_iter.bi_sector, zi->i_zsector);
- 			ret = -EIO;
- 		}
- 	}
+diff --git a/tools/testing/selftests/bpf/progs/btf_dump_test_case_padding.c b/tools/testing/selftests/bpf/progs/btf_dump_test_case_padding.c
+index 35c512818a56b..db5458da61826 100644
+--- a/tools/testing/selftests/bpf/progs/btf_dump_test_case_padding.c
++++ b/tools/testing/selftests/bpf/progs/btf_dump_test_case_padding.c
+@@ -102,12 +102,21 @@ struct zone {
+ 	struct zone_padding __pad__;
+ };
+ 
++/* ----- START-EXPECTED-OUTPUT ----- */
++struct padding_wo_named_members {
++	long: 64;
++	long: 64;
++};
++
++/* ------ END-EXPECTED-OUTPUT ------ */
++
+ int f(struct {
+ 	struct padded_implicitly _1;
+ 	struct padded_explicitly _2;
+ 	struct padded_a_lot _3;
+ 	struct padded_cache_line _4;
+ 	struct zone _5;
++	struct padding_wo_named_members _6;
+ } *_)
+ {
+ 	return 0;
+-- 
+2.39.2
+
 
 
