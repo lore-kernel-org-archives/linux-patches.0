@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2015683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADEAC433A4;
-	Mon,  3 Apr 2023 14:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3148C5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA15FC433D2;
+	Mon,  3 Apr 2023 14:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531478;
-	bh=sSU9XvZ09P806JnsvzQ+NQuxr5xjRZAphV+fuvT+dDQ=;
+	s=korg; t=1680531481;
+	bh=irJsSHp6/SkRA9vkYVuyOTr+2apf/aIYLp27GEA2Kvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5NdAyjxZWocIoxnL7JMTwRem1JPDyAh/XpfBAG6BZjcnhyXKnOn2hhe49PJkDKAA
-	 31oggEiY0iLiJmNLvhzpJd/pGWnds8VPp0986IltQCzNz4FTQJ7hUYcgeUcrLebhA1
-	 1hSNMABCxNQAIEbCZ1QiO/hFHNXpdIRlA0kI1rAA=
+	b=UHcbapzhxlQKeWVCc/TakVW/5UkbUbI+yrHP2SzFDRrHtVvPXcbo+6EmH8/2+CNnd
+	 MbFbZqPLpDuop3tEfDiF3hAKUvxKBKN9N3xge8cSHtVEgygstFBWl5TeVib9i5zVci
+	 NFGy7pJDgyFbh/EcNKgnhgxsv99ooKHE6hT84RsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 4.19 79/84] firmware: arm_scmi: Fix device node validation for mailbox transport
-Date: Mon,  3 Apr 2023 16:09:20 +0200
-Message-Id: <20230403140356.135257966@linuxfoundation.org>
+	syzbot+7bb81dfa9cda07d9cd9d@syzkaller.appspotmail.com,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>
+Subject: [PATCH 4.19 80/84] gfs2: Always check inode size of inline inodes
+Date: Mon,  3 Apr 2023 16:09:21 +0200
+Message-Id: <20230403140356.169033851@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -34,81 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit 2ab4f4018cb6b8010ca5002c3bdc37783b5d28c2 upstream.
+commit 70376c7ff31221f1d21db5611d8209e677781d3a upstream.
 
-When mailboxes are used as a transport it is possible to setup the SCMI
-transport layer, depending on the underlying channels configuration, to use
-one or two mailboxes, associated, respectively, to one or two, distinct,
-shared memory areas: any other combination should be treated as invalid.
+Check if the inode size of stuffed (inline) inodes is within the allowed
+range when reading inodes from disk (gfs2_dinode_in()).  This prevents
+us from on-disk corruption.
 
-Add more strict checking of SCMI mailbox transport device node descriptors.
+The two checks in stuffed_readpage() and gfs2_unstuffer_page() that just
+truncate inline data to the maximum allowed size don't actually make
+sense, and they can be removed now as well.
 
-Fixes: 5c8a47a5a91d ("firmware: arm_scmi: Make scmi core independent of the transport type")
-Cc: <stable@vger.kernel.org> # 4.19
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20230307162324.891866-1-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-[Cristian: backported to v4.19]
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Reported-by: syzbot+7bb81dfa9cda07d9cd9d@syzkaller.appspotmail.com
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+[pchelkin@ispras.ru: adjust the inode variable inside gfs2_dinode_in with
+the format used before upstream commit 7db354444ad8 ("gfs2: Cosmetic
+gfs2_dinode_{in,out} cleanup")]
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/driver.c |   37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ fs/gfs2/aops.c  |    2 --
+ fs/gfs2/bmap.c  |    3 ---
+ fs/gfs2/glops.c |    3 +++
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -705,6 +705,39 @@ static int scmi_remove(struct platform_d
- 	return ret;
- }
+--- a/fs/gfs2/aops.c
++++ b/fs/gfs2/aops.c
+@@ -480,8 +480,6 @@ int stuffed_readpage(struct gfs2_inode *
+ 		return error;
  
-+static int scmi_mailbox_chan_validate(struct device *cdev)
-+{
-+	int num_mb, num_sh, ret = 0;
-+	struct device_node *np = cdev->of_node;
-+
-+	num_mb = of_count_phandle_with_args(np, "mboxes", "#mbox-cells");
-+	num_sh = of_count_phandle_with_args(np, "shmem", NULL);
-+	/* Bail out if mboxes and shmem descriptors are inconsistent */
-+	if (num_mb <= 0 || num_sh > 2 || num_mb != num_sh) {
-+		dev_warn(cdev, "Invalid channel descriptor for '%s'\n",
-+			 of_node_full_name(np));
-+		return -EINVAL;
-+	}
-+
-+	if (num_sh > 1) {
-+		struct device_node *np_tx, *np_rx;
-+
-+		np_tx = of_parse_phandle(np, "shmem", 0);
-+		np_rx = of_parse_phandle(np, "shmem", 1);
-+		/* SCMI Tx and Rx shared mem areas have to be distinct */
-+		if (!np_tx || !np_rx || np_tx == np_rx) {
-+			dev_warn(cdev, "Invalid shmem descriptor for '%s'\n",
-+				 of_node_full_name(np));
-+			ret = -EINVAL;
-+		}
-+
-+		of_node_put(np_tx);
-+		of_node_put(np_rx);
-+	}
-+
-+	return ret;
-+}
-+
- static inline int
- scmi_mbox_chan_setup(struct scmi_info *info, struct device *dev, int prot_id)
- {
-@@ -720,6 +753,10 @@ scmi_mbox_chan_setup(struct scmi_info *i
- 		goto idr_alloc;
- 	}
+ 	kaddr = kmap_atomic(page);
+-	if (dsize > gfs2_max_stuffed_size(ip))
+-		dsize = gfs2_max_stuffed_size(ip);
+ 	memcpy(kaddr, dibh->b_data + sizeof(struct gfs2_dinode), dsize);
+ 	memset(kaddr + dsize, 0, PAGE_SIZE - dsize);
+ 	kunmap_atomic(kaddr);
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -72,9 +72,6 @@ static int gfs2_unstuffer_page(struct gf
+ 		void *kaddr = kmap(page);
+ 		u64 dsize = i_size_read(inode);
+  
+-		if (dsize > gfs2_max_stuffed_size(ip))
+-			dsize = gfs2_max_stuffed_size(ip);
+-
+ 		memcpy(kaddr, dibh->b_data + sizeof(struct gfs2_dinode), dsize);
+ 		memset(kaddr + dsize, 0, PAGE_SIZE - dsize);
+ 		kunmap(page);
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -388,6 +388,9 @@ static int gfs2_dinode_in(struct gfs2_in
+ 	ip->i_depth = (u8)depth;
+ 	ip->i_entries = be32_to_cpu(str->di_entries);
  
-+	ret = scmi_mailbox_chan_validate(dev);
-+	if (ret)
-+		return ret;
++	if (gfs2_is_stuffed(ip) && ip->i_inode.i_size > gfs2_max_stuffed_size(ip))
++		goto corrupt;
 +
- 	cinfo = devm_kzalloc(info->dev, sizeof(*cinfo), GFP_KERNEL);
- 	if (!cinfo)
- 		return -ENOMEM;
+ 	if (S_ISREG(ip->i_inode.i_mode))
+ 		gfs2_set_aops(&ip->i_inode);
+ 
 
 
