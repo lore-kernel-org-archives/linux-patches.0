@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C566E5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:14:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FD6C433EF;
-	Mon,  3 Apr 2023 14:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DF35683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:14:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C36C433D2;
+	Mon,  3 Apr 2023 14:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531265;
-	bh=Aeh4P4TT+k04DjzYUgpPDb1o1+M9iWo3CiOTETMf9Fw=;
+	s=korg; t=1680531268;
+	bh=Ii1rLnsh/HS9UmegE8llE9PZGm422BpnLK1iHvZpJnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PxKMmwBU4XsmqSgRJQQ8+hf+AHq0EGjCZrGFXXMEo2w65lYoJa0MXcmIPD/4LJp84
-	 /tDVCm65vyHCH3HdBTZljaGUNToZRztYpl8mx0GFxnw8P0VSOvMhx/tXQbN4xuu25D
-	 5QqwXP3h71CUMwYnE24XXUB5WlUdzJrhaa34X1rI=
+	b=e/bQIVS3NsKMsUTtPOHio/ESltfOPu83Qf8K+frTjBxqPDnw7oyUccbW/tiOzTrFt
+	 deU6hE6XRXw8S4XEx+VtC9WUskXq5rYdB0UjRlY3PdK88lTU5ebWKF6mqJIVknkY6y
+	 MkUMTA85s8d0HtBm7lYtIecBBTcB5BGkwyR8G64o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com,
-	Jun Nie <jun.nie@linaro.org>,
-	Ye Bin <yebin10@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
-	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 4.14 64/66] ext4: fix kernel BUG in ext4_write_inline_data_end()
-Date: Mon,  3 Apr 2023 16:09:12 +0200
-Message-Id: <20230403140354.015532633@linuxfoundation.org>
+	Kyle Zeng <zengyhkyle@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 4.14 65/66] net: sched: cbq: dont intepret cls results when asked to drop
+Date: Mon,  3 Apr 2023 16:09:13 +0200
+Message-Id: <20230403140354.052131669@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -38,110 +36,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 5c099c4fdc438014d5893629e70a8ba934433ee8 upstream.
+commit caa4b35b4317d5147b3ab0fbdc9c075c7d2e9c12 upstream.
 
-Syzbot report follow issue:
-------------[ cut here ]------------
-kernel BUG at fs/ext4/inline.c:227!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN
-CPU: 1 PID: 3629 Comm: syz-executor212 Not tainted 6.1.0-rc5-syzkaller-00018-g59d0d52c30d4 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:ext4_write_inline_data+0x344/0x3e0 fs/ext4/inline.c:227
-RSP: 0018:ffffc90003b3f368 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffff8880704e16c0 RCX: 0000000000000000
-RDX: ffff888021763a80 RSI: ffffffff821e31a4 RDI: 0000000000000006
-RBP: 000000000006818e R08: 0000000000000006 R09: 0000000000068199
-R10: 0000000000000079 R11: 0000000000000000 R12: 000000000000000b
-R13: 0000000000068199 R14: ffffc90003b3f408 R15: ffff8880704e1c82
-FS:  000055555723e3c0(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fffe8ac9080 CR3: 0000000079f81000 CR4: 0000000000350ee0
-Call Trace:
- <TASK>
- ext4_write_inline_data_end+0x2a3/0x12f0 fs/ext4/inline.c:768
- ext4_write_end+0x242/0xdd0 fs/ext4/inode.c:1313
- ext4_da_write_end+0x3ed/0xa30 fs/ext4/inode.c:3063
- generic_perform_write+0x316/0x570 mm/filemap.c:3764
- ext4_buffered_write_iter+0x15b/0x460 fs/ext4/file.c:285
- ext4_file_write_iter+0x8bc/0x16e0 fs/ext4/file.c:700
- call_write_iter include/linux/fs.h:2191 [inline]
- do_iter_readv_writev+0x20b/0x3b0 fs/read_write.c:735
- do_iter_write+0x182/0x700 fs/read_write.c:861
- vfs_iter_write+0x74/0xa0 fs/read_write.c:902
- iter_file_splice_write+0x745/0xc90 fs/splice.c:686
- do_splice_from fs/splice.c:764 [inline]
- direct_splice_actor+0x114/0x180 fs/splice.c:931
- splice_direct_to_actor+0x335/0x8a0 fs/splice.c:886
- do_splice_direct+0x1ab/0x280 fs/splice.c:974
- do_sendfile+0xb19/0x1270 fs/read_write.c:1255
- __do_sys_sendfile64 fs/read_write.c:1323 [inline]
- __se_sys_sendfile64 fs/read_write.c:1309 [inline]
- __x64_sys_sendfile64+0x1d0/0x210 fs/read_write.c:1309
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
----[ end trace 0000000000000000 ]---
+If asked to drop a packet via TC_ACT_SHOT it is unsafe to assume that
+res.class contains a valid pointer
 
-Above issue may happens as follows:
-ext4_da_write_begin
-  ext4_da_write_inline_data_begin
-    ext4_da_convert_inline_data_to_extent
-      ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
-ext4_da_write_end
+Sample splat reported by Kyle Zeng
 
-ext4_run_li_request
-  ext4_mb_prefetch
-    ext4_read_block_bitmap_nowait
-      ext4_validate_block_bitmap
-        ext4_mark_group_bitmap_corrupted(sb, block_group, EXT4_GROUP_INFO_BBITMAP_CORRUPT)
-	 percpu_counter_sub(&sbi->s_freeclusters_counter,grp->bb_free);
-	  -> sbi->s_freeclusters_counter become zero
-ext4_da_write_begin
-  if (ext4_nonda_switch(inode->i_sb)) -> As freeclusters_counter is zero will return true
-    *fsdata = (void *)FALL_BACK_TO_NONDELALLOC;
-    ext4_write_begin
-ext4_da_write_end
-  if (write_mode == FALL_BACK_TO_NONDELALLOC)
-    ext4_write_end
-      if (inline_data)
-        ext4_write_inline_data_end
-	  ext4_write_inline_data
-	    BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
-           -> As inode is already convert to extent, so 'pos + len' > inline_size
-	   -> then trigger BUG.
+[    5.405624] 0: reclassify loop, rule prio 0, protocol 800
+[    5.406326] ==================================================================
+[    5.407240] BUG: KASAN: slab-out-of-bounds in cbq_enqueue+0x54b/0xea0
+[    5.407987] Read of size 1 at addr ffff88800e3122aa by task poc/299
+[    5.408731]
+[    5.408897] CPU: 0 PID: 299 Comm: poc Not tainted 5.10.155+ #15
+[    5.409516] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS 1.15.0-1 04/01/2014
+[    5.410439] Call Trace:
+[    5.410764]  dump_stack+0x87/0xcd
+[    5.411153]  print_address_description+0x7a/0x6b0
+[    5.411687]  ? vprintk_func+0xb9/0xc0
+[    5.411905]  ? printk+0x76/0x96
+[    5.412110]  ? cbq_enqueue+0x54b/0xea0
+[    5.412323]  kasan_report+0x17d/0x220
+[    5.412591]  ? cbq_enqueue+0x54b/0xea0
+[    5.412803]  __asan_report_load1_noabort+0x10/0x20
+[    5.413119]  cbq_enqueue+0x54b/0xea0
+[    5.413400]  ? __kasan_check_write+0x10/0x20
+[    5.413679]  __dev_queue_xmit+0x9c0/0x1db0
+[    5.413922]  dev_queue_xmit+0xc/0x10
+[    5.414136]  ip_finish_output2+0x8bc/0xcd0
+[    5.414436]  __ip_finish_output+0x472/0x7a0
+[    5.414692]  ip_finish_output+0x5c/0x190
+[    5.414940]  ip_output+0x2d8/0x3c0
+[    5.415150]  ? ip_mc_finish_output+0x320/0x320
+[    5.415429]  __ip_queue_xmit+0x753/0x1760
+[    5.415664]  ip_queue_xmit+0x47/0x60
+[    5.415874]  __tcp_transmit_skb+0x1ef9/0x34c0
+[    5.416129]  tcp_connect+0x1f5e/0x4cb0
+[    5.416347]  tcp_v4_connect+0xc8d/0x18c0
+[    5.416577]  __inet_stream_connect+0x1ae/0xb40
+[    5.416836]  ? local_bh_enable+0x11/0x20
+[    5.417066]  ? lock_sock_nested+0x175/0x1d0
+[    5.417309]  inet_stream_connect+0x5d/0x90
+[    5.417548]  ? __inet_stream_connect+0xb40/0xb40
+[    5.417817]  __sys_connect+0x260/0x2b0
+[    5.418037]  __x64_sys_connect+0x76/0x80
+[    5.418267]  do_syscall_64+0x31/0x50
+[    5.418477]  entry_SYSCALL_64_after_hwframe+0x61/0xc6
+[    5.418770] RIP: 0033:0x473bb7
+[    5.418952] Code: 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00
+00 00 90 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2a 00 00
+00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 18 89 54 24 0c 48 89 34
+24 89
+[    5.420046] RSP: 002b:00007fffd20eb0f8 EFLAGS: 00000246 ORIG_RAX:
+000000000000002a
+[    5.420472] RAX: ffffffffffffffda RBX: 00007fffd20eb578 RCX: 0000000000473bb7
+[    5.420872] RDX: 0000000000000010 RSI: 00007fffd20eb110 RDI: 0000000000000007
+[    5.421271] RBP: 00007fffd20eb150 R08: 0000000000000001 R09: 0000000000000004
+[    5.421671] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+[    5.422071] R13: 00007fffd20eb568 R14: 00000000004fc740 R15: 0000000000000002
+[    5.422471]
+[    5.422562] Allocated by task 299:
+[    5.422782]  __kasan_kmalloc+0x12d/0x160
+[    5.423007]  kasan_kmalloc+0x5/0x10
+[    5.423208]  kmem_cache_alloc_trace+0x201/0x2e0
+[    5.423492]  tcf_proto_create+0x65/0x290
+[    5.423721]  tc_new_tfilter+0x137e/0x1830
+[    5.423957]  rtnetlink_rcv_msg+0x730/0x9f0
+[    5.424197]  netlink_rcv_skb+0x166/0x300
+[    5.424428]  rtnetlink_rcv+0x11/0x20
+[    5.424639]  netlink_unicast+0x673/0x860
+[    5.424870]  netlink_sendmsg+0x6af/0x9f0
+[    5.425100]  __sys_sendto+0x58d/0x5a0
+[    5.425315]  __x64_sys_sendto+0xda/0xf0
+[    5.425539]  do_syscall_64+0x31/0x50
+[    5.425764]  entry_SYSCALL_64_after_hwframe+0x61/0xc6
+[    5.426065]
+[    5.426157] The buggy address belongs to the object at ffff88800e312200
+[    5.426157]  which belongs to the cache kmalloc-128 of size 128
+[    5.426955] The buggy address is located 42 bytes to the right of
+[    5.426955]  128-byte region [ffff88800e312200, ffff88800e312280)
+[    5.427688] The buggy address belongs to the page:
+[    5.427992] page:000000009875fabc refcount:1 mapcount:0
+mapping:0000000000000000 index:0x0 pfn:0xe312
+[    5.428562] flags: 0x100000000000200(slab)
+[    5.428812] raw: 0100000000000200 dead000000000100 dead000000000122
+ffff888007843680
+[    5.429325] raw: 0000000000000000 0000000000100010 00000001ffffffff
+ffff88800e312401
+[    5.429875] page dumped because: kasan: bad access detected
+[    5.430214] page->mem_cgroup:ffff88800e312401
+[    5.430471]
+[    5.430564] Memory state around the buggy address:
+[    5.430846]  ffff88800e312180: fc fc fc fc fc fc fc fc fc fc fc fc
+fc fc fc fc
+[    5.431267]  ffff88800e312200: 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 fc
+[    5.431705] >ffff88800e312280: fc fc fc fc fc fc fc fc fc fc fc fc
+fc fc fc fc
+[    5.432123]                                   ^
+[    5.432391]  ffff88800e312300: 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 fc
+[    5.432810]  ffff88800e312380: fc fc fc fc fc fc fc fc fc fc fc fc
+fc fc fc fc
+[    5.433229] ==================================================================
+[    5.433648] Disabling lock debugging due to kernel taint
 
-To solve this issue, instead of checking ext4_has_inline_data() which
-is only cleared after data has been written back, check the
-EXT4_STATE_MAY_INLINE_DATA flag in ext4_write_end().
-
-Fixes: f19d5870cbf7 ("ext4: add normal write support for inline data")
-Reported-by: syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com
-Reported-by: Jun Nie <jun.nie@linaro.org>
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/r/20221206144134.1919987-1-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ta: Fix conflict in if expression and use the local variable inline_data
-as it is initialized with ext4_has_inline_data(inode) anyway.]
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_cbq.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1425,7 +1425,8 @@ static int ext4_write_end(struct file *f
- 	int inline_data = ext4_has_inline_data(inode);
+--- a/net/sched/sch_cbq.c
++++ b/net/sched/sch_cbq.c
+@@ -236,6 +236,8 @@ cbq_classify(struct sk_buff *skb, struct
+ 		result = tcf_classify(skb, fl, &res, true);
+ 		if (!fl || result < 0)
+ 			goto fallback;
++		if (result == TC_ACT_SHOT)
++			return NULL;
  
- 	trace_ext4_write_end(inode, pos, len, copied);
--	if (inline_data) {
-+	if (inline_data &&
-+	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)) {
- 		ret = ext4_write_inline_data_end(inode, pos, len,
- 						 copied, page);
- 		if (ret < 0) {
+ 		cl = (void *)res.class;
+ 		if (!cl) {
+@@ -255,8 +257,6 @@ cbq_classify(struct sk_buff *skb, struct
+ 		case TC_ACT_STOLEN:
+ 		case TC_ACT_TRAP:
+ 			*qerr = NET_XMIT_SUCCESS | __NET_XMIT_STOLEN;
+-		case TC_ACT_SHOT:
+-			return NULL;
+ 		case TC_ACT_RECLASSIFY:
+ 			return cbq_reclassify(skb, cl);
+ 		}
 
 
