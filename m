@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CFA6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94679C433D2;
-	Mon,  3 Apr 2023 14:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAE16FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25990C433EF;
+	Mon,  3 Apr 2023 14:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533286;
-	bh=sJYkMFLKTOSjPjS7N91ko3D1k/zI1jC2wm1x73QJaU0=;
+	s=korg; t=1680533289;
+	bh=//lb1NvM2T0ckJjYGmS1UZFhO1E7RtGtZoey5OEoRLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WW7oeCWrFhlWiFXqTq0Wiw04bw2BFusFlrjyeyRdriujb664YNA2YzeUPsy3OXU7U
-	 KdxZ9yTB1rFQTvWldbkheifbl43cItwEmkqB1D9vXdF0dS9ssiVlkkmqezNXb9aEe7
-	 Of/L0exEc7NGSjceL+utj6D2WeZEnfSQDrYweOgs=
+	b=FU1Jvc8M6xGzo4RLTOl41HI+bCW+jd4WJWR4QfbuBph6nSeMORTeKVrWGismjNA9M
+	 nImQ8dFNEr5SunrDly8zeajnzD3SVy/uUE6ba0uzZ0NKkIS66MaErmONsD1Z8DGP/K
+	 iYsrPWuq/0Nn47a4UCyM1Eb9QZvIJvTlHRsJUSqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raghunathan Srinivasan <raghunathan.srinivasan@intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jacob Pan <jacob.jun.pan@linux.intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 126/187] iommu/vt-d: Allow zero SAGAW if second-stage not supported
-Date: Mon,  3 Apr 2023 16:09:31 +0200
-Message-Id: <20230403140420.114648545@linuxfoundation.org>
+Subject: [PATCH 6.2 127/187] Revert "venus: firmware: Correct non-pix start and end addresses"
+Date: Mon,  3 Apr 2023 16:09:32 +0200
+Message-Id: <20230403140420.161479149@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -38,41 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Javier Martinez Canillas <javierm@redhat.com>
 
-[ Upstream commit bfd3c6b9fa4a1dc78139dd1621d5bea321ffa69d ]
+[ Upstream commit f95b8ea79c47c0ad3d18f45ad538f9970e414d1f ]
 
-The VT-d spec states (in section 11.4.2) that hardware implementations
-reporting second-stage translation support (SSTS) field as Clear also
-report the SAGAW field as 0. Fix an inappropriate check in alloc_iommu().
+This reverts commit a837e5161cff, which broke probing of the venus
+driver, at least on the SC7180 SoC HP X2 Chromebook:
 
-Fixes: 792fb43ce2c9 ("iommu/vt-d: Enable Intel IOMMU scalable mode by default")
-Suggested-by: Raghunathan Srinivasan <raghunathan.srinivasan@intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20230318024824.124542-1-baolu.lu@linux.intel.com
-Link: https://lore.kernel.org/r/20230329134721.469447-3-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+  qcom-venus aa00000.video-codec: Adding to iommu group 11
+  qcom-venus aa00000.video-codec: non legacy binding
+  qcom-venus aa00000.video-codec: failed to reset venus core
+  qcom-venus: probe of aa00000.video-codec failed with error -110
+
+Matthias Kaehlcke also reported that the same change caused a regression
+in SC7180 and sc7280, that prevents AOSS from entering sleep mode during
+system suspend.  So let's revert this commit for now to fix both issues.
+
+Fixes: a837e5161cff ("venus: firmware: Correct non-pix start and end addresses")
+Reported-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/dmar.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/firmware.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-index b00a0ceb2d137..c80c524ad32d7 100644
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -1057,7 +1057,8 @@ static int alloc_iommu(struct dmar_drhd_unit *drhd)
- 	}
+diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+index 142d4c74017c0..d59ecf776715c 100644
+--- a/drivers/media/platform/qcom/venus/firmware.c
++++ b/drivers/media/platform/qcom/venus/firmware.c
+@@ -38,8 +38,8 @@ static void venus_reset_cpu(struct venus_core *core)
+ 	writel(fw_size, wrapper_base + WRAPPER_FW_END_ADDR);
+ 	writel(0, wrapper_base + WRAPPER_CPA_START_ADDR);
+ 	writel(fw_size, wrapper_base + WRAPPER_CPA_END_ADDR);
+-	writel(0, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+-	writel(0, wrapper_base + WRAPPER_NONPIX_END_ADDR);
++	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
++	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
  
- 	err = -EINVAL;
--	if (cap_sagaw(iommu->cap) == 0) {
-+	if (!cap_sagaw(iommu->cap) &&
-+	    (!ecap_smts(iommu->ecap) || ecap_slts(iommu->ecap))) {
- 		pr_info("%s: No supported address widths. Not attempting DMA translation.\n",
- 			iommu->name);
- 		drhd->ignored = 1;
+ 	if (IS_V6(core)) {
+ 		/* Bring XTSS out of reset */
 -- 
 2.39.2
 
