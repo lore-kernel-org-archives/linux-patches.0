@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510316FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:50:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96E3C433D2;
-	Mon,  3 Apr 2023 14:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7816FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:50:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73647C433EF;
+	Mon,  3 Apr 2023 14:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533420;
-	bh=IcaCh37xgB7rDjvOgeQTE9eJE4wJ0tSAn0RaXPK6uEE=;
+	s=korg; t=1680533422;
+	bh=2qD1tchNQGHnzuaiNCPCzxaT3c1+eZmS5FrYmbzT+vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p0gx1suLzyhyhApKEbf0f8PE3Dty9yap7+ds/qwVruv2LGi1jsSR2FzScX6wBPgcA
-	 dDMb39aXtJnu5UcoFSwg03lcAoTBqRk5ZOf18+VyzpeFjIZ4nYR0wDKiOVavoU4Il+
-	 0rOAMSA1kgc/GC8ROqxvohwegvfE6XXmUso56WAY=
+	b=mcpI6vDk6OQiaDV6nk2Ax/cM1A1pArtrCOOHH/GxuZFR7cMo90ln0djm9Qs0SlZkg
+	 aIiBwX89DK5pi9CbFWmi13MR77RVtt7ck7GzJyH9K3WtjEk9ZHpnf394OUTHBe+sAI
+	 gK1eC5EqadmkUAJYQQUfZPRR3wsBUUFYctmjbBdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Reiji Watanabe <reijiw@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.2 176/187] KVM: arm64: PMU: Fix GET_ONE_REG for vPMC regs to return the current value
-Date: Mon,  3 Apr 2023 16:10:21 +0200
-Message-Id: <20230403140422.060923721@linuxfoundation.org>
+	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@chromium.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.2 150/187] pinctrl: amd: Disable and mask interrupts on resume
+Date: Mon,  3 Apr 2023 16:09:55 +0200
+Message-Id: <20230403140420.976218566@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,78 +34,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reiji Watanabe <reijiw@google.com>
+From: Kornel Dulęba <korneld@chromium.org>
 
-commit 9228b26194d1cc00449f12f306f53ef2e234a55b upstream.
+commit b26cd9325be4c1fcd331b77f10acb627c560d4d7 upstream.
 
-Have KVM_GET_ONE_REG for vPMU counter (vPMC) registers (PMCCNTR_EL0
-and PMEVCNTR<n>_EL0) return the sum of the register value in the sysreg
-file and the current perf event counter value.
+This fixes a similar problem to the one observed in:
+commit 4e5a04be88fe ("pinctrl: amd: disable and mask interrupts on probe").
 
-Values of vPMC registers are saved in sysreg files on certain occasions.
-These saved values don't represent the current values of the vPMC
-registers if the perf events for the vPMCs count events after the save.
-The current values of those registers are the sum of the sysreg file
-value and the current perf event counter value.  But, when userspace
-reads those registers (using KVM_GET_ONE_REG), KVM returns the sysreg
-file value to userspace (not the sum value).
+On some systems, during suspend/resume cycle firmware leaves
+an interrupt enabled on a pin that is not used by the kernel.
+This confuses the AMD pinctrl driver and causes spurious interrupts.
 
-Fix this to return the sum value for KVM_GET_ONE_REG.
+The driver already has logic to detect if a pin is used by the kernel.
+Leverage it to re-initialize interrupt fields of a pin only if it's not
+used by us.
 
-Fixes: 051ff581ce70 ("arm64: KVM: Add access handler for event counter register")
 Cc: stable@vger.kernel.org
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Reiji Watanabe <reijiw@google.com>
-Link: https://lore.kernel.org/r/20230313033208.1475499-1-reijiw@google.com
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Fixes: dbad75dd1f25 ("pinctrl: add AMD GPIO driver support.")
+Signed-off-by: Kornel Dulęba <korneld@chromium.org>
+Link: https://lore.kernel.org/r/20230320093259.845178-1-korneld@chromium.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/sys_regs.c |   21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c |   36 ++++++++++++++++++++----------------
+ 1 file changed, 20 insertions(+), 16 deletions(-)
 
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -765,6 +765,22 @@ static bool pmu_counter_idx_valid(struct
- 	return true;
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -865,32 +865,34 @@ static const struct pinconf_ops amd_pinc
+ 	.pin_config_group_set = amd_pinconf_group_set,
+ };
+ 
+-static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
++static void amd_gpio_irq_init_pin(struct amd_gpio *gpio_dev, int pin)
+ {
+-	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
++	const struct pin_desc *pd;
+ 	unsigned long flags;
+ 	u32 pin_reg, mask;
+-	int i;
+ 
+ 	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
+ 		BIT(INTERRUPT_MASK_OFF) | BIT(INTERRUPT_ENABLE_OFF) |
+ 		BIT(WAKE_CNTRL_OFF_S4);
+ 
+-	for (i = 0; i < desc->npins; i++) {
+-		int pin = desc->pins[i].number;
+-		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
+-
+-		if (!pd)
+-			continue;
++	pd = pin_desc_get(gpio_dev->pctrl, pin);
++	if (!pd)
++		return;
+ 
+-		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
++	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
++	pin_reg = readl(gpio_dev->base + pin * 4);
++	pin_reg &= ~mask;
++	writel(pin_reg, gpio_dev->base + pin * 4);
++	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
++}
+ 
+-		pin_reg = readl(gpio_dev->base + i * 4);
+-		pin_reg &= ~mask;
+-		writel(pin_reg, gpio_dev->base + i * 4);
++static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
++{
++	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
++	int i;
+ 
+-		raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
+-	}
++	for (i = 0; i < desc->npins; i++)
++		amd_gpio_irq_init_pin(gpio_dev, i);
  }
  
-+static int get_pmu_evcntr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r,
-+			  u64 *val)
-+{
-+	u64 idx;
-+
-+	if (r->CRn == 9 && r->CRm == 13 && r->Op2 == 0)
-+		/* PMCCNTR_EL0 */
-+		idx = ARMV8_PMU_CYCLE_IDX;
-+	else
-+		/* PMEVCNTRn_EL0 */
-+		idx = ((r->CRm & 3) << 3) | (r->Op2 & 7);
-+
-+	*val = kvm_pmu_get_counter_value(vcpu, idx);
-+	return 0;
-+}
-+
- static bool access_pmu_evcntr(struct kvm_vcpu *vcpu,
- 			      struct sys_reg_params *p,
- 			      const struct sys_reg_desc *r)
-@@ -981,7 +997,7 @@ static bool access_pmuserenr(struct kvm_
- /* Macro to expand the PMEVCNTRn_EL0 register */
- #define PMU_PMEVCNTR_EL0(n)						\
- 	{ PMU_SYS_REG(SYS_PMEVCNTRn_EL0(n)),				\
--	  .reset = reset_pmevcntr,					\
-+	  .reset = reset_pmevcntr, .get_user = get_pmu_evcntr,		\
- 	  .access = access_pmu_evcntr, .reg = (PMEVCNTR0_EL0 + n), }
+ #ifdef CONFIG_PM_SLEEP
+@@ -943,8 +945,10 @@ static int amd_gpio_resume(struct device
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
  
- /* Macro to expand the PMEVTYPERn_EL0 register */
-@@ -1745,7 +1761,8 @@ static const struct sys_reg_desc sys_reg
- 	{ PMU_SYS_REG(SYS_PMCEID1_EL0),
- 	  .access = access_pmceid, .reset = NULL },
- 	{ PMU_SYS_REG(SYS_PMCCNTR_EL0),
--	  .access = access_pmu_evcntr, .reset = reset_unknown, .reg = PMCCNTR_EL0 },
-+	  .access = access_pmu_evcntr, .reset = reset_unknown,
-+	  .reg = PMCCNTR_EL0, .get_user = get_pmu_evcntr},
- 	{ PMU_SYS_REG(SYS_PMXEVTYPER_EL0),
- 	  .access = access_pmu_evtyper, .reset = NULL },
- 	{ PMU_SYS_REG(SYS_PMXEVCNTR_EL0),
+-		if (!amd_gpio_should_save(gpio_dev, pin))
++		if (!amd_gpio_should_save(gpio_dev, pin)) {
++			amd_gpio_irq_init_pin(gpio_dev, pin);
+ 			continue;
++		}
+ 
+ 		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
+ 		gpio_dev->saved_regs[i] |= readl(gpio_dev->base + pin * 4) & PIN_IRQ_PENDING;
 
 
