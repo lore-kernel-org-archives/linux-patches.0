@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5EE6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:36:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86A4C433D2;
-	Mon,  3 Apr 2023 14:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53486FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:36:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E80EC4339E;
+	Mon,  3 Apr 2023 14:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532584;
-	bh=E4T0SiswVxYm0Qphw2SWWetAWnT01gBvclPnviCLg18=;
+	s=korg; t=1680532586;
+	bh=k+hmGhSaD1+QaJ7ZakF1ukiTvaTebvpE8t6aMcJUf28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1DNPw31su/643hvAx4fpljj0045cy2LkRwHa+HI6bDmpzMevCQCcsxsw6KtL9dl1N
-	 DuEyA5fLlMZCXRWcnaotOYK+92J+eEz5PbXtYMrrlDSpkPLG2a20zNQEiESeWpdnIC
-	 /jUIZGYjJfC4kZeXPkbIisrZb5gY8Pty6sQy8r1Q=
+	b=lTX0qo+EGcYmOqpKqNA2vO0VV5y/1d1NsyCdcL1Ek/yV4EARia2s4h/ig41M9lI1F
+	 nsk3ybavzKt8lfR1UezQ4bYgQJjDJWLOoKSKTt96wFYMqpOS4MvfE6TdexHnmvZiHR
+	 C3aFSAtnqqZglCHK/LJOeLIAYHmq5b8UPtoFlnRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
+	Curtis Malainey <cujomalainey@chromium.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Curtis Malainey <curtis@malainey.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/181] ACPI: video: Add backlight=native DMI quirk for Dell Vostro 15 3535
-Date: Mon,  3 Apr 2023 16:07:53 +0200
-Message-Id: <20230403140416.399160269@linuxfoundation.org>
+Subject: [PATCH 6.1 039/181] ASoC: SOF: ipc3: Check for upper size limit for the received message
+Date: Mon,  3 Apr 2023 16:07:54 +0200
+Message-Id: <20230403140416.427934308@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -35,39 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 89b0411481967a2e8c91190a211a359966cfcf4b ]
+[ Upstream commit 989a3e4479177d0f4afab8be1960731bc0ffbbd0 ]
 
-Sometimes the system boots up with a acpi_video0 backlight interface
-which doesn't work. So add Dell Vostro 15 3535 into the
-video_detect_dmi_table to set it to native explicitly.
+The sof_ipc3_rx_msg() checks for minimum size of a new rx message but it is
+missing the check for upper limit.
+Corrupted or compromised firmware might be able to take advantage of this
+to cause out of bounds reads outside of the message area.
 
-Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
+Reported-by: Curtis Malainey <cujomalainey@chromium.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Curtis Malainey <curtis@malainey.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20230307114917.5124-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/sof/ipc3.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 7f0ed845cd6ad..f06b3d3556710 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -714,6 +714,13 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Dell G15 5515"),
- 		},
- 	},
-+	{
-+	 .callback = video_detect_force_native,
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "Vostro 15 3535"),
-+		},
-+	},
+diff --git a/sound/soc/sof/ipc3.c b/sound/soc/sof/ipc3.c
+index b28af3a48b707..60b96b0c2412f 100644
+--- a/sound/soc/sof/ipc3.c
++++ b/sound/soc/sof/ipc3.c
+@@ -970,8 +970,9 @@ static void sof_ipc3_rx_msg(struct snd_sof_dev *sdev)
+ 		return;
+ 	}
  
- 	/*
- 	 * Desktops which falsely report a backlight and which our heuristics
+-	if (hdr.size < sizeof(hdr)) {
+-		dev_err(sdev->dev, "The received message size is invalid\n");
++	if (hdr.size < sizeof(hdr) || hdr.size > SOF_IPC_MSG_MAX_SIZE) {
++		dev_err(sdev->dev, "The received message size is invalid: %u\n",
++			hdr.size);
+ 		return;
+ 	}
+ 
 -- 
 2.39.2
 
