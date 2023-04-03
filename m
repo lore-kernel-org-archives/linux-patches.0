@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F856FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7DFC4339B;
-	Mon,  3 Apr 2023 14:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913216FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E33C433D2;
+	Mon,  3 Apr 2023 14:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532523;
-	bh=mMZl9Vi4nPwhVrUiv1pJsBG2yi9AgwwPmCWL0tI4Ka4=;
+	s=korg; t=1680532528;
+	bh=Bj4C/a8N6Rx+cNWrg26nF/Rq/+JT3vS6jYovD76DZDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EHP0Chm2q5xwX9ECU+BBRhhZb+z5MkY8GwN7QOhwZJ8+y7G7udzhGIaFSbvkgtE36
-	 fvsupKQXeYrwWgt9+Br0dOOcUPTeBEhf0oidNq7IE/CpccL318srvSH9G7Huq1HGEU
-	 uQ0gpI0dr8yoKV92MZdMeZMyUjmIZUJRvMUiXtE0=
+	b=Dd4T/jsKF0twDL5LkxTRO7xjk6k2hLVIeo5G1KdWbcHU3r/1g+6rmyIRinLHhA/Iw
+	 mstPGbmCpjsOhqI3cj1Na/FZO8wFORovyCLWF+0VrC32gIliaOJvgvZmGPOymXcR1S
+	 bh5uV+f3CuaiWBd5Td6dY3ZBmkUleaZiDbLumZ+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Chiu <andy.chiu@sifive.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/181] riscv: ftrace: Fixup panic by disabling preemption
-Date: Mon,  3 Apr 2023 16:07:31 +0200
-Message-Id: <20230403140415.648037204@linuxfoundation.org>
+Subject: [PATCH 6.1 002/181] cifs: update ip_addr for ses only for primary chan setup
+Date: Mon,  3 Apr 2023 16:07:17 +0200
+Message-Id: <20230403140415.177676987@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,55 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Chiu <andy.chiu@sifive.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 8547649981e6631328cd64f583667501ae385531 ]
+[ Upstream commit e77978de4765229e09c8fabcf4f8419ff367317f ]
 
-In RISCV, we must use an AUIPC + JALR pair to encode an immediate,
-forming a jump that jumps to an address over 4K. This may cause errors
-if we want to enable kernel preemption and remove dependency from
-patching code with stop_machine(). For example, if a task was switched
-out on auipc. And, if we changed the ftrace function before it was
-switched back, then it would jump to an address that has updated 11:0
-bits mixing with previous XLEN:12 part.
+We update ses->ip_addr whenever we do a session setup.
+But this should happen only for primary channel in mchan
+scenario.
 
-p: patched area performed by dynamic ftrace
-ftrace_prologue:
-p|      REG_S   ra, -SZREG(sp)
-p|      auipc   ra, 0x? ------------> preempted
-					...
-				change ftrace function
-					...
-p|      jalr    -?(ra) <------------- switched back
-p|      REG_L   ra, -SZREG(sp)
-func:
-	xxx
-	ret
-
-Fixes: afc76b8b8011 ("riscv: Using PATCHABLE_FUNCTION_ENTRY instead of MCOUNT")
-Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230112090603.1295340-2-guoren@kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: bc962159e8e3 ("cifs: avoid race conditions with parallel reconnects")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/connect.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index ae11d5647f9d4..06b9b2f60b9fb 100644
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -278,7 +278,7 @@ config ARCH_RV64I
- 	select HAVE_DYNAMIC_FTRACE_WITH_REGS if HAVE_DYNAMIC_FTRACE
- 	select HAVE_FTRACE_MCOUNT_RECORD if !XIP_KERNEL
- 	select HAVE_FUNCTION_GRAPH_TRACER
--	select HAVE_FUNCTION_TRACER if !XIP_KERNEL
-+	select HAVE_FUNCTION_TRACER if !XIP_KERNEL && !PREEMPTION
- 	select SWIOTLB if MMU
+diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
+index 7aecb1646b6fc..43637c1283748 100644
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -4082,16 +4082,12 @@ cifs_setup_session(const unsigned int xid, struct cifs_ses *ses,
+ 		   struct nls_table *nls_info)
+ {
+ 	int rc = -ENOSYS;
+-	struct sockaddr_in6 *addr6 = (struct sockaddr_in6 *)&server->dstaddr;
+-	struct sockaddr_in *addr = (struct sockaddr_in *)&server->dstaddr;
++	struct TCP_Server_Info *pserver = CIFS_SERVER_IS_CHAN(server) ? server->primary_server : server;
++	struct sockaddr_in6 *addr6 = (struct sockaddr_in6 *)&pserver->dstaddr;
++	struct sockaddr_in *addr = (struct sockaddr_in *)&pserver->dstaddr;
+ 	bool is_binding = false;
  
- endchoice
+ 	spin_lock(&ses->ses_lock);
+-	if (server->dstaddr.ss_family == AF_INET6)
+-		scnprintf(ses->ip_addr, sizeof(ses->ip_addr), "%pI6", &addr6->sin6_addr);
+-	else
+-		scnprintf(ses->ip_addr, sizeof(ses->ip_addr), "%pI4", &addr->sin_addr);
+-
+ 	if (ses->ses_status != SES_GOOD &&
+ 	    ses->ses_status != SES_NEW &&
+ 	    ses->ses_status != SES_NEED_RECON) {
+@@ -4115,6 +4111,14 @@ cifs_setup_session(const unsigned int xid, struct cifs_ses *ses,
+ 		ses->ses_status = SES_IN_SETUP;
+ 	spin_unlock(&ses->ses_lock);
+ 
++	/* update ses ip_addr only for primary chan */
++	if (server == pserver) {
++		if (server->dstaddr.ss_family == AF_INET6)
++			scnprintf(ses->ip_addr, sizeof(ses->ip_addr), "%pI6", &addr6->sin6_addr);
++		else
++			scnprintf(ses->ip_addr, sizeof(ses->ip_addr), "%pI4", &addr->sin_addr);
++	}
++
+ 	if (!is_binding) {
+ 		ses->capabilities = server->capabilities;
+ 		if (!linuxExtEnabled)
 -- 
 2.39.2
 
