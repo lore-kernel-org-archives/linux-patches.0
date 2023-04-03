@@ -1,26 +1,26 @@
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEF76FA1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79D06FD8
 	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 16:05:48 +0000 (UTC)
-Date: Mon, 03 Apr 2023 16:05:40 +0000
+Date: Mon, 03 Apr 2023 16:05:34 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680537945; x=1680797145;
-	bh=0rd5UabrR4S8zBOjGuYiCQNZWnW9f90O2jNqLnbMfWQ=;
+	s=protonmail3; t=1680537946; x=1680797146;
+	bh=oEJbMfcSxPAVYQ1DqXldJJ53Wy/YKt+yaqDsNi9mbNM=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=UGpvUuXySKIQEtOuB55zxqpC1PpiMhJ8FMYSS/tv8ESgwa9km4t/qF4VfPGnPls4I
-	 jOjFfIg44ykT/vg12YzynQGnKM0+sShxvsDO4YECHqFN9Ylg6px5qy59mv4XNvPldn
-	 7imdbUjIDJV1uanzAoTaVXQkGGLG7PefENu5WNJg9nJ4lmdPxZj+aIfJaJMfR3Y4sq
-	 KXtvzOnkl4wb4XUinkV8ia3E1ARknKv5+Vb5pHelVrzRamR4nQaFqPScb2N+eZWfGZ
-	 AZe7NsLxr9FzXripc7x7hNjktRXeI+fNDn80ZxR8fu6DzfVLXJEGxcQKMzpqHoPbun
-	 Hrj3ZjOiyT7XA==
+	b=mcAisQpovlZWBd5J/aB1BdW8fOnxGRD0GyRNFdOx/y0VJsa9lneENIPn+Q1lX5vGj
+	 w5t7w2vmdEOFT1BeVmGoJCfAwMxlO4GqnSzqW2xfr1g6C2vnG8S0+DFJ0Gyt81Qiek
+	 CcQjhcWVKX4QnM3fdJoW9a8jWcTrt3paJ8LZtDShKCDIqSNRvWWW8seSs0wwSvwi7A
+	 v0RaCJ2EAaDOHU1zXTSnIsVGPvH22ENw/ULTxKOk1XU9sTgzVagbXL39pUxhkPtDhk
+	 USFvV7pRcAOZmy/V4VbbyVdRJ9zcuOTSh+Zvqn9nK41qJ8kJLVNDEARGooyr4QQ+A+
+	 w3NxRDL8LlcPA==
 To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>
 From: Benno Lossin <y86-dev@protonmail.com>
 Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <y86-dev@protonmail.com>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <a.hindborg@samsung.com>
-Subject: [PATCH v5 11/15] rust: init: add `Zeroable` trait and `init::zeroed` function
-Message-ID: <20230403160511.174894-4-y86-dev@protonmail.com>
+Subject: [PATCH v5 10/15] rust: init: add `stack_pin_init!` macro
+Message-ID: <20230403160511.174894-3-y86-dev@protonmail.com>
 In-Reply-To: <20230403154422.168633-1-y86-dev@protonmail.com>
 References: <20230403154422.168633-1-y86-dev@protonmail.com>
 Feedback-ID: 40624463:user:proton
@@ -33,143 +33,301 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Add the `Zeroable` trait which marks types that can be initialized by
-writing `0x00` to every byte of the type. Also add the `init::zeroed`
-function that creates an initializer for a `Zeroable` type that writes
-`0x00` to every byte.
+The `stack_pin_init!` macro allows pin-initializing a value on the
+stack. It accepts a `impl PinInit<T, E>` to initialize a `T`. It allows
+propagating any errors via `?` or handling it normally via `match`.
 
 Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
-Cc: Gary Guo <gary@garyguo.net>
 Cc: Alice Ryhl <aliceryhl@google.com>
 Cc: Andreas Hindborg <a.hindborg@samsung.com>
+Cc: Gary Guo <gary@garyguo.net>
 ---
- rust/kernel/init.rs | 94 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 92 insertions(+), 2 deletions(-)
+ rust/kernel/init.rs            | 146 +++++++++++++++++++++++++++++++--
+ rust/kernel/init/__internal.rs |  50 +++++++++++
+ 2 files changed, 190 insertions(+), 6 deletions(-)
 
 diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-index 1343cafdd760..09bba4e86ace 100644
+index 37e8159df24d..1343cafdd760 100644
 --- a/rust/kernel/init.rs
 +++ b/rust/kernel/init.rs
-@@ -195,8 +195,14 @@ use crate::{
- };
- use alloc::boxed::Box;
- use core::{
--    alloc::AllocError, cell::Cell, convert::Infallible, marker::PhantomDat=
-a, mem::MaybeUninit,
--    pin::Pin, ptr,
-+    alloc::AllocError,
-+    cell::Cell,
-+    convert::Infallible,
-+    marker::PhantomData,
-+    mem::MaybeUninit,
-+    num::*,
-+    pin::Pin,
-+    ptr::{self, NonNull},
- };
-
+@@ -12,7 +12,8 @@
+ //!
+ //! To initialize a `struct` with an in-place constructor you will need tw=
+o things:
+ //! - an in-place constructor,
+-//! - a memory location that can hold your `struct`.
++//! - a memory location that can hold your `struct` (this can be the [stac=
+k], an [`Arc<T>`],
++//!   [`UniqueArc<T>`], [`Box<T>`] or any other smart pointer that impleme=
+nts [`InPlaceInit`]).
+ //!
+ //! To get an in-place constructor there are generally three options:
+ //! - directly creating an in-place constructor using the [`pin_init!`] ma=
+cro,
+@@ -180,6 +181,7 @@
+ //! [pinning]: https://doc.rust-lang.org/std/pin/index.html
+ //! [structurally pinned fields]:
+ //!     https://doc.rust-lang.org/std/pin/index.html#pinning-is-structural=
+-for-field
++//! [stack]: crate::stack_pin_init
+ //! [`Arc<T>`]: crate::sync::Arc
+ //! [`impl PinInit<Foo>`]: PinInit
+ //! [`impl PinInit<T, E>`]: PinInit
+@@ -202,6 +204,138 @@ pub mod __internal;
  #[doc(hidden)]
-@@ -1329,3 +1335,87 @@ pub unsafe trait PinnedDrop: __internal::HasPinData =
-{
-     /// automatically.
-     fn drop(self: Pin<&mut Self>, only_call_from_drop: __internal::OnlyCal=
-lFromDrop);
- }
-+
-+/// Marker trait for types that can be initialized by writing just zeroes.
+ pub mod macros;
+
++/// Initialize and pin a type directly on the stack.
 +///
-+/// # Safety
++/// # Examples
 +///
-+/// The bit pattern consisting of only zeroes is a valid bit pattern for t=
-his type. In other words,
-+/// this is not UB:
++/// ```rust
++/// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
++/// # use kernel::{init, pin_init, stack_pin_init, init::*, sync::Mutex, n=
+ew_mutex};
++/// # use macros::pin_data;
++/// # use core::pin::Pin;
++/// #[pin_data]
++/// struct Foo {
++///     #[pin]
++///     a: Mutex<usize>,
++///     b: Bar,
++/// }
 +///
-+/// ```rust,ignore
-+/// let val: Self =3D unsafe { core::mem::zeroed() };
++/// #[pin_data]
++/// struct Bar {
++///     x: u32,
++/// }
++///
++/// stack_pin_init!(let foo =3D pin_init!(Foo {
++///     a <- new_mutex!(42),
++///     b: Bar {
++///         x: 64,
++///     },
++/// }));
++/// let foo: Pin<&mut Foo> =3D foo;
++/// pr_info!("a: {}", &*foo.a.lock());
 +/// ```
-+pub unsafe trait Zeroable {}
-+
-+/// Create a new zeroed T.
 +///
-+/// The returned initializer will write `0x00` to every byte of the given =
-`slot`.
-+#[inline]
-+pub fn zeroed<T: Zeroable + Unpin>() -> impl Init<T> {
-+    // SAFETY: Because `T: Zeroable`, all bytes zero is a valid bit patter=
-n for `T`
-+    // and because we write all zeroes, the memory is initialized.
-+    unsafe {
-+        init_from_closure(|slot: *mut T| {
-+            slot.write_bytes(0, 1);
-+            Ok(())
-+        })
-+    }
-+}
-+
-+macro_rules! impl_zeroable {
-+    ($($({$($generics:tt)*})? $t:ty, )*) =3D> {
-+        $(unsafe impl$($($generics)*)? Zeroable for $t {})*
++/// # Syntax
++///
++/// A normal `let` binding with optional type annotation. The expression i=
+s expected to implement
++/// [`PinInit`]/[`Init`] with the error type [`Infallible`]. If you want t=
+o use a different error
++/// type, then use [`stack_try_pin_init!`].
++#[macro_export]
++macro_rules! stack_pin_init {
++    (let $var:ident $(: $t:ty)? =3D $val:expr) =3D> {
++        let mut $var =3D ::core::pin::pin!($crate::init::__internal::Stack=
+Init$(::<$t>)?::uninit());
++        let mut $var =3D {
++            let val =3D $val;
++            match $crate::init::__internal::StackInit::init($var, val) {
++                Ok(res) =3D> res,
++                Err(x) =3D> {
++                    let x: ::core::convert::Infallible =3D x;
++                    match x {}
++                }
++            }
++        };
 +    };
 +}
 +
-+impl_zeroable! {
-+    // SAFETY: All primitives that are allowed to be zero.
-+    bool,
-+    char,
-+    u8, u16, u32, u64, u128, usize,
-+    i8, i16, i32, i64, i128, isize,
-+    f32, f64,
-+
-+    // SAFETY: These are ZSTs, there is nothing to zero.
-+    {<T: ?Sized>} PhantomData<T>, core::marker::PhantomPinned, Infallible,=
- (),
-+
-+    // SAFETY: Type is allowed to take any value, including all zeros.
-+    {<T>} MaybeUninit<T>,
-+
-+    // SAFETY: All zeros is equivalent to `None` (option layout optimizati=
-on guarantee).
-+    Option<NonZeroU8>, Option<NonZeroU16>, Option<NonZeroU32>, Option<NonZ=
-eroU64>,
-+    Option<NonZeroU128>, Option<NonZeroUsize>,
-+    Option<NonZeroI8>, Option<NonZeroI16>, Option<NonZeroI32>, Option<NonZ=
-eroI64>,
-+    Option<NonZeroI128>, Option<NonZeroIsize>,
-+
-+    // SAFETY: All zeros is equivalent to `None` (option layout optimizati=
-on guarantee).
-+    //
-+    // In this case we are allowed to use `T: ?Sized`, since all zeros is =
-the `None` variant.
-+    {<T: ?Sized>} Option<NonNull<T>>,
-+    {<T: ?Sized>} Option<Box<T>>,
-+
-+    // SAFETY: `null` pointer is valid.
-+    //
-+    // We cannot use `T: ?Sized`, since the VTABLE pointer part of fat poi=
-nters is not allowed to be
-+    // null.
-+    {<T>} *mut T, {<T>} *const T,
-+
-+    // SAFETY: `null` pointer is valid and the metadata part of these fat =
-pointers is allowed to be
-+    // zero.
-+    {<T>} *mut [T], {<T>} *const [T], *mut str, *const str,
-+
-+    // SAFETY: `T` is `Zeroable`.
-+    {<const N: usize, T: Zeroable>} [T; N], {<T: Zeroable>} Wrapping<T>,
++/// Initialize and pin a type directly on the stack.
++///
++/// # Examples
++///
++/// ```rust
++/// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
++/// # use kernel::{init, pin_init, stack_try_pin_init, init::*, sync::Mute=
+x, new_mutex};
++/// # use macros::pin_data;
++/// # use core::{alloc::AllocError, pin::Pin};
++/// #[pin_data]
++/// struct Foo {
++///     #[pin]
++///     a: Mutex<usize>,
++///     b: Box<Bar>,
++/// }
++///
++/// struct Bar {
++///     x: u32,
++/// }
++///
++/// stack_try_pin_init!(let foo: Result<Pin<&mut Foo>, AllocError> =3D pin=
+_init!(Foo {
++///     a <- new_mutex!(42),
++///     b: Box::try_new(Bar {
++///         x: 64,
++///     })?,
++/// }));
++/// let foo =3D foo.unwrap();
++/// pr_info!("a: {}", &*foo.a.lock());
++/// ```
++///
++/// ```rust
++/// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
++/// # use kernel::{init, pin_init, stack_try_pin_init, init::*, sync::Mute=
+x, new_mutex};
++/// # use macros::pin_data;
++/// # use core::{alloc::AllocError, pin::Pin};
++/// #[pin_data]
++/// struct Foo {
++///     #[pin]
++///     a: Mutex<usize>,
++///     b: Box<Bar>,
++/// }
++///
++/// struct Bar {
++///     x: u32,
++/// }
++///
++/// stack_try_pin_init!(let foo: Pin<&mut Foo> =3D? pin_init!(Foo {
++///     a <- new_mutex!(42),
++///     b: Box::try_new(Bar {
++///         x: 64,
++///     })?,
++/// }));
++/// pr_info!("a: {}", &*foo.a.lock());
++/// # Ok::<_, AllocError>(())
++/// ```
++///
++/// # Syntax
++///
++/// A normal `let` binding with optional type annotation. The expression i=
+s expected to implement
++/// [`PinInit`]/[`Init`]. This macro assigns a result to the given variabl=
+e, adding a `?` after the
++/// `=3D` will propagate this error.
++#[macro_export]
++macro_rules! stack_try_pin_init {
++    (let $var:ident $(: $t:ty)? =3D $val:expr) =3D> {
++        let mut $var =3D ::core::pin::pin!($crate::init::__internal::Stack=
+Init$(::<$t>)?::uninit());
++        let mut $var =3D {
++            let val =3D $val;
++            $crate::init::__internal::StackInit::init($var, val)
++        };
++    };
++    (let $var:ident $(: $t:ty)? =3D? $val:expr) =3D> {
++        let mut $var =3D ::core::pin::pin!($crate::init::__internal::Stack=
+Init$(::<$t>)?::uninit());
++        let mut $var =3D {
++            let val =3D $val;
++            $crate::init::__internal::StackInit::init($var, val)?
++        };
++    };
 +}
 +
-+macro_rules! impl_tuple_zeroable {
-+    ($(,)?) =3D> {};
-+    ($first:ident, $($t:ident),* $(,)?) =3D> {
-+        // SAFETY: All elements are zeroable and padding can be zero.
-+        unsafe impl<$first: Zeroable, $($t: Zeroable),*> Zeroable for ($fi=
-rst, $($t),*) {}
-+        impl_tuple_zeroable!($($t),* ,);
+ /// Construct an in-place, pinned initializer for `struct`s.
+ ///
+ /// This macro defaults the error to [`Infallible`]. If you need [`Error`]=
+, then use
+@@ -913,8 +1047,8 @@ macro_rules! try_init {
+ /// A pin-initializer for the type `T`.
+ ///
+ /// To use this initializer, you will need a suitable memory location that=
+ can hold a `T`. This can
+-/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::pi=
+n_init`] function of a
+-/// smart pointer like [`Arc<T>`] on this.
++/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`] or even the stack (see [`s=
+tack_pin_init!`]). Use the
++/// [`InPlaceInit::pin_init`] function of a smart pointer like [`Arc<T>`] =
+on this.
+ ///
+ /// Also see the [module description](self).
+ ///
+@@ -949,9 +1083,9 @@ pub unsafe trait PinInit<T: ?Sized, E =3D Infallible>:=
+ Sized {
+ /// An initializer for `T`.
+ ///
+ /// To use this initializer, you will need a suitable memory location that=
+ can hold a `T`. This can
+-/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::in=
+it`] function of a smart
+-/// pointer like [`Arc<T>`] on this. Because [`PinInit<T, E>`] is a super =
+trait, you can
+-/// use every function that takes it as well.
++/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`] or even the stack (see [`s=
+tack_pin_init!`]). Use the
++/// [`InPlaceInit::init`] function of a smart pointer like [`Arc<T>`] on t=
+his. Because
++/// [`PinInit<T, E>`] is a super trait, you can use every function that ta=
+kes it as well.
+ ///
+ /// Also see the [module description](self).
+ ///
+diff --git a/rust/kernel/init/__internal.rs b/rust/kernel/init/__internal.r=
+s
+index 69be03e17c1f..f4846638cb59 100644
+--- a/rust/kernel/init/__internal.rs
++++ b/rust/kernel/init/__internal.rs
+@@ -112,6 +112,56 @@ unsafe impl<T: ?Sized> HasInitData for T {
+     }
+ }
+
++/// Stack initializer helper type. Use [`stack_pin_init`] instead of this =
+primitive.
++///
++/// # Invariants
++///
++/// If `self.1` is true, then `self.0` is initialized.
++///
++/// [`stack_pin_init`]: kernel::stack_pin_init
++pub struct StackInit<T>(MaybeUninit<T>, bool);
++
++impl<T> Drop for StackInit<T> {
++    #[inline]
++    fn drop(&mut self) {
++        if self.1 {
++            // SAFETY: As we are being dropped, we only call this once. An=
+d since `self.1 =3D=3D true`,
++            // `self.0` has to be initialized.
++            unsafe { self.0.assume_init_drop() };
++        }
 +    }
 +}
 +
-+impl_tuple_zeroable!(A, B, C, D, E, F, G, H, I, J);
++impl<T> StackInit<T> {
++    /// Creates a new [`StackInit<T>`] that is uninitialized. Use [`stack_=
+pin_init`] instead of this
++    /// primitive.
++    ///
++    /// [`stack_pin_init`]: kernel::stack_pin_init
++    #[inline]
++    pub fn uninit() -> Self {
++        Self(MaybeUninit::uninit(), false)
++    }
++
++    /// Initializes the contents and returns the result.
++    #[inline]
++    pub fn init<E>(self: Pin<&mut Self>, init: impl PinInit<T, E>) -> Resu=
+lt<Pin<&mut T>, E> {
++        // SAFETY: We never move out of `this`.
++        let this =3D unsafe { Pin::into_inner_unchecked(self) };
++        // The value is currently initialized, so it needs to be dropped b=
+efore we can reuse
++        // the memory (this is a safety guarantee of `Pin`).
++        if this.1 {
++            // SAFETY: `this.1` is true and we set it to false after this.
++            unsafe { this.0.assume_init_drop() };
++            this.1 =3D false;
++        }
++        // SAFETY: The memory slot is valid and this type ensures that it =
+will stay pinned.
++        unsafe { init.__pinned_init(this.0.as_mut_ptr())? };
++        this.1 =3D true;
++        // SAFETY: The slot is now pinned, since we will never give access=
+ to `&mut T`.
++        Ok(unsafe { Pin::new_unchecked(this.0.assume_init_mut()) })
++    }
++}
++
+ /// When a value of this type is dropped, it drops a `T`.
+ ///
+ /// Can be forgotton to prevent the drop.
 --
 2.39.2
 
