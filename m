@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC6D6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BFAC433EF;
-	Mon,  3 Apr 2023 14:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779026FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22DCC433EF;
+	Mon,  3 Apr 2023 14:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532086;
-	bh=ofs2jD6JL/nr2hVtNEEt4cyqmDWgNc/8F3k/RHHvP8Q=;
+	s=korg; t=1680532089;
+	bh=I86NJCPu1+KiO59bQFYOpha356Tl4KQfy3wuYdiGe9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wHaOwbzBRWL5Dn/ozHkfE+tKrO72E5PlpEkSLoheaY/bD3kX/31KOqgi2Rr18XwMB
-	 BHro62TgUCXUfe1CNYzCqchau4hPBCxZnEQ20V7OcKVay2RFwTbTzyPR0SCPhyv9r1
-	 4z2bhaxKspdsM54pEhaNY8HA9+BgBDmdX0y7CbdE=
+	b=stTfSbaXzQYacZEiw45lZe9+upT0QmDQ2uKTIwBpok4xi8VabqMlk053Rg2Q1/cik
+	 GvsR0gpLTShwkA24evvVtH6mW4BVblovGS4LCPKWSIJy8ymd1K+cYV7aabyrloRJD8
+	 3UxEmPMFCfR6W0epTVPvDrNHV0IwCBDxEZFqtA7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Ruslan Bilovol <ruslan.bilovol@gmail.com>,
-	John Keeping <john@metanate.com>
-Subject: [PATCH 5.10 080/173] usb: gadget: u_audio: dont let userspace block driver unbind
-Date: Mon,  3 Apr 2023 16:08:15 +0200
-Message-Id: <20230403140417.008576908@linuxfoundation.org>
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 115/173] ALSA: asihpi: check pao in control_message()
+Date: Mon,  3 Apr 2023 16:08:50 +0200
+Message-Id: <20230403140418.172114350@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,69 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvin Šipraga <alsi@bang-olufsen.dk>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit 6c67ed9ad9b83e453e808f9b31a931a20a25629b upstream.
+[ Upstream commit 9026c0bf233db53b86f74f4c620715e94eb32a09 ]
 
-In the unbind callback for f_uac1 and f_uac2, a call to snd_card_free()
-via g_audio_cleanup() will disconnect the card and then wait for all
-resources to be released, which happens when the refcount falls to zero.
-Since userspace can keep the refcount incremented by not closing the
-relevant file descriptor, the call to unbind may block indefinitely.
-This can cause a deadlock during reboot, as evidenced by the following
-blocked task observed on my machine:
+control_message() might be called with pao = NULL.
+Here indicates control_message() as sample.
 
-  task:reboot  state:D stack:0   pid:2827  ppid:569    flags:0x0000000c
-  Call trace:
-   __switch_to+0xc8/0x140
-   __schedule+0x2f0/0x7c0
-   schedule+0x60/0xd0
-   schedule_timeout+0x180/0x1d4
-   wait_for_completion+0x78/0x180
-   snd_card_free+0x90/0xa0
-   g_audio_cleanup+0x2c/0x64
-   afunc_unbind+0x28/0x60
-   ...
-   kernel_restart+0x4c/0xac
-   __do_sys_reboot+0xcc/0x1ec
-   __arm64_sys_reboot+0x28/0x30
-   invoke_syscall+0x4c/0x110
-   ...
+(B)	static void control_message(struct hpi_adapter_obj *pao, ...)
+	{                                                   ^^^
+		struct hpi_hw_obj *phw = pao->priv;
+		...                      ^^^
+	}
 
-The issue can also be observed by opening the card with arecord and
-then stopping the process through the shell before unbinding:
+(A)	void _HPI_6205(struct hpi_adapter_obj *pao, ...)
+	{                                      ^^^
+		...
+		case HPI_OBJ_CONTROL:
+(B)			control_message(pao, phm, phr);
+			break;          ^^^
+		...
+	}
 
-  # arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
-  Recording WAVE '/dev/null' : Signed 32 bit Little Endian, Rate 48000 Hz, Stereo
-  ^Z[1]+  Stopped                    arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
-  # echo gadget.0 > /sys/bus/gadget/drivers/configfs-gadget/unbind
-  (observe that the unbind command never finishes)
+	void HPI_6205(...)
+	{
+		...
+(A)		_HPI_6205(NULL, phm, phr);
+		...       ^^^^
+	}
 
-Fix the problem by using snd_card_free_when_closed() instead, which will
-still disconnect the card as desired, but defer the task of freeing the
-resources to the core once userspace closes its file descriptor.
+Therefore, We will get too many warning via cppcheck, like below
 
-Fixes: 132fcb460839 ("usb: gadget: Add Audio Class 2.0 Driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Reviewed-by: Ruslan Bilovol <ruslan.bilovol@gmail.com>
-Reviewed-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20230302163648.3349669-1-alvin@pqrs.dk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	sound/pci/asihpi/hpi6205.c:238:27: warning: Possible null pointer dereference: pao [nullPointer]
+		 struct hpi_hw_obj *phw = pao->priv;
+		                          ^
+	sound/pci/asihpi/hpi6205.c:433:13: note: Calling function '_HPI_6205', 1st argument 'NULL' value is 0
+		  _HPI_6205(NULL, phm, phr);
+		            ^
+	sound/pci/asihpi/hpi6205.c:401:20: note: Calling function 'control_message', 1st argument 'pao' value is 0
+	   control_message(pao, phm, phr);
+	                   ^
+Set phr->error like many functions doing, and don't call _HPI_6205()
+with NULL.
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87ttypeaqz.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/u_audio.c |    2 +-
+ sound/pci/asihpi/hpi6205.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/u_audio.c
-+++ b/drivers/usb/gadget/function/u_audio.c
-@@ -613,7 +613,7 @@ void g_audio_cleanup(struct g_audio *g_a
- 	uac = g_audio->uac;
- 	card = uac->card;
- 	if (card)
--		snd_card_free(card);
-+		snd_card_free_when_closed(card);
+diff --git a/sound/pci/asihpi/hpi6205.c b/sound/pci/asihpi/hpi6205.c
+index 3d6914c64c4a8..4cdaeefeb6885 100644
+--- a/sound/pci/asihpi/hpi6205.c
++++ b/sound/pci/asihpi/hpi6205.c
+@@ -430,7 +430,7 @@ void HPI_6205(struct hpi_message *phm, struct hpi_response *phr)
+ 		pao = hpi_find_adapter(phm->adapter_index);
+ 	} else {
+ 		/* subsys messages don't address an adapter */
+-		_HPI_6205(NULL, phm, phr);
++		phr->error = HPI_ERROR_INVALID_OBJ_INDEX;
+ 		return;
+ 	}
  
- 	kfree(uac->p_prm.ureq);
- 	kfree(uac->c_prm.ureq);
+-- 
+2.39.2
+
 
 
