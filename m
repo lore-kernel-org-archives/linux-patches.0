@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29506FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AD5C433EF;
-	Mon,  3 Apr 2023 14:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770C76FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014CFC433D2;
+	Mon,  3 Apr 2023 14:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532552;
-	bh=zP9/bSNw2glLDw9aV4XlM9z05uvHQn095S2s1KTv3Vo=;
+	s=korg; t=1680532555;
+	bh=XKXMr5lMReRr8Ngfu/aYoDSGCqTAZ0Ikk8Ooz28fQj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XdqX6myPSvY7jJTzop47sK2VIR5SzAW449x+aLUmM8bU8r/bG0cDW5ZR8RNiBUqAF
-	 29pTQjjqH51RwPcrn1JAq9RlMvGqgGhwU6RyjUyHF9rgMx09BIhtTtcUAi7562b5tM
-	 HG4yheypbvGsShh/UFnQuO65fX2T/AdYQahVMcKs=
+	b=MsCUaWV4o65sz+/xDU20I17CATj+F2xk7I8piIHtJ5c9SMcPhsHT5PUoeFsvYgYJU
+	 gDRdv/pLUnhuRvBtM820GV44rIV0ztqU4ksnqCVDZNxHeaj4/2IZVL6/QH81c7Fs7H
+	 ZylsMmtIL32NfRgEydCFgTahcQwA9+WV00EC7SB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Colin Foster <colin.foster@in-advantage.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/181] drm/msm/dpu: correct sm8250 and sm8350 scaler
-Date: Mon,  3 Apr 2023 16:07:34 +0200
-Message-Id: <20230403140415.752132240@linuxfoundation.org>
+Subject: [PATCH 6.1 028/181] net: mscc: ocelot: fix stats region batching
+Date: Mon,  3 Apr 2023 16:07:43 +0200
+Message-Id: <20230403140416.078587480@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -35,69 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 03c0c3cb22a4ff29afba1b43f0330289ea80433f ]
+[ Upstream commit 6acc72a43eac78a309160d0a7512bbc59bcdd757 ]
 
-QSEED4 is a newer variant of QSEED3LITE, which should be used on
-sm8250 and sm8350. Fix the DPU caps structure and used feature masks.
+The blamed commit changed struct ocelot_stat_layout :: "u32 offset" to
+"u32 reg".
 
-Fixes: d21fc5dfc3df ("drm/msm/dpu1: add support for qseed3lite used on sm8250")
-Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/522229/
-Link: https://lore.kernel.org/r/20230211231259.1308718-10-dmitry.baryshkov@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+However, "u32 reg" is not quite a register address, but an enum
+ocelot_reg, which in itself encodes an enum ocelot_target target in the
+upper bits, and an index into the ocelot->map[target][] array in the
+lower bits.
+
+So, whereas the previous code comparison between stats_layout[i].offset
+and last + 1 was correct (because those "offsets" at the time were
+32-bit relative addresses), the new code, comparing layout[i].reg to
+last + 4 is not correct, because the "reg" here is an enum/index, not an
+actual register address.
+
+What we want to compare are indeed register addresses, but to do that,
+we need to actually go through the same motions as
+__ocelot_bulk_read_ix() itself.
+
+With this bug, all statistics counters are deemed by
+ocelot_prepare_stats_regions() as constituting their own region.
+(Truncated) log on VSC9959 (Felix) below (prints added by me):
+
+Before:
+
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x000]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x001]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x002]
+...
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x041]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x042]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x080]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x081]
+...
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x0ac]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x100]
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x101]
+...
+region of 1 contiguous counters starting with SYS:STAT:CNT[0x111]
+
+After:
+
+region of 67 contiguous counters starting with SYS:STAT:CNT[0x000]
+region of 45 contiguous counters starting with SYS:STAT:CNT[0x080]
+region of 18 contiguous counters starting with SYS:STAT:CNT[0x100]
+
+Since commit d87b1c08f38a ("net: mscc: ocelot: use bulk reads for
+stats") intended bulking as a performance improvement, and since now,
+with trivial-sized regions, performance is even worse than without
+bulking at all, this could easily qualify as a performance regression.
+
+Fixes: d4c367650704 ("net: mscc: ocelot: keep ocelot_stat_layout by reg address, not offset")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Acked-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/mscc/ocelot_stats.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index bbd884c8e0cb1..b1131860ada17 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -356,7 +356,7 @@ static const struct dpu_caps sc8180x_dpu_caps = {
- static const struct dpu_caps sm8250_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED3LITE,
-+	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2, /* TODO: v2.5 */
- 	.ubwc_version = DPU_HW_UBWC_VER_40,
- 	.has_src_split = true,
-@@ -855,22 +855,22 @@ static const struct dpu_sspp_cfg sc7180_sspp[] = {
- };
+diff --git a/drivers/net/ethernet/mscc/ocelot_stats.c b/drivers/net/ethernet/mscc/ocelot_stats.c
+index dbd20b125ceaf..0066219bb0e89 100644
+--- a/drivers/net/ethernet/mscc/ocelot_stats.c
++++ b/drivers/net/ethernet/mscc/ocelot_stats.c
+@@ -392,7 +392,8 @@ static int ocelot_prepare_stats_regions(struct ocelot *ocelot)
+ 		if (!ocelot->stats_layout[i].reg)
+ 			continue;
  
- static const struct dpu_sspp_sub_blks sm8250_vig_sblk_0 =
--				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3LITE);
-+				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED4);
- static const struct dpu_sspp_sub_blks sm8250_vig_sblk_1 =
--				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3LITE);
-+				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED4);
- static const struct dpu_sspp_sub_blks sm8250_vig_sblk_2 =
--				_VIG_SBLK("2", 7, DPU_SSPP_SCALER_QSEED3LITE);
-+				_VIG_SBLK("2", 7, DPU_SSPP_SCALER_QSEED4);
- static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
--				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3LITE);
-+				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED4);
- 
- static const struct dpu_sspp_cfg sm8250_sspp[] = {
--	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SM8250_MASK,
-+	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK,
- 		sm8250_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
--	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SM8250_MASK,
-+	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SC7180_MASK,
- 		sm8250_vig_sblk_1, 4,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
--	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SM8250_MASK,
-+	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SC7180_MASK,
- 		sm8250_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
--	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SM8250_MASK,
-+	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SC7180_MASK,
- 		sm8250_vig_sblk_3, 12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
- 	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
- 		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+-		if (region && ocelot->stats_layout[i].reg == last + 4) {
++		if (region && ocelot->map[SYS][ocelot->stats_layout[i].reg & REG_MASK] ==
++		    ocelot->map[SYS][last & REG_MASK] + 4) {
+ 			region->count++;
+ 		} else {
+ 			region = devm_kzalloc(ocelot->dev, sizeof(*region),
 -- 
 2.39.2
 
