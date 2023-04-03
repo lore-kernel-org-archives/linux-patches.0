@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C116FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8082BC433D2;
-	Mon,  3 Apr 2023 14:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F196FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2013BC4339B;
+	Mon,  3 Apr 2023 14:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531836;
-	bh=o+DHNUvMrqssmDuPURIP88XIensrdTNpeW5JZPyUX2M=;
+	s=korg; t=1680531839;
+	bh=Zd0Bh8N1GeTQcSWxoncqu5NRL4f8O7zAnsFaVthiqY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJOwwlBrFGRCsuTIue4Y+yY3xhNMYl1sZI59xKK5HwZUkseIRpEY8mfWZnxPHC0d7
-	 Z4hwsnbQsCS6iCX2HXJaNscb4CONobBh2mG30Igiu5z0WvUt8g0dc5LlSAK8255CSG
-	 i5R2eCxVMa6K7p2i1868Ib8wPlUGYxBlPYaZXiBU=
+	b=LQDCNBVsYIdpe9Uys7aypLL2V95OOZYUQ9Lslrw9gwQz/xZeaIVr1zSeDn+4LDe2j
+	 iYXAN7G5uxJr+7uwi/xbkqiWyZuEbS6g//TL6lgSDy0FhsGZQqBokurqtOCP3LY+NF
+	 zOOnQNg9EnNNlZSSDhnXd9nhKDrevDXCAS+D5EIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Marek Szlosek <marek.szlosek@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/173] iavf: fix non-tunneled IPv6 UDP packet type and hashing
-Date: Mon,  3 Apr 2023 16:07:21 +0200
-Message-Id: <20230403140415.202191477@linuxfoundation.org>
+Subject: [PATCH 5.10 027/173] intel/igbvf: free irq on the error path in igbvf_request_msix()
+Date: Mon,  3 Apr 2023 16:07:22 +0200
+Message-Id: <20230403140415.231600922@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -39,46 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit de58647b4301fe181f9c38e8b46f7021584ae427 ]
+[ Upstream commit 85eb39bb39cbb5c086df1e19ba67cc1366693a77 ]
 
-Currently, IAVF's decode_rx_desc_ptype() correctly reports payload type
-of L4 for IPv4 UDP packets and IPv{4,6} TCP, but only L3 for IPv6 UDP.
-Originally, i40e, ice and iavf were affected.
-Commit 73df8c9e3e3d ("i40e: Correct UDP packet header for non_tunnel-ipv6")
-fixed that in i40e, then
-commit 638a0c8c8861 ("ice: fix incorrect payload indicator on PTYPE")
-fixed that for ice.
-IPv6 UDP is L4 obviously. Fix it and make iavf report correct L4 hash
-type for such packets, so that the stack won't calculate it on CPU when
-needs it.
+In igbvf_request_msix(), irqs have not been freed on the err path,
+we need to free it. Fix it.
 
-Fixes: 206812b5fccb ("i40e/i40evf: i40e implementation for skb_set_hash")
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: d4e0fe01a38a ("igbvf: add new driver to support 82576 virtual functions")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Tested-by: Marek Szlosek <marek.szlosek@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igbvf/netdev.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_common.c b/drivers/net/ethernet/intel/iavf/iavf_common.c
-index 8547fc8fdfd60..78423ca401b24 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_common.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_common.c
-@@ -662,7 +662,7 @@ struct iavf_rx_ptype_decoded iavf_ptype_lookup[] = {
- 	/* Non Tunneled IPv6 */
- 	IAVF_PTT(88, IP, IPV6, FRG, NONE, NONE, NOF, NONE, PAY3),
- 	IAVF_PTT(89, IP, IPV6, NOF, NONE, NONE, NOF, NONE, PAY3),
--	IAVF_PTT(90, IP, IPV6, NOF, NONE, NONE, NOF, UDP,  PAY3),
-+	IAVF_PTT(90, IP, IPV6, NOF, NONE, NONE, NOF, UDP,  PAY4),
- 	IAVF_PTT_UNUSED_ENTRY(91),
- 	IAVF_PTT(92, IP, IPV6, NOF, NONE, NONE, NOF, TCP,  PAY4),
- 	IAVF_PTT(93, IP, IPV6, NOF, NONE, NONE, NOF, SCTP, PAY4),
+diff --git a/drivers/net/ethernet/intel/igbvf/netdev.c b/drivers/net/ethernet/intel/igbvf/netdev.c
+index fe8c0a26b7201..037ec90ed56cb 100644
+--- a/drivers/net/ethernet/intel/igbvf/netdev.c
++++ b/drivers/net/ethernet/intel/igbvf/netdev.c
+@@ -1074,7 +1074,7 @@ static int igbvf_request_msix(struct igbvf_adapter *adapter)
+ 			  igbvf_intr_msix_rx, 0, adapter->rx_ring->name,
+ 			  netdev);
+ 	if (err)
+-		goto out;
++		goto free_irq_tx;
+ 
+ 	adapter->rx_ring->itr_register = E1000_EITR(vector);
+ 	adapter->rx_ring->itr_val = adapter->current_itr;
+@@ -1083,10 +1083,14 @@ static int igbvf_request_msix(struct igbvf_adapter *adapter)
+ 	err = request_irq(adapter->msix_entries[vector].vector,
+ 			  igbvf_msix_other, 0, netdev->name, netdev);
+ 	if (err)
+-		goto out;
++		goto free_irq_rx;
+ 
+ 	igbvf_configure_msix(adapter);
+ 	return 0;
++free_irq_rx:
++	free_irq(adapter->msix_entries[--vector].vector, netdev);
++free_irq_tx:
++	free_irq(adapter->msix_entries[--vector].vector, netdev);
+ out:
+ 	return err;
+ }
 -- 
 2.39.2
 
