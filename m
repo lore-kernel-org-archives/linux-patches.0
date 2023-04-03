@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BD96FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DDCC433EF;
-	Mon,  3 Apr 2023 14:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F9D6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A014C433D2;
+	Mon,  3 Apr 2023 14:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532957;
-	bh=tVjfHchTo8NIK9WaR/Gd2x94Uah9jIv2RAcKNUZXZtY=;
+	s=korg; t=1680532959;
+	bh=QNjg35JqVGRkiXWOhfrxOD6oYTzm8nvTMwy5KmuZDYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYak6Uu46dKaOcPmCRxh0FtYa+POekjL3hk8yxB0bDPTME/nk7OAjgmFRH87mV3W+
-	 20H/KBEF37j8mF6jH19xftRBzY120m1dzvcsV5Tu89BUZNfEOWeiyYCm/qNZ67fwhw
-	 1bt7dzNgIPBhvWPnDqV9uQkjNzWuiWnIScXzas3Q=
+	b=LBqRDd6VouCDA7lbQesBWiJunB+521UP0ssYLa4ddEN3Y6lXytiqvmv5GLYW5GWTI
+	 v5zpDswn/tWxufrs+81mOsbEQIjF1SOZMPDX4nThJCH+pYFlKtYwykNt9lOIjD4cJe
+	 jnd2QoQ/eiJFTPDIYkXWUgZisczX9MWhaIZL47K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 180/181] hsr: ratelimit only when errors are printed
-Date: Mon,  3 Apr 2023 16:10:15 +0200
-Message-Id: <20230403140420.992814561@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.1 181/181] x86/PVH: avoid 32-bit build warning when obtaining VGA console info
+Date: Mon,  3 Apr 2023 16:10:16 +0200
+Message-Id: <20230403140421.025329184@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -35,49 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Jan Beulich <jbeulich@suse.com>
 
-commit 1b0120e4db0bf2838d1ce741195ce4b7cc100b91 upstream.
+commit aadbd07ff8a75ed342388846da78dfaddb8b106a upstream.
 
-Recently, when automatically merging -net and net-next in MPTCP devel
-tree, our CI reported [1] a conflict in hsr, the same as the one
-reported by Stephen in netdev [2].
+In the commit referenced below I failed to pay attention to this code
+also being buildable as 32-bit. Adjust the type of "ret" - there's no
+real need for it to be wider than 32 bits.
 
-When looking at the conflict, I noticed it is in fact the v1 [3] that
-has been applied in -net and the v2 [4] in net-next. Maybe the v1 was
-applied by accident.
-
-As mentioned by Jakub Kicinski [5], the new condition makes more sense
-before the net_ratelimit(), not to update net_ratelimit's state which is
-unnecessary if we're not going to print either way.
-
-Here, this modification applies the v2 but in -net.
-
-Link: https://github.com/multipath-tcp/mptcp_net-next/actions/runs/4423171069 [1]
-Link: https://lore.kernel.org/netdev/20230315100914.53fc1760@canb.auug.org.au/ [2]
-Link: https://lore.kernel.org/netdev/20230307133229.127442-1-koverskeid@gmail.com/ [3]
-Link: https://lore.kernel.org/netdev/20230309092302.179586-1-koverskeid@gmail.com/ [4]
-Link: https://lore.kernel.org/netdev/20230308232001.2fb62013@kernel.org/ [5]
-Fixes: 28e8cabe80f3 ("net: hsr: Don't log netdev_err message on unknown prp dst node")
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Reviewed-by: Steen Hegelund <Steen.Hegelund@microchip.com>
-Link: https://lore.kernel.org/r/20230315-net-20230315-hsr_framereg-ratelimit-v1-1-61d2ef176d11@tessares.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 934ef33ee75c ("x86/PVH: obtain VGA console info in Dom0")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+Link: https://lore.kernel.org/r/2d2193ff-670b-0a27-e12d-2c5c4c121c79@suse.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 ---
- net/hsr/hsr_framereg.c |    2 +-
+ arch/x86/xen/enlighten_pvh.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -422,7 +422,7 @@ void hsr_addr_subst_dest(struct hsr_node
- 	node_dst = find_node_by_addr_A(&port->hsr->node_db,
- 				       eth_hdr(skb)->h_dest);
- 	if (!node_dst) {
--		if (net_ratelimit() && port->hsr->prot_version != PRP_V1)
-+		if (port->hsr->prot_version != PRP_V1 && net_ratelimit())
- 			netdev_err(skb->dev, "%s: Unknown node\n", __func__);
- 		return;
- 	}
+--- a/arch/x86/xen/enlighten_pvh.c
++++ b/arch/x86/xen/enlighten_pvh.c
+@@ -48,7 +48,7 @@ void __init xen_pvh_init(struct boot_par
+ 		struct xen_platform_op op = {
+ 			.cmd = XENPF_get_dom0_console,
+ 		};
+-		long ret = HYPERVISOR_platform_op(&op);
++		int ret = HYPERVISOR_platform_op(&op);
+ 
+ 		if (ret > 0)
+ 			xen_init_vga(&op.u.dom0_console,
 
 
