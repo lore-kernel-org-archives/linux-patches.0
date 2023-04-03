@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38906FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:30:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF86C433EF;
-	Mon,  3 Apr 2023 14:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6BF6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:30:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7098C433D2;
+	Mon,  3 Apr 2023 14:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532234;
-	bh=YBS5+jHGJzi3JDG7CMye8IsKn0fN3IFUkvZPxXmj5eM=;
+	s=korg; t=1680532237;
+	bh=A2ihg6NCvTo57pbj+EXLYojVOlUt6a/yGPGu9qzuYYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpN8KfteolQVENdrUrq2JzosguGozFhX3o0YqgF8K80IUONvTsClboXhTLDPH94fE
-	 DvnRFEghvSxxga2o6MBepB+Kl3CTA+tKqwpdrR/ApDDN/IoZ0LrMBi78jaC3t1bwv0
-	 oxVclwYfccAqsVcLLobwtKvip4vOsa6cjLJdQc9A=
+	b=1K761sJHoyC6+SkLP6ktzI+2Fmi9nzX4qy/Q94O7aKfqBK2Kvtgf1hhXOkLeBQQkf
+	 z2K0ZAyYxcwRa3pUQJpi0p2kBcXW8jbJiNgLpL6j4zH08Xe0OpMDmlZCMwMtFGOv4M
+	 3eBS3ZrSPPpOGKXzPlaVBLUyMg8scRZh4DiXPguw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.10 154/173] pinctrl: at91-pio4: fix domain name assignment
-Date: Mon,  3 Apr 2023 16:09:29 +0200
-Message-Id: <20230403140419.428295685@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.10 155/173] powerpc: Dont try to copy PPR for task with NULL pt_regs
+Date: Mon,  3 Apr 2023 16:09:30 +0200
+Message-Id: <20230403140419.458180987@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,39 +34,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 7bb97e360acdd38b68ad0a1defb89c6e89c85596 upstream.
+commit fd7276189450110ed835eb0a334e62d2f1c4e3be upstream.
 
-Since commit d59f6617eef0 ("genirq: Allow fwnode to carry name
-information only") an IRQ domain is always given a name during
-allocation (e.g. used for the debugfs entry).
+powerpc sets up PF_KTHREAD and PF_IO_WORKER with a NULL pt_regs, which
+from my (arguably very short) checking is not commonly done for other
+archs. This is fine, except when PF_IO_WORKER's have been created and
+the task does something that causes a coredump to be generated. Then we
+get this crash:
 
-Drop the no longer valid name assignment, which would lead to an attempt
-to free a string constant when removing the domain on late probe
-failures (e.g. probe deferral).
+  Kernel attempted to read user page (160) - exploit attempt? (uid: 1000)
+  BUG: Kernel NULL pointer dereference on read at 0x00000160
+  Faulting instruction address: 0xc0000000000c3a60
+  Oops: Kernel access of bad area, sig: 11 [#1]
+  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=32 NUMA pSeries
+  Modules linked in: bochs drm_vram_helper drm_kms_helper xts binfmt_misc ecb ctr syscopyarea sysfillrect cbc sysimgblt drm_ttm_helper aes_generic ttm sg libaes evdev joydev virtio_balloon vmx_crypto gf128mul drm dm_mod fuse loop configfs drm_panel_orientation_quirks ip_tables x_tables autofs4 hid_generic usbhid hid xhci_pci xhci_hcd usbcore usb_common sd_mod
+  CPU: 1 PID: 1982 Comm: ppc-crash Not tainted 6.3.0-rc2+ #88
+  Hardware name: IBM pSeries (emulated by qemu) POWER9 (raw) 0x4e1202 0xf000005 of:SLOF,HEAD hv:linux,kvm pSeries
+  NIP:  c0000000000c3a60 LR: c000000000039944 CTR: c0000000000398e0
+  REGS: c0000000041833b0 TRAP: 0300   Not tainted  (6.3.0-rc2+)
+  MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 88082828  XER: 200400f8
+  ...
+  NIP memcpy_power7+0x200/0x7d0
+  LR  ppr_get+0x64/0xb0
+  Call Trace:
+    ppr_get+0x40/0xb0 (unreliable)
+    __regset_get+0x180/0x1f0
+    regset_get_alloc+0x64/0x90
+    elf_core_dump+0xb98/0x1b60
+    do_coredump+0x1c34/0x24a0
+    get_signal+0x71c/0x1410
+    do_notify_resume+0x140/0x6f0
+    interrupt_exit_user_prepare_main+0x29c/0x320
+    interrupt_exit_user_prepare+0x6c/0xa0
+    interrupt_return_srr_user+0x8/0x138
 
-Fixes: d59f6617eef0 ("genirq: Allow fwnode to carry name information only")
-Cc: stable@vger.kernel.org	# 4.13
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com> # on SAMA7G5
-Link: https://lore.kernel.org/r/20230224130828.27985-1-johan+linaro@kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Because ppr_get() is trying to copy from a PF_IO_WORKER with a NULL
+pt_regs.
+
+Check for a valid pt_regs in both ppc_get/ppr_set, and return an error
+if not set. The actual error value doesn't seem to be important here, so
+just pick -EINVAL.
+
+Fixes: fa439810cc1b ("powerpc/ptrace: Enable support for NT_PPPC_TAR, NT_PPC_PPR, NT_PPC_DSCR")
+Cc: stable@vger.kernel.org # v4.8+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[mpe: Trim oops in change log, add Fixes & Cc stable]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/d9f63344-fe7c-56ae-b420-4a1a04a2ae4c@kernel.dk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-at91-pio4.c |    1 -
- 1 file changed, 1 deletion(-)
+ arch/powerpc/kernel/ptrace/ptrace-view.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/pinctrl/pinctrl-at91-pio4.c
-+++ b/drivers/pinctrl/pinctrl-at91-pio4.c
-@@ -1139,7 +1139,6 @@ static int atmel_pinctrl_probe(struct pl
- 		dev_err(dev, "can't add the irq domain\n");
- 		return -ENODEV;
- 	}
--	atmel_pioctrl->irq_domain->name = "atmel gpio";
+--- a/arch/powerpc/kernel/ptrace/ptrace-view.c
++++ b/arch/powerpc/kernel/ptrace/ptrace-view.c
+@@ -298,6 +298,9 @@ static int gpr_set(struct task_struct *t
+ static int ppr_get(struct task_struct *target, const struct user_regset *regset,
+ 		   struct membuf to)
+ {
++	if (!target->thread.regs)
++		return -EINVAL;
++
+ 	return membuf_write(&to, &target->thread.regs->ppr, sizeof(u64));
+ }
  
- 	for (i = 0; i < atmel_pioctrl->npins; i++) {
- 		int irq = irq_create_mapping(atmel_pioctrl->irq_domain, i);
+@@ -305,6 +308,9 @@ static int ppr_set(struct task_struct *t
+ 		   unsigned int pos, unsigned int count, const void *kbuf,
+ 		   const void __user *ubuf)
+ {
++	if (!target->thread.regs)
++		return -EINVAL;
++
+ 	return user_regset_copyin(&pos, &count, &kbuf, &ubuf,
+ 				  &target->thread.regs->ppr, 0, sizeof(u64));
+ }
 
 
