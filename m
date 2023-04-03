@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE513612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FD7C433EF;
-	Mon,  3 Apr 2023 14:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8071F612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1FCC433A0;
+	Mon,  3 Apr 2023 14:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531651;
-	bh=RI4FPB1DKV/B/YpGWBOOOenfAVNZs71y7SH5hiC4Sno=;
+	s=korg; t=1680531654;
+	bh=yo/GowJspS9xIPJZdpuPQJlHVyI1uHUr04sRIKrsvcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+W1MhRYH+Vn+/0TjVsz/0pXJoWb1jFryjZMKdnnzPrcicdB8pFji8RjxG4MaRe3M
-	 na1WhS8VhsK7oi7Z0qtKEgxVceaczQbcT2cFtUNcwmEPDTFmxCQcOKTydkU9VOdHcL
-	 TN+2bbpQkgbtD6YkjYO8MCoLfFxzXbubLhVl1Hio=
+	b=G8QXIQaCnTv5BJiMQnSjplWMS3r7QvuzLUfsbMETgDxP0uzNDJ7u5A1UWEVY7J3Cj
+	 8XzpYJEEzTnc9gVLkK8fqedeQ7BtW425J9v7e2rPSheze3/D7caZ6fWgMRVzlrvGFY
+	 tap/oHuo6+a2NeTUDK73vdS+5GQrwG/GyHKz1MUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	George Kennedy <george.kennedy@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Dragos-Marian Panait <dragos.panait@windriver.com>
-Subject: [PATCH 5.4 058/104] tun: avoid double free in tun_free_netdev
-Date: Mon,  3 Apr 2023 16:08:50 +0200
-Message-Id: <20230403140406.563603661@linuxfoundation.org>
+	Yaroslav Furman <yaro330@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.4 030/104] uas: Add US_FL_NO_REPORT_OPCODES for JMicron JMS583Gen 2
+Date: Mon,  3 Apr 2023 16:08:22 +0200
+Message-Id: <20230403140405.484138146@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -36,237 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: George Kennedy <george.kennedy@oracle.com>
+From: Yaroslav Furman <yaro330@gmail.com>
 
-commit 158b515f703e75e7d68289bf4d98c664e1d632df upstream.
+commit a37eb61b6ec064ac794b8a1e89fd33eb582fe51d upstream.
 
-Avoid double free in tun_free_netdev() by moving the
-dev->tstats and tun->security allocs to a new ndo_init routine
-(tun_net_init()) that will be called by register_netdevice().
-ndo_init is paired with the desctructor (tun_free_netdev()),
-so if there's an error in register_netdevice() the destructor
-will handle the frees.
+Just like other JMicron JMS5xx enclosures, it chokes on report-opcodes,
+let's avoid them.
 
-BUG: KASAN: double-free or invalid-free in selinux_tun_dev_free_security+0x1a/0x20 security/selinux/hooks.c:5605
-
-CPU: 0 PID: 25750 Comm: syz-executor416 Not tainted 5.16.0-rc2-syzk #1
-Hardware name: Red Hat KVM, BIOS
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0x89/0xb5 lib/dump_stack.c:106
-print_address_description.constprop.9+0x28/0x160 mm/kasan/report.c:247
-kasan_report_invalid_free+0x55/0x80 mm/kasan/report.c:372
-____kasan_slab_free mm/kasan/common.c:346 [inline]
-__kasan_slab_free+0x107/0x120 mm/kasan/common.c:374
-kasan_slab_free include/linux/kasan.h:235 [inline]
-slab_free_hook mm/slub.c:1723 [inline]
-slab_free_freelist_hook mm/slub.c:1749 [inline]
-slab_free mm/slub.c:3513 [inline]
-kfree+0xac/0x2d0 mm/slub.c:4561
-selinux_tun_dev_free_security+0x1a/0x20 security/selinux/hooks.c:5605
-security_tun_dev_free_security+0x4f/0x90 security/security.c:2342
-tun_free_netdev+0xe6/0x150 drivers/net/tun.c:2215
-netdev_run_todo+0x4df/0x840 net/core/dev.c:10627
-rtnl_unlock+0x13/0x20 net/core/rtnetlink.c:112
-__tun_chr_ioctl+0x80c/0x2870 drivers/net/tun.c:3302
-tun_chr_ioctl+0x2f/0x40 drivers/net/tun.c:3311
-vfs_ioctl fs/ioctl.c:51 [inline]
-__do_sys_ioctl fs/ioctl.c:874 [inline]
-__se_sys_ioctl fs/ioctl.c:860 [inline]
-__x64_sys_ioctl+0x19d/0x220 fs/ioctl.c:860
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x3a/0x80 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x44/0xae
-
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: George Kennedy <george.kennedy@oracle.com>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/1639679132-19884-1-git-send-email-george.kennedy@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[DP: adjusted context for 5.4 stable]
-Signed-off-by: Dragos-Marian Panait <dragos.panait@windriver.com>
+Signed-off-by: Yaroslav Furman <yaro330@gmail.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230312090745.47962-1-yaro330@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tun.c |  109 +++++++++++++++++++++++++++++-------------------------
- 1 file changed, 59 insertions(+), 50 deletions(-)
+ drivers/usb/storage/unusual_uas.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -250,6 +250,9 @@ struct tun_struct {
- 	struct tun_prog __rcu *steering_prog;
- 	struct tun_prog __rcu *filter_prog;
- 	struct ethtool_link_ksettings link_ksettings;
-+	/* init args */
-+	struct file *file;
-+	struct ifreq *ifr;
- };
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -111,6 +111,13 @@ UNUSUAL_DEV(0x152d, 0x0578, 0x0000, 0x99
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_BROKEN_FUA),
  
- struct veth {
-@@ -275,6 +278,9 @@ void *tun_ptr_to_xdp(void *ptr)
- }
- EXPORT_SYMBOL(tun_ptr_to_xdp);
- 
-+static void tun_flow_init(struct tun_struct *tun);
-+static void tun_flow_uninit(struct tun_struct *tun);
++/* Reported by: Yaroslav Furman <yaro330@gmail.com> */
++UNUSUAL_DEV(0x152d, 0x0583, 0x0000, 0x9999,
++		"JMicron",
++		"JMS583Gen 2",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_NO_REPORT_OPCODES),
 +
- static int tun_napi_receive(struct napi_struct *napi, int budget)
- {
- 	struct tun_file *tfile = container_of(napi, struct tun_file, napi);
-@@ -1027,6 +1033,49 @@ static int check_filter(struct tap_filte
- 
- static const struct ethtool_ops tun_ethtool_ops;
- 
-+static int tun_net_init(struct net_device *dev)
-+{
-+	struct tun_struct *tun = netdev_priv(dev);
-+	struct ifreq *ifr = tun->ifr;
-+	int err;
-+
-+	tun->pcpu_stats = netdev_alloc_pcpu_stats(struct tun_pcpu_stats);
-+	if (!tun->pcpu_stats)
-+		return -ENOMEM;
-+
-+	spin_lock_init(&tun->lock);
-+
-+	err = security_tun_dev_alloc_security(&tun->security);
-+	if (err < 0) {
-+		free_percpu(tun->pcpu_stats);
-+		return err;
-+	}
-+
-+	tun_flow_init(tun);
-+
-+	dev->hw_features = NETIF_F_SG | NETIF_F_FRAGLIST |
-+			   TUN_USER_FEATURES | NETIF_F_HW_VLAN_CTAG_TX |
-+			   NETIF_F_HW_VLAN_STAG_TX;
-+	dev->features = dev->hw_features | NETIF_F_LLTX;
-+	dev->vlan_features = dev->features &
-+			     ~(NETIF_F_HW_VLAN_CTAG_TX |
-+			       NETIF_F_HW_VLAN_STAG_TX);
-+
-+	tun->flags = (tun->flags & ~TUN_FEATURES) |
-+		      (ifr->ifr_flags & TUN_FEATURES);
-+
-+	INIT_LIST_HEAD(&tun->disabled);
-+	err = tun_attach(tun, tun->file, false, ifr->ifr_flags & IFF_NAPI,
-+			 ifr->ifr_flags & IFF_NAPI_FRAGS, false);
-+	if (err < 0) {
-+		tun_flow_uninit(tun);
-+		security_tun_dev_free_security(tun->security);
-+		free_percpu(tun->pcpu_stats);
-+		return err;
-+	}
-+	return 0;
-+}
-+
- /* Net device detach from fd. */
- static void tun_net_uninit(struct net_device *dev)
- {
-@@ -1285,6 +1334,7 @@ static int tun_net_change_carrier(struct
- }
- 
- static const struct net_device_ops tun_netdev_ops = {
-+	.ndo_init		= tun_net_init,
- 	.ndo_uninit		= tun_net_uninit,
- 	.ndo_open		= tun_net_open,
- 	.ndo_stop		= tun_net_close,
-@@ -1365,6 +1415,7 @@ static int tun_xdp_tx(struct net_device
- }
- 
- static const struct net_device_ops tap_netdev_ops = {
-+	.ndo_init		= tun_net_init,
- 	.ndo_uninit		= tun_net_uninit,
- 	.ndo_open		= tun_net_open,
- 	.ndo_stop		= tun_net_close,
-@@ -1405,7 +1456,7 @@ static void tun_flow_uninit(struct tun_s
- #define MAX_MTU 65535
- 
- /* Initialize net device. */
--static void tun_net_init(struct net_device *dev)
-+static void tun_net_initialize(struct net_device *dev)
- {
- 	struct tun_struct *tun = netdev_priv(dev);
- 
-@@ -2839,9 +2890,6 @@ static int tun_set_iff(struct net *net,
- 
- 		if (!dev)
- 			return -ENOMEM;
--		err = dev_get_valid_name(net, dev, name);
--		if (err < 0)
--			goto err_free_dev;
- 
- 		dev_net_set(dev, net);
- 		dev->rtnl_link_ops = &tun_link_ops;
-@@ -2860,41 +2908,16 @@ static int tun_set_iff(struct net *net,
- 		tun->rx_batched = 0;
- 		RCU_INIT_POINTER(tun->steering_prog, NULL);
- 
--		tun->pcpu_stats = netdev_alloc_pcpu_stats(struct tun_pcpu_stats);
--		if (!tun->pcpu_stats) {
--			err = -ENOMEM;
--			goto err_free_dev;
--		}
--
--		spin_lock_init(&tun->lock);
--
--		err = security_tun_dev_alloc_security(&tun->security);
--		if (err < 0)
--			goto err_free_stat;
--
--		tun_net_init(dev);
--		tun_flow_init(tun);
-+		tun->ifr = ifr;
-+		tun->file = file;
- 
--		dev->hw_features = NETIF_F_SG | NETIF_F_FRAGLIST |
--				   TUN_USER_FEATURES | NETIF_F_HW_VLAN_CTAG_TX |
--				   NETIF_F_HW_VLAN_STAG_TX;
--		dev->features = dev->hw_features | NETIF_F_LLTX;
--		dev->vlan_features = dev->features &
--				     ~(NETIF_F_HW_VLAN_CTAG_TX |
--				       NETIF_F_HW_VLAN_STAG_TX);
--
--		tun->flags = (tun->flags & ~TUN_FEATURES) |
--			      (ifr->ifr_flags & TUN_FEATURES);
--
--		INIT_LIST_HEAD(&tun->disabled);
--		err = tun_attach(tun, file, false, ifr->ifr_flags & IFF_NAPI,
--				 ifr->ifr_flags & IFF_NAPI_FRAGS, false);
--		if (err < 0)
--			goto err_free_flow;
-+		tun_net_initialize(dev);
- 
- 		err = register_netdevice(tun->dev);
--		if (err < 0)
--			goto err_detach;
-+		if (err < 0) {
-+			free_netdev(dev);
-+			return err;
-+		}
- 		/* free_netdev() won't check refcnt, to aovid race
- 		 * with dev_put() we need publish tun after registration.
- 		 */
-@@ -2913,20 +2936,6 @@ static int tun_set_iff(struct net *net,
- 
- 	strcpy(ifr->ifr_name, tun->dev->name);
- 	return 0;
--
--err_detach:
--	tun_detach_all(dev);
--	/* register_netdevice() already called tun_free_netdev() */
--	goto err_free_dev;
--
--err_free_flow:
--	tun_flow_uninit(tun);
--	security_tun_dev_free_security(tun->security);
--err_free_stat:
--	free_percpu(tun->pcpu_stats);
--err_free_dev:
--	free_netdev(dev);
--	return err;
- }
- 
- static void tun_get_iff(struct tun_struct *tun, struct ifreq *ifr)
+ /* Reported-by: Thinh Nguyen <thinhn@synopsys.com> */
+ UNUSUAL_DEV(0x154b, 0xf00b, 0x0000, 0x9999,
+ 		"PNY",
 
 
