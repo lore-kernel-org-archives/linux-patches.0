@@ -1,26 +1,26 @@
 Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79D06FD8
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 16:05:48 +0000 (UTC)
-Date: Mon, 03 Apr 2023 16:05:34 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D866FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 16:05:55 +0000 (UTC)
+Date: Mon, 03 Apr 2023 16:05:51 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680537946; x=1680797146;
-	bh=oEJbMfcSxPAVYQ1DqXldJJ53Wy/YKt+yaqDsNi9mbNM=;
+	s=protonmail3; t=1680537953; x=1680797153;
+	bh=yfXd5D8BxAfgdr5rvbjqK+tp79cUPO+/3tQLSPK3UIg=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=mcAisQpovlZWBd5J/aB1BdW8fOnxGRD0GyRNFdOx/y0VJsa9lneENIPn+Q1lX5vGj
-	 w5t7w2vmdEOFT1BeVmGoJCfAwMxlO4GqnSzqW2xfr1g6C2vnG8S0+DFJ0Gyt81Qiek
-	 CcQjhcWVKX4QnM3fdJoW9a8jWcTrt3paJ8LZtDShKCDIqSNRvWWW8seSs0wwSvwi7A
-	 v0RaCJ2EAaDOHU1zXTSnIsVGPvH22ENw/ULTxKOk1XU9sTgzVagbXL39pUxhkPtDhk
-	 USFvV7pRcAOZmy/V4VbbyVdRJ9zcuOTSh+Zvqn9nK41qJ8kJLVNDEARGooyr4QQ+A+
-	 w3NxRDL8LlcPA==
+	b=TCVLk2yubXDKuQlr3pe5wZyiIV9qDsFS1iwqzHpJfktLn8TfIvPkX1U7vQW7s8eJ0
+	 L652DT+NIWHREzxkRYZc2dhoYadI1BFb5yRx8zTR0JW0kdSnyIi6A+lTTkwgZ5smhe
+	 cUH2ZWbsnSg0SDz9c2LmoASMukzxddVPi9XKuWaaXh4sgY1KIcl88DrIdBwRlST/5x
+	 xbu2cmHykV1BYcbsJpUVDKRy9oluuB+eIX6ONwA8jW5J/VKuNnapEEVVXd+0Pb43vH
+	 mcdSNvd4C6Bfg0hl4EXKMw/YTr3GGOXShO74ey++rWY6GbjdXEHIHFx3zFupWilDtO
+	 QPyJWBWInyPQw==
 To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>
 From: Benno Lossin <y86-dev@protonmail.com>
 Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <y86-dev@protonmail.com>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <a.hindborg@samsung.com>
-Subject: [PATCH v5 10/15] rust: init: add `stack_pin_init!` macro
-Message-ID: <20230403160511.174894-3-y86-dev@protonmail.com>
+Subject: [PATCH v5 13/15] rust: types: add common init-helper functions for `Opaque`
+Message-ID: <20230403160511.174894-6-y86-dev@protonmail.com>
 In-Reply-To: <20230403154422.168633-1-y86-dev@protonmail.com>
 References: <20230403154422.168633-1-y86-dev@protonmail.com>
 Feedback-ID: 40624463:user:proton
@@ -33,301 +33,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-The `stack_pin_init!` macro allows pin-initializing a value on the
-stack. It accepts a `impl PinInit<T, E>` to initialize a `T`. It allows
-propagating any errors via `?` or handling it normally via `match`.
+Add helper functions to more easily initialize `Opaque<T>` via FFI and
+rust raw initializer functions.
+These functions take a function pointer to the FFI/raw initialization
+function and take between 0-4 other arguments. It then returns an
+initializer that uses the FFI/raw initialization function along with the
+given arguments to initialize an `Opaque<T>`.
 
 Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
-Cc: Alice Ryhl <aliceryhl@google.com>
-Cc: Andreas Hindborg <a.hindborg@samsung.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
 Cc: Gary Guo <gary@garyguo.net>
 ---
- rust/kernel/init.rs            | 146 +++++++++++++++++++++++++++++++--
- rust/kernel/init/__internal.rs |  50 +++++++++++
- 2 files changed, 190 insertions(+), 6 deletions(-)
+ rust/kernel/init.rs  |  9 +++++++++
+ rust/kernel/types.rs | 47 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+)
 
 diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-index 37e8159df24d..1343cafdd760 100644
+index 09bba4e86ace..b4947e8cf731 100644
 --- a/rust/kernel/init.rs
 +++ b/rust/kernel/init.rs
-@@ -12,7 +12,8 @@
+@@ -177,6 +177,14 @@
+ //! }
+ //! ```
  //!
- //! To initialize a `struct` with an in-place constructor you will need tw=
-o things:
- //! - an in-place constructor,
--//! - a memory location that can hold your `struct`.
-+//! - a memory location that can hold your `struct` (this can be the [stac=
-k], an [`Arc<T>`],
-+//!   [`UniqueArc<T>`], [`Box<T>`] or any other smart pointer that impleme=
-nts [`InPlaceInit`]).
- //!
- //! To get an in-place constructor there are generally three options:
- //! - directly creating an in-place constructor using the [`pin_init!`] ma=
-cro,
-@@ -180,6 +181,7 @@
++//! For the special case where initializing a field is a single FFI-functi=
+on call that cannot fail,
++//! there exist helper functions [`Opaque::ffi_init`]. These functions ini=
+tialize a single
++//! [`Opaque`] field by just delegating to the FFI-function. You can use t=
+hese in combination with
++//! [`pin_init!`].
++//!
++//! For more information on how to use [`pin_init_from_closure()`], take a=
+ look at the uses inside
++//! the `kernel` crate. The [`sync`] module is a good starting point.
++//!
+ //! [`sync`]: kernel::sync
  //! [pinning]: https://doc.rust-lang.org/std/pin/index.html
  //! [structurally pinned fields]:
- //!     https://doc.rust-lang.org/std/pin/index.html#pinning-is-structural=
--for-field
-+//! [stack]: crate::stack_pin_init
- //! [`Arc<T>`]: crate::sync::Arc
- //! [`impl PinInit<Foo>`]: PinInit
+@@ -187,6 +195,7 @@
  //! [`impl PinInit<T, E>`]: PinInit
-@@ -202,6 +204,138 @@ pub mod __internal;
- #[doc(hidden)]
- pub mod macros;
+ //! [`impl Init<T, E>`]: Init
+ //! [`Opaque`]: kernel::types::Opaque
++//! [`Opaque::ffi_init`]: kernel::types::Opaque::ffi_init
+ //! [`pin_data`]: ::macros::pin_data
 
-+/// Initialize and pin a type directly on the stack.
-+///
-+/// # Examples
-+///
-+/// ```rust
-+/// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
-+/// # use kernel::{init, pin_init, stack_pin_init, init::*, sync::Mutex, n=
-ew_mutex};
-+/// # use macros::pin_data;
-+/// # use core::pin::Pin;
-+/// #[pin_data]
-+/// struct Foo {
-+///     #[pin]
-+///     a: Mutex<usize>,
-+///     b: Bar,
-+/// }
-+///
-+/// #[pin_data]
-+/// struct Bar {
-+///     x: u32,
-+/// }
-+///
-+/// stack_pin_init!(let foo =3D pin_init!(Foo {
-+///     a <- new_mutex!(42),
-+///     b: Bar {
-+///         x: 64,
-+///     },
-+/// }));
-+/// let foo: Pin<&mut Foo> =3D foo;
-+/// pr_info!("a: {}", &*foo.a.lock());
-+/// ```
-+///
-+/// # Syntax
-+///
-+/// A normal `let` binding with optional type annotation. The expression i=
-s expected to implement
-+/// [`PinInit`]/[`Init`] with the error type [`Infallible`]. If you want t=
-o use a different error
-+/// type, then use [`stack_try_pin_init!`].
-+#[macro_export]
-+macro_rules! stack_pin_init {
-+    (let $var:ident $(: $t:ty)? =3D $val:expr) =3D> {
-+        let mut $var =3D ::core::pin::pin!($crate::init::__internal::Stack=
-Init$(::<$t>)?::uninit());
-+        let mut $var =3D {
-+            let val =3D $val;
-+            match $crate::init::__internal::StackInit::init($var, val) {
-+                Ok(res) =3D> res,
-+                Err(x) =3D> {
-+                    let x: ::core::convert::Infallible =3D x;
-+                    match x {}
-+                }
-+            }
-+        };
-+    };
-+}
-+
-+/// Initialize and pin a type directly on the stack.
-+///
-+/// # Examples
-+///
-+/// ```rust
-+/// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
-+/// # use kernel::{init, pin_init, stack_try_pin_init, init::*, sync::Mute=
-x, new_mutex};
-+/// # use macros::pin_data;
-+/// # use core::{alloc::AllocError, pin::Pin};
-+/// #[pin_data]
-+/// struct Foo {
-+///     #[pin]
-+///     a: Mutex<usize>,
-+///     b: Box<Bar>,
-+/// }
-+///
-+/// struct Bar {
-+///     x: u32,
-+/// }
-+///
-+/// stack_try_pin_init!(let foo: Result<Pin<&mut Foo>, AllocError> =3D pin=
-_init!(Foo {
-+///     a <- new_mutex!(42),
-+///     b: Box::try_new(Bar {
-+///         x: 64,
-+///     })?,
-+/// }));
-+/// let foo =3D foo.unwrap();
-+/// pr_info!("a: {}", &*foo.a.lock());
-+/// ```
-+///
-+/// ```rust
-+/// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
-+/// # use kernel::{init, pin_init, stack_try_pin_init, init::*, sync::Mute=
-x, new_mutex};
-+/// # use macros::pin_data;
-+/// # use core::{alloc::AllocError, pin::Pin};
-+/// #[pin_data]
-+/// struct Foo {
-+///     #[pin]
-+///     a: Mutex<usize>,
-+///     b: Box<Bar>,
-+/// }
-+///
-+/// struct Bar {
-+///     x: u32,
-+/// }
-+///
-+/// stack_try_pin_init!(let foo: Pin<&mut Foo> =3D? pin_init!(Foo {
-+///     a <- new_mutex!(42),
-+///     b: Box::try_new(Bar {
-+///         x: 64,
-+///     })?,
-+/// }));
-+/// pr_info!("a: {}", &*foo.a.lock());
-+/// # Ok::<_, AllocError>(())
-+/// ```
-+///
-+/// # Syntax
-+///
-+/// A normal `let` binding with optional type annotation. The expression i=
-s expected to implement
-+/// [`PinInit`]/[`Init`]. This macro assigns a result to the given variabl=
-e, adding a `?` after the
-+/// `=3D` will propagate this error.
-+#[macro_export]
-+macro_rules! stack_try_pin_init {
-+    (let $var:ident $(: $t:ty)? =3D $val:expr) =3D> {
-+        let mut $var =3D ::core::pin::pin!($crate::init::__internal::Stack=
-Init$(::<$t>)?::uninit());
-+        let mut $var =3D {
-+            let val =3D $val;
-+            $crate::init::__internal::StackInit::init($var, val)
-+        };
-+    };
-+    (let $var:ident $(: $t:ty)? =3D? $val:expr) =3D> {
-+        let mut $var =3D ::core::pin::pin!($crate::init::__internal::Stack=
-Init$(::<$t>)?::uninit());
-+        let mut $var =3D {
-+            let val =3D $val;
-+            $crate::init::__internal::StackInit::init($var, val)?
-+        };
-+    };
-+}
-+
- /// Construct an in-place, pinned initializer for `struct`s.
- ///
- /// This macro defaults the error to [`Infallible`]. If you need [`Error`]=
-, then use
-@@ -913,8 +1047,8 @@ macro_rules! try_init {
- /// A pin-initializer for the type `T`.
- ///
- /// To use this initializer, you will need a suitable memory location that=
- can hold a `T`. This can
--/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::pi=
-n_init`] function of a
--/// smart pointer like [`Arc<T>`] on this.
-+/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`] or even the stack (see [`s=
-tack_pin_init!`]). Use the
-+/// [`InPlaceInit::pin_init`] function of a smart pointer like [`Arc<T>`] =
-on this.
- ///
- /// Also see the [module description](self).
- ///
-@@ -949,9 +1083,9 @@ pub unsafe trait PinInit<T: ?Sized, E =3D Infallible>:=
- Sized {
- /// An initializer for `T`.
- ///
- /// To use this initializer, you will need a suitable memory location that=
- can hold a `T`. This can
--/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::in=
-it`] function of a smart
--/// pointer like [`Arc<T>`] on this. Because [`PinInit<T, E>`] is a super =
-trait, you can
--/// use every function that takes it as well.
-+/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`] or even the stack (see [`s=
-tack_pin_init!`]). Use the
-+/// [`InPlaceInit::init`] function of a smart pointer like [`Arc<T>`] on t=
-his. Because
-+/// [`PinInit<T, E>`] is a super trait, you can use every function that ta=
-kes it as well.
- ///
- /// Also see the [module description](self).
- ///
-diff --git a/rust/kernel/init/__internal.rs b/rust/kernel/init/__internal.r=
-s
-index 69be03e17c1f..f4846638cb59 100644
---- a/rust/kernel/init/__internal.rs
-+++ b/rust/kernel/init/__internal.rs
-@@ -112,6 +112,56 @@ unsafe impl<T: ?Sized> HasInitData for T {
+ use crate::{
+diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
+index ff2b2fac951d..dbfae9bb97ce 100644
+--- a/rust/kernel/types.rs
++++ b/rust/kernel/types.rs
+@@ -2,6 +2,7 @@
+
+ //! Kernel types.
+
++use crate::init::{self, PinInit};
+ use alloc::boxed::Box;
+ use core::{
+     cell::UnsafeCell,
+@@ -248,6 +249,52 @@ impl<T> Opaque<T> {
      }
  }
 
-+/// Stack initializer helper type. Use [`stack_pin_init`] instead of this =
-primitive.
-+///
-+/// # Invariants
-+///
-+/// If `self.1` is true, then `self.0` is initialized.
-+///
-+/// [`stack_pin_init`]: kernel::stack_pin_init
-+pub struct StackInit<T>(MaybeUninit<T>, bool);
-+
-+impl<T> Drop for StackInit<T> {
-+    #[inline]
-+    fn drop(&mut self) {
-+        if self.1 {
-+            // SAFETY: As we are being dropped, we only call this once. An=
-d since `self.1 =3D=3D true`,
-+            // `self.0` has to be initialized.
-+            unsafe { self.0.assume_init_drop() };
++macro_rules! opaque_init_funcs {
++    ($($abi:literal $name:ident($($arg_name:ident: $arg_typ:ident),*);)*) =
+=3D> {
++        impl<T> Opaque<T> {
++            $(
++                /// Create an initializer using the given initializer func=
+tion.
++                ///
++                /// # Safety
++                ///
++                /// The given function **must** under all circumstances in=
+itialize the memory
++                /// location to a valid `T`. If it fails to do so it resul=
+ts in UB.
++                ///
++                /// If any parameters are given, those need to be valid fo=
+r the function. Valid
++                /// means that calling the function with those parameters =
+complies with the above
++                /// requirement **and** every other requirement on the fun=
+ction itself.
++                pub unsafe fn $name<$($arg_typ),*>(
++                    init_func: unsafe extern $abi fn(*mut T $(, $arg_typ)*=
+),
++                    $($arg_name: $arg_typ,)*
++                ) -> impl PinInit<Self> {
++                    // SAFETY: The safety contract of this function ensure=
+s that `init_func` fully
++                    // initializes `slot`.
++                    unsafe {
++                        init::pin_init_from_closure(move |slot| {
++                            init_func(Self::raw_get(slot) $(, $arg_name)*)=
+;
++                            Ok(())
++                        })
++                    }
++                }
++            )*
 +        }
 +    }
 +}
 +
-+impl<T> StackInit<T> {
-+    /// Creates a new [`StackInit<T>`] that is uninitialized. Use [`stack_=
-pin_init`] instead of this
-+    /// primitive.
-+    ///
-+    /// [`stack_pin_init`]: kernel::stack_pin_init
-+    #[inline]
-+    pub fn uninit() -> Self {
-+        Self(MaybeUninit::uninit(), false)
-+    }
++opaque_init_funcs! {
++    "C" ffi_init();
++    "C" ffi_init1(arg1: A1);
++    "C" ffi_init2(arg1: A1, arg2: A2);
++    "C" ffi_init3(arg1: A1, arg2: A2, arg3: A3);
++    "C" ffi_init4(arg1: A1, arg2: A2, arg3: A3, arg4: A4);
 +
-+    /// Initializes the contents and returns the result.
-+    #[inline]
-+    pub fn init<E>(self: Pin<&mut Self>, init: impl PinInit<T, E>) -> Resu=
-lt<Pin<&mut T>, E> {
-+        // SAFETY: We never move out of `this`.
-+        let this =3D unsafe { Pin::into_inner_unchecked(self) };
-+        // The value is currently initialized, so it needs to be dropped b=
-efore we can reuse
-+        // the memory (this is a safety guarantee of `Pin`).
-+        if this.1 {
-+            // SAFETY: `this.1` is true and we set it to false after this.
-+            unsafe { this.0.assume_init_drop() };
-+            this.1 =3D false;
-+        }
-+        // SAFETY: The memory slot is valid and this type ensures that it =
-will stay pinned.
-+        unsafe { init.__pinned_init(this.0.as_mut_ptr())? };
-+        this.1 =3D true;
-+        // SAFETY: The slot is now pinned, since we will never give access=
- to `&mut T`.
-+        Ok(unsafe { Pin::new_unchecked(this.0.assume_init_mut()) })
-+    }
++    "Rust" manual_init();
++    "Rust" manual_init1(arg1: A1);
++    "Rust" manual_init2(arg1: A1, arg2: A2);
++    "Rust" manual_init3(arg1: A1, arg2: A2, arg3: A3);
++    "Rust" manual_init4(arg1: A1, arg2: A2, arg3: A3, arg4: A4);
 +}
 +
- /// When a value of this type is dropped, it drops a `T`.
- ///
- /// Can be forgotton to prevent the drop.
+ /// A sum type that always holds either a value of type `L` or `R`.
+ pub enum Either<L, R> {
+     /// Constructs an instance of [`Either`] containing a value of type `L=
+`.
 --
 2.39.2
 
