@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946376FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B560C433A1;
-	Mon,  3 Apr 2023 14:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDB56FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FB5C4339E;
+	Mon,  3 Apr 2023 14:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532107;
-	bh=noVZb804vuPDQVTQr3X92/tFr/DAUTuTMhxnNHqblGA=;
+	s=korg; t=1680532110;
+	bh=V7R50GzPEh0LA6RroHUD3MkOHCM67gpVWZSpW7uxhKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEDMHFMgm17kMyfmNKb5OStJSOgE8cfp+pAl1DZg/Hq3dItYwXXfl3rEP47hmzbJk
-	 f1c/wQSkJ8TngKx7nzFGoF5qkiAbcVEJjcEJkvlrZE2ZWTIdG2owUBgJxzF3dBeWgY
-	 Dpt8RMym+LdoZmWVTiOu38jqN9hCOcjwhiRy/6pM=
+	b=VuJdGGihNBF9kKi9FMuUymRSQLyLwhGlXA6qOSKaPVx4wFfPcH4w59hUAr75Xuhny
+	 9cYjzB/IDO+WNqCUKQMth26mSaDOQn72Ss30nA+L339aj/9u6uwA8+dFrnot+L8Q/D
+	 7oHQj1Co2Uj8RSbRlQFyAtk18+pcx3POm3qoRT/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SongJingyi <u201912584@hust.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	ChunHao Lin <hau@realtek.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 130/173] ptp_qoriq: fix memory leak in probe()
-Date: Mon,  3 Apr 2023 16:09:05 +0200
-Message-Id: <20230403140418.668153087@linuxfoundation.org>
+Subject: [PATCH 5.10 131/173] r8169: fix RTL8168H and RTL8107E rx crc error
+Date: Mon,  3 Apr 2023 16:09:06 +0200
+Message-Id: <20230403140418.706912277@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -37,44 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: SongJingyi <u201912584@hust.edu.cn>
+From: ChunHao Lin <hau@realtek.com>
 
-[ Upstream commit f33642224e38d7e0d59336e10e7b4e370b1c4506 ]
+[ Upstream commit 33189f0a94b9639c058781fcf82e4ea3803b1682 ]
 
-Smatch complains that:
-drivers/ptp/ptp_qoriq.c ptp_qoriq_probe()
-warn: 'base' from ioremap() not released.
+When link speed is 10 Mbps and temperature is under -20°C, RTL8168H and
+RTL8107E may have rx crc error. Disable phy 10 Mbps pll off to fix this
+issue.
 
-Fix this by revising the parameter from 'ptp_qoriq->base' to 'base'.
-This is only a bug if ptp_qoriq_init() returns on the
-first -ENODEV error path.
-For other error paths ptp_qoriq->base and base are the same.
-And this change makes the code more readable.
-
-Fixes: 7f4399ba405b ("ptp_qoriq: fix NULL access if ptp dt node missing")
-Signed-off-by: SongJingyi <u201912584@hust.edu.cn>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230324031406.1895159-1-u201912584@hust.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6e1d0b898818 ("r8169:add support for RTL8168H and RTL8107E")
+Signed-off-by: ChunHao Lin <hau@realtek.com>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_qoriq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_phy_config.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ptp/ptp_qoriq.c b/drivers/ptp/ptp_qoriq.c
-index 08f4cf0ad9e3c..8fa9772acf79b 100644
---- a/drivers/ptp/ptp_qoriq.c
-+++ b/drivers/ptp/ptp_qoriq.c
-@@ -601,7 +601,7 @@ static int ptp_qoriq_probe(struct platform_device *dev)
- 	return 0;
+diff --git a/drivers/net/ethernet/realtek/r8169_phy_config.c b/drivers/net/ethernet/realtek/r8169_phy_config.c
+index 913d030d73eb4..e18a76f5049fd 100644
+--- a/drivers/net/ethernet/realtek/r8169_phy_config.c
++++ b/drivers/net/ethernet/realtek/r8169_phy_config.c
+@@ -970,6 +970,9 @@ static void rtl8168h_2_hw_phy_config(struct rtl8169_private *tp,
+ 	/* disable phy pfm mode */
+ 	phy_modify_paged(phydev, 0x0a44, 0x11, BIT(7), 0);
  
- no_clock:
--	iounmap(ptp_qoriq->base);
-+	iounmap(base);
- no_ioremap:
- 	release_resource(ptp_qoriq->rsrc);
- no_resource:
++	/* disable 10m pll off */
++	phy_modify_paged(phydev, 0x0a43, 0x10, BIT(0), 0);
++
+ 	rtl8168g_disable_aldps(phydev);
+ 	rtl8168g_config_eee_phy(phydev);
+ }
 -- 
 2.39.2
 
