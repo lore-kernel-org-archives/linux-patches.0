@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D546FAA
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AFAC433EF;
-	Mon,  3 Apr 2023 14:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F856FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7DFC4339B;
+	Mon,  3 Apr 2023 14:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532525;
-	bh=Eul+jJM0hZafSRZ8PPFq0JYcvfFF/gb8t13UzgFH/Cw=;
+	s=korg; t=1680532523;
+	bh=mMZl9Vi4nPwhVrUiv1pJsBG2yi9AgwwPmCWL0tI4Ka4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h1SPX/GuuLYUMtNJt8o1ZAJ1iYTXmruqjWwEJCH/+Eh40kJnh8LdW8No2H25rdte4
-	 /Km7CzkhQfRKDaeJNmZH8AyKFSboUYPf23qrc6chq8yyHcmwhOuG0HM05pqN5kBaO7
-	 iNSHBrKJOA45PcaQ8Zyp4+QDA9HoLeIAfd0/wm24=
+	b=EHP0Chm2q5xwX9ECU+BBRhhZb+z5MkY8GwN7QOhwZJ8+y7G7udzhGIaFSbvkgtE36
+	 fvsupKQXeYrwWgt9+Br0dOOcUPTeBEhf0oidNq7IE/CpccL318srvSH9G7Huq1HGEU
+	 uQ0gpI0dr8yoKV92MZdMeZMyUjmIZUJRvMUiXtE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
-	Joel Stanley <joel@jms.id.au>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Andy Chiu <andy.chiu@sifive.com>,
+	Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/181] ARM: dts: aspeed: p10bmc: Update battery node name
-Date: Mon,  3 Apr 2023 16:07:32 +0200
-Message-Id: <20230403140415.678694731@linuxfoundation.org>
+Subject: [PATCH 6.1 016/181] riscv: ftrace: Fixup panic by disabling preemption
+Date: Mon,  3 Apr 2023 16:07:31 +0200
+Message-Id: <20230403140415.648037204@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,51 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eddie James <eajames@linux.ibm.com>
+From: Andy Chiu <andy.chiu@sifive.com>
 
-[ Upstream commit a8cef541dd5ef9445130660008c029205c4c5aa5 ]
+[ Upstream commit 8547649981e6631328cd64f583667501ae385531 ]
 
-The ADC sensor for the battery needs to be named "iio-hwmon" for
-compatibility with user space applications.
+In RISCV, we must use an AUIPC + JALR pair to encode an immediate,
+forming a jump that jumps to an address over 4K. This may cause errors
+if we want to enable kernel preemption and remove dependency from
+patching code with stop_machine(). For example, if a task was switched
+out on auipc. And, if we changed the ftrace function before it was
+switched back, then it would jump to an address that has updated 11:0
+bits mixing with previous XLEN:12 part.
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230202152759.67069-1-eajames@linux.ibm.com
-Fixes: bf1914e2cfed ("ARM: dts: aspeed: p10bmc: Fix ADC iio-hwmon battery node name")
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Link: https://lore.kernel.org/r/20230221003352.1218797-1-joel@jms.id.au
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+p: patched area performed by dynamic ftrace
+ftrace_prologue:
+p|      REG_S   ra, -SZREG(sp)
+p|      auipc   ra, 0x? ------------> preempted
+					...
+				change ftrace function
+					...
+p|      jalr    -?(ra) <------------- switched back
+p|      REG_L   ra, -SZREG(sp)
+func:
+	xxx
+	ret
+
+Fixes: afc76b8b8011 ("riscv: Using PATCHABLE_FUNCTION_ENTRY instead of MCOUNT")
+Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Link: https://lore.kernel.org/r/20230112090603.1295340-2-guoren@kernel.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 2 +-
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-index fcc890e3ad735..f11feb98fde33 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-@@ -244,7 +244,7 @@
- 		};
- 	};
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index ae11d5647f9d4..06b9b2f60b9fb 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -278,7 +278,7 @@ config ARCH_RV64I
+ 	select HAVE_DYNAMIC_FTRACE_WITH_REGS if HAVE_DYNAMIC_FTRACE
+ 	select HAVE_FTRACE_MCOUNT_RECORD if !XIP_KERNEL
+ 	select HAVE_FUNCTION_GRAPH_TRACER
+-	select HAVE_FUNCTION_TRACER if !XIP_KERNEL
++	select HAVE_FUNCTION_TRACER if !XIP_KERNEL && !PREEMPTION
+ 	select SWIOTLB if MMU
  
--	iio-hwmon-battery {
-+	iio-hwmon {
- 		compatible = "iio-hwmon";
- 		io-channels = <&adc1 7>;
- 	};
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 4879da4cdbd25..77a3a27b04e26 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -220,7 +220,7 @@
- 		};
- 	};
- 
--	iio-hwmon-battery {
-+	iio-hwmon {
- 		compatible = "iio-hwmon";
- 		io-channels = <&adc1 7>;
- 	};
+ endchoice
 -- 
 2.39.2
 
