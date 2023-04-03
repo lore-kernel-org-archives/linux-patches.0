@@ -1,26 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B4E6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8472CC433D2;
-	Mon,  3 Apr 2023 14:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D916FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37C4C433EF;
+	Mon,  3 Apr 2023 14:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532000;
-	bh=NBPZGQ942ws4fxaQ3ieQb0lyvmMVEn7kAkRYh8pGsSk=;
+	s=korg; t=1680532003;
+	bh=n7TtcujSaA0jzwWoGjoSoT0wDjWYaBUPyji86BFmLJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jIz0BMm42MPH9+Rcal7GETAE+/LxL7DqGA5lVNL20IF3e5UFfAx2LfY6pO7zqIKET
-	 W9hZpdNSA7xm54rOfsdRvtsF5m73Uak1EaIeVkexFG0kUQ89P3eu5SbtQVlmQ2YVQt
-	 8w8XF9yR2NGlGq8bpOAbl/MrWqAZtY9U0D9uHN8s=
+	b=q0GDu3fxnGRo1rHS5GSA4lWMxEhn1PNWzPRY4mROj1Spx5EYbjAUbkxfEBp30EJ/X
+	 BroP3wdYbbUhrGrCiF3UqhCksrKJq5eWkgoNrDIQ6/pEixK+0xNl/29uhtsAr2YEmg
+	 q9bqygtkA6Hf+almOalFYnFcHQfJmN7MknOjtPko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Huckleberry <nhuck@google.com>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 5.10 081/173] fsverity: Remove WQ_UNBOUND from fsverity read workqueue
-Date: Mon,  3 Apr 2023 16:08:16 +0200
-Message-Id: <20230403140417.044912385@linuxfoundation.org>
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	intel-gfx@lists.freedesktop.org,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.10 090/173] drm/i915/active: Fix missing debug object activation
+Date: Mon,  3 Apr 2023 16:08:25 +0200
+Message-Id: <20230403140417.351683580@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -34,62 +41,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Huckleberry <nhuck@google.com>
+From: Nirmoy Das <nirmoy.das@intel.com>
 
-commit f959325e6ac3f499450088b8d9c626d1177be160 upstream.
+commit e92eb246feb9019b0b137706c934b8891cdfe3c2 upstream.
 
-WQ_UNBOUND causes significant scheduler latency on ARM64/Android.  This
-is problematic for latency sensitive workloads, like I/O
-post-processing.
+debug_active_activate() expected ref->count to be zero
+which is not true anymore as __i915_active_activate() calls
+debug_active_activate() after incrementing the count.
 
-Removing WQ_UNBOUND gives a 96% reduction in fsverity workqueue related
-scheduler latency and improves app cold startup times by ~30ms.
-WQ_UNBOUND was also removed from the dm-verity workqueue for the same
-reason [1].
+v2: No need to check for "ref->count == 1" as __i915_active_activate()
+already make sure of that(Janusz).
 
-This code was tested by running Android app startup benchmarks and
-measuring how long the fsverity workqueue spent in the runnable state.
-
-Before
-Total workqueue scheduler latency: 553800us
-After
-Total workqueue scheduler latency: 18962us
-
-[1]: https://lore.kernel.org/all/20230202012348.885402-1-nhuck@google.com/
-
-Signed-off-by: Nathan Huckleberry <nhuck@google.com>
-Fixes: 8a1d0f9cacc9 ("fs-verity: add data verification hooks for ->readpages()")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230310193325.620493-1-nhuck@google.com
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Fixes: 04240e30ed06 ("drm/i915: Skip taking acquire mutex for no ref->active callback")
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@intel.com>
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v5.10+
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230313114613.9874-1-nirmoy.das@intel.com
+(cherry picked from commit bfad380c542438a9b642f8190b7fd37bc77e2723)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/verity/verify.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/i915_active.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/verity/verify.c
-+++ b/fs/verity/verify.c
-@@ -279,15 +279,15 @@ EXPORT_SYMBOL_GPL(fsverity_enqueue_verif
- int __init fsverity_init_workqueue(void)
+--- a/drivers/gpu/drm/i915/i915_active.c
++++ b/drivers/gpu/drm/i915/i915_active.c
+@@ -96,8 +96,7 @@ static void debug_active_init(struct i91
+ static void debug_active_activate(struct i915_active *ref)
  {
- 	/*
--	 * Use an unbound workqueue to allow bios to be verified in parallel
--	 * even when they happen to complete on the same CPU.  This sacrifices
--	 * locality, but it's worthwhile since hashing is CPU-intensive.
-+	 * Use a high-priority workqueue to prioritize verification work, which
-+	 * blocks reads from completing, over regular application tasks.
- 	 *
--	 * Also use a high-priority workqueue to prioritize verification work,
--	 * which blocks reads from completing, over regular application tasks.
-+	 * For performance reasons, don't use an unbound workqueue.  Using an
-+	 * unbound workqueue for crypto operations causes excessive scheduler
-+	 * latency on ARM64.
- 	 */
- 	fsverity_read_workqueue = alloc_workqueue("fsverity_read_queue",
--						  WQ_UNBOUND | WQ_HIGHPRI,
-+						  WQ_HIGHPRI,
- 						  num_online_cpus());
- 	if (!fsverity_read_workqueue)
- 		return -ENOMEM;
+ 	lockdep_assert_held(&ref->tree_lock);
+-	if (!atomic_read(&ref->count)) /* before the first inc */
+-		debug_object_activate(ref, &active_debug_desc);
++	debug_object_activate(ref, &active_debug_desc);
+ }
+ 
+ static void debug_active_deactivate(struct i915_active *ref)
 
 
