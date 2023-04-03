@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DAE5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37C3C4339B;
-	Mon,  3 Apr 2023 14:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC165698
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46834C433EF;
+	Mon,  3 Apr 2023 14:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531523;
-	bh=pc7sVLMlxUUPLoMc579jDkeXM0xm02GMOsv3uokjTMA=;
+	s=korg; t=1680531525;
+	bh=7yTdyPEdt1T6TU/RdjcpX5ybfC60Dmwad/+yB0Qvgsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6XnaKKEDnz1SqOxJKuOV1obP/iuMbFlk2YYdMbfVxsmMjkXEL+lCbj9iq8o3J0Hu
-	 3r4T5tOoT1V7zyAAIABs7PeCGRAc/zrHY3k6PD2EjNdI5V3K3BTdqwFyOEfJpA8X67
-	 Z8QyKhcOCazOnh6GFUoWyIoCp2eNkmffAbtsAWlk=
+	b=VK7wbb1A0sEejQCCzc/JzUKilJ9D1ELgRmBsZF/52eXb/bms2n69XZtFrnJ/KmGvD
+	 /qMCAONi3dnvMw2EJaf6x30RzOywReXI9NuMDIGYnzdn8HjEZ0kPhmEQQgHarI7jVa
+	 b291qAwcWgyeqCiIsIDN4fUGL8q4VCze6O5iWI3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zheng Wang <zyytlz.wz@163.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 011/104] xirc2ps_cs: Fix use after free bug in xirc2ps_detach
-Date: Mon,  3 Apr 2023 16:08:03 +0200
-Message-Id: <20230403140404.590762419@linuxfoundation.org>
+Subject: [PATCH 5.4 012/104] net: qcom/emac: Fix use after free bug in emac_remove due to race condition
+Date: Mon,  3 Apr 2023 16:08:04 +0200
+Message-Id: <20230403140404.641902364@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -37,54 +37,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit e8d20c3ded59a092532513c9bd030d1ea66f5f44 ]
+[ Upstream commit 6b6bc5b8bd2d4ca9e1efa9ae0f98a0b0687ace75 ]
 
-In xirc2ps_probe, the local->tx_timeout_task was bounded
-with xirc2ps_tx_timeout_task. When timeout occurs,
-it will call xirc_tx_timeout->schedule_work to start the
-work.
+In emac_probe, &adpt->work_thread is bound with
+emac_work_thread. Then it will be started by timeout
+handler emac_tx_timeout or a IRQ handler emac_isr.
 
-When we call xirc2ps_detach to remove the driver, there
-may be a sequence as follows:
+If we remove the driver which will call emac_remove
+  to make cleanup, there may be a unfinished work.
 
-Stop responding to timeout tasks and complete scheduled
-tasks before cleanup in xirc2ps_detach, which will fix
-the problem.
+The possible sequence is as follows:
+
+Fix it by finishing the work before cleanup in the emac_remove
+and disable timeout response.
 
 CPU0                  CPU1
 
-                    |xirc2ps_tx_timeout_task
-xirc2ps_detach      |
-  free_netdev       |
-    kfree(dev);     |
-                    |
-                    | do_reset
-                    |   //use dev
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+                    |emac_work_thread
+emac_remove         |
+free_netdev         |
+kfree(netdev);      |
+                    |emac_reinit_locked
+                    |emac_mac_down
+                    |//use netdev
+Fixes: b9b17debc69d ("net: emac: emac gigabit ethernet controller driver")
 Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xircom/xirc2ps_cs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/qualcomm/emac/emac.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/xircom/xirc2ps_cs.c b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-index fd5288ff53b53..e3438cef5f9c6 100644
---- a/drivers/net/ethernet/xircom/xirc2ps_cs.c
-+++ b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-@@ -503,6 +503,11 @@ static void
- xirc2ps_detach(struct pcmcia_device *link)
- {
-     struct net_device *dev = link->priv;
-+    struct local_info *local = netdev_priv(dev);
+diff --git a/drivers/net/ethernet/qualcomm/emac/emac.c b/drivers/net/ethernet/qualcomm/emac/emac.c
+index 5c199d2516d47..5fe28dec60c1d 100644
+--- a/drivers/net/ethernet/qualcomm/emac/emac.c
++++ b/drivers/net/ethernet/qualcomm/emac/emac.c
+@@ -738,9 +738,15 @@ static int emac_remove(struct platform_device *pdev)
+ 	struct net_device *netdev = dev_get_drvdata(&pdev->dev);
+ 	struct emac_adapter *adpt = netdev_priv(netdev);
+ 
++	netif_carrier_off(netdev);
++	netif_tx_disable(netdev);
 +
-+    netif_carrier_off(dev);
-+    netif_tx_disable(dev);
-+    cancel_work_sync(&local->tx_timeout_task);
+ 	unregister_netdev(netdev);
+ 	netif_napi_del(&adpt->rx_q.napi);
  
-     dev_dbg(&link->dev, "detach\n");
++	free_irq(adpt->irq.irq, &adpt->irq);
++	cancel_work_sync(&adpt->work_thread);
++
+ 	emac_clks_teardown(adpt);
  
+ 	put_device(&adpt->phydev->mdio.dev);
 -- 
 2.39.2
 
