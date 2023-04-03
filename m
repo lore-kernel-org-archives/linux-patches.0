@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDE56FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CC4C433D2;
-	Mon,  3 Apr 2023 14:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EB06FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38FC0C433EF;
+	Mon,  3 Apr 2023 14:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532724;
-	bh=Xt076set2fXWBWhyvV31TnJjJ+gh4g293OObPxQNfUo=;
+	s=korg; t=1680532727;
+	bh=O61t+1YL3XxxO/y3OMHk0ny13zEfWQt8Tnh5ByxMsXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JbfJNfS3I0R6c5Cdxusc0Too7iXSAFFSLydPwotUXrmg5lHqzCUm+iwskYoxULnvW
-	 TPLz100Q9HQ9zC3yW+69yCs1ctLjx1oqCch/w6QZX7L1j169ieVQgBwePbJ+q6jMOA
-	 mrpWht7earIAYxXXzdxTqA+MbJzRuSyPQ+JvhaZ0=
+	b=lx4GKli50cApKw2a9Ithqn9vDLacAQBaNz//Rj4Apispqfc46qowvkhF6C0RXuIii
+	 Ct/mxcMLxkCybQb/CZpCORL5GdAXfAYc0FFGz6l5IKKFFXpAcwn7H7ynW/KBqL09WQ
+	 qWnLzZ959Ojo9sI6gF1MsILrmR79NXLTkVriwoN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChunHao Lin <hau@realtek.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/181] r8169: fix RTL8168H and RTL8107E rx crc error
-Date: Mon,  3 Apr 2023 16:08:48 +0200
-Message-Id: <20230403140418.136391559@linuxfoundation.org>
+Subject: [PATCH 6.1 094/181] regulator: Handle deferred clk
+Date: Mon,  3 Apr 2023 16:08:49 +0200
+Message-Id: <20230403140418.165019450@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,37 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ChunHao Lin <hau@realtek.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 33189f0a94b9639c058781fcf82e4ea3803b1682 ]
+[ Upstream commit 02bcba0b9f9da706d5bd1e8cbeb83493863e17b5 ]
 
-When link speed is 10 Mbps and temperature is under -20°C, RTL8168H and
-RTL8107E may have rx crc error. Disable phy 10 Mbps pll off to fix this
-issue.
+devm_clk_get() can return -EPROBE_DEFER. So it is better to return the
+error code from devm_clk_get(), instead of a hard coded -ENOENT.
 
-Fixes: 6e1d0b898818 ("r8169:add support for RTL8168H and RTL8107E")
-Signed-off-by: ChunHao Lin <hau@realtek.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This gives more opportunities to successfully probe the driver.
+
+Fixes: 8959e5324485 ("regulator: fixed: add possibility to enable by clock")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/18459fae3d017a66313699c7c8456b28158b2dd0.1679819354.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_phy_config.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/regulator/fixed.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_phy_config.c b/drivers/net/ethernet/realtek/r8169_phy_config.c
-index 930496cd34ed0..b50f16786c246 100644
---- a/drivers/net/ethernet/realtek/r8169_phy_config.c
-+++ b/drivers/net/ethernet/realtek/r8169_phy_config.c
-@@ -826,6 +826,9 @@ static void rtl8168h_2_hw_phy_config(struct rtl8169_private *tp,
- 	/* disable phy pfm mode */
- 	phy_modify_paged(phydev, 0x0a44, 0x11, BIT(7), 0);
- 
-+	/* disable 10m pll off */
-+	phy_modify_paged(phydev, 0x0a43, 0x10, BIT(0), 0);
-+
- 	rtl8168g_disable_aldps(phydev);
- 	rtl8168g_config_eee_phy(phydev);
- }
+diff --git a/drivers/regulator/fixed.c b/drivers/regulator/fixed.c
+index 2a9867abba20c..e6724a229d237 100644
+--- a/drivers/regulator/fixed.c
++++ b/drivers/regulator/fixed.c
+@@ -215,7 +215,7 @@ static int reg_fixed_voltage_probe(struct platform_device *pdev)
+ 		drvdata->enable_clock = devm_clk_get(dev, NULL);
+ 		if (IS_ERR(drvdata->enable_clock)) {
+ 			dev_err(dev, "Can't get enable-clock from devicetree\n");
+-			return -ENOENT;
++			return PTR_ERR(drvdata->enable_clock);
+ 		}
+ 	} else if (drvtype && drvtype->has_performance_state) {
+ 		drvdata->desc.ops = &fixed_voltage_domain_ops;
 -- 
 2.39.2
 
