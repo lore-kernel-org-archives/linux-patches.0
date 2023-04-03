@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966866FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B242C4339E;
-	Mon,  3 Apr 2023 14:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2FF6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BF4C433EF;
+	Mon,  3 Apr 2023 14:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532029;
-	bh=ht9xRiRLIBmrOvAPF67S0ozI0aoUjgVp3V3hLnSziiM=;
+	s=korg; t=1680532032;
+	bh=U1B9SCUwyo+l2TBmiKv0wwTMcpUYbNihOL0RsfXLvLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WNp4TTpJdSrdY4+Wkksyd+7G2q/omNIYEWux2TzIPJuCbuQ9mrnM3rl53+KMgQONq
-	 sIgzLS+6h2LPFLf8Rh5r4Dr4N0sE1YAonJfVq6eLiU9+4ZbsI0sZCuvVM1uAI1m0xD
-	 mOImSuR3MsTSHpy5eD+b9ksDjx30uIYu6QGObvyk=
+	b=JB7Z7/Tx3hB11++jQpk+kYvKZOYEwAEuP+e8q6nr5cA44wjrV76jCHxbU1NRQG0VB
+	 J27XcUFGdhsUS91LclhvrJ5uKj55CA7HJFhEIL1YUdF7sXYkWM2MllpRlYYy6lO+I+
+	 SyNFq1JQZYXEMTY4GjHAjVDVHWb3BB89UssHMn8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corinna Vinschen <vinschen@redhat.com>,
-	Lin Ma <linma@zju.edu.cn>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 5.10 082/173] igb: revert rtnl_lock() that causes deadlock
-Date: Mon,  3 Apr 2023 16:08:17 +0200
-Message-Id: <20230403140417.076234356@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Brian Foster <bfoster@redhat.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 5.10 100/173] xfs: shut down the filesystem if we screw up quota reservation
+Date: Mon,  3 Apr 2023 16:08:35 +0200
+Message-Id: <20230403140417.658551304@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -38,87 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-commit 65f69851e44d71248b952a687e44759a7abb5016 upstream.
+commit 2a4bdfa8558ca2904dc17b83497dc82aa7fc05e9 upstream.
 
-The commit 6faee3d4ee8b ("igb: Add lock to avoid data race") adds
-rtnl_lock to eliminate a false data race shown below
+If we ever screw up the quota reservations enough to trip the
+assertions, something's wrong with the quota code.  Shut down the
+filesystem when this happens, because this is corruption.
 
- (FREE from device detaching)      |   (USE from netdev core)
-igb_remove                         |  igb_ndo_get_vf_config
- igb_disable_sriov                 |  vf >= adapter->vfs_allocated_count?
-  kfree(adapter->vf_data)          |
-  adapter->vfs_allocated_count = 0 |
-                                   |    memcpy(... adapter->vf_data[vf]
-
-The above race will never happen and the extra rtnl_lock causes deadlock
-below
-
-[  141.420169]  <TASK>
-[  141.420672]  __schedule+0x2dd/0x840
-[  141.421427]  schedule+0x50/0xc0
-[  141.422041]  schedule_preempt_disabled+0x11/0x20
-[  141.422678]  __mutex_lock.isra.13+0x431/0x6b0
-[  141.423324]  unregister_netdev+0xe/0x20
-[  141.423578]  igbvf_remove+0x45/0xe0 [igbvf]
-[  141.423791]  pci_device_remove+0x36/0xb0
-[  141.423990]  device_release_driver_internal+0xc1/0x160
-[  141.424270]  pci_stop_bus_device+0x6d/0x90
-[  141.424507]  pci_stop_and_remove_bus_device+0xe/0x20
-[  141.424789]  pci_iov_remove_virtfn+0xba/0x120
-[  141.425452]  sriov_disable+0x2f/0xf0
-[  141.425679]  igb_disable_sriov+0x4e/0x100 [igb]
-[  141.426353]  igb_remove+0xa0/0x130 [igb]
-[  141.426599]  pci_device_remove+0x36/0xb0
-[  141.426796]  device_release_driver_internal+0xc1/0x160
-[  141.427060]  driver_detach+0x44/0x90
-[  141.427253]  bus_remove_driver+0x55/0xe0
-[  141.427477]  pci_unregister_driver+0x2a/0xa0
-[  141.428296]  __x64_sys_delete_module+0x141/0x2b0
-[  141.429126]  ? mntput_no_expire+0x4a/0x240
-[  141.429363]  ? syscall_trace_enter.isra.19+0x126/0x1a0
-[  141.429653]  do_syscall_64+0x5b/0x80
-[  141.429847]  ? exit_to_user_mode_prepare+0x14d/0x1c0
-[  141.430109]  ? syscall_exit_to_user_mode+0x12/0x30
-[  141.430849]  ? do_syscall_64+0x67/0x80
-[  141.431083]  ? syscall_exit_to_user_mode_prepare+0x183/0x1b0
-[  141.431770]  ? syscall_exit_to_user_mode+0x12/0x30
-[  141.432482]  ? do_syscall_64+0x67/0x80
-[  141.432714]  ? exc_page_fault+0x64/0x140
-[  141.432911]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-Since the igb_disable_sriov() will call pci_disable_sriov() before
-releasing any resources, the netdev core will synchronize the cleanup to
-avoid any races. This patch removes the useless rtnl_(un)lock to guarantee
-correctness.
-
-CC: stable@vger.kernel.org
-Fixes: 6faee3d4ee8b ("igb: Add lock to avoid data race")
-Reported-by: Corinna Vinschen <vinschen@redhat.com>
-Link: https://lore.kernel.org/intel-wired-lan/ZAcJvkEPqWeJHO2r@calimero.vinschen.de/
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Tested-by: Corinna Vinschen <vinschen@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c |    2 --
- 1 file changed, 2 deletions(-)
+ fs/xfs/xfs_trans_dquot.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -3821,9 +3821,7 @@ static void igb_remove(struct pci_dev *p
- 	igb_release_hw_control(adapter);
+--- a/fs/xfs/xfs_trans_dquot.c
++++ b/fs/xfs/xfs_trans_dquot.c
+@@ -16,6 +16,7 @@
+ #include "xfs_quota.h"
+ #include "xfs_qm.h"
+ #include "xfs_trace.h"
++#include "xfs_error.h"
  
- #ifdef CONFIG_PCI_IOV
--	rtnl_lock();
- 	igb_disable_sriov(pdev);
--	rtnl_unlock();
- #endif
+ STATIC void	xfs_trans_alloc_dqinfo(xfs_trans_t *);
  
- 	unregister_netdev(netdev);
+@@ -708,9 +709,11 @@ xfs_trans_dqresv(
+ 					    XFS_TRANS_DQ_RES_INOS,
+ 					    ninos);
+ 	}
+-	ASSERT(dqp->q_blk.reserved >= dqp->q_blk.count);
+-	ASSERT(dqp->q_rtb.reserved >= dqp->q_rtb.count);
+-	ASSERT(dqp->q_ino.reserved >= dqp->q_ino.count);
++
++	if (XFS_IS_CORRUPT(mp, dqp->q_blk.reserved < dqp->q_blk.count) ||
++	    XFS_IS_CORRUPT(mp, dqp->q_rtb.reserved < dqp->q_rtb.count) ||
++	    XFS_IS_CORRUPT(mp, dqp->q_ino.reserved < dqp->q_ino.count))
++		goto error_corrupt;
+ 
+ 	xfs_dqunlock(dqp);
+ 	return 0;
+@@ -720,6 +723,10 @@ error_return:
+ 	if (xfs_dquot_type(dqp) == XFS_DQTYPE_PROJ)
+ 		return -ENOSPC;
+ 	return -EDQUOT;
++error_corrupt:
++	xfs_dqunlock(dqp);
++	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
++	return -EFSCORRUPTED;
+ }
+ 
+ 
 
 
