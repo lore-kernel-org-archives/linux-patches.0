@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1245612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:21:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3283CC433D2;
-	Mon,  3 Apr 2023 14:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D52612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:21:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA70C433EF;
+	Mon,  3 Apr 2023 14:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531688;
-	bh=6VhpgjvJnis42Y1hg3Yd4OCu3JdcL2uLe+Izqj45V/w=;
+	s=korg; t=1680531691;
+	bh=Ip690Z0SnmHN1TPnQ5/zkyWqvlc2EW7ei+z1mAIBGFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B92bMgHvI8Ab3/Yv/OduKv+vTa9onJn8ybYmc+om4xWhzxPPrqR6W4enEup6fLMkN
-	 u24qjiaLygFXRZlO91h2onOjgSBGFwunN/AKZdGMhYO4f+FMp8BiQYGXIxJNktmaGQ
-	 lHWLJ4UoxPJQ417A4fAWg7gTIwEtIosBq0hyynLg=
+	b=u4VIHV8bTidigZv0zabVEnLw2R0UvaxT33oRnevCcTRAWc4A29mg+znO00iLCphuD
+	 eLmlpTF5CN7Syfff/5rq4Gnh+t/tFuLCGEL3oA8sRwuP9R9RpLOGt6SATw5lJAgLMT
+	 WGrAAzaGjC/7FKLAX1gdcZF2XdHPq/ssyqw65Z3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tomas Henzl <thenzl@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 074/104] mtd: rawnand: meson: invalidate cache on polling ECC bit
-Date: Mon,  3 Apr 2023 16:09:06 +0200
-Message-Id: <20230403140407.044476221@linuxfoundation.org>
+Subject: [PATCH 5.4 075/104] scsi: megaraid_sas: Fix crash after a double completion
+Date: Mon,  3 Apr 2023 16:09:07 +0200
+Message-Id: <20230403140407.074485853@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -36,66 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arseniy Krasnov <avkrasnov@sberdevices.ru>
+From: Tomas Henzl <thenzl@redhat.com>
 
-[ Upstream commit e732e39ed9929c05fd219035bc9653ba4100d4fa ]
+[ Upstream commit 2309df27111a51734cb9240b4d3c25f2f3c6ab06 ]
 
-'info_buf' memory is cached and driver polls ECC bit in it. This bit
-is set by the NAND controller. If 'usleep_range()' returns before device
-sets this bit, 'info_buf' will be cached and driver won't see update of
-this bit and will loop forever.
+When a physical disk is attached directly "without JBOD MAP support" (see
+megasas_get_tm_devhandle()) then there is no real error handling in the
+driver.  Return FAILED instead of SUCCESS.
 
-Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
-Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/d4ef0bd6-816e-f6fa-9385-f05f775f0ae2@sberdevices.ru
+Fixes: 18365b138508 ("megaraid_sas: Task management support")
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://lore.kernel.org/r/20230324150134.14696-1-thenzl@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/meson_nand.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/scsi/megaraid/megaraid_sas_fusion.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/meson_nand.c b/drivers/mtd/nand/raw/meson_nand.c
-index a65aadb54af68..240b493abb86f 100644
---- a/drivers/mtd/nand/raw/meson_nand.c
-+++ b/drivers/mtd/nand/raw/meson_nand.c
-@@ -172,6 +172,7 @@ struct meson_nfc {
+diff --git a/drivers/scsi/megaraid/megaraid_sas_fusion.c b/drivers/scsi/megaraid/megaraid_sas_fusion.c
+index 944273f60d224..890002688bd40 100644
+--- a/drivers/scsi/megaraid/megaraid_sas_fusion.c
++++ b/drivers/scsi/megaraid/megaraid_sas_fusion.c
+@@ -4659,7 +4659,7 @@ int megasas_task_abort_fusion(struct scsi_cmnd *scmd)
+ 	devhandle = megasas_get_tm_devhandle(scmd->device);
  
- 	dma_addr_t daddr;
- 	dma_addr_t iaddr;
-+	u32 info_bytes;
+ 	if (devhandle == (u16)ULONG_MAX) {
+-		ret = SUCCESS;
++		ret = FAILED;
+ 		sdev_printk(KERN_INFO, scmd->device,
+ 			"task abort issued for invalid devhandle\n");
+ 		mutex_unlock(&instance->reset_mutex);
+@@ -4729,7 +4729,7 @@ int megasas_reset_target_fusion(struct scsi_cmnd *scmd)
+ 	devhandle = megasas_get_tm_devhandle(scmd->device);
  
- 	unsigned long assigned_cs;
- };
-@@ -499,6 +500,7 @@ static int meson_nfc_dma_buffer_setup(struct nand_chip *nand, void *databuf,
- 					 nfc->daddr, datalen, dir);
- 			return ret;
- 		}
-+		nfc->info_bytes = infolen;
- 		cmd = GENCMDIADDRL(NFC_CMD_AIL, nfc->iaddr);
- 		writel(cmd, nfc->reg_base + NFC_REG_CMD);
- 
-@@ -516,8 +518,10 @@ static void meson_nfc_dma_buffer_release(struct nand_chip *nand,
- 	struct meson_nfc *nfc = nand_get_controller_data(nand);
- 
- 	dma_unmap_single(nfc->dev, nfc->daddr, datalen, dir);
--	if (infolen)
-+	if (infolen) {
- 		dma_unmap_single(nfc->dev, nfc->iaddr, infolen, dir);
-+		nfc->info_bytes = 0;
-+	}
- }
- 
- static int meson_nfc_read_buf(struct nand_chip *nand, u8 *buf, int len)
-@@ -706,6 +710,8 @@ static void meson_nfc_check_ecc_pages_valid(struct meson_nfc *nfc,
- 		usleep_range(10, 15);
- 		/* info is updated by nfc dma engine*/
- 		smp_rmb();
-+		dma_sync_single_for_cpu(nfc->dev, nfc->iaddr, nfc->info_bytes,
-+					DMA_FROM_DEVICE);
- 		ret = *info & ECC_COMPLETE;
- 	} while (!ret);
- }
+ 	if (devhandle == (u16)ULONG_MAX) {
+-		ret = SUCCESS;
++		ret = FAILED;
+ 		sdev_printk(KERN_INFO, scmd->device,
+ 			"target reset issued for invalid devhandle\n");
+ 		mutex_unlock(&instance->reset_mutex);
 -- 
 2.39.2
 
