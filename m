@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAD56FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A916C433D2;
-	Mon,  3 Apr 2023 14:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C066FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F168C433D2;
+	Mon,  3 Apr 2023 14:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533325;
-	bh=BoB3oMBtNg/fDAUW2AA+bqEXtcZhcifO8b6Ne+d8Bkk=;
+	s=korg; t=1680533328;
+	bh=2AC7GPNx/CQVbkxhE8DKBShGd2Ym1rSArirjGCjbPMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbWHjPUqCRhlgm812hZed1wagbFZFNsDBtOm+77/Z2xU4Cr4u/RiPOMRzrm2QFqMT
-	 UuolaUUwKrXsFAiM3p6dqMKzeSvTzsk/Ik84rySNKxqB1+Hn1JqawOW+x1j+v4YaKj
-	 HMpGJ6QUALfIbuOvN2RFr1mhnNgOcXxozqhZvHf8=
+	b=xcn4VdcA7cpvnGdesCSts4QYHfV5dxXw5F21k2j+Z7WGPxM8Ke1vEJUkTZSdIpS4G
+	 DZjHffmPo3WavnOM6D6XvBpJLV7KsZA/sB0TDJNJXZRyoIaPpnzE6E4rso7QtoJtws
+	 GEs0neCC4soAkC9IODzxNaEfcWr3ciuGe47wHBnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 140/187] io_uring/poll: clear single/double poll flags on poll arming
-Date: Mon,  3 Apr 2023 16:09:45 +0200
-Message-Id: <20230403140420.609619449@linuxfoundation.org>
+Subject: [PATCH 6.2 141/187] io_uring/rsrc: fix rogue rsrc node grabbing
+Date: Mon,  3 Apr 2023 16:09:46 +0200
+Message-Id: <20230403140420.646066045@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -34,38 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 005308f7bdacf5685ed1a431244a183dbbb9e0e8 upstream.
+commit 4ff0b50de8cabba055efe50bbcb7506c41a69835 upstream.
 
-Unless we have at least one entry queued, then don't call into
-io_poll_remove_entries(). Normally this isn't possible, but if we
-retry poll then we can have ->nr_entries cleared again as we're
-setting it up. If this happens for a poll retry, then we'll still have
-at least REQ_F_SINGLE_POLL set. io_poll_remove_entries() then thinks
-it has entries to remove.
+We should not be looking at ctx->rsrc_node and anyhow modifying the node
+without holding uring_lock, grabbing references in such a way is not
+safe either.
 
-Clear REQ_F_SINGLE_POLL and REQ_F_DOUBLE_POLL unconditionally when
-arming a poll request.
-
-Fixes: c16bda37594f ("io_uring/poll: allow some retries for poll triggering spuriously")
 Cc: stable@vger.kernel.org
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
+Fixes: 5106dd6e74ab6 ("io_uring: propagate issue_flags state down to file assignment")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/1202ede2d7bb90136e3482b2b84aad9ed483e5d6.1680098433.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/rsrc.h |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -724,6 +724,7 @@ int io_arm_poll_handler(struct io_kiocb
- 	apoll = io_req_alloc_apoll(req, issue_flags);
- 	if (!apoll)
- 		return IO_APOLL_ABORTED;
-+	req->flags &= ~(REQ_F_SINGLE_POLL | REQ_F_DOUBLE_POLL);
- 	req->flags |= REQ_F_POLLED;
- 	ipt.pt._qproc = io_async_queue_proc;
+--- a/io_uring/rsrc.h
++++ b/io_uring/rsrc.h
+@@ -144,15 +144,13 @@ static inline void io_req_set_rsrc_node(
+ 					unsigned int issue_flags)
+ {
+ 	if (!req->rsrc_node) {
+-		req->rsrc_node = ctx->rsrc_node;
++		io_ring_submit_lock(ctx, issue_flags);
+ 
+-		if (!(issue_flags & IO_URING_F_UNLOCKED)) {
+-			lockdep_assert_held(&ctx->uring_lock);
++		lockdep_assert_held(&ctx->uring_lock);
+ 
+-			io_charge_rsrc_node(ctx);
+-		} else {
+-			percpu_ref_get(&req->rsrc_node->refs);
+-		}
++		req->rsrc_node = ctx->rsrc_node;
++		io_charge_rsrc_node(ctx);
++		io_ring_submit_unlock(ctx, issue_flags);
+ 	}
+ }
  
 
 
