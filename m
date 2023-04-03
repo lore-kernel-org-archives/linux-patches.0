@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136AD6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C67AC433D2;
-	Mon,  3 Apr 2023 14:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED1F6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366A9C4339B;
+	Mon,  3 Apr 2023 14:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532091;
-	bh=iIimPAl3W7sA8efoe/qBB54Hy/DRWY0cczHHWIEH6Vk=;
+	s=korg; t=1680532094;
+	bh=kgrOCrY7zLaXwqT8YFulyREFHlVIFjbtep6vu7csO18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Pk2ict6ZSzrFJSKP6XNjwRRom0KEPF+G5+rsHHCPICTqP47SuytyHO3gBLnc9VBi
-	 TedBf2hldKeByGUy87KgmpEO5XxvryVe2oILgZbaeusv1eVAFz9q4y1gBN/fM1OUy4
-	 Q897+bSXjb4aXUnSv1s3D6pcriOOGaA9Y2J0mwnI=
+	b=J5WM2MXZbp1SGvKTEkv39JpTKz989ziUbz4wXso5kgwsfdTHFFPXUIq/AyYZFKAuH
+	 1v7xmE9QizLJ1HCi0thk63FxC1tQ3HmB3UyMY79H54sVGyXgQZoQesdHMvvnmLyJu7
+	 L8rN2zFSxzoIYL2C7DzSLwkFc4mOsUeTQuatn7dI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Gusev <aagusev@ispras.ru>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 124/173] tracing: Fix wrong return in kprobe_event_gen_test.c
-Date: Mon,  3 Apr 2023 16:08:59 +0200
-Message-Id: <20230403140418.472793987@linuxfoundation.org>
+Subject: [PATCH 5.10 125/173] ca8210: Fix unsigned mac_len comparison with zero in ca8210_skb_tx()
+Date: Mon,  3 Apr 2023 16:09:00 +0200
+Message-Id: <20230403140418.501589566@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,50 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anton Gusev <aagusev@ispras.ru>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit bc4f359b3b607daac0290d0038561237a86b38cb ]
+[ Upstream commit 748b2f5e82d17480404b3e2895388fc2925f7caf ]
 
-Overwriting the error code with the deletion result may cause the
-function to return 0 despite encountering an error. Commit b111545d26c0
-("tracing: Remove the useless value assignment in
-test_create_synth_event()") solves a similar issue by
-returning the original error code, so this patch does the same.
+mac_len is of type unsigned, which can never be less than zero.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+	mac_len = ieee802154_hdr_peek_addrs(skb, &header);
+	if (mac_len < 0)
+		return mac_len;
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230131075818.5322-1-aagusev@ispras.ru
+Change this to type int as ieee802154_hdr_peek_addrs() can return negative
+integers, this is found by static analysis with smatch.
 
-Signed-off-by: Anton Gusev <aagusev@ispras.ru>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 6c993779ea1d ("ca8210: fix mac_len negative array access")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230306191824.4115839-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/kprobe_event_gen_test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ieee802154/ca8210.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/trace/kprobe_event_gen_test.c b/kernel/trace/kprobe_event_gen_test.c
-index c736487fc0e48..e0c420eb0b2b4 100644
---- a/kernel/trace/kprobe_event_gen_test.c
-+++ b/kernel/trace/kprobe_event_gen_test.c
-@@ -146,7 +146,7 @@ static int __init test_gen_kprobe_cmd(void)
- 	if (trace_event_file_is_valid(gen_kprobe_test))
- 		gen_kprobe_test = NULL;
- 	/* We got an error after creating the event, delete it */
--	ret = kprobe_event_delete("gen_kprobe_test");
-+	kprobe_event_delete("gen_kprobe_test");
- 	goto out;
- }
+diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
+index 5beb447529f9e..1c5d70c60354b 100644
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -1945,10 +1945,9 @@ static int ca8210_skb_tx(
+ 	struct ca8210_priv  *priv
+ )
+ {
+-	int status;
+ 	struct ieee802154_hdr header = { };
+ 	struct secspec secspec;
+-	unsigned int mac_len;
++	int mac_len, status;
  
-@@ -211,7 +211,7 @@ static int __init test_gen_kretprobe_cmd(void)
- 	if (trace_event_file_is_valid(gen_kretprobe_test))
- 		gen_kretprobe_test = NULL;
- 	/* We got an error after creating the event, delete it */
--	ret = kprobe_event_delete("gen_kretprobe_test");
-+	kprobe_event_delete("gen_kretprobe_test");
- 	goto out;
- }
+ 	dev_dbg(&priv->spi->dev, "%s called\n", __func__);
  
 -- 
 2.39.2
