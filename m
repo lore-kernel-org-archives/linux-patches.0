@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95AC6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB80C4339B;
-	Mon,  3 Apr 2023 14:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAF06FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB45C433D2;
+	Mon,  3 Apr 2023 14:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533105;
-	bh=9v6fPcXoHqX2UYXzCOsQOtq2Xoz/bLwl3a0T8ElP0JA=;
+	s=korg; t=1680533108;
+	bh=jiBHGv/Qc37ebIMDLVhnDSbtaYWP9xZ76vBBWTmM94I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RPTZfL7P6dHCeW3kCMXGjyArc/G2/LhIN8hj/PRUr5Ah6FXpxfVNm56CH5uBXHeb6
-	 BWVxMGmz2mDo94lx1CtWsH9Cdqjnp4IyWbZWdP6hkxdjFxhZPDJzIXYkOx26XpT3oN
-	 uAWp3O5U2EQoMhY0CS6olvWXgV5EU2Zf53PLZTyg=
+	b=fSm79IEM3iZVVHuZVZq+gEtH7wP67vPLo9UEeU2eqW4GQIwS11kRvD3UbYP0ghCr1
+	 y98vo4N25LOB6vPd55ykf+Lt3INKMWxwI6StQFJzZV6a+11/xm6+3q5zsTwe/hmSpy
+	 DPplKZ0KuRTVbpn8csVRFLzP8RRs1WGPGPnzhfNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Irvin Cote <irvincoteg@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Antti Laakso <antti.laakso@intel.com>,
+	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 049/187] nvme-pci: fixing memory leak in probe teardown path
-Date: Mon,  3 Apr 2023 16:08:14 +0200
-Message-Id: <20230403140417.596536916@linuxfoundation.org>
+Subject: [PATCH 6.2 058/187] tools/power turbostat: fix decoding of HWP_STATUS
+Date: Mon,  3 Apr 2023 16:08:23 +0200
+Message-Id: <20230403140417.867335171@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,32 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Irvin Cote <irvincoteg@gmail.com>
+From: Antti Laakso <antti.laakso@intel.com>
 
-[ Upstream commit a61d265533b7fe0026a02a49916aa564ffe38e4c ]
+[ Upstream commit 92c25393586ac799b9b7d9e50434f3c44a7622c4 ]
 
-In case the nvme_probe teardown path is triggered the ctrl ref count does
-not reach 0 thus creating a memory leak upon failure of nvme_probe.
+The "excursion to minimum" information is in bit2
+in HWP_STATUS MSR. Fix the bitmask used for
+decoding the register.
 
-Signed-off-by: Irvin Cote <irvincoteg@gmail.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Antti Laakso <antti.laakso@intel.com>
+Reviewed-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/power/x86/turbostat/turbostat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 29c902b9aecbd..c51ebbee8103e 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3126,6 +3126,7 @@ static int nvme_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	nvme_dev_unmap(dev);
- out_uninit_ctrl:
- 	nvme_uninit_ctrl(&dev->ctrl);
-+	nvme_put_ctrl(&dev->ctrl);
- 	return result;
- }
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index c24054e3ef7ad..c61c6c704fbe6 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -4426,7 +4426,7 @@ int print_hwp(struct thread_data *t, struct core_data *c, struct pkg_data *p)
  
+ 	fprintf(outf, "cpu%d: MSR_HWP_STATUS: 0x%08llx "
+ 		"(%sGuaranteed_Perf_Change, %sExcursion_Min)\n",
+-		cpu, msr, ((msr) & 0x1) ? "" : "No-", ((msr) & 0x2) ? "" : "No-");
++		cpu, msr, ((msr) & 0x1) ? "" : "No-", ((msr) & 0x4) ? "" : "No-");
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
