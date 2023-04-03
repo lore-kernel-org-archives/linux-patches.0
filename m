@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830055698
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:15:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0616DC433D2;
-	Mon,  3 Apr 2023 14:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC09D5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:14:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73117C433EF;
+	Mon,  3 Apr 2023 14:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531302;
-	bh=pc7sVLMlxUUPLoMc579jDkeXM0xm02GMOsv3uokjTMA=;
+	s=korg; t=1680531299;
+	bh=5/2/f7vdjW7G2QSK/N5uqSEGsX7vs6bAfBeQIAfa11g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uyApnEQFKil16U/el+5bSQzS29l0TiT4lowyQeWpib3LWbq71FrChZUUHg2Nvk6jP
-	 pufxZnDB0rOiBGSy+NOQv52yf2O9EPPMxSZgZsq/5K6vG4N9fmP1hOe6haaAhy/qZa
-	 jemaulCI+CvIeBDz2m+oY7bZ/l1AuhXAIcqJ2mPQ=
+	b=kc9cx1z+e7GmZPMSUnNt/iOUe5PvzsEchG4hwOpvymojGLopwo9JL9xMTuF7hi5PC
+	 gMQBiDj53hCrW2ika3t4PmCe4/GrVYUlRnK96EeAQ1YAOwi8rx46Y5PR7NuNXfqYdm
+	 cLeLh0JtHJvR3l7qSIs6JCC/13FgOpoOd+ZaFyBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 12/84] xirc2ps_cs: Fix use after free bug in xirc2ps_detach
-Date: Mon,  3 Apr 2023 16:08:13 +0200
-Message-Id: <20230403140353.805958014@linuxfoundation.org>
+Subject: [PATCH 4.19 11/84] qed/qed_sriov: guard against NULL derefs from qed_iov_get_vf_info
+Date: Mon,  3 Apr 2023 16:08:12 +0200
+Message-Id: <20230403140353.777639690@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,56 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit e8d20c3ded59a092532513c9bd030d1ea66f5f44 ]
+[ Upstream commit 25143b6a01d0cc5319edd3de22ffa2578b045550 ]
 
-In xirc2ps_probe, the local->tx_timeout_task was bounded
-with xirc2ps_tx_timeout_task. When timeout occurs,
-it will call xirc_tx_timeout->schedule_work to start the
-work.
+We have to make sure that the info returned by the helper is valid
+before using it.
 
-When we call xirc2ps_detach to remove the driver, there
-may be a sequence as follows:
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
 
-Stop responding to timeout tasks and complete scheduled
-tasks before cleanup in xirc2ps_detach, which will fix
-the problem.
-
-CPU0                  CPU1
-
-                    |xirc2ps_tx_timeout_task
-xirc2ps_detach      |
-  free_netdev       |
-    kfree(dev);     |
-                    |
-                    | do_reset
-                    |   //use dev
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Fixes: f990c82c385b ("qed*: Add support for ndo_set_vf_trust")
+Fixes: 733def6a04bf ("qed*: IOV link control")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xircom/xirc2ps_cs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/qlogic/qed/qed_sriov.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/xircom/xirc2ps_cs.c b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-index fd5288ff53b53..e3438cef5f9c6 100644
---- a/drivers/net/ethernet/xircom/xirc2ps_cs.c
-+++ b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-@@ -503,6 +503,11 @@ static void
- xirc2ps_detach(struct pcmcia_device *link)
- {
-     struct net_device *dev = link->priv;
-+    struct local_info *local = netdev_priv(dev);
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_sriov.c b/drivers/net/ethernet/qlogic/qed/qed_sriov.c
+index 402c1c3d84ce2..5c8eaded6b30d 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_sriov.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_sriov.c
+@@ -4403,6 +4403,9 @@ qed_iov_configure_min_tx_rate(struct qed_dev *cdev, int vfid, u32 rate)
+ 	}
+ 
+ 	vf = qed_iov_get_vf_info(QED_LEADING_HWFN(cdev), (u16)vfid, true);
++	if (!vf)
++		return -EINVAL;
 +
-+    netif_carrier_off(dev);
-+    netif_tx_disable(dev);
-+    cancel_work_sync(&local->tx_timeout_task);
+ 	vport_id = vf->vport_id;
  
-     dev_dbg(&link->dev, "detach\n");
+ 	return qed_configure_vport_wfq(cdev, vport_id, rate);
+@@ -5142,7 +5145,7 @@ static void qed_iov_handle_trust_change(struct qed_hwfn *hwfn)
  
+ 		/* Validate that the VF has a configured vport */
+ 		vf = qed_iov_get_vf_info(hwfn, i, true);
+-		if (!vf->vport_instance)
++		if (!vf || !vf->vport_instance)
+ 			continue;
+ 
+ 		memset(&params, 0, sizeof(params));
 -- 
 2.39.2
 
