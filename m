@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0056E6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77376C433D2;
-	Mon,  3 Apr 2023 14:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2086FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15730C4339B;
+	Mon,  3 Apr 2023 14:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533189;
-	bh=UMk1yWcwvsggJJjnaJ9yTLb2WQw1KXCFuCFy3Q+rgHE=;
+	s=korg; t=1680533192;
+	bh=Ks/vrInK+T10ZMd95fnDkU1UIouez3jI1LEu6oF2Mog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O16ATLFyfIMw7c+EyTL6enJ4jOwImHQq7HxRKxfR/7THplyDW8GvRibyfgwhWkaLb
-	 ZtmuM5DH8rgyVazX4mdVwfY1ZpeqdNufkcrmVyk9j1vzZ4CjeqB5MPMLvqy3YE1Z2u
-	 LudPJoQ1e6PMZ2DZELhJebdxcCkklavMYg3MbkA0=
+	b=X/dNz4lm2dxOUJix3yF836qVlvaEIju1MEPqVGmsdYY30U5iFBV+OGrNJDP2xofv1
+	 B/fJhZPyqZNyyOZ6dgzVLU532Y0md8JxYZHtotKiW88hV4RjHuj7G6QjVR5H1me3Or
+	 F9lafsuQ9AALLGozqVwPnHibzMYor9Yk4oZBzovE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prarit Bhargava <prarit@redhat.com>,
-	linux-pm@vger.kernel.org,
-	Len Brown <len.brown@intel.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 057/187] tools/power turbostat: Fix /dev/cpu_dma_latency warnings
-Date: Mon,  3 Apr 2023 16:08:22 +0200
-Message-Id: <20230403140417.838998267@linuxfoundation.org>
+Subject: [PATCH 6.2 048/187] sched_getaffinity: dont assume cpumask_size() is fully initialized
+Date: Mon,  3 Apr 2023 16:08:13 +0200
+Message-Id: <20230403140417.558102543@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,56 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prarit Bhargava <prarit@redhat.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 40aafc7d58d3544f152a863a0e9863014b6d5d8c ]
+[ Upstream commit 6015b1aca1a233379625385feb01dd014aca60b5 ]
 
-When running as non-root the following error is seen in turbostat:
+The getaffinity() system call uses 'cpumask_size()' to decide how big
+the CPU mask is - so far so good.  It is indeed the allocation size of a
+cpumask.
 
-turbostat: fopen /dev/cpu_dma_latency
-: Permission denied
+But the code also assumes that the whole allocation is initialized
+without actually doing so itself.  That's wrong, because we might have
+fixed-size allocations (making copying and clearing more efficient), but
+not all of it is then necessarily used if 'nr_cpu_ids' is smaller.
 
-turbostat and the man page have information on how to avoid other
-permission errors, so these can be fixed the same way.
+Having checked other users of 'cpumask_size()', they all seem to be ok,
+either using it purely for the allocation size, or explicitly zeroing
+the cpumask before using the size in bytes to copy it.
 
-Provide better /dev/cpu_dma_latency warnings that provide instructions on
-how to avoid the error, and update the man page.
+See for example the ublk_ctrl_get_queue_affinity() function that uses
+the proper 'zalloc_cpumask_var()' to make sure that the whole mask is
+cleared, whether the storage is on the stack or if it was an external
+allocation.
 
-Signed-off-by: Prarit Bhargava <prarit@redhat.com>
-Cc: linux-pm@vger.kernel.org
-Signed-off-by: Len Brown <len.brown@intel.com>
+Fix this by just zeroing the allocation before using it.  Do the same
+for the compat version of sched_getaffinity(), which had the same logic.
+
+Also, for consistency, make sched_getaffinity() use 'cpumask_bits()' to
+access the bits.  For a cpumask_var_t, it ends up being a pointer to the
+same data either way, but it's just a good idea to treat it like you
+would a 'cpumask_t'.  The compat case already did that.
+
+Reported-by: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://lore.kernel.org/lkml/7d026744-6bd6-6827-0471-b5e8eae0be3f@arm.com/
+Cc: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.8 | 2 ++
- tools/power/x86/turbostat/turbostat.c | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ kernel/compat.c     | 2 +-
+ kernel/sched/core.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.8 b/tools/power/x86/turbostat/turbostat.8
-index c7b26a3603afe..3e1a4c4be001a 100644
---- a/tools/power/x86/turbostat/turbostat.8
-+++ b/tools/power/x86/turbostat/turbostat.8
-@@ -344,6 +344,8 @@ Alternatively, non-root users can be enabled to run turbostat this way:
+diff --git a/kernel/compat.c b/kernel/compat.c
+index 55551989d9da5..fb50f29d9b361 100644
+--- a/kernel/compat.c
++++ b/kernel/compat.c
+@@ -152,7 +152,7 @@ COMPAT_SYSCALL_DEFINE3(sched_getaffinity, compat_pid_t,  pid, unsigned int, len,
+ 	if (len & (sizeof(compat_ulong_t)-1))
+ 		return -EINVAL;
  
- # chmod +r /dev/cpu/*/msr
+-	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
+ 		return -ENOMEM;
  
-+# chmod +r /dev/cpu_dma_latency
-+
- .B "turbostat "
- reads hardware counters, but doesn't write them.
- So it will not interfere with the OS or other programs, including
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index aba460410dbd1..c24054e3ef7ad 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -5482,7 +5482,7 @@ void print_dev_latency(void)
+ 	ret = sched_getaffinity(pid, mask);
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 9a0698353d60f..57d84b534cdea 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -8404,14 +8404,14 @@ SYSCALL_DEFINE3(sched_getaffinity, pid_t, pid, unsigned int, len,
+ 	if (len & (sizeof(unsigned long)-1))
+ 		return -EINVAL;
  
- 	retval = read(fd, (void *)&value, sizeof(int));
- 	if (retval != sizeof(int)) {
--		warn("read %s\n", path);
-+		warn("read failed %s\n", path);
- 		close(fd);
- 		return;
- 	}
+-	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
+ 		return -ENOMEM;
+ 
+ 	ret = sched_getaffinity(pid, mask);
+ 	if (ret == 0) {
+ 		unsigned int retlen = min(len, cpumask_size());
+ 
+-		if (copy_to_user(user_mask_ptr, mask, retlen))
++		if (copy_to_user(user_mask_ptr, cpumask_bits(mask), retlen))
+ 			ret = -EFAULT;
+ 		else
+ 			ret = retlen;
 -- 
 2.39.2
 
