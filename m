@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101E55683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEB9C433EF;
-	Mon,  3 Apr 2023 14:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8EEB5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFABC433EF;
+	Mon,  3 Apr 2023 14:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531118;
-	bh=doUINzl8CjaZfid4C522zUPd5p8Wyavp513+b6Q7ulY=;
+	s=korg; t=1680531121;
+	bh=u8ZrTZQM2AJ6iKQXhVIxLpGjMM9TJWzOm3JEepdBDdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=il5+Jc5d8XqwL547qAM55R2OgNSSS6H+uAPVLmJMqTRGKPwJkJGhbNL8kOg+Qt4GZ
-	 JsKoPLGrWKrJU4INyXrrDzcxMosqzcWfYNxvjc+8L2nNVr0gmVLwnAtn6pbKug8sOR
-	 nBHb4hVPVGNcVLj6dRnuilireHprT3iojpFr9VVQ=
+	b=Q1qJ0m0SAcUszNfGAZPbRVh19lbXRPuo/Ndw2wtHlN/6SvXcbIANTPWmH4zpcTdzw
+	 Y9iCxNwzrDTL8R+573BwMdQc9BU3XbYBoW0RPmh7sU9UAYl0mGq2PAwHZGZEDHhf9H
+	 bduN0nGLuANORbtU7Cgm8pbr4bmNVEXnkWC7W++U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrien Thierry <athierry@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 27/66] scsi: ufs: core: Add soft dependency on governor_simpleondemand
-Date: Mon,  3 Apr 2023 16:08:35 +0200
-Message-Id: <20230403140352.880817701@linuxfoundation.org>
+Subject: [PATCH 4.14 10/66] net: qcom/emac: Fix use after free bug in emac_remove due to race condition
+Date: Mon,  3 Apr 2023 16:08:18 +0200
+Message-Id: <20230403140352.178677353@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -35,34 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrien Thierry <athierry@redhat.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 2ebe16155dc8bd4e602cad5b5f65458d2eaa1a75 ]
+[ Upstream commit 6b6bc5b8bd2d4ca9e1efa9ae0f98a0b0687ace75 ]
 
-The ufshcd driver uses simpleondemand governor for devfreq. Add it to the
-list of ufshcd softdeps to allow userspace initramfs tools like dracut to
-automatically pull the governor module into the initramfs together with UFS
-drivers.
+In emac_probe, &adpt->work_thread is bound with
+emac_work_thread. Then it will be started by timeout
+handler emac_tx_timeout or a IRQ handler emac_isr.
 
-Link: https://lore.kernel.org/r/20230220140740.14379-1-athierry@redhat.com
-Signed-off-by: Adrien Thierry <athierry@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+If we remove the driver which will call emac_remove
+  to make cleanup, there may be a unfinished work.
+
+The possible sequence is as follows:
+
+Fix it by finishing the work before cleanup in the emac_remove
+and disable timeout response.
+
+CPU0                  CPU1
+
+                    |emac_work_thread
+emac_remove         |
+free_netdev         |
+kfree(netdev);      |
+                    |emac_reinit_locked
+                    |emac_mac_down
+                    |//use netdev
+Fixes: b9b17debc69d ("net: emac: emac gigabit ethernet controller driver")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufshcd.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/qualcomm/emac/emac.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index 694c0fc31fbf7..fe7db66ab1f3e 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -8087,5 +8087,6 @@ EXPORT_SYMBOL_GPL(ufshcd_init);
- MODULE_AUTHOR("Santosh Yaragnavi <santosh.sy@samsung.com>");
- MODULE_AUTHOR("Vinayak Holikatti <h.vinayak@samsung.com>");
- MODULE_DESCRIPTION("Generic UFS host controller driver Core");
-+MODULE_SOFTDEP("pre: governor_simpleondemand");
- MODULE_LICENSE("GPL");
- MODULE_VERSION(UFSHCD_DRIVER_VERSION);
+diff --git a/drivers/net/ethernet/qualcomm/emac/emac.c b/drivers/net/ethernet/qualcomm/emac/emac.c
+index cae570f1d7e12..527c4dd250833 100644
+--- a/drivers/net/ethernet/qualcomm/emac/emac.c
++++ b/drivers/net/ethernet/qualcomm/emac/emac.c
+@@ -758,9 +758,15 @@ static int emac_remove(struct platform_device *pdev)
+ 	struct net_device *netdev = dev_get_drvdata(&pdev->dev);
+ 	struct emac_adapter *adpt = netdev_priv(netdev);
+ 
++	netif_carrier_off(netdev);
++	netif_tx_disable(netdev);
++
+ 	unregister_netdev(netdev);
+ 	netif_napi_del(&adpt->rx_q.napi);
+ 
++	free_irq(adpt->irq.irq, &adpt->irq);
++	cancel_work_sync(&adpt->work_thread);
++
+ 	emac_clks_teardown(adpt);
+ 
+ 	put_device(&adpt->phydev->mdio.dev);
 -- 
 2.39.2
 
