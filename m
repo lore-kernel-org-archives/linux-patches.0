@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C21F5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:16:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2477C433EF;
-	Mon,  3 Apr 2023 14:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262A15683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:16:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C7EC433D2;
+	Mon,  3 Apr 2023 14:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531410;
-	bh=NxzOtRQu6KigYzzhwtqdp249Roma4xVFBm/yW7xDUEc=;
+	s=korg; t=1680531413;
+	bh=elbZTfnoO9XGtb/v16KA9+EzqGYnj10HocvDxBVSs5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iz4Jyic+G5NbhCEt8qPfSQjTuWHZL6LgITnXikXzdQQ4fvVVERosVBaHEVVaWTOPO
-	 Cd0lJyW634lHSVibbLc+WY9xOkPgmJFCF/g/4RFGg6YNJulLZf9tc3VFKPcsk20R7s
-	 qtjU64L6kcBJ42L3a7NZxeP1U5LlAHiR6Y2SkyMs=
+	b=Uk5o+q+gc3m9MXEfkEuN7iQDqEcGka64Dx+fUXHIfsuIuERTHPbvfHsBpJpGTnHHa
+	 d3a7G4SKrvgCY2b/e2+XU7S9BqTXgi+VHs5ugHJqK3BdvBf57W6t/PZA9I2M0waSf3
+	 Q4dZNRvQeV7WKqCXewK9CPGmkWttQGMXlZR8/TfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	NeilBrown <neilb@suse.de>,
-	Song Liu <song@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 52/84] md: avoid signed overflow in slot_store()
-Date: Mon,  3 Apr 2023 16:08:53 +0200
-Message-Id: <20230403140355.203256694@linuxfoundation.org>
+Subject: [PATCH 4.19 53/84] ALSA: asihpi: check pao in control_message()
+Date: Mon,  3 Apr 2023 16:08:54 +0200
+Message-Id: <20230403140355.240909283@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -36,42 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neilb@suse.de>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 3bc57292278a0b6ac4656cad94c14f2453344b57 ]
+[ Upstream commit 9026c0bf233db53b86f74f4c620715e94eb32a09 ]
 
-slot_store() uses kstrtouint() to get a slot number, but stores the
-result in an "int" variable (by casting a pointer).
-This can result in a negative slot number if the unsigned int value is
-very large.
+control_message() might be called with pao = NULL.
+Here indicates control_message() as sample.
 
-A negative number means that the slot is empty, but setting a negative
-slot number this way will not remove the device from the array.  I don't
-think this is a serious problem, but it could cause confusion and it is
-best to fix it.
+(B)	static void control_message(struct hpi_adapter_obj *pao, ...)
+	{                                                   ^^^
+		struct hpi_hw_obj *phw = pao->priv;
+		...                      ^^^
+	}
 
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Song Liu <song@kernel.org>
+(A)	void _HPI_6205(struct hpi_adapter_obj *pao, ...)
+	{                                      ^^^
+		...
+		case HPI_OBJ_CONTROL:
+(B)			control_message(pao, phm, phr);
+			break;          ^^^
+		...
+	}
+
+	void HPI_6205(...)
+	{
+		...
+(A)		_HPI_6205(NULL, phm, phr);
+		...       ^^^^
+	}
+
+Therefore, We will get too many warning via cppcheck, like below
+
+	sound/pci/asihpi/hpi6205.c:238:27: warning: Possible null pointer dereference: pao [nullPointer]
+		 struct hpi_hw_obj *phw = pao->priv;
+		                          ^
+	sound/pci/asihpi/hpi6205.c:433:13: note: Calling function '_HPI_6205', 1st argument 'NULL' value is 0
+		  _HPI_6205(NULL, phm, phr);
+		            ^
+	sound/pci/asihpi/hpi6205.c:401:20: note: Calling function 'control_message', 1st argument 'pao' value is 0
+	   control_message(pao, phm, phr);
+	                   ^
+Set phr->error like many functions doing, and don't call _HPI_6205()
+with NULL.
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87ttypeaqz.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/asihpi/hpi6205.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 89d4dcc5253e5..f8c111b369928 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -2991,6 +2991,9 @@ slot_store(struct md_rdev *rdev, const char *buf, size_t len)
- 		err = kstrtouint(buf, 10, (unsigned int *)&slot);
- 		if (err < 0)
- 			return err;
-+		if (slot < 0)
-+			/* overflow */
-+			return -ENOSPC;
+diff --git a/sound/pci/asihpi/hpi6205.c b/sound/pci/asihpi/hpi6205.c
+index 2864698436a5f..6a49f897c4d91 100644
+--- a/sound/pci/asihpi/hpi6205.c
++++ b/sound/pci/asihpi/hpi6205.c
+@@ -441,7 +441,7 @@ void HPI_6205(struct hpi_message *phm, struct hpi_response *phr)
+ 		pao = hpi_find_adapter(phm->adapter_index);
+ 	} else {
+ 		/* subsys messages don't address an adapter */
+-		_HPI_6205(NULL, phm, phr);
++		phr->error = HPI_ERROR_INVALID_OBJ_INDEX;
+ 		return;
  	}
- 	if (rdev->mddev->pers && slot == -1) {
- 		/* Setting 'slot' on an active array requires also
+ 
 -- 
 2.39.2
 
