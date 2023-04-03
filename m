@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD68F5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C27C433EF;
-	Mon,  3 Apr 2023 14:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802865683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07106C4339B;
+	Mon,  3 Apr 2023 14:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531433;
-	bh=PfydbKzpZCsxVnfkbWETdgAMfBJsJKvG7N8IhN7kgBE=;
+	s=korg; t=1680531436;
+	bh=vwyP+btEt/+dbkYLeGagCBJ++IwAxrGwe1QLKWvlyYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WdxpZOFX2PNS+MnWngcsrD929RFThcgfnPAlj/QNIlpG++R5gFxp0OC4qOOcPAOLq
-	 dhEM/fFkz/4+439/NkpRD656PbdYv8uz1Eeq/+vRtxW7JGQX1j+M1YIeyJWI+i6UNO
-	 VrTslfsuGjSCuM19Yv0ri4hsJHdXzWB6r+8q0et4=
+	b=d7oTECuQcZHG7qng9GGWaDp/+XQY0bnjwqxSXI1JpY18s+y6KXNJDs9YIPv+Jo9wg
+	 BzPGUjBFh2OxgfnMT8iW4DS4J6JZs7VqffP03O2awXtQ0PS4MDb7xHRwwvT56YtRwH
+	 KQDXR/KCMlLdkD5xE74+DULtHpxZ67xUEEBfL2GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 60/84] fbdev: au1200fb: Fix potential divide by zero
-Date: Mon,  3 Apr 2023 16:09:01 +0200
-Message-Id: <20230403140355.499556340@linuxfoundation.org>
+Subject: [PATCH 4.19 61/84] ca8210: Fix unsigned mac_len comparison with zero in ca8210_skb_tx()
+Date: Mon,  3 Apr 2023 16:09:02 +0200
+Message-Id: <20230403140355.538863288@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,37 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 44a3b36b42acfc433aaaf526191dd12fbb919fdb ]
+[ Upstream commit 748b2f5e82d17480404b3e2895388fc2925f7caf ]
 
-var->pixclock can be assigned to zero by user. Without
-proper check, divide by zero would occur when invoking
-macro PICOS2KHZ in au1200fb_fb_check_var.
+mac_len is of type unsigned, which can never be less than zero.
 
-Error out if var->pixclock is zero.
+	mac_len = ieee802154_hdr_peek_addrs(skb, &header);
+	if (mac_len < 0)
+		return mac_len;
 
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Change this to type int as ieee802154_hdr_peek_addrs() can return negative
+integers, this is found by static analysis with smatch.
+
+Fixes: 6c993779ea1d ("ca8210: fix mac_len negative array access")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230306191824.4115839-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/au1200fb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ieee802154/ca8210.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/au1200fb.c b/drivers/video/fbdev/au1200fb.c
-index 3872ccef4cb2c..f8e83a9519189 100644
---- a/drivers/video/fbdev/au1200fb.c
-+++ b/drivers/video/fbdev/au1200fb.c
-@@ -1039,6 +1039,9 @@ static int au1200fb_fb_check_var(struct fb_var_screeninfo *var,
- 	u32 pixclock;
- 	int screen_size, plane;
+diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
+index 2d4471b77fa7c..f75faec23cc98 100644
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -1943,10 +1943,9 @@ static int ca8210_skb_tx(
+ 	struct ca8210_priv  *priv
+ )
+ {
+-	int status;
+ 	struct ieee802154_hdr header = { };
+ 	struct secspec secspec;
+-	unsigned int mac_len;
++	int mac_len, status;
  
-+	if (!var->pixclock)
-+		return -EINVAL;
-+
- 	plane = fbdev->plane;
+ 	dev_dbg(&priv->spi->dev, "%s called\n", __func__);
  
- 	/* Make sure that the mode respect all LCD controller and
 -- 
 2.39.2
 
