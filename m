@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A4A5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2D2C433D2;
-	Mon,  3 Apr 2023 14:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2175683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D7EC433A1;
+	Mon,  3 Apr 2023 14:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531132;
-	bh=racrdeC06ukuu1fSvkjbs9AJFAptKDnohO4OTEYO99I=;
+	s=korg; t=1680531134;
+	bh=zZdJyEvK+hiEWV4P9OFpE2bzPXVb5+iDl/clnPfbL1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pecY4c8LndIi+BmtQ2yKwDguIrey+seDKRQyi74NMYR05SAZ3poXtxf+Uxlud2qk1
-	 E2YHtYYbskENQcJyG2HWEPDF45i1+jWXRt9yWjTD3S514zG4biJqdh3b5LnimSPgbH
-	 5cWb1x4yzPLYi2s66S277YRV2R2/M/B+9kcDixyQ=
+	b=MiPLIvMZSDu0kRkEgOQc+uNyq2UxHuSERHVX4VZ162osj2rVI0yNNZca/bHFBI57S
+	 QgQ4ywbvMYv1QcLwr94Ch8FRfB6SeAJwEfjR0S7Tl5w//afsn4NMtNU9bpKDAwE6EJ
+	 JRM7iMiwEsOoQ+mLojh3srHiBZ4xZB2PymgrX8cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Selvaraj <joelselvaraj.oss@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.14 31/66] scsi: core: Add BLIST_SKIP_VPD_PAGES for SKhynix H28U74301AMR
-Date: Mon,  3 Apr 2023 16:08:39 +0200
-Message-Id: <20230403140353.004220736@linuxfoundation.org>
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Ruslan Bilovol <ruslan.bilovol@gmail.com>,
+	John Keeping <john@metanate.com>
+Subject: [PATCH 4.14 32/66] usb: gadget: u_audio: dont let userspace block driver unbind
+Date: Mon,  3 Apr 2023 16:08:40 +0200
+Message-Id: <20230403140353.034468737@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -34,37 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+From: Alvin Šipraga <alsi@bang-olufsen.dk>
 
-commit a204b490595de71016b2360a1886ec8c12d0afac upstream.
+commit 6c67ed9ad9b83e453e808f9b31a931a20a25629b upstream.
 
-Xiaomi Poco F1 (qcom/sdm845-xiaomi-beryllium*.dts) comes with a SKhynix
-H28U74301AMR UFS. The sd_read_cpr() operation leads to a 120 second
-timeout, making the device bootup very slow:
+In the unbind callback for f_uac1 and f_uac2, a call to snd_card_free()
+via g_audio_cleanup() will disconnect the card and then wait for all
+resources to be released, which happens when the refcount falls to zero.
+Since userspace can keep the refcount incremented by not closing the
+relevant file descriptor, the call to unbind may block indefinitely.
+This can cause a deadlock during reboot, as evidenced by the following
+blocked task observed on my machine:
 
-[  121.457736] sd 0:0:0:1: [sdb] tag#23 timing out command, waited 120s
+  task:reboot  state:D stack:0   pid:2827  ppid:569    flags:0x0000000c
+  Call trace:
+   __switch_to+0xc8/0x140
+   __schedule+0x2f0/0x7c0
+   schedule+0x60/0xd0
+   schedule_timeout+0x180/0x1d4
+   wait_for_completion+0x78/0x180
+   snd_card_free+0x90/0xa0
+   g_audio_cleanup+0x2c/0x64
+   afunc_unbind+0x28/0x60
+   ...
+   kernel_restart+0x4c/0xac
+   __do_sys_reboot+0xcc/0x1ec
+   __arm64_sys_reboot+0x28/0x30
+   invoke_syscall+0x4c/0x110
+   ...
 
-Setting the BLIST_SKIP_VPD_PAGES allows the device to skip the failing
-sd_read_cpr operation and boot normally.
+The issue can also be observed by opening the card with arecord and
+then stopping the process through the shell before unbinding:
 
-Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
-Link: https://lore.kernel.org/r/20230313041402.39330-1-joelselvaraj.oss@gmail.com
+  # arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
+  Recording WAVE '/dev/null' : Signed 32 bit Little Endian, Rate 48000 Hz, Stereo
+  ^Z[1]+  Stopped                    arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
+  # echo gadget.0 > /sys/bus/gadget/drivers/configfs-gadget/unbind
+  (observe that the unbind command never finishes)
+
+Fix the problem by using snd_card_free_when_closed() instead, which will
+still disconnect the card as desired, but defer the task of freeing the
+resources to the core once userspace closes its file descriptor.
+
+Fixes: 132fcb460839 ("usb: gadget: Add Audio Class 2.0 Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Reviewed-by: Ruslan Bilovol <ruslan.bilovol@gmail.com>
+Reviewed-by: John Keeping <john@metanate.com>
+Link: https://lore.kernel.org/r/20230302163648.3349669-1-alvin@pqrs.dk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_devinfo.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/u_audio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/scsi_devinfo.c
-+++ b/drivers/scsi/scsi_devinfo.c
-@@ -241,6 +241,7 @@ static struct {
- 	{"SGI", "RAID5", "*", BLIST_SPARSELUN},
- 	{"SGI", "TP9100", "*", BLIST_REPORTLUN2},
- 	{"SGI", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
-+	{"SKhynix", "H28U74301AMR", NULL, BLIST_SKIP_VPD_PAGES},
- 	{"IBM", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
- 	{"SUN", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
- 	{"DELL", "Universal Xport", "*", BLIST_NO_ULD_ATTACH},
+--- a/drivers/usb/gadget/function/u_audio.c
++++ b/drivers/usb/gadget/function/u_audio.c
+@@ -635,7 +635,7 @@ void g_audio_cleanup(struct g_audio *g_a
+ 	uac = g_audio->uac;
+ 	card = uac->card;
+ 	if (card)
+-		snd_card_free(card);
++		snd_card_free_when_closed(card);
+ 
+ 	kfree(uac->p_prm.ureq);
+ 	kfree(uac->c_prm.ureq);
 
 
