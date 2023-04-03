@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930E56FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A775C433D2;
-	Mon,  3 Apr 2023 14:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3816FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF1DC433EF;
+	Mon,  3 Apr 2023 14:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532873;
-	bh=yQpucFppg61iLd8+TE6u3745AlGx+fHxxxi4HMBtJ1c=;
+	s=korg; t=1680532876;
+	bh=uhQ1Ign+mAVpQ+Qk1eZOn5h31+V7oD71ZIRBQa/hZQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7LmpHz2sbpiN8Ubn8RRQuqOj6K4cMnmhv56ruSNOXWZu2YNMgMX4wspV7WNQAYFN
-	 OEHG/flY8KYJngbU3y7/mZhqd/DpmArqbuiPqFaDF2P40XAQCjm9DtajcYFNKC/+cU
-	 B64abizXqQbzLe0gAamGnOl2vQHVR9o/p04/u2os=
+	b=gfJ9FrPk0SF2zI2DQCdIOavHkcGFZkPnKbTUExcan19IIB3ak37ICMbpuvLkerbwq
+	 wvfj3tzWZ0VjWgihMVwNa7evBG+/K2Xr0DDoD/hBT9y37utrBBG9FvK6P9QlHfngTF
+	 svCG4g1cnq0sZiZXGUr2hu3sA8ikhKAkKADqWVeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 148/181] powerpc: Dont try to copy PPR for task with NULL pt_regs
-Date: Mon,  3 Apr 2023 16:09:43 +0200
-Message-Id: <20230403140419.864844485@linuxfoundation.org>
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 120/181] pinctrl: ocelot: Fix alt mode for ocelot
+Date: Mon,  3 Apr 2023 16:09:15 +0200
+Message-Id: <20230403140418.986386882@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -34,81 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-commit fd7276189450110ed835eb0a334e62d2f1c4e3be upstream.
+[ Upstream commit 657fd9da2d4b4aa0a384105b236baa22fa0233bf ]
 
-powerpc sets up PF_KTHREAD and PF_IO_WORKER with a NULL pt_regs, which
-from my (arguably very short) checking is not commonly done for other
-archs. This is fine, except when PF_IO_WORKER's have been created and
-the task does something that causes a coredump to be generated. Then we
-get this crash:
+In case the driver was trying to set an alternate mode for gpio
+0 or 32 then the mode was not set correctly. The reason is that
+there is computation error inside the function ocelot_pinmux_set_mux
+because in this case it was trying to shift to left by -1.
+Fix this by actually shifting the function bits and not the position.
 
-  Kernel attempted to read user page (160) - exploit attempt? (uid: 1000)
-  BUG: Kernel NULL pointer dereference on read at 0x00000160
-  Faulting instruction address: 0xc0000000000c3a60
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=32 NUMA pSeries
-  Modules linked in: bochs drm_vram_helper drm_kms_helper xts binfmt_misc ecb ctr syscopyarea sysfillrect cbc sysimgblt drm_ttm_helper aes_generic ttm sg libaes evdev joydev virtio_balloon vmx_crypto gf128mul drm dm_mod fuse loop configfs drm_panel_orientation_quirks ip_tables x_tables autofs4 hid_generic usbhid hid xhci_pci xhci_hcd usbcore usb_common sd_mod
-  CPU: 1 PID: 1982 Comm: ppc-crash Not tainted 6.3.0-rc2+ #88
-  Hardware name: IBM pSeries (emulated by qemu) POWER9 (raw) 0x4e1202 0xf000005 of:SLOF,HEAD hv:linux,kvm pSeries
-  NIP:  c0000000000c3a60 LR: c000000000039944 CTR: c0000000000398e0
-  REGS: c0000000041833b0 TRAP: 0300   Not tainted  (6.3.0-rc2+)
-  MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 88082828  XER: 200400f8
-  ...
-  NIP memcpy_power7+0x200/0x7d0
-  LR  ppr_get+0x64/0xb0
-  Call Trace:
-    ppr_get+0x40/0xb0 (unreliable)
-    __regset_get+0x180/0x1f0
-    regset_get_alloc+0x64/0x90
-    elf_core_dump+0xb98/0x1b60
-    do_coredump+0x1c34/0x24a0
-    get_signal+0x71c/0x1410
-    do_notify_resume+0x140/0x6f0
-    interrupt_exit_user_prepare_main+0x29c/0x320
-    interrupt_exit_user_prepare+0x6c/0xa0
-    interrupt_return_srr_user+0x8/0x138
-
-Because ppr_get() is trying to copy from a PF_IO_WORKER with a NULL
-pt_regs.
-
-Check for a valid pt_regs in both ppc_get/ppr_set, and return an error
-if not set. The actual error value doesn't seem to be important here, so
-just pick -EINVAL.
-
-Fixes: fa439810cc1b ("powerpc/ptrace: Enable support for NT_PPPC_TAR, NT_PPC_PPR, NT_PPC_DSCR")
-Cc: stable@vger.kernel.org # v4.8+
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[mpe: Trim oops in change log, add Fixes & Cc stable]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/d9f63344-fe7c-56ae-b420-4a1a04a2ae4c@kernel.dk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4b36082e2e09 ("pinctrl: ocelot: fix pinmuxing for pins after 31")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://lore.kernel.org/r/20230206203720.1177718-1-horatiu.vultur@microchip.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/ptrace/ptrace-view.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pinctrl/pinctrl-ocelot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/ptrace/ptrace-view.c
-+++ b/arch/powerpc/kernel/ptrace/ptrace-view.c
-@@ -290,6 +290,9 @@ static int gpr_set(struct task_struct *t
- static int ppr_get(struct task_struct *target, const struct user_regset *regset,
- 		   struct membuf to)
- {
-+	if (!target->thread.regs)
-+		return -EINVAL;
-+
- 	return membuf_write(&to, &target->thread.regs->ppr, sizeof(u64));
- }
+diff --git a/drivers/pinctrl/pinctrl-ocelot.c b/drivers/pinctrl/pinctrl-ocelot.c
+index 3d5995cbcb782..c1d58939dd89a 100644
+--- a/drivers/pinctrl/pinctrl-ocelot.c
++++ b/drivers/pinctrl/pinctrl-ocelot.c
+@@ -1202,7 +1202,7 @@ static int ocelot_pinmux_set_mux(struct pinctrl_dev *pctldev,
+ 	regmap_update_bits(info->map, REG_ALT(0, info, pin->pin),
+ 			   BIT(p), f << p);
+ 	regmap_update_bits(info->map, REG_ALT(1, info, pin->pin),
+-			   BIT(p), f << (p - 1));
++			   BIT(p), (f >> 1) << p);
  
-@@ -297,6 +300,9 @@ static int ppr_set(struct task_struct *t
- 		   unsigned int pos, unsigned int count, const void *kbuf,
- 		   const void __user *ubuf)
- {
-+	if (!target->thread.regs)
-+		return -EINVAL;
-+
- 	return user_regset_copyin(&pos, &count, &kbuf, &ubuf,
- 				  &target->thread.regs->ppr, 0, sizeof(u64));
+ 	return 0;
  }
+-- 
+2.39.2
+
 
 
