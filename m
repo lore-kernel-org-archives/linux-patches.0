@@ -1,30 +1,30 @@
 Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5863A936
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 21:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8BBA935
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 21:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680556053; x=1712092053;
+  t=1680556054; x=1712092054;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=+YKvwuyVLDMR+sFs/3u3SFfneQIZ0qZ0jxgoSlbNg60=;
-  b=URSOJ4J1AmYKM1GgsO9kkWwxKqAkZm1r2Yrmrf0DYRxx6mL2/YLXLwRk
-   UEH2smbDQV66hRp+0y1Xwbqg6HMRjNpwp7TYVkROc7WRor8NsoatM6HTe
-   tcs45B/SQ4ATdf/wNlfA5tbMGaajRYtad4JNhqxgQkn6aniFLBuEqE0xe
-   NAef7Dl4Kr4oU/anywBaBz5GsV99i9DC4v2by+qPP/yrncZwzFabzsjdH
-   i5zyYaHfM1n4NpytfOMbyPOuPr1XF9xLnBnXFqyX01SXCW2ofXkSnkUKy
-   gfXmWI42gr5bzKKnixTB9u9gCgG0dCVjj4Lz66IDVtRgdQo3+0r326Q++
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10669"; a="330590860"
+  bh=fYZQDLM69ukAcHy2Lr4F4fSjXY8oE5A3ji5UAJN5ox0=;
+  b=k8BYoQmpQ/xmt2XkKYIlniFgou4HFmSNaM8j39p03sbxMvWe5PSWj82T
+   fP20vbkYboQWg806OW9+10d6cewkMv080CBCV9o0mKUapJiE/nt3hDhzp
+   NqHugJh0CWSx19ocSHBEi6ixEZU5DnCrhTRBIRZ7ouq+54+UdITWPMTiW
+   qg0g8eiU0g3t0ix/U9YThXIt9VFmSb5t/JxqC8DuuNNGu4fDnMQ+4NH6i
+   I5KMP81eZyedSJx4sPl24M6GONyEDp54kxg5i199LAxFMdVNCxo+O4+XT
+   jumqUv64WN8nKnw5v6LqeF6qDUOss5mO6Oveno0uL04vXhcc0FtUhaRIO
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10669"; a="330590866"
 X-IronPort-AV: E=Sophos;i="5.98,315,1673942400"; 
-   d="scan'208";a="330590860"
+   d="scan'208";a="330590866"
 Received: from fmsmga003.fm.intel.com ([10.253.24.29])
   by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2023 14:07:29 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10669"; a="775354462"
+X-IronPort-AV: E=McAfee;i="6600,9927,10669"; a="775354456"
 X-IronPort-AV: E=Sophos;i="5.98,315,1673942400"; 
-   d="scan'208";a="775354462"
+   d="scan'208";a="775354456"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
   by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2023 14:07:25 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -37,9 +37,9 @@ Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v4 5/5] x86/mce: Handle AMD threshold interrupt storms
-Date: Mon,  3 Apr 2023 14:07:16 -0700
-Message-Id: <20230403210716.347773-6-tony.luck@intel.com>
+Subject: [PATCH v4 3/5] x86/mce: Introduce mce_handle_storm() to deal with begin/end of storms
+Date: Mon,  3 Apr 2023 14:07:14 -0700
+Message-Id: <20230403210716.347773-4-tony.luck@intel.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230403210716.347773-1-tony.luck@intel.com>
 References: <ZCRYl9c7xgIJ+pJe@yaz-sghr>
@@ -54,139 +54,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
 
-Extend the logic of handling CMCI storms to AMD threshold interrupts.
+Intel and AMD need to take different actions when a storm begins or
+ends. Prepare for the storm code moving from intel.c into core.c by
+adding a function that checks CPU vendor to pick the right action.
 
-Rely on the similar approach as of Intel's CMCI to mitigate storms per
-CPU and per bank. But, unlike CMCI, do not set thresholds and reduce
-interrupt rate on a storm. Rather, disable the interrupt on the
-corresponding CPU and bank. Re-enable back the interrupts if enough
-consecutive polls of the bank show no corrected errors (30, as
-programmed by Intel).
+No functional changes.
 
-Turning off the threshold interrupts would be a better solution on AMD
-systems as other error severities will still be handled even if the
-threshold interrupts are disabled.
-
-[Tony: Small tweak because mce_handle_storm() isn't a pointer now]
+[Tony: Changed from function pointer to regular function]
 
 Signed-off-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
 Tested-by: Yazen Ghannam <yazen.ghannam@amd.com>
 ---
- arch/x86/kernel/cpu/mce/internal.h |  2 ++
- arch/x86/kernel/cpu/mce/amd.c      | 49 ++++++++++++++++++++++++++++++
- arch/x86/kernel/cpu/mce/core.c     |  3 ++
- 3 files changed, 54 insertions(+)
+ arch/x86/kernel/cpu/mce/internal.h |  3 +++
+ arch/x86/kernel/cpu/mce/core.c     |  9 +++++++++
+ arch/x86/kernel/cpu/mce/intel.c    | 12 ++++++++++--
+ 3 files changed, 22 insertions(+), 2 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/mce/internal.h b/arch/x86/kernel/cpu/mce/internal.h
-index d052d80cce7a..f1a48bc2e904 100644
+index 8d3a740a66ff..68288099b125 100644
 --- a/arch/x86/kernel/cpu/mce/internal.h
 +++ b/arch/x86/kernel/cpu/mce/internal.h
-@@ -224,6 +224,7 @@ extern bool filter_mce(struct mce *m);
+@@ -43,12 +43,14 @@ extern mce_banks_t mce_banks_ce_disabled;
+ void track_cmci_storm(int bank, u64 status);
  
- #ifdef CONFIG_X86_MCE_AMD
- extern bool amd_filter_mce(struct mce *m);
-+void mce_amd_handle_storm(int bank, bool on);
- 
- /*
-  * If MCA_CONFIG[McaLsbInStatusSupported] is set, extract ErrAddr in bits
-@@ -251,6 +252,7 @@ static __always_inline void smca_extract_err_addr(struct mce *m)
- 
+ #ifdef CONFIG_X86_MCE_INTEL
++void mce_intel_handle_storm(int bank, bool on);
+ void cmci_disable_bank(int bank);
+ void intel_init_cmci(void);
+ void intel_init_lmce(void);
+ void intel_clear_lmce(void);
+ bool intel_filter_mce(struct mce *m);
  #else
- static inline bool amd_filter_mce(struct mce *m) { return false; }
-+static inline void mce_amd_handle_storm(int bank, bool on) {}
- static inline void smca_extract_err_addr(struct mce *m) { }
++static inline void mce_intel_handle_storm(int bank, bool on) { }
+ static inline void cmci_disable_bank(int bank) { }
+ static inline void intel_init_cmci(void) { }
+ static inline void intel_init_lmce(void) { }
+@@ -57,6 +59,7 @@ static inline bool intel_filter_mce(struct mce *m) { return false; }
  #endif
  
-diff --git a/arch/x86/kernel/cpu/mce/amd.c b/arch/x86/kernel/cpu/mce/amd.c
-index 23c5072fbbb7..cd79295e2a0a 100644
---- a/arch/x86/kernel/cpu/mce/amd.c
-+++ b/arch/x86/kernel/cpu/mce/amd.c
-@@ -468,6 +468,47 @@ static void threshold_restart_bank(void *_tr)
- 	wrmsr(tr->b->address, lo, hi);
- }
+ void mce_timer_kick(bool storm);
++void mce_handle_storm(int bank, bool on);
  
-+static void _reset_block(struct threshold_block *block)
-+{
-+	struct thresh_restart tr;
-+
-+	memset(&tr, 0, sizeof(tr));
-+	tr.b = block;
-+	threshold_restart_bank(&tr);
-+}
-+
-+static void toggle_interrupt_reset_block(struct threshold_block *block, bool on)
-+{
-+	if (!block)
-+		return;
-+
-+	block->interrupt_enable = !!on;
-+	_reset_block(block);
-+}
-+
-+void mce_amd_handle_storm(int bank, bool on)
-+{
-+	struct threshold_block *first_block = NULL, *block = NULL, *tmp = NULL;
-+	struct threshold_bank **bp = this_cpu_read(threshold_banks);
-+	unsigned long flags;
-+
-+	if (!bp)
-+		return;
-+
-+	local_irq_save(flags);
-+
-+	first_block = bp[bank]->blocks;
-+	if (!first_block)
-+		goto end;
-+
-+	toggle_interrupt_reset_block(first_block, on);
-+
-+	list_for_each_entry_safe(block, tmp, &first_block->miscj, miscj)
-+		toggle_interrupt_reset_block(block, on);
-+end:
-+	local_irq_restore(flags);
-+}
-+
- static void mce_threshold_block_init(struct threshold_block *b, int offset)
- {
- 	struct thresh_restart tr = {
-@@ -868,6 +909,7 @@ static void amd_threshold_interrupt(void)
- 	struct threshold_block *first_block = NULL, *block = NULL, *tmp = NULL;
- 	struct threshold_bank **bp = this_cpu_read(threshold_banks);
- 	unsigned int bank, cpu = smp_processor_id();
-+	u64 status;
- 
- 	/*
- 	 * Validate that the threshold bank has been initialized already. The
-@@ -881,6 +923,13 @@ static void amd_threshold_interrupt(void)
- 		if (!(per_cpu(bank_map, cpu) & (1 << bank)))
- 			continue;
- 
-+		rdmsrl(mca_msr_reg(bank, MCA_STATUS), status);
-+		track_cmci_storm(bank, status);
-+
-+		/* Return early on an interrupt storm */
-+		if (this_cpu_read(bank_storm[bank]))
-+			return;
-+
- 		first_block = bp[bank]->blocks;
- 		if (!first_block)
- 			continue;
+ #ifdef CONFIG_ACPI_APEI
+ int apei_write_mce(struct mce *m);
 diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index 820b317b1b85..fac90625d8cb 100644
+index 20347eb65b8b..099d8444aca4 100644
 --- a/arch/x86/kernel/cpu/mce/core.c
 +++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -2062,6 +2062,9 @@ void mce_handle_storm(int bank, bool on)
- 	case X86_VENDOR_INTEL:
- 		mce_intel_handle_storm(bank, on);
- 		break;
-+	case X86_VENDOR_AMD:
-+		mce_amd_handle_storm(bank, on);
-+		break;
- 	}
+@@ -1975,6 +1975,15 @@ static void mce_zhaoxin_feature_clear(struct cpuinfo_x86 *c)
+ 	intel_clear_lmce();
  }
  
++void mce_handle_storm(int bank, bool on)
++{
++	switch (boot_cpu_data.x86_vendor) {
++	case X86_VENDOR_INTEL:
++		mce_intel_handle_storm(bank, on);
++		break;
++	}
++}
++
+ static void __mcheck_cpu_init_vendor(struct cpuinfo_x86 *c)
+ {
+ 	switch (c->x86_vendor) {
+diff --git a/arch/x86/kernel/cpu/mce/intel.c b/arch/x86/kernel/cpu/mce/intel.c
+index 4106877de028..a8248514a689 100644
+--- a/arch/x86/kernel/cpu/mce/intel.c
++++ b/arch/x86/kernel/cpu/mce/intel.c
+@@ -152,6 +152,14 @@ static void cmci_set_threshold(int bank, int thresh)
+ 	raw_spin_unlock_irqrestore(&cmci_discover_lock, flags);
+ }
+ 
++void mce_intel_handle_storm(int bank, bool on)
++{
++	if (on)
++		cmci_set_threshold(bank, CMCI_STORM_THRESHOLD);
++	else
++		cmci_set_threshold(bank, cmci_threshold[bank]);
++}
++
+ static void cmci_storm_begin(int bank)
+ {
+ 	__set_bit(bank, this_cpu_ptr(mce_poll_banks));
+@@ -211,13 +219,13 @@ void track_cmci_storm(int bank, u64 status)
+ 		if (history & GENMASK_ULL(STORM_END_POLL_THRESHOLD - 1, 0))
+ 			return;
+ 		pr_notice("CPU%d BANK%d CMCI storm subsided\n", smp_processor_id(), bank);
+-		cmci_set_threshold(bank, cmci_threshold[bank]);
++		mce_handle_storm(bank, false);
+ 		cmci_storm_end(bank);
+ 	} else {
+ 		if (hweight64(history) < STORM_BEGIN_THRESHOLD)
+ 			return;
+ 		pr_notice("CPU%d BANK%d CMCI storm detected\n", smp_processor_id(), bank);
+-		cmci_set_threshold(bank, CMCI_STORM_THRESHOLD);
++		mce_handle_storm(bank, true);
+ 		cmci_storm_begin(bank);
+ 	}
+ }
 -- 
 2.39.2
 
