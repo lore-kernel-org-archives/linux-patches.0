@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950146FAF
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F007BC433D2;
-	Mon,  3 Apr 2023 14:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1582A6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90687C4339B;
+	Mon,  3 Apr 2023 14:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533229;
-	bh=cnK+bSlq/AFLy6JLlVpQzwyByrm0HpUiKc7cUGMa7iU=;
+	s=korg; t=1680533231;
+	bh=L1kJpFJUSVeanix7nTgCRhS/Dwhs2KuZo0TINsERVHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sm7K9iX2Sj8mdlCC1lWHXyJnsu/xmMxPj7S/YRfbeGg7zy3f+0AgUCJRyJNElNPPd
-	 8HxPriMxzB9SC7ei527vrRTEe3WGQLz39S+7oommDeADXHdcVv13/XR7maXyx/nBJQ
-	 oZ12f9jjhqLh+tTPoHCh+6p3M6yb696HigquLpF8=
+	b=bdtjKnlNqh1s5WSMXpfiOnG/DXnreNiRsKc6m2XwQGowvkQ19THQj5fdZoxO4ioI6
+	 kriVt7R3fwXYayomg8jt027heFJXwkWfCI5PWYaLJ8vV9feWXAuBiZO+QkdLyeV0/v
+	 QRVqkvZDCg0uFwcs1jk5L8lQXg8rO8USRvmd4m9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Auhagen <sven.auhagen@voleatech.de>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 103/187] net: mvpp2: parser fix PPPoE
-Date: Mon,  3 Apr 2023 16:09:08 +0200
-Message-Id: <20230403140419.363553316@linuxfoundation.org>
+Subject: [PATCH 6.2 104/187] smsc911x: avoid PHY being resumed when interface is not up
+Date: Mon,  3 Apr 2023 16:09:09 +0200
+Message-Id: <20230403140419.400897646@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,121 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Auhagen <sven.auhagen@voleatech.de>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 031a416c2170866be5132ae42e14453d669b0cb1 ]
+[ Upstream commit f22c993f31fa9615df46e49cd768b713d39a852f ]
 
-In PPPoE add all IPv4 header option length to the parser
-and adjust the L3 and L4 offset accordingly.
-Currently the L4 match does not work with PPPoE and
-all packets are matched as L3 IP4 OPT.
+SMSC911x doesn't need mdiobus suspend/resume, that's why it sets
+'mac_managed_pm'. However, setting it needs to be moved from init to
+probe, so mdiobus PM functions will really never be called (e.g. when
+the interface is not up yet during suspend/resume).
 
-Fixes: 3f518509dedc ("ethernet: Add new driver for Marvell Armada 375 network unit")
-Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
+Fixes: 3ce9f2bef755 ("net: smsc911x: Stop and start PHY during suspend and resume")
+Suggested-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230327083138.6044-1-wsa+renesas@sang-engineering.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/mvpp2/mvpp2_prs.c    | 82 ++++++++-----------
- 1 file changed, 34 insertions(+), 48 deletions(-)
+ drivers/net/ethernet/smsc/smsc911x.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
-index ed8be396428b9..9af22f497a40f 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
-@@ -1607,59 +1607,45 @@ static int mvpp2_prs_vlan_init(struct platform_device *pdev, struct mvpp2 *priv)
- static int mvpp2_prs_pppoe_init(struct mvpp2 *priv)
+diff --git a/drivers/net/ethernet/smsc/smsc911x.c b/drivers/net/ethernet/smsc/smsc911x.c
+index a2e511912e6a9..a690d139e1770 100644
+--- a/drivers/net/ethernet/smsc/smsc911x.c
++++ b/drivers/net/ethernet/smsc/smsc911x.c
+@@ -1037,8 +1037,6 @@ static int smsc911x_mii_probe(struct net_device *dev)
+ 		return ret;
+ 	}
+ 
+-	/* Indicate that the MAC is responsible for managing PHY PM */
+-	phydev->mac_managed_pm = true;
+ 	phy_attached_info(phydev);
+ 
+ 	phy_set_max_speed(phydev, SPEED_100);
+@@ -1066,6 +1064,7 @@ static int smsc911x_mii_init(struct platform_device *pdev,
+ 			     struct net_device *dev)
  {
- 	struct mvpp2_prs_entry pe;
--	int tid;
--
--	/* IPv4 over PPPoE with options */
--	tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
--					MVPP2_PE_LAST_FREE_TID);
--	if (tid < 0)
--		return tid;
--
--	memset(&pe, 0, sizeof(pe));
--	mvpp2_prs_tcam_lu_set(&pe, MVPP2_PRS_LU_PPPOE);
--	pe.index = tid;
--
--	mvpp2_prs_match_etype(&pe, 0, PPP_IP);
--
--	mvpp2_prs_sram_next_lu_set(&pe, MVPP2_PRS_LU_IP4);
--	mvpp2_prs_sram_ri_update(&pe, MVPP2_PRS_RI_L3_IP4_OPT,
--				 MVPP2_PRS_RI_L3_PROTO_MASK);
--	/* goto ipv4 dest-address (skip eth_type + IP-header-size - 4) */
--	mvpp2_prs_sram_shift_set(&pe, MVPP2_ETH_TYPE_LEN +
--				 sizeof(struct iphdr) - 4,
--				 MVPP2_PRS_SRAM_OP_SEL_SHIFT_ADD);
--	/* Set L3 offset */
--	mvpp2_prs_sram_offset_set(&pe, MVPP2_PRS_SRAM_UDF_TYPE_L3,
--				  MVPP2_ETH_TYPE_LEN,
--				  MVPP2_PRS_SRAM_OP_SEL_UDF_ADD);
--
--	/* Update shadow table and hw entry */
--	mvpp2_prs_shadow_set(priv, pe.index, MVPP2_PRS_LU_PPPOE);
--	mvpp2_prs_hw_write(priv, &pe);
-+	int tid, ihl;
+ 	struct smsc911x_data *pdata = netdev_priv(dev);
++	struct phy_device *phydev;
+ 	int err = -ENXIO;
  
--	/* IPv4 over PPPoE without options */
--	tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
--					MVPP2_PE_LAST_FREE_TID);
--	if (tid < 0)
--		return tid;
-+	/* IPv4 over PPPoE with header length >= 5 */
-+	for (ihl = MVPP2_PRS_IPV4_IHL_MIN; ihl <= MVPP2_PRS_IPV4_IHL_MAX; ihl++) {
-+		tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
-+						MVPP2_PE_LAST_FREE_TID);
-+		if (tid < 0)
-+			return tid;
+ 	pdata->mii_bus = mdiobus_alloc();
+@@ -1108,6 +1107,10 @@ static int smsc911x_mii_init(struct platform_device *pdev,
+ 		goto err_out_free_bus_2;
+ 	}
  
--	pe.index = tid;
-+		memset(&pe, 0, sizeof(pe));
-+		mvpp2_prs_tcam_lu_set(&pe, MVPP2_PRS_LU_PPPOE);
-+		pe.index = tid;
++	phydev = phy_find_first(pdata->mii_bus);
++	if (phydev)
++		phydev->mac_managed_pm = true;
++
+ 	return 0;
  
--	mvpp2_prs_tcam_data_byte_set(&pe, MVPP2_ETH_TYPE_LEN,
--				     MVPP2_PRS_IPV4_HEAD |
--				     MVPP2_PRS_IPV4_IHL_MIN,
--				     MVPP2_PRS_IPV4_HEAD_MASK |
--				     MVPP2_PRS_IPV4_IHL_MASK);
-+		mvpp2_prs_match_etype(&pe, 0, PPP_IP);
-+		mvpp2_prs_tcam_data_byte_set(&pe, MVPP2_ETH_TYPE_LEN,
-+					     MVPP2_PRS_IPV4_HEAD | ihl,
-+					     MVPP2_PRS_IPV4_HEAD_MASK |
-+					     MVPP2_PRS_IPV4_IHL_MASK);
- 
--	/* Clear ri before updating */
--	pe.sram[MVPP2_PRS_SRAM_RI_WORD] = 0x0;
--	pe.sram[MVPP2_PRS_SRAM_RI_CTRL_WORD] = 0x0;
--	mvpp2_prs_sram_ri_update(&pe, MVPP2_PRS_RI_L3_IP4,
--				 MVPP2_PRS_RI_L3_PROTO_MASK);
-+		mvpp2_prs_sram_next_lu_set(&pe, MVPP2_PRS_LU_IP4);
-+		mvpp2_prs_sram_ri_update(&pe, MVPP2_PRS_RI_L3_IP4,
-+					 MVPP2_PRS_RI_L3_PROTO_MASK);
-+		/* goto ipv4 dst-address (skip eth_type + IP-header-size - 4) */
-+		mvpp2_prs_sram_shift_set(&pe, MVPP2_ETH_TYPE_LEN +
-+					 sizeof(struct iphdr) - 4,
-+					 MVPP2_PRS_SRAM_OP_SEL_SHIFT_ADD);
-+		/* Set L3 offset */
-+		mvpp2_prs_sram_offset_set(&pe, MVPP2_PRS_SRAM_UDF_TYPE_L3,
-+					  MVPP2_ETH_TYPE_LEN,
-+					  MVPP2_PRS_SRAM_OP_SEL_UDF_ADD);
-+		/* Set L4 offset */
-+		mvpp2_prs_sram_offset_set(&pe, MVPP2_PRS_SRAM_UDF_TYPE_L4,
-+					  MVPP2_ETH_TYPE_LEN + (ihl * 4),
-+					  MVPP2_PRS_SRAM_OP_SEL_UDF_ADD);
- 
--	/* Update shadow table and hw entry */
--	mvpp2_prs_shadow_set(priv, pe.index, MVPP2_PRS_LU_PPPOE);
--	mvpp2_prs_hw_write(priv, &pe);
-+		/* Update shadow table and hw entry */
-+		mvpp2_prs_shadow_set(priv, pe.index, MVPP2_PRS_LU_PPPOE);
-+		mvpp2_prs_hw_write(priv, &pe);
-+	}
- 
- 	/* IPv6 over PPPoE */
- 	tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
+ err_out_free_bus_2:
 -- 
 2.39.2
 
