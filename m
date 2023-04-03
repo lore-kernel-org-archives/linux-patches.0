@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2FF6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BF4C433EF;
-	Mon,  3 Apr 2023 14:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF51C6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A45C4339B;
+	Mon,  3 Apr 2023 14:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532032;
-	bh=U1B9SCUwyo+l2TBmiKv0wwTMcpUYbNihOL0RsfXLvLQ=;
+	s=korg; t=1680532034;
+	bh=3B2I5dt0gbxDkIRli7iMMFAhYWMbIn02GHuW6/+RATw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JB7Z7/Tx3hB11++jQpk+kYvKZOYEwAEuP+e8q6nr5cA44wjrV76jCHxbU1NRQG0VB
-	 J27XcUFGdhsUS91LclhvrJ5uKj55CA7HJFhEIL1YUdF7sXYkWM2MllpRlYYy6lO+I+
-	 SyNFq1JQZYXEMTY4GjHAjVDVHWb3BB89UssHMn8w=
+	b=DKYdSLN5izi0wCQN/2ySiDzwX9QCRc5azvAA2tkSxKeA/EDuUfIY20bfkPnHfjSz4
+	 u7mmdgaQ8sK/eJeeDsILbEkMDL1oV4o1ksYmTzP6C9+prnb7rYH+ACUYQUsBR9ZlQF
+	 k1EjjckRpm3e6Js6W6Wbzg0lshTm5R8u8zAjLkFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
 	Brian Foster <bfoster@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandanrlinux@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 5.10 100/173] xfs: shut down the filesystem if we screw up quota reservation
-Date: Mon,  3 Apr 2023 16:08:35 +0200
-Message-Id: <20230403140417.658551304@linuxfoundation.org>
+Subject: [PATCH 5.10 101/173] xfs: dont reuse busy extents on extent trim
+Date: Mon,  3 Apr 2023 16:08:36 +0200
+Message-Id: <20230403140417.697788021@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,59 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Brian Foster <bfoster@redhat.com>
 
-commit 2a4bdfa8558ca2904dc17b83497dc82aa7fc05e9 upstream.
+commit 06058bc40534530e617e5623775c53bb24f032cb upstream.
 
-If we ever screw up the quota reservations enough to trip the
-assertions, something's wrong with the quota code.  Shut down the
-filesystem when this happens, because this is corruption.
+Freed extents are marked busy from the point the freeing transaction
+commits until the associated CIL context is checkpointed to the log.
+This prevents reuse and overwrite of recently freed blocks before
+the changes are committed to disk, which can lead to corruption
+after a crash. The exception to this rule is that metadata
+allocation is allowed to reuse busy extents because metadata changes
+are also logged.
 
+As of commit 97d3ac75e5e0 ("xfs: exact busy extent tracking"), XFS
+has allowed modification or complete invalidation of outstanding
+busy extents for metadata allocations. This implementation assumes
+that use of the associated extent is imminent, which is not always
+the case. For example, the trimmed extent might not satisfy the
+minimum length of the allocation request, or the allocation
+algorithm might be involved in a search for the optimal result based
+on locality.
+
+generic/019 reproduces a corruption caused by this scenario. First,
+a metadata block (usually a bmbt or symlink block) is freed from an
+inode. A subsequent bmbt split on an unrelated inode attempts a near
+mode allocation request that invalidates the busy block during the
+search, but does not ultimately allocate it. Due to the busy state
+invalidation, the block is no longer considered busy to subsequent
+allocation. A direct I/O write request immediately allocates the
+block and writes to it. Finally, the filesystem crashes while in a
+state where the initial metadata block free had not committed to the
+on-disk log. After recovery, the original metadata block is in its
+original location as expected, but has been corrupted by the
+aforementioned dio.
+
+This demonstrates that it is fundamentally unsafe to modify busy
+extent state for extents that are not guaranteed to be allocated.
+This applies to pretty much all of the code paths that currently
+trim busy extents for one reason or another. Therefore to address
+this problem, drop the reuse mechanism from the busy extent trim
+path. This code already knows how to return partial non-busy ranges
+of the targeted free extent and higher level code tracks the busy
+state of the allocation attempt. If a block allocation fails where
+one or more candidate extents is busy, we force the log and retry
+the allocation.
+
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Chandan Babu R <chandanrlinux@gmail.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_trans_dquot.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_extent_busy.c |   14 --------------
+ 1 file changed, 14 deletions(-)
 
---- a/fs/xfs/xfs_trans_dquot.c
-+++ b/fs/xfs/xfs_trans_dquot.c
-@@ -16,6 +16,7 @@
- #include "xfs_quota.h"
- #include "xfs_qm.h"
- #include "xfs_trace.h"
-+#include "xfs_error.h"
+--- a/fs/xfs/xfs_extent_busy.c
++++ b/fs/xfs/xfs_extent_busy.c
+@@ -344,7 +344,6 @@ xfs_extent_busy_trim(
+ 	ASSERT(*len > 0);
  
- STATIC void	xfs_trans_alloc_dqinfo(xfs_trans_t *);
+ 	spin_lock(&args->pag->pagb_lock);
+-restart:
+ 	fbno = *bno;
+ 	flen = *len;
+ 	rbp = args->pag->pagb_tree.rb_node;
+@@ -363,19 +362,6 @@ restart:
+ 			continue;
+ 		}
  
-@@ -708,9 +709,11 @@ xfs_trans_dqresv(
- 					    XFS_TRANS_DQ_RES_INOS,
- 					    ninos);
- 	}
--	ASSERT(dqp->q_blk.reserved >= dqp->q_blk.count);
--	ASSERT(dqp->q_rtb.reserved >= dqp->q_rtb.count);
--	ASSERT(dqp->q_ino.reserved >= dqp->q_ino.count);
-+
-+	if (XFS_IS_CORRUPT(mp, dqp->q_blk.reserved < dqp->q_blk.count) ||
-+	    XFS_IS_CORRUPT(mp, dqp->q_rtb.reserved < dqp->q_rtb.count) ||
-+	    XFS_IS_CORRUPT(mp, dqp->q_ino.reserved < dqp->q_ino.count))
-+		goto error_corrupt;
- 
- 	xfs_dqunlock(dqp);
- 	return 0;
-@@ -720,6 +723,10 @@ error_return:
- 	if (xfs_dquot_type(dqp) == XFS_DQTYPE_PROJ)
- 		return -ENOSPC;
- 	return -EDQUOT;
-+error_corrupt:
-+	xfs_dqunlock(dqp);
-+	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
-+	return -EFSCORRUPTED;
- }
- 
+-		/*
+-		 * If this is a metadata allocation, try to reuse the busy
+-		 * extent instead of trimming the allocation.
+-		 */
+-		if (!(args->datatype & XFS_ALLOC_USERDATA) &&
+-		    !(busyp->flags & XFS_EXTENT_BUSY_DISCARDED)) {
+-			if (!xfs_extent_busy_update_extent(args->mp, args->pag,
+-							  busyp, fbno, flen,
+-							  false))
+-				goto restart;
+-			continue;
+-		}
+-
+ 		if (bbno <= fbno) {
+ 			/* start overlap */
  
 
 
