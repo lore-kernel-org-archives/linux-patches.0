@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12DC6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:30:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D46C433EF;
-	Mon,  3 Apr 2023 14:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C106FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:30:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE166C433EF;
+	Mon,  3 Apr 2023 14:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532247;
-	bh=p1R/Ad0he83YE2u1+oXwn0yoaMGKewX0nYOTQhn+ZNA=;
+	s=korg; t=1680532250;
+	bh=AqSXgRIi/BJPiDJTWepOKNXUrQyyOJofAKS+fRFpeQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dnu8fr016LA2RwU9a7yQd3ql3pt1RtvmtEPTXogRt+5+yO1ecmeb3ets0C2ntSqh1
-	 2O0v70yRaMnxtR3r69UEcTpuDWxbWV2RKrbxc2ZAW+Hf0lMdd2LRg1YBvcd+OJfWKg
-	 IIu1KOSzsMYU/TnE9Z+Aq458u/INlLjA9p6tzYtk=
+	b=YJOE5dbLSVa8KW88KdluudrSHSrqKItTuqy8KouBZ7D+QoENW6NUhOdp1tTauy4gz
+	 B55y428eZQPgXVLI4YPSdQbGYwnP+nfgbOqSkFiklR/CxXAaM5EDbsas1A3EepkPY7
+	 HFaVhJRNUpk24qlScd5DA5vbjabzEdm/ICkxRE3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	NeilBrown <neilb@suse.de>,
-	Song Liu <song@kernel.org>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 10/99] md: avoid signed overflow in slot_store()
-Date: Mon,  3 Apr 2023 16:08:33 +0200
-Message-Id: <20230403140356.476215343@linuxfoundation.org>
+Subject: [PATCH 5.15 11/99] x86/PVH: obtain VGA console info in Dom0
+Date: Mon,  3 Apr 2023 16:08:34 +0200
+Message-Id: <20230403140356.562484464@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,42 +35,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neilb@suse.de>
+From: Jan Beulich <jbeulich@suse.com>
 
-[ Upstream commit 3bc57292278a0b6ac4656cad94c14f2453344b57 ]
+[ Upstream commit 934ef33ee75c3846f605f18b65048acd147e3918 ]
 
-slot_store() uses kstrtouint() to get a slot number, but stores the
-result in an "int" variable (by casting a pointer).
-This can result in a negative slot number if the unsigned int value is
-very large.
+A new platform-op was added to Xen to allow obtaining the same VGA
+console information PV Dom0 is handed. Invoke the new function and have
+the output data processed by xen_init_vga().
 
-A negative number means that the slot is empty, but setting a negative
-slot number this way will not remove the device from the array.  I don't
-think this is a serious problem, but it could cause confusion and it is
-best to fix it.
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
 
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/8f315e92-7bda-c124-71cc-478ab9c5e610@suse.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/xen/Makefile            |  2 +-
+ arch/x86/xen/enlighten_pv.c      |  3 ++-
+ arch/x86/xen/enlighten_pvh.c     | 13 +++++++++++++
+ arch/x86/xen/vga.c               |  5 ++---
+ arch/x86/xen/xen-ops.h           |  7 ++++---
+ include/xen/interface/platform.h |  3 +++
+ 6 files changed, 25 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 9e54b865f30da..bd0c9dfac9815 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -3189,6 +3189,9 @@ slot_store(struct md_rdev *rdev, const char *buf, size_t len)
- 		err = kstrtouint(buf, 10, (unsigned int *)&slot);
- 		if (err < 0)
- 			return err;
-+		if (slot < 0)
-+			/* overflow */
-+			return -ENOSPC;
- 	}
- 	if (rdev->mddev->pers && slot == -1) {
- 		/* Setting 'slot' on an active array requires also
+diff --git a/arch/x86/xen/Makefile b/arch/x86/xen/Makefile
+index 4953260e281c3..40b5779fce21c 100644
+--- a/arch/x86/xen/Makefile
++++ b/arch/x86/xen/Makefile
+@@ -45,7 +45,7 @@ obj-$(CONFIG_PARAVIRT_SPINLOCKS)+= spinlock.o
+ 
+ obj-$(CONFIG_XEN_DEBUG_FS)	+= debugfs.o
+ 
+-obj-$(CONFIG_XEN_PV_DOM0)	+= vga.o
++obj-$(CONFIG_XEN_DOM0)		+= vga.o
+ 
+ obj-$(CONFIG_SWIOTLB_XEN)	+= pci-swiotlb-xen.o
+ 
+diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
+index 561aad13412f9..998db0257e2ad 100644
+--- a/arch/x86/xen/enlighten_pv.c
++++ b/arch/x86/xen/enlighten_pv.c
+@@ -1353,7 +1353,8 @@ asmlinkage __visible void __init xen_start_kernel(void)
+ 
+ 		x86_platform.set_legacy_features =
+ 				xen_dom0_set_legacy_features;
+-		xen_init_vga(info, xen_start_info->console.dom0.info_size);
++		xen_init_vga(info, xen_start_info->console.dom0.info_size,
++			     &boot_params.screen_info);
+ 		xen_start_info->console.domU.mfn = 0;
+ 		xen_start_info->console.domU.evtchn = 0;
+ 
+diff --git a/arch/x86/xen/enlighten_pvh.c b/arch/x86/xen/enlighten_pvh.c
+index bcae606bbc5cf..1da44aca896c6 100644
+--- a/arch/x86/xen/enlighten_pvh.c
++++ b/arch/x86/xen/enlighten_pvh.c
+@@ -43,6 +43,19 @@ void __init xen_pvh_init(struct boot_params *boot_params)
+ 	x86_init.oem.banner = xen_banner;
+ 
+ 	xen_efi_init(boot_params);
++
++	if (xen_initial_domain()) {
++		struct xen_platform_op op = {
++			.cmd = XENPF_get_dom0_console,
++		};
++		long ret = HYPERVISOR_platform_op(&op);
++
++		if (ret > 0)
++			xen_init_vga(&op.u.dom0_console,
++				     min(ret * sizeof(char),
++					 sizeof(op.u.dom0_console)),
++				     &boot_params->screen_info);
++	}
+ }
+ 
+ void __init mem_map_via_hcall(struct boot_params *boot_params_p)
+diff --git a/arch/x86/xen/vga.c b/arch/x86/xen/vga.c
+index e336f223f7f47..93697109592c3 100644
+--- a/arch/x86/xen/vga.c
++++ b/arch/x86/xen/vga.c
+@@ -9,10 +9,9 @@
+ 
+ #include "xen-ops.h"
+ 
+-void __init xen_init_vga(const struct dom0_vga_console_info *info, size_t size)
++void __init xen_init_vga(const struct dom0_vga_console_info *info, size_t size,
++			 struct screen_info *screen_info)
+ {
+-	struct screen_info *screen_info = &boot_params.screen_info;
+-
+ 	/* This is drawn from a dump from vgacon:startup in
+ 	 * standard Linux. */
+ 	screen_info->orig_video_mode = 3;
+diff --git a/arch/x86/xen/xen-ops.h b/arch/x86/xen/xen-ops.h
+index 16aed4b121297..71f31032c635f 100644
+--- a/arch/x86/xen/xen-ops.h
++++ b/arch/x86/xen/xen-ops.h
+@@ -110,11 +110,12 @@ static inline void xen_uninit_lock_cpu(int cpu)
+ 
+ struct dom0_vga_console_info;
+ 
+-#ifdef CONFIG_XEN_PV_DOM0
+-void __init xen_init_vga(const struct dom0_vga_console_info *, size_t size);
++#ifdef CONFIG_XEN_DOM0
++void __init xen_init_vga(const struct dom0_vga_console_info *, size_t size,
++			 struct screen_info *);
+ #else
+ static inline void __init xen_init_vga(const struct dom0_vga_console_info *info,
+-				       size_t size)
++				       size_t size, struct screen_info *si)
+ {
+ }
+ #endif
+diff --git a/include/xen/interface/platform.h b/include/xen/interface/platform.h
+index 732efb08c3e17..744bc41355678 100644
+--- a/include/xen/interface/platform.h
++++ b/include/xen/interface/platform.h
+@@ -500,6 +500,8 @@ struct xenpf_symdata {
+ };
+ DEFINE_GUEST_HANDLE_STRUCT(xenpf_symdata);
+ 
++#define XENPF_get_dom0_console 64
++
+ struct xen_platform_op {
+ 	uint32_t cmd;
+ 	uint32_t interface_version; /* XENPF_INTERFACE_VERSION */
+@@ -523,6 +525,7 @@ struct xen_platform_op {
+ 		struct xenpf_mem_hotadd        mem_add;
+ 		struct xenpf_core_parking      core_parking;
+ 		struct xenpf_symdata           symdata;
++		struct dom0_vga_console_info   dom0_console;
+ 		uint8_t                        pad[128];
+ 	} u;
+ };
 -- 
 2.39.2
 
