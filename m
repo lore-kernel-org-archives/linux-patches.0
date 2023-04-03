@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6085A5698
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE18C433D2;
-	Mon,  3 Apr 2023 14:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1755698
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EFBC433D2;
+	Mon,  3 Apr 2023 14:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531103;
-	bh=+kKFF6Tqqd4IdQr95MV6sKJHP3PoF4ZKcnBipdHQo70=;
+	s=korg; t=1680531108;
+	bh=mjOBt0hwl4VEkVOuBgR29W11lOITYRPWxwYwBi1U/4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KupGcpCTAUV6eo+VgNQu+Rw64PjzdTK8liacgX/WRoy6mD6y4h6DbJv2gwzYqhoUN
-	 geogqoYyzch1osRdbsl0TpOq5qZtKZI+z0iV+DK08zDY1WrVejqToQ9ZJ5DFf+eJM+
-	 ZhJ4j2lsE8UPdI3oAZST4cUgcbmyt54ofHeoZldE=
+	b=0/mqw+FTcFuIkNXpUUcK0kSMEJYoLSGy9KRXslQ80eghRXtqFC9MYsbpkArmF+d8B
+	 B2+AhpDAliVFGaFW8kkSG8PV40MQWijjzz1aLVcVPBKh5lq9Fzq5n8RF4jlk7hlKBm
+	 TbAC8+8KuKBLoVv2dlxdMM/ufLwInVQry7CawvpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaroslav Furman <yaro330@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 4.14 21/66] uas: Add US_FL_NO_REPORT_OPCODES for JMicron JMS583Gen 2
-Date: Mon,  3 Apr 2023 16:08:29 +0200
-Message-Id: <20230403140352.676687995@linuxfoundation.org>
+	Dmitry Vyukov <dvyukov@google.com>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 23/66] riscv: Bump COMMAND_LINE_SIZE value to 1024
+Date: Mon,  3 Apr 2023 16:08:31 +0200
+Message-Id: <20230403140352.744504065@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -34,36 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yaroslav Furman <yaro330@gmail.com>
+From: Alexandre Ghiti <alex@ghiti.fr>
 
-commit a37eb61b6ec064ac794b8a1e89fd33eb582fe51d upstream.
+[ Upstream commit 61fc1ee8be26bc192d691932b0a67eabee45d12f ]
 
-Just like other JMicron JMS5xx enclosures, it chokes on report-opcodes,
-let's avoid them.
+Increase COMMAND_LINE_SIZE as the current default value is too low
+for syzbot kernel command line.
 
-Signed-off-by: Yaroslav Furman <yaro330@gmail.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230312090745.47962-1-yaro330@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+There has been considerable discussion on this patch that has led to a
+larger patch set removing COMMAND_LINE_SIZE from the uapi headers on all
+ports.  That's not quite done yet, but it's gotten far enough we're
+confident this is not a uABI change so this is safe.
+
+Reported-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Alexandre Ghiti <alex@ghiti.fr>
+Link: https://lore.kernel.org/r/20210316193420.904-1-alex@ghiti.fr
+[Palmer: it's not uabi]
+Link: https://lore.kernel.org/linux-riscv/874b8076-b0d1-4aaa-bcd8-05d523060152@app.fastmail.com/#t
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/unusual_uas.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/riscv/include/uapi/asm/setup.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+ create mode 100644 arch/riscv/include/uapi/asm/setup.h
 
---- a/drivers/usb/storage/unusual_uas.h
-+++ b/drivers/usb/storage/unusual_uas.h
-@@ -180,6 +180,13 @@ UNUSUAL_DEV(0x152d, 0x0578, 0x0000, 0x99
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_BROKEN_FUA),
- 
-+/* Reported by: Yaroslav Furman <yaro330@gmail.com> */
-+UNUSUAL_DEV(0x152d, 0x0583, 0x0000, 0x9999,
-+		"JMicron",
-+		"JMS583Gen 2",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_NO_REPORT_OPCODES),
+diff --git a/arch/riscv/include/uapi/asm/setup.h b/arch/riscv/include/uapi/asm/setup.h
+new file mode 100644
+index 0000000000000..66b13a5228808
+--- /dev/null
++++ b/arch/riscv/include/uapi/asm/setup.h
+@@ -0,0 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
 +
- /* Reported-by: Thinh Nguyen <thinhn@synopsys.com> */
- UNUSUAL_DEV(0x154b, 0xf00b, 0x0000, 0x9999,
- 		"PNY",
++#ifndef _UAPI_ASM_RISCV_SETUP_H
++#define _UAPI_ASM_RISCV_SETUP_H
++
++#define COMMAND_LINE_SIZE	1024
++
++#endif /* _UAPI_ASM_RISCV_SETUP_H */
+-- 
+2.39.2
+
 
 
