@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08136FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:29:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F55C433D2;
-	Mon,  3 Apr 2023 14:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826636FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:29:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A20AC433D2;
+	Mon,  3 Apr 2023 14:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532166;
-	bh=JTe0xHkN5NnrhCWXW2Eb6l1XG+VkIj9iPS/H5Nvw5dc=;
+	s=korg; t=1680532169;
+	bh=reSjqyV7Vx7mxYNpwY6x0nOsVnPeCj6ePppeHMPHC5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HTNduBFI1vFL8gFi/OdzRdLGINHpmsFTyUYhpKWP7ZaT5BQgqQKuv+Z3S+sLu9+J3
-	 0F8WhKFqc0oGspxm66/TPC/DIbnOp+B9vY29DZV2W+6CRbARix/PUWVjUxVcW09wNd
-	 Ylq5Yfi7EzuQUDQMh4nqvk2WB9qE7/MXJfoUtR/E=
+	b=ceuDiVdWtbzziluzUPRstV8qphKOBDgtJXmvUZZN99Klf4ua/WA2Cm8xSulnkgla2
+	 XyTtJUdA4kBLeWQicKWmxLbzuNN76PdWFVEaImRh+SR35cCuWcJ+Sl6u/VvkP/Hl6v
+	 iSxTjH9RfSo4rLd96pLxClopEIM25EbjL4tmVXIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Prarit Bhargava <prarit@redhat.com>,
+	linux-pm@vger.kernel.org,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 122/173] fbdev: au1200fb: Fix potential divide by zero
-Date: Mon,  3 Apr 2023 16:08:57 +0200
-Message-Id: <20230403140418.411260165@linuxfoundation.org>
+Subject: [PATCH 5.10 123/173] tools/power turbostat: Fix /dev/cpu_dma_latency warnings
+Date: Mon,  3 Apr 2023 16:08:58 +0200
+Message-Id: <20230403140418.439560468@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,37 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Prarit Bhargava <prarit@redhat.com>
 
-[ Upstream commit 44a3b36b42acfc433aaaf526191dd12fbb919fdb ]
+[ Upstream commit 40aafc7d58d3544f152a863a0e9863014b6d5d8c ]
 
-var->pixclock can be assigned to zero by user. Without
-proper check, divide by zero would occur when invoking
-macro PICOS2KHZ in au1200fb_fb_check_var.
+When running as non-root the following error is seen in turbostat:
 
-Error out if var->pixclock is zero.
+turbostat: fopen /dev/cpu_dma_latency
+: Permission denied
 
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+turbostat and the man page have information on how to avoid other
+permission errors, so these can be fixed the same way.
+
+Provide better /dev/cpu_dma_latency warnings that provide instructions on
+how to avoid the error, and update the man page.
+
+Signed-off-by: Prarit Bhargava <prarit@redhat.com>
+Cc: linux-pm@vger.kernel.org
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/au1200fb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/power/x86/turbostat/turbostat.8 | 2 ++
+ tools/power/x86/turbostat/turbostat.c | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/au1200fb.c b/drivers/video/fbdev/au1200fb.c
-index c00e01a173685..a8a0a448cdb5e 100644
---- a/drivers/video/fbdev/au1200fb.c
-+++ b/drivers/video/fbdev/au1200fb.c
-@@ -1040,6 +1040,9 @@ static int au1200fb_fb_check_var(struct fb_var_screeninfo *var,
- 	u32 pixclock;
- 	int screen_size, plane;
+diff --git a/tools/power/x86/turbostat/turbostat.8 b/tools/power/x86/turbostat/turbostat.8
+index f6b7e85b121ce..71e3f3a68b9df 100644
+--- a/tools/power/x86/turbostat/turbostat.8
++++ b/tools/power/x86/turbostat/turbostat.8
+@@ -294,6 +294,8 @@ Alternatively, non-root users can be enabled to run turbostat this way:
  
-+	if (!var->pixclock)
-+		return -EINVAL;
+ # chmod +r /dev/cpu/*/msr
+ 
++# chmod +r /dev/cpu_dma_latency
 +
- 	plane = fbdev->plane;
+ .B "turbostat "
+ reads hardware counters, but doesn't write them.
+ So it will not interfere with the OS or other programs, including
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index ef65f7eed1ec9..d33c9d427e573 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -5004,7 +5004,7 @@ void print_dev_latency(void)
  
- 	/* Make sure that the mode respect all LCD controller and
+ 	retval = read(fd, (void *)&value, sizeof(int));
+ 	if (retval != sizeof(int)) {
+-		warn("read %s\n", path);
++		warn("read failed %s\n", path);
+ 		close(fd);
+ 		return;
+ 	}
 -- 
 2.39.2
 
