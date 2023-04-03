@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698F0612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:21:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BD4C433EF;
-	Mon,  3 Apr 2023 14:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A99612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:21:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81321C433D2;
+	Mon,  3 Apr 2023 14:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531704;
-	bh=/obK6rDWHUQIau/qAmj3wPsGAbebbDit7OWGuRgYVQY=;
+	s=korg; t=1680531706;
+	bh=/tZOGbJFwoQfwNLEapz7JLnCRAmUJ67IRCilGZldgtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dwjk4CeDVUpqFgr3sJCBtqp7YbXVKjmLQ1FIeCatF+WZPHVXITEWqBVssbKtcjpG4
-	 iBbR2tiOd4ATTvUxtseNcGM1VLnPoDT/N1BjtOBL2L+olExwIvusuyLiT9pPBJqJpD
-	 IQx3yGtucj+RRHqJw1ClvK6YGrY4skKWH6JGbQN4=
+	b=vB+3uayGQN6iDwfd7VqnRCrbpl5vfW6KDYeFLPEVcFHfpNKHlXp5YgfwF+l0vw7Tz
+	 Wv4sdAxHpWRvvj+h3V4CuLqYaMMQjWOerlDJkw8LB149VWKZtcSEW0zWZLiKk7ixLg
+	 uWELiQMSNaCu5i83tHT0SMgPB6tlPfHLFLVtYHaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faicker Mo <faicker.mo@ucloud.cn>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+c9bfd85eca611ebf5db1@syzkaller.appspotmail.com,
+	Ivan Orlov <ivan.orlov0322@gmail.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 079/104] net/net_failover: fix txq exceeding warning
-Date: Mon,  3 Apr 2023 16:09:11 +0200
-Message-Id: <20230403140407.213586927@linuxfoundation.org>
+Subject: [PATCH 5.4 080/104] can: bcm: bcm_tx_setup(): fix KMSAN uninit-value in vfs_write
+Date: Mon,  3 Apr 2023 16:09:12 +0200
+Message-Id: <20230403140407.252575136@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,88 +37,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Faicker Mo <faicker.mo@ucloud.cn>
+From: Ivan Orlov <ivan.orlov0322@gmail.com>
 
-[ Upstream commit e3cbdcb0fbb61045ef3ce0e072927cc41737f787 ]
+[ Upstream commit 2b4c99f7d9a57ecd644eda9b1fb0a1072414959f ]
 
-The failover txq is inited as 16 queues.
-when a packet is transmitted from the failover device firstly,
-the failover device will select the queue which is returned from
-the primary device if the primary device is UP and running.
-If the primary device txq is bigger than the default 16,
-it can lead to the following warning:
-eth0 selects TX queue 18, but real number of TX queues is 16
+Syzkaller reported the following issue:
 
-The warning backtrace is:
-[   32.146376] CPU: 18 PID: 9134 Comm: chronyd Tainted: G            E      6.2.8-1.el7.centos.x86_64 #1
-[   32.147175] Hardware name: Red Hat KVM, BIOS 1.10.2-3.el7_4.1 04/01/2014
-[   32.147730] Call Trace:
-[   32.147971]  <TASK>
-[   32.148183]  dump_stack_lvl+0x48/0x70
-[   32.148514]  dump_stack+0x10/0x20
-[   32.148820]  netdev_core_pick_tx+0xb1/0xe0
-[   32.149180]  __dev_queue_xmit+0x529/0xcf0
-[   32.149533]  ? __check_object_size.part.0+0x21c/0x2c0
-[   32.149967]  ip_finish_output2+0x278/0x560
-[   32.150327]  __ip_finish_output+0x1fe/0x2f0
-[   32.150690]  ip_finish_output+0x2a/0xd0
-[   32.151032]  ip_output+0x7a/0x110
-[   32.151337]  ? __pfx_ip_finish_output+0x10/0x10
-[   32.151733]  ip_local_out+0x5e/0x70
-[   32.152054]  ip_send_skb+0x19/0x50
-[   32.152366]  udp_send_skb.isra.0+0x163/0x3a0
-[   32.152736]  udp_sendmsg+0xba8/0xec0
-[   32.153060]  ? __folio_memcg_unlock+0x25/0x60
-[   32.153445]  ? __pfx_ip_generic_getfrag+0x10/0x10
-[   32.153854]  ? sock_has_perm+0x85/0xa0
-[   32.154190]  inet_sendmsg+0x6d/0x80
-[   32.154508]  ? inet_sendmsg+0x6d/0x80
-[   32.154838]  sock_sendmsg+0x62/0x70
-[   32.155152]  ____sys_sendmsg+0x134/0x290
-[   32.155499]  ___sys_sendmsg+0x81/0xc0
-[   32.155828]  ? _get_random_bytes.part.0+0x79/0x1a0
-[   32.156240]  ? ip4_datagram_release_cb+0x5f/0x1e0
-[   32.156649]  ? get_random_u16+0x69/0xf0
-[   32.156989]  ? __fget_light+0xcf/0x110
-[   32.157326]  __sys_sendmmsg+0xc4/0x210
-[   32.157657]  ? __sys_connect+0xb7/0xe0
-[   32.157995]  ? __audit_syscall_entry+0xce/0x140
-[   32.158388]  ? syscall_trace_enter.isra.0+0x12c/0x1a0
-[   32.158820]  __x64_sys_sendmmsg+0x24/0x30
-[   32.159171]  do_syscall_64+0x38/0x90
-[   32.159493]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+=====================================================
+BUG: KMSAN: uninit-value in aio_rw_done fs/aio.c:1520 [inline]
+BUG: KMSAN: uninit-value in aio_write+0x899/0x950 fs/aio.c:1600
+ aio_rw_done fs/aio.c:1520 [inline]
+ aio_write+0x899/0x950 fs/aio.c:1600
+ io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
+ __do_sys_io_submit fs/aio.c:2078 [inline]
+ __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
+ __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fix that by reducing txq number as the non-existent primary-dev does.
+Uninit was created at:
+ slab_post_alloc_hook mm/slab.h:766 [inline]
+ slab_alloc_node mm/slub.c:3452 [inline]
+ __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
+ __do_kmalloc_node mm/slab_common.c:967 [inline]
+ __kmalloc+0x11d/0x3b0 mm/slab_common.c:981
+ kmalloc_array include/linux/slab.h:636 [inline]
+ bcm_tx_setup+0x80e/0x29d0 net/can/bcm.c:930
+ bcm_sendmsg+0x3a2/0xce0 net/can/bcm.c:1351
+ sock_sendmsg_nosec net/socket.c:714 [inline]
+ sock_sendmsg net/socket.c:734 [inline]
+ sock_write_iter+0x495/0x5e0 net/socket.c:1108
+ call_write_iter include/linux/fs.h:2189 [inline]
+ aio_write+0x63a/0x950 fs/aio.c:1600
+ io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
+ __do_sys_io_submit fs/aio.c:2078 [inline]
+ __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
+ __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: cfc80d9a1163 ("net: Introduce net_failover driver")
-Signed-off-by: Faicker Mo <faicker.mo@ucloud.cn>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+CPU: 1 PID: 5034 Comm: syz-executor350 Not tainted 6.2.0-rc6-syzkaller-80422-geda666ff2276 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
+=====================================================
+
+We can follow the call chain and find that 'bcm_tx_setup' function
+calls 'memcpy_from_msg' to copy some content to the newly allocated
+frame of 'op->frames'. After that the 'len' field of copied structure
+being compared with some constant value (64 or 8). However, if
+'memcpy_from_msg' returns an error, we will compare some uninitialized
+memory. This triggers 'uninit-value' issue.
+
+This patch will add 'memcpy_from_msg' possible errors processing to
+avoid uninit-value issue.
+
+Tested via syzkaller
+
+Reported-by: syzbot+c9bfd85eca611ebf5db1@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=47f897f8ad958bbde5790ebf389b5e7e0a345089
+Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
+Fixes: 6f3b911d5f29b ("can: bcm: add support for CAN FD frames")
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230314120445.12407-1-ivan.orlov0322@gmail.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/net_failover.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ net/can/bcm.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/net_failover.c b/drivers/net/net_failover.c
-index fb182bec8f062..6b7bba720d8c7 100644
---- a/drivers/net/net_failover.c
-+++ b/drivers/net/net_failover.c
-@@ -130,14 +130,10 @@ static u16 net_failover_select_queue(struct net_device *dev,
- 			txq = ops->ndo_select_queue(primary_dev, skb, sb_dev);
- 		else
- 			txq = netdev_pick_tx(primary_dev, skb, NULL);
--
--		qdisc_skb_cb(skb)->slave_dev_queue_mapping = skb->queue_mapping;
--
--		return txq;
-+	} else {
-+		txq = skb_rx_queue_recorded(skb) ? skb_get_rx_queue(skb) : 0;
- 	}
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index fbf1143a56e13..23c7d5f896bd2 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -938,6 +938,8 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
  
--	txq = skb_rx_queue_recorded(skb) ? skb_get_rx_queue(skb) : 0;
--
- 	/* Save the original txq to restore before passing to the driver */
- 	qdisc_skb_cb(skb)->slave_dev_queue_mapping = skb->queue_mapping;
+ 			cf = op->frames + op->cfsiz * i;
+ 			err = memcpy_from_msg((u8 *)cf, msg, op->cfsiz);
++			if (err < 0)
++				goto free_op;
  
+ 			if (op->flags & CAN_FD_FRAME) {
+ 				if (cf->len > 64)
+@@ -947,12 +949,8 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 					err = -EINVAL;
+ 			}
+ 
+-			if (err < 0) {
+-				if (op->frames != &op->sframe)
+-					kfree(op->frames);
+-				kfree(op);
+-				return err;
+-			}
++			if (err < 0)
++				goto free_op;
+ 
+ 			if (msg_head->flags & TX_CP_CAN_ID) {
+ 				/* copy can_id into frame */
+@@ -1023,6 +1021,12 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		bcm_tx_start_timer(op);
+ 
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
++
++free_op:
++	if (op->frames != &op->sframe)
++		kfree(op->frames);
++	kfree(op);
++	return err;
+ }
+ 
+ /*
 -- 
 2.39.2
 
