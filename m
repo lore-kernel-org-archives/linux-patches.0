@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17951612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F2BC433EF;
-	Mon,  3 Apr 2023 14:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF21B612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B04C433D2;
+	Mon,  3 Apr 2023 14:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531627;
-	bh=4KFDn7Py0GzT76z5MUSsDXPRxsKknF4cBcXYWqBuSrs=;
+	s=korg; t=1680531630;
+	bh=SA7YaWf5QR5zQgtl/QG6yMkZUhfahvZkWHN9poCC5js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=it91yGx5ZwS/lkZpssbIQLyV6CjUVgMHBgI4YAacVnO6wK1XE9yvBfXgYgwX9UJKE
-	 pr7zDtMTZeawM3nrU4YTdDkcvIwfS/HS1JmCXjWiWlTZkt8vUnilFyXRPYCRSZi8iX
-	 la3JfoDxNcoy5C8NGy12DhBVdazH+hYMGc23JWPY=
+	b=TljPvBXjJRqPTe9fht1c4l+DD9JZqPdWn/z8mx7Qf6CfU2axPFGlQPaDJWANpzIJq
+	 rJ1JwWbT1oudttiglOI75mdMerLcOJvvR8DYkjEpf63sFnGUWfy5pDcWhtEd3MeueV
+	 scLIT4vLo+gYKCCd5CLr+/L+CATZNwaDMtzQ++j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 5.4 050/104] usb: chipidea: core: fix possible concurrent when switch role
-Date: Mon,  3 Apr 2023 16:08:42 +0200
-Message-Id: <20230403140406.313276279@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.4 051/104] wifi: mac80211: fix qos on mesh interfaces
+Date: Mon,  3 Apr 2023 16:08:43 +0200
+Message-Id: <20230403140406.343872407@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -34,98 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 451b15ed138ec15bffbebb58a00ebdd884c3e659 upstream.
+commit 4e348c6c6e23491ae6eb5e077848a42d0562339c upstream.
 
-The user may call role_store() when driver is handling
-ci_handle_id_switch() which is triggerred by otg event or power lost
-event. Unfortunately, the controller may go into chaos in this case.
-Fix this by protecting it with mutex lock.
+When ieee80211_select_queue is called for mesh, the sta pointer is usually
+NULL, since the nexthop is looked up much later in the tx path.
+Explicitly check for unicast address in that case in order to make qos work
+again.
 
-Fixes: a932a8041ff9 ("usb: chipidea: core: add sysfs group")
-cc: <stable@vger.kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20230317061516.2451728-2-xu.yang_2@nxp.com
+Cc: stable@vger.kernel.org
+Fixes: 50e2ab392919 ("wifi: mac80211: fix queue selection for mesh/OCB interfaces")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20230314095956.62085-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/ci.h   |    2 ++
- drivers/usb/chipidea/core.c |    8 +++++++-
- drivers/usb/chipidea/otg.c  |    5 ++++-
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ net/mac80211/wme.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/chipidea/ci.h
-+++ b/drivers/usb/chipidea/ci.h
-@@ -203,6 +203,7 @@ struct hw_bank {
-  * @in_lpm: if the core in low power mode
-  * @wakeup_int: if wakeup interrupt occur
-  * @rev: The revision number for controller
-+ * @mutex: protect code from concorrent running when doing role switch
-  */
- struct ci_hdrc {
- 	struct device			*dev;
-@@ -256,6 +257,7 @@ struct ci_hdrc {
- 	bool				in_lpm;
- 	bool				wakeup_int;
- 	enum ci_revision		rev;
-+	struct mutex                    mutex;
- };
- 
- static inline struct ci_role_driver *ci_role(struct ci_hdrc *ci)
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -963,8 +963,12 @@ static ssize_t role_store(struct device
- 	if (role == CI_ROLE_END)
- 		return -EINVAL;
- 
--	if (role == ci->role)
-+	mutex_lock(&ci->mutex);
-+
-+	if (role == ci->role) {
-+		mutex_unlock(&ci->mutex);
- 		return n;
-+	}
- 
- 	pm_runtime_get_sync(dev);
- 	disable_irq(ci->irq);
-@@ -974,6 +978,7 @@ static ssize_t role_store(struct device
- 		ci_handle_vbus_change(ci);
- 	enable_irq(ci->irq);
- 	pm_runtime_put_sync(dev);
-+	mutex_unlock(&ci->mutex);
- 
- 	return (ret == 0) ? n : ret;
- }
-@@ -1009,6 +1014,7 @@ static int ci_hdrc_probe(struct platform
- 		return -ENOMEM;
- 
- 	spin_lock_init(&ci->lock);
-+	mutex_init(&ci->mutex);
- 	ci->dev = dev;
- 	ci->platdata = dev_get_platdata(dev);
- 	ci->imx28_write_fix = !!(ci->platdata->flags &
---- a/drivers/usb/chipidea/otg.c
-+++ b/drivers/usb/chipidea/otg.c
-@@ -164,8 +164,10 @@ static int hw_wait_vbus_lower_bsv(struct
- 
- static void ci_handle_id_switch(struct ci_hdrc *ci)
+--- a/net/mac80211/wme.c
++++ b/net/mac80211/wme.c
+@@ -141,12 +141,14 @@ u16 ieee80211_select_queue_80211(struct
+ u16 __ieee80211_select_queue(struct ieee80211_sub_if_data *sdata,
+ 			     struct sta_info *sta, struct sk_buff *skb)
  {
--	enum ci_role role = ci_otg_role(ci);
-+	enum ci_role role;
++	const struct ethhdr *eth = (void *)skb->data;
+ 	struct mac80211_qos_map *qos_map;
+ 	bool qos;
  
-+	mutex_lock(&ci->mutex);
-+	role = ci_otg_role(ci);
- 	if (role != ci->role) {
- 		dev_dbg(ci->dev, "switching from %s to %s\n",
- 			ci_role(ci)->name, ci->roles[role]->name);
-@@ -188,6 +190,7 @@ static void ci_handle_id_switch(struct c
- 		if (role == CI_ROLE_GADGET)
- 			ci_handle_vbus_change(ci);
- 	}
-+	mutex_unlock(&ci->mutex);
- }
- /**
-  * ci_otg_work - perform otg (vbus/id) event handle
+ 	/* all mesh/ocb stations are required to support WME */
+-	if (sta && (sdata->vif.type == NL80211_IFTYPE_MESH_POINT ||
+-		    sdata->vif.type == NL80211_IFTYPE_OCB))
++	if ((sdata->vif.type == NL80211_IFTYPE_MESH_POINT &&
++	    !is_multicast_ether_addr(eth->h_dest)) ||
++	    (sdata->vif.type == NL80211_IFTYPE_OCB && sta))
+ 		qos = true;
+ 	else if (sta)
+ 		qos = sta->sta.wme;
 
 
