@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2216FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:24:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23F7C433EF;
-	Mon,  3 Apr 2023 14:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6416FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:24:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8591FC433EF;
+	Mon,  3 Apr 2023 14:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531881;
-	bh=sdF55tlQCuJDJkuW3loGLeGBQy9GNKtT+736qscC4b8=;
+	s=korg; t=1680531883;
+	bh=r8Cp+2NSen49DdgR8bZsF0UXc15pZZ62TTZa8Ha3dw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTmBPHVKP2eG/WorstQLcBDIS9sEKk4RyLaOFcnc8OC7JhQhaBUyu2WYjHmE/yN9y
-	 +tEhHh5LdtxSzrnUq5qdYIdKnf2HYLaSJdajp5HuWELWNzhFPnG3SNBBcHt5Pgv3Z5
-	 4hIizlwCWGbOrtQSTMAAa6YDquECT5jjAQ9hFtfQ=
+	b=BcxW30WGdiUckvPny27GvGQFQMr5UAqyAaQ0N8Hy31rVnfR0++mTxNwkBbnRA6NnJ
+	 4eX258q1YAzD79FOcT8R+EBWegUhzX80lzWCNcVamxLk//Z7OmgWD08qV78YjQq7cB
+	 Bo/F2FZU8p1EEfnEk+sky3tN4uS3lD4WZoy7Ms/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Haynes <sh@synk.net>,
-	Lefteris Alexakis <lefteris.alexakis@kpn.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	stable <stable@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Oskar Senft <osk@google.com>,
+	linux-serial@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/173] bpf: Adjust insufficient default bpf_jit_limit
-Date: Mon,  3 Apr 2023 16:07:37 +0200
-Message-Id: <20230403140415.774617094@linuxfoundation.org>
+Subject: [PATCH 5.10 016/173] serial: 8250: ASPEED_VUART: select REGMAP instead of depending on it
+Date: Mon,  3 Apr 2023 16:07:11 +0200
+Message-Id: <20230403140414.822948724@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -38,76 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 10ec8ca8ec1a2f04c4ed90897225231c58c124a7 ]
+[ Upstream commit f8086d1a65ac693e3fd863128352b4b11ee7324d ]
 
-We've seen recent AWS EKS (Kubernetes) user reports like the following:
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-  After upgrading EKS nodes from v20230203 to v20230217 on our 1.24 EKS
-  clusters after a few days a number of the nodes have containers stuck
-  in ContainerCreating state or liveness/readiness probes reporting the
-  following error:
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
-    Readiness probe errored: rpc error: code = Unknown desc = failed to
-    exec in container: failed to start exec "4a11039f730203ffc003b7[...]":
-    OCI runtime exec failed: exec failed: unable to start container process:
-    unable to init seccomp: error loading seccomp filter into kernel:
-    error loading seccomp filter: errno 524: unknown
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
 
-  However, we had not been seeing this issue on previous AMIs and it only
-  started to occur on v20230217 (following the upgrade from kernel 5.4 to
-  5.10) with no other changes to the underlying cluster or workloads.
-
-  We tried the suggestions from that issue (sysctl net.core.bpf_jit_limit=452534528)
-  which helped to immediately allow containers to be created and probes to
-  execute but after approximately a day the issue returned and the value
-  returned by cat /proc/vmallocinfo | grep bpf_jit | awk '{s+=$2} END {print s}'
-  was steadily increasing.
-
-I tested bpf tree to observe bpf_jit_charge_modmem, bpf_jit_uncharge_modmem
-their sizes passed in as well as bpf_jit_current under tcpdump BPF filter,
-seccomp BPF and native (e)BPF programs, and the behavior all looks sane
-and expected, that is nothing "leaking" from an upstream perspective.
-
-The bpf_jit_limit knob was originally added in order to avoid a situation
-where unprivileged applications loading BPF programs (e.g. seccomp BPF
-policies) consuming all the module memory space via BPF JIT such that loading
-of kernel modules would be prevented. The default limit was defined back in
-2018 and while good enough back then, we are generally seeing far more BPF
-consumers today.
-
-Adjust the limit for the BPF JIT pool from originally 1/4 to now 1/2 of the
-module memory space to better reflect today's needs and avoid more users
-running into potentially hard to debug issues.
-
-Fixes: fdadd04931c2 ("bpf: fix bpf_jit_limit knob for PAGE_SIZE >= 64K")
-Reported-by: Stephen Haynes <sh@synk.net>
-Reported-by: Lefteris Alexakis <lefteris.alexakis@kpn.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://github.com/awslabs/amazon-eks-ami/issues/1179
-Link: https://github.com/awslabs/amazon-eks-ami/issues/1219
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230320143725.8394-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 8d310c9107a2 ("drivers/tty/serial/8250: Make Aspeed VUART SIRQ polarity configurable")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Oskar Senft <osk@google.com>
+Cc: linux-serial@vger.kernel.org
+Link: https://lore.kernel.org/r/20230226053953.4681-9-rdunlap@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 73d4b1e32fbdb..d3f6a070875cb 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -826,7 +826,7 @@ static int __init bpf_jit_charge_init(void)
- {
- 	/* Only used as heuristic here to derive limit. */
- 	bpf_jit_limit_max = bpf_jit_alloc_exec_limit();
--	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 2,
-+	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 1,
- 					    PAGE_SIZE), LONG_MAX);
- 	return 0;
- }
+diff --git a/drivers/tty/serial/8250/Kconfig b/drivers/tty/serial/8250/Kconfig
+index dcf89db183df9..b7922c8da1e61 100644
+--- a/drivers/tty/serial/8250/Kconfig
++++ b/drivers/tty/serial/8250/Kconfig
+@@ -254,8 +254,9 @@ config SERIAL_8250_ASPEED_VUART
+ 	tristate "Aspeed Virtual UART"
+ 	depends on SERIAL_8250
+ 	depends on OF
+-	depends on REGMAP && MFD_SYSCON
++	depends on MFD_SYSCON
+ 	depends on ARCH_ASPEED || COMPILE_TEST
++	select REGMAP
+ 	help
+ 	  If you want to use the virtual UART (VUART) device on Aspeed
+ 	  BMC platforms, enable this option. This enables the 16550A-
 -- 
 2.39.2
 
