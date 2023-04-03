@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505D36FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9735C433EF;
-	Mon,  3 Apr 2023 14:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DFC6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2CEC433EF;
+	Mon,  3 Apr 2023 14:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532445;
-	bh=K8RGQW+HdKAWm/HopdoMfw6JKdpP2o7OFqPh75Yrars=;
+	s=korg; t=1680532447;
+	bh=Cf/o0bEiMRTLEgap42Hv0ZhNah3vV8pQgOHzcbc0JJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwQpO7jsbaTFWeYoy0+pbgNdRL8LN8IZHleODmOhK2RJTdEs0XZIPsSTexWqIom/m
-	 Akpppim9jTq5KMpa52mZ4XMUgI+ORKNsTyLXHuSJDxw5UQONrtb/u/hmJL5+IkBGec
-	 8i1jw+F7T39IXswVDh4woPeSz+jK5l3gLFAPiABk=
+	b=o7zX6i32SMg2nRtqIeN9ZW5tHqoOLtMRErUmXQNXSZjfhsq+4tLYD3eOTpzh7jiTo
+	 Z63h1ucpsH01gHDqIhmviJSMjbLyIvzkqEUifK4SuAo7Bessl0v6FyueoDC9urgwOB
+	 fFo0Hb8oFc4MzaV1oqXQTzh4jV5V+8HgYTqH40bU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Alex Elder <elder@linaro.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alyssa Ross <hi@alyssa.is>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 56/99] net: ipa: compute DMA pool size properly
-Date: Mon,  3 Apr 2023 16:09:19 +0200
-Message-Id: <20230403140405.489738078@linuxfoundation.org>
+Subject: [PATCH 5.15 47/99] loop: LOOP_CONFIGURE: send uevents for partitions
+Date: Mon,  3 Apr 2023 16:09:10 +0200
+Message-Id: <20230403140405.063368378@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -38,54 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Elder <elder@linaro.org>
+From: Alyssa Ross <hi@alyssa.is>
 
-[ Upstream commit 6c75dc94f2b27fff57b305af9236eea181a00b6c ]
+[ Upstream commit bb430b69422640891b0b8db762885730579a4145 ]
 
-In gsi_trans_pool_init_dma(), the total size of a pool of memory
-used for DMA transactions is calculated.  However the calculation is
-done incorrectly.
+LOOP_CONFIGURE is, as far as I understand it, supposed to be a way to
+combine LOOP_SET_FD and LOOP_SET_STATUS64 into a single syscall.  When
+using LOOP_SET_FD+LOOP_SET_STATUS64, a single uevent would be sent for
+each partition found on the loop device after the second ioctl(), but
+when using LOOP_CONFIGURE, no such uevent was being sent.
 
-For 4KB pages, this total size is currently always more than one
-page, and as a result, the calculation produces a positive (though
-incorrect) total size.  The code still works in this case; we just
-end up with fewer DMA pool entries than we intended.
+In the old setup, uevents are disabled for LOOP_SET_FD, but not for
+LOOP_SET_STATUS64.  This makes sense, as it prevents uevents being
+sent for a partially configured device during LOOP_SET_FD - they're
+only sent at the end of LOOP_SET_STATUS64.  But for LOOP_CONFIGURE,
+uevents were disabled for the entire operation, so that final
+notification was never issued.  To fix this, reduce the critical
+section to exclude the loop_reread_partitions() call, which causes
+the uevents to be issued, to after uevents are re-enabled, matching
+the behaviour of the LOOP_SET_FD+LOOP_SET_STATUS64 combination.
 
-Bjorn Andersson tested booting a kernel with 16KB pages, and hit a
-null pointer derereference in sg_alloc_append_table_from_pages(),
-descending from gsi_trans_pool_init_dma().  The cause of this was
-that a 16KB total size was going to be allocated, and with 16KB
-pages the order of that allocation is 0.  The total_size calculation
-yielded 0, which eventually led to the crash.
+I noticed this because Busybox's losetup program recently changed from
+using LOOP_SET_FD+LOOP_SET_STATUS64 to LOOP_CONFIGURE, and this broke
+my setup, for which I want a notification from the kernel any time a
+new partition becomes available.
 
-Correcting the total_size calculation fixes the problem.
-
-Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Tested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Fixes: 9dd441e4ed57 ("soc: qcom: ipa: GSI transactions")
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Alex Elder <elder@linaro.org>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230328162751.2861791-1-elder@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alyssa Ross <hi@alyssa.is>
+[hch: reduced the critical section]
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 3448914e8cc5 ("loop: Add LOOP_CONFIGURE ioctl")
+Link: https://lore.kernel.org/r/20230320125430.55367-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/gsi_trans.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/loop.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
-index 1544564bc2835..d709e69181959 100644
---- a/drivers/net/ipa/gsi_trans.c
-+++ b/drivers/net/ipa/gsi_trans.c
-@@ -155,7 +155,7 @@ int gsi_trans_pool_init_dma(struct device *dev, struct gsi_trans_pool *pool,
- 	 * gsi_trans_pool_exit_dma() can assume the total allocated
- 	 * size is exactly (count * size).
- 	 */
--	total_size = get_order(total_size) << PAGE_SHIFT;
-+	total_size = PAGE_SIZE << get_order(total_size);
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 032862cce6e4e..c96bdb3e7ac52 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -1212,9 +1212,6 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
+ 	/* This is safe, since we have a reference from open(). */
+ 	__module_get(THIS_MODULE);
  
- 	virt = dma_alloc_coherent(dev, total_size, &addr, GFP_KERNEL);
- 	if (!virt)
+-	/* suppress uevents while reconfiguring the device */
+-	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 1);
+-
+ 	/*
+ 	 * If we don't hold exclusive handle for the device, upgrade to it
+ 	 * here to avoid changing device under exclusive owner.
+@@ -1268,6 +1265,9 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
+ 		goto out_unlock;
+ 	}
+ 
++	/* suppress uevents while reconfiguring the device */
++	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 1);
++
+ 	disk_force_media_change(lo->lo_disk, DISK_EVENT_MEDIA_CHANGE);
+ 	set_disk_ro(lo->lo_disk, (lo->lo_flags & LO_FLAGS_READ_ONLY) != 0);
+ 
+@@ -1316,17 +1316,17 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
+ 	if (partscan)
+ 		lo->lo_disk->flags &= ~GENHD_FL_NO_PART_SCAN;
+ 
++	/* enable and uncork uevent now that we are done */
++	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
++
+ 	loop_global_unlock(lo, is_loop);
+ 	if (partscan)
+ 		loop_reread_partitions(lo);
++
+ 	if (!(mode & FMODE_EXCL))
+ 		bd_abort_claiming(bdev, loop_configure);
+ 
+-	error = 0;
+-done:
+-	/* enable and uncork uevent now that we are done */
+-	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
+-	return error;
++	return 0;
+ 
+ out_unlock:
+ 	loop_global_unlock(lo, is_loop);
+@@ -1337,7 +1337,7 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
+ 	fput(file);
+ 	/* This is safe: open() is still holding a reference. */
+ 	module_put(THIS_MODULE);
+-	goto done;
++	return error;
+ }
+ 
+ static int __loop_clr_fd(struct loop_device *lo, bool release)
 -- 
 2.39.2
 
