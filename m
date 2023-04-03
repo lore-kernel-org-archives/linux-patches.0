@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6746FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE7DC433EF;
-	Mon,  3 Apr 2023 14:49:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108DF6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F83AC433EF;
+	Mon,  3 Apr 2023 14:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533365;
-	bh=VJ8fSE6cPSnFA9ct74l+U//TUQbG/ORxZtqTFAi4G1Y=;
+	s=korg; t=1680533367;
+	bh=jyRttOi/+1GUQiXflH/H+fTtTJy0fN3XLyD5v4JQOY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQKd5iaoZkUGAC31d0zIImZrRDcE2ZWLDXSHz99E4DA3EpEcn8e3KhND3s7H2sQap
-	 R0IuABr7BE3U/ko1l9o7lYaudni+vMfqJiMnTJ7uJBHyztop/NiSY1kT1weQzFe+cy
-	 Ig2M4KlxmNYtjIZgdniykBekMA2gpKuRcRiQ42I8=
+	b=CeD/6OhejGvUy4P7oCI05mjPIbnF2xIzMjiQiNtjaEvctfBaH45uZMGdIIhYFcc3A
+	 V3a+h8LrLlc2SCcaibWnOkfIWhzz5A+OE2hz1pjP+9952oedveMvdYJeYcbipG8pRW
+	 3HM0yN8yeOS9XwAUuyPaWI7UiSyazZk3KUSsyUpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazan Shhady <yazan.shhady@solid-run.com>,
-	Josua Mayer <josua@solid-run.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.2 148/187] net: phy: dp83869: fix default value for tx-/rx-internal-delay
-Date: Mon,  3 Apr 2023 16:09:53 +0200
-Message-Id: <20230403140420.894519955@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 6.2 157/187] NFSv4: Fix hangs when recovering open state after a server reboot
+Date: Mon,  3 Apr 2023 16:10:02 +0200
+Message-Id: <20230403140421.262666521@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,55 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josua Mayer <josua@solid-run.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 82e2c39f9ef78896e9b634dfd82dc042e6956bb7 upstream.
+commit 6165a16a5ad9b237bb3131cff4d3c601ccb8f9a3 upstream.
 
-dp83869 internally uses a look-up table for mapping supported delays in
-nanoseconds to register values.
-When specific delays are defined in device-tree, phy_get_internal_delay
-does the lookup automatically returning an index.
+When we're using a cached open stateid or a delegation in order to avoid
+sending a CLAIM_PREVIOUS open RPC call to the server, we don't have a
+new open stateid to present to update_open_stateid().
+Instead rely on nfs4_try_open_cached(), just as if we were doing a
+normal open.
 
-The default case wrongly assigns the nanoseconds value from the lookup
-table, resulting in numeric value 2000 applied to delay configuration
-register, rather than the expected index values 0-7 (7 for 2000).
-Ultimately this issue broke RX for 1Gbps links.
-
-Fix default delay configuration by assigning the intended index value
-directly.
-
+Fixes: d2bfda2e7aa0 ("NFSv4: don't reprocess cached open CLAIM_PREVIOUS")
 Cc: stable@vger.kernel.org
-Fixes: 736b25afe284 ("net: dp83869: Add RGMII internal delay configuration")
-Co-developed-by: Yazan Shhady <yazan.shhady@solid-run.com>
-Signed-off-by: Yazan Shhady <yazan.shhady@solid-run.com>
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230323102536.31988-1-josua@solid-run.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/dp83869.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/nfs/nfs4proc.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/net/phy/dp83869.c
-+++ b/drivers/net/phy/dp83869.c
-@@ -588,15 +588,13 @@ static int dp83869_of_init(struct phy_de
- 						       &dp83869_internal_delay[0],
- 						       delay_size, true);
- 	if (dp83869->rx_int_delay < 0)
--		dp83869->rx_int_delay =
--				dp83869_internal_delay[DP83869_CLK_DELAY_DEF];
-+		dp83869->rx_int_delay = DP83869_CLK_DELAY_DEF;
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -1980,8 +1980,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(str
+ 	if (!data->rpc_done) {
+ 		if (data->rpc_status)
+ 			return ERR_PTR(data->rpc_status);
+-		/* cached opens have already been processed */
+-		goto update;
++		return nfs4_try_open_cached(data);
+ 	}
  
- 	dp83869->tx_int_delay = phy_get_internal_delay(phydev, dev,
- 						       &dp83869_internal_delay[0],
- 						       delay_size, false);
- 	if (dp83869->tx_int_delay < 0)
--		dp83869->tx_int_delay =
--				dp83869_internal_delay[DP83869_CLK_DELAY_DEF];
-+		dp83869->tx_int_delay = DP83869_CLK_DELAY_DEF;
+ 	ret = nfs_refresh_inode(inode, &data->f_attr);
+@@ -1990,7 +1989,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(str
  
- 	return ret;
- }
+ 	if (data->o_res.delegation_type != 0)
+ 		nfs4_opendata_check_deleg(data, state);
+-update:
++
+ 	if (!update_open_stateid(state, &data->o_res.stateid,
+ 				NULL, data->o_arg.fmode))
+ 		return ERR_PTR(-EAGAIN);
 
 
