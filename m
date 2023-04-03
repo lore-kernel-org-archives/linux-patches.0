@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D0D5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178C1C433EF;
-	Mon,  3 Apr 2023 14:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4BF5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7E6C433EF;
+	Mon,  3 Apr 2023 14:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531176;
-	bh=gWfA6rsZ/9cW1w6m9P5WJ4iSEv5bthFzIk1hJwKyc28=;
+	s=korg; t=1680531179;
+	bh=lT/mxgCuuOaz5Xk6jbBVr201kxtzpxOjXNbAch4yd4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LRkNF2xyb+CesIgL85DWYY0FaM5uwatsGlH6MJXegDL5eO+eXP70Gn5iYpQr7DWzv
-	 04tuPPZpKjjd+QNsZob+wbHqeOgCpaFe/j0g+73LCRlE5IAPyjTF5M7AY18p072QWl
-	 HNms5vthteSiwnJyfIBo4lmVJ/APPql+EF58Aksg=
+	b=ytNC1UrGDRda7oeZjNst4WskfIuBd4NHkeaX+CBpA/b8ysLj/4Cs6hHxAvoyQCR9v
+	 3T0VDHqCsOlrt1wt7aS27QA2mOqRkKJW1s8F0AskUV3zU9PzdZ/REuXWX7tUOzTtcb
+	 m/ZldcRjszlizC3T+yxOWZxNvH2xQFfVHwWAoGoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 08/66] qed/qed_sriov: guard against NULL derefs from qed_iov_get_vf_info
-Date: Mon,  3 Apr 2023 16:08:16 +0200
-Message-Id: <20230403140352.078087990@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.14 42/66] ocfs2: fix data corruption after failed write
+Date: Mon,  3 Apr 2023 16:08:50 +0200
+Message-Id: <20230403140353.338404222@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -36,51 +41,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Jan Kara via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
 
-[ Upstream commit 25143b6a01d0cc5319edd3de22ffa2578b045550 ]
+commit 90410bcf873cf05f54a32183afff0161f44f9715 upstream.
 
-We have to make sure that the info returned by the helper is valid
-before using it.
+When buffered write fails to copy data into underlying page cache page,
+ocfs2_write_end_nolock() just zeroes out and dirties the page.  This can
+leave dirty page beyond EOF and if page writeback tries to write this page
+before write succeeds and expands i_size, page gets into inconsistent
+state where page dirty bit is clear but buffer dirty bits stay set
+resulting in page data never getting written and so data copied to the
+page is lost.  Fix the problem by invalidating page beyond EOF after
+failed write.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
-
-Fixes: f990c82c385b ("qed*: Add support for ndo_set_vf_trust")
-Fixes: 733def6a04bf ("qed*: IOV link control")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230302153843.18499-1-jack@suse.cz
+Fixes: 6dbf7bb55598 ("fs: Don't invalidate page buffers in block_write_full_page()")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ replace block_invalidate_folio to block_invalidatepage ]
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_sriov.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ocfs2/aops.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_sriov.c b/drivers/net/ethernet/qlogic/qed/qed_sriov.c
-index 3dbea6be4e553..ef6c3da38fc68 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_sriov.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_sriov.c
-@@ -4285,6 +4285,9 @@ qed_iov_configure_min_tx_rate(struct qed_dev *cdev, int vfid, u32 rate)
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -2001,11 +2001,25 @@ int ocfs2_write_end_nolock(struct addres
  	}
  
- 	vf = qed_iov_get_vf_info(QED_LEADING_HWFN(cdev), (u16)vfid, true);
-+	if (!vf)
-+		return -EINVAL;
+ 	if (unlikely(copied < len) && wc->w_target_page) {
++		loff_t new_isize;
 +
- 	vport_id = vf->vport_id;
+ 		if (!PageUptodate(wc->w_target_page))
+ 			copied = 0;
  
- 	return qed_configure_vport_wfq(cdev, vport_id, rate);
-@@ -4922,7 +4925,7 @@ static void qed_iov_handle_trust_change(struct qed_hwfn *hwfn)
- 
- 		/* Validate that the VF has a configured vport */
- 		vf = qed_iov_get_vf_info(hwfn, i, true);
--		if (!vf->vport_instance)
-+		if (!vf || !vf->vport_instance)
- 			continue;
- 
- 		memset(&params, 0, sizeof(params));
--- 
-2.39.2
-
+-		ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
+-				       start+len);
++		new_isize = max_t(loff_t, i_size_read(inode), pos + copied);
++		if (new_isize > page_offset(wc->w_target_page))
++			ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
++					       start+len);
++		else {
++			/*
++			 * When page is fully beyond new isize (data copy
++			 * failed), do not bother zeroing the page. Invalidate
++			 * it instead so that writeback does not get confused
++			 * put page & buffer dirty bits into inconsistent
++			 * state.
++			 */
++			block_invalidatepage(wc->w_target_page, 0, PAGE_SIZE);
++		}
+ 	}
+ 	if (wc->w_target_page)
+ 		flush_dcache_page(wc->w_target_page);
 
 
