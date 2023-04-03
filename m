@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662E35683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD6AC4339B;
-	Mon,  3 Apr 2023 14:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCBF5698
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BE9C4339B;
+	Mon,  3 Apr 2023 14:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531457;
-	bh=3ByZmPJLS99AN8es8Q7JHikYHOKrp4p2mJIzhX+LFUg=;
+	s=korg; t=1680531462;
+	bh=KtJ0VQeQNAYoKsagb/LIaOW4p3iN/MIgF6EHF9gQb5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4ONGFm2zLFgJhkgyWUvprzaen0meiiJmEKGUJHkI4aEu5S68wgmx30N1b4o4HOH3
-	 6f319gBT9aQrJ26goM5oY3lK3um1RHqwHULyjTAfLYQNO5f0a+bILYk3dICManJ442
-	 cc7dnang2y0S5AWQcwxVgRKwrv7ebwuIjAKtG86I=
+	b=ZUDiSsZEiUZw4Xb8x08I051JjKG/PdWWnYjDiVZNpDp7qcgBGbG9iEEYPLNwj4r00
+	 ZO5M6NYqfhupgHOYJsZQAHCmR/G4fzacJGXbHP1Cp9+LJ5Qd/Gai2loV0zkJQjy7rz
+	 aK15Lga9Bps0cEGr5xc+mp+DZavln1zavK6vRTZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eero Tamminen <oak@helsinkinet.fi>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 30/84] m68k: Only force 030 bus error if PC not in exception table
-Date: Mon,  3 Apr 2023 16:08:31 +0200
-Message-Id: <20230403140354.398880087@linuxfoundation.org>
+	Jetro Jormalainen <jje-lxkl@jetro.fi>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 73/84] ALSA: hda/conexant: Partial revert of a quirk for Lenovo
+Date: Mon,  3 Apr 2023 16:09:14 +0200
+Message-Id: <20230403140355.941521139@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -36,75 +34,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit e36a82bebbf7da814530d5a179bef9df5934b717 ]
+commit b871cb971c683f7f212e7ca3c9a6709a75785116 upstream.
 
-__get_kernel_nofault() does copy data in supervisor mode when
-forcing a task backtrace log through /proc/sysrq_trigger.
-This is expected cause a bus error exception on e.g. NULL
-pointer dereferencing when logging a kernel task has no
-workqueue associated. This bus error ought to be ignored.
+The recent commit f83bb2592482 ("ALSA: hda/conexant: Add quirk for
+LENOVO 20149 Notebook model") introduced a quirk for the device with
+17aa:3977, but this caused a regression on another model (Lenovo
+Ideadpad U31) with the very same PCI SSID.  And, through skimming over
+the net, it seems that this PCI SSID is used for multiple different
+models, so it's no good idea to apply the quirk with the SSID.
 
-Our 030 bus error handler is ill equipped to deal with this:
+Although we may take a different ID check (e.g. the codec SSID instead
+of the PCI SSID), unfortunately, the original patch author couldn't
+identify the hardware details any longer as the machine was returned,
+and we can't develop the further proper fix.
 
-Whenever ssw indicates a kernel mode access on a data fault,
-we don't even attempt to handle the fault and instead always
-send a SEGV signal (or panic). As a result, the check
-for exception handling at the fault PC (buried in
-send_sig_fault() which gets called from do_page_fault()
-eventually) is never used.
+In this patch, instead, we partially revert the change so that the
+quirk won't be applied as default for addressing the regression.
+Meanwhile, the quirk function itself is kept, and it's now made to be
+applicable via the explicit model=lenovo-20149 option.
 
-In contrast, both 040 and 060 access error handlers do not
-care whether a fault happened on supervisor mode access,
-and will call do_page_fault() on those, ultimately honoring
-the exception table.
-
-Add a check in bus_error030 to call do_page_fault() in case
-we do have an entry for the fault PC in our exception table.
-
-I had attempted a fix for this earlier in 2019 that did rely
-on testing pagefault_disabled() (see link below) to achieve
-the same thing, but this patch should be more generic.
-
-Tested on 030 Atari Falcon.
-
-Reported-by: Eero Tamminen <oak@helsinkinet.fi>
-Link: https://lore.kernel.org/r/alpine.LNX.2.21.1904091023540.25@nippy.intranet
-Link: https://lore.kernel.org/r/63130691-1984-c423-c1f2-73bfd8d3dcd3@gmail.com
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230301021107.26307-1-schmitzmic@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f83bb2592482 ("ALSA: hda/conexant: Add quirk for LENOVO 20149 Notebook model")
+Reported-by: Jetro Jormalainen <jje-lxkl@jetro.fi>
+Link: https://lore.kernel.org/r/20230308215009.4d3e58a6@mopti
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230320140954.31154-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/m68k/kernel/traps.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_conexant.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/m68k/kernel/traps.c b/arch/m68k/kernel/traps.c
-index 9b70a7f5e7058..35f706d836c50 100644
---- a/arch/m68k/kernel/traps.c
-+++ b/arch/m68k/kernel/traps.c
-@@ -30,6 +30,7 @@
- #include <linux/init.h>
- #include <linux/ptrace.h>
- #include <linux/kallsyms.h>
-+#include <linux/extable.h>
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -952,7 +952,10 @@ static const struct snd_pci_quirk cxt506
+ 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
+-	SND_PCI_QUIRK(0x17aa, 0x3977, "Lenovo IdeaPad U310", CXT_PINCFG_LENOVO_NOTEBOOK),
++	/* NOTE: we'd need to extend the quirk for 17aa:3977 as the same
++	 * PCI SSID is used on multiple Lenovo models
++	 */
++	SND_PCI_QUIRK(0x17aa, 0x3977, "Lenovo IdeaPad U310", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo G50-70", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x397b, "Lenovo S205", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad", CXT_FIXUP_THINKPAD_ACPI),
+@@ -974,6 +977,7 @@ static const struct hda_model_fixup cxt5
+ 	{ .id = CXT_FIXUP_HP_DOCK, .name = "hp-dock" },
+ 	{ .id = CXT_FIXUP_MUTE_LED_GPIO, .name = "mute-led-gpio" },
+ 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
++	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
+ 	{}
+ };
  
- #include <asm/setup.h>
- #include <asm/fpu.h>
-@@ -550,7 +551,8 @@ static inline void bus_error030 (struct frame *fp)
- 			errorcode |= 2;
- 
- 		if (mmusr & (MMU_I | MMU_WP)) {
--			if (ssw & 4) {
-+			/* We might have an exception table for this PC */
-+			if (ssw & 4 && !search_exception_tables(fp->ptregs.pc)) {
- 				pr_err("Data %s fault at %#010lx in %s (pc=%#lx)\n",
- 				       ssw & RW ? "read" : "write",
- 				       fp->un.fmtb.daddr,
--- 
-2.39.2
-
 
 
