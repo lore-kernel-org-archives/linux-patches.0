@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766AF6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FC9C4339C;
-	Mon,  3 Apr 2023 14:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AB96FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D22DC4339B;
+	Mon,  3 Apr 2023 14:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532050;
-	bh=W6ODByCyA/flrcRmuzoRnVse67s+Ev0Rk1mocG6tYJ8=;
+	s=korg; t=1680532052;
+	bh=bxh4Im4MNB+kYEPjhoLdRJTOVRxeKJsCl/GzbTaFKCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qu423GaLAMrC6QtwlD8qyjd5Z39WhyJXfmTlUWpsWNc/JU4vPJNEle7HvQS6RBHLU
-	 LcAAzyQ7SGLQUPFFqg+TSBeWlxN+TzBMEXw/xtVDleOFM1OpF3Nizty5CDdqm77HHv
-	 N5hGwK2WBc3O/c5/Cg7T49l/MMy8issdTDUoX6fg=
+	b=SN1M/eeYQv4Z/dOIiEgFQDn1fnwqD8k5yxlWLPlsIUb34ScdspF/lH7GIZy/Mt8Hb
+	 gVt/yHlZX3Ay8uVCucxkDLeQJ+bjjpLzXmeK1ry65UTh3LMrKPRUTcPr57Li1dZyOP
+	 tF7wMimyyT/iFW1eXQscasQ9xQi9zxAY4RDOWW64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <narmstrong@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 107/173] kcsan: avoid passing -g for test
-Date: Mon,  3 Apr 2023 16:08:42 +0200
-Message-Id: <20230403140417.905091738@linuxfoundation.org>
+Subject: [PATCH 5.10 108/173] drm/meson: Fix error handling when afbcd.ops->init fails
+Date: Mon,  3 Apr 2023 16:08:43 +0200
+Message-Id: <20230403140417.938459326@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -38,48 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Elver <elver@google.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 5eb39cde1e2487ba5ec1802dc5e58a77e700d99e ]
+[ Upstream commit fa747d75f65d1b1cbc3f4691fa67b695e8a399c8 ]
 
-Nathan reported that when building with GNU as and a version of clang that
-defaults to DWARF5, the assembler will complain with:
+When afbcd.ops->init fails we need to free the struct drm_device. Also
+all errors which come after afbcd.ops->init was successful need to exit
+the AFBCD, just like meson_drv_unbind() does.
 
-  Error: non-constant .uleb128 is not supported
-
-This is because `-g` defaults to the compiler debug info default. If the
-assembler does not support some of the directives used, the above errors
-occur. To fix, remove the explicit passing of `-g`.
-
-All the test wants is that stack traces print valid function names, and
-debug info is not required for that. (I currently cannot recall why I
-added the explicit `-g`.)
-
-Link: https://lkml.kernel.org/r/20230316224705.709984-2-elver@google.com
-Fixes: 1fe84fd4a402 ("kcsan: Add test suite")
-Signed-off-by: Marco Elver <elver@google.com>
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d1b5e41e13a7e9 ("drm/meson: Add AFBCD module driver")
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Acked-by: Neil Armstrong <narmstrong@baylibre.com>
+Signed-off-by: Neil Armstrong <narmstrong@baylibre.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20211230235515.1627522-3-martin.blumenstingl@googlemail.com
+Stable-dep-of: ba98413bf45e ("drm/meson: fix missing component unbind on bind errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcsan/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/meson/meson_drv.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/kcsan/Makefile b/kernel/kcsan/Makefile
-index c95957741d366..a9b0ee63b6978 100644
---- a/kernel/kcsan/Makefile
-+++ b/kernel/kcsan/Makefile
-@@ -13,6 +13,6 @@ CFLAGS_core.o := $(call cc-option,-fno-conserve-stack) \
- obj-y := core.o debugfs.o report.o
- obj-$(CONFIG_KCSAN_SELFTEST) += selftest.o
+diff --git a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv.c
+index b0bfe85f5f6a8..090878bd74f6a 100644
+--- a/drivers/gpu/drm/meson/meson_drv.c
++++ b/drivers/gpu/drm/meson/meson_drv.c
+@@ -320,38 +320,38 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
+ 	if (priv->afbcd.ops) {
+ 		ret = priv->afbcd.ops->init(priv);
+ 		if (ret)
+-			return ret;
++			goto free_drm;
+ 	}
  
--CFLAGS_kcsan-test.o := $(CFLAGS_KCSAN) -g -fno-omit-frame-pointer
-+CFLAGS_kcsan-test.o := $(CFLAGS_KCSAN) -fno-omit-frame-pointer
- CFLAGS_kcsan_test.o += $(DISABLE_STRUCTLEAK_PLUGIN)
- obj-$(CONFIG_KCSAN_TEST) += kcsan-test.o
+ 	/* Encoder Initialization */
+ 
+ 	ret = meson_venc_cvbs_create(priv);
+ 	if (ret)
+-		goto free_drm;
++		goto exit_afbcd;
+ 
+ 	if (has_components) {
+ 		ret = component_bind_all(drm->dev, drm);
+ 		if (ret) {
+ 			dev_err(drm->dev, "Couldn't bind all components\n");
+-			goto free_drm;
++			goto exit_afbcd;
+ 		}
+ 	}
+ 
+ 	ret = meson_plane_create(priv);
+ 	if (ret)
+-		goto free_drm;
++		goto exit_afbcd;
+ 
+ 	ret = meson_overlay_create(priv);
+ 	if (ret)
+-		goto free_drm;
++		goto exit_afbcd;
+ 
+ 	ret = meson_crtc_create(priv);
+ 	if (ret)
+-		goto free_drm;
++		goto exit_afbcd;
+ 
+ 	ret = drm_irq_install(drm, priv->vsync_irq);
+ 	if (ret)
+-		goto free_drm;
++		goto exit_afbcd;
+ 
+ 	drm_mode_config_reset(drm);
+ 
+@@ -369,6 +369,9 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
+ 
+ uninstall_irq:
+ 	drm_irq_uninstall(drm);
++exit_afbcd:
++	if (priv->afbcd.ops)
++		priv->afbcd.ops->exit(priv);
+ free_drm:
+ 	drm_dev_put(drm);
+ 
 -- 
 2.39.2
 
