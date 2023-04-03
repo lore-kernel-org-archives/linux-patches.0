@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003536FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49710C433EF;
-	Mon,  3 Apr 2023 14:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966866FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B242C4339E;
+	Mon,  3 Apr 2023 14:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532026;
-	bh=mjW/ZQZRH5bjZuwRt8GVXLr6JDyhVLSktLJ0grI8C2E=;
+	s=korg; t=1680532029;
+	bh=ht9xRiRLIBmrOvAPF67S0ozI0aoUjgVp3V3hLnSziiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAYAIdgC/MYbjHQkGhR4EYuAsLJrwofwpGCMd4YfOnsdMu58h28Km5pWEYH5H9a4v
-	 gWEfACjDhABvxp2Jlab6ugs8OQboKjWJQGrkxa6OnCJwkx5qX2goU0o5VvuyJIGgZb
-	 rSI3f9J54zdRSEPJKV+t3LyYtrTEu+Tdr3UMAaWY=
+	b=WNp4TTpJdSrdY4+Wkksyd+7G2q/omNIYEWux2TzIPJuCbuQ9mrnM3rl53+KMgQONq
+	 sIgzLS+6h2LPFLf8Rh5r4Dr4N0sE1YAonJfVq6eLiU9+4ZbsI0sZCuvVM1uAI1m0xD
+	 mOImSuR3MsTSHpy5eD+b9ksDjx30uIYu6QGObvyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 099/173] ocfs2: fix data corruption after failed write
-Date: Mon,  3 Apr 2023 16:08:34 +0200
-Message-Id: <20230403140417.629012939@linuxfoundation.org>
+	Corinna Vinschen <vinschen@redhat.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 5.10 082/173] igb: revert rtnl_lock() that causes deadlock
+Date: Mon,  3 Apr 2023 16:08:17 +0200
+Message-Id: <20230403140417.076234356@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -41,67 +38,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit 90410bcf873cf05f54a32183afff0161f44f9715 upstream.
+commit 65f69851e44d71248b952a687e44759a7abb5016 upstream.
 
-When buffered write fails to copy data into underlying page cache page,
-ocfs2_write_end_nolock() just zeroes out and dirties the page.  This can
-leave dirty page beyond EOF and if page writeback tries to write this page
-before write succeeds and expands i_size, page gets into inconsistent
-state where page dirty bit is clear but buffer dirty bits stay set
-resulting in page data never getting written and so data copied to the
-page is lost.  Fix the problem by invalidating page beyond EOF after
-failed write.
+The commit 6faee3d4ee8b ("igb: Add lock to avoid data race") adds
+rtnl_lock to eliminate a false data race shown below
 
-Link: https://lkml.kernel.org/r/20230302153843.18499-1-jack@suse.cz
-Fixes: 6dbf7bb55598 ("fs: Don't invalidate page buffers in block_write_full_page()")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ replace block_invalidate_folio to block_invalidatepage ]
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+ (FREE from device detaching)      |   (USE from netdev core)
+igb_remove                         |  igb_ndo_get_vf_config
+ igb_disable_sriov                 |  vf >= adapter->vfs_allocated_count?
+  kfree(adapter->vf_data)          |
+  adapter->vfs_allocated_count = 0 |
+                                   |    memcpy(... adapter->vf_data[vf]
+
+The above race will never happen and the extra rtnl_lock causes deadlock
+below
+
+[  141.420169]  <TASK>
+[  141.420672]  __schedule+0x2dd/0x840
+[  141.421427]  schedule+0x50/0xc0
+[  141.422041]  schedule_preempt_disabled+0x11/0x20
+[  141.422678]  __mutex_lock.isra.13+0x431/0x6b0
+[  141.423324]  unregister_netdev+0xe/0x20
+[  141.423578]  igbvf_remove+0x45/0xe0 [igbvf]
+[  141.423791]  pci_device_remove+0x36/0xb0
+[  141.423990]  device_release_driver_internal+0xc1/0x160
+[  141.424270]  pci_stop_bus_device+0x6d/0x90
+[  141.424507]  pci_stop_and_remove_bus_device+0xe/0x20
+[  141.424789]  pci_iov_remove_virtfn+0xba/0x120
+[  141.425452]  sriov_disable+0x2f/0xf0
+[  141.425679]  igb_disable_sriov+0x4e/0x100 [igb]
+[  141.426353]  igb_remove+0xa0/0x130 [igb]
+[  141.426599]  pci_device_remove+0x36/0xb0
+[  141.426796]  device_release_driver_internal+0xc1/0x160
+[  141.427060]  driver_detach+0x44/0x90
+[  141.427253]  bus_remove_driver+0x55/0xe0
+[  141.427477]  pci_unregister_driver+0x2a/0xa0
+[  141.428296]  __x64_sys_delete_module+0x141/0x2b0
+[  141.429126]  ? mntput_no_expire+0x4a/0x240
+[  141.429363]  ? syscall_trace_enter.isra.19+0x126/0x1a0
+[  141.429653]  do_syscall_64+0x5b/0x80
+[  141.429847]  ? exit_to_user_mode_prepare+0x14d/0x1c0
+[  141.430109]  ? syscall_exit_to_user_mode+0x12/0x30
+[  141.430849]  ? do_syscall_64+0x67/0x80
+[  141.431083]  ? syscall_exit_to_user_mode_prepare+0x183/0x1b0
+[  141.431770]  ? syscall_exit_to_user_mode+0x12/0x30
+[  141.432482]  ? do_syscall_64+0x67/0x80
+[  141.432714]  ? exc_page_fault+0x64/0x140
+[  141.432911]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Since the igb_disable_sriov() will call pci_disable_sriov() before
+releasing any resources, the netdev core will synchronize the cleanup to
+avoid any races. This patch removes the useless rtnl_(un)lock to guarantee
+correctness.
+
+CC: stable@vger.kernel.org
+Fixes: 6faee3d4ee8b ("igb: Add lock to avoid data race")
+Reported-by: Corinna Vinschen <vinschen@redhat.com>
+Link: https://lore.kernel.org/intel-wired-lan/ZAcJvkEPqWeJHO2r@calimero.vinschen.de/
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Tested-by: Corinna Vinschen <vinschen@redhat.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_main.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -1981,11 +1981,25 @@ int ocfs2_write_end_nolock(struct addres
- 	}
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -3821,9 +3821,7 @@ static void igb_remove(struct pci_dev *p
+ 	igb_release_hw_control(adapter);
  
- 	if (unlikely(copied < len) && wc->w_target_page) {
-+		loff_t new_isize;
-+
- 		if (!PageUptodate(wc->w_target_page))
- 			copied = 0;
+ #ifdef CONFIG_PCI_IOV
+-	rtnl_lock();
+ 	igb_disable_sriov(pdev);
+-	rtnl_unlock();
+ #endif
  
--		ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
--				       start+len);
-+		new_isize = max_t(loff_t, i_size_read(inode), pos + copied);
-+		if (new_isize > page_offset(wc->w_target_page))
-+			ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
-+					       start+len);
-+		else {
-+			/*
-+			 * When page is fully beyond new isize (data copy
-+			 * failed), do not bother zeroing the page. Invalidate
-+			 * it instead so that writeback does not get confused
-+			 * put page & buffer dirty bits into inconsistent
-+			 * state.
-+			 */
-+			block_invalidatepage(wc->w_target_page, 0, PAGE_SIZE);
-+		}
- 	}
- 	if (wc->w_target_page)
- 		flush_dcache_page(wc->w_target_page);
+ 	unregister_netdev(netdev);
 
 
