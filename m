@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F4F6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE3EC433D2;
-	Mon,  3 Apr 2023 14:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D5A6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C59C433D2;
+	Mon,  3 Apr 2023 14:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532878;
-	bh=a7axbQYD8z8Xc7gCC1YfckJxcJAG4ev05FD4JTZNsjc=;
+	s=korg; t=1680532881;
+	bh=GHMmG/dGpYmkCrZ6wUS64ruKlFVHN1grX6kamcEGYpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ifrLexNifsaEAFMg6yect8hAcQ5kQOOOfOLPSE3V1cZSiDRMDSgbsuozyY1gVx3uH
-	 mieNW22PEg2dFrhvS36Mf3UwJpGYUVuJJohyDaXzbnMzXA7jWMBLPeKiDW9q3Y02WM
-	 Jt9ohLpJrNtyRNQyTb9P9J/A7F/Y0nu17GgiI7oE=
+	b=G1bzwSKlvImCtoO02VFOXPNMnVPdVOgfbRZNXdur60CK0lJDDPJtIUnasFstSfuja
+	 dbscvLiJf4CTF9HwmJB3RG241gChkaGw3VFRCWIbR7sz8cefMLytoN9kKJmDcF0D5X
+	 5XfuQdVrKTTo6iPRDkTeD/zqoUWTI8mvclBPZhws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Benkmann <matthias.benkmann@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Raghunathan Srinivasan <raghunathan.srinivasan@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 121/181] Input: xpad - fix incorrectly applied patch for MAP_PROFILE_BUTTON
-Date: Mon,  3 Apr 2023 16:09:16 +0200
-Message-Id: <20230403140419.015468929@linuxfoundation.org>
+Subject: [PATCH 6.1 122/181] iommu/vt-d: Allow zero SAGAW if second-stage not supported
+Date: Mon,  3 Apr 2023 16:09:17 +0200
+Message-Id: <20230403140419.048218052@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -35,48 +38,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias Benkmann <matthias.benkmann@gmail.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit ffa6206ebf8d39e83d87ac226df68dbbe155819a ]
+[ Upstream commit bfd3c6b9fa4a1dc78139dd1621d5bea321ffa69d ]
 
-When commit commit fff1011a26d6 ("Input: xpad - add X-Box Adaptive Profile
-button") was applied, one hunk ended up in the wrong function; move it to
-where it belongs.
+The VT-d spec states (in section 11.4.2) that hardware implementations
+reporting second-stage translation support (SSTS) field as Clear also
+report the SAGAW field as 0. Fix an inappropriate check in alloc_iommu().
 
-Fixes: fff1011a26d6 ("Input: xpad - add X-Box Adaptive Profile button")
-Signed-off-by: Matthias Benkmann <matthias.benkmann@gmail.com>
-Link: https://lore.kernel.org/r/20230318162106.0aef4ba5@ninja
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 792fb43ce2c9 ("iommu/vt-d: Enable Intel IOMMU scalable mode by default")
+Suggested-by: Raghunathan Srinivasan <raghunathan.srinivasan@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20230318024824.124542-1-baolu.lu@linux.intel.com
+Link: https://lore.kernel.org/r/20230329134721.469447-3-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/iommu/intel/dmar.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
-index 2959d80f7fdb6..cd36cf7165423 100644
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -779,9 +779,6 @@ static void xpad_process_packet(struct usb_xpad *xpad, u16 cmd, unsigned char *d
- 	input_report_key(dev, BTN_C, data[8]);
- 	input_report_key(dev, BTN_Z, data[9]);
+diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
+index bc94059a5b870..f800989ea0462 100644
+--- a/drivers/iommu/intel/dmar.c
++++ b/drivers/iommu/intel/dmar.c
+@@ -1057,7 +1057,8 @@ static int alloc_iommu(struct dmar_drhd_unit *drhd)
+ 	}
  
--	/* Profile button has a value of 0-3, so it is reported as an axis */
--	if (xpad->mapping & MAP_PROFILE_BUTTON)
--		input_report_abs(dev, ABS_PROFILE, data[34]);
- 
- 	input_sync(dev);
- }
-@@ -1059,6 +1056,10 @@ static void xpadone_process_packet(struct usb_xpad *xpad, u16 cmd, unsigned char
- 					(__u16) le16_to_cpup((__le16 *)(data + 8)));
- 		}
- 
-+		/* Profile button has a value of 0-3, so it is reported as an axis */
-+		if (xpad->mapping & MAP_PROFILE_BUTTON)
-+			input_report_abs(dev, ABS_PROFILE, data[34]);
-+
- 		/* paddle handling */
- 		/* based on SDL's SDL_hidapi_xboxone.c */
- 		if (xpad->mapping & MAP_PADDLES) {
+ 	err = -EINVAL;
+-	if (cap_sagaw(iommu->cap) == 0) {
++	if (!cap_sagaw(iommu->cap) &&
++	    (!ecap_smts(iommu->ecap) || ecap_slts(iommu->ecap))) {
+ 		pr_info("%s: No supported address widths. Not attempting DMA translation.\n",
+ 			iommu->name);
+ 		drhd->ignored = 1;
 -- 
 2.39.2
 
