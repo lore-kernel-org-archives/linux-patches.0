@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DDA5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F70EC433EF;
-	Mon,  3 Apr 2023 14:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2015683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADEAC433A4;
+	Mon,  3 Apr 2023 14:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531475;
-	bh=359qXwL4HKdnDQgGZUMKUy0zOMWryxbG434QgbEkaD0=;
+	s=korg; t=1680531478;
+	bh=sSU9XvZ09P806JnsvzQ+NQuxr5xjRZAphV+fuvT+dDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CywlbDc0NohRw3Cz7gY+M3YNeImTp5x7YfppvPFGPvNE+ThhHIrwpTEjp4lRgNNqJ
-	 4uXxGv+NYYJcJv8Au1Zs3HXbGSfrKer1TQoSY8gK6Uynm62kAr/N5k7gKnXzDLfjsb
-	 qsX4CQ3oSzFdBubj6GlpOvvJloFNiWJC39fHN3ZU=
+	b=I5NdAyjxZWocIoxnL7JMTwRem1JPDyAh/XpfBAG6BZjcnhyXKnOn2hhe49PJkDKAA
+	 31oggEiY0iLiJmNLvhzpJd/pGWnds8VPp0986IltQCzNz4FTQJ7hUYcgeUcrLebhA1
+	 1hSNMABCxNQAIEbCZ1QiO/hFHNXpdIRlA0kI1rAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com,
-	Jun Nie <jun.nie@linaro.org>,
-	Ye Bin <yebin10@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
-	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 4.19 78/84] ext4: fix kernel BUG in ext4_write_inline_data_end()
-Date: Mon,  3 Apr 2023 16:09:19 +0200
-Message-Id: <20230403140356.095843299@linuxfoundation.org>
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>
+Subject: [PATCH 4.19 79/84] firmware: arm_scmi: Fix device node validation for mailbox transport
+Date: Mon,  3 Apr 2023 16:09:20 +0200
+Message-Id: <20230403140356.135257966@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -38,110 +34,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-commit 5c099c4fdc438014d5893629e70a8ba934433ee8 upstream.
+commit 2ab4f4018cb6b8010ca5002c3bdc37783b5d28c2 upstream.
 
-Syzbot report follow issue:
-------------[ cut here ]------------
-kernel BUG at fs/ext4/inline.c:227!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN
-CPU: 1 PID: 3629 Comm: syz-executor212 Not tainted 6.1.0-rc5-syzkaller-00018-g59d0d52c30d4 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:ext4_write_inline_data+0x344/0x3e0 fs/ext4/inline.c:227
-RSP: 0018:ffffc90003b3f368 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffff8880704e16c0 RCX: 0000000000000000
-RDX: ffff888021763a80 RSI: ffffffff821e31a4 RDI: 0000000000000006
-RBP: 000000000006818e R08: 0000000000000006 R09: 0000000000068199
-R10: 0000000000000079 R11: 0000000000000000 R12: 000000000000000b
-R13: 0000000000068199 R14: ffffc90003b3f408 R15: ffff8880704e1c82
-FS:  000055555723e3c0(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fffe8ac9080 CR3: 0000000079f81000 CR4: 0000000000350ee0
-Call Trace:
- <TASK>
- ext4_write_inline_data_end+0x2a3/0x12f0 fs/ext4/inline.c:768
- ext4_write_end+0x242/0xdd0 fs/ext4/inode.c:1313
- ext4_da_write_end+0x3ed/0xa30 fs/ext4/inode.c:3063
- generic_perform_write+0x316/0x570 mm/filemap.c:3764
- ext4_buffered_write_iter+0x15b/0x460 fs/ext4/file.c:285
- ext4_file_write_iter+0x8bc/0x16e0 fs/ext4/file.c:700
- call_write_iter include/linux/fs.h:2191 [inline]
- do_iter_readv_writev+0x20b/0x3b0 fs/read_write.c:735
- do_iter_write+0x182/0x700 fs/read_write.c:861
- vfs_iter_write+0x74/0xa0 fs/read_write.c:902
- iter_file_splice_write+0x745/0xc90 fs/splice.c:686
- do_splice_from fs/splice.c:764 [inline]
- direct_splice_actor+0x114/0x180 fs/splice.c:931
- splice_direct_to_actor+0x335/0x8a0 fs/splice.c:886
- do_splice_direct+0x1ab/0x280 fs/splice.c:974
- do_sendfile+0xb19/0x1270 fs/read_write.c:1255
- __do_sys_sendfile64 fs/read_write.c:1323 [inline]
- __se_sys_sendfile64 fs/read_write.c:1309 [inline]
- __x64_sys_sendfile64+0x1d0/0x210 fs/read_write.c:1309
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
----[ end trace 0000000000000000 ]---
+When mailboxes are used as a transport it is possible to setup the SCMI
+transport layer, depending on the underlying channels configuration, to use
+one or two mailboxes, associated, respectively, to one or two, distinct,
+shared memory areas: any other combination should be treated as invalid.
 
-Above issue may happens as follows:
-ext4_da_write_begin
-  ext4_da_write_inline_data_begin
-    ext4_da_convert_inline_data_to_extent
-      ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
-ext4_da_write_end
+Add more strict checking of SCMI mailbox transport device node descriptors.
 
-ext4_run_li_request
-  ext4_mb_prefetch
-    ext4_read_block_bitmap_nowait
-      ext4_validate_block_bitmap
-        ext4_mark_group_bitmap_corrupted(sb, block_group, EXT4_GROUP_INFO_BBITMAP_CORRUPT)
-	 percpu_counter_sub(&sbi->s_freeclusters_counter,grp->bb_free);
-	  -> sbi->s_freeclusters_counter become zero
-ext4_da_write_begin
-  if (ext4_nonda_switch(inode->i_sb)) -> As freeclusters_counter is zero will return true
-    *fsdata = (void *)FALL_BACK_TO_NONDELALLOC;
-    ext4_write_begin
-ext4_da_write_end
-  if (write_mode == FALL_BACK_TO_NONDELALLOC)
-    ext4_write_end
-      if (inline_data)
-        ext4_write_inline_data_end
-	  ext4_write_inline_data
-	    BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
-           -> As inode is already convert to extent, so 'pos + len' > inline_size
-	   -> then trigger BUG.
-
-To solve this issue, instead of checking ext4_has_inline_data() which
-is only cleared after data has been written back, check the
-EXT4_STATE_MAY_INLINE_DATA flag in ext4_write_end().
-
-Fixes: f19d5870cbf7 ("ext4: add normal write support for inline data")
-Reported-by: syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com
-Reported-by: Jun Nie <jun.nie@linaro.org>
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/r/20221206144134.1919987-1-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ta: Fix conflict in if expression and use the local variable inline_data
-as it is initialized with ext4_has_inline_data(inode) anyway.]
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Fixes: 5c8a47a5a91d ("firmware: arm_scmi: Make scmi core independent of the transport type")
+Cc: <stable@vger.kernel.org> # 4.19
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20230307162324.891866-1-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+[Cristian: backported to v4.19]
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_scmi/driver.c |   37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1428,7 +1428,8 @@ static int ext4_write_end(struct file *f
- 	int inline_data = ext4_has_inline_data(inode);
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -705,6 +705,39 @@ static int scmi_remove(struct platform_d
+ 	return ret;
+ }
  
- 	trace_ext4_write_end(inode, pos, len, copied);
--	if (inline_data) {
-+	if (inline_data &&
-+	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)) {
- 		ret = ext4_write_inline_data_end(inode, pos, len,
- 						 copied, page);
- 		if (ret < 0) {
++static int scmi_mailbox_chan_validate(struct device *cdev)
++{
++	int num_mb, num_sh, ret = 0;
++	struct device_node *np = cdev->of_node;
++
++	num_mb = of_count_phandle_with_args(np, "mboxes", "#mbox-cells");
++	num_sh = of_count_phandle_with_args(np, "shmem", NULL);
++	/* Bail out if mboxes and shmem descriptors are inconsistent */
++	if (num_mb <= 0 || num_sh > 2 || num_mb != num_sh) {
++		dev_warn(cdev, "Invalid channel descriptor for '%s'\n",
++			 of_node_full_name(np));
++		return -EINVAL;
++	}
++
++	if (num_sh > 1) {
++		struct device_node *np_tx, *np_rx;
++
++		np_tx = of_parse_phandle(np, "shmem", 0);
++		np_rx = of_parse_phandle(np, "shmem", 1);
++		/* SCMI Tx and Rx shared mem areas have to be distinct */
++		if (!np_tx || !np_rx || np_tx == np_rx) {
++			dev_warn(cdev, "Invalid shmem descriptor for '%s'\n",
++				 of_node_full_name(np));
++			ret = -EINVAL;
++		}
++
++		of_node_put(np_tx);
++		of_node_put(np_rx);
++	}
++
++	return ret;
++}
++
+ static inline int
+ scmi_mbox_chan_setup(struct scmi_info *info, struct device *dev, int prot_id)
+ {
+@@ -720,6 +753,10 @@ scmi_mbox_chan_setup(struct scmi_info *i
+ 		goto idr_alloc;
+ 	}
+ 
++	ret = scmi_mailbox_chan_validate(dev);
++	if (ret)
++		return ret;
++
+ 	cinfo = devm_kzalloc(info->dev, sizeof(*cinfo), GFP_KERNEL);
+ 	if (!cinfo)
+ 		return -ENOMEM;
 
 
