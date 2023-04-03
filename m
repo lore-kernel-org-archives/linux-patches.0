@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEF96FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:25:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52B3C4339C;
-	Mon,  3 Apr 2023 14:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D56B6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:25:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DDAC433D2;
+	Mon,  3 Apr 2023 14:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531902;
-	bh=5DztJjnytqAqEyQmHIJtCCmHkd6u6A48+ATtFb+1NE8=;
+	s=korg; t=1680531904;
+	bh=AYQK/nW9l4cl/DtggUNloxtu/0Ez46kxbDH+CvduZ00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYXU/gMTN5ZMCUKPTk1mKMITZV6iAUL1lVSOsSdDjCq/QBVBlQ86c+KHCenc7VJX8
-	 2ZyKjP0V0MMzbrlax2NZrVnIsxHRQT6wh2f1V+2tGBFHI84vJUSP7zvFOMFrBm2rzC
-	 wwAdvr4Y+QfejY0bskc8Ub18dZui+9fx8nH4hz14=
+	b=Jg4s1tHekMjBg5VpPeSPVf8YDR6lUgg3iCTC8YcnD65Q2VTL9sDsI6dD+A0c7BhH/
+	 k8axZ7WtBVArplICeFw/qdzyeKoN68rs3Fv4eump2BDxpN03GHU2IyV6GcamVF5IhN
+	 apa852eR11vHn46z6c9Q+0mftkls36yFLKGk97JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zheng Wang <zyytlz.wz@163.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/173] power: supply: bq24190: Fix use after free bug in bq24190_remove due to race condition
-Date: Mon,  3 Apr 2023 16:07:15 +0200
-Message-Id: <20230403140414.977852127@linuxfoundation.org>
+Subject: [PATCH 5.10 021/173] power: supply: da9150: Fix use after free bug in da9150_charger_remove due to race condition
+Date: Mon,  3 Apr 2023 16:07:16 +0200
+Message-Id: <20230403140415.015500735@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -37,51 +37,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 47c29d69212911f50bdcdd0564b5999a559010d4 ]
+[ Upstream commit 06615d11cc78162dfd5116efb71f29eb29502d37 ]
 
-In bq24190_probe, &bdi->input_current_limit_work is bound
-with bq24190_input_current_limit_work. When external power
-changed, it will call bq24190_charger_external_power_changed
- to start the work.
+In da9150_charger_probe, &charger->otg_work is bound with
+da9150_charger_otg_work. da9150_charger_otg_ncb may be
+called to start the work.
 
-If we remove the module which will call bq24190_remove to make
-cleanup, there may be a unfinished work. The possible
+If we remove the module which will call da9150_charger_remove
+to make cleanup, there may be a unfinished work. The possible
 sequence is as follows:
+
+Fix it by canceling the work before cleanup in the da9150_charger_remove
 
 CPU0                  CPUc1
 
-                    |bq24190_input_current_limit_work
-bq24190_remove      |
+                    |da9150_charger_otg_work
+da9150_charger_remove      |
 power_supply_unregister  |
 device_unregister   |
 power_supply_dev_release|
 kfree(psy)          |
                     |
-                    | power_supply_get_property_from_supplier
+                    | 	power_supply_changed(charger->usb);
                     |   //use
 
-Fix it by finishing the work before cleanup in the bq24190_remove
-
-Fixes: 97774672573a ("power_supply: Initialize changed_work before calling device_add")
+Fixes: c1a281e34dae ("power: Add support for DA9150 Charger")
 Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq24190_charger.c | 1 +
+ drivers/power/supply/da9150-charger.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
-index 81389fcc73e14..338dd82007e4e 100644
---- a/drivers/power/supply/bq24190_charger.c
-+++ b/drivers/power/supply/bq24190_charger.c
-@@ -1834,6 +1834,7 @@ static int bq24190_remove(struct i2c_client *client)
- 	struct bq24190_dev_info *bdi = i2c_get_clientdata(client);
- 	int error;
+diff --git a/drivers/power/supply/da9150-charger.c b/drivers/power/supply/da9150-charger.c
+index f9314cc0cd75f..6b987da586556 100644
+--- a/drivers/power/supply/da9150-charger.c
++++ b/drivers/power/supply/da9150-charger.c
+@@ -662,6 +662,7 @@ static int da9150_charger_remove(struct platform_device *pdev)
  
-+	cancel_delayed_work_sync(&bdi->input_current_limit_work);
- 	error = pm_runtime_resume_and_get(bdi->dev);
- 	if (error < 0)
- 		dev_warn(bdi->dev, "pm_runtime_get failed: %i\n", error);
+ 	if (!IS_ERR_OR_NULL(charger->usb_phy))
+ 		usb_unregister_notifier(charger->usb_phy, &charger->otg_nb);
++	cancel_work_sync(&charger->otg_work);
+ 
+ 	power_supply_unregister(charger->battery);
+ 	power_supply_unregister(charger->usb);
 -- 
 2.39.2
 
