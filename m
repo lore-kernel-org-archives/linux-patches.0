@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727F55683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5B3C433D2;
-	Mon,  3 Apr 2023 14:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DDA5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F70EC433EF;
+	Mon,  3 Apr 2023 14:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531473;
-	bh=Z5GpQM+QAhsfF597PZFvl/e2AmL7v7i5JiSZtIY63Vk=;
+	s=korg; t=1680531475;
+	bh=359qXwL4HKdnDQgGZUMKUy0zOMWryxbG434QgbEkaD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3t2noc6LN+NaYdeCKaoNIWD7vbiFz98KqD7F+guMtyCVPAHOMpjHNamM5UV+WALE
-	 RiQWl0Frr0n+ryqHBzYI62r/Bqv1lVTTni+Eyl7HhCpKLu/K9kkjsomlFg+BsQpP0r
-	 7C5QMq+hn3bDAXy3H5JX7YH7T9tWGydsVjSEa0v4=
+	b=CywlbDc0NohRw3Cz7gY+M3YNeImTp5x7YfppvPFGPvNE+ThhHIrwpTEjp4lRgNNqJ
+	 4uXxGv+NYYJcJv8Au1Zs3HXbGSfrKer1TQoSY8gK6Uynm62kAr/N5k7gKnXzDLfjsb
+	 qsX4CQ3oSzFdBubj6GlpOvvJloFNiWJC39fHN3ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	"Nobuhiro Iwamatsu (CIP)" <nobuhiro1.iwamatsu@toshiba.co.jp>
-Subject: [PATCH 4.19 77/84] usb: host: ohci-pxa27x: Fix and & vs | typo
-Date: Mon,  3 Apr 2023 16:09:18 +0200
-Message-Id: <20230403140356.065882986@linuxfoundation.org>
+	syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com,
+	Jun Nie <jun.nie@linaro.org>,
+	Ye Bin <yebin10@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
+	Tudor Ambarus <tudor.ambarus@linaro.org>
+Subject: [PATCH 4.19 78/84] ext4: fix kernel BUG in ext4_write_inline_data_end()
+Date: Mon,  3 Apr 2023 16:09:19 +0200
+Message-Id: <20230403140356.095843299@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,34 +38,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 0709831a50d31b3caf2237e8d7fe89e15b0d919d upstream.
+commit 5c099c4fdc438014d5893629e70a8ba934433ee8 upstream.
 
-The code is supposed to clear the RH_A_NPS and RH_A_PSM bits, but it's
-a no-op because of the & vs | typo.  This bug predates git and it was
-only discovered using static analysis so it must not affect too many
-people in real life.
+Syzbot report follow issue:
+------------[ cut here ]------------
+kernel BUG at fs/ext4/inline.c:227!
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+CPU: 1 PID: 3629 Comm: syz-executor212 Not tainted 6.1.0-rc5-syzkaller-00018-g59d0d52c30d4 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+RIP: 0010:ext4_write_inline_data+0x344/0x3e0 fs/ext4/inline.c:227
+RSP: 0018:ffffc90003b3f368 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffff8880704e16c0 RCX: 0000000000000000
+RDX: ffff888021763a80 RSI: ffffffff821e31a4 RDI: 0000000000000006
+RBP: 000000000006818e R08: 0000000000000006 R09: 0000000000068199
+R10: 0000000000000079 R11: 0000000000000000 R12: 000000000000000b
+R13: 0000000000068199 R14: ffffc90003b3f408 R15: ffff8880704e1c82
+FS:  000055555723e3c0(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fffe8ac9080 CR3: 0000000079f81000 CR4: 0000000000350ee0
+Call Trace:
+ <TASK>
+ ext4_write_inline_data_end+0x2a3/0x12f0 fs/ext4/inline.c:768
+ ext4_write_end+0x242/0xdd0 fs/ext4/inode.c:1313
+ ext4_da_write_end+0x3ed/0xa30 fs/ext4/inode.c:3063
+ generic_perform_write+0x316/0x570 mm/filemap.c:3764
+ ext4_buffered_write_iter+0x15b/0x460 fs/ext4/file.c:285
+ ext4_file_write_iter+0x8bc/0x16e0 fs/ext4/file.c:700
+ call_write_iter include/linux/fs.h:2191 [inline]
+ do_iter_readv_writev+0x20b/0x3b0 fs/read_write.c:735
+ do_iter_write+0x182/0x700 fs/read_write.c:861
+ vfs_iter_write+0x74/0xa0 fs/read_write.c:902
+ iter_file_splice_write+0x745/0xc90 fs/splice.c:686
+ do_splice_from fs/splice.c:764 [inline]
+ direct_splice_actor+0x114/0x180 fs/splice.c:931
+ splice_direct_to_actor+0x335/0x8a0 fs/splice.c:886
+ do_splice_direct+0x1ab/0x280 fs/splice.c:974
+ do_sendfile+0xb19/0x1270 fs/read_write.c:1255
+ __do_sys_sendfile64 fs/read_write.c:1323 [inline]
+ __se_sys_sendfile64 fs/read_write.c:1309 [inline]
+ __x64_sys_sendfile64+0x1d0/0x210 fs/read_write.c:1309
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20190817065520.GA29951@mwanda
-Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro1.iwamatsu@toshiba.co.jp>
+Above issue may happens as follows:
+ext4_da_write_begin
+  ext4_da_write_inline_data_begin
+    ext4_da_convert_inline_data_to_extent
+      ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
+ext4_da_write_end
+
+ext4_run_li_request
+  ext4_mb_prefetch
+    ext4_read_block_bitmap_nowait
+      ext4_validate_block_bitmap
+        ext4_mark_group_bitmap_corrupted(sb, block_group, EXT4_GROUP_INFO_BBITMAP_CORRUPT)
+	 percpu_counter_sub(&sbi->s_freeclusters_counter,grp->bb_free);
+	  -> sbi->s_freeclusters_counter become zero
+ext4_da_write_begin
+  if (ext4_nonda_switch(inode->i_sb)) -> As freeclusters_counter is zero will return true
+    *fsdata = (void *)FALL_BACK_TO_NONDELALLOC;
+    ext4_write_begin
+ext4_da_write_end
+  if (write_mode == FALL_BACK_TO_NONDELALLOC)
+    ext4_write_end
+      if (inline_data)
+        ext4_write_inline_data_end
+	  ext4_write_inline_data
+	    BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
+           -> As inode is already convert to extent, so 'pos + len' > inline_size
+	   -> then trigger BUG.
+
+To solve this issue, instead of checking ext4_has_inline_data() which
+is only cleared after data has been written back, check the
+EXT4_STATE_MAY_INLINE_DATA flag in ext4_write_end().
+
+Fixes: f19d5870cbf7 ("ext4: add normal write support for inline data")
+Reported-by: syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com
+Reported-by: Jun Nie <jun.nie@linaro.org>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Link: https://lore.kernel.org/r/20221206144134.1919987-1-yebin@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ta: Fix conflict in if expression and use the local variable inline_data
+as it is initialized with ext4_has_inline_data(inode) anyway.]
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-pxa27x.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/ohci-pxa27x.c
-+++ b/drivers/usb/host/ohci-pxa27x.c
-@@ -148,7 +148,7 @@ static int pxa27x_ohci_select_pmm(struct
- 		uhcrhda |= RH_A_NPS;
- 		break;
- 	case PMM_GLOBAL_MODE:
--		uhcrhda &= ~(RH_A_NPS & RH_A_PSM);
-+		uhcrhda &= ~(RH_A_NPS | RH_A_PSM);
- 		break;
- 	case PMM_PERPORT_MODE:
- 		uhcrhda &= ~(RH_A_NPS);
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -1428,7 +1428,8 @@ static int ext4_write_end(struct file *f
+ 	int inline_data = ext4_has_inline_data(inode);
+ 
+ 	trace_ext4_write_end(inode, pos, len, copied);
+-	if (inline_data) {
++	if (inline_data &&
++	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)) {
+ 		ret = ext4_write_inline_data_end(inode, pos, len,
+ 						 copied, page);
+ 		if (ret < 0) {
 
 
