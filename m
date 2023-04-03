@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0665683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E74C433EF;
-	Mon,  3 Apr 2023 14:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C7B5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852E0C4339B;
+	Mon,  3 Apr 2023 14:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531515;
-	bh=R0oJA7TgNtTlD6/a1l9JKsyxkJ0quP1uLw9XH9XglCw=;
+	s=korg; t=1680531517;
+	bh=VPNXqtJay/NDsyz6ETXPJ12aCdP/GFaBQ9c43DwefPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=doyCgaZl0mKwd/0Y7czosXIkoid02zEqp36jzJORZLYcbvVE1YqGdkzgGXzZPVtDI
-	 i00QmUKMBkxDzEPD11x+xcAlbDnFNY9YEHRYXz7eHhZ8irSJD0xNisskYZwLPfXwDh
-	 Z8aTwT5Q7bAiC/Jr5LauAs1IhlBeSmgqmj0gfB24=
+	b=xRu4quTs6mqrhLWWnIBDvePlTc2GlVayB/6N3yz6YVoOIJ9hQ6matCk40uxrzzS3f
+	 NaSNsamlDUWURHVm+34DV/x3vNyaAteFfV/h0tgXdIGREYxiSYyDiu4uxkmPO3l4Yh
+	 u0VfC2AFdcRqc9j2RmnPfaGa3IhWbeuzz3XZf+S8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c9bfd85eca611ebf5db1@syzkaller.appspotmail.com,
-	Ivan Orlov <ivan.orlov0322@gmail.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Meena Shanmugam <meenashanmugam@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 63/84] can: bcm: bcm_tx_setup(): fix KMSAN uninit-value in vfs_write
-Date: Mon,  3 Apr 2023 16:09:04 +0200
-Message-Id: <20230403140355.601224526@linuxfoundation.org>
+Subject: [PATCH 5.4 001/104] net: tls: fix possible race condition between do_tls_getsockopt_conf() and do_tls_setsockopt_conf()
+Date: Mon,  3 Apr 2023 16:07:53 +0200
+Message-Id: <20230403140403.847323570@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
-References: <20230403140353.406927418@linuxfoundation.org>
+In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
+References: <20230403140403.549815164@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,116 +38,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Orlov <ivan.orlov0322@gmail.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit 2b4c99f7d9a57ecd644eda9b1fb0a1072414959f ]
+commit 49c47cc21b5b7a3d8deb18fc57b0aa2ab1286962 upstream.
 
-Syzkaller reported the following issue:
+ctx->crypto_send.info is not protected by lock_sock in
+do_tls_getsockopt_conf(). A race condition between do_tls_getsockopt_conf()
+and error paths of do_tls_setsockopt_conf() may lead to a use-after-free
+or null-deref.
 
-=====================================================
-BUG: KMSAN: uninit-value in aio_rw_done fs/aio.c:1520 [inline]
-BUG: KMSAN: uninit-value in aio_write+0x899/0x950 fs/aio.c:1600
- aio_rw_done fs/aio.c:1520 [inline]
- aio_write+0x899/0x950 fs/aio.c:1600
- io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
- __do_sys_io_submit fs/aio.c:2078 [inline]
- __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
- __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+More discussion:  https://lore.kernel.org/all/Y/ht6gQL+u6fj3dG@hog/
 
-Uninit was created at:
- slab_post_alloc_hook mm/slab.h:766 [inline]
- slab_alloc_node mm/slub.c:3452 [inline]
- __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
- __do_kmalloc_node mm/slab_common.c:967 [inline]
- __kmalloc+0x11d/0x3b0 mm/slab_common.c:981
- kmalloc_array include/linux/slab.h:636 [inline]
- bcm_tx_setup+0x80e/0x29d0 net/can/bcm.c:930
- bcm_sendmsg+0x3a2/0xce0 net/can/bcm.c:1351
- sock_sendmsg_nosec net/socket.c:714 [inline]
- sock_sendmsg net/socket.c:734 [inline]
- sock_write_iter+0x495/0x5e0 net/socket.c:1108
- call_write_iter include/linux/fs.h:2189 [inline]
- aio_write+0x63a/0x950 fs/aio.c:1600
- io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
- __do_sys_io_submit fs/aio.c:2078 [inline]
- __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
- __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-CPU: 1 PID: 5034 Comm: syz-executor350 Not tainted 6.2.0-rc6-syzkaller-80422-geda666ff2276 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
-=====================================================
-
-We can follow the call chain and find that 'bcm_tx_setup' function
-calls 'memcpy_from_msg' to copy some content to the newly allocated
-frame of 'op->frames'. After that the 'len' field of copied structure
-being compared with some constant value (64 or 8). However, if
-'memcpy_from_msg' returns an error, we will compare some uninitialized
-memory. This triggers 'uninit-value' issue.
-
-This patch will add 'memcpy_from_msg' possible errors processing to
-avoid uninit-value issue.
-
-Tested via syzkaller
-
-Reported-by: syzbot+c9bfd85eca611ebf5db1@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=47f897f8ad958bbde5790ebf389b5e7e0a345089
-Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
-Fixes: 6f3b911d5f29b ("can: bcm: add support for CAN FD frames")
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20230314120445.12407-1-ivan.orlov0322@gmail.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 3c4d7559159b ("tls: kernel TLS support")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Link: https://lore.kernel.org/r/20230228023344.9623-1-hbh25y@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Meena Shanmugam <meenashanmugam@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/tls/tls_main.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 74e555a22de75..61269cc2fa828 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -935,6 +935,8 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index 7aba4ee77aba3..cb51a2f46b11d 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -371,13 +371,11 @@ static int do_tls_getsockopt_tx(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aes_gcm_128->iv,
+ 		       ctx->tx.iv + TLS_CIPHER_AES_GCM_128_SALT_SIZE,
+ 		       TLS_CIPHER_AES_GCM_128_IV_SIZE);
+ 		memcpy(crypto_info_aes_gcm_128->rec_seq, ctx->tx.rec_seq,
+ 		       TLS_CIPHER_AES_GCM_128_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aes_gcm_128,
+ 				 sizeof(*crypto_info_aes_gcm_128)))
+@@ -395,13 +393,11 @@ static int do_tls_getsockopt_tx(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aes_gcm_256->iv,
+ 		       ctx->tx.iv + TLS_CIPHER_AES_GCM_256_SALT_SIZE,
+ 		       TLS_CIPHER_AES_GCM_256_IV_SIZE);
+ 		memcpy(crypto_info_aes_gcm_256->rec_seq, ctx->tx.rec_seq,
+ 		       TLS_CIPHER_AES_GCM_256_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aes_gcm_256,
+ 				 sizeof(*crypto_info_aes_gcm_256)))
+@@ -421,6 +417,8 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
+ {
+ 	int rc = 0;
  
- 			cf = op->frames + op->cfsiz * i;
- 			err = memcpy_from_msg((u8 *)cf, msg, op->cfsiz);
-+			if (err < 0)
-+				goto free_op;
- 
- 			if (op->flags & CAN_FD_FRAME) {
- 				if (cf->len > 64)
-@@ -944,12 +946,8 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 					err = -EINVAL;
- 			}
- 
--			if (err < 0) {
--				if (op->frames != &op->sframe)
--					kfree(op->frames);
--				kfree(op);
--				return err;
--			}
-+			if (err < 0)
-+				goto free_op;
- 
- 			if (msg_head->flags & TX_CP_CAN_ID) {
- 				/* copy can_id into frame */
-@@ -1020,6 +1018,12 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		bcm_tx_start_timer(op);
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
++	lock_sock(sk);
 +
-+free_op:
-+	if (op->frames != &op->sframe)
-+		kfree(op->frames);
-+	kfree(op);
-+	return err;
+ 	switch (optname) {
+ 	case TLS_TX:
+ 		rc = do_tls_getsockopt_tx(sk, optval, optlen);
+@@ -429,6 +427,9 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
+ 		rc = -ENOPROTOOPT;
+ 		break;
+ 	}
++
++	release_sock(sk);
++
+ 	return rc;
  }
  
- /*
 -- 
 2.39.2
 
