@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9FA612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28513C433EF;
-	Mon,  3 Apr 2023 14:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BBA612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9C2C433D2;
+	Mon,  3 Apr 2023 14:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531735;
-	bh=GAkgdQ2/ZiV0xW33VoK5GdZmAZR/vkFGPNZyPRNpfmw=;
+	s=korg; t=1680531738;
+	bh=JhJVy8XIJssKZnJKSkyLw4mRF6oxbVz9C8OsK+gS7qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lLHJBx/mbLQkwAwAPRNAtHdLgYcty0801gpJyQf6m+I0EX8oLypSgbJcT592T/MnS
-	 5/kYMoFvQ7hXnmf6wWVX4Y01PTtB7wkasj/EEoi76RUJw66gdt+eTh6tk2NFTFCeaa
-	 v4bfLg+6RqBSmvkUFyP7Zsw2qEs73o1PLci00siA=
+	b=yD6KO5nE13XXJvjAUJ2mlOc6KmFNS9nU1uvvrvoIht0r+FbyP22e6ElUvs4eRzjgo
+	 WTYcUN/rouy/JiaCFaQ1uOr67GqpMLtRpMmsmbYf/AUcmgLUCFWQt+COAOYoXQExwx
+	 IVdikzsd4Zes/liNNz2luULOOK0pOsDN8kG4on04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Disseldorp <ddiss@suse.de>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Ronnie Sahlberg <lsahlber@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.4 090/104] cifs: fix DFS traversal oops without CONFIG_CIFS_DFS_UPCALL
-Date: Mon,  3 Apr 2023 16:09:22 +0200
-Message-Id: <20230403140407.685114272@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Bastien Nocera <hadess@hadess.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.4 091/104] Input: goodix - add Lenovo Yoga Book X90F to nine_bytes_report DMI table
+Date: Mon,  3 Apr 2023 16:09:23 +0200
+Message-Id: <20230403140407.717236928@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -36,62 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Disseldorp <ddiss@suse.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 179a88a8558bbf42991d361595281f3e45d7edfc upstream.
+commit 8a0432bab6ea3203d220785da7ab3c7677f70ecb upstream.
 
-When compiled with CONFIG_CIFS_DFS_UPCALL disabled, cifs_dfs_d_automount
-is NULL. cifs.ko logic for mapping CIFS_FATTR_DFS_REFERRAL attributes to
-S_AUTOMOUNT and corresponding dentry flags is retained regardless of
-CONFIG_CIFS_DFS_UPCALL, leading to a NULL pointer dereference in
-VFS follow_automount() when traversing a DFS referral link:
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  ...
-  Call Trace:
-   <TASK>
-   __traverse_mounts+0xb5/0x220
-   ? cifs_revalidate_mapping+0x65/0xc0 [cifs]
-   step_into+0x195/0x610
-   ? lookup_fast+0xe2/0xf0
-   path_lookupat+0x64/0x140
-   filename_lookup+0xc2/0x140
-   ? __create_object+0x299/0x380
-   ? kmem_cache_alloc+0x119/0x220
-   ? user_path_at_empty+0x31/0x50
-   user_path_at_empty+0x31/0x50
-   __x64_sys_chdir+0x2a/0xd0
-   ? exit_to_user_mode_prepare+0xca/0x100
-   do_syscall_64+0x42/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
+The Android Lenovo Yoga Book X90F / X90L uses the same goodix touchscreen
+with 9 bytes touch reports for its touch keyboard as the already supported
+Windows Lenovo Yoga Book X91F/L, add a DMI match for this to
+the nine_bytes_report DMI table.
 
-This fix adds an inline cifs_dfs_d_automount() {return -EREMOTE} handler
-when CONFIG_CIFS_DFS_UPCALL is disabled. An alternative would be to
-avoid flagging S_AUTOMOUNT, etc. without CONFIG_CIFS_DFS_UPCALL. This
-approach was chosen as it provides more control over the error path.
+When the quirk for the X91F/L was initially added it was written to
+also apply to the X90F/L but this does not work because the Android
+version of the Yoga Book uses completely different DMI strings.
+Also adjust the X91F/L quirk to reflect that it only applies to
+the X91F/L models.
 
-Signed-off-by: David Disseldorp <ddiss@suse.de>
-Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Bastien Nocera <hadess@hadess.net>
+Link: https://lore.kernel.org/r/20230315134442.71787-1-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsfs.h |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/goodix.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/fs/cifs/cifsfs.h
-+++ b/fs/cifs/cifsfs.h
-@@ -125,7 +125,10 @@ extern const struct dentry_operations ci
- #ifdef CONFIG_CIFS_DFS_UPCALL
- extern struct vfsmount *cifs_dfs_d_automount(struct path *path);
- #else
--#define cifs_dfs_d_automount NULL
-+static inline struct vfsmount *cifs_dfs_d_automount(struct path *path)
-+{
-+	return ERR_PTR(-EREMOTE);
-+}
+--- a/drivers/input/touchscreen/goodix.c
++++ b/drivers/input/touchscreen/goodix.c
+@@ -170,10 +170,18 @@ static const struct dmi_system_id rotate
+ static const struct dmi_system_id nine_bytes_report[] = {
+ #if defined(CONFIG_DMI) && defined(CONFIG_X86)
+ 	{
+-		.ident = "Lenovo YogaBook",
+-		/* YB1-X91L/F and YB1-X90L/F */
++		/* Lenovo Yoga Book X90F / X90L */
+ 		.matches = {
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X9")
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
++		}
++	},
++	{
++		/* Lenovo Yoga Book X91F / X91L */
++		.matches = {
++			/* Non exact match to match F + L versions */
++			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X91"),
+ 		}
+ 	},
  #endif
- 
- /* Functions related to symlinks */
 
 
