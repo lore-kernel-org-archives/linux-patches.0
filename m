@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCD96FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:29:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302DBC433A0;
-	Mon,  3 Apr 2023 14:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBAE6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:29:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B54C433D2;
+	Mon,  3 Apr 2023 14:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532174;
-	bh=q8bhXhQBVjJGjPd/SgUlpYFowjC+Tyl/84S5+1gBDEM=;
+	s=korg; t=1680532177;
+	bh=OcLHVubkdzeb5/bdCzqBaw1wvW5keTBpbV7ZGEEGEZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwBbECP4QZkAmdHaio6d8R5Ia34+Trj7PosbG+YF6RbGdpZHacJF7la5/juj8rUBb
-	 GqAb7uIMajgVz/DmlJgCvopsphWAWiBNxGbAKAnl6X2HioQApCwI2fVBVXFUpNvsjn
-	 TUkZA46aHfJJF1YX34s5yDkxbAnpNkD9o52mmmsA=
+	b=UW8vkezKvrKevvNkavd3d8KUz2JxrZA8re7YxvS2lVbzvkAEWmnGCDUQDkY6mVlNE
+	 sV3q3h0sEv5stSxSPVZQcPs+k1SE0iDBG/NA5tzb4eKDsCJbHhAHenDZW+7mO78Q3o
+	 3IH3Rah7BwyammJrWARfOL+5LZ7g/QOxHcLQ8gO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Disseldorp <ddiss@suse.de>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Ronnie Sahlberg <lsahlber@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.10 148/173] cifs: fix DFS traversal oops without CONFIG_CIFS_DFS_UPCALL
-Date: Mon,  3 Apr 2023 16:09:23 +0200
-Message-Id: <20230403140419.242312919@linuxfoundation.org>
+	Jetro Jormalainen <jje-lxkl@jetro.fi>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 157/173] ALSA: hda/conexant: Partial revert of a quirk for Lenovo
+Date: Mon,  3 Apr 2023 16:09:32 +0200
+Message-Id: <20230403140419.533163685@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,62 +34,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Disseldorp <ddiss@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 179a88a8558bbf42991d361595281f3e45d7edfc upstream.
+commit b871cb971c683f7f212e7ca3c9a6709a75785116 upstream.
 
-When compiled with CONFIG_CIFS_DFS_UPCALL disabled, cifs_dfs_d_automount
-is NULL. cifs.ko logic for mapping CIFS_FATTR_DFS_REFERRAL attributes to
-S_AUTOMOUNT and corresponding dentry flags is retained regardless of
-CONFIG_CIFS_DFS_UPCALL, leading to a NULL pointer dereference in
-VFS follow_automount() when traversing a DFS referral link:
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  ...
-  Call Trace:
-   <TASK>
-   __traverse_mounts+0xb5/0x220
-   ? cifs_revalidate_mapping+0x65/0xc0 [cifs]
-   step_into+0x195/0x610
-   ? lookup_fast+0xe2/0xf0
-   path_lookupat+0x64/0x140
-   filename_lookup+0xc2/0x140
-   ? __create_object+0x299/0x380
-   ? kmem_cache_alloc+0x119/0x220
-   ? user_path_at_empty+0x31/0x50
-   user_path_at_empty+0x31/0x50
-   __x64_sys_chdir+0x2a/0xd0
-   ? exit_to_user_mode_prepare+0xca/0x100
-   do_syscall_64+0x42/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
+The recent commit f83bb2592482 ("ALSA: hda/conexant: Add quirk for
+LENOVO 20149 Notebook model") introduced a quirk for the device with
+17aa:3977, but this caused a regression on another model (Lenovo
+Ideadpad U31) with the very same PCI SSID.  And, through skimming over
+the net, it seems that this PCI SSID is used for multiple different
+models, so it's no good idea to apply the quirk with the SSID.
 
-This fix adds an inline cifs_dfs_d_automount() {return -EREMOTE} handler
-when CONFIG_CIFS_DFS_UPCALL is disabled. An alternative would be to
-avoid flagging S_AUTOMOUNT, etc. without CONFIG_CIFS_DFS_UPCALL. This
-approach was chosen as it provides more control over the error path.
+Although we may take a different ID check (e.g. the codec SSID instead
+of the PCI SSID), unfortunately, the original patch author couldn't
+identify the hardware details any longer as the machine was returned,
+and we can't develop the further proper fix.
 
-Signed-off-by: David Disseldorp <ddiss@suse.de>
-Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+In this patch, instead, we partially revert the change so that the
+quirk won't be applied as default for addressing the regression.
+Meanwhile, the quirk function itself is kept, and it's now made to be
+applicable via the explicit model=lenovo-20149 option.
+
+Fixes: f83bb2592482 ("ALSA: hda/conexant: Add quirk for LENOVO 20149 Notebook model")
+Reported-by: Jetro Jormalainen <jje-lxkl@jetro.fi>
+Link: https://lore.kernel.org/r/20230308215009.4d3e58a6@mopti
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230320140954.31154-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsfs.h |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_conexant.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/cifs/cifsfs.h
-+++ b/fs/cifs/cifsfs.h
-@@ -126,7 +126,10 @@ extern const struct dentry_operations ci
- #ifdef CONFIG_CIFS_DFS_UPCALL
- extern struct vfsmount *cifs_dfs_d_automount(struct path *path);
- #else
--#define cifs_dfs_d_automount NULL
-+static inline struct vfsmount *cifs_dfs_d_automount(struct path *path)
-+{
-+	return ERR_PTR(-EREMOTE);
-+}
- #endif
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -973,7 +973,10 @@ static const struct snd_pci_quirk cxt506
+ 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
+-	SND_PCI_QUIRK(0x17aa, 0x3977, "Lenovo IdeaPad U310", CXT_PINCFG_LENOVO_NOTEBOOK),
++	/* NOTE: we'd need to extend the quirk for 17aa:3977 as the same
++	 * PCI SSID is used on multiple Lenovo models
++	 */
++	SND_PCI_QUIRK(0x17aa, 0x3977, "Lenovo IdeaPad U310", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo G50-70", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x397b, "Lenovo S205", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad", CXT_FIXUP_THINKPAD_ACPI),
+@@ -996,6 +999,7 @@ static const struct hda_model_fixup cxt5
+ 	{ .id = CXT_FIXUP_MUTE_LED_GPIO, .name = "mute-led-gpio" },
+ 	{ .id = CXT_FIXUP_HP_ZBOOK_MUTE_LED, .name = "hp-zbook-mute-led" },
+ 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
++	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
+ 	{}
+ };
  
- /* Functions related to symlinks */
 
 
