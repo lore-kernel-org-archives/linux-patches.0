@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCE96FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA919C4339B;
-	Mon,  3 Apr 2023 14:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114A36FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F00C4339B;
+	Mon,  3 Apr 2023 14:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532928;
-	bh=I33yJAT4KiFZSXPo/3E9ruaP8eATWEbCpjRbyNNyFzs=;
+	s=korg; t=1680532930;
+	bh=/UtXTKxPWee9amjyNtxBjonY+3putMhVxhd1K7Ksd2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oYCt0p5fakHLGBKeakxKHEm5ac5EFvfCtMFw7iDIgSz07HvtZyP6q5xL7Tv/RNPU/
-	 lgk0JvaCEitb/AzXz5LE+hhAXvrhR1RUoRUxXY/SRURKiGSINd7Zy4R/CAxwWvVFi4
-	 hRJ6ATsy6Hj4VXsMYpyEbGsK3zmOIuNEYEkJ3AxA=
+	b=cr26O2vTqlKYp3SHjljamBqGgFfHSkCqgMG+/8t6emVmaKmTWBq6VrZk8yWH3I1bm
+	 dNcI5LKjzHhQZUtmm4MnmfVw1xPgl9WdAuXbMrPJo9mjFg0oM+bNGsHUPSTxPQN1ww
+	 pEwHdwIhEahq9fRMFJ9b0ZgdzprN0hwDP5ZcE+FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.1 170/181] KVM: arm64: Disable interrupts while walking userspace PTs
-Date: Mon,  3 Apr 2023 16:10:05 +0200
-Message-Id: <20230403140420.661602557@linuxfoundation.org>
+	"Hans J. Schultz" <netdev@kapio-technology.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Fabio Estevam <festevam@gmail.com>
+Subject: [PATCH 6.1 171/181] net: dsa: mv88e6xxx: read FID when handling ATU violations
+Date: Mon,  3 Apr 2023 16:10:06 +0200
+Message-Id: <20230403140420.690425716@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -34,119 +37,170 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Hans J. Schultz <netdev@kapio-technology.com>
 
-commit e86fc1a3a3e9b4850fe74d738e3cfcf4297d8bba upstream.
+commit 4bf24ad09bc0b05e97fb48b962b2c9246fc76727 upstream.
 
-We walk the userspace PTs to discover what mapping size was
-used there. However, this can race against the userspace tables
-being freed, and we end-up in the weeds.
+When an ATU violation occurs, the switch uses the ATU FID register to
+report the FID of the MAC address that incurred the violation. It would
+be good for the driver to know the FID value for purposes such as
+logging and CPU-based authentication.
 
-Thankfully, the mm code is being generous and will IPI us when
-doing so. So let's implement our part of the bargain and disable
-interrupts around the walk. This ensures that nothing terrible
-happens during that time.
+Up until now, the driver has been calling the mv88e6xxx_g1_atu_op()
+function to read ATU violations, but that doesn't do exactly what we
+want, namely it calls mv88e6xxx_g1_atu_fid_write() with FID 0.
+(side note, the documentation for the ATU Get/Clear Violation command
+says that writes to the ATU FID register have no effect before the
+operation starts, it's only that we disregard the value that this
+register provides once the operation completes)
 
-We still need to handle the removal of the page tables before
-the walk. For that, allow get_user_mapping_size() to return an
-error, and make sure this error can be propagated all the way
-to the the exit handler.
+So mv88e6xxx_g1_atu_fid_write() is not what we want, but rather
+mv88e6xxx_g1_atu_fid_read(). However, the latter doesn't exist, we need
+to write it.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230316174546.3777507-2-maz@kernel.org
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+The remainder of mv88e6xxx_g1_atu_op() except for
+mv88e6xxx_g1_atu_fid_write() is still needed, namely to send a
+GET_CLR_VIOLATION command to the ATU. In principle we could have still
+kept calling mv88e6xxx_g1_atu_op(), but the MDIO writes to the ATU FID
+register are pointless, but in the interest of doing less CPU work per
+interrupt, write a new function called mv88e6xxx_g1_read_atu_violation()
+and call it.
+
+The FID will be the port default FID as set by mv88e6xxx_port_set_fid()
+if the VID from the packet cannot be found in the VTU. Otherwise it is
+the FID derived from the VTU entry associated with that VID.
+
+Signed-off-by: Hans J. Schultz <netdev@kapio-technology.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Fabio Estevam <festevam@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/mmu.c |   45 ++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 7 deletions(-)
+ drivers/net/dsa/mv88e6xxx/global1_atu.c |   72 +++++++++++++++++++++++++++-----
+ 1 file changed, 61 insertions(+), 11 deletions(-)
 
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -646,14 +646,33 @@ static int get_user_mapping_size(struct
- 				   CONFIG_PGTABLE_LEVELS),
- 		.mm_ops		= &kvm_user_mm_ops,
- 	};
-+	unsigned long flags;
- 	kvm_pte_t pte = 0;	/* Keep GCC quiet... */
- 	u32 level = ~0;
- 	int ret;
- 
-+	/*
-+	 * Disable IRQs so that we hazard against a concurrent
-+	 * teardown of the userspace page tables (which relies on
-+	 * IPI-ing threads).
-+	 */
-+	local_irq_save(flags);
- 	ret = kvm_pgtable_get_leaf(&pgt, addr, &pte, &level);
--	VM_BUG_ON(ret);
--	VM_BUG_ON(level >= KVM_PGTABLE_MAX_LEVELS);
--	VM_BUG_ON(!(pte & PTE_VALID));
-+	local_irq_restore(flags);
-+
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Not seeing an error, but not updating level? Something went
-+	 * deeply wrong...
-+	 */
-+	if (WARN_ON(level >= KVM_PGTABLE_MAX_LEVELS))
-+		return -EFAULT;
-+
-+	/* Oops, the userspace PTs are gone... Replay the fault */
-+	if (!kvm_pte_valid(pte))
-+		return -EAGAIN;
- 
- 	return BIT(ARM64_HW_PGTABLE_LEVEL_SHIFT(level));
+--- a/drivers/net/dsa/mv88e6xxx/global1_atu.c
++++ b/drivers/net/dsa/mv88e6xxx/global1_atu.c
+@@ -114,6 +114,19 @@ static int mv88e6xxx_g1_atu_op_wait(stru
+ 	return mv88e6xxx_g1_wait_bit(chip, MV88E6XXX_G1_ATU_OP, bit, 0);
  }
-@@ -1006,7 +1025,7 @@ static bool fault_supports_stage2_huge_m
-  *
-  * Returns the size of the mapping.
-  */
--static unsigned long
-+static long
- transparent_hugepage_adjust(struct kvm *kvm, struct kvm_memory_slot *memslot,
- 			    unsigned long hva, kvm_pfn_t *pfnp,
- 			    phys_addr_t *ipap)
-@@ -1018,8 +1037,15 @@ transparent_hugepage_adjust(struct kvm *
- 	 * sure that the HVA and IPA are sufficiently aligned and that the
- 	 * block map is contained within the memslot.
- 	 */
--	if (fault_supports_stage2_huge_mapping(memslot, hva, PMD_SIZE) &&
--	    get_user_mapping_size(kvm, hva) >= PMD_SIZE) {
-+	if (fault_supports_stage2_huge_mapping(memslot, hva, PMD_SIZE)) {
-+		int sz = get_user_mapping_size(kvm, hva);
-+
-+		if (sz < 0)
-+			return sz;
-+
-+		if (sz < PMD_SIZE)
-+			return PAGE_SIZE;
-+
- 		/*
- 		 * The address we faulted on is backed by a transparent huge
- 		 * page.  However, because we map the compound huge page and
-@@ -1138,7 +1164,7 @@ static int user_mem_abort(struct kvm_vcp
- 	bool logging_active = memslot_is_logging(memslot);
- 	bool use_read_lock = false;
- 	unsigned long fault_level = kvm_vcpu_trap_get_fault_level(vcpu);
--	unsigned long vma_pagesize, fault_granule;
-+	long vma_pagesize, fault_granule;
- 	enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
- 	struct kvm_pgtable *pgt;
  
-@@ -1295,6 +1321,11 @@ static int user_mem_abort(struct kvm_vcp
- 			vma_pagesize = transparent_hugepage_adjust(kvm, memslot,
- 								   hva, &pfn,
- 								   &fault_ipa);
++static int mv88e6xxx_g1_read_atu_violation(struct mv88e6xxx_chip *chip)
++{
++	int err;
 +
-+		if (vma_pagesize < 0) {
-+			ret = vma_pagesize;
-+			goto out_unlock;
++	err = mv88e6xxx_g1_write(chip, MV88E6XXX_G1_ATU_OP,
++				 MV88E6XXX_G1_ATU_OP_BUSY |
++				 MV88E6XXX_G1_ATU_OP_GET_CLR_VIOLATION);
++	if (err)
++		return err;
++
++	return mv88e6xxx_g1_atu_op_wait(chip);
++}
++
+ static int mv88e6xxx_g1_atu_op(struct mv88e6xxx_chip *chip, u16 fid, u16 op)
+ {
+ 	u16 val;
+@@ -159,6 +172,41 @@ int mv88e6xxx_g1_atu_get_next(struct mv8
+ 	return mv88e6xxx_g1_atu_op(chip, fid, MV88E6XXX_G1_ATU_OP_GET_NEXT_DB);
+ }
+ 
++static int mv88e6xxx_g1_atu_fid_read(struct mv88e6xxx_chip *chip, u16 *fid)
++{
++	u16 val = 0, upper = 0, op = 0;
++	int err = -EOPNOTSUPP;
++
++	if (mv88e6xxx_num_databases(chip) > 256) {
++		err = mv88e6xxx_g1_read(chip, MV88E6352_G1_ATU_FID, &val);
++		val &= 0xfff;
++		if (err)
++			return err;
++	} else {
++		err = mv88e6xxx_g1_read(chip, MV88E6XXX_G1_ATU_OP, &op);
++		if (err)
++			return err;
++		if (mv88e6xxx_num_databases(chip) > 64) {
++			/* ATU DBNum[7:4] are located in ATU Control 15:12 */
++			err = mv88e6xxx_g1_read(chip, MV88E6XXX_G1_ATU_CTL,
++						&upper);
++			if (err)
++				return err;
++
++			upper = (upper >> 8) & 0x00f0;
++		} else if (mv88e6xxx_num_databases(chip) > 16) {
++			/* ATU DBNum[5:4] are located in ATU Operation 9:8 */
++			upper = (op >> 4) & 0x30;
 +		}
++
++		/* ATU DBNum[3:0] are located in ATU Operation 3:0 */
++		val = (op & 0xf) | upper;
++	}
++	*fid = val;
++
++	return err;
++}
++
+ /* Offset 0x0C: ATU Data Register */
+ 
+ static int mv88e6xxx_g1_atu_data_read(struct mv88e6xxx_chip *chip,
+@@ -353,14 +401,12 @@ static irqreturn_t mv88e6xxx_g1_atu_prob
+ {
+ 	struct mv88e6xxx_chip *chip = dev_id;
+ 	struct mv88e6xxx_atu_entry entry;
+-	int spid;
+-	int err;
+-	u16 val;
++	int err, spid;
++	u16 val, fid;
+ 
+ 	mv88e6xxx_reg_lock(chip);
+ 
+-	err = mv88e6xxx_g1_atu_op(chip, 0,
+-				  MV88E6XXX_G1_ATU_OP_GET_CLR_VIOLATION);
++	err = mv88e6xxx_g1_read_atu_violation(chip);
+ 	if (err)
+ 		goto out;
+ 
+@@ -368,6 +414,10 @@ static irqreturn_t mv88e6xxx_g1_atu_prob
+ 	if (err)
+ 		goto out;
+ 
++	err = mv88e6xxx_g1_atu_fid_read(chip, &fid);
++	if (err)
++		goto out;
++
+ 	err = mv88e6xxx_g1_atu_data_read(chip, &entry);
+ 	if (err)
+ 		goto out;
+@@ -386,22 +436,22 @@ static irqreturn_t mv88e6xxx_g1_atu_prob
+ 
+ 	if (val & MV88E6XXX_G1_ATU_OP_MEMBER_VIOLATION) {
+ 		dev_err_ratelimited(chip->dev,
+-				    "ATU member violation for %pM portvec %x spid %d\n",
+-				    entry.mac, entry.portvec, spid);
++				    "ATU member violation for %pM fid %u portvec %x spid %d\n",
++				    entry.mac, fid, entry.portvec, spid);
+ 		chip->ports[spid].atu_member_violation++;
  	}
  
- 	if (fault_status != FSC_PERM && !device && kvm_has_mte(kvm)) {
+ 	if (val & MV88E6XXX_G1_ATU_OP_MISS_VIOLATION) {
+ 		dev_err_ratelimited(chip->dev,
+-				    "ATU miss violation for %pM portvec %x spid %d\n",
+-				    entry.mac, entry.portvec, spid);
++				    "ATU miss violation for %pM fid %u portvec %x spid %d\n",
++				    entry.mac, fid, entry.portvec, spid);
+ 		chip->ports[spid].atu_miss_violation++;
+ 	}
+ 
+ 	if (val & MV88E6XXX_G1_ATU_OP_FULL_VIOLATION) {
+ 		dev_err_ratelimited(chip->dev,
+-				    "ATU full violation for %pM portvec %x spid %d\n",
+-				    entry.mac, entry.portvec, spid);
++				    "ATU full violation for %pM fid %u portvec %x spid %d\n",
++				    entry.mac, fid, entry.portvec, spid);
+ 		chip->ports[spid].atu_full_violation++;
+ 	}
+ 	mv88e6xxx_reg_unlock(chip);
 
 
