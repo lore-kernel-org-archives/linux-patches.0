@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CAC6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543A9C433D2;
-	Mon,  3 Apr 2023 14:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670E76FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29B9C433EF;
+	Mon,  3 Apr 2023 14:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532099;
-	bh=qghLBvk/o7A2NJMvl5+Zh7iLCGuXpsNblsMZnDIl2us=;
+	s=korg; t=1680532102;
+	bh=z8bIqu+tjn/drb5jNXVqkU7gfS8hovNTfUF4ll+5mIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ynL7/XaTsNu4SGea4SsmXAxTYqDGz4dS6t438OyAEoQ6BA9DRZ2rXFrWrbS/7AwWr
-	 ZO4Mebbf3rkoW3S9iM+S0ilPNZWff/iTkIPu9ZbVoOWtpy2PScExTHzL9fW0HNTvhA
-	 iqciY4pGPx8GDXN9hpk+vbWMgWHCuwtivHZO+jns=
+	b=Q/aYYGl2eipNt+yuTt9mxsblBd9Ym5raHoJZ/nLxu04ymTYKEjx7RyMknf6V3jKWy
+	 gfxXvXk22vMPNLPCS32Lb1xr7y/EMp4HwawoiRhyFOK6zMdgO/TIGpOrKsYy2nTLr/
+	 ybFML1gfZByRHfquyVdt4DczcC879KWGvFrbLm0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tianhao Zhao <tizhao@redhat.com>,
+	Jonathan Cooper <jonathan.s.cooper@amd.com>,
+	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/173] mtd: rawnand: meson: invalidate cache on polling ECC bit
-Date: Mon,  3 Apr 2023 16:09:02 +0200
-Message-Id: <20230403140418.557842225@linuxfoundation.org>
+Subject: [PATCH 5.10 128/173] sfc: ef10: dont overwrite offload features at NIC reset
+Date: Mon,  3 Apr 2023 16:09:03 +0200
+Message-Id: <20230403140418.591640030@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,66 +38,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arseniy Krasnov <avkrasnov@sberdevices.ru>
+From: Íñigo Huguet <ihuguet@redhat.com>
 
-[ Upstream commit e732e39ed9929c05fd219035bc9653ba4100d4fa ]
+[ Upstream commit ca4a80e4bb7e87daf33b27d2ab9e4f5311018a89 ]
 
-'info_buf' memory is cached and driver polls ECC bit in it. This bit
-is set by the NAND controller. If 'usleep_range()' returns before device
-sets this bit, 'info_buf' will be cached and driver won't see update of
-this bit and will loop forever.
+At NIC reset, some offload features related to encapsulated traffic
+might have changed (this mainly happens if the firmware-variant is
+changed with the sfboot userspace tool). Because of this, features are
+checked and set again at reset time.
 
-Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
-Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/d4ef0bd6-816e-f6fa-9385-f05f775f0ae2@sberdevices.ru
+However, this was not done right, and some features were improperly
+overwritten at NIC reset:
+- Tunneled IPv6 segmentation was always disabled
+- Features disabled with ethtool were reenabled
+- Features that becomes unsupported after the reset were not disabled
+
+Also, checking if the device supports IPV6_CSUM to enable TSO6 is no
+longer necessary because all currently supported devices support it.
+Additionally, move the assignment of some other features to the
+EF10_OFFLOAD_FEATURES macro, like it is done in ef100, leaving the
+selection of features in efx_pci_probe_post_io a bit cleaner.
+
+Fixes: ffffd2454a7a ("sfc: correctly advertise tunneled IPv6 segmentation")
+Fixes: 24b2c3751aa3 ("sfc: advertise encapsulated offloads on EF10")
+Reported-by: Tianhao Zhao <tizhao@redhat.com>
+Suggested-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
+Tested-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
+Signed-off-by: Íñigo Huguet <ihuguet@redhat.com>
+Acked-by: Edward Cree <ecree.xilinx@gmail.com>
+Link: https://lore.kernel.org/r/20230323083417.7345-1-ihuguet@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/meson_nand.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/sfc/ef10.c | 38 ++++++++++++++++++++++-----------
+ drivers/net/ethernet/sfc/efx.c  | 17 ++++++---------
+ 2 files changed, 33 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/meson_nand.c b/drivers/mtd/nand/raw/meson_nand.c
-index 38f490088d764..dc631c5143187 100644
---- a/drivers/mtd/nand/raw/meson_nand.c
-+++ b/drivers/mtd/nand/raw/meson_nand.c
-@@ -172,6 +172,7 @@ struct meson_nfc {
+diff --git a/drivers/net/ethernet/sfc/ef10.c b/drivers/net/ethernet/sfc/ef10.c
+index eb1be73020822..32654fe1f8b59 100644
+--- a/drivers/net/ethernet/sfc/ef10.c
++++ b/drivers/net/ethernet/sfc/ef10.c
+@@ -1304,7 +1304,8 @@ static void efx_ef10_fini_nic(struct efx_nic *efx)
+ static int efx_ef10_init_nic(struct efx_nic *efx)
+ {
+ 	struct efx_ef10_nic_data *nic_data = efx->nic_data;
+-	netdev_features_t hw_enc_features = 0;
++	struct net_device *net_dev = efx->net_dev;
++	netdev_features_t tun_feats, tso_feats;
+ 	int rc;
  
- 	dma_addr_t daddr;
- 	dma_addr_t iaddr;
-+	u32 info_bytes;
+ 	if (nic_data->must_check_datapath_caps) {
+@@ -1349,20 +1350,30 @@ static int efx_ef10_init_nic(struct efx_nic *efx)
+ 		nic_data->must_restore_piobufs = false;
+ 	}
  
- 	unsigned long assigned_cs;
- };
-@@ -499,6 +500,7 @@ static int meson_nfc_dma_buffer_setup(struct nand_chip *nand, void *databuf,
- 					 nfc->daddr, datalen, dir);
- 			return ret;
- 		}
-+		nfc->info_bytes = infolen;
- 		cmd = GENCMDIADDRL(NFC_CMD_AIL, nfc->iaddr);
- 		writel(cmd, nfc->reg_base + NFC_REG_CMD);
+-	/* add encapsulated checksum offload features */
++	/* encap features might change during reset if fw variant changed */
+ 	if (efx_has_cap(efx, VXLAN_NVGRE) && !efx_ef10_is_vf(efx))
+-		hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
+-	/* add encapsulated TSO features */
+-	if (efx_has_cap(efx, TX_TSO_V2_ENCAP)) {
+-		netdev_features_t encap_tso_features;
++		net_dev->hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
++	else
++		net_dev->hw_enc_features &= ~(NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM);
  
-@@ -516,8 +518,10 @@ static void meson_nfc_dma_buffer_release(struct nand_chip *nand,
- 	struct meson_nfc *nfc = nand_get_controller_data(nand);
+-		encap_tso_features = NETIF_F_GSO_UDP_TUNNEL | NETIF_F_GSO_GRE |
+-			NETIF_F_GSO_UDP_TUNNEL_CSUM | NETIF_F_GSO_GRE_CSUM;
++	tun_feats = NETIF_F_GSO_UDP_TUNNEL | NETIF_F_GSO_GRE |
++		    NETIF_F_GSO_UDP_TUNNEL_CSUM | NETIF_F_GSO_GRE_CSUM;
++	tso_feats = NETIF_F_TSO | NETIF_F_TSO6;
  
- 	dma_unmap_single(nfc->dev, nfc->daddr, datalen, dir);
--	if (infolen)
-+	if (infolen) {
- 		dma_unmap_single(nfc->dev, nfc->iaddr, infolen, dir);
-+		nfc->info_bytes = 0;
-+	}
- }
+-		hw_enc_features |= encap_tso_features | NETIF_F_TSO;
+-		efx->net_dev->features |= encap_tso_features;
++	if (efx_has_cap(efx, TX_TSO_V2_ENCAP)) {
++		/* If this is first nic_init, or if it is a reset and a new fw
++		 * variant has added new features, enable them by default.
++		 * If the features are not new, maintain their current value.
++		 */
++		if (!(net_dev->hw_features & tun_feats))
++			net_dev->features |= tun_feats;
++		net_dev->hw_enc_features |= tun_feats | tso_feats;
++		net_dev->hw_features |= tun_feats;
++	} else {
++		net_dev->hw_enc_features &= ~(tun_feats | tso_feats);
++		net_dev->hw_features &= ~tun_feats;
++		net_dev->features &= ~tun_feats;
+ 	}
+-	efx->net_dev->hw_enc_features = hw_enc_features;
  
- static int meson_nfc_read_buf(struct nand_chip *nand, u8 *buf, int len)
-@@ -706,6 +710,8 @@ static void meson_nfc_check_ecc_pages_valid(struct meson_nfc *nfc,
- 		usleep_range(10, 15);
- 		/* info is updated by nfc dma engine*/
- 		smp_rmb();
-+		dma_sync_single_for_cpu(nfc->dev, nfc->iaddr, nfc->info_bytes,
-+					DMA_FROM_DEVICE);
- 		ret = *info & ECC_COMPLETE;
- 	} while (!ret);
- }
+ 	/* don't fail init if RSS setup doesn't work */
+ 	rc = efx->type->rx_push_rss_config(efx, false,
+@@ -3977,7 +3988,10 @@ static unsigned int ef10_check_caps(const struct efx_nic *efx,
+ 	 NETIF_F_HW_VLAN_CTAG_FILTER |	\
+ 	 NETIF_F_IPV6_CSUM |		\
+ 	 NETIF_F_RXHASH |		\
+-	 NETIF_F_NTUPLE)
++	 NETIF_F_NTUPLE |		\
++	 NETIF_F_SG |			\
++	 NETIF_F_RXCSUM |		\
++	 NETIF_F_RXALL)
+ 
+ const struct efx_nic_type efx_hunt_a0_vf_nic_type = {
+ 	.is_vf = true,
+diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
+index 29c8d2c990044..c069659c9e2d0 100644
+--- a/drivers/net/ethernet/sfc/efx.c
++++ b/drivers/net/ethernet/sfc/efx.c
+@@ -1045,21 +1045,18 @@ static int efx_pci_probe_post_io(struct efx_nic *efx)
+ 	}
+ 
+ 	/* Determine netdevice features */
+-	net_dev->features |= (efx->type->offload_features | NETIF_F_SG |
+-			      NETIF_F_TSO | NETIF_F_RXCSUM | NETIF_F_RXALL);
+-	if (efx->type->offload_features & (NETIF_F_IPV6_CSUM | NETIF_F_HW_CSUM)) {
+-		net_dev->features |= NETIF_F_TSO6;
+-		if (efx_has_cap(efx, TX_TSO_V2_ENCAP))
+-			net_dev->hw_enc_features |= NETIF_F_TSO6;
+-	}
+-	/* Check whether device supports TSO */
+-	if (!efx->type->tso_versions || !efx->type->tso_versions(efx))
+-		net_dev->features &= ~NETIF_F_ALL_TSO;
++	net_dev->features |= efx->type->offload_features;
++
++	/* Add TSO features */
++	if (efx->type->tso_versions && efx->type->tso_versions(efx))
++		net_dev->features |= NETIF_F_TSO | NETIF_F_TSO6;
++
+ 	/* Mask for features that also apply to VLAN devices */
+ 	net_dev->vlan_features |= (NETIF_F_HW_CSUM | NETIF_F_SG |
+ 				   NETIF_F_HIGHDMA | NETIF_F_ALL_TSO |
+ 				   NETIF_F_RXCSUM);
+ 
++	/* Determine user configurable features */
+ 	net_dev->hw_features |= net_dev->features & ~efx->fixed_features;
+ 
+ 	/* Disable receiving frames with bad FCS, by default. */
 -- 
 2.39.2
 
