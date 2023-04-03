@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FC36FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD54AC433EF;
-	Mon,  3 Apr 2023 14:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F056FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B244C4339B;
+	Mon,  3 Apr 2023 14:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532281;
-	bh=lB0ovEWypQQayEnK8c96qt+2LqdTYexrTsR2RunHWgQ=;
+	s=korg; t=1680532283;
+	bh=X7etHxlodcnC+Z9rSqNq8kuVmNyZreKh+MwC3cmJ+4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5vaGaTKVhXiW8mVrDWfE54R+3GX8uOs9auZZX4oYRttA9evadu5GKhZfrJdyjA79
-	 Z4DTrLL8kcYZ1fezEhP20wQsx+vvdw19M2tKzFTtyekGzO+E/nHKOMfLWGtsKRa1/P
-	 dQPZHZb3+1whOwfyMU7TlZsGwJZOzAY9hqzYKi9s=
+	b=fg9pccV4G/APSHYROrc1USpHrFQh6AA27yJcRuoSo8nHdMY22ZGbMV5uzr29d6PDQ
+	 gZnJ2UqI82xdCsxpjMKfj3jWNaMXAYxJY2jlnIkevo1yGUkvaB0pQDOsbU81G+OBWT
+	 /b9sSblybfDfVKHauwAy/IkT3T3vnddNzhWu8d/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 15/99] fbdev: tgafb: Fix potential divide by zero
-Date: Mon,  3 Apr 2023 16:08:38 +0200
-Message-Id: <20230403140358.648761963@linuxfoundation.org>
+Subject: [PATCH 5.15 24/99] ca8210: Fix unsigned mac_len comparison with zero in ca8210_skb_tx()
+Date: Mon,  3 Apr 2023 16:08:47 +0200
+Message-Id: <20230403140403.261713364@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -35,42 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit f90bd245de82c095187d8c2cabb8b488a39eaecc ]
+[ Upstream commit 748b2f5e82d17480404b3e2895388fc2925f7caf ]
 
-fb_set_var would by called when user invokes ioctl with cmd
-FBIOPUT_VSCREENINFO. User-provided data would finally reach
-tgafb_check_var. In case var->pixclock is assigned to zero,
-divide by zero would occur when checking whether reciprocal
-of var->pixclock is too high.
+mac_len is of type unsigned, which can never be less than zero.
 
-Similar crashes have happened in other fbdev drivers. There
-is no check and modification on var->pixclock along the call
-chain to tgafb_check_var. We believe it could also be triggered
-in driver tgafb from user site.
+	mac_len = ieee802154_hdr_peek_addrs(skb, &header);
+	if (mac_len < 0)
+		return mac_len;
 
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Change this to type int as ieee802154_hdr_peek_addrs() can return negative
+integers, this is found by static analysis with smatch.
+
+Fixes: 6c993779ea1d ("ca8210: fix mac_len negative array access")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230306191824.4115839-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/tgafb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ieee802154/ca8210.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/tgafb.c b/drivers/video/fbdev/tgafb.c
-index ae0cf55406369..b9b00a1ffe222 100644
---- a/drivers/video/fbdev/tgafb.c
-+++ b/drivers/video/fbdev/tgafb.c
-@@ -166,6 +166,9 @@ tgafb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
+diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
+index e2322bc3a4e9a..5834d3ed6dcf5 100644
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -1945,10 +1945,9 @@ static int ca8210_skb_tx(
+ 	struct ca8210_priv  *priv
+ )
  {
- 	struct tga_par *par = (struct tga_par *)info->par;
+-	int status;
+ 	struct ieee802154_hdr header = { };
+ 	struct secspec secspec;
+-	unsigned int mac_len;
++	int mac_len, status;
  
-+	if (!var->pixclock)
-+		return -EINVAL;
-+
- 	if (par->tga_type == TGA_TYPE_8PLANE) {
- 		if (var->bits_per_pixel != 8)
- 			return -EINVAL;
+ 	dev_dbg(&priv->spi->dev, "%s called\n", __func__);
+ 
 -- 
 2.39.2
 
