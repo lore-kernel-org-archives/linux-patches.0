@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2566FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 436B9C433D2;
-	Mon,  3 Apr 2023 14:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDB86FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8525C433EF;
+	Mon,  3 Apr 2023 14:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532985;
-	bh=BmqMEax4weicX1zhcxzuo9anZy4rDbHI8x69P/LmWqk=;
+	s=korg; t=1680532988;
+	bh=E9PId05J/ebYtm9trci939DeoQlZf31cw51CYdSOhBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQdaYmJ+dtuACIZcgGy8+dA1jJjNq2idHYtSQWfo+jXnyOj95TdiwX7soaerny2Vk
-	 pRBN6OllfkEya6k0+I+CZSNW1Qv3e9heP9w73Ml0WNS+O5U2ABIiN6M4fh9m+5J1NF
-	 gCa07X9LWt9MHeejSwp+oWhUIq7cH3nicOzNVMCg=
+	b=LvTJ4nZoGZ+cZhHqJme3++28jkwVvacNyiZDnulPlNuU8I9v+c6DiZspj/u7vi5V3
+	 aywJJhsl6qYsg0PVWrCD58iZjFEbSeDFcfms3fPpUw09v4PYIt9Beu47yzQL+ZND6q
+	 RMT6vR+tOSnr4gNkxx6f5S4mxo15z0A7kM4EniYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 011/187] btrfs: zoned: count fresh BG region as zone unusable
-Date: Mon,  3 Apr 2023 16:07:36 +0200
-Message-Id: <20230403140416.409010899@linuxfoundation.org>
+Subject: [PATCH 6.2 012/187] btrfs: zoned: drop space_info->active_total_bytes
+Date: Mon,  3 Apr 2023 16:07:37 +0200
+Message-Id: <20230403140416.444471333@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -37,131 +37,188 @@ Content-Transfer-Encoding: 8bit
 
 From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit fa2068d7e922b434eba5bfb0131e6d39febfdb48 ]
+[ Upstream commit e15acc25880cf048dba9df94d76ed7e7e10040e6 ]
 
-The naming of space_info->active_total_bytes is misleading. It counts
-not only active block groups but also full ones which are previously
-active but now inactive. That confusion results in a bug not counting
-the full BGs into active_total_bytes on mount time.
-
-For a background, there are three kinds of block groups in terms of
-activation.
-
-  1. Block groups never activated
-  2. Block groups currently active
-  3. Block groups previously active and currently inactive (due to fully
-     written or zone finish)
-
-What we really wanted to exclude from "total_bytes" is the total size of
-BGs #1. They seem empty and allocatable but since they are not activated,
-we cannot rely on them to do the space reservation.
-
-And, since BGs #1 never get activated, they should have no "used",
-"reserved" and "pinned" bytes.
-
-OTOH, BGs #3 can be counted in the "total", since they are already full
-we cannot allocate from them anyway. For them, "total_bytes == used +
-reserved + pinned + zone_unusable" should hold.
-
-Tracking #2 and #3 as "active_total_bytes" (current implementation) is
-confusing. And, tracking #1 and subtract that properly from "total_bytes"
-every time you need space reservation is cumbersome.
-
-Instead, we can count the whole region of a newly allocated block group as
-zone_unusable. Then, once that block group is activated, release
-[0 ..  zone_capacity] from the zone_unusable counters. With this, we can
-eliminate the confusing ->active_total_bytes and the code will be common
-among regular and the zoned mode. Also, no additional counter is needed
-with this approach.
+The space_info->active_total_bytes is no longer necessary as we now
+count the region of newly allocated block group as zone_unusable. Drop
+its usage.
 
 Fixes: 6a921de58992 ("btrfs: zoned: introduce space_info->active_total_bytes")
 CC: stable@vger.kernel.org # 6.1+
 Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: e15acc25880c ("btrfs: zoned: drop space_info->active_total_bytes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/free-space-cache.c |  8 +++++++-
- fs/btrfs/zoned.c            | 24 +++++++++++++++++++-----
- 2 files changed, 26 insertions(+), 6 deletions(-)
+ fs/btrfs/block-group.c |  6 ------
+ fs/btrfs/space-info.c  | 40 +++++++++-------------------------------
+ fs/btrfs/space-info.h  |  2 --
+ fs/btrfs/zoned.c       |  4 ----
+ 4 files changed, 9 insertions(+), 43 deletions(-)
 
-diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
-index 0d250d052487c..d84cef89cdff5 100644
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -2693,8 +2693,13 @@ static int __btrfs_add_free_space_zoned(struct btrfs_block_group *block_group,
- 		bg_reclaim_threshold = READ_ONCE(sinfo->bg_reclaim_threshold);
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index d628d545ffea7..8eb625318e785 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1036,14 +1036,8 @@ int btrfs_remove_block_group(struct btrfs_trans_handle *trans,
+ 			< block_group->zone_unusable);
+ 		WARN_ON(block_group->space_info->disk_total
+ 			< block_group->length * factor);
+-		WARN_ON(test_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE,
+-				 &block_group->runtime_flags) &&
+-			block_group->space_info->active_total_bytes
+-			< block_group->length);
+ 	}
+ 	block_group->space_info->total_bytes -= block_group->length;
+-	if (test_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &block_group->runtime_flags))
+-		block_group->space_info->active_total_bytes -= block_group->length;
+ 	block_group->space_info->bytes_readonly -=
+ 		(block_group->length - block_group->zone_unusable);
+ 	block_group->space_info->bytes_zone_unusable -=
+diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
+index 2237685d1ed0c..3eecce86f63fc 100644
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -308,8 +308,6 @@ void btrfs_add_bg_to_space_info(struct btrfs_fs_info *info,
+ 	ASSERT(found);
+ 	spin_lock(&found->lock);
+ 	found->total_bytes += block_group->length;
+-	if (test_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &block_group->runtime_flags))
+-		found->active_total_bytes += block_group->length;
+ 	found->disk_total += block_group->length * factor;
+ 	found->bytes_used += block_group->used;
+ 	found->disk_used += block_group->used * factor;
+@@ -379,22 +377,6 @@ static u64 calc_available_free_space(struct btrfs_fs_info *fs_info,
+ 	return avail;
+ }
  
- 	spin_lock(&ctl->tree_lock);
-+	/* Count initial region as zone_unusable until it gets activated. */
- 	if (!used)
- 		to_free = size;
-+	else if (initial &&
-+		 test_bit(BTRFS_FS_ACTIVE_ZONE_TRACKING, &block_group->fs_info->flags) &&
-+		 (block_group->flags & (BTRFS_BLOCK_GROUP_METADATA | BTRFS_BLOCK_GROUP_SYSTEM)))
-+		to_free = 0;
- 	else if (initial)
- 		to_free = block_group->zone_capacity;
- 	else if (offset >= block_group->alloc_offset)
-@@ -2722,7 +2727,8 @@ static int __btrfs_add_free_space_zoned(struct btrfs_block_group *block_group,
- 	reclaimable_unusable = block_group->zone_unusable -
- 			       (block_group->length - block_group->zone_capacity);
- 	/* All the region is now unusable. Mark it as unused and reclaim */
--	if (block_group->zone_unusable == block_group->length) {
-+	if (block_group->zone_unusable == block_group->length &&
-+	    block_group->alloc_offset) {
- 		btrfs_mark_bg_unused(block_group);
- 	} else if (bg_reclaim_threshold &&
- 		   reclaimable_unusable >=
+-static inline u64 writable_total_bytes(struct btrfs_fs_info *fs_info,
+-				       struct btrfs_space_info *space_info)
+-{
+-	/*
+-	 * On regular filesystem, all total_bytes are always writable. On zoned
+-	 * filesystem, there may be a limitation imposed by max_active_zones.
+-	 * For metadata allocation, we cannot finish an existing active block
+-	 * group to avoid a deadlock. Thus, we need to consider only the active
+-	 * groups to be writable for metadata space.
+-	 */
+-	if (!btrfs_is_zoned(fs_info) || (space_info->flags & BTRFS_BLOCK_GROUP_DATA))
+-		return space_info->total_bytes;
+-
+-	return space_info->active_total_bytes;
+-}
+-
+ int btrfs_can_overcommit(struct btrfs_fs_info *fs_info,
+ 			 struct btrfs_space_info *space_info, u64 bytes,
+ 			 enum btrfs_reserve_flush_enum flush)
+@@ -413,7 +395,7 @@ int btrfs_can_overcommit(struct btrfs_fs_info *fs_info,
+ 	else
+ 		avail = calc_available_free_space(fs_info, space_info, flush);
+ 
+-	if (used + bytes < writable_total_bytes(fs_info, space_info) + avail)
++	if (used + bytes < space_info->total_bytes + avail)
+ 		return 1;
+ 	return 0;
+ }
+@@ -449,7 +431,7 @@ void btrfs_try_granting_tickets(struct btrfs_fs_info *fs_info,
+ 		ticket = list_first_entry(head, struct reserve_ticket, list);
+ 
+ 		/* Check and see if our ticket can be satisfied now. */
+-		if ((used + ticket->bytes <= writable_total_bytes(fs_info, space_info)) ||
++		if ((used + ticket->bytes <= space_info->total_bytes) ||
+ 		    btrfs_can_overcommit(fs_info, space_info, ticket->bytes,
+ 					 flush)) {
+ 			btrfs_space_info_update_bytes_may_use(fs_info,
+@@ -829,7 +811,6 @@ btrfs_calc_reclaim_metadata_size(struct btrfs_fs_info *fs_info,
+ {
+ 	u64 used;
+ 	u64 avail;
+-	u64 total;
+ 	u64 to_reclaim = space_info->reclaim_size;
+ 
+ 	lockdep_assert_held(&space_info->lock);
+@@ -844,9 +825,8 @@ btrfs_calc_reclaim_metadata_size(struct btrfs_fs_info *fs_info,
+ 	 * space.  If that's the case add in our overage so we make sure to put
+ 	 * appropriate pressure on the flushing state machine.
+ 	 */
+-	total = writable_total_bytes(fs_info, space_info);
+-	if (total + avail < used)
+-		to_reclaim += used - (total + avail);
++	if (space_info->total_bytes + avail < used)
++		to_reclaim += used - (space_info->total_bytes + avail);
+ 
+ 	return to_reclaim;
+ }
+@@ -856,11 +836,10 @@ static bool need_preemptive_reclaim(struct btrfs_fs_info *fs_info,
+ {
+ 	u64 global_rsv_size = fs_info->global_block_rsv.reserved;
+ 	u64 ordered, delalloc;
+-	u64 total = writable_total_bytes(fs_info, space_info);
+ 	u64 thresh;
+ 	u64 used;
+ 
+-	thresh = mult_perc(total, 90);
++	thresh = mult_perc(space_info->total_bytes, 90);
+ 
+ 	lockdep_assert_held(&space_info->lock);
+ 
+@@ -923,8 +902,8 @@ static bool need_preemptive_reclaim(struct btrfs_fs_info *fs_info,
+ 					   BTRFS_RESERVE_FLUSH_ALL);
+ 	used = space_info->bytes_used + space_info->bytes_reserved +
+ 	       space_info->bytes_readonly + global_rsv_size;
+-	if (used < total)
+-		thresh += total - used;
++	if (used < space_info->total_bytes)
++		thresh += space_info->total_bytes - used;
+ 	thresh >>= space_info->clamp;
+ 
+ 	used = space_info->bytes_pinned;
+@@ -1651,7 +1630,7 @@ static int __reserve_bytes(struct btrfs_fs_info *fs_info,
+ 	 * can_overcommit() to ensure we can overcommit to continue.
+ 	 */
+ 	if (!pending_tickets &&
+-	    ((used + orig_bytes <= writable_total_bytes(fs_info, space_info)) ||
++	    ((used + orig_bytes <= space_info->total_bytes) ||
+ 	     btrfs_can_overcommit(fs_info, space_info, orig_bytes, flush))) {
+ 		btrfs_space_info_update_bytes_may_use(fs_info, space_info,
+ 						      orig_bytes);
+@@ -1665,8 +1644,7 @@ static int __reserve_bytes(struct btrfs_fs_info *fs_info,
+ 	 */
+ 	if (ret && unlikely(flush == BTRFS_RESERVE_FLUSH_EMERGENCY)) {
+ 		used = btrfs_space_info_used(space_info, false);
+-		if (used + orig_bytes <=
+-		    writable_total_bytes(fs_info, space_info)) {
++		if (used + orig_bytes <= space_info->total_bytes) {
+ 			btrfs_space_info_update_bytes_may_use(fs_info, space_info,
+ 							      orig_bytes);
+ 			ret = 0;
+diff --git a/fs/btrfs/space-info.h b/fs/btrfs/space-info.h
+index fc99ea2b0c34f..2033b71b18cec 100644
+--- a/fs/btrfs/space-info.h
++++ b/fs/btrfs/space-info.h
+@@ -96,8 +96,6 @@ struct btrfs_space_info {
+ 	u64 bytes_may_use;	/* number of bytes that may be used for
+ 				   delalloc/allocations */
+ 	u64 bytes_readonly;	/* total bytes that are read only */
+-	/* Total bytes in the space, but only accounts active block groups. */
+-	u64 active_total_bytes;
+ 	u64 bytes_zone_unusable;	/* total bytes that are unusable until
+ 					   resetting the device zone */
+ 
 diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index a6a8bc112fc42..c3c763cc06399 100644
+index c3c763cc06399..ce5ebba7fdd9a 100644
 --- a/fs/btrfs/zoned.c
 +++ b/fs/btrfs/zoned.c
-@@ -1576,9 +1576,19 @@ void btrfs_calc_zone_unusable(struct btrfs_block_group *cache)
- 		return;
+@@ -2330,10 +2330,6 @@ int btrfs_zoned_activate_one_bg(struct btrfs_fs_info *fs_info,
+ 	if (!btrfs_is_zoned(fs_info) || (space_info->flags & BTRFS_BLOCK_GROUP_DATA))
+ 		return 0;
  
- 	WARN_ON(cache->bytes_super != 0);
--	unusable = (cache->alloc_offset - cache->used) +
--		   (cache->length - cache->zone_capacity);
--	free = cache->zone_capacity - cache->alloc_offset;
-+
-+	/* Check for block groups never get activated */
-+	if (test_bit(BTRFS_FS_ACTIVE_ZONE_TRACKING, &cache->fs_info->flags) &&
-+	    cache->flags & (BTRFS_BLOCK_GROUP_METADATA | BTRFS_BLOCK_GROUP_SYSTEM) &&
-+	    !test_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &cache->runtime_flags) &&
-+	    cache->alloc_offset == 0) {
-+		unusable = cache->length;
-+		free = 0;
-+	} else {
-+		unusable = (cache->alloc_offset - cache->used) +
-+			   (cache->length - cache->zone_capacity);
-+		free = cache->zone_capacity - cache->alloc_offset;
-+	}
- 
- 	/* We only need ->free_space in ALLOC_SEQ block groups */
- 	cache->cached = BTRFS_CACHE_FINISHED;
-@@ -1915,7 +1925,11 @@ bool btrfs_zone_activate(struct btrfs_block_group *block_group)
- 
- 	/* Successfully activated all the zones */
- 	set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &block_group->runtime_flags);
--	space_info->active_total_bytes += block_group->length;
-+	WARN_ON(block_group->alloc_offset != 0);
-+	if (block_group->zone_unusable == block_group->length) {
-+		block_group->zone_unusable = block_group->length - block_group->zone_capacity;
-+		space_info->bytes_zone_unusable -= block_group->zone_capacity;
-+	}
- 	spin_unlock(&block_group->lock);
- 	btrfs_try_granting_tickets(fs_info, space_info);
- 	spin_unlock(&space_info->lock);
-@@ -2279,7 +2293,7 @@ int btrfs_zone_finish_one_bg(struct btrfs_fs_info *fs_info)
- 		u64 avail;
- 
- 		spin_lock(&block_group->lock);
--		if (block_group->reserved ||
-+		if (block_group->reserved || block_group->alloc_offset == 0 ||
- 		    (block_group->flags & BTRFS_BLOCK_GROUP_SYSTEM)) {
- 			spin_unlock(&block_group->lock);
- 			continue;
+-	/* No more block groups to activate */
+-	if (space_info->active_total_bytes == space_info->total_bytes)
+-		return 0;
+-
+ 	for (;;) {
+ 		int ret;
+ 		bool need_finish = false;
 -- 
 2.39.2
 
