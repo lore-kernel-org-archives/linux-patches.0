@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D62E6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:32:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF90BC433D2;
-	Mon,  3 Apr 2023 14:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188E96FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:32:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940E8C433EF;
+	Mon,  3 Apr 2023 14:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532367;
-	bh=a6mG5FKb02q1bL/eeUGR4r4kXmqIN29jjEwlBJPRBmQ=;
+	s=korg; t=1680532369;
+	bh=7ndKNZWViU2f84b78ppPFmwaLXby3ksYxtK1B8Y+UM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwedNXKjBhDL06vocUJyIPSy1/oXGUXLZv9hulK1i9PwXScJOFRPC5DLolSr1pg+o
-	 EJWOpFUkBUR8zvcHEQIeq//cwdHwi+rbhJgGqbk8JFvmsSv/R1qHvAzBPM9C93co/t
-	 3iwNIyOEN0k5q9hyJ3FHPSdj0lLenqBEX/yFWSPI=
+	b=VSwMgem81QCOLyRzbGdHh3Z6sziv3TXCXRjnR1avTYBsSeOItKUs1KklbT3O/Avdz
+	 3r0AUXacvJ0vtT02sPbiCHwMpHOhtEkxBsA/1ccg4xiH8R6Jrxfl/xPcS762v0GxXT
+	 R6Mr7shNSV77BbSm4n2awrDF5/DbTVCm/r48qPEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Auhagen <sven.auhagen@voleatech.de>,
-	Marcin Wojtas <mw@semihalf.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 48/99] net: mvpp2: classifier flow fix fragmentation flags
-Date: Mon,  3 Apr 2023 16:09:11 +0200
-Message-Id: <20230403140405.112009160@linuxfoundation.org>
+	Radoslaw Tyl <radoslawx.tyl@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 5.15 57/99] i40e: fix registers dump after run ethtool adapter self test
+Date: Mon,  3 Apr 2023 16:09:20 +0200
+Message-Id: <20230403140405.539108725@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,115 +39,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Auhagen <sven.auhagen@voleatech.de>
+From: Radoslaw Tyl <radoslawx.tyl@intel.com>
 
-[ Upstream commit 9a251cae51d57289908222e6c322ca61fccc25fd ]
+[ Upstream commit c5cff16f461a4a434a9915a7be7ac9ced861a8a4 ]
 
-Add missing IP Fragmentation Flag.
+Fix invalid registers dump from ethtool -d ethX after adapter self test
+by ethtool -t ethY. It causes invalid data display.
 
-Fixes: f9358e12a0af ("net: mvpp2: split ingress traffic into multiple flows")
-Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
-Reviewed-by: Marcin Wojtas <mw@semihalf.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The problem was caused by overwriting i40e_reg_list[].elements
+which is common for ethtool self test and dump.
+
+Fixes: 22dd9ae8afcc ("i40e: Rework register diagnostic")
+Signed-off-by: Radoslaw Tyl <radoslawx.tyl@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230328172659.3906413-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/mvpp2/mvpp2_cls.c    | 30 +++++++++++--------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_diag.c | 11 ++++++-----
+ drivers/net/ethernet/intel/i40e/i40e_diag.h |  2 +-
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
-index 41d935d1aaf6f..40aeaa7bd739f 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
-@@ -62,35 +62,38 @@ static const struct mvpp2_cls_flow cls_flows[MVPP2_N_PRS_FLOWS] = {
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
- 		       MVPP22_CLS_HEK_IP4_2T,
- 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4 |
--		       MVPP2_PRS_RI_L4_TCP,
-+		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
- 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_diag.c b/drivers/net/ethernet/intel/i40e/i40e_diag.c
+index ef4d3762bf371..ca229b0efeb65 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_diag.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_diag.c
+@@ -44,7 +44,7 @@ static i40e_status i40e_diag_reg_pattern_test(struct i40e_hw *hw,
+ 	return 0;
+ }
  
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
- 		       MVPP22_CLS_HEK_IP4_2T,
- 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OPT |
--		       MVPP2_PRS_RI_L4_TCP,
-+		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
- 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
+-struct i40e_diag_reg_test_info i40e_reg_list[] = {
++const struct i40e_diag_reg_test_info i40e_reg_list[] = {
+ 	/* offset               mask         elements   stride */
+ 	{I40E_QTX_CTL(0),       0x0000FFBF, 1,
+ 		I40E_QTX_CTL(1) - I40E_QTX_CTL(0)},
+@@ -78,27 +78,28 @@ i40e_status i40e_diag_reg_test(struct i40e_hw *hw)
+ {
+ 	i40e_status ret_code = 0;
+ 	u32 reg, mask;
++	u32 elements;
+ 	u32 i, j;
  
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
- 		       MVPP22_CLS_HEK_IP4_2T,
- 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OTHER |
--		       MVPP2_PRS_RI_L4_TCP,
-+		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
- 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
+ 	for (i = 0; i40e_reg_list[i].offset != 0 &&
+ 					     !ret_code; i++) {
  
- 	/* TCP over IPv4 flows, fragmented, with vlan tag */
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
- 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
--		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_L4_TCP,
-+		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_IP_FRAG_TRUE |
-+			   MVPP2_PRS_RI_L4_TCP,
- 		       MVPP2_PRS_IP_MASK),
++		elements = i40e_reg_list[i].elements;
+ 		/* set actual reg range for dynamically allocated resources */
+ 		if (i40e_reg_list[i].offset == I40E_QTX_CTL(0) &&
+ 		    hw->func_caps.num_tx_qp != 0)
+-			i40e_reg_list[i].elements = hw->func_caps.num_tx_qp;
++			elements = hw->func_caps.num_tx_qp;
+ 		if ((i40e_reg_list[i].offset == I40E_PFINT_ITRN(0, 0) ||
+ 		     i40e_reg_list[i].offset == I40E_PFINT_ITRN(1, 0) ||
+ 		     i40e_reg_list[i].offset == I40E_PFINT_ITRN(2, 0) ||
+ 		     i40e_reg_list[i].offset == I40E_QINT_TQCTL(0) ||
+ 		     i40e_reg_list[i].offset == I40E_QINT_RQCTL(0)) &&
+ 		    hw->func_caps.num_msix_vectors != 0)
+-			i40e_reg_list[i].elements =
+-				hw->func_caps.num_msix_vectors - 1;
++			elements = hw->func_caps.num_msix_vectors - 1;
  
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
- 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
--		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_L4_TCP,
-+		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_IP_FRAG_TRUE |
-+			   MVPP2_PRS_RI_L4_TCP,
- 		       MVPP2_PRS_IP_MASK),
+ 		/* test register access */
+ 		mask = i40e_reg_list[i].mask;
+-		for (j = 0; j < i40e_reg_list[i].elements && !ret_code; j++) {
++		for (j = 0; j < elements && !ret_code; j++) {
+ 			reg = i40e_reg_list[i].offset +
+ 			      (j * i40e_reg_list[i].stride);
+ 			ret_code = i40e_diag_reg_pattern_test(hw, reg, mask);
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_diag.h b/drivers/net/ethernet/intel/i40e/i40e_diag.h
+index c3340f320a18c..1db7c6d572311 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_diag.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_diag.h
+@@ -20,7 +20,7 @@ struct i40e_diag_reg_test_info {
+ 	u32 stride;	/* bytes between each element */
+ };
  
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
- 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
--		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_L4_TCP,
-+		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_IP_FRAG_TRUE |
-+			   MVPP2_PRS_RI_L4_TCP,
- 		       MVPP2_PRS_IP_MASK),
+-extern struct i40e_diag_reg_test_info i40e_reg_list[];
++extern const struct i40e_diag_reg_test_info i40e_reg_list[];
  
- 	/* UDP over IPv4 flows, Not fragmented, no vlan tag */
-@@ -132,35 +135,38 @@ static const struct mvpp2_cls_flow cls_flows[MVPP2_N_PRS_FLOWS] = {
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
- 		       MVPP22_CLS_HEK_IP4_2T,
- 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4 |
--		       MVPP2_PRS_RI_L4_UDP,
-+		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
- 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
- 
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
- 		       MVPP22_CLS_HEK_IP4_2T,
- 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OPT |
--		       MVPP2_PRS_RI_L4_UDP,
-+		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
- 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
- 
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
- 		       MVPP22_CLS_HEK_IP4_2T,
- 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OTHER |
--		       MVPP2_PRS_RI_L4_UDP,
-+		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
- 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
- 
- 	/* UDP over IPv4 flows, fragmented, with vlan tag */
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
- 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
--		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_L4_UDP,
-+		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_IP_FRAG_TRUE |
-+			   MVPP2_PRS_RI_L4_UDP,
- 		       MVPP2_PRS_IP_MASK),
- 
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
- 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
--		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_L4_UDP,
-+		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_IP_FRAG_TRUE |
-+			   MVPP2_PRS_RI_L4_UDP,
- 		       MVPP2_PRS_IP_MASK),
- 
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
- 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
--		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_L4_UDP,
-+		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_IP_FRAG_TRUE |
-+			   MVPP2_PRS_RI_L4_UDP,
- 		       MVPP2_PRS_IP_MASK),
- 
- 	/* TCP over IPv6 flows, not fragmented, no vlan tag */
+ i40e_status i40e_diag_reg_test(struct i40e_hw *hw);
+ i40e_status i40e_diag_eeprom_test(struct i40e_hw *hw);
 -- 
 2.39.2
 
