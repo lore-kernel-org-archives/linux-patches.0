@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A20612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA72C433EF;
-	Mon,  3 Apr 2023 14:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1480D612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91383C433D2;
+	Mon,  3 Apr 2023 14:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531730;
-	bh=RuYnVTJwWCkgS5pZsTRyfgbm1jPX/9A6YF9I++YlZ7Y=;
+	s=korg; t=1680531732;
+	bh=R+POetAYSV5TRg5HgTiYf8CNFjTKmQTNrVBo5/RGKmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/AoAcL6EcbkustODWHvPwUsLshbrIgBvjr1ufw6WvpLAtFqJcpWIOf5YfUojoS1y
-	 TDGJQQS9nPYpodigjHNaMZ/nh5pjYiA6ctwc1+H0LhFLSBcWux1LJ9apymPlkOliLp
-	 64tvevt5BBK/b0ONa6NfLK0ACjJ6SSCtdDxUk/BU=
+	b=1crlUlpyzyq0HO2drV8DSYCLCRlsIftXDXyZ325y6LlCChL93jUWOZW+1Si7HMp/D
+	 4hX/abOqPRDubb3FEnFOxULMvGihm3zIHkfPIKbQmn91Orm8QfJk0Ppunfu7N67ZdW
+	 dPS7ntKZtEilGgSi2TcXChz1IZopmqoIIwa+E8Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	NeilBrown <neilb@suse.de>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 062/104] md: avoid signed overflow in slot_store()
-Date: Mon,  3 Apr 2023 16:08:54 +0200
-Message-Id: <20230403140406.686598036@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Ronnie Sahlberg <lsahlber@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.4 089/104] cifs: prevent infinite recursion in CIFSGetDFSRefer()
+Date: Mon,  3 Apr 2023 16:09:21 +0200
+Message-Id: <20230403140407.645633395@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -36,44 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neilb@suse.de>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 3bc57292278a0b6ac4656cad94c14f2453344b57 ]
+commit 09ba47b44d26b475bbdf9c80db9e0193d2b58956 upstream.
 
-slot_store() uses kstrtouint() to get a slot number, but stores the
-result in an "int" variable (by casting a pointer).
-This can result in a negative slot number if the unsigned int value is
-very large.
+We can't call smb_init() in CIFSGetDFSRefer() as cifs_reconnect_tcon()
+may end up calling CIFSGetDFSRefer() again to get new DFS referrals
+and thus causing an infinite recursion.
 
-A negative number means that the slot is empty, but setting a negative
-slot number this way will not remove the device from the array.  I don't
-think this is a serious problem, but it could cause confusion and it is
-best to fix it.
-
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
+Cc: stable@vger.kernel.org # 6.2
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/cifs/cifssmb.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index aa2993d5d5d38..64558991ce0a0 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -3082,6 +3082,9 @@ slot_store(struct md_rdev *rdev, const char *buf, size_t len)
- 		err = kstrtouint(buf, 10, (unsigned int *)&slot);
- 		if (err < 0)
- 			return err;
-+		if (slot < 0)
-+			/* overflow */
-+			return -ENOSPC;
- 	}
- 	if (rdev->mddev->pers && slot == -1) {
- 		/* Setting 'slot' on an active array requires also
--- 
-2.39.2
-
+--- a/fs/cifs/cifssmb.c
++++ b/fs/cifs/cifssmb.c
+@@ -4933,8 +4933,13 @@ CIFSGetDFSRefer(const unsigned int xid,
+ 		return -ENODEV;
+ 
+ getDFSRetry:
+-	rc = smb_init(SMB_COM_TRANSACTION2, 15, ses->tcon_ipc, (void **) &pSMB,
+-		      (void **) &pSMBr);
++	/*
++	 * Use smb_init_no_reconnect() instead of smb_init() as
++	 * CIFSGetDFSRefer() may be called from cifs_reconnect_tcon() and thus
++	 * causing an infinite recursion.
++	 */
++	rc = smb_init_no_reconnect(SMB_COM_TRANSACTION2, 15, ses->tcon_ipc,
++				   (void **)&pSMB, (void **)&pSMBr);
+ 	if (rc)
+ 		return rc;
+ 
 
 
