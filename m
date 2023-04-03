@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6D96FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6297C433D2;
-	Mon,  3 Apr 2023 14:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABD96FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AAFC433D2;
+	Mon,  3 Apr 2023 14:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532011;
-	bh=NV7fsvGtmnS+yPXi6+sdyf+KKo0b63xITlaMufyYvXo=;
+	s=korg; t=1680532013;
+	bh=Tn9J1rkF8CqebWI3HPjC16L/ibAVABXU/64SeSXTrBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F4FBtu06roWSHijdqEQTCGJVTlKBr1igB4gbFP6uEmHMepEzSUqWWXu2hzjaKB7Wi
-	 8lyV5L6jgWKKtbGQqWQpZpMG6dNe5tI0HKjYXUCvlIdQypqsWOaDSbLHUjU9n+XIIm
-	 DxWOsjkCzUWcLr6gdrgQkb3akj/wULWUKsSOc+OY=
+	b=smdHoOQ8a/dMRHby/VsAsNrNX2LLN92JYLSww+kHEUV2PBRAsvXmQXGCu2Qr2pRKc
+	 yT+t8F3p/RruR7n6B5BaA6+dul6vLwvShbopsrDiSv7qFyV5Oi2aZGczimAMwIxKsT
+	 om+BbH6CzqnPe9yfQQYfBUyxgO6UN33YeSAshr9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 5.10 093/173] firmware: arm_scmi: Fix device node validation for mailbox transport
-Date: Mon,  3 Apr 2023 16:08:28 +0200
-Message-Id: <20230403140417.439653438@linuxfoundation.org>
+	Wei Chen <harperchen1110@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 5.10 094/173] i2c: xgene-slimpro: Fix out-of-bounds bug in xgene_slimpro_i2c_xfer()
+Date: Mon,  3 Apr 2023 16:08:29 +0200
+Message-Id: <20230403140417.469281541@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -34,84 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Wei Chen <harperchen1110@gmail.com>
 
-commit 2ab4f4018cb6b8010ca5002c3bdc37783b5d28c2 upstream.
+commit 92fbb6d1296f81f41f65effd7f5f8c0f74943d15 upstream.
 
-When mailboxes are used as a transport it is possible to setup the SCMI
-transport layer, depending on the underlying channels configuration, to use
-one or two mailboxes, associated, respectively, to one or two, distinct,
-shared memory areas: any other combination should be treated as invalid.
+The data->block[0] variable comes from user and is a number between
+0-255. Without proper check, the variable may be very large to cause
+an out-of-bounds when performing memcpy in slimpro_i2c_blkwr.
 
-Add more strict checking of SCMI mailbox transport device node descriptors.
+Fix this bug by checking the value of writelen.
 
-Fixes: 5c8a47a5a91d ("firmware: arm_scmi: Make scmi core independent of the transport type")
-Cc: <stable@vger.kernel.org> # 4.19
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20230307162324.891866-1-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: f6505fbabc42 ("i2c: add SLIMpro I2C device driver on APM X-Gene platform")
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/mailbox.c | 37 +++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ drivers/i2c/busses/i2c-xgene-slimpro.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/mailbox.c b/drivers/firmware/arm_scmi/mailbox.c
-index 0d9c9538b7f4..112c285deb97 100644
---- a/drivers/firmware/arm_scmi/mailbox.c
-+++ b/drivers/firmware/arm_scmi/mailbox.c
-@@ -52,6 +52,39 @@ static bool mailbox_chan_available(struct device_node *of_node, int idx)
- 					   "#mbox-cells", idx, NULL);
- }
+--- a/drivers/i2c/busses/i2c-xgene-slimpro.c
++++ b/drivers/i2c/busses/i2c-xgene-slimpro.c
+@@ -308,6 +308,9 @@ static int slimpro_i2c_blkwr(struct slim
+ 	u32 msg[3];
+ 	int rc;
  
-+static int mailbox_chan_validate(struct device *cdev)
-+{
-+	int num_mb, num_sh, ret = 0;
-+	struct device_node *np = cdev->of_node;
-+
-+	num_mb = of_count_phandle_with_args(np, "mboxes", "#mbox-cells");
-+	num_sh = of_count_phandle_with_args(np, "shmem", NULL);
-+	/* Bail out if mboxes and shmem descriptors are inconsistent */
-+	if (num_mb <= 0 || num_sh > 2 || num_mb != num_sh) {
-+		dev_warn(cdev, "Invalid channel descriptor for '%s'\n",
-+			 of_node_full_name(np));
++	if (writelen > I2C_SMBUS_BLOCK_MAX)
 +		return -EINVAL;
-+	}
 +
-+	if (num_sh > 1) {
-+		struct device_node *np_tx, *np_rx;
-+
-+		np_tx = of_parse_phandle(np, "shmem", 0);
-+		np_rx = of_parse_phandle(np, "shmem", 1);
-+		/* SCMI Tx and Rx shared mem areas have to be distinct */
-+		if (!np_tx || !np_rx || np_tx == np_rx) {
-+			dev_warn(cdev, "Invalid shmem descriptor for '%s'\n",
-+				 of_node_full_name(np));
-+			ret = -EINVAL;
-+		}
-+
-+		of_node_put(np_tx);
-+		of_node_put(np_rx);
-+	}
-+
-+	return ret;
-+}
-+
- static int mailbox_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 			      bool tx)
- {
-@@ -64,6 +97,10 @@ static int mailbox_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 	resource_size_t size;
- 	struct resource res;
- 
-+	ret = mailbox_chan_validate(cdev);
-+	if (ret)
-+		return ret;
-+
- 	smbox = devm_kzalloc(dev, sizeof(*smbox), GFP_KERNEL);
- 	if (!smbox)
- 		return -ENOMEM;
--- 
-2.40.0
-
+ 	memcpy(ctx->dma_buffer, data, writelen);
+ 	paddr = dma_map_single(ctx->dev, ctx->dma_buffer, writelen,
+ 			       DMA_TO_DEVICE);
 
 
