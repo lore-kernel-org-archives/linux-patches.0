@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6856FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B534EC433EF;
-	Mon,  3 Apr 2023 14:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83DA6FAF
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF7CC4339C;
+	Mon,  3 Apr 2023 14:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533216;
-	bh=09FVz4SObmT4TnU5j7bDzRdZ2yySSnj8sptzbz39ojU=;
+	s=korg; t=1680533221;
+	bh=a6mG5FKb02q1bL/eeUGR4r4kXmqIN29jjEwlBJPRBmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgGDuTFxsp75u2uhfs6/i3JJCBiOsuELcV2hBS7f8ZMA/lZ2XWTuMT6D1mlRwOhN5
-	 yAF1pSlClc7V7G5uq25isusxDSU31EaD8rohVcNGc6nUB4Bo2n64YyOfZRHOJTkCZd
-	 DWqXyiO/PbgGhBzVfk5bGYPmhBC0JyZ7MylOSTCk=
+	b=LbpUFvVFs1JDMFCT9QbYJ39qvUYggvwJtZBXqp6K4zxnR6ary+p0WRRGT8NvVLw7y
+	 WaDhWJKQE0ixpWp6ORdEoyDWUC4qn9anqrzug3ooOHoJdSm8X+q8cJQ5KaHS9/OehQ
+	 GWZe+aytK3dkEkvX1JKGFyT02etohnCCXPI+KHMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Asselin <pa@panix.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sven Auhagen <sven.auhagen@voleatech.de>,
+	Marcin Wojtas <mw@semihalf.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 099/187] ACPI: bus: Rework system-level device notification handling
-Date: Mon,  3 Apr 2023 16:09:04 +0200
-Message-Id: <20230403140419.229009502@linuxfoundation.org>
+Subject: [PATCH 6.2 101/187] net: mvpp2: classifier flow fix fragmentation flags
+Date: Mon,  3 Apr 2023 16:09:06 +0200
+Message-Id: <20230403140419.296188594@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,235 +36,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Sven Auhagen <sven.auhagen@voleatech.de>
 
-[ Upstream commit c56610a869bce03490faf4f157076370c71b8ae3 ]
+[ Upstream commit 9a251cae51d57289908222e6c322ca61fccc25fd ]
 
-For ACPI drivers that provide a ->notify() callback and set
-ACPI_DRIVER_ALL_NOTIFY_EVENTS in their flags, that callback can be
-invoked while either the ->add() or the ->remove() callback is running
-without any synchronization at the bus type level which is counter to
-the common-sense expectation that notification handling should only be
-enabled when the driver is actually bound to the device.  As a result,
-if the driver is not careful enough, it's ->notify() callback may crash
-when it is invoked too early or too late [1].
+Add missing IP Fragmentation Flag.
 
-This issue has been amplified by commit d6fb6ee1820c ("ACPI: bus: Drop
-driver member of struct acpi_device") that made acpi_bus_notify() check
-for the presence of the driver and its ->notify() callback directly
-instead of using an extra driver pointer that was only set and cleared
-by the bus type code, but it was present before that commit although
-it was harder to reproduce then.
-
-It can be addressed by using the observation that
-acpi_device_install_notify_handler() can be modified to install the
-handler for all types of events when ACPI_DRIVER_ALL_NOTIFY_EVENTS is
-set in the driver flags, in which case acpi_bus_notify() will not need
-to invoke the driver's ->notify() callback any more and that callback
-will only be invoked after acpi_device_install_notify_handler() has run
-and before acpi_device_remove_notify_handler() runs, which implies the
-correct ordering with respect to the other ACPI driver callbacks.
-
-Modify the code accordingly and while at it, drop two redundant local
-variables from acpi_bus_notify() and turn its description comment into
-a proper kerneldoc one.
-
-Fixes: d6fb6ee1820c ("ACPI: bus: Drop driver member of struct acpi_device")
-Link: https://lore.kernel.org/linux-acpi/9f6cba7a8a57e5a687c934e8e406e28c.squirrel@mail.panix.com # [1]
-Reported-by: Pierre Asselin <pa@panix.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Pierre Asselin <pa@panix.com>
+Fixes: f9358e12a0af ("net: mvpp2: split ingress traffic into multiple flows")
+Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
+Reviewed-by: Marcin Wojtas <mw@semihalf.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/bus.c | 83 +++++++++++++++++++++-------------------------
- 1 file changed, 37 insertions(+), 46 deletions(-)
+ .../net/ethernet/marvell/mvpp2/mvpp2_cls.c    | 30 +++++++++++--------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
-index 0c05ccde1f7a6..7c16bc15e7a14 100644
---- a/drivers/acpi/bus.c
-+++ b/drivers/acpi/bus.c
-@@ -459,85 +459,67 @@ static void acpi_bus_osc_negotiate_usb_control(void)
-                              Notification Handling
-    -------------------------------------------------------------------------- */
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
+index 41d935d1aaf6f..40aeaa7bd739f 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
+@@ -62,35 +62,38 @@ static const struct mvpp2_cls_flow cls_flows[MVPP2_N_PRS_FLOWS] = {
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4 |
+-		       MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
--/*
-- * acpi_bus_notify
-- * ---------------
-- * Callback for all 'system-level' device notifications (values 0x00-0x7F).
-+/**
-+ * acpi_bus_notify - Global system-level (0x00-0x7F) notifications handler
-+ * @handle: Target ACPI object.
-+ * @type: Notification type.
-+ * @data: Ignored.
-+ *
-+ * This only handles notifications related to device hotplug.
-  */
- static void acpi_bus_notify(acpi_handle handle, u32 type, void *data)
- {
- 	struct acpi_device *adev;
--	u32 ost_code = ACPI_OST_SC_NON_SPECIFIC_FAILURE;
--	bool hotplug_event = false;
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OPT |
+-		       MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
- 	switch (type) {
- 	case ACPI_NOTIFY_BUS_CHECK:
- 		acpi_handle_debug(handle, "ACPI_NOTIFY_BUS_CHECK event\n");
--		hotplug_event = true;
- 		break;
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OTHER |
+-		       MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
- 	case ACPI_NOTIFY_DEVICE_CHECK:
- 		acpi_handle_debug(handle, "ACPI_NOTIFY_DEVICE_CHECK event\n");
--		hotplug_event = true;
- 		break;
+ 	/* TCP over IPv4 flows, fragmented, with vlan tag */
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK),
  
- 	case ACPI_NOTIFY_DEVICE_WAKE:
- 		acpi_handle_debug(handle, "ACPI_NOTIFY_DEVICE_WAKE event\n");
--		break;
-+		return;
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK),
  
- 	case ACPI_NOTIFY_EJECT_REQUEST:
- 		acpi_handle_debug(handle, "ACPI_NOTIFY_EJECT_REQUEST event\n");
--		hotplug_event = true;
- 		break;
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK),
  
- 	case ACPI_NOTIFY_DEVICE_CHECK_LIGHT:
- 		acpi_handle_debug(handle, "ACPI_NOTIFY_DEVICE_CHECK_LIGHT event\n");
- 		/* TBD: Exactly what does 'light' mean? */
--		break;
-+		return;
+ 	/* UDP over IPv4 flows, Not fragmented, no vlan tag */
+@@ -132,35 +135,38 @@ static const struct mvpp2_cls_flow cls_flows[MVPP2_N_PRS_FLOWS] = {
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4 |
+-		       MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
- 	case ACPI_NOTIFY_FREQUENCY_MISMATCH:
- 		acpi_handle_err(handle, "Device cannot be configured due "
- 				"to a frequency mismatch\n");
--		break;
-+		return;
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OPT |
+-		       MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
- 	case ACPI_NOTIFY_BUS_MODE_MISMATCH:
- 		acpi_handle_err(handle, "Device cannot be configured due "
- 				"to a bus mode mismatch\n");
--		break;
-+		return;
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OTHER |
+-		       MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
- 	case ACPI_NOTIFY_POWER_FAULT:
- 		acpi_handle_err(handle, "Device has suffered a power fault\n");
--		break;
-+		return;
+ 	/* UDP over IPv4 flows, fragmented, with vlan tag */
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK),
  
- 	default:
- 		acpi_handle_debug(handle, "Unknown event type 0x%x\n", type);
--		break;
-+		return;
- 	}
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK),
  
- 	adev = acpi_get_acpi_dev(handle);
--	if (!adev)
--		goto err;
--
--	if (adev->dev.driver) {
--		struct acpi_driver *driver = to_acpi_driver(adev->dev.driver);
--
--		if (driver && driver->ops.notify &&
--		    (driver->flags & ACPI_DRIVER_ALL_NOTIFY_EVENTS))
--			driver->ops.notify(adev, type);
--	}
--
--	if (!hotplug_event) {
--		acpi_put_acpi_dev(adev);
--		return;
--	}
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK),
  
--	if (ACPI_SUCCESS(acpi_hotplug_schedule(adev, type)))
-+	if (adev && ACPI_SUCCESS(acpi_hotplug_schedule(adev, type)))
- 		return;
- 
- 	acpi_put_acpi_dev(adev);
- 
-- err:
--	acpi_evaluate_ost(handle, type, ost_code, NULL);
-+	acpi_evaluate_ost(handle, type, ACPI_OST_SC_NON_SPECIFIC_FAILURE, NULL);
- }
- 
- static void acpi_notify_device(acpi_handle handle, u32 event, void *data)
-@@ -562,42 +544,51 @@ static u32 acpi_device_fixed_event(void *data)
- 	return ACPI_INTERRUPT_HANDLED;
- }
- 
--static int acpi_device_install_notify_handler(struct acpi_device *device)
-+static int acpi_device_install_notify_handler(struct acpi_device *device,
-+					      struct acpi_driver *acpi_drv)
- {
- 	acpi_status status;
- 
--	if (device->device_type == ACPI_BUS_TYPE_POWER_BUTTON)
-+	if (device->device_type == ACPI_BUS_TYPE_POWER_BUTTON) {
- 		status =
- 		    acpi_install_fixed_event_handler(ACPI_EVENT_POWER_BUTTON,
- 						     acpi_device_fixed_event,
- 						     device);
--	else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON)
-+	} else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON) {
- 		status =
- 		    acpi_install_fixed_event_handler(ACPI_EVENT_SLEEP_BUTTON,
- 						     acpi_device_fixed_event,
- 						     device);
--	else
--		status = acpi_install_notify_handler(device->handle,
--						     ACPI_DEVICE_NOTIFY,
-+	} else {
-+		u32 type = acpi_drv->flags & ACPI_DRIVER_ALL_NOTIFY_EVENTS ?
-+				ACPI_ALL_NOTIFY : ACPI_DEVICE_NOTIFY;
-+
-+		status = acpi_install_notify_handler(device->handle, type,
- 						     acpi_notify_device,
- 						     device);
-+	}
- 
- 	if (ACPI_FAILURE(status))
- 		return -EINVAL;
- 	return 0;
- }
- 
--static void acpi_device_remove_notify_handler(struct acpi_device *device)
-+static void acpi_device_remove_notify_handler(struct acpi_device *device,
-+					      struct acpi_driver *acpi_drv)
- {
--	if (device->device_type == ACPI_BUS_TYPE_POWER_BUTTON)
-+	if (device->device_type == ACPI_BUS_TYPE_POWER_BUTTON) {
- 		acpi_remove_fixed_event_handler(ACPI_EVENT_POWER_BUTTON,
- 						acpi_device_fixed_event);
--	else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON)
-+	} else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON) {
- 		acpi_remove_fixed_event_handler(ACPI_EVENT_SLEEP_BUTTON,
- 						acpi_device_fixed_event);
--	else
--		acpi_remove_notify_handler(device->handle, ACPI_DEVICE_NOTIFY,
-+	} else {
-+		u32 type = acpi_drv->flags & ACPI_DRIVER_ALL_NOTIFY_EVENTS ?
-+				ACPI_ALL_NOTIFY : ACPI_DEVICE_NOTIFY;
-+
-+		acpi_remove_notify_handler(device->handle, type,
- 					   acpi_notify_device);
-+	}
- }
- 
- /* Handle events targeting \_SB device (at present only graceful shutdown) */
-@@ -1039,7 +1030,7 @@ static int acpi_device_probe(struct device *dev)
- 		 acpi_drv->name, acpi_dev->pnp.bus_id);
- 
- 	if (acpi_drv->ops.notify) {
--		ret = acpi_device_install_notify_handler(acpi_dev);
-+		ret = acpi_device_install_notify_handler(acpi_dev, acpi_drv);
- 		if (ret) {
- 			if (acpi_drv->ops.remove)
- 				acpi_drv->ops.remove(acpi_dev);
-@@ -1062,7 +1053,7 @@ static void acpi_device_remove(struct device *dev)
- 	struct acpi_driver *acpi_drv = to_acpi_driver(dev->driver);
- 
- 	if (acpi_drv->ops.notify)
--		acpi_device_remove_notify_handler(acpi_dev);
-+		acpi_device_remove_notify_handler(acpi_dev, acpi_drv);
- 
- 	if (acpi_drv->ops.remove)
- 		acpi_drv->ops.remove(acpi_dev);
+ 	/* TCP over IPv6 flows, not fragmented, no vlan tag */
 -- 
 2.39.2
 
