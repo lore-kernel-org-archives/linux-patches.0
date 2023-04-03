@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA12612F
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA51EC433D2;
-	Mon,  3 Apr 2023 14:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11C9612F
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F4CC433D2;
+	Mon,  3 Apr 2023 14:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531967;
-	bh=9tY99DwOS+XEkzwY5IdgPgQ6IL9ZaRmMz3bydicwHuE=;
+	s=korg; t=1680531969;
+	bh=TMxWy7W4G7H+8Bf/fT9Q3JmFCESugBABHkH4m+efxbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNbBiACBgy6kn4V4WaF+Eq2eul5hpEylcxPhRVRtLDFsafGprC+m8jVIHujG+hTtX
-	 thTEwdJ+j1z58JD1qF6c7LVYqVqmrAphg7Ipas3HreuqOttmf6+UBtfz5hjVMvIxm1
-	 bgu3wKFLPH+Z+nGBIsfTsBdNzW/4k8TSA3VIhqQY=
+	b=PuGcTXE2FP/ljjZ8I46fAwXsbKX1qn4NatoTkxqjTzBf9jR9TWl8LzJrCWXOm+uL3
+	 wjAXrbHi6Dk8HwO8AZHOQnLZ2Ol6AMMZpv5seO9KQ4FGmxd79oKkZ52R8jIcEvTfiY
+	 bHh3xC0rkXMteNIcO+fAHNI4ZusnVJge5R7+oybY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrico Sau <enrico.sau@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Caleb Sander <csander@purestorage.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/173] net: usb: qmi_wwan: add Telit 0x1080 composition
-Date: Mon,  3 Apr 2023 16:08:10 +0200
-Message-Id: <20230403140416.858154585@linuxfoundation.org>
+Subject: [PATCH 5.10 049/173] nvme-tcp: fix nvme_tcp_term_pdu to match spec
+Date: Mon,  3 Apr 2023 16:07:44 +0200
+Message-Id: <20230403140416.018827435@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,34 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Enrico Sau <enrico.sau@gmail.com>
+From: Caleb Sander <csander@purestorage.com>
 
-[ Upstream commit 382e363d5bed0cec5807b35761d14e55955eee63 ]
+[ Upstream commit aa01c67de5926fdb276793180564f172c55fb0d7 ]
 
-Add the following Telit FE990 composition:
+The FEI field of C2HTermReq/H2CTermReq is 4 bytes but not 4-byte-aligned
+in the NVMe/TCP specification (it is located at offset 10 in the PDU).
+Split it into two 16-bit integers in struct nvme_tcp_term_pdu
+so no padding is inserted. There should also be 10 reserved bytes after.
+There are currently no users of this type.
 
-0x1080: tty, adb, rmnet, tty, tty, tty, tty
-
-Signed-off-by: Enrico Sau <enrico.sau@gmail.com>
-Link: https://lore.kernel.org/r/20230306120528.198842-1-enrico.sau@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: fc221d05447aa6db ("nvme-tcp: Add protocol header")
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Caleb Sander <csander@purestorage.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/nvme-tcp.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index bce151e3706a0..070910567c44e 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1297,6 +1297,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1050, 2)},	/* Telit FN980 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1060, 2)},	/* Telit LN920 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1070, 2)},	/* Telit FN990 */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1080, 2)}, /* Telit FE990 */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
+diff --git a/include/linux/nvme-tcp.h b/include/linux/nvme-tcp.h
+index 959e0bd9a913e..73364ae916890 100644
+--- a/include/linux/nvme-tcp.h
++++ b/include/linux/nvme-tcp.h
+@@ -114,8 +114,9 @@ struct nvme_tcp_icresp_pdu {
+ struct nvme_tcp_term_pdu {
+ 	struct nvme_tcp_hdr	hdr;
+ 	__le16			fes;
+-	__le32			fei;
+-	__u8			rsvd[8];
++	__le16			feil;
++	__le16			feiu;
++	__u8			rsvd[10];
+ };
+ 
+ /**
 -- 
 2.39.2
 
