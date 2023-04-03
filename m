@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9235683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1259EC433D2;
-	Mon,  3 Apr 2023 14:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3055A5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEEAC433EF;
+	Mon,  3 Apr 2023 14:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531507;
-	bh=8Pwj6AeMV46wNGCGpoLrwR2GMOr61qL/EjWdxw7+qj8=;
+	s=korg; t=1680531510;
+	bh=2aIhFII3eIVmS73uoFi9gINRR136PU1L00WNnJmuWXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNBhHjlQLshDViqbTc1kMbnlkEteFNKjPvOe5ab9RFvZhfEAs8SZOZDbCwnBxFHGw
-	 owgKNlZ8Pn2XGCva8F5cdFBDsJc2Mi0ugt+1CUUIeiPeoGrTwpZ6m/T3CnHUsymDPI
-	 Jvl2SCuvH9tnqybLzedKtSRTV9rfHHF+4cSfiZ6c=
+	b=SisXhUwxq4j+C45XNSNT1Cv/KNjqqJAcUAjCIdMr2Vl6WYATAaxTLRzjaF7USoQ4V
+	 YPgRkFVGJeqTEbYoqztejgKsfS1fi+4zrbkST7VNSz69bv9lCqd2qLk1GpTqAblv8y
+	 rU7TckpYxW9Oka3rg58fwBJnEoUjatmREP8yIv+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Disseldorp <ddiss@suse.de>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Ronnie Sahlberg <lsahlber@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 4.19 70/84] cifs: fix DFS traversal oops without CONFIG_CIFS_DFS_UPCALL
-Date: Mon,  3 Apr 2023 16:09:11 +0200
-Message-Id: <20230403140355.850086402@linuxfoundation.org>
+	Juergen Gross <jgross@suse.com>,
+	Paul Durrant <paul@xen.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 4.19 71/84] xen/netback: dont do grant copy across page boundary
+Date: Mon,  3 Apr 2023 16:09:12 +0200
+Message-Id: <20230403140355.880522451@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -36,62 +35,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Disseldorp <ddiss@suse.de>
+From: Juergen Gross <jgross@suse.com>
 
-commit 179a88a8558bbf42991d361595281f3e45d7edfc upstream.
+commit 05310f31ca74673a96567fb14637b7d5d6c82ea5 upstream.
 
-When compiled with CONFIG_CIFS_DFS_UPCALL disabled, cifs_dfs_d_automount
-is NULL. cifs.ko logic for mapping CIFS_FATTR_DFS_REFERRAL attributes to
-S_AUTOMOUNT and corresponding dentry flags is retained regardless of
-CONFIG_CIFS_DFS_UPCALL, leading to a NULL pointer dereference in
-VFS follow_automount() when traversing a DFS referral link:
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  ...
-  Call Trace:
-   <TASK>
-   __traverse_mounts+0xb5/0x220
-   ? cifs_revalidate_mapping+0x65/0xc0 [cifs]
-   step_into+0x195/0x610
-   ? lookup_fast+0xe2/0xf0
-   path_lookupat+0x64/0x140
-   filename_lookup+0xc2/0x140
-   ? __create_object+0x299/0x380
-   ? kmem_cache_alloc+0x119/0x220
-   ? user_path_at_empty+0x31/0x50
-   user_path_at_empty+0x31/0x50
-   __x64_sys_chdir+0x2a/0xd0
-   ? exit_to_user_mode_prepare+0xca/0x100
-   do_syscall_64+0x42/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
+Fix xenvif_get_requests() not to do grant copy operations across local
+page boundaries. This requires to double the maximum number of copy
+operations per queue, as each copy could now be split into 2.
 
-This fix adds an inline cifs_dfs_d_automount() {return -EREMOTE} handler
-when CONFIG_CIFS_DFS_UPCALL is disabled. An alternative would be to
-avoid flagging S_AUTOMOUNT, etc. without CONFIG_CIFS_DFS_UPCALL. This
-approach was chosen as it provides more control over the error path.
+Make sure that struct xenvif_tx_cb doesn't grow too large.
 
-Signed-off-by: David Disseldorp <ddiss@suse.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: ad7f402ae4f4 ("xen/netback: Ensure protocol headers don't fall in the non-linear area")
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsfs.h |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/xen-netback/common.h  |    2 +-
+ drivers/net/xen-netback/netback.c |   25 +++++++++++++++++++++++--
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
---- a/fs/cifs/cifsfs.h
-+++ b/fs/cifs/cifsfs.h
-@@ -121,7 +121,10 @@ extern const struct dentry_operations ci
- #ifdef CONFIG_CIFS_DFS_UPCALL
- extern struct vfsmount *cifs_dfs_d_automount(struct path *path);
- #else
--#define cifs_dfs_d_automount NULL
-+static inline struct vfsmount *cifs_dfs_d_automount(struct path *path)
-+{
-+	return ERR_PTR(-EREMOTE);
-+}
- #endif
+--- a/drivers/net/xen-netback/common.h
++++ b/drivers/net/xen-netback/common.h
+@@ -166,7 +166,7 @@ struct xenvif_queue { /* Per-queue data
+ 	struct pending_tx_info pending_tx_info[MAX_PENDING_REQS];
+ 	grant_handle_t grant_tx_handle[MAX_PENDING_REQS];
  
- /* Functions related to symlinks */
+-	struct gnttab_copy tx_copy_ops[MAX_PENDING_REQS];
++	struct gnttab_copy tx_copy_ops[2 * MAX_PENDING_REQS];
+ 	struct gnttab_map_grant_ref tx_map_ops[MAX_PENDING_REQS];
+ 	struct gnttab_unmap_grant_ref tx_unmap_ops[MAX_PENDING_REQS];
+ 	/* passed to gnttab_[un]map_refs with pages under (un)mapping */
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -327,6 +327,7 @@ static int xenvif_count_requests(struct
+ struct xenvif_tx_cb {
+ 	u16 copy_pending_idx[XEN_NETBK_LEGACY_SLOTS_MAX + 1];
+ 	u8 copy_count;
++	u32 split_mask;
+ };
+ 
+ #define XENVIF_TX_CB(skb) ((struct xenvif_tx_cb *)(skb)->cb)
+@@ -354,6 +355,8 @@ static inline struct sk_buff *xenvif_all
+ 	struct sk_buff *skb =
+ 		alloc_skb(size + NET_SKB_PAD + NET_IP_ALIGN,
+ 			  GFP_ATOMIC | __GFP_NOWARN);
++
++	BUILD_BUG_ON(sizeof(*XENVIF_TX_CB(skb)) > sizeof(skb->cb));
+ 	if (unlikely(skb == NULL))
+ 		return NULL;
+ 
+@@ -389,11 +392,13 @@ static void xenvif_get_requests(struct x
+ 	nr_slots = shinfo->nr_frags + 1;
+ 
+ 	copy_count(skb) = 0;
++	XENVIF_TX_CB(skb)->split_mask = 0;
+ 
+ 	/* Create copy ops for exactly data_len bytes into the skb head. */
+ 	__skb_put(skb, data_len);
+ 	while (data_len > 0) {
+ 		int amount = data_len > txp->size ? txp->size : data_len;
++		bool split = false;
+ 
+ 		cop->source.u.ref = txp->gref;
+ 		cop->source.domid = queue->vif->domid;
+@@ -406,6 +411,13 @@ static void xenvif_get_requests(struct x
+ 		cop->dest.u.gmfn = virt_to_gfn(skb->data + skb_headlen(skb)
+ 				               - data_len);
+ 
++		/* Don't cross local page boundary! */
++		if (cop->dest.offset + amount > XEN_PAGE_SIZE) {
++			amount = XEN_PAGE_SIZE - cop->dest.offset;
++			XENVIF_TX_CB(skb)->split_mask |= 1U << copy_count(skb);
++			split = true;
++		}
++
+ 		cop->len = amount;
+ 		cop->flags = GNTCOPY_source_gref;
+ 
+@@ -413,7 +425,8 @@ static void xenvif_get_requests(struct x
+ 		pending_idx = queue->pending_ring[index];
+ 		callback_param(queue, pending_idx).ctx = NULL;
+ 		copy_pending_idx(skb, copy_count(skb)) = pending_idx;
+-		copy_count(skb)++;
++		if (!split)
++			copy_count(skb)++;
+ 
+ 		cop++;
+ 		data_len -= amount;
+@@ -434,7 +447,8 @@ static void xenvif_get_requests(struct x
+ 			nr_slots--;
+ 		} else {
+ 			/* The copy op partially covered the tx_request.
+-			 * The remainder will be mapped.
++			 * The remainder will be mapped or copied in the next
++			 * iteration.
+ 			 */
+ 			txp->offset += amount;
+ 			txp->size -= amount;
+@@ -532,6 +546,13 @@ static int xenvif_tx_check_gop(struct xe
+ 		pending_idx = copy_pending_idx(skb, i);
+ 
+ 		newerr = (*gopp_copy)->status;
++
++		/* Split copies need to be handled together. */
++		if (XENVIF_TX_CB(skb)->split_mask & (1U << i)) {
++			(*gopp_copy)++;
++			if (!newerr)
++				newerr = (*gopp_copy)->status;
++		}
+ 		if (likely(!newerr)) {
+ 			/* The first frag might still have this slot mapped */
+ 			if (i < copy_count(skb) - 1 || !sharedslot)
 
 
