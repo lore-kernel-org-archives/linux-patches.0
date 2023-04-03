@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022446FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C64EC433D2;
-	Mon,  3 Apr 2023 14:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930E56FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A775C433D2;
+	Mon,  3 Apr 2023 14:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532870;
-	bh=U6Ud4KNDfFwYq9OBSKOa+y7C4WX9Ec8TOUJEu5Robco=;
+	s=korg; t=1680532873;
+	bh=yQpucFppg61iLd8+TE6u3745AlGx+fHxxxi4HMBtJ1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rik/oiI05T6BuWQ0/V0DgPV0bxeIQIaOC/K2HfkVabuJc+yQi0+23JSV5ZpHiKzXQ
-	 gHWhTOI8Yge0BF+aN2MWRUEwM+PyQKckOr/37K5Lv81GCcg9xix9ipsN9OAQlxFgFW
-	 dd8Kdb/Pl6uZwWS9925hcIIDU6fxqHZcbrTj09mg=
+	b=s7LmpHz2sbpiN8Ubn8RRQuqOj6K4cMnmhv56ruSNOXWZu2YNMgMX4wspV7WNQAYFN
+	 OEHG/flY8KYJngbU3y7/mZhqd/DpmArqbuiPqFaDF2P40XAQCjm9DtajcYFNKC/+cU
+	 B64abizXqQbzLe0gAamGnOl2vQHVR9o/p04/u2os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 147/181] platform/x86: ideapad-laptop: Stop sending KEY_TOUCHPAD_TOGGLE
-Date: Mon,  3 Apr 2023 16:09:42 +0200
-Message-Id: <20230403140419.836167485@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.1 148/181] powerpc: Dont try to copy PPR for task with NULL pt_regs
+Date: Mon,  3 Apr 2023 16:09:43 +0200
+Message-Id: <20230403140419.864844485@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -33,87 +34,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit e3271a5917d1501089b1a224d702aa053e2877f4 upstream.
+commit fd7276189450110ed835eb0a334e62d2f1c4e3be upstream.
 
-Commit 5829f8a897e4 ("platform/x86: ideapad-laptop: Send
-KEY_TOUCHPAD_TOGGLE on some models") made ideapad-laptop send
-KEY_TOUCHPAD_TOGGLE when we receive an ACPI notify with VPC event bit 5 set
-and the touchpad-state has not been changed by the EC itself already.
+powerpc sets up PF_KTHREAD and PF_IO_WORKER with a NULL pt_regs, which
+from my (arguably very short) checking is not commonly done for other
+archs. This is fine, except when PF_IO_WORKER's have been created and
+the task does something that causes a coredump to be generated. Then we
+get this crash:
 
-This was done under the assumption that this would be good to do to make
-the touchpad-toggle hotkey work on newer models where the EC does not
-toggle the touchpad on/off itself (because it is not routed through
-the PS/2 controller, but uses I2C).
+  Kernel attempted to read user page (160) - exploit attempt? (uid: 1000)
+  BUG: Kernel NULL pointer dereference on read at 0x00000160
+  Faulting instruction address: 0xc0000000000c3a60
+  Oops: Kernel access of bad area, sig: 11 [#1]
+  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=32 NUMA pSeries
+  Modules linked in: bochs drm_vram_helper drm_kms_helper xts binfmt_misc ecb ctr syscopyarea sysfillrect cbc sysimgblt drm_ttm_helper aes_generic ttm sg libaes evdev joydev virtio_balloon vmx_crypto gf128mul drm dm_mod fuse loop configfs drm_panel_orientation_quirks ip_tables x_tables autofs4 hid_generic usbhid hid xhci_pci xhci_hcd usbcore usb_common sd_mod
+  CPU: 1 PID: 1982 Comm: ppc-crash Not tainted 6.3.0-rc2+ #88
+  Hardware name: IBM pSeries (emulated by qemu) POWER9 (raw) 0x4e1202 0xf000005 of:SLOF,HEAD hv:linux,kvm pSeries
+  NIP:  c0000000000c3a60 LR: c000000000039944 CTR: c0000000000398e0
+  REGS: c0000000041833b0 TRAP: 0300   Not tainted  (6.3.0-rc2+)
+  MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 88082828  XER: 200400f8
+  ...
+  NIP memcpy_power7+0x200/0x7d0
+  LR  ppr_get+0x64/0xb0
+  Call Trace:
+    ppr_get+0x40/0xb0 (unreliable)
+    __regset_get+0x180/0x1f0
+    regset_get_alloc+0x64/0x90
+    elf_core_dump+0xb98/0x1b60
+    do_coredump+0x1c34/0x24a0
+    get_signal+0x71c/0x1410
+    do_notify_resume+0x140/0x6f0
+    interrupt_exit_user_prepare_main+0x29c/0x320
+    interrupt_exit_user_prepare+0x6c/0xa0
+    interrupt_return_srr_user+0x8/0x138
 
-But it turns out that at least some models, e.g. the Yoga 7-15ITL5 the EC
-triggers an ACPI notify with VPC event bit 5 set on resume, which would
-now cause a spurious KEY_TOUCHPAD_TOGGLE on resume to which the desktop
-environment responds by disabling the touchpad in software, breaking
-the touchpad (until manually re-enabled) on resume.
+Because ppr_get() is trying to copy from a PF_IO_WORKER with a NULL
+pt_regs.
 
-It was never confirmed that sending KEY_TOUCHPAD_TOGGLE actually improves
-things on new models and at least some new models like the Yoga 7-15ITL5
-don't have a touchpad on/off toggle hotkey at all, while still sending
-ACPI notify events with VPC event bit 5 set.
+Check for a valid pt_regs in both ppc_get/ppr_set, and return an error
+if not set. The actual error value doesn't seem to be important here, so
+just pick -EINVAL.
 
-So it seems best to revert the change to send KEY_TOUCHPAD_TOGGLE when
-receiving an ACPI notify events with VPC event bit 5 and the touchpad
-state as reported by the EC has not changed.
-
-Note this is not a full revert the code to cache the last EC touchpad
-state is kept to avoid sending spurious KEY_TOUCHPAD_ON / _OFF events
-on resume.
-
-Fixes: 5829f8a897e4 ("platform/x86: ideapad-laptop: Send KEY_TOUCHPAD_TOGGLE on some models")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217234
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230330194644.64628-1-hdegoede@redhat.com
+Fixes: fa439810cc1b ("powerpc/ptrace: Enable support for NT_PPPC_TAR, NT_PPC_PPR, NT_PPC_DSCR")
+Cc: stable@vger.kernel.org # v4.8+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[mpe: Trim oops in change log, add Fixes & Cc stable]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/d9f63344-fe7c-56ae-b420-4a1a04a2ae4c@kernel.dk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/ideapad-laptop.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ arch/powerpc/kernel/ptrace/ptrace-view.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/platform/x86/ideapad-laptop.c
-+++ b/drivers/platform/x86/ideapad-laptop.c
-@@ -1164,7 +1164,6 @@ static const struct key_entry ideapad_ke
- 	{ KE_KEY,  65, { KEY_PROG4 } },
- 	{ KE_KEY,  66, { KEY_TOUCHPAD_OFF } },
- 	{ KE_KEY,  67, { KEY_TOUCHPAD_ON } },
--	{ KE_KEY,  68, { KEY_TOUCHPAD_TOGGLE } },
- 	{ KE_KEY, 128, { KEY_ESC } },
+--- a/arch/powerpc/kernel/ptrace/ptrace-view.c
++++ b/arch/powerpc/kernel/ptrace/ptrace-view.c
+@@ -290,6 +290,9 @@ static int gpr_set(struct task_struct *t
+ static int ppr_get(struct task_struct *target, const struct user_regset *regset,
+ 		   struct membuf to)
+ {
++	if (!target->thread.regs)
++		return -EINVAL;
++
+ 	return membuf_write(&to, &target->thread.regs->ppr, sizeof(u64));
+ }
  
- 	/*
-@@ -1520,18 +1519,16 @@ static void ideapad_sync_touchpad_state(
- 	if (priv->features.ctrl_ps2_aux_port)
- 		i8042_command(&param, value ? I8042_CMD_AUX_ENABLE : I8042_CMD_AUX_DISABLE);
- 
--	if (send_events) {
--		/*
--		 * On older models the EC controls the touchpad and toggles it
--		 * on/off itself, in this case we report KEY_TOUCHPAD_ON/_OFF.
--		 * If the EC did not toggle, report KEY_TOUCHPAD_TOGGLE.
--		 */
--		if (value != priv->r_touchpad_val) {
--			ideapad_input_report(priv, value ? 67 : 66);
--			sysfs_notify(&priv->platform_device->dev.kobj, NULL, "touchpad");
--		} else {
--			ideapad_input_report(priv, 68);
--		}
-+	/*
-+	 * On older models the EC controls the touchpad and toggles it on/off
-+	 * itself, in this case we report KEY_TOUCHPAD_ON/_OFF. Some models do
-+	 * an acpi-notify with VPC bit 5 set on resume, so this function get
-+	 * called with send_events=true on every resume. Therefor if the EC did
-+	 * not toggle, do nothing to avoid sending spurious KEY_TOUCHPAD_TOGGLE.
-+	 */
-+	if (send_events && value != priv->r_touchpad_val) {
-+		ideapad_input_report(priv, value ? 67 : 66);
-+		sysfs_notify(&priv->platform_device->dev.kobj, NULL, "touchpad");
- 	}
- 
- 	priv->r_touchpad_val = value;
+@@ -297,6 +300,9 @@ static int ppr_set(struct task_struct *t
+ 		   unsigned int pos, unsigned int count, const void *kbuf,
+ 		   const void __user *ubuf)
+ {
++	if (!target->thread.regs)
++		return -EINVAL;
++
+ 	return user_regset_copyin(&pos, &count, &kbuf, &ubuf,
+ 				  &target->thread.regs->ppr, 0, sizeof(u64));
+ }
 
 
