@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A966FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6304DC433EF;
-	Mon,  3 Apr 2023 14:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6746FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE7DC433EF;
+	Mon,  3 Apr 2023 14:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533362;
-	bh=RYYgMYNQ6cY6jef4ZIof9DGslb7v5sSlvFvdBTUm5GM=;
+	s=korg; t=1680533365;
+	bh=VJ8fSE6cPSnFA9ct74l+U//TUQbG/ORxZtqTFAi4G1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J4D9o27VhY5ey9PtCTfUbyUW9J+mmGv12yYp8+A6B6/804lC6xQdsHP/Ucel965JB
-	 g7MPavoIbDSQE5PklwYrhk82pdgRwNY+Sl52yhnk/EotBzWqLDUBPjDFMBfscOYlzq
-	 Ili7UnQ5YcBLFrNnREv8LoIpXzsBLV4WuV8u37rs=
+	b=YQKd5iaoZkUGAC31d0zIImZrRDcE2ZWLDXSHz99E4DA3EpEcn8e3KhND3s7H2sQap
+	 R0IuABr7BE3U/ko1l9o7lYaudni+vMfqJiMnTJ7uJBHyztop/NiSY1kT1weQzFe+cy
+	 Ig2M4KlxmNYtjIZgdniykBekMA2gpKuRcRiQ42I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Voegtle <tv@lio96.de>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 114/187] bnx2x: use the right build_skb() helper
-Date: Mon,  3 Apr 2023 16:09:19 +0200
-Message-Id: <20230403140419.726811156@linuxfoundation.org>
+	Yazan Shhady <yazan.shhady@solid-run.com>,
+	Josua Mayer <josua@solid-run.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.2 148/187] net: phy: dp83869: fix default value for tx-/rx-internal-delay
+Date: Mon,  3 Apr 2023 16:09:53 +0200
+Message-Id: <20230403140420.894519955@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,74 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Josua Mayer <josua@solid-run.com>
 
-[ Upstream commit 8c495270845d6b4854607e946baef3637a8259ed ]
+commit 82e2c39f9ef78896e9b634dfd82dc042e6956bb7 upstream.
 
-build_skb() no longer accepts slab buffers. Since slab use is fairly
-uncommon we prefer the drivers to call a separate slab_build_skb()
-function appropriately.
+dp83869 internally uses a look-up table for mapping supported delays in
+nanoseconds to register values.
+When specific delays are defined in device-tree, phy_get_internal_delay
+does the lookup automatically returning an index.
 
-bnx2x uses the old semantics where size of 0 meant buffer from slab.
-It sets the fp->rx_frag_size to 0 for MTUs which don't fit in a page.
-It needs to call slab_build_skb().
+The default case wrongly assigns the nanoseconds value from the lookup
+table, resulting in numeric value 2000 applied to delay configuration
+register, rather than the expected index values 0-7 (7 for 2000).
+Ultimately this issue broke RX for 1Gbps links.
 
-This fixes the WARN_ONCE() of incorrect API use seen with bnx2x.
+Fix default delay configuration by assigning the intended index value
+directly.
 
-Reported-by: Thomas Voegtle <tv@lio96.de>
-Link: https://lore.kernel.org/all/b8f295e4-ba57-8bfb-7d9c-9d62a498a727@lio96.de/
-Fixes: ce098da1497c ("skbuff: Introduce slab_build_skb()")
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230329000013.2734957-1-kuba@kernel.org
+Cc: stable@vger.kernel.org
+Fixes: 736b25afe284 ("net: dp83869: Add RGMII internal delay configuration")
+Co-developed-by: Yazan Shhady <yazan.shhady@solid-run.com>
+Signed-off-by: Yazan Shhady <yazan.shhady@solid-run.com>
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230323102536.31988-1-josua@solid-run.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/net/phy/dp83869.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-index 16c490692f422..12083b9679b54 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-@@ -672,6 +672,18 @@ static int bnx2x_fill_frag_skb(struct bnx2x *bp, struct bnx2x_fastpath *fp,
- 	return 0;
+--- a/drivers/net/phy/dp83869.c
++++ b/drivers/net/phy/dp83869.c
+@@ -588,15 +588,13 @@ static int dp83869_of_init(struct phy_de
+ 						       &dp83869_internal_delay[0],
+ 						       delay_size, true);
+ 	if (dp83869->rx_int_delay < 0)
+-		dp83869->rx_int_delay =
+-				dp83869_internal_delay[DP83869_CLK_DELAY_DEF];
++		dp83869->rx_int_delay = DP83869_CLK_DELAY_DEF;
+ 
+ 	dp83869->tx_int_delay = phy_get_internal_delay(phydev, dev,
+ 						       &dp83869_internal_delay[0],
+ 						       delay_size, false);
+ 	if (dp83869->tx_int_delay < 0)
+-		dp83869->tx_int_delay =
+-				dp83869_internal_delay[DP83869_CLK_DELAY_DEF];
++		dp83869->tx_int_delay = DP83869_CLK_DELAY_DEF;
+ 
+ 	return ret;
  }
- 
-+static struct sk_buff *
-+bnx2x_build_skb(const struct bnx2x_fastpath *fp, void *data)
-+{
-+	struct sk_buff *skb;
-+
-+	if (fp->rx_frag_size)
-+		skb = build_skb(data, fp->rx_frag_size);
-+	else
-+		skb = slab_build_skb(data);
-+	return skb;
-+}
-+
- static void bnx2x_frag_free(const struct bnx2x_fastpath *fp, void *data)
- {
- 	if (fp->rx_frag_size)
-@@ -779,7 +791,7 @@ static void bnx2x_tpa_stop(struct bnx2x *bp, struct bnx2x_fastpath *fp,
- 	dma_unmap_single(&bp->pdev->dev, dma_unmap_addr(rx_buf, mapping),
- 			 fp->rx_buf_size, DMA_FROM_DEVICE);
- 	if (likely(new_data))
--		skb = build_skb(data, fp->rx_frag_size);
-+		skb = bnx2x_build_skb(fp, data);
- 
- 	if (likely(skb)) {
- #ifdef BNX2X_STOP_ON_ERROR
-@@ -1046,7 +1058,7 @@ static int bnx2x_rx_int(struct bnx2x_fastpath *fp, int budget)
- 						 dma_unmap_addr(rx_buf, mapping),
- 						 fp->rx_buf_size,
- 						 DMA_FROM_DEVICE);
--				skb = build_skb(data, fp->rx_frag_size);
-+				skb = bnx2x_build_skb(fp, data);
- 				if (unlikely(!skb)) {
- 					bnx2x_frag_free(fp, data);
- 					bnx2x_fp_qstats(bp, fp)->
--- 
-2.39.2
-
 
 
