@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F145E6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78AC3C433D2;
-	Mon,  3 Apr 2023 14:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2FD6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E43C433D2;
+	Mon,  3 Apr 2023 14:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533022;
-	bh=/4Gnp6UZmcgEK0xo5Pv/G/WtbPtWC/wouYxDiNILz+Y=;
+	s=korg; t=1680533025;
+	bh=hRI07d01gZ1BQajozshHCpd8OZCc6ZBZz5yD0oyspYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t2Si4YqOyyqD8eyVUTBjWJygT6F7ZGcDDSlt+o6MApt9SHIMPNgu573nGftv32LR1
-	 zsOJ2ceCyg8TQAbVLWah67RgtX5vSo6XM5Ezr7GxKJXsRpVsh1h+DMHlp9GqcMxGZN
-	 uC4pWgENuY6FaUbwDnL9VGZVQsmiNqRYj43/3Vkg=
+	b=oNBlydlBeF31zKtKqqAiBEzHqgDgn+oZMJY7n3WhIx4MwA3CTmYW12OkoGSCKMO/w
+	 aOxBWJSV/t3VIqbtZEZK7iQNXy11FZZ4dny5+1mdkrTjl1s7nWCvWOZV2v15D4Ayk8
+	 ORuM2wyLhBlSfliwb80kSh3SU6osTqqffSJWdYcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 025/187] ACPI: x86: Introduce an acpi_quirk_skip_gpio_event_handlers() helper
-Date: Mon,  3 Apr 2023 16:07:50 +0200
-Message-Id: <20230403140416.845573442@linuxfoundation.org>
+Subject: [PATCH 6.2 026/187] ACPI: x86: Add skip i2c clients quirk for Acer Iconia One 7 B1-750
+Date: Mon,  3 Apr 2023 16:07:51 +0200
+Message-Id: <20230403140416.874938767@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -38,147 +37,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 5adc409340b1fc82bc1175e602d14ac82ac685e3 ]
+[ Upstream commit a5cb0695c5f0ac2ab0cedf2c1c0d75826cb73448 ]
 
-x86 ACPI boards which ship with only Android as their factory image usually
-have pretty broken ACPI tables, relying on everything being hardcoded in
-the factory kernel image and often disabling parts of the ACPI enumeration
-kernel code to avoid the broken tables causing issues.
+The Acer Iconia One 7 B1-750 is a x86 tablet which ships with Android x86
+as factory OS. The Android x86 kernel fork ignores I2C devices described
+in the DSDT, except for the PMIC and Audio codecs.
 
-Part of this broken ACPI code is that sometimes these boards have _AEI
-ACPI GPIO event handlers which are broken.
+As usual the Acer Iconia One 7 B1-750's DSDT contains a bunch of extra I2C
+devices which are not actually there, causing various resource conflicts.
+Add an ACPI_QUIRK_SKIP_I2C_CLIENTS quirk for the Acer Iconia One 7 B1-750
+to the acpi_quirk_skip_dmi_ids table to woraround this.
 
-So far this has been dealt with in the platform/x86/x86-android-tablets.c
-module, which contains various workarounds for these devices, by it calling
-acpi_gpiochip_free_interrupts() on gpiochip-s with troublesome handlers to
-disable the handlers.
-
-But in some cases this is too late, if the handlers are of the edge type
-then gpiolib-acpi.c's code will already have run them at boot.
-This can cause issues such as GPIOs ending up as owned by "ACPI:OpRegion",
-making them unavailable for drivers which actually need them.
-
-Boards with these broken ACPI tables are already listed in
-drivers/acpi/x86/utils.c for e.g. acpi_quirk_skip_i2c_client_enumeration().
-Extend the quirks mechanism for a new acpi_quirk_skip_gpio_event_handlers()
-helper, this re-uses the DMI-ids rather then having to duplicate the same
-DMI table in gpiolib-acpi.c .
-
-Also add the new ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS quirk to existing
-boards with troublesome ACPI gpio event handlers, so that the current
-acpi_gpiochip_free_interrupts() hack can be removed from
-x86-android-tablets.c .
+The DSDT also contains broken ACPI GPIO event handlers, disable those too.
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/x86/utils.c    | 24 +++++++++++++++++++++---
- drivers/gpio/gpiolib-acpi.c |  3 +++
- include/acpi/acpi_bus.h     |  5 +++++
- 3 files changed, 29 insertions(+), 3 deletions(-)
+ drivers/acpi/x86/utils.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
-index e45285d4e62a4..4bf57cce30bbf 100644
+index 4bf57cce30bbf..b2b0e2701333a 100644
 --- a/drivers/acpi/x86/utils.c
 +++ b/drivers/acpi/x86/utils.c
-@@ -251,6 +251,7 @@ bool force_storage_d3(void)
- #define ACPI_QUIRK_UART1_TTY_UART2_SKIP				BIT(1)
- #define ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY			BIT(2)
- #define ACPI_QUIRK_USE_ACPI_AC_AND_BATTERY			BIT(3)
-+#define ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS			BIT(4)
- 
- static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
- 	/*
-@@ -286,7 +287,8 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
- 		},
- 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
- 					ACPI_QUIRK_UART1_TTY_UART2_SKIP |
--					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
+@@ -280,6 +280,16 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
+ 	 *    need the x86-android-tablets module to properly work.
+ 	 */
+ #if IS_ENABLED(CONFIG_X86_ANDROID_TABLETS)
++	{
++		/* Acer Iconia One 7 B1-750 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "VESPA2"),
++		},
++		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
 +					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY |
 +					ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS),
- 	},
++	},
  	{
  		.matches = {
-@@ -294,7 +296,8 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "TF103C"),
- 		},
- 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
--					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
-+					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY |
-+					ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS),
- 	},
- 	{
- 		/* Lenovo Yoga Tablet 2 1050F/L */
-@@ -336,7 +339,8 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "M890BAP"),
- 		},
- 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
--					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
-+					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY |
-+					ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS),
- 	},
- 	{
- 		/* Whitelabel (sold as various brands) TM800A550L */
-@@ -413,6 +417,20 @@ int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *s
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(acpi_quirk_skip_serdev_enumeration);
-+
-+bool acpi_quirk_skip_gpio_event_handlers(void)
-+{
-+	const struct dmi_system_id *dmi_id;
-+	long quirks;
-+
-+	dmi_id = dmi_first_match(acpi_quirk_skip_dmi_ids);
-+	if (!dmi_id)
-+		return false;
-+
-+	quirks = (unsigned long)dmi_id->driver_data;
-+	return (quirks & ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS);
-+}
-+EXPORT_SYMBOL_GPL(acpi_quirk_skip_gpio_event_handlers);
- #endif
- 
- /* Lists of PMIC ACPI HIDs with an (often better) native charger driver */
-diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
-index 34ff048e70d0e..7c9175619a1dc 100644
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -536,6 +536,9 @@ void acpi_gpiochip_request_interrupts(struct gpio_chip *chip)
- 	if (ACPI_FAILURE(status))
- 		return;
- 
-+	if (acpi_quirk_skip_gpio_event_handlers())
-+		return;
-+
- 	acpi_walk_resources(handle, METHOD_NAME__AEI,
- 			    acpi_gpiochip_alloc_event, acpi_gpio);
- 
-diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-index 0584e9f6e3397..57acb895c0381 100644
---- a/include/acpi/acpi_bus.h
-+++ b/include/acpi/acpi_bus.h
-@@ -657,6 +657,7 @@ static inline bool acpi_quirk_skip_acpi_ac_and_battery(void)
- #if IS_ENABLED(CONFIG_X86_ANDROID_TABLETS)
- bool acpi_quirk_skip_i2c_client_enumeration(struct acpi_device *adev);
- int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip);
-+bool acpi_quirk_skip_gpio_event_handlers(void);
- #else
- static inline bool acpi_quirk_skip_i2c_client_enumeration(struct acpi_device *adev)
- {
-@@ -668,6 +669,10 @@ acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip)
- 	*skip = false;
- 	return 0;
- }
-+static inline bool acpi_quirk_skip_gpio_event_handlers(void)
-+{
-+	return false;
-+}
- #endif
- 
- #ifdef CONFIG_PM
+ 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
 -- 
 2.39.2
 
