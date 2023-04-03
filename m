@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B1C6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F31BC4339C;
-	Mon,  3 Apr 2023 14:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746B86FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDF8C433D2;
+	Mon,  3 Apr 2023 14:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532946;
-	bh=x721Ns2IQhG4NILRKHvE444P7IS9AyMiYmAngU6wpZY=;
+	s=korg; t=1680532949;
+	bh=wsmN8xBV05QAiIWNu5aEi78vipZZCpfL8hARWo+pfYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tumS5rPWqaFj+7Ic1WuTOWb00hQ4bWBn8KX/onfnIpHHESnO9QgHcnzspY61xzUc3
-	 hC2uqqd16VhVwySdaN6NnO2fyXAHNiZJUpwgfUSMEH/85I7VEMKWVVGUJlnui1P5Kh
-	 Z2igv/ROARj5MMk++dMI3ixQ8qRrraS3f3OM34oQ=
+	b=QXcCnjK6LgPFz6lOft+HU5M31yLz1hrdl2qmWpS3b2qRGBre+s7WHPGqA61dBViIy
+	 XwdAEU42O2fIpUX6FyTkdV8X5tY0WztIx2Uinm4+JtsYzeu563a/xirUfJQ/HPQmjE
+	 6AGZJ1KseqQu1LtHQYdL/SCKSpDXWABlmm+rUm70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 177/181] libbpf: Fix btf_dumps packed struct determination
-Date: Mon,  3 Apr 2023 16:10:12 +0200
-Message-Id: <20230403140420.885270789@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Joakim Tjernlund <joakim.tjernlund@infinera.com>
+Subject: [PATCH 6.1 178/181] usb: ucsi: Fix ucsi->connector race
+Date: Mon,  3 Apr 2023 16:10:13 +0200
+Message-Id: <20230403140420.922754359@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,132 +35,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 4fb877aaa179dcdb1676d55216482febaada457e ]
+commit 0482c34ec6f8557e06cd0f8e2d0e20e8ede6a22c upstream.
 
-Fix bug in btf_dump's logic of determining if a given struct type is
-packed or not. The notion of "natural alignment" is not needed and is
-even harmful in this case, so drop it altogether. The biggest difference
-in btf_is_struct_packed() compared to its original implementation is
-that we don't really use btf__align_of() to determine overall alignment
-of a struct type (because it could be 1 for both packed and non-packed
-struct, depending on specifci field definitions), and just use field's
-actual alignment to calculate whether any field is requiring packing or
-struct's size overall necessitates packing.
+ucsi_init() which runs from a workqueue sets ucsi->connector and
+on an error will clear it again.
 
-Add two simple test cases that demonstrate the difference this change
-would make.
+ucsi->connector gets dereferenced by ucsi_resume(), this checks for
+ucsi->connector being NULL in case ucsi_init() has not finished yet;
+or in case ucsi_init() has failed.
 
-Fixes: ea2ce1ba99aa ("libbpf: Fix BTF-to-C converter's padding logic")
-Reported-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20221215183605.4149488-1-andrii@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ucsi_init() setting ucsi->connector and then clearing it again on
+an error creates a race where the check in ucsi_resume() may pass,
+only to have ucsi->connector free-ed underneath it when ucsi_init()
+hits an error.
+
+Fix this race by making ucsi_init() store the connector array in
+a local variable and only assign it to ucsi->connector on success.
+
+Fixes: bdc62f2bae8f ("usb: typec: ucsi: Simplified registration and I/O API")
+Cc: stable@vger.kernel.org
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230308154244.722337-3-hdegoede@redhat.com
+Signed-off-by: Joakim Tjernlund <joakim.tjernlund@infinera.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/btf_dump.c                      | 33 ++++---------------
- .../bpf/progs/btf_dump_test_case_packing.c    | 19 +++++++++++
- 2 files changed, 25 insertions(+), 27 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |   22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index 09c78a7975184..56102711f395a 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -829,47 +829,26 @@ static void btf_dump_emit_type(struct btf_dump *d, __u32 id, __u32 cont_id)
- 	}
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1039,9 +1039,8 @@ static struct fwnode_handle *ucsi_find_f
+ 	return NULL;
  }
  
--static int btf_natural_align_of(const struct btf *btf, __u32 id)
--{
--	const struct btf_type *t = btf__type_by_id(btf, id);
--	int i, align, vlen;
--	const struct btf_member *m;
--
--	if (!btf_is_composite(t))
--		return btf__align_of(btf, id);
--
--	align = 1;
--	m = btf_members(t);
--	vlen = btf_vlen(t);
--	for (i = 0; i < vlen; i++, m++) {
--		align = max(align, btf__align_of(btf, m->type));
--	}
--
--	return align;
--}
--
- static bool btf_is_struct_packed(const struct btf *btf, __u32 id,
- 				 const struct btf_type *t)
+-static int ucsi_register_port(struct ucsi *ucsi, int index)
++static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
  {
- 	const struct btf_member *m;
--	int align, i, bit_sz;
-+	int max_align = 1, align, i, bit_sz;
- 	__u16 vlen;
+-	struct ucsi_connector *con = &ucsi->connector[index];
+ 	struct typec_capability *cap = &con->typec_cap;
+ 	enum typec_accessory *accessory = cap->accessory;
+ 	enum usb_role u_role = USB_ROLE_NONE;
+@@ -1062,7 +1061,6 @@ static int ucsi_register_port(struct ucs
+ 	init_completion(&con->complete);
+ 	mutex_init(&con->lock);
+ 	INIT_LIST_HEAD(&con->partner_tasks);
+-	con->num = index + 1;
+ 	con->ucsi = ucsi;
  
--	align = btf_natural_align_of(btf, id);
--	/* size of a non-packed struct has to be a multiple of its alignment */
--	if (align && (t->size % align) != 0)
--		return true;
--
- 	m = btf_members(t);
- 	vlen = btf_vlen(t);
- 	/* all non-bitfield fields have to be naturally aligned */
- 	for (i = 0; i < vlen; i++, m++) {
--		align = btf_natural_align_of(btf, m->type);
-+		align = btf__align_of(btf, m->type);
- 		bit_sz = btf_member_bitfield_size(t, i);
- 		if (align && bit_sz == 0 && m->offset % (8 * align) != 0)
- 			return true;
-+		max_align = max(align, max_align);
+ 	cap->fwnode = ucsi_find_fwnode(con);
+@@ -1204,7 +1202,7 @@ out_unlock:
+  */
+ static int ucsi_init(struct ucsi *ucsi)
+ {
+-	struct ucsi_connector *con;
++	struct ucsi_connector *con, *connector;
+ 	u64 command, ntfy;
+ 	int ret;
+ 	int i;
+@@ -1235,16 +1233,16 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	}
+ 
+ 	/* Allocate the connectors. Released in ucsi_unregister() */
+-	ucsi->connector = kcalloc(ucsi->cap.num_connectors + 1,
+-				  sizeof(*ucsi->connector), GFP_KERNEL);
+-	if (!ucsi->connector) {
++	connector = kcalloc(ucsi->cap.num_connectors + 1, sizeof(*connector), GFP_KERNEL);
++	if (!connector) {
+ 		ret = -ENOMEM;
+ 		goto err_reset;
+ 	}
+ 
+ 	/* Register all connectors */
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
+-		ret = ucsi_register_port(ucsi, i);
++		connector[i].num = i + 1;
++		ret = ucsi_register_port(ucsi, &connector[i]);
+ 		if (ret)
+ 			goto err_unregister;
+ 	}
+@@ -1256,11 +1254,12 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	if (ret < 0)
+ 		goto err_unregister;
+ 
++	ucsi->connector = connector;
+ 	ucsi->ntfy = ntfy;
+ 	return 0;
+ 
+ err_unregister:
+-	for (con = ucsi->connector; con->port; con++) {
++	for (con = connector; con->port; con++) {
+ 		ucsi_unregister_partner(con);
+ 		ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
+ 		ucsi_unregister_port_psy(con);
+@@ -1269,10 +1268,7 @@ err_unregister:
+ 		typec_unregister_port(con->port);
+ 		con->port = NULL;
  	}
 -
-+	/* size of a non-packed struct has to be a multiple of its alignment */
-+	if (t->size % max_align != 0)
-+		return true;
- 	/*
- 	 * if original struct was marked as packed, but its layout is
- 	 * naturally aligned, we'll detect that it's not packed
-diff --git a/tools/testing/selftests/bpf/progs/btf_dump_test_case_packing.c b/tools/testing/selftests/bpf/progs/btf_dump_test_case_packing.c
-index 5c6c62f7ed328..7998f27df7ddd 100644
---- a/tools/testing/selftests/bpf/progs/btf_dump_test_case_packing.c
-+++ b/tools/testing/selftests/bpf/progs/btf_dump_test_case_packing.c
-@@ -116,6 +116,23 @@ struct usb_host_endpoint {
- 	long: 0;
- };
- 
-+/* ----- START-EXPECTED-OUTPUT ----- */
-+struct nested_packed_struct {
-+	int a;
-+	char b;
-+} __attribute__((packed));
-+
-+struct outer_nonpacked_struct {
-+	short a;
-+	struct nested_packed_struct b;
-+};
-+
-+struct outer_packed_struct {
-+	short a;
-+	struct nested_packed_struct b;
-+} __attribute__((packed));
-+
-+/* ------ END-EXPECTED-OUTPUT ------ */
- 
- int f(struct {
- 	struct packed_trailing_space _1;
-@@ -128,6 +145,8 @@ int f(struct {
- 	union jump_code_union _8;
- 	struct outer_implicitly_packed_struct _9;
- 	struct usb_host_endpoint _10;
-+	struct outer_nonpacked_struct _11;
-+	struct outer_packed_struct _12;
- } *_)
- {
- 	return 0;
--- 
-2.39.2
-
+-	kfree(ucsi->connector);
+-	ucsi->connector = NULL;
+-
++	kfree(connector);
+ err_reset:
+ 	memset(&ucsi->cap, 0, sizeof(ucsi->cap));
+ 	ucsi_reset_ppm(ucsi);
 
 
