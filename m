@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB915683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:15:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C870C433EF;
-	Mon,  3 Apr 2023 14:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B435683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:15:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441ECC433D2;
+	Mon,  3 Apr 2023 14:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531305;
-	bh=ApVjCvisLECc8T7GZaG4NPq9k5E8KDEEC9ZqL3Xay98=;
+	s=korg; t=1680531307;
+	bh=jUtanx+6zdb4641vsVyUtAiOI+JEQIlqff9G3GMLqBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MafvIcnFHGOY9xW83Y5vlgh0Nk8CE3uK3WeVsVvxnqolIwAqxKhGVEMeqRw7LpTDg
-	 LwrD/42vqmK8EOYUuCLo+SoSwiq/3m25WYylad6gVDl8sjoESYSxTjU0QR8Wf0zovt
-	 BlYHmWJeVSJeNmDPwOGVGcHlIGWat0Aj3Mo0smPw=
+	b=GQzPjnRMEnuIWp0PeVo00NLMxHP8y+x7ZYVH9A+4lqzIXwwNq1kbdpv5p/Zr4Olna
+	 6TOQvtAiZnUogQAuP54FevawLOM6NcOosr75+s/DavaRDCeXLQrsBBDb/Hkc6CJiQ4
+	 U1lBz4+l6+dnan2YXnigm7aZvMdo2riY4mJ5rlXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
+	Geoff Levand <geoff@infradead.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 13/84] net: qcom/emac: Fix use after free bug in emac_remove due to race condition
-Date: Mon,  3 Apr 2023 16:08:14 +0200
-Message-Id: <20230403140353.835274761@linuxfoundation.org>
+Subject: [PATCH 4.19 14/84] net/ps3_gelic_net: Fix RX sk_buff length
+Date: Mon,  3 Apr 2023 16:08:15 +0200
+Message-Id: <20230403140353.864543048@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,60 +35,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Geoff Levand <geoff@infradead.org>
 
-[ Upstream commit 6b6bc5b8bd2d4ca9e1efa9ae0f98a0b0687ace75 ]
+[ Upstream commit 19b3bb51c3bc288b3f2c6f8c4450b0f548320625 ]
 
-In emac_probe, &adpt->work_thread is bound with
-emac_work_thread. Then it will be started by timeout
-handler emac_tx_timeout or a IRQ handler emac_isr.
+The Gelic Ethernet device needs to have the RX sk_buffs aligned to
+GELIC_NET_RXBUF_ALIGN, and also the length of the RX sk_buffs must
+be a multiple of GELIC_NET_RXBUF_ALIGN.
 
-If we remove the driver which will call emac_remove
-  to make cleanup, there may be a unfinished work.
+The current Gelic Ethernet driver was not allocating sk_buffs large
+enough to allow for this alignment.
 
-The possible sequence is as follows:
+Also, correct the maximum and minimum MTU sizes, and add a new
+preprocessor macro for the maximum frame size, GELIC_NET_MAX_FRAME.
 
-Fix it by finishing the work before cleanup in the emac_remove
-and disable timeout response.
+Fixes various randomly occurring runtime network errors.
 
-CPU0                  CPU1
-
-                    |emac_work_thread
-emac_remove         |
-free_netdev         |
-kfree(netdev);      |
-                    |emac_reinit_locked
-                    |emac_mac_down
-                    |//use netdev
-Fixes: b9b17debc69d ("net: emac: emac gigabit ethernet controller driver")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-
+Fixes: 02c1889166b4 ("ps3: gigabit ethernet driver for PS3, take3")
+Signed-off-by: Geoff Levand <geoff@infradead.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/emac/emac.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/toshiba/ps3_gelic_net.c | 19 ++++++++++---------
+ drivers/net/ethernet/toshiba/ps3_gelic_net.h |  5 +++--
+ 2 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/emac/emac.c b/drivers/net/ethernet/qualcomm/emac/emac.c
-index 76a9b37c8680f..3c764c28d5dbc 100644
---- a/drivers/net/ethernet/qualcomm/emac/emac.c
-+++ b/drivers/net/ethernet/qualcomm/emac/emac.c
-@@ -752,9 +752,15 @@ static int emac_remove(struct platform_device *pdev)
- 	struct net_device *netdev = dev_get_drvdata(&pdev->dev);
- 	struct emac_adapter *adpt = netdev_priv(netdev);
+diff --git a/drivers/net/ethernet/toshiba/ps3_gelic_net.c b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
+index 75237c81c63d6..67f61379ba672 100644
+--- a/drivers/net/ethernet/toshiba/ps3_gelic_net.c
++++ b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
+@@ -378,28 +378,29 @@ static int gelic_card_init_chain(struct gelic_card *card,
+  *
+  * allocates a new rx skb, iommu-maps it and attaches it to the descriptor.
+  * Activate the descriptor state-wise
++ *
++ * Gelic RX sk_buffs must be aligned to GELIC_NET_RXBUF_ALIGN and the length
++ * must be a multiple of GELIC_NET_RXBUF_ALIGN.
+  */
+ static int gelic_descr_prepare_rx(struct gelic_card *card,
+ 				  struct gelic_descr *descr)
+ {
++	static const unsigned int rx_skb_size =
++		ALIGN(GELIC_NET_MAX_FRAME, GELIC_NET_RXBUF_ALIGN) +
++		GELIC_NET_RXBUF_ALIGN - 1;
+ 	int offset;
+-	unsigned int bufsize;
  
-+	netif_carrier_off(netdev);
-+	netif_tx_disable(netdev);
-+
- 	unregister_netdev(netdev);
- 	netif_napi_del(&adpt->rx_q.napi);
+ 	if (gelic_descr_get_status(descr) !=  GELIC_DESCR_DMA_NOT_IN_USE)
+ 		dev_info(ctodev(card), "%s: ERROR status\n", __func__);
+-	/* we need to round up the buffer size to a multiple of 128 */
+-	bufsize = ALIGN(GELIC_NET_MAX_MTU, GELIC_NET_RXBUF_ALIGN);
  
-+	free_irq(adpt->irq.irq, &adpt->irq);
-+	cancel_work_sync(&adpt->work_thread);
-+
- 	emac_clks_teardown(adpt);
+-	/* and we need to have it 128 byte aligned, therefore we allocate a
+-	 * bit more */
+-	descr->skb = dev_alloc_skb(bufsize + GELIC_NET_RXBUF_ALIGN - 1);
++	descr->skb = netdev_alloc_skb(*card->netdev, rx_skb_size);
+ 	if (!descr->skb) {
+ 		descr->buf_addr = 0; /* tell DMAC don't touch memory */
+ 		dev_info(ctodev(card),
+ 			 "%s:allocate skb failed !!\n", __func__);
+ 		return -ENOMEM;
+ 	}
+-	descr->buf_size = cpu_to_be32(bufsize);
++	descr->buf_size = cpu_to_be32(rx_skb_size);
+ 	descr->dmac_cmd_status = 0;
+ 	descr->result_size = 0;
+ 	descr->valid_size = 0;
+@@ -412,7 +413,7 @@ static int gelic_descr_prepare_rx(struct gelic_card *card,
+ 	/* io-mmu-map the skb */
+ 	descr->buf_addr = cpu_to_be32(dma_map_single(ctodev(card),
+ 						     descr->skb->data,
+-						     GELIC_NET_MAX_MTU,
++						     GELIC_NET_MAX_FRAME,
+ 						     DMA_FROM_DEVICE));
+ 	if (!descr->buf_addr) {
+ 		dev_kfree_skb_any(descr->skb);
+@@ -930,7 +931,7 @@ static void gelic_net_pass_skb_up(struct gelic_descr *descr,
+ 	data_error = be32_to_cpu(descr->data_error);
+ 	/* unmap skb buffer */
+ 	dma_unmap_single(ctodev(card), be32_to_cpu(descr->buf_addr),
+-			 GELIC_NET_MAX_MTU,
++			 GELIC_NET_MAX_FRAME,
+ 			 DMA_FROM_DEVICE);
  
- 	put_device(&adpt->phydev->mdio.dev);
+ 	skb_put(skb, be32_to_cpu(descr->valid_size)?
+diff --git a/drivers/net/ethernet/toshiba/ps3_gelic_net.h b/drivers/net/ethernet/toshiba/ps3_gelic_net.h
+index fbbf9b54b173b..0e592fc19f6c5 100644
+--- a/drivers/net/ethernet/toshiba/ps3_gelic_net.h
++++ b/drivers/net/ethernet/toshiba/ps3_gelic_net.h
+@@ -32,8 +32,9 @@
+ #define GELIC_NET_RX_DESCRIPTORS        128 /* num of descriptors */
+ #define GELIC_NET_TX_DESCRIPTORS        128 /* num of descriptors */
+ 
+-#define GELIC_NET_MAX_MTU               VLAN_ETH_FRAME_LEN
+-#define GELIC_NET_MIN_MTU               VLAN_ETH_ZLEN
++#define GELIC_NET_MAX_FRAME             2312
++#define GELIC_NET_MAX_MTU               2294
++#define GELIC_NET_MIN_MTU               64
+ #define GELIC_NET_RXBUF_ALIGN           128
+ #define GELIC_CARD_RX_CSUM_DEFAULT      1 /* hw chksum */
+ #define GELIC_NET_WATCHDOG_TIMEOUT      5*HZ
 -- 
 2.39.2
 
