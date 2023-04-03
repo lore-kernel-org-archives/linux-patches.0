@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91191612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179EEC4339C;
-	Mon,  3 Apr 2023 14:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E120612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7FBC433D2;
+	Mon,  3 Apr 2023 14:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531612;
-	bh=9d7Anayty8RhvVuNsOs31H6y62ZkLu4OYTN4Le6kfuk=;
+	s=korg; t=1680531615;
+	bh=BHr5Z/lMBlhHM5Gab5wpKGHuBeWTk8j/hOTrsQ78cew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbbsFGRI1K92c/CA+ADqwx0Qz/86XvClUUND5G1kanggcsc8LKsYm+EqREEcK+zzI
-	 6VpRxYgXbqVauiKmSoAL7OBnJNKBQfRwr5qZiZ9MsWjbyI0LSMgs6XmWSrFemPnbQw
-	 bA+5EAav5bwofTbAZMi6JthhgtG3+P11pSR5by6I=
+	b=Em2C0bGhCluBaqwGHGbuGZS/93CLCpa7C+HSdjzVQFAMqXNSpz15y7lx6CLqeZ4r+
+	 ZZ+7X45FbQUhVZXrdZuAHnaMPFga/00eGtRDn08BACpzc1gMy9RGJN5ktWgZayuPKy
+	 FcTA8HST88M5Os7bVSwvMZGeMduWq3CK9wWwBcoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Huckleberry <nhuck@google.com>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 5.4 045/104] fsverity: Remove WQ_UNBOUND from fsverity read workqueue
-Date: Mon,  3 Apr 2023 16:08:37 +0200
-Message-Id: <20230403140406.159854304@linuxfoundation.org>
+	Frank Crawford <frank@crawford.emu.id.au>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 028/104] hwmon (it87): Fix voltage scaling for chips with 10.9mV  ADCs
+Date: Mon,  3 Apr 2023 16:08:20 +0200
+Message-Id: <20230403140405.389695423@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -34,62 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Huckleberry <nhuck@google.com>
+From: Frank Crawford <frank@crawford.emu.id.au>
 
-commit f959325e6ac3f499450088b8d9c626d1177be160 upstream.
+[ Upstream commit 968b66ffeb7956acc72836a7797aeb7b2444ec51 ]
 
-WQ_UNBOUND causes significant scheduler latency on ARM64/Android.  This
-is problematic for latency sensitive workloads, like I/O
-post-processing.
+Fix voltage scaling for chips that have 10.9mV ADCs, where scaling was
+not performed.
 
-Removing WQ_UNBOUND gives a 96% reduction in fsverity workqueue related
-scheduler latency and improves app cold startup times by ~30ms.
-WQ_UNBOUND was also removed from the dm-verity workqueue for the same
-reason [1].
-
-This code was tested by running Android app startup benchmarks and
-measuring how long the fsverity workqueue spent in the runnable state.
-
-Before
-Total workqueue scheduler latency: 553800us
-After
-Total workqueue scheduler latency: 18962us
-
-[1]: https://lore.kernel.org/all/20230202012348.885402-1-nhuck@google.com/
-
-Signed-off-by: Nathan Huckleberry <nhuck@google.com>
-Fixes: 8a1d0f9cacc9 ("fs-verity: add data verification hooks for ->readpages()")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230310193325.620493-1-nhuck@google.com
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ead8080351c9 ("hwmon: (it87) Add support for IT8732F")
+Signed-off-by: Frank Crawford <frank@crawford.emu.id.au>
+Link: https://lore.kernel.org/r/20230318080543.1226700-2-frank@crawford.emu.id.au
+[groeck: Update subject and description to focus on bug fix]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/verity/verify.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/hwmon/it87.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/verity/verify.c
-+++ b/fs/verity/verify.c
-@@ -259,15 +259,15 @@ EXPORT_SYMBOL_GPL(fsverity_enqueue_verif
- int __init fsverity_init_workqueue(void)
- {
- 	/*
--	 * Use an unbound workqueue to allow bios to be verified in parallel
--	 * even when they happen to complete on the same CPU.  This sacrifices
--	 * locality, but it's worthwhile since hashing is CPU-intensive.
-+	 * Use a high-priority workqueue to prioritize verification work, which
-+	 * blocks reads from completing, over regular application tasks.
- 	 *
--	 * Also use a high-priority workqueue to prioritize verification work,
--	 * which blocks reads from completing, over regular application tasks.
-+	 * For performance reasons, don't use an unbound workqueue.  Using an
-+	 * unbound workqueue for crypto operations causes excessive scheduler
-+	 * latency on ARM64.
- 	 */
- 	fsverity_read_workqueue = alloc_workqueue("fsverity_read_queue",
--						  WQ_UNBOUND | WQ_HIGHPRI,
-+						  WQ_HIGHPRI,
- 						  num_online_cpus());
- 	if (!fsverity_read_workqueue)
- 		return -ENOMEM;
+diff --git a/drivers/hwmon/it87.c b/drivers/hwmon/it87.c
+index fac9b5c68a6a0..85413d3dc3940 100644
+--- a/drivers/hwmon/it87.c
++++ b/drivers/hwmon/it87.c
+@@ -486,6 +486,8 @@ static const struct it87_devices it87_devices[] = {
+ #define has_pwm_freq2(data)	((data)->features & FEAT_PWM_FREQ2)
+ #define has_six_temp(data)	((data)->features & FEAT_SIX_TEMP)
+ #define has_vin3_5v(data)	((data)->features & FEAT_VIN3_5V)
++#define has_scaling(data)	((data)->features & (FEAT_12MV_ADC | \
++						     FEAT_10_9MV_ADC))
+ 
+ struct it87_sio_data {
+ 	int sioaddr;
+@@ -3098,7 +3100,7 @@ static int it87_probe(struct platform_device *pdev)
+ 			 "Detected broken BIOS defaults, disabling PWM interface\n");
+ 
+ 	/* Starting with IT8721F, we handle scaling of internal voltages */
+-	if (has_12mv_adc(data)) {
++	if (has_scaling(data)) {
+ 		if (sio_data->internal & BIT(0))
+ 			data->in_scaled |= BIT(3);	/* in3 is AVCC */
+ 		if (sio_data->internal & BIT(1))
+-- 
+2.39.2
+
 
 
