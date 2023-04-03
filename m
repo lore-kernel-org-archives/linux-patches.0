@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BA76FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DF0C433D2;
-	Mon,  3 Apr 2023 14:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42006FAA
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63474C4339C;
+	Mon,  3 Apr 2023 14:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532289;
-	bh=86ECuVXBSEl6Sy4ZHD9jFKG/QjnOIrx8XWmd8VxPbwE=;
+	s=korg; t=1680532291;
+	bh=spU2mk02nSgoWe3tfnPu2qFBJVFM5uiI2NMJ37z2o+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g33+ii7/ULABTyFkWLha1yi5Ha0Up5pGf4QmdMprNRmarExtU5LgdU50yeDWEJC7A
-	 8jGNj0PzQWIulmD/FGEHht5nGN26+IwPHQJndcsqvyE8ALF67/BTcs5Z67veei+Dn+
-	 V47BUthSNSyiRb9WNB3wQ3Sa+bthEhw9xSjSBM0A=
+	b=nIgVv+UZeM6RnOjjHwKxr0uIGr63x0SjmsMitC2obnwGxI7sSRjYbavZErYTyJ+Ww
+	 Rxzr37gmP15gEWT7l+E+vEgeRFiknCt1DqiY0seovWCJBZ3Q0rqOvUp4wSs6gjzeRq
+	 gpAq37LI9vTc9V4+y90a+4oKGSLql2vaL+1/iVHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	John Keeping <john@metanate.com>
-Subject: [PATCH 5.15 26/99] ALSA: usb-audio: Fix recursive locking at XRUN during syncing
-Date: Mon,  3 Apr 2023 16:08:49 +0200
-Message-Id: <20230403140403.806020237@linuxfoundation.org>
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 27/99] platform/x86: think-lmi: add missing type attribute
+Date: Mon,  3 Apr 2023 16:08:50 +0200
+Message-Id: <20230403140403.992770380@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,141 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit 8c721c53dda512fdd48eb24d6d99e56deee57898 ]
+[ Upstream commit 583329dcf22e568a328a944f20427ccfc95dce01 ]
 
-The recent support of low latency playback in USB-audio driver made
-the snd_usb_queue_pending_output_urbs() function to be called via PCM
-ack ops.  In the new code path, the function is performed already in
-the PCM stream lock.  The problem is that, when an XRUN is detected,
-the function calls snd_pcm_xrun() to notify, but snd_pcm_xrun() is
-supposed to be called only outside the stream lock.  As a result, it
-leads to a deadlock of PCM stream locking.
+This driver was missing the mandatory type attribute...oops.
 
-For avoiding such a recursive locking, this patch adds an additional
-check to the code paths in PCM core that call the ack callback; now it
-checks the error code from the callback, and if it's -EPIPE, the XRUN
-is handled in the PCM core side gracefully.  Along with it, the
-USB-audio driver code is changed to follow that, i.e. -EPIPE is
-returned instead of the explicit snd_pcm_xrun() call when the function
-is performed already in the stream lock.
+Add it in along with logic to determine whether the attribute is an
+enumeration type or a string by parsing the possible_values attribute.
 
-Fixes: d5f871f89e21 ("ALSA: usb-audio: Improved lowlatency playback support")
-Reported-and-tested-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20230317195128.3911155-1-john@metanate.com
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
-Reviewed-by; Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://lore.kernel.org/r/20230320142838.494-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Upstream bug https://bugzilla.kernel.org/show_bug.cgi?id=216460
+
+Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20230320003221.561750-1-mpearson-lenovo@squebb.ca
+Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_lib.c |  2 ++
- sound/usb/endpoint.c | 22 ++++++++++++++--------
- sound/usb/endpoint.h |  4 ++--
- sound/usb/pcm.c      |  2 +-
- 4 files changed, 19 insertions(+), 11 deletions(-)
+ drivers/platform/x86/think-lmi.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
-index 491064f55515b..8947c988b6d34 100644
---- a/sound/core/pcm_lib.c
-+++ b/sound/core/pcm_lib.c
-@@ -2137,6 +2137,8 @@ int pcm_lib_apply_appl_ptr(struct snd_pcm_substream *substream,
- 		ret = substream->ops->ack(substream);
- 		if (ret < 0) {
- 			runtime->control->appl_ptr = old_appl_ptr;
-+			if (ret == -EPIPE)
-+				__snd_pcm_xrun(substream);
- 			return ret;
- 		}
- 	}
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index 092350eb5f4e3..6c7d842d04965 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -444,8 +444,8 @@ static void push_back_to_ready_list(struct snd_usb_endpoint *ep,
-  * This function is used both for implicit feedback endpoints and in low-
-  * latency playback mode.
-  */
--void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
--				       bool in_stream_lock)
-+int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
-+				      bool in_stream_lock)
- {
- 	bool implicit_fb = snd_usb_endpoint_implicit_feedback_sink(ep);
- 
-@@ -469,7 +469,7 @@ void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 		spin_unlock_irqrestore(&ep->lock, flags);
- 
- 		if (ctx == NULL)
--			return;
-+			break;
- 
- 		/* copy over the length information */
- 		if (implicit_fb) {
-@@ -484,11 +484,14 @@ void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 			break;
- 		if (err < 0) {
- 			/* push back to ready list again for -EAGAIN */
--			if (err == -EAGAIN)
-+			if (err == -EAGAIN) {
- 				push_back_to_ready_list(ep, ctx);
--			else
-+				break;
-+			}
-+
-+			if (!in_stream_lock)
- 				notify_xrun(ep);
--			return;
-+			return -EPIPE;
- 		}
- 
- 		err = usb_submit_urb(ctx->urb, GFP_ATOMIC);
-@@ -496,13 +499,16 @@ void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 			usb_audio_err(ep->chip,
- 				      "Unable to submit urb #%d: %d at %s\n",
- 				      ctx->index, err, __func__);
--			notify_xrun(ep);
--			return;
-+			if (!in_stream_lock)
-+				notify_xrun(ep);
-+			return -EPIPE;
- 		}
- 
- 		set_bit(ctx->index, &ep->active_mask);
- 		atomic_inc(&ep->submitted_urbs);
- 	}
-+
-+	return 0;
+diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
+index c4d9c45350f7c..0c166b4fa7167 100644
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -531,6 +531,20 @@ static ssize_t possible_values_show(struct kobject *kobj, struct kobj_attribute
+ 	return sysfs_emit(buf, "%s\n", setting->possible_values);
  }
  
- /*
-diff --git a/sound/usb/endpoint.h b/sound/usb/endpoint.h
-index 6a9af04cf175a..daa7ba063d858 100644
---- a/sound/usb/endpoint.h
-+++ b/sound/usb/endpoint.h
-@@ -49,7 +49,7 @@ int snd_usb_endpoint_implicit_feedback_sink(struct snd_usb_endpoint *ep);
- int snd_usb_endpoint_next_packet_size(struct snd_usb_endpoint *ep,
- 				      struct snd_urb_ctx *ctx, int idx,
- 				      unsigned int avail);
--void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
--				       bool in_stream_lock);
-+int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
-+				      bool in_stream_lock);
++static ssize_t type_show(struct kobject *kobj, struct kobj_attribute *attr,
++		char *buf)
++{
++	struct tlmi_attr_setting *setting = to_tlmi_attr_setting(kobj);
++
++	if (setting->possible_values) {
++		/* Figure out what setting type is as BIOS does not return this */
++		if (strchr(setting->possible_values, ','))
++			return sysfs_emit(buf, "enumeration\n");
++	}
++	/* Anything else is going to be a string */
++	return sysfs_emit(buf, "string\n");
++}
++
+ static ssize_t current_value_store(struct kobject *kobj,
+ 		struct kobj_attribute *attr,
+ 		const char *buf, size_t count)
+@@ -601,10 +615,13 @@ static struct kobj_attribute attr_possible_values = __ATTR_RO(possible_values);
  
- #endif /* __USBAUDIO_ENDPOINT_H */
-diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
-index 87a30be643242..de0964dbf7a91 100644
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -1557,7 +1557,7 @@ static int snd_usb_pcm_playback_ack(struct snd_pcm_substream *substream)
- 	 * outputs here
- 	 */
- 	if (!ep->active_mask)
--		snd_usb_queue_pending_output_urbs(ep, true);
-+		return snd_usb_queue_pending_output_urbs(ep, true);
- 	return 0;
- }
+ static struct kobj_attribute attr_current_val = __ATTR_RW_MODE(current_value, 0600);
+ 
++static struct kobj_attribute attr_type = __ATTR_RO(type);
++
+ static struct attribute *tlmi_attrs[] = {
+ 	&attr_displ_name.attr,
+ 	&attr_current_val.attr,
+ 	&attr_possible_values.attr,
++	&attr_type.attr,
+ 	NULL
+ };
  
 -- 
 2.39.2
