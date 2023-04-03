@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3055A5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEEAC433EF;
-	Mon,  3 Apr 2023 14:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32825683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D1EC433D2;
+	Mon,  3 Apr 2023 14:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531510;
-	bh=2aIhFII3eIVmS73uoFi9gINRR136PU1L00WNnJmuWXc=;
+	s=korg; t=1680531512;
+	bh=5HEx7IkX5w6sin8psWi4OrXa3DEp0W2Eet2hWHmy2F4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SisXhUwxq4j+C45XNSNT1Cv/KNjqqJAcUAjCIdMr2Vl6WYATAaxTLRzjaF7USoQ4V
-	 YPgRkFVGJeqTEbYoqztejgKsfS1fi+4zrbkST7VNSz69bv9lCqd2qLk1GpTqAblv8y
-	 rU7TckpYxW9Oka3rg58fwBJnEoUjatmREP8yIv+E=
+	b=h5badcA4QaDoogD6c+eL+H4UOvQJgMQipReK/o3wd+DvocVghMV5vqBPZMnczXHEb
+	 nBXHpWyMIaEaA8ZH70cIrEYawNZffYjyevV+SoLppG/iK4Bkx/4L7yEAUPea49LfGa
+	 KmuLjmtrjOmaRgAlDR8onBP+6eUbas0LfkZaiwrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Paul Durrant <paul@xen.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 4.19 71/84] xen/netback: dont do grant copy across page boundary
-Date: Mon,  3 Apr 2023 16:09:12 +0200
-Message-Id: <20230403140355.880522451@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 4.19 72/84] pinctrl: at91-pio4: fix domain name assignment
+Date: Mon,  3 Apr 2023 16:09:13 +0200
+Message-Id: <20230403140355.910473613@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,118 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 05310f31ca74673a96567fb14637b7d5d6c82ea5 upstream.
+commit 7bb97e360acdd38b68ad0a1defb89c6e89c85596 upstream.
 
-Fix xenvif_get_requests() not to do grant copy operations across local
-page boundaries. This requires to double the maximum number of copy
-operations per queue, as each copy could now be split into 2.
+Since commit d59f6617eef0 ("genirq: Allow fwnode to carry name
+information only") an IRQ domain is always given a name during
+allocation (e.g. used for the debugfs entry).
 
-Make sure that struct xenvif_tx_cb doesn't grow too large.
+Drop the no longer valid name assignment, which would lead to an attempt
+to free a string constant when removing the domain on late probe
+failures (e.g. probe deferral).
 
-Cc: stable@vger.kernel.org
-Fixes: ad7f402ae4f4 ("xen/netback: Ensure protocol headers don't fall in the non-linear area")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d59f6617eef0 ("genirq: Allow fwnode to carry name information only")
+Cc: stable@vger.kernel.org	# 4.13
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com> # on SAMA7G5
+Link: https://lore.kernel.org/r/20230224130828.27985-1-johan+linaro@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/xen-netback/common.h  |    2 +-
- drivers/net/xen-netback/netback.c |   25 +++++++++++++++++++++++--
- 2 files changed, 24 insertions(+), 3 deletions(-)
+ drivers/pinctrl/pinctrl-at91-pio4.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/net/xen-netback/common.h
-+++ b/drivers/net/xen-netback/common.h
-@@ -166,7 +166,7 @@ struct xenvif_queue { /* Per-queue data
- 	struct pending_tx_info pending_tx_info[MAX_PENDING_REQS];
- 	grant_handle_t grant_tx_handle[MAX_PENDING_REQS];
+--- a/drivers/pinctrl/pinctrl-at91-pio4.c
++++ b/drivers/pinctrl/pinctrl-at91-pio4.c
+@@ -1080,7 +1080,6 @@ static int atmel_pinctrl_probe(struct pl
+ 		dev_err(dev, "can't add the irq domain\n");
+ 		return -ENODEV;
+ 	}
+-	atmel_pioctrl->irq_domain->name = "atmel gpio";
  
--	struct gnttab_copy tx_copy_ops[MAX_PENDING_REQS];
-+	struct gnttab_copy tx_copy_ops[2 * MAX_PENDING_REQS];
- 	struct gnttab_map_grant_ref tx_map_ops[MAX_PENDING_REQS];
- 	struct gnttab_unmap_grant_ref tx_unmap_ops[MAX_PENDING_REQS];
- 	/* passed to gnttab_[un]map_refs with pages under (un)mapping */
---- a/drivers/net/xen-netback/netback.c
-+++ b/drivers/net/xen-netback/netback.c
-@@ -327,6 +327,7 @@ static int xenvif_count_requests(struct
- struct xenvif_tx_cb {
- 	u16 copy_pending_idx[XEN_NETBK_LEGACY_SLOTS_MAX + 1];
- 	u8 copy_count;
-+	u32 split_mask;
- };
- 
- #define XENVIF_TX_CB(skb) ((struct xenvif_tx_cb *)(skb)->cb)
-@@ -354,6 +355,8 @@ static inline struct sk_buff *xenvif_all
- 	struct sk_buff *skb =
- 		alloc_skb(size + NET_SKB_PAD + NET_IP_ALIGN,
- 			  GFP_ATOMIC | __GFP_NOWARN);
-+
-+	BUILD_BUG_ON(sizeof(*XENVIF_TX_CB(skb)) > sizeof(skb->cb));
- 	if (unlikely(skb == NULL))
- 		return NULL;
- 
-@@ -389,11 +392,13 @@ static void xenvif_get_requests(struct x
- 	nr_slots = shinfo->nr_frags + 1;
- 
- 	copy_count(skb) = 0;
-+	XENVIF_TX_CB(skb)->split_mask = 0;
- 
- 	/* Create copy ops for exactly data_len bytes into the skb head. */
- 	__skb_put(skb, data_len);
- 	while (data_len > 0) {
- 		int amount = data_len > txp->size ? txp->size : data_len;
-+		bool split = false;
- 
- 		cop->source.u.ref = txp->gref;
- 		cop->source.domid = queue->vif->domid;
-@@ -406,6 +411,13 @@ static void xenvif_get_requests(struct x
- 		cop->dest.u.gmfn = virt_to_gfn(skb->data + skb_headlen(skb)
- 				               - data_len);
- 
-+		/* Don't cross local page boundary! */
-+		if (cop->dest.offset + amount > XEN_PAGE_SIZE) {
-+			amount = XEN_PAGE_SIZE - cop->dest.offset;
-+			XENVIF_TX_CB(skb)->split_mask |= 1U << copy_count(skb);
-+			split = true;
-+		}
-+
- 		cop->len = amount;
- 		cop->flags = GNTCOPY_source_gref;
- 
-@@ -413,7 +425,8 @@ static void xenvif_get_requests(struct x
- 		pending_idx = queue->pending_ring[index];
- 		callback_param(queue, pending_idx).ctx = NULL;
- 		copy_pending_idx(skb, copy_count(skb)) = pending_idx;
--		copy_count(skb)++;
-+		if (!split)
-+			copy_count(skb)++;
- 
- 		cop++;
- 		data_len -= amount;
-@@ -434,7 +447,8 @@ static void xenvif_get_requests(struct x
- 			nr_slots--;
- 		} else {
- 			/* The copy op partially covered the tx_request.
--			 * The remainder will be mapped.
-+			 * The remainder will be mapped or copied in the next
-+			 * iteration.
- 			 */
- 			txp->offset += amount;
- 			txp->size -= amount;
-@@ -532,6 +546,13 @@ static int xenvif_tx_check_gop(struct xe
- 		pending_idx = copy_pending_idx(skb, i);
- 
- 		newerr = (*gopp_copy)->status;
-+
-+		/* Split copies need to be handled together. */
-+		if (XENVIF_TX_CB(skb)->split_mask & (1U << i)) {
-+			(*gopp_copy)++;
-+			if (!newerr)
-+				newerr = (*gopp_copy)->status;
-+		}
- 		if (likely(!newerr)) {
- 			/* The first frag might still have this slot mapped */
- 			if (i < copy_count(skb) - 1 || !sharedslot)
+ 	for (i = 0; i < atmel_pioctrl->npins; i++) {
+ 		int irq = irq_create_mapping(atmel_pioctrl->irq_domain, i);
 
 
