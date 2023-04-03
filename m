@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFA95683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3FBC433EF;
-	Mon,  3 Apr 2023 14:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700545683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CD4C433EF;
+	Mon,  3 Apr 2023 14:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531441;
-	bh=6KR0NwaCVhWryNraWQ0rFYYCvh01RwPYIwb8Hk/NgX8=;
+	s=korg; t=1680531444;
+	bh=Q24NRcEzhgVm8UiR9gH3LzWlYm2ehh+5ZgK6JcpA32o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rCGR+TP8WY1Kv8vEEL8Awdi1uHagnOlV5vzTZlLZarlGvCYhPJXODOsmw5Vb8wkqm
-	 6hJhZSWBOc1Ys70koeYDVF+K9sh9CbB5Xx/gO+0ihrI/GswbxmOrt5Ryc+cI+75oNx
-	 ed3qLr/XhicJZ0IpShpMmi+VbnzUROuZ6CsdqlC4=
+	b=OFo3Qyl99mlltfkNPvONL23CJrxoglneBz25ep9kdwwuTeAVYY7Arj3Qs2jzjalhi
+	 To9dyndWtOQYvAM+7hSKrNupZ/rb+hXYMdc40iQQj0tGY0927BDlfELanki+ltuCZv
+	 2TYDTGUiTRoLpF9FNwpMGu126JWtmtuqj5QXZddo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrico Sau <enrico.sau@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Rich Felker <dalias@libc.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 34/84] net: usb: qmi_wwan: add Telit 0x1080 composition
-Date: Mon,  3 Apr 2023 16:08:35 +0200
-Message-Id: <20230403140354.516904349@linuxfoundation.org>
+Subject: [PATCH 4.19 35/84] sh: sanitize the flags on sigreturn
+Date: Mon,  3 Apr 2023 16:08:36 +0200
+Message-Id: <20230403140354.556334686@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,34 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Enrico Sau <enrico.sau@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 382e363d5bed0cec5807b35761d14e55955eee63 ]
+[ Upstream commit 573b22ccb7ce9ab7f0539a2e11a9d3609a8783f5 ]
 
-Add the following Telit FE990 composition:
+We fetch %SR value from sigframe; it might have been modified by signal
+handler, so we can't trust it with any bits that are not modifiable in
+user mode.
 
-0x1080: tty, adb, rmnet, tty, tty, tty, tty
-
-Signed-off-by: Enrico Sau <enrico.sau@gmail.com>
-Link: https://lore.kernel.org/r/20230306120528.198842-1-enrico.sau@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Rich Felker <dalias@libc.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/sh/include/asm/processor_32.h | 1 +
+ arch/sh/kernel/signal_32.c         | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 24ce49b311c4c..5417932242e77 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1322,6 +1322,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1050, 2)},	/* Telit FN980 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1060, 2)},	/* Telit LN920 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1070, 2)},	/* Telit FN990 */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1080, 2)}, /* Telit FE990 */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
+diff --git a/arch/sh/include/asm/processor_32.h b/arch/sh/include/asm/processor_32.h
+index 95100d8a0b7b4..fc94603724b86 100644
+--- a/arch/sh/include/asm/processor_32.h
++++ b/arch/sh/include/asm/processor_32.h
+@@ -57,6 +57,7 @@
+ #define SR_FD		0x00008000
+ #define SR_MD		0x40000000
+ 
++#define SR_USER_MASK	0x00000303	// M, Q, S, T bits
+ /*
+  * DSP structure and data
+  */
+diff --git a/arch/sh/kernel/signal_32.c b/arch/sh/kernel/signal_32.c
+index c46c0020ff55e..ce93ae78c3002 100644
+--- a/arch/sh/kernel/signal_32.c
++++ b/arch/sh/kernel/signal_32.c
+@@ -116,6 +116,7 @@ static int
+ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p)
+ {
+ 	unsigned int err = 0;
++	unsigned int sr = regs->sr & ~SR_USER_MASK;
+ 
+ #define COPY(x)		err |= __get_user(regs->x, &sc->sc_##x)
+ 			COPY(regs[1]);
+@@ -131,6 +132,8 @@ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p
+ 	COPY(sr);	COPY(pc);
+ #undef COPY
+ 
++	regs->sr = (regs->sr & SR_USER_MASK) | sr;
++
+ #ifdef CONFIG_SH_FPU
+ 	if (boot_cpu_data.flags & CPU_HAS_FPU) {
+ 		int owned_fp;
 -- 
 2.39.2
 
