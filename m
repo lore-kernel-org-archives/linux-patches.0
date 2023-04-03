@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3D26FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E37C433EF;
-	Mon,  3 Apr 2023 14:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC6D6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BFAC433EF;
+	Mon,  3 Apr 2023 14:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532084;
-	bh=xDhUend4NH57BXHzmf5W3pjKljyH/lzEPZluTU+3IwU=;
+	s=korg; t=1680532086;
+	bh=ofs2jD6JL/nr2hVtNEEt4cyqmDWgNc/8F3k/RHHvP8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7Ukdlq583XSa9dTXjGj98A0o8LHi6q7h7hOxP6m+TC/GQtqUsYLsIWf4dtqgTN3n
-	 mSo5vBae0AF52Vso0l1KGrTTJumZ7bzVX1UbhObeXhtREBHb76vb9pUBYZiysHVuIK
-	 c34KRgokfadAN8/HrsyNA0YMDlgcsZCUSIJezP6E=
+	b=wHaOwbzBRWL5Dn/ozHkfE+tKrO72E5PlpEkSLoheaY/bD3kX/31KOqgi2Rr18XwMB
+	 BHro62TgUCXUfe1CNYzCqchau4hPBCxZnEQ20V7OcKVay2RFwTbTzyPR0SCPhyv9r1
+	 4z2bhaxKspdsM54pEhaNY8HA9+BgBDmdX0y7CbdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+132fdd2f1e1805fdc591@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 089/173] nilfs2: fix kernel-infoleak in nilfs_ioctl_wrap_copy()
-Date: Mon,  3 Apr 2023 16:08:24 +0200
-Message-Id: <20230403140417.322881500@linuxfoundation.org>
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Ruslan Bilovol <ruslan.bilovol@gmail.com>,
+	John Keeping <john@metanate.com>
+Subject: [PATCH 5.10 080/173] usb: gadget: u_audio: dont let userspace block driver unbind
+Date: Mon,  3 Apr 2023 16:08:15 +0200
+Message-Id: <20230403140417.008576908@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,86 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Alvin Šipraga <alsi@bang-olufsen.dk>
 
-commit 003587000276f81d0114b5ce773d80c119d8cb30 upstream.
+commit 6c67ed9ad9b83e453e808f9b31a931a20a25629b upstream.
 
-The ioctl helper function nilfs_ioctl_wrap_copy(), which exchanges a
-metadata array to/from user space, may copy uninitialized buffer regions
-to user space memory for read-only ioctl commands NILFS_IOCTL_GET_SUINFO
-and NILFS_IOCTL_GET_CPINFO.
+In the unbind callback for f_uac1 and f_uac2, a call to snd_card_free()
+via g_audio_cleanup() will disconnect the card and then wait for all
+resources to be released, which happens when the refcount falls to zero.
+Since userspace can keep the refcount incremented by not closing the
+relevant file descriptor, the call to unbind may block indefinitely.
+This can cause a deadlock during reboot, as evidenced by the following
+blocked task observed on my machine:
 
-This can occur when the element size of the user space metadata given by
-the v_size member of the argument nilfs_argv structure is larger than the
-size of the metadata element (nilfs_suinfo structure or nilfs_cpinfo
-structure) on the file system side.
+  task:reboot  state:D stack:0   pid:2827  ppid:569    flags:0x0000000c
+  Call trace:
+   __switch_to+0xc8/0x140
+   __schedule+0x2f0/0x7c0
+   schedule+0x60/0xd0
+   schedule_timeout+0x180/0x1d4
+   wait_for_completion+0x78/0x180
+   snd_card_free+0x90/0xa0
+   g_audio_cleanup+0x2c/0x64
+   afunc_unbind+0x28/0x60
+   ...
+   kernel_restart+0x4c/0xac
+   __do_sys_reboot+0xcc/0x1ec
+   __arm64_sys_reboot+0x28/0x30
+   invoke_syscall+0x4c/0x110
+   ...
 
-KMSAN-enabled kernels detect this issue as follows:
+The issue can also be observed by opening the card with arecord and
+then stopping the process through the shell before unbinding:
 
- BUG: KMSAN: kernel-infoleak in instrument_copy_to_user
- include/linux/instrumented.h:121 [inline]
- BUG: KMSAN: kernel-infoleak in _copy_to_user+0xc0/0x100 lib/usercopy.c:33
-  instrument_copy_to_user include/linux/instrumented.h:121 [inline]
-  _copy_to_user+0xc0/0x100 lib/usercopy.c:33
-  copy_to_user include/linux/uaccess.h:169 [inline]
-  nilfs_ioctl_wrap_copy+0x6fa/0xc10 fs/nilfs2/ioctl.c:99
-  nilfs_ioctl_get_info fs/nilfs2/ioctl.c:1173 [inline]
-  nilfs_ioctl+0x2402/0x4450 fs/nilfs2/ioctl.c:1290
-  nilfs_compat_ioctl+0x1b8/0x200 fs/nilfs2/ioctl.c:1343
-  __do_compat_sys_ioctl fs/ioctl.c:968 [inline]
-  __se_compat_sys_ioctl+0x7dd/0x1000 fs/ioctl.c:910
-  __ia32_compat_sys_ioctl+0x93/0xd0 fs/ioctl.c:910
-  do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
-  __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
-  do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
-  do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
-  entry_SYSENTER_compat_after_hwframe+0x70/0x82
+  # arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
+  Recording WAVE '/dev/null' : Signed 32 bit Little Endian, Rate 48000 Hz, Stereo
+  ^Z[1]+  Stopped                    arecord -D hw:UAC2Gadget -f S32_LE -c 2 -r 48000 /dev/null
+  # echo gadget.0 > /sys/bus/gadget/drivers/configfs-gadget/unbind
+  (observe that the unbind command never finishes)
 
- Uninit was created at:
-  __alloc_pages+0x9f6/0xe90 mm/page_alloc.c:5572
-  alloc_pages+0xab0/0xd80 mm/mempolicy.c:2287
-  __get_free_pages+0x34/0xc0 mm/page_alloc.c:5599
-  nilfs_ioctl_wrap_copy+0x223/0xc10 fs/nilfs2/ioctl.c:74
-  nilfs_ioctl_get_info fs/nilfs2/ioctl.c:1173 [inline]
-  nilfs_ioctl+0x2402/0x4450 fs/nilfs2/ioctl.c:1290
-  nilfs_compat_ioctl+0x1b8/0x200 fs/nilfs2/ioctl.c:1343
-  __do_compat_sys_ioctl fs/ioctl.c:968 [inline]
-  __se_compat_sys_ioctl+0x7dd/0x1000 fs/ioctl.c:910
-  __ia32_compat_sys_ioctl+0x93/0xd0 fs/ioctl.c:910
-  do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
-  __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
-  do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
-  do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
-  entry_SYSENTER_compat_after_hwframe+0x70/0x82
+Fix the problem by using snd_card_free_when_closed() instead, which will
+still disconnect the card as desired, but defer the task of freeing the
+resources to the core once userspace closes its file descriptor.
 
- Bytes 16-127 of 3968 are uninitialized
- ...
-
-This eliminates the leak issue by initializing the page allocated as
-buffer using get_zeroed_page().
-
-Link: https://lkml.kernel.org/r/20230307085548.6290-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+132fdd2f1e1805fdc591@syzkaller.appspotmail.com
-  Link: https://lkml.kernel.org/r/000000000000a5bd2d05f63f04ae@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 132fcb460839 ("usb: gadget: Add Audio Class 2.0 Driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Reviewed-by: Ruslan Bilovol <ruslan.bilovol@gmail.com>
+Reviewed-by: John Keeping <john@metanate.com>
+Link: https://lore.kernel.org/r/20230302163648.3349669-1-alvin@pqrs.dk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/ioctl.c |    2 +-
+ drivers/usb/gadget/function/u_audio.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -70,7 +70,7 @@ static int nilfs_ioctl_wrap_copy(struct
- 	if (argv->v_index > ~(__u64)0 - argv->v_nmembs)
- 		return -EINVAL;
+--- a/drivers/usb/gadget/function/u_audio.c
++++ b/drivers/usb/gadget/function/u_audio.c
+@@ -613,7 +613,7 @@ void g_audio_cleanup(struct g_audio *g_a
+ 	uac = g_audio->uac;
+ 	card = uac->card;
+ 	if (card)
+-		snd_card_free(card);
++		snd_card_free_when_closed(card);
  
--	buf = (void *)__get_free_pages(GFP_NOFS, 0);
-+	buf = (void *)get_zeroed_page(GFP_NOFS);
- 	if (unlikely(!buf))
- 		return -ENOMEM;
- 	maxmembs = PAGE_SIZE / argv->v_size;
+ 	kfree(uac->p_prm.ureq);
+ 	kfree(uac->c_prm.ureq);
 
 
