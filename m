@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387866FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1880C433D2;
-	Mon,  3 Apr 2023 14:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C407A6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB45C433D2;
+	Mon,  3 Apr 2023 14:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533240;
-	bh=VTVNlULiYMJ+MZtsT+Lym2bqI7ZRqe4oMZnwYyi5JQc=;
+	s=korg; t=1680533242;
+	bh=30H4ztSUUBgo+PFzRC51WEixdOjzrExcRzYqlAvuAaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hdFU459et2YfRI02IEZUTA05ln3+EaqkV5DQ2NGXy4yLm28x/wZIv49YwwYAKHI+6
-	 yLIAvv5QOW3Dp8D6DeRuF47RzDB6KVG6ptoR2eSG85uf1PhRedSi3X0h1mGSMF9kOG
-	 ZcK2MoPkeqfRxJ/LTSJFL03TvVK5S5AzewSG+zwo=
+	b=QXdJNNcpRZXxEWZ8sjkcTELMLp3shYpHJ3+rv0TTFZMKdwSNTV+FA/bHb0pH61wM0
+	 Gyx2pbBem05m+lkriVEdWM/iRYj/rNkMxcZ+Vol3w0sKflJdPzuDYd9HjcWVw45G5P
+	 Cvr+MtyJrcQKtCwkpg6lbNM3rFMtCSzOgQJWrno0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Koschel <jkl820.git@gmail.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 6.2 107/187] ice: fix invalid check for empty list in ice_sched_assoc_vsi_to_agg()
-Date: Mon,  3 Apr 2023 16:09:12 +0200
-Message-Id: <20230403140419.487616902@linuxfoundation.org>
+	Frank Wunderlich <frank-w@public-files.de>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 108/187] net: ethernet: mtk_eth_soc: fix tx throughput regression with direct 1G links
+Date: Mon,  3 Apr 2023 16:09:13 +0200
+Message-Id: <20230403140419.531124619@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,61 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakob Koschel <jkl820.git@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit e9a1cc2e4c4ee7c7e60fb26345618c2522a2a10f ]
+[ Upstream commit 07b3af42d8d528374d4f42d688bae86eeb30831a ]
 
-The code implicitly assumes that the list iterator finds a correct
-handle. If 'vsi_handle' is not found the 'old_agg_vsi_info' was
-pointing to an bogus memory location. For safety a separate list
-iterator variable should be used to make the != NULL check on
-'old_agg_vsi_info' correct under any circumstances.
+Using the QDMA tx scheduler to throttle tx to line speed works fine for
+switch ports, but apparently caused a regression on non-switch ports.
 
-Additionally Linus proposed to avoid any use of the list iterator
-variable after the loop, in the attempt to move the list iterator
-variable declaration into the macro to avoid any potential misuse after
-the loop. Using it in a pointer comparison after the loop is undefined
-behavior and should be omitted if possible [1].
+Based on a number of tests, it seems that this throttling can be safely
+dropped without re-introducing the issues on switch ports that the
+tx scheduling changes resolved.
 
-Fixes: 37c592062b16 ("ice: remove the VSI info from previous agg")
-Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/ [1]
-Signed-off-by: Jakob Koschel <jkl820.git@gmail.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/netdev/trinity-92c3826f-c2c8-40af-8339-bc6d0d3ffea4-1678213958520@3c-app-gmx-bs16/
+Fixes: f63959c7eec3 ("net: ethernet: mtk_eth_soc: implement multi-queue support for per-port queues")
+Reported-by: Frank Wunderlich <frank-w@public-files.de>
+Reported-by: Daniel Golle <daniel@makrotopia.org>
+Tested-by: Daniel Golle <daniel@makrotopia.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20230324140404.95745-1-nbd@nbd.name
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_sched.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
-index 6d08b397df2ad..8f0ea411dfba0 100644
---- a/drivers/net/ethernet/intel/ice/ice_sched.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sched.c
-@@ -2787,7 +2787,7 @@ static int
- ice_sched_assoc_vsi_to_agg(struct ice_port_info *pi, u32 agg_id,
- 			   u16 vsi_handle, unsigned long *tc_bitmap)
- {
--	struct ice_sched_agg_vsi_info *agg_vsi_info, *old_agg_vsi_info = NULL;
-+	struct ice_sched_agg_vsi_info *agg_vsi_info, *iter, *old_agg_vsi_info = NULL;
- 	struct ice_sched_agg_info *agg_info, *old_agg_info;
- 	struct ice_hw *hw = pi->hw;
- 	int status = 0;
-@@ -2805,11 +2805,13 @@ ice_sched_assoc_vsi_to_agg(struct ice_port_info *pi, u32 agg_id,
- 	if (old_agg_info && old_agg_info != agg_info) {
- 		struct ice_sched_agg_vsi_info *vtmp;
- 
--		list_for_each_entry_safe(old_agg_vsi_info, vtmp,
-+		list_for_each_entry_safe(iter, vtmp,
- 					 &old_agg_info->agg_vsi_list,
- 					 list_entry)
--			if (old_agg_vsi_info->vsi_handle == vsi_handle)
-+			if (iter->vsi_handle == vsi_handle) {
-+				old_agg_vsi_info = iter;
- 				break;
-+			}
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 332329cb1ee00..9f9df6255baa1 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -713,8 +713,6 @@ static void mtk_mac_link_up(struct phylink_config *config,
+ 		break;
  	}
  
- 	/* check if entry already exist */
+-	mtk_set_queue_speed(mac->hw, mac->id, speed);
+-
+ 	/* Configure duplex */
+ 	if (duplex == DUPLEX_FULL)
+ 		mcr |= MAC_MCR_FORCE_DPX;
 -- 
 2.39.2
 
