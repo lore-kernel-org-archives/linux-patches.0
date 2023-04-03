@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9676B6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AEAFC433D2;
-	Mon,  3 Apr 2023 14:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E986FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05E2C4339B;
+	Mon,  3 Apr 2023 14:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532068;
-	bh=ADgOMX62IrR82V6veE+B2pFtCQ5XlrDFYKj5HOS6t58=;
+	s=korg; t=1680532071;
+	bh=8NN38rp18l8sW/u16ly69ADMI68JSc09ycDwXeOKiMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwA6Gc8AR4d35KNBG2Vonj6zXMJgIeRumN6xcaYdg78vCRjZ5CJbhnUeK23qEu37S
-	 /HFc0RyL+Cqc5NpoIjO8jt8cBJWLpezaqYMAZDf4LPB/NPeBOwMzAoFVkNUPVdobCG
-	 KJlvHfMpc4loBTiNTLQoChMbnI8441Tspk2zoHCM=
+	b=1ssBbIkMOqn8hFScH9GAkKgFIvsf1vZVoHxLiGrog/JDpzxjTiNNsrIG440LgTSk/
+	 modElDUnaSxPL1HDaO0dqHlOqmoaaSgk7JgKDRNAZvlggZHtc2zQRcYYcB1udD/urn
+	 LyVPy+HCY3+IsV5+zA0trK2D/2qbmHUPFBsnC8nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	NeilBrown <neilb@suse.de>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 113/173] md: avoid signed overflow in slot_store()
-Date: Mon,  3 Apr 2023 16:08:48 +0200
-Message-Id: <20230403140418.100115401@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>
+Subject: [PATCH 5.10 084/173] usb: cdns3: Fix issue with using incorrect PCI device function
+Date: Mon,  3 Apr 2023 16:08:19 +0200
+Message-Id: <20230403140417.144901648@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,44 +33,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neilb@suse.de>
+From: Pawel Laszczak <pawell@cadence.com>
 
-[ Upstream commit 3bc57292278a0b6ac4656cad94c14f2453344b57 ]
+commit 1272fd652a226ccb34e9f47371b6121948048438 upstream.
 
-slot_store() uses kstrtouint() to get a slot number, but stores the
-result in an "int" variable (by casting a pointer).
-This can result in a negative slot number if the unsigned int value is
-very large.
+PCI based platform can have more than two PCI functions.
+USBSS PCI Glue driver during initialization should
+consider only DRD/HOST/DEVICE PCI functions and
+all other should be ignored. This patch adds additional
+condition which causes that only DRD and HOST/DEVICE
+function will be accepted.
 
-A negative number means that the slot is empty, but setting a negative
-slot number this way will not remove the device from the array.  I don't
-think this is a serious problem, but it could cause confusion and it is
-best to fix it.
-
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+cc: <stable@vger.kernel.org>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Link: https://lore.kernel.org/r/20230308124427.311245-1-pawell@cadence.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index c0b34637bd667..1553c2495841b 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -3207,6 +3207,9 @@ slot_store(struct md_rdev *rdev, const char *buf, size_t len)
- 		err = kstrtouint(buf, 10, (unsigned int *)&slot);
- 		if (err < 0)
- 			return err;
-+		if (slot < 0)
-+			/* overflow */
-+			return -ENOSPC;
+--- a/drivers/usb/cdns3/cdns3-pci-wrap.c
++++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
+@@ -60,6 +60,11 @@ static struct pci_dev *cdns3_get_second_
+ 			return NULL;
  	}
- 	if (rdev->mddev->pers && slot == -1) {
- 		/* Setting 'slot' on an active array requires also
--- 
-2.39.2
-
+ 
++	if (func->devfn != PCI_DEV_FN_HOST_DEVICE &&
++	    func->devfn != PCI_DEV_FN_OTG) {
++		return NULL;
++	}
++
+ 	return func;
+ }
+ 
 
 
