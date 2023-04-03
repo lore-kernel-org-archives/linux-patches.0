@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BF96FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F6BC433AE;
-	Mon,  3 Apr 2023 14:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913136FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16851C433EF;
+	Mon,  3 Apr 2023 14:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532434;
-	bh=ZCbROKUxAMtnI5lC91A1jFFdbotDNC9GMcwvQZ6LIOM=;
+	s=korg; t=1680532437;
+	bh=eenWOeQQNPEv5V0c223t71Q3Y9U/3KJA4MKAx62PM4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7yZA/CaBObFxCXhI38WZRKxVikoFAIgAFBHA5L35kMmvpRC3rnn2zN9qIOuGk3nu
-	 OT5kYrn8Xln5PfwrT4Zr0zykeT+zYj8OmuP1lBZcjaxub3A5nAJI4eecK6rmnyh/7Z
-	 N2bDGcZpLE1rxKI1ynedVakwvuLZdSHs9N2Jwjpk=
+	b=0T32tt7BD4rF5i/uw94EgNc1T4MFb2UuwnDk+JzAZXtqELj7FH4SH2SQx47U9Mz3a
+	 fpjPjXDVRjCpMD2pSzs3olSbZ5fSxPqlvkO25STh4oAWLa1Ckr40GTap86R0Loje6i
+	 7/k9Qw239rzJIpXVXvu3AhNZ3TOb86u61iQmevOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junfeng Guo <junfeng.guo@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Jakob Koschel <jkl820.git@gmail.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 52/99] ice: add profile conflict check for AVF FDIR
-Date: Mon,  3 Apr 2023 16:09:15 +0200
-Message-Id: <20230403140405.296183862@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 5.15 53/99] ice: fix invalid check for empty list in ice_sched_assoc_vsi_to_agg()
+Date: Mon,  3 Apr 2023 16:09:16 +0200
+Message-Id: <20230403140405.341981874@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,123 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Junfeng Guo <junfeng.guo@intel.com>
+From: Jakob Koschel <jkl820.git@gmail.com>
 
-[ Upstream commit 29486b6df3e6a63b57d1ed1dce06051267282ff4 ]
+[ Upstream commit e9a1cc2e4c4ee7c7e60fb26345618c2522a2a10f ]
 
-Add profile conflict check while adding some FDIR rules to avoid
-unexpected flow behavior, rules may have conflict including:
-        IPv4 <---> {IPv4_UDP, IPv4_TCP, IPv4_SCTP}
-        IPv6 <---> {IPv6_UDP, IPv6_TCP, IPv6_SCTP}
+The code implicitly assumes that the list iterator finds a correct
+handle. If 'vsi_handle' is not found the 'old_agg_vsi_info' was
+pointing to an bogus memory location. For safety a separate list
+iterator variable should be used to make the != NULL check on
+'old_agg_vsi_info' correct under any circumstances.
 
-For example, when we create an FDIR rule for IPv4, this rule will work
-on packets including IPv4, IPv4_UDP, IPv4_TCP and IPv4_SCTP. But if we
-then create an FDIR rule for IPv4_UDP and then destroy it, the first
-FDIR rule for IPv4 cannot work on pkt IPv4_UDP then.
+Additionally Linus proposed to avoid any use of the list iterator
+variable after the loop, in the attempt to move the list iterator
+variable declaration into the macro to avoid any potential misuse after
+the loop. Using it in a pointer comparison after the loop is undefined
+behavior and should be omitted if possible [1].
 
-To prevent this unexpected behavior, we add restriction in software
-when creating FDIR rules by adding necessary profile conflict check.
-
-Fixes: 1f7ea1cd6a37 ("ice: Enable FDIR Configure for AVF")
-Signed-off-by: Junfeng Guo <junfeng.guo@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Fixes: 37c592062b16 ("ice: remove the VSI info from previous agg")
+Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/ [1]
+Signed-off-by: Jakob Koschel <jkl820.git@gmail.com>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/intel/ice/ice_virtchnl_fdir.c    | 73 +++++++++++++++++++
- 1 file changed, 73 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_sched.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-index eee180d8c0247..4b738f7391097 100644
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-@@ -731,6 +731,72 @@ static void ice_vc_fdir_rem_prof_all(struct ice_vf *vf)
+diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
+index 2d9b10277186b..0b61fde449152 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sched.c
++++ b/drivers/net/ethernet/intel/ice/ice_sched.c
+@@ -2758,7 +2758,7 @@ static enum ice_status
+ ice_sched_assoc_vsi_to_agg(struct ice_port_info *pi, u32 agg_id,
+ 			   u16 vsi_handle, unsigned long *tc_bitmap)
+ {
+-	struct ice_sched_agg_vsi_info *agg_vsi_info, *old_agg_vsi_info = NULL;
++	struct ice_sched_agg_vsi_info *agg_vsi_info, *iter, *old_agg_vsi_info = NULL;
+ 	struct ice_sched_agg_info *agg_info, *old_agg_info;
+ 	enum ice_status status = 0;
+ 	struct ice_hw *hw = pi->hw;
+@@ -2776,11 +2776,13 @@ ice_sched_assoc_vsi_to_agg(struct ice_port_info *pi, u32 agg_id,
+ 	if (old_agg_info && old_agg_info != agg_info) {
+ 		struct ice_sched_agg_vsi_info *vtmp;
+ 
+-		list_for_each_entry_safe(old_agg_vsi_info, vtmp,
++		list_for_each_entry_safe(iter, vtmp,
+ 					 &old_agg_info->agg_vsi_list,
+ 					 list_entry)
+-			if (old_agg_vsi_info->vsi_handle == vsi_handle)
++			if (iter->vsi_handle == vsi_handle) {
++				old_agg_vsi_info = iter;
+ 				break;
++			}
  	}
- }
  
-+/**
-+ * ice_vc_fdir_has_prof_conflict
-+ * @vf: pointer to the VF structure
-+ * @conf: FDIR configuration for each filter
-+ *
-+ * Check if @conf has conflicting profile with existing profiles
-+ *
-+ * Return: true on success, and false on error.
-+ */
-+static bool
-+ice_vc_fdir_has_prof_conflict(struct ice_vf *vf,
-+			      struct virtchnl_fdir_fltr_conf *conf)
-+{
-+	struct ice_fdir_fltr *desc;
-+
-+	list_for_each_entry(desc, &vf->fdir.fdir_rule_list, fltr_node) {
-+		struct virtchnl_fdir_fltr_conf *existing_conf;
-+		enum ice_fltr_ptype flow_type_a, flow_type_b;
-+		struct ice_fdir_fltr *a, *b;
-+
-+		existing_conf = to_fltr_conf_from_desc(desc);
-+		a = &existing_conf->input;
-+		b = &conf->input;
-+		flow_type_a = a->flow_type;
-+		flow_type_b = b->flow_type;
-+
-+		/* No need to compare two rules with different tunnel types or
-+		 * with the same protocol type.
-+		 */
-+		if (existing_conf->ttype != conf->ttype ||
-+		    flow_type_a == flow_type_b)
-+			continue;
-+
-+		switch (flow_type_a) {
-+		case ICE_FLTR_PTYPE_NONF_IPV4_UDP:
-+		case ICE_FLTR_PTYPE_NONF_IPV4_TCP:
-+		case ICE_FLTR_PTYPE_NONF_IPV4_SCTP:
-+			if (flow_type_b == ICE_FLTR_PTYPE_NONF_IPV4_OTHER)
-+				return true;
-+			break;
-+		case ICE_FLTR_PTYPE_NONF_IPV4_OTHER:
-+			if (flow_type_b == ICE_FLTR_PTYPE_NONF_IPV4_UDP ||
-+			    flow_type_b == ICE_FLTR_PTYPE_NONF_IPV4_TCP ||
-+			    flow_type_b == ICE_FLTR_PTYPE_NONF_IPV4_SCTP)
-+				return true;
-+			break;
-+		case ICE_FLTR_PTYPE_NONF_IPV6_UDP:
-+		case ICE_FLTR_PTYPE_NONF_IPV6_TCP:
-+		case ICE_FLTR_PTYPE_NONF_IPV6_SCTP:
-+			if (flow_type_b == ICE_FLTR_PTYPE_NONF_IPV6_OTHER)
-+				return true;
-+			break;
-+		case ICE_FLTR_PTYPE_NONF_IPV6_OTHER:
-+			if (flow_type_b == ICE_FLTR_PTYPE_NONF_IPV6_UDP ||
-+			    flow_type_b == ICE_FLTR_PTYPE_NONF_IPV6_TCP ||
-+			    flow_type_b == ICE_FLTR_PTYPE_NONF_IPV6_SCTP)
-+				return true;
-+			break;
-+		default:
-+			break;
-+		}
-+	}
-+
-+	return false;
-+}
-+
- /**
-  * ice_vc_fdir_write_flow_prof
-  * @vf: pointer to the VF structure
-@@ -871,6 +937,13 @@ ice_vc_fdir_config_input_set(struct ice_vf *vf, struct virtchnl_fdir_add *fltr,
- 	enum ice_fltr_ptype flow;
- 	int ret;
- 
-+	ret = ice_vc_fdir_has_prof_conflict(vf, conf);
-+	if (ret) {
-+		dev_dbg(dev, "Found flow profile conflict for VF %d\n",
-+			vf->vf_id);
-+		return ret;
-+	}
-+
- 	flow = input->flow_type;
- 	ret = ice_vc_fdir_alloc_prof(vf, flow);
- 	if (ret) {
+ 	/* check if entry already exist */
 -- 
 2.39.2
 
