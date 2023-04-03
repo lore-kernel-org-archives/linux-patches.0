@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9D65683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A00C433D2;
-	Mon,  3 Apr 2023 14:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6085A5698
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE18C433D2;
+	Mon,  3 Apr 2023 14:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531100;
-	bh=lgZTDMT30Frdvpe4vETU0UvV89pHNQM/oabTMvup6s0=;
+	s=korg; t=1680531103;
+	bh=+kKFF6Tqqd4IdQr95MV6sKJHP3PoF4ZKcnBipdHQo70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9Ad7MKISYcMz5ASga13AnzEJItUJN6fuC5mLwgjBjfZsiYVh6tnn4iSlELs2hk6r
-	 8I1w5I06jmH2BQQiWF3h8vfx5nUZDVGsW8v5r/wrLk4DPAZaLggS7VqMh0RWLB5EVy
-	 W6I9o1ei2YF3OLzZok+k2CBpUjKWrlqEOstDcWhE=
+	b=KupGcpCTAUV6eo+VgNQu+Rw64PjzdTK8liacgX/WRoy6mD6y4h6DbJv2gwzYqhoUN
+	 geogqoYyzch1osRdbsl0TpOq5qZtKZI+z0iV+DK08zDY1WrVejqToQ9ZJ5DFf+eJM+
+	 ZhJ4j2lsE8UPdI3oAZST4cUgcbmyt54ofHeoZldE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Crawford <frank@crawford.emu.id.au>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 20/66] hwmon (it87): Fix voltage scaling for chips with 10.9mV  ADCs
-Date: Mon,  3 Apr 2023 16:08:28 +0200
-Message-Id: <20230403140352.634264769@linuxfoundation.org>
+	Yaroslav Furman <yaro330@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 4.14 21/66] uas: Add US_FL_NO_REPORT_OPCODES for JMicron JMS583Gen 2
+Date: Mon,  3 Apr 2023 16:08:29 +0200
+Message-Id: <20230403140352.676687995@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -35,47 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Crawford <frank@crawford.emu.id.au>
+From: Yaroslav Furman <yaro330@gmail.com>
 
-[ Upstream commit 968b66ffeb7956acc72836a7797aeb7b2444ec51 ]
+commit a37eb61b6ec064ac794b8a1e89fd33eb582fe51d upstream.
 
-Fix voltage scaling for chips that have 10.9mV ADCs, where scaling was
-not performed.
+Just like other JMicron JMS5xx enclosures, it chokes on report-opcodes,
+let's avoid them.
 
-Fixes: ead8080351c9 ("hwmon: (it87) Add support for IT8732F")
-Signed-off-by: Frank Crawford <frank@crawford.emu.id.au>
-Link: https://lore.kernel.org/r/20230318080543.1226700-2-frank@crawford.emu.id.au
-[groeck: Update subject and description to focus on bug fix]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Yaroslav Furman <yaro330@gmail.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230312090745.47962-1-yaro330@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/it87.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/storage/unusual_uas.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hwmon/it87.c b/drivers/hwmon/it87.c
-index f8499cb95fec8..4e4e151760db2 100644
---- a/drivers/hwmon/it87.c
-+++ b/drivers/hwmon/it87.c
-@@ -495,6 +495,8 @@ static const struct it87_devices it87_devices[] = {
- #define has_pwm_freq2(data)	((data)->features & FEAT_PWM_FREQ2)
- #define has_six_temp(data)	((data)->features & FEAT_SIX_TEMP)
- #define has_vin3_5v(data)	((data)->features & FEAT_VIN3_5V)
-+#define has_scaling(data)	((data)->features & (FEAT_12MV_ADC | \
-+						     FEAT_10_9MV_ADC))
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -180,6 +180,13 @@ UNUSUAL_DEV(0x152d, 0x0578, 0x0000, 0x99
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_BROKEN_FUA),
  
- struct it87_sio_data {
- 	int sioaddr;
-@@ -3107,7 +3109,7 @@ static int it87_probe(struct platform_device *pdev)
- 			 "Detected broken BIOS defaults, disabling PWM interface\n");
- 
- 	/* Starting with IT8721F, we handle scaling of internal voltages */
--	if (has_12mv_adc(data)) {
-+	if (has_scaling(data)) {
- 		if (sio_data->internal & BIT(0))
- 			data->in_scaled |= BIT(3);	/* in3 is AVCC */
- 		if (sio_data->internal & BIT(1))
--- 
-2.39.2
-
++/* Reported by: Yaroslav Furman <yaro330@gmail.com> */
++UNUSUAL_DEV(0x152d, 0x0583, 0x0000, 0x9999,
++		"JMicron",
++		"JMS583Gen 2",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_NO_REPORT_OPCODES),
++
+ /* Reported-by: Thinh Nguyen <thinhn@synopsys.com> */
+ UNUSUAL_DEV(0x154b, 0xf00b, 0x0000, 0x9999,
+ 		"PNY",
 
 
