@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754F9612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DC8C433D2;
-	Mon,  3 Apr 2023 14:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA51612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A0DC4339B;
+	Mon,  3 Apr 2023 14:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531756;
-	bh=pcyFUqqJ3kufGxK/PEmiPPQ7THibp5zgaJKmm1fflV4=;
+	s=korg; t=1680531758;
+	bh=r/NkETelkWvmD9hSOomMfXa2LmuVDgA+IqPEIsmbnSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXnl1H2nU9/45l9UjTDqflgL7fSxUpusmE3BOjYF8nLnhKBDHprC+yw0IGmz/CKmQ
-	 m6id3yEPCLRs0ayjLJE6l6xvQ/e/5xjZYlnETEm7QbF9pAnAe7Ix3ycqx0WEAfTHes
-	 CBO/NcVcm+8YczerLVFq30GcTfDIKN4XxV8XfQe4=
+	b=x+/ssBac+8HA8xrJVJLon6OPXh81a8Da12GPZNJrGcj7aEk/S57/jU5+s8uxFUyHJ
+	 FKcDABTNuMKlUuIh9iJerbfQajYVyDPSrlGzt5J7qqSxLnB4MPaImtAyXNQ0NjzYg0
+	 h1zKbXzyC8yPcz7SLhhkuziHcZ16NRb07O9bGSco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 059/104] ocfs2: fix data corruption after failed write
-Date: Mon,  3 Apr 2023 16:08:51 +0200
-Message-Id: <20230403140406.594951613@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.4 093/104] pinctrl: at91-pio4: fix domain name assignment
+Date: Mon,  3 Apr 2023 16:09:25 +0200
+Message-Id: <20230403140407.816905576@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -41,67 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 90410bcf873cf05f54a32183afff0161f44f9715 upstream.
+commit 7bb97e360acdd38b68ad0a1defb89c6e89c85596 upstream.
 
-When buffered write fails to copy data into underlying page cache page,
-ocfs2_write_end_nolock() just zeroes out and dirties the page.  This can
-leave dirty page beyond EOF and if page writeback tries to write this page
-before write succeeds and expands i_size, page gets into inconsistent
-state where page dirty bit is clear but buffer dirty bits stay set
-resulting in page data never getting written and so data copied to the
-page is lost.  Fix the problem by invalidating page beyond EOF after
-failed write.
+Since commit d59f6617eef0 ("genirq: Allow fwnode to carry name
+information only") an IRQ domain is always given a name during
+allocation (e.g. used for the debugfs entry).
 
-Link: https://lkml.kernel.org/r/20230302153843.18499-1-jack@suse.cz
-Fixes: 6dbf7bb55598 ("fs: Don't invalidate page buffers in block_write_full_page()")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ replace block_invalidate_folio to block_invalidatepage ]
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Drop the no longer valid name assignment, which would lead to an attempt
+to free a string constant when removing the domain on late probe
+failures (e.g. probe deferral).
+
+Fixes: d59f6617eef0 ("genirq: Allow fwnode to carry name information only")
+Cc: stable@vger.kernel.org	# 4.13
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com> # on SAMA7G5
+Link: https://lore.kernel.org/r/20230224130828.27985-1-johan+linaro@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/pinctrl/pinctrl-at91-pio4.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -1990,11 +1990,25 @@ int ocfs2_write_end_nolock(struct addres
+--- a/drivers/pinctrl/pinctrl-at91-pio4.c
++++ b/drivers/pinctrl/pinctrl-at91-pio4.c
+@@ -1069,7 +1069,6 @@ static int atmel_pinctrl_probe(struct pl
+ 		dev_err(dev, "can't add the irq domain\n");
+ 		return -ENODEV;
  	}
+-	atmel_pioctrl->irq_domain->name = "atmel gpio";
  
- 	if (unlikely(copied < len) && wc->w_target_page) {
-+		loff_t new_isize;
-+
- 		if (!PageUptodate(wc->w_target_page))
- 			copied = 0;
- 
--		ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
--				       start+len);
-+		new_isize = max_t(loff_t, i_size_read(inode), pos + copied);
-+		if (new_isize > page_offset(wc->w_target_page))
-+			ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
-+					       start+len);
-+		else {
-+			/*
-+			 * When page is fully beyond new isize (data copy
-+			 * failed), do not bother zeroing the page. Invalidate
-+			 * it instead so that writeback does not get confused
-+			 * put page & buffer dirty bits into inconsistent
-+			 * state.
-+			 */
-+			block_invalidatepage(wc->w_target_page, 0, PAGE_SIZE);
-+		}
- 	}
- 	if (wc->w_target_page)
- 		flush_dcache_page(wc->w_target_page);
+ 	for (i = 0; i < atmel_pioctrl->npins; i++) {
+ 		int irq = irq_create_mapping(atmel_pioctrl->irq_domain, i);
 
 
