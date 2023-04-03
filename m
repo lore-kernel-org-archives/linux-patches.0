@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED0E6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4C1C433EF;
-	Mon,  3 Apr 2023 14:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27FE6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3977DC433D2;
+	Mon,  3 Apr 2023 14:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532665;
-	bh=UgHQf1efIHBgU4uG2r7B5JWlDxv2+s1TXxnzspAXBoo=;
+	s=korg; t=1680532667;
+	bh=frooMqeOYLIanJo4b1tpQmiXxHgvaZ8rKYC5kHxBHOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wrGKJuNpzPSQ9IB8opJ86UlApbWwvaYl3bAcB3WzcicBOhuaXglRm2f/OXbHHKmYN
-	 CFOGm8BMyKg5C6anezMJusB6HGkBdnYwIVuZFh/jWAtIDiJPKa0YU6OR+LyffBkR31
-	 Bwxb7cSHDdc6LsuyBzyq/v0s1687AIfoEzmoVzw4=
+	b=FDcQLkduBt+WdFnCas+d2MUHXQiCnO5/u4RaUrRUgjH2CnpfLO4R/2WT491FGKRFS
+	 3CsWAeJV6GEhU6eZBdaiHbUkXj8nHqCSPZzCbObTfSp3P5pXwbFPDSeLdxi6o5wMCC
+	 8VRs5uMvXp+Fv1YCfvytFAkEQILH8c8qbwLuXDoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariganesh Govindarajulu <hariganesh.govindarajulu@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>,
+	Rajnesh Kanwal <rkanwal@rivosinc.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/181] ACPI: tools: pfrut: Check if the input of level and type is in the right numeric range
-Date: Mon,  3 Apr 2023 16:08:07 +0200
-Message-Id: <20230403140416.853458627@linuxfoundation.org>
+Subject: [PATCH 6.1 070/181] riscv/kvm: Fix VM hang in case of timer delta being zero.
+Date: Mon,  3 Apr 2023 16:08:25 +0200
+Message-Id: <20230403140417.410269922@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,91 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Yu <yu.c.chen@intel.com>
+From: Rajnesh Kanwal <rkanwal@rivosinc.com>
 
-[ Upstream commit 0bc23d8b2237a104d7f8379d687aa4cb82e2968b ]
+[ Upstream commit 6eff38048944cadc3cddcf117acfa5199ec32490 ]
 
-The user provides arbitrary non-numeic value to level and type,
-which could bring unexpected behavior. In this case the expected
-behavior would be to throw an error.
+In case when VCPU is blocked due to WFI, we schedule the timer
+from `kvm_riscv_vcpu_timer_blocking()` to keep timer interrupt
+ticking.
 
- pfrut -h
-usage: pfrut [OPTIONS]
-code injection:
--l, --load
--s, --stage
--a, --activate
--u, --update [stage and activate]
--q, --query
--d, --revid
-update telemetry:
--G, --getloginfo
--T, --type(0:execution, 1:history)
--L, --level(0, 1, 2, 4)
--R, --read
--D, --revid log
+But in case when delta_ns comes to be zero, we never schedule
+the timer and VCPU keeps sleeping indefinitely until any activity
+is done with VM console.
 
- pfrut -T A
- pfrut -G
-log_level:0
-log_type:0
-log_revid:2
-max_data_size:65536
-chunk1_size:0
-chunk2_size:1530
-rollover_cnt:0
-reset_cnt:17
+This is easily reproduce-able using kvmtool.
+./lkvm-static run -c1 --console virtio -p "earlycon root=/dev/vda" \
+         -k ./Image -d rootfs.ext4
 
-Fix this by restricting the input to be in the expected range.
+Also, just add a print in kvm_riscv_vcpu_vstimer_expired() to
+check the interrupt delivery and run `top` or similar auto-upating
+cmd from guest. Within sometime one can notice that print from
+timer expiry routine stops and the `top` cmd output will stop
+updating.
 
-Reported-by: Hariganesh Govindarajulu <hariganesh.govindarajulu@intel.com>
-Suggested-by: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Signed-off-by: Chen Yu <yu.c.chen@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This change fixes this by making sure we schedule the timer even
+with delta_ns being zero to bring the VCPU out of sleep immediately.
+
+Fixes: 8f5cb44b1bae ("RISC-V: KVM: Support sstc extension")
+Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/acpi/tools/pfrut/pfrut.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ arch/riscv/kvm/vcpu_timer.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/tools/power/acpi/tools/pfrut/pfrut.c b/tools/power/acpi/tools/pfrut/pfrut.c
-index 52aa0351533c3..388c9e3ad0407 100644
---- a/tools/power/acpi/tools/pfrut/pfrut.c
-+++ b/tools/power/acpi/tools/pfrut/pfrut.c
-@@ -97,7 +97,7 @@ static struct option long_options[] = {
- static void parse_options(int argc, char **argv)
- {
- 	int option_index = 0;
--	char *pathname;
-+	char *pathname, *endptr;
- 	int opt;
+diff --git a/arch/riscv/kvm/vcpu_timer.c b/arch/riscv/kvm/vcpu_timer.c
+index ad34519c8a13d..3ac2ff6a65dac 100644
+--- a/arch/riscv/kvm/vcpu_timer.c
++++ b/arch/riscv/kvm/vcpu_timer.c
+@@ -147,10 +147,8 @@ static void kvm_riscv_vcpu_timer_blocking(struct kvm_vcpu *vcpu)
+ 		return;
  
- 	pathname = strdup(argv[0]);
-@@ -125,11 +125,23 @@ static void parse_options(int argc, char **argv)
- 			log_getinfo = 1;
- 			break;
- 		case 'T':
--			log_type = atoi(optarg);
-+			log_type = strtol(optarg, &endptr, 0);
-+			if (*endptr || (log_type != 0 && log_type != 1)) {
-+				printf("Number expected: type(0:execution, 1:history) - Quit.\n");
-+				exit(1);
-+			}
-+
- 			set_log_type = 1;
- 			break;
- 		case 'L':
--			log_level = atoi(optarg);
-+			log_level = strtol(optarg, &endptr, 0);
-+			if (*endptr ||
-+			    (log_level != 0 && log_level != 1 &&
-+			     log_level != 2 && log_level != 4)) {
-+				printf("Number expected: level(0, 1, 2, 4) - Quit.\n");
-+				exit(1);
-+			}
-+
- 			set_log_level = 1;
- 			break;
- 		case 'R':
+ 	delta_ns = kvm_riscv_delta_cycles2ns(t->next_cycles, gt, t);
+-	if (delta_ns) {
+-		hrtimer_start(&t->hrt, ktime_set(0, delta_ns), HRTIMER_MODE_REL);
+-		t->next_set = true;
+-	}
++	hrtimer_start(&t->hrt, ktime_set(0, delta_ns), HRTIMER_MODE_REL);
++	t->next_set = true;
+ }
+ 
+ static void kvm_riscv_vcpu_timer_unblocking(struct kvm_vcpu *vcpu)
 -- 
 2.39.2
 
