@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4B26FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C2AC433EF;
-	Mon,  3 Apr 2023 14:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA786FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:44:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FADEC4339B;
+	Mon,  3 Apr 2023 14:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533038;
-	bh=O/mOkDZ/o5RV/YSv+1yrLgRr2ghtm1kQQ5uzPclGIAs=;
+	s=korg; t=1680533041;
+	bh=FKBZKY8qQ6HXoFsT/mRrgOqXCpdTA4uhACvftMNXzMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bn+sAiQrj0lq07vXE2baMXr7ibghKiO1+2JgKbGLpYN5htZgpI9E5MuWRk5TVpNVR
-	 pcKv5OSD09vgXM+9WQ1yl65CDYMfXtgwHFM0zNyaVTviJTJ5d//1+ukbI8LScoibi6
-	 2vUd+riZJqohdfvEu2NIAfSoAV5XfRZ6SXLbhyBc=
+	b=heWBOuQPBlHz0lSxp8caGFf9UH0R7uOsmiH3RFW1Yn9uo1ZkoVILBmIYgc/Em0w3p
+	 g+bdW3svFBzUpYE6NzuQkkwhpEdhiKxnRLJS2X4rOUgrqe2XnyW2zo98UqnPPDJO0c
+	 zG6aPipY93edk8wlU8Iy9R/oh+s9EF64+Lv97sTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rander Wang <rander.wang@intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Rander Wang <rander.wang@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 031/187] ASoC: SOF: Intel: hda-dsp: harden D0i3 programming sequence
-Date: Mon,  3 Apr 2023 16:07:56 +0200
-Message-Id: <20230403140417.021687766@linuxfoundation.org>
+Subject: [PATCH 6.2 032/187] ASoC: SOF: Intel: hda-ctrl: re-add sleep after entering and exiting reset
+Date: Mon,  3 Apr 2023 16:07:57 +0200
+Message-Id: <20230403140417.054401798@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -38,56 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rander Wang <rander.wang@intel.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 52a55779ed14792a150421339664193d6eb8e036 ]
+[ Upstream commit 8bac40b8ed17ab1be9133e9620f65fae80262b7e ]
 
-Add delay between set and wait command according to hardware programming
-sequence. Also add debug log to detect error.
+This reverts commit a09d82ce0a867 ("ASoC: SOF: Intel: hda-ctrl: remove
+useless sleep")
 
-Signed-off-by: Rander Wang <rander.wang@intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+It was a mistake to remove those delays, in light of comments in the
+HDaudio spec captured in snd_hdac_bus_reset_link() that the codec
+needs time for its initialization and PLL lock.
+
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230307095453.3719-1-peter.ujfalusi@linux.intel.com
+Link: https://lore.kernel.org/r/20230307095412.3416-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-dsp.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/soc/sof/intel/hda-ctrl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/sof/intel/hda-dsp.c b/sound/soc/sof/intel/hda-dsp.c
-index b4eacae8564c8..6b2094f74c9c0 100644
---- a/sound/soc/sof/intel/hda-dsp.c
-+++ b/sound/soc/sof/intel/hda-dsp.c
-@@ -399,6 +399,12 @@ static int hda_dsp_update_d0i3c_register(struct snd_sof_dev *sdev, u8 value)
- 	snd_sof_dsp_update8(sdev, HDA_DSP_HDA_BAR, chip->d0i3_offset,
- 			    SOF_HDA_VS_D0I3C_I3, value);
- 
-+	/*
-+	 * The value written to the D0I3C::I3 bit may not be taken into account immediately.
-+	 * A delay is recommended before checking if D0I3C::CIP is cleared
-+	 */
-+	usleep_range(30, 40);
-+
- 	/* Wait for cmd in progress to be cleared before exiting the function */
- 	ret = hda_dsp_wait_d0i3c_done(sdev);
- 	if (ret < 0) {
-@@ -407,6 +413,12 @@ static int hda_dsp_update_d0i3c_register(struct snd_sof_dev *sdev, u8 value)
+diff --git a/sound/soc/sof/intel/hda-ctrl.c b/sound/soc/sof/intel/hda-ctrl.c
+index 3aea36c077c9d..f3bdeba284122 100644
+--- a/sound/soc/sof/intel/hda-ctrl.c
++++ b/sound/soc/sof/intel/hda-ctrl.c
+@@ -196,12 +196,15 @@ int hda_dsp_ctrl_init_chip(struct snd_sof_dev *sdev)
+ 		goto err;
  	}
  
- 	reg = snd_sof_dsp_read8(sdev, HDA_DSP_HDA_BAR, chip->d0i3_offset);
-+	/* Confirm d0i3 state changed with paranoia check */
-+	if ((reg ^ value) & SOF_HDA_VS_D0I3C_I3) {
-+		dev_err(sdev->dev, "failed to update D0I3C!\n");
-+		return -EIO;
-+	}
++	usleep_range(500, 1000);
 +
- 	trace_sof_intel_D0I3C_updated(sdev, reg);
+ 	/* exit HDA controller reset */
+ 	ret = hda_dsp_ctrl_link_reset(sdev, false);
+ 	if (ret < 0) {
+ 		dev_err(sdev->dev, "error: failed to exit HDA controller reset\n");
+ 		goto err;
+ 	}
++	usleep_range(1000, 1200);
  
- 	return 0;
+ 	hda_codec_detect_mask(sdev);
+ 
 -- 
 2.39.2
 
