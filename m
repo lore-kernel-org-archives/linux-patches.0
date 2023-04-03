@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23D45683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79826C433EF;
-	Mon,  3 Apr 2023 14:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D0D5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178C1C433EF;
+	Mon,  3 Apr 2023 14:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531173;
-	bh=JqR/Z1y+e/iqi/iXaOGYGocTsi+1ImpfOKQRV36tgzg=;
+	s=korg; t=1680531176;
+	bh=gWfA6rsZ/9cW1w6m9P5WJ4iSEv5bthFzIk1hJwKyc28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7cNPzRL/Lr/yRzAq2Qbghy3Z3dChn5pIS+Y2tYulNCxbshUTgSLywEBrHuXT7gCy
-	 SprLKGX0pDQrX9lmXJShDepXa5bMbzPJuHv3eHRXde2DxVYkZJLq0YPHV5NTzZ7lEe
-	 9HPtEDGHukdMefpde++YFK2hcMEHWcPtIW/4Mb+Q=
+	b=LRkNF2xyb+CesIgL85DWYY0FaM5uwatsGlH6MJXegDL5eO+eXP70Gn5iYpQr7DWzv
+	 04tuPPZpKjjd+QNsZob+wbHqeOgCpaFe/j0g+73LCRlE5IAPyjTF5M7AY18p072QWl
+	 HNms5vthteSiwnJyfIBo4lmVJ/APPql+EF58Aksg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 17/66] net: mdio: thunder: Add missing fwnode_handle_put()
-Date: Mon,  3 Apr 2023 16:08:25 +0200
-Message-Id: <20230403140352.501608208@linuxfoundation.org>
+Subject: [PATCH 4.14 08/66] qed/qed_sriov: guard against NULL derefs from qed_iov_get_vf_info
+Date: Mon,  3 Apr 2023 16:08:16 +0200
+Message-Id: <20230403140352.078087990@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -35,34 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit b1de5c78ebe9858ccec9d49af2f76724f1d47e3e ]
+[ Upstream commit 25143b6a01d0cc5319edd3de22ffa2578b045550 ]
 
-In device_for_each_child_node(), we should add fwnode_handle_put()
-when break out of the iteration device_for_each_child_node()
-as it will automatically increase and decrease the refcounter.
+We have to make sure that the info returned by the helper is valid
+before using it.
 
-Fixes: 379d7ac7ca31 ("phy: mdio-thunder: Add driver for Cavium Thunder SoC MDIO buses.")
-Signed-off-by: Liang He <windhl@126.com>
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
+
+Fixes: f990c82c385b ("qed*: Add support for ndo_set_vf_trust")
+Fixes: 733def6a04bf ("qed*: IOV link control")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mdio-thunder.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/qlogic/qed/qed_sriov.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/mdio-thunder.c b/drivers/net/phy/mdio-thunder.c
-index c0c922eff760c..959bf342133a7 100644
---- a/drivers/net/phy/mdio-thunder.c
-+++ b/drivers/net/phy/mdio-thunder.c
-@@ -107,6 +107,7 @@ static int thunder_mdiobus_pci_probe(struct pci_dev *pdev,
- 		if (i >= ARRAY_SIZE(nexus->buses))
- 			break;
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_sriov.c b/drivers/net/ethernet/qlogic/qed/qed_sriov.c
+index 3dbea6be4e553..ef6c3da38fc68 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_sriov.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_sriov.c
+@@ -4285,6 +4285,9 @@ qed_iov_configure_min_tx_rate(struct qed_dev *cdev, int vfid, u32 rate)
  	}
-+	fwnode_handle_put(fwn);
- 	return 0;
  
- err_release_regions:
+ 	vf = qed_iov_get_vf_info(QED_LEADING_HWFN(cdev), (u16)vfid, true);
++	if (!vf)
++		return -EINVAL;
++
+ 	vport_id = vf->vport_id;
+ 
+ 	return qed_configure_vport_wfq(cdev, vport_id, rate);
+@@ -4922,7 +4925,7 @@ static void qed_iov_handle_trust_change(struct qed_hwfn *hwfn)
+ 
+ 		/* Validate that the VF has a configured vport */
+ 		vf = qed_iov_get_vf_info(hwfn, i, true);
+-		if (!vf->vport_instance)
++		if (!vf || !vf->vport_instance)
+ 			continue;
+ 
+ 		memset(&params, 0, sizeof(params));
 -- 
 2.39.2
 
