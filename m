@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37CF36FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1988C4339B;
-	Mon,  3 Apr 2023 14:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEA36FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B02C433EF;
+	Mon,  3 Apr 2023 14:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533161;
-	bh=JP1QTvcissMj/XjivXZhr1RGMIK868GBA8cO9x4G+/k=;
+	s=korg; t=1680533163;
+	bh=gelvFvMvURmRLNCZnWXCKgk4dLWxrbXorcbSCtb53hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dov8eVJ45k5AyOeeGUUwWsRB3puAQbwgVVfE5xvai4WTiJ4skhpvcAgq2RDtZ2Ilw
-	 sPDiU+FQv3ADt5YiAjY7ecZWihjNUeFT0G0rGe6RBNCiFqyegPOaRge6a+X78KxRMz
-	 3qiM2pwY1UE0KKfN6aLRUlHklQKC/x09rUnYbrJ8=
+	b=2ugZvOHxywngGzjzOvGfb6Ssj1dBZIBuG7h6cT4KUb0+kTnSM4OedwOlXKS0QASOT
+	 X6IuTvHLq2+4Qb8RFJWHGMFYo5Suc8V/E3oKvK8IzTnfgXMRDQmzgzIsLrbfij42Nq
+	 MeiU5YzZSpkhA0VMr3+xLPQzrgKchuQLa/rTYvBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Rajendra Kawar <sikawar@microsoft.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	David Belanger <david.belanger@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 077/187] SUNRPC: fix shutdown of NFS TCP client socket
-Date: Mon,  3 Apr 2023 16:08:42 +0200
-Message-Id: <20230403140418.482611619@linuxfoundation.org>
+Subject: [PATCH 6.2 051/187] drm/amdkfd: Fixed kfd_process cleanup on module exit.
+Date: Mon,  3 Apr 2023 16:08:16 +0200
+Message-Id: <20230403140417.668554494@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,115 +36,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddharth Kawar <Siddharth.Kawar@microsoft.com>
+From: David Belanger <david.belanger@amd.com>
 
-[ Upstream commit 943d045a6d796175e5d08f9973953b1d2c07d797 ]
+[ Upstream commit 20bc9f76b6a2455c6b54b91ae7634f147f64987f ]
 
-NFS server Duplicate Request Cache (DRC) algorithms rely on NFS clients
-reconnecting using the same local TCP port. Unique NFS operations are
-identified by the per-TCP connection set of XIDs. This prevents file
-corruption when non-idempotent NFS operations are retried.
+Handle case when module is unloaded (kfd_exit) before a process space
+(mm_struct) is released.
 
-Currently, NFS client TCP connections are using different local TCP ports
-when reconnecting to NFS servers.
+v2: Fixed potential race conditions by removing all kfd_process from
+the process table first, then working on releasing the resources.
 
-After an NFS server initiates shutdown of the TCP connection, the NFS
-client's TCP socket is set to NULL after the socket state has reached
-TCP_LAST_ACK(9). When reconnecting, the new socket attempts to reuse
-the same local port but fails with EADDRNOTAVAIL (99). This forces the
-socket to use a different local TCP port to reconnect to the remote NFS
-server.
+v3: Fixed loop element access / synchronization.  Fixed extra empty lines.
 
-State Transition and Events:
-TCP_CLOSE_WAIT(8)
-TCP_LAST_ACK(9)
-connect(fail EADDRNOTAVAIL(99))
-TCP_CLOSE(7)
-bind on new port
-connect success
-
-dmesg excerpts showing reconnect switching from TCP local port of 926 to
-763 after commit 7c81e6a9d75b:
-[13354.947854] NFS call  mkdir testW
-...
-[13405.654781] RPC:       xs_tcp_state_change client 00000000037d0f03...
-[13405.654813] RPC:       state 8 conn 1 dead 0 zapped 1 sk_shutdown 1
-[13405.654826] RPC:       xs_data_ready...
-[13405.654892] RPC:       xs_tcp_state_change client 00000000037d0f03...
-[13405.654895] RPC:       state 9 conn 0 dead 0 zapped 1 sk_shutdown 3
-[13405.654899] RPC:       xs_tcp_state_change client 00000000037d0f03...
-[13405.654900] RPC:       state 9 conn 0 dead 0 zapped 1 sk_shutdown 3
-[13405.654950] RPC:       xs_connect scheduled xprt 00000000037d0f03
-[13405.654975] RPC:       xs_bind 0.0.0.0:926: ok (0)
-[13405.654980] RPC:       worker connecting xprt 00000000037d0f03 via tcp
-			  to 10.101.6.228 (port 2049)
-[13405.654991] RPC:       00000000037d0f03 connect status 99 connected 0
-			  sock state 7
-[13405.655001] RPC:       xs_tcp_state_change client 00000000037d0f03...
-[13405.655002] RPC:       state 7 conn 0 dead 0 zapped 1 sk_shutdown 3
-[13405.655024] RPC:       xs_connect scheduled xprt 00000000037d0f03
-[13405.655038] RPC:       xs_bind 0.0.0.0:763: ok (0)
-[13405.655041] RPC:       worker connecting xprt 00000000037d0f03 via tcp
-			  to 10.101.6.228 (port 2049)
-[13405.655065] RPC:       00000000037d0f03 connect status 115 connected 0
-			  sock state 2
-
-State Transition and Events with patch applied:
-TCP_CLOSE_WAIT(8)
-TCP_LAST_ACK(9)
-TCP_CLOSE(7)
-connect(reuse of port succeeds)
-
-dmesg excerpts showing reconnect on same TCP local port of 936 with patch
-applied:
-[  257.139935] NFS: mkdir(0:59/560857152), testQ
-[  257.139937] NFS call  mkdir testQ
-...
-[  307.822702] RPC:       state 8 conn 1 dead 0 zapped 1 sk_shutdown 1
-[  307.822714] RPC:       xs_data_ready...
-[  307.822817] RPC:       xs_tcp_state_change client 00000000ce702f14...
-[  307.822821] RPC:       state 9 conn 0 dead 0 zapped 1 sk_shutdown 3
-[  307.822825] RPC:       xs_tcp_state_change client 00000000ce702f14...
-[  307.822826] RPC:       state 9 conn 0 dead 0 zapped 1 sk_shutdown 3
-[  307.823606] RPC:       xs_tcp_state_change client 00000000ce702f14...
-[  307.823609] RPC:       state 7 conn 0 dead 0 zapped 1 sk_shutdown 3
-[  307.823629] RPC:       xs_tcp_state_change client 00000000ce702f14...
-[  307.823632] RPC:       state 7 conn 0 dead 0 zapped 1 sk_shutdown 3
-[  307.823676] RPC:       xs_connect scheduled xprt 00000000ce702f14
-[  307.823704] RPC:       xs_bind 0.0.0.0:936: ok (0)
-[  307.823709] RPC:       worker connecting xprt 00000000ce702f14 via tcp
-			  to 10.101.1.30 (port 2049)
-[  307.823748] RPC:       00000000ce702f14 connect status 115 connected 0
-			  sock state 2
-...
-[  314.916193] RPC:       state 7 conn 0 dead 0 zapped 1 sk_shutdown 3
-[  314.916251] RPC:       xs_connect scheduled xprt 00000000ce702f14
-[  314.916282] RPC:       xs_bind 0.0.0.0:936: ok (0)
-[  314.916292] RPC:       worker connecting xprt 00000000ce702f14 via tcp
-			  to 10.101.1.30 (port 2049)
-[  314.916342] RPC:       00000000ce702f14 connect status 115 connected 0
-			  sock state 2
-
-Fixes: 7c81e6a9d75b ("SUNRPC: Tweak TCP socket shutdown in the RPC client")
-Signed-off-by: Siddharth Rajendra Kawar <sikawar@microsoft.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: David Belanger <david.belanger@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_module.c  |  1 +
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h    |  1 +
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c | 67 +++++++++++++++++++++---
+ 3 files changed, 62 insertions(+), 7 deletions(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index aaa5b2741b79d..1b9465b43997c 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2155,6 +2155,7 @@ static void xs_tcp_shutdown(struct rpc_xprt *xprt)
- 	switch (skst) {
- 	case TCP_FIN_WAIT1:
- 	case TCP_FIN_WAIT2:
-+	case TCP_LAST_ACK:
- 		break;
- 	case TCP_ESTABLISHED:
- 	case TCP_CLOSE_WAIT:
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_module.c b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
+index 09b966dc37681..aee2212e52f69 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_module.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
+@@ -77,6 +77,7 @@ static int kfd_init(void)
+ 
+ static void kfd_exit(void)
+ {
++	kfd_cleanup_processes();
+ 	kfd_debugfs_fini();
+ 	kfd_process_destroy_wq();
+ 	kfd_procfs_shutdown();
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index 552c3ac85a132..7dc55919993c0 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -926,6 +926,7 @@ bool kfd_dev_is_large_bar(struct kfd_dev *dev);
+ 
+ int kfd_process_create_wq(void);
+ void kfd_process_destroy_wq(void);
++void kfd_cleanup_processes(void);
+ struct kfd_process *kfd_create_process(struct file *filep);
+ struct kfd_process *kfd_get_process(const struct task_struct *task);
+ struct kfd_process *kfd_lookup_process_by_pasid(u32 pasid);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+index 51b1683ac5c1e..4d9f2d1c49b1d 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -1167,6 +1167,17 @@ static void kfd_process_free_notifier(struct mmu_notifier *mn)
+ 	kfd_unref_process(container_of(mn, struct kfd_process, mmu_notifier));
+ }
+ 
++static void kfd_process_notifier_release_internal(struct kfd_process *p)
++{
++	cancel_delayed_work_sync(&p->eviction_work);
++	cancel_delayed_work_sync(&p->restore_work);
++
++	/* Indicate to other users that MM is no longer valid */
++	p->mm = NULL;
++
++	mmu_notifier_put(&p->mmu_notifier);
++}
++
+ static void kfd_process_notifier_release(struct mmu_notifier *mn,
+ 					struct mm_struct *mm)
+ {
+@@ -1181,17 +1192,22 @@ static void kfd_process_notifier_release(struct mmu_notifier *mn,
+ 		return;
+ 
+ 	mutex_lock(&kfd_processes_mutex);
++	/*
++	 * Do early return if table is empty.
++	 *
++	 * This could potentially happen if this function is called concurrently
++	 * by mmu_notifier and by kfd_cleanup_pocesses.
++	 *
++	 */
++	if (hash_empty(kfd_processes_table)) {
++		mutex_unlock(&kfd_processes_mutex);
++		return;
++	}
+ 	hash_del_rcu(&p->kfd_processes);
+ 	mutex_unlock(&kfd_processes_mutex);
+ 	synchronize_srcu(&kfd_processes_srcu);
+ 
+-	cancel_delayed_work_sync(&p->eviction_work);
+-	cancel_delayed_work_sync(&p->restore_work);
+-
+-	/* Indicate to other users that MM is no longer valid */
+-	p->mm = NULL;
+-
+-	mmu_notifier_put(&p->mmu_notifier);
++	kfd_process_notifier_release_internal(p);
+ }
+ 
+ static const struct mmu_notifier_ops kfd_process_mmu_notifier_ops = {
+@@ -1200,6 +1216,43 @@ static const struct mmu_notifier_ops kfd_process_mmu_notifier_ops = {
+ 	.free_notifier = kfd_process_free_notifier,
+ };
+ 
++/*
++ * This code handles the case when driver is being unloaded before all
++ * mm_struct are released.  We need to safely free the kfd_process and
++ * avoid race conditions with mmu_notifier that might try to free them.
++ *
++ */
++void kfd_cleanup_processes(void)
++{
++	struct kfd_process *p;
++	struct hlist_node *p_temp;
++	unsigned int temp;
++	HLIST_HEAD(cleanup_list);
++
++	/*
++	 * Move all remaining kfd_process from the process table to a
++	 * temp list for processing.   Once done, callback from mmu_notifier
++	 * release will not see the kfd_process in the table and do early return,
++	 * avoiding double free issues.
++	 */
++	mutex_lock(&kfd_processes_mutex);
++	hash_for_each_safe(kfd_processes_table, temp, p_temp, p, kfd_processes) {
++		hash_del_rcu(&p->kfd_processes);
++		synchronize_srcu(&kfd_processes_srcu);
++		hlist_add_head(&p->kfd_processes, &cleanup_list);
++	}
++	mutex_unlock(&kfd_processes_mutex);
++
++	hlist_for_each_entry_safe(p, p_temp, &cleanup_list, kfd_processes)
++		kfd_process_notifier_release_internal(p);
++
++	/*
++	 * Ensures that all outstanding free_notifier get called, triggering
++	 * the release of the kfd_process struct.
++	 */
++	mmu_notifier_synchronize();
++}
++
+ static int kfd_process_init_cwsr_apu(struct kfd_process *p, struct file *filep)
+ {
+ 	unsigned long  offset;
 -- 
 2.39.2
 
