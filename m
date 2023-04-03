@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4613F6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18B3C433EF;
-	Mon,  3 Apr 2023 14:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D297A6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACF8C433EF;
+	Mon,  3 Apr 2023 14:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532704;
-	bh=5eV74yvYIvmyDtYfV8PPpV4c+wtIjm40vhyr2Ff9WbQ=;
+	s=korg; t=1680532706;
+	bh=V9f23WxeNQlrK7fZEVquO+gAzb4iRSIuZZBjY4E2Jt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pC7GnPqMRGv8PUeZmhcib7zDAT/zsPqtQjgEkypj3KSKXQSAIXlLfb1TM8m9RK/M3
-	 0+am2UWrMUsyIU79bGQLVnMSWwHgWaLYSo7daqCE5u194/Tvxe4D2UsD2C3owlBaU0
-	 NUhxUMo6Pf3krc1DTLVROF40UUenDkagXMKta0Yo=
+	b=fj7dqId8gAJswQXDxKUkH22tzl2jl+VzCV8vM2e37d1+CHbmnStYJj0oDIPiDhz4t
+	 89ShFOU7vwTylNV5jOUQGlIKxM297nqp7HA7+jxwEaDoxxhymh8sv/JTKpiodp/LzA
+	 skNIAVq9L31FF9Unx42Qgb7+OGGPXldZH6X6BHYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Geulen <p.geulen@js-elektronik.de>,
-	Chaitanya Kulkarni <kkch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	David Belanger <david.belanger@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/181] nvme-pci: add NVME_QUIRK_BOGUS_NID for Lexar NM620
-Date: Mon,  3 Apr 2023 16:08:09 +0200
-Message-Id: <20230403140416.912193628@linuxfoundation.org>
+Subject: [PATCH 6.1 055/181] drm/amdkfd: Fixed kfd_process cleanup on module exit.
+Date: Mon,  3 Apr 2023 16:08:10 +0200
+Message-Id: <20230403140416.942062100@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,33 +36,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Philipp Geulen <p.geulen@js-elektronik.de>
+From: David Belanger <david.belanger@amd.com>
 
-[ Upstream commit b65d44fa0fe072c91bf41cd8756baa2b4c77eff2 ]
+[ Upstream commit 20bc9f76b6a2455c6b54b91ae7634f147f64987f ]
 
-Added a quirk to fix Lexar NM620 1TB SSD reporting duplicate NGUIDs.
+Handle case when module is unloaded (kfd_exit) before a process space
+(mm_struct) is released.
 
-Signed-off-by: Philipp Geulen <p.geulen@js-elektronik.de>
-Reviewed-by: Chaitanya Kulkarni <kkch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+v2: Fixed potential race conditions by removing all kfd_process from
+the process table first, then working on releasing the resources.
+
+v3: Fixed loop element access / synchronization.  Fixed extra empty lines.
+
+Signed-off-by: David Belanger <david.belanger@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_module.c  |  1 +
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h    |  1 +
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c | 67 +++++++++++++++++++++---
+ 3 files changed, 62 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 100f774bc97fa..60452f6a9f711 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3547,6 +3547,8 @@ static const struct pci_device_id nvme_id_table[] = {
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1d97, 0x2263), /* Lexar NM610 */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
-+	{ PCI_DEVICE(0x1d97, 0x1d97), /* Lexar NM620 */
-+		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1d97, 0x2269), /* Lexar NM760 */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0x0061),
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_module.c b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
+index 09b966dc37681..aee2212e52f69 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_module.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
+@@ -77,6 +77,7 @@ static int kfd_init(void)
+ 
+ static void kfd_exit(void)
+ {
++	kfd_cleanup_processes();
+ 	kfd_debugfs_fini();
+ 	kfd_process_destroy_wq();
+ 	kfd_procfs_shutdown();
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index bf610e3b683bb..6d6588b9beed7 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -928,6 +928,7 @@ bool kfd_dev_is_large_bar(struct kfd_dev *dev);
+ 
+ int kfd_process_create_wq(void);
+ void kfd_process_destroy_wq(void);
++void kfd_cleanup_processes(void);
+ struct kfd_process *kfd_create_process(struct file *filep);
+ struct kfd_process *kfd_get_process(const struct task_struct *task);
+ struct kfd_process *kfd_lookup_process_by_pasid(u32 pasid);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+index dd351105c1bcf..7f68d51541e8e 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -1167,6 +1167,17 @@ static void kfd_process_free_notifier(struct mmu_notifier *mn)
+ 	kfd_unref_process(container_of(mn, struct kfd_process, mmu_notifier));
+ }
+ 
++static void kfd_process_notifier_release_internal(struct kfd_process *p)
++{
++	cancel_delayed_work_sync(&p->eviction_work);
++	cancel_delayed_work_sync(&p->restore_work);
++
++	/* Indicate to other users that MM is no longer valid */
++	p->mm = NULL;
++
++	mmu_notifier_put(&p->mmu_notifier);
++}
++
+ static void kfd_process_notifier_release(struct mmu_notifier *mn,
+ 					struct mm_struct *mm)
+ {
+@@ -1181,17 +1192,22 @@ static void kfd_process_notifier_release(struct mmu_notifier *mn,
+ 		return;
+ 
+ 	mutex_lock(&kfd_processes_mutex);
++	/*
++	 * Do early return if table is empty.
++	 *
++	 * This could potentially happen if this function is called concurrently
++	 * by mmu_notifier and by kfd_cleanup_pocesses.
++	 *
++	 */
++	if (hash_empty(kfd_processes_table)) {
++		mutex_unlock(&kfd_processes_mutex);
++		return;
++	}
+ 	hash_del_rcu(&p->kfd_processes);
+ 	mutex_unlock(&kfd_processes_mutex);
+ 	synchronize_srcu(&kfd_processes_srcu);
+ 
+-	cancel_delayed_work_sync(&p->eviction_work);
+-	cancel_delayed_work_sync(&p->restore_work);
+-
+-	/* Indicate to other users that MM is no longer valid */
+-	p->mm = NULL;
+-
+-	mmu_notifier_put(&p->mmu_notifier);
++	kfd_process_notifier_release_internal(p);
+ }
+ 
+ static const struct mmu_notifier_ops kfd_process_mmu_notifier_ops = {
+@@ -1200,6 +1216,43 @@ static const struct mmu_notifier_ops kfd_process_mmu_notifier_ops = {
+ 	.free_notifier = kfd_process_free_notifier,
+ };
+ 
++/*
++ * This code handles the case when driver is being unloaded before all
++ * mm_struct are released.  We need to safely free the kfd_process and
++ * avoid race conditions with mmu_notifier that might try to free them.
++ *
++ */
++void kfd_cleanup_processes(void)
++{
++	struct kfd_process *p;
++	struct hlist_node *p_temp;
++	unsigned int temp;
++	HLIST_HEAD(cleanup_list);
++
++	/*
++	 * Move all remaining kfd_process from the process table to a
++	 * temp list for processing.   Once done, callback from mmu_notifier
++	 * release will not see the kfd_process in the table and do early return,
++	 * avoiding double free issues.
++	 */
++	mutex_lock(&kfd_processes_mutex);
++	hash_for_each_safe(kfd_processes_table, temp, p_temp, p, kfd_processes) {
++		hash_del_rcu(&p->kfd_processes);
++		synchronize_srcu(&kfd_processes_srcu);
++		hlist_add_head(&p->kfd_processes, &cleanup_list);
++	}
++	mutex_unlock(&kfd_processes_mutex);
++
++	hlist_for_each_entry_safe(p, p_temp, &cleanup_list, kfd_processes)
++		kfd_process_notifier_release_internal(p);
++
++	/*
++	 * Ensures that all outstanding free_notifier get called, triggering
++	 * the release of the kfd_process struct.
++	 */
++	mmu_notifier_synchronize();
++}
++
+ static int kfd_process_init_cwsr_apu(struct kfd_process *p, struct file *filep)
+ {
+ 	unsigned long  offset;
 -- 
 2.39.2
 
