@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C22612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C63C433EF;
-	Mon,  3 Apr 2023 14:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AD0612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8F9C433D2;
+	Mon,  3 Apr 2023 14:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531594;
-	bh=75h4lD0mk5zmLz+UDOKXhH8iMe3itMJ/s4s7lr3PM7E=;
+	s=korg; t=1680531596;
+	bh=rGOylEbBdtLBRqjtOZfHT8fiSLOclytQL9tB5qiDpNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UIG8EPpKOetaDltcyOqaxA9+ly2QugSHXBprHkTpTWS9ldrX5tiFeMvC0E2vzfwam
-	 umQej31+wx5n4xmLCfj7D2TeR5fPE88Imhhw5uLh+UM2jjExm3/VR99H2I/bEVSzfc
-	 uBc4zBpkdhoKudcVb2hy+ho6Lr0vhAiSx3Of/Udc=
+	b=ObXkGZhxNDuSoLTm2yg2s8HD5JDWQU1PySQIeK5xLQMyKhbi/VnGlLylD95yasbLD
+	 xL3tXsYpWzCR72a1dmm0n4GS65Cv8IJuBZsbska5h8sx1K8Wh0wh9OiX0XaoaUXKsE
+	 Dojqr35xLk5zHuRP7azXDzC+jWbceWGtHclEvMjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Koschel <jkl820.git@gmail.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Enrico Sau <enrico.sau@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 038/104] scsi: lpfc: Avoid usage of list iterator variable after loop
-Date: Mon,  3 Apr 2023 16:08:30 +0200
-Message-Id: <20230403140405.860636053@linuxfoundation.org>
+Subject: [PATCH 5.4 039/104] net: usb: cdc_mbim: avoid altsetting toggling for Telit FE990
+Date: Mon,  3 Apr 2023 16:08:31 +0200
+Message-Id: <20230403140405.908398611@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -36,59 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakob Koschel <jkl820.git@gmail.com>
+From: Enrico Sau <enrico.sau@gmail.com>
 
-[ Upstream commit 2850b23e9f9ae3696e472d2883ea1b43aafa884e ]
+[ Upstream commit 418383e6ed6b4624a54ec05c535f13d184fbf33b ]
 
-If the &epd_pool->list is empty when executing
-lpfc_get_io_buf_from_expedite_pool() the function would return an invalid
-pointer. Even in the case if the list is guaranteed to be populated, the
-iterator variable should not be used after the loop to be more robust for
-future changes.
+Add quirk CDC_MBIM_FLAG_AVOID_ALTSETTING_TOGGLE for Telit FE990
+0x1081 composition in order to avoid bind error.
 
-Linus proposed to avoid any use of the list iterator variable after the
-loop, in the attempt to move the list iterator variable declaration into
-the macro to avoid any potential misuse after the loop [1].
-
-Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/ [1]
-Signed-off-by: Jakob Koschel <jkl820.git@gmail.com>
-Link: https://lore.kernel.org/r/20230301-scsi-lpfc-avoid-list-iterator-after-loop-v1-1-325578ae7561@gmail.com
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Enrico Sau <enrico.sau@gmail.com>
+Link: https://lore.kernel.org/r/20230306115933.198259-1-enrico.sau@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_sli.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/usb/cdc_mbim.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index bd908dd273078..e489c68cfb631 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -20407,20 +20407,20 @@ lpfc_get_io_buf_from_private_pool(struct lpfc_hba *phba,
- static struct lpfc_io_buf *
- lpfc_get_io_buf_from_expedite_pool(struct lpfc_hba *phba)
- {
--	struct lpfc_io_buf *lpfc_ncmd;
-+	struct lpfc_io_buf *lpfc_ncmd = NULL, *iter;
- 	struct lpfc_io_buf *lpfc_ncmd_next;
- 	unsigned long iflag;
- 	struct lpfc_epd_pool *epd_pool;
+diff --git a/drivers/net/usb/cdc_mbim.c b/drivers/net/usb/cdc_mbim.c
+index 414341c9cf5ae..6ad1fb00a35cd 100644
+--- a/drivers/net/usb/cdc_mbim.c
++++ b/drivers/net/usb/cdc_mbim.c
+@@ -663,6 +663,11 @@ static const struct usb_device_id mbim_devs[] = {
+ 	  .driver_info = (unsigned long)&cdc_mbim_info_avoid_altsetting_toggle,
+ 	},
  
- 	epd_pool = &phba->epd_pool;
--	lpfc_ncmd = NULL;
- 
- 	spin_lock_irqsave(&epd_pool->lock, iflag);
- 	if (epd_pool->count > 0) {
--		list_for_each_entry_safe(lpfc_ncmd, lpfc_ncmd_next,
-+		list_for_each_entry_safe(iter, lpfc_ncmd_next,
- 					 &epd_pool->list, list) {
--			list_del(&lpfc_ncmd->list);
-+			list_del(&iter->list);
- 			epd_pool->count--;
-+			lpfc_ncmd = iter;
- 			break;
- 		}
- 	}
++	/* Telit FE990 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x1bc7, 0x1081, USB_CLASS_COMM, USB_CDC_SUBCLASS_MBIM, USB_CDC_PROTO_NONE),
++	  .driver_info = (unsigned long)&cdc_mbim_info_avoid_altsetting_toggle,
++	},
++
+ 	/* default entry */
+ 	{ USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_MBIM, USB_CDC_PROTO_NONE),
+ 	  .driver_info = (unsigned long)&cdc_mbim_info_zlp,
 -- 
 2.39.2
 
