@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069AC6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83139C433D2;
-	Mon,  3 Apr 2023 14:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA896FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1425CC4339B;
+	Mon,  3 Apr 2023 14:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532304;
-	bh=b0Z+ywrKJho9+/HDEm9stgcTAQDDhzWEQhXEGSKcnJU=;
+	s=korg; t=1680532307;
+	bh=9xiYEyK2wSHGh5mX8TpRAORckE1t8SMwdYDxJhxbABc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sV6u06WWib/6z7CVNEc5yB1exSVx2SwYLSnOnADYixA07Nb5mMPc/zg5TAKHvwrq1
-	 +CmcYPxVkrVgJJ0PZS6tDsMKpwzuNRoTemADSywDs5dqVcUbdOGDeQ41/Gy0fnhJDm
-	 ixie5WEwTSQNxPxCpNd0tar3RK7AcBNQNqgcuKjU=
+	b=pZX8vc5EupB9AdjhEUxdxCKjUOWokZe6qDMEAyjVQNqM47uesBOlfh911jk1Olckr
+	 DJRPb71SskHenc6M1ZeEQjMpQF/QNvopcDqV4to0kvUUTsUwXKckrUHnnTRpUWE4gp
+	 t8J3S7PLlnYuUftGi+g8ObIsGsWgnEA1cLvBBHWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Rajendra Kawar <sikawar@microsoft.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Tianhao Zhao <tizhao@redhat.com>,
+	Jonathan Cooper <jonathan.s.cooper@amd.com>,
+	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 32/99] SUNRPC: fix shutdown of NFS TCP client socket
-Date: Mon,  3 Apr 2023 16:08:55 +0200
-Message-Id: <20230403140404.360383298@linuxfoundation.org>
+Subject: [PATCH 5.15 33/99] sfc: ef10: dont overwrite offload features at NIC reset
+Date: Mon,  3 Apr 2023 16:08:56 +0200
+Message-Id: <20230403140404.406760266@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -35,115 +38,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddharth Kawar <Siddharth.Kawar@microsoft.com>
+From: Íñigo Huguet <ihuguet@redhat.com>
 
-[ Upstream commit 943d045a6d796175e5d08f9973953b1d2c07d797 ]
+[ Upstream commit ca4a80e4bb7e87daf33b27d2ab9e4f5311018a89 ]
 
-NFS server Duplicate Request Cache (DRC) algorithms rely on NFS clients
-reconnecting using the same local TCP port. Unique NFS operations are
-identified by the per-TCP connection set of XIDs. This prevents file
-corruption when non-idempotent NFS operations are retried.
+At NIC reset, some offload features related to encapsulated traffic
+might have changed (this mainly happens if the firmware-variant is
+changed with the sfboot userspace tool). Because of this, features are
+checked and set again at reset time.
 
-Currently, NFS client TCP connections are using different local TCP ports
-when reconnecting to NFS servers.
+However, this was not done right, and some features were improperly
+overwritten at NIC reset:
+- Tunneled IPv6 segmentation was always disabled
+- Features disabled with ethtool were reenabled
+- Features that becomes unsupported after the reset were not disabled
 
-After an NFS server initiates shutdown of the TCP connection, the NFS
-client's TCP socket is set to NULL after the socket state has reached
-TCP_LAST_ACK(9). When reconnecting, the new socket attempts to reuse
-the same local port but fails with EADDRNOTAVAIL (99). This forces the
-socket to use a different local TCP port to reconnect to the remote NFS
-server.
+Also, checking if the device supports IPV6_CSUM to enable TSO6 is no
+longer necessary because all currently supported devices support it.
+Additionally, move the assignment of some other features to the
+EF10_OFFLOAD_FEATURES macro, like it is done in ef100, leaving the
+selection of features in efx_pci_probe_post_io a bit cleaner.
 
-State Transition and Events:
-TCP_CLOSE_WAIT(8)
-TCP_LAST_ACK(9)
-connect(fail EADDRNOTAVAIL(99))
-TCP_CLOSE(7)
-bind on new port
-connect success
-
-dmesg excerpts showing reconnect switching from TCP local port of 926 to
-763 after commit 7c81e6a9d75b:
-[13354.947854] NFS call  mkdir testW
-...
-[13405.654781] RPC:       xs_tcp_state_change client 00000000037d0f03...
-[13405.654813] RPC:       state 8 conn 1 dead 0 zapped 1 sk_shutdown 1
-[13405.654826] RPC:       xs_data_ready...
-[13405.654892] RPC:       xs_tcp_state_change client 00000000037d0f03...
-[13405.654895] RPC:       state 9 conn 0 dead 0 zapped 1 sk_shutdown 3
-[13405.654899] RPC:       xs_tcp_state_change client 00000000037d0f03...
-[13405.654900] RPC:       state 9 conn 0 dead 0 zapped 1 sk_shutdown 3
-[13405.654950] RPC:       xs_connect scheduled xprt 00000000037d0f03
-[13405.654975] RPC:       xs_bind 0.0.0.0:926: ok (0)
-[13405.654980] RPC:       worker connecting xprt 00000000037d0f03 via tcp
-			  to 10.101.6.228 (port 2049)
-[13405.654991] RPC:       00000000037d0f03 connect status 99 connected 0
-			  sock state 7
-[13405.655001] RPC:       xs_tcp_state_change client 00000000037d0f03...
-[13405.655002] RPC:       state 7 conn 0 dead 0 zapped 1 sk_shutdown 3
-[13405.655024] RPC:       xs_connect scheduled xprt 00000000037d0f03
-[13405.655038] RPC:       xs_bind 0.0.0.0:763: ok (0)
-[13405.655041] RPC:       worker connecting xprt 00000000037d0f03 via tcp
-			  to 10.101.6.228 (port 2049)
-[13405.655065] RPC:       00000000037d0f03 connect status 115 connected 0
-			  sock state 2
-
-State Transition and Events with patch applied:
-TCP_CLOSE_WAIT(8)
-TCP_LAST_ACK(9)
-TCP_CLOSE(7)
-connect(reuse of port succeeds)
-
-dmesg excerpts showing reconnect on same TCP local port of 936 with patch
-applied:
-[  257.139935] NFS: mkdir(0:59/560857152), testQ
-[  257.139937] NFS call  mkdir testQ
-...
-[  307.822702] RPC:       state 8 conn 1 dead 0 zapped 1 sk_shutdown 1
-[  307.822714] RPC:       xs_data_ready...
-[  307.822817] RPC:       xs_tcp_state_change client 00000000ce702f14...
-[  307.822821] RPC:       state 9 conn 0 dead 0 zapped 1 sk_shutdown 3
-[  307.822825] RPC:       xs_tcp_state_change client 00000000ce702f14...
-[  307.822826] RPC:       state 9 conn 0 dead 0 zapped 1 sk_shutdown 3
-[  307.823606] RPC:       xs_tcp_state_change client 00000000ce702f14...
-[  307.823609] RPC:       state 7 conn 0 dead 0 zapped 1 sk_shutdown 3
-[  307.823629] RPC:       xs_tcp_state_change client 00000000ce702f14...
-[  307.823632] RPC:       state 7 conn 0 dead 0 zapped 1 sk_shutdown 3
-[  307.823676] RPC:       xs_connect scheduled xprt 00000000ce702f14
-[  307.823704] RPC:       xs_bind 0.0.0.0:936: ok (0)
-[  307.823709] RPC:       worker connecting xprt 00000000ce702f14 via tcp
-			  to 10.101.1.30 (port 2049)
-[  307.823748] RPC:       00000000ce702f14 connect status 115 connected 0
-			  sock state 2
-...
-[  314.916193] RPC:       state 7 conn 0 dead 0 zapped 1 sk_shutdown 3
-[  314.916251] RPC:       xs_connect scheduled xprt 00000000ce702f14
-[  314.916282] RPC:       xs_bind 0.0.0.0:936: ok (0)
-[  314.916292] RPC:       worker connecting xprt 00000000ce702f14 via tcp
-			  to 10.101.1.30 (port 2049)
-[  314.916342] RPC:       00000000ce702f14 connect status 115 connected 0
-			  sock state 2
-
-Fixes: 7c81e6a9d75b ("SUNRPC: Tweak TCP socket shutdown in the RPC client")
-Signed-off-by: Siddharth Rajendra Kawar <sikawar@microsoft.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: ffffd2454a7a ("sfc: correctly advertise tunneled IPv6 segmentation")
+Fixes: 24b2c3751aa3 ("sfc: advertise encapsulated offloads on EF10")
+Reported-by: Tianhao Zhao <tizhao@redhat.com>
+Suggested-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
+Tested-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
+Signed-off-by: Íñigo Huguet <ihuguet@redhat.com>
+Acked-by: Edward Cree <ecree.xilinx@gmail.com>
+Link: https://lore.kernel.org/r/20230323083417.7345-1-ihuguet@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/sfc/ef10.c | 38 ++++++++++++++++++++++-----------
+ drivers/net/ethernet/sfc/efx.c  | 17 ++++++---------
+ 2 files changed, 33 insertions(+), 22 deletions(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 897dfce7dd271..bf801adff63db 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2140,6 +2140,7 @@ static void xs_tcp_shutdown(struct rpc_xprt *xprt)
- 	switch (skst) {
- 	case TCP_FIN_WAIT1:
- 	case TCP_FIN_WAIT2:
-+	case TCP_LAST_ACK:
- 		break;
- 	case TCP_ESTABLISHED:
- 	case TCP_CLOSE_WAIT:
+diff --git a/drivers/net/ethernet/sfc/ef10.c b/drivers/net/ethernet/sfc/ef10.c
+index c316a9eb5be38..302b97c2e617c 100644
+--- a/drivers/net/ethernet/sfc/ef10.c
++++ b/drivers/net/ethernet/sfc/ef10.c
+@@ -1304,7 +1304,8 @@ static void efx_ef10_fini_nic(struct efx_nic *efx)
+ static int efx_ef10_init_nic(struct efx_nic *efx)
+ {
+ 	struct efx_ef10_nic_data *nic_data = efx->nic_data;
+-	netdev_features_t hw_enc_features = 0;
++	struct net_device *net_dev = efx->net_dev;
++	netdev_features_t tun_feats, tso_feats;
+ 	int rc;
+ 
+ 	if (nic_data->must_check_datapath_caps) {
+@@ -1349,20 +1350,30 @@ static int efx_ef10_init_nic(struct efx_nic *efx)
+ 		nic_data->must_restore_piobufs = false;
+ 	}
+ 
+-	/* add encapsulated checksum offload features */
++	/* encap features might change during reset if fw variant changed */
+ 	if (efx_has_cap(efx, VXLAN_NVGRE) && !efx_ef10_is_vf(efx))
+-		hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
+-	/* add encapsulated TSO features */
+-	if (efx_has_cap(efx, TX_TSO_V2_ENCAP)) {
+-		netdev_features_t encap_tso_features;
++		net_dev->hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
++	else
++		net_dev->hw_enc_features &= ~(NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM);
+ 
+-		encap_tso_features = NETIF_F_GSO_UDP_TUNNEL | NETIF_F_GSO_GRE |
+-			NETIF_F_GSO_UDP_TUNNEL_CSUM | NETIF_F_GSO_GRE_CSUM;
++	tun_feats = NETIF_F_GSO_UDP_TUNNEL | NETIF_F_GSO_GRE |
++		    NETIF_F_GSO_UDP_TUNNEL_CSUM | NETIF_F_GSO_GRE_CSUM;
++	tso_feats = NETIF_F_TSO | NETIF_F_TSO6;
+ 
+-		hw_enc_features |= encap_tso_features | NETIF_F_TSO;
+-		efx->net_dev->features |= encap_tso_features;
++	if (efx_has_cap(efx, TX_TSO_V2_ENCAP)) {
++		/* If this is first nic_init, or if it is a reset and a new fw
++		 * variant has added new features, enable them by default.
++		 * If the features are not new, maintain their current value.
++		 */
++		if (!(net_dev->hw_features & tun_feats))
++			net_dev->features |= tun_feats;
++		net_dev->hw_enc_features |= tun_feats | tso_feats;
++		net_dev->hw_features |= tun_feats;
++	} else {
++		net_dev->hw_enc_features &= ~(tun_feats | tso_feats);
++		net_dev->hw_features &= ~tun_feats;
++		net_dev->features &= ~tun_feats;
+ 	}
+-	efx->net_dev->hw_enc_features = hw_enc_features;
+ 
+ 	/* don't fail init if RSS setup doesn't work */
+ 	rc = efx->type->rx_push_rss_config(efx, false,
+@@ -3993,7 +4004,10 @@ static unsigned int ef10_check_caps(const struct efx_nic *efx,
+ 	 NETIF_F_HW_VLAN_CTAG_FILTER |	\
+ 	 NETIF_F_IPV6_CSUM |		\
+ 	 NETIF_F_RXHASH |		\
+-	 NETIF_F_NTUPLE)
++	 NETIF_F_NTUPLE |		\
++	 NETIF_F_SG |			\
++	 NETIF_F_RXCSUM |		\
++	 NETIF_F_RXALL)
+ 
+ const struct efx_nic_type efx_hunt_a0_vf_nic_type = {
+ 	.is_vf = true,
+diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
+index b6243f03e953d..16a896360f3fb 100644
+--- a/drivers/net/ethernet/sfc/efx.c
++++ b/drivers/net/ethernet/sfc/efx.c
+@@ -1003,21 +1003,18 @@ static int efx_pci_probe_post_io(struct efx_nic *efx)
+ 	}
+ 
+ 	/* Determine netdevice features */
+-	net_dev->features |= (efx->type->offload_features | NETIF_F_SG |
+-			      NETIF_F_TSO | NETIF_F_RXCSUM | NETIF_F_RXALL);
+-	if (efx->type->offload_features & (NETIF_F_IPV6_CSUM | NETIF_F_HW_CSUM)) {
+-		net_dev->features |= NETIF_F_TSO6;
+-		if (efx_has_cap(efx, TX_TSO_V2_ENCAP))
+-			net_dev->hw_enc_features |= NETIF_F_TSO6;
+-	}
+-	/* Check whether device supports TSO */
+-	if (!efx->type->tso_versions || !efx->type->tso_versions(efx))
+-		net_dev->features &= ~NETIF_F_ALL_TSO;
++	net_dev->features |= efx->type->offload_features;
++
++	/* Add TSO features */
++	if (efx->type->tso_versions && efx->type->tso_versions(efx))
++		net_dev->features |= NETIF_F_TSO | NETIF_F_TSO6;
++
+ 	/* Mask for features that also apply to VLAN devices */
+ 	net_dev->vlan_features |= (NETIF_F_HW_CSUM | NETIF_F_SG |
+ 				   NETIF_F_HIGHDMA | NETIF_F_ALL_TSO |
+ 				   NETIF_F_RXCSUM);
+ 
++	/* Determine user configurable features */
+ 	net_dev->hw_features |= net_dev->features & ~efx->fixed_features;
+ 
+ 	/* Disable receiving frames with bad FCS, by default. */
 -- 
 2.39.2
 
