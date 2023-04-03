@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C7F6FAA
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF06EC433A7;
-	Mon,  3 Apr 2023 14:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9C96FAA
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461CAC433EF;
+	Mon,  3 Apr 2023 14:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532996;
-	bh=dyRNXGOZf4brccamaHH/095YDcJCiuhx1pfl90nrrMk=;
+	s=korg; t=1680532998;
+	bh=/2AU/WuhNrF9jlJOBtr6si7VXZRwdlG/144lyguqH6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DNP7d+40qXpXp/2YPD6Aur1VcDWaBjwhJwu0duY5HCmkEU3OBAXpP2O57/BqBpBqM
-	 U4i5VqD+rIX0T8cPwTIniWWP1/qjnk4o7x9ta/ddfXOKwfCmhBn1jHI2r34gaLjQ44
-	 L8tnASgLGnwpJqmedZR1PRbilU1+TuNYNgdnxDCg=
+	b=SF4XG+P0U7NqUIk8jPvhQZEyL4zgj10J3lUJ8SrXl8QXqSAAwx3RFO31rLc3ZCrF7
+	 cdWsqlwN8FD7DkDf/HP76nbAZTrujqqnVWOmW/Fq2Dc7nR/wclLEiNAL10Xm0uNaXm
+	 KOcdCKK6DYcCMJ6duUNDJJuQtpfSA/8eiK40m2UU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 002/187] cifs: update ip_addr for ses only for primary chan setup
-Date: Mon,  3 Apr 2023 16:07:27 +0200
-Message-Id: <20230403140416.101074673@linuxfoundation.org>
+Subject: [PATCH 6.2 003/187] cifs: prevent data race in cifs_reconnect_tcon()
+Date: Mon,  3 Apr 2023 16:07:28 +0200
+Message-Id: <20230403140416.129422885@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,62 +35,253 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit e77978de4765229e09c8fabcf4f8419ff367317f ]
+[ Upstream commit 1bcd548d935a33c6fc58331405eb1b82fd6150de ]
 
-We update ses->ip_addr whenever we do a session setup.
-But this should happen only for primary channel in mchan
-scenario.
+Make sure to get an up-to-date TCP_Server_Info::nr_targets value prior
+to waiting the server to be reconnected in cifs_reconnect_tcon().  It
+is set in cifs_tcp_ses_needs_reconnect() and protected by
+TCP_Server_Info::srv_lock.
 
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Create a new cifs_wait_for_server_reconnect() helper that can be used
+by both SMB2+ and CIFS reconnect code.
+
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: bc962159e8e3 ("cifs: avoid race conditions with parallel reconnects")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/connect.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ fs/cifs/cifsproto.h |  1 +
+ fs/cifs/cifssmb.c   | 43 ++----------------------
+ fs/cifs/misc.c      | 44 ++++++++++++++++++++++++
+ fs/cifs/smb2pdu.c   | 82 ++++++++++++---------------------------------
+ 4 files changed, 69 insertions(+), 101 deletions(-)
 
-diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
-index 6da2af97b8bac..f53837f436d08 100644
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -3735,16 +3735,12 @@ cifs_setup_session(const unsigned int xid, struct cifs_ses *ses,
- 		   struct nls_table *nls_info)
- {
- 	int rc = -ENOSYS;
--	struct sockaddr_in6 *addr6 = (struct sockaddr_in6 *)&server->dstaddr;
--	struct sockaddr_in *addr = (struct sockaddr_in *)&server->dstaddr;
-+	struct TCP_Server_Info *pserver = CIFS_SERVER_IS_CHAN(server) ? server->primary_server : server;
-+	struct sockaddr_in6 *addr6 = (struct sockaddr_in6 *)&pserver->dstaddr;
-+	struct sockaddr_in *addr = (struct sockaddr_in *)&pserver->dstaddr;
- 	bool is_binding = false;
+diff --git a/fs/cifs/cifsproto.h b/fs/cifs/cifsproto.h
+index e75184544ecb4..639df85dafd6c 100644
+--- a/fs/cifs/cifsproto.h
++++ b/fs/cifs/cifsproto.h
+@@ -697,5 +697,6 @@ static inline int cifs_create_options(struct cifs_sb_info *cifs_sb, int options)
  
- 	spin_lock(&ses->ses_lock);
--	if (server->dstaddr.ss_family == AF_INET6)
--		scnprintf(ses->ip_addr, sizeof(ses->ip_addr), "%pI6", &addr6->sin6_addr);
--	else
--		scnprintf(ses->ip_addr, sizeof(ses->ip_addr), "%pI4", &addr->sin_addr);
+ struct super_block *cifs_get_tcon_super(struct cifs_tcon *tcon);
+ void cifs_put_tcon_super(struct super_block *sb);
++int cifs_wait_for_server_reconnect(struct TCP_Server_Info *server, bool retry);
+ 
+ #endif			/* _CIFSPROTO_H */
+diff --git a/fs/cifs/cifssmb.c b/fs/cifs/cifssmb.c
+index 566e6a26b897c..5ca4a5383aaae 100644
+--- a/fs/cifs/cifssmb.c
++++ b/fs/cifs/cifssmb.c
+@@ -70,7 +70,6 @@ cifs_reconnect_tcon(struct cifs_tcon *tcon, int smb_command)
+ 	struct cifs_ses *ses;
+ 	struct TCP_Server_Info *server;
+ 	struct nls_table *nls_codepage;
+-	int retries;
+ 
+ 	/*
+ 	 * SMBs NegProt, SessSetup, uLogoff do not have tcon yet so check for
+@@ -98,45 +97,9 @@ cifs_reconnect_tcon(struct cifs_tcon *tcon, int smb_command)
+ 	}
+ 	spin_unlock(&tcon->tc_lock);
+ 
+-	retries = server->nr_targets;
 -
- 	if (ses->ses_status != SES_GOOD &&
- 	    ses->ses_status != SES_NEW &&
- 	    ses->ses_status != SES_NEED_RECON) {
-@@ -3768,6 +3764,14 @@ cifs_setup_session(const unsigned int xid, struct cifs_ses *ses,
- 		ses->ses_status = SES_IN_SETUP;
- 	spin_unlock(&ses->ses_lock);
+-	/*
+-	 * Give demultiplex thread up to 10 seconds to each target available for
+-	 * reconnect -- should be greater than cifs socket timeout which is 7
+-	 * seconds.
+-	 */
+-	while (server->tcpStatus == CifsNeedReconnect) {
+-		rc = wait_event_interruptible_timeout(server->response_q,
+-						      (server->tcpStatus != CifsNeedReconnect),
+-						      10 * HZ);
+-		if (rc < 0) {
+-			cifs_dbg(FYI, "%s: aborting reconnect due to a received signal by the process\n",
+-				 __func__);
+-			return -ERESTARTSYS;
+-		}
+-
+-		/* are we still trying to reconnect? */
+-		spin_lock(&server->srv_lock);
+-		if (server->tcpStatus != CifsNeedReconnect) {
+-			spin_unlock(&server->srv_lock);
+-			break;
+-		}
+-		spin_unlock(&server->srv_lock);
+-
+-		if (retries && --retries)
+-			continue;
+-
+-		/*
+-		 * on "soft" mounts we wait once. Hard mounts keep
+-		 * retrying until process is killed or server comes
+-		 * back on-line
+-		 */
+-		if (!tcon->retry) {
+-			cifs_dbg(FYI, "gave up waiting on reconnect in smb_init\n");
+-			return -EHOSTDOWN;
+-		}
+-		retries = server->nr_targets;
+-	}
++	rc = cifs_wait_for_server_reconnect(server, tcon->retry);
++	if (rc)
++		return rc;
  
-+	/* update ses ip_addr only for primary chan */
-+	if (server == pserver) {
-+		if (server->dstaddr.ss_family == AF_INET6)
-+			scnprintf(ses->ip_addr, sizeof(ses->ip_addr), "%pI6", &addr6->sin6_addr);
-+		else
-+			scnprintf(ses->ip_addr, sizeof(ses->ip_addr), "%pI4", &addr->sin_addr);
-+	}
+ 	spin_lock(&ses->chan_lock);
+ 	if (!cifs_chan_needs_reconnect(ses, server) && !tcon->need_reconnect) {
+diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
+index 9f4486b705d5c..5542893ef03f7 100644
+--- a/fs/cifs/misc.c
++++ b/fs/cifs/misc.c
+@@ -1376,3 +1376,47 @@ int cifs_inval_name_dfs_link_error(const unsigned int xid,
+ 	return 0;
+ }
+ #endif
 +
- 	if (!is_binding) {
- 		ses->capabilities = server->capabilities;
- 		if (!linuxExtEnabled)
++int cifs_wait_for_server_reconnect(struct TCP_Server_Info *server, bool retry)
++{
++	int timeout = 10;
++	int rc;
++
++	spin_lock(&server->srv_lock);
++	if (server->tcpStatus != CifsNeedReconnect) {
++		spin_unlock(&server->srv_lock);
++		return 0;
++	}
++	timeout *= server->nr_targets;
++	spin_unlock(&server->srv_lock);
++
++	/*
++	 * Give demultiplex thread up to 10 seconds to each target available for
++	 * reconnect -- should be greater than cifs socket timeout which is 7
++	 * seconds.
++	 *
++	 * On "soft" mounts we wait once. Hard mounts keep retrying until
++	 * process is killed or server comes back on-line.
++	 */
++	do {
++		rc = wait_event_interruptible_timeout(server->response_q,
++						      (server->tcpStatus != CifsNeedReconnect),
++						      timeout * HZ);
++		if (rc < 0) {
++			cifs_dbg(FYI, "%s: aborting reconnect due to received signal\n",
++				 __func__);
++			return -ERESTARTSYS;
++		}
++
++		/* are we still trying to reconnect? */
++		spin_lock(&server->srv_lock);
++		if (server->tcpStatus != CifsNeedReconnect) {
++			spin_unlock(&server->srv_lock);
++			return 0;
++		}
++		spin_unlock(&server->srv_lock);
++	} while (retry);
++
++	cifs_dbg(FYI, "%s: gave up waiting on reconnect\n", __func__);
++	return -EHOSTDOWN;
++}
+diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
+index 6e6e44d8b4c79..83d04cd2f9df8 100644
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -139,66 +139,6 @@ smb2_hdr_assemble(struct smb2_hdr *shdr, __le16 smb2_cmd,
+ 	return;
+ }
+ 
+-static int wait_for_server_reconnect(struct TCP_Server_Info *server,
+-				     __le16 smb2_command, bool retry)
+-{
+-	int timeout = 10;
+-	int rc;
+-
+-	spin_lock(&server->srv_lock);
+-	if (server->tcpStatus != CifsNeedReconnect) {
+-		spin_unlock(&server->srv_lock);
+-		return 0;
+-	}
+-	timeout *= server->nr_targets;
+-	spin_unlock(&server->srv_lock);
+-
+-	/*
+-	 * Return to caller for TREE_DISCONNECT and LOGOFF and CLOSE
+-	 * here since they are implicitly done when session drops.
+-	 */
+-	switch (smb2_command) {
+-	/*
+-	 * BB Should we keep oplock break and add flush to exceptions?
+-	 */
+-	case SMB2_TREE_DISCONNECT:
+-	case SMB2_CANCEL:
+-	case SMB2_CLOSE:
+-	case SMB2_OPLOCK_BREAK:
+-		return -EAGAIN;
+-	}
+-
+-	/*
+-	 * Give demultiplex thread up to 10 seconds to each target available for
+-	 * reconnect -- should be greater than cifs socket timeout which is 7
+-	 * seconds.
+-	 *
+-	 * On "soft" mounts we wait once. Hard mounts keep retrying until
+-	 * process is killed or server comes back on-line.
+-	 */
+-	do {
+-		rc = wait_event_interruptible_timeout(server->response_q,
+-						      (server->tcpStatus != CifsNeedReconnect),
+-						      timeout * HZ);
+-		if (rc < 0) {
+-			cifs_dbg(FYI, "%s: aborting reconnect due to received signal\n",
+-				 __func__);
+-			return -ERESTARTSYS;
+-		}
+-
+-		/* are we still trying to reconnect? */
+-		spin_lock(&server->srv_lock);
+-		if (server->tcpStatus != CifsNeedReconnect) {
+-			spin_unlock(&server->srv_lock);
+-			return 0;
+-		}
+-		spin_unlock(&server->srv_lock);
+-	} while (retry);
+-
+-	cifs_dbg(FYI, "%s: gave up waiting on reconnect\n", __func__);
+-	return -EHOSTDOWN;
+-}
+-
+ static int
+ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
+ 	       struct TCP_Server_Info *server)
+@@ -239,7 +179,27 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
+ 	    (!tcon->ses->server) || !server)
+ 		return -EIO;
+ 
+-	rc = wait_for_server_reconnect(server, smb2_command, tcon->retry);
++	spin_lock(&server->srv_lock);
++	if (server->tcpStatus == CifsNeedReconnect) {
++		/*
++		 * Return to caller for TREE_DISCONNECT and LOGOFF and CLOSE
++		 * here since they are implicitly done when session drops.
++		 */
++		switch (smb2_command) {
++		/*
++		 * BB Should we keep oplock break and add flush to exceptions?
++		 */
++		case SMB2_TREE_DISCONNECT:
++		case SMB2_CANCEL:
++		case SMB2_CLOSE:
++		case SMB2_OPLOCK_BREAK:
++			spin_unlock(&server->srv_lock);
++			return -EAGAIN;
++		}
++	}
++	spin_unlock(&server->srv_lock);
++
++	rc = cifs_wait_for_server_reconnect(server, tcon->retry);
+ 	if (rc)
+ 		return rc;
+ 
 -- 
 2.39.2
 
