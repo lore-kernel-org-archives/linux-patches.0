@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663D06FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19B1C433D2;
-	Mon,  3 Apr 2023 14:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AA56FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844B8C433D2;
+	Mon,  3 Apr 2023 14:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533352;
-	bh=dUBqWNwaiPeImQrG7Jns7ez82GT05Fkz+laPb8zZckU=;
+	s=korg; t=1680533354;
+	bh=W/EwnJ/wOEZ/BA4j2am0zv3s+vhY8lehxly6aGXHsdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cX9btMW46EEBPklsk+f+idfeh+4Ah0wzPIn2rrIptDpS36Mic0PZoH4tkufTP4zg0
-	 kKnmLgZh7XHxEZIeAFavba5TUvhIvtlwyZdWp/7/BqJPHd12xf90LR5q8e77mgtsJ2
-	 KvYNJr1qak8O+n5gVP2ZQNemK+SPY97BvhLLgjTQ=
+	b=RwbiaKPSBrol7a6UU2mep2mX6st1j/XZojicchJhXG6Upr3qC2yZdTVquWvxsWIf8
+	 DVZy9qk6DmYrxDsyy9FmwAdL3qOUhkGg23bC/BUvkomqtRXfVM8WN30wv8e8PRyg3O
+	 qNSBXCF2rksShLd2iDlNolwDiAYnp0T3dFpiamUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 120/187] net: dsa: sync unicast and multicast addresses for VLAN filters too
-Date: Mon,  3 Apr 2023 16:09:25 +0200
-Message-Id: <20230403140419.912180566@linuxfoundation.org>
+Subject: [PATCH 6.2 121/187] net: ethernet: mtk_eth_soc: fix flow block refcounting logic
+Date: Mon,  3 Apr 2023 16:09:26 +0200
+Message-Id: <20230403140419.941896579@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -37,277 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 64fdc5f341db01200e33105265d4b8450122a82e ]
+[ Upstream commit 8c1cb87c2a5c29da416848451a687473f379611c ]
 
-If certain conditions are met, DSA can install all necessary MAC
-addresses on the CPU ports as FDB entries and disable flooding towards
-the CPU (we call this RX filtering).
+Since we call flow_block_cb_decref on FLOW_BLOCK_UNBIND, we also need to
+call flow_block_cb_incref for a newly allocated cb.
+Also fix the accidentally inverted refcount check on unbind.
 
-There is one corner case where this does not work.
-
-ip link add br0 type bridge vlan_filtering 1 && ip link set br0 up
-ip link set swp0 master br0 && ip link set swp0 up
-ip link add link swp0 name swp0.100 type vlan id 100
-ip link set swp0.100 up && ip addr add 192.168.100.1/24 dev swp0.100
-
-Traffic through swp0.100 is broken, because the bridge turns on VLAN
-filtering in the swp0 port (causing RX packets to be classified to the
-FDB database corresponding to the VID from their 802.1Q header), and
-although the 8021q module does call dev_uc_add() towards the real
-device, that API is VLAN-unaware, so it only contains the MAC address,
-not the VID; and DSA's current implementation of ndo_set_rx_mode() is
-only for VID 0 (corresponding to FDB entries which are installed in an
-FDB database which is only hit when the port is VLAN-unaware).
-
-It's interesting to understand why the bridge does not turn on
-IFF_PROMISC for its swp0 bridge port, and it may appear at first glance
-that this is a regression caused by the logic in commit 2796d0c648c9
-("bridge: Automatically manage port promiscuous mode."). After all,
-a bridge port needs to have IFF_PROMISC by its very nature - it needs to
-receive and forward frames with a MAC DA different from the bridge
-ports' MAC addresses.
-
-While that may be true, when the bridge is VLAN-aware *and* it has a
-single port, there is no real reason to enable promiscuity even if that
-is an automatic port, with flooding and learning (there is nowhere for
-packets to go except to the BR_FDB_LOCAL entries), and this is how the
-corner case appears. Adding a second automatic interface to the bridge
-would make swp0 promisc as well, and would mask the corner case.
-
-Given the dev_uc_add() / ndo_set_rx_mode() API is what it is (it doesn't
-pass a VLAN ID), the only way to address that problem is to install host
-FDB entries for the cartesian product of RX filtering MAC addresses and
-VLAN RX filters.
-
-Fixes: 7569459a52c9 ("net: dsa: manage flooding on the CPU ports")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Fixes: 502e84e2382d ("net: ethernet: mtk_eth_soc: add flow offloading support")
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230329151821.745752-1-vladimir.oltean@nxp.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230330120840.52079-1-nbd@nbd.name
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/slave.c | 121 ++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 116 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_ppe_offload.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/dsa/slave.c b/net/dsa/slave.c
-index 6711ddc0a3c7d..df8b16c741a40 100644
---- a/net/dsa/slave.c
-+++ b/net/dsa/slave.c
-@@ -57,6 +57,12 @@ struct dsa_standalone_event_work {
- 	u16 vid;
- };
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
+index 81afd5ee3fbf1..161751bb36c9c 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
++++ b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
+@@ -576,6 +576,7 @@ mtk_eth_setup_tc_block(struct net_device *dev, struct flow_block_offload *f)
+ 		if (IS_ERR(block_cb))
+ 			return PTR_ERR(block_cb);
  
-+struct dsa_host_vlan_rx_filtering_ctx {
-+	struct net_device *dev;
-+	const unsigned char *addr;
-+	enum dsa_standalone_event event;
-+};
-+
- static bool dsa_switch_supports_uc_filtering(struct dsa_switch *ds)
- {
- 	return ds->ops->port_fdb_add && ds->ops->port_fdb_del &&
-@@ -155,18 +161,37 @@ static int dsa_slave_schedule_standalone_work(struct net_device *dev,
- 	return 0;
- }
- 
-+static int dsa_slave_host_vlan_rx_filtering(struct net_device *vdev, int vid,
-+					    void *arg)
-+{
-+	struct dsa_host_vlan_rx_filtering_ctx *ctx = arg;
-+
-+	return dsa_slave_schedule_standalone_work(ctx->dev, ctx->event,
-+						  ctx->addr, vid);
-+}
-+
- static int dsa_slave_sync_uc(struct net_device *dev,
- 			     const unsigned char *addr)
- {
- 	struct net_device *master = dsa_slave_to_master(dev);
- 	struct dsa_port *dp = dsa_slave_to_port(dev);
-+	struct dsa_host_vlan_rx_filtering_ctx ctx = {
-+		.dev = dev,
-+		.addr = addr,
-+		.event = DSA_UC_ADD,
-+	};
-+	int err;
- 
- 	dev_uc_add(master, addr);
- 
- 	if (!dsa_switch_supports_uc_filtering(dp->ds))
++		flow_block_cb_incref(block_cb);
+ 		flow_block_cb_add(block_cb, f);
+ 		list_add_tail(&block_cb->driver_list, &block_cb_list);
  		return 0;
+@@ -584,7 +585,7 @@ mtk_eth_setup_tc_block(struct net_device *dev, struct flow_block_offload *f)
+ 		if (!block_cb)
+ 			return -ENOENT;
  
--	return dsa_slave_schedule_standalone_work(dev, DSA_UC_ADD, addr, 0);
-+	err = dsa_slave_schedule_standalone_work(dev, DSA_UC_ADD, addr, 0);
-+	if (err)
-+		return err;
-+
-+	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
- }
- 
- static int dsa_slave_unsync_uc(struct net_device *dev,
-@@ -174,13 +199,23 @@ static int dsa_slave_unsync_uc(struct net_device *dev,
- {
- 	struct net_device *master = dsa_slave_to_master(dev);
- 	struct dsa_port *dp = dsa_slave_to_port(dev);
-+	struct dsa_host_vlan_rx_filtering_ctx ctx = {
-+		.dev = dev,
-+		.addr = addr,
-+		.event = DSA_UC_DEL,
-+	};
-+	int err;
- 
- 	dev_uc_del(master, addr);
- 
- 	if (!dsa_switch_supports_uc_filtering(dp->ds))
- 		return 0;
- 
--	return dsa_slave_schedule_standalone_work(dev, DSA_UC_DEL, addr, 0);
-+	err = dsa_slave_schedule_standalone_work(dev, DSA_UC_DEL, addr, 0);
-+	if (err)
-+		return err;
-+
-+	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
- }
- 
- static int dsa_slave_sync_mc(struct net_device *dev,
-@@ -188,13 +223,23 @@ static int dsa_slave_sync_mc(struct net_device *dev,
- {
- 	struct net_device *master = dsa_slave_to_master(dev);
- 	struct dsa_port *dp = dsa_slave_to_port(dev);
-+	struct dsa_host_vlan_rx_filtering_ctx ctx = {
-+		.dev = dev,
-+		.addr = addr,
-+		.event = DSA_MC_ADD,
-+	};
-+	int err;
- 
- 	dev_mc_add(master, addr);
- 
- 	if (!dsa_switch_supports_mc_filtering(dp->ds))
- 		return 0;
- 
--	return dsa_slave_schedule_standalone_work(dev, DSA_MC_ADD, addr, 0);
-+	err = dsa_slave_schedule_standalone_work(dev, DSA_MC_ADD, addr, 0);
-+	if (err)
-+		return err;
-+
-+	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
- }
- 
- static int dsa_slave_unsync_mc(struct net_device *dev,
-@@ -202,13 +247,23 @@ static int dsa_slave_unsync_mc(struct net_device *dev,
- {
- 	struct net_device *master = dsa_slave_to_master(dev);
- 	struct dsa_port *dp = dsa_slave_to_port(dev);
-+	struct dsa_host_vlan_rx_filtering_ctx ctx = {
-+		.dev = dev,
-+		.addr = addr,
-+		.event = DSA_MC_DEL,
-+	};
-+	int err;
- 
- 	dev_mc_del(master, addr);
- 
- 	if (!dsa_switch_supports_mc_filtering(dp->ds))
- 		return 0;
- 
--	return dsa_slave_schedule_standalone_work(dev, DSA_MC_DEL, addr, 0);
-+	err = dsa_slave_schedule_standalone_work(dev, DSA_MC_DEL, addr, 0);
-+	if (err)
-+		return err;
-+
-+	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
- }
- 
- void dsa_slave_sync_ha(struct net_device *dev)
-@@ -1668,6 +1723,8 @@ static int dsa_slave_vlan_rx_add_vid(struct net_device *dev, __be16 proto,
- 		.flags = 0,
- 	};
- 	struct netlink_ext_ack extack = {0};
-+	struct dsa_switch *ds = dp->ds;
-+	struct netdev_hw_addr *ha;
- 	int ret;
- 
- 	/* User port... */
-@@ -1687,6 +1744,30 @@ static int dsa_slave_vlan_rx_add_vid(struct net_device *dev, __be16 proto,
- 		return ret;
- 	}
- 
-+	if (!dsa_switch_supports_uc_filtering(ds) &&
-+	    !dsa_switch_supports_mc_filtering(ds))
-+		return 0;
-+
-+	netif_addr_lock_bh(dev);
-+
-+	if (dsa_switch_supports_mc_filtering(ds)) {
-+		netdev_for_each_synced_mc_addr(ha, dev) {
-+			dsa_slave_schedule_standalone_work(dev, DSA_MC_ADD,
-+							   ha->addr, vid);
-+		}
-+	}
-+
-+	if (dsa_switch_supports_uc_filtering(ds)) {
-+		netdev_for_each_synced_uc_addr(ha, dev) {
-+			dsa_slave_schedule_standalone_work(dev, DSA_UC_ADD,
-+							   ha->addr, vid);
-+		}
-+	}
-+
-+	netif_addr_unlock_bh(dev);
-+
-+	dsa_flush_workqueue();
-+
- 	return 0;
- }
- 
-@@ -1699,13 +1780,43 @@ static int dsa_slave_vlan_rx_kill_vid(struct net_device *dev, __be16 proto,
- 		/* This API only allows programming tagged, non-PVID VIDs */
- 		.flags = 0,
- 	};
-+	struct dsa_switch *ds = dp->ds;
-+	struct netdev_hw_addr *ha;
- 	int err;
- 
- 	err = dsa_port_vlan_del(dp, &vlan);
- 	if (err)
- 		return err;
- 
--	return dsa_port_host_vlan_del(dp, &vlan);
-+	err = dsa_port_host_vlan_del(dp, &vlan);
-+	if (err)
-+		return err;
-+
-+	if (!dsa_switch_supports_uc_filtering(ds) &&
-+	    !dsa_switch_supports_mc_filtering(ds))
-+		return 0;
-+
-+	netif_addr_lock_bh(dev);
-+
-+	if (dsa_switch_supports_mc_filtering(ds)) {
-+		netdev_for_each_synced_mc_addr(ha, dev) {
-+			dsa_slave_schedule_standalone_work(dev, DSA_MC_DEL,
-+							   ha->addr, vid);
-+		}
-+	}
-+
-+	if (dsa_switch_supports_uc_filtering(ds)) {
-+		netdev_for_each_synced_uc_addr(ha, dev) {
-+			dsa_slave_schedule_standalone_work(dev, DSA_UC_DEL,
-+							   ha->addr, vid);
-+		}
-+	}
-+
-+	netif_addr_unlock_bh(dev);
-+
-+	dsa_flush_workqueue();
-+
-+	return 0;
- }
- 
- static int dsa_slave_restore_vlan(struct net_device *vdev, int vid, void *arg)
+-		if (flow_block_cb_decref(block_cb)) {
++		if (!flow_block_cb_decref(block_cb)) {
+ 			flow_block_cb_remove(block_cb, f);
+ 			list_del(&block_cb->driver_list);
+ 		}
 -- 
 2.39.2
 
