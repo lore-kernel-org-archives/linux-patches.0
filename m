@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D373612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14430C4339B;
-	Mon,  3 Apr 2023 14:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285ED612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B5EC4339B;
+	Mon,  3 Apr 2023 14:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531774;
-	bh=LGxED/n1YkWwhiEoXO7dPNsBXTGMmhf3fHFvcpDd4ew=;
+	s=korg; t=1680531777;
+	bh=cUbdTdfNCu+gXcfryzDJ/tEK64FA6qOUzDqIn33M+cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJWDo7eNvthpBtIC46jIN78JShXOe2M3B/wQfvGh16PYd9Uxp+iQoWsQ8Ay8eN9OW
-	 efR3Q80LxeE9wMEn27tfqqNylr6hXytPT9n8f6hiG3L2yXTTBMCD4bdT2IXMLQMpfe
-	 GkdFkVDkoXzZqCVFu2HdJ7gUdRwzUojuWQeN3cHE=
+	b=ecU6fz6EAjloCNwYZ8TcQ889JC6cEOF/jron7EBrtk+AFEYr4dT+jBHjYv4dW55RN
+	 SfMo4Z/1aQebhCS8FiyFPjDNWSQDm5hFkAK2+Tj2UgOS2721KRjOT5Rv4BHYXRS7MK
+	 usPGyLRRq9y7NwemWb1pFOZH8ru3S/Ek8p6cniGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 096/104] ALSA: usb-audio: Fix regression on detection of Roland VS-100
-Date: Mon,  3 Apr 2023 16:09:28 +0200
-Message-Id: <20230403140407.925942878@linuxfoundation.org>
+	Lucas Stach <l.stach@pengutronix.de>,
+	Christian Gmeiner <christian.gmeiner@gmail.com>
+Subject: [PATCH 5.4 097/104] drm/etnaviv: fix reference leak when mmaping imported buffer
+Date: Mon,  3 Apr 2023 16:09:29 +0200
+Message-Id: <20230403140407.964964337@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -33,46 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-commit fa4e7a6fa12b1132340785e14bd439cbe95b7a5a upstream.
+commit 963b2e8c428f79489ceeb058e8314554ec9cbe6f upstream.
 
-It's been reported that the recent kernel can't probe the PCM devices
-on Roland VS-100 properly, and it turned out to be a regression by the
-recent addition of the bit shift range check for the format bits.
-In the old code, we just did bit-shift and it resulted in zero, which
-is then corrected to the standard PCM format, while the new code
-explicitly returns an error in such a case.
+drm_gem_prime_mmap() takes a reference on the GEM object, but before that
+drm_gem_mmap_obj() already takes a reference, which will be leaked as only
+one reference is dropped when the mapping is closed. Drop the extra
+reference when dma_buf_mmap() succeeds.
 
-For addressing the regression, relax the check and fallback to the
-standard PCM type (with the info output).
-
-Fixes: 43d5ca88dfcd ("ALSA: usb-audio: Fix potential out-of-bounds shift")
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217084
-Link: https://lore.kernel.org/r/20230324075005.19403-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Christian Gmeiner <christian.gmeiner@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/format.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -40,8 +40,12 @@ static u64 parse_audio_format_i_type(str
- 	case UAC_VERSION_1:
- 	default: {
- 		struct uac_format_type_i_discrete_descriptor *fmt = _fmt;
--		if (format >= 64)
--			return 0; /* invalid format */
-+		if (format >= 64) {
-+			usb_audio_info(chip,
-+				       "%u:%d: invalid format type 0x%llx is detected, processed as PCM\n",
-+				       fp->iface, fp->altsetting, format);
-+			format = UAC_FORMAT_TYPE_I_PCM;
-+		}
- 		sample_width = fmt->bBitResolution;
- 		sample_bytes = fmt->bSubframeSize;
- 		format = 1ULL << format;
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
+@@ -93,7 +93,15 @@ static void *etnaviv_gem_prime_vmap_impl
+ static int etnaviv_gem_prime_mmap_obj(struct etnaviv_gem_object *etnaviv_obj,
+ 		struct vm_area_struct *vma)
+ {
+-	return dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
++	int ret;
++
++	ret = dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
++	if (!ret) {
++		/* Drop the reference acquired by drm_gem_mmap_obj(). */
++		drm_gem_object_put(&etnaviv_obj->base);
++	}
++
++	return ret;
+ }
+ 
+ static const struct etnaviv_gem_ops etnaviv_gem_prime_ops = {
 
 
