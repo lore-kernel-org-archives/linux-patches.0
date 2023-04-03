@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA896FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1425CC4339B;
-	Mon,  3 Apr 2023 14:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337E86FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE8DC4339B;
+	Mon,  3 Apr 2023 14:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532307;
-	bh=9xiYEyK2wSHGh5mX8TpRAORckE1t8SMwdYDxJhxbABc=;
+	s=korg; t=1680532310;
+	bh=n0wXmv/9AfzSzwTXDUFKIsGEtgqcqQkQw6BexLF/x64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pZX8vc5EupB9AdjhEUxdxCKjUOWokZe6qDMEAyjVQNqM47uesBOlfh911jk1Olckr
-	 DJRPb71SskHenc6M1ZeEQjMpQF/QNvopcDqV4to0kvUUTsUwXKckrUHnnTRpUWE4gp
-	 t8J3S7PLlnYuUftGi+g8ObIsGsWgnEA1cLvBBHWA=
+	b=h3sbSvP4+T2cYmu3jaiVscxPq1vl58DmwXS5WNwv7Q4Rx5NJqQzKAAPtO1awXInK+
+	 BQqZPJpOSk7TRMj+xoa3BI5s+0/PrdNnpQnihe1RRoaTI85Or1zzuwcPrQH0pxkNDL
+	 iO0uG/SEJodRPakCEmNv0k1AxCIJNoQad89gMfL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianhao Zhao <tizhao@redhat.com>,
-	Jonathan Cooper <jonathan.s.cooper@amd.com>,
-	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 33/99] sfc: ef10: dont overwrite offload features at NIC reset
-Date: Mon,  3 Apr 2023 16:08:56 +0200
-Message-Id: <20230403140404.406760266@linuxfoundation.org>
+Subject: [PATCH 5.15 16/99] sched_getaffinity: dont assume cpumask_size() is fully initialized
+Date: Mon,  3 Apr 2023 16:08:39 +0200
+Message-Id: <20230403140359.324159080@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -38,142 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Íñigo Huguet <ihuguet@redhat.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit ca4a80e4bb7e87daf33b27d2ab9e4f5311018a89 ]
+[ Upstream commit 6015b1aca1a233379625385feb01dd014aca60b5 ]
 
-At NIC reset, some offload features related to encapsulated traffic
-might have changed (this mainly happens if the firmware-variant is
-changed with the sfboot userspace tool). Because of this, features are
-checked and set again at reset time.
+The getaffinity() system call uses 'cpumask_size()' to decide how big
+the CPU mask is - so far so good.  It is indeed the allocation size of a
+cpumask.
 
-However, this was not done right, and some features were improperly
-overwritten at NIC reset:
-- Tunneled IPv6 segmentation was always disabled
-- Features disabled with ethtool were reenabled
-- Features that becomes unsupported after the reset were not disabled
+But the code also assumes that the whole allocation is initialized
+without actually doing so itself.  That's wrong, because we might have
+fixed-size allocations (making copying and clearing more efficient), but
+not all of it is then necessarily used if 'nr_cpu_ids' is smaller.
 
-Also, checking if the device supports IPV6_CSUM to enable TSO6 is no
-longer necessary because all currently supported devices support it.
-Additionally, move the assignment of some other features to the
-EF10_OFFLOAD_FEATURES macro, like it is done in ef100, leaving the
-selection of features in efx_pci_probe_post_io a bit cleaner.
+Having checked other users of 'cpumask_size()', they all seem to be ok,
+either using it purely for the allocation size, or explicitly zeroing
+the cpumask before using the size in bytes to copy it.
 
-Fixes: ffffd2454a7a ("sfc: correctly advertise tunneled IPv6 segmentation")
-Fixes: 24b2c3751aa3 ("sfc: advertise encapsulated offloads on EF10")
-Reported-by: Tianhao Zhao <tizhao@redhat.com>
-Suggested-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
-Tested-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
-Signed-off-by: Íñigo Huguet <ihuguet@redhat.com>
-Acked-by: Edward Cree <ecree.xilinx@gmail.com>
-Link: https://lore.kernel.org/r/20230323083417.7345-1-ihuguet@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+See for example the ublk_ctrl_get_queue_affinity() function that uses
+the proper 'zalloc_cpumask_var()' to make sure that the whole mask is
+cleared, whether the storage is on the stack or if it was an external
+allocation.
+
+Fix this by just zeroing the allocation before using it.  Do the same
+for the compat version of sched_getaffinity(), which had the same logic.
+
+Also, for consistency, make sched_getaffinity() use 'cpumask_bits()' to
+access the bits.  For a cpumask_var_t, it ends up being a pointer to the
+same data either way, but it's just a good idea to treat it like you
+would a 'cpumask_t'.  The compat case already did that.
+
+Reported-by: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://lore.kernel.org/lkml/7d026744-6bd6-6827-0471-b5e8eae0be3f@arm.com/
+Cc: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ef10.c | 38 ++++++++++++++++++++++-----------
- drivers/net/ethernet/sfc/efx.c  | 17 ++++++---------
- 2 files changed, 33 insertions(+), 22 deletions(-)
+ kernel/compat.c     | 2 +-
+ kernel/sched/core.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/ef10.c b/drivers/net/ethernet/sfc/ef10.c
-index c316a9eb5be38..302b97c2e617c 100644
---- a/drivers/net/ethernet/sfc/ef10.c
-+++ b/drivers/net/ethernet/sfc/ef10.c
-@@ -1304,7 +1304,8 @@ static void efx_ef10_fini_nic(struct efx_nic *efx)
- static int efx_ef10_init_nic(struct efx_nic *efx)
- {
- 	struct efx_ef10_nic_data *nic_data = efx->nic_data;
--	netdev_features_t hw_enc_features = 0;
-+	struct net_device *net_dev = efx->net_dev;
-+	netdev_features_t tun_feats, tso_feats;
- 	int rc;
+diff --git a/kernel/compat.c b/kernel/compat.c
+index 55551989d9da5..fb50f29d9b361 100644
+--- a/kernel/compat.c
++++ b/kernel/compat.c
+@@ -152,7 +152,7 @@ COMPAT_SYSCALL_DEFINE3(sched_getaffinity, compat_pid_t,  pid, unsigned int, len,
+ 	if (len & (sizeof(compat_ulong_t)-1))
+ 		return -EINVAL;
  
- 	if (nic_data->must_check_datapath_caps) {
-@@ -1349,20 +1350,30 @@ static int efx_ef10_init_nic(struct efx_nic *efx)
- 		nic_data->must_restore_piobufs = false;
- 	}
+-	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
+ 		return -ENOMEM;
  
--	/* add encapsulated checksum offload features */
-+	/* encap features might change during reset if fw variant changed */
- 	if (efx_has_cap(efx, VXLAN_NVGRE) && !efx_ef10_is_vf(efx))
--		hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
--	/* add encapsulated TSO features */
--	if (efx_has_cap(efx, TX_TSO_V2_ENCAP)) {
--		netdev_features_t encap_tso_features;
-+		net_dev->hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
-+	else
-+		net_dev->hw_enc_features &= ~(NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM);
+ 	ret = sched_getaffinity(pid, mask);
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 0c72459d5f42a..acf7c09c9152f 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -8185,14 +8185,14 @@ SYSCALL_DEFINE3(sched_getaffinity, pid_t, pid, unsigned int, len,
+ 	if (len & (sizeof(unsigned long)-1))
+ 		return -EINVAL;
  
--		encap_tso_features = NETIF_F_GSO_UDP_TUNNEL | NETIF_F_GSO_GRE |
--			NETIF_F_GSO_UDP_TUNNEL_CSUM | NETIF_F_GSO_GRE_CSUM;
-+	tun_feats = NETIF_F_GSO_UDP_TUNNEL | NETIF_F_GSO_GRE |
-+		    NETIF_F_GSO_UDP_TUNNEL_CSUM | NETIF_F_GSO_GRE_CSUM;
-+	tso_feats = NETIF_F_TSO | NETIF_F_TSO6;
+-	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
+ 		return -ENOMEM;
  
--		hw_enc_features |= encap_tso_features | NETIF_F_TSO;
--		efx->net_dev->features |= encap_tso_features;
-+	if (efx_has_cap(efx, TX_TSO_V2_ENCAP)) {
-+		/* If this is first nic_init, or if it is a reset and a new fw
-+		 * variant has added new features, enable them by default.
-+		 * If the features are not new, maintain their current value.
-+		 */
-+		if (!(net_dev->hw_features & tun_feats))
-+			net_dev->features |= tun_feats;
-+		net_dev->hw_enc_features |= tun_feats | tso_feats;
-+		net_dev->hw_features |= tun_feats;
-+	} else {
-+		net_dev->hw_enc_features &= ~(tun_feats | tso_feats);
-+		net_dev->hw_features &= ~tun_feats;
-+		net_dev->features &= ~tun_feats;
- 	}
--	efx->net_dev->hw_enc_features = hw_enc_features;
+ 	ret = sched_getaffinity(pid, mask);
+ 	if (ret == 0) {
+ 		unsigned int retlen = min(len, cpumask_size());
  
- 	/* don't fail init if RSS setup doesn't work */
- 	rc = efx->type->rx_push_rss_config(efx, false,
-@@ -3993,7 +4004,10 @@ static unsigned int ef10_check_caps(const struct efx_nic *efx,
- 	 NETIF_F_HW_VLAN_CTAG_FILTER |	\
- 	 NETIF_F_IPV6_CSUM |		\
- 	 NETIF_F_RXHASH |		\
--	 NETIF_F_NTUPLE)
-+	 NETIF_F_NTUPLE |		\
-+	 NETIF_F_SG |			\
-+	 NETIF_F_RXCSUM |		\
-+	 NETIF_F_RXALL)
- 
- const struct efx_nic_type efx_hunt_a0_vf_nic_type = {
- 	.is_vf = true,
-diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
-index b6243f03e953d..16a896360f3fb 100644
---- a/drivers/net/ethernet/sfc/efx.c
-+++ b/drivers/net/ethernet/sfc/efx.c
-@@ -1003,21 +1003,18 @@ static int efx_pci_probe_post_io(struct efx_nic *efx)
- 	}
- 
- 	/* Determine netdevice features */
--	net_dev->features |= (efx->type->offload_features | NETIF_F_SG |
--			      NETIF_F_TSO | NETIF_F_RXCSUM | NETIF_F_RXALL);
--	if (efx->type->offload_features & (NETIF_F_IPV6_CSUM | NETIF_F_HW_CSUM)) {
--		net_dev->features |= NETIF_F_TSO6;
--		if (efx_has_cap(efx, TX_TSO_V2_ENCAP))
--			net_dev->hw_enc_features |= NETIF_F_TSO6;
--	}
--	/* Check whether device supports TSO */
--	if (!efx->type->tso_versions || !efx->type->tso_versions(efx))
--		net_dev->features &= ~NETIF_F_ALL_TSO;
-+	net_dev->features |= efx->type->offload_features;
-+
-+	/* Add TSO features */
-+	if (efx->type->tso_versions && efx->type->tso_versions(efx))
-+		net_dev->features |= NETIF_F_TSO | NETIF_F_TSO6;
-+
- 	/* Mask for features that also apply to VLAN devices */
- 	net_dev->vlan_features |= (NETIF_F_HW_CSUM | NETIF_F_SG |
- 				   NETIF_F_HIGHDMA | NETIF_F_ALL_TSO |
- 				   NETIF_F_RXCSUM);
- 
-+	/* Determine user configurable features */
- 	net_dev->hw_features |= net_dev->features & ~efx->fixed_features;
- 
- 	/* Disable receiving frames with bad FCS, by default. */
+-		if (copy_to_user(user_mask_ptr, mask, retlen))
++		if (copy_to_user(user_mask_ptr, cpumask_bits(mask), retlen))
+ 			ret = -EFAULT;
+ 		else
+ 			ret = retlen;
 -- 
 2.39.2
 
