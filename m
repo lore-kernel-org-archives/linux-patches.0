@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC38F612F
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36130C433A1;
-	Mon,  3 Apr 2023 14:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47032612F
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21C0C433D2;
+	Mon,  3 Apr 2023 14:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531990;
-	bh=i2GGW3Zzb33Agi4Dth8sraYtXMV8E2zOCVJOmTcxFCI=;
+	s=korg; t=1680531993;
+	bh=A/HeRJzBO++y8fhXAYaUN/zEJydntN/wr5K4/IIMCtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYntbp1NJ0aS+mqmcGL7s0Ijcg7ueyhXcDK8wfoBSS+7ZfJZDybKZaPAeE+pUIolW
-	 B5nO31Q4M5RCTYWf2WRqmdIc4z6wVU3O22974vwpZKfmuJk/MgYaGCRyiYIbEu0bRf
-	 0QQOYWCzLGcJADnR5oMRbwX/rKl8ALvqxdNmEt3Y=
+	b=qQxcQvEdcgnj8Cqx4l0u0LWdWQoghpCCljyHlkBFVU5UZxVo0X1eSTrpdIEoIiwCn
+	 lAZU1ZUx33gfhxc1bAzo/OKEmpAAw83nFpo0hvpWM1q9HFcg2yNnu65tkqGUUfgvFW
+	 jiOyjLQbyRG1w33s1Rz57sh9sYcIZadegR+AYCk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 053/173] Bluetooth: btqcomsmd: Fix command timeout after setting BD address
-Date: Mon,  3 Apr 2023 16:07:48 +0200
-Message-Id: <20230403140416.162523085@linuxfoundation.org>
+Subject: [PATCH 5.10 054/173] Bluetooth: L2CAP: Fix not checking for maximum number of DCID
+Date: Mon,  3 Apr 2023 16:07:49 +0200
+Message-Id: <20230403140416.193727368@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,72 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 5d44ab9e204200a78ad55cdf185aa2bb109b5950 ]
+[ Upstream commit 7cf3b1dd6aa603fd80969e9e7160becf1455a0eb ]
 
-On most devices using the btqcomsmd driver (e.g. the DragonBoard 410c
-and other devices based on the Qualcomm MSM8916/MSM8909/... SoCs)
-the Bluetooth firmware seems to become unresponsive for a while after
-setting the BD address. On recent kernel versions (at least 5.17+)
-this often causes timeouts for subsequent commands, e.g. the HCI reset
-sent by the Bluetooth core during initialization:
+When receiving L2CAP_CREDIT_BASED_CONNECTION_REQ the remote may request
+more channels than allowed by the spec (10 octecs = 5 CIDs) so this
+checks if the number of channels is bigger than the maximum allowed and
+respond with an error.
 
-    Bluetooth: hci0: Opcode 0x c03 failed: -110
-
-Unfortunately this behavior does not seem to be documented anywhere.
-Experimentation suggests that the minimum necessary delay to avoid
-the problem is ~150us. However, to be sure add a sleep for > 1ms
-in case it is a bit longer on other firmware versions.
-
-Older kernel versions are likely also affected, although perhaps with
-slightly different errors or less probability. Side effects can easily
-hide the issue in most cases, e.g. unrelated incoming interrupts that
-cause the necessary delay.
-
-Fixes: 1511cc750c3d ("Bluetooth: Introduce Qualcomm WCNSS SMD based HCI driver")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Stable-dep-of: 9aa9d9473f15 ("Bluetooth: L2CAP: Fix responding with wrong PDU type")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqcomsmd.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ include/net/bluetooth/l2cap.h |  1 +
+ net/bluetooth/l2cap_core.c    | 12 +++++++++---
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
-index 2acb719e596f5..11c7e04bf3947 100644
---- a/drivers/bluetooth/btqcomsmd.c
-+++ b/drivers/bluetooth/btqcomsmd.c
-@@ -122,6 +122,21 @@ static int btqcomsmd_setup(struct hci_dev *hdev)
- 	return 0;
- }
+diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
+index 9b8000869b078..7f9d0ab76b14f 100644
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -493,6 +493,7 @@ struct l2cap_le_credits {
  
-+static int btqcomsmd_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
-+{
-+	int ret;
-+
-+	ret = qca_set_bdaddr_rome(hdev, bdaddr);
-+	if (ret)
-+		return ret;
-+
-+	/* The firmware stops responding for a while after setting the bdaddr,
-+	 * causing timeouts for subsequent commands. Sleep a bit to avoid this.
-+	 */
-+	usleep_range(1000, 10000);
-+	return 0;
-+}
-+
- static int btqcomsmd_probe(struct platform_device *pdev)
- {
- 	struct btqcomsmd *btq;
-@@ -162,7 +177,7 @@ static int btqcomsmd_probe(struct platform_device *pdev)
- 	hdev->close = btqcomsmd_close;
- 	hdev->send = btqcomsmd_send;
- 	hdev->setup = btqcomsmd_setup;
--	hdev->set_bdaddr = qca_set_bdaddr_rome;
-+	hdev->set_bdaddr = btqcomsmd_set_bdaddr;
+ #define L2CAP_ECRED_MIN_MTU		64
+ #define L2CAP_ECRED_MIN_MPS		64
++#define L2CAP_ECRED_MAX_CID		5
  
- 	ret = hci_register_dev(hdev);
- 	if (ret < 0)
+ struct l2cap_ecred_conn_req {
+ 	__le16 psm;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index bde90df6b4976..b01677882e38c 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5952,7 +5952,7 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
+ 	struct l2cap_ecred_conn_req *req = (void *) data;
+ 	struct {
+ 		struct l2cap_ecred_conn_rsp rsp;
+-		__le16 dcid[5];
++		__le16 dcid[L2CAP_ECRED_MAX_CID];
+ 	} __packed pdu;
+ 	struct l2cap_chan *chan, *pchan;
+ 	u16 mtu, mps;
+@@ -5969,6 +5969,14 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
+ 		goto response;
+ 	}
+ 
++	cmd_len -= sizeof(*req);
++	num_scid = cmd_len / sizeof(u16);
++
++	if (num_scid > ARRAY_SIZE(pdu.dcid)) {
++		result = L2CAP_CR_LE_INVALID_PARAMS;
++		goto response;
++	}
++
+ 	mtu  = __le16_to_cpu(req->mtu);
+ 	mps  = __le16_to_cpu(req->mps);
+ 
+@@ -6013,8 +6021,6 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
+ 	}
+ 
+ 	result = L2CAP_CR_LE_SUCCESS;
+-	cmd_len -= sizeof(*req);
+-	num_scid = cmd_len / sizeof(u16);
+ 
+ 	for (i = 0; i < num_scid; i++) {
+ 		u16 scid = __le16_to_cpu(req->scid[i]);
 -- 
 2.39.2
 
