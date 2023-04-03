@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D3E6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3363C433D2;
-	Mon,  3 Apr 2023 14:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF20B6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A04C433D2;
+	Mon,  3 Apr 2023 14:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533174;
-	bh=ybnf0WuouWU08KTr71yU7vBE+kVfFz4SW7MEMzkHpuc=;
+	s=korg; t=1680533176;
+	bh=TE4xOXYqMwj5XtV3cSDXvMt3tMyHbTy3WEJzGo5XXdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDoGg9IkGdk0I7IqljMButsihzt4vfqSxIUnFyKN/r2Flph+OtH/uZNufPIk3lZt0
-	 ZOxrItFblEbIECuUSbf5o7xDbwu3pmT26LPetPClHQCXBJpH1ARQ9iDXYisVexQVJP
-	 0CkNFUkrIwmotHDbqHsvVSwkiKbHs3fx06EDSBSI=
+	b=Ccq59OANEYHA4dc812RG6CTYtMsM+iL9wgJUXZ0Mqs7k3gWIlZMjkFNgQfeIX3fJx
+	 Ne7JUf9sRUWC+n6bA7KVdVCKy32jWsxAfQ2ANYYro9a7N9O2PM3sACse/2pgLc1aIf
+	 uGPRpN2HfhEvqvRAsXUQ5O6TdBjIkxxeNxwV0FLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Adham Faris <afaris@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 081/187] net: dsa: realtek: fix out-of-bounds access
-Date: Mon,  3 Apr 2023 16:08:46 +0200
-Message-Id: <20230403140418.628007986@linuxfoundation.org>
+Subject: [PATCH 6.2 052/187] net/mlx5e: Lower maximum allowed MTU in XSK to match XDP prerequisites
+Date: Mon,  3 Apr 2023 16:08:17 +0200
+Message-Id: <20230403140417.697209115@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -39,59 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Adham Faris <afaris@nvidia.com>
 
-[ Upstream commit b93eb564869321d0dffaf23fcc5c88112ed62466 ]
+[ Upstream commit 78dee7befd56987283c13877b834c0aa97ad51b9 ]
 
-The probe function sets priv->chip_data to (void *)priv + sizeof(*priv)
-with the expectation that priv has enough trailing space.
+XSK redirecting XDP programs require linearity, hence applies
+restrictions on the MTU. For PAGE_SIZE=4K, MTU shouldn't exceed 3498.
 
-However, only realtek-smi actually allocated this chip_data space.
-Do likewise in realtek-mdio to fix out-of-bounds accesses.
+Features that contradict with XDP such HW-LRO and HW-GRO are enforced
+by the driver in advance, during XSK params validation, except for MTU,
+which was not enforced before this patch.
 
-These accesses likely went unnoticed so far, because of an (unused)
-buf[4096] member in struct realtek_priv, which caused kmalloc to
-round up the allocated buffer to a big enough size, so nothing of
-value was overwritten. With a different allocator (like in the barebox
-bootloader port of the driver) or with KASAN, the memory corruption
-becomes quickly apparent.
+This has been spotted during test scenario described below:
+Attaching xdpsock program (PAGE_SIZE=4K), with MTU < 3498, detaching
+XDP program, changing the MTU to arbitrary value in the range
+[3499, 3754], attaching XDP program again, which ended up with failure
+since MTU is > 3498.
 
-Fixes: aac94001067d ("net: dsa: realtek: add new mdio interface for drivers")
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://lore.kernel.org/r/20230323103735.2331786-1-a.fatoum@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This commit lowers the XSK MTU limitation to be aligned with XDP MTU
+limitation, since XSK socket is meaningless without XDP program.
+
+Signed-off-by: Adham Faris <afaris@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/realtek-mdio.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/realtek/realtek-mdio.c b/drivers/net/dsa/realtek/realtek-mdio.c
-index 3e54fac5f9027..5a8fe707ca25e 100644
---- a/drivers/net/dsa/realtek/realtek-mdio.c
-+++ b/drivers/net/dsa/realtek/realtek-mdio.c
-@@ -21,6 +21,7 @@
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 47d4b54d15634..1f4233b2842f7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -4117,13 +4117,17 @@ static bool mlx5e_xsk_validate_mtu(struct net_device *netdev,
+ 		struct xsk_buff_pool *xsk_pool =
+ 			mlx5e_xsk_get_pool(&chs->params, chs->params.xsk, ix);
+ 		struct mlx5e_xsk_param xsk;
++		int max_xdp_mtu;
  
- #include <linux/module.h>
- #include <linux/of_device.h>
-+#include <linux/overflow.h>
- #include <linux/regmap.h>
+ 		if (!xsk_pool)
+ 			continue;
  
- #include "realtek.h"
-@@ -152,7 +153,9 @@ static int realtek_mdio_probe(struct mdio_device *mdiodev)
- 	if (!var)
- 		return -EINVAL;
+ 		mlx5e_build_xsk_param(xsk_pool, &xsk);
++		max_xdp_mtu = mlx5e_xdp_max_mtu(new_params, &xsk);
  
--	priv = devm_kzalloc(&mdiodev->dev, sizeof(*priv), GFP_KERNEL);
-+	priv = devm_kzalloc(&mdiodev->dev,
-+			    size_add(sizeof(*priv), var->chip_data_sz),
-+			    GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
+-		if (!mlx5e_validate_xsk_param(new_params, &xsk, mdev)) {
++		/* Validate XSK params and XDP MTU in advance */
++		if (!mlx5e_validate_xsk_param(new_params, &xsk, mdev) ||
++		    new_params->sw_mtu > max_xdp_mtu) {
+ 			u32 hr = mlx5e_get_linear_rq_headroom(new_params, &xsk);
+ 			int max_mtu_frame, max_mtu_page, max_mtu;
  
+@@ -4133,9 +4137,9 @@ static bool mlx5e_xsk_validate_mtu(struct net_device *netdev,
+ 			 */
+ 			max_mtu_frame = MLX5E_HW2SW_MTU(new_params, xsk.chunk_size - hr);
+ 			max_mtu_page = MLX5E_HW2SW_MTU(new_params, SKB_MAX_HEAD(0));
+-			max_mtu = min(max_mtu_frame, max_mtu_page);
++			max_mtu = min3(max_mtu_frame, max_mtu_page, max_xdp_mtu);
+ 
+-			netdev_err(netdev, "MTU %d is too big for an XSK running on channel %u. Try MTU <= %d\n",
++			netdev_err(netdev, "MTU %d is too big for an XSK running on channel %u or its redirection XDP program. Try MTU <= %d\n",
+ 				   new_params->sw_mtu, ix, max_mtu);
+ 			return false;
+ 		}
 -- 
 2.39.2
 
