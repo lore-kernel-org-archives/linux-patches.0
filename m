@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370C46FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39DCC433D2;
-	Mon,  3 Apr 2023 14:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C946FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD23C433EF;
+	Mon,  3 Apr 2023 14:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532058;
-	bh=+cSnd0+pXbfBgQ9Z2CGVEYbjvtyoDoodXIoHywwXID4=;
+	s=korg; t=1680532060;
+	bh=iZqiTaLgDd5//QY2VsIVIebD5YO4KGJ4GDpZ1pW4mvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKXgmvAS/2Iy2gZ9znnWssiBORdXqoglsmvRUbV2YZiu7pZCnF9DF+J5XvKpmmglv
-	 52c0gQB6JLebZo8O6t9kUFqcleW7baDysZGIBzDe7owowgI1rSKcm36urj1o3AWEM+
-	 0rm7DRMeGfDLqmxwStlKWuaGvr4AchKoTSWOijQs=
+	b=0DC41KJ3ZQIktqbB74+3Ah1SvWfqo2iX3vNAhHILMuwYJybUPmFojF4VO8nZfqO36
+	 0hiqu/fbRkv1kWvPkwjBfJjZ7a7R3YcCy7eIfZr+rwtDdQA8IpHuKhcXpsTEsCqJQf
+	 p6JPzWGxY2osycLM/7AnpK2EVl6hu4ixcuVs4/7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coly Li <colyli@suse.de>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.10 083/173] dm thin: fix deadlock when swapping to thin device
-Date: Mon,  3 Apr 2023 16:08:18 +0200
-Message-Id: <20230403140417.106192169@linuxfoundation.org>
+	Ivan Bornyakov <i.bornyakov@metrotek.ru>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 110/173] bus: imx-weim: fix branch condition evaluates to a garbage value
+Date: Mon,  3 Apr 2023 16:08:45 +0200
+Message-Id: <20230403140418.001038821@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,70 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Coly Li <colyli@suse.de>
+From: Ivan Bornyakov <i.bornyakov@metrotek.ru>
 
-commit 9bbf5feecc7eab2c370496c1c161bbfe62084028 upstream.
+[ Upstream commit 1adab2922c58e7ff4fa9f0b43695079402cce876 ]
 
-This is an already known issue that dm-thin volume cannot be used as
-swap, otherwise a deadlock may happen when dm-thin internal memory
-demand triggers swap I/O on the dm-thin volume itself.
+If bus type is other than imx50_weim_devtype and have no child devices,
+variable 'ret' in function weim_parse_dt() will not be initialized, but
+will be used as branch condition and return value. Fix this by
+initializing 'ret' with 0.
 
-But thanks to commit a666e5c05e7c ("dm: fix deadlock when swapping to
-encrypted device"), the limit_swap_bios target flag can also be used
-for dm-thin to avoid the recursive I/O when it is used as swap.
+This was discovered with help of clang-analyzer, but the situation is
+quite possible in real life.
 
-Fix is to simply set ti->limit_swap_bios to true in both pool_ctr()
-and thin_ctr().
-
-In my test, I create a dm-thin volume /dev/vg/swap and use it as swap
-device. Then I run fio on another dm-thin volume /dev/vg/main and use
-large --blocksize to trigger swap I/O onto /dev/vg/swap.
-
-The following fio command line is used in my test,
-  fio --name recursive-swap-io --lockmem 1 --iodepth 128 \
-     --ioengine libaio --filename /dev/vg/main --rw randrw \
-    --blocksize 1M --numjobs 32 --time_based --runtime=12h
-
-Without this fix, the whole system can be locked up within 15 seconds.
-
-With this fix, there is no any deadlock or hung task observed after
-2 hours of running fio.
-
-Furthermore, if blocksize is changed from 1M to 128M, after around 30
-seconds fio has no visible I/O, and the out-of-memory killer message
-shows up in kernel message. After around 20 minutes all fio processes
-are killed and the whole system is back to being alive.
-
-This is exactly what is expected when recursive I/O happens on dm-thin
-volume when it is used as swap.
-
-Depends-on: a666e5c05e7c ("dm: fix deadlock when swapping to encrypted device")
+Fixes: 52c47b63412b ("bus: imx-weim: improve error handling upon child probe-failure")
+Signed-off-by: Ivan Bornyakov <i.bornyakov@metrotek.ru>
 Cc: stable@vger.kernel.org
-Signed-off-by: Coly Li <colyli@suse.de>
-Acked-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-thin.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bus/imx-weim.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -3383,6 +3383,7 @@ static int pool_ctr(struct dm_target *ti
- 	pt->low_water_blocks = low_water_blocks;
- 	pt->adjusted_pf = pt->requested_pf = pf;
- 	ti->num_flush_bios = 1;
-+	ti->limit_swap_bios = true;
+diff --git a/drivers/bus/imx-weim.c b/drivers/bus/imx-weim.c
+index 28bb65a5613fd..201767823edb5 100644
+--- a/drivers/bus/imx-weim.c
++++ b/drivers/bus/imx-weim.c
+@@ -192,8 +192,8 @@ static int weim_parse_dt(struct platform_device *pdev, void __iomem *base)
+ 	const struct of_device_id *of_id = of_match_device(weim_id_table,
+ 							   &pdev->dev);
+ 	const struct imx_weim_devtype *devtype = of_id->data;
++	int ret = 0, have_child = 0;
+ 	struct device_node *child;
+-	int ret, have_child = 0;
+ 	struct cs_timing_state ts = {};
+ 	u32 reg;
  
- 	/*
- 	 * Only need to enable discards if the pool should pass
-@@ -4259,6 +4260,7 @@ static int thin_ctr(struct dm_target *ti
- 		goto bad;
- 
- 	ti->num_flush_bios = 1;
-+	ti->limit_swap_bios = true;
- 	ti->flush_supported = true;
- 	ti->per_io_data_size = sizeof(struct dm_thin_endio_hook);
- 
+-- 
+2.39.2
+
 
 
