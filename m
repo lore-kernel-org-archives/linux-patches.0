@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03ACE6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD35C433EF;
-	Mon,  3 Apr 2023 14:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6796FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6932C433EF;
+	Mon,  3 Apr 2023 14:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533030;
-	bh=QHiqBaDd7TKi3Fgb4EqKzNbkcwRu76OmI/eB7btnxU4=;
+	s=korg; t=1680533036;
+	bh=MjEEL8boqjlO56Osnd+473gjFPNIpRp9UcMS4Htxkr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AoZVOnGcy+J77E6lyVZDLSKqGkXkaO+PgvXJNSIMpY5kM/afW+8E7uQLs2NYvvCmr
-	 O9vQQZ8bkRvva6F92bda5eAUy7GOjV6zfswqBD4thX8zVNke+Y7C1dCFuf96eGYVkh
-	 zKVmwTJWVodHvV8Nioh3l2iMinEUr/lPcBbS2HXk=
+	b=NO3/zm1YE8FZwEAl1RLvOFw5LVBjiVwc1A3ytBXolod+4LmOo3mijeqMHfON1SdvU
+	 jJNiyQxHb6Jb7/AFRcmxjZDtaYGRvFuxGC5xCcrvKueg3Td1LXZ+IcDDhUm9TTBcIz
+	 AqlEYPJ9wnGziZ1rFYaCU201dZ0JfykhIvUoyRic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Curtis Malainey <cujomalainey@chromium.org>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Ferry Toth <fntoth@gmail.com>,
 	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Curtis Malainey <curtis@malainey.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 028/187] ASoC: SOF: ipc3: Check for upper size limit for the received message
-Date: Mon,  3 Apr 2023 16:07:53 +0200
-Message-Id: <20230403140416.932927084@linuxfoundation.org>
+Subject: [PATCH 6.2 030/187] ASoC: SOF: Intel: pci-tng: revert invalid bar size setting
+Date: Mon,  3 Apr 2023 16:07:55 +0200
+Message-Id: <20230403140416.992108172@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -38,43 +38,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 989a3e4479177d0f4afab8be1960731bc0ffbbd0 ]
+[ Upstream commit ca09e2a351fbc7836ba9418304ff0c3e72addfe0 ]
 
-The sof_ipc3_rx_msg() checks for minimum size of a new rx message but it is
-missing the check for upper limit.
-Corrupted or compromised firmware might be able to take advantage of this
-to cause out of bounds reads outside of the message area.
+The logic for the ioremap is to find the resource index 3 (IRAM) and
+infer the BAR address by subtracting the IRAM offset. The BAR size
+defined in hardware specifications is 2MB.
 
-Reported-by: Curtis Malainey <cujomalainey@chromium.org>
+The commit 5947b2726beb6 ("ASoC: SOF: Intel: Check the bar size before
+remapping") tried to find the BAR size by querying the resource length
+instead of a pre-canned value, but by requesting the size for index 3
+it only gets the size of the IRAM. That's obviously wrong and prevents
+the probe from proceeding.
+
+This commit attempted to fix an issue in a fuzzing/simulated
+environment but created another on actual devices, so the best course
+of action is to revert that change.
+
+Reported-by: Ferry Toth <fntoth@gmail.com>
+Tested-by: Ferry Toth <fntoth@gmail.com> (Intel Edison-Arduino)
+Link: https://github.com/thesofproject/linux/issues/3901
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Curtis Malainey <curtis@malainey.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230307114917.5124-1-peter.ujfalusi@linux.intel.com
+Link: https://lore.kernel.org/r/20230307095341.3222-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc3.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/sof/intel/pci-tng.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/sound/soc/sof/ipc3.c b/sound/soc/sof/ipc3.c
-index 1fef4dcc09368..fde8af5a1f485 100644
---- a/sound/soc/sof/ipc3.c
-+++ b/sound/soc/sof/ipc3.c
-@@ -970,8 +970,9 @@ static void sof_ipc3_rx_msg(struct snd_sof_dev *sdev)
- 		return;
- 	}
+diff --git a/sound/soc/sof/intel/pci-tng.c b/sound/soc/sof/intel/pci-tng.c
+index 5b2b409752c58..8c22a00266c06 100644
+--- a/sound/soc/sof/intel/pci-tng.c
++++ b/sound/soc/sof/intel/pci-tng.c
+@@ -75,11 +75,7 @@ static int tangier_pci_probe(struct snd_sof_dev *sdev)
  
--	if (hdr.size < sizeof(hdr)) {
--		dev_err(sdev->dev, "The received message size is invalid\n");
-+	if (hdr.size < sizeof(hdr) || hdr.size > SOF_IPC_MSG_MAX_SIZE) {
-+		dev_err(sdev->dev, "The received message size is invalid: %u\n",
-+			hdr.size);
- 		return;
- 	}
+ 	/* LPE base */
+ 	base = pci_resource_start(pci, desc->resindex_lpe_base) - IRAM_OFFSET;
+-	size = pci_resource_len(pci, desc->resindex_lpe_base);
+-	if (size < PCI_BAR_SIZE) {
+-		dev_err(sdev->dev, "error: I/O region is too small.\n");
+-		return -ENODEV;
+-	}
++	size = PCI_BAR_SIZE;
  
+ 	dev_dbg(sdev->dev, "LPE PHY base at 0x%x size 0x%x", base, size);
+ 	sdev->bar[DSP_BAR] = devm_ioremap(sdev->dev, base, size);
 -- 
 2.39.2
 
