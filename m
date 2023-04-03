@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED696FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F3FC433EF;
-	Mon,  3 Apr 2023 14:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D439F6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B654C433D2;
+	Mon,  3 Apr 2023 14:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532505;
-	bh=5hDqYyvqlV8Bo90sllU5fpXSgThq0RxaW1rl9qBcAeM=;
+	s=korg; t=1680532507;
+	bh=Z25A45hnW1pYtquAgyaMm9SFLRjubVarjBXy2rGnPdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LcD1UN3G97+eBFw+WQb5KIN4tuqFffYSr+fHbCLZnaXsKMSVbbrSNgJWG97Du1Ljp
-	 agQTo89+Uql1dDDGMQdzVnFamyak47rLd/VnJmcrQB4wlBaMtU5Xvt0UqDT1fVKkIr
-	 8yGyBdD+4iWtuXSo6vbtrXiYBOVG9RSQyXIa6ZC8=
+	b=QBqx2ukr1IGtBWQIX4TWZYFOEnd2NfDHsN1YwkX6zZJzV5T97NM9kC+NMorXy+sXQ
+	 Q/e2QtGiv+qBGMWZmWUyOp3fRrS+WxaViGDdmGFq71enJ+ShVllJHnpaYSi4/jhQvt
+	 OBhGldXxWDkJfPOpqOemTIMyW34jV1/5FkVIXS1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Fine <gil.fine@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Victor Hsieh <victorhsieh@google.com>,
+	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/181] thunderbolt: Limit USB3 bandwidth of certain Intel USB4 host routers
-Date: Mon,  3 Apr 2023 16:07:16 +0200
-Message-Id: <20230403140415.140110769@linuxfoundation.org>
+Subject: [PATCH 6.1 010/181] fsverity: dont drop pagecache at end of FS_IOC_ENABLE_VERITY
+Date: Mon,  3 Apr 2023 16:07:25 +0200
+Message-Id: <20230403140415.456016200@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,136 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gil Fine <gil.fine@linux.intel.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit f0a57dd33b3eadf540912cd130db727ea824d174 ]
+[ Upstream commit a075bacde257f755bea0e53400c9f1cdd1b8e8e6 ]
 
-Current Intel USB4 host routers have hardware limitation that the USB3
-bandwidth cannot go higher than 16376 Mb/s. Work this around by adding a
-new quirk that limits the bandwidth for the affected host routers.
+The full pagecache drop at the end of FS_IOC_ENABLE_VERITY is causing
+performance problems and is hindering adoption of fsverity.  It was
+intended to solve a race condition where unverified pages might be left
+in the pagecache.  But actually it doesn't solve it fully.
 
+Since the incomplete solution for this race condition has too much
+performance impact for it to be worth it, let's remove it for now.
+
+Fixes: 3fda4c617e84 ("fs-verity: implement FS_IOC_ENABLE_VERITY ioctl")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Victor Hsieh <victorhsieh@google.com>
+Link: https://lore.kernel.org/r/20230314235332.50270-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/quirks.c | 31 +++++++++++++++++++++++++++++++
- drivers/thunderbolt/tb.h     |  3 +++
- drivers/thunderbolt/usb4.c   | 17 +++++++++++++++--
- 3 files changed, 49 insertions(+), 2 deletions(-)
+ fs/verity/enable.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/thunderbolt/quirks.c b/drivers/thunderbolt/quirks.c
-index ae28a03fa890b..1157b8869bcca 100644
---- a/drivers/thunderbolt/quirks.c
-+++ b/drivers/thunderbolt/quirks.c
-@@ -26,6 +26,19 @@ static void quirk_clx_disable(struct tb_switch *sw)
- 	tb_sw_dbg(sw, "disabling CL states\n");
- }
+diff --git a/fs/verity/enable.c b/fs/verity/enable.c
+index df6b499bf6a14..400c264bf8930 100644
+--- a/fs/verity/enable.c
++++ b/fs/verity/enable.c
+@@ -390,25 +390,27 @@ int fsverity_ioctl_enable(struct file *filp, const void __user *uarg)
+ 		goto out_drop_write;
  
-+static void quirk_usb3_maximum_bandwidth(struct tb_switch *sw)
-+{
-+	struct tb_port *port;
-+
-+	tb_switch_for_each_port(sw, port) {
-+		if (!tb_port_is_usb3_down(port))
-+			continue;
-+		port->max_bw = 16376;
-+		tb_port_dbg(port, "USB3 maximum bandwidth limited to %u Mb/s\n",
-+			    port->max_bw);
-+	}
-+}
-+
- struct tb_quirk {
- 	u16 hw_vendor_id;
- 	u16 hw_device_id;
-@@ -43,6 +56,24 @@ static const struct tb_quirk tb_quirks[] = {
- 	 * DP buffers.
- 	 */
- 	{ 0x8087, 0x0b26, 0x0000, 0x0000, quirk_dp_credit_allocation },
-+	/*
-+	 * Limit the maximum USB3 bandwidth for the following Intel USB4
-+	 * host routers due to a hardware issue.
-+	 */
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_ADL_NHI0, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_ADL_NHI1, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_RPL_NHI0, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_RPL_NHI1, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_MTL_M_NHI0, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_MTL_P_NHI0, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_MTL_P_NHI1, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
+ 	err = enable_verity(filp, &arg);
+-	if (err)
+-		goto out_allow_write_access;
+ 
  	/*
- 	 * CLx is not supported on AMD USB4 Yellow Carp and Pink Sardine platforms.
+-	 * Some pages of the file may have been evicted from pagecache after
+-	 * being used in the Merkle tree construction, then read into pagecache
+-	 * again by another process reading from the file concurrently.  Since
+-	 * these pages didn't undergo verification against the file digest which
+-	 * fs-verity now claims to be enforcing, we have to wipe the pagecache
+-	 * to ensure that all future reads are verified.
++	 * We no longer drop the inode's pagecache after enabling verity.  This
++	 * used to be done to try to avoid a race condition where pages could be
++	 * evicted after being used in the Merkle tree construction, then
++	 * re-instantiated by a concurrent read.  Such pages are unverified, and
++	 * the backing storage could have filled them with different content, so
++	 * they shouldn't be used to fulfill reads once verity is enabled.
++	 *
++	 * But, dropping the pagecache has a big performance impact, and it
++	 * doesn't fully solve the race condition anyway.  So for those reasons,
++	 * and also because this race condition isn't very important relatively
++	 * speaking (especially for small-ish files, where the chance of a page
++	 * being used, evicted, *and* re-instantiated all while enabling verity
++	 * is quite small), we no longer drop the inode's pagecache.
  	 */
-diff --git a/drivers/thunderbolt/tb.h b/drivers/thunderbolt/tb.h
-index e11d973a8f9b6..f034723b1b40e 100644
---- a/drivers/thunderbolt/tb.h
-+++ b/drivers/thunderbolt/tb.h
-@@ -252,6 +252,8 @@ struct tb_switch {
-  * @ctl_credits: Buffers reserved for control path
-  * @dma_credits: Number of credits allocated for DMA tunneling for all
-  *		 DMA paths through this port.
-+ * @max_bw: Maximum possible bandwidth through this adapter if set to
-+ *	    non-zero.
-  *
-  * In USB4 terminology this structure represents an adapter (protocol or
-  * lane adapter).
-@@ -277,6 +279,7 @@ struct tb_port {
- 	unsigned int total_credits;
- 	unsigned int ctl_credits;
- 	unsigned int dma_credits;
-+	unsigned int max_bw;
- };
+-	filemap_write_and_wait(inode->i_mapping);
+-	invalidate_inode_pages2(inode->i_mapping);
  
- /**
-diff --git a/drivers/thunderbolt/usb4.c b/drivers/thunderbolt/usb4.c
-index cf8d4f769579e..3c821f5e44814 100644
---- a/drivers/thunderbolt/usb4.c
-+++ b/drivers/thunderbolt/usb4.c
-@@ -1865,6 +1865,15 @@ int usb4_port_retimer_nvm_read(struct tb_port *port, u8 index,
- 				usb4_port_retimer_nvm_read_block, &info);
- }
- 
-+static inline unsigned int
-+usb4_usb3_port_max_bandwidth(const struct tb_port *port, unsigned int bw)
-+{
-+	/* Take the possible bandwidth limitation into account */
-+	if (port->max_bw)
-+		return min(bw, port->max_bw);
-+	return bw;
-+}
-+
- /**
-  * usb4_usb3_port_max_link_rate() - Maximum support USB3 link rate
-  * @port: USB3 adapter port
-@@ -1886,7 +1895,9 @@ int usb4_usb3_port_max_link_rate(struct tb_port *port)
- 		return ret;
- 
- 	lr = (val & ADP_USB3_CS_4_MSLR_MASK) >> ADP_USB3_CS_4_MSLR_SHIFT;
--	return lr == ADP_USB3_CS_4_MSLR_20G ? 20000 : 10000;
-+	ret = lr == ADP_USB3_CS_4_MSLR_20G ? 20000 : 10000;
-+
-+	return usb4_usb3_port_max_bandwidth(port, ret);
- }
- 
- /**
-@@ -1913,7 +1924,9 @@ int usb4_usb3_port_actual_link_rate(struct tb_port *port)
- 		return 0;
- 
- 	lr = val & ADP_USB3_CS_4_ALR_MASK;
--	return lr == ADP_USB3_CS_4_ALR_20G ? 20000 : 10000;
-+	ret = lr == ADP_USB3_CS_4_ALR_20G ? 20000 : 10000;
-+
-+	return usb4_usb3_port_max_bandwidth(port, ret);
- }
- 
- static int usb4_usb3_port_cm_request(struct tb_port *port, bool request)
+ 	/*
+ 	 * allow_write_access() is needed to pair with deny_write_access().
+ 	 * Regardless, the filesystem won't allow writing to verity files.
+ 	 */
+-out_allow_write_access:
+ 	allow_write_access(filp);
+ out_drop_write:
+ 	mnt_drop_write_file(filp);
 -- 
 2.39.2
 
