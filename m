@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090406FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B03C433EF;
-	Mon,  3 Apr 2023 14:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EBF6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A17C433EF;
+	Mon,  3 Apr 2023 14:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532395;
-	bh=Z4NjwDtzQVHjg9JIcYWcK+ab0zaKlYqSBka7pq3ojPk=;
+	s=korg; t=1680532398;
+	bh=2HnkMK+6+8F4sG73bK5zwXhszATQOJJP/fQBYmjmR54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X1kgKINFy8QtmoKncgFkHPI2DGa+/ZL5MW8zALpqtUU4DN5pDL+Y07bEC/NfbOT58
-	 z8WJIK5POk0levUIY/9WPNHVhufd2F1xN9+l+Yo6MlIBi/qWnNQUqbTvhxFU+keJ6f
-	 HJC7b2Jp6fwMPdkR++EUqo4ujZfMqimgpSBNI7pU=
+	b=dIHFBGEGHa/4pmIuH0a17I3THeA9qDcTL76NjO1v6QTwDlUvl8YFKtGdl2tx0j7Z2
+	 Xvx28BVm+uKGmYN9V4D41Mt+l9At0Tjng6/OLVm5Z1991F4I2XhNampHa0bOWt/p8o
+	 fLyqkG9GkhhEw/5BuYdGtD5HeTE4GBrjJD2yA8mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Auhagen <sven.auhagen@voleatech.de>,
-	Marcin Wojtas <mw@semihalf.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 49/99] net: mvpp2: parser fix QinQ
-Date: Mon,  3 Apr 2023 16:09:12 +0200
-Message-Id: <20230403140405.155781036@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Ronnie Sahlberg <lsahlber@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 67/99] cifs: prevent infinite recursion in CIFSGetDFSRefer()
+Date: Mon,  3 Apr 2023 16:09:30 +0200
+Message-Id: <20230403140405.994461103@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,40 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Auhagen <sven.auhagen@voleatech.de>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit a587a84813b90372cb0a7565e201a4075da67919 ]
+commit 09ba47b44d26b475bbdf9c80db9e0193d2b58956 upstream.
 
-The mvpp2 parser entry for QinQ has the inner and outer VLAN
-in the wrong order.
-Fix the problem by swapping them.
+We can't call smb_init() in CIFSGetDFSRefer() as cifs_reconnect_tcon()
+may end up calling CIFSGetDFSRefer() again to get new DFS referrals
+and thus causing an infinite recursion.
 
-Fixes: 3f518509dedc ("ethernet: Add new driver for Marvell Armada 375 network unit")
-Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
-Reviewed-by: Marcin Wojtas <mw@semihalf.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
+Cc: stable@vger.kernel.org # 6.2
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/cifs/cifssmb.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
-index 93575800ca92a..34d2714205977 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
-@@ -1539,8 +1539,8 @@ static int mvpp2_prs_vlan_init(struct platform_device *pdev, struct mvpp2 *priv)
- 	if (!priv->prs_double_vlans)
- 		return -ENOMEM;
+--- a/fs/cifs/cifssmb.c
++++ b/fs/cifs/cifssmb.c
+@@ -4751,8 +4751,13 @@ CIFSGetDFSRefer(const unsigned int xid,
+ 		return -ENODEV;
  
--	/* Double VLAN: 0x8100, 0x88A8 */
--	err = mvpp2_prs_double_vlan_add(priv, ETH_P_8021Q, ETH_P_8021AD,
-+	/* Double VLAN: 0x88A8, 0x8100 */
-+	err = mvpp2_prs_double_vlan_add(priv, ETH_P_8021AD, ETH_P_8021Q,
- 					MVPP2_PRS_PORT_MASK);
- 	if (err)
- 		return err;
--- 
-2.39.2
-
+ getDFSRetry:
+-	rc = smb_init(SMB_COM_TRANSACTION2, 15, ses->tcon_ipc, (void **) &pSMB,
+-		      (void **) &pSMBr);
++	/*
++	 * Use smb_init_no_reconnect() instead of smb_init() as
++	 * CIFSGetDFSRefer() may be called from cifs_reconnect_tcon() and thus
++	 * causing an infinite recursion.
++	 */
++	rc = smb_init_no_reconnect(SMB_COM_TRANSACTION2, 15, ses->tcon_ipc,
++				   (void **)&pSMB, (void **)&pSMBr);
+ 	if (rc)
+ 		return rc;
+ 
 
 
