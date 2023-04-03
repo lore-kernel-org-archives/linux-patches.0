@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4806612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A21DC433EF;
-	Mon,  3 Apr 2023 14:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6952C612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5FBC433D2;
+	Mon,  3 Apr 2023 14:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531766;
-	bh=rfVv/EPGmOJfARn5s/5qZBQLEMqSzOYVFm85EhrcRl0=;
+	s=korg; t=1680531769;
+	bh=FPkH9PXy3xWR9So2Q2UJzXlHT9aVVobiwfb7/kLq0bI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WGeRd0p6kzu/uhtfhBtiIYe2dHINInVgbtOqril6LxZAVn1U/VTzKSGChhSjS+7e/
-	 aMYMLBOUO+KmMatacCiCpwlr2ZNSJT9TLfBLRLaLlLHywNXcyyiYSRCsUY+HU7P51X
-	 YMMk8GzywhOtpWzuTg2skvwGN43zstGaHc2CA/zg=
+	b=kaB2/ULixPV0lnPPWu/7XyPLcilQqVA27qTYSpfZVLcXbzCAB2D9yxvEURYDJ4wwX
+	 sjca7qT2E4XqpmcWv5rFRkWYBa2BDXLKFf9h86yoD5KxST9W1HxC3Ta9bivRSZDqqr
+	 8VsSFkePBPgk4WT1ws+2Dv7ZDykLogTXTpetjoac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7bb81dfa9cda07d9cd9d@syzkaller.appspotmail.com,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 5.4 104/104] gfs2: Always check inode size of inline inodes
-Date: Mon,  3 Apr 2023 16:09:36 +0200
-Message-Id: <20230403140408.234088998@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 5.4 094/104] NFSv4: Fix hangs when recovering open state after a server reboot
+Date: Mon,  3 Apr 2023 16:09:26 +0200
+Message-Id: <20230403140407.856701069@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,65 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 70376c7ff31221f1d21db5611d8209e677781d3a upstream.
+commit 6165a16a5ad9b237bb3131cff4d3c601ccb8f9a3 upstream.
 
-Check if the inode size of stuffed (inline) inodes is within the allowed
-range when reading inodes from disk (gfs2_dinode_in()).  This prevents
-us from on-disk corruption.
+When we're using a cached open stateid or a delegation in order to avoid
+sending a CLAIM_PREVIOUS open RPC call to the server, we don't have a
+new open stateid to present to update_open_stateid().
+Instead rely on nfs4_try_open_cached(), just as if we were doing a
+normal open.
 
-The two checks in stuffed_readpage() and gfs2_unstuffer_page() that just
-truncate inline data to the maximum allowed size don't actually make
-sense, and they can be removed now as well.
-
-Reported-by: syzbot+7bb81dfa9cda07d9cd9d@syzkaller.appspotmail.com
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-[pchelkin@ispras.ru: adjust the inode variable inside gfs2_dinode_in with
-the format used before upstream commit 7db354444ad8 ("gfs2: Cosmetic
-gfs2_dinode_{in,out} cleanup")]
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Fixes: d2bfda2e7aa0 ("NFSv4: don't reprocess cached open CLAIM_PREVIOUS")
+Cc: stable@vger.kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/aops.c  |    2 --
- fs/gfs2/bmap.c  |    3 ---
- fs/gfs2/glops.c |    3 +++
- 3 files changed, 3 insertions(+), 5 deletions(-)
+ fs/nfs/nfs4proc.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/gfs2/aops.c
-+++ b/fs/gfs2/aops.c
-@@ -456,8 +456,6 @@ static int stuffed_readpage(struct gfs2_
- 		return error;
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -1934,8 +1934,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(str
+ 	if (!data->rpc_done) {
+ 		if (data->rpc_status)
+ 			return ERR_PTR(data->rpc_status);
+-		/* cached opens have already been processed */
+-		goto update;
++		return nfs4_try_open_cached(data);
+ 	}
  
- 	kaddr = kmap_atomic(page);
--	if (dsize > gfs2_max_stuffed_size(ip))
--		dsize = gfs2_max_stuffed_size(ip);
- 	memcpy(kaddr, dibh->b_data + sizeof(struct gfs2_dinode), dsize);
- 	memset(kaddr + dsize, 0, PAGE_SIZE - dsize);
- 	kunmap_atomic(kaddr);
---- a/fs/gfs2/bmap.c
-+++ b/fs/gfs2/bmap.c
-@@ -70,9 +70,6 @@ static int gfs2_unstuffer_page(struct gf
- 		void *kaddr = kmap(page);
- 		u64 dsize = i_size_read(inode);
-  
--		if (dsize > gfs2_max_stuffed_size(ip))
--			dsize = gfs2_max_stuffed_size(ip);
--
- 		memcpy(kaddr, dibh->b_data + sizeof(struct gfs2_dinode), dsize);
- 		memset(kaddr + dsize, 0, PAGE_SIZE - dsize);
- 		kunmap(page);
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -411,6 +411,9 @@ static int gfs2_dinode_in(struct gfs2_in
- 	ip->i_depth = (u8)depth;
- 	ip->i_entries = be32_to_cpu(str->di_entries);
+ 	ret = nfs_refresh_inode(inode, &data->f_attr);
+@@ -1944,7 +1943,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(str
  
-+	if (gfs2_is_stuffed(ip) && ip->i_inode.i_size > gfs2_max_stuffed_size(ip))
-+		goto corrupt;
+ 	if (data->o_res.delegation_type != 0)
+ 		nfs4_opendata_check_deleg(data, state);
+-update:
 +
- 	if (S_ISREG(ip->i_inode.i_mode))
- 		gfs2_set_aops(&ip->i_inode);
- 
+ 	if (!update_open_stateid(state, &data->o_res.stateid,
+ 				NULL, data->o_arg.fmode))
+ 		return ERR_PTR(-EAGAIN);
 
 
