@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84E36FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:25:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4194DC433EF;
-	Mon,  3 Apr 2023 14:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718DA6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:25:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4281C433EF;
+	Mon,  3 Apr 2023 14:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531938;
-	bh=P4CzGikgM7jVUFgJYP7iZJQTknwuEyOTArmUon2XDVo=;
+	s=korg; t=1680531941;
+	bh=6ZIG/AaYFRe4Ziajz/NcQxFcvyNcXM3LuH1cO7y+XfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJqZaR/G/yoMeEWZ3As2RTu67HKKuAJJ9r+dP+kp3Fmp1TFZUw1uzZ2FkiYt0KSRh
-	 G48VagGqB+2hJLmb25Gvyi7IgcQ9Nnw0QNYCTvRG+9C2dqpQnvxzXW6lUDv6U+By6W
-	 ZRWpPh3+2oTGeARVJQZnhq1kmPqwsznrf2wyEINk=
+	b=rxnW/KCKufRmtu+lrzikD6oJ1lqCGfeYWYRV1YNrHuMG24pFrCresb14dLE3gaIHH
+	 9Tdq0Nj14cCzpPhkomc1kb0qkuBRguqI20PbZs90Nzz8gjgBfrT1jIVuIvTEgDIF8Z
+	 iAHdnZLyOGQhjyvC1xDQbMdR8u9VlYNjsd7FSYN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danny Kaehn <kaehndan@gmail.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Stan Johnson <userm57@yahoo.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 065/173] HID: cp2112: Fix driver not registering GPIO IRQ chip as threaded
-Date: Mon,  3 Apr 2023 16:08:00 +0200
-Message-Id: <20230403140416.558156432@linuxfoundation.org>
+Subject: [PATCH 5.10 048/173] net/sonic: use dma_mapping_error() for error check
+Date: Mon,  3 Apr 2023 16:07:43 +0200
+Message-Id: <20230403140415.989455919@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,35 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Danny Kaehn <kaehndan@gmail.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 37f5b858a66543b2b67c0288280af623985abc29 ]
+[ Upstream commit 4107b8746d93ace135b8c4da4f19bbae81db785f ]
 
-The CP2112 generates interrupts from a polling routine on a thread,
-and can only support threaded interrupts. This patch configures the
-gpiochip irq chip with this flag, disallowing consumers to request
-a hard IRQ from this driver, which resulted in a segfault previously.
+The DMA address returned by dma_map_single() should be checked with
+dma_mapping_error(). Fix it accordingly.
 
-Signed-off-by: Danny Kaehn <kaehndan@gmail.com>
-Link: https://lore.kernel.org/r/20230210170044.11835-1-kaehndan@gmail.com
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Fixes: efcce839360f ("[PATCH] macsonic/jazzsonic network drivers update")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/6645a4b5c1e364312103f48b7b36783b94e197a2.1679370343.git.fthain@linux-m68k.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-cp2112.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/natsemi/sonic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
-index 172f20e88c6c9..d902fe43cb818 100644
---- a/drivers/hid/hid-cp2112.c
-+++ b/drivers/hid/hid-cp2112.c
-@@ -1352,6 +1352,7 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	girq->parents = NULL;
- 	girq->default_type = IRQ_TYPE_NONE;
- 	girq->handler = handle_simple_irq;
-+	girq->threaded = true;
+diff --git a/drivers/net/ethernet/natsemi/sonic.c b/drivers/net/ethernet/natsemi/sonic.c
+index d17d1b4f2585f..825356ee3492e 100644
+--- a/drivers/net/ethernet/natsemi/sonic.c
++++ b/drivers/net/ethernet/natsemi/sonic.c
+@@ -292,7 +292,7 @@ static int sonic_send_packet(struct sk_buff *skb, struct net_device *dev)
+ 	 */
  
- 	ret = gpiochip_add_data(&dev->gc, dev);
- 	if (ret < 0) {
+ 	laddr = dma_map_single(lp->device, skb->data, length, DMA_TO_DEVICE);
+-	if (!laddr) {
++	if (dma_mapping_error(lp->device, laddr)) {
+ 		pr_err_ratelimited("%s: failed to map tx DMA buffer.\n", dev->name);
+ 		dev_kfree_skb_any(skb);
+ 		return NETDEV_TX_OK;
+@@ -509,7 +509,7 @@ static bool sonic_alloc_rb(struct net_device *dev, struct sonic_local *lp,
+ 
+ 	*new_addr = dma_map_single(lp->device, skb_put(*new_skb, SONIC_RBSIZE),
+ 				   SONIC_RBSIZE, DMA_FROM_DEVICE);
+-	if (!*new_addr) {
++	if (dma_mapping_error(lp->device, *new_addr)) {
+ 		dev_kfree_skb(*new_skb);
+ 		*new_skb = NULL;
+ 		return false;
 -- 
 2.39.2
 
