@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D5A6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C59C433D2;
-	Mon,  3 Apr 2023 14:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187016FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9385FC433EF;
+	Mon,  3 Apr 2023 14:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532881;
-	bh=GHMmG/dGpYmkCrZ6wUS64ruKlFVHN1grX6kamcEGYpE=;
+	s=korg; t=1680532883;
+	bh=b433K2IxkgY2T+vFMSNzzrQicmbc2Ss7MekLP91B3c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1bzwSKlvImCtoO02VFOXPNMnVPdVOgfbRZNXdur60CK0lJDDPJtIUnasFstSfuja
-	 dbscvLiJf4CTF9HwmJB3RG241gChkaGw3VFRCWIbR7sz8cefMLytoN9kKJmDcF0D5X
-	 5XfuQdVrKTTo6iPRDkTeD/zqoUWTI8mvclBPZhws=
+	b=jI3JNW8ZIHGfqTwIrqodp6NfCV1aTvMhGkpg9x3SeZyhZq4aoE0GjtCbNQN9QoCuE
+	 XAlssx5/babJpnGIEmfy9LPE4uGRl1gIGHUJRY7LCXrcXBw4ylzIQ5ikNvfur1e2GX
+	 O9+K7WJ9IscoD1jUPIzWZ3u6bEbanQ4nC7HcRd3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raghunathan Srinivasan <raghunathan.srinivasan@intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jacob Pan <jacob.jun.pan@linux.intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 122/181] iommu/vt-d: Allow zero SAGAW if second-stage not supported
-Date: Mon,  3 Apr 2023 16:09:17 +0200
-Message-Id: <20230403140419.048218052@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 123/181] Input: i8042 - add TUXEDO devices to i8042 quirk tables for partial fix
+Date: Mon,  3 Apr 2023 16:09:18 +0200
+Message-Id: <20230403140419.077499668@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -38,43 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit bfd3c6b9fa4a1dc78139dd1621d5bea321ffa69d ]
+commit cbedf1a33970c9b825ae75b81fbd3e88e224a418 upstream.
 
-The VT-d spec states (in section 11.4.2) that hardware implementations
-reporting second-stage translation support (SSTS) field as Clear also
-report the SAGAW field as 0. Fix an inappropriate check in alloc_iommu().
+A lot of modern Clevo barebones have touchpad and/or keyboard issues after
+suspend fixable with nomux + reset + noloop + nopnp. Luckily, none of them
+have an external PS/2 port so this can safely be set for all of them.
 
-Fixes: 792fb43ce2c9 ("iommu/vt-d: Enable Intel IOMMU scalable mode by default")
-Suggested-by: Raghunathan Srinivasan <raghunathan.srinivasan@intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20230318024824.124542-1-baolu.lu@linux.intel.com
-Link: https://lore.kernel.org/r/20230329134721.469447-3-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+I'm not entirely sure if every device listed really needs all four quirks,
+but after testing and production use, no negative effects could be
+observed when setting all four.
+
+Setting SERIO_QUIRK_NOMUX or SERIO_QUIRK_RESET_ALWAYS on the Clevo N150CU
+and the Clevo NHxxRZQ makes the keyboard very laggy for ~5 seconds after
+boot and sometimes also after resume. However both are required for the
+keyboard to not fail completely sometimes after boot or resume.
+
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230321191619.647911-1-wse@tuxedocomputers.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/dmar.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/input/serio/i8042-acpipnpio.h |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-index bc94059a5b870..f800989ea0462 100644
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -1057,7 +1057,8 @@ static int alloc_iommu(struct dmar_drhd_unit *drhd)
- 	}
- 
- 	err = -EINVAL;
--	if (cap_sagaw(iommu->cap) == 0) {
-+	if (!cap_sagaw(iommu->cap) &&
-+	    (!ecap_smts(iommu->ecap) || ecap_slts(iommu->ecap))) {
- 		pr_info("%s: No supported address widths. Not attempting DMA translation.\n",
- 			iommu->name);
- 		drhd->ignored = 1;
--- 
-2.39.2
-
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1117,11 +1117,39 @@ static const struct dmi_system_id i8042_
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
+ 	{
++		/*
++		 * Setting SERIO_QUIRK_NOMUX or SERIO_QUIRK_RESET_ALWAYS makes
++		 * the keyboard very laggy for ~5 seconds after boot and
++		 * sometimes also after resume.
++		 * However both are required for the keyboard to not fail
++		 * completely sometimes after boot or resume.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "N150CU"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "NH5xAx"),
+ 		},
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	{
++		/*
++		 * Setting SERIO_QUIRK_NOMUX or SERIO_QUIRK_RESET_ALWAYS makes
++		 * the keyboard very laggy for ~5 seconds after boot and
++		 * sometimes also after resume.
++		 * However both are required for the keyboard to not fail
++		 * completely sometimes after boot or resume.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "NHxxRZQ"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
+ 	{
+ 		.matches = {
 
 
