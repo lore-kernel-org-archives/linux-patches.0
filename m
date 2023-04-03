@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3FB6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:30:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE31C433EF;
-	Mon,  3 Apr 2023 14:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD536FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:30:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A11AC4339B;
+	Mon,  3 Apr 2023 14:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532242;
-	bh=5z3BT5YdvD8H1nZXhn2GHI5/AZRK/zqwo4rKywAzgow=;
+	s=korg; t=1680532244;
+	bh=fUBiPi3iGIPQx/IykMMUmf0Tt6mBx/Ci0M9FUu01ke0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vGD9zpd5CkXCWjiuf4SSYOLofliTspSVc7nJeoxnXTGhto8ElzsVKe7f+p5Q6xGkS
-	 1EFX9qEkRLHt1UQI92NzqXEfMxjoioa5KRmdwNtkbHCYYuyT3J/Qk06Mv8XMLCF54g
-	 69smk3yQdRBwuOaQ2ds7bJBZz0/qcMFKhFimbnxY=
+	b=t6vXy/UO1vNAgol0lXPYaqX9zs++pRrPkZjGzVWYPiMuwBaFIvy6L/haPvmy4rB+C
+	 obRJvJbVNOxOIaM/FMNw5t2+/xmsp34Qem2RqefSj297u12gzqeOmSnSHROv569T6Q
+	 tEf8dHe/YqXB2YJ4PcP7ApXNFx1rV7GEaNWKvt+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Ronnie Sahlberg <lsahlber@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.10 147/173] cifs: prevent infinite recursion in CIFSGetDFSRefer()
-Date: Mon,  3 Apr 2023 16:09:22 +0200
-Message-Id: <20230403140419.213210622@linuxfoundation.org>
+	Victor Hsieh <victorhsieh@google.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 01/99] fsverity: dont drop pagecache at end of FS_IOC_ENABLE_VERITY
+Date: Mon,  3 Apr 2023 16:08:24 +0200
+Message-Id: <20230403140356.127512159@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
-References: <20230403140414.174516815@linuxfoundation.org>
+In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
+References: <20230403140356.079638751@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,40 +37,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 09ba47b44d26b475bbdf9c80db9e0193d2b58956 upstream.
+[ Upstream commit a075bacde257f755bea0e53400c9f1cdd1b8e8e6 ]
 
-We can't call smb_init() in CIFSGetDFSRefer() as cifs_reconnect_tcon()
-may end up calling CIFSGetDFSRefer() again to get new DFS referrals
-and thus causing an infinite recursion.
+The full pagecache drop at the end of FS_IOC_ENABLE_VERITY is causing
+performance problems and is hindering adoption of fsverity.  It was
+intended to solve a race condition where unverified pages might be left
+in the pagecache.  But actually it doesn't solve it fully.
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
-Cc: stable@vger.kernel.org # 6.2
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since the incomplete solution for this race condition has too much
+performance impact for it to be worth it, let's remove it for now.
+
+Fixes: 3fda4c617e84 ("fs-verity: implement FS_IOC_ENABLE_VERITY ioctl")
+Cc: stable@vger.kernel.org
+Reviewed-by: Victor Hsieh <victorhsieh@google.com>
+Link: https://lore.kernel.org/r/20230314235332.50270-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifssmb.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/verity/enable.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/fs/cifs/cifssmb.c
-+++ b/fs/cifs/cifssmb.c
-@@ -4859,8 +4859,13 @@ CIFSGetDFSRefer(const unsigned int xid,
- 		return -ENODEV;
+diff --git a/fs/verity/enable.c b/fs/verity/enable.c
+index 60a4372aa4d75..dfe8acc32df66 100644
+--- a/fs/verity/enable.c
++++ b/fs/verity/enable.c
+@@ -391,25 +391,27 @@ int fsverity_ioctl_enable(struct file *filp, const void __user *uarg)
+ 		goto out_drop_write;
  
- getDFSRetry:
--	rc = smb_init(SMB_COM_TRANSACTION2, 15, ses->tcon_ipc, (void **) &pSMB,
--		      (void **) &pSMBr);
-+	/*
-+	 * Use smb_init_no_reconnect() instead of smb_init() as
-+	 * CIFSGetDFSRefer() may be called from cifs_reconnect_tcon() and thus
-+	 * causing an infinite recursion.
-+	 */
-+	rc = smb_init_no_reconnect(SMB_COM_TRANSACTION2, 15, ses->tcon_ipc,
-+				   (void **)&pSMB, (void **)&pSMBr);
- 	if (rc)
- 		return rc;
+ 	err = enable_verity(filp, &arg);
+-	if (err)
+-		goto out_allow_write_access;
  
+ 	/*
+-	 * Some pages of the file may have been evicted from pagecache after
+-	 * being used in the Merkle tree construction, then read into pagecache
+-	 * again by another process reading from the file concurrently.  Since
+-	 * these pages didn't undergo verification against the file digest which
+-	 * fs-verity now claims to be enforcing, we have to wipe the pagecache
+-	 * to ensure that all future reads are verified.
++	 * We no longer drop the inode's pagecache after enabling verity.  This
++	 * used to be done to try to avoid a race condition where pages could be
++	 * evicted after being used in the Merkle tree construction, then
++	 * re-instantiated by a concurrent read.  Such pages are unverified, and
++	 * the backing storage could have filled them with different content, so
++	 * they shouldn't be used to fulfill reads once verity is enabled.
++	 *
++	 * But, dropping the pagecache has a big performance impact, and it
++	 * doesn't fully solve the race condition anyway.  So for those reasons,
++	 * and also because this race condition isn't very important relatively
++	 * speaking (especially for small-ish files, where the chance of a page
++	 * being used, evicted, *and* re-instantiated all while enabling verity
++	 * is quite small), we no longer drop the inode's pagecache.
+ 	 */
+-	filemap_write_and_wait(inode->i_mapping);
+-	invalidate_inode_pages2(inode->i_mapping);
+ 
+ 	/*
+ 	 * allow_write_access() is needed to pair with deny_write_access().
+ 	 * Regardless, the filesystem won't allow writing to verity files.
+ 	 */
+-out_allow_write_access:
+ 	allow_write_access(filp);
+ out_drop_write:
+ 	mnt_drop_write_file(filp);
+-- 
+2.39.2
+
 
 
