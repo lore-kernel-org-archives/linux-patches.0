@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F5D612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34B4C433EF;
-	Mon,  3 Apr 2023 14:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E02612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D11FC433EF;
+	Mon,  3 Apr 2023 14:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531725;
-	bh=5TLepZfTZcVzGwlNZ9AnecpuYx2zr+cY2SAA8r2FtMA=;
+	s=korg; t=1680531727;
+	bh=XTDuqyjgti2NWC470q43ZVMqGzKewYj4dalnHhFmmH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=woGBeNkps6CT2ISJzE/LNOxFoD2afdgfOCBv/802e44fLvxiB+7GdnxAZOjXS1zd9
-	 SZoRzcWT0W/AqfKneJTFWgi7rcQl8umvGpvJMPR+wTa2t5UDC3GLlf1T0RwQg9KHug
-	 hardzTK/YIxd5s1xT7520AbSVJYm5apcnDoZYNVs=
+	b=uQl6UgSKdmAg4r/3IkJNO+FDL9XppF8y4rEHfOLm8gIzoZ3Zi9z6blCMdWYZEM47+
+	 X90CRBC4MPWY0xbWH2km16i5jS2Qu85r2wAYmQdOoUzQx6GK2ua98WmVkPI424AO/q
+	 08Qvsb4fBQufjmjLgGuqNVXK4FuhmJvshsEP2wYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	msizanoen <msizanoen@qtmlabs.xyz>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.4 087/104] Input: alps - fix compatibility with -funsigned-char
-Date: Mon,  3 Apr 2023 16:09:19 +0200
-Message-Id: <20230403140407.562706261@linuxfoundation.org>
+Subject: [PATCH 5.4 088/104] Input: focaltech - use explicitly signed char type
+Date: Mon,  3 Apr 2023 16:09:20 +0200
+Message-Id: <20230403140407.603872516@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -34,77 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: msizanoen <msizanoen@qtmlabs.xyz>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 754ff5060daf5a1cf4474eff9b4edeb6c17ef7ab upstream.
+commit 8980f190947ba29f23110408e712444884b74251 upstream.
 
-The AlpsPS/2 code previously relied on the assumption that `char` is a
-signed type, which was true on x86 platforms (the only place where this
-driver is used) before kernel 6.2. However, on 6.2 and later, this
-assumption is broken due to the introduction of -funsigned-char as a new
-global compiler flag.
+The recent change of -funsigned-char causes additions of negative
+numbers to become additions of large positive numbers, leading to wrong
+calculations of mouse movement. Change these casts to be explicitly
+signed, to take into account negative offsets.
 
-Fix this by explicitly specifying the signedness of `char` when sign
-extending the values received from the device.
-
-Fixes: f3f33c677699 ("Input: alps - Rushmore and v7 resolution support")
-Signed-off-by: msizanoen <msizanoen@qtmlabs.xyz>
+Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230320045228.182259-1-msizanoen@qtmlabs.xyz
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217211
+Link: https://lore.kernel.org/r/20230318133010.1285202-1-Jason@zx2c4.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/alps.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/input/mouse/focaltech.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/input/mouse/alps.c
-+++ b/drivers/input/mouse/alps.c
-@@ -852,8 +852,8 @@ static void alps_process_packet_v6(struc
- 			x = y = z = 0;
+--- a/drivers/input/mouse/focaltech.c
++++ b/drivers/input/mouse/focaltech.c
+@@ -202,8 +202,8 @@ static void focaltech_process_rel_packet
+ 	state->pressed = packet[0] >> 7;
+ 	finger1 = ((packet[0] >> 4) & 0x7) - 1;
+ 	if (finger1 < FOC_MAX_FINGERS) {
+-		state->fingers[finger1].x += (char)packet[1];
+-		state->fingers[finger1].y += (char)packet[2];
++		state->fingers[finger1].x += (s8)packet[1];
++		state->fingers[finger1].y += (s8)packet[2];
+ 	} else {
+ 		psmouse_err(psmouse, "First finger in rel packet invalid: %d\n",
+ 			    finger1);
+@@ -218,8 +218,8 @@ static void focaltech_process_rel_packet
+ 	 */
+ 	finger2 = ((packet[3] >> 4) & 0x7) - 1;
+ 	if (finger2 < FOC_MAX_FINGERS) {
+-		state->fingers[finger2].x += (char)packet[4];
+-		state->fingers[finger2].y += (char)packet[5];
++		state->fingers[finger2].x += (s8)packet[4];
++		state->fingers[finger2].y += (s8)packet[5];
+ 	}
+ }
  
- 		/* Divide 4 since trackpoint's speed is too fast */
--		input_report_rel(dev2, REL_X, (char)x / 4);
--		input_report_rel(dev2, REL_Y, -((char)y / 4));
-+		input_report_rel(dev2, REL_X, (s8)x / 4);
-+		input_report_rel(dev2, REL_Y, -((s8)y / 4));
- 
- 		psmouse_report_standard_buttons(dev2, packet[3]);
- 
-@@ -1104,8 +1104,8 @@ static void alps_process_trackstick_pack
- 	    ((packet[3] & 0x20) << 1);
- 	z = (packet[5] & 0x3f) | ((packet[3] & 0x80) >> 1);
- 
--	input_report_rel(dev2, REL_X, (char)x);
--	input_report_rel(dev2, REL_Y, -((char)y));
-+	input_report_rel(dev2, REL_X, (s8)x);
-+	input_report_rel(dev2, REL_Y, -((s8)y));
- 	input_report_abs(dev2, ABS_PRESSURE, z);
- 
- 	psmouse_report_standard_buttons(dev2, packet[1]);
-@@ -2294,20 +2294,20 @@ static int alps_get_v3_v7_resolution(str
- 	if (reg < 0)
- 		return reg;
- 
--	x_pitch = (char)(reg << 4) >> 4; /* sign extend lower 4 bits */
-+	x_pitch = (s8)(reg << 4) >> 4; /* sign extend lower 4 bits */
- 	x_pitch = 50 + 2 * x_pitch; /* In 0.1 mm units */
- 
--	y_pitch = (char)reg >> 4; /* sign extend upper 4 bits */
-+	y_pitch = (s8)reg >> 4; /* sign extend upper 4 bits */
- 	y_pitch = 36 + 2 * y_pitch; /* In 0.1 mm units */
- 
- 	reg = alps_command_mode_read_reg(psmouse, reg_pitch + 1);
- 	if (reg < 0)
- 		return reg;
- 
--	x_electrode = (char)(reg << 4) >> 4; /* sign extend lower 4 bits */
-+	x_electrode = (s8)(reg << 4) >> 4; /* sign extend lower 4 bits */
- 	x_electrode = 17 + x_electrode;
- 
--	y_electrode = (char)reg >> 4; /* sign extend upper 4 bits */
-+	y_electrode = (s8)reg >> 4; /* sign extend upper 4 bits */
- 	y_electrode = 13 + y_electrode;
- 
- 	x_phys = x_pitch * (x_electrode - 1); /* In 0.1 mm units */
 
 
