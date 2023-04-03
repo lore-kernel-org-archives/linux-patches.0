@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227EB612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D18EC4339B;
-	Mon,  3 Apr 2023 14:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC92D612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC49C433D2;
+	Mon,  3 Apr 2023 14:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531785;
-	bh=mO4vYXcJuyymdEEWbI0LWfTCSxdcp7fAKLUOX4tNjlw=;
+	s=korg; t=1680531787;
+	bh=IwMWYdBKl/+HaUW9L4ptr4zcnq2wc7KRXzW9GDpR7Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZsOtcQ5cwbRPDFyqZKiDmyxxRgSIn3M1T8R9AXyion15a+cpvH/mBKgAutiGTN7QP
-	 j0YGLIfXk88AG+6Q4OiWgOYXAU7FRa5x2je/QC5RdNtKm1FLsTPriBMXZVUz43sv+6
-	 oYavtWm2ZD7R0O4WgDxPbOOSRlLYe3gCJ8vVFnVE=
+	b=TEfpHT5lGSuqqWDEUG6wx8v7+HxB8AskgtBMZUlhje6qzggWzq/vGvGBc5SSS5xEa
+	 ijVgY9DAYmuUnCbIAyzpjJGd1eEJea1fi51OoajJdBYUlNwpOEZuus/YcOrBv4/4wQ
+	 v3EbqB7Fs6Wolk/q7mGTevxs1ckUUVc8MtbbKxSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com,
-	Jun Nie <jun.nie@linaro.org>,
-	Ye Bin <yebin10@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
-	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 5.4 100/104] ext4: fix kernel BUG in ext4_write_inline_data_end()
-Date: Mon,  3 Apr 2023 16:09:32 +0200
-Message-Id: <20230403140408.097458297@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Vlad Buslov <vladbu@mellanox.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jiri Pirko <jiri@resnulli.us>,
+	"David S. Miller" <davem@davemloft.net>,
+	Zubin Mithra <zsm@google.com>
+Subject: [PATCH 5.4 101/104] net_sched: add __rcu annotation to netdev->qdisc
+Date: Mon,  3 Apr 2023 16:09:33 +0200
+Message-Id: <20230403140408.129342136@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -38,110 +40,312 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 5c099c4fdc438014d5893629e70a8ba934433ee8 upstream.
+commit 5891cd5ec46c2c2eb6427cb54d214b149635dd0e upstream.
 
-Syzbot report follow issue:
-------------[ cut here ]------------
-kernel BUG at fs/ext4/inline.c:227!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN
-CPU: 1 PID: 3629 Comm: syz-executor212 Not tainted 6.1.0-rc5-syzkaller-00018-g59d0d52c30d4 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:ext4_write_inline_data+0x344/0x3e0 fs/ext4/inline.c:227
-RSP: 0018:ffffc90003b3f368 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffff8880704e16c0 RCX: 0000000000000000
-RDX: ffff888021763a80 RSI: ffffffff821e31a4 RDI: 0000000000000006
-RBP: 000000000006818e R08: 0000000000000006 R09: 0000000000068199
-R10: 0000000000000079 R11: 0000000000000000 R12: 000000000000000b
-R13: 0000000000068199 R14: ffffc90003b3f408 R15: ffff8880704e1c82
-FS:  000055555723e3c0(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fffe8ac9080 CR3: 0000000079f81000 CR4: 0000000000350ee0
-Call Trace:
- <TASK>
- ext4_write_inline_data_end+0x2a3/0x12f0 fs/ext4/inline.c:768
- ext4_write_end+0x242/0xdd0 fs/ext4/inode.c:1313
- ext4_da_write_end+0x3ed/0xa30 fs/ext4/inode.c:3063
- generic_perform_write+0x316/0x570 mm/filemap.c:3764
- ext4_buffered_write_iter+0x15b/0x460 fs/ext4/file.c:285
- ext4_file_write_iter+0x8bc/0x16e0 fs/ext4/file.c:700
- call_write_iter include/linux/fs.h:2191 [inline]
- do_iter_readv_writev+0x20b/0x3b0 fs/read_write.c:735
- do_iter_write+0x182/0x700 fs/read_write.c:861
- vfs_iter_write+0x74/0xa0 fs/read_write.c:902
- iter_file_splice_write+0x745/0xc90 fs/splice.c:686
- do_splice_from fs/splice.c:764 [inline]
- direct_splice_actor+0x114/0x180 fs/splice.c:931
- splice_direct_to_actor+0x335/0x8a0 fs/splice.c:886
- do_splice_direct+0x1ab/0x280 fs/splice.c:974
- do_sendfile+0xb19/0x1270 fs/read_write.c:1255
- __do_sys_sendfile64 fs/read_write.c:1323 [inline]
- __se_sys_sendfile64 fs/read_write.c:1309 [inline]
- __x64_sys_sendfile64+0x1d0/0x210 fs/read_write.c:1309
+syzbot found a data-race [1] which lead me to add __rcu
+annotations to netdev->qdisc, and proper accessors
+to get LOCKDEP support.
+
+[1]
+BUG: KCSAN: data-race in dev_activate / qdisc_lookup_rcu
+
+write to 0xffff888168ad6410 of 8 bytes by task 13559 on cpu 1:
+ attach_default_qdiscs net/sched/sch_generic.c:1167 [inline]
+ dev_activate+0x2ed/0x8f0 net/sched/sch_generic.c:1221
+ __dev_open+0x2e9/0x3a0 net/core/dev.c:1416
+ __dev_change_flags+0x167/0x3f0 net/core/dev.c:8139
+ rtnl_configure_link+0xc2/0x150 net/core/rtnetlink.c:3150
+ __rtnl_newlink net/core/rtnetlink.c:3489 [inline]
+ rtnl_newlink+0xf4d/0x13e0 net/core/rtnetlink.c:3529
+ rtnetlink_rcv_msg+0x745/0x7e0 net/core/rtnetlink.c:5594
+ netlink_rcv_skb+0x14e/0x250 net/netlink/af_netlink.c:2494
+ rtnetlink_rcv+0x18/0x20 net/core/rtnetlink.c:5612
+ netlink_unicast_kernel net/netlink/af_netlink.c:1317 [inline]
+ netlink_unicast+0x602/0x6d0 net/netlink/af_netlink.c:1343
+ netlink_sendmsg+0x728/0x850 net/netlink/af_netlink.c:1919
+ sock_sendmsg_nosec net/socket.c:705 [inline]
+ sock_sendmsg net/socket.c:725 [inline]
+ ____sys_sendmsg+0x39a/0x510 net/socket.c:2413
+ ___sys_sendmsg net/socket.c:2467 [inline]
+ __sys_sendmsg+0x195/0x230 net/socket.c:2496
+ __do_sys_sendmsg net/socket.c:2505 [inline]
+ __se_sys_sendmsg net/socket.c:2503 [inline]
+ __x64_sys_sendmsg+0x42/0x50 net/socket.c:2503
  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
----[ end trace 0000000000000000 ]---
+ do_syscall_64+0x44/0xd0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-Above issue may happens as follows:
-ext4_da_write_begin
-  ext4_da_write_inline_data_begin
-    ext4_da_convert_inline_data_to_extent
-      ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
-ext4_da_write_end
+read to 0xffff888168ad6410 of 8 bytes by task 13560 on cpu 0:
+ qdisc_lookup_rcu+0x30/0x2e0 net/sched/sch_api.c:323
+ __tcf_qdisc_find+0x74/0x3a0 net/sched/cls_api.c:1050
+ tc_del_tfilter+0x1c7/0x1350 net/sched/cls_api.c:2211
+ rtnetlink_rcv_msg+0x5ba/0x7e0 net/core/rtnetlink.c:5585
+ netlink_rcv_skb+0x14e/0x250 net/netlink/af_netlink.c:2494
+ rtnetlink_rcv+0x18/0x20 net/core/rtnetlink.c:5612
+ netlink_unicast_kernel net/netlink/af_netlink.c:1317 [inline]
+ netlink_unicast+0x602/0x6d0 net/netlink/af_netlink.c:1343
+ netlink_sendmsg+0x728/0x850 net/netlink/af_netlink.c:1919
+ sock_sendmsg_nosec net/socket.c:705 [inline]
+ sock_sendmsg net/socket.c:725 [inline]
+ ____sys_sendmsg+0x39a/0x510 net/socket.c:2413
+ ___sys_sendmsg net/socket.c:2467 [inline]
+ __sys_sendmsg+0x195/0x230 net/socket.c:2496
+ __do_sys_sendmsg net/socket.c:2505 [inline]
+ __se_sys_sendmsg net/socket.c:2503 [inline]
+ __x64_sys_sendmsg+0x42/0x50 net/socket.c:2503
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x44/0xd0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-ext4_run_li_request
-  ext4_mb_prefetch
-    ext4_read_block_bitmap_nowait
-      ext4_validate_block_bitmap
-        ext4_mark_group_bitmap_corrupted(sb, block_group, EXT4_GROUP_INFO_BBITMAP_CORRUPT)
-	 percpu_counter_sub(&sbi->s_freeclusters_counter,grp->bb_free);
-	  -> sbi->s_freeclusters_counter become zero
-ext4_da_write_begin
-  if (ext4_nonda_switch(inode->i_sb)) -> As freeclusters_counter is zero will return true
-    *fsdata = (void *)FALL_BACK_TO_NONDELALLOC;
-    ext4_write_begin
-ext4_da_write_end
-  if (write_mode == FALL_BACK_TO_NONDELALLOC)
-    ext4_write_end
-      if (inline_data)
-        ext4_write_inline_data_end
-	  ext4_write_inline_data
-	    BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
-           -> As inode is already convert to extent, so 'pos + len' > inline_size
-	   -> then trigger BUG.
+value changed: 0xffffffff85dee080 -> 0xffff88815d96ec00
 
-To solve this issue, instead of checking ext4_has_inline_data() which
-is only cleared after data has been written back, check the
-EXT4_STATE_MAY_INLINE_DATA flag in ext4_write_end().
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 13560 Comm: syz-executor.2 Not tainted 5.17.0-rc3-syzkaller-00116-gf1baf68e1383-dirty #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
 
-Fixes: f19d5870cbf7 ("ext4: add normal write support for inline data")
-Reported-by: syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com
-Reported-by: Jun Nie <jun.nie@linaro.org>
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/r/20221206144134.1919987-1-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ta: Fix conflict in if expression and use the local variable inline_data
-as it is initialized with ext4_has_inline_data(inode) anyway.]
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Fixes: 470502de5bdb ("net: sched: unlock rules update API")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Vlad Buslov <vladbu@mellanox.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Cc: Jiri Pirko <jiri@resnulli.us>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Zubin Mithra <zsm@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/netdevice.h |    2 +-
+ net/core/rtnetlink.c      |    6 ++++--
+ net/sched/cls_api.c       |    6 +++---
+ net/sched/sch_api.c       |   22 ++++++++++++----------
+ net/sched/sch_generic.c   |   22 ++++++++++++----------
+ 5 files changed, 32 insertions(+), 26 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1439,7 +1439,8 @@ static int ext4_write_end(struct file *f
- 	bool verity = ext4_verity_in_progress(inode);
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -1986,7 +1986,7 @@ struct net_device {
+ 	struct netdev_queue	*_tx ____cacheline_aligned_in_smp;
+ 	unsigned int		num_tx_queues;
+ 	unsigned int		real_num_tx_queues;
+-	struct Qdisc		*qdisc;
++	struct Qdisc __rcu	*qdisc;
+ #ifdef CONFIG_NET_SCHED
+ 	DECLARE_HASHTABLE	(qdisc_hash, 4);
+ #endif
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -1593,6 +1593,7 @@ static int rtnl_fill_ifinfo(struct sk_bu
+ {
+ 	struct ifinfomsg *ifm;
+ 	struct nlmsghdr *nlh;
++	struct Qdisc *qdisc;
  
- 	trace_ext4_write_end(inode, pos, len, copied);
--	if (inline_data) {
-+	if (inline_data &&
-+	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)) {
- 		ret = ext4_write_inline_data_end(inode, pos, len,
- 						 copied, page);
- 		if (ret < 0) {
+ 	ASSERT_RTNL();
+ 	nlh = nlmsg_put(skb, pid, seq, type, sizeof(*ifm), flags);
+@@ -1610,6 +1611,7 @@ static int rtnl_fill_ifinfo(struct sk_bu
+ 	if (tgt_netnsid >= 0 && nla_put_s32(skb, IFLA_TARGET_NETNSID, tgt_netnsid))
+ 		goto nla_put_failure;
+ 
++	qdisc = rtnl_dereference(dev->qdisc);
+ 	if (nla_put_string(skb, IFLA_IFNAME, dev->name) ||
+ 	    nla_put_u32(skb, IFLA_TXQLEN, dev->tx_queue_len) ||
+ 	    nla_put_u8(skb, IFLA_OPERSTATE,
+@@ -1628,8 +1630,8 @@ static int rtnl_fill_ifinfo(struct sk_bu
+ #endif
+ 	    put_master_ifindex(skb, dev) ||
+ 	    nla_put_u8(skb, IFLA_CARRIER, netif_carrier_ok(dev)) ||
+-	    (dev->qdisc &&
+-	     nla_put_string(skb, IFLA_QDISC, dev->qdisc->ops->id)) ||
++	    (qdisc &&
++	     nla_put_string(skb, IFLA_QDISC, qdisc->ops->id)) ||
+ 	    nla_put_ifalias(skb, dev) ||
+ 	    nla_put_u32(skb, IFLA_CARRIER_CHANGES,
+ 			atomic_read(&dev->carrier_up_count) +
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -1079,7 +1079,7 @@ static int __tcf_qdisc_find(struct net *
+ 
+ 	/* Find qdisc */
+ 	if (!*parent) {
+-		*q = dev->qdisc;
++		*q = rcu_dereference(dev->qdisc);
+ 		*parent = (*q)->handle;
+ 	} else {
+ 		*q = qdisc_lookup_rcu(dev, TC_H_MAJ(*parent));
+@@ -2552,7 +2552,7 @@ static int tc_dump_tfilter(struct sk_buf
+ 
+ 		parent = tcm->tcm_parent;
+ 		if (!parent)
+-			q = dev->qdisc;
++			q = rtnl_dereference(dev->qdisc);
+ 		else
+ 			q = qdisc_lookup(dev, TC_H_MAJ(tcm->tcm_parent));
+ 		if (!q)
+@@ -2938,7 +2938,7 @@ static int tc_dump_chain(struct sk_buff
+ 
+ 		parent = tcm->tcm_parent;
+ 		if (!parent) {
+-			q = dev->qdisc;
++			q = rtnl_dereference(dev->qdisc);
+ 			parent = q->handle;
+ 		} else {
+ 			q = qdisc_lookup(dev, TC_H_MAJ(tcm->tcm_parent));
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -298,7 +298,7 @@ struct Qdisc *qdisc_lookup(struct net_de
+ 
+ 	if (!handle)
+ 		return NULL;
+-	q = qdisc_match_from_root(dev->qdisc, handle);
++	q = qdisc_match_from_root(rtnl_dereference(dev->qdisc), handle);
+ 	if (q)
+ 		goto out;
+ 
+@@ -317,7 +317,7 @@ struct Qdisc *qdisc_lookup_rcu(struct ne
+ 
+ 	if (!handle)
+ 		return NULL;
+-	q = qdisc_match_from_root(dev->qdisc, handle);
++	q = qdisc_match_from_root(rcu_dereference(dev->qdisc), handle);
+ 	if (q)
+ 		goto out;
+ 
+@@ -1072,10 +1072,10 @@ static int qdisc_graft(struct net_device
+ skip:
+ 		if (!ingress) {
+ 			notify_and_destroy(net, skb, n, classid,
+-					   dev->qdisc, new);
++					   rtnl_dereference(dev->qdisc), new);
+ 			if (new && !new->ops->attach)
+ 				qdisc_refcount_inc(new);
+-			dev->qdisc = new ? : &noop_qdisc;
++			rcu_assign_pointer(dev->qdisc, new ? : &noop_qdisc);
+ 
+ 			if (new && new->ops->attach)
+ 				new->ops->attach(new);
+@@ -1455,7 +1455,7 @@ static int tc_get_qdisc(struct sk_buff *
+ 				q = dev_ingress_queue(dev)->qdisc_sleeping;
+ 			}
+ 		} else {
+-			q = dev->qdisc;
++			q = rtnl_dereference(dev->qdisc);
+ 		}
+ 		if (!q) {
+ 			NL_SET_ERR_MSG(extack, "Cannot find specified qdisc on specified device");
+@@ -1544,7 +1544,7 @@ replay:
+ 				q = dev_ingress_queue(dev)->qdisc_sleeping;
+ 			}
+ 		} else {
+-			q = dev->qdisc;
++			q = rtnl_dereference(dev->qdisc);
+ 		}
+ 
+ 		/* It may be default qdisc, ignore it */
+@@ -1766,7 +1766,8 @@ static int tc_dump_qdisc(struct sk_buff
+ 			s_q_idx = 0;
+ 		q_idx = 0;
+ 
+-		if (tc_dump_qdisc_root(dev->qdisc, skb, cb, &q_idx, s_q_idx,
++		if (tc_dump_qdisc_root(rtnl_dereference(dev->qdisc),
++				       skb, cb, &q_idx, s_q_idx,
+ 				       true, tca[TCA_DUMP_INVISIBLE]) < 0)
+ 			goto done;
+ 
+@@ -2042,7 +2043,7 @@ static int tc_ctl_tclass(struct sk_buff
+ 		} else if (qid1) {
+ 			qid = qid1;
+ 		} else if (qid == 0)
+-			qid = dev->qdisc->handle;
++			qid = rtnl_dereference(dev->qdisc)->handle;
+ 
+ 		/* Now qid is genuine qdisc handle consistent
+ 		 * both with parent and child.
+@@ -2053,7 +2054,7 @@ static int tc_ctl_tclass(struct sk_buff
+ 			portid = TC_H_MAKE(qid, portid);
+ 	} else {
+ 		if (qid == 0)
+-			qid = dev->qdisc->handle;
++			qid = rtnl_dereference(dev->qdisc)->handle;
+ 	}
+ 
+ 	/* OK. Locate qdisc */
+@@ -2214,7 +2215,8 @@ static int tc_dump_tclass(struct sk_buff
+ 	s_t = cb->args[0];
+ 	t = 0;
+ 
+-	if (tc_dump_tclass_root(dev->qdisc, skb, tcm, cb, &t, s_t, true) < 0)
++	if (tc_dump_tclass_root(rtnl_dereference(dev->qdisc),
++				skb, tcm, cb, &t, s_t, true) < 0)
+ 		goto done;
+ 
+ 	dev_queue = dev_ingress_queue(dev);
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -1106,18 +1106,20 @@ static void attach_default_qdiscs(struct
+ 	if (!netif_is_multiqueue(dev) ||
+ 	    dev->priv_flags & IFF_NO_QUEUE) {
+ 		netdev_for_each_tx_queue(dev, attach_one_default_qdisc, NULL);
+-		dev->qdisc = txq->qdisc_sleeping;
+-		qdisc_refcount_inc(dev->qdisc);
++		qdisc = txq->qdisc_sleeping;
++		rcu_assign_pointer(dev->qdisc, qdisc);
++		qdisc_refcount_inc(qdisc);
+ 	} else {
+ 		qdisc = qdisc_create_dflt(txq, &mq_qdisc_ops, TC_H_ROOT, NULL);
+ 		if (qdisc) {
+-			dev->qdisc = qdisc;
++			rcu_assign_pointer(dev->qdisc, qdisc);
+ 			qdisc->ops->attach(qdisc);
+ 		}
+ 	}
++
+ #ifdef CONFIG_NET_SCHED
+-	if (dev->qdisc != &noop_qdisc)
+-		qdisc_hash_add(dev->qdisc, false);
++	if (qdisc != &noop_qdisc)
++		qdisc_hash_add(qdisc, false);
+ #endif
+ }
+ 
+@@ -1147,7 +1149,7 @@ void dev_activate(struct net_device *dev
+ 	 * and noqueue_qdisc for virtual interfaces
+ 	 */
+ 
+-	if (dev->qdisc == &noop_qdisc)
++	if (rtnl_dereference(dev->qdisc) == &noop_qdisc)
+ 		attach_default_qdiscs(dev);
+ 
+ 	if (!netif_carrier_ok(dev))
+@@ -1316,7 +1318,7 @@ static int qdisc_change_tx_queue_len(str
+ void dev_qdisc_change_real_num_tx(struct net_device *dev,
+ 				  unsigned int new_real_tx)
+ {
+-	struct Qdisc *qdisc = dev->qdisc;
++	struct Qdisc *qdisc = rtnl_dereference(dev->qdisc);
+ 
+ 	if (qdisc->ops->change_real_num_tx)
+ 		qdisc->ops->change_real_num_tx(qdisc, new_real_tx);
+@@ -1356,7 +1358,7 @@ static void dev_init_scheduler_queue(str
+ 
+ void dev_init_scheduler(struct net_device *dev)
+ {
+-	dev->qdisc = &noop_qdisc;
++	rcu_assign_pointer(dev->qdisc, &noop_qdisc);
+ 	netdev_for_each_tx_queue(dev, dev_init_scheduler_queue, &noop_qdisc);
+ 	if (dev_ingress_queue(dev))
+ 		dev_init_scheduler_queue(dev, dev_ingress_queue(dev), &noop_qdisc);
+@@ -1384,8 +1386,8 @@ void dev_shutdown(struct net_device *dev
+ 	netdev_for_each_tx_queue(dev, shutdown_scheduler_queue, &noop_qdisc);
+ 	if (dev_ingress_queue(dev))
+ 		shutdown_scheduler_queue(dev, dev_ingress_queue(dev), &noop_qdisc);
+-	qdisc_put(dev->qdisc);
+-	dev->qdisc = &noop_qdisc;
++	qdisc_put(rtnl_dereference(dev->qdisc));
++	rcu_assign_pointer(dev->qdisc, &noop_qdisc);
+ 
+ 	WARN_ON(timer_pending(&dev->watchdog_timer));
+ }
 
 
