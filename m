@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50745683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6BCC4339B;
-	Mon,  3 Apr 2023 14:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2BA5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162ABC433D2;
+	Mon,  3 Apr 2023 14:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531556;
-	bh=oTYcsKz5mlHTMJn7GtLdLz8Ts0xxU/HsY4xWh9XaYkY=;
+	s=korg; t=1680531559;
+	bh=xzkDB1uiJ+7IJS1LEtEGwk+zR+KsCP8XTZubpVXtn+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cBt3M7rs3kSzkNJZ8Ww9yjBrHfXjHS+6CYZo3bB/RIhxUR7jkMKeveChy08sz9rx
-	 +oK4yx/+ICxX7jZZEA0zVzJVebNmz5W6CBz5dCfSos52hX+wGbdKsitpF8bCeMMmsQ
-	 0B/44yjADw5Yob5d1tFG27lG0FPv1f9pAgXnJ4FA=
+	b=bYRSAzSODryORXY1YLr4b6TEMj+v9L578DKCYmjbqEopl2VgMtD9A68X/3z7hxFEh
+	 hbiPOF4lAuhIhrIo3NopeSmz4ft3Ix4CssrTBFj4RuDyYJdmQ7WshpkWpG0SuCiMMI
+	 vjznFLcBU3zrEJ/dnnPcBbfpQv6yTBLcJ0Rd64eA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liang He <windhl@126.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 023/104] net: dsa: mt7530: move setting ssc_delta to PHY_INTERFACE_MODE_TRGMII case
-Date: Mon,  3 Apr 2023 16:08:15 +0200
-Message-Id: <20230403140405.153933489@linuxfoundation.org>
+Subject: [PATCH 5.4 024/104] net: mdio: thunder: Add missing fwnode_handle_put()
+Date: Mon,  3 Apr 2023 16:08:16 +0200
+Message-Id: <20230403140405.202496963@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,49 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 407b508bdd70b6848993843d96ed49ac4108fb52 ]
+[ Upstream commit b1de5c78ebe9858ccec9d49af2f76724f1d47e3e ]
 
-Move setting the ssc_delta variable to under the PHY_INTERFACE_MODE_TRGMII
-case as it's only needed when trgmii is used.
+In device_for_each_child_node(), we should add fwnode_handle_put()
+when break out of the iteration device_for_each_child_node()
+as it will automatically increase and decrease the refcounter.
 
-Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Link: https://lore.kernel.org/r/20230320190520.124513-3-arinc.unal@arinc9.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 379d7ac7ca31 ("phy: mdio-thunder: Add driver for Cavium Thunder SoC MDIO buses.")
+Signed-off-by: Liang He <windhl@126.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/phy/mdio-thunder.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 2d8382eb9add3..5bd282cb3d9f2 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -396,6 +396,10 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, int mode)
- 		break;
- 	case PHY_INTERFACE_MODE_TRGMII:
- 		trgint = 1;
-+		if (xtal == HWTRAP_XTAL_25MHZ)
-+			ssc_delta = 0x57;
-+		else
-+			ssc_delta = 0x87;
- 		if (priv->id == ID_MT7621) {
- 			/* PLL frequency: 150MHz: 1.2GBit */
- 			if (xtal == HWTRAP_XTAL_40MHZ)
-@@ -414,11 +418,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, int mode)
- 		return -EINVAL;
+diff --git a/drivers/net/phy/mdio-thunder.c b/drivers/net/phy/mdio-thunder.c
+index 1e2f57ed1ef75..31ca0361a11e0 100644
+--- a/drivers/net/phy/mdio-thunder.c
++++ b/drivers/net/phy/mdio-thunder.c
+@@ -104,6 +104,7 @@ static int thunder_mdiobus_pci_probe(struct pci_dev *pdev,
+ 		if (i >= ARRAY_SIZE(nexus->buses))
+ 			break;
  	}
++	fwnode_handle_put(fwn);
+ 	return 0;
  
--	if (xtal == HWTRAP_XTAL_25MHZ)
--		ssc_delta = 0x57;
--	else
--		ssc_delta = 0x87;
--
- 	mt7530_rmw(priv, MT7530_P6ECR, P6_INTF_MODE_MASK,
- 		   P6_INTF_MODE(trgint));
- 
+ err_release_regions:
 -- 
 2.39.2
 
