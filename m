@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8405683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC28C433D2;
-	Mon,  3 Apr 2023 14:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D415683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFD5C4339B;
+	Mon,  3 Apr 2023 14:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531533;
-	bh=23ce0YqyjdydrJ6eTt5+gYdCKYYGWRIVlyFT2GNleRQ=;
+	s=korg; t=1680531536;
+	bh=OvkhZjNkdUw0HyPWqCLBqFSLsxrOb1WkuWoq9iupCj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BmOxiF05ScxRzqaXDUd/GCgBHbSxr0M1z+t9RP37cEPd7j8e9P0rMeP9G8co6M2G4
-	 AQxRkDOIH/K+GAQ3rnQs9BJQlNpHKlmU2p7OvCNaRr0u/64vIhK1F6ZYpv/MbNUksG
-	 nhVHBfPsOT7lHFaD5JSXCnPrR+NvQuqoRzXFLKhU=
+	b=HoIjK9wPK4vxG4EZwSqBkrLqIjDzgZ+UppnJRdVj7ypqSegAY5MwXBgwfi1ijdwwY
+	 02WjUmVF08pCyoa6oYYSqmhpMdZV4baxskfHqDq/XbXEhQTBbfJAwOn0FnWFKnC9ja
+	 7tUWcUyLiSDdLW3eHdvGe95f4DubNvnIOPIeD0wM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharath SM <bharathsm@microsoft.com>,
-	David Howells <dhowells@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Steve French <smfrench@gmail.com>,
-	keyrings@vger.kernel.org,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
+	Stephen Haynes <sh@synk.net>,
+	Lefteris Alexakis <lefteris.alexakis@kpn.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 015/104] keys: Do not cache key in task struct if key is requested from kernel thread
-Date: Mon,  3 Apr 2023 16:08:07 +0200
-Message-Id: <20230403140404.785142940@linuxfoundation.org>
+Subject: [PATCH 5.4 016/104] bpf: Adjust insufficient default bpf_jit_limit
+Date: Mon,  3 Apr 2023 16:08:08 +0200
+Message-Id: <20230403140404.831412069@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -41,61 +38,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 47f9e4c924025c5be87959d3335e66fcbb7f6b5c ]
+[ Upstream commit 10ec8ca8ec1a2f04c4ed90897225231c58c124a7 ]
 
-The key which gets cached in task structure from a kernel thread does not
-get invalidated even after expiry.  Due to which, a new key request from
-kernel thread will be served with the cached key if it's present in task
-struct irrespective of the key validity.  The change is to not cache key in
-task_struct when key requested from kernel thread so that kernel thread
-gets a valid key on every key request.
+We've seen recent AWS EKS (Kubernetes) user reports like the following:
 
-The problem has been seen with the cifs module doing DNS lookups from a
-kernel thread and the results getting pinned by being attached to that
-kernel thread's cache - and thus not something that can be easily got rid
-of.  The cache would ordinarily be cleared by notify-resume, but kernel
-threads don't do that.
+  After upgrading EKS nodes from v20230203 to v20230217 on our 1.24 EKS
+  clusters after a few days a number of the nodes have containers stuck
+  in ContainerCreating state or liveness/readiness probes reporting the
+  following error:
 
-This isn't seen with AFS because AFS is doing request_key() within the
-kernel half of a user thread - which will do notify-resume.
+    Readiness probe errored: rpc error: code = Unknown desc = failed to
+    exec in container: failed to start exec "4a11039f730203ffc003b7[...]":
+    OCI runtime exec failed: exec failed: unable to start container process:
+    unable to init seccomp: error loading seccomp filter into kernel:
+    error loading seccomp filter: errno 524: unknown
 
-Fixes: 7743c48e54ee ("keys: Cache result of request_key*() temporarily in task_struct")
-Signed-off-by: Bharath SM <bharathsm@microsoft.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Steve French <smfrench@gmail.com>
-cc: keyrings@vger.kernel.org
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/CAGypqWw951d=zYRbdgNR4snUDvJhWL=q3=WOyh7HhSJupjz2vA@mail.gmail.com/
+  However, we had not been seeing this issue on previous AMIs and it only
+  started to occur on v20230217 (following the upgrade from kernel 5.4 to
+  5.10) with no other changes to the underlying cluster or workloads.
+
+  We tried the suggestions from that issue (sysctl net.core.bpf_jit_limit=452534528)
+  which helped to immediately allow containers to be created and probes to
+  execute but after approximately a day the issue returned and the value
+  returned by cat /proc/vmallocinfo | grep bpf_jit | awk '{s+=$2} END {print s}'
+  was steadily increasing.
+
+I tested bpf tree to observe bpf_jit_charge_modmem, bpf_jit_uncharge_modmem
+their sizes passed in as well as bpf_jit_current under tcpdump BPF filter,
+seccomp BPF and native (e)BPF programs, and the behavior all looks sane
+and expected, that is nothing "leaking" from an upstream perspective.
+
+The bpf_jit_limit knob was originally added in order to avoid a situation
+where unprivileged applications loading BPF programs (e.g. seccomp BPF
+policies) consuming all the module memory space via BPF JIT such that loading
+of kernel modules would be prevented. The default limit was defined back in
+2018 and while good enough back then, we are generally seeing far more BPF
+consumers today.
+
+Adjust the limit for the BPF JIT pool from originally 1/4 to now 1/2 of the
+module memory space to better reflect today's needs and avoid more users
+running into potentially hard to debug issues.
+
+Fixes: fdadd04931c2 ("bpf: fix bpf_jit_limit knob for PAGE_SIZE >= 64K")
+Reported-by: Stephen Haynes <sh@synk.net>
+Reported-by: Lefteris Alexakis <lefteris.alexakis@kpn.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://github.com/awslabs/amazon-eks-ami/issues/1179
+Link: https://github.com/awslabs/amazon-eks-ami/issues/1219
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230320143725.8394-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/request_key.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ kernel/bpf/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/keys/request_key.c b/security/keys/request_key.c
-index 957b9e3e14924..17c9c0cfb6f59 100644
---- a/security/keys/request_key.c
-+++ b/security/keys/request_key.c
-@@ -38,9 +38,12 @@ static void cache_requested_key(struct key *key)
- #ifdef CONFIG_KEYS_REQUEST_CACHE
- 	struct task_struct *t = current;
- 
--	key_put(t->cached_requested_key);
--	t->cached_requested_key = key_get(key);
--	set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
-+	/* Do not cache key if it is a kernel thread */
-+	if (!(t->flags & PF_KTHREAD)) {
-+		key_put(t->cached_requested_key);
-+		t->cached_requested_key = key_get(key);
-+		set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
-+	}
- #endif
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 11f24421ad3a0..dde21d23f2202 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -764,7 +764,7 @@ static int __init bpf_jit_charge_init(void)
+ {
+ 	/* Only used as heuristic here to derive limit. */
+ 	bpf_jit_limit_max = bpf_jit_alloc_exec_limit();
+-	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 2,
++	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 1,
+ 					    PAGE_SIZE), LONG_MAX);
+ 	return 0;
  }
- 
 -- 
 2.39.2
 
