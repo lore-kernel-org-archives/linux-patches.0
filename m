@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337E86FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE8DC4339B;
-	Mon,  3 Apr 2023 14:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C790C6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB72C433D2;
+	Mon,  3 Apr 2023 14:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532310;
-	bh=n0wXmv/9AfzSzwTXDUFKIsGEtgqcqQkQw6BexLF/x64=;
+	s=korg; t=1680532312;
+	bh=k66i/i8PwyozQXW037uw3riCeJj4csVfrDjvmlNfV4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h3sbSvP4+T2cYmu3jaiVscxPq1vl58DmwXS5WNwv7Q4Rx5NJqQzKAAPtO1awXInK+
-	 BQqZPJpOSk7TRMj+xoa3BI5s+0/PrdNnpQnihe1RRoaTI85Or1zzuwcPrQH0pxkNDL
-	 iO0uG/SEJodRPakCEmNv0k1AxCIJNoQad89gMfL4=
+	b=x2dTewjEirhs6OlR+SfrEiZb9bRsbDhTFW1ktIK6+tl4GJMz6KKTs+bxzRqmzcbQC
+	 bcxnm914j+ZOjwA7YYVVBKjEn0D5t0T4v3ccj0f81KcDXW2hDNRADYdI3pxI0bbhCy
+	 AJOgFYlJgsZTkaZkS2em5Hb3uQ/nKet9VkFB60rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Yury Norov <yury.norov@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Tomas Henzl <thenzl@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 16/99] sched_getaffinity: dont assume cpumask_size() is fully initialized
-Date: Mon,  3 Apr 2023 16:08:39 +0200
-Message-Id: <20230403140359.324159080@linuxfoundation.org>
+Subject: [PATCH 5.15 34/99] scsi: megaraid_sas: Fix crash after a double completion
+Date: Mon,  3 Apr 2023 16:08:57 +0200
+Message-Id: <20230403140404.458019750@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,80 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Tomas Henzl <thenzl@redhat.com>
 
-[ Upstream commit 6015b1aca1a233379625385feb01dd014aca60b5 ]
+[ Upstream commit 2309df27111a51734cb9240b4d3c25f2f3c6ab06 ]
 
-The getaffinity() system call uses 'cpumask_size()' to decide how big
-the CPU mask is - so far so good.  It is indeed the allocation size of a
-cpumask.
+When a physical disk is attached directly "without JBOD MAP support" (see
+megasas_get_tm_devhandle()) then there is no real error handling in the
+driver.  Return FAILED instead of SUCCESS.
 
-But the code also assumes that the whole allocation is initialized
-without actually doing so itself.  That's wrong, because we might have
-fixed-size allocations (making copying and clearing more efficient), but
-not all of it is then necessarily used if 'nr_cpu_ids' is smaller.
-
-Having checked other users of 'cpumask_size()', they all seem to be ok,
-either using it purely for the allocation size, or explicitly zeroing
-the cpumask before using the size in bytes to copy it.
-
-See for example the ublk_ctrl_get_queue_affinity() function that uses
-the proper 'zalloc_cpumask_var()' to make sure that the whole mask is
-cleared, whether the storage is on the stack or if it was an external
-allocation.
-
-Fix this by just zeroing the allocation before using it.  Do the same
-for the compat version of sched_getaffinity(), which had the same logic.
-
-Also, for consistency, make sched_getaffinity() use 'cpumask_bits()' to
-access the bits.  For a cpumask_var_t, it ends up being a pointer to the
-same data either way, but it's just a good idea to treat it like you
-would a 'cpumask_t'.  The compat case already did that.
-
-Reported-by: Ryan Roberts <ryan.roberts@arm.com>
-Link: https://lore.kernel.org/lkml/7d026744-6bd6-6827-0471-b5e8eae0be3f@arm.com/
-Cc: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 18365b138508 ("megaraid_sas: Task management support")
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://lore.kernel.org/r/20230324150134.14696-1-thenzl@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/compat.c     | 2 +-
- kernel/sched/core.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/megaraid/megaraid_sas_fusion.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/compat.c b/kernel/compat.c
-index 55551989d9da5..fb50f29d9b361 100644
---- a/kernel/compat.c
-+++ b/kernel/compat.c
-@@ -152,7 +152,7 @@ COMPAT_SYSCALL_DEFINE3(sched_getaffinity, compat_pid_t,  pid, unsigned int, len,
- 	if (len & (sizeof(compat_ulong_t)-1))
- 		return -EINVAL;
+diff --git a/drivers/scsi/megaraid/megaraid_sas_fusion.c b/drivers/scsi/megaraid/megaraid_sas_fusion.c
+index 056837849ead5..c254254aa72f8 100644
+--- a/drivers/scsi/megaraid/megaraid_sas_fusion.c
++++ b/drivers/scsi/megaraid/megaraid_sas_fusion.c
+@@ -4737,7 +4737,7 @@ int megasas_task_abort_fusion(struct scsi_cmnd *scmd)
+ 	devhandle = megasas_get_tm_devhandle(scmd->device);
  
--	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
- 		return -ENOMEM;
+ 	if (devhandle == (u16)ULONG_MAX) {
+-		ret = SUCCESS;
++		ret = FAILED;
+ 		sdev_printk(KERN_INFO, scmd->device,
+ 			"task abort issued for invalid devhandle\n");
+ 		mutex_unlock(&instance->reset_mutex);
+@@ -4807,7 +4807,7 @@ int megasas_reset_target_fusion(struct scsi_cmnd *scmd)
+ 	devhandle = megasas_get_tm_devhandle(scmd->device);
  
- 	ret = sched_getaffinity(pid, mask);
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 0c72459d5f42a..acf7c09c9152f 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8185,14 +8185,14 @@ SYSCALL_DEFINE3(sched_getaffinity, pid_t, pid, unsigned int, len,
- 	if (len & (sizeof(unsigned long)-1))
- 		return -EINVAL;
- 
--	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
- 		return -ENOMEM;
- 
- 	ret = sched_getaffinity(pid, mask);
- 	if (ret == 0) {
- 		unsigned int retlen = min(len, cpumask_size());
- 
--		if (copy_to_user(user_mask_ptr, mask, retlen))
-+		if (copy_to_user(user_mask_ptr, cpumask_bits(mask), retlen))
- 			ret = -EFAULT;
- 		else
- 			ret = retlen;
+ 	if (devhandle == (u16)ULONG_MAX) {
+-		ret = SUCCESS;
++		ret = FAILED;
+ 		sdev_printk(KERN_INFO, scmd->device,
+ 			"target reset issued for invalid devhandle\n");
+ 		mutex_unlock(&instance->reset_mutex);
 -- 
 2.39.2
 
