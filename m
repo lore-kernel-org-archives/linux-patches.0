@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18C56FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5439AC433EF;
-	Mon,  3 Apr 2023 14:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF4C6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB54EC433D2;
+	Mon,  3 Apr 2023 14:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533197;
-	bh=bZj8I0z5ff9UW7JELN2/HVbrcTgcLhO3Zv8zB/fMmHM=;
+	s=korg; t=1680533200;
+	bh=GOXd9LLtlIxzb3c3U7731ypA6ZZjJbJNhuTwL8ZiXNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWNVreAZxuoEth/uBI1YmArrAVwVc0t+JvGeUXhv0+T9iUvs6nM8u1NpuIdDi+CrF
-	 98iR071so++zHBMNeQEc6eFWg+5lhAOenIK0he3Y78vWTaQC3xv5sfo4lKgM0a06FF
-	 wiiEUoRcqNRPvGFnxVbFFLGhKB/wXnitdFRdSTZ4=
+	b=TRQier/bXseFWY9rSGN48GcMoG7jx6TCak9dsgEKGYu4w2P6M60Mmkzlnk11m5djh
+	 mlKJG5bAJjAw1D8XmD6qY8OiXUvxul1GiHaFTL/nhHNJLaH5nEz5jJoHJjJ9sjE7HD
+	 KfnuTvpVhV7LHbRXmAPv2bdikKfLq64wMWAo9gDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 092/187] net: stmmac: dont reject VLANs when IFF_PROMISC is set
-Date: Mon,  3 Apr 2023 16:08:57 +0200
-Message-Id: <20230403140419.007957542@linuxfoundation.org>
+Subject: [PATCH 6.2 093/187] drm/i915/pmu: Use functions common with sysfs to read actual freq
+Date: Mon,  3 Apr 2023 16:08:58 +0200
+Message-Id: <20230403140419.038292110@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,287 +36,178 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-[ Upstream commit a7602e7332b97cfbec7bacb0f1ade99a575fe104 ]
+[ Upstream commit 12d4eb20d9d86fae5f84117ff047e966e470f7b9 ]
 
-The blamed commit has introduced the following tests to
-dwmac4_add_hw_vlan_rx_fltr(), called from stmmac_vlan_rx_add_vid():
+Expose intel_rps_read_actual_frequency_fw to read the actual freq without
+taking forcewake for use by PMU. The code is refactored to use a common set
+of functions across sysfs and PMU. Using common functions with sysfs in PMU
+solves the issues of missing support for MTL and missing support for older
+generations (prior to Gen6). It also future proofs the PMU where sometimes
+code has been updated for sysfs and PMU has been missed.
 
-	if (hw->promisc) {
-		netdev_err(dev,
-			   "Adding VLAN in promisc mode not supported\n");
-		return -EPERM;
-	}
+v2: Remove runtime_pm_if_in_use from read_actual_frequency_fw (Tvrtko)
 
-"VLAN promiscuous" mode is keyed in this driver to IFF_PROMISC, and so,
-vlan_vid_add() and vlan_vid_del() calls cannot take place in IFF_PROMISC
-mode. I have the following 2 arguments that this restriction is.... hm,
-how shall I put it nicely... unproductive :)
+v3: (Tvrtko)
+ - Remove goto in __read_cagf
+ - Unexport intel_rps_get_cagf and intel_rps_read_punit_req
 
-First, take the case of a Linux bridge. If the kernel is compiled with
-CONFIG_BRIDGE_VLAN_FILTERING=y, then this bridge shall have a VLAN
-database. The bridge shall try to call vlan_add_vid() on its bridge
-ports for each VLAN in the VLAN table. It will do this irrespectively of
-whether that port is *currently* VLAN-aware or not. So it will do this
-even when the bridge was created with vlan_filtering 0.
-But the Linux bridge, in VLAN-unaware mode, configures its ports in
-promiscuous (IFF_PROMISC) mode, so that they accept packets with any
-MAC DA (a switch must do this in order to forward those packets which
-are not directly targeted to its MAC address).
-
-As a result, the stmmac driver does not work as a bridge port, when the
-kernel is compiled with CONFIG_BRIDGE_VLAN_FILTERING=y.
-
-$ ip link add br0 type bridge && ip link set br0 up
-$ ip link set eth0 master br0 && ip link set eth0 up
-[ 2333.943296] br0: port 1(eth0) entered blocking state
-[ 2333.943381] br0: port 1(eth0) entered disabled state
-[ 2333.943782] device eth0 entered promiscuous mode
-[ 2333.944080] 4033c000.ethernet eth0: Adding VLAN in promisc mode not supported
-[ 2333.976509] 4033c000.ethernet eth0: failed to initialize vlan filtering on this port
-RTNETLINK answers: Operation not permitted
-
-Secondly, take the case of stmmac as DSA master. Some switch tagging
-protocols are based on 802.1Q VLANs (tag_sja1105.c), and as such,
-tag_8021q.c uses vlan_vid_add() to work with VLAN-filtering DSA masters.
-But also, when a DSA port becomes promiscuous (for example when it joins
-a bridge), the DSA framework also makes the DSA master promiscuous.
-
-Moreover, for every VLAN that a DSA switch sends to the CPU, DSA also
-programs a VLAN filter on the DSA master, because if the the DSA switch
-uses a tail tag, then the hardware frame parser of the DSA master will
-see VLAN as VLAN, and might filter them out, for being unknown.
-
-Due to the above 2 reasons, my belief is that the stmmac driver does not
-get to choose to not accept vlan_vid_add() calls while IFF_PROMISC is
-enabled, because the 2 are completely independent and there are code
-paths in the network stack which directly lead to this situation
-occurring, without the user's direct input.
-
-In fact, my belief is that "VLAN promiscuous" mode should have never
-been keyed on IFF_PROMISC in the first place, but rather, on the
-NETIF_F_HW_VLAN_CTAG_FILTER feature flag which can be toggled by the
-user through ethtool -k, when present in netdev->hw_features.
-
-In the stmmac driver, NETIF_F_HW_VLAN_CTAG_FILTER is only present in
-"features", making this feature "on [fixed]".
-
-I have this belief because I am unaware of any definition of promiscuity
-which implies having an effect on anything other than MAC DA (therefore
-not VLAN). However, I seem to be rather alone in having this opinion,
-looking back at the disagreements from this discussion:
-https://lore.kernel.org/netdev/20201110153958.ci5ekor3o2ekg3ky@ipetronik.com/
-
-In any case, to remove the vlan_vid_add() dependency on !IFF_PROMISC,
-one would need to remove the check and see what fails. I guess the test
-was there because of the way in which dwmac4_vlan_promisc_enable() is
-implemented.
-
-For context, the dwmac4 supports Perfect Filtering for a limited number
-of VLANs - dwmac4_get_num_vlan(), priv->hw->num_vlan, with a fallback on
-Hash Filtering - priv->dma_cap.vlhash - see stmmac_vlan_update(), also
-visible in cat /sys/kernel/debug/stmmaceth/eth0/dma_cap | grep 'VLAN
-Hash Filtering'.
-
-The perfect filtering is based on MAC_VLAN_Tag_Filter/MAC_VLAN_Tag_Data
-registers, accessed in the driver through dwmac4_write_vlan_filter().
-
-The hash filtering is based on the MAC_VLAN_Hash_Table register, named
-GMAC_VLAN_HASH_TABLE in the driver and accessed by dwmac4_update_vlan_hash().
-The control bit for enabling hash filtering is GMAC_VLAN_VTHM
-(MAC_VLAN_Tag_Ctrl bit VTHM: VLAN Tag Hash Table Match Enable).
-
-Now, the description of dwmac4_vlan_promisc_enable() is that it iterates
-through the driver's cache of perfect filter entries (hw->vlan_filter[i],
-added by dwmac4_add_hw_vlan_rx_fltr()), and evicts them from hardware by
-unsetting their GMAC_VLAN_TAG_DATA_VEN (MAC_VLAN_Tag_Data bit VEN - VLAN
-Tag Enable) bit. Then it unsets the GMAC_VLAN_VTHM bit, which disables
-hash matching.
-
-This leaves the MAC, according to table "VLAN Match Status" from the
-documentation, to always enter these data paths:
-
-VID    |VLAN Perfect Filter |VTHM Bit |VLAN Hash Filter |Final VLAN Match
-       |Match Result        |         |Match Result     |Status
--------|--------------------|---------|-----------------|----------------
-VID!=0 |Fail                |0        |don't care       |Pass
-
-So, dwmac4_vlan_promisc_enable() does its job, but by unsetting
-GMAC_VLAN_VTHM, it conflicts with the other code path which controls
-this bit: dwmac4_update_vlan_hash(), called through stmmac_update_vlan_hash()
-from stmmac_vlan_rx_add_vid() and from stmmac_vlan_rx_kill_vid().
-This is, I guess, why dwmac4_add_hw_vlan_rx_fltr() is not allowed to run
-after dwmac4_vlan_promisc_enable() has unset GMAC_VLAN_VTHM: because if
-it did, then dwmac4_update_vlan_hash() would set GMAC_VLAN_VTHM again,
-breaking the "VLAN promiscuity".
-
-It turns out that dwmac4_vlan_promisc_enable() is way too complicated
-for what needs to be done. The MAC_Packet_Filter register also has the
-VTFE bit (VLAN Tag Filter Enable), which simply controls whether VLAN
-tagged packets which don't match the filtering tables (either perfect or
-hash) are dropped or not. At the moment, this driver unconditionally
-sets GMAC_PACKET_FILTER_VTFE if NETIF_F_HW_VLAN_CTAG_FILTER was detected
-through the priv->dma_cap.vlhash capability bits of the device, in
-stmmac_dvr_probe().
-
-I would suggest deleting the unnecessarily complex logic from
-dwmac4_vlan_promisc_enable(), and simply unsetting GMAC_PACKET_FILTER_VTFE
-when becoming IFF_PROMISC, which has the same effect of allowing packets
-with any VLAN tags, but has the additional benefit of being able to run
-concurrently with stmmac_vlan_rx_add_vid() and stmmac_vlan_rx_kill_vid().
-
-As much as I believe that the VTFE bit should have been exclusively
-controlled by NETIF_F_HW_VLAN_CTAG_FILTER through ethtool, and not by
-IFF_PROMISC, changing that is not a punctual fix to the problem, and it
-would probably break the VFFQ feature added by the later commit
-e0f9956a3862 ("net: stmmac: Add option for VLAN filter fail queue
-enable"). From the commit description, VFFQ needs IFF_PROMISC=on and
-VTFE=off in order to work (and this change respects that). But if VTFE
-was changed to be controlled through ethtool -k, then a user-visible
-change would have been introduced in Intel's scripts (a need to run
-"ethtool -k eth0 rx-vlan-filter off" which did not exist before).
-
-The patch was tested with this set of commands:
-
-  ip link set eth0 up
-  ip link add link eth0 name eth0.100 type vlan id 100
-  ip addr add 192.168.100.2/24 dev eth0.100 && ip link set eth0.100 up
-  ip link set eth0 promisc on
-  ip link add link eth0 name eth0.101 type vlan id 101
-  ip addr add 192.168.101.2/24 dev eth0.101 && ip link set eth0.101 up
-  ip link set eth0 promisc off
-  ping -c 5 192.168.100.1
-  ping -c 5 192.168.101.1
-  ip link set eth0 promisc on
-  ping -c 5 192.168.100.1
-  ping -c 5 192.168.101.1
-  ip link del eth0.100
-  ip link del eth0.101
-  # Wait for VLAN-tagged pings from the other end...
-  # Check with "tcpdump -i eth0 -e -n -p" and we should see them
-  ip link set eth0 promisc off
-  # Wait for VLAN-tagged pings from the other end...
-  # Check with "tcpdump -i eth0 -e -n -p" and we shouldn't see them
-  # anymore, but remove the "-p" argument from tcpdump and they're there.
-
-Fixes: c89f44ff10fd ("net: stmmac: Add support for VLAN promiscuous mode")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 22009b6dad66 ("drm/i915/mtl: Modify CAGF functions for MTL")
+Link: https://gitlab.freedesktop.org/drm/intel/-/issues/8280
+Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230316004800.2539753-1-ashutosh.dixit@intel.com
+(cherry picked from commit 44df42e66139b5fac8db49ee354be279210f9816)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/common.h  |  1 -
- .../net/ethernet/stmicro/stmmac/dwmac4_core.c | 61 +------------------
- 2 files changed, 3 insertions(+), 59 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_rps.c | 38 ++++++++++++++++-------------
+ drivers/gpu/drm/i915/gt/intel_rps.h |  4 +--
+ drivers/gpu/drm/i915/i915_pmu.c     | 10 +++-----
+ 3 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
-index ec9c130276d89..54bb072aeb2d3 100644
---- a/drivers/net/ethernet/stmicro/stmmac/common.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/common.h
-@@ -532,7 +532,6 @@ struct mac_device_info {
- 	unsigned int xlgmac;
- 	unsigned int num_vlan;
- 	u32 vlan_filter[32];
--	unsigned int promisc;
- 	bool vlan_fail_q_en;
- 	u8 vlan_fail_q;
- };
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index 8c7a0b7c99520..36251ec2589c9 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -472,12 +472,6 @@ static int dwmac4_add_hw_vlan_rx_fltr(struct net_device *dev,
- 	if (vid > 4095)
- 		return -EINVAL;
- 
--	if (hw->promisc) {
--		netdev_err(dev,
--			   "Adding VLAN in promisc mode not supported\n");
--		return -EPERM;
--	}
--
- 	/* Single Rx VLAN Filter */
- 	if (hw->num_vlan == 1) {
- 		/* For single VLAN filter, VID 0 means VLAN promiscuous */
-@@ -527,12 +521,6 @@ static int dwmac4_del_hw_vlan_rx_fltr(struct net_device *dev,
- {
- 	int i, ret = 0;
- 
--	if (hw->promisc) {
--		netdev_err(dev,
--			   "Deleting VLAN in promisc mode not supported\n");
--		return -EPERM;
--	}
--
- 	/* Single Rx VLAN Filter */
- 	if (hw->num_vlan == 1) {
- 		if ((hw->vlan_filter[0] & GMAC_VLAN_TAG_VID) == vid) {
-@@ -557,39 +545,6 @@ static int dwmac4_del_hw_vlan_rx_fltr(struct net_device *dev,
- 	return ret;
+diff --git a/drivers/gpu/drm/i915/gt/intel_rps.c b/drivers/gpu/drm/i915/gt/intel_rps.c
+index 9ad3bc7201cba..fc73cfe0e39bb 100644
+--- a/drivers/gpu/drm/i915/gt/intel_rps.c
++++ b/drivers/gpu/drm/i915/gt/intel_rps.c
+@@ -2074,16 +2074,6 @@ void intel_rps_sanitize(struct intel_rps *rps)
+ 		rps_disable_interrupts(rps);
  }
  
--static void dwmac4_vlan_promisc_enable(struct net_device *dev,
--				       struct mac_device_info *hw)
+-u32 intel_rps_read_rpstat_fw(struct intel_rps *rps)
 -{
--	void __iomem *ioaddr = hw->pcsr;
--	u32 value;
--	u32 hash;
--	u32 val;
--	int i;
+-	struct drm_i915_private *i915 = rps_to_i915(rps);
+-	i915_reg_t rpstat;
 -
--	/* Single Rx VLAN Filter */
--	if (hw->num_vlan == 1) {
--		dwmac4_write_single_vlan(dev, 0);
--		return;
--	}
+-	rpstat = (GRAPHICS_VER(i915) >= 12) ? GEN12_RPSTAT1 : GEN6_RPSTAT1;
 -
--	/* Extended Rx VLAN Filter Enable */
--	for (i = 0; i < hw->num_vlan; i++) {
--		if (hw->vlan_filter[i] & GMAC_VLAN_TAG_DATA_VEN) {
--			val = hw->vlan_filter[i] & ~GMAC_VLAN_TAG_DATA_VEN;
--			dwmac4_write_vlan_filter(dev, hw, i, val);
--		}
--	}
--
--	hash = readl(ioaddr + GMAC_VLAN_HASH_TABLE);
--	if (hash & GMAC_VLAN_VLHT) {
--		value = readl(ioaddr + GMAC_VLAN_TAG);
--		if (value & GMAC_VLAN_VTHM) {
--			value &= ~GMAC_VLAN_VTHM;
--			writel(value, ioaddr + GMAC_VLAN_TAG);
--		}
--	}
+-	return intel_uncore_read_fw(rps_to_gt(rps)->uncore, rpstat);
 -}
 -
- static void dwmac4_restore_hw_vlan_rx_fltr(struct net_device *dev,
- 					   struct mac_device_info *hw)
+ u32 intel_rps_read_rpstat(struct intel_rps *rps)
  {
-@@ -709,22 +664,12 @@ static void dwmac4_set_filter(struct mac_device_info *hw,
- 	}
- 
- 	/* VLAN filtering */
--	if (dev->features & NETIF_F_HW_VLAN_CTAG_FILTER)
-+	if (dev->flags & IFF_PROMISC && !hw->vlan_fail_q_en)
-+		value &= ~GMAC_PACKET_FILTER_VTFE;
-+	else if (dev->features & NETIF_F_HW_VLAN_CTAG_FILTER)
- 		value |= GMAC_PACKET_FILTER_VTFE;
- 
- 	writel(value, ioaddr + GMAC_PACKET_FILTER);
--
--	if (dev->flags & IFF_PROMISC && !hw->vlan_fail_q_en) {
--		if (!hw->promisc) {
--			hw->promisc = 1;
--			dwmac4_vlan_promisc_enable(dev, hw);
--		}
--	} else {
--		if (hw->promisc) {
--			hw->promisc = 0;
--			dwmac4_restore_hw_vlan_rx_fltr(dev, hw);
--		}
--	}
+ 	struct drm_i915_private *i915 = rps_to_i915(rps);
+@@ -2094,7 +2084,7 @@ u32 intel_rps_read_rpstat(struct intel_rps *rps)
+ 	return intel_uncore_read(rps_to_gt(rps)->uncore, rpstat);
  }
  
- static void dwmac4_flow_ctrl(struct mac_device_info *hw, unsigned int duplex,
+-u32 intel_rps_get_cagf(struct intel_rps *rps, u32 rpstat)
++static u32 intel_rps_get_cagf(struct intel_rps *rps, u32 rpstat)
+ {
+ 	struct drm_i915_private *i915 = rps_to_i915(rps);
+ 	u32 cagf;
+@@ -2117,10 +2107,11 @@ u32 intel_rps_get_cagf(struct intel_rps *rps, u32 rpstat)
+ 	return cagf;
+ }
+ 
+-static u32 read_cagf(struct intel_rps *rps)
++static u32 __read_cagf(struct intel_rps *rps, bool take_fw)
+ {
+ 	struct drm_i915_private *i915 = rps_to_i915(rps);
+ 	struct intel_uncore *uncore = rps_to_uncore(rps);
++	i915_reg_t r = INVALID_MMIO_REG;
+ 	u32 freq;
+ 
+ 	/*
+@@ -2128,22 +2119,30 @@ static u32 read_cagf(struct intel_rps *rps)
+ 	 * registers will return 0 freq when GT is in RC6
+ 	 */
+ 	if (GRAPHICS_VER_FULL(i915) >= IP_VER(12, 70)) {
+-		freq = intel_uncore_read(uncore, MTL_MIRROR_TARGET_WP1);
++		r = MTL_MIRROR_TARGET_WP1;
+ 	} else if (GRAPHICS_VER(i915) >= 12) {
+-		freq = intel_uncore_read(uncore, GEN12_RPSTAT1);
++		r = GEN12_RPSTAT1;
+ 	} else if (IS_VALLEYVIEW(i915) || IS_CHERRYVIEW(i915)) {
+ 		vlv_punit_get(i915);
+ 		freq = vlv_punit_read(i915, PUNIT_REG_GPU_FREQ_STS);
+ 		vlv_punit_put(i915);
+ 	} else if (GRAPHICS_VER(i915) >= 6) {
+-		freq = intel_uncore_read(uncore, GEN6_RPSTAT1);
++		r = GEN6_RPSTAT1;
+ 	} else {
+-		freq = intel_uncore_read(uncore, MEMSTAT_ILK);
++		r = MEMSTAT_ILK;
+ 	}
+ 
++	if (i915_mmio_reg_valid(r))
++		freq = take_fw ? intel_uncore_read(uncore, r) : intel_uncore_read_fw(uncore, r);
++
+ 	return intel_rps_get_cagf(rps, freq);
+ }
+ 
++static u32 read_cagf(struct intel_rps *rps)
++{
++	return __read_cagf(rps, true);
++}
++
+ u32 intel_rps_read_actual_frequency(struct intel_rps *rps)
+ {
+ 	struct intel_runtime_pm *rpm = rps_to_uncore(rps)->rpm;
+@@ -2156,7 +2155,12 @@ u32 intel_rps_read_actual_frequency(struct intel_rps *rps)
+ 	return freq;
+ }
+ 
+-u32 intel_rps_read_punit_req(struct intel_rps *rps)
++u32 intel_rps_read_actual_frequency_fw(struct intel_rps *rps)
++{
++	return intel_gpu_freq(rps, __read_cagf(rps, false));
++}
++
++static u32 intel_rps_read_punit_req(struct intel_rps *rps)
+ {
+ 	struct intel_uncore *uncore = rps_to_uncore(rps);
+ 	struct intel_runtime_pm *rpm = rps_to_uncore(rps)->rpm;
+diff --git a/drivers/gpu/drm/i915/gt/intel_rps.h b/drivers/gpu/drm/i915/gt/intel_rps.h
+index 9e1cad9ba0e9c..d86ddfee095ed 100644
+--- a/drivers/gpu/drm/i915/gt/intel_rps.h
++++ b/drivers/gpu/drm/i915/gt/intel_rps.h
+@@ -34,8 +34,8 @@ void intel_rps_mark_interactive(struct intel_rps *rps, bool interactive);
+ 
+ int intel_gpu_freq(struct intel_rps *rps, int val);
+ int intel_freq_opcode(struct intel_rps *rps, int val);
+-u32 intel_rps_get_cagf(struct intel_rps *rps, u32 rpstat1);
+ u32 intel_rps_read_actual_frequency(struct intel_rps *rps);
++u32 intel_rps_read_actual_frequency_fw(struct intel_rps *rps);
+ u32 intel_rps_get_requested_frequency(struct intel_rps *rps);
+ u32 intel_rps_get_min_frequency(struct intel_rps *rps);
+ u32 intel_rps_get_min_raw_freq(struct intel_rps *rps);
+@@ -46,10 +46,8 @@ int intel_rps_set_max_frequency(struct intel_rps *rps, u32 val);
+ u32 intel_rps_get_rp0_frequency(struct intel_rps *rps);
+ u32 intel_rps_get_rp1_frequency(struct intel_rps *rps);
+ u32 intel_rps_get_rpn_frequency(struct intel_rps *rps);
+-u32 intel_rps_read_punit_req(struct intel_rps *rps);
+ u32 intel_rps_read_punit_req_frequency(struct intel_rps *rps);
+ u32 intel_rps_read_rpstat(struct intel_rps *rps);
+-u32 intel_rps_read_rpstat_fw(struct intel_rps *rps);
+ void gen6_rps_get_freq_caps(struct intel_rps *rps, struct intel_rps_freq_caps *caps);
+ void intel_rps_raise_unslice(struct intel_rps *rps);
+ void intel_rps_lower_unslice(struct intel_rps *rps);
+diff --git a/drivers/gpu/drm/i915/i915_pmu.c b/drivers/gpu/drm/i915/i915_pmu.c
+index 52531ab28c5f5..6d422b056f8a8 100644
+--- a/drivers/gpu/drm/i915/i915_pmu.c
++++ b/drivers/gpu/drm/i915/i915_pmu.c
+@@ -393,14 +393,12 @@ frequency_sample(struct intel_gt *gt, unsigned int period_ns)
+ 		 * case we assume the system is running at the intended
+ 		 * frequency. Fortunately, the read should rarely fail!
+ 		 */
+-		val = intel_rps_read_rpstat_fw(rps);
+-		if (val)
+-			val = intel_rps_get_cagf(rps, val);
+-		else
+-			val = rps->cur_freq;
++		val = intel_rps_read_actual_frequency_fw(rps);
++		if (!val)
++			val = intel_gpu_freq(rps, rps->cur_freq);
+ 
+ 		add_sample_mult(&pmu->sample[__I915_SAMPLE_FREQ_ACT],
+-				intel_gpu_freq(rps, val), period_ns / 1000);
++				val, period_ns / 1000);
+ 	}
+ 
+ 	if (pmu->enable & config_mask(I915_PMU_REQUESTED_FREQUENCY)) {
 -- 
 2.39.2
 
