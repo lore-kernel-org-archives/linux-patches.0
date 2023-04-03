@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400C3612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8280C433EF;
-	Mon,  3 Apr 2023 14:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AD4612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5946DC4339B;
+	Mon,  3 Apr 2023 14:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531751;
-	bh=K0x3SRRa4HXHn+EKwSF6/erKOQgcKi+VGbc7NR6slpo=;
+	s=korg; t=1680531753;
+	bh=H2fvv6Sn/nwtQj7JD929f6vx9acoQ8RQKgq2U3QvaLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fy2DGDJicFEXIG0Hhw+JsK0BAoy6UdgKPw3adqquEFGBfaEQsPo8neU2PPO6vO9mz
-	 Y4sXVx/Z1GlSY7ryuHNbek9RfJJlyp0tQIbGIhrHIziw08gAHtgmOKuN+JiXoVRsop
-	 6H1GLzKdZeq3J0yNFMkkYoqEb66BS4XS1kSANrJo=
+	b=QFjd0YxNi7eYZ8PuohX6RJawYUAXnlAGbkUqZle05sOckGF16026PZEBF2wpS3k8S
+	 jh/nn5EKjm7aaSOrTaBHdj430AGyQDXNWvWmobND5qiXFF3rnRvR18ww3qkksRzHMf
+	 i3OdxCe41wH8lnQz7qf+k7yTIkKwgIH8KGTup9RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wei Chen <harperchen1110@gmail.com>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/104] fbdev: nvidia: Fix potential divide by zero
-Date: Mon,  3 Apr 2023 16:08:59 +0200
-Message-Id: <20230403140406.837211731@linuxfoundation.org>
+Subject: [PATCH 5.4 068/104] fbdev: intelfb: Fix potential divide by zero
+Date: Mon,  3 Apr 2023 16:09:00 +0200
+Message-Id: <20230403140406.866765166@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -37,36 +37,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 92e2a00f2987483e1f9253625828622edd442e61 ]
+[ Upstream commit d823685486a3446d061fed7c7d2f80af984f119a ]
 
-variable var->pixclock can be set by user. In case it
-equals to zero, divide by zero would occur in nvidiafb_set_par.
+Variable var->pixclock is controlled by user and can be assigned
+to zero. Without proper check, divide by zero would occur in
+intelfbhw_validate_mode and intelfbhw_mode_to_hw.
 
-Similar crashes have happened in other fbdev drivers. There
-is no check and modification on var->pixclock along the call
-chain to nvidia_check_var and nvidiafb_set_par. We believe it
-could also be triggered in driver nvidia from user site.
+Error out if var->pixclock is zero.
 
 Signed-off-by: Wei Chen <harperchen1110@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/nvidia/nvidia.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/video/fbdev/intelfb/intelfbdrv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/video/fbdev/nvidia/nvidia.c b/drivers/video/fbdev/nvidia/nvidia.c
-index fbeeed5afe350..aa502b3ba25ae 100644
---- a/drivers/video/fbdev/nvidia/nvidia.c
-+++ b/drivers/video/fbdev/nvidia/nvidia.c
-@@ -766,6 +766,8 @@ static int nvidiafb_check_var(struct fb_var_screeninfo *var,
- 	int pitch, err = 0;
+diff --git a/drivers/video/fbdev/intelfb/intelfbdrv.c b/drivers/video/fbdev/intelfb/intelfbdrv.c
+index a76c61512c608..274e6bb4a9610 100644
+--- a/drivers/video/fbdev/intelfb/intelfbdrv.c
++++ b/drivers/video/fbdev/intelfb/intelfbdrv.c
+@@ -1214,6 +1214,9 @@ static int intelfb_check_var(struct fb_var_screeninfo *var,
  
- 	NVTRACE_ENTER();
+ 	dinfo = GET_DINFO(info);
+ 
 +	if (!var->pixclock)
 +		return -EINVAL;
- 
- 	var->transp.offset = 0;
- 	var->transp.length = 0;
++
+ 	/* update the pitch */
+ 	if (intelfbhw_validate_mode(dinfo, var) != 0)
+ 		return -EINVAL;
 -- 
 2.39.2
 
