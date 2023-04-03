@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2785B5698
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC3FC4339B;
-	Mon,  3 Apr 2023 14:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809FE5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071E8C4339B;
+	Mon,  3 Apr 2023 14:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531092;
-	bh=pc7sVLMlxUUPLoMc579jDkeXM0xm02GMOsv3uokjTMA=;
+	s=korg; t=1680531095;
+	bh=hLiKUKVPVgEMC1Yb/Chsnm0iyPNxJbnPCPwUj6bKMR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5I0FLmx/wDtE9smqlVbnfEWsWLn1E5sHlhZUFawG/UMn7t2UximRhmsFs6F/4J+c
-	 bx5ciLxU/gmKUi/OuylSsEEYMhnHTE8BYfJJ9OqEW2EEi8bxyQQgLxE1g9ZtQoRLls
-	 xalxFOyu3L1SB0HVMa3h53O6KRHwG7sNQgA9JaQ4=
+	b=uwrEPbQ9ojLZThm6H7uTSHmWg2osKSXXL64txlCOnP8aZHSz4Wgc7IOkBtakXJVE9
+	 VW+Gju2157L4YKoRrSieVAPV6hSKbg7f+2U6BW+fY8p3h15IsBz5KkdLDCOW1ihDlp
+	 ATiY8v1OI5OrIjtm+4DezbmCJiZE4aQhsE0MxVFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 09/66] xirc2ps_cs: Fix use after free bug in xirc2ps_detach
-Date: Mon,  3 Apr 2023 16:08:17 +0200
-Message-Id: <20230403140352.124952675@linuxfoundation.org>
+Subject: [PATCH 4.14 18/66] Bluetooth: btqcomsmd: Fix command timeout after setting BD address
+Date: Mon,  3 Apr 2023 16:08:26 +0200
+Message-Id: <20230403140352.544852597@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -35,56 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 
-[ Upstream commit e8d20c3ded59a092532513c9bd030d1ea66f5f44 ]
+[ Upstream commit 5d44ab9e204200a78ad55cdf185aa2bb109b5950 ]
 
-In xirc2ps_probe, the local->tx_timeout_task was bounded
-with xirc2ps_tx_timeout_task. When timeout occurs,
-it will call xirc_tx_timeout->schedule_work to start the
-work.
+On most devices using the btqcomsmd driver (e.g. the DragonBoard 410c
+and other devices based on the Qualcomm MSM8916/MSM8909/... SoCs)
+the Bluetooth firmware seems to become unresponsive for a while after
+setting the BD address. On recent kernel versions (at least 5.17+)
+this often causes timeouts for subsequent commands, e.g. the HCI reset
+sent by the Bluetooth core during initialization:
 
-When we call xirc2ps_detach to remove the driver, there
-may be a sequence as follows:
+    Bluetooth: hci0: Opcode 0x c03 failed: -110
 
-Stop responding to timeout tasks and complete scheduled
-tasks before cleanup in xirc2ps_detach, which will fix
-the problem.
+Unfortunately this behavior does not seem to be documented anywhere.
+Experimentation suggests that the minimum necessary delay to avoid
+the problem is ~150us. However, to be sure add a sleep for > 1ms
+in case it is a bit longer on other firmware versions.
 
-CPU0                  CPU1
+Older kernel versions are likely also affected, although perhaps with
+slightly different errors or less probability. Side effects can easily
+hide the issue in most cases, e.g. unrelated incoming interrupts that
+cause the necessary delay.
 
-                    |xirc2ps_tx_timeout_task
-xirc2ps_detach      |
-  free_netdev       |
-    kfree(dev);     |
-                    |
-                    | do_reset
-                    |   //use dev
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1511cc750c3d ("Bluetooth: Introduce Qualcomm WCNSS SMD based HCI driver")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xircom/xirc2ps_cs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/bluetooth/btqcomsmd.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/xircom/xirc2ps_cs.c b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-index fd5288ff53b53..e3438cef5f9c6 100644
---- a/drivers/net/ethernet/xircom/xirc2ps_cs.c
-+++ b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-@@ -503,6 +503,11 @@ static void
- xirc2ps_detach(struct pcmcia_device *link)
- {
-     struct net_device *dev = link->priv;
-+    struct local_info *local = netdev_priv(dev);
+diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
+index 3a32150104c30..2f372ab7c9b78 100644
+--- a/drivers/bluetooth/btqcomsmd.c
++++ b/drivers/bluetooth/btqcomsmd.c
+@@ -134,6 +134,21 @@ static int btqcomsmd_setup(struct hci_dev *hdev)
+ 	return 0;
+ }
+ 
++static int btqcomsmd_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
++{
++	int ret;
 +
-+    netif_carrier_off(dev);
-+    netif_tx_disable(dev);
-+    cancel_work_sync(&local->tx_timeout_task);
++	ret = qca_set_bdaddr_rome(hdev, bdaddr);
++	if (ret)
++		return ret;
++
++	/* The firmware stops responding for a while after setting the bdaddr,
++	 * causing timeouts for subsequent commands. Sleep a bit to avoid this.
++	 */
++	usleep_range(1000, 10000);
++	return 0;
++}
++
+ static int btqcomsmd_probe(struct platform_device *pdev)
+ {
+ 	struct btqcomsmd *btq;
+@@ -174,7 +189,7 @@ static int btqcomsmd_probe(struct platform_device *pdev)
+ 	hdev->close = btqcomsmd_close;
+ 	hdev->send = btqcomsmd_send;
+ 	hdev->setup = btqcomsmd_setup;
+-	hdev->set_bdaddr = qca_set_bdaddr_rome;
++	hdev->set_bdaddr = btqcomsmd_set_bdaddr;
  
-     dev_dbg(&link->dev, "detach\n");
- 
+ 	ret = hci_register_dev(hdev);
+ 	if (ret < 0)
 -- 
 2.39.2
 
