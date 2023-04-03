@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BD06FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DBBC433EF;
-	Mon,  3 Apr 2023 14:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACE46FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55A4C433EF;
+	Mon,  3 Apr 2023 14:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532735;
-	bh=fG9Zl/2hEFisguEQyZVMdPw9Itaf1tOsqcR5AgjBkOo=;
+	s=korg; t=1680532738;
+	bh=kzLXTTkJJ7Z3jt5XvXdnW1zQoy1TCpTl2yXgW1xDFB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyXo8vfOnAbeoWQYJOgLZUcfGC9wDliWgMnwnJZT2avEnVo5EkChzbKjOBNOcdVvs
-	 3mYT0oFZzQ9lj/297A/ZMctxVivF7UymjuPLAEbRNxMJH1YDH4M/V9wf2R7/glI1/J
-	 8nuIkFw+TNHOp33jG8U1QcA88ULrPTqaBxo8OGmQ=
+	b=lhri2ItYrERR/BT220XtOjZWV1khVnN5G1QgB53IlthfIFG6lFcNPoXM5tXPfR0yu
+	 dwVIhpUQm76pve7OQ8zvxmQGfAkbCFIN9PTXMWXUKczgdTqvdIf+eekgR0EFh19Nxm
+	 rwiTaqspBxAcXm7ymZ8M5bRvV0MvkrW6kdf4cn3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Rajvi Jingar <rajvi.jingar@linux.intel.com>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/181] drm/i915/tc: Fix the ICL PHY ownership check in TC-cold state
-Date: Mon,  3 Apr 2023 16:08:52 +0200
-Message-Id: <20230403140418.266442533@linuxfoundation.org>
+Subject: [PATCH 6.1 098/181] platform/x86/intel/pmc: Alder Lake PCH slp_s0_residency fix
+Date: Mon,  3 Apr 2023 16:08:53 +0200
+Message-Id: <20230403140418.295008544@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -37,46 +38,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Imre Deak <imre.deak@intel.com>
+From: Rajvi Jingar <rajvi.jingar@linux.intel.com>
 
-[ Upstream commit 38c583019484f190d5b33f59b8ae810e6b1763c6 ]
+[ Upstream commit fb5755100a0a5aa5957bdb204fd1e249684557fc ]
 
-The commit renaming icl_tc_phy_is_in_safe_mode() to
-icl_tc_phy_take_ownership() didn't flip the function's return value
-accordingly, fix this up.
+For platforms with Alder Lake PCH (Alder Lake S and Raptor Lake S) the
+slp_s0_residency attribute has been reporting the wrong value. Unlike other
+platforms, ADL PCH does not have a counter for the time that the SLP_S0
+signal was asserted. Instead, firmware uses the aggregate of the Low Power
+Mode (LPM) substate counters as the S0ix value.  Since the LPM counters run
+at a different frequency, this lead to misreporting of the S0ix time.
 
-This didn't cause an actual problem besides state check errors, since
-the function is only used during HW readout.
+Add a check for Alder Lake PCH and adjust the frequency accordingly when
+display slp_s0_residency.
 
-Cc: José Roberto de Souza <jose.souza@intel.com>
-Fixes: f53979d68a77 ("drm/i915/display/tc: Rename safe_mode functions ownership")
-Reviewed-by: José Roberto de Souza <jose.souza@intel.com>
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230316131724.359612-4-imre.deak@intel.com
-(cherry picked from commit f2c7959dda614d9b7c6a41510492de39d31705ec)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: bbab31101f44 ("platform/x86/intel: pmc/core: Add Alderlake support to pmc core driver")
+Signed-off-by: Rajvi Jingar <rajvi.jingar@linux.intel.com>
+Signed-off-by: David E. Box <david.e.box@linux.intel.com>
+Reviewed-by: Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20230320212029.3154407-1-david.e.box@linux.intel.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_tc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/intel/pmc/core.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_tc.c b/drivers/gpu/drm/i915/display/intel_tc.c
-index e5af955b5600f..8d6dac32c8960 100644
---- a/drivers/gpu/drm/i915/display/intel_tc.c
-+++ b/drivers/gpu/drm/i915/display/intel_tc.c
-@@ -440,9 +440,9 @@ static bool icl_tc_phy_is_owned(struct intel_digital_port *dig_port)
- 				PORT_TX_DFLEXDPCSSS(dig_port->tc_phy_fia));
- 	if (val == 0xffffffff) {
- 		drm_dbg_kms(&i915->drm,
--			    "Port %s: PHY in TCCOLD, assume safe mode\n",
-+			    "Port %s: PHY in TCCOLD, assume not owned\n",
- 			    dig_port->tc_port_name);
--		return true;
-+		return false;
- 	}
+diff --git a/drivers/platform/x86/intel/pmc/core.c b/drivers/platform/x86/intel/pmc/core.c
+index 17ec5825d13d7..be0fb9401202a 100644
+--- a/drivers/platform/x86/intel/pmc/core.c
++++ b/drivers/platform/x86/intel/pmc/core.c
+@@ -958,7 +958,18 @@ static inline void pmc_core_reg_write(struct pmc_dev *pmcdev, int reg_offset,
  
- 	return val & DP_PHY_MODE_STATUS_NOT_SAFE(dig_port->tc_phy_fia_idx);
+ static inline u64 pmc_core_adjust_slp_s0_step(struct pmc_dev *pmcdev, u32 value)
+ {
+-	return (u64)value * pmcdev->map->slp_s0_res_counter_step;
++	/*
++	 * ADL PCH does not have the SLP_S0 counter and LPM Residency counters are
++	 * used as a workaround which uses 30.5 usec tick. All other client
++	 * programs have the legacy SLP_S0 residency counter that is using the 122
++	 * usec tick.
++	 */
++	const int lpm_adj_x2 = pmcdev->map->lpm_res_counter_step_x2;
++
++	if (pmcdev->map == &adl_reg_map)
++		return (u64)value * GET_X2_COUNTER((u64)lpm_adj_x2);
++	else
++		return (u64)value * pmcdev->map->slp_s0_res_counter_step;
+ }
+ 
+ static int set_etr3(struct pmc_dev *pmcdev)
 -- 
 2.39.2
 
