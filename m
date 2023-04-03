@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D566FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2052CC433D2;
-	Mon,  3 Apr 2023 14:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6243D6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB44CC433EF;
+	Mon,  3 Apr 2023 14:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533205;
-	bh=JN9YqzKVUHlvafYfS95SQ1f8FKGv2UnGqBIudw//A0Y=;
+	s=korg; t=1680533208;
+	bh=Einpn2ALN2xXNuQcDxCgB93uEJyh1ApAX7KK/N9oS+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3dVM229AwAhLIRU4MZ3TqrX/ltsvfhLzefuEWoM27shkKwlhN9P8qDr4RVe97VZi
-	 zdm1NRZLugF4A9s1+gpl+Rk6SdZB9iIll1xFC+tQ9Ny6E4/xZI/uyxyPGzfwDmByPf
-	 /8rTrLVz8PdmuiRC4fFn+i58WDmXTuPWylfWNx1Y=
+	b=QlE2edNg8+DpXa/ztgmiGczBxXb2Desd/PyXZuwKdKfxR/ARfrE1AWZyib0C26BYE
+	 T/DSbmsfOOLgGzWQrxPUSRafsrBSUjXOFwPm5afrmXIvx1HQ3jvRK3AIhp2jad/zXV
+	 CvAJFITOMukvMcB8EWVE/D7jJL1efelN79rQQ2kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Rajvi Jingar <rajvi.jingar@linux.intel.com>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 095/187] drm/i915/perf: Drop wakeref on GuC RC error
-Date: Mon,  3 Apr 2023 16:09:00 +0200
-Message-Id: <20230403140419.110969504@linuxfoundation.org>
+Subject: [PATCH 6.2 096/187] platform/x86/intel/pmc: Alder Lake PCH slp_s0_residency fix
+Date: Mon,  3 Apr 2023 16:09:01 +0200
+Message-Id: <20230403140419.139213118@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -37,90 +38,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Wilson <chris.p.wilson@linux.intel.com>
+From: Rajvi Jingar <rajvi.jingar@linux.intel.com>
 
-[ Upstream commit 5c95b2d5d44fa250ce8aeee27bdb39b381d03857 ]
+[ Upstream commit fb5755100a0a5aa5957bdb204fd1e249684557fc ]
 
-If we fail to adjust the GuC run-control on opening the perf stream,
-make sure we unwind the wakeref just taken.
+For platforms with Alder Lake PCH (Alder Lake S and Raptor Lake S) the
+slp_s0_residency attribute has been reporting the wrong value. Unlike other
+platforms, ADL PCH does not have a counter for the time that the SLP_S0
+signal was asserted. Instead, firmware uses the aggregate of the Low Power
+Mode (LPM) substate counters as the S0ix value.  Since the LPM counters run
+at a different frequency, this lead to misreporting of the S0ix time.
 
-v2: Retain old goto label names (Ashutosh)
-v3: Drop bitfield boolean
+Add a check for Alder Lake PCH and adjust the frequency accordingly when
+display slp_s0_residency.
 
-Fixes: 01e742746785 ("drm/i915/guc: Support OA when Wa_16011777198 is enabled")
-Signed-off-by: Chris Wilson <chris.p.wilson@linux.intel.com>
-Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230323225901.3743681-2-umesh.nerlige.ramappa@intel.com
-(cherry picked from commit 2810ac6c753d17ee2572ffb57fe2382a786a080a)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: bbab31101f44 ("platform/x86/intel: pmc/core: Add Alderlake support to pmc core driver")
+Signed-off-by: Rajvi Jingar <rajvi.jingar@linux.intel.com>
+Signed-off-by: David E. Box <david.e.box@linux.intel.com>
+Reviewed-by: Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20230320212029.3154407-1-david.e.box@linux.intel.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_perf.c       | 14 +++++++++-----
- drivers/gpu/drm/i915/i915_perf_types.h |  6 ++++++
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ drivers/platform/x86/intel/pmc/core.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_perf.c b/drivers/gpu/drm/i915/i915_perf.c
-index 125b6ca25a756..7d5e2c53c23a7 100644
---- a/drivers/gpu/drm/i915/i915_perf.c
-+++ b/drivers/gpu/drm/i915/i915_perf.c
-@@ -1592,9 +1592,7 @@ static void i915_oa_stream_destroy(struct i915_perf_stream *stream)
- 	/*
- 	 * Wa_16011777198:dg2: Unset the override of GUCRC mode to enable rc6.
- 	 */
--	if (intel_uc_uses_guc_rc(&gt->uc) &&
--	    (IS_DG2_GRAPHICS_STEP(gt->i915, G10, STEP_A0, STEP_C0) ||
--	     IS_DG2_GRAPHICS_STEP(gt->i915, G11, STEP_A0, STEP_B0)))
-+	if (stream->override_gucrc)
- 		drm_WARN_ON(&gt->i915->drm,
- 			    intel_guc_slpc_unset_gucrc_mode(&gt->uc.guc.slpc));
+diff --git a/drivers/platform/x86/intel/pmc/core.c b/drivers/platform/x86/intel/pmc/core.c
+index 3a15d32d7644c..b9591969e0fa1 100644
+--- a/drivers/platform/x86/intel/pmc/core.c
++++ b/drivers/platform/x86/intel/pmc/core.c
+@@ -66,7 +66,18 @@ static inline void pmc_core_reg_write(struct pmc_dev *pmcdev, int reg_offset,
  
-@@ -3293,8 +3291,10 @@ static int i915_oa_stream_init(struct i915_perf_stream *stream,
- 		if (ret) {
- 			drm_dbg(&stream->perf->i915->drm,
- 				"Unable to override gucrc mode\n");
--			goto err_config;
-+			goto err_gucrc;
- 		}
-+
-+		stream->override_gucrc = true;
- 	}
- 
- 	ret = alloc_oa_buffer(stream);
-@@ -3333,11 +3333,15 @@ static int i915_oa_stream_init(struct i915_perf_stream *stream,
- 	free_oa_buffer(stream);
- 
- err_oa_buf_alloc:
--	free_oa_configs(stream);
-+	if (stream->override_gucrc)
-+		intel_guc_slpc_unset_gucrc_mode(&gt->uc.guc.slpc);
- 
-+err_gucrc:
- 	intel_uncore_forcewake_put(stream->uncore, FORCEWAKE_ALL);
- 	intel_engine_pm_put(stream->engine);
- 
-+	free_oa_configs(stream);
-+
- err_config:
- 	free_noa_wait(stream);
- 
-diff --git a/drivers/gpu/drm/i915/i915_perf_types.h b/drivers/gpu/drm/i915/i915_perf_types.h
-index ca150b7af3f29..4d5d8c365d9e2 100644
---- a/drivers/gpu/drm/i915/i915_perf_types.h
-+++ b/drivers/gpu/drm/i915/i915_perf_types.h
-@@ -316,6 +316,12 @@ struct i915_perf_stream {
- 	 * buffer should be checked for available data.
- 	 */
- 	u64 poll_oa_period;
-+
-+	/**
-+	 * @override_gucrc: GuC RC has been overridden for the perf stream,
-+	 * and we need to restore the default configuration on release.
+ static inline u64 pmc_core_adjust_slp_s0_step(struct pmc_dev *pmcdev, u32 value)
+ {
+-	return (u64)value * pmcdev->map->slp_s0_res_counter_step;
++	/*
++	 * ADL PCH does not have the SLP_S0 counter and LPM Residency counters are
++	 * used as a workaround which uses 30.5 usec tick. All other client
++	 * programs have the legacy SLP_S0 residency counter that is using the 122
++	 * usec tick.
 +	 */
-+	bool override_gucrc;
- };
++	const int lpm_adj_x2 = pmcdev->map->lpm_res_counter_step_x2;
++
++	if (pmcdev->map == &adl_reg_map)
++		return (u64)value * GET_X2_COUNTER((u64)lpm_adj_x2);
++	else
++		return (u64)value * pmcdev->map->slp_s0_res_counter_step;
+ }
  
- /**
+ static int set_etr3(struct pmc_dev *pmcdev)
 -- 
 2.39.2
 
