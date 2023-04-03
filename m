@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B446139
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D49C4339B;
-	Mon,  3 Apr 2023 14:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2806D3F
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9744C4339B;
+	Mon,  3 Apr 2023 14:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531995;
-	bh=mhyK7Q9wpfWO0egESmSWpZAeIOs+OFJmRpTWkzEgMJY=;
+	s=korg; t=1680531998;
+	bh=u/O9oSwFl7oXTaJku6rhQs0l1MMuGRCZTZekRT+8LbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5BwanidWDDooY/q0MPBVrGYapA/BVOQCmarzoum7j0AP/vzz/Po60o4vqL30Queh
-	 b3vCbpoMP4eEnOwY77TMK6DGi/RvJJQ+F9IRnyZzMPDjtUgNWPk4AV3rJNYPm7Wze5
-	 hwsprvNvZ1ml1MT26y/nBpnN3EB5SgwqS0+cq4dk=
+	b=KblUbAKeJft14Gw+jSUmKCKPo9FjV5ystNQTd8T2c+cZY3M2TNWtU8gY98YpYaKXr
+	 f7q9IDhsyCbmH+vYpkkXLBRBJXHJJI86nBBB9KXws+H4huFYzataObl8TfqSFDX0/3
+	 ZDJp/p/rNd3KnbQioAohy/kj0Ac9aAKCUAsP7rJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Li Zetao <lizetao1@huawei.com>,
+	Francois Romieu <romieu@fr.zoreil.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/173] Bluetooth: L2CAP: Fix responding with wrong PDU type
-Date: Mon,  3 Apr 2023 16:07:50 +0200
-Message-Id: <20230403140416.230510022@linuxfoundation.org>
+Subject: [PATCH 5.10 046/173] atm: idt77252: fix kmemleak when rmmod idt77252
+Date: Mon,  3 Apr 2023 16:07:41 +0200
+Message-Id: <20230403140415.915230235@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -34,224 +36,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 9aa9d9473f1550d1936c31259720b3f1f4690576 ]
+[ Upstream commit 4fe3c88552a3fbe1944426a4506a18cdeb457b5a ]
 
-L2CAP_ECRED_CONN_REQ shall be responded with L2CAP_ECRED_CONN_RSP not
-L2CAP_LE_CONN_RSP:
+There are memory leaks reported by kmemleak:
 
-L2CAP LE EATT Server - Reject - run
-  Listening for connections
-  New client connection with handle 0x002a
-  Sending L2CAP Request from client
-  Client received response code 0x15
-  Unexpected L2CAP response code (expected 0x18)
-L2CAP LE EATT Server - Reject - test failed
+  unreferenced object 0xffff888106500800 (size 128):
+    comm "modprobe", pid 1017, jiffies 4297787785 (age 67.152s)
+    hex dump (first 32 bytes):
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<00000000970ce626>] __kmem_cache_alloc_node+0x20c/0x380
+      [<00000000fb5f78d9>] kmalloc_trace+0x2f/0xb0
+      [<000000000e947e2a>] idt77252_init_one+0x2847/0x3c90 [idt77252]
+      [<000000006efb048e>] local_pci_probe+0xeb/0x1a0
+    ...
 
-> ACL Data RX: Handle 42 flags 0x02 dlen 26
-      LE L2CAP: Enhanced Credit Connection Request (0x17) ident 1 len 18
-        PSM: 39 (0x0027)
-        MTU: 64
-        MPS: 64
-        Credits: 5
-        Source CID: 65
-        Source CID: 66
-        Source CID: 67
-        Source CID: 68
-        Source CID: 69
-< ACL Data TX: Handle 42 flags 0x00 dlen 16
-      LE L2CAP: LE Connection Response (0x15) ident 1 len 8
-        invalid size
-        00 00 00 00 00 00 06 00
+  unreferenced object 0xffff888106500b00 (size 128):
+    comm "modprobe", pid 1017, jiffies 4297787785 (age 67.152s)
+    hex dump (first 32 bytes):
+      00 20 3d 01 80 88 ff ff 00 20 3d 01 80 88 ff ff  . =...... =.....
+      f0 23 3d 01 80 88 ff ff 00 20 3d 01 00 00 00 00  .#=...... =.....
+    backtrace:
+      [<00000000970ce626>] __kmem_cache_alloc_node+0x20c/0x380
+      [<00000000fb5f78d9>] kmalloc_trace+0x2f/0xb0
+      [<00000000f451c5be>] alloc_scq.constprop.0+0x4a/0x400 [idt77252]
+      [<00000000e6313849>] idt77252_init_one+0x28cf/0x3c90 [idt77252]
 
-L2CAP LE EATT Server - Reject - run
-  Listening for connections
-  New client connection with handle 0x002a
-  Sending L2CAP Request from client
-  Client received response code 0x18
-L2CAP LE EATT Server - Reject - test passed
+The root cause is traced to the vc_maps which alloced in open_card_oam()
+are not freed in close_card_oam(). The vc_maps are used to record
+open connections, so when close a vc_map in close_card_oam(), the memory
+should be freed. Moreover, the ubr0 is not closed when close a idt77252
+device, leading to the memory leak of vc_map and scq_info.
 
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix them by adding kfree in close_card_oam() and implementing new
+close_card_ubr0() to close ubr0.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Francois Romieu <romieu@fr.zoreil.com>
+Link: https://lore.kernel.org/r/20230320143318.2644630-1-lizetao1@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 117 +++++++++++++++++++++++++------------
- 1 file changed, 79 insertions(+), 38 deletions(-)
+ drivers/atm/idt77252.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index b01677882e38c..367b1dec2e751 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -710,6 +710,17 @@ void l2cap_chan_del(struct l2cap_chan *chan, int err)
- }
- EXPORT_SYMBOL_GPL(l2cap_chan_del);
+diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
+index 82f6f1fbe9e78..a217b50439e72 100644
+--- a/drivers/atm/idt77252.c
++++ b/drivers/atm/idt77252.c
+@@ -2915,6 +2915,7 @@ close_card_oam(struct idt77252_dev *card)
  
-+static void __l2cap_chan_list_id(struct l2cap_conn *conn, u16 id,
-+				 l2cap_chan_func_t func, void *data)
-+{
-+	struct l2cap_chan *chan, *l;
-+
-+	list_for_each_entry_safe(chan, l, &conn->chan_l, list) {
-+		if (chan->ident == id)
-+			func(chan, data);
-+	}
-+}
-+
- static void __l2cap_chan_list(struct l2cap_conn *conn, l2cap_chan_func_t func,
- 			      void *data)
- {
-@@ -777,23 +788,9 @@ static void l2cap_chan_le_connect_reject(struct l2cap_chan *chan)
- 
- static void l2cap_chan_ecred_connect_reject(struct l2cap_chan *chan)
- {
--	struct l2cap_conn *conn = chan->conn;
--	struct l2cap_ecred_conn_rsp rsp;
--	u16 result;
--
--	if (test_bit(FLAG_DEFER_SETUP, &chan->flags))
--		result = L2CAP_CR_LE_AUTHORIZATION;
--	else
--		result = L2CAP_CR_LE_BAD_PSM;
--
- 	l2cap_state_change(chan, BT_DISCONN);
- 
--	memset(&rsp, 0, sizeof(rsp));
--
--	rsp.result  = cpu_to_le16(result);
--
--	l2cap_send_cmd(conn, chan->ident, L2CAP_LE_CONN_RSP, sizeof(rsp),
--		       &rsp);
-+	__l2cap_ecred_conn_rsp_defer(chan);
- }
- 
- static void l2cap_chan_connect_reject(struct l2cap_chan *chan)
-@@ -848,7 +845,7 @@ void l2cap_chan_close(struct l2cap_chan *chan, int reason)
- 					break;
- 				case L2CAP_MODE_EXT_FLOWCTL:
- 					l2cap_chan_ecred_connect_reject(chan);
--					break;
-+					return;
- 				}
+ 				recycle_rx_pool_skb(card, &vc->rcv.rx_pool);
  			}
++			kfree(vc);
  		}
-@@ -3934,43 +3931,86 @@ void __l2cap_le_connect_rsp_defer(struct l2cap_chan *chan)
- 		       &rsp);
+ 	}
+ }
+@@ -2958,6 +2959,15 @@ open_card_ubr0(struct idt77252_dev *card)
+ 	return 0;
  }
  
--void __l2cap_ecred_conn_rsp_defer(struct l2cap_chan *chan)
-+static void l2cap_ecred_list_defer(struct l2cap_chan *chan, void *data)
++static void
++close_card_ubr0(struct idt77252_dev *card)
++{
++	struct vc_map *vc = card->vcs[0];
++
++	free_scq(card, vc->scq);
++	kfree(vc);
++}
++
+ static int
+ idt77252_dev_open(struct idt77252_dev *card)
  {
-+	int *result = data;
-+
-+	if (*result || test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
-+		return;
-+
-+	switch (chan->state) {
-+	case BT_CONNECT2:
-+		/* If channel still pending accept add to result */
-+		(*result)++;
-+		return;
-+	case BT_CONNECTED:
-+		return;
-+	default:
-+		/* If not connected or pending accept it has been refused */
-+		*result = -ECONNREFUSED;
-+		return;
-+	}
-+}
-+
-+struct l2cap_ecred_rsp_data {
- 	struct {
- 		struct l2cap_ecred_conn_rsp rsp;
--		__le16 dcid[5];
-+		__le16 scid[L2CAP_ECRED_MAX_CID];
- 	} __packed pdu;
-+	int count;
-+};
-+
-+static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
-+{
-+	struct l2cap_ecred_rsp_data *rsp = data;
-+
-+	if (test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
-+		return;
-+
-+	/* Reset ident so only one response is sent */
-+	chan->ident = 0;
-+
-+	/* Include all channels pending with the same ident */
-+	if (!rsp->pdu.rsp.result)
-+		rsp->pdu.rsp.dcid[rsp->count++] = cpu_to_le16(chan->scid);
-+	else
-+		l2cap_chan_del(chan, ECONNRESET);
-+}
-+
-+void __l2cap_ecred_conn_rsp_defer(struct l2cap_chan *chan)
-+{
- 	struct l2cap_conn *conn = chan->conn;
--	u16 ident = chan->ident;
--	int i = 0;
-+	struct l2cap_ecred_rsp_data data;
-+	u16 id = chan->ident;
-+	int result = 0;
+@@ -3007,6 +3017,7 @@ static void idt77252_dev_close(struct atm_dev *dev)
+ 	struct idt77252_dev *card = dev->dev_data;
+ 	u32 conf;
  
--	if (!ident)
-+	if (!id)
- 		return;
++	close_card_ubr0(card);
+ 	close_card_oam(card);
  
--	BT_DBG("chan %p ident %d", chan, ident);
-+	BT_DBG("chan %p id %d", chan, id);
- 
--	pdu.rsp.mtu     = cpu_to_le16(chan->imtu);
--	pdu.rsp.mps     = cpu_to_le16(chan->mps);
--	pdu.rsp.credits = cpu_to_le16(chan->rx_credits);
--	pdu.rsp.result  = cpu_to_le16(L2CAP_CR_LE_SUCCESS);
-+	memset(&data, 0, sizeof(data));
- 
--	mutex_lock(&conn->chan_lock);
-+	data.pdu.rsp.mtu     = cpu_to_le16(chan->imtu);
-+	data.pdu.rsp.mps     = cpu_to_le16(chan->mps);
-+	data.pdu.rsp.credits = cpu_to_le16(chan->rx_credits);
-+	data.pdu.rsp.result  = cpu_to_le16(L2CAP_CR_LE_SUCCESS);
- 
--	list_for_each_entry(chan, &conn->chan_l, list) {
--		if (chan->ident != ident)
--			continue;
-+	/* Verify that all channels are ready */
-+	__l2cap_chan_list_id(conn, id, l2cap_ecred_list_defer, &result);
- 
--		/* Reset ident so only one response is sent */
--		chan->ident = 0;
-+	if (result > 0)
-+		return;
- 
--		/* Include all channels pending with the same ident */
--		pdu.dcid[i++] = cpu_to_le16(chan->scid);
--	}
-+	if (result < 0)
-+		data.pdu.rsp.result = cpu_to_le16(L2CAP_CR_LE_AUTHORIZATION);
- 
--	mutex_unlock(&conn->chan_lock);
-+	/* Build response */
-+	__l2cap_chan_list_id(conn, id, l2cap_ecred_rsp_defer, &data);
- 
--	l2cap_send_cmd(conn, ident, L2CAP_ECRED_CONN_RSP,
--			sizeof(pdu.rsp) + i * sizeof(__le16), &pdu);
-+	l2cap_send_cmd(conn, id, L2CAP_ECRED_CONN_RSP,
-+		       sizeof(data.pdu.rsp) + (data.count * sizeof(__le16)),
-+		       &data.pdu);
- }
- 
- void __l2cap_connect_rsp_defer(struct l2cap_chan *chan)
-@@ -6073,6 +6113,7 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
- 		__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
- 
- 		chan->ident = cmd->ident;
-+		chan->mode = L2CAP_MODE_EXT_FLOWCTL;
- 
- 		if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
- 			l2cap_state_change(chan, BT_CONNECT2);
+ 	conf = SAR_CFG_RXPTH |	/* enable receive path           */
 -- 
 2.39.2
 
