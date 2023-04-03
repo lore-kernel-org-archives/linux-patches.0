@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33226FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FCFC433D2;
-	Mon,  3 Apr 2023 14:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B6F6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02DBC433D2;
+	Mon,  3 Apr 2023 14:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533255;
-	bh=YrDgFLmFfvH+WFEX1x8mTzwDYf59WvtcW9Lgu6zuxVw=;
+	s=korg; t=1680533258;
+	bh=DZZZor3KGACAE+vuWBdaPZmKFCVu59LfVL0jJ+4tQbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l1/dz1EczJHqNIZZO3/uyumrMebjMh+nmDluiCekx7ZkbEJDaE97lHMgD8EHK4Tpv
-	 5dED041wcZymnFgIZi8Y9D1me47EIu/QqnjYSPmQrntgwjhmREWAmWmDbUyNWyJjbw
-	 TL1k4XsQwkYfFmAGKNwhjiIhrnijS9MC7ZqwmZmY=
+	b=KfNOway2G3ePA/NZawwLnOlzpm3vXmos/3d0Y6WLrJPGdwJ10oTikT92CQeSb2NPQ
+	 sz/tmjDDB09QHHuqcAbHvGaO8WZIFcobTVTmJl3gRh3XSw2qJiDFwDMB9gP6XX7ilh
+	 WVIOYrw9DXvzMBduS8yKRQdaJ0Fo+XHPjZxdPNSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Lyude Paul <lyude@redhat.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Alex Elder <elder@linaro.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 112/187] drm/nouveau/kms: Fix backlight registration
-Date: Mon,  3 Apr 2023 16:09:17 +0200
-Message-Id: <20230403140419.658683061@linuxfoundation.org>
+Subject: [PATCH 6.2 113/187] net: ipa: compute DMA pool size properly
+Date: Mon,  3 Apr 2023 16:09:18 +0200
+Message-Id: <20230403140419.688734351@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,62 +38,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Alex Elder <elder@linaro.org>
 
-[ Upstream commit 30fb97ba4a8e082ba0a5432479d6995472edbd7b ]
+[ Upstream commit 6c75dc94f2b27fff57b305af9236eea181a00b6c ]
 
-The nouveau code used to call drm_fb_helper_initial_config() from
-nouveau_fbcon_init() before calling drm_dev_register(). This would
-probe all connectors so that drm_connector->status could be used during
-backlight registration which runs from nouveau_connector_late_register().
+In gsi_trans_pool_init_dma(), the total size of a pool of memory
+used for DMA transactions is calculated.  However the calculation is
+done incorrectly.
 
-After commit 4a16dd9d18a0 ("drm/nouveau/kms: switch to drm fbdev helpers")
-the fbdev emulation code, which now is a drm-client, can only run after
-drm_dev_register(). So during backlight registration the connectors are
-not probed yet and the drm_connector->status == connected check in
-nv50_backlight_init() would now always fail.
+For 4KB pages, this total size is currently always more than one
+page, and as a result, the calculation produces a positive (though
+incorrect) total size.  The code still works in this case; we just
+end up with fewer DMA pool entries than we intended.
 
-Replace the drm_connector->status == connected check with
-a drm_helper_probe_detect() == connected check to fix nv_backlight
-no longer getting registered because of this.
+Bjorn Andersson tested booting a kernel with 16KB pages, and hit a
+null pointer derereference in sg_alloc_append_table_from_pages(),
+descending from gsi_trans_pool_init_dma().  The cause of this was
+that a 16KB total size was going to be allocated, and with 16KB
+pages the order of that allocation is 0.  The total_size calculation
+yielded 0, which eventually led to the crash.
 
-Fixes: 4a16dd9d18a0 ("drm/nouveau/kms: switch to drm fbdev helpers")
-Link: https://gitlab.freedesktop.org/drm/nouveau/-/issues/202
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2181941
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230326205433.36485-1-hdegoede@redhat.com
+Correcting the total_size calculation fixes the problem.
+
+Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Tested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Fixes: 9dd441e4ed57 ("soc: qcom: ipa: GSI transactions")
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Alex Elder <elder@linaro.org>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230328162751.2861791-1-elder@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_backlight.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ipa/gsi_trans.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_backlight.c b/drivers/gpu/drm/nouveau/nouveau_backlight.c
-index 40409a29f5b69..91b5ecc575380 100644
---- a/drivers/gpu/drm/nouveau/nouveau_backlight.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_backlight.c
-@@ -33,6 +33,7 @@
- #include <linux/apple-gmux.h>
- #include <linux/backlight.h>
- #include <linux/idr.h>
-+#include <drm/drm_probe_helper.h>
+diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
+index 0f52c068c46d6..ee6fb00b71eb6 100644
+--- a/drivers/net/ipa/gsi_trans.c
++++ b/drivers/net/ipa/gsi_trans.c
+@@ -156,7 +156,7 @@ int gsi_trans_pool_init_dma(struct device *dev, struct gsi_trans_pool *pool,
+ 	 * gsi_trans_pool_exit_dma() can assume the total allocated
+ 	 * size is exactly (count * size).
+ 	 */
+-	total_size = get_order(total_size) << PAGE_SHIFT;
++	total_size = PAGE_SIZE << get_order(total_size);
  
- #include "nouveau_drv.h"
- #include "nouveau_reg.h"
-@@ -299,8 +300,12 @@ nv50_backlight_init(struct nouveau_backlight *bl,
- 	struct nouveau_drm *drm = nouveau_drm(nv_encoder->base.base.dev);
- 	struct nvif_object *device = &drm->client.device.object;
- 
-+	/*
-+	 * Note when this runs the connectors have not been probed yet,
-+	 * so nv_conn->base.status is not set yet.
-+	 */
- 	if (!nvif_rd32(device, NV50_PDISP_SOR_PWM_CTL(ffs(nv_encoder->dcb->or) - 1)) ||
--	    nv_conn->base.status != connector_status_connected)
-+	    drm_helper_probe_detect(&nv_conn->base, NULL, false) != connector_status_connected)
- 		return -ENODEV;
- 
- 	if (nv_conn->type == DCB_CONNECTOR_eDP) {
+ 	virt = dma_alloc_coherent(dev, total_size, &addr, GFP_KERNEL);
+ 	if (!virt)
 -- 
 2.39.2
 
