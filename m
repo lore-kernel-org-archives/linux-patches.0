@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118695683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0ADC433EF;
-	Mon,  3 Apr 2023 14:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042355683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D371C433D2;
+	Mon,  3 Apr 2023 14:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531081;
-	bh=ygSp+g4Y+Ab1hDgl4rqv7mauQJdy7Fttff9lMibTLK8=;
+	s=korg; t=1680531084;
+	bh=FGzaECPAJipNzpIl9hT6PZYius2mSfj/XIZN0wJsyQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKKIm9Jm1EUivHAJb4wDvgrNN2OwlwT9xu5TBJ5Cp8NkIFDW8JMq1iKPuzjG03bHA
-	 n2/DuANwx1R3AFa5ZqwQgOCGO47+4nfVhU+kOlWWqsKlI5bPfGtG70GEQ8Hyl9l/+g
-	 4+SJ8aiNTC+kxL/DcxPifu02sD+A1SfXlp1gYDKw=
+	b=y2DceJQLnW1a3El00cNT++N7rH8qBetf35QsuWPfdwnVqliOHl4YuM60XU7xteIHF
+	 E2G9BLVOBZQy3RgIwjQhrJs52YCEMAGnc4WM5kQuyCFVGNI3OX3vMU6Z5TTh6+uWbt
+	 fRaceDUwZqpV4CZUszT23v+PAI9OTw02L6c51Gt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 05/66] i2c: imx-lpi2c: check only for enabled interrupt flags
-Date: Mon,  3 Apr 2023 16:08:13 +0200
-Message-Id: <20230403140351.940895159@linuxfoundation.org>
+Subject: [PATCH 4.14 06/66] scsi: scsi_dh_alua: Fix memleak for qdata in alua_activate()
+Date: Mon,  3 Apr 2023 16:08:14 +0200
+Message-Id: <20230403140351.986961681@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -36,45 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 1c7885004567e8951d65a983be095f254dd20bef ]
+[ Upstream commit a13faca032acbf2699293587085293bdfaafc8ae ]
 
-When reading from I2C, the Tx watermark is set to 0. Unfortunately the
-TDF (transmit data flag) is enabled when Tx FIFO entries is equal or less
-than watermark. So it is set in every case, hence the reset default of 1.
-This results in the MSR_RDF _and_ MSR_TDF flags to be set thus trying
-to send Tx data on a read message.
-Mask the IRQ status to filter for wanted flags only.
+If alua_rtpg_queue() failed from alua_activate(), then 'qdata' is not
+freed, which will cause following memleak:
 
-Fixes: a55fa9d0e42e ("i2c: imx-lpi2c: add low power i2c bus driver")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Tested-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+unreferenced object 0xffff88810b2c6980 (size 32):
+  comm "kworker/u16:2", pid 635322, jiffies 4355801099 (age 1216426.076s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    40 39 24 c1 ff ff ff ff 00 f8 ea 0a 81 88 ff ff  @9$.............
+  backtrace:
+    [<0000000098f3a26d>] alua_activate+0xb0/0x320
+    [<000000003b529641>] scsi_dh_activate+0xb2/0x140
+    [<000000007b296db3>] activate_path_work+0xc6/0xe0 [dm_multipath]
+    [<000000007adc9ace>] process_one_work+0x3c5/0x730
+    [<00000000c457a985>] worker_thread+0x93/0x650
+    [<00000000cb80e628>] kthread+0x1ba/0x210
+    [<00000000a1e61077>] ret_from_fork+0x22/0x30
+
+Fix the problem by freeing 'qdata' in error path.
+
+Fixes: 625fe857e4fa ("scsi: scsi_dh_alua: Check scsi_device_get() return value")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20230315062154.668812-1-yukuai1@huaweicloud.com
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-imx-lpi2c.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/device_handler/scsi_dh_alua.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
-index e86801a631206..ca4d554126579 100644
---- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-+++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-@@ -515,10 +515,14 @@ static int lpi2c_imx_xfer(struct i2c_adapter *adapter,
- static irqreturn_t lpi2c_imx_isr(int irq, void *dev_id)
- {
- 	struct lpi2c_imx_struct *lpi2c_imx = dev_id;
-+	unsigned int enabled;
- 	unsigned int temp;
+diff --git a/drivers/scsi/device_handler/scsi_dh_alua.c b/drivers/scsi/device_handler/scsi_dh_alua.c
+index 2cf5579a9ad9c..750d57d77be3b 100644
+--- a/drivers/scsi/device_handler/scsi_dh_alua.c
++++ b/drivers/scsi/device_handler/scsi_dh_alua.c
+@@ -1025,10 +1025,12 @@ static int alua_activate(struct scsi_device *sdev,
+ 	rcu_read_unlock();
+ 	mutex_unlock(&h->init_mutex);
  
-+	enabled = readl(lpi2c_imx->base + LPI2C_MIER);
-+
- 	lpi2c_imx_intctrl(lpi2c_imx, 0);
- 	temp = readl(lpi2c_imx->base + LPI2C_MSR);
-+	temp &= enabled;
- 
- 	if (temp & MSR_RDF)
- 		lpi2c_imx_read_rxfifo(lpi2c_imx);
+-	if (alua_rtpg_queue(pg, sdev, qdata, true))
++	if (alua_rtpg_queue(pg, sdev, qdata, true)) {
+ 		fn = NULL;
+-	else
++	} else {
++		kfree(qdata);
+ 		err = SCSI_DH_DEV_OFFLINED;
++	}
+ 	kref_put(&pg->kref, release_port_group);
+ out:
+ 	if (fn)
 -- 
 2.39.2
 
