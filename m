@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7D3612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06778C433EF;
-	Mon,  3 Apr 2023 14:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227EB612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D18EC4339B;
+	Mon,  3 Apr 2023 14:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531782;
-	bh=s5dncEOqtsN7KbnLlVkApV27CMa5Xix8/NG1uWOFjfo=;
+	s=korg; t=1680531785;
+	bh=mO4vYXcJuyymdEEWbI0LWfTCSxdcp7fAKLUOX4tNjlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKdHsyvL/T0NiwRH1C6YmodSneKzvRdcqTFZfOAYAb7KcuTVPTXhz4rcJusfEb/QS
-	 H3GygjUWdGHEzq/6PHctbTxIYryyk6bmopDpy+QG0/OZbBbLQPU8LRD/1LIDNjnAjy
-	 UYDOtraRJnJ7/8l1agKrismDLwL5Wif7jcgAyrc8=
+	b=ZsOtcQ5cwbRPDFyqZKiDmyxxRgSIn3M1T8R9AXyion15a+cpvH/mBKgAutiGTN7QP
+	 j0YGLIfXk88AG+6Q4OiWgOYXAU7FRa5x2je/QC5RdNtKm1FLsTPriBMXZVUz43sv+6
+	 oYavtWm2ZD7R0O4WgDxPbOOSRlLYe3gCJ8vVFnVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Yang <sherry.yang@oracle.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 099/104] btrfs: scan device in non-exclusive mode
-Date: Mon,  3 Apr 2023 16:09:31 +0200
-Message-Id: <20230403140408.046335632@linuxfoundation.org>
+	syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com,
+	Jun Nie <jun.nie@linaro.org>,
+	Ye Bin <yebin10@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
+	Tudor Ambarus <tudor.ambarus@linaro.org>
+Subject: [PATCH 5.4 100/104] ext4: fix kernel BUG in ext4_write_inline_data_end()
+Date: Mon,  3 Apr 2023 16:09:32 +0200
+Message-Id: <20230403140408.097458297@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -36,87 +38,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 50d281fc434cb8e2497f5e70a309ccca6b1a09f0 upstream.
+commit 5c099c4fdc438014d5893629e70a8ba934433ee8 upstream.
 
-This fixes mkfs/mount/check failures due to race with systemd-udevd
-scan.
+Syzbot report follow issue:
+------------[ cut here ]------------
+kernel BUG at fs/ext4/inline.c:227!
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+CPU: 1 PID: 3629 Comm: syz-executor212 Not tainted 6.1.0-rc5-syzkaller-00018-g59d0d52c30d4 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+RIP: 0010:ext4_write_inline_data+0x344/0x3e0 fs/ext4/inline.c:227
+RSP: 0018:ffffc90003b3f368 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffff8880704e16c0 RCX: 0000000000000000
+RDX: ffff888021763a80 RSI: ffffffff821e31a4 RDI: 0000000000000006
+RBP: 000000000006818e R08: 0000000000000006 R09: 0000000000068199
+R10: 0000000000000079 R11: 0000000000000000 R12: 000000000000000b
+R13: 0000000000068199 R14: ffffc90003b3f408 R15: ffff8880704e1c82
+FS:  000055555723e3c0(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fffe8ac9080 CR3: 0000000079f81000 CR4: 0000000000350ee0
+Call Trace:
+ <TASK>
+ ext4_write_inline_data_end+0x2a3/0x12f0 fs/ext4/inline.c:768
+ ext4_write_end+0x242/0xdd0 fs/ext4/inode.c:1313
+ ext4_da_write_end+0x3ed/0xa30 fs/ext4/inode.c:3063
+ generic_perform_write+0x316/0x570 mm/filemap.c:3764
+ ext4_buffered_write_iter+0x15b/0x460 fs/ext4/file.c:285
+ ext4_file_write_iter+0x8bc/0x16e0 fs/ext4/file.c:700
+ call_write_iter include/linux/fs.h:2191 [inline]
+ do_iter_readv_writev+0x20b/0x3b0 fs/read_write.c:735
+ do_iter_write+0x182/0x700 fs/read_write.c:861
+ vfs_iter_write+0x74/0xa0 fs/read_write.c:902
+ iter_file_splice_write+0x745/0xc90 fs/splice.c:686
+ do_splice_from fs/splice.c:764 [inline]
+ direct_splice_actor+0x114/0x180 fs/splice.c:931
+ splice_direct_to_actor+0x335/0x8a0 fs/splice.c:886
+ do_splice_direct+0x1ab/0x280 fs/splice.c:974
+ do_sendfile+0xb19/0x1270 fs/read_write.c:1255
+ __do_sys_sendfile64 fs/read_write.c:1323 [inline]
+ __se_sys_sendfile64 fs/read_write.c:1309 [inline]
+ __x64_sys_sendfile64+0x1d0/0x210 fs/read_write.c:1309
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+---[ end trace 0000000000000000 ]---
 
-During the device scan initiated by systemd-udevd, other user space
-EXCL operations such as mkfs, mount, or check may get blocked and result
-in a "Device or resource busy" error. This is because the device
-scan process opens the device with the EXCL flag in the kernel.
+Above issue may happens as follows:
+ext4_da_write_begin
+  ext4_da_write_inline_data_begin
+    ext4_da_convert_inline_data_to_extent
+      ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
+ext4_da_write_end
 
-Two reports were received:
+ext4_run_li_request
+  ext4_mb_prefetch
+    ext4_read_block_bitmap_nowait
+      ext4_validate_block_bitmap
+        ext4_mark_group_bitmap_corrupted(sb, block_group, EXT4_GROUP_INFO_BBITMAP_CORRUPT)
+	 percpu_counter_sub(&sbi->s_freeclusters_counter,grp->bb_free);
+	  -> sbi->s_freeclusters_counter become zero
+ext4_da_write_begin
+  if (ext4_nonda_switch(inode->i_sb)) -> As freeclusters_counter is zero will return true
+    *fsdata = (void *)FALL_BACK_TO_NONDELALLOC;
+    ext4_write_begin
+ext4_da_write_end
+  if (write_mode == FALL_BACK_TO_NONDELALLOC)
+    ext4_write_end
+      if (inline_data)
+        ext4_write_inline_data_end
+	  ext4_write_inline_data
+	    BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
+           -> As inode is already convert to extent, so 'pos + len' > inline_size
+	   -> then trigger BUG.
 
- - btrfs/179 test case, where the fsck command failed with the -EBUSY
-   error
+To solve this issue, instead of checking ext4_has_inline_data() which
+is only cleared after data has been written back, check the
+EXT4_STATE_MAY_INLINE_DATA flag in ext4_write_end().
 
- - LTP pwritev03 test case, where mkfs.vfs failed with
-   the -EBUSY error, when mkfs.vfs tried to overwrite old btrfs filesystem
-   on the device.
-
-In both cases, fsck and mkfs (respectively) were racing with a
-systemd-udevd device scan, and systemd-udevd won, resulting in the
--EBUSY error for fsck and mkfs.
-
-Reproducing the problem has been difficult because there is a very
-small window during which these userspace threads can race to
-acquire the exclusive device open. Even on the system where the problem
-was observed, the problem occurrences were anywhere between 10 to 400
-iterations and chances of reproducing decreases with debug printk()s.
-
-However, an exclusive device open is unnecessary for the scan process,
-as there are no write operations on the device during scan. Furthermore,
-during the mount process, the superblock is re-read in the below
-function call chain:
-
-  btrfs_mount_root
-   btrfs_open_devices
-    open_fs_devices
-     btrfs_open_one_device
-       btrfs_get_bdev_and_sb
-
-So, to fix this issue, removes the FMODE_EXCL flag from the scan
-operation, and add a comment.
-
-The case where mkfs may still write to the device and a scan is running,
-the btrfs signature is not written at that time so scan will not
-recognize such device.
-
-Reported-by: Sherry Yang <sherry.yang@oracle.com>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Link: https://lore.kernel.org/oe-lkp/202303170839.fdf23068-oliver.sang@intel.com
-CC: stable@vger.kernel.org # 5.4+
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f19d5870cbf7 ("ext4: add normal write support for inline data")
+Reported-by: syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com
+Reported-by: Jun Nie <jun.nie@linaro.org>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Link: https://lore.kernel.org/r/20221206144134.1919987-1-yebin@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ta: Fix conflict in if expression and use the local variable inline_data
+as it is initialized with ext4_has_inline_data(inode) anyway.]
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -1579,8 +1579,17 @@ struct btrfs_device *btrfs_scan_one_devi
- 	 * later supers, using BTRFS_SUPER_MIRROR_MAX instead
- 	 */
- 	bytenr = btrfs_sb_offset(0);
--	flags |= FMODE_EXCL;
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -1439,7 +1439,8 @@ static int ext4_write_end(struct file *f
+ 	bool verity = ext4_verity_in_progress(inode);
  
-+	/*
-+	 * Avoid using flag |= FMODE_EXCL here, as the systemd-udev may
-+	 * initiate the device scan which may race with the user's mount
-+	 * or mkfs command, resulting in failure.
-+	 * Since the device scan is solely for reading purposes, there is
-+	 * no need for FMODE_EXCL. Additionally, the devices are read again
-+	 * during the mount process. It is ok to get some inconsistent
-+	 * values temporarily, as the device paths of the fsid are the only
-+	 * required information for assembling the volume.
-+	 */
- 	bdev = blkdev_get_by_path(path, flags, holder);
- 	if (IS_ERR(bdev))
- 		return ERR_CAST(bdev);
+ 	trace_ext4_write_end(inode, pos, len, copied);
+-	if (inline_data) {
++	if (inline_data &&
++	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)) {
+ 		ret = ext4_write_inline_data_end(inode, pos, len,
+ 						 copied, page);
+ 		if (ret < 0) {
 
 
