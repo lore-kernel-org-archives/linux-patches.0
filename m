@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6AC6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:40:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85181C433D2;
-	Mon,  3 Apr 2023 14:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15E26FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:40:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D2EC433EF;
+	Mon,  3 Apr 2023 14:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532828;
-	bh=DwY+yCmnnTVF6ZEf7AKk5MMt3RiJokAbP5E81GglWF0=;
+	s=korg; t=1680532831;
+	bh=am/cZ2VQblcLM3UF3r1wQtePQAg8kzwhdW0v967Zv9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lrsIWw6EhYesGwgn9G8D0kFW2hz8tkdqcZ9Ct71WB3ltYlzf1ca1klbGmWt3GFiMf
-	 39R+pn4d6tX9yqc8UpUIAdUbKkBs/tNDHMRwmUU7POXcDEEbA6+OfKOsR70/xfKZML
-	 pBVLCtexyev1Ir3sZb+/iwgSNSj8yhnpYmStGDBw=
+	b=O0t6TStiEYV+wMGIg9BMxDZwZAyvE4vZEAx+CgpuarYawzVv5UAhScgmFjHR2kQ9g
+	 Upx2GfU2857kI/wdyHgAMgwUd4lqIF6VNY+I3bnf6D8+b5t5DR7vD8AxdYf4vPedlO
+	 hbRipIIFdgTKGPpD/HIcUksve//4NnexJQdVahaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Hans Holmberg <hans.holmberg@wdc.com>
-Subject: [PATCH 6.1 133/181] zonefs: Do not propagate iomap_dio_rw() ENOTBLK error to user space
-Date: Mon,  3 Apr 2023 16:09:28 +0200
-Message-Id: <20230403140419.400250410@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 134/181] block/io_uring: pass in issue_flags for uring_cmd task_work handling
+Date: Mon,  3 Apr 2023 16:09:29 +0200
+Message-Id: <20230403140419.429764225@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -37,56 +33,269 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 77af13ba3c7f91d91c377c7e2d122849bbc17128 upstream.
+commit 9d2789ac9d60c049d26ef6d3005d9c94c5a559e9 upstream.
 
-The call to invalidate_inode_pages2_range() in __iomap_dio_rw() may
-fail, in which case -ENOTBLK is returned and this error code is
-propagated back to user space trhough iomap_dio_rw() ->
-zonefs_file_dio_write() return chain. This error code is fairly obscure
-and may confuse the user. Avoid this and be consistent with the behavior
-of zonefs_file_dio_append() for similar invalidate_inode_pages2_range()
-errors by returning -EBUSY to user space when iomap_dio_rw() returns
--ENOTBLK.
+io_uring_cmd_done() currently assumes that the uring_lock is held
+when invoked, and while it generally is, this is not guaranteed.
+Pass in the issue_flags associated with it, so that we have
+IO_URING_F_UNLOCKED available to be able to lock the CQ ring
+appropriately when completing events.
 
-Suggested-by: Christoph Hellwig <hch@infradead.org>
-Fixes: 8dcc1a9d90c1 ("fs: New zonefs file system")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Tested-by: Hans Holmberg <hans.holmberg@wdc.com>
+Fixes: ee692a21e9bf ("fs,io_uring: add infrastructure for uring-cmd")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/zonefs/file.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/block/ublk_drv.c  |   31 ++++++++++++++++++-------------
+ drivers/nvme/host/ioctl.c |   14 ++++++++------
+ include/linux/io_uring.h  |   11 ++++++-----
+ io_uring/uring_cmd.c      |   10 ++++++----
+ 4 files changed, 38 insertions(+), 28 deletions(-)
 
---- a/fs/zonefs/file.c
-+++ b/fs/zonefs/file.c
-@@ -567,11 +567,21 @@ static ssize_t zonefs_file_dio_write(str
- 		append = sync;
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -656,7 +656,8 @@ static void __ublk_fail_req(struct ublk_
+ 	}
+ }
+ 
+-static void ubq_complete_io_cmd(struct ublk_io *io, int res)
++static void ubq_complete_io_cmd(struct ublk_io *io, int res,
++				unsigned issue_flags)
+ {
+ 	/* mark this cmd owned by ublksrv */
+ 	io->flags |= UBLK_IO_FLAG_OWNED_BY_SRV;
+@@ -668,7 +669,7 @@ static void ubq_complete_io_cmd(struct u
+ 	io->flags &= ~UBLK_IO_FLAG_ACTIVE;
+ 
+ 	/* tell ublksrv one io request is coming */
+-	io_uring_cmd_done(io->cmd, res, 0);
++	io_uring_cmd_done(io->cmd, res, 0, issue_flags);
+ }
+ 
+ #define UBLK_REQUEUE_DELAY_MS	3
+@@ -685,7 +686,8 @@ static inline void __ublk_abort_rq(struc
+ 	mod_delayed_work(system_wq, &ubq->dev->monitor_work, 0);
+ }
+ 
+-static inline void __ublk_rq_task_work(struct request *req)
++static inline void __ublk_rq_task_work(struct request *req,
++				       unsigned issue_flags)
+ {
+ 	struct ublk_queue *ubq = req->mq_hctx->driver_data;
+ 	int tag = req->tag;
+@@ -723,7 +725,7 @@ static inline void __ublk_rq_task_work(s
+ 			pr_devel("%s: need get data. op %d, qid %d tag %d io_flags %x\n",
+ 					__func__, io->cmd->cmd_op, ubq->q_id,
+ 					req->tag, io->flags);
+-			ubq_complete_io_cmd(io, UBLK_IO_RES_NEED_GET_DATA);
++			ubq_complete_io_cmd(io, UBLK_IO_RES_NEED_GET_DATA, issue_flags);
+ 			return;
+ 		}
+ 		/*
+@@ -761,17 +763,18 @@ static inline void __ublk_rq_task_work(s
+ 			mapped_bytes >> 9;
  	}
  
--	if (append)
-+	if (append) {
- 		ret = zonefs_file_dio_append(iocb, from);
--	else
-+	} else {
-+		/*
-+		 * iomap_dio_rw() may return ENOTBLK if there was an issue with
-+		 * page invalidation. Overwrite that error code with EBUSY to
-+		 * be consistent with zonefs_file_dio_append() return value for
-+		 * similar issues.
-+		 */
- 		ret = iomap_dio_rw(iocb, from, &zonefs_write_iomap_ops,
- 				   &zonefs_write_dio_ops, 0, NULL, 0);
-+		if (ret == -ENOTBLK)
-+			ret = -EBUSY;
-+	}
-+
- 	if (zonefs_zone_is_seq(z) &&
- 	    (ret > 0 || ret == -EIOCBQUEUED)) {
- 		if (ret > 0)
+-	ubq_complete_io_cmd(io, UBLK_IO_RES_OK);
++	ubq_complete_io_cmd(io, UBLK_IO_RES_OK, issue_flags);
+ }
+ 
+-static inline void ublk_forward_io_cmds(struct ublk_queue *ubq)
++static inline void ublk_forward_io_cmds(struct ublk_queue *ubq,
++					unsigned issue_flags)
+ {
+ 	struct llist_node *io_cmds = llist_del_all(&ubq->io_cmds);
+ 	struct ublk_rq_data *data, *tmp;
+ 
+ 	io_cmds = llist_reverse_order(io_cmds);
+ 	llist_for_each_entry_safe(data, tmp, io_cmds, node)
+-		__ublk_rq_task_work(blk_mq_rq_from_pdu(data));
++		__ublk_rq_task_work(blk_mq_rq_from_pdu(data), issue_flags);
+ }
+ 
+ static inline void ublk_abort_io_cmds(struct ublk_queue *ubq)
+@@ -783,12 +786,12 @@ static inline void ublk_abort_io_cmds(st
+ 		__ublk_abort_rq(ubq, blk_mq_rq_from_pdu(data));
+ }
+ 
+-static void ublk_rq_task_work_cb(struct io_uring_cmd *cmd)
++static void ublk_rq_task_work_cb(struct io_uring_cmd *cmd, unsigned issue_flags)
+ {
+ 	struct ublk_uring_cmd_pdu *pdu = ublk_get_uring_cmd_pdu(cmd);
+ 	struct ublk_queue *ubq = pdu->ubq;
+ 
+-	ublk_forward_io_cmds(ubq);
++	ublk_forward_io_cmds(ubq, issue_flags);
+ }
+ 
+ static void ublk_rq_task_work_fn(struct callback_head *work)
+@@ -797,8 +800,9 @@ static void ublk_rq_task_work_fn(struct
+ 			struct ublk_rq_data, work);
+ 	struct request *req = blk_mq_rq_from_pdu(data);
+ 	struct ublk_queue *ubq = req->mq_hctx->driver_data;
++	unsigned issue_flags = IO_URING_F_UNLOCKED;
+ 
+-	ublk_forward_io_cmds(ubq);
++	ublk_forward_io_cmds(ubq, issue_flags);
+ }
+ 
+ static void ublk_queue_cmd(struct ublk_queue *ubq, struct request *rq)
+@@ -1052,7 +1056,8 @@ static void ublk_cancel_queue(struct ubl
+ 		struct ublk_io *io = &ubq->ios[i];
+ 
+ 		if (io->flags & UBLK_IO_FLAG_ACTIVE)
+-			io_uring_cmd_done(io->cmd, UBLK_IO_RES_ABORT, 0);
++			io_uring_cmd_done(io->cmd, UBLK_IO_RES_ABORT, 0,
++						IO_URING_F_UNLOCKED);
+ 	}
+ 
+ 	/* all io commands are canceled */
+@@ -1295,7 +1300,7 @@ static int ublk_ch_uring_cmd(struct io_u
+ 	return -EIOCBQUEUED;
+ 
+  out:
+-	io_uring_cmd_done(cmd, ret, 0);
++	io_uring_cmd_done(cmd, ret, 0, issue_flags);
+ 	pr_devel("%s: complete: cmd op %d, tag %d ret %x io_flags %x\n",
+ 			__func__, cmd_op, tag, ret, io->flags);
+ 	return -EIOCBQUEUED;
+@@ -2053,7 +2058,7 @@ static int ublk_ctrl_uring_cmd(struct io
+ 		break;
+ 	}
+  out:
+-	io_uring_cmd_done(cmd, ret, 0);
++	io_uring_cmd_done(cmd, ret, 0, issue_flags);
+ 	pr_devel("%s: cmd done ret %d cmd_op %x, dev id %d qid %d\n",
+ 			__func__, ret, cmd->cmd_op, header->dev_id, header->queue_id);
+ 	return -EIOCBQUEUED;
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -387,7 +387,8 @@ static inline struct nvme_uring_cmd_pdu
+ 	return (struct nvme_uring_cmd_pdu *)&ioucmd->pdu;
+ }
+ 
+-static void nvme_uring_task_meta_cb(struct io_uring_cmd *ioucmd)
++static void nvme_uring_task_meta_cb(struct io_uring_cmd *ioucmd,
++				    unsigned issue_flags)
+ {
+ 	struct nvme_uring_cmd_pdu *pdu = nvme_uring_cmd_pdu(ioucmd);
+ 	struct request *req = pdu->req;
+@@ -408,17 +409,18 @@ static void nvme_uring_task_meta_cb(stru
+ 		blk_rq_unmap_user(req->bio);
+ 	blk_mq_free_request(req);
+ 
+-	io_uring_cmd_done(ioucmd, status, result);
++	io_uring_cmd_done(ioucmd, status, result, issue_flags);
+ }
+ 
+-static void nvme_uring_task_cb(struct io_uring_cmd *ioucmd)
++static void nvme_uring_task_cb(struct io_uring_cmd *ioucmd,
++			       unsigned issue_flags)
+ {
+ 	struct nvme_uring_cmd_pdu *pdu = nvme_uring_cmd_pdu(ioucmd);
+ 
+ 	if (pdu->bio)
+ 		blk_rq_unmap_user(pdu->bio);
+ 
+-	io_uring_cmd_done(ioucmd, pdu->nvme_status, pdu->u.result);
++	io_uring_cmd_done(ioucmd, pdu->nvme_status, pdu->u.result, issue_flags);
+ }
+ 
+ static enum rq_end_io_ret nvme_uring_cmd_end_io(struct request *req,
+@@ -440,7 +442,7 @@ static enum rq_end_io_ret nvme_uring_cmd
+ 	 * Otherwise, move the completion to task work.
+ 	 */
+ 	if (cookie != NULL && blk_rq_is_poll(req))
+-		nvme_uring_task_cb(ioucmd);
++		nvme_uring_task_cb(ioucmd, IO_URING_F_UNLOCKED);
+ 	else
+ 		io_uring_cmd_complete_in_task(ioucmd, nvme_uring_task_cb);
+ 
+@@ -462,7 +464,7 @@ static enum rq_end_io_ret nvme_uring_cmd
+ 	 * Otherwise, move the completion to task work.
+ 	 */
+ 	if (cookie != NULL && blk_rq_is_poll(req))
+-		nvme_uring_task_meta_cb(ioucmd);
++		nvme_uring_task_meta_cb(ioucmd, IO_URING_F_UNLOCKED);
+ 	else
+ 		io_uring_cmd_complete_in_task(ioucmd, nvme_uring_task_meta_cb);
+ 
+--- a/include/linux/io_uring.h
++++ b/include/linux/io_uring.h
+@@ -26,7 +26,7 @@ struct io_uring_cmd {
+ 	const void	*cmd;
+ 	union {
+ 		/* callback to defer completions to task context */
+-		void (*task_work_cb)(struct io_uring_cmd *cmd);
++		void (*task_work_cb)(struct io_uring_cmd *cmd, unsigned);
+ 		/* used for polled completion */
+ 		void *cookie;
+ 	};
+@@ -38,9 +38,10 @@ struct io_uring_cmd {
+ #if defined(CONFIG_IO_URING)
+ int io_uring_cmd_import_fixed(u64 ubuf, unsigned long len, int rw,
+ 			      struct iov_iter *iter, void *ioucmd);
+-void io_uring_cmd_done(struct io_uring_cmd *cmd, ssize_t ret, ssize_t res2);
++void io_uring_cmd_done(struct io_uring_cmd *cmd, ssize_t ret, ssize_t res2,
++			unsigned issue_flags);
+ void io_uring_cmd_complete_in_task(struct io_uring_cmd *ioucmd,
+-			void (*task_work_cb)(struct io_uring_cmd *));
++			void (*task_work_cb)(struct io_uring_cmd *, unsigned));
+ struct sock *io_uring_get_socket(struct file *file);
+ void __io_uring_cancel(bool cancel_all);
+ void __io_uring_free(struct task_struct *tsk);
+@@ -71,11 +72,11 @@ static inline int io_uring_cmd_import_fi
+ 	return -EOPNOTSUPP;
+ }
+ static inline void io_uring_cmd_done(struct io_uring_cmd *cmd, ssize_t ret,
+-		ssize_t ret2)
++		ssize_t ret2, unsigned issue_flags)
+ {
+ }
+ static inline void io_uring_cmd_complete_in_task(struct io_uring_cmd *ioucmd,
+-			void (*task_work_cb)(struct io_uring_cmd *))
++			void (*task_work_cb)(struct io_uring_cmd *, unsigned))
+ {
+ }
+ static inline struct sock *io_uring_get_socket(struct file *file)
+--- a/io_uring/uring_cmd.c
++++ b/io_uring/uring_cmd.c
+@@ -15,12 +15,13 @@
+ static void io_uring_cmd_work(struct io_kiocb *req, bool *locked)
+ {
+ 	struct io_uring_cmd *ioucmd = io_kiocb_to_cmd(req, struct io_uring_cmd);
++	unsigned issue_flags = *locked ? 0 : IO_URING_F_UNLOCKED;
+ 
+-	ioucmd->task_work_cb(ioucmd);
++	ioucmd->task_work_cb(ioucmd, issue_flags);
+ }
+ 
+ void io_uring_cmd_complete_in_task(struct io_uring_cmd *ioucmd,
+-			void (*task_work_cb)(struct io_uring_cmd *))
++			void (*task_work_cb)(struct io_uring_cmd *, unsigned))
+ {
+ 	struct io_kiocb *req = cmd_to_io_kiocb(ioucmd);
+ 
+@@ -42,7 +43,8 @@ static inline void io_req_set_cqe32_extr
+  * Called by consumers of io_uring_cmd, if they originally returned
+  * -EIOCBQUEUED upon receiving the command.
+  */
+-void io_uring_cmd_done(struct io_uring_cmd *ioucmd, ssize_t ret, ssize_t res2)
++void io_uring_cmd_done(struct io_uring_cmd *ioucmd, ssize_t ret, ssize_t res2,
++		       unsigned issue_flags)
+ {
+ 	struct io_kiocb *req = cmd_to_io_kiocb(ioucmd);
+ 
+@@ -56,7 +58,7 @@ void io_uring_cmd_done(struct io_uring_c
+ 		/* order with io_iopoll_req_issued() checking ->iopoll_complete */
+ 		smp_store_release(&req->iopoll_completed, 1);
+ 	else
+-		__io_req_complete(req, 0);
++		__io_req_complete(req, issue_flags);
+ }
+ EXPORT_SYMBOL_GPL(io_uring_cmd_done);
+ 
 
 
