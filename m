@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77515683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255D9C433D2;
-	Mon,  3 Apr 2023 14:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF055683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81BFC433D2;
+	Mon,  3 Apr 2023 14:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531076;
-	bh=C0FLhrOXWMhJz0PAJwRu0Uzl46me5i3kX96oWvGA5ew=;
+	s=korg; t=1680531079;
+	bh=PKgOHJ8YgUUpIj745gDQhMjuKvp10yGNvhk2qbe1YMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3DB0jw6e4bMSr3UeLbicpsZ/klAbm8WE9Gy+/CpzIg5aD2laFRfInyMAA86B1QJu
-	 HsCGKUrjDb7IvNxr5p9vUEPSh1E7aaMl2TuC1s430WEWLGguMmMmJIo/t+fw8map3A
-	 AOXsCpYKxipDkdX2yL+PE5CUKh8V8z83/ldwIodA=
+	b=ZgVPaQX3TvmTRMOVDb5ze6dL22zMLZbVP86egRvNnmCT0K9thU/IPNitUBWOMHV9b
+	 WmXLu2Ec3cCaNaIX215CEACf3UOMTgr3tpO7E4cxT4qFYLlDXZ9cNkvckrx74CU5j2
+	 n2DesnkPQffu5gaaIZYFESEA96f/TyiKgl1lij2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Akihiko Odaki <akihiko.odaki@daynix.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Marek Szlosek <marek.szlosek@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 03/66] intel/igbvf: free irq on the error path in igbvf_request_msix()
-Date: Mon,  3 Apr 2023 16:08:11 +0200
-Message-Id: <20230403140351.835051222@linuxfoundation.org>
+Subject: [PATCH 4.14 04/66] igbvf: Regard vf reset nack as success
+Date: Mon,  3 Apr 2023 16:08:12 +0200
+Message-Id: <20230403140351.889429767@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -37,52 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-[ Upstream commit 85eb39bb39cbb5c086df1e19ba67cc1366693a77 ]
+[ Upstream commit 02c83791ef969c6a8a150b4927193d0d0e50fb23 ]
 
-In igbvf_request_msix(), irqs have not been freed on the err path,
-we need to free it. Fix it.
+vf reset nack actually represents the reset operation itself is
+performed but no address is assigned. Therefore, e1000_reset_hw_vf
+should fill the "perm_addr" with the zero address and return success on
+such an occasion. This prevents its callers in netdev.c from saying PF
+still resetting, and instead allows them to correctly report that no
+address is assigned.
 
-Fixes: d4e0fe01a38a ("igbvf: add new driver to support 82576 virtual functions")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Fixes: 6ddbc4cf1f4d ("igb: Indicate failure on vf reset for empty mac address")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Tested-by: Marek Szlosek <marek.szlosek@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igbvf/netdev.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igbvf/vf.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igbvf/netdev.c b/drivers/net/ethernet/intel/igbvf/netdev.c
-index 98fd214f2c42b..cc1a608904ab8 100644
---- a/drivers/net/ethernet/intel/igbvf/netdev.c
-+++ b/drivers/net/ethernet/intel/igbvf/netdev.c
-@@ -1093,7 +1093,7 @@ static int igbvf_request_msix(struct igbvf_adapter *adapter)
- 			  igbvf_intr_msix_rx, 0, adapter->rx_ring->name,
- 			  netdev);
- 	if (err)
--		goto out;
-+		goto free_irq_tx;
+diff --git a/drivers/net/ethernet/intel/igbvf/vf.c b/drivers/net/ethernet/intel/igbvf/vf.c
+index 9577ccf4b26ad..7156684337e56 100644
+--- a/drivers/net/ethernet/intel/igbvf/vf.c
++++ b/drivers/net/ethernet/intel/igbvf/vf.c
+@@ -24,6 +24,8 @@
  
- 	adapter->rx_ring->itr_register = E1000_EITR(vector);
- 	adapter->rx_ring->itr_val = adapter->current_itr;
-@@ -1102,10 +1102,14 @@ static int igbvf_request_msix(struct igbvf_adapter *adapter)
- 	err = request_irq(adapter->msix_entries[vector].vector,
- 			  igbvf_msix_other, 0, netdev->name, netdev);
- 	if (err)
--		goto out;
-+		goto free_irq_rx;
+ *******************************************************************************/
  
- 	igbvf_configure_msix(adapter);
- 	return 0;
-+free_irq_rx:
-+	free_irq(adapter->msix_entries[--vector].vector, netdev);
-+free_irq_tx:
-+	free_irq(adapter->msix_entries[--vector].vector, netdev);
- out:
- 	return err;
- }
++#include <linux/etherdevice.h>
++
+ #include "vf.h"
+ 
+ static s32 e1000_check_for_link_vf(struct e1000_hw *hw);
+@@ -154,11 +156,16 @@ static s32 e1000_reset_hw_vf(struct e1000_hw *hw)
+ 		/* set our "perm_addr" based on info provided by PF */
+ 		ret_val = mbx->ops.read_posted(hw, msgbuf, 3);
+ 		if (!ret_val) {
+-			if (msgbuf[0] == (E1000_VF_RESET |
+-					  E1000_VT_MSGTYPE_ACK))
++			switch (msgbuf[0]) {
++			case E1000_VF_RESET | E1000_VT_MSGTYPE_ACK:
+ 				memcpy(hw->mac.perm_addr, addr, ETH_ALEN);
+-			else
++				break;
++			case E1000_VF_RESET | E1000_VT_MSGTYPE_NACK:
++				eth_zero_addr(hw->mac.perm_addr);
++				break;
++			default:
+ 				ret_val = -E1000_ERR_MAC_INIT;
++			}
+ 		}
+ 	}
+ 
 -- 
 2.39.2
 
