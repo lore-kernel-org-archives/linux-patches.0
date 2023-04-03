@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B956FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:39:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C61C433D2;
-	Mon,  3 Apr 2023 14:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D956FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:39:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FB9C433D2;
+	Mon,  3 Apr 2023 14:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532787;
-	bh=2RXm2wa3A9FC+yqYtJ4MiGv0GflYG/3NkCVxITDf+1A=;
+	s=korg; t=1680532789;
+	bh=M22DJ+mVfTKZWQi6MsRdRD2l2Ixq8iEj5qdp5K6pGXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYPGZfTxjb6WJnV66j/5R8SzZYULocx+ad4C83eSGyC+x9sSssbx5JGctOvVhtLis
-	 yVGuYAt0hFnuGtbFaP1ip4tOPf0wzWSnVy9pENomCGyromwWQfjvFF7EZjP1iWmHPS
-	 zE0Qu1Ltow34/JAX910+e0tI98vExNBykA7cuEZY=
+	b=uX4/PuPcEJP3s7BFv+F/MNUvKgLRSaaH10RtiP/ZgPBtaUZOS9F1RLoFJRS310/5i
+	 eZkYjOYzrsgXuu8Qb+bWOWuTLYUO06Cmg619n6I9VNTQE3FIwCj7Ym93dYIHqwo+7j
+	 XYfHjRpo1SwxYhqTJyfyYrb2OklxC14tkIzDnXvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Arun Ramadoss <arun.ramadoss@microchip.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/181] bnxt_en: Fix typo in PCI id to device description string mapping
-Date: Mon,  3 Apr 2023 16:09:10 +0200
-Message-Id: <20230403140418.833260598@linuxfoundation.org>
+Subject: [PATCH 6.1 087/181] net: dsa: microchip: ksz8: fix ksz8_fdb_dump()
+Date: Mon,  3 Apr 2023 16:08:42 +0200
+Message-Id: <20230403140417.948373548@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -38,45 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 62aad36ed31abc80f35db11e187e690448a79f7d ]
+[ Upstream commit 88e943e83827a349f70c3464b3eba7260be7461d ]
 
-Fix 57502 and 57508 NPAR description string entries.  The typos
-caused these devices to not match up with lspci output.
+Before this patch, the ksz8_fdb_dump() function had several issues, such
+as uninitialized variables and incorrect usage of source port as a bit
+mask. These problems caused inaccurate reporting of vid information and
+port assignment in the bridge fdb.
 
-Fixes: 49c98421e6ab ("bnxt_en: Add PCI IDs for 57500 series NPAR devices.")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e587be759e6e ("net: dsa: microchip: update fdb add/del/dump in ksz_common")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/dsa/microchip/ksz8795.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 251b102d2792b..c6e36603bd2db 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -175,12 +175,12 @@ static const struct pci_device_id bnxt_pci_tbl[] = {
- 	{ PCI_VDEVICE(BROADCOM, 0x1750), .driver_data = BCM57508 },
- 	{ PCI_VDEVICE(BROADCOM, 0x1751), .driver_data = BCM57504 },
- 	{ PCI_VDEVICE(BROADCOM, 0x1752), .driver_data = BCM57502 },
--	{ PCI_VDEVICE(BROADCOM, 0x1800), .driver_data = BCM57508_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1800), .driver_data = BCM57502_NPAR },
- 	{ PCI_VDEVICE(BROADCOM, 0x1801), .driver_data = BCM57504_NPAR },
--	{ PCI_VDEVICE(BROADCOM, 0x1802), .driver_data = BCM57502_NPAR },
--	{ PCI_VDEVICE(BROADCOM, 0x1803), .driver_data = BCM57508_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1802), .driver_data = BCM57508_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1803), .driver_data = BCM57502_NPAR },
- 	{ PCI_VDEVICE(BROADCOM, 0x1804), .driver_data = BCM57504_NPAR },
--	{ PCI_VDEVICE(BROADCOM, 0x1805), .driver_data = BCM57502_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1805), .driver_data = BCM57508_NPAR },
- 	{ PCI_VDEVICE(BROADCOM, 0xd802), .driver_data = BCM58802 },
- 	{ PCI_VDEVICE(BROADCOM, 0xd804), .driver_data = BCM58804 },
- #ifdef CONFIG_BNXT_SRIOV
+diff --git a/drivers/net/dsa/microchip/ksz8795.c b/drivers/net/dsa/microchip/ksz8795.c
+index bd3b133e7085b..22250ae222b5b 100644
+--- a/drivers/net/dsa/microchip/ksz8795.c
++++ b/drivers/net/dsa/microchip/ksz8795.c
+@@ -907,15 +907,14 @@ int ksz8_fdb_dump(struct ksz_device *dev, int port,
+ 	u16 entries = 0;
+ 	u8 timestamp = 0;
+ 	u8 fid;
+-	u8 member;
+-	struct alu_struct alu;
++	u8 src_port;
++	u8 mac[ETH_ALEN];
+ 
+ 	do {
+-		alu.is_static = false;
+-		ret = ksz8_r_dyn_mac_table(dev, i, alu.mac, &fid, &member,
++		ret = ksz8_r_dyn_mac_table(dev, i, mac, &fid, &src_port,
+ 					   &timestamp, &entries);
+-		if (!ret && (member & BIT(port))) {
+-			ret = cb(alu.mac, alu.fid, alu.is_static, data);
++		if (!ret && port == src_port) {
++			ret = cb(mac, fid, false, data);
+ 			if (ret)
+ 				break;
+ 		}
 -- 
 2.39.2
 
