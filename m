@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB475683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:16:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B60C433D2;
-	Mon,  3 Apr 2023 14:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F265683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:16:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C660C433D2;
+	Mon,  3 Apr 2023 14:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531392;
-	bh=zVTLlKMOrV1CvvOrw82Wu2DC/iAQmg5zIt19C0knmsI=;
+	s=korg; t=1680531394;
+	bh=pIt2YjW4LjCyHu7GlwODLDd1ZFl1TLMnTafiZRmp8qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QS8CK7P24khdzZXXKWLMN8ZIfC9rosikvxn+sE5OluOTsKwY64f77rZZIBsthCRUP
-	 k8sg4yMXrSKGN4mHFdstfoR1qB6iXZXOfBQwnLLG2UVDp71jaChDV0uiXH2XLG3fRf
-	 tuPtjkaeVFsPax/4/LivyV42FHeD5O+o5Pv6yUcU=
+	b=Jf28sPaPhJf8mAvZcFclIHeUaZcJprJcNXpiOI/IMDLmzCHyLYt74Z6As0THkCQQ8
+	 3ACRSwcxmPAzouo2bnaohVU2RfHQueEhuM0SW4GhJT33+6EsseR1uyWqbodOm3jNt+
+	 ZjRspB3+aPlo+K/KdTzKJW+v+Fp8vt//CkrTMa7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangerkun <yangerkun@huawei.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.19 46/84] dm crypt: add cond_resched() to dmcrypt_write()
-Date: Mon,  3 Apr 2023 16:08:47 +0200
-Message-Id: <20230403140354.972450783@linuxfoundation.org>
+	Zhang Qiao <zhangqiao22@huawei.com>,
+	Roman Kagan <rkagan@amazon.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 4.19 47/84] sched/fair: sanitize vruntime of entity being placed
+Date: Mon,  3 Apr 2023 16:08:48 +0200
+Message-Id: <20230403140355.007537220@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,45 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Zhang Qiao <zhangqiao22@huawei.com>
 
-commit fb294b1c0ba982144ca467a75e7d01ff26304e2b upstream.
+commit 829c1651e9c4a6f78398d3e67651cef9bb6b42cc upstream.
 
-The loop in dmcrypt_write may be running for unbounded amount of time,
-thus we need cond_resched() in it.
+When a scheduling entity is placed onto cfs_rq, its vruntime is pulled
+to the base level (around cfs_rq->min_vruntime), so that the entity
+doesn't gain extra boost when placed backwards.
 
-This commit fixes the following warning:
+However, if the entity being placed wasn't executed for a long time, its
+vruntime may get too far behind (e.g. while cfs_rq was executing a
+low-weight hog), which can inverse the vruntime comparison due to s64
+overflow.  This results in the entity being placed with its original
+vruntime way forwards, so that it will effectively never get to the cpu.
 
-[ 3391.153255][   C12] watchdog: BUG: soft lockup - CPU#12 stuck for 23s! [dmcrypt_write/2:2897]
-...
-[ 3391.387210][   C12] Call trace:
-[ 3391.390338][   C12]  blk_attempt_bio_merge.part.6+0x38/0x158
-[ 3391.395970][   C12]  blk_attempt_plug_merge+0xc0/0x1b0
-[ 3391.401085][   C12]  blk_mq_submit_bio+0x398/0x550
-[ 3391.405856][   C12]  submit_bio_noacct+0x308/0x380
-[ 3391.410630][   C12]  dmcrypt_write+0x1e4/0x208 [dm_crypt]
-[ 3391.416005][   C12]  kthread+0x130/0x138
-[ 3391.419911][   C12]  ret_from_fork+0x10/0x18
+To prevent that, ignore the vruntime of the entity being placed if it
+didn't execute for much longer than the characteristic sheduler time
+scale.
 
-Reported-by: yangerkun <yangerkun@huawei.com>
-Fixes: dc2676210c42 ("dm crypt: offload writes to thread")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+[rkagan: formatted, adjusted commit log, comments, cutoff value]
+Signed-off-by: Zhang Qiao <zhangqiao22@huawei.com>
+Co-developed-by: Roman Kagan <rkagan@amazon.de>
+Signed-off-by: Roman Kagan <rkagan@amazon.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20230130122216.3555094-1-rkagan@amazon.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/sched/fair.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -1661,6 +1661,7 @@ pop_from_list:
- 			io = crypt_io_from_node(rb_first(&write_tree));
- 			rb_erase(&io->rb_node, &write_tree);
- 			kcryptd_io_write(io);
-+			cond_resched();
- 		} while (!RB_EMPTY_ROOT(&write_tree));
- 		blk_finish_plug(&plug);
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -3858,6 +3858,7 @@ static void
+ place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int initial)
+ {
+ 	u64 vruntime = cfs_rq->min_vruntime;
++	u64 sleep_time;
+ 
+ 	/*
+ 	 * The 'current' period is already promised to the current tasks,
+@@ -3882,8 +3883,18 @@ place_entity(struct cfs_rq *cfs_rq, stru
+ 		vruntime -= thresh;
  	}
+ 
+-	/* ensure we never gain time by being placed backwards. */
+-	se->vruntime = max_vruntime(se->vruntime, vruntime);
++	/*
++	 * Pull vruntime of the entity being placed to the base level of
++	 * cfs_rq, to prevent boosting it if placed backwards.  If the entity
++	 * slept for a long time, don't even try to compare its vruntime with
++	 * the base as it may be too far off and the comparison may get
++	 * inversed due to s64 overflow.
++	 */
++	sleep_time = rq_clock_task(rq_of(cfs_rq)) - se->exec_start;
++	if ((s64)sleep_time > 60LL * NSEC_PER_SEC)
++		se->vruntime = vruntime;
++	else
++		se->vruntime = max_vruntime(se->vruntime, vruntime);
+ }
+ 
+ static void check_enqueue_throttle(struct cfs_rq *cfs_rq);
 
 
