@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B866FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60429C433D2;
-	Mon,  3 Apr 2023 14:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CC96FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B085C433D2;
+	Mon,  3 Apr 2023 14:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532672;
-	bh=id1f1gd3gxTk0QcLh0AzTqvVCOc9NMLlm+IvnAlrbXo=;
+	s=korg; t=1680532675;
+	bh=Sq6EyJ89k30liJXZj/iji5UKTuBj2qIgu1GpiNL4H3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fDahcHcUUkm1nkn8kt6JXZfKRn5p5z5Z4j+xdEhAmIgLlqbEyLpdIbGWHZs08dH6w
-	 lWhoeCWv6soOlcRVA+ljiXelk7TCQ19+0IGahVRgAVN/3fZnSmHmTu4VI8y8FfIXxI
-	 huptU/FxPKRgCytSYcApZmWzBUt+4jjrtwhlBkLM=
+	b=oZZcFXxDDAgA46BUQAMdx+gubyiEhghNzC/iEDywmuVnbuJpyO9Qj6gCvyv8j/jok
+	 Asee503GwWETXUnhriP0L0rP8DaR7upOLikpa00NUfQ213Sj3M4wiQDPDZMsD0nZDN
+	 LkZqrxvr4egrmyHUpd65VJKcc0tVjyFmfEGhVlZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	John Keeping <john@metanate.com>
-Subject: [PATCH 6.1 072/181] ALSA: usb-audio: Fix recursive locking at XRUN during syncing
-Date: Mon,  3 Apr 2023 16:08:27 +0200
-Message-Id: <20230403140417.477850702@linuxfoundation.org>
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 073/181] PCI: dwc: Fix PORT_LINK_CONTROL update when CDM check enabled
+Date: Mon,  3 Apr 2023 16:08:28 +0200
+Message-Id: <20230403140417.506764370@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,142 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 8c721c53dda512fdd48eb24d6d99e56deee57898 ]
+[ Upstream commit cdce67099117ece371582f706c6eff7d3a65326d ]
 
-The recent support of low latency playback in USB-audio driver made
-the snd_usb_queue_pending_output_urbs() function to be called via PCM
-ack ops.  In the new code path, the function is performed already in
-the PCM stream lock.  The problem is that, when an XRUN is detected,
-the function calls snd_pcm_xrun() to notify, but snd_pcm_xrun() is
-supposed to be called only outside the stream lock.  As a result, it
-leads to a deadlock of PCM stream locking.
+If CDM_CHECK is enabled (by the DT "snps,enable-cdm-check" property), 'val'
+is overwritten by PCIE_PL_CHK_REG_CONTROL_STATUS initialization.  Commit
+ec7b952f453c ("PCI: dwc: Always enable CDM check if "snps,enable-cdm-check"
+exists") did not account for further usage of 'val', so we wrote improper
+values to PCIE_PORT_LINK_CONTROL when the CDM check is enabled.
 
-For avoiding such a recursive locking, this patch adds an additional
-check to the code paths in PCM core that call the ack callback; now it
-checks the error code from the callback, and if it's -EPIPE, the XRUN
-is handled in the PCM core side gracefully.  Along with it, the
-USB-audio driver code is changed to follow that, i.e. -EPIPE is
-returned instead of the explicit snd_pcm_xrun() call when the function
-is performed already in the stream lock.
+Move the PCIE_PORT_LINK_CONTROL update to be completely after the
+PCIE_PL_CHK_REG_CONTROL_STATUS register initialization.
 
-Fixes: d5f871f89e21 ("ALSA: usb-audio: Improved lowlatency playback support")
-Reported-and-tested-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20230317195128.3911155-1-john@metanate.com
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
-Reviewed-by; Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://lore.kernel.org/r/20230320142838.494-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[bhelgaas: commit log adapted from Serge's version]
+Fixes: ec7b952f453c ("PCI: dwc: Always enable CDM check if "snps,enable-cdm-check" exists")
+Link: https://lore.kernel.org/r/20230310123510.675685-2-yoshihiro.shimoda.uh@renesas.com
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_lib.c |  2 ++
- sound/usb/endpoint.c | 22 ++++++++++++++--------
- sound/usb/endpoint.h |  4 ++--
- sound/usb/pcm.c      |  2 +-
- 4 files changed, 19 insertions(+), 11 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
-index 8b6aeb8a78f7d..02fd65993e7e5 100644
---- a/sound/core/pcm_lib.c
-+++ b/sound/core/pcm_lib.c
-@@ -2155,6 +2155,8 @@ int pcm_lib_apply_appl_ptr(struct snd_pcm_substream *substream,
- 		ret = substream->ops->ack(substream);
- 		if (ret < 0) {
- 			runtime->control->appl_ptr = old_appl_ptr;
-+			if (ret == -EPIPE)
-+				__snd_pcm_xrun(substream);
- 			return ret;
- 		}
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index 9e4d96e5a3f5a..575834cae3b9e 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -645,11 +645,6 @@ void dw_pcie_setup(struct dw_pcie *pci)
+ 		dw_pcie_writel_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL, val);
  	}
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index 419302e2057e8..647fa054d8b1d 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -455,8 +455,8 @@ static void push_back_to_ready_list(struct snd_usb_endpoint *ep,
-  * This function is used both for implicit feedback endpoints and in low-
-  * latency playback mode.
-  */
--void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
--				       bool in_stream_lock)
-+int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
-+				      bool in_stream_lock)
- {
- 	bool implicit_fb = snd_usb_endpoint_implicit_feedback_sink(ep);
  
-@@ -480,7 +480,7 @@ void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 		spin_unlock_irqrestore(&ep->lock, flags);
- 
- 		if (ctx == NULL)
--			return;
-+			break;
- 
- 		/* copy over the length information */
- 		if (implicit_fb) {
-@@ -495,11 +495,14 @@ void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 			break;
- 		if (err < 0) {
- 			/* push back to ready list again for -EAGAIN */
--			if (err == -EAGAIN)
-+			if (err == -EAGAIN) {
- 				push_back_to_ready_list(ep, ctx);
--			else
-+				break;
-+			}
-+
-+			if (!in_stream_lock)
- 				notify_xrun(ep);
--			return;
-+			return -EPIPE;
- 		}
- 
- 		err = usb_submit_urb(ctx->urb, GFP_ATOMIC);
-@@ -507,13 +510,16 @@ void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 			usb_audio_err(ep->chip,
- 				      "Unable to submit urb #%d: %d at %s\n",
- 				      ctx->index, err, __func__);
--			notify_xrun(ep);
--			return;
-+			if (!in_stream_lock)
-+				notify_xrun(ep);
-+			return -EPIPE;
- 		}
- 
- 		set_bit(ctx->index, &ep->active_mask);
- 		atomic_inc(&ep->submitted_urbs);
+-	val = dw_pcie_readl_dbi(pci, PCIE_PORT_LINK_CONTROL);
+-	val &= ~PORT_LINK_FAST_LINK_MODE;
+-	val |= PORT_LINK_DLL_LINK_EN;
+-	dw_pcie_writel_dbi(pci, PCIE_PORT_LINK_CONTROL, val);
+-
+ 	if (of_property_read_bool(np, "snps,enable-cdm-check")) {
+ 		val = dw_pcie_readl_dbi(pci, PCIE_PL_CHK_REG_CONTROL_STATUS);
+ 		val |= PCIE_PL_CHK_REG_CHK_REG_CONTINUOUS |
+@@ -657,6 +652,11 @@ void dw_pcie_setup(struct dw_pcie *pci)
+ 		dw_pcie_writel_dbi(pci, PCIE_PL_CHK_REG_CONTROL_STATUS, val);
  	}
+ 
++	val = dw_pcie_readl_dbi(pci, PCIE_PORT_LINK_CONTROL);
++	val &= ~PORT_LINK_FAST_LINK_MODE;
++	val |= PORT_LINK_DLL_LINK_EN;
++	dw_pcie_writel_dbi(pci, PCIE_PORT_LINK_CONTROL, val);
 +
-+	return 0;
- }
- 
- /*
-diff --git a/sound/usb/endpoint.h b/sound/usb/endpoint.h
-index 924f4351588ce..c09f68ce08b18 100644
---- a/sound/usb/endpoint.h
-+++ b/sound/usb/endpoint.h
-@@ -52,7 +52,7 @@ int snd_usb_endpoint_implicit_feedback_sink(struct snd_usb_endpoint *ep);
- int snd_usb_endpoint_next_packet_size(struct snd_usb_endpoint *ep,
- 				      struct snd_urb_ctx *ctx, int idx,
- 				      unsigned int avail);
--void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
--				       bool in_stream_lock);
-+int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
-+				      bool in_stream_lock);
- 
- #endif /* __USBAUDIO_ENDPOINT_H */
-diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
-index 2c5765cbed2d6..1e1d7458bce10 100644
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -1595,7 +1595,7 @@ static int snd_usb_pcm_playback_ack(struct snd_pcm_substream *substream)
- 	 * outputs here
- 	 */
- 	if (!ep->active_mask)
--		snd_usb_queue_pending_output_urbs(ep, true);
-+		return snd_usb_queue_pending_output_urbs(ep, true);
- 	return 0;
- }
- 
+ 	of_property_read_u32(np, "num-lanes", &pci->num_lanes);
+ 	if (!pci->num_lanes) {
+ 		dev_dbg(pci->dev, "Using h/w default number of lanes\n");
 -- 
 2.39.2
 
