@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6026FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59A1C433EF;
-	Mon,  3 Apr 2023 14:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014836FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D899C433D2;
+	Mon,  3 Apr 2023 14:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532641;
-	bh=UMk1yWcwvsggJJjnaJ9yTLb2WQw1KXCFuCFy3Q+rgHE=;
+	s=korg; t=1680532643;
+	bh=jiBHGv/Qc37ebIMDLVhnDSbtaYWP9xZ76vBBWTmM94I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HepWkbxpu2tCemP1r99PRIjNkH5QLOTAcs6xZl3EVfVOLjE0iS53T6XfGvAB38lgk
-	 un7JPD72Vyh7PBWjnNbxwf5MFACGIyUe0CUzQ6Ze8HAkPL7N8VZutIUgAi4jS4gBvW
-	 uAiYQJff8KlDm1SaGgsoQa7/uiPtjRb26Pfw/IP8=
+	b=umfEOryzu1VTgS6qiG2mIbwRXd8BenovkI2IBEOP2yDY5m0XCEMv1Mn8HDzSxlsSs
+	 cqyWoFHUfo2eljk6GrcKx8U854OPc+b7CINSK8TzIritKyG6hPF1mlaeYC3zqiy7zE
+	 VWt6QkJNM1z7ccP1So3yAr9Zr5eb8DNITsgDpBo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prarit Bhargava <prarit@redhat.com>,
-	linux-pm@vger.kernel.org,
+	Antti Laakso <antti.laakso@intel.com>,
+	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
 	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/181] tools/power turbostat: Fix /dev/cpu_dma_latency warnings
-Date: Mon,  3 Apr 2023 16:08:16 +0200
-Message-Id: <20230403140417.120319370@linuxfoundation.org>
+Subject: [PATCH 6.1 062/181] tools/power turbostat: fix decoding of HWP_STATUS
+Date: Mon,  3 Apr 2023 16:08:17 +0200
+Message-Id: <20230403140417.152678965@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,56 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prarit Bhargava <prarit@redhat.com>
+From: Antti Laakso <antti.laakso@intel.com>
 
-[ Upstream commit 40aafc7d58d3544f152a863a0e9863014b6d5d8c ]
+[ Upstream commit 92c25393586ac799b9b7d9e50434f3c44a7622c4 ]
 
-When running as non-root the following error is seen in turbostat:
+The "excursion to minimum" information is in bit2
+in HWP_STATUS MSR. Fix the bitmask used for
+decoding the register.
 
-turbostat: fopen /dev/cpu_dma_latency
-: Permission denied
-
-turbostat and the man page have information on how to avoid other
-permission errors, so these can be fixed the same way.
-
-Provide better /dev/cpu_dma_latency warnings that provide instructions on
-how to avoid the error, and update the man page.
-
-Signed-off-by: Prarit Bhargava <prarit@redhat.com>
-Cc: linux-pm@vger.kernel.org
+Signed-off-by: Antti Laakso <antti.laakso@intel.com>
+Reviewed-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
 Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.8 | 2 ++
  tools/power/x86/turbostat/turbostat.c | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.8 b/tools/power/x86/turbostat/turbostat.8
-index c7b26a3603afe..3e1a4c4be001a 100644
---- a/tools/power/x86/turbostat/turbostat.8
-+++ b/tools/power/x86/turbostat/turbostat.8
-@@ -344,6 +344,8 @@ Alternatively, non-root users can be enabled to run turbostat this way:
- 
- # chmod +r /dev/cpu/*/msr
- 
-+# chmod +r /dev/cpu_dma_latency
-+
- .B "turbostat "
- reads hardware counters, but doesn't write them.
- So it will not interfere with the OS or other programs, including
 diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index aba460410dbd1..c24054e3ef7ad 100644
+index c24054e3ef7ad..c61c6c704fbe6 100644
 --- a/tools/power/x86/turbostat/turbostat.c
 +++ b/tools/power/x86/turbostat/turbostat.c
-@@ -5482,7 +5482,7 @@ void print_dev_latency(void)
+@@ -4426,7 +4426,7 @@ int print_hwp(struct thread_data *t, struct core_data *c, struct pkg_data *p)
  
- 	retval = read(fd, (void *)&value, sizeof(int));
- 	if (retval != sizeof(int)) {
--		warn("read %s\n", path);
-+		warn("read failed %s\n", path);
- 		close(fd);
- 		return;
- 	}
+ 	fprintf(outf, "cpu%d: MSR_HWP_STATUS: 0x%08llx "
+ 		"(%sGuaranteed_Perf_Change, %sExcursion_Min)\n",
+-		cpu, msr, ((msr) & 0x1) ? "" : "No-", ((msr) & 0x2) ? "" : "No-");
++		cpu, msr, ((msr) & 0x1) ? "" : "No-", ((msr) & 0x4) ? "" : "No-");
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
