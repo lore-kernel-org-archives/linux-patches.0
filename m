@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D52612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:21:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA70C433EF;
-	Mon,  3 Apr 2023 14:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EF9612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:21:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D7AC433EF;
+	Mon,  3 Apr 2023 14:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531691;
-	bh=Ip690Z0SnmHN1TPnQ5/zkyWqvlc2EW7ei+z1mAIBGFw=;
+	s=korg; t=1680531693;
+	bh=wrhezHmLmCKjt4LuGcSQSpvYXsnUuqQcLgfeEZ4/JhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4VIHV8bTidigZv0zabVEnLw2R0UvaxT33oRnevCcTRAWc4A29mg+znO00iLCphuD
-	 eLmlpTF5CN7Syfff/5rq4Gnh+t/tFuLCGEL3oA8sRwuP9R9RpLOGt6SATw5lJAgLMT
-	 WGrAAzaGjC/7FKLAX1gdcZF2XdHPq/ssyqw65Z3U=
+	b=KzdHtGSkncx25n/2eMTSvADzCUy6jIrglD5UEHT+ewsJkvG11q2BcTg3nxyPB6ivP
+	 GoJx8qcscaIp/XqZq3d0gBEZFm/iCtRp0VcWWv3nCgqyF/Iysx3SvgHH/WqOWO/JSC
+	 jstDWw0HJ1tK0yMpkvOItIsbcm9+CuviytlquIYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	SongJingyi <u201912584@hust.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 075/104] scsi: megaraid_sas: Fix crash after a double completion
-Date: Mon,  3 Apr 2023 16:09:07 +0200
-Message-Id: <20230403140407.074485853@linuxfoundation.org>
+Subject: [PATCH 5.4 076/104] ptp_qoriq: fix memory leak in probe()
+Date: Mon,  3 Apr 2023 16:09:08 +0200
+Message-Id: <20230403140407.104429805@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,45 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: SongJingyi <u201912584@hust.edu.cn>
 
-[ Upstream commit 2309df27111a51734cb9240b4d3c25f2f3c6ab06 ]
+[ Upstream commit f33642224e38d7e0d59336e10e7b4e370b1c4506 ]
 
-When a physical disk is attached directly "without JBOD MAP support" (see
-megasas_get_tm_devhandle()) then there is no real error handling in the
-driver.  Return FAILED instead of SUCCESS.
+Smatch complains that:
+drivers/ptp/ptp_qoriq.c ptp_qoriq_probe()
+warn: 'base' from ioremap() not released.
 
-Fixes: 18365b138508 ("megaraid_sas: Task management support")
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20230324150134.14696-1-thenzl@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fix this by revising the parameter from 'ptp_qoriq->base' to 'base'.
+This is only a bug if ptp_qoriq_init() returns on the
+first -ENODEV error path.
+For other error paths ptp_qoriq->base and base are the same.
+And this change makes the code more readable.
+
+Fixes: 7f4399ba405b ("ptp_qoriq: fix NULL access if ptp dt node missing")
+Signed-off-by: SongJingyi <u201912584@hust.edu.cn>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230324031406.1895159-1-u201912584@hust.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid/megaraid_sas_fusion.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ptp/ptp_qoriq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/megaraid/megaraid_sas_fusion.c b/drivers/scsi/megaraid/megaraid_sas_fusion.c
-index 944273f60d224..890002688bd40 100644
---- a/drivers/scsi/megaraid/megaraid_sas_fusion.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_fusion.c
-@@ -4659,7 +4659,7 @@ int megasas_task_abort_fusion(struct scsi_cmnd *scmd)
- 	devhandle = megasas_get_tm_devhandle(scmd->device);
+diff --git a/drivers/ptp/ptp_qoriq.c b/drivers/ptp/ptp_qoriq.c
+index a577218d1ab71..ca211feadb383 100644
+--- a/drivers/ptp/ptp_qoriq.c
++++ b/drivers/ptp/ptp_qoriq.c
+@@ -604,7 +604,7 @@ static int ptp_qoriq_probe(struct platform_device *dev)
+ 	return 0;
  
- 	if (devhandle == (u16)ULONG_MAX) {
--		ret = SUCCESS;
-+		ret = FAILED;
- 		sdev_printk(KERN_INFO, scmd->device,
- 			"task abort issued for invalid devhandle\n");
- 		mutex_unlock(&instance->reset_mutex);
-@@ -4729,7 +4729,7 @@ int megasas_reset_target_fusion(struct scsi_cmnd *scmd)
- 	devhandle = megasas_get_tm_devhandle(scmd->device);
- 
- 	if (devhandle == (u16)ULONG_MAX) {
--		ret = SUCCESS;
-+		ret = FAILED;
- 		sdev_printk(KERN_INFO, scmd->device,
- 			"target reset issued for invalid devhandle\n");
- 		mutex_unlock(&instance->reset_mutex);
+ no_clock:
+-	iounmap(ptp_qoriq->base);
++	iounmap(base);
+ no_ioremap:
+ 	release_resource(ptp_qoriq->rsrc);
+ no_resource:
 -- 
 2.39.2
 
