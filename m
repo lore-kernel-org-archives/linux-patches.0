@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A88612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5360C433D2;
-	Mon,  3 Apr 2023 14:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DF5612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED46C4339E;
+	Mon,  3 Apr 2023 14:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531633;
-	bh=xDhUend4NH57BXHzmf5W3pjKljyH/lzEPZluTU+3IwU=;
+	s=korg; t=1680531635;
+	bh=Tn9J1rkF8CqebWI3HPjC16L/ibAVABXU/64SeSXTrBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x3TtVn4IE9TJ9s/mdrmSCyJ0LlLGTh5igIC9LxK/TrQAnhnapfrsRWBnkq3DfwotP
-	 Eo8c4RZDmkGSMfgs6QXtkqn+StXp74OCbHEYM9KKBuUECJoOWQaDjujvUHja7BDkYC
-	 EgzmIKTZff9eDFfFiTlAsT8t3c8JQkBe73PrDAPg=
+	b=1AJhJvvOR+rE/XlenjwETNgcqhDRfDFlVWKTHGpt1yBjB1+dZ6abdbZ2RZthy7VqT
+	 w7NtrpbKquM5c4uX7Qwaq9EkNVGygLrzi0HmrBvj+jyqgEjsslUlRYEvOv7/5SICRG
+	 lJk4W6djJIADzVUL3YV/Bn0d/Q6gZxVELu42vnvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+132fdd2f1e1805fdc591@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 052/104] nilfs2: fix kernel-infoleak in nilfs_ioctl_wrap_copy()
-Date: Mon,  3 Apr 2023 16:08:44 +0200
-Message-Id: <20230403140406.377418974@linuxfoundation.org>
+	Wei Chen <harperchen1110@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 5.4 053/104] i2c: xgene-slimpro: Fix out-of-bounds bug in xgene_slimpro_i2c_xfer()
+Date: Mon,  3 Apr 2023 16:08:45 +0200
+Message-Id: <20230403140406.407933882@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,86 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Wei Chen <harperchen1110@gmail.com>
 
-commit 003587000276f81d0114b5ce773d80c119d8cb30 upstream.
+commit 92fbb6d1296f81f41f65effd7f5f8c0f74943d15 upstream.
 
-The ioctl helper function nilfs_ioctl_wrap_copy(), which exchanges a
-metadata array to/from user space, may copy uninitialized buffer regions
-to user space memory for read-only ioctl commands NILFS_IOCTL_GET_SUINFO
-and NILFS_IOCTL_GET_CPINFO.
+The data->block[0] variable comes from user and is a number between
+0-255. Without proper check, the variable may be very large to cause
+an out-of-bounds when performing memcpy in slimpro_i2c_blkwr.
 
-This can occur when the element size of the user space metadata given by
-the v_size member of the argument nilfs_argv structure is larger than the
-size of the metadata element (nilfs_suinfo structure or nilfs_cpinfo
-structure) on the file system side.
+Fix this bug by checking the value of writelen.
 
-KMSAN-enabled kernels detect this issue as follows:
-
- BUG: KMSAN: kernel-infoleak in instrument_copy_to_user
- include/linux/instrumented.h:121 [inline]
- BUG: KMSAN: kernel-infoleak in _copy_to_user+0xc0/0x100 lib/usercopy.c:33
-  instrument_copy_to_user include/linux/instrumented.h:121 [inline]
-  _copy_to_user+0xc0/0x100 lib/usercopy.c:33
-  copy_to_user include/linux/uaccess.h:169 [inline]
-  nilfs_ioctl_wrap_copy+0x6fa/0xc10 fs/nilfs2/ioctl.c:99
-  nilfs_ioctl_get_info fs/nilfs2/ioctl.c:1173 [inline]
-  nilfs_ioctl+0x2402/0x4450 fs/nilfs2/ioctl.c:1290
-  nilfs_compat_ioctl+0x1b8/0x200 fs/nilfs2/ioctl.c:1343
-  __do_compat_sys_ioctl fs/ioctl.c:968 [inline]
-  __se_compat_sys_ioctl+0x7dd/0x1000 fs/ioctl.c:910
-  __ia32_compat_sys_ioctl+0x93/0xd0 fs/ioctl.c:910
-  do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
-  __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
-  do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
-  do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
-  entry_SYSENTER_compat_after_hwframe+0x70/0x82
-
- Uninit was created at:
-  __alloc_pages+0x9f6/0xe90 mm/page_alloc.c:5572
-  alloc_pages+0xab0/0xd80 mm/mempolicy.c:2287
-  __get_free_pages+0x34/0xc0 mm/page_alloc.c:5599
-  nilfs_ioctl_wrap_copy+0x223/0xc10 fs/nilfs2/ioctl.c:74
-  nilfs_ioctl_get_info fs/nilfs2/ioctl.c:1173 [inline]
-  nilfs_ioctl+0x2402/0x4450 fs/nilfs2/ioctl.c:1290
-  nilfs_compat_ioctl+0x1b8/0x200 fs/nilfs2/ioctl.c:1343
-  __do_compat_sys_ioctl fs/ioctl.c:968 [inline]
-  __se_compat_sys_ioctl+0x7dd/0x1000 fs/ioctl.c:910
-  __ia32_compat_sys_ioctl+0x93/0xd0 fs/ioctl.c:910
-  do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
-  __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
-  do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
-  do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
-  entry_SYSENTER_compat_after_hwframe+0x70/0x82
-
- Bytes 16-127 of 3968 are uninitialized
- ...
-
-This eliminates the leak issue by initializing the page allocated as
-buffer using get_zeroed_page().
-
-Link: https://lkml.kernel.org/r/20230307085548.6290-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+132fdd2f1e1805fdc591@syzkaller.appspotmail.com
-  Link: https://lkml.kernel.org/r/000000000000a5bd2d05f63f04ae@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f6505fbabc42 ("i2c: add SLIMpro I2C device driver on APM X-Gene platform")
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/ioctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xgene-slimpro.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -70,7 +70,7 @@ static int nilfs_ioctl_wrap_copy(struct
- 	if (argv->v_index > ~(__u64)0 - argv->v_nmembs)
- 		return -EINVAL;
+--- a/drivers/i2c/busses/i2c-xgene-slimpro.c
++++ b/drivers/i2c/busses/i2c-xgene-slimpro.c
+@@ -308,6 +308,9 @@ static int slimpro_i2c_blkwr(struct slim
+ 	u32 msg[3];
+ 	int rc;
  
--	buf = (void *)__get_free_pages(GFP_NOFS, 0);
-+	buf = (void *)get_zeroed_page(GFP_NOFS);
- 	if (unlikely(!buf))
- 		return -ENOMEM;
- 	maxmembs = PAGE_SIZE / argv->v_size;
++	if (writelen > I2C_SMBUS_BLOCK_MAX)
++		return -EINVAL;
++
+ 	memcpy(ctx->dma_buffer, data, writelen);
+ 	paddr = dma_map_single(ctx->dev, ctx->dma_buffer, writelen,
+ 			       DMA_TO_DEVICE);
 
 
