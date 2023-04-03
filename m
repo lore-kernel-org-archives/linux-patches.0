@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD076FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DF6C4339B;
-	Mon,  3 Apr 2023 14:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003536FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49710C433EF;
+	Mon,  3 Apr 2023 14:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532024;
-	bh=h72Em7GOJa3svmUAf1xPSFeqPWFZoWzRb66+yrshzeI=;
+	s=korg; t=1680532026;
+	bh=mjW/ZQZRH5bjZuwRt8GVXLr6JDyhVLSktLJ0grI8C2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbCJUuPhbScI8VB6FcIpbD+MfcBLtWxPxHzjwclcyFz+XcfQiWRUlJrp4X4lr/GFG
-	 GBKm2cqfA84AuGjkVlduQPkjhcw4KEFeBMbrDhiRVGYXom9QcNvJcQKRAbXNOSqd9g
-	 L12YfIAmjvv8vesZtn5zAVMQ+ejBkK1+aVONxwzg=
+	b=uAYAIdgC/MYbjHQkGhR4EYuAsLJrwofwpGCMd4YfOnsdMu58h28Km5pWEYH5H9a4v
+	 gWEfACjDhABvxp2Jlab6ugs8OQboKjWJQGrkxa6OnCJwkx5qX2goU0o5VvuyJIGgZb
+	 rSI3f9J54zdRSEPJKV+t3LyYtrTEu+Tdr3UMAaWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Zhang Qiao <zhangqiao22@huawei.com>
-Subject: [PATCH 5.10 098/173] sched/fair: Sanitize vruntime of entity being migrated
-Date: Mon,  3 Apr 2023 16:08:33 +0200
-Message-Id: <20230403140417.599107767@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 099/173] ocfs2: fix data corruption after failed write
+Date: Mon,  3 Apr 2023 16:08:34 +0200
+Message-Id: <20230403140417.629012939@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,131 +41,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Jan Kara via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
 
-commit a53ce18cacb477dd0513c607f187d16f0fa96f71 upstream.
+commit 90410bcf873cf05f54a32183afff0161f44f9715 upstream.
 
-Commit 829c1651e9c4 ("sched/fair: sanitize vruntime of entity being placed")
-fixes an overflowing bug, but ignore a case that se->exec_start is reset
-after a migration.
+When buffered write fails to copy data into underlying page cache page,
+ocfs2_write_end_nolock() just zeroes out and dirties the page.  This can
+leave dirty page beyond EOF and if page writeback tries to write this page
+before write succeeds and expands i_size, page gets into inconsistent
+state where page dirty bit is clear but buffer dirty bits stay set
+resulting in page data never getting written and so data copied to the
+page is lost.  Fix the problem by invalidating page beyond EOF after
+failed write.
 
-For fixing this case, we delay the reset of se->exec_start after
-placing the entity which se->exec_start to detect long sleeping task.
-
-In order to take into account a possible divergence between the clock_task
-of 2 rqs, we increase the threshold to around 104 days.
-
-Fixes: 829c1651e9c4 ("sched/fair: sanitize vruntime of entity being placed")
-Originally-by: Zhang Qiao <zhangqiao22@huawei.com>
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Zhang Qiao <zhangqiao22@huawei.com>
-Link: https://lore.kernel.org/r/20230317160810.107988-1-vincent.guittot@linaro.org
+Link: https://lkml.kernel.org/r/20230302153843.18499-1-jack@suse.cz
+Fixes: 6dbf7bb55598 ("fs: Don't invalidate page buffers in block_write_full_page()")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ replace block_invalidate_folio to block_invalidatepage ]
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |    3 ++
- kernel/sched/fair.c |   53 ++++++++++++++++++++++++++++++++++++++++++----------
- 2 files changed, 46 insertions(+), 10 deletions(-)
+ fs/ocfs2/aops.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -1601,6 +1601,9 @@ static inline void dequeue_task(struct r
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -1981,11 +1981,25 @@ int ocfs2_write_end_nolock(struct addres
+ 	}
  
- void activate_task(struct rq *rq, struct task_struct *p, int flags)
- {
-+	if (task_on_rq_migrating(p))
-+		flags |= ENQUEUE_MIGRATED;
+ 	if (unlikely(copied < len) && wc->w_target_page) {
++		loff_t new_isize;
 +
- 	enqueue_task(rq, p, flags);
+ 		if (!PageUptodate(wc->w_target_page))
+ 			copied = 0;
  
- 	p->on_rq = TASK_ON_RQ_QUEUED;
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4274,11 +4274,33 @@ static void check_spread(struct cfs_rq *
- #endif
- }
- 
-+static inline bool entity_is_long_sleeper(struct sched_entity *se)
-+{
-+	struct cfs_rq *cfs_rq;
-+	u64 sleep_time;
-+
-+	if (se->exec_start == 0)
-+		return false;
-+
-+	cfs_rq = cfs_rq_of(se);
-+
-+	sleep_time = rq_clock_task(rq_of(cfs_rq));
-+
-+	/* Happen while migrating because of clock task divergence */
-+	if (sleep_time <= se->exec_start)
-+		return false;
-+
-+	sleep_time -= se->exec_start;
-+	if (sleep_time > ((1ULL << 63) / scale_load_down(NICE_0_LOAD)))
-+		return true;
-+
-+	return false;
-+}
-+
- static void
- place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int initial)
- {
- 	u64 vruntime = cfs_rq->min_vruntime;
--	u64 sleep_time;
- 
- 	/*
- 	 * The 'current' period is already promised to the current tasks,
-@@ -4305,13 +4327,24 @@ place_entity(struct cfs_rq *cfs_rq, stru
- 
- 	/*
- 	 * Pull vruntime of the entity being placed to the base level of
--	 * cfs_rq, to prevent boosting it if placed backwards.  If the entity
--	 * slept for a long time, don't even try to compare its vruntime with
--	 * the base as it may be too far off and the comparison may get
--	 * inversed due to s64 overflow.
-+	 * cfs_rq, to prevent boosting it if placed backwards.
-+	 * However, min_vruntime can advance much faster than real time, with
-+	 * the extreme being when an entity with the minimal weight always runs
-+	 * on the cfs_rq. If the waking entity slept for a long time, its
-+	 * vruntime difference from min_vruntime may overflow s64 and their
-+	 * comparison may get inversed, so ignore the entity's original
-+	 * vruntime in that case.
-+	 * The maximal vruntime speedup is given by the ratio of normal to
-+	 * minimal weight: scale_load_down(NICE_0_LOAD) / MIN_SHARES.
-+	 * When placing a migrated waking entity, its exec_start has been set
-+	 * from a different rq. In order to take into account a possible
-+	 * divergence between new and prev rq's clocks task because of irq and
-+	 * stolen time, we take an additional margin.
-+	 * So, cutting off on the sleep time of
-+	 *     2^63 / scale_load_down(NICE_0_LOAD) ~ 104 days
-+	 * should be safe.
- 	 */
--	sleep_time = rq_clock_task(rq_of(cfs_rq)) - se->exec_start;
--	if ((s64)sleep_time > 60LL * NSEC_PER_SEC)
-+	if (entity_is_long_sleeper(se))
- 		se->vruntime = vruntime;
- 	else
- 		se->vruntime = max_vruntime(se->vruntime, vruntime);
-@@ -4410,6 +4443,9 @@ enqueue_entity(struct cfs_rq *cfs_rq, st
- 
- 	if (flags & ENQUEUE_WAKEUP)
- 		place_entity(cfs_rq, se, 0);
-+	/* Entity has migrated, no longer consider this task hot */
-+	if (flags & ENQUEUE_MIGRATED)
-+		se->exec_start = 0;
- 
- 	check_schedstat_required();
- 	update_stats_enqueue(cfs_rq, se, flags);
-@@ -6995,9 +7031,6 @@ static void migrate_task_rq_fair(struct
- 	/* Tell new CPU we are migrated */
- 	p->se.avg.last_update_time = 0;
- 
--	/* We have migrated, no longer consider this task hot */
--	p->se.exec_start = 0;
--
- 	update_scan_period(p, new_cpu);
- }
- 
+-		ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
+-				       start+len);
++		new_isize = max_t(loff_t, i_size_read(inode), pos + copied);
++		if (new_isize > page_offset(wc->w_target_page))
++			ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
++					       start+len);
++		else {
++			/*
++			 * When page is fully beyond new isize (data copy
++			 * failed), do not bother zeroing the page. Invalidate
++			 * it instead so that writeback does not get confused
++			 * put page & buffer dirty bits into inconsistent
++			 * state.
++			 */
++			block_invalidatepage(wc->w_target_page, 0, PAGE_SIZE);
++		}
+ 	}
+ 	if (wc->w_target_page)
+ 		flush_dcache_page(wc->w_target_page);
 
 
