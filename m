@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E39D6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01FF5C433EF;
-	Mon,  3 Apr 2023 14:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1636C6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93982C433EF;
+	Mon,  3 Apr 2023 14:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532380;
-	bh=1uwUJhUCoaNMzhfqPPFtqrupiM6OX4o+zK6d1+ejq2g=;
+	s=korg; t=1680532382;
+	bh=U0Lvgd9jdtUD7FHxAcKp+Ug2og//UYTe0EmF84LG+Rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K2r08RItvuely3nYXn7oAZzU57PtBIpiGLt/ZpUVbQNU36jW55RnJQ0SJqR1cNXi4
-	 lPTDA9yHyg3VLVYG2lhgNglFzkDT2KEC6UY2PZD5NDrJ7oYLPQU8YDn+lL8IwFLYAs
-	 ybwklfvIe4/QplBlXHn1eJKprMNTy4vnSm3S+7vM=
+	b=asAAimoUm7FEFk1xFx8iMimyl10c2pZ6yunf+x9lKHhK4kNBgXbc9E2X3gVZao5eq
+	 Ga72dSpn8ry1aUI07kIq6A2tVn05n8z7f4wF8REHHDmFjgl8hGymDbFgme+XjkzErB
+	 mzha8IqDb0osXdWoBlT9i8PuIRzmkd2cF2ZxcEHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Steffen=20B=C3=A4tz?= <steffen@innosonix.de>,
-	Fabio Estevam <festevam@denx.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 61/99] net: dsa: mv88e6xxx: Enable IGMP snooping on user ports only
-Date: Mon,  3 Apr 2023 16:09:24 +0200
-Message-Id: <20230403140405.717743165@linuxfoundation.org>
+Subject: [PATCH 5.15 62/99] net: ethernet: mtk_eth_soc: fix flow block refcounting logic
+Date: Mon,  3 Apr 2023 16:09:25 +0200
+Message-Id: <20230403140405.763621366@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -39,50 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steffen Bätz <steffen@innosonix.de>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 7bcad0f0e6fbc1d613e49e0ee35c8e5f2e685bb0 ]
+[ Upstream commit 8c1cb87c2a5c29da416848451a687473f379611c ]
 
-Do not set the MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP bit on CPU or DSA ports.
+Since we call flow_block_cb_decref on FLOW_BLOCK_UNBIND, we also need to
+call flow_block_cb_incref for a newly allocated cb.
+Also fix the accidentally inverted refcount check on unbind.
 
-This allows the host CPU port to be a regular IGMP listener by sending out
-IGMP Membership Reports, which would otherwise not be forwarded by the
-mv88exxx chip, but directly looped back to the CPU port itself.
-
-Fixes: 54d792f257c6 ("net: dsa: Centralise global and port setup code into mv88e6xxx.")
-Signed-off-by: Steffen Bätz <steffen@innosonix.de>
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230329150140.701559-1-festevam@gmail.com
+Fixes: 502e84e2382d ("net: ethernet: mtk_eth_soc: add flow offloading support")
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230330120840.52079-1-nbd@nbd.name
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_ppe_offload.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 99c4e45c62e33..8a030dc0b8a36 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -2912,9 +2912,14 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
- 	 * If this is the upstream port for this switch, enable
- 	 * forwarding of unknown unicasts and multicasts.
- 	 */
--	reg = MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP |
--		MV88E6185_PORT_CTL0_USE_TAG | MV88E6185_PORT_CTL0_USE_IP |
-+	reg = MV88E6185_PORT_CTL0_USE_TAG | MV88E6185_PORT_CTL0_USE_IP |
- 		MV88E6XXX_PORT_CTL0_STATE_FORWARDING;
-+	/* Forward any IPv4 IGMP or IPv6 MLD frames received
-+	 * by a USER port to the CPU port to allow snooping.
-+	 */
-+	if (dsa_is_user_port(ds, port))
-+		reg |= MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP;
-+
- 	err = mv88e6xxx_port_write(chip, port, MV88E6XXX_PORT_CTL0, reg);
- 	if (err)
- 		return err;
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
+index 7bb1f20002b58..7c5403c010715 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
++++ b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
+@@ -462,6 +462,7 @@ mtk_eth_setup_tc_block(struct net_device *dev, struct flow_block_offload *f)
+ 		if (IS_ERR(block_cb))
+ 			return PTR_ERR(block_cb);
+ 
++		flow_block_cb_incref(block_cb);
+ 		flow_block_cb_add(block_cb, f);
+ 		list_add_tail(&block_cb->driver_list, &block_cb_list);
+ 		return 0;
+@@ -470,7 +471,7 @@ mtk_eth_setup_tc_block(struct net_device *dev, struct flow_block_offload *f)
+ 		if (!block_cb)
+ 			return -ENOENT;
+ 
+-		if (flow_block_cb_decref(block_cb)) {
++		if (!flow_block_cb_decref(block_cb)) {
+ 			flow_block_cb_remove(block_cb, f);
+ 			list_del(&block_cb->driver_list);
+ 		}
 -- 
 2.39.2
 
