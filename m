@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE386FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C77C433EF;
-	Mon,  3 Apr 2023 14:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E87D6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD03C433D2;
+	Mon,  3 Apr 2023 14:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532299;
-	bh=XUlcWoUW+KDtBHjGCUOL1/ueJjtMd/b3JHYVLsv9gCU=;
+	s=korg; t=1680532302;
+	bh=nKoXT/pN5cODU1vXtSyc7ofqfc/dOK1eSqnxjpQSMh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=huNucVfyJehMidx47euTjxQxKOOGZkUYc5xoa5wI0xDZnjMfXc9lC4ZImjGDbewGw
-	 PGlb+ZZAJYmMAw3RSnXXfQyREWXj2x2DoNEBqrQvflcUR1lVZVC2DIn4RUZwHlhR2Y
-	 FrQAKfPkT3oiow7wYWctRgNhzUtbRgPkuI93jbRY=
+	b=vM6NBnu+OiyN9xcR/kjqChf+bpm7+/fGlq5Add5Rg9eidBYjbIh8qJjf1BVa8wzxX
+	 FyoZgEn/9D+uTzPrq3Fx/Y7tWYOqrav+BHHQBbf50bTrnUiXeV2OeFfM2JIXX+uMvE
+	 CKOGlc7eIyYjB0FuSzUl4Bu+b3KVKTL4/v73bSMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 30/99] platform/x86: think-lmi: Add possible_values for ThinkStation
-Date: Mon,  3 Apr 2023 16:08:53 +0200
-Message-Id: <20230403140404.263734739@linuxfoundation.org>
+Subject: [PATCH 5.15 31/99] mtd: rawnand: meson: invalidate cache on polling ECC bit
+Date: Mon,  3 Apr 2023 16:08:54 +0200
+Message-Id: <20230403140404.310210926@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,58 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Pearson <mpearson-lenovo@squebb.ca>
+From: Arseniy Krasnov <avkrasnov@sberdevices.ru>
 
-[ Upstream commit 8a02d70679fc1c434401863333c8ea7dbf201494 ]
+[ Upstream commit e732e39ed9929c05fd219035bc9653ba4100d4fa ]
 
-ThinkStation platforms don't support the API to return possible_values
-but instead embed it in the settings string.
+'info_buf' memory is cached and driver polls ECC bit in it. This bit
+is set by the NAND controller. If 'usleep_range()' returns before device
+sets this bit, 'info_buf' will be cached and driver won't see update of
+this bit and will loop forever.
 
-Try and extract this information and set the possible_values attribute
-appropriately.
-
-Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
-Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://lore.kernel.org/r/20230320003221.561750-4-mpearson-lenovo@squebb.ca
-Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
+Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/d4ef0bd6-816e-f6fa-9385-f05f775f0ae2@sberdevices.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/mtd/nand/raw/meson_nand.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index b7428f5ec4c4c..c9ed2644bb8a6 100644
---- a/drivers/platform/x86/think-lmi.c
-+++ b/drivers/platform/x86/think-lmi.c
-@@ -943,6 +943,26 @@ static int tlmi_analyze(void)
- 			if (ret || !setting->possible_values)
- 				pr_info("Error retrieving possible values for %d : %s\n",
- 						i, setting->display_name);
-+		} else {
-+			/*
-+			 * Older Thinkstations don't support the bios_selections API.
-+			 * Instead they store this as a [Optional:Option1,Option2] section of the
-+			 * name string.
-+			 * Try and pull that out if it's available.
-+			 */
-+			char *item, *optstart, *optend;
-+
-+			if (!tlmi_setting(setting->index, &item, LENOVO_BIOS_SETTING_GUID)) {
-+				optstart = strstr(item, "[Optional:");
-+				if (optstart) {
-+					optstart += strlen("[Optional:");
-+					optend = strstr(optstart, "]");
-+					if (optend)
-+						setting->possible_values =
-+							kstrndup(optstart, optend - optstart,
-+									GFP_KERNEL);
-+				}
-+			}
+diff --git a/drivers/mtd/nand/raw/meson_nand.c b/drivers/mtd/nand/raw/meson_nand.c
+index b97adeee4cc14..4fd20e70aabd4 100644
+--- a/drivers/mtd/nand/raw/meson_nand.c
++++ b/drivers/mtd/nand/raw/meson_nand.c
+@@ -172,6 +172,7 @@ struct meson_nfc {
+ 
+ 	dma_addr_t daddr;
+ 	dma_addr_t iaddr;
++	u32 info_bytes;
+ 
+ 	unsigned long assigned_cs;
+ };
+@@ -499,6 +500,7 @@ static int meson_nfc_dma_buffer_setup(struct nand_chip *nand, void *databuf,
+ 					 nfc->daddr, datalen, dir);
+ 			return ret;
  		}
- 		/*
- 		 * firmware-attributes requires that possible_values are separated by ';' but
++		nfc->info_bytes = infolen;
+ 		cmd = GENCMDIADDRL(NFC_CMD_AIL, nfc->iaddr);
+ 		writel(cmd, nfc->reg_base + NFC_REG_CMD);
+ 
+@@ -516,8 +518,10 @@ static void meson_nfc_dma_buffer_release(struct nand_chip *nand,
+ 	struct meson_nfc *nfc = nand_get_controller_data(nand);
+ 
+ 	dma_unmap_single(nfc->dev, nfc->daddr, datalen, dir);
+-	if (infolen)
++	if (infolen) {
+ 		dma_unmap_single(nfc->dev, nfc->iaddr, infolen, dir);
++		nfc->info_bytes = 0;
++	}
+ }
+ 
+ static int meson_nfc_read_buf(struct nand_chip *nand, u8 *buf, int len)
+@@ -706,6 +710,8 @@ static void meson_nfc_check_ecc_pages_valid(struct meson_nfc *nfc,
+ 		usleep_range(10, 15);
+ 		/* info is updated by nfc dma engine*/
+ 		smp_rmb();
++		dma_sync_single_for_cpu(nfc->dev, nfc->iaddr, nfc->info_bytes,
++					DMA_FROM_DEVICE);
+ 		ret = *info & ECC_COMPLETE;
+ 	} while (!ret);
+ }
 -- 
 2.39.2
 
