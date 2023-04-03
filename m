@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D31B6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:39:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9463FC433EF;
-	Mon,  3 Apr 2023 14:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1196FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:39:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F86C4339B;
+	Mon,  3 Apr 2023 14:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532750;
-	bh=ybnf0WuouWU08KTr71yU7vBE+kVfFz4SW7MEMzkHpuc=;
+	s=korg; t=1680532753;
+	bh=a6mG5FKb02q1bL/eeUGR4r4kXmqIN29jjEwlBJPRBmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WpqGtfRtAEyRpcp3KJOoNflu1UrijSzWlkYEYAwyRMb+V+dWdwT+JrgYumug0yVBN
-	 5vDEBQyV8H6d5DCemzUcIZ4dEgln7qZgIl5ZVS02raLO/twUCoNLIxSu7Vb5PvCi9q
-	 hJFM0Gn2znS4i7bTRDvq936Iz30lbYGH2tSXyZ0k=
+	b=b2aHHphisj3y5q53w/id63YTgTX/0/XQIzwf0UQwiHDr5358DpVmzWUEdXWQiAXF8
+	 wHwtcx1A8uZcdvEp1QVkDjdNiTmrGUAJ+pguHUoe9c2Ym0WvxSFeGuq8F4+pWErX/L
+	 DvKephEy7rPS3KbsNgSsypB0HxtHq7zc4Y1oplRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sven Auhagen <sven.auhagen@voleatech.de>,
+	Marcin Wojtas <mw@semihalf.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/181] net: dsa: realtek: fix out-of-bounds access
-Date: Mon,  3 Apr 2023 16:08:40 +0200
-Message-Id: <20230403140417.891359754@linuxfoundation.org>
+Subject: [PATCH 6.1 103/181] net: mvpp2: classifier flow fix fragmentation flags
+Date: Mon,  3 Apr 2023 16:08:58 +0200
+Message-Id: <20230403140418.455667676@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -39,59 +36,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Sven Auhagen <sven.auhagen@voleatech.de>
 
-[ Upstream commit b93eb564869321d0dffaf23fcc5c88112ed62466 ]
+[ Upstream commit 9a251cae51d57289908222e6c322ca61fccc25fd ]
 
-The probe function sets priv->chip_data to (void *)priv + sizeof(*priv)
-with the expectation that priv has enough trailing space.
+Add missing IP Fragmentation Flag.
 
-However, only realtek-smi actually allocated this chip_data space.
-Do likewise in realtek-mdio to fix out-of-bounds accesses.
-
-These accesses likely went unnoticed so far, because of an (unused)
-buf[4096] member in struct realtek_priv, which caused kmalloc to
-round up the allocated buffer to a big enough size, so nothing of
-value was overwritten. With a different allocator (like in the barebox
-bootloader port of the driver) or with KASAN, the memory corruption
-becomes quickly apparent.
-
-Fixes: aac94001067d ("net: dsa: realtek: add new mdio interface for drivers")
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://lore.kernel.org/r/20230323103735.2331786-1-a.fatoum@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f9358e12a0af ("net: mvpp2: split ingress traffic into multiple flows")
+Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
+Reviewed-by: Marcin Wojtas <mw@semihalf.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/realtek-mdio.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../net/ethernet/marvell/mvpp2/mvpp2_cls.c    | 30 +++++++++++--------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/dsa/realtek/realtek-mdio.c b/drivers/net/dsa/realtek/realtek-mdio.c
-index 3e54fac5f9027..5a8fe707ca25e 100644
---- a/drivers/net/dsa/realtek/realtek-mdio.c
-+++ b/drivers/net/dsa/realtek/realtek-mdio.c
-@@ -21,6 +21,7 @@
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
+index 41d935d1aaf6f..40aeaa7bd739f 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
+@@ -62,35 +62,38 @@ static const struct mvpp2_cls_flow cls_flows[MVPP2_N_PRS_FLOWS] = {
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4 |
+-		       MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
- #include <linux/module.h>
- #include <linux/of_device.h>
-+#include <linux/overflow.h>
- #include <linux/regmap.h>
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OPT |
+-		       MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
- #include "realtek.h"
-@@ -152,7 +153,9 @@ static int realtek_mdio_probe(struct mdio_device *mdiodev)
- 	if (!var)
- 		return -EINVAL;
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OTHER |
+-		       MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
--	priv = devm_kzalloc(&mdiodev->dev, sizeof(*priv), GFP_KERNEL);
-+	priv = devm_kzalloc(&mdiodev->dev,
-+			    size_add(sizeof(*priv), var->chip_data_sz),
-+			    GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
+ 	/* TCP over IPv4 flows, fragmented, with vlan tag */
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK),
  
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	/* UDP over IPv4 flows, Not fragmented, no vlan tag */
+@@ -132,35 +135,38 @@ static const struct mvpp2_cls_flow cls_flows[MVPP2_N_PRS_FLOWS] = {
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4 |
+-		       MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OPT |
+-		       MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OTHER |
+-		       MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
+ 
+ 	/* UDP over IPv4 flows, fragmented, with vlan tag */
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	/* TCP over IPv6 flows, not fragmented, no vlan tag */
 -- 
 2.39.2
 
