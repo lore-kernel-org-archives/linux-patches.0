@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BBA612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9C2C433D2;
-	Mon,  3 Apr 2023 14:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9016612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F29BC433D2;
+	Mon,  3 Apr 2023 14:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531738;
-	bh=JhJVy8XIJssKZnJKSkyLw4mRF6oxbVz9C8OsK+gS7qw=;
+	s=korg; t=1680531740;
+	bh=I86NJCPu1+KiO59bQFYOpha356Tl4KQfy3wuYdiGe9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yD6KO5nE13XXJvjAUJ2mlOc6KmFNS9nU1uvvrvoIht0r+FbyP22e6ElUvs4eRzjgo
-	 WTYcUN/rouy/JiaCFaQ1uOr67GqpMLtRpMmsmbYf/AUcmgLUCFWQt+COAOYoXQExwx
-	 IVdikzsd4Zes/liNNz2luULOOK0pOsDN8kG4on04=
+	b=0Z3U6LmQ8ZHiapbOcYjAU0kwZ2wG1mfNUujnsfxPP2l7IgvdA9ll0olwGWyazWNbp
+	 y5sr1dF3Zomda5adX3wS5kvLNGK3dWXC/CMXsRCLx289RLVDi2IlpLUL37OCAnx7k1
+	 7YXl8uG4T6U1fVSpSzqdv5S6+wF44P3y/eHNqXuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Bastien Nocera <hadess@hadess.net>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.4 091/104] Input: goodix - add Lenovo Yoga Book X90F to nine_bytes_report DMI table
-Date: Mon,  3 Apr 2023 16:09:23 +0200
-Message-Id: <20230403140407.717236928@linuxfoundation.org>
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 063/104] ALSA: asihpi: check pao in control_message()
+Date: Mon,  3 Apr 2023 16:08:55 +0200
+Message-Id: <20230403140406.717185384@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,53 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit 8a0432bab6ea3203d220785da7ab3c7677f70ecb upstream.
+[ Upstream commit 9026c0bf233db53b86f74f4c620715e94eb32a09 ]
 
-The Android Lenovo Yoga Book X90F / X90L uses the same goodix touchscreen
-with 9 bytes touch reports for its touch keyboard as the already supported
-Windows Lenovo Yoga Book X91F/L, add a DMI match for this to
-the nine_bytes_report DMI table.
+control_message() might be called with pao = NULL.
+Here indicates control_message() as sample.
 
-When the quirk for the X91F/L was initially added it was written to
-also apply to the X90F/L but this does not work because the Android
-version of the Yoga Book uses completely different DMI strings.
-Also adjust the X91F/L quirk to reflect that it only applies to
-the X91F/L models.
+(B)	static void control_message(struct hpi_adapter_obj *pao, ...)
+	{                                                   ^^^
+		struct hpi_hw_obj *phw = pao->priv;
+		...                      ^^^
+	}
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Bastien Nocera <hadess@hadess.net>
-Link: https://lore.kernel.org/r/20230315134442.71787-1-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(A)	void _HPI_6205(struct hpi_adapter_obj *pao, ...)
+	{                                      ^^^
+		...
+		case HPI_OBJ_CONTROL:
+(B)			control_message(pao, phm, phr);
+			break;          ^^^
+		...
+	}
+
+	void HPI_6205(...)
+	{
+		...
+(A)		_HPI_6205(NULL, phm, phr);
+		...       ^^^^
+	}
+
+Therefore, We will get too many warning via cppcheck, like below
+
+	sound/pci/asihpi/hpi6205.c:238:27: warning: Possible null pointer dereference: pao [nullPointer]
+		 struct hpi_hw_obj *phw = pao->priv;
+		                          ^
+	sound/pci/asihpi/hpi6205.c:433:13: note: Calling function '_HPI_6205', 1st argument 'NULL' value is 0
+		  _HPI_6205(NULL, phm, phr);
+		            ^
+	sound/pci/asihpi/hpi6205.c:401:20: note: Calling function 'control_message', 1st argument 'pao' value is 0
+	   control_message(pao, phm, phr);
+	                   ^
+Set phr->error like many functions doing, and don't call _HPI_6205()
+with NULL.
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87ttypeaqz.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/goodix.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ sound/pci/asihpi/hpi6205.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/touchscreen/goodix.c
-+++ b/drivers/input/touchscreen/goodix.c
-@@ -170,10 +170,18 @@ static const struct dmi_system_id rotate
- static const struct dmi_system_id nine_bytes_report[] = {
- #if defined(CONFIG_DMI) && defined(CONFIG_X86)
- 	{
--		.ident = "Lenovo YogaBook",
--		/* YB1-X91L/F and YB1-X90L/F */
-+		/* Lenovo Yoga Book X90F / X90L */
- 		.matches = {
--			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X9")
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
-+		}
-+	},
-+	{
-+		/* Lenovo Yoga Book X91F / X91L */
-+		.matches = {
-+			/* Non exact match to match F + L versions */
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X91"),
- 		}
- 	},
- #endif
+diff --git a/sound/pci/asihpi/hpi6205.c b/sound/pci/asihpi/hpi6205.c
+index 3d6914c64c4a8..4cdaeefeb6885 100644
+--- a/sound/pci/asihpi/hpi6205.c
++++ b/sound/pci/asihpi/hpi6205.c
+@@ -430,7 +430,7 @@ void HPI_6205(struct hpi_message *phm, struct hpi_response *phr)
+ 		pao = hpi_find_adapter(phm->adapter_index);
+ 	} else {
+ 		/* subsys messages don't address an adapter */
+-		_HPI_6205(NULL, phm, phr);
++		phr->error = HPI_ERROR_INVALID_OBJ_INDEX;
+ 		return;
+ 	}
+ 
+-- 
+2.39.2
+
 
 
