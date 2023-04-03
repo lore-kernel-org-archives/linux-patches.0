@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A067F5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:14:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297C4C433EF;
-	Mon,  3 Apr 2023 14:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404595683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:14:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACD1C4339B;
+	Mon,  3 Apr 2023 14:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531273;
-	bh=uVI9bvcjhh5fMLFX4dlOB96QsXbr3zWKfyw4FSbntRA=;
+	s=korg; t=1680531276;
+	bh=2yJDhlgtT2RyRVOjfRfz4bd8Xvh8tCq8cDWSbB+IWv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gc+5oxBR/dl6jMkTqoKmoqfChSs5gL9F6eykkbYeXYx6FRC9qe8BA5mKvQ6LNNSBV
-	 YLh+nCAdCvSPjbh63T+83WzVn2Dl77i9F9ShssonbZ0GdLBsFagp8sblaI++Y1bm8y
-	 1tW4htUOANatkMSyHkl7jiNj38F0MhFo0itYncHo=
+	b=gQr1eKrUlF/0ibeAbgxKqmvfiX3jHeDEdomz+BYcbvuUxRraKWgSXVwg7kk0N022Y
+	 SNqTyzB/CWUYzfbLVQ8foygEJlrZW2VdYtbfDCktBXZ10VVXj11KWShtuOlUN3suwc
+	 +dKRnO/FczeYirQkRHpADQIA2QcckJsTfLOXHOos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 44/66] ALSA: asihpi: check pao in control_message()
-Date: Mon,  3 Apr 2023 16:08:52 +0200
-Message-Id: <20230403140353.396887247@linuxfoundation.org>
+Subject: [PATCH 4.14 45/66] ALSA: hda/ca0132: fixup buffer overrun at tuning_ctl_set()
+Date: Mon,  3 Apr 2023 16:08:53 +0200
+Message-Id: <20230403140353.426975109@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -37,68 +37,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 9026c0bf233db53b86f74f4c620715e94eb32a09 ]
+[ Upstream commit 98e5eb110095ec77cb6d775051d181edbf9cd3cf ]
 
-control_message() might be called with pao = NULL.
-Here indicates control_message() as sample.
+tuning_ctl_set() might have buffer overrun at (X) if it didn't break
+from loop by matching (A).
 
-(B)	static void control_message(struct hpi_adapter_obj *pao, ...)
-	{                                                   ^^^
-		struct hpi_hw_obj *phw = pao->priv;
-		...                      ^^^
-	}
-
-(A)	void _HPI_6205(struct hpi_adapter_obj *pao, ...)
-	{                                      ^^^
-		...
-		case HPI_OBJ_CONTROL:
-(B)			control_message(pao, phm, phr);
-			break;          ^^^
-		...
-	}
-
-	void HPI_6205(...)
+	static int tuning_ctl_set(...)
 	{
-		...
-(A)		_HPI_6205(NULL, phm, phr);
-		...       ^^^^
+		for (i = 0; i < TUNING_CTLS_COUNT; i++)
+(A)			if (nid == ca0132_tuning_ctls[i].nid)
+				break;
+
+		snd_hda_power_up(...);
+(X)		dspio_set_param(..., ca0132_tuning_ctls[i].mid, ...);
+		snd_hda_power_down(...);                ^
+
+		return 1;
 	}
 
-Therefore, We will get too many warning via cppcheck, like below
+We will get below error by cppcheck
 
-	sound/pci/asihpi/hpi6205.c:238:27: warning: Possible null pointer dereference: pao [nullPointer]
-		 struct hpi_hw_obj *phw = pao->priv;
-		                          ^
-	sound/pci/asihpi/hpi6205.c:433:13: note: Calling function '_HPI_6205', 1st argument 'NULL' value is 0
-		  _HPI_6205(NULL, phm, phr);
-		            ^
-	sound/pci/asihpi/hpi6205.c:401:20: note: Calling function 'control_message', 1st argument 'pao' value is 0
-	   control_message(pao, phm, phr);
-	                   ^
-Set phr->error like many functions doing, and don't call _HPI_6205()
-with NULL.
+	sound/pci/hda/patch_ca0132.c:4229:2: note: After for loop, i has value 12
+	 for (i = 0; i < TUNING_CTLS_COUNT; i++)
+	 ^
+	sound/pci/hda/patch_ca0132.c:4234:43: note: Array index out of bounds
+	 dspio_set_param(codec, ca0132_tuning_ctls[i].mid, 0x20,
+	                                           ^
+This patch cares non match case.
 
 Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87ttypeaqz.wl-kuninori.morimoto.gx@renesas.com
+Link: https://lore.kernel.org/r/87sfe9eap7.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/asihpi/hpi6205.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_ca0132.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/asihpi/hpi6205.c b/sound/pci/asihpi/hpi6205.c
-index 8d5abfa4e24bf..bc694a69b4b79 100644
---- a/sound/pci/asihpi/hpi6205.c
-+++ b/sound/pci/asihpi/hpi6205.c
-@@ -441,7 +441,7 @@ void HPI_6205(struct hpi_message *phm, struct hpi_response *phr)
- 		pao = hpi_find_adapter(phm->adapter_index);
- 	} else {
- 		/* subsys messages don't address an adapter */
--		_HPI_6205(NULL, phm, phr);
-+		phr->error = HPI_ERROR_INVALID_OBJ_INDEX;
- 		return;
- 	}
+diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
+index 280643f72c6e2..13c32f3414d2f 100644
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -2943,8 +2943,10 @@ static int tuning_ctl_set(struct hda_codec *codec, hda_nid_t nid,
  
+ 	for (i = 0; i < TUNING_CTLS_COUNT; i++)
+ 		if (nid == ca0132_tuning_ctls[i].nid)
+-			break;
++			goto found;
+ 
++	return -EINVAL;
++found:
+ 	snd_hda_power_up(codec);
+ 	dspio_set_param(codec, ca0132_tuning_ctls[i].mid,
+ 			ca0132_tuning_ctls[i].req,
 -- 
 2.39.2
 
