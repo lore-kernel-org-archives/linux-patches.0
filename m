@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9C96FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE62C433EF;
-	Mon,  3 Apr 2023 14:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EF36FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1047C4339E;
+	Mon,  3 Apr 2023 14:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533307;
-	bh=7ghJs8LmqnVNF5ZFjS+B5Kels7rqILpJKIg1J9yyst4=;
+	s=korg; t=1680533310;
+	bh=7fxM8GdmJz4XU1Wmwks4WKlLAcEvkTVClq+ihHPbwk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RHlmfihx48BlsfiQyYMNjpozahANwCdG1FjeiMLZ6PeWru0AHE+Op1rJ2liFcMCgJ
-	 ngUcj1lSi65RktNVRQoXF2EUBw4Le2Zt7hx/U/F4/VAuHcZdqUiShYj7DD4JieDpMS
-	 aG6FeBUXCXkoRGPoeWDgq5dBPDkpQpqIKjT92Ld8=
+	b=uBuNeXPzYxYXF0WSx3p40fIFn3r5KKzCxOeLgodg7/Adei94xh3QBEHeUIIEvEsbP
+	 0SIOub9ksdyxbX9dDm239kxwV3GWUHhWvygueXfMQn022/1TcU+ydFV4px/HTOMmOj
+	 VIOgk9ZSndIj2R0j+dqZeWisV+az0EL/tBw88Nhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 116/187] bnxt_en: Fix reporting of test result in ethtool selftest
-Date: Mon,  3 Apr 2023 16:09:21 +0200
-Message-Id: <20230403140419.785882796@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Bastien Nocera <hadess@hadess.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.2 134/187] Input: goodix - add Lenovo Yoga Book X90F to nine_bytes_report DMI table
+Date: Mon,  3 Apr 2023 16:09:39 +0200
+Message-Id: <20230403140420.412954969@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -39,39 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 83714dc3db0e4a088673601bc8099b079bc1a077 ]
+commit 8a0432bab6ea3203d220785da7ab3c7677f70ecb upstream.
 
-When the selftest command fails, driver is not reporting the failure
-by updating the "test->flags" when bnxt_close_nic() fails.
+The Android Lenovo Yoga Book X90F / X90L uses the same goodix touchscreen
+with 9 bytes touch reports for its touch keyboard as the already supported
+Windows Lenovo Yoga Book X91F/L, add a DMI match for this to
+the nine_bytes_report DMI table.
 
-Fixes: eb51365846bc ("bnxt_en: Add basic ethtool -t selftest support.")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When the quirk for the X91F/L was initially added it was written to
+also apply to the X90F/L but this does not work because the Android
+version of the Yoga Book uses completely different DMI strings.
+Also adjust the X91F/L quirk to reflect that it only applies to
+the X91F/L models.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Bastien Nocera <hadess@hadess.net>
+Link: https://lore.kernel.org/r/20230315134442.71787-1-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/touchscreen/goodix.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index ec573127b7076..7658a06b8d059 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -3738,6 +3738,7 @@ static void bnxt_self_test(struct net_device *dev, struct ethtool_test *etest,
- 		bnxt_ulp_stop(bp);
- 		rc = bnxt_close_nic(bp, true, false);
- 		if (rc) {
-+			etest->flags |= ETH_TEST_FL_FAILED;
- 			bnxt_ulp_start(bp, rc);
- 			return;
+--- a/drivers/input/touchscreen/goodix.c
++++ b/drivers/input/touchscreen/goodix.c
+@@ -124,10 +124,18 @@ static const unsigned long goodix_irq_fl
+ static const struct dmi_system_id nine_bytes_report[] = {
+ #if defined(CONFIG_DMI) && defined(CONFIG_X86)
+ 	{
+-		.ident = "Lenovo YogaBook",
+-		/* YB1-X91L/F and YB1-X90L/F */
++		/* Lenovo Yoga Book X90F / X90L */
+ 		.matches = {
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X9")
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
++		}
++	},
++	{
++		/* Lenovo Yoga Book X91F / X91L */
++		.matches = {
++			/* Non exact match to match F + L versions */
++			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X91"),
  		}
--- 
-2.39.2
-
+ 	},
+ #endif
 
 
