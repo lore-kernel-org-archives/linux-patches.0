@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87085683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F49FC433EF;
-	Mon,  3 Apr 2023 14:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B8F5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED66C433EF;
+	Mon,  3 Apr 2023 14:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531538;
-	bh=vmRHxWXauqltCTp09RX7xctKAfxXOkatQKiugOKMfCA=;
+	s=korg; t=1680531541;
+	bh=tHwk9/r/WDvRoc05Y1C3ntAttYDGx+o/WrfiprrAmdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ogy1qzr2LggMeYok0b7rwM8Oja/etzUJXJ8QufW51QLeReooPN5hs3T/m//wMf51w
-	 1/WKpQeMHWNcH2nsXN3uftefkKth/ZwtRlrx8B9C5fEi9eU/IeZX+g4i1d0wmCsYXI
-	 dRSLuNi+qidrYW6to0bIeXFPH3qi3Or1Xh9JEPts=
+	b=u2yt5qZrjYg47iYv795ZG75A3o1FtXiHMimfy0Rsn3WS2uwDYqujtKSbuTyM/eQay
+	 SuF9/9PgWBsR5PT2etCSc86VpNY6QDt87lDk4QiImTLhYL3JDGfQInbtzo09gHbkkL
+	 6nLs6SgT81omRCVv2mMyjPkMsrMqaZWnPdRULUjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Li Zetao <lizetao1@huawei.com>,
+	Francois Romieu <romieu@fr.zoreil.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 017/104] net/mlx5: Read the TC mapping of all priorities on ETS query
-Date: Mon,  3 Apr 2023 16:08:09 +0200
-Message-Id: <20230403140404.877692387@linuxfoundation.org>
+Subject: [PATCH 5.4 018/104] atm: idt77252: fix kmemleak when rmmod idt77252
+Date: Mon,  3 Apr 2023 16:08:10 +0200
+Message-Id: <20230403140404.922912843@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -36,49 +36,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 44d553188c38ac74b799dfdcebafef2f7bb70942 ]
+[ Upstream commit 4fe3c88552a3fbe1944426a4506a18cdeb457b5a ]
 
-When ETS configurations are queried by the user to get the mapping
-assignment between packet priority and traffic class, only priorities up
-to maximum TCs are queried from QTCT register in FW to retrieve their
-assigned TC, leaving the rest of the priorities mapped to the default
-TC #0 which might be misleading.
+There are memory leaks reported by kmemleak:
 
-Fix by querying the TC mapping of all priorities on each ETS query,
-regardless of the maximum number of TCs configured in FW.
+  unreferenced object 0xffff888106500800 (size 128):
+    comm "modprobe", pid 1017, jiffies 4297787785 (age 67.152s)
+    hex dump (first 32 bytes):
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<00000000970ce626>] __kmem_cache_alloc_node+0x20c/0x380
+      [<00000000fb5f78d9>] kmalloc_trace+0x2f/0xb0
+      [<000000000e947e2a>] idt77252_init_one+0x2847/0x3c90 [idt77252]
+      [<000000006efb048e>] local_pci_probe+0xeb/0x1a0
+    ...
 
-Fixes: 820c2c5e773d ("net/mlx5e: Read ETS settings directly from firmware")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+  unreferenced object 0xffff888106500b00 (size 128):
+    comm "modprobe", pid 1017, jiffies 4297787785 (age 67.152s)
+    hex dump (first 32 bytes):
+      00 20 3d 01 80 88 ff ff 00 20 3d 01 80 88 ff ff  . =...... =.....
+      f0 23 3d 01 80 88 ff ff 00 20 3d 01 00 00 00 00  .#=...... =.....
+    backtrace:
+      [<00000000970ce626>] __kmem_cache_alloc_node+0x20c/0x380
+      [<00000000fb5f78d9>] kmalloc_trace+0x2f/0xb0
+      [<00000000f451c5be>] alloc_scq.constprop.0+0x4a/0x400 [idt77252]
+      [<00000000e6313849>] idt77252_init_one+0x28cf/0x3c90 [idt77252]
+
+The root cause is traced to the vc_maps which alloced in open_card_oam()
+are not freed in close_card_oam(). The vc_maps are used to record
+open connections, so when close a vc_map in close_card_oam(), the memory
+should be freed. Moreover, the ubr0 is not closed when close a idt77252
+device, leading to the memory leak of vc_map and scq_info.
+
+Fix them by adding kfree in close_card_oam() and implementing new
+close_card_ubr0() to close ubr0.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Francois Romieu <romieu@fr.zoreil.com>
+Link: https://lore.kernel.org/r/20230320143318.2644630-1-lizetao1@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/atm/idt77252.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index 01f2918063af0..f1952e14c8042 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -109,12 +109,14 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
- 	if (!MLX5_CAP_GEN(priv->mdev, ets))
- 		return -EOPNOTSUPP;
+diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
+index a95a9448984fe..c60611196786f 100644
+--- a/drivers/atm/idt77252.c
++++ b/drivers/atm/idt77252.c
+@@ -2914,6 +2914,7 @@ close_card_oam(struct idt77252_dev *card)
  
--	ets->ets_cap = mlx5_max_tc(priv->mdev) + 1;
--	for (i = 0; i < ets->ets_cap; i++) {
-+	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
- 		err = mlx5_query_port_prio_tc(mdev, i, &ets->prio_tc[i]);
- 		if (err)
- 			return err;
-+	}
+ 				recycle_rx_pool_skb(card, &vc->rcv.rx_pool);
+ 			}
++			kfree(vc);
+ 		}
+ 	}
+ }
+@@ -2957,6 +2958,15 @@ open_card_ubr0(struct idt77252_dev *card)
+ 	return 0;
+ }
  
-+	ets->ets_cap = mlx5_max_tc(priv->mdev) + 1;
-+	for (i = 0; i < ets->ets_cap; i++) {
- 		err = mlx5_query_port_tc_group(mdev, i, &tc_group[i]);
- 		if (err)
- 			return err;
++static void
++close_card_ubr0(struct idt77252_dev *card)
++{
++	struct vc_map *vc = card->vcs[0];
++
++	free_scq(card, vc->scq);
++	kfree(vc);
++}
++
+ static int
+ idt77252_dev_open(struct idt77252_dev *card)
+ {
+@@ -3006,6 +3016,7 @@ static void idt77252_dev_close(struct atm_dev *dev)
+ 	struct idt77252_dev *card = dev->dev_data;
+ 	u32 conf;
+ 
++	close_card_ubr0(card);
+ 	close_card_oam(card);
+ 
+ 	conf = SAR_CFG_RXPTH |	/* enable receive path           */
 -- 
 2.39.2
 
