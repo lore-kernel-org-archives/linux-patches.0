@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BB36FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B9CC433EF;
-	Mon,  3 Apr 2023 14:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5E06FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A8FC433EF;
+	Mon,  3 Apr 2023 14:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532006;
-	bh=ycViADGvelMLm/JR/WGtcxaznIGuXSaenJ576f5cda0=;
+	s=korg; t=1680532008;
+	bh=auzT78B8sTYFbmdAMJSvXW38zALVULSPkuQHYRo5wJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rfzMnv0Nd7zWCCVRMuXNta4XcXws5EZCzPTegcOsIMFDu7jgnu/pQAfNj8mM8PgR+
-	 +qkuFm5ScN3dLaYZs287ry7IAfD5kEjDPuBpjcUEU49HeIMoOQLePJpjA+a9WfqjZO
-	 +4JraiIcLDn3VoDRGbEVsxdTmzr3wHs7wSCkAcE8=
+	b=UkHwP3P/21EliQgXunXGtnx190HlDoL6/xHZDXy9Du/NgHtOG5MRYpy7yxOiniIZB
+	 hVn8IWNv9OiG3h2J9uYyRcT3CH4iEbnCjwVzOe+CZDWlPRmoBTWmbavpahzJztAg/x
+	 6cLQ1RU25HDe/ymayc6uSIB2/CvvyXDlaKBjxzjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Shawn C <shawn.c.lee@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 5.10 091/173] drm/i915: Preserve crtc_state->inherited during state clearing
-Date: Mon,  3 Apr 2023 16:08:26 +0200
-Message-Id: <20230403140417.381078395@linuxfoundation.org>
+	Rijo Thomas <Rijo-john.Thomas@amd.com>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 5.10 092/173] tee: amdtee: fix race condition in amdtee_open_session
+Date: Mon,  3 Apr 2023 16:08:27 +0200
+Message-Id: <20230403140417.410529300@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,42 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Rijo Thomas <Rijo-john.Thomas@amd.com>
 
-commit 3a84f2c6c9558c554a90ec26ad25df92fc5e05b7 upstream.
+commit f8502fba45bd30e1a6a354d9d898bc99d1a11e6d upstream.
 
-intel_crtc_prepare_cleared_state() is unintentionally losing
-the "inherited" flag. This will happen if intel_initial_commit()
-is forced to go through the full modeset calculations for
-whatever reason.
+There is a potential race condition in amdtee_open_session that may
+lead to use-after-free. For instance, in amdtee_open_session() after
+sess->sess_mask is set, and before setting:
 
-Afterwards the first real commit from userspace will not get
-forced to the full modeset path, and thus eg. audio state may
-not get recomputed properly. So if the monitor was already
-enabled during boot audio will not work until userspace itself
-does an explicit full modeset.
+    sess->session_info[i] = session_info;
 
+if amdtee_close_session() closes this same session, then 'sess' data
+structure will be released, causing kernel panic when 'sess' is
+accessed within amdtee_open_session().
+
+The solution is to set the bit sess->sess_mask as the last step in
+amdtee_open_session().
+
+Fixes: 757cc3e9ff1d ("tee: add AMD-TEE driver")
 Cc: stable@vger.kernel.org
-Tested-by: Lee Shawn C <shawn.c.lee@intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230223152048.20878-1-ville.syrjala@linux.intel.com
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-(cherry picked from commit 2553bacaf953b48c59357f5a622282bc0c45adae)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Rijo Thomas <Rijo-john.Thomas@amd.com>
+Acked-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/tee/amdtee/core.c |   29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -13335,6 +13335,7 @@ intel_crtc_prepare_cleared_state(struct
- 	 * only fields that are know to not cause problems are preserved. */
+--- a/drivers/tee/amdtee/core.c
++++ b/drivers/tee/amdtee/core.c
+@@ -267,35 +267,34 @@ int amdtee_open_session(struct tee_conte
+ 		goto out;
+ 	}
  
- 	saved_state->uapi = crtc_state->uapi;
-+	saved_state->inherited = crtc_state->inherited;
- 	saved_state->scaler_state = crtc_state->scaler_state;
- 	saved_state->shared_dpll = crtc_state->shared_dpll;
- 	saved_state->dpll_hw_state = crtc_state->dpll_hw_state;
++	/* Open session with loaded TA */
++	handle_open_session(arg, &session_info, param);
++	if (arg->ret != TEEC_SUCCESS) {
++		pr_err("open_session failed %d\n", arg->ret);
++		handle_unload_ta(ta_handle);
++		kref_put(&sess->refcount, destroy_session);
++		goto out;
++	}
++
+ 	/* Find an empty session index for the given TA */
+ 	spin_lock(&sess->lock);
+ 	i = find_first_zero_bit(sess->sess_mask, TEE_NUM_SESSIONS);
+-	if (i < TEE_NUM_SESSIONS)
++	if (i < TEE_NUM_SESSIONS) {
++		sess->session_info[i] = session_info;
++		set_session_id(ta_handle, i, &arg->session);
+ 		set_bit(i, sess->sess_mask);
++	}
+ 	spin_unlock(&sess->lock);
+ 
+ 	if (i >= TEE_NUM_SESSIONS) {
+ 		pr_err("reached maximum session count %d\n", TEE_NUM_SESSIONS);
++		handle_close_session(ta_handle, session_info);
+ 		handle_unload_ta(ta_handle);
+ 		kref_put(&sess->refcount, destroy_session);
+ 		rc = -ENOMEM;
+ 		goto out;
+ 	}
+ 
+-	/* Open session with loaded TA */
+-	handle_open_session(arg, &session_info, param);
+-	if (arg->ret != TEEC_SUCCESS) {
+-		pr_err("open_session failed %d\n", arg->ret);
+-		spin_lock(&sess->lock);
+-		clear_bit(i, sess->sess_mask);
+-		spin_unlock(&sess->lock);
+-		handle_unload_ta(ta_handle);
+-		kref_put(&sess->refcount, destroy_session);
+-		goto out;
+-	}
+-
+-	sess->session_info[i] = session_info;
+-	set_session_id(ta_handle, i, &arg->session);
+ out:
+ 	free_pages((u64)ta, get_order(ta_size));
+ 	return rc;
 
 
