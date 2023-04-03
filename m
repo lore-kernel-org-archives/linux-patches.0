@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78765698
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B402C433EF;
-	Mon,  3 Apr 2023 14:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662E35683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD6AC4339B;
+	Mon,  3 Apr 2023 14:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531454;
-	bh=owMb/5zaUn95UoRs1Dv0jPDDfgSFkocVhVaJ/qfEDLI=;
+	s=korg; t=1680531457;
+	bh=3ByZmPJLS99AN8es8Q7JHikYHOKrp4p2mJIzhX+LFUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XtOJnNj4XpZ1dBrkQSnILech5Eq+RwcRZVzwSOu3UKGEFvp5cpKhcagJ1GMUjisRr
-	 Y6e1xaMIxV+xxQUJQm8lf7QC6uoNZ2405XYHFtzz4UTVQaCZRbeMNBQDR2OCFmPXh/
-	 gtrZxXHuJTCyFAazNL1qbhX73QkJBvS56gNih8f0=
+	b=s4ONGFm2zLFgJhkgyWUvprzaen0meiiJmEKGUJHkI4aEu5S68wgmx30N1b4o4HOH3
+	 6f319gBT9aQrJ26goM5oY3lK3um1RHqwHULyjTAfLYQNO5f0a+bILYk3dICManJ442
+	 cc7dnang2y0S5AWQcwxVgRKwrv7ebwuIjAKtG86I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corinna Vinschen <vinschen@redhat.com>,
-	Lin Ma <linma@zju.edu.cn>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 4.19 39/84] igb: revert rtnl_lock() that causes deadlock
-Date: Mon,  3 Apr 2023 16:08:40 +0200
-Message-Id: <20230403140354.698997278@linuxfoundation.org>
+	Eero Tamminen <oak@helsinkinet.fi>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 30/84] m68k: Only force 030 bus error if PC not in exception table
+Date: Mon,  3 Apr 2023 16:08:31 +0200
+Message-Id: <20230403140354.398880087@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -38,87 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-commit 65f69851e44d71248b952a687e44759a7abb5016 upstream.
+[ Upstream commit e36a82bebbf7da814530d5a179bef9df5934b717 ]
 
-The commit 6faee3d4ee8b ("igb: Add lock to avoid data race") adds
-rtnl_lock to eliminate a false data race shown below
+__get_kernel_nofault() does copy data in supervisor mode when
+forcing a task backtrace log through /proc/sysrq_trigger.
+This is expected cause a bus error exception on e.g. NULL
+pointer dereferencing when logging a kernel task has no
+workqueue associated. This bus error ought to be ignored.
 
- (FREE from device detaching)      |   (USE from netdev core)
-igb_remove                         |  igb_ndo_get_vf_config
- igb_disable_sriov                 |  vf >= adapter->vfs_allocated_count?
-  kfree(adapter->vf_data)          |
-  adapter->vfs_allocated_count = 0 |
-                                   |    memcpy(... adapter->vf_data[vf]
+Our 030 bus error handler is ill equipped to deal with this:
 
-The above race will never happen and the extra rtnl_lock causes deadlock
-below
+Whenever ssw indicates a kernel mode access on a data fault,
+we don't even attempt to handle the fault and instead always
+send a SEGV signal (or panic). As a result, the check
+for exception handling at the fault PC (buried in
+send_sig_fault() which gets called from do_page_fault()
+eventually) is never used.
 
-[  141.420169]  <TASK>
-[  141.420672]  __schedule+0x2dd/0x840
-[  141.421427]  schedule+0x50/0xc0
-[  141.422041]  schedule_preempt_disabled+0x11/0x20
-[  141.422678]  __mutex_lock.isra.13+0x431/0x6b0
-[  141.423324]  unregister_netdev+0xe/0x20
-[  141.423578]  igbvf_remove+0x45/0xe0 [igbvf]
-[  141.423791]  pci_device_remove+0x36/0xb0
-[  141.423990]  device_release_driver_internal+0xc1/0x160
-[  141.424270]  pci_stop_bus_device+0x6d/0x90
-[  141.424507]  pci_stop_and_remove_bus_device+0xe/0x20
-[  141.424789]  pci_iov_remove_virtfn+0xba/0x120
-[  141.425452]  sriov_disable+0x2f/0xf0
-[  141.425679]  igb_disable_sriov+0x4e/0x100 [igb]
-[  141.426353]  igb_remove+0xa0/0x130 [igb]
-[  141.426599]  pci_device_remove+0x36/0xb0
-[  141.426796]  device_release_driver_internal+0xc1/0x160
-[  141.427060]  driver_detach+0x44/0x90
-[  141.427253]  bus_remove_driver+0x55/0xe0
-[  141.427477]  pci_unregister_driver+0x2a/0xa0
-[  141.428296]  __x64_sys_delete_module+0x141/0x2b0
-[  141.429126]  ? mntput_no_expire+0x4a/0x240
-[  141.429363]  ? syscall_trace_enter.isra.19+0x126/0x1a0
-[  141.429653]  do_syscall_64+0x5b/0x80
-[  141.429847]  ? exit_to_user_mode_prepare+0x14d/0x1c0
-[  141.430109]  ? syscall_exit_to_user_mode+0x12/0x30
-[  141.430849]  ? do_syscall_64+0x67/0x80
-[  141.431083]  ? syscall_exit_to_user_mode_prepare+0x183/0x1b0
-[  141.431770]  ? syscall_exit_to_user_mode+0x12/0x30
-[  141.432482]  ? do_syscall_64+0x67/0x80
-[  141.432714]  ? exc_page_fault+0x64/0x140
-[  141.432911]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+In contrast, both 040 and 060 access error handlers do not
+care whether a fault happened on supervisor mode access,
+and will call do_page_fault() on those, ultimately honoring
+the exception table.
 
-Since the igb_disable_sriov() will call pci_disable_sriov() before
-releasing any resources, the netdev core will synchronize the cleanup to
-avoid any races. This patch removes the useless rtnl_(un)lock to guarantee
-correctness.
+Add a check in bus_error030 to call do_page_fault() in case
+we do have an entry for the fault PC in our exception table.
 
-CC: stable@vger.kernel.org
-Fixes: 6faee3d4ee8b ("igb: Add lock to avoid data race")
-Reported-by: Corinna Vinschen <vinschen@redhat.com>
-Link: https://lore.kernel.org/intel-wired-lan/ZAcJvkEPqWeJHO2r@calimero.vinschen.de/
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Tested-by: Corinna Vinschen <vinschen@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+I had attempted a fix for this earlier in 2019 that did rely
+on testing pagefault_disabled() (see link below) to achieve
+the same thing, but this patch should be more generic.
+
+Tested on 030 Atari Falcon.
+
+Reported-by: Eero Tamminen <oak@helsinkinet.fi>
+Link: https://lore.kernel.org/r/alpine.LNX.2.21.1904091023540.25@nippy.intranet
+Link: https://lore.kernel.org/r/63130691-1984-c423-c1f2-73bfd8d3dcd3@gmail.com
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20230301021107.26307-1-schmitzmic@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c |    2 --
- 1 file changed, 2 deletions(-)
+ arch/m68k/kernel/traps.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -3700,9 +3700,7 @@ static void igb_remove(struct pci_dev *p
- 	igb_release_hw_control(adapter);
+diff --git a/arch/m68k/kernel/traps.c b/arch/m68k/kernel/traps.c
+index 9b70a7f5e7058..35f706d836c50 100644
+--- a/arch/m68k/kernel/traps.c
++++ b/arch/m68k/kernel/traps.c
+@@ -30,6 +30,7 @@
+ #include <linux/init.h>
+ #include <linux/ptrace.h>
+ #include <linux/kallsyms.h>
++#include <linux/extable.h>
  
- #ifdef CONFIG_PCI_IOV
--	rtnl_lock();
- 	igb_disable_sriov(pdev);
--	rtnl_unlock();
- #endif
+ #include <asm/setup.h>
+ #include <asm/fpu.h>
+@@ -550,7 +551,8 @@ static inline void bus_error030 (struct frame *fp)
+ 			errorcode |= 2;
  
- 	unregister_netdev(netdev);
+ 		if (mmusr & (MMU_I | MMU_WP)) {
+-			if (ssw & 4) {
++			/* We might have an exception table for this PC */
++			if (ssw & 4 && !search_exception_tables(fp->ptregs.pc)) {
+ 				pr_err("Data %s fault at %#010lx in %s (pc=%#lx)\n",
+ 				       ssw & RW ? "read" : "write",
+ 				       fp->un.fmtb.daddr,
+-- 
+2.39.2
+
 
 
