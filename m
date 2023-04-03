@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2170D612F
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978A2C433EF;
-	Mon,  3 Apr 2023 14:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC38F612F
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36130C433A1;
+	Mon,  3 Apr 2023 14:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531987;
-	bh=upTXbOOZyD5jfy1RwA+Q/zsGtT9gImRRhm1yjOvbTFg=;
+	s=korg; t=1680531990;
+	bh=i2GGW3Zzb33Agi4Dth8sraYtXMV8E2zOCVJOmTcxFCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/GMTbX0kOd8oFbCZ9KjVAsIRgIlM9LTrKRg/Cn2xUwlxzP7E08S+LQ87z9SQdUDn
-	 4uPerHVCiI1tK7OKzi4UCtfniyAUTBu1ygsL+LccUxF+HYeUe28TKDtDLQh+6C3FFW
-	 mvUk4UblOAw0ry4wbHeNDkBI4O8DZdJXdycH3LPs=
+	b=KYntbp1NJ0aS+mqmcGL7s0Ijcg7ueyhXcDK8wfoBSS+7ZfJZDybKZaPAeE+pUIolW
+	 B5nO31Q4M5RCTYWf2WRqmdIc4z6wVU3O22974vwpZKfmuJk/MgYaGCRyiYIbEu0bRf
+	 0QQOYWCzLGcJADnR5oMRbwX/rKl8ALvqxdNmEt3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/173] net: mdio: thunder: Add missing fwnode_handle_put()
-Date: Mon,  3 Apr 2023 16:07:47 +0200
-Message-Id: <20230403140416.134125793@linuxfoundation.org>
+Subject: [PATCH 5.10 053/173] Bluetooth: btqcomsmd: Fix command timeout after setting BD address
+Date: Mon,  3 Apr 2023 16:07:48 +0200
+Message-Id: <20230403140416.162523085@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,34 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 
-[ Upstream commit b1de5c78ebe9858ccec9d49af2f76724f1d47e3e ]
+[ Upstream commit 5d44ab9e204200a78ad55cdf185aa2bb109b5950 ]
 
-In device_for_each_child_node(), we should add fwnode_handle_put()
-when break out of the iteration device_for_each_child_node()
-as it will automatically increase and decrease the refcounter.
+On most devices using the btqcomsmd driver (e.g. the DragonBoard 410c
+and other devices based on the Qualcomm MSM8916/MSM8909/... SoCs)
+the Bluetooth firmware seems to become unresponsive for a while after
+setting the BD address. On recent kernel versions (at least 5.17+)
+this often causes timeouts for subsequent commands, e.g. the HCI reset
+sent by the Bluetooth core during initialization:
 
-Fixes: 379d7ac7ca31 ("phy: mdio-thunder: Add driver for Cavium Thunder SoC MDIO buses.")
-Signed-off-by: Liang He <windhl@126.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    Bluetooth: hci0: Opcode 0x c03 failed: -110
+
+Unfortunately this behavior does not seem to be documented anywhere.
+Experimentation suggests that the minimum necessary delay to avoid
+the problem is ~150us. However, to be sure add a sleep for > 1ms
+in case it is a bit longer on other firmware versions.
+
+Older kernel versions are likely also affected, although perhaps with
+slightly different errors or less probability. Side effects can easily
+hide the issue in most cases, e.g. unrelated incoming interrupts that
+cause the necessary delay.
+
+Fixes: 1511cc750c3d ("Bluetooth: Introduce Qualcomm WCNSS SMD based HCI driver")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-thunder.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btqcomsmd.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/mdio/mdio-thunder.c b/drivers/net/mdio/mdio-thunder.c
-index 822d2cdd2f359..394b864aaa372 100644
---- a/drivers/net/mdio/mdio-thunder.c
-+++ b/drivers/net/mdio/mdio-thunder.c
-@@ -104,6 +104,7 @@ static int thunder_mdiobus_pci_probe(struct pci_dev *pdev,
- 		if (i >= ARRAY_SIZE(nexus->buses))
- 			break;
- 	}
-+	fwnode_handle_put(fwn);
+diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
+index 2acb719e596f5..11c7e04bf3947 100644
+--- a/drivers/bluetooth/btqcomsmd.c
++++ b/drivers/bluetooth/btqcomsmd.c
+@@ -122,6 +122,21 @@ static int btqcomsmd_setup(struct hci_dev *hdev)
  	return 0;
+ }
  
- err_release_regions:
++static int btqcomsmd_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
++{
++	int ret;
++
++	ret = qca_set_bdaddr_rome(hdev, bdaddr);
++	if (ret)
++		return ret;
++
++	/* The firmware stops responding for a while after setting the bdaddr,
++	 * causing timeouts for subsequent commands. Sleep a bit to avoid this.
++	 */
++	usleep_range(1000, 10000);
++	return 0;
++}
++
+ static int btqcomsmd_probe(struct platform_device *pdev)
+ {
+ 	struct btqcomsmd *btq;
+@@ -162,7 +177,7 @@ static int btqcomsmd_probe(struct platform_device *pdev)
+ 	hdev->close = btqcomsmd_close;
+ 	hdev->send = btqcomsmd_send;
+ 	hdev->setup = btqcomsmd_setup;
+-	hdev->set_bdaddr = qca_set_bdaddr_rome;
++	hdev->set_bdaddr = btqcomsmd_set_bdaddr;
+ 
+ 	ret = hci_register_dev(hdev);
+ 	if (ret < 0)
 -- 
 2.39.2
 
