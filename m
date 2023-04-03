@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BDD6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:25:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF194C433EF;
-	Mon,  3 Apr 2023 14:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE6F6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:25:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5226EC433EF;
+	Mon,  3 Apr 2023 14:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531910;
-	bh=Fl/vlYeUW39Md15nQwyr5HWiNGCg1oAAvbVd102TIUM=;
+	s=korg; t=1680531912;
+	bh=1ZQ7SuRWwSWzRkCxP8tIEfxjdVqCusx6gEgXInSpFf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZwAGcWoaNFQbOtBzohCrz4csvTwFqT9oAM8wEgpwHdrrYQgS0Q7pK6fin5ZvcTbO
-	 XOkEmhwCgItAZMLOUwaDQmmaPhis3yMX1BbOmVmeB0ufaPreyTMNB1+/V8ugbmmHbW
-	 J6ylMtXXp1F1kedJ40uxN2lBKpr+FU2APJ/mxuls=
+	b=xe11jT7D8t+QVDS0iJPo1ztKzhjWVVnv9KtIFIRHcoaeEJ2c1UP/4+k4MpeK47HCj
+	 xv1JSlMN8CUZOCMvyh3wVLxje1AvcqdUtqnt2+VqG0Wbmy6/qDvbidgA5ID/qU/B43
+	 2/K3VnfDlP+k4zSFKCeAVRyl5/sb2yBzZkJjS2bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <wangborong@cdjrlc.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/173] serial: fsl_lpuart: Fix comment typo
-Date: Mon,  3 Apr 2023 16:07:08 +0200
-Message-Id: <20230403140414.708212383@linuxfoundation.org>
+Subject: [PATCH 5.10 047/173] erspan: do not use skb_mac_header() in ndo_start_xmit()
+Date: Mon,  3 Apr 2023 16:07:42 +0200
+Message-Id: <20230403140415.949679486@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -34,34 +37,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Wang <wangborong@cdjrlc.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 374e01fa1304e1eabd2cd16f750da3ecaeab069b ]
+[ Upstream commit 8e50ed774554f93d55426039b27b1e38d7fa64d8 ]
 
-The double `as' is duplicated in the comment, remove one.
+Drivers should not assume skb_mac_header(skb) == skb->data in their
+ndo_start_xmit().
 
-Signed-off-by: Jason Wang <wangborong@cdjrlc.com>
-Link: https://lore.kernel.org/r/20220803104208.4127-1-wangborong@cdjrlc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 1be6f2b15f90 ("tty: serial: fsl_lpuart: fix race on RX DMA shutdown")
+Use skb_network_offset() and skb_transport_offset() which
+better describe what is needed in erspan_fb_xmit() and
+ip6erspan_tunnel_xmit()
+
+syzbot reported:
+WARNING: CPU: 0 PID: 5083 at include/linux/skbuff.h:2873 skb_mac_header include/linux/skbuff.h:2873 [inline]
+WARNING: CPU: 0 PID: 5083 at include/linux/skbuff.h:2873 ip6erspan_tunnel_xmit+0x1d9c/0x2d90 net/ipv6/ip6_gre.c:962
+Modules linked in:
+CPU: 0 PID: 5083 Comm: syz-executor406 Not tainted 6.3.0-rc2-syzkaller-00866-gd4671cb96fa3 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/02/2023
+RIP: 0010:skb_mac_header include/linux/skbuff.h:2873 [inline]
+RIP: 0010:ip6erspan_tunnel_xmit+0x1d9c/0x2d90 net/ipv6/ip6_gre.c:962
+Code: 04 02 41 01 de 84 c0 74 08 3c 03 0f 8e 1c 0a 00 00 45 89 b4 24 c8 00 00 00 c6 85 77 fe ff ff 01 e9 33 e7 ff ff e8 b4 27 a1 f8 <0f> 0b e9 b6 e7 ff ff e8 a8 27 a1 f8 49 8d bf f0 0c 00 00 48 b8 00
+RSP: 0018:ffffc90003b2f830 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 000000000000ffff RCX: 0000000000000000
+RDX: ffff888021273a80 RSI: ffffffff88e1bd4c RDI: 0000000000000003
+RBP: ffffc90003b2f9d8 R08: 0000000000000003 R09: 000000000000ffff
+R10: 000000000000ffff R11: 0000000000000000 R12: ffff88802b28da00
+R13: 00000000000000d0 R14: ffff88807e25b6d0 R15: ffff888023408000
+FS: 0000555556a61300(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000055e5b11eb6e8 CR3: 0000000027c1b000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+__netdev_start_xmit include/linux/netdevice.h:4900 [inline]
+netdev_start_xmit include/linux/netdevice.h:4914 [inline]
+__dev_direct_xmit+0x504/0x730 net/core/dev.c:4300
+dev_direct_xmit include/linux/netdevice.h:3088 [inline]
+packet_xmit+0x20a/0x390 net/packet/af_packet.c:285
+packet_snd net/packet/af_packet.c:3075 [inline]
+packet_sendmsg+0x31a0/0x5150 net/packet/af_packet.c:3107
+sock_sendmsg_nosec net/socket.c:724 [inline]
+sock_sendmsg+0xde/0x190 net/socket.c:747
+__sys_sendto+0x23a/0x340 net/socket.c:2142
+__do_sys_sendto net/socket.c:2154 [inline]
+__se_sys_sendto net/socket.c:2150 [inline]
+__x64_sys_sendto+0xe1/0x1b0 net/socket.c:2150
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f123aaa1039
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 b1 14 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffc15d12058 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f123aaa1039
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
+RBP: 0000000000000000 R08: 0000000020000040 R09: 0000000000000014
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f123aa648c0
+R13: 431bde82d7b634db R14: 0000000000000000 R15: 0000000000000000
+
+Fixes: 1baf5ebf8954 ("erspan: auto detect truncated packets.")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230320163427.8096-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/ip_gre.c  | 4 ++--
+ net/ipv6/ip6_gre.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index 32cce52800a73..bab296c5a0211 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -2766,7 +2766,7 @@ static int __maybe_unused lpuart_suspend(struct device *dev)
- 		 * EDMA driver during suspend will forcefully release any
- 		 * non-idle DMA channels. If port wakeup is enabled or if port
- 		 * is console port or 'no_console_suspend' is set the Rx DMA
--		 * cannot resume as as expected, hence gracefully release the
-+		 * cannot resume as expected, hence gracefully release the
- 		 * Rx DMA path before suspend and start Rx DMA path on resume.
- 		 */
- 		if (irq_wake) {
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index 65ead8a749337..9d1a506571043 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -547,7 +547,7 @@ static void erspan_fb_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		truncate = true;
+ 	}
+ 
+-	nhoff = skb_network_header(skb) - skb_mac_header(skb);
++	nhoff = skb_network_offset(skb);
+ 	if (skb->protocol == htons(ETH_P_IP) &&
+ 	    (ntohs(ip_hdr(skb)->tot_len) > skb->len - nhoff))
+ 		truncate = true;
+@@ -556,7 +556,7 @@ static void erspan_fb_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		int thoff;
+ 
+ 		if (skb_transport_header_was_set(skb))
+-			thoff = skb_transport_header(skb) - skb_mac_header(skb);
++			thoff = skb_transport_offset(skb);
+ 		else
+ 			thoff = nhoff + sizeof(struct ipv6hdr);
+ 		if (ntohs(ipv6_hdr(skb)->payload_len) > skb->len - thoff)
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index 0010f9e54f13b..2332b5b81c551 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -959,7 +959,7 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 		truncate = true;
+ 	}
+ 
+-	nhoff = skb_network_header(skb) - skb_mac_header(skb);
++	nhoff = skb_network_offset(skb);
+ 	if (skb->protocol == htons(ETH_P_IP) &&
+ 	    (ntohs(ip_hdr(skb)->tot_len) > skb->len - nhoff))
+ 		truncate = true;
+@@ -968,7 +968,7 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 		int thoff;
+ 
+ 		if (skb_transport_header_was_set(skb))
+-			thoff = skb_transport_header(skb) - skb_mac_header(skb);
++			thoff = skb_transport_offset(skb);
+ 		else
+ 			thoff = nhoff + sizeof(struct ipv6hdr);
+ 		if (ntohs(ipv6_hdr(skb)->payload_len) > skb->len - thoff)
 -- 
 2.39.2
 
