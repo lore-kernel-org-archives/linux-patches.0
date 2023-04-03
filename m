@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDF36FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55508C433EF;
-	Mon,  3 Apr 2023 14:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715836FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF491C433D2;
+	Mon,  3 Apr 2023 14:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532481;
-	bh=QNjg35JqVGRkiXWOhfrxOD6oYTzm8nvTMwy5KmuZDYY=;
+	s=korg; t=1680532484;
+	bh=FRulbb6pNLrb0RCTNx3tfUqgje9p+WUcCiK4zImj9pM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ckpC3lh+Lz30qBnjqm1Zc7ba9AzVO+AbyHuiby+nREMe7lrwCNBoy/5EkQ3ffTubK
-	 vCSspNp/3lcP2NyDIhasTkmxzHxcoJRMlTSAHHiaWtom4nzwoGeEwsidv3wkvj37rN
-	 EG5lCYuIj0ovxmUY3VyB5V4+gjMTL/cymP+j7ivU=
+	b=QlrCinU8GFCVGDdtNYtvJ5eQjmL1OHKtB3K3t/TI/VJOeselc8EN90p8c6wedWt7o
+	 KvFsYEcwfi9ezs9yHOqr7r6H0F6ezPmfqvlmdpwPc3p4neqsxZJ7OocW5Hy9EcMFOu
+	 HGFYEx/SUoIGd8EbsksPJGXWzdxyqJzck9W7B3fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.15 99/99] x86/PVH: avoid 32-bit build warning when obtaining VGA console info
-Date: Mon,  3 Apr 2023 16:10:02 +0200
-Message-Id: <20230403140407.023606727@linuxfoundation.org>
+	Tim Crawford <tcrawford@system76.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Jeremy Soller <jeremy@system76.com>
+Subject: [PATCH 5.15 82/99] ALSA: hda/realtek: Add quirks for some Clevo laptops
+Date: Mon,  3 Apr 2023 16:09:45 +0200
+Message-Id: <20230403140406.500050172@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -35,36 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Tim Crawford <tcrawford@system76.com>
 
-commit aadbd07ff8a75ed342388846da78dfaddb8b106a upstream.
+commit b7a5822810c4398515300d614d988cf638adecad upstream.
 
-In the commit referenced below I failed to pay attention to this code
-also being buildable as 32-bit. Adjust the type of "ret" - there's no
-real need for it to be wider than 32 bits.
+Add the audio quirk for some of Clevo's latest RPL laptops:
 
-Fixes: 934ef33ee75c ("x86/PVH: obtain VGA console info in Dom0")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
+- NP50RNJS (ALC256)
+- NP70SNE (ALC256)
+- PD50SNE (ALC1220)
+- PE60RNE (ALC1220)
+
+Co-authored-by: Jeremy Soller <jeremy@system76.com>
+Signed-off-by: Tim Crawford <tcrawford@system76.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230317141825.11807-1-tcrawford@system76.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-Link: https://lore.kernel.org/r/2d2193ff-670b-0a27-e12d-2c5c4c121c79@suse.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
 ---
- arch/x86/xen/enlighten_pvh.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/xen/enlighten_pvh.c
-+++ b/arch/x86/xen/enlighten_pvh.c
-@@ -48,7 +48,7 @@ void __init xen_pvh_init(struct boot_par
- 		struct xen_platform_op op = {
- 			.cmd = XENPF_get_dom0_console,
- 		};
--		long ret = HYPERVISOR_platform_op(&op);
-+		int ret = HYPERVISOR_platform_op(&op);
- 
- 		if (ret > 0)
- 			xen_init_vga(&op.u.dom0_console,
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -2625,6 +2625,7 @@ static const struct snd_pci_quirk alc882
+ 	SND_PCI_QUIRK(0x1558, 0x65e5, "Clevo PC50D[PRS](?:-D|-G)?", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x65f1, "Clevo PC50HS", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x65f5, "Clevo PD50PN[NRT]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
++	SND_PCI_QUIRK(0x1558, 0x66a2, "Clevo PE60RNE", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x67d1, "Clevo PB71[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x67e1, "Clevo PB71[DE][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x67e5, "Clevo PC70D[PRS](?:-D|-G)?", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+@@ -2645,6 +2646,7 @@ static const struct snd_pci_quirk alc882
+ 	SND_PCI_QUIRK(0x1558, 0x96e1, "Clevo P960[ER][CDFN]-K", ALC1220_FIXUP_CLEVO_P950),
+ 	SND_PCI_QUIRK(0x1558, 0x97e1, "Clevo P970[ER][CDFN]", ALC1220_FIXUP_CLEVO_P950),
+ 	SND_PCI_QUIRK(0x1558, 0x97e2, "Clevo P970RC-M", ALC1220_FIXUP_CLEVO_P950),
++	SND_PCI_QUIRK(0x1558, 0xd502, "Clevo PD50SNE", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK_VENDOR(0x1558, "Clevo laptop", ALC882_FIXUP_EAPD),
+ 	SND_PCI_QUIRK(0x161f, 0x2054, "Medion laptop", ALC883_FIXUP_EAPD),
+ 	SND_PCI_QUIRK(0x17aa, 0x3a0d, "Lenovo Y530", ALC882_FIXUP_LENOVO_Y530),
+@@ -9201,6 +9203,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1558, 0x5101, "Clevo S510WU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x5157, "Clevo W517GU1", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x51a1, "Clevo NS50MU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0x5630, "Clevo NP50RNJS", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x70a1, "Clevo NB70T[HJK]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x70b3, "Clevo NK70SB", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x70f2, "Clevo NH79EPY", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+@@ -9235,6 +9238,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1558, 0x971d, "Clevo N970T[CDF]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa500, "Clevo NL5[03]RU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa600, "Clevo NL50NU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0xa671, "Clevo NP70SN[CDE]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb018, "Clevo NP50D[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb019, "Clevo NH77D[BE]Q", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb022, "Clevo NH77D[DC][QW]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
 
 
