@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C9A612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B03CC43325;
-	Mon,  3 Apr 2023 14:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55F2612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A055C433D2;
+	Mon,  3 Apr 2023 14:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531585;
-	bh=uQ5UaCmFtXHeFp3gX6zcla6YwLqloL+K8mNimWJRMSM=;
+	s=korg; t=1680531588;
+	bh=K+V39EeKe6iCTrbQd/BlGo1gjFZe4Ik03rVWVFz+ysk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fTVDZZ5aGTzJg7mLLZJB2GVWYZKmoadBRk1AW8h4o8CUqp9xJJQVhPndXJXpygqBg
-	 yodqrE3wVTjBd95XQrInXMpcdP4ETbFxhds7pfYiMo6Dd0WjJgxDazsPEE8QGyvLyi
-	 NbzUWxx4DaVwIV+rUJ5CfqfrMUHJgVzE6vND0JQU=
+	b=ib3jNCv/zdJOsA/vysJtpuICsdwhmdO7xO5ipsiESOBgbctBUzBR7eg2zGqu0hE6s
+	 JfW0OWalybrfiBnPDPkOuZuMNiE/IQyGu+2RjPrqkvziqwtJtg0EAXEda2xB1Y6Hhv
+	 UnhgnnV/LTbPCMWY4FrX0Upc2jpA+2rJxBxqE1Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <groeck@chromium.org>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 027/104] platform/chrome: cros_ec_chardev: fix kernel data leak from ioctl
-Date: Mon,  3 Apr 2023 16:08:19 +0200
-Message-Id: <20230403140405.341158399@linuxfoundation.org>
+Subject: [PATCH 5.4 036/104] scsi: target: iscsi: Fix an error message in iscsi_check_key()
+Date: Mon,  3 Apr 2023 16:08:28 +0200
+Message-Id: <20230403140405.769042838@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,39 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit b20cf3f89c56b5f6a38b7f76a8128bf9f291bbd3 ]
+[ Upstream commit 6cc55c969b7ce8d85e09a636693d4126c3676c11 ]
 
-It is possible to peep kernel page's data by providing larger `insize`
-in struct cros_ec_command[1] when invoking EC host commands.
+The first half of the error message is printed by pr_err(), the second half
+is printed by pr_debug(). The user will therefore see only the first part
+of the message and will miss some useful information.
 
-Fix it by using zeroed memory.
-
-[1]: https://elixir.bootlin.com/linux/v6.2/source/include/linux/platform_data/cros_ec_proto.h#L74
-
-Fixes: eda2e30c6684 ("mfd / platform: cros_ec: Miscellaneous character device to talk with the EC")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Link: https://lore.kernel.org/r/20230324010658.1082361-1-tzungbi@kernel.org
+Link: https://lore.kernel.org/r/20230214141556.762047-1-mlombard@redhat.com
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_chardev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/iscsi/iscsi_target_parameters.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_chardev.c b/drivers/platform/chrome/cros_ec_chardev.c
-index 1f5f4a46ab748..4791b62c2923f 100644
---- a/drivers/platform/chrome/cros_ec_chardev.c
-+++ b/drivers/platform/chrome/cros_ec_chardev.c
-@@ -285,7 +285,7 @@ static long cros_ec_chardev_ioctl_xcmd(struct cros_ec_dev *ec, void __user *arg)
- 	    u_cmd.insize > EC_MAX_MSG_BYTES)
- 		return -EINVAL;
+diff --git a/drivers/target/iscsi/iscsi_target_parameters.c b/drivers/target/iscsi/iscsi_target_parameters.c
+index 7a461fbb15668..31cd3c02e5176 100644
+--- a/drivers/target/iscsi/iscsi_target_parameters.c
++++ b/drivers/target/iscsi/iscsi_target_parameters.c
+@@ -1262,18 +1262,20 @@ static struct iscsi_param *iscsi_check_key(
+ 		return param;
  
--	s_cmd = kmalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize),
-+	s_cmd = kzalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize),
- 			GFP_KERNEL);
- 	if (!s_cmd)
- 		return -ENOMEM;
+ 	if (!(param->phase & phase)) {
+-		pr_err("Key \"%s\" may not be negotiated during ",
+-				param->name);
++		char *phase_name;
++
+ 		switch (phase) {
+ 		case PHASE_SECURITY:
+-			pr_debug("Security phase.\n");
++			phase_name = "Security";
+ 			break;
+ 		case PHASE_OPERATIONAL:
+-			pr_debug("Operational phase.\n");
++			phase_name = "Operational";
+ 			break;
+ 		default:
+-			pr_debug("Unknown phase.\n");
++			phase_name = "Unknown";
+ 		}
++		pr_err("Key \"%s\" may not be negotiated during %s phase.\n",
++				param->name, phase_name);
+ 		return NULL;
+ 	}
+ 
 -- 
 2.39.2
 
