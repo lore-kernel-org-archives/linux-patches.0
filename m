@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD106FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:32:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235B9C433D2;
-	Mon,  3 Apr 2023 14:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18816FAA
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:32:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680D8C433D2;
+	Mon,  3 Apr 2023 14:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532359;
-	bh=d2kJloD1m/EvDPqToiYYJTD3x8xotyhjKibguqq2vME=;
+	s=korg; t=1680532364;
+	bh=2pa5qYOH99HejMlK7P61qqxdiYP9eVCz52UkJjVO/bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iMEqcEAhtU8yIBfyDhyLelbzgErzRByEarGQXH5hCjeBiHePWn4trA7aT6xd7nAgV
-	 1G+yb49y1/nbjsSdSRQrZow5d3NRTiN2TV3Hdtp/7bSrUFm09xIZ63k9AgPvRCo1xR
-	 U2yy4t6qYEkmGHwJ0a6TobS5DUNi8ObDnFngtL9A=
+	b=Y3GDhJ/IgEu6L0iM7y2k1mbd3pFZPj8oyNVUFVOkf0I6FcJuPZ47uKC6VhMTN95BU
+	 jSukjjvSxHjOuKPKwd6zuqinLkrjZT2cUeUv2ymDZB92boUaINXVxYzNRnJYHbv2hB
+	 GYYLpPb35aqiVsdqA8XTuNoNjOHtJDwpksBCGMms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antti Laakso <antti.laakso@intel.com>,
-	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
-	Len Brown <len.brown@intel.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/99] tools/power turbostat: fix decoding of HWP_STATUS
-Date: Mon,  3 Apr 2023 16:08:45 +0200
-Message-Id: <20230403140402.579048052@linuxfoundation.org>
+Subject: [PATCH 5.15 14/99] ALSA: hda/ca0132: fixup buffer overrun at tuning_ctl_set()
+Date: Mon,  3 Apr 2023 16:08:37 +0200
+Message-Id: <20230403140358.021934279@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,35 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Antti Laakso <antti.laakso@intel.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 92c25393586ac799b9b7d9e50434f3c44a7622c4 ]
+[ Upstream commit 98e5eb110095ec77cb6d775051d181edbf9cd3cf ]
 
-The "excursion to minimum" information is in bit2
-in HWP_STATUS MSR. Fix the bitmask used for
-decoding the register.
+tuning_ctl_set() might have buffer overrun at (X) if it didn't break
+from loop by matching (A).
 
-Signed-off-by: Antti Laakso <antti.laakso@intel.com>
-Reviewed-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+	static int tuning_ctl_set(...)
+	{
+		for (i = 0; i < TUNING_CTLS_COUNT; i++)
+(A)			if (nid == ca0132_tuning_ctls[i].nid)
+				break;
+
+		snd_hda_power_up(...);
+(X)		dspio_set_param(..., ca0132_tuning_ctls[i].mid, ...);
+		snd_hda_power_down(...);                ^
+
+		return 1;
+	}
+
+We will get below error by cppcheck
+
+	sound/pci/hda/patch_ca0132.c:4229:2: note: After for loop, i has value 12
+	 for (i = 0; i < TUNING_CTLS_COUNT; i++)
+	 ^
+	sound/pci/hda/patch_ca0132.c:4234:43: note: Array index out of bounds
+	 dspio_set_param(codec, ca0132_tuning_ctls[i].mid, 0x20,
+	                                           ^
+This patch cares non match case.
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87sfe9eap7.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_ca0132.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 84b8a35c91972..a3197efe52c63 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -4241,7 +4241,7 @@ int print_hwp(struct thread_data *t, struct core_data *c, struct pkg_data *p)
+diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
+index c0cb6e49a9b65..2646663e03426 100644
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -4231,8 +4231,10 @@ static int tuning_ctl_set(struct hda_codec *codec, hda_nid_t nid,
  
- 	fprintf(outf, "cpu%d: MSR_HWP_STATUS: 0x%08llx "
- 		"(%sGuaranteed_Perf_Change, %sExcursion_Min)\n",
--		cpu, msr, ((msr) & 0x1) ? "" : "No-", ((msr) & 0x2) ? "" : "No-");
-+		cpu, msr, ((msr) & 0x1) ? "" : "No-", ((msr) & 0x4) ? "" : "No-");
+ 	for (i = 0; i < TUNING_CTLS_COUNT; i++)
+ 		if (nid == ca0132_tuning_ctls[i].nid)
+-			break;
++			goto found;
  
- 	return 0;
- }
++	return -EINVAL;
++found:
+ 	snd_hda_power_up(codec);
+ 	dspio_set_param(codec, ca0132_tuning_ctls[i].mid, 0x20,
+ 			ca0132_tuning_ctls[i].req,
 -- 
 2.39.2
 
