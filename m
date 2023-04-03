@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D656A6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A8AC433EF;
-	Mon,  3 Apr 2023 14:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD766FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C735DC433EF;
+	Mon,  3 Apr 2023 14:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533218;
-	bh=OiRHRT+tN7kfIwIZmzUutp8jKYY6cjy2deDCH3BOxvQ=;
+	s=korg; t=1680533224;
+	bh=cpdE50Xs+IYUZ2exad8CwEpEUz+guWEMvR5QSQLGsks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BAZE08ILvcVxLeYbs4jm8Nz1rmutg12/99b7u9Tcap2TOL4ZgldI39PdOOBX0eyhI
-	 gJBLrPgda6kptsasHGwopQyi4N1lOMFLKAQLutuYolfEhXnX3XD8xGRf5KLDx8kFas
-	 B6r0GgHuo5WHE1kuPuOtiAecsc/Z/Dr62seGKkfQ=
+	b=Vvh7BSU4KoqB7DbFvcAA4+w3q2W6hI2Z1JYyhGkPFKgDm85MKqDFC3JgNkbuXxZ/G
+	 r0uMbCKw85rTvQKBwAHPZCKQvfUVYpBfNmUUYtmvOEn/cz7wviZ0O1GsA3iEaSwJgy
+	 KrZBw/LBFOjSXgJcAt1Wk011YK7akXU5u+8Ru75I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alyssa Ross <hi@alyssa.is>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Arun Ramadoss <arun.ramadoss@microchip.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 100/187] loop: LOOP_CONFIGURE: send uevents for partitions
-Date: Mon,  3 Apr 2023 16:09:05 +0200
-Message-Id: <20230403140419.257452215@linuxfoundation.org>
+Subject: [PATCH 6.2 084/187] net: dsa: microchip: ksz8: fix ksz8_fdb_dump() to extract all 1024 entries
+Date: Mon,  3 Apr 2023 16:08:49 +0200
+Message-Id: <20230403140418.722598098@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,98 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alyssa Ross <hi@alyssa.is>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit bb430b69422640891b0b8db762885730579a4145 ]
+[ Upstream commit 5d90492dd4ff50ad65c582c76c345d0b90001728 ]
 
-LOOP_CONFIGURE is, as far as I understand it, supposed to be a way to
-combine LOOP_SET_FD and LOOP_SET_STATUS64 into a single syscall.  When
-using LOOP_SET_FD+LOOP_SET_STATUS64, a single uevent would be sent for
-each partition found on the loop device after the second ioctl(), but
-when using LOOP_CONFIGURE, no such uevent was being sent.
+Current ksz8_fdb_dump() is able to extract only max 249 entries on
+the ksz8863/ksz8873 series of switches. This happened due to wrong
+bit mask and offset calculation.
 
-In the old setup, uevents are disabled for LOOP_SET_FD, but not for
-LOOP_SET_STATUS64.  This makes sense, as it prevents uevents being
-sent for a partially configured device during LOOP_SET_FD - they're
-only sent at the end of LOOP_SET_STATUS64.  But for LOOP_CONFIGURE,
-uevents were disabled for the entire operation, so that final
-notification was never issued.  To fix this, reduce the critical
-section to exclude the loop_reread_partitions() call, which causes
-the uevents to be issued, to after uevents are re-enabled, matching
-the behaviour of the LOOP_SET_FD+LOOP_SET_STATUS64 combination.
+This commit corrects the issue and allows for the complete extraction of
+all 1024 entries.
 
-I noticed this because Busybox's losetup program recently changed from
-using LOOP_SET_FD+LOOP_SET_STATUS64 to LOOP_CONFIGURE, and this broke
-my setup, for which I want a notification from the kernel any time a
-new partition becomes available.
-
-Signed-off-by: Alyssa Ross <hi@alyssa.is>
-[hch: reduced the critical section]
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Fixes: 3448914e8cc5 ("loop: Add LOOP_CONFIGURE ioctl")
-Link: https://lore.kernel.org/r/20230320125430.55367-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 4b20a07e103f ("net: dsa: microchip: ksz8795: add support for ksz88xx chips")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index eabbc3bdec221..4916fe78ab8fa 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1010,9 +1010,6 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
- 	/* This is safe, since we have a reference from open(). */
- 	__module_get(THIS_MODULE);
- 
--	/* suppress uevents while reconfiguring the device */
--	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 1);
--
- 	/*
- 	 * If we don't hold exclusive handle for the device, upgrade to it
- 	 * here to avoid changing device under exclusive owner.
-@@ -1067,6 +1064,9 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
- 		}
- 	}
- 
-+	/* suppress uevents while reconfiguring the device */
-+	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 1);
-+
- 	disk_force_media_change(lo->lo_disk, DISK_EVENT_MEDIA_CHANGE);
- 	set_disk_ro(lo->lo_disk, (lo->lo_flags & LO_FLAGS_READ_ONLY) != 0);
- 
-@@ -1109,17 +1109,17 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
- 	if (partscan)
- 		clear_bit(GD_SUPPRESS_PART_SCAN, &lo->lo_disk->state);
- 
-+	/* enable and uncork uevent now that we are done */
-+	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
-+
- 	loop_global_unlock(lo, is_loop);
- 	if (partscan)
- 		loop_reread_partitions(lo);
-+
- 	if (!(mode & FMODE_EXCL))
- 		bd_abort_claiming(bdev, loop_configure);
- 
--	error = 0;
--done:
--	/* enable and uncork uevent now that we are done */
--	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
--	return error;
-+	return 0;
- 
- out_unlock:
- 	loop_global_unlock(lo, is_loop);
-@@ -1130,7 +1130,7 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
- 	fput(file);
- 	/* This is safe: open() is still holding a reference. */
- 	module_put(THIS_MODULE);
--	goto done;
-+	return error;
- }
- 
- static void __loop_clr_fd(struct loop_device *lo, bool release)
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index 19cd05762ab77..725a868b76f7e 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -398,10 +398,10 @@ static const u32 ksz8863_masks[] = {
+ 	[STATIC_MAC_TABLE_FID]		= GENMASK(29, 26),
+ 	[STATIC_MAC_TABLE_OVERRIDE]	= BIT(20),
+ 	[STATIC_MAC_TABLE_FWD_PORTS]	= GENMASK(18, 16),
+-	[DYNAMIC_MAC_TABLE_ENTRIES_H]	= GENMASK(5, 0),
++	[DYNAMIC_MAC_TABLE_ENTRIES_H]	= GENMASK(1, 0),
+ 	[DYNAMIC_MAC_TABLE_MAC_EMPTY]	= BIT(7),
+ 	[DYNAMIC_MAC_TABLE_NOT_READY]	= BIT(7),
+-	[DYNAMIC_MAC_TABLE_ENTRIES]	= GENMASK(31, 28),
++	[DYNAMIC_MAC_TABLE_ENTRIES]	= GENMASK(31, 24),
+ 	[DYNAMIC_MAC_TABLE_FID]		= GENMASK(19, 16),
+ 	[DYNAMIC_MAC_TABLE_SRC_PORT]	= GENMASK(21, 20),
+ 	[DYNAMIC_MAC_TABLE_TIMESTAMP]	= GENMASK(23, 22),
+@@ -411,7 +411,7 @@ static u8 ksz8863_shifts[] = {
+ 	[VLAN_TABLE_MEMBERSHIP_S]	= 16,
+ 	[STATIC_MAC_FWD_PORTS]		= 16,
+ 	[STATIC_MAC_FID]		= 22,
+-	[DYNAMIC_MAC_ENTRIES_H]		= 3,
++	[DYNAMIC_MAC_ENTRIES_H]		= 8,
+ 	[DYNAMIC_MAC_ENTRIES]		= 24,
+ 	[DYNAMIC_MAC_FID]		= 16,
+ 	[DYNAMIC_MAC_TIMESTAMP]		= 24,
 -- 
 2.39.2
 
