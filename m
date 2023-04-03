@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F07C5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:15:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5276C4339B;
-	Mon,  3 Apr 2023 14:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2DF5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:15:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53685C4339E;
+	Mon,  3 Apr 2023 14:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531313;
-	bh=PxqPMzVEc7im+jWZOMRDEIzZsZY7CHmVhF6E4q6Gmzc=;
+	s=korg; t=1680531315;
+	bh=LfDgYuaWXEhuMTVNA6ZR30gYuMb3jLplz8PxfQTD7x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULEC4Ktg7kSqIm+HjO5Gyve7jKRnXptxZlSenLGJKWGavgf3jdi7Tkaih/ACtC5PS
-	 XUwe01R1pxYdaJjo9Er5bmZk9F/oDz95P0Jbg2y/KCDr8DxYwQTm0CbtrOVPXyw5Fu
-	 ctdxqyKWKnooAlaJVmpsX2/UE0xsTDstCP0am1eU=
+	b=fNM+o4c11QYNo+bRDgfqTWRNdWJanj6wBZrZNNhvI8dGjqze4HPpurs1WNwPYPDkf
+	 eYu285ST89B930Z7jDEUwMnTieNBGWGSwvKBCDjNToGO4i/bn0eBREjopzZdG6Qex8
+	 7l732vFPAksSx1MDRYR2AUdaBnPKynhbCiwvvEpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Haynes <sh@synk.net>,
-	Lefteris Alexakis <lefteris.alexakis@kpn.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 16/84] bpf: Adjust insufficient default bpf_jit_limit
-Date: Mon,  3 Apr 2023 16:08:17 +0200
-Message-Id: <20230403140353.936222062@linuxfoundation.org>
+Subject: [PATCH 4.19 17/84] net/mlx5: Read the TC mapping of all priorities on ETS query
+Date: Mon,  3 Apr 2023 16:08:18 +0200
+Message-Id: <20230403140353.964564515@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -38,76 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 10ec8ca8ec1a2f04c4ed90897225231c58c124a7 ]
+[ Upstream commit 44d553188c38ac74b799dfdcebafef2f7bb70942 ]
 
-We've seen recent AWS EKS (Kubernetes) user reports like the following:
+When ETS configurations are queried by the user to get the mapping
+assignment between packet priority and traffic class, only priorities up
+to maximum TCs are queried from QTCT register in FW to retrieve their
+assigned TC, leaving the rest of the priorities mapped to the default
+TC #0 which might be misleading.
 
-  After upgrading EKS nodes from v20230203 to v20230217 on our 1.24 EKS
-  clusters after a few days a number of the nodes have containers stuck
-  in ContainerCreating state or liveness/readiness probes reporting the
-  following error:
+Fix by querying the TC mapping of all priorities on each ETS query,
+regardless of the maximum number of TCs configured in FW.
 
-    Readiness probe errored: rpc error: code = Unknown desc = failed to
-    exec in container: failed to start exec "4a11039f730203ffc003b7[...]":
-    OCI runtime exec failed: exec failed: unable to start container process:
-    unable to init seccomp: error loading seccomp filter into kernel:
-    error loading seccomp filter: errno 524: unknown
-
-  However, we had not been seeing this issue on previous AMIs and it only
-  started to occur on v20230217 (following the upgrade from kernel 5.4 to
-  5.10) with no other changes to the underlying cluster or workloads.
-
-  We tried the suggestions from that issue (sysctl net.core.bpf_jit_limit=452534528)
-  which helped to immediately allow containers to be created and probes to
-  execute but after approximately a day the issue returned and the value
-  returned by cat /proc/vmallocinfo | grep bpf_jit | awk '{s+=$2} END {print s}'
-  was steadily increasing.
-
-I tested bpf tree to observe bpf_jit_charge_modmem, bpf_jit_uncharge_modmem
-their sizes passed in as well as bpf_jit_current under tcpdump BPF filter,
-seccomp BPF and native (e)BPF programs, and the behavior all looks sane
-and expected, that is nothing "leaking" from an upstream perspective.
-
-The bpf_jit_limit knob was originally added in order to avoid a situation
-where unprivileged applications loading BPF programs (e.g. seccomp BPF
-policies) consuming all the module memory space via BPF JIT such that loading
-of kernel modules would be prevented. The default limit was defined back in
-2018 and while good enough back then, we are generally seeing far more BPF
-consumers today.
-
-Adjust the limit for the BPF JIT pool from originally 1/4 to now 1/2 of the
-module memory space to better reflect today's needs and avoid more users
-running into potentially hard to debug issues.
-
-Fixes: fdadd04931c2 ("bpf: fix bpf_jit_limit knob for PAGE_SIZE >= 64K")
-Reported-by: Stephen Haynes <sh@synk.net>
-Reported-by: Lefteris Alexakis <lefteris.alexakis@kpn.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://github.com/awslabs/amazon-eks-ami/issues/1179
-Link: https://github.com/awslabs/amazon-eks-ami/issues/1219
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230320143725.8394-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 820c2c5e773d ("net/mlx5e: Read ETS settings directly from firmware")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 24e16538e4d71..285101772c755 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -603,7 +603,7 @@ static int __init bpf_jit_charge_init(void)
- {
- 	/* Only used as heuristic here to derive limit. */
- 	bpf_jit_limit_max = bpf_jit_alloc_exec_limit();
--	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 2,
-+	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 1,
- 					    PAGE_SIZE), LONG_MAX);
- 	return 0;
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index 722998d685646..6f1f53f91ed8c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -109,12 +109,14 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
+ 	if (!MLX5_CAP_GEN(priv->mdev, ets))
+ 		return -EOPNOTSUPP;
+ 
+-	ets->ets_cap = mlx5_max_tc(priv->mdev) + 1;
+-	for (i = 0; i < ets->ets_cap; i++) {
++	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
+ 		err = mlx5_query_port_prio_tc(mdev, i, &ets->prio_tc[i]);
+ 		if (err)
+ 			return err;
++	}
+ 
++	ets->ets_cap = mlx5_max_tc(priv->mdev) + 1;
++	for (i = 0; i < ets->ets_cap; i++) {
+ 		err = mlx5_query_port_tc_group(mdev, i, &tc_group[i]);
+ 		if (err)
+ 			return err;
 -- 
 2.39.2
 
