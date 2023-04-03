@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C066FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F168C433D2;
-	Mon,  3 Apr 2023 14:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6528A6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA46BC4339E;
+	Mon,  3 Apr 2023 14:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533328;
-	bh=2AC7GPNx/CQVbkxhE8DKBShGd2Ym1rSArirjGCjbPMk=;
+	s=korg; t=1680533331;
+	bh=StEsn3dk1QY88RqxVzwXk0GuyPKH/bC1cwTvloS4JQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xcn4VdcA7cpvnGdesCSts4QYHfV5dxXw5F21k2j+Z7WGPxM8Ke1vEJUkTZSdIpS4G
-	 DZjHffmPo3WavnOM6D6XvBpJLV7KsZA/sB0TDJNJXZRyoIaPpnzE6E4rso7QtoJtws
-	 GEs0neCC4soAkC9IODzxNaEfcWr3ciuGe47wHBnY=
+	b=kCHALHfGWNqxPcGoSrmBr+c++dfIlEqpsJ5zhbskd2Yc0dDKWDMlAm8PD6bl1Qj39
+	 +upzWbg6gIZvAJocF84LyjLYvHcrmD1Gf8Emokn7ECtZFbGaIRGqNaL7HBWJoQ47Lm
+	 S7vkxEBARs0zxhER6iAOmN29llzmPt9B5zTvVeAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 141/187] io_uring/rsrc: fix rogue rsrc node grabbing
-Date: Mon,  3 Apr 2023 16:09:46 +0200
-Message-Id: <20230403140420.646066045@linuxfoundation.org>
+Subject: [PATCH 6.2 142/187] io_uring: fix poll/netmsg alloc caches
+Date: Mon,  3 Apr 2023 16:09:47 +0200
+Message-Id: <20230403140420.680737304@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,44 +36,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 4ff0b50de8cabba055efe50bbcb7506c41a69835 upstream.
+commit fd30d1cdcc4ff405fc54765edf2e11b03f2ed4f3 upstream.
 
-We should not be looking at ctx->rsrc_node and anyhow modifying the node
-without holding uring_lock, grabbing references in such a way is not
-safe either.
+We increase cache->nr_cached when we free into the cache but don't
+decrease when we take from it, so in some time we'll get an empty
+cache with cache->nr_cached larger than IO_ALLOC_CACHE_MAX, that fails
+io_alloc_cache_put() and effectively disables caching.
 
+Fixes: 9b797a37c4bd8 ("io_uring: add abstraction around apoll cache")
 Cc: stable@vger.kernel.org
-Fixes: 5106dd6e74ab6 ("io_uring: propagate issue_flags state down to file assignment")
 Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/1202ede2d7bb90136e3482b2b84aad9ed483e5d6.1680098433.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rsrc.h |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ io_uring/alloc_cache.h |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/io_uring/rsrc.h
-+++ b/io_uring/rsrc.h
-@@ -144,15 +144,13 @@ static inline void io_req_set_rsrc_node(
- 					unsigned int issue_flags)
- {
- 	if (!req->rsrc_node) {
--		req->rsrc_node = ctx->rsrc_node;
-+		io_ring_submit_lock(ctx, issue_flags);
+--- a/io_uring/alloc_cache.h
++++ b/io_uring/alloc_cache.h
+@@ -27,6 +27,7 @@ static inline struct io_cache_entry *io_
+ 		struct hlist_node *node = cache->list.first;
  
--		if (!(issue_flags & IO_URING_F_UNLOCKED)) {
--			lockdep_assert_held(&ctx->uring_lock);
-+		lockdep_assert_held(&ctx->uring_lock);
- 
--			io_charge_rsrc_node(ctx);
--		} else {
--			percpu_ref_get(&req->rsrc_node->refs);
--		}
-+		req->rsrc_node = ctx->rsrc_node;
-+		io_charge_rsrc_node(ctx);
-+		io_ring_submit_unlock(ctx, issue_flags);
+ 		hlist_del(node);
++		cache->nr_cached--;
+ 		return container_of(node, struct io_cache_entry, node);
  	}
- }
  
 
 
