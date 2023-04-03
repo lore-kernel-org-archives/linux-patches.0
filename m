@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA497612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC48C4339C;
-	Mon,  3 Apr 2023 14:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6AE612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2058BC4339C;
+	Mon,  3 Apr 2023 14:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531601;
-	bh=6p5ARjw7NtCvfwJniRKWDiBaO/KRjZ5Zm2VYjEBLCuY=;
+	s=korg; t=1680531604;
+	bh=5yPxDY3ZCbd0YB6IMC++CJ+kv77PynV6iQtSvUJWRYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/buK1Uj3TmVbq97/tf56KBwpMIoO2bZTjmvamSjCYpYaiNpz6qxkJAA0E6z113ad
-	 FCNXEXF/AKBv7j9IOznV0xHop2bhuOmyadPZceYNUn1TxRHtt/r4qWSxfo05MC0X0G
-	 9Xcyh4uq3dfa2dFUG5oigcjPF1oyiM2zdO4rtyy4=
+	b=WMJweNJ78hO4OL9y72ZKemMLdyvZp5BekxeAxbhZZfdNuUxMH9qLw/xtrYvanP1dN
+	 lsuN5Ub8z68zGTwbUTjxtPPsB9r3rFUoWEYaccyF6Y8DQMjrefJsxVnWo6wJClDVv3
+	 LpXOFfeeHC6Rd2rs//sJTtr36Q7R8dnRwryC4p/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Rich Felker <dalias@libc.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 041/104] sh: sanitize the flags on sigreturn
-Date: Mon,  3 Apr 2023 16:08:33 +0200
-Message-Id: <20230403140406.001439425@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.4 042/104] cifs: empty interface list when server doesnt support query interfaces
+Date: Mon,  3 Apr 2023 16:08:34 +0200
+Message-Id: <20230403140406.045762277@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -36,58 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 573b22ccb7ce9ab7f0539a2e11a9d3609a8783f5 ]
+commit 896cd316b841053f6df95ab77b5f1322c16a8e18 upstream.
 
-We fetch %SR value from sigframe; it might have been modified by signal
-handler, so we can't trust it with any bits that are not modifiable in
-user mode.
+When querying server interfaces returns -EOPNOTSUPP,
+clear the list of interfaces. Assumption is that multichannel
+would be disabled too.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Rich Felker <dalias@libc.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/include/asm/processor_32.h | 1 +
- arch/sh/kernel/signal_32.c         | 3 +++
- 2 files changed, 4 insertions(+)
+ fs/cifs/smb2ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/sh/include/asm/processor_32.h b/arch/sh/include/asm/processor_32.h
-index 0e0ecc0132e3b..58ae979798fa8 100644
---- a/arch/sh/include/asm/processor_32.h
-+++ b/arch/sh/include/asm/processor_32.h
-@@ -51,6 +51,7 @@
- #define SR_FD		0x00008000
- #define SR_MD		0x40000000
- 
-+#define SR_USER_MASK	0x00000303	// M, Q, S, T bits
- /*
-  * DSP structure and data
-  */
-diff --git a/arch/sh/kernel/signal_32.c b/arch/sh/kernel/signal_32.c
-index 24473fa6c3b63..f6e1a47ad7ca0 100644
---- a/arch/sh/kernel/signal_32.c
-+++ b/arch/sh/kernel/signal_32.c
-@@ -116,6 +116,7 @@ static int
- restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p)
- {
- 	unsigned int err = 0;
-+	unsigned int sr = regs->sr & ~SR_USER_MASK;
- 
- #define COPY(x)		err |= __get_user(regs->x, &sc->sc_##x)
- 			COPY(regs[1]);
-@@ -131,6 +132,8 @@ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p
- 	COPY(sr);	COPY(pc);
- #undef COPY
- 
-+	regs->sr = (regs->sr & SR_USER_MASK) | sr;
-+
- #ifdef CONFIG_SH_FPU
- 	if (boot_cpu_data.flags & CPU_HAS_FPU) {
- 		int owned_fp;
--- 
-2.39.2
-
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -587,7 +587,7 @@ SMB3_request_interfaces(const unsigned i
+ 	if (rc == -EOPNOTSUPP) {
+ 		cifs_dbg(FYI,
+ 			 "server does not support query network interfaces\n");
+-		goto out;
++		ret_data_len = 0;
+ 	} else if (rc != 0) {
+ 		cifs_tcon_dbg(VFS, "error %d on ioctl to get interface list\n", rc);
+ 		goto out;
 
 
