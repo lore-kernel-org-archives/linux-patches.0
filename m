@@ -1,49 +1,34 @@
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8BBA935
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 21:07:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680556054; x=1712092054;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=fYZQDLM69ukAcHy2Lr4F4fSjXY8oE5A3ji5UAJN5ox0=;
-  b=k8BYoQmpQ/xmt2XkKYIlniFgou4HFmSNaM8j39p03sbxMvWe5PSWj82T
-   fP20vbkYboQWg806OW9+10d6cewkMv080CBCV9o0mKUapJiE/nt3hDhzp
-   NqHugJh0CWSx19ocSHBEi6ixEZU5DnCrhTRBIRZ7ouq+54+UdITWPMTiW
-   qg0g8eiU0g3t0ix/U9YThXIt9VFmSb5t/JxqC8DuuNNGu4fDnMQ+4NH6i
-   I5KMP81eZyedSJx4sPl24M6GONyEDp54kxg5i199LAxFMdVNCxo+O4+XT
-   jumqUv64WN8nKnw5v6LqeF6qDUOss5mO6Oveno0uL04vXhcc0FtUhaRIO
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10669"; a="330590866"
-X-IronPort-AV: E=Sophos;i="5.98,315,1673942400"; 
-   d="scan'208";a="330590866"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2023 14:07:29 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10669"; a="775354456"
-X-IronPort-AV: E=Sophos;i="5.98,315,1673942400"; 
-   d="scan'208";a="775354456"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2023 14:07:25 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
-	Smita.KoralahalliChannabasappa@amd.com,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B64AA935
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 21:18:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81BAC433D2;
+	Mon,  3 Apr 2023 21:18:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1680556714;
+	bh=ucmhwRX47uXO0MlZH7U9zOFpYmMj48MklJqZ2TW68Lk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=VyNjo4ikVA6/7LcoEe3jRN//x86B6gZbYMzYSdmQcs5PW5XgtWoCWdFc0D5eC+SnB
+	 Ig8e5JpBl7oWkxqh+Uv/Q/kfv0/rGQ4Z9DlFd6FswtqEjtlBx9APyiwmLIc5+Rfulh
+	 gMLTPAqg9HaAlPHRIXpbGu/A74JjBbacT36jniopMjYngyc+Ey93YU/bgk2DBX5j0c
+	 mD3eoY4KgI5LNUDd87iB0KPBl/yTZHVYhKtlys8E8aV31rUqtr8M5Zi9iXlSt2QJ/m
+	 HgL0raKmdw6OmUQ8563SvSc61gRZZyPl9XdXAQPUMn+ick2a8dUwKOUoTUW5u/oAtI
+	 eXavevm2JxqKA==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v4 3/5] x86/mce: Introduce mce_handle_storm() to deal with begin/end of storms
-Date: Mon,  3 Apr 2023 14:07:14 -0700
-Message-Id: <20230403210716.347773-4-tony.luck@intel.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230403210716.347773-1-tony.luck@intel.com>
-References: <ZCRYl9c7xgIJ+pJe@yaz-sghr>
- <20230403210716.347773-1-tony.luck@intel.com>
+	"Garmin . Chang" <Garmin.Chang@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH] clk: mediatek: Use right match table for mt8188-wpe
+Date: Mon,  3 Apr 2023 14:18:32 -0700
+Message-Id: <20230403211832.1019605-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.40.0.348.gf938b09366-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,108 +37,33 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
+This is copy/pasta from another file. Fix the match table pointer.
 
-Intel and AMD need to take different actions when a storm begins or
-ends. Prepare for the storm code moving from intel.c into core.c by
-adding a function that checks CPU vendor to pick the right action.
-
-No functional changes.
-
-[Tony: Changed from function pointer to regular function]
-
-Signed-off-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Tested-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Cc: Garmin.Chang <Garmin.Chang@mediatek.com>
+Cc: Chen-Yu Tsai <wenst@chromium.org>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: f42b9e9a43e3 ("clk: mediatek: Add MT8188 wpesys clock support")
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202304011039.UBDX1UOT-lkp@intel.com/
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
- arch/x86/kernel/cpu/mce/internal.h |  3 +++
- arch/x86/kernel/cpu/mce/core.c     |  9 +++++++++
- arch/x86/kernel/cpu/mce/intel.c    | 12 ++++++++++--
- 3 files changed, 22 insertions(+), 2 deletions(-)
+ drivers/clk/mediatek/clk-mt8188-wpe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/mce/internal.h b/arch/x86/kernel/cpu/mce/internal.h
-index 8d3a740a66ff..68288099b125 100644
---- a/arch/x86/kernel/cpu/mce/internal.h
-+++ b/arch/x86/kernel/cpu/mce/internal.h
-@@ -43,12 +43,14 @@ extern mce_banks_t mce_banks_ce_disabled;
- void track_cmci_storm(int bank, u64 status);
+diff --git a/drivers/clk/mediatek/clk-mt8188-wpe.c b/drivers/clk/mediatek/clk-mt8188-wpe.c
+index 5abded13cece..c372ff703f9c 100644
+--- a/drivers/clk/mediatek/clk-mt8188-wpe.c
++++ b/drivers/clk/mediatek/clk-mt8188-wpe.c
+@@ -88,7 +88,7 @@ static const struct of_device_id of_match_clk_mt8188_wpe[] = {
+ 	{ .compatible = "mediatek,mt8188-wpesys-vpp0", .data = &wpe_vpp0_desc },
+ 	{ /* sentinel */ }
+ };
+-MODULE_DEVICE_TABLE(platform, clk_mt8188_vpp1_id_table);
++MODULE_DEVICE_TABLE(platform, of_match_clk_mt8188_wpe);
  
- #ifdef CONFIG_X86_MCE_INTEL
-+void mce_intel_handle_storm(int bank, bool on);
- void cmci_disable_bank(int bank);
- void intel_init_cmci(void);
- void intel_init_lmce(void);
- void intel_clear_lmce(void);
- bool intel_filter_mce(struct mce *m);
- #else
-+static inline void mce_intel_handle_storm(int bank, bool on) { }
- static inline void cmci_disable_bank(int bank) { }
- static inline void intel_init_cmci(void) { }
- static inline void intel_init_lmce(void) { }
-@@ -57,6 +59,7 @@ static inline bool intel_filter_mce(struct mce *m) { return false; }
- #endif
- 
- void mce_timer_kick(bool storm);
-+void mce_handle_storm(int bank, bool on);
- 
- #ifdef CONFIG_ACPI_APEI
- int apei_write_mce(struct mce *m);
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index 20347eb65b8b..099d8444aca4 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -1975,6 +1975,15 @@ static void mce_zhaoxin_feature_clear(struct cpuinfo_x86 *c)
- 	intel_clear_lmce();
- }
- 
-+void mce_handle_storm(int bank, bool on)
-+{
-+	switch (boot_cpu_data.x86_vendor) {
-+	case X86_VENDOR_INTEL:
-+		mce_intel_handle_storm(bank, on);
-+		break;
-+	}
-+}
-+
- static void __mcheck_cpu_init_vendor(struct cpuinfo_x86 *c)
- {
- 	switch (c->x86_vendor) {
-diff --git a/arch/x86/kernel/cpu/mce/intel.c b/arch/x86/kernel/cpu/mce/intel.c
-index 4106877de028..a8248514a689 100644
---- a/arch/x86/kernel/cpu/mce/intel.c
-+++ b/arch/x86/kernel/cpu/mce/intel.c
-@@ -152,6 +152,14 @@ static void cmci_set_threshold(int bank, int thresh)
- 	raw_spin_unlock_irqrestore(&cmci_discover_lock, flags);
- }
- 
-+void mce_intel_handle_storm(int bank, bool on)
-+{
-+	if (on)
-+		cmci_set_threshold(bank, CMCI_STORM_THRESHOLD);
-+	else
-+		cmci_set_threshold(bank, cmci_threshold[bank]);
-+}
-+
- static void cmci_storm_begin(int bank)
- {
- 	__set_bit(bank, this_cpu_ptr(mce_poll_banks));
-@@ -211,13 +219,13 @@ void track_cmci_storm(int bank, u64 status)
- 		if (history & GENMASK_ULL(STORM_END_POLL_THRESHOLD - 1, 0))
- 			return;
- 		pr_notice("CPU%d BANK%d CMCI storm subsided\n", smp_processor_id(), bank);
--		cmci_set_threshold(bank, cmci_threshold[bank]);
-+		mce_handle_storm(bank, false);
- 		cmci_storm_end(bank);
- 	} else {
- 		if (hweight64(history) < STORM_BEGIN_THRESHOLD)
- 			return;
- 		pr_notice("CPU%d BANK%d CMCI storm detected\n", smp_processor_id(), bank);
--		cmci_set_threshold(bank, CMCI_STORM_THRESHOLD);
-+		mce_handle_storm(bank, true);
- 		cmci_storm_begin(bank);
- 	}
- }
+ static struct platform_driver clk_mt8188_wpe_drv = {
+ 	.probe = mtk_clk_simple_probe,
 -- 
-2.39.2
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
