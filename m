@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509276FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:44:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2EFC433EF;
-	Mon,  3 Apr 2023 14:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88256FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:44:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8EFC433EF;
+	Mon,  3 Apr 2023 14:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533064;
-	bh=h1C3jfAE2PYU/BbEkLJgU+iKGqkKcYmMoviIAYMVqnM=;
+	s=korg; t=1680533066;
+	bh=T+y02KqbdinWzs5BHyJ64yYI5IzZszI6qc+B2eCbKfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMNwmBLvtccPWM4BMU5WeYHBp99k+3x/CGghubXPY/GCoHRJAVmFIpAx2rf39dUnw
-	 lLRZFMdBB2/t+AOvbh1SO0PV1ElqPS1FwE0aN3EmdOIt61ofASwPcHlsU5rwPb+8GB
-	 k1sbUbDcSWdMGgAPHFd+Z6qCXJ6cvwcqBw3B3SSM=
+	b=tE1aTCX6leQ6oMJld73MvmIr4ZPFWL3eYjGLjtC3Z3dn7gqLqjqypZclgcQeMKzZ8
+	 ROqeO3lQ/8Aww1hiROgqzkZSBI4Cu12sEcON1jqkd8dIyP58N57QaettOIR7mZb/4v
+	 kGkba22eVu7NYSRJos+loIGW9QMbD7rddpZPhljM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jane Jian <Jane.Jian@amd.com>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 040/187] drm/amdgpu/vcn: custom video info caps for sriov
-Date: Mon,  3 Apr 2023 16:08:05 +0200
-Message-Id: <20230403140417.305019784@linuxfoundation.org>
+Subject: [PATCH 6.2 041/187] drm/amdkfd: fix potential kgd_mem UAFs
+Date: Mon,  3 Apr 2023 16:08:06 +0200
+Message-Id: <20230403140417.334061882@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,188 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jane Jian <Jane.Jian@amd.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-[ Upstream commit d71e38df3b730a17ab6b25cabb2ccfe8a7f04385 ]
+[ Upstream commit 9da050b0d9e04439d225a2ec3044af70cdfb3933 ]
 
-for sriov, we added a new flag to indicate av1 support,
-this will override the original caps info.
+kgd_mem pointers returned by kfd_process_device_translate_handle are
+only guaranteed to be valid while p->mutex is held. As soon as the mutex
+is unlocked, another thread can free the BO.
 
-Signed-off-by: Jane Jian <Jane.Jian@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h    |   4 +
- drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h |   3 +-
- drivers/gpu/drm/amd/amdgpu/soc21.c          | 103 ++++++++++++++++++--
- 3 files changed, 99 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index 2b9d806e23afb..10a0a510910b6 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -123,6 +123,8 @@ enum AMDGIM_FEATURE_FLAG {
- 	AMDGIM_FEATURE_PP_ONE_VF = (1 << 4),
- 	/* Indirect Reg Access enabled */
- 	AMDGIM_FEATURE_INDIRECT_REG_ACCESS = (1 << 5),
-+	/* AV1 Support MODE*/
-+	AMDGIM_FEATURE_AV1_SUPPORT = (1 << 6),
- };
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index f79b8e964140e..e191d38f3da62 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1298,14 +1298,14 @@ static int kfd_ioctl_map_memory_to_gpu(struct file *filep,
+ 		args->n_success = i+1;
+ 	}
  
- enum AMDGIM_REG_ACCESS_FLAG {
-@@ -321,6 +323,8 @@ static inline bool is_virtual_machine(void)
- 	((!amdgpu_in_reset(adev)) && adev->virt.tdr_debug)
- #define amdgpu_sriov_is_normal(adev) \
- 	((!amdgpu_in_reset(adev)) && (!adev->virt.tdr_debug))
-+#define amdgpu_sriov_is_av1_support(adev) \
-+	((adev)->virt.gim_feature & AMDGIM_FEATURE_AV1_SUPPORT)
- bool amdgpu_virt_mmio_blocked(struct amdgpu_device *adev);
- void amdgpu_virt_init_setting(struct amdgpu_device *adev);
- void amdgpu_virt_kiq_reg_write_reg_wait(struct amdgpu_device *adev,
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h b/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h
-index 6c97148ca0ed3..24d42d24e6a01 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h
-@@ -93,7 +93,8 @@ union amd_sriov_msg_feature_flags {
- 		uint32_t mm_bw_management  : 1;
- 		uint32_t pp_one_vf_mode	   : 1;
- 		uint32_t reg_indirect_acc  : 1;
--		uint32_t reserved	   : 26;
-+		uint32_t av1_support       : 1;
-+		uint32_t reserved	   : 25;
- 	} flags;
- 	uint32_t all;
- };
-diff --git a/drivers/gpu/drm/amd/amdgpu/soc21.c b/drivers/gpu/drm/amd/amdgpu/soc21.c
-index 3d938b52178e3..9eedc1a1494c0 100644
---- a/drivers/gpu/drm/amd/amdgpu/soc21.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -101,6 +101,59 @@ static const struct amdgpu_video_codecs vcn_4_0_0_video_codecs_decode_vcn1 =
- 	.codec_array = vcn_4_0_0_video_codecs_decode_array_vcn1,
- };
+-	mutex_unlock(&p->mutex);
+-
+ 	err = amdgpu_amdkfd_gpuvm_sync_memory(dev->adev, (struct kgd_mem *) mem, true);
+ 	if (err) {
+ 		pr_debug("Sync memory failed, wait interrupted by user signal\n");
+ 		goto sync_memory_failed;
+ 	}
  
-+/* SRIOV SOC21, not const since data is controlled by host */
-+static struct amdgpu_video_codec_info sriov_vcn_4_0_0_video_codecs_encode_array_vcn0[] = {
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_AV1, 8192, 4352, 0)},
-+};
++	mutex_unlock(&p->mutex);
 +
-+static struct amdgpu_video_codec_info sriov_vcn_4_0_0_video_codecs_encode_array_vcn1[] = {
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
-+};
-+
-+static struct amdgpu_video_codecs sriov_vcn_4_0_0_video_codecs_encode_vcn0 = {
-+	.codec_count = ARRAY_SIZE(sriov_vcn_4_0_0_video_codecs_encode_array_vcn0),
-+	.codec_array = sriov_vcn_4_0_0_video_codecs_encode_array_vcn0,
-+};
-+
-+static struct amdgpu_video_codecs sriov_vcn_4_0_0_video_codecs_encode_vcn1 = {
-+	.codec_count = ARRAY_SIZE(sriov_vcn_4_0_0_video_codecs_encode_array_vcn1),
-+	.codec_array = sriov_vcn_4_0_0_video_codecs_encode_array_vcn1,
-+};
-+
-+static struct amdgpu_video_codec_info sriov_vcn_4_0_0_video_codecs_decode_array_vcn0[] = {
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4096, 3)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4096, 5)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4096, 4)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 186)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 8192, 4352, 0)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_AV1, 8192, 4352, 0)},
-+};
-+
-+static struct amdgpu_video_codec_info sriov_vcn_4_0_0_video_codecs_decode_array_vcn1[] = {
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4096, 3)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4096, 5)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4096, 4)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 186)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 8192, 4352, 0)},
-+};
-+
-+static struct amdgpu_video_codecs sriov_vcn_4_0_0_video_codecs_decode_vcn0 = {
-+	.codec_count = ARRAY_SIZE(sriov_vcn_4_0_0_video_codecs_decode_array_vcn0),
-+	.codec_array = sriov_vcn_4_0_0_video_codecs_decode_array_vcn0,
-+};
-+
-+static struct amdgpu_video_codecs sriov_vcn_4_0_0_video_codecs_decode_vcn1 = {
-+	.codec_count = ARRAY_SIZE(sriov_vcn_4_0_0_video_codecs_decode_array_vcn1),
-+	.codec_array = sriov_vcn_4_0_0_video_codecs_decode_array_vcn1,
-+};
-+
- static int soc21_query_video_codecs(struct amdgpu_device *adev, bool encode,
- 				 const struct amdgpu_video_codecs **codecs)
- {
-@@ -111,16 +164,31 @@ static int soc21_query_video_codecs(struct amdgpu_device *adev, bool encode,
- 	case IP_VERSION(4, 0, 0):
- 	case IP_VERSION(4, 0, 2):
- 	case IP_VERSION(4, 0, 4):
--		if (adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0) {
--			if (encode)
--				*codecs = &vcn_4_0_0_video_codecs_encode_vcn1;
--			else
--				*codecs = &vcn_4_0_0_video_codecs_decode_vcn1;
-+		if (amdgpu_sriov_vf(adev)) {
-+			if ((adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0) ||
-+			!amdgpu_sriov_is_av1_support(adev)) {
-+				if (encode)
-+					*codecs = &sriov_vcn_4_0_0_video_codecs_encode_vcn1;
-+				else
-+					*codecs = &sriov_vcn_4_0_0_video_codecs_decode_vcn1;
-+			} else {
-+				if (encode)
-+					*codecs = &sriov_vcn_4_0_0_video_codecs_encode_vcn0;
-+				else
-+					*codecs = &sriov_vcn_4_0_0_video_codecs_decode_vcn0;
-+			}
- 		} else {
--			if (encode)
--				*codecs = &vcn_4_0_0_video_codecs_encode_vcn0;
--			else
--				*codecs = &vcn_4_0_0_video_codecs_decode_vcn0;
-+			if ((adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0)) {
-+				if (encode)
-+					*codecs = &vcn_4_0_0_video_codecs_encode_vcn1;
-+				else
-+					*codecs = &vcn_4_0_0_video_codecs_decode_vcn1;
-+			} else {
-+				if (encode)
-+					*codecs = &vcn_4_0_0_video_codecs_encode_vcn0;
-+				else
-+					*codecs = &vcn_4_0_0_video_codecs_decode_vcn0;
-+			}
+ 	/* Flush TLBs after waiting for the page table updates to complete */
+ 	for (i = 0; i < args->n_devices; i++) {
+ 		peer_pdd = kfd_process_device_data_by_id(p, devices_arr[i]);
+@@ -1321,9 +1321,9 @@ static int kfd_ioctl_map_memory_to_gpu(struct file *filep,
+ bind_process_to_device_failed:
+ get_mem_obj_from_handle_failed:
+ map_memory_to_gpu_failed:
++sync_memory_failed:
+ 	mutex_unlock(&p->mutex);
+ copy_from_user_failed:
+-sync_memory_failed:
+ 	kfree(devices_arr);
+ 
+ 	return err;
+@@ -1337,6 +1337,7 @@ static int kfd_ioctl_unmap_memory_from_gpu(struct file *filep,
+ 	void *mem;
+ 	long err = 0;
+ 	uint32_t *devices_arr = NULL, i;
++	bool flush_tlb;
+ 
+ 	if (!args->n_devices) {
+ 		pr_debug("Device IDs array empty\n");
+@@ -1389,16 +1390,19 @@ static int kfd_ioctl_unmap_memory_from_gpu(struct file *filep,
  		}
- 		return 0;
- 	default:
-@@ -729,8 +797,23 @@ static int soc21_common_late_init(void *handle)
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 		args->n_success = i+1;
+ 	}
+-	mutex_unlock(&p->mutex);
  
--	if (amdgpu_sriov_vf(adev))
-+	if (amdgpu_sriov_vf(adev)) {
- 		xgpu_nv_mailbox_get_irq(adev);
-+		if ((adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0) ||
-+		!amdgpu_sriov_is_av1_support(adev)) {
-+			amdgpu_virt_update_sriov_video_codec(adev,
-+							     sriov_vcn_4_0_0_video_codecs_encode_array_vcn1,
-+							     ARRAY_SIZE(sriov_vcn_4_0_0_video_codecs_encode_array_vcn1),
-+							     sriov_vcn_4_0_0_video_codecs_decode_array_vcn1,
-+							     ARRAY_SIZE(sriov_vcn_4_0_0_video_codecs_decode_array_vcn1));
-+		} else {
-+			amdgpu_virt_update_sriov_video_codec(adev,
-+							     sriov_vcn_4_0_0_video_codecs_encode_array_vcn0,
-+							     ARRAY_SIZE(sriov_vcn_4_0_0_video_codecs_encode_array_vcn0),
-+							     sriov_vcn_4_0_0_video_codecs_decode_array_vcn0,
-+							     ARRAY_SIZE(sriov_vcn_4_0_0_video_codecs_decode_array_vcn0));
-+		}
+-	if (kfd_flush_tlb_after_unmap(pdd->dev)) {
++	flush_tlb = kfd_flush_tlb_after_unmap(pdd->dev);
++	if (flush_tlb) {
+ 		err = amdgpu_amdkfd_gpuvm_sync_memory(pdd->dev->adev,
+ 				(struct kgd_mem *) mem, true);
+ 		if (err) {
+ 			pr_debug("Sync memory failed, wait interrupted by user signal\n");
+ 			goto sync_memory_failed;
+ 		}
 +	}
++	mutex_unlock(&p->mutex);
  
- 	return 0;
++	if (flush_tlb) {
+ 		/* Flush TLBs after waiting for the page table updates to complete */
+ 		for (i = 0; i < args->n_devices; i++) {
+ 			peer_pdd = kfd_process_device_data_by_id(p, devices_arr[i]);
+@@ -1414,9 +1418,9 @@ static int kfd_ioctl_unmap_memory_from_gpu(struct file *filep,
+ bind_process_to_device_failed:
+ get_mem_obj_from_handle_failed:
+ unmap_memory_from_gpu_failed:
++sync_memory_failed:
+ 	mutex_unlock(&p->mutex);
+ copy_from_user_failed:
+-sync_memory_failed:
+ 	kfree(devices_arr);
+ 	return err;
  }
 -- 
 2.39.2
