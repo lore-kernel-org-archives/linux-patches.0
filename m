@@ -1,90 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748EC5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 13:35:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E61C433EF;
-	Mon,  3 Apr 2023 13:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EBE5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019EFC4339B;
+	Mon,  3 Apr 2023 14:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680528957;
-	bh=qeZpISFwCJmRMfwTmzmQKVEuhrCuQ0NX8Q6VX57v1zQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GoMhiwu+A7lTKutOVLbFCTUXT+NvPKJI2XijIam1cNEMR8QPOE6dxEMBqx9BBI+wW
-	 LUmVlztDQ0yW8h5/e46noVLFKduCrtimRnzf86VlVlm833731TiYHKBJ42i+fyVwKY
-	 P1nE/wRszbX5iw5HN2PR11wbZ0tmUyHgoSoua83g=
-Date: Mon, 3 Apr 2023 15:35:54 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: cuigaosheng <cuigaosheng1@huawei.com>
-Cc: stable@vger.kernel.org, bparrot@ti.com, mchehab@kernel.org,
-	sashal@kernel.org, laurent.pinchart@ideasonboard.com,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 5.10] media: ti: cal: revert "media: ti: cal: fix
- possible memory leak in cal_ctx_create()"
-Message-ID: <2023040333-untimely-salami-5e44@gregkh>
-References: <20230403121704.3017781-1-cuigaosheng1@huawei.com>
- <2023040303-corporate-unearth-8b5b@gregkh>
- <beac5f8a-d96e-1e1f-1e3c-18f3f9d7519c@huawei.com>
+	s=korg; t=1680531071;
+	bh=5RJSKIK5ew6Sg+i0x6krCE1POLGK0hC9xrp4doolEGA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cpi/QC74kNWxwvizLxisFTto0dMCNiQ7ZhVEKEaXRvGIHSPTcnolXyGFpKVDq4B+O
+	 pAKQSXiUJZ4DbPgxQfhlD+x9j3x1MtFolaTsLe96nlQD8yS49dXzEskQlYx2Nf6P4l
+	 kmsu5aZbnyrEjeFG1oR28sGaEGamlPHwzY5wmmvQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 01/66] power: supply: da9150: Fix use after free bug in da9150_charger_remove due to race condition
+Date: Mon,  3 Apr 2023 16:08:09 +0200
+Message-Id: <20230403140351.708118231@linuxfoundation.org>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
+References: <20230403140351.636471867@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <beac5f8a-d96e-1e1f-1e3c-18f3f9d7519c@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Apr 03, 2023 at 09:11:43PM +0800, cuigaosheng wrote:
-> On 2023/4/3 20:53, Greg KH wrote:
-> > On Mon, Apr 03, 2023 at 08:17:04PM +0800, Gaosheng Cui wrote:
-> > > This reverts commit c7a218cbf67fffcd99b76ae3b5e9c2e8bef17c8c.
-> > > 
-> > > The memory of ctx is allocated by devm_kzalloc in cal_ctx_create,
-> > > it should not be freed by kfree when cal_ctx_v4l2_init() fails,
-> > > otherwise kfree() will cause double free, so revert this patch.
-> > > 
-> > > Fixes: c7a218cbf67f ("media: ti: cal: fix possible memory leak in cal_ctx_create()")
-> > > Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-> > > ---
-> > >   drivers/media/platform/ti-vpe/cal.c | 4 +---
-> > >   1 file changed, 1 insertion(+), 3 deletions(-)
-> > > 
-> > > diff --git a/drivers/media/platform/ti-vpe/cal.c b/drivers/media/platform/ti-vpe/cal.c
-> > > index 93121c90d76a..2eef245c31a1 100644
-> > > --- a/drivers/media/platform/ti-vpe/cal.c
-> > > +++ b/drivers/media/platform/ti-vpe/cal.c
-> > > @@ -624,10 +624,8 @@ static struct cal_ctx *cal_ctx_create(struct cal_dev *cal, int inst)
-> > >   	ctx->cport = inst;
-> > >   	ret = cal_ctx_v4l2_init(ctx);
-> > > -	if (ret) {
-> > > -		kfree(ctx);
-> > > +	if (ret)
-> > >   		return NULL;
-> > > -	}
-> > >   	return ctx;
-> > >   }
-> > > -- 
-> > > 2.25.1
-> > > 
-> > Why is this not needed to be reverted in Linus's tree first?
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> > .
-> 
-> Thanks for taking time to review this patch.
-> 
-> The memory of ctx is allocated by kzalloc since commit 9e67f24e4d90
-> ("media: ti-vpe: cal: fix ctx uninitialization"), so the fixes tag
-> of patch c7a218cbf67fis not entirely accurate, mainline should merge this
-> patch, but it should not be merged into 5.10, my apologies  for
-> notdiscovering this bug earlier. Gaosheng.
-> 
+From: Zheng Wang <zyytlz.wz@163.com>
 
-Great, can you please put all of this information in the changelog
-explaining why this is only needed for this one branch and resend it?
+[ Upstream commit 06615d11cc78162dfd5116efb71f29eb29502d37 ]
 
-thanks,
+In da9150_charger_probe, &charger->otg_work is bound with
+da9150_charger_otg_work. da9150_charger_otg_ncb may be
+called to start the work.
 
-greg k-h
+If we remove the module which will call da9150_charger_remove
+to make cleanup, there may be a unfinished work. The possible
+sequence is as follows:
+
+Fix it by canceling the work before cleanup in the da9150_charger_remove
+
+CPU0                  CPUc1
+
+                    |da9150_charger_otg_work
+da9150_charger_remove      |
+power_supply_unregister  |
+device_unregister   |
+power_supply_dev_release|
+kfree(psy)          |
+                    |
+                    | 	power_supply_changed(charger->usb);
+                    |   //use
+
+Fixes: c1a281e34dae ("power: Add support for DA9150 Charger")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/power/supply/da9150-charger.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/power/supply/da9150-charger.c b/drivers/power/supply/da9150-charger.c
+index 60099815296e7..b2d38eb32288a 100644
+--- a/drivers/power/supply/da9150-charger.c
++++ b/drivers/power/supply/da9150-charger.c
+@@ -666,6 +666,7 @@ static int da9150_charger_remove(struct platform_device *pdev)
+ 
+ 	if (!IS_ERR_OR_NULL(charger->usb_phy))
+ 		usb_unregister_notifier(charger->usb_phy, &charger->otg_nb);
++	cancel_work_sync(&charger->otg_work);
+ 
+ 	power_supply_unregister(charger->battery);
+ 	power_supply_unregister(charger->usb);
+-- 
+2.39.2
+
+
+
