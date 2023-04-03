@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9935698
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534E7C433D2;
-	Mon,  3 Apr 2023 14:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD8B5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:11:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC904C4339B;
+	Mon,  3 Apr 2023 14:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531113;
-	bh=4WYmlHOFW8JnkQwDZ4iFAD0VkNwsk4pLJ5UCv6X5CIQ=;
+	s=korg; t=1680531111;
+	bh=8U0+KCB4JzpOYrOfqQpnHMvfkiX3CwL64HOjTw2QnaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wTxAxeQKZ4e5JZZOgg/Iyi+cZydHV7bOmnf2O/gG4GF1NKmIwEn92IRCsxblds/VW
-	 rNUGuinZz3cX0ZalKTuul1gL1dL1O/7NYeFcnw5ge6wBb1xVJzoX4f37ZzALkj1QSk
-	 LdU2V8P9f17UtP2ZX5GvkjzecOMuR+q1oL0yC3Yg=
+	b=yXx/CSADgRmkDawozfLsUKCtc36+AxZNrTj8aqNj5uwHYRnxrAjj7ocgsOfBpyWVA
+	 6r3aFdJLAwneP3UBxVlqvjfHDIeFCu8WUOwqPfSZikya//9X7aXc4KQfOH/sxiIuIB
+	 uyY/yvJ20NdwmS8rk0cBUDCHIDb0oWeQPKlHC/pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eero Tamminen <oak@helsinkinet.fi>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	lianhui tang <bluetlh@gmail.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 25/66] m68k: Only force 030 bus error if PC not in exception table
-Date: Mon,  3 Apr 2023 16:08:33 +0200
-Message-Id: <20230403140352.817560430@linuxfoundation.org>
+Subject: [PATCH 4.14 24/66] ca8210: fix mac_len negative array access
+Date: Mon,  3 Apr 2023 16:08:32 +0200
+Message-Id: <20230403140352.780803104@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -36,73 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit e36a82bebbf7da814530d5a179bef9df5934b717 ]
+[ Upstream commit 6c993779ea1d0cccdb3a5d7d45446dd229e610a3 ]
 
-__get_kernel_nofault() does copy data in supervisor mode when
-forcing a task backtrace log through /proc/sysrq_trigger.
-This is expected cause a bus error exception on e.g. NULL
-pointer dereferencing when logging a kernel task has no
-workqueue associated. This bus error ought to be ignored.
+This patch fixes a buffer overflow access of skb->data if
+ieee802154_hdr_peek_addrs() fails.
 
-Our 030 bus error handler is ill equipped to deal with this:
-
-Whenever ssw indicates a kernel mode access on a data fault,
-we don't even attempt to handle the fault and instead always
-send a SEGV signal (or panic). As a result, the check
-for exception handling at the fault PC (buried in
-send_sig_fault() which gets called from do_page_fault()
-eventually) is never used.
-
-In contrast, both 040 and 060 access error handlers do not
-care whether a fault happened on supervisor mode access,
-and will call do_page_fault() on those, ultimately honoring
-the exception table.
-
-Add a check in bus_error030 to call do_page_fault() in case
-we do have an entry for the fault PC in our exception table.
-
-I had attempted a fix for this earlier in 2019 that did rely
-on testing pagefault_disabled() (see link below) to achieve
-the same thing, but this patch should be more generic.
-
-Tested on 030 Atari Falcon.
-
-Reported-by: Eero Tamminen <oak@helsinkinet.fi>
-Link: https://lore.kernel.org/r/alpine.LNX.2.21.1904091023540.25@nippy.intranet
-Link: https://lore.kernel.org/r/63130691-1984-c423-c1f2-73bfd8d3dcd3@gmail.com
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230301021107.26307-1-schmitzmic@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reported-by: lianhui tang <bluetlh@gmail.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Link: https://lore.kernel.org/r/20230217042504.3303396-1-aahringo@redhat.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/kernel/traps.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ieee802154/ca8210.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/m68k/kernel/traps.c b/arch/m68k/kernel/traps.c
-index 5c72deb117a8e..d75c143d99d0f 100644
---- a/arch/m68k/kernel/traps.c
-+++ b/arch/m68k/kernel/traps.c
-@@ -30,6 +30,7 @@
- #include <linux/init.h>
- #include <linux/ptrace.h>
- #include <linux/kallsyms.h>
-+#include <linux/extable.h>
+diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
+index eff7571dbea20..76ca8c63bc379 100644
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -1955,6 +1955,8 @@ static int ca8210_skb_tx(
+ 	 * packet
+ 	 */
+ 	mac_len = ieee802154_hdr_peek_addrs(skb, &header);
++	if (mac_len < 0)
++		return mac_len;
  
- #include <asm/setup.h>
- #include <asm/fpu.h>
-@@ -550,7 +551,8 @@ static inline void bus_error030 (struct frame *fp)
- 			errorcode |= 2;
- 
- 		if (mmusr & (MMU_I | MMU_WP)) {
--			if (ssw & 4) {
-+			/* We might have an exception table for this PC */
-+			if (ssw & 4 && !search_exception_tables(fp->ptregs.pc)) {
- 				pr_err("Data %s fault at %#010lx in %s (pc=%#lx)\n",
- 				       ssw & RW ? "read" : "write",
- 				       fp->un.fmtb.daddr,
+ 	secspec.security_level = header.sec.level;
+ 	secspec.key_id_mode = header.sec.key_id_mode;
 -- 
 2.39.2
 
