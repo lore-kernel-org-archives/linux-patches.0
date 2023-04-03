@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328816FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A411CC433D2;
-	Mon,  3 Apr 2023 14:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CA46FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413EBC4339B;
+	Mon,  3 Apr 2023 14:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532678;
-	bh=08OWbfiWPJSbxDnAwXss/74HZV+xVfgvzDUcsYqfuCA=;
+	s=korg; t=1680532680;
+	bh=POaTkwwZJ7tL37prY/CVFCDc2KaYpGRV4p3VkAw6wsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VmFOkz6SqoO3S7Ka+CR0GEtITBc9y7P6YjtckuNQazUT51O4Fs9e9TXKv5McH8CPG
-	 ez066i1vu/+SXzDCg5Yw7kvSiAb3ZonC61O8pKEBh1Sw6ztydWN2R8tQuAVZMmj4GA
-	 OEUEwODrKVOfC6ulurswZdB+l7YkYTe9p4O2CdHY=
+	b=ouZuS6c1LfZ9tQU6V1w0BQO5OroQjQY5JLcTj7LGxqWy0+Av4C9X1RkHV2sJcqy17
+	 n2nkR1dvYIyD3RfNXgbEsUm48yIf8kVcrGi80n0UYJnUpYnX3V125oW/+isbOcmhnw
+	 m5KxdBLYP3iCoFmdxe10niIdKMA+Eo2l957s9vZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Tesarik <petr.tesarik.ext@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/181] swiotlb: fix slot alignment checks
-Date: Mon,  3 Apr 2023 16:08:29 +0200
-Message-Id: <20230403140417.540659835@linuxfoundation.org>
+Subject: [PATCH 6.1 075/181] platform/x86: think-lmi: add missing type attribute
+Date: Mon,  3 Apr 2023 16:08:30 +0200
+Message-Id: <20230403140417.573705385@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -35,78 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Tesarik <petr.tesarik.ext@huawei.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit 0eee5ae1025699ea93d44fdb6ef2365505082103 ]
+[ Upstream commit 583329dcf22e568a328a944f20427ccfc95dce01 ]
 
-Explicit alignment and page alignment are used only to calculate
-the stride, not when checking actual slot physical address.
+This driver was missing the mandatory type attribute...oops.
 
-Originally, only page alignment was implemented, and that worked,
-because the whole SWIOTLB is allocated on a page boundary, so
-aligning the start index was sufficient to ensure a page-aligned
-slot.
+Add it in along with logic to determine whether the attribute is an
+enumeration type or a string by parsing the possible_values attribute.
 
-When commit 1f221a0d0dbf ("swiotlb: respect min_align_mask") added
-support for min_align_mask, the index could be incremented in the
-search loop, potentially finding an unaligned slot if minimum device
-alignment is between IO_TLB_SIZE and PAGE_SIZE.  The bug could go
-unnoticed, because the slot size is 2 KiB, and the most common page
-size is 4 KiB, so there is no alignment value in between.
+Upstream bug https://bugzilla.kernel.org/show_bug.cgi?id=216460
 
-IIUC the intention has been to find a slot that conforms to all
-alignment constraints: device minimum alignment, an explicit
-alignment (given as function parameter) and optionally page
-alignment (if allocation size is >= PAGE_SIZE). The most
-restrictive mask can be trivially computed with logical AND. The
-rest can stay.
-
-Fixes: 1f221a0d0dbf ("swiotlb: respect min_align_mask")
-Fixes: e81e99bacc9f ("swiotlb: Support aligned swiotlb buffers")
-Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20230320003221.561750-1-mpearson-lenovo@squebb.ca
+Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/swiotlb.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/platform/x86/think-lmi.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
-index 1ecd0d1f7231a..eeb5695c3f286 100644
---- a/kernel/dma/swiotlb.c
-+++ b/kernel/dma/swiotlb.c
-@@ -626,22 +626,26 @@ static int swiotlb_do_find_slots(struct device *dev, int area_index,
- 	BUG_ON(!nslots);
- 	BUG_ON(area_index >= mem->nareas);
+diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
+index a01a92769c1a3..07c9dc21eff52 100644
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -947,6 +947,20 @@ static ssize_t possible_values_show(struct kobject *kobj, struct kobj_attribute
+ 	return sysfs_emit(buf, "%s\n", setting->possible_values);
+ }
  
-+	/*
-+	 * For allocations of PAGE_SIZE or larger only look for page aligned
-+	 * allocations.
-+	 */
-+	if (alloc_size >= PAGE_SIZE)
-+		iotlb_align_mask &= PAGE_MASK;
-+	iotlb_align_mask &= alloc_align_mask;
++static ssize_t type_show(struct kobject *kobj, struct kobj_attribute *attr,
++		char *buf)
++{
++	struct tlmi_attr_setting *setting = to_tlmi_attr_setting(kobj);
 +
- 	/*
- 	 * For mappings with an alignment requirement don't bother looping to
--	 * unaligned slots once we found an aligned one.  For allocations of
--	 * PAGE_SIZE or larger only look for page aligned allocations.
-+	 * unaligned slots once we found an aligned one.
- 	 */
- 	stride = (iotlb_align_mask >> IO_TLB_SHIFT) + 1;
--	if (alloc_size >= PAGE_SIZE)
--		stride = max(stride, stride << (PAGE_SHIFT - IO_TLB_SHIFT));
--	stride = max(stride, (alloc_align_mask >> IO_TLB_SHIFT) + 1);
++	if (setting->possible_values) {
++		/* Figure out what setting type is as BIOS does not return this */
++		if (strchr(setting->possible_values, ','))
++			return sysfs_emit(buf, "enumeration\n");
++	}
++	/* Anything else is going to be a string */
++	return sysfs_emit(buf, "string\n");
++}
++
+ static ssize_t current_value_store(struct kobject *kobj,
+ 		struct kobj_attribute *attr,
+ 		const char *buf, size_t count)
+@@ -1036,10 +1050,13 @@ static struct kobj_attribute attr_possible_values = __ATTR_RO(possible_values);
  
- 	spin_lock_irqsave(&area->lock, flags);
- 	if (unlikely(nslots > mem->area_nslabs - area->used))
- 		goto not_found;
+ static struct kobj_attribute attr_current_val = __ATTR_RW_MODE(current_value, 0600);
  
- 	slot_base = area_index * mem->area_nslabs;
--	index = wrap_area_index(mem, ALIGN(area->index, stride));
-+	index = area->index;
++static struct kobj_attribute attr_type = __ATTR_RO(type);
++
+ static struct attribute *tlmi_attrs[] = {
+ 	&attr_displ_name.attr,
+ 	&attr_current_val.attr,
+ 	&attr_possible_values.attr,
++	&attr_type.attr,
+ 	NULL
+ };
  
- 	for (slots_checked = 0; slots_checked < mem->area_nslabs; ) {
- 		slot_index = slot_base + index;
 -- 
 2.39.2
 
