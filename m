@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9126FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DFDC433EF;
-	Mon,  3 Apr 2023 14:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5896FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0CCC433EF;
+	Mon,  3 Apr 2023 14:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532265;
-	bh=N7oIYTYSX41R1e4ayN5+sCIljqt4QsteV2O2OTwmmlQ=;
+	s=korg; t=1680532268;
+	bh=pm499dLIuPFQxS03VhUJO+tDXd8FwpaPsu/4/gtoJHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VxKu6lCVlTo44OBkOuqGL6aXx9VCur2sH0MdA9dYTK/dBj1zcVLw/9Wj/LNGYf0n2
-	 gnnL6DbcPURjzpElSlPj0+kGJzAXz7FtUCl+kT4al/kmRzJsWRGRyNTHXAE46WXq1Y
-	 eWJGXnDTRvFFaS+pMDHzRaWRLrGh7VYPV2HSt4Cc=
+	b=jQU41uGHGC8c49c4ieoyzKdL4IcUQ+mA9s1FpD+DnfvYFV7sVxKJgPeQgZPmNRXp/
+	 UoIropdYGC5fGEurTApVYeG7xRA+psOXSmTEd45cqDrLeDBaMLSzRc4yUaz88xiwKn
+	 0ax7B0TNRPFXa1OKhlLAL90LepcjyTpnSEvyrI9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Steve French <stfrench@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/99] kcsan: avoid passing -g for test
-Date: Mon,  3 Apr 2023 16:08:28 +0200
-Message-Id: <20230403140356.266222209@linuxfoundation.org>
+Subject: [PATCH 5.15 06/99] ksmbd: dont terminate inactive sessions after a few seconds
+Date: Mon,  3 Apr 2023 16:08:29 +0200
+Message-Id: <20230403140356.296427018@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -38,48 +35,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Elver <elver@google.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 5eb39cde1e2487ba5ec1802dc5e58a77e700d99e ]
+[ Upstream commit be6f42fad5f5fd1fea9d562df82c38ad6ed3bfe9 ]
 
-Nathan reported that when building with GNU as and a version of clang that
-defaults to DWARF5, the assembler will complain with:
+Steve reported that inactive sessions are terminated after a few
+seconds. ksmbd terminate when receiving -EAGAIN error from
+kernel_recvmsg(). -EAGAIN means there is no data available in timeout.
+So ksmbd should keep connection with unlimited retries instead of
+terminating inactive sessions.
 
-  Error: non-constant .uleb128 is not supported
-
-This is because `-g` defaults to the compiler debug info default. If the
-assembler does not support some of the directives used, the above errors
-occur. To fix, remove the explicit passing of `-g`.
-
-All the test wants is that stack traces print valid function names, and
-debug info is not required for that. (I currently cannot recall why I
-added the explicit `-g`.)
-
-Link: https://lkml.kernel.org/r/20230316224705.709984-2-elver@google.com
-Fixes: 1fe84fd4a402 ("kcsan: Add test suite")
-Signed-off-by: Marco Elver <elver@google.com>
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Reported-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcsan/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/connection.c     |  4 ++--
+ fs/ksmbd/connection.h     |  3 ++-
+ fs/ksmbd/transport_rdma.c |  2 +-
+ fs/ksmbd/transport_tcp.c  | 35 +++++++++++++++++++++++------------
+ 4 files changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/kernel/kcsan/Makefile b/kernel/kcsan/Makefile
-index 5936288ee938b..c4ddd189f3e07 100644
---- a/kernel/kcsan/Makefile
-+++ b/kernel/kcsan/Makefile
-@@ -13,6 +13,6 @@ CFLAGS_core.o := $(call cc-option,-fno-conserve-stack) \
- obj-y := core.o debugfs.o report.o
- obj-$(CONFIG_KCSAN_SELFTEST) += selftest.o
+diff --git a/fs/ksmbd/connection.c b/fs/ksmbd/connection.c
+index 6105649b4ebb0..610abaadbb677 100644
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -292,7 +292,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 		kvfree(conn->request_buf);
+ 		conn->request_buf = NULL;
  
--CFLAGS_kcsan_test.o := $(CFLAGS_KCSAN) -g -fno-omit-frame-pointer
-+CFLAGS_kcsan_test.o := $(CFLAGS_KCSAN) -fno-omit-frame-pointer
- CFLAGS_kcsan_test.o += $(DISABLE_STRUCTLEAK_PLUGIN)
- obj-$(CONFIG_KCSAN_KUNIT_TEST) += kcsan_test.o
+-		size = t->ops->read(t, hdr_buf, sizeof(hdr_buf));
++		size = t->ops->read(t, hdr_buf, sizeof(hdr_buf), -1);
+ 		if (size != sizeof(hdr_buf))
+ 			break;
+ 
+@@ -335,7 +335,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 		 * We already read 4 bytes to find out PDU size, now
+ 		 * read in PDU
+ 		 */
+-		size = t->ops->read(t, conn->request_buf + 4, pdu_size);
++		size = t->ops->read(t, conn->request_buf + 4, pdu_size, 2);
+ 		if (size < 0) {
+ 			pr_err("sock_read failed: %d\n", size);
+ 			break;
+diff --git a/fs/ksmbd/connection.h b/fs/ksmbd/connection.h
+index 8694aef482c1a..4b15c5e673d92 100644
+--- a/fs/ksmbd/connection.h
++++ b/fs/ksmbd/connection.h
+@@ -122,7 +122,8 @@ struct ksmbd_conn_ops {
+ struct ksmbd_transport_ops {
+ 	int (*prepare)(struct ksmbd_transport *t);
+ 	void (*disconnect)(struct ksmbd_transport *t);
+-	int (*read)(struct ksmbd_transport *t, char *buf, unsigned int size);
++	int (*read)(struct ksmbd_transport *t, char *buf,
++		    unsigned int size, int max_retries);
+ 	int (*writev)(struct ksmbd_transport *t, struct kvec *iovs, int niov,
+ 		      int size, bool need_invalidate_rkey,
+ 		      unsigned int remote_key);
+diff --git a/fs/ksmbd/transport_rdma.c b/fs/ksmbd/transport_rdma.c
+index 9d67419929d6c..9ca29cdb7898f 100644
+--- a/fs/ksmbd/transport_rdma.c
++++ b/fs/ksmbd/transport_rdma.c
+@@ -663,7 +663,7 @@ static int smb_direct_post_recv(struct smb_direct_transport *t,
+ }
+ 
+ static int smb_direct_read(struct ksmbd_transport *t, char *buf,
+-			   unsigned int size)
++			   unsigned int size, int unused)
+ {
+ 	struct smb_direct_recvmsg *recvmsg;
+ 	struct smb_direct_data_transfer *data_transfer;
+diff --git a/fs/ksmbd/transport_tcp.c b/fs/ksmbd/transport_tcp.c
+index e0ca6cc04b91c..d1d7954368a56 100644
+--- a/fs/ksmbd/transport_tcp.c
++++ b/fs/ksmbd/transport_tcp.c
+@@ -291,16 +291,18 @@ static int ksmbd_tcp_run_kthread(struct interface *iface)
+ 
+ /**
+  * ksmbd_tcp_readv() - read data from socket in given iovec
+- * @t:		TCP transport instance
+- * @iov_orig:	base IO vector
+- * @nr_segs:	number of segments in base iov
+- * @to_read:	number of bytes to read from socket
++ * @t:			TCP transport instance
++ * @iov_orig:		base IO vector
++ * @nr_segs:		number of segments in base iov
++ * @to_read:		number of bytes to read from socket
++ * @max_retries:	maximum retry count
+  *
+  * Return:	on success return number of bytes read from socket,
+  *		otherwise return error number
+  */
+ static int ksmbd_tcp_readv(struct tcp_transport *t, struct kvec *iov_orig,
+-			   unsigned int nr_segs, unsigned int to_read)
++			   unsigned int nr_segs, unsigned int to_read,
++			   int max_retries)
+ {
+ 	int length = 0;
+ 	int total_read;
+@@ -308,7 +310,6 @@ static int ksmbd_tcp_readv(struct tcp_transport *t, struct kvec *iov_orig,
+ 	struct msghdr ksmbd_msg;
+ 	struct kvec *iov;
+ 	struct ksmbd_conn *conn = KSMBD_TRANS(t)->conn;
+-	int max_retry = 2;
+ 
+ 	iov = get_conn_iovec(t, nr_segs);
+ 	if (!iov)
+@@ -335,14 +336,23 @@ static int ksmbd_tcp_readv(struct tcp_transport *t, struct kvec *iov_orig,
+ 		} else if (conn->status == KSMBD_SESS_NEED_RECONNECT) {
+ 			total_read = -EAGAIN;
+ 			break;
+-		} else if ((length == -ERESTARTSYS || length == -EAGAIN) &&
+-			   max_retry) {
++		} else if (length == -ERESTARTSYS || length == -EAGAIN) {
++			/*
++			 * If max_retries is negative, Allow unlimited
++			 * retries to keep connection with inactive sessions.
++			 */
++			if (max_retries == 0) {
++				total_read = length;
++				break;
++			} else if (max_retries > 0) {
++				max_retries--;
++			}
++
+ 			usleep_range(1000, 2000);
+ 			length = 0;
+-			max_retry--;
+ 			continue;
+ 		} else if (length <= 0) {
+-			total_read = -EAGAIN;
++			total_read = length;
+ 			break;
+ 		}
+ 	}
+@@ -358,14 +368,15 @@ static int ksmbd_tcp_readv(struct tcp_transport *t, struct kvec *iov_orig,
+  * Return:	on success return number of bytes read from socket,
+  *		otherwise return error number
+  */
+-static int ksmbd_tcp_read(struct ksmbd_transport *t, char *buf, unsigned int to_read)
++static int ksmbd_tcp_read(struct ksmbd_transport *t, char *buf,
++			  unsigned int to_read, int max_retries)
+ {
+ 	struct kvec iov;
+ 
+ 	iov.iov_base = buf;
+ 	iov.iov_len = to_read;
+ 
+-	return ksmbd_tcp_readv(TCP_TRANS(t), &iov, 1, to_read);
++	return ksmbd_tcp_readv(TCP_TRANS(t), &iov, 1, to_read, max_retries);
+ }
+ 
+ static int ksmbd_tcp_writev(struct ksmbd_transport *t, struct kvec *iov,
 -- 
 2.39.2
 
