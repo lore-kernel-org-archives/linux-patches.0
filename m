@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1BF6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:44:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFB2C433D2;
-	Mon,  3 Apr 2023 14:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC3D6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381E0C433EF;
+	Mon,  3 Apr 2023 14:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533098;
-	bh=vuW0vUuDsrbF6EdZBmyISlMkpcKD10t+InuXT0eDUMk=;
+	s=korg; t=1680533100;
+	bh=xMcTrCAq/Ug9yr5HZbxkJYlVpKku54OpmikTertNWHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HWsjHtjzPp2si+3l1kmEFy+DgEJobwJl+LUG74SlJ7pUG4d4xbkemt14n6rIecDyD
-	 QgLLDbB5xTnzEDFYG672hlFYGxxeQuUkOTPlio8R2BS8hFeTz01xwB34b8W+Epi+rC
-	 ivZ/MtvST6e8JEQMelFgfi1G5LMNzsG+3ASIUr5g=
+	b=pcUb/mmfupQ+6H911zwpbi61fPtMYN8Y5xjoDjiSNHiBC6LGbVfYiCU2VKeuGi5u6
+	 WtA6JPWBh+T1LNyF9iAHU/YvrdXaxTlTs7Dv20T4kCg/CltIiZ1WGRRJ+SIUkWAPU3
+	 d0JYYaUzWeg6mIQF5cjJTaaTz2bA7AD8yVK9Yifs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Nick Terrell <terrelln@fb.com>,
+	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
+	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 023/187] zstd: Fix definition of assert()
-Date: Mon,  3 Apr 2023 16:07:48 +0200
-Message-Id: <20230403140416.787278477@linuxfoundation.org>
+Subject: [PATCH 6.2 024/187] ACPI: video: Add backlight=native DMI quirk for Dell Vostro 15 3535
+Date: Mon,  3 Apr 2023 16:07:49 +0200
+Message-Id: <20230403140416.817139790@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,34 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+From: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
 
-[ Upstream commit 6906598f1ce93761716d780b6e3f171e13f0f4ce ]
+[ Upstream commit 89b0411481967a2e8c91190a211a359966cfcf4b ]
 
-assert(x) should emit a warning if x is false. WARN_ON(x) emits a
-warning if x is true. Thus, assert(x) should be defined as WARN_ON(!x)
-rather than WARN_ON(x).
+Sometimes the system boots up with a acpi_video0 backlight interface
+which doesn't work. So add Dell Vostro 15 3535 into the
+video_detect_dmi_table to set it to native explicitly.
 
-Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Signed-off-by: Nick Terrell <terrelln@fb.com>
+Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/zstd/common/zstd_deps.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/video_detect.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/lib/zstd/common/zstd_deps.h b/lib/zstd/common/zstd_deps.h
-index 7a5bf44839c9c..f06df065dec01 100644
---- a/lib/zstd/common/zstd_deps.h
-+++ b/lib/zstd/common/zstd_deps.h
-@@ -84,7 +84,7 @@ static uint64_t ZSTD_div64(uint64_t dividend, uint32_t divisor) {
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 710ac640267dd..14d6d81e536fe 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -716,6 +716,13 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Dell G15 5515"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_native,
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "Vostro 15 3535"),
++		},
++	},
  
- #include <linux/kernel.h>
- 
--#define assert(x) WARN_ON((x))
-+#define assert(x) WARN_ON(!(x))
- 
- #endif /* ZSTD_DEPS_ASSERT */
- #endif /* ZSTD_DEPS_NEED_ASSERT */
+ 	/*
+ 	 * Desktops which falsely report a backlight and which our heuristics
 -- 
 2.39.2
 
