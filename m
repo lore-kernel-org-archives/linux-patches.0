@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D44C6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BEDC4339B;
-	Mon,  3 Apr 2023 14:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BF96FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F6BC433AE;
+	Mon,  3 Apr 2023 14:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532432;
-	bh=CjN35DnqgDDv5rnDHMGj8/n93IwxRypP2ELTE0UlnHU=;
+	s=korg; t=1680532434;
+	bh=ZCbROKUxAMtnI5lC91A1jFFdbotDNC9GMcwvQZ6LIOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RmtnUeKOCb93+s7+R2JqCboe0gDp7vvsByHgasSnnWFtmTFWPnSUQCq90Em+hANUz
-	 h85nUvY0l5of60zVknMlOmZ5w4gqlRQk9u73wOfqDvLqIo1HhHUSNWzUuAok8ejAS3
-	 xLjrQT3RO7HLNB77SmGak0xJLcHJ8UB/oFHcja20=
+	b=i7yZA/CaBObFxCXhI38WZRKxVikoFAIgAFBHA5L35kMmvpRC3rnn2zN9qIOuGk3nu
+	 OT5kYrn8Xln5PfwrT4Zr0zykeT+zYj8OmuP1lBZcjaxub3A5nAJI4eecK6rmnyh/7Z
+	 N2bDGcZpLE1rxKI1ynedVakwvuLZdSHs9N2Jwjpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Junfeng Guo <junfeng.guo@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 51/99] smsc911x: avoid PHY being resumed when interface is not up
-Date: Mon,  3 Apr 2023 16:09:14 +0200
-Message-Id: <20230403140405.246226499@linuxfoundation.org>
+Subject: [PATCH 5.15 52/99] ice: add profile conflict check for AVF FDIR
+Date: Mon,  3 Apr 2023 16:09:15 +0200
+Message-Id: <20230403140405.296183862@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -37,58 +36,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Junfeng Guo <junfeng.guo@intel.com>
 
-[ Upstream commit f22c993f31fa9615df46e49cd768b713d39a852f ]
+[ Upstream commit 29486b6df3e6a63b57d1ed1dce06051267282ff4 ]
 
-SMSC911x doesn't need mdiobus suspend/resume, that's why it sets
-'mac_managed_pm'. However, setting it needs to be moved from init to
-probe, so mdiobus PM functions will really never be called (e.g. when
-the interface is not up yet during suspend/resume).
+Add profile conflict check while adding some FDIR rules to avoid
+unexpected flow behavior, rules may have conflict including:
+        IPv4 <---> {IPv4_UDP, IPv4_TCP, IPv4_SCTP}
+        IPv6 <---> {IPv6_UDP, IPv6_TCP, IPv6_SCTP}
 
-Fixes: 3ce9f2bef755 ("net: smsc911x: Stop and start PHY during suspend and resume")
-Suggested-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230327083138.6044-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+For example, when we create an FDIR rule for IPv4, this rule will work
+on packets including IPv4, IPv4_UDP, IPv4_TCP and IPv4_SCTP. But if we
+then create an FDIR rule for IPv4_UDP and then destroy it, the first
+FDIR rule for IPv4 cannot work on pkt IPv4_UDP then.
+
+To prevent this unexpected behavior, we add restriction in software
+when creating FDIR rules by adding necessary profile conflict check.
+
+Fixes: 1f7ea1cd6a37 ("ice: Enable FDIR Configure for AVF")
+Signed-off-by: Junfeng Guo <junfeng.guo@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/smsc/smsc911x.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ .../ethernet/intel/ice/ice_virtchnl_fdir.c    | 73 +++++++++++++++++++
+ 1 file changed, 73 insertions(+)
 
-diff --git a/drivers/net/ethernet/smsc/smsc911x.c b/drivers/net/ethernet/smsc/smsc911x.c
-index 63b99dd8ca51c..b330dcbe949df 100644
---- a/drivers/net/ethernet/smsc/smsc911x.c
-+++ b/drivers/net/ethernet/smsc/smsc911x.c
-@@ -1037,8 +1037,6 @@ static int smsc911x_mii_probe(struct net_device *dev)
- 		return ret;
+diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
+index eee180d8c0247..4b738f7391097 100644
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
+@@ -731,6 +731,72 @@ static void ice_vc_fdir_rem_prof_all(struct ice_vf *vf)
  	}
+ }
  
--	/* Indicate that the MAC is responsible for managing PHY PM */
--	phydev->mac_managed_pm = true;
- 	phy_attached_info(phydev);
- 
- 	phy_set_max_speed(phydev, SPEED_100);
-@@ -1066,6 +1064,7 @@ static int smsc911x_mii_init(struct platform_device *pdev,
- 			     struct net_device *dev)
- {
- 	struct smsc911x_data *pdata = netdev_priv(dev);
-+	struct phy_device *phydev;
- 	int err = -ENXIO;
- 
- 	pdata->mii_bus = mdiobus_alloc();
-@@ -1108,6 +1107,10 @@ static int smsc911x_mii_init(struct platform_device *pdev,
- 		goto err_out_free_bus_2;
- 	}
- 
-+	phydev = phy_find_first(pdata->mii_bus);
-+	if (phydev)
-+		phydev->mac_managed_pm = true;
++/**
++ * ice_vc_fdir_has_prof_conflict
++ * @vf: pointer to the VF structure
++ * @conf: FDIR configuration for each filter
++ *
++ * Check if @conf has conflicting profile with existing profiles
++ *
++ * Return: true on success, and false on error.
++ */
++static bool
++ice_vc_fdir_has_prof_conflict(struct ice_vf *vf,
++			      struct virtchnl_fdir_fltr_conf *conf)
++{
++	struct ice_fdir_fltr *desc;
 +
- 	return 0;
++	list_for_each_entry(desc, &vf->fdir.fdir_rule_list, fltr_node) {
++		struct virtchnl_fdir_fltr_conf *existing_conf;
++		enum ice_fltr_ptype flow_type_a, flow_type_b;
++		struct ice_fdir_fltr *a, *b;
++
++		existing_conf = to_fltr_conf_from_desc(desc);
++		a = &existing_conf->input;
++		b = &conf->input;
++		flow_type_a = a->flow_type;
++		flow_type_b = b->flow_type;
++
++		/* No need to compare two rules with different tunnel types or
++		 * with the same protocol type.
++		 */
++		if (existing_conf->ttype != conf->ttype ||
++		    flow_type_a == flow_type_b)
++			continue;
++
++		switch (flow_type_a) {
++		case ICE_FLTR_PTYPE_NONF_IPV4_UDP:
++		case ICE_FLTR_PTYPE_NONF_IPV4_TCP:
++		case ICE_FLTR_PTYPE_NONF_IPV4_SCTP:
++			if (flow_type_b == ICE_FLTR_PTYPE_NONF_IPV4_OTHER)
++				return true;
++			break;
++		case ICE_FLTR_PTYPE_NONF_IPV4_OTHER:
++			if (flow_type_b == ICE_FLTR_PTYPE_NONF_IPV4_UDP ||
++			    flow_type_b == ICE_FLTR_PTYPE_NONF_IPV4_TCP ||
++			    flow_type_b == ICE_FLTR_PTYPE_NONF_IPV4_SCTP)
++				return true;
++			break;
++		case ICE_FLTR_PTYPE_NONF_IPV6_UDP:
++		case ICE_FLTR_PTYPE_NONF_IPV6_TCP:
++		case ICE_FLTR_PTYPE_NONF_IPV6_SCTP:
++			if (flow_type_b == ICE_FLTR_PTYPE_NONF_IPV6_OTHER)
++				return true;
++			break;
++		case ICE_FLTR_PTYPE_NONF_IPV6_OTHER:
++			if (flow_type_b == ICE_FLTR_PTYPE_NONF_IPV6_UDP ||
++			    flow_type_b == ICE_FLTR_PTYPE_NONF_IPV6_TCP ||
++			    flow_type_b == ICE_FLTR_PTYPE_NONF_IPV6_SCTP)
++				return true;
++			break;
++		default:
++			break;
++		}
++	}
++
++	return false;
++}
++
+ /**
+  * ice_vc_fdir_write_flow_prof
+  * @vf: pointer to the VF structure
+@@ -871,6 +937,13 @@ ice_vc_fdir_config_input_set(struct ice_vf *vf, struct virtchnl_fdir_add *fltr,
+ 	enum ice_fltr_ptype flow;
+ 	int ret;
  
- err_out_free_bus_2:
++	ret = ice_vc_fdir_has_prof_conflict(vf, conf);
++	if (ret) {
++		dev_dbg(dev, "Found flow profile conflict for VF %d\n",
++			vf->vf_id);
++		return ret;
++	}
++
+ 	flow = input->flow_type;
+ 	ret = ice_vc_fdir_alloc_prof(vf, flow);
+ 	if (ret) {
 -- 
 2.39.2
 
