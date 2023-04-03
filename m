@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6796FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6932C433EF;
-	Mon,  3 Apr 2023 14:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4B26FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C2AC433EF;
+	Mon,  3 Apr 2023 14:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533036;
-	bh=MjEEL8boqjlO56Osnd+473gjFPNIpRp9UcMS4Htxkr4=;
+	s=korg; t=1680533038;
+	bh=O/mOkDZ/o5RV/YSv+1yrLgRr2ghtm1kQQ5uzPclGIAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NO3/zm1YE8FZwEAl1RLvOFw5LVBjiVwc1A3ytBXolod+4LmOo3mijeqMHfON1SdvU
-	 jJNiyQxHb6Jb7/AFRcmxjZDtaYGRvFuxGC5xCcrvKueg3Td1LXZ+IcDDhUm9TTBcIz
-	 AqlEYPJ9wnGziZ1rFYaCU201dZ0JfykhIvUoyRic=
+	b=Bn+sAiQrj0lq07vXE2baMXr7ibghKiO1+2JgKbGLpYN5htZgpI9E5MuWRk5TVpNVR
+	 pcKv5OSD09vgXM+9WQ1yl65CDYMfXtgwHFM0zNyaVTviJTJ5d//1+ukbI8LScoibi6
+	 2vUd+riZJqohdfvEu2NIAfSoAV5XfRZ6SXLbhyBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ferry Toth <fntoth@gmail.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Rander Wang <rander.wang@intel.com>,
 	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 030/187] ASoC: SOF: Intel: pci-tng: revert invalid bar size setting
-Date: Mon,  3 Apr 2023 16:07:55 +0200
-Message-Id: <20230403140416.992108172@linuxfoundation.org>
+Subject: [PATCH 6.2 031/187] ASoC: SOF: Intel: hda-dsp: harden D0i3 programming sequence
+Date: Mon,  3 Apr 2023 16:07:56 +0200
+Message-Id: <20230403140417.021687766@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -38,55 +38,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Rander Wang <rander.wang@intel.com>
 
-[ Upstream commit ca09e2a351fbc7836ba9418304ff0c3e72addfe0 ]
+[ Upstream commit 52a55779ed14792a150421339664193d6eb8e036 ]
 
-The logic for the ioremap is to find the resource index 3 (IRAM) and
-infer the BAR address by subtracting the IRAM offset. The BAR size
-defined in hardware specifications is 2MB.
+Add delay between set and wait command according to hardware programming
+sequence. Also add debug log to detect error.
 
-The commit 5947b2726beb6 ("ASoC: SOF: Intel: Check the bar size before
-remapping") tried to find the BAR size by querying the resource length
-instead of a pre-canned value, but by requesting the size for index 3
-it only gets the size of the IRAM. That's obviously wrong and prevents
-the probe from proceeding.
-
-This commit attempted to fix an issue in a fuzzing/simulated
-environment but created another on actual devices, so the best course
-of action is to revert that change.
-
-Reported-by: Ferry Toth <fntoth@gmail.com>
-Tested-by: Ferry Toth <fntoth@gmail.com> (Intel Edison-Arduino)
-Link: https://github.com/thesofproject/linux/issues/3901
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Rander Wang <rander.wang@intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230307095341.3222-1-peter.ujfalusi@linux.intel.com
+Link: https://lore.kernel.org/r/20230307095453.3719-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/pci-tng.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ sound/soc/sof/intel/hda-dsp.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/soc/sof/intel/pci-tng.c b/sound/soc/sof/intel/pci-tng.c
-index 5b2b409752c58..8c22a00266c06 100644
---- a/sound/soc/sof/intel/pci-tng.c
-+++ b/sound/soc/sof/intel/pci-tng.c
-@@ -75,11 +75,7 @@ static int tangier_pci_probe(struct snd_sof_dev *sdev)
+diff --git a/sound/soc/sof/intel/hda-dsp.c b/sound/soc/sof/intel/hda-dsp.c
+index b4eacae8564c8..6b2094f74c9c0 100644
+--- a/sound/soc/sof/intel/hda-dsp.c
++++ b/sound/soc/sof/intel/hda-dsp.c
+@@ -399,6 +399,12 @@ static int hda_dsp_update_d0i3c_register(struct snd_sof_dev *sdev, u8 value)
+ 	snd_sof_dsp_update8(sdev, HDA_DSP_HDA_BAR, chip->d0i3_offset,
+ 			    SOF_HDA_VS_D0I3C_I3, value);
  
- 	/* LPE base */
- 	base = pci_resource_start(pci, desc->resindex_lpe_base) - IRAM_OFFSET;
--	size = pci_resource_len(pci, desc->resindex_lpe_base);
--	if (size < PCI_BAR_SIZE) {
--		dev_err(sdev->dev, "error: I/O region is too small.\n");
--		return -ENODEV;
--	}
-+	size = PCI_BAR_SIZE;
++	/*
++	 * The value written to the D0I3C::I3 bit may not be taken into account immediately.
++	 * A delay is recommended before checking if D0I3C::CIP is cleared
++	 */
++	usleep_range(30, 40);
++
+ 	/* Wait for cmd in progress to be cleared before exiting the function */
+ 	ret = hda_dsp_wait_d0i3c_done(sdev);
+ 	if (ret < 0) {
+@@ -407,6 +413,12 @@ static int hda_dsp_update_d0i3c_register(struct snd_sof_dev *sdev, u8 value)
+ 	}
  
- 	dev_dbg(sdev->dev, "LPE PHY base at 0x%x size 0x%x", base, size);
- 	sdev->bar[DSP_BAR] = devm_ioremap(sdev->dev, base, size);
+ 	reg = snd_sof_dsp_read8(sdev, HDA_DSP_HDA_BAR, chip->d0i3_offset);
++	/* Confirm d0i3 state changed with paranoia check */
++	if ((reg ^ value) & SOF_HDA_VS_D0I3C_I3) {
++		dev_err(sdev->dev, "failed to update D0I3C!\n");
++		return -EIO;
++	}
++
+ 	trace_sof_intel_D0I3C_updated(sdev, reg);
+ 
+ 	return 0;
 -- 
 2.39.2
 
