@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5153D612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88B2C433EF;
-	Mon,  3 Apr 2023 14:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE513612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FD7C433EF;
+	Mon,  3 Apr 2023 14:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531649;
-	bh=XRqSj7GDNJVSFoLUmFcfEHBFGn6268V6jQhSs6LmeHo=;
+	s=korg; t=1680531651;
+	bh=RI4FPB1DKV/B/YpGWBOOOenfAVNZs71y7SH5hiC4Sno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sUYPrJOd8DxnzPytYOFUb/+0JKv9eHmEfXleaxW0np07iMcLhNFwXNdg8npd1mcPF
-	 lGE7ErwoOl2MmfBXPQay+YPBMTMuQEzIzV4k5agCN3oSvAw+qB/bZqUGLzjoDUwu74
-	 XQVN49BlHOkxjnb2y+ExRUx2HPlIrwWIqsYnB1Nk=
+	b=s+W1MhRYH+Vn+/0TjVsz/0pXJoWb1jFryjZMKdnnzPrcicdB8pFji8RjxG4MaRe3M
+	 na1WhS8VhsK7oi7Z0qtKEgxVceaczQbcT2cFtUNcwmEPDTFmxCQcOKTydkU9VOdHcL
+	 TN+2bbpQkgbtD6YkjYO8MCoLfFxzXbubLhVl1Hio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Zhang Qiao <zhangqiao22@huawei.com>
-Subject: [PATCH 5.4 057/104] sched/fair: Sanitize vruntime of entity being migrated
-Date: Mon,  3 Apr 2023 16:08:49 +0200
-Message-Id: <20230403140406.532526096@linuxfoundation.org>
+	syzkaller <syzkaller@googlegroups.com>,
+	George Kennedy <george.kennedy@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Dragos-Marian Panait <dragos.panait@windriver.com>
+Subject: [PATCH 5.4 058/104] tun: avoid double free in tun_free_netdev
+Date: Mon,  3 Apr 2023 16:08:50 +0200
+Message-Id: <20230403140406.563603661@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,131 +36,237 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: George Kennedy <george.kennedy@oracle.com>
 
-commit a53ce18cacb477dd0513c607f187d16f0fa96f71 upstream.
+commit 158b515f703e75e7d68289bf4d98c664e1d632df upstream.
 
-Commit 829c1651e9c4 ("sched/fair: sanitize vruntime of entity being placed")
-fixes an overflowing bug, but ignore a case that se->exec_start is reset
-after a migration.
+Avoid double free in tun_free_netdev() by moving the
+dev->tstats and tun->security allocs to a new ndo_init routine
+(tun_net_init()) that will be called by register_netdevice().
+ndo_init is paired with the desctructor (tun_free_netdev()),
+so if there's an error in register_netdevice() the destructor
+will handle the frees.
 
-For fixing this case, we delay the reset of se->exec_start after
-placing the entity which se->exec_start to detect long sleeping task.
+BUG: KASAN: double-free or invalid-free in selinux_tun_dev_free_security+0x1a/0x20 security/selinux/hooks.c:5605
 
-In order to take into account a possible divergence between the clock_task
-of 2 rqs, we increase the threshold to around 104 days.
+CPU: 0 PID: 25750 Comm: syz-executor416 Not tainted 5.16.0-rc2-syzk #1
+Hardware name: Red Hat KVM, BIOS
+Call Trace:
+<TASK>
+__dump_stack lib/dump_stack.c:88 [inline]
+dump_stack_lvl+0x89/0xb5 lib/dump_stack.c:106
+print_address_description.constprop.9+0x28/0x160 mm/kasan/report.c:247
+kasan_report_invalid_free+0x55/0x80 mm/kasan/report.c:372
+____kasan_slab_free mm/kasan/common.c:346 [inline]
+__kasan_slab_free+0x107/0x120 mm/kasan/common.c:374
+kasan_slab_free include/linux/kasan.h:235 [inline]
+slab_free_hook mm/slub.c:1723 [inline]
+slab_free_freelist_hook mm/slub.c:1749 [inline]
+slab_free mm/slub.c:3513 [inline]
+kfree+0xac/0x2d0 mm/slub.c:4561
+selinux_tun_dev_free_security+0x1a/0x20 security/selinux/hooks.c:5605
+security_tun_dev_free_security+0x4f/0x90 security/security.c:2342
+tun_free_netdev+0xe6/0x150 drivers/net/tun.c:2215
+netdev_run_todo+0x4df/0x840 net/core/dev.c:10627
+rtnl_unlock+0x13/0x20 net/core/rtnetlink.c:112
+__tun_chr_ioctl+0x80c/0x2870 drivers/net/tun.c:3302
+tun_chr_ioctl+0x2f/0x40 drivers/net/tun.c:3311
+vfs_ioctl fs/ioctl.c:51 [inline]
+__do_sys_ioctl fs/ioctl.c:874 [inline]
+__se_sys_ioctl fs/ioctl.c:860 [inline]
+__x64_sys_ioctl+0x19d/0x220 fs/ioctl.c:860
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x3a/0x80 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-Fixes: 829c1651e9c4 ("sched/fair: sanitize vruntime of entity being placed")
-Originally-by: Zhang Qiao <zhangqiao22@huawei.com>
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Zhang Qiao <zhangqiao22@huawei.com>
-Link: https://lore.kernel.org/r/20230317160810.107988-1-vincent.guittot@linaro.org
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/1639679132-19884-1-git-send-email-george.kennedy@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[DP: adjusted context for 5.4 stable]
+Signed-off-by: Dragos-Marian Panait <dragos.panait@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |    3 ++
- kernel/sched/fair.c |   53 ++++++++++++++++++++++++++++++++++++++++++----------
- 2 files changed, 46 insertions(+), 10 deletions(-)
+ drivers/net/tun.c |  109 +++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 59 insertions(+), 50 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -1411,6 +1411,9 @@ static inline void dequeue_task(struct r
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -250,6 +250,9 @@ struct tun_struct {
+ 	struct tun_prog __rcu *steering_prog;
+ 	struct tun_prog __rcu *filter_prog;
+ 	struct ethtool_link_ksettings link_ksettings;
++	/* init args */
++	struct file *file;
++	struct ifreq *ifr;
+ };
  
- void activate_task(struct rq *rq, struct task_struct *p, int flags)
- {
-+	if (task_on_rq_migrating(p))
-+		flags |= ENQUEUE_MIGRATED;
-+
- 	if (task_contributes_to_load(p))
- 		rq->nr_uninterruptible--;
- 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -3877,11 +3877,33 @@ static void check_spread(struct cfs_rq *
- #endif
+ struct veth {
+@@ -275,6 +278,9 @@ void *tun_ptr_to_xdp(void *ptr)
  }
+ EXPORT_SYMBOL(tun_ptr_to_xdp);
  
-+static inline bool entity_is_long_sleeper(struct sched_entity *se)
++static void tun_flow_init(struct tun_struct *tun);
++static void tun_flow_uninit(struct tun_struct *tun);
++
+ static int tun_napi_receive(struct napi_struct *napi, int budget)
+ {
+ 	struct tun_file *tfile = container_of(napi, struct tun_file, napi);
+@@ -1027,6 +1033,49 @@ static int check_filter(struct tap_filte
+ 
+ static const struct ethtool_ops tun_ethtool_ops;
+ 
++static int tun_net_init(struct net_device *dev)
 +{
-+	struct cfs_rq *cfs_rq;
-+	u64 sleep_time;
++	struct tun_struct *tun = netdev_priv(dev);
++	struct ifreq *ifr = tun->ifr;
++	int err;
 +
-+	if (se->exec_start == 0)
-+		return false;
++	tun->pcpu_stats = netdev_alloc_pcpu_stats(struct tun_pcpu_stats);
++	if (!tun->pcpu_stats)
++		return -ENOMEM;
 +
-+	cfs_rq = cfs_rq_of(se);
++	spin_lock_init(&tun->lock);
 +
-+	sleep_time = rq_clock_task(rq_of(cfs_rq));
++	err = security_tun_dev_alloc_security(&tun->security);
++	if (err < 0) {
++		free_percpu(tun->pcpu_stats);
++		return err;
++	}
 +
-+	/* Happen while migrating because of clock task divergence */
-+	if (sleep_time <= se->exec_start)
-+		return false;
++	tun_flow_init(tun);
 +
-+	sleep_time -= se->exec_start;
-+	if (sleep_time > ((1ULL << 63) / scale_load_down(NICE_0_LOAD)))
-+		return true;
++	dev->hw_features = NETIF_F_SG | NETIF_F_FRAGLIST |
++			   TUN_USER_FEATURES | NETIF_F_HW_VLAN_CTAG_TX |
++			   NETIF_F_HW_VLAN_STAG_TX;
++	dev->features = dev->hw_features | NETIF_F_LLTX;
++	dev->vlan_features = dev->features &
++			     ~(NETIF_F_HW_VLAN_CTAG_TX |
++			       NETIF_F_HW_VLAN_STAG_TX);
 +
-+	return false;
++	tun->flags = (tun->flags & ~TUN_FEATURES) |
++		      (ifr->ifr_flags & TUN_FEATURES);
++
++	INIT_LIST_HEAD(&tun->disabled);
++	err = tun_attach(tun, tun->file, false, ifr->ifr_flags & IFF_NAPI,
++			 ifr->ifr_flags & IFF_NAPI_FRAGS, false);
++	if (err < 0) {
++		tun_flow_uninit(tun);
++		security_tun_dev_free_security(tun->security);
++		free_percpu(tun->pcpu_stats);
++		return err;
++	}
++	return 0;
 +}
 +
- static void
- place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int initial)
+ /* Net device detach from fd. */
+ static void tun_net_uninit(struct net_device *dev)
  {
- 	u64 vruntime = cfs_rq->min_vruntime;
--	u64 sleep_time;
- 
- 	/*
- 	 * The 'current' period is already promised to the current tasks,
-@@ -3908,13 +3930,24 @@ place_entity(struct cfs_rq *cfs_rq, stru
- 
- 	/*
- 	 * Pull vruntime of the entity being placed to the base level of
--	 * cfs_rq, to prevent boosting it if placed backwards.  If the entity
--	 * slept for a long time, don't even try to compare its vruntime with
--	 * the base as it may be too far off and the comparison may get
--	 * inversed due to s64 overflow.
-+	 * cfs_rq, to prevent boosting it if placed backwards.
-+	 * However, min_vruntime can advance much faster than real time, with
-+	 * the extreme being when an entity with the minimal weight always runs
-+	 * on the cfs_rq. If the waking entity slept for a long time, its
-+	 * vruntime difference from min_vruntime may overflow s64 and their
-+	 * comparison may get inversed, so ignore the entity's original
-+	 * vruntime in that case.
-+	 * The maximal vruntime speedup is given by the ratio of normal to
-+	 * minimal weight: scale_load_down(NICE_0_LOAD) / MIN_SHARES.
-+	 * When placing a migrated waking entity, its exec_start has been set
-+	 * from a different rq. In order to take into account a possible
-+	 * divergence between new and prev rq's clocks task because of irq and
-+	 * stolen time, we take an additional margin.
-+	 * So, cutting off on the sleep time of
-+	 *     2^63 / scale_load_down(NICE_0_LOAD) ~ 104 days
-+	 * should be safe.
- 	 */
--	sleep_time = rq_clock_task(rq_of(cfs_rq)) - se->exec_start;
--	if ((s64)sleep_time > 60LL * NSEC_PER_SEC)
-+	if (entity_is_long_sleeper(se))
- 		se->vruntime = vruntime;
- 	else
- 		se->vruntime = max_vruntime(se->vruntime, vruntime);
-@@ -4013,6 +4046,9 @@ enqueue_entity(struct cfs_rq *cfs_rq, st
- 
- 	if (flags & ENQUEUE_WAKEUP)
- 		place_entity(cfs_rq, se, 0);
-+	/* Entity has migrated, no longer consider this task hot */
-+	if (flags & ENQUEUE_MIGRATED)
-+		se->exec_start = 0;
- 
- 	check_schedstat_required();
- 	update_stats_enqueue(cfs_rq, se, flags);
-@@ -6638,9 +6674,6 @@ static void migrate_task_rq_fair(struct
- 	/* Tell new CPU we are migrated */
- 	p->se.avg.last_update_time = 0;
- 
--	/* We have migrated, no longer consider this task hot */
--	p->se.exec_start = 0;
--
- 	update_scan_period(p, new_cpu);
+@@ -1285,6 +1334,7 @@ static int tun_net_change_carrier(struct
  }
  
+ static const struct net_device_ops tun_netdev_ops = {
++	.ndo_init		= tun_net_init,
+ 	.ndo_uninit		= tun_net_uninit,
+ 	.ndo_open		= tun_net_open,
+ 	.ndo_stop		= tun_net_close,
+@@ -1365,6 +1415,7 @@ static int tun_xdp_tx(struct net_device
+ }
+ 
+ static const struct net_device_ops tap_netdev_ops = {
++	.ndo_init		= tun_net_init,
+ 	.ndo_uninit		= tun_net_uninit,
+ 	.ndo_open		= tun_net_open,
+ 	.ndo_stop		= tun_net_close,
+@@ -1405,7 +1456,7 @@ static void tun_flow_uninit(struct tun_s
+ #define MAX_MTU 65535
+ 
+ /* Initialize net device. */
+-static void tun_net_init(struct net_device *dev)
++static void tun_net_initialize(struct net_device *dev)
+ {
+ 	struct tun_struct *tun = netdev_priv(dev);
+ 
+@@ -2839,9 +2890,6 @@ static int tun_set_iff(struct net *net,
+ 
+ 		if (!dev)
+ 			return -ENOMEM;
+-		err = dev_get_valid_name(net, dev, name);
+-		if (err < 0)
+-			goto err_free_dev;
+ 
+ 		dev_net_set(dev, net);
+ 		dev->rtnl_link_ops = &tun_link_ops;
+@@ -2860,41 +2908,16 @@ static int tun_set_iff(struct net *net,
+ 		tun->rx_batched = 0;
+ 		RCU_INIT_POINTER(tun->steering_prog, NULL);
+ 
+-		tun->pcpu_stats = netdev_alloc_pcpu_stats(struct tun_pcpu_stats);
+-		if (!tun->pcpu_stats) {
+-			err = -ENOMEM;
+-			goto err_free_dev;
+-		}
+-
+-		spin_lock_init(&tun->lock);
+-
+-		err = security_tun_dev_alloc_security(&tun->security);
+-		if (err < 0)
+-			goto err_free_stat;
+-
+-		tun_net_init(dev);
+-		tun_flow_init(tun);
++		tun->ifr = ifr;
++		tun->file = file;
+ 
+-		dev->hw_features = NETIF_F_SG | NETIF_F_FRAGLIST |
+-				   TUN_USER_FEATURES | NETIF_F_HW_VLAN_CTAG_TX |
+-				   NETIF_F_HW_VLAN_STAG_TX;
+-		dev->features = dev->hw_features | NETIF_F_LLTX;
+-		dev->vlan_features = dev->features &
+-				     ~(NETIF_F_HW_VLAN_CTAG_TX |
+-				       NETIF_F_HW_VLAN_STAG_TX);
+-
+-		tun->flags = (tun->flags & ~TUN_FEATURES) |
+-			      (ifr->ifr_flags & TUN_FEATURES);
+-
+-		INIT_LIST_HEAD(&tun->disabled);
+-		err = tun_attach(tun, file, false, ifr->ifr_flags & IFF_NAPI,
+-				 ifr->ifr_flags & IFF_NAPI_FRAGS, false);
+-		if (err < 0)
+-			goto err_free_flow;
++		tun_net_initialize(dev);
+ 
+ 		err = register_netdevice(tun->dev);
+-		if (err < 0)
+-			goto err_detach;
++		if (err < 0) {
++			free_netdev(dev);
++			return err;
++		}
+ 		/* free_netdev() won't check refcnt, to aovid race
+ 		 * with dev_put() we need publish tun after registration.
+ 		 */
+@@ -2913,20 +2936,6 @@ static int tun_set_iff(struct net *net,
+ 
+ 	strcpy(ifr->ifr_name, tun->dev->name);
+ 	return 0;
+-
+-err_detach:
+-	tun_detach_all(dev);
+-	/* register_netdevice() already called tun_free_netdev() */
+-	goto err_free_dev;
+-
+-err_free_flow:
+-	tun_flow_uninit(tun);
+-	security_tun_dev_free_security(tun->security);
+-err_free_stat:
+-	free_percpu(tun->pcpu_stats);
+-err_free_dev:
+-	free_netdev(dev);
+-	return err;
+ }
+ 
+ static void tun_get_iff(struct tun_struct *tun, struct ifreq *ifr)
 
 
