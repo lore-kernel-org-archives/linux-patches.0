@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F1C6D3F
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B98AC4339C;
-	Mon,  3 Apr 2023 14:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F93C6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA797C433EF;
+	Mon,  3 Apr 2023 14:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531826;
-	bh=IqetB2fbYrqoNhAm/dhXm2HfLo8MzuB9kLYaGhVl70w=;
+	s=korg; t=1680531829;
+	bh=Q4MYWkyT1lKDhtdpe7b6Cjgie62j0doR8iBY5OJBEHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pL4903xyRSkc+etSh1RkIX6vrYBjf237oxuFG8u9aqmKizCmCv7gw56lBr93upLvI
-	 PVWQsWtVwJbB20uPNX4LA/y1VNTbIZFgAjJYTcNJtE/MepYezbWCqsUlgeH1NEaFmO
-	 BAeMDMLoA4UsevzxICUkw+3Sw6cegYBW5aeCOMng=
+	b=fO1kUvJKr0hHdp0s7kEkMQhgYul/3TsPO2f2CgwOX7qnN6tICWgIMJ2SuV8Ei6740
+	 4t51/z0jNV0JkAoZY3b8vGrvxcVw714xMp3MCUf36LoJ0P8kP1BC8XpDd2NQJ3/G9z
+	 +pQI247gBKE0VuOMmtXJxxBLV+E0Q4KPh2kA9o3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/173] tty: serial: fsl_lpuart: fix race on RX DMA shutdown
-Date: Mon,  3 Apr 2023 16:07:09 +0200
-Message-Id: <20230403140414.752433875@linuxfoundation.org>
+Subject: [PATCH 5.10 023/173] ARM: dts: imx6sl: tolino-shine2hd: fix usbotg1 pinctrl
+Date: Mon,  3 Apr 2023 16:07:18 +0200
+Message-Id: <20230403140415.088095150@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,107 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 1be6f2b15f902c02e055ae0b419ca789200473c9 ]
+[ Upstream commit 1cd489e1ada1cffa56bd06fd4609f5a60a985d43 ]
 
->From time to time DMA completion can come in the middle of DMA shutdown:
+usb@2184000: 'pinctrl-0' is a dependency of 'pinctrl-names'
 
-<process ctx>:				<IRQ>:
-lpuart32_shutdown()
-  lpuart_dma_shutdown()
-    del_timer_sync()
-					lpuart_dma_rx_complete()
-					  lpuart_copy_rx_to_tty()
-					    mod_timer()
-    lpuart_dma_rx_free()
-
-When the timer fires a bit later, sport->dma_rx_desc is NULL:
-
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
-pc : lpuart_copy_rx_to_tty+0xcc/0x5bc
-lr : lpuart_timer_func+0x1c/0x2c
-Call trace:
- lpuart_copy_rx_to_tty
- lpuart_timer_func
- call_timer_fn
- __run_timers.part.0
- run_timer_softirq
- __do_softirq
- __irq_exit_rcu
- irq_exit
- handle_domain_irq
- gic_handle_irq
- call_on_irq_stack
- do_interrupt_handler
- ...
-
-To fix this fold del_timer_sync() into lpuart_dma_rx_free() after
-dmaengine_terminate_sync() to make sure timer will not be re-started in
-lpuart_copy_rx_to_tty() <= lpuart_dma_rx_complete().
-
-Fixes: 4a8588a1cf86 ("serial: fsl_lpuart: delete timer on shutdown")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20230309134302.74940-2-alexander.sverdlin@siemens.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Fixes: 9c7016f1ca6d ("ARM: dts: imx: add devicetree for Tolino Shine 2 HD")
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index bab296c5a0211..99f29bd930bd0 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1278,6 +1278,7 @@ static void lpuart_dma_rx_free(struct uart_port *port)
- 	struct dma_chan *chan = sport->dma_rx_chan;
+diff --git a/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts b/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts
+index caa2796088036..0fd126db4e5db 100644
+--- a/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts
++++ b/arch/arm/boot/dts/imx6sl-tolino-shine2hd.dts
+@@ -580,6 +580,7 @@ &usdhc3 {
  
- 	dmaengine_terminate_all(chan);
-+	del_timer_sync(&sport->lpuart_timer);
- 	dma_unmap_sg(chan->device->dev, &sport->rx_sgl, 1, DMA_FROM_DEVICE);
- 	kfree(sport->rx_ring.buf);
- 	sport->rx_ring.tail = 0;
-@@ -1743,7 +1744,6 @@ static int lpuart32_startup(struct uart_port *port)
- static void lpuart_dma_shutdown(struct lpuart_port *sport)
- {
- 	if (sport->lpuart_dma_rx_use) {
--		del_timer_sync(&sport->lpuart_timer);
- 		lpuart_dma_rx_free(&sport->port);
- 		sport->lpuart_dma_rx_use = false;
- 	}
-@@ -1894,10 +1894,8 @@ lpuart_set_termios(struct uart_port *port, struct ktermios *termios,
- 	 * Since timer function acqures sport->port.lock, need to stop before
- 	 * acquring same lock because otherwise del_timer_sync() can deadlock.
- 	 */
--	if (old && sport->lpuart_dma_rx_use) {
--		del_timer_sync(&sport->lpuart_timer);
-+	if (old && sport->lpuart_dma_rx_use)
- 		lpuart_dma_rx_free(&sport->port);
--	}
- 
- 	spin_lock_irqsave(&sport->port.lock, flags);
- 
-@@ -2129,10 +2127,8 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
- 	 * Since timer function acqures sport->port.lock, need to stop before
- 	 * acquring same lock because otherwise del_timer_sync() can deadlock.
- 	 */
--	if (old && sport->lpuart_dma_rx_use) {
--		del_timer_sync(&sport->lpuart_timer);
-+	if (old && sport->lpuart_dma_rx_use)
- 		lpuart_dma_rx_free(&sport->port);
--	}
- 
- 	spin_lock_irqsave(&sport->port.lock, flags);
- 
-@@ -2770,7 +2766,6 @@ static int __maybe_unused lpuart_suspend(struct device *dev)
- 		 * Rx DMA path before suspend and start Rx DMA path on resume.
- 		 */
- 		if (irq_wake) {
--			del_timer_sync(&sport->lpuart_timer);
- 			lpuart_dma_rx_free(&sport->port);
- 		}
- 
+ &usbotg1 {
+ 	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_usbotg1>;
+ 	disable-over-current;
+ 	srp-disable;
+ 	hnp-disable;
 -- 
 2.39.2
 
