@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51256FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:24:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C881C433EF;
-	Mon,  3 Apr 2023 14:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633E56FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:24:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC14C433EF;
+	Mon,  3 Apr 2023 14:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531865;
-	bh=6f7KR+ALwyBHlBBYzNUIYCXLI+wSJM7AL3O+2NtVGQo=;
+	s=korg; t=1680531868;
+	bh=2AIBwY3J3ynmp2/eh34rP2nAuu2RQI7NUx4xvJg7Ewo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uwf/gqqak2nYbCIgNRaXdmyp86AmlAyJc1cMP1Rzf1QE5Gyt04W8p/8C3gdMoVBF7
-	 eHhOBRs4vydkJmw08b38psRaAEZ4ZQCPA9JXevorKERbVKDEoDcowZRiMgUGtCeA6r
-	 qDkA375YXd390KEtYJ8N7X4LMCb9aXq+NEoLwfHY=
+	b=Dg+UvrSHOanvQHRHDxRNxfdA9YXZQSJYAgGw37wJB6yrf+a2+nTm+7uGqA0DpRjqq
+	 1EY2IJf3N8R22K1PawawyIP8hNWTJNfWUyfENPfqoDio2tPsgomV51Wb0x3RUOwMKS
+	 ytF+1m9txyYH3fDgEmooFyJYLPFNXMeRZ1bgyGfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Bizon <mbizon@freebox.fr>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/173] net: mdio: fix owner field for mdio buses registered using device-tree
-Date: Mon,  3 Apr 2023 16:07:31 +0200
-Message-Id: <20230403140415.569774429@linuxfoundation.org>
+Subject: [PATCH 5.10 037/173] net: qcom/emac: Fix use after free bug in emac_remove due to race condition
+Date: Mon,  3 Apr 2023 16:07:32 +0200
+Message-Id: <20230403140415.598266101@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -37,149 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxime Bizon <mbizon@freebox.fr>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 99669259f3361d759219811e670b7e0742668556 ]
+[ Upstream commit 6b6bc5b8bd2d4ca9e1efa9ae0f98a0b0687ace75 ]
 
-Bus ownership is wrong when using of_mdiobus_register() to register an mdio
-bus. That function is not inline, so when it calls mdiobus_register() the wrong
-THIS_MODULE value is captured.
+In emac_probe, &adpt->work_thread is bound with
+emac_work_thread. Then it will be started by timeout
+handler emac_tx_timeout or a IRQ handler emac_isr.
 
-Signed-off-by: Maxime Bizon <mbizon@freebox.fr>
-Fixes: 90eff9096c01 ("net: phy: Allow splitting MDIO bus/device support from PHYs")
-[florian: fix kdoc, added Fixes tag]
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+If we remove the driver which will call emac_remove
+  to make cleanup, there may be a unfinished work.
+
+The possible sequence is as follows:
+
+Fix it by finishing the work before cleanup in the emac_remove
+and disable timeout response.
+
+CPU0                  CPU1
+
+                    |emac_work_thread
+emac_remove         |
+free_netdev         |
+kfree(netdev);      |
+                    |emac_reinit_locked
+                    |emac_mac_down
+                    |//use netdev
+Fixes: b9b17debc69d ("net: emac: emac gigabit ethernet controller driver")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/of_mdio.c    | 12 +++++++-----
- drivers/net/phy/mdio_devres.c | 11 ++++++-----
- include/linux/of_mdio.h       | 22 +++++++++++++++++++---
- 3 files changed, 32 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/qualcomm/emac/emac.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
-index 5bae47f3da405..b254127cea50d 100644
---- a/drivers/net/mdio/of_mdio.c
-+++ b/drivers/net/mdio/of_mdio.c
-@@ -238,21 +238,23 @@ bool of_mdiobus_child_is_phy(struct device_node *child)
- EXPORT_SYMBOL(of_mdiobus_child_is_phy);
+diff --git a/drivers/net/ethernet/qualcomm/emac/emac.c b/drivers/net/ethernet/qualcomm/emac/emac.c
+index ad655f0a4965c..e1aa56be9cc0b 100644
+--- a/drivers/net/ethernet/qualcomm/emac/emac.c
++++ b/drivers/net/ethernet/qualcomm/emac/emac.c
+@@ -728,9 +728,15 @@ static int emac_remove(struct platform_device *pdev)
+ 	struct net_device *netdev = dev_get_drvdata(&pdev->dev);
+ 	struct emac_adapter *adpt = netdev_priv(netdev);
  
- /**
-- * of_mdiobus_register - Register mii_bus and create PHYs from the device tree
-+ * __of_mdiobus_register - Register mii_bus and create PHYs from the device tree
-  * @mdio: pointer to mii_bus structure
-  * @np: pointer to device_node of MDIO bus.
-+ * @owner: module owning the @mdio object.
-  *
-  * This function registers the mii_bus structure and registers a phy_device
-  * for each child node of @np.
-  */
--int of_mdiobus_register(struct mii_bus *mdio, struct device_node *np)
-+int __of_mdiobus_register(struct mii_bus *mdio, struct device_node *np,
-+			  struct module *owner)
- {
- 	struct device_node *child;
- 	bool scanphys = false;
- 	int addr, rc;
- 
- 	if (!np)
--		return mdiobus_register(mdio);
-+		return __mdiobus_register(mdio, owner);
- 
- 	/* Do not continue if the node is disabled */
- 	if (!of_device_is_available(np))
-@@ -272,7 +274,7 @@ int of_mdiobus_register(struct mii_bus *mdio, struct device_node *np)
- 	of_property_read_u32(np, "reset-post-delay-us", &mdio->reset_post_delay_us);
- 
- 	/* Register the MDIO bus */
--	rc = mdiobus_register(mdio);
-+	rc = __mdiobus_register(mdio, owner);
- 	if (rc)
- 		return rc;
- 
-@@ -336,7 +338,7 @@ int of_mdiobus_register(struct mii_bus *mdio, struct device_node *np)
- 	mdiobus_unregister(mdio);
- 	return rc;
- }
--EXPORT_SYMBOL(of_mdiobus_register);
-+EXPORT_SYMBOL(__of_mdiobus_register);
- 
- /**
-  * of_mdio_find_device - Given a device tree node, find the mdio_device
-diff --git a/drivers/net/phy/mdio_devres.c b/drivers/net/phy/mdio_devres.c
-index b560e99695dfd..69b829e6ab35b 100644
---- a/drivers/net/phy/mdio_devres.c
-+++ b/drivers/net/phy/mdio_devres.c
-@@ -98,13 +98,14 @@ EXPORT_SYMBOL(__devm_mdiobus_register);
- 
- #if IS_ENABLED(CONFIG_OF_MDIO)
- /**
-- * devm_of_mdiobus_register - Resource managed variant of of_mdiobus_register()
-+ * __devm_of_mdiobus_register - Resource managed variant of of_mdiobus_register()
-  * @dev:	Device to register mii_bus for
-  * @mdio:	MII bus structure to register
-  * @np:		Device node to parse
-+ * @owner:	Owning module
-  */
--int devm_of_mdiobus_register(struct device *dev, struct mii_bus *mdio,
--			     struct device_node *np)
-+int __devm_of_mdiobus_register(struct device *dev, struct mii_bus *mdio,
-+			       struct device_node *np, struct module *owner)
- {
- 	struct mdiobus_devres *dr;
- 	int ret;
-@@ -117,7 +118,7 @@ int devm_of_mdiobus_register(struct device *dev, struct mii_bus *mdio,
- 	if (!dr)
- 		return -ENOMEM;
- 
--	ret = of_mdiobus_register(mdio, np);
-+	ret = __of_mdiobus_register(mdio, np, owner);
- 	if (ret) {
- 		devres_free(dr);
- 		return ret;
-@@ -127,7 +128,7 @@ int devm_of_mdiobus_register(struct device *dev, struct mii_bus *mdio,
- 	devres_add(dev, dr);
- 	return 0;
- }
--EXPORT_SYMBOL(devm_of_mdiobus_register);
-+EXPORT_SYMBOL(__devm_of_mdiobus_register);
- #endif /* CONFIG_OF_MDIO */
- 
- MODULE_LICENSE("GPL");
-diff --git a/include/linux/of_mdio.h b/include/linux/of_mdio.h
-index f56c6a9230ac8..8cc6522ee43ab 100644
---- a/include/linux/of_mdio.h
-+++ b/include/linux/of_mdio.h
-@@ -14,9 +14,25 @@
- 
- #if IS_ENABLED(CONFIG_OF_MDIO)
- bool of_mdiobus_child_is_phy(struct device_node *child);
--int of_mdiobus_register(struct mii_bus *mdio, struct device_node *np);
--int devm_of_mdiobus_register(struct device *dev, struct mii_bus *mdio,
--			     struct device_node *np);
-+int __of_mdiobus_register(struct mii_bus *mdio, struct device_node *np,
-+			  struct module *owner);
++	netif_carrier_off(netdev);
++	netif_tx_disable(netdev);
 +
-+static inline int of_mdiobus_register(struct mii_bus *mdio,
-+				      struct device_node *np)
-+{
-+	return __of_mdiobus_register(mdio, np, THIS_MODULE);
-+}
+ 	unregister_netdev(netdev);
+ 	netif_napi_del(&adpt->rx_q.napi);
+ 
++	free_irq(adpt->irq.irq, &adpt->irq);
++	cancel_work_sync(&adpt->work_thread);
 +
-+int __devm_of_mdiobus_register(struct device *dev, struct mii_bus *mdio,
-+			       struct device_node *np, struct module *owner);
-+
-+static inline int devm_of_mdiobus_register(struct device *dev,
-+					   struct mii_bus *mdio,
-+					   struct device_node *np)
-+{
-+	return __devm_of_mdiobus_register(dev, mdio, np, THIS_MODULE);
-+}
-+
- struct mdio_device *of_mdio_find_device(struct device_node *np);
- struct phy_device *of_phy_find_device(struct device_node *phy_np);
- struct phy_device *
+ 	emac_clks_teardown(adpt);
+ 
+ 	put_device(&adpt->phydev->mdio.dev);
 -- 
 2.39.2
 
