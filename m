@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5E06FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A8FC433EF;
-	Mon,  3 Apr 2023 14:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6D96FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6297C433D2;
+	Mon,  3 Apr 2023 14:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532008;
-	bh=auzT78B8sTYFbmdAMJSvXW38zALVULSPkuQHYRo5wJQ=;
+	s=korg; t=1680532011;
+	bh=NV7fsvGtmnS+yPXi6+sdyf+KKo0b63xITlaMufyYvXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UkHwP3P/21EliQgXunXGtnx190HlDoL6/xHZDXy9Du/NgHtOG5MRYpy7yxOiniIZB
-	 hVn8IWNv9OiG3h2J9uYyRcT3CH4iEbnCjwVzOe+CZDWlPRmoBTWmbavpahzJztAg/x
-	 6cLQ1RU25HDe/ymayc6uSIB2/CvvyXDlaKBjxzjY=
+	b=F4FBtu06roWSHijdqEQTCGJVTlKBr1igB4gbFP6uEmHMepEzSUqWWXu2hzjaKB7Wi
+	 8lyV5L6jgWKKtbGQqWQpZpMG6dNe5tI0HKjYXUCvlIdQypqsWOaDSbLHUjU9n+XIIm
+	 DxWOsjkCzUWcLr6gdrgQkb3akj/wULWUKsSOc+OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rijo Thomas <Rijo-john.Thomas@amd.com>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Jens Wiklander <jens.wiklander@linaro.org>
-Subject: [PATCH 5.10 092/173] tee: amdtee: fix race condition in amdtee_open_session
-Date: Mon,  3 Apr 2023 16:08:27 +0200
-Message-Id: <20230403140417.410529300@linuxfoundation.org>
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>
+Subject: [PATCH 5.10 093/173] firmware: arm_scmi: Fix device node validation for mailbox transport
+Date: Mon,  3 Apr 2023 16:08:28 +0200
+Message-Id: <20230403140417.439653438@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,84 +34,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rijo Thomas <Rijo-john.Thomas@amd.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-commit f8502fba45bd30e1a6a354d9d898bc99d1a11e6d upstream.
+commit 2ab4f4018cb6b8010ca5002c3bdc37783b5d28c2 upstream.
 
-There is a potential race condition in amdtee_open_session that may
-lead to use-after-free. For instance, in amdtee_open_session() after
-sess->sess_mask is set, and before setting:
+When mailboxes are used as a transport it is possible to setup the SCMI
+transport layer, depending on the underlying channels configuration, to use
+one or two mailboxes, associated, respectively, to one or two, distinct,
+shared memory areas: any other combination should be treated as invalid.
 
-    sess->session_info[i] = session_info;
+Add more strict checking of SCMI mailbox transport device node descriptors.
 
-if amdtee_close_session() closes this same session, then 'sess' data
-structure will be released, causing kernel panic when 'sess' is
-accessed within amdtee_open_session().
-
-The solution is to set the bit sess->sess_mask as the last step in
-amdtee_open_session().
-
-Fixes: 757cc3e9ff1d ("tee: add AMD-TEE driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Rijo Thomas <Rijo-john.Thomas@amd.com>
-Acked-by: Sumit Garg <sumit.garg@linaro.org>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Fixes: 5c8a47a5a91d ("firmware: arm_scmi: Make scmi core independent of the transport type")
+Cc: <stable@vger.kernel.org> # 4.19
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20230307162324.891866-1-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/amdtee/core.c |   29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ drivers/firmware/arm_scmi/mailbox.c | 37 +++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
---- a/drivers/tee/amdtee/core.c
-+++ b/drivers/tee/amdtee/core.c
-@@ -267,35 +267,34 @@ int amdtee_open_session(struct tee_conte
- 		goto out;
- 	}
+diff --git a/drivers/firmware/arm_scmi/mailbox.c b/drivers/firmware/arm_scmi/mailbox.c
+index 0d9c9538b7f4..112c285deb97 100644
+--- a/drivers/firmware/arm_scmi/mailbox.c
++++ b/drivers/firmware/arm_scmi/mailbox.c
+@@ -52,6 +52,39 @@ static bool mailbox_chan_available(struct device_node *of_node, int idx)
+ 					   "#mbox-cells", idx, NULL);
+ }
  
-+	/* Open session with loaded TA */
-+	handle_open_session(arg, &session_info, param);
-+	if (arg->ret != TEEC_SUCCESS) {
-+		pr_err("open_session failed %d\n", arg->ret);
-+		handle_unload_ta(ta_handle);
-+		kref_put(&sess->refcount, destroy_session);
-+		goto out;
++static int mailbox_chan_validate(struct device *cdev)
++{
++	int num_mb, num_sh, ret = 0;
++	struct device_node *np = cdev->of_node;
++
++	num_mb = of_count_phandle_with_args(np, "mboxes", "#mbox-cells");
++	num_sh = of_count_phandle_with_args(np, "shmem", NULL);
++	/* Bail out if mboxes and shmem descriptors are inconsistent */
++	if (num_mb <= 0 || num_sh > 2 || num_mb != num_sh) {
++		dev_warn(cdev, "Invalid channel descriptor for '%s'\n",
++			 of_node_full_name(np));
++		return -EINVAL;
 +	}
 +
- 	/* Find an empty session index for the given TA */
- 	spin_lock(&sess->lock);
- 	i = find_first_zero_bit(sess->sess_mask, TEE_NUM_SESSIONS);
--	if (i < TEE_NUM_SESSIONS)
-+	if (i < TEE_NUM_SESSIONS) {
-+		sess->session_info[i] = session_info;
-+		set_session_id(ta_handle, i, &arg->session);
- 		set_bit(i, sess->sess_mask);
++	if (num_sh > 1) {
++		struct device_node *np_tx, *np_rx;
++
++		np_tx = of_parse_phandle(np, "shmem", 0);
++		np_rx = of_parse_phandle(np, "shmem", 1);
++		/* SCMI Tx and Rx shared mem areas have to be distinct */
++		if (!np_tx || !np_rx || np_tx == np_rx) {
++			dev_warn(cdev, "Invalid shmem descriptor for '%s'\n",
++				 of_node_full_name(np));
++			ret = -EINVAL;
++		}
++
++		of_node_put(np_tx);
++		of_node_put(np_rx);
 +	}
- 	spin_unlock(&sess->lock);
++
++	return ret;
++}
++
+ static int mailbox_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+ 			      bool tx)
+ {
+@@ -64,6 +97,10 @@ static int mailbox_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+ 	resource_size_t size;
+ 	struct resource res;
  
- 	if (i >= TEE_NUM_SESSIONS) {
- 		pr_err("reached maximum session count %d\n", TEE_NUM_SESSIONS);
-+		handle_close_session(ta_handle, session_info);
- 		handle_unload_ta(ta_handle);
- 		kref_put(&sess->refcount, destroy_session);
- 		rc = -ENOMEM;
- 		goto out;
- 	}
- 
--	/* Open session with loaded TA */
--	handle_open_session(arg, &session_info, param);
--	if (arg->ret != TEEC_SUCCESS) {
--		pr_err("open_session failed %d\n", arg->ret);
--		spin_lock(&sess->lock);
--		clear_bit(i, sess->sess_mask);
--		spin_unlock(&sess->lock);
--		handle_unload_ta(ta_handle);
--		kref_put(&sess->refcount, destroy_session);
--		goto out;
--	}
--
--	sess->session_info[i] = session_info;
--	set_session_id(ta_handle, i, &arg->session);
- out:
- 	free_pages((u64)ta, get_order(ta_size));
- 	return rc;
++	ret = mailbox_chan_validate(cdev);
++	if (ret)
++		return ret;
++
+ 	smbox = devm_kzalloc(dev, sizeof(*smbox), GFP_KERNEL);
+ 	if (!smbox)
+ 		return -ENOMEM;
+-- 
+2.40.0
+
 
 
