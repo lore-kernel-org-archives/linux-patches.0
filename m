@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981436FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E861C433EF;
-	Mon,  3 Apr 2023 14:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3726F6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4398C433D2;
+	Mon,  3 Apr 2023 14:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532489;
-	bh=8fDpWdDJed4wWXQJ1uiE+mQNg9rYkBy9GbITTi0wzBY=;
+	s=korg; t=1680532492;
+	bh=DVsWSBvy+EpPeMBt0bjXaMfpsBY6XhGAU0Y/OE6SH4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hywl6dBWSnouvAfjStKemVZeK3aNGngOXNvN8gVbyHQbC969bWzoryZsoRr/tFMdO
-	 r532uNhRtJK/Soh40ySx3ONDzIWIUJniErdkGRFIoI7Uy4SnWINNzmnSNOrrs6RpQu
-	 B72RIqJ7eKBDemIvs/7FMhlMx9ykVXruMYkigsik=
+	b=DV174mfLWNcHaw8T9c3+gtEbvp0p/GmMEStNpPw+90ihjw7kfKHyPYV9vxxnUavnH
+	 V9lkXnCMRZxXjqHqQsTFLaS4mxpraelpQ+HVfYc56OYro9yiMuUtwV2utMFWOeMRLs
+	 EsnSg83M7QRxxFusc2IWvr0TLdwtd4dEdJ97q8Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 5.15 84/99] xtensa: fix KASAN report for show_stack
-Date: Mon,  3 Apr 2023 16:09:47 +0200
-Message-Id: <20230403140406.558075369@linuxfoundation.org>
+	Douglas Raillard <douglas.raillard@arm.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>
+Subject: [PATCH 5.15 85/99] rcu: Fix rcu_torture_read ftrace event
+Date: Mon,  3 Apr 2023 16:09:48 +0200
+Message-Id: <20230403140406.588323049@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -33,53 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Douglas Raillard <douglas.raillard@arm.com>
 
-commit 1d3b7a788ca7435156809a6bd5b20c95b2370d45 upstream.
+commit d18a04157fc171fd48075e3dc96471bd3b87f0dd upstream.
 
-show_stack dumps raw stack contents which may trigger an unnecessary
-KASAN report. Fix it by copying stack contents to a temporary buffer
-with __memcpy and then printing that buffer instead of passing stack
-pointer directly to the print_hex_dump.
+Fix the rcutorturename field so that its size is correctly reported in
+the text format embedded in trace.dat files. As it stands, it is
+reported as being of size 1:
 
+    field:char rcutorturename[8];   offset:8;       size:1; signed:0;
+
+Signed-off-by: Douglas Raillard <douglas.raillard@arm.com>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Fixes: 04ae87a52074e ("ftrace: Rework event_create_dir()")
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[ boqun: Add "Cc" and "Fixes" tags per Steven ]
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/xtensa/kernel/traps.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ include/trace/events/rcu.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/xtensa/kernel/traps.c
-+++ b/arch/xtensa/kernel/traps.c
-@@ -510,7 +510,7 @@ static size_t kstack_depth_to_print = CO
+--- a/include/trace/events/rcu.h
++++ b/include/trace/events/rcu.h
+@@ -768,7 +768,7 @@ TRACE_EVENT_RCU(rcu_torture_read,
+ 	TP_ARGS(rcutorturename, rhp, secs, c_old, c),
  
- void show_stack(struct task_struct *task, unsigned long *sp, const char *loglvl)
- {
--	size_t len;
-+	size_t len, off = 0;
- 
- 	if (!sp)
- 		sp = stack_pointer(task);
-@@ -519,9 +519,17 @@ void show_stack(struct task_struct *task
- 		  kstack_depth_to_print * STACK_DUMP_ENTRY_SIZE);
- 
- 	printk("%sStack:\n", loglvl);
--	print_hex_dump(loglvl, " ", DUMP_PREFIX_NONE,
--		       STACK_DUMP_LINE_SIZE, STACK_DUMP_ENTRY_SIZE,
--		       sp, len, false);
-+	while (off < len) {
-+		u8 line[STACK_DUMP_LINE_SIZE];
-+		size_t line_len = len - off > STACK_DUMP_LINE_SIZE ?
-+			STACK_DUMP_LINE_SIZE : len - off;
-+
-+		__memcpy(line, (u8 *)sp + off, line_len);
-+		print_hex_dump(loglvl, " ", DUMP_PREFIX_NONE,
-+			       STACK_DUMP_LINE_SIZE, STACK_DUMP_ENTRY_SIZE,
-+			       line, line_len, false);
-+		off += STACK_DUMP_LINE_SIZE;
-+	}
- 	show_trace(task, sp, loglvl);
- }
- 
+ 	TP_STRUCT__entry(
+-		__field(char, rcutorturename[RCUTORTURENAME_LEN])
++		__array(char, rcutorturename, RCUTORTURENAME_LEN)
+ 		__field(struct rcu_head *, rhp)
+ 		__field(unsigned long, secs)
+ 		__field(unsigned long, c_old)
 
 
