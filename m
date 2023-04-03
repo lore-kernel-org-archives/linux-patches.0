@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1151F6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0B8C433EF;
-	Mon,  3 Apr 2023 14:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7A86FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:30:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333CCC433EF;
+	Mon,  3 Apr 2023 14:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532218;
-	bh=4MLDfjtmhqMJnSHxnehmbopmFve10hnYqhVKCSGQUtM=;
+	s=korg; t=1680532221;
+	bh=KIZU/RK/8jNPdhrgtKZa+jBC7AZUhvu8qZL1RruvLgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZgyGnfV7eOSOWsOAA3iB3/7QI6AX2BBXVZs0kfTcgv8sNmf7HPeZHokbwVUb2YNvw
-	 126WVroHhZeXiVx3/K901tKs9PZgpfdFm6zbUJv59RQeSGfkt1D/gBc2JZ4/rgBS13
-	 OaymqMmaOuLe2TToQFZPX7cS0HLDpPi3e2sK4Ks8=
+	b=CjuYfDVhq98Swd++cjHB1F9R25EhvJ+pTqp2CEt4mPK1u3F/1/Ts44cebLCTh7FND
+	 ns/rLzVniYb1EDYG7SfjfN+GNeLAjDorzntriH41cH0ZTN5uiuZ5b/foS4rBVGvsFA
+	 dEWpEvU4XtqMixvmwMSDOe/vKry9Wbk/RJlT7iHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7bb81dfa9cda07d9cd9d@syzkaller.appspotmail.com,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 5.10 172/173] gfs2: Always check inode size of inline inodes
-Date: Mon,  3 Apr 2023 16:09:47 +0200
-Message-Id: <20230403140420.021888302@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 173/173] hsr: ratelimit only when errors are printed
+Date: Mon,  3 Apr 2023 16:09:48 +0200
+Message-Id: <20230403140420.051272657@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,65 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 70376c7ff31221f1d21db5611d8209e677781d3a upstream.
+commit 1b0120e4db0bf2838d1ce741195ce4b7cc100b91 upstream.
 
-Check if the inode size of stuffed (inline) inodes is within the allowed
-range when reading inodes from disk (gfs2_dinode_in()).  This prevents
-us from on-disk corruption.
+Recently, when automatically merging -net and net-next in MPTCP devel
+tree, our CI reported [1] a conflict in hsr, the same as the one
+reported by Stephen in netdev [2].
 
-The two checks in stuffed_readpage() and gfs2_unstuffer_page() that just
-truncate inline data to the maximum allowed size don't actually make
-sense, and they can be removed now as well.
+When looking at the conflict, I noticed it is in fact the v1 [3] that
+has been applied in -net and the v2 [4] in net-next. Maybe the v1 was
+applied by accident.
 
-Reported-by: syzbot+7bb81dfa9cda07d9cd9d@syzkaller.appspotmail.com
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-[pchelkin@ispras.ru: adjust the inode variable inside gfs2_dinode_in with
-the format used before upstream commit 7db354444ad8 ("gfs2: Cosmetic
-gfs2_dinode_{in,out} cleanup")]
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+As mentioned by Jakub Kicinski [5], the new condition makes more sense
+before the net_ratelimit(), not to update net_ratelimit's state which is
+unnecessary if we're not going to print either way.
+
+Here, this modification applies the v2 but in -net.
+
+Link: https://github.com/multipath-tcp/mptcp_net-next/actions/runs/4423171069 [1]
+Link: https://lore.kernel.org/netdev/20230315100914.53fc1760@canb.auug.org.au/ [2]
+Link: https://lore.kernel.org/netdev/20230307133229.127442-1-koverskeid@gmail.com/ [3]
+Link: https://lore.kernel.org/netdev/20230309092302.179586-1-koverskeid@gmail.com/ [4]
+Link: https://lore.kernel.org/netdev/20230308232001.2fb62013@kernel.org/ [5]
+Fixes: 28e8cabe80f3 ("net: hsr: Don't log netdev_err message on unknown prp dst node")
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Reviewed-by: Steen Hegelund <Steen.Hegelund@microchip.com>
+Link: https://lore.kernel.org/r/20230315-net-20230315-hsr_framereg-ratelimit-v1-1-61d2ef176d11@tessares.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/aops.c  |    2 --
- fs/gfs2/bmap.c  |    3 ---
- fs/gfs2/glops.c |    3 +++
- 3 files changed, 3 insertions(+), 5 deletions(-)
+ net/hsr/hsr_framereg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/gfs2/aops.c
-+++ b/fs/gfs2/aops.c
-@@ -451,8 +451,6 @@ static int stuffed_readpage(struct gfs2_
- 		return error;
- 
- 	kaddr = kmap_atomic(page);
--	if (dsize > gfs2_max_stuffed_size(ip))
--		dsize = gfs2_max_stuffed_size(ip);
- 	memcpy(kaddr, dibh->b_data + sizeof(struct gfs2_dinode), dsize);
- 	memset(kaddr + dsize, 0, PAGE_SIZE - dsize);
- 	kunmap_atomic(kaddr);
---- a/fs/gfs2/bmap.c
-+++ b/fs/gfs2/bmap.c
-@@ -69,9 +69,6 @@ static int gfs2_unstuffer_page(struct gf
- 		void *kaddr = kmap(page);
- 		u64 dsize = i_size_read(inode);
-  
--		if (dsize > gfs2_max_stuffed_size(ip))
--			dsize = gfs2_max_stuffed_size(ip);
--
- 		memcpy(kaddr, dibh->b_data + sizeof(struct gfs2_dinode), dsize);
- 		memset(kaddr + dsize, 0, PAGE_SIZE - dsize);
- 		kunmap(page);
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -454,6 +454,9 @@ static int gfs2_dinode_in(struct gfs2_in
- 	ip->i_depth = (u8)depth;
- 	ip->i_entries = be32_to_cpu(str->di_entries);
- 
-+	if (gfs2_is_stuffed(ip) && ip->i_inode.i_size > gfs2_max_stuffed_size(ip))
-+		goto corrupt;
-+
- 	if (S_ISREG(ip->i_inode.i_mode))
- 		gfs2_set_aops(&ip->i_inode);
- 
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -380,7 +380,7 @@ void hsr_addr_subst_dest(struct hsr_node
+ 	node_dst = find_node_by_addr_A(&port->hsr->node_db,
+ 				       eth_hdr(skb)->h_dest);
+ 	if (!node_dst) {
+-		if (net_ratelimit() && port->hsr->prot_version != PRP_V1)
++		if (port->hsr->prot_version != PRP_V1 && net_ratelimit())
+ 			netdev_err(skb->dev, "%s: Unknown node\n", __func__);
+ 		return;
+ 	}
 
 
