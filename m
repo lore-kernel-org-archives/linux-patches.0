@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CB76FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F647C433D2;
-	Mon,  3 Apr 2023 14:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCC56FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:48:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD813C433EF;
+	Mon,  3 Apr 2023 14:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533336;
-	bh=r0qPG9AVwV8MCeUOEbJH5imDFdSYCagOeFMWt+brQv4=;
+	s=korg; t=1680533339;
+	bh=qAyAT3Te9onZUsww9VPY0vLWsDiE3qYQbgYPKPQkrGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gdw9Up98MNDL2wRmMSZF5ixdM7QhGCEKyB5xSdRgcgi29qjJMg8GFPQiayVF0YGEg
-	 mDQuODgy6tRimlxxC8LcD0t8TxE9Jb0qwVopBuEPRf2FxwHPBxfLDD1qetx//Ahx76
-	 TqhZf+INAKRz38Ad9JYhQ7O5ARCExUTY3jaQguw8=
+	b=msUarF/oAm157jLnPch9zX+7GAJ6bJp7ViON530kFnE6z6aHsqZyjSKjmobR9BfaO
+	 P/rqJN0eYuPsj4KFGGBbDdXpSE3RKzxX172y+xqVB3+C84XWpGEv+BJ0/lQSicm/NW
+	 SyQA7FCOOoLx+2yAzCjGmkHWZn/ciPXSS62FovSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 117/187] bnxt_en: Fix typo in PCI id to device description string mapping
-Date: Mon,  3 Apr 2023 16:09:22 +0200
-Message-Id: <20230403140419.821206999@linuxfoundation.org>
+	Hans Holmberg <Hans.Holmberg@wdc.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Hans Holmberg <hans.holmberg@wdc.com>
+Subject: [PATCH 6.2 144/187] zonefs: Always invalidate last cached page on append write
+Date: Mon,  3 Apr 2023 16:09:49 +0200
+Message-Id: <20230403140420.749811062@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -38,47 +37,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit 62aad36ed31abc80f35db11e187e690448a79f7d ]
+commit c1976bd8f23016d8706973908f2bb0ac0d852a8f upstream.
 
-Fix 57502 and 57508 NPAR description string entries.  The typos
-caused these devices to not match up with lspci output.
+When a direct append write is executed, the append offset may correspond
+to the last page of a sequential file inode which might have been cached
+already by buffered reads, page faults with mmap-read or non-direct
+readahead. To ensure that the on-disk and cached data is consistant for
+such last cached page, make sure to always invalidate it in
+zonefs_file_dio_append(). If the invalidation fails, return -EBUSY to
+userspace to differentiate from IO errors.
 
-Fixes: 49c98421e6ab ("bnxt_en: Add PCI IDs for 57500 series NPAR devices.")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This invalidation will always be a no-op when the FS block size (device
+zone write granularity) is equal to the page size (e.g. 4K).
+
+Reported-by: Hans Holmberg <Hans.Holmberg@wdc.com>
+Fixes: 02ef12a663c7 ("zonefs: use REQ_OP_ZONE_APPEND for sync DIO")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Tested-by: Hans Holmberg <hans.holmberg@wdc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/zonefs/file.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index b44b2ec5e61a2..015b5848b9583 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -175,12 +175,12 @@ static const struct pci_device_id bnxt_pci_tbl[] = {
- 	{ PCI_VDEVICE(BROADCOM, 0x1750), .driver_data = BCM57508 },
- 	{ PCI_VDEVICE(BROADCOM, 0x1751), .driver_data = BCM57504 },
- 	{ PCI_VDEVICE(BROADCOM, 0x1752), .driver_data = BCM57502 },
--	{ PCI_VDEVICE(BROADCOM, 0x1800), .driver_data = BCM57508_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1800), .driver_data = BCM57502_NPAR },
- 	{ PCI_VDEVICE(BROADCOM, 0x1801), .driver_data = BCM57504_NPAR },
--	{ PCI_VDEVICE(BROADCOM, 0x1802), .driver_data = BCM57502_NPAR },
--	{ PCI_VDEVICE(BROADCOM, 0x1803), .driver_data = BCM57508_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1802), .driver_data = BCM57508_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1803), .driver_data = BCM57502_NPAR },
- 	{ PCI_VDEVICE(BROADCOM, 0x1804), .driver_data = BCM57504_NPAR },
--	{ PCI_VDEVICE(BROADCOM, 0x1805), .driver_data = BCM57502_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1805), .driver_data = BCM57508_NPAR },
- 	{ PCI_VDEVICE(BROADCOM, 0xd802), .driver_data = BCM58802 },
- 	{ PCI_VDEVICE(BROADCOM, 0xd804), .driver_data = BCM58804 },
- #ifdef CONFIG_BNXT_SRIOV
--- 
-2.39.2
-
+--- a/fs/zonefs/file.c
++++ b/fs/zonefs/file.c
+@@ -382,6 +382,7 @@ static ssize_t zonefs_file_dio_append(st
+ 	struct zonefs_zone *z = zonefs_inode_zone(inode);
+ 	struct block_device *bdev = inode->i_sb->s_bdev;
+ 	unsigned int max = bdev_max_zone_append_sectors(bdev);
++	pgoff_t start, end;
+ 	struct bio *bio;
+ 	ssize_t size;
+ 	int nr_pages;
+@@ -390,6 +391,19 @@ static ssize_t zonefs_file_dio_append(st
+ 	max = ALIGN_DOWN(max << SECTOR_SHIFT, inode->i_sb->s_blocksize);
+ 	iov_iter_truncate(from, max);
+ 
++	/*
++	 * If the inode block size (zone write granularity) is smaller than the
++	 * page size, we may be appending data belonging to the last page of the
++	 * inode straddling inode->i_size, with that page already cached due to
++	 * a buffered read or readahead. So make sure to invalidate that page.
++	 * This will always be a no-op for the case where the block size is
++	 * equal to the page size.
++	 */
++	start = iocb->ki_pos >> PAGE_SHIFT;
++	end = (iocb->ki_pos + iov_iter_count(from) - 1) >> PAGE_SHIFT;
++	if (invalidate_inode_pages2_range(inode->i_mapping, start, end))
++		return -EBUSY;
++
+ 	nr_pages = iov_iter_npages(from, BIO_MAX_VECS);
+ 	if (!nr_pages)
+ 		return 0;
 
 
