@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299B66FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:32:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C24C433EF;
-	Mon,  3 Apr 2023 14:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D62E6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:32:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF90BC433D2;
+	Mon,  3 Apr 2023 14:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532362;
-	bh=iIimPAl3W7sA8efoe/qBB54Hy/DRWY0cczHHWIEH6Vk=;
+	s=korg; t=1680532367;
+	bh=a6mG5FKb02q1bL/eeUGR4r4kXmqIN29jjEwlBJPRBmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5PxZenHkCTkBk7K9Uh5judD4QgVSce2KPBw3d1q5Su+5BfyeoyYCEjr1Ikp0UEOA
-	 M+s8GKLaajhDaoXazV1a2YjZlZN4Y7/UMOx+WiYhIrwY+w0phEJfo+4hGWvLPzHxv9
-	 5XDF4O+W0rLr6rjrNfe7NjwpjlPyLEYDibx7gZP4=
+	b=UwedNXKjBhDL06vocUJyIPSy1/oXGUXLZv9hulK1i9PwXScJOFRPC5DLolSr1pg+o
+	 EJWOpFUkBUR8zvcHEQIeq//cwdHwi+rbhJgGqbk8JFvmsSv/R1qHvAzBPM9C93co/t
+	 3iwNIyOEN0k5q9hyJ3FHPSdj0lLenqBEX/yFWSPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Gusev <aagusev@ispras.ru>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sven Auhagen <sven.auhagen@voleatech.de>,
+	Marcin Wojtas <mw@semihalf.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 23/99] tracing: Fix wrong return in kprobe_event_gen_test.c
-Date: Mon,  3 Apr 2023 16:08:46 +0200
-Message-Id: <20230403140403.096311281@linuxfoundation.org>
+Subject: [PATCH 5.15 48/99] net: mvpp2: classifier flow fix fragmentation flags
+Date: Mon,  3 Apr 2023 16:09:11 +0200
+Message-Id: <20230403140405.112009160@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -36,51 +36,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anton Gusev <aagusev@ispras.ru>
+From: Sven Auhagen <sven.auhagen@voleatech.de>
 
-[ Upstream commit bc4f359b3b607daac0290d0038561237a86b38cb ]
+[ Upstream commit 9a251cae51d57289908222e6c322ca61fccc25fd ]
 
-Overwriting the error code with the deletion result may cause the
-function to return 0 despite encountering an error. Commit b111545d26c0
-("tracing: Remove the useless value assignment in
-test_create_synth_event()") solves a similar issue by
-returning the original error code, so this patch does the same.
+Add missing IP Fragmentation Flag.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230131075818.5322-1-aagusev@ispras.ru
-
-Signed-off-by: Anton Gusev <aagusev@ispras.ru>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: f9358e12a0af ("net: mvpp2: split ingress traffic into multiple flows")
+Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
+Reviewed-by: Marcin Wojtas <mw@semihalf.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/kprobe_event_gen_test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../net/ethernet/marvell/mvpp2/mvpp2_cls.c    | 30 +++++++++++--------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/trace/kprobe_event_gen_test.c b/kernel/trace/kprobe_event_gen_test.c
-index c736487fc0e48..e0c420eb0b2b4 100644
---- a/kernel/trace/kprobe_event_gen_test.c
-+++ b/kernel/trace/kprobe_event_gen_test.c
-@@ -146,7 +146,7 @@ static int __init test_gen_kprobe_cmd(void)
- 	if (trace_event_file_is_valid(gen_kprobe_test))
- 		gen_kprobe_test = NULL;
- 	/* We got an error after creating the event, delete it */
--	ret = kprobe_event_delete("gen_kprobe_test");
-+	kprobe_event_delete("gen_kprobe_test");
- 	goto out;
- }
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
+index 41d935d1aaf6f..40aeaa7bd739f 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
+@@ -62,35 +62,38 @@ static const struct mvpp2_cls_flow cls_flows[MVPP2_N_PRS_FLOWS] = {
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4 |
+-		       MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
-@@ -211,7 +211,7 @@ static int __init test_gen_kretprobe_cmd(void)
- 	if (trace_event_file_is_valid(gen_kretprobe_test))
- 		gen_kretprobe_test = NULL;
- 	/* We got an error after creating the event, delete it */
--	ret = kprobe_event_delete("gen_kretprobe_test");
-+	kprobe_event_delete("gen_kretprobe_test");
- 	goto out;
- }
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OPT |
+-		       MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
  
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OTHER |
+-		       MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
+ 
+ 	/* TCP over IPv4 flows, fragmented, with vlan tag */
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_TCP4, MVPP2_FL_IP4_TCP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_L4_TCP,
++		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_TCP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	/* UDP over IPv4 flows, Not fragmented, no vlan tag */
+@@ -132,35 +135,38 @@ static const struct mvpp2_cls_flow cls_flows[MVPP2_N_PRS_FLOWS] = {
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4 |
+-		       MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OPT |
+-		       MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_UNTAG,
+ 		       MVPP22_CLS_HEK_IP4_2T,
+ 		       MVPP2_PRS_RI_VLAN_NONE | MVPP2_PRS_RI_L3_IP4_OTHER |
+-		       MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_IP_FRAG_TRUE | MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK | MVPP2_PRS_RI_VLAN_MASK),
+ 
+ 	/* UDP over IPv4 flows, fragmented, with vlan tag */
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_L3_IP4 | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_L3_IP4_OPT | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_UDP4, MVPP2_FL_IP4_UDP_FRAG_TAG,
+ 		       MVPP22_CLS_HEK_IP4_2T | MVPP22_CLS_HEK_TAGGED,
+-		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_L4_UDP,
++		       MVPP2_PRS_RI_L3_IP4_OTHER | MVPP2_PRS_RI_IP_FRAG_TRUE |
++			   MVPP2_PRS_RI_L4_UDP,
+ 		       MVPP2_PRS_IP_MASK),
+ 
+ 	/* TCP over IPv6 flows, not fragmented, no vlan tag */
 -- 
 2.39.2
 
