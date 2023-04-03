@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF3B6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0305DC4339B;
-	Mon,  3 Apr 2023 14:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B589E6FAA
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D042C433D2;
+	Mon,  3 Apr 2023 14:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533137;
-	bh=dijRHkwEyGLRXtAb+sEESVp1psxBCqD8i594SKuZ2DQ=;
+	s=korg; t=1680533142;
+	bh=COH24gq4e/H+2ogqRFsA6K4mrQtdIvzicFL0cNodjR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgOU+JY0clok7upt2rYF32+ZTZYodmZI1xdZDfUd2HLzB+n2qzJ9UnaGQwLpABLGq
-	 1JCq3cUcqcDS5E+BjtkJTImNxNOBIueToGiOMSjV1kPaZltSs70eKtqWpMOJ+I2BDP
-	 fD+5Fe8Y9Wz72avcVC1WBOkGbIW1jv+YI5INKsGg=
+	b=ak131xBoMnRoyJentSKNY8Ucr4mQ6W/k77jz7dJ3+q+Cm98tXcA/mFJZYH04dC4bv
+	 Tziu9jdY7xA9AjNMFyoZ9MsMfdmiCKAylgbD6CBJ3t9d7GkGg+wlZ/3FmX1MKgbGWG
+	 zJdOmL3OIkPSk7f5bbMnEuu3o/eMzWW2CaXPAEG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	John Keeping <john@metanate.com>
-Subject: [PATCH 6.2 068/187] ALSA: usb-audio: Fix recursive locking at XRUN during syncing
-Date: Mon,  3 Apr 2023 16:08:33 +0200
-Message-Id: <20230403140418.192305639@linuxfoundation.org>
+	Petr Tesarik <petr.tesarik.ext@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 070/187] swiotlb: fix slot alignment checks
+Date: Mon,  3 Apr 2023 16:08:35 +0200
+Message-Id: <20230403140418.250729553@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,142 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Petr Tesarik <petr.tesarik.ext@huawei.com>
 
-[ Upstream commit 8c721c53dda512fdd48eb24d6d99e56deee57898 ]
+[ Upstream commit 0eee5ae1025699ea93d44fdb6ef2365505082103 ]
 
-The recent support of low latency playback in USB-audio driver made
-the snd_usb_queue_pending_output_urbs() function to be called via PCM
-ack ops.  In the new code path, the function is performed already in
-the PCM stream lock.  The problem is that, when an XRUN is detected,
-the function calls snd_pcm_xrun() to notify, but snd_pcm_xrun() is
-supposed to be called only outside the stream lock.  As a result, it
-leads to a deadlock of PCM stream locking.
+Explicit alignment and page alignment are used only to calculate
+the stride, not when checking actual slot physical address.
 
-For avoiding such a recursive locking, this patch adds an additional
-check to the code paths in PCM core that call the ack callback; now it
-checks the error code from the callback, and if it's -EPIPE, the XRUN
-is handled in the PCM core side gracefully.  Along with it, the
-USB-audio driver code is changed to follow that, i.e. -EPIPE is
-returned instead of the explicit snd_pcm_xrun() call when the function
-is performed already in the stream lock.
+Originally, only page alignment was implemented, and that worked,
+because the whole SWIOTLB is allocated on a page boundary, so
+aligning the start index was sufficient to ensure a page-aligned
+slot.
 
-Fixes: d5f871f89e21 ("ALSA: usb-audio: Improved lowlatency playback support")
-Reported-and-tested-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20230317195128.3911155-1-john@metanate.com
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
-Reviewed-by; Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://lore.kernel.org/r/20230320142838.494-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+When commit 1f221a0d0dbf ("swiotlb: respect min_align_mask") added
+support for min_align_mask, the index could be incremented in the
+search loop, potentially finding an unaligned slot if minimum device
+alignment is between IO_TLB_SIZE and PAGE_SIZE.  The bug could go
+unnoticed, because the slot size is 2 KiB, and the most common page
+size is 4 KiB, so there is no alignment value in between.
+
+IIUC the intention has been to find a slot that conforms to all
+alignment constraints: device minimum alignment, an explicit
+alignment (given as function parameter) and optionally page
+alignment (if allocation size is >= PAGE_SIZE). The most
+restrictive mask can be trivially computed with logical AND. The
+rest can stay.
+
+Fixes: 1f221a0d0dbf ("swiotlb: respect min_align_mask")
+Fixes: e81e99bacc9f ("swiotlb: Support aligned swiotlb buffers")
+Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_lib.c |  2 ++
- sound/usb/endpoint.c | 22 ++++++++++++++--------
- sound/usb/endpoint.h |  4 ++--
- sound/usb/pcm.c      |  2 +-
- 4 files changed, 19 insertions(+), 11 deletions(-)
+ kernel/dma/swiotlb.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
-index 8b6aeb8a78f7d..02fd65993e7e5 100644
---- a/sound/core/pcm_lib.c
-+++ b/sound/core/pcm_lib.c
-@@ -2155,6 +2155,8 @@ int pcm_lib_apply_appl_ptr(struct snd_pcm_substream *substream,
- 		ret = substream->ops->ack(substream);
- 		if (ret < 0) {
- 			runtime->control->appl_ptr = old_appl_ptr;
-+			if (ret == -EPIPE)
-+				__snd_pcm_xrun(substream);
- 			return ret;
- 		}
- 	}
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index 419302e2057e8..647fa054d8b1d 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -455,8 +455,8 @@ static void push_back_to_ready_list(struct snd_usb_endpoint *ep,
-  * This function is used both for implicit feedback endpoints and in low-
-  * latency playback mode.
-  */
--void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
--				       bool in_stream_lock)
-+int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
-+				      bool in_stream_lock)
- {
- 	bool implicit_fb = snd_usb_endpoint_implicit_feedback_sink(ep);
+diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+index 869dd6667c464..312458506e6d5 100644
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -642,22 +642,26 @@ static int swiotlb_do_find_slots(struct device *dev, int area_index,
+ 	BUG_ON(!nslots);
+ 	BUG_ON(area_index >= mem->nareas);
  
-@@ -480,7 +480,7 @@ void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 		spin_unlock_irqrestore(&ep->lock, flags);
- 
- 		if (ctx == NULL)
--			return;
-+			break;
- 
- 		/* copy over the length information */
- 		if (implicit_fb) {
-@@ -495,11 +495,14 @@ void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 			break;
- 		if (err < 0) {
- 			/* push back to ready list again for -EAGAIN */
--			if (err == -EAGAIN)
-+			if (err == -EAGAIN) {
- 				push_back_to_ready_list(ep, ctx);
--			else
-+				break;
-+			}
++	/*
++	 * For allocations of PAGE_SIZE or larger only look for page aligned
++	 * allocations.
++	 */
++	if (alloc_size >= PAGE_SIZE)
++		iotlb_align_mask &= PAGE_MASK;
++	iotlb_align_mask &= alloc_align_mask;
 +
-+			if (!in_stream_lock)
- 				notify_xrun(ep);
--			return;
-+			return -EPIPE;
- 		}
- 
- 		err = usb_submit_urb(ctx->urb, GFP_ATOMIC);
-@@ -507,13 +510,16 @@ void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 			usb_audio_err(ep->chip,
- 				      "Unable to submit urb #%d: %d at %s\n",
- 				      ctx->index, err, __func__);
--			notify_xrun(ep);
--			return;
-+			if (!in_stream_lock)
-+				notify_xrun(ep);
-+			return -EPIPE;
- 		}
- 
- 		set_bit(ctx->index, &ep->active_mask);
- 		atomic_inc(&ep->submitted_urbs);
- 	}
-+
-+	return 0;
- }
- 
- /*
-diff --git a/sound/usb/endpoint.h b/sound/usb/endpoint.h
-index 924f4351588ce..c09f68ce08b18 100644
---- a/sound/usb/endpoint.h
-+++ b/sound/usb/endpoint.h
-@@ -52,7 +52,7 @@ int snd_usb_endpoint_implicit_feedback_sink(struct snd_usb_endpoint *ep);
- int snd_usb_endpoint_next_packet_size(struct snd_usb_endpoint *ep,
- 				      struct snd_urb_ctx *ctx, int idx,
- 				      unsigned int avail);
--void snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
--				       bool in_stream_lock);
-+int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
-+				      bool in_stream_lock);
- 
- #endif /* __USBAUDIO_ENDPOINT_H */
-diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
-index d959da7a1afba..eec5232f9fb29 100644
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -1639,7 +1639,7 @@ static int snd_usb_pcm_playback_ack(struct snd_pcm_substream *substream)
- 	 * outputs here
+ 	/*
+ 	 * For mappings with an alignment requirement don't bother looping to
+-	 * unaligned slots once we found an aligned one.  For allocations of
+-	 * PAGE_SIZE or larger only look for page aligned allocations.
++	 * unaligned slots once we found an aligned one.
  	 */
- 	if (!ep->active_mask)
--		snd_usb_queue_pending_output_urbs(ep, true);
-+		return snd_usb_queue_pending_output_urbs(ep, true);
- 	return 0;
- }
+ 	stride = (iotlb_align_mask >> IO_TLB_SHIFT) + 1;
+-	if (alloc_size >= PAGE_SIZE)
+-		stride = max(stride, stride << (PAGE_SHIFT - IO_TLB_SHIFT));
+-	stride = max(stride, (alloc_align_mask >> IO_TLB_SHIFT) + 1);
  
+ 	spin_lock_irqsave(&area->lock, flags);
+ 	if (unlikely(nslots > mem->area_nslabs - area->used))
+ 		goto not_found;
+ 
+ 	slot_base = area_index * mem->area_nslabs;
+-	index = wrap_area_index(mem, ALIGN(area->index, stride));
++	index = area->index;
+ 
+ 	for (slots_checked = 0; slots_checked < mem->area_nslabs; ) {
+ 		slot_index = slot_base + index;
 -- 
 2.39.2
 
