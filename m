@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4B86FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:44:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF09C433D2;
-	Mon,  3 Apr 2023 14:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9D06FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:44:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6298C4339B;
+	Mon,  3 Apr 2023 14:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533048;
-	bh=XrrhMWQnqt1ikQWLiMWwcVO1PUIEDtnXn1ngPJpkiys=;
+	s=korg; t=1680533051;
+	bh=isO0RvN70ZcuYch9J00VGEUvSaWqdMj2Ho5yc7Tft/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RiM8Id15Tg1tCzhtgWK16vrkuLQpcUyS1DCMYTAhBx2IhTGR8laaXVaLgj2M/zU84
-	 DlNEM5DxjXjLMrqb9BiBph8KqyKQZSFiTeuI4o3N25/ygEPx6TzU/JWKk/WIYLd4nl
-	 AywFic1GXPf+CW2iQhD3VESBlxYqquhxcPdxcDh4=
+	b=xl4IhtxXYc5+eN4Kx7aSJFDP827WpNnfiVEvpI4QOaMzGBDk+xztMV/8/wYma4+ZG
+	 yqRQFDN13AK4S7/fkuIpCSRpuIOmHJCJRmfRN38cdQDRnWFIZg0z24f+YW781wkeVT
+	 FfBhznVoNvv29mknOiwn0qjkhQRYgBUKLnU58Mz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 017/187] ASoC: Intel: avs: max98357a: Explicitly define codec format
-Date: Mon,  3 Apr 2023 16:07:42 +0200
-Message-Id: <20230403140416.599607813@linuxfoundation.org>
+Subject: [PATCH 6.2 035/187] wifi: mac80211: check basic rates validity
+Date: Mon,  3 Apr 2023 16:08:00 +0200
+Message-Id: <20230403140417.147598860@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,69 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit d16c893425d07ada1fdd817ec06d322efcf69480 ]
+[ Upstream commit ce04abc3fcc62cd5640af981ebfd7c4dc3bded28 ]
 
-max98357a is speaker codec configured in 48000/2/S16_LE format
-regardless of front end format, so force it to be so.
+When userspace sets basic rates, it might send us some rates
+list that's empty or consists of invalid values only. We're
+currently ignoring invalid values and then may end up with a
+rates bitmap that's empty, which later results in a warning.
 
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://lore.kernel.org/r/20230303134854.2277146-2-amadeuszx.slawinski@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reject the call if there were no valid rates.
+
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/boards/max98357a.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ net/mac80211/cfg.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/intel/avs/boards/max98357a.c b/sound/soc/intel/avs/boards/max98357a.c
-index 921f42caf7e09..183123d08c5a3 100644
---- a/sound/soc/intel/avs/boards/max98357a.c
-+++ b/sound/soc/intel/avs/boards/max98357a.c
-@@ -8,6 +8,7 @@
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index d611e15301839..e24d2d5b04ad0 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -2576,6 +2576,17 @@ static int ieee80211_change_bss(struct wiphy *wiphy,
+ 	if (!sband)
+ 		return -EINVAL;
  
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <sound/pcm_params.h>
- #include <sound/soc.h>
- #include <sound/soc-acpi.h>
- #include <sound/soc-dapm.h>
-@@ -24,6 +25,26 @@ static const struct snd_soc_dapm_route card_base_routes[] = {
- 	{ "Spk", NULL, "Speaker" },
- };
++	if (params->basic_rates) {
++		if (!ieee80211_parse_bitrates(link->conf->chandef.width,
++					      wiphy->bands[sband->band],
++					      params->basic_rates,
++					      params->basic_rates_len,
++					      &link->conf->basic_rates))
++			return -EINVAL;
++		changed |= BSS_CHANGED_BASIC_RATES;
++		ieee80211_check_rate_mask(link);
++	}
++
+ 	if (params->use_cts_prot >= 0) {
+ 		link->conf->use_cts_prot = params->use_cts_prot;
+ 		changed |= BSS_CHANGED_ERP_CTS_PROT;
+@@ -2597,16 +2608,6 @@ static int ieee80211_change_bss(struct wiphy *wiphy,
+ 		changed |= BSS_CHANGED_ERP_SLOT;
+ 	}
  
-+static int
-+avs_max98357a_be_fixup(struct snd_soc_pcm_runtime *runrime, struct snd_pcm_hw_params *params)
-+{
-+	struct snd_interval *rate, *channels;
-+	struct snd_mask *fmt;
-+
-+	rate = hw_param_interval(params, SNDRV_PCM_HW_PARAM_RATE);
-+	channels = hw_param_interval(params, SNDRV_PCM_HW_PARAM_CHANNELS);
-+	fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
-+
-+	/* The ADSP will convert the FE rate to 48k, stereo */
-+	rate->min = rate->max = 48000;
-+	channels->min = channels->max = 2;
-+
-+	/* set SSP0 to 16 bit */
-+	snd_mask_none(fmt);
-+	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
-+	return 0;
-+}
-+
- static int avs_create_dai_link(struct device *dev, const char *platform_name, int ssp_port,
- 			       struct snd_soc_dai_link **dai_link)
- {
-@@ -55,6 +76,7 @@ static int avs_create_dai_link(struct device *dev, const char *platform_name, in
- 	dl->num_platforms = 1;
- 	dl->id = 0;
- 	dl->dai_fmt = SND_SOC_DAIFMT_I2S | SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_CBS_CFS;
-+	dl->be_hw_params_fixup = avs_max98357a_be_fixup;
- 	dl->nonatomic = 1;
- 	dl->no_pcm = 1;
- 	dl->dpcm_playback = 1;
+-	if (params->basic_rates) {
+-		ieee80211_parse_bitrates(link->conf->chandef.width,
+-					 wiphy->bands[sband->band],
+-					 params->basic_rates,
+-					 params->basic_rates_len,
+-					 &link->conf->basic_rates);
+-		changed |= BSS_CHANGED_BASIC_RATES;
+-		ieee80211_check_rate_mask(link);
+-	}
+-
+ 	if (params->ap_isolate >= 0) {
+ 		if (params->ap_isolate)
+ 			sdata->flags |= IEEE80211_SDATA_DONT_BRIDGE_PACKETS;
 -- 
 2.39.2
 
