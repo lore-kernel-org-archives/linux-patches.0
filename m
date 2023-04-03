@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581D85683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:14:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03ADC433D2;
-	Mon,  3 Apr 2023 14:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830055698
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:15:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0616DC433D2;
+	Mon,  3 Apr 2023 14:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531297;
-	bh=rUQRIhUeyifgt0ybj9cSWK6h7SZ7CgQcMts4G2oQ0Rc=;
+	s=korg; t=1680531302;
+	bh=pc7sVLMlxUUPLoMc579jDkeXM0xm02GMOsv3uokjTMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlXbGeBEhiwB+xl+Pg/D0QMZuNtTvIRBqyb3EnyKMblsdTw7qMveGdIaSoqUpDH5r
-	 f4PwxNnhkWU05LL8jVMv+AtVMtzOWC3jzi4DrqjnMHsiRBkZJ2MrwHTNduruFdFNdI
-	 vC2LOsWyBg/ayUoeKzvYcK6xZ259acn9sRApQsuo=
+	b=uyApnEQFKil16U/el+5bSQzS29l0TiT4lowyQeWpib3LWbq71FrChZUUHg2Nvk6jP
+	 pufxZnDB0rOiBGSy+NOQv52yf2O9EPPMxSZgZsq/5K6vG4N9fmP1hOe6haaAhy/qZa
+	 jemaulCI+CvIeBDz2m+oY7bZ/l1AuhXAIcqJ2mPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Heidrich <szymon.heidrich@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 10/84] net: usb: smsc95xx: Limit packet length to skb->len
-Date: Mon,  3 Apr 2023 16:08:11 +0200
-Message-Id: <20230403140353.748065745@linuxfoundation.org>
+Subject: [PATCH 4.19 12/84] xirc2ps_cs: Fix use after free bug in xirc2ps_detach
+Date: Mon,  3 Apr 2023 16:08:13 +0200
+Message-Id: <20230403140353.805958014@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,41 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit ff821092cf02a70c2bccd2d19269f01e29aa52cf ]
+[ Upstream commit e8d20c3ded59a092532513c9bd030d1ea66f5f44 ]
 
-Packet length retrieved from descriptor may be larger than
-the actual socket buffer length. In such case the cloned
-skb passed up the network stack will leak kernel memory contents.
+In xirc2ps_probe, the local->tx_timeout_task was bounded
+with xirc2ps_tx_timeout_task. When timeout occurs,
+it will call xirc_tx_timeout->schedule_work to start the
+work.
 
-Fixes: 2f7ca802bdae ("net: Add SMSC LAN9500 USB2.0 10/100 ethernet adapter driver")
-Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20230316101954.75836-1-szymon.heidrich@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+When we call xirc2ps_detach to remove the driver, there
+may be a sequence as follows:
+
+Stop responding to timeout tasks and complete scheduled
+tasks before cleanup in xirc2ps_detach, which will fix
+the problem.
+
+CPU0                  CPU1
+
+                    |xirc2ps_tx_timeout_task
+xirc2ps_detach      |
+  free_netdev       |
+    kfree(dev);     |
+                    |
+                    | do_reset
+                    |   //use dev
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc95xx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/xircom/xirc2ps_cs.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
-index 4f29010e1aeff..0850486864135 100644
---- a/drivers/net/usb/smsc95xx.c
-+++ b/drivers/net/usb/smsc95xx.c
-@@ -1950,6 +1950,12 @@ static int smsc95xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		size = (u16)((header & RX_STS_FL_) >> 16);
- 		align_count = (4 - ((size + NET_IP_ALIGN) % 4)) % 4;
- 
-+		if (unlikely(size > skb->len)) {
-+			netif_dbg(dev, rx_err, dev->net,
-+				  "size err header=0x%08x\n", header);
-+			return 0;
-+		}
+diff --git a/drivers/net/ethernet/xircom/xirc2ps_cs.c b/drivers/net/ethernet/xircom/xirc2ps_cs.c
+index fd5288ff53b53..e3438cef5f9c6 100644
+--- a/drivers/net/ethernet/xircom/xirc2ps_cs.c
++++ b/drivers/net/ethernet/xircom/xirc2ps_cs.c
+@@ -503,6 +503,11 @@ static void
+ xirc2ps_detach(struct pcmcia_device *link)
+ {
+     struct net_device *dev = link->priv;
++    struct local_info *local = netdev_priv(dev);
 +
- 		if (unlikely(header & RX_STS_ES_)) {
- 			netif_dbg(dev, rx_err, dev->net,
- 				  "Error header=0x%08x\n", header);
++    netif_carrier_off(dev);
++    netif_tx_disable(dev);
++    cancel_work_sync(&local->tx_timeout_task);
+ 
+     dev_dbg(&link->dev, "detach\n");
+ 
 -- 
 2.39.2
 
