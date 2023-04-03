@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98D96FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711D3C433EF;
-	Mon,  3 Apr 2023 14:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E29F6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD01DC433D2;
+	Mon,  3 Apr 2023 14:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532719;
-	bh=CFwtfCdZMp1Q7KUyl+NWYHlyWJeMW6k/3fiBLWkeoz8=;
+	s=korg; t=1680532722;
+	bh=Ia9vvw6uzgqyM9awMM8KJIvAZ/jNkNzpPj20+akxcr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pOIgwQlVSh+h5UjNs9oHcEDTMiIu/GbwNw/ZdQxdty0PU/dXdxu6Pnpk6vRDHq+O9
-	 80yUvM7/x77Yv2lcEpaIP4iV3eiUPDxKwzRCrVjrya5gH4aPOpnrhq1SaWxZZrSyIG
-	 fZx7SWaspvAsf4hvd/5U5oIKbJYoJOLXKcZj0RTQ=
+	b=riHp4QPHl+CFGOiloGdC7RfRavTC3XHvnvmLXvw/6m/dnN7cOzHpAniyhwyM0MKvL
+	 iJoKf1UxYTnS8HrYIEwMqRiJ85UKs2X5YMbpfapAfvIo6jxVw2UXkU73ku8tQLY39J
+	 M0vDHhuN34UB5RUgZWC6qvuA8o3Q51FNN41tzcMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sathya Prakash <sathya.prakash@broadcom.com>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Suganath Prabu Subramani <suganath-prabu.subramani@broadcom.com>,
+	MPT-FusionLinux.pdl@broadcom.com,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/181] ALSA: hda/ca0132: fixup buffer overrun at tuning_ctl_set()
-Date: Mon,  3 Apr 2023 16:08:05 +0200
-Message-Id: <20230403140416.781983685@linuxfoundation.org>
+Subject: [PATCH 6.1 084/181] scsi: mpt3sas: Dont print sense pool info twice
+Date: Mon,  3 Apr 2023 16:08:39 +0200
+Message-Id: <20230403140417.863440757@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -35,60 +40,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-[ Upstream commit 98e5eb110095ec77cb6d775051d181edbf9cd3cf ]
+[ Upstream commit d684a7a26f7d2c7122a4581ac966ed64e88fb29c ]
 
-tuning_ctl_set() might have buffer overrun at (X) if it didn't break
-from loop by matching (A).
+_base_allocate_sense_dma_pool() already prints out the sense pool
+information, so don't print it a second time after calling it in
+_base_allocate_memory_pools(). In addition the version in
+_base_allocate_memory_pools() was using the wrong size value, sz, which was
+last assigned when doing some nvme calculations instead of sense_sz to
+determine the pool size in kilobytes.
 
-	static int tuning_ctl_set(...)
-	{
-		for (i = 0; i < TUNING_CTLS_COUNT; i++)
-(A)			if (nid == ca0132_tuning_ctls[i].nid)
-				break;
-
-		snd_hda_power_up(...);
-(X)		dspio_set_param(..., ca0132_tuning_ctls[i].mid, ...);
-		snd_hda_power_down(...);                ^
-
-		return 1;
-	}
-
-We will get below error by cppcheck
-
-	sound/pci/hda/patch_ca0132.c:4229:2: note: After for loop, i has value 12
-	 for (i = 0; i < TUNING_CTLS_COUNT; i++)
-	 ^
-	sound/pci/hda/patch_ca0132.c:4234:43: note: Array index out of bounds
-	 dspio_set_param(codec, ca0132_tuning_ctls[i].mid, 0x20,
-	                                           ^
-This patch cares non match case.
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87sfe9eap7.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: Sathya Prakash <sathya.prakash@broadcom.com>
+Cc: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Cc: Suganath Prabu Subramani <suganath-prabu.subramani@broadcom.com>
+Cc: MPT-FusionLinux.pdl@broadcom.com
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
+Fixes: 970ac2bb70e7 ("scsi: mpt3sas: Force sense buffer allocations to be within same 4 GB region")
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Link: https://lore.kernel.org/r/20230324193204.567932-1-jsnitsel@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_ca0132.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index acde4cd58785e..099722ebaed83 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -4228,8 +4228,10 @@ static int tuning_ctl_set(struct hda_codec *codec, hda_nid_t nid,
- 
- 	for (i = 0; i < TUNING_CTLS_COUNT; i++)
- 		if (nid == ca0132_tuning_ctls[i].nid)
--			break;
-+			goto found;
- 
-+	return -EINVAL;
-+found:
- 	snd_hda_power_up(codec);
- 	dspio_set_param(codec, ca0132_tuning_ctls[i].mid, 0x20,
- 			ca0132_tuning_ctls[i].req,
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index 2ee9ea57554d7..14ae0a9c5d3d8 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -6616,11 +6616,6 @@ _base_allocate_memory_pools(struct MPT3SAS_ADAPTER *ioc)
+ 	else if (rc == -EAGAIN)
+ 		goto try_32bit_dma;
+ 	total_sz += sense_sz;
+-	ioc_info(ioc,
+-	    "sense pool(0x%p)- dma(0x%llx): depth(%d),"
+-	    "element_size(%d), pool_size(%d kB)\n",
+-	    ioc->sense, (unsigned long long)ioc->sense_dma, ioc->scsiio_depth,
+-	    SCSI_SENSE_BUFFERSIZE, sz / 1024);
+ 	/* reply pool, 4 byte align */
+ 	sz = ioc->reply_free_queue_depth * ioc->reply_sz;
+ 	rc = _base_allocate_reply_pool(ioc, sz);
 -- 
 2.39.2
 
