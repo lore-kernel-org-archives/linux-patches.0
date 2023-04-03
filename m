@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199055683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:13:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95115C433EF;
-	Mon,  3 Apr 2023 14:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06AC5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:13:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E57C433D2;
+	Mon,  3 Apr 2023 14:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531191;
-	bh=zjEk9E6e7qe1JmkTXMOwfLHd9Pot19JP8A+Cy+lz/Eo=;
+	s=korg; t=1680531194;
+	bh=pR6dVImNUpI3i4tk65yAw4Wyr9DpfFAfNgJ0R0OcflE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwy4brekZgpA5mHKTP5wvT1OZ589LzBpHCMZ1Mtm1S8PhATHEqZ+uJRjUrMF4KbkM
-	 ZmeAe7UUtikwLhp8ZQ1NvywQZMxPuThqbvRxPP24QUAhhW61iDPQQeau27SH6d8kRn
-	 tJozYmDw1HWkzPmtZXIhua7HXB91q49OEm33v+KQ=
+	b=LXbjLYQ6AH6Agojud0ntIad0gZrhlpaXghd0Aft9Q9y5m0VbTngNzb3SQ5OPM5WNe
+	 I4AuV0RU3V8A+tUNCtTNfWjibLIayFhmmxyjcnoUmPdh/tF9BE36sHKaG71QPuxwgj
+	 X6U654h6EyMrUFdg0O9WJ9g00zlfOx5jh+sM9DaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 4.14 55/66] Input: focaltech - use explicitly signed char type
-Date: Mon,  3 Apr 2023 16:09:03 +0200
-Message-Id: <20230403140353.728767819@linuxfoundation.org>
+	David Disseldorp <ddiss@suse.de>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Ronnie Sahlberg <lsahlber@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 4.14 56/66] cifs: fix DFS traversal oops without CONFIG_CIFS_DFS_UPCALL
+Date: Mon,  3 Apr 2023 16:09:04 +0200
+Message-Id: <20230403140353.757516420@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -35,50 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: David Disseldorp <ddiss@suse.de>
 
-commit 8980f190947ba29f23110408e712444884b74251 upstream.
+commit 179a88a8558bbf42991d361595281f3e45d7edfc upstream.
 
-The recent change of -funsigned-char causes additions of negative
-numbers to become additions of large positive numbers, leading to wrong
-calculations of mouse movement. Change these casts to be explicitly
-signed, to take into account negative offsets.
+When compiled with CONFIG_CIFS_DFS_UPCALL disabled, cifs_dfs_d_automount
+is NULL. cifs.ko logic for mapping CIFS_FATTR_DFS_REFERRAL attributes to
+S_AUTOMOUNT and corresponding dentry flags is retained regardless of
+CONFIG_CIFS_DFS_UPCALL, leading to a NULL pointer dereference in
+VFS follow_automount() when traversing a DFS referral link:
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  ...
+  Call Trace:
+   <TASK>
+   __traverse_mounts+0xb5/0x220
+   ? cifs_revalidate_mapping+0x65/0xc0 [cifs]
+   step_into+0x195/0x610
+   ? lookup_fast+0xe2/0xf0
+   path_lookupat+0x64/0x140
+   filename_lookup+0xc2/0x140
+   ? __create_object+0x299/0x380
+   ? kmem_cache_alloc+0x119/0x220
+   ? user_path_at_empty+0x31/0x50
+   user_path_at_empty+0x31/0x50
+   __x64_sys_chdir+0x2a/0xd0
+   ? exit_to_user_mode_prepare+0xca/0x100
+   do_syscall_64+0x42/0x90
+   entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+This fix adds an inline cifs_dfs_d_automount() {return -EREMOTE} handler
+when CONFIG_CIFS_DFS_UPCALL is disabled. An alternative would be to
+avoid flagging S_AUTOMOUNT, etc. without CONFIG_CIFS_DFS_UPCALL. This
+approach was chosen as it provides more control over the error path.
+
+Signed-off-by: David Disseldorp <ddiss@suse.de>
 Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217211
-Link: https://lore.kernel.org/r/20230318133010.1285202-1-Jason@zx2c4.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/focaltech.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/cifs/cifsfs.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/input/mouse/focaltech.c
-+++ b/drivers/input/mouse/focaltech.c
-@@ -206,8 +206,8 @@ static void focaltech_process_rel_packet
- 	state->pressed = packet[0] >> 7;
- 	finger1 = ((packet[0] >> 4) & 0x7) - 1;
- 	if (finger1 < FOC_MAX_FINGERS) {
--		state->fingers[finger1].x += (char)packet[1];
--		state->fingers[finger1].y += (char)packet[2];
-+		state->fingers[finger1].x += (s8)packet[1];
-+		state->fingers[finger1].y += (s8)packet[2];
- 	} else {
- 		psmouse_err(psmouse, "First finger in rel packet invalid: %d\n",
- 			    finger1);
-@@ -222,8 +222,8 @@ static void focaltech_process_rel_packet
- 	 */
- 	finger2 = ((packet[3] >> 4) & 0x7) - 1;
- 	if (finger2 < FOC_MAX_FINGERS) {
--		state->fingers[finger2].x += (char)packet[4];
--		state->fingers[finger2].y += (char)packet[5];
-+		state->fingers[finger2].x += (s8)packet[4];
-+		state->fingers[finger2].y += (s8)packet[5];
- 	}
- }
+--- a/fs/cifs/cifsfs.h
++++ b/fs/cifs/cifsfs.h
+@@ -122,7 +122,10 @@ extern const struct dentry_operations ci
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+ extern struct vfsmount *cifs_dfs_d_automount(struct path *path);
+ #else
+-#define cifs_dfs_d_automount NULL
++static inline struct vfsmount *cifs_dfs_d_automount(struct path *path)
++{
++	return ERR_PTR(-EREMOTE);
++}
+ #endif
  
+ /* Functions related to symlinks */
 
 
