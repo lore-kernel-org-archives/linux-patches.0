@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D297A6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACF8C433EF;
-	Mon,  3 Apr 2023 14:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D76B6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02162C433D2;
+	Mon,  3 Apr 2023 14:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532706;
-	bh=V9f23WxeNQlrK7fZEVquO+gAzb4iRSIuZZBjY4E2Jt0=;
+	s=korg; t=1680532709;
+	bh=JScWhqWpUgG463GuSgtB/AfcGxI7ds2qh6vyRe7IYQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fj7dqId8gAJswQXDxKUkH22tzl2jl+VzCV8vM2e37d1+CHbmnStYJj0oDIPiDhz4t
-	 89ShFOU7vwTylNV5jOUQGlIKxM297nqp7HA7+jxwEaDoxxhymh8sv/JTKpiodp/LzA
-	 skNIAVq9L31FF9Unx42Qgb7+OGGPXldZH6X6BHYM=
+	b=dHUmnd7b2BugowBo69GwgDHWeeyLbnPQdoRNUUUd14H4zgTyF3Obm73ZQNSjZOwTS
+	 QTUWLQUEeguh5cOR8E/P+ODrZ46isZrSpoXwRHkOBqoVWMXlbrzkgfocNB7qUdRvEY
+	 m6rZFRkiJv5kCI7dNDdaPYSh13unkIccd1qSUNcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Belanger <david.belanger@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Adham Faris <afaris@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/181] drm/amdkfd: Fixed kfd_process cleanup on module exit.
-Date: Mon,  3 Apr 2023 16:08:10 +0200
-Message-Id: <20230403140416.942062100@linuxfoundation.org>
+Subject: [PATCH 6.1 056/181] net/mlx5e: Lower maximum allowed MTU in XSK to match XDP prerequisites
+Date: Mon,  3 Apr 2023 16:08:11 +0200
+Message-Id: <20230403140416.971031459@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -36,148 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Belanger <david.belanger@amd.com>
+From: Adham Faris <afaris@nvidia.com>
 
-[ Upstream commit 20bc9f76b6a2455c6b54b91ae7634f147f64987f ]
+[ Upstream commit 78dee7befd56987283c13877b834c0aa97ad51b9 ]
 
-Handle case when module is unloaded (kfd_exit) before a process space
-(mm_struct) is released.
+XSK redirecting XDP programs require linearity, hence applies
+restrictions on the MTU. For PAGE_SIZE=4K, MTU shouldn't exceed 3498.
 
-v2: Fixed potential race conditions by removing all kfd_process from
-the process table first, then working on releasing the resources.
+Features that contradict with XDP such HW-LRO and HW-GRO are enforced
+by the driver in advance, during XSK params validation, except for MTU,
+which was not enforced before this patch.
 
-v3: Fixed loop element access / synchronization.  Fixed extra empty lines.
+This has been spotted during test scenario described below:
+Attaching xdpsock program (PAGE_SIZE=4K), with MTU < 3498, detaching
+XDP program, changing the MTU to arbitrary value in the range
+[3499, 3754], attaching XDP program again, which ended up with failure
+since MTU is > 3498.
 
-Signed-off-by: David Belanger <david.belanger@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This commit lowers the XSK MTU limitation to be aligned with XDP MTU
+limitation, since XSK socket is meaningless without XDP program.
+
+Signed-off-by: Adham Faris <afaris@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_module.c  |  1 +
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h    |  1 +
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 67 +++++++++++++++++++++---
- 3 files changed, 62 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_module.c b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
-index 09b966dc37681..aee2212e52f69 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_module.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
-@@ -77,6 +77,7 @@ static int kfd_init(void)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 3b5c5064cfafc..5e01de4c32037 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -4104,13 +4104,17 @@ static bool mlx5e_xsk_validate_mtu(struct net_device *netdev,
+ 		struct xsk_buff_pool *xsk_pool =
+ 			mlx5e_xsk_get_pool(&chs->params, chs->params.xsk, ix);
+ 		struct mlx5e_xsk_param xsk;
++		int max_xdp_mtu;
  
- static void kfd_exit(void)
- {
-+	kfd_cleanup_processes();
- 	kfd_debugfs_fini();
- 	kfd_process_destroy_wq();
- 	kfd_procfs_shutdown();
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index bf610e3b683bb..6d6588b9beed7 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -928,6 +928,7 @@ bool kfd_dev_is_large_bar(struct kfd_dev *dev);
+ 		if (!xsk_pool)
+ 			continue;
  
- int kfd_process_create_wq(void);
- void kfd_process_destroy_wq(void);
-+void kfd_cleanup_processes(void);
- struct kfd_process *kfd_create_process(struct file *filep);
- struct kfd_process *kfd_get_process(const struct task_struct *task);
- struct kfd_process *kfd_lookup_process_by_pasid(u32 pasid);
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index dd351105c1bcf..7f68d51541e8e 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -1167,6 +1167,17 @@ static void kfd_process_free_notifier(struct mmu_notifier *mn)
- 	kfd_unref_process(container_of(mn, struct kfd_process, mmu_notifier));
- }
+ 		mlx5e_build_xsk_param(xsk_pool, &xsk);
++		max_xdp_mtu = mlx5e_xdp_max_mtu(new_params, &xsk);
  
-+static void kfd_process_notifier_release_internal(struct kfd_process *p)
-+{
-+	cancel_delayed_work_sync(&p->eviction_work);
-+	cancel_delayed_work_sync(&p->restore_work);
-+
-+	/* Indicate to other users that MM is no longer valid */
-+	p->mm = NULL;
-+
-+	mmu_notifier_put(&p->mmu_notifier);
-+}
-+
- static void kfd_process_notifier_release(struct mmu_notifier *mn,
- 					struct mm_struct *mm)
- {
-@@ -1181,17 +1192,22 @@ static void kfd_process_notifier_release(struct mmu_notifier *mn,
- 		return;
+-		if (!mlx5e_validate_xsk_param(new_params, &xsk, mdev)) {
++		/* Validate XSK params and XDP MTU in advance */
++		if (!mlx5e_validate_xsk_param(new_params, &xsk, mdev) ||
++		    new_params->sw_mtu > max_xdp_mtu) {
+ 			u32 hr = mlx5e_get_linear_rq_headroom(new_params, &xsk);
+ 			int max_mtu_frame, max_mtu_page, max_mtu;
  
- 	mutex_lock(&kfd_processes_mutex);
-+	/*
-+	 * Do early return if table is empty.
-+	 *
-+	 * This could potentially happen if this function is called concurrently
-+	 * by mmu_notifier and by kfd_cleanup_pocesses.
-+	 *
-+	 */
-+	if (hash_empty(kfd_processes_table)) {
-+		mutex_unlock(&kfd_processes_mutex);
-+		return;
-+	}
- 	hash_del_rcu(&p->kfd_processes);
- 	mutex_unlock(&kfd_processes_mutex);
- 	synchronize_srcu(&kfd_processes_srcu);
+@@ -4120,9 +4124,9 @@ static bool mlx5e_xsk_validate_mtu(struct net_device *netdev,
+ 			 */
+ 			max_mtu_frame = MLX5E_HW2SW_MTU(new_params, xsk.chunk_size - hr);
+ 			max_mtu_page = MLX5E_HW2SW_MTU(new_params, SKB_MAX_HEAD(0));
+-			max_mtu = min(max_mtu_frame, max_mtu_page);
++			max_mtu = min3(max_mtu_frame, max_mtu_page, max_xdp_mtu);
  
--	cancel_delayed_work_sync(&p->eviction_work);
--	cancel_delayed_work_sync(&p->restore_work);
--
--	/* Indicate to other users that MM is no longer valid */
--	p->mm = NULL;
--
--	mmu_notifier_put(&p->mmu_notifier);
-+	kfd_process_notifier_release_internal(p);
- }
- 
- static const struct mmu_notifier_ops kfd_process_mmu_notifier_ops = {
-@@ -1200,6 +1216,43 @@ static const struct mmu_notifier_ops kfd_process_mmu_notifier_ops = {
- 	.free_notifier = kfd_process_free_notifier,
- };
- 
-+/*
-+ * This code handles the case when driver is being unloaded before all
-+ * mm_struct are released.  We need to safely free the kfd_process and
-+ * avoid race conditions with mmu_notifier that might try to free them.
-+ *
-+ */
-+void kfd_cleanup_processes(void)
-+{
-+	struct kfd_process *p;
-+	struct hlist_node *p_temp;
-+	unsigned int temp;
-+	HLIST_HEAD(cleanup_list);
-+
-+	/*
-+	 * Move all remaining kfd_process from the process table to a
-+	 * temp list for processing.   Once done, callback from mmu_notifier
-+	 * release will not see the kfd_process in the table and do early return,
-+	 * avoiding double free issues.
-+	 */
-+	mutex_lock(&kfd_processes_mutex);
-+	hash_for_each_safe(kfd_processes_table, temp, p_temp, p, kfd_processes) {
-+		hash_del_rcu(&p->kfd_processes);
-+		synchronize_srcu(&kfd_processes_srcu);
-+		hlist_add_head(&p->kfd_processes, &cleanup_list);
-+	}
-+	mutex_unlock(&kfd_processes_mutex);
-+
-+	hlist_for_each_entry_safe(p, p_temp, &cleanup_list, kfd_processes)
-+		kfd_process_notifier_release_internal(p);
-+
-+	/*
-+	 * Ensures that all outstanding free_notifier get called, triggering
-+	 * the release of the kfd_process struct.
-+	 */
-+	mmu_notifier_synchronize();
-+}
-+
- static int kfd_process_init_cwsr_apu(struct kfd_process *p, struct file *filep)
- {
- 	unsigned long  offset;
+-			netdev_err(netdev, "MTU %d is too big for an XSK running on channel %u. Try MTU <= %d\n",
++			netdev_err(netdev, "MTU %d is too big for an XSK running on channel %u or its redirection XDP program. Try MTU <= %d\n",
+ 				   new_params->sw_mtu, ix, max_mtu);
+ 			return false;
+ 		}
 -- 
 2.39.2
 
