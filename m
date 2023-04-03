@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FF96FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D181C4339B;
-	Mon,  3 Apr 2023 14:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FBD6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFA9C433EF;
+	Mon,  3 Apr 2023 14:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532907;
-	bh=j0Jeu4RnpYJiX8Pp4sc66dpNEQtfQUwKb286o999eRI=;
+	s=korg; t=1680532910;
+	bh=ANfRMlHw1qLpImj958fWUqyIF95SmRE7pbT/Y0G+AKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w3Pfg0v0OwHnbyCYApvCK35Wb1R4CqnwykJIIwKXTsrjlHpLwEvLpsl3Ca1uw3aYK
-	 ZVIkgCsZ9cXnfbYMeVRvaupuxyjxvYvkNaep2Z1u5G/bDPypg/0yjXdjg8Xtxwr9Tw
-	 FKTjhXN7W4RhiHQ0Alx2tR3LOORJRdWR3jobNwUM=
+	b=UvYMw8TBaF0MwbSx2dqwNOYqzCRPqTmUWUNN+VmreSTZ8mt9gZDrcJeqZiw6G7DfI
+	 65PEgl4NSquV+ahyG/EVgXnS5rcaSkIYGy6Vj3JqVbfehqm/jHVM9KC2BWHBPOkQTu
+	 obitwnz7AE6DX/y/hnhn2CDaeP0Zy+TvC1XiOSCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Hersen Wu <hersenxs.wu@amd.com>,
 	Qingqing Zhuo <qingqing.zhuo@amd.com>,
 	Fangzhi Zuo <Jerry.Zuo@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 163/181] drm/amd/display: Add DSC Support for Synaptics Cascaded MST Hub
-Date: Mon,  3 Apr 2023 16:09:58 +0200
-Message-Id: <20230403140420.384258199@linuxfoundation.org>
+Subject: [PATCH 6.1 164/181] drm/amd/display: Take FEC Overhead into Timeslot Calculation
+Date: Mon,  3 Apr 2023 16:09:59 +0200
+Message-Id: <20230403140420.419188415@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -39,77 +40,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Fangzhi Zuo <Jerry.Zuo@amd.com>
 
-commit f4f3b7dedbe849e780c779ba67365bb1db0d8637 upstream.
+commit 68dc1846c3a44d5e633be145c169ce2fd5420695 upstream.
 
-Traditional synaptics hub has one MST branch device without virtual dpcd.
-Synaptics cascaded hub has two chained MST branch devices. DSC decoding
-is performed via root MST branch device, instead of the second MST branch
-device.
+8b/10b encoding needs to add 3% fec overhead into the pbn.
+In the Synapcis Cascaded MST hub, the first stage MST branch device
+needs the information to determine the timeslot count for the
+second stage MST branch device. Missing this overhead will leads to
+insufficient timeslot allocation.
 
+Cc: stable@vger.kernel.org
+Cc: Mario Limonciello <mario.limonciello@amd.com>
 Reviewed-by: Hersen Wu <hersenxs.wu@amd.com>
 Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
 Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   19 ++++++++++++
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.h |   12 +++++++
- 2 files changed, 31 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   32 +++++++++---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.h |    3 +
+ 2 files changed, 27 insertions(+), 8 deletions(-)
 
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -208,6 +208,21 @@ bool needs_dsc_aux_workaround(struct dc_
- 	return false;
- }
+@@ -646,12 +646,25 @@ struct dsc_mst_fairness_params {
+ 	struct amdgpu_dm_connector *aconnector;
+ };
  
-+bool is_synaptics_cascaded_panamera(struct dc_link *link, struct drm_dp_mst_port *port)
+-static int kbps_to_peak_pbn(int kbps)
++static uint16_t get_fec_overhead_multiplier(struct dc_link *dc_link)
 +{
-+	u8 branch_vendor_data[4] = { 0 }; // Vendor data 0x50C ~ 0x50F
++	u8 link_coding_cap;
++	uint16_t fec_overhead_multiplier_x1000 = PBN_FEC_OVERHEAD_MULTIPLIER_8B_10B;
 +
-+	if (drm_dp_dpcd_read(port->mgr->aux, DP_BRANCH_VENDOR_SPECIFIC_START, &branch_vendor_data, 4) == 4) {
-+		if (link->dpcd_caps.branch_dev_id == DP_BRANCH_DEVICE_ID_90CC24 &&
-+				IS_SYNAPTICS_CASCADED_PANAMERA(link->dpcd_caps.branch_dev_name, branch_vendor_data)) {
-+			DRM_INFO("Synaptics Cascaded MST hub\n");
-+			return true;
-+		}
-+	}
++	link_coding_cap = dc_link_dp_mst_decide_link_encoding_format(dc_link);
++	if (link_coding_cap == DP_128b_132b_ENCODING)
++		fec_overhead_multiplier_x1000 = PBN_FEC_OVERHEAD_MULTIPLIER_128B_132B;
 +
-+	return false;
++	return fec_overhead_multiplier_x1000;
 +}
 +
- static bool validate_dsc_caps_on_connector(struct amdgpu_dm_connector *aconnector)
++static int kbps_to_peak_pbn(int kbps, uint16_t fec_overhead_multiplier_x1000)
  {
- 	struct dc_sink *dc_sink = aconnector->dc_sink;
-@@ -231,6 +246,10 @@ static bool validate_dsc_caps_on_connect
- 	    needs_dsc_aux_workaround(aconnector->dc_link))
- 		aconnector->dsc_aux = &aconnector->mst_port->dm_dp_aux.aux;
+ 	u64 peak_kbps = kbps;
  
-+	/* synaptics cascaded MST hub case */
-+	if (!aconnector->dsc_aux && is_synaptics_cascaded_panamera(aconnector->dc_link, port))
-+		aconnector->dsc_aux = port->mgr->aux;
-+
- 	if (!aconnector->dsc_aux)
- 		return false;
+ 	peak_kbps *= 1006;
+-	peak_kbps = div_u64(peak_kbps, 1000);
++	peak_kbps *= fec_overhead_multiplier_x1000;
++	peak_kbps = div_u64(peak_kbps, 1000 * 1000);
+ 	return (int) DIV64_U64_ROUND_UP(peak_kbps * 64, (54 * 8 * 1000));
+ }
  
+@@ -738,11 +751,12 @@ static int increase_dsc_bpp(struct drm_a
+ 	int link_timeslots_used;
+ 	int fair_pbn_alloc;
+ 	int ret = 0;
++	uint16_t fec_overhead_multiplier_x1000 = get_fec_overhead_multiplier(dc_link);
+ 
+ 	for (i = 0; i < count; i++) {
+ 		if (vars[i + k].dsc_enabled) {
+ 			initial_slack[i] =
+-			kbps_to_peak_pbn(params[i].bw_range.max_kbps) - vars[i + k].pbn;
++			kbps_to_peak_pbn(params[i].bw_range.max_kbps, fec_overhead_multiplier_x1000) - vars[i + k].pbn;
+ 			bpp_increased[i] = false;
+ 			remaining_to_increase += 1;
+ 		} else {
+@@ -838,6 +852,7 @@ static int try_disable_dsc(struct drm_at
+ 	int next_index;
+ 	int remaining_to_try = 0;
+ 	int ret;
++	uint16_t fec_overhead_multiplier_x1000 = get_fec_overhead_multiplier(dc_link);
+ 
+ 	for (i = 0; i < count; i++) {
+ 		if (vars[i + k].dsc_enabled
+@@ -867,7 +882,7 @@ static int try_disable_dsc(struct drm_at
+ 		if (next_index == -1)
+ 			break;
+ 
+-		vars[next_index].pbn = kbps_to_peak_pbn(params[next_index].bw_range.stream_kbps);
++		vars[next_index].pbn = kbps_to_peak_pbn(params[next_index].bw_range.stream_kbps, fec_overhead_multiplier_x1000);
+ 		ret = drm_dp_atomic_find_time_slots(state,
+ 						    params[next_index].port->mgr,
+ 						    params[next_index].port,
+@@ -880,7 +895,7 @@ static int try_disable_dsc(struct drm_at
+ 			vars[next_index].dsc_enabled = false;
+ 			vars[next_index].bpp_x16 = 0;
+ 		} else {
+-			vars[next_index].pbn = kbps_to_peak_pbn(params[next_index].bw_range.max_kbps);
++			vars[next_index].pbn = kbps_to_peak_pbn(params[next_index].bw_range.max_kbps, fec_overhead_multiplier_x1000);
+ 			ret = drm_dp_atomic_find_time_slots(state,
+ 							    params[next_index].port->mgr,
+ 							    params[next_index].port,
+@@ -909,6 +924,7 @@ static int compute_mst_dsc_configs_for_l
+ 	int count = 0;
+ 	int i, k, ret;
+ 	bool debugfs_overwrite = false;
++	uint16_t fec_overhead_multiplier_x1000 = get_fec_overhead_multiplier(dc_link);
+ 
+ 	memset(params, 0, sizeof(params));
+ 
+@@ -970,7 +986,7 @@ static int compute_mst_dsc_configs_for_l
+ 	/* Try no compression */
+ 	for (i = 0; i < count; i++) {
+ 		vars[i + k].aconnector = params[i].aconnector;
+-		vars[i + k].pbn = kbps_to_peak_pbn(params[i].bw_range.stream_kbps);
++		vars[i + k].pbn = kbps_to_peak_pbn(params[i].bw_range.stream_kbps, fec_overhead_multiplier_x1000);
+ 		vars[i + k].dsc_enabled = false;
+ 		vars[i + k].bpp_x16 = 0;
+ 		ret = drm_dp_atomic_find_time_slots(state, params[i].port->mgr, params[i].port,
+@@ -989,7 +1005,7 @@ static int compute_mst_dsc_configs_for_l
+ 	/* Try max compression */
+ 	for (i = 0; i < count; i++) {
+ 		if (params[i].compression_possible && params[i].clock_force_enable != DSC_CLK_FORCE_DISABLE) {
+-			vars[i + k].pbn = kbps_to_peak_pbn(params[i].bw_range.min_kbps);
++			vars[i + k].pbn = kbps_to_peak_pbn(params[i].bw_range.min_kbps, fec_overhead_multiplier_x1000);
+ 			vars[i + k].dsc_enabled = true;
+ 			vars[i + k].bpp_x16 = params[i].bw_range.min_target_bpp_x16;
+ 			ret = drm_dp_atomic_find_time_slots(state, params[i].port->mgr,
+@@ -997,7 +1013,7 @@ static int compute_mst_dsc_configs_for_l
+ 			if (ret < 0)
+ 				return ret;
+ 		} else {
+-			vars[i + k].pbn = kbps_to_peak_pbn(params[i].bw_range.stream_kbps);
++			vars[i + k].pbn = kbps_to_peak_pbn(params[i].bw_range.stream_kbps, fec_overhead_multiplier_x1000);
+ 			vars[i + k].dsc_enabled = false;
+ 			vars[i + k].bpp_x16 = 0;
+ 			ret = drm_dp_atomic_find_time_slots(state, params[i].port->mgr,
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.h
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.h
-@@ -34,6 +34,18 @@
- #define SYNAPTICS_RC_OFFSET        0x4BC
- #define SYNAPTICS_RC_DATA          0x4C0
+@@ -46,6 +46,9 @@
+ #define SYNAPTICS_CASCADED_HUB_ID  0x5A
+ #define IS_SYNAPTICS_CASCADED_PANAMERA(devName, data) ((IS_SYNAPTICS_PANAMERA(devName) && ((int)data[2] == SYNAPTICS_CASCADED_HUB_ID)) ? 1 : 0)
  
-+#define DP_BRANCH_VENDOR_SPECIFIC_START 0x50C
-+
-+/**
-+ * Panamera MST Hub detection
-+ * Offset DPCD 050Eh == 0x5A indicates cascaded MST hub case
-+ * Check from beginning of branch device vendor specific field (050Ch)
-+ */
-+#define IS_SYNAPTICS_PANAMERA(branchDevName) (((int)branchDevName[4] & 0xF0) == 0x50 ? 1 : 0)
-+#define BRANCH_HW_REVISION_PANAMERA_A2 0x10
-+#define SYNAPTICS_CASCADED_HUB_ID  0x5A
-+#define IS_SYNAPTICS_CASCADED_PANAMERA(devName, data) ((IS_SYNAPTICS_PANAMERA(devName) && ((int)data[2] == SYNAPTICS_CASCADED_HUB_ID)) ? 1 : 0)
++#define PBN_FEC_OVERHEAD_MULTIPLIER_8B_10B	1031
++#define PBN_FEC_OVERHEAD_MULTIPLIER_128B_132B	1000
 +
  struct amdgpu_display_manager;
  struct amdgpu_dm_connector;
