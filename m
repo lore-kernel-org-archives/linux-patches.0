@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD766FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C735DC433EF;
-	Mon,  3 Apr 2023 14:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2FC6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61796C433EF;
+	Mon,  3 Apr 2023 14:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533224;
-	bh=cpdE50Xs+IYUZ2exad8CwEpEUz+guWEMvR5QSQLGsks=;
+	s=korg; t=1680533226;
+	bh=XqCYsBqcdS3JoSuA8/wHHStjQJ0Lc+gJQ3obvfy4Esw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vvh7BSU4KoqB7DbFvcAA4+w3q2W6hI2Z1JYyhGkPFKgDm85MKqDFC3JgNkbuXxZ/G
-	 r0uMbCKw85rTvQKBwAHPZCKQvfUVYpBfNmUUYtmvOEn/cz7wviZ0O1GsA3iEaSwJgy
-	 KrZBw/LBFOjSXgJcAt1Wk011YK7akXU5u+8Ru75I=
+	b=1fqzqrx3oaQjJYkV3o/KwnWsusszvm2Rmbj09Tjc1tUcjbRYbgSqApNVwVPaQNr2z
+	 908BKR4dlM5YHqaPTtrjb9QdYlRqVcBKZN/a/puSPVAz5Zb8huGcATDSIprk6JDIGw
+	 FxbMNBmbjSI9+vuT8+DhBacDTbW/ZBpJ4P/EhY9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Arun Ramadoss <arun.ramadoss@microchip.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sven Auhagen <sven.auhagen@voleatech.de>,
+	Marcin Wojtas <mw@semihalf.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 084/187] net: dsa: microchip: ksz8: fix ksz8_fdb_dump() to extract all 1024 entries
-Date: Mon,  3 Apr 2023 16:08:49 +0200
-Message-Id: <20230403140418.722598098@linuxfoundation.org>
+Subject: [PATCH 6.2 102/187] net: mvpp2: parser fix QinQ
+Date: Mon,  3 Apr 2023 16:09:07 +0200
+Message-Id: <20230403140419.334614097@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -37,53 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Sven Auhagen <sven.auhagen@voleatech.de>
 
-[ Upstream commit 5d90492dd4ff50ad65c582c76c345d0b90001728 ]
+[ Upstream commit a587a84813b90372cb0a7565e201a4075da67919 ]
 
-Current ksz8_fdb_dump() is able to extract only max 249 entries on
-the ksz8863/ksz8873 series of switches. This happened due to wrong
-bit mask and offset calculation.
+The mvpp2 parser entry for QinQ has the inner and outer VLAN
+in the wrong order.
+Fix the problem by swapping them.
 
-This commit corrects the issue and allows for the complete extraction of
-all 1024 entries.
-
-Fixes: 4b20a07e103f ("net: dsa: microchip: ksz8795: add support for ksz88xx chips")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 3f518509dedc ("ethernet: Add new driver for Marvell Armada 375 network unit")
+Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
+Reviewed-by: Marcin Wojtas <mw@semihalf.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz_common.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
-index 19cd05762ab77..725a868b76f7e 100644
---- a/drivers/net/dsa/microchip/ksz_common.c
-+++ b/drivers/net/dsa/microchip/ksz_common.c
-@@ -398,10 +398,10 @@ static const u32 ksz8863_masks[] = {
- 	[STATIC_MAC_TABLE_FID]		= GENMASK(29, 26),
- 	[STATIC_MAC_TABLE_OVERRIDE]	= BIT(20),
- 	[STATIC_MAC_TABLE_FWD_PORTS]	= GENMASK(18, 16),
--	[DYNAMIC_MAC_TABLE_ENTRIES_H]	= GENMASK(5, 0),
-+	[DYNAMIC_MAC_TABLE_ENTRIES_H]	= GENMASK(1, 0),
- 	[DYNAMIC_MAC_TABLE_MAC_EMPTY]	= BIT(7),
- 	[DYNAMIC_MAC_TABLE_NOT_READY]	= BIT(7),
--	[DYNAMIC_MAC_TABLE_ENTRIES]	= GENMASK(31, 28),
-+	[DYNAMIC_MAC_TABLE_ENTRIES]	= GENMASK(31, 24),
- 	[DYNAMIC_MAC_TABLE_FID]		= GENMASK(19, 16),
- 	[DYNAMIC_MAC_TABLE_SRC_PORT]	= GENMASK(21, 20),
- 	[DYNAMIC_MAC_TABLE_TIMESTAMP]	= GENMASK(23, 22),
-@@ -411,7 +411,7 @@ static u8 ksz8863_shifts[] = {
- 	[VLAN_TABLE_MEMBERSHIP_S]	= 16,
- 	[STATIC_MAC_FWD_PORTS]		= 16,
- 	[STATIC_MAC_FID]		= 22,
--	[DYNAMIC_MAC_ENTRIES_H]		= 3,
-+	[DYNAMIC_MAC_ENTRIES_H]		= 8,
- 	[DYNAMIC_MAC_ENTRIES]		= 24,
- 	[DYNAMIC_MAC_FID]		= 16,
- 	[DYNAMIC_MAC_TIMESTAMP]		= 24,
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
+index 75ba57bd1d46d..ed8be396428b9 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
+@@ -1539,8 +1539,8 @@ static int mvpp2_prs_vlan_init(struct platform_device *pdev, struct mvpp2 *priv)
+ 	if (!priv->prs_double_vlans)
+ 		return -ENOMEM;
+ 
+-	/* Double VLAN: 0x8100, 0x88A8 */
+-	err = mvpp2_prs_double_vlan_add(priv, ETH_P_8021Q, ETH_P_8021AD,
++	/* Double VLAN: 0x88A8, 0x8100 */
++	err = mvpp2_prs_double_vlan_add(priv, ETH_P_8021AD, ETH_P_8021Q,
+ 					MVPP2_PRS_PORT_MASK);
+ 	if (err)
+ 		return err;
 -- 
 2.39.2
 
