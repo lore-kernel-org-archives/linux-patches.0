@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C2B6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D22FC433D2;
-	Mon,  3 Apr 2023 14:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DD06FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:37:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D7CC433D2;
+	Mon,  3 Apr 2023 14:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532654;
-	bh=11A643II97k5BJwesN/mhwYq8mIX6gHm7xWFgzm2iaY=;
+	s=korg; t=1680532657;
+	bh=NE99H+N2fc5lPLf+0ydmjzBy2LHMWhPInpLgsCfHzbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K27CayfRUaRoCMhl8eiG8AtFyItBGRqooIEL45qHbt/MpbYfBtMvau+YiZeaPyLfN
-	 8jgQTpq+DuXT3nvqMgTknASDZxNd5Soc5SQrigfSUsiTKbSVazKqLn6++TQAjpw1VG
-	 UbYnXKs78Qc2Fi1OE4C8RnPm2jFaaxX9GtSMASTo=
+	b=kXZmZs5hGN4MlB4TCAMTDyrrW+MPmJljpwbwXWvPJnJnKQpK4dxzGs4G11i6vzT2O
+	 ylOs0dmuOvc89jBvngWcCp4rKB5IywhZ3k7ZFMmr+VHbYf/dnEH5VqdH41rmagn7qE
+	 bYfILkafXqCGzbfmvw+SYitwtmBEJj3uUekPeZP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/181] mtd: rawnand: meson: initialize struct with zeroes
-Date: Mon,  3 Apr 2023 16:08:21 +0200
-Message-Id: <20230403140417.280242717@linuxfoundation.org>
+Subject: [PATCH 6.1 067/181] mtd: nand: mxic-ecc: Fix mxic_ecc_data_xfer_wait_for_completion() when irq is used
+Date: Mon,  3 Apr 2023 16:08:22 +0200
+Message-Id: <20230403140417.309433653@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -37,57 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 4ce341de6c02d02aba7c78a6447ccfcaa9eeb328 ]
+[ Upstream commit 75dce6a941e3f16c3b4878c8b2f46d5d07c619ce ]
 
-This structure must be zeroed, because it's field 'hw->core' is used as
-'parent' in 'clk_core_fill_parent_index()', but it will be uninitialized.
-This happens, because when this struct is not zeroed, pointer 'hw' is
-"initialized" by garbage, which is valid pointer, but points to some
-garbage. So 'hw' will be dereferenced, but 'core' contains some random
-data which will be interpreted as a pointer. The following backtrace is
-result of dereference of such pointer:
+wait_for_completion_timeout() and readl_poll_timeout() don't handle their
+return value the same way.
 
-[    1.081319]  __clk_register+0x414/0x820
-[    1.085113]  devm_clk_register+0x64/0xd0
-[    1.088995]  meson_nfc_probe+0x258/0x6ec
-[    1.092875]  platform_probe+0x70/0xf0
-[    1.096498]  really_probe+0xc8/0x3e0
-[    1.100034]  __driver_probe_device+0x84/0x190
-[    1.104346]  driver_probe_device+0x44/0x120
-[    1.108487]  __driver_attach+0xb4/0x220
-[    1.112282]  bus_for_each_dev+0x78/0xd0
-[    1.116077]  driver_attach+0x2c/0x40
-[    1.119613]  bus_add_driver+0x184/0x240
-[    1.123408]  driver_register+0x80/0x140
-[    1.127203]  __platform_driver_register+0x30/0x40
-[    1.131860]  meson_nfc_driver_init+0x24/0x30
+wait_for_completion_timeout() returns 0 on time out (and >0 in all other
+cases)
+readl_poll_timeout() returns 0 on success and -ETIMEDOUT upon a timeout.
 
-Fixes: 1e4d3ba66888 ("mtd: rawnand: meson: fix the clock")
-Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+In order for the error handling path to work in both cases, the logic
+against wait_for_completion_timeout() needs to be inverted.
+
+Fixes: 48e6633a9fa2 ("mtd: nand: mxic-ecc: Add Macronix external ECC engine support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230227102425.793841-1-AVKrasnov@sberdevices.ru
+Link: https://lore.kernel.org/linux-mtd/beddbc374557e44ceec897e68c4a5d12764ddbb9.1676459308.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/meson_nand.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/ecc-mxic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mtd/nand/raw/meson_nand.c b/drivers/mtd/nand/raw/meson_nand.c
-index 5ee01231ac4cd..30e326adabfc1 100644
---- a/drivers/mtd/nand/raw/meson_nand.c
-+++ b/drivers/mtd/nand/raw/meson_nand.c
-@@ -991,7 +991,7 @@ static const struct mtd_ooblayout_ops meson_ooblayout_ops = {
- 
- static int meson_nfc_clk_init(struct meson_nfc *nfc)
- {
--	struct clk_parent_data nfc_divider_parent_data[1];
-+	struct clk_parent_data nfc_divider_parent_data[1] = {0};
- 	struct clk_init_data init = {0};
- 	int ret;
- 
+diff --git a/drivers/mtd/nand/ecc-mxic.c b/drivers/mtd/nand/ecc-mxic.c
+index 8afdca731b874..6b487ffe2f2dc 100644
+--- a/drivers/mtd/nand/ecc-mxic.c
++++ b/drivers/mtd/nand/ecc-mxic.c
+@@ -429,6 +429,7 @@ static int mxic_ecc_data_xfer_wait_for_completion(struct mxic_ecc_engine *mxic)
+ 		mxic_ecc_enable_int(mxic);
+ 		ret = wait_for_completion_timeout(&mxic->complete,
+ 						  msecs_to_jiffies(1000));
++		ret = ret ? 0 : -ETIMEDOUT;
+ 		mxic_ecc_disable_int(mxic);
+ 	} else {
+ 		ret = readl_poll_timeout(mxic->regs + INTRPT_STS, val,
 -- 
 2.39.2
 
