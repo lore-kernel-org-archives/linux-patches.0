@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF0E6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:39:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8645C433D2;
-	Mon,  3 Apr 2023 14:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAD96FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:39:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63079C433D2;
+	Mon,  3 Apr 2023 14:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532743;
-	bh=CvI2cRHi5U0ZseVS4v+bVBVc12ZkIelqoTGsUNRvZns=;
+	s=korg; t=1680532745;
+	bh=K6uvNA7yH0Minio83kio7ISml0YM8O5J/t1spzUr9fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=om2gWt/ub1GFPSJ4Q7r09iHCLWHLzKU2svTcioQ/6k9ws35jHGphRmKhf1hIA/hjW
-	 SffMrJcNj5i/rOdwQGC3R84aALy24XmfGrXyz3X1rUa630seHddNzoA/7hSRDuy13V
-	 +wAO//IsO7N9Ui+2nVzjrCxWdiVdGp9/8ZpO+kEc=
+	b=dNiH1MWkYnWUYjprRyl51cFA5kdBBZsjiztVpS316SgdARTZQrJs3lCxViYAPFm4u
+	 Zndy6waIFQvFEi+OikplS7w9EMqNUi5OyFc6cwjthuyJ4t76ckgOD5yVTR4OPjS53F
+	 lAEyLjJD45z0izX9MXuAqsMiPPVHcfqvziq9n0Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Krowiak <akrowiak@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Pierre Asselin <pa@panix.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/181] s390/vfio-ap: fix memory leak in vfio_ap device driver
-Date: Mon,  3 Apr 2023 16:08:55 +0200
-Message-Id: <20230403140418.354175413@linuxfoundation.org>
+Subject: [PATCH 6.1 101/181] ACPI: bus: Rework system-level device notification handling
+Date: Mon,  3 Apr 2023 16:08:56 +0200
+Message-Id: <20230403140418.383270540@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -37,46 +35,235 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Krowiak <akrowiak@linux.ibm.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 8f8cf767589f2131ae5d40f3758429095c701c84 ]
+[ Upstream commit c56610a869bce03490faf4f157076370c71b8ae3 ]
 
-The device release callback function invoked to release the matrix device
-uses the dev_get_drvdata(device *dev) function to retrieve the
-pointer to the vfio_matrix_dev object in order to free its storage. The
-problem is, this object is not stored as drvdata with the device; since the
-kfree function will accept a NULL pointer, the memory for the
-vfio_matrix_dev object is never freed.
+For ACPI drivers that provide a ->notify() callback and set
+ACPI_DRIVER_ALL_NOTIFY_EVENTS in their flags, that callback can be
+invoked while either the ->add() or the ->remove() callback is running
+without any synchronization at the bus type level which is counter to
+the common-sense expectation that notification handling should only be
+enabled when the driver is actually bound to the device.  As a result,
+if the driver is not careful enough, it's ->notify() callback may crash
+when it is invoked too early or too late [1].
 
-Since the device being released is contained within the vfio_matrix_dev
-object, the container_of macro will be used to retrieve its pointer.
+This issue has been amplified by commit d6fb6ee1820c ("ACPI: bus: Drop
+driver member of struct acpi_device") that made acpi_bus_notify() check
+for the presence of the driver and its ->notify() callback directly
+instead of using an extra driver pointer that was only set and cleared
+by the bus type code, but it was present before that commit although
+it was harder to reproduce then.
 
-Fixes: 1fde573413b5 ("s390: vfio-ap: base implementation of VFIO AP device driver")
-Signed-off-by: Tony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230320150447.34557-1-akrowiak@linux.ibm.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+It can be addressed by using the observation that
+acpi_device_install_notify_handler() can be modified to install the
+handler for all types of events when ACPI_DRIVER_ALL_NOTIFY_EVENTS is
+set in the driver flags, in which case acpi_bus_notify() will not need
+to invoke the driver's ->notify() callback any more and that callback
+will only be invoked after acpi_device_install_notify_handler() has run
+and before acpi_device_remove_notify_handler() runs, which implies the
+correct ordering with respect to the other ACPI driver callbacks.
+
+Modify the code accordingly and while at it, drop two redundant local
+variables from acpi_bus_notify() and turn its description comment into
+a proper kerneldoc one.
+
+Fixes: d6fb6ee1820c ("ACPI: bus: Drop driver member of struct acpi_device")
+Link: https://lore.kernel.org/linux-acpi/9f6cba7a8a57e5a687c934e8e406e28c.squirrel@mail.panix.com # [1]
+Reported-by: Pierre Asselin <pa@panix.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Pierre Asselin <pa@panix.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/vfio_ap_drv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/bus.c | 83 +++++++++++++++++++++-------------------------
+ 1 file changed, 37 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/s390/crypto/vfio_ap_drv.c b/drivers/s390/crypto/vfio_ap_drv.c
-index f43cfeabd2cc8..0afceb63ac43c 100644
---- a/drivers/s390/crypto/vfio_ap_drv.c
-+++ b/drivers/s390/crypto/vfio_ap_drv.c
-@@ -54,8 +54,9 @@ static struct ap_driver vfio_ap_drv = {
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index d466c81953146..3b6146b1e25cc 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -456,85 +456,67 @@ static void acpi_bus_osc_negotiate_usb_control(void)
+                              Notification Handling
+    -------------------------------------------------------------------------- */
  
- static void vfio_ap_matrix_dev_release(struct device *dev)
+-/*
+- * acpi_bus_notify
+- * ---------------
+- * Callback for all 'system-level' device notifications (values 0x00-0x7F).
++/**
++ * acpi_bus_notify - Global system-level (0x00-0x7F) notifications handler
++ * @handle: Target ACPI object.
++ * @type: Notification type.
++ * @data: Ignored.
++ *
++ * This only handles notifications related to device hotplug.
+  */
+ static void acpi_bus_notify(acpi_handle handle, u32 type, void *data)
  {
--	struct ap_matrix_dev *matrix_dev = dev_get_drvdata(dev);
-+	struct ap_matrix_dev *matrix_dev;
+ 	struct acpi_device *adev;
+-	u32 ost_code = ACPI_OST_SC_NON_SPECIFIC_FAILURE;
+-	bool hotplug_event = false;
  
-+	matrix_dev = container_of(dev, struct ap_matrix_dev, device);
- 	kfree(matrix_dev);
+ 	switch (type) {
+ 	case ACPI_NOTIFY_BUS_CHECK:
+ 		acpi_handle_debug(handle, "ACPI_NOTIFY_BUS_CHECK event\n");
+-		hotplug_event = true;
+ 		break;
+ 
+ 	case ACPI_NOTIFY_DEVICE_CHECK:
+ 		acpi_handle_debug(handle, "ACPI_NOTIFY_DEVICE_CHECK event\n");
+-		hotplug_event = true;
+ 		break;
+ 
+ 	case ACPI_NOTIFY_DEVICE_WAKE:
+ 		acpi_handle_debug(handle, "ACPI_NOTIFY_DEVICE_WAKE event\n");
+-		break;
++		return;
+ 
+ 	case ACPI_NOTIFY_EJECT_REQUEST:
+ 		acpi_handle_debug(handle, "ACPI_NOTIFY_EJECT_REQUEST event\n");
+-		hotplug_event = true;
+ 		break;
+ 
+ 	case ACPI_NOTIFY_DEVICE_CHECK_LIGHT:
+ 		acpi_handle_debug(handle, "ACPI_NOTIFY_DEVICE_CHECK_LIGHT event\n");
+ 		/* TBD: Exactly what does 'light' mean? */
+-		break;
++		return;
+ 
+ 	case ACPI_NOTIFY_FREQUENCY_MISMATCH:
+ 		acpi_handle_err(handle, "Device cannot be configured due "
+ 				"to a frequency mismatch\n");
+-		break;
++		return;
+ 
+ 	case ACPI_NOTIFY_BUS_MODE_MISMATCH:
+ 		acpi_handle_err(handle, "Device cannot be configured due "
+ 				"to a bus mode mismatch\n");
+-		break;
++		return;
+ 
+ 	case ACPI_NOTIFY_POWER_FAULT:
+ 		acpi_handle_err(handle, "Device has suffered a power fault\n");
+-		break;
++		return;
+ 
+ 	default:
+ 		acpi_handle_debug(handle, "Unknown event type 0x%x\n", type);
+-		break;
++		return;
+ 	}
+ 
+ 	adev = acpi_get_acpi_dev(handle);
+-	if (!adev)
+-		goto err;
+-
+-	if (adev->dev.driver) {
+-		struct acpi_driver *driver = to_acpi_driver(adev->dev.driver);
+-
+-		if (driver && driver->ops.notify &&
+-		    (driver->flags & ACPI_DRIVER_ALL_NOTIFY_EVENTS))
+-			driver->ops.notify(adev, type);
+-	}
+-
+-	if (!hotplug_event) {
+-		acpi_put_acpi_dev(adev);
+-		return;
+-	}
+ 
+-	if (ACPI_SUCCESS(acpi_hotplug_schedule(adev, type)))
++	if (adev && ACPI_SUCCESS(acpi_hotplug_schedule(adev, type)))
+ 		return;
+ 
+ 	acpi_put_acpi_dev(adev);
+ 
+- err:
+-	acpi_evaluate_ost(handle, type, ost_code, NULL);
++	acpi_evaluate_ost(handle, type, ACPI_OST_SC_NON_SPECIFIC_FAILURE, NULL);
  }
  
+ static void acpi_notify_device(acpi_handle handle, u32 event, void *data)
+@@ -559,42 +541,51 @@ static u32 acpi_device_fixed_event(void *data)
+ 	return ACPI_INTERRUPT_HANDLED;
+ }
+ 
+-static int acpi_device_install_notify_handler(struct acpi_device *device)
++static int acpi_device_install_notify_handler(struct acpi_device *device,
++					      struct acpi_driver *acpi_drv)
+ {
+ 	acpi_status status;
+ 
+-	if (device->device_type == ACPI_BUS_TYPE_POWER_BUTTON)
++	if (device->device_type == ACPI_BUS_TYPE_POWER_BUTTON) {
+ 		status =
+ 		    acpi_install_fixed_event_handler(ACPI_EVENT_POWER_BUTTON,
+ 						     acpi_device_fixed_event,
+ 						     device);
+-	else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON)
++	} else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON) {
+ 		status =
+ 		    acpi_install_fixed_event_handler(ACPI_EVENT_SLEEP_BUTTON,
+ 						     acpi_device_fixed_event,
+ 						     device);
+-	else
+-		status = acpi_install_notify_handler(device->handle,
+-						     ACPI_DEVICE_NOTIFY,
++	} else {
++		u32 type = acpi_drv->flags & ACPI_DRIVER_ALL_NOTIFY_EVENTS ?
++				ACPI_ALL_NOTIFY : ACPI_DEVICE_NOTIFY;
++
++		status = acpi_install_notify_handler(device->handle, type,
+ 						     acpi_notify_device,
+ 						     device);
++	}
+ 
+ 	if (ACPI_FAILURE(status))
+ 		return -EINVAL;
+ 	return 0;
+ }
+ 
+-static void acpi_device_remove_notify_handler(struct acpi_device *device)
++static void acpi_device_remove_notify_handler(struct acpi_device *device,
++					      struct acpi_driver *acpi_drv)
+ {
+-	if (device->device_type == ACPI_BUS_TYPE_POWER_BUTTON)
++	if (device->device_type == ACPI_BUS_TYPE_POWER_BUTTON) {
+ 		acpi_remove_fixed_event_handler(ACPI_EVENT_POWER_BUTTON,
+ 						acpi_device_fixed_event);
+-	else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON)
++	} else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON) {
+ 		acpi_remove_fixed_event_handler(ACPI_EVENT_SLEEP_BUTTON,
+ 						acpi_device_fixed_event);
+-	else
+-		acpi_remove_notify_handler(device->handle, ACPI_DEVICE_NOTIFY,
++	} else {
++		u32 type = acpi_drv->flags & ACPI_DRIVER_ALL_NOTIFY_EVENTS ?
++				ACPI_ALL_NOTIFY : ACPI_DEVICE_NOTIFY;
++
++		acpi_remove_notify_handler(device->handle, type,
+ 					   acpi_notify_device);
++	}
+ }
+ 
+ /* Handle events targeting \_SB device (at present only graceful shutdown) */
+@@ -1036,7 +1027,7 @@ static int acpi_device_probe(struct device *dev)
+ 		 acpi_drv->name, acpi_dev->pnp.bus_id);
+ 
+ 	if (acpi_drv->ops.notify) {
+-		ret = acpi_device_install_notify_handler(acpi_dev);
++		ret = acpi_device_install_notify_handler(acpi_dev, acpi_drv);
+ 		if (ret) {
+ 			if (acpi_drv->ops.remove)
+ 				acpi_drv->ops.remove(acpi_dev);
+@@ -1059,7 +1050,7 @@ static void acpi_device_remove(struct device *dev)
+ 	struct acpi_driver *acpi_drv = to_acpi_driver(dev->driver);
+ 
+ 	if (acpi_drv->ops.notify)
+-		acpi_device_remove_notify_handler(acpi_dev);
++		acpi_device_remove_notify_handler(acpi_dev, acpi_drv);
+ 
+ 	if (acpi_drv->ops.remove)
+ 		acpi_drv->ops.remove(acpi_dev);
 -- 
 2.39.2
 
