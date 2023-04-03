@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0955683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C55C433EF;
-	Mon,  3 Apr 2023 14:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D98B5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:19:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A28C433EF;
+	Mon,  3 Apr 2023 14:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531546;
-	bh=AYQK/nW9l4cl/DtggUNloxtu/0Ez46kxbDH+CvduZ00=;
+	s=korg; t=1680531549;
+	bh=PJ7dg7p2r4pOd8lbHOnL51IrXooaZsr6jQK8mphGK2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eGu+2u0LtsRiPtDr8ceddhZ7W+giMYHnOVWAWfr9dhvun5+2RHwZQxosTgoBiPAZ6
-	 VzCRIGFgZpSnUhQ6hZYWwxnyiktjxZ+Z5VOKfVtmBbnb22qXLKJzSuXqYkmbQ3RZcp
-	 FxKfxl0CtXAaZT0W8vaG/O8ZVG8KviZYICD0K1Fk=
+	b=QDVn9HmyfcNHU1UWzbngneyM8cj24XAGwubYgDQa5DPq9L6ncgT0Z+1FWY+1DUJoq
+	 QipZkDlNuNvkRsEALErTLTJx3AMZriVdJB67YP/VV8srqJAzkp+n7MleIej8Cg/ojz
+	 IZvn19+JvODeRH0qWrfSaTnombEtbmv+qL0lgD3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Stan Johnson <userm57@yahoo.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 002/104] power: supply: da9150: Fix use after free bug in da9150_charger_remove due to race condition
-Date: Mon,  3 Apr 2023 16:07:54 +0200
-Message-Id: <20230403140404.035056916@linuxfoundation.org>
+Subject: [PATCH 5.4 020/104] net/sonic: use dma_mapping_error() for error check
+Date: Mon,  3 Apr 2023 16:08:12 +0200
+Message-Id: <20230403140405.016688592@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,52 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 06615d11cc78162dfd5116efb71f29eb29502d37 ]
+[ Upstream commit 4107b8746d93ace135b8c4da4f19bbae81db785f ]
 
-In da9150_charger_probe, &charger->otg_work is bound with
-da9150_charger_otg_work. da9150_charger_otg_ncb may be
-called to start the work.
+The DMA address returned by dma_map_single() should be checked with
+dma_mapping_error(). Fix it accordingly.
 
-If we remove the module which will call da9150_charger_remove
-to make cleanup, there may be a unfinished work. The possible
-sequence is as follows:
-
-Fix it by canceling the work before cleanup in the da9150_charger_remove
-
-CPU0                  CPUc1
-
-                    |da9150_charger_otg_work
-da9150_charger_remove      |
-power_supply_unregister  |
-device_unregister   |
-power_supply_dev_release|
-kfree(psy)          |
-                    |
-                    | 	power_supply_changed(charger->usb);
-                    |   //use
-
-Fixes: c1a281e34dae ("power: Add support for DA9150 Charger")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: efcce839360f ("[PATCH] macsonic/jazzsonic network drivers update")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/6645a4b5c1e364312103f48b7b36783b94e197a2.1679370343.git.fthain@linux-m68k.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/da9150-charger.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/natsemi/sonic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/da9150-charger.c b/drivers/power/supply/da9150-charger.c
-index f9314cc0cd75f..6b987da586556 100644
---- a/drivers/power/supply/da9150-charger.c
-+++ b/drivers/power/supply/da9150-charger.c
-@@ -662,6 +662,7 @@ static int da9150_charger_remove(struct platform_device *pdev)
+diff --git a/drivers/net/ethernet/natsemi/sonic.c b/drivers/net/ethernet/natsemi/sonic.c
+index 05e760444a92c..953708e2ab4b4 100644
+--- a/drivers/net/ethernet/natsemi/sonic.c
++++ b/drivers/net/ethernet/natsemi/sonic.c
+@@ -256,7 +256,7 @@ static int sonic_send_packet(struct sk_buff *skb, struct net_device *dev)
+ 	 */
  
- 	if (!IS_ERR_OR_NULL(charger->usb_phy))
- 		usb_unregister_notifier(charger->usb_phy, &charger->otg_nb);
-+	cancel_work_sync(&charger->otg_work);
+ 	laddr = dma_map_single(lp->device, skb->data, length, DMA_TO_DEVICE);
+-	if (!laddr) {
++	if (dma_mapping_error(lp->device, laddr)) {
+ 		pr_err_ratelimited("%s: failed to map tx DMA buffer.\n", dev->name);
+ 		dev_kfree_skb_any(skb);
+ 		return NETDEV_TX_OK;
+@@ -474,7 +474,7 @@ static bool sonic_alloc_rb(struct net_device *dev, struct sonic_local *lp,
  
- 	power_supply_unregister(charger->battery);
- 	power_supply_unregister(charger->usb);
+ 	*new_addr = dma_map_single(lp->device, skb_put(*new_skb, SONIC_RBSIZE),
+ 				   SONIC_RBSIZE, DMA_FROM_DEVICE);
+-	if (!*new_addr) {
++	if (dma_mapping_error(lp->device, *new_addr)) {
+ 		dev_kfree_skb(*new_skb);
+ 		*new_skb = NULL;
+ 		return false;
 -- 
 2.39.2
 
