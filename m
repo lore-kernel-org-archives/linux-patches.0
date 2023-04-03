@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEA36FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B02C433EF;
-	Mon,  3 Apr 2023 14:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED126FAA
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5657C4339C;
+	Mon,  3 Apr 2023 14:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533163;
-	bh=gelvFvMvURmRLNCZnWXCKgk4dLWxrbXorcbSCtb53hs=;
+	s=korg; t=1680533166;
+	bh=nWhptAhs2rCbBbIHGH5KVb/MaC+1nBXY2k0uT4Aj6o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ugZvOHxywngGzjzOvGfb6Ssj1dBZIBuG7h6cT4KUb0+kTnSM4OedwOlXKS0QASOT
-	 X6IuTvHLq2+4Qb8RFJWHGMFYo5Suc8V/E3oKvK8IzTnfgXMRDQmzgzIsLrbfij42Nq
-	 MeiU5YzZSpkhA0VMr3+xLPQzrgKchuQLa/rTYvBo=
+	b=Yo3fcpYudP0JKugHJ5MyUD0JBSsGNA8W5yqgh41W9eCYiTWa42onQRCzmWUInQmiz
+	 cOFpu5Vfs71fA+F/vu/PkvGtshLCoq1r3rLZCu7Z3nuWIED6Ew9mjAAUtRJ/0wF1Pn
+	 s1bdvFQoxrPj116fETDWZZA+M5+yygw+XovfrHl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Belanger <david.belanger@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Tianhao Zhao <tizhao@redhat.com>,
+	Jonathan Cooper <jonathan.s.cooper@amd.com>,
+	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 051/187] drm/amdkfd: Fixed kfd_process cleanup on module exit.
-Date: Mon,  3 Apr 2023 16:08:16 +0200
-Message-Id: <20230403140417.668554494@linuxfoundation.org>
+Subject: [PATCH 6.2 078/187] sfc: ef10: dont overwrite offload features at NIC reset
+Date: Mon,  3 Apr 2023 16:08:43 +0200
+Message-Id: <20230403140418.521172010@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,148 +38,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Belanger <david.belanger@amd.com>
+From: Íñigo Huguet <ihuguet@redhat.com>
 
-[ Upstream commit 20bc9f76b6a2455c6b54b91ae7634f147f64987f ]
+[ Upstream commit ca4a80e4bb7e87daf33b27d2ab9e4f5311018a89 ]
 
-Handle case when module is unloaded (kfd_exit) before a process space
-(mm_struct) is released.
+At NIC reset, some offload features related to encapsulated traffic
+might have changed (this mainly happens if the firmware-variant is
+changed with the sfboot userspace tool). Because of this, features are
+checked and set again at reset time.
 
-v2: Fixed potential race conditions by removing all kfd_process from
-the process table first, then working on releasing the resources.
+However, this was not done right, and some features were improperly
+overwritten at NIC reset:
+- Tunneled IPv6 segmentation was always disabled
+- Features disabled with ethtool were reenabled
+- Features that becomes unsupported after the reset were not disabled
 
-v3: Fixed loop element access / synchronization.  Fixed extra empty lines.
+Also, checking if the device supports IPV6_CSUM to enable TSO6 is no
+longer necessary because all currently supported devices support it.
+Additionally, move the assignment of some other features to the
+EF10_OFFLOAD_FEATURES macro, like it is done in ef100, leaving the
+selection of features in efx_pci_probe_post_io a bit cleaner.
 
-Signed-off-by: David Belanger <david.belanger@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: ffffd2454a7a ("sfc: correctly advertise tunneled IPv6 segmentation")
+Fixes: 24b2c3751aa3 ("sfc: advertise encapsulated offloads on EF10")
+Reported-by: Tianhao Zhao <tizhao@redhat.com>
+Suggested-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
+Tested-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
+Signed-off-by: Íñigo Huguet <ihuguet@redhat.com>
+Acked-by: Edward Cree <ecree.xilinx@gmail.com>
+Link: https://lore.kernel.org/r/20230323083417.7345-1-ihuguet@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_module.c  |  1 +
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h    |  1 +
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 67 +++++++++++++++++++++---
- 3 files changed, 62 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/sfc/ef10.c | 38 ++++++++++++++++++++++-----------
+ drivers/net/ethernet/sfc/efx.c  | 17 ++++++---------
+ 2 files changed, 33 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_module.c b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
-index 09b966dc37681..aee2212e52f69 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_module.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
-@@ -77,6 +77,7 @@ static int kfd_init(void)
- 
- static void kfd_exit(void)
+diff --git a/drivers/net/ethernet/sfc/ef10.c b/drivers/net/ethernet/sfc/ef10.c
+index 7022fb2005a2f..d30459dbfe8f8 100644
+--- a/drivers/net/ethernet/sfc/ef10.c
++++ b/drivers/net/ethernet/sfc/ef10.c
+@@ -1304,7 +1304,8 @@ static void efx_ef10_fini_nic(struct efx_nic *efx)
+ static int efx_ef10_init_nic(struct efx_nic *efx)
  {
-+	kfd_cleanup_processes();
- 	kfd_debugfs_fini();
- 	kfd_process_destroy_wq();
- 	kfd_procfs_shutdown();
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index 552c3ac85a132..7dc55919993c0 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -926,6 +926,7 @@ bool kfd_dev_is_large_bar(struct kfd_dev *dev);
+ 	struct efx_ef10_nic_data *nic_data = efx->nic_data;
+-	netdev_features_t hw_enc_features = 0;
++	struct net_device *net_dev = efx->net_dev;
++	netdev_features_t tun_feats, tso_feats;
+ 	int rc;
  
- int kfd_process_create_wq(void);
- void kfd_process_destroy_wq(void);
-+void kfd_cleanup_processes(void);
- struct kfd_process *kfd_create_process(struct file *filep);
- struct kfd_process *kfd_get_process(const struct task_struct *task);
- struct kfd_process *kfd_lookup_process_by_pasid(u32 pasid);
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 51b1683ac5c1e..4d9f2d1c49b1d 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -1167,6 +1167,17 @@ static void kfd_process_free_notifier(struct mmu_notifier *mn)
- 	kfd_unref_process(container_of(mn, struct kfd_process, mmu_notifier));
- }
+ 	if (nic_data->must_check_datapath_caps) {
+@@ -1349,20 +1350,30 @@ static int efx_ef10_init_nic(struct efx_nic *efx)
+ 		nic_data->must_restore_piobufs = false;
+ 	}
  
-+static void kfd_process_notifier_release_internal(struct kfd_process *p)
-+{
-+	cancel_delayed_work_sync(&p->eviction_work);
-+	cancel_delayed_work_sync(&p->restore_work);
-+
-+	/* Indicate to other users that MM is no longer valid */
-+	p->mm = NULL;
-+
-+	mmu_notifier_put(&p->mmu_notifier);
-+}
-+
- static void kfd_process_notifier_release(struct mmu_notifier *mn,
- 					struct mm_struct *mm)
- {
-@@ -1181,17 +1192,22 @@ static void kfd_process_notifier_release(struct mmu_notifier *mn,
- 		return;
+-	/* add encapsulated checksum offload features */
++	/* encap features might change during reset if fw variant changed */
+ 	if (efx_has_cap(efx, VXLAN_NVGRE) && !efx_ef10_is_vf(efx))
+-		hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
+-	/* add encapsulated TSO features */
+-	if (efx_has_cap(efx, TX_TSO_V2_ENCAP)) {
+-		netdev_features_t encap_tso_features;
++		net_dev->hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
++	else
++		net_dev->hw_enc_features &= ~(NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM);
  
- 	mutex_lock(&kfd_processes_mutex);
-+	/*
-+	 * Do early return if table is empty.
-+	 *
-+	 * This could potentially happen if this function is called concurrently
-+	 * by mmu_notifier and by kfd_cleanup_pocesses.
-+	 *
-+	 */
-+	if (hash_empty(kfd_processes_table)) {
-+		mutex_unlock(&kfd_processes_mutex);
-+		return;
-+	}
- 	hash_del_rcu(&p->kfd_processes);
- 	mutex_unlock(&kfd_processes_mutex);
- 	synchronize_srcu(&kfd_processes_srcu);
+-		encap_tso_features = NETIF_F_GSO_UDP_TUNNEL | NETIF_F_GSO_GRE |
+-			NETIF_F_GSO_UDP_TUNNEL_CSUM | NETIF_F_GSO_GRE_CSUM;
++	tun_feats = NETIF_F_GSO_UDP_TUNNEL | NETIF_F_GSO_GRE |
++		    NETIF_F_GSO_UDP_TUNNEL_CSUM | NETIF_F_GSO_GRE_CSUM;
++	tso_feats = NETIF_F_TSO | NETIF_F_TSO6;
  
--	cancel_delayed_work_sync(&p->eviction_work);
--	cancel_delayed_work_sync(&p->restore_work);
--
--	/* Indicate to other users that MM is no longer valid */
--	p->mm = NULL;
--
--	mmu_notifier_put(&p->mmu_notifier);
-+	kfd_process_notifier_release_internal(p);
- }
+-		hw_enc_features |= encap_tso_features | NETIF_F_TSO;
+-		efx->net_dev->features |= encap_tso_features;
++	if (efx_has_cap(efx, TX_TSO_V2_ENCAP)) {
++		/* If this is first nic_init, or if it is a reset and a new fw
++		 * variant has added new features, enable them by default.
++		 * If the features are not new, maintain their current value.
++		 */
++		if (!(net_dev->hw_features & tun_feats))
++			net_dev->features |= tun_feats;
++		net_dev->hw_enc_features |= tun_feats | tso_feats;
++		net_dev->hw_features |= tun_feats;
++	} else {
++		net_dev->hw_enc_features &= ~(tun_feats | tso_feats);
++		net_dev->hw_features &= ~tun_feats;
++		net_dev->features &= ~tun_feats;
+ 	}
+-	efx->net_dev->hw_enc_features = hw_enc_features;
  
- static const struct mmu_notifier_ops kfd_process_mmu_notifier_ops = {
-@@ -1200,6 +1216,43 @@ static const struct mmu_notifier_ops kfd_process_mmu_notifier_ops = {
- 	.free_notifier = kfd_process_free_notifier,
- };
+ 	/* don't fail init if RSS setup doesn't work */
+ 	rc = efx->type->rx_push_rss_config(efx, false,
+@@ -4021,7 +4032,10 @@ static unsigned int efx_ef10_recycle_ring_size(const struct efx_nic *efx)
+ 	 NETIF_F_HW_VLAN_CTAG_FILTER |	\
+ 	 NETIF_F_IPV6_CSUM |		\
+ 	 NETIF_F_RXHASH |		\
+-	 NETIF_F_NTUPLE)
++	 NETIF_F_NTUPLE |		\
++	 NETIF_F_SG |			\
++	 NETIF_F_RXCSUM |		\
++	 NETIF_F_RXALL)
  
-+/*
-+ * This code handles the case when driver is being unloaded before all
-+ * mm_struct are released.  We need to safely free the kfd_process and
-+ * avoid race conditions with mmu_notifier that might try to free them.
-+ *
-+ */
-+void kfd_cleanup_processes(void)
-+{
-+	struct kfd_process *p;
-+	struct hlist_node *p_temp;
-+	unsigned int temp;
-+	HLIST_HEAD(cleanup_list);
+ const struct efx_nic_type efx_hunt_a0_vf_nic_type = {
+ 	.is_vf = true,
+diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
+index 3a86f1213a051..6a1bff54bc6c3 100644
+--- a/drivers/net/ethernet/sfc/efx.c
++++ b/drivers/net/ethernet/sfc/efx.c
+@@ -1001,21 +1001,18 @@ static int efx_pci_probe_post_io(struct efx_nic *efx)
+ 	}
+ 
+ 	/* Determine netdevice features */
+-	net_dev->features |= (efx->type->offload_features | NETIF_F_SG |
+-			      NETIF_F_TSO | NETIF_F_RXCSUM | NETIF_F_RXALL);
+-	if (efx->type->offload_features & (NETIF_F_IPV6_CSUM | NETIF_F_HW_CSUM)) {
+-		net_dev->features |= NETIF_F_TSO6;
+-		if (efx_has_cap(efx, TX_TSO_V2_ENCAP))
+-			net_dev->hw_enc_features |= NETIF_F_TSO6;
+-	}
+-	/* Check whether device supports TSO */
+-	if (!efx->type->tso_versions || !efx->type->tso_versions(efx))
+-		net_dev->features &= ~NETIF_F_ALL_TSO;
++	net_dev->features |= efx->type->offload_features;
 +
-+	/*
-+	 * Move all remaining kfd_process from the process table to a
-+	 * temp list for processing.   Once done, callback from mmu_notifier
-+	 * release will not see the kfd_process in the table and do early return,
-+	 * avoiding double free issues.
-+	 */
-+	mutex_lock(&kfd_processes_mutex);
-+	hash_for_each_safe(kfd_processes_table, temp, p_temp, p, kfd_processes) {
-+		hash_del_rcu(&p->kfd_processes);
-+		synchronize_srcu(&kfd_processes_srcu);
-+		hlist_add_head(&p->kfd_processes, &cleanup_list);
-+	}
-+	mutex_unlock(&kfd_processes_mutex);
++	/* Add TSO features */
++	if (efx->type->tso_versions && efx->type->tso_versions(efx))
++		net_dev->features |= NETIF_F_TSO | NETIF_F_TSO6;
 +
-+	hlist_for_each_entry_safe(p, p_temp, &cleanup_list, kfd_processes)
-+		kfd_process_notifier_release_internal(p);
-+
-+	/*
-+	 * Ensures that all outstanding free_notifier get called, triggering
-+	 * the release of the kfd_process struct.
-+	 */
-+	mmu_notifier_synchronize();
-+}
-+
- static int kfd_process_init_cwsr_apu(struct kfd_process *p, struct file *filep)
- {
- 	unsigned long  offset;
+ 	/* Mask for features that also apply to VLAN devices */
+ 	net_dev->vlan_features |= (NETIF_F_HW_CSUM | NETIF_F_SG |
+ 				   NETIF_F_HIGHDMA | NETIF_F_ALL_TSO |
+ 				   NETIF_F_RXCSUM);
+ 
++	/* Determine user configurable features */
+ 	net_dev->hw_features |= net_dev->features & ~efx->fixed_features;
+ 
+ 	/* Disable receiving frames with bad FCS, by default. */
 -- 
 2.39.2
 
