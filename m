@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CB36FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268CEC433EF;
-	Mon,  3 Apr 2023 14:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370C46FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:27:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39DCC433D2;
+	Mon,  3 Apr 2023 14:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532055;
-	bh=CWtyyx3MgD4WAeRD4gojJ7zwP2RRGe6+mgHkGYRc3vM=;
+	s=korg; t=1680532058;
+	bh=+cSnd0+pXbfBgQ9Z2CGVEYbjvtyoDoodXIoHywwXID4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=encBFfk/JVsvvXkdcg7j0hvTGbkyJ1PFE5xDNxpfYNL4pjDgjaqwZ7LFbp8LLvtz9
-	 e2UWWwSITY2IAo22O/5my1u6GVSEWFBz/qfqWNUBlErQZItCt6qSC2NdTWUoFFTwnM
-	 3VjST+EI5OU60yYqrOsqo7z0++TvPzQDQBNf3/vo=
+	b=KKXgmvAS/2Iy2gZ9znnWssiBORdXqoglsmvRUbV2YZiu7pZCnF9DF+J5XvKpmmglv
+	 52c0gQB6JLebZo8O6t9kUFqcleW7baDysZGIBzDe7owowgI1rSKcm36urj1o3AWEM+
+	 0rm7DRMeGfDLqmxwStlKWuaGvr4AchKoTSWOijQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/173] drm/meson: fix missing component unbind on bind errors
-Date: Mon,  3 Apr 2023 16:08:44 +0200
-Message-Id: <20230403140417.967398654@linuxfoundation.org>
+	Coly Li <colyli@suse.de>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.10 083/173] dm thin: fix deadlock when swapping to thin device
+Date: Mon,  3 Apr 2023 16:08:18 +0200
+Message-Id: <20230403140417.106192169@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,65 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Coly Li <colyli@suse.de>
 
-[ Upstream commit ba98413bf45edbf33672e2539e321b851b2cfbd1 ]
+commit 9bbf5feecc7eab2c370496c1c161bbfe62084028 upstream.
 
-Make sure to unbind all subcomponents when binding the aggregate device
-fails.
+This is an already known issue that dm-thin volume cannot be used as
+swap, otherwise a deadlock may happen when dm-thin internal memory
+demand triggers swap I/O on the dm-thin volume itself.
 
-Fixes: a41e82e6c457 ("drm/meson: Add support for components")
-Cc: stable@vger.kernel.org      # 4.12
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230306103533.4915-1-johan+linaro@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+But thanks to commit a666e5c05e7c ("dm: fix deadlock when swapping to
+encrypted device"), the limit_swap_bios target flag can also be used
+for dm-thin to avoid the recursive I/O when it is used as swap.
+
+Fix is to simply set ti->limit_swap_bios to true in both pool_ctr()
+and thin_ctr().
+
+In my test, I create a dm-thin volume /dev/vg/swap and use it as swap
+device. Then I run fio on another dm-thin volume /dev/vg/main and use
+large --blocksize to trigger swap I/O onto /dev/vg/swap.
+
+The following fio command line is used in my test,
+  fio --name recursive-swap-io --lockmem 1 --iodepth 128 \
+     --ioengine libaio --filename /dev/vg/main --rw randrw \
+    --blocksize 1M --numjobs 32 --time_based --runtime=12h
+
+Without this fix, the whole system can be locked up within 15 seconds.
+
+With this fix, there is no any deadlock or hung task observed after
+2 hours of running fio.
+
+Furthermore, if blocksize is changed from 1M to 128M, after around 30
+seconds fio has no visible I/O, and the out-of-memory killer message
+shows up in kernel message. After around 20 minutes all fio processes
+are killed and the whole system is back to being alive.
+
+This is exactly what is expected when recursive I/O happens on dm-thin
+volume when it is used as swap.
+
+Depends-on: a666e5c05e7c ("dm: fix deadlock when swapping to encrypted device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Coly Li <colyli@suse.de>
+Acked-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/meson/meson_drv.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/md/dm-thin.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv.c
-index 090878bd74f6a..5c29ddf93eb3f 100644
---- a/drivers/gpu/drm/meson/meson_drv.c
-+++ b/drivers/gpu/drm/meson/meson_drv.c
-@@ -339,19 +339,19 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -3383,6 +3383,7 @@ static int pool_ctr(struct dm_target *ti
+ 	pt->low_water_blocks = low_water_blocks;
+ 	pt->adjusted_pf = pt->requested_pf = pf;
+ 	ti->num_flush_bios = 1;
++	ti->limit_swap_bios = true;
  
- 	ret = meson_plane_create(priv);
- 	if (ret)
--		goto exit_afbcd;
-+		goto unbind_all;
+ 	/*
+ 	 * Only need to enable discards if the pool should pass
+@@ -4259,6 +4260,7 @@ static int thin_ctr(struct dm_target *ti
+ 		goto bad;
  
- 	ret = meson_overlay_create(priv);
- 	if (ret)
--		goto exit_afbcd;
-+		goto unbind_all;
+ 	ti->num_flush_bios = 1;
++	ti->limit_swap_bios = true;
+ 	ti->flush_supported = true;
+ 	ti->per_io_data_size = sizeof(struct dm_thin_endio_hook);
  
- 	ret = meson_crtc_create(priv);
- 	if (ret)
--		goto exit_afbcd;
-+		goto unbind_all;
- 
- 	ret = drm_irq_install(drm, priv->vsync_irq);
- 	if (ret)
--		goto exit_afbcd;
-+		goto unbind_all;
- 
- 	drm_mode_config_reset(drm);
- 
-@@ -369,6 +369,9 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
- 
- uninstall_irq:
- 	drm_irq_uninstall(drm);
-+unbind_all:
-+	if (has_components)
-+		component_unbind_all(drm->dev, drm);
- exit_afbcd:
- 	if (priv->afbcd.ops)
- 		priv->afbcd.ops->exit(priv);
--- 
-2.39.2
-
 
 
