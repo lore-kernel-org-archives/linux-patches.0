@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1304612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67528C433EF;
-	Mon,  3 Apr 2023 14:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76344612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D04C433D2;
+	Mon,  3 Apr 2023 14:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531622;
-	bh=IR+Ms+D06BRkpRSxbupCvNJAIWUjyGRDhjJ6KeZWrfw=;
+	s=korg; t=1680531625;
+	bh=jfqSmcs6eeBcUxR3Hcw8u6iVG/WGCLmO5QOcJrJ/Txk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1ulF+cZARUSx7gPxjdVUa7RiQJi7Q3c1PI1AugVFr3XhJZ6VBSDufdPDv1YWPx9d
-	 zlC+/tEaYjj6tvt4CUS3BmD84xejEmSXSxxcCmqCGbF1j6B6d5dUnafv59MCF2OP1e
-	 EoZumc71sZlcfI2pb7scQikCWqhWirkjDFu6DMoA=
+	b=kqXYE1f7UU2r44cEBEzy6d1EPMgVz2Lx6XTUwrV9Enl6LoyYLCp1dQBB+nItGOmM/
+	 tYQSMfLZk81mA+Fz/7bawUxRStKW0UqvsUmGEab1m6ZRsHz0jCY2wyVJrTUW9Juu1v
+	 UY6wi9J8GfcrBRWAYfc66YXGqog+m17FzAzSUqkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>
-Subject: [PATCH 5.4 048/104] usb: cdns3: Fix issue with using incorrect PCI device function
-Date: Mon,  3 Apr 2023 16:08:40 +0200
-Message-Id: <20230403140406.253676583@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 5.4 049/104] usb: chipdea: core: fix return -EINVAL if request role is the same with current role
+Date: Mon,  3 Apr 2023 16:08:41 +0200
+Message-Id: <20230403140406.283567926@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -33,44 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 1272fd652a226ccb34e9f47371b6121948048438 upstream.
+commit 3670de80678961eda7fa2220883fc77c16868951 upstream.
 
-PCI based platform can have more than two PCI functions.
-USBSS PCI Glue driver during initialization should
-consider only DRD/HOST/DEVICE PCI functions and
-all other should be ignored. This patch adds additional
-condition which causes that only DRD and HOST/DEVICE
-function will be accepted.
+It should not return -EINVAL if the request role is the same with current
+role, return non-error and without do anything instead.
 
+Fixes: a932a8041ff9 ("usb: chipidea: core: add sysfs group")
 cc: <stable@vger.kernel.org>
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Link: https://lore.kernel.org/r/20230308124427.311245-1-pawell@cadence.com
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20230317061516.2451728-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-pci-wrap.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/chipidea/core.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/cdns3/cdns3-pci-wrap.c b/drivers/usb/cdns3/cdns3-pci-wrap.c
-index deeea618ba33..1f6320d98a76 100644
---- a/drivers/usb/cdns3/cdns3-pci-wrap.c
-+++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
-@@ -60,6 +60,11 @@ static struct pci_dev *cdns3_get_second_fun(struct pci_dev *pdev)
- 			return NULL;
- 	}
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -960,9 +960,12 @@ static ssize_t role_store(struct device
+ 			     strlen(ci->roles[role]->name)))
+ 			break;
  
-+	if (func->devfn != PCI_DEV_FN_HOST_DEVICE &&
-+	    func->devfn != PCI_DEV_FN_OTG) {
-+		return NULL;
-+	}
+-	if (role == CI_ROLE_END || role == ci->role)
++	if (role == CI_ROLE_END)
+ 		return -EINVAL;
+ 
++	if (role == ci->role)
++		return n;
 +
- 	return func;
- }
- 
--- 
-2.40.0
-
+ 	pm_runtime_get_sync(dev);
+ 	disable_irq(ci->irq);
+ 	ci_role_stop(ci);
 
 
