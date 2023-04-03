@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C89E612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9950EC433EF;
-	Mon,  3 Apr 2023 14:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1BC612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:22:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3070CC433EF;
+	Mon,  3 Apr 2023 14:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531746;
-	bh=6rJG97ZzxVmIyk1bTkmXt1OfZk0tUqXxGyQT7Wn+4hM=;
+	s=korg; t=1680531748;
+	bh=HOHow3Rugp9Ruw1/d46OiozlmC0U0AXbrl1Q5lePDYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gut5TerPVKMK14EY9vbI0WHSzkBVMiDtjcmaeUp9xdDnRZ2nas0KyXIK9AR493aSF
-	 QPzo3uO7jmiNgHHVWah7da8PfHagrrsxLWmEsMQXzy8L3a03hpPgNueTVVc8K60J1B
-	 wuy0SGJ+QvCUqC4fExPr7St65Ot9/EYfD9M7g0A4=
+	b=Q7vjG2N18fy0d3SshIGD2u+wf2+A12SfAybSuL6IPJ1zyykoqlO7G1diAjs5lMBrB
+	 oayFQY0ZUJpzlJd8PmK+JEBGpviwmt+fWOjUcu11oJ4cGWdC04Lt3JuJNn2ApauAoh
+	 nx0m5dFOcGGw9jCGZOdRd94EcUqnJlH3zObBWI7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 065/104] fbdev: tgafb: Fix potential divide by zero
-Date: Mon,  3 Apr 2023 16:08:57 +0200
-Message-Id: <20230403140406.776209095@linuxfoundation.org>
+Subject: [PATCH 5.4 066/104] sched_getaffinity: dont assume cpumask_size() is fully initialized
+Date: Mon,  3 Apr 2023 16:08:58 +0200
+Message-Id: <20230403140406.806866071@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,42 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit f90bd245de82c095187d8c2cabb8b488a39eaecc ]
+[ Upstream commit 6015b1aca1a233379625385feb01dd014aca60b5 ]
 
-fb_set_var would by called when user invokes ioctl with cmd
-FBIOPUT_VSCREENINFO. User-provided data would finally reach
-tgafb_check_var. In case var->pixclock is assigned to zero,
-divide by zero would occur when checking whether reciprocal
-of var->pixclock is too high.
+The getaffinity() system call uses 'cpumask_size()' to decide how big
+the CPU mask is - so far so good.  It is indeed the allocation size of a
+cpumask.
 
-Similar crashes have happened in other fbdev drivers. There
-is no check and modification on var->pixclock along the call
-chain to tgafb_check_var. We believe it could also be triggered
-in driver tgafb from user site.
+But the code also assumes that the whole allocation is initialized
+without actually doing so itself.  That's wrong, because we might have
+fixed-size allocations (making copying and clearing more efficient), but
+not all of it is then necessarily used if 'nr_cpu_ids' is smaller.
 
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Having checked other users of 'cpumask_size()', they all seem to be ok,
+either using it purely for the allocation size, or explicitly zeroing
+the cpumask before using the size in bytes to copy it.
+
+See for example the ublk_ctrl_get_queue_affinity() function that uses
+the proper 'zalloc_cpumask_var()' to make sure that the whole mask is
+cleared, whether the storage is on the stack or if it was an external
+allocation.
+
+Fix this by just zeroing the allocation before using it.  Do the same
+for the compat version of sched_getaffinity(), which had the same logic.
+
+Also, for consistency, make sched_getaffinity() use 'cpumask_bits()' to
+access the bits.  For a cpumask_var_t, it ends up being a pointer to the
+same data either way, but it's just a good idea to treat it like you
+would a 'cpumask_t'.  The compat case already did that.
+
+Reported-by: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://lore.kernel.org/lkml/7d026744-6bd6-6827-0471-b5e8eae0be3f@arm.com/
+Cc: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/tgafb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/compat.c     | 2 +-
+ kernel/sched/core.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/tgafb.c b/drivers/video/fbdev/tgafb.c
-index 286b2371c7dd3..eab2b4f87d68f 100644
---- a/drivers/video/fbdev/tgafb.c
-+++ b/drivers/video/fbdev/tgafb.c
-@@ -166,6 +166,9 @@ tgafb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
- {
- 	struct tga_par *par = (struct tga_par *)info->par;
+diff --git a/kernel/compat.c b/kernel/compat.c
+index a2bc1d6ceb570..241516f326c04 100644
+--- a/kernel/compat.c
++++ b/kernel/compat.c
+@@ -240,7 +240,7 @@ COMPAT_SYSCALL_DEFINE3(sched_getaffinity, compat_pid_t,  pid, unsigned int, len,
+ 	if (len & (sizeof(compat_ulong_t)-1))
+ 		return -EINVAL;
  
-+	if (!var->pixclock)
-+		return -EINVAL;
-+
- 	if (par->tga_type == TGA_TYPE_8PLANE) {
- 		if (var->bits_per_pixel != 8)
- 			return -EINVAL;
+-	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
+ 		return -ENOMEM;
+ 
+ 	ret = sched_getaffinity(pid, mask);
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index d5765b7c92f79..51ac62637e4ed 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -5661,14 +5661,14 @@ SYSCALL_DEFINE3(sched_getaffinity, pid_t, pid, unsigned int, len,
+ 	if (len & (sizeof(unsigned long)-1))
+ 		return -EINVAL;
+ 
+-	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&mask, GFP_KERNEL))
+ 		return -ENOMEM;
+ 
+ 	ret = sched_getaffinity(pid, mask);
+ 	if (ret == 0) {
+ 		unsigned int retlen = min(len, cpumask_size());
+ 
+-		if (copy_to_user(user_mask_ptr, mask, retlen))
++		if (copy_to_user(user_mask_ptr, cpumask_bits(mask), retlen))
+ 			ret = -EFAULT;
+ 		else
+ 			ret = retlen;
 -- 
 2.39.2
 
