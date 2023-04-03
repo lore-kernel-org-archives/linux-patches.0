@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8606612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507A8C433EF;
-	Mon,  3 Apr 2023 14:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C2C612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:23:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB66C433D2;
+	Mon,  3 Apr 2023 14:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531800;
-	bh=vON1FfdxgCQqggAJNWnSFHxUX+k8afB/4aCCX357TLA=;
+	s=korg; t=1680531803;
+	bh=oGNwlDDSBUTBAPdVgUnXbF/tTCXMU1iMaBtY5e9rf9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qy2WaQQFPqYQrBu1VnnPcMIoFRMTFwx9ana+1BXXASMBZ2TLaLs+XRzVw5DcGx1//
-	 /otlZnSl3G094Udob2ICXc/qeRXFN7Vx1m/8lgOWx+jZ20sZXtHARAdvWXM5QW54tP
-	 n4Y4RFEJBkFxzCZ09fjGCV+OUIjVFRug+K8Ey77Y=
+	b=LrlK9/OFkH7aIkslg6P17ES+qYC8Ycz4ZA4PdLXd0LWVJk6zJDc90wsZCRaxsQsLf
+	 CEA/WiNgrufPNz9u4my3D3dtYWZEcm5WlDzLm6eN71gl5L+g2EKiYIQCFTOWhfdvIf
+	 jLBCny++94XEvhuOg6RVfVwUp2uFDBb2xmb32cS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 012/173] KVM: Register /dev/kvm as the _very_ last thing during initialization
-Date: Mon,  3 Apr 2023 16:07:07 +0200
-Message-Id: <20230403140414.671904725@linuxfoundation.org>
+Subject: [PATCH 5.10 002/173] perf/core: Fix perf_output_begin parameter is incorrectly invoked in perf_event_bpf_output
+Date: Mon,  3 Apr 2023 16:06:57 +0200
+Message-Id: <20230403140414.275620681@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,86 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit 2b01281273738bf2d6551da48d65db2df3f28998 ]
+[ Upstream commit eb81a2ed4f52be831c9fb879752d89645a312c13 ]
 
-Register /dev/kvm, i.e. expose KVM to userspace, only after all other
-setup has completed.  Once /dev/kvm is exposed, userspace can start
-invoking KVM ioctls, creating VMs, etc...  If userspace creates a VM
-before KVM is done with its configuration, bad things may happen, e.g.
-KVM will fail to properly migrate vCPU state if a VM is created before
-KVM has registered preemption notifiers.
+syzkaller reportes a KASAN issue with stack-out-of-bounds.
+The call trace is as follows:
+  dump_stack+0x9c/0xd3
+  print_address_description.constprop.0+0x19/0x170
+  __kasan_report.cold+0x6c/0x84
+  kasan_report+0x3a/0x50
+  __perf_event_header__init_id+0x34/0x290
+  perf_event_header__init_id+0x48/0x60
+  perf_output_begin+0x4a4/0x560
+  perf_event_bpf_output+0x161/0x1e0
+  perf_iterate_sb_cpu+0x29e/0x340
+  perf_iterate_sb+0x4c/0xc0
+  perf_event_bpf_event+0x194/0x2c0
+  __bpf_prog_put.constprop.0+0x55/0xf0
+  __cls_bpf_delete_prog+0xea/0x120 [cls_bpf]
+  cls_bpf_delete_prog_work+0x1c/0x30 [cls_bpf]
+  process_one_work+0x3c2/0x730
+  worker_thread+0x93/0x650
+  kthread+0x1b8/0x210
+  ret_from_fork+0x1f/0x30
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20221130230934.1014142-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+commit 267fb27352b6 ("perf: Reduce stack usage of perf_output_begin()")
+use on-stack struct perf_sample_data of the caller function.
+
+However, perf_event_bpf_output uses incorrect parameter to convert
+small-sized data (struct perf_bpf_event) into large-sized data
+(struct perf_sample_data), which causes memory overwriting occurs in
+__perf_event_header__init_id.
+
+Fixes: 267fb27352b6 ("perf: Reduce stack usage of perf_output_begin()")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20230314044735.56551-1-yangjihong1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- virt/kvm/kvm_main.c | 31 ++++++++++++++++++++++---------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+ kernel/events/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index d96a076aef0dd..d2df081021714 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -5020,12 +5020,6 @@ int kvm_init(void *opaque, unsigned vcpu_size, unsigned vcpu_align,
- 	kvm_vm_fops.owner = module;
- 	kvm_vcpu_fops.owner = module;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index d7b61116f15bb..eb8660ed1abba 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -8710,7 +8710,7 @@ static void perf_event_bpf_output(struct perf_event *event, void *data)
  
--	r = misc_register(&kvm_dev);
--	if (r) {
--		pr_err("kvm: misc device register failed\n");
--		goto out_unreg;
--	}
--
- 	register_syscore_ops(&kvm_syscore_ops);
- 
- 	kvm_preempt_ops.sched_in = kvm_sched_in;
-@@ -5034,11 +5028,24 @@ int kvm_init(void *opaque, unsigned vcpu_size, unsigned vcpu_align,
- 	kvm_init_debug();
- 
- 	r = kvm_vfio_ops_init();
--	WARN_ON(r);
-+	if (WARN_ON_ONCE(r))
-+		goto err_vfio;
-+
-+	/*
-+	 * Registration _must_ be the very last thing done, as this exposes
-+	 * /dev/kvm to userspace, i.e. all infrastructure must be setup!
-+	 */
-+	r = misc_register(&kvm_dev);
-+	if (r) {
-+		pr_err("kvm: misc device register failed\n");
-+		goto err_register;
-+	}
- 
- 	return 0;
- 
--out_unreg:
-+err_register:
-+	kvm_vfio_ops_exit();
-+err_vfio:
- 	kvm_async_pf_deinit();
- out_free_5:
- 	for_each_possible_cpu(cpu)
-@@ -5065,8 +5072,14 @@ void kvm_exit(void)
- {
- 	int cpu;
- 
--	debugfs_remove_recursive(kvm_debugfs_dir);
-+	/*
-+	 * Note, unregistering /dev/kvm doesn't strictly need to come first,
-+	 * fops_get(), a.k.a. try_module_get(), prevents acquiring references
-+	 * to KVM while the module is being stopped.
-+	 */
- 	misc_deregister(&kvm_dev);
-+
-+	debugfs_remove_recursive(kvm_debugfs_dir);
- 	for_each_possible_cpu(cpu)
- 		free_cpumask_var(per_cpu(cpu_kick_mask, cpu));
- 	kmem_cache_destroy(kvm_vcpu_cache);
+ 	perf_event_header__init_id(&bpf_event->event_id.header,
+ 				   &sample, event);
+-	ret = perf_output_begin(&handle, data, event,
++	ret = perf_output_begin(&handle, &sample, event,
+ 				bpf_event->event_id.header.size);
+ 	if (ret)
+ 		return;
 -- 
 2.39.2
 
