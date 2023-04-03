@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3726F6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4398C433D2;
-	Mon,  3 Apr 2023 14:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5506FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:34:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551E1C433EF;
+	Mon,  3 Apr 2023 14:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532492;
-	bh=DVsWSBvy+EpPeMBt0bjXaMfpsBY6XhGAU0Y/OE6SH4w=;
+	s=korg; t=1680532494;
+	bh=BVclvr4EGedUuGLmRzihaQUqZTZ46qI3OJEKv0FvIxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DV174mfLWNcHaw8T9c3+gtEbvp0p/GmMEStNpPw+90ihjw7kfKHyPYV9vxxnUavnH
-	 V9lkXnCMRZxXjqHqQsTFLaS4mxpraelpQ+HVfYc56OYro9yiMuUtwV2utMFWOeMRLs
-	 EsnSg83M7QRxxFusc2IWvr0TLdwtd4dEdJ97q8Bs=
+	b=ncVXJwnThnwCmMlRlQHAVLtj08/pHP3Wx1BTHGXIAg5WvZ2iH3qWXZsHfnnbTfIOg
+	 FMoyFUtQbjcv0tdaFeh5MoclemzABrtQV9LluzLfEfwRG7+T8fIK0xrGQjpS21fKZK
+	 rroiXvy4+K6KAj6WztL+n7+gQLCkoTpak2iKLOJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Raillard <douglas.raillard@arm.com>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 5.15 85/99] rcu: Fix rcu_torture_read ftrace event
-Date: Mon,  3 Apr 2023 16:09:48 +0200
-Message-Id: <20230403140406.588323049@linuxfoundation.org>
+	Lucas Stach <l.stach@pengutronix.de>,
+	Christian Gmeiner <christian.gmeiner@gmail.com>
+Subject: [PATCH 5.15 86/99] drm/etnaviv: fix reference leak when mmaping imported buffer
+Date: Mon,  3 Apr 2023 16:09:49 +0200
+Message-Id: <20230403140406.626488994@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -37,39 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Raillard <douglas.raillard@arm.com>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-commit d18a04157fc171fd48075e3dc96471bd3b87f0dd upstream.
+commit 963b2e8c428f79489ceeb058e8314554ec9cbe6f upstream.
 
-Fix the rcutorturename field so that its size is correctly reported in
-the text format embedded in trace.dat files. As it stands, it is
-reported as being of size 1:
+drm_gem_prime_mmap() takes a reference on the GEM object, but before that
+drm_gem_mmap_obj() already takes a reference, which will be leaked as only
+one reference is dropped when the mapping is closed. Drop the extra
+reference when dma_buf_mmap() succeeds.
 
-    field:char rcutorturename[8];   offset:8;       size:1; signed:0;
-
-Signed-off-by: Douglas Raillard <douglas.raillard@arm.com>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
 Cc: stable@vger.kernel.org
-Fixes: 04ae87a52074e ("ftrace: Rework event_create_dir()")
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-[ boqun: Add "Cc" and "Fixes" tags per Steven ]
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Christian Gmeiner <christian.gmeiner@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rcu.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/include/trace/events/rcu.h
-+++ b/include/trace/events/rcu.h
-@@ -768,7 +768,7 @@ TRACE_EVENT_RCU(rcu_torture_read,
- 	TP_ARGS(rcutorturename, rhp, secs, c_old, c),
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
+@@ -88,7 +88,15 @@ static void *etnaviv_gem_prime_vmap_impl
+ static int etnaviv_gem_prime_mmap_obj(struct etnaviv_gem_object *etnaviv_obj,
+ 		struct vm_area_struct *vma)
+ {
+-	return dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
++	int ret;
++
++	ret = dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
++	if (!ret) {
++		/* Drop the reference acquired by drm_gem_mmap_obj(). */
++		drm_gem_object_put(&etnaviv_obj->base);
++	}
++
++	return ret;
+ }
  
- 	TP_STRUCT__entry(
--		__field(char, rcutorturename[RCUTORTURENAME_LEN])
-+		__array(char, rcutorturename, RCUTORTURENAME_LEN)
- 		__field(struct rcu_head *, rhp)
- 		__field(unsigned long, secs)
- 		__field(unsigned long, c_old)
+ static const struct etnaviv_gem_ops etnaviv_gem_prime_ops = {
 
 
