@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9406FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB11C433EF;
-	Mon,  3 Apr 2023 14:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65D66FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350F6C4339B;
+	Mon,  3 Apr 2023 14:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532531;
-	bh=kBuQ9V3uPHntYhEysWPZWq7DDkPBSNcLII4/gXUfQHY=;
+	s=korg; t=1680532533;
+	bh=NJHF/NjHhx/f9ocyj5TyCfoMegS0VIU/roRrfmKd2jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PK31z0q+LNke1g0AZ/BubSnh/ZQCSIWmiJbZIM57geIiPjxdiRTDyXV7HYLUFkWsL
-	 fC8GsyKEIlSCpNK3HKNKrlhhCRBjJx82WHL3RoCglhxSaC76VfRYx2UWLJRx7uuOJ4
-	 p3mVo1DDv8cy+sIw9QJKRf/6WQU+paU47vCtaLbo=
+	b=vOe4MGL+BafQcurPnt4rnvuLn/2Bp3DGIdyjJ65GJLetBdQvUsbKKEw+w7/X8BPAE
+	 l5AIGM/6bFX88hJwhebl/+IpisyksfJbJEvlES0XwQszAGoUJ8IG1YBEHp4DZqFBKl
+	 ok3gvYTNFL1BRjhbciPBVTT6EWyoBjKCJIQenevU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shyam Prasad N <sprasad@microsoft.com>,
 	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/181] cifs: prevent data race in cifs_reconnect_tcon()
-Date: Mon,  3 Apr 2023 16:07:18 +0200
-Message-Id: <20230403140415.207634969@linuxfoundation.org>
+Subject: [PATCH 6.1 004/181] cifs: avoid race conditions with parallel reconnects
+Date: Mon,  3 Apr 2023 16:07:19 +0200
+Message-Id: <20230403140415.239397628@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -35,253 +36,331 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 1bcd548d935a33c6fc58331405eb1b82fd6150de ]
+[ Upstream commit bc962159e8e326af634a506508034a375bf2b858 ]
 
-Make sure to get an up-to-date TCP_Server_Info::nr_targets value prior
-to waiting the server to be reconnected in cifs_reconnect_tcon().  It
-is set in cifs_tcp_ses_needs_reconnect() and protected by
-TCP_Server_Info::srv_lock.
+When multiple processes/channels do reconnects in parallel
+we used to return success immediately
+negotiate/session-setup/tree-connect, causing race conditions
+between processes that enter the function in parallel.
+This caused several errors related to session not found to
+show up during parallel reconnects.
 
-Create a new cifs_wait_for_server_reconnect() helper that can be used
-by both SMB2+ and CIFS reconnect code.
-
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: bc962159e8e3 ("cifs: avoid race conditions with parallel reconnects")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsproto.h |  1 +
- fs/cifs/cifssmb.c   | 43 ++----------------------
- fs/cifs/misc.c      | 44 ++++++++++++++++++++++++
- fs/cifs/smb2pdu.c   | 82 ++++++++++++---------------------------------
- 4 files changed, 69 insertions(+), 101 deletions(-)
+ fs/cifs/connect.c       | 48 ++++++++++++++++++++++++++++++-----------
+ fs/cifs/smb2pdu.c       | 44 +++++++++++++++++++++----------------
+ fs/cifs/smb2transport.c | 17 ++++++++++++---
+ 3 files changed, 76 insertions(+), 33 deletions(-)
 
-diff --git a/fs/cifs/cifsproto.h b/fs/cifs/cifsproto.h
-index bc4475f6c0827..98513f5af3f96 100644
---- a/fs/cifs/cifsproto.h
-+++ b/fs/cifs/cifsproto.h
-@@ -691,5 +691,6 @@ static inline int cifs_create_options(struct cifs_sb_info *cifs_sb, int options)
+diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
+index 43637c1283748..077c88c49dfdf 100644
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -261,31 +261,42 @@ cifs_mark_tcp_ses_conns_for_reconnect(struct TCP_Server_Info *server,
+ 			cifs_chan_update_iface(ses, server);
  
- struct super_block *cifs_get_tcon_super(struct cifs_tcon *tcon);
- void cifs_put_tcon_super(struct super_block *sb);
-+int cifs_wait_for_server_reconnect(struct TCP_Server_Info *server, bool retry);
+ 		spin_lock(&ses->chan_lock);
+-		if (!mark_smb_session && cifs_chan_needs_reconnect(ses, server))
+-			goto next_session;
++		if (!mark_smb_session && cifs_chan_needs_reconnect(ses, server)) {
++			spin_unlock(&ses->chan_lock);
++			continue;
++		}
  
- #endif			/* _CIFSPROTO_H */
-diff --git a/fs/cifs/cifssmb.c b/fs/cifs/cifssmb.c
-index 6c6a7fc47f3e3..4bc6ba87baf4c 100644
---- a/fs/cifs/cifssmb.c
-+++ b/fs/cifs/cifssmb.c
-@@ -70,7 +70,6 @@ cifs_reconnect_tcon(struct cifs_tcon *tcon, int smb_command)
- 	struct cifs_ses *ses;
- 	struct TCP_Server_Info *server;
- 	struct nls_table *nls_codepage;
--	int retries;
+ 		if (mark_smb_session)
+ 			CIFS_SET_ALL_CHANS_NEED_RECONNECT(ses);
+ 		else
+ 			cifs_chan_set_need_reconnect(ses, server);
  
- 	/*
- 	 * SMBs NegProt, SessSetup, uLogoff do not have tcon yet so check for
-@@ -98,45 +97,9 @@ cifs_reconnect_tcon(struct cifs_tcon *tcon, int smb_command)
++		cifs_dbg(FYI, "%s: channel connect bitmap: 0x%lx\n",
++			 __func__, ses->chans_need_reconnect);
++
+ 		/* If all channels need reconnect, then tcon needs reconnect */
+-		if (!mark_smb_session && !CIFS_ALL_CHANS_NEED_RECONNECT(ses))
+-			goto next_session;
++		if (!mark_smb_session && !CIFS_ALL_CHANS_NEED_RECONNECT(ses)) {
++			spin_unlock(&ses->chan_lock);
++			continue;
++		}
++		spin_unlock(&ses->chan_lock);
+ 
++		spin_lock(&ses->ses_lock);
+ 		ses->ses_status = SES_NEED_RECON;
++		spin_unlock(&ses->ses_lock);
+ 
+ 		list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
+ 			tcon->need_reconnect = true;
++			spin_lock(&tcon->tc_lock);
+ 			tcon->status = TID_NEED_RECON;
++			spin_unlock(&tcon->tc_lock);
+ 		}
+ 		if (ses->tcon_ipc) {
+ 			ses->tcon_ipc->need_reconnect = true;
++			spin_lock(&ses->tcon_ipc->tc_lock);
+ 			ses->tcon_ipc->status = TID_NEED_RECON;
++			spin_unlock(&ses->tcon_ipc->tc_lock);
+ 		}
+-
+-next_session:
+-		spin_unlock(&ses->chan_lock);
  	}
- 	spin_unlock(&tcon->tc_lock);
- 
--	retries = server->nr_targets;
--
--	/*
--	 * Give demultiplex thread up to 10 seconds to each target available for
--	 * reconnect -- should be greater than cifs socket timeout which is 7
--	 * seconds.
--	 */
--	while (server->tcpStatus == CifsNeedReconnect) {
--		rc = wait_event_interruptible_timeout(server->response_q,
--						      (server->tcpStatus != CifsNeedReconnect),
--						      10 * HZ);
--		if (rc < 0) {
--			cifs_dbg(FYI, "%s: aborting reconnect due to a received signal by the process\n",
--				 __func__);
--			return -ERESTARTSYS;
--		}
--
--		/* are we still trying to reconnect? */
--		spin_lock(&server->srv_lock);
--		if (server->tcpStatus != CifsNeedReconnect) {
--			spin_unlock(&server->srv_lock);
--			break;
--		}
--		spin_unlock(&server->srv_lock);
--
--		if (retries && --retries)
--			continue;
--
--		/*
--		 * on "soft" mounts we wait once. Hard mounts keep
--		 * retrying until process is killed or server comes
--		 * back on-line
--		 */
--		if (!tcon->retry) {
--			cifs_dbg(FYI, "gave up waiting on reconnect in smb_init\n");
--			return -EHOSTDOWN;
--		}
--		retries = server->nr_targets;
--	}
-+	rc = cifs_wait_for_server_reconnect(server, tcon->retry);
-+	if (rc)
-+		return rc;
- 
- 	spin_lock(&ses->chan_lock);
- 	if (!cifs_chan_needs_reconnect(ses, server) && !tcon->need_reconnect) {
-diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
-index 4e54736a06996..832856aef4b7a 100644
---- a/fs/cifs/misc.c
-+++ b/fs/cifs/misc.c
-@@ -1382,3 +1382,47 @@ int cifs_inval_name_dfs_link_error(const unsigned int xid,
- 	return 0;
+ 	spin_unlock(&cifs_tcp_ses_lock);
  }
- #endif
-+
-+int cifs_wait_for_server_reconnect(struct TCP_Server_Info *server, bool retry)
-+{
-+	int timeout = 10;
-+	int rc;
-+
-+	spin_lock(&server->srv_lock);
-+	if (server->tcpStatus != CifsNeedReconnect) {
+@@ -4050,11 +4061,19 @@ cifs_negotiate_protocol(const unsigned int xid, struct cifs_ses *ses,
+ 
+ 	/* only send once per connect */
+ 	spin_lock(&server->srv_lock);
+-	if (!server->ops->need_neg(server) ||
++	if (server->tcpStatus != CifsGood &&
++	    server->tcpStatus != CifsNew &&
+ 	    server->tcpStatus != CifsNeedNegotiate) {
 +		spin_unlock(&server->srv_lock);
-+		return 0;
++		return -EHOSTDOWN;
 +	}
-+	timeout *= server->nr_targets;
-+	spin_unlock(&server->srv_lock);
 +
-+	/*
-+	 * Give demultiplex thread up to 10 seconds to each target available for
-+	 * reconnect -- should be greater than cifs socket timeout which is 7
-+	 * seconds.
-+	 *
-+	 * On "soft" mounts we wait once. Hard mounts keep retrying until
-+	 * process is killed or server comes back on-line.
-+	 */
-+	do {
-+		rc = wait_event_interruptible_timeout(server->response_q,
-+						      (server->tcpStatus != CifsNeedReconnect),
-+						      timeout * HZ);
-+		if (rc < 0) {
-+			cifs_dbg(FYI, "%s: aborting reconnect due to received signal\n",
-+				 __func__);
-+			return -ERESTARTSYS;
-+		}
++	if (!server->ops->need_neg(server) &&
++	    server->tcpStatus == CifsGood) {
+ 		spin_unlock(&server->srv_lock);
+ 		return 0;
+ 	}
 +
-+		/* are we still trying to reconnect? */
-+		spin_lock(&server->srv_lock);
-+		if (server->tcpStatus != CifsNeedReconnect) {
-+			spin_unlock(&server->srv_lock);
-+			return 0;
-+		}
-+		spin_unlock(&server->srv_lock);
-+	} while (retry);
+ 	server->tcpStatus = CifsInNegotiate;
+ 	spin_unlock(&server->srv_lock);
+ 
+@@ -4088,23 +4107,28 @@ cifs_setup_session(const unsigned int xid, struct cifs_ses *ses,
+ 	bool is_binding = false;
+ 
+ 	spin_lock(&ses->ses_lock);
++	cifs_dbg(FYI, "%s: channel connect bitmap: 0x%lx\n",
++		 __func__, ses->chans_need_reconnect);
 +
-+	cifs_dbg(FYI, "%s: gave up waiting on reconnect\n", __func__);
-+	return -EHOSTDOWN;
-+}
+ 	if (ses->ses_status != SES_GOOD &&
+ 	    ses->ses_status != SES_NEW &&
+ 	    ses->ses_status != SES_NEED_RECON) {
+ 		spin_unlock(&ses->ses_lock);
+-		return 0;
++		return -EHOSTDOWN;
+ 	}
+ 
+ 	/* only send once per connect */
+ 	spin_lock(&ses->chan_lock);
+-	if (CIFS_ALL_CHANS_GOOD(ses) ||
+-	    cifs_chan_in_reconnect(ses, server)) {
++	if (CIFS_ALL_CHANS_GOOD(ses)) {
++		if (ses->ses_status == SES_NEED_RECON)
++			ses->ses_status = SES_GOOD;
+ 		spin_unlock(&ses->chan_lock);
+ 		spin_unlock(&ses->ses_lock);
+ 		return 0;
+ 	}
+-	is_binding = !CIFS_ALL_CHANS_NEED_RECONNECT(ses);
++
+ 	cifs_chan_set_in_reconnect(ses, server);
++	is_binding = !CIFS_ALL_CHANS_NEED_RECONNECT(ses);
+ 	spin_unlock(&ses->chan_lock);
+ 
+ 	if (!is_binding)
 diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
-index 6e6e44d8b4c79..83d04cd2f9df8 100644
+index 83d04cd2f9df8..f0b1ae0835d71 100644
 --- a/fs/cifs/smb2pdu.c
 +++ b/fs/cifs/smb2pdu.c
-@@ -139,66 +139,6 @@ smb2_hdr_assemble(struct smb2_hdr *shdr, __le16 smb2_cmd,
- 	return;
- }
+@@ -199,6 +199,7 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
+ 	}
+ 	spin_unlock(&server->srv_lock);
  
--static int wait_for_server_reconnect(struct TCP_Server_Info *server,
--				     __le16 smb2_command, bool retry)
--{
--	int timeout = 10;
--	int rc;
--
--	spin_lock(&server->srv_lock);
--	if (server->tcpStatus != CifsNeedReconnect) {
--		spin_unlock(&server->srv_lock);
--		return 0;
--	}
--	timeout *= server->nr_targets;
--	spin_unlock(&server->srv_lock);
--
--	/*
--	 * Return to caller for TREE_DISCONNECT and LOGOFF and CLOSE
--	 * here since they are implicitly done when session drops.
--	 */
--	switch (smb2_command) {
--	/*
--	 * BB Should we keep oplock break and add flush to exceptions?
--	 */
--	case SMB2_TREE_DISCONNECT:
--	case SMB2_CANCEL:
--	case SMB2_CLOSE:
--	case SMB2_OPLOCK_BREAK:
--		return -EAGAIN;
--	}
--
--	/*
--	 * Give demultiplex thread up to 10 seconds to each target available for
--	 * reconnect -- should be greater than cifs socket timeout which is 7
--	 * seconds.
--	 *
--	 * On "soft" mounts we wait once. Hard mounts keep retrying until
--	 * process is killed or server comes back on-line.
--	 */
--	do {
--		rc = wait_event_interruptible_timeout(server->response_q,
--						      (server->tcpStatus != CifsNeedReconnect),
--						      timeout * HZ);
--		if (rc < 0) {
--			cifs_dbg(FYI, "%s: aborting reconnect due to received signal\n",
--				 __func__);
--			return -ERESTARTSYS;
--		}
--
--		/* are we still trying to reconnect? */
--		spin_lock(&server->srv_lock);
--		if (server->tcpStatus != CifsNeedReconnect) {
--			spin_unlock(&server->srv_lock);
--			return 0;
--		}
--		spin_unlock(&server->srv_lock);
--	} while (retry);
--
--	cifs_dbg(FYI, "%s: gave up waiting on reconnect\n", __func__);
--	return -EHOSTDOWN;
--}
--
- static int
- smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
- 	       struct TCP_Server_Info *server)
-@@ -239,7 +179,27 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
- 	    (!tcon->ses->server) || !server)
- 		return -EIO;
++again:
+ 	rc = cifs_wait_for_server_reconnect(server, tcon->retry);
+ 	if (rc)
+ 		return rc;
+@@ -217,6 +218,7 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
  
--	rc = wait_for_server_reconnect(server, smb2_command, tcon->retry);
-+	spin_lock(&server->srv_lock);
-+	if (server->tcpStatus == CifsNeedReconnect) {
-+		/*
-+		 * Return to caller for TREE_DISCONNECT and LOGOFF and CLOSE
-+		 * here since they are implicitly done when session drops.
-+		 */
-+		switch (smb2_command) {
-+		/*
-+		 * BB Should we keep oplock break and add flush to exceptions?
-+		 */
-+		case SMB2_TREE_DISCONNECT:
-+		case SMB2_CANCEL:
-+		case SMB2_CLOSE:
-+		case SMB2_OPLOCK_BREAK:
-+			spin_unlock(&server->srv_lock);
-+			return -EAGAIN;
-+		}
-+	}
-+	spin_unlock(&server->srv_lock);
+ 	nls_codepage = load_nls_default();
+ 
++	mutex_lock(&ses->session_mutex);
+ 	/*
+ 	 * Recheck after acquire mutex. If another thread is negotiating
+ 	 * and the server never sends an answer the socket will be closed
+@@ -225,6 +227,11 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
+ 	spin_lock(&server->srv_lock);
+ 	if (server->tcpStatus == CifsNeedReconnect) {
+ 		spin_unlock(&server->srv_lock);
++		mutex_unlock(&ses->session_mutex);
 +
-+	rc = cifs_wait_for_server_reconnect(server, tcon->retry);
++		if (tcon->retry)
++			goto again;
++
+ 		rc = -EHOSTDOWN;
+ 		goto out;
+ 	}
+@@ -234,19 +241,22 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
+ 	 * need to prevent multiple threads trying to simultaneously
+ 	 * reconnect the same SMB session
+ 	 */
++	spin_lock(&ses->ses_lock);
+ 	spin_lock(&ses->chan_lock);
+-	if (!cifs_chan_needs_reconnect(ses, server)) {
++	if (!cifs_chan_needs_reconnect(ses, server) &&
++	    ses->ses_status == SES_GOOD) {
+ 		spin_unlock(&ses->chan_lock);
+-
++		spin_unlock(&ses->ses_lock);
+ 		/* this means that we only need to tree connect */
+ 		if (tcon->need_reconnect)
+ 			goto skip_sess_setup;
+ 
++		mutex_unlock(&ses->session_mutex);
+ 		goto out;
+ 	}
+ 	spin_unlock(&ses->chan_lock);
++	spin_unlock(&ses->ses_lock);
+ 
+-	mutex_lock(&ses->session_mutex);
+ 	rc = cifs_negotiate_protocol(0, ses, server);
+ 	if (!rc) {
+ 		rc = cifs_setup_session(0, ses, server, nls_codepage);
+@@ -262,10 +272,8 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
+ 		mutex_unlock(&ses->session_mutex);
+ 		goto out;
+ 	}
+-	mutex_unlock(&ses->session_mutex);
+ 
+ skip_sess_setup:
+-	mutex_lock(&ses->session_mutex);
+ 	if (!tcon->need_reconnect) {
+ 		mutex_unlock(&ses->session_mutex);
+ 		goto out;
+@@ -280,7 +288,7 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
+ 	cifs_dbg(FYI, "reconnect tcon rc = %d\n", rc);
+ 	if (rc) {
+ 		/* If sess reconnected but tcon didn't, something strange ... */
+-		pr_warn_once("reconnect tcon failed rc = %d\n", rc);
++		cifs_dbg(VFS, "reconnect tcon failed rc = %d\n", rc);
+ 		goto out;
+ 	}
+ 
+@@ -1252,9 +1260,9 @@ SMB2_sess_alloc_buffer(struct SMB2_sess_data *sess_data)
  	if (rc)
  		return rc;
  
+-	spin_lock(&ses->chan_lock);
+-	is_binding = !CIFS_ALL_CHANS_NEED_RECONNECT(ses);
+-	spin_unlock(&ses->chan_lock);
++	spin_lock(&ses->ses_lock);
++	is_binding = (ses->ses_status == SES_GOOD);
++	spin_unlock(&ses->ses_lock);
+ 
+ 	if (is_binding) {
+ 		req->hdr.SessionId = cpu_to_le64(ses->Suid);
+@@ -1412,9 +1420,9 @@ SMB2_auth_kerberos(struct SMB2_sess_data *sess_data)
+ 		goto out_put_spnego_key;
+ 	}
+ 
+-	spin_lock(&ses->chan_lock);
+-	is_binding = !CIFS_ALL_CHANS_NEED_RECONNECT(ses);
+-	spin_unlock(&ses->chan_lock);
++	spin_lock(&ses->ses_lock);
++	is_binding = (ses->ses_status == SES_GOOD);
++	spin_unlock(&ses->ses_lock);
+ 
+ 	/* keep session key if binding */
+ 	if (!is_binding) {
+@@ -1538,9 +1546,9 @@ SMB2_sess_auth_rawntlmssp_negotiate(struct SMB2_sess_data *sess_data)
+ 
+ 	cifs_dbg(FYI, "rawntlmssp session setup challenge phase\n");
+ 
+-	spin_lock(&ses->chan_lock);
+-	is_binding = !CIFS_ALL_CHANS_NEED_RECONNECT(ses);
+-	spin_unlock(&ses->chan_lock);
++	spin_lock(&ses->ses_lock);
++	is_binding = (ses->ses_status == SES_GOOD);
++	spin_unlock(&ses->ses_lock);
+ 
+ 	/* keep existing ses id and flags if binding */
+ 	if (!is_binding) {
+@@ -1606,9 +1614,9 @@ SMB2_sess_auth_rawntlmssp_authenticate(struct SMB2_sess_data *sess_data)
+ 
+ 	rsp = (struct smb2_sess_setup_rsp *)sess_data->iov[0].iov_base;
+ 
+-	spin_lock(&ses->chan_lock);
+-	is_binding = !CIFS_ALL_CHANS_NEED_RECONNECT(ses);
+-	spin_unlock(&ses->chan_lock);
++	spin_lock(&ses->ses_lock);
++	is_binding = (ses->ses_status == SES_GOOD);
++	spin_unlock(&ses->ses_lock);
+ 
+ 	/* keep existing ses id and flags if binding */
+ 	if (!is_binding) {
+diff --git a/fs/cifs/smb2transport.c b/fs/cifs/smb2transport.c
+index d827b7547ffad..790acf65a0926 100644
+--- a/fs/cifs/smb2transport.c
++++ b/fs/cifs/smb2transport.c
+@@ -81,6 +81,7 @@ int smb2_get_sign_key(__u64 ses_id, struct TCP_Server_Info *server, u8 *key)
+ 	struct cifs_ses *ses = NULL;
+ 	int i;
+ 	int rc = 0;
++	bool is_binding = false;
+ 
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 
+@@ -97,9 +98,12 @@ int smb2_get_sign_key(__u64 ses_id, struct TCP_Server_Info *server, u8 *key)
+ 	goto out;
+ 
+ found:
++	spin_lock(&ses->ses_lock);
+ 	spin_lock(&ses->chan_lock);
+-	if (cifs_chan_needs_reconnect(ses, server) &&
+-	    !CIFS_ALL_CHANS_NEED_RECONNECT(ses)) {
++
++	is_binding = (cifs_chan_needs_reconnect(ses, server) &&
++		      ses->ses_status == SES_GOOD);
++	if (is_binding) {
+ 		/*
+ 		 * If we are in the process of binding a new channel
+ 		 * to an existing session, use the master connection
+@@ -107,6 +111,7 @@ int smb2_get_sign_key(__u64 ses_id, struct TCP_Server_Info *server, u8 *key)
+ 		 */
+ 		memcpy(key, ses->smb3signingkey, SMB3_SIGN_KEY_SIZE);
+ 		spin_unlock(&ses->chan_lock);
++		spin_unlock(&ses->ses_lock);
+ 		goto out;
+ 	}
+ 
+@@ -119,10 +124,12 @@ int smb2_get_sign_key(__u64 ses_id, struct TCP_Server_Info *server, u8 *key)
+ 		if (chan->server == server) {
+ 			memcpy(key, chan->signkey, SMB3_SIGN_KEY_SIZE);
+ 			spin_unlock(&ses->chan_lock);
++			spin_unlock(&ses->ses_lock);
+ 			goto out;
+ 		}
+ 	}
+ 	spin_unlock(&ses->chan_lock);
++	spin_unlock(&ses->ses_lock);
+ 
+ 	cifs_dbg(VFS,
+ 		 "%s: Could not find channel signing key for session 0x%llx\n",
+@@ -392,11 +399,15 @@ generate_smb3signingkey(struct cifs_ses *ses,
+ 	bool is_binding = false;
+ 	int chan_index = 0;
+ 
++	spin_lock(&ses->ses_lock);
+ 	spin_lock(&ses->chan_lock);
+-	is_binding = !CIFS_ALL_CHANS_NEED_RECONNECT(ses);
++	is_binding = (cifs_chan_needs_reconnect(ses, server) &&
++		      ses->ses_status == SES_GOOD);
++
+ 	chan_index = cifs_ses_get_chan_index(ses, server);
+ 	/* TODO: introduce ref counting for channels when the can be freed */
+ 	spin_unlock(&ses->chan_lock);
++	spin_unlock(&ses->ses_lock);
+ 
+ 	/*
+ 	 * All channels use the same encryption/decryption keys but
 -- 
 2.39.2
 
