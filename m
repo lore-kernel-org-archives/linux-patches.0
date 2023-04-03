@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787835683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:14:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A24C433D2;
-	Mon,  3 Apr 2023 14:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1530F5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:14:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED73C4339B;
+	Mon,  3 Apr 2023 14:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531289;
-	bh=osYd5k2tGDI708FtAvOzUUH/YD3JHeDpaPD+2tk6KTQ=;
+	s=korg; t=1680531291;
+	bh=APZHvjlYB+S1uix2r4oeWZExx8va0wm0aLaFl/EnM60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0I8dx9EKJpw2qyghkAjKjrZoG6jAOTofoVDgbRJrLscKYKaNK4OZFOHxGzWYoQwN
-	 02Dt/k7WLBABhCdfEcDcDIkEB3DfTOtnn3ywlvftfSjdbO3Ddh9JzCwmp8zzLCyngf
-	 POLFvzNYNqL6qGvIu1w6chiDuCGV/iA8kM4AU+6k=
+	b=ImmhZb2U2QGN1TzCGVIcURXP+pCxqVMHLJPc5yv9U62iRjCofs5pc1LjYXezZJTBP
+	 jBZnKxQd5BlVGClPf16NoCnwaHCaikmoKLKWk9sJL4H532dL2Z6GdL1huR4tyvMCS0
+	 +/k4R2cRfGhEqwjItVabrhuhyPbXqQrg2fRv6Frs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 50/66] fbdev: lxfb: Fix potential divide by zero
-Date: Mon,  3 Apr 2023 16:08:58 +0200
-Message-Id: <20230403140353.572961497@linuxfoundation.org>
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zhang Qiao <zhangqiao22@huawei.com>
+Subject: [PATCH 4.14 41/66] sched/fair: Sanitize vruntime of entity being migrated
+Date: Mon,  3 Apr 2023 16:08:49 +0200
+Message-Id: <20230403140353.305362820@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -35,38 +35,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 61ac4b86a4c047c20d5cb423ddd87496f14d9868 ]
+commit a53ce18cacb477dd0513c607f187d16f0fa96f71 upstream.
 
-var->pixclock can be assigned to zero by user. Without proper
-check, divide by zero would occur in lx_set_clock.
+Commit 829c1651e9c4 ("sched/fair: sanitize vruntime of entity being placed")
+fixes an overflowing bug, but ignore a case that se->exec_start is reset
+after a migration.
 
-Error out if var->pixclock is zero.
+For fixing this case, we delay the reset of se->exec_start after
+placing the entity which se->exec_start to detect long sleeping task.
 
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In order to take into account a possible divergence between the clock_task
+of 2 rqs, we increase the threshold to around 104 days.
+
+Fixes: 829c1651e9c4 ("sched/fair: sanitize vruntime of entity being placed")
+Originally-by: Zhang Qiao <zhangqiao22@huawei.com>
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Zhang Qiao <zhangqiao22@huawei.com>
+Link: https://lore.kernel.org/r/20230317160810.107988-1-vincent.guittot@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/geode/lxfb_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/sched/core.c |    3 ++
+ kernel/sched/fair.c |   53 ++++++++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 46 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/video/fbdev/geode/lxfb_core.c b/drivers/video/fbdev/geode/lxfb_core.c
-index 138da6cb6cbcd..4345246b4c798 100644
---- a/drivers/video/fbdev/geode/lxfb_core.c
-+++ b/drivers/video/fbdev/geode/lxfb_core.c
-@@ -247,6 +247,9 @@ static void get_modedb(struct fb_videomode **modedb, unsigned int *size)
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -776,6 +776,9 @@ static inline void dequeue_task(struct r
  
- static int lxfb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
+ void activate_task(struct rq *rq, struct task_struct *p, int flags)
  {
-+	if (!var->pixclock)
-+		return -EINVAL;
++	if (task_on_rq_migrating(p))
++		flags |= ENQUEUE_MIGRATED;
 +
- 	if (var->xres > 1920 || var->yres > 1440)
- 		return -EINVAL;
+ 	if (task_contributes_to_load(p))
+ 		rq->nr_uninterruptible--;
  
--- 
-2.39.2
-
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -3611,11 +3611,33 @@ static void check_spread(struct cfs_rq *
+ #endif
+ }
+ 
++static inline bool entity_is_long_sleeper(struct sched_entity *se)
++{
++	struct cfs_rq *cfs_rq;
++	u64 sleep_time;
++
++	if (se->exec_start == 0)
++		return false;
++
++	cfs_rq = cfs_rq_of(se);
++
++	sleep_time = rq_clock_task(rq_of(cfs_rq));
++
++	/* Happen while migrating because of clock task divergence */
++	if (sleep_time <= se->exec_start)
++		return false;
++
++	sleep_time -= se->exec_start;
++	if (sleep_time > ((1ULL << 63) / scale_load_down(NICE_0_LOAD)))
++		return true;
++
++	return false;
++}
++
+ static void
+ place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int initial)
+ {
+ 	u64 vruntime = cfs_rq->min_vruntime;
+-	u64 sleep_time;
+ 
+ 	/*
+ 	 * The 'current' period is already promised to the current tasks,
+@@ -3642,13 +3664,24 @@ place_entity(struct cfs_rq *cfs_rq, stru
+ 
+ 	/*
+ 	 * Pull vruntime of the entity being placed to the base level of
+-	 * cfs_rq, to prevent boosting it if placed backwards.  If the entity
+-	 * slept for a long time, don't even try to compare its vruntime with
+-	 * the base as it may be too far off and the comparison may get
+-	 * inversed due to s64 overflow.
++	 * cfs_rq, to prevent boosting it if placed backwards.
++	 * However, min_vruntime can advance much faster than real time, with
++	 * the extreme being when an entity with the minimal weight always runs
++	 * on the cfs_rq. If the waking entity slept for a long time, its
++	 * vruntime difference from min_vruntime may overflow s64 and their
++	 * comparison may get inversed, so ignore the entity's original
++	 * vruntime in that case.
++	 * The maximal vruntime speedup is given by the ratio of normal to
++	 * minimal weight: scale_load_down(NICE_0_LOAD) / MIN_SHARES.
++	 * When placing a migrated waking entity, its exec_start has been set
++	 * from a different rq. In order to take into account a possible
++	 * divergence between new and prev rq's clocks task because of irq and
++	 * stolen time, we take an additional margin.
++	 * So, cutting off on the sleep time of
++	 *     2^63 / scale_load_down(NICE_0_LOAD) ~ 104 days
++	 * should be safe.
+ 	 */
+-	sleep_time = rq_clock_task(rq_of(cfs_rq)) - se->exec_start;
+-	if ((s64)sleep_time > 60LL * NSEC_PER_SEC)
++	if (entity_is_long_sleeper(se))
+ 		se->vruntime = vruntime;
+ 	else
+ 		se->vruntime = max_vruntime(se->vruntime, vruntime);
+@@ -3746,6 +3779,9 @@ enqueue_entity(struct cfs_rq *cfs_rq, st
+ 
+ 	if (flags & ENQUEUE_WAKEUP)
+ 		place_entity(cfs_rq, se, 0);
++	/* Entity has migrated, no longer consider this task hot */
++	if (flags & ENQUEUE_MIGRATED)
++		se->exec_start = 0;
+ 
+ 	check_schedstat_required();
+ 	update_stats_enqueue(cfs_rq, se, flags);
+@@ -6100,9 +6136,6 @@ static void migrate_task_rq_fair(struct
+ 
+ 	/* Tell new CPU we are migrated */
+ 	p->se.avg.last_update_time = 0;
+-
+-	/* We have migrated, no longer consider this task hot */
+-	p->se.exec_start = 0;
+ }
+ 
+ static void task_dead_fair(struct task_struct *p)
 
 
