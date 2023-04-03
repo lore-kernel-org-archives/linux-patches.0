@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3148C5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA15FC433D2;
-	Mon,  3 Apr 2023 14:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F3C5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7B1C433EF;
+	Mon,  3 Apr 2023 14:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531481;
-	bh=irJsSHp6/SkRA9vkYVuyOTr+2apf/aIYLp27GEA2Kvk=;
+	s=korg; t=1680531483;
+	bh=bRpzjpdLKer8zuXcMgodwmlIVyfKR2UFssVqcMyAImY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHcbapzhxlQKeWVCc/TakVW/5UkbUbI+yrHP2SzFDRrHtVvPXcbo+6EmH8/2+CNnd
-	 MbFbZqPLpDuop3tEfDiF3hAKUvxKBKN9N3xge8cSHtVEgygstFBWl5TeVib9i5zVci
-	 NFGy7pJDgyFbh/EcNKgnhgxsv99ooKHE6hT84RsM=
+	b=CA28sGZYATr6g2Bf9kLGIjWzbcrUecM1Uj7xRYoWLI6mzIBPfru1xq5UQMl0wOYUW
+	 9NV4sZlLH/C0B5wpEXzchdYJ0DkX4zl6a6SestGG4i5O9KwkSN7y99pKjo6mCZrc68
+	 e5S69THBL8wxJcmNcd/eeYfWE1Tf9apfqi0h9qu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7bb81dfa9cda07d9cd9d@syzkaller.appspotmail.com,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 4.19 80/84] gfs2: Always check inode size of inline inodes
-Date: Mon,  3 Apr 2023 16:09:21 +0200
-Message-Id: <20230403140356.169033851@linuxfoundation.org>
+	Kyle Zeng <zengyhkyle@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 4.19 81/84] net: sched: cbq: dont intepret cls results when asked to drop
+Date: Mon,  3 Apr 2023 16:09:22 +0200
+Message-Id: <20230403140356.198646877@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,65 +36,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 70376c7ff31221f1d21db5611d8209e677781d3a upstream.
+commit caa4b35b4317d5147b3ab0fbdc9c075c7d2e9c12 upstream.
 
-Check if the inode size of stuffed (inline) inodes is within the allowed
-range when reading inodes from disk (gfs2_dinode_in()).  This prevents
-us from on-disk corruption.
+If asked to drop a packet via TC_ACT_SHOT it is unsafe to assume that
+res.class contains a valid pointer
 
-The two checks in stuffed_readpage() and gfs2_unstuffer_page() that just
-truncate inline data to the maximum allowed size don't actually make
-sense, and they can be removed now as well.
+Sample splat reported by Kyle Zeng
 
-Reported-by: syzbot+7bb81dfa9cda07d9cd9d@syzkaller.appspotmail.com
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-[pchelkin@ispras.ru: adjust the inode variable inside gfs2_dinode_in with
-the format used before upstream commit 7db354444ad8 ("gfs2: Cosmetic
-gfs2_dinode_{in,out} cleanup")]
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+[    5.405624] 0: reclassify loop, rule prio 0, protocol 800
+[    5.406326] ==================================================================
+[    5.407240] BUG: KASAN: slab-out-of-bounds in cbq_enqueue+0x54b/0xea0
+[    5.407987] Read of size 1 at addr ffff88800e3122aa by task poc/299
+[    5.408731]
+[    5.408897] CPU: 0 PID: 299 Comm: poc Not tainted 5.10.155+ #15
+[    5.409516] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS 1.15.0-1 04/01/2014
+[    5.410439] Call Trace:
+[    5.410764]  dump_stack+0x87/0xcd
+[    5.411153]  print_address_description+0x7a/0x6b0
+[    5.411687]  ? vprintk_func+0xb9/0xc0
+[    5.411905]  ? printk+0x76/0x96
+[    5.412110]  ? cbq_enqueue+0x54b/0xea0
+[    5.412323]  kasan_report+0x17d/0x220
+[    5.412591]  ? cbq_enqueue+0x54b/0xea0
+[    5.412803]  __asan_report_load1_noabort+0x10/0x20
+[    5.413119]  cbq_enqueue+0x54b/0xea0
+[    5.413400]  ? __kasan_check_write+0x10/0x20
+[    5.413679]  __dev_queue_xmit+0x9c0/0x1db0
+[    5.413922]  dev_queue_xmit+0xc/0x10
+[    5.414136]  ip_finish_output2+0x8bc/0xcd0
+[    5.414436]  __ip_finish_output+0x472/0x7a0
+[    5.414692]  ip_finish_output+0x5c/0x190
+[    5.414940]  ip_output+0x2d8/0x3c0
+[    5.415150]  ? ip_mc_finish_output+0x320/0x320
+[    5.415429]  __ip_queue_xmit+0x753/0x1760
+[    5.415664]  ip_queue_xmit+0x47/0x60
+[    5.415874]  __tcp_transmit_skb+0x1ef9/0x34c0
+[    5.416129]  tcp_connect+0x1f5e/0x4cb0
+[    5.416347]  tcp_v4_connect+0xc8d/0x18c0
+[    5.416577]  __inet_stream_connect+0x1ae/0xb40
+[    5.416836]  ? local_bh_enable+0x11/0x20
+[    5.417066]  ? lock_sock_nested+0x175/0x1d0
+[    5.417309]  inet_stream_connect+0x5d/0x90
+[    5.417548]  ? __inet_stream_connect+0xb40/0xb40
+[    5.417817]  __sys_connect+0x260/0x2b0
+[    5.418037]  __x64_sys_connect+0x76/0x80
+[    5.418267]  do_syscall_64+0x31/0x50
+[    5.418477]  entry_SYSCALL_64_after_hwframe+0x61/0xc6
+[    5.418770] RIP: 0033:0x473bb7
+[    5.418952] Code: 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00
+00 00 90 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2a 00 00
+00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 18 89 54 24 0c 48 89 34
+24 89
+[    5.420046] RSP: 002b:00007fffd20eb0f8 EFLAGS: 00000246 ORIG_RAX:
+000000000000002a
+[    5.420472] RAX: ffffffffffffffda RBX: 00007fffd20eb578 RCX: 0000000000473bb7
+[    5.420872] RDX: 0000000000000010 RSI: 00007fffd20eb110 RDI: 0000000000000007
+[    5.421271] RBP: 00007fffd20eb150 R08: 0000000000000001 R09: 0000000000000004
+[    5.421671] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+[    5.422071] R13: 00007fffd20eb568 R14: 00000000004fc740 R15: 0000000000000002
+[    5.422471]
+[    5.422562] Allocated by task 299:
+[    5.422782]  __kasan_kmalloc+0x12d/0x160
+[    5.423007]  kasan_kmalloc+0x5/0x10
+[    5.423208]  kmem_cache_alloc_trace+0x201/0x2e0
+[    5.423492]  tcf_proto_create+0x65/0x290
+[    5.423721]  tc_new_tfilter+0x137e/0x1830
+[    5.423957]  rtnetlink_rcv_msg+0x730/0x9f0
+[    5.424197]  netlink_rcv_skb+0x166/0x300
+[    5.424428]  rtnetlink_rcv+0x11/0x20
+[    5.424639]  netlink_unicast+0x673/0x860
+[    5.424870]  netlink_sendmsg+0x6af/0x9f0
+[    5.425100]  __sys_sendto+0x58d/0x5a0
+[    5.425315]  __x64_sys_sendto+0xda/0xf0
+[    5.425539]  do_syscall_64+0x31/0x50
+[    5.425764]  entry_SYSCALL_64_after_hwframe+0x61/0xc6
+[    5.426065]
+[    5.426157] The buggy address belongs to the object at ffff88800e312200
+[    5.426157]  which belongs to the cache kmalloc-128 of size 128
+[    5.426955] The buggy address is located 42 bytes to the right of
+[    5.426955]  128-byte region [ffff88800e312200, ffff88800e312280)
+[    5.427688] The buggy address belongs to the page:
+[    5.427992] page:000000009875fabc refcount:1 mapcount:0
+mapping:0000000000000000 index:0x0 pfn:0xe312
+[    5.428562] flags: 0x100000000000200(slab)
+[    5.428812] raw: 0100000000000200 dead000000000100 dead000000000122
+ffff888007843680
+[    5.429325] raw: 0000000000000000 0000000000100010 00000001ffffffff
+ffff88800e312401
+[    5.429875] page dumped because: kasan: bad access detected
+[    5.430214] page->mem_cgroup:ffff88800e312401
+[    5.430471]
+[    5.430564] Memory state around the buggy address:
+[    5.430846]  ffff88800e312180: fc fc fc fc fc fc fc fc fc fc fc fc
+fc fc fc fc
+[    5.431267]  ffff88800e312200: 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 fc
+[    5.431705] >ffff88800e312280: fc fc fc fc fc fc fc fc fc fc fc fc
+fc fc fc fc
+[    5.432123]                                   ^
+[    5.432391]  ffff88800e312300: 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 fc
+[    5.432810]  ffff88800e312380: fc fc fc fc fc fc fc fc fc fc fc fc
+fc fc fc fc
+[    5.433229] ==================================================================
+[    5.433648] Disabling lock debugging due to kernel taint
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/aops.c  |    2 --
- fs/gfs2/bmap.c  |    3 ---
- fs/gfs2/glops.c |    3 +++
- 3 files changed, 3 insertions(+), 5 deletions(-)
+ net/sched/sch_cbq.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/gfs2/aops.c
-+++ b/fs/gfs2/aops.c
-@@ -480,8 +480,6 @@ int stuffed_readpage(struct gfs2_inode *
- 		return error;
+--- a/net/sched/sch_cbq.c
++++ b/net/sched/sch_cbq.c
+@@ -236,6 +236,8 @@ cbq_classify(struct sk_buff *skb, struct
+ 		result = tcf_classify(skb, fl, &res, true);
+ 		if (!fl || result < 0)
+ 			goto fallback;
++		if (result == TC_ACT_SHOT)
++			return NULL;
  
- 	kaddr = kmap_atomic(page);
--	if (dsize > gfs2_max_stuffed_size(ip))
--		dsize = gfs2_max_stuffed_size(ip);
- 	memcpy(kaddr, dibh->b_data + sizeof(struct gfs2_dinode), dsize);
- 	memset(kaddr + dsize, 0, PAGE_SIZE - dsize);
- 	kunmap_atomic(kaddr);
---- a/fs/gfs2/bmap.c
-+++ b/fs/gfs2/bmap.c
-@@ -72,9 +72,6 @@ static int gfs2_unstuffer_page(struct gf
- 		void *kaddr = kmap(page);
- 		u64 dsize = i_size_read(inode);
-  
--		if (dsize > gfs2_max_stuffed_size(ip))
--			dsize = gfs2_max_stuffed_size(ip);
--
- 		memcpy(kaddr, dibh->b_data + sizeof(struct gfs2_dinode), dsize);
- 		memset(kaddr + dsize, 0, PAGE_SIZE - dsize);
- 		kunmap(page);
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -388,6 +388,9 @@ static int gfs2_dinode_in(struct gfs2_in
- 	ip->i_depth = (u8)depth;
- 	ip->i_entries = be32_to_cpu(str->di_entries);
- 
-+	if (gfs2_is_stuffed(ip) && ip->i_inode.i_size > gfs2_max_stuffed_size(ip))
-+		goto corrupt;
-+
- 	if (S_ISREG(ip->i_inode.i_mode))
- 		gfs2_set_aops(&ip->i_inode);
- 
+ 		cl = (void *)res.class;
+ 		if (!cl) {
+@@ -256,8 +258,6 @@ cbq_classify(struct sk_buff *skb, struct
+ 		case TC_ACT_TRAP:
+ 			*qerr = NET_XMIT_SUCCESS | __NET_XMIT_STOLEN;
+ 			/* fall through */
+-		case TC_ACT_SHOT:
+-			return NULL;
+ 		case TC_ACT_RECLASSIFY:
+ 			return cbq_reclassify(skb, cl);
+ 		}
 
 
