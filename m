@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12656FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA51C433D2;
-	Mon,  3 Apr 2023 14:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D546FAA
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AFAC433EF;
+	Mon,  3 Apr 2023 14:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532520;
-	bh=UJvwCMbuQins9OiCsCCL7DT2Adm/PW8+hpqKzU0gX1g=;
+	s=korg; t=1680532525;
+	bh=Eul+jJM0hZafSRZ8PPFq0JYcvfFF/gb8t13UzgFH/Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rnSJQyBM76pewgrdULa1xwcI/DL/5ZEk3pQHWo26cvQ39nh7tTTjnl8OqIADKXHlt
-	 VCmDNVMcTWSFR160SLdiDALd46c1I6W0sL0vzBrWORus/GzOu5d5rY9ZSTaS5SZbcO
-	 eccHiXE30ZUKcGnTTxSFFl+3GcwBx2cYY6t3Dmxc=
+	b=h1SPX/GuuLYUMtNJt8o1ZAJ1iYTXmruqjWwEJCH/+Eh40kJnh8LdW8No2H25rdte4
+	 /Km7CzkhQfRKDaeJNmZH8AyKFSboUYPf23qrc6chq8yyHcmwhOuG0HM05pqN5kBaO7
+	 iNSHBrKJOA45PcaQ8Zyp4+QDA9HoLeIAfd0/wm24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eddie James <eajames@linux.ibm.com>,
+	Joel Stanley <joel@jms.id.au>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/181] net: ethernet: ti: am65-cpsw/cpts: Fix CPTS release action
-Date: Mon,  3 Apr 2023 16:07:30 +0200
-Message-Id: <20230403140415.613916322@linuxfoundation.org>
+Subject: [PATCH 6.1 017/181] ARM: dts: aspeed: p10bmc: Update battery node name
+Date: Mon,  3 Apr 2023 16:07:32 +0200
+Message-Id: <20230403140415.678694731@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -38,132 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Eddie James <eajames@linux.ibm.com>
 
-[ Upstream commit 4ad8766cd3982744e53f107f378d2c65b76ff9a8 ]
+[ Upstream commit a8cef541dd5ef9445130660008c029205c4c5aa5 ]
 
-The am65_cpts_release() function is registered as a devm_action in the
-am65_cpts_create() function in am65-cpts driver. When the am65-cpsw driver
-invokes am65_cpts_create(), am65_cpts_release() is added in the set of devm
-actions associated with the am65-cpsw driver's device.
+The ADC sensor for the battery needs to be named "iio-hwmon" for
+compatibility with user space applications.
 
-In the event of probe failure or probe deferral, the platform_drv_probe()
-function invokes dev_pm_domain_detach() which powers off the CPSW and the
-CPSW's CPTS hardware, both of which share the same power domain. Since the
-am65_cpts_disable() function invoked by the am65_cpts_release() function
-attempts to reset the CPTS hardware by writing to its registers, the CPTS
-hardware is assumed to be powered on at this point. However, the hardware
-is powered off before the devm actions are executed.
-
-Fix this by getting rid of the devm action for am65_cpts_release() and
-invoking it directly on the cleanup and exit paths.
-
-Fixes: f6bd59526ca5 ("net: ethernet: ti: introduce am654 common platform time sync driver")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230202152759.67069-1-eajames@linux.ibm.com
+Fixes: bf1914e2cfed ("ARM: dts: aspeed: p10bmc: Fix ADC iio-hwmon battery node name")
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Link: https://lore.kernel.org/r/20230221003352.1218797-1-joel@jms.id.au
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c |  2 ++
- drivers/net/ethernet/ti/am65-cpts.c      | 15 +++++----------
- drivers/net/ethernet/ti/am65-cpts.h      |  5 +++++
- 3 files changed, 12 insertions(+), 10 deletions(-)
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 2 +-
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 00911e9360525..8ff1c84a23ce7 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -2817,6 +2817,7 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+index fcc890e3ad735..f11feb98fde33 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+@@ -244,7 +244,7 @@
+ 		};
+ 	};
  
- err_free_phylink:
- 	am65_cpsw_nuss_phylink_cleanup(common);
-+	am65_cpts_release(common->cpts);
- err_of_clear:
- 	of_platform_device_destroy(common->mdio_dev, NULL);
- err_pm_clear:
-@@ -2845,6 +2846,7 @@ static int am65_cpsw_nuss_remove(struct platform_device *pdev)
- 	 */
- 	am65_cpsw_nuss_cleanup_ndev(common);
- 	am65_cpsw_nuss_phylink_cleanup(common);
-+	am65_cpts_release(common->cpts);
+-	iio-hwmon-battery {
++	iio-hwmon {
+ 		compatible = "iio-hwmon";
+ 		io-channels = <&adc1 7>;
+ 	};
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 4879da4cdbd25..77a3a27b04e26 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -220,7 +220,7 @@
+ 		};
+ 	};
  
- 	of_platform_device_destroy(common->mdio_dev, NULL);
- 
-diff --git a/drivers/net/ethernet/ti/am65-cpts.c b/drivers/net/ethernet/ti/am65-cpts.c
-index e2f0fb286143b..9948ac14e68db 100644
---- a/drivers/net/ethernet/ti/am65-cpts.c
-+++ b/drivers/net/ethernet/ti/am65-cpts.c
-@@ -918,14 +918,13 @@ static int am65_cpts_of_parse(struct am65_cpts *cpts, struct device_node *node)
- 	return cpts_of_mux_clk_setup(cpts, node);
- }
- 
--static void am65_cpts_release(void *data)
-+void am65_cpts_release(struct am65_cpts *cpts)
- {
--	struct am65_cpts *cpts = data;
--
- 	ptp_clock_unregister(cpts->ptp_clock);
- 	am65_cpts_disable(cpts);
- 	clk_disable_unprepare(cpts->refclk);
- }
-+EXPORT_SYMBOL_GPL(am65_cpts_release);
- 
- struct am65_cpts *am65_cpts_create(struct device *dev, void __iomem *regs,
- 				   struct device_node *node)
-@@ -1003,18 +1002,12 @@ struct am65_cpts *am65_cpts_create(struct device *dev, void __iomem *regs,
- 	}
- 	cpts->phc_index = ptp_clock_index(cpts->ptp_clock);
- 
--	ret = devm_add_action_or_reset(dev, am65_cpts_release, cpts);
--	if (ret) {
--		dev_err(dev, "failed to add ptpclk reset action %d", ret);
--		return ERR_PTR(ret);
--	}
--
- 	ret = devm_request_threaded_irq(dev, cpts->irq, NULL,
- 					am65_cpts_interrupt,
- 					IRQF_ONESHOT, dev_name(dev), cpts);
- 	if (ret < 0) {
- 		dev_err(cpts->dev, "error attaching irq %d\n", ret);
--		return ERR_PTR(ret);
-+		goto reset_ptpclk;
- 	}
- 
- 	dev_info(dev, "CPTS ver 0x%08x, freq:%u, add_val:%u\n",
-@@ -1023,6 +1016,8 @@ struct am65_cpts *am65_cpts_create(struct device *dev, void __iomem *regs,
- 
- 	return cpts;
- 
-+reset_ptpclk:
-+	am65_cpts_release(cpts);
- refclk_disable:
- 	clk_disable_unprepare(cpts->refclk);
- 	return ERR_PTR(ret);
-diff --git a/drivers/net/ethernet/ti/am65-cpts.h b/drivers/net/ethernet/ti/am65-cpts.h
-index cf9fbc28fd032..c0ae0117e5737 100644
---- a/drivers/net/ethernet/ti/am65-cpts.h
-+++ b/drivers/net/ethernet/ti/am65-cpts.h
-@@ -18,6 +18,7 @@ struct am65_cpts_estf_cfg {
- };
- 
- #if IS_ENABLED(CONFIG_TI_K3_AM65_CPTS)
-+void am65_cpts_release(struct am65_cpts *cpts);
- struct am65_cpts *am65_cpts_create(struct device *dev, void __iomem *regs,
- 				   struct device_node *node);
- int am65_cpts_phc_index(struct am65_cpts *cpts);
-@@ -29,6 +30,10 @@ int am65_cpts_estf_enable(struct am65_cpts *cpts, int idx,
- 			  struct am65_cpts_estf_cfg *cfg);
- void am65_cpts_estf_disable(struct am65_cpts *cpts, int idx);
- #else
-+static inline void am65_cpts_release(struct am65_cpts *cpts)
-+{
-+}
-+
- static inline struct am65_cpts *am65_cpts_create(struct device *dev,
- 						 void __iomem *regs,
- 						 struct device_node *node)
+-	iio-hwmon-battery {
++	iio-hwmon {
+ 		compatible = "iio-hwmon";
+ 		io-channels = <&adc1 7>;
+ 	};
 -- 
 2.39.2
 
