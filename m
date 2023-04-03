@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28D66FAA
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47178C4339B;
-	Mon,  3 Apr 2023 14:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D44C6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BEDC4339B;
+	Mon,  3 Apr 2023 14:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532429;
-	bh=yQpucFppg61iLd8+TE6u3745AlGx+fHxxxi4HMBtJ1c=;
+	s=korg; t=1680532432;
+	bh=CjN35DnqgDDv5rnDHMGj8/n93IwxRypP2ELTE0UlnHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXar0N1hmXuejeHDXs2wpIOF7gu5N3m4GMuiO8/Igiwg+dxjd6UH5K1oBGtZe7Agc
-	 FZ+MXYbQKTsqTCs3yYQyXQU5leeKsy0J6zu4dQnrrbnwF1Hygfd2o3QdhQkdbRhDUV
-	 m2CyqCXmOQx0qP/Z4tU4T+q54pCkahMr6zsIuFb4=
+	b=RmtnUeKOCb93+s7+R2JqCboe0gDp7vvsByHgasSnnWFtmTFWPnSUQCq90Em+hANUz
+	 h85nUvY0l5of60zVknMlOmZ5w4gqlRQk9u73wOfqDvLqIo1HhHUSNWzUuAok8ejAS3
+	 xLjrQT3RO7HLNB77SmGak0xJLcHJ8UB/oFHcja20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.15 78/99] powerpc: Dont try to copy PPR for task with NULL pt_regs
-Date: Mon,  3 Apr 2023 16:09:41 +0200
-Message-Id: <20230403140406.379803918@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 51/99] smsc911x: avoid PHY being resumed when interface is not up
+Date: Mon,  3 Apr 2023 16:09:14 +0200
+Message-Id: <20230403140405.246226499@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -34,81 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit fd7276189450110ed835eb0a334e62d2f1c4e3be upstream.
+[ Upstream commit f22c993f31fa9615df46e49cd768b713d39a852f ]
 
-powerpc sets up PF_KTHREAD and PF_IO_WORKER with a NULL pt_regs, which
-from my (arguably very short) checking is not commonly done for other
-archs. This is fine, except when PF_IO_WORKER's have been created and
-the task does something that causes a coredump to be generated. Then we
-get this crash:
+SMSC911x doesn't need mdiobus suspend/resume, that's why it sets
+'mac_managed_pm'. However, setting it needs to be moved from init to
+probe, so mdiobus PM functions will really never be called (e.g. when
+the interface is not up yet during suspend/resume).
 
-  Kernel attempted to read user page (160) - exploit attempt? (uid: 1000)
-  BUG: Kernel NULL pointer dereference on read at 0x00000160
-  Faulting instruction address: 0xc0000000000c3a60
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=32 NUMA pSeries
-  Modules linked in: bochs drm_vram_helper drm_kms_helper xts binfmt_misc ecb ctr syscopyarea sysfillrect cbc sysimgblt drm_ttm_helper aes_generic ttm sg libaes evdev joydev virtio_balloon vmx_crypto gf128mul drm dm_mod fuse loop configfs drm_panel_orientation_quirks ip_tables x_tables autofs4 hid_generic usbhid hid xhci_pci xhci_hcd usbcore usb_common sd_mod
-  CPU: 1 PID: 1982 Comm: ppc-crash Not tainted 6.3.0-rc2+ #88
-  Hardware name: IBM pSeries (emulated by qemu) POWER9 (raw) 0x4e1202 0xf000005 of:SLOF,HEAD hv:linux,kvm pSeries
-  NIP:  c0000000000c3a60 LR: c000000000039944 CTR: c0000000000398e0
-  REGS: c0000000041833b0 TRAP: 0300   Not tainted  (6.3.0-rc2+)
-  MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 88082828  XER: 200400f8
-  ...
-  NIP memcpy_power7+0x200/0x7d0
-  LR  ppr_get+0x64/0xb0
-  Call Trace:
-    ppr_get+0x40/0xb0 (unreliable)
-    __regset_get+0x180/0x1f0
-    regset_get_alloc+0x64/0x90
-    elf_core_dump+0xb98/0x1b60
-    do_coredump+0x1c34/0x24a0
-    get_signal+0x71c/0x1410
-    do_notify_resume+0x140/0x6f0
-    interrupt_exit_user_prepare_main+0x29c/0x320
-    interrupt_exit_user_prepare+0x6c/0xa0
-    interrupt_return_srr_user+0x8/0x138
-
-Because ppr_get() is trying to copy from a PF_IO_WORKER with a NULL
-pt_regs.
-
-Check for a valid pt_regs in both ppc_get/ppr_set, and return an error
-if not set. The actual error value doesn't seem to be important here, so
-just pick -EINVAL.
-
-Fixes: fa439810cc1b ("powerpc/ptrace: Enable support for NT_PPPC_TAR, NT_PPC_PPR, NT_PPC_DSCR")
-Cc: stable@vger.kernel.org # v4.8+
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[mpe: Trim oops in change log, add Fixes & Cc stable]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/d9f63344-fe7c-56ae-b420-4a1a04a2ae4c@kernel.dk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3ce9f2bef755 ("net: smsc911x: Stop and start PHY during suspend and resume")
+Suggested-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230327083138.6044-1-wsa+renesas@sang-engineering.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/ptrace/ptrace-view.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/smsc/smsc911x.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/kernel/ptrace/ptrace-view.c
-+++ b/arch/powerpc/kernel/ptrace/ptrace-view.c
-@@ -290,6 +290,9 @@ static int gpr_set(struct task_struct *t
- static int ppr_get(struct task_struct *target, const struct user_regset *regset,
- 		   struct membuf to)
- {
-+	if (!target->thread.regs)
-+		return -EINVAL;
-+
- 	return membuf_write(&to, &target->thread.regs->ppr, sizeof(u64));
- }
+diff --git a/drivers/net/ethernet/smsc/smsc911x.c b/drivers/net/ethernet/smsc/smsc911x.c
+index 63b99dd8ca51c..b330dcbe949df 100644
+--- a/drivers/net/ethernet/smsc/smsc911x.c
++++ b/drivers/net/ethernet/smsc/smsc911x.c
+@@ -1037,8 +1037,6 @@ static int smsc911x_mii_probe(struct net_device *dev)
+ 		return ret;
+ 	}
  
-@@ -297,6 +300,9 @@ static int ppr_set(struct task_struct *t
- 		   unsigned int pos, unsigned int count, const void *kbuf,
- 		   const void __user *ubuf)
+-	/* Indicate that the MAC is responsible for managing PHY PM */
+-	phydev->mac_managed_pm = true;
+ 	phy_attached_info(phydev);
+ 
+ 	phy_set_max_speed(phydev, SPEED_100);
+@@ -1066,6 +1064,7 @@ static int smsc911x_mii_init(struct platform_device *pdev,
+ 			     struct net_device *dev)
  {
-+	if (!target->thread.regs)
-+		return -EINVAL;
+ 	struct smsc911x_data *pdata = netdev_priv(dev);
++	struct phy_device *phydev;
+ 	int err = -ENXIO;
+ 
+ 	pdata->mii_bus = mdiobus_alloc();
+@@ -1108,6 +1107,10 @@ static int smsc911x_mii_init(struct platform_device *pdev,
+ 		goto err_out_free_bus_2;
+ 	}
+ 
++	phydev = phy_find_first(pdata->mii_bus);
++	if (phydev)
++		phydev->mac_managed_pm = true;
 +
- 	return user_regset_copyin(&pos, &count, &kbuf, &ubuf,
- 				  &target->thread.regs->ppr, 0, sizeof(u64));
- }
+ 	return 0;
+ 
+ err_out_free_bus_2:
+-- 
+2.39.2
+
 
 
