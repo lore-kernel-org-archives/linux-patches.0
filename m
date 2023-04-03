@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2806D3F
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9744C4339B;
-	Mon,  3 Apr 2023 14:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B4E6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8472CC433D2;
+	Mon,  3 Apr 2023 14:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531998;
-	bh=u/O9oSwFl7oXTaJku6rhQs0l1MMuGRCZTZekRT+8LbA=;
+	s=korg; t=1680532000;
+	bh=NBPZGQ942ws4fxaQ3ieQb0lyvmMVEn7kAkRYh8pGsSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KblUbAKeJft14Gw+jSUmKCKPo9FjV5ystNQTd8T2c+cZY3M2TNWtU8gY98YpYaKXr
-	 f7q9IDhsyCbmH+vYpkkXLBRBJXHJJI86nBBB9KXws+H4huFYzataObl8TfqSFDX0/3
-	 ZDJp/p/rNd3KnbQioAohy/kj0Ac9aAKCUAsP7rJA=
+	b=jIz0BMm42MPH9+Rcal7GETAE+/LxL7DqGA5lVNL20IF3e5UFfAx2LfY6pO7zqIKET
+	 W9hZpdNSA7xm54rOfsdRvtsF5m73Uak1EaIeVkexFG0kUQ89P3eu5SbtQVlmQ2YVQt
+	 8w8XF9yR2NGlGq8bpOAbl/MrWqAZtY9U0D9uHN8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Francois Romieu <romieu@fr.zoreil.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/173] atm: idt77252: fix kmemleak when rmmod idt77252
-Date: Mon,  3 Apr 2023 16:07:41 +0200
-Message-Id: <20230403140415.915230235@linuxfoundation.org>
+	Nathan Huckleberry <nhuck@google.com>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 5.10 081/173] fsverity: Remove WQ_UNBOUND from fsverity read workqueue
+Date: Mon,  3 Apr 2023 16:08:16 +0200
+Message-Id: <20230403140417.044912385@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,92 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Nathan Huckleberry <nhuck@google.com>
 
-[ Upstream commit 4fe3c88552a3fbe1944426a4506a18cdeb457b5a ]
+commit f959325e6ac3f499450088b8d9c626d1177be160 upstream.
 
-There are memory leaks reported by kmemleak:
+WQ_UNBOUND causes significant scheduler latency on ARM64/Android.  This
+is problematic for latency sensitive workloads, like I/O
+post-processing.
 
-  unreferenced object 0xffff888106500800 (size 128):
-    comm "modprobe", pid 1017, jiffies 4297787785 (age 67.152s)
-    hex dump (first 32 bytes):
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<00000000970ce626>] __kmem_cache_alloc_node+0x20c/0x380
-      [<00000000fb5f78d9>] kmalloc_trace+0x2f/0xb0
-      [<000000000e947e2a>] idt77252_init_one+0x2847/0x3c90 [idt77252]
-      [<000000006efb048e>] local_pci_probe+0xeb/0x1a0
-    ...
+Removing WQ_UNBOUND gives a 96% reduction in fsverity workqueue related
+scheduler latency and improves app cold startup times by ~30ms.
+WQ_UNBOUND was also removed from the dm-verity workqueue for the same
+reason [1].
 
-  unreferenced object 0xffff888106500b00 (size 128):
-    comm "modprobe", pid 1017, jiffies 4297787785 (age 67.152s)
-    hex dump (first 32 bytes):
-      00 20 3d 01 80 88 ff ff 00 20 3d 01 80 88 ff ff  . =...... =.....
-      f0 23 3d 01 80 88 ff ff 00 20 3d 01 00 00 00 00  .#=...... =.....
-    backtrace:
-      [<00000000970ce626>] __kmem_cache_alloc_node+0x20c/0x380
-      [<00000000fb5f78d9>] kmalloc_trace+0x2f/0xb0
-      [<00000000f451c5be>] alloc_scq.constprop.0+0x4a/0x400 [idt77252]
-      [<00000000e6313849>] idt77252_init_one+0x28cf/0x3c90 [idt77252]
+This code was tested by running Android app startup benchmarks and
+measuring how long the fsverity workqueue spent in the runnable state.
 
-The root cause is traced to the vc_maps which alloced in open_card_oam()
-are not freed in close_card_oam(). The vc_maps are used to record
-open connections, so when close a vc_map in close_card_oam(), the memory
-should be freed. Moreover, the ubr0 is not closed when close a idt77252
-device, leading to the memory leak of vc_map and scq_info.
+Before
+Total workqueue scheduler latency: 553800us
+After
+Total workqueue scheduler latency: 18962us
 
-Fix them by adding kfree in close_card_oam() and implementing new
-close_card_ubr0() to close ubr0.
+[1]: https://lore.kernel.org/all/20230202012348.885402-1-nhuck@google.com/
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Francois Romieu <romieu@fr.zoreil.com>
-Link: https://lore.kernel.org/r/20230320143318.2644630-1-lizetao1@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Nathan Huckleberry <nhuck@google.com>
+Fixes: 8a1d0f9cacc9 ("fs-verity: add data verification hooks for ->readpages()")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230310193325.620493-1-nhuck@google.com
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/atm/idt77252.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/verity/verify.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
-index 82f6f1fbe9e78..a217b50439e72 100644
---- a/drivers/atm/idt77252.c
-+++ b/drivers/atm/idt77252.c
-@@ -2915,6 +2915,7 @@ close_card_oam(struct idt77252_dev *card)
- 
- 				recycle_rx_pool_skb(card, &vc->rcv.rx_pool);
- 			}
-+			kfree(vc);
- 		}
- 	}
- }
-@@ -2958,6 +2959,15 @@ open_card_ubr0(struct idt77252_dev *card)
- 	return 0;
- }
- 
-+static void
-+close_card_ubr0(struct idt77252_dev *card)
-+{
-+	struct vc_map *vc = card->vcs[0];
-+
-+	free_scq(card, vc->scq);
-+	kfree(vc);
-+}
-+
- static int
- idt77252_dev_open(struct idt77252_dev *card)
+--- a/fs/verity/verify.c
++++ b/fs/verity/verify.c
+@@ -279,15 +279,15 @@ EXPORT_SYMBOL_GPL(fsverity_enqueue_verif
+ int __init fsverity_init_workqueue(void)
  {
-@@ -3007,6 +3017,7 @@ static void idt77252_dev_close(struct atm_dev *dev)
- 	struct idt77252_dev *card = dev->dev_data;
- 	u32 conf;
- 
-+	close_card_ubr0(card);
- 	close_card_oam(card);
- 
- 	conf = SAR_CFG_RXPTH |	/* enable receive path           */
--- 
-2.39.2
-
+ 	/*
+-	 * Use an unbound workqueue to allow bios to be verified in parallel
+-	 * even when they happen to complete on the same CPU.  This sacrifices
+-	 * locality, but it's worthwhile since hashing is CPU-intensive.
++	 * Use a high-priority workqueue to prioritize verification work, which
++	 * blocks reads from completing, over regular application tasks.
+ 	 *
+-	 * Also use a high-priority workqueue to prioritize verification work,
+-	 * which blocks reads from completing, over regular application tasks.
++	 * For performance reasons, don't use an unbound workqueue.  Using an
++	 * unbound workqueue for crypto operations causes excessive scheduler
++	 * latency on ARM64.
+ 	 */
+ 	fsverity_read_workqueue = alloc_workqueue("fsverity_read_queue",
+-						  WQ_UNBOUND | WQ_HIGHPRI,
++						  WQ_HIGHPRI,
+ 						  num_online_cpus());
+ 	if (!fsverity_read_workqueue)
+ 		return -ENOMEM;
 
 
