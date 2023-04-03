@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF20B6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A04C433D2;
-	Mon,  3 Apr 2023 14:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF4A6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:46:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0599AC433D2;
+	Mon,  3 Apr 2023 14:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533176;
-	bh=TE4xOXYqMwj5XtV3cSDXvMt3tMyHbTy3WEJzGo5XXdQ=;
+	s=korg; t=1680533179;
+	bh=c9WRQrQ9Zh03YecmPXROf8+OeeoJCsLrKKMhLWr98vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ccq59OANEYHA4dc812RG6CTYtMsM+iL9wgJUXZ0Mqs7k3gWIlZMjkFNgQfeIX3fJx
-	 Ne7JUf9sRUWC+n6bA7KVdVCKy32jWsxAfQ2ANYYro9a7N9O2PM3sACse/2pgLc1aIf
-	 uGPRpN2HfhEvqvRAsXUQ5O6TdBjIkxxeNxwV0FLs=
+	b=WVESUZQr4bpJ6aNTk8L9pTQG8DyPlT/djdo49/BlEzQ+5f9XF2TxTUvE3KPiHeEKE
+	 sQ/9zOLPaXpSkrYUAE42FAlnbfIfKdzDRST8ufillb1rr2+W1ARRxNhnSh9QCGAvtC
+	 FSykYRX9eh/PTPeKEnkG31ekpUcRxzGsj4LJAjVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adham Faris <afaris@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 052/187] net/mlx5e: Lower maximum allowed MTU in XSK to match XDP prerequisites
-Date: Mon,  3 Apr 2023 16:08:17 +0200
-Message-Id: <20230403140417.697209115@linuxfoundation.org>
+Subject: [PATCH 6.2 053/187] fbdev: nvidia: Fix potential divide by zero
+Date: Mon,  3 Apr 2023 16:08:18 +0200
+Message-Id: <20230403140417.725792786@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,69 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adham Faris <afaris@nvidia.com>
+From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 78dee7befd56987283c13877b834c0aa97ad51b9 ]
+[ Upstream commit 92e2a00f2987483e1f9253625828622edd442e61 ]
 
-XSK redirecting XDP programs require linearity, hence applies
-restrictions on the MTU. For PAGE_SIZE=4K, MTU shouldn't exceed 3498.
+variable var->pixclock can be set by user. In case it
+equals to zero, divide by zero would occur in nvidiafb_set_par.
 
-Features that contradict with XDP such HW-LRO and HW-GRO are enforced
-by the driver in advance, during XSK params validation, except for MTU,
-which was not enforced before this patch.
+Similar crashes have happened in other fbdev drivers. There
+is no check and modification on var->pixclock along the call
+chain to nvidia_check_var and nvidiafb_set_par. We believe it
+could also be triggered in driver nvidia from user site.
 
-This has been spotted during test scenario described below:
-Attaching xdpsock program (PAGE_SIZE=4K), with MTU < 3498, detaching
-XDP program, changing the MTU to arbitrary value in the range
-[3499, 3754], attaching XDP program again, which ended up with failure
-since MTU is > 3498.
-
-This commit lowers the XSK MTU limitation to be aligned with XDP MTU
-limitation, since XSK socket is meaningless without XDP program.
-
-Signed-off-by: Adham Faris <afaris@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/nvidia/nvidia.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 47d4b54d15634..1f4233b2842f7 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -4117,13 +4117,17 @@ static bool mlx5e_xsk_validate_mtu(struct net_device *netdev,
- 		struct xsk_buff_pool *xsk_pool =
- 			mlx5e_xsk_get_pool(&chs->params, chs->params.xsk, ix);
- 		struct mlx5e_xsk_param xsk;
-+		int max_xdp_mtu;
+diff --git a/drivers/video/fbdev/nvidia/nvidia.c b/drivers/video/fbdev/nvidia/nvidia.c
+index e60a276b4855d..ea4ba3dfb96bb 100644
+--- a/drivers/video/fbdev/nvidia/nvidia.c
++++ b/drivers/video/fbdev/nvidia/nvidia.c
+@@ -764,6 +764,8 @@ static int nvidiafb_check_var(struct fb_var_screeninfo *var,
+ 	int pitch, err = 0;
  
- 		if (!xsk_pool)
- 			continue;
+ 	NVTRACE_ENTER();
++	if (!var->pixclock)
++		return -EINVAL;
  
- 		mlx5e_build_xsk_param(xsk_pool, &xsk);
-+		max_xdp_mtu = mlx5e_xdp_max_mtu(new_params, &xsk);
- 
--		if (!mlx5e_validate_xsk_param(new_params, &xsk, mdev)) {
-+		/* Validate XSK params and XDP MTU in advance */
-+		if (!mlx5e_validate_xsk_param(new_params, &xsk, mdev) ||
-+		    new_params->sw_mtu > max_xdp_mtu) {
- 			u32 hr = mlx5e_get_linear_rq_headroom(new_params, &xsk);
- 			int max_mtu_frame, max_mtu_page, max_mtu;
- 
-@@ -4133,9 +4137,9 @@ static bool mlx5e_xsk_validate_mtu(struct net_device *netdev,
- 			 */
- 			max_mtu_frame = MLX5E_HW2SW_MTU(new_params, xsk.chunk_size - hr);
- 			max_mtu_page = MLX5E_HW2SW_MTU(new_params, SKB_MAX_HEAD(0));
--			max_mtu = min(max_mtu_frame, max_mtu_page);
-+			max_mtu = min3(max_mtu_frame, max_mtu_page, max_xdp_mtu);
- 
--			netdev_err(netdev, "MTU %d is too big for an XSK running on channel %u. Try MTU <= %d\n",
-+			netdev_err(netdev, "MTU %d is too big for an XSK running on channel %u or its redirection XDP program. Try MTU <= %d\n",
- 				   new_params->sw_mtu, ix, max_mtu);
- 			return false;
- 		}
+ 	var->transp.offset = 0;
+ 	var->transp.length = 0;
 -- 
 2.39.2
 
