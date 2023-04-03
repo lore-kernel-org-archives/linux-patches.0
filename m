@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0828C6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:40:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CA7C4339B;
-	Mon,  3 Apr 2023 14:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2DE6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:40:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1496BC433D2;
+	Mon,  3 Apr 2023 14:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532807;
-	bh=BK4xOjh/MRSgGKsJNpX9Bb7WMvIAOk0PJAbRma5T9wA=;
+	s=korg; t=1680532810;
+	bh=n4BZOnVH0vyjAq10MGm3aPcUiheVOdpKnNU2BEWMxjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7KWjGVIET3lzdCaUFR1Cr/8lmCupYsqs65Uin+X1QyWSAsOjklGvmwv6G0Xq9hZ+
-	 ElD8MrxZnSUoiHFIYcZTt8+6vzYvzLjj+jE40Y2CaBiphJT03FMzM70TR2iW6fwNiS
-	 iUoc0bhPINfohorQZNohDaopR81PswfjHEzMIMec=
+	b=pun6Z0K3S/QbAh0A2eOHwaOn+pmgpQd2ibNr6bTb3w6FLhe4oPi3XevK9lkUegpIY
+	 F7mzRtp3Fb62Bs8Znfk1w77L1DkSv/CWqGBfO11rCmzJK9s4uOS1sRw5Rie/HsQTqq
+	 GzfoaIaMgccuinsjEg7hTitsODIPlWL2uzUa45EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Steffen=20B=C3=A4tz?= <steffen@innosonix.de>,
-	Fabio Estevam <festevam@denx.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 117/181] net: dsa: mv88e6xxx: Enable IGMP snooping on user ports only
-Date: Mon,  3 Apr 2023 16:09:12 +0200
-Message-Id: <20230403140418.891980819@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Ronnie Sahlberg <lsahlber@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 126/181] cifs: prevent infinite recursion in CIFSGetDFSRefer()
+Date: Mon,  3 Apr 2023 16:09:21 +0200
+Message-Id: <20230403140419.168409614@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -39,52 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steffen Bätz <steffen@innosonix.de>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 7bcad0f0e6fbc1d613e49e0ee35c8e5f2e685bb0 ]
+commit 09ba47b44d26b475bbdf9c80db9e0193d2b58956 upstream.
 
-Do not set the MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP bit on CPU or DSA ports.
+We can't call smb_init() in CIFSGetDFSRefer() as cifs_reconnect_tcon()
+may end up calling CIFSGetDFSRefer() again to get new DFS referrals
+and thus causing an infinite recursion.
 
-This allows the host CPU port to be a regular IGMP listener by sending out
-IGMP Membership Reports, which would otherwise not be forwarded by the
-mv88exxx chip, but directly looped back to the CPU port itself.
-
-Fixes: 54d792f257c6 ("net: dsa: Centralise global and port setup code into mv88e6xxx.")
-Signed-off-by: Steffen Bätz <steffen@innosonix.de>
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230329150140.701559-1-festevam@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
+Cc: stable@vger.kernel.org # 6.2
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 9 +++++++--
+ fs/cifs/cifssmb.c |    9 +++++++--
  1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 3a6db36574ad7..8cf27e2654fcf 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -3354,9 +3354,14 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
- 	 * If this is the upstream port for this switch, enable
- 	 * forwarding of unknown unicasts and multicasts.
- 	 */
--	reg = MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP |
--		MV88E6185_PORT_CTL0_USE_TAG | MV88E6185_PORT_CTL0_USE_IP |
-+	reg = MV88E6185_PORT_CTL0_USE_TAG | MV88E6185_PORT_CTL0_USE_IP |
- 		MV88E6XXX_PORT_CTL0_STATE_FORWARDING;
-+	/* Forward any IPv4 IGMP or IPv6 MLD frames received
-+	 * by a USER port to the CPU port to allow snooping.
+--- a/fs/cifs/cifssmb.c
++++ b/fs/cifs/cifssmb.c
+@@ -4319,8 +4319,13 @@ CIFSGetDFSRefer(const unsigned int xid,
+ 		return -ENODEV;
+ 
+ getDFSRetry:
+-	rc = smb_init(SMB_COM_TRANSACTION2, 15, ses->tcon_ipc, (void **) &pSMB,
+-		      (void **) &pSMBr);
++	/*
++	 * Use smb_init_no_reconnect() instead of smb_init() as
++	 * CIFSGetDFSRefer() may be called from cifs_reconnect_tcon() and thus
++	 * causing an infinite recursion.
 +	 */
-+	if (dsa_is_user_port(ds, port))
-+		reg |= MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP;
-+
- 	err = mv88e6xxx_port_write(chip, port, MV88E6XXX_PORT_CTL0, reg);
- 	if (err)
- 		return err;
--- 
-2.39.2
-
++	rc = smb_init_no_reconnect(SMB_COM_TRANSACTION2, 15, ses->tcon_ipc,
++				   (void **)&pSMB, (void **)&pSMBr);
+ 	if (rc)
+ 		return rc;
+ 
 
 
