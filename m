@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009156FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D19CC4339C;
-	Mon,  3 Apr 2023 14:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E276FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A24FC433EF;
+	Mon,  3 Apr 2023 14:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532421;
-	bh=ztiuKPta5K4XqEf6JPO6r2QEIBwJDgEmXHyE7luSg98=;
+	s=korg; t=1680532424;
+	bh=eIbs2gPg3C58QXDt3BxX3RfWhOV282cG4sJxTZaF/P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XxxU0XXWKnPI3faMRWyWXKhyCF8LmvV2mjaXhGukuPe40LOlzS4LhIBa4aqOIgfoG
-	 KeJuUjDXKC5RRUXTv+rxmTjqEW0iVSsvKiPqW4mRbZilpVwxnILn3IV9QazR7e2rCQ
-	 2R3H4ypkEORGequB3PbNubNNVfeSn6nCF9WFctlg=
+	b=qBKAyBm3Szp48f2NFOIn/x9UBAnhKO3NyyuN3ZHBLBygBB15mv+emC9FQKeYKxpG6
+	 8B8+VKozqZJv3x/ytqkopR7qtpQnHiaIuiMZbF1KRXGy8HnQi5vN9v3o+yCECpgTyx
+	 AXyFrENfxfk2JOQXxyMLfgQbHD6fTJ/47v2A/ZHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@chromium.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.15 76/99] pinctrl: amd: Disable and mask interrupts on resume
-Date: Mon,  3 Apr 2023 16:09:39 +0200
-Message-Id: <20230403140406.319667705@linuxfoundation.org>
+	Sven Auhagen <sven.auhagen@voleatech.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 50/99] net: mvpp2: parser fix PPPoE
+Date: Mon,  3 Apr 2023 16:09:13 +0200
+Message-Id: <20230403140405.199993480@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -34,94 +35,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kornel Dulęba <korneld@chromium.org>
+From: Sven Auhagen <sven.auhagen@voleatech.de>
 
-commit b26cd9325be4c1fcd331b77f10acb627c560d4d7 upstream.
+[ Upstream commit 031a416c2170866be5132ae42e14453d669b0cb1 ]
 
-This fixes a similar problem to the one observed in:
-commit 4e5a04be88fe ("pinctrl: amd: disable and mask interrupts on probe").
+In PPPoE add all IPv4 header option length to the parser
+and adjust the L3 and L4 offset accordingly.
+Currently the L4 match does not work with PPPoE and
+all packets are matched as L3 IP4 OPT.
 
-On some systems, during suspend/resume cycle firmware leaves
-an interrupt enabled on a pin that is not used by the kernel.
-This confuses the AMD pinctrl driver and causes spurious interrupts.
-
-The driver already has logic to detect if a pin is used by the kernel.
-Leverage it to re-initialize interrupt fields of a pin only if it's not
-used by us.
-
-Cc: stable@vger.kernel.org
-Fixes: dbad75dd1f25 ("pinctrl: add AMD GPIO driver support.")
-Signed-off-by: Kornel Dulęba <korneld@chromium.org>
-Link: https://lore.kernel.org/r/20230320093259.845178-1-korneld@chromium.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3f518509dedc ("ethernet: Add new driver for Marvell Armada 375 network unit")
+Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |   36 ++++++++++++++++++++----------------
- 1 file changed, 20 insertions(+), 16 deletions(-)
+ .../net/ethernet/marvell/mvpp2/mvpp2_prs.c    | 82 ++++++++-----------
+ 1 file changed, 34 insertions(+), 48 deletions(-)
 
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -863,32 +863,34 @@ static const struct pinconf_ops amd_pinc
- 	.pin_config_group_set = amd_pinconf_group_set,
- };
- 
--static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
-+static void amd_gpio_irq_init_pin(struct amd_gpio *gpio_dev, int pin)
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
+index 34d2714205977..a8188b972ccbc 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
+@@ -1607,59 +1607,45 @@ static int mvpp2_prs_vlan_init(struct platform_device *pdev, struct mvpp2 *priv)
+ static int mvpp2_prs_pppoe_init(struct mvpp2 *priv)
  {
--	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
-+	const struct pin_desc *pd;
- 	unsigned long flags;
- 	u32 pin_reg, mask;
--	int i;
- 
- 	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
- 		BIT(INTERRUPT_MASK_OFF) | BIT(INTERRUPT_ENABLE_OFF) |
- 		BIT(WAKE_CNTRL_OFF_S4);
- 
--	for (i = 0; i < desc->npins; i++) {
--		int pin = desc->pins[i].number;
--		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
+ 	struct mvpp2_prs_entry pe;
+-	int tid;
 -
--		if (!pd)
--			continue;
-+	pd = pin_desc_get(gpio_dev->pctrl, pin);
-+	if (!pd)
-+		return;
+-	/* IPv4 over PPPoE with options */
+-	tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
+-					MVPP2_PE_LAST_FREE_TID);
+-	if (tid < 0)
+-		return tid;
+-
+-	memset(&pe, 0, sizeof(pe));
+-	mvpp2_prs_tcam_lu_set(&pe, MVPP2_PRS_LU_PPPOE);
+-	pe.index = tid;
+-
+-	mvpp2_prs_match_etype(&pe, 0, PPP_IP);
+-
+-	mvpp2_prs_sram_next_lu_set(&pe, MVPP2_PRS_LU_IP4);
+-	mvpp2_prs_sram_ri_update(&pe, MVPP2_PRS_RI_L3_IP4_OPT,
+-				 MVPP2_PRS_RI_L3_PROTO_MASK);
+-	/* goto ipv4 dest-address (skip eth_type + IP-header-size - 4) */
+-	mvpp2_prs_sram_shift_set(&pe, MVPP2_ETH_TYPE_LEN +
+-				 sizeof(struct iphdr) - 4,
+-				 MVPP2_PRS_SRAM_OP_SEL_SHIFT_ADD);
+-	/* Set L3 offset */
+-	mvpp2_prs_sram_offset_set(&pe, MVPP2_PRS_SRAM_UDF_TYPE_L3,
+-				  MVPP2_ETH_TYPE_LEN,
+-				  MVPP2_PRS_SRAM_OP_SEL_UDF_ADD);
+-
+-	/* Update shadow table and hw entry */
+-	mvpp2_prs_shadow_set(priv, pe.index, MVPP2_PRS_LU_PPPOE);
+-	mvpp2_prs_hw_write(priv, &pe);
++	int tid, ihl;
  
--		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
-+	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
-+	pin_reg = readl(gpio_dev->base + pin * 4);
-+	pin_reg &= ~mask;
-+	writel(pin_reg, gpio_dev->base + pin * 4);
-+	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
-+}
+-	/* IPv4 over PPPoE without options */
+-	tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
+-					MVPP2_PE_LAST_FREE_TID);
+-	if (tid < 0)
+-		return tid;
++	/* IPv4 over PPPoE with header length >= 5 */
++	for (ihl = MVPP2_PRS_IPV4_IHL_MIN; ihl <= MVPP2_PRS_IPV4_IHL_MAX; ihl++) {
++		tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
++						MVPP2_PE_LAST_FREE_TID);
++		if (tid < 0)
++			return tid;
  
--		pin_reg = readl(gpio_dev->base + i * 4);
--		pin_reg &= ~mask;
--		writel(pin_reg, gpio_dev->base + i * 4);
-+static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
-+{
-+	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
-+	int i;
+-	pe.index = tid;
++		memset(&pe, 0, sizeof(pe));
++		mvpp2_prs_tcam_lu_set(&pe, MVPP2_PRS_LU_PPPOE);
++		pe.index = tid;
  
--		raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
--	}
-+	for (i = 0; i < desc->npins; i++)
-+		amd_gpio_irq_init_pin(gpio_dev, i);
- }
+-	mvpp2_prs_tcam_data_byte_set(&pe, MVPP2_ETH_TYPE_LEN,
+-				     MVPP2_PRS_IPV4_HEAD |
+-				     MVPP2_PRS_IPV4_IHL_MIN,
+-				     MVPP2_PRS_IPV4_HEAD_MASK |
+-				     MVPP2_PRS_IPV4_IHL_MASK);
++		mvpp2_prs_match_etype(&pe, 0, PPP_IP);
++		mvpp2_prs_tcam_data_byte_set(&pe, MVPP2_ETH_TYPE_LEN,
++					     MVPP2_PRS_IPV4_HEAD | ihl,
++					     MVPP2_PRS_IPV4_HEAD_MASK |
++					     MVPP2_PRS_IPV4_IHL_MASK);
  
- #ifdef CONFIG_PM_SLEEP
-@@ -941,8 +943,10 @@ static int amd_gpio_resume(struct device
- 	for (i = 0; i < desc->npins; i++) {
- 		int pin = desc->pins[i].number;
+-	/* Clear ri before updating */
+-	pe.sram[MVPP2_PRS_SRAM_RI_WORD] = 0x0;
+-	pe.sram[MVPP2_PRS_SRAM_RI_CTRL_WORD] = 0x0;
+-	mvpp2_prs_sram_ri_update(&pe, MVPP2_PRS_RI_L3_IP4,
+-				 MVPP2_PRS_RI_L3_PROTO_MASK);
++		mvpp2_prs_sram_next_lu_set(&pe, MVPP2_PRS_LU_IP4);
++		mvpp2_prs_sram_ri_update(&pe, MVPP2_PRS_RI_L3_IP4,
++					 MVPP2_PRS_RI_L3_PROTO_MASK);
++		/* goto ipv4 dst-address (skip eth_type + IP-header-size - 4) */
++		mvpp2_prs_sram_shift_set(&pe, MVPP2_ETH_TYPE_LEN +
++					 sizeof(struct iphdr) - 4,
++					 MVPP2_PRS_SRAM_OP_SEL_SHIFT_ADD);
++		/* Set L3 offset */
++		mvpp2_prs_sram_offset_set(&pe, MVPP2_PRS_SRAM_UDF_TYPE_L3,
++					  MVPP2_ETH_TYPE_LEN,
++					  MVPP2_PRS_SRAM_OP_SEL_UDF_ADD);
++		/* Set L4 offset */
++		mvpp2_prs_sram_offset_set(&pe, MVPP2_PRS_SRAM_UDF_TYPE_L4,
++					  MVPP2_ETH_TYPE_LEN + (ihl * 4),
++					  MVPP2_PRS_SRAM_OP_SEL_UDF_ADD);
  
--		if (!amd_gpio_should_save(gpio_dev, pin))
-+		if (!amd_gpio_should_save(gpio_dev, pin)) {
-+			amd_gpio_irq_init_pin(gpio_dev, pin);
- 			continue;
-+		}
+-	/* Update shadow table and hw entry */
+-	mvpp2_prs_shadow_set(priv, pe.index, MVPP2_PRS_LU_PPPOE);
+-	mvpp2_prs_hw_write(priv, &pe);
++		/* Update shadow table and hw entry */
++		mvpp2_prs_shadow_set(priv, pe.index, MVPP2_PRS_LU_PPPOE);
++		mvpp2_prs_hw_write(priv, &pe);
++	}
  
- 		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
- 		gpio_dev->saved_regs[i] |= readl(gpio_dev->base + pin * 4) & PIN_IRQ_PENDING;
+ 	/* IPv6 over PPPoE */
+ 	tid = mvpp2_prs_tcam_first_free(priv, MVPP2_PE_FIRST_FREE_TID,
+-- 
+2.39.2
+
 
 
