@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644E46FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B5DC433D2;
-	Mon,  3 Apr 2023 14:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F145E6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:43:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78AC3C433D2;
+	Mon,  3 Apr 2023 14:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533020;
-	bh=I5p+nFrt1hderaCIh4QWIYwi/J9OVB299B44AzHSw3I=;
+	s=korg; t=1680533022;
+	bh=/4Gnp6UZmcgEK0xo5Pv/G/WtbPtWC/wouYxDiNILz+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sfUtTy7/VjWGrVn/DzDoQ17KFnuUAiOuNc0TS6ONP4vXDxCaPb3ymFZ1IaQKUOOi0
-	 n2hhwG14fVgnIcbtiM+2lc4ZJG3RQgIBrRrNebT8uyCF2G0nseyjveP8dL0uSoMyma
-	 3k/QmJPhCa9uH1Da0eCBotXypz21dolOIAOqZAMs=
+	b=t2Si4YqOyyqD8eyVUTBjWJygT6F7ZGcDDSlt+o6MApt9SHIMPNgu573nGftv32LR1
+	 zsOJ2ceCyg8TQAbVLWah67RgtX5vSo6XM5Ezr7GxKJXsRpVsh1h+DMHlp9GqcMxGZN
+	 uC4pWgENuY6FaUbwDnL9VGZVQsmiNqRYj43/3Vkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravulapati Vishnu Vardhan Rao <quic_visr@quicinc.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 016/187] ASoC: codecs: tx-macro: Fix for KASAN: slab-out-of-bounds
-Date: Mon,  3 Apr 2023 16:07:41 +0200
-Message-Id: <20230403140416.561565578@linuxfoundation.org>
+Subject: [PATCH 6.2 025/187] ACPI: x86: Introduce an acpi_quirk_skip_gpio_event_handlers() helper
+Date: Mon,  3 Apr 2023 16:07:50 +0200
+Message-Id: <20230403140416.845573442@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,91 +36,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ravulapati Vishnu Vardhan Rao <quic_visr@quicinc.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit e5e7e398f6bb7918dab0612eb6991f7bae95520d ]
+[ Upstream commit 5adc409340b1fc82bc1175e602d14ac82ac685e3 ]
 
-When we run syzkaller we get below Out of Bound.
-    "KASAN: slab-out-of-bounds Read in regcache_flat_read"
+x86 ACPI boards which ship with only Android as their factory image usually
+have pretty broken ACPI tables, relying on everything being hardcoded in
+the factory kernel image and often disabling parts of the ACPI enumeration
+kernel code to avoid the broken tables causing issues.
 
-    Below is the backtrace of the issue:
+Part of this broken ACPI code is that sometimes these boards have _AEI
+ACPI GPIO event handlers which are broken.
 
-    dump_backtrace+0x0/0x4c8
-    show_stack+0x34/0x44
-    dump_stack_lvl+0xd8/0x118
-    print_address_description+0x30/0x2d8
-    kasan_report+0x158/0x198
-    __asan_report_load4_noabort+0x44/0x50
-    regcache_flat_read+0x10c/0x110
-    regcache_read+0xf4/0x180
-    _regmap_read+0xc4/0x278
-    _regmap_update_bits+0x130/0x290
-    regmap_update_bits_base+0xc0/0x15c
-    snd_soc_component_update_bits+0xa8/0x22c
-    snd_soc_component_write_field+0x68/0xd4
-    tx_macro_digital_mute+0xec/0x140
+So far this has been dealt with in the platform/x86/x86-android-tablets.c
+module, which contains various workarounds for these devices, by it calling
+acpi_gpiochip_free_interrupts() on gpiochip-s with troublesome handlers to
+disable the handlers.
 
-    Actually There is no need to have decimator with 32 bits.
-    By limiting the variable with short type u8 issue is resolved.
+But in some cases this is too late, if the handlers are of the edge type
+then gpiolib-acpi.c's code will already have run them at boot.
+This can cause issues such as GPIOs ending up as owned by "ACPI:OpRegion",
+making them unavailable for drivers which actually need them.
 
-Signed-off-by: Ravulapati Vishnu Vardhan Rao <quic_visr@quicinc.com>
-Link: https://lore.kernel.org/r/20230304080702.609-1-quic_visr@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Boards with these broken ACPI tables are already listed in
+drivers/acpi/x86/utils.c for e.g. acpi_quirk_skip_i2c_client_enumeration().
+Extend the quirks mechanism for a new acpi_quirk_skip_gpio_event_handlers()
+helper, this re-uses the DMI-ids rather then having to duplicate the same
+DMI table in gpiolib-acpi.c .
+
+Also add the new ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS quirk to existing
+boards with troublesome ACPI gpio event handlers, so that the current
+acpi_gpiochip_free_interrupts() hack can be removed from
+x86-android-tablets.c .
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/lpass-tx-macro.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/acpi/x86/utils.c    | 24 +++++++++++++++++++++---
+ drivers/gpio/gpiolib-acpi.c |  3 +++
+ include/acpi/acpi_bus.h     |  5 +++++
+ 3 files changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
-index 2449a2df66df0..8facdb922f076 100644
---- a/sound/soc/codecs/lpass-tx-macro.c
-+++ b/sound/soc/codecs/lpass-tx-macro.c
-@@ -242,7 +242,7 @@ enum {
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index e45285d4e62a4..4bf57cce30bbf 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -251,6 +251,7 @@ bool force_storage_d3(void)
+ #define ACPI_QUIRK_UART1_TTY_UART2_SKIP				BIT(1)
+ #define ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY			BIT(2)
+ #define ACPI_QUIRK_USE_ACPI_AC_AND_BATTERY			BIT(3)
++#define ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS			BIT(4)
  
- struct tx_mute_work {
- 	struct tx_macro *tx;
--	u32 decimator;
-+	u8 decimator;
- 	struct delayed_work dwork;
- };
- 
-@@ -635,7 +635,7 @@ static int tx_macro_mclk_enable(struct tx_macro *tx,
+ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
+ 	/*
+@@ -286,7 +287,8 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
+ 		},
+ 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
+ 					ACPI_QUIRK_UART1_TTY_UART2_SKIP |
+-					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
++					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY |
++					ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS),
+ 	},
+ 	{
+ 		.matches = {
+@@ -294,7 +296,8 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "TF103C"),
+ 		},
+ 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
+-					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
++					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY |
++					ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS),
+ 	},
+ 	{
+ 		/* Lenovo Yoga Tablet 2 1050F/L */
+@@ -336,7 +339,8 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "M890BAP"),
+ 		},
+ 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
+-					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
++					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY |
++					ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS),
+ 	},
+ 	{
+ 		/* Whitelabel (sold as various brands) TM800A550L */
+@@ -413,6 +417,20 @@ int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *s
  	return 0;
  }
+ EXPORT_SYMBOL_GPL(acpi_quirk_skip_serdev_enumeration);
++
++bool acpi_quirk_skip_gpio_event_handlers(void)
++{
++	const struct dmi_system_id *dmi_id;
++	long quirks;
++
++	dmi_id = dmi_first_match(acpi_quirk_skip_dmi_ids);
++	if (!dmi_id)
++		return false;
++
++	quirks = (unsigned long)dmi_id->driver_data;
++	return (quirks & ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS);
++}
++EXPORT_SYMBOL_GPL(acpi_quirk_skip_gpio_event_handlers);
+ #endif
  
--static bool is_amic_enabled(struct snd_soc_component *component, int decimator)
-+static bool is_amic_enabled(struct snd_soc_component *component, u8 decimator)
- {
- 	u16 adc_mux_reg, adc_reg, adc_n;
+ /* Lists of PMIC ACPI HIDs with an (often better) native charger driver */
+diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+index 34ff048e70d0e..7c9175619a1dc 100644
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -536,6 +536,9 @@ void acpi_gpiochip_request_interrupts(struct gpio_chip *chip)
+ 	if (ACPI_FAILURE(status))
+ 		return;
  
-@@ -849,7 +849,7 @@ static int tx_macro_enable_dec(struct snd_soc_dapm_widget *w,
- 			       struct snd_kcontrol *kcontrol, int event)
- {
- 	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
--	unsigned int decimator;
-+	u8 decimator;
- 	u16 tx_vol_ctl_reg, dec_cfg_reg, hpf_gate_reg, tx_gain_ctl_reg;
- 	u8 hpf_cut_off_freq;
- 	int hpf_delay = TX_MACRO_DMIC_HPF_DELAY_MS;
-@@ -1064,7 +1064,8 @@ static int tx_macro_hw_params(struct snd_pcm_substream *substream,
- 			      struct snd_soc_dai *dai)
- {
- 	struct snd_soc_component *component = dai->component;
--	u32 decimator, sample_rate;
-+	u32 sample_rate;
-+	u8 decimator;
- 	int tx_fs_rate;
- 	struct tx_macro *tx = snd_soc_component_get_drvdata(component);
++	if (acpi_quirk_skip_gpio_event_handlers())
++		return;
++
+ 	acpi_walk_resources(handle, METHOD_NAME__AEI,
+ 			    acpi_gpiochip_alloc_event, acpi_gpio);
  
-@@ -1128,7 +1129,7 @@ static int tx_macro_digital_mute(struct snd_soc_dai *dai, int mute, int stream)
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index 0584e9f6e3397..57acb895c0381 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -657,6 +657,7 @@ static inline bool acpi_quirk_skip_acpi_ac_and_battery(void)
+ #if IS_ENABLED(CONFIG_X86_ANDROID_TABLETS)
+ bool acpi_quirk_skip_i2c_client_enumeration(struct acpi_device *adev);
+ int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip);
++bool acpi_quirk_skip_gpio_event_handlers(void);
+ #else
+ static inline bool acpi_quirk_skip_i2c_client_enumeration(struct acpi_device *adev)
  {
- 	struct snd_soc_component *component = dai->component;
- 	struct tx_macro *tx = snd_soc_component_get_drvdata(component);
--	u16 decimator;
-+	u8 decimator;
+@@ -668,6 +669,10 @@ acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip)
+ 	*skip = false;
+ 	return 0;
+ }
++static inline bool acpi_quirk_skip_gpio_event_handlers(void)
++{
++	return false;
++}
+ #endif
  
- 	/* active decimator not set yet */
- 	if (tx->active_decimator[dai->id] == -1)
+ #ifdef CONFIG_PM
 -- 
 2.39.2
 
