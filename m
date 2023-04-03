@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7446FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2588EC433D2;
-	Mon,  3 Apr 2023 14:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4638E6FAA
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:29:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08ADC433EF;
+	Mon,  3 Apr 2023 14:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532138;
-	bh=7kY+R7Lbs29oei3mRtewtiaJwB/b3MIPNLcDcJ6Z3NA=;
+	s=korg; t=1680532141;
+	bh=yRiw3o0/+sfsy1f3urFEAfzg3WhQdZrlqKCrqyY2xGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2udnSsTOepvRswF4WA22jvX2VGZMrHRx5DYi6ZiDsEMzTSkr0jik4VUxln1zx6lfN
-	 GHJsndEioXwNZUWJ6LJtUlJ6ChamZg4MsD4ItDCzAaFmwwHrTu8woK+VNiNT3RVdNW
-	 e5MoWD30Mf7b4gXwcs/seuViciK3fSORri2sIKAI=
+	b=QVmXEFkkfsv4RqyRLnQFbDJQGqxjNE/ATFFqUxumOFtTXLst/YBM25Zr9Lz8oBRkm
+	 GedWjQ9Di+K+3b9d3m9dkJ/iZQNYTSFhHWL1ThUP2VAL61iE5zF6VxlS+xztJNyUF4
+	 4K7a1vqeY0lGOFkK1PHpDnyMKg/SvsV1qSvhaZ54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 141/173] bnxt_en: Fix typo in PCI id to device description string mapping
-Date: Mon,  3 Apr 2023 16:09:16 +0200
-Message-Id: <20230403140419.027995812@linuxfoundation.org>
+Subject: [PATCH 5.10 142/173] bnxt_en: Add missing 200G link speed reporting
+Date: Mon,  3 Apr 2023 16:09:17 +0200
+Message-Id: <20230403140419.056411295@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -38,45 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 62aad36ed31abc80f35db11e187e690448a79f7d ]
+[ Upstream commit 581bce7bcb7e7f100908728e7b292e266c76895b ]
 
-Fix 57502 and 57508 NPAR description string entries.  The typos
-caused these devices to not match up with lspci output.
+bnxt_fw_to_ethtool_speed() is missing the case statement for 200G
+link speed reported by firmware.  As a result, ethtool will report
+unknown speed when the firmware reports 200G link speed.
 
-Fixes: 49c98421e6ab ("bnxt_en: Add PCI IDs for 57500 series NPAR devices.")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Fixes: 532262ba3b84 ("bnxt_en: ethtool: support PAM4 link speeds up to 200G")
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h         | 1 +
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 6928c0b578abb..3a9fcf942a6de 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -219,12 +219,12 @@ static const struct pci_device_id bnxt_pci_tbl[] = {
- 	{ PCI_VDEVICE(BROADCOM, 0x1750), .driver_data = BCM57508 },
- 	{ PCI_VDEVICE(BROADCOM, 0x1751), .driver_data = BCM57504 },
- 	{ PCI_VDEVICE(BROADCOM, 0x1752), .driver_data = BCM57502 },
--	{ PCI_VDEVICE(BROADCOM, 0x1800), .driver_data = BCM57508_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1800), .driver_data = BCM57502_NPAR },
- 	{ PCI_VDEVICE(BROADCOM, 0x1801), .driver_data = BCM57504_NPAR },
--	{ PCI_VDEVICE(BROADCOM, 0x1802), .driver_data = BCM57502_NPAR },
--	{ PCI_VDEVICE(BROADCOM, 0x1803), .driver_data = BCM57508_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1802), .driver_data = BCM57508_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1803), .driver_data = BCM57502_NPAR },
- 	{ PCI_VDEVICE(BROADCOM, 0x1804), .driver_data = BCM57504_NPAR },
--	{ PCI_VDEVICE(BROADCOM, 0x1805), .driver_data = BCM57502_NPAR },
-+	{ PCI_VDEVICE(BROADCOM, 0x1805), .driver_data = BCM57508_NPAR },
- 	{ PCI_VDEVICE(BROADCOM, 0xd802), .driver_data = BCM58802 },
- 	{ PCI_VDEVICE(BROADCOM, 0xd804), .driver_data = BCM58804 },
- #ifdef CONFIG_BNXT_SRIOV
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 34affd1de91da..b7b07beb17ffb 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1198,6 +1198,7 @@ struct bnxt_link_info {
+ #define BNXT_LINK_SPEED_40GB	PORT_PHY_QCFG_RESP_LINK_SPEED_40GB
+ #define BNXT_LINK_SPEED_50GB	PORT_PHY_QCFG_RESP_LINK_SPEED_50GB
+ #define BNXT_LINK_SPEED_100GB	PORT_PHY_QCFG_RESP_LINK_SPEED_100GB
++#define BNXT_LINK_SPEED_200GB	PORT_PHY_QCFG_RESP_LINK_SPEED_200GB
+ 	u16			support_speeds;
+ 	u16			support_pam4_speeds;
+ 	u16			auto_link_speeds;	/* fw adv setting */
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 81b63d1c2391f..1e67e86fc3344 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -1653,6 +1653,8 @@ u32 bnxt_fw_to_ethtool_speed(u16 fw_link_speed)
+ 		return SPEED_50000;
+ 	case BNXT_LINK_SPEED_100GB:
+ 		return SPEED_100000;
++	case BNXT_LINK_SPEED_200GB:
++		return SPEED_200000;
+ 	default:
+ 		return SPEED_UNKNOWN;
+ 	}
 -- 
 2.39.2
 
