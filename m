@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A1A6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4FEC433D2;
-	Mon,  3 Apr 2023 14:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EDF6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:35:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5164DC433D2;
+	Mon,  3 Apr 2023 14:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532513;
-	bh=mJhC8uKfVrjC1a6D6SzGoF3krBnkwkjsGiQQqtghLuw=;
+	s=korg; t=1680532515;
+	bh=yRgIFKuJ04v02ElTFYmhoub7Af/FQQrOiHDnSxjunq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzbZ6rw9FUxaJxZOly/CDz5kcOukrpviqNouKpo+2PBMXl+zXUwBMU06DBE4Hkor8
-	 Xwt1R3LRXXeeAfMPM0X110yQY3yeZ/IuLAz7rkwqlM+NdnEUzqxPtTqF2uPjLuYssZ
-	 72xp5QOZnGHFGDUH+kVF1tBzedfpIU/ZQhbsPSRo=
+	b=KQeMgc+/4BRLsn6v5OdbC/XfVHRtaryActRn7ivGeDHOMUdMxXhW5krXo7B+hMTfq
+	 YGb5Vv93N2fsS5g8T9zfo8iJX56yIsYx9GrYcsE0gcoXTLrcuqn6g/x8JeniuLyeDR
+	 at0TgCpeLvB6EMDa2fZZfFCUoyeEjIAdMYp/DKV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/181] kcsan: avoid passing -g for test
-Date: Mon,  3 Apr 2023 16:07:27 +0200
-Message-Id: <20230403140415.513169813@linuxfoundation.org>
+Subject: [PATCH 6.1 013/181] btrfs: rename BTRFS_FS_NO_OVERCOMMIT to BTRFS_FS_ACTIVE_ZONE_TRACKING
+Date: Mon,  3 Apr 2023 16:07:28 +0200
+Message-Id: <20230403140415.542808396@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -38,48 +38,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Elver <elver@google.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 5eb39cde1e2487ba5ec1802dc5e58a77e700d99e ]
+[ Upstream commit bf1f1fec2724a33b67ec12032402ea75f2a83622 ]
 
-Nathan reported that when building with GNU as and a version of clang that
-defaults to DWARF5, the assembler will complain with:
+This flag only gets set when we're doing active zone tracking, and we're
+going to need to use this flag for things related to this behavior.
+Rename the flag to represent what it actually means for the file system
+so it can be used in other ways and still make sense.
 
-  Error: non-constant .uleb128 is not supported
-
-This is because `-g` defaults to the compiler debug info default. If the
-assembler does not support some of the directives used, the above errors
-occur. To fix, remove the explicit passing of `-g`.
-
-All the test wants is that stack traces print valid function names, and
-debug info is not required for that. (I currently cannot recall why I
-added the explicit `-g`.)
-
-Link: https://lkml.kernel.org/r/20230316224705.709984-2-elver@google.com
-Fixes: 1fe84fd4a402 ("kcsan: Add test suite")
-Signed-off-by: Marco Elver <elver@google.com>
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcsan/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/ctree.h      | 7 ++-----
+ fs/btrfs/space-info.c | 2 +-
+ fs/btrfs/zoned.c      | 3 +--
+ 3 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/kcsan/Makefile b/kernel/kcsan/Makefile
-index 8cf70f068d92d..a45f3dfc8d141 100644
---- a/kernel/kcsan/Makefile
-+++ b/kernel/kcsan/Makefile
-@@ -16,6 +16,6 @@ obj-y := core.o debugfs.o report.o
- KCSAN_INSTRUMENT_BARRIERS_selftest.o := y
- obj-$(CONFIG_KCSAN_SELFTEST) += selftest.o
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index a3febabacec04..3bcef0c4d6fc4 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -590,11 +590,8 @@ enum {
+ 	/* Indicate we have to finish a zone to do next allocation. */
+ 	BTRFS_FS_NEED_ZONE_FINISH,
  
--CFLAGS_kcsan_test.o := $(CFLAGS_KCSAN) -g -fno-omit-frame-pointer
-+CFLAGS_kcsan_test.o := $(CFLAGS_KCSAN) -fno-omit-frame-pointer
- CFLAGS_kcsan_test.o += $(DISABLE_STRUCTLEAK_PLUGIN)
- obj-$(CONFIG_KCSAN_KUNIT_TEST) += kcsan_test.o
+-	/*
+-	 * Indicate metadata over-commit is disabled. This is set when active
+-	 * zone tracking is needed.
+-	 */
+-	BTRFS_FS_NO_OVERCOMMIT,
++	/* This is set when active zone tracking is needed. */
++	BTRFS_FS_ACTIVE_ZONE_TRACKING,
+ 
+ #if BITS_PER_LONG == 32
+ 	/* Indicate if we have error/warn message printed on 32bit systems */
+diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
+index 65c010159fb5f..c7642c00a65d0 100644
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -404,7 +404,7 @@ int btrfs_can_overcommit(struct btrfs_fs_info *fs_info,
+ 		return 0;
+ 
+ 	used = btrfs_space_info_used(space_info, true);
+-	if (test_bit(BTRFS_FS_NO_OVERCOMMIT, &fs_info->flags) &&
++	if (test_bit(BTRFS_FS_ACTIVE_ZONE_TRACKING, &fs_info->flags) &&
+ 	    (space_info->flags & BTRFS_BLOCK_GROUP_METADATA))
+ 		avail = 0;
+ 	else
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 1b72004136ef8..0d88cc46ac5db 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -538,8 +538,7 @@ int btrfs_get_dev_zone_info(struct btrfs_device *device, bool populate_cache)
+ 		}
+ 		atomic_set(&zone_info->active_zones_left,
+ 			   max_active_zones - nactive);
+-		/* Overcommit does not work well with active zone tacking. */
+-		set_bit(BTRFS_FS_NO_OVERCOMMIT, &fs_info->flags);
++		set_bit(BTRFS_FS_ACTIVE_ZONE_TRACKING, &fs_info->flags);
+ 	}
+ 
+ 	/* Validate superblock log */
 -- 
 2.39.2
 
