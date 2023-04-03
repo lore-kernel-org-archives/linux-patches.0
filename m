@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590016FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E38C433EF;
-	Mon,  3 Apr 2023 14:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AA66FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED85C433D2;
+	Mon,  3 Apr 2023 14:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533132;
-	bh=SOEJmCQrbTopYVE1Ag8DVpLUlBhlcA40MD4sRS5USy8=;
+	s=korg; t=1680533134;
+	bh=GmNuH4Bu6L56gd0Q6XLlnI3oM36STsCVqjwDPgJYZes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1IM5Z6ScWYCemGjTHIazdlfOBBBVw3bymWDXRK363YuGLVqk3iUP5vxUmjDmQjqaS
-	 uC/jm7CtEiJWAEAjubRzylzSYN2B9bJgA2TrhrRUg6I+5J7bGN5Bqt3nWdR8vKyYOj
-	 3611z0glkiZ90QQUBwWXGapB95JpXGN38bMuMt6s=
+	b=uGNg7ewKu3q3i0MkMW7U/gadxKtGbdZZA6ftMk4qhaWmKYOBcXJMukKy/QQCYycR+
+	 7ZOMSh+z3XgOV8DElfmfdG5okpVvB8B/fdYaBOIdXB4CaWBx228Ag0e6oBQ6gnRu4q
+	 EBkMa7MG/WEjvIhiemG0DeTU+Y215DvRUbjtK2QM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Philipp Geulen <p.geulen@js-elektronik.de>,
+	Chaitanya Kulkarni <kkch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 067/187] mips: bmips: BCM6358: disable RAC flush for TP1
-Date: Mon,  3 Apr 2023 16:08:32 +0200
-Message-Id: <20230403140418.158299677@linuxfoundation.org>
+Subject: [PATCH 6.2 050/187] nvme-pci: add NVME_QUIRK_BOGUS_NID for Lexar NM620
+Date: Mon,  3 Apr 2023 16:08:15 +0200
+Message-Id: <20230403140417.629479886@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,112 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Álvaro Fernández Rojas <noltari@gmail.com>
+From: Philipp Geulen <p.geulen@js-elektronik.de>
 
-[ Upstream commit ab327f8acdf8d06601fbf058859a539a9422afff ]
+[ Upstream commit b65d44fa0fe072c91bf41cd8756baa2b4c77eff2 ]
 
-RAC flush causes kernel panics on BCM6358 with EHCI/OHCI when booting from TP1:
-[    3.881739] usb 1-1: new high-speed USB device number 2 using ehci-platform
-[    3.895011] Reserved instruction in kernel code[#1]:
-[    3.900113] CPU: 0 PID: 1 Comm: init Not tainted 5.10.16 #0
-[    3.905829] $ 0   : 00000000 10008700 00000000 77d94060
-[    3.911238] $ 4   : 7fd1f088 00000000 81431cac 81431ca0
-[    3.916641] $ 8   : 00000000 ffffefff 8075cd34 00000000
-[    3.922043] $12   : 806f8d40 f3e812b7 00000000 000d9aaa
-[    3.927446] $16   : 7fd1f068 7fd1f080 7ff559b8 81428470
-[    3.932848] $20   : 00000000 00000000 55590000 77d70000
-[    3.938251] $24   : 00000018 00000010
-[    3.943655] $28   : 81430000 81431e60 81431f28 800157fc
-[    3.949058] Hi    : 00000000
-[    3.952013] Lo    : 00000000
-[    3.955019] epc   : 80015808 setup_sigcontext+0x54/0x24c
-[    3.960464] ra    : 800157fc setup_sigcontext+0x48/0x24c
-[    3.965913] Status: 10008703	KERNEL EXL IE
-[    3.970216] Cause : 00800028 (ExcCode 0a)
-[    3.974340] PrId  : 0002a010 (Broadcom BMIPS4350)
-[    3.979170] Modules linked in: ohci_platform ohci_hcd fsl_mph_dr_of ehci_platform ehci_fsl ehci_hcd gpio_button_hotplug usbcore nls_base usb_common
-[    3.992907] Process init (pid: 1, threadinfo=(ptrval), task=(ptrval), tls=77e22ec8)
-[    4.000776] Stack : 81431ef4 7fd1f080 81431f28 81428470 7fd1f068 81431edc 7ff559b8 81428470
-[    4.009467]         81431f28 7fd1f080 55590000 77d70000 77d5498c 80015c70 806f0000 8063ae74
-[    4.018149]         08100002 81431f28 0000000a 08100002 81431f28 0000000a 77d6b418 00000003
-[    4.026831]         ffffffff 80016414 80080734 81431ecc 81431ecc 00000001 00000000 04000000
-[    4.035512]         77d54874 00000000 00000000 00000000 00000000 00000012 00000002 00000000
-[    4.044196]         ...
-[    4.046706] Call Trace:
-[    4.049238] [<80015808>] setup_sigcontext+0x54/0x24c
-[    4.054356] [<80015c70>] setup_frame+0xdc/0x124
-[    4.059015] [<80016414>] do_notify_resume+0x1dc/0x288
-[    4.064207] [<80011b50>] work_notifysig+0x10/0x18
-[    4.069036]
-[    4.070538] Code: 8fc300b4  00001025  26240008 <ac820000> ac830004  3c048063  0c0228aa  24846a00  26240010
-[    4.080686]
-[    4.082517] ---[ end trace 22a8edb41f5f983b ]---
-[    4.087374] Kernel panic - not syncing: Fatal exception
-[    4.092753] Rebooting in 1 seconds..
+Added a quirk to fix Lexar NM620 1TB SSD reporting duplicate NGUIDs.
 
-Because the bootloader (CFE) is not initializing the Read-ahead cache properly
-on the second thread (TP1). Since the RAC was not initialized properly, we
-should avoid flushing it at the risk of corrupting the instruction stream as
-seen in the trace above.
-
-Fixes: d59098a0e9cb ("MIPS: bmips: use generic dma noncoherent ops")
-Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Philipp Geulen <p.geulen@js-elektronik.de>
+Reviewed-by: Chaitanya Kulkarni <kkch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/bmips/dma.c   | 5 +++++
- arch/mips/bmips/setup.c | 8 ++++++++
- 2 files changed, 13 insertions(+)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/mips/bmips/dma.c b/arch/mips/bmips/dma.c
-index 33788668cbdbf..3779e7855bd75 100644
---- a/arch/mips/bmips/dma.c
-+++ b/arch/mips/bmips/dma.c
-@@ -5,6 +5,8 @@
- #include <asm/bmips.h>
- #include <asm/io.h>
- 
-+bool bmips_rac_flush_disable;
-+
- void arch_sync_dma_for_cpu_all(void)
- {
- 	void __iomem *cbr = BMIPS_GET_CBR();
-@@ -15,6 +17,9 @@ void arch_sync_dma_for_cpu_all(void)
- 	    boot_cpu_type() != CPU_BMIPS4380)
- 		return;
- 
-+	if (unlikely(bmips_rac_flush_disable))
-+		return;
-+
- 	/* Flush stale data out of the readahead cache */
- 	cfg = __raw_readl(cbr + BMIPS_RAC_CONFIG);
- 	__raw_writel(cfg | 0x100, cbr + BMIPS_RAC_CONFIG);
-diff --git a/arch/mips/bmips/setup.c b/arch/mips/bmips/setup.c
-index e95b3f78e7cd4..549a6392a3d2d 100644
---- a/arch/mips/bmips/setup.c
-+++ b/arch/mips/bmips/setup.c
-@@ -35,6 +35,8 @@
- #define REG_BCM6328_OTP		((void __iomem *)CKSEG1ADDR(0x1000062c))
- #define BCM6328_TP1_DISABLED	BIT(9)
- 
-+extern bool bmips_rac_flush_disable;
-+
- static const unsigned long kbase = VMLINUX_LOAD_ADDRESS & 0xfff00000;
- 
- struct bmips_quirk {
-@@ -104,6 +106,12 @@ static void bcm6358_quirks(void)
- 	 * disable SMP for now
- 	 */
- 	bmips_smp_enabled = 0;
-+
-+	/*
-+	 * RAC flush causes kernel panics on BCM6358 when booting from TP1
-+	 * because the bootloader is not initializing it properly.
-+	 */
-+	bmips_rac_flush_disable = !!(read_c0_brcm_cmt_local() & (1 << 31));
- }
- 
- static void bcm6368_quirks(void)
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index c51ebbee8103e..ea3f0806783a3 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3491,6 +3491,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1d97, 0x2263), /* Lexar NM610 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
++	{ PCI_DEVICE(0x1d97, 0x1d97), /* Lexar NM620 */
++		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1d97, 0x2269), /* Lexar NM760 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0x0061),
 -- 
 2.39.2
 
