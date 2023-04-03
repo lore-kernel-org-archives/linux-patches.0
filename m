@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD555683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8080C433EF;
-	Mon,  3 Apr 2023 14:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFA95683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:17:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3FBC433EF;
+	Mon,  3 Apr 2023 14:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531439;
-	bh=9qh1pJz0WQ3jG4cRKFgGtm8M/BEAgnGZ8Zz5cpBLCfE=;
+	s=korg; t=1680531441;
+	bh=6KR0NwaCVhWryNraWQ0rFYYCvh01RwPYIwb8Hk/NgX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fO/BxnjzOXTHHJPhY/FY/IvfqkQqnYjFrm4tcE4ZyzMy4/A8xCBg5foDR1tf5JfPK
-	 5DH8DsQ031rEdrCbdRmfC1XyUV61m5uo4RgNDpt5cuiQbaWKqlCBBwPcDBZnBDtDfV
-	 udtWZ6neGuhDFidTqd2XIT02qcwgWrXoczL72pCA=
+	b=rCGR+TP8WY1Kv8vEEL8Awdi1uHagnOlV5vzTZlLZarlGvCYhPJXODOsmw5Vb8wkqm
+	 6hJhZSWBOc1Ys70koeYDVF+K9sh9CbB5Xx/gO+0ihrI/GswbxmOrt5Ryc+cI+75oNx
+	 ed3qLr/XhicJZ0IpShpMmi+VbnzUROuZ6CsdqlC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Enrico Sau <enrico.sau@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 62/84] scsi: megaraid_sas: Fix crash after a double completion
-Date: Mon,  3 Apr 2023 16:09:03 +0200
-Message-Id: <20230403140355.568045696@linuxfoundation.org>
+Subject: [PATCH 4.19 34/84] net: usb: qmi_wwan: add Telit 0x1080 composition
+Date: Mon,  3 Apr 2023 16:08:35 +0200
+Message-Id: <20230403140354.516904349@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -35,45 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Enrico Sau <enrico.sau@gmail.com>
 
-[ Upstream commit 2309df27111a51734cb9240b4d3c25f2f3c6ab06 ]
+[ Upstream commit 382e363d5bed0cec5807b35761d14e55955eee63 ]
 
-When a physical disk is attached directly "without JBOD MAP support" (see
-megasas_get_tm_devhandle()) then there is no real error handling in the
-driver.  Return FAILED instead of SUCCESS.
+Add the following Telit FE990 composition:
 
-Fixes: 18365b138508 ("megaraid_sas: Task management support")
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20230324150134.14696-1-thenzl@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+0x1080: tty, adb, rmnet, tty, tty, tty, tty
+
+Signed-off-by: Enrico Sau <enrico.sau@gmail.com>
+Link: https://lore.kernel.org/r/20230306120528.198842-1-enrico.sau@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid/megaraid_sas_fusion.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/megaraid/megaraid_sas_fusion.c b/drivers/scsi/megaraid/megaraid_sas_fusion.c
-index bdb12bf0d5c75..b400167f9ad42 100644
---- a/drivers/scsi/megaraid/megaraid_sas_fusion.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_fusion.c
-@@ -4367,7 +4367,7 @@ int megasas_task_abort_fusion(struct scsi_cmnd *scmd)
- 	devhandle = megasas_get_tm_devhandle(scmd->device);
- 
- 	if (devhandle == (u16)ULONG_MAX) {
--		ret = SUCCESS;
-+		ret = FAILED;
- 		sdev_printk(KERN_INFO, scmd->device,
- 			"task abort issued for invalid devhandle\n");
- 		mutex_unlock(&instance->reset_mutex);
-@@ -4440,7 +4440,7 @@ int megasas_reset_target_fusion(struct scsi_cmnd *scmd)
- 	devhandle = megasas_get_tm_devhandle(scmd->device);
- 
- 	if (devhandle == (u16)ULONG_MAX) {
--		ret = SUCCESS;
-+		ret = FAILED;
- 		sdev_printk(KERN_INFO, scmd->device,
- 			"target reset issued for invalid devhandle\n");
- 		mutex_unlock(&instance->reset_mutex);
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 24ce49b311c4c..5417932242e77 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1322,6 +1322,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1050, 2)},	/* Telit FN980 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1060, 2)},	/* Telit LN920 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1070, 2)},	/* Telit FN990 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1080, 2)}, /* Telit FE990 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
 -- 
 2.39.2
 
