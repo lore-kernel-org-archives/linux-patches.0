@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD5D6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:50:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11571C433EF;
-	Mon,  3 Apr 2023 14:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2914D6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:50:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64E7C433EF;
+	Mon,  3 Apr 2023 14:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533446;
-	bh=rvDxnpxMCENmFryhKk66DKvKmEFYKucWaQbQmY1G3wo=;
+	s=korg; t=1680533449;
+	bh=gJ016sqzJQxqEjvfTMBfOhvk6EinTxxMh5BJM1UUeJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dGtDZ0wZ7mJpq2AUaTjkU+K/5Lxi/0pQe3gNrYk7Qi4yXgwNnrBRgxBviCCLHUMw8
-	 HtAETHUw3hf0GyOp4f8SkgjsYixa7ez8ewt0weniYv8cu3kb3mdy/U+qOteYD7M+LD
-	 VqwcFEYHAWjloY4yn1EFJK+yPM58efb0CF48RIrc=
+	b=ofX5NGaeuuKYjxFo5h1m5cWDwRerUyACdk0oR9YMn7Xl1KffX999kLpIElXoya7Hi
+	 5g2s6uFLjdAUeDryXwD2Po04kHQdPqSbfZE/+6lyX43PaUaYytZ4ke+D6Sh4381PQB
+	 n7LFxo3ZdSIfLhfkxrAIXQlZ4t3dtfQT/V2UaV+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Paul Durrant <paul@xen.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.2 147/187] xen/netback: dont do grant copy across page boundary
-Date: Mon,  3 Apr 2023 16:09:52 +0200
-Message-Id: <20230403140420.855583925@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.2 180/187] KVM: arm64: Check for kvm_vma_mte_allowed in the critical section
+Date: Mon,  3 Apr 2023 16:10:25 +0200
+Message-Id: <20230403140422.230511109@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,118 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 05310f31ca74673a96567fb14637b7d5d6c82ea5 upstream.
+commit 8c2e8ac8ad4be68409e806ce1cc78fc7a04539f3 upstream.
 
-Fix xenvif_get_requests() not to do grant copy operations across local
-page boundaries. This requires to double the maximum number of copy
-operations per queue, as each copy could now be split into 2.
+On page fault, we find about the VMA that backs the page fault
+early on, and quickly release the mmap_read_lock. However, using
+the VMA pointer after the critical section is pretty dangerous,
+as a teardown may happen in the meantime and the VMA be long gone.
 
-Make sure that struct xenvif_tx_cb doesn't grow too large.
+Move the sampling of the MTE permission early, and NULL-ify the
+VMA pointer after that, just to be on the safe side.
 
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: ad7f402ae4f4 ("xen/netback: Ensure protocol headers don't fall in the non-linear area")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20230316174546.3777507-3-maz@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/xen-netback/common.h  |    2 +-
- drivers/net/xen-netback/netback.c |   25 +++++++++++++++++++++++--
- 2 files changed, 24 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/mmu.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/net/xen-netback/common.h
-+++ b/drivers/net/xen-netback/common.h
-@@ -166,7 +166,7 @@ struct xenvif_queue { /* Per-queue data
- 	struct pending_tx_info pending_tx_info[MAX_PENDING_REQS];
- 	grant_handle_t grant_tx_handle[MAX_PENDING_REQS];
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -1218,7 +1218,7 @@ static int user_mem_abort(struct kvm_vcp
+ {
+ 	int ret = 0;
+ 	bool write_fault, writable, force_pte = false;
+-	bool exec_fault;
++	bool exec_fault, mte_allowed;
+ 	bool device = false;
+ 	unsigned long mmu_seq;
+ 	struct kvm *kvm = vcpu->kvm;
+@@ -1309,6 +1309,10 @@ static int user_mem_abort(struct kvm_vcp
+ 		fault_ipa &= ~(vma_pagesize - 1);
  
--	struct gnttab_copy tx_copy_ops[MAX_PENDING_REQS];
-+	struct gnttab_copy tx_copy_ops[2 * MAX_PENDING_REQS];
- 	struct gnttab_map_grant_ref tx_map_ops[MAX_PENDING_REQS];
- 	struct gnttab_unmap_grant_ref tx_unmap_ops[MAX_PENDING_REQS];
- 	/* passed to gnttab_[un]map_refs with pages under (un)mapping */
---- a/drivers/net/xen-netback/netback.c
-+++ b/drivers/net/xen-netback/netback.c
-@@ -334,6 +334,7 @@ static int xenvif_count_requests(struct
- struct xenvif_tx_cb {
- 	u16 copy_pending_idx[XEN_NETBK_LEGACY_SLOTS_MAX + 1];
- 	u8 copy_count;
-+	u32 split_mask;
- };
- 
- #define XENVIF_TX_CB(skb) ((struct xenvif_tx_cb *)(skb)->cb)
-@@ -361,6 +362,8 @@ static inline struct sk_buff *xenvif_all
- 	struct sk_buff *skb =
- 		alloc_skb(size + NET_SKB_PAD + NET_IP_ALIGN,
- 			  GFP_ATOMIC | __GFP_NOWARN);
+ 	gfn = fault_ipa >> PAGE_SHIFT;
++	mte_allowed = kvm_vma_mte_allowed(vma);
 +
-+	BUILD_BUG_ON(sizeof(*XENVIF_TX_CB(skb)) > sizeof(skb->cb));
- 	if (unlikely(skb == NULL))
- 		return NULL;
++	/* Don't use the VMA after the unlock -- it may have vanished */
++	vma = NULL;
  
-@@ -396,11 +399,13 @@ static void xenvif_get_requests(struct x
- 	nr_slots = shinfo->nr_frags + 1;
+ 	/*
+ 	 * Read mmu_invalidate_seq so that KVM can detect if the results of
+@@ -1379,7 +1383,7 @@ static int user_mem_abort(struct kvm_vcp
  
- 	copy_count(skb) = 0;
-+	XENVIF_TX_CB(skb)->split_mask = 0;
- 
- 	/* Create copy ops for exactly data_len bytes into the skb head. */
- 	__skb_put(skb, data_len);
- 	while (data_len > 0) {
- 		int amount = data_len > txp->size ? txp->size : data_len;
-+		bool split = false;
- 
- 		cop->source.u.ref = txp->gref;
- 		cop->source.domid = queue->vif->domid;
-@@ -413,6 +418,13 @@ static void xenvif_get_requests(struct x
- 		cop->dest.u.gmfn = virt_to_gfn(skb->data + skb_headlen(skb)
- 				               - data_len);
- 
-+		/* Don't cross local page boundary! */
-+		if (cop->dest.offset + amount > XEN_PAGE_SIZE) {
-+			amount = XEN_PAGE_SIZE - cop->dest.offset;
-+			XENVIF_TX_CB(skb)->split_mask |= 1U << copy_count(skb);
-+			split = true;
-+		}
-+
- 		cop->len = amount;
- 		cop->flags = GNTCOPY_source_gref;
- 
-@@ -420,7 +432,8 @@ static void xenvif_get_requests(struct x
- 		pending_idx = queue->pending_ring[index];
- 		callback_param(queue, pending_idx).ctx = NULL;
- 		copy_pending_idx(skb, copy_count(skb)) = pending_idx;
--		copy_count(skb)++;
-+		if (!split)
-+			copy_count(skb)++;
- 
- 		cop++;
- 		data_len -= amount;
-@@ -441,7 +454,8 @@ static void xenvif_get_requests(struct x
- 			nr_slots--;
+ 	if (fault_status != ESR_ELx_FSC_PERM && !device && kvm_has_mte(kvm)) {
+ 		/* Check the VMM hasn't introduced a new disallowed VMA */
+-		if (kvm_vma_mte_allowed(vma)) {
++		if (mte_allowed) {
+ 			sanitise_mte_tags(kvm, pfn, vma_pagesize);
  		} else {
- 			/* The copy op partially covered the tx_request.
--			 * The remainder will be mapped.
-+			 * The remainder will be mapped or copied in the next
-+			 * iteration.
- 			 */
- 			txp->offset += amount;
- 			txp->size -= amount;
-@@ -539,6 +553,13 @@ static int xenvif_tx_check_gop(struct xe
- 		pending_idx = copy_pending_idx(skb, i);
- 
- 		newerr = (*gopp_copy)->status;
-+
-+		/* Split copies need to be handled together. */
-+		if (XENVIF_TX_CB(skb)->split_mask & (1U << i)) {
-+			(*gopp_copy)++;
-+			if (!newerr)
-+				newerr = (*gopp_copy)->status;
-+		}
- 		if (likely(!newerr)) {
- 			/* The first frag might still have this slot mapped */
- 			if (i < copy_count(skb) - 1 || !sharedslot)
+ 			ret = -EFAULT;
 
 
