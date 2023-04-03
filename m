@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600935683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB301C4339B;
-	Mon,  3 Apr 2023 14:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2D25683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:12:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D01C433EF;
+	Mon,  3 Apr 2023 14:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531158;
-	bh=WiyDNnzogZw7TUxAyEyj9rd19g/En/1BcpJUIPt4xE0=;
+	s=korg; t=1680531160;
+	bh=F5oEs+V5GQZXXD6ZvwNXlGjOnJSg8N0w220pJeonFL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B72KiFqZtfvlaekNpqjurU6CICnFFOhrKofQZBvKAXl7X04DAEeFKwlis3he326T5
-	 HIrb4+44jQHIlNFR8+mtOxK6YSBl3U3JrP4iC5r9BM9rdZJQVPWQ/e2bxNy8WDZ/eT
-	 uqGeAbc/jRgD1tDRlGXcAQxz4d3xADBgHYfOd/m8=
+	b=FTsWLp8T9l1yHRVIcOt2ZhcSpEUeTayX4RqSF8jg9byATE1bH3Pa+BA/4xysdnmeU
+	 c1LResUtrbA6MFObHK6pMtAyTkMZvPLCSF3bc8ZJzqL5SybF7ajzTJ1yVTYH0KC0hO
+	 mKmec6yT29cJTyHGCFQLR2cNUZ+3QayQE43iGWQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Qiao <zhangqiao22@huawei.com>,
-	Roman Kagan <rkagan@amazon.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 4.14 40/66] sched/fair: sanitize vruntime of entity being placed
-Date: Mon,  3 Apr 2023 16:08:48 +0200
-Message-Id: <20230403140353.275227340@linuxfoundation.org>
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Geoff Levand <geoff@infradead.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 12/66] net/ps3_gelic_net: Use dma_mapping_error
+Date: Mon,  3 Apr 2023 16:08:20 +0200
+Message-Id: <20230403140352.269758193@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
 References: <20230403140351.636471867@linuxfoundation.org>
@@ -35,65 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qiao <zhangqiao22@huawei.com>
+From: Geoff Levand <geoff@infradead.org>
 
-commit 829c1651e9c4a6f78398d3e67651cef9bb6b42cc upstream.
+[ Upstream commit bebe933d35a63d4f042fbf4dce4f22e689ba0fcd ]
 
-When a scheduling entity is placed onto cfs_rq, its vruntime is pulled
-to the base level (around cfs_rq->min_vruntime), so that the entity
-doesn't gain extra boost when placed backwards.
+The current Gelic Etherenet driver was checking the return value of its
+dma_map_single call, and not using the dma_mapping_error() routine.
 
-However, if the entity being placed wasn't executed for a long time, its
-vruntime may get too far behind (e.g. while cfs_rq was executing a
-low-weight hog), which can inverse the vruntime comparison due to s64
-overflow.  This results in the entity being placed with its original
-vruntime way forwards, so that it will effectively never get to the cpu.
+Fixes runtime problems like these:
 
-To prevent that, ignore the vruntime of the entity being placed if it
-didn't execute for much longer than the characteristic sheduler time
-scale.
+  DMA-API: ps3_gelic_driver sb_05: device driver failed to check map error
+  WARNING: CPU: 0 PID: 0 at kernel/dma/debug.c:1027 .check_unmap+0x888/0x8dc
 
-[rkagan: formatted, adjusted commit log, comments, cutoff value]
-Signed-off-by: Zhang Qiao <zhangqiao22@huawei.com>
-Co-developed-by: Roman Kagan <rkagan@amazon.de>
-Signed-off-by: Roman Kagan <rkagan@amazon.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20230130122216.3555094-1-rkagan@amazon.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 02c1889166b4 ("ps3: gigabit ethernet driver for PS3, take3")
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Geoff Levand <geoff@infradead.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/toshiba/ps3_gelic_net.c | 24 +++++++++++---------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -3615,6 +3615,7 @@ static void
- place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int initial)
- {
- 	u64 vruntime = cfs_rq->min_vruntime;
-+	u64 sleep_time;
+diff --git a/drivers/net/ethernet/toshiba/ps3_gelic_net.c b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
+index 67f61379ba672..572294678faf0 100644
+--- a/drivers/net/ethernet/toshiba/ps3_gelic_net.c
++++ b/drivers/net/ethernet/toshiba/ps3_gelic_net.c
+@@ -330,15 +330,17 @@ static int gelic_card_init_chain(struct gelic_card *card,
  
- 	/*
- 	 * The 'current' period is already promised to the current tasks,
-@@ -3639,8 +3640,18 @@ place_entity(struct cfs_rq *cfs_rq, stru
- 		vruntime -= thresh;
+ 	/* set up the hardware pointers in each descriptor */
+ 	for (i = 0; i < no; i++, descr++) {
++		dma_addr_t cpu_addr;
++
+ 		gelic_descr_set_status(descr, GELIC_DESCR_DMA_NOT_IN_USE);
+-		descr->bus_addr =
+-			dma_map_single(ctodev(card), descr,
+-				       GELIC_DESCR_SIZE,
+-				       DMA_BIDIRECTIONAL);
+ 
+-		if (!descr->bus_addr)
++		cpu_addr = dma_map_single(ctodev(card), descr,
++					  GELIC_DESCR_SIZE, DMA_BIDIRECTIONAL);
++
++		if (dma_mapping_error(ctodev(card), cpu_addr))
+ 			goto iommu_error;
+ 
++		descr->bus_addr = cpu_to_be32(cpu_addr);
+ 		descr->next = descr + 1;
+ 		descr->prev = descr - 1;
  	}
+@@ -388,6 +390,7 @@ static int gelic_descr_prepare_rx(struct gelic_card *card,
+ 	static const unsigned int rx_skb_size =
+ 		ALIGN(GELIC_NET_MAX_FRAME, GELIC_NET_RXBUF_ALIGN) +
+ 		GELIC_NET_RXBUF_ALIGN - 1;
++	dma_addr_t cpu_addr;
+ 	int offset;
  
--	/* ensure we never gain time by being placed backwards. */
--	se->vruntime = max_vruntime(se->vruntime, vruntime);
-+	/*
-+	 * Pull vruntime of the entity being placed to the base level of
-+	 * cfs_rq, to prevent boosting it if placed backwards.  If the entity
-+	 * slept for a long time, don't even try to compare its vruntime with
-+	 * the base as it may be too far off and the comparison may get
-+	 * inversed due to s64 overflow.
-+	 */
-+	sleep_time = rq_clock_task(rq_of(cfs_rq)) - se->exec_start;
-+	if ((s64)sleep_time > 60LL * NSEC_PER_SEC)
-+		se->vruntime = vruntime;
-+	else
-+		se->vruntime = max_vruntime(se->vruntime, vruntime);
- }
+ 	if (gelic_descr_get_status(descr) !=  GELIC_DESCR_DMA_NOT_IN_USE)
+@@ -411,11 +414,10 @@ static int gelic_descr_prepare_rx(struct gelic_card *card,
+ 	if (offset)
+ 		skb_reserve(descr->skb, GELIC_NET_RXBUF_ALIGN - offset);
+ 	/* io-mmu-map the skb */
+-	descr->buf_addr = cpu_to_be32(dma_map_single(ctodev(card),
+-						     descr->skb->data,
+-						     GELIC_NET_MAX_FRAME,
+-						     DMA_FROM_DEVICE));
+-	if (!descr->buf_addr) {
++	cpu_addr = dma_map_single(ctodev(card), descr->skb->data,
++				  GELIC_NET_MAX_FRAME, DMA_FROM_DEVICE);
++	descr->buf_addr = cpu_to_be32(cpu_addr);
++	if (dma_mapping_error(ctodev(card), cpu_addr)) {
+ 		dev_kfree_skb_any(descr->skb);
+ 		descr->skb = NULL;
+ 		dev_info(ctodev(card),
+@@ -795,7 +797,7 @@ static int gelic_descr_prepare_tx(struct gelic_card *card,
  
- static void check_enqueue_throttle(struct cfs_rq *cfs_rq);
+ 	buf = dma_map_single(ctodev(card), skb->data, skb->len, DMA_TO_DEVICE);
+ 
+-	if (!buf) {
++	if (dma_mapping_error(ctodev(card), buf)) {
+ 		dev_err(ctodev(card),
+ 			"dma map 2 failed (%p, %i). Dropping packet\n",
+ 			skb->data, skb->len);
+-- 
+2.39.2
+
 
 
