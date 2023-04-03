@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC3D6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381E0C433EF;
-	Mon,  3 Apr 2023 14:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467886FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:45:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1015C433D2;
+	Mon,  3 Apr 2023 14:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533100;
-	bh=xMcTrCAq/Ug9yr5HZbxkJYlVpKku54OpmikTertNWHU=;
+	s=korg; t=1680533103;
+	bh=3aVYDWmzpbb9KN/Q4bFfppLaKmIbQSdRnvS68o5FyZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pcUb/mmfupQ+6H911zwpbi61fPtMYN8Y5xjoDjiSNHiBC6LGbVfYiCU2VKeuGi5u6
-	 WtA6JPWBh+T1LNyF9iAHU/YvrdXaxTlTs7Dv20T4kCg/CltIiZ1WGRRJ+SIUkWAPU3
-	 d0JYYaUzWeg6mIQF5cjJTaaTz2bA7AD8yVK9Yifs=
+	b=02zQU+7BV3E5zn4hKR0ykMB7WbLL7FLhg8P/lKwIoMWlHTkw7/QixafoRX4fq7XrV
+	 uwZNF6lWFD2JXkzrTAHPDak6vU9qvAPkAcVe/wZSV+6IE3eN7hXHAuNvEbvk1aPGH/
+	 Blia3HCGSXoeJyZwnXbh1h7n2Z25dfQ+RpUXjotY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
+	syzbot+fa5414772d5c445dac3c@syzkaller.appspotmail.com,
+	Hyunwoo Kim <v4bel@theori.io>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 024/187] ACPI: video: Add backlight=native DMI quirk for Dell Vostro 15 3535
-Date: Mon,  3 Apr 2023 16:07:49 +0200
-Message-Id: <20230403140416.817139790@linuxfoundation.org>
+Subject: [PATCH 6.2 015/187] xfrm: Zero padding when dumping algos and encap
+Date: Mon,  3 Apr 2023 16:07:40 +0200
+Message-Id: <20230403140416.532772949@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -35,39 +38,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 89b0411481967a2e8c91190a211a359966cfcf4b ]
+[ Upstream commit 8222d5910dae08213b6d9d4bc9a7f8502855e624 ]
 
-Sometimes the system boots up with a acpi_video0 backlight interface
-which doesn't work. So add Dell Vostro 15 3535 into the
-video_detect_dmi_table to set it to native explicitly.
+When copying data to user-space we should ensure that only valid
+data is copied over.  Padding in structures may be filled with
+random (possibly sensitve) data and should never be given directly
+to user-space.
 
-Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
+This patch fixes the copying of xfrm algorithms and the encap
+template in xfrm_user so that padding is zeroed.
+
+Reported-by: syzbot+fa5414772d5c445dac3c@syzkaller.appspotmail.com
+Reported-by: Hyunwoo Kim <v4bel@theori.io>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/xfrm/xfrm_user.c | 45 ++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 41 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 710ac640267dd..14d6d81e536fe 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -716,6 +716,13 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Dell G15 5515"),
- 		},
- 	},
-+	{
-+	 .callback = video_detect_force_native,
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "Vostro 15 3535"),
-+		},
-+	},
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index cf5172d4ce68c..103af2b3e986f 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -1012,7 +1012,9 @@ static int copy_to_user_aead(struct xfrm_algo_aead *aead, struct sk_buff *skb)
+ 		return -EMSGSIZE;
  
- 	/*
- 	 * Desktops which falsely report a backlight and which our heuristics
+ 	ap = nla_data(nla);
+-	memcpy(ap, aead, sizeof(*aead));
++	strscpy_pad(ap->alg_name, aead->alg_name, sizeof(ap->alg_name));
++	ap->alg_key_len = aead->alg_key_len;
++	ap->alg_icv_len = aead->alg_icv_len;
+ 
+ 	if (redact_secret && aead->alg_key_len)
+ 		memset(ap->alg_key, 0, (aead->alg_key_len + 7) / 8);
+@@ -1032,7 +1034,8 @@ static int copy_to_user_ealg(struct xfrm_algo *ealg, struct sk_buff *skb)
+ 		return -EMSGSIZE;
+ 
+ 	ap = nla_data(nla);
+-	memcpy(ap, ealg, sizeof(*ealg));
++	strscpy_pad(ap->alg_name, ealg->alg_name, sizeof(ap->alg_name));
++	ap->alg_key_len = ealg->alg_key_len;
+ 
+ 	if (redact_secret && ealg->alg_key_len)
+ 		memset(ap->alg_key, 0, (ealg->alg_key_len + 7) / 8);
+@@ -1043,6 +1046,40 @@ static int copy_to_user_ealg(struct xfrm_algo *ealg, struct sk_buff *skb)
+ 	return 0;
+ }
+ 
++static int copy_to_user_calg(struct xfrm_algo *calg, struct sk_buff *skb)
++{
++	struct nlattr *nla = nla_reserve(skb, XFRMA_ALG_COMP, sizeof(*calg));
++	struct xfrm_algo *ap;
++
++	if (!nla)
++		return -EMSGSIZE;
++
++	ap = nla_data(nla);
++	strscpy_pad(ap->alg_name, calg->alg_name, sizeof(ap->alg_name));
++	ap->alg_key_len = 0;
++
++	return 0;
++}
++
++static int copy_to_user_encap(struct xfrm_encap_tmpl *ep, struct sk_buff *skb)
++{
++	struct nlattr *nla = nla_reserve(skb, XFRMA_ENCAP, sizeof(*ep));
++	struct xfrm_encap_tmpl *uep;
++
++	if (!nla)
++		return -EMSGSIZE;
++
++	uep = nla_data(nla);
++	memset(uep, 0, sizeof(*uep));
++
++	uep->encap_type = ep->encap_type;
++	uep->encap_sport = ep->encap_sport;
++	uep->encap_dport = ep->encap_dport;
++	uep->encap_oa = ep->encap_oa;
++
++	return 0;
++}
++
+ static int xfrm_smark_put(struct sk_buff *skb, struct xfrm_mark *m)
+ {
+ 	int ret = 0;
+@@ -1098,12 +1135,12 @@ static int copy_to_user_state_extra(struct xfrm_state *x,
+ 			goto out;
+ 	}
+ 	if (x->calg) {
+-		ret = nla_put(skb, XFRMA_ALG_COMP, sizeof(*(x->calg)), x->calg);
++		ret = copy_to_user_calg(x->calg, skb);
+ 		if (ret)
+ 			goto out;
+ 	}
+ 	if (x->encap) {
+-		ret = nla_put(skb, XFRMA_ENCAP, sizeof(*x->encap), x->encap);
++		ret = copy_to_user_encap(x->encap, skb);
+ 		if (ret)
+ 			goto out;
+ 	}
 -- 
 2.39.2
 
