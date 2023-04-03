@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC1A6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5372C4339B;
-	Mon,  3 Apr 2023 14:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090406FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:33:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B03C433EF;
+	Mon,  3 Apr 2023 14:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532393;
-	bh=XTDuqyjgti2NWC470q43ZVMqGzKewYj4dalnHhFmmH0=;
+	s=korg; t=1680532395;
+	bh=Z4NjwDtzQVHjg9JIcYWcK+ab0zaKlYqSBka7pq3ojPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBEcRiEsMTh9fBLII0AoR0rArN/i70OOk7RLlpQVsOoMYgYjasR4saCec1I9l6yeh
-	 Mwvj57AFF8VFtYeAdsiR6THAreRjTHFCX8wSJuGtDl5PZsyUDvomNAARIF3tC9VnGo
-	 q0vmm67Rx4FFC0TMGWEwc9ExeJGugLoKUzYlfzVk=
+	b=X1kgKINFy8QtmoKncgFkHPI2DGa+/ZL5MW8zALpqtUU4DN5pDL+Y07bEC/NfbOT58
+	 z8WJIK5POk0levUIY/9WPNHVhufd2F1xN9+l+Yo6MlIBi/qWnNQUqbTvhxFU+keJ6f
+	 HJC7b2Jp6fwMPdkR++EUqo4ujZfMqimgpSBNI7pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 66/99] Input: focaltech - use explicitly signed char type
-Date: Mon,  3 Apr 2023 16:09:29 +0200
-Message-Id: <20230403140405.949678384@linuxfoundation.org>
+	Sven Auhagen <sven.auhagen@voleatech.de>,
+	Marcin Wojtas <mw@semihalf.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 49/99] net: mvpp2: parser fix QinQ
+Date: Mon,  3 Apr 2023 16:09:12 +0200
+Message-Id: <20230403140405.155781036@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -35,50 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Sven Auhagen <sven.auhagen@voleatech.de>
 
-commit 8980f190947ba29f23110408e712444884b74251 upstream.
+[ Upstream commit a587a84813b90372cb0a7565e201a4075da67919 ]
 
-The recent change of -funsigned-char causes additions of negative
-numbers to become additions of large positive numbers, leading to wrong
-calculations of mouse movement. Change these casts to be explicitly
-signed, to take into account negative offsets.
+The mvpp2 parser entry for QinQ has the inner and outer VLAN
+in the wrong order.
+Fix the problem by swapping them.
 
-Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217211
-Link: https://lore.kernel.org/r/20230318133010.1285202-1-Jason@zx2c4.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3f518509dedc ("ethernet: Add new driver for Marvell Armada 375 network unit")
+Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
+Reviewed-by: Marcin Wojtas <mw@semihalf.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/focaltech.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/mouse/focaltech.c
-+++ b/drivers/input/mouse/focaltech.c
-@@ -202,8 +202,8 @@ static void focaltech_process_rel_packet
- 	state->pressed = packet[0] >> 7;
- 	finger1 = ((packet[0] >> 4) & 0x7) - 1;
- 	if (finger1 < FOC_MAX_FINGERS) {
--		state->fingers[finger1].x += (char)packet[1];
--		state->fingers[finger1].y += (char)packet[2];
-+		state->fingers[finger1].x += (s8)packet[1];
-+		state->fingers[finger1].y += (s8)packet[2];
- 	} else {
- 		psmouse_err(psmouse, "First finger in rel packet invalid: %d\n",
- 			    finger1);
-@@ -218,8 +218,8 @@ static void focaltech_process_rel_packet
- 	 */
- 	finger2 = ((packet[3] >> 4) & 0x7) - 1;
- 	if (finger2 < FOC_MAX_FINGERS) {
--		state->fingers[finger2].x += (char)packet[4];
--		state->fingers[finger2].y += (char)packet[5];
-+		state->fingers[finger2].x += (s8)packet[4];
-+		state->fingers[finger2].y += (s8)packet[5];
- 	}
- }
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
+index 93575800ca92a..34d2714205977 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_prs.c
+@@ -1539,8 +1539,8 @@ static int mvpp2_prs_vlan_init(struct platform_device *pdev, struct mvpp2 *priv)
+ 	if (!priv->prs_double_vlans)
+ 		return -ENOMEM;
  
+-	/* Double VLAN: 0x8100, 0x88A8 */
+-	err = mvpp2_prs_double_vlan_add(priv, ETH_P_8021Q, ETH_P_8021AD,
++	/* Double VLAN: 0x88A8, 0x8100 */
++	err = mvpp2_prs_double_vlan_add(priv, ETH_P_8021AD, ETH_P_8021Q,
+ 					MVPP2_PRS_PORT_MASK);
+ 	if (err)
+ 		return err;
+-- 
+2.39.2
+
 
 
