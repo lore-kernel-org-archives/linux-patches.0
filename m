@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B6F6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02DBC433D2;
-	Mon,  3 Apr 2023 14:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD686FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:47:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A22C433EF;
+	Mon,  3 Apr 2023 14:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533258;
-	bh=DZZZor3KGACAE+vuWBdaPZmKFCVu59LfVL0jJ+4tQbg=;
+	s=korg; t=1680533260;
+	bh=szT39CA6GFwW8Uwab12ODbR9gRBlXoufUbm6553eTUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KfNOway2G3ePA/NZawwLnOlzpm3vXmos/3d0Y6WLrJPGdwJ10oTikT92CQeSb2NPQ
-	 sz/tmjDDB09QHHuqcAbHvGaO8WZIFcobTVTmJl3gRh3XSw2qJiDFwDMB9gP6XX7ilh
-	 WVIOYrw9DXvzMBduS8yKRQdaJ0Fo+XHPjZxdPNSE=
+	b=koc/9RpwryL4sE5ZFLxIqeLM7RDqIzTf92OPPFOSrWeHayLzWafYq4fJbs69KfjoD
+	 RGI3BiFpBdB3fe2ihj6XDZxeMFr0raQyIB8ARWAx4tlxPAD8EaLetZeoI3YIBhLFtP
+	 8EDrGHcgEpX8LbmQfEFzKGiugvTSdH7DyR3cvO84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Alex Elder <elder@linaro.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Arun Ramadoss <arun.ramadoss@microchip.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 113/187] net: ipa: compute DMA pool size properly
-Date: Mon,  3 Apr 2023 16:09:18 +0200
-Message-Id: <20230403140419.688734351@linuxfoundation.org>
+Subject: [PATCH 6.2 086/187] net: dsa: microchip: ksz8: ksz8_fdb_dump: avoid extracting ghost entry from empty dynamic MAC table.
+Date: Mon,  3 Apr 2023 16:08:51 +0200
+Message-Id: <20230403140418.784606387@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -38,54 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Elder <elder@linaro.org>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 6c75dc94f2b27fff57b305af9236eea181a00b6c ]
+[ Upstream commit 492606cdc74804d372ab1bdb8f3ef4a6fb6f9f59 ]
 
-In gsi_trans_pool_init_dma(), the total size of a pool of memory
-used for DMA transactions is calculated.  However the calculation is
-done incorrectly.
+If the dynamic MAC table is empty, we will still extract one outdated
+entry. Fix it by using correct bit offset.
 
-For 4KB pages, this total size is currently always more than one
-page, and as a result, the calculation produces a positive (though
-incorrect) total size.  The code still works in this case; we just
-end up with fewer DMA pool entries than we intended.
-
-Bjorn Andersson tested booting a kernel with 16KB pages, and hit a
-null pointer derereference in sg_alloc_append_table_from_pages(),
-descending from gsi_trans_pool_init_dma().  The cause of this was
-that a 16KB total size was going to be allocated, and with 16KB
-pages the order of that allocation is 0.  The total_size calculation
-yielded 0, which eventually led to the crash.
-
-Correcting the total_size calculation fixes the problem.
-
-Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Tested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Fixes: 9dd441e4ed57 ("soc: qcom: ipa: GSI transactions")
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Alex Elder <elder@linaro.org>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230328162751.2861791-1-elder@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4b20a07e103f ("net: dsa: microchip: ksz8795: add support for ksz88xx chips")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/gsi_trans.c | 2 +-
+ drivers/net/dsa/microchip/ksz_common.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
-index 0f52c068c46d6..ee6fb00b71eb6 100644
---- a/drivers/net/ipa/gsi_trans.c
-+++ b/drivers/net/ipa/gsi_trans.c
-@@ -156,7 +156,7 @@ int gsi_trans_pool_init_dma(struct device *dev, struct gsi_trans_pool *pool,
- 	 * gsi_trans_pool_exit_dma() can assume the total allocated
- 	 * size is exactly (count * size).
- 	 */
--	total_size = get_order(total_size) << PAGE_SHIFT;
-+	total_size = PAGE_SIZE << get_order(total_size);
- 
- 	virt = dma_alloc_coherent(dev, total_size, &addr, GFP_KERNEL);
- 	if (!virt)
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index 9da2b3afce26e..f8d04a4a303ef 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -399,7 +399,7 @@ static const u32 ksz8863_masks[] = {
+ 	[STATIC_MAC_TABLE_OVERRIDE]	= BIT(20),
+ 	[STATIC_MAC_TABLE_FWD_PORTS]	= GENMASK(18, 16),
+ 	[DYNAMIC_MAC_TABLE_ENTRIES_H]	= GENMASK(1, 0),
+-	[DYNAMIC_MAC_TABLE_MAC_EMPTY]	= BIT(7),
++	[DYNAMIC_MAC_TABLE_MAC_EMPTY]	= BIT(2),
+ 	[DYNAMIC_MAC_TABLE_NOT_READY]	= BIT(7),
+ 	[DYNAMIC_MAC_TABLE_ENTRIES]	= GENMASK(31, 24),
+ 	[DYNAMIC_MAC_TABLE_FID]		= GENMASK(19, 16),
 -- 
 2.39.2
 
