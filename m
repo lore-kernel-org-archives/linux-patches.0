@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB656FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:41:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75889C4339B;
-	Mon,  3 Apr 2023 14:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914F56FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19ED3C433EF;
+	Mon,  3 Apr 2023 14:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532917;
-	bh=SQ56sA41q7+iUdWXKEA1lbNyW1sHw9NFOQLH+PMnCVk=;
+	s=korg; t=1680532920;
+	bh=6SnvLvhDmMe+ljU9lj8VIya8wlZXztZgAtVXyz4R2RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RqC8FVs550Ij31pDkXt7cIYhJQ8snszhv+030ACIffWKDFKwgFDtTNvVDA7nKleor
-	 HsumuftZqqEo4Eo94ScykZNumIfC9lknbEekrJ0jPXHQ5zt/+k3y6xgeSXwmM0wauJ
-	 +/75nHUIYC4W7onlY1nOXEHkPIhxYLYc+ShXptCg=
+	b=shXVM+Rzt6pg0KZhOTF7CZDEzGxXP+1G9mTs1LAn7iTXjx3S3gboVG35f1Zkf90qA
+	 P9HNV0EcqcUkjPo+ZjEDRoGn8Kl8ycEgURLXEXFvh8ylDBlaRtE4KHSzHvLFvP0Wd6
+	 hhoR3q5zwsjRwdOVh+UsWppNXz1vre/sp3j1V6ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Manasi Navare <navaremanasi@google.com>,
 	Drew Davenport <ddavenport@chromium.org>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
 	Imre Deak <imre.deak@intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
 	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 167/181] drm/i915: Disable DC states for all commits
-Date: Mon,  3 Apr 2023 16:10:02 +0200
-Message-Id: <20230403140420.540414271@linuxfoundation.org>
+Subject: [PATCH 6.1 168/181] drm/i915: Move CSC load back into .color_commit_arm() when PSR is enabled on skl/glk
+Date: Mon,  3 Apr 2023 16:10:03 +0200
+Message-Id: <20230403140420.579896686@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -40,104 +40,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit a2b6e99d8a623544f3bdccd28ee35b9c1b00daa5 upstream.
+commit a8e03e00b62073b494886dbff32f8b5338066c8b upstream.
 
-Keeping DC states enabled is incompatible with the _noarm()/_arm()
-split we use for writing pipe/plane registers. When DC5 and PSR
-are enabled, all pipe/plane registers effectively become self-arming
-on account of DC5 exit arming the update, and PSR exit latching it.
+SKL/GLK CSC unit suffers from a nasty issue where a CSC
+coeff/offset register read or write between DC5 exit and
+PSR exit will undo the CSC arming performed by DMC, and
+then during PSR exit the hardware will latch zeroes into
+the active CSC registers. This causes any plane going
+through the CSC to output all black.
 
-What probably saves us most of the time is that (with PIPE_MISC[21]=0)
-all pipe register writes themselves trigger PSR exit, and then
-we don't re-enter PSR until the idle frame count has elapsed.
-So it may be that the PSR exit happens already before we've
-updated the state too much.
+We can sidestep the issue by making sure the PSR exit has
+already actually happened before we touch the CSC coeff/offset
+registers. Easiest way to guarantee that is to just move the
+CSC programming back into the .color_commir_arm() as we force
+a PSR exit (and crucially wait for it to actually happen)
+prior to touching the arming registers.
 
-Also the PSR1 panel (at least on this KBL) seems to discard the first
-frame we trasmit, presumably still scanning out from its internal
-framebuffer at that point. So only the second frame we transmit is
-actually visible. But I suppose that could also be panel specific
-behaviour. I haven't checked out how other PSR panels behave, nor
-did I bother to check what the eDP spec has to say about this.
+When PSR (and thus also DC states) are disabled we don't
+have anything to worry about, so we can keep using the
+more optional _noarm() hook for writing the CSC registers.
 
-And since this really is all about DC states, let's switch from
-the MODESET domain to the DC_OFF domain. Functionally they are
-100% identical. We should probably remove the MODESET domain...
-
-And for good measure let's toss in an assert to the place where
-we do the _noarm() register writes to make sure DC states are
-in fact off.
-
-v2: Just use intel_display_power_is_enabled() (Imre)
-
-Cc: <stable@vger.kernel.org> #v5.17+
+Cc: <stable@vger.kernel.org> #v5.19+
 Cc: Manasi Navare <navaremanasi@google.com>
 Cc: Drew Davenport <ddavenport@chromium.org>
+Cc: Imre Deak <imre.deak@intel.com>
 Cc: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Imre Deak <imre.deak@intel.com>
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8283
 Fixes: d13dde449580 ("drm/i915: Split pipe+output CSC programming to noarm+arm pair")
-Fixes: f8a005eb8972 ("drm/i915: Optimize icl+ universal plane programming")
-Fixes: 890b6ec4a522 ("drm/i915: Split skl+ plane update into noarm+arm pair")
 Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230320183532.17727-1-ville.syrjala@linux.intel.com
-(cherry picked from commit 41b4c7fe72b6105a4b49395eea9aa40cef94288d)
+Link: https://patchwork.freedesktop.org/patch/msgid/20230320095438.17328-3-ville.syrjala@linux.intel.com
+Reviewed-by: Imre Deak <imre.deak@intel.com>
+(cherry picked from commit 80a892a4c2428b65366721599fc5fe50eaed35fd)
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c |   28 ++++++++++++++++++++++++---
- 1 file changed, 25 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_color.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -7124,6 +7124,8 @@ static void intel_update_crtc(struct int
+--- a/drivers/gpu/drm/i915/display/intel_color.c
++++ b/drivers/gpu/drm/i915/display/intel_color.c
+@@ -499,6 +499,22 @@ static void icl_color_commit_noarm(const
+ 	icl_load_csc_matrix(crtc_state);
+ }
  
- 	intel_fbc_update(state, crtc);
- 
-+	drm_WARN_ON(&i915->drm, !intel_display_power_is_enabled(i915, POWER_DOMAIN_DC_OFF));
-+
- 	if (!modeset &&
- 	    (new_crtc_state->uapi.color_mgmt_changed ||
- 	     new_crtc_state->update_pipe))
-@@ -7500,8 +7502,28 @@ static void intel_atomic_commit_tail(str
- 	drm_atomic_helper_wait_for_dependencies(&state->base);
- 	drm_dp_mst_atomic_wait_for_dependencies(&state->base);
- 
--	if (state->modeset)
--		wakeref = intel_display_power_get(dev_priv, POWER_DOMAIN_MODESET);
++static void skl_color_commit_noarm(const struct intel_crtc_state *crtc_state)
++{
 +	/*
-+	 * During full modesets we write a lot of registers, wait
-+	 * for PLLs, etc. Doing that while DC states are enabled
-+	 * is not a good idea.
-+	 *
-+	 * During fastsets and other updates we also need to
-+	 * disable DC states due to the following scenario:
-+	 * 1. DC5 exit and PSR exit happen
-+	 * 2. Some or all _noarm() registers are written
-+	 * 3. Due to some long delay PSR is re-entered
-+	 * 4. DC5 entry -> DMC saves the already written new
-+	 *    _noarm() registers and the old not yet written
-+	 *    _arm() registers
-+	 * 5. DC5 exit -> DMC restores a mixture of old and
-+	 *    new register values and arms the update
-+	 * 6. PSR exit -> hardware latches a mixture of old and
-+	 *    new register values -> corrupted frame, or worse
-+	 * 7. New _arm() registers are finally written
-+	 * 8. Hardware finally latches a complete set of new
-+	 *    register values, and subsequent frames will be OK again
++	 * Possibly related to display WA #1184, SKL CSC loses the latched
++	 * CSC coeff/offset register values if the CSC registers are disarmed
++	 * between DC5 exit and PSR exit. This will cause the plane(s) to
++	 * output all black (until CSC_MODE is rearmed and properly latched).
++	 * Once PSR exit (and proper register latching) has occurred the
++	 * danger is over. Thus when PSR is enabled the CSC coeff/offset
++	 * register programming will be peformed from skl_color_commit_arm()
++	 * which is called after PSR exit.
 +	 */
-+	wakeref = intel_display_power_get(dev_priv, POWER_DOMAIN_DC_OFF);
++	if (!crtc_state->has_psr)
++		ilk_load_csc_matrix(crtc_state);
++}
++
+ static void ilk_color_commit_noarm(const struct intel_crtc_state *crtc_state)
+ {
+ 	ilk_load_csc_matrix(crtc_state);
+@@ -541,6 +557,9 @@ static void skl_color_commit_arm(const s
+ 	enum pipe pipe = crtc->pipe;
+ 	u32 val = 0;
  
- 	intel_atomic_prepare_plane_clear_colors(state);
- 
-@@ -7640,8 +7662,8 @@ static void intel_atomic_commit_tail(str
- 		 * the culprit.
- 		 */
- 		intel_uncore_arm_unclaimed_mmio_detection(&dev_priv->uncore);
--		intel_display_power_put(dev_priv, POWER_DOMAIN_MODESET, wakeref);
- 	}
-+	intel_display_power_put(dev_priv, POWER_DOMAIN_DC_OFF, wakeref);
- 	intel_runtime_pm_put(&dev_priv->runtime_pm, state->wakeref);
- 
++	if (crtc_state->has_psr)
++		ilk_load_csc_matrix(crtc_state);
++
  	/*
+ 	 * We don't (yet) allow userspace to control the pipe background color,
+ 	 * so force it to black, but apply pipe gamma and CSC appropriately
+@@ -2171,7 +2190,7 @@ static const struct intel_color_funcs ic
+ 
+ static const struct intel_color_funcs glk_color_funcs = {
+ 	.color_check = glk_color_check,
+-	.color_commit_noarm = ilk_color_commit_noarm,
++	.color_commit_noarm = skl_color_commit_noarm,
+ 	.color_commit_arm = skl_color_commit_arm,
+ 	.load_luts = glk_load_luts,
+ 	.read_luts = glk_read_luts,
+@@ -2179,7 +2198,7 @@ static const struct intel_color_funcs gl
+ 
+ static const struct intel_color_funcs skl_color_funcs = {
+ 	.color_check = ivb_color_check,
+-	.color_commit_noarm = ilk_color_commit_noarm,
++	.color_commit_noarm = skl_color_commit_noarm,
+ 	.color_commit_arm = skl_color_commit_arm,
+ 	.load_luts = bdw_load_luts,
+ 	.read_luts = NULL,
 
 
