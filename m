@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5486FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:31:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCA7C433EF;
-	Mon,  3 Apr 2023 14:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A674C6FAA
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:32:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22682C4339B;
+	Mon,  3 Apr 2023 14:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532315;
-	bh=n0/wxVzQGJULDVFbJTnwSpFclH48QvKKA9KgpkShm1o=;
+	s=korg; t=1680532320;
+	bh=19t0rPq3crjC5O2MK4Z4Vhx6EBXH9zcpPD76EiN9EeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qHuR70iz27qmdQ1IJWyrtb1unrrXCHF1Q0ykZsDhhwdfXcwV+xwHU2z0yaykVtrVC
-	 NU8etKqPrQncWLGtOsz6EuqjsTN9ZIP8ys0m3yvB8exfxQBVH2aH/VFy/VpRmIrKvn
-	 t740ERKsZd0i+yyQda+LEKrsfIxf6JImHSl9JxoQ=
+	b=DB21cSdt1WG0HJdDSxP0uva/b0ZYN57/q8iM4OFmjzkecNUy4gs1eBNhWXVS8VNoO
+	 ewtsQwSbsZFsZ85HhYhgmOkc2xuRo88o9OsQeBs3b4L0tVDnJ1J8ceuSxaTwC/vLSH
+	 iiLjgsXpNyFnfMgQ9n1JykU9u5WUoVInnQef/z/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sathya Prakash <sathya.prakash@broadcom.com>,
-	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
-	Suganath Prabu Subramani <suganath-prabu.subramani@broadcom.com>,
-	MPT-FusionLinux.pdl@broadcom.com,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 35/99] scsi: mpt3sas: Dont print sense pool info twice
-Date: Mon,  3 Apr 2023 16:08:58 +0200
-Message-Id: <20230403140404.506137237@linuxfoundation.org>
+Subject: [PATCH 5.15 37/99] net: dsa: microchip: ksz8863_smi: fix bulk access
+Date: Mon,  3 Apr 2023 16:09:00 +0200
+Message-Id: <20230403140404.608774784@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
 References: <20230403140356.079638751@linuxfoundation.org>
@@ -40,48 +36,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerry Snitselaar <jsnitsel@redhat.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit d684a7a26f7d2c7122a4581ac966ed64e88fb29c ]
+[ Upstream commit 392ff7a84cbca34118ca286dfbfe8aee24605897 ]
 
-_base_allocate_sense_dma_pool() already prints out the sense pool
-information, so don't print it a second time after calling it in
-_base_allocate_memory_pools(). In addition the version in
-_base_allocate_memory_pools() was using the wrong size value, sz, which was
-last assigned when doing some nvme calculations instead of sense_sz to
-determine the pool size in kilobytes.
+Current regmap bulk access is broken, resulting to wrong reads/writes
+if ksz_read64/ksz_write64 functions are used.
+Mostly this issue was visible by using ksz8_fdb_dump(), which returned
+corrupt MAC address.
 
-Cc: Sathya Prakash <sathya.prakash@broadcom.com>
-Cc: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
-Cc: Suganath Prabu Subramani <suganath-prabu.subramani@broadcom.com>
-Cc: MPT-FusionLinux.pdl@broadcom.com
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
-Fixes: 970ac2bb70e7 ("scsi: mpt3sas: Force sense buffer allocations to be within same 4 GB region")
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Link: https://lore.kernel.org/r/20230324193204.567932-1-jsnitsel@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The reason is that regmap was configured to have max_raw_read/write,
+even if ksz8863_mdio_read/write functions are able to handle unlimited
+read/write accesses. On ksz_read64 function we are using multiple 32bit
+accesses by incrementing each access by 1 instead of 4. Resulting buffer
+had 01234567.12345678 instead of 01234567.89abcdef.
+
+We have multiple ways to fix it:
+- enable 4 byte alignment for 32bit accesses. Since the HW do not have
+  this requirement. It will break driver.
+- disable max_raw_* limit.
+
+This patch is removing max_raw_* limit for regmap accesses in ksz8863_smi.
+
+Fixes: 60a364760002 ("net: dsa: microchip: Add Microchip KSZ8863 SMI based driver support")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/dsa/microchip/ksz8863_smi.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
-index 90118204e21a7..5aa4ae0b06076 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_base.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
-@@ -6456,11 +6456,6 @@ _base_allocate_memory_pools(struct MPT3SAS_ADAPTER *ioc)
- 	else if (rc == -EAGAIN)
- 		goto try_32bit_dma;
- 	total_sz += sense_sz;
--	ioc_info(ioc,
--	    "sense pool(0x%p)- dma(0x%llx): depth(%d),"
--	    "element_size(%d), pool_size(%d kB)\n",
--	    ioc->sense, (unsigned long long)ioc->sense_dma, ioc->scsiio_depth,
--	    SCSI_SENSE_BUFFERSIZE, sz / 1024);
- 	/* reply pool, 4 byte align */
- 	sz = ioc->reply_free_queue_depth * ioc->reply_sz;
- 	rc = _base_allocate_reply_pool(ioc, sz);
+diff --git a/drivers/net/dsa/microchip/ksz8863_smi.c b/drivers/net/dsa/microchip/ksz8863_smi.c
+index 5883fa7edda22..54f3e033abbf4 100644
+--- a/drivers/net/dsa/microchip/ksz8863_smi.c
++++ b/drivers/net/dsa/microchip/ksz8863_smi.c
+@@ -86,22 +86,16 @@ static const struct regmap_bus regmap_smi[] = {
+ 	{
+ 		.read = ksz8863_mdio_read,
+ 		.write = ksz8863_mdio_write,
+-		.max_raw_read = 1,
+-		.max_raw_write = 1,
+ 	},
+ 	{
+ 		.read = ksz8863_mdio_read,
+ 		.write = ksz8863_mdio_write,
+ 		.val_format_endian_default = REGMAP_ENDIAN_BIG,
+-		.max_raw_read = 2,
+-		.max_raw_write = 2,
+ 	},
+ 	{
+ 		.read = ksz8863_mdio_read,
+ 		.write = ksz8863_mdio_write,
+ 		.val_format_endian_default = REGMAP_ENDIAN_BIG,
+-		.max_raw_read = 4,
+-		.max_raw_write = 4,
+ 	}
+ };
+ 
+@@ -112,7 +106,6 @@ static const struct regmap_config ksz8863_regmap_config[] = {
+ 		.pad_bits = 24,
+ 		.val_bits = 8,
+ 		.cache_type = REGCACHE_NONE,
+-		.use_single_read = 1,
+ 		.lock = ksz_regmap_lock,
+ 		.unlock = ksz_regmap_unlock,
+ 	},
+@@ -122,7 +115,6 @@ static const struct regmap_config ksz8863_regmap_config[] = {
+ 		.pad_bits = 24,
+ 		.val_bits = 16,
+ 		.cache_type = REGCACHE_NONE,
+-		.use_single_read = 1,
+ 		.lock = ksz_regmap_lock,
+ 		.unlock = ksz_regmap_unlock,
+ 	},
+@@ -132,7 +124,6 @@ static const struct regmap_config ksz8863_regmap_config[] = {
+ 		.pad_bits = 24,
+ 		.val_bits = 32,
+ 		.cache_type = REGCACHE_NONE,
+-		.use_single_read = 1,
+ 		.lock = ksz_regmap_lock,
+ 		.unlock = ksz_regmap_unlock,
+ 	}
 -- 
 2.39.2
 
