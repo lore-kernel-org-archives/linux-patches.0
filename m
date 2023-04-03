@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF6B6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CA2C4339B;
-	Mon,  3 Apr 2023 14:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0506FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:49:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA317C433EF;
+	Mon,  3 Apr 2023 14:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680533388;
-	bh=/ixys3Xf4gbqCSmx2bAR/cwuDorgFfxJOlFvU5ERZsQ=;
+	s=korg; t=1680533391;
+	bh=BML+I3nOveJkWdAOgxel/c36NkkJSeTGD2sjU0O6seI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJfKStl+2XHnp7/fklzw8OMPhhp/mXIrgOss4XgerzkU3yFz6exGZ2R5QUFw69Eb8
-	 +b62EyaXHCxRkEJESqaeUmyWf6wwvC/Sz9EsVbLTSz2qqaDUGeNhEGQSt0Nzak520T
-	 l9g0bHfEuqjZrdNc0pCSq8ovvSD5z7iT9lrA/6X0=
+	b=bZZ1QscW7nLinnjG+kyMT6pj+VjLzR+DhF/MfeUoRlzepuoZLkqOEr9uO0XVvTEWq
+	 RNigG77PclPm1l0a9ZCJHHvwef6iASqLW3+qhdWEf0Qe/4XD1ysH+GNjlAlwkutDsF
+	 vgRHUPRqtMQyAz93w+kVcokZHpMG41QfwqtuB7N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.2 165/187] s390/uaccess: add missing earlyclobber annotations to __clear_user()
-Date: Mon,  3 Apr 2023 16:10:10 +0200
-Message-Id: <20230403140421.595021146@linuxfoundation.org>
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	linux-s390@vger.kernel.org,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Subject: [PATCH 6.2 166/187] s390: reintroduce expoline dependence to scripts
+Date: Mon,  3 Apr 2023 16:10:11 +0200
+Message-Id: <20230403140421.642822033@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
 References: <20230403140416.015323160@linuxfoundation.org>
@@ -36,37 +40,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit 89aba4c26fae4e459f755a18912845c348ee48f3 upstream.
+commit 7bb2107e63d8a4a13bbb6fe0e1cbd68784a2e9ac upstream.
 
-Add missing earlyclobber annotation to size, to, and tmp2 operands of the
-__clear_user() inline assembly since they are modified or written to before
-the last usage of all input operands. This can lead to incorrect register
-allocation for the inline assembly.
+Expolines depend on scripts/basic/fixdep. And build of expolines can now
+race with the fixdep build:
 
-Fixes: 6c2a9e6df604 ("[S390] Use alternative user-copy operations for new hardware.")
-Reported-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/all/20230321122514.1743889-3-mark.rutland@arm.com/
+ make[1]: *** Deleting file 'arch/s390/lib/expoline/expoline.o'
+ /bin/sh: line 1: scripts/basic/fixdep: Permission denied
+ make[1]: *** [../scripts/Makefile.build:385: arch/s390/lib/expoline/expoline.o] Error 126
+ make: *** [../arch/s390/Makefile:166: expoline_prepare] Error 2
+
+The dependence was removed in the below Fixes: commit. So reintroduce
+the dependence on scripts.
+
+Fixes: a0b0987a7811 ("s390/nospec: remove unneeded header includes")
+Cc: Joe Lawrence <joe.lawrence@redhat.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: linux-s390@vger.kernel.org
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20230316112809.7903-1-jirislaby@kernel.org
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/lib/uaccess.c |    2 +-
+ arch/s390/Makefile |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/lib/uaccess.c
-+++ b/arch/s390/lib/uaccess.c
-@@ -172,7 +172,7 @@ unsigned long __clear_user(void __user *
- 		"4: slgr  %0,%0\n"
- 		"5:\n"
- 		EX_TABLE(0b,2b) EX_TABLE(6b,2b) EX_TABLE(3b,5b) EX_TABLE(7b,5b)
--		: "+a" (size), "+a" (to), "+a" (tmp1), "=a" (tmp2)
-+		: "+&a" (size), "+&a" (to), "+a" (tmp1), "=&a" (tmp2)
- 		: "a" (empty_zero_page), [spec] "d" (spec.val)
- 		: "cc", "memory", "0");
- 	return size;
+--- a/arch/s390/Makefile
++++ b/arch/s390/Makefile
+@@ -162,7 +162,7 @@ vdso_prepare: prepare0
+ 
+ ifdef CONFIG_EXPOLINE_EXTERN
+ modules_prepare: expoline_prepare
+-expoline_prepare:
++expoline_prepare: scripts
+ 	$(Q)$(MAKE) $(build)=arch/s390/lib/expoline arch/s390/lib/expoline/expoline.o
+ endif
+ endif
 
 
