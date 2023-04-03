@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4544B6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:24:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C207AC433D2;
-	Mon,  3 Apr 2023 14:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6706FAA
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:24:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A138C4339E;
+	Mon,  3 Apr 2023 14:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531876;
-	bh=3du2xMhjCwnrU/97g8ODQsnA+o4fqyGowS2L03UrctA=;
+	s=korg; t=1680531878;
+	bh=4Y8/xJhwU7aJXJUzYvMwx8jzSFFEXA9tPwndwM5aX+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXu3SHqsarwFEJOOIyINHHay0WMvWoxMyufVi/Itiv45dKmiAASAbZrxXwg3Q/XSR
-	 341UEXzoavpEE7k5cLnkKtSkjKeGoEhY93zz9Q9T5q7C0RywhP88vMmsu4UPf7hU93
-	 fYqtzmbOzrdNK8LfSdHim0QYHCC2hQ8AIk8f2qBE=
+	b=KWbO8cTRdTL1cuoQD+uO583ek8vpfgsMhapjFsXBe1qtu7tTWu/GAEck+CK2fgCO9
+	 lNhxG0naigLaOD7hV69J3dtSyKeI998q9fWxLn9wNqv8Av9TnNwA96IKvfUysUtios
+	 xTZDPzaUAnAappaJvW+H0iCymYE3fhLPGVxtCOdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heinz Wiesinger <pprkut@slackware.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Bharath SM <bharathsm@microsoft.com>,
+	David Howells <dhowells@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Shyam Prasad N <nspmangalore@gmail.com>,
+	Steve French <smfrench@gmail.com>,
+	keyrings@vger.kernel.org,
+	linux-cifs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 040/173] bootconfig: Fix testcase to increase max node
-Date: Mon,  3 Apr 2023 16:07:35 +0200
-Message-Id: <20230403140415.705799623@linuxfoundation.org>
+Subject: [PATCH 5.10 041/173] keys: Do not cache key in task struct if key is requested from kernel thread
+Date: Mon,  3 Apr 2023 16:07:36 +0200
+Message-Id: <20230403140415.734756121@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,57 +41,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b69245126a48e50882021180fa5d264dc7149ccc ]
+[ Upstream commit 47f9e4c924025c5be87959d3335e66fcbb7f6b5c ]
 
-Since commit 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig
-from 1024 to 8192 for DCC support") increased the max number of bootconfig
-node to 8192, the bootconfig testcase of the max number of nodes fails.
-To fix this issue, we can not simply increase the number in the test script
-because the test bootconfig file becomes too big (>32KB). To fix that, we
-can use a combination of three alphabets (26^3 = 17576). But with that,
-we can not express the 8193 (just one exceed from the limitation) because
-it also exceeds the max size of bootconfig. So, the first 26 nodes will just
-use one alphabet.
+The key which gets cached in task structure from a kernel thread does not
+get invalidated even after expiry.  Due to which, a new key request from
+kernel thread will be served with the cached key if it's present in task
+struct irrespective of the key validity.  The change is to not cache key in
+task_struct when key requested from kernel thread so that kernel thread
+gets a valid key on every key request.
 
-With this fix, test-bootconfig.sh passes all tests.
+The problem has been seen with the cifs module doing DNS lookups from a
+kernel thread and the results getting pinned by being attached to that
+kernel thread's cache - and thus not something that can be easily got rid
+of.  The cache would ordinarily be cleared by notify-resume, but kernel
+threads don't do that.
 
-Link: https://lore.kernel.org/all/167888844790.791176.670805252426835131.stgit@devnote2/
+This isn't seen with AFS because AFS is doing request_key() within the
+kernel half of a user thread - which will do notify-resume.
 
-Reported-by: Heinz Wiesinger <pprkut@slackware.com>
-Link: https://lore.kernel.org/all/2463802.XAFRqVoOGU@amaterasu.liwjatan.org
-Fixes: 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig from 1024 to 8192 for DCC support")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 7743c48e54ee ("keys: Cache result of request_key*() temporarily in task_struct")
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+cc: Shyam Prasad N <nspmangalore@gmail.com>
+cc: Steve French <smfrench@gmail.com>
+cc: keyrings@vger.kernel.org
+cc: linux-cifs@vger.kernel.org
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/CAGypqWw951d=zYRbdgNR4snUDvJhWL=q3=WOyh7HhSJupjz2vA@mail.gmail.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bootconfig/test-bootconfig.sh | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ security/keys/request_key.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/tools/bootconfig/test-bootconfig.sh b/tools/bootconfig/test-bootconfig.sh
-index baed891d0ba49..e36f178f7dcbf 100755
---- a/tools/bootconfig/test-bootconfig.sh
-+++ b/tools/bootconfig/test-bootconfig.sh
-@@ -87,10 +87,14 @@ xfail grep -i "error" $OUTFILE
+diff --git a/security/keys/request_key.c b/security/keys/request_key.c
+index 2da4404276f0f..07a0ef2baacd8 100644
+--- a/security/keys/request_key.c
++++ b/security/keys/request_key.c
+@@ -38,9 +38,12 @@ static void cache_requested_key(struct key *key)
+ #ifdef CONFIG_KEYS_REQUEST_CACHE
+ 	struct task_struct *t = current;
  
- echo "Max node number check"
+-	key_put(t->cached_requested_key);
+-	t->cached_requested_key = key_get(key);
+-	set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
++	/* Do not cache key if it is a kernel thread */
++	if (!(t->flags & PF_KTHREAD)) {
++		key_put(t->cached_requested_key);
++		t->cached_requested_key = key_get(key);
++		set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
++	}
+ #endif
+ }
  
--echo -n > $TEMPCONF
--for i in `seq 1 1024` ; do
--   echo "node$i" >> $TEMPCONF
--done
-+awk '
-+BEGIN {
-+  for (i = 0; i < 26; i += 1)
-+      printf("%c\n", 65 + i % 26)
-+  for (i = 26; i < 8192; i += 1)
-+      printf("%c%c%c\n", 65 + i % 26, 65 + (i / 26) % 26, 65 + (i / 26 / 26))
-+}
-+' > $TEMPCONF
- xpass $BOOTCONF -a $TEMPCONF $INITRD
- 
- echo "badnode" >> $TEMPCONF
 -- 
 2.39.2
 
