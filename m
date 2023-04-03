@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FC66FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:24:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DB5C433EF;
-	Mon,  3 Apr 2023 14:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4402A6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:24:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A96C433EF;
+	Mon,  3 Apr 2023 14:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531860;
-	bh=VxhM1OT+WAig7YlWhpqE95wvoEoiL9Y9vNk6i21+gVE=;
+	s=korg; t=1680531863;
+	bh=j4yYjAt0pd60UiRT0z8Ma+P4EWMtWEJB0saM2dcyiIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tT8dn1yFTrmjTN5e+nxAiRtmVSi4kkAaEOAjgNzKjkTKe/tdfjbQjVces2WMGKrPJ
-	 B+hYfOleoTnJSnTewzleLw/fqs8gKnvQ+x7cfkGfzGlGbeWI4Otwsts05xsL8ED8BE
-	 hb4A/dqGkrVnFKdP42Hh/NMmteZRvgPFA0m8L5CQ=
+	b=GEqAX7VuulzQc1VllrkKofeG7xwAAnly+psEqTstuJgXpBwiQ+MsGm9amS5LH/JSc
+	 yNUwvl7plZrFx4UQ3KECprB1x8qKUoYTUs+1nEGrXxq7xNsZGVB25HZu3d/VYwEdaw
+	 zBG54gFDqz4S186FZqIJeAZRjIN15Fz/v/2YyYoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 034/173] xirc2ps_cs: Fix use after free bug in xirc2ps_detach
-Date: Mon,  3 Apr 2023 16:07:29 +0200
-Message-Id: <20230403140415.484371033@linuxfoundation.org>
+Subject: [PATCH 5.10 035/173] net: phy: Ensure state transitions are processed from phy_stop()
+Date: Mon,  3 Apr 2023 16:07:30 +0200
+Message-Id: <20230403140415.522665717@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -35,56 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit e8d20c3ded59a092532513c9bd030d1ea66f5f44 ]
+[ Upstream commit 4203d84032e28f893594a453bd8bc9c3b15c7334 ]
 
-In xirc2ps_probe, the local->tx_timeout_task was bounded
-with xirc2ps_tx_timeout_task. When timeout occurs,
-it will call xirc_tx_timeout->schedule_work to start the
-work.
+In the phy_disconnect() -> phy_stop() path, we will be forcibly setting
+the PHY state machine to PHY_HALTED. This invalidates the old_state !=
+phydev->state condition in phy_state_machine() such that we will neither
+display the state change for debugging, nor will we invoke the
+link_change_notify() callback.
 
-When we call xirc2ps_detach to remove the driver, there
-may be a sequence as follows:
+Factor the code by introducing phy_process_state_change(), and ensure
+that we process the state change from phy_stop() as well.
 
-Stop responding to timeout tasks and complete scheduled
-tasks before cleanup in xirc2ps_detach, which will fix
-the problem.
-
-CPU0                  CPU1
-
-                    |xirc2ps_tx_timeout_task
-xirc2ps_detach      |
-  free_netdev       |
-    kfree(dev);     |
-                    |
-                    | do_reset
-                    |   //use dev
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Fixes: 5c5f626bcace ("net: phy: improve handling link_change_notify callback")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xircom/xirc2ps_cs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/phy/phy.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/xircom/xirc2ps_cs.c b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-index 3e337142b5161..56cef59c1c872 100644
---- a/drivers/net/ethernet/xircom/xirc2ps_cs.c
-+++ b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-@@ -503,6 +503,11 @@ static void
- xirc2ps_detach(struct pcmcia_device *link)
- {
-     struct net_device *dev = link->priv;
-+    struct local_info *local = netdev_priv(dev);
+diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
+index 18e67eb6d8b4f..f3e606b6617e9 100644
+--- a/drivers/net/phy/phy.c
++++ b/drivers/net/phy/phy.c
+@@ -56,6 +56,18 @@ static const char *phy_state_to_str(enum phy_state st)
+ 	return NULL;
+ }
+ 
++static void phy_process_state_change(struct phy_device *phydev,
++				     enum phy_state old_state)
++{
++	if (old_state != phydev->state) {
++		phydev_dbg(phydev, "PHY state change %s -> %s\n",
++			   phy_state_to_str(old_state),
++			   phy_state_to_str(phydev->state));
++		if (phydev->drv && phydev->drv->link_change_notify)
++			phydev->drv->link_change_notify(phydev);
++	}
++}
 +
-+    netif_carrier_off(dev);
-+    netif_tx_disable(dev);
-+    cancel_work_sync(&local->tx_timeout_task);
+ static void phy_link_up(struct phy_device *phydev)
+ {
+ 	phydev->phy_link_change(phydev, true);
+@@ -1110,6 +1122,7 @@ EXPORT_SYMBOL(phy_free_interrupt);
+ void phy_stop(struct phy_device *phydev)
+ {
+ 	struct net_device *dev = phydev->attached_dev;
++	enum phy_state old_state;
  
-     dev_dbg(&link->dev, "detach\n");
+ 	if (!phy_is_started(phydev) && phydev->state != PHY_DOWN) {
+ 		WARN(1, "called from state %s\n",
+@@ -1118,6 +1131,7 @@ void phy_stop(struct phy_device *phydev)
+ 	}
  
+ 	mutex_lock(&phydev->lock);
++	old_state = phydev->state;
+ 
+ 	if (phydev->state == PHY_CABLETEST) {
+ 		phy_abort_cable_test(phydev);
+@@ -1128,6 +1142,7 @@ void phy_stop(struct phy_device *phydev)
+ 		sfp_upstream_stop(phydev->sfp_bus);
+ 
+ 	phydev->state = PHY_HALTED;
++	phy_process_state_change(phydev, old_state);
+ 
+ 	mutex_unlock(&phydev->lock);
+ 
+@@ -1242,13 +1257,7 @@ void phy_state_machine(struct work_struct *work)
+ 	if (err < 0)
+ 		phy_error(phydev);
+ 
+-	if (old_state != phydev->state) {
+-		phydev_dbg(phydev, "PHY state change %s -> %s\n",
+-			   phy_state_to_str(old_state),
+-			   phy_state_to_str(phydev->state));
+-		if (phydev->drv && phydev->drv->link_change_notify)
+-			phydev->drv->link_change_notify(phydev);
+-	}
++	phy_process_state_change(phydev, old_state);
+ 
+ 	/* Only re-schedule a PHY state machine change if we are polling the
+ 	 * PHY, if PHY_IGNORE_INTERRUPT is set, then we will be moving
 -- 
 2.39.2
 
