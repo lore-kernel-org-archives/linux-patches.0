@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11C9612F
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F4CC433D2;
-	Mon,  3 Apr 2023 14:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73884612F
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:26:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF902C433EF;
+	Mon,  3 Apr 2023 14:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531969;
-	bh=TMxWy7W4G7H+8Bf/fT9Q3JmFCESugBABHkH4m+efxbY=;
+	s=korg; t=1680531972;
+	bh=P6vD6BAEdEhDdhlgw4psgjaRokQKZmpTxdO+jiaYJFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PuGcTXE2FP/ljjZ8I46fAwXsbKX1qn4NatoTkxqjTzBf9jR9TWl8LzJrCWXOm+uL3
-	 wjAXrbHi6Dk8HwO8AZHOQnLZ2Ol6AMMZpv5seO9KQ4FGmxd79oKkZ52R8jIcEvTfiY
-	 bHh3xC0rkXMteNIcO+fAHNI4ZusnVJge5R7+oybY=
+	b=Ow0JX6YoUsPGmYa0eIw0ycsDq1SDADc5bZ+BPpUVpoyzB3UvegYTm39u/oa0bs0cV
+	 DELoQ7iGQ+gM0iZ/VOp7CEPDLuI3J9GfJMajwUYXTtB1CENEQ2p2HB1rTiD5St7i9n
+	 aWWc1ndk5ITLOiXPtGSpYBISepQ10EQCoflQpnDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Caleb Sander <csander@purestorage.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Rich Felker <dalias@libc.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/173] nvme-tcp: fix nvme_tcp_term_pdu to match spec
-Date: Mon,  3 Apr 2023 16:07:44 +0200
-Message-Id: <20230403140416.018827435@linuxfoundation.org>
+Subject: [PATCH 5.10 076/173] sh: sanitize the flags on sigreturn
+Date: Mon,  3 Apr 2023 16:08:11 +0200
+Message-Id: <20230403140416.887428711@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -37,42 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Caleb Sander <csander@purestorage.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit aa01c67de5926fdb276793180564f172c55fb0d7 ]
+[ Upstream commit 573b22ccb7ce9ab7f0539a2e11a9d3609a8783f5 ]
 
-The FEI field of C2HTermReq/H2CTermReq is 4 bytes but not 4-byte-aligned
-in the NVMe/TCP specification (it is located at offset 10 in the PDU).
-Split it into two 16-bit integers in struct nvme_tcp_term_pdu
-so no padding is inserted. There should also be 10 reserved bytes after.
-There are currently no users of this type.
+We fetch %SR value from sigframe; it might have been modified by signal
+handler, so we can't trust it with any bits that are not modifiable in
+user mode.
 
-Fixes: fc221d05447aa6db ("nvme-tcp: Add protocol header")
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Caleb Sander <csander@purestorage.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Rich Felker <dalias@libc.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nvme-tcp.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/sh/include/asm/processor_32.h | 1 +
+ arch/sh/kernel/signal_32.c         | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/include/linux/nvme-tcp.h b/include/linux/nvme-tcp.h
-index 959e0bd9a913e..73364ae916890 100644
---- a/include/linux/nvme-tcp.h
-+++ b/include/linux/nvme-tcp.h
-@@ -114,8 +114,9 @@ struct nvme_tcp_icresp_pdu {
- struct nvme_tcp_term_pdu {
- 	struct nvme_tcp_hdr	hdr;
- 	__le16			fes;
--	__le32			fei;
--	__u8			rsvd[8];
-+	__le16			feil;
-+	__le16			feiu;
-+	__u8			rsvd[10];
- };
+diff --git a/arch/sh/include/asm/processor_32.h b/arch/sh/include/asm/processor_32.h
+index aa92cc933889d..6c7966e627758 100644
+--- a/arch/sh/include/asm/processor_32.h
++++ b/arch/sh/include/asm/processor_32.h
+@@ -50,6 +50,7 @@
+ #define SR_FD		0x00008000
+ #define SR_MD		0x40000000
  
- /**
++#define SR_USER_MASK	0x00000303	// M, Q, S, T bits
+ /*
+  * DSP structure and data
+  */
+diff --git a/arch/sh/kernel/signal_32.c b/arch/sh/kernel/signal_32.c
+index dd3092911efad..dc13702003f0f 100644
+--- a/arch/sh/kernel/signal_32.c
++++ b/arch/sh/kernel/signal_32.c
+@@ -115,6 +115,7 @@ static int
+ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p)
+ {
+ 	unsigned int err = 0;
++	unsigned int sr = regs->sr & ~SR_USER_MASK;
+ 
+ #define COPY(x)		err |= __get_user(regs->x, &sc->sc_##x)
+ 			COPY(regs[1]);
+@@ -130,6 +131,8 @@ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p
+ 	COPY(sr);	COPY(pc);
+ #undef COPY
+ 
++	regs->sr = (regs->sr & SR_USER_MASK) | sr;
++
+ #ifdef CONFIG_SH_FPU
+ 	if (boot_cpu_data.flags & CPU_HAS_FPU) {
+ 		int owned_fp;
 -- 
 2.39.2
 
