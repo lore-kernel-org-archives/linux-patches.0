@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E120612E
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7FBC433D2;
-	Mon,  3 Apr 2023 14:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16EA612E
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:20:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8C3C4339C;
+	Mon,  3 Apr 2023 14:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531615;
-	bh=BHr5Z/lMBlhHM5Gab5wpKGHuBeWTk8j/hOTrsQ78cew=;
+	s=korg; t=1680531617;
+	bh=F/EwB6z8OddU3I+npaVUBSF7DJJc/wQLqLE/xr4Yjhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Em2C0bGhCluBaqwGHGbuGZS/93CLCpa7C+HSdjzVQFAMqXNSpz15y7lx6CLqeZ4r+
-	 ZZ+7X45FbQUhVZXrdZuAHnaMPFga/00eGtRDn08BACpzc1gMy9RGJN5ktWgZayuPKy
-	 FcTA8HST88M5Os7bVSwvMZGeMduWq3CK9wWwBcoE=
+	b=Q1J2UBVQZ6q7qRxW9zosBuzv1TyioGq1g/XcsRH0DLZ7mi8Y1j5a0UThKV/jp+4VZ
+	 InDF4cM3dSd5DvrUiHIAC+4R1ZlRsmiSONMfTlHnleundOlPXlo3QBGUsNy224cZfr
+	 JH2G/gilktXHq632VwRiPyJDCtXgYSVMEXjakxVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Crawford <frank@crawford.emu.id.au>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 028/104] hwmon (it87): Fix voltage scaling for chips with 10.9mV  ADCs
-Date: Mon,  3 Apr 2023 16:08:20 +0200
-Message-Id: <20230403140405.389695423@linuxfoundation.org>
+	Corinna Vinschen <vinschen@redhat.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 5.4 046/104] igb: revert rtnl_lock() that causes deadlock
+Date: Mon,  3 Apr 2023 16:08:38 +0200
+Message-Id: <20230403140406.190758041@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140403.549815164@linuxfoundation.org>
 References: <20230403140403.549815164@linuxfoundation.org>
@@ -35,47 +38,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Crawford <frank@crawford.emu.id.au>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 968b66ffeb7956acc72836a7797aeb7b2444ec51 ]
+commit 65f69851e44d71248b952a687e44759a7abb5016 upstream.
 
-Fix voltage scaling for chips that have 10.9mV ADCs, where scaling was
-not performed.
+The commit 6faee3d4ee8b ("igb: Add lock to avoid data race") adds
+rtnl_lock to eliminate a false data race shown below
 
-Fixes: ead8080351c9 ("hwmon: (it87) Add support for IT8732F")
-Signed-off-by: Frank Crawford <frank@crawford.emu.id.au>
-Link: https://lore.kernel.org/r/20230318080543.1226700-2-frank@crawford.emu.id.au
-[groeck: Update subject and description to focus on bug fix]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ (FREE from device detaching)      |   (USE from netdev core)
+igb_remove                         |  igb_ndo_get_vf_config
+ igb_disable_sriov                 |  vf >= adapter->vfs_allocated_count?
+  kfree(adapter->vf_data)          |
+  adapter->vfs_allocated_count = 0 |
+                                   |    memcpy(... adapter->vf_data[vf]
+
+The above race will never happen and the extra rtnl_lock causes deadlock
+below
+
+[  141.420169]  <TASK>
+[  141.420672]  __schedule+0x2dd/0x840
+[  141.421427]  schedule+0x50/0xc0
+[  141.422041]  schedule_preempt_disabled+0x11/0x20
+[  141.422678]  __mutex_lock.isra.13+0x431/0x6b0
+[  141.423324]  unregister_netdev+0xe/0x20
+[  141.423578]  igbvf_remove+0x45/0xe0 [igbvf]
+[  141.423791]  pci_device_remove+0x36/0xb0
+[  141.423990]  device_release_driver_internal+0xc1/0x160
+[  141.424270]  pci_stop_bus_device+0x6d/0x90
+[  141.424507]  pci_stop_and_remove_bus_device+0xe/0x20
+[  141.424789]  pci_iov_remove_virtfn+0xba/0x120
+[  141.425452]  sriov_disable+0x2f/0xf0
+[  141.425679]  igb_disable_sriov+0x4e/0x100 [igb]
+[  141.426353]  igb_remove+0xa0/0x130 [igb]
+[  141.426599]  pci_device_remove+0x36/0xb0
+[  141.426796]  device_release_driver_internal+0xc1/0x160
+[  141.427060]  driver_detach+0x44/0x90
+[  141.427253]  bus_remove_driver+0x55/0xe0
+[  141.427477]  pci_unregister_driver+0x2a/0xa0
+[  141.428296]  __x64_sys_delete_module+0x141/0x2b0
+[  141.429126]  ? mntput_no_expire+0x4a/0x240
+[  141.429363]  ? syscall_trace_enter.isra.19+0x126/0x1a0
+[  141.429653]  do_syscall_64+0x5b/0x80
+[  141.429847]  ? exit_to_user_mode_prepare+0x14d/0x1c0
+[  141.430109]  ? syscall_exit_to_user_mode+0x12/0x30
+[  141.430849]  ? do_syscall_64+0x67/0x80
+[  141.431083]  ? syscall_exit_to_user_mode_prepare+0x183/0x1b0
+[  141.431770]  ? syscall_exit_to_user_mode+0x12/0x30
+[  141.432482]  ? do_syscall_64+0x67/0x80
+[  141.432714]  ? exc_page_fault+0x64/0x140
+[  141.432911]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Since the igb_disable_sriov() will call pci_disable_sriov() before
+releasing any resources, the netdev core will synchronize the cleanup to
+avoid any races. This patch removes the useless rtnl_(un)lock to guarantee
+correctness.
+
+CC: stable@vger.kernel.org
+Fixes: 6faee3d4ee8b ("igb: Add lock to avoid data race")
+Reported-by: Corinna Vinschen <vinschen@redhat.com>
+Link: https://lore.kernel.org/intel-wired-lan/ZAcJvkEPqWeJHO2r@calimero.vinschen.de/
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Tested-by: Corinna Vinschen <vinschen@redhat.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/it87.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/igb_main.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/hwmon/it87.c b/drivers/hwmon/it87.c
-index fac9b5c68a6a0..85413d3dc3940 100644
---- a/drivers/hwmon/it87.c
-+++ b/drivers/hwmon/it87.c
-@@ -486,6 +486,8 @@ static const struct it87_devices it87_devices[] = {
- #define has_pwm_freq2(data)	((data)->features & FEAT_PWM_FREQ2)
- #define has_six_temp(data)	((data)->features & FEAT_SIX_TEMP)
- #define has_vin3_5v(data)	((data)->features & FEAT_VIN3_5V)
-+#define has_scaling(data)	((data)->features & (FEAT_12MV_ADC | \
-+						     FEAT_10_9MV_ADC))
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -3674,9 +3674,7 @@ static void igb_remove(struct pci_dev *p
+ 	igb_release_hw_control(adapter);
  
- struct it87_sio_data {
- 	int sioaddr;
-@@ -3098,7 +3100,7 @@ static int it87_probe(struct platform_device *pdev)
- 			 "Detected broken BIOS defaults, disabling PWM interface\n");
+ #ifdef CONFIG_PCI_IOV
+-	rtnl_lock();
+ 	igb_disable_sriov(pdev);
+-	rtnl_unlock();
+ #endif
  
- 	/* Starting with IT8721F, we handle scaling of internal voltages */
--	if (has_12mv_adc(data)) {
-+	if (has_scaling(data)) {
- 		if (sio_data->internal & BIT(0))
- 			data->in_scaled |= BIT(3);	/* in3 is AVCC */
- 		if (sio_data->internal & BIT(1))
--- 
-2.39.2
-
+ 	unregister_netdev(netdev);
 
 
