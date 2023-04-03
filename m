@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8726D3F
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:30:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DBEC433D2;
-	Mon,  3 Apr 2023 14:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EC03C28
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:30:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB41C433D2;
+	Mon,  3 Apr 2023 14:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532200;
-	bh=ipxHTxZjq0ntO9wU/f92/vKcYTeSoDSv2LEQ0DvrZ04=;
+	s=korg; t=1680532203;
+	bh=hTO5rCFm8m80YtrBSZ/A5k+OnAYqmr6iNzrQePeUj4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMKzEoXrHNXZ4vsfV7MoNbwKX9ncSIzZnP7Tdzo/4gOuofIekE0iGIj2rRLF9VYfB
-	 C5sNgWLdUx27FdKH34oRZVn99SlyfUAon5j0wvPqP830boR2iXoVinudkbG6Oc8ceJ
-	 G/O7uG2rLmUW9DHPUbYNwQ06CG2RIgNcCkgYZmps=
+	b=gauPnkH1gyCCwwJlLVgDNuD2wSWQn50MeqkWRoJpcAQjp8tMCQY1bKUoQV8wQX7H2
+	 tJPQTCfJFGuJWjnFkMwRC4GP3drOEyqOhe70TMx7kFHP+dsHaAU2Xc7rnC3rt5DzqV
+	 Zb/rPfVY9UdeceDDHDehLyFRVraw5RkKCMbfIIDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>
-Subject: [PATCH 5.10 166/173] zonefs: Fix error message in zonefs_file_dio_append()
-Date: Mon,  3 Apr 2023 16:09:41 +0200
-Message-Id: <20230403140419.816485092@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Bastien Nocera <hadess@hadess.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 149/173] Input: goodix - add Lenovo Yoga Book X90F to nine_bytes_report DMI table
+Date: Mon,  3 Apr 2023 16:09:24 +0200
+Message-Id: <20230403140419.271741604@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -36,36 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 88b170088ad2c3e27086fe35769aa49f8a512564 upstream.
+commit 8a0432bab6ea3203d220785da7ab3c7677f70ecb upstream.
 
-Since the expected write location in a sequential file is always at the
-end of the file (append write), when an invalid write append location is
-detected in zonefs_file_dio_append(), print the invalid written location
-instead of the expected write location.
+The Android Lenovo Yoga Book X90F / X90L uses the same goodix touchscreen
+with 9 bytes touch reports for its touch keyboard as the already supported
+Windows Lenovo Yoga Book X91F/L, add a DMI match for this to
+the nine_bytes_report DMI table.
 
-Fixes: a608da3bd730 ("zonefs: Detect append writes at invalid locations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+When the quirk for the X91F/L was initially added it was written to
+also apply to the X90F/L but this does not work because the Android
+version of the Yoga Book uses completely different DMI strings.
+Also adjust the X91F/L quirk to reflect that it only applies to
+the X91F/L models.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Bastien Nocera <hadess@hadess.net>
+Link: https://lore.kernel.org/r/20230315134442.71787-1-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/zonefs/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/touchscreen/goodix.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/fs/zonefs/super.c
-+++ b/fs/zonefs/super.c
-@@ -789,7 +789,7 @@ static ssize_t zonefs_file_dio_append(st
- 		if (bio->bi_iter.bi_sector != wpsector) {
- 			zonefs_warn(inode->i_sb,
- 				"Corrupted write pointer %llu for zone at %llu\n",
--				wpsector, zi->i_zsector);
-+				bio->bi_iter.bi_sector, zi->i_zsector);
- 			ret = -EIO;
+--- a/drivers/input/touchscreen/goodix.c
++++ b/drivers/input/touchscreen/goodix.c
+@@ -183,10 +183,18 @@ static const unsigned long goodix_irq_fl
+ static const struct dmi_system_id nine_bytes_report[] = {
+ #if defined(CONFIG_DMI) && defined(CONFIG_X86)
+ 	{
+-		.ident = "Lenovo YogaBook",
+-		/* YB1-X91L/F and YB1-X90L/F */
++		/* Lenovo Yoga Book X90F / X90L */
+ 		.matches = {
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X9")
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
++		}
++	},
++	{
++		/* Lenovo Yoga Book X91F / X91L */
++		.matches = {
++			/* Non exact match to match F + L versions */
++			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X91"),
  		}
- 	}
+ 	},
+ #endif
 
 
