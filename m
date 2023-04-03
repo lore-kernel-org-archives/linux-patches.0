@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567756FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFFDC433D2;
-	Mon,  3 Apr 2023 14:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDFE6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:28:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C9BC433EF;
+	Mon,  3 Apr 2023 14:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532128;
-	bh=qMACCk7Kc+T+YqMAOsy1DtcQPwSsW6AQLiVp3aEQjuA=;
+	s=korg; t=1680532130;
+	bh=zT5hLXeM+lb1YzxAgtlM5aDhaLChWKiDMHbnXx77sns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RaTZUtiWrzgvqsv8vfgsijZwd5zhAHmbGxv50RD2299nR3Rc4LHs2tW5QfTXSh0Kf
-	 JuaUxHfXWIJ6jp2R/h6lmcf2DJLT/CpqWlEfH3Q46Pikf4ESWoDd9iwcl22aT5CM/Q
-	 Hh055l0u9mKIYR1vPURy7fvTRD4VXWqy2+ZwG91o=
+	b=C+yJeA3ZCtxzfEuOk4jWxvSzHrjh4C3VeuBbnPDbVVhBKHWVWZJUhskHS7jlHdhos
+	 X9gcVpnEGPsGaygJgYX4ZoqCl2d5pV/2EmBJgx5KG0+eLaRflm0830P6AEUeToW8zB
+	 EWwkIMElWNtjp1j4UFHnY4qVVVVZF+dCHguMC9Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tasos Sahanidis <tasos@tasossah.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 137/173] ALSA: ymfpci: Fix assignment in if condition
-Date: Mon,  3 Apr 2023 16:09:12 +0200
-Message-Id: <20230403140418.909550737@linuxfoundation.org>
+Subject: [PATCH 5.10 138/173] ALSA: ymfpci: Fix BUG_ON in probe function
+Date: Mon,  3 Apr 2023 16:09:13 +0200
+Message-Id: <20230403140418.940793999@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -34,384 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Tasos Sahanidis <tasos@tasossah.com>
 
-[ Upstream commit e7daaeedb4f270126792ae216f406c1ba2b8f4d9 ]
+[ Upstream commit 6be2e7522eb529b41c16d459f33bbdbcddbf5c15 ]
 
-PCI YMFPCI driver code contains lots of assignments in if condition,
-which is a bad coding style that may confuse readers and occasionally
-lead to bugs.
+The snd_dma_buffer.bytes field now contains the aligned size, which this
+snd_BUG_ON() did not account for, resulting in the following:
 
-This patch is merely for coding-style fixes, no functional changes.
+[    9.625915] ------------[ cut here ]------------
+[    9.633440] WARNING: CPU: 0 PID: 126 at sound/pci/ymfpci/ymfpci_main.c:2168 snd_ymfpci_create+0x681/0x698 [snd_ymfpci]
+[    9.648926] Modules linked in: snd_ymfpci(+) snd_intel_dspcfg kvm(+) snd_intel_sdw_acpi snd_ac97_codec snd_mpu401_uart snd_opl3_lib irqbypass snd_hda_codec gameport snd_rawmidi crct10dif_pclmul crc32_pclmul cfg80211 snd_hda_core polyval_clmulni polyval_generic gf128mul snd_seq_device ghash_clmulni_intel snd_hwdep ac97_bus sha512_ssse3 rfkill snd_pcm aesni_intel tg3 snd_timer crypto_simd snd mxm_wmi libphy cryptd k10temp fam15h_power pcspkr soundcore sp5100_tco wmi acpi_cpufreq mac_hid dm_multipath sg loop fuse dm_mod bpf_preload ip_tables x_tables ext4 crc32c_generic crc16 mbcache jbd2 sr_mod cdrom ata_generic pata_acpi firewire_ohci crc32c_intel firewire_core xhci_pci crc_itu_t pata_via xhci_pci_renesas floppy
+[    9.711849] CPU: 0 PID: 126 Comm: kworker/0:2 Not tainted 6.1.21-1-lts #1 08d2e5ece03136efa7c6aeea9a9c40916b1bd8da
+[    9.722200] Hardware name: To Be Filled By O.E.M. To Be Filled By O.E.M./990FX Extreme4, BIOS P2.70 06/05/2014
+[    9.732204] Workqueue: events work_for_cpu_fn
+[    9.736580] RIP: 0010:snd_ymfpci_create+0x681/0x698 [snd_ymfpci]
+[    9.742594] Code: 8c c0 4c 89 e2 48 89 df 48 c7 c6 92 c6 8c c0 e8 15 d0 e9 ff 48 83 c4 08 44 89 e8 5b 5d 41 5c 41 5d 41 5e 41 5f e9 d3 7a 33 e3 <0f> 0b e9 cb fd ff ff 41 bd fb ff ff ff eb db 41 bd f4 ff ff ff eb
+[    9.761358] RSP: 0018:ffffab64804e7da0 EFLAGS: 00010287
+[    9.766594] RAX: ffff8fa2df06c400 RBX: ffff8fa3073a8000 RCX: ffff8fa303fbc4a8
+[    9.773734] RDX: ffff8fa2df06d000 RSI: 0000000000000010 RDI: 0000000000000020
+[    9.780876] RBP: ffff8fa300b5d0d0 R08: ffff8fa3073a8e50 R09: 00000000df06bf00
+[    9.788018] R10: ffff8fa2df06bf00 R11: 00000000df068200 R12: ffff8fa3073a8918
+[    9.795159] R13: 0000000000000000 R14: 0000000000000080 R15: ffff8fa2df068200
+[    9.802317] FS:  0000000000000000(0000) GS:ffff8fa9fec00000(0000) knlGS:0000000000000000
+[    9.810414] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    9.816158] CR2: 000055febaf66500 CR3: 0000000101a2e000 CR4: 00000000000406f0
+[    9.823301] Call Trace:
+[    9.825747]  <TASK>
+[    9.827889]  snd_card_ymfpci_probe+0x194/0x950 [snd_ymfpci b78a5fe64b5663a6390a909c67808567e3e73615]
+[    9.837030]  ? finish_task_switch.isra.0+0x90/0x2d0
+[    9.841918]  local_pci_probe+0x45/0x80
+[    9.845680]  work_for_cpu_fn+0x1a/0x30
+[    9.849431]  process_one_work+0x1c7/0x380
+[    9.853464]  worker_thread+0x1af/0x390
+[    9.857225]  ? rescuer_thread+0x3b0/0x3b0
+[    9.861254]  kthread+0xde/0x110
+[    9.864414]  ? kthread_complete_and_exit+0x20/0x20
+[    9.869210]  ret_from_fork+0x22/0x30
+[    9.872792]  </TASK>
+[    9.874985] ---[ end trace 0000000000000000 ]---
 
-Link: https://lore.kernel.org/r/20210608140540.17885-53-tiwai@suse.de
+Fixes: 5c1733e33c88 ("ALSA: memalloc: Align buffer allocations in page size")
+Signed-off-by: Tasos Sahanidis <tasos@tasossah.com>
+Link: https://lore.kernel.org/r/20230329032808.170403-1-tasos@tasossah.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 6be2e7522eb5 ("ALSA: ymfpci: Fix BUG_ON in probe function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ymfpci/ymfpci.c      | 71 +++++++++++++++++++--------------
- sound/pci/ymfpci/ymfpci_main.c | 72 +++++++++++++++++++++++-----------
- 2 files changed, 91 insertions(+), 52 deletions(-)
+ sound/pci/ymfpci/ymfpci_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/ymfpci/ymfpci.c b/sound/pci/ymfpci/ymfpci.c
-index 9b0d18a7bf356..27fd10b976f77 100644
---- a/sound/pci/ymfpci/ymfpci.c
-+++ b/sound/pci/ymfpci/ymfpci.c
-@@ -78,7 +78,8 @@ static int snd_ymfpci_create_gameport(struct snd_ymfpci *chip, int dev,
- 
- 		if (io_port == 1) {
- 			/* auto-detect */
--			if (!(io_port = pci_resource_start(chip->pci, 2)))
-+			io_port = pci_resource_start(chip->pci, 2);
-+			if (!io_port)
- 				return -ENODEV;
- 		}
- 	} else {
-@@ -87,7 +88,8 @@ static int snd_ymfpci_create_gameport(struct snd_ymfpci *chip, int dev,
- 			for (io_port = 0x201; io_port <= 0x205; io_port++) {
- 				if (io_port == 0x203)
- 					continue;
--				if ((r = request_region(io_port, 1, "YMFPCI gameport")) != NULL)
-+				r = request_region(io_port, 1, "YMFPCI gameport");
-+				if (r)
- 					break;
- 			}
- 			if (!r) {
-@@ -108,10 +110,13 @@ static int snd_ymfpci_create_gameport(struct snd_ymfpci *chip, int dev,
- 		}
- 	}
- 
--	if (!r && !(r = request_region(io_port, 1, "YMFPCI gameport"))) {
--		dev_err(chip->card->dev,
--			"joystick port %#x is in use.\n", io_port);
--		return -EBUSY;
-+	if (!r) {
-+		r = request_region(io_port, 1, "YMFPCI gameport");
-+		if (!r) {
-+			dev_err(chip->card->dev,
-+				"joystick port %#x is in use.\n", io_port);
-+			return -EBUSY;
-+		}
- 	}
- 
- 	chip->gameport = gp = gameport_allocate_port();
-@@ -199,8 +204,9 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
- 			/* auto-detect */
- 			fm_port[dev] = pci_resource_start(pci, 1);
- 		}
--		if (fm_port[dev] > 0 &&
--		    (fm_res = request_region(fm_port[dev], 4, "YMFPCI OPL3")) != NULL) {
-+		if (fm_port[dev] > 0)
-+			fm_res = request_region(fm_port[dev], 4, "YMFPCI OPL3");
-+		if (fm_res) {
- 			legacy_ctrl |= YMFPCI_LEGACY_FMEN;
- 			pci_write_config_word(pci, PCIR_DSXG_FMBASE, fm_port[dev]);
- 		}
-@@ -208,8 +214,9 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
- 			/* auto-detect */
- 			mpu_port[dev] = pci_resource_start(pci, 1) + 0x20;
- 		}
--		if (mpu_port[dev] > 0 &&
--		    (mpu_res = request_region(mpu_port[dev], 2, "YMFPCI MPU401")) != NULL) {
-+		if (mpu_port[dev] > 0)
-+			mpu_res = request_region(mpu_port[dev], 2, "YMFPCI MPU401");
-+		if (mpu_res) {
- 			legacy_ctrl |= YMFPCI_LEGACY_MEN;
- 			pci_write_config_word(pci, PCIR_DSXG_MPU401BASE, mpu_port[dev]);
- 		}
-@@ -221,8 +228,9 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
- 		case 0x3a8: legacy_ctrl2 |= 3; break;
- 		default: fm_port[dev] = 0; break;
- 		}
--		if (fm_port[dev] > 0 &&
--		    (fm_res = request_region(fm_port[dev], 4, "YMFPCI OPL3")) != NULL) {
-+		if (fm_port[dev] > 0)
-+			fm_res = request_region(fm_port[dev], 4, "YMFPCI OPL3");
-+		if (fm_res) {
- 			legacy_ctrl |= YMFPCI_LEGACY_FMEN;
- 		} else {
- 			legacy_ctrl2 &= ~YMFPCI_LEGACY2_FMIO;
-@@ -235,8 +243,9 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
- 		case 0x334: legacy_ctrl2 |= 3 << 4; break;
- 		default: mpu_port[dev] = 0; break;
- 		}
--		if (mpu_port[dev] > 0 &&
--		    (mpu_res = request_region(mpu_port[dev], 2, "YMFPCI MPU401")) != NULL) {
-+		if (mpu_port[dev] > 0)
-+			mpu_res = request_region(mpu_port[dev], 2, "YMFPCI MPU401");
-+		if (mpu_res) {
- 			legacy_ctrl |= YMFPCI_LEGACY_MEN;
- 		} else {
- 			legacy_ctrl2 &= ~YMFPCI_LEGACY2_MPUIO;
-@@ -250,9 +259,8 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
- 	pci_read_config_word(pci, PCIR_DSXG_LEGACY, &old_legacy_ctrl);
- 	pci_write_config_word(pci, PCIR_DSXG_LEGACY, legacy_ctrl);
- 	pci_write_config_word(pci, PCIR_DSXG_ELEGACY, legacy_ctrl2);
--	if ((err = snd_ymfpci_create(card, pci,
--				     old_legacy_ctrl,
--			 	     &chip)) < 0) {
-+	err = snd_ymfpci_create(card, pci, old_legacy_ctrl, &chip);
-+	if (err  < 0) {
- 		release_and_free_resource(mpu_res);
- 		release_and_free_resource(fm_res);
- 		goto free_card;
-@@ -293,11 +301,12 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
- 		goto free_card;
- 
- 	if (chip->mpu_res) {
--		if ((err = snd_mpu401_uart_new(card, 0, MPU401_HW_YMFPCI,
--					       mpu_port[dev],
--					       MPU401_INFO_INTEGRATED |
--					       MPU401_INFO_IRQ_HOOK,
--					       -1, &chip->rawmidi)) < 0) {
-+		err = snd_mpu401_uart_new(card, 0, MPU401_HW_YMFPCI,
-+					  mpu_port[dev],
-+					  MPU401_INFO_INTEGRATED |
-+					  MPU401_INFO_IRQ_HOOK,
-+					  -1, &chip->rawmidi);
-+		if (err < 0) {
- 			dev_warn(card->dev,
- 				 "cannot initialize MPU401 at 0x%lx, skipping...\n",
- 				 mpu_port[dev]);
-@@ -306,18 +315,22 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
- 		}
- 	}
- 	if (chip->fm_res) {
--		if ((err = snd_opl3_create(card,
--					   fm_port[dev],
--					   fm_port[dev] + 2,
--					   OPL3_HW_OPL3, 1, &opl3)) < 0) {
-+		err = snd_opl3_create(card,
-+				      fm_port[dev],
-+				      fm_port[dev] + 2,
-+				      OPL3_HW_OPL3, 1, &opl3);
-+		if (err < 0) {
- 			dev_warn(card->dev,
- 				 "cannot initialize FM OPL3 at 0x%lx, skipping...\n",
- 				 fm_port[dev]);
- 			legacy_ctrl &= ~YMFPCI_LEGACY_FMEN;
- 			pci_write_config_word(pci, PCIR_DSXG_LEGACY, legacy_ctrl);
--		} else if ((err = snd_opl3_hwdep_new(opl3, 0, 1, NULL)) < 0) {
--			dev_err(card->dev, "cannot create opl3 hwdep\n");
--			goto free_card;
-+		} else {
-+			err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
-+			if (err < 0) {
-+				dev_err(card->dev, "cannot create opl3 hwdep\n");
-+				goto free_card;
-+			}
- 		}
- 	}
- 
 diff --git a/sound/pci/ymfpci/ymfpci_main.c b/sound/pci/ymfpci/ymfpci_main.c
-index cacc6a9d14c8b..8fd0607698820 100644
+index 8fd0607698820..0cd9b4029dab1 100644
 --- a/sound/pci/ymfpci/ymfpci_main.c
 +++ b/sound/pci/ymfpci/ymfpci_main.c
-@@ -292,7 +292,8 @@ static void snd_ymfpci_pcm_interrupt(struct snd_ymfpci *chip, struct snd_ymfpci_
- 	struct snd_ymfpci_pcm *ypcm;
- 	u32 pos, delta;
+@@ -2164,7 +2164,7 @@ static int snd_ymfpci_memalloc(struct snd_ymfpci *chip)
+ 	chip->work_base = ptr;
+ 	chip->work_base_addr = ptr_addr;
  	
--	if ((ypcm = voice->ypcm) == NULL)
-+	ypcm = voice->ypcm;
-+	if (!ypcm)
- 		return;
- 	if (ypcm->substream == NULL)
- 		return;
-@@ -628,7 +629,8 @@ static int snd_ymfpci_playback_hw_params(struct snd_pcm_substream *substream,
- 	struct snd_ymfpci_pcm *ypcm = runtime->private_data;
- 	int err;
+-	snd_BUG_ON(ptr + chip->work_size !=
++	snd_BUG_ON(ptr + PAGE_ALIGN(chip->work_size) !=
+ 		   chip->work_ptr.area + chip->work_ptr.bytes);
  
--	if ((err = snd_ymfpci_pcm_voice_alloc(ypcm, params_channels(hw_params))) < 0)
-+	err = snd_ymfpci_pcm_voice_alloc(ypcm, params_channels(hw_params));
-+	if (err < 0)
- 		return err;
- 	return 0;
- }
-@@ -932,7 +934,8 @@ static int snd_ymfpci_playback_open(struct snd_pcm_substream *substream)
- 	struct snd_ymfpci_pcm *ypcm;
- 	int err;
- 	
--	if ((err = snd_ymfpci_playback_open_1(substream)) < 0)
-+	err = snd_ymfpci_playback_open_1(substream);
-+	if (err < 0)
- 		return err;
- 	ypcm = runtime->private_data;
- 	ypcm->output_front = 1;
-@@ -954,7 +957,8 @@ static int snd_ymfpci_playback_spdif_open(struct snd_pcm_substream *substream)
- 	struct snd_ymfpci_pcm *ypcm;
- 	int err;
- 	
--	if ((err = snd_ymfpci_playback_open_1(substream)) < 0)
-+	err = snd_ymfpci_playback_open_1(substream);
-+	if (err < 0)
- 		return err;
- 	ypcm = runtime->private_data;
- 	ypcm->output_front = 0;
-@@ -982,7 +986,8 @@ static int snd_ymfpci_playback_4ch_open(struct snd_pcm_substream *substream)
- 	struct snd_ymfpci_pcm *ypcm;
- 	int err;
- 	
--	if ((err = snd_ymfpci_playback_open_1(substream)) < 0)
-+	err = snd_ymfpci_playback_open_1(substream);
-+	if (err < 0)
- 		return err;
- 	ypcm = runtime->private_data;
- 	ypcm->output_front = 0;
-@@ -1124,7 +1129,8 @@ int snd_ymfpci_pcm(struct snd_ymfpci *chip, int device)
- 	struct snd_pcm *pcm;
- 	int err;
- 
--	if ((err = snd_pcm_new(chip->card, "YMFPCI", device, 32, 1, &pcm)) < 0)
-+	err = snd_pcm_new(chip->card, "YMFPCI", device, 32, 1, &pcm);
-+	if (err < 0)
- 		return err;
- 	pcm->private_data = chip;
- 
-@@ -1157,7 +1163,8 @@ int snd_ymfpci_pcm2(struct snd_ymfpci *chip, int device)
- 	struct snd_pcm *pcm;
- 	int err;
- 
--	if ((err = snd_pcm_new(chip->card, "YMFPCI - PCM2", device, 0, 1, &pcm)) < 0)
-+	err = snd_pcm_new(chip->card, "YMFPCI - PCM2", device, 0, 1, &pcm);
-+	if (err < 0)
- 		return err;
- 	pcm->private_data = chip;
- 
-@@ -1190,7 +1197,8 @@ int snd_ymfpci_pcm_spdif(struct snd_ymfpci *chip, int device)
- 	struct snd_pcm *pcm;
- 	int err;
- 
--	if ((err = snd_pcm_new(chip->card, "YMFPCI - IEC958", device, 1, 0, &pcm)) < 0)
-+	err = snd_pcm_new(chip->card, "YMFPCI - IEC958", device, 1, 0, &pcm);
-+	if (err < 0)
- 		return err;
- 	pcm->private_data = chip;
- 
-@@ -1230,7 +1238,8 @@ int snd_ymfpci_pcm_4ch(struct snd_ymfpci *chip, int device)
- 	struct snd_pcm *pcm;
- 	int err;
- 
--	if ((err = snd_pcm_new(chip->card, "YMFPCI - Rear", device, 1, 0, &pcm)) < 0)
-+	err = snd_pcm_new(chip->card, "YMFPCI - Rear", device, 1, 0, &pcm);
-+	if (err < 0)
- 		return err;
- 	pcm->private_data = chip;
- 
-@@ -1785,7 +1794,8 @@ int snd_ymfpci_mixer(struct snd_ymfpci *chip, int rear_switch)
- 		.read = snd_ymfpci_codec_read,
- 	};
- 
--	if ((err = snd_ac97_bus(chip->card, 0, &ops, chip, &chip->ac97_bus)) < 0)
-+	err = snd_ac97_bus(chip->card, 0, &ops, chip, &chip->ac97_bus);
-+	if (err < 0)
- 		return err;
- 	chip->ac97_bus->private_free = snd_ymfpci_mixer_free_ac97_bus;
- 	chip->ac97_bus->no_vra = 1; /* YMFPCI doesn't need VRA */
-@@ -1793,7 +1803,8 @@ int snd_ymfpci_mixer(struct snd_ymfpci *chip, int rear_switch)
- 	memset(&ac97, 0, sizeof(ac97));
- 	ac97.private_data = chip;
- 	ac97.private_free = snd_ymfpci_mixer_free_ac97;
--	if ((err = snd_ac97_mixer(chip->ac97_bus, &ac97, &chip->ac97)) < 0)
-+	err = snd_ac97_mixer(chip->ac97_bus, &ac97, &chip->ac97);
-+	if (err < 0)
- 		return err;
- 
- 	/* to be sure */
-@@ -1801,7 +1812,8 @@ int snd_ymfpci_mixer(struct snd_ymfpci *chip, int rear_switch)
- 			     AC97_EA_VRA|AC97_EA_VRM, 0);
- 
- 	for (idx = 0; idx < ARRAY_SIZE(snd_ymfpci_controls); idx++) {
--		if ((err = snd_ctl_add(chip->card, snd_ctl_new1(&snd_ymfpci_controls[idx], chip))) < 0)
-+		err = snd_ctl_add(chip->card, snd_ctl_new1(&snd_ymfpci_controls[idx], chip));
-+		if (err < 0)
- 			return err;
- 	}
- 	if (chip->ac97->ext_id & AC97_EI_SDAC) {
-@@ -1814,27 +1826,37 @@ int snd_ymfpci_mixer(struct snd_ymfpci *chip, int rear_switch)
- 	/* add S/PDIF control */
- 	if (snd_BUG_ON(!chip->pcm_spdif))
- 		return -ENXIO;
--	if ((err = snd_ctl_add(chip->card, kctl = snd_ctl_new1(&snd_ymfpci_spdif_default, chip))) < 0)
-+	kctl = snd_ctl_new1(&snd_ymfpci_spdif_default, chip);
-+	err = snd_ctl_add(chip->card, kctl);
-+	if (err < 0)
- 		return err;
- 	kctl->id.device = chip->pcm_spdif->device;
--	if ((err = snd_ctl_add(chip->card, kctl = snd_ctl_new1(&snd_ymfpci_spdif_mask, chip))) < 0)
-+	kctl = snd_ctl_new1(&snd_ymfpci_spdif_mask, chip);
-+	err = snd_ctl_add(chip->card, kctl);
-+	if (err < 0)
- 		return err;
- 	kctl->id.device = chip->pcm_spdif->device;
--	if ((err = snd_ctl_add(chip->card, kctl = snd_ctl_new1(&snd_ymfpci_spdif_stream, chip))) < 0)
-+	kctl = snd_ctl_new1(&snd_ymfpci_spdif_stream, chip);
-+	err = snd_ctl_add(chip->card, kctl);
-+	if (err < 0)
- 		return err;
- 	kctl->id.device = chip->pcm_spdif->device;
- 	chip->spdif_pcm_ctl = kctl;
- 
- 	/* direct recording source */
--	if (chip->device_id == PCI_DEVICE_ID_YAMAHA_754 &&
--	    (err = snd_ctl_add(chip->card, kctl = snd_ctl_new1(&snd_ymfpci_drec_source, chip))) < 0)
--		return err;
-+	if (chip->device_id == PCI_DEVICE_ID_YAMAHA_754) {
-+		kctl = snd_ctl_new1(&snd_ymfpci_drec_source, chip);
-+		err = snd_ctl_add(chip->card, kctl);
-+		if (err < 0)
-+			return err;
-+	}
- 
- 	/*
- 	 * shared rear/line-in
- 	 */
- 	if (rear_switch) {
--		if ((err = snd_ctl_add(chip->card, snd_ctl_new1(&snd_ymfpci_rear_shared, chip))) < 0)
-+		err = snd_ctl_add(chip->card, snd_ctl_new1(&snd_ymfpci_rear_shared, chip));
-+		if (err < 0)
- 			return err;
- 	}
- 
-@@ -1847,7 +1869,8 @@ int snd_ymfpci_mixer(struct snd_ymfpci *chip, int rear_switch)
- 		kctl->id.device = chip->pcm->device;
- 		kctl->id.subdevice = idx;
- 		kctl->private_value = (unsigned long)substream;
--		if ((err = snd_ctl_add(chip->card, kctl)) < 0)
-+		err = snd_ctl_add(chip->card, kctl);
-+		if (err < 0)
- 			return err;
- 		chip->pcm_mixer[idx].left = 0x8000;
- 		chip->pcm_mixer[idx].right = 0x8000;
-@@ -1928,7 +1951,8 @@ int snd_ymfpci_timer(struct snd_ymfpci *chip, int device)
- 	tid.card = chip->card->number;
- 	tid.device = device;
- 	tid.subdevice = 0;
--	if ((err = snd_timer_new(chip->card, "YMFPCI", &tid, &timer)) >= 0) {
-+	err = snd_timer_new(chip->card, "YMFPCI", &tid, &timer);
-+	if (err >= 0) {
- 		strcpy(timer->name, "YMFPCI timer");
- 		timer->private_data = chip;
- 		timer->hw = snd_ymfpci_timer_hw;
-@@ -2334,7 +2358,8 @@ int snd_ymfpci_create(struct snd_card *card,
- 	*rchip = NULL;
- 
- 	/* enable PCI device */
--	if ((err = pci_enable_device(pci)) < 0)
-+	err = pci_enable_device(pci);
-+	if (err < 0)
- 		return err;
- 
- 	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
-@@ -2357,7 +2382,8 @@ int snd_ymfpci_create(struct snd_card *card,
- 	pci_set_master(pci);
- 	chip->src441_used = -1;
- 
--	if ((chip->res_reg_area = request_mem_region(chip->reg_area_phys, 0x8000, "YMFPCI")) == NULL) {
-+	chip->res_reg_area = request_mem_region(chip->reg_area_phys, 0x8000, "YMFPCI");
-+	if (!chip->res_reg_area) {
- 		dev_err(chip->card->dev,
- 			"unable to grab memory region 0x%lx-0x%lx\n",
- 			chip->reg_area_phys, chip->reg_area_phys + 0x8000 - 1);
+ 	snd_ymfpci_writel(chip, YDSXGR_PLAYCTRLBASE, chip->bank_base_playback_addr);
 -- 
 2.39.2
 
