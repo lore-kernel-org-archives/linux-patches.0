@@ -1,392 +1,158 @@
-Received: from 0.smtp.remotehost.it (0.smtp.remotehost.it [213.190.28.75])
+Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38283205
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 21:06:56 +0000 (UTC)
-Message-ID: <401a5df3-b13b-fb56-a305-9c82f5f0ca77@0.smtp.remotehost.it>
-Date: Mon, 3 Apr 2023 23:06:53 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80FE3205
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 21:07:13 +0000 (UTC)
+Date: Mon, 03 Apr 2023 21:06:49 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1680556031; x=1680815231;
+	bh=Ygcel1PvnMoe3RHJ38UCoAZrKYRkopyr0hOnUB7vewE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=w18BWd4XymeKr9glYoZHqwLcVivawa55JNf6WPwPjen8au9DMMLMFxeTf5Al4zBrh
+	 RXxIpXDggEITn+Ct6No4+78+Us2apw0H7dktahZBnH+FbuyKREJd4K80uK/TpsR/dN
+	 Ef/781PugEn0S9xCc51NAU1EyKk7fmWnJ5vEUkJlc/PEDa1LwCDnpC1J63WXNDRqxI
+	 fRsv3JILSveZbz9O8vsssDuEkGd/Hp6mJve3BT2H3Myx55igXzk/kIeGEMAHYekuBM
+	 GmHIsP4oBA6Bfu4m/0JvFEpDP7WrAKcvcQzhEzsbpfTa10UxYMlQ21Z5YajijuCJFM
+	 j6BfubfY0nIrA==
+To: Alice Ryhl <alice@ryhl.io>
+From: y86-dev <y86-dev@protonmail.com>
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <a.hindborg@samsung.com>, Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+Subject: Re: [PATCH v5 14/15] rust: sync: reduce stack usage of `UniqueArc::try_new_uninit`
+Message-ID: <IPLyc9BujE_3VnXZSkge4KAkU2UP7JQGWIOlhWq4Dfli3k_M5luHYkPrxH5ig1E3G_iTKkaSJuzsXCdSx6e3AC4iLYlVqNULFvBr4VYR2MQ=@protonmail.com>
+In-Reply-To: <d50b28f0-e989-7392-505b-2dd9f00abef6@ryhl.io>
+References: <20230403154422.168633-1-y86-dev@protonmail.com> <20230403160511.174894-7-y86-dev@protonmail.com> <d50b28f0-e989-7392-505b-2dd9f00abef6@ryhl.io>
+Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 6.1 021/181] blk-mq: move the srcu_struct used for
- quiescing to the tagset
-Content-Language: en-US, de-DE, lb-LU, fr-FR
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Christoph Hellwig <hch@lst.de>,
- Keith Busch <kbusch@kernel.org>, Ming Lei <ming.lei@redhat.com>,
- Chao Leng <lengchao@huawei.com>, Sagi Grimberg <sagi@grimberg.me>,
- Hannes Reinecke <hare@suse.de>, Chaitanya Kulkarni <kch@nvidia.com>,
- Jens Axboe <axboe@kernel.dk>, Sasha Levin <sashal@kernel.org>
-References: <20230403140415.090615502@linuxfoundation.org>
- <20230403140415.825266522@linuxfoundation.org>
-From: Pascal Ernster <git@hardfalcon.net>
-In-Reply-To: <20230403140415.825266522@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-[2023-04-03 16:07] Greg Kroah-Hartman:
-> From: Christoph Hellwig <hch@lst.de>
-> 
-> [ Upstream commit 80bd4a7aab4c9ce59bf5e35fdf52aa23d8a3c9f5 ]
-> 
-> All I/O submissions have fairly similar latencies, and a tagset-wide
-> quiesce is a fairly common operation.
-> 
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
-> Reviewed-by: Keith Busch <kbusch@kernel.org>
-> Reviewed-by: Ming Lei <ming.lei@redhat.com>
-> Reviewed-by: Chao Leng <lengchao@huawei.com>
-> Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-> Reviewed-by: Hannes Reinecke <hare@suse.de>
-> Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-> Link: https://lore.kernel.org/r/20221101150050.3510-12-hch@lst.de
-> [axboe: fix whitespace]
-> Signed-off-by: Jens Axboe <axboe@kernel.dk>
-> Stable-dep-of: 00e885efcfbb ("blk-mq: fix "bad unlock balance detected" on q->srcu in __blk_mq_run_dispatch_ops")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->   block/blk-core.c       | 27 +++++----------------------
->   block/blk-mq.c         | 33 +++++++++++++++++++++++++--------
->   block/blk-mq.h         | 14 +++++++-------
->   block/blk-sysfs.c      |  9 ++-------
->   block/blk.h            |  9 +--------
->   block/genhd.c          |  2 +-
->   include/linux/blk-mq.h |  4 ++++
->   include/linux/blkdev.h |  9 ---------
->   8 files changed, 45 insertions(+), 62 deletions(-)
-> 
-> diff --git a/block/blk-core.c b/block/blk-core.c
-> index 24ee7785a5ad5..d5da62bb4bc06 100644
-> --- a/block/blk-core.c
-> +++ b/block/blk-core.c
-> @@ -65,7 +65,6 @@ DEFINE_IDA(blk_queue_ida);
->    * For queue allocation
->    */
->   struct kmem_cache *blk_requestq_cachep;
-> -struct kmem_cache *blk_requestq_srcu_cachep;
->   
->   /*
->    * Controlling structure to kblockd
-> @@ -373,26 +372,20 @@ static void blk_timeout_work(struct work_struct *work)
->   {
->   }
->   
-> -struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu)
-> +struct request_queue *blk_alloc_queue(int node_id)
->   {
->   	struct request_queue *q;
->   
-> -	q = kmem_cache_alloc_node(blk_get_queue_kmem_cache(alloc_srcu),
-> -			GFP_KERNEL | __GFP_ZERO, node_id);
-> +	q = kmem_cache_alloc_node(blk_requestq_cachep, GFP_KERNEL | __GFP_ZERO,
-> +				  node_id);
->   	if (!q)
->   		return NULL;
->   
-> -	if (alloc_srcu) {
-> -		blk_queue_flag_set(QUEUE_FLAG_HAS_SRCU, q);
-> -		if (init_srcu_struct(q->srcu) != 0)
-> -			goto fail_q;
-> -	}
-> -
->   	q->last_merge = NULL;
->   
->   	q->id = ida_alloc(&blk_queue_ida, GFP_KERNEL);
->   	if (q->id < 0)
-> -		goto fail_srcu;
-> +		goto fail_q;
->   
->   	q->stats = blk_alloc_queue_stats();
->   	if (!q->stats)
-> @@ -434,11 +427,8 @@ struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu)
->   	blk_free_queue_stats(q->stats);
->   fail_id:
->   	ida_free(&blk_queue_ida, q->id);
-> -fail_srcu:
-> -	if (alloc_srcu)
-> -		cleanup_srcu_struct(q->srcu);
->   fail_q:
-> -	kmem_cache_free(blk_get_queue_kmem_cache(alloc_srcu), q);
-> +	kmem_cache_free(blk_requestq_cachep, q);
->   	return NULL;
->   }
->   
-> @@ -1190,9 +1180,6 @@ int __init blk_dev_init(void)
->   			sizeof_field(struct request, cmd_flags));
->   	BUILD_BUG_ON(REQ_OP_BITS + REQ_FLAG_BITS > 8 *
->   			sizeof_field(struct bio, bi_opf));
-> -	BUILD_BUG_ON(ALIGN(offsetof(struct request_queue, srcu),
-> -			   __alignof__(struct request_queue)) !=
-> -		     sizeof(struct request_queue));
->   
->   	/* used for unplugging and affects IO latency/throughput - HIGHPRI */
->   	kblockd_workqueue = alloc_workqueue("kblockd",
-> @@ -1203,10 +1190,6 @@ int __init blk_dev_init(void)
->   	blk_requestq_cachep = kmem_cache_create("request_queue",
->   			sizeof(struct request_queue), 0, SLAB_PANIC, NULL);
->   
-> -	blk_requestq_srcu_cachep = kmem_cache_create("request_queue_srcu",
-> -			sizeof(struct request_queue) +
-> -			sizeof(struct srcu_struct), 0, SLAB_PANIC, NULL);
-> -
->   	blk_debugfs_root = debugfs_create_dir("block", NULL);
->   
->   	return 0;
-> diff --git a/block/blk-mq.c b/block/blk-mq.c
-> index aa67a52c5a069..f8c97d75b8d1a 100644
-> --- a/block/blk-mq.c
-> +++ b/block/blk-mq.c
-> @@ -261,8 +261,8 @@ EXPORT_SYMBOL_GPL(blk_mq_quiesce_queue_nowait);
->    */
->   void blk_mq_wait_quiesce_done(struct request_queue *q)
->   {
-> -	if (blk_queue_has_srcu(q))
-> -		synchronize_srcu(q->srcu);
-> +	if (q->tag_set->flags & BLK_MQ_F_BLOCKING)
-> +		synchronize_srcu(q->tag_set->srcu);
->   	else
->   		synchronize_rcu();
->   }
-> @@ -4022,7 +4022,7 @@ static struct request_queue *blk_mq_init_queue_data(struct blk_mq_tag_set *set,
->   	struct request_queue *q;
->   	int ret;
->   
-> -	q = blk_alloc_queue(set->numa_node, set->flags & BLK_MQ_F_BLOCKING);
-> +	q = blk_alloc_queue(set->numa_node);
->   	if (!q)
->   		return ERR_PTR(-ENOMEM);
->   	q->queuedata = queuedata;
-> @@ -4194,9 +4194,6 @@ static void blk_mq_update_poll_flag(struct request_queue *q)
->   int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
->   		struct request_queue *q)
->   {
-> -	WARN_ON_ONCE(blk_queue_has_srcu(q) !=
-> -			!!(set->flags & BLK_MQ_F_BLOCKING));
-> -
->   	/* mark the queue as mq asap */
->   	q->mq_ops = set->ops;
->   
-> @@ -4453,8 +4450,18 @@ int blk_mq_alloc_tag_set(struct blk_mq_tag_set *set)
->   	if (set->nr_maps == 1 && set->nr_hw_queues > nr_cpu_ids)
->   		set->nr_hw_queues = nr_cpu_ids;
->   
-> -	if (blk_mq_alloc_tag_set_tags(set, set->nr_hw_queues) < 0)
-> -		return -ENOMEM;
-> +	if (set->flags & BLK_MQ_F_BLOCKING) {
-> +		set->srcu = kmalloc(sizeof(*set->srcu), GFP_KERNEL);
-> +		if (!set->srcu)
-> +			return -ENOMEM;
-> +		ret = init_srcu_struct(set->srcu);
-> +		if (ret)
-> +			goto out_free_srcu;
-> +	}
-> +
-> +	ret = blk_mq_alloc_tag_set_tags(set, set->nr_hw_queues);
-> +	if (ret)
-> +		goto out_cleanup_srcu;
->   
->   	ret = -ENOMEM;
->   	for (i = 0; i < set->nr_maps; i++) {
-> @@ -4484,6 +4491,12 @@ int blk_mq_alloc_tag_set(struct blk_mq_tag_set *set)
->   	}
->   	kfree(set->tags);
->   	set->tags = NULL;
-> +out_cleanup_srcu:
-> +	if (set->flags & BLK_MQ_F_BLOCKING)
-> +		cleanup_srcu_struct(set->srcu);
-> +out_free_srcu:
-> +	if (set->flags & BLK_MQ_F_BLOCKING)
-> +		kfree(set->srcu);
->   	return ret;
->   }
->   EXPORT_SYMBOL(blk_mq_alloc_tag_set);
-> @@ -4523,6 +4536,10 @@ void blk_mq_free_tag_set(struct blk_mq_tag_set *set)
->   
->   	kfree(set->tags);
->   	set->tags = NULL;
-> +	if (set->flags & BLK_MQ_F_BLOCKING) {
-> +		cleanup_srcu_struct(set->srcu);
-> +		kfree(set->srcu);
-> +	}
->   }
->   EXPORT_SYMBOL(blk_mq_free_tag_set);
->   
-> diff --git a/block/blk-mq.h b/block/blk-mq.h
-> index 0b2870839cdd6..ef59fee62780d 100644
-> --- a/block/blk-mq.h
-> +++ b/block/blk-mq.h
-> @@ -377,17 +377,17 @@ static inline bool hctx_may_queue(struct blk_mq_hw_ctx *hctx,
->   /* run the code block in @dispatch_ops with rcu/srcu read lock held */
->   #define __blk_mq_run_dispatch_ops(q, check_sleep, dispatch_ops)	\
->   do {								\
-> -	if (!blk_queue_has_srcu(q)) {				\
-> -		rcu_read_lock();				\
-> -		(dispatch_ops);					\
-> -		rcu_read_unlock();				\
-> -	} else {						\
-> +	if ((q)->tag_set->flags & BLK_MQ_F_BLOCKING) {		\
->   		int srcu_idx;					\
->   								\
->   		might_sleep_if(check_sleep);			\
-> -		srcu_idx = srcu_read_lock((q)->srcu);		\
-> +		srcu_idx = srcu_read_lock((q)->tag_set->srcu);	\
->   		(dispatch_ops);					\
-> -		srcu_read_unlock((q)->srcu, srcu_idx);		\
-> +		srcu_read_unlock((q)->tag_set->srcu, srcu_idx);	\
-> +	} else {						\
-> +		rcu_read_lock();				\
-> +		(dispatch_ops);					\
-> +		rcu_read_unlock();				\
->   	}							\
->   } while (0)
->   
-> diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-> index e71b3b43927c0..e7871665825a3 100644
-> --- a/block/blk-sysfs.c
-> +++ b/block/blk-sysfs.c
-> @@ -739,10 +739,8 @@ queue_attr_store(struct kobject *kobj, struct attribute *attr,
->   
->   static void blk_free_queue_rcu(struct rcu_head *rcu_head)
->   {
-> -	struct request_queue *q = container_of(rcu_head, struct request_queue,
-> -					       rcu_head);
-> -
-> -	kmem_cache_free(blk_get_queue_kmem_cache(blk_queue_has_srcu(q)), q);
-> +	kmem_cache_free(blk_requestq_cachep,
-> +			container_of(rcu_head, struct request_queue, rcu_head));
->   }
->   
->   /**
-> @@ -779,9 +777,6 @@ static void blk_release_queue(struct kobject *kobj)
->   	if (queue_is_mq(q))
->   		blk_mq_release(q);
->   
-> -	if (blk_queue_has_srcu(q))
-> -		cleanup_srcu_struct(q->srcu);
-> -
->   	ida_free(&blk_queue_ida, q->id);
->   	call_rcu(&q->rcu_head, blk_free_queue_rcu);
->   }
-> diff --git a/block/blk.h b/block/blk.h
-> index a186ea20f39d8..4849a2efa4c50 100644
-> --- a/block/blk.h
-> +++ b/block/blk.h
-> @@ -27,7 +27,6 @@ struct blk_flush_queue {
->   };
->   
->   extern struct kmem_cache *blk_requestq_cachep;
-> -extern struct kmem_cache *blk_requestq_srcu_cachep;
->   extern struct kobj_type blk_queue_ktype;
->   extern struct ida blk_queue_ida;
->   
-> @@ -428,13 +427,7 @@ int bio_add_hw_page(struct request_queue *q, struct bio *bio,
->   		struct page *page, unsigned int len, unsigned int offset,
->   		unsigned int max_sectors, bool *same_page);
->   
-> -static inline struct kmem_cache *blk_get_queue_kmem_cache(bool srcu)
-> -{
-> -	if (srcu)
-> -		return blk_requestq_srcu_cachep;
-> -	return blk_requestq_cachep;
-> -}
-> -struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu);
-> +struct request_queue *blk_alloc_queue(int node_id);
->   
->   int disk_scan_partitions(struct gendisk *disk, fmode_t mode);
->   
-> diff --git a/block/genhd.c b/block/genhd.c
-> index 0b6928e948f31..4db1f905514c5 100644
-> --- a/block/genhd.c
-> +++ b/block/genhd.c
-> @@ -1436,7 +1436,7 @@ struct gendisk *__blk_alloc_disk(int node, struct lock_class_key *lkclass)
->   	struct request_queue *q;
->   	struct gendisk *disk;
->   
-> -	q = blk_alloc_queue(node, false);
-> +	q = blk_alloc_queue(node);
->   	if (!q)
->   		return NULL;
->   
-> diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
-> index a9764cbf7f8d2..8e942e36f1c48 100644
-> --- a/include/linux/blk-mq.h
-> +++ b/include/linux/blk-mq.h
-> @@ -7,6 +7,7 @@
->   #include <linux/lockdep.h>
->   #include <linux/scatterlist.h>
->   #include <linux/prefetch.h>
-> +#include <linux/srcu.h>
->   
->   struct blk_mq_tags;
->   struct blk_flush_queue;
-> @@ -507,6 +508,8 @@ enum hctx_type {
->    * @tag_list_lock: Serializes tag_list accesses.
->    * @tag_list:	   List of the request queues that use this tag set. See also
->    *		   request_queue.tag_set_list.
-> + * @srcu:	   Use as lock when type of the request queue is blocking
-> + *		   (BLK_MQ_F_BLOCKING).
->    */
->   struct blk_mq_tag_set {
->   	struct blk_mq_queue_map	map[HCTX_MAX_TYPES];
-> @@ -527,6 +530,7 @@ struct blk_mq_tag_set {
->   
->   	struct mutex		tag_list_lock;
->   	struct list_head	tag_list;
-> +	struct srcu_struct	*srcu;
->   };
->   
->   /**
-> diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-> index 891f8cbcd0436..36c286d22fb23 100644
-> --- a/include/linux/blkdev.h
-> +++ b/include/linux/blkdev.h
-> @@ -22,7 +22,6 @@
->   #include <linux/blkzoned.h>
->   #include <linux/sched.h>
->   #include <linux/sbitmap.h>
-> -#include <linux/srcu.h>
->   #include <linux/uuid.h>
->   #include <linux/xarray.h>
->   
-> @@ -544,18 +543,11 @@ struct request_queue {
->   	struct mutex		debugfs_mutex;
->   
->   	bool			mq_sysfs_init_done;
-> -
-> -	/**
-> -	 * @srcu: Sleepable RCU. Use as lock when type of the request queue
-> -	 * is blocking (BLK_MQ_F_BLOCKING). Must be the last member
-> -	 */
-> -	struct srcu_struct	srcu[];
->   };
->   
->   /* Keep blk_queue_flag_name[] in sync with the definitions below */
->   #define QUEUE_FLAG_STOPPED	0	/* queue is stopped */
->   #define QUEUE_FLAG_DYING	1	/* queue being torn down */
-> -#define QUEUE_FLAG_HAS_SRCU	2	/* SRCU is allocated */
->   #define QUEUE_FLAG_NOMERGES     3	/* disable merge attempts */
->   #define QUEUE_FLAG_SAME_COMP	4	/* complete on same CPU-group */
->   #define QUEUE_FLAG_FAIL_IO	5	/* fake timeout */
-> @@ -591,7 +583,6 @@ bool blk_queue_flag_test_and_set(unsigned int flag, struct request_queue *q);
->   
->   #define blk_queue_stopped(q)	test_bit(QUEUE_FLAG_STOPPED, &(q)->queue_flags)
->   #define blk_queue_dying(q)	test_bit(QUEUE_FLAG_DYING, &(q)->queue_flags)
-> -#define blk_queue_has_srcu(q)	test_bit(QUEUE_FLAG_HAS_SRCU, &(q)->queue_flags)
->   #define blk_queue_init_done(q)	test_bit(QUEUE_FLAG_INIT_DONE, &(q)->queue_flags)
->   #define blk_queue_nomerges(q)	test_bit(QUEUE_FLAG_NOMERGES, &(q)->queue_flags)
->   #define blk_queue_noxmerges(q)	\
+On 03.04.23 19:56, Alice Ryhl wrote:
+> On 4/3/23 18:05, Benno Lossin wrote:
+>>        /// Tries to allocate a new [`UniqueArc`] instance whose contents=
+ are not initialised yet.
+>>        pub fn try_new_uninit() -> Result<UniqueArc<MaybeUninit<T>>, Allo=
+cError> {
+>> -        Ok(UniqueArc::<MaybeUninit<T>> {
+>> +        // INVARIANT: The refcount is initialised to a non-zero value.
+>> +        let inner =3D Box::try_init::<AllocError>(try_init!(ArcInner {
+>> +            // SAFETY: There are no safety requirements for this FFI ca=
+ll.
+>> +            refcount: Opaque::new(unsafe { bindings::REFCOUNT_INIT(1) }=
+),
+>> +            data <- init::uninit::<T, AllocError>(),
+>> +        }? AllocError))?;
+>> +        Ok(UniqueArc {
+>>                // INVARIANT: The newly-created object has a ref-count of=
+ 1.
+>> -            inner: Arc::try_new(MaybeUninit::uninit())?,
+>> +            // SAFETY: The pointer from the `Box` is valid.
+>> +            inner: unsafe { Arc::from_inner(Box::leak(inner).into()) },
+>>            })
+>>        }
+>>    }
+>=20
+> I'm curious - do you know whether this compiles to the same machine code
+> as this?
+>=20
+> pub fn try_new_uninit() -> Result<UniqueArc<MaybeUninit<T>>, AllocError> =
+{
+>       let inner: Box<MaybeUninit<ArcInner<T>>> =3D Box::try_new_uninit()?=
+;
+>       let ptr =3D Box::into_raw(inner) as *mut ArcInner<T>;
+>       addr_of_mut!((*ptr).refcount).write(bindings::REFCOUNT_INIT(1));
+>       Ok(UniqueArc {
+>           inner: Arc {
+>               ptr: unsafe { NonNull::new_unchecked(ptr) },
+>               _p: PhantomData,
+>           }
+>       })
+> }
 
+Yes it compiles to exactly the same assembly (byte for byte), because I was
+not sure if I was compiling the right thing, I compiled this function:
 
-On systems with their (btrfs) root filesystem residing on an LVM volume, 
-this patch is reproducibly causing a complete freeze during shutdowns 
-and reboots.
+    unsafe { core::arch::asm!("ud2") };
+    let r1 =3D UniqueArc::try_new_uninit();
+    unsafe { core::arch::asm!("ud2") };
+    let r2 =3D UniqueArc::try_new_uninit2();
+    unsafe { core::arch::asm!("ud2") };
 
-I had previously replied with the same message to patch 022/181 instead 
-of this one, but had gotten the subject mixed up actually meant this patch.
+The `ud2` instructions are for better visibility, as I have not read a lot
+of assembly. The above disassembles to this:
 
+    ffffffff8143bb80 <_RNvXCsdVu6umiBwhr_12rust_minimalNtB2_11RustMinimalNt=
+CsfATHBUcknU9_6kernel6Module4init>:
+    ffffffff8143bb80:=0941 57                =09push   r15
+    ffffffff8143bb82:=0941 56                =09push   r14
+    ffffffff8143bb84:=0953                   =09push   rbx
+    ffffffff8143bb85:=0949 89 ff             =09mov    r15,rdi
+    ffffffff8143bb88:=090f 0b                =09ud2
+    ffffffff8143bb8a:=09bf 04 00 10 00       =09mov    edi,0x100004
+    ffffffff8143bb8f:=09be 04 00 00 00       =09mov    esi,0x4
+    ffffffff8143bb94:=09e8 a7 23 f5 ff       =09call   ffffffff8138df40 <__=
+rust_alloc>
+    ffffffff8143bb99:=0948 85 c0             =09test   rax,rax
+    ffffffff8143bb9c:=0974 12                =09je     ffffffff8143bbb0 <_R=
+NvXCsdVu6umiBwhr_12rust_minimalNtB2_11RustMinimalNtCsfATHBUcknU9_6kernel6Mo=
+dule4init+0x30>
+    ffffffff8143bb9e:=0949 89 c6             =09mov    r14,rax
+    ffffffff8143bba1:=09bf 01 00 00 00       =09mov    edi,0x1
+    ffffffff8143bba6:=09e8 e5 fc f4 ff       =09call   ffffffff8138b890 <ru=
+st_helper_REFCOUNT_INIT>
+    ffffffff8143bbab:=0941 89 06             =09mov    DWORD PTR [r14],eax
+    ffffffff8143bbae:=09eb 03                =09jmp    ffffffff8143bbb3 <_R=
+NvXCsdVu6umiBwhr_12rust_minimalNtB2_11RustMinimalNtCsfATHBUcknU9_6kernel6Mo=
+dule4init+0x33>
+    ffffffff8143bbb0:=0945 31 f6             =09xor    r14d,r14d
+    ffffffff8143bbb3:=090f 0b                =09ud2
+    ffffffff8143bbb5:=09bf 04 00 10 00       =09mov    edi,0x100004
+    ffffffff8143bbba:=09be 04 00 00 00       =09mov    esi,0x4
+    ffffffff8143bbbf:=09e8 7c 23 f5 ff       =09call   ffffffff8138df40 <__=
+rust_alloc>
+    ffffffff8143bbc4:=0948 85 c0             =09test   rax,rax
+    ffffffff8143bbc7:=0974 11                =09je     ffffffff8143bbda <_R=
+NvXCsdVu6umiBwhr_12rust_minimalNtB2_11RustMinimalNtCsfATHBUcknU9_6kernel6Mo=
+dule4init+0x5a>
+    ffffffff8143bbc9:=0948 89 c3             =09mov    rbx,rax
+    ffffffff8143bbcc:=09bf 01 00 00 00       =09mov    edi,0x1
+    ffffffff8143bbd1:=09e8 ba fc f4 ff       =09call   ffffffff8138b890 <ru=
+st_helper_REFCOUNT_INIT>
+    ffffffff8143bbd6:=0989 03                =09mov    DWORD PTR [rbx],eax
+    ffffffff8143bbd8:=09eb 02                =09jmp    ffffffff8143bbdc <_R=
+NvXCsdVu6umiBwhr_12rust_minimalNtB2_11RustMinimalNtCsfATHBUcknU9_6kernel6Mo=
+dule4init+0x5c>
+    ffffffff8143bbda:=0931 db                =09xor    ebx,ebx
+    ffffffff8143bbdc:=090f 0b                =09ud2
+    ffffffff8143bbde:=094d 89 77 08          =09mov    QWORD PTR [r15+0x8],=
+r14
+    ffffffff8143bbe2:=0949 89 5f 10          =09mov    QWORD PTR [r15+0x10]=
+,rbx
+    ffffffff8143bbe6:=0941 c7 07 00 00 00 00 =09mov    DWORD PTR [r15],0x0
+    ffffffff8143bbed:=094c 89 f8             =09mov    rax,r15
+    ffffffff8143bbf0:=095b                   =09pop    rbx
+    ffffffff8143bbf1:=0941 5e                =09pop    r14
+    ffffffff8143bbf3:=0941 5f                =09pop    r15
+    ffffffff8143bbf5:=09c3                   =09ret
 
-Regards
-Pascal
+I have not done extensive enough tests to be sure about this in general,
+but most of the examples of the pin-init API that I looked at were
+optimized to the same assembly as manual initialization.
+
+The only examples were this was not the case was when I had triply nested
+structs with `Box`es that all were initialized via `PinInit`. That was the
+point were the initialization closure was not inlined any more.
+I also verified that in this particular case the closure was again inlined
+after adding `#[inline]` to it (which requires `stmt_expr_attributes`).
+
+At some point I might do a more thorough analysis.
+
+--=20
+Cheers,
+Benno
