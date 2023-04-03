@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914F56FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19ED3C433EF;
-	Mon,  3 Apr 2023 14:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE246FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:42:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC52C433D2;
+	Mon,  3 Apr 2023 14:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532920;
-	bh=6SnvLvhDmMe+ljU9lj8VIya8wlZXztZgAtVXyz4R2RA=;
+	s=korg; t=1680532923;
+	bh=jyRttOi/+1GUQiXflH/H+fTtTJy0fN3XLyD5v4JQOY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shXVM+Rzt6pg0KZhOTF7CZDEzGxXP+1G9mTs1LAn7iTXjx3S3gboVG35f1Zkf90qA
-	 P9HNV0EcqcUkjPo+ZjEDRoGn8Kl8ycEgURLXEXFvh8ylDBlaRtE4KHSzHvLFvP0Wd6
-	 hhoR3q5zwsjRwdOVh+UsWppNXz1vre/sp3j1V6ys=
+	b=G0B6xouZGyBtWYNyB127MZsw/f+a6NbuZV9e9tfk2lh40N2hkPuZgqP9FCGquDjpu
+	 SGiwh3XT7fQ4K7VfvSeGomLKa0QdvfYXHgGG25sigrwRuEym0UkpAiZ5vKbqumXMIY
+	 UN8z6tvQPNBUbVTXSvdN0hIWtc9GXRyHNTgMbC+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manasi Navare <navaremanasi@google.com>,
-	Drew Davenport <ddavenport@chromium.org>,
-	Imre Deak <imre.deak@intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 168/181] drm/i915: Move CSC load back into .color_commit_arm() when PSR is enabled on skl/glk
-Date: Mon,  3 Apr 2023 16:10:03 +0200
-Message-Id: <20230403140420.579896686@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 6.1 151/181] NFSv4: Fix hangs when recovering open state after a server reboot
+Date: Mon,  3 Apr 2023 16:09:46 +0200
+Message-Id: <20230403140419.967494531@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -38,97 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit a8e03e00b62073b494886dbff32f8b5338066c8b upstream.
+commit 6165a16a5ad9b237bb3131cff4d3c601ccb8f9a3 upstream.
 
-SKL/GLK CSC unit suffers from a nasty issue where a CSC
-coeff/offset register read or write between DC5 exit and
-PSR exit will undo the CSC arming performed by DMC, and
-then during PSR exit the hardware will latch zeroes into
-the active CSC registers. This causes any plane going
-through the CSC to output all black.
+When we're using a cached open stateid or a delegation in order to avoid
+sending a CLAIM_PREVIOUS open RPC call to the server, we don't have a
+new open stateid to present to update_open_stateid().
+Instead rely on nfs4_try_open_cached(), just as if we were doing a
+normal open.
 
-We can sidestep the issue by making sure the PSR exit has
-already actually happened before we touch the CSC coeff/offset
-registers. Easiest way to guarantee that is to just move the
-CSC programming back into the .color_commir_arm() as we force
-a PSR exit (and crucially wait for it to actually happen)
-prior to touching the arming registers.
-
-When PSR (and thus also DC states) are disabled we don't
-have anything to worry about, so we can keep using the
-more optional _noarm() hook for writing the CSC registers.
-
-Cc: <stable@vger.kernel.org> #v5.19+
-Cc: Manasi Navare <navaremanasi@google.com>
-Cc: Drew Davenport <ddavenport@chromium.org>
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Jouni Högander <jouni.hogander@intel.com>
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8283
-Fixes: d13dde449580 ("drm/i915: Split pipe+output CSC programming to noarm+arm pair")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230320095438.17328-3-ville.syrjala@linux.intel.com
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-(cherry picked from commit 80a892a4c2428b65366721599fc5fe50eaed35fd)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: d2bfda2e7aa0 ("NFSv4: don't reprocess cached open CLAIM_PREVIOUS")
+Cc: stable@vger.kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_color.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ fs/nfs/nfs4proc.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_color.c
-+++ b/drivers/gpu/drm/i915/display/intel_color.c
-@@ -499,6 +499,22 @@ static void icl_color_commit_noarm(const
- 	icl_load_csc_matrix(crtc_state);
- }
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -1980,8 +1980,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(str
+ 	if (!data->rpc_done) {
+ 		if (data->rpc_status)
+ 			return ERR_PTR(data->rpc_status);
+-		/* cached opens have already been processed */
+-		goto update;
++		return nfs4_try_open_cached(data);
+ 	}
  
-+static void skl_color_commit_noarm(const struct intel_crtc_state *crtc_state)
-+{
-+	/*
-+	 * Possibly related to display WA #1184, SKL CSC loses the latched
-+	 * CSC coeff/offset register values if the CSC registers are disarmed
-+	 * between DC5 exit and PSR exit. This will cause the plane(s) to
-+	 * output all black (until CSC_MODE is rearmed and properly latched).
-+	 * Once PSR exit (and proper register latching) has occurred the
-+	 * danger is over. Thus when PSR is enabled the CSC coeff/offset
-+	 * register programming will be peformed from skl_color_commit_arm()
-+	 * which is called after PSR exit.
-+	 */
-+	if (!crtc_state->has_psr)
-+		ilk_load_csc_matrix(crtc_state);
-+}
+ 	ret = nfs_refresh_inode(inode, &data->f_attr);
+@@ -1990,7 +1989,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(str
+ 
+ 	if (data->o_res.delegation_type != 0)
+ 		nfs4_opendata_check_deleg(data, state);
+-update:
 +
- static void ilk_color_commit_noarm(const struct intel_crtc_state *crtc_state)
- {
- 	ilk_load_csc_matrix(crtc_state);
-@@ -541,6 +557,9 @@ static void skl_color_commit_arm(const s
- 	enum pipe pipe = crtc->pipe;
- 	u32 val = 0;
- 
-+	if (crtc_state->has_psr)
-+		ilk_load_csc_matrix(crtc_state);
-+
- 	/*
- 	 * We don't (yet) allow userspace to control the pipe background color,
- 	 * so force it to black, but apply pipe gamma and CSC appropriately
-@@ -2171,7 +2190,7 @@ static const struct intel_color_funcs ic
- 
- static const struct intel_color_funcs glk_color_funcs = {
- 	.color_check = glk_color_check,
--	.color_commit_noarm = ilk_color_commit_noarm,
-+	.color_commit_noarm = skl_color_commit_noarm,
- 	.color_commit_arm = skl_color_commit_arm,
- 	.load_luts = glk_load_luts,
- 	.read_luts = glk_read_luts,
-@@ -2179,7 +2198,7 @@ static const struct intel_color_funcs gl
- 
- static const struct intel_color_funcs skl_color_funcs = {
- 	.color_check = ivb_color_check,
--	.color_commit_noarm = ilk_color_commit_noarm,
-+	.color_commit_noarm = skl_color_commit_noarm,
- 	.color_commit_arm = skl_color_commit_arm,
- 	.load_luts = bdw_load_luts,
- 	.read_luts = NULL,
+ 	if (!update_open_stateid(state, &data->o_res.stateid,
+ 				NULL, data->o_arg.fmode))
+ 		return ERR_PTR(-EAGAIN);
 
 
