@@ -1,40 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B9E5683
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2C0C433EF;
-	Mon,  3 Apr 2023 14:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4EC5683
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:18:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82CCCC433EF;
+	Mon,  3 Apr 2023 14:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680531486;
-	bh=oeMo3j+UO3Ar8tYDF+vJ038dMcLrp5HC9ppOEsU7aVM=;
+	s=korg; t=1680531488;
+	bh=ehJUsNhEVSvDbvx/mh9U9pSmg7rr+bXaqy60FE1nGWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yas05GD891bWaGYlzJMtHMgPAtaIEd0rywayUO9pYAY7X2nBd5TBjZm5eyGXJs8Nw
-	 CbNDHaXRGHGYLS1BgrDg3Swdzaewj3tOszXtuRhY3tmATiK7ZUqZQBcoOTsIoj/fd6
-	 xYx6RhgvcsvxIpQ1oazPXEBORcftFYwDnQcpPcfs=
+	b=VI+XwP6Bxadqjtd5YXZtycqLtdcOlcMw7eaHma8Lpxob9lFWW29BwaOz6Pnt6ZEK+
+	 wxF66ryz8QzFaDmSEymIObLRV6feqp7uEDX8kjhHCetVCS4WhAtt2FJt2jxBfjei3E
+	 2WuaAIaM6Nb6WqQfuTtkL060EZ8TdSxWdmP7I7qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	bristot@redhat.com,
-	claudio@evidence.eu.com,
-	lizefan@huawei.com,
-	longman@redhat.com,
-	luca.abeni@santannapisa.it,
-	mathieu.poirier@linaro.org,
-	rostedt@goodmis.org,
-	tj@kernel.org,
-	tommaso.cucinotta@santannapisa.it,
-	Ingo Molnar <mingo@kernel.org>,
-	Cai Xinchen <caixinchen1@huawei.com>
-Subject: [PATCH 4.19 82/84] cgroup/cpuset: Change cpuset_rwsem and hotplug lock order
-Date: Mon,  3 Apr 2023 16:09:23 +0200
-Message-Id: <20230403140356.228152282@linuxfoundation.org>
+	=?UTF-8?q?Steffen=20B=C3=A4tz?= <steffen@innosonix.de>,
+	Fabio Estevam <festevam@denx.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 65/84] net: dsa: mv88e6xxx: Enable IGMP snooping on user ports only
+Date: Mon,  3 Apr 2023 16:09:06 +0200
+Message-Id: <20230403140355.664238660@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140353.406927418@linuxfoundation.org>
 References: <20230403140353.406927418@linuxfoundation.org>
@@ -48,231 +39,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juri Lelli <juri.lelli@redhat.com>
+From: Steffen Bätz <steffen@innosonix.de>
 
-commit d74b27d63a8bebe2fe634944e4ebdc7b10db7a39 upstream.
+[ Upstream commit 7bcad0f0e6fbc1d613e49e0ee35c8e5f2e685bb0 ]
 
-commit 1243dc518c9da ("cgroup/cpuset: Convert cpuset_mutex to
-percpu_rwsem") is performance patch which is not backport. So
-convert percpu_rwsem to cpuset_mutex.
+Do not set the MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP bit on CPU or DSA ports.
 
-commit aa44002e7db25 ("cpuset: Fix unsafe lock order between
-cpuset lock and cpuslock") makes lock order keep cpuset_mutex
-->cpu_hotplug_lock. We should change lock order in cpuset_attach.
+This allows the host CPU port to be a regular IGMP listener by sending out
+IGMP Membership Reports, which would otherwise not be forwarded by the
+mv88exxx chip, but directly looped back to the CPU port itself.
 
-original commit message:
-
-cpuset_rwsem is going to be acquired from sched_setscheduler() with a
-following patch. There are however paths (e.g., spawn_ksoftirqd) in
-which sched_scheduler() is eventually called while holding hotplug lock;
-this creates a dependecy between hotplug lock (to be always acquired
-first) and cpuset_rwsem (to be always acquired after hotplug lock).
-
-Fix paths which currently take the two locks in the wrong order (after
-a following patch is applied).
-
-Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: bristot@redhat.com
-Cc: claudio@evidence.eu.com
-Cc: lizefan@huawei.com
-Cc: longman@redhat.com
-Cc: luca.abeni@santannapisa.it
-Cc: mathieu.poirier@linaro.org
-Cc: rostedt@goodmis.org
-Cc: tj@kernel.org
-Cc: tommaso.cucinotta@santannapisa.it
-Link: https://lkml.kernel.org/r/20190719140000.31694-7-juri.lelli@redhat.com
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 54d792f257c6 ("net: dsa: Centralise global and port setup code into mv88e6xxx.")
+Signed-off-by: Steffen Bätz <steffen@innosonix.de>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230329150140.701559-1-festevam@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-v2:
- * Change get_online_cpus/put_online_cpus lock order in cpuset_attach
-   to keep cpuset_mutex and hotplug lock order
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- include/linux/cpuset.h |    8 ++++----
- kernel/cgroup/cpuset.c |   24 +++++++++++++++++-------
- 2 files changed, 21 insertions(+), 11 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/include/linux/cpuset.h
-+++ b/include/linux/cpuset.h
-@@ -40,14 +40,14 @@ static inline bool cpusets_enabled(void)
- 
- static inline void cpuset_inc(void)
- {
--	static_branch_inc(&cpusets_pre_enable_key);
--	static_branch_inc(&cpusets_enabled_key);
-+	static_branch_inc_cpuslocked(&cpusets_pre_enable_key);
-+	static_branch_inc_cpuslocked(&cpusets_enabled_key);
- }
- 
- static inline void cpuset_dec(void)
- {
--	static_branch_dec(&cpusets_enabled_key);
--	static_branch_dec(&cpusets_pre_enable_key);
-+	static_branch_dec_cpuslocked(&cpusets_enabled_key);
-+	static_branch_dec_cpuslocked(&cpusets_pre_enable_key);
- }
- 
- extern int cpuset_init(void);
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -830,8 +830,8 @@ static void rebuild_sched_domains_locked
- 	cpumask_var_t *doms;
- 	int ndoms;
- 
-+	lockdep_assert_cpus_held();
- 	lockdep_assert_held(&cpuset_mutex);
--	get_online_cpus();
- 
- 	/*
- 	 * We have raced with CPU hotplug. Don't do anything to avoid
-@@ -839,15 +839,13 @@ static void rebuild_sched_domains_locked
- 	 * Anyways, hotplug work item will rebuild sched domains.
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index be064bcfd70a6..6b310f7235801 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -2237,9 +2237,14 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
+ 	 * If this is the upstream port for this switch, enable
+ 	 * forwarding of unknown unicasts and multicasts.
  	 */
- 	if (!cpumask_equal(top_cpuset.effective_cpus, cpu_active_mask))
--		goto out;
-+		return;
- 
- 	/* Generate domain masks and attrs */
- 	ndoms = generate_sched_domains(&doms, &attr);
- 
- 	/* Have scheduler rebuild the domains */
- 	partition_sched_domains(ndoms, doms, attr);
--out:
--	put_online_cpus();
- }
- #else /* !CONFIG_SMP */
- static void rebuild_sched_domains_locked(void)
-@@ -857,9 +855,11 @@ static void rebuild_sched_domains_locked
- 
- void rebuild_sched_domains(void)
- {
-+	get_online_cpus();
- 	mutex_lock(&cpuset_mutex);
- 	rebuild_sched_domains_locked();
- 	mutex_unlock(&cpuset_mutex);
-+	put_online_cpus();
- }
- 
- /**
-@@ -1528,13 +1528,13 @@ static void cpuset_attach(struct cgroup_
- 	cgroup_taskset_first(tset, &css);
- 	cs = css_cs(css);
- 
--	mutex_lock(&cpuset_mutex);
--
- 	/*
- 	 * It should hold cpus lock because a cpu offline event can
- 	 * cause set_cpus_allowed_ptr() failed.
- 	 */
- 	get_online_cpus();
-+	mutex_lock(&cpuset_mutex);
+-	reg = MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP |
+-		MV88E6185_PORT_CTL0_USE_TAG | MV88E6185_PORT_CTL0_USE_IP |
++	reg = MV88E6185_PORT_CTL0_USE_TAG | MV88E6185_PORT_CTL0_USE_IP |
+ 		MV88E6XXX_PORT_CTL0_STATE_FORWARDING;
++	/* Forward any IPv4 IGMP or IPv6 MLD frames received
++	 * by a USER port to the CPU port to allow snooping.
++	 */
++	if (dsa_is_user_port(ds, port))
++		reg |= MV88E6XXX_PORT_CTL0_IGMP_MLD_SNOOP;
 +
- 	/* prepare for attach */
- 	if (cs == &top_cpuset)
- 		cpumask_copy(cpus_attach, cpu_possible_mask);
-@@ -1553,7 +1553,6 @@ static void cpuset_attach(struct cgroup_
- 		cpuset_change_task_nodemask(task, &cpuset_attach_nodemask_to);
- 		cpuset_update_task_spread_flag(cs, task);
- 	}
--       put_online_cpus();
- 
- 	/*
- 	 * Change mm for all threadgroup leaders. This is expensive and may
-@@ -1589,6 +1588,7 @@ static void cpuset_attach(struct cgroup_
- 		wake_up(&cpuset_attach_wq);
- 
- 	mutex_unlock(&cpuset_mutex);
-+	put_online_cpus();
- }
- 
- /* The various types of files and directories in a cpuset file system */
-@@ -1617,6 +1617,7 @@ static int cpuset_write_u64(struct cgrou
- 	cpuset_filetype_t type = cft->private;
- 	int retval = 0;
- 
-+	get_online_cpus();
- 	mutex_lock(&cpuset_mutex);
- 	if (!is_cpuset_online(cs)) {
- 		retval = -ENODEV;
-@@ -1654,6 +1655,7 @@ static int cpuset_write_u64(struct cgrou
- 	}
- out_unlock:
- 	mutex_unlock(&cpuset_mutex);
-+	put_online_cpus();
- 	return retval;
- }
- 
-@@ -1664,6 +1666,7 @@ static int cpuset_write_s64(struct cgrou
- 	cpuset_filetype_t type = cft->private;
- 	int retval = -ENODEV;
- 
-+	get_online_cpus();
- 	mutex_lock(&cpuset_mutex);
- 	if (!is_cpuset_online(cs))
- 		goto out_unlock;
-@@ -1678,6 +1681,7 @@ static int cpuset_write_s64(struct cgrou
- 	}
- out_unlock:
- 	mutex_unlock(&cpuset_mutex);
-+	put_online_cpus();
- 	return retval;
- }
- 
-@@ -1716,6 +1720,7 @@ static ssize_t cpuset_write_resmask(stru
- 	kernfs_break_active_protection(of->kn);
- 	flush_work(&cpuset_hotplug_work);
- 
-+	get_online_cpus();
- 	mutex_lock(&cpuset_mutex);
- 	if (!is_cpuset_online(cs))
- 		goto out_unlock;
-@@ -1741,6 +1746,7 @@ static ssize_t cpuset_write_resmask(stru
- 	free_trial_cpuset(trialcs);
- out_unlock:
- 	mutex_unlock(&cpuset_mutex);
-+	put_online_cpus();
- 	kernfs_unbreak_active_protection(of->kn);
- 	css_put(&cs->css);
- 	flush_workqueue(cpuset_migrate_mm_wq);
-@@ -1985,6 +1991,7 @@ static int cpuset_css_online(struct cgro
- 	if (!parent)
- 		return 0;
- 
-+	get_online_cpus();
- 	mutex_lock(&cpuset_mutex);
- 
- 	set_bit(CS_ONLINE, &cs->flags);
-@@ -2035,6 +2042,7 @@ static int cpuset_css_online(struct cgro
- 	spin_unlock_irq(&callback_lock);
- out_unlock:
- 	mutex_unlock(&cpuset_mutex);
-+	put_online_cpus();
- 	return 0;
- }
- 
-@@ -2048,6 +2056,7 @@ static void cpuset_css_offline(struct cg
- {
- 	struct cpuset *cs = css_cs(css);
- 
-+	get_online_cpus();
- 	mutex_lock(&cpuset_mutex);
- 
- 	if (is_sched_load_balance(cs))
-@@ -2057,6 +2066,7 @@ static void cpuset_css_offline(struct cg
- 	clear_bit(CS_ONLINE, &cs->flags);
- 
- 	mutex_unlock(&cpuset_mutex);
-+	put_online_cpus();
- }
- 
- static void cpuset_css_free(struct cgroup_subsys_state *css)
+ 	err = mv88e6xxx_port_write(chip, port, MV88E6XXX_PORT_CTL0, reg);
+ 	if (err)
+ 		return err;
+-- 
+2.39.2
+
 
 
