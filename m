@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210EA6FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:29:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CFAC433A0;
-	Mon,  3 Apr 2023 14:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF686FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:29:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F25C433D2;
+	Mon,  3 Apr 2023 14:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532179;
-	bh=LGxED/n1YkWwhiEoXO7dPNsBXTGMmhf3fHFvcpDd4ew=;
+	s=korg; t=1680532182;
+	bh=CCgCiBLRjPuMUDEJGny9aayQsoYCLo64JkuGJXdGraE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0avCZc+mENSGfRmYiDqb8YYFirEygjChDjH1FrPDj4Y9U+Ig5QLEZHk9ORhZoDxe
-	 RwTFJmtstl2vdlDMy+t1wu0YOVssuYVfofBmgxEPSPOyd1e8gLg1r+99RUug4CTcmW
-	 9pbVG2g9JGN4SG6/zODSVwXcIcej6X2HRVB9fCqQ=
+	b=V2+byVpNGRIpQtLRDXzeDOYAWR4jwpja+v0WRSw+mngXIsjYZLyFF+MUzb3jTqxOT
+	 nQRuyWTiir1iAwCgZpSAYoLYDknBt8kToG64IDf/LhbKTggCbu5KmshLWg7k0HuZ5N
+	 mhtOc53P/WoBC1jUFR5N50/d0YEJfG1JnqdGlLVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	huangwenhui <huangwenhuia@uniontech.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 158/173] ALSA: usb-audio: Fix regression on detection of Roland VS-100
-Date: Mon,  3 Apr 2023 16:09:33 +0200
-Message-Id: <20230403140419.562331332@linuxfoundation.org>
+Subject: [PATCH 5.10 159/173] ALSA: hda/realtek: Add quirk for Lenovo ZhaoYang CF4620Z
+Date: Mon,  3 Apr 2023 16:09:34 +0200
+Message-Id: <20230403140419.590138928@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
 References: <20230403140414.174516815@linuxfoundation.org>
@@ -33,46 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: huangwenhui <huangwenhuia@uniontech.com>
 
-commit fa4e7a6fa12b1132340785e14bd439cbe95b7a5a upstream.
+commit 52aad39385e1bfdb34a1b405f699a8ef302c58b0 upstream.
 
-It's been reported that the recent kernel can't probe the PCM devices
-on Roland VS-100 properly, and it turned out to be a regression by the
-recent addition of the bit shift range check for the format bits.
-In the old code, we just did bit-shift and it resulted in zero, which
-is then corrected to the standard PCM format, while the new code
-explicitly returns an error in such a case.
+Fix headset microphone detection on Lenovo ZhaoYang CF4620Z.
 
-For addressing the regression, relax the check and fallback to the
-standard PCM type (with the info output).
+[ adjusted to be applicable to the latest tree -- tiwai ]
 
-Fixes: 43d5ca88dfcd ("ALSA: usb-audio: Fix potential out-of-bounds shift")
+Signed-off-by: huangwenhui <huangwenhuia@uniontech.com>
 Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217084
-Link: https://lore.kernel.org/r/20230324075005.19403-1-tiwai@suse.de
+Link: https://lore.kernel.org/r/20230328074644.30142-1-huangwenhuia@uniontech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/format.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -40,8 +40,12 @@ static u64 parse_audio_format_i_type(str
- 	case UAC_VERSION_1:
- 	default: {
- 		struct uac_format_type_i_discrete_descriptor *fmt = _fmt;
--		if (format >= 64)
--			return 0; /* invalid format */
-+		if (format >= 64) {
-+			usb_audio_info(chip,
-+				       "%u:%d: invalid format type 0x%llx is detected, processed as PCM\n",
-+				       fp->iface, fp->altsetting, format);
-+			format = UAC_FORMAT_TYPE_I_PCM;
-+		}
- 		sample_width = fmt->bBitResolution;
- 		sample_bytes = fmt->bSubframeSize;
- 		format = 1ULL << format;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9253,6 +9253,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x17aa, 0x511e, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
+ 	SND_PCI_QUIRK(0x17aa, 0x511f, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
+ 	SND_PCI_QUIRK(0x17aa, 0x9e54, "LENOVO NB", ALC269_FIXUP_LENOVO_EAPD),
++	SND_PCI_QUIRK(0x17aa, 0x9e56, "Lenovo ZhaoYang CF4620Z", ALC286_FIXUP_SONY_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1849, 0x1233, "ASRock NUC Box 1100", ALC233_FIXUP_NO_AUDIO_JACK),
+ 	SND_PCI_QUIRK(0x1849, 0xa233, "Positivo Master C6300", ALC269_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x19e5, 0x3204, "Huawei MACH-WX9", ALC256_FIXUP_HUAWEI_MACH_WX9_PINS),
 
 
