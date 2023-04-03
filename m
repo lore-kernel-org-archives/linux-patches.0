@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50696FA1
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30574C433D2;
-	Mon,  3 Apr 2023 14:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4613F6FA1
+	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 14:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18B3C433EF;
+	Mon,  3 Apr 2023 14:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680532701;
-	bh=nWhptAhs2rCbBbIHGH5KVb/MaC+1nBXY2k0uT4Aj6o8=;
+	s=korg; t=1680532704;
+	bh=5eV74yvYIvmyDtYfV8PPpV4c+wtIjm40vhyr2Ff9WbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MuuGkiyPiduzeupV5FDktvsYexSoNJ9PB4rIh8MTVSF+jjX+jluH/GBlrJJWSni7L
-	 g0vUK8RHv/HHCIPKDgC+xvuXKwxFS0NOysQ3455wMQUmAbHk75aX8BaugmaqN/11j0
-	 34mtcxUEVtv0QzBfa3bTZ4wPhkiSSqzqmTPUbsuc=
+	b=pC7GnPqMRGv8PUeZmhcib7zDAT/zsPqtQjgEkypj3KSKXQSAIXlLfb1TM8m9RK/M3
+	 0+am2UWrMUsyIU79bGQLVnMSWwHgWaLYSo7daqCE5u194/Tvxe4D2UsD2C3owlBaU0
+	 NUhxUMo6Pf3krc1DTLVROF40UUenDkagXMKta0Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianhao Zhao <tizhao@redhat.com>,
-	Jonathan Cooper <jonathan.s.cooper@amd.com>,
-	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Philipp Geulen <p.geulen@js-elektronik.de>,
+	Chaitanya Kulkarni <kkch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/181] sfc: ef10: dont overwrite offload features at NIC reset
-Date: Mon,  3 Apr 2023 16:08:37 +0200
-Message-Id: <20230403140417.806007698@linuxfoundation.org>
+Subject: [PATCH 6.1 054/181] nvme-pci: add NVME_QUIRK_BOGUS_NID for Lexar NM620
+Date: Mon,  3 Apr 2023 16:08:09 +0200
+Message-Id: <20230403140416.912193628@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
 References: <20230403140415.090615502@linuxfoundation.org>
@@ -38,142 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Íñigo Huguet <ihuguet@redhat.com>
+From: Philipp Geulen <p.geulen@js-elektronik.de>
 
-[ Upstream commit ca4a80e4bb7e87daf33b27d2ab9e4f5311018a89 ]
+[ Upstream commit b65d44fa0fe072c91bf41cd8756baa2b4c77eff2 ]
 
-At NIC reset, some offload features related to encapsulated traffic
-might have changed (this mainly happens if the firmware-variant is
-changed with the sfboot userspace tool). Because of this, features are
-checked and set again at reset time.
+Added a quirk to fix Lexar NM620 1TB SSD reporting duplicate NGUIDs.
 
-However, this was not done right, and some features were improperly
-overwritten at NIC reset:
-- Tunneled IPv6 segmentation was always disabled
-- Features disabled with ethtool were reenabled
-- Features that becomes unsupported after the reset were not disabled
-
-Also, checking if the device supports IPV6_CSUM to enable TSO6 is no
-longer necessary because all currently supported devices support it.
-Additionally, move the assignment of some other features to the
-EF10_OFFLOAD_FEATURES macro, like it is done in ef100, leaving the
-selection of features in efx_pci_probe_post_io a bit cleaner.
-
-Fixes: ffffd2454a7a ("sfc: correctly advertise tunneled IPv6 segmentation")
-Fixes: 24b2c3751aa3 ("sfc: advertise encapsulated offloads on EF10")
-Reported-by: Tianhao Zhao <tizhao@redhat.com>
-Suggested-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
-Tested-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
-Signed-off-by: Íñigo Huguet <ihuguet@redhat.com>
-Acked-by: Edward Cree <ecree.xilinx@gmail.com>
-Link: https://lore.kernel.org/r/20230323083417.7345-1-ihuguet@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Philipp Geulen <p.geulen@js-elektronik.de>
+Reviewed-by: Chaitanya Kulkarni <kkch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ef10.c | 38 ++++++++++++++++++++++-----------
- drivers/net/ethernet/sfc/efx.c  | 17 ++++++---------
- 2 files changed, 33 insertions(+), 22 deletions(-)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/sfc/ef10.c b/drivers/net/ethernet/sfc/ef10.c
-index 7022fb2005a2f..d30459dbfe8f8 100644
---- a/drivers/net/ethernet/sfc/ef10.c
-+++ b/drivers/net/ethernet/sfc/ef10.c
-@@ -1304,7 +1304,8 @@ static void efx_ef10_fini_nic(struct efx_nic *efx)
- static int efx_ef10_init_nic(struct efx_nic *efx)
- {
- 	struct efx_ef10_nic_data *nic_data = efx->nic_data;
--	netdev_features_t hw_enc_features = 0;
-+	struct net_device *net_dev = efx->net_dev;
-+	netdev_features_t tun_feats, tso_feats;
- 	int rc;
- 
- 	if (nic_data->must_check_datapath_caps) {
-@@ -1349,20 +1350,30 @@ static int efx_ef10_init_nic(struct efx_nic *efx)
- 		nic_data->must_restore_piobufs = false;
- 	}
- 
--	/* add encapsulated checksum offload features */
-+	/* encap features might change during reset if fw variant changed */
- 	if (efx_has_cap(efx, VXLAN_NVGRE) && !efx_ef10_is_vf(efx))
--		hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
--	/* add encapsulated TSO features */
--	if (efx_has_cap(efx, TX_TSO_V2_ENCAP)) {
--		netdev_features_t encap_tso_features;
-+		net_dev->hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
-+	else
-+		net_dev->hw_enc_features &= ~(NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM);
- 
--		encap_tso_features = NETIF_F_GSO_UDP_TUNNEL | NETIF_F_GSO_GRE |
--			NETIF_F_GSO_UDP_TUNNEL_CSUM | NETIF_F_GSO_GRE_CSUM;
-+	tun_feats = NETIF_F_GSO_UDP_TUNNEL | NETIF_F_GSO_GRE |
-+		    NETIF_F_GSO_UDP_TUNNEL_CSUM | NETIF_F_GSO_GRE_CSUM;
-+	tso_feats = NETIF_F_TSO | NETIF_F_TSO6;
- 
--		hw_enc_features |= encap_tso_features | NETIF_F_TSO;
--		efx->net_dev->features |= encap_tso_features;
-+	if (efx_has_cap(efx, TX_TSO_V2_ENCAP)) {
-+		/* If this is first nic_init, or if it is a reset and a new fw
-+		 * variant has added new features, enable them by default.
-+		 * If the features are not new, maintain their current value.
-+		 */
-+		if (!(net_dev->hw_features & tun_feats))
-+			net_dev->features |= tun_feats;
-+		net_dev->hw_enc_features |= tun_feats | tso_feats;
-+		net_dev->hw_features |= tun_feats;
-+	} else {
-+		net_dev->hw_enc_features &= ~(tun_feats | tso_feats);
-+		net_dev->hw_features &= ~tun_feats;
-+		net_dev->features &= ~tun_feats;
- 	}
--	efx->net_dev->hw_enc_features = hw_enc_features;
- 
- 	/* don't fail init if RSS setup doesn't work */
- 	rc = efx->type->rx_push_rss_config(efx, false,
-@@ -4021,7 +4032,10 @@ static unsigned int efx_ef10_recycle_ring_size(const struct efx_nic *efx)
- 	 NETIF_F_HW_VLAN_CTAG_FILTER |	\
- 	 NETIF_F_IPV6_CSUM |		\
- 	 NETIF_F_RXHASH |		\
--	 NETIF_F_NTUPLE)
-+	 NETIF_F_NTUPLE |		\
-+	 NETIF_F_SG |			\
-+	 NETIF_F_RXCSUM |		\
-+	 NETIF_F_RXALL)
- 
- const struct efx_nic_type efx_hunt_a0_vf_nic_type = {
- 	.is_vf = true,
-diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
-index 3a86f1213a051..6a1bff54bc6c3 100644
---- a/drivers/net/ethernet/sfc/efx.c
-+++ b/drivers/net/ethernet/sfc/efx.c
-@@ -1001,21 +1001,18 @@ static int efx_pci_probe_post_io(struct efx_nic *efx)
- 	}
- 
- 	/* Determine netdevice features */
--	net_dev->features |= (efx->type->offload_features | NETIF_F_SG |
--			      NETIF_F_TSO | NETIF_F_RXCSUM | NETIF_F_RXALL);
--	if (efx->type->offload_features & (NETIF_F_IPV6_CSUM | NETIF_F_HW_CSUM)) {
--		net_dev->features |= NETIF_F_TSO6;
--		if (efx_has_cap(efx, TX_TSO_V2_ENCAP))
--			net_dev->hw_enc_features |= NETIF_F_TSO6;
--	}
--	/* Check whether device supports TSO */
--	if (!efx->type->tso_versions || !efx->type->tso_versions(efx))
--		net_dev->features &= ~NETIF_F_ALL_TSO;
-+	net_dev->features |= efx->type->offload_features;
-+
-+	/* Add TSO features */
-+	if (efx->type->tso_versions && efx->type->tso_versions(efx))
-+		net_dev->features |= NETIF_F_TSO | NETIF_F_TSO6;
-+
- 	/* Mask for features that also apply to VLAN devices */
- 	net_dev->vlan_features |= (NETIF_F_HW_CSUM | NETIF_F_SG |
- 				   NETIF_F_HIGHDMA | NETIF_F_ALL_TSO |
- 				   NETIF_F_RXCSUM);
- 
-+	/* Determine user configurable features */
- 	net_dev->hw_features |= net_dev->features & ~efx->fixed_features;
- 
- 	/* Disable receiving frames with bad FCS, by default. */
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 100f774bc97fa..60452f6a9f711 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3547,6 +3547,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1d97, 0x2263), /* Lexar NM610 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
++	{ PCI_DEVICE(0x1d97, 0x1d97), /* Lexar NM620 */
++		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1d97, 0x2269), /* Lexar NM760 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0x0061),
 -- 
 2.39.2
 
