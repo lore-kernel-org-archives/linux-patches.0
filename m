@@ -1,66 +1,48 @@
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out198-158.us.a.mail.aliyun.com (out198-158.us.a.mail.aliyun.com [47.90.198.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A83BA954
-	for <patches@lists.linux.dev>; Mon,  3 Apr 2023 23:43:20 +0000 (UTC)
-Received: by mail-oi1-f181.google.com with SMTP id bm2so23079870oib.4
-        for <patches@lists.linux.dev>; Mon, 03 Apr 2023 16:43:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1680565399;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j+kZVt7LtKE+lA5uejWYYqCOFw5NZiSEn6sJt5bKfW4=;
-        b=TUawIrXcpmq/iw5q9PtohrAmgkDgEZBYtVVR96KdKQQNNkBJYHYHmdicMv7agXuQeF
-         UrB5riSK32nY/uCtqoztRRSJhqkVZgHpwVmcT7/6ft1XweGjgOMfJtJ3bqlvwZ4Bhcgo
-         nyvIEs3mMy4Gd4FyrpYwagE6AAk7GARodPbEo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680565399;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=j+kZVt7LtKE+lA5uejWYYqCOFw5NZiSEn6sJt5bKfW4=;
-        b=QhkHrHdjC0BNI1E6pB+SbfNKeGWb1Rgq0DdZK5pmgaw9TvPuiNJc0Oq4Xy1aayXEbt
-         pY18rq7qiyhSk9W8CAq5Wel/SHAOzMqGXWXX58fjW4hLMEh/RSHaWspYaH0wXAUvdajh
-         TfZfpzVa9G5QvlvX717VmCQYD/4+i2CC+d67MJLkQBh12p13/Nfea2Ko1HPUR5wNrV5u
-         GLEEH09GArgedz1uCTfekqVVPBuR0cT4iPjuqXMWy7+EdnNNroRldHyi0rguXoikArSO
-         PRFc46Qc9B0wycTVzxVUot5tHwlwdM+fl5c+RKzJiV6HyVvL6X+o51DWOcV2Taj785gP
-         n1Tg==
-X-Gm-Message-State: AAQBX9dDfA4xc7lX1lE90jhqJ+oofpRnb8qICJqI3/lp9HfPfppksaNo
-	Rbz8VARIFTzrcXgiHzOBCa3U+A==
-X-Google-Smtp-Source: AKy350a5pL6MDx68qE1GhzBon575/IUkWBkCH8YZMmi7kAVkxJvXGksTgIBibZWQCKoe5kDiwSMiyA==
-X-Received: by 2002:a05:6808:2104:b0:389:340e:be43 with SMTP id r4-20020a056808210400b00389340ebe43mr638647oiw.48.1680565399370;
-        Mon, 03 Apr 2023 16:43:19 -0700 (PDT)
-Received: from fedora64.linuxtx.org (99-47-93-78.lightspeed.rcsntx.sbcglobal.net. [99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id w10-20020a4aaf0a000000b0053479edbc17sm4609530oon.33.2023.04.03.16.43.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 16:43:18 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Mon, 3 Apr 2023 18:43:17 -0500
-From: Justin Forbes <jforbes@fedoraproject.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC8A7E
+	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 00:43:39 +0000 (UTC)
+X-Alimail-AntiSpam:AC=CONTINUE;BC=0.1801081|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_enroll_verification|0.00564708-0.000340503-0.994012;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047188;MF=wangyugui@e16-tech.com;NM=1;PH=DS;RN=16;RT=16;SR=0;TI=SMTPD_---.S6YpDZ6_1680567152;
+Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.S6YpDZ6_1680567152)
+          by smtp.aliyun-inc.com;
+          Tue, 04 Apr 2023 08:12:34 +0800
+Date: Tue, 04 Apr 2023 08:12:35 +0800
+From: Wang Yugui <wangyugui@e16-tech.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/187] 6.2.10-rc1 review
-Message-ID: <ZCtklaEG7OmJgFNi@fedora64.linuxtx.org>
-References: <20230403140416.015323160@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/181] 6.1.23-rc1 review
+Cc: stable@vger.kernel.org,
+ patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org,
+ akpm@linux-foundation.org,
+ linux@roeck-us.net,
+ shuah@kernel.org,
+ patches@kernelci.org,
+ lkft-triage@lists.linaro.org,
+ pavel@denx.de,
+ jonathanh@nvidia.com,
+ f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net,
+ rwarsow@gmx.de
+In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
+References: <20230403140415.090615502@linuxfoundation.org>
+Message-Id: <20230404081234.DC6A.409509F4@e16-tech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Becky! ver. 2.81.04 [en]
 
-On Mon, Apr 03, 2023 at 04:07:25PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.10 release.
-> There are 187 patches in this series, all will be posted as a response
+Hi,
+
+> This is the start of the stable review cycle for the 6.1.23 release.
+> There are 181 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -68,16 +50,27 @@ On Mon, Apr 03, 2023 at 04:07:25PM +0200, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.10-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.23-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
-Tested rc1 against the Fedora build system (aarch64, armv7, ppc64le,
-s390x, x86_64), and boot tested x86_64. No regressions noted.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+fstests btrfs/056 triggered a panic for 6.1.23-rc1, but the panic does not
+happen on 6.1.22.
+
+the patch *1 dropped in 6.1.9-rc is added to 6.1.231-rc1 again.
+*1 Subject: blk-mq: move the srcu_struct used for quiescing to the tagset
+
+we need more patches because this issue does not happen(is fixed) in upstream.
+
+so many new bug-fix patch depends on it,  so it is not good to just drop it.
+
+Best Regards
+Wang Yugui (wangyugui@e16-tech.com)
+2023/04/04
+
