@@ -1,97 +1,201 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56797C
-	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 03:57:50 +0000 (UTC)
-Received: by mail-pj1-f52.google.com with SMTP id lr16-20020a17090b4b9000b0023f187954acso32660873pjb.2
-        for <patches@lists.linux.dev>; Mon, 03 Apr 2023 20:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680580670;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=X83KCjdEK4T1hTeVfZLCAmpcMx+WY5WGo1yjmpuoFY0=;
-        b=oq3XFCwGZiXf34KBortg9bkf70ZMlaDht0ktfRbBRS7y0qjhlChdfbhkO9hd0zbS0r
-         zNeoDd5Z9dbGGUndflQDKNsvuy6GO4sApUa5PcOFu785whnRHzDX4y2ECwLY7MUqo9Od
-         SGDMcJu9IfBHmyrCCbkEajT67JHRKuuQMu3bLM5HVxHXZ2jKkgfAn8OvDblBkRr1SE+E
-         P1ihcE03PtUmOw2g/RAc0Lzm7tttFYbNMa2x9RhgiojB41KPFfdD2moXblejwcaR4MK4
-         VeTG6PlWbZHRDnHdnTvfahag1UAzasfmxd68DxdBajUiVHE6lwKUW/MMjEWpuZioJeg0
-         j1Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680580670;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X83KCjdEK4T1hTeVfZLCAmpcMx+WY5WGo1yjmpuoFY0=;
-        b=CxTC4tHrhh4Y2J2voROk/8gbYGX9g9XqPbvM4YXqlheeDQdu+w3EmVVylFdhXKxEbt
-         tAs/R6ieaj6QeeA4T7A4ZfDyWFNYftJGUwC5fxtG1d3s/2R+fqeRbxxoRQq+lz+7f7av
-         n4tFWlWungS3n1W8YrS9p7UhYv3inimv0zPgTjG6tgZKMp/uQNBuaRPXBSdSQNrUKfBe
-         fV+ffXqsVOc+x4lvcftr0pqq+HIPpYY6BQf0ir03Bpv+Xh17ZxKzimBVvv/4oFJ6kaGa
-         Woi5IhQAcYxaCc1FL0nSWeLFFi5fU9wqyr5HlQ9H7BrhsJSAiByKedKhO2M3dFIuLtwi
-         FQMQ==
-X-Gm-Message-State: AAQBX9fG71i8Rq9JRmXjsDArkLBLJX54QnL7EIsLhWhsN9h0Xbfv8oM8
-	DASQAnPpF91dW8IEKSMJ+xEgy0//EM/b8A==
-X-Google-Smtp-Source: AKy350aA0gIOmG7NVFgGWhbVMzrwLDGJv2GOkUP/HnQ0c/JDE6vsHoRKeJF8b9596TgF/7xSOCYJJQ==
-X-Received: by 2002:a17:90b:4a50:b0:239:ea16:5b13 with SMTP id lb16-20020a17090b4a5000b00239ea165b13mr1371109pjb.14.1680580670314;
-        Mon, 03 Apr 2023 20:57:50 -0700 (PDT)
-Received: from debian.me (subs03-180-214-233-87.three.co.id. [180.214.233.87])
-        by smtp.gmail.com with ESMTPSA id kr15-20020a170903080f00b001a1ca6dc38csm7308518plb.118.2023.04.03.20.57.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 20:57:49 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id A43A7106782; Tue,  4 Apr 2023 10:57:46 +0700 (WIB)
-Date: Tue, 4 Apr 2023 10:57:46 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/187] 6.2.10-rc1 review
-Message-ID: <ZCugOvsPTEg9A0nO@debian.me>
-References: <20230403140416.015323160@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03F0648
+	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 04:56:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8F8C433EF;
+	Tue,  4 Apr 2023 04:56:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1680584197;
+	bh=DEj7fP4yjaJYRm0hK8YbMkOV78W9FUtbKMsN0uDAz4Q=;
+	h=From:To:Cc:Subject:Date:From;
+	b=jsIPPz2U4XtabVsmSKvsFRyZNqWTmmtZnTtO9J4sNtkztz51JGfaiKxbX/TaNOBuU
+	 fGdbIrMUQIuT29BDoTnmA4nen1n8MQyf9DtBq8coohhLPVIeHHxf3KZmiIxNtC+pz1
+	 MRjh/4fID5Zimdum/pVMkX9cqCwkEuiXkuE0txlnR6zsfIdBAShAqNF2OKWttQPuVS
+	 VVG7yKFr5/VFKT28MfXCLQTY9fw6+njKgXSqvyOivk4LZk7J1xy1R3kUJ87ShjPSsW
+	 zezg11hu1DSVrS+AM5AwGx465qyX6lQGE5aTiFx8MIFEwhtGhqRh5sHVZcUpwMLOOM
+	 BMsComMRqpm1g==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	"Garmin . Chang" <Garmin.Chang@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH v2] clk: mediatek: Use right match table, include mod_devicetable
+Date: Mon,  3 Apr 2023 21:56:36 -0700
+Message-Id: <20230404045636.1114141-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.40.0.348.gf938b09366-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5SJdshfoX489i1R0"
-Content-Disposition: inline
-In-Reply-To: <20230403140416.015323160@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
+This is copy/pasta that breaks modular builds. Fix the match table to
+use the right pointer, or the right device table type. And while we're
+including the header, fix the order to be linux, dt-bindings, and
+finally local.
 
---5SJdshfoX489i1R0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Cc: Garmin.Chang <Garmin.Chang@mediatek.com>
+Cc: Chen-Yu Tsai <wenst@chromium.org>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: f42b9e9a43e3 ("clk: mediatek: Add MT8188 wpesys clock support")
+Fixes: 0d2f2cefba64 ("clk: mediatek: Add MT8188 adsp clock support")
+Fixes: e4aaa60eae16 ("clk: mediatek: Add MT8188 vdosys0 clock support")
+Fixes: cfa4609f9bbe ("clk: mediatek: Add MT8188 vdosys1 clock support")
+Fixes: bb87c1109ce2 ("clk: mediatek: Add MT8188 vencsys clock support")
+Fixes: f42b9e9a43e3 ("clk: mediatek: Add MT8188 wpesys clock support")
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202304011039.UBDX1UOT-lkp@intel.com/
+Link: https://lore.kernel.org/oe-kbuild-all/202304020649.QO2HlpD5-lkp@intel.com/
+Link: https://lore.kernel.org/oe-kbuild-all/202304021055.WDhQPcoS-lkp@intel.com/
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/clk/mediatek/clk-mt8188-adsp_audio26m.c | 6 ++++--
+ drivers/clk/mediatek/clk-mt8188-imp_iic_wrap.c  | 6 ++++--
+ drivers/clk/mediatek/clk-mt8188-vdo0.c          | 4 +++-
+ drivers/clk/mediatek/clk-mt8188-vdo1.c          | 4 +++-
+ drivers/clk/mediatek/clk-mt8188-venc.c          | 6 ++++--
+ drivers/clk/mediatek/clk-mt8188-wpe.c           | 2 +-
+ 6 files changed, 19 insertions(+), 9 deletions(-)
 
-On Mon, Apr 03, 2023 at 04:07:25PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.10 release.
-> There are 187 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
+diff --git a/drivers/clk/mediatek/clk-mt8188-adsp_audio26m.c b/drivers/clk/mediatek/clk-mt8188-adsp_audio26m.c
+index b3c31ffff931..808f2ad3b7ee 100644
+--- a/drivers/clk/mediatek/clk-mt8188-adsp_audio26m.c
++++ b/drivers/clk/mediatek/clk-mt8188-adsp_audio26m.c
+@@ -4,10 +4,12 @@
+  * Author: Garmin Chang <garmin.chang@mediatek.com>
+  */
+ 
+-#include <dt-bindings/clock/mediatek,mt8188-clk.h>
+ #include <linux/clk-provider.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/platform_device.h>
+ 
++#include <dt-bindings/clock/mediatek,mt8188-clk.h>
++
+ #include "clk-gate.h"
+ #include "clk-mtk.h"
+ 
+@@ -34,7 +36,7 @@ static const struct of_device_id of_match_clk_mt8188_adsp_audio26m[] = {
+ 	{ .compatible = "mediatek,mt8188-adsp-audio26m", .data = &adsp_audio26m_desc },
+ 	{ /* sentinel */ }
+ };
+-MODULE_DEVICE_TABLE(platform, of_match_clk_mt8188_adsp_audio26m);
++MODULE_DEVICE_TABLE(of, of_match_clk_mt8188_adsp_audio26m);
+ 
+ static struct platform_driver clk_mt8188_adsp_audio26m_drv = {
+ 	.probe = mtk_clk_simple_probe,
+diff --git a/drivers/clk/mediatek/clk-mt8188-imp_iic_wrap.c b/drivers/clk/mediatek/clk-mt8188-imp_iic_wrap.c
+index 2238d2984320..da41a3c59919 100644
+--- a/drivers/clk/mediatek/clk-mt8188-imp_iic_wrap.c
++++ b/drivers/clk/mediatek/clk-mt8188-imp_iic_wrap.c
+@@ -4,10 +4,12 @@
+  * Author: Garmin Chang <garmin.chang@mediatek.com>
+  */
+ 
+-#include <dt-bindings/clock/mediatek,mt8188-clk.h>
+ #include <linux/clk-provider.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/platform_device.h>
+ 
++#include <dt-bindings/clock/mediatek,mt8188-clk.h>
++
+ #include "clk-gate.h"
+ #include "clk-mtk.h"
+ 
+@@ -65,7 +67,7 @@ static const struct of_device_id of_match_clk_mt8188_imp_iic_wrap[] = {
+ 	{ .compatible = "mediatek,mt8188-imp-iic-wrap-en", .data = &imp_iic_wrap_en_desc },
+ 	{ /* sentinel */ }
+ };
+-MODULE_DEVICE_TABLE(platform, of_match_clk_mt8188_imp_iic_wrap);
++MODULE_DEVICE_TABLE(of, of_match_clk_mt8188_imp_iic_wrap);
+ 
+ static struct platform_driver clk_mt8188_imp_iic_wrap_drv = {
+ 	.probe = mtk_clk_simple_probe,
+diff --git a/drivers/clk/mediatek/clk-mt8188-vdo0.c b/drivers/clk/mediatek/clk-mt8188-vdo0.c
+index 0c61c2dc4337..d2be44c2f3f5 100644
+--- a/drivers/clk/mediatek/clk-mt8188-vdo0.c
++++ b/drivers/clk/mediatek/clk-mt8188-vdo0.c
+@@ -4,10 +4,12 @@
+  * Author: Garmin Chang <garmin.chang@mediatek.com>
+  */
+ 
+-#include <dt-bindings/clock/mediatek,mt8188-clk.h>
+ #include <linux/clk-provider.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/platform_device.h>
+ 
++#include <dt-bindings/clock/mediatek,mt8188-clk.h>
++
+ #include "clk-gate.h"
+ #include "clk-mtk.h"
+ 
+diff --git a/drivers/clk/mediatek/clk-mt8188-vdo1.c b/drivers/clk/mediatek/clk-mt8188-vdo1.c
+index 99fcf6d7b1ab..2ef8cae2e16e 100644
+--- a/drivers/clk/mediatek/clk-mt8188-vdo1.c
++++ b/drivers/clk/mediatek/clk-mt8188-vdo1.c
+@@ -4,10 +4,12 @@
+  * Author: Garmin Chang <garmin.chang@mediatek.com>
+  */
+ 
+-#include <dt-bindings/clock/mediatek,mt8188-clk.h>
+ #include <linux/clk-provider.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/platform_device.h>
+ 
++#include <dt-bindings/clock/mediatek,mt8188-clk.h>
++
+ #include "clk-gate.h"
+ #include "clk-mtk.h"
+ 
+diff --git a/drivers/clk/mediatek/clk-mt8188-venc.c b/drivers/clk/mediatek/clk-mt8188-venc.c
+index 6f6589ccd5a0..245367f33fa5 100644
+--- a/drivers/clk/mediatek/clk-mt8188-venc.c
++++ b/drivers/clk/mediatek/clk-mt8188-venc.c
+@@ -4,10 +4,12 @@
+  * Author: Garmin Chang <garmin.chang@mediatek.com>
+  */
+ 
+-#include <dt-bindings/clock/mediatek,mt8188-clk.h>
+ #include <linux/clk-provider.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/platform_device.h>
+ 
++#include <dt-bindings/clock/mediatek,mt8188-clk.h>
++
+ #include "clk-gate.h"
+ #include "clk-mtk.h"
+ 
+@@ -39,7 +41,7 @@ static const struct of_device_id of_match_clk_mt8188_venc1[] = {
+ 	{ .compatible = "mediatek,mt8188-vencsys", .data = &venc1_desc },
+ 	{ /* sentinel */ }
+ };
+-MODULE_DEVICE_TABLE(platform, of_match_clk_mt8188_venc1);
++MODULE_DEVICE_TABLE(of, of_match_clk_mt8188_venc1);
+ 
+ static struct platform_driver clk_mt8188_venc1_drv = {
+ 	.probe = mtk_clk_simple_probe,
+diff --git a/drivers/clk/mediatek/clk-mt8188-wpe.c b/drivers/clk/mediatek/clk-mt8188-wpe.c
+index 5abded13cece..c372ff703f9c 100644
+--- a/drivers/clk/mediatek/clk-mt8188-wpe.c
++++ b/drivers/clk/mediatek/clk-mt8188-wpe.c
+@@ -88,7 +88,7 @@ static const struct of_device_id of_match_clk_mt8188_wpe[] = {
+ 	{ .compatible = "mediatek,mt8188-wpesys-vpp0", .data = &wpe_vpp0_desc },
+ 	{ /* sentinel */ }
+ };
+-MODULE_DEVICE_TABLE(platform, clk_mt8188_vpp1_id_table);
++MODULE_DEVICE_TABLE(platform, of_match_clk_mt8188_wpe);
+ 
+ static struct platform_driver clk_mt8188_wpe_drv = {
+ 	.probe = mtk_clk_simple_probe,
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
-
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---5SJdshfoX489i1R0
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZCugNQAKCRD2uYlJVVFO
-oxJXAQClKhOw1JlBz0nW4dpboPW5D5LZD5B0B5gkzM7vLQOEtgD/S6Y7Zdqp/PVq
-qqML2XTrdIrdrjKeQa2IpHEeFyrFzgc=
-=7dUL
------END PGP SIGNATURE-----
-
---5SJdshfoX489i1R0--
