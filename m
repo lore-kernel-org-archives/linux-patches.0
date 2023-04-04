@@ -1,35 +1,35 @@
-Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2090.outbound.protection.outlook.com [40.107.11.90])
+Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2120.outbound.protection.outlook.com [40.107.11.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7987D6AB8
-	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 13:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231F86AB8
+	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 13:25:41 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=PjzhwNjoBe8Wekgoog86V5tfYoo7tuy8IhXI/9m1O8w6IELiZCsPaKVEmPMAZMDFsfOAfIYB8rIgoGml6I5RpPjHcXIwqd9VCjv8JOrGkFr6jGtPnJqCM0X0/hrweyJMN9m4RqmkLMWzrwLD556Jp7Kbgk6Akk1wPGAeYnaIBsxR0zcMm7USmFR8bpMwm1xsAIyrEc1MDg5Z6B78stKuKP8jdqD8fiPwPhO6nPVDghwv+eNjsXVVruB6W9oLyBgY1pKZIqP2wuyj9AFfMqJ+yNR7GoLajXIE6C4d9PiXGgJIzee/cdZDJI06hSgny0Y9BfOklHkyVfxt9JfsyFxZ+g==
+ b=SYnyW6I5k37mOeypVNpSN2qLqwytDVOwiu4PEEZewuWu4SSyW2PJXXhtFWVDcyl+pFzku5QRO4RGtMz7fSyZtGp2XExz1HW74vfEXc4uTcZ1IYOCQP1tKdeqRyrq3ruVTqEuudjZ1Zxq3/vkHz6eDQhwupH34eqJySXNjAaDeqAM0Ax05zN7uCdCBZV9wTFuhm+tm6pq7CR2R3WYcbkbNI7azQSohdkY/EimlZ6JjV8vGM8zjpgRhY7SjCvukY33YUkCS619cEx6aSr7UIgD7s4spHqgzDmfrxdVRWBFx7Wj1FdMdyfvc8ByDwMyHM6TzpE//IVhzeaJJ1fXfcUCpg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zvy+c5bkdoERtIy0xSy1eKOHIIio+A7fkjBfsd6b+TE=;
- b=hW9X1vZVLB269qdJW77+7kWXNr1wo5zhPwGss1qs26TqE1Q5Jx+b5vND/k/N7R2nwKP2a3VDKTDw+kqHMQOka2nJK6VFi0EiWtfzhCNrvyW9hmxVpoqwbDUDsQl7dhtIlxR/g9kp35jq2MMi4TBeeSo+TGKzZ1LEeDE4UzH7x8LVbj6CGz762oplsPeFXrDH77BCJ37gKOA+I8wQ+KDmHIyS/CD27BULGCjBfXOtxt9FEE3mOcolVn0epavcHWenaUkKjTk09oBgaQMzR29x2rygxMLOYf3CTqeiCDfb6famIAugG2K9RGtUs1ypo3sKty4JKgwfgT6xIdEixWPIYg==
+ bh=UHXzunnPTuoYOyVuL3YIOCvzwY8XXrIHLDWiVYBqcY4=;
+ b=a9MHSLnHzSxFYLA9ASJ0EdbJDs1Jd/jsaglICzpUaiZK3kaJs8zBqsYHQPyrqcsZugtN4INiOeNGwRaJqy0UuD5ATuNIwPRUg8pz2ub1ogQc0BT61CnjlqB9KUJ2s1PKDIDkwcsxEN0UkBY2niqUhzVC8sZ0vNUsXsVvMDils5vVgoRCDjiCOuMln9jgBuzX1DrWnz37KCtpWyPdIu2jqYVb2gFBr6XhZe1AH3XnFyNE+E4rVK2SyV8WBGf6nuMiUbxAcCWMEhD5cSjG+7KZv59a2+SQfIfoXW7BSFVoXT8VnkeMyYwwb+hXbZcyEzmi+3A2coZGx6Et9037RIBdtQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
  dkim=pass header.d=garyguo.net; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zvy+c5bkdoERtIy0xSy1eKOHIIio+A7fkjBfsd6b+TE=;
- b=zjEYIZIGk+Rhl76VAz/SiDzfz2i/z2fF4RznytqCTZcrYTtaD54IupuTcZlPF0XWFuVLSPI9QzIA9uNRNxcHpJjtzwnORO9ZcSd6ZYeXCMn8X4ZpX6WxhyXfbL+8mCEWGAsu9ldUOTrA0iDXT8lE8klrn2gLhWBmSmPZcjiCmFU=
+ bh=UHXzunnPTuoYOyVuL3YIOCvzwY8XXrIHLDWiVYBqcY4=;
+ b=qmPCb+9QjhtJq0UCkPDy2zMc0Qnqc3usA4jDXkufwHItbbi5M5ndP/uiaGwQmc6V6D2J39R0MGiPiTh5tTvoA+nM3vP3SpDNcm0mTsbMydZNPDlw8sAzKIt7JN41tOLcF5Uv7UkKleGdM6Kp+9mVKo/TYPrpE2hVBed7qosIHGI=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=garyguo.net;
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
- by LO6P265MB6378.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:2da::14) with
+ by LO4P265MB6263.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:279::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6254.33; Tue, 4 Apr
- 2023 13:24:17 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6254.35; Tue, 4 Apr
+ 2023 13:25:37 +0000
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::e1a3:5e38:b483:8161]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::e1a3:5e38:b483:8161%5]) with mapi id 15.20.6254.035; Tue, 4 Apr 2023
- 13:24:17 +0000
-Date: Tue, 4 Apr 2023 14:24:15 +0100
+ 13:25:37 +0000
+Date: Tue, 4 Apr 2023 14:25:35 +0100
 From: Gary Guo <gary@garyguo.net>
 To: Benno Lossin <y86-dev@protonmail.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
@@ -39,17 +39,17 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
  rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
  patches@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>, Andreas
  Hindborg <a.hindborg@samsung.com>
-Subject: Re: [PATCH v5 11/15] rust: init: add `Zeroable` trait and
- `init::zeroed` function
-Message-ID: <20230404142415.00ccaa22.gary@garyguo.net>
-In-Reply-To: <20230403160511.174894-4-y86-dev@protonmail.com>
+Subject: Re: [PATCH v5 14/15] rust: sync: reduce stack usage of
+ `UniqueArc::try_new_uninit`
+Message-ID: <20230404142535.63d75904.gary@garyguo.net>
+In-Reply-To: <20230403160511.174894-7-y86-dev@protonmail.com>
 References: <20230403154422.168633-1-y86-dev@protonmail.com>
-	<20230403160511.174894-4-y86-dev@protonmail.com>
+	<20230403160511.174894-7-y86-dev@protonmail.com>
 X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO0P265CA0004.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:355::14) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-ClientProxiedBy: LO4P123CA0305.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:196::22) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -58,63 +58,67 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO6P265MB6378:EE_
-X-MS-Office365-Filtering-Correlation-Id: c1684a6d-ade3-46c4-55e3-08db350fe41a
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO4P265MB6263:EE_
+X-MS-Office365-Filtering-Correlation-Id: fc3eb80d-919c-4a13-53fc-08db351013cb
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	Qmc+P3zCZir7Utcy4rft8ptH4J1RTKE79CWtAoJZ8UCTKZ5DlzomUrcDzM1jyQeAJJ/vRxIHg2AU4/jkhIBkGHlRnCxY+bxGwiXphpJOYO6x7FcBGKp1zODaVGcatRlGNJYNCYtqYy/z38/yymZoxA9sSZQ9skN9s76nuIrpBB1rWNUKtzCoY+OoNks95eJHa1lde7M+dTLR8gz7cYBmCiXrMVFvMA/KHMHq4U09G07JKQ4deNrIapz1w81q/bo4d7FGkuoT5i9MwwzNf7arcek6IfUzw2E6NdgwWwxGp0iqcMxJv9Bsv/00VCS27euJA5784e88z4BZjJjMgG4tLBrzt1cNlwywcBAtgoZvmR4yBL4AF4lyFicRMzaS7O2SyUgG7Uu8O7JVSN+69sR4nM7wlVUsxO1QI7TSm8GbIFEq2FCbw5Qnm/lj1TiIOw3/NuW0yWhAKZkcSeWR4BVYdiVmMoqG73+ILLW0xyw/D0Hf7WTCbzITKCPjxIzg56LDYAyuRtdWI4N1YoQ88EJyCYBZEcuDrkrOWOiDcXsf1p6caN3ot5dp+KwB0e5/N4YAn54ovoCEpXg7awjttxjTOQYbMyx93rhp8Q/RAqTv3X0Q34O89PacerYE79aIyLN6Ft/Q5HEeQ7wR/JOT3PgZtw==
+	S1oUGXDO5WuLPU8k9d1ViLu90WcV3UuCi6MagZ3Upwn7dUj2PO0jkUwtBneLJ8TFqONz9lRXK0hTHWbpf9s9X5/CiFFUojcmuWdAxOSGy8avNX4kwQt24tSBf1fvc1pXqcZTXMNWA4rdX2G1lEq+inBCbNFAtEIEVJRsLlwHIBVxv7H3fTW3ltTSxNfsugOGLLWZo6GMcnTGJQXQvFr3vOeeDBXF/WTrzGJwG+kTj1nsrLr/MRzd2y/GkADMoTQfcRfG5FWsn4RVydUljQrLGTFLDCrGUIHwOuwRt3q9hpBP7mvIU2sHGLv90AqLJQBeV+7qSjONRnmOo7eWVej22vU4vnGIuKrXTrSu0FdscxF+Mlhgkug91ZdFLLpUb9zBjJz/mlgeSYo66zn3BiyRFdncJ1ImvboJQGCmvcBhn2iHKn8c5rLy5nboaa51vfIZGiquc7NHcFDpamJYe9j/NP77o8MATU2UpRHhKmXZSEizXjD3WK7LgL9iuRIWf7W2d8c/J/BkUEeUzBuFh7BR5K8X59HrLuADNPI1gjbrodhsn2tEvlr9rNrbb3NydXMKWp/B+nzBcaxx2ZW4iAZQ+/Axz8l9/KkzEkxwxBGzDW8=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(39830400003)(136003)(376002)(346002)(396003)(366004)(451199021)(186003)(26005)(6506007)(41300700001)(4326008)(2616005)(1076003)(6916009)(316002)(6512007)(66476007)(66946007)(54906003)(478600001)(38100700002)(8676002)(6486002)(66556008)(36756003)(86362001)(7416002)(2906002)(83380400001)(8936002)(5660300002)(81973001);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(39830400003)(396003)(366004)(346002)(376002)(136003)(451199021)(86362001)(36756003)(2906002)(2616005)(6486002)(186003)(83380400001)(6512007)(26005)(1076003)(6506007)(4326008)(8676002)(66946007)(66476007)(66556008)(478600001)(7416002)(41300700001)(38100700002)(316002)(6916009)(54906003)(5660300002)(8936002)(81973001);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?mRjp2ychZphZNt1a6+q/4AybbPusS1BM7wN0q85WLFVsAbKNO5wiuSmRDYZN?=
- =?us-ascii?Q?7opqHq+gOdrGZHn92s2U5v25tNR0wDlcc8XGC2/Fujlv39yfjInqu+QDGsCw?=
- =?us-ascii?Q?mQneInfbFptLcieynpNkq6y4Tv78SrGVbuFc63e6pDTLpFx+zjc2NvTznC+h?=
- =?us-ascii?Q?uNb8kzJSdUy8maTCpvhfLxDYoloZwDcUN0vXOVHUsB6xrIqVSmKuIn/arsxS?=
- =?us-ascii?Q?AD7sxffziQlBQBXjFOBqJzIHBvYl9jt/nz/S2TomSAd9mc1geSTRaGeeashp?=
- =?us-ascii?Q?cXuIPhOgn2LHu4z6FkJLUzqnrM+UZ/Rp7WP8tgXC6/tCoFarO1fq7/iO0Qd8?=
- =?us-ascii?Q?QhGk/1p/RbJ73n7prW/SmIDKsuM0oBraqWScMlUBxfY8xGiJnFfnjGei2hCp?=
- =?us-ascii?Q?4uWTD6rgN5/zsIRPbXuvctfkXzwy73W2uI+s53yJG7PDKwCnD5pql6bW81hn?=
- =?us-ascii?Q?erqknjCf/5cg8wcKSDHcdDQ06rvpSDShCNfXVqd0tVRkBus6wUFzplf4R1Sr?=
- =?us-ascii?Q?xY/Zr4P4tskTsI9pFCxLaLVuy62lSPsJIy9ZVk2xIAmmPSvgVX70iSkU5Ypc?=
- =?us-ascii?Q?tDy18rOMhVGRfjKn50lcAQh9IpZUTw9E16yH8Qog/JRWtvBbjbMjlEbH19QS?=
- =?us-ascii?Q?X8lzMqCKPHwd56IGRVIx/jyz+ToijcV6PNyPhpnf3/r7Ohults3BTIsf4obS?=
- =?us-ascii?Q?WgmN9Qncp+CM67vx/uLgvMC+jiZpUye1J55L/zoDN6V7AcPUfBeTt47TuCpg?=
- =?us-ascii?Q?Poxw6YhBciNT9syeyQPBuQnz7Vb9G4u4ydtTnKL1dYYrt5RsCbDtvSZdd+Xy?=
- =?us-ascii?Q?Da9MPsRRH1rx/Tq/vf3VSMCd/+A9+KxXBbuxBuu+8G3/y649+A7udKDxibUz?=
- =?us-ascii?Q?dlSt/Wxg7RXMPzQNDE5kmqfALcZOfEuIfw1F/XbbAa2iTk/S8Hym5NT2vonk?=
- =?us-ascii?Q?kIPZNP947TainJziFWDrcdH5bYvXOEuvlIDEuJns6MzsNMLshrBXqi7GBna8?=
- =?us-ascii?Q?Icg2cl44sxZM74scpBrYEfutvURm1OcEotOx1poqenEX1QuUtadbfI4dLCLS?=
- =?us-ascii?Q?wlg3GR70pgPV6b9rt27xj1uRWN3GAMAAqPALBEnU+qzsNA+EkHUUmGfiZo22?=
- =?us-ascii?Q?9bStnEvUrg1BxLlAXzLwG0sOXDieM9/7cDw1n3DJpXqF+vMm/CgbnUE9MxB/?=
- =?us-ascii?Q?wz/wSdB1UEHsMpUx3O+WiXRvClvG029PEwEbqKLRbbfJPsT6PR+hhPq/GR5F?=
- =?us-ascii?Q?nUrmvpy3qmBumMbe0Y7x6rDrmxKVbvulsM7N9n4j4Ws2v9+t/Cb6Gpbd0VFx?=
- =?us-ascii?Q?2SWczqYA4W50mZjEg8w7WG4HpaKwCVIQu9kScw+hKlTewM8cMj4EvhDJEuXG?=
- =?us-ascii?Q?bVQE9zWV5wkgRU2YIbF0KZrn15bDslIycshtiEkQiVrU6PLx3wQ9YG/o4BRD?=
- =?us-ascii?Q?1/edRvvjEVdd8DbfXjyn7tNq6uZ80XNE4m5ezmneJh1B5jBzCZCpWUnqZU6f?=
- =?us-ascii?Q?EVv0wsOga+B4GkoGxg55UA3fuQ7jhyEcaGB167GZrlaglATpdsbfocIDKX9x?=
- =?us-ascii?Q?jczw6SufMmz2J1hUEsQrlr8A66WyUqj8PVTcGPwE?=
+	=?us-ascii?Q?CZRe/T8bxIWEzAt47pdTeqmpAeeQPpF4v+S1HLkMP4uodoCll/SJRxBD5N4j?=
+ =?us-ascii?Q?0vfIe4mO8A2iUAKbM9RQApyif9kmgwwMp+nIuWm9FWy2WoxdPfXgwv0rjiLI?=
+ =?us-ascii?Q?rwaxX5F0AyhRZjAYsPztfryVR+OkHmP9uhLzSjAt5+kY+/gqA6Z7SaoH+naK?=
+ =?us-ascii?Q?gA17V/vaTb6n/ShuEsfjufkiLJPmV6OccqU0smXy9evFvXTVkEb5Cfu9Y7ti?=
+ =?us-ascii?Q?lPFIr0xxwMMetniWF4/nztCPNA7bmc6kTAZ0RLLBzqB5yem4ihIInel7fDyu?=
+ =?us-ascii?Q?gCpWjRXQCTG2DIQPbcaTuRqCDS6H0vsgzaEv0iF9kjGqRgzmvzgoEmr2Mqpu?=
+ =?us-ascii?Q?f24zQIGlDQGMekhDpnrsMJ+b267wYmRtaKEaaiEEitR592sBDMpR6Q81abxZ?=
+ =?us-ascii?Q?g9vb8Q8/Y0WqQFnFvbBrGdJfwD8eWMSrbC5+sS/vHxjN1wMps1M/VHpzlJmW?=
+ =?us-ascii?Q?iQOFEDUADJMwsXxbrtwGi7q9H3g70w6XkIHnnBq7OsLX9YeuXKwsmfiJhW6V?=
+ =?us-ascii?Q?wSjQ5R3MAGh2oXENOcZd8bHa+YUBLzVKq3m0t0evNoqM69bnX7Wpmai6CbLx?=
+ =?us-ascii?Q?YheUO3oP5RWBWAcA8ZP3igGuJEP1Gz+533aek/ToetdKka2JwSy3WborBwbe?=
+ =?us-ascii?Q?ZAgcgCNf7mrRpZ6ke6vL9EqPbUYcvECKcw8aFsGpGcVR8cKmCliFIXzHEbbH?=
+ =?us-ascii?Q?qWnNOD78ag3wtDU0E1MLMzc8unTd2XmfTeTeVIPI4JJ/1GSWqRkC8xv2HwzD?=
+ =?us-ascii?Q?bH7UuOf3O6FvgdnqfvbjNavmi2j+r70rCG0zYWOa45z/scA715bnSX7fjxGj?=
+ =?us-ascii?Q?QDuuJgra013JWGZKejsza6yUyOyLMtSkxNg8OxAUF4lrzPI4ovyAer+/X46M?=
+ =?us-ascii?Q?luNru6w5vn0wMZ9awwfIYdGUAFuxO8XgRa9vpX9hOE4qGdMakxHoJHAsOYUB?=
+ =?us-ascii?Q?0yAXZIZNmIsztlkcETXWt77UWk2YLmq4AeOOclQE5LhaW9lZ/5dGoV+SspO1?=
+ =?us-ascii?Q?MUUL7Tpo1fJ4+xBFmSpxNKU7pVWQ3xUIEUsxFH74JB/1L1p+QBPjPSei8VEN?=
+ =?us-ascii?Q?ns0WpviZ/0IxJLr6m0CqtGDWaPF4lj4RrEazJ6hP+5THxTsu+sKy4ueNAluC?=
+ =?us-ascii?Q?9KosYs6JT9pWaBy8wGQtZ7Y+VooQS7KWEi76e/HoUMPkpFiyJksmK2oVx01r?=
+ =?us-ascii?Q?IwHYQMB1WnABQqgC5cobZrnsCCVvg9d3KRgIPxoTHNjHprvZUeNMfDBzDlmu?=
+ =?us-ascii?Q?dP0dQQRapnlSGRxttjpy/re4XONodAmzNCvPlYND0HJ2lWq3qAKha2nLQY7o?=
+ =?us-ascii?Q?pVDsiMVX5+MPafcSp6lhDrQf3wIyZ8+MCgBlbguQc2l15TiqFcjN+gZ1c5SN?=
+ =?us-ascii?Q?t2L3caaZ3VIqVqtecQJD2O533Sfi3iIqzhFp08ANO1TzDDqeg7RioyZRbL2j?=
+ =?us-ascii?Q?wYIF8RZGrPhqdeBiNFCrTALCevW0CWfdR56BmoD8Ee8ZHfZfCZkhT5AzieTv?=
+ =?us-ascii?Q?nZtz+S0PLGcTfQMfi3phrgQnS7t065Fr+RcDaF1XyrinKHHidcdfI5hcCFls?=
+ =?us-ascii?Q?YlN75K8LcPNMEhXCBM3ShO3qn7N0fljyuMvVccoR?=
 X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: c1684a6d-ade3-46c4-55e3-08db350fe41a
+X-MS-Exchange-CrossTenant-Network-Message-Id: fc3eb80d-919c-4a13-53fc-08db351013cb
 X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Apr 2023 13:24:17.2545
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Apr 2023 13:25:37.2244
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: RQjNITBbXOWn73IJlVhalSwlx7YcZx68t+7ZHEOOydgc6TwHP8M5Jk6mwJjYo5wLawQ7R14WEg/oY5YN8gW8FQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO6P265MB6378
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6Yx/D5lurw8Wsdeq+P/kWddCky4jbVLa4j7nVoZzfJ292Vnqw4GtgVmXTS1KtL5bYdyr8KLlZs1oaxHwtYLjXw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO4P265MB6263
 
-On Mon, 03 Apr 2023 16:05:40 +0000
+On Mon, 03 Apr 2023 16:05:56 +0000
 Benno Lossin <y86-dev@protonmail.com> wrote:
 
-> Add the `Zeroable` trait which marks types that can be initialized by
-> writing `0x00` to every byte of the type. Also add the `init::zeroed`
-> function that creates an initializer for a `Zeroable` type that writes
-> `0x00` to every byte.
+> `UniqueArc::try_new_uninit` calls `Arc::try_new(MaybeUninit::uninit())`.
+> This results in the uninitialized memory being placed on the stack,
+> which may be arbitrarily large due to the generic `T` and thus could
+> cause a stack overflow for large types.
+> 
+> Change the implementation to use the pin-init API which enables in-place
+> initialization. In particular it avoids having to first construct and
+> then move the uninitialized memory from the stack into the final location.
 > 
 > Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
 > Cc: Gary Guo <gary@garyguo.net>
@@ -124,123 +128,71 @@ Benno Lossin <y86-dev@protonmail.com> wrote:
 Reviewed-by: Gary Guo <gary@garyguo.net>
 
 > ---
->  rust/kernel/init.rs | 94 ++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 92 insertions(+), 2 deletions(-)
+>  rust/kernel/lib.rs      |  1 -
+>  rust/kernel/sync/arc.rs | 16 +++++++++++++---
+>  2 files changed, 13 insertions(+), 4 deletions(-)
 > 
-> diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-> index 1343cafdd760..09bba4e86ace 100644
-> --- a/rust/kernel/init.rs
-> +++ b/rust/kernel/init.rs
-> @@ -195,8 +195,14 @@ use crate::{
+> diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
+> index 821bd067151c..2d7606135ef6 100644
+> --- a/rust/kernel/lib.rs
+> +++ b/rust/kernel/lib.rs
+> @@ -28,7 +28,6 @@
+>  #[cfg(not(CONFIG_RUST))]
+>  compile_error!("Missing kernel configuration for conditional compilation");
+> 
+> -#[allow(unused_extern_crates)]
+>  // Allow proc-macros to refer to `::kernel` inside the `kernel` crate (this crate).
+>  extern crate self as kernel;
+> 
+> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+> index 43a53fbe175d..d05caa723718 100644
+> --- a/rust/kernel/sync/arc.rs
+> +++ b/rust/kernel/sync/arc.rs
+> @@ -18,7 +18,8 @@
+>  use crate::{
+>      bindings,
+>      error::{self, Error},
+> -    init::{InPlaceInit, Init, PinInit},
+> +    init::{self, InPlaceInit, Init, PinInit},
+> +    try_init,
+>      types::{ForeignOwnable, Opaque},
 >  };
 >  use alloc::boxed::Box;
->  use core::{
-> -    alloc::AllocError, cell::Cell, convert::Infallible, marker::PhantomData, mem::MaybeUninit,
-> -    pin::Pin, ptr,
-> +    alloc::AllocError,
-> +    cell::Cell,
-> +    convert::Infallible,
-> +    marker::PhantomData,
-> +    mem::MaybeUninit,
-> +    num::*,
-> +    pin::Pin,
-> +    ptr::{self, NonNull},
+> @@ -30,6 +31,7 @@ use core::{
+>      pin::Pin,
+>      ptr::NonNull,
 >  };
+> +use macros::pin_data;
 > 
->  #[doc(hidden)]
-> @@ -1329,3 +1335,87 @@ pub unsafe trait PinnedDrop: __internal::HasPinData {
->      /// automatically.
->      fn drop(self: Pin<&mut Self>, only_call_from_drop: __internal::OnlyCallFromDrop);
+>  /// A reference-counted pointer to an instance of `T`.
+>  ///
+> @@ -122,6 +124,7 @@ pub struct Arc<T: ?Sized> {
+>      _p: PhantomData<ArcInner<T>>,
 >  }
-> +
-> +/// Marker trait for types that can be initialized by writing just zeroes.
-> +///
-> +/// # Safety
-> +///
-> +/// The bit pattern consisting of only zeroes is a valid bit pattern for this type. In other words,
-> +/// this is not UB:
-> +///
-> +/// ```rust,ignore
-> +/// let val: Self = unsafe { core::mem::zeroed() };
-> +/// ```
-> +pub unsafe trait Zeroable {}
-> +
-> +/// Create a new zeroed T.
-> +///
-> +/// The returned initializer will write `0x00` to every byte of the given `slot`.
-> +#[inline]
-> +pub fn zeroed<T: Zeroable + Unpin>() -> impl Init<T> {
-> +    // SAFETY: Because `T: Zeroable`, all bytes zero is a valid bit pattern for `T`
-> +    // and because we write all zeroes, the memory is initialized.
-> +    unsafe {
-> +        init_from_closure(|slot: *mut T| {
-> +            slot.write_bytes(0, 1);
-> +            Ok(())
-> +        })
-> +    }
-> +}
-> +
-> +macro_rules! impl_zeroable {
-> +    ($($({$($generics:tt)*})? $t:ty, )*) => {
-> +        $(unsafe impl$($($generics)*)? Zeroable for $t {})*
-> +    };
-> +}
-> +
-> +impl_zeroable! {
-> +    // SAFETY: All primitives that are allowed to be zero.
-> +    bool,
-> +    char,
-> +    u8, u16, u32, u64, u128, usize,
-> +    i8, i16, i32, i64, i128, isize,
-> +    f32, f64,
-> +
-> +    // SAFETY: These are ZSTs, there is nothing to zero.
-> +    {<T: ?Sized>} PhantomData<T>, core::marker::PhantomPinned, Infallible, (),
-> +
-> +    // SAFETY: Type is allowed to take any value, including all zeros.
-> +    {<T>} MaybeUninit<T>,
-> +
-> +    // SAFETY: All zeros is equivalent to `None` (option layout optimization guarantee).
-> +    Option<NonZeroU8>, Option<NonZeroU16>, Option<NonZeroU32>, Option<NonZeroU64>,
-> +    Option<NonZeroU128>, Option<NonZeroUsize>,
-> +    Option<NonZeroI8>, Option<NonZeroI16>, Option<NonZeroI32>, Option<NonZeroI64>,
-> +    Option<NonZeroI128>, Option<NonZeroIsize>,
-> +
-> +    // SAFETY: All zeros is equivalent to `None` (option layout optimization guarantee).
-> +    //
-> +    // In this case we are allowed to use `T: ?Sized`, since all zeros is the `None` variant.
-> +    {<T: ?Sized>} Option<NonNull<T>>,
-> +    {<T: ?Sized>} Option<Box<T>>,
-> +
-> +    // SAFETY: `null` pointer is valid.
-> +    //
-> +    // We cannot use `T: ?Sized`, since the VTABLE pointer part of fat pointers is not allowed to be
-> +    // null.
-> +    {<T>} *mut T, {<T>} *const T,
-> +
-> +    // SAFETY: `null` pointer is valid and the metadata part of these fat pointers is allowed to be
-> +    // zero.
-> +    {<T>} *mut [T], {<T>} *const [T], *mut str, *const str,
-
-Just a note: if `Pointee` trait is stabilised, this could be changed to
-
-impl<T: ?Sized> Zeroable for *const T where <T as Pointee>::Metadata: Zeroable {}
-
-> +
-> +    // SAFETY: `T` is `Zeroable`.
-> +    {<const N: usize, T: Zeroable>} [T; N], {<T: Zeroable>} Wrapping<T>,
-> +}
-> +
-> +macro_rules! impl_tuple_zeroable {
-> +    ($(,)?) => {};
-> +    ($first:ident, $($t:ident),* $(,)?) => {
-> +        // SAFETY: All elements are zeroable and padding can be zero.
-> +        unsafe impl<$first: Zeroable, $($t: Zeroable),*> Zeroable for ($first, $($t),*) {}
-> +        impl_tuple_zeroable!($($t),* ,);
-> +    }
-> +}
-> +
-> +impl_tuple_zeroable!(A, B, C, D, E, F, G, H, I, J);
+> 
+> +#[pin_data]
+>  #[repr(C)]
+>  struct ArcInner<T: ?Sized> {
+>      refcount: Opaque<bindings::refcount_t>,
+> @@ -502,9 +505,16 @@ impl<T> UniqueArc<T> {
+> 
+>      /// Tries to allocate a new [`UniqueArc`] instance whose contents are not initialised yet.
+>      pub fn try_new_uninit() -> Result<UniqueArc<MaybeUninit<T>>, AllocError> {
+> -        Ok(UniqueArc::<MaybeUninit<T>> {
+> +        // INVARIANT: The refcount is initialised to a non-zero value.
+> +        let inner = Box::try_init::<AllocError>(try_init!(ArcInner {
+> +            // SAFETY: There are no safety requirements for this FFI call.
+> +            refcount: Opaque::new(unsafe { bindings::REFCOUNT_INIT(1) }),
+> +            data <- init::uninit::<T, AllocError>(),
+> +        }? AllocError))?;
+> +        Ok(UniqueArc {
+>              // INVARIANT: The newly-created object has a ref-count of 1.
+> -            inner: Arc::try_new(MaybeUninit::uninit())?,
+> +            // SAFETY: The pointer from the `Box` is valid.
+> +            inner: unsafe { Arc::from_inner(Box::leak(inner).into()) },
+>          })
+>      }
+>  }
 > --
 > 2.39.2
 > 
