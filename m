@@ -1,76 +1,390 @@
-Received: from out198-158.us.a.mail.aliyun.com (out198-158.us.a.mail.aliyun.com [47.90.198.158])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC8A7E
-	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 00:43:39 +0000 (UTC)
-X-Alimail-AntiSpam:AC=CONTINUE;BC=0.1801081|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_enroll_verification|0.00564708-0.000340503-0.994012;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047188;MF=wangyugui@e16-tech.com;NM=1;PH=DS;RN=16;RT=16;SR=0;TI=SMTPD_---.S6YpDZ6_1680567152;
-Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.S6YpDZ6_1680567152)
-          by smtp.aliyun-inc.com;
-          Tue, 04 Apr 2023 08:12:34 +0800
-Date: Tue, 04 Apr 2023 08:12:35 +0800
-From: Wang Yugui <wangyugui@e16-tech.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 6.1 000/181] 6.1.23-rc1 review
-Cc: stable@vger.kernel.org,
- patches@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org,
- akpm@linux-foundation.org,
- linux@roeck-us.net,
- shuah@kernel.org,
- patches@kernelci.org,
- lkft-triage@lists.linaro.org,
- pavel@denx.de,
- jonathanh@nvidia.com,
- f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net,
- rwarsow@gmx.de
-In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3671C7E
+	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 01:18:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1680571090;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/ihKBwpxm1bDhPDdGn9V1Q+j0Mm6ALDkQ+mvARyfJXs=;
+	b=fQke+DIyZijWR9E3o5tYM3uFGqCBGt6uYZmuPBqsVY5gpY7ovIrjRGjg6KplMVQgLb/fQm
+	Ua63Qx5XCeTDcj6bUBuqhlEvL0AH67ZrZweaY2eT2uC/MyBIVYzSU5z0uqZ0RzULkOtQoa
+	mcb9Ps0nkrxSaljmYomeDDHjjuGwlro=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-310-8ov5tIF7PaqAEe9tnnOZPA-1; Mon, 03 Apr 2023 21:18:06 -0400
+X-MC-Unique: 8ov5tIF7PaqAEe9tnnOZPA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com [10.11.54.10])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6D9E2185A78F;
+	Tue,  4 Apr 2023 01:18:05 +0000 (UTC)
+Received: from ovpn-8-16.pek2.redhat.com (ovpn-8-16.pek2.redhat.com [10.72.8.16])
+	by smtp.corp.redhat.com (Postfix) with ESMTPS id 819BC483EC1;
+	Tue,  4 Apr 2023 01:17:55 +0000 (UTC)
+Date: Tue, 4 Apr 2023 09:17:50 +0800
+From: Ming Lei <ming.lei@redhat.com>
+To: Pascal Ernster <git@hardfalcon.net>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>, Chao Leng <lengchao@huawei.com>,
+	Sagi Grimberg <sagi@grimberg.me>, Hannes Reinecke <hare@suse.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>, ming.lei@redhat.com
+Subject: Re: [PATCH 6.1 021/181] blk-mq: move the srcu_struct used for
+ quiescing to the tagset
+Message-ID: <ZCt6vpfpJCk0J451@ovpn-8-16.pek2.redhat.com>
 References: <20230403140415.090615502@linuxfoundation.org>
-Message-Id: <20230404081234.DC6A.409509F4@e16-tech.com>
+ <20230403140415.825266522@linuxfoundation.org>
+ <401a5df3-b13b-fb56-a305-9c82f5f0ca77@0.smtp.remotehost.it>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Becky! ver. 2.81.04 [en]
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <401a5df3-b13b-fb56-a305-9c82f5f0ca77@0.smtp.remotehost.it>
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.10
 
-Hi,
-
-> This is the start of the stable review cycle for the 6.1.23 release.
-> There are 181 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Mon, Apr 03, 2023 at 11:06:53PM +0200, Pascal Ernster wrote:
+> [2023-04-03 16:07] Greg Kroah-Hartman:
+> > From: Christoph Hellwig <hch@lst.de>
+> > 
+> > [ Upstream commit 80bd4a7aab4c9ce59bf5e35fdf52aa23d8a3c9f5 ]
+> > 
+> > All I/O submissions have fairly similar latencies, and a tagset-wide
+> > quiesce is a fairly common operation.
+> > 
+> > Signed-off-by: Christoph Hellwig <hch@lst.de>
+> > Reviewed-by: Keith Busch <kbusch@kernel.org>
+> > Reviewed-by: Ming Lei <ming.lei@redhat.com>
+> > Reviewed-by: Chao Leng <lengchao@huawei.com>
+> > Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+> > Reviewed-by: Hannes Reinecke <hare@suse.de>
+> > Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+> > Link: https://lore.kernel.org/r/20221101150050.3510-12-hch@lst.de
+> > [axboe: fix whitespace]
+> > Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> > Stable-dep-of: 00e885efcfbb ("blk-mq: fix "bad unlock balance detected" on q->srcu in __blk_mq_run_dispatch_ops")
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> >   block/blk-core.c       | 27 +++++----------------------
+> >   block/blk-mq.c         | 33 +++++++++++++++++++++++++--------
+> >   block/blk-mq.h         | 14 +++++++-------
+> >   block/blk-sysfs.c      |  9 ++-------
+> >   block/blk.h            |  9 +--------
+> >   block/genhd.c          |  2 +-
+> >   include/linux/blk-mq.h |  4 ++++
+> >   include/linux/blkdev.h |  9 ---------
+> >   8 files changed, 45 insertions(+), 62 deletions(-)
+> > 
+> > diff --git a/block/blk-core.c b/block/blk-core.c
+> > index 24ee7785a5ad5..d5da62bb4bc06 100644
+> > --- a/block/blk-core.c
+> > +++ b/block/blk-core.c
+> > @@ -65,7 +65,6 @@ DEFINE_IDA(blk_queue_ida);
+> >    * For queue allocation
+> >    */
+> >   struct kmem_cache *blk_requestq_cachep;
+> > -struct kmem_cache *blk_requestq_srcu_cachep;
+> >   /*
+> >    * Controlling structure to kblockd
+> > @@ -373,26 +372,20 @@ static void blk_timeout_work(struct work_struct *work)
+> >   {
+> >   }
+> > -struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu)
+> > +struct request_queue *blk_alloc_queue(int node_id)
+> >   {
+> >   	struct request_queue *q;
+> > -	q = kmem_cache_alloc_node(blk_get_queue_kmem_cache(alloc_srcu),
+> > -			GFP_KERNEL | __GFP_ZERO, node_id);
+> > +	q = kmem_cache_alloc_node(blk_requestq_cachep, GFP_KERNEL | __GFP_ZERO,
+> > +				  node_id);
+> >   	if (!q)
+> >   		return NULL;
+> > -	if (alloc_srcu) {
+> > -		blk_queue_flag_set(QUEUE_FLAG_HAS_SRCU, q);
+> > -		if (init_srcu_struct(q->srcu) != 0)
+> > -			goto fail_q;
+> > -	}
+> > -
+> >   	q->last_merge = NULL;
+> >   	q->id = ida_alloc(&blk_queue_ida, GFP_KERNEL);
+> >   	if (q->id < 0)
+> > -		goto fail_srcu;
+> > +		goto fail_q;
+> >   	q->stats = blk_alloc_queue_stats();
+> >   	if (!q->stats)
+> > @@ -434,11 +427,8 @@ struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu)
+> >   	blk_free_queue_stats(q->stats);
+> >   fail_id:
+> >   	ida_free(&blk_queue_ida, q->id);
+> > -fail_srcu:
+> > -	if (alloc_srcu)
+> > -		cleanup_srcu_struct(q->srcu);
+> >   fail_q:
+> > -	kmem_cache_free(blk_get_queue_kmem_cache(alloc_srcu), q);
+> > +	kmem_cache_free(blk_requestq_cachep, q);
+> >   	return NULL;
+> >   }
+> > @@ -1190,9 +1180,6 @@ int __init blk_dev_init(void)
+> >   			sizeof_field(struct request, cmd_flags));
+> >   	BUILD_BUG_ON(REQ_OP_BITS + REQ_FLAG_BITS > 8 *
+> >   			sizeof_field(struct bio, bi_opf));
+> > -	BUILD_BUG_ON(ALIGN(offsetof(struct request_queue, srcu),
+> > -			   __alignof__(struct request_queue)) !=
+> > -		     sizeof(struct request_queue));
+> >   	/* used for unplugging and affects IO latency/throughput - HIGHPRI */
+> >   	kblockd_workqueue = alloc_workqueue("kblockd",
+> > @@ -1203,10 +1190,6 @@ int __init blk_dev_init(void)
+> >   	blk_requestq_cachep = kmem_cache_create("request_queue",
+> >   			sizeof(struct request_queue), 0, SLAB_PANIC, NULL);
+> > -	blk_requestq_srcu_cachep = kmem_cache_create("request_queue_srcu",
+> > -			sizeof(struct request_queue) +
+> > -			sizeof(struct srcu_struct), 0, SLAB_PANIC, NULL);
+> > -
+> >   	blk_debugfs_root = debugfs_create_dir("block", NULL);
+> >   	return 0;
+> > diff --git a/block/blk-mq.c b/block/blk-mq.c
+> > index aa67a52c5a069..f8c97d75b8d1a 100644
+> > --- a/block/blk-mq.c
+> > +++ b/block/blk-mq.c
+> > @@ -261,8 +261,8 @@ EXPORT_SYMBOL_GPL(blk_mq_quiesce_queue_nowait);
+> >    */
+> >   void blk_mq_wait_quiesce_done(struct request_queue *q)
+> >   {
+> > -	if (blk_queue_has_srcu(q))
+> > -		synchronize_srcu(q->srcu);
+> > +	if (q->tag_set->flags & BLK_MQ_F_BLOCKING)
+> > +		synchronize_srcu(q->tag_set->srcu);
+> >   	else
+> >   		synchronize_rcu();
+> >   }
+> > @@ -4022,7 +4022,7 @@ static struct request_queue *blk_mq_init_queue_data(struct blk_mq_tag_set *set,
+> >   	struct request_queue *q;
+> >   	int ret;
+> > -	q = blk_alloc_queue(set->numa_node, set->flags & BLK_MQ_F_BLOCKING);
+> > +	q = blk_alloc_queue(set->numa_node);
+> >   	if (!q)
+> >   		return ERR_PTR(-ENOMEM);
+> >   	q->queuedata = queuedata;
+> > @@ -4194,9 +4194,6 @@ static void blk_mq_update_poll_flag(struct request_queue *q)
+> >   int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
+> >   		struct request_queue *q)
+> >   {
+> > -	WARN_ON_ONCE(blk_queue_has_srcu(q) !=
+> > -			!!(set->flags & BLK_MQ_F_BLOCKING));
+> > -
+> >   	/* mark the queue as mq asap */
+> >   	q->mq_ops = set->ops;
+> > @@ -4453,8 +4450,18 @@ int blk_mq_alloc_tag_set(struct blk_mq_tag_set *set)
+> >   	if (set->nr_maps == 1 && set->nr_hw_queues > nr_cpu_ids)
+> >   		set->nr_hw_queues = nr_cpu_ids;
+> > -	if (blk_mq_alloc_tag_set_tags(set, set->nr_hw_queues) < 0)
+> > -		return -ENOMEM;
+> > +	if (set->flags & BLK_MQ_F_BLOCKING) {
+> > +		set->srcu = kmalloc(sizeof(*set->srcu), GFP_KERNEL);
+> > +		if (!set->srcu)
+> > +			return -ENOMEM;
+> > +		ret = init_srcu_struct(set->srcu);
+> > +		if (ret)
+> > +			goto out_free_srcu;
+> > +	}
+> > +
+> > +	ret = blk_mq_alloc_tag_set_tags(set, set->nr_hw_queues);
+> > +	if (ret)
+> > +		goto out_cleanup_srcu;
+> >   	ret = -ENOMEM;
+> >   	for (i = 0; i < set->nr_maps; i++) {
+> > @@ -4484,6 +4491,12 @@ int blk_mq_alloc_tag_set(struct blk_mq_tag_set *set)
+> >   	}
+> >   	kfree(set->tags);
+> >   	set->tags = NULL;
+> > +out_cleanup_srcu:
+> > +	if (set->flags & BLK_MQ_F_BLOCKING)
+> > +		cleanup_srcu_struct(set->srcu);
+> > +out_free_srcu:
+> > +	if (set->flags & BLK_MQ_F_BLOCKING)
+> > +		kfree(set->srcu);
+> >   	return ret;
+> >   }
+> >   EXPORT_SYMBOL(blk_mq_alloc_tag_set);
+> > @@ -4523,6 +4536,10 @@ void blk_mq_free_tag_set(struct blk_mq_tag_set *set)
+> >   	kfree(set->tags);
+> >   	set->tags = NULL;
+> > +	if (set->flags & BLK_MQ_F_BLOCKING) {
+> > +		cleanup_srcu_struct(set->srcu);
+> > +		kfree(set->srcu);
+> > +	}
+> >   }
+> >   EXPORT_SYMBOL(blk_mq_free_tag_set);
+> > diff --git a/block/blk-mq.h b/block/blk-mq.h
+> > index 0b2870839cdd6..ef59fee62780d 100644
+> > --- a/block/blk-mq.h
+> > +++ b/block/blk-mq.h
+> > @@ -377,17 +377,17 @@ static inline bool hctx_may_queue(struct blk_mq_hw_ctx *hctx,
+> >   /* run the code block in @dispatch_ops with rcu/srcu read lock held */
+> >   #define __blk_mq_run_dispatch_ops(q, check_sleep, dispatch_ops)	\
+> >   do {								\
+> > -	if (!blk_queue_has_srcu(q)) {				\
+> > -		rcu_read_lock();				\
+> > -		(dispatch_ops);					\
+> > -		rcu_read_unlock();				\
+> > -	} else {						\
+> > +	if ((q)->tag_set->flags & BLK_MQ_F_BLOCKING) {		\
+> >   		int srcu_idx;					\
+> >   								\
+> >   		might_sleep_if(check_sleep);			\
+> > -		srcu_idx = srcu_read_lock((q)->srcu);		\
+> > +		srcu_idx = srcu_read_lock((q)->tag_set->srcu);	\
+> >   		(dispatch_ops);					\
+> > -		srcu_read_unlock((q)->srcu, srcu_idx);		\
+> > +		srcu_read_unlock((q)->tag_set->srcu, srcu_idx);	\
+> > +	} else {						\
+> > +		rcu_read_lock();				\
+> > +		(dispatch_ops);					\
+> > +		rcu_read_unlock();				\
+> >   	}							\
+> >   } while (0)
+> > diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+> > index e71b3b43927c0..e7871665825a3 100644
+> > --- a/block/blk-sysfs.c
+> > +++ b/block/blk-sysfs.c
+> > @@ -739,10 +739,8 @@ queue_attr_store(struct kobject *kobj, struct attribute *attr,
+> >   static void blk_free_queue_rcu(struct rcu_head *rcu_head)
+> >   {
+> > -	struct request_queue *q = container_of(rcu_head, struct request_queue,
+> > -					       rcu_head);
+> > -
+> > -	kmem_cache_free(blk_get_queue_kmem_cache(blk_queue_has_srcu(q)), q);
+> > +	kmem_cache_free(blk_requestq_cachep,
+> > +			container_of(rcu_head, struct request_queue, rcu_head));
+> >   }
+> >   /**
+> > @@ -779,9 +777,6 @@ static void blk_release_queue(struct kobject *kobj)
+> >   	if (queue_is_mq(q))
+> >   		blk_mq_release(q);
+> > -	if (blk_queue_has_srcu(q))
+> > -		cleanup_srcu_struct(q->srcu);
+> > -
+> >   	ida_free(&blk_queue_ida, q->id);
+> >   	call_rcu(&q->rcu_head, blk_free_queue_rcu);
+> >   }
+> > diff --git a/block/blk.h b/block/blk.h
+> > index a186ea20f39d8..4849a2efa4c50 100644
+> > --- a/block/blk.h
+> > +++ b/block/blk.h
+> > @@ -27,7 +27,6 @@ struct blk_flush_queue {
+> >   };
+> >   extern struct kmem_cache *blk_requestq_cachep;
+> > -extern struct kmem_cache *blk_requestq_srcu_cachep;
+> >   extern struct kobj_type blk_queue_ktype;
+> >   extern struct ida blk_queue_ida;
+> > @@ -428,13 +427,7 @@ int bio_add_hw_page(struct request_queue *q, struct bio *bio,
+> >   		struct page *page, unsigned int len, unsigned int offset,
+> >   		unsigned int max_sectors, bool *same_page);
+> > -static inline struct kmem_cache *blk_get_queue_kmem_cache(bool srcu)
+> > -{
+> > -	if (srcu)
+> > -		return blk_requestq_srcu_cachep;
+> > -	return blk_requestq_cachep;
+> > -}
+> > -struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu);
+> > +struct request_queue *blk_alloc_queue(int node_id);
+> >   int disk_scan_partitions(struct gendisk *disk, fmode_t mode);
+> > diff --git a/block/genhd.c b/block/genhd.c
+> > index 0b6928e948f31..4db1f905514c5 100644
+> > --- a/block/genhd.c
+> > +++ b/block/genhd.c
+> > @@ -1436,7 +1436,7 @@ struct gendisk *__blk_alloc_disk(int node, struct lock_class_key *lkclass)
+> >   	struct request_queue *q;
+> >   	struct gendisk *disk;
+> > -	q = blk_alloc_queue(node, false);
+> > +	q = blk_alloc_queue(node);
+> >   	if (!q)
+> >   		return NULL;
+> > diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
+> > index a9764cbf7f8d2..8e942e36f1c48 100644
+> > --- a/include/linux/blk-mq.h
+> > +++ b/include/linux/blk-mq.h
+> > @@ -7,6 +7,7 @@
+> >   #include <linux/lockdep.h>
+> >   #include <linux/scatterlist.h>
+> >   #include <linux/prefetch.h>
+> > +#include <linux/srcu.h>
+> >   struct blk_mq_tags;
+> >   struct blk_flush_queue;
+> > @@ -507,6 +508,8 @@ enum hctx_type {
+> >    * @tag_list_lock: Serializes tag_list accesses.
+> >    * @tag_list:	   List of the request queues that use this tag set. See also
+> >    *		   request_queue.tag_set_list.
+> > + * @srcu:	   Use as lock when type of the request queue is blocking
+> > + *		   (BLK_MQ_F_BLOCKING).
+> >    */
+> >   struct blk_mq_tag_set {
+> >   	struct blk_mq_queue_map	map[HCTX_MAX_TYPES];
+> > @@ -527,6 +530,7 @@ struct blk_mq_tag_set {
+> >   	struct mutex		tag_list_lock;
+> >   	struct list_head	tag_list;
+> > +	struct srcu_struct	*srcu;
+> >   };
+> >   /**
+> > diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+> > index 891f8cbcd0436..36c286d22fb23 100644
+> > --- a/include/linux/blkdev.h
+> > +++ b/include/linux/blkdev.h
+> > @@ -22,7 +22,6 @@
+> >   #include <linux/blkzoned.h>
+> >   #include <linux/sched.h>
+> >   #include <linux/sbitmap.h>
+> > -#include <linux/srcu.h>
+> >   #include <linux/uuid.h>
+> >   #include <linux/xarray.h>
+> > @@ -544,18 +543,11 @@ struct request_queue {
+> >   	struct mutex		debugfs_mutex;
+> >   	bool			mq_sysfs_init_done;
+> > -
+> > -	/**
+> > -	 * @srcu: Sleepable RCU. Use as lock when type of the request queue
+> > -	 * is blocking (BLK_MQ_F_BLOCKING). Must be the last member
+> > -	 */
+> > -	struct srcu_struct	srcu[];
+> >   };
+> >   /* Keep blk_queue_flag_name[] in sync with the definitions below */
+> >   #define QUEUE_FLAG_STOPPED	0	/* queue is stopped */
+> >   #define QUEUE_FLAG_DYING	1	/* queue being torn down */
+> > -#define QUEUE_FLAG_HAS_SRCU	2	/* SRCU is allocated */
+> >   #define QUEUE_FLAG_NOMERGES     3	/* disable merge attempts */
+> >   #define QUEUE_FLAG_SAME_COMP	4	/* complete on same CPU-group */
+> >   #define QUEUE_FLAG_FAIL_IO	5	/* fake timeout */
+> > @@ -591,7 +583,6 @@ bool blk_queue_flag_test_and_set(unsigned int flag, struct request_queue *q);
+> >   #define blk_queue_stopped(q)	test_bit(QUEUE_FLAG_STOPPED, &(q)->queue_flags)
+> >   #define blk_queue_dying(q)	test_bit(QUEUE_FLAG_DYING, &(q)->queue_flags)
+> > -#define blk_queue_has_srcu(q)	test_bit(QUEUE_FLAG_HAS_SRCU, &(q)->queue_flags)
+> >   #define blk_queue_init_done(q)	test_bit(QUEUE_FLAG_INIT_DONE, &(q)->queue_flags)
+> >   #define blk_queue_nomerges(q)	test_bit(QUEUE_FLAG_NOMERGES, &(q)->queue_flags)
+> >   #define blk_queue_noxmerges(q)	\
 > 
-> Responses should be made by Wed, 05 Apr 2023 14:03:18 +0000.
-> Anything received after that time might be too late.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.23-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
+> On systems with their (btrfs) root filesystem residing on an LVM volume,
+> this patch is reproducibly causing a complete freeze during shutdowns and
+> reboots.
 > 
-> thanks,
-> 
-> greg k-h
+> I had previously replied with the same message to patch 022/181 instead of
+> this one, but had gotten the subject mixed up actually meant this patch.
+
+That is because the dependency patch is missed:
+
+commit 8537380bb988 ("blk-mq: skip non-mq queues in blk_mq_quiesce_queue")
+
+https://lore.kernel.org/linux-block/Y6qpwYaPOxgsZjp9@T590/
 
 
-fstests btrfs/056 triggered a panic for 6.1.23-rc1, but the panic does not
-happen on 6.1.22.
-
-the patch *1 dropped in 6.1.9-rc is added to 6.1.231-rc1 again.
-*1 Subject: blk-mq: move the srcu_struct used for quiescing to the tagset
-
-we need more patches because this issue does not happen(is fixed) in upstream.
-
-so many new bug-fix patch depends on it,  so it is not good to just drop it.
-
-Best Regards
-Wang Yugui (wangyugui@e16-tech.com)
-2023/04/04
+Thanks,
+Ming
 
