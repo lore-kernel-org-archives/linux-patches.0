@@ -1,80 +1,71 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from sender4-op-o10.zoho.com (sender4-op-o10.zoho.com [136.143.188.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2336A7C
-	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 11:31:54 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 450311C0DFD; Tue,  4 Apr 2023 13:22:02 +0200 (CEST)
-Date: Tue, 4 Apr 2023 13:22:01 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 006/173] ipmi:ssif: resend_msg() cannot fail
-Message-ID: <ZCwIWfSovPxvPzU2@duo.ucw.cz>
-References: <20230403140414.174516815@linuxfoundation.org>
- <20230403140414.435644519@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27017C
+	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 11:32:41 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; t=1680607925; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=HCRvfx/e7AyhCDrMyXqZRbRQIeyD+oEo8JD2HGF8IZiKEH7TGuo6xuONvo0gmVb/mFmfPsuepkRH5D8yMxnwbJQsN8jbztk/nchOYf41AWXuKmChNbQT8ps/cJUABMQsWAdQHBJEYminLnvOWsbT6reD0J0rggoyf1sF22rrHnA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1680607925; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
+	bh=SurNIkRcrzZn0jveewPZbpUke3jSI9WnfglfUnB1T0o=; 
+	b=ZnGYc8rl6QRdB+YF5UodLZw5i7iLglvi5vdRwgWqa4EzV01YEjercnLHAjADoEPFj/dOjLSaFyKKWNjP6uX8NoVVqLRtXYqLPEqGvN4i0v/HswgCtfyns+g5zuykhAblHOo8F9Nyw8rxU6T6aMior2+Dwbw/pT1mINofG/wOOhA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=arinc9.com;
+	spf=pass  smtp.mailfrom=arinc.unal@arinc9.com;
+	dmarc=pass header.from=<arinc.unal@arinc9.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1680607925;
+	s=zmail; d=arinc9.com; i=arinc.unal@arinc9.com;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=SurNIkRcrzZn0jveewPZbpUke3jSI9WnfglfUnB1T0o=;
+	b=fPEDP5477B2TyC06gwdsAeoE3J/8Z4gFwOD69oBobxp5ab70X+28gM/dBY/g49Ua
+	+IsjRujzxn7aMljAZmOcReaeoc6VCsy2jFiD9GLkwJLbUpjsKMKzmfy4k4wL0JkOuPg
+	vnuHB/PCXIvUQhoY5pLAs4TSV9lS+n1NaBSiCp9c=
+Received: from [10.10.10.3] (149.91.1.15 [149.91.1.15]) by mx.zohomail.com
+	with SMTPS id 1680607919598744.2155252450362; Tue, 4 Apr 2023 04:31:59 -0700 (PDT)
+Message-ID: <f08afb70-2278-b6aa-7f48-e407b9af447c@arinc9.com>
+Date: Tue, 4 Apr 2023 14:31:55 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="kaXC/y2ScS6jCe+I"
-Content-Disposition: inline
-In-Reply-To: <20230403140414.435644519@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 5.10 051/173] net: dsa: mt7530: move setting ssc_delta to
+ PHY_INTERFACE_MODE_TRGMII case
+To: Pavel Machek <pavel@denx.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
+References: <20230403140414.174516815@linuxfoundation.org>
+ <20230403140416.096716862@linuxfoundation.org> <ZCwJhAfrTIPorVTw@duo.ucw.cz>
+Content-Language: en-US
+From: =?UTF-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>
+In-Reply-To: <ZCwJhAfrTIPorVTw@duo.ucw.cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
+On 4.04.2023 14:27, Pavel Machek wrote:
+> Hi!
+> 
+>> [ Upstream commit 407b508bdd70b6848993843d96ed49ac4108fb52 ]
+>>
+>> Move setting the ssc_delta variable to under the PHY_INTERFACE_MODE_TRGMII
+>> case as it's only needed when trgmii is used.
+> 
+> This one is very wrong for 5.10. ssc_delta is unconditionally used
+> below, and it will not use uninitialized variable.
+> 
+> (In mainline, that code is protected by if (trgint), so it does not
+> have this problem).
 
---kaXC/y2ScS6jCe+I
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patch is not stable material in the first place. As a newbie I 
+incorrectly sent it to net tree instead of net-next. This patch can just 
+be ignored for 5.10, if that takes the least amount of effort for you folks.
 
-Hi!
+Sorry about that and thanks for pointing this out Pavel.
 
-> The resend_msg() function cannot fail, but there was error handling
-> around using it.  Rework the handling of the error, and fix the out of
-> retries debug reporting that was wrong around this, too.
-
-> @@ -909,31 +909,17 @@ static void msg_written_handler(struct ssif_info *s=
-sif_info, int result,
->  	if (result < 0) {
->  		ssif_info->retries_left--;
->  		if (ssif_info->retries_left > 0) {
-> -			if (!start_resend(ssif_info)) {
-> -				ssif_inc_stat(ssif_info, send_retries);
-> -				return;
-> -			}
-> -			/* request failed, just return the error. */
-> -			ssif_inc_stat(ssif_info, send_errors);
-> -
-> -			if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
-> -				dev_dbg(&ssif_info->client->dev,
-> -					"%s: Out of retries\n", __func__);
-> -			msg_done_handler(ssif_info, -EIO, NULL, 0);
-> +			start_resend(ssif_info);
->  			return;
->  		}
-
-ssif_inc_stat(ssif_info, send_errors); disappeared here, is that
-intentional?
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---kaXC/y2ScS6jCe+I
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZCwIWQAKCRAw5/Bqldv6
-8k2lAKCAMfVys8P3G+wY0FR3nIJt5iaDkwCgu8ib2MYDHIpRvpm1docPUDK3BpQ=
-=nS+o
------END PGP SIGNATURE-----
-
---kaXC/y2ScS6jCe+I--
+Arınç
