@@ -1,230 +1,157 @@
-Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from GBR01-LO2-obe.outbound.protection.outlook.com (mail-lo2gbr01on2108.outbound.protection.outlook.com [40.107.10.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250FF6AB8
-	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 13:01:28 +0000 (UTC)
-Received: by mail-ua1-f52.google.com with SMTP id n17so23166074uaj.10
-        for <patches@lists.linux.dev>; Tue, 04 Apr 2023 06:01:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680613287;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AKuT2jdlAG+SgHXtPwT8kZwDya2VIJf4E3a+udNrV1U=;
-        b=UVu37TzURWNtOLler24i+dYYA6JmTJHIBsMzMcAxh+2FFaw06F+PKN4gICXbWGrAhT
-         aYUR7CT0QjUMik+CvKtNvuLcV0JIFV1Esdb35EIU5bXYVOEiZAT/sRHCJDqwjPHLRZk1
-         gnb3FKzHoB3mvBEmHXANFTaRalrPYLFOeWe/tRkoVUjaKKdURnI/Sfoywtj+qiumn6JQ
-         5b5cx0l6AtytMhl9cPSSd6Wm4wAjP6Ef2sHeZh7r0qXIv80fWcPmIN7wLRCxVpMJTg0D
-         1gJCfA5e6b6pSYKdy0UOvzG0EzCjbhyDsRqZCZw276sCXYdVHYG6x7t+OEVqQCiM14N9
-         LG9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680613287;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AKuT2jdlAG+SgHXtPwT8kZwDya2VIJf4E3a+udNrV1U=;
-        b=EWxRNl1/A+MCom5Y2rgspBXn2SEBmdGP3cM847EaPW7qTdluy5YEl6V9cmJ/vdWXRj
-         i6hHIw/T8K1nkmF63y7tTAmlx95SSnTBORtvB30VjZlyOZogHH880HZ5QXRvMsE8V8qJ
-         VoOOQvJNzZOkMyYQW1cqlCb1c2g1bKIQf/oqOr/0+VFa9X4R2YbYwkMgWcLg1Y+PSvHu
-         qd70OvVSm0JIUwbYKu5vAq4jM7ueNXfzihfSL7E99v0vLCE73+0a7vlKhcB+wycmI67g
-         OOMNk6wtgfgD+fvWN2ijRAHytA2x7JAifRO+9svvRLOrxVXjcXmfQAR3VKat25+5QCxF
-         oEzg==
-X-Gm-Message-State: AAQBX9cr6jQSZGd/L1eDx9ZZaSbwZMY/LB3n2+nJ/+BzBVQ5Rc7W3XHB
-	E4pozp/nzy4E5vjYrm2kuW6tcVmzhcxTeYrFwG0Bgg==
-X-Google-Smtp-Source: AKy350ZpaUQox2idaCi2bd7ek2lLeGMJEmRBZJpd+DvuzTfp0Jexh82Kfp6VQxs8ZCtJIMUzcUlSwJtwx2rOxZoLa9g=
-X-Received: by 2002:a1f:90c9:0:b0:43c:6ef1:7116 with SMTP id
- s192-20020a1f90c9000000b0043c6ef17116mr2183840vkd.0.1680613286831; Tue, 04
- Apr 2023 06:01:26 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E11E6AB8
+	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 13:11:21 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=U4jlSHnjPl1h2Ud47GwtLMEX+FFCZQ0ytOTt+tojjyeqrvpvVXysdee1S9O/9GiZgMzvRAeyN/jtRpKKvLOqLi7ANRgwGaW9ok33ciSRy7xzsuyNdRl96OFK5kkOHaKiKNQPSiITaDox8IKYaS9vIVTuHzgG28eHAi8qhOnHIMfJYxYKrGxDblpOaE8FsvO7NeJMQGGw6kn1ytcHNDIztUtcRSjQBfmzObW4fFWyRZb5BmOgGoqwhRCeWg3JJ8gg4VjolX8e8Zh1S9h75fhWXQIyw0DkIMv4mFItkv/m242E+xPRPxBdNIxPnzTHOM2QteFC3jRf9lOqsJvbZ/CfOQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mddkWgCLR8mKQbUELfmtvPs82p6xVxTzryUemsGLIo4=;
+ b=JmuLqbBhliFwHqYa11QQF9fdYVSxDmwaGFaGP9btxZNQSb0/T1/mUZ8Jzbua/R8DRUyfDcstSLTK8pf7hKQi7r+DmEVvkK0DLqD1N4+iSyIqHSEReNdin8Pso6nNLAnCkJzivJRWvoJRW+yoonuWXayrlaippnxzpvYu2IoRDre3HlY0XGdn9kJPd+m7cwM46EIOeTof+m6bnWEGrbqc7ZeKkgOS5fLHTYRnZJvNd5Iuh8MWubYsRCW6ctOz4FvTXZrnmWvJbEqpUmLu4Xd4HHDw+YebFYg70R4KCC8KCKJ9iMRbIOnZhNBwiCKNQ6/Ig+B8u//etIFkpTyjf3FRmg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
+ dkim=pass header.d=garyguo.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mddkWgCLR8mKQbUELfmtvPs82p6xVxTzryUemsGLIo4=;
+ b=nOwLaV2v52P9z1NShlbI3iWfw0TgezNPqnXLs46Esh4f8/6+XVxZZitaEikjpr8BA2IVb8kH9fnlI3COItNB+73qrJJhSpyVgIGf+OkiupXkeDIgEaCyYmsA6FM90GKU+O5UEdczYTRkqm+csNI8pN8rQGwJludBwGPaCgMNHR8=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=garyguo.net;
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
+ by LO2P265MB5086.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:251::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6254.35; Tue, 4 Apr
+ 2023 13:11:18 +0000
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::e1a3:5e38:b483:8161]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::e1a3:5e38:b483:8161%5]) with mapi id 15.20.6254.035; Tue, 4 Apr 2023
+ 13:11:18 +0000
+Date: Tue, 4 Apr 2023 14:11:16 +0100
+From: Gary Guo <gary@garyguo.net>
+To: Benno Lossin <y86-dev@protonmail.com>, Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
+ <boqun.feng@gmail.com>, =?UTF-8?B?QmrDtnJu?= Roy Baron
+ <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, Andreas Hindborg <a.hindborg@samsung.com>
+Subject: Re: [PATCH v5 01/15] rust: enable the `pin_macro` feature
+Message-ID: <20230404141116.23ac0e05.gary@garyguo.net>
+In-Reply-To: <20230403154422.168633-2-y86-dev@protonmail.com>
+References: <20230403154422.168633-1-y86-dev@protonmail.com>
+	<20230403154422.168633-2-y86-dev@protonmail.com>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P265CA0010.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:2ad::21) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230403140415.090615502@linuxfoundation.org>
-In-Reply-To: <20230403140415.090615502@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 4 Apr 2023 18:31:15 +0530
-Message-ID: <CA+G9fYsjKH8SqfNwaa0grQjaB2KbaJCTmMAzuxdLLKiK_qA5Zg@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/181] 6.1.23-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO2P265MB5086:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4320c2a4-0b2d-4abd-2156-08db350e13d4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	Y/O2mIb482dcMOQuqowBLogu5yB89e8bQ+UPlSSJvYtFvmL5tItscO25TObXWMNjb0Jm4vm7XHEB7ox40hN+nPBJUj7F9nRgAf8M+AUxaAqHKQJhTrA33F46mMikVjp/HYd//0OkJOsec1SItEkTYIYtI0J9bGe3Tm5SaT/IJ2qSDSAAsDidKyQDe4BIzy/rZh2O/p4/SvNypqq8xZJD/ilOGvsz5twPl6XXTQgiWmf15H10mZDrYX/JPZmT1jEEpX/l/hceDJpi/4YrdFVaXjBVS7F2AERuB8kFTrPPVLQSPj77XwQzbVv0dGpMfj23FyrxHMDoagvb8QbhqOU58RelnAYZLmwbJsElXlspK7XFFhEBRIaYNuwkETXRzqLTa4hgT9gggzauwHi8wrFNe2vo0BfLvPe6sUcg6zdPPyDVv9p3t1qQjaLwNrweH3OQCShpeqNT0kt0km9JiLcJQvDLRZ34Ho+l5Pm+T5nCD6gshntmYfiC8DuRszb3erqO+Fwfz7ZIvSCFrKD7ozCwiatwhu4pSva40g/QRvLy0KCQRUnN7WTAicPILPG5yMLOu+A70E0beDdFKQsug/IYyGT+yCw+byYWPuycY3CQRNk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(136003)(346002)(366004)(376002)(396003)(39830400003)(451199021)(66946007)(66556008)(66476007)(41300700001)(8676002)(4326008)(7416002)(5660300002)(8936002)(54906003)(478600001)(6506007)(6486002)(1076003)(6512007)(26005)(186003)(2616005)(83380400001)(316002)(110136005)(86362001)(38100700002)(2906002)(36756003)(81973001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?i5t0tahuZV/vZXu+16VtinLoNwXfXYMQ7s3+VC9PITOfvPvZ8rObb+vZcpSE?=
+ =?us-ascii?Q?5hmdU5qqYFHF59GzQEHjV/0UAfnTyZ3QdRMi5yZ13mGhFyHiFWv3hhj0t4Jp?=
+ =?us-ascii?Q?FxJIoBeN6F4yBgXdj0yQ/Ya0QXsAoC8WK2w2knUZ69M4OAlbGox6L8zbsu7+?=
+ =?us-ascii?Q?TxPc5GxhXugFCK7euHNeFs/vn6IdwXYbKIIiPZKqJ5SeH/CcmGgxYUNl9Bs6?=
+ =?us-ascii?Q?PFO3QBdDy/mW/potk4UvjDaK16RqqjccxvRF0dU3kJsjB0QJZQlzwrhJu5c+?=
+ =?us-ascii?Q?uj24t3XlwIYE4KIInuIrm9m/36QN/plKMX1hEfsQNojYVLtx+0doxzOQJuJk?=
+ =?us-ascii?Q?xcO051189mBPdARwfYecH32+kzFx5iSjMsOuHz5tlz0tPhDi09p5l8QYLQl+?=
+ =?us-ascii?Q?nrvFyZRuXN0QF4kGPVfWixtiXHbX/85qJ9qO+fwE1Ymf36kMFxj07Mb64QfP?=
+ =?us-ascii?Q?xKIwI17/CJN8F3JYc+Nampmx7ye3vdb0ZIcq1SGBY1WNuzmDNWIY1juco+E5?=
+ =?us-ascii?Q?VQFxsvHk+e/EIuM0di15NWWEyFtRzfGbAohxy4Aiztmti1dnmISS9arLtDGG?=
+ =?us-ascii?Q?Ck1LC6ce1ssYS/HKYSSMy0Q5+32Ez/F0vK1/k2vMNtHul2eVxfihmsO1axm4?=
+ =?us-ascii?Q?37cSqVMpRgq1g3DnKejlbi97wQQ+9sWaqxfskK1HOXQ46sSCMNT/AjZsa+BX?=
+ =?us-ascii?Q?po0D0nE7C1Z1E1h3uJNQ0Wk1eUInGk4zTIsjRnhQADWQK30DH4b3Io2rCp3B?=
+ =?us-ascii?Q?zRaJFsBlC1VK/CGPFh0udQtWEe8IHduz2lFq8VdWFuGLobudnhwyDtw1MNSI?=
+ =?us-ascii?Q?epJVytmAjC+q6nld9CtYaoNRgUBGCsQAZzYlKsErV0iYLCBxsxoUU6G7dFBq?=
+ =?us-ascii?Q?gMX4RSY2OaABjaP2GPosUexAbyxo1qOWiQIUjCqkV005ZlY2ysqH2sfsUb7i?=
+ =?us-ascii?Q?H7G2QCT5tFSN7neD5/rAkOvcDQIg7S4sxzbdKnMuqKH/vsO5f2nmNzEBjuuc?=
+ =?us-ascii?Q?0tC41ke/bBYiZPhwgjY1o1jx8uLzmSbUMLFvNntZYQT1Td63zt9k1Z4nqID9?=
+ =?us-ascii?Q?RHO6M0zi4i0IUXkchHLk2hka2gDFBMasUQoU81aKdafa0xYhcOTPjkZZOm9o?=
+ =?us-ascii?Q?OZbPCoqQBovHF06oafsIpZxRKTHvE2H1n1fdkmzX/xTK/SH79Mqnj+yL5n5U?=
+ =?us-ascii?Q?5Z2ujS1k13knzKT+LYs+GK+mFyE2JPRl5TyCHdVwzvvg8BsRvE6fIqMmDfuN?=
+ =?us-ascii?Q?N9ZaC/URdt5Kf6RAFIjUv7Yd2klnkTfZXF7hIkwYW7xDzQHdFOiO88FfdEuq?=
+ =?us-ascii?Q?qmFg7VF1yxSmIg3h/+Tf0qFpUQ91naAq6lHy14G4zaiRIPVK0uL/uAInCBcS?=
+ =?us-ascii?Q?FLocpXS1NP1wvavQAagQWOIvDfkLwJx+Xqg/gjAFEzlBVcjGmXfQMNPiu6N+?=
+ =?us-ascii?Q?R3/8jgkOxE62jot9RTmEYTd4kh9AuioFyJF/kd/te5ekNdocp8nXICA5lRDH?=
+ =?us-ascii?Q?iecffe1XfkIlj95bhWbauXxkxAMYRqfN10wpjbFOSqpWYwaan7NeKORH/JuX?=
+ =?us-ascii?Q?VnJ1CIpIvQ1EcFxn+4LvpJ3vi+DheoQIJ0xjboTT?=
+X-OriginatorOrg: garyguo.net
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4320c2a4-0b2d-4abd-2156-08db350e13d4
+X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Apr 2023 13:11:18.3343
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 276+GJ6Y3PA+a5ceHSjiZ5rBCjkBDE6e81t4g+huDb1sa0X2vOL6LNA8XYp4pFSBZgjLSPoghUXuSPuRjKpXyQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO2P265MB5086
 
-On Mon, 3 Apr 2023 at 20:05, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.23 release.
-> There are 181 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 05 Apr 2023 14:03:18 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.23-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Mon, 03 Apr 2023 15:44:46 +0000
+Benno Lossin <y86-dev@protonmail.com> wrote:
 
+> This feature enables the use of the `pin!` macro for the `stack_pin_init!`
+> macro. This feature is already stabilized in Rust version 1.68.
+> 
+> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+> Cc: Gary Guo <gary@garyguo.net>
+> Cc: Andreas Hindborg <a.hindborg@samsung.com>
+> Cc: Alice Ryhl <aliceryhl@google.com>
+> Acked-by: Boqun Feng <boqun.feng@gmail.com>
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+Reviewed-by: Gary Guo <gary@garyguo.net>
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> ---
+>  rust/kernel/lib.rs     | 1 +
+>  scripts/Makefile.build | 2 +-
+>  2 files changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
+> index 223564f9f0cc..4317b6d5f50b 100644
+> --- a/rust/kernel/lib.rs
+> +++ b/rust/kernel/lib.rs
+> @@ -17,6 +17,7 @@
+>  #![feature(core_ffi_c)]
+>  #![feature(dispatch_from_dyn)]
+>  #![feature(generic_associated_types)]
+> +#![feature(pin_macro)]
+>  #![feature(receiver_trait)]
+>  #![feature(unsize)]
+> 
+> diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+> index 76323201232a..ba4102b9d94d 100644
+> --- a/scripts/Makefile.build
+> +++ b/scripts/Makefile.build
+> @@ -277,7 +277,7 @@ $(obj)/%.lst: $(src)/%.c FORCE
+>  # Compile Rust sources (.rs)
+>  # ---------------------------------------------------------------------------
+> 
+> -rust_allowed_features := core_ffi_c
+> +rust_allowed_features := core_ffi_c,pin_macro
+> 
+>  rust_common_cmd = \
+>  	RUST_MODFILE=$(modfile) $(RUSTC_OR_CLIPPY) $(rust_flags) \
+> --
+> 2.39.2
+> 
+> 
 
-## Build
-* kernel: 6.1.23-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.1.y
-* git commit: 01cd0041b7a5a573cba99332d1c30a82999d7fc1
-* git describe: v6.1.22-182-g01cd0041b7a5
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.2=
-2-182-g01cd0041b7a5
-
-## Test Regressions (compared to v6.1.22)
-
-## Metric Regressions (compared to v6.1.22)
-
-## Test Fixes (compared to v6.1.22)
-
-## Metric Fixes (compared to v6.1.22)
-
-## Test result summary
-total: 168890, pass: 147321, fail: 4018, skip: 17196, xfail: 355
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 149 total, 148 passed, 1 failed
-* arm64: 52 total, 51 passed, 1 failed
-* i386: 39 total, 36 passed, 3 failed
-* mips: 30 total, 28 passed, 2 failed
-* parisc: 8 total, 8 passed, 0 failed
-* powerpc: 38 total, 36 passed, 2 failed
-* riscv: 16 total, 15 passed, 1 failed
-* s390: 16 total, 16 passed, 0 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 44 total, 44 passed, 0 failed
-
-## Test suites summary
-* boot
-* fwts
-* igt-gpu-tools
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* perf
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
