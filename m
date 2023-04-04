@@ -1,201 +1,216 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03F0648
-	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 04:56:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8F8C433EF;
-	Tue,  4 Apr 2023 04:56:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1680584197;
-	bh=DEj7fP4yjaJYRm0hK8YbMkOV78W9FUtbKMsN0uDAz4Q=;
-	h=From:To:Cc:Subject:Date:From;
-	b=jsIPPz2U4XtabVsmSKvsFRyZNqWTmmtZnTtO9J4sNtkztz51JGfaiKxbX/TaNOBuU
-	 fGdbIrMUQIuT29BDoTnmA4nen1n8MQyf9DtBq8coohhLPVIeHHxf3KZmiIxNtC+pz1
-	 MRjh/4fID5Zimdum/pVMkX9cqCwkEuiXkuE0txlnR6zsfIdBAShAqNF2OKWttQPuVS
-	 VVG7yKFr5/VFKT28MfXCLQTY9fw6+njKgXSqvyOivk4LZk7J1xy1R3kUJ87ShjPSsW
-	 zezg11hu1DSVrS+AM5AwGx465qyX6lQGE5aTiFx8MIFEwhtGhqRh5sHVZcUpwMLOOM
-	 BMsComMRqpm1g==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	"Garmin . Chang" <Garmin.Chang@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH v2] clk: mediatek: Use right match table, include mod_devicetable
-Date: Mon,  3 Apr 2023 21:56:36 -0700
-Message-Id: <20230404045636.1114141-1-sboyd@kernel.org>
-X-Mailer: git-send-email 2.40.0.348.gf938b09366-goog
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAD6648
+	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 05:11:52 +0000 (UTC)
+Received: by mail-vs1-f48.google.com with SMTP id cu36so27363404vsb.7
+        for <patches@lists.linux.dev>; Mon, 03 Apr 2023 22:11:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680585111;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SCiMJmUi8GaQ+x1OyTgFrNc5tQQqEFd+PygZeMOOGjI=;
+        b=YGyuMqUTM5D9CeLhG6088aMd/+HgcJ+QoHsGZlmMCscGNlPTDjJfOdxKaXEdKG86Tc
+         RJeiV03HoDKlpeCd+enyYmHAvE1uLgrT19GcPrGCrM2e3YF8xE49bgm01bM+or15PGE3
+         eg0yrLkn5f6KkSKruqEqTxHQsiU76iJrPsDHJGXVOuB598RLhT6aoaTWS2bXzs7WVs9m
+         iAV5nmL3WZs9M0sLSP1FvgDNAKsGsea/6tlhadFKLq8VmPdi8ipS40AMe5IELCqJ/7Sr
+         T6+uDSCBtsr80NpKcFfgjTcB49i9FJ8dhy1cJk+RHzGA/HAKvPOdXHEzYnBLjYVewrVT
+         ZoyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680585111;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SCiMJmUi8GaQ+x1OyTgFrNc5tQQqEFd+PygZeMOOGjI=;
+        b=5TsZyAI/pqSNEiCmVCq9LdQnS5gNoslJPHZXnDvJeU0zN7Ax0pPDsP5y+/7vaCBKTy
+         TfwnY28NL31cofcQAeBzZMFfrgT/v49UWwHLKh+DuMk+M2SZfy1QDLkraSDmK3yGVDyp
+         p+CNm/b9/aJzCkzd/k0cB1fBC+6dz18TLJ47YR4Z0p3pNrewFvxXsZ2CnBEyk6AS2FU0
+         2jCo7pyHa67tn1FcbKnhv/3ofySLobbw40MXp8/+xdV5/XT3432gSvOOv3k7RQk6/mvV
+         1IKoJ5tacGHyXkKWKz2qHeDhzIL3EQrx+DTf1G+5tv+aq0xjwh2+TZVsTfdWynKa0Re3
+         chGw==
+X-Gm-Message-State: AAQBX9cLoEZNiaVx7SZYsiPSkyAQYVvsPT8OqwvJOh4wxgs/PP8xHmAz
+	8vXXvFCmm8J2+JpNOqSEmbTJtHGSZ6rm08i1COUjEw==
+X-Google-Smtp-Source: AKy350YHEjnie5+lRjtxBz/zJSLcE4i2hqRV2u+5OLxYyK4AT/Gz1r8izWK4qKq8pbmTVSQjCPJE4C3u7sKBmh52BGI=
+X-Received: by 2002:a67:ca8d:0:b0:425:d255:dd38 with SMTP id
+ a13-20020a67ca8d000000b00425d255dd38mr1343193vsl.1.1680585111012; Mon, 03 Apr
+ 2023 22:11:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230403140351.636471867@linuxfoundation.org>
+In-Reply-To: <20230403140351.636471867@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 4 Apr 2023 10:41:39 +0530
+Message-ID: <CA+G9fYu2dBjTD=X5josQwf0om2C1_A-Lerfnb7A9BWD=_drQ4w@mail.gmail.com>
+Subject: Re: [PATCH 4.14 00/66] 4.14.312-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is copy/pasta that breaks modular builds. Fix the match table to
-use the right pointer, or the right device table type. And while we're
-including the header, fix the order to be linux, dt-bindings, and
-finally local.
+On Mon, 3 Apr 2023 at 19:41, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.14.312 release.
+> There are 66 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 05 Apr 2023 14:03:18 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
+4.14.312-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-4.14.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Cc: Garmin.Chang <Garmin.Chang@mediatek.com>
-Cc: Chen-Yu Tsai <wenst@chromium.org>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Fixes: f42b9e9a43e3 ("clk: mediatek: Add MT8188 wpesys clock support")
-Fixes: 0d2f2cefba64 ("clk: mediatek: Add MT8188 adsp clock support")
-Fixes: e4aaa60eae16 ("clk: mediatek: Add MT8188 vdosys0 clock support")
-Fixes: cfa4609f9bbe ("clk: mediatek: Add MT8188 vdosys1 clock support")
-Fixes: bb87c1109ce2 ("clk: mediatek: Add MT8188 vencsys clock support")
-Fixes: f42b9e9a43e3 ("clk: mediatek: Add MT8188 wpesys clock support")
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202304011039.UBDX1UOT-lkp@intel.com/
-Link: https://lore.kernel.org/oe-kbuild-all/202304020649.QO2HlpD5-lkp@intel.com/
-Link: https://lore.kernel.org/oe-kbuild-all/202304021055.WDhQPcoS-lkp@intel.com/
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/clk/mediatek/clk-mt8188-adsp_audio26m.c | 6 ++++--
- drivers/clk/mediatek/clk-mt8188-imp_iic_wrap.c  | 6 ++++--
- drivers/clk/mediatek/clk-mt8188-vdo0.c          | 4 +++-
- drivers/clk/mediatek/clk-mt8188-vdo1.c          | 4 +++-
- drivers/clk/mediatek/clk-mt8188-venc.c          | 6 ++++--
- drivers/clk/mediatek/clk-mt8188-wpe.c           | 2 +-
- 6 files changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt8188-adsp_audio26m.c b/drivers/clk/mediatek/clk-mt8188-adsp_audio26m.c
-index b3c31ffff931..808f2ad3b7ee 100644
---- a/drivers/clk/mediatek/clk-mt8188-adsp_audio26m.c
-+++ b/drivers/clk/mediatek/clk-mt8188-adsp_audio26m.c
-@@ -4,10 +4,12 @@
-  * Author: Garmin Chang <garmin.chang@mediatek.com>
-  */
- 
--#include <dt-bindings/clock/mediatek,mt8188-clk.h>
- #include <linux/clk-provider.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
- 
-+#include <dt-bindings/clock/mediatek,mt8188-clk.h>
-+
- #include "clk-gate.h"
- #include "clk-mtk.h"
- 
-@@ -34,7 +36,7 @@ static const struct of_device_id of_match_clk_mt8188_adsp_audio26m[] = {
- 	{ .compatible = "mediatek,mt8188-adsp-audio26m", .data = &adsp_audio26m_desc },
- 	{ /* sentinel */ }
- };
--MODULE_DEVICE_TABLE(platform, of_match_clk_mt8188_adsp_audio26m);
-+MODULE_DEVICE_TABLE(of, of_match_clk_mt8188_adsp_audio26m);
- 
- static struct platform_driver clk_mt8188_adsp_audio26m_drv = {
- 	.probe = mtk_clk_simple_probe,
-diff --git a/drivers/clk/mediatek/clk-mt8188-imp_iic_wrap.c b/drivers/clk/mediatek/clk-mt8188-imp_iic_wrap.c
-index 2238d2984320..da41a3c59919 100644
---- a/drivers/clk/mediatek/clk-mt8188-imp_iic_wrap.c
-+++ b/drivers/clk/mediatek/clk-mt8188-imp_iic_wrap.c
-@@ -4,10 +4,12 @@
-  * Author: Garmin Chang <garmin.chang@mediatek.com>
-  */
- 
--#include <dt-bindings/clock/mediatek,mt8188-clk.h>
- #include <linux/clk-provider.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
- 
-+#include <dt-bindings/clock/mediatek,mt8188-clk.h>
-+
- #include "clk-gate.h"
- #include "clk-mtk.h"
- 
-@@ -65,7 +67,7 @@ static const struct of_device_id of_match_clk_mt8188_imp_iic_wrap[] = {
- 	{ .compatible = "mediatek,mt8188-imp-iic-wrap-en", .data = &imp_iic_wrap_en_desc },
- 	{ /* sentinel */ }
- };
--MODULE_DEVICE_TABLE(platform, of_match_clk_mt8188_imp_iic_wrap);
-+MODULE_DEVICE_TABLE(of, of_match_clk_mt8188_imp_iic_wrap);
- 
- static struct platform_driver clk_mt8188_imp_iic_wrap_drv = {
- 	.probe = mtk_clk_simple_probe,
-diff --git a/drivers/clk/mediatek/clk-mt8188-vdo0.c b/drivers/clk/mediatek/clk-mt8188-vdo0.c
-index 0c61c2dc4337..d2be44c2f3f5 100644
---- a/drivers/clk/mediatek/clk-mt8188-vdo0.c
-+++ b/drivers/clk/mediatek/clk-mt8188-vdo0.c
-@@ -4,10 +4,12 @@
-  * Author: Garmin Chang <garmin.chang@mediatek.com>
-  */
- 
--#include <dt-bindings/clock/mediatek,mt8188-clk.h>
- #include <linux/clk-provider.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
- 
-+#include <dt-bindings/clock/mediatek,mt8188-clk.h>
-+
- #include "clk-gate.h"
- #include "clk-mtk.h"
- 
-diff --git a/drivers/clk/mediatek/clk-mt8188-vdo1.c b/drivers/clk/mediatek/clk-mt8188-vdo1.c
-index 99fcf6d7b1ab..2ef8cae2e16e 100644
---- a/drivers/clk/mediatek/clk-mt8188-vdo1.c
-+++ b/drivers/clk/mediatek/clk-mt8188-vdo1.c
-@@ -4,10 +4,12 @@
-  * Author: Garmin Chang <garmin.chang@mediatek.com>
-  */
- 
--#include <dt-bindings/clock/mediatek,mt8188-clk.h>
- #include <linux/clk-provider.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
- 
-+#include <dt-bindings/clock/mediatek,mt8188-clk.h>
-+
- #include "clk-gate.h"
- #include "clk-mtk.h"
- 
-diff --git a/drivers/clk/mediatek/clk-mt8188-venc.c b/drivers/clk/mediatek/clk-mt8188-venc.c
-index 6f6589ccd5a0..245367f33fa5 100644
---- a/drivers/clk/mediatek/clk-mt8188-venc.c
-+++ b/drivers/clk/mediatek/clk-mt8188-venc.c
-@@ -4,10 +4,12 @@
-  * Author: Garmin Chang <garmin.chang@mediatek.com>
-  */
- 
--#include <dt-bindings/clock/mediatek,mt8188-clk.h>
- #include <linux/clk-provider.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
- 
-+#include <dt-bindings/clock/mediatek,mt8188-clk.h>
-+
- #include "clk-gate.h"
- #include "clk-mtk.h"
- 
-@@ -39,7 +41,7 @@ static const struct of_device_id of_match_clk_mt8188_venc1[] = {
- 	{ .compatible = "mediatek,mt8188-vencsys", .data = &venc1_desc },
- 	{ /* sentinel */ }
- };
--MODULE_DEVICE_TABLE(platform, of_match_clk_mt8188_venc1);
-+MODULE_DEVICE_TABLE(of, of_match_clk_mt8188_venc1);
- 
- static struct platform_driver clk_mt8188_venc1_drv = {
- 	.probe = mtk_clk_simple_probe,
-diff --git a/drivers/clk/mediatek/clk-mt8188-wpe.c b/drivers/clk/mediatek/clk-mt8188-wpe.c
-index 5abded13cece..c372ff703f9c 100644
---- a/drivers/clk/mediatek/clk-mt8188-wpe.c
-+++ b/drivers/clk/mediatek/clk-mt8188-wpe.c
-@@ -88,7 +88,7 @@ static const struct of_device_id of_match_clk_mt8188_wpe[] = {
- 	{ .compatible = "mediatek,mt8188-wpesys-vpp0", .data = &wpe_vpp0_desc },
- 	{ /* sentinel */ }
- };
--MODULE_DEVICE_TABLE(platform, clk_mt8188_vpp1_id_table);
-+MODULE_DEVICE_TABLE(platform, of_match_clk_mt8188_wpe);
- 
- static struct platform_driver clk_mt8188_wpe_drv = {
- 	.probe = mtk_clk_simple_probe,
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 4.14.312-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-4.14.y
+* git commit: f4c3927dd933c23aed0848ae3b5214808b7e6e88
+* git describe: v4.14.311-67-gf4c3927dd933
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4.14=
+.311-67-gf4c3927dd933
+
+## Test Regressions (compared to v4.14.311)
+
+## Metric Regressions (compared to v4.14.311)
+
+## Test Fixes (compared to v4.14.311)
+
+## Metric Fixes (compared to v4.14.311)
+
+## Test result summary
+total: 63126, pass: 54139, fail: 1959, skip: 6939, xfail: 89
+
+## Build Summary
+* arc: 10 total, 10 passed, 0 failed
+* arm: 106 total, 104 passed, 2 failed
+* arm64: 33 total, 31 passed, 2 failed
+* i386: 20 total, 19 passed, 1 failed
+* mips: 21 total, 21 passed, 0 failed
+* parisc: 6 total, 6 passed, 0 failed
+* powerpc: 8 total, 7 passed, 1 failed
+* s390: 6 total, 5 passed, 1 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 25 total, 24 passed, 1 failed
+
+## Test suites summary
+* boot
+* fwts
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
