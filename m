@@ -1,21 +1,22 @@
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B7B7C
-	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 11:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF62A7C
+	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 11:29:11 +0000 (UTC)
 Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 678471C0E01; Tue,  4 Apr 2023 13:27:01 +0200 (CEST)
-Date: Tue, 4 Apr 2023 13:27:00 +0200
+	id CDDFD1C0DFE; Tue,  4 Apr 2023 13:29:09 +0200 (CEST)
+Date: Tue, 4 Apr 2023 13:29:09 +0200
 From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	=?utf-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 051/173] net: dsa: mt7530: move setting ssc_delta to
- PHY_INTERFACE_MODE_TRGMII case
-Message-ID: <ZCwJhAfrTIPorVTw@duo.ucw.cz>
+	Sanju Mehta <Sanju.Mehta@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: Re: [PATCH 5.10 063/173] thunderbolt: Use const qualifier for
+ `ring_interrupt_index`
+Message-ID: <ZCwKBSQSbj3Ka4on@duo.ucw.cz>
 References: <20230403140414.174516815@linuxfoundation.org>
- <20230403140416.096716862@linuxfoundation.org>
+ <20230403140416.499791738@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -23,71 +24,56 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="xL+ikprMmmbWsSJq"
+	protocol="application/pgp-signature"; boundary="QPUMG3WcAYkC+ftV"
 Content-Disposition: inline
-In-Reply-To: <20230403140416.096716862@linuxfoundation.org>
+In-Reply-To: <20230403140416.499791738@linuxfoundation.org>
 
 
---xL+ikprMmmbWsSJq
+--QPUMG3WcAYkC+ftV
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 Hi!
 
-> [ Upstream commit 407b508bdd70b6848993843d96ed49ac4108fb52 ]
+> From: Mario Limonciello <mario.limonciello@amd.com>
 >=20
-> Move setting the ssc_delta variable to under the PHY_INTERFACE_MODE_TRGMII
-> case as it's only needed when trgmii is used.
+> commit 1716efdb07938bd6510e1127d02012799112c433 upstream.
+>=20
+> `ring_interrupt_index` doesn't change the data for `ring` so mark it as
+> const. This is needed by the following patch that disables interrupt
+> auto clear for rings.
 
-This one is very wrong for 5.10. ssc_delta is unconditionally used
-below, and it will not use uninitialized variable.
-
-(In mainline, that code is protected by if (trgint), so it does not
-have this problem).
+Yeah, nice cleanup. But do we really need it in -stable?
 
 Best regards,
 								Pavel
-
-> +++ b/drivers/net/dsa/mt7530.c
-> @@ -403,6 +403,10 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_inte=
-rface_t interface)
->  		break;
->  	case PHY_INTERFACE_MODE_TRGMII:
->  		trgint =3D 1;
-> +		if (xtal =3D=3D HWTRAP_XTAL_25MHZ)
-> +			ssc_delta =3D 0x57;
-> +		else
-> +			ssc_delta =3D 0x87;
->  		if (priv->id =3D=3D ID_MT7621) {
->  			/* PLL frequency: 150MHz: 1.2GBit */
->  			if (xtal =3D=3D HWTRAP_XTAL_40MHZ)
-> @@ -422,11 +426,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_inte=
-rface_t interface)
->  		return -EINVAL;
->  	}
+							=09
+> +++ b/drivers/thunderbolt/nhi.c
+> @@ -36,7 +36,7 @@
 > =20
-> -	if (xtal =3D=3D HWTRAP_XTAL_25MHZ)
-> -		ssc_delta =3D 0x57;
-> -	else
-> -		ssc_delta =3D 0x87;
-> -
->  	mt7530_rmw(priv, MT7530_P6ECR, P6_INTF_MODE_MASK,
->  		   P6_INTF_MODE(trgint));
+>  #define NHI_MAILBOX_TIMEOUT	500 /* ms */
 > =20
+> -static int ring_interrupt_index(struct tb_ring *ring)
+> +static int ring_interrupt_index(const struct tb_ring *ring)
+>  {
+>  	int bit =3D ring->hop;
+>  	if (!ring->is_tx)
+>=20
+>=20
 
 --=20
 DENX Software Engineering GmbH,        Managing Director: Erika Unter
 HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
---xL+ikprMmmbWsSJq
+--QPUMG3WcAYkC+ftV
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZCwJhAAKCRAw5/Bqldv6
-8mYeAJ4w3zv0OY2gBX4ssOR3SzI65IpJTACfWhRCc5Ju6H5SdLg1JjYI0QN+5+o=
-=AvMh
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZCwKBQAKCRAw5/Bqldv6
+8rRSAJsHwMppkZv7sHEdAc/+N07jcUO2JwCcDm/nIt/5Dcy/9KjT13HYCO5vcb4=
+=JN/b
 -----END PGP SIGNATURE-----
 
---xL+ikprMmmbWsSJq--
+--QPUMG3WcAYkC+ftV--
