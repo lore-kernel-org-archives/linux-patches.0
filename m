@@ -1,74 +1,91 @@
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B385D7E
-	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 01:41:22 +0000 (UTC)
-Received: from kwepemi500012.china.huawei.com (unknown [172.30.72.53])
-	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Pr95K09K0zrXhk;
-	Tue,  4 Apr 2023 09:23:48 +0800 (CST)
-Received: from cgs.huawei.com (10.244.148.83) by
- kwepemi500012.china.huawei.com (7.221.188.12) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23; Tue, 4 Apr 2023 09:25:03 +0800
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
-To: <stable@vger.kernel.org>, <cuigaosheng1@huawei.com>
-CC: <bparrot@ti.com>, <mchehab@kernel.org>, <sashal@kernel.org>,
-	<laurent.pinchart@ideasonboard.com>, <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>
-Subject: [PATCH 5.10,v2] media: ti: cal: revert "media: ti: cal: fix possible memory leak in cal_ctx_create()"
-Date: Tue, 4 Apr 2023 09:25:02 +0800
-Message-ID: <20230404012502.3061129-1-cuigaosheng1@huawei.com>
-X-Mailer: git-send-email 2.25.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4ED7E
+	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 01:46:08 +0000 (UTC)
+Received: by mail-pl1-f175.google.com with SMTP id iw3so29879943plb.6
+        for <patches@lists.linux.dev>; Mon, 03 Apr 2023 18:46:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680572768; x=1683164768;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TKc+EYx7SwEU6/Vyls1s2GPepAFxHA/QgAomLsWmEzI=;
+        b=KVhv0/uzhPIcfjRUIbVX/qmG88E8gr8GAfn7UA5ccwrxjmTtnFNeEenhB1ynKvv9/+
+         aT0RnSdTEB+pAUFqnFFiTDjXhDaJW+9I+1VX0PmkODRazjswWQpRelBWbla2ZRTEg7a5
+         C4K6VB2WFem20bDLNRZEoiPNcCTaQJqwFh2pMz6nLPyyO14nyh14Y1uvr+MY7EBpZHE6
+         WpY/RHiGugQ7Xp3wVRQ9eM/kI5pkmFBgqoNouDb41eJxWXtFOBXGguxdYPn+RpnYjHzd
+         a6ZxR08qsfh22yTr+lNLRzY9VAWkw/JdoEmkX6pEloOREsIC5gVaEkuCPnjRs+zafa+h
+         X8Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680572768; x=1683164768;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TKc+EYx7SwEU6/Vyls1s2GPepAFxHA/QgAomLsWmEzI=;
+        b=3QmtO6tH4r4J2J0kFR4jNJna3CI2rR6tNk6u+yT+/ODNNrVCXQLJ/rHV44U/jmiYBy
+         DNIYtf9ecrL8f79kWaaTP78q2Dwgp0Rtm6BWLeUW4rCz/8doSJfdrdtBm9EpoeWdx9+s
+         kv46us3I3/bQaekw56ygW3tv+kVAhEfObcSxcDQgCoW51woVRfF1YgmvlyujcAfIa5Y4
+         yLpF1le/HVw6CJGVTNdHnSUeoDWFF2vm34Qms3Gu9hdzGC+2RQB/Fwbb5sB+ecxNaOEC
+         vVQQSkt9811XktdzG1hwz8O6UtlXSLd7JKfJIIg2X9z/S+nkv6CV/CwzcIsmEnYZj2i5
+         RN2g==
+X-Gm-Message-State: AAQBX9fZN55ty7qeVJ5SkgFv8oQYmk/gJSpj6tPuCK/599jTiklTdKfc
+	xAR4aMUZtC3xbPl3zna2L4s=
+X-Google-Smtp-Source: AKy350YloTfDcwXsjgzsf/hxAZHDhEOEPl7uvuNDiA/ljjv3lzuY6HBD85oP6HUWQSFKkiV5u9IHCA==
+X-Received: by 2002:a17:903:2803:b0:1a2:7d:17f2 with SMTP id kp3-20020a170903280300b001a2007d17f2mr788467plb.69.1680572768004;
+        Mon, 03 Apr 2023 18:46:08 -0700 (PDT)
+Received: from [10.230.29.214] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id z12-20020a170902834c00b0019ac9c4f32esm7138071pln.309.2023.04.03.18.46.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Apr 2023 18:46:07 -0700 (PDT)
+Message-ID: <213a416f-3182-a4a6-7640-c8a385d91d68@gmail.com>
+Date: Mon, 3 Apr 2023 18:46:04 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.244.148.83]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemi500012.china.huawei.com (7.221.188.12)
-X-CFilter-Loop: Reflected
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 5.10 000/173] 5.10.177-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230403140414.174516815@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230403140414.174516815@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This reverts commit c7a218cbf67fffcd99b76ae3b5e9c2e8bef17c8c.
 
-The memory of ctx is allocated by devm_kzalloc in cal_ctx_create,
-it should not be freed by kfree when cal_ctx_v4l2_init() fails,
-otherwise kfree() will cause double free, so revert this patch.
 
-The memory of ctx is allocated by kzalloc since commit
-9e67f24e4d9 ("media: ti-vpe: cal: fix ctx uninitialization"),
-so the fixes tag of patch c7a218cbf67fis not entirely accurate,
-mainline should merge this patch, but it should not be merged
-into 5.10, so we just revert this patch for this branch.
+On 4/3/2023 7:06 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.177 release.
+> There are 173 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 05 Apr 2023 14:03:18 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.177-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Fixes: c7a218cbf67f ("media: ti: cal: fix possible memory leak in cal_ctx_create()")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
----
-v2:
-- Update the commit message and explain why this is needed
-  for 5.10 branch, thanks!
- drivers/media/platform/ti-vpe/cal.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-diff --git a/drivers/media/platform/ti-vpe/cal.c b/drivers/media/platform/ti-vpe/cal.c
-index 93121c90d76a..2eef245c31a1 100644
---- a/drivers/media/platform/ti-vpe/cal.c
-+++ b/drivers/media/platform/ti-vpe/cal.c
-@@ -624,10 +624,8 @@ static struct cal_ctx *cal_ctx_create(struct cal_dev *cal, int inst)
- 	ctx->cport = inst;
- 
- 	ret = cal_ctx_v4l2_init(ctx);
--	if (ret) {
--		kfree(ctx);
-+	if (ret)
- 		return NULL;
--	}
- 
- 	return ctx;
- }
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
 -- 
-2.25.1
-
+Florian
