@@ -1,38 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9C9BA3E
-	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 15:19:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518C4C433D2;
-	Tue,  4 Apr 2023 15:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E56BA3E
+	for <patches@lists.linux.dev>; Tue,  4 Apr 2023 15:24:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9AEC433D2;
+	Tue,  4 Apr 2023 15:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1680621572;
-	bh=nuJTFJGIsbVfytQ1dEZ5dUc8pyR/VtbceXSR+Jw9H/o=;
+	s=k20201202; t=1680621847;
+	bh=bv9sygn2HLy3yHTqEOJi6mXpzfPPW8uG8OQ6tRdO7H0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pI6KF+KDRQ9n3cMnn/xrHPLrP0Os6RSDqn2lmDfyr9Ndcq7n8+zKJ0dDL0YXDi7Y6
-	 BzlCBvAkfi155dBSzxUGdM1bin88pzkTOud6fecYJBuOqvFVvTrC2uXPBhYdvL73XT
-	 /u6NxgGVXyD3EhBOO/Wo8wP0CUq3RjENVkFvAhJLMvqqWRe2CFCNm4ow724VAxQs1Z
-	 5lIdWTNHAHWQeHlFwaHu6vavXPeR5tUekKdpBBX1RgcnnpKjhsFbRQ9xk0FHQWnB6f
-	 jABq6ATNRK1SI0laDAEuJ/goKp/K0jotbpDUSIO1saSBvAyJgGVT91yb6JgQLLatYo
-	 MJZpVoPnEEvdA==
-Date: Tue, 4 Apr 2023 11:19:30 -0400
+	b=ldNhfu/p2517oQHIWGt8kWF9JUE1qGbm2quarSyLUVnB2KtTT9hICpYz17w++Gm5O
+	 H0jG3TXdJW3RzHIYYck5MZdT86LfQvz60cm1zu0toziI7AZ8rNW+1W4raQBc0+124X
+	 zKtZeCYCIbvZf5gImmYOHrEbnfRLkYTt32OMpKbJJWAVkTMq0s+sNGM4aNRhQNZYuT
+	 AD49RpOjZIoHwpJ4/vfWwIAKVWgLWVmhXawWhY1fbARXXr8S/z2qzW31MAI0NEtjDF
+	 xeaGc5ek4UwaqmWcw1qUn3U1U71PZwY+UDx1x0vp3E2RmoUOniZMwCOPLzPxNl6Gm6
+	 piX5s4xCjiz2g==
+Date: Tue, 4 Apr 2023 11:24:06 -0400
 From: Sasha Levin <sashal@kernel.org>
-To: Pascal Ernster <git@hardfalcon.net>
-Cc: Ming Lei <ming.lei@redhat.com>,
+To: Pavel Machek <pavel@denx.de>
+Cc: =?utf-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org, patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>, Keith Busch <kbusch@kernel.org>,
-	Chao Leng <lengchao@huawei.com>, Sagi Grimberg <sagi@grimberg.me>,
-	Hannes Reinecke <hare@suse.de>, Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: Re: [PATCH 6.1 021/181] blk-mq: move the srcu_struct used for
- quiescing to the tagset
-Message-ID: <ZCxAAkotxZ+VBHkS@sashalap>
-References: <20230403140415.090615502@linuxfoundation.org>
- <20230403140415.825266522@linuxfoundation.org>
- <401a5df3-b13b-fb56-a305-9c82f5f0ca77@0.smtp.remotehost.it>
- <ZCt6vpfpJCk0J451@ovpn-8-16.pek2.redhat.com>
- <2f2bcc75-e46b-6849-734c-2e646d9bb382@0.smtp.remotehost.it>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: Re: [PATCH 5.10 051/173] net: dsa: mt7530: move setting ssc_delta to
+ PHY_INTERFACE_MODE_TRGMII case
+Message-ID: <ZCxBFgch4aN1GKqR@sashalap>
+References: <20230403140414.174516815@linuxfoundation.org>
+ <20230403140416.096716862@linuxfoundation.org>
+ <ZCwJhAfrTIPorVTw@duo.ucw.cz>
+ <f08afb70-2278-b6aa-7f48-e407b9af447c@arinc9.com>
+ <ZCwNZEoySWUWoKpR@duo.ucw.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,31 +38,32 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <2f2bcc75-e46b-6849-734c-2e646d9bb382@0.smtp.remotehost.it>
+In-Reply-To: <ZCwNZEoySWUWoKpR@duo.ucw.cz>
 
-On Tue, Apr 04, 2023 at 07:56:10AM +0200, Pascal Ernster wrote:
->[2023-04-04 03:17] Ming Lei:
->>On Mon, Apr 03, 2023 at 11:06:53PM +0200, Pascal Ernster wrote:
->>>On systems with their (btrfs) root filesystem residing on an LVM volume,
->>>this patch is reproducibly causing a complete freeze during shutdowns and
->>>reboots.
->>>
->>>I had previously replied with the same message to patch 022/181 instead of
->>>this one, but had gotten the subject mixed up actually meant this patch.
->>
->>That is because the dependency patch is missed:
->>
->>commit 8537380bb988 ("blk-mq: skip non-mq queues in blk_mq_quiesce_queue")
->>
->>https://lore.kernel.org/linux-block/Y6qpwYaPOxgsZjp9@T590/
+On Tue, Apr 04, 2023 at 01:43:32PM +0200, Pavel Machek wrote:
+>Hi!
 >
+>> > > [ Upstream commit 407b508bdd70b6848993843d96ed49ac4108fb52 ]
+>> > >
+>> > > Move setting the ssc_delta variable to under the PHY_INTERFACE_MODE_TRGMII
+>> > > case as it's only needed when trgmii is used.
+>> >
+>> > This one is very wrong for 5.10. ssc_delta is unconditionally used
+>> > below, and it will not use uninitialized variable.
+>> >
+>> > (In mainline, that code is protected by if (trgint), so it does not
+>> > have this problem).
+>>
+>> This patch is not stable material in the first place. As a newbie I
+>> incorrectly sent it to net tree instead of net-next. This patch can just be
+>> ignored for 5.10, if that takes the least amount of effort for you folks.
+>>
+>> Sorry about that and thanks for pointing this out Pavel.
 >
->Thanks a lot Ming, this does indeed fix the issue for me. :)
+>I believe you did the right thing, but as it had Fixes header stable
+>people picked it up.
 
-Perfect, thanks for the report and the fix.
-
-I've dropped these two patches from the 6.1 tree for now with plans to
-re-do it along with the missing dependency for the next release.
+Right. I'll drop it.
 
 -- 
 Thanks,
