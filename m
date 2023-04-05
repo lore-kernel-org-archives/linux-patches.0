@@ -1,20 +1,34 @@
-Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41DC77F5;
-	Wed,  5 Apr 2023 09:15:27 +0000 (UTC)
-Received: from uucp (helo=alpha)
-	by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
-	id 1pjyVe-0007pG-01; Wed, 05 Apr 2023 10:28:50 +0200
-Received: by alpha.franken.de (Postfix, from userid 1000)
-	id D9339C2160; Wed,  5 Apr 2023 10:26:25 +0200 (CEST)
-Date: Wed, 5 Apr 2023 10:26:25 +0200
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: ndesaulniers@google.com, trix@redhat.com, linux-mips@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH] MIPS: Drop unused positional parameter in
- local_irq_{dis,en}able
-Message-ID: <20230405082625.GB5556@alpha.franken.de>
-References: <20230404-mips-unused-named-parameters-v1-1-71d6c656f1de@kernel.org>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7F2A4A;
+	Wed,  5 Apr 2023 09:30:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C42C433D2;
+	Wed,  5 Apr 2023 09:30:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1680687027;
+	bh=cF6ZOA0CTBRp5JFa60UbcgjM/2p3p51Z/7tMkQoCO3M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=H25qKiSE+jO39WNSW4o2s1CVd8pn+kfJfVprHotKSA+GhxXRq4Y2FmnUle7BPYdtP
+	 RpnNPrwrfahm0pw9eL8ECc4bBl3em5Vuo5tHBU9pX86Ego27t08LhQcjA2Qy3wBTuB
+	 M5xn5FRHuO7lCYHQz6A/c6Ge4y5JUIl28AXyGtHk=
+Date: Wed, 5 Apr 2023 11:30:25 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Kelsey Steele <kelseysteele@linux.microsoft.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	decui@microsoft.com, petrtesarik@huaweicloud.com,
+	linux-hyperv@vger.kernel.org, iommu@lists.linux.dev,
+	robin.murphy@arm.com, dexuan.linux@gmail.com,
+	tyler.hicks@microsoft.com
+Subject: Re: [PATCH 6.1 000/179] 6.1.23-rc2 review
+Message-ID: <2023040503-perkiness-nutty-f8f4@gregkh>
+References: <20230404183150.381314754@linuxfoundation.org>
+ <20230405003549.GA21326@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -23,36 +37,34 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230404-mips-unused-named-parameters-v1-1-71d6c656f1de@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20230405003549.GA21326@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
 
-On Tue, Apr 04, 2023 at 02:18:41PM -0700, Nathan Chancellor wrote:
-> When building with clang's integrated assembler, it points out that the
-> CONFIG_CPU_HAS_DIEI versions of local_irq_enable and local_irq_disable
-> have a named parameter that is not used in the body of the macro and it
-> thinks that $8 is a positional parameter, rather than a register:
+On Tue, Apr 04, 2023 at 05:35:49PM -0700, Kelsey Steele wrote:
+> On Tue, Apr 04, 2023 at 08:32:15PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.23 release.
+> > There are 179 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Thu, 06 Apr 2023 18:31:13 +0000.
+> > Anything received after that time might be too late.
+> > 
 > 
->   arch/mips/include/asm/asmmacro.h:48:2: warning: macro defined with named parameters which are not used in macro body, possible positional parameter found in body which will have no effect
->    .macro local_irq_enable reg=$8
->    ^
+> Hi Greg, 
 > 
-> The comment above the function that performs this check in LLVM notes
-> that the warning may trigger in this case, even though it is not
-> problematic. It is easy enough to clean this up by just omitting the
-> named parameter for this version of the macro, as it is entirely unused.
+> 6.1.23-rc2 is failing to boot on x86 WSL. A bisect leads to commit
+> c2f05366b687 ("swiotlb: fix slot alignment checks") being the problem
+> and reverting this patch puts everything back in a working state.
 > 
-> Reported-by: Nick Desaulniers <ndesaulniers@google.com>
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1415
-> Link: https://github.com/llvm/llvm-project/commit/81c944cadb7f9e55b3517b7423a820e2577b9279
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  arch/mips/include/asm/asmmacro.h | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> There's a report from Dexuan who also encountered this error on a Linux
+> VM on Hyper-V:
+> 
+> https://lore.kernel.org/all/CAA42JLa1y9jJ7BgQvXeUYQh-K2mDNHd2BYZ4iZUz33r5zY7oAQ@mail.gmail.com/
+> 
+> Adding a chunk of my log below which shows errors occuring from the hv_strvsc driver.
 
-applied to mips-next.
+Is this also a problem on 6.2-rc1, and Linus's tree?
 
-Thomas.
+thanks,
 
--- 
-Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
-good idea.                                                [ RFC1925, 2.3 ]
+greg k-h
