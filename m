@@ -1,105 +1,58 @@
-Received: from qproxy1-pub.mail.unifiedlayer.com (qproxy1-pub.mail.unifiedlayer.com [173.254.64.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E4CA45
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 09:12:44 +0000 (UTC)
-Received: from outbound-ss-820.bluehost.com (outbound-ss-820.bluehost.com [69.89.24.241])
-	by qproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id C39B18032F87
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 08:49:57 +0000 (UTC)
-Received: from cmgw11.mail.unifiedlayer.com (unknown [10.0.90.126])
-	by progateway2.mail.pro1.eigbox.com (Postfix) with ESMTP id 346EE10047FB4
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 08:49:50 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id jypxpotHG2LM4jypyp9gRY; Wed, 05 Apr 2023 08:49:50 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=KbQXDSUD c=1 sm=1 tr=0 ts=642d362e
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=dKHAf1wccvYA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=wCbDlB704wCocptsMoXzCNIIUhH1OZvAYrJXarJTUuI=; b=kB97TK0l+bsfhCd2Izz2KgCoq8
-	Lxpqv5BV1XDlw651KHym4RC/GZfWv6eBRbQuHX8NKWvzgZWTf5KSRQW2d1JCQ/ztUcbcqfmIive9e
-	iycWcxTRl0rEjx5sJnuQyQEau0eqJPHFah930OYnUbxtJIZvGkyBOz3/Lre5As8ifoFzGBcVtmVz4
-	LEFYFeE2ZvPW225LZadlcfvBS1exA7ZHNhVwPH10vGT8VLHo3d+DRVY1Yue+G9u40xzYEDzQxRMx/
-	EUmlVBYKmbUGopzyck+F5y4cCINKP7+jQFit4ys9vBIlLjr6Mrqda4JRUaRgI3sAjyFFLVJ9ngqSl
-	r+749Yrw==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:34180 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pjypx-001ZCk-4r;
-	Wed, 05 Apr 2023 02:49:49 -0600
-Subject: Re: [PATCH 5.15 00/99] 5.15.106-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230403140356.079638751@linuxfoundation.org>
-In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <c6df1f3a-f92d-86a7-9a2b-08ca7eedcad8@w6rz.net>
-Date: Wed, 5 Apr 2023 01:49:43 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41DC77F5;
+	Wed,  5 Apr 2023 09:15:27 +0000 (UTC)
+Received: from uucp (helo=alpha)
+	by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
+	id 1pjyVe-0007pG-01; Wed, 05 Apr 2023 10:28:50 +0200
+Received: by alpha.franken.de (Postfix, from userid 1000)
+	id D9339C2160; Wed,  5 Apr 2023 10:26:25 +0200 (CEST)
+Date: Wed, 5 Apr 2023 10:26:25 +0200
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: ndesaulniers@google.com, trix@redhat.com, linux-mips@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] MIPS: Drop unused positional parameter in
+ local_irq_{dis,en}able
+Message-ID: <20230405082625.GB5556@alpha.franken.de>
+References: <20230404-mips-unused-named-parameters-v1-1-71d6c656f1de@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pjypx-001ZCk-4r
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:34180
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230404-mips-unused-named-parameters-v1-1-71d6c656f1de@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On 4/3/23 7:08 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.106 release.
-> There are 99 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 05 Apr 2023 14:03:18 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.106-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Tue, Apr 04, 2023 at 02:18:41PM -0700, Nathan Chancellor wrote:
+> When building with clang's integrated assembler, it points out that the
+> CONFIG_CPU_HAS_DIEI versions of local_irq_enable and local_irq_disable
+> have a named parameter that is not used in the body of the macro and it
+> thinks that $8 is a positional parameter, rather than a register:
+> 
+>   arch/mips/include/asm/asmmacro.h:48:2: warning: macro defined with named parameters which are not used in macro body, possible positional parameter found in body which will have no effect
+>    .macro local_irq_enable reg=$8
+>    ^
+> 
+> The comment above the function that performs this check in LLVM notes
+> that the warning may trigger in this case, even though it is not
+> problematic. It is easy enough to clean this up by just omitting the
+> named parameter for this version of the macro, as it is entirely unused.
+> 
+> Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1415
+> Link: https://github.com/llvm/llvm-project/commit/81c944cadb7f9e55b3517b7423a820e2577b9279
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  arch/mips/include/asm/asmmacro.h | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+applied to mips-next.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Thomas.
 
+-- 
+Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
+good idea.                                                [ RFC1925, 2.3 ]
