@@ -1,83 +1,82 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1657470
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 16:53:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:
-	Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Reply-To:Content-ID:Content-Description;
-	bh=ibm+nWW7IW9tcDE0xVaQziVWYwGIW9klab1GLTkBWA8=; b=Vszq9Sjag0KovbFyUMSIcdP524
-	sx4GTfSXPdQPMNeFs+3wFwwWnKOBYkz+C33wureTGP8x88exBW5FHohne8bJGpScLFtLp+RPI5CaN
-	Kut8dzMCf0y59hZNjJCXQcOfUrizMO5bph1jpdXdhCsYgNeG7L0oozB3WVaomOOpdtose9ebh6BBV
-	fOQmoxAnQliQsozhiVBeZzU6VmXbABZUOT9nbGZ08aCmcCEOJpsAvzfRbwfnnJiQ1ly6XCTacLdSn
-	OWB3x2K7tk6m8/9LJIfUd/ucqlolkGqzUHepQBIe9h5b0nfy3tUUQ6cGA/xrcngBZohsJkwiuFqVa
-	Pg1Ne22w==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1pk6Na-005BOz-1J;
-	Wed, 05 Apr 2023 16:53:02 +0000
-Date: Wed, 5 Apr 2023 09:53:02 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: david@redhat.com, patches@lists.linux.dev,
-	linux-modules@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
-	prarit@redhat.com, gregkh@linuxfoundation.org, rafael@kernel.org,
-	christophe.leroy@csgroup.eu, tglx@linutronix.de,
-	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
-	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
-	mhocko@suse.com, dave.hansen@linux.intel.com,
-	colin.i.king@gmail.com, jim.cromie@gmail.com,
-	catalin.marinas@arm.com, jbaron@akamai.com,
-	rick.p.edgecombe@intel.com
-Subject: Re: [PATCH v2 5/6] debugfs: add debugfs_create_atomic64_t for
- atomic64_t
-Message-ID: <ZC2nbiarELlUVcSj@bombadil.infradead.org>
-References: <20230405022702.753323-1-mcgrof@kernel.org>
- <20230405022702.753323-6-mcgrof@kernel.org>
- <CAHk-=whH+OsAY+9qLc9Hz+-W8u=dvD3NLWHemOQpZPcgZa52fA@mail.gmail.com>
- <ZC2cC+I1KTyD8UcC@bombadil.infradead.org>
- <ZC2dtI02ZIbjte2l@bombadil.infradead.org>
- <CAHk-=wiGhHk4u2RRZmJinA4Apb47pXXJPW9cOZ_2-yUqOvaC7Q@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717677470
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 17:04:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A64FC433D2;
+	Wed,  5 Apr 2023 17:04:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1680714278;
+	bh=9XZaACGA8FEx/xawf4gzfj0QBSYDuFw19q/kCaTroBM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=b4VTVAKIlzv23U87D5TYG7fhsx8AhXzWs5HSkIS3HaLutWQ4ktBaeXtqBeuLEXTKZ
+	 7pGoqWaeEqXnp45FgilVfDJleRC5mDakhYQrDROHsAPxkiVyaF/aFNL2Yrrezjbc/v
+	 jFvLe/g7uJuotDXTVKqCKCcjzy7iH2wl0eIsmPVY=
+Date: Wed, 5 Apr 2023 19:04:35 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Pratyush Yadav <ptyadav@amazon.de>
+Cc: Steve French <stfrench@microsoft.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Aurelien Aptel <aaptel@suse.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.4] smb3: fix problem with null cifs super block with
+ previous patch
+Message-ID: <2023040514-ravishing-problem-9302@gregkh>
+References: <20230405135709.100174-1-ptyadav@amazon.de>
+ <2023040523-delusion-corrode-f466@gregkh>
+ <mafs0fs9egzzb.fsf_-_@amazon.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHk-=wiGhHk4u2RRZmJinA4Apb47pXXJPW9cOZ_2-yUqOvaC7Q@mail.gmail.com>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+In-Reply-To: <mafs0fs9egzzb.fsf_-_@amazon.de>
 
-On Wed, Apr 05, 2023 at 09:23:09AM -0700, Linus Torvalds wrote:
-> On Wed, Apr 5, 2023 at 9:11 AM Luis Chamberlain <mcgrof@kernel.org> wrote:
+On Wed, Apr 05, 2023 at 04:34:00PM +0200, Pratyush Yadav wrote:
+> On Wed, Apr 05 2023, Greg Kroah-Hartman wrote:
+> 
+> > On Wed, Apr 05, 2023 at 03:57:09PM +0200, Pratyush Yadav wrote:
+> >> From: Steve French <stfrench@microsoft.com>
+> >>
+> >> [ Upstream commit 87f93d82e0952da18af4d978e7d887b4c5326c0b ]
+> >>
+> >> Add check for null cifs_sb to create_options helper
+> >>
+> >> Signed-off-by: Steve French <stfrench@microsoft.com>
+> >> Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+> >> Reviewed-by: Aurelien Aptel <aaptel@suse.com>
+> >> Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
+> >> ---
+> >>
+> >> Only compile-tested. This was discovered by our static code analysis
+> >> tool. I do not use CIFS and do not know how to actually reproduce the
+> >> NULL dereference.
+> >>
+> >> Follow up from [0]. Original patch is at [1].
+> >>
+> >> Mandatory text due to licensing terms:
+> >>
+> >> This bug was discovered and resolved using Coverity Static Analysis
+> >> Security Testing (SAST) by Synopsys, Inc.
 > >
-> > Oh but I don't get the atomic incs, so we'd need debugfs_create_atomic_long_t().
+> > What?  That's funny.  And nothing I'm going to be adding to the
+> > changelog text, sorry, as that's not what is upstream.
 > 
->   debugfs_create_ulong("total_mod_size",
->        0400, mod_debugfs_root,
->        &total_mod_size.counter);
+> That is fine by me. I placed this text below the 3 dashed lines so it
+> does _not_ end up in the commit message, but still discloses this
+> information.
 > 
-> but I didn't actually try to compile that kind of version.
+> > Please go poke your lawyers, that's not ok.
 > 
-> (I think "counter" is actually a _signed_ long, so maybe the types don't match).
+> Yes, perhaps I should. But let's go forward with this patch since it
+> keeps the original commit message?
 
-I see yes, sadly we'd have to cast to (unsigned long *) to make that
-work as atomic_long counters are long long int:
+It's already been queued up, you should have gotten an email saying
+that, right?
 
-   debugfs_create_ulong("total_mod_size",
-        0400, mod_debugfs_root,
--        &total_mod_size.counter);
-+        (unsigned long *)&total_mod_size.counter);
+thanks,
 
-That's:
-
-unsigned long min bits 32
-long long     min bits 64
-
-But since we'd be doing our accounting in atomic_long and just use
-debugfs for prints I think that's fine. Just a bit ugly.
-
-  Luis
+greg k-h
