@@ -1,91 +1,113 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-fw-33001.amazon.com (smtp-fw-33001.amazon.com [207.171.190.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C7B2C9A
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 13:10:41 +0000 (UTC)
-Received: by mail-pj1-f53.google.com with SMTP id e15-20020a17090ac20f00b0023d1b009f52so39470730pjt.2
-        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 06:10:41 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52EC2C9A
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 13:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680700241; x=1683292241;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VtodILvQ2ZMMlQviiIR+jJTYn+DhiSUAYYkxKahJV3E=;
-        b=ggCDlh67old4Wkj7U8Xwno8MC/kO4SkXOblBCvDt9kFG9v2sdYQESfxZLEmPnPdtNG
-         OJBOohulVFZIASbj3NL7CFupbP+jc9yRP4ht4QCyFhgimVu/BqWnrgc5lfgT2yYRdNUq
-         qW8lh+CsnB4Oj5uoqqlnJEI1zfWII7fa0Nre5xYhqH9FDrJ5q7RjXz/fJe7F2QhyJrsH
-         1O4TGb31QZ31/4xJ5ybx/TO+hJP86nkJuIpZEAiR5DKL7r2GRSG/140XbcGfoY8SNEsf
-         CpZmjcHzjMeZ/eXc9aCRpOtrdv829DWm3sp339ddYNW0S9d/FxVUCgeJgtIcQFIbLsr/
-         UfNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680700241; x=1683292241;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VtodILvQ2ZMMlQviiIR+jJTYn+DhiSUAYYkxKahJV3E=;
-        b=qvVBIDhl4rLD02PhIKdHd6opzJcMbhSmUwS5BhQbx/Ivfm5RTuRNBnWq4DBhecRsBk
-         y75b/sbTPoP3ekLuY1A1t8WSWJecn8VARdAQu2kapRakZ64AQzVy74mcS9Mex5G2lvz3
-         N8AdDeE4s+1NhTNNWPtOrY/TUz9k1S9FUfsJGRTYsJYjMm1WFdMXnKYwQvYbkEUgZFjW
-         Dgbs9MeJciytb4uSvCx6NfU40mfLa3QUVrioDUFDH8kyBcvEwY/mkxjTuJQN0fEr/YNp
-         qVbi1G7ZBIzgTLozIoYfJJCrUJNr/8d5IzNX3yf63iKwNI1KBqnIiVV4dFjQVoxr6xLx
-         8f1w==
-X-Gm-Message-State: AAQBX9ePItcrXKeOcGF22ASc3QAlYPLV0ZHB1hg+5YGkulv/I+0Q9FMz
-	MBimfxqcXgugxrorSnXg0tA=
-X-Google-Smtp-Source: AKy350Y78GB5qsViRCXJ2kOADdulfOaU/53okcrylJp8k7Da2LwyAVBtU9ZjdYg6bmzyh9d1Gzo7Vw==
-X-Received: by 2002:a17:90b:1c8d:b0:234:b964:5703 with SMTP id oo13-20020a17090b1c8d00b00234b9645703mr6584614pjb.18.1680700240841;
-        Wed, 05 Apr 2023 06:10:40 -0700 (PDT)
-Received: from [192.168.1.105] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
-        by smtp.gmail.com with ESMTPSA id t23-20020a17090a5d9700b0023d0290afbdsm1383910pji.4.2023.04.05.06.10.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Apr 2023 06:10:40 -0700 (PDT)
-Message-ID: <df2fd045-daef-246f-8f44-5c2a301b4804@gmail.com>
-Date: Wed, 5 Apr 2023 06:10:38 -0700
+  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
+  t=1680703044; x=1712239044;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=5F/jfz5jD3o9f9TTv+PJ6d4VzW2xv8KXs5pF0+UPt5o=;
+  b=W+rZPWuaBQva+yQUh14A6+NO6Hv2OG6ZNjrv88Xh7h4Jrw8GavOK4T4h
+   TaAC2zunPUXwPMM6iRsWxL/LzzyZRU+9WU+vObH6CiUnBXoq9Zhp9LFxW
+   gJxjEe5GZZvAyb44t6xbm8vCeMZYiP3G/zclMWOPDuGvZAMSME6FziDzm
+   I=;
+X-IronPort-AV: E=Sophos;i="5.98,319,1673913600"; 
+   d="scan'208";a="274938105"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO email-inbound-relay-pdx-2a-m6i4x-83883bdb.us-west-2.amazon.com) ([10.43.8.6])
+  by smtp-border-fw-33001.sea14.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2023 13:57:15 +0000
+Received: from EX19D007EUA004.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan2.pdx.amazon.com [10.236.137.194])
+	by email-inbound-relay-pdx-2a-m6i4x-83883bdb.us-west-2.amazon.com (Postfix) with ESMTPS id 3270F60C4E;
+	Wed,  5 Apr 2023 13:57:13 +0000 (UTC)
+Received: from EX19D028EUB003.ant.amazon.com (10.252.61.31) by
+ EX19D007EUA004.ant.amazon.com (10.252.50.76) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.26; Wed, 5 Apr 2023 13:57:12 +0000
+Received: from EX19MTAUEB001.ant.amazon.com (10.252.135.35) by
+ EX19D028EUB003.ant.amazon.com (10.252.61.31) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.26; Wed, 5 Apr 2023 13:57:11 +0000
+Received: from dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com (10.15.11.255)
+ by mail-relay.amazon.com (10.252.135.35) with Microsoft SMTP Server id
+ 15.2.1118.26 via Frontend Transport; Wed, 5 Apr 2023 13:57:11 +0000
+Received: by dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com (Postfix, from userid 23027615)
+	id 27A9620D34; Wed,  5 Apr 2023 15:57:10 +0200 (CEST)
+From: Pratyush Yadav <ptyadav@amazon.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Steve French <stfrench@microsoft.com>, Amir Goldstein
+	<amir73il@gmail.com>, Aurelien Aptel <aaptel@suse.com>, Pratyush Yadav
+	<ptyadav@amazon.de>, <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4] smb3: fix problem with null cifs super block with previous patch
+Date: Wed, 5 Apr 2023 15:57:09 +0200
+Message-ID: <20230405135709.100174-1-ptyadav@amazon.de>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 6.2 000/185] 6.2.10-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230405100309.298748790@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230405100309.298748790@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
+From: Steve French <stfrench@microsoft.com>
 
+[ Upstream commit 87f93d82e0952da18af4d978e7d887b4c5326c0b ]
 
-On 4/5/2023 3:03 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.10 release.
-> There are 185 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 07 Apr 2023 10:02:32 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.10-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Add check for null cifs_sb to create_options helper
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels build tested on 
-BMIPS_GENERIC:
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Aurelien Aptel <aaptel@suse.com>
+Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
+---
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+Only compile-tested. This was discovered by our static code analysis
+tool. I do not use CIFS and do not know how to actually reproduce the
+NULL dereference.
+
+Follow up from [0]. Original patch is at [1].
+
+Mandatory text due to licensing terms:
+
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
+
+[0] https://lore.kernel.org/stable/20230405114220.108739-1-ptyadav@amazon.de/T/#u
+[1] https://lore.kernel.org/all/CAH2r5mtu69KEWU94qZK32H_8cvyhVU8GyOKrZqbdjH0ZLd95Zg@mail.gmail.com/
+
+ fs/cifs/cifsproto.h | 2 +-
+ fs/cifs/smb2ops.c   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/fs/cifs/cifsproto.h b/fs/cifs/cifsproto.h
+index a5fab9afd699f..2dde83a969680 100644
+--- a/fs/cifs/cifsproto.h
++++ b/fs/cifs/cifsproto.h
+@@ -602,7 +602,7 @@ static inline int get_dfs_path(const unsigned int xid, struct cifs_ses *ses,
+
+ static inline int cifs_create_options(struct cifs_sb_info *cifs_sb, int options)
+ {
+-	if (backup_cred(cifs_sb))
++	if (cifs_sb && (backup_cred(cifs_sb)))
+ 		return options | CREATE_OPEN_BACKUP_INTENT;
+ 	else
+ 		return options;
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 4cb0ebe7330eb..44a261b9850de 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -2343,7 +2343,7 @@ smb2_queryfs(const unsigned int xid, struct cifs_tcon *tcon,
+ 				      FS_FULL_SIZE_INFORMATION,
+ 				      SMB2_O_INFO_FILESYSTEM,
+ 				      sizeof(struct smb2_fs_full_size_info),
+-				      &rsp_iov, &buftype, NULL);
++				      &rsp_iov, &buftype, cifs_sb);
+ 	if (rc)
+ 		goto qfs_exit;
+
+--
+2.39.2
+
