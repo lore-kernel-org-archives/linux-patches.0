@@ -1,52 +1,105 @@
-Received: from outbound-smtp55.blacknight.com (outbound-smtp55.blacknight.com [46.22.136.239])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01A229A9
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 14:55:22 +0000 (UTC)
-Received: from mail.blacknight.com (pemlinmail04.blacknight.ie [81.17.254.17])
-	by outbound-smtp55.blacknight.com (Postfix) with ESMTPS id F2525FAE47
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 15:50:12 +0100 (IST)
-Received: (qmail 1459 invoked from network); 5 Apr 2023 14:50:12 -0000
-Received: from unknown (HELO techsingularity.net) (mgorman@techsingularity.net@[84.203.21.103])
-  by 81.17.254.9 with ESMTPSA (AES256-SHA encrypted, authenticated); 5 Apr 2023 14:50:12 -0000
-Date: Wed, 5 Apr 2023 15:50:10 +0100
-From: Mel Gorman <mgorman@techsingularity.net>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>, linux-hardening@vger.kernel.org,
-	Alexander Halbuer <halbuer@sra.uni-hannover.de>
-Subject: Re: [PATCH] mm, page_alloc: use check_pages_enabled static key to
- check tail pages
-Message-ID: <20230405145010.lrrc4gnxtaqjlnil@techsingularity.net>
-References: <20230405142840.11068-1-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A22B63AE
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 15:33:12 +0000 (UTC)
+Received: by mail-ed1-f44.google.com with SMTP id h8so142113604ede.8
+        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 08:33:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1680708791; x=1683300791;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SiNSMmn4P5V1jwJhNPZuiJRsbJQ57AhnJVTBbX8pgZo=;
+        b=UzCI7Vm7G7qwwMWEyfqBZqmho2af7qG7W5q6MNXNH4h9drKkur5x25YgpxlNEMgRJY
+         UzfQg/HiriI+5Wq4ZFz+3otXp4n45FnNfjuW7PM7EC4eY9D/ehfZjZfXNO+o0aZXavQV
+         +fNmDag49HNiz/AicejkZvHplgZOsYgAd06hE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680708791; x=1683300791;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SiNSMmn4P5V1jwJhNPZuiJRsbJQ57AhnJVTBbX8pgZo=;
+        b=hvDWBFaoKUM0Ww/ZhDTu+gds5yyM76+CqmIxyfJkSgJdXNKXV6pY1XY1w8TvIJGmr+
+         X1EJaizZV2SgmlX2RZnfyL3bYBnVhqr1IT7RmQkIIg88nrgddUwhj2ZxSHn8uEv7YQL2
+         /PyQ154V/OmeVmbLaKQiAB5y3npk5rdlkK8P14fKbcHeDUnR2BqLiGajs1EgGD7u+6xl
+         fsytHPItIujiG/Cu+LcBI/0TlGdxfU/UY7XazMlDJ6DJ6RO7HZqblKTgeqmHWg/mHleo
+         tkUD2mp5NMpa/K7LtjLZ39M5xvqwK6BHVDqlSH0Hq5t5NWskEPO6kjEMNNMYvWIWf3nF
+         1s+w==
+X-Gm-Message-State: AAQBX9dxHksv0ghheFA9W+v7nPDtvkkFYRyn4w1lbJEVxCnP3YOO9Zxu
+	hTfH5jXPRzZaY9m5ssZPHc8HLoBPpsGW9EzTrJUbTQ==
+X-Google-Smtp-Source: AKy350blVFmMBscnED3a05buTLau3U6CTxNhFaqpoShphwjE47obkP545ADQIXmCo9YgrcrQ+bNQJw==
+X-Received: by 2002:a17:906:7f98:b0:92b:eca6:43fc with SMTP id f24-20020a1709067f9800b0092beca643fcmr3652422ejr.64.1680708791007;
+        Wed, 05 Apr 2023 08:33:11 -0700 (PDT)
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com. [209.85.208.47])
+        by smtp.gmail.com with ESMTPSA id gv19-20020a1709072bd300b00931db712768sm7507547ejc.4.2023.04.05.08.33.10
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Apr 2023 08:33:10 -0700 (PDT)
+Received: by mail-ed1-f47.google.com with SMTP id eg48so141974821edb.13
+        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 08:33:10 -0700 (PDT)
+X-Received: by 2002:a17:907:2075:b0:947:72cd:9325 with SMTP id
+ qp21-20020a170907207500b0094772cd9325mr1890350ejb.15.1680708395703; Wed, 05
+ Apr 2023 08:26:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Disposition: inline
-In-Reply-To: <20230405142840.11068-1-vbabka@suse.cz>
+References: <20230405022702.753323-1-mcgrof@kernel.org> <20230405022702.753323-6-mcgrof@kernel.org>
+In-Reply-To: <20230405022702.753323-6-mcgrof@kernel.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 5 Apr 2023 08:26:18 -0700
+X-Gmail-Original-Message-ID: <CAHk-=whH+OsAY+9qLc9Hz+-W8u=dvD3NLWHemOQpZPcgZa52fA@mail.gmail.com>
+Message-ID: <CAHk-=whH+OsAY+9qLc9Hz+-W8u=dvD3NLWHemOQpZPcgZa52fA@mail.gmail.com>
+Subject: Re: [PATCH v2 5/6] debugfs: add debugfs_create_atomic64_t for atomic64_t
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: david@redhat.com, patches@lists.linux.dev, linux-modules@vger.kernel.org, 
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org, pmladek@suse.com, 
+	petr.pavlu@suse.com, prarit@redhat.com, gregkh@linuxfoundation.org, 
+	rafael@kernel.org, christophe.leroy@csgroup.eu, tglx@linutronix.de, 
+	peterz@infradead.org, song@kernel.org, rppt@kernel.org, dave@stgolabs.net, 
+	willy@infradead.org, vbabka@suse.cz, mhocko@suse.com, 
+	dave.hansen@linux.intel.com, colin.i.king@gmail.com, jim.cromie@gmail.com, 
+	catalin.marinas@arm.com, jbaron@akamai.com, rick.p.edgecombe@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 05, 2023 at 04:28:40PM +0200, Vlastimil Babka wrote:
-> Commit 700d2e9a36b9 ("mm, page_alloc: reduce page alloc/free sanity
-> checks") has introduced a new static key check_pages_enabled to control
-> when struct pages are sanity checked during allocation and freeing. Mel
-> Gorman suggested that free_tail_pages_check() could use this static key
-> as well, instead of relying on CONFIG_DEBUG_VM. That makes sense, so do
-> that. Also rename the function to free_tail_page_prepare() because it
-> works on a single tail page and has a struct page preparation component
-> as well as the optional checking component.
-> Also remove some unnecessary unlikely() within static_branch_unlikely()
-> statements that Mel pointed out for commit 700d2e9a36b9.
-> 
-> Suggested-by: Mel Gorman <mgorman@techsingularity.net>
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+On Tue, Apr 4, 2023 at 7:27=E2=80=AFPM Luis Chamberlain <mcgrof@kernel.org>=
+ wrote:
+>
+> Sometimes you want to add debugfs entries for atomic counters which
+> can be pretty large using atomic64_t. Add support for these.
 
-Acked-by: Mel Gorman <mgorman@techsingularity.net>
+So I realize why you use atomic64, but I really suspect you'd be
+better off with just the regular "atomic_long".
 
--- 
-Mel Gorman
-SUSE Labs
+This is not some debug stat that we care deeply about on 32-bit, and
+"atomic64" is often really really nasty on 32-bit architectures.
+
+For example, on x86, instead of being a single instruction, it ends up
+being a cmpxchg loop. In fact, even a single atomic read is a cmpxchg
+(admittedly without the need for looping).
+
+And yeah, I realize that we don't have a "atomic_long" debugfs
+interface either. But I think we could just use atomic_long for the
+module code (avoiding all the horrors of 64-bit atomics on 32-bit
+architectures), and then using just 'var->counter' for the value. It's
+not like the debugfs stuff actually does any truly atomic updates.
+
+So something like
+
+        debugfs_create_ulong(... &val->counter ..);
+
+instead of
+
+        debugfs_create_atomic64(... &val ..);
+
+Hmm?
+
+I dunno. I just think this is not something that may be worth
+introducing a new thing for, when it is *so* painful on 32-bit, and
+doesn't seem worth it.
+
+                   Linus
