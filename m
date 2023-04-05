@@ -1,28 +1,51 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C956C3C37
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 14:20:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0749BC433EF;
-	Wed,  5 Apr 2023 14:20:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1680704448;
-	bh=btbPux0eFWafe1NQLw2ZxhsMN4Gxi4p1nV2A1irZIWs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fXj05RZKA4ticFCf9iuC2+ylwEUjnpDLTFqw1ROzk7rcNAdf4BfI19YVCBW6NMp69
-	 Rl7Icocj0G+C6niGphO4RBiVCJ5WC3lPXVCrNZAYj5tYRrAovUcNP5gBK9ccmCj+7/
-	 cVLUoKT2t0Ghgs79Bq8i2AI+3QdBVlBk/9Qz73dA=
-Date: Wed, 5 Apr 2023 16:20:40 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pratyush Yadav <ptyadav@amazon.de>
-Cc: Steve French <stfrench@microsoft.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Aurelien Aptel <aaptel@suse.com>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.4] smb3: fix problem with null cifs super block with
- previous patch
-Message-ID: <2023040523-delusion-corrode-f466@gregkh>
-References: <20230405135709.100174-1-ptyadav@amazon.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422FB3C37
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 14:27:14 +0000 (UTC)
+Received: by mail-pj1-f54.google.com with SMTP id r7-20020a17090b050700b002404be7920aso35659882pjz.5
+        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 07:27:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=heitbaum.com; s=google; t=1680704833;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=n5Q02pfG+OMk1kh4JZ7k9vPqYbgDWeWrEDJEsiquIG4=;
+        b=OKG4h15dRFM8loga0ZloBGZgnF3LHC7oXhkOBfSthdmOI1EvekxAnPab3OhpRM4ip7
+         oYkUFKrGyJ9t91H2ZZgyogELlpEPRaxyzj4dgYhEHQtku9+aw/+4mGBSuyILq75Helph
+         jIBLEzMI4bl5eJG5iSZmAim2Il85wh5bnxi8Y=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680704833;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n5Q02pfG+OMk1kh4JZ7k9vPqYbgDWeWrEDJEsiquIG4=;
+        b=Lq2T7a5iQ5DNjqs9dLMSqsts/UisAb07ci0tMhA0D+ryTDGIXsd9nXN0VKEHsTZ8L9
+         8QtODGSCbGzw8wkLoJQ4qlAtG50KUSdfoWPenWeDVbje6Zud0+ScF8UNJL+1QmCikDrS
+         Hoq9bDJuNyJGhGNonq9YogIqGxMTOmN/MECK9U/bWxiNDr3Y7RTlBlJ3mfE9KeOBGUZH
+         SA7pDxjGRVbawYFxhbr52WcWTEYOsE8oFxcExL34ZM0fwbIHHo3TL2kDwSH4iGW3zxpz
+         cX9ZxYSKytZPd7ciewI9UOhlNS4paL5JzfmxTbQug5QJmMeQ75S0tA9eLDZgyUkGJ5GO
+         WTqA==
+X-Gm-Message-State: AAQBX9c2zEWEAnuwkkkCScWXrJxrwoFuy5k9hlli4cuf67nMWAPtcbHp
+	gc6LMzShvsB2XSE9X7rqrAVt2A==
+X-Google-Smtp-Source: AKy350bdTWZsUp46cZZT7/E0Gnd1Xdy0heFNW1jSTFgn0+eJMFdjYMnZCiPf6VmMUxVQNMG5RAZeDg==
+X-Received: by 2002:a17:902:db10:b0:1a2:8924:224a with SMTP id m16-20020a170902db1000b001a28924224amr7755865plx.25.1680704833368;
+        Wed, 05 Apr 2023 07:27:13 -0700 (PDT)
+Received: from 90aff2bdd59e (124-148-239-102.tpgi.com.au. [124.148.239.102])
+        by smtp.gmail.com with ESMTPSA id j11-20020a17090276cb00b0019e5fc3c7e6sm10224782plt.101.2023.04.05.07.27.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Apr 2023 07:27:12 -0700 (PDT)
+Date: Wed, 5 Apr 2023 14:27:05 +0000
+From: Rudi Heitbaum <rudi@heitbaum.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/177] 6.1.23-rc3 review
+Message-ID: <20230405142705.GA8@90aff2bdd59e>
+References: <20230405100302.540890806@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -31,36 +54,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230405135709.100174-1-ptyadav@amazon.de>
+In-Reply-To: <20230405100302.540890806@linuxfoundation.org>
 
-On Wed, Apr 05, 2023 at 03:57:09PM +0200, Pratyush Yadav wrote:
-> From: Steve French <stfrench@microsoft.com>
+On Wed, Apr 05, 2023 at 12:03:38PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.23 release.
+> There are 177 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> [ Upstream commit 87f93d82e0952da18af4d978e7d887b4c5326c0b ]
-> 
-> Add check for null cifs_sb to create_options helper
-> 
-> Signed-off-by: Steve French <stfrench@microsoft.com>
-> Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-> Reviewed-by: Aurelien Aptel <aaptel@suse.com>
-> Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
-> ---
-> 
-> Only compile-tested. This was discovered by our static code analysis
-> tool. I do not use CIFS and do not know how to actually reproduce the
-> NULL dereference.
-> 
-> Follow up from [0]. Original patch is at [1].
-> 
-> Mandatory text due to licensing terms:
-> 
-> This bug was discovered and resolved using Coverity Static Analysis
-> Security Testing (SAST) by Synopsys, Inc.
+> Responses should be made by Fri, 07 Apr 2023 10:02:26 +0000.
+> Anything received after that time might be too late.
 
-What?  That's funny.  And nothing I'm going to be adding to the
-changelog text, sorry, as that's not what is upstream.  Please go poke
-your lawyers, that's not ok.
+Hi Greg,
 
-thanks,
+6.1.23-rc3 tested.
 
-greg k-h
+Run tested on:
+- Allwinner H6 (Tanix TX6)
+- Intel Alder Lake x86_64 (nuc12 i7-1260P)
+
+In addition - build tested for:
+- Allwinner A64
+- Allwinner H3
+- Allwinner H5
+- NXP iMX6
+- NXP iMX8
+- Qualcomm Dragonboard
+- Rockchip RK3288
+- Rockchip RK3328
+- Rockchip RK3399pro
+- Samsung Exynos
+
+Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
+--
+Rudi
