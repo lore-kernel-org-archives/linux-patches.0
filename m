@@ -1,261 +1,84 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909D879CC
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 20:35:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=TqXpp0mGR6pbQr82UrkZafoUwwcLEWn2SwPyhW5ccH4=; b=X5xdE8rLMlmIhymO9yURWuCRx9
-	w1LgYZs4/coLMo59/hY71k4+rqnnXzqaLc5HYdKHqVHeoeTjhEf7wUc+AnskcobUNmGIMxBiv8Nn8
-	4fequI0umG+GJm1tyfsebfRL+VKkmKOxEwafCKr8gSWS1hpUZbDjeFqnf5ue3DwhmTAMrdbOYR7Vs
-	1us/UOeklOrrDnWWlQ0mwgKBLyIuyRsaCVXegU/FjJbxeXni04d40TF9X1ydJQypCAQlOZPMknDfW
-	luZOgQOsCu0wq15gDwNE23B8ohPubiurmXTgY3jEVQMDaFCaX4lsgzS0gc8tNvC4H8mXH5q3iqLZM
-	4fHLE72w==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1pk9qT-005dWa-2g;
-	Wed, 05 Apr 2023 20:35:05 +0000
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: david@redhat.com,
-	patches@lists.linux.dev,
-	linux-modules@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	pmladek@suse.com,
-	petr.pavlu@suse.com,
-	prarit@redhat.com,
-	torvalds@linux-foundation.org,
-	gregkh@linuxfoundation.org,
-	rafael@kernel.org
-Cc: christophe.leroy@csgroup.eu,
-	tglx@linutronix.de,
-	peterz@infradead.org,
-	song@kernel.org,
-	rppt@kernel.org,
-	dave@stgolabs.net,
-	willy@infradead.org,
-	vbabka@suse.cz,
-	mhocko@suse.com,
-	dave.hansen@linux.intel.com,
-	colin.i.king@gmail.com,
-	jim.cromie@gmail.com,
-	catalin.marinas@arm.com,
-	jbaron@akamai.com,
-	rick.p.edgecombe@intel.com,
-	mcgrof@kernel.org
-Subject: [PATCH v2 1/2] Change DEFINE_SEMAPHORE() to take a number argument
-Date: Wed,  5 Apr 2023 13:35:04 -0700
-Message-Id: <20230405203505.1343562-2-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230405203505.1343562-1-mcgrof@kernel.org>
-References: <20230405203505.1343562-1-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6568B79CC;
+	Wed,  5 Apr 2023 20:44:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F30CC433EF;
+	Wed,  5 Apr 2023 20:44:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1680727481;
+	bh=HM42jy9mV3T5mKNjxd6eAXa1sP1hyHMBCh9v69nIN2o=;
+	h=From:Date:Subject:To:Cc:From;
+	b=j2D5zuYKWtCpeuSPAei2jXjEslYrj3lg/aswR2lOlTM6Z2kDVMLJVyQvuDEFEP3Qj
+	 WqdAUqMvoHdyyoiOXv7DszWJY2GFqv8yokJCKKXOgTQCydbGXzV5ptb11xjrnAM3/j
+	 8dFPWrsbPxU9jeiOBVbJuPUtKsCECYu5tu4S6nVv30ZHntN8m/H8PNrhiCRBSIRdh/
+	 uYeENdBK0vRBBivPCAOBWpaeZkUkOtgStMqXdJvPatVP0i3kbj4L8c6kDr6hthYjev
+	 KxCwU6cL8WnxJPFt0Z2/pFiW7hM14DgIXCMhLpTrC7Dsq3osoqdLGhjXJ/GOAK5d9L
+	 83gOGGqwwT8kw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 05 Apr 2023 13:44:28 -0700
+Subject: [PATCH] Documentation/llvm: Add a note about prebuilt kernel.org
+ toolchains
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230405-korg-llvm-tc-docs-v1-1-420849b2e025@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAKvdLWQC/x2NywqDMBAAf0X23IX4gtBfKT0k61aXalJ2RQTx3
+ 409DsMwBxirsMGzOkB5E5OcCtSPCmgKaWSUoTA0rmld53r8Zh1xnrcFV8Ihk6HvimHv60g9lC4
+ GY4waEk13uQRbWW/xU/7I/p+93ud5AXmHlOd8AAAA
+To: ndesaulniers@google.com, masahiroy@kernel.org, corbet@lwn.net
+Cc: arnd@arndb.de, keescook@chromium.org, trix@redhat.com, 
+ nicolas@fjasle.eu, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ linux-kbuild@vger.kernel.org, linux-doc@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1310; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=HM42jy9mV3T5mKNjxd6eAXa1sP1hyHMBCh9v69nIN2o=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCm6d3dYvz4csqOw7/VmxV3L/3T11B4TXONVE6ixyCX3/
+ rdHHEEMHaUsDGIcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAibDWMDK+LP29i87qio3L3
+ R9KshWE/ws3ePN1wujNId1rnmq1/tu1hZGiQO7IsS/zBROcLhVZTVbM2h5yyS+64JXiB9+olQQb
+ nMn4A
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-From: Peter Zijlstra <peterz@infradead.org>
+I recently started uploading prebuilt stable versions of LLVM to
+kernel.org, which should make building the kernel with LLVM more
+accessible to maintainers and developers. Link them in the LLVM
+documentation to make this more visible.
 
-Fundamentally semaphores are a counted primitive, but
-DEFINE_SEMAPHORE() does not expose this and explicitly creates a
-binary semaphore.
-
-Change DEFINE_SEMAPHORE() to take a number argument and use that in the
-few places that open-coded it using __SEMAPHORE_INITIALIZER().
-
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-[mcgrof: add some tribal knowledge about why some folks prefer
- binary sempahores over mutexes]
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/20230319235619.GA18547@dev-arch.thelio-3990X/
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/mips/cavium-octeon/setup.c                       |  2 +-
- arch/x86/kernel/cpu/intel.c                           |  2 +-
- drivers/firmware/efi/runtime-wrappers.c               |  2 +-
- drivers/firmware/efi/vars.c                           |  2 +-
- drivers/macintosh/adb.c                               |  2 +-
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c      |  2 +-
- drivers/platform/x86/intel/ifs/sysfs.c                |  2 +-
- drivers/scsi/esas2r/esas2r_ioctl.c                    |  2 +-
- .../vc04_services/interface/vchiq_arm/vchiq_arm.c     |  2 +-
- include/linux/semaphore.h                             | 11 +++++++++--
- kernel/printk/printk.c                                |  2 +-
- net/rxrpc/call_object.c                               |  6 ++----
- 12 files changed, 21 insertions(+), 16 deletions(-)
+ Documentation/kbuild/llvm.rst | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/mips/cavium-octeon/setup.c b/arch/mips/cavium-octeon/setup.c
-index a71727f7a608..c5561016f577 100644
---- a/arch/mips/cavium-octeon/setup.c
-+++ b/arch/mips/cavium-octeon/setup.c
-@@ -72,7 +72,7 @@ extern void pci_console_init(const char *arg);
- static unsigned long long max_memory = ULLONG_MAX;
- static unsigned long long reserve_low_mem;
+diff --git a/Documentation/kbuild/llvm.rst b/Documentation/kbuild/llvm.rst
+index bfb51685073c..3e1f67b05ca6 100644
+--- a/Documentation/kbuild/llvm.rst
++++ b/Documentation/kbuild/llvm.rst
+@@ -171,6 +171,10 @@ Getting Help
+ Getting LLVM
+ -------------
  
--DEFINE_SEMAPHORE(octeon_bootbus_sem);
-+DEFINE_SEMAPHORE(octeon_bootbus_sem, 1);
- EXPORT_SYMBOL(octeon_bootbus_sem);
- 
- static struct octeon_boot_descriptor *octeon_boot_desc_ptr;
-diff --git a/arch/x86/kernel/cpu/intel.c b/arch/x86/kernel/cpu/intel.c
-index 291d4167fab8..12bad63822f0 100644
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -1177,7 +1177,7 @@ static const struct {
- static struct ratelimit_state bld_ratelimit;
- 
- static unsigned int sysctl_sld_mitigate = 1;
--static DEFINE_SEMAPHORE(buslock_sem);
-+static DEFINE_SEMAPHORE(buslock_sem, 1);
- 
- #ifdef CONFIG_PROC_SYSCTL
- static struct ctl_table sld_sysctls[] = {
-diff --git a/drivers/firmware/efi/runtime-wrappers.c b/drivers/firmware/efi/runtime-wrappers.c
-index 1fba4e09cdcf..a400c4312c82 100644
---- a/drivers/firmware/efi/runtime-wrappers.c
-+++ b/drivers/firmware/efi/runtime-wrappers.c
-@@ -158,7 +158,7 @@ void efi_call_virt_check_flags(unsigned long flags, const char *call)
-  * none of the remaining functions are actually ever called at runtime.
-  * So let's just use a single lock to serialize all Runtime Services calls.
-  */
--static DEFINE_SEMAPHORE(efi_runtime_lock);
-+static DEFINE_SEMAPHORE(efi_runtime_lock, 1);
- 
- /*
-  * Expose the EFI runtime lock to the UV platform
-diff --git a/drivers/firmware/efi/vars.c b/drivers/firmware/efi/vars.c
-index bd75b87f5fc1..bfc5fa6aa47b 100644
---- a/drivers/firmware/efi/vars.c
-+++ b/drivers/firmware/efi/vars.c
-@@ -21,7 +21,7 @@
- /* Private pointer to registered efivars */
- static struct efivars *__efivars;
- 
--static DEFINE_SEMAPHORE(efivars_lock);
-+static DEFINE_SEMAPHORE(efivars_lock, 1);
- 
- static efi_status_t check_var_size(bool nonblocking, u32 attributes,
- 				   unsigned long size)
-diff --git a/drivers/macintosh/adb.c b/drivers/macintosh/adb.c
-index 23bd0c77ac1a..56599515d51a 100644
---- a/drivers/macintosh/adb.c
-+++ b/drivers/macintosh/adb.c
-@@ -80,7 +80,7 @@ static struct adb_driver *adb_controller;
- BLOCKING_NOTIFIER_HEAD(adb_client_list);
- static int adb_got_sleep;
- static int adb_inited;
--static DEFINE_SEMAPHORE(adb_probe_mutex);
-+static DEFINE_SEMAPHORE(adb_probe_mutex, 1);
- static int sleepy_trackpad;
- static int autopoll_devs;
- int __adb_probe_sync;
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-index 5d1e4fe335aa..5a105bab4387 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-@@ -298,7 +298,7 @@ const u32 dmae_reg_go_c[] = {
- 
- /* Global resources for unloading a previously loaded device */
- #define BNX2X_PREV_WAIT_NEEDED 1
--static DEFINE_SEMAPHORE(bnx2x_prev_sem);
-+static DEFINE_SEMAPHORE(bnx2x_prev_sem, 1);
- static LIST_HEAD(bnx2x_prev_list);
- 
- /* Forward declaration */
-diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
-index ee636a76b083..4c3c642ee19a 100644
---- a/drivers/platform/x86/intel/ifs/sysfs.c
-+++ b/drivers/platform/x86/intel/ifs/sysfs.c
-@@ -13,7 +13,7 @@
-  * Protects against simultaneous tests on multiple cores, or
-  * reloading can file while a test is in progress
-  */
--static DEFINE_SEMAPHORE(ifs_sem);
-+static DEFINE_SEMAPHORE(ifs_sem, 1);
- 
- /*
-  * The sysfs interface to check additional details of last test
-diff --git a/drivers/scsi/esas2r/esas2r_ioctl.c b/drivers/scsi/esas2r/esas2r_ioctl.c
-index e003d923acbf..055d2e87a2c8 100644
---- a/drivers/scsi/esas2r/esas2r_ioctl.c
-+++ b/drivers/scsi/esas2r/esas2r_ioctl.c
-@@ -56,7 +56,7 @@ dma_addr_t esas2r_buffered_ioctl_addr;
- u32 esas2r_buffered_ioctl_size;
- struct pci_dev *esas2r_buffered_ioctl_pcid;
- 
--static DEFINE_SEMAPHORE(buffered_ioctl_semaphore);
-+static DEFINE_SEMAPHORE(buffered_ioctl_semaphore, 1);
- typedef int (*BUFFERED_IOCTL_CALLBACK)(struct esas2r_adapter *,
- 				       struct esas2r_request *,
- 				       struct esas2r_sg_context *,
-diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-index cddcd3c596c9..1a656fdc9445 100644
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-@@ -149,7 +149,7 @@ static char *g_fragments_base;
- static char *g_free_fragments;
- static struct semaphore g_free_fragments_sema;
- 
--static DEFINE_SEMAPHORE(g_free_fragments_mutex);
-+static DEFINE_SEMAPHORE(g_free_fragments_mutex, 1);
- 
- static int
- vchiq_blocking_bulk_transfer(struct vchiq_instance *instance, unsigned int handle, void *data,
-diff --git a/include/linux/semaphore.h b/include/linux/semaphore.h
-index 6694d0019a68..2d6aa3fd7861 100644
---- a/include/linux/semaphore.h
-+++ b/include/linux/semaphore.h
-@@ -25,8 +25,15 @@ struct semaphore {
- 	.wait_list	= LIST_HEAD_INIT((name).wait_list),		\
- }
- 
--#define DEFINE_SEMAPHORE(name)	\
--	struct semaphore name = __SEMAPHORE_INITIALIZER(name, 1)
-+/*
-+ * There is a big difference between a binary semaphore and a mutex.
-+ * You cannot call mutex_unlock() from IRQ context because it takes an
-+ * internal mutex spin_lock in a non-IRQ-safe manner. Both try_lock()
-+ * and unlock() can be called from IRQ context. A mutex must also be
-+ * released in the same context that locked it.
-+ */
-+#define DEFINE_SEMAPHORE(_name, _n)	\
-+	struct semaphore _name = __SEMAPHORE_INITIALIZER(_name, _n)
- 
- static inline void sema_init(struct semaphore *sem, int val)
- {
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index fd0c9f913940..76987aaa5a45 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -89,7 +89,7 @@ static DEFINE_MUTEX(console_mutex);
-  * console_sem protects updates to console->seq and console_suspended,
-  * and also provides serialization for console printing.
-  */
--static DEFINE_SEMAPHORE(console_sem);
-+static DEFINE_SEMAPHORE(console_sem, 1);
- HLIST_HEAD(console_list);
- EXPORT_SYMBOL_GPL(console_list);
- DEFINE_STATIC_SRCU(console_srcu);
-diff --git a/net/rxrpc/call_object.c b/net/rxrpc/call_object.c
-index e9f1f49d18c2..3e5cc70884dd 100644
---- a/net/rxrpc/call_object.c
-+++ b/net/rxrpc/call_object.c
-@@ -40,10 +40,8 @@ const char *const rxrpc_call_completions[NR__RXRPC_CALL_COMPLETIONS] = {
- 
- struct kmem_cache *rxrpc_call_jar;
- 
--static struct semaphore rxrpc_call_limiter =
--	__SEMAPHORE_INITIALIZER(rxrpc_call_limiter, 1000);
--static struct semaphore rxrpc_kernel_call_limiter =
--	__SEMAPHORE_INITIALIZER(rxrpc_kernel_call_limiter, 1000);
-+static DEFINE_SEMAPHORE(rxrpc_call_limiter, 1000);
-+static DEFINE_SEMAPHORE(rxrpc_kernel_call_limiter, 1000);
- 
- void rxrpc_poke_call(struct rxrpc_call *call, enum rxrpc_call_poke_trace what)
- {
++We provide prebuilt stable versions of LLVM on `kernel.org <https://kernel.org/pub/tools/llvm/>`_.
++Below are links that may be useful for building LLVM from source or procurring
++it through a distribution's package manager.
++
+ - https://releases.llvm.org/download.html
+ - https://github.com/llvm/llvm-project
+ - https://llvm.org/docs/GettingStarted.html
+
+---
+base-commit: 7e364e56293bb98cae1b55fd835f5991c4e96e7d
+change-id: 20230405-korg-llvm-tc-docs-84304e881bc5
+
+Best regards,
 -- 
-2.39.2
+Nathan Chancellor <nathan@kernel.org>
 
