@@ -1,90 +1,134 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422FB3C37
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 14:27:14 +0000 (UTC)
-Received: by mail-pj1-f54.google.com with SMTP id r7-20020a17090b050700b002404be7920aso35659882pjz.5
-        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 07:27:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google; t=1680704833;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=n5Q02pfG+OMk1kh4JZ7k9vPqYbgDWeWrEDJEsiquIG4=;
-        b=OKG4h15dRFM8loga0ZloBGZgnF3LHC7oXhkOBfSthdmOI1EvekxAnPab3OhpRM4ip7
-         oYkUFKrGyJ9t91H2ZZgyogELlpEPRaxyzj4dgYhEHQtku9+aw/+4mGBSuyILq75Helph
-         jIBLEzMI4bl5eJG5iSZmAim2Il85wh5bnxi8Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680704833;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n5Q02pfG+OMk1kh4JZ7k9vPqYbgDWeWrEDJEsiquIG4=;
-        b=Lq2T7a5iQ5DNjqs9dLMSqsts/UisAb07ci0tMhA0D+ryTDGIXsd9nXN0VKEHsTZ8L9
-         8QtODGSCbGzw8wkLoJQ4qlAtG50KUSdfoWPenWeDVbje6Zud0+ScF8UNJL+1QmCikDrS
-         Hoq9bDJuNyJGhGNonq9YogIqGxMTOmN/MECK9U/bWxiNDr3Y7RTlBlJ3mfE9KeOBGUZH
-         SA7pDxjGRVbawYFxhbr52WcWTEYOsE8oFxcExL34ZM0fwbIHHo3TL2kDwSH4iGW3zxpz
-         cX9ZxYSKytZPd7ciewI9UOhlNS4paL5JzfmxTbQug5QJmMeQ75S0tA9eLDZgyUkGJ5GO
-         WTqA==
-X-Gm-Message-State: AAQBX9c2zEWEAnuwkkkCScWXrJxrwoFuy5k9hlli4cuf67nMWAPtcbHp
-	gc6LMzShvsB2XSE9X7rqrAVt2A==
-X-Google-Smtp-Source: AKy350bdTWZsUp46cZZT7/E0Gnd1Xdy0heFNW1jSTFgn0+eJMFdjYMnZCiPf6VmMUxVQNMG5RAZeDg==
-X-Received: by 2002:a17:902:db10:b0:1a2:8924:224a with SMTP id m16-20020a170902db1000b001a28924224amr7755865plx.25.1680704833368;
-        Wed, 05 Apr 2023 07:27:13 -0700 (PDT)
-Received: from 90aff2bdd59e (124-148-239-102.tpgi.com.au. [124.148.239.102])
-        by smtp.gmail.com with ESMTPSA id j11-20020a17090276cb00b0019e5fc3c7e6sm10224782plt.101.2023.04.05.07.27.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 07:27:12 -0700 (PDT)
-Date: Wed, 5 Apr 2023 14:27:05 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/177] 6.1.23-rc3 review
-Message-ID: <20230405142705.GA8@90aff2bdd59e>
-References: <20230405100302.540890806@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679013C37
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 14:28:44 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 9B4E220698;
+	Wed,  5 Apr 2023 14:28:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1680704922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=YqF8idOT1k8dhFhoAQM1OZCaPGH+LbOP3hVosygnnAQ=;
+	b=WVaVx3f8jfJQKBrfm1KKPpu1TcMgehaxgeLwwQ9QdGOHYxkx8YPpK+YnwBcH/TuDfUtltp
+	eGYu5tbmV+Jy0lWoWendCQ+RFdn948Skgg9VRW3qrz2VzOewuUgNOEED7NoEOReVQlebjg
+	aQSL802rqCiFXe2+0TVtvusx2+oMtNc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1680704922;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=YqF8idOT1k8dhFhoAQM1OZCaPGH+LbOP3hVosygnnAQ=;
+	b=k7dqNQ3FQNhza/bL6k9yridUZP846ungl/5G4HuGIotJRUoBC4mwuwU/xNE9aquALOp7hH
+	jMzFA8BhZsNC/tAA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 7850B13A31;
+	Wed,  5 Apr 2023 14:28:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id ocHaHJqFLWT3CwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 05 Apr 2023 14:28:42 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Kees Cook <keescook@chromium.org>,
+	linux-hardening@vger.kernel.org,
+	Alexander Halbuer <halbuer@sra.uni-hannover.de>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH] mm, page_alloc: use check_pages_enabled static key to check tail pages
+Date: Wed,  5 Apr 2023 16:28:40 +0200
+Message-Id: <20230405142840.11068-1-vbabka@suse.cz>
+X-Mailer: git-send-email 2.40.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230405100302.540890806@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Apr 05, 2023 at 12:03:38PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.23 release.
-> There are 177 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 07 Apr 2023 10:02:26 +0000.
-> Anything received after that time might be too late.
+Commit 700d2e9a36b9 ("mm, page_alloc: reduce page alloc/free sanity
+checks") has introduced a new static key check_pages_enabled to control
+when struct pages are sanity checked during allocation and freeing. Mel
+Gorman suggested that free_tail_pages_check() could use this static key
+as well, instead of relying on CONFIG_DEBUG_VM. That makes sense, so do
+that. Also rename the function to free_tail_page_prepare() because it
+works on a single tail page and has a struct page preparation component
+as well as the optional checking component.
+Also remove some unnecessary unlikely() within static_branch_unlikely()
+statements that Mel pointed out for commit 700d2e9a36b9.
 
-Hi Greg,
+Suggested-by: Mel Gorman <mgorman@techsingularity.net>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+---
+ mm/hugetlb_vmemmap.c |  2 +-
+ mm/page_alloc.c      | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-6.1.23-rc3 tested.
+diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
+index a15cc56cf70a..656b00d1a2fb 100644
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -264,7 +264,7 @@ static void vmemmap_remap_pte(pte_t *pte, unsigned long addr,
+  * How many struct page structs need to be reset. When we reuse the head
+  * struct page, the special metadata (e.g. page->flags or page->mapping)
+  * cannot copy to the tail struct page structs. The invalid value will be
+- * checked in the free_tail_pages_check(). In order to avoid the message
++ * checked in the free_tail_page_prepare(). In order to avoid the message
+  * of "corrupted mapping in tail page". We need to reset at least 3 (one
+  * head struct page struct and two tail struct page structs) struct page
+  * structs.
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index a109444e9f44..7df5bf07e013 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -1308,7 +1308,7 @@ static inline bool free_page_is_bad(struct page *page)
+ 	return true;
+ }
+ 
+-static int free_tail_pages_check(struct page *head_page, struct page *page)
++static int free_tail_page_prepare(struct page *head_page, struct page *page)
+ {
+ 	struct folio *folio = (struct folio *)head_page;
+ 	int ret = 1;
+@@ -1319,7 +1319,7 @@ static int free_tail_pages_check(struct page *head_page, struct page *page)
+ 	 */
+ 	BUILD_BUG_ON((unsigned long)LIST_POISON1 & 1);
+ 
+-	if (!IS_ENABLED(CONFIG_DEBUG_VM)) {
++	if (!static_branch_unlikely(&check_pages_enabled)) {
+ 		ret = 0;
+ 		goto out;
+ 	}
+@@ -1447,9 +1447,9 @@ static __always_inline bool free_pages_prepare(struct page *page,
+ 			ClearPageHasHWPoisoned(page);
+ 		for (i = 1; i < (1 << order); i++) {
+ 			if (compound)
+-				bad += free_tail_pages_check(page, page + i);
++				bad += free_tail_page_prepare(page, page + i);
+ 			if (static_branch_unlikely(&check_pages_enabled)) {
+-				if (unlikely(free_page_is_bad(page + i))) {
++				if (free_page_is_bad(page + i)) {
+ 					bad++;
+ 					continue;
+ 				}
+@@ -2375,7 +2375,7 @@ static inline bool check_new_pages(struct page *page, unsigned int order)
+ 		for (int i = 0; i < (1 << order); i++) {
+ 			struct page *p = page + i;
+ 
+-			if (unlikely(check_new_page(p)))
++			if (check_new_page(p))
+ 				return true;
+ 		}
+ 	}
+-- 
+2.40.0
 
-Run tested on:
-- Allwinner H6 (Tanix TX6)
-- Intel Alder Lake x86_64 (nuc12 i7-1260P)
-
-In addition - build tested for:
-- Allwinner A64
-- Allwinner H3
-- Allwinner H5
-- NXP iMX6
-- NXP iMX8
-- Qualcomm Dragonboard
-- Rockchip RK3288
-- Rockchip RK3328
-- Rockchip RK3399pro
-- Samsung Exynos
-
-Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
---
-Rudi
