@@ -1,116 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from qproxy1-pub.mail.unifiedlayer.com (qproxy1-pub.mail.unifiedlayer.com [173.254.64.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E5F7F8
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 06:52:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D2DC433A4
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 06:52:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1680677557;
-	bh=XUuQ7Bb4fmNGW4BDO3pXmRn2zVkwWZkSaUU2boHvL/M=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=lkT4mgj2agKQd29h+FxK0YhPn8c6UtfOswmOyb6crEefOooUhJPp0ZN6HKwz7n0Rc
-	 Xi4Sq8YwJOWswjT0ihPhVUEaAKhw/lvD4AZgZyduhRzIdvrbgZo20pcFr6z/zfli6A
-	 LejdkVLtw+4Kwp8zZJQSPnsIXcXD31u03m6zZooDEdVO4KIU1obmny/HMw8przOfmH
-	 o986LodMYnqZGJDK8/UhoIphMjw1poxwqr4HbzaoGu75cB8uAoWUmNrPiuUV/hwkfb
-	 GdMKKJtaJK1OcSRpbB6iZv2+TO3Bb9aGYs18l2bHa/hVkA1FxBtcNuZaLxO1kBux2J
-	 fodldYHrBFbCg==
-Received: by mail-lj1-f179.google.com with SMTP id bx10so17962246ljb.8
-        for <patches@lists.linux.dev>; Tue, 04 Apr 2023 23:52:36 -0700 (PDT)
-X-Gm-Message-State: AAQBX9dsVEwN44fVB2eUzEbgx7n6Wzp10mjFF40F3UmlecqqFEEm3PPc
-	Wyz2DQZ1OfFPH9KEhVZSxzGCQk1nDrCfNE2+Ff8=
-X-Google-Smtp-Source: AKy350aa78EAvutnWbkk9TEc9gO1+JVmLRwUFOt3Os/WhAUHxKCINpMoAa+2knzygX+VpzhYgUBDyPuAB4qZd3UbvI0=
-X-Received: by 2002:a2e:824a:0:b0:299:b5e6:4c45 with SMTP id
- j10-20020a2e824a000000b00299b5e64c45mr1866847ljh.5.1680677554868; Tue, 04 Apr
- 2023 23:52:34 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E4CA45
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 09:12:44 +0000 (UTC)
+Received: from outbound-ss-820.bluehost.com (outbound-ss-820.bluehost.com [69.89.24.241])
+	by qproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id C39B18032F87
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 08:49:57 +0000 (UTC)
+Received: from cmgw11.mail.unifiedlayer.com (unknown [10.0.90.126])
+	by progateway2.mail.pro1.eigbox.com (Postfix) with ESMTP id 346EE10047FB4
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 08:49:50 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id jypxpotHG2LM4jypyp9gRY; Wed, 05 Apr 2023 08:49:50 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=KbQXDSUD c=1 sm=1 tr=0 ts=642d362e
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=dKHAf1wccvYA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=wCbDlB704wCocptsMoXzCNIIUhH1OZvAYrJXarJTUuI=; b=kB97TK0l+bsfhCd2Izz2KgCoq8
+	Lxpqv5BV1XDlw651KHym4RC/GZfWv6eBRbQuHX8NKWvzgZWTf5KSRQW2d1JCQ/ztUcbcqfmIive9e
+	iycWcxTRl0rEjx5sJnuQyQEau0eqJPHFah930OYnUbxtJIZvGkyBOz3/Lre5As8ifoFzGBcVtmVz4
+	LEFYFeE2ZvPW225LZadlcfvBS1exA7ZHNhVwPH10vGT8VLHo3d+DRVY1Yue+G9u40xzYEDzQxRMx/
+	EUmlVBYKmbUGopzyck+F5y4cCINKP7+jQFit4ys9vBIlLjr6Mrqda4JRUaRgI3sAjyFFLVJ9ngqSl
+	r+749Yrw==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:34180 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1pjypx-001ZCk-4r;
+	Wed, 05 Apr 2023 02:49:49 -0600
+Subject: Re: [PATCH 5.15 00/99] 5.15.106-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230403140356.079638751@linuxfoundation.org>
+In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <c6df1f3a-f92d-86a7-9a2b-08ca7eedcad8@w6rz.net>
+Date: Wed, 5 Apr 2023 01:49:43 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230405022702.753323-1-mcgrof@kernel.org> <20230405022702.753323-2-mcgrof@kernel.org>
-In-Reply-To: <20230405022702.753323-2-mcgrof@kernel.org>
-From: Song Liu <song@kernel.org>
-Date: Tue, 4 Apr 2023 23:52:22 -0700
-X-Gmail-Original-Message-ID: <CAPhsuW7o=JaQQRtyEo=sicxpifc2s8oFXrV7metER=eiETv8nQ@mail.gmail.com>
-Message-ID: <CAPhsuW7o=JaQQRtyEo=sicxpifc2s8oFXrV7metER=eiETv8nQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] module: fix kmemleak annotations for non init ELF sections
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: david@redhat.com, patches@lists.linux.dev, linux-modules@vger.kernel.org, 
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org, pmladek@suse.com, 
-	petr.pavlu@suse.com, prarit@redhat.com, torvalds@linux-foundation.org, 
-	gregkh@linuxfoundation.org, rafael@kernel.org, christophe.leroy@csgroup.eu, 
-	tglx@linutronix.de, peterz@infradead.org, rppt@kernel.org, dave@stgolabs.net, 
-	willy@infradead.org, vbabka@suse.cz, mhocko@suse.com, 
-	dave.hansen@linux.intel.com, colin.i.king@gmail.com, jim.cromie@gmail.com, 
-	catalin.marinas@arm.com, jbaron@akamai.com, rick.p.edgecombe@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1pjypx-001ZCk-4r
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:34180
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Tue, Apr 4, 2023 at 7:27=E2=80=AFPM Luis Chamberlain <mcgrof@kernel.org>=
- wrote:
+On 4/3/23 7:08 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.106 release.
+> There are 99 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> Commit ac3b43283923 ("module: replace module_layout with module_memory")
-> reworked the way to handle memory allocations to make it clearer. But it
-> lost in translation how we handled kmemleak_ignore() or kmemleak_not_leak=
-()
-> for different ELF sections.
+> Responses should be made by Wed, 05 Apr 2023 14:03:18 +0000.
+> Anything received after that time might be too late.
 >
-> Fix this and clarify the comments a bit more.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.106-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 >
-> Fixes: ac3b43283923 ("module: replace module_layout with module_memory")
-> Reported-by: Jim Cromie <jim.cromie@gmail.com>
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> thanks,
+>
+> greg k-h
 
-Acked-by: Song Liu <song@kernel.org>
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Thanks for the fix!
+Tested-by: Ron Economos <re@w6rz.net>
 
-> ---
->  kernel/module/main.c | 20 ++++++++++++++++----
->  1 file changed, 16 insertions(+), 4 deletions(-)
->
-> diff --git a/kernel/module/main.c b/kernel/module/main.c
-> index 5cc21083af04..d8bb23fa6989 100644
-> --- a/kernel/module/main.c
-> +++ b/kernel/module/main.c
-> @@ -2233,11 +2233,23 @@ static int move_module(struct module *mod, struct=
- load_info *info)
->                 ptr =3D module_memory_alloc(mod->mem[type].size, type);
->
->                 /*
-> -                * The pointer to this block is stored in the module stru=
-cture
-> -                * which is inside the block. Just mark it as not being a
-> -                * leak.
-> +                * The pointer to these blocks of memory are stored on th=
-e module
-> +                * structure and we keep that around so long as the modul=
-e is
-> +                * around. We only free that memory when we unload the mo=
-dule.
-> +                * Just mark them as not being a leak then. The .init* EL=
-F
-> +                * sections *do* get freed after boot so we treat them sl=
-ightly
-> +                * differently and only grey them out -- they work as typ=
-ical
-> +                * memory allocations which *do* eventually get freed.
->                  */
-> -               kmemleak_ignore(ptr);
-> +               switch (type) {
-> +               case MOD_INIT_TEXT: /* fallthrough */
-> +               case MOD_INIT_DATA: /* fallthrough */
-> +               case MOD_INIT_RODATA: /* fallthrough */
-> +                       kmemleak_ignore(ptr);
-> +                       break;
-> +               default:
-> +                       kmemleak_not_leak(ptr);
-> +               }
->                 if (!ptr) {
->                         t =3D type;
->                         goto out_enomem;
-> --
-> 2.39.2
->
