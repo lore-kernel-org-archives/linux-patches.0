@@ -1,44 +1,44 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5814CC950
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 21:52:46 +0000 (UTC)
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-500349a5139so4025584a12.1
-        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 14:52:46 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13792C950
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 21:59:40 +0000 (UTC)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-502739add9dso836358a12.0
+        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 14:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20210112.gappssmtp.com; s=20210112; t=1680731564;
+        d=metaspace-dk.20210112.gappssmtp.com; s=20210112; t=1680731979;
         h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
          :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=CQlHkLe0nciRyVqFq9sfsFmRt63ff4HXDstgqyEXBdc=;
-        b=2SdNqxnbBITR/O+AJmQJkuOWPBpyU19T64bURPo7FYbe8N7ac2SnQDJiLwbWMbsliT
-         yt+VlMkjnx63f7z0OZiCGnp7CdbkrB2XcPBlZ5DStE21HdXBd9XKPNL7bYR8yjEZtai/
-         aJdjQqlmSUYvdjhy/PRRoU/EKCmFdxsGckqxutWP2GJCd+Qw+fwj9iBNRURYrCpTvzMZ
-         T6VzSmpG0hlLoQaE3ckpevECyGb7nbZo+iBMeFRfpipy16GZD6otdEHbi+9dPhVh0dJH
-         w9KF0zuQPYHEIvUIs97D67GuhYbZmcnZshUbp9aJAIUpBJSrKOWpQrFf+8LecVkSVMhW
-         /JvA==
+        bh=RZZVkPe4AwCbs7pG7yz8OubdmqvEAqRS47xr1RdAx9w=;
+        b=ERYi2dpfiVAnS8c8CJFU01G0Zh34IwJJhXbOOe9qa65Sdogiq2+lBBlXX4UaMWXiGl
+         3pByt8yzAClGmfMHTH1TurTPaJZ4sdTnyBsqNrvY83aiXY5rmrypjwccyXqmepm6h9ym
+         x42ez/i70xtNQh1AvTN7FOvZJ642iGusLuWmQtoCF6B4ZL6YctoQWiFdH3TeXtoVaVAh
+         PHmvF2Ymx1na1IeLk/O3quXY5YZAc+RHjMgrX3l/KYpQwIAs0oRQ2HANnnzrQeN57kcW
+         +zEfc+AVNEKZOM8XEIWluADGyJUIXKaN883bVUsErupZ9C4oYzDpFTGDlU8z1ERB6d12
+         AFWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680731564;
+        d=1e100.net; s=20210112; t=1680731979;
         h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
          :user-agent:references:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CQlHkLe0nciRyVqFq9sfsFmRt63ff4HXDstgqyEXBdc=;
-        b=mQ6nwidA4JaiCptD2eIV8p4NOlVwavSg2NDiRMolR7KmWXvYRUABZpkTsyVYIhIOrX
-         n9x02vANaMLJRuuf10FIOoN4FJ5FdthbPxim135FcpRXL2o1CwBYkYx4+Jifrxa5JawJ
-         1lG6GMYNDIAULtuI2qRRQBXAJXgyrFBMMiUhER07VEnE6d9s/1iDOclwTbybn8QuTdGZ
-         Pmivxn/eV2kbbyA7lsGYHaXU5qiDQGYHktn4hfADq6PwgfvLCpajDyTS+FIfkJqWqkr3
-         77Amlz84seA/2dem0WEnv7EGNvp2JCcVuqUADLxyBgZpIkV2wyGjiXLYi5aKx1lSoI7L
-         csfw==
-X-Gm-Message-State: AAQBX9eC48NIVO3HPYYvqvPC4nGHfQrgnRIFYi0Msm37zkLzuijcSVHk
-	hw2BwT1CusxCP24A74R+rBjBPQ==
-X-Google-Smtp-Source: AKy350Z/7W3HPZNePzh8LaWKcOFTjs9BugvO4cW1sMP8sNpcuUsjHWzecPNIp8jeFnCbx3jBUA6rGw==
-X-Received: by 2002:aa7:cd0b:0:b0:502:2953:c0b2 with SMTP id b11-20020aa7cd0b000000b005022953c0b2mr2976829edw.12.1680731564424;
-        Wed, 05 Apr 2023 14:52:44 -0700 (PDT)
+        bh=RZZVkPe4AwCbs7pG7yz8OubdmqvEAqRS47xr1RdAx9w=;
+        b=s2YC5qigQPP23N2Za6lmr1YMya42mXn68Sx0dt0s/Y65c1Rwo6d8WgOFhlOdBy25eU
+         KiRuWEC0HitcJ/K7JcxGpKYCmIjqqQVrVgtmGJ+e04l9/3XMQhGQtjG8ZskNZgHysqew
+         Td0SGmtEzYtpL4/ryD7Aua0MLQJo+6OuDODXFseQggi86YxEbCzlmYs35JaYjcgzht2q
+         Ff24hI+h8KRLXYuBmiN4R7jmPYr6OKMvGr5mzYMI2M1/YYJo2cjnaNhKWJNlOKKNNRWv
+         lz+ptS0txzUcqqXE6U3FSNfo2x0mY4bDBQo3Ori4vGhMlP2ero2YHJSn5NCiLyWBOHi8
+         Rrmw==
+X-Gm-Message-State: AAQBX9cX+smKEIbvVAds26ydXIOo6GrR91pjgPF0bEpq4gWl0UG1x3vQ
+	U122CcmxqqbIfYT7t/5fNZfmJA==
+X-Google-Smtp-Source: AKy350aZ5fbWqOqFqxsZjsVdzrI8BDvIV15oXyKuAnwypjN/QNgCyXKwxwCQnsSOgZUF/qv629FpHg==
+X-Received: by 2002:a05:6402:b04:b0:4fd:215e:b691 with SMTP id bm4-20020a0564020b0400b004fd215eb691mr3735096edb.4.1680731978953;
+        Wed, 05 Apr 2023 14:59:38 -0700 (PDT)
 Received: from localhost ([79.142.230.34])
-        by smtp.gmail.com with ESMTPSA id cx7-20020a05640222a700b004fd1ee3f723sm7635921edb.67.2023.04.05.14.52.43
+        by smtp.gmail.com with ESMTPSA id h5-20020a50c385000000b004ad601533a3sm7837803edf.55.2023.04.05.14.59.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 14:52:44 -0700 (PDT)
+        Wed, 05 Apr 2023 14:59:38 -0700 (PDT)
 References: <20230405193445.745024-1-y86-dev@protonmail.com>
- <20230405193445.745024-11-y86-dev@protonmail.com>
+ <20230405193445.745024-15-y86-dev@protonmail.com>
 User-agent: mu4e 1.10.1; emacs 28.2.50
 From: Andreas Hindborg <nmi@metaspace.dk>
 To: Benno Lossin <y86-dev@protonmail.com>
@@ -50,10 +50,11 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
  rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
  patches@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>, Andreas
  Hindborg <a.hindborg@samsung.com>
-Subject: Re: [PATCH v6 10/15] rust: init: add `stack_pin_init!` macro
-Date: Wed, 05 Apr 2023 23:51:52 +0200
-In-reply-to: <20230405193445.745024-11-y86-dev@protonmail.com>
-Message-ID: <87ttxuro7n.fsf@metaspace.dk>
+Subject: Re: [PATCH v6 14/15] rust: sync: reduce stack usage of
+ `UniqueArc::try_new_uninit`
+Date: Wed, 05 Apr 2023 23:59:01 +0200
+In-reply-to: <20230405193445.745024-15-y86-dev@protonmail.com>
+Message-ID: <87pm8irnw5.fsf@metaspace.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -65,260 +66,86 @@ Content-Type: text/plain
 
 Benno Lossin <y86-dev@protonmail.com> writes:
 
-> The `stack_pin_init!` macro allows pin-initializing a value on the
-> stack. It accepts a `impl PinInit<T, E>` to initialize a `T`. It allows
-> propagating any errors via `?` or handling it normally via `match`.
+> `UniqueArc::try_new_uninit` calls `Arc::try_new(MaybeUninit::uninit())`.
+> This results in the uninitialized memory being placed on the stack,
+> which may be arbitrarily large due to the generic `T` and thus could
+> cause a stack overflow for large types.
+>
+> Change the implementation to use the pin-init API which enables in-place
+> initialization. In particular it avoids having to first construct and
+> then move the uninitialized memory from the stack into the final location.
 >
 > Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
 > Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+> Reviewed-by: Gary Guo <gary@garyguo.net>
 > Cc: Andreas Hindborg <a.hindborg@samsung.com>
-> Cc: Gary Guo <gary@garyguo.net>
 > ---
 
 Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
 
->  rust/kernel/init.rs            | 140 +++++++++++++++++++++++++++++++--
->  rust/kernel/init/__internal.rs |  50 ++++++++++++
->  2 files changed, 184 insertions(+), 6 deletions(-)
+>  rust/kernel/lib.rs      |  1 -
+>  rust/kernel/sync/arc.rs | 16 +++++++++++++---
+>  2 files changed, 13 insertions(+), 4 deletions(-)
 >
-> diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-> index 37e8159df24d..99751375e7c8 100644
-> --- a/rust/kernel/init.rs
-> +++ b/rust/kernel/init.rs
-> @@ -12,7 +12,8 @@
->  //!
->  //! To initialize a `struct` with an in-place constructor you will need two things:
->  //! - an in-place constructor,
-> -//! - a memory location that can hold your `struct`.
-> +//! - a memory location that can hold your `struct` (this can be the [stack], an [`Arc<T>`],
-> +//!   [`UniqueArc<T>`], [`Box<T>`] or any other smart pointer that implements [`InPlaceInit`]).
->  //!
->  //! To get an in-place constructor there are generally three options:
->  //! - directly creating an in-place constructor using the [`pin_init!`] macro,
-> @@ -180,6 +181,7 @@
->  //! [pinning]: https://doc.rust-lang.org/std/pin/index.html
->  //! [structurally pinned fields]:
->  //!     https://doc.rust-lang.org/std/pin/index.html#pinning-is-structural-for-field
-> +//! [stack]: crate::stack_pin_init
->  //! [`Arc<T>`]: crate::sync::Arc
->  //! [`impl PinInit<Foo>`]: PinInit
->  //! [`impl PinInit<T, E>`]: PinInit
-> @@ -202,6 +204,132 @@ pub mod __internal;
->  #[doc(hidden)]
->  pub mod macros;
+> diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
+> index 821bd067151c..2d7606135ef6 100644
+> --- a/rust/kernel/lib.rs
+> +++ b/rust/kernel/lib.rs
+> @@ -28,7 +28,6 @@
+>  #[cfg(not(CONFIG_RUST))]
+>  compile_error!("Missing kernel configuration for conditional compilation");
 >
-> +/// Initialize and pin a type directly on the stack.
-> +///
-> +/// # Examples
-> +///
-> +/// ```rust
-> +/// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
-> +/// # use kernel::{init, pin_init, stack_pin_init, init::*, sync::Mutex, new_mutex};
-> +/// # use macros::pin_data;
-> +/// # use core::pin::Pin;
-> +/// #[pin_data]
-> +/// struct Foo {
-> +///     #[pin]
-> +///     a: Mutex<usize>,
-> +///     b: Bar,
-> +/// }
-> +///
-> +/// #[pin_data]
-> +/// struct Bar {
-> +///     x: u32,
-> +/// }
-> +///
-> +/// stack_pin_init!(let foo = pin_init!(Foo {
-> +///     a <- new_mutex!(42),
-> +///     b: Bar {
-> +///         x: 64,
-> +///     },
-> +/// }));
-> +/// let foo: Pin<&mut Foo> = foo;
-> +/// pr_info!("a: {}", &*foo.a.lock());
-> +/// ```
-> +///
-> +/// # Syntax
-> +///
-> +/// A normal `let` binding with optional type annotation. The expression is expected to implement
-> +/// [`PinInit`]/[`Init`] with the error type [`Infallible`]. If you want to use a different error
-> +/// type, then use [`stack_try_pin_init!`].
-> +#[macro_export]
-> +macro_rules! stack_pin_init {
-> +    (let $var:ident $(: $t:ty)? = $val:expr) => {
-> +        let val = $val;
-> +        let mut $var = ::core::pin::pin!($crate::init::__internal::StackInit$(::<$t>)?::uninit());
-> +        let mut $var = match $crate::init::__internal::StackInit::init($var, val) {
-> +            Ok(res) => res,
-> +            Err(x) => {
-> +                let x: ::core::convert::Infallible = x;
-> +                match x {}
-> +            }
-> +        };
-> +    };
-> +}
-> +
-> +/// Initialize and pin a type directly on the stack.
-> +///
-> +/// # Examples
-> +///
-> +/// ```rust
-> +/// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
-> +/// # use kernel::{init, pin_init, stack_try_pin_init, init::*, sync::Mutex, new_mutex};
-> +/// # use macros::pin_data;
-> +/// # use core::{alloc::AllocError, pin::Pin};
-> +/// #[pin_data]
-> +/// struct Foo {
-> +///     #[pin]
-> +///     a: Mutex<usize>,
-> +///     b: Box<Bar>,
-> +/// }
-> +///
-> +/// struct Bar {
-> +///     x: u32,
-> +/// }
-> +///
-> +/// stack_try_pin_init!(let foo: Result<Pin<&mut Foo>, AllocError> = pin_init!(Foo {
-> +///     a <- new_mutex!(42),
-> +///     b: Box::try_new(Bar {
-> +///         x: 64,
-> +///     })?,
-> +/// }));
-> +/// let foo = foo.unwrap();
-> +/// pr_info!("a: {}", &*foo.a.lock());
-> +/// ```
-> +///
-> +/// ```rust
-> +/// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
-> +/// # use kernel::{init, pin_init, stack_try_pin_init, init::*, sync::Mutex, new_mutex};
-> +/// # use macros::pin_data;
-> +/// # use core::{alloc::AllocError, pin::Pin};
-> +/// #[pin_data]
-> +/// struct Foo {
-> +///     #[pin]
-> +///     a: Mutex<usize>,
-> +///     b: Box<Bar>,
-> +/// }
-> +///
-> +/// struct Bar {
-> +///     x: u32,
-> +/// }
-> +///
-> +/// stack_try_pin_init!(let foo: Pin<&mut Foo> =? pin_init!(Foo {
-> +///     a <- new_mutex!(42),
-> +///     b: Box::try_new(Bar {
-> +///         x: 64,
-> +///     })?,
-> +/// }));
-> +/// pr_info!("a: {}", &*foo.a.lock());
-> +/// # Ok::<_, AllocError>(())
-> +/// ```
-> +///
-> +/// # Syntax
-> +///
-> +/// A normal `let` binding with optional type annotation. The expression is expected to implement
-> +/// [`PinInit`]/[`Init`]. This macro assigns a result to the given variable, adding a `?` after the
-> +/// `=` will propagate this error.
-> +#[macro_export]
-> +macro_rules! stack_try_pin_init {
-> +    (let $var:ident $(: $t:ty)? = $val:expr) => {
-> +        let val = $val;
-> +        let mut $var = ::core::pin::pin!($crate::init::__internal::StackInit$(::<$t>)?::uninit());
-> +        let mut $var = $crate::init::__internal::StackInit::init($var, val);
-> +    };
-> +    (let $var:ident $(: $t:ty)? =? $val:expr) => {
-> +        let val = $val;
-> +        let mut $var = ::core::pin::pin!($crate::init::__internal::StackInit$(::<$t>)?::uninit());
-> +        let mut $var = $crate::init::__internal::StackInit::init($var, val)?;
-> +    };
-> +}
-> +
->  /// Construct an in-place, pinned initializer for `struct`s.
+> -#[allow(unused_extern_crates)]
+>  // Allow proc-macros to refer to `::kernel` inside the `kernel` crate (this crate).
+>  extern crate self as kernel;
+>
+> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+> index 43a53fbe175d..d05caa723718 100644
+> --- a/rust/kernel/sync/arc.rs
+> +++ b/rust/kernel/sync/arc.rs
+> @@ -18,7 +18,8 @@
+>  use crate::{
+>      bindings,
+>      error::{self, Error},
+> -    init::{InPlaceInit, Init, PinInit},
+> +    init::{self, InPlaceInit, Init, PinInit},
+> +    try_init,
+>      types::{ForeignOwnable, Opaque},
+>  };
+>  use alloc::boxed::Box;
+> @@ -30,6 +31,7 @@ use core::{
+>      pin::Pin,
+>      ptr::NonNull,
+>  };
+> +use macros::pin_data;
+>
+>  /// A reference-counted pointer to an instance of `T`.
 >  ///
->  /// This macro defaults the error to [`Infallible`]. If you need [`Error`], then use
-> @@ -913,8 +1041,8 @@ macro_rules! try_init {
->  /// A pin-initializer for the type `T`.
->  ///
->  /// To use this initializer, you will need a suitable memory location that can hold a `T`. This can
-> -/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::pin_init`] function of a
-> -/// smart pointer like [`Arc<T>`] on this.
-> +/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`] or even the stack (see [`stack_pin_init!`]). Use the
-> +/// [`InPlaceInit::pin_init`] function of a smart pointer like [`Arc<T>`] on this.
->  ///
->  /// Also see the [module description](self).
->  ///
-> @@ -949,9 +1077,9 @@ pub unsafe trait PinInit<T: ?Sized, E = Infallible>: Sized {
->  /// An initializer for `T`.
->  ///
->  /// To use this initializer, you will need a suitable memory location that can hold a `T`. This can
-> -/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`]. Use the [`InPlaceInit::init`] function of a smart
-> -/// pointer like [`Arc<T>`] on this. Because [`PinInit<T, E>`] is a super trait, you can
-> -/// use every function that takes it as well.
-> +/// be [`Box<T>`], [`Arc<T>`], [`UniqueArc<T>`] or even the stack (see [`stack_pin_init!`]). Use the
-> +/// [`InPlaceInit::init`] function of a smart pointer like [`Arc<T>`] on this. Because
-> +/// [`PinInit<T, E>`] is a super trait, you can use every function that takes it as well.
->  ///
->  /// Also see the [module description](self).
->  ///
-> diff --git a/rust/kernel/init/__internal.rs b/rust/kernel/init/__internal.rs
-> index 69be03e17c1f..600b6442c6e9 100644
-> --- a/rust/kernel/init/__internal.rs
-> +++ b/rust/kernel/init/__internal.rs
-> @@ -112,6 +112,56 @@ unsafe impl<T: ?Sized> HasInitData for T {
->      }
+> @@ -122,6 +124,7 @@ pub struct Arc<T: ?Sized> {
+>      _p: PhantomData<ArcInner<T>>,
 >  }
 >
-> +/// Stack initializer helper type. Use [`stack_pin_init`] instead of this primitive.
-> +///
-> +/// # Invariants
-> +///
-> +/// If `self.1` is true, then `self.0` is initialized.
-> +///
-> +/// [`stack_pin_init`]: kernel::stack_pin_init
-> +pub struct StackInit<T>(MaybeUninit<T>, bool);
-> +
-> +impl<T> Drop for StackInit<T> {
-> +    #[inline]
-> +    fn drop(&mut self) {
-> +        if self.1 {
-> +            // SAFETY: As we are being dropped, we only call this once. And since `self.1 == true`,
-> +            // `self.0` has to be initialized.
-> +            unsafe { self.0.assume_init_drop() };
-> +        }
-> +    }
-> +}
-> +
-> +impl<T> StackInit<T> {
-> +    /// Creates a new [`StackInit<T>`] that is uninitialized. Use [`stack_pin_init`] instead of this
-> +    /// primitive.
-> +    ///
-> +    /// [`stack_pin_init`]: kernel::stack_pin_init
-> +    #[inline]
-> +    pub fn uninit() -> Self {
-> +        Self(MaybeUninit::uninit(), false)
-> +    }
-> +
-> +    /// Initializes the contents and returns the result.
-> +    #[inline]
-> +    pub fn init<E>(self: Pin<&mut Self>, init: impl PinInit<T, E>) -> Result<Pin<&mut T>, E> {
-> +        // SAFETY: We never move out of `this`.
-> +        let this = unsafe { Pin::into_inner_unchecked(self) };
-> +        // The value is currently initialized, so it needs to be dropped before we can reuse
-> +        // the memory (this is a safety guarantee of `Pin`).
-> +        if this.1 {
-> +            this.1 = false;
-> +            // SAFETY: `this.1` was true and we set it to false.
-> +            unsafe { this.0.assume_init_drop() };
-> +        }
-> +        // SAFETY: The memory slot is valid and this type ensures that it will stay pinned.
-> +        unsafe { init.__pinned_init(this.0.as_mut_ptr())? };
-> +        this.1 = true;
-> +        // SAFETY: The slot is now pinned, since we will never give access to `&mut T`.
-> +        Ok(unsafe { Pin::new_unchecked(this.0.assume_init_mut()) })
-> +    }
-> +}
-> +
->  /// When a value of this type is dropped, it drops a `T`.
->  ///
->  /// Can be forgotton to prevent the drop.
+> +#[pin_data]
+>  #[repr(C)]
+>  struct ArcInner<T: ?Sized> {
+>      refcount: Opaque<bindings::refcount_t>,
+> @@ -502,9 +505,16 @@ impl<T> UniqueArc<T> {
+>
+>      /// Tries to allocate a new [`UniqueArc`] instance whose contents are not initialised yet.
+>      pub fn try_new_uninit() -> Result<UniqueArc<MaybeUninit<T>>, AllocError> {
+> -        Ok(UniqueArc::<MaybeUninit<T>> {
+> +        // INVARIANT: The refcount is initialised to a non-zero value.
+> +        let inner = Box::try_init::<AllocError>(try_init!(ArcInner {
+> +            // SAFETY: There are no safety requirements for this FFI call.
+> +            refcount: Opaque::new(unsafe { bindings::REFCOUNT_INIT(1) }),
+> +            data <- init::uninit::<T, AllocError>(),
+> +        }? AllocError))?;
+> +        Ok(UniqueArc {
+>              // INVARIANT: The newly-created object has a ref-count of 1.
+> -            inner: Arc::try_new(MaybeUninit::uninit())?,
+> +            // SAFETY: The pointer from the `Box` is valid.
+> +            inner: unsafe { Arc::from_inner(Box::leak(inner).into()) },
+>          })
+>      }
+>  }
 
