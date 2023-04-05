@@ -1,91 +1,156 @@
-Received: from smtp-fw-6001.amazon.com (smtp-fw-6001.amazon.com [52.95.48.154])
+Received: from outbound-smtp46.blacknight.com (outbound-smtp46.blacknight.com [46.22.136.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156A7EC5
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 11:42:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
-  t=1680694973; x=1712230973;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=yEEbqIHbJ2Q7C7Ovj6gBdia6NIMCaeuoyosg0qxNrIs=;
-  b=C2auYIrWmARbGJAeFY6rZ0YSV0kL4aEf+fQFqoH/fSAxNjTe3o7qlNAc
-   JCN8voatfjWsUL7PBRE0OHfy0UqPK1HbtU+LMz1rfl3KJ0fEfYu5hovzF
-   8zIUvU48SeLW8kTe+KoeSMG17uKT1/A926rGetKUQeG3TtueRXdo/uhT+
-   k=;
-X-IronPort-AV: E=Sophos;i="5.98,319,1673913600"; 
-   d="scan'208";a="317047722"
-Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO email-inbound-relay-iad-1d-m6i4x-d23e07e8.us-east-1.amazon.com) ([10.43.8.2])
-  by smtp-border-fw-6001.iad6.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2023 11:42:50 +0000
-Received: from EX19D002EUA003.ant.amazon.com (iad12-ws-svc-p26-lb9-vlan3.iad.amazon.com [10.40.163.38])
-	by email-inbound-relay-iad-1d-m6i4x-d23e07e8.us-east-1.amazon.com (Postfix) with ESMTPS id 659E58533C;
-	Wed,  5 Apr 2023 11:42:48 +0000 (UTC)
-Received: from EX19D028EUC001.ant.amazon.com (10.252.61.241) by
- EX19D002EUA003.ant.amazon.com (10.252.50.18) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.26; Wed, 5 Apr 2023 11:42:46 +0000
-Received: from EX19MTAUEC001.ant.amazon.com (10.252.135.222) by
- EX19D028EUC001.ant.amazon.com (10.252.61.241) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.26; Wed, 5 Apr 2023 11:42:45 +0000
-Received: from dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com (10.15.11.255)
- by mail-relay.amazon.com (10.252.135.200) with Microsoft SMTP Server id
- 15.2.1118.26 via Frontend Transport; Wed, 5 Apr 2023 11:42:45 +0000
-Received: by dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com (Postfix, from userid 23027615)
-	id 3F45A22BC6; Wed,  5 Apr 2023 13:42:44 +0200 (CEST)
-From: Pratyush Yadav <ptyadav@amazon.de>
-To: <stable@vger.kernel.org>
-CC: Pratyush Yadav <ptyadav@amazon.de>, Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>, <patches@lists.linux.dev>, Amir Goldstein
-	<amir73il@gmail.com>, Steve French <stfrench@microsoft.com>, Sasha Levin
-	<sashal@kernel.org>
-Subject: [PATCH 5.4] cifs/smb3: Fix NULL pointer dereference in smb2_query_info_compound()
-Date: Wed, 5 Apr 2023 13:42:20 +0200
-Message-ID: <20230405114220.108739-1-ptyadav@amazon.de>
-X-Mailer: git-send-email 2.39.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5364DA5E
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 12:55:23 +0000 (UTC)
+Received: from mail.blacknight.com (pemlinmail02.blacknight.ie [81.17.254.11])
+	by outbound-smtp46.blacknight.com (Postfix) with ESMTPS id ECECFFAE34
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 13:45:20 +0100 (IST)
+Received: (qmail 19508 invoked from network); 5 Apr 2023 12:45:20 -0000
+Received: from unknown (HELO techsingularity.net) (mgorman@techsingularity.net@[84.203.21.103])
+  by 81.17.254.9 with ESMTPSA (AES256-SHA encrypted, authenticated); 5 Apr 2023 12:45:20 -0000
+Date: Wed, 5 Apr 2023 13:45:19 +0100
+From: Mel Gorman <mgorman@techsingularity.net>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Kees Cook <keescook@chromium.org>, linux-hardening@vger.kernel.org,
+	Alexander Halbuer <halbuer@sra.uni-hannover.de>
+Subject: Re: [PATCH] mm, page_alloc: reduce page alloc/free sanity checks
+Message-ID: <20230405124519.ir7y54aunmyg3tcn@techsingularity.net>
+References: <20230216095131.17336-1-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-15
+Content-Disposition: inline
+In-Reply-To: <20230216095131.17336-1-vbabka@suse.cz>
 
-smb2_queryfs() calls smb2_query_info_compound() with cifs_sb set to
-NULL. It is then dereferenced by cifs_create_options(). Commit
-a6e44cb21534d ("SMB3: Backup intent flag missing from some more ops")
-removed the NULL check before dereferencing cifs_sb. Add it back.
+On Thu, Feb 16, 2023 at 10:51:31AM +0100, Vlastimil Babka wrote:
+> Historically, we have performed sanity checks on all struct pages being
+> allocated or freed, making sure they have no unexpected page flags or
+> certain field values. This can detect insufficient cleanup and some
+> cases of use-after-free, although on its own it can't always identify
+> the culprit. The result is a warning and the "bad page" being leaked.
+> 
+> The checks do need some cpu cycles, so in 4.7 with commits 479f854a207c
+> ("mm, page_alloc: defer debugging checks of pages allocated from the
+> PCP") and 4db7548ccbd9 ("mm, page_alloc: defer debugging checks of freed
+> pages until a PCP drain") they were no longer performed in the hot paths
+> when allocating and freeing from pcplists, but only when pcplists are
+> bypassed, refilled or drained. For debugging purposes, with
+> CONFIG_DEBUG_VM enabled the checks were instead still done in the
+> hot paths and not when refilling or draining pcplists.
+> 
+> With 4462b32c9285 ("mm, page_alloc: more extensive free page checking
+> with debug_pagealloc"), enabling debug_pagealloc also moved the sanity
+> checks back to hot pahs. When both debug_pagealloc and CONFIG_DEBUG_VM
+> are enabled, the checks are done both in hotpaths and pcplist
+> refill/drain.
+> 
+> Even though the non-debug default today might seem to be a sensible
+> tradeoff between overhead and ability to detect bad pages, on closer
+> look it's arguably not. As most allocations go through the pcplists,
+> catching any bad pages when refilling or draining pcplists has only a
+> small chance, insufficient for debugging or serious hardening purposes.
+> On the other hand the cost of the checks is concentrated in the already
+> expensive drain/refill batching operations, and those are done under the
+> often contended zone lock. That was recently identified as an issue for
+> page allocation and the zone lock contention reduced by moving the
+> checks outside of the locked section with a patch "mm: reduce lock
+> contention of pcp buffer refill", but the cost of the checks is still
+> visible compared to their removal [1]. In the pcplist draining path
+> free_pcppages_bulk() the checks are still done under zone->lock.
+> 
+> Thus, remove the checks from pcplist refill and drain paths completely.
+> Introduce a static key check_pages_enabled to control checks during page
+> allocation a freeing (whether pcplist is used or bypassed). The static
+> key is enabled if either is true:
+> - kernel is built with CONFIG_DEBUG_VM=y (debugging)
+> - debug_pagealloc or page poisoning is boot-time enabled (debugging)
+> - init_on_alloc or init_on_free is boot-time enabled (hardening)
+> 
+> The resulting user visible changes:
+> - no checks when draining/refilling pcplists - less overhead, with
+>   likely no practical reduction of ability to catch bad pages
+> - no checks when bypassing pcplists in default config (no
+>   debugging/hardening) - less overhead etc. as above
+> - on typical hardened kernels [2], checks are now performed on each page
+>   allocation/free (previously only when bypassing/draining/refilling
+>   pcplists) - the init_on_alloc/init_on_free enabled should be sufficient
+>   indication for preferring more costly alloc/free operations for
+>   hardening purposes and we shouldn't need to introduce another toggle
+> - code (various wrappers) removal and simplification
+> 
+> [1] https://lore.kernel.org/all/68ba44d8-6899-c018-dcb3-36f3a96e6bea@sra.uni-hannover.de/
+> [2] https://lore.kernel.org/all/63ebc499.a70a0220.9ac51.29ea@mx.google.com/
+> 
+> Reported-by: Alexander Halbuer <halbuer@sra.uni-hannover.de>
+> Reported-by: Andrew Morton <akpm@linux-foundation.org>
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
 
-Fixes: a6e44cb21534d ("SMB3: Backup intent flag missing from some more ops")
-Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
----
+Some minor comments below
 
-Only compile-tested. I do not know this code very well. This was pointed
-out by our static code analysis tool.
+> @@ -1432,9 +1448,11 @@ static __always_inline bool free_pages_prepare(struct page *page,
+>  		for (i = 1; i < (1 << order); i++) {
+>  			if (compound)
+>  				bad += free_tail_pages_check(page, page + i);
 
- fs/cifs/smb2ops.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+free_tail_pages_check is also a function that only does something useful
+when CONFIG_DEBUG_VM is set. While it might be outside the scope of the
+patch, it might also benefit from check_pages_enabled checks?
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index 4cb0ebe7330eb..04256edaa4f73 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -2272,7 +2272,10 @@ smb2_query_info_compound(const unsigned int xid, struct cifs_tcon *tcon,
- 	oparms.tcon = tcon;
- 	oparms.desired_access = desired_access;
- 	oparms.disposition = FILE_OPEN;
--	oparms.create_options = cifs_create_options(cifs_sb, 0);
-+	if (cifs_sb)
-+		oparms.create_options = cifs_create_options(cifs_sb, 0);
-+	else
-+		oparms.create_options = 0;
- 	oparms.fid = &fid;
- 	oparms.reconnect = false;
+> -			if (unlikely(free_page_is_bad(page + i))) {
+> -				bad++;
+> -				continue;
+> +			if (static_branch_unlikely(&check_pages_enabled)) {
+> +				if (unlikely(free_page_is_bad(page + i))) {
+> +					bad++;
+> +					continue;
+> +				}
+>  			}
+>  			(page + i)->flags &= ~PAGE_FLAGS_CHECK_AT_PREP;
+>  		}
 
---
-2.39.2
+The unlikely() within a static_branch_unlikely probably adds very little
+given the block is so tiny. 
 
+> @@ -2392,56 +2369,20 @@ static inline int check_new_page(struct page *page)
+>  	return 1;
+>  }
+>  
+> -static bool check_new_pages(struct page *page, unsigned int order)
+> +static inline bool check_new_pages(struct page *page, unsigned int order)
+>  {
+> -	int i;
+> -	for (i = 0; i < (1 << order); i++) {
+> -		struct page *p = page + i;
+> +	if (static_branch_unlikely(&check_pages_enabled)) {
+> +		for (int i = 0; i < (1 << order); i++) {
+> +			struct page *p = page + i;
+>  
+> -		if (unlikely(check_new_page(p)))
+> -			return true;
+> +			if (unlikely(check_new_page(p)))
+> +				return true;
+> +		}
+>  	}
+>  
+
+unlikely() within static_branch_unlikely probably adds very little.
+
+Otherwise, looks good. I agree that with changes over time that the ability
+of the checks to detect anything is reduced and it's probably at the point
+where it can only detect a very specific bit corruption instead of broken
+code. Commit 44042b449872 ("mm/page_alloc: allow high-order pages to be
+stored on the per-cpu lists") also likely reduced the ability of the checks
+to find anything.
+
+-- 
+Mel Gorman
+SUSE Labs
