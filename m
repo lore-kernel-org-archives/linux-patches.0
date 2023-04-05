@@ -1,108 +1,134 @@
-Received: from smtp-fw-6002.amazon.com (smtp-fw-6002.amazon.com [52.95.49.90])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2040.outbound.protection.outlook.com [40.107.236.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7054A29A9
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 14:34:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
-  t=1680705265; x=1712241265;
-  h=from:to:cc:subject:references:date:in-reply-to:
-   message-id:mime-version;
-  bh=vKSsmD1LFhGHckqi8FG6BhqL5uqs9ljlD+0dp7MmnaI=;
-  b=UtfYN425pIiooEuFNrQaboK/YwYVC7k4m/GNTljGt2NEDzhw4cmS4mfn
-   t5P16+mafmiAguc4bAAe4xF93d8QOquB7OIerNzCKOKZNr5srU5OLKFF3
-   iWThMfKHVDjfHr4QgxCYssc67YYyZK6DQZ4L+UHic9h6s7C6i+nwaF5WR
-   4=;
-X-IronPort-AV: E=Sophos;i="5.98,321,1673913600"; 
-   d="scan'208";a="315109822"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO email-inbound-relay-iad-1d-m6i4x-25ac6bd5.us-east-1.amazon.com) ([10.43.8.6])
-  by smtp-border-fw-6002.iad6.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2023 14:34:17 +0000
-Received: from EX19MTAUWB001.ant.amazon.com (iad12-ws-svc-p26-lb9-vlan2.iad.amazon.com [10.40.163.34])
-	by email-inbound-relay-iad-1d-m6i4x-25ac6bd5.us-east-1.amazon.com (Postfix) with ESMTPS id 37DC6453A4;
-	Wed,  5 Apr 2023 14:34:14 +0000 (UTC)
-Received: from EX19MTAUWA001.ant.amazon.com (10.250.64.204) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF5333C0
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 14:34:32 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fW0Ggo+RwJkQbH+gW+BeHaH4+rwcVtHKA1+KSVJK3yxS32Qn/uo1VPAPCujSUu+Wi+nbNwZqEfCULl7UyRp0eDLGE+/0tWzoYU9RAAda5k4jXjLQtUzCpLLCXX1pZdBD35NOE9BRlRAAV0fsMIGirwAhzcnIq2IBZCn5mD9Brh9Cs7Vmf6Y85OKSYioyXW7diBmUwI+M3nKBfEcjTo5l3adcbr3Av5XyXXE/ndWo4CXMCJZ2A3FGhW/DlIXGmwT37fW5tICeU9PE5vZxoPlEEG7ZIt5wNWw8Fw33XS1+zbgfTEf5OXSbjOvqaaFKKPLc1lGaGtY8gA9sgK2d666nKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kt3PY0ud7Ku92JLK+3YPx0QObceEiWNazVg6asdO2lc=;
+ b=HFrVeyeirC/lqdllW/FbBO9mFBjfTW22h5SNbozN8qf+Joun80Sc0P+9ALUBxqwlXTiNpQiMb3GJ0UT86CK9YmQzWU4v/1j0DIl1ZL6Xzg5p3WH2WfjeiVxD24z9IKgkNxbo7FrNhpmNiNlXAVqF60Qr/DO6pwKAuJB83YFinNm15BKSp2xBJJVIPFGi8LBhQeP9gii9MpZknhFlsMqATaCeuQRckmdHfsN+W9vc8cCyQHPfkHYP89v/iHR/rlj3kz69pXMzGMv8/v5aQ43knx/qadSKmcWcfGHodim2eUnr9dKy3H1J7/gcigrSLRfihLBbx5VyxAIGU4MW9DsrkA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kt3PY0ud7Ku92JLK+3YPx0QObceEiWNazVg6asdO2lc=;
+ b=T4NKlybN0bdvdWRWI0IsTDdVV8uqdtKbtuK+Xx3+d3iHMpiOq5u7uHwrat8+6njl2LUTFsRmGterYAohkdcfvlLjQlMKjKfQuKkHtnR9ViLFHuJJS4c8YnzgYvk9MuwGJijSrQ04tgxfxN7XLRyfnIJjYIcfOY82d551hUTaUVfP2QHZrZDecBfSksSUb0HAIerEp2jgjx09tcrQBkg0xGuvtnyXV/rj1/UDKhFvPfLiZ5fZ4qznbdYXggIwNeeH+z5ixuNaa3ZUqKQwLleRlHDiux2GXJFhonLBnAu6+B73NEcukWRn7hYkccfJQXyAiNypc6C7/SvqE4sd+fXL+w==
+Received: from BN0PR04CA0123.namprd04.prod.outlook.com (2603:10b6:408:ed::8)
+ by PH7PR12MB7161.namprd12.prod.outlook.com (2603:10b6:510:200::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6254.35; Wed, 5 Apr
+ 2023 14:34:29 +0000
+Received: from BN8NAM11FT089.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:ed:cafe::fa) by BN0PR04CA0123.outlook.office365.com
+ (2603:10b6:408:ed::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6277.30 via Frontend
+ Transport; Wed, 5 Apr 2023 14:34:28 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BN8NAM11FT089.mail.protection.outlook.com (10.13.176.105) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6277.30 via Frontend Transport; Wed, 5 Apr 2023 14:34:28 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Wed, 5 Apr 2023
+ 07:34:22 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.26; Wed, 5 Apr 2023 14:34:01 +0000
-Received: from dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com (10.15.11.255)
- by mail-relay.amazon.com (10.250.64.204) with Microsoft SMTP Server id
- 15.2.1118.26 via Frontend Transport; Wed, 5 Apr 2023 14:34:01 +0000
-Received: by dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com (Postfix, from userid 23027615)
-	id 66FB220D48; Wed,  5 Apr 2023 16:34:00 +0200 (CEST)
-From: Pratyush Yadav <ptyadav@amazon.de>
+ 15.2.986.37; Wed, 5 Apr 2023 07:34:21 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
+ Transport; Wed, 5 Apr 2023 07:34:21 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Steve French <stfrench@microsoft.com>, Amir Goldstein
-	<amir73il@gmail.com>, Aurelien Aptel <aaptel@suse.com>,
-	<stable@vger.kernel.org>, <patches@lists.linux.dev>, Sasha Levin
-	<sashal@kernel.org>
-Subject: Re: [PATCH 5.4] smb3: fix problem with null cifs super block with
- previous patch
-References: <20230405135709.100174-1-ptyadav@amazon.de>
-	<2023040523-delusion-corrode-f466@gregkh>
-Date: Wed, 5 Apr 2023 16:34:00 +0200
-In-Reply-To: <2023040523-delusion-corrode-f466@gregkh> (Greg Kroah-Hartman's
-	message of "Wed, 5 Apr 2023 16:20:40 +0200")
-Message-ID: <mafs0fs9egzzb.fsf_-_@amazon.de>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 5.15 00/99] 5.15.106-rc1 review
+In-Reply-To: <20230403140356.079638751@linuxfoundation.org>
+References: <20230403140356.079638751@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Message-ID: <ee0bde44-7c8b-4590-94e4-e255945577d1@drhqmail201.nvidia.com>
+Date: Wed, 5 Apr 2023 07:34:21 -0700
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8NAM11FT089:EE_|PH7PR12MB7161:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5b9999b2-a839-49d5-af67-08db35e2dcfc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	PVTqazNMcT919swYKXYGryepYGDuruDdtgHyE41/Svzw3UTu9g2tZN+IB6lDlN6SXnnmd+okR1TL+7rFNEEuDGtzINP/MkS2eR07QOdYx4ntNozm7itGFp2fe4lh57FTFeVmwE/9/ZMUpaatywjeZnQrEE/RuxXjgtUoLu1y3qPndoBeDO4vTlPXfBNctf+sNJ2v5Zlytqhd7b4JYvnliICdr/2NIK15MxmpEPa7h5fhHcRLCDVma5hTEZCll/fI1w8FeF+y5QZBMtD7FNJXmO66XzhbQtpXSIt7xa09m1wGDteW+QsM2I0GIxPtOCgjdnCZDBLSAkUMNHozxEkzYgy5AFH+F7uG6/LrIU5LlV+puwXncTaUL6rchoNA64fhUlXwnSlbwOqNwZCYQUUUo1bEJvX5fefF0SqKa8J7dPz1Jij1GrVdGVKoU4xp7T6JcwDRSDaAV+gBM1CxGxg99PZqlGdwoHUVzej97FXFLMhKF1DIUrqXA0HFzlctk6eQiColDx4vHAVp1i5JeUOGLbflMrK9tkHipsB3y5O1LxZeEmTjnlNhPL9UZ7wDrc6HltDL0kV7PrQ7p6RpTdlHAx8bwgn3L39ZpabZLaSE9KZNhY29l0ZsBFUxN1Y5iHpDawwGXIvF7LgJeAGuLY90ebEMLmmmLHG0abdnPCAh3OU1RVVKOOr9Jjt265FBaSWHTwPErAdT35RCKOkKhBfXXFMAJ8u5dXYeC9DcPqe/e9oGJusfnKFXOwyIjWXjP2TMo6ksyVe41U5rNrdi0JcrwH4iZZFuWFUgbVcZ89qDYf4=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(346002)(396003)(136003)(376002)(451199021)(40470700004)(36840700001)(46966006)(31686004)(47076005)(426003)(336012)(40460700003)(86362001)(186003)(26005)(7636003)(31696002)(6916009)(2906002)(70206006)(70586007)(8676002)(82740400003)(41300700001)(40480700001)(356005)(4326008)(36860700001)(54906003)(316002)(478600001)(82310400005)(7416002)(8936002)(966005)(5660300002);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Apr 2023 14:34:28.7610
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5b9999b2-a839-49d5-af67-08db35e2dcfc
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN8NAM11FT089.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7161
 
-On Wed, Apr 05 2023, Greg Kroah-Hartman wrote:
+On Mon, 03 Apr 2023 16:08:23 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.106 release.
+> There are 99 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 05 Apr 2023 14:03:18 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.106-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-> On Wed, Apr 05, 2023 at 03:57:09PM +0200, Pratyush Yadav wrote:
->> From: Steve French <stfrench@microsoft.com>
->>
->> [ Upstream commit 87f93d82e0952da18af4d978e7d887b4c5326c0b ]
->>
->> Add check for null cifs_sb to create_options helper
->>
->> Signed-off-by: Steve French <stfrench@microsoft.com>
->> Reviewed-by: Amir Goldstein <amir73il@gmail.com>
->> Reviewed-by: Aurelien Aptel <aaptel@suse.com>
->> Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
->> ---
->>
->> Only compile-tested. This was discovered by our static code analysis
->> tool. I do not use CIFS and do not know how to actually reproduce the
->> NULL dereference.
->>
->> Follow up from [0]. Original patch is at [1].
->>
->> Mandatory text due to licensing terms:
->>
->> This bug was discovered and resolved using Coverity Static Analysis
->> Security Testing (SAST) by Synopsys, Inc.
->
-> What?  That's funny.  And nothing I'm going to be adding to the
-> changelog text, sorry, as that's not what is upstream.
+All tests passing for Tegra ...
 
-That is fine by me. I placed this text below the 3 dashed lines so it
-does _not_ end up in the commit message, but still discloses this
-information.
+Test results for stable-v5.15:
+    11 builds:	11 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    114 tests:	114 pass, 0 fail
 
-> Please go poke your lawyers, that's not ok.
+Linux version:	5.15.106-rc1-gaacd62149991
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-Yes, perhaps I should. But let's go forward with this patch since it
-keeps the original commit message?
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
--- 
-Regards,
-Pratyush Yadav
-
-
-
-Amazon Development Center Germany GmbH
-Krausenstr. 38
-10117 Berlin
-Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
-Eingetragen am Amtsgericht Charlottenburg unter HRB 149173 B
-Sitz: Berlin
-Ust-ID: DE 289 237 879
-
-
-
+Jon
