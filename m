@@ -1,122 +1,121 @@
-Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C6B749B
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 19:37:11 +0000 (UTC)
-Date: Wed, 05 Apr 2023 19:36:51 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680723430; x=1680982630;
-	bh=ZCKyMh4Cy/a8XCkX5YtgorxlPc4QWU1n5QVDMdo6GOo=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=B9v+mNYE+wICOGnB1gx9G8hQz5juL8uXYdjvo0bSEZLdFjfADz11wIE2VhQDM7QNi
-	 x1p2Jd8LtPSnnXCxKBvT/BQMcSSVQakOn5Tu9zNq4BgJrjV36JBs1HKgQUcWdUwvcH
-	 CCH2wMxnRm/0j3WFa+m5L/OGsfJrk3XBKSapXCxB+bxmo6phWLX6xaeJL1oHmt/G98
-	 n6A7XITPBOxvkXVDKSjY9/n/d7XCpba+Ub3bBocwqugIouncNDDnV3WaPQC10uSlGe
-	 iUZsj3YHeyud28v8VWNcoZSfsJSJDflsjvDQ6ZrdOOqlngzdBufDuYWy3zvySFVp+H
-	 qvHizrikBFTig==
-To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>, Andreas Hindborg <nmi@metaspace.dk>
-From: Benno Lossin <y86-dev@protonmail.com>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <y86-dev@protonmail.com>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <a.hindborg@samsung.com>
-Subject: [PATCH v6 14/15] rust: sync: reduce stack usage of `UniqueArc::try_new_uninit`
-Message-ID: <20230405193445.745024-15-y86-dev@protonmail.com>
-In-Reply-To: <20230405193445.745024-1-y86-dev@protonmail.com>
-References: <20230405193445.745024-1-y86-dev@protonmail.com>
-Feedback-ID: 40624463:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4D7749A
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 19:45:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=gRyDGkNXA8X/Ou+wCx5J0rIg1wyfF74j9vjMPvDUruY=; b=tYXt24Fo50ltUGZjPjw2lPjPeF
+	nzY6+MQSkeHE/QQynKGgV5VV5lcwL+HdN/7sVQPA/lOJowkAzVPwlrGZdP5RRyOlT9x5Or6Jud0RF
+	rpjK/rHLoylED/BxIlOYor/5xjtmHNdH+Y92VoG8pEM6QJ410A2J6xQX2X5xzmPmm/sGx7GMD57/H
+	fR/YNVwFPAg+dxxkHyps6vNJA6hvv+J2zaH3tcW+KrzQYlvD0Ai74boZq12pBdFycMCoY9rcMLD6N
+	NZbanhKGgMn2inBPxugV6qcnRU6qemPwa/xBWnjEvce+TByP4Cq4QdDBhTfOmx8vzZ0Us5rav4nxk
+	3NLOOFdg==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1pk94s-005Wvv-0J;
+	Wed, 05 Apr 2023 19:45:54 +0000
+Date: Wed, 5 Apr 2023 12:45:54 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: David Hildenbrand <david@redhat.com>
+Cc: patches@lists.linux.dev, linux-modules@vger.kernel.org,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org, pmladek@suse.com,
+	petr.pavlu@suse.com, prarit@redhat.com,
+	torvalds@linux-foundation.org, gregkh@linuxfoundation.org,
+	rafael@kernel.org, christophe.leroy@csgroup.eu, tglx@linutronix.de,
+	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
+	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
+	mhocko@suse.com, dave.hansen@linux.intel.com,
+	colin.i.king@gmail.com, jim.cromie@gmail.com,
+	catalin.marinas@arm.com, jbaron@akamai.com,
+	rick.p.edgecombe@intel.com
+Subject: Re: [PATCH v2 3/6] module: extract patient module check into helper
+Message-ID: <ZC3P8m1AN5XZNjrP@bombadil.infradead.org>
+References: <20230405022702.753323-1-mcgrof@kernel.org>
+ <20230405022702.753323-4-mcgrof@kernel.org>
+ <b069b2b0-05fd-5c32-23c7-fbdd513681de@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b069b2b0-05fd-5c32-23c7-fbdd513681de@redhat.com>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-`UniqueArc::try_new_uninit` calls `Arc::try_new(MaybeUninit::uninit())`.
-This results in the uninitialized memory being placed on the stack,
-which may be arbitrarily large due to the generic `T` and thus could
-cause a stack overflow for large types.
+On Wed, Apr 05, 2023 at 07:11:24PM +0200, David Hildenbrand wrote:
+> On 05.04.23 04:26, Luis Chamberlain wrote:
+> > The patient module check inside add_unformed_module() is large
+> > enough as we need it. It is a bit hard to read too, so just
+> > move it to a helper and do the inverse checks first to help
+> > shift the code and make it easier to read. The new helper then
+> > is module_patient_check_exists().
+> > 
+> > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> > ---
+> >   kernel/module/main.c | 71 +++++++++++++++++++++++++-------------------
+> >   1 file changed, 40 insertions(+), 31 deletions(-)
+> > 
+> > diff --git a/kernel/module/main.c b/kernel/module/main.c
+> > index 98c261928325..8f382580195b 100644
+> > --- a/kernel/module/main.c
+> > +++ b/kernel/module/main.c
+> > @@ -2638,6 +2638,43 @@ static bool finished_loading(const char *name)
+> >   	return ret;
+> >   }
+> > +/* Must be called with module_mutex held */
+> > +static int module_patient_check_exists(const char *name)
+> > +{
+> > +	struct module *old;
+> > +	int err = 0;
+> > +
+> > +	old = find_module_all(name, strlen(name), true);
+> > +	if (old == NULL)
+> > +		return 0;
+> > +
+> > +	if (old->state == MODULE_STATE_COMING
+> > +	    || old->state == MODULE_STATE_UNFORMED) {
+> 
+> I never understood why people prefer to prefix the || on a newline. But it
+> seems to be a thing in the module/ world :)
 
-Change the implementation to use the pin-init API which enables in-place
-initialization. In particular it avoids having to first construct and
-then move the uninitialized memory from the stack into the final location.
+Yeah the other way seems better, I'll make it pretty.
 
-Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Cc: Andreas Hindborg <a.hindborg@samsung.com>
----
- rust/kernel/lib.rs      |  1 -
- rust/kernel/sync/arc.rs | 16 +++++++++++++---
- 2 files changed, 13 insertions(+), 4 deletions(-)
+> > +		/* Wait in case it fails to load. */
+> > +		mutex_unlock(&module_mutex);
+> > +		err = wait_event_interruptible(module_wq,
+> > +				       finished_loading(name));
+> > +		if (err)
+> > +			return err;
+> 
+> You return with the mutex unlocked. The caller will unlock again ...
 
-diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-index 821bd067151c..2d7606135ef6 100644
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -28,7 +28,6 @@
- #[cfg(not(CONFIG_RUST))]
- compile_error!("Missing kernel configuration for conditional compilation")=
-;
+Fixed now by moving the mutex below up after the wait_event_interruptible(),
+thanks.
 
--#[allow(unused_extern_crates)]
- // Allow proc-macros to refer to `::kernel` inside the `kernel` crate (thi=
-s crate).
- extern crate self as kernel;
+> > +
+> > +		/* The module might have gone in the meantime. */
+> > +		mutex_lock(&module_mutex);
+> > +		old = find_module_all(name, strlen(name), true);
+> > +	}
+> > +
+> > +	/*
+> > +	 * We are here only when the same module was being loaded. Do
+> > +	 * not try to load it again right now. It prevents long delays
+> > +	 * caused by serialized module load failures. It might happen
+> > +	 * when more devices of the same type trigger load of
+> > +	 * a particular module.
+> > +	 */
+> > +	if (old && old->state == MODULE_STATE_LIVE)
+> > +		return -EEXIST;
+> > +	else
+> > +		return -EBUSY;
+> 
+> You can drop the else and return right away.
 
-diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-index 43a53fbe175d..d05caa723718 100644
---- a/rust/kernel/sync/arc.rs
-+++ b/rust/kernel/sync/arc.rs
-@@ -18,7 +18,8 @@
- use crate::{
-     bindings,
-     error::{self, Error},
--    init::{InPlaceInit, Init, PinInit},
-+    init::{self, InPlaceInit, Init, PinInit},
-+    try_init,
-     types::{ForeignOwnable, Opaque},
- };
- use alloc::boxed::Box;
-@@ -30,6 +31,7 @@ use core::{
-     pin::Pin,
-     ptr::NonNull,
- };
-+use macros::pin_data;
+Will make it pretty like that, thanks.
 
- /// A reference-counted pointer to an instance of `T`.
- ///
-@@ -122,6 +124,7 @@ pub struct Arc<T: ?Sized> {
-     _p: PhantomData<ArcInner<T>>,
- }
-
-+#[pin_data]
- #[repr(C)]
- struct ArcInner<T: ?Sized> {
-     refcount: Opaque<bindings::refcount_t>,
-@@ -502,9 +505,16 @@ impl<T> UniqueArc<T> {
-
-     /// Tries to allocate a new [`UniqueArc`] instance whose contents are =
-not initialised yet.
-     pub fn try_new_uninit() -> Result<UniqueArc<MaybeUninit<T>>, AllocErro=
-r> {
--        Ok(UniqueArc::<MaybeUninit<T>> {
-+        // INVARIANT: The refcount is initialised to a non-zero value.
-+        let inner =3D Box::try_init::<AllocError>(try_init!(ArcInner {
-+            // SAFETY: There are no safety requirements for this FFI call.
-+            refcount: Opaque::new(unsafe { bindings::REFCOUNT_INIT(1) }),
-+            data <- init::uninit::<T, AllocError>(),
-+        }? AllocError))?;
-+        Ok(UniqueArc {
-             // INVARIANT: The newly-created object has a ref-count of 1.
--            inner: Arc::try_new(MaybeUninit::uninit())?,
-+            // SAFETY: The pointer from the `Box` is valid.
-+            inner: unsafe { Arc::from_inner(Box::leak(inner).into()) },
-         })
-     }
- }
---
-2.39.2
-
-
+  Luis
