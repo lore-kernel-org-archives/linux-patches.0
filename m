@@ -1,118 +1,234 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553D47470;
-	Wed,  5 Apr 2023 17:56:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E091C433D2;
-	Wed,  5 Apr 2023 17:56:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1680717400;
-	bh=jVAC+4ymjcbvNsupEft+6hBzdRCfnsofg1xrrfqn2EE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VtGkj96fnXFRhZOFW35CsBKWfZ1/hZZH22iSRV99oWKoubYmnccIzXR0hKMt3LRNV
-	 YCF7wADFu0UjIdtw/et1GgDXbcfonja4xyX97aUkHEKffk/VbfeJrwEGwyflIiYqjP
-	 o4cYJ3hrSJp695Jkk7u6UuuKeZHM8oXWOP7v78C9PsmpY6/AC190FdW57Wk7WXAszk
-	 zgBUnuWdUR/s57car2zRtQIuxBJJvuCy4njGmveVwu/Yc/YLRDD3qG1gam/ol7JgTj
-	 xnMEaLC/V3zH1VtaAcytv1ZReq7Q5Du3WPmo9CHK5xcuBupoB3YC3KLYlv6RlOnQw2
-	 eTCAQCaIkYZBg==
-Date: Wed, 5 Apr 2023 18:56:36 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	ndesaulniers@google.com, trix@redhat.com,
-	linux-riscv@lists.infradead.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] riscv: Adjust dependencies of HAVE_DYNAMIC_FTRACE
- selection
-Message-ID: <20230405-dejected-unending-28e29d89f206@spud>
-References: <20230404-riscv-dynamic-ftrace-checks-clang-v1-1-0ce296b7d423@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553DE7470
+	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 18:16:25 +0000 (UTC)
+Received: by mail-vs1-f54.google.com with SMTP id i10so32255594vss.5
+        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 11:16:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680718584;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IBYRvq5aRUhHxPjwjo61wwnRjLT5arGtgwWPvAxbEvM=;
+        b=wJ+SL4emeWxYwJxzHlacBCVwGzcdradBb/1VrRma4pdApUKQRhX6u/oPpOoLqvSkj7
+         We0HBPAML8a6PphWKo6HDkdEwKnxKmqm39DSMwObOU3XmphYF/EP92H42Z4ucjI184BL
+         aTGviu8rHMtY4bEqIE1JtF0x2H2xqnTOOgKXwKtTlDukjDleb8nCdEf3K6gVaFYulU5n
+         gv1TYakt8qiHLIQqzq1lITAks+lRTGadpKsuqMVyMvWEnGOwALzv1XQeUn6Uy3uAzwT6
+         DI3nqymy2Eg0pI7AvfcFayWtfLLF/Z7RlV4S3e+rqLr5t+2vLsngpZM4l4b6hPKCs1Ik
+         lIKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680718584;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IBYRvq5aRUhHxPjwjo61wwnRjLT5arGtgwWPvAxbEvM=;
+        b=RREi4R1+/CrJZIEP/MTSlH0dWwyDyjQda78xMrKbMUWOZO40K2+BXJ6ccAQUg9lChy
+         YiA/oGEuIOoZIffRuragcnOTpwn47kG8ybdBgYDjy6VoJ0axT7bauTsnRto6AVUZwmgS
+         0qkM5xGJNmzyRtz18+Y2ynw5+LMyIfY67zNV6nV0qFBVwELmw6CfszjJjvtxspJIra8V
+         a26uh9tPU6b66ZWKoMSFnZ/CvOW/xOC/oj2JTjvopu0CLFuX4QhOLPVtl9lReN28rvp0
+         3z/1/vlIbkG40FfqrQ7BqPTTGLzaLfqWks4OdGaRadQETQzkgzPWT6u0wqh4u5InQZuS
+         5GDw==
+X-Gm-Message-State: AAQBX9dJPVkRgy2PzTNh/1sXQn8zRyCMOMwe95j6NqE52d1U3TUfhpwT
+	q5DSlwHOiy+gx0QmqZWEiPCNvMhowF51ivcoy7ZApQ==
+X-Google-Smtp-Source: AKy350ZvoV+kCRKNng2HmglGD04IoAYgEM7XhLtMsYekXEaxS99syMWCmysI+S7nwsXw+HpRaD4qAS1BfR+CDoNV6uA=
+X-Received: by 2002:a67:d20f:0:b0:426:392a:92bc with SMTP id
+ y15-20020a67d20f000000b00426392a92bcmr5517030vsi.1.1680718584030; Wed, 05 Apr
+ 2023 11:16:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Y/qRivkW8sHyiGgn"
-Content-Disposition: inline
-In-Reply-To: <20230404-riscv-dynamic-ftrace-checks-clang-v1-1-0ce296b7d423@kernel.org>
-
-
---Y/qRivkW8sHyiGgn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20230405100309.298748790@linuxfoundation.org>
+In-Reply-To: <20230405100309.298748790@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 5 Apr 2023 23:46:12 +0530
+Message-ID: <CA+G9fYvsWKkL_HPNH8hrRAu0LqOv2QrgJCQVorkcqjR6-0ehoQ@mail.gmail.com>
+Subject: Re: [PATCH 6.2 000/185] 6.2.10-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 04, 2023 at 01:34:21PM -0700, Nathan Chancellor wrote:
-> When building allmodconfig with clang and its integrated assembler and
-> linking with a version of GNU ld prior to 2.36, the following link error
-> occurs:
->=20
->   riscv64-linux-gnu-ld: .init.data has both ordered [`__patchable_functio=
-n_entries' in init/main.o] and unordered [`.init_array.0' in kernel/trace/t=
-race_benchmark.o] sections
->   riscv64-linux-gnu-ld: final link failed: bad value
->=20
-> This is the same error addressed by commit 45bd8951806e ("arm64: Improve
-> HAVE_DYNAMIC_FTRACE_WITH_REGS selection for clang") for arm64. See that
-> changelog for a full description of why this error occurs with this
-> combination of tools.
->=20
-> In a similar manner as that change, restrict the
-> CONFIG_HAVE_DYNAMIC_FTRACE selection to combinations of tools known to
-> work so that there are no errors.
->=20
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1817
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  arch/riscv/Kconfig | 13 ++++++++++++-
->  1 file changed, 12 insertions(+), 1 deletion(-)
->=20
-> diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-> index eb7f29a412f8..4b82838ac870 100644
-> --- a/arch/riscv/Kconfig
-> +++ b/arch/riscv/Kconfig
-> @@ -136,12 +136,23 @@ config RISCV
->  	select TRACE_IRQFLAGS_SUPPORT
->  	select UACCESS_MEMCPY if !MMU
->  	select ZONE_DMA32 if 64BIT
-> -	select HAVE_DYNAMIC_FTRACE if !XIP_KERNEL && MMU && $(cc-option,-fpatch=
-able-function-entry=3D8)
-> +	select HAVE_DYNAMIC_FTRACE if !XIP_KERNEL && MMU && (CLANG_SUPPORTS_DYN=
-AMIC_FTRACE || GCC_SUPPORTS_DYNAMIC_FTRACE)
->  	select HAVE_DYNAMIC_FTRACE_WITH_REGS if HAVE_DYNAMIC_FTRACE
->  	select HAVE_FTRACE_MCOUNT_RECORD if !XIP_KERNEL
->  	select HAVE_FUNCTION_GRAPH_TRACER
->  	select HAVE_FUNCTION_TRACER if !XIP_KERNEL && !PREEMPTION
-> =20
-> +config CLANG_SUPPORTS_DYNAMIC_FTRACE
-> +	def_bool CC_IS_CLANG
-> +	# https://github.com/llvm/llvm-project/commit/6ab8927931851bb42b2c93a00=
-801dc499d7d9b1e
-> +	depends on CLANG_VERSION >=3D 130000
-> +	# https://github.com/ClangBuiltLinux/linux/issues/1817
-> +	depends on AS_IS_GNU || (AS_IS_LLVM && (LD_IS_LLD || LD_VERSION >=3D 23=
-600))
-> +
-> +config GCC_SUPPORTS_DYNAMIC_FTRACE
-> +	def_bool CC_IS_GCC
-> +	depends on $(cc-option,-fpatchable-function-entry=3D8)
-
-I thought about merging these, but I think you just end up with
-something that is difficult to grok. Explanation in the arm64 is pretty
-good & the change follows.
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+On Wed, 5 Apr 2023 at 15:33, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.2.10 release.
+> There are 185 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 07 Apr 2023 10:02:32 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.2.10-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.2.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
 
---Y/qRivkW8sHyiGgn
-Content-Type: application/pgp-signature; name="signature.asc"
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
------BEGIN PGP SIGNATURE-----
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZC22VAAKCRB4tDGHoIJi
-0p76AP9x5WZy9i0kDAHbGvogZ6rJrVgolnqAW0uZIAwGqZdHPAD8Ds6dJzr3hChp
-JMo2BHpHOC9Dn+Zzu8NxlXecUBFqAgc=
-=4TDW
------END PGP SIGNATURE-----
+## Build
+* kernel: 6.2.10-rc2
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.2.y
+* git commit: 572b6e9e4ebca45157885c1b1cb946421c568243
+* git describe: v6.2.9-186-g572b6e9e4ebc
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.2.y/build/v6.2.9=
+-186-g572b6e9e4ebc
 
---Y/qRivkW8sHyiGgn--
+## Test Regressions (compared to v6.2.9)
+
+## Metric Regressions (compared to v6.2.9)
+
+## Test Fixes (compared to v6.2.9)
+
+## Metric Fixes (compared to v6.2.9)
+
+## Test result summary
+total: 198254, pass: 167459, fail: 4145, skip: 26300, xfail: 350
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 145 total, 142 passed, 3 failed
+* arm64: 54 total, 53 passed, 1 failed
+* i386: 41 total, 38 passed, 3 failed
+* mips: 30 total, 28 passed, 2 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 38 total, 36 passed, 2 failed
+* riscv: 26 total, 25 passed, 1 failed
+* s390: 16 total, 16 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 7 passed, 1 failed
+* x86_64: 46 total, 46 passed, 0 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-math++
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
