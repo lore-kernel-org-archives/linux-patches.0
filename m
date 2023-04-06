@@ -1,165 +1,97 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C8B7ED
-	for <patches@lists.linux.dev>; Thu,  6 Apr 2023 00:44:08 +0000 (UTC)
-Received: by mail-oi1-f171.google.com with SMTP id w133so27998051oib.1
-        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 17:44:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2619F7E9
+	for <patches@lists.linux.dev>; Thu,  6 Apr 2023 02:44:37 +0000 (UTC)
+Received: by mail-pl1-f182.google.com with SMTP id n14so20402419plc.8
+        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 19:44:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680741848; x=1683333848;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=67K+de3mao0/Lnp/JFUaVgWP4zMne5Ah1yDfkby8fn8=;
-        b=nx/AYkv7CEOZ3408n02ETiVYOD9Q8YNY4+QF2nmAjQZ98tpiXR9pQmmvXSeanS8Wft
-         tHwCfnPL+27H/cOdUMC2iqt+3VOja7Zf3PXib+nFjLzBu4kzYWOTtk+q+QhvsLvwDxNc
-         ITt7UYEWBmh8sxVpUS2AJmyK3VwPpR+AUVHerA1CKxBKsWvDvIXfQY7Hrx/LdfhyPoLV
-         PVJ2/uzGVeyVYZrvXKYe/+zQrdWoPIxv6AmeOhC70xF7Ccl/l71IIVHsmiuCpBJ4nWpz
-         sf+INcsn+Ap3BbTn4THDfpciSY52UTHeg2uUttrvjhgbgVw0aqHoL4CvbZX7//5+5sZL
-         Sdsg==
+        d=gmail.com; s=20210112; t=1680749076;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=oZDEZxZL7BBW3xh9tIxL6hZNJCCHQuMtGQKbxKWBlwE=;
+        b=gXeD6Y1fAewNZTZqhuvjTPf8M7+annlEk5SyhKG4YzNg6IerDS5oW0dwxx1Vfl6EwD
+         LjoMS9paiU6K4Pjh1zdlZ+VN+Cbi8gF9w1ez1S2a7z/HaVvrTJL47B+s5PvXujiXEWz5
+         sxA4KUrRfB/ZyXrDBXf/Gt9ARI4D544xNN1gy223K60kIOX0Ej0/RD13ollF8bnnKTay
+         B3qaF19uqKiBdIv+m3Yk9uY1G+v/geK1VexXfqieQuAdptOXj3AoU2pRMVW5p7St/rhq
+         VwYYHvnUFuAgdLT0igNdnAxaY3HikbRzn7uIwgu2XOJtTmLCqbF3edPOL/QA5Cxwj+f9
+         4Rzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680741848; x=1683333848;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=67K+de3mao0/Lnp/JFUaVgWP4zMne5Ah1yDfkby8fn8=;
-        b=G4nrlTqnzfjUP9CIljfvkHY5zNaEyMxxKAPweeMTI987/g4Y2H8YHnTIWVIr5dapHb
-         ELN52gA49UQulpV71r6CPPsV/0NNrEQCaW7hCQMZn3N6AkWCTJL7asJG3UZ1z4Ce1JdI
-         tkQ3hiu4Kc07n3WEcvqVb1pGKC+tTxuOYSJxhSYxlgSq80vFaVRHqh+4KWfja5XloeCo
-         d328U9E6fTyIIZ/KcyqAOEUL4M6OfMYdijXyV3NtTHl1EmQ9lD1TN3FAllFaaw67eT/M
-         sadb8IZCpfOqEUPXQ0MDJOllUnlJw7Xfzu1IKuLOTZ7cfNw7tEFNmdrK6nPl1ONM81CL
-         iGFQ==
-X-Gm-Message-State: AAQBX9c22M8p4FhyQGG2JUQopvT9pM2/7XBcHc6veufqbo4wiNNvXgm0
-	EoP7cXsO6n8EQvyMzujiQzEb+w==
-X-Google-Smtp-Source: AKy350b8BmAT+p2shjCbWnOCKFS11d0DHa+ch0OS1JKdTIuUwWRx91NagXjRlTfZlnyd7JdcRr2AKQ==
-X-Received: by 2002:aca:674a:0:b0:37f:b1d6:9f3c with SMTP id b10-20020aca674a000000b0037fb1d69f3cmr3077677oiy.46.1680741847707;
-        Wed, 05 Apr 2023 17:44:07 -0700 (PDT)
-Received: from [192.168.17.16] ([189.219.75.19])
-        by smtp.gmail.com with ESMTPSA id f1-20020a4ab001000000b0051aa196ac82sm7336187oon.14.2023.04.05.17.44.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Apr 2023 17:44:07 -0700 (PDT)
-Message-ID: <ce3fab46-1ce6-888d-33ae-0e317b9bba2a@linaro.org>
-Date: Wed, 5 Apr 2023 18:44:05 -0600
+        d=1e100.net; s=20210112; t=1680749076;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oZDEZxZL7BBW3xh9tIxL6hZNJCCHQuMtGQKbxKWBlwE=;
+        b=pn4mV0V5KIEedhw2XTylM0EdBs1xrAS5aFMT1Wit1XJl7Nwymv97W9AQf8oXfyF6y2
+         KjK74NvxcnuHOCev5mg4iYVlJqtIqo/ekd+kv6yGOfIKs6j1qroEQVbF/1+Lyk1iCYFV
+         mRp1MPNdUMIG/w2rkg0RRr2OgUSZlVPXbas9JZzXV2XmZp5fkgSRFabq+PUBwok77fku
+         LWHKxAjk41G/A2wleWC4HJHDvdiH2n2HPDt8xgyTdE5nYDCO47nHcH/gLfqpy1leKman
+         QzfDDcX+4i0OvwJ4NoHdTiXZOEwjcrhzrPXsAP5eM+4LAKAqfvrPhpZBq8qWxajDFHLV
+         Zgyw==
+X-Gm-Message-State: AAQBX9f7qUP44HyMmIug+zmvrSoivyTtVr6wZfMfClPvF66RPC0W+piH
+	WQJFVCJ1Q6Geaz0uGvRaYZE=
+X-Google-Smtp-Source: AKy350aaHoTNYvn3xjIDtrcygA6BrWrs2uocaFRjy5+25cEqn3vExzxr1gA8HlF6UBePIz15UaJLYw==
+X-Received: by 2002:a17:90a:8281:b0:23e:fa90:ba37 with SMTP id g1-20020a17090a828100b0023efa90ba37mr8394686pjn.49.1680749076239;
+        Wed, 05 Apr 2023 19:44:36 -0700 (PDT)
+Received: from debian.me (subs02-180-214-232-14.three.co.id. [180.214.232.14])
+        by smtp.gmail.com with ESMTPSA id d14-20020a17090a498e00b00234afca2498sm1988964pjh.28.2023.04.05.19.44.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Apr 2023 19:44:35 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id 312F31067E2; Thu,  6 Apr 2023 09:44:31 +0700 (WIB)
+Date: Thu, 6 Apr 2023 09:44:31 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/177] 6.1.23-rc3 review
+Message-ID: <ZC4yD2ts7JRPjsSJ@debian.me>
+References: <20230405100302.540890806@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 5.4 084/357] treewide: Replace DECLARE_TASKLET() with
- DECLARE_TASKLET_OLD()
-Content-Language: en-US
-To: Tom Saeger <tom.saeger@oracle.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- Thomas Gleixner <tglx@linutronix.de>, Kees Cook <keescook@chromium.org>,
- Sasha Levin <sashal@kernel.org>
-References: <20230310133733.973883071@linuxfoundation.org>
- <20230310133737.692796889@linuxfoundation.org>
- <20230317182806.owvwdor6qpzp6tve@oracle.com> <ZBhek48t2C6QBUrp@kroah.com>
- <20230320164800.mtiol2cbrtr4jfsy@oracle.com>
- <20230320172710.mx7hsqs6tgmcpxjd@oracle.com>
-From: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
-In-Reply-To: <20230320172710.mx7hsqs6tgmcpxjd@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="UjSs2hH9lS8IKAD5"
+Content-Disposition: inline
+In-Reply-To: <20230405100302.540890806@linuxfoundation.org>
 
-Hello!
 
-On 20/03/23 11:27, Tom Saeger wrote:
-> On Mon, Mar 20, 2023 at 11:48:02AM -0500, Tom Saeger wrote:
->> On Mon, Mar 20, 2023 at 02:24:35PM +0100, Greg Kroah-Hartman wrote:
->>> On Fri, Mar 17, 2023 at 12:28:06PM -0600, Tom Saeger wrote:
->>>> On Fri, Mar 10, 2023 at 02:36:13PM +0100, Greg Kroah-Hartman wrote:
->>>>> From: Kees Cook <keescook@chromium.org>
->>>>>
->>>>> [ Upstream commit b13fecb1c3a603c4b8e99b306fecf4f668c11b32 ]
->>>>>
->>>>> This converts all the existing DECLARE_TASKLET() (and ...DISABLED)
->>>>> macros with DECLARE_TASKLET_OLD() in preparation for refactoring the
->>>>> tasklet callback type. All existing DECLARE_TASKLET() users had a "0"
->>>>> data argument, it has been removed here as well.
->>>>>
->>>>> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->>>>> Acked-by: Thomas Gleixner <tglx@linutronix.de>
->>>>> Signed-off-by: Kees Cook <keescook@chromium.org>
->>>>> Stable-dep-of: 1fdeb8b9f29d ("wifi: iwl3945: Add missing check for create_singlethread_workqueue")
->>>>> Signed-off-by: Sasha Levin <sashal@kernel.org>
->>>>> ---
->>>>
->>>> I noticed kernelci.org bot (5.4) reports:
->>>>
->>>>      Build Failures Detected:
->>>>
->>>>      mips:
->>>>          ip27_defconfig: (gcc-10) FAIL
->>>>          ip28_defconfig: (gcc-10) FAIL
->>>>          lasat_defconfig: (gcc-10) FAIL
->>>>
->>>>      Errors summary:
->>>>
->>>>      1    arch/mips/lasat/picvue_proc.c:87:20: error: ‘pvc_display_tasklet’ undeclared (first use in this function)
->>>>      1    arch/mips/lasat/picvue_proc.c:42:44: error: expected ‘)’ before ‘&’ token
->>>>      1    arch/mips/lasat/picvue_proc.c:33:13: error: ‘pvc_display’ defined but not used [-Werror=unused-function]
->>>>
->>>> Link: https://lore.kernel.org/stable/64041dda.170a0220.8cc25.79c9@mx.google.com/
->>>>
->>>> Here's what I found...
->>>> this backport to 5.4.y of:
->>>> b13fecb1c3a6 ("treewide: Replace DECLARE_TASKLET() with DECLARE_TASKLET_OLD()")
->>>> changed all locations of DECLARE_TASKLET with DECLARE_TASKLET_OLD,
->>>> except one, in arch/mips/lasat/pcivue_proc.c.
->>>>
->>>> This is due to:
->>>> 10760dde9be3 ("MIPS: Remove support for LASAT") preceeding
->>>> b13fecb1c3a6 ("treewide: Replace DECLARE_TASKLET() with DECLARE_TASKLET_OLD()")
->>>> upstream and the former not being present in 5.4.y.
->>>>
->>>> I rolled a revert/re-apply with fixes in the attached mbox,
->>>> however maybe just a revert makes more sense?  Up to you.
->>>>
->>>> I have yet to try building this on mips, just did this by inspection.
->>>
->>> I've taken your patches, let's see how that works...
->>>
->>
->> Ugh, It didn't go well.  I now see a problem.  The change to DECLARE_TASKLET_OLD also
->> removed the last parameter.  I missed that.  I'll spin-up a mips build.
->>
-> 
-> I've now confirmed locally with gcc-10 mips build of lasat_defconfig
-> 
-> 
-> fixup patch should be:
-> 
-> 
-> diff --git a/arch/mips/lasat/picvue_proc.c b/arch/mips/lasat/picvue_proc.c
-> index 8126f15b8e09..6b019915b0c8 100644
-> --- a/arch/mips/lasat/picvue_proc.c
-> +++ b/arch/mips/lasat/picvue_proc.c
-> @@ -39,7 +39,7 @@ static void pvc_display(unsigned long data)
->   		pvc_write_string(pvc_lines[i], 0, i);
->   }
->   
-> -static DECLARE_TASKLET(pvc_display_tasklet, &pvc_display, 0);
-> +static DECLARE_TASKLET_OLD(pvc_display_tasklet, &pvc_display);
->   
->   static int pvc_line_proc_show(struct seq_file *m, void *v)
->   {
-> 
-> 
-> Attached is a reflow of these two patches.
+--UjSs2hH9lS8IKAD5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We don't generally build lasat_defconfig but can reproduce the problem on the most recent 5.4.y RC (5.4.240-rc1). Bisection led to "treewide: Replace DECLARE_TASKLET() with DECLARE_TASKLET_OLD()" (5de7a4254eb2) (as expected), and reverting it also made the build pass (as expected, I guess).
+On Wed, Apr 05, 2023 at 12:03:38PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.23 release.
+> There are 177 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
-With those two patches applied on top of 5.4.240-rc1, MIPS' lasat_defconfig builds with GCC-12 for us.
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-Greetings!
+--=20
+An old man doll... just what I always wanted! - Clara
 
-Daniel Díaz
-daniel.diaz@linaro.org
+--UjSs2hH9lS8IKAD5
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZC4yCgAKCRD2uYlJVVFO
+o98AAP0bADVBrvSx7OjHQkW//t9JqaO/Q/GOFj/F4ZojjtT6ZQD+KWtCVzNpUtnX
+wc71snwNTeR2wNMk3DQzt0zw9S46rQ4=
+=SAoo
+-----END PGP SIGNATURE-----
+
+--UjSs2hH9lS8IKAD5--
