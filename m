@@ -1,107 +1,118 @@
-Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.86.151])
+Received: from smtp-fw-9102.amazon.com (smtp-fw-9102.amazon.com [207.171.184.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EDEECA
-	for <patches@lists.linux.dev>; Thu,  6 Apr 2023 08:15:56 +0000 (UTC)
-Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
- relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- uk-mtapsc-7-YVjMLhzINku5loDUzSosnA-1; Thu, 06 Apr 2023 09:15:53 +0100
-X-MC-Unique: YVjMLhzINku5loDUzSosnA-1
-Received: from AcuMS.Aculab.com (10.202.163.6) by AcuMS.aculab.com
- (10.202.163.6) with Microsoft SMTP Server (TLS) id 15.0.1497.48; Thu, 6 Apr
- 2023 09:15:51 +0100
-Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
- id 15.00.1497.048; Thu, 6 Apr 2023 09:15:51 +0100
-From: David Laight <David.Laight@ACULAB.COM>
-To: 'Luis Chamberlain' <mcgrof@kernel.org>, Linus Torvalds
-	<torvalds@linux-foundation.org>
-CC: "david@redhat.com" <david@redhat.com>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, "linux-modules@vger.kernel.org"
-	<linux-modules@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"pmladek@suse.com" <pmladek@suse.com>, "petr.pavlu@suse.com"
-	<petr.pavlu@suse.com>, "prarit@redhat.com" <prarit@redhat.com>,
-	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-	"rafael@kernel.org" <rafael@kernel.org>, "christophe.leroy@csgroup.eu"
-	<christophe.leroy@csgroup.eu>, "tglx@linutronix.de" <tglx@linutronix.de>,
-	"peterz@infradead.org" <peterz@infradead.org>, "song@kernel.org"
-	<song@kernel.org>, "rppt@kernel.org" <rppt@kernel.org>, "dave@stgolabs.net"
-	<dave@stgolabs.net>, "willy@infradead.org" <willy@infradead.org>,
-	"vbabka@suse.cz" <vbabka@suse.cz>, "mhocko@suse.com" <mhocko@suse.com>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"colin.i.king@gmail.com" <colin.i.king@gmail.com>, "jim.cromie@gmail.com"
-	<jim.cromie@gmail.com>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
-	"jbaron@akamai.com" <jbaron@akamai.com>, "rick.p.edgecombe@intel.com"
-	<rick.p.edgecombe@intel.com>
-Subject: RE: [PATCH v2 5/6] debugfs: add debugfs_create_atomic64_t for
- atomic64_t
-Thread-Topic: [PATCH v2 5/6] debugfs: add debugfs_create_atomic64_t for
- atomic64_t
-Thread-Index: AQHZZ98c6jprfqRD8kOXCEPd17f6W68d7Shg
-Date: Thu, 6 Apr 2023 08:15:51 +0000
-Message-ID: <979c8cf9ab2d4fcba811adc0c563b8bb@AcuMS.aculab.com>
-References: <20230405022702.753323-1-mcgrof@kernel.org>
- <20230405022702.753323-6-mcgrof@kernel.org>
- <CAHk-=whH+OsAY+9qLc9Hz+-W8u=dvD3NLWHemOQpZPcgZa52fA@mail.gmail.com>
- <ZC2cC+I1KTyD8UcC@bombadil.infradead.org>
- <ZC2dtI02ZIbjte2l@bombadil.infradead.org>
- <CAHk-=wiGhHk4u2RRZmJinA4Apb47pXXJPW9cOZ_2-yUqOvaC7Q@mail.gmail.com>
- <ZC2nbiarELlUVcSj@bombadil.infradead.org>
-In-Reply-To: <ZC2nbiarELlUVcSj@bombadil.infradead.org>
-Accept-Language: en-GB, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.202.205.107]
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914BDA21
+	for <patches@lists.linux.dev>; Thu,  6 Apr 2023 08:48:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
+  t=1680770914; x=1712306914;
+  h=from:to:cc:subject:references:date:in-reply-to:
+   message-id:mime-version;
+  bh=eCCEIPDsX9p6xMK5oOcfZQj/UVGS7/pUHr5w0Qxmn+A=;
+  b=KSysOrP+GCmNfSmUqQZmPrDgCnlKbk+m99FR8MzfA2RnbIi7BYKJynM0
+   IGsB4WPKA8UZfsra6c41ZogpinYA1fFroyol4t+G85Eym8FMk6SXajeAR
+   HUacdKhe4/z38BBnVZR8kDcg1pj9lzQZsdAfiCXZ8OSNyaPtClR+BvEZa
+   w=;
+X-IronPort-AV: E=Sophos;i="5.98,323,1673913600"; 
+   d="scan'208";a="326711923"
+Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO email-inbound-relay-pdx-2a-m6i4x-83883bdb.us-west-2.amazon.com) ([10.25.36.210])
+  by smtp-border-fw-9102.sea19.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2023 08:48:28 +0000
+Received: from EX19MTAUWB001.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan2.pdx.amazon.com [10.236.137.194])
+	by email-inbound-relay-pdx-2a-m6i4x-83883bdb.us-west-2.amazon.com (Postfix) with ESMTPS id 6539060148;
+	Thu,  6 Apr 2023 08:48:26 +0000 (UTC)
+Received: from EX19MTAUWC001.ant.amazon.com (10.250.64.145) by
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.26; Thu, 6 Apr 2023 08:48:26 +0000
+Received: from dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com (10.15.11.255)
+ by mail-relay.amazon.com (10.250.64.145) with Microsoft SMTP Server id
+ 15.2.1118.25 via Frontend Transport; Thu, 6 Apr 2023 08:48:25 +0000
+Received: by dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com (Postfix, from userid 23027615)
+	id 72E1622BC6; Thu,  6 Apr 2023 10:48:24 +0200 (CEST)
+From: Pratyush Yadav <ptyadav@amazon.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Steve French <stfrench@microsoft.com>, Amir Goldstein
+	<amir73il@gmail.com>, Aurelien Aptel <aaptel@suse.com>,
+	<stable@vger.kernel.org>, <patches@lists.linux.dev>, Sasha Levin
+	<sashal@kernel.org>
+Subject: Re: [PATCH 5.4] smb3: fix problem with null cifs super block with
+ previous patch
+References: <20230405135709.100174-1-ptyadav@amazon.de>
+	<2023040523-delusion-corrode-f466@gregkh> <mafs0fs9egzzb.fsf_-_@amazon.de>
+	<2023040514-ravishing-problem-9302@gregkh>
+Date: Thu, 6 Apr 2023 10:48:24 +0200
+In-Reply-To: <2023040514-ravishing-problem-9302@gregkh> (Greg Kroah-Hartman's
+	message of "Wed, 5 Apr 2023 19:04:35 +0200")
+Message-ID: <mafs0bkk1gzvr.fsf_-_@amazon.de>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: aculab.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain
 
-RnJvbTogTHVpcyBDaGFtYmVybGFpbiAgTHVpcyBDaGFtYmVybGFpbg0KPiBTZW50OiAwNSBBcHJp
-bCAyMDIzIDE3OjUzDQo+IA0KPiBPbiBXZWQsIEFwciAwNSwgMjAyMyBhdCAwOToyMzowOUFNIC0w
-NzAwLCBMaW51cyBUb3J2YWxkcyB3cm90ZToNCj4gPiBPbiBXZWQsIEFwciA1LCAyMDIzIGF0IDk6
-MTHigK9BTSBMdWlzIENoYW1iZXJsYWluIDxtY2dyb2ZAa2VybmVsLm9yZz4gd3JvdGU6DQo+ID4g
-Pg0KPiA+ID4gT2ggYnV0IEkgZG9uJ3QgZ2V0IHRoZSBhdG9taWMgaW5jcywgc28gd2UnZCBuZWVk
-IGRlYnVnZnNfY3JlYXRlX2F0b21pY19sb25nX3QoKS4NCj4gPg0KPiA+ICAgZGVidWdmc19jcmVh
-dGVfdWxvbmcoInRvdGFsX21vZF9zaXplIiwNCj4gPiAgICAgICAgMDQwMCwgbW9kX2RlYnVnZnNf
-cm9vdCwNCj4gPiAgICAgICAgJnRvdGFsX21vZF9zaXplLmNvdW50ZXIpOw0KPiA+DQo+ID4gYnV0
-IEkgZGlkbid0IGFjdHVhbGx5IHRyeSB0byBjb21waWxlIHRoYXQga2luZCBvZiB2ZXJzaW9uLg0K
-PiA+DQo+ID4gKEkgdGhpbmsgImNvdW50ZXIiIGlzIGFjdHVhbGx5IGEgX3NpZ25lZF8gbG9uZywg
-c28gbWF5YmUgdGhlIHR5cGVzIGRvbid0IG1hdGNoKS4NCj4gDQo+IEkgc2VlIHllcywgc2FkbHkg
-d2UnZCBoYXZlIHRvIGNhc3QgdG8gKHVuc2lnbmVkIGxvbmcgKikgdG8gbWFrZSB0aGF0DQo+IHdv
-cmsgYXMgYXRvbWljX2xvbmcgY291bnRlcnMgYXJlIGxvbmcgbG9uZyBpbnQ6DQo+IA0KPiAgICBk
-ZWJ1Z2ZzX2NyZWF0ZV91bG9uZygidG90YWxfbW9kX3NpemUiLA0KPiAgICAgICAgIDA0MDAsIG1v
-ZF9kZWJ1Z2ZzX3Jvb3QsDQo+IC0gICAgICAgICZ0b3RhbF9tb2Rfc2l6ZS5jb3VudGVyKTsNCj4g
-KyAgICAgICAgKHVuc2lnbmVkIGxvbmcgKikmdG90YWxfbW9kX3NpemUuY291bnRlcik7DQo+IA0K
-PiBUaGF0J3M6DQo+IA0KPiB1bnNpZ25lZCBsb25nIG1pbiBiaXRzIDMyDQo+IGxvbmcgbG9uZyAg
-ICAgbWluIGJpdHMgNjQNCj4gDQo+IEJ1dCBzaW5jZSB3ZSdkIGJlIGRvaW5nIG91ciBhY2NvdW50
-aW5nIGluIGF0b21pY19sb25nIGFuZCBqdXN0IHVzZQ0KPiBkZWJ1Z2ZzIGZvciBwcmludHMgSSB0
-aGluayB0aGF0J3MgZmluZS4gSnVzdCBhIGJpdCB1Z2x5Lg0KDQpUaGF0IGlzbid0IGdvaW5nIHRv
-IHdvcmsuDQpJdCBpcyBwcmV0dHkgbXVjaCBuZXZlciByaWdodCB0byBkbyAqKGludGVnZXJfdHlw
-ZSAqKSZpbnRlZ2VyX3ZhcmlhYmxlLg0KDQpCdXQgYXJlIHlvdSByZWFsbHkgc3VyZSAnYXRvbWlj
-X2xvbmcnIGlzICdsb25nIGxvbmcnDQpkb2Vzbid0IHNvdW5kIHJpZ2h0IGF0IGFsbC4NCidsb25n
-IGxvbmcnIGlzIDEyOGJpdCBvbiA2NGJpdCBhbmQgNjRiaXQgb24gMzJiaXQgLSBzbyBpcyBhbHdh
-eXMNCmEgZG91YmxlLXJlZ2lzdGVyIGFjY2Vzcy4NClRoaXMgaXMgd29yc2UgdGhhbiBhdG9taWNf
-dTY0Lg0KDQpJIHNob3VsZCBwcm9iYWJseSB0cnkgdG8gbG9va3VwIGFuZC9vciBtZWFzdXJlIHRo
-ZSBwZXJmb3JtYW5jZQ0Kb2YgYXRvbWljIG9wZXJhdGlvbnMgKGVzcC4gY21weGNoZykgb24geDg2
-Lg0KSGlzdG9yaWNhbGx5IHRoZXkgd2VyZSBhIHNlcGFyYXRlIHJlYWQgYW5kIHdyaXRlIGJ1cyBj
-eWNsZXMgd2l0aA0KdGhlICdsb2NrJyBzaWduYWwgYXNzZXJ0ZWQgKGFuZCBzdGlsbCBhcmUgaWYg
-dGhleSBjcm9zcyBjYWNoZQ0KbGluZSBib3VuZGFyaWVzKS4NCkJ1dCBpdCBpcyBwb3NzaWJsZSB0
-aGF0IGF0IGxlYXN0IHNvbWUgb2YgdGhlIGxvY2tlZCBvcGVyYXRpb25zDQooZXNwLiB0aGUgeGNo
-ZyBvbmVzKSBhcmUgaW1wbGVtZW50ZWQgd2l0aGluIHRoZSBjYWNoZSBpdHNlbGYNCnNvIGFyZSBq
-dXN0IGEgc2luZ2xlIGNwdSAtPiBjYWNoZSBvcGVyYXRpb24uDQpJZiBub3QgaXQgaXMgYWN0dWFs
-bHkgcG9zc2libGUgdGhhdCB0aGUgX2xvY2FsIHZhcmlhbnRzIHRoYXQNCnNlZW0gdG8gaGF2ZSBi
-ZWVuIGFkZGVkIHNob3VsZCBub3QgdXNlIHRoZSBsb2NrZWQgaW5zdHJ1Y3Rpb25zIQ0KDQoJRGF2
-aWQNCg0KLQ0KUmVnaXN0ZXJlZCBBZGRyZXNzIExha2VzaWRlLCBCcmFtbGV5IFJvYWQsIE1vdW50
-IEZhcm0sIE1pbHRvbiBLZXluZXMsIE1LMSAxUFQsIFVLDQpSZWdpc3RyYXRpb24gTm86IDEzOTcz
-ODYgKFdhbGVzKQ0K
+On Wed, Apr 05 2023, Greg Kroah-Hartman wrote:
+
+> On Wed, Apr 05, 2023 at 04:34:00PM +0200, Pratyush Yadav wrote:
+>> On Wed, Apr 05 2023, Greg Kroah-Hartman wrote:
+>>
+>> > On Wed, Apr 05, 2023 at 03:57:09PM +0200, Pratyush Yadav wrote:
+>> >> From: Steve French <stfrench@microsoft.com>
+>> >>
+>> >> [ Upstream commit 87f93d82e0952da18af4d978e7d887b4c5326c0b ]
+>> >>
+>> >> Add check for null cifs_sb to create_options helper
+>> >>
+>> >> Signed-off-by: Steve French <stfrench@microsoft.com>
+>> >> Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+>> >> Reviewed-by: Aurelien Aptel <aaptel@suse.com>
+>> >> Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
+>> >> ---
+>> >>
+>> >> Only compile-tested. This was discovered by our static code analysis
+>> >> tool. I do not use CIFS and do not know how to actually reproduce the
+>> >> NULL dereference.
+>> >>
+>> >> Follow up from [0]. Original patch is at [1].
+>> >>
+>> >> Mandatory text due to licensing terms:
+>> >>
+>> >> This bug was discovered and resolved using Coverity Static Analysis
+>> >> Security Testing (SAST) by Synopsys, Inc.
+>> >
+>> > What?  That's funny.  And nothing I'm going to be adding to the
+>> > changelog text, sorry, as that's not what is upstream.
+>>
+>> That is fine by me. I placed this text below the 3 dashed lines so it
+>> does _not_ end up in the commit message, but still discloses this
+>> information.
+>>
+>> > Please go poke your lawyers, that's not ok.
+>>
+>> Yes, perhaps I should. But let's go forward with this patch since it
+>> keeps the original commit message?
+>
+> It's already been queued up, you should have gotten an email saying
+> that, right?
+
+Yes, I did, thanks! There was a bit of a race in me sending that email
+and receiving the notification.
+
+-- 
+Regards,
+Pratyush Yadav
+
+
+
+Amazon Development Center Germany GmbH
+Krausenstr. 38
+10117 Berlin
+Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
+Eingetragen am Amtsgericht Charlottenburg unter HRB 149173 B
+Sitz: Berlin
+Ust-ID: DE 289 237 879
+
+
 
