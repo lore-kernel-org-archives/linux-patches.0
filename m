@@ -1,52 +1,165 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2427FD524
-	for <patches@lists.linux.dev>; Wed,  5 Apr 2023 23:47:11 +0000 (UTC)
-Received: by linux.microsoft.com (Postfix, from userid 1131)
-	id B3420210DEF1; Wed,  5 Apr 2023 16:47:10 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B3420210DEF1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1680738430;
-	bh=yNAS5erRHhc/EFovP6vHaxgN265p2mfiB1fFyCTB5Ps=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=i8wtK9UPGKsH/hQJPEblp8Q6kuursJLm1edttlRDGEHQKBvD9GGnufAYR3CfXxm2j
-	 2oMf29rR+yni6ErUPADLi/D+JxmFvZ9qU37T5InL8qmMhswYu0CKJS1AAgJCglkCTp
-	 mZ22BaHALA/7hjZldRK4mkGR6lXf38c10Eo+8sDY=
-Date: Wed, 5 Apr 2023 16:47:10 -0700
-From: Kelsey Steele <kelseysteele@linux.microsoft.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/185] 6.2.10-rc2 review
-Message-ID: <20230405234710.GB5053@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20230405100309.298748790@linuxfoundation.org>
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C8B7ED
+	for <patches@lists.linux.dev>; Thu,  6 Apr 2023 00:44:08 +0000 (UTC)
+Received: by mail-oi1-f171.google.com with SMTP id w133so27998051oib.1
+        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 17:44:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680741848; x=1683333848;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=67K+de3mao0/Lnp/JFUaVgWP4zMne5Ah1yDfkby8fn8=;
+        b=nx/AYkv7CEOZ3408n02ETiVYOD9Q8YNY4+QF2nmAjQZ98tpiXR9pQmmvXSeanS8Wft
+         tHwCfnPL+27H/cOdUMC2iqt+3VOja7Zf3PXib+nFjLzBu4kzYWOTtk+q+QhvsLvwDxNc
+         ITt7UYEWBmh8sxVpUS2AJmyK3VwPpR+AUVHerA1CKxBKsWvDvIXfQY7Hrx/LdfhyPoLV
+         PVJ2/uzGVeyVYZrvXKYe/+zQrdWoPIxv6AmeOhC70xF7Ccl/l71IIVHsmiuCpBJ4nWpz
+         sf+INcsn+Ap3BbTn4THDfpciSY52UTHeg2uUttrvjhgbgVw0aqHoL4CvbZX7//5+5sZL
+         Sdsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680741848; x=1683333848;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=67K+de3mao0/Lnp/JFUaVgWP4zMne5Ah1yDfkby8fn8=;
+        b=G4nrlTqnzfjUP9CIljfvkHY5zNaEyMxxKAPweeMTI987/g4Y2H8YHnTIWVIr5dapHb
+         ELN52gA49UQulpV71r6CPPsV/0NNrEQCaW7hCQMZn3N6AkWCTJL7asJG3UZ1z4Ce1JdI
+         tkQ3hiu4Kc07n3WEcvqVb1pGKC+tTxuOYSJxhSYxlgSq80vFaVRHqh+4KWfja5XloeCo
+         d328U9E6fTyIIZ/KcyqAOEUL4M6OfMYdijXyV3NtTHl1EmQ9lD1TN3FAllFaaw67eT/M
+         sadb8IZCpfOqEUPXQ0MDJOllUnlJw7Xfzu1IKuLOTZ7cfNw7tEFNmdrK6nPl1ONM81CL
+         iGFQ==
+X-Gm-Message-State: AAQBX9c22M8p4FhyQGG2JUQopvT9pM2/7XBcHc6veufqbo4wiNNvXgm0
+	EoP7cXsO6n8EQvyMzujiQzEb+w==
+X-Google-Smtp-Source: AKy350b8BmAT+p2shjCbWnOCKFS11d0DHa+ch0OS1JKdTIuUwWRx91NagXjRlTfZlnyd7JdcRr2AKQ==
+X-Received: by 2002:aca:674a:0:b0:37f:b1d6:9f3c with SMTP id b10-20020aca674a000000b0037fb1d69f3cmr3077677oiy.46.1680741847707;
+        Wed, 05 Apr 2023 17:44:07 -0700 (PDT)
+Received: from [192.168.17.16] ([189.219.75.19])
+        by smtp.gmail.com with ESMTPSA id f1-20020a4ab001000000b0051aa196ac82sm7336187oon.14.2023.04.05.17.44.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Apr 2023 17:44:07 -0700 (PDT)
+Message-ID: <ce3fab46-1ce6-888d-33ae-0e317b9bba2a@linaro.org>
+Date: Wed, 5 Apr 2023 18:44:05 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230405100309.298748790@linuxfoundation.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 5.4 084/357] treewide: Replace DECLARE_TASKLET() with
+ DECLARE_TASKLET_OLD()
+Content-Language: en-US
+To: Tom Saeger <tom.saeger@oracle.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Thomas Gleixner <tglx@linutronix.de>, Kees Cook <keescook@chromium.org>,
+ Sasha Levin <sashal@kernel.org>
+References: <20230310133733.973883071@linuxfoundation.org>
+ <20230310133737.692796889@linuxfoundation.org>
+ <20230317182806.owvwdor6qpzp6tve@oracle.com> <ZBhek48t2C6QBUrp@kroah.com>
+ <20230320164800.mtiol2cbrtr4jfsy@oracle.com>
+ <20230320172710.mx7hsqs6tgmcpxjd@oracle.com>
+From: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
+In-Reply-To: <20230320172710.mx7hsqs6tgmcpxjd@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Apr 05, 2023 at 12:03:46PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.10 release.
-> There are 185 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hello!
+
+On 20/03/23 11:27, Tom Saeger wrote:
+> On Mon, Mar 20, 2023 at 11:48:02AM -0500, Tom Saeger wrote:
+>> On Mon, Mar 20, 2023 at 02:24:35PM +0100, Greg Kroah-Hartman wrote:
+>>> On Fri, Mar 17, 2023 at 12:28:06PM -0600, Tom Saeger wrote:
+>>>> On Fri, Mar 10, 2023 at 02:36:13PM +0100, Greg Kroah-Hartman wrote:
+>>>>> From: Kees Cook <keescook@chromium.org>
+>>>>>
+>>>>> [ Upstream commit b13fecb1c3a603c4b8e99b306fecf4f668c11b32 ]
+>>>>>
+>>>>> This converts all the existing DECLARE_TASKLET() (and ...DISABLED)
+>>>>> macros with DECLARE_TASKLET_OLD() in preparation for refactoring the
+>>>>> tasklet callback type. All existing DECLARE_TASKLET() users had a "0"
+>>>>> data argument, it has been removed here as well.
+>>>>>
+>>>>> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>>>>> Acked-by: Thomas Gleixner <tglx@linutronix.de>
+>>>>> Signed-off-by: Kees Cook <keescook@chromium.org>
+>>>>> Stable-dep-of: 1fdeb8b9f29d ("wifi: iwl3945: Add missing check for create_singlethread_workqueue")
+>>>>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>>>>> ---
+>>>>
+>>>> I noticed kernelci.org bot (5.4) reports:
+>>>>
+>>>>      Build Failures Detected:
+>>>>
+>>>>      mips:
+>>>>          ip27_defconfig: (gcc-10) FAIL
+>>>>          ip28_defconfig: (gcc-10) FAIL
+>>>>          lasat_defconfig: (gcc-10) FAIL
+>>>>
+>>>>      Errors summary:
+>>>>
+>>>>      1    arch/mips/lasat/picvue_proc.c:87:20: error: ‘pvc_display_tasklet’ undeclared (first use in this function)
+>>>>      1    arch/mips/lasat/picvue_proc.c:42:44: error: expected ‘)’ before ‘&’ token
+>>>>      1    arch/mips/lasat/picvue_proc.c:33:13: error: ‘pvc_display’ defined but not used [-Werror=unused-function]
+>>>>
+>>>> Link: https://lore.kernel.org/stable/64041dda.170a0220.8cc25.79c9@mx.google.com/
+>>>>
+>>>> Here's what I found...
+>>>> this backport to 5.4.y of:
+>>>> b13fecb1c3a6 ("treewide: Replace DECLARE_TASKLET() with DECLARE_TASKLET_OLD()")
+>>>> changed all locations of DECLARE_TASKLET with DECLARE_TASKLET_OLD,
+>>>> except one, in arch/mips/lasat/pcivue_proc.c.
+>>>>
+>>>> This is due to:
+>>>> 10760dde9be3 ("MIPS: Remove support for LASAT") preceeding
+>>>> b13fecb1c3a6 ("treewide: Replace DECLARE_TASKLET() with DECLARE_TASKLET_OLD()")
+>>>> upstream and the former not being present in 5.4.y.
+>>>>
+>>>> I rolled a revert/re-apply with fixes in the attached mbox,
+>>>> however maybe just a revert makes more sense?  Up to you.
+>>>>
+>>>> I have yet to try building this on mips, just did this by inspection.
+>>>
+>>> I've taken your patches, let's see how that works...
+>>>
+>>
+>> Ugh, It didn't go well.  I now see a problem.  The change to DECLARE_TASKLET_OLD also
+>> removed the last parameter.  I missed that.  I'll spin-up a mips build.
+>>
 > 
-> Responses should be made by Fri, 07 Apr 2023 10:02:32 +0000.
-> Anything received after that time might be too late.
+> I've now confirmed locally with gcc-10 mips build of lasat_defconfig
+> 
+> 
+> fixup patch should be:
+> 
+> 
+> diff --git a/arch/mips/lasat/picvue_proc.c b/arch/mips/lasat/picvue_proc.c
+> index 8126f15b8e09..6b019915b0c8 100644
+> --- a/arch/mips/lasat/picvue_proc.c
+> +++ b/arch/mips/lasat/picvue_proc.c
+> @@ -39,7 +39,7 @@ static void pvc_display(unsigned long data)
+>   		pvc_write_string(pvc_lines[i], 0, i);
+>   }
+>   
+> -static DECLARE_TASKLET(pvc_display_tasklet, &pvc_display, 0);
+> +static DECLARE_TASKLET_OLD(pvc_display_tasklet, &pvc_display);
+>   
+>   static int pvc_line_proc_show(struct seq_file *m, void *v)
+>   {
+> 
+> 
+> Attached is a reflow of these two patches.
 
-No regressions found on WSL (x86 and arm64).
+We don't generally build lasat_defconfig but can reproduce the problem on the most recent 5.4.y RC (5.4.240-rc1). Bisection led to "treewide: Replace DECLARE_TASKLET() with DECLARE_TASKLET_OLD()" (5de7a4254eb2) (as expected), and reverting it also made the build pass (as expected, I guess).
 
-Built, booted, and reviewed dmesg.
+With those two patches applied on top of 5.4.240-rc1, MIPS' lasat_defconfig builds with GCC-12 for us.
 
-Thank you.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Tested-by: Kelsey Steele <kelseysteele@linux.microsoft.com> 
+Greetings!
+
+Daniel Díaz
+daniel.diaz@linaro.org
+
