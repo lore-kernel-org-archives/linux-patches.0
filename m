@@ -1,81 +1,110 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D2F7E9
-	for <patches@lists.linux.dev>; Thu,  6 Apr 2023 02:48:39 +0000 (UTC)
-Received: by mail-pg1-f182.google.com with SMTP id y19so22965406pgk.5
-        for <patches@lists.linux.dev>; Wed, 05 Apr 2023 19:48:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680749319; x=1683341319;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MHuPzBxJToh2F/SQs1hc1tHUZRPWSYggD2FMkgtFvfU=;
-        b=RTKcqTfW0bcbhj53/JSrPCwNJD1Ba88spY6/ybnuphWun2+rmFQmK1uLk0wbkc1kKa
-         jZNdcK/zr3w9CBlghABXWIglBm9pYljqfr/0THmtze44cp/qPaitadt/6tdH+khAbuMZ
-         QJwp0IwE9qDS0MVsFJvlrnx9tZuMss2F5AR2Od1swe1Vl7P0pacrSTYOYDL+p/IwwWHv
-         5Civ59SUpKkTNlbKT5UJWcYwmZqnhAz8UIII9XKvEo2diUqzmauRDGATGkt9zQ18Hcwd
-         25A9NIXzLdL5/IGyZGxHwB8HtzwocoE0QBs6TwAF7bxtmHKTDRTYWqoOoacrZRTbq2vE
-         REwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680749319; x=1683341319;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MHuPzBxJToh2F/SQs1hc1tHUZRPWSYggD2FMkgtFvfU=;
-        b=FnV3ZK2Rdtv4yjEp8sCaCWtsITZdhRmWnySNG4wmx6TO3BFGQEpV0GDYhuvb9QE1YB
-         N6pPGVRJB8bBwmWPTiDN73txyOHaAdkZ+wnQJTe2NeUrq3UpDOoj18k5x9nRxBwBWsgJ
-         x20hdtHWqPGPwgoH811a0kf0TFlLR+9ovlOEln2Xg3o7ZPvkp6LGSBWd+z6eEHkbD7ug
-         TTRhNDf5Qi/QWkRN6PM5F0e6nOhE8sgsjjXFmiPI/8RzaZn4HMBTyW8zTVuyHmor6hFh
-         DSwM1hLL/2yIpaVnbydUUS+AFtjYKsUNs8RtMMDx3V+KlOyz7/uGWKwOvst98nagIjyW
-         s7EQ==
-X-Gm-Message-State: AAQBX9drCOLH8hTuni0/RRtapfBlMmR/nx1SUOfDSbPWjwYYaRZ0fr0V
-	NRRLjGQfUj2ZwO4ddE63Py37TiQkD4Tt0hvhN/E=
-X-Google-Smtp-Source: AKy350bfpkuIo+RGLpDcjFpvKCAEt+1deus7O3fF9RbKJsscdxuSKlJ3KTv9GDz4ZMdQyeQE61+I0jn93WpfMURtvuY=
-X-Received: by 2002:a05:6a00:1394:b0:626:2343:76b0 with SMTP id
- t20-20020a056a00139400b00626234376b0mr4514179pfg.6.1680749318969; Wed, 05 Apr
- 2023 19:48:38 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1127A41
+	for <patches@lists.linux.dev>; Thu,  6 Apr 2023 06:56:16 +0000 (UTC)
+Date: Thu, 06 Apr 2023 06:56:09 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1680764174; x=1681023374;
+	bh=x9eH5jLzlqlD1oeTC6skO4fRxBR6eOlDpRkl8IwVxoE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=bACR+JIcC17dQkUDTOdz3igPN7NdemtDMVCzZ9hrPxMBnu4Mc0kiG1Cy9Ru+wU8cn
+	 1jiZsOHRVr1JoF6hkeyTq4S/3xn7F8kIEVf7q37xeNSRpLETOALYDxKutilYck4OyR
+	 kXvod+SRn7yF4H9AU1NsJblvg6tId10aJd5eFe6McqlmYLM2vEYxovQo5ouw7Lc3bA
+	 RBQU2g2dYhRAmLwyJsxlR53JMN/yEh6akzWNywUE/+l+N/7axerMOt3yciStV5CkbA
+	 dgkT0S0TWKcWe+5U8VZ1JlhWiqq9ivCieB9AW3t1ruk7TxYh8nsimAU9dpUA89Cijd
+	 CLEFtR3gl3h3g==
+To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>, Andreas Hindborg <nmi@metaspace.dk>
+From: Benno Lossin <y86-dev@protonmail.com>
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <y86-dev@protonmail.com>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <a.hindborg@samsung.com>
+Subject: [PATCH v6.1] rust: types: add `Opaque::pin_init`
+Message-ID: <20230406065546.787669-1-y86-dev@protonmail.com>
+In-Reply-To: <20230405193445.745024-14-y86-dev@protonmail.com>
+References: <20230405193445.745024-1-y86-dev@protonmail.com> <20230405193445.745024-14-y86-dev@protonmail.com>
+Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230405100302.540890806@linuxfoundation.org>
-In-Reply-To: <20230405100302.540890806@linuxfoundation.org>
-From: Allen Pais <stable.kernel.dev@gmail.com>
-Date: Thu, 6 Apr 2023 08:18:28 +0530
-Message-ID: <CAJq+SaAc05wRYVQVRHP0zPZfYbHb5nz80JHfU-74MSa+X8_sRg@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/177] 6.1.23-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> This is the start of the stable review cycle for the 6.1.23 release.
-> There are 177 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 07 Apr 2023 10:02:26 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.23-rc3.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Add support for pin-init in combination with `Opaque<T>`, the `pin_init`
+function initializes the contents via a user-supplied initializer for
+`T`.
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+Cc: Alice Ryhl <aliceryhl@google.com>
+Cc: Andreas Hindborg <a.hindborg@samsung.com>
+Cc: Gary Guo <gary@garyguo.net>
+---
+ rust/kernel/init.rs  |  3 +++
+ rust/kernel/types.rs | 18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
+index ffd539e2f5ef..23d879e53b26 100644
+--- a/rust/kernel/init.rs
++++ b/rust/kernel/init.rs
+@@ -177,6 +177,9 @@
+ //! }
+ //! ```
+ //!
++//! For more information on how to use [`pin_init_from_closure()`], take a=
+ look at the uses inside
++//! the `kernel` crate. The [`sync`] module is a good starting point.
++//!
+ //! [`sync`]: kernel::sync
+ //! [pinning]: https://doc.rust-lang.org/std/pin/index.html
+ //! [structurally pinned fields]:
+diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
+index ff2b2fac951d..cf1cbd6a1447 100644
+--- a/rust/kernel/types.rs
++++ b/rust/kernel/types.rs
+@@ -2,6 +2,7 @@
 
-Thanks.
+ //! Kernel types.
+
++use crate::init::{self, PinInit};
+ use alloc::boxed::Box;
+ use core::{
+     cell::UnsafeCell,
+@@ -234,6 +235,23 @@ impl<T> Opaque<T> {
+         Self(MaybeUninit::uninit())
+     }
+
++    /// Creates a pin-initializer for `Opaque<T>`.
++    ///
++    /// # Safety
++    ///
++    /// [`PinInit<T, E>`] promises that the [`Pin` `Drop` guarantee] is up=
+held for the type `T` if
++    /// initialization succeeds. `Opaque` is a wrapper that allows holding=
+ uninitialized values of
++    /// `T`, so it does not drop the `T` when it is dropped. When calling =
+this function the caller
++    /// needs to guarantee that:
++    /// - either `T` does not have drop glue ([`core::mem::needs_drop`] re=
+tuns `false`),
++    /// - or the caller ensures the drop guarantee manually.
++    ///
++    /// [`Pin` `Drop` guarantee]: https://doc.rust-lang.org/core/pin/index=
+.html#drop-guarantee
++    pub unsafe fn pin_init<E>(init: impl PinInit<T, E>) -> impl PinInit<Se=
+lf, E> {
++        // SAFETY: `init` initializes the only field of this struct.
++        unsafe { init::pin_init_from_closure(|slot| init.__pinned_init(Sel=
+f::raw_get(slot))) }
++    }
++
+     /// Returns a raw pointer to the opaque data.
+     pub fn get(&self) -> *mut T {
+         UnsafeCell::raw_get(self.0.as_ptr())
+--
+2.39.2
+
+
