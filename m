@@ -1,110 +1,107 @@
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
+Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.86.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1127A41
-	for <patches@lists.linux.dev>; Thu,  6 Apr 2023 06:56:16 +0000 (UTC)
-Date: Thu, 06 Apr 2023 06:56:09 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680764174; x=1681023374;
-	bh=x9eH5jLzlqlD1oeTC6skO4fRxBR6eOlDpRkl8IwVxoE=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=bACR+JIcC17dQkUDTOdz3igPN7NdemtDMVCzZ9hrPxMBnu4Mc0kiG1Cy9Ru+wU8cn
-	 1jiZsOHRVr1JoF6hkeyTq4S/3xn7F8kIEVf7q37xeNSRpLETOALYDxKutilYck4OyR
-	 kXvod+SRn7yF4H9AU1NsJblvg6tId10aJd5eFe6McqlmYLM2vEYxovQo5ouw7Lc3bA
-	 RBQU2g2dYhRAmLwyJsxlR53JMN/yEh6akzWNywUE/+l+N/7axerMOt3yciStV5CkbA
-	 dgkT0S0TWKcWe+5U8VZ1JlhWiqq9ivCieB9AW3t1ruk7TxYh8nsimAU9dpUA89Cijd
-	 CLEFtR3gl3h3g==
-To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>, Andreas Hindborg <nmi@metaspace.dk>
-From: Benno Lossin <y86-dev@protonmail.com>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <y86-dev@protonmail.com>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <a.hindborg@samsung.com>
-Subject: [PATCH v6.1] rust: types: add `Opaque::pin_init`
-Message-ID: <20230406065546.787669-1-y86-dev@protonmail.com>
-In-Reply-To: <20230405193445.745024-14-y86-dev@protonmail.com>
-References: <20230405193445.745024-1-y86-dev@protonmail.com> <20230405193445.745024-14-y86-dev@protonmail.com>
-Feedback-ID: 40624463:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EDEECA
+	for <patches@lists.linux.dev>; Thu,  6 Apr 2023 08:15:56 +0000 (UTC)
+Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
+ relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ uk-mtapsc-7-YVjMLhzINku5loDUzSosnA-1; Thu, 06 Apr 2023 09:15:53 +0100
+X-MC-Unique: YVjMLhzINku5loDUzSosnA-1
+Received: from AcuMS.Aculab.com (10.202.163.6) by AcuMS.aculab.com
+ (10.202.163.6) with Microsoft SMTP Server (TLS) id 15.0.1497.48; Thu, 6 Apr
+ 2023 09:15:51 +0100
+Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
+ id 15.00.1497.048; Thu, 6 Apr 2023 09:15:51 +0100
+From: David Laight <David.Laight@ACULAB.COM>
+To: 'Luis Chamberlain' <mcgrof@kernel.org>, Linus Torvalds
+	<torvalds@linux-foundation.org>
+CC: "david@redhat.com" <david@redhat.com>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "linux-modules@vger.kernel.org"
+	<linux-modules@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"pmladek@suse.com" <pmladek@suse.com>, "petr.pavlu@suse.com"
+	<petr.pavlu@suse.com>, "prarit@redhat.com" <prarit@redhat.com>,
+	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	"rafael@kernel.org" <rafael@kernel.org>, "christophe.leroy@csgroup.eu"
+	<christophe.leroy@csgroup.eu>, "tglx@linutronix.de" <tglx@linutronix.de>,
+	"peterz@infradead.org" <peterz@infradead.org>, "song@kernel.org"
+	<song@kernel.org>, "rppt@kernel.org" <rppt@kernel.org>, "dave@stgolabs.net"
+	<dave@stgolabs.net>, "willy@infradead.org" <willy@infradead.org>,
+	"vbabka@suse.cz" <vbabka@suse.cz>, "mhocko@suse.com" <mhocko@suse.com>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+	"colin.i.king@gmail.com" <colin.i.king@gmail.com>, "jim.cromie@gmail.com"
+	<jim.cromie@gmail.com>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
+	"jbaron@akamai.com" <jbaron@akamai.com>, "rick.p.edgecombe@intel.com"
+	<rick.p.edgecombe@intel.com>
+Subject: RE: [PATCH v2 5/6] debugfs: add debugfs_create_atomic64_t for
+ atomic64_t
+Thread-Topic: [PATCH v2 5/6] debugfs: add debugfs_create_atomic64_t for
+ atomic64_t
+Thread-Index: AQHZZ98c6jprfqRD8kOXCEPd17f6W68d7Shg
+Date: Thu, 6 Apr 2023 08:15:51 +0000
+Message-ID: <979c8cf9ab2d4fcba811adc0c563b8bb@AcuMS.aculab.com>
+References: <20230405022702.753323-1-mcgrof@kernel.org>
+ <20230405022702.753323-6-mcgrof@kernel.org>
+ <CAHk-=whH+OsAY+9qLc9Hz+-W8u=dvD3NLWHemOQpZPcgZa52fA@mail.gmail.com>
+ <ZC2cC+I1KTyD8UcC@bombadil.infradead.org>
+ <ZC2dtI02ZIbjte2l@bombadil.infradead.org>
+ <CAHk-=wiGhHk4u2RRZmJinA4Apb47pXXJPW9cOZ_2-yUqOvaC7Q@mail.gmail.com>
+ <ZC2nbiarELlUVcSj@bombadil.infradead.org>
+In-Reply-To: <ZC2nbiarELlUVcSj@bombadil.infradead.org>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Add support for pin-init in combination with `Opaque<T>`, the `pin_init`
-function initializes the contents via a user-supplied initializer for
-`T`.
-
-Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
-Cc: Alice Ryhl <aliceryhl@google.com>
-Cc: Andreas Hindborg <a.hindborg@samsung.com>
-Cc: Gary Guo <gary@garyguo.net>
----
- rust/kernel/init.rs  |  3 +++
- rust/kernel/types.rs | 18 ++++++++++++++++++
- 2 files changed, 21 insertions(+)
-
-diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-index ffd539e2f5ef..23d879e53b26 100644
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -177,6 +177,9 @@
- //! }
- //! ```
- //!
-+//! For more information on how to use [`pin_init_from_closure()`], take a=
- look at the uses inside
-+//! the `kernel` crate. The [`sync`] module is a good starting point.
-+//!
- //! [`sync`]: kernel::sync
- //! [pinning]: https://doc.rust-lang.org/std/pin/index.html
- //! [structurally pinned fields]:
-diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-index ff2b2fac951d..cf1cbd6a1447 100644
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -2,6 +2,7 @@
-
- //! Kernel types.
-
-+use crate::init::{self, PinInit};
- use alloc::boxed::Box;
- use core::{
-     cell::UnsafeCell,
-@@ -234,6 +235,23 @@ impl<T> Opaque<T> {
-         Self(MaybeUninit::uninit())
-     }
-
-+    /// Creates a pin-initializer for `Opaque<T>`.
-+    ///
-+    /// # Safety
-+    ///
-+    /// [`PinInit<T, E>`] promises that the [`Pin` `Drop` guarantee] is up=
-held for the type `T` if
-+    /// initialization succeeds. `Opaque` is a wrapper that allows holding=
- uninitialized values of
-+    /// `T`, so it does not drop the `T` when it is dropped. When calling =
-this function the caller
-+    /// needs to guarantee that:
-+    /// - either `T` does not have drop glue ([`core::mem::needs_drop`] re=
-tuns `false`),
-+    /// - or the caller ensures the drop guarantee manually.
-+    ///
-+    /// [`Pin` `Drop` guarantee]: https://doc.rust-lang.org/core/pin/index=
-.html#drop-guarantee
-+    pub unsafe fn pin_init<E>(init: impl PinInit<T, E>) -> impl PinInit<Se=
-lf, E> {
-+        // SAFETY: `init` initializes the only field of this struct.
-+        unsafe { init::pin_init_from_closure(|slot| init.__pinned_init(Sel=
-f::raw_get(slot))) }
-+    }
-+
-     /// Returns a raw pointer to the opaque data.
-     pub fn get(&self) -> *mut T {
-         UnsafeCell::raw_get(self.0.as_ptr())
---
-2.39.2
-
+RnJvbTogTHVpcyBDaGFtYmVybGFpbiAgTHVpcyBDaGFtYmVybGFpbg0KPiBTZW50OiAwNSBBcHJp
+bCAyMDIzIDE3OjUzDQo+IA0KPiBPbiBXZWQsIEFwciAwNSwgMjAyMyBhdCAwOToyMzowOUFNIC0w
+NzAwLCBMaW51cyBUb3J2YWxkcyB3cm90ZToNCj4gPiBPbiBXZWQsIEFwciA1LCAyMDIzIGF0IDk6
+MTHigK9BTSBMdWlzIENoYW1iZXJsYWluIDxtY2dyb2ZAa2VybmVsLm9yZz4gd3JvdGU6DQo+ID4g
+Pg0KPiA+ID4gT2ggYnV0IEkgZG9uJ3QgZ2V0IHRoZSBhdG9taWMgaW5jcywgc28gd2UnZCBuZWVk
+IGRlYnVnZnNfY3JlYXRlX2F0b21pY19sb25nX3QoKS4NCj4gPg0KPiA+ICAgZGVidWdmc19jcmVh
+dGVfdWxvbmcoInRvdGFsX21vZF9zaXplIiwNCj4gPiAgICAgICAgMDQwMCwgbW9kX2RlYnVnZnNf
+cm9vdCwNCj4gPiAgICAgICAgJnRvdGFsX21vZF9zaXplLmNvdW50ZXIpOw0KPiA+DQo+ID4gYnV0
+IEkgZGlkbid0IGFjdHVhbGx5IHRyeSB0byBjb21waWxlIHRoYXQga2luZCBvZiB2ZXJzaW9uLg0K
+PiA+DQo+ID4gKEkgdGhpbmsgImNvdW50ZXIiIGlzIGFjdHVhbGx5IGEgX3NpZ25lZF8gbG9uZywg
+c28gbWF5YmUgdGhlIHR5cGVzIGRvbid0IG1hdGNoKS4NCj4gDQo+IEkgc2VlIHllcywgc2FkbHkg
+d2UnZCBoYXZlIHRvIGNhc3QgdG8gKHVuc2lnbmVkIGxvbmcgKikgdG8gbWFrZSB0aGF0DQo+IHdv
+cmsgYXMgYXRvbWljX2xvbmcgY291bnRlcnMgYXJlIGxvbmcgbG9uZyBpbnQ6DQo+IA0KPiAgICBk
+ZWJ1Z2ZzX2NyZWF0ZV91bG9uZygidG90YWxfbW9kX3NpemUiLA0KPiAgICAgICAgIDA0MDAsIG1v
+ZF9kZWJ1Z2ZzX3Jvb3QsDQo+IC0gICAgICAgICZ0b3RhbF9tb2Rfc2l6ZS5jb3VudGVyKTsNCj4g
+KyAgICAgICAgKHVuc2lnbmVkIGxvbmcgKikmdG90YWxfbW9kX3NpemUuY291bnRlcik7DQo+IA0K
+PiBUaGF0J3M6DQo+IA0KPiB1bnNpZ25lZCBsb25nIG1pbiBiaXRzIDMyDQo+IGxvbmcgbG9uZyAg
+ICAgbWluIGJpdHMgNjQNCj4gDQo+IEJ1dCBzaW5jZSB3ZSdkIGJlIGRvaW5nIG91ciBhY2NvdW50
+aW5nIGluIGF0b21pY19sb25nIGFuZCBqdXN0IHVzZQ0KPiBkZWJ1Z2ZzIGZvciBwcmludHMgSSB0
+aGluayB0aGF0J3MgZmluZS4gSnVzdCBhIGJpdCB1Z2x5Lg0KDQpUaGF0IGlzbid0IGdvaW5nIHRv
+IHdvcmsuDQpJdCBpcyBwcmV0dHkgbXVjaCBuZXZlciByaWdodCB0byBkbyAqKGludGVnZXJfdHlw
+ZSAqKSZpbnRlZ2VyX3ZhcmlhYmxlLg0KDQpCdXQgYXJlIHlvdSByZWFsbHkgc3VyZSAnYXRvbWlj
+X2xvbmcnIGlzICdsb25nIGxvbmcnDQpkb2Vzbid0IHNvdW5kIHJpZ2h0IGF0IGFsbC4NCidsb25n
+IGxvbmcnIGlzIDEyOGJpdCBvbiA2NGJpdCBhbmQgNjRiaXQgb24gMzJiaXQgLSBzbyBpcyBhbHdh
+eXMNCmEgZG91YmxlLXJlZ2lzdGVyIGFjY2Vzcy4NClRoaXMgaXMgd29yc2UgdGhhbiBhdG9taWNf
+dTY0Lg0KDQpJIHNob3VsZCBwcm9iYWJseSB0cnkgdG8gbG9va3VwIGFuZC9vciBtZWFzdXJlIHRo
+ZSBwZXJmb3JtYW5jZQ0Kb2YgYXRvbWljIG9wZXJhdGlvbnMgKGVzcC4gY21weGNoZykgb24geDg2
+Lg0KSGlzdG9yaWNhbGx5IHRoZXkgd2VyZSBhIHNlcGFyYXRlIHJlYWQgYW5kIHdyaXRlIGJ1cyBj
+eWNsZXMgd2l0aA0KdGhlICdsb2NrJyBzaWduYWwgYXNzZXJ0ZWQgKGFuZCBzdGlsbCBhcmUgaWYg
+dGhleSBjcm9zcyBjYWNoZQ0KbGluZSBib3VuZGFyaWVzKS4NCkJ1dCBpdCBpcyBwb3NzaWJsZSB0
+aGF0IGF0IGxlYXN0IHNvbWUgb2YgdGhlIGxvY2tlZCBvcGVyYXRpb25zDQooZXNwLiB0aGUgeGNo
+ZyBvbmVzKSBhcmUgaW1wbGVtZW50ZWQgd2l0aGluIHRoZSBjYWNoZSBpdHNlbGYNCnNvIGFyZSBq
+dXN0IGEgc2luZ2xlIGNwdSAtPiBjYWNoZSBvcGVyYXRpb24uDQpJZiBub3QgaXQgaXMgYWN0dWFs
+bHkgcG9zc2libGUgdGhhdCB0aGUgX2xvY2FsIHZhcmlhbnRzIHRoYXQNCnNlZW0gdG8gaGF2ZSBi
+ZWVuIGFkZGVkIHNob3VsZCBub3QgdXNlIHRoZSBsb2NrZWQgaW5zdHJ1Y3Rpb25zIQ0KDQoJRGF2
+aWQNCg0KLQ0KUmVnaXN0ZXJlZCBBZGRyZXNzIExha2VzaWRlLCBCcmFtbGV5IFJvYWQsIE1vdW50
+IEZhcm0sIE1pbHRvbiBLZXluZXMsIE1LMSAxUFQsIFVLDQpSZWdpc3RyYXRpb24gTm86IDEzOTcz
+ODYgKFdhbGVzKQ0K
 
