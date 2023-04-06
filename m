@@ -1,23 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00FEAD29
-	for <patches@lists.linux.dev>; Thu,  6 Apr 2023 17:51:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCB2C433D2;
-	Thu,  6 Apr 2023 17:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B537AFC8;
+	Thu,  6 Apr 2023 20:09:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D89C433D2;
+	Thu,  6 Apr 2023 20:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1680803502;
-	bh=URrz+/2zLMv5BZoWzv7thKBt/9KhKr4iJnpzdXcOan4=;
+	s=k20201202; t=1680811770;
+	bh=Q7lexELhWJnXP5ulJenE60lac1wT7UwrK1pKH0F6JEM=;
 	h=From:Date:Subject:To:Cc:From;
-	b=Tf0RxFDm45UqXgi6dExO+oP/E+Imqbva0ixze2k33AyMriVQtuVAdoRIsjMaXpwXR
-	 6yYvzHv8gShmSTcmNA0mhHoGZ2GqKcf1n0KT7tuywb6N0SPYZ6x8MjHLHJHTmRUWFP
-	 dc3ShRr0J9KRr8Bn+wsdvgUop8W6BkLrdGrCW/zyeqeBNMp4tS+9S1Kc4gLlF6gJvr
-	 D+NPXG/YBiUJePDXpIcD7L/O/4n5HLySLLgRkjOdXvYr3C8kTij6kem/jMZ8PUZ3b4
-	 pordRq8Cr3h7tI+laW7oeWVfBUm7qXodMTmm3ul9DBP0Ch9dCzwQt/Eiz7eRbFRZol
-	 77h129dJ4Tt2w==
+	b=b/e4Q8CHXD7PdCulLx9tfXOkZNUr/kiIjmM0HMkVvUHAjbKB0C1B/sLBaMliVYDYy
+	 aupviGR5G0w+TK0gWCMXwtJX/k2Hal7azC4hwUDsDxamY/rXPjDQu05Oi5xYFGum+S
+	 GdonFAbHsTK3Y8vW8aJLppF9CjsWUCREkF6ZQlQYBc+QIxJDxwm3zC8akUTt2tfW6R
+	 ATs7x9pU8GWci6yLkAw07XFVn/221wS/os8jViHn7Ybrb1dqMKjpk8NDEbEKkdf2uZ
+	 5K0af7Ava8HgTROFyL53btUn4ZKMQDiaUZ01XHvjAitfy+rRBTBLof89HyV1M0XlS0
+	 NYQbkfZf2MU3Q==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 06 Apr 2023 10:51:30 -0700
-Subject: [PATCH] powerpc/32: Include thread_info.h in head_booke.h
+Date: Thu, 06 Apr 2023 13:09:15 -0700
+Subject: [PATCH] MIPS: generic: Do not select CPUs that are unsupported in
+ clang
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -26,59 +27,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230406-wundef-thread_shift_booke-v1-1-8deffa4d84f9@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAKEGL2QC/x2N2wrCMBAFf6Xss4FYNRR/RaQkzYlZxFR24wVK/
- 93Ux+EwZxZSCEPp3C0keLPyXBrsdx1N2ZcbDMfG1Nv+YI/Wmc+rRCRTs8DHUTOnOoZ5vsPADnG
- wDtGdHDU/eIUJ4suUt4eH1wrZhqcg8fcfvVzX9QeVWPMxhAAAAA==
-To: mpe@ellerman.id.au
-Cc: npiggin@gmail.com, christophe.leroy@csgroup.eu, masahiroy@kernel.org, 
- linuxppc-dev@lists.ozlabs.org, patches@lists.linux.dev, 
- kernel test robot <lkp@intel.com>, Nathan Chancellor <nathan@kernel.org>
+Message-Id: <20230406-mips-clang-generic-selects-fix-v1-1-811690c9fb69@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAOomL2QC/x2NwQqDQAxEf0VybmB3Lbb0V0oPuzFqQLeSSCmI/
+ 97Y4/Bm3uxgrMIGj2YH5Y+YvKuHeGmAplxHRuk9QwqpDdfQ4SKrIc2OcOTqY0LjmWkzHOSLOQ2
+ 30qbY9fEOLinZGIvmStOpWbJtrCdYlb3/f36+juMH0I9/84kAAAA=
+To: tsbogend@alpha.franken.de, jiaxun.yang@flygoat.com
+Cc: linux-mips@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1458; i=nathan@kernel.org;
- h=from:subject:message-id; bh=URrz+/2zLMv5BZoWzv7thKBt/9KhKr4iJnpzdXcOan4=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCn6bGurV5UtO5C8Kohhtktf/ZGoQ9I13gGRhVOfZj9XX
- aBncN6wo5SFQYyDQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEzEpJWR4eoRtoUKslHPfvud
- kGQ5KvXthVH8f/XPEvJryve9PHMo/SLDP52Xn3j+xPw2/Bl0jc16uczsl6s5Ar+v23uGPctLwN0
- riwUA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1846; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=Q7lexELhWJnXP5ulJenE60lac1wT7UwrK1pKH0F6JEM=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCn6aj9zHQse+prd+XfuYWLHxeSgewf33H33NJf3PBPT4
+ xdrLFw+dZSyMIhxMMiKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJWDowMqxjiAmSq1Nk/jmP
+ KUfxc4VbrZh80Iz1TB8TnvouX3q35TEjw5q32ZIGMqIz2TeZNsx9c32NbuTppmNbrm0w2vD0YGB
+ 4OD8A
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-When building with W=1 after commit 80b6093b55e3 ("kbuild: add -Wundef
-to KBUILD_CPPFLAGS for W=1 builds"), the following warning occurs.
+When building allnoconfig with clang after commit de34007751aa ("MIPS:
+generic: Enable all CPUs supported by virt board in Kconfig"), the
+following error occurs:
 
-  In file included from arch/powerpc/kvm/bookehv_interrupts.S:26:
-  arch/powerpc/kvm/../kernel/head_booke.h:20:6: warning: "THREAD_SHIFT" is not defined, evaluates to 0 [-Wundef]
-     20 | #if (THREAD_SHIFT < 15)
-        |      ^~~~~~~~~~~~
+  error: unknown target CPU 'r4600'
+  note: valid target CPU values are: mips1, mips2, mips3, mips4, mips5, mips32, mips32r2, mips32r3, mips32r5, mips32r6, mips64, mips64r2, mips64r3, mips64r5, mips64r6, octeon, octeon+, p5600
 
-THREAD_SHIFT is defined in thread_info.h but it is not directly included
-in head_booke.h, so it is possible for THREAD_SHIFT to be undefined. Add
-the include to ensure that THREAD_SHIFT is always defined.
+Working around that, there are similar errors for 'loongson2e' and
+'loongson2f'.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/202304050954.yskLdczH-lkp@intel.com/
+These CPUs are not supported in clang/LLVM, so do not select support for
+them in MIPS_GENERIC_KERNEL when building with clang.
+
+Fixes: de34007751aa ("MIPS: generic: Enable all CPUs supported by virt board in Kconfig")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/powerpc/kernel/head_booke.h | 1 +
- 1 file changed, 1 insertion(+)
+ arch/mips/Kconfig | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/kernel/head_booke.h b/arch/powerpc/kernel/head_booke.h
-index 37d43c172676..b6b5b01a173c 100644
---- a/arch/powerpc/kernel/head_booke.h
-+++ b/arch/powerpc/kernel/head_booke.h
-@@ -5,6 +5,7 @@
- #include <asm/ptrace.h>	/* for STACK_FRAME_REGS_MARKER */
- #include <asm/kvm_asm.h>
- #include <asm/kvm_booke_hv_asm.h>
-+#include <asm/thread_info.h>	/* for THREAD_SHIFT */
- 
- #ifdef __ASSEMBLY__
- 
+diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
+index a975f140ae82..84de20f48b59 100644
+--- a/arch/mips/Kconfig
++++ b/arch/mips/Kconfig
+@@ -154,15 +154,15 @@ config MIPS_GENERIC_KERNEL
+ 	select SMP_UP if SMP
+ 	select SWAP_IO_SPACE
+ 	select SYS_HAS_CPU_CAVIUM_OCTEON
+-	select SYS_HAS_CPU_LOONGSON2E
+-	select SYS_HAS_CPU_LOONGSON2F
++	select SYS_HAS_CPU_LOONGSON2E if !CC_IS_CLANG
++	select SYS_HAS_CPU_LOONGSON2F if !CC_IS_CLANG
+ 	select SYS_HAS_CPU_MIPS32_R1
+ 	select SYS_HAS_CPU_MIPS32_R2
+ 	select SYS_HAS_CPU_MIPS32_R6
+ 	select SYS_HAS_CPU_MIPS64_R1
+ 	select SYS_HAS_CPU_MIPS64_R2
+ 	select SYS_HAS_CPU_MIPS64_R6
+-	select SYS_HAS_CPU_R4X00
++	select SYS_HAS_CPU_R4X00 if !CC_IS_CLANG
+ 	select SYS_SUPPORTS_32BIT_KERNEL
+ 	select SYS_SUPPORTS_64BIT_KERNEL
+ 	select SYS_SUPPORTS_BIG_ENDIAN
 
 ---
-base-commit: b0bbe5a2915201e3231e788d716d39dc54493b03
-change-id: 20230406-wundef-thread_shift_booke-e08d806ed656
+base-commit: 045c340c86f8a9d7cb675e179dc6297caa6ebc01
+change-id: 20230406-mips-clang-generic-selects-fix-a2f7b3216d18
 
 Best regards,
 -- 
