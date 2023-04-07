@@ -1,187 +1,135 @@
-Received: from insect.birch.relay.mailchannels.net (insect.birch.relay.mailchannels.net [23.83.209.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EF1AD22
-	for <patches@lists.linux.dev>; Fri,  7 Apr 2023 19:09:09 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id A452D642819;
-	Fri,  7 Apr 2023 17:50:17 +0000 (UTC)
-Received: from pdx1-sub0-mail-a273.dreamhost.com (unknown [127.0.0.6])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id D0719642887;
-	Fri,  7 Apr 2023 17:50:16 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1680889817; a=rsa-sha256;
-	cv=none;
-	b=TIbVxD5clnbRC5sek/1Y6JVMCwvjldE7zJ5JXvkErmkxZ5spzniOBeaq15Clq/mrQiiyYN
-	n2lqo/kQkSyln3sagMFmv7H1egerBwIll4T7vGyUYZrFy1e6HOoxSwyA7IoAX1oon4aaLb
-	H4lBe8RWXfrLL9/8BvYV+N85B94zycBYg0UnQGaHzOAAMzVhqDimvReWj0eq6wE0ay638z
-	Zcz7OhjkkKTADKq/aT/zBhKy5pRTstItXb4gXEXIWW97lwU+niFyKjXOX9n2Ez0BTzdpg8
-	tET7CkWpgNLz3zFNUzHzvhJ+ZgxqYPezbDg65K5sQhdOBiTVj7f/+2bhCHD+uA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1680889817;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=Mu9kZlt0sY3Iz7fipBM4PsZC6jpgc1lK7rIImuJwcmA=;
-	b=mhIdX9AUWfSxKwf98Zsl6nqV1ckKdof33MJI+HCXdMyP5auJGvrULmvYMq5Cj5OO+iLbKh
-	C9MBKMyS4fU18KQ5zchecX13pttwfNJDk0BV8gTrl41LOHkjne76/qW5PD6EYDdiPRB9qX
-	a8u6TIzDUTGBBQRSYn8HA6DIaoYPUTH1jCfHiGta/RXm9vnXFT2Wte63JAapz+09QyqXKn
-	JeAryPUbNfGe7D3ZUgmtO9EjA7/+S8DakHEbfR3k2WuOmtCFl7BvmNR5dH9WoRU8PhJQ+v
-	gPwKt3RsJYuaHRYqO+7/0TyY/3HSIvsqQNii0+iG2n4HYuUlGMld5gEOYKvqLQ==
-ARC-Authentication-Results: i=1;
-	rspamd-786cb55f77-r5vrk;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Shoe-Cooing: 45257a4105340661_1680889817417_2184140518
-X-MC-Loop-Signature: 1680889817417:4182388007
-X-MC-Ingress-Time: 1680889817416
-Received: from pdx1-sub0-mail-a273.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.114.243.16 (trex/6.7.2);
-	Fri, 07 Apr 2023 17:50:17 +0000
-Received: from offworld (ip72-199-50-187.sd.sd.cox.net [72.199.50.187])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a273.dreamhost.com (Postfix) with ESMTPSA id 4PtQr70tB3zFJ;
-	Fri,  7 Apr 2023 10:50:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1680889816;
-	bh=Mu9kZlt0sY3Iz7fipBM4PsZC6jpgc1lK7rIImuJwcmA=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=bBcBOgYjS+tWkkrzlBRKxYSONYL0z2wuJaudfaWFf21tnZlCXeIll5w+XrnpG+c50
-	 Rt1lU5LGEjvogjGcr3ikPfCub4vJ2/NFH4LoOGzkRcrR9AxAq7a3REsIpmY+YNq/Zi
-	 y6j9b+CFHCAtZhUqlaCyrqWkkcJam2kj+E7cHcIu3hPsXCKBDrtqYMHQLbzrFDd+Ns
-	 agIRq7fTvZo80pX1fA6NsESIwkpOZbxj5qBXYtVj7q+SbuWI0Rc8ig2lhBfBBbh/rw
-	 hBZBl9TpfN0ppuOaEUHfNNwn13IaJjeZ+lJ1ECLNcJHYpYtsQVa9L03DXUU6J+nnvL
-	 fNEDL9kWNGqYw==
-Date: Fri, 7 Apr 2023 10:19:29 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: david@redhat.com, patches@lists.linux.dev,
-	linux-modules@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
-	prarit@redhat.com, torvalds@linux-foundation.org,
-	gregkh@linuxfoundation.org, rafael@kernel.org,
-	christophe.leroy@csgroup.eu, tglx@linutronix.de,
-	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
-	willy@infradead.org, vbabka@suse.cz, mhocko@suse.com,
-	dave.hansen@linux.intel.com, colin.i.king@gmail.com,
-	jim.cromie@gmail.com, catalin.marinas@arm.com, jbaron@akamai.com,
-	rick.p.edgecombe@intel.com
-Subject: Re: [PATCH v2 2/2] modules/kmod: replace implementation with a
- sempahore
-Message-ID: <20230407171929.xlxi7ewxxtrqo6z5@offworld>
-Mail-Followup-To: Luis Chamberlain <mcgrof@kernel.org>, david@redhat.com,
-	patches@lists.linux.dev, linux-modules@vger.kernel.org,
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org, pmladek@suse.com,
-	petr.pavlu@suse.com, prarit@redhat.com,
-	torvalds@linux-foundation.org, gregkh@linuxfoundation.org,
-	rafael@kernel.org, christophe.leroy@csgroup.eu, tglx@linutronix.de,
-	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
-	willy@infradead.org, vbabka@suse.cz, mhocko@suse.com,
-	dave.hansen@linux.intel.com, colin.i.king@gmail.com,
-	jim.cromie@gmail.com, catalin.marinas@arm.com, jbaron@akamai.com,
-	rick.p.edgecombe@intel.com
-References: <20230405203505.1343562-1-mcgrof@kernel.org>
- <20230405203505.1343562-3-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F012AD22
+	for <patches@lists.linux.dev>; Fri,  7 Apr 2023 20:05:18 +0000 (UTC)
+Received: by mail-pg1-f173.google.com with SMTP id s19so24990768pgi.0
+        for <patches@lists.linux.dev>; Fri, 07 Apr 2023 13:05:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112; t=1680897917; x=1683489917;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vdCXGzVGpQlfAukY4hF5kEd5gLRY5hPyCWsVGlyaVT4=;
+        b=bwYz6WQu+3CDeyg+SifIEaFQBntjRYmHYdIC1HofzV+goe/tHp5sWvdCfeGZsZ7piN
+         N1FsO7VE6dLPXKlSQnQmaITOXYIWZ6VFsn9VcTe2K7icNX7w+c+cN787cHrHryXhO4dK
+         sELbD+qVeqs7HWelUIfL7SSA7Y+8Tvv+uJkxqiamcm3hDNcHTHhoF5G7bCAop0dadhw2
+         UiJCEqgrC8abVItNLXwBakL7uFAE9srNakmnzka1+iT1a0CAztceb2Q0SNqXFeT48wvS
+         TZxLbIONSFV0gZHF1Z6W2TXc8/BAkGmA/JY4TSbvl48Bkw8f6QSHCggxKDXh9cLX+M/R
+         TNIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680897917; x=1683489917;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vdCXGzVGpQlfAukY4hF5kEd5gLRY5hPyCWsVGlyaVT4=;
+        b=BuEYTUTMWtx2tnlCVsxLIlbxeWrC6vCjKJVcBAlaZyUPIDZ2wq+wxqwe3d6W1qZnwD
+         UYkguewyRxidDDwTk6BsvaKdleXrw2UAHCa/IkdopNEYPG8Yoa140iuAj+ebxXcm0l2V
+         UGzDTM5rNS+iLCfP8AGib75a1TMVJ6uROxE1hMXk3i/44BG98ZkDkrGUmEvtGFF8b3rc
+         Wj3MA5GST82CSic3u9FbihbwMQiuNs87uzeE/KtzGrZFLR3GSuLdlxGxhvtiP62mRb1+
+         4aTzhpa/H4Y1L8Ks0hRch2BDXDha9WYsgmglD+s62yqekqIpXRtbrKHQ43JsT6QKut/K
+         nMsg==
+X-Gm-Message-State: AAQBX9fKmkonfopQkvezLrcbGPqifCn5lyNsvQ2+nC7yqGRbPgXWWW19
+	iT2pEpSnSX/3jVEXubx3RxnUhRc02WKHDjzcwgOPhw==
+X-Google-Smtp-Source: AKy350bz7+45zvC9ZJN7sODXWkAUgHOWaxCkTpaRsVir3WWnsa1RP/CqiiXRch7jQzDzDvuwIeqbnlQD07DwH3Vojo0=
+X-Received: by 2002:a65:4903:0:b0:503:7be2:19a7 with SMTP id
+ p3-20020a654903000000b005037be219a7mr724077pgs.1.1680897917336; Fri, 07 Apr
+ 2023 13:05:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20230405203505.1343562-3-mcgrof@kernel.org>
-User-Agent: NeoMutt/20220429
+References: <20230405-korg-llvm-tc-docs-v1-1-420849b2e025@kernel.org>
+ <CAGG=3QX65iJEtvMiSD2Ju18f0KfHsi2zPXAQDSh0ScqbCLv=Cg@mail.gmail.com> <20230405205126.GA3280774@dev-arch.thelio-3990X>
+In-Reply-To: <20230405205126.GA3280774@dev-arch.thelio-3990X>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Fri, 7 Apr 2023 13:05:06 -0700
+Message-ID: <CAKwvOdmG4j4u2Uw3arpkkO4FHQMvWV_MiCiXNpOV3GQqq_5ofg@mail.gmail.com>
+Subject: Re: [PATCH] Documentation/llvm: Add a note about prebuilt kernel.org toolchains
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Bill Wendling <morbo@google.com>, masahiroy@kernel.org, corbet@lwn.net, arnd@arndb.de, 
+	keescook@chromium.org, trix@redhat.com, nicolas@fjasle.eu, 
+	llvm@lists.linux.dev, patches@lists.linux.dev, linux-kbuild@vger.kernel.org, 
+	linux-doc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-In the title: s/sempahore/semaphore
+On Wed, Apr 5, 2023 at 1:51=E2=80=AFPM Nathan Chancellor <nathan@kernel.org=
+> wrote:
+>
+> On Wed, Apr 05, 2023 at 01:47:44PM -0700, Bill Wendling wrote:
+> > On Wed, Apr 5, 2023 at 1:44=E2=80=AFPM Nathan Chancellor <nathan@kernel=
+.org> wrote:
+> > >
+> > > I recently started uploading prebuilt stable versions of LLVM to
+> > > kernel.org, which should make building the kernel with LLVM more
+> > > accessible to maintainers and developers. Link them in the LLVM
+> > > documentation to make this more visible.
+> > >
+> > > Link: https://lore.kernel.org/20230319235619.GA18547@dev-arch.thelio-=
+3990X/
+> > > Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+> > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > > ---
+> > >  Documentation/kbuild/llvm.rst | 4 ++++
+> > >  1 file changed, 4 insertions(+)
+> > >
+> > > diff --git a/Documentation/kbuild/llvm.rst b/Documentation/kbuild/llv=
+m.rst
+> > > index bfb51685073c..3e1f67b05ca6 100644
+> > > --- a/Documentation/kbuild/llvm.rst
+> > > +++ b/Documentation/kbuild/llvm.rst
+> > > @@ -171,6 +171,10 @@ Getting Help
+> > >  Getting LLVM
+> > >  -------------
+> > >
+> > > +We provide prebuilt stable versions of LLVM on `kernel.org <https://=
+kernel.org/pub/tools/llvm/>`_.
+> > > +Below are links that may be useful for building LLVM from source or =
+procurring
+> >
+> > s/procurring/procuring/
+>
+> Leave it to me to forget to use ':set spell' :( sometimes I think that
+> people would have a hard time guessing I am a native English speaker :^)
 
-On Wed, 05 Apr 2023, Luis Chamberlain wrote:
+https://www.adamalbrecht.com/blog/2019/10/21/spell-check-in-vim-for-markdow=
+n-and-git-commit-messages/
 
->Simplfy the concurrency delimiter we user for kmod with the semaphore.
->I had used the kmod strategy to try to implement a similar concurrency
->delimiter for the kernel_read*() calls from the finit_module() path
->so to reduce vmalloc() memory pressure. That effort didn't provid yet
->conclusive results, but one thing that did became clear is we can use
->the suggested alternative solution with semaphores which Linus hinted
->at instead of using the atomic / wait strategy.
->
->I've stress tested this with kmod test 0008:
->
->time /data/linux-next/tools/testing/selftests/kmod/kmod.sh -t 0008
->
->And I get only a *slight* delay. That delay however is small, a few
->seconds for a full test loop run that runs 150 times, for about ~30-40
->seconds. The small delay is worth the simplfication IMHO.
+Thanks for the patch!
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 
-Yes, code looks a lot nicer.
+>
+> > Otherwise:
+> >
+> > Reviewed-by: Bill Wendling <morbo@google.com>
+>
+> Thanks for the quick review! I will send a v2 once others have had a
+> chance to chime in (unless the person applying this does not mind fixing
+> it up at that time).
+>
+> > -bw
+> >
+> > > +it through a distribution's package manager.
+> > > +
+> > >  - https://releases.llvm.org/download.html
+> > >  - https://github.com/llvm/llvm-project
+> > >  - https://llvm.org/docs/GettingStarted.html
+> > >
+> > > ---
+> > > base-commit: 7e364e56293bb98cae1b55fd835f5991c4e96e7d
+> > > change-id: 20230405-korg-llvm-tc-docs-84304e881bc5
+> > >
+> > > Best regards,
+> > > --
+> > > Nathan Chancellor <nathan@kernel.org>
+> > >
+> > >
 
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
 
->Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
->---
-> kernel/module/kmod.c | 26 +++++++-------------------
-> 1 file changed, 7 insertions(+), 19 deletions(-)
->
->diff --git a/kernel/module/kmod.c b/kernel/module/kmod.c
->index b717134ebe17..925eb85b8346 100644
->--- a/kernel/module/kmod.c
->+++ b/kernel/module/kmod.c
->@@ -40,8 +40,7 @@
->  * effect. Systems like these are very unlikely if modules are enabled.
->  */
-> #define MAX_KMOD_CONCURRENT 50
->-static atomic_t kmod_concurrent_max = ATOMIC_INIT(MAX_KMOD_CONCURRENT);
->-static DECLARE_WAIT_QUEUE_HEAD(kmod_wq);
->+static DEFINE_SEMAPHORE(kmod_concurrent_max, MAX_KMOD_CONCURRENT);
->
-> /*
->  * This is a restriction on having *all* MAX_KMOD_CONCURRENT threads
->@@ -148,29 +147,18 @@ int __request_module(bool wait, const char *fmt, ...)
->	if (ret)
->		return ret;
->
->-	if (atomic_dec_if_positive(&kmod_concurrent_max) < 0) {
->-		pr_warn_ratelimited("request_module: kmod_concurrent_max (%u) close to 0 (max_modprobes: %u), for module %s, throttling...",
->-				    atomic_read(&kmod_concurrent_max),
->-				    MAX_KMOD_CONCURRENT, module_name);
->-		ret = wait_event_killable_timeout(kmod_wq,
->-						  atomic_dec_if_positive(&kmod_concurrent_max) >= 0,
->-						  MAX_KMOD_ALL_BUSY_TIMEOUT * HZ);
->-		if (!ret) {
->-			pr_warn_ratelimited("request_module: modprobe %s cannot be processed, kmod busy with %d threads for more than %d seconds now",
->-					    module_name, MAX_KMOD_CONCURRENT, MAX_KMOD_ALL_BUSY_TIMEOUT);
->-			return -ETIME;
->-		} else if (ret == -ERESTARTSYS) {
->-			pr_warn_ratelimited("request_module: sigkill sent for modprobe %s, giving up", module_name);
->-			return ret;
->-		}
->+	ret = down_timeout(&kmod_concurrent_max, MAX_KMOD_ALL_BUSY_TIMEOUT);
->+	if (ret) {
->+		pr_warn_ratelimited("request_module: modprobe %s cannot be processed, kmod busy with %d threads for more than %d seconds now",
->+				    module_name, MAX_KMOD_CONCURRENT, MAX_KMOD_ALL_BUSY_TIMEOUT);
->+		return ret;
->	}
->
->	trace_module_request(module_name, wait, _RET_IP_);
->
->	ret = call_modprobe(module_name, wait ? UMH_WAIT_PROC : UMH_WAIT_EXEC);
->
->-	atomic_inc(&kmod_concurrent_max);
->-	wake_up(&kmod_wq);
->+	up(&kmod_concurrent_max);
->
->	return ret;
-> }
->--
->2.39.2
->
+
+--=20
+Thanks,
+~Nick Desaulniers
