@@ -1,101 +1,92 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583D92582
-	for <patches@lists.linux.dev>; Fri,  7 Apr 2023 20:53:00 +0000 (UTC)
-Received: by mail-ej1-f50.google.com with SMTP id 18so10812990ejo.13
-        for <patches@lists.linux.dev>; Fri, 07 Apr 2023 13:52:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1680900778; x=1683492778;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g8xM6r6/rOzbRR11rE4PPyc0SA/I8K68bLshe2lzvT4=;
-        b=AYFrTpg1m87JjskjlUbD3Y540rAQROTwgYO8jaDYgMlWEXVBLkfRSn/upu13hQpwOs
-         0L9q74bZd4i3Si7TeWIMNU+0St5PYlcxrnH7KFZsrsGgGaLe3++g6B8rSj1j5f1LlhPn
-         NOjnmhfCdyA6EY1gRVqkmJjPxqYHrJP1A6T9E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680900778; x=1683492778;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=g8xM6r6/rOzbRR11rE4PPyc0SA/I8K68bLshe2lzvT4=;
-        b=TzO3f2eIi9sQrv87qLk0Ih+idqTW3ccRh06DDpQ6EWY3Z+Fn8bIlpjCwQiTS2Zw29L
-         8Dq+hni2qIjxuiKnU2UbW4+Peyzlr5rMxyse1pYRZ88pgbDpGkP05BWTLmQfOcTywiix
-         BYc2NIt9agN5ghJP1IIPa3PTFmsnvxfiwNauRQcWNaEaDxSD338gM0PYhTPnWib2TbB6
-         UoLyblJRzTdYHt1QLIs/4y0wdhrdGgAdneSxf79bGzBQ90m//fttQJfHWNKJtbvT6CU2
-         GOUCdPF1Sdza+CwxNoh/mMAXhEcFZFqAejJiBM73iuNu2miqdc6Mj70pdEedRjAmWe6n
-         tZOg==
-X-Gm-Message-State: AAQBX9flgXW0FjTUj72uEu4LSSa1wleUlePady9HN02itHSt7/o4bYpy
-	YJ2WpODNYwhI814/n4ygCdfi0qUtoIv37obF9XDOZw==
-X-Google-Smtp-Source: AKy350Z7GmYyGMAxsRCrQ9QtSdau1Xfyo6EDRsGpz53wHPAKTL2UC9u0Xomc3st8+Fnh9KQr5DABIQ==
-X-Received: by 2002:a17:906:f6ce:b0:92b:eca6:43fc with SMTP id jo14-20020a170906f6ce00b0092beca643fcmr567199ejb.64.1680900778102;
-        Fri, 07 Apr 2023 13:52:58 -0700 (PDT)
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com. [209.85.218.49])
-        by smtp.gmail.com with ESMTPSA id x5-20020a170906804500b008def483cf79sm2367946ejw.168.2023.04.07.13.52.56
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Apr 2023 13:52:57 -0700 (PDT)
-Received: by mail-ej1-f49.google.com with SMTP id n21so10816917ejz.4
-        for <patches@lists.linux.dev>; Fri, 07 Apr 2023 13:52:56 -0700 (PDT)
-X-Received: by 2002:a17:907:b687:b0:947:72cd:9325 with SMTP id
- vm7-20020a170907b68700b0094772cd9325mr310007ejc.15.1680900776633; Fri, 07 Apr
- 2023 13:52:56 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE1E2582;
+	Fri,  7 Apr 2023 21:43:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BCAC433EF;
+	Fri,  7 Apr 2023 21:43:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1680903796;
+	bh=6njH95OlaX2vmS6xziCvXrBXY5+XsyA/skz5Cmhigj4=;
+	h=From:Date:Subject:To:Cc:From;
+	b=j+P0P1MC7lb0nTQkjhyRq44+OxwPMCOGfqR9Lbuu7gL0wUtvxAyFuUOFQ8NmKNuMS
+	 g1IhTOPE4gjGrGrXz7Y5WfkprSvc802qK/cQZ4amdEzT5uSfXOXQfG2uY7cqVCJckO
+	 0OtYDJ9WELHjLIyz9WwnMg4ffBzoXaQ1j7NE9NF5M3nWDhaor2sCcP8x1piHdxu8N1
+	 jsGN/R7hiYyrOryrnkEePfMnrmoUPKDbWwfnRqj/QAMulBl//B+ZNZ7OViFtHqi+uB
+	 jPoSq0WFw4BzUd3EaMwiGuV9SQFOVqqCUOmBTr3ZXWl/9U7UE9cq87LNH8tWvp4w4t
+	 Z18wtpPnOL6/A==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 07 Apr 2023 14:42:48 -0700
+Subject: [PATCH v2] Documentation/llvm: Add a note about prebuilt
+ kernel.org toolchains
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230405203505.1343562-1-mcgrof@kernel.org> <20230405203505.1343562-2-mcgrof@kernel.org>
- <ZDB+zn3X4sac9DFU@casper.infradead.org>
-In-Reply-To: <ZDB+zn3X4sac9DFU@casper.infradead.org>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Fri, 7 Apr 2023 13:52:39 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wgYFGyy9jBmwEJHtdtdaEbqiyFn7GtMN6jP2ZFw92zYDA@mail.gmail.com>
-Message-ID: <CAHk-=wgYFGyy9jBmwEJHtdtdaEbqiyFn7GtMN6jP2ZFw92zYDA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] Change DEFINE_SEMAPHORE() to take a number argument
-To: Matthew Wilcox <willy@infradead.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, david@redhat.com, patches@lists.linux.dev, 
-	linux-modules@vger.kernel.org, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com, 
-	prarit@redhat.com, gregkh@linuxfoundation.org, rafael@kernel.org, 
-	christophe.leroy@csgroup.eu, tglx@linutronix.de, peterz@infradead.org, 
-	song@kernel.org, rppt@kernel.org, dave@stgolabs.net, vbabka@suse.cz, 
-	mhocko@suse.com, dave.hansen@linux.intel.com, colin.i.king@gmail.com, 
-	jim.cromie@gmail.com, catalin.marinas@arm.com, jbaron@akamai.com, 
-	rick.p.edgecombe@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230405-korg-llvm-tc-docs-v2-1-98d2e4a96c41@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAFeOMGQC/32NTQ7CIBBGr2JYOwaQJujKe5gugI4taQtmpiGap
+ neX9gAu3/eTtwpGisjifloFYYkcc6qgzycRBpd6hNhVFlrqqzSygTFTD9NUZlgCdDkwWFMbtFb
+ 50Ij6844RPLkUhv05O16Q9uJN+IqfQ/ZsKw+Rl0zfw13Unv7TFAUKjJbW3LxGqZvHiJRwutSla
+ Ldt+wF3VNrAzAAAAA==
+To: masahiroy@kernel.org, corbet@lwn.net
+Cc: arnd@arndb.de, keescook@chromium.org, ndesaulniers@google.com, 
+ trix@redhat.com, nicolas@fjasle.eu, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, linux-kbuild@vger.kernel.org, 
+ linux-doc@vger.kernel.org, Bill Wendling <morbo@google.com>, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1580; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=6njH95OlaX2vmS6xziCvXrBXY5+XsyA/skz5Cmhigj4=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCkGfcUeszz/ZJgKNBxq2Wr7L3ji/YUJi/7bvqp25Cx68
+ XUXz9wVHaUsDGIcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiy/QZGbZc2z2N5fmEqzdX
+ yqgYfDyVpRbfWiCxzbxd68KEVZt7gs8z/Pc8qvfD7q9G4S/p4rxZRosi5z/K+ZnQltbem5npGsY
+ ayw4A
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Fri, Apr 7, 2023 at 1:37=E2=80=AFPM Matthew Wilcox <willy@infradead.org>=
- wrote:
->
-> I'd like to mention completions as an alternative to semaphores, but
-> can't figure out a nice way to fit that in.
+I recently started uploading prebuilt stable versions of LLVM to
+kernel.org, which should make building the kernel with LLVM more
+accessible to maintainers and developers. Link them in the LLVM
+documentation to make this more visible.
 
-I'm personally a bit sorry completions ever became a thing.
+Link: https://lore.kernel.org/20230319235619.GA18547@dev-arch.thelio-3990X/
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Bill Wendling <morbo@google.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Changes in v2:
+- Fix typo ('procurring' -> 'procuring') [Bill]
+- Link to v1: https://lore.kernel.org/r/20230405-korg-llvm-tc-docs-v1-1-420849b2e025@kernel.org
+---
+ Documentation/kbuild/llvm.rst | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-There's a real reason for having them, but they have been used and
-mis-used in so many confusing ways that I am worried every time I see
-a completion. We've had some nasty use of 'init_completion()' in
-particular.
+diff --git a/Documentation/kbuild/llvm.rst b/Documentation/kbuild/llvm.rst
+index bfb51685073c..c3851fe1900d 100644
+--- a/Documentation/kbuild/llvm.rst
++++ b/Documentation/kbuild/llvm.rst
+@@ -171,6 +171,10 @@ Getting Help
+ Getting LLVM
+ -------------
+ 
++We provide prebuilt stable versions of LLVM on `kernel.org <https://kernel.org/pub/tools/llvm/>`_.
++Below are links that may be useful for building LLVM from source or procuring
++it through a distribution's package manager.
++
+ - https://releases.llvm.org/download.html
+ - https://github.com/llvm/llvm-project
+ - https://llvm.org/docs/GettingStarted.html
 
-There are many obvious uses of completions, and they have nice strict
-semantics wrt last-use etc (so that you can put them on the stack and
-know that you're the last user when you return, which is not
-necessarily true of locking in general).
+---
+base-commit: 7e364e56293bb98cae1b55fd835f5991c4e96e7d
+change-id: 20230405-korg-llvm-tc-docs-84304e881bc5
 
-But there are several less-than-obvious uses too, and any use of
-reinit_completion() ends up just making me go "Uhh".  The
-serialization needed for that to actually work right often means that
-you might as well have used a "wait_event()" with a
-"smp_store_release()" variable instead and made the code more obvious.
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-I dunno. I might have had a few bad experiences and it's just rare
-enough to be one of those things that I feel wasn't worth the
-abstraction cost.
-
-And I can't even blame anybody else. I think I'm to blame for that horror.
-
-              Linus
