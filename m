@@ -1,26 +1,26 @@
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B651857
-	for <patches@lists.linux.dev>; Sat,  8 Apr 2023 12:26:27 +0000 (UTC)
-Date: Sat, 08 Apr 2023 12:26:17 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6881841
+	for <patches@lists.linux.dev>; Sat,  8 Apr 2023 12:26:39 +0000 (UTC)
+Date: Sat, 08 Apr 2023 12:26:27 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680956785; x=1681215985;
-	bh=gdEIW+2bBi1IvDlMbXGasea4+ibnJ2p7QwfZLUN+zQA=;
+	s=protonmail3; t=1680956797; x=1681215997;
+	bh=YjWJqyzY7rAxB/8T748G6J4lTdaIt8uzOIDk7TzSA8o=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=pIADBwX0173PFfDAF4r8e2kpng9MOS+XfnmIhLloRySMWkhT+hJFIwVqFCm70SlFk
-	 xe8aSwoKIBu9UndZ3hjYZWZab6m4Uw/3fjqRa/aq7mAP6Iia/pJC4YcxaZAvjKrRiM
-	 13cqLprzI5htvsV8Qw03OTT/UxKhiqAYGp2O97EZ5OljSLHnNe1qMAKD87bZNhh3od
-	 pmMg0i2DbTTf/ocozFq7m+EFrT3ditbd6+EOODeSDnhZpo50KppqBzNJR0lSSDzOos
-	 m2lC4i4s3hwan7lUlWo3DbTS3z1WVJUwSq/VbL7qnN1KTH9fM45gKIMe7/peaq6Ep8
-	 CC1NDL05UAKXg==
+	b=yJI2kW0bjVdmWEnbNqeuak4+eblElCb6I+DrB69qGiFObCyFe0TNVXjzucDlFNfcK
+	 3bupOg9//vx2vp7dkOSCF/7fSzWBPsZ6rM0VjUUWWqwgg13oNwCa0BPDHmwfDRcAM1
+	 v7j1UjxhQC+1Bhd/tolmiWccVVkd5w8EfZucU5lUATEn29hvrg/wxMfs1xxmIbjcL9
+	 7NDlY7T9dbpyw2VtJf9MIwzk6OrFWsJIAE1ohjuam3cgORImgEicR5MQjUBIKwLUQO
+	 7fMRssbNsGuEAuaium3EN9Put5zzj7l/cq0v+MDqWGwKa2Kmzr/itMLg2LJhzRXouk
+	 fnINbVCzhYZjg==
 To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>, Andreas Hindborg <nmi@metaspace.dk>
 From: Benno Lossin <y86-dev@protonmail.com>
 Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <y86-dev@protonmail.com>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <a.hindborg@samsung.com>
-Subject: [PATCH v7 12/15] rust: prelude: add `pin-init` API items to prelude
-Message-ID: <20230408122429.1103522-13-y86-dev@protonmail.com>
+Subject: [PATCH v7 14/15] rust: sync: reduce stack usage of `UniqueArc::try_new_uninit`
+Message-ID: <20230408122429.1103522-15-y86-dev@protonmail.com>
 In-Reply-To: <20230408122429.1103522-1-y86-dev@protonmail.com>
 References: <20230408122429.1103522-1-y86-dev@protonmail.com>
 Feedback-ID: 40624463:user:proton
@@ -33,43 +33,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Add `pin-init` API macros and traits to the prelude.
+`UniqueArc::try_new_uninit` calls `Arc::try_new(MaybeUninit::uninit())`.
+This results in the uninitialized memory being placed on the stack,
+which may be arbitrarily large due to the generic `T` and thus could
+cause a stack overflow for large types.
+
+Change the implementation to use the pin-init API which enables in-place
+initialization. In particular it avoids having to first construct and
+then move the uninitialized memory from the stack into the final location.
 
 Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
 ---
- rust/kernel/prelude.rs | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ rust/kernel/lib.rs      |  1 -
+ rust/kernel/sync/arc.rs | 16 +++++++++++++---
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
-index 0bc1c97e5604..fcdc511d2ce8 100644
---- a/rust/kernel/prelude.rs
-+++ b/rust/kernel/prelude.rs
-@@ -18,7 +18,7 @@ pub use core::pin::Pin;
- pub use alloc::{boxed::Box, vec::Vec};
+diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
+index 821bd067151c..2d7606135ef6 100644
+--- a/rust/kernel/lib.rs
++++ b/rust/kernel/lib.rs
+@@ -28,7 +28,6 @@
+ #[cfg(not(CONFIG_RUST))]
+ compile_error!("Missing kernel configuration for conditional compilation")=
+;
 
- #[doc(no_inline)]
--pub use macros::{module, vtable};
-+pub use macros::{module, pin_data, pinned_drop, vtable};
+-#[allow(unused_extern_crates)]
+ // Allow proc-macros to refer to `::kernel` inside the `kernel` crate (thi=
+s crate).
+ extern crate self as kernel;
 
- pub use super::build_assert;
+diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+index 43a53fbe175d..d05caa723718 100644
+--- a/rust/kernel/sync/arc.rs
++++ b/rust/kernel/sync/arc.rs
+@@ -18,7 +18,8 @@
+ use crate::{
+     bindings,
+     error::{self, Error},
+-    init::{InPlaceInit, Init, PinInit},
++    init::{self, InPlaceInit, Init, PinInit},
++    try_init,
+     types::{ForeignOwnable, Opaque},
+ };
+ use alloc::boxed::Box;
+@@ -30,6 +31,7 @@ use core::{
+     pin::Pin,
+     ptr::NonNull,
+ };
++use macros::pin_data;
 
-@@ -27,8 +27,12 @@ pub use super::build_assert;
- pub use super::dbg;
- pub use super::{pr_alert, pr_crit, pr_debug, pr_emerg, pr_err, pr_info, pr=
-_notice, pr_warn};
+ /// A reference-counted pointer to an instance of `T`.
+ ///
+@@ -122,6 +124,7 @@ pub struct Arc<T: ?Sized> {
+     _p: PhantomData<ArcInner<T>>,
+ }
 
-+pub use super::{init, pin_init, try_init, try_pin_init};
-+
- pub use super::static_assert;
++#[pin_data]
+ #[repr(C)]
+ struct ArcInner<T: ?Sized> {
+     refcount: Opaque<bindings::refcount_t>,
+@@ -502,9 +505,16 @@ impl<T> UniqueArc<T> {
 
- pub use super::error::{code::*, Error, Result};
-
- pub use super::{str::CStr, ThisModule};
-+
-+pub use super::init::{InPlaceInit, Init, PinInit};
+     /// Tries to allocate a new [`UniqueArc`] instance whose contents are =
+not initialised yet.
+     pub fn try_new_uninit() -> Result<UniqueArc<MaybeUninit<T>>, AllocErro=
+r> {
+-        Ok(UniqueArc::<MaybeUninit<T>> {
++        // INVARIANT: The refcount is initialised to a non-zero value.
++        let inner =3D Box::try_init::<AllocError>(try_init!(ArcInner {
++            // SAFETY: There are no safety requirements for this FFI call.
++            refcount: Opaque::new(unsafe { bindings::REFCOUNT_INIT(1) }),
++            data <- init::uninit::<T, AllocError>(),
++        }? AllocError))?;
++        Ok(UniqueArc {
+             // INVARIANT: The newly-created object has a ref-count of 1.
+-            inner: Arc::try_new(MaybeUninit::uninit())?,
++            // SAFETY: The pointer from the `Box` is valid.
++            inner: unsafe { Arc::from_inner(Box::leak(inner).into()) },
+         })
+     }
+ }
 --
 2.39.2
 
