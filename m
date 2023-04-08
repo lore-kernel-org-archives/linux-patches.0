@@ -1,26 +1,26 @@
 Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05AE1841
-	for <patches@lists.linux.dev>; Sat,  8 Apr 2023 12:25:41 +0000 (UTC)
-Date: Sat, 08 Apr 2023 12:25:29 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE141841
+	for <patches@lists.linux.dev>; Sat,  8 Apr 2023 12:25:43 +0000 (UTC)
+Date: Sat, 08 Apr 2023 12:25:34 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1680956734; x=1681215934;
-	bh=/3m6gBMij6Ax7PcQaOILDRRx86A/6McrrYe3eb+j60U=;
+	s=protonmail3; t=1680956741; x=1681215941;
+	bh=35ec0Ze6x4vGPDCyxTq1eqzjMeEQtTPCRJPMgIkdSpQ=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=gmiZT8rEZ4T5b4rbZc4Llt40scAmwCy+zVC8Goi1+xfTTA9TQHB1/7NRbEODLxbNA
-	 ElegjFBERD91wYJVeZDAb4KnE58lNeyBvLG/lQ4Xs+7hMcKoUxbkz+CPDc/3LtBPhV
-	 DPRIA1MjRFy2kbfL+ISWZ0IKcBdFkoYMAA4lMiAl6pk0PagRKCCOX4P+0xCZG8rPqI
-	 /A9OKveMcD3pSPSNPv0rilXwCGcpG9Pr0wjs5rgu7Hvh0jY/trkFRh/FI8mM90jErr
-	 Uipnf+KhJnLI9hiVsHxtaq2Ky+ECE8HjwlaBxhWTF/VGA4tg5kEzsuoJ0vKnN/OyUx
-	 lTyx1YV3J2Idw==
+	b=FYV5X6kKzH5aJLDgjemr4GztE2oe4Czvvz/JEScQv86bVFwyj0bZQ1YRQ1hXChD9m
+	 3TfJzwTozZAHgbsWWOZFmPzRq+oxCGxUubp6HDE1DA/kfD2Jl3me0k1jwGXVMFL7z1
+	 G3PtJmyAHAvFh4bu8fmOqU6fUhvBZ4zTl2OnBlgsn5wTU0dbtv4rMv8j6Hgx+MG3iv
+	 /jmRBJoVztPeM8++iv/hgDoghU2IlJTC/z5XU/5+0xPRd8G9p/+5WdM5jBE9tJkzxm
+	 bWSk1b7oP1fY8hLYYx7rVrfQl3Efnj57NMVrR1orrmdGJfkmE2/0WKmBJ1K/XEuJWK
+	 usrgK6JiuE8fg==
 To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>, Andreas Hindborg <nmi@metaspace.dk>
 From: Benno Lossin <y86-dev@protonmail.com>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <y86-dev@protonmail.com>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH v7 03/15] rust: sync: change error type of constructor functions
-Message-ID: <20230408122429.1103522-4-y86-dev@protonmail.com>
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <y86-dev@protonmail.com>, Wedson Almeida Filho <walmeida@microsoft.com>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH v7 04/15] rust: sync: add `assume_init` to `UniqueArc`
+Message-ID: <20230408122429.1103522-5-y86-dev@protonmail.com>
 In-Reply-To: <20230408122429.1103522-1-y86-dev@protonmail.com>
 References: <20230408122429.1103522-1-y86-dev@protonmail.com>
 Feedback-ID: 40624463:user:proton
@@ -33,64 +33,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Change the error type of the constructors of `Arc` and `UniqueArc` to be
-`AllocError` instead of `Error`. This makes the API more clear as to
-what can go wrong when calling `try_new` or its variants.
+Adds the `assume_init` function to `UniqueArc<MaybeUninit<T>>` that
+unsafely assumes the value to be initialized and yields a value of type
+`UniqueArc<T>`. This function is used when manually initializing the
+pointee of an `UniqueArc`.
 
 Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
+Reviewed-by: Wedson Almeida Filho <walmeida@microsoft.com>
 Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
 ---
- rust/kernel/sync/arc.rs | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ rust/kernel/sync/arc.rs | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-index f2f1c83d72ba..aa7135f0f238 100644
+index aa7135f0f238..eee7008e5e3e 100644
 --- a/rust/kernel/sync/arc.rs
 +++ b/rust/kernel/sync/arc.rs
-@@ -17,11 +17,11 @@
-
- use crate::{
-     bindings,
--    error::Result,
-     types::{ForeignOwnable, Opaque},
- };
- use alloc::boxed::Box;
- use core::{
-+    alloc::AllocError,
-     marker::{PhantomData, Unsize},
-     mem::{ManuallyDrop, MaybeUninit},
-     ops::{Deref, DerefMut},
-@@ -149,7 +149,7 @@ unsafe impl<T: ?Sized + Sync + Send> Sync for Arc<T> {}
-
- impl<T> Arc<T> {
-     /// Constructs a new reference counted instance of `T`.
--    pub fn try_new(contents: T) -> Result<Self> {
-+    pub fn try_new(contents: T) -> Result<Self, AllocError> {
-         // INVARIANT: The refcount is initialised to a non-zero value.
-         let value =3D ArcInner {
-             // SAFETY: There are no safety requirements for this FFI call.
-@@ -469,7 +469,7 @@ pub struct UniqueArc<T: ?Sized> {
-
- impl<T> UniqueArc<T> {
-     /// Tries to allocate a new [`UniqueArc`] instance.
--    pub fn try_new(value: T) -> Result<Self> {
-+    pub fn try_new(value: T) -> Result<Self, AllocError> {
-         Ok(Self {
-             // INVARIANT: The newly-created object has a ref-count of 1.
-             inner: Arc::try_new(value)?,
-@@ -477,7 +477,7 @@ impl<T> UniqueArc<T> {
-     }
-
-     /// Tries to allocate a new [`UniqueArc`] instance whose contents are =
-not initialised yet.
--    pub fn try_new_uninit() -> Result<UniqueArc<MaybeUninit<T>>> {
-+    pub fn try_new_uninit() -> Result<UniqueArc<MaybeUninit<T>>, AllocErro=
-r> {
-         Ok(UniqueArc::<MaybeUninit<T>> {
-             // INVARIANT: The newly-created object has a ref-count of 1.
-             inner: Arc::try_new(MaybeUninit::uninit())?,
+@@ -489,6 +489,17 @@ impl<T> UniqueArc<MaybeUninit<T>> {
+     /// Converts a `UniqueArc<MaybeUninit<T>>` into a `UniqueArc<T>` by wr=
+iting a value into it.
+     pub fn write(mut self, value: T) -> UniqueArc<T> {
+         self.deref_mut().write(value);
++        // SAFETY: We just wrote the value to be initialized.
++        unsafe { self.assume_init() }
++    }
++
++    /// Unsafely assume that `self` is initialized.
++    ///
++    /// # Safety
++    ///
++    /// The caller guarantees that the value behind this pointer has been =
+initialized. It is
++    /// *immediate* UB to call this when the value is not initialized.
++    pub unsafe fn assume_init(self) -> UniqueArc<T> {
+         let inner =3D ManuallyDrop::new(self).inner.ptr;
+         UniqueArc {
+             // SAFETY: The new `Arc` is taking over `ptr` from `self.inner=
+` (which won't be
 --
 2.39.2
 
