@@ -1,96 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B568C0D
-	for <patches@lists.linux.dev>; Tue, 11 Apr 2023 14:18:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E5FC433D2;
-	Tue, 11 Apr 2023 14:18:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681222684;
-	bh=phQbiTUMckwrc/2j8y2Y4Lzr+S5bXXke7Mem0FZ1I1c=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=EQ6kEUS887tn38L6Sk8gToVqEAh32Rx42Izy2rbZ3EvXckSQgCRSXGJM2w90aBCZ/
-	 ERuJb4MCaXGYkLmHZxqVbkON1YvetEFyBgyPKx2bFBku+75F2HW3OVNHCX9ZEfFA8b
-	 zbYgUgo2flNkXr7yVIQmveXpFp8F+EAi4KmnZgwQ=
-Subject: Patch "Revert "media: ti: cal: fix possible memory leak in cal_ctx_create()"" has been added to the 5.10-stable tree
-To: bparrot@ti.com,cuigaosheng1@huawei.com,gregkh@linuxfoundation.org,laurent.pinchart@ideasonboard.com,mchehab@kernel.org,patches@lists.linux.dev,sashal@kernel.org
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Tue, 11 Apr 2023 16:17:53 +0200
-In-Reply-To: <20230404012502.3061129-1-cuigaosheng1@huawei.com>
-Message-ID: <2023041153-malformed-streak-6073@gregkh>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F4128EE
+	for <patches@lists.linux.dev>; Tue, 11 Apr 2023 15:17:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0237DC433EF;
+	Tue, 11 Apr 2023 15:17:38 +0000 (UTC)
+Date: Tue, 11 Apr 2023 16:17:35 +0100
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: david@redhat.com, patches@lists.linux.dev,
+	linux-modules@vger.kernel.org, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
+	prarit@redhat.com, torvalds@linux-foundation.org,
+	gregkh@linuxfoundation.org, rafael@kernel.org,
+	christophe.leroy@csgroup.eu, tglx@linutronix.de,
+	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
+	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
+	mhocko@suse.com, dave.hansen@linux.intel.com,
+	colin.i.king@gmail.com, jim.cromie@gmail.com, jbaron@akamai.com,
+	rick.p.edgecombe@intel.com
+Subject: Re: [PATCH v2 1/6] module: fix kmemleak annotations for non init ELF
+ sections
+Message-ID: <ZDV6DzePHI3KLISY@arm.com>
+References: <20230405022702.753323-1-mcgrof@kernel.org>
+ <20230405022702.753323-2-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230405022702.753323-2-mcgrof@kernel.org>
 
+On Tue, Apr 04, 2023 at 07:26:57PM -0700, Luis Chamberlain wrote:
+> diff --git a/kernel/module/main.c b/kernel/module/main.c
+> index 5cc21083af04..d8bb23fa6989 100644
+> --- a/kernel/module/main.c
+> +++ b/kernel/module/main.c
+> @@ -2233,11 +2233,23 @@ static int move_module(struct module *mod, struct load_info *info)
+>  		ptr = module_memory_alloc(mod->mem[type].size, type);
+>  
+>  		/*
+> -		 * The pointer to this block is stored in the module structure
+> -		 * which is inside the block. Just mark it as not being a
+> -		 * leak.
+> +		 * The pointer to these blocks of memory are stored on the module
+> +		 * structure and we keep that around so long as the module is
+> +		 * around. We only free that memory when we unload the module.
+> +		 * Just mark them as not being a leak then. The .init* ELF
+> +		 * sections *do* get freed after boot so we treat them slightly
+> +		 * differently and only grey them out -- they work as typical
+> +		 * memory allocations which *do* eventually get freed.
+>  		 */
+> -		kmemleak_ignore(ptr);
+> +		switch (type) {
+> +		case MOD_INIT_TEXT: /* fallthrough */
+> +		case MOD_INIT_DATA: /* fallthrough */
+> +		case MOD_INIT_RODATA: /* fallthrough */
+> +			kmemleak_ignore(ptr);
+> +			break;
+> +		default:
+> +			kmemleak_not_leak(ptr);
+> +		}
 
-This is a note to let you know that I've just added the patch titled
+This works as well but if you want to keep it simple, just call
+kmemleak_not_leak() in all cases. When freeing the init sections, they
+would be removed from the kmemleak tracing anyway.
 
-    Revert "media: ti: cal: fix possible memory leak in cal_ctx_create()"
-
-to the 5.10-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
-
-The filename of the patch is:
-     revert-media-ti-cal-fix-possible-memory-leak-in-cal_ctx_create.patch
-and it can be found in the queue-5.10 subdirectory.
-
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
-
-
-From cuigaosheng1@huawei.com  Tue Apr 11 16:17:00 2023
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
-Date: Tue, 4 Apr 2023 09:25:02 +0800
-Subject: Revert "media: ti: cal: fix possible memory leak in cal_ctx_create()"
-To: <stable@vger.kernel.org>, <cuigaosheng1@huawei.com>
-Cc: <bparrot@ti.com>, <mchehab@kernel.org>, <sashal@kernel.org>, <laurent.pinchart@ideasonboard.com>, <gregkh@linuxfoundation.org>, <patches@lists.linux.dev>
-Message-ID: <20230404012502.3061129-1-cuigaosheng1@huawei.com>
-
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
-
-This reverts commit c7a218cbf67fffcd99b76ae3b5e9c2e8bef17c8c.
-
-The memory of ctx is allocated by devm_kzalloc in cal_ctx_create,
-it should not be freed by kfree when cal_ctx_v4l2_init() fails,
-otherwise kfree() will cause double free, so revert this patch.
-
-The memory of ctx is allocated by kzalloc since commit
-9e67f24e4d9 ("media: ti-vpe: cal: fix ctx uninitialization"),
-so the fixes tag of patch c7a218cbf67fis not entirely accurate,
-mainline should merge this patch, but it should not be merged
-into 5.10, so we just revert this patch for this branch.
-
-Fixes: c7a218cbf67f ("media: ti: cal: fix possible memory leak in cal_ctx_create()")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/media/platform/ti-vpe/cal.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
---- a/drivers/media/platform/ti-vpe/cal.c
-+++ b/drivers/media/platform/ti-vpe/cal.c
-@@ -624,10 +624,8 @@ static struct cal_ctx *cal_ctx_create(st
- 	ctx->cport = inst;
- 
- 	ret = cal_ctx_v4l2_init(ctx);
--	if (ret) {
--		kfree(ctx);
-+	if (ret)
- 		return NULL;
--	}
- 
- 	return ctx;
- }
-
-
-Patches currently in stable-queue which might be from cuigaosheng1@huawei.com are
-
-queue-5.10/revert-media-ti-cal-fix-possible-memory-leak-in-cal_ctx_create.patch
+-- 
+Catalin
