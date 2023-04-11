@@ -1,90 +1,162 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FF42F2D
-	for <patches@lists.linux.dev>; Tue, 11 Apr 2023 08:13:16 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id A97DB320093C;
-	Tue, 11 Apr 2023 04:13:14 -0400 (EDT)
-Received: from imap42 ([10.202.2.92])
-  by compute6.internal (MEProxy); Tue, 11 Apr 2023 04:13:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1681200794; x=1681287194; bh=NJ
-	boNri+CC288UTjop87+vyXFr430ZEANuDrQsZnXeY=; b=A8xSBfNLcC7ifYpR5w
-	ilzah4OcNCEAY2OMMa2EWT9kt8vCEYhySANOxaUIxYjIb3oMR/wpUs5yTIO+Zi4a
-	wPB4LjqyHv3TI3UfEry43Dd5zyCsm4on2XX1ZF1saImtcXW0bP4of3ZLkFcc7t0P
-	jEUoO4NKmDErwNwdKfE2bGeu9svO3TI/UcHfMJVZaCHHpun3bg5swh2u0Bvxzvd/
-	+NeiJ0+boR5jz6OqCDLjHk75+YFqBYsl2tjmEDyvpDU370lc/wrpoAQ8EboNyLgx
-	WkgBHjvTfvmZG2dOPtBeMFacgl6QACH8Ny8di+qYMgKuwZ+XlAiX/I1cmIWXhik9
-	SoiQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1681200794; x=1681287194; bh=NJboNri+CC288
-	UTjop87+vyXFr430ZEANuDrQsZnXeY=; b=HdAcjAALSgWwNNliFkrpvS6tg+SsA
-	0NWqmOY5EkNTmylvUjrzgYAuYapvuBvzxSmNTCjcpaAbMHFWkbJjZSM6AYYUi5M4
-	jmrZrdvvOyi15m+hHTnAC1GoBFrEBj7jfMEEicZzEVYEkK4Ey0oKM4RWmjQNUCbH
-	HZ8xAfX2xo3bqLvcV5CJMxTRdayeQZFSo3+KvHxMDbkXQEID1B2Iqdn5pMgIPx7i
-	GGCGkhlmflnVGE0tcIP3A3w1rBWCTWXdwHuMmK+7eM46sN9rjAgxKTd0bti3Tr7Y
-	3Cr1GVniMTasf+CUFRyHCDw4gRKsusRZXt8NTVLQZNVMISMXrcBZH3gBw==
-X-ME-Sender: <xms:mRY1ZEx_sDPdYJ-HwCxwJS0zVAXoW1Hp3ouByHKQoK7TVfKFF96eqQ>
-    <xme:mRY1ZISXih7G4MmtPHMWePa77rT54hLgXP38rIozOc4rrqhVRfCTE6bDTDsdKlFKE
-    IQJ8FEP2CS_eP7Txw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekgedgtdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehl
-    ihgtvgcutfihhhhlfdcuoegrlhhitggvsehrhihhlhdrihhoqeenucggtffrrghtthgvrh
-    hnpeehffehfeefieettdelhefhkeegieejheeljeegffefjeevjeekveefgeduhfejhfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrlhhitg
-    gvsehrhihhlhdrihho
-X-ME-Proxy: <xmx:mRY1ZGVzM6J5wkHuoUJ88hmBbkhCme6MWlJ25scb5NaMNRMNNHatug>
-    <xmx:mRY1ZChMlIUfWHzbLKMLQl8SG99oD6MCS0ccEY4ewHM5qLkJqrDX2Q>
-    <xmx:mRY1ZGAhtD3AJkBPTa-1tSCs7JFjKNhEOERJjqg4ltYQY7m1ul_wbA>
-    <xmx:mhY1ZK7L5cJogUYljaFNT4FZj2wRQYtj6q5fp8SsvyI4wUUhIoq9yA>
-Feedback-ID: i56684263:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id A31E9BC0078; Tue, 11 Apr 2023 04:13:13 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-334-g8c072af647-fm-20230330.001-g8c072af6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF78E4436
+	for <patches@lists.linux.dev>; Tue, 11 Apr 2023 08:42:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1681202547;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=f0G40HMMtqNusZREMWnmDmOZTULsZQjdvFBX6d0j6nM=;
+	b=ObBOH/fGlAUO6NQSk42MpU7rJiZ5bRMHscB7sYHunkJl6MvvD1M+OQOg2Z4CkqiHcN3k1S
+	adxi4DoGJqISJUJjvg5EOPk4cw2bRxU0Z77UzwEy4Q/ZPj1BFl7xonOswB0WA6pRifi6LG
+	AecxrsLzm5oL9VkQG0JN0KVz/miPNQE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-271-u-nZsGXUNfOJXljvI7hi1A-1; Tue, 11 Apr 2023 04:42:26 -0400
+X-MC-Unique: u-nZsGXUNfOJXljvI7hi1A-1
+Received: by mail-wm1-f71.google.com with SMTP id l26-20020a05600c1d1a00b003edf85f6bb1so5078821wms.3
+        for <patches@lists.linux.dev>; Tue, 11 Apr 2023 01:42:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681202545; x=1683794545;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f0G40HMMtqNusZREMWnmDmOZTULsZQjdvFBX6d0j6nM=;
+        b=8IwhtQ9nZtroTgbd1Cez8oWYvCymGabwAjDDkIjZhYrIAtJmAvFCeAVS9idf3qW0pD
+         w4lmNhaoYWoklARhhnelRUNDoHzwa5UJrpy5J2yOwhc6rMeZf+gtM6Dgo5NlfNbN907p
+         UJ2t6czOSbKmaqpuCFFLg8G1iWKQbsTm2Z52sbnO89XTtAvMBJsL/aLCqVS6nO4/E2ui
+         SNzLlJOs4XKz1rR4vsWE8m4TUS0tJxbJnXS5lVYtETrlXMCBpvSQthjVocScGfzOJpSS
+         m5mAf4UuNSuUhpGp2zUS0rk/0daz5zad/Ly1Fkw7Mu7uenQiTvlRgc2vyJrUs55Juwjm
+         kJNQ==
+X-Gm-Message-State: AAQBX9dOMSdDer0RJkte1qG78IcwX0BqKRmt82c3uQhx5kYJjenevzhT
+	JhtJnWQ4kUJBucSG5bo5u4GnU/trG6G3SxLMYF3pAOzEdLGc4vr1GvYuAsQaqsFtlWv/yT5q68p
+	+/MkEilghpjoZGxZiVw==
+X-Received: by 2002:a7b:cb81:0:b0:3ee:1acd:b039 with SMTP id m1-20020a7bcb81000000b003ee1acdb039mr9362625wmi.34.1681202545149;
+        Tue, 11 Apr 2023 01:42:25 -0700 (PDT)
+X-Google-Smtp-Source: AKy350Y0ozkUapL4MwnXUftzJoDwFRIUNHeFl1HSv1T0LtFvCqpcIZ1xQSSekp/uyzdWD3ViMfmTvg==
+X-Received: by 2002:a7b:cb81:0:b0:3ee:1acd:b039 with SMTP id m1-20020a7bcb81000000b003ee1acdb039mr9362604wmi.34.1681202544706;
+        Tue, 11 Apr 2023 01:42:24 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c706:1300:6f08:1748:eba7:b2a9? (p200300cbc70613006f081748eba7b2a9.dip0.t-ipconnect.de. [2003:cb:c706:1300:6f08:1748:eba7:b2a9])
+        by smtp.gmail.com with ESMTPSA id 22-20020a05600c021600b003dc522dd25esm16326602wmi.30.2023.04.11.01.42.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Apr 2023 01:42:24 -0700 (PDT)
+Message-ID: <3132a8ca-49a3-3d6a-09fe-984293116d76@redhat.com>
+Date: Tue, 11 Apr 2023 10:42:22 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Message-Id: <048e6799-d7fa-40c0-8419-513a2c70a5f1@app.fastmail.com>
-In-Reply-To: <20230408122429.1103522-14-y86-dev@protonmail.com>
-References: <20230408122429.1103522-1-y86-dev@protonmail.com>
- <20230408122429.1103522-14-y86-dev@protonmail.com>
-Date: Tue, 11 Apr 2023 10:12:53 +0200
-From: "Alice Ryhl" <alice@ryhl.io>
-To: "Benno Lossin" <y86-dev@protonmail.com>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, "Alice Ryhl" <aliceryhl@google.com>,
- "Andreas Hindborg" <a.hindborg@samsung.com>,
- "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>,
- "Wedson Almeida Filho" <wedsonaf@gmail.com>,
- "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
- =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- "Andreas Hindborg" <nmi@metaspace.dk>
-Subject: Re: [PATCH v7 13/15] rust: types: add `Opaque::ffi_init`
-Content-Type: text/plain
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v2 2/2] modules/kmod: replace implementation with a
+ sempahore
+To: Luis Chamberlain <mcgrof@kernel.org>, patches@lists.linux.dev,
+ linux-modules@vger.kernel.org, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
+ prarit@redhat.com, torvalds@linux-foundation.org,
+ gregkh@linuxfoundation.org, rafael@kernel.org
+Cc: christophe.leroy@csgroup.eu, tglx@linutronix.de, peterz@infradead.org,
+ song@kernel.org, rppt@kernel.org, dave@stgolabs.net, willy@infradead.org,
+ vbabka@suse.cz, mhocko@suse.com, dave.hansen@linux.intel.com,
+ colin.i.king@gmail.com, jim.cromie@gmail.com, catalin.marinas@arm.com,
+ jbaron@akamai.com, rick.p.edgecombe@intel.com
+References: <20230405203505.1343562-1-mcgrof@kernel.org>
+ <20230405203505.1343562-3-mcgrof@kernel.org>
+From: David Hildenbrand <david@redhat.com>
+Organization: Red Hat
+In-Reply-To: <20230405203505.1343562-3-mcgrof@kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Apr 8, 2023, at 2:26 PM, Benno Lossin wrote:
-> This function allows to easily initialize `Opaque` with the pin-init
-> API. `Opaque::ffi_init` takes a closure and returns a pin-initializer.
-> This pin-initiailizer calls the given closure with a pointer to the
-> inner `T`.
->
-> Co-developed-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
-> Cc: Alice Ryhl <aliceryhl@google.com>
-> Cc: Andreas Hindborg <a.hindborg@samsung.com>
+On 05.04.23 22:35, Luis Chamberlain wrote:
+> Simplfy the concurrency delimiter we user for kmod with the semaphore.
+> I had used the kmod strategy to try to implement a similar concurrency
+> delimiter for the kernel_read*() calls from the finit_module() path
+> so to reduce vmalloc() memory pressure. That effort didn't provid yet
+> conclusive results, but one thing that did became clear is we can use
+> the suggested alternative solution with semaphores which Linus hinted
+> at instead of using the atomic / wait strategy.
+> 
+> I've stress tested this with kmod test 0008:
+> 
+> time /data/linux-next/tools/testing/selftests/kmod/kmod.sh -t 0008
+> 
+> And I get only a *slight* delay. That delay however is small, a few
+> seconds for a full test loop run that runs 150 times, for about ~30-40
+> seconds. The small delay is worth the simplfication IMHO.
+> 
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
+>   kernel/module/kmod.c | 26 +++++++-------------------
+>   1 file changed, 7 insertions(+), 19 deletions(-)
+> 
+> diff --git a/kernel/module/kmod.c b/kernel/module/kmod.c
+> index b717134ebe17..925eb85b8346 100644
+> --- a/kernel/module/kmod.c
+> +++ b/kernel/module/kmod.c
+> @@ -40,8 +40,7 @@
+>    * effect. Systems like these are very unlikely if modules are enabled.
+>    */
+>   #define MAX_KMOD_CONCURRENT 50
+> -static atomic_t kmod_concurrent_max = ATOMIC_INIT(MAX_KMOD_CONCURRENT);
+> -static DECLARE_WAIT_QUEUE_HEAD(kmod_wq);
+> +static DEFINE_SEMAPHORE(kmod_concurrent_max, MAX_KMOD_CONCURRENT);
+>   
+>   /*
+>    * This is a restriction on having *all* MAX_KMOD_CONCURRENT threads
+> @@ -148,29 +147,18 @@ int __request_module(bool wait, const char *fmt, ...)
+>   	if (ret)
+>   		return ret;
+>   
+> -	if (atomic_dec_if_positive(&kmod_concurrent_max) < 0) {
+> -		pr_warn_ratelimited("request_module: kmod_concurrent_max (%u) close to 0 (max_modprobes: %u), for module %s, throttling...",
+> -				    atomic_read(&kmod_concurrent_max),
+> -				    MAX_KMOD_CONCURRENT, module_name);
+> -		ret = wait_event_killable_timeout(kmod_wq,
+> -						  atomic_dec_if_positive(&kmod_concurrent_max) >= 0,
+> -						  MAX_KMOD_ALL_BUSY_TIMEOUT * HZ);
+> -		if (!ret) {
+> -			pr_warn_ratelimited("request_module: modprobe %s cannot be processed, kmod busy with %d threads for more than %d seconds now",
+> -					    module_name, MAX_KMOD_CONCURRENT, MAX_KMOD_ALL_BUSY_TIMEOUT);
+> -			return -ETIME;
+> -		} else if (ret == -ERESTARTSYS) {
+> -			pr_warn_ratelimited("request_module: sigkill sent for modprobe %s, giving up", module_name);
+> -			return ret;
+> -		}
+> +	ret = down_timeout(&kmod_concurrent_max, MAX_KMOD_ALL_BUSY_TIMEOUT);
+> +	if (ret) {
+> +		pr_warn_ratelimited("request_module: modprobe %s cannot be processed, kmod busy with %d threads for more than %d seconds now",
+> +				    module_name, MAX_KMOD_CONCURRENT, MAX_KMOD_ALL_BUSY_TIMEOUT);
+> +		return ret;
+>   	}
+>   
+>   	trace_module_request(module_name, wait, _RET_IP_);
+>   
+>   	ret = call_modprobe(module_name, wait ? UMH_WAIT_PROC : UMH_WAIT_EXEC);
+>   
+> -	atomic_inc(&kmod_concurrent_max);
+> -	wake_up(&kmod_wq);
+> +	up(&kmod_concurrent_max);
+>   
+>   	return ret;
+>   }
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Much cleaner
+
+Reviewed-by: David Hildenbrand <david@redhat.com>
+
+-- 
+Thanks,
+
+David / dhildenb
+
