@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672812F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B8DC433D2;
-	Wed, 12 Apr 2023 08:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034352F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D38AC433EF;
+	Wed, 12 Apr 2023 08:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289496;
-	bh=clVH+3uQz6oglW9J8ktfAN5InOh6L8MCW/lKsmFZqFo=;
+	s=korg; t=1681289498;
+	bh=KniCw7X4s6beES+ACV7I6uEf+SnCJlfKPEwGe5iWZ3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1B4rqWquIoBehx+mojkyUvDggLLZ+zO3Gw7kxQhg/QEmTjDQPxxL89YZCrHupVYV
-	 adkp7zxcV6G3pLBU801VPL9kO6+HaaFV3Frk9U6i5Vi1IwZRKyT8X71bPxTwZd8CJa
-	 RlOoITGZm4+v1TYi6X8EJTOAeBGXJ4tRrd3g+LOg=
+	b=1KYHcLEM/9I95e1L2HBqvrE6RkDR66xNflVJ50tqnGDCF6Ete8laqSeOtKAnSQ5Yn
+	 DyG2ySyHblJnof7U0Ul/FI12mF4GB9KFp1kqn2BaWAjpmUt4GlCjZqgxx6I5O6rcED
+	 lfbz4HsjBsvmtJxFEIRr1pdch1f5OfeXnTMXx0is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.2 092/173] serial: 8250: Prevent starting up DMA Rx on THRI interrupt
-Date: Wed, 12 Apr 2023 10:33:38 +0200
-Message-Id: <20230412082841.771747179@linuxfoundation.org>
+	Marios Makassikis <mmakassikis@freebox.fr>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 093/173] ksmbd: do not call kvmalloc() with __GFP_NORETRY | __GFP_NO_WARN
+Date: Wed, 12 Apr 2023 10:33:39 +0200
+Message-Id: <20230412082841.820299099@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -34,75 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Marios Makassikis <mmakassikis@freebox.fr>
 
-commit 90b8596ac46043e4a782d9111f5b285251b13756 upstream.
+commit e416ea62a9166e6075a07a970cc5bf79255d2700 upstream.
 
-Hans de Goede reported Bluetooth adapters (HCIs) connected over an UART
-connection failed due corrupted Rx payload. The problem was narrowed
-down to DMA Rx starting on UART_IIR_THRI interrupt. The problem occurs
-despite LSR having DR bit set, which is precondition for attempting to
-start DMA Rx in the first place.
+Commit 83dcedd5540d ("ksmbd: fix infinite loop in ksmbd_conn_handler_loop()"),
+changes GFP modifiers passed to kvmalloc(). This cause xfstests generic/551
+test to fail. We limit pdu length size according to connection status and
+maximum number of connections. In the rest, memory allocation of request
+is limited by credit management. so these flags are no longer needed.
 
->From a debug patch:
-[x.807834] 8250irq: iir=cc lsr+saved=60 received=0/15 ier=0f dma_t/rx/err=0/0/0
-[x.808676] 8250irq: iir=c2 lsr+saved=61 received=0/0 ier=0f dma_t/rx/err=0/0/0
-[x.808776] 8250irq: iir=cc lsr+saved=60 received=1/12 ier=0d dma_t/rx/err=0/1/0
-[x.808870] Bluetooth: hci0: Frame reassembly failed (-84)
-
-In the debug snippet, received field indicates 1 byte was transferred
-over DMA and 12 bytes after that with the non-DMA Rx. The sole byte DMA
-handled was corrupted (gets zeroed) which leads to the HCI failure.
-
-This problem became apparent after commit e8ffbb71f783 ("serial: 8250:
-use THRE & __stop_tx also with DMA") changed Tx stop behavior. Tx stop
-is now triggered from a THRI interrupt.
-
-Despite that this problem looks like a HW bug, this fix is not adding
-UART_BUG_xx flag to the driver beucase it seems useful in general to
-avoid starting DMA when there are only a few bytes to transfer.
-Skipping DMA for small transfers avoids the extra overhead DMA incurs.
-
-Thus, don't setup DMA Rx on UART_IIR_THRI but leave it to a subsequent
-interrupt which has Rx a related IIR value.
-
-By returning false from handle_rx_dma(), the DMA vs non-DMA decision is
-postponed until either UART_IIR_RDI (FIFO threshold worth of bytes
-awaiting) or UART_IIR_TIMEOUT (inter-character timeout) triggers at a
-later time which allows better to discern whether the number of bytes
-warrants starting DMA or not.
-
-Reported-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Hans de Goede <hdegoede@redhat.com>
-Fixes: e8ffbb71f783 ("serial: 8250: use THRE & __stop_tx also with DMA")
+Fixes: 83dcedd5540d ("ksmbd: fix infinite loop in ksmbd_conn_handler_loop()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230317103034.12881-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ksmbd/connection.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1896,6 +1896,17 @@ EXPORT_SYMBOL_GPL(serial8250_modem_statu
- static bool handle_rx_dma(struct uart_8250_port *up, unsigned int iir)
- {
- 	switch (iir & 0x3f) {
-+	case UART_IIR_THRI:
-+		/*
-+		 * Postpone DMA or not decision to IIR_RDI or IIR_RX_TIMEOUT
-+		 * because it's impossible to do an informed decision about
-+		 * that with IIR_THRI.
-+		 *
-+		 * This also fixes one known DMA Rx corruption issue where
-+		 * DR is asserted but DMA Rx only gets a corrupted zero byte
-+		 * (too early DR?).
-+		 */
-+		return false;
- 	case UART_IIR_RDI:
- 		if (!up->dma->rx_running)
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -326,10 +326,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 
+ 		/* 4 for rfc1002 length field */
+ 		size = pdu_size + 4;
+-		conn->request_buf = kvmalloc(size,
+-					     GFP_KERNEL |
+-					     __GFP_NOWARN |
+-					     __GFP_NORETRY);
++		conn->request_buf = kvmalloc(size, GFP_KERNEL);
+ 		if (!conn->request_buf)
  			break;
+ 
 
 
