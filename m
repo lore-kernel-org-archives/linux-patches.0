@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5492F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:39:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463A1C433D2;
-	Wed, 12 Apr 2023 08:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA0D2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:39:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8C0C433EF;
+	Wed, 12 Apr 2023 08:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288770;
-	bh=HpDiPge5WbKmg9/mLvM0fTSRVjMevrgZx91HWYIwaBE=;
+	s=korg; t=1681288773;
+	bh=8U48gKTLAtvzZr3KsZAGXhT8ouZ2sFVl7DENiYl3hFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYWqka5PrKh+htiTNhJ8ZbSDiykFyKSVOEJskYZY36tD1eKu41/7FQ0zucP3OZMWl
-	 9LJm6WRHOY1IgpUF9uIhzQXFRYyd+lYOHIrXlHtyPT7B2OlX/GNwzLs8ympG8NgELw
-	 mCizopdB3itcrxIy08wbaeF3iM1Xi1c8ijvrxGbk=
+	b=ZG0pZM+i4GmUI+XylOMb/G/MsrtPCsBZl3X0JQtloVQ2ahSlJdv6NHFjvupJveVCb
+	 fPl6ns9uBfx0dGDmL7RooA4x5qE6BFqvsQOFz6VBamXQ8WlC5h9sGPUWINIbrTcEm9
+	 Cni++aFVFsr639DMxt+LCBKF/+Z40QXcs+7esxuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/164] ASoC: SOF: ipc4: Ensure DSP is in D0I0 during sof_ipc4_set_get_data()
-Date: Wed, 12 Apr 2023 10:32:13 +0200
-Message-Id: <20230412082837.311064305@linuxfoundation.org>
+Subject: [PATCH 6.1 002/164] dm integrity: Remove bi_sector thats only used by commented debug code
+Date: Wed, 12 Apr 2023 10:32:04 +0200
+Message-Id: <20230412082836.826569154@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -38,54 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-[ Upstream commit e51f49512d98783b90799c9cc2002895ec3aa0eb ]
+[ Upstream commit 5cd6d1d53a1f74222e73d8b42ab7ecf28ee2f34f ]
 
-The set_get_data() IPC op bypasses the check for the no_pm flag as done
-with the regular IPC tx_msg op. Since set_get_data should be performed
-when the DSP is in D0I0, set the DSP power state to D0I0 before sending
-the IPC's in sof_ipc4_set_get_data().
+drivers/md/dm-integrity.c:1738:13: warning: variable 'bi_sector' set but not used.
 
-Fixes: ceb89acc4dc8 ("ASoC: SOF: ipc4: Add support for mandatory message handling functionality")
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230322085538.10214-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3895
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Stable-dep-of: f7b58a69fad9 ("dm: fix improper splitting for abnormal bios")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/md/dm-integrity.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/sound/soc/sof/ipc4.c b/sound/soc/sof/ipc4.c
-index 6eaa18e27e5af..c08f3960ddd96 100644
---- a/sound/soc/sof/ipc4.c
-+++ b/sound/soc/sof/ipc4.c
-@@ -392,6 +392,9 @@ static int sof_ipc4_tx_msg(struct snd_sof_dev *sdev, void *msg_data, size_t msg_
- static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
- 				 size_t payload_bytes, bool set)
- {
-+	const struct sof_dsp_power_state target_state = {
-+			.state = SOF_DSP_PM_D0,
-+	};
- 	size_t payload_limit = sdev->ipc->max_payload_size;
- 	struct sof_ipc4_msg *ipc4_msg = data;
- 	struct sof_ipc4_msg tx = {{ 0 }};
-@@ -422,6 +425,11 @@ static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index 1388ee35571e0..c62c21aadf329 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -1735,7 +1735,6 @@ static void integrity_metadata(struct work_struct *w)
+ 		}
  
- 	tx.extension |= SOF_IPC4_MOD_EXT_MSG_FIRST_BLOCK(1);
+ 		if (unlikely(dio->op == REQ_OP_DISCARD)) {
+-			sector_t bi_sector = dio->bio_details.bi_iter.bi_sector;
+ 			unsigned bi_size = dio->bio_details.bi_iter.bi_size;
+ 			unsigned max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : HASH_MAX_DIGESTSIZE;
+ 			unsigned max_blocks = max_size / ic->tag_size;
+@@ -1752,13 +1751,7 @@ static void integrity_metadata(struct work_struct *w)
+ 					goto error;
+ 				}
  
-+	/* ensure the DSP is in D0i0 before sending IPC */
-+	ret = snd_sof_dsp_set_power_state(sdev, &target_state);
-+	if (ret < 0)
-+		return ret;
-+
- 	/* Serialise IPC TX */
- 	mutex_lock(&sdev->ipc->tx_mutex);
+-				/*if (bi_size < this_step_blocks << (SECTOR_SHIFT + ic->sb->log2_sectors_per_block)) {
+-					printk("BUGG: bi_sector: %llx, bi_size: %u\n", bi_sector, bi_size);
+-					printk("BUGG: this_step_blocks: %u\n", this_step_blocks);
+-					BUG();
+-				}*/
+ 				bi_size -= this_step_blocks << (SECTOR_SHIFT + ic->sb->log2_sectors_per_block);
+-				bi_sector += this_step_blocks << ic->sb->log2_sectors_per_block;
+ 			}
  
+ 			if (likely(checksums != checksums_onstack))
 -- 
 2.39.2
 
