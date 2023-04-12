@@ -1,106 +1,87 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626EA611A
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 14:26:14 +0000 (UTC)
-Received: by mail-yb1-f202.google.com with SMTP id 4-20020a251904000000b00b7f75c3cafdso40568717ybz.16
-        for <patches@lists.linux.dev>; Wed, 12 Apr 2023 07:26:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1681309573; x=1683901573;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WJTQsHGephiRRGvzWHKa1YfmC5Q/3ge7v2DAEPqx4c4=;
-        b=V7YEThzOYtDMs86dvZiALvp5IGI1ltp4+kzxus8hjvBQgA+Hkeig7HSUu4Xtw0ABuT
-         VtTwZFgtMVgH4L2D0wF2tEbs6UGd3gWATRDmagm0lL/Hssv8vHVfEzed0WE9fbFcHJj0
-         v/rxKWTHDNKWV65IkKtCw9KqWHM1YSyzqwP9hQ1NpOyTUIENXwC+/maq9qX4yZgzy9My
-         YFgmroTeA6XHPnOg3ibWPnvpGMauSXEa67Fk1HfkD5XdI53DjHrX7XY9GHcxCsgJc232
-         v5gVo1gtg6/x4MP1vh004GqLXaHM2nuIkfQSpveSpJ4WZEYnIA5NPXedU5zpR5AQ19DU
-         Oeew==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CB4611A
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 14:29:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1681309739;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=K4OXioAsNwvXZ/K4d6kxtMxBP2GaRJrPo091krrcB4E=;
+	b=ip+Em0ekawFg0yYHPE8Z3WN9KGRkqsHZMi9RzceCwvsRnR2tbch0f2YoZFwybOwrft2ALB
+	yT+vHUvQ9aMi73w/MrYbWhqzLjgcT08+RbbQEmJtctG8LI6mVKyS1EUY4KVjAQnsAPn6Jr
+	Dg4I+2sqcAC/82IGUXS7YWwrC8zlt7U=
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-673-dFBk3OgvPGmSBhzebS6SnQ-1; Wed, 12 Apr 2023 10:28:58 -0400
+X-MC-Unique: dFBk3OgvPGmSBhzebS6SnQ-1
+Received: by mail-vs1-f69.google.com with SMTP id g28-20020a67d49c000000b00425dd7c582cso2984009vsj.22
+        for <patches@lists.linux.dev>; Wed, 12 Apr 2023 07:28:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681309573; x=1683901573;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WJTQsHGephiRRGvzWHKa1YfmC5Q/3ge7v2DAEPqx4c4=;
-        b=bbJv3HCegWRRnnIpd9ltTPTo2y7FYs0vp6/OmMCLDQcrKTK/jdjITNLooRpgXfIGUK
-         OozlHDz1Bo1TJkquHDuDaTWYfR1fcnc4GFysxhSLD3S54ZsokYkUUtkRLET6UhqRrZ1u
-         XX545pMNbK3XU/I0gqbaRCV10OLN5v4Ipg7nBVJg1VgEfeY4kgLNpWg/ApY457InUti8
-         xCkzqpHxKPqH9bAp41B1Utveg7IFvcFDccVfuk8o66RN5piXOgnR8ep859vMepFKaLQD
-         U55+4C3b+wndh8zWq0SAAqoJJdKEzPDZzm0MnK9F3UedPOQguSQIf95K5TkN8EBYY6PX
-         BrYg==
-X-Gm-Message-State: AAQBX9dFGd2a/P/wd47CHIWNhZ0FR7uRHATh52a0x/WRUk7125gqHPtY
-	BCwqSrw+kPjxyM4ZtUqGmkuhzb++Mio=
-X-Google-Smtp-Source: AKy350Zl6YR9aOMGTUQskmFoZx6nvL9NvZh8zC6FVTwxZ9uu9+IB2T122NWVpTOkYAsoDGf+KrZU/SFr+1U=
-X-Received: from zagreus.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a25:7654:0:b0:b8e:e0db:5b9d with SMTP id
- r81-20020a257654000000b00b8ee0db5b9dmr6098435ybc.12.1681309573433; Wed, 12
- Apr 2023 07:26:13 -0700 (PDT)
-Date: Wed, 12 Apr 2023 07:26:11 -0700
-In-Reply-To: <87jzyhfnza.fsf@redhat.com>
+        d=1e100.net; s=20210112; t=1681309738; x=1683901738;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=K4OXioAsNwvXZ/K4d6kxtMxBP2GaRJrPo091krrcB4E=;
+        b=PnsQ03vaOdLO1uq5ZVOfmEPrfGCNMgkcnD4P5nszpp+aedAIbdy/0i9FLW9YDcuNvM
+         Ffy6o/5nnZNaKlPpfgoEhG+G38LwoKu7z5qRDthRVcOqMXGBKq5VicZ8/uxv+so40fXI
+         TWV+5dDyEN+5/Vvu060ny4kMaGInoI8MniiZjV/D7pqqydWOzAPlN+DXnpSV45CIv8Rk
+         F9huCqwAzRU0Tsp849vDwLxQAkmHZn/auYo8vtN/XPQmrVut028hFRW2ANjmQhR6/jol
+         mlpxNKxMMjcGQ9pWCk68+bp5HH6Wkm6oxgcHPqfnYmKG2YVF6RF1JerW0w54vxgZUNDR
+         SZ/g==
+X-Gm-Message-State: AAQBX9d4XltXA7CqhKo1VbrILp9XBlR0ejhETdqoyNxf0qyW4BY5PXEz
+	bm3Mc53NAB6Sw+PgA2K/LES0L5nwpef/Gzhr33fI8Bmcpu1wpvABkGhJ7sgTHM21KSci5oI2f6e
+	oHAH9T4W9shC2PfMiOwoI5RrPKSWxpHMAYqUpH7Gy8g==
+X-Received: by 2002:a67:e046:0:b0:416:2ad3:35ba with SMTP id n6-20020a67e046000000b004162ad335bamr1437049vsl.1.1681309737985;
+        Wed, 12 Apr 2023 07:28:57 -0700 (PDT)
+X-Google-Smtp-Source: AKy350a+O+PE+LTKuY6GQvO+COcRTx3TNniSZzjqcUv4AblpnfFwjeYkSaIpO7UrXjAmLoCKpyIGiHDCHeNCcN4qe88=
+X-Received: by 2002:a67:e046:0:b0:416:2ad3:35ba with SMTP id
+ n6-20020a67e046000000b004162ad335bamr1437039vsl.1.1681309737698; Wed, 12 Apr
+ 2023 07:28:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
 References: <20230412082838.125271466@linuxfoundation.org> <20230412082842.164450040@linuxfoundation.org>
- <87jzyhfnza.fsf@redhat.com>
-Message-ID: <ZDa/D5+HjGVuJgdA@google.com>
+ <87jzyhfnza.fsf@redhat.com> <ZDa/D5+HjGVuJgdA@google.com>
+In-Reply-To: <ZDa/D5+HjGVuJgdA@google.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 12 Apr 2023 16:28:46 +0200
+Message-ID: <CABgObfY3Ly6PeFqQ8uv+s88LX-y7iXLV0HXWQ1H4uSHwqkfwYA@mail.gmail.com>
 Subject: Re: [PATCH 6.2 101/173] KVM: SVM: Flush Hyper-V TLB when required
-From: Sean Christopherson <seanjc@google.com>
-To: Vitaly Kuznetsov <vkuznets@redhat.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>, patches@lists.linux.dev, 
-	Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="us-ascii"
+To: Sean Christopherson <seanjc@google.com>
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>, patches@lists.linux.dev
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 12, 2023, Vitaly Kuznetsov wrote:
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org> writes:
-> 
-> > From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-> >
-> > commit e5c972c1fadacc858b6a564d056f177275238040 upstream.
-> >
-> > The Hyper-V "EnlightenedNptTlb" enlightenment is always enabled when KVM
-> > is running on top of Hyper-V and Hyper-V exposes support for it (which
-> > is always). On AMD CPUs this enlightenment results in ASID invalidations
-> > not flushing TLB entries derived from the NPT. To force the underlying
-> > (L0) hypervisor to rebuild its shadow page tables, an explicit hypercall
-> > is needed.
-> >
-> > The original KVM implementation of Hyper-V's "EnlightenedNptTlb" on SVM
-> > only added remote TLB flush hooks. This worked out fine for a while, as
-> > sufficient remote TLB flushes where being issued in KVM to mask the
-> > problem. Since v5.17, changes in the TDP code reduced the number of
-> > flushes and the out-of-sync TLB prevents guests from booting
-> > successfully.
-> >
-> > Split svm_flush_tlb_current() into separate callbacks for the 3 cases
-> > (guest/all/current), and issue the required Hyper-V hypercall when a
-> > Hyper-V TLB flush is needed. The most important case where the TLB flush
-> > was missing is when loading a new PGD, which is followed by what is now
-> > svm_flush_tlb_current().
-> >
-> > Cc: stable@vger.kernel.org # v5.17+
-> > Fixes: 1e0c7d40758b ("KVM: SVM: hyper-v: Remote TLB flush for SVM")
-> > Link: https://lore.kernel.org/lkml/43980946-7bbf-dcef-7e40-af904c456250@linux.microsoft.com/
-> > Suggested-by: Sean Christopherson <seanjc@google.com>
-> > Signed-off-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-> > Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-> > Message-Id: <20230324145233.4585-1-jpiotrowski@linux.microsoft.com>
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> 
-> It seems issues are still observed even with this fix, right?:
-> https://lore.kernel.org/kvm/959c5bce-beb5-b463-7158-33fc4a4f910c@linux.microsoft.com/
+On Wed, Apr 12, 2023 at 4:26=E2=80=AFPM Sean Christopherson <seanjc@google.=
+com> wrote:
+> There are no functional issues with the fix, and there's no evidence that=
+ KVM is
+> to blame for the slow L2 boot times when the TDP MMU is enabled.
+>
+> > Jeremi, Sean, do you thing it's still worth it to push this to stable@?
+> > IMO a small patch disabling TDP MMU on Hyper-V would be better for the
+> > time being...
+>
+> Yes, I think it's worth pushing to stable.  The fix is valid even if we e=
+nd up
+> disabling the TDP MMU on Hyper-V as a workaround.  And the fix is mandato=
+ry if/when
+> the TDP MMU is re-enabled, or if we root cause the boot problem sooner th=
+an later
+> and don't have to resort to disabling the TDP MMU.
 
-There are no functional issues with the fix, and there's no evidence that KVM is
-to blame for the slow L2 boot times when the TDP MMU is enabled.
+Agreed plus it's a good idea to keep this patch anyway for correctness
+of kvm-amd.ko. Performance is a separate issue.
 
-> Jeremi, Sean, do you thing it's still worth it to push this to stable@?
-> IMO a small patch disabling TDP MMU on Hyper-V would be better for the
-> time being...
+Paolo
 
-Yes, I think it's worth pushing to stable.  The fix is valid even if we end up
-disabling the TDP MMU on Hyper-V as a workaround.  And the fix is mandatory if/when
-the TDP MMU is re-enabled, or if we root cause the boot problem sooner than later
-and don't have to resort to disabling the TDP MMU.
