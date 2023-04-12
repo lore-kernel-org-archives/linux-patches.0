@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268272F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC27C433EF;
-	Wed, 12 Apr 2023 08:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EE02F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54214C433D2;
+	Wed, 12 Apr 2023 08:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289032;
-	bh=QxS97UowRHVVPDBHnO2wX1hpErq1U7N0AtxbogtNIIg=;
+	s=korg; t=1681289034;
+	bh=dePYVyhhQ2CroVwonwelpyCQdVX/unKh+KuH+KtUeZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwOAYEp1S9ql20KxEqNe5KKtdhNMNXS5bAVkS9OaLO6gAO/+tLy1r9O2/ASUGBYTi
-	 NAMSCfey9O9h/cz/mpigZRqKu0TEdv7nSvPSw5kDXIAwbBX7R1REQ6gf2AD9pBjlvr
-	 sXXB14kLwbD9CuUgra7U7h8maHPAR5tBJ9uuo2lk=
+	b=JRUAaj2rgFdqFFIKrmv/w9zxCOBxdvpfXGdxIMc4Vx4PxmDnZUp3xkEr2ZYSu/Rv7
+	 T2Emu5bDnKdY+pc3wilALxfBQSMItd74t9Zfnif6IgLGrlrx32cKpEymZpj0Mn9l0e
+	 7NMqcunYfVBbiLc8V1mGEL6MTNOgFCNqMM0UPSEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Ming Lei <ming.lei@redhat.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/164] block: dont set GD_NEED_PART_SCAN if scan partition failed
-Date: Wed, 12 Apr 2023 10:33:51 +0200
-Message-Id: <20230412082841.256175754@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>
+Subject: [PATCH 6.1 081/164] tty: serial: fsl_lpuart: avoid checking for transfer complete when UARTCTRL_SBK is asserted in lpuart32_tx_empty
+Date: Wed, 12 Apr 2023 10:33:23 +0200
+Message-Id: <20230412082840.191066353@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -37,75 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit 3723091ea1884d599cc8b8bf719d6f42e8d4d8b1 ]
+commit 9425914f3de6febbd6250395f56c8279676d9c3c upstream.
 
-Currently if disk_scan_partitions() failed, GD_NEED_PART_SCAN will still
-set, and partition scan will be proceed again when blkdev_get_by_dev()
-is called. However, this will cause a problem that re-assemble partitioned
-raid device will creat partition for underlying disk.
+According to LPUART RM, Transmission Complete Flag becomes 0 if queuing
+a break character by writing 1 to CTRL[SBK], so here need to avoid
+checking for transmission complete when UARTCTRL_SBK is asserted,
+otherwise the lpuart32_tx_empty may never get TIOCSER_TEMT.
 
-Test procedure:
+Commit 2411fd94ceaa("tty: serial: fsl_lpuart: skip waiting for
+transmission complete when UARTCTRL_SBK is asserted") only fix it in
+lpuart32_set_termios(), here also fix it in lpuart32_tx_empty().
 
-mdadm -CR /dev/md0 -l 1 -n 2 /dev/sda /dev/sdb -e 1.0
-sgdisk -n 0:0:+100MiB /dev/md0
-blockdev --rereadpt /dev/sda
-blockdev --rereadpt /dev/sdb
-mdadm -S /dev/md0
-mdadm -A /dev/md0 /dev/sda /dev/sdb
-
-Test result: underlying disk partition and raid partition can be
-observed at the same time
-
-Note that this can still happen in come corner cases that
-GD_NEED_PART_SCAN can be set for underlying disk while re-assemble raid
-device.
-
-Fixes: e5cfefa97bcc ("block: fix scan partition for exclusively open device again")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 380c966c093e ("tty: serial: fsl_lpuart: add 32-bit register interface support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20230323054415.20363-1-sherry.sun@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/genhd.c | 8 +++++++-
+ drivers/tty/serial/fsl_lpuart.c |    8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 0b6928e948f31..62a61388e752d 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -368,7 +368,6 @@ int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
- 	if (disk->open_partitions)
- 		return -EBUSY;
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -838,11 +838,17 @@ static unsigned int lpuart32_tx_empty(st
+ 			struct lpuart_port, port);
+ 	unsigned long stat = lpuart32_read(port, UARTSTAT);
+ 	unsigned long sfifo = lpuart32_read(port, UARTFIFO);
++	unsigned long ctrl = lpuart32_read(port, UARTCTRL);
  
--	set_bit(GD_NEED_PART_SCAN, &disk->state);
- 	/*
- 	 * If the device is opened exclusively by current thread already, it's
- 	 * safe to scan partitons, otherwise, use bd_prepare_to_claim() to
-@@ -381,12 +380,19 @@ int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
- 			return ret;
- 	}
+ 	if (sport->dma_tx_in_progress)
+ 		return 0;
  
-+	set_bit(GD_NEED_PART_SCAN, &disk->state);
- 	bdev = blkdev_get_by_dev(disk_devt(disk), mode & ~FMODE_EXCL, NULL);
- 	if (IS_ERR(bdev))
- 		ret =  PTR_ERR(bdev);
- 	else
- 		blkdev_put(bdev, mode & ~FMODE_EXCL);
- 
+-	if (stat & UARTSTAT_TC && sfifo & UARTFIFO_TXEMPT)
 +	/*
-+	 * If blkdev_get_by_dev() failed early, GD_NEED_PART_SCAN is still set,
-+	 * and this will cause that re-assemble partitioned raid device will
-+	 * creat partition for underlying disk.
++	 * LPUART Transmission Complete Flag may never be set while queuing a break
++	 * character, so avoid checking for transmission complete when UARTCTRL_SBK
++	 * is asserted.
 +	 */
-+	clear_bit(GD_NEED_PART_SCAN, &disk->state);
- 	if (!(mode & FMODE_EXCL))
- 		bd_abort_claiming(disk->part0, disk_scan_partitions);
- 	return ret;
--- 
-2.39.2
-
++	if ((stat & UARTSTAT_TC && sfifo & UARTFIFO_TXEMPT) || ctrl & UARTCTRL_SBK)
+ 		return TIOCSER_TEMT;
+ 
+ 	return 0;
 
 
