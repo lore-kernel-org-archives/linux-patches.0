@@ -1,45 +1,42 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF533C02
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 18:49:15 +0000 (UTC)
-Received: by mail-pj1-f41.google.com with SMTP id j8so10956562pjy.4
-        for <patches@lists.linux.dev>; Wed, 12 Apr 2023 11:49:15 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D7C3C02
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 19:37:48 +0000 (UTC)
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-760a66d23f8so1846539f.0
+        for <patches@lists.linux.dev>; Wed, 12 Apr 2023 12:37:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681325354; x=1683917354;
+        d=linuxfoundation.org; s=google; t=1681328268; x=1683920268;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=H05k7Cmf7Hi9K1W5Jq5qb2sK9hV84Ca4AOxKRM48YfM=;
-        b=HMMUFCvzNjgopc5Thi5lWaxvcqQqa0y+zOdusyhfF6LhmhycxBRa4WffMalNUKl6nr
-         S8+V4hy34z8w8YRquFliv2EUopBD2Vi7LdaNMiLtbKlvv+dF30vG4W3Axx/f+h74ow5H
-         yar4MBE/aG+ZlOjMxucU3IUBfmsD8xWM2d6eIcECY+Hd82lJ8oClPK601GAjaZjsN5A5
-         R2q7JCP35OX8zO11xeIg7kOix1IkOsHI+xW0+WYKjMGwgeHupLJwU12tny1LgP+uq/y4
-         Q5XdJyqImEhV4H9DggnyoCrO8lT8+kttl3if0j9tEr+yo+St3BrGVgeMW59YAXPmoP8d
-         wgWw==
+        bh=SA+VjG801FJzKZfXKEA6/770snka7mIpjnJyN9XxyfI=;
+        b=Ct9UauyxKrxt1IguFNEfeI5UYBISUhiEUYx2BC2rKDFNat95+1S+movXXGCMiSctUs
+         KmvowONKOEkuUBQu4nIm10edKsEzhW72W04UcMVMfL9HAHGSyHoSVR9CD3AekPXOOXD/
+         KSluP+wtafeVuRw1pkHXVkiuBP1nMycF9r82c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681325354; x=1683917354;
+        d=1e100.net; s=20221208; t=1681328268; x=1683920268;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H05k7Cmf7Hi9K1W5Jq5qb2sK9hV84Ca4AOxKRM48YfM=;
-        b=ZHKdgGT1xi1vXWhTNbEcSxdNpfjwctHTNjYfGzPkGeN3lo+RS9dLzOU9xxj6F8+3/8
-         ncxS+zSsBJnE2Sxf1Hj0TDMVPmznrKfxaYpqByJ+Q31P/YQsJ0NpScMUZLrdc+OETJUW
-         mtenvSg2xhcNiP3g76Lt8lndsnFmnWxh5lV4yNdJNYdvDTKXgwLckGrv7+w59F7ZCf0T
-         JXuBJnisckZGLrTMoBEuR4e4p/t9B76gaarvaaNxcUBQdHLTx0EhN69OVRYRmJVU8qG5
-         0ZqVRF4YHIPGUXa28UTCb0+WNOy4Lu60hH02zyh5TsTeXg7mRbHK0Ofh7RJ7MilIJ+m6
-         3fgA==
-X-Gm-Message-State: AAQBX9f4vDRQG05sZeoXldZ8G7McX0mZEEE3QEjoknzq6fgsJvaRxSbQ
-	JzMuR3hkBhDg7APQZN7cdVw=
-X-Google-Smtp-Source: AKy350ZadzBFUD+fa2eWacS3/dkJ9b4jQHhviCVAXcanHlRAilaRUWKYM0yIkKcFtqMUek8Ppt8y8g==
-X-Received: by 2002:a05:6a20:8ca7:b0:e7:33df:44f1 with SMTP id k39-20020a056a208ca700b000e733df44f1mr3238521pzh.57.1681325354577;
-        Wed, 12 Apr 2023 11:49:14 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id d21-20020aa78155000000b0062e0010c6c1sm11940373pfn.164.2023.04.12.11.49.12
+        bh=SA+VjG801FJzKZfXKEA6/770snka7mIpjnJyN9XxyfI=;
+        b=HuynVe+wgF2lTpNvCJ3WQY6tJpkMGroHnt7SqRYvZOriAkVst3VNtPos+1pbNGZAFV
+         Y/aXo2QYxfPiJ5zfyIj6Nmt8tuT9ZBhwc8FZXXpgPWZsKc1AUeo3nmQZ4KBz7aW+AzOt
+         u/1xp3jWFoqdHjPtSRiI6u/7i109Ep6/dJDUZ09I0k6/qb3WaT9b2dfxbI6GBKhhtumw
+         zjzpE8oFAC7bE20GgA4zP33Ib0G1y6MgaiWF2pb1BTJSmEBWC3bz/5ukIbq3ngIrl15f
+         0lZyf4cDKHjrNJ+zPUp6g8LLHBxdu0En0Dn+kD5ZVROQ8EQwn6fAnGq2kFbd17YP6PZp
+         KqSQ==
+X-Gm-Message-State: AAQBX9e7N2+fEkiHQQO7viZN+QAOxNWkhSHh3ZL7kXyUGTpCBmOooZnb
+	SGV1XgJsVo2kfN4GvM7Lo1664A==
+X-Google-Smtp-Source: AKy350ZhbHdLt/AXSMTBfteDoZtvSSKGMoJK3SmoZDVGtXm2zVlmnv9oVC2SoaR3njUq6H5e/R6dHg==
+X-Received: by 2002:a92:b711:0:b0:329:552e:2040 with SMTP id k17-20020a92b711000000b00329552e2040mr946352ili.3.1681328268017;
+        Wed, 12 Apr 2023 12:37:48 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id d9-20020a92d5c9000000b003284a6f4405sm12093ilq.1.2023.04.12.12.37.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Apr 2023 11:49:14 -0700 (PDT)
-Message-ID: <c09adf8e-0760-84b9-8e78-c7223e48a542@gmail.com>
-Date: Wed, 12 Apr 2023 11:49:11 -0700
+        Wed, 12 Apr 2023 12:37:47 -0700 (PDT)
+Message-ID: <b7e88931-3343-aa16-2880-ada37132aa54@linuxfoundation.org>
+Date: Wed, 12 Apr 2023 13:37:46 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,14 +52,15 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Shuah Khan <skhan@linuxfoundation.org>
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 4/12/23 01:32, Greg Kroah-Hartman wrote:
+On 4/12/23 02:32, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.2.11 release.
 > There are 173 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -80,11 +78,11 @@ On 4/12/23 01:32, Greg Kroah-Hartman wrote:
 > thanks,
 > 
 > greg k-h
+> 
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Compiled and booted on my test system. No dmesg regressions.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
+thanks,
+-- Shuah
