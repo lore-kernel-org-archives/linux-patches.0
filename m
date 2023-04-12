@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8550D2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F6A1C433EF;
-	Wed, 12 Apr 2023 08:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283112F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CAFC433EF;
+	Wed, 12 Apr 2023 08:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289226;
-	bh=bYaVAezvZYC+7rTTpkRaCacRmXcFhB5zEDuWZQHfX6c=;
+	s=korg; t=1681289229;
+	bh=8U48gKTLAtvzZr3KsZAGXhT8ouZ2sFVl7DENiYl3hFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ctBLfp25XMOBbwZ6fEdTXk2ww+6IlUKchGcnNjjqFNinQKtvaWLQNBu85Ft6qjjOC
-	 7JxswnDnbrSa5u4s5KveJQmtYCOROJowUq1b6/4K9jm5jwqWwe9QRO1VHk+Ab11W2/
-	 nn22x9zpLIj/a8dD+nNJe9Qob5GqcuiPKhk+Ic8w=
+	b=UI+pN4mvWvNCmED9Z2n+sGV2Mx9kugFN0LRW/g65gTtPlgQu6c6r/Sz8pGPrugG8m
+	 bZJUGLX27xy9pqD1B8EpEmzxNr+2vz7p8ucHi0dfs709lbhbLDyUPAANwG6LsTuPWW
+	 AiwF6vlXY6HCNiDq6YKk3Mw52RrLuvNBnYQxgpzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a7492efaa5d61b51db23@syzkaller.appspotmail.com,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 019/173] net: qrtr: Fix a refcount bug in qrtr_recvmsg()
-Date: Wed, 12 Apr 2023 10:32:25 +0200
-Message-Id: <20230412082838.872672191@linuxfoundation.org>
+Subject: [PATCH 6.2 002/173] dm integrity: Remove bi_sector thats only used by commented debug code
+Date: Wed, 12 Apr 2023 10:32:08 +0200
+Message-Id: <20230412082838.236042652@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,75 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-[ Upstream commit 44d807320000db0d0013372ad39b53e12d52f758 ]
+[ Upstream commit 5cd6d1d53a1f74222e73d8b42ab7ecf28ee2f34f ]
 
-Syzbot reported a bug as following:
+drivers/md/dm-integrity.c:1738:13: warning: variable 'bi_sector' set but not used.
 
-refcount_t: addition on 0; use-after-free.
-...
-RIP: 0010:refcount_warn_saturate+0x17c/0x1f0 lib/refcount.c:25
-...
-Call Trace:
- <TASK>
- __refcount_add include/linux/refcount.h:199 [inline]
- __refcount_inc include/linux/refcount.h:250 [inline]
- refcount_inc include/linux/refcount.h:267 [inline]
- kref_get include/linux/kref.h:45 [inline]
- qrtr_node_acquire net/qrtr/af_qrtr.c:202 [inline]
- qrtr_node_lookup net/qrtr/af_qrtr.c:398 [inline]
- qrtr_send_resume_tx net/qrtr/af_qrtr.c:1003 [inline]
- qrtr_recvmsg+0x85f/0x990 net/qrtr/af_qrtr.c:1070
- sock_recvmsg_nosec net/socket.c:1017 [inline]
- sock_recvmsg+0xe2/0x160 net/socket.c:1038
- qrtr_ns_worker+0x170/0x1700 net/qrtr/ns.c:688
- process_one_work+0x991/0x15c0 kernel/workqueue.c:2390
- worker_thread+0x669/0x1090 kernel/workqueue.c:2537
-
-It occurs in the concurrent scenario of qrtr_recvmsg() and
-qrtr_endpoint_unregister() as following:
-
-	cpu0					cpu1
-qrtr_recvmsg				qrtr_endpoint_unregister
-qrtr_send_resume_tx			qrtr_node_release
-qrtr_node_lookup			mutex_lock(&qrtr_node_lock)
-spin_lock_irqsave(&qrtr_nodes_lock, )	refcount_dec_and_test(&node->ref) [node->ref == 0]
-radix_tree_lookup [node != NULL]	__qrtr_node_release
-qrtr_node_acquire			spin_lock_irqsave(&qrtr_nodes_lock, )
-kref_get(&node->ref) [WARNING]		...
-					mutex_unlock(&qrtr_node_lock)
-
-Use qrtr_node_lock to protect qrtr_node_lookup() implementation, this
-is actually improving the protection of node reference.
-
-Fixes: 0a7e0d0ef054 ("net: qrtr: Migrate node lookup tree to spinlock")
-Reported-by: syzbot+a7492efaa5d61b51db23@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=a7492efaa5d61b51db23
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3895
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Stable-dep-of: f7b58a69fad9 ("dm: fix improper splitting for abnormal bios")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/dm-integrity.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 5c2fb992803b7..3a70255c8d02f 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -393,10 +393,12 @@ static struct qrtr_node *qrtr_node_lookup(unsigned int nid)
- 	struct qrtr_node *node;
- 	unsigned long flags;
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index 1388ee35571e0..c62c21aadf329 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -1735,7 +1735,6 @@ static void integrity_metadata(struct work_struct *w)
+ 		}
  
-+	mutex_lock(&qrtr_node_lock);
- 	spin_lock_irqsave(&qrtr_nodes_lock, flags);
- 	node = radix_tree_lookup(&qrtr_nodes, nid);
- 	node = qrtr_node_acquire(node);
- 	spin_unlock_irqrestore(&qrtr_nodes_lock, flags);
-+	mutex_unlock(&qrtr_node_lock);
+ 		if (unlikely(dio->op == REQ_OP_DISCARD)) {
+-			sector_t bi_sector = dio->bio_details.bi_iter.bi_sector;
+ 			unsigned bi_size = dio->bio_details.bi_iter.bi_size;
+ 			unsigned max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : HASH_MAX_DIGESTSIZE;
+ 			unsigned max_blocks = max_size / ic->tag_size;
+@@ -1752,13 +1751,7 @@ static void integrity_metadata(struct work_struct *w)
+ 					goto error;
+ 				}
  
- 	return node;
- }
+-				/*if (bi_size < this_step_blocks << (SECTOR_SHIFT + ic->sb->log2_sectors_per_block)) {
+-					printk("BUGG: bi_sector: %llx, bi_size: %u\n", bi_sector, bi_size);
+-					printk("BUGG: this_step_blocks: %u\n", this_step_blocks);
+-					BUG();
+-				}*/
+ 				bi_size -= this_step_blocks << (SECTOR_SHIFT + ic->sb->log2_sectors_per_block);
+-				bi_sector += this_step_blocks << ic->sb->log2_sectors_per_block;
+ 			}
+ 
+ 			if (likely(checksums != checksums_onstack))
 -- 
 2.39.2
 
