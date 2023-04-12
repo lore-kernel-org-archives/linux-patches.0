@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC892F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A10C433EF;
-	Wed, 12 Apr 2023 08:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7942F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048EAC433D2;
+	Wed, 12 Apr 2023 08:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288650;
-	bh=nS414579cCkCyebrkAtx/4frSjcIZbbiJFvk+50Bu24=;
+	s=korg; t=1681288653;
+	bh=x56azieUZ+uRlKvWVAU8DC9DUcZVkTo6qiVvuz0bVs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NADxYFKOFSVLg2V4xH5Oc4Vx3LJqLMyEc0uQ4ZlK9+cqTyJggVtodqw82RZyH1lF+
-	 MzpV2waPlXKc4OHxlyfhFSum21qQksIabkpq/9uJneWt6yV7c5gtk+rxOIKog/TuWR
-	 F9S6zDe0LUIJmhUYELlvTcVofTNbncRVwfZOJvzw=
+	b=tiPsE3CSP5uZAVZ6HYtYmyTEQRWVjWE5MYxlOdQ59UaLx6xB1rwvY1BeU1vJzds4o
+	 hvuqYIyVd6KymP4KkJ1XvDZSvQUX1Y6aGodfSLriF/Qm5xojAtJSgucLicbmSkoKSd
+	 htgnh2ADptcz3BAYZyH3/mVVJ66mi38v52lMkQHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Chang <waynec@nvidia.com>,
-	Haotien Hsu <haotienh@nvidia.com>
-Subject: [PATCH 5.15 51/93] usb: xhci: tegra: fix sleep in atomic call
-Date: Wed, 12 Apr 2023 10:33:52 +0200
-Message-Id: <20230412082825.294526028@linuxfoundation.org>
+	Lars-Peter Clausen <lars@metafoo.de>,
+	David Lechner <david@lechnology.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 60/93] iio: adc: ti-ads7950: Set `can_sleep` flag for GPIO chip
+Date: Wed, 12 Apr 2023 10:34:01 +0200
+Message-Id: <20230412082825.659501528@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -34,76 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wayne Chang <waynec@nvidia.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-commit 4c7f9d2e413dc06a157c4e5dccde84aaf4655eb3 upstream.
+commit 363c7dc72f79edd55bf1c4380e0fbf7f1bbc2c86 upstream.
 
-When we set the dual-role port to Host mode, we observed the following
-splat:
-[  167.057718] BUG: sleeping function called from invalid context at
-include/linux/sched/mm.h:229
-[  167.057872] Workqueue: events tegra_xusb_usb_phy_work
-[  167.057954] Call trace:
-[  167.057962]  dump_backtrace+0x0/0x210
-[  167.057996]  show_stack+0x30/0x50
-[  167.058020]  dump_stack_lvl+0x64/0x84
-[  167.058065]  dump_stack+0x14/0x34
-[  167.058100]  __might_resched+0x144/0x180
-[  167.058140]  __might_sleep+0x64/0xd0
-[  167.058171]  slab_pre_alloc_hook.constprop.0+0xa8/0x110
-[  167.058202]  __kmalloc_track_caller+0x74/0x2b0
-[  167.058233]  kvasprintf+0xa4/0x190
-[  167.058261]  kasprintf+0x58/0x90
-[  167.058285]  tegra_xusb_find_port_node.isra.0+0x58/0xd0
-[  167.058334]  tegra_xusb_find_port+0x38/0xa0
-[  167.058380]  tegra_xusb_padctl_get_usb3_companion+0x38/0xd0
-[  167.058430]  tegra_xhci_id_notify+0x8c/0x1e0
-[  167.058473]  notifier_call_chain+0x88/0x100
-[  167.058506]  atomic_notifier_call_chain+0x44/0x70
-[  167.058537]  tegra_xusb_usb_phy_work+0x60/0xd0
-[  167.058581]  process_one_work+0x1dc/0x4c0
-[  167.058618]  worker_thread+0x54/0x410
-[  167.058650]  kthread+0x188/0x1b0
-[  167.058672]  ret_from_fork+0x10/0x20
+The ads7950 uses a mutex as well as SPI transfers in its GPIO callbacks.
+This means these callbacks can sleep and the `can_sleep` flag should be
+set.
 
-The function tegra_xusb_padctl_get_usb3_companion eventually calls
-tegra_xusb_find_port and this in turn calls kasprintf which might sleep
-and so cannot be called from an atomic context.
+Having the flag set will make sure that warnings are generated when calling
+any of the callbacks from a potentially non-sleeping context.
 
-Fix this by moving the call to tegra_xusb_padctl_get_usb3_companion to
-the tegra_xhci_id_work function where it is really needed.
-
-Fixes: f836e7843036 ("usb: xhci-tegra: Add OTG support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Signed-off-by: Haotien Hsu <haotienh@nvidia.com>
-Link: https://lore.kernel.org/r/20230327095548.1599470-1-haotienh@nvidia.com
+Fixes: c97dce792dc8 ("iio: adc: ti-ads7950: add GPIO support")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Acked-by: David Lechner <david@lechnology.com>
+Link: https://lore.kernel.org/r/20230312210933.2275376-1-lars@metafoo.de
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-tegra.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/adc/ti-ads7950.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/host/xhci-tegra.c
-+++ b/drivers/usb/host/xhci-tegra.c
-@@ -1225,6 +1225,9 @@ static void tegra_xhci_id_work(struct wo
- 
- 	mutex_unlock(&tegra->lock);
- 
-+	tegra->otg_usb3_port = tegra_xusb_padctl_get_usb3_companion(tegra->padctl,
-+								    tegra->otg_usb2_port);
-+
- 	if (tegra->host_mode) {
- 		/* switch to host mode */
- 		if (tegra->otg_usb3_port >= 0) {
-@@ -1339,9 +1342,6 @@ static int tegra_xhci_id_notify(struct n
- 	}
- 
- 	tegra->otg_usb2_port = tegra_xusb_get_usb2_port(tegra, usbphy);
--	tegra->otg_usb3_port = tegra_xusb_padctl_get_usb3_companion(
--							tegra->padctl,
--							tegra->otg_usb2_port);
- 
- 	tegra->host_mode = (usbphy->last_event == USB_EVENT_ID) ? true : false;
- 
+--- a/drivers/iio/adc/ti-ads7950.c
++++ b/drivers/iio/adc/ti-ads7950.c
+@@ -634,6 +634,7 @@ static int ti_ads7950_probe(struct spi_d
+ 	st->chip.label = dev_name(&st->spi->dev);
+ 	st->chip.parent = &st->spi->dev;
+ 	st->chip.owner = THIS_MODULE;
++	st->chip.can_sleep = true;
+ 	st->chip.base = -1;
+ 	st->chip.ngpio = TI_ADS7950_NUM_GPIOS;
+ 	st->chip.get_direction = ti_ads7950_get_direction;
 
 
