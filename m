@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF5B2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:52:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460E5C433D2;
-	Wed, 12 Apr 2023 08:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787052F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:52:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7EFC433EF;
+	Wed, 12 Apr 2023 08:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289543;
-	bh=Lopcdp1Clx17cFPIKdazuHwRuYr/qovSXWFq4JdE/90=;
+	s=korg; t=1681289546;
+	bh=42AdxJVvxg7jLApAnNaNM9tNWle6YWAIPJ+GVQZ8AzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cyJXvg9Vq1NcLqaQin/ed5e26nydlnIobUXENLS/YukH8P6BDbz5bhMWyvRBOYWBS
-	 5Xt/BgT2JFtFLKOoMn8mG3YLhlUnYJ9HZ2G5IvNm3LPHMlr1J5XppB991K4LpI2bLq
-	 iyzdkzAj0zy/K/imeOWFTJVNGxVB6koT3fLTBAJg=
+	b=wV3Tz2D8TRCMtmG+frWPraEmubpu7TU4fiB4h/nIMxvzUdRp69b+dUAm0Yn5jhOOw
+	 u5xAZNQ2wVNzH1jHOJlXgvXd2ubwHNbUlF1u5JNl8OQQnC3fpnXKvmPrn85XlgiYdA
+	 eulqNXj9LxraHc8+TXgNfbdYr7+2xrn3v4XoMdL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Zhengjun Xing <zhengjun.xing@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 139/173] perf: Optimize perf_pmu_migrate_context()
-Date: Wed, 12 Apr 2023 10:34:25 +0200
-Message-Id: <20230412082843.730351966@linuxfoundation.org>
+Subject: [PATCH 6.2 140/173] perf/core: Fix the same task check in perf_event_set_output
+Date: Wed, 12 Apr 2023 10:34:26 +0200
+Message-Id: <20230412082843.760563841@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,55 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit b168098912926236bbeebaf7795eb7aab76d2b45 ]
+[ Upstream commit 24d3ae2f37d8bc3c14b31d353c5d27baf582b6a6 ]
 
-Thomas reported that offlining CPUs spends a lot of time in
-synchronize_rcu() as called from perf_pmu_migrate_context() even though
-he's not actually using uncore events.
+The same task check in perf_event_set_output has some potential issues
+for some usages.
 
-Turns out, the thing is unconditionally waiting for RCU, even if there's
-no actual events to migrate.
+For the current perf code, there is a problem if using of
+perf_event_open() to have multiple samples getting into the same mmap’d
+memory when they are both attached to the same process.
+https://lore.kernel.org/all/92645262-D319-4068-9C44-2409EF44888E@gmail.com/
+Because the event->ctx is not ready when the perf_event_set_output() is
+invoked in the perf_event_open().
 
-Fixes: 0cda4c023132 ("perf: Introduce perf_pmu_migrate_context()")
-Reported-by: Thomas Gleixner <tglx@linutronix.de>
+Besides the above issue, before the commit bd2756811766 ("perf: Rewrite
+core context handling"), perf record can errors out when sampling with
+a hardware event and a software event as below.
+ $ perf record -e cycles,dummy --per-thread ls
+ failed to mmap with 22 (Invalid argument)
+That's because that prior to the commit a hardware event and a software
+event are from different task context.
+
+The problem should be a long time issue since commit c3f00c70276d
+("perk: Separate find_get_context() from event initialization").
+
+The task struct is stored in the event->hw.target for each per-thread
+event. It is a more reliable way to determine whether two events are
+attached to the same task.
+
+The event->hw.target was also introduced several years ago by the
+commit 50f16a8bf9d7 ("perf: Remove type specific target pointers"). It
+can not only be used to fix the issue with the current code, but also
+back port to fix the issues with an older kernel.
+
+Note: The event->hw.target was introduced later than commit
+c3f00c70276d. The patch may cannot be applied between the commit
+c3f00c70276d and commit 50f16a8bf9d7. Anybody that wants to back-port
+this at that period may have to find other solutions.
+
+Fixes: c3f00c70276d ("perf: Separate find_get_context() from event initialization")
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lkml.kernel.org/r/20230403090858.GT4253@hirez.programming.kicks-ass.net
+Reviewed-by: Zhengjun Xing <zhengjun.xing@linux.intel.com>
+Link: https://lkml.kernel.org/r/20230322202449.512091-1-kan.liang@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ kernel/events/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index fad170b475921..4b3205f6bed5e 100644
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -12875,12 +12875,14 @@ void perf_pmu_migrate_context(struct pmu *pmu, int src_cpu, int dst_cpu)
- 	__perf_pmu_remove(src_ctx, src_cpu, pmu, &src_ctx->pinned_groups, &events);
- 	__perf_pmu_remove(src_ctx, src_cpu, pmu, &src_ctx->flexible_groups, &events);
+@@ -12155,7 +12155,7 @@ perf_event_set_output(struct perf_event
+ 	/*
+ 	 * If its not a per-cpu rb, it must be the same task.
+ 	 */
+-	if (output_event->cpu == -1 && output_event->ctx != event->ctx)
++	if (output_event->cpu == -1 && output_event->hw.target != event->hw.target)
+ 		goto out;
  
--	/*
--	 * Wait for the events to quiesce before re-instating them.
--	 */
--	synchronize_rcu();
-+	if (!list_empty(&events)) {
-+		/*
-+		 * Wait for the events to quiesce before re-instating them.
-+		 */
-+		synchronize_rcu();
- 
--	__perf_pmu_install(dst_ctx, dst_cpu, pmu, &events);
-+		__perf_pmu_install(dst_ctx, dst_cpu, pmu, &events);
-+	}
- 
- 	mutex_unlock(&dst_ctx->mutex);
- 	mutex_unlock(&src_ctx->mutex);
--- 
-2.39.2
-
+ 	/*
 
 
