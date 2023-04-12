@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCEF2F2C
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB1BC433D2;
-	Wed, 12 Apr 2023 08:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404552F2C
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3AFC4339E;
+	Wed, 12 Apr 2023 08:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289237;
-	bh=c3eagSUoLMYwVV4b5xMhf+LxFQ11Lw2Td9HucxeukJ4=;
+	s=korg; t=1681289240;
+	bh=ZwWzCoWqRtee3WK+9ne5c5HfcjA5A939EML7leNsb6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFlQt2Z4NnJ+k4m7b0DXGgBqYegQwaboDbFkQ7JFOIALBOAyeS96lL4a48a2IuL1E
-	 bwvyuP9ss8yMUvLZRfLPTBkCD/hVgVD51QlO2Fx2xSzVpPIIjgMEmuoO8yOhUDPIgD
-	 KAmKbuLolQbBUj0fLeNQMpQdVgoJmIctESAGGl8c=
+	b=AiJBY0HcCz3snEaP92EbWcsHB4URboUKsLJs0sizgApOutMp9kOZ9sXOzXL8fWTc9
+	 r7uM0/nBKwfem/zgVrElQBah64HVDQa888ZRo3ZAKmoK81GTT863/4kqUDxIGnBdI5
+	 jJR888CJQBZ4rrd365gcYcxAxS8IA9Fz7GSqM+jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orange Kao <orange@aiven.io>,
-	Mike Snitzer <snitzer@kernel.org>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 004/173] dm: fix improper splitting for abnormal bios
-Date: Wed, 12 Apr 2023 10:32:10 +0200
-Message-Id: <20230412082838.320364640@linuxfoundation.org>
+Subject: [PATCH 6.2 005/173] drm/i915: Move the DSB setup/cleaup into the color code
+Date: Wed, 12 Apr 2023 10:32:11 +0200
+Message-Id: <20230412082838.356197188@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -35,81 +35,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit f7b58a69fad9d2c4c90cab0247811155dd0d48e7 ]
+[ Upstream commit efb2b57edf20c32b08eee4ce8b436c459fe4caea ]
 
-"Abnormal" bios include discards, write zeroes and secure erase. By no
-longer passing the calculated 'len' pointer, commit 7dd06a2548b2 ("dm:
-allow dm_accept_partial_bio() for dm_io without duplicate bios") took a
-senseless approach to disallowing dm_accept_partial_bio() from working
-for duplicate bios processed using __send_duplicate_bios().
+Since the color management code is the only user of the DSB
+at the moment move the DSB prepare/cleanup there too. The
+code has to anyway make decisions on whether to use the DSB
+or not (and how to use it). Also we'll need a place where we
+actually generate the DSB command buffer ahead of time rather
+than the current situation where it gets generated too late
+during the mmio programming of the hardware.
 
-It inadvertently and incorrectly stopped the use of 'len' when
-initializing a target's io (in alloc_tio). As such the resulting tio
-could address more area of a device than it should.
-
-For example, when discarding an entire DM striped device with the
-following DM table:
- vg-lvol0: 0 159744 striped 2 128 7:0 2048 7:1 2048
- vg-lvol0: 159744 45056 striped 2 128 7:2 2048 7:3 2048
-
-Before this fix:
-
- device-mapper: striped: target_stripe=0, bdev=7:0, start=2048 len=102400
- blkdiscard: attempt to access beyond end of device
- loop0: rw=2051, sector=2048, nr_sectors = 102400 limit=81920
-
- device-mapper: striped: target_stripe=1, bdev=7:1, start=2048 len=102400
- blkdiscard: attempt to access beyond end of device
- loop1: rw=2051, sector=2048, nr_sectors = 102400 limit=81920
-
-After this fix;
-
- device-mapper: striped: target_stripe=0, bdev=7:0, start=2048 len=79872
- device-mapper: striped: target_stripe=1, bdev=7:1, start=2048 len=79872
-
-Fixes: 7dd06a2548b2 ("dm: allow dm_accept_partial_bio() for dm_io without duplicate bios")
-Cc: stable@vger.kernel.org
-Reported-by: Orange Kao <orange@aiven.io>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221123152638.20622-9-ville.syrjala@linux.intel.com
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Stable-dep-of: c880f855d1e2 ("drm/i915: Add a .color_post_update() hook")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_color.c   | 10 ++++++++
+ drivers/gpu/drm/i915/display/intel_color.h   |  2 ++
+ drivers/gpu/drm/i915/display/intel_display.c | 25 ++++++++------------
+ drivers/gpu/drm/i915/display/intel_display.h |  8 +++++++
+ 4 files changed, 30 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index 94e4899d8ac7c..cdbf24def8af3 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -1462,7 +1462,8 @@ static void setup_split_accounting(struct clone_info *ci, unsigned int len)
+diff --git a/drivers/gpu/drm/i915/display/intel_color.c b/drivers/gpu/drm/i915/display/intel_color.c
+index c3928d28cd443..ff6b8aaaa2194 100644
+--- a/drivers/gpu/drm/i915/display/intel_color.c
++++ b/drivers/gpu/drm/i915/display/intel_color.c
+@@ -1220,6 +1220,16 @@ void intel_color_commit_arm(const struct intel_crtc_state *crtc_state)
+ 	i915->display.funcs.color->color_commit_arm(crtc_state);
  }
  
- static void alloc_multiple_bios(struct bio_list *blist, struct clone_info *ci,
--				struct dm_target *ti, unsigned int num_bios)
-+				struct dm_target *ti, unsigned int num_bios,
-+				unsigned *len)
++void intel_color_prepare_commit(struct intel_crtc_state *crtc_state)
++{
++	intel_dsb_prepare(crtc_state);
++}
++
++void intel_color_cleanup_commit(struct intel_crtc_state *crtc_state)
++{
++	intel_dsb_cleanup(crtc_state);
++}
++
+ static bool intel_can_preload_luts(const struct intel_crtc_state *new_crtc_state)
  {
- 	struct bio *bio;
- 	int try;
-@@ -1473,7 +1474,7 @@ static void alloc_multiple_bios(struct bio_list *blist, struct clone_info *ci,
- 		if (try)
- 			mutex_lock(&ci->io->md->table_devices_lock);
- 		for (bio_nr = 0; bio_nr < num_bios; bio_nr++) {
--			bio = alloc_tio(ci, ti, bio_nr, NULL,
-+			bio = alloc_tio(ci, ti, bio_nr, len,
- 					try ? GFP_NOIO : GFP_NOWAIT);
- 			if (!bio)
- 				break;
-@@ -1511,7 +1512,7 @@ static int __send_duplicate_bios(struct clone_info *ci, struct dm_target *ti,
- 		if (len)
- 			setup_split_accounting(ci, *len);
- 		/* dm_accept_partial_bio() is not supported with shared tio->len_ptr */
--		alloc_multiple_bios(&blist, ci, ti, num_bios);
-+		alloc_multiple_bios(&blist, ci, ti, num_bios, len);
- 		while ((clone = bio_list_pop(&blist))) {
- 			dm_tio_set_flag(clone_to_tio(clone), DM_TIO_IS_DUPLICATE_BIO);
- 			__map_bio(clone);
+ 	struct intel_crtc *crtc = to_intel_crtc(new_crtc_state->uapi.crtc);
+diff --git a/drivers/gpu/drm/i915/display/intel_color.h b/drivers/gpu/drm/i915/display/intel_color.h
+index 2a5ada67774d0..0e85406036b54 100644
+--- a/drivers/gpu/drm/i915/display/intel_color.h
++++ b/drivers/gpu/drm/i915/display/intel_color.h
+@@ -17,6 +17,8 @@ void intel_color_init_hooks(struct drm_i915_private *i915);
+ int intel_color_init(struct drm_i915_private *i915);
+ void intel_color_crtc_init(struct intel_crtc *crtc);
+ int intel_color_check(struct intel_crtc_state *crtc_state);
++void intel_color_prepare_commit(struct intel_crtc_state *crtc_state);
++void intel_color_cleanup_commit(struct intel_crtc_state *crtc_state);
+ void intel_color_commit_noarm(const struct intel_crtc_state *crtc_state);
+ void intel_color_commit_arm(const struct intel_crtc_state *crtc_state);
+ void intel_color_load_luts(const struct intel_crtc_state *crtc_state);
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index f0aad2403109b..ca76408b99b38 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -93,7 +93,6 @@
+ #include "intel_dp_link_training.h"
+ #include "intel_dpio_phy.h"
+ #include "intel_dpt.h"
+-#include "intel_dsb.h"
+ #include "intel_fbc.h"
+ #include "intel_fbdev.h"
+ #include "intel_fdi.h"
+@@ -6946,7 +6945,7 @@ static int intel_atomic_prepare_commit(struct intel_atomic_state *state)
+ 
+ 	for_each_new_intel_crtc_in_state(state, crtc, crtc_state, i) {
+ 		if (intel_crtc_needs_color_update(crtc_state))
+-			intel_dsb_prepare(crtc_state);
++			intel_color_prepare_commit(crtc_state);
+ 	}
+ 
+ 	return 0;
+@@ -7399,24 +7398,18 @@ static void intel_atomic_commit_fence_wait(struct intel_atomic_state *intel_stat
+ 		    &wait_reset);
+ }
+ 
+-static void intel_cleanup_dsbs(struct intel_atomic_state *state)
+-{
+-	struct intel_crtc_state *old_crtc_state, *new_crtc_state;
+-	struct intel_crtc *crtc;
+-	int i;
+-
+-	for_each_oldnew_intel_crtc_in_state(state, crtc, old_crtc_state,
+-					    new_crtc_state, i)
+-		intel_dsb_cleanup(old_crtc_state);
+-}
+-
+ static void intel_atomic_cleanup_work(struct work_struct *work)
+ {
+ 	struct intel_atomic_state *state =
+ 		container_of(work, struct intel_atomic_state, base.commit_work);
+ 	struct drm_i915_private *i915 = to_i915(state->base.dev);
++	struct intel_crtc_state *old_crtc_state;
++	struct intel_crtc *crtc;
++	int i;
++
++	for_each_old_intel_crtc_in_state(state, crtc, old_crtc_state, i)
++		intel_color_cleanup_commit(old_crtc_state);
+ 
+-	intel_cleanup_dsbs(state);
+ 	drm_atomic_helper_cleanup_planes(&i915->drm, &state->base);
+ 	drm_atomic_helper_commit_cleanup_done(&state->base);
+ 	drm_atomic_state_put(&state->base);
+@@ -7624,6 +7617,8 @@ static void intel_atomic_commit_tail(struct intel_atomic_state *state)
+ 		 * DSB cleanup is done in cleanup_work aligning with framebuffer
+ 		 * cleanup. So copy and reset the dsb structure to sync with
+ 		 * commit_done and later do dsb cleanup in cleanup_work.
++		 *
++		 * FIXME get rid of this funny new->old swapping
+ 		 */
+ 		old_crtc_state->dsb = fetch_and_zero(&new_crtc_state->dsb);
+ 	}
+@@ -7774,7 +7769,7 @@ static int intel_atomic_commit(struct drm_device *dev,
+ 		i915_sw_fence_commit(&state->commit_ready);
+ 
+ 		for_each_new_intel_crtc_in_state(state, crtc, new_crtc_state, i)
+-			intel_dsb_cleanup(new_crtc_state);
++			intel_color_cleanup_commit(new_crtc_state);
+ 
+ 		drm_atomic_helper_cleanup_planes(dev, &state->base);
+ 		intel_runtime_pm_put(&dev_priv->runtime_pm, state->wakeref);
+diff --git a/drivers/gpu/drm/i915/display/intel_display.h b/drivers/gpu/drm/i915/display/intel_display.h
+index 714030136b7f2..ef73730f32b09 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.h
++++ b/drivers/gpu/drm/i915/display/intel_display.h
+@@ -440,6 +440,14 @@ enum hpd_pin {
+ 	     (__i)++) \
+ 		for_each_if(plane)
+ 
++#define for_each_old_intel_crtc_in_state(__state, crtc, old_crtc_state, __i) \
++	for ((__i) = 0; \
++	     (__i) < (__state)->base.dev->mode_config.num_crtc && \
++		     ((crtc) = to_intel_crtc((__state)->base.crtcs[__i].ptr), \
++		      (old_crtc_state) = to_intel_crtc_state((__state)->base.crtcs[__i].old_state), 1); \
++	     (__i)++) \
++		for_each_if(crtc)
++
+ #define for_each_new_intel_plane_in_state(__state, plane, new_plane_state, __i) \
+ 	for ((__i) = 0; \
+ 	     (__i) < (__state)->base.dev->mode_config.num_total_plane && \
 -- 
 2.39.2
 
