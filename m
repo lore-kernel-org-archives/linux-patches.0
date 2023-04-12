@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329D82F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:42:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF6CC4339B;
-	Wed, 12 Apr 2023 08:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CBD2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:42:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CEA0C433EF;
+	Wed, 12 Apr 2023 08:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288972;
-	bh=bZQwY5utIZE0zr3H/V89W6a3QeuDDku3AY2tA7Kum3k=;
+	s=korg; t=1681288974;
+	bh=mm1cFY9I+s94zxmrzYZtzyxo7+VFUsuwGFGCvhrLxTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzGqR3rWTZYfEzg2/buh1Z09wEhU1XUGLYQt/oOlS47S7Ol4gZCFJ0fwHDIktIIv+
-	 WusKCvKOzCkE/k+4ZWW7z+ZSy5GegSwyX0VygEPEtIFWvZCbL6bTXIc6nT6RoO/o6T
-	 zN4UbovDaLQshQYvOdvI7DimWAG3ERl8n5hb4sbY=
+	b=wttYdraUcvexMndr2e/F+DNs2++KjvXizR/Fvcrtl8ZjUXhEKluROc++j7BoGP08h
+	 gAgUUA62X1a+urYF84D9dfDBxE1JqeTVVB3g+FFdhimSJjT55d3Mo4YqjJOXWGNTfj
+	 rjdCt1ZIJDZPbUrcDvXCYTZp72huO1oyN1bk7ZIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Soller <jeremy@system76.com>,
-	Tim Crawford <tcrawford@system76.com>,
+	Andy Chi <andy.chi@canonical.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 088/164] ALSA: hda/realtek: Add quirk for Clevo X370SNW
-Date: Wed, 12 Apr 2023 10:33:30 +0200
-Message-Id: <20230412082840.454121926@linuxfoundation.org>
+Subject: [PATCH 6.1 089/164] ALSA: hda/realtek: fix mute/micmute LEDs for a HP ProBook
+Date: Wed, 12 Apr 2023 10:33:31 +0200
+Message-Id: <20230412082840.492971888@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,16 +34,17 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Soller <jeremy@system76.com>
+From: Andy Chi <andy.chi@canonical.com>
 
-commit 36d4d213c6d4fffae2645a601e8ae996de4c3645 upstream.
+commit 9fdc1605c504204e0fdec7892b29c916579e06f3 upstream.
 
-Fixes speaker output and headset detection on Clevo X370SNW.
+There is a HP ProBook which using ALC236 codec and need the
+ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk to make mute LED and
+micmute LED work.
 
-Signed-off-by: Jeremy Soller <jeremy@system76.com>
-Signed-off-by: Tim Crawford <tcrawford@system76.com>
+Signed-off-by: Andy Chi <andy.chi@canonical.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230331162317.14992-1-tcrawford@system76.com
+Link: https://lore.kernel.org/r/20230331083242.58416-1-andy.chi@canonical.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -53,13 +53,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -2624,6 +2624,7 @@ static const struct snd_pci_quirk alc882
- 	SND_PCI_QUIRK(0x1462, 0xda57, "MSI Z270-Gaming", ALC1220_FIXUP_GB_DUAL_CODECS),
- 	SND_PCI_QUIRK_VENDOR(0x1462, "MSI", ALC882_FIXUP_GPIO3),
- 	SND_PCI_QUIRK(0x147b, 0x107a, "Abit AW9D-MAX", ALC882_FIXUP_ABIT_AW9D_MAX),
-+	SND_PCI_QUIRK(0x1558, 0x3702, "Clevo X370SN[VW]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x50d3, "Clevo PC50[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x65d1, "Clevo PB51[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x65d2, "Clevo PB51R[CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+@@ -9443,6 +9443,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8b47, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b5d, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8b66, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8b7a, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b7d, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b87, "HP", ALC236_FIXUP_HP_GPIO_LED),
 
 
