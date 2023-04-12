@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E2B2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7C8C433EF;
-	Wed, 12 Apr 2023 08:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E5D2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C04C433D2;
+	Wed, 12 Apr 2023 08:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289168;
-	bh=M0pOMAesmv9+NrTgGaXjIPREvL0v4vzo8Aqvu0uGCus=;
+	s=korg; t=1681289171;
+	bh=x3RKzflTQ3kBjUjp8AUnyg6r6p55qmEVROUsfh1YLpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1D4uIW5DqiEAG/4NJB43dWiTx9LWlFan5qsQu6iCHULGmi18XkUD9FpfYj/r45JF
-	 EUM2c7Rw5tNVz9bvU2q7uY56rUwCL5GqG36R4eyvHYDNShCPwAxBRsdayaH6wmPngc
-	 P/t0Dtu7B7VdbtwivtpDNgkgB3eFQMYqRkoAd5Zo=
+	b=Jc8E3Gec9LbGdKUhH3W19fv/sGqemAZcq75oOFm1H3zOzNOfXjgpqvSOa84HNP2kT
+	 Klfh35or96P9zK8nNBSsQhuYdRXNfcxi//w5XKE3jDSec+5cN5hw6lERbz7Q3vEYLA
+	 6PlAH1je0FJf35Mg4ziz6xEVCVYrhnlKDyjxAmig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Rajneesh Bhardwaj <rajneesh.bhardwaj@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Limonciello, Mario" <Mario.Limonciello@amd.com>
-Subject: [PATCH 6.1 144/164] drm/amdgpu: for S0ix, skip SDMA 5.x+ suspend/resume
-Date: Wed, 12 Apr 2023 10:34:26 +0200
-Message-Id: <20230412082842.730050483@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>
+Subject: [PATCH 6.1 162/164] maple_tree: add smp_rmb() to dead node detection
+Date: Wed, 12 Apr 2023 10:34:44 +0200
+Message-Id: <20230412082843.507888500@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -36,39 +33,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: "Liam R. Howlett" <Liam.Howlett@Oracle.com>
 
-commit 2a7798ea7390fd78f191c9e9bf68f5581d3b4a02 upstream.
+commit 0a2b18d948838e16912b3b627b504ab062b7d02a upstream.
 
-SDMA 5.x is part of the GFX block so it's controlled via
-GFXOFF.  Skip suspend as it should be handled the same
-as GFX.
+Add an smp_rmb() before reading the parent pointer to ensure that anything
+read from the node prior to the parent pointer hasn't been reordered ahead
+of this check.
 
-v2: drop SDMA 4.x.  That requires special handling.
+The is necessary for RCU mode.
 
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Rajneesh Bhardwaj <rajneesh.bhardwaj@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
+Link: https://lkml.kernel.org/r/20230227173632.3292573-7-surenb@google.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Cc: stable@vger.kernel.org
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ lib/maple_tree.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3034,6 +3034,12 @@ static int amdgpu_device_ip_suspend_phas
- 		     adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_MES))
- 			continue;
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -529,9 +529,11 @@ static inline struct maple_node *mte_par
+  */
+ static inline bool ma_dead_node(const struct maple_node *node)
+ {
+-	struct maple_node *parent = (void *)((unsigned long)
+-					     node->parent & ~MAPLE_NODE_MASK);
++	struct maple_node *parent;
  
-+		/* SDMA 5.x+ is part of GFX power domain so it's covered by GFXOFF */
-+		if (adev->in_s0ix &&
-+		    (adev->ip_versions[SDMA0_HWIP][0] >= IP_VERSION(5, 0, 0)) &&
-+		    (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_SDMA))
-+			continue;
-+
- 		/* XXX handle errors */
- 		r = adev->ip_blocks[i].version->funcs->suspend(adev);
- 		/* XXX handle errors */
++	/* Do not reorder reads from the node prior to the parent check */
++	smp_rmb();
++	parent = (void *)((unsigned long) node->parent & ~MAPLE_NODE_MASK);
+ 	return (parent == node);
+ }
+ 
+@@ -546,6 +548,8 @@ static inline bool mte_dead_node(const s
+ 	struct maple_node *parent, *node;
+ 
+ 	node = mte_to_node(enode);
++	/* Do not reorder reads from the node prior to the parent check */
++	smp_rmb();
+ 	parent = mte_parent(enode);
+ 	return (parent == node);
+ }
 
 
