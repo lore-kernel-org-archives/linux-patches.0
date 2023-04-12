@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C8B2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:36:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0473BC433EF;
-	Wed, 12 Apr 2023 08:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247072F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:36:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F74AC433D2;
+	Wed, 12 Apr 2023 08:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288603;
-	bh=nFcOaDx7RDf9mjdo7joNbeSrMkDHetJ7wlnSxRCH5tc=;
+	s=korg; t=1681288606;
+	bh=RKkaba01zL28ZP805ngmqnuqBQ+yspna+e8PA1USccs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=udYtAKFy9iZsGkuKSBDZDdRrD/MGmoaCeLD4uzXsp1qJszRmds23jrLWUCBRHSCvl
-	 +fqHtLjcMnFHwfgzo6/O+8M0VIeh9pf1Dz6A7Prig5AU+Yzz6T851NmfkOR5wxviim
-	 dcbCUBlaQBJICo/Jxx5Sd67AlE0rhExrmNkRViAE=
+	b=kwNVGIDcrKmpQR57J5WrnnKNWN6zu/OTN7OPN7ygo5AILCJoxBF6DAOIkQpKx6eCr
+	 +GKAIKg5ulB+LpGy1Fnmqj6C6td9hpApr/ksIPoDx1ppAlU00rSFyu94I3xFM0Mc7a
+	 Np6DWiMpPZZTmm13xf5GXvYt9mBQFYu138HPYgk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 40/93] platform/x86: think-lmi: Clean up display of current_value on Thinkstation
-Date: Wed, 12 Apr 2023 10:33:41 +0200
-Message-Id: <20230412082824.818762666@linuxfoundation.org>
+Subject: [PATCH 5.15 41/93] gpio: davinci: Add irq chip flag to skip set wake
+Date: Wed, 12 Apr 2023 10:33:42 +0200
+Message-Id: <20230412082824.870940244@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -37,57 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Pearson <mpearson-lenovo@squebb.ca>
+From: Dhruva Gole <d-gole@ti.com>
 
-[ Upstream commit 7065655216d4d034d71164641f3bec0b189ad6fa ]
+[ Upstream commit 7b75c4703609a3ebaf67271813521bc0281e1ec1 ]
 
-On ThinkStations on retrieving the attribute value the BIOS appends the
-possible values to the string.
-Clean up the display in the current_value_show function so the options
-part is not displayed.
+Add the IRQCHIP_SKIP_SET_WAKE flag since there are no special IRQ Wake
+bits that can be set to enable wakeup IRQ.
 
-Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
-Reported by Mario Limoncello <Mario.Limonciello@amd.com>
-Link: https://github.com/fwupd/fwupd/issues/5077#issuecomment-1488730526
-Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://lore.kernel.org/r/20230403013120.2105-2-mpearson-lenovo@squebb.ca
-Tested-by: Mario Limonciello <mario.limonciello@amd.com>
-Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 3d9edf09d452 ("[ARM] 4457/2: davinci: GPIO support")
+Signed-off-by: Dhruva Gole <d-gole@ti.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpio/gpio-davinci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index ded3aacb26cc9..76f0d04e17f30 100644
---- a/drivers/platform/x86/think-lmi.c
-+++ b/drivers/platform/x86/think-lmi.c
-@@ -504,7 +504,7 @@ static ssize_t display_name_show(struct kobject *kobj, struct kobj_attribute *at
- static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
- {
- 	struct tlmi_attr_setting *setting = to_tlmi_attr_setting(kobj);
--	char *item, *value;
-+	char *item, *value, *p;
- 	int ret;
+diff --git a/drivers/gpio/gpio-davinci.c b/drivers/gpio/gpio-davinci.c
+index cb5afaa7ed482..0214244e9f01f 100644
+--- a/drivers/gpio/gpio-davinci.c
++++ b/drivers/gpio/gpio-davinci.c
+@@ -326,7 +326,7 @@ static struct irq_chip gpio_irqchip = {
+ 	.irq_enable	= gpio_irq_enable,
+ 	.irq_disable	= gpio_irq_disable,
+ 	.irq_set_type	= gpio_irq_type,
+-	.flags		= IRQCHIP_SET_TYPE_MASKED,
++	.flags		= IRQCHIP_SET_TYPE_MASKED | IRQCHIP_SKIP_SET_WAKE,
+ };
  
- 	ret = tlmi_setting(setting->index, &item, LENOVO_BIOS_SETTING_GUID);
-@@ -515,9 +515,12 @@ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *a
- 	value = strpbrk(item, ",");
- 	if (!value || value == item || !strlen(value + 1))
- 		ret = -EINVAL;
--	else
-+	else {
-+		/* On Workstations remove the Options part after the value */
-+		p = strchrnul(value, ';');
-+		*p = '\0';
- 		ret = sysfs_emit(buf, "%s\n", value + 1);
--
-+	}
- 	kfree(item);
- 
- 	return ret;
+ static void gpio_irq_handler(struct irq_desc *desc)
 -- 
 2.39.2
 
