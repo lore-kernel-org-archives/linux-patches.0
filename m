@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6F42F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:54:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F57C433EF;
-	Wed, 12 Apr 2023 08:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDC52F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:54:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5E9C433D2;
+	Wed, 12 Apr 2023 08:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289650;
-	bh=rcPR1yzzx+NFOP4b57vj9H7yNsBfGrlEDO8tBhP58zQ=;
+	s=korg; t=1681289653;
+	bh=cATfKN99cZpHvzM06QWxClbFUtIhxUZr8cGzUjM7Geg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=niOEMexPBu8iN+kXSt4n1hqPGGHhwQz65aSDD+0I6IvT9gVTAAZ2UXp0rfIt7AWeN
-	 cugCNA4t25OLrqhToWAedHk+zZpsO1tNnciobkBZ0zMywgOVMqo4XfW8NCq/umroNE
-	 B4CHm3jJfBWgLVIUUpiCdRKQWUeX1FJ0iAzfkWiI=
+	b=Ruefjy4GwYoFS+SRqLsTuihF4g5Mur6nK4Hj3h9+zSK/O3rlKSeXgFQ64Y2n+vmmS
+	 Mp1640zTN9bsoMto6oextFBSwqfcbRbVbLBvkUkQt17B7X6p+0GYV4PHVH7ZtFFWxR
+	 ti4BiIP5z4ot3IRPyzcUclUp5ykc0BwDaUxMtHcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH 6.2 159/173] drm/bridge: lt9611: Fix PLL being unable to lock
-Date: Wed, 12 Apr 2023 10:34:45 +0200
-Message-Id: <20230412082844.551763467@linuxfoundation.org>
+	Min Li <lm0963hack@gmail.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.2 150/173] drm/i915: fix race condition UAF in i915_perf_add_config_ioctl
+Date: Wed, 12 Apr 2023 10:34:36 +0200
+Message-Id: <20230412082844.162389237@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -34,37 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Foss <robert.foss@linaro.org>
+From: Min Li <lm0963hack@gmail.com>
 
-commit 2a9df204be0bbb896e087f00b9ee3fc559d5a608 upstream.
+commit dc30c011469165d57af9adac5baff7d767d20e5c upstream.
 
-This fixes PLL being unable to lock, and is derived from an equivalent
-downstream commit.
+Userspace can guess the id value and try to race oa_config object creation
+with config remove, resulting in a use-after-free if we dereference the
+object after unlocking the metrics_lock.  For that reason, unlocking the
+metrics_lock must be done after we are done dereferencing the object.
 
-Available LT9611 documentation does not list this register, neither does
-LT9611UXC (which is a different chip).
-
-This commit has been confirmed to fix HDMI output on DragonBoard 845c.
-
-Suggested-by: Amit Pundir <amit.pundir@linaro.org>
-Reviewed-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221213150304.4189760-1-robert.foss@linaro.org
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+Signed-off-by: Min Li <lm0963hack@gmail.com>
+Fixes: f89823c21224 ("drm/i915/perf: Implement I915_PERF_ADD/REMOVE_CONFIG interface")
+Cc: <stable@vger.kernel.org> # v4.14+
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230328093627.5067-1-lm0963hack@gmail.com
+[tursulin: Manually added stable tag.]
+(cherry picked from commit 49f6f6483b652108bcb73accd0204a464b922395)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/i915_perf.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -258,6 +258,7 @@ static int lt9611_pll_setup(struct lt961
- 		{ 0x8126, 0x55 },
- 		{ 0x8127, 0x66 },
- 		{ 0x8128, 0x88 },
-+		{ 0x812a, 0x20 },
- 	};
+--- a/drivers/gpu/drm/i915/i915_perf.c
++++ b/drivers/gpu/drm/i915/i915_perf.c
+@@ -4612,13 +4612,13 @@ int i915_perf_add_config_ioctl(struct dr
+ 		err = oa_config->id;
+ 		goto sysfs_err;
+ 	}
+-
+-	mutex_unlock(&perf->metrics_lock);
++	id = oa_config->id;
  
- 	regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
+ 	drm_dbg(&perf->i915->drm,
+ 		"Added config %s id=%i\n", oa_config->uuid, oa_config->id);
++	mutex_unlock(&perf->metrics_lock);
+ 
+-	return oa_config->id;
++	return id;
+ 
+ sysfs_err:
+ 	mutex_unlock(&perf->metrics_lock);
 
 
