@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983592F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:39:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E66C433D2;
-	Wed, 12 Apr 2023 08:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D1D2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:39:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B1CC433EF;
+	Wed, 12 Apr 2023 08:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288765;
-	bh=NdJIdttaNnPy+/lC6CYgAQwQRlNTxsx9GHiIsy2XfZw=;
+	s=korg; t=1681288768;
+	bh=bDiQ9Xf5Nu54cyd6oFCPEX6z/JVwq9+vIKyU5/l60ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ya2ODr7fM/e4QMTA2otqYy5aEd4hdAy5LvQJQt2QYhONx37bKBVGnN561pb37rabc
-	 fz5a54Xx14Ah5XkO5RBW/S9tEg2HzU39XbryfHY4G3JRupdJQSabbZFWfnhxFCdAbO
-	 UBbcnf9MCWhhrrcDvejJkw1MfBiYWbKp7pEEGHrM=
+	b=An5JN9+MzhlHhW0mgGpJspdH31uFnL/W7E1jPv1TNEt48taSZEMNyTNgXcOpz5tvL
+	 CdXNQ4jnqGbA+pObbEhNMKnB8bg59K/I+aA6pSkREzz7oQzTVBiOPUL/mgjwDnMwz1
+	 S/LsS15H2UgsP0NSTalwKycOCSYF3M8BGJmiYaGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Thornber <ejt@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
+	Mohammed Gamal <mgamal@redhat.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/164] dm cache: Add some documentation to dm-cache-background-tracker.h
-Date: Wed, 12 Apr 2023 10:32:03 +0200
-Message-Id: <20230412082836.775989971@linuxfoundation.org>
+Subject: [PATCH 6.1 010/164] Drivers: vmbus: Check for channel allocation before looking up relids
+Date: Wed, 12 Apr 2023 10:32:12 +0200
+Message-Id: <20230412082837.257440117@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,91 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Thornber <ejt@redhat.com>
+From: Mohammed Gamal <mgamal@redhat.com>
 
-[ Upstream commit 22c40e134c4c7a828ac09d25a5a8597b1e45c031 ]
+[ Upstream commit 1eb65c8687316c65140b48fad27133d583178e15 ]
 
-Signed-off-by: Joe Thornber <ejt@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Stable-dep-of: f7b58a69fad9 ("dm: fix improper splitting for abnormal bios")
+relid2channel() assumes vmbus channel array to be allocated when called.
+However, in cases such as kdump/kexec, not all relids will be reset by the host.
+When the second kernel boots and if the guest receives a vmbus interrupt during
+vmbus driver initialization before vmbus_connect() is called, before it finishes,
+or if it fails, the vmbus interrupt service routine is called which in turn calls
+relid2channel() and can cause a null pointer dereference.
+
+Print a warning and error out in relid2channel() for a channel id that's invalid
+in the second kernel.
+
+Fixes: 8b6a877c060e ("Drivers: hv: vmbus: Replace the per-CPU channel lists with a global array of channels")
+
+Signed-off-by: Mohammed Gamal <mgamal@redhat.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Link: https://lore.kernel.org/r/20230217204411.212709-1-mgamal@redhat.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-background-tracker.h | 40 ++++++++++++++++++++++--
- 1 file changed, 37 insertions(+), 3 deletions(-)
+ drivers/hv/connection.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/md/dm-cache-background-tracker.h b/drivers/md/dm-cache-background-tracker.h
-index 27ab90dbc2752..b5056e8275c15 100644
---- a/drivers/md/dm-cache-background-tracker.h
-+++ b/drivers/md/dm-cache-background-tracker.h
-@@ -12,19 +12,44 @@
- 
- /*----------------------------------------------------------------*/
- 
-+/*
-+ * The cache policy decides what background work should be performed,
-+ * such as promotions, demotions and writebacks. The core cache target
-+ * is in charge of performing the work, and does so when it sees fit.
-+ *
-+ * The background_tracker acts as a go between. Keeping track of future
-+ * work that the policy has decided upon, and handing (issuing) it to
-+ * the core target when requested.
-+ *
-+ * There is no locking in this, so calls will probably need to be
-+ * protected with a spinlock.
-+ */
-+
- struct background_work;
- struct background_tracker;
- 
- /*
-- * FIXME: discuss lack of locking in all methods.
-+ * Create a new tracker, it will not be able to queue more than
-+ * 'max_work' entries.
+diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
+index 9dc27e5d367a2..da51b50787dff 100644
+--- a/drivers/hv/connection.c
++++ b/drivers/hv/connection.c
+@@ -409,6 +409,10 @@ void vmbus_disconnect(void)
   */
- struct background_tracker *btracker_create(unsigned max_work);
-+
-+/*
-+ * Destroy the tracker. No issued, but not complete, work should
-+ * exist when this is called. It is fine to have queued but unissued
-+ * work.
-+ */
- void btracker_destroy(struct background_tracker *b);
- 
- unsigned btracker_nr_writebacks_queued(struct background_tracker *b);
- unsigned btracker_nr_demotions_queued(struct background_tracker *b);
- 
- /*
-+ * Queue some work within the tracker. 'work' should point to the work
-+ * to queue, this will be copied (ownership doesn't pass).  If pwork
-+ * is not NULL then it will be set to point to the tracker's internal
-+ * copy of the work.
-+ *
-  * returns -EINVAL iff the work is already queued.  -ENOMEM if the work
-  * couldn't be queued for another reason.
-  */
-@@ -33,11 +58,20 @@ int btracker_queue(struct background_tracker *b,
- 		   struct policy_work **pwork);
- 
- /*
-+ * Hands out the next piece of work to be performed.
-  * Returns -ENODATA if there's no work.
-  */
- int btracker_issue(struct background_tracker *b, struct policy_work **work);
--void btracker_complete(struct background_tracker *b,
--		       struct policy_work *op);
-+
-+/*
-+ * Informs the tracker that the work has been completed and it may forget
-+ * about it.
-+ */
-+void btracker_complete(struct background_tracker *b, struct policy_work *op);
-+
-+/*
-+ * Predicate to see if an origin block is already scheduled for promotion.
-+ */
- bool btracker_promotion_already_present(struct background_tracker *b,
- 					dm_oblock_t oblock);
- 
+ struct vmbus_channel *relid2channel(u32 relid)
+ {
++	if (vmbus_connection.channels == NULL) {
++		pr_warn_once("relid2channel: relid=%d: No channels mapped!\n", relid);
++		return NULL;
++	}
+ 	if (WARN_ON(relid >= MAX_CHANNEL_RELIDS))
+ 		return NULL;
+ 	return READ_ONCE(vmbus_connection.channels[relid]);
 -- 
 2.39.2
 
