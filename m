@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE8B2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F95C4339B;
-	Wed, 12 Apr 2023 08:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF682F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A921C433EF;
+	Wed, 12 Apr 2023 08:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289290;
-	bh=DrvHmrJT/KO7569aA3Z0nDhxYOS0Z50RG245NGFc720=;
+	s=korg; t=1681289293;
+	bh=QXDQ4fKp07JfAMbjgZVFjQtYq5POj2EW3Qsxq/izZSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OArbsqJHqVdjUdqX7DZsnEH2vUKnlldOH7+FRS9LAri+HbVY6KHTZD9ePWRdNzf9H
-	 k3wSRNzcbIUPHBVbJOVk7BbkuECsRHu2altXVDGwQsoQkDnOnfTFjR8HnweHXlTdWl
-	 Ii2a5pJvIqdjRDFSDAfiVBx4Uq+JRNC7XAyBiVcw=
+	b=T9e7QNrFpwgQXaN65GdLVPvHIF4/sx7mRS0qaoZKw9fku1pXhA8U15UnlNwQOqjeQ
+	 VDf9gt70zuAu5X32R0/dOwKaDwsFD5hrKb6yqgo2EYIq/TPDZf23XGXa3gQV/CEsex
+	 tAsEUnfYnrKVm8d25fgIaQp2MSiiUjM58FRKGWTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corinna Vinschen <vinschen@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhi Li <yieli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 042/173] net: stmmac: fix up RX flow hash indirection table when setting channels
-Date: Wed, 12 Apr 2023 10:32:48 +0200
-Message-Id: <20230412082839.801211941@linuxfoundation.org>
+Subject: [PATCH 6.2 043/173] sunrpc: only free unix grouplist after RCU settles
+Date: Wed, 12 Apr 2023 10:32:49 +0200
+Message-Id: <20230412082839.849838250@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -35,83 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corinna Vinschen <vinschen@redhat.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 218c597325f4faf7b7a6049233a30d7842b5b2dc ]
+[ Upstream commit 5085e41f9e83a1bec51da1f20b54f2ec3a13a3fe ]
 
-stmmac_reinit_queues() fails to fix up the RX hash.  Even if the number
-of channels gets restricted, the output of `ethtool -x' indicates that
-all RX queues are used:
+While the unix_gid object is rcu-freed, the group_info list that it
+contains is not. Ensure that we only put the group list reference once
+we are really freeing the unix_gid object.
 
-  $ ethtool -l enp0s29f2
-  Channel parameters for enp0s29f2:
-  Pre-set maximums:
-  RX:		8
-  TX:		8
-  Other:		n/a
-  Combined:	n/a
-  Current hardware settings:
-  RX:		8
-  TX:		8
-  Other:		n/a
-  Combined:	n/a
-  $ ethtool -x enp0s29f2
-  RX flow hash indirection table for enp0s29f2 with 8 RX ring(s):
-      0:      0     1     2     3     4     5     6     7
-      8:      0     1     2     3     4     5     6     7
-  [...]
-  $ ethtool -L enp0s29f2 rx 3
-  $ ethtool -x enp0s29f2
-  RX flow hash indirection table for enp0s29f2 with 3 RX ring(s):
-      0:      0     1     2     3     4     5     6     7
-      8:      0     1     2     3     4     5     6     7
-  [...]
-
-Fix this by setting the indirection table according to the number
-of specified queues.  The result is now as expected:
-
-  $ ethtool -L enp0s29f2 rx 3
-  $ ethtool -x enp0s29f2
-  RX flow hash indirection table for enp0s29f2 with 3 RX ring(s):
-      0:      0     1     2     0     1     2     0     1
-      8:      2     0     1     2     0     1     2     0
-  [...]
-
-Tested on Intel Elkhart Lake.
-
-Fixes: 0366f7e06a6b ("net: stmmac: add ethtool support for get/set channels")
-Signed-off-by: Corinna Vinschen <vinschen@redhat.com>
-Link: https://lore.kernel.org/r/20230403121120.489138-1-vinschen@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Zhi Li <yieli@redhat.com>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2183056
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Fixes: fd5d2f78261b ("SUNRPC: Make server side AUTH_UNIX use lockless lookups")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/sunrpc/svcauth_unix.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 20b51a39db38d..4888536a31500 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -6948,7 +6948,7 @@ static void stmmac_napi_del(struct net_device *dev)
- int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
+diff --git a/net/sunrpc/svcauth_unix.c b/net/sunrpc/svcauth_unix.c
+index b1efc34db6ed8..609ade4fb49ed 100644
+--- a/net/sunrpc/svcauth_unix.c
++++ b/net/sunrpc/svcauth_unix.c
+@@ -416,14 +416,23 @@ static int unix_gid_hash(kuid_t uid)
+ 	return hash_long(from_kuid(&init_user_ns, uid), GID_HASHBITS);
+ }
+ 
+-static void unix_gid_put(struct kref *kref)
++static void unix_gid_free(struct rcu_head *rcu)
  {
- 	struct stmmac_priv *priv = netdev_priv(dev);
--	int ret = 0;
-+	int ret = 0, i;
+-	struct cache_head *item = container_of(kref, struct cache_head, ref);
+-	struct unix_gid *ug = container_of(item, struct unix_gid, h);
++	struct unix_gid *ug = container_of(rcu, struct unix_gid, rcu);
++	struct cache_head *item = &ug->h;
++
+ 	if (test_bit(CACHE_VALID, &item->flags) &&
+ 	    !test_bit(CACHE_NEGATIVE, &item->flags))
+ 		put_group_info(ug->gi);
+-	kfree_rcu(ug, rcu);
++	kfree(ug);
++}
++
++static void unix_gid_put(struct kref *kref)
++{
++	struct cache_head *item = container_of(kref, struct cache_head, ref);
++	struct unix_gid *ug = container_of(item, struct unix_gid, h);
++
++	call_rcu(&ug->rcu, unix_gid_free);
+ }
  
- 	if (netif_running(dev))
- 		stmmac_release(dev);
-@@ -6957,6 +6957,10 @@ int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
- 
- 	priv->plat->rx_queues_to_use = rx_cnt;
- 	priv->plat->tx_queues_to_use = tx_cnt;
-+	if (!netif_is_rxfh_configured(dev))
-+		for (i = 0; i < ARRAY_SIZE(priv->rss.table); i++)
-+			priv->rss.table[i] = ethtool_rxfh_indir_default(i,
-+									rx_cnt);
- 
- 	stmmac_napi_add(dev);
- 
+ static int unix_gid_match(struct cache_head *corig, struct cache_head *cnew)
 -- 
 2.39.2
 
