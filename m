@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E132F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:52:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3A7C433EF;
-	Wed, 12 Apr 2023 08:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEE02F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:52:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD6CC4339B;
+	Wed, 12 Apr 2023 08:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289564;
-	bh=vdzjwGx0crus/MrqMWbowkFJ+jXWtZeht3nOZLLVkbA=;
+	s=korg; t=1681289567;
+	bh=bQNSIlfoowlZAxsVwrWOChNZgJI9gpSXvSPHeUNqQoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TC8N7ZABcm1clx8fIBCZ1VJuUIdXR4xR20yyKd1c7Z9BfzgagkMXAi+MrK7AjmCAn
-	 Gssnz38hO3VE9nJ+nAzM2/lYCsdzprrfG772nDUrVLX4+NE/HfFGId/10O+mKLeMNw
-	 EGKn4jBfoZ27giEw/Jok4R3godo9dajmrZh/tHdU=
+	b=gtZrZ7yayeRcvp4hU7aDzbz3xoR5khI/apwoCVeIurIaV/baYkCOAipVhsFqTKfXi
+	 iYvdDKHTTVPGXJja565WgwPEwvd+fxAY0B5XwYOlo6NYPqFYMKumgs10Xg68CabEND
+	 g9wxQTaQaJ2JhPU8/h6eh3dlS87iXjsr03uZmqAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>
-Subject: [PATCH 6.2 147/173] drm/panfrost: Fix the panfrost_mmu_map_fault_addr() error path
-Date: Wed, 12 Apr 2023 10:34:33 +0200
-Message-Id: <20230412082844.040777900@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Tom Zanussi" <zanussi@kernel.org>,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.2 121/173] tracing/synthetic: Fix races on freeing last_cmd
+Date: Wed, 12 Apr 2023 10:34:07 +0200
+Message-Id: <20230412082843.009363649@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -35,33 +38,184 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
 
-commit 764a2ab9eb56e1200083e771aab16186836edf1d upstream.
+commit 4ccf11c4e8a8e051499d53a12f502196c97a758e upstream.
 
-Make sure all bo->base.pages entries are either NULL or pointing to a
-valid page before calling drm_gem_shmem_put_pages().
+Currently, the "last_cmd" variable can be accessed by multiple processes
+asynchronously when multiple users manipulate synthetic_events node
+at the same time, it could lead to use-after-free or double-free.
 
-Reported-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
-Cc: <stable@vger.kernel.org>
-Fixes: 187d2929206e ("drm/panfrost: Add support for GPU heap allocations")
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20210521093811.1018992-1-boris.brezillon@collabora.com
+This patch add "lastcmd_mutex" to prevent "last_cmd" from being accessed
+asynchronously.
+
+================================================================
+
+It's easy to reproduce in the KASAN environment by running the two
+scripts below in different shells.
+
+script 1:
+        while :
+        do
+                echo -n -e '\x88' > /sys/kernel/tracing/synthetic_events
+        done
+
+script 2:
+        while :
+        do
+                echo -n -e '\xb0' > /sys/kernel/tracing/synthetic_events
+        done
+
+================================================================
+double-free scenario:
+
+    process A                       process B
+-------------------               ---------------
+1.kstrdup last_cmd
+                                  2.free last_cmd
+3.free last_cmd(double-free)
+
+================================================================
+use-after-free scenario:
+
+    process A                       process B
+-------------------               ---------------
+1.kstrdup last_cmd
+                                  2.free last_cmd
+3.tracing_log_err(use-after-free)
+
+================================================================
+
+Appendix 1. KASAN report double-free:
+
+BUG: KASAN: double-free in kfree+0xdc/0x1d4
+Free of addr ***** by task sh/4879
+Call trace:
+        ...
+        kfree+0xdc/0x1d4
+        create_or_delete_synth_event+0x60/0x1e8
+        trace_parse_run_command+0x2bc/0x4b8
+        synth_events_write+0x20/0x30
+        vfs_write+0x200/0x830
+        ...
+
+Allocated by task 4879:
+        ...
+        kstrdup+0x5c/0x98
+        create_or_delete_synth_event+0x6c/0x1e8
+        trace_parse_run_command+0x2bc/0x4b8
+        synth_events_write+0x20/0x30
+        vfs_write+0x200/0x830
+        ...
+
+Freed by task 5464:
+        ...
+        kfree+0xdc/0x1d4
+        create_or_delete_synth_event+0x60/0x1e8
+        trace_parse_run_command+0x2bc/0x4b8
+        synth_events_write+0x20/0x30
+        vfs_write+0x200/0x830
+        ...
+
+================================================================
+Appendix 2. KASAN report use-after-free:
+
+BUG: KASAN: use-after-free in strlen+0x5c/0x7c
+Read of size 1 at addr ***** by task sh/5483
+sh: CPU: 7 PID: 5483 Comm: sh
+        ...
+        __asan_report_load1_noabort+0x34/0x44
+        strlen+0x5c/0x7c
+        tracing_log_err+0x60/0x444
+        create_or_delete_synth_event+0xc4/0x204
+        trace_parse_run_command+0x2bc/0x4b8
+        synth_events_write+0x20/0x30
+        vfs_write+0x200/0x830
+        ...
+
+Allocated by task 5483:
+        ...
+        kstrdup+0x5c/0x98
+        create_or_delete_synth_event+0x80/0x204
+        trace_parse_run_command+0x2bc/0x4b8
+        synth_events_write+0x20/0x30
+        vfs_write+0x200/0x830
+        ...
+
+Freed by task 5480:
+        ...
+        kfree+0xdc/0x1d4
+        create_or_delete_synth_event+0x74/0x204
+        trace_parse_run_command+0x2bc/0x4b8
+        synth_events_write+0x20/0x30
+        vfs_write+0x200/0x830
+        ...
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230321110444.1587-1-Tze-nan.Wu@mediatek.com
+
+Fixes: 27c888da9867 ("tracing: Remove size restriction on synthetic event cmd error logging")
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: "Tom Zanussi" <zanussi@kernel.org>
+Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_mmu.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_events_synth.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-@@ -504,6 +504,7 @@ static int panfrost_mmu_map_fault_addr(s
- 		if (IS_ERR(pages[i])) {
- 			mutex_unlock(&bo->base.pages_lock);
- 			ret = PTR_ERR(pages[i]);
-+			pages[i] = NULL;
- 			goto err_pages;
- 		}
- 	}
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -44,14 +44,21 @@ enum { ERRORS };
+ 
+ static const char *err_text[] = { ERRORS };
+ 
++DEFINE_MUTEX(lastcmd_mutex);
+ static char *last_cmd;
+ 
+ static int errpos(const char *str)
+ {
++	int ret = 0;
++
++	mutex_lock(&lastcmd_mutex);
+ 	if (!str || !last_cmd)
+-		return 0;
++		goto out;
+ 
+-	return err_pos(last_cmd, str);
++	ret = err_pos(last_cmd, str);
++ out:
++	mutex_unlock(&lastcmd_mutex);
++	return ret;
+ }
+ 
+ static void last_cmd_set(const char *str)
+@@ -59,18 +66,22 @@ static void last_cmd_set(const char *str
+ 	if (!str)
+ 		return;
+ 
++	mutex_lock(&lastcmd_mutex);
+ 	kfree(last_cmd);
+-
+ 	last_cmd = kstrdup(str, GFP_KERNEL);
++	mutex_unlock(&lastcmd_mutex);
+ }
+ 
+ static void synth_err(u8 err_type, u16 err_pos)
+ {
++	mutex_lock(&lastcmd_mutex);
+ 	if (!last_cmd)
+-		return;
++		goto out;
+ 
+ 	tracing_log_err(NULL, "synthetic_events", last_cmd, err_text,
+ 			err_type, err_pos);
++ out:
++	mutex_unlock(&lastcmd_mutex);
+ }
+ 
+ static int create_synth_event(const char *raw_command);
 
 
