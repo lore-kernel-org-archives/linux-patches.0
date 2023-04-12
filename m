@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087F32F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:41:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F01C4339E;
-	Wed, 12 Apr 2023 08:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C282F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:41:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2094DC433D2;
+	Wed, 12 Apr 2023 08:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288880;
-	bh=ChwdYkPeOWGXG9W0mLjaUFy/6A6lXNufzAqZmga9sK0=;
+	s=korg; t=1681288883;
+	bh=C3LSIZRJHufdaX7iBUhVu2WMe8ZJJeCpKaH9KVH70WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lOsB5ZBFDTxei0cwNwXV4YMyW5exs8i49TgvzTFPeTtbt1FtyrMU4N1XTfV5DZG9u
-	 QdFS4KGY0hC4PanTlx+vVUUF2twuIEyGTQef34xOhz+9TEEOhmvsu0JxH5r5ibVEb2
-	 wBirMGs7k++dGWrI23iLy3faVA1WvCcL1wgJLeY4=
+	b=nJ7SMDizWzJ5/HYB3DjQFcgBfP6uo8hOa2LB7TPb2GIX1ADo0zAlIpRilnQnzzGZx
+	 TnvSlyihhoy9BDpHb7niQxmncSy0B+vCE0Ix2z5bRUBIwvqUXW0Sd7CgK1Qxfk0yMm
+	 Mq19XLxATAfWiuK1WHyxZOpGru5zPBUWW2oR7afA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/164] NFSD: callback request does not use correct credential for AUTH_SYS
-Date: Wed, 12 Apr 2023 10:32:47 +0200
-Message-Id: <20230412082838.764648253@linuxfoundation.org>
+Subject: [PATCH 6.1 054/164] arm64: compat: Work around uninitialized variable warning
+Date: Wed, 12 Apr 2023 10:32:56 +0200
+Message-Id: <20230412082839.127864879@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -36,41 +37,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 7de82c2f36fb26aa78440bbf0efcf360b691d98b ]
+[ Upstream commit 32d85999680601d01b2a36713c9ffd7397c8688b ]
 
-Currently callback request does not use the credential specified in
-CREATE_SESSION if the security flavor for the back channel is AUTH_SYS.
+Dan reports that smatch complains about a potential uninitialized
+variable being used in the compat alignment fixup code.
 
-Problem was discovered by pynfs 4.1 DELEG5 and DELEG7 test with error:
-DELEG5   st_delegation.testCBSecParms     : FAILURE
-           expected callback with uid, gid == 17, 19, got 0, 0
+The logic is not wrong per se, but we do end up using an uninitialized
+variable if reading the instruction that triggered the alignment fault
+from user space faults, even if the fault ensures that the uninitialized
+value doesn't propagate any further.
 
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 8276c902bbe9 ("SUNRPC: remove uid and gid from struct auth_cred")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Given that we just give up and return 1 if any fault occurs when reading
+the instruction, let's get rid of the 'success handling' pattern that
+captures the fault in a variable and aborts later, and instead, just
+return 1 immediately if any of the get_user() calls result in an
+exception.
+
+Fixes: 3fc24ef32d3b ("arm64: compat: Implement misalignment fixups for multiword loads")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/202304021214.gekJ8yRc-lkp@intel.com/
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20230404103625.2386382-1-ardb@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4callback.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/compat_alignment.c | 32 ++++++++++++----------------
+ 1 file changed, 14 insertions(+), 18 deletions(-)
 
-diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
-index 6253cbe5f81b4..39989c14c8a1e 100644
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -874,8 +874,8 @@ static const struct cred *get_backchannel_cred(struct nfs4_client *clp, struct r
- 		if (!kcred)
- 			return NULL;
+diff --git a/arch/arm64/kernel/compat_alignment.c b/arch/arm64/kernel/compat_alignment.c
+index 5edec2f49ec98..deff21bfa6800 100644
+--- a/arch/arm64/kernel/compat_alignment.c
++++ b/arch/arm64/kernel/compat_alignment.c
+@@ -314,36 +314,32 @@ int do_compat_alignment_fixup(unsigned long addr, struct pt_regs *regs)
+ 	int (*handler)(unsigned long addr, u32 instr, struct pt_regs *regs);
+ 	unsigned int type;
+ 	u32 instr = 0;
+-	u16 tinstr = 0;
+ 	int isize = 4;
+ 	int thumb2_32b = 0;
+-	int fault;
  
--		kcred->uid = ses->se_cb_sec.uid;
--		kcred->gid = ses->se_cb_sec.gid;
-+		kcred->fsuid = ses->se_cb_sec.uid;
-+		kcred->fsgid = ses->se_cb_sec.gid;
- 		return kcred;
+ 	instrptr = instruction_pointer(regs);
+ 
+ 	if (compat_thumb_mode(regs)) {
+ 		__le16 __user *ptr = (__le16 __user *)(instrptr & ~1);
++		u16 tinstr, tinst2;
+ 
+-		fault = alignment_get_thumb(regs, ptr, &tinstr);
+-		if (!fault) {
+-			if (IS_T32(tinstr)) {
+-				/* Thumb-2 32-bit */
+-				u16 tinst2;
+-				fault = alignment_get_thumb(regs, ptr + 1, &tinst2);
+-				instr = ((u32)tinstr << 16) | tinst2;
+-				thumb2_32b = 1;
+-			} else {
+-				isize = 2;
+-				instr = thumb2arm(tinstr);
+-			}
++		if (alignment_get_thumb(regs, ptr, &tinstr))
++			return 1;
++
++		if (IS_T32(tinstr)) { /* Thumb-2 32-bit */
++			if (alignment_get_thumb(regs, ptr + 1, &tinst2))
++				return 1;
++			instr = ((u32)tinstr << 16) | tinst2;
++			thumb2_32b = 1;
++		} else {
++			isize = 2;
++			instr = thumb2arm(tinstr);
+ 		}
+ 	} else {
+-		fault = alignment_get_arm(regs, (__le32 __user *)instrptr, &instr);
++		if (alignment_get_arm(regs, (__le32 __user *)instrptr, &instr))
++			return 1;
  	}
- }
+ 
+-	if (fault)
+-		return 1;
+-
+ 	switch (CODING_BITS(instr)) {
+ 	case 0x00000000:	/* 3.13.4 load/store instruction extensions */
+ 		if (LDSTHD_I_BIT(instr))
 -- 
 2.39.2
 
