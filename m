@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95302F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4220BC4339C;
-	Wed, 12 Apr 2023 08:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663202F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0CF0C433D2;
+	Wed, 12 Apr 2023 08:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289066;
-	bh=PHG4L2sYEwAW9G4KcXZyk02SCWpC/6epzTDNMCHUL80=;
+	s=korg; t=1681289069;
+	bh=I0+46HlBogmXBSNOixqGDnQmBCzm44ivNBTQu28y+8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gay8KsdKFxFzRaNYiltrysokG6HYj6xjNZOGd9AvuZtiYjNhiOZm8m/i1UI2DsJyL
-	 HpUh2B7xqSBxhYw2h6ozEGNktm11wypjmX5fVRSu0QoeN79Q5m5Wr/r9Z04B5xuhAt
-	 lrCNpOi6wzgbv6ygbzg7EzPFMcMxJDXpZAxU45Ac=
+	b=XAJ0qhE+9rEpSXSmLtE8PHE4Y2hKzNO7CZ2Tj1DIjWtr+bHBpdA0rUV/xhga4a0ho
+	 IBoPCjpnHLC6UhlOVxRs/I4K5q/temua5Rk/kzNRHvoE+m9+/xr9f+aYvkhxWwjNld
+	 4Sq9yN1Xd2wxrF43jX2awv8XkvawYmJmvfC6fGA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Daniel Bristot de Oliveira <bristot@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 124/164] tracing/timerlat: Notify new max thread latency
-Date: Wed, 12 Apr 2023 10:34:06 +0200
-Message-Id: <20230412082841.868871290@linuxfoundation.org>
+Subject: [PATCH 6.1 125/164] tracing/osnoise: Fix notify new tracing_max_latency
+Date: Wed, 12 Apr 2023 10:34:07 +0200
+Message-Id: <20230412082841.908299598@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -36,15 +36,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-commit b9f451a9029a16eb7913ace09b92493d00f2e564 upstream.
+commit d3cba7f02cd82118c32651c73374d8a5a459d9a6 upstream.
 
-timerlat is not reporting a new tracing_max_latency for the thread
-latency. The reason is that it is not calling notify_new_max_latency()
-function after the new thread latency is sampled.
+osnoise/timerlat tracers are reporting new max latency on instances
+where the tracing is off, creating inconsistencies between the max
+reported values in the trace and in the tracing_max_latency. Thus
+only report new tracing_max_latency on active tracing instances.
 
-Call notify_new_max_latency() after computing the thread latency.
-
-Link: https://lkml.kernel.org/r/16e18d61d69073d0192ace07bf61e405cca96e9c.1680104184.git.bristot@kernel.org
+Link: https://lkml.kernel.org/r/ecd109fde4a0c24ab0f00ba1e9a144ac19a91322.1680104184.git.bristot@kernel.org
 
 Cc: stable@vger.kernel.org
 Fixes: dae181349f1e ("tracing/osnoise: Support a list of trace_array *tr")
@@ -52,19 +51,19 @@ Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace_osnoise.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/kernel/trace/trace_osnoise.c
 +++ b/kernel/trace/trace_osnoise.c
-@@ -1681,6 +1681,8 @@ static int timerlat_main(void *data)
- 
- 		trace_timerlat_sample(&s);
- 
-+		notify_new_max_latency(diff);
-+
- 		timerlat_dump_stack(time_to_us(diff));
- 
- 		tlat->tracing_thread = false;
+@@ -1270,7 +1270,7 @@ static void notify_new_max_latency(u64 l
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(inst, &osnoise_instances, list) {
+ 		tr = inst->tr;
+-		if (tr->max_latency < latency) {
++		if (tracer_tracing_is_on(tr) && tr->max_latency < latency) {
+ 			tr->max_latency = latency;
+ 			latency_fsnotify(tr);
+ 		}
 
 
