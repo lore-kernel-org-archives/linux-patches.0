@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651192F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBFFC433EF;
-	Wed, 12 Apr 2023 08:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8942F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77440C433EF;
+	Wed, 12 Apr 2023 08:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289200;
-	bh=NdJIdttaNnPy+/lC6CYgAQwQRlNTxsx9GHiIsy2XfZw=;
+	s=korg; t=1681289203;
+	bh=3tqKWDOYZheOCgxApj3yWUg5jfqIUXGGOah/Uc7tmtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QR/h/+evK5/haaK+pHn7fCVx6hy0ddJffQAJFk+SXbZ2ekpUgkTEMAkt4sDMZJFbQ
-	 xNNwi+JTBbnWZyI7hYprli4gHt3X5mRgJhSyUgTkf5utcb/DA5QNpk1u4i+HFG5q3g
-	 KxDtnKH/0koaX2R9vMJGZzh+I5a3VNA9waaNMS/0=
+	b=sbWiCegeSCH8ZKnMaw59zWEI65ZYqAVQ/tGYiA2aFyOgx9UUcMvNNM19K0g37/hPB
+	 enPuT1B2vbjUWMgbLG7DWjcftRSqZJH1EAkyk+qoQjvLhNXHsBpqeM/PKlruBsq2hR
+	 WKroK2l76exM6YPULFJCFGNO6oc+cczsOOzuX5rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Thornber <ejt@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 001/173] dm cache: Add some documentation to dm-cache-background-tracker.h
-Date: Wed, 12 Apr 2023 10:32:07 +0200
-Message-Id: <20230412082838.191564117@linuxfoundation.org>
+Subject: [PATCH 6.2 010/173] pwm: hibvt: Explicitly set .polarity in .get_state()
+Date: Wed, 12 Apr 2023 10:32:16 +0200
+Message-Id: <20230412082838.528013279@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,91 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Thornber <ejt@redhat.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 22c40e134c4c7a828ac09d25a5a8597b1e45c031 ]
+[ Upstream commit 6f57937980142715e927697a6ffd2050f38ed6f6 ]
 
-Signed-off-by: Joe Thornber <ejt@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Stable-dep-of: f7b58a69fad9 ("dm: fix improper splitting for abnormal bios")
+The driver only both polarities. Complete the implementation of
+.get_state() by setting .polarity according to the configured hardware
+state.
+
+Fixes: d09f00810850 ("pwm: Add PWM driver for HiSilicon BVT SOCs")
+Link: https://lore.kernel.org/r/20230228135508.1798428-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-background-tracker.h | 40 ++++++++++++++++++++++--
- 1 file changed, 37 insertions(+), 3 deletions(-)
+ drivers/pwm/pwm-hibvt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/dm-cache-background-tracker.h b/drivers/md/dm-cache-background-tracker.h
-index 27ab90dbc2752..b5056e8275c15 100644
---- a/drivers/md/dm-cache-background-tracker.h
-+++ b/drivers/md/dm-cache-background-tracker.h
-@@ -12,19 +12,44 @@
+diff --git a/drivers/pwm/pwm-hibvt.c b/drivers/pwm/pwm-hibvt.c
+index 12c05c155cab0..1b9274c5ad872 100644
+--- a/drivers/pwm/pwm-hibvt.c
++++ b/drivers/pwm/pwm-hibvt.c
+@@ -146,6 +146,7 @@ static int hibvt_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
  
- /*----------------------------------------------------------------*/
+ 	value = readl(base + PWM_CTRL_ADDR(pwm->hwpwm));
+ 	state->enabled = (PWM_ENABLE_MASK & value);
++	state->polarity = (PWM_POLARITY_MASK & value) ? PWM_POLARITY_INVERSED : PWM_POLARITY_NORMAL;
  
-+/*
-+ * The cache policy decides what background work should be performed,
-+ * such as promotions, demotions and writebacks. The core cache target
-+ * is in charge of performing the work, and does so when it sees fit.
-+ *
-+ * The background_tracker acts as a go between. Keeping track of future
-+ * work that the policy has decided upon, and handing (issuing) it to
-+ * the core target when requested.
-+ *
-+ * There is no locking in this, so calls will probably need to be
-+ * protected with a spinlock.
-+ */
-+
- struct background_work;
- struct background_tracker;
- 
- /*
-- * FIXME: discuss lack of locking in all methods.
-+ * Create a new tracker, it will not be able to queue more than
-+ * 'max_work' entries.
-  */
- struct background_tracker *btracker_create(unsigned max_work);
-+
-+/*
-+ * Destroy the tracker. No issued, but not complete, work should
-+ * exist when this is called. It is fine to have queued but unissued
-+ * work.
-+ */
- void btracker_destroy(struct background_tracker *b);
- 
- unsigned btracker_nr_writebacks_queued(struct background_tracker *b);
- unsigned btracker_nr_demotions_queued(struct background_tracker *b);
- 
- /*
-+ * Queue some work within the tracker. 'work' should point to the work
-+ * to queue, this will be copied (ownership doesn't pass).  If pwork
-+ * is not NULL then it will be set to point to the tracker's internal
-+ * copy of the work.
-+ *
-  * returns -EINVAL iff the work is already queued.  -ENOMEM if the work
-  * couldn't be queued for another reason.
-  */
-@@ -33,11 +58,20 @@ int btracker_queue(struct background_tracker *b,
- 		   struct policy_work **pwork);
- 
- /*
-+ * Hands out the next piece of work to be performed.
-  * Returns -ENODATA if there's no work.
-  */
- int btracker_issue(struct background_tracker *b, struct policy_work **work);
--void btracker_complete(struct background_tracker *b,
--		       struct policy_work *op);
-+
-+/*
-+ * Informs the tracker that the work has been completed and it may forget
-+ * about it.
-+ */
-+void btracker_complete(struct background_tracker *b, struct policy_work *op);
-+
-+/*
-+ * Predicate to see if an origin block is already scheduled for promotion.
-+ */
- bool btracker_promotion_already_present(struct background_tracker *b,
- 					dm_oblock_t oblock);
- 
+ 	return 0;
+ }
 -- 
 2.39.2
 
