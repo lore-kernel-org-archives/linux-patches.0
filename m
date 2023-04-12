@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524DB2F2C
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD804C4339C;
-	Wed, 12 Apr 2023 08:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A542F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F59CC433D2;
+	Wed, 12 Apr 2023 08:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289056;
-	bh=F5YHa/cR8Xm5T1b2AopomUqRvZ+MUhNjnm2MVtt7spQ=;
+	s=korg; t=1681289058;
+	bh=hw3GM1MrphKYN1jjXC3YijJ126DywjLtlxb4sLXRnko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hqmu3Jn2AbFtFSeoMoBdZ8HkANA9bxEfGt9qhXeAUuHCSfV0tV5CN9jC8iJc9s4PU
-	 gZbIKPhnA+oZsBxHw9DGy9B/F48JZi61/ya4rlgMST62Iw6//v1sJAZAbfRNTmsON7
-	 eeVTHxZqrjFSPPEu74fWsqsNhzTjOEIp1TZGw8AU=
+	b=k45V0vtiD4tP1vL3MQTGIkBVBwCrzQZ3/okY+jxPCnRR/DDBn/FIE2dEnWNk0CHJ/
+	 HrEzmSc17FEvIdzOMJLPXES0ZfYCx1rn2ttWDzWVLKGcBLncaeeyAFbuOTYhRZqG9g
+	 14a010LwlpTvYQ7Mef42Q++sZD3ChgrEf0sl3+HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 120/164] ACPI: video: Add acpi_backlight=video quirk for Apple iMac14,1 and iMac14,2
-Date: Wed, 12 Apr 2023 10:34:02 +0200
-Message-Id: <20230412082841.686464357@linuxfoundation.org>
+Subject: [PATCH 6.1 121/164] ACPI: video: Add acpi_backlight=video quirk for Lenovo ThinkPad W530
+Date: Wed, 12 Apr 2023 10:34:03 +0200
+Message-Id: <20230412082841.730190059@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -37,21 +37,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-commit 2699107989431d6db44f8a9e809ea74c387336d1 upstream.
+commit a5b2781dcab2c77979a4b8adda781d2543580901 upstream.
 
-On the Apple iMac14,1 and iMac14,2 all-in-ones (monitors with builtin "PC")
-the connection between the GPU and the panel is seen by the GPU driver as
-regular DP instead of eDP, causing the GPU driver to never call
-acpi_video_register_backlight().
+The Lenovo ThinkPad W530 uses a nvidia k1000m GPU. When this gets used
+together with one of the older nvidia binary driver series (the latest
+series does not support it), then backlight control does not work.
 
-(GPU drivers only call acpi_video_register_backlight() when an internal
- panel is detected, to avoid non working acpi_video# devices getting
- registered on desktops which unfortunately is a real issue.)
+This is caused by commit 3dbc80a3e4c5 ("ACPI: video: Make backlight
+class device registration a separate step (v2)") combined with
+commit 5aa9d943e9b6 ("ACPI: video: Don't enable fallback path for
+creating ACPI backlight by default").
 
-Fix the missing acpi_video# backlight device on these all-in-ones by
-adding a acpi_backlight=video DMI quirk, so that video.ko will
-immediately register the backlight device instead of waiting for
-an acpi_video_register_backlight() call.
+After these changes the acpi_video# backlight device is only registered
+when requested by a GPU driver calling acpi_video_register_backlight()
+which the nvidia binary driver does not do.
+
+I realize that using the nvidia binary driver is not a supported use-case
+and users can workaround this by adding acpi_backlight=video on the kernel
+commandline, but the ThinkPad W530 is a popular model under Linux users,
+so it seems worthwhile to add a quirk for this.
+
+I will also email Nvidia asking them to make the driver call
+acpi_video_register_backlight() when an internal LCD panel is detected.
+So maybe the next maintenance release of the drivers will fix this...
 
 Fixes: 5aa9d943e9b6 ("ACPI: video: Don't enable fallback path for creating ACPI backlight by default")
 Cc: All applicable <stable@vger.kernel.org>
@@ -60,34 +68,25 @@ Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/acpi/video_detect.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/drivers/acpi/video_detect.c
 +++ b/drivers/acpi/video_detect.c
-@@ -275,6 +275,29 @@ static const struct dmi_system_id video_
+@@ -298,6 +298,20 @@ static const struct dmi_system_id video_
  	},
  
  	/*
-+	 * Models which need acpi_video backlight control where the GPU drivers
-+	 * do not call acpi_video_register_backlight() because no internal panel
-+	 * is detected. Typically these are all-in-ones (monitors with builtin
-+	 * PC) where the panel connection shows up as regular DP instead of eDP.
++	 * Older models with nvidia GPU which need acpi_video backlight
++	 * control and where the old nvidia binary driver series does not
++	 * call acpi_video_register_backlight().
 +	 */
 +	{
 +	 .callback = video_detect_force_video,
-+	 /* Apple iMac14,1 */
++	 /* ThinkPad W530 */
 +	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "iMac14,1"),
-+		},
-+	},
-+	{
-+	 .callback = video_detect_force_video,
-+	 /* Apple iMac14,2 */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "iMac14,2"),
++		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++		DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad W530"),
 +		},
 +	},
 +
