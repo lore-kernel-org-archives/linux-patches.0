@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEED2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69132C4339B;
-	Wed, 12 Apr 2023 08:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B5F2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024D4C433EF;
+	Wed, 12 Apr 2023 08:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289274;
-	bh=/PTpr3PXJyhRBqFSQo1gHIjAiiw7J80Bkyf7OiUV9cA=;
+	s=korg; t=1681289277;
+	bh=b58c0GxXaSToQJMoKlWIf/Npy4kK0r9k02SR2EDdD6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mK6FmVL23hh5ziKt70fYdbjt7iZd1UvPuOuGqOeU0o6EEL1cyknYilwhuzyQSdmym
-	 LhUYbEZLhI734kZenWPXu+yVgocIqC6RTFumbGu6sW1dwiatuL3isGAKO3lF2J8HIr
-	 +vD2nL0/PYrXYM9KAXCYcUDxqVVUF9VNmcjjTbJg=
+	b=lBM/VEzm0dZq/nvk0fL9N8yDlm6C42jkRp68I2ftX+L+UbXf7duo7mHFjANijzjae
+	 q2Mjv37w9pqFd/urkt8SsCCHQbRfxOsmF1K6akZYImcFbcqVcB/yviiLS2IftJfr9g
+	 SL+ETn9Jt2YaHEQILyiVVAd6j/G0CiVuRwAFznNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
 	Mark Pearson <mpearson-lenovo@squebb.ca>,
 	Mario Limonciello <mario.limonciello@amd.com>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 037/173] platform/x86: think-lmi: Fix memory leaks when parsing ThinkStation WMI strings
-Date: Wed, 12 Apr 2023 10:32:43 +0200
-Message-Id: <20230412082839.582822472@linuxfoundation.org>
+Subject: [PATCH 6.2 038/173] platform/x86: think-lmi: Clean up display of current_value on Thinkstation
+Date: Wed, 12 Apr 2023 10:32:44 +0200
+Message-Id: <20230412082839.635241160@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -39,53 +39,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit e7d796fccdc8d17c2d21817ebe4c7bf5bbfe5433 ]
+[ Upstream commit 7065655216d4d034d71164641f3bec0b189ad6fa ]
 
-My previous commit introduced a memory leak where the item allocated
-from tlmi_setting was not freed.
-This commit also renames it to avoid confusion with the similarly name
-variable in the same function.
+On ThinkStations on retrieving the attribute value the BIOS appends the
+possible values to the string.
+Clean up the display in the current_value_show function so the options
+part is not displayed.
 
-Fixes: 8a02d70679fc ("platform/x86: think-lmi: Add possible_values for ThinkStation")
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Link: https://lore.kernel.org/lkml/df26ff45-8933-f2b3-25f4-6ee51ccda7d8@gmx.de/T/
+Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
+Reported by Mario Limoncello <Mario.Limonciello@amd.com>
+Link: https://github.com/fwupd/fwupd/issues/5077#issuecomment-1488730526
 Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://lore.kernel.org/r/20230403013120.2105-1-mpearson-lenovo@squebb.ca
+Link: https://lore.kernel.org/r/20230403013120.2105-2-mpearson-lenovo@squebb.ca
 Tested-by: Mario Limonciello <mario.limonciello@amd.com>
 Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/platform/x86/think-lmi.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index 4e738ec5e6fb8..70c4ee254c43a 100644
+index 70c4ee254c43a..336b9029d1515 100644
 --- a/drivers/platform/x86/think-lmi.c
 +++ b/drivers/platform/x86/think-lmi.c
-@@ -1459,10 +1459,10 @@ static int tlmi_analyze(void)
- 			 * name string.
- 			 * Try and pull that out if it's available.
- 			 */
--			char *item, *optstart, *optend;
-+			char *optitem, *optstart, *optend;
+@@ -920,7 +920,7 @@ static ssize_t display_name_show(struct kobject *kobj, struct kobj_attribute *at
+ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
+ {
+ 	struct tlmi_attr_setting *setting = to_tlmi_attr_setting(kobj);
+-	char *item, *value;
++	char *item, *value, *p;
+ 	int ret;
  
--			if (!tlmi_setting(setting->index, &item, LENOVO_BIOS_SETTING_GUID)) {
--				optstart = strstr(item, "[Optional:");
-+			if (!tlmi_setting(setting->index, &optitem, LENOVO_BIOS_SETTING_GUID)) {
-+				optstart = strstr(optitem, "[Optional:");
- 				if (optstart) {
- 					optstart += strlen("[Optional:");
- 					optend = strstr(optstart, "]");
-@@ -1471,6 +1471,7 @@ static int tlmi_analyze(void)
- 							kstrndup(optstart, optend - optstart,
- 									GFP_KERNEL);
- 				}
-+				kfree(optitem);
- 			}
- 		}
- 		/*
+ 	ret = tlmi_setting(setting->index, &item, LENOVO_BIOS_SETTING_GUID);
+@@ -931,9 +931,12 @@ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *a
+ 	value = strpbrk(item, ",");
+ 	if (!value || value == item || !strlen(value + 1))
+ 		ret = -EINVAL;
+-	else
++	else {
++		/* On Workstations remove the Options part after the value */
++		p = strchrnul(value, ';');
++		*p = '\0';
+ 		ret = sysfs_emit(buf, "%s\n", value + 1);
+-
++	}
+ 	kfree(item);
+ 
+ 	return ret;
 -- 
 2.39.2
 
