@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6562F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C85C433EF;
-	Wed, 12 Apr 2023 08:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1572F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BDAC433D2;
+	Wed, 12 Apr 2023 08:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289483;
-	bh=6pPtoos7XlZm+tErdnJ8qc6Lsa3V7V9OXbeueIdLfVA=;
+	s=korg; t=1681289485;
+	bh=eHmIpHBznLPl+BQ3GzuwgCFKE9FGLeADOBYQl3lsYXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M3tMG60ZaUBhlfbRbj3t+cBLHEA9fKdZZ411HgRfHPQqrXyo7ty3Q6v+3x8ME27cr
-	 55/Khg63R+MSueGLbMrqpNqlLCmvaGVBr6vEyN5Couvs30UV8MBKnPQy1zWv8g6h8a
-	 AMDHrBdyZUeLsa8NgZncXZfNOi0HfoPVsn7B5GtE=
+	b=ML/vh5hSQ00JTUDXj58jKZ4D6okDWUQX335qMmNfiy7PafuCacZGY3NHr5IfKIJZ7
+	 vpNQ+FwBkUMwU0GPbzMzifGC9IIrr+L6yosHEYVIb2Cd/Rm5Luu+bYbmiNfIOBIVEa
+	 soIEy537HgJqItWLGlCWxLZwECsDO6msiqfIoN3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiyang Ruan <ruansy.fnst@fujitsu.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Alistair Popple <apopple@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 089/173] fsdax: unshare: zero destination if srcmap is HOLE or UNWRITTEN
-Date: Wed, 12 Apr 2023 10:33:35 +0200
-Message-Id: <20230412082841.647109699@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.2 116/173] ACPI: video: Add auto_detect arg to __acpi_video_get_backlight_type()
+Date: Wed, 12 Apr 2023 10:34:02 +0200
+Message-Id: <20230412082842.784066938@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -41,59 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 13dd4e04625f600e5affb1b3f0b6c35268ab839b upstream.
+commit 78dfc9d1d1abb9e400386fa9c5724a8f7d75e3b9 upstream.
 
-unshare copies data from source to destination.  But if the source is
-HOLE or UNWRITTEN extents, we should zero the destination, otherwise
-the HOLE or UNWRITTEN part will be user-visible old data of the new
-allocated extent.
+Allow callers of __acpi_video_get_backlight_type() to pass a pointer
+to a bool which will get set to false if the backlight-type comes from
+the cmdline or a DMI quirk and set to true if auto-detection was used.
 
-Found by running generic/649 while mounting with -o dax=always on pmem.
+And make __acpi_video_get_backlight_type() non static so that it can
+be called directly outside of video_detect.c .
 
-Link: https://lkml.kernel.org/r/1679483469-2-1-git-send-email-ruansy.fnst@fujitsu.com
-Fixes: d984648e428b ("fsdax,xfs: port unshare to fsdax")
-Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Darrick J. Wong <djwong@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+While at it turn the acpi_video_get_backlight_type() and
+acpi_video_backlight_use_native() wrappers into static inline functions
+in include/acpi/video.h, so that we need to export one less symbol.
+
+Fixes: 5aa9d943e9b6 ("ACPI: video: Don't enable fallback path for creating ACPI backlight by default")
+Cc: All applicable <stable@vger.kernel.org>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dax.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/acpi/video_detect.c |   21 ++++++++-------------
+ include/acpi/video.h        |   15 +++++++++++++--
+ 2 files changed, 21 insertions(+), 15 deletions(-)
 
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -1258,15 +1258,20 @@ static s64 dax_unshare_iter(struct iomap
- 	/* don't bother with blocks that are not shared to start with */
- 	if (!(iomap->flags & IOMAP_F_SHARED))
- 		return length;
--	/* don't bother with holes or unwritten extents */
--	if (srcmap->type == IOMAP_HOLE || srcmap->type == IOMAP_UNWRITTEN)
--		return length;
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -774,7 +774,7 @@ static bool prefer_native_over_acpi_vide
+  * Determine which type of backlight interface to use on this system,
+  * First check cmdline, then dmi quirks, then do autodetect.
+  */
+-static enum acpi_backlight_type __acpi_video_get_backlight_type(bool native)
++enum acpi_backlight_type __acpi_video_get_backlight_type(bool native, bool *auto_detect)
+ {
+ 	static DEFINE_MUTEX(init_mutex);
+ 	static bool nvidia_wmi_ec_present;
+@@ -799,6 +799,9 @@ static enum acpi_backlight_type __acpi_v
+ 		native_available = true;
+ 	mutex_unlock(&init_mutex);
  
- 	id = dax_read_lock();
- 	ret = dax_iomap_direct_access(iomap, pos, length, &daddr, NULL);
- 	if (ret < 0)
- 		goto out_unlock;
- 
-+	/* zero the distance if srcmap is HOLE or UNWRITTEN */
-+	if (srcmap->flags & IOMAP_F_SHARED || srcmap->type == IOMAP_UNWRITTEN) {
-+		memset(daddr, 0, length);
-+		dax_flush(iomap->dax_dev, daddr, length);
-+		ret = length;
-+		goto out_unlock;
-+	}
++	if (auto_detect)
++		*auto_detect = false;
 +
- 	ret = dax_iomap_direct_access(srcmap, pos, length, &saddr, NULL);
- 	if (ret < 0)
- 		goto out_unlock;
+ 	/*
+ 	 * The below heuristics / detection steps are in order of descending
+ 	 * presedence. The commandline takes presedence over anything else.
+@@ -810,6 +813,9 @@ static enum acpi_backlight_type __acpi_v
+ 	if (acpi_backlight_dmi != acpi_backlight_undef)
+ 		return acpi_backlight_dmi;
+ 
++	if (auto_detect)
++		*auto_detect = true;
++
+ 	/* Special cases such as nvidia_wmi_ec and apple gmux. */
+ 	if (nvidia_wmi_ec_present)
+ 		return acpi_backlight_nvidia_wmi_ec;
+@@ -829,15 +835,4 @@ static enum acpi_backlight_type __acpi_v
+ 	/* No ACPI video/native (old hw), use vendor specific fw methods. */
+ 	return acpi_backlight_vendor;
+ }
+-
+-enum acpi_backlight_type acpi_video_get_backlight_type(void)
+-{
+-	return __acpi_video_get_backlight_type(false);
+-}
+-EXPORT_SYMBOL(acpi_video_get_backlight_type);
+-
+-bool acpi_video_backlight_use_native(void)
+-{
+-	return __acpi_video_get_backlight_type(true) == acpi_backlight_native;
+-}
+-EXPORT_SYMBOL(acpi_video_backlight_use_native);
++EXPORT_SYMBOL(__acpi_video_get_backlight_type);
+--- a/include/acpi/video.h
++++ b/include/acpi/video.h
+@@ -59,8 +59,6 @@ extern void acpi_video_unregister(void);
+ extern void acpi_video_register_backlight(void);
+ extern int acpi_video_get_edid(struct acpi_device *device, int type,
+ 			       int device_id, void **edid);
+-extern enum acpi_backlight_type acpi_video_get_backlight_type(void);
+-extern bool acpi_video_backlight_use_native(void);
+ /*
+  * Note: The value returned by acpi_video_handles_brightness_key_presses()
+  * may change over time and should not be cached.
+@@ -69,6 +67,19 @@ extern bool acpi_video_handles_brightnes
+ extern int acpi_video_get_levels(struct acpi_device *device,
+ 				 struct acpi_video_device_brightness **dev_br,
+ 				 int *pmax_level);
++
++extern enum acpi_backlight_type __acpi_video_get_backlight_type(bool native,
++								bool *auto_detect);
++
++static inline enum acpi_backlight_type acpi_video_get_backlight_type(void)
++{
++	return __acpi_video_get_backlight_type(false, NULL);
++}
++
++static inline bool acpi_video_backlight_use_native(void)
++{
++	return __acpi_video_get_backlight_type(true, NULL) == acpi_backlight_native;
++}
+ #else
+ static inline void acpi_video_report_nolcd(void) { return; };
+ static inline int acpi_video_register(void) { return -ENODEV; }
 
 
