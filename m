@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5562F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5EFBC433D2;
-	Wed, 12 Apr 2023 08:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8652F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BBBC4339B;
+	Wed, 12 Apr 2023 08:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289311;
-	bh=5cY+KYllyQz3wkeEM6rYhYYVqe7C1LBhwHvgXUr+uno=;
+	s=korg; t=1681289313;
+	bh=pIwo7D4hHuDWzGd2okAAnndjmKh7LIeuMSmul57JB7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hoI328+CjLkTieZfVg072dXgu0DL1BIdsPGRLBZ+q0B4ou6MQTuzvGWrftf5mRZNd
-	 Fbl388FR9pwno4ErptARjJK1k6FONkOXioMVK+SH2qucYiJnwBh9gLNrx7fUiuFCT0
-	 zv+6uW1423EOyKP3OstzyFkGkpCs5cWAf5Sr4b3Q=
+	b=iW1aN4zoh5hnymYc0Tt0bdd3uyKVSpwm/hUy5XtIFMnoiHu43UUyhDCqyjak9Hc0t
+	 0eK4QbDFvBA808rFgLNmIYVNNkOZ0DnQXXD9FAxyMEt+Weo2zX8VSveVOlIiRWVxKw
+	 Pj2tjLAftnWYiV2+FBtV3vZ7zJsffeWv/ELEDlKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Roulin <aroulin@nvidia.com>,
-	Danielle Ratson <danieller@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 050/173] ethtool: reset #lanes when lanes is omitted
-Date: Wed, 12 Apr 2023 10:32:56 +0200
-Message-Id: <20230412082840.132555507@linuxfoundation.org>
+Subject: [PATCH 6.2 024/173] wifi: brcmfmac: Fix SDIO suspend/resume regression
+Date: Wed, 12 Apr 2023 10:32:30 +0200
+Message-Id: <20230412082839.072582135@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -37,91 +36,160 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Roulin <aroulin@nvidia.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit e847c7675e19ef344913724dc68f83df31ad6a17 ]
+[ Upstream commit e4efa515d58f1363d8a27e548f9c5769d3121e03 ]
 
-If the number of lanes was forced and then subsequently the user
-omits this parameter, the ksettings->lanes is reset. The driver
-should then reset the number of lanes to the device's default
-for the specified speed.
+After commit 92cadedd9d5f ("brcmfmac: Avoid keeping power to SDIO card
+unless WOWL is used"), the wifi adapter by default is turned off on suspend
+and then re-probed on resume.
 
-However, although the ksettings->lanes is set to 0, the mod variable
-is not set to true to indicate the driver and userspace should be
-notified of the changes.
+In at least 2 model x86/acpi tablets with brcmfmac43430a1 wifi adapters,
+the newly added re-probe on resume fails like this:
 
-The consequence is that the same ethtool operation will produce
-different results based on the initial state.
+ brcmfmac: brcmf_sdio_bus_rxctl: resumed on timeout
+ ieee80211 phy1: brcmf_bus_started: failed: -110
+ ieee80211 phy1: brcmf_attach: dongle is not responding: err=-110
+ brcmfmac: brcmf_sdio_firmware_callback: brcmf_attach failed
 
-If the initial state is:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 2
-        Duplex: Full
-        Auto-negotiation: on
+It seems this specific brcmfmac model does not like being reprobed without
+it actually being turned off first.
 
-then executing 'ethtool -s swp1 speed 50000 autoneg off' will yield:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 2
-        Duplex: Full
-        Auto-negotiation: off
+And the adapter is not being turned off during suspend because of
+commit f0992ace680c ("brcmfmac: prohibit ACPI power management for brcmfmac
+driver").
 
-While if the initial state is:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 1
-        Duplex: Full
-        Auto-negotiation: off
+Now that the driver is being reprobed on resume, the disabling of ACPI
+pm is no longer necessary, except when WOWL is used (in which case there
+is no-reprobe).
 
-executing the same 'ethtool -s swp1 speed 50000 autoneg off' results in:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 1
-        Duplex: Full
-        Auto-negotiation: off
+Move the dis-/en-abling of ACPI pm to brcmf_sdio_wowl_config(), this fixes
+the brcmfmac43430a1 suspend/resume regression and should help save some
+power when suspended.
 
-This patch fixes this behavior. Omitting lanes will always results in
-the driver choosing the default lane width for the chosen speed. In this
-scenario, regardless of the initial state, the end state will be, e.g.,
+This change means that the code now also may re-enable ACPI pm when WOWL
+gets disabled. ACPI pm should only be re-enabled if it was enabled by
+the ACPI core originally. Add a brcmf_sdiod_acpi_save_power_manageable()
+to save the original state for this.
 
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 2
-        Duplex: Full
-        Auto-negotiation: off
+This has been tested on the following devices:
 
-Fixes: 012ce4dd3102 ("ethtool: Extend link modes settings uAPI with lanes")
-Signed-off-by: Andy Roulin <aroulin@nvidia.com>
-Reviewed-by: Danielle Ratson <danieller@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/ac238d6b-8726-8156-3810-6471291dbc7f@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Asus T100TA                brcmfmac43241b4-sdio
+Acer Iconia One 7 B1-750   brcmfmac43340-sdio
+Chuwi Hi8                  brcmfmac43430a0-sdio
+Chuwi Hi8                  brcmfmac43430a1-sdio
+
+(the Asus T100TA is the device for which the prohibiting of ACPI pm
+ was originally added)
+
+Fixes: 92cadedd9d5f ("brcmfmac: Avoid keeping power to SDIO card unless WOWL is used")
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230320122252.240070-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/linkmodes.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/bcmsdh.c      | 36 +++++++++++++------
+ .../broadcom/brcm80211/brcmfmac/sdio.h        |  2 ++
+ 2 files changed, 28 insertions(+), 10 deletions(-)
 
-diff --git a/net/ethtool/linkmodes.c b/net/ethtool/linkmodes.c
-index 126e06c713a3a..2d91f2a8c7626 100644
---- a/net/ethtool/linkmodes.c
-+++ b/net/ethtool/linkmodes.c
-@@ -282,11 +282,12 @@ static int ethnl_update_linkmodes(struct genl_info *info, struct nlattr **tb,
- 					    "lanes configuration not supported by device");
- 			return -EOPNOTSUPP;
- 		}
--	} else if (!lsettings->autoneg) {
--		/* If autoneg is off and lanes parameter is not passed from user,
--		 * set the lanes parameter to 0.
-+	} else if (!lsettings->autoneg && ksettings->lanes) {
-+		/* If autoneg is off and lanes parameter is not passed from user but
-+		 * it was defined previously then set the lanes parameter to 0.
- 		 */
- 		ksettings->lanes = 0;
-+		*mod = true;
- 	}
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+index b7c918f241c91..65d4799a56584 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+@@ -994,15 +994,34 @@ static const struct sdio_device_id brcmf_sdmmc_ids[] = {
+ MODULE_DEVICE_TABLE(sdio, brcmf_sdmmc_ids);
  
- 	ret = ethnl_update_bitset(ksettings->link_modes.advertising,
+ 
+-static void brcmf_sdiod_acpi_set_power_manageable(struct device *dev,
+-						  int val)
++static void brcmf_sdiod_acpi_save_power_manageable(struct brcmf_sdio_dev *sdiodev)
+ {
+ #if IS_ENABLED(CONFIG_ACPI)
+ 	struct acpi_device *adev;
+ 
+-	adev = ACPI_COMPANION(dev);
++	adev = ACPI_COMPANION(&sdiodev->func1->dev);
+ 	if (adev)
+-		adev->flags.power_manageable = 0;
++		sdiodev->func1_power_manageable = adev->flags.power_manageable;
++
++	adev = ACPI_COMPANION(&sdiodev->func2->dev);
++	if (adev)
++		sdiodev->func2_power_manageable = adev->flags.power_manageable;
++#endif
++}
++
++static void brcmf_sdiod_acpi_set_power_manageable(struct brcmf_sdio_dev *sdiodev,
++						  int enable)
++{
++#if IS_ENABLED(CONFIG_ACPI)
++	struct acpi_device *adev;
++
++	adev = ACPI_COMPANION(&sdiodev->func1->dev);
++	if (adev)
++		adev->flags.power_manageable = enable ? sdiodev->func1_power_manageable : 0;
++
++	adev = ACPI_COMPANION(&sdiodev->func2->dev);
++	if (adev)
++		adev->flags.power_manageable = enable ? sdiodev->func2_power_manageable : 0;
+ #endif
+ }
+ 
+@@ -1012,7 +1031,6 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
+ 	int err;
+ 	struct brcmf_sdio_dev *sdiodev;
+ 	struct brcmf_bus *bus_if;
+-	struct device *dev;
+ 
+ 	brcmf_dbg(SDIO, "Enter\n");
+ 	brcmf_dbg(SDIO, "Class=%x\n", func->class);
+@@ -1020,14 +1038,9 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
+ 	brcmf_dbg(SDIO, "sdio device ID: 0x%04x\n", func->device);
+ 	brcmf_dbg(SDIO, "Function#: %d\n", func->num);
+ 
+-	dev = &func->dev;
+-
+ 	/* Set MMC_QUIRK_LENIENT_FN0 for this card */
+ 	func->card->quirks |= MMC_QUIRK_LENIENT_FN0;
+ 
+-	/* prohibit ACPI power management for this device */
+-	brcmf_sdiod_acpi_set_power_manageable(dev, 0);
+-
+ 	/* Consume func num 1 but dont do anything with it. */
+ 	if (func->num == 1)
+ 		return 0;
+@@ -1059,6 +1072,7 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
+ 	dev_set_drvdata(&sdiodev->func1->dev, bus_if);
+ 	sdiodev->dev = &sdiodev->func1->dev;
+ 
++	brcmf_sdiod_acpi_save_power_manageable(sdiodev);
+ 	brcmf_sdiod_change_state(sdiodev, BRCMF_SDIOD_DOWN);
+ 
+ 	brcmf_dbg(SDIO, "F2 found, calling brcmf_sdiod_probe...\n");
+@@ -1124,6 +1138,8 @@ void brcmf_sdio_wowl_config(struct device *dev, bool enabled)
+ 
+ 	if (sdiodev->settings->bus.sdio.oob_irq_supported ||
+ 	    pm_caps & MMC_PM_WAKE_SDIO_IRQ) {
++		/* Stop ACPI from turning off the device when wowl is enabled */
++		brcmf_sdiod_acpi_set_power_manageable(sdiodev, !enabled);
+ 		sdiodev->wowl_enabled = enabled;
+ 		brcmf_dbg(SDIO, "Configuring WOWL, enabled=%d\n", enabled);
+ 		return;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
+index b76d34d36bde6..0d18ed15b4032 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
+@@ -188,6 +188,8 @@ struct brcmf_sdio_dev {
+ 	char nvram_name[BRCMF_FW_NAME_LEN];
+ 	char clm_name[BRCMF_FW_NAME_LEN];
+ 	bool wowl_enabled;
++	bool func1_power_manageable;
++	bool func2_power_manageable;
+ 	enum brcmf_sdiod_state state;
+ 	struct brcmf_sdiod_freezer *freezer;
+ 	const struct firmware *clm_fw;
 -- 
 2.39.2
 
