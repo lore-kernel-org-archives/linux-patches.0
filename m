@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492102F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A39C4339B;
-	Wed, 12 Apr 2023 08:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7112F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7653FC433D2;
+	Wed, 12 Apr 2023 08:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289048;
-	bh=KniCw7X4s6beES+ACV7I6uEf+SnCJlfKPEwGe5iWZ3Y=;
+	s=korg; t=1681289050;
+	bh=lxjy0herTY3nPIjIN7MHtjRmv7Ula2S2rl7YYIm7pzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gnKotxFWonxaS3qFzNfhSQjKOF0ZZKWB4dFQ17amrOsXIeF77hABK0+uCRu8WSoya
-	 m42Pro8LyCqT8IzA7y5xUxmEqJw2oTtnHd7yGcLsq/LOOuHXoLNfzy+OupuFFDkvPq
-	 pHWUldDyTIbSXQaSBO5XeVjVKU/Ytsv3HS4/XQoM=
+	b=oL18eHcfvdjPFkI+2jGfz5xJPEKdDCBhbFddmtVnHl2D4EsrNLOMFxBvpbdW4YsR7
+	 8SAwbDbe5VWz9uce1IkwkhIb3N84pdk2QmiQG5wn7XKtgDKbvAK9QDAEc0o2C2yHnj
+	 dPsHtqdfnJx8Ei2gCN20O9IK0DRhxE48FsKFwrao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 086/164] ksmbd: do not call kvmalloc() with __GFP_NORETRY | __GFP_NO_WARN
-Date: Wed, 12 Apr 2023 10:33:28 +0200
-Message-Id: <20230412082840.379841322@linuxfoundation.org>
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 077/164] iio: buffer: make sure O_NONBLOCK is respected
+Date: Wed, 12 Apr 2023 10:33:19 +0200
+Message-Id: <20230412082840.027747830@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,39 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marios Makassikis <mmakassikis@freebox.fr>
+From: Nuno Sá <nuno.sa@analog.com>
 
-commit e416ea62a9166e6075a07a970cc5bf79255d2700 upstream.
+commit 3da1814184582ed0faf039275a3f02e6f69944ee upstream.
 
-Commit 83dcedd5540d ("ksmbd: fix infinite loop in ksmbd_conn_handler_loop()"),
-changes GFP modifiers passed to kvmalloc(). This cause xfstests generic/551
-test to fail. We limit pdu length size according to connection status and
-maximum number of connections. In the rest, memory allocation of request
-is limited by credit management. so these flags are no longer needed.
+For output buffers, there's no guarantee that the buffer won't be full
+in the first iteration of the loop in which case we would block
+independently of userspace passing O_NONBLOCK or not. Fix it by always
+checking the flag before going to sleep.
 
-Fixes: 83dcedd5540d ("ksmbd: fix infinite loop in ksmbd_conn_handler_loop()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+While at it (and as it's a bit related), refactored the loop so that the
+stop condition is 'written != n', i.e, run the loop until all data has
+been copied into the IIO buffers. This makes the code a bit simpler.
+
+Fixes: 9eeee3b0bf190 ("iio: Add output buffer support")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Lars-Peter Clausen <lars@metafoo.de>
+Link: https://lore.kernel.org/r/20230216101452.591805-3-nuno.sa@analog.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/iio/industrialio-buffer.c |   19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -326,10 +326,7 @@ int ksmbd_conn_handler_loop(void *p)
+--- a/drivers/iio/industrialio-buffer.c
++++ b/drivers/iio/industrialio-buffer.c
+@@ -203,21 +203,24 @@ static ssize_t iio_buffer_write(struct f
+ 				break;
+ 			}
  
- 		/* 4 for rfc1002 length field */
- 		size = pdu_size + 4;
--		conn->request_buf = kvmalloc(size,
--					     GFP_KERNEL |
--					     __GFP_NOWARN |
--					     __GFP_NORETRY);
-+		conn->request_buf = kvmalloc(size, GFP_KERNEL);
- 		if (!conn->request_buf)
- 			break;
++			if (filp->f_flags & O_NONBLOCK) {
++				if (!written)
++					ret = -EAGAIN;
++				break;
++			}
++
+ 			wait_woken(&wait, TASK_INTERRUPTIBLE,
+ 					MAX_SCHEDULE_TIMEOUT);
+ 			continue;
+ 		}
  
+ 		ret = rb->access->write(rb, n - written, buf + written);
+-		if (ret == 0 && (filp->f_flags & O_NONBLOCK))
+-			ret = -EAGAIN;
++		if (ret < 0)
++			break;
+ 
+-		if (ret > 0) {
+-			written += ret;
+-			if (written != n && !(filp->f_flags & O_NONBLOCK))
+-				continue;
+-		}
+-	} while (ret == 0);
++		written += ret;
++
++	} while (written != n);
+ 	remove_wait_queue(&rb->pollq, &wait);
+ 
+ 	return ret < 0 ? ret : written;
 
 
