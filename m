@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356E62F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAA6C433EF;
-	Wed, 12 Apr 2023 08:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67812F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50793C433D2;
+	Wed, 12 Apr 2023 08:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289216;
-	bh=KPtMdFvcLXeqApTHAa/m2nsp4q+5zyw3rFRDHD7Ep6Y=;
+	s=korg; t=1681289218;
+	bh=NNSM0798TvY+Lv0mYifS28sDtxZ7eR6U7AcxdbiE5uA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XkZCXyoeeJQxoIuNWUloq4pFcQ/8tscc6pPIaZzI0BhRWuus/sDEJajCdxWb5pmFW
-	 n1EsQBGs7qEVl89QAn4LmA15gtI4gNyks5HdY24slMrbD0U8MoTLiZXldOACdIzE4x
-	 Qhn8l9MAaGlTurIyz7pde26y4kHdisDb7yxaCc7E=
+	b=2R3DmumFTMXRWnhvQ1Zn9z1KEchf7NsEaQoCrgEuJOid5wEuvfq8AorvKueq6Q2pR
+	 pvyoYID1YBwBeUT5hcsOuiV7xU5ylsY23LZW+5p08eeW99e39ot+jy94n+ZZNKHzF0
+	 XEJZ3UxgyUwhOY5BxIWfP/aszDym0+ohbit8uPk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Nico Boehr <nrb@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 015/173] ASoC: codecs: lpass: fix the order or clks turn off during suspend
-Date: Wed, 12 Apr 2023 10:32:21 +0200
-Message-Id: <20230412082838.719057987@linuxfoundation.org>
+Subject: [PATCH 6.2 016/173] KVM: s390: pv: fix external interruption loop not always detected
+Date: Wed, 12 Apr 2023 10:32:22 +0200
+Message-Id: <20230412082838.749206573@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,82 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Nico Boehr <nrb@linux.ibm.com>
 
-[ Upstream commit a4a3203426f4b67535d6442ddc5dca8878a0678f ]
+[ Upstream commit 21f27df854008b86349a203bf97fef79bb11f53e ]
 
-The order in which clocks are stopped matters as some of the clock
-like NPL are derived from MCLK.
+To determine whether the guest has caused an external interruption loop
+upon code 20 (external interrupt) intercepts, the ext_new_psw needs to
+be inspected to see whether external interrupts are enabled.
 
-Without this patch, Dragonboard RB5 DSP would crash with below error:
- qcom_q6v5_pas 17300000.remoteproc: fatal error received:
- ABT_dal.c:278:ABTimeout: AHB Bus hang is detected,
- Number of bus hang detected := 2 , addr0 = 0x3370000 , addr1 = 0x0!!!
+Under non-PV, ext_new_psw can simply be taken from guest lowcore. Under
+PV, KVM can only access the encrypted guest lowcore and hence the
+ext_new_psw must not be taken from guest lowcore.
 
-Turn off  fsgen first, followed by npl and then finally mclk, which is exactly
-the opposite order of enable sequence.
+handle_external_interrupt() incorrectly did that and hence was not able
+to reliably tell whether an external interruption loop is happening or
+not. False negatives cause spurious failures of my kvm-unit-test
+for extint loops[1] under PV.
 
-Fixes: 1dc3459009c3 ("ASoC: codecs: lpass: register mclk after runtime pm")
-Reported-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Link: https://lore.kernel.org/r/20230323110125.23790-1-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Since code 20 is only caused under PV if and only if the guest's
+ext_new_psw is enabled for external interrupts, false positive detection
+of a external interruption loop can not happen.
+
+Fix this issue by instead looking at the guest PSW in the state
+description. Since the PSW swap for external interrupt is done by the
+ultravisor before the intercept is caused, this reliably tells whether
+the guest is enabled for external interrupts in the ext_new_psw.
+
+Also update the comments to explain better what is happening.
+
+[1] https://lore.kernel.org/kvm/20220812062151.1980937-4-nrb@linux.ibm.com/
+
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Fixes: 201ae986ead7 ("KVM: s390: protvirt: Implement interrupt injection")
+Link: https://lore.kernel.org/r/20230213085520.100756-2-nrb@linux.ibm.com
+Message-Id: <20230213085520.100756-2-nrb@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/lpass-rx-macro.c  | 4 ++--
- sound/soc/codecs/lpass-tx-macro.c  | 4 ++--
- sound/soc/codecs/lpass-wsa-macro.c | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ arch/s390/kvm/intercept.c | 32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
-index 8621cfabcf5b6..1639f3b66facb 100644
---- a/sound/soc/codecs/lpass-rx-macro.c
-+++ b/sound/soc/codecs/lpass-rx-macro.c
-@@ -3667,9 +3667,9 @@ static int __maybe_unused rx_macro_runtime_suspend(struct device *dev)
- 	regcache_cache_only(rx->regmap, true);
- 	regcache_mark_dirty(rx->regmap);
+diff --git a/arch/s390/kvm/intercept.c b/arch/s390/kvm/intercept.c
+index 0ee02dae14b2b..2cda8d9d7c6ef 100644
+--- a/arch/s390/kvm/intercept.c
++++ b/arch/s390/kvm/intercept.c
+@@ -271,10 +271,18 @@ static int handle_prog(struct kvm_vcpu *vcpu)
+  * handle_external_interrupt - used for external interruption interceptions
+  * @vcpu: virtual cpu
+  *
+- * This interception only occurs if the CPUSTAT_EXT_INT bit was set, or if
+- * the new PSW does not have external interrupts disabled. In the first case,
+- * we've got to deliver the interrupt manually, and in the second case, we
+- * drop to userspace to handle the situation there.
++ * This interception occurs if:
++ * - the CPUSTAT_EXT_INT bit was already set when the external interrupt
++ *   occurred. In this case, the interrupt needs to be injected manually to
++ *   preserve interrupt priority.
++ * - the external new PSW has external interrupts enabled, which will cause an
++ *   interruption loop. We drop to userspace in this case.
++ *
++ * The latter case can be detected by inspecting the external mask bit in the
++ * external new psw.
++ *
++ * Under PV, only the latter case can occur, since interrupt priorities are
++ * handled in the ultravisor.
+  */
+ static int handle_external_interrupt(struct kvm_vcpu *vcpu)
+ {
+@@ -285,10 +293,18 @@ static int handle_external_interrupt(struct kvm_vcpu *vcpu)
  
--	clk_disable_unprepare(rx->mclk);
--	clk_disable_unprepare(rx->npl);
- 	clk_disable_unprepare(rx->fsgen);
-+	clk_disable_unprepare(rx->npl);
-+	clk_disable_unprepare(rx->mclk);
+ 	vcpu->stat.exit_external_interrupt++;
  
- 	return 0;
- }
-diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
-index 8facdb922f076..9f33289ce2174 100644
---- a/sound/soc/codecs/lpass-tx-macro.c
-+++ b/sound/soc/codecs/lpass-tx-macro.c
-@@ -2093,9 +2093,9 @@ static int __maybe_unused tx_macro_runtime_suspend(struct device *dev)
- 	regcache_cache_only(tx->regmap, true);
- 	regcache_mark_dirty(tx->regmap);
- 
--	clk_disable_unprepare(tx->mclk);
--	clk_disable_unprepare(tx->npl);
- 	clk_disable_unprepare(tx->fsgen);
-+	clk_disable_unprepare(tx->npl);
-+	clk_disable_unprepare(tx->mclk);
- 
- 	return 0;
- }
-diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
-index c0b86d69c72e3..01149b20b4c93 100644
---- a/sound/soc/codecs/lpass-wsa-macro.c
-+++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -2504,9 +2504,9 @@ static int __maybe_unused wsa_macro_runtime_suspend(struct device *dev)
- 	regcache_cache_only(wsa->regmap, true);
- 	regcache_mark_dirty(wsa->regmap);
- 
--	clk_disable_unprepare(wsa->mclk);
--	clk_disable_unprepare(wsa->npl);
- 	clk_disable_unprepare(wsa->fsgen);
-+	clk_disable_unprepare(wsa->npl);
-+	clk_disable_unprepare(wsa->mclk);
- 
- 	return 0;
- }
+-	rc = read_guest_lc(vcpu, __LC_EXT_NEW_PSW, &newpsw, sizeof(psw_t));
+-	if (rc)
+-		return rc;
+-	/* We can not handle clock comparator or timer interrupt with bad PSW */
++	if (kvm_s390_pv_cpu_is_protected(vcpu)) {
++		newpsw = vcpu->arch.sie_block->gpsw;
++	} else {
++		rc = read_guest_lc(vcpu, __LC_EXT_NEW_PSW, &newpsw, sizeof(psw_t));
++		if (rc)
++			return rc;
++	}
++
++	/*
++	 * Clock comparator or timer interrupt with external interrupt enabled
++	 * will cause interrupt loop. Drop to userspace.
++	 */
+ 	if ((eic == EXT_IRQ_CLK_COMP || eic == EXT_IRQ_CPU_TIMER) &&
+ 	    (newpsw.mask & PSW_MASK_EXT))
+ 		return -EOPNOTSUPP;
 -- 
 2.39.2
 
