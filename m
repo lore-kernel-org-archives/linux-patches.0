@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9023C2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A73DC433D2;
-	Wed, 12 Apr 2023 08:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235BA2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3660C433EF;
+	Wed, 12 Apr 2023 08:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288666;
-	bh=bYs3RiM3cKzoUtmqBaxN1gXvuc2X6G682uDsrDZprh0=;
+	s=korg; t=1681288669;
+	bh=cL22PBSYfvX7dAg/Rl+kGlkmW0y/CcpNb7L+1jRVj+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHOkllTs6n35HD+A3chBlKuahsMGu4D1y57D7bTsCGGFmgS2/dAzObs5PHGC3Ni4M
-	 RBv25xN1jCsI+YwDJHOvx74cdbcFN9zV4n89fAz1oYX05H3kDKCgRe9tEEO9qTOj2I
-	 DHg9JmsJc4FDrFT0oqGMvAZJfE/RWGGGLOmHRxs0=
+	b=qW0bypZSmc0q3MU4s1qmmW/EiIHM4LxXvfHLRj1JmeeJJng1u32BK9DD5jggLUSRT
+	 88mdeOW9XdRtgpWAO7p70iPa8f5TYr3SImKYtP36LldUZYrY8aabNL0sIQ9UPemDLW
+	 1JGwLte7o+Wu434YCNhkNq0t6WMjWploD64EFH+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sherry Sun <sherry.sun@nxp.com>
-Subject: [PATCH 5.15 65/93] tty: serial: fsl_lpuart: avoid checking for transfer complete when UARTCTRL_SBK is asserted in lpuart32_tx_empty
-Date: Wed, 12 Apr 2023 10:34:06 +0200
-Message-Id: <20230412082825.866193988@linuxfoundation.org>
+	syzbot+b08ebcc22f8f3e6be43a@syzkaller.appspotmail.com,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 66/93] nilfs2: fix potential UAF of struct nilfs_sc_info in nilfs_segctor_thread()
+Date: Wed, 12 Apr 2023 10:34:07 +0200
+Message-Id: <20230412082825.905320427@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -34,48 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 9425914f3de6febbd6250395f56c8279676d9c3c upstream.
+commit 6be49d100c22ffea3287a4b19d7639d259888e33 upstream.
 
-According to LPUART RM, Transmission Complete Flag becomes 0 if queuing
-a break character by writing 1 to CTRL[SBK], so here need to avoid
-checking for transmission complete when UARTCTRL_SBK is asserted,
-otherwise the lpuart32_tx_empty may never get TIOCSER_TEMT.
+The finalization of nilfs_segctor_thread() can race with
+nilfs_segctor_kill_thread() which terminates that thread, potentially
+causing a use-after-free BUG as KASAN detected.
 
-Commit 2411fd94ceaa("tty: serial: fsl_lpuart: skip waiting for
-transmission complete when UARTCTRL_SBK is asserted") only fix it in
-lpuart32_set_termios(), here also fix it in lpuart32_tx_empty().
+At the end of nilfs_segctor_thread(), it assigns NULL to "sc_task" member
+of "struct nilfs_sc_info" to indicate the thread has finished, and then
+notifies nilfs_segctor_kill_thread() of this using waitqueue
+"sc_wait_task" on the struct nilfs_sc_info.
 
-Fixes: 380c966c093e ("tty: serial: fsl_lpuart: add 32-bit register interface support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Link: https://lore.kernel.org/r/20230323054415.20363-1-sherry.sun@nxp.com
+However, here, immediately after the NULL assignment to "sc_task", it is
+possible that nilfs_segctor_kill_thread() will detect it and return to
+continue the deallocation, freeing the nilfs_sc_info structure before the
+thread does the notification.
+
+This fixes the issue by protecting the NULL assignment to "sc_task" and
+its notification, with spinlock "sc_state_lock" of the struct
+nilfs_sc_info.  Since nilfs_segctor_kill_thread() does a final check to
+see if "sc_task" is NULL with "sc_state_lock" locked, this can eliminate
+the race.
+
+Link: https://lkml.kernel.org/r/20230327175318.8060-1-konishi.ryusuke@gmail.com
+Reported-by: syzbot+b08ebcc22f8f3e6be43a@syzkaller.appspotmail.com
+Link: https://lkml.kernel.org/r/00000000000000660d05f7dfa877@google.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/nilfs2/segment.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -829,11 +829,17 @@ static unsigned int lpuart32_tx_empty(st
- 			struct lpuart_port, port);
- 	unsigned long stat = lpuart32_read(port, UARTSTAT);
- 	unsigned long sfifo = lpuart32_read(port, UARTFIFO);
-+	unsigned long ctrl = lpuart32_read(port, UARTCTRL);
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2609,11 +2609,10 @@ static int nilfs_segctor_thread(void *ar
+ 	goto loop;
  
- 	if (sport->dma_tx_in_progress)
- 		return 0;
- 
--	if (stat & UARTSTAT_TC && sfifo & UARTFIFO_TXEMPT)
-+	/*
-+	 * LPUART Transmission Complete Flag may never be set while queuing a break
-+	 * character, so avoid checking for transmission complete when UARTCTRL_SBK
-+	 * is asserted.
-+	 */
-+	if ((stat & UARTSTAT_TC && sfifo & UARTFIFO_TXEMPT) || ctrl & UARTCTRL_SBK)
- 		return TIOCSER_TEMT;
- 
+  end_thread:
+-	spin_unlock(&sci->sc_state_lock);
+-
+ 	/* end sync. */
+ 	sci->sc_task = NULL;
+ 	wake_up(&sci->sc_wait_task); /* for nilfs_segctor_kill_thread() */
++	spin_unlock(&sci->sc_state_lock);
  	return 0;
+ }
+ 
 
 
