@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE1A2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84C2C433EF;
-	Wed, 12 Apr 2023 08:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130032F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90073C433EF;
+	Wed, 12 Apr 2023 08:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289264;
-	bh=AeKYbk+bSL0H5ExY4FVuP8fdSoNMmFesGea8FnmH6Mw=;
+	s=korg; t=1681289266;
+	bh=kSfMlW5eVR9DAOMH/2ul2MyNtZv4s5yj5Dne60UaMTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dEtY+d9aRUHnKR1c4Fw8QWJHWMBTtKeXXHkt0OJ78A367K/R7Tww0XPmYhpHatP5K
-	 yHgGjMrlaWELfBDWwEN6vWNkOwO3cQkESxzAl/8pvV2p27QZE74p5c3V+871jngXjr
-	 f83dtpNfvoz7tscBaFDIYouyAzph3HbhXhd+0BP0=
+	b=lCpZ/wqIZFy0+++zZCmeVZFV+MrTebMBsUEk3nGGnAlyTo5z/xxFFOL1BP9obTbma
+	 ZeFdeb1pwvkuKgGhwFJ66Yk8zwxb2PDpC1lOkNtcQilezXZ/ZSNt4hrJOUGUq0tRrj
+	 K6i+UoZ0ds57bEZYlHlX0Ej1qlbw/7Cj14+eXIsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Ram Kumar Dharuman <quic_ramd@quicinc.com>,
+	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 033/173] drm/i915/huc: Cancel HuC delayed load timer on reset.
-Date: Wed, 12 Apr 2023 10:32:39 +0200
-Message-Id: <20230412082839.416958261@linuxfoundation.org>
+Subject: [PATCH 6.2 034/173] net: qrtr: Do not do DEL_SERVER broadcast after DEL_CLIENT
+Date: Wed, 12 Apr 2023 10:32:40 +0200
+Message-Id: <20230412082839.458133674@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,71 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-[ Upstream commit c74237496fbc799257b091179dd01a3200f7314d ]
+[ Upstream commit 839349d13905927d8a567ca4d21d88c82028e31d ]
 
-In the rare case where we do a full GT reset after starting the HuC
-load and before it completes (which basically boils down to i915 hanging
-during init), we need to cancel the delayed load fence, as it will be
-re-initialized in the post-reset recovery.
+On the remote side, when QRTR socket is removed, af_qrtr will call
+qrtr_port_remove() which broadcasts the DEL_CLIENT packet to all neighbours
+including local NS. NS upon receiving the DEL_CLIENT packet, will remove
+the lookups associated with the node:port and broadcasts the DEL_SERVER
+packet.
 
-Fixes: 27536e03271d ("drm/i915/huc: track delayed HuC load with a fence")
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
-Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230313205556.1174503-1-daniele.ceraolospurio@intel.com
-(cherry picked from commit cdf7911f7dbcb37228409a63bf75630776c45a15)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+But on the host side, due to the arrival of the DEL_CLIENT packet, the NS
+would've already deleted the server belonging to that port. So when the
+remote's NS again broadcasts the DEL_SERVER for that port, it throws below
+error message on the host:
+
+"failed while handling packet from 2:-2"
+
+So fix this error by not broadcasting the DEL_SERVER packet when the
+DEL_CLIENT packet gets processed."
+
+Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Ram Kumar Dharuman <quic_ramd@quicinc.com>
+Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_huc.c | 7 +++++++
- drivers/gpu/drm/i915/gt/uc/intel_huc.h | 7 +------
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ net/qrtr/ns.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_huc.c b/drivers/gpu/drm/i915/gt/uc/intel_huc.c
-index 410905da8e974..0c103ca160d10 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_huc.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_huc.c
-@@ -235,6 +235,13 @@ static void delayed_huc_load_fini(struct intel_huc *huc)
- 	i915_sw_fence_fini(&huc->delayed_load.fence);
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index e595079c2cafe..3e40a1ba48f79 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -273,7 +273,7 @@ static struct qrtr_server *server_add(unsigned int service,
+ 	return NULL;
  }
  
-+int intel_huc_sanitize(struct intel_huc *huc)
-+{
-+	delayed_huc_load_complete(huc);
-+	intel_uc_fw_sanitize(&huc->fw);
-+	return 0;
-+}
-+
- static bool vcs_supported(struct intel_gt *gt)
+-static int server_del(struct qrtr_node *node, unsigned int port)
++static int server_del(struct qrtr_node *node, unsigned int port, bool bcast)
  {
- 	intel_engine_mask_t mask = gt->info.engine_mask;
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_huc.h b/drivers/gpu/drm/i915/gt/uc/intel_huc.h
-index 52db03620c609..db555b3c1f562 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_huc.h
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_huc.h
-@@ -41,6 +41,7 @@ struct intel_huc {
- 	} delayed_load;
- };
+ 	struct qrtr_lookup *lookup;
+ 	struct qrtr_server *srv;
+@@ -286,7 +286,7 @@ static int server_del(struct qrtr_node *node, unsigned int port)
+ 	radix_tree_delete(&node->servers, port);
  
-+int intel_huc_sanitize(struct intel_huc *huc);
- void intel_huc_init_early(struct intel_huc *huc);
- int intel_huc_init(struct intel_huc *huc);
- void intel_huc_fini(struct intel_huc *huc);
-@@ -54,12 +55,6 @@ bool intel_huc_is_authenticated(struct intel_huc *huc);
- void intel_huc_register_gsc_notifier(struct intel_huc *huc, struct bus_type *bus);
- void intel_huc_unregister_gsc_notifier(struct intel_huc *huc, struct bus_type *bus);
+ 	/* Broadcast the removal of local servers */
+-	if (srv->node == qrtr_ns.local_node)
++	if (srv->node == qrtr_ns.local_node && bcast)
+ 		service_announce_del(&qrtr_ns.bcast_sq, srv);
  
--static inline int intel_huc_sanitize(struct intel_huc *huc)
--{
--	intel_uc_fw_sanitize(&huc->fw);
--	return 0;
--}
--
- static inline bool intel_huc_is_supported(struct intel_huc *huc)
- {
- 	return intel_uc_fw_is_supported(&huc->fw);
+ 	/* Announce the service's disappearance to observers */
+@@ -372,7 +372,7 @@ static int ctrl_cmd_bye(struct sockaddr_qrtr *from)
+ 		}
+ 		slot = radix_tree_iter_resume(slot, &iter);
+ 		rcu_read_unlock();
+-		server_del(node, srv->port);
++		server_del(node, srv->port, true);
+ 		rcu_read_lock();
+ 	}
+ 	rcu_read_unlock();
+@@ -458,10 +458,13 @@ static int ctrl_cmd_del_client(struct sockaddr_qrtr *from,
+ 		kfree(lookup);
+ 	}
+ 
+-	/* Remove the server belonging to this port */
++	/* Remove the server belonging to this port but don't broadcast
++	 * DEL_SERVER. Neighbours would've already removed the server belonging
++	 * to this port due to the DEL_CLIENT broadcast from qrtr_port_remove().
++	 */
+ 	node = node_get(node_id);
+ 	if (node)
+-		server_del(node, port);
++		server_del(node, port, false);
+ 
+ 	/* Advertise the removal of this client to all local servers */
+ 	local_node = node_get(qrtr_ns.local_node);
+@@ -566,7 +569,7 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
+ 	if (!node)
+ 		return -ENOENT;
+ 
+-	return server_del(node, port);
++	return server_del(node, port, true);
+ }
+ 
+ static int ctrl_cmd_new_lookup(struct sockaddr_qrtr *from,
 -- 
 2.39.2
 
