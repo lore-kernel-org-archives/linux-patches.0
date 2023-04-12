@@ -1,27 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994C32F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6625C433A0;
-	Wed, 12 Apr 2023 08:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021FA2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551BEC433EF;
+	Wed, 12 Apr 2023 08:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289179;
-	bh=vCjQLRwvG9Fjkgjh9V2g/YplN8RULrAjuuFEEVOYUm8=;
+	s=korg; t=1681289181;
+	bh=+qZGFFl48Mk0ePi0uZ0A1bLWYcUePl2Tw57kk0qAljM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Om/utSRSHoCcmnG7bamw9oaHa1tREBM0RZRZmL6XKYIP5vHAH+dOjxproYi8dLwaz
-	 yw93aaY6181R9nl43/pAR3eQQR6NveMCUMT3VAr9J6JZjulf+v/zzE+58kn01Qj31d
-	 o7FqgjrOzj9DhvzC0NUesns7v21PBNG0+YN7L/8I=
+	b=bjLdDaKUecQkui5OHFlaHO9y87V5auluwmljZcKC9t1QMPNAKLm78Rtuh0Af5YAhX
+	 hAsWBZv6wTn4UVeiaJ+cJB5o1t6jkwBerdlUIQj2KLtsQeBxP9gjDKNFSRLLX0jOj+
+	 7jvLKzwZFMLYOBqR1RCjOsI1lbhp3Ktpxc0/3Nyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <tim.huang@amd.com>,
+	Lyude Paul <lyude@redhat.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Ben Skeggs <bskeggs@redhat.com>,
+	Karol Herbst <kherbst@redhat.com>,
+	Harry Wentland <harry.wentland@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	dri-devel@lists.freedesktop.org,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
 	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 145/164] drm/amdgpu: skip psp suspend for IMU enabled ASICs mode2 reset
-Date: Wed, 12 Apr 2023 10:34:27 +0200
-Message-Id: <20230412082842.771554924@linuxfoundation.org>
+Subject: [PATCH 6.1 146/164] drm/display/dp_mst: Handle old/new payload states in drm_dp_remove_payload()
+Date: Wed, 12 Apr 2023 10:34:28 +0200
+Message-Id: <20230412082842.819985225@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,42 +45,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <tim.huang@amd.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit e11c775030c5585370fda43035204bb5fa23b139 upstream.
+commit e761cc20946a0094df71cb31a565a6a0d03bd8be upstream.
 
-The psp suspend & resume should be skipped to avoid destroy
-the TMR and reload FWs again for IMU enabled APU ASICs.
+Atm, drm_dp_remove_payload() uses the same payload state to both get the
+vc_start_slot required for the payload removal DPCD message and to
+deduct time_slots from vc_start_slot of all payloads after the one being
+removed.
 
-Signed-off-by: Tim Huang <tim.huang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The above isn't always correct, as vc_start_slot must be the up-to-date
+version contained in the new payload state, but time_slots must be the
+one used when the payload was previously added, contained in the old
+payload state. The new payload's time_slots can change vs. the old one
+if the current atomic commit changes the corresponding mode.
+
+This patch let's drivers pass the old and new payload states to
+drm_dp_remove_payload(), but keeps these the same for now in all drivers
+not to change the behavior. A follow-up i915 patch will pass in that
+driver the correct old and new states to the function.
+
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Ben Skeggs <bskeggs@redhat.com>
+Cc: Karol Herbst <kherbst@redhat.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Wayne Lin <Wayne.Lin@amd.com>
+Cc: stable@vger.kernel.org # 6.1
+Cc: dri-devel@lists.freedesktop.org
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Acked-by: Lyude Paul <lyude@redhat.com>
+Acked-by: Daniel Vetter <daniel@ffwll.ch>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230206114856.2665066-2-imre.deak@intel.com
+Hand modified for missing 8c7d980da9ba3eb67a1b40fd4b33bcf49397084b
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |    2 -
+ drivers/gpu/drm/display/drm_dp_mst_topology.c             |   26 +++++++-------
+ drivers/gpu/drm/i915/display/intel_dp_mst.c               |    4 +-
+ drivers/gpu/drm/nouveau/dispnv50/disp.c                   |    2 -
+ include/drm/display/drm_dp_mst_helper.h                   |    3 +
+ 5 files changed, 21 insertions(+), 16 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3040,6 +3040,18 @@ static int amdgpu_device_ip_suspend_phas
- 		    (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_SDMA))
- 			continue;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -206,7 +206,7 @@ bool dm_helpers_dp_mst_write_payload_all
+ 	if (enable)
+ 		drm_dp_add_payload_part1(mst_mgr, mst_state, payload);
+ 	else
+-		drm_dp_remove_payload(mst_mgr, mst_state, payload);
++		drm_dp_remove_payload(mst_mgr, mst_state, payload, payload);
  
-+		/* Once swPSP provides the IMU, RLC FW binaries to TOS during cold-boot.
-+		 * These are in TMR, hence are expected to be reused by PSP-TOS to reload
-+		 * from this location and RLC Autoload automatically also gets loaded
-+		 * from here based on PMFW -> PSP message during re-init sequence.
-+		 * Therefore, the psp suspend & resume should be skipped to avoid destroy
-+		 * the TMR and reload FWs again for IMU enabled APU ASICs.
-+		 */
-+		if (amdgpu_in_reset(adev) &&
-+		    (adev->flags & AMD_IS_APU) && adev->gfx.imu.funcs &&
-+		    adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_PSP)
-+			continue;
-+
- 		/* XXX handle errors */
- 		r = adev->ip_blocks[i].version->funcs->suspend(adev);
- 		/* XXX handle errors */
+ 	/* mst_mgr->->payloads are VC payload notify MST branch using DPCD or
+ 	 * AUX message. The sequence is slot 1-63 allocated sequence for each
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -3342,7 +3342,8 @@ EXPORT_SYMBOL(drm_dp_add_payload_part1);
+  * drm_dp_remove_payload() - Remove an MST payload
+  * @mgr: Manager to use.
+  * @mst_state: The MST atomic state
+- * @payload: The payload to write
++ * @old_payload: The payload with its old state
++ * @new_payload: The payload to write
+  *
+  * Removes a payload from an MST topology if it was successfully assigned a start slot. Also updates
+  * the starting time slots of all other payloads which would have been shifted towards the start of
+@@ -3350,36 +3351,37 @@ EXPORT_SYMBOL(drm_dp_add_payload_part1);
+  */
+ void drm_dp_remove_payload(struct drm_dp_mst_topology_mgr *mgr,
+ 			   struct drm_dp_mst_topology_state *mst_state,
+-			   struct drm_dp_mst_atomic_payload *payload)
++			   const struct drm_dp_mst_atomic_payload *old_payload,
++			   struct drm_dp_mst_atomic_payload *new_payload)
+ {
+ 	struct drm_dp_mst_atomic_payload *pos;
+ 	bool send_remove = false;
+ 
+ 	/* We failed to make the payload, so nothing to do */
+-	if (payload->vc_start_slot == -1)
++	if (new_payload->vc_start_slot == -1)
+ 		return;
+ 
+ 	mutex_lock(&mgr->lock);
+-	send_remove = drm_dp_mst_port_downstream_of_branch(payload->port, mgr->mst_primary);
++	send_remove = drm_dp_mst_port_downstream_of_branch(new_payload->port, mgr->mst_primary);
+ 	mutex_unlock(&mgr->lock);
+ 
+ 	if (send_remove)
+-		drm_dp_destroy_payload_step1(mgr, mst_state, payload);
++		drm_dp_destroy_payload_step1(mgr, mst_state, new_payload);
+ 	else
+ 		drm_dbg_kms(mgr->dev, "Payload for VCPI %d not in topology, not sending remove\n",
+-			    payload->vcpi);
++			    new_payload->vcpi);
+ 
+ 	list_for_each_entry(pos, &mst_state->payloads, next) {
+-		if (pos != payload && pos->vc_start_slot > payload->vc_start_slot)
+-			pos->vc_start_slot -= payload->time_slots;
++		if (pos != new_payload && pos->vc_start_slot > new_payload->vc_start_slot)
++			pos->vc_start_slot -= old_payload->time_slots;
+ 	}
+-	payload->vc_start_slot = -1;
++	new_payload->vc_start_slot = -1;
+ 
+ 	mgr->payload_count--;
+-	mgr->next_start_slot -= payload->time_slots;
++	mgr->next_start_slot -= old_payload->time_slots;
+ 
+-	if (payload->delete)
+-		drm_dp_mst_put_port_malloc(payload->port);
++	if (new_payload->delete)
++		drm_dp_mst_put_port_malloc(new_payload->port);
+ }
+ EXPORT_SYMBOL(drm_dp_remove_payload);
+ 
+--- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
+@@ -366,6 +366,8 @@ static void intel_mst_disable_dp(struct
+ 		to_intel_connector(old_conn_state->connector);
+ 	struct drm_dp_mst_topology_state *mst_state =
+ 		drm_atomic_get_mst_topology_state(&state->base, &intel_dp->mst_mgr);
++	struct drm_dp_mst_atomic_payload *payload =
++		drm_atomic_get_mst_payload_state(mst_state, connector->port);
+ 	struct drm_i915_private *i915 = to_i915(connector->base.dev);
+ 
+ 	drm_dbg_kms(&i915->drm, "active links %d\n",
+@@ -374,7 +376,7 @@ static void intel_mst_disable_dp(struct
+ 	intel_hdcp_disable(intel_mst->connector);
+ 
+ 	drm_dp_remove_payload(&intel_dp->mst_mgr, mst_state,
+-			      drm_atomic_get_mst_payload_state(mst_state, connector->port));
++			      payload, payload);
+ 
+ 	intel_audio_codec_disable(encoder, old_crtc_state, old_conn_state);
+ }
+--- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
++++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
+@@ -1028,7 +1028,7 @@ nv50_msto_prepare(struct drm_atomic_stat
+ 
+ 	// TODO: Figure out if we want to do a better job of handling VCPI allocation failures here?
+ 	if (msto->disabled) {
+-		drm_dp_remove_payload(mgr, mst_state, payload);
++		drm_dp_remove_payload(mgr, mst_state, payload, payload);
+ 	} else {
+ 		if (msto->enabled)
+ 			drm_dp_add_payload_part1(mgr, mst_state, payload);
+--- a/include/drm/display/drm_dp_mst_helper.h
++++ b/include/drm/display/drm_dp_mst_helper.h
+@@ -841,7 +841,8 @@ int drm_dp_add_payload_part2(struct drm_
+ 			     struct drm_dp_mst_atomic_payload *payload);
+ void drm_dp_remove_payload(struct drm_dp_mst_topology_mgr *mgr,
+ 			   struct drm_dp_mst_topology_state *mst_state,
+-			   struct drm_dp_mst_atomic_payload *payload);
++			   const struct drm_dp_mst_atomic_payload *old_payload,
++			   struct drm_dp_mst_atomic_payload *new_payload);
+ 
+ int drm_dp_check_act_status(struct drm_dp_mst_topology_mgr *mgr);
+ 
 
 
