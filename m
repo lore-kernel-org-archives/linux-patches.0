@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EE02F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:40:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A434CC4339B;
-	Wed, 12 Apr 2023 08:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9CA2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:40:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F84AC433D2;
+	Wed, 12 Apr 2023 08:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288826;
-	bh=ejybGv4NS3pYwTMmRgSSfn/5KKsdTb1SBzecpRHGcrs=;
+	s=korg; t=1681288828;
+	bh=sIgyhsMwk7QVMipQvGKzZroEFlStJQRzxjaDDwVLo8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ycxC1B37+2mPGVBEmmRCUa/lc+VHPa3qhcPFV1vi9DU2LWglYgfa532Av6Lj6Uur1
-	 T77QUfGkPM96GpPZVnpOIY1ka0i8gHCT/Xf4u6rjeZRkjubjMAma/uP11tKHcOWg3N
-	 rQa3nx0o4cvnOvVuhhmhJIG33ZhQzqgm7Xilxlfc=
+	b=JamJJTMdbPLSbsY/NdVFbnngOObqzkZztfiPCK8LYSabGM13YaQ2bu3m29PKX1qcf
+	 WyZG2SLHqbhmB2UOfKwrOSD216auKRJsBY80M/o/Z4I1ArvJ1s409+j00rCSitnRpP
+	 WmOtiozUV7AiD6cVbPuMxKaggWhIcoF8oxynTyuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <groeck@chromium.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/164] pwm: cros-ec: Explicitly set .polarity in .get_state()
-Date: Wed, 12 Apr 2023 10:32:16 +0200
-Message-Id: <20230412082837.451363791@linuxfoundation.org>
+Subject: [PATCH 6.1 032/164] net: dont let netpoll invoke NAPI if in xmit context
+Date: Wed, 12 Apr 2023 10:32:34 +0200
+Message-Id: <20230412082838.275739107@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -36,35 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 30006b77c7e130e01d1ab2148cc8abf73dfcc4bf ]
+[ Upstream commit 275b471e3d2daf1472ae8fa70dc1b50c9e0b9e75 ]
 
-The driver only supports normal polarity. Complete the implementation of
-.get_state() by setting .polarity accordingly.
+Commit 0db3dc73f7a3 ("[NETPOLL]: tx lock deadlock fix") narrowed
+down the region under netif_tx_trylock() inside netpoll_send_skb().
+(At that point in time netif_tx_trylock() would lock all queues of
+the device.) Taking the tx lock was problematic because driver's
+cleanup method may take the same lock. So the change made us hold
+the xmit lock only around xmit, and expected the driver to take
+care of locking within ->ndo_poll_controller().
 
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Fixes: 1f0d3bb02785 ("pwm: Add ChromeOS EC PWM driver")
-Link: https://lore.kernel.org/r/20230228135508.1798428-3-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Unfortunately this only works if netpoll isn't itself called with
+the xmit lock already held. Netpoll code is careful and uses
+trylock(). The drivers, however, may be using plain lock().
+Printing while holding the xmit lock is going to result in rare
+deadlocks.
+
+Luckily we record the xmit lock owners, so we can scan all the queues,
+the same way we scan NAPI owners. If any of the xmit locks is held
+by the local CPU we better not attempt any polling.
+
+It would be nice if we could narrow down the check to only the NAPIs
+and the queue we're trying to use. I don't see a way to do that now.
+
+Reported-by: Roman Gushchin <roman.gushchin@linux.dev>
+Fixes: 0db3dc73f7a3 ("[NETPOLL]: tx lock deadlock fix")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-cros-ec.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/netpoll.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-cros-ec.c b/drivers/pwm/pwm-cros-ec.c
-index 11684edc06207..e55bc36ed4972 100644
---- a/drivers/pwm/pwm-cros-ec.c
-+++ b/drivers/pwm/pwm-cros-ec.c
-@@ -198,6 +198,7 @@ static int cros_ec_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index 9be762e1d0428..4ac8d0ad9f6fc 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -137,6 +137,20 @@ static void queue_process(struct work_struct *work)
+ 	}
+ }
  
- 	state->enabled = (ret > 0);
- 	state->period = EC_PWM_MAX_DUTY;
-+	state->polarity = PWM_POLARITY_NORMAL;
++static int netif_local_xmit_active(struct net_device *dev)
++{
++	int i;
++
++	for (i = 0; i < dev->num_tx_queues; i++) {
++		struct netdev_queue *txq = netdev_get_tx_queue(dev, i);
++
++		if (READ_ONCE(txq->xmit_lock_owner) == smp_processor_id())
++			return 1;
++	}
++
++	return 0;
++}
++
+ static void poll_one_napi(struct napi_struct *napi)
+ {
+ 	int work;
+@@ -183,7 +197,10 @@ void netpoll_poll_dev(struct net_device *dev)
+ 	if (!ni || down_trylock(&ni->dev_lock))
+ 		return;
  
- 	/*
- 	 * Note that "disabled" and "duty cycle == 0" are treated the same. If
+-	if (!netif_running(dev)) {
++	/* Some drivers will take the same locks in poll and xmit,
++	 * we can't poll if local CPU is already in xmit.
++	 */
++	if (!netif_running(dev) || netif_local_xmit_active(dev)) {
+ 		up(&ni->dev_lock);
+ 		return;
+ 	}
 -- 
 2.39.2
 
