@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244192F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB89C433D2;
-	Wed, 12 Apr 2023 08:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB7E2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355B6C433EF;
+	Wed, 12 Apr 2023 08:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288993;
-	bh=6h/sY1dLM0/Z6oJ4Ojx075PAmh8I3r/WsT//+vTg//Q=;
+	s=korg; t=1681288995;
+	bh=5vre8+SuQn35PcCTo6nzjVVZtJ/r+TB1Nj7nOdcEbRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWaRGUeA93KXrDOspdZS+cGjozw7ahaPPMEWyxYv4HwvYCd9DS5o+slB+/zZyFGyQ
-	 /NdPD/L5QXRfF2jVE2uU3FOF6jQTtktHp25MnbSX1UJtVFknMRdYLl9UvRIFHaYsp0
-	 zAml6uzD20phj4MH0PhYjDp74ywmxLp5w/WFPA9M=
+	b=PnQfG9RjwYX8ZhpGPKaFBuwT22Vi3MW5CHL6gNzX6+DRyrpKBecW1RQpdpx382RiY
+	 I5VFniL1+psfYi28M+NhuEFiP6vusnE8k+dgH4qKPlDI9WXzQIvJ6OX46/LZ9BIAQt
+	 EJOOIi6h3GDIcNsKEUZvEN9Ycq9wKITwLUkQfR2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Clevenger <scclevenger@os.amperecomputing.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 6.1 096/164] coresight: etm4x: Do not access TRCIDR1 for identification
-Date: Wed, 12 Apr 2023 10:33:38 +0200
-Message-Id: <20230412082840.747997308@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 6.1 079/164] tty: serial: sh-sci: Fix transmit end interrupt handler
+Date: Wed, 12 Apr 2023 10:33:21 +0200
+Message-Id: <20230412082840.108378270@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -37,113 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 735e7b30a53a1679c050cddb73f5e5316105d2e3 upstream.
+commit b43a18647f03c87e77d50d6fe74904b61b96323e upstream.
 
-CoreSight ETM4x architecture clearly provides ways to identify a device
-via registers in the "Management" class, TRCDEVARCH and TRCDEVTYPE. These
-registers can be accessed without the Trace domain being powered on.
-We additionally added TRCIDR1 as fallback in order to cover for any
-ETMs that may not have implemented TRCDEVARCH. So far, nobody has
-reported hitting a WARNING we placed to catch such systems.
+The fourth interrupt on SCI port is transmit end interrupt compared to
+the break interrupt on other port types. So, shuffle the interrupts to fix
+the transmit end interrupt handler.
 
-Also, more importantly it is problematic to access TRCIDR1, which is a
-"Trace" register via MMIO access, without clearing the OSLK. But we cannot
-mess with the OSLK until we know for sure that this is an ETMv4 device.
-Thus, this kind of creates a chicken and egg problem unnecessarily for
-systems "which are compliant" to the ETMv4 architecture.
-
-Let us remove the TRCIDR1 fall back check and rely only on TRCDEVARCH.
-
-Fixes: 8b94db1edaee ("coresight: etm4x: Use TRCDEVARCH for component discovery")
-Cc: stable@vger.kernel.org
-Reported-by: Steve Clevenger <scclevenger@os.amperecomputing.com>
-Link: https://lore.kernel.org/all/143540e5623d4c7393d24833f2b80600d8d745d2.1677881753.git.scclevenger@os.amperecomputing.com/
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: James Clark <james.clark@arm.com>
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230321104530.1547136-1-suzuki.poulose@arm.com
+Fixes: e1d0be616186 ("sh-sci: Add h8300 SCI")
+Cc: stable <stable@kernel.org>
+Suggested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230317150403.154094-1-biju.das.jz@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c |   22 ++++++++-------------
- drivers/hwtracing/coresight/coresight-etm4x.h      |   20 +++++--------------
- 2 files changed, 15 insertions(+), 27 deletions(-)
+ drivers/tty/serial/sh-sci.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1010,25 +1010,21 @@ static bool etm4_init_iomem_access(struc
- 				   struct csdev_access *csa)
- {
- 	u32 devarch = readl_relaxed(drvdata->base + TRCDEVARCH);
--	u32 idr1 = readl_relaxed(drvdata->base + TRCIDR1);
- 
- 	/*
- 	 * All ETMs must implement TRCDEVARCH to indicate that
--	 * the component is an ETMv4. To support any broken
--	 * implementations we fall back to TRCIDR1 check, which
--	 * is not really reliable.
-+	 * the component is an ETMv4. Even though TRCIDR1 also
-+	 * contains the information, it is part of the "Trace"
-+	 * register and must be accessed with the OSLK cleared,
-+	 * with MMIO. But we cannot touch the OSLK until we are
-+	 * sure this is an ETM. So rely only on the TRCDEVARCH.
- 	 */
--	if ((devarch & ETM_DEVARCH_ID_MASK) == ETM_DEVARCH_ETMv4x_ARCH) {
--		drvdata->arch = etm_devarch_to_arch(devarch);
--	} else {
--		pr_warn("CPU%d: ETM4x incompatible TRCDEVARCH: %x, falling back to TRCIDR1\n",
--			smp_processor_id(), devarch);
--
--		if (ETM_TRCIDR1_ARCH_MAJOR(idr1) != ETM_TRCIDR1_ARCH_ETMv4)
--			return false;
--		drvdata->arch = etm_trcidr_to_arch(idr1);
-+	if ((devarch & ETM_DEVARCH_ID_MASK) != ETM_DEVARCH_ETMv4x_ARCH) {
-+		pr_warn_once("TRCDEVARCH doesn't match ETMv4 architecture\n");
-+		return false;
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -31,6 +31,7 @@
+ #include <linux/ioport.h>
+ #include <linux/ktime.h>
+ #include <linux/major.h>
++#include <linux/minmax.h>
+ #include <linux/module.h>
+ #include <linux/mm.h>
+ #include <linux/of.h>
+@@ -2867,6 +2868,13 @@ static int sci_init_single(struct platfo
+ 			sci_port->irqs[i] = platform_get_irq(dev, i);
  	}
  
-+	drvdata->arch = etm_devarch_to_arch(devarch);
- 	*csa = CSDEV_ACCESS_IOMEM(drvdata->base);
- 	return true;
- }
---- a/drivers/hwtracing/coresight/coresight-etm4x.h
-+++ b/drivers/hwtracing/coresight/coresight-etm4x.h
-@@ -753,14 +753,12 @@
-  * TRCDEVARCH	- CoreSight architected register
-  *                - Bits[15:12] - Major version
-  *                - Bits[19:16] - Minor version
-- * TRCIDR1	- ETM architected register
-- *                - Bits[11:8] - Major version
-- *                - Bits[7:4]  - Minor version
-- * We must rely on TRCDEVARCH for the version information,
-- * however we don't want to break the support for potential
-- * old implementations which might not implement it. Thus
-- * we fall back to TRCIDR1 if TRCDEVARCH is not implemented
-- * for memory mapped components.
-+ *
-+ * We must rely only on TRCDEVARCH for the version information. Even though,
-+ * TRCIDR1 also provides the architecture version, it is a "Trace" register
-+ * and as such must be accessed only with Trace power domain ON. This may
-+ * not be available at probe time.
-+ *
-  * Now to make certain decisions easier based on the version
-  * we use an internal representation of the version in the
-  * driver, as follows :
-@@ -786,12 +784,6 @@ static inline u8 etm_devarch_to_arch(u32
- 				ETM_DEVARCH_REVISION(devarch));
- }
- 
--static inline u8 etm_trcidr_to_arch(u32 trcidr1)
--{
--	return ETM_ARCH_VERSION(ETM_TRCIDR1_ARCH_MAJOR(trcidr1),
--				ETM_TRCIDR1_ARCH_MINOR(trcidr1));
--}
--
- enum etm_impdef_type {
- 	ETM4_IMPDEF_HISI_CORE_COMMIT,
- 	ETM4_IMPDEF_FEATURE_MAX,
++	/*
++	 * The fourth interrupt on SCI port is transmit end interrupt, so
++	 * shuffle the interrupts.
++	 */
++	if (p->type == PORT_SCI)
++		swap(sci_port->irqs[SCIx_BRI_IRQ], sci_port->irqs[SCIx_TEI_IRQ]);
++
+ 	/* The SCI generates several interrupts. They can be muxed together or
+ 	 * connected to different interrupt lines. In the muxed case only one
+ 	 * interrupt resource is specified as there is only one interrupt ID.
 
 
