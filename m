@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51802F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDE8C4339B;
-	Wed, 12 Apr 2023 08:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6126B2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8AAC433D2;
+	Wed, 12 Apr 2023 08:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288700;
-	bh=0v2h6MAqLDWJy8r9FK4Wjz16DUWz19dMM7R4k6Tcw/I=;
+	s=korg; t=1681288703;
+	bh=qmjZbcL6VUI+7bN9ySIP4mIQ6Ik9bk71S9ipV3KubHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qd7qJiQ5AnIpoeFE1J7Y9SZ7J2Tcd/hT4+CJWWAxOB0AOvYVPIinUITpKUTyIiJCK
-	 wm/B2gN9sTAYQDkhMR8wMFnQpEgU7Ju/Boa4K9F25B0vwpjh+fj3qAA2phuud+hYlb
-	 s+xrALsGOdpKGu74vrzszJAtEht/ekwed8jg3/k0=
+	b=eqBd4Cfpt+2RmepchuVArZjws2U55vmI5K6XUEMCgZR9/KstFuvLPQ7V51jH6Lu5A
+	 6GQ4FFezI/uhu59qNdGh+hnXdFGfNYlsQ+OfdMt6qkLC9z6GeylEbiH029V0qu16SL
+	 bVezftXCeVVornzzJDkDtKevYBYkOUzeRgMGJW14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yin Fengwei <fengwei.yin@intel.com>,
-	kernel test robot <yujie.liu@intel.com>,
 	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
+	Thiago Rafael Becker <tbecker@redhat.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 77/93] smb3: lower default deferred close timeout to address perf regression
-Date: Wed, 12 Apr 2023 10:34:18 +0200
-Message-Id: <20230412082826.379618513@linuxfoundation.org>
+Subject: [PATCH 5.15 78/93] cifs: sanitize paths in cifs_update_super_prepath.
+Date: Wed, 12 Apr 2023 10:34:19 +0200
+Message-Id: <20230412082826.423305083@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -38,46 +36,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Thiago Rafael Becker <tbecker@redhat.com>
 
-[ Upstream commit 7e0e76d99079be13c9961dde7c93b2d1ee665af4 ]
+[ Upstream commit d19342c6609b67f2ba83b9eccca2777e3687f625 ]
 
-Performance tests with large number of threads noted that the change
-of the default closetimeo (deferred close timeout between when
-close is done by application and when client has to send the close
-to the server), to 5 seconds from 1 second, significantly degraded
-perf in some cases like this (in the filebench example reported,
-the stats show close requests on the wire taking twice as long,
-and 50% regression in filebench perf). This is stil configurable
-via mount parm closetimeo, but to be safe, decrease default back
-to its previous value of 1 second.
+After a server reboot, clients are failing to move files with ENOENT.
+This is caused by DFS referrals containing multiple separators, which
+the server move call doesn't recognize.
 
-Reported-by: Yin Fengwei <fengwei.yin@intel.com>
-Reported-by: kernel test robot <yujie.liu@intel.com>
-Link: https://lore.kernel.org/lkml/997614df-10d4-af53-9571-edec36b0e2f3@intel.com/
-Fixes: 5efdd9122eff ("smb3: allow deferred close timeout to be configurable")
-Cc: stable@vger.kernel.org # 6.0+
-Tested-by: Yin Fengwei <fengwei.yin@intel.com>
+v1: Initial patch.
+v2: Move prototype to header.
+
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2182472
+Fixes: a31080899d5f ("cifs: sanitize multiple delimiters in prepath")
+Actually-Fixes: 24e0a1eff9e2 ("cifs: switch to new mount api")
 Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Thiago Rafael Becker <tbecker@redhat.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: d19342c6609b ("cifs: sanitize paths in cifs_update_super_prepath.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/fs_context.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/fs_context.c | 13 +++++++------
+ fs/cifs/fs_context.h |  3 +++
+ fs/cifs/misc.c       |  2 +-
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
+diff --git a/fs/cifs/fs_context.c b/fs/cifs/fs_context.c
+index 85ad0c9e2f8b5..8455db6a26f5a 100644
+--- a/fs/cifs/fs_context.c
++++ b/fs/cifs/fs_context.c
+@@ -437,13 +437,14 @@ int smb3_parse_opt(const char *options, const char *key, char **val)
+  * but there are some bugs that prevent rename from working if there are
+  * multiple delimiters.
+  *
+- * Returns a sanitized duplicate of @path. The caller is responsible for
+- * cleaning up the original.
++ * Returns a sanitized duplicate of @path. @gfp indicates the GFP_* flags
++ * for kstrdup.
++ * The caller is responsible for freeing the original.
+  */
+ #define IS_DELIM(c) ((c) == '/' || (c) == '\\')
+-static char *sanitize_path(char *path)
++char *cifs_sanitize_prepath(char *prepath, gfp_t gfp)
+ {
+-	char *cursor1 = path, *cursor2 = path;
++	char *cursor1 = prepath, *cursor2 = prepath;
+ 
+ 	/* skip all prepended delimiters */
+ 	while (IS_DELIM(*cursor1))
+@@ -465,7 +466,7 @@ static char *sanitize_path(char *path)
+ 		cursor2--;
+ 
+ 	*(cursor2) = '\0';
+-	return kstrdup(path, GFP_KERNEL);
++	return kstrdup(prepath, gfp);
+ }
+ 
+ /*
+@@ -527,7 +528,7 @@ smb3_parse_devname(const char *devname, struct smb3_fs_context *ctx)
+ 	if (!*pos)
+ 		return 0;
+ 
+-	ctx->prepath = sanitize_path(pos);
++	ctx->prepath = cifs_sanitize_prepath(pos, GFP_KERNEL);
+ 	if (!ctx->prepath)
+ 		return -ENOMEM;
+ 
 diff --git a/fs/cifs/fs_context.h b/fs/cifs/fs_context.h
-index b5ae210bafe04..ad45256cf68e2 100644
+index ad45256cf68e2..3cf8d6235162d 100644
 --- a/fs/cifs/fs_context.h
 +++ b/fs/cifs/fs_context.h
-@@ -282,5 +282,5 @@ extern void smb3_update_mnt_flags(struct cifs_sb_info *cifs_sb);
-  * max deferred close timeout (jiffies) - 2^30
+@@ -283,4 +283,7 @@ extern void smb3_update_mnt_flags(struct cifs_sb_info *cifs_sb);
   */
  #define SMB3_MAX_DCLOSETIMEO (1 << 30)
--#define SMB3_DEF_DCLOSETIMEO (5 * HZ) /* Can increase later, other clients use larger */
-+#define SMB3_DEF_DCLOSETIMEO (1 * HZ) /* even 1 sec enough to help eg open/write/close/open/read */
+ #define SMB3_DEF_DCLOSETIMEO (1 * HZ) /* even 1 sec enough to help eg open/write/close/open/read */
++
++extern char *cifs_sanitize_prepath(char *prepath, gfp_t gfp);
++
  #endif
+diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
+index 3a90ee314ed73..300f5f382e43f 100644
+--- a/fs/cifs/misc.c
++++ b/fs/cifs/misc.c
+@@ -1301,7 +1301,7 @@ int cifs_update_super_prepath(struct cifs_sb_info *cifs_sb, char *prefix)
+ 	kfree(cifs_sb->prepath);
+ 
+ 	if (prefix && *prefix) {
+-		cifs_sb->prepath = kstrdup(prefix, GFP_ATOMIC);
++		cifs_sb->prepath = cifs_sanitize_prepath(prefix, GFP_ATOMIC);
+ 		if (!cifs_sb->prepath)
+ 			return -ENOMEM;
+ 
 -- 
 2.39.2
 
