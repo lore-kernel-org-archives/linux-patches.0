@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A542F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F59CC433D2;
-	Wed, 12 Apr 2023 08:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955DF2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D225C433D2;
+	Wed, 12 Apr 2023 08:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289058;
-	bh=hw3GM1MrphKYN1jjXC3YijJ126DywjLtlxb4sLXRnko=;
+	s=korg; t=1681289061;
+	bh=u4QMldzwkCH7K8evFHAHipIsjqvDKlM5fwCfMdglvxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k45V0vtiD4tP1vL3MQTGIkBVBwCrzQZ3/okY+jxPCnRR/DDBn/FIE2dEnWNk0CHJ/
-	 HrEzmSc17FEvIdzOMJLPXES0ZfYCx1rn2ttWDzWVLKGcBLncaeeyAFbuOTYhRZqG9g
-	 14a010LwlpTvYQ7Mef42Q++sZD3ChgrEf0sl3+HI=
+	b=td5QOkaAYf1N7puLVmhw3Csuin/LtTafrGjmiHoPLWhX2KIanjt3VJ9Krk1BmPeI5
+	 LMfVgQ4Jtu4kH+jbLyKP1ccM/LDyDvvGT6hXgnHdjgRXALjYgvRCA7hrVLO6p+Z7Ue
+	 DXICxO9dVfdipWuMsNu3R7o4+xDNc7HEs78qq5sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 121/164] ACPI: video: Add acpi_backlight=video quirk for Lenovo ThinkPad W530
-Date: Wed, 12 Apr 2023 10:34:03 +0200
-Message-Id: <20230412082841.730190059@linuxfoundation.org>
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 122/164] net: stmmac: Add queue reset into stmmac_xdp_open() function
+Date: Wed, 12 Apr 2023 10:34:04 +0200
+Message-Id: <20230412082841.779494923@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,64 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Song Yoong Siang <yoong.siang.song@intel.com>
 
-commit a5b2781dcab2c77979a4b8adda781d2543580901 upstream.
+commit 24e3fce00c0b557491ff596c0682a29dee6fe848 upstream.
 
-The Lenovo ThinkPad W530 uses a nvidia k1000m GPU. When this gets used
-together with one of the older nvidia binary driver series (the latest
-series does not support it), then backlight control does not work.
+Queue reset was moved out from __init_dma_rx_desc_rings() and
+__init_dma_tx_desc_rings() functions. Thus, the driver fails to transmit
+and receive packet after XDP prog setup.
 
-This is caused by commit 3dbc80a3e4c5 ("ACPI: video: Make backlight
-class device registration a separate step (v2)") combined with
-commit 5aa9d943e9b6 ("ACPI: video: Don't enable fallback path for
-creating ACPI backlight by default").
+This commit adds the missing queue reset into stmmac_xdp_open() function.
 
-After these changes the acpi_video# backlight device is only registered
-when requested by a GPU driver calling acpi_video_register_backlight()
-which the nvidia binary driver does not do.
-
-I realize that using the nvidia binary driver is not a supported use-case
-and users can workaround this by adding acpi_backlight=video on the kernel
-commandline, but the ThinkPad W530 is a popular model under Linux users,
-so it seems worthwhile to add a quirk for this.
-
-I will also email Nvidia asking them to make the driver call
-acpi_video_register_backlight() when an internal LCD panel is detected.
-So maybe the next maintenance release of the drivers will fix this...
-
-Fixes: 5aa9d943e9b6 ("ACPI: video: Don't enable fallback path for creating ACPI backlight by default")
-Cc: All applicable <stable@vger.kernel.org>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: f9ec5723c3db ("net: ethernet: stmicro: stmmac: move queue reset to dedicated functions")
+Cc: <stable@vger.kernel.org> # 6.0+
+Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/20230404044823.3226144-1-yoong.siang.song@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -298,6 +298,20 @@ static const struct dmi_system_id video_
- 	},
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -6627,6 +6627,8 @@ int stmmac_xdp_open(struct net_device *d
+ 		goto init_error;
+ 	}
  
- 	/*
-+	 * Older models with nvidia GPU which need acpi_video backlight
-+	 * control and where the old nvidia binary driver series does not
-+	 * call acpi_video_register_backlight().
-+	 */
-+	{
-+	 .callback = video_detect_force_video,
-+	 /* ThinkPad W530 */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+		DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad W530"),
-+		},
-+	},
++	stmmac_reset_queues_param(priv);
 +
-+	/*
- 	 * These models have a working acpi_video backlight control, and using
- 	 * native backlight causes a regression where backlight does not work
- 	 * when userspace is not handling brightness key events. Disable
+ 	/* DMA CSR Channel configuration */
+ 	for (chan = 0; chan < dma_csr_ch; chan++) {
+ 		stmmac_init_chan(priv, priv->ioaddr, priv->plat->dma_cfg, chan);
 
 
