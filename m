@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6652F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:50:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E65C4339B;
-	Wed, 12 Apr 2023 08:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B2F2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:50:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBD7C433D2;
+	Wed, 12 Apr 2023 08:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289405;
-	bh=4h7XxP2l6FPHUUSG7kgVsDjORIV0/8sty62BgSyJBu8=;
+	s=korg; t=1681289407;
+	bh=Y5avBEy5XRgbgxi7czMPQBpvH123Ly2+/Aa8by29/LA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QMaABO/ZBFkIj5ZZCOlR3VnAcI5uZDBDNBCJcjU42iBvjGnTnBpI6KpAzWGqU3uAl
-	 CL5T7JStSUGLU4XsHJ/ARwRPVKMiBlTQySqOW4jyCmnDk4OiBR7agK/hM8fx94RacG
-	 JNh4l1XXRxRpD38b7gmKx+ORYnwzf9Otl3up/RUY=
+	b=EXHU0+lmlE+f5Rwo+kuF1Z1sIaygRuCe+ZS8jE0FEY9k1Tx5/IaEhQ6/Ww4e4HtqQ
+	 dOKn53eJ91BvfcO9erkw38vbfHB7ndu+KVKs4eJ0nfQrXiV0LyIai0okCaHVIE9ox5
+	 XdaDEjWA945LUhIMYJL8lPEX79XeSAw+zSrr9K2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sherry Sun <sherry.sun@nxp.com>
-Subject: [PATCH 6.2 085/173] tty: serial: fsl_lpuart: fix crash in lpuart_uport_is_active
-Date: Wed, 12 Apr 2023 10:33:31 +0200
-Message-Id: <20230412082841.492525782@linuxfoundation.org>
+	Ira Weiny <ira.weiny@intel.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.2 057/173] cxl/pci: Handle truncated CDAT entries
+Date: Wed, 12 Apr 2023 10:33:03 +0200
+Message-Id: <20230412082840.426776136@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -34,33 +36,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 178e00f36f934a88682d96aa046c1f90cb6f83a7 upstream.
+commit b56faef2312057db20479b240eb71bd2e51fb51c upstream.
 
-For serdev framework, tty->dev is a NULL pointer, lpuart_uport_is_active
-calling device_may_wakeup() may cause kernel NULL pointer crash, so here
-add the NULL pointer check before using it.
+If truncated CDAT entries are received from a device, the concatenation
+of those entries constitutes a corrupt CDAT, yet is happily exposed to
+user space.
 
-Fixes: 4f5cb8c5e915 ("tty: serial: fsl_lpuart: enable wakeup source for lpuart")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Link: https://lore.kernel.org/r/20230323110923.24581-1-sherry.sun@nxp.com
+Avoid by verifying response lengths and erroring out if truncation is
+detected.
+
+The last CDAT entry may still be truncated despite the checks introduced
+herein if the length in the CDAT header is too small.  However, that is
+easily detectable by user space because it reaches EOF prematurely.
+A subsequent commit which rightsizes the CDAT response allocation closes
+that remaining loophole.
+
+The two lines introduced here which exceed 80 chars are shortened to
+less than 80 chars by a subsequent commit which migrates to a
+synchronous DOE API and replaces "t.task.rv" by "rc".
+
+The existing acpi_cdat_header and acpi_table_cdat struct definitions
+provided by ACPICA cannot be used because they do not employ __le16 or
+__le32 types.  I believe that cannot be changed because those types are
+Linux-specific and ACPI is specified for little endian platforms only,
+hence doesn't care about endianness.  So duplicate the structs.
+
+Fixes: c97006046c79 ("cxl/port: Read CDAT table")
+Tested-by: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: stable@vger.kernel.org # v6.0+
+Link: https://lore.kernel.org/r/bce3aebc0e8e18a1173425a7a865b232c3912963.1678543498.git.lukas@wunner.de
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cxl/core/pci.c |   13 +++++++++----
+ drivers/cxl/cxlpci.h   |   14 ++++++++++++++
+ 2 files changed, 23 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -2896,7 +2896,7 @@ static bool lpuart_uport_is_active(struc
- 	tty = tty_port_tty_get(port);
- 	if (tty) {
- 		tty_dev = tty->dev;
--		may_wake = device_may_wakeup(tty_dev);
-+		may_wake = tty_dev && device_may_wakeup(tty_dev);
- 		tty_kref_put(tty);
- 	}
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -547,8 +547,8 @@ static int cxl_cdat_read_table(struct de
  
+ 	do {
+ 		DECLARE_CDAT_DOE_TASK(CDAT_DOE_REQ(entry_handle), t);
++		struct cdat_entry_header *entry;
+ 		size_t entry_dw;
+-		__le32 *entry;
+ 		int rc;
+ 
+ 		rc = pci_doe_submit_task(cdat_doe, &t.task);
+@@ -557,14 +557,19 @@ static int cxl_cdat_read_table(struct de
+ 			return rc;
+ 		}
+ 		wait_for_completion(&t.c);
+-		/* 1 DW header + 1 DW data min */
+-		if (t.task.rv < (2 * sizeof(__le32)))
++
++		/* 1 DW Table Access Response Header + CDAT entry */
++		entry = (struct cdat_entry_header *)(t.response_pl + 1);
++		if ((entry_handle == 0 &&
++		     t.task.rv != sizeof(__le32) + sizeof(struct cdat_header)) ||
++		    (entry_handle > 0 &&
++		     (t.task.rv < sizeof(__le32) + sizeof(*entry) ||
++		      t.task.rv != sizeof(__le32) + le16_to_cpu(entry->length))))
+ 			return -EIO;
+ 
+ 		/* Get the CXL table access header entry handle */
+ 		entry_handle = FIELD_GET(CXL_DOE_TABLE_ACCESS_ENTRY_HANDLE,
+ 					 le32_to_cpu(t.response_pl[0]));
+-		entry = t.response_pl + 1;
+ 		entry_dw = t.task.rv / sizeof(__le32);
+ 		/* Skip Header */
+ 		entry_dw -= 1;
+--- a/drivers/cxl/cxlpci.h
++++ b/drivers/cxl/cxlpci.h
+@@ -62,6 +62,20 @@ enum cxl_regloc_type {
+ 	CXL_REGLOC_RBI_TYPES
+ };
+ 
++struct cdat_header {
++	__le32 length;
++	u8 revision;
++	u8 checksum;
++	u8 reserved[6];
++	__le32 sequence;
++} __packed;
++
++struct cdat_entry_header {
++	u8 type;
++	u8 reserved;
++	__le16 length;
++} __packed;
++
+ int devm_cxl_port_enumerate_dports(struct cxl_port *port);
+ struct cxl_dev_state;
+ int cxl_hdm_decode_init(struct cxl_dev_state *cxlds, struct cxl_hdm *cxlhdm);
 
 
