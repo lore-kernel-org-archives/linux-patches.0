@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9312F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:41:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C247C433D2;
-	Wed, 12 Apr 2023 08:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFC62F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:41:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50F8C433D2;
+	Wed, 12 Apr 2023 08:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288909;
-	bh=Wyy1xiKSfQdxnGCLWtwufagAVjuyCaEo526UYJykz6k=;
+	s=korg; t=1681288912;
+	bh=J8k/ZPAuNUgwFx/OaEXQKRiBPzPd7xSlMUB02YKmDRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N5/NkCQMySxcvil3AKVgALosNAarP1OvYx2wl/PsTrYWOaAfd9VbymUF0MtXw7zex
-	 fgXMqmJAPOQbrU+Rh8IaNSiW9hragqJ8o6GUhgwPwY5nYJoVQNu1sWHprqNUam2MwZ
-	 5FUf8P6OiSHJXhKpDAQgaxIrd9h5lYI1oVLXjAzU=
+	b=hzAyT3DIku+MYUyzA1h4drN/sjh9CjtYB5uwlcuGv79Qx2IQ0JqaD7dvveogIFFBu
+	 Go1Mn/SE7p/XAE8B6XTFmoe6F/M5SGgxQ9qu53D8xxchWC/YbqTR9uPcMZU9XelpcI
+	 chYG4JCMbsHNFCOgwWW6GnfqwKXR/zKh+WFOgGgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simei Su <simei.su@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/164] ice: fix wrong fallback logic for FDIR
-Date: Wed, 12 Apr 2023 10:32:48 +0200
-Message-Id: <20230412082838.804465207@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.1 064/164] xhci: also avoid the XHCI_ZERO_64B_REGS quirk with a passthrough iommu
+Date: Wed, 12 Apr 2023 10:33:06 +0200
+Message-Id: <20230412082839.524912340@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -36,59 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simei Su <simei.su@intel.com>
+From: D Scott Phillips <scott@os.amperecomputing.com>
 
-[ Upstream commit b4a01ace20f5c93c724abffc0a83ec84f514b98d ]
+commit ecaa4902439298f6b0e29f47424a86b310a9ff4f upstream.
 
-When adding a FDIR filter, if ice_vc_fdir_set_irq_ctx returns failure,
-the inserted fdir entry will not be removed and if ice_vc_fdir_write_fltr
-returns failure, the fdir context info for irq handler will not be cleared
-which may lead to inconsistent or memory leak issue. This patch refines
-failure cases to resolve this issue.
+Previously the quirk was skipped when no iommu was present. The same
+rationale for skipping the quirk also applies in the iommu.passthrough=1
+case.
 
-Fixes: 1f7ea1cd6a37 ("ice: Enable FDIR Configure for AVF")
-Signed-off-by: Simei Su <simei.su@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Skip applying the XHCI_ZERO_64B_REGS quirk if the device's iommu domain is
+passthrough.
+
+Fixes: 12de0a35c996 ("xhci: Add quirk to zero 64bit registers on Renesas PCIe controllers")
+Cc: stable <stable@kernel.org>
+Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230330143056.1390020-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-index a2645ff3100e4..f4ef76e37098c 100644
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-@@ -1871,7 +1871,7 @@ int ice_vc_add_fdir_fltr(struct ice_vf *vf, u8 *msg)
- 		v_ret = VIRTCHNL_STATUS_SUCCESS;
- 		stat->status = VIRTCHNL_FDIR_FAILURE_RULE_NORESOURCE;
- 		dev_dbg(dev, "VF %d: set FDIR context failed\n", vf->vf_id);
--		goto err_free_conf;
-+		goto err_rem_entry;
- 	}
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -9,6 +9,7 @@
+  */
  
- 	ret = ice_vc_fdir_write_fltr(vf, conf, true, is_tun);
-@@ -1880,15 +1880,16 @@ int ice_vc_add_fdir_fltr(struct ice_vf *vf, u8 *msg)
- 		stat->status = VIRTCHNL_FDIR_FAILURE_RULE_NORESOURCE;
- 		dev_err(dev, "VF %d: writing FDIR rule failed, ret:%d\n",
- 			vf->vf_id, ret);
--		goto err_rem_entry;
-+		goto err_clr_irq;
- 	}
+ #include <linux/pci.h>
++#include <linux/iommu.h>
+ #include <linux/iopoll.h>
+ #include <linux/irq.h>
+ #include <linux/log2.h>
+@@ -228,6 +229,7 @@ int xhci_reset(struct xhci_hcd *xhci, u6
+ static void xhci_zero_64b_regs(struct xhci_hcd *xhci)
+ {
+ 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
++	struct iommu_domain *domain;
+ 	int err, i;
+ 	u64 val;
+ 	u32 intrs;
+@@ -246,7 +248,9 @@ static void xhci_zero_64b_regs(struct xh
+ 	 * an iommu. Doing anything when there is no iommu is definitely
+ 	 * unsafe...
+ 	 */
+-	if (!(xhci->quirks & XHCI_ZERO_64B_REGS) || !device_iommu_mapped(dev))
++	domain = iommu_get_domain_for_dev(dev);
++	if (!(xhci->quirks & XHCI_ZERO_64B_REGS) || !domain ||
++	    domain->type == IOMMU_DOMAIN_IDENTITY)
+ 		return;
  
- exit:
- 	kfree(stat);
- 	return ret;
- 
--err_rem_entry:
-+err_clr_irq:
- 	ice_vc_fdir_clear_irq_ctx(vf);
-+err_rem_entry:
- 	ice_vc_fdir_remove_entry(vf, conf, conf->flow_id);
- err_free_conf:
- 	devm_kfree(dev, conf);
--- 
-2.39.2
-
+ 	xhci_info(xhci, "Zeroing 64bit base registers, expecting fault\n");
 
 
