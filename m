@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B876C2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:36:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F037C433D2;
-	Wed, 12 Apr 2023 08:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636F72F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:36:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC55FC433EF;
+	Wed, 12 Apr 2023 08:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288587;
-	bh=FTkMKnfVapHEFaiXN5I6p9/3ltCCHWSl4FI2CfsIT9U=;
+	s=korg; t=1681288590;
+	bh=kSfMlW5eVR9DAOMH/2ul2MyNtZv4s5yj5Dne60UaMTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFNaK+Q0oV7E8RT2axAuGCRSOsSasXSLoKUVJa26xEIpVbr1Dn8nszCrnPiwsOgpH
-	 /ed4+62r7fnQeduyWNQCJG5iW90EslZIsN4wocUJA0q8Mi/ylGWnwZymrfrrr6E9Uy
-	 WB8iBWZsX05tXt2daM2U6bRGEgVkQW+UY2KbfwKU=
+	b=Z9Nf11iniygY3Bep1/NegabT0QqtjREkxGFiasx16WmHBktp+RvBZtWN40D+8byWv
+	 FCXPIzfh6EYNwebKdvHTVaT9gFssotdDm7f2VLIEQEiIeztXQNxBqmb9X+Pi1UOGJ7
+	 p65KCOsaJcrBQ0KosmCkEi3GVksb5KjPZ/PPsxmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+47c24ca20a2fa01f082e@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Ram Kumar Dharuman <quic_ramd@quicinc.com>,
+	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 35/93] sctp: check send stream number after wait_for_sndbuf
-Date: Wed, 12 Apr 2023 10:33:36 +0200
-Message-Id: <20230412082824.585972687@linuxfoundation.org>
+Subject: [PATCH 5.15 36/93] net: qrtr: Do not do DEL_SERVER broadcast after DEL_CLIENT
+Date: Wed, 12 Apr 2023 10:33:37 +0200
+Message-Id: <20230412082824.636318570@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -36,64 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-[ Upstream commit 2584024b23552c00d95b50255e47bd18d306d31a ]
+[ Upstream commit 839349d13905927d8a567ca4d21d88c82028e31d ]
 
-This patch fixes a corner case where the asoc out stream count may change
-after wait_for_sndbuf.
+On the remote side, when QRTR socket is removed, af_qrtr will call
+qrtr_port_remove() which broadcasts the DEL_CLIENT packet to all neighbours
+including local NS. NS upon receiving the DEL_CLIENT packet, will remove
+the lookups associated with the node:port and broadcasts the DEL_SERVER
+packet.
 
-When the main thread in the client starts a connection, if its out stream
-count is set to N while the in stream count in the server is set to N - 2,
-another thread in the client keeps sending the msgs with stream number
-N - 1, and waits for sndbuf before processing INIT_ACK.
+But on the host side, due to the arrival of the DEL_CLIENT packet, the NS
+would've already deleted the server belonging to that port. So when the
+remote's NS again broadcasts the DEL_SERVER for that port, it throws below
+error message on the host:
 
-However, after processing INIT_ACK, the out stream count in the client is
-shrunk to N - 2, the same to the in stream count in the server. The crash
-occurs when the thread waiting for sndbuf is awake and sends the msg in a
-non-existing stream(N - 1), the call trace is as below:
+"failed while handling packet from 2:-2"
 
-  KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]
-  Call Trace:
-   <TASK>
-   sctp_cmd_send_msg net/sctp/sm_sideeffect.c:1114 [inline]
-   sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1777 [inline]
-   sctp_side_effects net/sctp/sm_sideeffect.c:1199 [inline]
-   sctp_do_sm+0x197d/0x5310 net/sctp/sm_sideeffect.c:1170
-   sctp_primitive_SEND+0x9f/0xc0 net/sctp/primitive.c:163
-   sctp_sendmsg_to_asoc+0x10eb/0x1a30 net/sctp/socket.c:1868
-   sctp_sendmsg+0x8d4/0x1d90 net/sctp/socket.c:2026
-   inet_sendmsg+0x9d/0xe0 net/ipv4/af_inet.c:825
-   sock_sendmsg_nosec net/socket.c:722 [inline]
-   sock_sendmsg+0xde/0x190 net/socket.c:745
+So fix this error by not broadcasting the DEL_SERVER packet when the
+DEL_CLIENT packet gets processed."
 
-The fix is to add an unlikely check for the send stream number after the
-thread wakes up from the wait_for_sndbuf.
-
-Fixes: 5bbbbe32a431 ("sctp: introduce stream scheduler foundations")
-Reported-by: syzbot+47c24ca20a2fa01f082e@syzkaller.appspotmail.com
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Ram Kumar Dharuman <quic_ramd@quicinc.com>
+Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/qrtr/ns.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 5f6e6a6e91b3d..a5344fddddbb6 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -1831,6 +1831,10 @@ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
- 		err = sctp_wait_for_sndbuf(asoc, &timeo, msg_len);
- 		if (err)
- 			goto err;
-+		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
-+			err = -EINVAL;
-+			goto err;
-+		}
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index e595079c2cafe..3e40a1ba48f79 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -273,7 +273,7 @@ static struct qrtr_server *server_add(unsigned int service,
+ 	return NULL;
+ }
+ 
+-static int server_del(struct qrtr_node *node, unsigned int port)
++static int server_del(struct qrtr_node *node, unsigned int port, bool bcast)
+ {
+ 	struct qrtr_lookup *lookup;
+ 	struct qrtr_server *srv;
+@@ -286,7 +286,7 @@ static int server_del(struct qrtr_node *node, unsigned int port)
+ 	radix_tree_delete(&node->servers, port);
+ 
+ 	/* Broadcast the removal of local servers */
+-	if (srv->node == qrtr_ns.local_node)
++	if (srv->node == qrtr_ns.local_node && bcast)
+ 		service_announce_del(&qrtr_ns.bcast_sq, srv);
+ 
+ 	/* Announce the service's disappearance to observers */
+@@ -372,7 +372,7 @@ static int ctrl_cmd_bye(struct sockaddr_qrtr *from)
+ 		}
+ 		slot = radix_tree_iter_resume(slot, &iter);
+ 		rcu_read_unlock();
+-		server_del(node, srv->port);
++		server_del(node, srv->port, true);
+ 		rcu_read_lock();
+ 	}
+ 	rcu_read_unlock();
+@@ -458,10 +458,13 @@ static int ctrl_cmd_del_client(struct sockaddr_qrtr *from,
+ 		kfree(lookup);
  	}
  
- 	if (sctp_state(asoc, CLOSED)) {
+-	/* Remove the server belonging to this port */
++	/* Remove the server belonging to this port but don't broadcast
++	 * DEL_SERVER. Neighbours would've already removed the server belonging
++	 * to this port due to the DEL_CLIENT broadcast from qrtr_port_remove().
++	 */
+ 	node = node_get(node_id);
+ 	if (node)
+-		server_del(node, port);
++		server_del(node, port, false);
+ 
+ 	/* Advertise the removal of this client to all local servers */
+ 	local_node = node_get(qrtr_ns.local_node);
+@@ -566,7 +569,7 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
+ 	if (!node)
+ 		return -ENOENT;
+ 
+-	return server_del(node, port);
++	return server_del(node, port, true);
+ }
+ 
+ static int ctrl_cmd_new_lookup(struct sockaddr_qrtr *from,
 -- 
 2.39.2
 
