@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9922A2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:42:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D98C433D2;
-	Wed, 12 Apr 2023 08:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCA72F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:42:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB76C433D2;
+	Wed, 12 Apr 2023 08:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288961;
-	bh=Yh1fMWrHRNHokVHYSfw/szZwhr2A8AcHPgen2jXsQlE=;
+	s=korg; t=1681288964;
+	bh=QXDQ4fKp07JfAMbjgZVFjQtYq5POj2EW3Qsxq/izZSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1zOZSb/BiROE3shRZbIuTuHJhq7GguznTENy83hcrXwm5Ov+B06IcQPukL0KUfvlL
-	 Y79uKYvZWw6PgKlNz14IyUV1Xq3rsej3QkeGTa5m1NRhQkpqp43UVHYp6AsxrM00Oj
-	 axBiGdKdUiPjVaWknFLbo/jXKlELEh18Le5ZxUEc=
+	b=nZdOYjvEmKN91D+ujXw3jGhfR1jJmyUtH+/HDI2LDXbME76dbEShFAcUSAxF6ZZE9
+	 CcHRmZD8auQUjeTfXqhP2sfP2ZW/lgS6SQrf0Ak8Caf7Ya0W7RmzuM108VdO1iZqXD
+	 6lQ9jkgzMWl6oHhLi8x5LFHL1pUUxQreWPeH39mY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shailend Chand <shailend@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhi Li <yieli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/164] gve: Secure enough bytes in the first TX desc for all TCP pkts
-Date: Wed, 12 Apr 2023 10:32:55 +0200
-Message-Id: <20230412082839.084338516@linuxfoundation.org>
+Subject: [PATCH 6.1 044/164] sunrpc: only free unix grouplist after RCU settles
+Date: Wed, 12 Apr 2023 10:32:46 +0200
+Message-Id: <20230412082838.723495759@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,71 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shailend Chand <shailend@google.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 3ce9345580974863c060fa32971537996a7b2d57 ]
+[ Upstream commit 5085e41f9e83a1bec51da1f20b54f2ec3a13a3fe ]
 
-Non-GSO TCP packets whose SKBs' linear portion did not include the
-entire TCP header were not populating the first Tx descriptor with
-as many bytes as the vNIC expected. This change ensures that all
-TCP packets populate the first descriptor with the correct number of
-bytes.
+While the unix_gid object is rcu-freed, the group_info list that it
+contains is not. Ensure that we only put the group list reference once
+we are really freeing the unix_gid object.
 
-Fixes: 893ce44df565 ("gve: Add basic driver framework for Compute Engine Virtual NIC")
-Signed-off-by: Shailend Chand <shailend@google.com>
-Link: https://lore.kernel.org/r/20230403172809.2939306-1-shailend@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Zhi Li <yieli@redhat.com>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2183056
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Fixes: fd5d2f78261b ("SUNRPC: Make server side AUTH_UNIX use lockless lookups")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve.h    |  2 ++
- drivers/net/ethernet/google/gve/gve_tx.c | 12 +++++-------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ net/sunrpc/svcauth_unix.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve.h b/drivers/net/ethernet/google/gve/gve.h
-index 160735484465a..458149a77ebe6 100644
---- a/drivers/net/ethernet/google/gve/gve.h
-+++ b/drivers/net/ethernet/google/gve/gve.h
-@@ -47,6 +47,8 @@
+diff --git a/net/sunrpc/svcauth_unix.c b/net/sunrpc/svcauth_unix.c
+index b1efc34db6ed8..609ade4fb49ed 100644
+--- a/net/sunrpc/svcauth_unix.c
++++ b/net/sunrpc/svcauth_unix.c
+@@ -416,14 +416,23 @@ static int unix_gid_hash(kuid_t uid)
+ 	return hash_long(from_kuid(&init_user_ns, uid), GID_HASHBITS);
+ }
  
- #define GVE_RX_BUFFER_SIZE_DQO 2048
- 
-+#define GVE_GQ_TX_MIN_PKT_DESC_BYTES 182
+-static void unix_gid_put(struct kref *kref)
++static void unix_gid_free(struct rcu_head *rcu)
+ {
+-	struct cache_head *item = container_of(kref, struct cache_head, ref);
+-	struct unix_gid *ug = container_of(item, struct unix_gid, h);
++	struct unix_gid *ug = container_of(rcu, struct unix_gid, rcu);
++	struct cache_head *item = &ug->h;
 +
- /* Each slot in the desc ring has a 1:1 mapping to a slot in the data ring */
- struct gve_rx_desc_queue {
- 	struct gve_rx_desc *desc_ring; /* the descriptor ring */
-diff --git a/drivers/net/ethernet/google/gve/gve_tx.c b/drivers/net/ethernet/google/gve/gve_tx.c
-index 4888bf05fbedb..5e11b82367545 100644
---- a/drivers/net/ethernet/google/gve/gve_tx.c
-+++ b/drivers/net/ethernet/google/gve/gve_tx.c
-@@ -284,8 +284,8 @@ static inline int gve_skb_fifo_bytes_required(struct gve_tx_ring *tx,
- 	int bytes;
- 	int hlen;
+ 	if (test_bit(CACHE_VALID, &item->flags) &&
+ 	    !test_bit(CACHE_NEGATIVE, &item->flags))
+ 		put_group_info(ug->gi);
+-	kfree_rcu(ug, rcu);
++	kfree(ug);
++}
++
++static void unix_gid_put(struct kref *kref)
++{
++	struct cache_head *item = container_of(kref, struct cache_head, ref);
++	struct unix_gid *ug = container_of(item, struct unix_gid, h);
++
++	call_rcu(&ug->rcu, unix_gid_free);
+ }
  
--	hlen = skb_is_gso(skb) ? skb_checksum_start_offset(skb) +
--				 tcp_hdrlen(skb) : skb_headlen(skb);
-+	hlen = skb_is_gso(skb) ? skb_checksum_start_offset(skb) + tcp_hdrlen(skb) :
-+				 min_t(int, GVE_GQ_TX_MIN_PKT_DESC_BYTES, skb->len);
- 
- 	pad_bytes = gve_tx_fifo_pad_alloc_one_frag(&tx->tx_fifo,
- 						   hlen);
-@@ -454,13 +454,11 @@ static int gve_tx_add_skb_copy(struct gve_priv *priv, struct gve_tx_ring *tx, st
- 	pkt_desc = &tx->desc[idx];
- 
- 	l4_hdr_offset = skb_checksum_start_offset(skb);
--	/* If the skb is gso, then we want the tcp header in the first segment
--	 * otherwise we want the linear portion of the skb (which will contain
--	 * the checksum because skb->csum_start and skb->csum_offset are given
--	 * relative to skb->head) in the first segment.
-+	/* If the skb is gso, then we want the tcp header alone in the first segment
-+	 * otherwise we want the minimum required by the gVNIC spec.
- 	 */
- 	hlen = is_gso ? l4_hdr_offset + tcp_hdrlen(skb) :
--			skb_headlen(skb);
-+			min_t(int, GVE_GQ_TX_MIN_PKT_DESC_BYTES, skb->len);
- 
- 	info->skb =  skb;
- 	/* We don't want to split the header, so if necessary, pad to the end
+ static int unix_gid_match(struct cache_head *corig, struct cache_head *cnew)
 -- 
 2.39.2
 
