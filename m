@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFE72F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724BFC433EF;
-	Wed, 12 Apr 2023 08:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3E32F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323C5C433D2;
+	Wed, 12 Apr 2023 08:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289006;
-	bh=gG6ouSqh8QkBppjSq44+i1x1Ams8TTluv3t01YzupRg=;
+	s=korg; t=1681289008;
+	bh=dKz/1zhK9Qcd7wLZrZQmb0D3l3DtgegBCj3BhpQ+n2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2RnvdJdD5Rr52QGj7414JLJrs3GxlI6Z2POWi7Qw6ONCp6LDOsD+56UyFV83biDLo
-	 2LF2t96Ni8tnbogNq2KO1fnItUYgmdA6XUwOgx8opGITzRIRz7omVqLWgTRLYWr8mf
-	 jl/par+c0iuYS+OQz3UZkYngsJ7VLHMO+ysUSv3I=
+	b=zJe7vu49vS1syAz5aABzjuE3m6SKumVNBgbSSec0iu6hL2O4FWTR5EQoPOVhQlA70
+	 H1jumohCBypv814bXe8z7X+PoNp49Z2TsGes4lxb1CCXRzpnY4vxq5hX/WbupjQRIF
+	 wx3D39Glnr4eTs//NWjt9HB1zCS5UoGJJeNr8EF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Martin Belanger <Martin.Belanger@dell.com>,
-	Daniel Wagner <dwagner@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 100/164] blk-mq: directly poll requests
-Date: Wed, 12 Apr 2023 10:33:42 +0200
-Message-Id: <20230412082840.899002135@linuxfoundation.org>
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 101/164] iio: adc: ad7791: fix IRQ flags
+Date: Wed, 12 Apr 2023 10:33:43 +0200
+Message-Id: <20230412082840.935057711@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -41,54 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Nuno Sá <nuno.sa@analog.com>
 
-commit 38a8c4d1d45006841f0643f4cb29b5e50758837c upstream.
+[ Upstream commit 0c6ef985a1fd8a74dcb5cad941ddcadd55cb8697 ]
 
-Polling needs a bio with a valid bi_bdev, but neither of those are
-guaranteed for polled driver requests. Make request based polling
-directly use blk-mq's polling function instead.
+The interrupt is triggered on the falling edge rather than being a level
+low interrupt.
 
-When executing a request from a polled hctx, we know the request's
-cookie, and that it's from a live blk-mq queue that supports polling, so
-we can safely skip everything that bio_poll provides.
-
-Cc: stable@kernel.org
-Reported-by: Martin Belanger <Martin.Belanger@dell.com>
-Reported-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Tested-by: Daniel Wagner <dwagner@suse.de>
-Revieded-by: Daniel Wagner <dwagner@suse.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://lore.kernel.org/r/20230331180056.1155862-1-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: da4d3d6bb9f6 ("iio: adc: ad-sigma-delta: Allow custom IRQ flags")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20230120124645.819910-1-nuno.sa@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/iio/adc/ad7791.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -1327,8 +1327,6 @@ bool blk_rq_is_poll(struct request *rq)
- 		return false;
- 	if (rq->mq_hctx->type != HCTX_TYPE_POLL)
- 		return false;
--	if (WARN_ON_ONCE(!rq->bio))
--		return false;
- 	return true;
- }
- EXPORT_SYMBOL_GPL(blk_rq_is_poll);
-@@ -1336,7 +1334,7 @@ EXPORT_SYMBOL_GPL(blk_rq_is_poll);
- static void blk_rq_poll_completion(struct request *rq, struct completion *wait)
- {
- 	do {
--		bio_poll(rq->bio, NULL, 0);
-+		blk_mq_poll(rq->q, blk_rq_to_qc(rq), NULL, 0);
- 		cond_resched();
- 	} while (!completion_done(wait));
- }
+diff --git a/drivers/iio/adc/ad7791.c b/drivers/iio/adc/ad7791.c
+index fee8d129a5f08..86effe8501b44 100644
+--- a/drivers/iio/adc/ad7791.c
++++ b/drivers/iio/adc/ad7791.c
+@@ -253,7 +253,7 @@ static const struct ad_sigma_delta_info ad7791_sigma_delta_info = {
+ 	.has_registers = true,
+ 	.addr_shift = 4,
+ 	.read_mask = BIT(3),
+-	.irq_flags = IRQF_TRIGGER_LOW,
++	.irq_flags = IRQF_TRIGGER_FALLING,
+ };
+ 
+ static int ad7791_read_raw(struct iio_dev *indio_dev,
+-- 
+2.39.2
+
 
 
