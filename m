@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AB02F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58747C433EF;
-	Wed, 12 Apr 2023 08:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7575D2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBD8C433EF;
+	Wed, 12 Apr 2023 08:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289506;
-	bh=X3v1Du2kXgEipHjKRqV75GcJkfM8lK6TZ4VZvLt08uI=;
+	s=korg; t=1681289509;
+	bh=lvFSa5UtYCeK0PTqjImMgwr9fydJbYwZ4FO0sAbVKHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxtsD+Vpe/ITV8R1WF+CHmi8yC7ii2D2A/f+vKEOvzH8xqMbBPFqkuSMOt0TumVPC
-	 dlvhEkDmfe3Y+IDTE7Uy7tcZBhJvYo5uot2ZWcafe+TOHAaGXJ7j+KajHNy2Gr8hkD
-	 ilsCBUL2p/q9auVbmn1fUUOc+xf4hU0TFoxZeb9o=
+	b=eqcHo/H/6i0qH3Xj1YX10a+y4eDouQU5xgrzqx48FCNXz/PiwCekx7UGPmnyom4Ub
+	 dZ+Jmz3k7x8FhjYAMwjKGNoELWPouHsZEryhuB6d0gXKspMfzPS9oFa4vc7yQwkwpd
+	 CEv9KamoyMnrZRfHUUl0Ssx6D/K4U7FrVRUVWqfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b08ebcc22f8f3e6be43a@syzkaller.appspotmail.com,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 086/173] nilfs2: fix potential UAF of struct nilfs_sc_info in nilfs_segctor_thread()
-Date: Wed, 12 Apr 2023 10:33:32 +0200
-Message-Id: <20230412082841.526806213@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.2 119/173] ACPI: video: Add acpi_backlight=video quirk for Lenovo ThinkPad W530
+Date: Wed, 12 Apr 2023 10:34:05 +0200
+Message-Id: <20230412082842.907706556@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -35,55 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 6be49d100c22ffea3287a4b19d7639d259888e33 upstream.
+commit a5b2781dcab2c77979a4b8adda781d2543580901 upstream.
 
-The finalization of nilfs_segctor_thread() can race with
-nilfs_segctor_kill_thread() which terminates that thread, potentially
-causing a use-after-free BUG as KASAN detected.
+The Lenovo ThinkPad W530 uses a nvidia k1000m GPU. When this gets used
+together with one of the older nvidia binary driver series (the latest
+series does not support it), then backlight control does not work.
 
-At the end of nilfs_segctor_thread(), it assigns NULL to "sc_task" member
-of "struct nilfs_sc_info" to indicate the thread has finished, and then
-notifies nilfs_segctor_kill_thread() of this using waitqueue
-"sc_wait_task" on the struct nilfs_sc_info.
+This is caused by commit 3dbc80a3e4c5 ("ACPI: video: Make backlight
+class device registration a separate step (v2)") combined with
+commit 5aa9d943e9b6 ("ACPI: video: Don't enable fallback path for
+creating ACPI backlight by default").
 
-However, here, immediately after the NULL assignment to "sc_task", it is
-possible that nilfs_segctor_kill_thread() will detect it and return to
-continue the deallocation, freeing the nilfs_sc_info structure before the
-thread does the notification.
+After these changes the acpi_video# backlight device is only registered
+when requested by a GPU driver calling acpi_video_register_backlight()
+which the nvidia binary driver does not do.
 
-This fixes the issue by protecting the NULL assignment to "sc_task" and
-its notification, with spinlock "sc_state_lock" of the struct
-nilfs_sc_info.  Since nilfs_segctor_kill_thread() does a final check to
-see if "sc_task" is NULL with "sc_state_lock" locked, this can eliminate
-the race.
+I realize that using the nvidia binary driver is not a supported use-case
+and users can workaround this by adding acpi_backlight=video on the kernel
+commandline, but the ThinkPad W530 is a popular model under Linux users,
+so it seems worthwhile to add a quirk for this.
 
-Link: https://lkml.kernel.org/r/20230327175318.8060-1-konishi.ryusuke@gmail.com
-Reported-by: syzbot+b08ebcc22f8f3e6be43a@syzkaller.appspotmail.com
-Link: https://lkml.kernel.org/r/00000000000000660d05f7dfa877@google.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+I will also email Nvidia asking them to make the driver call
+acpi_video_register_backlight() when an internal LCD panel is detected.
+So maybe the next maintenance release of the drivers will fix this...
+
+Fixes: 5aa9d943e9b6 ("ACPI: video: Don't enable fallback path for creating ACPI backlight by default")
+Cc: All applicable <stable@vger.kernel.org>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/acpi/video_detect.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2607,11 +2607,10 @@ static int nilfs_segctor_thread(void *ar
- 	goto loop;
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -300,6 +300,20 @@ static const struct dmi_system_id video_
+ 	},
  
-  end_thread:
--	spin_unlock(&sci->sc_state_lock);
--
- 	/* end sync. */
- 	sci->sc_task = NULL;
- 	wake_up(&sci->sc_wait_task); /* for nilfs_segctor_kill_thread() */
-+	spin_unlock(&sci->sc_state_lock);
- 	return 0;
- }
- 
+ 	/*
++	 * Older models with nvidia GPU which need acpi_video backlight
++	 * control and where the old nvidia binary driver series does not
++	 * call acpi_video_register_backlight().
++	 */
++	{
++	 .callback = video_detect_force_video,
++	 /* ThinkPad W530 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++		DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad W530"),
++		},
++	},
++
++	/*
+ 	 * These models have a working acpi_video backlight control, and using
+ 	 * native backlight causes a regression where backlight does not work
+ 	 * when userspace is not handling brightness key events. Disable
 
 
