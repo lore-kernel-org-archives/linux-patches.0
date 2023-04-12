@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B4B2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAD3C433D2;
-	Wed, 12 Apr 2023 08:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1622F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0589FC433D2;
+	Wed, 12 Apr 2023 08:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288705;
-	bh=z08KnyR2SsuHLbrfY5ErqK5sorxW50UkAmukT7BiUCI=;
+	s=korg; t=1681288708;
+	bh=8yvw5nfTbRF0oJZP2vUQoe80x2q+tz0LWnS0w2/oPjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C9lYvmd/1Mk9T59Lc9VJdB9MZHMgQRBaAlewQSTom4ZODtNRk2HDKexcKKapxchHp
-	 W7dHTbhQGwh+T4SZswamSiO5y5Inw/6zYtrmT69W/SG1q5Nei28p+aXveiI0ZEm+2d
-	 cmy7tcuwm6P2m2LNOCAx3su5ifpNVO/Xy9WHXw6o=
+	b=oqlOnsFqVu8EV9/t6Ath+3MdSSj/jssHmzonOsy1CLSKuipH7ivo+xgbftPxvsf9k
+	 BUPR9sxh2PGxcmQFI8E23gug6BF6tQJvmdcBrTGSVieweSww0slR3N+XSDpT2+7/cO
+	 sfReLLRVqUDbJyN5+IwTjN8oRGobdl0o85ES+BqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Zhengjun Xing <zhengjun.xing@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 79/93] perf/core: Fix the same task check in perf_event_set_output
-Date: Wed, 12 Apr 2023 10:34:20 +0200
-Message-Id: <20230412082826.466079121@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>
+Subject: [PATCH 5.15 53/93] usb: cdnsp: Fixes error: uninitialized symbol len
+Date: Wed, 12 Apr 2023 10:33:54 +0200
+Message-Id: <20230412082825.388361383@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -36,70 +33,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-[ Upstream commit 24d3ae2f37d8bc3c14b31d353c5d27baf582b6a6 ]
+commit 1edf48991a783d00a3a18dc0d27c88139e4030a2 upstream.
 
-The same task check in perf_event_set_output has some potential issues
-for some usages.
+The patch 5bc38d33a5a1: "usb: cdnsp: Fixes issue with redundant
+Status Stage" leads to the following Smatch static checker warning:
 
-For the current perf code, there is a problem if using of
-perf_event_open() to have multiple samples getting into the same mmap’d
-memory when they are both attached to the same process.
-https://lore.kernel.org/all/92645262-D319-4068-9C44-2409EF44888E@gmail.com/
-Because the event->ctx is not ready when the perf_event_set_output() is
-invoked in the perf_event_open().
+  drivers/usb/cdns3/cdnsp-ep0.c:470 cdnsp_setup_analyze()
+  error: uninitialized symbol 'len'.
 
-Besides the above issue, before the commit bd2756811766 ("perf: Rewrite
-core context handling"), perf record can errors out when sampling with
-a hardware event and a software event as below.
- $ perf record -e cycles,dummy --per-thread ls
- failed to mmap with 22 (Invalid argument)
-That's because that prior to the commit a hardware event and a software
-event are from different task context.
-
-The problem should be a long time issue since commit c3f00c70276d
-("perk: Separate find_get_context() from event initialization").
-
-The task struct is stored in the event->hw.target for each per-thread
-event. It is a more reliable way to determine whether two events are
-attached to the same task.
-
-The event->hw.target was also introduced several years ago by the
-commit 50f16a8bf9d7 ("perf: Remove type specific target pointers"). It
-can not only be used to fix the issue with the current code, but also
-back port to fix the issues with an older kernel.
-
-Note: The event->hw.target was introduced later than commit
-c3f00c70276d. The patch may cannot be applied between the commit
-c3f00c70276d and commit 50f16a8bf9d7. Anybody that wants to back-port
-this at that period may have to find other solutions.
-
-Fixes: c3f00c70276d ("perf: Separate find_get_context() from event initialization")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Zhengjun Xing <zhengjun.xing@linux.intel.com>
-Link: https://lkml.kernel.org/r/20230322202449.512091-1-kan.liang@linux.intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+cc: <stable@vger.kernel.org>
+Fixes: 5bc38d33a5a1 ("usb: cdnsp: Fixes issue with redundant Status Stage")
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Link: https://lore.kernel.org/r/20230331090600.454674-1-pawell@cadence.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/cdns3/cdnsp-ep0.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 2cdee62c3de73..dc57835e70966 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -12024,7 +12024,7 @@ perf_event_set_output(struct perf_event *event, struct perf_event *output_event)
- 	/*
- 	 * If its not a per-cpu rb, it must be the same task.
- 	 */
--	if (output_event->cpu == -1 && output_event->ctx != event->ctx)
-+	if (output_event->cpu == -1 && output_event->hw.target != event->hw.target)
- 		goto out;
+--- a/drivers/usb/cdns3/cdnsp-ep0.c
++++ b/drivers/usb/cdns3/cdnsp-ep0.c
+@@ -414,7 +414,7 @@ static int cdnsp_ep0_std_request(struct
+ void cdnsp_setup_analyze(struct cdnsp_device *pdev)
+ {
+ 	struct usb_ctrlrequest *ctrl = &pdev->setup;
+-	int ret = 0;
++	int ret = -EINVAL;
+ 	u16 len;
  
- 	/*
--- 
-2.39.2
-
+ 	trace_cdnsp_ctrl_req(ctrl);
+@@ -424,7 +424,6 @@ void cdnsp_setup_analyze(struct cdnsp_de
+ 
+ 	if (pdev->gadget.state == USB_STATE_NOTATTACHED) {
+ 		dev_err(pdev->dev, "ERR: Setup detected in unattached state\n");
+-		ret = -EINVAL;
+ 		goto out;
+ 	}
+ 
 
 
