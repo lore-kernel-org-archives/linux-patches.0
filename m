@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0839C2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:53:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57015C433D2;
-	Wed, 12 Apr 2023 08:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9032F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:53:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC58C433EF;
+	Wed, 12 Apr 2023 08:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289634;
-	bh=3IoHkviqn8PN/EAomH2O4prchYv3fWvEZxdmkGA0mwY=;
+	s=korg; t=1681289637;
+	bh=aMciy0R6RSU+bWDQ+Km+kU9ii7DeYaaHukWKshTn5og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ggkfryLmgLNkumvSUVW7yoj6jFUAU1Z7NTZ4L5t3zLmWAAd5RDqnvEP9m5VzmtqHo
-	 AGMOMFxBhxEag5MlUOYuPdfxEKQsHDDoD6F7y4VshrczPrlQ2y271t8OwVu5UL/7w9
-	 5+6HkSjERaDAR0pH+LVrxzSHvOOLmsJO3tZ9Q8K0=
+	b=A93ANh7uXoOr4k6vB3nAByPsgvc8OnyGvBY04ArD9yt3tWfJ85GOFVMKwbvEJPn2y
+	 57+E1guEuds8fmiW3v3YcRL1tzYjBRFaUeImbic6nOzOc3iSPZqbmDP0PKzl6wfiHz
+	 Lygyr8VBqyymFaX3GOHTFE698AueIylPcAzsFP9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	David Hildenbrand <david@redhat.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Nadav Amit <nadav.amit@gmail.com>,
+	Peng Zhang <zhangpeng.00@bytedance.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 153/173] mm/hugetlb: fix uffd wr-protection for CoW optimization path
-Date: Wed, 12 Apr 2023 10:34:39 +0200
-Message-Id: <20230412082844.291748407@linuxfoundation.org>
+Subject: [PATCH 6.2 154/173] maple_tree: fix get wrong data_end in mtree_lookup_walk()
+Date: Wed, 12 Apr 2023 10:34:40 +0200
+Message-Id: <20230412082844.321928073@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -41,88 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Xu <peterx@redhat.com>
+From: Peng Zhang <zhangpeng.00@bytedance.com>
 
-commit 60d5b473d61be61ac315e544fcd6a8234a79500e upstream.
+commit ec07967d7523adb3670f9dfee0232e3bc868f3de upstream.
 
-This patch fixes an issue that a hugetlb uffd-wr-protected mapping can be
-writable even with uffd-wp bit set.  It only happens with hugetlb private
-mappings, when someone firstly wr-protects a missing pte (which will
-install a pte marker), then a write to the same page without any prior
-access to the page.
+if (likely(offset > end))
+	max = pivots[offset];
 
-Userfaultfd-wp trap for hugetlb was implemented in hugetlb_fault() before
-reaching hugetlb_wp() to avoid taking more locks that userfault won't
-need.  However there's one CoW optimization path that can trigger
-hugetlb_wp() inside hugetlb_no_page(), which will bypass the trap.
+The above code should be changed to if (likely(offset < end)), which is
+correct.  This affects the correctness of ma_data_end().  Now it seems
+that the final result will not be wrong, but it is best to change it.
+This patch does not change the code as above, because it simplifies the
+code by the way.
 
-This patch skips hugetlb_wp() for CoW and retries the fault if uffd-wp bit
-is detected.  The new path will only trigger in the CoW optimization path
-because generic hugetlb_fault() (e.g.  when a present pte was
-wr-protected) will resolve the uffd-wp bit already.  Also make sure
-anonymous UNSHARE won't be affected and can still be resolved, IOW only
-skip CoW not CoR.
-
-This patch will be needed for v5.19+ hence copy stable.
-
-[peterx@redhat.com: v2]
-  Link: https://lkml.kernel.org/r/ZBzOqwF2wrHgBVZb@x1n
-[peterx@redhat.com: v3]
-  Link: https://lkml.kernel.org/r/20230324142620.2344140-1-peterx@redhat.com
-Link: https://lkml.kernel.org/r/20230321191840.1897940-1-peterx@redhat.com
-Fixes: 166f3ecc0daf ("mm/hugetlb: hook page faults for uffd write protection")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reported-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
+Link: https://lkml.kernel.org/r/20230314124203.91572-1-zhangpeng.00@bytedance.com
+Link: https://lkml.kernel.org/r/20230314124203.91572-2-zhangpeng.00@bytedance.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Peng Zhang <zhangpeng.00@bytedance.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ lib/maple_tree.c |   15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5476,7 +5476,7 @@ static vm_fault_t hugetlb_wp(struct mm_s
- 		       struct page *pagecache_page, spinlock_t *ptl)
- {
- 	const bool unshare = flags & FAULT_FLAG_UNSHARE;
--	pte_t pte;
-+	pte_t pte = huge_ptep_get(ptep);
- 	struct hstate *h = hstate_vma(vma);
- 	struct page *old_page, *new_page;
- 	int outside_reserve = 0;
-@@ -5485,6 +5485,17 @@ static vm_fault_t hugetlb_wp(struct mm_s
- 	struct mmu_notifier_range range;
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -3875,18 +3875,13 @@ static inline void *mtree_lookup_walk(st
+ 		end = ma_data_end(node, type, pivots, max);
+ 		if (unlikely(ma_dead_node(node)))
+ 			goto dead_node;
+-
+-		if (pivots[offset] >= mas->index)
+-			goto next;
+-
+ 		do {
+-			offset++;
+-		} while ((offset < end) && (pivots[offset] < mas->index));
+-
+-		if (likely(offset > end))
+-			max = pivots[offset];
++			if (pivots[offset] >= mas->index) {
++				max = pivots[offset];
++				break;
++			}
++		} while (++offset < end);
  
- 	/*
-+	 * Never handle CoW for uffd-wp protected pages.  It should be only
-+	 * handled when the uffd-wp protection is removed.
-+	 *
-+	 * Note that only the CoW optimization path (in hugetlb_no_page())
-+	 * can trigger this, because hugetlb_fault() will always resolve
-+	 * uffd-wp bit first.
-+	 */
-+	if (!unshare && huge_pte_uffd_wp(pte))
-+		return 0;
-+
-+	/*
- 	 * hugetlb does not support FOLL_FORCE-style write faults that keep the
- 	 * PTE mapped R/O such as maybe_mkwrite() would do.
- 	 */
-@@ -5497,7 +5508,6 @@ static vm_fault_t hugetlb_wp(struct mm_s
- 		return 0;
- 	}
- 
--	pte = huge_ptep_get(ptep);
- 	old_page = pte_page(pte);
- 
- 	delayacct_wpcopy_start();
+-next:
+ 		slots = ma_slots(node, type);
+ 		next = mt_slot(mas->tree, slots, offset);
+ 		if (unlikely(ma_dead_node(node)))
 
 
