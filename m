@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7112F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7653FC433D2;
-	Wed, 12 Apr 2023 08:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C1E2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6DFC433EF;
+	Wed, 12 Apr 2023 08:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289050;
-	bh=lxjy0herTY3nPIjIN7MHtjRmv7Ula2S2rl7YYIm7pzw=;
+	s=korg; t=1681289053;
+	bh=nynBZg6qn44ZvCVlDDtAdnoLQAzHBlyTyxRwBhms3lM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oL18eHcfvdjPFkI+2jGfz5xJPEKdDCBhbFddmtVnHl2D4EsrNLOMFxBvpbdW4YsR7
-	 8SAwbDbe5VWz9uce1IkwkhIb3N84pdk2QmiQG5wn7XKtgDKbvAK9QDAEc0o2C2yHnj
-	 dPsHtqdfnJx8Ei2gCN20O9IK0DRhxE48FsKFwrao=
+	b=Cu53v5fyiOF+X4t+LkF0zsJG6IV8wHTsA0Dej7vBu5iC+fiyc+K2qWCsoPJ2xm44S
+	 1vVpdK7YawY4oVmCRPArykREWxsURUX62mKfDJscPvuFYrTiIOG1DpC1bVi7RUYUpD
+	 SjzGikL48NZlZHFaqFm643f/soXPkLUaJDMveAfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 077/164] iio: buffer: make sure O_NONBLOCK is respected
-Date: Wed, 12 Apr 2023 10:33:19 +0200
-Message-Id: <20230412082840.027747830@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	John Keeping <john@metanate.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 111/164] ftrace: Mark get_lock_parent_ip() __always_inline
+Date: Wed, 12 Apr 2023 10:33:53 +0200
+Message-Id: <20230412082841.331905436@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -36,64 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: John Keeping <john@metanate.com>
 
-commit 3da1814184582ed0faf039275a3f02e6f69944ee upstream.
+commit ea65b41807a26495ff2a73dd8b1bab2751940887 upstream.
 
-For output buffers, there's no guarantee that the buffer won't be full
-in the first iteration of the loop in which case we would block
-independently of userspace passing O_NONBLOCK or not. Fix it by always
-checking the flag before going to sleep.
+If the compiler decides not to inline this function then preemption
+tracing will always show an IP inside the preemption disabling path and
+never the function actually calling preempt_{enable,disable}.
 
-While at it (and as it's a bit related), refactored the loop so that the
-stop condition is 'written != n', i.e, run the loop until all data has
-been copied into the IIO buffers. This makes the code a bit simpler.
+Link: https://lore.kernel.org/linux-trace-kernel/20230327173647.1690849-1-john@metanate.com
 
-Fixes: 9eeee3b0bf190 ("iio: Add output buffer support")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20230216101452.591805-3-nuno.sa@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: stable@vger.kernel.org
+Fixes: f904f58263e1d ("sched/debug: Fix preempt_disable_ip recording for preempt_disable()")
+Signed-off-by: John Keeping <john@metanate.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-buffer.c |   19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ include/linux/ftrace.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/industrialio-buffer.c
-+++ b/drivers/iio/industrialio-buffer.c
-@@ -203,21 +203,24 @@ static ssize_t iio_buffer_write(struct f
- 				break;
- 			}
+--- a/include/linux/ftrace.h
++++ b/include/linux/ftrace.h
+@@ -943,7 +943,7 @@ static inline void __ftrace_enabled_rest
+ #define CALLER_ADDR5 ((unsigned long)ftrace_return_address(5))
+ #define CALLER_ADDR6 ((unsigned long)ftrace_return_address(6))
  
-+			if (filp->f_flags & O_NONBLOCK) {
-+				if (!written)
-+					ret = -EAGAIN;
-+				break;
-+			}
-+
- 			wait_woken(&wait, TASK_INTERRUPTIBLE,
- 					MAX_SCHEDULE_TIMEOUT);
- 			continue;
- 		}
+-static inline unsigned long get_lock_parent_ip(void)
++static __always_inline unsigned long get_lock_parent_ip(void)
+ {
+ 	unsigned long addr = CALLER_ADDR0;
  
- 		ret = rb->access->write(rb, n - written, buf + written);
--		if (ret == 0 && (filp->f_flags & O_NONBLOCK))
--			ret = -EAGAIN;
-+		if (ret < 0)
-+			break;
- 
--		if (ret > 0) {
--			written += ret;
--			if (written != n && !(filp->f_flags & O_NONBLOCK))
--				continue;
--		}
--	} while (ret == 0);
-+		written += ret;
-+
-+	} while (written != n);
- 	remove_wait_queue(&rb->pollq, &wait);
- 
- 	return ret < 0 ? ret : written;
 
 
