@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11F92F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3B8C433D2;
-	Wed, 12 Apr 2023 08:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C9C2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D38AC433EF;
+	Wed, 12 Apr 2023 08:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289042;
-	bh=STEqW0L1eVQhKd2XM38aKS9C9KEZTVwy7R/+JBbFZE0=;
+	s=korg; t=1681289045;
+	bh=4sYj83CJDCChZKahyCiEMM2QVihTmqHguGieoTLcR3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQYGm8QTsDBZNbSRw0TSRJAl+MHOd5qwh3ykYTBvMw/SAYLCWAzTVQ9tL1ZgmlcM/
-	 vxkO4RTvGM9boUuPRIrkM2V3260tDjXTi0BSyC3T/ZBHDtMBYJAdzVSfSD22Q8iUJV
-	 WHbWmJ5AAKMeYKNPohATeE6v8xOxb59I2Hek4DSQ=
+	b=diGn8EQVBsWyRmuuzfM7mJx4UfKwv/IJ0Dj152U/tVc/Tqs7ivByhIwOuM6p+Aff9
+	 HEvpYu6JMFsJKR9OSKAb7gAuVo46tblG3Z/TwP0l7UvpAv77KIrxxFD3MrR6KfPiRj
+	 6IAvcx+yDYXnS6RBNCkLuTtsOTokbvkW731fZtZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.1 084/164] dt-bindings: serial: renesas,scif: Fix 4th IRQ for 4-IRQ SCIFs
-Date: Wed, 12 Apr 2023 10:33:26 +0200
-Message-Id: <20230412082840.303108798@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.1 085/164] serial: 8250: Prevent starting up DMA Rx on THRI interrupt
+Date: Wed, 12 Apr 2023 10:33:27 +0200
+Message-Id: <20230412082840.338536320@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,43 +34,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 7b21f329ae0ab6361c0aebfc094db95821490cd1 upstream.
+commit 90b8596ac46043e4a782d9111f5b285251b13756 upstream.
 
-The fourth interrupt on SCIF variants with four interrupts (RZ/A1) is
-the Break interrupt, not the Transmit End interrupt (like on SCI(g)).
-Update the description and interrupt name to fix this.
+Hans de Goede reported Bluetooth adapters (HCIs) connected over an UART
+connection failed due corrupted Rx payload. The problem was narrowed
+down to DMA Rx starting on UART_IIR_THRI interrupt. The problem occurs
+despite LSR having DR bit set, which is precondition for attempting to
+start DMA Rx in the first place.
 
-Fixes: 384d00fae8e51f8f ("dt-bindings: serial: sh-sci: Convert to json-schema")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/719d1582e0ebbe3d674e3a48fc26295e1475a4c3.1679046394.git.geert+renesas@glider.be
+>From a debug patch:
+[x.807834] 8250irq: iir=cc lsr+saved=60 received=0/15 ier=0f dma_t/rx/err=0/0/0
+[x.808676] 8250irq: iir=c2 lsr+saved=61 received=0/0 ier=0f dma_t/rx/err=0/0/0
+[x.808776] 8250irq: iir=cc lsr+saved=60 received=1/12 ier=0d dma_t/rx/err=0/1/0
+[x.808870] Bluetooth: hci0: Frame reassembly failed (-84)
+
+In the debug snippet, received field indicates 1 byte was transferred
+over DMA and 12 bytes after that with the non-DMA Rx. The sole byte DMA
+handled was corrupted (gets zeroed) which leads to the HCI failure.
+
+This problem became apparent after commit e8ffbb71f783 ("serial: 8250:
+use THRE & __stop_tx also with DMA") changed Tx stop behavior. Tx stop
+is now triggered from a THRI interrupt.
+
+Despite that this problem looks like a HW bug, this fix is not adding
+UART_BUG_xx flag to the driver beucase it seems useful in general to
+avoid starting DMA when there are only a few bytes to transfer.
+Skipping DMA for small transfers avoids the extra overhead DMA incurs.
+
+Thus, don't setup DMA Rx on UART_IIR_THRI but leave it to a subsequent
+interrupt which has Rx a related IIR value.
+
+By returning false from handle_rx_dma(), the DMA vs non-DMA decision is
+postponed until either UART_IIR_RDI (FIFO threshold worth of bytes
+awaiting) or UART_IIR_TIMEOUT (inter-character timeout) triggers at a
+later time which allows better to discern whether the number of bytes
+warrants starting DMA or not.
+
+Reported-by: Hans de Goede <hdegoede@redhat.com>
+Tested-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: e8ffbb71f783 ("serial: 8250: use THRE & __stop_tx also with DMA")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230317103034.12881-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/serial/renesas,scif.yaml |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_port.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/Documentation/devicetree/bindings/serial/renesas,scif.yaml
-+++ b/Documentation/devicetree/bindings/serial/renesas,scif.yaml
-@@ -91,7 +91,7 @@ properties:
-           - description: Error interrupt
-           - description: Receive buffer full interrupt
-           - description: Transmit buffer empty interrupt
--          - description: Transmit End interrupt
-+          - description: Break interrupt
-       - items:
-           - description: Error interrupt
-           - description: Receive buffer full interrupt
-@@ -106,7 +106,7 @@ properties:
-           - const: eri
-           - const: rxi
-           - const: txi
--          - const: tei
-+          - const: bri
-       - items:
-           - const: eri
-           - const: rxi
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -1897,6 +1897,17 @@ EXPORT_SYMBOL_GPL(serial8250_modem_statu
+ static bool handle_rx_dma(struct uart_8250_port *up, unsigned int iir)
+ {
+ 	switch (iir & 0x3f) {
++	case UART_IIR_THRI:
++		/*
++		 * Postpone DMA or not decision to IIR_RDI or IIR_RX_TIMEOUT
++		 * because it's impossible to do an informed decision about
++		 * that with IIR_THRI.
++		 *
++		 * This also fixes one known DMA Rx corruption issue where
++		 * DR is asserted but DMA Rx only gets a corrupted zero byte
++		 * (too early DR?).
++		 */
++		return false;
+ 	case UART_IIR_RDI:
+ 		if (!up->dma->rx_running)
+ 			break;
 
 
