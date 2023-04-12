@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEE02F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:52:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD6CC4339B;
-	Wed, 12 Apr 2023 08:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC882F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:52:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560D9C433EF;
+	Wed, 12 Apr 2023 08:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289567;
-	bh=bQNSIlfoowlZAxsVwrWOChNZgJI9gpSXvSPHeUNqQoI=;
+	s=korg; t=1681289569;
+	bh=HlQSI+ixNoqIYaxvI3R11KkjSKixM4v0SaIeDMIs5mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gtZrZ7yayeRcvp4hU7aDzbz3xoR5khI/apwoCVeIurIaV/baYkCOAipVhsFqTKfXi
-	 iYvdDKHTTVPGXJja565WgwPEwvd+fxAY0B5XwYOlo6NYPqFYMKumgs10Xg68CabEND
-	 g9wxQTaQaJ2JhPU8/h6eh3dlS87iXjsr03uZmqAI=
+	b=YFG2/iux+RxCIjQ3kRN9HS4Ggr0I9UL3jQqkbSlCcCmHng2I0lx85HTbN0kih6XHY
+	 cdbhe1QWGL2VmegAHdLOOMgh1YJujzkW0yFv6uT9q3zUAOxNjVb7VwVw7q4VquAOQf
+	 9sgcepydzGgK/U12UJDwXjJ04jBPKvQBTxgIhJUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"Tom Zanussi" <zanussi@kernel.org>,
-	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.2 121/173] tracing/synthetic: Fix races on freeing last_cmd
-Date: Wed, 12 Apr 2023 10:34:07 +0200
-Message-Id: <20230412082843.009363649@linuxfoundation.org>
+	Karol Herbst <kherbst@redhat.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.2 148/173] drm/nouveau/disp: Support more modes by checking with lower bpc
+Date: Wed, 12 Apr 2023 10:34:34 +0200
+Message-Id: <20230412082844.079772133@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -38,184 +34,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+From: Karol Herbst <kherbst@redhat.com>
 
-commit 4ccf11c4e8a8e051499d53a12f502196c97a758e upstream.
+commit 7f67aa097e875c87fba024e850cf405342300059 upstream.
 
-Currently, the "last_cmd" variable can be accessed by multiple processes
-asynchronously when multiple users manipulate synthetic_events node
-at the same time, it could lead to use-after-free or double-free.
+This allows us to advertise more modes especially on HDR displays.
 
-This patch add "lastcmd_mutex" to prevent "last_cmd" from being accessed
-asynchronously.
+Fixes using 4K@60 modes on my TV and main display both using a HDMI to DP
+adapter. Also fixes similar issues for users running into this.
 
-================================================================
-
-It's easy to reproduce in the KASAN environment by running the two
-scripts below in different shells.
-
-script 1:
-        while :
-        do
-                echo -n -e '\x88' > /sys/kernel/tracing/synthetic_events
-        done
-
-script 2:
-        while :
-        do
-                echo -n -e '\xb0' > /sys/kernel/tracing/synthetic_events
-        done
-
-================================================================
-double-free scenario:
-
-    process A                       process B
--------------------               ---------------
-1.kstrdup last_cmd
-                                  2.free last_cmd
-3.free last_cmd(double-free)
-
-================================================================
-use-after-free scenario:
-
-    process A                       process B
--------------------               ---------------
-1.kstrdup last_cmd
-                                  2.free last_cmd
-3.tracing_log_err(use-after-free)
-
-================================================================
-
-Appendix 1. KASAN report double-free:
-
-BUG: KASAN: double-free in kfree+0xdc/0x1d4
-Free of addr ***** by task sh/4879
-Call trace:
-        ...
-        kfree+0xdc/0x1d4
-        create_or_delete_synth_event+0x60/0x1e8
-        trace_parse_run_command+0x2bc/0x4b8
-        synth_events_write+0x20/0x30
-        vfs_write+0x200/0x830
-        ...
-
-Allocated by task 4879:
-        ...
-        kstrdup+0x5c/0x98
-        create_or_delete_synth_event+0x6c/0x1e8
-        trace_parse_run_command+0x2bc/0x4b8
-        synth_events_write+0x20/0x30
-        vfs_write+0x200/0x830
-        ...
-
-Freed by task 5464:
-        ...
-        kfree+0xdc/0x1d4
-        create_or_delete_synth_event+0x60/0x1e8
-        trace_parse_run_command+0x2bc/0x4b8
-        synth_events_write+0x20/0x30
-        vfs_write+0x200/0x830
-        ...
-
-================================================================
-Appendix 2. KASAN report use-after-free:
-
-BUG: KASAN: use-after-free in strlen+0x5c/0x7c
-Read of size 1 at addr ***** by task sh/5483
-sh: CPU: 7 PID: 5483 Comm: sh
-        ...
-        __asan_report_load1_noabort+0x34/0x44
-        strlen+0x5c/0x7c
-        tracing_log_err+0x60/0x444
-        create_or_delete_synth_event+0xc4/0x204
-        trace_parse_run_command+0x2bc/0x4b8
-        synth_events_write+0x20/0x30
-        vfs_write+0x200/0x830
-        ...
-
-Allocated by task 5483:
-        ...
-        kstrdup+0x5c/0x98
-        create_or_delete_synth_event+0x80/0x204
-        trace_parse_run_command+0x2bc/0x4b8
-        synth_events_write+0x20/0x30
-        vfs_write+0x200/0x830
-        ...
-
-Freed by task 5480:
-        ...
-        kfree+0xdc/0x1d4
-        create_or_delete_synth_event+0x74/0x204
-        trace_parse_run_command+0x2bc/0x4b8
-        synth_events_write+0x20/0x30
-        vfs_write+0x200/0x830
-        ...
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230321110444.1587-1-Tze-nan.Wu@mediatek.com
-
-Fixes: 27c888da9867 ("tracing: Remove size restriction on synthetic event cmd error logging")
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: "Tom Zanussi" <zanussi@kernel.org>
-Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: stable@vger.kernel.org # 5.10+
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230330223938.4025569-1-kherbst@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/nouveau/dispnv50/disp.c |   32 ++++++++++++++++++++++++++++++++
+ drivers/gpu/drm/nouveau/nouveau_dp.c    |    8 +++++---
+ 2 files changed, 37 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -44,14 +44,21 @@ enum { ERRORS };
+--- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
++++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
+@@ -363,6 +363,35 @@ nv50_outp_atomic_check_view(struct drm_e
+ 	return 0;
+ }
  
- static const char *err_text[] = { ERRORS };
- 
-+DEFINE_MUTEX(lastcmd_mutex);
- static char *last_cmd;
- 
- static int errpos(const char *str)
- {
-+	int ret = 0;
++static void
++nv50_outp_atomic_fix_depth(struct drm_encoder *encoder, struct drm_crtc_state *crtc_state)
++{
++	struct nv50_head_atom *asyh = nv50_head_atom(crtc_state);
++	struct nouveau_encoder *nv_encoder = nouveau_encoder(encoder);
++	struct drm_display_mode *mode = &asyh->state.adjusted_mode;
++	unsigned int max_rate, mode_rate;
 +
-+	mutex_lock(&lastcmd_mutex);
- 	if (!str || !last_cmd)
--		return 0;
-+		goto out;
++	switch (nv_encoder->dcb->type) {
++	case DCB_OUTPUT_DP:
++		max_rate = nv_encoder->dp.link_nr * nv_encoder->dp.link_bw;
++
++		/* we don't support more than 10 anyway */
++		asyh->or.bpc = min_t(u8, asyh->or.bpc, 10);
++
++		/* reduce the bpc until it works out */
++		while (asyh->or.bpc > 6) {
++			mode_rate = DIV_ROUND_UP(mode->clock * asyh->or.bpc * 3, 8);
++			if (mode_rate <= max_rate)
++				break;
++
++			asyh->or.bpc -= 2;
++		}
++		break;
++	default:
++		break;
++	}
++}
++
+ static int
+ nv50_outp_atomic_check(struct drm_encoder *encoder,
+ 		       struct drm_crtc_state *crtc_state,
+@@ -381,6 +410,9 @@ nv50_outp_atomic_check(struct drm_encode
+ 	if (crtc_state->mode_changed || crtc_state->connectors_changed)
+ 		asyh->or.bpc = connector->display_info.bpc;
  
--	return err_pos(last_cmd, str);
-+	ret = err_pos(last_cmd, str);
-+ out:
-+	mutex_unlock(&lastcmd_mutex);
-+	return ret;
++	/* We might have to reduce the bpc */
++	nv50_outp_atomic_fix_depth(encoder, crtc_state);
++
+ 	return 0;
  }
  
- static void last_cmd_set(const char *str)
-@@ -59,18 +66,22 @@ static void last_cmd_set(const char *str
- 	if (!str)
- 		return;
- 
-+	mutex_lock(&lastcmd_mutex);
- 	kfree(last_cmd);
--
- 	last_cmd = kstrdup(str, GFP_KERNEL);
-+	mutex_unlock(&lastcmd_mutex);
+--- a/drivers/gpu/drm/nouveau/nouveau_dp.c
++++ b/drivers/gpu/drm/nouveau/nouveau_dp.c
+@@ -263,8 +263,6 @@ nouveau_dp_irq(struct work_struct *work)
  }
  
- static void synth_err(u8 err_type, u16 err_pos)
+ /* TODO:
+- * - Use the minimum possible BPC here, once we add support for the max bpc
+- *   property.
+  * - Validate against the DP caps advertised by the GPU (we don't check these
+  *   yet)
+  */
+@@ -276,7 +274,11 @@ nv50_dp_mode_valid(struct drm_connector
  {
-+	mutex_lock(&lastcmd_mutex);
- 	if (!last_cmd)
--		return;
-+		goto out;
+ 	const unsigned int min_clock = 25000;
+ 	unsigned int max_rate, mode_rate, ds_max_dotclock, clock = mode->clock;
+-	const u8 bpp = connector->display_info.bpc * 3;
++	/* Check with the minmum bpc always, so we can advertise better modes.
++	 * In particlar not doing this causes modes to be dropped on HDR
++	 * displays as we might check with a bpc of 16 even.
++	 */
++	const u8 bpp = 6 * 3;
  
- 	tracing_log_err(NULL, "synthetic_events", last_cmd, err_text,
- 			err_type, err_pos);
-+ out:
-+	mutex_unlock(&lastcmd_mutex);
- }
- 
- static int create_synth_event(const char *raw_command);
+ 	if (mode->flags & DRM_MODE_FLAG_INTERLACE && !outp->caps.dp_interlace)
+ 		return MODE_NO_INTERLACE;
 
 
