@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F722F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:45:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D403C433EF;
-	Wed, 12 Apr 2023 08:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412E92F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:45:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE19FC433EF;
+	Wed, 12 Apr 2023 08:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289135;
-	bh=aPr2HDddyWFuIhSKSV8/6IN3abAJcUmZu3tXAMtxe08=;
+	s=korg; t=1681289138;
+	bh=41NGmFq+tNbRraKltE7oNfRk/f9Q2R2YCmjrh0HQkdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHgjWD909LQUf/QiQMqrIRCiNZn1P2fQHLwgfp3Z+xTMs4NyaazHxShAoX1hpue+A
-	 K3Doz+vDKbY9OPFNzzwjaGWc/GLXw8kpxjWedm39giiIlhU1pxJjHMwXmjDmKKgLly
-	 pkk2Oeh3IqlWyZ3XIkUPiKZtSe3io1W2dE+ljQN4=
+	b=diaXTexJP/n89YrluR5olV5Q22cSVoXrQCUdPthw5p7ZfvDDPkBIcCP9ATwZ/goCo
+	 WgmfWEdV6piVALIe+7jreIlI4dT532CAhL/AUT1uHZKMjud/NvokHdVdX1AA/Fn5na
+	 ORo4Y0Ocfr0e6UGbRamgfPB/Q6NZBSEnadeIi+AQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Zhengjun Xing <zhengjun.xing@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/164] perf/core: Fix the same task check in perf_event_set_output
-Date: Wed, 12 Apr 2023 10:33:52 +0200
-Message-Id: <20230412082841.292488848@linuxfoundation.org>
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Jasdeep Dhillon <jdhillon@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Limonciello, Mario" <Mario.Limonciello@amd.com>
+Subject: [PATCH 6.1 143/164] drm/amd/display: Clear MST topology if it fails to resume
+Date: Wed, 12 Apr 2023 10:34:25 +0200
+Message-Id: <20230412082842.685824975@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -36,70 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Roman Li <roman.li@amd.com>
 
-[ Upstream commit 24d3ae2f37d8bc3c14b31d353c5d27baf582b6a6 ]
+commit 3f6752b4de41896c7f1609b1585db2080e8150d8 upstream.
 
-The same task check in perf_event_set_output has some potential issues
-for some usages.
+[Why]
+In case of failure to resume MST topology after suspend, an emtpty
+mst tree prevents further mst hub detection on the same connector.
+That causes the issue with MST hub hotplug after it's been unplug in
+suspend.
 
-For the current perf code, there is a problem if using of
-perf_event_open() to have multiple samples getting into the same mmap’d
-memory when they are both attached to the same process.
-https://lore.kernel.org/all/92645262-D319-4068-9C44-2409EF44888E@gmail.com/
-Because the event->ctx is not ready when the perf_event_set_output() is
-invoked in the perf_event_open().
+[How]
+Stop topology manager on the connector after detecting DM_MST failure.
 
-Besides the above issue, before the commit bd2756811766 ("perf: Rewrite
-core context handling"), perf record can errors out when sampling with
-a hardware event and a software event as below.
- $ perf record -e cycles,dummy --per-thread ls
- failed to mmap with 22 (Invalid argument)
-That's because that prior to the commit a hardware event and a software
-event are from different task context.
-
-The problem should be a long time issue since commit c3f00c70276d
-("perk: Separate find_get_context() from event initialization").
-
-The task struct is stored in the event->hw.target for each per-thread
-event. It is a more reliable way to determine whether two events are
-attached to the same task.
-
-The event->hw.target was also introduced several years ago by the
-commit 50f16a8bf9d7 ("perf: Remove type specific target pointers"). It
-can not only be used to fix the issue with the current code, but also
-back port to fix the issues with an older kernel.
-
-Note: The event->hw.target was introduced later than commit
-c3f00c70276d. The patch may cannot be applied between the commit
-c3f00c70276d and commit 50f16a8bf9d7. Anybody that wants to back-port
-this at that period may have to find other solutions.
-
-Fixes: c3f00c70276d ("perf: Separate find_get_context() from event initialization")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Zhengjun Xing <zhengjun.xing@linux.intel.com>
-Link: https://lkml.kernel.org/r/20230322202449.512091-1-kan.liang@linux.intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
+Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 2aa286b4151b3..7699b99706ad4 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -12040,7 +12040,7 @@ perf_event_set_output(struct perf_event *event, struct perf_event *output_event)
- 	/*
- 	 * If its not a per-cpu rb, it must be the same task.
- 	 */
--	if (output_event->cpu == -1 && output_event->ctx != event->ctx)
-+	if (output_event->cpu == -1 && output_event->hw.target != event->hw.target)
- 		goto out;
- 
- 	/*
--- 
-2.39.2
-
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2175,6 +2175,8 @@ static int detect_mst_link_for_all_conne
+ 				DRM_ERROR("DM_MST: Failed to start MST\n");
+ 				aconnector->dc_link->type =
+ 					dc_connection_single;
++				ret = dm_helpers_dp_mst_stop_top_mgr(aconnector->dc_link->ctx,
++								     aconnector->dc_link);
+ 				break;
+ 			}
+ 		}
 
 
