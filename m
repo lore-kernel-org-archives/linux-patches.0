@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB732F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:42:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA376C433EF;
-	Wed, 12 Apr 2023 08:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C502F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:42:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D29C433EF;
+	Wed, 12 Apr 2023 08:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288956;
-	bh=5cY+KYllyQz3wkeEM6rYhYYVqe7C1LBhwHvgXUr+uno=;
+	s=korg; t=1681288958;
+	bh=C9xK+V3NoEgds0YrL0vY8yVOhbY5/ASgA/t/tEdjWNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhCfjBTCv7rchsZdtlbhDFEGBBIVmGxOAcjWrFoMx62gc0CQVPBjfrfd13StPXX2O
-	 3Yi33PB0TgNLXdcZJzgLzyjl7nTymnUNozxds9UMR5hn4ZYlIuPriq7R9Xx22BMHZ4
-	 5pmu0QKdAK1F1iR8dmDp0LHw62BoFkosRKzW+Gds=
+	b=k4jrmyFyokR250WYsghTaxy/7nUAWtA8DK9mBRndYL7QFF63n1wqv6X6J/UIxMMWy
+	 V8YFjlO/XwW68avifKqzp+XbL9pLcS6HNoQpMhSpdHesuXx3J7Tc3zXumDGi9ZfYhs
+	 a3Roglb0BvzoIyCbnPxjreSfEqocRPyEqdfQgxEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Roulin <aroulin@nvidia.com>,
-	Danielle Ratson <danieller@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/164] ethtool: reset #lanes when lanes is omitted
-Date: Wed, 12 Apr 2023 10:32:53 +0200
-Message-Id: <20230412082839.010364950@linuxfoundation.org>
+Subject: [PATCH 6.1 052/164] netlink: annotate lockless accesses to nlk->max_recvmsg_len
+Date: Wed, 12 Apr 2023 10:32:54 +0200
+Message-Id: <20230412082839.047087060@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -37,91 +37,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Roulin <aroulin@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e847c7675e19ef344913724dc68f83df31ad6a17 ]
+[ Upstream commit a1865f2e7d10dde00d35a2122b38d2e469ae67ed ]
 
-If the number of lanes was forced and then subsequently the user
-omits this parameter, the ksettings->lanes is reset. The driver
-should then reset the number of lanes to the device's default
-for the specified speed.
+syzbot reported a data-race in data-race in netlink_recvmsg() [1]
 
-However, although the ksettings->lanes is set to 0, the mod variable
-is not set to true to indicate the driver and userspace should be
-notified of the changes.
+Indeed, netlink_recvmsg() can be run concurrently,
+and netlink_dump() also needs protection.
 
-The consequence is that the same ethtool operation will produce
-different results based on the initial state.
+[1]
+BUG: KCSAN: data-race in netlink_recvmsg / netlink_recvmsg
 
-If the initial state is:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 2
-        Duplex: Full
-        Auto-negotiation: on
+read to 0xffff888141840b38 of 8 bytes by task 23057 on cpu 0:
+netlink_recvmsg+0xea/0x730 net/netlink/af_netlink.c:1988
+sock_recvmsg_nosec net/socket.c:1017 [inline]
+sock_recvmsg net/socket.c:1038 [inline]
+__sys_recvfrom+0x1ee/0x2e0 net/socket.c:2194
+__do_sys_recvfrom net/socket.c:2212 [inline]
+__se_sys_recvfrom net/socket.c:2208 [inline]
+__x64_sys_recvfrom+0x78/0x90 net/socket.c:2208
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-then executing 'ethtool -s swp1 speed 50000 autoneg off' will yield:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 2
-        Duplex: Full
-        Auto-negotiation: off
+write to 0xffff888141840b38 of 8 bytes by task 23037 on cpu 1:
+netlink_recvmsg+0x114/0x730 net/netlink/af_netlink.c:1989
+sock_recvmsg_nosec net/socket.c:1017 [inline]
+sock_recvmsg net/socket.c:1038 [inline]
+____sys_recvmsg+0x156/0x310 net/socket.c:2720
+___sys_recvmsg net/socket.c:2762 [inline]
+do_recvmmsg+0x2e5/0x710 net/socket.c:2856
+__sys_recvmmsg net/socket.c:2935 [inline]
+__do_sys_recvmmsg net/socket.c:2958 [inline]
+__se_sys_recvmmsg net/socket.c:2951 [inline]
+__x64_sys_recvmmsg+0xe2/0x160 net/socket.c:2951
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-While if the initial state is:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 1
-        Duplex: Full
-        Auto-negotiation: off
+value changed: 0x0000000000000000 -> 0x0000000000001000
 
-executing the same 'ethtool -s swp1 speed 50000 autoneg off' results in:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 1
-        Duplex: Full
-        Auto-negotiation: off
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 23037 Comm: syz-executor.2 Not tainted 6.3.0-rc4-syzkaller-00195-g5a57b48fdfcb #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/02/2023
 
-This patch fixes this behavior. Omitting lanes will always results in
-the driver choosing the default lane width for the chosen speed. In this
-scenario, regardless of the initial state, the end state will be, e.g.,
-
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 2
-        Duplex: Full
-        Auto-negotiation: off
-
-Fixes: 012ce4dd3102 ("ethtool: Extend link modes settings uAPI with lanes")
-Signed-off-by: Andy Roulin <aroulin@nvidia.com>
-Reviewed-by: Danielle Ratson <danieller@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/ac238d6b-8726-8156-3810-6471291dbc7f@nvidia.com
+Fixes: 9063e21fb026 ("netlink: autosize skb lengthes")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230403214643.768555-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/linkmodes.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/netlink/af_netlink.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/ethtool/linkmodes.c b/net/ethtool/linkmodes.c
-index 126e06c713a3a..2d91f2a8c7626 100644
---- a/net/ethtool/linkmodes.c
-+++ b/net/ethtool/linkmodes.c
-@@ -282,11 +282,12 @@ static int ethnl_update_linkmodes(struct genl_info *info, struct nlattr **tb,
- 					    "lanes configuration not supported by device");
- 			return -EOPNOTSUPP;
- 		}
--	} else if (!lsettings->autoneg) {
--		/* If autoneg is off and lanes parameter is not passed from user,
--		 * set the lanes parameter to 0.
-+	} else if (!lsettings->autoneg && ksettings->lanes) {
-+		/* If autoneg is off and lanes parameter is not passed from user but
-+		 * it was defined previously then set the lanes parameter to 0.
- 		 */
- 		ksettings->lanes = 0;
-+		*mod = true;
- 	}
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index e506712967918..99622c64081c4 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1941,7 +1941,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 	struct scm_cookie scm;
+ 	struct sock *sk = sock->sk;
+ 	struct netlink_sock *nlk = nlk_sk(sk);
+-	size_t copied;
++	size_t copied, max_recvmsg_len;
+ 	struct sk_buff *skb, *data_skb;
+ 	int err, ret;
  
- 	ret = ethnl_update_bitset(ksettings->link_modes.advertising,
+@@ -1974,9 +1974,10 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ #endif
+ 
+ 	/* Record the max length of recvmsg() calls for future allocations */
+-	nlk->max_recvmsg_len = max(nlk->max_recvmsg_len, len);
+-	nlk->max_recvmsg_len = min_t(size_t, nlk->max_recvmsg_len,
+-				     SKB_WITH_OVERHEAD(32768));
++	max_recvmsg_len = max(READ_ONCE(nlk->max_recvmsg_len), len);
++	max_recvmsg_len = min_t(size_t, max_recvmsg_len,
++				SKB_WITH_OVERHEAD(32768));
++	WRITE_ONCE(nlk->max_recvmsg_len, max_recvmsg_len);
+ 
+ 	copied = data_skb->len;
+ 	if (len < copied) {
+@@ -2225,6 +2226,7 @@ static int netlink_dump(struct sock *sk)
+ 	struct netlink_ext_ack extack = {};
+ 	struct netlink_callback *cb;
+ 	struct sk_buff *skb = NULL;
++	size_t max_recvmsg_len;
+ 	struct module *module;
+ 	int err = -ENOBUFS;
+ 	int alloc_min_size;
+@@ -2247,8 +2249,9 @@ static int netlink_dump(struct sock *sk)
+ 	cb = &nlk->cb;
+ 	alloc_min_size = max_t(int, cb->min_dump_alloc, NLMSG_GOODSIZE);
+ 
+-	if (alloc_min_size < nlk->max_recvmsg_len) {
+-		alloc_size = nlk->max_recvmsg_len;
++	max_recvmsg_len = READ_ONCE(nlk->max_recvmsg_len);
++	if (alloc_min_size < max_recvmsg_len) {
++		alloc_size = max_recvmsg_len;
+ 		skb = alloc_skb(alloc_size,
+ 				(GFP_KERNEL & ~__GFP_DIRECT_RECLAIM) |
+ 				__GFP_NOWARN | __GFP_NORETRY);
 -- 
 2.39.2
 
