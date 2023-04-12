@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1622F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0589FC433D2;
-	Wed, 12 Apr 2023 08:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C1E2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB9BC433D2;
+	Wed, 12 Apr 2023 08:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288708;
-	bh=8yvw5nfTbRF0oJZP2vUQoe80x2q+tz0LWnS0w2/oPjA=;
+	s=korg; t=1681288711;
+	bh=QeBSDAhBgcWyYS0UnSVb1G5bdnh+AJPrvVoKDw0w2hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oqlOnsFqVu8EV9/t6Ath+3MdSSj/jssHmzonOsy1CLSKuipH7ivo+xgbftPxvsf9k
-	 BUPR9sxh2PGxcmQFI8E23gug6BF6tQJvmdcBrTGSVieweSww0slR3N+XSDpT2+7/cO
-	 sfReLLRVqUDbJyN5+IwTjN8oRGobdl0o85ES+BqM=
+	b=GQ0789yfsNaei40evd9guPqa3iVn+8IhibSAF4n3ypVHuHN1ErulObCzQhUuKMSpw
+	 sjtxkCdeJqPrwhrkL/82LTybHme6E38uyvKla903p9TjDi03yf0UUp/7wMvPp8ok07
+	 Qd9OZ1497yHNhsNRJTof2bT8PgXFi61i31/50Ba0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>
-Subject: [PATCH 5.15 53/93] usb: cdnsp: Fixes error: uninitialized symbol len
-Date: Wed, 12 Apr 2023 10:33:54 +0200
-Message-Id: <20230412082825.388361383@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	John Keeping <john@metanate.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 80/93] ftrace: Mark get_lock_parent_ip() __always_inline
+Date: Wed, 12 Apr 2023 10:34:21 +0200
+Message-Id: <20230412082826.516566704@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -33,43 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: John Keeping <john@metanate.com>
 
-commit 1edf48991a783d00a3a18dc0d27c88139e4030a2 upstream.
+commit ea65b41807a26495ff2a73dd8b1bab2751940887 upstream.
 
-The patch 5bc38d33a5a1: "usb: cdnsp: Fixes issue with redundant
-Status Stage" leads to the following Smatch static checker warning:
+If the compiler decides not to inline this function then preemption
+tracing will always show an IP inside the preemption disabling path and
+never the function actually calling preempt_{enable,disable}.
 
-  drivers/usb/cdns3/cdnsp-ep0.c:470 cdnsp_setup_analyze()
-  error: uninitialized symbol 'len'.
+Link: https://lore.kernel.org/linux-trace-kernel/20230327173647.1690849-1-john@metanate.com
 
-cc: <stable@vger.kernel.org>
-Fixes: 5bc38d33a5a1 ("usb: cdnsp: Fixes issue with redundant Status Stage")
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Link: https://lore.kernel.org/r/20230331090600.454674-1-pawell@cadence.com
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: stable@vger.kernel.org
+Fixes: f904f58263e1d ("sched/debug: Fix preempt_disable_ip recording for preempt_disable()")
+Signed-off-by: John Keeping <john@metanate.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-ep0.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/ftrace.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdnsp-ep0.c
-+++ b/drivers/usb/cdns3/cdnsp-ep0.c
-@@ -414,7 +414,7 @@ static int cdnsp_ep0_std_request(struct
- void cdnsp_setup_analyze(struct cdnsp_device *pdev)
+--- a/include/linux/ftrace.h
++++ b/include/linux/ftrace.h
+@@ -850,7 +850,7 @@ static inline void __ftrace_enabled_rest
+ #define CALLER_ADDR5 ((unsigned long)ftrace_return_address(5))
+ #define CALLER_ADDR6 ((unsigned long)ftrace_return_address(6))
+ 
+-static inline unsigned long get_lock_parent_ip(void)
++static __always_inline unsigned long get_lock_parent_ip(void)
  {
- 	struct usb_ctrlrequest *ctrl = &pdev->setup;
--	int ret = 0;
-+	int ret = -EINVAL;
- 	u16 len;
- 
- 	trace_cdnsp_ctrl_req(ctrl);
-@@ -424,7 +424,6 @@ void cdnsp_setup_analyze(struct cdnsp_de
- 
- 	if (pdev->gadget.state == USB_STATE_NOTATTACHED) {
- 		dev_err(pdev->dev, "ERR: Setup detected in unattached state\n");
--		ret = -EINVAL;
- 		goto out;
- 	}
+ 	unsigned long addr = CALLER_ADDR0;
  
 
 
