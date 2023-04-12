@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71012F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC17C433EF;
-	Wed, 12 Apr 2023 08:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C7129AB
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD828C4339B;
+	Wed, 12 Apr 2023 08:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289467;
-	bh=sj65i9WUhIFL6LaBxGxWIa2tjizlo64Yy4X1DFEXVlw=;
+	s=korg; t=1681289470;
+	bh=laj6jwC4AiSpDhUVdtfTNlfua5Z1cJRjWek8a/kh/TU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPWiHjfUrXZypfwz4iWJulRpmZakqNXs+RWFFkzG09hPslSrT6bfzVoEqehV5kShE
-	 6c8OjVQ3kRp1d8sgQXDIPNldZ1V9lbGw2t3vjyp9q54xgwje1EmFZIaa3LH7nsXRJK
-	 N67kPEd+IaW4CVw8e/R94Z+co94SnIq3Svh7eh9Q=
+	b=WoT3wB8fnJMHtGlWvFho56ZAiuSv5WepGZ12fwFivhrxDYKC50oTgjyejUykn4xmi
+	 cvJ1nh5HftjRifKJ7lZLIy39N0vdwC7TjqAHyoFm44i/xZKkLJw1GIo4c9E+5VCK0a
+	 x/WvUvUpvk/sez2y2YLIh8LCvrBc3Axu4jnut5SU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	mark.rutland@arm.com,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.2 110/173] ftrace: Fix issue that direct->addr not restored in modify_ftrace_direct()
-Date: Wed, 12 Apr 2023 10:33:56 +0200
-Message-Id: <20230412082842.529792960@linuxfoundation.org>
+	syzbot+8ac3859139c685c4f597@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.2 111/173] fs: drop peer group ids under namespace lock
+Date: Wed, 12 Apr 2023 10:33:57 +0200
+Message-Id: <20230412082842.569052139@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -38,56 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 2a2d8c51defb446e8d89a83f42f8e5cd529111e9 upstream.
+commit cb2239c198ad9fbd5aced22cf93e45562da781eb upstream.
 
-Syzkaller report a WARNING: "WARN_ON(!direct)" in modify_ftrace_direct().
+When cleaning up peer group ids in the failure path we need to make sure
+to hold on to the namespace lock. Otherwise another thread might just
+turn the mount from a shared into a non-shared mount concurrently.
 
-Root cause is 'direct->addr' was changed from 'old_addr' to 'new_addr' but
-not restored if error happened on calling ftrace_modify_direct_caller().
-Then it can no longer find 'direct' by that 'old_addr'.
-
-To fix it, restore 'direct->addr' to 'old_addr' explicitly in error path.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230330025223.1046087-1-zhengyejian1@huawei.com
-
-Cc: stable@vger.kernel.org
-Cc: <mhiramat@kernel.org>
-Cc: <mark.rutland@arm.com>
-Cc: <ast@kernel.org>
-Cc: <daniel@iogearbox.net>
-Fixes: 8a141dd7f706 ("ftrace: Fix modify_ftrace_direct.")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/lkml/00000000000088694505f8132d77@google.com
+Fixes: 2a1867219c7b ("fs: add mount_setattr()")
+Reported-by: syzbot+8ac3859139c685c4f597@syzkaller.appspotmail.com
+Cc: stable@vger.kernel.org # 5.12+
+Message-Id: <20230330-vfs-mount_setattr-propagation-fix-v1-1-37548d91533b@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ fs/namespace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -5568,12 +5568,15 @@ int modify_ftrace_direct(unsigned long i
- 		ret = 0;
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -4286,9 +4286,9 @@ out:
+ 	unlock_mount_hash();
+ 
+ 	if (kattr->propagation) {
+-		namespace_unlock();
+ 		if (err)
+ 			cleanup_group_ids(mnt, NULL);
++		namespace_unlock();
  	}
  
--	if (unlikely(ret && new_direct)) {
--		direct->count++;
--		list_del_rcu(&new_direct->next);
--		synchronize_rcu_tasks();
--		kfree(new_direct);
--		ftrace_direct_func_count--;
-+	if (ret) {
-+		direct->addr = old_addr;
-+		if (unlikely(new_direct)) {
-+			direct->count++;
-+			list_del_rcu(&new_direct->next);
-+			synchronize_rcu_tasks();
-+			kfree(new_direct);
-+			ftrace_direct_func_count--;
-+		}
- 	}
- 
-  out_unlock:
+ 	return err;
 
 
