@@ -1,30 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79382F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:50:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA9DC433EF;
-	Wed, 12 Apr 2023 08:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680562F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:50:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9FFC4339B;
+	Wed, 12 Apr 2023 08:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289454;
-	bh=ufToQkiASLa+rFF4Pj0uzl7m8luMgXz6oamPvsRC/RI=;
+	s=korg; t=1681289457;
+	bh=sYd6ICRjhfCK/+Zoza1/9PMmL5WhMZ0xzQHAveKZHDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqK/sWr3AdnBJNo4E0UfC5t532s11bslOjCflKXSd/vZBkJ9JZq+p1PGk1rfseOsH
-	 UtCPh2kS/LEVLTyZaUQMgJRgT3W8vULzAaqtR4VzN49PKeYgJjh+8ZaWErvib7QBSD
-	 zRU8lFueWUd3BR7oWp4JknQ9eVEwoGu6Ou4+eDlo=
+	b=MvSZn7qPd7QwwYcXOCsTXrvJTpgywCtshoNnUef7aRFpNz3J8Y1auew9thrhj1HsY
+	 P2Tg6JadOLWC7q5/Iz4j+foGDXi1EV1HaqJl0a3zVrzVk4hxhbRXaDLVYmjDnGpc5R
+	 WiHEZn+v6BZJPSWrSJgZKjVTBb27k9Gz9XAkIsio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiyang Ruan <ruansy.fnst@fujitsu.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Jan Kara <jack@suse.cz>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 088/173] fsdax: dedupe should compare the min of two iters length
-Date: Wed, 12 Apr 2023 10:33:34 +0200
-Message-Id: <20230412082841.607329994@linuxfoundation.org>
+	William Breathitt Gray <william.gray@linaro.org>
+Subject: [PATCH 6.2 106/173] counter: 104-quad-8: Fix race condition between FLAG and CNTR reads
+Date: Wed, 12 Apr 2023 10:33:52 +0200
+Message-Id: <20230412082842.347218359@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -38,49 +33,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From: William Breathitt Gray <william.gray@linaro.org>
 
-commit e900ba10d15041a6236cc75778cc6e06c3590a58 upstream.
+commit 4aa3b75c74603c3374877d5fd18ad9cc3a9a62ed upstream.
 
-In an dedupe comparison iter loop, the length of iomap_iter decreases
-because it implies the remaining length after each iteration.
+The Counter (CNTR) register is 24 bits wide, but we can have an
+effective 25-bit count value by setting bit 24 to the XOR of the Borrow
+flag and Carry flag. The flags can be read from the FLAG register, but a
+race condition exists: the Borrow flag and Carry flag are instantaneous
+and could change by the time the count value is read from the CNTR
+register.
 
-The dedupe command will fail with -EIO if the range is larger than one
-page size and not aligned to the page size.  Also report warning in dmesg:
+Since the race condition could result in an incorrect 25-bit count
+value, remove support for 25-bit count values from this driver;
+hard-coded maximum count values are replaced by a LS7267_CNTR_MAX define
+for consistency and clarity.
 
-[ 4338.498374] ------------[ cut here ]------------
-[ 4338.498689] WARNING: CPU: 3 PID: 1415645 at fs/iomap/iter.c:16
-...
-
-The compare function should use the min length of the current iters,
-not the total length.
-
-Link: https://lkml.kernel.org/r/1679469958-2-1-git-send-email-ruansy.fnst@fujitsu.com
-Fixes: 0e79e3736d54 ("fsdax: dedupe: iter two files at the same time")
-Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 28e5d3bb0325 ("iio: 104-quad-8: Add IIO support for the ACCES 104-QUAD-8")
+Cc: <stable@vger.kernel.org> # 6.1.x
+Cc: <stable@vger.kernel.org> # 6.2.x
+Link: https://lore.kernel.org/r/20230312231554.134858-1-william.gray@linaro.org/
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dax.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/counter/104-quad-8.c |   29 ++++++++---------------------
+ 1 file changed, 8 insertions(+), 21 deletions(-)
 
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -2022,8 +2022,8 @@ int dax_dedupe_file_range_compare(struct
+--- a/drivers/counter/104-quad-8.c
++++ b/drivers/counter/104-quad-8.c
+@@ -97,10 +97,6 @@ struct quad8 {
+ 	struct quad8_reg __iomem *reg;
+ };
  
- 	while ((ret = iomap_iter(&src_iter, ops)) > 0 &&
- 	       (ret = iomap_iter(&dst_iter, ops)) > 0) {
--		compared = dax_range_compare_iter(&src_iter, &dst_iter, len,
--						  same);
-+		compared = dax_range_compare_iter(&src_iter, &dst_iter,
-+				min(src_iter.len, dst_iter.len), same);
- 		if (compared < 0)
- 			return ret;
- 		src_iter.processed = dst_iter.processed = compared;
+-/* Borrow Toggle flip-flop */
+-#define QUAD8_FLAG_BT BIT(0)
+-/* Carry Toggle flip-flop */
+-#define QUAD8_FLAG_CT BIT(1)
+ /* Error flag */
+ #define QUAD8_FLAG_E BIT(4)
+ /* Up/Down flag */
+@@ -133,6 +129,9 @@ struct quad8 {
+ #define QUAD8_CMR_QUADRATURE_X2 0x10
+ #define QUAD8_CMR_QUADRATURE_X4 0x18
+ 
++/* Each Counter is 24 bits wide */
++#define LS7267_CNTR_MAX GENMASK(23, 0)
++
+ static int quad8_signal_read(struct counter_device *counter,
+ 			     struct counter_signal *signal,
+ 			     enum counter_signal_level *level)
+@@ -156,18 +155,10 @@ static int quad8_count_read(struct count
+ {
+ 	struct quad8 *const priv = counter_priv(counter);
+ 	struct channel_reg __iomem *const chan = priv->reg->channel + count->id;
+-	unsigned int flags;
+-	unsigned int borrow;
+-	unsigned int carry;
+ 	unsigned long irqflags;
+ 	int i;
+ 
+-	flags = ioread8(&chan->control);
+-	borrow = flags & QUAD8_FLAG_BT;
+-	carry = !!(flags & QUAD8_FLAG_CT);
+-
+-	/* Borrow XOR Carry effectively doubles count range */
+-	*val = (unsigned long)(borrow ^ carry) << 24;
++	*val = 0;
+ 
+ 	spin_lock_irqsave(&priv->lock, irqflags);
+ 
+@@ -191,8 +182,7 @@ static int quad8_count_write(struct coun
+ 	unsigned long irqflags;
+ 	int i;
+ 
+-	/* Only 24-bit values are supported */
+-	if (val > 0xFFFFFF)
++	if (val > LS7267_CNTR_MAX)
+ 		return -ERANGE;
+ 
+ 	spin_lock_irqsave(&priv->lock, irqflags);
+@@ -806,8 +796,7 @@ static int quad8_count_preset_write(stru
+ 	struct quad8 *const priv = counter_priv(counter);
+ 	unsigned long irqflags;
+ 
+-	/* Only 24-bit values are supported */
+-	if (preset > 0xFFFFFF)
++	if (preset > LS7267_CNTR_MAX)
+ 		return -ERANGE;
+ 
+ 	spin_lock_irqsave(&priv->lock, irqflags);
+@@ -834,8 +823,7 @@ static int quad8_count_ceiling_read(stru
+ 		*ceiling = priv->preset[count->id];
+ 		break;
+ 	default:
+-		/* By default 0x1FFFFFF (25 bits unsigned) is maximum count */
+-		*ceiling = 0x1FFFFFF;
++		*ceiling = LS7267_CNTR_MAX;
+ 		break;
+ 	}
+ 
+@@ -850,8 +838,7 @@ static int quad8_count_ceiling_write(str
+ 	struct quad8 *const priv = counter_priv(counter);
+ 	unsigned long irqflags;
+ 
+-	/* Only 24-bit values are supported */
+-	if (ceiling > 0xFFFFFF)
++	if (ceiling > LS7267_CNTR_MAX)
+ 		return -ERANGE;
+ 
+ 	spin_lock_irqsave(&priv->lock, irqflags);
 
 
