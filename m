@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC5D2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:50:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1EEC433D2;
-	Wed, 12 Apr 2023 08:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79382F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:50:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA9DC433EF;
+	Wed, 12 Apr 2023 08:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289452;
-	bh=+wPbTRfenOfWq7UEujuOoPuctD1IGdzvO57c4X6CL1s=;
+	s=korg; t=1681289454;
+	bh=ufToQkiASLa+rFF4Pj0uzl7m8luMgXz6oamPvsRC/RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aedvEopkX1nuORTU2mi6BDiMLG1ALLnv9muJqpv6fQby9wVwYW/jXGxYknLmt2bRH
-	 G4Nc9YjT0rAaMKnktg1ud8OTvCsOuZ00zhoojr306kK/SvQWkdJ40gu7IhP7vDyAKW
-	 0zEigsG2zEt17diKsXwkEpd0rSmIbVlHnUvZLvTI=
+	b=YqK/sWr3AdnBJNo4E0UfC5t532s11bslOjCflKXSd/vZBkJ9JZq+p1PGk1rfseOsH
+	 UtCPh2kS/LEVLTyZaUQMgJRgT3W8vULzAaqtR4VzN49PKeYgJjh+8ZaWErvib7QBSD
+	 zRU8lFueWUd3BR7oWp4JknQ9eVEwoGu6Ou4+eDlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Clevenger <scclevenger@os.amperecomputing.com>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 6.2 105/173] coresight-etm4: Fix for() loop drvdata->nr_addr_cmp range bug
-Date: Wed, 12 Apr 2023 10:33:51 +0200
-Message-Id: <20230412082842.307389314@linuxfoundation.org>
+	Shiyang Ruan <ruansy.fnst@fujitsu.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jan Kara <jack@suse.cz>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.2 088/173] fsdax: dedupe should compare the min of two iters length
+Date: Wed, 12 Apr 2023 10:33:34 +0200
+Message-Id: <20230412082841.607329994@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -35,33 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve Clevenger <scclevenger@os.amperecomputing.com>
+From: Shiyang Ruan <ruansy.fnst@fujitsu.com>
 
-commit bf84937e882009075f57fd213836256fc65d96bc upstream.
+commit e900ba10d15041a6236cc75778cc6e06c3590a58 upstream.
 
-In etm4_enable_hw, fix for() loop range to represent address comparator pairs.
+In an dedupe comparison iter loop, the length of iomap_iter decreases
+because it implies the remaining length after each iteration.
 
-Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve Clevenger <scclevenger@os.amperecomputing.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/4a4ee61ce8ef402615a4528b21a051de3444fb7b.1677540079.git.scclevenger@os.amperecomputing.com
+The dedupe command will fail with -EIO if the range is larger than one
+page size and not aligned to the page size.  Also report warning in dmesg:
+
+[ 4338.498374] ------------[ cut here ]------------
+[ 4338.498689] WARNING: CPU: 3 PID: 1415645 at fs/iomap/iter.c:16
+...
+
+The compare function should use the min length of the current iters,
+not the total length.
+
+Link: https://lkml.kernel.org/r/1679469958-2-1-git-send-email-ruansy.fnst@fujitsu.com
+Fixes: 0e79e3736d54 ("fsdax: dedupe: iter two files at the same time")
+Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dax.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -454,7 +454,7 @@ static int etm4_enable_hw(struct etmv4_d
- 		if (etm4x_sspcicrn_present(drvdata, i))
- 			etm4x_relaxed_write32(csa, config->ss_pe_cmp[i], TRCSSPCICRn(i));
- 	}
--	for (i = 0; i < drvdata->nr_addr_cmp; i++) {
-+	for (i = 0; i < drvdata->nr_addr_cmp * 2; i++) {
- 		etm4x_relaxed_write64(csa, config->addr_val[i], TRCACVRn(i));
- 		etm4x_relaxed_write64(csa, config->addr_acc[i], TRCACATRn(i));
- 	}
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -2022,8 +2022,8 @@ int dax_dedupe_file_range_compare(struct
+ 
+ 	while ((ret = iomap_iter(&src_iter, ops)) > 0 &&
+ 	       (ret = iomap_iter(&dst_iter, ops)) > 0) {
+-		compared = dax_range_compare_iter(&src_iter, &dst_iter, len,
+-						  same);
++		compared = dax_range_compare_iter(&src_iter, &dst_iter,
++				min(src_iter.len, dst_iter.len), same);
+ 		if (compared < 0)
+ 			return ret;
+ 		src_iter.processed = dst_iter.processed = compared;
 
 
