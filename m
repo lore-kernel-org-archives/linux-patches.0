@@ -1,88 +1,50 @@
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FB39472
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 19:41:06 +0000 (UTC)
-Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-7606cf9c551so4189439f.0
-        for <patches@lists.linux.dev>; Wed, 12 Apr 2023 12:41:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1681328466;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ql2TRAjGOflpr9Whb4W4uT3fSvI+kJA4AxiqWsIZIc8=;
-        b=VmwIeNu0tX7WOntbiPN80zRIhYotWibYJiYtotMwWOG5llUAtyGBKFXwaSky9drvqg
-         zOwgT23N42FAugD+T+sjlslOuXEIYcacASE0APNSl6m6AvC6xvNSHNaWY7BEf8s6qIp3
-         AiUQbydMiKsgGVHtqk2sOEXQ909EZwKsV8Em8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681328466;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ql2TRAjGOflpr9Whb4W4uT3fSvI+kJA4AxiqWsIZIc8=;
-        b=Et+43HAy4F/oPnTxmMt1+PZws+uNRRVVHXCP2ygAG8iWihrexPru4KOMODFVJpVzp2
-         8sSQCkA9vcI+JU6hFEJr+MiocBew2i7kJ6CAKm7XTORlrVx8mBS/V5Suwq5cTXB5Oxs8
-         Qn9TNIX2UFqbNd++ay98nXkSKImTEufmo4vK79ARzyf3F+o0V1j1J5SYkTpEKoRWEDgm
-         v2riZUKcffwnqHEurodpGP0ViVYgIrYLNSAjlStiukNbha5mbSjgXx+kUjG4WWELlfyp
-         X4ahpqZfodFpUod5rWV7Wo7PMlGtKI61KwP5w3SeaRdSxJr7D+BUZBsNWlLCVjGjDmGH
-         o7LA==
-X-Gm-Message-State: AAQBX9flmSCR4wj6/J2T/KGqFBAhGrmS8uhpvs1igACNFu5KX5mK9nof
-	vCKyXS0arrJHagQte9ZR0D0Qhg==
-X-Google-Smtp-Source: AKy350bFAJV00eVFNzyrbWV0rVV5BzfmhbZQv6Cav0Gy81MxDHlYipcSY/zwavuuKDckDpXWk31R4w==
-X-Received: by 2002:a6b:14cc:0:b0:740:7d21:d96f with SMTP id 195-20020a6b14cc000000b007407d21d96fmr1700262iou.1.1681328466035;
-        Wed, 12 Apr 2023 12:41:06 -0700 (PDT)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id c9-20020a5ea909000000b007594a835232sm4475016iod.13.2023.04.12.12.41.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Apr 2023 12:41:05 -0700 (PDT)
-Message-ID: <b2e4201c-f1c0-a842-ce07-7befe668a698@linuxfoundation.org>
-Date: Wed, 12 Apr 2023 13:41:04 -0600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E109474
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 20:13:55 +0000 (UTC)
+Date: Wed, 12 Apr 2023 20:13:34 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1681330428; x=1681589628;
+	bh=R+WoLmWuecqwRSEBmC5tnSn+wxUTipT0To/pDvrDmlc=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=RxO1+5fRUD7vXsUe+Df1yh0XPkds+RM3QbGWWnhb43rlSsEMHp5g1uUN3V/BMbaGy
+	 VwirVEf6/RhJgCuW48gf4/3CnOMe+L/CzE1olgF3OHt+xD0BZxPFE2Ie3dtEofOhN/
+	 tO6BjMWshp/c27NPPLVQrS+0nzDqZJ3D+D1VUwN4eOKHroNDYE1pBvzB23efZqtv4B
+	 0/MoyD9t3GwdzU2TLgP14vn9s39ZUnP8Pe64Q+WND83EDLgWbPNGnS9r4IN0azOb4s
+	 wIgpZDYaAY57s7pBA1b+/4AONizg4VkvSnxWApPJtnLbLr/isqCMh7D6cplgCygFgE
+	 9STx4VX9v1XBA==
+To: Miguel Ojeda <ojeda@kernel.org>
+From: y86-dev <y86-dev@protonmail.com>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <alice@ryhl.io>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v7 00/15] Rust pin-init API for pinned initialization of structs
+Message-ID: <TTE27GJ76877W-sIzVb_b80o8dCEf-CSDOKHLMTeYD23mET-2EymYGp9PII26HWZb0vF-emqnkIVdVKNwEqQHmWNZq_7P_GiL_U9Eyk0R58=@protonmail.com>
+In-Reply-To: <20230408122429.1103522-1-y86-dev@protonmail.com>
+References: <20230408122429.1103522-1-y86-dev@protonmail.com>
+Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 5.15 00/93] 5.15.107-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
-References: <20230412082823.045155996@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 4/12/23 02:33, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.107 release.
-> There are 93 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 14 Apr 2023 08:28:02 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.107-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+Hi Miguel,
 
-Compiled and booted on my test system. No dmesg regressions.
+could you please change my current email on the patches from
+    <y86-dev@protonmail.com>
+to my new email
+    <benno.lossin@proton.me>
+Please do this for the Signed-off-by tags as well as the actual
+git-author. Lina's patch to introduce `UniqueArc::assume_init` has
+my Co-developed-by tag, also change the email there.
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Much appreciated!
 
-thanks,
--- Shuah
+--
+Cheers,
+Benno
