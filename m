@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41932F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:35:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587BDC433EF;
-	Wed, 12 Apr 2023 08:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761A82F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:35:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0300C433D2;
+	Wed, 12 Apr 2023 08:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288537;
-	bh=CAV92dUJEaWzF2rsEApT8/n2gspYX3igZNIpCkHQtcI=;
+	s=korg; t=1681288540;
+	bh=EbaNhUAeUPnhla0EfDutxBsMW8Rizs4Y6ZQmz1GUCzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gE6kAhad+oLBSvQBPD/Wrgbq5aI0ZAbPxfEBSz+IoXQYFrCWecgEoWU2wqhBZofTb
-	 4vko20phUnJuqDHRn72FzhIEQ3l8MgrPREW5JXlhrndIXJjjaobcexF4rgA1HRqiur
-	 G9NJ5YIPJ5UQeCL94h4TAYqhRZjIR+IFOlRERg3I=
+	b=l7rUe7PpnCnOOVXmaf4o9X1eko5Hzv3N7ure2OLvtadK7bjajHDcthFEny21TfQ/X
+	 Q+Le4CsGwDGgW5LTQDsZ8aQ/xYYXpdWCLO6uAg09uzKWp3pNMo2uvtnPUDWU8rBwJB
+	 I6CHmRsIWPsQgSkDAlF9nnqRSg7KBPkTfgv08j/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Konrad Jankowski <konrad0.jankowski@intel.com>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 16/93] iavf: return errno code instead of status code
-Date: Wed, 12 Apr 2023 10:33:17 +0200
-Message-Id: <20230412082823.721667346@linuxfoundation.org>
+Subject: [PATCH 5.15 17/93] iavf/iavf_main: actually log ->src mask when talking about it
+Date: Wed, 12 Apr 2023 10:33:18 +0200
+Message-Id: <20230412082823.771080437@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -36,117 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit 9f4651ea3e07339b460d403ff01b7cc2178fef7b ]
+[ Upstream commit 6650c8e906ce58404bfdfceceeba7bd10d397d40 ]
 
-The iavf_parse_cls_flower function returns an integer error code, and
-not an iavf_status enumeration.
+This fixes a copy-paste issue where dev_err would log the dst mask even
+though it is clearly talking about src.
 
-Fix the function to use the standard errno value EINVAL as its return
-instead of using IAVF_ERR_CONFIG.
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
 
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
+Fixes: 0075fa0fadd0 ("i40evf: Add support to apply cloud filters")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 6650c8e906ce ("iavf/iavf_main: actually log ->src mask when talking about it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index f5e6ae2c683f4..bafccf61c654f 100644
+index bafccf61c654f..3b62f37b3cf14 100644
 --- a/drivers/net/ethernet/intel/iavf/iavf_main.c
 +++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -3103,7 +3103,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
- 			} else {
- 				dev_err(&adapter->pdev->dev, "Bad ether dest mask %pM\n",
- 					match.mask->dst);
--				return IAVF_ERR_CONFIG;
-+				return -EINVAL;
- 			}
- 		}
- 
-@@ -3113,7 +3113,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
- 			} else {
- 				dev_err(&adapter->pdev->dev, "Bad ether src mask %pM\n",
- 					match.mask->src);
--				return IAVF_ERR_CONFIG;
-+				return -EINVAL;
- 			}
- 		}
- 
-@@ -3148,7 +3148,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
- 			} else {
- 				dev_err(&adapter->pdev->dev, "Bad vlan mask %u\n",
- 					match.mask->vlan_id);
--				return IAVF_ERR_CONFIG;
-+				return -EINVAL;
- 			}
- 		}
- 		vf->mask.tcp_spec.vlan_id |= cpu_to_be16(0xffff);
-@@ -3172,7 +3172,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
- 			} else {
- 				dev_err(&adapter->pdev->dev, "Bad ip dst mask 0x%08x\n",
- 					be32_to_cpu(match.mask->dst));
--				return IAVF_ERR_CONFIG;
-+				return -EINVAL;
- 			}
- 		}
- 
-@@ -3182,13 +3182,13 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+@@ -3181,7 +3181,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+ 				field_flags |= IAVF_CLOUD_FIELD_IIP;
  			} else {
  				dev_err(&adapter->pdev->dev, "Bad ip src mask 0x%08x\n",
- 					be32_to_cpu(match.mask->dst));
--				return IAVF_ERR_CONFIG;
-+				return -EINVAL;
+-					be32_to_cpu(match.mask->dst));
++					be32_to_cpu(match.mask->src));
+ 				return -EINVAL;
  			}
  		}
- 
- 		if (field_flags & IAVF_CLOUD_FIELD_TEN_ID) {
- 			dev_info(&adapter->pdev->dev, "Tenant id not allowed for ip filter\n");
--			return IAVF_ERR_CONFIG;
-+			return -EINVAL;
- 		}
- 		if (match.key->dst) {
- 			vf->mask.tcp_spec.dst_ip[0] |= cpu_to_be32(0xffffffff);
-@@ -3209,7 +3209,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
- 		if (ipv6_addr_any(&match.mask->dst)) {
- 			dev_err(&adapter->pdev->dev, "Bad ipv6 dst mask 0x%02x\n",
- 				IPV6_ADDR_ANY);
--			return IAVF_ERR_CONFIG;
-+			return -EINVAL;
- 		}
- 
- 		/* src and dest IPv6 address should not be LOOPBACK
-@@ -3219,7 +3219,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
- 		    ipv6_addr_loopback(&match.key->src)) {
- 			dev_err(&adapter->pdev->dev,
- 				"ipv6 addr should not be loopback\n");
--			return IAVF_ERR_CONFIG;
-+			return -EINVAL;
- 		}
- 		if (!ipv6_addr_any(&match.mask->dst) ||
- 		    !ipv6_addr_any(&match.mask->src))
-@@ -3244,7 +3244,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
- 			} else {
- 				dev_err(&adapter->pdev->dev, "Bad src port mask %u\n",
- 					be16_to_cpu(match.mask->src));
--				return IAVF_ERR_CONFIG;
-+				return -EINVAL;
- 			}
- 		}
- 
-@@ -3254,7 +3254,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
- 			} else {
- 				dev_err(&adapter->pdev->dev, "Bad dst port mask %u\n",
- 					be16_to_cpu(match.mask->dst));
--				return IAVF_ERR_CONFIG;
-+				return -EINVAL;
- 			}
- 		}
- 		if (match.key->dst) {
 -- 
 2.39.2
 
