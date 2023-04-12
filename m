@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8652F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BBBC4339B;
-	Wed, 12 Apr 2023 08:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8CA2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92C2C433EF;
+	Wed, 12 Apr 2023 08:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289313;
-	bh=pIwo7D4hHuDWzGd2okAAnndjmKh7LIeuMSmul57JB7w=;
+	s=korg; t=1681289316;
+	bh=PfxVeX4BeRvBqoR0Z/ZWR0+L6pTTbxS+U60wJ1qhpYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iW1aN4zoh5hnymYc0Tt0bdd3uyKVSpwm/hUy5XtIFMnoiHu43UUyhDCqyjak9Hc0t
-	 0eK4QbDFvBA808rFgLNmIYVNNkOZ0DnQXXD9FAxyMEt+Weo2zX8VSveVOlIiRWVxKw
-	 Pj2tjLAftnWYiV2+FBtV3vZ7zJsffeWv/ELEDlKI=
+	b=BE8oEpUgHMJmNMFFVNEHel49rjETaJWPQdy9wklkaFeNJKuY2kOyo3CZ4WETC+wkR
+	 0Dxs1pmPhazr5AYxflqddWIMnQIm1sxE7bS5XVyx/cY6m5j7kgBXMuqNIlNL1PfvJJ
+	 pGun9HjaL79qGJ879pbh58dykYgA8hEf0ScyWlqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 024/173] wifi: brcmfmac: Fix SDIO suspend/resume regression
-Date: Wed, 12 Apr 2023 10:32:30 +0200
-Message-Id: <20230412082839.072582135@linuxfoundation.org>
+Subject: [PATCH 6.2 051/173] netlink: annotate lockless accesses to nlk->max_recvmsg_len
+Date: Wed, 12 Apr 2023 10:32:57 +0200
+Message-Id: <20230412082840.180183564@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,160 +37,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e4efa515d58f1363d8a27e548f9c5769d3121e03 ]
+[ Upstream commit a1865f2e7d10dde00d35a2122b38d2e469ae67ed ]
 
-After commit 92cadedd9d5f ("brcmfmac: Avoid keeping power to SDIO card
-unless WOWL is used"), the wifi adapter by default is turned off on suspend
-and then re-probed on resume.
+syzbot reported a data-race in data-race in netlink_recvmsg() [1]
 
-In at least 2 model x86/acpi tablets with brcmfmac43430a1 wifi adapters,
-the newly added re-probe on resume fails like this:
+Indeed, netlink_recvmsg() can be run concurrently,
+and netlink_dump() also needs protection.
 
- brcmfmac: brcmf_sdio_bus_rxctl: resumed on timeout
- ieee80211 phy1: brcmf_bus_started: failed: -110
- ieee80211 phy1: brcmf_attach: dongle is not responding: err=-110
- brcmfmac: brcmf_sdio_firmware_callback: brcmf_attach failed
+[1]
+BUG: KCSAN: data-race in netlink_recvmsg / netlink_recvmsg
 
-It seems this specific brcmfmac model does not like being reprobed without
-it actually being turned off first.
+read to 0xffff888141840b38 of 8 bytes by task 23057 on cpu 0:
+netlink_recvmsg+0xea/0x730 net/netlink/af_netlink.c:1988
+sock_recvmsg_nosec net/socket.c:1017 [inline]
+sock_recvmsg net/socket.c:1038 [inline]
+__sys_recvfrom+0x1ee/0x2e0 net/socket.c:2194
+__do_sys_recvfrom net/socket.c:2212 [inline]
+__se_sys_recvfrom net/socket.c:2208 [inline]
+__x64_sys_recvfrom+0x78/0x90 net/socket.c:2208
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-And the adapter is not being turned off during suspend because of
-commit f0992ace680c ("brcmfmac: prohibit ACPI power management for brcmfmac
-driver").
+write to 0xffff888141840b38 of 8 bytes by task 23037 on cpu 1:
+netlink_recvmsg+0x114/0x730 net/netlink/af_netlink.c:1989
+sock_recvmsg_nosec net/socket.c:1017 [inline]
+sock_recvmsg net/socket.c:1038 [inline]
+____sys_recvmsg+0x156/0x310 net/socket.c:2720
+___sys_recvmsg net/socket.c:2762 [inline]
+do_recvmmsg+0x2e5/0x710 net/socket.c:2856
+__sys_recvmmsg net/socket.c:2935 [inline]
+__do_sys_recvmmsg net/socket.c:2958 [inline]
+__se_sys_recvmmsg net/socket.c:2951 [inline]
+__x64_sys_recvmmsg+0xe2/0x160 net/socket.c:2951
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Now that the driver is being reprobed on resume, the disabling of ACPI
-pm is no longer necessary, except when WOWL is used (in which case there
-is no-reprobe).
+value changed: 0x0000000000000000 -> 0x0000000000001000
 
-Move the dis-/en-abling of ACPI pm to brcmf_sdio_wowl_config(), this fixes
-the brcmfmac43430a1 suspend/resume regression and should help save some
-power when suspended.
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 23037 Comm: syz-executor.2 Not tainted 6.3.0-rc4-syzkaller-00195-g5a57b48fdfcb #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/02/2023
 
-This change means that the code now also may re-enable ACPI pm when WOWL
-gets disabled. ACPI pm should only be re-enabled if it was enabled by
-the ACPI core originally. Add a brcmf_sdiod_acpi_save_power_manageable()
-to save the original state for this.
-
-This has been tested on the following devices:
-
-Asus T100TA                brcmfmac43241b4-sdio
-Acer Iconia One 7 B1-750   brcmfmac43340-sdio
-Chuwi Hi8                  brcmfmac43430a0-sdio
-Chuwi Hi8                  brcmfmac43430a1-sdio
-
-(the Asus T100TA is the device for which the prohibiting of ACPI pm
- was originally added)
-
-Fixes: 92cadedd9d5f ("brcmfmac: Avoid keeping power to SDIO card unless WOWL is used")
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230320122252.240070-1-hdegoede@redhat.com
+Fixes: 9063e21fb026 ("netlink: autosize skb lengthes")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230403214643.768555-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../broadcom/brcm80211/brcmfmac/bcmsdh.c      | 36 +++++++++++++------
- .../broadcom/brcm80211/brcmfmac/sdio.h        |  2 ++
- 2 files changed, 28 insertions(+), 10 deletions(-)
+ net/netlink/af_netlink.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-index b7c918f241c91..65d4799a56584 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -994,15 +994,34 @@ static const struct sdio_device_id brcmf_sdmmc_ids[] = {
- MODULE_DEVICE_TABLE(sdio, brcmf_sdmmc_ids);
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index c642776597531..f365dfdd672d7 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1952,7 +1952,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 	struct scm_cookie scm;
+ 	struct sock *sk = sock->sk;
+ 	struct netlink_sock *nlk = nlk_sk(sk);
+-	size_t copied;
++	size_t copied, max_recvmsg_len;
+ 	struct sk_buff *skb, *data_skb;
+ 	int err, ret;
  
- 
--static void brcmf_sdiod_acpi_set_power_manageable(struct device *dev,
--						  int val)
-+static void brcmf_sdiod_acpi_save_power_manageable(struct brcmf_sdio_dev *sdiodev)
- {
- #if IS_ENABLED(CONFIG_ACPI)
- 	struct acpi_device *adev;
- 
--	adev = ACPI_COMPANION(dev);
-+	adev = ACPI_COMPANION(&sdiodev->func1->dev);
- 	if (adev)
--		adev->flags.power_manageable = 0;
-+		sdiodev->func1_power_manageable = adev->flags.power_manageable;
-+
-+	adev = ACPI_COMPANION(&sdiodev->func2->dev);
-+	if (adev)
-+		sdiodev->func2_power_manageable = adev->flags.power_manageable;
-+#endif
-+}
-+
-+static void brcmf_sdiod_acpi_set_power_manageable(struct brcmf_sdio_dev *sdiodev,
-+						  int enable)
-+{
-+#if IS_ENABLED(CONFIG_ACPI)
-+	struct acpi_device *adev;
-+
-+	adev = ACPI_COMPANION(&sdiodev->func1->dev);
-+	if (adev)
-+		adev->flags.power_manageable = enable ? sdiodev->func1_power_manageable : 0;
-+
-+	adev = ACPI_COMPANION(&sdiodev->func2->dev);
-+	if (adev)
-+		adev->flags.power_manageable = enable ? sdiodev->func2_power_manageable : 0;
+@@ -1985,9 +1985,10 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
  #endif
- }
  
-@@ -1012,7 +1031,6 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
- 	int err;
- 	struct brcmf_sdio_dev *sdiodev;
- 	struct brcmf_bus *bus_if;
--	struct device *dev;
+ 	/* Record the max length of recvmsg() calls for future allocations */
+-	nlk->max_recvmsg_len = max(nlk->max_recvmsg_len, len);
+-	nlk->max_recvmsg_len = min_t(size_t, nlk->max_recvmsg_len,
+-				     SKB_WITH_OVERHEAD(32768));
++	max_recvmsg_len = max(READ_ONCE(nlk->max_recvmsg_len), len);
++	max_recvmsg_len = min_t(size_t, max_recvmsg_len,
++				SKB_WITH_OVERHEAD(32768));
++	WRITE_ONCE(nlk->max_recvmsg_len, max_recvmsg_len);
  
- 	brcmf_dbg(SDIO, "Enter\n");
- 	brcmf_dbg(SDIO, "Class=%x\n", func->class);
-@@ -1020,14 +1038,9 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
- 	brcmf_dbg(SDIO, "sdio device ID: 0x%04x\n", func->device);
- 	brcmf_dbg(SDIO, "Function#: %d\n", func->num);
+ 	copied = data_skb->len;
+ 	if (len < copied) {
+@@ -2236,6 +2237,7 @@ static int netlink_dump(struct sock *sk)
+ 	struct netlink_ext_ack extack = {};
+ 	struct netlink_callback *cb;
+ 	struct sk_buff *skb = NULL;
++	size_t max_recvmsg_len;
+ 	struct module *module;
+ 	int err = -ENOBUFS;
+ 	int alloc_min_size;
+@@ -2258,8 +2260,9 @@ static int netlink_dump(struct sock *sk)
+ 	cb = &nlk->cb;
+ 	alloc_min_size = max_t(int, cb->min_dump_alloc, NLMSG_GOODSIZE);
  
--	dev = &func->dev;
--
- 	/* Set MMC_QUIRK_LENIENT_FN0 for this card */
- 	func->card->quirks |= MMC_QUIRK_LENIENT_FN0;
- 
--	/* prohibit ACPI power management for this device */
--	brcmf_sdiod_acpi_set_power_manageable(dev, 0);
--
- 	/* Consume func num 1 but dont do anything with it. */
- 	if (func->num == 1)
- 		return 0;
-@@ -1059,6 +1072,7 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
- 	dev_set_drvdata(&sdiodev->func1->dev, bus_if);
- 	sdiodev->dev = &sdiodev->func1->dev;
- 
-+	brcmf_sdiod_acpi_save_power_manageable(sdiodev);
- 	brcmf_sdiod_change_state(sdiodev, BRCMF_SDIOD_DOWN);
- 
- 	brcmf_dbg(SDIO, "F2 found, calling brcmf_sdiod_probe...\n");
-@@ -1124,6 +1138,8 @@ void brcmf_sdio_wowl_config(struct device *dev, bool enabled)
- 
- 	if (sdiodev->settings->bus.sdio.oob_irq_supported ||
- 	    pm_caps & MMC_PM_WAKE_SDIO_IRQ) {
-+		/* Stop ACPI from turning off the device when wowl is enabled */
-+		brcmf_sdiod_acpi_set_power_manageable(sdiodev, !enabled);
- 		sdiodev->wowl_enabled = enabled;
- 		brcmf_dbg(SDIO, "Configuring WOWL, enabled=%d\n", enabled);
- 		return;
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
-index b76d34d36bde6..0d18ed15b4032 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
-@@ -188,6 +188,8 @@ struct brcmf_sdio_dev {
- 	char nvram_name[BRCMF_FW_NAME_LEN];
- 	char clm_name[BRCMF_FW_NAME_LEN];
- 	bool wowl_enabled;
-+	bool func1_power_manageable;
-+	bool func2_power_manageable;
- 	enum brcmf_sdiod_state state;
- 	struct brcmf_sdiod_freezer *freezer;
- 	const struct firmware *clm_fw;
+-	if (alloc_min_size < nlk->max_recvmsg_len) {
+-		alloc_size = nlk->max_recvmsg_len;
++	max_recvmsg_len = READ_ONCE(nlk->max_recvmsg_len);
++	if (alloc_min_size < max_recvmsg_len) {
++		alloc_size = max_recvmsg_len;
+ 		skb = alloc_skb(alloc_size,
+ 				(GFP_KERNEL & ~__GFP_DIRECT_RECLAIM) |
+ 				__GFP_NOWARN | __GFP_NORETRY);
 -- 
 2.39.2
 
