@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859332F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D969C433A0;
-	Wed, 12 Apr 2023 08:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D232F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85955C4339B;
+	Wed, 12 Apr 2023 08:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289192;
-	bh=zPD0J1sUNFxWudAzYLfB64mzTrEKEMBfra5zYw+2sbI=;
+	s=korg; t=1681289194;
+	bh=Z+ZBg97YQPZ8DZ+RHaYqeucicUfB0Tyc/gqv88F12Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z4mNkFEsOOqKH5oTzWw9uiUJCfekMsoYt0UQ/vxzG852uAyRr1mAAdV7MLTBLH78D
-	 lFFWn/pIr8jRnizyg8PMxAMWJI2abVcK0xOH9FeHiY7wknuMFf3r6YUQH3Ht4VTfkJ
-	 6iUjZp+Q4q4HWbrqS1Xq8EQ3VMxlGvv07hbK803I=
+	b=PSb+q/jLcYA1OuvA/B2J6DardLc6Ws2y2u+uB+xxPGG9Wol9cxsyNmjSsWlP6HrUZ
+	 5m5lDvy2kEHCkv5/8fSXE8xlJGPCXWx8SVRcERAH3twCxydpnu9Kg81ZP81ynVV48I
+	 mrrVq2sRAVQtcSs8pQmxZ8rZxyv9cev/sEhwomXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manasi Navare <navaremanasi@google.com>,
-	Drew Davenport <ddavenport@chromium.org>,
-	Imre Deak <imre.deak@intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 150/164] drm/i915: Split icl_color_commit_noarm() from skl_color_commit_noarm()
-Date: Wed, 12 Apr 2023 10:34:32 +0200
-Message-Id: <20230412082843.006173696@linuxfoundation.org>
+	Alistair Popple <apopple@nvidia.com>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 151/164] mm: take a page reference when removing device exclusive entries
+Date: Wed, 12 Apr 2023 10:34:33 +0200
+Message-Id: <20230412082843.051890441@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -38,67 +39,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Alistair Popple <apopple@nvidia.com>
 
-commit 76b767d4d1cd052e455cf18e06929e8b2b70101d upstream.
+commit 7c7b962938ddda6a9cd095de557ee5250706ea88 upstream.
 
-We're going to want different behavior for skl/glk vs. icl
-in .color_commit_noarm(), so split the hook into two. Arguably
-we already had slightly different behaviour since
-csc_enable/gamma_enable are never set on icl+, so the old
-code was perhaps a bit confusing as well.
+Device exclusive page table entries are used to prevent CPU access to a
+page whilst it is being accessed from a device.  Typically this is used to
+implement atomic operations when the underlying bus does not support
+atomic access.  When a CPU thread encounters a device exclusive entry it
+locks the page and restores the original entry after calling mmu notifiers
+to signal drivers that exclusive access is no longer available.
 
-Cc: <stable@vger.kernel.org> #v5.19+
-Cc: Manasi Navare <navaremanasi@google.com>
-Cc: Drew Davenport <ddavenport@chromium.org>
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Jouni Högander <jouni.hogander@intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230320095438.17328-2-ville.syrjala@linux.intel.com
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-(cherry picked from commit f161eb01f50ab31f2084975b43bce54b7b671e17)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+The device exclusive entry holds a reference to the page making it safe to
+access the struct page whilst the entry is present.  However the fault
+handling code does not hold the PTL when taking the page lock.  This means
+if there are multiple threads faulting concurrently on the device
+exclusive entry one will remove the entry whilst others will wait on the
+page lock without holding a reference.
+
+This can lead to threads locking or waiting on a folio with a zero
+refcount.  Whilst mmap_lock prevents the pages getting freed via munmap()
+they may still be freed by a migration.  This leads to warnings such as
+PAGE_FLAGS_CHECK_AT_FREE due to the page being locked when the refcount
+drops to zero.
+
+Fix this by trying to take a reference on the folio before locking it.
+The code already checks the PTE under the PTL and aborts if the entry is
+no longer there.  It is also possible the folio has been unmapped, freed
+and re-allocated allowing a reference to be taken on an unrelated folio.
+This case is also detected by the PTE check and the folio is unlocked
+without further changes.
+
+Link: https://lkml.kernel.org/r/20230330012519.804116-1-apopple@nvidia.com
+Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
+Reviewed-by: Ralph Campbell <rcampbell@nvidia.com>
+Reviewed-by: John Hubbard <jhubbard@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_color.c |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ mm/memory.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_color.c
-+++ b/drivers/gpu/drm/i915/display/intel_color.c
-@@ -2098,6 +2098,25 @@ static void glk_read_luts(struct intel_c
- 	}
- }
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3619,8 +3619,21 @@ static vm_fault_t remove_device_exclusiv
+ 	struct vm_area_struct *vma = vmf->vma;
+ 	struct mmu_notifier_range range;
  
-+static void icl_color_commit_arm(const struct intel_crtc_state *crtc_state)
-+{
-+	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
-+	struct drm_i915_private *i915 = to_i915(crtc->base.dev);
-+	enum pipe pipe = crtc->pipe;
-+
+-	if (!folio_lock_or_retry(folio, vma->vm_mm, vmf->flags))
 +	/*
-+	 * We don't (yet) allow userspace to control the pipe background color,
-+	 * so force it to black.
++	 * We need a reference to lock the folio because we don't hold
++	 * the PTL so a racing thread can remove the device-exclusive
++	 * entry and unmap it. If the folio is free the entry must
++	 * have been removed already. If it happens to have already
++	 * been re-allocated after being freed all we do is lock and
++	 * unlock it.
 +	 */
-+	intel_de_write(i915, SKL_BOTTOM_COLOR(pipe), 0);
++	if (!folio_try_get(folio))
++		return 0;
 +
-+	intel_de_write(i915, GAMMA_MODE(crtc->pipe),
-+		       crtc_state->gamma_mode);
-+
-+	intel_de_write_fw(i915, PIPE_CSC_MODE(crtc->pipe),
-+			  crtc_state->csc_mode);
-+}
-+
- static struct drm_property_blob *
- icl_read_lut_multi_segment(struct intel_crtc *crtc)
- {
-@@ -2183,7 +2202,7 @@ static const struct intel_color_funcs i9
- static const struct intel_color_funcs icl_color_funcs = {
- 	.color_check = icl_color_check,
- 	.color_commit_noarm = icl_color_commit_noarm,
--	.color_commit_arm = skl_color_commit_arm,
-+	.color_commit_arm = icl_color_commit_arm,
- 	.load_luts = icl_load_luts,
- 	.read_luts = icl_read_luts,
- };
++	if (!folio_lock_or_retry(folio, vma->vm_mm, vmf->flags)) {
++		folio_put(folio);
+ 		return VM_FAULT_RETRY;
++	}
+ 	mmu_notifier_range_init_owner(&range, MMU_NOTIFY_EXCLUSIVE, 0, vma,
+ 				vma->vm_mm, vmf->address & PAGE_MASK,
+ 				(vmf->address & PAGE_MASK) + PAGE_SIZE, NULL);
+@@ -3633,6 +3646,7 @@ static vm_fault_t remove_device_exclusiv
+ 
+ 	pte_unmap_unlock(vmf->pte, vmf->ptl);
+ 	folio_unlock(folio);
++	folio_put(folio);
+ 
+ 	mmu_notifier_invalidate_range_end(&range);
+ 	return 0;
 
 
