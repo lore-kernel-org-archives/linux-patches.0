@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AEA2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:41:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD12C4331E;
-	Wed, 12 Apr 2023 08:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650A92F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:41:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA996C433EF;
+	Wed, 12 Apr 2023 08:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288901;
-	bh=No/o7Nw40NJctC95qme3wB0FA3XKx6bh26qzevsE4PQ=;
+	s=korg; t=1681288904;
+	bh=nS414579cCkCyebrkAtx/4frSjcIZbbiJFvk+50Bu24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZQYIMrsmVWM0Wr/QH5H177wQF8GedvhhzpHHquiiiU0abFJc6v2kBGqleneqDfFe
-	 FWotFwPkK3LazN24w9rIE8KE7ScfensT37U9bRmiJm546gNPctm60cxMcVNppQHXm4
-	 NUP9gSZs8h+gYoy8wfM/bb9qBhDrv18f+vIAhQpw=
+	b=Iqd/fjAM8Qwl0sAEjAooKFro9B4q9Stb6jFmasmqsLoW9atKdzZhfPO7XWapDFbEs
+	 93OaTtiQ062oLJuPYYccbzwDujXenLn19iuiUvagUIUu+kkpyXyo+be5QBk5pLeMGy
+	 30eevnjyNEwid70rAL/oUxwhcB5eXZN5gVAfUNOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ira Weiny <ira.weiny@intel.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.1 061/164] PCI/DOE: Fix memory leak with CONFIG_DEBUG_OBJECTS=y
-Date: Wed, 12 Apr 2023 10:33:03 +0200
-Message-Id: <20230412082839.410632625@linuxfoundation.org>
+	Wayne Chang <waynec@nvidia.com>,
+	Haotien Hsu <haotienh@nvidia.com>
+Subject: [PATCH 6.1 062/164] usb: xhci: tegra: fix sleep in atomic call
+Date: Wed, 12 Apr 2023 10:33:04 +0200
+Message-Id: <20230412082839.457652988@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -38,43 +34,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Wayne Chang <waynec@nvidia.com>
 
-commit abf04be0e7071f2bcd39bf97ba407e7d4439785e upstream.
+commit 4c7f9d2e413dc06a157c4e5dccde84aaf4655eb3 upstream.
 
-After a pci_doe_task completes, its work_struct needs to be destroyed
-to avoid a memory leak with CONFIG_DEBUG_OBJECTS=y.
+When we set the dual-role port to Host mode, we observed the following
+splat:
+[  167.057718] BUG: sleeping function called from invalid context at
+include/linux/sched/mm.h:229
+[  167.057872] Workqueue: events tegra_xusb_usb_phy_work
+[  167.057954] Call trace:
+[  167.057962]  dump_backtrace+0x0/0x210
+[  167.057996]  show_stack+0x30/0x50
+[  167.058020]  dump_stack_lvl+0x64/0x84
+[  167.058065]  dump_stack+0x14/0x34
+[  167.058100]  __might_resched+0x144/0x180
+[  167.058140]  __might_sleep+0x64/0xd0
+[  167.058171]  slab_pre_alloc_hook.constprop.0+0xa8/0x110
+[  167.058202]  __kmalloc_track_caller+0x74/0x2b0
+[  167.058233]  kvasprintf+0xa4/0x190
+[  167.058261]  kasprintf+0x58/0x90
+[  167.058285]  tegra_xusb_find_port_node.isra.0+0x58/0xd0
+[  167.058334]  tegra_xusb_find_port+0x38/0xa0
+[  167.058380]  tegra_xusb_padctl_get_usb3_companion+0x38/0xd0
+[  167.058430]  tegra_xhci_id_notify+0x8c/0x1e0
+[  167.058473]  notifier_call_chain+0x88/0x100
+[  167.058506]  atomic_notifier_call_chain+0x44/0x70
+[  167.058537]  tegra_xusb_usb_phy_work+0x60/0xd0
+[  167.058581]  process_one_work+0x1dc/0x4c0
+[  167.058618]  worker_thread+0x54/0x410
+[  167.058650]  kthread+0x188/0x1b0
+[  167.058672]  ret_from_fork+0x10/0x20
 
-Fixes: 9d24322e887b ("PCI/DOE: Add DOE mailbox support functions")
-Tested-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: stable@vger.kernel.org # v6.0+
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/775768b4912531c3b887d405fc51a50e465e1bf9.1678543498.git.lukas@wunner.de
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+The function tegra_xusb_padctl_get_usb3_companion eventually calls
+tegra_xusb_find_port and this in turn calls kasprintf which might sleep
+and so cannot be called from an atomic context.
+
+Fix this by moving the call to tegra_xusb_padctl_get_usb3_companion to
+the tegra_xhci_id_work function where it is really needed.
+
+Fixes: f836e7843036 ("usb: xhci-tegra: Add OTG support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Signed-off-by: Haotien Hsu <haotienh@nvidia.com>
+Link: https://lore.kernel.org/r/20230327095548.1599470-1-haotienh@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/doe.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/xhci-tegra.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/doe.c b/drivers/pci/doe.c
-index c14ffdf23f87..e5e9b287b976 100644
---- a/drivers/pci/doe.c
-+++ b/drivers/pci/doe.c
-@@ -224,6 +224,7 @@ static void signal_task_complete(struct pci_doe_task *task, int rv)
- {
- 	task->rv = rv;
- 	task->complete(task);
-+	destroy_work_on_stack(&task->work);
- }
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -1225,6 +1225,9 @@ static void tegra_xhci_id_work(struct wo
  
- static void signal_task_abort(struct pci_doe_task *task, int rv)
--- 
-2.40.0
-
+ 	mutex_unlock(&tegra->lock);
+ 
++	tegra->otg_usb3_port = tegra_xusb_padctl_get_usb3_companion(tegra->padctl,
++								    tegra->otg_usb2_port);
++
+ 	if (tegra->host_mode) {
+ 		/* switch to host mode */
+ 		if (tegra->otg_usb3_port >= 0) {
+@@ -1339,9 +1342,6 @@ static int tegra_xhci_id_notify(struct n
+ 	}
+ 
+ 	tegra->otg_usb2_port = tegra_xusb_get_usb2_port(tegra, usbphy);
+-	tegra->otg_usb3_port = tegra_xusb_padctl_get_usb3_companion(
+-							tegra->padctl,
+-							tegra->otg_usb2_port);
+ 
+ 	tegra->host_mode = (usbphy->last_event == USB_EVENT_ID) ? true : false;
+ 
 
 
