@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070EC2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF1CC433D2;
-	Wed, 12 Apr 2023 08:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6342F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C76C433EF;
+	Wed, 12 Apr 2023 08:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288626;
-	bh=uKRlQqf54VqYTAbgcmCVIc2lO0zRoCrjTI61V3EbSwk=;
+	s=korg; t=1681288629;
+	bh=ibJLtRvzVDuqBrTSutnRzpkUay9rj3n4Cv6LSn6cvxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+dCfbj7O+lM4sUoK9flIYvuhwf+uz5Wkg81xE1YZPeO2DhugprIFF8xTiQLuIE1X
-	 rX90TPcLpFogYPZx76nOJLFz58WPfRSom8JPTdAXtjwHmJqPiZyrBTwK4szgEVHgSG
-	 kwreRe5wucaZz5AUD6dBNgR8ZWnnTekSLaLsxv5U=
+	b=eD//9R5wq20T55wc+iZZKTYzw4AmD++2SGPAUoUJ/SR3mhkb9AnoVCZlwRAV/ttK4
+	 Y0y91UN3cSbFM6wdkNKqtEP0fkHgxMzAvcSDMU0ulQnFoj+JGicxgiyVKp5d8Fc96b
+	 dh4zsDG0kqAPdQjMP/eyaiEH/UbJdvL2SHljZH2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Roulin <aroulin@nvidia.com>,
-	Danielle Ratson <danieller@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Shailend Chand <shailend@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 48/93] ethtool: reset #lanes when lanes is omitted
-Date: Wed, 12 Apr 2023 10:33:49 +0200
-Message-Id: <20230412082825.174866420@linuxfoundation.org>
+Subject: [PATCH 5.15 49/93] gve: Secure enough bytes in the first TX desc for all TCP pkts
+Date: Wed, 12 Apr 2023 10:33:50 +0200
+Message-Id: <20230412082825.214283897@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -37,91 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Roulin <aroulin@nvidia.com>
+From: Shailend Chand <shailend@google.com>
 
-[ Upstream commit e847c7675e19ef344913724dc68f83df31ad6a17 ]
+[ Upstream commit 3ce9345580974863c060fa32971537996a7b2d57 ]
 
-If the number of lanes was forced and then subsequently the user
-omits this parameter, the ksettings->lanes is reset. The driver
-should then reset the number of lanes to the device's default
-for the specified speed.
+Non-GSO TCP packets whose SKBs' linear portion did not include the
+entire TCP header were not populating the first Tx descriptor with
+as many bytes as the vNIC expected. This change ensures that all
+TCP packets populate the first descriptor with the correct number of
+bytes.
 
-However, although the ksettings->lanes is set to 0, the mod variable
-is not set to true to indicate the driver and userspace should be
-notified of the changes.
-
-The consequence is that the same ethtool operation will produce
-different results based on the initial state.
-
-If the initial state is:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 2
-        Duplex: Full
-        Auto-negotiation: on
-
-then executing 'ethtool -s swp1 speed 50000 autoneg off' will yield:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 2
-        Duplex: Full
-        Auto-negotiation: off
-
-While if the initial state is:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 1
-        Duplex: Full
-        Auto-negotiation: off
-
-executing the same 'ethtool -s swp1 speed 50000 autoneg off' results in:
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 1
-        Duplex: Full
-        Auto-negotiation: off
-
-This patch fixes this behavior. Omitting lanes will always results in
-the driver choosing the default lane width for the chosen speed. In this
-scenario, regardless of the initial state, the end state will be, e.g.,
-
-$ ethtool swp1 | grep -A 3 'Speed: '
-        Speed: 500000Mb/s
-        Lanes: 2
-        Duplex: Full
-        Auto-negotiation: off
-
-Fixes: 012ce4dd3102 ("ethtool: Extend link modes settings uAPI with lanes")
-Signed-off-by: Andy Roulin <aroulin@nvidia.com>
-Reviewed-by: Danielle Ratson <danieller@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/ac238d6b-8726-8156-3810-6471291dbc7f@nvidia.com
+Fixes: 893ce44df565 ("gve: Add basic driver framework for Compute Engine Virtual NIC")
+Signed-off-by: Shailend Chand <shailend@google.com>
+Link: https://lore.kernel.org/r/20230403172809.2939306-1-shailend@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/linkmodes.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/google/gve/gve.h    |  2 ++
+ drivers/net/ethernet/google/gve/gve_tx.c | 12 +++++-------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/net/ethtool/linkmodes.c b/net/ethtool/linkmodes.c
-index f9eda596f3014..3d05b9bf34854 100644
---- a/net/ethtool/linkmodes.c
-+++ b/net/ethtool/linkmodes.c
-@@ -277,11 +277,12 @@ static int ethnl_update_linkmodes(struct genl_info *info, struct nlattr **tb,
- 					    "lanes configuration not supported by device");
- 			return -EOPNOTSUPP;
- 		}
--	} else if (!lsettings->autoneg) {
--		/* If autoneg is off and lanes parameter is not passed from user,
--		 * set the lanes parameter to 0.
-+	} else if (!lsettings->autoneg && ksettings->lanes) {
-+		/* If autoneg is off and lanes parameter is not passed from user but
-+		 * it was defined previously then set the lanes parameter to 0.
- 		 */
- 		ksettings->lanes = 0;
-+		*mod = true;
- 	}
+diff --git a/drivers/net/ethernet/google/gve/gve.h b/drivers/net/ethernet/google/gve/gve.h
+index b1273dce4795b..08f4c0595efae 100644
+--- a/drivers/net/ethernet/google/gve/gve.h
++++ b/drivers/net/ethernet/google/gve/gve.h
+@@ -47,6 +47,8 @@
  
- 	ret = ethnl_update_bitset(ksettings->link_modes.advertising,
+ #define GVE_RX_BUFFER_SIZE_DQO 2048
+ 
++#define GVE_GQ_TX_MIN_PKT_DESC_BYTES 182
++
+ /* Each slot in the desc ring has a 1:1 mapping to a slot in the data ring */
+ struct gve_rx_desc_queue {
+ 	struct gve_rx_desc *desc_ring; /* the descriptor ring */
+diff --git a/drivers/net/ethernet/google/gve/gve_tx.c b/drivers/net/ethernet/google/gve/gve_tx.c
+index 9922ce46a6351..43e7b74bdb767 100644
+--- a/drivers/net/ethernet/google/gve/gve_tx.c
++++ b/drivers/net/ethernet/google/gve/gve_tx.c
+@@ -283,8 +283,8 @@ static inline int gve_skb_fifo_bytes_required(struct gve_tx_ring *tx,
+ 	int bytes;
+ 	int hlen;
+ 
+-	hlen = skb_is_gso(skb) ? skb_checksum_start_offset(skb) +
+-				 tcp_hdrlen(skb) : skb_headlen(skb);
++	hlen = skb_is_gso(skb) ? skb_checksum_start_offset(skb) + tcp_hdrlen(skb) :
++				 min_t(int, GVE_GQ_TX_MIN_PKT_DESC_BYTES, skb->len);
+ 
+ 	pad_bytes = gve_tx_fifo_pad_alloc_one_frag(&tx->tx_fifo,
+ 						   hlen);
+@@ -431,13 +431,11 @@ static int gve_tx_add_skb_copy(struct gve_priv *priv, struct gve_tx_ring *tx, st
+ 	pkt_desc = &tx->desc[idx];
+ 
+ 	l4_hdr_offset = skb_checksum_start_offset(skb);
+-	/* If the skb is gso, then we want the tcp header in the first segment
+-	 * otherwise we want the linear portion of the skb (which will contain
+-	 * the checksum because skb->csum_start and skb->csum_offset are given
+-	 * relative to skb->head) in the first segment.
++	/* If the skb is gso, then we want the tcp header alone in the first segment
++	 * otherwise we want the minimum required by the gVNIC spec.
+ 	 */
+ 	hlen = is_gso ? l4_hdr_offset + tcp_hdrlen(skb) :
+-			skb_headlen(skb);
++			min_t(int, GVE_GQ_TX_MIN_PKT_DESC_BYTES, skb->len);
+ 
+ 	info->skb =  skb;
+ 	/* We don't want to split the header, so if necessary, pad to the end
 -- 
 2.39.2
 
