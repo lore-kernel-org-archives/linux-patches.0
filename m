@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613842F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:45:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8801C433D2;
-	Wed, 12 Apr 2023 08:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086C92F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:45:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819E0C4339B;
+	Wed, 12 Apr 2023 08:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289117;
-	bh=LMx+8hQcBlHW1IGjmfXYERjJ107BbGJVFMGasEWoeV4=;
+	s=korg; t=1681289119;
+	bh=ldw7XbhBb1FduhtV1MrUJHLm5E0vJiafFKpOZ6P+NCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dwFL+L4yDiGs9DVRIvaz8fzMLHbqdNC+qlAN0oDaY2PXE9Yj16LX41e5zb2GcUX5T
-	 d8+NCNNTNiN3QkerFA75OyLdCwZp+5ohBDinT0mvV5xzp+poF8T9zMHZOwYzuLrF1D
-	 0tUHyO5qBPtGtAECIYzM5ElNICdc0v8i3+6o+bRM=
+	b=hvj73xIw6BAgZQduOei+XJc9PoyKjPYq+INBr+LXolf78GUD0RNCPr4eTi7Izt4G4
+	 px5kKpaA4SFF4ToMlUweSu3CTp7+pwFlArfj7F0jnRWfCzNK0Ip/lZAwePsKwkiK9v
+	 T1cEsXK98RIDs6gdk67W+OKgkujMOzzd8YnQ/poU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 141/164] maple_tree: fix a potential concurrency bug in RCU mode
-Date: Wed, 12 Apr 2023 10:34:23 +0200
-Message-Id: <20230412082842.597469761@linuxfoundation.org>
+	Shuangpeng Bai <sjb7183@psu.edu>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.1 114/164] can: j1939: j1939_tp_tx_dat_new(): fix out-of-bounds memory access
+Date: Wed, 12 Apr 2023 10:33:56 +0200
+Message-Id: <20230412082841.463366507@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,82 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Zhang <zhangpeng.00@bytedance.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit c45ea315a602d45569b08b93e9ab30f6a63a38aa upstream.
+commit b45193cb4df556fe6251b285a5ce44046dd36b4a upstream.
 
-There is a concurrency bug that may cause the wrong value to be loaded
-when a CPU is modifying the maple tree.
+In the j1939_tp_tx_dat_new() function, an out-of-bounds memory access
+could occur during the memcpy() operation if the size of skb->cb is
+larger than the size of struct j1939_sk_buff_cb. This is because the
+memcpy() operation uses the size of skb->cb, leading to a read beyond
+the struct j1939_sk_buff_cb.
 
-CPU1:
-mtree_insert_range()
-  mas_insert()
-    mas_store_root()
-      ...
-      mas_root_expand()
-        ...
-        rcu_assign_pointer(mas->tree->ma_root, mte_mk_root(mas->node));
-        ma_set_meta(node, maple_leaf_64, 0, slot);    <---IP
+Updated the memcpy() operation to use the size of struct
+j1939_sk_buff_cb instead of the size of skb->cb. This ensures that the
+memcpy() operation only reads the memory within the bounds of struct
+j1939_sk_buff_cb, preventing out-of-bounds memory access.
 
-CPU2:
-mtree_load()
-  mtree_lookup_walk()
-    ma_data_end();
+Additionally, add a BUILD_BUG_ON() to check that the size of skb->cb
+is greater than or equal to the size of struct j1939_sk_buff_cb. This
+ensures that the skb->cb buffer is large enough to hold the
+j1939_sk_buff_cb structure.
 
-When CPU1 is about to execute the instruction pointed to by IP, the
-ma_data_end() executed by CPU2 may return the wrong end position, which
-will cause the value loaded by mtree_load() to be wrong.
-
-An example of triggering the bug:
-
-Add mdelay(100) between rcu_assign_pointer() and ma_set_meta() in
-mas_root_expand().
-
-static DEFINE_MTREE(tree);
-int work(void *p) {
-	unsigned long val;
-	for (int i = 0 ; i< 30; ++i) {
-		val = (unsigned long)mtree_load(&tree, 8);
-		mdelay(5);
-		pr_info("%lu",val);
-	}
-	return 0;
-}
-
-mt_init_flags(&tree, MT_FLAGS_USE_RCU);
-mtree_insert(&tree, 0, (void*)12345, GFP_KERNEL);
-run_thread(work)
-mtree_insert(&tree, 1, (void*)56789, GFP_KERNEL);
-
-In RCU mode, mtree_load() should always return the value before or after
-the data structure is modified, and in this example mtree_load(&tree, 8)
-may return 56789 which is not expected, it should always return NULL.  Fix
-it by put ma_set_meta() before rcu_assign_pointer().
-
-Link: https://lkml.kernel.org/r/20230314124203.91572-4-zhangpeng.00@bytedance.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Peng Zhang <zhangpeng.00@bytedance.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Reported-by: Shuangpeng Bai <sjb7183@psu.edu>
+Tested-by: Shuangpeng Bai <sjb7183@psu.edu>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://groups.google.com/g/syzkaller/c/G_LL-C3plRs/m/-8xCi6dCAgAJ
+Link: https://lore.kernel.org/all/20230404073128.3173900-1-o.rempel@pengutronix.de
+Cc: stable@vger.kernel.org
+[mkl: rephrase commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/can/j1939/transport.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -3654,10 +3654,9 @@ static inline int mas_root_expand(struct
- 		slot++;
- 	mas->depth = 1;
- 	mas_set_height(mas);
--
-+	ma_set_meta(node, maple_leaf_64, 0, slot);
- 	/* swap the new root into the tree */
- 	rcu_assign_pointer(mas->tree->ma_root, mte_mk_root(mas->node));
--	ma_set_meta(node, maple_leaf_64, 0, slot);
- 	return slot;
- }
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -604,7 +604,10 @@ sk_buff *j1939_tp_tx_dat_new(struct j193
+ 	/* reserve CAN header */
+ 	skb_reserve(skb, offsetof(struct can_frame, data));
  
+-	memcpy(skb->cb, re_skcb, sizeof(skb->cb));
++	/* skb->cb must be large enough to hold a j1939_sk_buff_cb structure */
++	BUILD_BUG_ON(sizeof(skb->cb) < sizeof(*re_skcb));
++
++	memcpy(skb->cb, re_skcb, sizeof(*re_skcb));
+ 	skcb = j1939_skb_to_cb(skb);
+ 	if (swap_src_dst)
+ 		j1939_skbcb_swap(skcb);
 
 
