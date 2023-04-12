@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0422F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:53:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA4DC433D2;
-	Wed, 12 Apr 2023 08:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786702F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:53:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E71C433EF;
+	Wed, 12 Apr 2023 08:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289595;
-	bh=R553NeeqXzX/6Dy+1psUqDRfzAFY9v96xArde1rthyo=;
+	s=korg; t=1681289598;
+	bh=8Vz31qR/1EZSbmuq+T4mdiC1zhZx/0gsEHu3tqXI9n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LxhVszrpI3aQjDRQn39WF8TQF7hTRuTAIl4RJthfJpCA+QjQEAQgO4xRIyslA0MB/
-	 RWUnS9nuQyELTP8y0OYUMr0IVRjlenvY8JJCr/KyPQIOlDufB/8lcRLfUVR/MoPKaU
-	 6G2ri7/nPKYUs9nooD5iDPUeN0MNSuAzwPowDqLo=
+	b=aDGXW9lpIHDgw+kEW5PS5/pTmeuCy8zgAQbyC+q3DwrpcAU177E+vSk3d/IrFGiow
+	 9x6FWAbXLWAUGOzZkU8mdsJr2yi0V4GHw56zVtTybnmKTT+CvQkuCr1lhCGBxjY7Pu
+	 +NyHaU/Jva9shGPPiFC0dPhhOebPuziCdhwuhLNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alistair Popple <apopple@nvidia.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Christoph Hellwig <hch@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 160/173] mm: take a page reference when removing device exclusive entries
-Date: Wed, 12 Apr 2023 10:34:46 +0200
-Message-Id: <20230412082844.598782741@linuxfoundation.org>
+	Liam Howlett <Liam.Howlett@oracle.com>,
+	Jirka Hladky <jhladky@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>
+Subject: [PATCH 6.2 161/173] maple_tree: remove GFP_ZERO from kmem_cache_alloc() and kmem_cache_alloc_bulk()
+Date: Wed, 12 Apr 2023 10:34:47 +0200
+Message-Id: <20230412082844.648360014@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -39,84 +35,291 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alistair Popple <apopple@nvidia.com>
+From: "Liam R. Howlett" <Liam.Howlett@Oracle.com>
 
-commit 7c7b962938ddda6a9cd095de557ee5250706ea88 upstream.
+commit 541e06b772c1aaffb3b6a245ccface36d7107af2 upstream.
 
-Device exclusive page table entries are used to prevent CPU access to a
-page whilst it is being accessed from a device.  Typically this is used to
-implement atomic operations when the underlying bus does not support
-atomic access.  When a CPU thread encounters a device exclusive entry it
-locks the page and restores the original entry after calling mmu notifiers
-to signal drivers that exclusive access is no longer available.
+Preallocations are common in the VMA code to avoid allocating under
+certain locking conditions.  The preallocations must also cover the
+worst-case scenario.  Removing the GFP_ZERO flag from the
+kmem_cache_alloc() (and bulk variant) calls will reduce the amount of time
+spent zeroing memory that may not be used.  Only zero out the necessary
+area to keep track of the allocations in the maple state.  Zero the entire
+node prior to using it in the tree.
 
-The device exclusive entry holds a reference to the page making it safe to
-access the struct page whilst the entry is present.  However the fault
-handling code does not hold the PTL when taking the page lock.  This means
-if there are multiple threads faulting concurrently on the device
-exclusive entry one will remove the entry whilst others will wait on the
-page lock without holding a reference.
+This required internal changes to node counting on allocation, so the test
+code is also updated.
 
-This can lead to threads locking or waiting on a folio with a zero
-refcount.  Whilst mmap_lock prevents the pages getting freed via munmap()
-they may still be freed by a migration.  This leads to warnings such as
-PAGE_FLAGS_CHECK_AT_FREE due to the page being locked when the refcount
-drops to zero.
+This restores some micro-benchmark performance: up to +9% in mmtests mmap1
+by my testing +10% to +20% in mmap, mmapaddr, mmapmany tests reported by
+Red Hat
 
-Fix this by trying to take a reference on the folio before locking it.
-The code already checks the PTE under the PTL and aborts if the entry is
-no longer there.  It is also possible the folio has been unmapped, freed
-and re-allocated allowing a reference to be taken on an unrelated folio.
-This case is also detected by the PTE check and the folio is unlocked
-without further changes.
-
-Link: https://lkml.kernel.org/r/20230330012519.804116-1-apopple@nvidia.com
-Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
-Signed-off-by: Alistair Popple <apopple@nvidia.com>
-Reviewed-by: Ralph Campbell <rcampbell@nvidia.com>
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2149636
+Link: https://lkml.kernel.org/r/20230105160427.2988454-1-Liam.Howlett@oracle.com
+Cc: stable@vger.kernel.org
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Liam Howlett <Liam.Howlett@oracle.com>
+Reported-by: Jirka Hladky <jhladky@redhat.com>
+Suggested-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ lib/maple_tree.c                 |   80 ++++++++++++++++++++-------------------
+ tools/testing/radix-tree/maple.c |   18 ++++----
+ 2 files changed, 52 insertions(+), 46 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -3580,8 +3580,21 @@ static vm_fault_t remove_device_exclusiv
- 	struct vm_area_struct *vma = vmf->vma;
- 	struct mmu_notifier_range range;
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -149,13 +149,12 @@ struct maple_subtree_state {
+ /* Functions */
+ static inline struct maple_node *mt_alloc_one(gfp_t gfp)
+ {
+-	return kmem_cache_alloc(maple_node_cache, gfp | __GFP_ZERO);
++	return kmem_cache_alloc(maple_node_cache, gfp);
+ }
  
--	if (!folio_lock_or_retry(folio, vma->vm_mm, vmf->flags))
-+	/*
-+	 * We need a reference to lock the folio because we don't hold
-+	 * the PTL so a racing thread can remove the device-exclusive
-+	 * entry and unmap it. If the folio is free the entry must
-+	 * have been removed already. If it happens to have already
-+	 * been re-allocated after being freed all we do is lock and
-+	 * unlock it.
-+	 */
-+	if (!folio_try_get(folio))
-+		return 0;
+ static inline int mt_alloc_bulk(gfp_t gfp, size_t size, void **nodes)
+ {
+-	return kmem_cache_alloc_bulk(maple_node_cache, gfp | __GFP_ZERO, size,
+-				     nodes);
++	return kmem_cache_alloc_bulk(maple_node_cache, gfp, size, nodes);
+ }
+ 
+ static inline void mt_free_bulk(size_t size, void __rcu **nodes)
+@@ -1128,9 +1127,10 @@ static inline struct maple_node *mas_pop
+ {
+ 	struct maple_alloc *ret, *node = mas->alloc;
+ 	unsigned long total = mas_allocated(mas);
++	unsigned int req = mas_alloc_req(mas);
+ 
+ 	/* nothing or a request pending. */
+-	if (unlikely(!total))
++	if (WARN_ON(!total))
+ 		return NULL;
+ 
+ 	if (total == 1) {
+@@ -1140,27 +1140,25 @@ static inline struct maple_node *mas_pop
+ 		goto single_node;
+ 	}
+ 
+-	if (!node->node_count) {
++	if (node->node_count == 1) {
+ 		/* Single allocation in this node. */
+ 		mas->alloc = node->slot[0];
+-		node->slot[0] = NULL;
+ 		mas->alloc->total = node->total - 1;
+ 		ret = node;
+ 		goto new_head;
+ 	}
+-
+ 	node->total--;
+-	ret = node->slot[node->node_count];
+-	node->slot[node->node_count--] = NULL;
++	ret = node->slot[--node->node_count];
++	node->slot[node->node_count] = NULL;
+ 
+ single_node:
+ new_head:
+-	ret->total = 0;
+-	ret->node_count = 0;
+-	if (ret->request_count) {
+-		mas_set_alloc_req(mas, ret->request_count + 1);
+-		ret->request_count = 0;
++	if (req) {
++		req++;
++		mas_set_alloc_req(mas, req);
+ 	}
 +
-+	if (!folio_lock_or_retry(folio, vma->vm_mm, vmf->flags)) {
-+		folio_put(folio);
- 		return VM_FAULT_RETRY;
-+	}
- 	mmu_notifier_range_init_owner(&range, MMU_NOTIFY_EXCLUSIVE, 0, vma,
- 				vma->vm_mm, vmf->address & PAGE_MASK,
- 				(vmf->address & PAGE_MASK) + PAGE_SIZE, NULL);
-@@ -3594,6 +3607,7 @@ static vm_fault_t remove_device_exclusiv
++	memset(ret, 0, sizeof(*ret));
+ 	return (struct maple_node *)ret;
+ }
  
- 	pte_unmap_unlock(vmf->pte, vmf->ptl);
- 	folio_unlock(folio);
-+	folio_put(folio);
+@@ -1179,21 +1177,20 @@ static inline void mas_push_node(struct
+ 	unsigned long count;
+ 	unsigned int requested = mas_alloc_req(mas);
  
- 	mmu_notifier_invalidate_range_end(&range);
- 	return 0;
+-	memset(reuse, 0, sizeof(*reuse));
+ 	count = mas_allocated(mas);
+ 
+-	if (count && (head->node_count < MAPLE_ALLOC_SLOTS - 1)) {
+-		if (head->slot[0])
+-			head->node_count++;
+-		head->slot[head->node_count] = reuse;
++	reuse->request_count = 0;
++	reuse->node_count = 0;
++	if (count && (head->node_count < MAPLE_ALLOC_SLOTS)) {
++		head->slot[head->node_count++] = reuse;
+ 		head->total++;
+ 		goto done;
+ 	}
+ 
+ 	reuse->total = 1;
+ 	if ((head) && !((unsigned long)head & 0x1)) {
+-		head->request_count = 0;
+ 		reuse->slot[0] = head;
++		reuse->node_count = 1;
+ 		reuse->total += head->total;
+ 	}
+ 
+@@ -1212,7 +1209,6 @@ static inline void mas_alloc_nodes(struc
+ {
+ 	struct maple_alloc *node;
+ 	unsigned long allocated = mas_allocated(mas);
+-	unsigned long success = allocated;
+ 	unsigned int requested = mas_alloc_req(mas);
+ 	unsigned int count;
+ 	void **slots = NULL;
+@@ -1228,24 +1224,29 @@ static inline void mas_alloc_nodes(struc
+ 		WARN_ON(!allocated);
+ 	}
+ 
+-	if (!allocated || mas->alloc->node_count == MAPLE_ALLOC_SLOTS - 1) {
++	if (!allocated || mas->alloc->node_count == MAPLE_ALLOC_SLOTS) {
+ 		node = (struct maple_alloc *)mt_alloc_one(gfp);
+ 		if (!node)
+ 			goto nomem_one;
+ 
+-		if (allocated)
++		if (allocated) {
+ 			node->slot[0] = mas->alloc;
++			node->node_count = 1;
++		} else {
++			node->node_count = 0;
++		}
+ 
+-		success++;
+ 		mas->alloc = node;
++		node->total = ++allocated;
+ 		requested--;
+ 	}
+ 
+ 	node = mas->alloc;
++	node->request_count = 0;
+ 	while (requested) {
+ 		max_req = MAPLE_ALLOC_SLOTS;
+-		if (node->slot[0]) {
+-			unsigned int offset = node->node_count + 1;
++		if (node->node_count) {
++			unsigned int offset = node->node_count;
+ 
+ 			slots = (void **)&node->slot[offset];
+ 			max_req -= offset;
+@@ -1259,15 +1260,13 @@ static inline void mas_alloc_nodes(struc
+ 			goto nomem_bulk;
+ 
+ 		node->node_count += count;
+-		/* zero indexed. */
+-		if (slots == (void **)&node->slot)
+-			node->node_count--;
+-
+-		success += count;
++		allocated += count;
+ 		node = node->slot[0];
++		node->node_count = 0;
++		node->request_count = 0;
+ 		requested -= count;
+ 	}
+-	mas->alloc->total = success;
++	mas->alloc->total = allocated;
+ 	return;
+ 
+ nomem_bulk:
+@@ -1276,7 +1275,7 @@ nomem_bulk:
+ nomem_one:
+ 	mas_set_alloc_req(mas, requested);
+ 	if (mas->alloc && !(((unsigned long)mas->alloc & 0x1)))
+-		mas->alloc->total = success;
++		mas->alloc->total = allocated;
+ 	mas_set_err(mas, -ENOMEM);
+ 	return;
+ 
+@@ -5725,6 +5724,7 @@ int mas_preallocate(struct ma_state *mas
+ void mas_destroy(struct ma_state *mas)
+ {
+ 	struct maple_alloc *node;
++	unsigned long total;
+ 
+ 	/*
+ 	 * When using mas_for_each() to insert an expected number of elements,
+@@ -5747,14 +5747,20 @@ void mas_destroy(struct ma_state *mas)
+ 	}
+ 	mas->mas_flags &= ~(MA_STATE_BULK|MA_STATE_PREALLOC);
+ 
+-	while (mas->alloc && !((unsigned long)mas->alloc & 0x1)) {
++	total = mas_allocated(mas);
++	while (total) {
+ 		node = mas->alloc;
+ 		mas->alloc = node->slot[0];
+-		if (node->node_count > 0)
+-			mt_free_bulk(node->node_count,
+-				     (void __rcu **)&node->slot[1]);
++		if (node->node_count > 1) {
++			size_t count = node->node_count - 1;
++
++			mt_free_bulk(count, (void __rcu **)&node->slot[1]);
++			total -= count;
++		}
+ 		kmem_cache_free(maple_node_cache, node);
++		total--;
+ 	}
++
+ 	mas->alloc = NULL;
+ }
+ EXPORT_SYMBOL_GPL(mas_destroy);
+--- a/tools/testing/radix-tree/maple.c
++++ b/tools/testing/radix-tree/maple.c
+@@ -173,11 +173,11 @@ static noinline void check_new_node(stru
+ 
+ 		if (!MAPLE_32BIT) {
+ 			if (i >= 35)
+-				e = i - 35;
++				e = i - 34;
+ 			else if (i >= 5)
+-				e = i - 5;
++				e = i - 4;
+ 			else if (i >= 2)
+-				e = i - 2;
++				e = i - 1;
+ 		} else {
+ 			if (i >= 4)
+ 				e = i - 4;
+@@ -305,17 +305,17 @@ static noinline void check_new_node(stru
+ 	MT_BUG_ON(mt, mas.node != MA_ERROR(-ENOMEM));
+ 	MT_BUG_ON(mt, !mas_nomem(&mas, GFP_KERNEL));
+ 	MT_BUG_ON(mt, mas_allocated(&mas) != MAPLE_ALLOC_SLOTS + 1);
+-	MT_BUG_ON(mt, mas.alloc->node_count != MAPLE_ALLOC_SLOTS - 1);
++	MT_BUG_ON(mt, mas.alloc->node_count != MAPLE_ALLOC_SLOTS);
+ 
+ 	mn = mas_pop_node(&mas); /* get the next node. */
+ 	MT_BUG_ON(mt, mn == NULL);
+ 	MT_BUG_ON(mt, not_empty(mn));
+ 	MT_BUG_ON(mt, mas_allocated(&mas) != MAPLE_ALLOC_SLOTS);
+-	MT_BUG_ON(mt, mas.alloc->node_count != MAPLE_ALLOC_SLOTS - 2);
++	MT_BUG_ON(mt, mas.alloc->node_count != MAPLE_ALLOC_SLOTS - 1);
+ 
+ 	mas_push_node(&mas, mn);
+ 	MT_BUG_ON(mt, mas_allocated(&mas) != MAPLE_ALLOC_SLOTS + 1);
+-	MT_BUG_ON(mt, mas.alloc->node_count != MAPLE_ALLOC_SLOTS - 1);
++	MT_BUG_ON(mt, mas.alloc->node_count != MAPLE_ALLOC_SLOTS);
+ 
+ 	/* Check the limit of pop/push/pop */
+ 	mas_node_count(&mas, MAPLE_ALLOC_SLOTS + 2); /* Request */
+@@ -323,14 +323,14 @@ static noinline void check_new_node(stru
+ 	MT_BUG_ON(mt, mas.node != MA_ERROR(-ENOMEM));
+ 	MT_BUG_ON(mt, !mas_nomem(&mas, GFP_KERNEL));
+ 	MT_BUG_ON(mt, mas_alloc_req(&mas));
+-	MT_BUG_ON(mt, mas.alloc->node_count);
++	MT_BUG_ON(mt, mas.alloc->node_count != 1);
+ 	MT_BUG_ON(mt, mas_allocated(&mas) != MAPLE_ALLOC_SLOTS + 2);
+ 	mn = mas_pop_node(&mas);
+ 	MT_BUG_ON(mt, not_empty(mn));
+ 	MT_BUG_ON(mt, mas_allocated(&mas) != MAPLE_ALLOC_SLOTS + 1);
+-	MT_BUG_ON(mt, mas.alloc->node_count  != MAPLE_ALLOC_SLOTS - 1);
++	MT_BUG_ON(mt, mas.alloc->node_count  != MAPLE_ALLOC_SLOTS);
+ 	mas_push_node(&mas, mn);
+-	MT_BUG_ON(mt, mas.alloc->node_count);
++	MT_BUG_ON(mt, mas.alloc->node_count != 1);
+ 	MT_BUG_ON(mt, mas_allocated(&mas) != MAPLE_ALLOC_SLOTS + 2);
+ 	mn = mas_pop_node(&mas);
+ 	MT_BUG_ON(mt, not_empty(mn));
 
 
