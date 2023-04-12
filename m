@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14962F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:35:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D7BC433D2;
-	Wed, 12 Apr 2023 08:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9438F2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:35:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56DFC433EF;
+	Wed, 12 Apr 2023 08:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288555;
-	bh=Rq08TbII99Z6iYT+clEcAC1SLfJ6CcTvOB6Ok4dvmWQ=;
+	s=korg; t=1681288558;
+	bh=owgKjuVL5ytEDBalUlxI9xWDrDQyAjuVKTal3jwFHDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YagwZLdDXavonW8ciSRZRIR1T7VFIH/2qyKN3rfIX+uNeYW/61kmkhGvAj5yS2huH
-	 QKojm2F8MoxAGHs4TE/pAuyRz3f2x4UQZgNMInPxvMJwyL4hv8kvCP8fR2shPgNxi/
-	 UTcjUz4nYb01/OGcGjie3lOrE+H3fg39W2OzGgS8=
+	b=jkZZP9nyHw4Vd1JZCUuvWZqAyiYaqEHLWRZc1n0eQ+Rp07dGYFz6bk2d1rI1jvDwI
+	 r1KHSoPpFb4AfCQx4AvVBN/EmUxFaViih8GOHvhs7kF5ltWHtoUWgcIq8OuyzLVotH
+	 TgSr2NEcasB3yJY+yY8O3nV9IH4h2FBcYxpyND9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 07/93] soc: sifive: ccache: fix missing of_node_put() in sifive_ccache_init()
-Date: Wed, 12 Apr 2023 10:33:08 +0200
-Message-Id: <20230412082823.346117157@linuxfoundation.org>
+Subject: [PATCH 5.15 08/93] ocfs2: ocfs2_mount_volume does cleanup job before return error
+Date: Wed, 12 Apr 2023 10:33:09 +0200
+Message-Id: <20230412082823.386013109@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -35,63 +42,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
 
-[ Upstream commit 8fbf94fea0b4e187ca9100936c5429f96b8a4e44 ]
+[ Upstream commit 0737e01de9c411e4db87dcedf4a9789d41b1c5c1 ]
 
-The device_node pointer returned by of_find_matching_node() with
-refcount incremented, when finish using it, the refcount need be
-decreased.
+After this patch, when error, ocfs2_fill_super doesn't take care to
+release resources which are allocated in ocfs2_mount_volume.
 
-Fixes: a967a289f169 ("RISC-V: sifive_l2_cache: Add L2 cache controller driver for SiFive SoCs")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lkml.kernel.org/r/20220424130952.2436-5-heming.zhao@suse.com
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: ce2fcf1516d6 ("ocfs2: fix memory leak in ocfs2_mount_volume()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/sifive/sifive_ccache.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ fs/ocfs2/super.c | 35 +++++++++++++++++++++++------------
+ 1 file changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/soc/sifive/sifive_ccache.c b/drivers/soc/sifive/sifive_ccache.c
-index 4b9d0a656a979..09914cb4f0284 100644
---- a/drivers/soc/sifive/sifive_ccache.c
-+++ b/drivers/soc/sifive/sifive_ccache.c
-@@ -209,12 +209,16 @@ static int __init sifive_ccache_init(void)
- 	if (!np)
- 		return -ENODEV;
+diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
+index a03f0cabff0bf..017f809e54401 100644
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -1783,11 +1783,10 @@ static int ocfs2_get_sector(struct super_block *sb,
+ static int ocfs2_mount_volume(struct super_block *sb)
+ {
+ 	int status = 0;
+-	int unlock_super = 0;
+ 	struct ocfs2_super *osb = OCFS2_SB(sb);
  
--	if (of_address_to_resource(np, 0, &res))
--		return -ENODEV;
-+	if (of_address_to_resource(np, 0, &res)) {
-+		rc = -ENODEV;
-+		goto err_node_put;
-+	}
+ 	if (ocfs2_is_hard_readonly(osb))
+-		goto leave;
++		goto out;
  
- 	ccache_base = ioremap(res.start, resource_size(&res));
--	if (!ccache_base)
--		return -ENOMEM;
-+	if (!ccache_base) {
-+		rc = -ENOMEM;
-+		goto err_node_put;
-+	}
+ 	mutex_init(&osb->obs_trim_fs_mutex);
  
- 	if (of_property_read_u32(np, "cache-level", &level)) {
- 		rc = -ENOENT;
-@@ -237,6 +241,7 @@ static int __init sifive_ccache_init(void)
- 			goto err_free_irq;
- 		}
+@@ -1797,44 +1796,56 @@ static int ocfs2_mount_volume(struct super_block *sb)
+ 		if (status == -EBADR && ocfs2_userspace_stack(osb))
+ 			mlog(ML_ERROR, "couldn't mount because cluster name on"
+ 			" disk does not match the running cluster name.\n");
+-		goto leave;
++		goto out;
  	}
-+	of_node_put(np);
  
- 	ccache_config_read();
+ 	status = ocfs2_super_lock(osb, 1);
+ 	if (status < 0) {
+ 		mlog_errno(status);
+-		goto leave;
++		goto out_dlm;
+ 	}
+-	unlock_super = 1;
  
-@@ -253,6 +258,8 @@ static int __init sifive_ccache_init(void)
- 		free_irq(g_irq[i], NULL);
- err_unmap:
- 	iounmap(ccache_base);
-+err_node_put:
-+	of_node_put(np);
- 	return rc;
+ 	/* This will load up the node map and add ourselves to it. */
+ 	status = ocfs2_find_slot(osb);
+ 	if (status < 0) {
+ 		mlog_errno(status);
+-		goto leave;
++		goto out_super_lock;
+ 	}
+ 
+ 	/* load all node-local system inodes */
+ 	status = ocfs2_init_local_system_inodes(osb);
+ 	if (status < 0) {
+ 		mlog_errno(status);
+-		goto leave;
++		goto out_super_lock;
+ 	}
+ 
+ 	status = ocfs2_check_volume(osb);
+ 	if (status < 0) {
+ 		mlog_errno(status);
+-		goto leave;
++		goto out_system_inodes;
+ 	}
+ 
+ 	status = ocfs2_truncate_log_init(osb);
+-	if (status < 0)
++	if (status < 0) {
+ 		mlog_errno(status);
++		goto out_system_inodes;
++	}
+ 
+-leave:
+-	if (unlock_super)
+-		ocfs2_super_unlock(osb, 1);
++	ocfs2_super_unlock(osb, 1);
++	return 0;
+ 
++out_system_inodes:
++	if (osb->local_alloc_state == OCFS2_LA_ENABLED)
++		ocfs2_shutdown_local_alloc(osb);
++	ocfs2_release_system_inodes(osb);
++	/* before journal shutdown, we should release slot_info */
++	ocfs2_free_slot_info(osb);
++	ocfs2_journal_shutdown(osb);
++out_super_lock:
++	ocfs2_super_unlock(osb, 1);
++out_dlm:
++	ocfs2_dlm_shutdown(osb, 0);
++out:
+ 	return status;
  }
  
 -- 
