@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC08F2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B00C4339B;
-	Wed, 12 Apr 2023 08:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994C32F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6625C433A0;
+	Wed, 12 Apr 2023 08:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289176;
-	bh=1HKHTnioBqhIecFAvO85C+FIo2QjsHhQJpAl8NQzCmw=;
+	s=korg; t=1681289179;
+	bh=vCjQLRwvG9Fjkgjh9V2g/YplN8RULrAjuuFEEVOYUm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gZIukoKLQitQ+rXtzzxcmULp4gaIhX7IDQS+jJoUeutOblsk7R6BEXNIgWa1EhyuO
-	 mVp9oTuTC3MOrvMFv6mznjwvq6KTqFFH700XulQFvxMXSAMO4ttksznZ5s4WEwydJ/
-	 daMO6HStqI7NcWSNAHlbQBNn4K6R09q/g4KZqYoM=
+	b=Om/utSRSHoCcmnG7bamw9oaHa1tREBM0RZRZmL6XKYIP5vHAH+dOjxproYi8dLwaz
+	 yw93aaY6181R9nl43/pAR3eQQR6NveMCUMT3VAr9J6JZjulf+v/zzE+58kn01Qj31d
+	 o7FqgjrOzj9DhvzC0NUesns7v21PBNG0+YN7L/8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	syzbot+8d95422d3537159ca390@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 164/164] mm: enable maple tree RCU mode by default.
-Date: Wed, 12 Apr 2023 10:34:46 +0200
-Message-Id: <20230412082843.570250345@linuxfoundation.org>
+	Tim Huang <tim.huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 145/164] drm/amdgpu: skip psp suspend for IMU enabled ASICs mode2 reset
+Date: Wed, 12 Apr 2023 10:34:27 +0200
+Message-Id: <20230412082842.771554924@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -34,89 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Liam R. Howlett" <Liam.Howlett@Oracle.com>
+From: Tim Huang <tim.huang@amd.com>
 
-commit 3dd4432549415f3c65dd52d5c687629efbf4ece1 upstream.
+commit e11c775030c5585370fda43035204bb5fa23b139 upstream.
 
-Use the maple tree in RCU mode for VMA tracking.
+The psp suspend & resume should be skipped to avoid destroy
+the TMR and reload FWs again for IMU enabled APU ASICs.
 
-The maple tree tracks the stack and is able to update the pivot
-(lower/upper boundary) in-place to allow the page fault handler to write
-to the tree while holding just the mmap read lock.  This is safe as the
-writes to the stack have a guard VMA which ensures there will always be
-a NULL in the direction of the growth and thus will only update a pivot.
-
-It is possible, but not recommended, to have VMAs that grow up/down
-without guard VMAs.  syzbot has constructed a testcase which sets up a
-VMA to grow and consume the empty space.  Overwriting the entire NULL
-entry causes the tree to be altered in a way that is not safe for
-concurrent readers; the readers may see a node being rewritten or one
-that does not match the maple state they are using.
-
-Enabling RCU mode allows the concurrent readers to see a stable node and
-will return the expected result.
-
-Link: https://lkml.kernel.org/r/20230227173632.3292573-9-surenb@google.com
-Cc: stable@vger.kernel.org
-Fixes: d4af56c5c7c6 ("mm: start tracking VMAs with maple tree")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reported-by: syzbot+8d95422d3537159ca390@syzkaller.appspotmail.com
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mm_types.h |    3 ++-
- kernel/fork.c            |    3 +++
- mm/mmap.c                |    3 ++-
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/include/linux/mm_types.h
-+++ b/include/linux/mm_types.h
-@@ -725,7 +725,8 @@ struct mm_struct {
- 	unsigned long cpu_bitmap[];
- };
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3040,6 +3040,18 @@ static int amdgpu_device_ip_suspend_phas
+ 		    (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_SDMA))
+ 			continue;
  
--#define MM_MT_FLAGS	(MT_FLAGS_ALLOC_RANGE | MT_FLAGS_LOCK_EXTERN)
-+#define MM_MT_FLAGS	(MT_FLAGS_ALLOC_RANGE | MT_FLAGS_LOCK_EXTERN | \
-+			 MT_FLAGS_USE_RCU)
- extern struct mm_struct init_mm;
- 
- /* Pointer magic because the dynamic array size confuses some compilers. */
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -617,6 +617,7 @@ static __latent_entropy int dup_mmap(str
- 	if (retval)
- 		goto out;
- 
-+	mt_clear_in_rcu(mas.tree);
- 	mas_for_each(&old_mas, mpnt, ULONG_MAX) {
- 		struct file *file;
- 
-@@ -703,6 +704,8 @@ static __latent_entropy int dup_mmap(str
- 	retval = arch_dup_mmap(oldmm, mm);
- loop_out:
- 	mas_destroy(&mas);
-+	if (!retval)
-+		mt_set_in_rcu(mas.tree);
- out:
- 	mmap_write_unlock(mm);
- 	flush_tlb_mm(oldmm);
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -2308,7 +2308,7 @@ do_mas_align_munmap(struct ma_state *mas
- 	int count = 0;
- 	int error = -ENOMEM;
- 	MA_STATE(mas_detach, &mt_detach, 0, 0);
--	mt_init_flags(&mt_detach, MT_FLAGS_LOCK_EXTERN);
-+	mt_init_flags(&mt_detach, mas->tree->ma_flags & MT_FLAGS_LOCK_MASK);
- 	mt_set_external_lock(&mt_detach, &mm->mmap_lock);
- 
- 	if (mas_preallocate(mas, vma, GFP_KERNEL))
-@@ -3095,6 +3095,7 @@ void exit_mmap(struct mm_struct *mm)
- 	 */
- 	set_bit(MMF_OOM_SKIP, &mm->flags);
- 	mmap_write_lock(mm);
-+	mt_clear_in_rcu(&mm->mm_mt);
- 	free_pgtables(&tlb, &mm->mm_mt, vma, FIRST_USER_ADDRESS,
- 		      USER_PGTABLES_CEILING);
- 	tlb_finish_mmu(&tlb);
++		/* Once swPSP provides the IMU, RLC FW binaries to TOS during cold-boot.
++		 * These are in TMR, hence are expected to be reused by PSP-TOS to reload
++		 * from this location and RLC Autoload automatically also gets loaded
++		 * from here based on PMFW -> PSP message during re-init sequence.
++		 * Therefore, the psp suspend & resume should be skipped to avoid destroy
++		 * the TMR and reload FWs again for IMU enabled APU ASICs.
++		 */
++		if (amdgpu_in_reset(adev) &&
++		    (adev->flags & AMD_IS_APU) && adev->gfx.imu.funcs &&
++		    adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_PSP)
++			continue;
++
+ 		/* XXX handle errors */
+ 		r = adev->ip_blocks[i].version->funcs->suspend(adev);
+ 		/* XXX handle errors */
 
 
