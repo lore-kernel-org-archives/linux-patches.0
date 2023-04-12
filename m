@@ -1,201 +1,62 @@
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08672944C
-	for <patches@lists.linux.dev>; Tue, 11 Apr 2023 17:38:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1681234739; x=1712770739;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=D8E9ccJywHMwXWNHgCXbCN5O7kiM9px87r66fGOiF2o=;
-  b=DZxYXVUa4k3Qx1ti7/NEEeO1tYeS0JOVKUMwRRVqI0eUE3Pkd97+0SIQ
-   P4YiQLyduXrOQTvtvVEXhtIshtaiRnsB/CX3zAE7o0a+iBroJVZHiIyyL
-   ujpWY7IhNd1shH+gek0/fD9BFV7LrFVKW8OGHMnhhP9CRCfL+Z1QUX3Pr
-   8Ol5Y0KIwMRlK1Ao8dFw9nTE0ej85kjES+/9KQ+L6nB7NfZzzmzFgXUBa
-   KTDPiQw2mjkNY8eA6Ubxq1VrBmG5cpff4JVq8mw3XHgS/M3ztKob1ZpEj
-   OMvS+xwLh7ELN7sGiepx/bcjLkEm81HrtB6/UedfMAiL+0TVr1ZPOBxLa
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10677"; a="346359979"
-X-IronPort-AV: E=Sophos;i="5.98,336,1673942400"; 
-   d="scan'208";a="346359979"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2023 10:38:55 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10677"; a="638911771"
-X-IronPort-AV: E=Sophos;i="5.98,336,1673942400"; 
-   d="scan'208";a="638911771"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2023 10:38:55 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
-	Smita.KoralahalliChannabasappa@amd.com,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v5 5/5] x86/mce: Handle AMD threshold interrupt storms
-Date: Tue, 11 Apr 2023 10:38:41 -0700
-Message-Id: <20230411173841.70491-6-tony.luck@intel.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230411173841.70491-1-tony.luck@intel.com>
-References: <20230403210716.347773-1-tony.luck@intel.com>
- <20230411173841.70491-1-tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892BE362
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 04:05:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=jaf8TVcaCoY+gXRI/VJ8dcjLvYvyn0Wf6eDT01i5qTU=; b=gV/Q8PhBJfKEwrm7QUc3Nj/RkV
+	SdSL5cwKeC0Plg0b6mwejcTDoMjZarfDiNAgQplXpqYWFesGNsx9Ly1iS6lsQsOGJ+pmFjNCyYBZf
+	iTxAWnMJJISxhizo+817ILIZ4QnD9GsCTv7+ptWdl3GhN2mkaCUshKhLgpYXIWL6hRXulCkBhdaqR
+	xAasSAx0b9s9kawlt7zz92GU+EBueFmLjNPSh92Ny2DYBUxQ8C626EYy8rD6dI2n+LAlqcCd2bwnj
+	qtaTHNNsdcvpr+FmnPzCRFCLdstHHWMLyCna3D7TkKLo6UwdqvD2aTrs6jMv7YKU2iQnB2ZHFHxEy
+	KNQzlAXw==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1pmRjM-001jmc-1R;
+	Wed, 12 Apr 2023 04:05:12 +0000
+Date: Tue, 11 Apr 2023 21:05:12 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Matthew Wilcox <willy@infradead.org>
+Cc: david@redhat.com, patches@lists.linux.dev,
+	linux-modules@vger.kernel.org, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
+	prarit@redhat.com, torvalds@linux-foundation.org,
+	gregkh@linuxfoundation.org, rafael@kernel.org,
+	christophe.leroy@csgroup.eu, tglx@linutronix.de,
+	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
+	dave@stgolabs.net, vbabka@suse.cz, mhocko@suse.com,
+	dave.hansen@linux.intel.com, colin.i.king@gmail.com,
+	jim.cromie@gmail.com, catalin.marinas@arm.com, jbaron@akamai.com,
+	rick.p.edgecombe@intel.com
+Subject: Re: [PATCH v2 1/2] Change DEFINE_SEMAPHORE() to take a number
+ argument
+Message-ID: <ZDYt+PwRjr+BzeBz@bombadil.infradead.org>
+References: <20230405203505.1343562-1-mcgrof@kernel.org>
+ <20230405203505.1343562-2-mcgrof@kernel.org>
+ <ZDB+zn3X4sac9DFU@casper.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZDB+zn3X4sac9DFU@casper.infradead.org>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-From: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
+On Fri, Apr 07, 2023 at 09:36:30PM +0100, Matthew Wilcox wrote:
+> Or this:
+> 
+> /*
+>  * Unlike mutexes, binary semaphores do not have an owner, so up() can
+>  * be called in a different thread from the one which called down().
+>  * It is also safe to call down_trylock() and up() from interrupt
+>  * context.
+>  */
 
-Extend the logic of handling CMCI storms to AMD threshold interrupts.
+I went with that. Thanks for helping me paint this shed!
 
-Rely on the similar approach as of Intel's CMCI to mitigate storms per
-CPU and per bank. But, unlike CMCI, do not set thresholds and reduce
-interrupt rate on a storm. Rather, disable the interrupt on the
-corresponding CPU and bank. Re-enable back the interrupts if enough
-consecutive polls of the bank show no corrected errors (30, as
-programmed by Intel).
-
-Turning off the threshold interrupts would be a better solution on AMD
-systems as other error severities will still be handled even if the
-threshold interrupts are disabled.
-
-[Tony: Small tweak because mce_handle_storm() isn't a pointer now]
-
-Signed-off-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Tested-by: Yazen Ghannam <yazen.ghannam@amd.com>
----
- arch/x86/kernel/cpu/mce/internal.h |  4 +++
- arch/x86/kernel/cpu/mce/amd.c      | 49 ++++++++++++++++++++++++++++++
- arch/x86/kernel/cpu/mce/core.c     |  3 ++
- 3 files changed, 56 insertions(+)
-
-diff --git a/arch/x86/kernel/cpu/mce/internal.h b/arch/x86/kernel/cpu/mce/internal.h
-index 9a2d6e289b8d..f1a48bc2e904 100644
---- a/arch/x86/kernel/cpu/mce/internal.h
-+++ b/arch/x86/kernel/cpu/mce/internal.h
-@@ -40,6 +40,8 @@ struct dentry *mce_get_debugfs_dir(void);
- 
- extern mce_banks_t mce_banks_ce_disabled;
- 
-+void track_cmci_storm(int bank, u64 status);
-+
- #ifdef CONFIG_X86_MCE_INTEL
- void mce_intel_handle_storm(int bank, bool on);
- void cmci_disable_bank(int bank);
-@@ -222,6 +224,7 @@ extern bool filter_mce(struct mce *m);
- 
- #ifdef CONFIG_X86_MCE_AMD
- extern bool amd_filter_mce(struct mce *m);
-+void mce_amd_handle_storm(int bank, bool on);
- 
- /*
-  * If MCA_CONFIG[McaLsbInStatusSupported] is set, extract ErrAddr in bits
-@@ -249,6 +252,7 @@ static __always_inline void smca_extract_err_addr(struct mce *m)
- 
- #else
- static inline bool amd_filter_mce(struct mce *m) { return false; }
-+static inline void mce_amd_handle_storm(int bank, bool on) {}
- static inline void smca_extract_err_addr(struct mce *m) { }
- #endif
- 
-diff --git a/arch/x86/kernel/cpu/mce/amd.c b/arch/x86/kernel/cpu/mce/amd.c
-index 23c5072fbbb7..cd79295e2a0a 100644
---- a/arch/x86/kernel/cpu/mce/amd.c
-+++ b/arch/x86/kernel/cpu/mce/amd.c
-@@ -468,6 +468,47 @@ static void threshold_restart_bank(void *_tr)
- 	wrmsr(tr->b->address, lo, hi);
- }
- 
-+static void _reset_block(struct threshold_block *block)
-+{
-+	struct thresh_restart tr;
-+
-+	memset(&tr, 0, sizeof(tr));
-+	tr.b = block;
-+	threshold_restart_bank(&tr);
-+}
-+
-+static void toggle_interrupt_reset_block(struct threshold_block *block, bool on)
-+{
-+	if (!block)
-+		return;
-+
-+	block->interrupt_enable = !!on;
-+	_reset_block(block);
-+}
-+
-+void mce_amd_handle_storm(int bank, bool on)
-+{
-+	struct threshold_block *first_block = NULL, *block = NULL, *tmp = NULL;
-+	struct threshold_bank **bp = this_cpu_read(threshold_banks);
-+	unsigned long flags;
-+
-+	if (!bp)
-+		return;
-+
-+	local_irq_save(flags);
-+
-+	first_block = bp[bank]->blocks;
-+	if (!first_block)
-+		goto end;
-+
-+	toggle_interrupt_reset_block(first_block, on);
-+
-+	list_for_each_entry_safe(block, tmp, &first_block->miscj, miscj)
-+		toggle_interrupt_reset_block(block, on);
-+end:
-+	local_irq_restore(flags);
-+}
-+
- static void mce_threshold_block_init(struct threshold_block *b, int offset)
- {
- 	struct thresh_restart tr = {
-@@ -868,6 +909,7 @@ static void amd_threshold_interrupt(void)
- 	struct threshold_block *first_block = NULL, *block = NULL, *tmp = NULL;
- 	struct threshold_bank **bp = this_cpu_read(threshold_banks);
- 	unsigned int bank, cpu = smp_processor_id();
-+	u64 status;
- 
- 	/*
- 	 * Validate that the threshold bank has been initialized already. The
-@@ -881,6 +923,13 @@ static void amd_threshold_interrupt(void)
- 		if (!(per_cpu(bank_map, cpu) & (1 << bank)))
- 			continue;
- 
-+		rdmsrl(mca_msr_reg(bank, MCA_STATUS), status);
-+		track_cmci_storm(bank, status);
-+
-+		/* Return early on an interrupt storm */
-+		if (this_cpu_read(bank_storm[bank]))
-+			return;
-+
- 		first_block = bp[bank]->blocks;
- 		if (!first_block)
- 			continue;
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index 820b317b1b85..fac90625d8cb 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -2062,6 +2062,9 @@ void mce_handle_storm(int bank, bool on)
- 	case X86_VENDOR_INTEL:
- 		mce_intel_handle_storm(bank, on);
- 		break;
-+	case X86_VENDOR_AMD:
-+		mce_amd_handle_storm(bank, on);
-+		break;
- 	}
- }
- 
--- 
-2.39.2
-
+  Luis
