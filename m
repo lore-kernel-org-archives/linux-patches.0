@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C1C2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:35:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72A5C433D2;
-	Wed, 12 Apr 2023 08:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82C62F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:35:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509B3C433D2;
+	Wed, 12 Apr 2023 08:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288548;
-	bh=xsVNdltK1tOP4oDjAlWlPJ2n4xSkE32XTtY/BYtaMDg=;
+	s=korg; t=1681288550;
+	bh=8nZZtkfRU+EOKvdXq+dYm6NHfKhuy0LKOrnaHWTjVYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HwNqkjw9wXCeOYV7wv/Ve4+12VEmADNdvfeO0h9U/rflT4MGU3tkbIHs1NcRts+44
-	 BxynNhcOVqUKqCpe+gNOOhmbpd4n5H3hxR6HyyJrCEObtZS9kjaoCxmu8Zoywnn8Kx
-	 o+37tsPaVKuDh6EieV0l62j25BxpEnMcmFzjitrg=
+	b=jZFeU13blfQ9Ni6C9MC7rFVsEWBmwgp/2D1aTvfVN0qTD2BLJxsIsYh5u0hw+Y0Yz
+	 SoTfPrQVwVuXj7VPebn3+MONXy/HA1XG2PuBDeYybq4J8b4EFmSoa4djU2FcIHtRP6
+	 rt8ZmXuitry7eoBggtzTJtShvsKzqdk2WNyBbXoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Dooks <ben.dooks@sifive.com>,
-	Zong Li <zong.li@sifive.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 04/93] soc: sifive: ccache: use pr_fmt() to remove CCACHE: prefixes
-Date: Wed, 12 Apr 2023 10:33:05 +0200
-Message-Id: <20230412082823.229829021@linuxfoundation.org>
+Subject: [PATCH 5.15 05/93] soc: sifive: ccache: fix missing iounmap() in error path in sifive_ccache_init()
+Date: Wed, 12 Apr 2023 10:33:06 +0200
+Message-Id: <20230412082823.279066545@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -37,100 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Dooks <ben.dooks@sifive.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 696ab9bda22a770d079dc3a23bac9aaa553d98f4 ]
+[ Upstream commit 73e770f085023da327dc9ffeb6cd96b0bb22d97e ]
 
-Use the pr_fmt() macro to prefix all the output with "CCACHE:"
-to avoid having to write it out each time, or make a large diff
-when the next change comes along.
+Add missing iounmap() before return error from sifive_ccache_init().
 
-Signed-off-by: Ben Dooks <ben.dooks@sifive.com>
-Signed-off-by: Zong Li <zong.li@sifive.com>
+Fixes: a967a289f169 ("RISC-V: sifive_l2_cache: Add L2 cache controller driver for SiFive SoCs")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20220913061817.22564-6-zong.li@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Stable-dep-of: 73e770f08502 ("soc: sifive: ccache: fix missing iounmap() in error path in sifive_ccache_init()")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/sifive/sifive_ccache.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/soc/sifive/sifive_ccache.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/soc/sifive/sifive_ccache.c b/drivers/soc/sifive/sifive_ccache.c
-index 17080af7dfa00..91f0c2b32ea2b 100644
+index 91f0c2b32ea2b..335e4303fb928 100644
 --- a/drivers/soc/sifive/sifive_ccache.c
 +++ b/drivers/soc/sifive/sifive_ccache.c
-@@ -5,6 +5,9 @@
-  * Copyright (C) 2018-2022 SiFive, Inc.
-  *
-  */
-+
-+#define pr_fmt(fmt) "CCACHE: " fmt
-+
- #include <linux/debugfs.h>
- #include <linux/interrupt.h>
- #include <linux/of_irq.h>
-@@ -85,13 +88,13 @@ static void ccache_config_read(void)
+@@ -216,13 +216,16 @@ static int __init sifive_ccache_init(void)
+ 	if (!ccache_base)
+ 		return -ENOMEM;
  
- 	cfg = readl(ccache_base + SIFIVE_CCACHE_CONFIG);
- 
--	pr_info("CCACHE: %u banks, %u ways, sets/bank=%llu, bytes/block=%llu\n",
-+	pr_info("%u banks, %u ways, sets/bank=%llu, bytes/block=%llu\n",
- 		(cfg & 0xff), (cfg >> 8) & 0xff,
- 		BIT_ULL((cfg >> 16) & 0xff),
- 		BIT_ULL((cfg >> 24) & 0xff));
- 
- 	cfg = readl(ccache_base + SIFIVE_CCACHE_WAYENABLE);
--	pr_info("CCACHE: Index of the largest way enabled: %u\n", cfg);
-+	pr_info("Index of the largest way enabled: %u\n", cfg);
- }
- 
- static const struct of_device_id sifive_ccache_ids[] = {
-@@ -155,7 +158,7 @@ static irqreturn_t ccache_int_handler(int irq, void *device)
- 	if (irq == g_irq[DIR_CORR]) {
- 		add_h = readl(ccache_base + SIFIVE_CCACHE_DIRECCFIX_HIGH);
- 		add_l = readl(ccache_base + SIFIVE_CCACHE_DIRECCFIX_LOW);
--		pr_err("CCACHE: DirError @ 0x%08X.%08X\n", add_h, add_l);
-+		pr_err("DirError @ 0x%08X.%08X\n", add_h, add_l);
- 		/* Reading this register clears the DirError interrupt sig */
- 		readl(ccache_base + SIFIVE_CCACHE_DIRECCFIX_COUNT);
- 		atomic_notifier_call_chain(&ccache_err_chain,
-@@ -175,7 +178,7 @@ static irqreturn_t ccache_int_handler(int irq, void *device)
- 	if (irq == g_irq[DATA_CORR]) {
- 		add_h = readl(ccache_base + SIFIVE_CCACHE_DATECCFIX_HIGH);
- 		add_l = readl(ccache_base + SIFIVE_CCACHE_DATECCFIX_LOW);
--		pr_err("CCACHE: DataError @ 0x%08X.%08X\n", add_h, add_l);
-+		pr_err("DataError @ 0x%08X.%08X\n", add_h, add_l);
- 		/* Reading this register clears the DataError interrupt sig */
- 		readl(ccache_base + SIFIVE_CCACHE_DATECCFIX_COUNT);
- 		atomic_notifier_call_chain(&ccache_err_chain,
-@@ -185,7 +188,7 @@ static irqreturn_t ccache_int_handler(int irq, void *device)
- 	if (irq == g_irq[DATA_UNCORR]) {
- 		add_h = readl(ccache_base + SIFIVE_CCACHE_DATECCFAIL_HIGH);
- 		add_l = readl(ccache_base + SIFIVE_CCACHE_DATECCFAIL_LOW);
--		pr_err("CCACHE: DataFail @ 0x%08X.%08X\n", add_h, add_l);
-+		pr_err("DataFail @ 0x%08X.%08X\n", add_h, add_l);
- 		/* Reading this register clears the DataFail interrupt sig */
- 		readl(ccache_base + SIFIVE_CCACHE_DATECCFAIL_COUNT);
- 		atomic_notifier_call_chain(&ccache_err_chain,
-@@ -218,7 +221,7 @@ static int __init sifive_ccache_init(void)
+-	if (of_property_read_u32(np, "cache-level", &level))
+-		return -ENOENT;
++	if (of_property_read_u32(np, "cache-level", &level)) {
++		rc = -ENOENT;
++		goto err_unmap;
++	}
  
  	intr_num = of_property_count_u32_elems(np, "interrupts");
  	if (!intr_num) {
--		pr_err("CCACHE: no interrupts property\n");
-+		pr_err("No interrupts property\n");
- 		return -ENODEV;
+ 		pr_err("No interrupts property\n");
+-		return -ENODEV;
++		rc = -ENODEV;
++		goto err_unmap;
  	}
  
-@@ -227,7 +230,7 @@ static int __init sifive_ccache_init(void)
- 		rc = request_irq(g_irq[i], ccache_int_handler, 0, "ccache_ecc",
+ 	for (i = 0; i < intr_num; i++) {
+@@ -231,7 +234,7 @@ static int __init sifive_ccache_init(void)
  				 NULL);
  		if (rc) {
--			pr_err("CCACHE: Could not request IRQ %d\n", g_irq[i]);
-+			pr_err("Could not request IRQ %d\n", g_irq[i]);
- 			return rc;
+ 			pr_err("Could not request IRQ %d\n", g_irq[i]);
+-			return rc;
++			goto err_unmap;
  		}
  	}
+ 
+@@ -244,6 +247,10 @@ static int __init sifive_ccache_init(void)
+ 	setup_sifive_debug();
+ #endif
+ 	return 0;
++
++err_unmap:
++	iounmap(ccache_base);
++	return rc;
+ }
+ 
+ device_initcall(sifive_ccache_init);
 -- 
 2.39.2
 
