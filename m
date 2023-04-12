@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5572F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:35:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3B6C433D2;
-	Wed, 12 Apr 2023 08:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41932F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:35:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587BDC433EF;
+	Wed, 12 Apr 2023 08:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288535;
-	bh=yTNLAF/N82RWqW09CItoj+J4UBdtT8qT2Cp4fGF6yP4=;
+	s=korg; t=1681288537;
+	bh=CAV92dUJEaWzF2rsEApT8/n2gspYX3igZNIpCkHQtcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NuPtg8VI3peHG2AIqKU7XU4yBkTNYypbq/26Vp40+a2wnZl7dTslvCcIHosal+Kmp
-	 T8UXBNAgX7/t+dmoOlDuS8S6Vj3+Yp0nfoTgNGE2nBD72kGGsgGQskWH/W3oQgIZQY
-	 UFX0KvPsi9+Ey6Sm1z4KIRUCl+1x+7WY8/ZyYWek=
+	b=gE6kAhad+oLBSvQBPD/Wrgbq5aI0ZAbPxfEBSz+IoXQYFrCWecgEoWU2wqhBZofTb
+	 4vko20phUnJuqDHRn72FzhIEQ3l8MgrPREW5JXlhrndIXJjjaobcexF4rgA1HRqiur
+	 G9NJ5YIPJ5UQeCL94h4TAYqhRZjIR+IFOlRERg3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Daniel Scally <djrscally@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Konrad Jankowski <konrad0.jankowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 15/93] platform/x86: int3472/discrete: Ensure the clk/power enable pins are in output mode
-Date: Wed, 12 Apr 2023 10:33:16 +0200
-Message-Id: <20230412082823.688521197@linuxfoundation.org>
+Subject: [PATCH 5.15 16/93] iavf: return errno code instead of status code
+Date: Wed, 12 Apr 2023 10:33:17 +0200
+Message-Id: <20230412082823.721667346@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -37,71 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit cf5ac2d45f6e4d11ad78e7b10ae9a4121ba5e995 ]
+[ Upstream commit 9f4651ea3e07339b460d403ff01b7cc2178fef7b ]
 
-acpi_get_and_request_gpiod() does not take a gpio_lookup_flags argument
-specifying that the pins direction should be initialized to a specific
-value.
+The iavf_parse_cls_flower function returns an integer error code, and
+not an iavf_status enumeration.
 
-This means that in some cases the pins might be left in input mode, causing
-the gpiod_set() calls made to enable the clk / regulator to not work.
+Fix the function to use the standard errno value EINVAL as its return
+instead of using IAVF_ERR_CONFIG.
 
-One example of this problem is the clk-enable GPIO for the ov01a1s sensor
-on a Dell Latitude 9420 being left in input mode causing the clk to
-never get enabled.
-
-Explicitly set the direction of the pins to output to fix this.
-
-Fixes: 5de691bffe57 ("platform/x86: Add intel_skl_int3472 driver")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Reviewed-by: Daniel Scally <djrscally@gmail.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230111201426.947853-1-hdegoede@redhat.com
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 6650c8e906ce ("iavf/iavf_main: actually log ->src mask when talking about it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/int3472/clk_and_regulator.c | 3 +++
- drivers/platform/x86/intel/int3472/discrete.c          | 4 ++++
- 2 files changed, 7 insertions(+)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/int3472/clk_and_regulator.c b/drivers/platform/x86/intel/int3472/clk_and_regulator.c
-index 1cf958983e868..28353addffa7f 100644
---- a/drivers/platform/x86/intel/int3472/clk_and_regulator.c
-+++ b/drivers/platform/x86/intel/int3472/clk_and_regulator.c
-@@ -181,6 +181,9 @@ int skl_int3472_register_regulator(struct int3472_discrete_device *int3472,
- 		return PTR_ERR(int3472->regulator.gpio);
- 	}
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index f5e6ae2c683f4..bafccf61c654f 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -3103,7 +3103,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+ 			} else {
+ 				dev_err(&adapter->pdev->dev, "Bad ether dest mask %pM\n",
+ 					match.mask->dst);
+-				return IAVF_ERR_CONFIG;
++				return -EINVAL;
+ 			}
+ 		}
  
-+	/* Ensure the pin is in output mode and non-active state */
-+	gpiod_direction_output(int3472->regulator.gpio, 0);
-+
- 	cfg.dev = &int3472->adev->dev;
- 	cfg.init_data = &init_data;
- 	cfg.ena_gpiod = int3472->regulator.gpio;
-diff --git a/drivers/platform/x86/intel/int3472/discrete.c b/drivers/platform/x86/intel/int3472/discrete.c
-index d2e8a87a077e7..401fa8f223d62 100644
---- a/drivers/platform/x86/intel/int3472/discrete.c
-+++ b/drivers/platform/x86/intel/int3472/discrete.c
-@@ -169,6 +169,8 @@ static int skl_int3472_map_gpio_to_clk(struct int3472_discrete_device *int3472,
- 			return (PTR_ERR(gpio));
+@@ -3113,7 +3113,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+ 			} else {
+ 				dev_err(&adapter->pdev->dev, "Bad ether src mask %pM\n",
+ 					match.mask->src);
+-				return IAVF_ERR_CONFIG;
++				return -EINVAL;
+ 			}
+ 		}
  
- 		int3472->clock.ena_gpio = gpio;
-+		/* Ensure the pin is in output mode and non-active state */
-+		gpiod_direction_output(int3472->clock.ena_gpio, 0);
- 		break;
- 	case INT3472_GPIO_TYPE_PRIVACY_LED:
- 		gpio = acpi_get_and_request_gpiod(path, pin, "int3472,privacy-led");
-@@ -176,6 +178,8 @@ static int skl_int3472_map_gpio_to_clk(struct int3472_discrete_device *int3472,
- 			return (PTR_ERR(gpio));
+@@ -3148,7 +3148,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+ 			} else {
+ 				dev_err(&adapter->pdev->dev, "Bad vlan mask %u\n",
+ 					match.mask->vlan_id);
+-				return IAVF_ERR_CONFIG;
++				return -EINVAL;
+ 			}
+ 		}
+ 		vf->mask.tcp_spec.vlan_id |= cpu_to_be16(0xffff);
+@@ -3172,7 +3172,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+ 			} else {
+ 				dev_err(&adapter->pdev->dev, "Bad ip dst mask 0x%08x\n",
+ 					be32_to_cpu(match.mask->dst));
+-				return IAVF_ERR_CONFIG;
++				return -EINVAL;
+ 			}
+ 		}
  
- 		int3472->clock.led_gpio = gpio;
-+		/* Ensure the pin is in output mode and non-active state */
-+		gpiod_direction_output(int3472->clock.led_gpio, 0);
- 		break;
- 	default:
- 		dev_err(int3472->dev, "Invalid GPIO type 0x%02x for clock\n", type);
+@@ -3182,13 +3182,13 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+ 			} else {
+ 				dev_err(&adapter->pdev->dev, "Bad ip src mask 0x%08x\n",
+ 					be32_to_cpu(match.mask->dst));
+-				return IAVF_ERR_CONFIG;
++				return -EINVAL;
+ 			}
+ 		}
+ 
+ 		if (field_flags & IAVF_CLOUD_FIELD_TEN_ID) {
+ 			dev_info(&adapter->pdev->dev, "Tenant id not allowed for ip filter\n");
+-			return IAVF_ERR_CONFIG;
++			return -EINVAL;
+ 		}
+ 		if (match.key->dst) {
+ 			vf->mask.tcp_spec.dst_ip[0] |= cpu_to_be32(0xffffffff);
+@@ -3209,7 +3209,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+ 		if (ipv6_addr_any(&match.mask->dst)) {
+ 			dev_err(&adapter->pdev->dev, "Bad ipv6 dst mask 0x%02x\n",
+ 				IPV6_ADDR_ANY);
+-			return IAVF_ERR_CONFIG;
++			return -EINVAL;
+ 		}
+ 
+ 		/* src and dest IPv6 address should not be LOOPBACK
+@@ -3219,7 +3219,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+ 		    ipv6_addr_loopback(&match.key->src)) {
+ 			dev_err(&adapter->pdev->dev,
+ 				"ipv6 addr should not be loopback\n");
+-			return IAVF_ERR_CONFIG;
++			return -EINVAL;
+ 		}
+ 		if (!ipv6_addr_any(&match.mask->dst) ||
+ 		    !ipv6_addr_any(&match.mask->src))
+@@ -3244,7 +3244,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+ 			} else {
+ 				dev_err(&adapter->pdev->dev, "Bad src port mask %u\n",
+ 					be16_to_cpu(match.mask->src));
+-				return IAVF_ERR_CONFIG;
++				return -EINVAL;
+ 			}
+ 		}
+ 
+@@ -3254,7 +3254,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
+ 			} else {
+ 				dev_err(&adapter->pdev->dev, "Bad dst port mask %u\n",
+ 					be16_to_cpu(match.mask->dst));
+-				return IAVF_ERR_CONFIG;
++				return -EINVAL;
+ 			}
+ 		}
+ 		if (match.key->dst) {
 -- 
 2.39.2
 
