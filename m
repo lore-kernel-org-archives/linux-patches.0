@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D232F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85955C4339B;
-	Wed, 12 Apr 2023 08:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E422F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4870BC433EF;
+	Wed, 12 Apr 2023 08:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289194;
-	bh=Z+ZBg97YQPZ8DZ+RHaYqeucicUfB0Tyc/gqv88F12Qk=;
+	s=korg; t=1681289197;
+	bh=K+Y+tweG5YdWT2kXHVXfyuMkvSBN8SWxTBudNmv/B/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSb+q/jLcYA1OuvA/B2J6DardLc6Ws2y2u+uB+xxPGG9Wol9cxsyNmjSsWlP6HrUZ
-	 5m5lDvy2kEHCkv5/8fSXE8xlJGPCXWx8SVRcERAH3twCxydpnu9Kg81ZP81ynVV48I
-	 mrrVq2sRAVQtcSs8pQmxZ8rZxyv9cev/sEhwomXg=
+	b=UuJJb8lT+Kj4JeRdGJDiLYsIEDiscKqtNGuddlH84qsd3hQncDdb46PwwG7S8aMy/
+	 hzpqzF50wckSlfiho2qJMzNJIlpBZCb0EI6nnqXg5IHqEf8/QH0omomZpcym1H2laP
+	 CqpgD99Bydi1iQ7hkhurtawaWalXwqE9ERqbk6ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alistair Popple <apopple@nvidia.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Christoph Hellwig <hch@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 151/164] mm: take a page reference when removing device exclusive entries
-Date: Wed, 12 Apr 2023 10:34:33 +0200
-Message-Id: <20230412082843.051890441@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Kemeng Shi <shikemeng@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Khazhy Kumykov <khazhy@google.com>
+Subject: [PATCH 6.1 142/164] blk-throttle: Fix that bps of child could exceed bps limited in parent
+Date: Wed, 12 Apr 2023 10:34:24 +0200
+Message-Id: <20230412082842.638417255@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -39,84 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alistair Popple <apopple@nvidia.com>
+From: Kemeng Shi <shikemeng@huawei.com>
 
-commit 7c7b962938ddda6a9cd095de557ee5250706ea88 upstream.
+commit 84aca0a7e039c8735abc0f89f3f48e9006c0dfc7 upstream.
 
-Device exclusive page table entries are used to prevent CPU access to a
-page whilst it is being accessed from a device.  Typically this is used to
-implement atomic operations when the underlying bus does not support
-atomic access.  When a CPU thread encounters a device exclusive entry it
-locks the page and restores the original entry after calling mmu notifiers
-to signal drivers that exclusive access is no longer available.
+Consider situation as following (on the default hierarchy):
+ HDD
+  |
+root (bps limit: 4k)
+  |
+child (bps limit :8k)
+  |
+fio bs=8k
+Rate of fio is supposed to be 4k, but result is 8k. Reason is as
+following:
+Size of single IO from fio is larger than bytes allowed in one
+throtl_slice in child, so IOs are always queued in child group first.
+When queued IOs in child are dispatched to parent group, BIO_BPS_THROTTLED
+is set and these IOs will not be limited by tg_within_bps_limit anymore.
+Fix this by only set BIO_BPS_THROTTLED when the bio traversed the entire
+tree.
 
-The device exclusive entry holds a reference to the page making it safe to
-access the struct page whilst the entry is present.  However the fault
-handling code does not hold the PTL when taking the page lock.  This means
-if there are multiple threads faulting concurrently on the device
-exclusive entry one will remove the entry whilst others will wait on the
-page lock without holding a reference.
+There patch has no influence on situation which is not on the default
+hierarchy as each group is a single root group without parent.
 
-This can lead to threads locking or waiting on a folio with a zero
-refcount.  Whilst mmap_lock prevents the pages getting freed via munmap()
-they may still be freed by a migration.  This leads to warnings such as
-PAGE_FLAGS_CHECK_AT_FREE due to the page being locked when the refcount
-drops to zero.
-
-Fix this by trying to take a reference on the folio before locking it.
-The code already checks the PTE under the PTL and aborts if the entry is
-no longer there.  It is also possible the folio has been unmapped, freed
-and re-allocated allowing a reference to be taken on an unrelated folio.
-This case is also detected by the PTE check and the folio is unlocked
-without further changes.
-
-Link: https://lkml.kernel.org/r/20230330012519.804116-1-apopple@nvidia.com
-Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
-Signed-off-by: Alistair Popple <apopple@nvidia.com>
-Reviewed-by: Ralph Campbell <rcampbell@nvidia.com>
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Kemeng Shi <shikemeng@huawei.com>
+Link: https://lore.kernel.org/r/20221205115709.251489-3-shikemeng@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: Khazhy Kumykov <khazhy@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ block/blk-throttle.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -3619,8 +3619,21 @@ static vm_fault_t remove_device_exclusiv
- 	struct vm_area_struct *vma = vmf->vma;
- 	struct mmu_notifier_range range;
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -1066,7 +1066,6 @@ static void tg_dispatch_one_bio(struct t
+ 	sq->nr_queued[rw]--;
  
--	if (!folio_lock_or_retry(folio, vma->vm_mm, vmf->flags))
-+	/*
-+	 * We need a reference to lock the folio because we don't hold
-+	 * the PTL so a racing thread can remove the device-exclusive
-+	 * entry and unmap it. If the folio is free the entry must
-+	 * have been removed already. If it happens to have already
-+	 * been re-allocated after being freed all we do is lock and
-+	 * unlock it.
-+	 */
-+	if (!folio_try_get(folio))
-+		return 0;
-+
-+	if (!folio_lock_or_retry(folio, vma->vm_mm, vmf->flags)) {
-+		folio_put(folio);
- 		return VM_FAULT_RETRY;
-+	}
- 	mmu_notifier_range_init_owner(&range, MMU_NOTIFY_EXCLUSIVE, 0, vma,
- 				vma->vm_mm, vmf->address & PAGE_MASK,
- 				(vmf->address & PAGE_MASK) + PAGE_SIZE, NULL);
-@@ -3633,6 +3646,7 @@ static vm_fault_t remove_device_exclusiv
+ 	throtl_charge_bio(tg, bio);
+-	bio_set_flag(bio, BIO_BPS_THROTTLED);
  
- 	pte_unmap_unlock(vmf->pte, vmf->ptl);
- 	folio_unlock(folio);
-+	folio_put(folio);
- 
- 	mmu_notifier_invalidate_range_end(&range);
- 	return 0;
+ 	/*
+ 	 * If our parent is another tg, we just need to transfer @bio to
+@@ -1079,6 +1078,7 @@ static void tg_dispatch_one_bio(struct t
+ 		throtl_add_bio_tg(bio, &tg->qnode_on_parent[rw], parent_tg);
+ 		start_parent_slice_with_credit(tg, parent_tg, rw);
+ 	} else {
++		bio_set_flag(bio, BIO_BPS_THROTTLED);
+ 		throtl_qnode_add_bio(bio, &tg->qnode_on_parent[rw],
+ 				     &parent_sq->queued[rw]);
+ 		BUG_ON(tg->td->nr_queued[rw] <= 0);
 
 
