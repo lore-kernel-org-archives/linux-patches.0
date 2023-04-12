@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944182F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19581C433D2;
-	Wed, 12 Apr 2023 08:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BC12F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1710C433D2;
+	Wed, 12 Apr 2023 08:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289514;
-	bh=H1qmMxjG+fUZjN1Cp4bxsMl1HtKmBvjX7IbzJvHyxWs=;
+	s=korg; t=1681289517;
+	bh=dKz/1zhK9Qcd7wLZrZQmb0D3l3DtgegBCj3BhpQ+n2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JMrIuzo/W3NuxlwtFJy74TJMIXiE6f5kRxGQL0QxPp2SAQQCs1WEnh5Zmvou3bJFz
-	 n/KZ0C267+u7ZEUCp73kiQ74ROGC2KshR54XNWB+d4q9osWedDvFo/M0Q9VPg8daQ/
-	 3jmGteoBMmadFd6TtIcdcyeSLEuMS0Sf5IKZBLdE=
+	b=MJ/Uma/rbWtv6NtIlNrUG/SQhyFGmHsB4a2xa8eyL1cyfDYFTlgQ5qS/bFG4zqUXE
+	 rR5qV8w80UTQGIW4Ay4pa8tTa373Vgr0wgb3Xh8Yr27C2Gg5cmcjMZLvW1kkrcUlgJ
+	 UeZ1Q0834EE/WkH+Og6Ou7kqOwO4S7En10S75GJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guennadi Liakhovetski <guennadi.liakhovetski@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.2 129/173] ASoC: SOF: avoid a NULL dereference with unsupported widgets
-Date: Wed, 12 Apr 2023 10:34:15 +0200
-Message-Id: <20230412082843.361858470@linuxfoundation.org>
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 130/173] iio: adc: ad7791: fix IRQ flags
+Date: Wed, 12 Apr 2023 10:34:16 +0200
+Message-Id: <20230412082843.400580934@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -35,40 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guennadi Liakhovetski <guennadi.liakhovetski@linux.intel.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-commit e3720f92e0237921da537e47a0b24e27899203f8 upstream.
+[ Upstream commit 0c6ef985a1fd8a74dcb5cad941ddcadd55cb8697 ]
 
-If an IPC4 topology contains an unsupported widget, its .module_info
-field won't be set, then sof_ipc4_route_setup() will cause a kernel
-Oops trying to dereference it. Add a check for such cases.
+The interrupt is triggered on the falling edge rather than being a level
+low interrupt.
 
-Cc: stable@vger.kernel.org # 6.2
-Signed-off-by: Guennadi Liakhovetski <guennadi.liakhovetski@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230329113828.28562-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: da4d3d6bb9f6 ("iio: adc: ad-sigma-delta: Allow custom IRQ flags")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20230120124645.819910-1-nuno.sa@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-topology.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iio/adc/ad7791.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -1686,6 +1686,14 @@ static int sof_ipc4_route_setup(struct s
- 	u32 header, extension;
- 	int ret;
+diff --git a/drivers/iio/adc/ad7791.c b/drivers/iio/adc/ad7791.c
+index fee8d129a5f08..86effe8501b44 100644
+--- a/drivers/iio/adc/ad7791.c
++++ b/drivers/iio/adc/ad7791.c
+@@ -253,7 +253,7 @@ static const struct ad_sigma_delta_info ad7791_sigma_delta_info = {
+ 	.has_registers = true,
+ 	.addr_shift = 4,
+ 	.read_mask = BIT(3),
+-	.irq_flags = IRQF_TRIGGER_LOW,
++	.irq_flags = IRQF_TRIGGER_FALLING,
+ };
  
-+	if (!src_fw_module || !sink_fw_module) {
-+		/* The NULL module will print as "(efault)" */
-+		dev_err(sdev->dev, "source %s or sink %s widget weren't set up properly\n",
-+			src_fw_module->man4_module_entry.name,
-+			sink_fw_module->man4_module_entry.name);
-+		return -ENODEV;
-+	}
-+
- 	sroute->src_queue_id = sof_ipc4_get_queue_id(src_widget, sink_widget,
- 						     SOF_PIN_TYPE_SOURCE);
- 	if (sroute->src_queue_id < 0) {
+ static int ad7791_read_raw(struct iio_dev *indio_dev,
+-- 
+2.39.2
+
 
 
