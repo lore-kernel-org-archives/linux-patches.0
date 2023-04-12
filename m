@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787052F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:52:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7EFC433EF;
-	Wed, 12 Apr 2023 08:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2D22F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:52:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B45BC433D2;
+	Wed, 12 Apr 2023 08:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289546;
-	bh=42AdxJVvxg7jLApAnNaNM9tNWle6YWAIPJ+GVQZ8AzU=;
+	s=korg; t=1681289548;
+	bh=KWC4I4EMt7wAag3IpbqLcsuMvMad7yvicpsrw1qUVt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wV3Tz2D8TRCMtmG+frWPraEmubpu7TU4fiB4h/nIMxvzUdRp69b+dUAm0Yn5jhOOw
-	 u5xAZNQ2wVNzH1jHOJlXgvXd2ubwHNbUlF1u5JNl8OQQnC3fpnXKvmPrn85XlgiYdA
-	 eulqNXj9LxraHc8+TXgNfbdYr7+2xrn3v4XoMdL4=
+	b=mYtngLbmdhcbCawwD05Q8Ae42WAlU2iIIIf+RpaXB/mnwZXkqhE75WWx75m3+ugrc
+	 bp/oodqU/iAUFFV5mWPeo8SkJ8CUDUF+I8mzT9xhb+NZR7Lti4lHjUjHsP4jFOrkBw
+	 OnJsQ7lPVJ0Wc2L79+VlPKmvD83eZTelt5NDsQvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Zhengjun Xing <zhengjun.xing@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 140/173] perf/core: Fix the same task check in perf_event_set_output
-Date: Wed, 12 Apr 2023 10:34:26 +0200
-Message-Id: <20230412082843.760563841@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	kernel test robot <lkp@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.2 141/173] tracing/synthetic: Make lastcmd_mutex static
+Date: Wed, 12 Apr 2023 10:34:27 +0200
+Message-Id: <20230412082843.799762411@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,65 +38,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 24d3ae2f37d8bc3c14b31d353c5d27baf582b6a6 ]
+commit 31c683967174b487939efaf65e41f5ff1404e141 upstream.
 
-The same task check in perf_event_set_output has some potential issues
-for some usages.
+The lastcmd_mutex is only used in trace_events_synth.c and should be
+static.
 
-For the current perf code, there is a problem if using of
-perf_event_open() to have multiple samples getting into the same mmap’d
-memory when they are both attached to the same process.
-https://lore.kernel.org/all/92645262-D319-4068-9C44-2409EF44888E@gmail.com/
-Because the event->ctx is not ready when the perf_event_set_output() is
-invoked in the perf_event_open().
+Link: https://lore.kernel.org/linux-trace-kernel/202304062033.cRStgOuP-lkp@intel.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20230406111033.6e26de93@gandalf.local.home
 
-Besides the above issue, before the commit bd2756811766 ("perf: Rewrite
-core context handling"), perf record can errors out when sampling with
-a hardware event and a software event as below.
- $ perf record -e cycles,dummy --per-thread ls
- failed to mmap with 22 (Invalid argument)
-That's because that prior to the commit a hardware event and a software
-event are from different task context.
-
-The problem should be a long time issue since commit c3f00c70276d
-("perk: Separate find_get_context() from event initialization").
-
-The task struct is stored in the event->hw.target for each per-thread
-event. It is a more reliable way to determine whether two events are
-attached to the same task.
-
-The event->hw.target was also introduced several years ago by the
-commit 50f16a8bf9d7 ("perf: Remove type specific target pointers"). It
-can not only be used to fix the issue with the current code, but also
-back port to fix the issues with an older kernel.
-
-Note: The event->hw.target was introduced later than commit
-c3f00c70276d. The patch may cannot be applied between the commit
-c3f00c70276d and commit 50f16a8bf9d7. Anybody that wants to back-port
-this at that period may have to find other solutions.
-
-Fixes: c3f00c70276d ("perf: Separate find_get_context() from event initialization")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Zhengjun Xing <zhengjun.xing@linux.intel.com>
-Link: https://lkml.kernel.org/r/20230322202449.512091-1-kan.liang@linux.intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Fixes: 4ccf11c4e8a8e ("tracing/synthetic: Fix races on freeing last_cmd")
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    2 +-
+ kernel/trace/trace_events_synth.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -12155,7 +12155,7 @@ perf_event_set_output(struct perf_event
- 	/*
- 	 * If its not a per-cpu rb, it must be the same task.
- 	 */
--	if (output_event->cpu == -1 && output_event->ctx != event->ctx)
-+	if (output_event->cpu == -1 && output_event->hw.target != event->hw.target)
- 		goto out;
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -44,7 +44,7 @@ enum { ERRORS };
  
- 	/*
+ static const char *err_text[] = { ERRORS };
+ 
+-DEFINE_MUTEX(lastcmd_mutex);
++static DEFINE_MUTEX(lastcmd_mutex);
+ static char *last_cmd;
+ 
+ static int errpos(const char *str)
 
 
