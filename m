@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962B62F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDFFC433D2;
-	Wed, 12 Apr 2023 08:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAE52F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D811AC433EF;
+	Wed, 12 Apr 2023 08:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288679;
-	bh=A7RAqtUDros8ZCN6zVlRp9fwK6d/mLbAyBMh4h5eUOY=;
+	s=korg; t=1681288682;
+	bh=Mq3xcN0ID0xRabsPzLt0o6brpX5pANrwFzsm9/4ivGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCtWkM/fturZ5eb1aL18wScvD9Wi21jbODze0Fv/WsOQ0zvKWxQa6ojh56b9ZkfAz
-	 Q2yFxhx2JZEVp/KKkvGDOJQgtNp0T//n4jpQ36nvGE09p8112v6wW4xHbJR+xOF4Pz
-	 288tUl1/tBT3TB4p/0nI97DI6TJUuOu71mmUKH8c=
+	b=KfoQZi7x0E1y9eH+fb/IWXVH2e9D6GXu0Pya8Jlllnyq7Z2SVwGnEVRqXBlfaav+C
+	 jgX0ZN5y7DnWmWrQyzOVlHu4Rv8WjfJlkOskt3GIyM8USE7RrCxJbbc4Ir3xpIS+qN
+	 TSLi2UxSx6YS5krRG6luL6nDiuvuYew/McGy1WQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	D Scott Phillips <scott@os.amperecomputing.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 52/93] xhci: also avoid the XHCI_ZERO_64B_REGS quirk with a passthrough iommu
-Date: Wed, 12 Apr 2023 10:33:53 +0200
-Message-Id: <20230412082825.338374877@linuxfoundation.org>
+	Jeremy Soller <jeremy@system76.com>,
+	Tim Crawford <tcrawford@system76.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 70/93] ALSA: hda/realtek: Add quirk for Clevo X370SNW
+Date: Wed, 12 Apr 2023 10:34:11 +0200
+Message-Id: <20230412082826.067849842@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -36,56 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: D Scott Phillips <scott@os.amperecomputing.com>
+From: Jeremy Soller <jeremy@system76.com>
 
-commit ecaa4902439298f6b0e29f47424a86b310a9ff4f upstream.
+commit 36d4d213c6d4fffae2645a601e8ae996de4c3645 upstream.
 
-Previously the quirk was skipped when no iommu was present. The same
-rationale for skipping the quirk also applies in the iommu.passthrough=1
-case.
+Fixes speaker output and headset detection on Clevo X370SNW.
 
-Skip applying the XHCI_ZERO_64B_REGS quirk if the device's iommu domain is
-passthrough.
-
-Fixes: 12de0a35c996 ("xhci: Add quirk to zero 64bit registers on Renesas PCIe controllers")
-Cc: stable <stable@kernel.org>
-Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230330143056.1390020-2-mathias.nyman@linux.intel.com
+Signed-off-by: Jeremy Soller <jeremy@system76.com>
+Signed-off-by: Tim Crawford <tcrawford@system76.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230331162317.14992-1-tcrawford@system76.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -9,6 +9,7 @@
-  */
- 
- #include <linux/pci.h>
-+#include <linux/iommu.h>
- #include <linux/iopoll.h>
- #include <linux/irq.h>
- #include <linux/log2.h>
-@@ -225,6 +226,7 @@ int xhci_reset(struct xhci_hcd *xhci, u6
- static void xhci_zero_64b_regs(struct xhci_hcd *xhci)
- {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
-+	struct iommu_domain *domain;
- 	int err, i;
- 	u64 val;
- 	u32 intrs;
-@@ -243,7 +245,9 @@ static void xhci_zero_64b_regs(struct xh
- 	 * an iommu. Doing anything when there is no iommu is definitely
- 	 * unsafe...
- 	 */
--	if (!(xhci->quirks & XHCI_ZERO_64B_REGS) || !device_iommu_mapped(dev))
-+	domain = iommu_get_domain_for_dev(dev);
-+	if (!(xhci->quirks & XHCI_ZERO_64B_REGS) || !domain ||
-+	    domain->type == IOMMU_DOMAIN_IDENTITY)
- 		return;
- 
- 	xhci_info(xhci, "Zeroing 64bit base registers, expecting fault\n");
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -2618,6 +2618,7 @@ static const struct snd_pci_quirk alc882
+ 	SND_PCI_QUIRK(0x1462, 0xda57, "MSI Z270-Gaming", ALC1220_FIXUP_GB_DUAL_CODECS),
+ 	SND_PCI_QUIRK_VENDOR(0x1462, "MSI", ALC882_FIXUP_GPIO3),
+ 	SND_PCI_QUIRK(0x147b, 0x107a, "Abit AW9D-MAX", ALC882_FIXUP_ABIT_AW9D_MAX),
++	SND_PCI_QUIRK(0x1558, 0x3702, "Clevo X370SN[VW]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x50d3, "Clevo PC50[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x65d1, "Clevo PB51[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x65d2, "Clevo PB51R[CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
 
 
