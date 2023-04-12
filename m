@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E422F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4870BC433EF;
-	Wed, 12 Apr 2023 08:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651192F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBFFC433EF;
+	Wed, 12 Apr 2023 08:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289197;
-	bh=K+Y+tweG5YdWT2kXHVXfyuMkvSBN8SWxTBudNmv/B/M=;
+	s=korg; t=1681289200;
+	bh=NdJIdttaNnPy+/lC6CYgAQwQRlNTxsx9GHiIsy2XfZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UuJJb8lT+Kj4JeRdGJDiLYsIEDiscKqtNGuddlH84qsd3hQncDdb46PwwG7S8aMy/
-	 hzpqzF50wckSlfiho2qJMzNJIlpBZCb0EI6nnqXg5IHqEf8/QH0omomZpcym1H2laP
-	 CqpgD99Bydi1iQ7hkhurtawaWalXwqE9ERqbk6ek=
+	b=QR/h/+evK5/haaK+pHn7fCVx6hy0ddJffQAJFk+SXbZ2ekpUgkTEMAkt4sDMZJFbQ
+	 xNNwi+JTBbnWZyI7hYprli4gHt3X5mRgJhSyUgTkf5utcb/DA5QNpk1u4i+HFG5q3g
+	 KxDtnKH/0koaX2R9vMJGZzh+I5a3VNA9waaNMS/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Kemeng Shi <shikemeng@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Khazhy Kumykov <khazhy@google.com>
-Subject: [PATCH 6.1 142/164] blk-throttle: Fix that bps of child could exceed bps limited in parent
-Date: Wed, 12 Apr 2023 10:34:24 +0200
-Message-Id: <20230412082842.638417255@linuxfoundation.org>
+	Joe Thornber <ejt@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 001/173] dm cache: Add some documentation to dm-cache-background-tracker.h
+Date: Wed, 12 Apr 2023 10:32:07 +0200
+Message-Id: <20230412082838.191564117@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
-References: <20230412082836.695875037@linuxfoundation.org>
+In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
+References: <20230412082838.125271466@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,57 +37,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huawei.com>
+From: Joe Thornber <ejt@redhat.com>
 
-commit 84aca0a7e039c8735abc0f89f3f48e9006c0dfc7 upstream.
+[ Upstream commit 22c40e134c4c7a828ac09d25a5a8597b1e45c031 ]
 
-Consider situation as following (on the default hierarchy):
- HDD
-  |
-root (bps limit: 4k)
-  |
-child (bps limit :8k)
-  |
-fio bs=8k
-Rate of fio is supposed to be 4k, but result is 8k. Reason is as
-following:
-Size of single IO from fio is larger than bytes allowed in one
-throtl_slice in child, so IOs are always queued in child group first.
-When queued IOs in child are dispatched to parent group, BIO_BPS_THROTTLED
-is set and these IOs will not be limited by tg_within_bps_limit anymore.
-Fix this by only set BIO_BPS_THROTTLED when the bio traversed the entire
-tree.
-
-There patch has no influence on situation which is not on the default
-hierarchy as each group is a single root group without parent.
-
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Kemeng Shi <shikemeng@huawei.com>
-Link: https://lore.kernel.org/r/20221205115709.251489-3-shikemeng@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Cc: Khazhy Kumykov <khazhy@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Joe Thornber <ejt@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Stable-dep-of: f7b58a69fad9 ("dm: fix improper splitting for abnormal bios")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-throttle.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-cache-background-tracker.h | 40 ++++++++++++++++++++++--
+ 1 file changed, 37 insertions(+), 3 deletions(-)
 
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -1066,7 +1066,6 @@ static void tg_dispatch_one_bio(struct t
- 	sq->nr_queued[rw]--;
+diff --git a/drivers/md/dm-cache-background-tracker.h b/drivers/md/dm-cache-background-tracker.h
+index 27ab90dbc2752..b5056e8275c15 100644
+--- a/drivers/md/dm-cache-background-tracker.h
++++ b/drivers/md/dm-cache-background-tracker.h
+@@ -12,19 +12,44 @@
  
- 	throtl_charge_bio(tg, bio);
--	bio_set_flag(bio, BIO_BPS_THROTTLED);
+ /*----------------------------------------------------------------*/
  
- 	/*
- 	 * If our parent is another tg, we just need to transfer @bio to
-@@ -1079,6 +1078,7 @@ static void tg_dispatch_one_bio(struct t
- 		throtl_add_bio_tg(bio, &tg->qnode_on_parent[rw], parent_tg);
- 		start_parent_slice_with_credit(tg, parent_tg, rw);
- 	} else {
-+		bio_set_flag(bio, BIO_BPS_THROTTLED);
- 		throtl_qnode_add_bio(bio, &tg->qnode_on_parent[rw],
- 				     &parent_sq->queued[rw]);
- 		BUG_ON(tg->td->nr_queued[rw] <= 0);
++/*
++ * The cache policy decides what background work should be performed,
++ * such as promotions, demotions and writebacks. The core cache target
++ * is in charge of performing the work, and does so when it sees fit.
++ *
++ * The background_tracker acts as a go between. Keeping track of future
++ * work that the policy has decided upon, and handing (issuing) it to
++ * the core target when requested.
++ *
++ * There is no locking in this, so calls will probably need to be
++ * protected with a spinlock.
++ */
++
+ struct background_work;
+ struct background_tracker;
+ 
+ /*
+- * FIXME: discuss lack of locking in all methods.
++ * Create a new tracker, it will not be able to queue more than
++ * 'max_work' entries.
+  */
+ struct background_tracker *btracker_create(unsigned max_work);
++
++/*
++ * Destroy the tracker. No issued, but not complete, work should
++ * exist when this is called. It is fine to have queued but unissued
++ * work.
++ */
+ void btracker_destroy(struct background_tracker *b);
+ 
+ unsigned btracker_nr_writebacks_queued(struct background_tracker *b);
+ unsigned btracker_nr_demotions_queued(struct background_tracker *b);
+ 
+ /*
++ * Queue some work within the tracker. 'work' should point to the work
++ * to queue, this will be copied (ownership doesn't pass).  If pwork
++ * is not NULL then it will be set to point to the tracker's internal
++ * copy of the work.
++ *
+  * returns -EINVAL iff the work is already queued.  -ENOMEM if the work
+  * couldn't be queued for another reason.
+  */
+@@ -33,11 +58,20 @@ int btracker_queue(struct background_tracker *b,
+ 		   struct policy_work **pwork);
+ 
+ /*
++ * Hands out the next piece of work to be performed.
+  * Returns -ENODATA if there's no work.
+  */
+ int btracker_issue(struct background_tracker *b, struct policy_work **work);
+-void btracker_complete(struct background_tracker *b,
+-		       struct policy_work *op);
++
++/*
++ * Informs the tracker that the work has been completed and it may forget
++ * about it.
++ */
++void btracker_complete(struct background_tracker *b, struct policy_work *op);
++
++/*
++ * Predicate to see if an origin block is already scheduled for promotion.
++ */
+ bool btracker_promotion_already_present(struct background_tracker *b,
+ 					dm_oblock_t oblock);
+ 
+-- 
+2.39.2
+
 
 
