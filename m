@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A057B2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E91C433D2;
-	Wed, 12 Apr 2023 08:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5436A2F2C
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1004C433EF;
+	Wed, 12 Apr 2023 08:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288687;
-	bh=4bU/yMrCZDmhYRPGm7nhGwhtpTu99YtY5jD5oO2YXF0=;
+	s=korg; t=1681288690;
+	bh=mVWHYlf+USLbGn2FYA1FPXGmYV6Zqrey6uH8esVo+DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9h/5+jgw8POWtw/3k9m1NvMeEoj9bud7PmVT5bWZLaJDMuafMJMBUuJ+stzL4ivD
-	 TFwLtgXiDhqGEqFFdoyS0bXs0I5QkyT3siuJ10wqYdESSmAuTgEZ9L4fWkP2rQL3W3
-	 LizMNlgybUmPWlgKOvRprbijpHUtTaKqzEbJBrq4=
+	b=h2QTl2WkoQOa7+MVbp5nS0L8AsQvfU+7xK7jzun7VfiBTeCGzid7Rs13Z/aVPp/qY
+	 lIyv+kHqKmtKH/0Aym+UkVLkhkEJX/bbtZAOaimPCzhPpN4qHIPMe4EauBDpQCackP
+	 zTEsDEJ6njePK5Cu1WP20wJdUIjlLop839qdm0BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Clevenger <scclevenger@os.amperecomputing.com>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 5.15 72/93] coresight-etm4: Fix for() loop drvdata->nr_addr_cmp range bug
-Date: Wed, 12 Apr 2023 10:34:13 +0200
-Message-Id: <20230412082826.166409338@linuxfoundation.org>
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 73/93] iio: adc: ad7791: fix IRQ flags
+Date: Wed, 12 Apr 2023 10:34:14 +0200
+Message-Id: <20230412082826.205521097@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -35,33 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve Clevenger <scclevenger@os.amperecomputing.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-commit bf84937e882009075f57fd213836256fc65d96bc upstream.
+[ Upstream commit 0c6ef985a1fd8a74dcb5cad941ddcadd55cb8697 ]
 
-In etm4_enable_hw, fix for() loop range to represent address comparator pairs.
+The interrupt is triggered on the falling edge rather than being a level
+low interrupt.
 
-Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve Clevenger <scclevenger@os.amperecomputing.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/4a4ee61ce8ef402615a4528b21a051de3444fb7b.1677540079.git.scclevenger@os.amperecomputing.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: da4d3d6bb9f6 ("iio: adc: ad-sigma-delta: Allow custom IRQ flags")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20230120124645.819910-1-nuno.sa@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c |    2 +-
+ drivers/iio/adc/ad7791.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -411,7 +411,7 @@ static int etm4_enable_hw(struct etmv4_d
- 		if (etm4x_sspcicrn_present(drvdata, i))
- 			etm4x_relaxed_write32(csa, config->ss_pe_cmp[i], TRCSSPCICRn(i));
- 	}
--	for (i = 0; i < drvdata->nr_addr_cmp; i++) {
-+	for (i = 0; i < drvdata->nr_addr_cmp * 2; i++) {
- 		etm4x_relaxed_write64(csa, config->addr_val[i], TRCACVRn(i));
- 		etm4x_relaxed_write64(csa, config->addr_acc[i], TRCACATRn(i));
- 	}
+diff --git a/drivers/iio/adc/ad7791.c b/drivers/iio/adc/ad7791.c
+index cb579aa89f39c..f7d7bc1e44455 100644
+--- a/drivers/iio/adc/ad7791.c
++++ b/drivers/iio/adc/ad7791.c
+@@ -253,7 +253,7 @@ static const struct ad_sigma_delta_info ad7791_sigma_delta_info = {
+ 	.has_registers = true,
+ 	.addr_shift = 4,
+ 	.read_mask = BIT(3),
+-	.irq_flags = IRQF_TRIGGER_LOW,
++	.irq_flags = IRQF_TRIGGER_FALLING,
+ };
+ 
+ static int ad7791_read_raw(struct iio_dev *indio_dev,
+-- 
+2.39.2
+
 
 
