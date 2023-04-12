@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5ED2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430AEC433D2;
-	Wed, 12 Apr 2023 08:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6122F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:45:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8C2C433EF;
+	Wed, 12 Apr 2023 08:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289098;
-	bh=IAG9D4C/aVPzhVjnjKi9Nu03F23Gl72icAT6r5wJ3sc=;
+	s=korg; t=1681289101;
+	bh=uwAY/9GtKs9gNOa+hkvuwmO/7unYXqkFUCS/B22EESw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BPzcs5lkoPvMjoDbC6bNxIPfOTzjKnOhxcnmB8EUARt+jjoRk3OcTWMpxPDDt91Zb
-	 DjUkyzcRBZyrrtdTsegOJ9Ajs1zFd7Abi189C7N+4liKMEQlOFmYglGJlshr+Jy4KJ
-	 LR1ILy/zgnqGkxD+fuYTmNNNkYMEz/5fL0SctHLA=
+	b=Ant+7hw8u8I1PHcCNN/x9LDjICrD3MW/+75t4XX1qr3DfsJE0detUowBGJ5nFHJGA
+	 xpyrDPPpww1qPxUGSEcqSdNwuBc9rnIY9Avlk2nJ52y+TitlaGwiHffizT31z2iLmY
+	 GBvsVA/LJD81ackvQLpNuLAwiWjtrAatg8orQvk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Min Li <lm0963hack@gmail.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
 	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 135/164] drm/i915: Fix context runtime accounting
-Date: Wed, 12 Apr 2023 10:34:17 +0200
-Message-Id: <20230412082842.349335451@linuxfoundation.org>
+Subject: [PATCH 6.1 136/164] drm/i915: fix race condition UAF in i915_perf_add_config_ioctl
+Date: Wed, 12 Apr 2023 10:34:18 +0200
+Message-Id: <20230412082842.390564033@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,61 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+From: Min Li <lm0963hack@gmail.com>
 
-commit dc3421560a67361442f33ec962fc6dd48895a0df upstream.
+commit dc30c011469165d57af9adac5baff7d767d20e5c upstream.
 
-When considering whether to mark one context as stopped and another as
-started we need to look at whether the previous and new _contexts_ are
-different and not just requests. Otherwise the software tracked context
-start time was incorrectly updated to the most recent lite-restore time-
-stamp, which was in some cases resulting in active time going backward,
-until the context switch (typically the heartbeat pulse) would synchronise
-with the hardware tracked context runtime. Easiest use case to observe
-this behaviour was with a full screen clients with close to 100% engine
-load.
+Userspace can guess the id value and try to race oa_config object creation
+with config remove, resulting in a use-after-free if we dereference the
+object after unlocking the metrics_lock.  For that reason, unlocking the
+metrics_lock must be done after we are done dereferencing the object.
 
+Signed-off-by: Min Li <lm0963hack@gmail.com>
+Fixes: f89823c21224 ("drm/i915/perf: Implement I915_PERF_ADD/REMOVE_CONFIG interface")
+Cc: <stable@vger.kernel.org> # v4.14+
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
 Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Fixes: bb6287cb1886 ("drm/i915: Track context current active time")
-Cc: <stable@vger.kernel.org> # v5.19+
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230320151423.1708436-1-tvrtko.ursulin@linux.intel.com
-[tursulin: Fix spelling in commit msg.]
-(cherry picked from commit b3e70051879c665acdd3a1ab50d0ed58d6a8001f)
+Link: https://patchwork.freedesktop.org/patch/msgid/20230328093627.5067-1-lm0963hack@gmail.com
+[tursulin: Manually added stable tag.]
+(cherry picked from commit 49f6f6483b652108bcb73accd0204a464b922395)
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_execlists_submission.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/i915_perf.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
-+++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
-@@ -2017,6 +2017,8 @@ process_csb(struct intel_engine_cs *engi
- 	 * inspecting the queue to see if we need to resumbit.
- 	 */
- 	if (*prev != *execlists->active) { /* elide lite-restores */
-+		struct intel_context *prev_ce = NULL, *active_ce = NULL;
-+
- 		/*
- 		 * Note the inherent discrepancy between the HW runtime,
- 		 * recorded as part of the context switch, and the CPU
-@@ -2028,9 +2030,15 @@ process_csb(struct intel_engine_cs *engi
- 		 * and correct overselves later when updating from HW.
- 		 */
- 		if (*prev)
--			lrc_runtime_stop((*prev)->context);
-+			prev_ce = (*prev)->context;
- 		if (*execlists->active)
--			lrc_runtime_start((*execlists->active)->context);
-+			active_ce = (*execlists->active)->context;
-+		if (prev_ce != active_ce) {
-+			if (prev_ce)
-+				lrc_runtime_stop(prev_ce);
-+			if (active_ce)
-+				lrc_runtime_start(active_ce);
-+		}
- 		new_timeslice(execlists);
+--- a/drivers/gpu/drm/i915/i915_perf.c
++++ b/drivers/gpu/drm/i915/i915_perf.c
+@@ -4270,13 +4270,13 @@ int i915_perf_add_config_ioctl(struct dr
+ 		err = oa_config->id;
+ 		goto sysfs_err;
  	}
+-
+-	mutex_unlock(&perf->metrics_lock);
++	id = oa_config->id;
  
+ 	drm_dbg(&perf->i915->drm,
+ 		"Added config %s id=%i\n", oa_config->uuid, oa_config->id);
++	mutex_unlock(&perf->metrics_lock);
+ 
+-	return oa_config->id;
++	return id;
+ 
+ sysfs_err:
+ 	mutex_unlock(&perf->metrics_lock);
 
 
