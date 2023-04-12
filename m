@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80B52F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F69EC4339B;
-	Wed, 12 Apr 2023 08:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA522F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F71C433D2;
+	Wed, 12 Apr 2023 08:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289074;
-	bh=8HeqEwN9bz79Z34xpNI0lFd2kG0CISYLc/kdcOkTMdI=;
+	s=korg; t=1681289077;
+	bh=KWC4I4EMt7wAag3IpbqLcsuMvMad7yvicpsrw1qUVt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZyvOjfZuWly+SaLSUodWp99NzbvyaNcWBmMuj/llfrhr6/ekHtWH4XElyqlmdqr4
-	 vnN8Omd795/CXvqYVPgsD9FFv+eZdf266BmAfNB+j+LXX8IolAJs87YAPsfzn5c0e9
-	 TYCtDwn2yJ7sOVnT1sckB2DmhQKn8bx3f2kL7tPw=
+	b=eXHQktw+yNID4wXo3lzQ03GISUnCImCCApm6Boee1eNH5rx0KNO27rXuDuuzn8UZ3
+	 nDMQgwRoLfd7dFMb11MjsmrPBX5cFXEHSffox5v0EEe/pcjgUJiRwNHqUPlQKSnSjc
+	 BsZF7x0h9Qj9/IzP1fbZM8SFV1BSltNAG+XCWrx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Montleon <jmontleo@redhat.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 127/164] ASoC: hdac_hdmi: use set_stream() instead of set_tdm_slots()
-Date: Wed, 12 Apr 2023 10:34:09 +0200
-Message-Id: <20230412082842.015997850@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	kernel test robot <lkp@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 128/164] tracing/synthetic: Make lastcmd_mutex static
+Date: Wed, 12 Apr 2023 10:34:10 +0200
+Message-Id: <20230412082842.056506969@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,69 +38,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Montleon <jmontleo@redhat.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit f6887a71bdd2f0dcba9b8180dd2223cfa8637e85 upstream.
+commit 31c683967174b487939efaf65e41f5ff1404e141 upstream.
 
-hdac_hdmi was not updated to use set_stream() instead of set_tdm_slots()
-in the original commit so HDMI no longer produces audio.
+The lastcmd_mutex is only used in trace_events_synth.c and should be
+static.
 
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/regressions/CAJD_bPKQdtaExvVEKxhQ47G-ZXDA=k+gzhMJRHLBe=mysPnuKA@mail.gmail.com/
-Fixes: 636110411ca7 ("ASoC: Intel/SOF: use set_stream() instead of set_tdm_slots() for HDAudio")
-Signed-off-by: Jason Montleon <jmontleo@redhat.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230324170711.2526-1-jmontleo@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/linux-trace-kernel/202304062033.cRStgOuP-lkp@intel.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20230406111033.6e26de93@gandalf.local.home
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Fixes: 4ccf11c4e8a8e ("tracing/synthetic: Fix races on freeing last_cmd")
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/hdac_hdmi.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ kernel/trace/trace_events_synth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -436,23 +436,28 @@ static int hdac_hdmi_setup_audio_infofra
- 	return 0;
- }
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -44,7 +44,7 @@ enum { ERRORS };
  
--static int hdac_hdmi_set_tdm_slot(struct snd_soc_dai *dai,
--		unsigned int tx_mask, unsigned int rx_mask,
--		int slots, int slot_width)
-+static int hdac_hdmi_set_stream(struct snd_soc_dai *dai,
-+				void *stream, int direction)
- {
- 	struct hdac_hdmi_priv *hdmi = snd_soc_dai_get_drvdata(dai);
- 	struct hdac_device *hdev = hdmi->hdev;
- 	struct hdac_hdmi_dai_port_map *dai_map;
- 	struct hdac_hdmi_pcm *pcm;
-+	struct hdac_stream *hstream;
+ static const char *err_text[] = { ERRORS };
  
--	dev_dbg(&hdev->dev, "%s: strm_tag: %d\n", __func__, tx_mask);
-+	if (!stream)
-+		return -EINVAL;
-+
-+	hstream = (struct hdac_stream *)stream;
-+
-+	dev_dbg(&hdev->dev, "%s: strm_tag: %d\n", __func__, hstream->stream_tag);
+-DEFINE_MUTEX(lastcmd_mutex);
++static DEFINE_MUTEX(lastcmd_mutex);
+ static char *last_cmd;
  
- 	dai_map = &hdmi->dai_map[dai->id];
- 
- 	pcm = hdac_hdmi_get_pcm_from_cvt(hdmi, dai_map->cvt);
- 
- 	if (pcm)
--		pcm->stream_tag = (tx_mask << 4);
-+		pcm->stream_tag = (hstream->stream_tag << 4);
- 
- 	return 0;
- }
-@@ -1544,7 +1549,7 @@ static const struct snd_soc_dai_ops hdmi
- 	.startup = hdac_hdmi_pcm_open,
- 	.shutdown = hdac_hdmi_pcm_close,
- 	.hw_params = hdac_hdmi_set_hw_params,
--	.set_tdm_slot = hdac_hdmi_set_tdm_slot,
-+	.set_stream = hdac_hdmi_set_stream,
- };
- 
- /*
+ static int errpos(const char *str)
 
 
