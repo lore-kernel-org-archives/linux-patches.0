@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2812F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813BBC4339B;
-	Wed, 12 Apr 2023 08:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5ED2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430AEC433D2;
+	Wed, 12 Apr 2023 08:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289095;
-	bh=ada9z2yj0rwKdAG0HOG8J0ATX7rRaXOe3vsYDDjSg4g=;
+	s=korg; t=1681289098;
+	bh=IAG9D4C/aVPzhVjnjKi9Nu03F23Gl72icAT6r5wJ3sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yCv5get2zu0TqfndTpzPMa819t5lAdwuzZcIeUdYRGfvmbxHLlV6jxZgMwgtv1o0H
-	 0p1ObolDUVKAXZP/jVZUO0UJwM9NWHsxYVur5v6Valzakj/W8+G1tg9Eq8sVx0UKTY
-	 moixgS5CcVPNd6p69aaw/xdPpHSwTKCZI40T9eYs=
+	b=BPzcs5lkoPvMjoDbC6bNxIPfOTzjKnOhxcnmB8EUARt+jjoRk3OcTWMpxPDDt91Zb
+	 DjUkyzcRBZyrrtdTsegOJ9Ajs1zFd7Abi189C7N+4liKMEQlOFmYglGJlshr+Jy4KJ
+	 LR1ILy/zgnqGkxD+fuYTmNNNkYMEz/5fL0SctHLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Herbst <kherbst@redhat.com>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.1 134/164] drm/nouveau/disp: Support more modes by checking with lower bpc
-Date: Wed, 12 Apr 2023 10:34:16 +0200
-Message-Id: <20230412082842.299127374@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.1 135/164] drm/i915: Fix context runtime accounting
+Date: Wed, 12 Apr 2023 10:34:17 +0200
+Message-Id: <20230412082842.349335451@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -34,96 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karol Herbst <kherbst@redhat.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 
-commit 7f67aa097e875c87fba024e850cf405342300059 upstream.
+commit dc3421560a67361442f33ec962fc6dd48895a0df upstream.
 
-This allows us to advertise more modes especially on HDR displays.
+When considering whether to mark one context as stopped and another as
+started we need to look at whether the previous and new _contexts_ are
+different and not just requests. Otherwise the software tracked context
+start time was incorrectly updated to the most recent lite-restore time-
+stamp, which was in some cases resulting in active time going backward,
+until the context switch (typically the heartbeat pulse) would synchronise
+with the hardware tracked context runtime. Easiest use case to observe
+this behaviour was with a full screen clients with close to 100% engine
+load.
 
-Fixes using 4K@60 modes on my TV and main display both using a HDMI to DP
-adapter. Also fixes similar issues for users running into this.
-
-Cc: stable@vger.kernel.org # 5.10+
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230330223938.4025569-1-kherbst@redhat.com
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Fixes: bb6287cb1886 ("drm/i915: Track context current active time")
+Cc: <stable@vger.kernel.org> # v5.19+
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230320151423.1708436-1-tvrtko.ursulin@linux.intel.com
+[tursulin: Fix spelling in commit msg.]
+(cherry picked from commit b3e70051879c665acdd3a1ab50d0ed58d6a8001f)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/dispnv50/disp.c |   32 ++++++++++++++++++++++++++++++++
- drivers/gpu/drm/nouveau/nouveau_dp.c    |    8 +++++---
- 2 files changed, 37 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_execlists_submission.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-@@ -410,6 +410,35 @@ nv50_outp_atomic_check_view(struct drm_e
- 	return 0;
- }
- 
-+static void
-+nv50_outp_atomic_fix_depth(struct drm_encoder *encoder, struct drm_crtc_state *crtc_state)
-+{
-+	struct nv50_head_atom *asyh = nv50_head_atom(crtc_state);
-+	struct nouveau_encoder *nv_encoder = nouveau_encoder(encoder);
-+	struct drm_display_mode *mode = &asyh->state.adjusted_mode;
-+	unsigned int max_rate, mode_rate;
+--- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
++++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+@@ -2017,6 +2017,8 @@ process_csb(struct intel_engine_cs *engi
+ 	 * inspecting the queue to see if we need to resumbit.
+ 	 */
+ 	if (*prev != *execlists->active) { /* elide lite-restores */
++		struct intel_context *prev_ce = NULL, *active_ce = NULL;
 +
-+	switch (nv_encoder->dcb->type) {
-+	case DCB_OUTPUT_DP:
-+		max_rate = nv_encoder->dp.link_nr * nv_encoder->dp.link_bw;
-+
-+		/* we don't support more than 10 anyway */
-+		asyh->or.bpc = min_t(u8, asyh->or.bpc, 10);
-+
-+		/* reduce the bpc until it works out */
-+		while (asyh->or.bpc > 6) {
-+			mode_rate = DIV_ROUND_UP(mode->clock * asyh->or.bpc * 3, 8);
-+			if (mode_rate <= max_rate)
-+				break;
-+
-+			asyh->or.bpc -= 2;
+ 		/*
+ 		 * Note the inherent discrepancy between the HW runtime,
+ 		 * recorded as part of the context switch, and the CPU
+@@ -2028,9 +2030,15 @@ process_csb(struct intel_engine_cs *engi
+ 		 * and correct overselves later when updating from HW.
+ 		 */
+ 		if (*prev)
+-			lrc_runtime_stop((*prev)->context);
++			prev_ce = (*prev)->context;
+ 		if (*execlists->active)
+-			lrc_runtime_start((*execlists->active)->context);
++			active_ce = (*execlists->active)->context;
++		if (prev_ce != active_ce) {
++			if (prev_ce)
++				lrc_runtime_stop(prev_ce);
++			if (active_ce)
++				lrc_runtime_start(active_ce);
 +		}
-+		break;
-+	default:
-+		break;
-+	}
-+}
-+
- static int
- nv50_outp_atomic_check(struct drm_encoder *encoder,
- 		       struct drm_crtc_state *crtc_state,
-@@ -428,6 +457,9 @@ nv50_outp_atomic_check(struct drm_encode
- 	if (crtc_state->mode_changed || crtc_state->connectors_changed)
- 		asyh->or.bpc = connector->display_info.bpc;
+ 		new_timeslice(execlists);
+ 	}
  
-+	/* We might have to reduce the bpc */
-+	nv50_outp_atomic_fix_depth(encoder, crtc_state);
-+
- 	return 0;
- }
- 
---- a/drivers/gpu/drm/nouveau/nouveau_dp.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_dp.c
-@@ -245,8 +245,6 @@ void nouveau_dp_irq(struct nouveau_drm *
- }
- 
- /* TODO:
-- * - Use the minimum possible BPC here, once we add support for the max bpc
-- *   property.
-  * - Validate against the DP caps advertised by the GPU (we don't check these
-  *   yet)
-  */
-@@ -258,7 +256,11 @@ nv50_dp_mode_valid(struct drm_connector
- {
- 	const unsigned int min_clock = 25000;
- 	unsigned int max_rate, mode_rate, ds_max_dotclock, clock = mode->clock;
--	const u8 bpp = connector->display_info.bpc * 3;
-+	/* Check with the minmum bpc always, so we can advertise better modes.
-+	 * In particlar not doing this causes modes to be dropped on HDR
-+	 * displays as we might check with a bpc of 16 even.
-+	 */
-+	const u8 bpp = 6 * 3;
- 
- 	if (mode->flags & DRM_MODE_FLAG_INTERLACE && !outp->caps.dp_interlace)
- 		return MODE_NO_INTERLACE;
 
 
