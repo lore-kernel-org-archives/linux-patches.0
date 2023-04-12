@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C532F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:36:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893BDC433D2;
-	Wed, 12 Apr 2023 08:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04CC2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:36:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CFBC433EF;
+	Wed, 12 Apr 2023 08:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288592;
-	bh=7/2Np1ubv8XW4mrs4kc5VMI8JFmFG5oZ8uKx+632mYc=;
+	s=korg; t=1681288595;
+	bh=4MpD9K1viLKj1tqX2ZdomU2qThJJePFPEfyFO3QQ25E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMFattxJdlw2n0I9cu1g1rPEA/7+YysP+clGGBXZHJDrcY/1SPOV/y6DU44HmKowX
-	 QNKpRhK9GYxUDuoGgE7H4nM2VJhA7Uk4A8apGmA9ifrqmpHTjudb8/1YG//Ito6yAA
-	 U+Iap460CIMHlJGQ49luy7XLAg6KDYp26xBmyJXI=
+	b=iDaWjHbu3GLXZlGJixFENs9I4bsOLy06RkUSx3tWO5xVq/ae/IQJEfzB3yt5Dhy8q
+	 +G0mJFfMZR1bSqVdtsElRL0OM3slShYtoh+iB48k4jCd44M0lkbIQEp8KDftG5X8wt
+	 Pe3/qEfXr/hyOjfBaU9UC9LAkwxEC6kGeRAUS5tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8257f4dcef79de670baf@syzkaller.appspotmail.com,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 37/93] ipv6: Fix an uninit variable access bug in __ip6_make_skb()
-Date: Wed, 12 Apr 2023 10:33:38 +0200
-Message-Id: <20230412082824.681819975@linuxfoundation.org>
+Subject: [PATCH 5.15 20/93] drm/amdgpu: Prevent race between late signaled fences and GPU reset.
+Date: Wed, 12 Apr 2023 10:33:21 +0200
+Message-Id: <20230412082823.908025238@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -36,99 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Andrey Grodzovsky <andrey.grodzovsky@amd.com>
 
-[ Upstream commit ea30388baebcce37fd594d425a65037ca35e59e8 ]
+[ Upstream commit 9e225fb9e636b31b97e9d35324c2f9e43ee0aab4 ]
 
-Syzbot reported a bug as following:
+Problem:
+After we start handling timed out jobs we assume there fences won't be
+signaled but we cannot be sure and sometimes they fire late. We need
+to prevent concurrent accesses to fence array from
+amdgpu_fence_driver_clear_job_fences during GPU reset and amdgpu_fence_process
+from a late EOP interrupt.
 
-=====================================================
-BUG: KMSAN: uninit-value in arch_atomic64_inc arch/x86/include/asm/atomic64_64.h:88 [inline]
-BUG: KMSAN: uninit-value in arch_atomic_long_inc include/linux/atomic/atomic-long.h:161 [inline]
-BUG: KMSAN: uninit-value in atomic_long_inc include/linux/atomic/atomic-instrumented.h:1429 [inline]
-BUG: KMSAN: uninit-value in __ip6_make_skb+0x2f37/0x30f0 net/ipv6/ip6_output.c:1956
- arch_atomic64_inc arch/x86/include/asm/atomic64_64.h:88 [inline]
- arch_atomic_long_inc include/linux/atomic/atomic-long.h:161 [inline]
- atomic_long_inc include/linux/atomic/atomic-instrumented.h:1429 [inline]
- __ip6_make_skb+0x2f37/0x30f0 net/ipv6/ip6_output.c:1956
- ip6_finish_skb include/net/ipv6.h:1122 [inline]
- ip6_push_pending_frames+0x10e/0x550 net/ipv6/ip6_output.c:1987
- rawv6_push_pending_frames+0xb12/0xb90 net/ipv6/raw.c:579
- rawv6_sendmsg+0x297e/0x2e60 net/ipv6/raw.c:922
- inet_sendmsg+0x101/0x180 net/ipv4/af_inet.c:827
- sock_sendmsg_nosec net/socket.c:714 [inline]
- sock_sendmsg net/socket.c:734 [inline]
- ____sys_sendmsg+0xa8e/0xe70 net/socket.c:2476
- ___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2530
- __sys_sendmsg net/socket.c:2559 [inline]
- __do_sys_sendmsg net/socket.c:2568 [inline]
- __se_sys_sendmsg net/socket.c:2566 [inline]
- __x64_sys_sendmsg+0x367/0x540 net/socket.c:2566
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Fix:
+Before accessing fence array in GPU disable EOP interrupt and flush
+all pending interrupt handlers for amdgpu device's interrupt line.
 
-Uninit was created at:
- slab_post_alloc_hook mm/slab.h:766 [inline]
- slab_alloc_node mm/slub.c:3452 [inline]
- __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
- __do_kmalloc_node mm/slab_common.c:967 [inline]
- __kmalloc_node_track_caller+0x114/0x3b0 mm/slab_common.c:988
- kmalloc_reserve net/core/skbuff.c:492 [inline]
- __alloc_skb+0x3af/0x8f0 net/core/skbuff.c:565
- alloc_skb include/linux/skbuff.h:1270 [inline]
- __ip6_append_data+0x51c1/0x6bb0 net/ipv6/ip6_output.c:1684
- ip6_append_data+0x411/0x580 net/ipv6/ip6_output.c:1854
- rawv6_sendmsg+0x2882/0x2e60 net/ipv6/raw.c:915
- inet_sendmsg+0x101/0x180 net/ipv4/af_inet.c:827
- sock_sendmsg_nosec net/socket.c:714 [inline]
- sock_sendmsg net/socket.c:734 [inline]
- ____sys_sendmsg+0xa8e/0xe70 net/socket.c:2476
- ___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2530
- __sys_sendmsg net/socket.c:2559 [inline]
- __do_sys_sendmsg net/socket.c:2568 [inline]
- __se_sys_sendmsg net/socket.c:2566 [inline]
- __x64_sys_sendmsg+0x367/0x540 net/socket.c:2566
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+v2: Switch from irq_get/put to full enable/disable_irq for amdgpu
 
-It is because icmp6hdr does not in skb linear region under the scenario
-of SOCK_RAW socket. Access icmp6_hdr(skb)->icmp6_type directly will
-trigger the uninit variable access bug.
-
-Use a local variable icmp6_type to carry the correct value in different
-scenarios.
-
-Fixes: 14878f75abd5 ("[IPV6]: Add ICMPMsgStats MIB (RFC 4293) [rev 2]")
-Reported-by: syzbot+8257f4dcef79de670baf@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=3d605ec1d0a7f2a269a1a6936ac7f2b85975ee9c
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 1427a7202739 ("drm/amdgpu: fix amdgpu_job_free_resources v2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  4 ++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c  | 18 ++++++++++++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h   |  1 +
+ 3 files changed, 23 insertions(+)
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 383442ded9542..be63929b1ac53 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1913,8 +1913,13 @@ struct sk_buff *__ip6_make_skb(struct sock *sk,
- 	IP6_UPD_PO_STATS(net, rt->rt6i_idev, IPSTATS_MIB_OUT, skb->len);
- 	if (proto == IPPROTO_ICMPV6) {
- 		struct inet6_dev *idev = ip6_dst_idev(skb_dst(skb));
-+		u8 icmp6_type;
- 
--		ICMP6MSGOUT_INC_STATS(net, idev, icmp6_hdr(skb)->icmp6_type);
-+		if (sk->sk_socket->type == SOCK_RAW && !inet_sk(sk)->hdrincl)
-+			icmp6_type = fl6->fl6_icmp_type;
-+		else
-+			icmp6_type = icmp6_hdr(skb)->icmp6_type;
-+		ICMP6MSGOUT_INC_STATS(net, idev, icmp6_type);
- 		ICMP6_INC_STATS(net, idev, ICMP6_MIB_OUTMSGS);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 2f51789d98181..8711d39fc2f71 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4609,6 +4609,8 @@ int amdgpu_device_pre_asic_reset(struct amdgpu_device *adev,
+ 		amdgpu_virt_fini_data_exchange(adev);
  	}
  
++	amdgpu_fence_driver_isr_toggle(adev, true);
++
+ 	/* block all schedulers and reset given job's ring */
+ 	for (i = 0; i < AMDGPU_MAX_RINGS; ++i) {
+ 		struct amdgpu_ring *ring = adev->rings[i];
+@@ -4631,6 +4633,8 @@ int amdgpu_device_pre_asic_reset(struct amdgpu_device *adev,
+ 		amdgpu_fence_driver_force_completion(ring);
+ 	}
+ 
++	amdgpu_fence_driver_isr_toggle(adev, false);
++
+ 	if (job && job->vm)
+ 		drm_sched_increase_karma(&job->base);
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
+index bbd6f7a123033..f3d7094184530 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
+@@ -569,6 +569,24 @@ void amdgpu_fence_driver_hw_fini(struct amdgpu_device *adev)
+ 	}
+ }
+ 
++/* Will either stop and flush handlers for amdgpu interrupt or reanble it */
++void amdgpu_fence_driver_isr_toggle(struct amdgpu_device *adev, bool stop)
++{
++	int i;
++
++	for (i = 0; i < AMDGPU_MAX_RINGS; i++) {
++		struct amdgpu_ring *ring = adev->rings[i];
++
++		if (!ring || !ring->fence_drv.initialized || !ring->fence_drv.irq_src)
++			continue;
++
++		if (stop)
++			disable_irq(adev->irq.irq);
++		else
++			enable_irq(adev->irq.irq);
++	}
++}
++
+ void amdgpu_fence_driver_sw_fini(struct amdgpu_device *adev)
+ {
+ 	unsigned int i, j;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
+index e713d31619fe7..fc87a1fea8b44 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
+@@ -131,6 +131,7 @@ signed long amdgpu_fence_wait_polling(struct amdgpu_ring *ring,
+ 				      uint32_t wait_seq,
+ 				      signed long timeout);
+ unsigned amdgpu_fence_count_emitted(struct amdgpu_ring *ring);
++void amdgpu_fence_driver_isr_toggle(struct amdgpu_device *adev, bool stop);
+ 
+ /*
+  * Rings.
 -- 
 2.39.2
 
