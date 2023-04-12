@@ -1,39 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B902F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C192C433D2;
-	Wed, 12 Apr 2023 08:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51132F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA84C4339B;
+	Wed, 12 Apr 2023 08:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288632;
-	bh=lIuvcA/4kwvCsshIx2xJ2yvivDpd8BcdiRD4swhbUpA=;
+	s=korg; t=1681288634;
+	bh=5+faxszAFZdrXUNZjgsmc+Dq96ra8ZVb34UEnmOihPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nnnw6gToL23yIxAk9eOb/croE7JXilB8qs1204hOCfz0ii1zOJxGSkE0+P+5PJiAG
-	 fI2U8dcY5Iu5iczUzCrEyp7ISUZwM2G7VViwAILb+WxjPOzx79jcIZoN9mE7KYZDF7
-	 d+wWgXtEPFgK4dQTLlnOvpiN7WD85QlRvFPO8cVs=
+	b=SxH56es0kafpwhprOtDNL0TtbeDLGgn3tq0cvxZEdA+xFBb4uUBmW99pZyJFqCuVa
+	 J+m95amnBr2vPNs3OiETfcVuOUS50054zK9GycpWbdPC/mcHVkHKWmhWVkfhnNdQFD
+	 TxS2YfCILrbNttibWjO1nE3ilJ80TTS9HYAFHcJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tonghao Zhang <tong@infragraf.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Stanislav Fomichev <sdf@google.com>,
-	Hao Luo <haoluo@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Hou Tao <houtao1@huawei.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Michael Walle <michael@walle.cc>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	linux-gpio@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/93] bpf: hash map, avoid deadlock with suitable hash mask
-Date: Wed, 12 Apr 2023 10:33:23 +0200
-Message-Id: <20230412082823.993310345@linuxfoundation.org>
+Subject: [PATCH 5.15 23/93] gpio: GPIO_REGMAP: select REGMAP instead of depending on it
+Date: Wed, 12 Apr 2023 10:33:24 +0200
+Message-Id: <20230412082824.034062670@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -47,66 +39,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tonghao Zhang <tong@infragraf.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 9f907439dc80e4a2fcfb949927b36c036468dbb3 ]
+[ Upstream commit d49765b5f4320a402fbc4ed5edfd73d87640f27c ]
 
-The deadlock still may occur while accessed in NMI and non-NMI
-context. Because in NMI, we still may access the same bucket but with
-different map_locked index.
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-For example, on the same CPU, .max_entries = 2, we update the hash map,
-with key = 4, while running bpf prog in NMI nmi_handle(), to update
-hash map with key = 20, so it will have the same bucket index but have
-different map_locked index.
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
-To fix this issue, using min mask to hash again.
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
 
-Fixes: 20b6cc34ea74 ("bpf: Avoid hashtab deadlock with map_locked")
-Signed-off-by: Tonghao Zhang <tong@infragraf.org>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Song Liu <song@kernel.org>
-Cc: Yonghong Song <yhs@fb.com>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: KP Singh <kpsingh@kernel.org>
-Cc: Stanislav Fomichev <sdf@google.com>
-Cc: Hao Luo <haoluo@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Hou Tao <houtao1@huawei.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20230111092903.92389-1-tong@infragraf.org
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: ebe363197e52 ("gpio: add a reusable generic gpio_chip using regmap")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Michael Walle <michael@walle.cc>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-gpio@vger.kernel.org
+Acked-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpio/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index e7f45a966e6b5..10b37773d9e47 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -163,7 +163,7 @@ static inline int htab_lock_bucket(const struct bpf_htab *htab,
- 	unsigned long flags;
- 	bool use_raw_lock;
+diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+index 947474f6abb45..7b9def6b10047 100644
+--- a/drivers/gpio/Kconfig
++++ b/drivers/gpio/Kconfig
+@@ -100,7 +100,7 @@ config GPIO_GENERIC
+ 	tristate
  
--	hash = hash & HASHTAB_MAP_LOCK_MASK;
-+	hash = hash & min_t(u32, HASHTAB_MAP_LOCK_MASK, htab->n_buckets - 1);
+ config GPIO_REGMAP
+-	depends on REGMAP
++	select REGMAP
+ 	tristate
  
- 	use_raw_lock = htab_use_raw_lock(htab);
- 	if (use_raw_lock)
-@@ -194,7 +194,7 @@ static inline void htab_unlock_bucket(const struct bpf_htab *htab,
- {
- 	bool use_raw_lock = htab_use_raw_lock(htab);
- 
--	hash = hash & HASHTAB_MAP_LOCK_MASK;
-+	hash = hash & min_t(u32, HASHTAB_MAP_LOCK_MASK, htab->n_buckets - 1);
- 	if (use_raw_lock)
- 		raw_spin_unlock_irqrestore(&b->raw_lock, flags);
- 	else
+ # put drivers in the right section, in alphabetical order
 -- 
 2.39.2
 
