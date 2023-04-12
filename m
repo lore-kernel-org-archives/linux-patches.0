@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283C42F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:50:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FD4C433D2;
-	Wed, 12 Apr 2023 08:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33382F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:50:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D68FC433D2;
+	Wed, 12 Apr 2023 08:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289439;
-	bh=sddEuKU4VUbzVx0wQNn1BnzPMxQ388nNWKkeANiIyi0=;
+	s=korg; t=1681289441;
+	bh=JFLHhSMSXYGuZz+WKuoMUdkm8+kexttvGEBCNwrEtXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pl3GCL6zJzGsH/ozIbkC8R+TJKu8Gtl4b7g7uf0+AHsMF6ci87jUkLmc7SDhJjFfM
-	 x+iurvl57XsikYERRPZf57mxuaO7Ps1mi0NKX5OCk6oVhNMsNlCYGXJ1CdhnExYU3Y
-	 sWpcpSdMN3Jgm3i83jm8/V5uFE1MitUPOWN5Elqc=
+	b=KMmxUHRrgIbSQThUhmnJcca5fBdWlHhuN3iPcrroTRmSlruFYS+wbpikquGN0gzhz
+	 CK7Fh1ngFTBRdc+81lZSc3Njxd5wD8R/WmsQLSBcj09nOWsTSzwOuXBppVOZN4Y0O7
+	 eka8hDXfzy9prF1OZahjeSoDB874fj3YGC1vYy5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
 	Sean Christopherson <seanjc@google.com>,
+	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.2 100/173] KVM: nVMX: Do not report error code when synthesizing VM-Exit from Real Mode
-Date: Wed, 12 Apr 2023 10:33:46 +0200
-Message-Id: <20230412082842.119583117@linuxfoundation.org>
+Subject: [PATCH 6.2 101/173] KVM: SVM: Flush Hyper-V TLB when required
+Date: Wed, 12 Apr 2023 10:33:47 +0200
+Message-Id: <20230412082842.164450040@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -35,47 +36,158 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
 
-commit 80962ec912db56d323883154efc2297473e692cb upstream.
+commit e5c972c1fadacc858b6a564d056f177275238040 upstream.
 
-Don't report an error code to L1 when synthesizing a nested VM-Exit and
-L2 is in Real Mode.  Per Intel's SDM, regarding the error code valid bit:
+The Hyper-V "EnlightenedNptTlb" enlightenment is always enabled when KVM
+is running on top of Hyper-V and Hyper-V exposes support for it (which
+is always). On AMD CPUs this enlightenment results in ASID invalidations
+not flushing TLB entries derived from the NPT. To force the underlying
+(L0) hypervisor to rebuild its shadow page tables, an explicit hypercall
+is needed.
 
-  This bit is always 0 if the VM exit occurred while the logical processor
-  was in real-address mode (CR0.PE=0).
+The original KVM implementation of Hyper-V's "EnlightenedNptTlb" on SVM
+only added remote TLB flush hooks. This worked out fine for a while, as
+sufficient remote TLB flushes where being issued in KVM to mask the
+problem. Since v5.17, changes in the TDP code reduced the number of
+flushes and the out-of-sync TLB prevents guests from booting
+successfully.
 
-The bug was introduced by a recent fix for AMD's Paged Real Mode, which
-moved the error code suppression from the common "queue exception" path
-to the "inject exception" path, but missed VMX's "synthesize VM-Exit"
-path.
+Split svm_flush_tlb_current() into separate callbacks for the 3 cases
+(guest/all/current), and issue the required Hyper-V hypercall when a
+Hyper-V TLB flush is needed. The most important case where the TLB flush
+was missing is when loading a new PGD, which is followed by what is now
+svm_flush_tlb_current().
 
-Fixes: b97f07458373 ("KVM: x86: determine if an exception has an error code only when injecting it.")
-Cc: stable@vger.kernel.org
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230322143300.2209476-3-seanjc@google.com>
+Cc: stable@vger.kernel.org # v5.17+
+Fixes: 1e0c7d40758b ("KVM: SVM: hyper-v: Remote TLB flush for SVM")
+Link: https://lore.kernel.org/lkml/43980946-7bbf-dcef-7e40-af904c456250@linux.microsoft.com/
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Message-Id: <20230324145233.4585-1-jpiotrowski@linux.microsoft.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/kvm/kvm_onhyperv.h     |    5 +++++
+ arch/x86/kvm/svm/svm.c          |   37 ++++++++++++++++++++++++++++++++++---
+ arch/x86/kvm/svm/svm_onhyperv.h |   15 +++++++++++++++
+ 3 files changed, 54 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3873,7 +3873,12 @@ static void nested_vmx_inject_exception_
- 		exit_qual = 0;
- 	}
+--- a/arch/x86/kvm/kvm_onhyperv.h
++++ b/arch/x86/kvm/kvm_onhyperv.h
+@@ -12,6 +12,11 @@ int hv_remote_flush_tlb_with_range(struc
+ int hv_remote_flush_tlb(struct kvm *kvm);
+ void hv_track_root_tdp(struct kvm_vcpu *vcpu, hpa_t root_tdp);
+ #else /* !CONFIG_HYPERV */
++static inline int hv_remote_flush_tlb(struct kvm *kvm)
++{
++	return -EOPNOTSUPP;
++}
++
+ static inline void hv_track_root_tdp(struct kvm_vcpu *vcpu, hpa_t root_tdp)
+ {
+ }
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3718,7 +3718,7 @@ static void svm_enable_nmi_window(struct
+ 	svm->vmcb->save.rflags |= (X86_EFLAGS_TF | X86_EFLAGS_RF);
+ }
  
--	if (ex->has_error_code) {
+-static void svm_flush_tlb_current(struct kvm_vcpu *vcpu)
++static void svm_flush_tlb_asid(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 
+@@ -3742,6 +3742,37 @@ static void svm_flush_tlb_current(struct
+ 		svm->current_vmcb->asid_generation--;
+ }
+ 
++static void svm_flush_tlb_current(struct kvm_vcpu *vcpu)
++{
++	hpa_t root_tdp = vcpu->arch.mmu->root.hpa;
++
 +	/*
-+	 * Unlike AMD's Paged Real Mode, which reports an error code on #PF
-+	 * VM-Exits even if the CPU is in Real Mode, Intel VMX never sets the
-+	 * "has error code" flags on VM-Exit if the CPU is in Real Mode.
++	 * When running on Hyper-V with EnlightenedNptTlb enabled, explicitly
++	 * flush the NPT mappings via hypercall as flushing the ASID only
++	 * affects virtual to physical mappings, it does not invalidate guest
++	 * physical to host physical mappings.
 +	 */
-+	if (ex->has_error_code && is_protmode(vcpu)) {
- 		/*
- 		 * Intel CPUs do not generate error codes with bits 31:16 set,
- 		 * and more importantly VMX disallows setting bits 31:16 in the
++	if (svm_hv_is_enlightened_tlb_enabled(vcpu) && VALID_PAGE(root_tdp))
++		hyperv_flush_guest_mapping(root_tdp);
++
++	svm_flush_tlb_asid(vcpu);
++}
++
++static void svm_flush_tlb_all(struct kvm_vcpu *vcpu)
++{
++	/*
++	 * When running on Hyper-V with EnlightenedNptTlb enabled, remote TLB
++	 * flushes should be routed to hv_remote_flush_tlb() without requesting
++	 * a "regular" remote flush.  Reaching this point means either there's
++	 * a KVM bug or a prior hv_remote_flush_tlb() call failed, both of
++	 * which might be fatal to the guest.  Yell, but try to recover.
++	 */
++	if (WARN_ON_ONCE(svm_hv_is_enlightened_tlb_enabled(vcpu)))
++		hv_remote_flush_tlb(vcpu->kvm);
++
++	svm_flush_tlb_asid(vcpu);
++}
++
+ static void svm_flush_tlb_gva(struct kvm_vcpu *vcpu, gva_t gva)
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+@@ -4747,10 +4778,10 @@ static struct kvm_x86_ops svm_x86_ops __
+ 	.set_rflags = svm_set_rflags,
+ 	.get_if_flag = svm_get_if_flag,
+ 
+-	.flush_tlb_all = svm_flush_tlb_current,
++	.flush_tlb_all = svm_flush_tlb_all,
+ 	.flush_tlb_current = svm_flush_tlb_current,
+ 	.flush_tlb_gva = svm_flush_tlb_gva,
+-	.flush_tlb_guest = svm_flush_tlb_current,
++	.flush_tlb_guest = svm_flush_tlb_asid,
+ 
+ 	.vcpu_pre_run = svm_vcpu_pre_run,
+ 	.vcpu_run = svm_vcpu_run,
+--- a/arch/x86/kvm/svm/svm_onhyperv.h
++++ b/arch/x86/kvm/svm/svm_onhyperv.h
+@@ -6,6 +6,8 @@
+ #ifndef __ARCH_X86_KVM_SVM_ONHYPERV_H__
+ #define __ARCH_X86_KVM_SVM_ONHYPERV_H__
+ 
++#include <asm/mshyperv.h>
++
+ #if IS_ENABLED(CONFIG_HYPERV)
+ 
+ #include "kvm_onhyperv.h"
+@@ -15,6 +17,14 @@ static struct kvm_x86_ops svm_x86_ops;
+ 
+ int svm_hv_enable_l2_tlb_flush(struct kvm_vcpu *vcpu);
+ 
++static inline bool svm_hv_is_enlightened_tlb_enabled(struct kvm_vcpu *vcpu)
++{
++	struct hv_vmcb_enlightenments *hve = &to_svm(vcpu)->vmcb->control.hv_enlightenments;
++
++	return ms_hyperv.nested_features & HV_X64_NESTED_ENLIGHTENED_TLB &&
++	       !!hve->hv_enlightenments_control.enlightened_npt_tlb;
++}
++
+ static inline void svm_hv_init_vmcb(struct vmcb *vmcb)
+ {
+ 	struct hv_vmcb_enlightenments *hve = &vmcb->control.hv_enlightenments;
+@@ -80,6 +90,11 @@ static inline void svm_hv_update_vp_id(s
+ }
+ #else
+ 
++static inline bool svm_hv_is_enlightened_tlb_enabled(struct kvm_vcpu *vcpu)
++{
++	return false;
++}
++
+ static inline void svm_hv_init_vmcb(struct vmcb *vmcb)
+ {
+ }
 
 
