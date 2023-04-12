@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4032F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:49:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A778DC433D2;
-	Wed, 12 Apr 2023 08:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C530E2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:49:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FCBC433EF;
+	Wed, 12 Apr 2023 08:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289392;
-	bh=21OnGELfFIqpPmaF6jBtOcYh5Fp4wg3v95cGurPvF2s=;
+	s=korg; t=1681289394;
+	bh=QuaGXjC5V1Z9gZPEptZ6X/a16Op/YzvS5QUF7G9c7a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmL7FxzjOZjRJjKn/pJvPpZ1fIxPH0SNhgo6vf84EhoJpXLepZY5BLyGLi6bMRjca
-	 Wtp1qnnowWUxHd+fmez8S5kTP045TcyfzuMFJCEj8JZFKF+fc8fLYlAnd6G/e9vSv9
-	 APnhbB+KUQqgdjBn8f7FlxicuvcYuCrmLcqTRzHY=
+	b=k0h+A5yEiAGjI2WLohekpUwQH+jKf+AigxW7PoWmEmW4hjF+1aT1HL75yrSIwODlP
+	 L3Fcj/C7PVwkoNf6pUuOOQ3ClrwtTacTOPB1hrFk+uyBVBlhpeYoPXEp1Su4yLunH5
+	 mXs2XAH3sJnutDfKoFxYUWy1fyAXNfZ9swW6RX9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.2 081/173] iio: light: vcnl4000: Fix WARN_ON on uninitialized lock
-Date: Wed, 12 Apr 2023 10:33:27 +0200
-Message-Id: <20230412082841.329969092@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 6.2 082/173] tty: serial: sh-sci: Fix transmit end interrupt handler
+Date: Wed, 12 Apr 2023 10:33:28 +0200
+Message-Id: <20230412082841.365139615@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,63 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mårten Lindahl <marten.lindahl@axis.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 42ec40b0883c1cce58b06e8fa82049a61033151c upstream.
+commit b43a18647f03c87e77d50d6fe74904b61b96323e upstream.
 
-There are different init functions for the sensors in this driver in
-which only one initializes the generic vcnl4000_lock. With commit
-e21b5b1f2669 ("iio: light: vcnl4000: Preserve conf bits when toggle power")
-the vcnl4040 sensor started to depend on the lock, but it was missed to
-initialize it in vcnl4040's init function. This has not been visible
-until we run lockdep on it:
+The fourth interrupt on SCI port is transmit end interrupt compared to
+the break interrupt on other port types. So, shuffle the interrupts to fix
+the transmit end interrupt handler.
 
-  DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-  at kernel/locking/mutex.c:575 __mutex_lock+0x4f8/0x890
-  Call trace:
-  __mutex_lock
-  mutex_lock_nested
-  vcnl4200_set_power_state
-  vcnl4200_init
-  vcnl4000_probe
-
-Fix this by initializing the lock in the probe function instead of doing
-it in the chip specific init functions.
-
-Fixes: e21b5b1f2669 ("iio: light: vcnl4000: Preserve conf bits when toggle power")
-Signed-off-by: Mårten Lindahl <marten.lindahl@axis.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230131140109.2067577-1-marten.lindahl@axis.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: e1d0be616186 ("sh-sci: Add h8300 SCI")
+Cc: stable <stable@kernel.org>
+Suggested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230317150403.154094-1-biju.das.jz@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/vcnl4000.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/serial/sh-sci.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/iio/light/vcnl4000.c b/drivers/iio/light/vcnl4000.c
-index cc1a2062e76d..69c5bc987e26 100644
---- a/drivers/iio/light/vcnl4000.c
-+++ b/drivers/iio/light/vcnl4000.c
-@@ -199,7 +199,6 @@ static int vcnl4000_init(struct vcnl4000_data *data)
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -31,6 +31,7 @@
+ #include <linux/ioport.h>
+ #include <linux/ktime.h>
+ #include <linux/major.h>
++#include <linux/minmax.h>
+ #include <linux/module.h>
+ #include <linux/mm.h>
+ #include <linux/of.h>
+@@ -2864,6 +2865,13 @@ static int sci_init_single(struct platfo
+ 			sci_port->irqs[i] = platform_get_irq(dev, i);
+ 	}
  
- 	data->rev = ret & 0xf;
- 	data->al_scale = 250000;
--	mutex_init(&data->vcnl4000_lock);
- 
- 	return data->chip_spec->set_power_state(data, true);
- };
-@@ -1197,6 +1196,8 @@ static int vcnl4000_probe(struct i2c_client *client)
- 	data->id = id->driver_data;
- 	data->chip_spec = &vcnl4000_chip_spec_cfg[data->id];
- 
-+	mutex_init(&data->vcnl4000_lock);
++	/*
++	 * The fourth interrupt on SCI port is transmit end interrupt, so
++	 * shuffle the interrupts.
++	 */
++	if (p->type == PORT_SCI)
++		swap(sci_port->irqs[SCIx_BRI_IRQ], sci_port->irqs[SCIx_TEI_IRQ]);
 +
- 	ret = data->chip_spec->init(data);
- 	if (ret < 0)
- 		return ret;
--- 
-2.40.0
-
+ 	/* The SCI generates several interrupts. They can be muxed together or
+ 	 * connected to different interrupt lines. In the muxed case only one
+ 	 * interrupt resource is specified as there is only one interrupt ID.
 
 
