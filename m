@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283112F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CAFC433EF;
-	Wed, 12 Apr 2023 08:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8FE2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469C0C433EF;
+	Wed, 12 Apr 2023 08:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289229;
-	bh=8U48gKTLAtvzZr3KsZAGXhT8ouZ2sFVl7DENiYl3hFk=;
+	s=korg; t=1681289231;
+	bh=I9V557eNeYP2dCLszb/J98mzl6NCdiMwBr85BvpjQSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UI+pN4mvWvNCmED9Z2n+sGV2Mx9kugFN0LRW/g65gTtPlgQu6c6r/Sz8pGPrugG8m
-	 bZJUGLX27xy9pqD1B8EpEmzxNr+2vz7p8ucHi0dfs709lbhbLDyUPAANwG6LsTuPWW
-	 AiwF6vlXY6HCNiDq6YKk3Mw52RrLuvNBnYQxgpzc=
+	b=bHGRtWRPWrEL8rxWFGDWe2Q5toXunAMHWqr2mp0pzN9Xxt9OsO/M3PdmmCiDLR0OP
+	 mOEm2Rj1FNTWHIXHDoTq71pPsRRa88Q0fOLGHq897ZfT8REqGwmZYdJw79lXcq+8gV
+	 dykGfxOv6oS4u141M5INL8vGY3ZCPxLYuBzslaiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
-	Mike Snitzer <snitzer@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Michael Sit Wei Hong <michael.wei.hong.sit@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 002/173] dm integrity: Remove bi_sector thats only used by commented debug code
-Date: Wed, 12 Apr 2023 10:32:08 +0200
-Message-Id: <20230412082838.236042652@linuxfoundation.org>
+Subject: [PATCH 6.2 020/173] net: phylink: add phylink_expects_phy() method
+Date: Wed, 12 Apr 2023 10:32:26 +0200
+Message-Id: <20230412082838.914097582@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,48 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+From: Michael Sit Wei Hong <michael.wei.hong.sit@intel.com>
 
-[ Upstream commit 5cd6d1d53a1f74222e73d8b42ab7ecf28ee2f34f ]
+[ Upstream commit 653a180957a85c3fc30320cc7e84f5dc913a64f8 ]
 
-drivers/md/dm-integrity.c:1738:13: warning: variable 'bi_sector' set but not used.
+Provide phylink_expects_phy() to allow MAC drivers to check if it
+is expecting a PHY to attach to. Since fixed-linked setups do not
+need to attach to a PHY.
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3895
-Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Stable-dep-of: f7b58a69fad9 ("dm: fix improper splitting for abnormal bios")
+Provides a boolean value as to if the MAC should expect a PHY.
+Returns true if a PHY is expected.
+
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Michael Sit Wei Hong <michael.wei.hong.sit@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: fe2cfbc96803 ("net: stmmac: check if MAC needs to attach to a PHY")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-integrity.c | 7 -------
- 1 file changed, 7 deletions(-)
+ drivers/net/phy/phylink.c | 19 +++++++++++++++++++
+ include/linux/phylink.h   |  1 +
+ 2 files changed, 20 insertions(+)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index 1388ee35571e0..c62c21aadf329 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -1735,7 +1735,6 @@ static void integrity_metadata(struct work_struct *w)
- 		}
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index 4d2519cdb8012..bf8a8ed5d5d7b 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -1571,6 +1571,25 @@ void phylink_destroy(struct phylink *pl)
+ }
+ EXPORT_SYMBOL_GPL(phylink_destroy);
  
- 		if (unlikely(dio->op == REQ_OP_DISCARD)) {
--			sector_t bi_sector = dio->bio_details.bi_iter.bi_sector;
- 			unsigned bi_size = dio->bio_details.bi_iter.bi_size;
- 			unsigned max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : HASH_MAX_DIGESTSIZE;
- 			unsigned max_blocks = max_size / ic->tag_size;
-@@ -1752,13 +1751,7 @@ static void integrity_metadata(struct work_struct *w)
- 					goto error;
- 				}
++/**
++ * phylink_expects_phy() - Determine if phylink expects a phy to be attached
++ * @pl: a pointer to a &struct phylink returned from phylink_create()
++ *
++ * When using fixed-link mode, or in-band mode with 1000base-X or 2500base-X,
++ * no PHY is needed.
++ *
++ * Returns true if phylink will be expecting a PHY.
++ */
++bool phylink_expects_phy(struct phylink *pl)
++{
++	if (pl->cfg_link_an_mode == MLO_AN_FIXED ||
++	    (pl->cfg_link_an_mode == MLO_AN_INBAND &&
++	     phy_interface_mode_is_8023z(pl->link_config.interface)))
++		return false;
++	return true;
++}
++EXPORT_SYMBOL_GPL(phylink_expects_phy);
++
+ static void phylink_phy_change(struct phy_device *phydev, bool up)
+ {
+ 	struct phylink *pl = phydev->phylink;
+diff --git a/include/linux/phylink.h b/include/linux/phylink.h
+index c492c26202b5b..637698ed5cb6c 100644
+--- a/include/linux/phylink.h
++++ b/include/linux/phylink.h
+@@ -574,6 +574,7 @@ struct phylink *phylink_create(struct phylink_config *, struct fwnode_handle *,
+ 			       phy_interface_t iface,
+ 			       const struct phylink_mac_ops *mac_ops);
+ void phylink_destroy(struct phylink *);
++bool phylink_expects_phy(struct phylink *pl);
  
--				/*if (bi_size < this_step_blocks << (SECTOR_SHIFT + ic->sb->log2_sectors_per_block)) {
--					printk("BUGG: bi_sector: %llx, bi_size: %u\n", bi_sector, bi_size);
--					printk("BUGG: this_step_blocks: %u\n", this_step_blocks);
--					BUG();
--				}*/
- 				bi_size -= this_step_blocks << (SECTOR_SHIFT + ic->sb->log2_sectors_per_block);
--				bi_sector += this_step_blocks << ic->sb->log2_sectors_per_block;
- 			}
- 
- 			if (likely(checksums != checksums_onstack))
+ int phylink_connect_phy(struct phylink *, struct phy_device *);
+ int phylink_of_phy_connect(struct phylink *, struct device_node *, u32 flags);
 -- 
 2.39.2
 
