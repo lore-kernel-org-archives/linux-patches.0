@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771582F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3677C433D2;
-	Wed, 12 Apr 2023 08:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FA82F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C39C433EF;
+	Wed, 12 Apr 2023 08:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289245;
-	bh=TmVgtrcayJOHHCETtAj2Z1Xq+rIbApmhoK92MLxWiEI=;
+	s=korg; t=1681289248;
+	bh=bDiQ9Xf5Nu54cyd6oFCPEX6z/JVwq9+vIKyU5/l60ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShsuQgbUJhkcRUmUTr+iB9VWQlECM8M7v+T76XMkakv8Rw4/1L1zzh8Iqmue9Qxxg
-	 fUyib+sZAcBiZ78UK8dXbVudTOd1/5AWfAbo5ho6vK1azhMYhlc6SqAuCSe9OBimn2
-	 G86Or/ckjutUieSjCpJojQ0CFqY8gvNM3mH7oDXQ=
+	b=ZbEkbCuT/ugvnjIyvrSCD7VnICWRbDc/dFaLWIdnsjmkp5cTA0libcO1juj7pDOEn
+	 QYcMPXQbsBk5EaGM7eLnvCeFGArfJANeL/U5i9YQvoHnCzW5ax+EkJAsbnOO+FEtBc
+	 c6vq5ECB8Jli6Zzho0hEyxa/dACpy/FyoRsiaiHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Michael Walle <michael@walle.cc>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	linux-gpio@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Mohammed Gamal <mgamal@redhat.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 007/173] gpio: GPIO_REGMAP: select REGMAP instead of depending on it
-Date: Wed, 12 Apr 2023 10:32:13 +0200
-Message-Id: <20230412082838.427252919@linuxfoundation.org>
+Subject: [PATCH 6.2 008/173] Drivers: vmbus: Check for channel allocation before looking up relids
+Date: Wed, 12 Apr 2023 10:32:14 +0200
+Message-Id: <20230412082838.458114378@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -39,45 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Mohammed Gamal <mgamal@redhat.com>
 
-[ Upstream commit d49765b5f4320a402fbc4ed5edfd73d87640f27c ]
+[ Upstream commit 1eb65c8687316c65140b48fad27133d583178e15 ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+relid2channel() assumes vmbus channel array to be allocated when called.
+However, in cases such as kdump/kexec, not all relids will be reset by the host.
+When the second kernel boots and if the guest receives a vmbus interrupt during
+vmbus driver initialization before vmbus_connect() is called, before it finishes,
+or if it fails, the vmbus interrupt service routine is called which in turn calls
+relid2channel() and can cause a null pointer dereference.
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
+Print a warning and error out in relid2channel() for a channel id that's invalid
+in the second kernel.
 
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+Fixes: 8b6a877c060e ("Drivers: hv: vmbus: Replace the per-CPU channel lists with a global array of channels")
 
-Fixes: ebe363197e52 ("gpio: add a reusable generic gpio_chip using regmap")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Michael Walle <michael@walle.cc>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-gpio@vger.kernel.org
-Acked-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Mohammed Gamal <mgamal@redhat.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Link: https://lore.kernel.org/r/20230217204411.212709-1-mgamal@redhat.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hv/connection.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-index e9917a45b005a..42e5042d01495 100644
---- a/drivers/gpio/Kconfig
-+++ b/drivers/gpio/Kconfig
-@@ -100,7 +100,7 @@ config GPIO_GENERIC
- 	tristate
- 
- config GPIO_REGMAP
--	depends on REGMAP
-+	select REGMAP
- 	tristate
- 
- # put drivers in the right section, in alphabetical order
+diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
+index 9dc27e5d367a2..da51b50787dff 100644
+--- a/drivers/hv/connection.c
++++ b/drivers/hv/connection.c
+@@ -409,6 +409,10 @@ void vmbus_disconnect(void)
+  */
+ struct vmbus_channel *relid2channel(u32 relid)
+ {
++	if (vmbus_connection.channels == NULL) {
++		pr_warn_once("relid2channel: relid=%d: No channels mapped!\n", relid);
++		return NULL;
++	}
+ 	if (WARN_ON(relid >= MAX_CHANNEL_RELIDS))
+ 		return NULL;
+ 	return READ_ONCE(vmbus_connection.channels[relid]);
 -- 
 2.39.2
 
