@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D482F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC979C433D2;
-	Wed, 12 Apr 2023 08:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC892F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A10C433EF;
+	Wed, 12 Apr 2023 08:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288648;
-	bh=q9rItHT/DZ16yQ1ZWUIpHFXvtL31QCYC7fj4bgJ7cu8=;
+	s=korg; t=1681288650;
+	bh=nS414579cCkCyebrkAtx/4frSjcIZbbiJFvk+50Bu24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7vWgo9bcPHi74XtgT88lV645CjkOCRhT7/LvxuBuvu0Xd2wBWiGsyt9GjI+bw4g9
-	 zXZB4aJ8oRx+T8T6GKA9d4pa24a9uy4PTDCK/3VlY4/I9ihNZG9ghqxSiAQl3COBZi
-	 edzC0Rnm+u9x1WSuB+AxwKyHyO/NXdELPma3yVlw=
+	b=NADxYFKOFSVLg2V4xH5Oc4Vx3LJqLMyEc0uQ4ZlK9+cqTyJggVtodqw82RZyH1lF+
+	 MzpV2waPlXKc4OHxlyfhFSum21qQksIabkpq/9uJneWt6yV7c5gtk+rxOIKog/TuWR
+	 F9S6zDe0LUIJmhUYELlvTcVofTNbncRVwfZOJvzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 18/93] serial: 8250_exar: derive nr_ports from PCI ID for Acces I/O cards
-Date: Wed, 12 Apr 2023 10:33:19 +0200
-Message-Id: <20230412082823.820999875@linuxfoundation.org>
+	Wayne Chang <waynec@nvidia.com>,
+	Haotien Hsu <haotienh@nvidia.com>
+Subject: [PATCH 5.15 51/93] usb: xhci: tegra: fix sleep in atomic call
+Date: Wed, 12 Apr 2023 10:33:52 +0200
+Message-Id: <20230412082825.294526028@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -34,86 +34,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Wayne Chang <waynec@nvidia.com>
 
-[ Upstream commit 8e4413aaf6a2e3a46e99a0718ca54c0cf8609cb2 ]
+commit 4c7f9d2e413dc06a157c4e5dccde84aaf4655eb3 upstream.
 
-In the similar way how it's done in 8250_pericom, derive the number of
-the UART ports from PCI ID for Acces I/O cards.
+When we set the dual-role port to Host mode, we observed the following
+splat:
+[  167.057718] BUG: sleeping function called from invalid context at
+include/linux/sched/mm.h:229
+[  167.057872] Workqueue: events tegra_xusb_usb_phy_work
+[  167.057954] Call trace:
+[  167.057962]  dump_backtrace+0x0/0x210
+[  167.057996]  show_stack+0x30/0x50
+[  167.058020]  dump_stack_lvl+0x64/0x84
+[  167.058065]  dump_stack+0x14/0x34
+[  167.058100]  __might_resched+0x144/0x180
+[  167.058140]  __might_sleep+0x64/0xd0
+[  167.058171]  slab_pre_alloc_hook.constprop.0+0xa8/0x110
+[  167.058202]  __kmalloc_track_caller+0x74/0x2b0
+[  167.058233]  kvasprintf+0xa4/0x190
+[  167.058261]  kasprintf+0x58/0x90
+[  167.058285]  tegra_xusb_find_port_node.isra.0+0x58/0xd0
+[  167.058334]  tegra_xusb_find_port+0x38/0xa0
+[  167.058380]  tegra_xusb_padctl_get_usb3_companion+0x38/0xd0
+[  167.058430]  tegra_xhci_id_notify+0x8c/0x1e0
+[  167.058473]  notifier_call_chain+0x88/0x100
+[  167.058506]  atomic_notifier_call_chain+0x44/0x70
+[  167.058537]  tegra_xusb_usb_phy_work+0x60/0xd0
+[  167.058581]  process_one_work+0x1dc/0x4c0
+[  167.058618]  worker_thread+0x54/0x410
+[  167.058650]  kthread+0x188/0x1b0
+[  167.058672]  ret_from_fork+0x10/0x20
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20220127180608.71509-1-andriy.shevchenko@linux.intel.com
+The function tegra_xusb_padctl_get_usb3_companion eventually calls
+tegra_xusb_find_port and this in turn calls kasprintf which might sleep
+and so cannot be called from an atomic context.
+
+Fix this by moving the call to tegra_xusb_padctl_get_usb3_companion to
+the tegra_xhci_id_work function where it is really needed.
+
+Fixes: f836e7843036 ("usb: xhci-tegra: Add OTG support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Signed-off-by: Haotien Hsu <haotienh@nvidia.com>
+Link: https://lore.kernel.org/r/20230327095548.1599470-1-haotienh@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 14ee78d5932a ("serial: exar: Add support for Sealevel 7xxxC serial cards")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_exar.c | 37 ++++++++++-------------------
- 1 file changed, 13 insertions(+), 24 deletions(-)
+ drivers/usb/host/xhci-tegra.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_exar.c b/drivers/tty/serial/8250/8250_exar.c
-index d502240bbcf23..7292917ac8784 100644
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -623,7 +623,12 @@ exar_pci_probe(struct pci_dev *pcidev, const struct pci_device_id *ent)
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -1225,6 +1225,9 @@ static void tegra_xhci_id_work(struct wo
  
- 	maxnr = pci_resource_len(pcidev, bar) >> (board->reg_shift + 3);
+ 	mutex_unlock(&tegra->lock);
  
--	nr_ports = board->num_ports ? board->num_ports : pcidev->device & 0x0f;
-+	if (pcidev->vendor == PCI_VENDOR_ID_ACCESSIO)
-+		nr_ports = BIT(((pcidev->device & 0x38) >> 3) - 1);
-+	else if (board->num_ports)
-+		nr_ports = board->num_ports;
-+	else
-+		nr_ports = pcidev->device & 0x0f;
- 
- 	priv = devm_kzalloc(&pcidev->dev, struct_size(priv, line, nr_ports), GFP_KERNEL);
- 	if (!priv)
-@@ -722,22 +727,6 @@ static int __maybe_unused exar_resume(struct device *dev)
- 
- static SIMPLE_DEV_PM_OPS(exar_pci_pm, exar_suspend, exar_resume);
- 
--static const struct exar8250_board acces_com_2x = {
--	.num_ports	= 2,
--	.setup		= pci_xr17c154_setup,
--};
--
--static const struct exar8250_board acces_com_4x = {
--	.num_ports	= 4,
--	.setup		= pci_xr17c154_setup,
--};
--
--static const struct exar8250_board acces_com_8x = {
--	.num_ports	= 8,
--	.setup		= pci_xr17c154_setup,
--};
--
--
- static const struct exar8250_board pbn_fastcom335_2 = {
- 	.num_ports	= 2,
- 	.setup		= pci_fastcom335_setup,
-@@ -822,13 +811,13 @@ static const struct exar8250_board pbn_exar_XR17V8358 = {
++	tegra->otg_usb3_port = tegra_xusb_padctl_get_usb3_companion(tegra->padctl,
++								    tegra->otg_usb2_port);
++
+ 	if (tegra->host_mode) {
+ 		/* switch to host mode */
+ 		if (tegra->otg_usb3_port >= 0) {
+@@ -1339,9 +1342,6 @@ static int tegra_xhci_id_notify(struct n
  	}
  
- static const struct pci_device_id exar_pci_tbl[] = {
--	EXAR_DEVICE(ACCESSIO, COM_2S, acces_com_2x),
--	EXAR_DEVICE(ACCESSIO, COM_4S, acces_com_4x),
--	EXAR_DEVICE(ACCESSIO, COM_8S, acces_com_8x),
--	EXAR_DEVICE(ACCESSIO, COM232_8, acces_com_8x),
--	EXAR_DEVICE(ACCESSIO, COM_2SM, acces_com_2x),
--	EXAR_DEVICE(ACCESSIO, COM_4SM, acces_com_4x),
--	EXAR_DEVICE(ACCESSIO, COM_8SM, acces_com_8x),
-+	EXAR_DEVICE(ACCESSIO, COM_2S, pbn_exar_XR17C15x),
-+	EXAR_DEVICE(ACCESSIO, COM_4S, pbn_exar_XR17C15x),
-+	EXAR_DEVICE(ACCESSIO, COM_8S, pbn_exar_XR17C15x),
-+	EXAR_DEVICE(ACCESSIO, COM232_8, pbn_exar_XR17C15x),
-+	EXAR_DEVICE(ACCESSIO, COM_2SM, pbn_exar_XR17C15x),
-+	EXAR_DEVICE(ACCESSIO, COM_4SM, pbn_exar_XR17C15x),
-+	EXAR_DEVICE(ACCESSIO, COM_8SM, pbn_exar_XR17C15x),
+ 	tegra->otg_usb2_port = tegra_xusb_get_usb2_port(tegra, usbphy);
+-	tegra->otg_usb3_port = tegra_xusb_padctl_get_usb3_companion(
+-							tegra->padctl,
+-							tegra->otg_usb2_port);
  
- 	CONNECT_DEVICE(XR17C152, UART_2_232, pbn_connect),
- 	CONNECT_DEVICE(XR17C154, UART_4_232, pbn_connect),
--- 
-2.39.2
-
+ 	tegra->host_mode = (usbphy->last_event == USB_EVENT_ID) ? true : false;
+ 
 
 
