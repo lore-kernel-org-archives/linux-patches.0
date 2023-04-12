@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5BC2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28529C4339B;
-	Wed, 12 Apr 2023 08:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415312F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:39:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD493C433D2;
+	Wed, 12 Apr 2023 08:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288739;
-	bh=oMT2R2Foa4wOad4EX6fd1c+6fMvn1/GgbHWxdd1bEX8=;
+	s=korg; t=1681288742;
+	bh=TDO5TQ6ii7fPaHPtpP2/5DXA1bNXZKwWQSj7gwuRUGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQzWJz8Y5IQ5kWeTbTmzgwZFdfQHs3jZgNVqrjq2C1dDz2lrqmaiGR7mYVrf/Myd7
-	 Kw19J5dN0kZody9ZngJYkPJ+cUtnylbqNFnb8FtPAHHRKVpXwQ7iQUvfWitCjNPmiT
-	 3udQe2aXpJAL1JIw8/Scpq+hWnNkKvBW2ZfAd0E4=
+	b=Cyye0BxIvDgDqkmD/P6PSs2+8XouHOuvw+Hz1OMTayvz1BiTUFOhGSzSfDXpMGdUJ
+	 ZOoKYMLfVqN9m9J1G1SfeZmaMfAMHRXJjLYw45Ea9GeNdsEIwMhhYAloaF0/p4C3T3
+	 LC62yURm8vQ5OasxOoR/+T7fqgeQ90+pX1t2diFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alistair Popple <apopple@nvidia.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Christoph Hellwig <hch@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 93/93] mm: take a page reference when removing device exclusive entries
-Date: Wed, 12 Apr 2023 10:34:34 +0200
-Message-Id: <20230412082827.068122936@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Thorsten Leemhuis <regressions@leemhuis.info>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 85/93] tracing: Free error logs of tracing instances
+Date: Wed, 12 Apr 2023 10:34:26 +0200
+Message-Id: <20230412082826.755058106@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -39,84 +40,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alistair Popple <apopple@nvidia.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 7c7b962938ddda6a9cd095de557ee5250706ea88 upstream.
+commit 3357c6e429643231e60447b52ffbb7ac895aca22 upstream.
 
-Device exclusive page table entries are used to prevent CPU access to a
-page whilst it is being accessed from a device.  Typically this is used to
-implement atomic operations when the underlying bus does not support
-atomic access.  When a CPU thread encounters a device exclusive entry it
-locks the page and restores the original entry after calling mmu notifiers
-to signal drivers that exclusive access is no longer available.
+When a tracing instance is removed, the error messages that hold errors
+that occurred in the instance needs to be freed. The following reports a
+memory leak:
 
-The device exclusive entry holds a reference to the page making it safe to
-access the struct page whilst the entry is present.  However the fault
-handling code does not hold the PTL when taking the page lock.  This means
-if there are multiple threads faulting concurrently on the device
-exclusive entry one will remove the entry whilst others will wait on the
-page lock without holding a reference.
+ # cd /sys/kernel/tracing
+ # mkdir instances/foo
+ # echo 'hist:keys=x' > instances/foo/events/sched/sched_switch/trigger
+ # cat instances/foo/error_log
+ [  117.404795] hist:sched:sched_switch: error: Couldn't find field
+   Command: hist:keys=x
+                      ^
+ # rmdir instances/foo
 
-This can lead to threads locking or waiting on a folio with a zero
-refcount.  Whilst mmap_lock prevents the pages getting freed via munmap()
-they may still be freed by a migration.  This leads to warnings such as
-PAGE_FLAGS_CHECK_AT_FREE due to the page being locked when the refcount
-drops to zero.
+Then check for memory leaks:
 
-Fix this by trying to take a reference on the folio before locking it.
-The code already checks the PTE under the PTL and aborts if the entry is
-no longer there.  It is also possible the folio has been unmapped, freed
-and re-allocated allowing a reference to be taken on an unrelated folio.
-This case is also detected by the PTE check and the folio is unlocked
-without further changes.
+ # echo scan > /sys/kernel/debug/kmemleak
+ # cat /sys/kernel/debug/kmemleak
+unreferenced object 0xffff88810d8ec700 (size 192):
+  comm "bash", pid 869, jiffies 4294950577 (age 215.752s)
+  hex dump (first 32 bytes):
+    60 dd 68 61 81 88 ff ff 60 dd 68 61 81 88 ff ff  `.ha....`.ha....
+    a0 30 8c 83 ff ff ff ff 26 00 0a 00 00 00 00 00  .0......&.......
+  backtrace:
+    [<00000000dae26536>] kmalloc_trace+0x2a/0xa0
+    [<00000000b2938940>] tracing_log_err+0x277/0x2e0
+    [<000000004a0e1b07>] parse_atom+0x966/0xb40
+    [<0000000023b24337>] parse_expr+0x5f3/0xdb0
+    [<00000000594ad074>] event_hist_trigger_parse+0x27f8/0x3560
+    [<00000000293a9645>] trigger_process_regex+0x135/0x1a0
+    [<000000005c22b4f2>] event_trigger_write+0x87/0xf0
+    [<000000002cadc509>] vfs_write+0x162/0x670
+    [<0000000059c3b9be>] ksys_write+0xca/0x170
+    [<00000000f1cddc00>] do_syscall_64+0x3e/0xc0
+    [<00000000868ac68c>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
+unreferenced object 0xffff888170c35a00 (size 32):
+  comm "bash", pid 869, jiffies 4294950577 (age 215.752s)
+  hex dump (first 32 bytes):
+    0a 20 20 43 6f 6d 6d 61 6e 64 3a 20 68 69 73 74  .  Command: hist
+    3a 6b 65 79 73 3d 78 0a 00 00 00 00 00 00 00 00  :keys=x.........
+  backtrace:
+    [<000000006a747de5>] __kmalloc+0x4d/0x160
+    [<000000000039df5f>] tracing_log_err+0x29b/0x2e0
+    [<000000004a0e1b07>] parse_atom+0x966/0xb40
+    [<0000000023b24337>] parse_expr+0x5f3/0xdb0
+    [<00000000594ad074>] event_hist_trigger_parse+0x27f8/0x3560
+    [<00000000293a9645>] trigger_process_regex+0x135/0x1a0
+    [<000000005c22b4f2>] event_trigger_write+0x87/0xf0
+    [<000000002cadc509>] vfs_write+0x162/0x670
+    [<0000000059c3b9be>] ksys_write+0xca/0x170
+    [<00000000f1cddc00>] do_syscall_64+0x3e/0xc0
+    [<00000000868ac68c>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Link: https://lkml.kernel.org/r/20230330012519.804116-1-apopple@nvidia.com
-Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
-Signed-off-by: Alistair Popple <apopple@nvidia.com>
-Reviewed-by: Ralph Campbell <rcampbell@nvidia.com>
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The problem is that the error log needs to be freed when the instance is
+removed.
+
+Link: https://lore.kernel.org/lkml/76134d9f-a5ba-6a0d-37b3-28310b4a1e91@alu.unizg.hr/
+Link: https://lore.kernel.org/linux-trace-kernel/20230404194504.5790b95f@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Eric Biggers <ebiggers@kernel.org>
+Fixes: 2f754e771b1a6 ("tracing: Have the error logs show up in the proper instances")
+Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -3462,8 +3462,21 @@ static vm_fault_t remove_device_exclusiv
- 	struct vm_area_struct *vma = vmf->vma;
- 	struct mmu_notifier_range range;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9416,6 +9416,7 @@ static int __remove_instance(struct trac
+ 	tracefs_remove(tr->dir);
+ 	free_percpu(tr->last_func_repeats);
+ 	free_trace_buffers(tr);
++	clear_tracing_err_log(tr);
  
--	if (!lock_page_or_retry(page, vma->vm_mm, vmf->flags))
-+	/*
-+	 * We need a reference to lock the page because we don't hold
-+	 * the PTL so a racing thread can remove the device-exclusive
-+	 * entry and unmap it. If the page is free the entry must
-+	 * have been removed already. If it happens to have already
-+	 * been re-allocated after being freed all we do is lock and
-+	 * unlock it.
-+	 */
-+	if (!get_page_unless_zero(page))
-+		return 0;
-+
-+	if (!lock_page_or_retry(page, vma->vm_mm, vmf->flags)) {
-+		put_page(page);
- 		return VM_FAULT_RETRY;
-+	}
- 	mmu_notifier_range_init_owner(&range, MMU_NOTIFY_EXCLUSIVE, 0, vma,
- 				vma->vm_mm, vmf->address & PAGE_MASK,
- 				(vmf->address & PAGE_MASK) + PAGE_SIZE, NULL);
-@@ -3476,6 +3489,7 @@ static vm_fault_t remove_device_exclusiv
- 
- 	pte_unmap_unlock(vmf->pte, vmf->ptl);
- 	unlock_page(page);
-+	put_page(page);
- 
- 	mmu_notifier_invalidate_range_end(&range);
- 	return 0;
+ 	for (i = 0; i < tr->nr_topts; i++) {
+ 		kfree(tr->topts[i].topts);
 
 
