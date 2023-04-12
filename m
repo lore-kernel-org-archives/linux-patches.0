@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604222F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C666EC433EF;
-	Wed, 12 Apr 2023 08:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF532F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637FAC433EF;
+	Wed, 12 Apr 2023 08:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289298;
-	bh=Wyy1xiKSfQdxnGCLWtwufagAVjuyCaEo526UYJykz6k=;
+	s=korg; t=1681289300;
+	bh=Nu99zQnar79xY7WfqRSqIYPOTRMBK5F3eom1H8kRIfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cFD03FexT58200tHNidWX6SlBmdn/NMsrKnexO/aRVuTZzUPpW1OnsGs4xGc/Yo9Z
-	 LoTX0+HMddW+TL/2lnduwJ8ZsEGfQOV15C7BUTfas8nKd7vkpMQHCaedccapK8cmRE
-	 A4ylAx2/assLLJYi8gUoILbwNryybRbjUlfv7w3k=
+	b=wSdQd/vJKqh4YI5eTwrMeh+dTPoskzdp7owOUIUqtjetsOY2hqUR6sQ9+zKDhYZLf
+	 pN3SN0SaIlkpPRqof/i2Ts2xk3HdwSjPirmUrBkAMiHMgWYhGiLraGvj9c5vKGalyh
+	 weuPT1jFJcoripD9BhApGO+8a5TGY0iab5cySvQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simei Su <simei.su@intel.com>,
+	Junfeng Guo <junfeng.guo@intel.com>,
+	Lingyu Liu <lingyu.liu@intel.com>,
 	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 045/173] ice: fix wrong fallback logic for FDIR
-Date: Wed, 12 Apr 2023 10:32:51 +0200
-Message-Id: <20230412082839.925565511@linuxfoundation.org>
+Subject: [PATCH 6.2 046/173] ice: Reset FDIR counter in FDIR init stage
+Date: Wed, 12 Apr 2023 10:32:52 +0200
+Message-Id: <20230412082839.967203750@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,57 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simei Su <simei.su@intel.com>
+From: Lingyu Liu <lingyu.liu@intel.com>
 
-[ Upstream commit b4a01ace20f5c93c724abffc0a83ec84f514b98d ]
+[ Upstream commit 83c911dc5e0e8e6eaa6431c06972a8f159bfe2fc ]
 
-When adding a FDIR filter, if ice_vc_fdir_set_irq_ctx returns failure,
-the inserted fdir entry will not be removed and if ice_vc_fdir_write_fltr
-returns failure, the fdir context info for irq handler will not be cleared
-which may lead to inconsistent or memory leak issue. This patch refines
-failure cases to resolve this issue.
+Reset the FDIR counters when FDIR inits. Without this patch,
+when VF initializes or resets, all the FDIR counters are not
+cleaned, which may cause unexpected behaviors for future FDIR
+rule create (e.g., rule conflict).
 
 Fixes: 1f7ea1cd6a37 ("ice: Enable FDIR Configure for AVF")
-Signed-off-by: Simei Su <simei.su@intel.com>
+Signed-off-by: Junfeng Guo <junfeng.guo@intel.com>
+Signed-off-by: Lingyu Liu <lingyu.liu@intel.com>
 Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ .../net/ethernet/intel/ice/ice_virtchnl_fdir.c   | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-index a2645ff3100e4..f4ef76e37098c 100644
+index f4ef76e37098c..7f72604079723 100644
 --- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
 +++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-@@ -1871,7 +1871,7 @@ int ice_vc_add_fdir_fltr(struct ice_vf *vf, u8 *msg)
- 		v_ret = VIRTCHNL_STATUS_SUCCESS;
- 		stat->status = VIRTCHNL_FDIR_FAILURE_RULE_NORESOURCE;
- 		dev_dbg(dev, "VF %d: set FDIR context failed\n", vf->vf_id);
--		goto err_free_conf;
-+		goto err_rem_entry;
+@@ -541,6 +541,21 @@ static void ice_vc_fdir_rem_prof_all(struct ice_vf *vf)
  	}
+ }
  
- 	ret = ice_vc_fdir_write_fltr(vf, conf, true, is_tun);
-@@ -1880,15 +1880,16 @@ int ice_vc_add_fdir_fltr(struct ice_vf *vf, u8 *msg)
- 		stat->status = VIRTCHNL_FDIR_FAILURE_RULE_NORESOURCE;
- 		dev_err(dev, "VF %d: writing FDIR rule failed, ret:%d\n",
- 			vf->vf_id, ret);
--		goto err_rem_entry;
-+		goto err_clr_irq;
- 	}
++/**
++ * ice_vc_fdir_reset_cnt_all - reset all FDIR counters for this VF FDIR
++ * @fdir: pointer to the VF FDIR structure
++ */
++static void ice_vc_fdir_reset_cnt_all(struct ice_vf_fdir *fdir)
++{
++	enum ice_fltr_ptype flow;
++
++	for (flow = ICE_FLTR_PTYPE_NONF_NONE;
++	     flow < ICE_FLTR_PTYPE_MAX; flow++) {
++		fdir->fdir_fltr_cnt[flow][0] = 0;
++		fdir->fdir_fltr_cnt[flow][1] = 0;
++	}
++}
++
+ /**
+  * ice_vc_fdir_has_prof_conflict
+  * @vf: pointer to the VF structure
+@@ -1998,6 +2013,7 @@ void ice_vf_fdir_init(struct ice_vf *vf)
+ 	spin_lock_init(&fdir->ctx_lock);
+ 	fdir->ctx_irq.flags = 0;
+ 	fdir->ctx_done.flags = 0;
++	ice_vc_fdir_reset_cnt_all(fdir);
+ }
  
- exit:
- 	kfree(stat);
- 	return ret;
- 
--err_rem_entry:
-+err_clr_irq:
- 	ice_vc_fdir_clear_irq_ctx(vf);
-+err_rem_entry:
- 	ice_vc_fdir_remove_entry(vf, conf, conf->flow_id);
- err_free_conf:
- 	devm_kfree(dev, conf);
+ /**
 -- 
 2.39.2
 
