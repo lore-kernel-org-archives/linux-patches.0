@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCC52F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:45:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18C3C433D2;
-	Wed, 12 Apr 2023 08:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A622F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:45:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E27DC4339B;
+	Wed, 12 Apr 2023 08:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289109;
-	bh=n4mwNYjy3HalLWOPtetbZlj0HvvnVWiTiTMH8P7M+yI=;
+	s=korg; t=1681289112;
+	bh=nRtfYNe4WbQkl0xaaX7/+XdjN/OF22kpnRePfMNS8XI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hpTfFVg1Qr4+WtuYVGL3rF7EIpZtLzBTYN+pi7wXvNyCy6aFVJgwqNH6cueYWlgTf
-	 B8igW3/T3StuQY52EdXoyXvfbmXuapOegnczpCvA6a+DY4drC5csHTk/s7IiROhuip
-	 OroLZKEw5nCCHaLHXIVD5oQTBrt0uJ0m9IHBZI84=
+	b=XF4ROMn5h7uvmkJj5s7th9s8TzDbz9BfhPxj87phoAfqQ9QpRlDKSW7ZPFgrwUgtH
+	 0BVpr2QRo9Ro37m2KlDY/SQ2uLTuI/efGXpy9DB5blx0updYPe/1Sxn249/IdY6OSv
+	 qSG7yOzhVaHTboTrMmJPGsLjxsxSq1Vq2szZn+e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	David Hildenbrand <david@redhat.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Nadav Amit <nadav.amit@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 139/164] mm/hugetlb: fix uffd wr-protection for CoW optimization path
-Date: Wed, 12 Apr 2023 10:34:21 +0200
-Message-Id: <20230412082842.521876847@linuxfoundation.org>
+	syzbot+8ac3859139c685c4f597@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 113/164] fs: drop peer group ids under namespace lock
+Date: Wed, 12 Apr 2023 10:33:55 +0200
+Message-Id: <20230412082841.416917739@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -41,88 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Xu <peterx@redhat.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 60d5b473d61be61ac315e544fcd6a8234a79500e upstream.
+commit cb2239c198ad9fbd5aced22cf93e45562da781eb upstream.
 
-This patch fixes an issue that a hugetlb uffd-wr-protected mapping can be
-writable even with uffd-wp bit set.  It only happens with hugetlb private
-mappings, when someone firstly wr-protects a missing pte (which will
-install a pte marker), then a write to the same page without any prior
-access to the page.
+When cleaning up peer group ids in the failure path we need to make sure
+to hold on to the namespace lock. Otherwise another thread might just
+turn the mount from a shared into a non-shared mount concurrently.
 
-Userfaultfd-wp trap for hugetlb was implemented in hugetlb_fault() before
-reaching hugetlb_wp() to avoid taking more locks that userfault won't
-need.  However there's one CoW optimization path that can trigger
-hugetlb_wp() inside hugetlb_no_page(), which will bypass the trap.
-
-This patch skips hugetlb_wp() for CoW and retries the fault if uffd-wp bit
-is detected.  The new path will only trigger in the CoW optimization path
-because generic hugetlb_fault() (e.g.  when a present pte was
-wr-protected) will resolve the uffd-wp bit already.  Also make sure
-anonymous UNSHARE won't be affected and can still be resolved, IOW only
-skip CoW not CoR.
-
-This patch will be needed for v5.19+ hence copy stable.
-
-[peterx@redhat.com: v2]
-  Link: https://lkml.kernel.org/r/ZBzOqwF2wrHgBVZb@x1n
-[peterx@redhat.com: v3]
-  Link: https://lkml.kernel.org/r/20230324142620.2344140-1-peterx@redhat.com
-Link: https://lkml.kernel.org/r/20230321191840.1897940-1-peterx@redhat.com
-Fixes: 166f3ecc0daf ("mm/hugetlb: hook page faults for uffd write protection")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reported-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/lkml/00000000000088694505f8132d77@google.com
+Fixes: 2a1867219c7b ("fs: add mount_setattr()")
+Reported-by: syzbot+8ac3859139c685c4f597@syzkaller.appspotmail.com
+Cc: stable@vger.kernel.org # 5.12+
+Message-Id: <20230330-vfs-mount_setattr-propagation-fix-v1-1-37548d91533b@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/namespace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5469,7 +5469,7 @@ static vm_fault_t hugetlb_wp(struct mm_s
- 		       struct page *pagecache_page, spinlock_t *ptl)
- {
- 	const bool unshare = flags & FAULT_FLAG_UNSHARE;
--	pte_t pte;
-+	pte_t pte = huge_ptep_get(ptep);
- 	struct hstate *h = hstate_vma(vma);
- 	struct page *old_page, *new_page;
- 	int outside_reserve = 0;
-@@ -5481,6 +5481,17 @@ static vm_fault_t hugetlb_wp(struct mm_s
- 	VM_BUG_ON(!unshare && !(flags & FOLL_WRITE));
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -4180,9 +4180,9 @@ out:
+ 	unlock_mount_hash();
  
- 	/*
-+	 * Never handle CoW for uffd-wp protected pages.  It should be only
-+	 * handled when the uffd-wp protection is removed.
-+	 *
-+	 * Note that only the CoW optimization path (in hugetlb_no_page())
-+	 * can trigger this, because hugetlb_fault() will always resolve
-+	 * uffd-wp bit first.
-+	 */
-+	if (!unshare && huge_pte_uffd_wp(pte))
-+		return 0;
-+
-+	/*
- 	 * hugetlb does not support FOLL_FORCE-style write faults that keep the
- 	 * PTE mapped R/O such as maybe_mkwrite() would do.
- 	 */
-@@ -5495,7 +5506,6 @@ static vm_fault_t hugetlb_wp(struct mm_s
- 		return 0;
+ 	if (kattr->propagation) {
+-		namespace_unlock();
+ 		if (err)
+ 			cleanup_group_ids(mnt, NULL);
++		namespace_unlock();
  	}
  
--	pte = huge_ptep_get(ptep);
- 	old_page = pte_page(pte);
- 
- 	delayacct_wpcopy_start();
+ 	return err;
 
 
