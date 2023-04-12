@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761A82F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:35:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0300C433D2;
-	Wed, 12 Apr 2023 08:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FAC2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:35:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89393C433EF;
+	Wed, 12 Apr 2023 08:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288540;
-	bh=EbaNhUAeUPnhla0EfDutxBsMW8Rizs4Y6ZQmz1GUCzw=;
+	s=korg; t=1681288542;
+	bh=QRlrZVrRVlY2Bb4V8al69Chpuhw3g4qOcsToB0TgspI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7rUe7PpnCnOOVXmaf4o9X1eko5Hzv3N7ure2OLvtadK7bjajHDcthFEny21TfQ/X
-	 Q+Le4CsGwDGgW5LTQDsZ8aQ/xYYXpdWCLO6uAg09uzKWp3pNMo2uvtnPUDWU8rBwJB
-	 I6CHmRsIWPsQgSkDAlF9nnqRSg7KBPkTfgv08j/I=
+	b=IcudV1Dx+HAQe7GBNcmax0/tdLWC2bTspApCQDylixx0iU5o4L0IgWIi+W7P/9Nzv
+	 caaS+5Omnc02Mpj2yVdxA3865wij7JxCCERIdoYB7/hEga/IDHz26GaBLh6cWyqcv2
+	 woYk1DB6eDxkfItCqQl75AbHe1N3AhTmh79bBmeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Zong Li <zong.li@sifive.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 17/93] iavf/iavf_main: actually log ->src mask when talking about it
-Date: Wed, 12 Apr 2023 10:33:18 +0200
-Message-Id: <20230412082823.771080437@linuxfoundation.org>
+Subject: [PATCH 5.15 02/93] soc: sifive: ccache: determine the cache level from dts
+Date: Wed, 12 Apr 2023 10:33:03 +0200
+Message-Id: <20230412082823.145768544@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -36,38 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Zong Li <zong.li@sifive.com>
 
-[ Upstream commit 6650c8e906ce58404bfdfceceeba7bd10d397d40 ]
+[ Upstream commit 95f196f3212bbc258611c22865aef12b98304e1d ]
 
-This fixes a copy-paste issue where dev_err would log the dst mask even
-though it is clearly talking about src.
+Composable cache could be L2 or L3 cache, use 'cache-level' property of
+device node to determine the level.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
-
-Fixes: 0075fa0fadd0 ("i40evf: Add support to apply cloud filters")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Zong Li <zong.li@sifive.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20220913061817.22564-4-zong.li@sifive.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Stable-dep-of: 73e770f08502 ("soc: sifive: ccache: fix missing iounmap() in error path in sifive_ccache_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/sifive/sifive_ccache.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index bafccf61c654f..3b62f37b3cf14 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -3181,7 +3181,7 @@ static int iavf_parse_cls_flower(struct iavf_adapter *adapter,
- 				field_flags |= IAVF_CLOUD_FIELD_IIP;
- 			} else {
- 				dev_err(&adapter->pdev->dev, "Bad ip src mask 0x%08x\n",
--					be32_to_cpu(match.mask->dst));
-+					be32_to_cpu(match.mask->src));
- 				return -EINVAL;
- 			}
- 		}
+diff --git a/drivers/soc/sifive/sifive_ccache.c b/drivers/soc/sifive/sifive_ccache.c
+index 949b824e89adf..b361b661ea09a 100644
+--- a/drivers/soc/sifive/sifive_ccache.c
++++ b/drivers/soc/sifive/sifive_ccache.c
+@@ -38,6 +38,7 @@
+ static void __iomem *ccache_base;
+ static int g_irq[SIFIVE_CCACHE_MAX_ECCINTR];
+ static struct riscv_cacheinfo_ops ccache_cache_ops;
++static int level;
+ 
+ enum {
+ 	DIR_CORR = 0,
+@@ -144,7 +145,7 @@ static const struct attribute_group *ccache_get_priv_group(struct cacheinfo
+ 							   *this_leaf)
+ {
+ 	/* We want to use private group for composable cache only */
+-	if (this_leaf->level == 2)
++	if (this_leaf->level == level)
+ 		return &priv_attr_group;
+ 	else
+ 		return NULL;
+@@ -215,6 +216,9 @@ static int __init sifive_ccache_init(void)
+ 	if (!ccache_base)
+ 		return -ENOMEM;
+ 
++	if (of_property_read_u32(np, "cache-level", &level))
++		return -ENOENT;
++
+ 	intr_num = of_property_count_u32_elems(np, "interrupts");
+ 	if (!intr_num) {
+ 		pr_err("CCACHE: no interrupts property\n");
 -- 
 2.39.2
 
