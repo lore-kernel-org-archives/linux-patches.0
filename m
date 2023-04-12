@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C472F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCF1C433EF;
-	Wed, 12 Apr 2023 08:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E5A2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71337C433EF;
+	Wed, 12 Apr 2023 08:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288998;
-	bh=Nu44ymle03dOZ7+jAaV71SrqUhCT+O1lzsq1ySYOKDg=;
+	s=korg; t=1681289000;
+	bh=sYd6ICRjhfCK/+Zoza1/9PMmL5WhMZ0xzQHAveKZHDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJie+wHkgyd0G+7LugA/Y5hqSJVy9rr2PVKmdUcSWEuiZ8wbigJXpCBZHFc/hmmWx
-	 i3YHfqILOZJ6uYcAqEbb2REjLBGKleraOse5entIEmKl2OFt20DViIQXBjsaIQ0uQ9
-	 J7mOUVsccbgA2ysOnOnyAe06hb1oQHf/caQ3kv2E=
+	b=IBHofUikqR8kA4dIljh4moYIAo7kqH/WvcWEY7hhNmQ3clEC51PKB3vYohZ23klef
+	 e8YaTFcZggaiA9j2k0184xiAE89QX0RidUTVLH5M/EP2fvaL5zLIhr9JVCkcdh0oFT
+	 ew/veD7fafw3HYs9K5OLrdeGm7x9OuhrPdDmN/7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Clevenger <scclevenger@os.amperecomputing.com>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 6.1 097/164] coresight-etm4: Fix for() loop drvdata->nr_addr_cmp range bug
-Date: Wed, 12 Apr 2023 10:33:39 +0200
-Message-Id: <20230412082840.786756421@linuxfoundation.org>
+	William Breathitt Gray <william.gray@linaro.org>
+Subject: [PATCH 6.1 098/164] counter: 104-quad-8: Fix race condition between FLAG and CNTR reads
+Date: Wed, 12 Apr 2023 10:33:40 +0200
+Message-Id: <20230412082840.822017654@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,33 +33,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve Clevenger <scclevenger@os.amperecomputing.com>
+From: William Breathitt Gray <william.gray@linaro.org>
 
-commit bf84937e882009075f57fd213836256fc65d96bc upstream.
+commit 4aa3b75c74603c3374877d5fd18ad9cc3a9a62ed upstream.
 
-In etm4_enable_hw, fix for() loop range to represent address comparator pairs.
+The Counter (CNTR) register is 24 bits wide, but we can have an
+effective 25-bit count value by setting bit 24 to the XOR of the Borrow
+flag and Carry flag. The flags can be read from the FLAG register, but a
+race condition exists: the Borrow flag and Carry flag are instantaneous
+and could change by the time the count value is read from the CNTR
+register.
 
-Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve Clevenger <scclevenger@os.amperecomputing.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/4a4ee61ce8ef402615a4528b21a051de3444fb7b.1677540079.git.scclevenger@os.amperecomputing.com
+Since the race condition could result in an incorrect 25-bit count
+value, remove support for 25-bit count values from this driver;
+hard-coded maximum count values are replaced by a LS7267_CNTR_MAX define
+for consistency and clarity.
+
+Fixes: 28e5d3bb0325 ("iio: 104-quad-8: Add IIO support for the ACCES 104-QUAD-8")
+Cc: <stable@vger.kernel.org> # 6.1.x
+Cc: <stable@vger.kernel.org> # 6.2.x
+Link: https://lore.kernel.org/r/20230312231554.134858-1-william.gray@linaro.org/
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/counter/104-quad-8.c |   29 ++++++++---------------------
+ 1 file changed, 8 insertions(+), 21 deletions(-)
 
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -451,7 +451,7 @@ static int etm4_enable_hw(struct etmv4_d
- 		if (etm4x_sspcicrn_present(drvdata, i))
- 			etm4x_relaxed_write32(csa, config->ss_pe_cmp[i], TRCSSPCICRn(i));
+--- a/drivers/counter/104-quad-8.c
++++ b/drivers/counter/104-quad-8.c
+@@ -97,10 +97,6 @@ struct quad8 {
+ 	struct quad8_reg __iomem *reg;
+ };
+ 
+-/* Borrow Toggle flip-flop */
+-#define QUAD8_FLAG_BT BIT(0)
+-/* Carry Toggle flip-flop */
+-#define QUAD8_FLAG_CT BIT(1)
+ /* Error flag */
+ #define QUAD8_FLAG_E BIT(4)
+ /* Up/Down flag */
+@@ -133,6 +129,9 @@ struct quad8 {
+ #define QUAD8_CMR_QUADRATURE_X2 0x10
+ #define QUAD8_CMR_QUADRATURE_X4 0x18
+ 
++/* Each Counter is 24 bits wide */
++#define LS7267_CNTR_MAX GENMASK(23, 0)
++
+ static int quad8_signal_read(struct counter_device *counter,
+ 			     struct counter_signal *signal,
+ 			     enum counter_signal_level *level)
+@@ -156,18 +155,10 @@ static int quad8_count_read(struct count
+ {
+ 	struct quad8 *const priv = counter_priv(counter);
+ 	struct channel_reg __iomem *const chan = priv->reg->channel + count->id;
+-	unsigned int flags;
+-	unsigned int borrow;
+-	unsigned int carry;
+ 	unsigned long irqflags;
+ 	int i;
+ 
+-	flags = ioread8(&chan->control);
+-	borrow = flags & QUAD8_FLAG_BT;
+-	carry = !!(flags & QUAD8_FLAG_CT);
+-
+-	/* Borrow XOR Carry effectively doubles count range */
+-	*val = (unsigned long)(borrow ^ carry) << 24;
++	*val = 0;
+ 
+ 	spin_lock_irqsave(&priv->lock, irqflags);
+ 
+@@ -191,8 +182,7 @@ static int quad8_count_write(struct coun
+ 	unsigned long irqflags;
+ 	int i;
+ 
+-	/* Only 24-bit values are supported */
+-	if (val > 0xFFFFFF)
++	if (val > LS7267_CNTR_MAX)
+ 		return -ERANGE;
+ 
+ 	spin_lock_irqsave(&priv->lock, irqflags);
+@@ -806,8 +796,7 @@ static int quad8_count_preset_write(stru
+ 	struct quad8 *const priv = counter_priv(counter);
+ 	unsigned long irqflags;
+ 
+-	/* Only 24-bit values are supported */
+-	if (preset > 0xFFFFFF)
++	if (preset > LS7267_CNTR_MAX)
+ 		return -ERANGE;
+ 
+ 	spin_lock_irqsave(&priv->lock, irqflags);
+@@ -834,8 +823,7 @@ static int quad8_count_ceiling_read(stru
+ 		*ceiling = priv->preset[count->id];
+ 		break;
+ 	default:
+-		/* By default 0x1FFFFFF (25 bits unsigned) is maximum count */
+-		*ceiling = 0x1FFFFFF;
++		*ceiling = LS7267_CNTR_MAX;
+ 		break;
  	}
--	for (i = 0; i < drvdata->nr_addr_cmp; i++) {
-+	for (i = 0; i < drvdata->nr_addr_cmp * 2; i++) {
- 		etm4x_relaxed_write64(csa, config->addr_val[i], TRCACVRn(i));
- 		etm4x_relaxed_write64(csa, config->addr_acc[i], TRCACATRn(i));
- 	}
+ 
+@@ -850,8 +838,7 @@ static int quad8_count_ceiling_write(str
+ 	struct quad8 *const priv = counter_priv(counter);
+ 	unsigned long irqflags;
+ 
+-	/* Only 24-bit values are supported */
+-	if (ceiling > 0xFFFFFF)
++	if (ceiling > LS7267_CNTR_MAX)
+ 		return -ERANGE;
+ 
+ 	spin_lock_irqsave(&priv->lock, irqflags);
 
 
