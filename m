@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CBD2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:42:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CEA0C433EF;
-	Wed, 12 Apr 2023 08:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DAC2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:42:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF07C433D2;
+	Wed, 12 Apr 2023 08:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288974;
-	bh=mm1cFY9I+s94zxmrzYZtzyxo7+VFUsuwGFGCvhrLxTk=;
+	s=korg; t=1681288977;
+	bh=mXPxwdqctaWuvNo3Mr/rvXBuSKg6oqk9IDTnsDFszDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wttYdraUcvexMndr2e/F+DNs2++KjvXizR/Fvcrtl8ZjUXhEKluROc++j7BoGP08h
-	 gAgUUA62X1a+urYF84D9dfDBxE1JqeTVVB3g+FFdhimSJjT55d3Mo4YqjJOXWGNTfj
-	 rjdCt1ZIJDZPbUrcDvXCYTZp72huO1oyN1bk7ZIg=
+	b=W/2Pxbedwi5O6+lxJTWwKVMmOod1ModJsIp0CQlvBVYsu62jM3YiPEpmok5qlEStc
+	 cxgdXqal8TUNz1uVSCq6FgeP+SH93XoLdz/9JUx+4cHjw5jE7tGsr+9Rk2Y8tlH42U
+	 y9yMawAGucqKRK9mxbQ/EuyRxmfbfDJh4suEufW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Chi <andy.chi@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 089/164] ALSA: hda/realtek: fix mute/micmute LEDs for a HP ProBook
-Date: Wed, 12 Apr 2023 10:33:31 +0200
-Message-Id: <20230412082840.492971888@linuxfoundation.org>
+	Miguel Luis <miguel.luis@oracle.com>,
+	Boris Ostrovsky <boris.ovstrosky@oracle.com>,
+	Eric DeVolder <eric.devolder@oracle.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	David R <david@unsolicited.net>,
+	stable@kernel.org
+Subject: [PATCH 6.1 090/164] x86/acpi/boot: Correct acpi_is_processor_usable() check
+Date: Wed, 12 Apr 2023 10:33:32 +0200
+Message-Id: <20230412082840.540377628@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -34,32 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Chi <andy.chi@canonical.com>
+From: Eric DeVolder <eric.devolder@oracle.com>
 
-commit 9fdc1605c504204e0fdec7892b29c916579e06f3 upstream.
+commit fed8d8773b8ea68ad99d9eee8c8343bef9da2c2c upstream.
 
-There is a HP ProBook which using ALC236 codec and need the
-ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk to make mute LED and
-micmute LED work.
+The logic in acpi_is_processor_usable() requires the online capable
+bit be set for hotpluggable CPUs.  The online capable bit has been
+introduced in ACPI 6.3.
 
-Signed-off-by: Andy Chi <andy.chi@canonical.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230331083242.58416-1-andy.chi@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+However, for ACPI revisions < 6.3 which do not support that bit, CPUs
+should be reported as usable, not the other way around.
+
+Reverse the check.
+
+  [ bp: Rewrite commit message. ]
+
+Fixes: e2869bd7af60 ("x86/acpi/boot: Do not register processors that cannot be onlined for x2APIC")
+Suggested-by: Miguel Luis <miguel.luis@oracle.com>
+Suggested-by: Boris Ostrovsky <boris.ovstrosky@oracle.com>
+Signed-off-by: Eric DeVolder <eric.devolder@oracle.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: David R <david@unsolicited.net>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230327191026.3454-2-eric.devolder@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/acpi/boot.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9443,6 +9443,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8b47, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b5d, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x8b66, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b7a, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b7d, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b87, "HP", ALC236_FIXUP_HP_GPIO_LED),
+--- a/arch/x86/kernel/acpi/boot.c
++++ b/arch/x86/kernel/acpi/boot.c
+@@ -193,7 +193,8 @@ static bool __init acpi_is_processor_usa
+ 	if (lapic_flags & ACPI_MADT_ENABLED)
+ 		return true;
+ 
+-	if (acpi_support_online_capable && (lapic_flags & ACPI_MADT_ONLINE_CAPABLE))
++	if (!acpi_support_online_capable ||
++	    (lapic_flags & ACPI_MADT_ONLINE_CAPABLE))
+ 		return true;
+ 
+ 	return false;
 
 
