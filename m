@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0022F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116C9C433D2;
-	Wed, 12 Apr 2023 08:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491E02F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A075AC433EF;
+	Wed, 12 Apr 2023 08:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289184;
-	bh=dmmA2nGlB1noaL3zMnmPHrNcgJ0XWaUjQdA29nqoBxE=;
+	s=korg; t=1681289187;
+	bh=rcPR1yzzx+NFOP4b57vj9H7yNsBfGrlEDO8tBhP58zQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ekx7PGz9GMXgHRpfoVKeqXN3ldw6CAHGLOMA9A9G1+9Y9rZYEaD+Xp1WwawZkK0vC
-	 o2xyjEf7On3Secx7UxLzt5rSDSl+3/VQL7Ve2I3ADFHxU4gtGddL8exVMvyTe/SOzB
-	 uVfvAR+w5F90pDuOmnWyXiaADEMPgEXCzGDFFhCM=
+	b=PydIZ4R6rADrI9SCAjLt6OIwRcycv3sJuspW1b9+zCS5hdhlclBsYShhXAKiO7fzc
+	 R6CvX3UDc3WES9LVcMSutKWdBFVU8hkruupCyzSKnPD2jEEYwWsgxMPqAFSfn8MA1C
+	 Jv2611hcHUkrtRb6JVG+0vs+xilFIEjIo8Lv+D+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>
-Subject: [PATCH 6.1 147/164] drm/i915/dp_mst: Fix payload removal during output disabling
-Date: Wed, 12 Apr 2023 10:34:29 +0200
-Message-Id: <20230412082842.857622548@linuxfoundation.org>
+	Amit Pundir <amit.pundir@linaro.org>,
+	Robert Foss <robert.foss@linaro.org>
+Subject: [PATCH 6.1 148/164] drm/bridge: lt9611: Fix PLL being unable to lock
+Date: Wed, 12 Apr 2023 10:34:30 +0200
+Message-Id: <20230412082842.899008389@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -38,80 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Imre Deak <imre.deak@intel.com>
+From: Robert Foss <robert.foss@linaro.org>
 
-commit eb50912ec931913e70640cecf75cb993fd26995f upstream.
+commit 2a9df204be0bbb896e087f00b9ee3fc559d5a608 upstream.
 
-Use the correct old/new topology and payload states in
-intel_mst_disable_dp(). So far drm_atomic_get_mst_topology_state() it
-used returned either the old state, in case the state was added already
-earlier during the atomic check phase or otherwise the new state (but
-the latter could fail, which can't be handled in the enable/disable
-hooks). After the first patch in the patchset, the state should always
-get added already during the check phase, so here we can get the
-old/new states without a failure.
+This fixes PLL being unable to lock, and is derived from an equivalent
+downstream commit.
 
-drm_dp_remove_payload() should use time_slots from the old payload state
-and vc_start_slot in the new one. It should update the new payload
-states to reflect the sink's current payload table after the payload is
-removed. Pass the new topology state and the old and new payload states
-accordingly.
+Available LT9611 documentation does not list this register, neither does
+LT9611UXC (which is a different chip).
 
-This also fixes a problem where the payload allocations for multiple MST
-streams on the same link got inconsistent after a few commits, as
-during payload removal the old instead of the new payload state got
-updated, so the subsequent enabling sequence and commits used a stale
-payload state.
+This commit has been confirmed to fix HDMI output on DragonBoard 845c.
 
-v2: Constify the old payload state pointer. (Ville)
-
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: stable@vger.kernel.org # 6.1
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Acked-by: Lyude Paul <lyude@redhat.com>
-Acked-by: Daniel Vetter <daniel@ffwll.ch>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230206114856.2665066-4-imre.deak@intel.com
+Suggested-by: Amit Pundir <amit.pundir@linaro.org>
+Reviewed-by: Amit Pundir <amit.pundir@linaro.org>
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221213150304.4189760-1-robert.foss@linaro.org
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp_mst.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt9611.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-@@ -364,10 +364,14 @@ static void intel_mst_disable_dp(struct
- 	struct intel_dp *intel_dp = &dig_port->dp;
- 	struct intel_connector *connector =
- 		to_intel_connector(old_conn_state->connector);
--	struct drm_dp_mst_topology_state *mst_state =
--		drm_atomic_get_mst_topology_state(&state->base, &intel_dp->mst_mgr);
--	struct drm_dp_mst_atomic_payload *payload =
--		drm_atomic_get_mst_payload_state(mst_state, connector->port);
-+	struct drm_dp_mst_topology_state *old_mst_state =
-+		drm_atomic_get_old_mst_topology_state(&state->base, &intel_dp->mst_mgr);
-+	struct drm_dp_mst_topology_state *new_mst_state =
-+		drm_atomic_get_new_mst_topology_state(&state->base, &intel_dp->mst_mgr);
-+	const struct drm_dp_mst_atomic_payload *old_payload =
-+		drm_atomic_get_mst_payload_state(old_mst_state, connector->port);
-+	struct drm_dp_mst_atomic_payload *new_payload =
-+		drm_atomic_get_mst_payload_state(new_mst_state, connector->port);
- 	struct drm_i915_private *i915 = to_i915(connector->base.dev);
+--- a/drivers/gpu/drm/bridge/lontium-lt9611.c
++++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
+@@ -258,6 +258,7 @@ static int lt9611_pll_setup(struct lt961
+ 		{ 0x8126, 0x55 },
+ 		{ 0x8127, 0x66 },
+ 		{ 0x8128, 0x88 },
++		{ 0x812a, 0x20 },
+ 	};
  
- 	drm_dbg_kms(&i915->drm, "active links %d\n",
-@@ -375,8 +379,8 @@ static void intel_mst_disable_dp(struct
- 
- 	intel_hdcp_disable(intel_mst->connector);
- 
--	drm_dp_remove_payload(&intel_dp->mst_mgr, mst_state,
--			      payload, payload);
-+	drm_dp_remove_payload(&intel_dp->mst_mgr, new_mst_state,
-+			      old_payload, new_payload);
- 
- 	intel_audio_codec_disable(encoder, old_crtc_state, old_conn_state);
- }
+ 	regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
 
 
