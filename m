@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061592F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:39:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82581C433EF;
-	Wed, 12 Apr 2023 08:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983592F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:39:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E66C433D2;
+	Wed, 12 Apr 2023 08:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288762;
-	bh=ldw7XbhBb1FduhtV1MrUJHLm5E0vJiafFKpOZ6P+NCM=;
+	s=korg; t=1681288765;
+	bh=NdJIdttaNnPy+/lC6CYgAQwQRlNTxsx9GHiIsy2XfZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G86+7O8MdmCbtZl0yFkpVKbqWTNzWaPiQFhphtVotxJ5JuI5ARlwbmg4e3s/0kOh2
-	 xQNkrhA28WBVvKWG70EpuuMx72o4SB/u23ixPEUuukFS7oH6oAeIALc2XJaxU5CinV
-	 X+kCRoGepbPXH+UFuC0TkuAVPFPQJkqjIynXc5wQ=
+	b=ya2ODr7fM/e4QMTA2otqYy5aEd4hdAy5LvQJQt2QYhONx37bKBVGnN561pb37rabc
+	 fz5a54Xx14Ah5XkO5RBW/S9tEg2HzU39XbryfHY4G3JRupdJQSabbZFWfnhxFCdAbO
+	 UBbcnf9MCWhhrrcDvejJkw1MfBiYWbKp7pEEGHrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <sjb7183@psu.edu>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 83/93] can: j1939: j1939_tp_tx_dat_new(): fix out-of-bounds memory access
-Date: Wed, 12 Apr 2023 10:34:24 +0200
-Message-Id: <20230412082826.657727739@linuxfoundation.org>
+	Joe Thornber <ejt@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/164] dm cache: Add some documentation to dm-cache-background-tracker.h
+Date: Wed, 12 Apr 2023 10:32:03 +0200
+Message-Id: <20230412082836.775989971@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
-References: <20230412082823.045155996@linuxfoundation.org>
+In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
+References: <20230412082836.695875037@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,53 +37,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Joe Thornber <ejt@redhat.com>
 
-commit b45193cb4df556fe6251b285a5ce44046dd36b4a upstream.
+[ Upstream commit 22c40e134c4c7a828ac09d25a5a8597b1e45c031 ]
 
-In the j1939_tp_tx_dat_new() function, an out-of-bounds memory access
-could occur during the memcpy() operation if the size of skb->cb is
-larger than the size of struct j1939_sk_buff_cb. This is because the
-memcpy() operation uses the size of skb->cb, leading to a read beyond
-the struct j1939_sk_buff_cb.
-
-Updated the memcpy() operation to use the size of struct
-j1939_sk_buff_cb instead of the size of skb->cb. This ensures that the
-memcpy() operation only reads the memory within the bounds of struct
-j1939_sk_buff_cb, preventing out-of-bounds memory access.
-
-Additionally, add a BUILD_BUG_ON() to check that the size of skb->cb
-is greater than or equal to the size of struct j1939_sk_buff_cb. This
-ensures that the skb->cb buffer is large enough to hold the
-j1939_sk_buff_cb structure.
-
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Reported-by: Shuangpeng Bai <sjb7183@psu.edu>
-Tested-by: Shuangpeng Bai <sjb7183@psu.edu>
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://groups.google.com/g/syzkaller/c/G_LL-C3plRs/m/-8xCi6dCAgAJ
-Link: https://lore.kernel.org/all/20230404073128.3173900-1-o.rempel@pengutronix.de
-Cc: stable@vger.kernel.org
-[mkl: rephrase commit message]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Joe Thornber <ejt@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Stable-dep-of: f7b58a69fad9 ("dm: fix improper splitting for abnormal bios")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/j1939/transport.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/md/dm-cache-background-tracker.h | 40 ++++++++++++++++++++++--
+ 1 file changed, 37 insertions(+), 3 deletions(-)
 
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -604,7 +604,10 @@ sk_buff *j1939_tp_tx_dat_new(struct j193
- 	/* reserve CAN header */
- 	skb_reserve(skb, offsetof(struct can_frame, data));
+diff --git a/drivers/md/dm-cache-background-tracker.h b/drivers/md/dm-cache-background-tracker.h
+index 27ab90dbc2752..b5056e8275c15 100644
+--- a/drivers/md/dm-cache-background-tracker.h
++++ b/drivers/md/dm-cache-background-tracker.h
+@@ -12,19 +12,44 @@
  
--	memcpy(skb->cb, re_skcb, sizeof(skb->cb));
-+	/* skb->cb must be large enough to hold a j1939_sk_buff_cb structure */
-+	BUILD_BUG_ON(sizeof(skb->cb) < sizeof(*re_skcb));
+ /*----------------------------------------------------------------*/
+ 
++/*
++ * The cache policy decides what background work should be performed,
++ * such as promotions, demotions and writebacks. The core cache target
++ * is in charge of performing the work, and does so when it sees fit.
++ *
++ * The background_tracker acts as a go between. Keeping track of future
++ * work that the policy has decided upon, and handing (issuing) it to
++ * the core target when requested.
++ *
++ * There is no locking in this, so calls will probably need to be
++ * protected with a spinlock.
++ */
 +
-+	memcpy(skb->cb, re_skcb, sizeof(*re_skcb));
- 	skcb = j1939_skb_to_cb(skb);
- 	if (swap_src_dst)
- 		j1939_skbcb_swap(skcb);
+ struct background_work;
+ struct background_tracker;
+ 
+ /*
+- * FIXME: discuss lack of locking in all methods.
++ * Create a new tracker, it will not be able to queue more than
++ * 'max_work' entries.
+  */
+ struct background_tracker *btracker_create(unsigned max_work);
++
++/*
++ * Destroy the tracker. No issued, but not complete, work should
++ * exist when this is called. It is fine to have queued but unissued
++ * work.
++ */
+ void btracker_destroy(struct background_tracker *b);
+ 
+ unsigned btracker_nr_writebacks_queued(struct background_tracker *b);
+ unsigned btracker_nr_demotions_queued(struct background_tracker *b);
+ 
+ /*
++ * Queue some work within the tracker. 'work' should point to the work
++ * to queue, this will be copied (ownership doesn't pass).  If pwork
++ * is not NULL then it will be set to point to the tracker's internal
++ * copy of the work.
++ *
+  * returns -EINVAL iff the work is already queued.  -ENOMEM if the work
+  * couldn't be queued for another reason.
+  */
+@@ -33,11 +58,20 @@ int btracker_queue(struct background_tracker *b,
+ 		   struct policy_work **pwork);
+ 
+ /*
++ * Hands out the next piece of work to be performed.
+  * Returns -ENODATA if there's no work.
+  */
+ int btracker_issue(struct background_tracker *b, struct policy_work **work);
+-void btracker_complete(struct background_tracker *b,
+-		       struct policy_work *op);
++
++/*
++ * Informs the tracker that the work has been completed and it may forget
++ * about it.
++ */
++void btracker_complete(struct background_tracker *b, struct policy_work *op);
++
++/*
++ * Predicate to see if an origin block is already scheduled for promotion.
++ */
+ bool btracker_promotion_already_present(struct background_tracker *b,
+ 					dm_oblock_t oblock);
+ 
+-- 
+2.39.2
+
 
 
