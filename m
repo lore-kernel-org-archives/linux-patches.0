@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE13B2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:50:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6FBC4339B;
-	Wed, 12 Apr 2023 08:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283C42F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:50:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FD4C433D2;
+	Wed, 12 Apr 2023 08:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289436;
-	bh=qLaI2HZOKZjOQmZjWHIXapXNy83pMiq813rBb64/TnI=;
+	s=korg; t=1681289439;
+	bh=sddEuKU4VUbzVx0wQNn1BnzPMxQ388nNWKkeANiIyi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzL90R8DNtYZK5p41lIPPjTOFsnJCi+K9tWaGrEZYss+wqwTc2GhczBsdFjHzIUiW
-	 9hjZ3TJrtHeiLa+30I7YqQz3SS317hubZJOP9JOkuQUP0LtOyI4H4t9sYufR+rpST/
-	 IBMeJoZCvHAUxK5DK18xYJtMTs26+AYmck2KKv/8=
+	b=pl3GCL6zJzGsH/ozIbkC8R+TJKu8Gtl4b7g7uf0+AHsMF6ci87jUkLmc7SDhJjFfM
+	 x+iurvl57XsikYERRPZf57mxuaO7Ps1mi0NKX5OCk6oVhNMsNlCYGXJ1CdhnExYU3Y
+	 sWpcpSdMN3Jgm3i83jm8/V5uFE1MitUPOWN5Elqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maxim Levitsky <mlevitsk@redhat.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.2 099/173] KVM: x86: Clear "has_error_code", not "error_code", for RM exception injection
-Date: Wed, 12 Apr 2023 10:33:45 +0200
-Message-Id: <20230412082842.071974579@linuxfoundation.org>
+Subject: [PATCH 6.2 100/173] KVM: nVMX: Do not report error code when synthesizing VM-Exit from Real Mode
+Date: Wed, 12 Apr 2023 10:33:46 +0200
+Message-Id: <20230412082842.119583117@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -37,52 +37,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 6c41468c7c12d74843bb414fc00307ea8a6318c3 upstream.
+commit 80962ec912db56d323883154efc2297473e692cb upstream.
 
-When injecting an exception into a vCPU in Real Mode, suppress the error
-code by clearing the flag that tracks whether the error code is valid, not
-by clearing the error code itself.  The "typo" was introduced by recent
-fix for SVM's funky Paged Real Mode.
+Don't report an error code to L1 when synthesizing a nested VM-Exit and
+L2 is in Real Mode.  Per Intel's SDM, regarding the error code valid bit:
 
-Opportunistically hoist the logic above the tracepoint so that the trace
-is coherent with respect to what is actually injected (this was also the
-behavior prior to the buggy commit).
+  This bit is always 0 if the VM exit occurred while the logical processor
+  was in real-address mode (CR0.PE=0).
+
+The bug was introduced by a recent fix for AMD's Paged Real Mode, which
+moved the error code suppression from the common "queue exception" path
+to the "inject exception" path, but missed VMX's "synthesize VM-Exit"
+path.
 
 Fixes: b97f07458373 ("KVM: x86: determine if an exception has an error code only when injecting it.")
 Cc: stable@vger.kernel.org
 Cc: Maxim Levitsky <mlevitsk@redhat.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230322143300.2209476-2-seanjc@google.com>
+Message-Id: <20230322143300.2209476-3-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/x86/kvm/vmx/nested.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -9795,13 +9795,20 @@ int kvm_check_nested_events(struct kvm_v
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3873,7 +3873,12 @@ static void nested_vmx_inject_exception_
+ 		exit_qual = 0;
+ 	}
  
- static void kvm_inject_exception(struct kvm_vcpu *vcpu)
- {
+-	if (ex->has_error_code) {
 +	/*
-+	 * Suppress the error code if the vCPU is in Real Mode, as Real Mode
-+	 * exceptions don't report error codes.  The presence of an error code
-+	 * is carried with the exception and only stripped when the exception
-+	 * is injected as intercepted #PF VM-Exits for AMD's Paged Real Mode do
-+	 * report an error code despite the CPU being in Real Mode.
++	 * Unlike AMD's Paged Real Mode, which reports an error code on #PF
++	 * VM-Exits even if the CPU is in Real Mode, Intel VMX never sets the
++	 * "has error code" flags on VM-Exit if the CPU is in Real Mode.
 +	 */
-+	vcpu->arch.exception.has_error_code &= is_protmode(vcpu);
-+
- 	trace_kvm_inj_exception(vcpu->arch.exception.vector,
- 				vcpu->arch.exception.has_error_code,
- 				vcpu->arch.exception.error_code,
- 				vcpu->arch.exception.injected);
- 
--	if (vcpu->arch.exception.error_code && !is_protmode(vcpu))
--		vcpu->arch.exception.error_code = false;
- 	static_call(kvm_x86_inject_exception)(vcpu);
- }
- 
++	if (ex->has_error_code && is_protmode(vcpu)) {
+ 		/*
+ 		 * Intel CPUs do not generate error codes with bits 31:16 set,
+ 		 * and more importantly VMX disallows setting bits 31:16 in the
 
 
