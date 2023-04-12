@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E512F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:41:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B605CC4339B;
-	Wed, 12 Apr 2023 08:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DF02F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:41:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A080C433EF;
+	Wed, 12 Apr 2023 08:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288865;
-	bh=UPSBXQrUPWEfNPDUuAdtUlcZe+56sNgmoQ7r0QlRKkk=;
+	s=korg; t=1681288867;
+	bh=Ys/RNCcDaan94e580LeV2ag4qgEvG4FZkLsFpFSpw0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1GqdmSqRxoDmFi370bu08IXb3K4gADKF/5TIm5mTC4KspoaktFTfxpcAnHszcpt5
-	 RiMZQFuZfiDXyCc8NGLO/7qXKRPPv7TzDFdTpWBISC6cb259SM2PEqbah42uQ91TbE
-	 08h2WtDKNaOg3vFlUlzGTcDWiqQE7u7HPiuldBEg=
+	b=SlMNYVuMEJfzaL4GtGLtWmo8SCZCiAy6t/OD48V0NTMk0IDippJQsluyxb0VdPNLy
+	 Aek8O6wFl5g0Dn3ORWnKOlaZtt91/2vhT6i9ZvXUs5VR4WQVbSNe/cPn6ExAi0xbvW
+	 SbLhSGHMkSlqWUsDJEax4uUSYXCL8/ci2EDzB3I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Munehisa Kamata <kamatam@amazon.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/164] pwm: meson: Explicitly set .polarity in .get_state()
-Date: Wed, 12 Apr 2023 10:32:19 +0200
-Message-Id: <20230412082837.603495379@linuxfoundation.org>
+Subject: [PATCH 6.1 018/164] ASoC: codecs: lpass: fix the order or clks turn off during suspend
+Date: Wed, 12 Apr 2023 10:32:20 +0200
+Message-Id: <20230412082837.650168325@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -37,62 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 8caa81eb950cb2e9d2d6959b37d853162d197f57 ]
+[ Upstream commit a4a3203426f4b67535d6442ddc5dca8878a0678f ]
 
-The driver only supports normal polarity. Complete the implementation of
-.get_state() by setting .polarity accordingly.
+The order in which clocks are stopped matters as some of the clock
+like NPL are derived from MCLK.
 
-This fixes a regression that was possible since commit c73a3107624d
-("pwm: Handle .get_state() failures") which stopped to zero-initialize
-the state passed to the .get_state() callback. This was reported at
-https://forum.odroid.com/viewtopic.php?f=177&t=46360 . While this was an
-unintended side effect, the real issue is the driver's callback not
-setting the polarity.
+Without this patch, Dragonboard RB5 DSP would crash with below error:
+ qcom_q6v5_pas 17300000.remoteproc: fatal error received:
+ ABT_dal.c:278:ABTimeout: AHB Bus hang is detected,
+ Number of bus hang detected := 2 , addr0 = 0x3370000 , addr1 = 0x0!!!
 
-There is a complicating fact, that the .apply() callback fakes support
-for inversed polarity. This is not (and cannot) be matched by
-.get_state(). As fixing this isn't easy, only point it out in a comment
-to prevent authors of other drivers from copying that approach.
+Turn off  fsgen first, followed by npl and then finally mclk, which is exactly
+the opposite order of enable sequence.
 
-Fixes: c375bcbaabdb ("pwm: meson: Read the full hardware state in meson_pwm_get_state()")
-Reported-by: Munehisa Kamata <kamatam@amazon.com>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20230310191405.2606296-1-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 1dc3459009c3 ("ASoC: codecs: lpass: register mclk after runtime pm")
+Reported-by: Amit Pundir <amit.pundir@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
+Link: https://lore.kernel.org/r/20230323110125.23790-1-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-meson.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/codecs/lpass-rx-macro.c  | 4 ++--
+ sound/soc/codecs/lpass-tx-macro.c  | 4 ++--
+ sound/soc/codecs/lpass-wsa-macro.c | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pwm/pwm-meson.c b/drivers/pwm/pwm-meson.c
-index 16d79ca5d8f53..5cd7b90872c62 100644
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -162,6 +162,12 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
- 	duty = state->duty_cycle;
- 	period = state->period;
+diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
+index 8621cfabcf5b6..1639f3b66facb 100644
+--- a/sound/soc/codecs/lpass-rx-macro.c
++++ b/sound/soc/codecs/lpass-rx-macro.c
+@@ -3667,9 +3667,9 @@ static int __maybe_unused rx_macro_runtime_suspend(struct device *dev)
+ 	regcache_cache_only(rx->regmap, true);
+ 	regcache_mark_dirty(rx->regmap);
  
-+	/*
-+	 * Note this is wrong. The result is an output wave that isn't really
-+	 * inverted and so is wrongly identified by .get_state as normal.
-+	 * Fixing this needs some care however as some machines might rely on
-+	 * this.
-+	 */
- 	if (state->polarity == PWM_POLARITY_INVERSED)
- 		duty = period - duty;
+-	clk_disable_unprepare(rx->mclk);
+-	clk_disable_unprepare(rx->npl);
+ 	clk_disable_unprepare(rx->fsgen);
++	clk_disable_unprepare(rx->npl);
++	clk_disable_unprepare(rx->mclk);
  
-@@ -358,6 +364,8 @@ static int meson_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
- 		state->duty_cycle = 0;
- 	}
- 
-+	state->polarity = PWM_POLARITY_NORMAL;
-+
  	return 0;
  }
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index e5611f655beda..d1d9d8d2df2d2 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -1946,9 +1946,9 @@ static int __maybe_unused tx_macro_runtime_suspend(struct device *dev)
+ 	regcache_cache_only(tx->regmap, true);
+ 	regcache_mark_dirty(tx->regmap);
  
+-	clk_disable_unprepare(tx->mclk);
+-	clk_disable_unprepare(tx->npl);
+ 	clk_disable_unprepare(tx->fsgen);
++	clk_disable_unprepare(tx->npl);
++	clk_disable_unprepare(tx->mclk);
+ 
+ 	return 0;
+ }
+diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
+index c012033fb69ed..8ed48c86ccb33 100644
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -2502,9 +2502,9 @@ static int __maybe_unused wsa_macro_runtime_suspend(struct device *dev)
+ 	regcache_cache_only(wsa->regmap, true);
+ 	regcache_mark_dirty(wsa->regmap);
+ 
+-	clk_disable_unprepare(wsa->mclk);
+-	clk_disable_unprepare(wsa->npl);
+ 	clk_disable_unprepare(wsa->fsgen);
++	clk_disable_unprepare(wsa->npl);
++	clk_disable_unprepare(wsa->mclk);
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
