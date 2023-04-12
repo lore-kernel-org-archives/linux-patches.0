@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631DB2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA8FC433EF;
-	Wed, 12 Apr 2023 08:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08A92F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B76C433D2;
+	Wed, 12 Apr 2023 08:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288661;
-	bh=4rz2/nTlYA9K4x8eMsrsFRbbZGQTjgndnyQbbnkhsIU=;
+	s=korg; t=1681288663;
+	bh=1pIiuaRW/ZLvmtgtW4ZAz0fWnge673yIkuLpnR+3NKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Db3UGABo94AYQEwmXsvpibW+CLMxG6JmxeQJ4FcOj7SqgAJtz4aeAKIybNDJSUK+u
-	 bhUAhfljQWOA+aqqBmGxZ5LBQ2XhVmsJLgHKrYlPUzOOSlxGHUCCeiiRR+6VXYpvAQ
-	 /m95lJV+Elt/1LiB2ZQyRSTNMas4jGrQj0qUk6iA=
+	b=kDE8Icb43ltWpWjT+fzQ3MDw73Q2ZY9FNS9tvbWRzOkfZUQr1rcrXLyYmgybjq4sG
+	 CacNLymMQEmtQ36j2pQSU7vkt5NTN7PV6WgCBRpwtc24CRGrYZbNwkpof57ziPCaXF
+	 5ywCbpHczABKkBAxoYOHwW33RAg3rLVJN3tdRU7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Biju Das <biju.das.jz@bp.renesas.com>
-Subject: [PATCH 5.15 63/93] tty: serial: sh-sci: Fix transmit end interrupt handler
-Date: Wed, 12 Apr 2023 10:34:04 +0200
-Message-Id: <20230412082825.786792240@linuxfoundation.org>
+Subject: [PATCH 5.15 64/93] tty: serial: sh-sci: Fix Rx on RZ/G2L SCI
+Date: Wed, 12 Apr 2023 10:34:05 +0200
+Message-Id: <20230412082825.818152675@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -37,45 +35,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit b43a18647f03c87e77d50d6fe74904b61b96323e upstream.
+commit f92ed0cd9328aed918ebb0ebb64d259eccbcc6e7 upstream.
 
-The fourth interrupt on SCI port is transmit end interrupt compared to
-the break interrupt on other port types. So, shuffle the interrupts to fix
-the transmit end interrupt handler.
+SCI IP on RZ/G2L alike SoCs do not need regshift compared to other SCI
+IPs on the SH platform. Currently, it does regshift and configuring Rx
+wrongly. Drop adding regshift for RZ/G2L alike SoCs.
 
-Fixes: e1d0be616186 ("sh-sci: Add h8300 SCI")
-Cc: stable <stable@kernel.org>
-Suggested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: dfc80387aefb ("serial: sh-sci: Compute the regshift value for SCI ports")
+Cc: stable@vger.kernel.org
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20230317150403.154094-1-biju.das.jz@bp.renesas.com
+Link: https://lore.kernel.org/r/20230321114753.75038-3-biju.das.jz@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/tty/serial/sh-sci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/tty/serial/sh-sci.c
 +++ b/drivers/tty/serial/sh-sci.c
-@@ -31,6 +31,7 @@
- #include <linux/ioport.h>
- #include <linux/ktime.h>
- #include <linux/major.h>
-+#include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/mm.h>
- #include <linux/of.h>
-@@ -2895,6 +2896,13 @@ static int sci_init_single(struct platfo
- 			sci_port->irqs[i] = platform_get_irq(dev, i);
- 	}
+@@ -2968,7 +2968,7 @@ static int sci_init_single(struct platfo
+ 	port->flags		= UPF_FIXED_PORT | UPF_BOOT_AUTOCONF | p->flags;
+ 	port->fifosize		= sci_port->params->fifosize;
  
-+	/*
-+	 * The fourth interrupt on SCI port is transmit end interrupt, so
-+	 * shuffle the interrupts.
-+	 */
-+	if (p->type == PORT_SCI)
-+		swap(sci_port->irqs[SCIx_BRI_IRQ], sci_port->irqs[SCIx_TEI_IRQ]);
-+
- 	/* The SCI generates several interrupts. They can be muxed together or
- 	 * connected to different interrupt lines. In the muxed case only one
- 	 * interrupt resource is specified as there is only one interrupt ID.
+-	if (port->type == PORT_SCI) {
++	if (port->type == PORT_SCI && !dev->dev.of_node) {
+ 		if (sci_port->reg_size >= 0x20)
+ 			port->regshift = 2;
+ 		else
 
 
