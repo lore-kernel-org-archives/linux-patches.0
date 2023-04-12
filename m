@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7B72F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:49:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2379CC433EF;
-	Wed, 12 Apr 2023 08:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD122F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:49:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA198C4339B;
+	Wed, 12 Apr 2023 08:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289347;
-	bh=8yvw5nfTbRF0oJZP2vUQoe80x2q+tz0LWnS0w2/oPjA=;
+	s=korg; t=1681289350;
+	bh=jt+VKwPlE5zDAyCCCYF9J1iVwPrU6UANaCUz928spFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpBBNwv6Wbzsjml562hUhlms+Qr04R1tDBL/jLKtc/jJGHysRHlduiBzmiKpq3KG2
-	 or4P+mWbXSTkOuQC5WUxShywEjYJh5vFM2tyOw5zbcNWHJyWoT1XuoL99sV096Aznm
-	 uYHNrxdbODcyWIE1xICQt7HeqJKgcTfeo7byRecI=
+	b=BZeszJGG/BYq/dOL9OIyieZqgZ8tk45zSwjYhSq9wSNY+FXoDYTSDefyJfP6hkvYv
+	 3VSDjITdcS7Cx/lt2WI5qYNZuP872MPF4Sfl0rr7iQaJiTWG8TbNAiG4G9UoR+x3Ns
+	 LNSKcedVQfK+NDC6ej9aaM4jPbUiFqRfZ3YA2g6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>
-Subject: [PATCH 6.2 065/173] usb: cdnsp: Fixes error: uninitialized symbol len
-Date: Wed, 12 Apr 2023 10:33:11 +0200
-Message-Id: <20230412082840.706949384@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.2 066/173] usb: dwc3: pci: add support for the Intel Meteor Lake-S
+Date: Wed, 12 Apr 2023 10:33:12 +0200
+Message-Id: <20230412082840.736720353@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -33,43 +33,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 1edf48991a783d00a3a18dc0d27c88139e4030a2 upstream.
+commit ec799c8a92e0be91e0940cc739a27f483242df65 upstream.
 
-The patch 5bc38d33a5a1: "usb: cdnsp: Fixes issue with redundant
-Status Stage" leads to the following Smatch static checker warning:
+This patch adds the necessary PCI ID for Intel Meteor Lake-S
+devices.
 
-  drivers/usb/cdns3/cdnsp-ep0.c:470 cdnsp_setup_analyze()
-  error: uninitialized symbol 'len'.
-
-cc: <stable@vger.kernel.org>
-Fixes: 5bc38d33a5a1 ("usb: cdnsp: Fixes issue with redundant Status Stage")
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Link: https://lore.kernel.org/r/20230331090600.454674-1-pawell@cadence.com
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230330150224.89316-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-ep0.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/dwc3/dwc3-pci.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/cdns3/cdnsp-ep0.c
-+++ b/drivers/usb/cdns3/cdnsp-ep0.c
-@@ -414,7 +414,7 @@ static int cdnsp_ep0_std_request(struct
- void cdnsp_setup_analyze(struct cdnsp_device *pdev)
- {
- 	struct usb_ctrlrequest *ctrl = &pdev->setup;
--	int ret = 0;
-+	int ret = -EINVAL;
- 	u16 len;
+--- a/drivers/usb/dwc3/dwc3-pci.c
++++ b/drivers/usb/dwc3/dwc3-pci.c
+@@ -49,6 +49,7 @@
+ #define PCI_DEVICE_ID_INTEL_RPLS		0x7a61
+ #define PCI_DEVICE_ID_INTEL_MTLM		0x7eb1
+ #define PCI_DEVICE_ID_INTEL_MTLP		0x7ec1
++#define PCI_DEVICE_ID_INTEL_MTLS		0x7f6f
+ #define PCI_DEVICE_ID_INTEL_MTL			0x7e7e
+ #define PCI_DEVICE_ID_INTEL_TGL			0x9a15
+ #define PCI_DEVICE_ID_AMD_MR			0x163a
+@@ -474,6 +475,9 @@ static const struct pci_device_id dwc3_p
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_MTLP),
+ 	  (kernel_ulong_t) &dwc3_pci_intel_swnode, },
  
- 	trace_cdnsp_ctrl_req(ctrl);
-@@ -424,7 +424,6 @@ void cdnsp_setup_analyze(struct cdnsp_de
- 
- 	if (pdev->gadget.state == USB_STATE_NOTATTACHED) {
- 		dev_err(pdev->dev, "ERR: Setup detected in unattached state\n");
--		ret = -EINVAL;
- 		goto out;
- 	}
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_MTLS),
++	  (kernel_ulong_t) &dwc3_pci_intel_swnode, },
++
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_MTL),
+ 	  (kernel_ulong_t) &dwc3_pci_intel_swnode, },
  
 
 
