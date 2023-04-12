@@ -1,101 +1,90 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C976121
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 14:48:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1681310880;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+ZFIv/p/zrHXi9Hb3mDpf82IzUDGx965Bpax3jM97+I=;
-	b=NKszh3qtwaXt4iIXO7Cas/6/7wGFBSRbjPx3Lrqvcft427oY5DqX3LVW3v/G2c9e1mREt8
-	cjSbrpCIJMEiq00ntBLn0hNgCjUCUda8tYp5IptPm5O6Om7jI8y4bK9Q2ZgXvfs1jaI1oi
-	QWGIlmUeE03VQ9tw536coqwJsTeoFWU=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-267-SglHw7HQP3idhFgQT1CIDQ-1; Wed, 12 Apr 2023 10:47:59 -0400
-X-MC-Unique: SglHw7HQP3idhFgQT1CIDQ-1
-Received: by mail-qk1-f200.google.com with SMTP id 1-20020a370301000000b0074681bc7f42so5992843qkd.8
-        for <patches@lists.linux.dev>; Wed, 12 Apr 2023 07:47:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E2720EE
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 16:53:18 +0000 (UTC)
+Received: by mail-pj1-f43.google.com with SMTP id c3so13114000pjg.1
+        for <patches@lists.linux.dev>; Wed, 12 Apr 2023 09:53:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681318398; x=1683910398;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=svKE2Vd+mVEPF5FMwXkomHu4DRBlZ0ZAxPOWlhr/OIU=;
+        b=gk0Le4iV1SfVvzyHk2McZLdrmZlTcuC70+BAG9tJx3Dl99K1N6BOKdKc9hYwRtYaaT
+         yuzXMA3xTNfiTHo/6qTW6m5sliFiNSmwYUQtvybF7Q3D8G8Fhf4w09u1K5+/JHmTCD4T
+         aDIIyMy/52dsz77dK9zryhdSAXiKR5/oV3fMHuKnB8RFKY5+6z6zFmnuDD59mYY98u+5
+         AazhxT7lbTpkwxQXHxaYeYU/u2hkz8lJyTv14NdqxNLUtMRu773n0qrd/6ZjbAs4r+og
+         krCn+Cic71gMPA8gmu6H0ARI7JRM1mpSDNG6XyUVa5+ebU2mUexMvzhzFoTlngQeuOKk
+         LuJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681310879; x=1683902879;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z7aoSHBk9B3SuF51OwG6nN2I/gKWPktJ/GEECG1+4VA=;
-        b=EqriTYvGKSjzsjyCqpFseoAClrNbiix7ee20PTNMAqjZFwBEyZYno7g/EgaIjhgHH6
-         0IfcDSekmFJfmPWzNixDIlQb5OF9FFm2R+MW9CIoZ7clRj2L1+GzhCvXSmCsfXwKDKND
-         xolvjdThBdA/kAE6ZSkOyxmXbgtukGzzRGPtfeDny1fqkHWFYvxVvt2/R9vi8BlPYJIg
-         DdmHus0eIWWa436DYw+YdUJw0hXi8xUf3gqe/YhMYGCb9+qDPF3T63oIhLSsp2q7rOIq
-         Jes8SxGLHIDKEHTp79Ll17dk5DbFhkEUFfb67jHH/3s17pv4bYdQ5ibO8LuM4ONIIISN
-         hdxg==
-X-Gm-Message-State: AAQBX9eOMHCSSxVlW1HK6NIuCClPU/5PMMW5DACbBNF2Hr4AGb6aK08E
-	VwEVKq0aTplSzGyCqWrJCTX6Aw5G5rL8MJrZiFWvLZrEjoM5Qy+YMAdUPUOXVmcro6b4sWawrLh
-	o6p1uUsgI0ojlsJfq10L1mQ67g1TVbqiSFHnefHEMJSc/v2YIB4/+sR6yV3L1ypY6GIYAHFdOPU
-	ZK5g==
-X-Received: by 2002:a05:622a:1cb:b0:3e3:824f:45f1 with SMTP id t11-20020a05622a01cb00b003e3824f45f1mr3961277qtw.27.1681310879078;
-        Wed, 12 Apr 2023 07:47:59 -0700 (PDT)
-X-Google-Smtp-Source: AKy350aG1bLmg0WEoDAicV85azZn9oNrATuG6ivlTsH69LgN751j4sEUZ7khp0xPnzerYNinK4cpLA==
-X-Received: by 2002:a05:622a:1cb:b0:3e3:824f:45f1 with SMTP id t11-20020a05622a01cb00b003e3824f45f1mr3961249qtw.27.1681310878775;
-        Wed, 12 Apr 2023 07:47:58 -0700 (PDT)
-Received: from fedora (g2.ign.cz. [91.219.240.8])
-        by smtp.gmail.com with ESMTPSA id d9-20020ac86689000000b003e3910db4f1sm4310584qtp.35.2023.04.12.07.47.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 07:47:58 -0700 (PDT)
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Sean Christopherson
- <seanjc@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jeremi Piotrowski
- <jpiotrowski@linux.microsoft.com>, patches@lists.linux.dev
-Subject: Re: [PATCH 6.2 101/173] KVM: SVM: Flush Hyper-V TLB when required
-In-Reply-To: <CABgObfY3Ly6PeFqQ8uv+s88LX-y7iXLV0HXWQ1H4uSHwqkfwYA@mail.gmail.com>
-References: <20230412082838.125271466@linuxfoundation.org>
- <20230412082842.164450040@linuxfoundation.org> <87jzyhfnza.fsf@redhat.com>
- <ZDa/D5+HjGVuJgdA@google.com>
- <CABgObfY3Ly6PeFqQ8uv+s88LX-y7iXLV0HXWQ1H4uSHwqkfwYA@mail.gmail.com>
-Date: Wed, 12 Apr 2023 16:47:55 +0200
-Message-ID: <87edopf97o.fsf@redhat.com>
+        d=1e100.net; s=20221208; t=1681318398; x=1683910398;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=svKE2Vd+mVEPF5FMwXkomHu4DRBlZ0ZAxPOWlhr/OIU=;
+        b=AC4qJB4i4aD4FyyNWUxILULoqADcXgOdXHXq5s/EQVLlRboIvoMYgjac/pwNiP2fMa
+         NpHYHZ+HhxzzRpGdwMVN6LHxc+kNBpnQfPBs0ZbFyDG1ZIsaLR0OI/p3E2jHPrdORwKM
+         z0KeiCRbpdjAT9s0EUtb8xr06tLeN9rZJKmf57sWZGofOJ9lcMZcmSEbxRgn0TOZ8txh
+         4A7yftJvub3i28lXCoVVvcgsEN4CRg2L1UfcAju+QHl8TSH4j49jrmwp+3G+wmKoQxG3
+         8npuT/jwKwnf8o6ngJmf26E4akjra/cBPFwPKx+iR3OlURsCE7ntvBG9D/o/10r52g8l
+         5FiQ==
+X-Gm-Message-State: AAQBX9d62QxykOkR7WWBil8YcMfp7KL3HX9MUfNA2dhvkZfSyH5bMqTX
+	D2HcCZHK1RBffrwippfoqtE=
+X-Google-Smtp-Source: AKy350YAciQEkRZtVRmlMlv0UthOqCVxofwPzJcsir6JhllD5+o7/Sa5Sg3UPbTrGGwL7kFNOlJIvQ==
+X-Received: by 2002:a17:902:d2cb:b0:1a2:37fc:b591 with SMTP id n11-20020a170902d2cb00b001a237fcb591mr9883195plc.69.1681318398402;
+        Wed, 12 Apr 2023 09:53:18 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id iz15-20020a170902ef8f00b001a1dc2be791sm6718454plb.259.2023.04.12.09.53.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Apr 2023 09:53:17 -0700 (PDT)
+Message-ID: <5d683cd2-c989-c3e5-b55f-cd31aa78c7c8@gmail.com>
+Date: Wed, 12 Apr 2023 09:53:15 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 5.15 00/93] 5.15.107-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230412082823.045155996@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On 4/12/23 01:33, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.107 release.
+> There are 93 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 14 Apr 2023 08:28:02 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.107-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-> On Wed, Apr 12, 2023 at 4:26=E2=80=AFPM Sean Christopherson <seanjc@googl=
-e.com> wrote:
->> There are no functional issues with the fix, and there's no evidence tha=
-t KVM is
->> to blame for the slow L2 boot times when the TDP MMU is enabled.
->>
->> > Jeremi, Sean, do you thing it's still worth it to push this to stable@=
-?
->> > IMO a small patch disabling TDP MMU on Hyper-V would be better for the
->> > time being...
->>
->> Yes, I think it's worth pushing to stable.  The fix is valid even if we =
-end up
->> disabling the TDP MMU on Hyper-V as a workaround.  And the fix is mandat=
-ory if/when
->> the TDP MMU is re-enabled, or if we root cause the boot problem sooner t=
-han later
->> and don't have to resort to disabling the TDP MMU.
->
-> Agreed plus it's a good idea to keep this patch anyway for correctness
-> of kvm-amd.ko. Performance is a separate issue.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-OK, makes sense, without the correctness there's no point in discussing
-performance.
-
---=20
-Vitaly
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
