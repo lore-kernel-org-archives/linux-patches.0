@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA8E2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F08C4339B;
-	Wed, 12 Apr 2023 08:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5782F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1426DC433EF;
+	Wed, 12 Apr 2023 08:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289013;
-	bh=4LXR3GzVJNVTrw2a6OWBwyLQ30AyTCXqbV5i6lZaGUg=;
+	s=korg; t=1681289016;
+	bh=ttKwdByJ6eeroWi/fURXXfWHftS/NU3Ypy5OpLCfu94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nu7t6orI/fVlPe/L5seL5Px6liDNKMLNawnI0y9ZRtQq2uUVPvFZgm2RGalEKEuAW
-	 Cul/+s+IAu/70CXXFTa+WVOeTyxd6pBYRb/AUcu4iw0myKXxkrgrJaj7sixZ8nLgFP
-	 4F/ZiJNfxQ803vMCP1+WFAULhCYsWSkZnCbOyxsA=
+	b=G3V7nWst6RTFkzrk3jM6TEWlwe45nf/eKHpA16wfNTfuEsoVCv5ZNXCXbhudP/54l
+	 sPEUqPCuusF93O++v34YD507Ockz/47a3aZZFqroJEPuN8PtD267NHNaeBb/HtK3eG
+	 R+vAsBzr5pPgznoaPaOnTtZcKdvZLEx7BtQSNs3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Lukowicz <wlukowicz01@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Li Zetao <lizetao1@huawei.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 103/164] io_uring: fix memory leak when removing provided buffers
-Date: Wed, 12 Apr 2023 10:33:45 +0200
-Message-Id: <20230412082840.994467329@linuxfoundation.org>
+Subject: [PATCH 6.1 104/164] scsi: qla2xxx: Fix memory leak in qla2x00_probe_one()
+Date: Wed, 12 Apr 2023 10:33:46 +0200
+Message-Id: <20230412082841.042690784@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,61 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wojciech Lukowicz <wlukowicz01@gmail.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit b4a72c0589fdea6259720375426179888969d6a2 ]
+[ Upstream commit 85ade4010e13ef152ea925c74d94253db92e5428 ]
 
-When removing provided buffers, io_buffer structs are not being disposed
-of, leading to a memory leak. They can't be freed individually, because
-they are allocated in page-sized groups. They need to be added to some
-free list instead, such as io_buffers_cache. All callers already hold
-the lock protecting it, apart from when destroying buffers, so had to
-extend the lock there.
+There is a memory leak reported by kmemleak:
 
-Fixes: cc3cec8367cb ("io_uring: speedup provided buffer handling")
-Signed-off-by: Wojciech Lukowicz <wlukowicz01@gmail.com>
-Link: https://lore.kernel.org/r/20230401195039.404909-2-wlukowicz01@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+  unreferenced object 0xffffc900003f0000 (size 12288):
+    comm "modprobe", pid 19117, jiffies 4299751452 (age 42490.264s)
+    hex dump (first 32 bytes):
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<00000000629261a8>] __vmalloc_node_range+0xe56/0x1110
+      [<0000000001906886>] __vmalloc_node+0xbd/0x150
+      [<000000005bb4dc34>] vmalloc+0x25/0x30
+      [<00000000a2dc1194>] qla2x00_create_host+0x7a0/0xe30 [qla2xxx]
+      [<0000000062b14b47>] qla2x00_probe_one+0x2eb8/0xd160 [qla2xxx]
+      [<00000000641ccc04>] local_pci_probe+0xeb/0x1a0
+
+The root cause is traced to an error-handling path in qla2x00_probe_one()
+when the adapter "base_vha" initialize failed. The fab_scan_rp "scan.l" is
+used to record the port information and it is allocated in
+qla2x00_create_host(). However, it is not released in the error handling
+path "probe_failed".
+
+Fix this by freeing the memory of "scan.l" when an error occurs in the
+adapter initialization process.
+
+Fixes: a4239945b8ad ("scsi: qla2xxx: Add switch command to simplify fabric discovery")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Link: https://lore.kernel.org/r/20230325110004.363898-1-lizetao1@huawei.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 2 +-
- io_uring/kbuf.c     | 5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/scsi/qla2xxx/qla_os.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index ce4969d3e20de..cc35aba1e4957 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2585,8 +2585,8 @@ static __cold void io_ring_ctx_free(struct io_ring_ctx *ctx)
- 	io_eventfd_unregister(ctx);
- 	io_alloc_cache_free(&ctx->apoll_cache, io_apoll_cache_free);
- 	io_alloc_cache_free(&ctx->netmsg_cache, io_netmsg_cache_free);
--	mutex_unlock(&ctx->uring_lock);
- 	io_destroy_buffers(ctx);
-+	mutex_unlock(&ctx->uring_lock);
- 	if (ctx->sq_creds)
- 		put_cred(ctx->sq_creds);
- 	if (ctx->submitter_task)
-diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
-index 9a9db1fcdc14d..acc37e5a6d4e1 100644
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -228,11 +228,14 @@ static int __io_remove_buffers(struct io_ring_ctx *ctx,
- 		return i;
- 	}
- 
-+	/* protects io_buffers_cache */
-+	lockdep_assert_held(&ctx->uring_lock);
-+
- 	while (!list_empty(&bl->buf_list)) {
- 		struct io_buffer *nxt;
- 
- 		nxt = list_first_entry(&bl->buf_list, struct io_buffer, list);
--		list_del(&nxt->list);
-+		list_move(&nxt->list, &ctx->io_buffers_cache);
- 		if (++i == nbufs)
- 			return i;
- 		cond_resched();
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 7d2d872bae3c5..08dc825fbf4f6 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -3608,6 +3608,7 @@ qla2x00_probe_one(struct pci_dev *pdev, const struct pci_device_id *id)
+ probe_failed:
+ 	qla_enode_stop(base_vha);
+ 	qla_edb_stop(base_vha);
++	vfree(base_vha->scan.l);
+ 	if (base_vha->gnl.l) {
+ 		dma_free_coherent(&ha->pdev->dev, base_vha->gnl.size,
+ 				base_vha->gnl.l, base_vha->gnl.ldma);
 -- 
 2.39.2
 
