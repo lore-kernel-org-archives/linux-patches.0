@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CC12F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:53:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C926FC433D2;
-	Wed, 12 Apr 2023 08:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0422F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:53:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA4DC433D2;
+	Wed, 12 Apr 2023 08:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289593;
-	bh=vBBhl3kMZZztSAu0fq6+NjtEI8anSAQfBaropzoIkN0=;
+	s=korg; t=1681289595;
+	bh=R553NeeqXzX/6Dy+1psUqDRfzAFY9v96xArde1rthyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/6qlm1DLkPZ5rJJ61DAIxt24kwCoASjRGthYBIBIdovKhfoxcZcCT5n8oE+8aV83
-	 3ia1VszSVNgawkd1/v+DJRlsWMVqqzpGbvr8ejKiw8pUx4Fg2Lp+brGarEvabgjd4B
-	 bKCOu961F/d34zKTOePHmqit53iI45sTB6Ui5kHU=
+	b=LxhVszrpI3aQjDRQn39WF8TQF7hTRuTAIl4RJthfJpCA+QjQEAQgO4xRIyslA0MB/
+	 RWUnS9nuQyELTP8y0OYUMr0IVRjlenvY8JJCr/KyPQIOlDufB/8lcRLfUVR/MoPKaU
+	 6G2ri7/nPKYUs9nooD5iDPUeN0MNSuAzwPowDqLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>
-Subject: [PATCH 6.2 151/173] ring-buffer: Fix race while reader and writer are on the same page
-Date: Wed, 12 Apr 2023 10:34:37 +0200
-Message-Id: <20230412082844.202983515@linuxfoundation.org>
+	Alistair Popple <apopple@nvidia.com>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.2 160/173] mm: take a page reference when removing device exclusive entries
+Date: Wed, 12 Apr 2023 10:34:46 +0200
+Message-Id: <20230412082844.598782741@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -34,103 +39,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Alistair Popple <apopple@nvidia.com>
 
-commit 6455b6163d8c680366663cdb8c679514d55fc30c upstream.
+commit 7c7b962938ddda6a9cd095de557ee5250706ea88 upstream.
 
-When user reads file 'trace_pipe', kernel keeps printing following logs
-that warn at "cpu_buffer->reader_page->read > rb_page_size(reader)" in
-rb_get_reader_page(). It just looks like there's an infinite loop in
-tracing_read_pipe(). This problem occurs several times on arm64 platform
-when testing v5.10 and below.
+Device exclusive page table entries are used to prevent CPU access to a
+page whilst it is being accessed from a device.  Typically this is used to
+implement atomic operations when the underlying bus does not support
+atomic access.  When a CPU thread encounters a device exclusive entry it
+locks the page and restores the original entry after calling mmu notifiers
+to signal drivers that exclusive access is no longer available.
 
-  Call trace:
-   rb_get_reader_page+0x248/0x1300
-   rb_buffer_peek+0x34/0x160
-   ring_buffer_peek+0xbc/0x224
-   peek_next_entry+0x98/0xbc
-   __find_next_entry+0xc4/0x1c0
-   trace_find_next_entry_inc+0x30/0x94
-   tracing_read_pipe+0x198/0x304
-   vfs_read+0xb4/0x1e0
-   ksys_read+0x74/0x100
-   __arm64_sys_read+0x24/0x30
-   el0_svc_common.constprop.0+0x7c/0x1bc
-   do_el0_svc+0x2c/0x94
-   el0_svc+0x20/0x30
-   el0_sync_handler+0xb0/0xb4
-   el0_sync+0x160/0x180
+The device exclusive entry holds a reference to the page making it safe to
+access the struct page whilst the entry is present.  However the fault
+handling code does not hold the PTL when taking the page lock.  This means
+if there are multiple threads faulting concurrently on the device
+exclusive entry one will remove the entry whilst others will wait on the
+page lock without holding a reference.
 
-Then I dump the vmcore and look into the problematic per_cpu ring_buffer,
-I found that tail_page/commit_page/reader_page are on the same page while
-reader_page->read is obviously abnormal:
-  tail_page == commit_page == reader_page == {
-    .write = 0x100d20,
-    .read = 0x8f9f4805,  // Far greater than 0xd20, obviously abnormal!!!
-    .entries = 0x10004c,
-    .real_end = 0x0,
-    .page = {
-      .time_stamp = 0x857257416af0,
-      .commit = 0xd20,  // This page hasn't been full filled.
-      // .data[0...0xd20] seems normal.
-    }
- }
+This can lead to threads locking or waiting on a folio with a zero
+refcount.  Whilst mmap_lock prevents the pages getting freed via munmap()
+they may still be freed by a migration.  This leads to warnings such as
+PAGE_FLAGS_CHECK_AT_FREE due to the page being locked when the refcount
+drops to zero.
 
-The root cause is most likely the race that reader and writer are on the
-same page while reader saw an event that not fully committed by writer.
+Fix this by trying to take a reference on the folio before locking it.
+The code already checks the PTE under the PTL and aborts if the entry is
+no longer there.  It is also possible the folio has been unmapped, freed
+and re-allocated allowing a reference to be taken on an unrelated folio.
+This case is also detected by the PTE check and the folio is unlocked
+without further changes.
 
-To fix this, add memory barriers to make sure the reader can see the
-content of what is committed. Since commit a0fcaaed0c46 ("ring-buffer: Fix
-race between reset page and reading page") has added the read barrier in
-rb_get_reader_page(), here we just need to add the write barrier.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230325021247.2923907-1-zhengyejian1@huawei.com
-
-Cc: stable@vger.kernel.org
-Fixes: 77ae365eca89 ("ring-buffer: make lockless")
-Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lkml.kernel.org/r/20230330012519.804116-1-apopple@nvidia.com
+Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
+Reviewed-by: Ralph Campbell <rcampbell@nvidia.com>
+Reviewed-by: John Hubbard <jhubbard@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ mm/memory.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -3102,6 +3102,10 @@ rb_set_commit_to_write(struct ring_buffe
- 		if (RB_WARN_ON(cpu_buffer,
- 			       rb_is_reader_page(cpu_buffer->tail_page)))
- 			return;
-+		/*
-+		 * No need for a memory barrier here, as the update
-+		 * of the tail_page did it for this page.
-+		 */
- 		local_set(&cpu_buffer->commit_page->page->commit,
- 			  rb_page_write(cpu_buffer->commit_page));
- 		rb_inc_page(&cpu_buffer->commit_page);
-@@ -3111,6 +3115,8 @@ rb_set_commit_to_write(struct ring_buffe
- 	while (rb_commit_index(cpu_buffer) !=
- 	       rb_page_write(cpu_buffer->commit_page)) {
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3580,8 +3580,21 @@ static vm_fault_t remove_device_exclusiv
+ 	struct vm_area_struct *vma = vmf->vma;
+ 	struct mmu_notifier_range range;
  
-+		/* Make sure the readers see the content of what is committed. */
-+		smp_wmb();
- 		local_set(&cpu_buffer->commit_page->page->commit,
- 			  rb_page_write(cpu_buffer->commit_page));
- 		RB_WARN_ON(cpu_buffer,
-@@ -4688,7 +4694,12 @@ rb_get_reader_page(struct ring_buffer_pe
+-	if (!folio_lock_or_retry(folio, vma->vm_mm, vmf->flags))
++	/*
++	 * We need a reference to lock the folio because we don't hold
++	 * the PTL so a racing thread can remove the device-exclusive
++	 * entry and unmap it. If the folio is free the entry must
++	 * have been removed already. If it happens to have already
++	 * been re-allocated after being freed all we do is lock and
++	 * unlock it.
++	 */
++	if (!folio_try_get(folio))
++		return 0;
++
++	if (!folio_lock_or_retry(folio, vma->vm_mm, vmf->flags)) {
++		folio_put(folio);
+ 		return VM_FAULT_RETRY;
++	}
+ 	mmu_notifier_range_init_owner(&range, MMU_NOTIFY_EXCLUSIVE, 0, vma,
+ 				vma->vm_mm, vmf->address & PAGE_MASK,
+ 				(vmf->address & PAGE_MASK) + PAGE_SIZE, NULL);
+@@ -3594,6 +3607,7 @@ static vm_fault_t remove_device_exclusiv
  
- 	/*
- 	 * Make sure we see any padding after the write update
--	 * (see rb_reset_tail())
-+	 * (see rb_reset_tail()).
-+	 *
-+	 * In addition, a writer may be writing on the reader page
-+	 * if the page has not been fully filled, so the read barrier
-+	 * is also needed to make sure we see the content of what is
-+	 * committed by the writer (see rb_set_commit_to_write()).
- 	 */
- 	smp_rmb();
+ 	pte_unmap_unlock(vmf->pte, vmf->ptl);
+ 	folio_unlock(folio);
++	folio_put(folio);
  
+ 	mmu_notifier_invalidate_range_end(&range);
+ 	return 0;
 
 
