@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6126B2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8AAC433D2;
-	Wed, 12 Apr 2023 08:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B4B2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAD3C433D2;
+	Wed, 12 Apr 2023 08:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288703;
-	bh=qmjZbcL6VUI+7bN9ySIP4mIQ6Ik9bk71S9ipV3KubHE=;
+	s=korg; t=1681288705;
+	bh=z08KnyR2SsuHLbrfY5ErqK5sorxW50UkAmukT7BiUCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqBd4Cfpt+2RmepchuVArZjws2U55vmI5K6XUEMCgZR9/KstFuvLPQ7V51jH6Lu5A
-	 6GQ4FFezI/uhu59qNdGh+hnXdFGfNYlsQ+OfdMt6qkLC9z6GeylEbiH029V0qu16SL
-	 bVezftXCeVVornzzJDkDtKevYBYkOUzeRgMGJW14=
+	b=C9lYvmd/1Mk9T59Lc9VJdB9MZHMgQRBaAlewQSTom4ZODtNRk2HDKexcKKapxchHp
+	 W7dHTbhQGwh+T4SZswamSiO5y5Inw/6zYtrmT69W/SG1q5Nei28p+aXveiI0ZEm+2d
+	 cmy7tcuwm6P2m2LNOCAx3su5ifpNVO/Xy9WHXw6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Thiago Rafael Becker <tbecker@redhat.com>,
-	Steve French <stfrench@microsoft.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zhengjun Xing <zhengjun.xing@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 78/93] cifs: sanitize paths in cifs_update_super_prepath.
-Date: Wed, 12 Apr 2023 10:34:19 +0200
-Message-Id: <20230412082826.423305083@linuxfoundation.org>
+Subject: [PATCH 5.15 79/93] perf/core: Fix the same task check in perf_event_set_output
+Date: Wed, 12 Apr 2023 10:34:20 +0200
+Message-Id: <20230412082826.466079121@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -36,96 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thiago Rafael Becker <tbecker@redhat.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit d19342c6609b67f2ba83b9eccca2777e3687f625 ]
+[ Upstream commit 24d3ae2f37d8bc3c14b31d353c5d27baf582b6a6 ]
 
-After a server reboot, clients are failing to move files with ENOENT.
-This is caused by DFS referrals containing multiple separators, which
-the server move call doesn't recognize.
+The same task check in perf_event_set_output has some potential issues
+for some usages.
 
-v1: Initial patch.
-v2: Move prototype to header.
+For the current perf code, there is a problem if using of
+perf_event_open() to have multiple samples getting into the same mmap’d
+memory when they are both attached to the same process.
+https://lore.kernel.org/all/92645262-D319-4068-9C44-2409EF44888E@gmail.com/
+Because the event->ctx is not ready when the perf_event_set_output() is
+invoked in the perf_event_open().
 
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2182472
-Fixes: a31080899d5f ("cifs: sanitize multiple delimiters in prepath")
-Actually-Fixes: 24e0a1eff9e2 ("cifs: switch to new mount api")
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Thiago Rafael Becker <tbecker@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Besides the above issue, before the commit bd2756811766 ("perf: Rewrite
+core context handling"), perf record can errors out when sampling with
+a hardware event and a software event as below.
+ $ perf record -e cycles,dummy --per-thread ls
+ failed to mmap with 22 (Invalid argument)
+That's because that prior to the commit a hardware event and a software
+event are from different task context.
+
+The problem should be a long time issue since commit c3f00c70276d
+("perk: Separate find_get_context() from event initialization").
+
+The task struct is stored in the event->hw.target for each per-thread
+event. It is a more reliable way to determine whether two events are
+attached to the same task.
+
+The event->hw.target was also introduced several years ago by the
+commit 50f16a8bf9d7 ("perf: Remove type specific target pointers"). It
+can not only be used to fix the issue with the current code, but also
+back port to fix the issues with an older kernel.
+
+Note: The event->hw.target was introduced later than commit
+c3f00c70276d. The patch may cannot be applied between the commit
+c3f00c70276d and commit 50f16a8bf9d7. Anybody that wants to back-port
+this at that period may have to find other solutions.
+
+Fixes: c3f00c70276d ("perf: Separate find_get_context() from event initialization")
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Zhengjun Xing <zhengjun.xing@linux.intel.com>
+Link: https://lkml.kernel.org/r/20230322202449.512091-1-kan.liang@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/fs_context.c | 13 +++++++------
- fs/cifs/fs_context.h |  3 +++
- fs/cifs/misc.c       |  2 +-
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ kernel/events/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/cifs/fs_context.c b/fs/cifs/fs_context.c
-index 85ad0c9e2f8b5..8455db6a26f5a 100644
---- a/fs/cifs/fs_context.c
-+++ b/fs/cifs/fs_context.c
-@@ -437,13 +437,14 @@ int smb3_parse_opt(const char *options, const char *key, char **val)
-  * but there are some bugs that prevent rename from working if there are
-  * multiple delimiters.
-  *
-- * Returns a sanitized duplicate of @path. The caller is responsible for
-- * cleaning up the original.
-+ * Returns a sanitized duplicate of @path. @gfp indicates the GFP_* flags
-+ * for kstrdup.
-+ * The caller is responsible for freeing the original.
-  */
- #define IS_DELIM(c) ((c) == '/' || (c) == '\\')
--static char *sanitize_path(char *path)
-+char *cifs_sanitize_prepath(char *prepath, gfp_t gfp)
- {
--	char *cursor1 = path, *cursor2 = path;
-+	char *cursor1 = prepath, *cursor2 = prepath;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 2cdee62c3de73..dc57835e70966 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -12024,7 +12024,7 @@ perf_event_set_output(struct perf_event *event, struct perf_event *output_event)
+ 	/*
+ 	 * If its not a per-cpu rb, it must be the same task.
+ 	 */
+-	if (output_event->cpu == -1 && output_event->ctx != event->ctx)
++	if (output_event->cpu == -1 && output_event->hw.target != event->hw.target)
+ 		goto out;
  
- 	/* skip all prepended delimiters */
- 	while (IS_DELIM(*cursor1))
-@@ -465,7 +466,7 @@ static char *sanitize_path(char *path)
- 		cursor2--;
- 
- 	*(cursor2) = '\0';
--	return kstrdup(path, GFP_KERNEL);
-+	return kstrdup(prepath, gfp);
- }
- 
- /*
-@@ -527,7 +528,7 @@ smb3_parse_devname(const char *devname, struct smb3_fs_context *ctx)
- 	if (!*pos)
- 		return 0;
- 
--	ctx->prepath = sanitize_path(pos);
-+	ctx->prepath = cifs_sanitize_prepath(pos, GFP_KERNEL);
- 	if (!ctx->prepath)
- 		return -ENOMEM;
- 
-diff --git a/fs/cifs/fs_context.h b/fs/cifs/fs_context.h
-index ad45256cf68e2..3cf8d6235162d 100644
---- a/fs/cifs/fs_context.h
-+++ b/fs/cifs/fs_context.h
-@@ -283,4 +283,7 @@ extern void smb3_update_mnt_flags(struct cifs_sb_info *cifs_sb);
-  */
- #define SMB3_MAX_DCLOSETIMEO (1 << 30)
- #define SMB3_DEF_DCLOSETIMEO (1 * HZ) /* even 1 sec enough to help eg open/write/close/open/read */
-+
-+extern char *cifs_sanitize_prepath(char *prepath, gfp_t gfp);
-+
- #endif
-diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
-index 3a90ee314ed73..300f5f382e43f 100644
---- a/fs/cifs/misc.c
-+++ b/fs/cifs/misc.c
-@@ -1301,7 +1301,7 @@ int cifs_update_super_prepath(struct cifs_sb_info *cifs_sb, char *prefix)
- 	kfree(cifs_sb->prepath);
- 
- 	if (prefix && *prefix) {
--		cifs_sb->prepath = kstrdup(prefix, GFP_ATOMIC);
-+		cifs_sb->prepath = cifs_sanitize_prepath(prefix, GFP_ATOMIC);
- 		if (!cifs_sb->prepath)
- 			return -ENOMEM;
- 
+ 	/*
 -- 
 2.39.2
 
