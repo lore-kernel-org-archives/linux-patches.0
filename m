@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1572F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BDAC433D2;
-	Wed, 12 Apr 2023 08:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01F62F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E9EC4339B;
+	Wed, 12 Apr 2023 08:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289485;
-	bh=eHmIpHBznLPl+BQ3GzuwgCFKE9FGLeADOBYQl3lsYXk=;
+	s=korg; t=1681289488;
+	bh=/Q3UN315pK5M8c06heD37MxopiZUoKNSvu6wWmkTs/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ML/vh5hSQ00JTUDXj58jKZ4D6okDWUQX335qMmNfiy7PafuCacZGY3NHr5IfKIJZ7
-	 vpNQ+FwBkUMwU0GPbzMzifGC9IIrr+L6yosHEYVIb2Cd/Rm5Luu+bYbmiNfIOBIVEa
-	 soIEy537HgJqItWLGlCWxLZwECsDO6msiqfIoN3A=
+	b=wIUMb9W8obKBTeLmWAkElMqJERnDj+mShCJvp1c/sbVp1bCZPOkjUvKMwXxLMrfE5
+	 +FCpIZ/ZFRRsFHEgA5mPNvXXN9qg0vMmxYNXRbGrVsYcEeONcgbwOV97WeC2UWAfcW
+	 uLKTPM1dP3Cp9zk5seRous77sDN6qkp7nBMhs6ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.2 116/173] ACPI: video: Add auto_detect arg to __acpi_video_get_backlight_type()
-Date: Wed, 12 Apr 2023 10:34:02 +0200
-Message-Id: <20230412082842.784066938@linuxfoundation.org>
+Subject: [PATCH 6.2 117/173] ACPI: video: Make acpi_backlight=video work independent from GPU driver
+Date: Wed, 12 Apr 2023 10:34:03 +0200
+Message-Id: <20230412082842.826157314@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -37,18 +37,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-commit 78dfc9d1d1abb9e400386fa9c5724a8f7d75e3b9 upstream.
+commit e506731c8f35699d746c615164ed620cd53c00ca upstream.
 
-Allow callers of __acpi_video_get_backlight_type() to pass a pointer
-to a bool which will get set to false if the backlight-type comes from
-the cmdline or a DMI quirk and set to true if auto-detection was used.
+Commit 3dbc80a3e4c5 ("ACPI: video: Make backlight class device
+registration a separate step (v2)") combined with
+commit 5aa9d943e9b6 ("ACPI: video: Don't enable fallback path for
+creating ACPI backlight by default")
 
-And make __acpi_video_get_backlight_type() non static so that it can
-be called directly outside of video_detect.c .
+Means that the video.ko code now fully depends on the GPU driver calling
+acpi_video_register_backlight() for the acpi_video# backlight class
+devices to get registered.
 
-While at it turn the acpi_video_get_backlight_type() and
-acpi_video_backlight_use_native() wrappers into static inline functions
-in include/acpi/video.h, so that we need to export one less symbol.
+This means that if the GPU driver does not do this, acpi_backlight=video
+on the cmdline, or DMI quirks for selecting acpi_video# will not work.
+
+This is a problem on for example Apple iMac14,1 all-in-ones where
+the monitor's LCD panel shows up as a regular DP connection instead of
+eDP so the GPU driver will not call acpi_video_register_backlight() [1].
+
+Fix this by making video.ko directly register the acpi_video# devices
+when these have been explicitly requested either on the cmdline or
+through DMI quirks (rather then auto-detection being used).
+
+[1] GPU drivers only call acpi_video_register_backlight() when an internal
+panel is detected, to avoid non working acpi_video# devices getting
+registered on desktops which unfortunately is a real issue.
 
 Fixes: 5aa9d943e9b6 ("ACPI: video: Don't enable fallback path for creating ACPI backlight by default")
 Cc: All applicable <stable@vger.kernel.org>
@@ -57,88 +70,41 @@ Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |   21 ++++++++-------------
- include/acpi/video.h        |   15 +++++++++++++--
- 2 files changed, 21 insertions(+), 15 deletions(-)
+ drivers/acpi/acpi_video.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -774,7 +774,7 @@ static bool prefer_native_over_acpi_vide
-  * Determine which type of backlight interface to use on this system,
-  * First check cmdline, then dmi quirks, then do autodetect.
-  */
--static enum acpi_backlight_type __acpi_video_get_backlight_type(bool native)
-+enum acpi_backlight_type __acpi_video_get_backlight_type(bool native, bool *auto_detect)
+--- a/drivers/acpi/acpi_video.c
++++ b/drivers/acpi/acpi_video.c
+@@ -1984,6 +1984,7 @@ static int instance;
+ static int acpi_video_bus_add(struct acpi_device *device)
  {
- 	static DEFINE_MUTEX(init_mutex);
- 	static bool nvidia_wmi_ec_present;
-@@ -799,6 +799,9 @@ static enum acpi_backlight_type __acpi_v
- 		native_available = true;
- 	mutex_unlock(&init_mutex);
+ 	struct acpi_video_bus *video;
++	bool auto_detect;
+ 	int error;
+ 	acpi_status status;
  
-+	if (auto_detect)
-+		*auto_detect = false;
-+
+@@ -2045,10 +2046,20 @@ static int acpi_video_bus_add(struct acp
+ 	mutex_unlock(&video_list_lock);
+ 
  	/*
- 	 * The below heuristics / detection steps are in order of descending
- 	 * presedence. The commandline takes presedence over anything else.
-@@ -810,6 +813,9 @@ static enum acpi_backlight_type __acpi_v
- 	if (acpi_backlight_dmi != acpi_backlight_undef)
- 		return acpi_backlight_dmi;
+-	 * The userspace visible backlight_device gets registered separately
+-	 * from acpi_video_register_backlight().
++	 * If backlight-type auto-detection is used then a native backlight may
++	 * show up later and this may change the result from video to native.
++	 * Therefor normally the userspace visible /sys/class/backlight device
++	 * gets registered separately by the GPU driver calling
++	 * acpi_video_register_backlight() when an internal panel is detected.
++	 * Register the backlight now when not using auto-detection, so that
++	 * when the kernel cmdline or DMI-quirks are used the backlight will
++	 * get registered even if acpi_video_register_backlight() is not called.
+ 	 */
+ 	acpi_video_run_bcl_for_osi(video);
++	if (__acpi_video_get_backlight_type(false, &auto_detect) == acpi_backlight_video &&
++	    !auto_detect)
++		acpi_video_bus_register_backlight(video);
++
+ 	acpi_video_bus_add_notify_handler(video);
  
-+	if (auto_detect)
-+		*auto_detect = true;
-+
- 	/* Special cases such as nvidia_wmi_ec and apple gmux. */
- 	if (nvidia_wmi_ec_present)
- 		return acpi_backlight_nvidia_wmi_ec;
-@@ -829,15 +835,4 @@ static enum acpi_backlight_type __acpi_v
- 	/* No ACPI video/native (old hw), use vendor specific fw methods. */
- 	return acpi_backlight_vendor;
- }
--
--enum acpi_backlight_type acpi_video_get_backlight_type(void)
--{
--	return __acpi_video_get_backlight_type(false);
--}
--EXPORT_SYMBOL(acpi_video_get_backlight_type);
--
--bool acpi_video_backlight_use_native(void)
--{
--	return __acpi_video_get_backlight_type(true) == acpi_backlight_native;
--}
--EXPORT_SYMBOL(acpi_video_backlight_use_native);
-+EXPORT_SYMBOL(__acpi_video_get_backlight_type);
---- a/include/acpi/video.h
-+++ b/include/acpi/video.h
-@@ -59,8 +59,6 @@ extern void acpi_video_unregister(void);
- extern void acpi_video_register_backlight(void);
- extern int acpi_video_get_edid(struct acpi_device *device, int type,
- 			       int device_id, void **edid);
--extern enum acpi_backlight_type acpi_video_get_backlight_type(void);
--extern bool acpi_video_backlight_use_native(void);
- /*
-  * Note: The value returned by acpi_video_handles_brightness_key_presses()
-  * may change over time and should not be cached.
-@@ -69,6 +67,19 @@ extern bool acpi_video_handles_brightnes
- extern int acpi_video_get_levels(struct acpi_device *device,
- 				 struct acpi_video_device_brightness **dev_br,
- 				 int *pmax_level);
-+
-+extern enum acpi_backlight_type __acpi_video_get_backlight_type(bool native,
-+								bool *auto_detect);
-+
-+static inline enum acpi_backlight_type acpi_video_get_backlight_type(void)
-+{
-+	return __acpi_video_get_backlight_type(false, NULL);
-+}
-+
-+static inline bool acpi_video_backlight_use_native(void)
-+{
-+	return __acpi_video_get_backlight_type(true, NULL) == acpi_backlight_native;
-+}
- #else
- static inline void acpi_video_report_nolcd(void) { return; };
- static inline int acpi_video_register(void) { return -ENODEV; }
+ 	return 0;
 
 
