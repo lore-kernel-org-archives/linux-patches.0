@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D141A2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560D7C433D2;
-	Wed, 12 Apr 2023 08:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81A82F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9E5C433EF;
+	Wed, 12 Apr 2023 08:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288642;
-	bh=i26/0FaezUH8GQO0idE4VHfr3p5l7CatSshX/hOoo2Y=;
+	s=korg; t=1681288645;
+	bh=Iaujq5ZepP0bJdDw1IZo/f6laXPJ0p0ecE72PG18934=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iV0M4Y1a3Xy2a01rZW4i+NvX7yKPbp5aENSyoIE8i6OQAAQG363UjLpFCffSKbLtf
-	 FIcvjX6yXNeCGY1FDmwOBQPquCFz2siUaf9D/+expyp4XMXIYr3R0d9sAFD70GphOG
-	 3pgJ8fRfQ13oSiGF7rPpBaqwG7INXeNEglJjkjIA=
+	b=tKiFjYoZWwtCwiN0DLde9EPobIDvwE4gIZNCOH+O6W1lRR4IJ0qYXU58FyGrgN0C5
+	 FoAncWCrqO0sxVq1EkCtIXJUHiXysSx9Fv8xtQ2s5TppCBfPsQX6aPn8z0zIk+48Zw
+	 GZnqsdTn5ePenRLKX6+xi1aelP1izlQRPn7d/4ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Nico Boehr <nrb@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 26/93] pwm: sprd: Explicitly set .polarity in .get_state()
-Date: Wed, 12 Apr 2023 10:33:27 +0200
-Message-Id: <20230412082824.163979870@linuxfoundation.org>
+Subject: [PATCH 5.15 27/93] KVM: s390: pv: fix external interruption loop not always detected
+Date: Wed, 12 Apr 2023 10:33:28 +0200
+Message-Id: <20230412082824.213300033@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -35,34 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Nico Boehr <nrb@linux.ibm.com>
 
-[ Upstream commit 2be4dcf6627e1bcbbef8e6ba1811f5127d39202c ]
+[ Upstream commit 21f27df854008b86349a203bf97fef79bb11f53e ]
 
-The driver only supports normal polarity. Complete the implementation of
-.get_state() by setting .polarity accordingly.
+To determine whether the guest has caused an external interruption loop
+upon code 20 (external interrupt) intercepts, the ext_new_psw needs to
+be inspected to see whether external interrupts are enabled.
 
-Fixes: 8aae4b02e8a6 ("pwm: sprd: Add Spreadtrum PWM support")
-Link: https://lore.kernel.org/r/20230228135508.1798428-5-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Under non-PV, ext_new_psw can simply be taken from guest lowcore. Under
+PV, KVM can only access the encrypted guest lowcore and hence the
+ext_new_psw must not be taken from guest lowcore.
+
+handle_external_interrupt() incorrectly did that and hence was not able
+to reliably tell whether an external interruption loop is happening or
+not. False negatives cause spurious failures of my kvm-unit-test
+for extint loops[1] under PV.
+
+Since code 20 is only caused under PV if and only if the guest's
+ext_new_psw is enabled for external interrupts, false positive detection
+of a external interruption loop can not happen.
+
+Fix this issue by instead looking at the guest PSW in the state
+description. Since the PSW swap for external interrupt is done by the
+ultravisor before the intercept is caused, this reliably tells whether
+the guest is enabled for external interrupts in the ext_new_psw.
+
+Also update the comments to explain better what is happening.
+
+[1] https://lore.kernel.org/kvm/20220812062151.1980937-4-nrb@linux.ibm.com/
+
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Fixes: 201ae986ead7 ("KVM: s390: protvirt: Implement interrupt injection")
+Link: https://lore.kernel.org/r/20230213085520.100756-2-nrb@linux.ibm.com
+Message-Id: <20230213085520.100756-2-nrb@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-sprd.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/kvm/intercept.c | 32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pwm/pwm-sprd.c b/drivers/pwm/pwm-sprd.c
-index 7004f55bbf115..869e696a503f0 100644
---- a/drivers/pwm/pwm-sprd.c
-+++ b/drivers/pwm/pwm-sprd.c
-@@ -109,6 +109,7 @@ static void sprd_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
- 	duty = val & SPRD_PWM_DUTY_MSK;
- 	tmp = (prescale + 1) * NSEC_PER_SEC * duty;
- 	state->duty_cycle = DIV_ROUND_CLOSEST_ULL(tmp, chn->clk_rate);
-+	state->polarity = PWM_POLARITY_NORMAL;
+diff --git a/arch/s390/kvm/intercept.c b/arch/s390/kvm/intercept.c
+index 8ca301f49b305..aeb0e0865e890 100644
+--- a/arch/s390/kvm/intercept.c
++++ b/arch/s390/kvm/intercept.c
+@@ -271,10 +271,18 @@ static int handle_prog(struct kvm_vcpu *vcpu)
+  * handle_external_interrupt - used for external interruption interceptions
+  * @vcpu: virtual cpu
+  *
+- * This interception only occurs if the CPUSTAT_EXT_INT bit was set, or if
+- * the new PSW does not have external interrupts disabled. In the first case,
+- * we've got to deliver the interrupt manually, and in the second case, we
+- * drop to userspace to handle the situation there.
++ * This interception occurs if:
++ * - the CPUSTAT_EXT_INT bit was already set when the external interrupt
++ *   occurred. In this case, the interrupt needs to be injected manually to
++ *   preserve interrupt priority.
++ * - the external new PSW has external interrupts enabled, which will cause an
++ *   interruption loop. We drop to userspace in this case.
++ *
++ * The latter case can be detected by inspecting the external mask bit in the
++ * external new psw.
++ *
++ * Under PV, only the latter case can occur, since interrupt priorities are
++ * handled in the ultravisor.
+  */
+ static int handle_external_interrupt(struct kvm_vcpu *vcpu)
+ {
+@@ -285,10 +293,18 @@ static int handle_external_interrupt(struct kvm_vcpu *vcpu)
  
- 	/* Disable PWM clocks if the PWM channel is not in enable state. */
- 	if (!state->enabled)
+ 	vcpu->stat.exit_external_interrupt++;
+ 
+-	rc = read_guest_lc(vcpu, __LC_EXT_NEW_PSW, &newpsw, sizeof(psw_t));
+-	if (rc)
+-		return rc;
+-	/* We can not handle clock comparator or timer interrupt with bad PSW */
++	if (kvm_s390_pv_cpu_is_protected(vcpu)) {
++		newpsw = vcpu->arch.sie_block->gpsw;
++	} else {
++		rc = read_guest_lc(vcpu, __LC_EXT_NEW_PSW, &newpsw, sizeof(psw_t));
++		if (rc)
++			return rc;
++	}
++
++	/*
++	 * Clock comparator or timer interrupt with external interrupt enabled
++	 * will cause interrupt loop. Drop to userspace.
++	 */
+ 	if ((eic == EXT_IRQ_CLK_COMP || eic == EXT_IRQ_CPU_TIMER) &&
+ 	    (newpsw.mask & PSW_MASK_EXT))
+ 		return -EOPNOTSUPP;
 -- 
 2.39.2
 
