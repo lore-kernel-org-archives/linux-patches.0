@@ -1,27 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6342F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C76C433EF;
-	Wed, 12 Apr 2023 08:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B902F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C192C433D2;
+	Wed, 12 Apr 2023 08:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288629;
-	bh=ibJLtRvzVDuqBrTSutnRzpkUay9rj3n4Cv6LSn6cvxk=;
+	s=korg; t=1681288632;
+	bh=lIuvcA/4kwvCsshIx2xJ2yvivDpd8BcdiRD4swhbUpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eD//9R5wq20T55wc+iZZKTYzw4AmD++2SGPAUoUJ/SR3mhkb9AnoVCZlwRAV/ttK4
-	 Y0y91UN3cSbFM6wdkNKqtEP0fkHgxMzAvcSDMU0ulQnFoj+JGicxgiyVKp5d8Fc96b
-	 dh4zsDG0kqAPdQjMP/eyaiEH/UbJdvL2SHljZH2g=
+	b=nnnw6gToL23yIxAk9eOb/croE7JXilB8qs1204hOCfz0ii1zOJxGSkE0+P+5PJiAG
+	 fI2U8dcY5Iu5iczUzCrEyp7ISUZwM2G7VViwAILb+WxjPOzx79jcIZoN9mE7KYZDF7
+	 d+wWgXtEPFgK4dQTLlnOvpiN7WD85QlRvFPO8cVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shailend Chand <shailend@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tonghao Zhang <tong@infragraf.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Stanislav Fomichev <sdf@google.com>,
+	Hao Luo <haoluo@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 49/93] gve: Secure enough bytes in the first TX desc for all TCP pkts
-Date: Wed, 12 Apr 2023 10:33:50 +0200
-Message-Id: <20230412082825.214283897@linuxfoundation.org>
+Subject: [PATCH 5.15 22/93] bpf: hash map, avoid deadlock with suitable hash mask
+Date: Wed, 12 Apr 2023 10:33:23 +0200
+Message-Id: <20230412082823.993310345@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -35,71 +47,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shailend Chand <shailend@google.com>
+From: Tonghao Zhang <tong@infragraf.org>
 
-[ Upstream commit 3ce9345580974863c060fa32971537996a7b2d57 ]
+[ Upstream commit 9f907439dc80e4a2fcfb949927b36c036468dbb3 ]
 
-Non-GSO TCP packets whose SKBs' linear portion did not include the
-entire TCP header were not populating the first Tx descriptor with
-as many bytes as the vNIC expected. This change ensures that all
-TCP packets populate the first descriptor with the correct number of
-bytes.
+The deadlock still may occur while accessed in NMI and non-NMI
+context. Because in NMI, we still may access the same bucket but with
+different map_locked index.
 
-Fixes: 893ce44df565 ("gve: Add basic driver framework for Compute Engine Virtual NIC")
-Signed-off-by: Shailend Chand <shailend@google.com>
-Link: https://lore.kernel.org/r/20230403172809.2939306-1-shailend@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For example, on the same CPU, .max_entries = 2, we update the hash map,
+with key = 4, while running bpf prog in NMI nmi_handle(), to update
+hash map with key = 20, so it will have the same bucket index but have
+different map_locked index.
+
+To fix this issue, using min mask to hash again.
+
+Fixes: 20b6cc34ea74 ("bpf: Avoid hashtab deadlock with map_locked")
+Signed-off-by: Tonghao Zhang <tong@infragraf.org>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>
+Cc: Song Liu <song@kernel.org>
+Cc: Yonghong Song <yhs@fb.com>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: KP Singh <kpsingh@kernel.org>
+Cc: Stanislav Fomichev <sdf@google.com>
+Cc: Hao Luo <haoluo@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Hou Tao <houtao1@huawei.com>
+Acked-by: Yonghong Song <yhs@fb.com>
+Acked-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20230111092903.92389-1-tong@infragraf.org
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve.h    |  2 ++
- drivers/net/ethernet/google/gve/gve_tx.c | 12 +++++-------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ kernel/bpf/hashtab.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve.h b/drivers/net/ethernet/google/gve/gve.h
-index b1273dce4795b..08f4c0595efae 100644
---- a/drivers/net/ethernet/google/gve/gve.h
-+++ b/drivers/net/ethernet/google/gve/gve.h
-@@ -47,6 +47,8 @@
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index e7f45a966e6b5..10b37773d9e47 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -163,7 +163,7 @@ static inline int htab_lock_bucket(const struct bpf_htab *htab,
+ 	unsigned long flags;
+ 	bool use_raw_lock;
  
- #define GVE_RX_BUFFER_SIZE_DQO 2048
+-	hash = hash & HASHTAB_MAP_LOCK_MASK;
++	hash = hash & min_t(u32, HASHTAB_MAP_LOCK_MASK, htab->n_buckets - 1);
  
-+#define GVE_GQ_TX_MIN_PKT_DESC_BYTES 182
-+
- /* Each slot in the desc ring has a 1:1 mapping to a slot in the data ring */
- struct gve_rx_desc_queue {
- 	struct gve_rx_desc *desc_ring; /* the descriptor ring */
-diff --git a/drivers/net/ethernet/google/gve/gve_tx.c b/drivers/net/ethernet/google/gve/gve_tx.c
-index 9922ce46a6351..43e7b74bdb767 100644
---- a/drivers/net/ethernet/google/gve/gve_tx.c
-+++ b/drivers/net/ethernet/google/gve/gve_tx.c
-@@ -283,8 +283,8 @@ static inline int gve_skb_fifo_bytes_required(struct gve_tx_ring *tx,
- 	int bytes;
- 	int hlen;
+ 	use_raw_lock = htab_use_raw_lock(htab);
+ 	if (use_raw_lock)
+@@ -194,7 +194,7 @@ static inline void htab_unlock_bucket(const struct bpf_htab *htab,
+ {
+ 	bool use_raw_lock = htab_use_raw_lock(htab);
  
--	hlen = skb_is_gso(skb) ? skb_checksum_start_offset(skb) +
--				 tcp_hdrlen(skb) : skb_headlen(skb);
-+	hlen = skb_is_gso(skb) ? skb_checksum_start_offset(skb) + tcp_hdrlen(skb) :
-+				 min_t(int, GVE_GQ_TX_MIN_PKT_DESC_BYTES, skb->len);
- 
- 	pad_bytes = gve_tx_fifo_pad_alloc_one_frag(&tx->tx_fifo,
- 						   hlen);
-@@ -431,13 +431,11 @@ static int gve_tx_add_skb_copy(struct gve_priv *priv, struct gve_tx_ring *tx, st
- 	pkt_desc = &tx->desc[idx];
- 
- 	l4_hdr_offset = skb_checksum_start_offset(skb);
--	/* If the skb is gso, then we want the tcp header in the first segment
--	 * otherwise we want the linear portion of the skb (which will contain
--	 * the checksum because skb->csum_start and skb->csum_offset are given
--	 * relative to skb->head) in the first segment.
-+	/* If the skb is gso, then we want the tcp header alone in the first segment
-+	 * otherwise we want the minimum required by the gVNIC spec.
- 	 */
- 	hlen = is_gso ? l4_hdr_offset + tcp_hdrlen(skb) :
--			skb_headlen(skb);
-+			min_t(int, GVE_GQ_TX_MIN_PKT_DESC_BYTES, skb->len);
- 
- 	info->skb =  skb;
- 	/* We don't want to split the header, so if necessary, pad to the end
+-	hash = hash & HASHTAB_MAP_LOCK_MASK;
++	hash = hash & min_t(u32, HASHTAB_MAP_LOCK_MASK, htab->n_buckets - 1);
+ 	if (use_raw_lock)
+ 		raw_spin_unlock_irqrestore(&b->raw_lock, flags);
+ 	else
 -- 
 2.39.2
 
