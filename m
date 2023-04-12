@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EF42F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CB9C433EF;
-	Wed, 12 Apr 2023 08:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844BA2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:43:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09889C433EF;
+	Wed, 12 Apr 2023 08:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288987;
-	bh=qRnW51CAr4tybE3yzK5UfT/m6IaLRpp8rBezNZ9P2Ms=;
+	s=korg; t=1681288990;
+	bh=iZ9yxT2Xc3z9E5xZeb0E5BX1+xBQycOMYzMy+EJVKJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bX02KK+hji2McX4curzRNfzlE1eVLPjQYYVsy+5vCjOGDiyYGMXN2k8E/ZTvjzwSt
-	 RlzuiuCKY/ZbaCskkxF6be1SSxUmxEep6joaNZyh0EzGJjMfcjdE1DxBX3ViyHcqQZ
-	 ReCgbhUCJRjr63+nhCdRfVhFj1EOQu1freqlQcL8=
+	b=Zxp/0dN8DETbG+tyxK+WU4+dmNpGiOcASIyhvn3YK289x0Ghw36p4tdVhOKNXQCZq
+	 iIZYc81Lf6U8JU51uMLq1vOW0oo3U2TcdUaMKjLxkTiWJCH3lyK2UD320B89j47wh3
+	 oPEQ0/D2ed+XWk9nyww05AVDeIbQPOaaqPbTGhts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muchun Song <songmuchun@bytedance.com>,
+	Marco Elver <elver@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
 	Alexander Potapenko <glider@google.com>,
 	Dmitry Vyukov <dvyukov@google.com>,
 	Jann Horn <jannh@google.com>,
-	Marco Elver <elver@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
 	SeongJae Park <sjpark@amazon.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 094/164] mm: kfence: fix PG_slab and memcg_data clearing
-Date: Wed, 12 Apr 2023 10:33:36 +0200
-Message-Id: <20230412082840.675462099@linuxfoundation.org>
+Subject: [PATCH 6.1 095/164] mm: kfence: fix handling discontiguous page
+Date: Wed, 12 Apr 2023 10:33:37 +0200
+Message-Id: <20230412082840.711859772@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -42,87 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Muchun Song <songmuchun@bytedance.com>
 
-commit 3ee2d7471fa4963a2ced0a84f0653ce88b43c5b2 upstream.
+commit 1f2803b2660f4b04d48d065072c0ae0c9ca255fd upstream.
 
-It does not reset PG_slab and memcg_data when KFENCE fails to initialize
-kfence pool at runtime.  It is reporting a "Bad page state" message when
-kfence pool is freed to buddy.  The checking of whether it is a compound
-head page seems unnecessary since we already guarantee this when
-allocating kfence pool.   Remove the check to simplify the code.
+The struct pages could be discontiguous when the kfence pool is allocated
+via alloc_contig_pages() with CONFIG_SPARSEMEM and
+!CONFIG_SPARSEMEM_VMEMMAP.
 
-Link: https://lkml.kernel.org/r/20230320030059.20189-1-songmuchun@bytedance.com
+This may result in setting PG_slab and memcg_data to a arbitrary
+address (may be not used as a struct page), which in the worst case
+might corrupt the kernel.
+
+So the iteration should use nth_page().
+
+Link: https://lkml.kernel.org/r/20230323025003.94447-1-songmuchun@bytedance.com
 Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
 Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Reviewed-by: Marco Elver <elver@google.com>
+Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
 Cc: Alexander Potapenko <glider@google.com>
 Cc: Dmitry Vyukov <dvyukov@google.com>
 Cc: Jann Horn <jannh@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: SeongJae Park <sjpark@amazon.de>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |   30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ mm/kfence/core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/mm/kfence/core.c
 +++ b/mm/kfence/core.c
-@@ -562,10 +562,6 @@ static unsigned long kfence_init_pool(vo
+@@ -557,7 +557,7 @@ static unsigned long kfence_init_pool(vo
+ 	 * enters __slab_free() slow-path.
+ 	 */
+ 	for (i = 0; i < KFENCE_POOL_SIZE / PAGE_SIZE; i++) {
+-		struct slab *slab = page_slab(&pages[i]);
++		struct slab *slab = page_slab(nth_page(pages, i));
+ 
  		if (!i || (i % 2))
  			continue;
+@@ -603,7 +603,7 @@ static unsigned long kfence_init_pool(vo
  
--		/* Verify we do not have a compound head page. */
--		if (WARN_ON(compound_head(&pages[i]) != &pages[i]))
--			return addr;
--
- 		__folio_set_slab(slab_folio(slab));
- #ifdef CONFIG_MEMCG
- 		slab->memcg_data = (unsigned long)&kfence_metadata[i / 2 - 1].objcg |
-@@ -598,12 +594,26 @@ static unsigned long kfence_init_pool(vo
+ reset_slab:
+ 	for (i = 0; i < KFENCE_POOL_SIZE / PAGE_SIZE; i++) {
+-		struct slab *slab = page_slab(&pages[i]);
++		struct slab *slab = page_slab(nth_page(pages, i));
  
- 		/* Protect the right redzone. */
- 		if (unlikely(!kfence_protect(addr + PAGE_SIZE)))
--			return addr;
-+			goto reset_slab;
- 
- 		addr += 2 * PAGE_SIZE;
- 	}
- 
- 	return 0;
-+
-+reset_slab:
-+	for (i = 0; i < KFENCE_POOL_SIZE / PAGE_SIZE; i++) {
-+		struct slab *slab = page_slab(&pages[i]);
-+
-+		if (!i || (i % 2))
-+			continue;
-+#ifdef CONFIG_MEMCG
-+		slab->memcg_data = 0;
-+#endif
-+		__folio_clear_slab(slab_folio(slab));
-+	}
-+
-+	return addr;
- }
- 
- static bool __init kfence_init_pool_early(void)
-@@ -633,16 +643,6 @@ static bool __init kfence_init_pool_earl
- 	 * fails for the first page, and therefore expect addr==__kfence_pool in
- 	 * most failure cases.
- 	 */
--	for (char *p = (char *)addr; p < __kfence_pool + KFENCE_POOL_SIZE; p += PAGE_SIZE) {
--		struct slab *slab = virt_to_slab(p);
--
--		if (!slab)
--			continue;
--#ifdef CONFIG_MEMCG
--		slab->memcg_data = 0;
--#endif
--		__folio_clear_slab(slab_folio(slab));
--	}
- 	memblock_free_late(__pa(addr), KFENCE_POOL_SIZE - (addr - (unsigned long)__kfence_pool));
- 	__kfence_pool = NULL;
- 	return false;
+ 		if (!i || (i % 2))
+ 			continue;
 
 
