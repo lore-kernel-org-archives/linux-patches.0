@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9342F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:40:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38017C433D2;
-	Wed, 12 Apr 2023 08:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5A02F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:40:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C679EC433EF;
+	Wed, 12 Apr 2023 08:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288854;
-	bh=W+4o9Mbf3zNn0Y5iGtu5NRR2e6rYp+MRKdh7a7nazKY=;
+	s=korg; t=1681288857;
+	bh=6lWKfKBulpNklmb+GAvy3/ZlKbxPIwivjxix0FnIlcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SSL4GisqYkznByrTUlGb8fiGoG/NIe0DCi4S3/y3neMmL8RheN6oLYExKxCJzxmfP
-	 s5puHBmHdMROOo1LmSJWRcBxDzUUuu9YcXe+hQByhRHnvezFy1DpE5iJ7ZgTty99Z+
-	 yfoIrCAp/e+or7ds1iYuls5UWEGbbV7vqX7ENp5M=
+	b=llGxHILfaOIe7wF2rE0qpELlTx6SR3ZbPw2EzeMNs6sxZcHNOvYab7R6XAB6LILPP
+	 FYD1kNYJWoQa8lzmMYcMbXNxhlWRKbMTbUKdDhfYOEcXqcILnVp5mB2CUQhTjh7b+G
+	 uGwO51QFrRwXrkJnL74+hZAkpcT009deQiUNLXmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff LaBundy <jeff@labundy.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/164] pwm: iqs620a: Explicitly set .polarity in .get_state()
-Date: Wed, 12 Apr 2023 10:32:17 +0200
-Message-Id: <20230412082837.500263360@linuxfoundation.org>
+Subject: [PATCH 6.1 042/164] net: ethernet: ti: am65-cpsw: Fix mdio cleanup in probe
+Date: Wed, 12 Apr 2023 10:32:44 +0200
+Message-Id: <20230412082838.638651795@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -36,35 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit b20b097128d9145fadcea1cbb45c4d186cb57466 ]
+[ Upstream commit c6b486fb33680ad5a3a6390ce693c835caaae3f7 ]
 
-The driver only supports normal polarity. Complete the implementation of
-.get_state() by setting .polarity accordingly.
+In the am65_cpsw_nuss_probe() function's cleanup path, the call to
+of_platform_device_destroy() for the common->mdio_dev device is invoked
+unconditionally. It is possible that either the MDIO node is not present
+in the device-tree, or the MDIO node is disabled in the device-tree. In
+both these cases, the MDIO device is not created, resulting in a NULL
+pointer dereference when the of_platform_device_destroy() function is
+invoked on the common->mdio_dev device on the cleanup path.
 
-Fixes: 6f0841a8197b ("pwm: Add support for Azoteq IQS620A PWM generator")
-Reviewed-by: Jeff LaBundy <jeff@labundy.com>
-Link: https://lore.kernel.org/r/20230228135508.1798428-4-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fix this by ensuring that the common->mdio_dev device exists, before
+attempting to invoke of_platform_device_destroy().
+
+Fixes: a45cfcc69a25 ("net: ethernet: ti: am65-cpsw-nuss: use of_platform_device_create() for mdio")
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20230403090321.835877-1-s-vadapalli@ti.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-iqs620a.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-iqs620a.c b/drivers/pwm/pwm-iqs620a.c
-index 15aae53db5abb..aeb19a274accf 100644
---- a/drivers/pwm/pwm-iqs620a.c
-+++ b/drivers/pwm/pwm-iqs620a.c
-@@ -126,6 +126,7 @@ static int iqs620_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
- 	mutex_unlock(&iqs620_pwm->lock);
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 8ff1c84a23ce7..25466cbdc16bd 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2819,7 +2819,8 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+ 	am65_cpsw_nuss_phylink_cleanup(common);
+ 	am65_cpts_release(common->cpts);
+ err_of_clear:
+-	of_platform_device_destroy(common->mdio_dev, NULL);
++	if (common->mdio_dev)
++		of_platform_device_destroy(common->mdio_dev, NULL);
+ err_pm_clear:
+ 	pm_runtime_put_sync(dev);
+ 	pm_runtime_disable(dev);
+@@ -2848,7 +2849,8 @@ static int am65_cpsw_nuss_remove(struct platform_device *pdev)
+ 	am65_cpsw_nuss_phylink_cleanup(common);
+ 	am65_cpts_release(common->cpts);
  
- 	state->period = IQS620_PWM_PERIOD_NS;
-+	state->polarity = PWM_POLARITY_NORMAL;
+-	of_platform_device_destroy(common->mdio_dev, NULL);
++	if (common->mdio_dev)
++		of_platform_device_destroy(common->mdio_dev, NULL);
  
- 	return 0;
- }
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.39.2
 
