@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C142F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:40:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F774C433D2;
-	Wed, 12 Apr 2023 08:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E312F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:40:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9CFC433D2;
+	Wed, 12 Apr 2023 08:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288841;
-	bh=44hdiDc/hmsXy7eU4R3GTlkJvlovBQOh576uDgGNeRE=;
+	s=korg; t=1681288844;
+	bh=/PTpr3PXJyhRBqFSQo1gHIjAiiw7J80Bkyf7OiUV9cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R4XcoAphaRdJziTolJepwZksWwUXkhBFis3M7NmbpGt0rNumZEcHVVNFO9mAyzEUU
-	 ScUqnlfXF49u7oN4xEc6QyY7SGLA21B8qWf885mqj5x1miAnKcsnFWPKVsYs8qGBj5
-	 IkY25B27oOmmoiEESYzjcexqZ04scuoa/qrj27ko=
+	b=D61kwfUdwZUVJwtg7buE00IbN+C3cbaTZx30CeP+F9s60mnPGM2x/mp/G+fDky2X8
+	 YVk59d+alMDyvuRiPNp4fVr/yRPeQlJGrdyM36VIbLbV4Ieyc+WFavzGfnf/CLfoYt
+	 FsRaFDHCStRWnO4v+Tas7tZckhAX/fDhqVSP7ZFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Armin Wolf <W_Armin@gmx.de>,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/164] platform/x86: think-lmi: Fix memory leak when showing current settings
-Date: Wed, 12 Apr 2023 10:32:39 +0200
-Message-Id: <20230412082838.439419776@linuxfoundation.org>
+Subject: [PATCH 6.1 038/164] platform/x86: think-lmi: Fix memory leaks when parsing ThinkStation WMI strings
+Date: Wed, 12 Apr 2023 10:32:40 +0200
+Message-Id: <20230412082838.483295436@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -37,48 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit a3c4c053014585dcf20f4df954791b74d8a8afcd ]
+[ Upstream commit e7d796fccdc8d17c2d21817ebe4c7bf5bbfe5433 ]
 
-When retriving a item string with tlmi_setting(), the result has to be
-freed using kfree(). In current_value_show() however, malformed
-item strings are not freed, causing a memory leak.
-Fix this by eliminating the early return responsible for this.
+My previous commit introduced a memory leak where the item allocated
+from tlmi_setting was not freed.
+This commit also renames it to avoid confusion with the similarly name
+variable in the same function.
 
-Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Link: https://lore.kernel.org/platform-driver-x86/01e920bc-5882-ba0c-dd15-868bf0eca0b8@alu.unizg.hr/T/#t
-Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Fixes: 0fdf10e5fc96 ("platform/x86: think-lmi: Split current_value to reflect only the value")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20230331213319.41040-1-W_Armin@gmx.de
+Fixes: 8a02d70679fc ("platform/x86: think-lmi: Add possible_values for ThinkStation")
+Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Link: https://lore.kernel.org/lkml/df26ff45-8933-f2b3-25f4-6ee51ccda7d8@gmx.de/T/
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20230403013120.2105-1-mpearson-lenovo@squebb.ca
 Tested-by: Mario Limonciello <mario.limonciello@amd.com>
+Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/platform/x86/think-lmi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index 74af3e593b2ca..4e738ec5e6fb8 100644
+index 4e738ec5e6fb8..70c4ee254c43a 100644
 --- a/drivers/platform/x86/think-lmi.c
 +++ b/drivers/platform/x86/think-lmi.c
-@@ -930,10 +930,12 @@ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *a
- 	/* validate and split from `item,value` -> `value` */
- 	value = strpbrk(item, ",");
- 	if (!value || value == item || !strlen(value + 1))
--		return -EINVAL;
-+		ret = -EINVAL;
-+	else
-+		ret = sysfs_emit(buf, "%s\n", value + 1);
+@@ -1459,10 +1459,10 @@ static int tlmi_analyze(void)
+ 			 * name string.
+ 			 * Try and pull that out if it's available.
+ 			 */
+-			char *item, *optstart, *optend;
++			char *optitem, *optstart, *optend;
  
--	ret = sysfs_emit(buf, "%s\n", value + 1);
- 	kfree(item);
-+
- 	return ret;
- }
- 
+-			if (!tlmi_setting(setting->index, &item, LENOVO_BIOS_SETTING_GUID)) {
+-				optstart = strstr(item, "[Optional:");
++			if (!tlmi_setting(setting->index, &optitem, LENOVO_BIOS_SETTING_GUID)) {
++				optstart = strstr(optitem, "[Optional:");
+ 				if (optstart) {
+ 					optstart += strlen("[Optional:");
+ 					optend = strstr(optstart, "]");
+@@ -1471,6 +1471,7 @@ static int tlmi_analyze(void)
+ 							kstrndup(optstart, optend - optstart,
+ 									GFP_KERNEL);
+ 				}
++				kfree(optitem);
+ 			}
+ 		}
+ 		/*
 -- 
 2.39.2
 
