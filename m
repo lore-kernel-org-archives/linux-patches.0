@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7AF2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:40:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05744C433EF;
-	Wed, 12 Apr 2023 08:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BE82F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:40:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E46C433D2;
+	Wed, 12 Apr 2023 08:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288810;
-	bh=M3eM+qZiS+n0YjjwO5ePu1405l6zr9McMGbSc/QHvNs=;
+	s=korg; t=1681288812;
+	bh=t+zrnDSCYRG5wmnmy56If/bOJ/jkaymnE1OLVXFr6aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=De2/dT5iWXZJUZbd5NcaQudTkH3qfl7rYcO3XZ/mdjhzVp8qBwcdZ/jokHGpo5F0I
-	 LlcDa59nNiqtBbcqIQ0ZyzzmwRdC1qMxmewg3iM7jM/foDicUu6kc6igHBL/l0iorj
-	 BSDxIkXxEVjjCpYloo0tIWLYJsr52CmpRsO621WU=
+	b=b7aPY4zcqAiGbO3Z37wIZZtXTbQwWHQ5wLyKTuRLxPOkc/g90o8f7ns2Ln5srjwKF
+	 f0CeHtCazjzO9eGWDjBikeZy+LZ1ju87fSrdK2nx2FJKceWm/lDpzOpETSdgFulHZm
+	 LsJLxN3BBDPi3Vqi8uiDqbBL2jEdUwYm1OP20bTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Andrea Righi <andrea.righi@canonical.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/164] l2tp: generate correct module alias strings
-Date: Wed, 12 Apr 2023 10:32:28 +0200
-Message-Id: <20230412082838.021508251@linuxfoundation.org>
+Subject: [PATCH 6.1 027/164] wifi: brcmfmac: Fix SDIO suspend/resume regression
+Date: Wed, 12 Apr 2023 10:32:29 +0200
+Message-Id: <20230412082838.071973976@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -37,80 +36,160 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrea Righi <andrea.righi@canonical.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 154e07c164859fc90bf4e8143f2f6c1af9f3a35e ]
+[ Upstream commit e4efa515d58f1363d8a27e548f9c5769d3121e03 ]
 
-Commit 65b32f801bfb ("uapi: move IPPROTO_L2TP to in.h") moved the
-definition of IPPROTO_L2TP from a define to an enum, but since
-__stringify doesn't work properly with enums, we ended up breaking the
-modalias strings for the l2tp modules:
+After commit 92cadedd9d5f ("brcmfmac: Avoid keeping power to SDIO card
+unless WOWL is used"), the wifi adapter by default is turned off on suspend
+and then re-probed on resume.
 
- $ modinfo l2tp_ip l2tp_ip6 | grep alias
- alias:          net-pf-2-proto-IPPROTO_L2TP
- alias:          net-pf-2-proto-2-type-IPPROTO_L2TP
- alias:          net-pf-10-proto-IPPROTO_L2TP
- alias:          net-pf-10-proto-2-type-IPPROTO_L2TP
+In at least 2 model x86/acpi tablets with brcmfmac43430a1 wifi adapters,
+the newly added re-probe on resume fails like this:
 
-Use the resolved number directly in MODULE_ALIAS_*() macros (as we
-already do with SOCK_DGRAM) to fix the alias strings:
+ brcmfmac: brcmf_sdio_bus_rxctl: resumed on timeout
+ ieee80211 phy1: brcmf_bus_started: failed: -110
+ ieee80211 phy1: brcmf_attach: dongle is not responding: err=-110
+ brcmfmac: brcmf_sdio_firmware_callback: brcmf_attach failed
 
-$ modinfo l2tp_ip l2tp_ip6 | grep alias
-alias:          net-pf-2-proto-115
-alias:          net-pf-2-proto-115-type-2
-alias:          net-pf-10-proto-115
-alias:          net-pf-10-proto-115-type-2
+It seems this specific brcmfmac model does not like being reprobed without
+it actually being turned off first.
 
-Moreover, fix the ordering of the parameters passed to
-MODULE_ALIAS_NET_PF_PROTO_TYPE() by switching proto and type.
+And the adapter is not being turned off during suspend because of
+commit f0992ace680c ("brcmfmac: prohibit ACPI power management for brcmfmac
+driver").
 
-Fixes: 65b32f801bfb ("uapi: move IPPROTO_L2TP to in.h")
-Link: https://lore.kernel.org/lkml/ZCQt7hmodtUaBlCP@righiandr-XPS-13-7390
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Andrea Righi <andrea.righi@canonical.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Tested-by:  Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Now that the driver is being reprobed on resume, the disabling of ACPI
+pm is no longer necessary, except when WOWL is used (in which case there
+is no-reprobe).
+
+Move the dis-/en-abling of ACPI pm to brcmf_sdio_wowl_config(), this fixes
+the brcmfmac43430a1 suspend/resume regression and should help save some
+power when suspended.
+
+This change means that the code now also may re-enable ACPI pm when WOWL
+gets disabled. ACPI pm should only be re-enabled if it was enabled by
+the ACPI core originally. Add a brcmf_sdiod_acpi_save_power_manageable()
+to save the original state for this.
+
+This has been tested on the following devices:
+
+Asus T100TA                brcmfmac43241b4-sdio
+Acer Iconia One 7 B1-750   brcmfmac43340-sdio
+Chuwi Hi8                  brcmfmac43430a0-sdio
+Chuwi Hi8                  brcmfmac43430a1-sdio
+
+(the Asus T100TA is the device for which the prohibiting of ACPI pm
+ was originally added)
+
+Fixes: 92cadedd9d5f ("brcmfmac: Avoid keeping power to SDIO card unless WOWL is used")
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230320122252.240070-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_ip.c  | 8 ++++----
- net/l2tp/l2tp_ip6.c | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/bcmsdh.c      | 36 +++++++++++++------
+ .../broadcom/brcm80211/brcmfmac/sdio.h        |  2 ++
+ 2 files changed, 28 insertions(+), 10 deletions(-)
 
-diff --git a/net/l2tp/l2tp_ip.c b/net/l2tp/l2tp_ip.c
-index 4db5a554bdbd9..41a74fc84ca13 100644
---- a/net/l2tp/l2tp_ip.c
-+++ b/net/l2tp/l2tp_ip.c
-@@ -677,8 +677,8 @@ MODULE_AUTHOR("James Chapman <jchapman@katalix.com>");
- MODULE_DESCRIPTION("L2TP over IP");
- MODULE_VERSION("1.0");
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+index d0daef674e728..e300278ea38c6 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+@@ -991,15 +991,34 @@ static const struct sdio_device_id brcmf_sdmmc_ids[] = {
+ MODULE_DEVICE_TABLE(sdio, brcmf_sdmmc_ids);
  
--/* Use the value of SOCK_DGRAM (2) directory, because __stringify doesn't like
-- * enums
-+/* Use the values of SOCK_DGRAM (2) as type and IPPROTO_L2TP (115) as protocol,
-+ * because __stringify doesn't like enums
-  */
--MODULE_ALIAS_NET_PF_PROTO_TYPE(PF_INET, 2, IPPROTO_L2TP);
--MODULE_ALIAS_NET_PF_PROTO(PF_INET, IPPROTO_L2TP);
-+MODULE_ALIAS_NET_PF_PROTO_TYPE(PF_INET, 115, 2);
-+MODULE_ALIAS_NET_PF_PROTO(PF_INET, 115);
-diff --git a/net/l2tp/l2tp_ip6.c b/net/l2tp/l2tp_ip6.c
-index 9dbd801ddb98c..9db7f4f5a4414 100644
---- a/net/l2tp/l2tp_ip6.c
-+++ b/net/l2tp/l2tp_ip6.c
-@@ -808,8 +808,8 @@ MODULE_AUTHOR("Chris Elston <celston@katalix.com>");
- MODULE_DESCRIPTION("L2TP IP encapsulation for IPv6");
- MODULE_VERSION("1.0");
  
--/* Use the value of SOCK_DGRAM (2) directory, because __stringify doesn't like
-- * enums
-+/* Use the values of SOCK_DGRAM (2) as type and IPPROTO_L2TP (115) as protocol,
-+ * because __stringify doesn't like enums
-  */
--MODULE_ALIAS_NET_PF_PROTO_TYPE(PF_INET6, 2, IPPROTO_L2TP);
--MODULE_ALIAS_NET_PF_PROTO(PF_INET6, IPPROTO_L2TP);
-+MODULE_ALIAS_NET_PF_PROTO_TYPE(PF_INET6, 115, 2);
-+MODULE_ALIAS_NET_PF_PROTO(PF_INET6, 115);
+-static void brcmf_sdiod_acpi_set_power_manageable(struct device *dev,
+-						  int val)
++static void brcmf_sdiod_acpi_save_power_manageable(struct brcmf_sdio_dev *sdiodev)
+ {
+ #if IS_ENABLED(CONFIG_ACPI)
+ 	struct acpi_device *adev;
+ 
+-	adev = ACPI_COMPANION(dev);
++	adev = ACPI_COMPANION(&sdiodev->func1->dev);
+ 	if (adev)
+-		adev->flags.power_manageable = 0;
++		sdiodev->func1_power_manageable = adev->flags.power_manageable;
++
++	adev = ACPI_COMPANION(&sdiodev->func2->dev);
++	if (adev)
++		sdiodev->func2_power_manageable = adev->flags.power_manageable;
++#endif
++}
++
++static void brcmf_sdiod_acpi_set_power_manageable(struct brcmf_sdio_dev *sdiodev,
++						  int enable)
++{
++#if IS_ENABLED(CONFIG_ACPI)
++	struct acpi_device *adev;
++
++	adev = ACPI_COMPANION(&sdiodev->func1->dev);
++	if (adev)
++		adev->flags.power_manageable = enable ? sdiodev->func1_power_manageable : 0;
++
++	adev = ACPI_COMPANION(&sdiodev->func2->dev);
++	if (adev)
++		adev->flags.power_manageable = enable ? sdiodev->func2_power_manageable : 0;
+ #endif
+ }
+ 
+@@ -1009,7 +1028,6 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
+ 	int err;
+ 	struct brcmf_sdio_dev *sdiodev;
+ 	struct brcmf_bus *bus_if;
+-	struct device *dev;
+ 
+ 	brcmf_dbg(SDIO, "Enter\n");
+ 	brcmf_dbg(SDIO, "Class=%x\n", func->class);
+@@ -1017,14 +1035,9 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
+ 	brcmf_dbg(SDIO, "sdio device ID: 0x%04x\n", func->device);
+ 	brcmf_dbg(SDIO, "Function#: %d\n", func->num);
+ 
+-	dev = &func->dev;
+-
+ 	/* Set MMC_QUIRK_LENIENT_FN0 for this card */
+ 	func->card->quirks |= MMC_QUIRK_LENIENT_FN0;
+ 
+-	/* prohibit ACPI power management for this device */
+-	brcmf_sdiod_acpi_set_power_manageable(dev, 0);
+-
+ 	/* Consume func num 1 but dont do anything with it. */
+ 	if (func->num == 1)
+ 		return 0;
+@@ -1055,6 +1068,7 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
+ 	dev_set_drvdata(&sdiodev->func1->dev, bus_if);
+ 	sdiodev->dev = &sdiodev->func1->dev;
+ 
++	brcmf_sdiod_acpi_save_power_manageable(sdiodev);
+ 	brcmf_sdiod_change_state(sdiodev, BRCMF_SDIOD_DOWN);
+ 
+ 	brcmf_dbg(SDIO, "F2 found, calling brcmf_sdiod_probe...\n");
+@@ -1120,6 +1134,8 @@ void brcmf_sdio_wowl_config(struct device *dev, bool enabled)
+ 
+ 	if (sdiodev->settings->bus.sdio.oob_irq_supported ||
+ 	    pm_caps & MMC_PM_WAKE_SDIO_IRQ) {
++		/* Stop ACPI from turning off the device when wowl is enabled */
++		brcmf_sdiod_acpi_set_power_manageable(sdiodev, !enabled);
+ 		sdiodev->wowl_enabled = enabled;
+ 		brcmf_dbg(SDIO, "Configuring WOWL, enabled=%d\n", enabled);
+ 		return;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
+index b76d34d36bde6..0d18ed15b4032 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
+@@ -188,6 +188,8 @@ struct brcmf_sdio_dev {
+ 	char nvram_name[BRCMF_FW_NAME_LEN];
+ 	char clm_name[BRCMF_FW_NAME_LEN];
+ 	bool wowl_enabled;
++	bool func1_power_manageable;
++	bool func2_power_manageable;
+ 	enum brcmf_sdiod_state state;
+ 	struct brcmf_sdiod_freezer *freezer;
+ 	const struct firmware *clm_fw;
 -- 
 2.39.2
 
