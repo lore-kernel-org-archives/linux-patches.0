@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEDA2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88CB9C433EF;
-	Wed, 12 Apr 2023 08:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B8C2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F123C4339B;
+	Wed, 12 Apr 2023 08:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289318;
-	bh=z2FSxgaMurnoOFENJQPAeepHRVYk0PnDdfcMOF1tKNc=;
+	s=korg; t=1681289321;
+	bh=tizzr9Z/DD9nqnYD6GLHyGMJyjTbjh2odzIXH3yIEpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pD8KXT6pzgeuHE0G41kyMqQfq6igQXT+CkqDT8mOZSRqOwcd/LJAx+hYJKZxHdnku
-	 w6Wfn/G3Yf2a7auZlAUofdi55Y/yAfahYdy/AFz2miofIxon5smxni/uOGGnN8uzAL
-	 T5k2O00Uyo1G4gen4U9bjetLrBmykGyADjw8XGJg=
+	b=ck3amsqXnBlJANiY588TPX+L7f+Pfa460Z235nuLPxT/C/yi35sobvlsMsMhNDIzp
+	 kgkxU8N/uQbsXMO0rnd3MGazdjBw4VPZ8m6t0CHj0Z7aHmPs7bIiJddgTUGiFwYxxD
+	 JVOMCaHix8Gs0uZnxDGhAOc15M+hwHaWoySwuKsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shailend Chand <shailend@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 052/173] gve: Secure enough bytes in the first TX desc for all TCP pkts
-Date: Wed, 12 Apr 2023 10:32:58 +0200
-Message-Id: <20230412082840.218330063@linuxfoundation.org>
+Subject: [PATCH 6.2 025/173] NFSD: Avoid calling OPDESC() with ops->opnum == OP_ILLEGAL
+Date: Wed, 12 Apr 2023 10:32:31 +0200
+Message-Id: <20230412082839.110157319@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -35,71 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shailend Chand <shailend@google.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 3ce9345580974863c060fa32971537996a7b2d57 ]
+[ Upstream commit 804d8e0a6e54427268790472781e03bc243f4ee3 ]
 
-Non-GSO TCP packets whose SKBs' linear portion did not include the
-entire TCP header were not populating the first Tx descriptor with
-as many bytes as the vNIC expected. This change ensures that all
-TCP packets populate the first descriptor with the correct number of
-bytes.
+OPDESC() simply indexes into nfsd4_ops[] by the op's operation
+number, without range checking that value. It assumes callers are
+careful to avoid calling it with an out-of-bounds opnum value.
 
-Fixes: 893ce44df565 ("gve: Add basic driver framework for Compute Engine Virtual NIC")
-Signed-off-by: Shailend Chand <shailend@google.com>
-Link: https://lore.kernel.org/r/20230403172809.2939306-1-shailend@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+nfsd4_decode_compound() is not so careful, and can invoke OPDESC()
+with opnum set to OP_ILLEGAL, which is 10044 -- well beyond the end
+of nfsd4_ops[].
+
+Reported-by: Jeff Layton <jlayton@kernel.org>
+Fixes: f4f9ef4a1b0a ("nfsd4: opdesc will be useful outside nfs4proc.c")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve.h    |  2 ++
- drivers/net/ethernet/google/gve/gve_tx.c | 12 +++++-------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ fs/nfsd/nfs4xdr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve.h b/drivers/net/ethernet/google/gve/gve.h
-index 64eb0442c82fd..005cb9dfe078b 100644
---- a/drivers/net/ethernet/google/gve/gve.h
-+++ b/drivers/net/ethernet/google/gve/gve.h
-@@ -47,6 +47,8 @@
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index 97edb32be77f1..67bbd2d6334c4 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -2476,10 +2476,12 @@ nfsd4_decode_compound(struct nfsd4_compoundargs *argp)
+ 	for (i = 0; i < argp->opcnt; i++) {
+ 		op = &argp->ops[i];
+ 		op->replay = NULL;
++		op->opdesc = NULL;
  
- #define GVE_RX_BUFFER_SIZE_DQO 2048
- 
-+#define GVE_GQ_TX_MIN_PKT_DESC_BYTES 182
+ 		if (xdr_stream_decode_u32(argp->xdr, &op->opnum) < 0)
+ 			return false;
+ 		if (nfsd4_opnum_in_range(argp, op)) {
++			op->opdesc = OPDESC(op);
+ 			op->status = nfsd4_dec_ops[op->opnum](argp, &op->u);
+ 			if (op->status != nfs_ok)
+ 				trace_nfsd_compound_decode_err(argp->rqstp,
+@@ -2490,7 +2492,7 @@ nfsd4_decode_compound(struct nfsd4_compoundargs *argp)
+ 			op->opnum = OP_ILLEGAL;
+ 			op->status = nfserr_op_illegal;
+ 		}
+-		op->opdesc = OPDESC(op);
 +
- /* Each slot in the desc ring has a 1:1 mapping to a slot in the data ring */
- struct gve_rx_desc_queue {
- 	struct gve_rx_desc *desc_ring; /* the descriptor ring */
-diff --git a/drivers/net/ethernet/google/gve/gve_tx.c b/drivers/net/ethernet/google/gve/gve_tx.c
-index 4888bf05fbedb..5e11b82367545 100644
---- a/drivers/net/ethernet/google/gve/gve_tx.c
-+++ b/drivers/net/ethernet/google/gve/gve_tx.c
-@@ -284,8 +284,8 @@ static inline int gve_skb_fifo_bytes_required(struct gve_tx_ring *tx,
- 	int bytes;
- 	int hlen;
- 
--	hlen = skb_is_gso(skb) ? skb_checksum_start_offset(skb) +
--				 tcp_hdrlen(skb) : skb_headlen(skb);
-+	hlen = skb_is_gso(skb) ? skb_checksum_start_offset(skb) + tcp_hdrlen(skb) :
-+				 min_t(int, GVE_GQ_TX_MIN_PKT_DESC_BYTES, skb->len);
- 
- 	pad_bytes = gve_tx_fifo_pad_alloc_one_frag(&tx->tx_fifo,
- 						   hlen);
-@@ -454,13 +454,11 @@ static int gve_tx_add_skb_copy(struct gve_priv *priv, struct gve_tx_ring *tx, st
- 	pkt_desc = &tx->desc[idx];
- 
- 	l4_hdr_offset = skb_checksum_start_offset(skb);
--	/* If the skb is gso, then we want the tcp header in the first segment
--	 * otherwise we want the linear portion of the skb (which will contain
--	 * the checksum because skb->csum_start and skb->csum_offset are given
--	 * relative to skb->head) in the first segment.
-+	/* If the skb is gso, then we want the tcp header alone in the first segment
-+	 * otherwise we want the minimum required by the gVNIC spec.
- 	 */
- 	hlen = is_gso ? l4_hdr_offset + tcp_hdrlen(skb) :
--			skb_headlen(skb);
-+			min_t(int, GVE_GQ_TX_MIN_PKT_DESC_BYTES, skb->len);
- 
- 	info->skb =  skb;
- 	/* We don't want to split the header, so if necessary, pad to the end
+ 		/*
+ 		 * We'll try to cache the result in the DRC if any one
+ 		 * op in the compound wants to be cached:
 -- 
 2.39.2
 
