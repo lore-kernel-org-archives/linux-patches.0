@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1641F2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892F7C433D2;
-	Wed, 12 Apr 2023 08:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5BC2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28529C4339B;
+	Wed, 12 Apr 2023 08:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288736;
-	bh=mSyg4tg5boZp2/djK30YWARMI8q9pHgCOE3s7moXNYw=;
+	s=korg; t=1681288739;
+	bh=oMT2R2Foa4wOad4EX6fd1c+6fMvn1/GgbHWxdd1bEX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AeqCp5L8KH/DqRUGY5XJLDuz9pGiJvgPHEShKecr6rDEjkUCyvpzSj3tUvPXeyavo
-	 60tJyhXGC2yZFzAxMuPx31LnIeV4RKkSansIdAkYUlcWM3tVuxxxZ70xKGc8IbgCvz
-	 Ee/D/jo1qDk/2fCftcSTd1+H83MfRX6NLLbPr938=
+	b=lQzWJz8Y5IQ5kWeTbTmzgwZFdfQHs3jZgNVqrjq2C1dDz2lrqmaiGR7mYVrf/Myd7
+	 Kw19J5dN0kZody9ZngJYkPJ+cUtnylbqNFnb8FtPAHHRKVpXwQ7iQUvfWitCjNPmiT
+	 3udQe2aXpJAL1JIw8/Scpq+hWnNkKvBW2ZfAd0E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Sojka <michal.sojka@cvut.cz>,
-	Jakub Jira <jirajak2@fel.cvut.cz>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 84/93] can: isotp: isotp_ops: fix poll() to not report false EPOLLOUT events
-Date: Wed, 12 Apr 2023 10:34:25 +0200
-Message-Id: <20230412082826.710797251@linuxfoundation.org>
+	Alistair Popple <apopple@nvidia.com>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 93/93] mm: take a page reference when removing device exclusive entries
+Date: Wed, 12 Apr 2023 10:34:34 +0200
+Message-Id: <20230412082827.068122936@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -36,71 +39,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Sojka <michal.sojka@cvut.cz>
+From: Alistair Popple <apopple@nvidia.com>
 
-commit 79e19fa79cb5d5f1b3bf3e3ae24989ccb93c7b7b upstream.
+commit 7c7b962938ddda6a9cd095de557ee5250706ea88 upstream.
 
-When using select()/poll()/epoll() with a non-blocking ISOTP socket to
-wait for when non-blocking write is possible, a false EPOLLOUT event
-is sometimes returned. This can happen at least after sending a
-message which must be split to multiple CAN frames.
+Device exclusive page table entries are used to prevent CPU access to a
+page whilst it is being accessed from a device.  Typically this is used to
+implement atomic operations when the underlying bus does not support
+atomic access.  When a CPU thread encounters a device exclusive entry it
+locks the page and restores the original entry after calling mmu notifiers
+to signal drivers that exclusive access is no longer available.
 
-The reason is that isotp_sendmsg() returns -EAGAIN when tx.state is
-not equal to ISOTP_IDLE and this behavior is not reflected in
-datagram_poll(), which is used in isotp_ops.
+The device exclusive entry holds a reference to the page making it safe to
+access the struct page whilst the entry is present.  However the fault
+handling code does not hold the PTL when taking the page lock.  This means
+if there are multiple threads faulting concurrently on the device
+exclusive entry one will remove the entry whilst others will wait on the
+page lock without holding a reference.
 
-This is fixed by introducing ISOTP-specific poll function, which
-suppresses the EPOLLOUT events in that case.
+This can lead to threads locking or waiting on a folio with a zero
+refcount.  Whilst mmap_lock prevents the pages getting freed via munmap()
+they may still be freed by a migration.  This leads to warnings such as
+PAGE_FLAGS_CHECK_AT_FREE due to the page being locked when the refcount
+drops to zero.
 
-v2: https://lore.kernel.org/all/20230302092812.320643-1-michal.sojka@cvut.cz
-v1: https://lore.kernel.org/all/20230224010659.48420-1-michal.sojka@cvut.cz
-    https://lore.kernel.org/all/b53a04a2-ba1f-3858-84c1-d3eb3301ae15@hartkopp.net
+Fix this by trying to take a reference on the folio before locking it.
+The code already checks the PTE under the PTL and aborts if the entry is
+no longer there.  It is also possible the folio has been unmapped, freed
+and re-allocated allowing a reference to be taken on an unrelated folio.
+This case is also detected by the PTE check and the folio is unlocked
+without further changes.
 
-Signed-off-by: Michal Sojka <michal.sojka@cvut.cz>
-Reported-by: Jakub Jira <jirajak2@fel.cvut.cz>
-Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Fixes: e057dd3fc20f ("can: add ISO 15765-2:2016 transport protocol")
-Link: https://lore.kernel.org/all/20230331125511.372783-1-michal.sojka@cvut.cz
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lkml.kernel.org/r/20230330012519.804116-1-apopple@nvidia.com
+Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
+Reviewed-by: Ralph Campbell <rcampbell@nvidia.com>
+Reviewed-by: John Hubbard <jhubbard@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ mm/memory.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1482,6 +1482,21 @@ static int isotp_init(struct sock *sk)
- 	return 0;
- }
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3462,8 +3462,21 @@ static vm_fault_t remove_device_exclusiv
+ 	struct vm_area_struct *vma = vmf->vma;
+ 	struct mmu_notifier_range range;
  
-+static __poll_t isotp_poll(struct file *file, struct socket *sock, poll_table *wait)
-+{
-+	struct sock *sk = sock->sk;
-+	struct isotp_sock *so = isotp_sk(sk);
+-	if (!lock_page_or_retry(page, vma->vm_mm, vmf->flags))
++	/*
++	 * We need a reference to lock the page because we don't hold
++	 * the PTL so a racing thread can remove the device-exclusive
++	 * entry and unmap it. If the page is free the entry must
++	 * have been removed already. If it happens to have already
++	 * been re-allocated after being freed all we do is lock and
++	 * unlock it.
++	 */
++	if (!get_page_unless_zero(page))
++		return 0;
 +
-+	__poll_t mask = datagram_poll(file, sock, wait);
-+	poll_wait(file, &so->wait, wait);
-+
-+	/* Check for false positives due to TX state */
-+	if ((mask & EPOLLWRNORM) && (so->tx.state != ISOTP_IDLE))
-+		mask &= ~(EPOLLOUT | EPOLLWRNORM);
-+
-+	return mask;
-+}
-+
- static int isotp_sock_no_ioctlcmd(struct socket *sock, unsigned int cmd,
- 				  unsigned long arg)
- {
-@@ -1497,7 +1512,7 @@ static const struct proto_ops isotp_ops
- 	.socketpair = sock_no_socketpair,
- 	.accept = sock_no_accept,
- 	.getname = isotp_getname,
--	.poll = datagram_poll,
-+	.poll = isotp_poll,
- 	.ioctl = isotp_sock_no_ioctlcmd,
- 	.gettstamp = sock_gettstamp,
- 	.listen = sock_no_listen,
++	if (!lock_page_or_retry(page, vma->vm_mm, vmf->flags)) {
++		put_page(page);
+ 		return VM_FAULT_RETRY;
++	}
+ 	mmu_notifier_range_init_owner(&range, MMU_NOTIFY_EXCLUSIVE, 0, vma,
+ 				vma->vm_mm, vmf->address & PAGE_MASK,
+ 				(vmf->address & PAGE_MASK) + PAGE_SIZE, NULL);
+@@ -3476,6 +3489,7 @@ static vm_fault_t remove_device_exclusiv
+ 
+ 	pte_unmap_unlock(vmf->pte, vmf->ptl);
+ 	unlock_page(page);
++	put_page(page);
+ 
+ 	mmu_notifier_invalidate_range_end(&range);
+ 	return 0;
 
 
