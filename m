@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037562F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8313BC433EF;
-	Wed, 12 Apr 2023 08:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962B62F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:37:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDFFC433D2;
+	Wed, 12 Apr 2023 08:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288676;
-	bh=AF9g+Tb2emYJDaDpciFvV+lM4Gyj5F6neLswzcnGvFk=;
+	s=korg; t=1681288679;
+	bh=A7RAqtUDros8ZCN6zVlRp9fwK6d/mLbAyBMh4h5eUOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fIO2wsk5ZqWG3ViAzFoBFZwbV7A8/jiTwyDBfylGC4XwDGzWPrjCBQwu7LFeQkYJ8
-	 X9QUjKqT5e1kjdB0KPpV9/TueoW+qAbHzyQ4ArKed2gkIs40jofCCrCIIeu3QIn15w
-	 pzKQTwX1t4Pv9Cp7z2gV2sSJDfscJMLt7i30WLY8=
+	b=zCtWkM/fturZ5eb1aL18wScvD9Wi21jbODze0Fv/WsOQ0zvKWxQa6ojh56b9ZkfAz
+	 Q2yFxhx2JZEVp/KKkvGDOJQgtNp0T//n4jpQ36nvGE09p8112v6wW4xHbJR+xOF4Pz
+	 288tUl1/tBT3TB4p/0nI97DI6TJUuOu71mmUKH8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 69/93] ksmbd: do not call kvmalloc() with __GFP_NORETRY | __GFP_NO_WARN
-Date: Wed, 12 Apr 2023 10:34:10 +0200
-Message-Id: <20230412082826.029542796@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 52/93] xhci: also avoid the XHCI_ZERO_64B_REGS quirk with a passthrough iommu
+Date: Wed, 12 Apr 2023 10:33:53 +0200
+Message-Id: <20230412082825.338374877@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -35,39 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marios Makassikis <mmakassikis@freebox.fr>
+From: D Scott Phillips <scott@os.amperecomputing.com>
 
-commit e416ea62a9166e6075a07a970cc5bf79255d2700 upstream.
+commit ecaa4902439298f6b0e29f47424a86b310a9ff4f upstream.
 
-Commit 83dcedd5540d ("ksmbd: fix infinite loop in ksmbd_conn_handler_loop()"),
-changes GFP modifiers passed to kvmalloc(). This cause xfstests generic/551
-test to fail. We limit pdu length size according to connection status and
-maximum number of connections. In the rest, memory allocation of request
-is limited by credit management. so these flags are no longer needed.
+Previously the quirk was skipped when no iommu was present. The same
+rationale for skipping the quirk also applies in the iommu.passthrough=1
+case.
 
-Fixes: 83dcedd5540d ("ksmbd: fix infinite loop in ksmbd_conn_handler_loop()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Skip applying the XHCI_ZERO_64B_REGS quirk if the device's iommu domain is
+passthrough.
+
+Fixes: 12de0a35c996 ("xhci: Add quirk to zero 64bit registers on Renesas PCIe controllers")
+Cc: stable <stable@kernel.org>
+Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230330143056.1390020-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/usb/host/xhci.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -320,10 +320,7 @@ int ksmbd_conn_handler_loop(void *p)
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -9,6 +9,7 @@
+  */
  
- 		/* 4 for rfc1002 length field */
- 		size = pdu_size + 4;
--		conn->request_buf = kvmalloc(size,
--					     GFP_KERNEL |
--					     __GFP_NOWARN |
--					     __GFP_NORETRY);
-+		conn->request_buf = kvmalloc(size, GFP_KERNEL);
- 		if (!conn->request_buf)
- 			break;
+ #include <linux/pci.h>
++#include <linux/iommu.h>
+ #include <linux/iopoll.h>
+ #include <linux/irq.h>
+ #include <linux/log2.h>
+@@ -225,6 +226,7 @@ int xhci_reset(struct xhci_hcd *xhci, u6
+ static void xhci_zero_64b_regs(struct xhci_hcd *xhci)
+ {
+ 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
++	struct iommu_domain *domain;
+ 	int err, i;
+ 	u64 val;
+ 	u32 intrs;
+@@ -243,7 +245,9 @@ static void xhci_zero_64b_regs(struct xh
+ 	 * an iommu. Doing anything when there is no iommu is definitely
+ 	 * unsafe...
+ 	 */
+-	if (!(xhci->quirks & XHCI_ZERO_64B_REGS) || !device_iommu_mapped(dev))
++	domain = iommu_get_domain_for_dev(dev);
++	if (!(xhci->quirks & XHCI_ZERO_64B_REGS) || !domain ||
++	    domain->type == IOMMU_DOMAIN_IDENTITY)
+ 		return;
  
+ 	xhci_info(xhci, "Zeroing 64bit base registers, expecting fault\n");
 
 
