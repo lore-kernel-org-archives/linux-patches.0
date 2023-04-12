@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF682F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A921C433EF;
-	Wed, 12 Apr 2023 08:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C892F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:48:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B58BC433D2;
+	Wed, 12 Apr 2023 08:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289293;
-	bh=QXDQ4fKp07JfAMbjgZVFjQtYq5POj2EW3Qsxq/izZSw=;
+	s=korg; t=1681289295;
+	bh=abvIVO8JZE1KQoOhnBdFY1iuqX31JVgVIX5XwR0k6ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T9e7QNrFpwgQXaN65GdLVPvHIF4/sx7mRS0qaoZKw9fku1pXhA8U15UnlNwQOqjeQ
-	 VDf9gt70zuAu5X32R0/dOwKaDwsFD5hrKb6yqgo2EYIq/TPDZf23XGXa3gQV/CEsex
-	 tAsEUnfYnrKVm8d25fgIaQp2MSiiUjM58FRKGWTg=
+	b=gUiVMmEWE3WoM9xs6B2rK7ee1VFrFsCpTqVX7Ds5Tqel3TQ+6yQ769dTvjWFlQhto
+	 gVAwxTkCUbjFYuJZoY+/O5nFPUBmx1BDOq9I7UAGU33VS657dfRykYPtSVnvc5Bv4A
+	 6mPIczc5AEWvGI59fsun06X+6QWzDHix7lVLhh74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Li <yieli@redhat.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 043/173] sunrpc: only free unix grouplist after RCU settles
-Date: Wed, 12 Apr 2023 10:32:49 +0200
-Message-Id: <20230412082839.849838250@linuxfoundation.org>
+Subject: [PATCH 6.2 044/173] NFSD: callback request does not use correct credential for AUTH_SYS
+Date: Wed, 12 Apr 2023 10:32:50 +0200
+Message-Id: <20230412082839.893123785@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,56 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 5085e41f9e83a1bec51da1f20b54f2ec3a13a3fe ]
+[ Upstream commit 7de82c2f36fb26aa78440bbf0efcf360b691d98b ]
 
-While the unix_gid object is rcu-freed, the group_info list that it
-contains is not. Ensure that we only put the group list reference once
-we are really freeing the unix_gid object.
+Currently callback request does not use the credential specified in
+CREATE_SESSION if the security flavor for the back channel is AUTH_SYS.
 
-Reported-by: Zhi Li <yieli@redhat.com>
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2183056
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Fixes: fd5d2f78261b ("SUNRPC: Make server side AUTH_UNIX use lockless lookups")
+Problem was discovered by pynfs 4.1 DELEG5 and DELEG7 test with error:
+DELEG5   st_delegation.testCBSecParms     : FAILURE
+           expected callback with uid, gid == 17, 19, got 0, 0
+
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 8276c902bbe9 ("SUNRPC: remove uid and gid from struct auth_cred")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svcauth_unix.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4callback.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/svcauth_unix.c b/net/sunrpc/svcauth_unix.c
-index b1efc34db6ed8..609ade4fb49ed 100644
---- a/net/sunrpc/svcauth_unix.c
-+++ b/net/sunrpc/svcauth_unix.c
-@@ -416,14 +416,23 @@ static int unix_gid_hash(kuid_t uid)
- 	return hash_long(from_kuid(&init_user_ns, uid), GID_HASHBITS);
- }
+diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
+index 2a815f5a52c4b..4039ffcf90ba5 100644
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -946,8 +946,8 @@ static const struct cred *get_backchannel_cred(struct nfs4_client *clp, struct r
+ 		if (!kcred)
+ 			return NULL;
  
--static void unix_gid_put(struct kref *kref)
-+static void unix_gid_free(struct rcu_head *rcu)
- {
--	struct cache_head *item = container_of(kref, struct cache_head, ref);
--	struct unix_gid *ug = container_of(item, struct unix_gid, h);
-+	struct unix_gid *ug = container_of(rcu, struct unix_gid, rcu);
-+	struct cache_head *item = &ug->h;
-+
- 	if (test_bit(CACHE_VALID, &item->flags) &&
- 	    !test_bit(CACHE_NEGATIVE, &item->flags))
- 		put_group_info(ug->gi);
--	kfree_rcu(ug, rcu);
-+	kfree(ug);
-+}
-+
-+static void unix_gid_put(struct kref *kref)
-+{
-+	struct cache_head *item = container_of(kref, struct cache_head, ref);
-+	struct unix_gid *ug = container_of(item, struct unix_gid, h);
-+
-+	call_rcu(&ug->rcu, unix_gid_free);
+-		kcred->uid = ses->se_cb_sec.uid;
+-		kcred->gid = ses->se_cb_sec.gid;
++		kcred->fsuid = ses->se_cb_sec.uid;
++		kcred->fsgid = ses->se_cb_sec.gid;
+ 		return kcred;
+ 	}
  }
- 
- static int unix_gid_match(struct cache_head *corig, struct cache_head *cnew)
 -- 
 2.39.2
 
