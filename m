@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF792F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6B8C4339C;
-	Wed, 12 Apr 2023 08:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E65A2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:44:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888DEC4339B;
+	Wed, 12 Apr 2023 08:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289080;
-	bh=7dKDgcGJtTOo5/LJAr61enMxkUxsY7O9Sv8OXzmIO8k=;
+	s=korg; t=1681289082;
+	bh=+VgXcekNaZX5j4F/90GhBEJESkXAC+zuuS8mB+8CtDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2pI5/DF5xPYHnIGL3rtfkHWkSxK30MkR1HT0Nnuh8mZx1NFuX9vDB6hTJgguBbhwp
-	 hjNGbbSuDeulInMWRNkOFqWByMf8JSY1WIa4Pl6fbEgQPGP6IMlYJ8GJsqokS+8z8D
-	 xIxshT5MSaZC0DVT03Ssa6u5kspSD7UD+TXn+2VY=
+	b=EkFvZlHDYl+obPVGcwFfAhOYGQgwXt+/hA666I9bPiLTyL7FpPOqPx1QKCnQeh5Pq
+	 /BbC8Vt4k8AKnrUGpu9alc6NLmQfjqhhprkR11kL0oSri1+f6l/y8ctrKRrum1y5fA
+	 3fhFZstHJM7w/cVR41VLseTWVsJ+JLWKrYgRodB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 129/164] zsmalloc: document freeable stats
-Date: Wed, 12 Apr 2023 10:34:11 +0200
-Message-Id: <20230412082842.095836037@linuxfoundation.org>
+	mhiramat@kernel.org,
+	mark.rutland@arm.com,
+	ast@kernel.org,
+	daniel@iogearbox.net,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 112/164] ftrace: Fix issue that direct->addr not restored in modify_ftrace_direct()
+Date: Wed, 12 Apr 2023 10:33:54 +0200
+Message-Id: <20230412082841.379955310@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,34 +38,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 618a8a917dbf5830e2064d2fa0568940eb5d2584 upstream.
+commit 2a2d8c51defb446e8d89a83f42f8e5cd529111e9 upstream.
 
-When freeable class stat was added to classes file (back in 2016) we
-forgot to update zsmalloc documentation.  Fix that.
+Syzkaller report a WARNING: "WARN_ON(!direct)" in modify_ftrace_direct().
 
-Link: https://lkml.kernel.org/r/20230325024631.2817153-3-senozhatsky@chromium.org
-Fixes: 1120ed548394 ("mm/zsmalloc: add `freeable' column to pool stat")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Root cause is 'direct->addr' was changed from 'old_addr' to 'new_addr' but
+not restored if error happened on calling ftrace_modify_direct_caller().
+Then it can no longer find 'direct' by that 'old_addr'.
+
+To fix it, restore 'direct->addr' to 'old_addr' explicitly in error path.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230330025223.1046087-1-zhengyejian1@huawei.com
+
+Cc: stable@vger.kernel.org
+Cc: <mhiramat@kernel.org>
+Cc: <mark.rutland@arm.com>
+Cc: <ast@kernel.org>
+Cc: <daniel@iogearbox.net>
+Fixes: 8a141dd7f706 ("ftrace: Fix modify_ftrace_direct.")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/mm/zsmalloc.rst |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/ftrace.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/Documentation/mm/zsmalloc.rst
-+++ b/Documentation/mm/zsmalloc.rst
-@@ -68,6 +68,8 @@ pages_used
- 	the number of pages allocated for the class
- pages_per_zspage
- 	the number of 0-order pages to make a zspage
-+freeable
-+	the approximate number of pages class compaction can free
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -5557,12 +5557,15 @@ int modify_ftrace_direct(unsigned long i
+ 		ret = 0;
+ 	}
  
- We assign a zspage to ZS_ALMOST_EMPTY fullness group when n <= N / f, where
+-	if (unlikely(ret && new_direct)) {
+-		direct->count++;
+-		list_del_rcu(&new_direct->next);
+-		synchronize_rcu_tasks();
+-		kfree(new_direct);
+-		ftrace_direct_func_count--;
++	if (ret) {
++		direct->addr = old_addr;
++		if (unlikely(new_direct)) {
++			direct->count++;
++			list_del_rcu(&new_direct->next);
++			synchronize_rcu_tasks();
++			kfree(new_direct);
++			ftrace_direct_func_count--;
++		}
+ 	}
  
+  out_unlock:
 
 
