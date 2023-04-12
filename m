@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BC12F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1710C433D2;
-	Wed, 12 Apr 2023 08:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5732F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:51:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52201C433D2;
+	Wed, 12 Apr 2023 08:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289517;
-	bh=dKz/1zhK9Qcd7wLZrZQmb0D3l3DtgegBCj3BhpQ+n2E=;
+	s=korg; t=1681289519;
+	bh=/MKBGP3G17dM/AeUC/HknQ2So8TXdWesndPifUGHbjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MJ/Uma/rbWtv6NtIlNrUG/SQhyFGmHsB4a2xa8eyL1cyfDYFTlgQ5qS/bFG4zqUXE
-	 rR5qV8w80UTQGIW4Ay4pa8tTa373Vgr0wgb3Xh8Yr27C2Gg5cmcjMZLvW1kkrcUlgJ
-	 UeZ1Q0834EE/WkH+Og6Ou7kqOwO4S7En10S75GJM=
+	b=QmEiSobQ5jNKxDYtbkZrrvaJbyXW9XPVK+4f1JoaJrI8jiFP2G6oBGh4z9zbr0OPH
+	 fGtxWkjK+1AxSp/DSGCgu2uOH4qe5oPJxNfF6PGN77x1S9qr7ze85LWTgmUS0sbLbD
+	 7Vnc1WkDU/jg4joa5rPH825c7h3fz2ulEu1JUzYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Wojciech Lukowicz <wlukowicz01@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 130/173] iio: adc: ad7791: fix IRQ flags
-Date: Wed, 12 Apr 2023 10:34:16 +0200
-Message-Id: <20230412082843.400580934@linuxfoundation.org>
+Subject: [PATCH 6.2 131/173] io_uring: fix return value when removing provided buffers
+Date: Wed, 12 Apr 2023 10:34:17 +0200
+Message-Id: <20230412082843.446732254@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -35,35 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Wojciech Lukowicz <wlukowicz01@gmail.com>
 
-[ Upstream commit 0c6ef985a1fd8a74dcb5cad941ddcadd55cb8697 ]
+[ Upstream commit c0921e51dab767ef5adf6175c4a0ba3c6e1074a3 ]
 
-The interrupt is triggered on the falling edge rather than being a level
-low interrupt.
+When a request to remove buffers is submitted, and the given number to be
+removed is larger than available in the specified buffer group, the
+resulting CQE result will be the number of removed buffers + 1, which is
+1 more than it should be.
 
-Fixes: da4d3d6bb9f6 ("iio: adc: ad-sigma-delta: Allow custom IRQ flags")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20230120124645.819910-1-nuno.sa@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Previously, the head was part of the list and it got removed after the
+loop, so the increment was needed. Now, the head is not an element of
+the list, so the increment shouldn't be there anymore.
+
+Fixes: dbc7d452e7cf ("io_uring: manage provided buffers strictly ordered")
+Signed-off-by: Wojciech Lukowicz <wlukowicz01@gmail.com>
+Link: https://lore.kernel.org/r/20230401195039.404909-2-wlukowicz01@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7791.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/kbuf.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7791.c b/drivers/iio/adc/ad7791.c
-index fee8d129a5f08..86effe8501b44 100644
---- a/drivers/iio/adc/ad7791.c
-+++ b/drivers/iio/adc/ad7791.c
-@@ -253,7 +253,7 @@ static const struct ad_sigma_delta_info ad7791_sigma_delta_info = {
- 	.has_registers = true,
- 	.addr_shift = 4,
- 	.read_mask = BIT(3),
--	.irq_flags = IRQF_TRIGGER_LOW,
-+	.irq_flags = IRQF_TRIGGER_FALLING,
- };
+diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
+index 3002dc8271959..0fdcc0adbdbcc 100644
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -228,7 +228,6 @@ static int __io_remove_buffers(struct io_ring_ctx *ctx,
+ 		return i;
+ 	}
  
- static int ad7791_read_raw(struct iio_dev *indio_dev,
+-	/* the head kbuf is the list itself */
+ 	while (!list_empty(&bl->buf_list)) {
+ 		struct io_buffer *nxt;
+ 
+@@ -238,7 +237,6 @@ static int __io_remove_buffers(struct io_ring_ctx *ctx,
+ 			return i;
+ 		cond_resched();
+ 	}
+-	i++;
+ 
+ 	return i;
+ }
 -- 
 2.39.2
 
