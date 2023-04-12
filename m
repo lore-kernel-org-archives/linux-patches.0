@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491E02F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A075AC433EF;
-	Wed, 12 Apr 2023 08:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD902F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:46:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4224DC433D2;
+	Wed, 12 Apr 2023 08:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289187;
-	bh=rcPR1yzzx+NFOP4b57vj9H7yNsBfGrlEDO8tBhP58zQ=;
+	s=korg; t=1681289189;
+	bh=YWyD+qEB/dXKPhzA0Ydochg7X9UnwWMvHIbeeWJylg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PydIZ4R6rADrI9SCAjLt6OIwRcycv3sJuspW1b9+zCS5hdhlclBsYShhXAKiO7fzc
-	 R6CvX3UDc3WES9LVcMSutKWdBFVU8hkruupCyzSKnPD2jEEYwWsgxMPqAFSfn8MA1C
-	 Jv2611hcHUkrtRb6JVG+0vs+xilFIEjIo8Lv+D+g=
+	b=YQiZAMzNw31dtvsFLrd2bGgSKOA0cfeLy6oLsuqjyGVB29EmBo75NsGEYPhzSGYAC
+	 MMiSoECpq+hF35XaEN4sThxRTgTfVaCqJUxDGt6f6JXeDFvonEmR6hVjZUKUJ1cLXd
+	 kJFClZdqjyUMyerShXBajxGEAkQSx6qPktpOTtr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH 6.1 148/164] drm/bridge: lt9611: Fix PLL being unable to lock
-Date: Wed, 12 Apr 2023 10:34:30 +0200
-Message-Id: <20230412082842.899008389@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Subject: [PATCH 6.1 149/164] drm/i915: Use _MMIO_PIPE() for SKL_BOTTOM_COLOR
+Date: Wed, 12 Apr 2023 10:34:31 +0200
+Message-Id: <20230412082842.938632535@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -34,37 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Foss <robert.foss@linaro.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 2a9df204be0bbb896e087f00b9ee3fc559d5a608 upstream.
+commit 05ca98523481aa687c5a8dce8939fec539632153 upstream.
 
-This fixes PLL being unable to lock, and is derived from an equivalent
-downstream commit.
+No need to use _MMIO_PIPE2() for SKL_BOTTOM_COLOR
+since all pipe registers are evenly spread on skl+.
+Switch to _MMIO_PIPE() and thus avoid the hidden dev_priv.
 
-Available LT9611 documentation does not list this register, neither does
-LT9611UXC (which is a different chip).
-
-This commit has been confirmed to fix HDMI output on DragonBoard 845c.
-
-Suggested-by: Amit Pundir <amit.pundir@linaro.org>
-Reviewed-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221213150304.4189760-1-robert.foss@linaro.org
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221026113906.10551-3-ville.syrjala@linux.intel.com
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/i915_reg.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -258,6 +258,7 @@ static int lt9611_pll_setup(struct lt961
- 		{ 0x8126, 0x55 },
- 		{ 0x8127, 0x66 },
- 		{ 0x8128, 0x88 },
-+		{ 0x812a, 0x20 },
- 	};
+--- a/drivers/gpu/drm/i915/i915_reg.h
++++ b/drivers/gpu/drm/i915/i915_reg.h
+@@ -3747,9 +3747,10 @@
  
- 	regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
+ /* Skylake+ pipe bottom (background) color */
+ #define _SKL_BOTTOM_COLOR_A		0x70034
++#define _SKL_BOTTOM_COLOR_B		0x71034
+ #define   SKL_BOTTOM_COLOR_GAMMA_ENABLE		REG_BIT(31)
+ #define   SKL_BOTTOM_COLOR_CSC_ENABLE		REG_BIT(30)
+-#define SKL_BOTTOM_COLOR(pipe)		_MMIO_PIPE2(pipe, _SKL_BOTTOM_COLOR_A)
++#define SKL_BOTTOM_COLOR(pipe)		_MMIO_PIPE(pipe, _SKL_BOTTOM_COLOR_A, _SKL_BOTTOM_COLOR_B)
+ 
+ #define _ICL_PIPE_A_STATUS			0x70058
+ #define ICL_PIPESTATUS(pipe)			_MMIO_PIPE2(pipe, _ICL_PIPE_A_STATUS)
 
 
