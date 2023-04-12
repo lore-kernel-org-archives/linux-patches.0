@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54EC2F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAB4C433EF;
-	Wed, 12 Apr 2023 08:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716F22F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:38:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD13C433D2;
+	Wed, 12 Apr 2023 08:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681288731;
-	bh=FQS306GDYfd638mZ9jZ7/P8HzcxEzggpFUj6t28B4c0=;
+	s=korg; t=1681288734;
+	bh=64g9qhaXqLFVJLT4MseXGb2oTZhdPdjB/lowPRGvwME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgQ9KNK/nnZT+1/e5XR3TevIcHqg+XYaPN9Kq5EZ6mm6HPFFJPKE422bJ+PmeTmL8
-	 tXVq/kloHoWZT/PDUMcJq0xAY208EPa5VD9j6nRTCFuu0R+MpJ7K5IjCMzKwVB+LHu
-	 a/bv9ku+UiCn5GDjNjyCte3NBOuion45h0DDCqyM=
+	b=KujdfvmpMDNPlPR65ebMCBeuZBAWka+VZDNyBcztRDa8W65/roKms5cbz4hYRub6u
+	 AsM9ozq974uc5XzTE2pp8F46Hqbm1XczTT/d3yuzxOngfeCyem9Xc0LUljnBr01TOp
+	 TJ3dpqjU/vAhLaxcTJW2KwaeYhVNR/BQ68ZJfHnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 59/93] iio: adis16480: select CONFIG_CRC32
-Date: Wed, 12 Apr 2023 10:34:00 +0200
-Message-Id: <20230412082825.622174714@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 50/93] kbuild: refactor single builds of *.ko
+Date: Wed, 12 Apr 2023 10:33:51 +0200
+Message-Id: <20230412082825.263712578@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082823.045155996@linuxfoundation.org>
 References: <20230412082823.045155996@linuxfoundation.org>
@@ -36,42 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit d9b540ee461cca7edca0dd2c2a42625c6b9ffb8f upstream.
+[ Upstream commit f110e5a250e3c5db417e094b3dd86f1c135291ca ]
 
-In rare randconfig builds, the missing CRC32 helper causes
-a link error:
+Remove the potentially invalid modules.order instead of using
+the temporary file.
 
-ld.lld: error: undefined symbol: crc32_le
->>> referenced by usercopy_64.c
->>>               vmlinux.o:(adis16480_trigger_handler)
+Also, KBUILD_MODULES is don't care for single builds. No need to
+cancel it.
 
-Fixes: 941f130881fa ("iio: adis16480: support burst read function")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20230131094616.130238-1-arnd@kernel.org
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Stable-dep-of: ed1f4ccfe947 ("clk: imx: imx8mp: add shared clk gate for usb suspend clk")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ Makefile | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/iio/imu/Kconfig b/drivers/iio/imu/Kconfig
-index f1d7d4b5e222..c2f97629e9cd 100644
---- a/drivers/iio/imu/Kconfig
-+++ b/drivers/iio/imu/Kconfig
-@@ -47,6 +47,7 @@ config ADIS16480
- 	depends on SPI
- 	select IIO_ADIS_LIB
- 	select IIO_ADIS_LIB_BUFFER if IIO_BUFFER
-+	select CRC32
- 	help
- 	  Say yes here to build support for Analog Devices ADIS16375, ADIS16480,
- 	  ADIS16485, ADIS16488 inertial sensors.
+diff --git a/Makefile b/Makefile
+index 6459e91369fdb..4de8cd300451d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1850,6 +1850,8 @@ modules modules_install:
+ 	@echo >&2 '***'
+ 	@exit 1
+ 
++KBUILD_MODULES :=
++
+ endif # CONFIG_MODULES
+ 
+ # Single targets
+@@ -1875,18 +1877,12 @@ $(single-ko): single_modpost
+ $(single-no-ko): descend
+ 	@:
+ 
+-ifeq ($(KBUILD_EXTMOD),)
+-# For the single build of in-tree modules, use a temporary file to avoid
+-# the situation of modules_install installing an invalid modules.order.
+-MODORDER := .modules.tmp
+-endif
+-
++# Remove MODORDER when done because it is not the real one.
+ PHONY += single_modpost
+ single_modpost: $(single-no-ko) modules_prepare
+ 	$(Q){ $(foreach m, $(single-ko), echo $(extmod_prefix)$m;) } > $(MODORDER)
+ 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modpost
+-
+-KBUILD_MODULES := 1
++	$(Q)rm -f $(MODORDER)
+ 
+ export KBUILD_SINGLE_TARGETS := $(addprefix $(extmod_prefix), $(single-no-ko))
+ 
+@@ -1896,10 +1892,6 @@ build-dirs := $(foreach d, $(build-dirs), \
+ 
+ endif
+ 
+-ifndef CONFIG_MODULES
+-KBUILD_MODULES :=
+-endif
+-
+ # Handle descending into subdirectories listed in $(build-dirs)
+ # Preset locale variables to speed up the build process. Limit locale
+ # tweaks to this spot to avoid wrong language settings when running
 -- 
-2.40.0
+2.39.2
 
 
 
