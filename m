@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2062F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36006C433EF;
-	Wed, 12 Apr 2023 08:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE1A2F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84C2C433EF;
+	Wed, 12 Apr 2023 08:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289261;
-	bh=3YeqdeCF+1HV/QUFbidCoyb/gGZf3t0711kmjTA3aj8=;
+	s=korg; t=1681289264;
+	bh=AeKYbk+bSL0H5ExY4FVuP8fdSoNMmFesGea8FnmH6Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=At8HfTpqR1jJJ+MWT44SOfKKJP+Ek7bJRciAWxtYwHedtrE438zfhkYoZSQzSRXWC
-	 W0jH+Z5ZFAb42ulI0eoSZqISIKIgij9+Edl4UY/7ZG00WHwH7hVEZLZb0jINtz+R5f
-	 iLH7h7TgZJgE4sxGWpZ0bvKmJxmtS9ILVyxy4/ps=
+	b=dEtY+d9aRUHnKR1c4Fw8QWJHWMBTtKeXXHkt0OJ78A367K/R7Tww0XPmYhpHatP5K
+	 yHgGjMrlaWELfBDWwEN6vWNkOwO3cQkESxzAl/8pvV2p27QZE74p5c3V+871jngXjr
+	 f83dtpNfvoz7tscBaFDIYouyAzph3HbhXhd+0BP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+47c24ca20a2fa01f082e@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 032/173] sctp: check send stream number after wait_for_sndbuf
-Date: Wed, 12 Apr 2023 10:32:38 +0200
-Message-Id: <20230412082839.386722356@linuxfoundation.org>
+Subject: [PATCH 6.2 033/173] drm/i915/huc: Cancel HuC delayed load timer on reset.
+Date: Wed, 12 Apr 2023 10:32:39 +0200
+Message-Id: <20230412082839.416958261@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
 References: <20230412082838.125271466@linuxfoundation.org>
@@ -36,64 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-[ Upstream commit 2584024b23552c00d95b50255e47bd18d306d31a ]
+[ Upstream commit c74237496fbc799257b091179dd01a3200f7314d ]
 
-This patch fixes a corner case where the asoc out stream count may change
-after wait_for_sndbuf.
+In the rare case where we do a full GT reset after starting the HuC
+load and before it completes (which basically boils down to i915 hanging
+during init), we need to cancel the delayed load fence, as it will be
+re-initialized in the post-reset recovery.
 
-When the main thread in the client starts a connection, if its out stream
-count is set to N while the in stream count in the server is set to N - 2,
-another thread in the client keeps sending the msgs with stream number
-N - 1, and waits for sndbuf before processing INIT_ACK.
-
-However, after processing INIT_ACK, the out stream count in the client is
-shrunk to N - 2, the same to the in stream count in the server. The crash
-occurs when the thread waiting for sndbuf is awake and sends the msg in a
-non-existing stream(N - 1), the call trace is as below:
-
-  KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]
-  Call Trace:
-   <TASK>
-   sctp_cmd_send_msg net/sctp/sm_sideeffect.c:1114 [inline]
-   sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1777 [inline]
-   sctp_side_effects net/sctp/sm_sideeffect.c:1199 [inline]
-   sctp_do_sm+0x197d/0x5310 net/sctp/sm_sideeffect.c:1170
-   sctp_primitive_SEND+0x9f/0xc0 net/sctp/primitive.c:163
-   sctp_sendmsg_to_asoc+0x10eb/0x1a30 net/sctp/socket.c:1868
-   sctp_sendmsg+0x8d4/0x1d90 net/sctp/socket.c:2026
-   inet_sendmsg+0x9d/0xe0 net/ipv4/af_inet.c:825
-   sock_sendmsg_nosec net/socket.c:722 [inline]
-   sock_sendmsg+0xde/0x190 net/socket.c:745
-
-The fix is to add an unlikely check for the send stream number after the
-thread wakes up from the wait_for_sndbuf.
-
-Fixes: 5bbbbe32a431 ("sctp: introduce stream scheduler foundations")
-Reported-by: syzbot+47c24ca20a2fa01f082e@syzkaller.appspotmail.com
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 27536e03271d ("drm/i915/huc: track delayed HuC load with a fence")
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
+Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230313205556.1174503-1-daniele.ceraolospurio@intel.com
+(cherry picked from commit cdf7911f7dbcb37228409a63bf75630776c45a15)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/i915/gt/uc/intel_huc.c | 7 +++++++
+ drivers/gpu/drm/i915/gt/uc/intel_huc.h | 7 +------
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 84021a6c4f9da..ec7d1a89efbbd 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -1829,6 +1829,10 @@ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
- 		err = sctp_wait_for_sndbuf(asoc, &timeo, msg_len);
- 		if (err)
- 			goto err;
-+		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
-+			err = -EINVAL;
-+			goto err;
-+		}
- 	}
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_huc.c b/drivers/gpu/drm/i915/gt/uc/intel_huc.c
+index 410905da8e974..0c103ca160d10 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_huc.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_huc.c
+@@ -235,6 +235,13 @@ static void delayed_huc_load_fini(struct intel_huc *huc)
+ 	i915_sw_fence_fini(&huc->delayed_load.fence);
+ }
  
- 	if (sctp_state(asoc, CLOSED)) {
++int intel_huc_sanitize(struct intel_huc *huc)
++{
++	delayed_huc_load_complete(huc);
++	intel_uc_fw_sanitize(&huc->fw);
++	return 0;
++}
++
+ static bool vcs_supported(struct intel_gt *gt)
+ {
+ 	intel_engine_mask_t mask = gt->info.engine_mask;
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_huc.h b/drivers/gpu/drm/i915/gt/uc/intel_huc.h
+index 52db03620c609..db555b3c1f562 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_huc.h
++++ b/drivers/gpu/drm/i915/gt/uc/intel_huc.h
+@@ -41,6 +41,7 @@ struct intel_huc {
+ 	} delayed_load;
+ };
+ 
++int intel_huc_sanitize(struct intel_huc *huc);
+ void intel_huc_init_early(struct intel_huc *huc);
+ int intel_huc_init(struct intel_huc *huc);
+ void intel_huc_fini(struct intel_huc *huc);
+@@ -54,12 +55,6 @@ bool intel_huc_is_authenticated(struct intel_huc *huc);
+ void intel_huc_register_gsc_notifier(struct intel_huc *huc, struct bus_type *bus);
+ void intel_huc_unregister_gsc_notifier(struct intel_huc *huc, struct bus_type *bus);
+ 
+-static inline int intel_huc_sanitize(struct intel_huc *huc)
+-{
+-	intel_uc_fw_sanitize(&huc->fw);
+-	return 0;
+-}
+-
+ static inline bool intel_huc_is_supported(struct intel_huc *huc)
+ {
+ 	return intel_uc_fw_is_supported(&huc->fw);
 -- 
 2.39.2
 
