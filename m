@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086C92F24
-	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:45:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819E0C4339B;
-	Wed, 12 Apr 2023 08:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F012F24
+	for <patches@lists.linux.dev>; Wed, 12 Apr 2023 08:45:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD58C433D2;
+	Wed, 12 Apr 2023 08:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681289119;
-	bh=ldw7XbhBb1FduhtV1MrUJHLm5E0vJiafFKpOZ6P+NCM=;
+	s=korg; t=1681289122;
+	bh=dqOfdoiMD5nlhVVX/fukRIEfw9Nvjb0Ds7Q8VFsAq7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hvj73xIw6BAgZQduOei+XJc9PoyKjPYq+INBr+LXolf78GUD0RNCPr4eTi7Izt4G4
-	 px5kKpaA4SFF4ToMlUweSu3CTp7+pwFlArfj7F0jnRWfCzNK0Ip/lZAwePsKwkiK9v
-	 T1cEsXK98RIDs6gdk67W+OKgkujMOzzd8YnQ/poU=
+	b=EPe1L5theLRVfH3sKwaVSTj/y765RFOI3bXZI83GOB6aus2EncukkcMwZrcL2jy9p
+	 R+Wyyu7rF8AsQHw7x8GReNqR3Js8D2ObNbs6FHm93ANrB0P2IbXpCCIUn/O7mHF1sS
+	 AAs7T2MXw0eb+YYRzmj3b2KahRBurarBjPwfa6w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <sjb7183@psu.edu>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	"Dae R. Jeong" <threeearcat@gmail.com>,
+	Hillf Danton <hdanton@sina.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 114/164] can: j1939: j1939_tp_tx_dat_new(): fix out-of-bounds memory access
-Date: Wed, 12 Apr 2023 10:33:56 +0200
-Message-Id: <20230412082841.463366507@linuxfoundation.org>
+Subject: [PATCH 6.1 115/164] can: isotp: fix race between isotp_sendsmg() and isotp_release()
+Date: Wed, 12 Apr 2023 10:33:57 +0200
+Message-Id: <20230412082841.512837101@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
 References: <20230412082836.695875037@linuxfoundation.org>
@@ -35,53 +36,162 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit b45193cb4df556fe6251b285a5ce44046dd36b4a upstream.
+commit 051737439eaee5bdd03d3c2ef5510d54a478fd05 upstream.
 
-In the j1939_tp_tx_dat_new() function, an out-of-bounds memory access
-could occur during the memcpy() operation if the size of skb->cb is
-larger than the size of struct j1939_sk_buff_cb. This is because the
-memcpy() operation uses the size of skb->cb, leading to a read beyond
-the struct j1939_sk_buff_cb.
+As discussed with Dae R. Jeong and Hillf Danton here [1] the sendmsg()
+function in isotp.c might get into a race condition when restoring the
+former tx.state from the old_state.
 
-Updated the memcpy() operation to use the size of struct
-j1939_sk_buff_cb instead of the size of skb->cb. This ensures that the
-memcpy() operation only reads the memory within the bounds of struct
-j1939_sk_buff_cb, preventing out-of-bounds memory access.
+Remove the old_state concept and implement proper locking for the
+ISOTP_IDLE transitions in isotp_sendmsg(), inspired by a
+simplification idea from Hillf Danton.
 
-Additionally, add a BUILD_BUG_ON() to check that the size of skb->cb
-is greater than or equal to the size of struct j1939_sk_buff_cb. This
-ensures that the skb->cb buffer is large enough to hold the
-j1939_sk_buff_cb structure.
+Introduce a new tx.state ISOTP_SHUTDOWN and use the same locking
+mechanism from isotp_release() which resolves a potential race between
+isotp_sendsmg() and isotp_release().
 
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Reported-by: Shuangpeng Bai <sjb7183@psu.edu>
-Tested-by: Shuangpeng Bai <sjb7183@psu.edu>
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://groups.google.com/g/syzkaller/c/G_LL-C3plRs/m/-8xCi6dCAgAJ
-Link: https://lore.kernel.org/all/20230404073128.3173900-1-o.rempel@pengutronix.de
+[1] https://lore.kernel.org/linux-can/ZB%2F93xJxq%2FBUqAgG@dragonet
+
+v1: https://lore.kernel.org/all/20230331102114.15164-1-socketcan@hartkopp.net
+v2: https://lore.kernel.org/all/20230331123600.3550-1-socketcan@hartkopp.net
+    take care of signal interrupts for wait_event_interruptible() in
+    isotp_release()
+v3: https://lore.kernel.org/all/20230331130654.9886-1-socketcan@hartkopp.net
+    take care of signal interrupts for wait_event_interruptible() in
+    isotp_sendmsg() in the wait_tx_done case
+v4: https://lore.kernel.org/all/20230331131935.21465-1-socketcan@hartkopp.net
+    take care of signal interrupts for wait_event_interruptible() in
+    isotp_sendmsg() in ALL cases
+
+Cc: Dae R. Jeong <threeearcat@gmail.com>
+Cc: Hillf Danton <hdanton@sina.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Fixes: 4f027cba8216 ("can: isotp: split tx timer into transmission and timeout")
+Link: https://lore.kernel.org/all/20230331131935.21465-1-socketcan@hartkopp.net
 Cc: stable@vger.kernel.org
 [mkl: rephrase commit message]
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/transport.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/can/isotp.c |   55 +++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 31 insertions(+), 24 deletions(-)
 
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -604,7 +604,10 @@ sk_buff *j1939_tp_tx_dat_new(struct j193
- 	/* reserve CAN header */
- 	skb_reserve(skb, offsetof(struct can_frame, data));
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -119,7 +119,8 @@ enum {
+ 	ISOTP_WAIT_FIRST_FC,
+ 	ISOTP_WAIT_FC,
+ 	ISOTP_WAIT_DATA,
+-	ISOTP_SENDING
++	ISOTP_SENDING,
++	ISOTP_SHUTDOWN,
+ };
  
--	memcpy(skb->cb, re_skcb, sizeof(skb->cb));
-+	/* skb->cb must be large enough to hold a j1939_sk_buff_cb structure */
-+	BUILD_BUG_ON(sizeof(skb->cb) < sizeof(*re_skcb));
+ struct tpcon {
+@@ -880,8 +881,8 @@ static enum hrtimer_restart isotp_tx_tim
+ 					     txtimer);
+ 	struct sock *sk = &so->sk;
+ 
+-	/* don't handle timeouts in IDLE state */
+-	if (so->tx.state == ISOTP_IDLE)
++	/* don't handle timeouts in IDLE or SHUTDOWN state */
++	if (so->tx.state == ISOTP_IDLE || so->tx.state == ISOTP_SHUTDOWN)
+ 		return HRTIMER_NORESTART;
+ 
+ 	/* we did not get any flow control or echo frame in time */
+@@ -918,7 +919,6 @@ static int isotp_sendmsg(struct socket *
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct isotp_sock *so = isotp_sk(sk);
+-	u32 old_state = so->tx.state;
+ 	struct sk_buff *skb;
+ 	struct net_device *dev;
+ 	struct canfd_frame *cf;
+@@ -928,23 +928,24 @@ static int isotp_sendmsg(struct socket *
+ 	int off;
+ 	int err;
+ 
+-	if (!so->bound)
++	if (!so->bound || so->tx.state == ISOTP_SHUTDOWN)
+ 		return -EADDRNOTAVAIL;
+ 
++wait_free_buffer:
+ 	/* we do not support multiple buffers - for now */
+-	if (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE ||
+-	    wq_has_sleeper(&so->wait)) {
+-		if (msg->msg_flags & MSG_DONTWAIT) {
+-			err = -EAGAIN;
+-			goto err_out;
+-		}
++	if (wq_has_sleeper(&so->wait) && (msg->msg_flags & MSG_DONTWAIT))
++		return -EAGAIN;
+ 
+-		/* wait for complete transmission of current pdu */
+-		err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
+-		if (err)
+-			goto err_out;
++	/* wait for complete transmission of current pdu */
++	err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
++	if (err)
++		goto err_event_drop;
 +
-+	memcpy(skb->cb, re_skcb, sizeof(*re_skcb));
- 	skcb = j1939_skb_to_cb(skb);
- 	if (swap_src_dst)
- 		j1939_skbcb_swap(skcb);
++	if (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
++		if (so->tx.state == ISOTP_SHUTDOWN)
++			return -EADDRNOTAVAIL;
+ 
+-		so->tx.state = ISOTP_SENDING;
++		goto wait_free_buffer;
+ 	}
+ 
+ 	if (!size || size > MAX_MSG_LENGTH) {
+@@ -1074,7 +1075,9 @@ static int isotp_sendmsg(struct socket *
+ 
+ 	if (wait_tx_done) {
+ 		/* wait for complete transmission of current pdu */
+-		wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
++		err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
++		if (err)
++			goto err_event_drop;
+ 
+ 		if (sk->sk_err)
+ 			return -sk->sk_err;
+@@ -1082,13 +1085,15 @@ static int isotp_sendmsg(struct socket *
+ 
+ 	return size;
+ 
++err_event_drop:
++	/* got signal: force tx state machine to be idle */
++	so->tx.state = ISOTP_IDLE;
++	hrtimer_cancel(&so->txfrtimer);
++	hrtimer_cancel(&so->txtimer);
+ err_out_drop:
+ 	/* drop this PDU and unlock a potential wait queue */
+-	old_state = ISOTP_IDLE;
+-err_out:
+-	so->tx.state = old_state;
+-	if (so->tx.state == ISOTP_IDLE)
+-		wake_up_interruptible(&so->wait);
++	so->tx.state = ISOTP_IDLE;
++	wake_up_interruptible(&so->wait);
+ 
+ 	return err;
+ }
+@@ -1150,10 +1155,12 @@ static int isotp_release(struct socket *
+ 	net = sock_net(sk);
+ 
+ 	/* wait for complete transmission of current pdu */
+-	wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
++	while (wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE) == 0 &&
++	       cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SHUTDOWN) != ISOTP_IDLE)
++		;
+ 
+ 	/* force state machines to be idle also when a signal occurred */
+-	so->tx.state = ISOTP_IDLE;
++	so->tx.state = ISOTP_SHUTDOWN;
+ 	so->rx.state = ISOTP_IDLE;
+ 
+ 	spin_lock(&isotp_notifier_lock);
 
 
