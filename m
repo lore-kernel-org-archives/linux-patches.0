@@ -1,121 +1,232 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817752581
-	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 08:34:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
-	t=1681374846; i=secu100@gmx.net;
-	bh=JuB/8Df5JPEkDBJvzkYX19UwLMGlrI3SNhkkgdoSeJo=;
-	h=X-UI-Sender-Class:Date:Subject:References:To:Cc:From:In-Reply-To;
-	b=iBPaUVJE2Tw9ftzeoxrvp8G+jwPE+L4NQOhDQQXW9vAXQTI5qG16np9HmqFvieWaK
-	 ITIU1thk0m11eyb/ZwWp3sRfDcnT5p/Z9XX9M+SADpYpV80cQeqmm6ppqdEwzzxp7F
-	 Rnin1Bk71Bw+snM9CYYuh4+tRcgScnsfOx89DVSNLwStCtU1ZU8grZndLBRfmHymHc
-	 tJXSYY3VvKcdZVI950UdNsZwt5xzB5wOG0bj2fqs4GnGfqIUkoAeyfj4r3C76FkK/Y
-	 uF1+BVqx5ha9dEjuJnvMDKSWC7eHDTCLzMH+IMBXFJXOsGLgJhsNNt9X8ouG4FgL+X
-	 Acf449GFKDTUg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.178.22] ([93.212.130.164]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTABZ-1pvyFt1AQ3-00Uce3; Thu, 13
- Apr 2023 10:34:06 +0200
-Message-ID: <30f48ec1-df68-68e2-f81f-538e5526599e@gmx.net>
-Date: Thu, 13 Apr 2023 10:32:20 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042D762F
+	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 08:55:40 +0000 (UTC)
+Received: by mail-ua1-f54.google.com with SMTP id k20so9875629ual.2
+        for <patches@lists.linux.dev>; Thu, 13 Apr 2023 01:55:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681376140; x=1683968140;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7PrjGClB6aBMd5jPrkLLFovctALNVXzd7tpLMl0zzO4=;
+        b=y60vwBrMosjjUa5lWyKi3dJna9t5hEp6YTEeDt8R0sXW2YmWqyudV4JZf0AfvtLahj
+         IfvyeBlTSKKBmjvUdckFYjgOT6n0kOhhKaDUc2nA1oxJ0xqOL1RqjEb7x/If6mJHeLB+
+         ZsaH0kNwtcWlH08gsThfdQuYigJUhHFXMlIkbtHyZlBQdHoeVjHxtA+oO5AZsm3ncMq1
+         96XpADM6UiaMk0978OgkI7UOc4pRsup2GcI+osduGZtJeGLY/3e3eBq/AzQSZP9M+H6O
+         KcVpfWz3ORh2ZKPCw1A+duiuWyh2SmRdxYBFnRJOw1C+YM6nOvF5RsioVJHETscGsaw0
+         Qr/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681376140; x=1683968140;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7PrjGClB6aBMd5jPrkLLFovctALNVXzd7tpLMl0zzO4=;
+        b=LB3px8biTi3RmL9ahxYWKIoNdwACybmTCGvIVtpJXIP1zTtJbSfpg2INt46ZMhWk3U
+         vBbD5EFvHgvm6L/TVaiINtlvbZYDK8AJASmBOPWpVUL/581XWcFSwpMp0ExQZAVV3iIE
+         4IELWBqCjWtxZCINwR8UO7AmPjj+zCshxTBR5qkvv9SgunImHY3W8nsS4UvEp3lri+Ae
+         OIrE+LEwsZuYRbiQaxWYHPyQ2ds4eisl4FShGONzhJXUODhrDyUhW8qUiC8s9eN/F3KL
+         iH0YUnx12T4MB0GKVLkziBl/LMGVmiGmAWXOJl/jE8T8FNNBUAMjpQupDZpmLfRENNBK
+         Oz6w==
+X-Gm-Message-State: AAQBX9ddcMd/m0P7AvOKf0ltRAyYVc8yJtc+nvwIyIwsEm2IOGaT/50Q
+	o3gK/yXMr9aIgQoUs3reCU3Cz/xQRVzbZx6YSIKl6w==
+X-Google-Smtp-Source: AKy350Z81to55BJMvhHs6QbXIb8eH6eaUTqPmN7DYMdBoFqQZcGxnpkaVC8M63nSp71akXc2AIK9BL9UAGSl8AFP/lY=
+X-Received: by 2002:a9f:3012:0:b0:6cd:2038:4911 with SMTP id
+ h18-20020a9f3012000000b006cd20384911mr646593uab.1.1681376139699; Thu, 13 Apr
+ 2023 01:55:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: [PATCH 6.1.23] ALSA: hda/realtek: Add quirk for HP ENVY Laptop
- 17-cr0xxx
-References: <25ce0797-1d40-6e2b-0895-c4ca85aad2e6@gmx.net>
-To: stable@vger.kernel.org
-Cc: kernel@vger.kernel.org, patches@lists.linux.dev
-From: "secu100@gmx.net" <secu100@gmx.net>
-In-Reply-To: <25ce0797-1d40-6e2b-0895-c4ca85aad2e6@gmx.net>
-X-Forwarded-Message-Id: <25ce0797-1d40-6e2b-0895-c4ca85aad2e6@gmx.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20230412082838.125271466@linuxfoundation.org>
+In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 13 Apr 2023 14:25:28 +0530
+Message-ID: <CA+G9fYvNNULQQ809qOxfk=3jqQpSfRvNwW80zNRXXCxbzqxFbQ@mail.gmail.com>
+Subject: Re: [PATCH 6.2 000/173] 6.2.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:AeR3DtBk8wIp4Pd/PFDBNXTo5fGJiSxRvhN60wUsgQfF8o2QPo4
- RV65YwiJWjUYIHNYERbg6vpUx3d8xU7CMVAIaBTh726xtG0zeDIq2e7tryS0stBYwXK7zDQ
- SPsGZ+zjWAKn2ZpfefexDiqdSq1Kq5y6T+CEFyYMUik+/iHXmb8VfjZMPrfYo3kfY10dNNq
- Ree1HGWITyF8wu0NY2kTg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:LrXcOaS+3w8=;+SjxOydbkme88SKtQG+LSv0mYKu
- epgNC3JHX0vp5bOR7LSjsafxKHVRRFtNIo2RpShLQGnYNXPL5sDLrRyq6huVgGMi5bJmX0ouS
- kNcx2moa0WhnY2zO3YcMQixOs0iJeZwsjeOQKlF//VvL/EvkAdMMEtXllfbH+o9hq40SDQTYJ
- 0yR5GT2TSmvmN7HyG1KwnG98y/qRipz0EYyk62WPgpRnoABRfURlo/r4wJ6BS4nxtNAKed4KF
- yNH2D6+WK4XguJzMIvt6rLbbGETR/9l2gEEg2EdP3AOxLp6cIMm+bukmh8PNgub8L0sZNXimM
- UJZ6DBMFAQ09oFQenZVtAMzWxEuGRc/yuaRo8BjMRc+xAUxjxLC100LAux8Xk9d9GVoVQ+LtX
- fu5jJbfRNLO114U5Ka/j8MILJ0uWrC+hD8iHdEy2VFIcdybsOhbrf218Lxs+bazpUJLuSPkbc
- WDmIuOVMCcGJblBlZcwcnL/ATUcxZPuFSXlYbDk6NS6cNpcR9jpuHPXC2rf2aNFhUcYmD0uxZ
- j5KkNobRvDXXBm/RHoHpPEVeNje+Ed7o74T9TO9L0VqKctFtfKAbo3Fech8tapWSzXXehGMNp
- udd0ZhyWTqVhwyy9oXCN+4JlQuf1yVQSGHLsNC8uplupH69WrzRu5wTEXPx4wUltf2dsMuHj0
- 9kjz90JY1V6WonlaU24F8rTxlO13fnUbh4cETSffVwSBscF/8yXO9FhUILztZwIVhgiRz/fuf
- 6j8C4EhuFmca1MvEJ41IAe7RR50uB3qQ+vsdBAo9NPLbs5hS2ebP+fnv3HZobcaLMoEkObvY+
- F+i18BDAUBekRCqylYXbg7Z09wtP81h5kBognq/o+F9mSRwMsE9o1KFVbpmRjwfE4ZPXbgwUC
- IW2eRlyuLqjDud1hVZbt72ShrCTcwrWUOAA6PFgtAR/IBSLn6ulzqqDhuIdYjtOTTUsVFrmao
- wL1dMQ/qgBWHxXHB1CUW+FPTH08=
 
-The patch of the file patch_realtek.c fixes the speaker output on the HP
-ENVY Laptop 17-cr0xxx. The LEDs for muting the microphone and speakers
-still do not work. Likewise, the hotkey for microphone muting is without
-function.
-
-This laptop model uses actually the Realtek ALC245 codec alongside with
-Cirrus Logic amplifiers. In the bios there seems to be no _DSD property
-specified in the ACPI tables of the CSC3551 section. Therefore, the file
-cs35l41_hda.c must also be patched.
-
-Even if a patch of the file cs35l41_hda.c is excluded, it would make
-sense to make the adjustment in the file patch_realtek.c. then the sound
-output would work in case of a bios update on the part of the manufacturer=
-.
+On Wed, 12 Apr 2023 at 14:17, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.2.11 release.
+> There are 173 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 14 Apr 2023 08:28:02 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.2.11-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.2.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
 
-=2D-- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9426,6 +9426,7 @@ static const struct snd_pci_quirk alc269
- =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x89c6, "Zbook Fury 17 G9"=
-,
-ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x89ca, "HP",
-ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x89d3, "HP EliteBook 645 =
-G9 (MB 89D2)",
-ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x8a2e, "HP ENVY Laptop 17-cr0xx=
-x",
-ALC287_FIXUP_CS35L41_I2C_2),
- =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One",
-ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
- =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x8aa0, "HP ProBook 440 G9=
- (MB 8A9E)",
-ALC236_FIXUP_HP_GPIO_LED),
- =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x8aa3, "HP ProBook 450 G9=
- (MB 8AA1)",
-ALC236_FIXUP_HP_GPIO_LED),
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
+## Build
+* kernel: 6.2.11-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.2.y
+* git commit: 5f50ce97de71b5278626756de07d906a3a4882d0
+* git describe: v6.2.9-361-g5f50ce97de71
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.2.y/build/v6.2.9=
+-361-g5f50ce97de71
 
-=2D-- a/sound/pci/hda/cs35l41_hda.c
-+++ b/sound/pci/hda/cs35l41_hda.c
-@@ -1244,6 +1244,10 @@ static int cs35l41_no_acpi_dsd(struct cs
- =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->bst_type =3D CS35L41_=
-EXT_BOOST;
- =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->gpio1.func =3D CS35l4=
-1_VSPK_SWITCH;
- =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->gpio1.valid =3D true;
-+=C2=A0=C2=A0=C2=A0 } else if (strncmp(hid, "CSC3551", 7) =3D=3D 0) {
-+=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->bst_type =3D CS35L41_EXT_BO=
-OST;
-+=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->gpio1.func =3D CS35l41_VSPK=
-_SWITCH;
-+=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->gpio1.valid =3D true;
- =C2=A0=C2=A0=C2=A0=C2=A0 } else {
- =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 /*
- =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 =C2=A0* Note: CLSA010(0/1) ar=
-e special cases which use a slightly
-different design.
+## Test Regressions (compared to v6.2.9)
 
+## Metric Regressions (compared to v6.2.9)
+
+## Test Fixes (compared to v6.2.9)
+
+## Metric Fixes (compared to v6.2.9)
+
+## Test result summary
+total: 186207, pass: 158993, fail: 4143, skip: 22756, xfail: 315
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 145 total, 142 passed, 3 failed
+* arm64: 54 total, 53 passed, 1 failed
+* i386: 41 total, 38 passed, 3 failed
+* mips: 30 total, 28 passed, 2 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 38 total, 36 passed, 2 failed
+* riscv: 26 total, 25 passed, 1 failed
+* s390: 16 total, 16 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 7 passed, 1 failed
+* x86_64: 46 total, 46 passed, 0 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
