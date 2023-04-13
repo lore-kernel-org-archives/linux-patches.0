@@ -1,69 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4148F2F31
-	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 22:22:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A588C433D2;
-	Thu, 13 Apr 2023 22:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCAA64B
+	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 22:38:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6193C433EF;
+	Thu, 13 Apr 2023 22:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681424577;
-	bh=1tkGVNkh5mtgc1lUnPVm9sXXKjCYxesPI5fmgwuuyPQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZWY3jYOVkEYGIRmU2gLBqJ0crhvbz7Ufz93+tiCtUHrit2ktzSif341pPgd3Ysjre
-	 gUaUwIF78slrGvRs368ZAS5Gbb/Jy17dA65+654LJbpHzjo93toSssoiKdaRzvaY6u
-	 mBZukuSLfNd4XOUruiwiKFFoM9k9/McYA9LftgoueaZSnTdnAQB/V3yL139cr7k6kD
-	 Hs7jare8xK9ZW9DGTNo5v+E7nsA2gsTm4ERseqxK0bSv6Vv6m4Hiva/AK44PohTcTy
-	 N/E9/skyCnwAB/9Wlpi6x5gcc4L6mfDp9RAqpeYoqGmuXoY+YHnObR8OmEeZgOWMRy
-	 ZOlT2clibcJmA==
-Date: Thu, 13 Apr 2023 23:22:52 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	patches@lists.linux.dev, Tommaso Merciai <tomm.merciai@gmail.com>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Hal Feng <hal.feng@starfivetech.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Xingyu Wu <xingyu.wu@starfivetech.com>
-Subject: Re: [PATCH] clk: starfive: Avoid casting iomem pointers
-Message-ID: <20230413-nastiness-endurance-3a9159e599d4@spud>
-References: <20230413205528.4044216-1-sboyd@kernel.org>
- <20230413-creamer-overstate-f7ce5a72e437@spud>
- <558d22a8848f2f026f272fdc0528424d.sboyd@kernel.org>
+	s=k20201202; t=1681425515;
+	bh=mxON2XWy5axtTK7Rhbe3JIQCWet3NhoTe0n5UPPbxXY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=AJKGIVcj1S2FJ6AwXfolPCUlnmW7HczX032Lw8MHE9VHy7Xi7IsPpKHWjlzQzLYIx
+	 hOsljRrkzxHFR9HIWfvNYEaLSs5C6d95ucMjR5F+JO0fsq4Dh22kcLj+78crxDmewN
+	 w9YE1z6KNSJvGn6ilCVZ/pgBDgM1C+0WuWQ3aZWQUfu+2++bEoJdrBoTX1VCUB1sd1
+	 ZVfvXuqOHzUd5PwK+98HbEl061vTTVUhzidhlvkPjP40B/pYwrQ1hx8ynP4H5lBgok
+	 qKOchAp4xeQ9sDXGCrUnKId/he/DyYrWzpJLhMvSiLjHB8UmlbYMMBSaeeSpSCSNyM
+	 SkGncmLCMkLFw==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 0/6] SPMI patches for v6.4
+Date: Thu, 13 Apr 2023 15:38:28 -0700
+Message-ID: <20230413223834.4084793-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.40.0.634.g4ca3ef3211-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="1wIS3iEeVvli0/Lq"
-Content-Disposition: inline
-In-Reply-To: <558d22a8848f2f026f272fdc0528424d.sboyd@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Hi Greg,
 
---1wIS3iEeVvli0/Lq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Here's the pile of SPMI patches for the next merge window. They're
+mostly cleanups, one batch migrates drivers to the new platform driver
+remove function and another drops of_match_ptr() from the Mediatek
+driver. There's also some kernel-doc warning fixes and we allow the
+'remove' callback for spmi drivers to be optional so that drivers that
+don't have one don't oops when they're unbound.
 
-On Thu, Apr 13, 2023 at 03:01:02PM -0700, Stephen Boyd wrote:
+Jishnu Prakash (1):
+  spmi: Add a check for remove callback when removing a SPMI driver
 
-> Yeah that looks better. Care to send a proper patch for it?
+Krzysztof Kozlowski (1):
+  spmi: mtk-pmif: Drop of_match_ptr for ID table
 
-Yup, no problem: 20230413-critter-synopsis-dac070a86cb4@spud
+Randy Dunlap (1):
+  spmi: fix W=1 kernel-doc warnings
 
-Cheers,
-Conor.
+Uwe Kleine-König (3):
+  spmi: hisi-spmi-controller: Convert to platform remove callback
+    returning void
+  spmi: mtk-pmif: Convert to platform remove callback returning void
+  spmi: pmic-arb: Convert to platform remove callback returning void
 
---1wIS3iEeVvli0/Lq
-Content-Type: application/pgp-signature; name="signature.asc"
+ drivers/spmi/hisi-spmi-controller.c | 5 ++---
+ drivers/spmi/spmi-mtk-pmif.c        | 7 +++----
+ drivers/spmi/spmi-pmic-arb.c        | 9 ++++-----
+ drivers/spmi/spmi.c                 | 8 +++++---
+ 4 files changed, 14 insertions(+), 15 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZDiAvAAKCRB4tDGHoIJi
-0ii6AQD2B6CeWTcD+/POiQaJpv6BhpcQoDReJbIkRNIwlf7tWgD6AlJxcRngsS/H
-rVcwq4nNi1A0jw5jvPnj3CqbRDuk+wE=
-=o5Ls
------END PGP SIGNATURE-----
-
---1wIS3iEeVvli0/Lq--
