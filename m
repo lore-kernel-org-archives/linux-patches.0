@@ -1,101 +1,102 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outbound-ss-820.bluehost.com (outbound-ss-820.bluehost.com [69.89.24.241])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AFF2C9C
-	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 11:43:12 +0000 (UTC)
-Received: by mail-ot1-f50.google.com with SMTP id k101-20020a9d19ee000000b006a14270bc7eso4521150otk.6
-        for <patches@lists.linux.dev>; Thu, 13 Apr 2023 04:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681386191; x=1683978191;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mtkxny2XQ1LJCG2ofJudelWHLWK11yhtce+Fr/hSPn8=;
-        b=oXjbFJvk92wtbyCcl59f74SM1mU4r5QhoXD8WwDF5VnGA0gYWNUw/ZTzhjZp7Gt5T8
-         DTKAzl1FIuBZ/JcyGWZEO9j1jr844bTUfa+rnFDx8ijPSkwqCYe+yPipv3IFsySaa2cD
-         Srql1CUGrCo25m+nxA5Os4/G2ciOKszpPW5EUWpwzyqTTyWmMws1U/DSqbvogFACFnBr
-         qO+hc6kcMnaHDXnCSh6cObRJL8ICMvRJOV8BgNKdQhIER+60oAU2YA0c6OOwtcGRwsJj
-         XYbwWAo3T/QFgUIRB6QYa4gOfgO65t/pJiJ7qNn3d/KfDkaNG1/yFL4bNl0NmwrjIljk
-         Ujqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681386191; x=1683978191;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mtkxny2XQ1LJCG2ofJudelWHLWK11yhtce+Fr/hSPn8=;
-        b=S5Maq6AnLrojdQzdFvpjEMHi4iuAPUkU7ZGwCQXtS5+R9SweHlBpKnPL9pjBlPuzRg
-         82YLuDjRzKqnVcjfEEVw5oXNoeyOQlbog74T7I3CgjQtXOwppLUwo4XxKM+AMvTLJlUN
-         lQAZFAxi/PzgI43rgp4U0xxZZGxclCgfj7m8a3E05alIE+AbXSq/oQGpFpARziCtO9v7
-         ihRZIdIKlUyTIFngcgvHXR+WyAgLh4aCgAHYxBurWL7CS+YY3nZrf5DnotQ6KGbtKkz3
-         s+Pm5mjT1/L/puW/oAccBuojCqfYVWGDMdTitRGIgAe9jshZweRahKvFvZukWo4lscCk
-         C1tg==
-X-Gm-Message-State: AAQBX9e0i8yU9ouAVuJt3Koz4d1iEwl4gn7IX/wXfGjEO2eCk8HrPyEf
-	hPz1IUgcgfyyMakfCFK+kxo=
-X-Google-Smtp-Source: AKy350YZTDJKV+tiTbQnkjJAINUoycnSG+9D+G9cnYQXR8TK/HyVLbFOZpwTulkcVVsHrnC6L0M7PQ==
-X-Received: by 2002:a9d:6c55:0:b0:6a3:c51c:e615 with SMTP id g21-20020a9d6c55000000b006a3c51ce615mr797209otq.8.1681386191480;
-        Thu, 13 Apr 2023 04:43:11 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id w24-20020a9d6758000000b006a11dd6d2c1sm597872otm.29.2023.04.13.04.43.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Apr 2023 04:43:11 -0700 (PDT)
-Message-ID: <1b61b5dc-a006-3307-b478-baa5520cb8af@gmail.com>
-Date: Thu, 13 Apr 2023 08:43:07 -0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433FF2C9C
+	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 12:16:26 +0000 (UTC)
+Received: from cmgw12.mail.unifiedlayer.com (unknown [10.0.90.127])
+	by progateway2.mail.pro1.eigbox.com (Postfix) with ESMTP id 4DEED10048545
+	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 12:16:20 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id mvsCp5bU0zG5imvsCpqcAo; Thu, 13 Apr 2023 12:16:20 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=YpDK+6UX c=1 sm=1 tr=0 ts=6437f294
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=dKHAf1wccvYA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=wwr025VLPom+kwYQpLnukilx+EvXo5OYuUtoHiDnz3A=; b=vw+pmagzTzcZYlF2X0j3o4yAQb
+	Jw5hYL5wIC+azxgjrKYGm3V+Pz3oKPQQ8HzNWMTxv7IQLSmD0zTE7OlVOjl8lmOaVwEWr7NEOIYKf
+	yqlDpgIDqpkT6HCKNuaJ4t/dMcDnl7yYYp5pOOPPv6D1oW9mb/BjjRnfF+F1NWvamtcweI4l2yFCH
+	nRfcX7krsh9KfeGjHbc7eXmx5P0V91naESbNWITtXGoUOaKDpAuW2qj3oenjMLTtSRHFYd6eSzsQv
+	zAQVEToiaGJj3KqWRrPntkmG65pYzuOWkOqNVrm2V+T/d9fCKpc0htpp98a3flEClHfiZFcqwVxFN
+	bL6StbaA==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:34858 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1pmvsB-002jlK-9j;
+	Thu, 13 Apr 2023 06:16:19 -0600
+Subject: Re: [PATCH 6.1 000/164] 6.1.24-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230412082836.695875037@linuxfoundation.org>
+In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <98534055-5871-59f2-5ff3-d011859102ee@w6rz.net>
+Date: Thu, 13 Apr 2023 05:16:17 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH] rust: init: broaden the blanket impl of `Init`
-To: Benno Lossin <benno.lossin@proton.me>, Miguel Ojeda <ojeda@kernel.org>,
- Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20230413100157.740697-1-benno.lossin@proton.me>
-Content-Language: en-US
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230413100157.740697-1-benno.lossin@proton.me>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1pmvsB-002jlK-9j
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:34858
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On 4/13/23 07:02, Benno Lossin wrote:
-> This makes it possible to use `T` as a `impl Init<T, E>` for every error
-> type `E` instead of just `Infallible`.
-> 
-> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
-> ---
-> 
-> @Miguel: you can squash this patch into 90e53c5e70a69 or put it on top of
-> rust-next.
-> 
->  rust/kernel/init.rs | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-> index a1298c8bbda0..4ebfb08dab11 100644
-> --- a/rust/kernel/init.rs
-> +++ b/rust/kernel/init.rs
-> @@ -1190,8 +1190,8 @@ pub fn uninit<T, E>() -> impl Init<MaybeUninit<T>, E> {
->  }
-> 
->  // SAFETY: Every type can be initialized by-value.
-> -unsafe impl<T> Init<T> for T {
-> -    unsafe fn __init(self, slot: *mut T) -> Result<(), Infallible> {
-> +unsafe impl<T, E> Init<T, E> for T {
-> +    unsafe fn __init(self, slot: *mut T) -> Result<(), E> {
->          unsafe { slot.write(self) };
->          Ok(())
->      }
-> 
-> base-commit: 1944caa8e8dcb2d93d99d8364719ad8d07aa163f
-> --
-> 2.39.2
-> 
-> 
+On 4/12/23 1:32 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.24 release.
+> There are 164 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 14 Apr 2023 08:28:02 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.24-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+
+Tested-by: Ron Economos <re@w6rz.net>
+
