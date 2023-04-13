@@ -1,83 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBC07E
-	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 00:26:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072BEC433EF;
-	Thu, 13 Apr 2023 00:26:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681345566;
-	bh=tQYSWNm02Rfoi3cW6r6HFWTCjEAasxZQGZXCvVRhjHo=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=RcqgakYq+dcD1F/KD6eHSmn/VuynpviBakPDOvGdPOiiMNusf0wtDni7ahcJvjDbD
-	 964hFnKfvfV8zMuiuQSi9ziYZ2rPnU5wG2+UZVOTeYq27aTls+lLd41k7Mk08CG4vu
-	 XtuiVOn4GBkblKM75Eg01Q4IFfDKl+DapbSQ8RP0/9UFj57xUfo0eiD4ASLw8ZZi9O
-	 elFCmO7fjlqhIh8M6zHakT+MndZWHVWcqkCw+/rOEBKu6Uj1HzRR7y2vmgMZKeSh2n
-	 JTO/SrSxf4ApeyzjKRb5pE23rCrzpeN3tIrsGQ1xUwi0K7pbyffV26H4AhPfeTO7Ic
-	 kRraecxfw91WA==
-Message-ID: <eaf237baf3a0bfd5bf4c7e97e32f9261.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E79361
+	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 02:03:34 +0000 (UTC)
+Received: by mail-pl1-f177.google.com with SMTP id m18so13423704plx.5
+        for <patches@lists.linux.dev>; Wed, 12 Apr 2023 19:03:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681351414;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=txKXh4wrdWgZPXoWJyQNrYSeqmxrC6VLhn9OwDe5xzI=;
+        b=c8XnjtGZdkmKrJPY85IPYQxCp/coLXG4/EPy3q8A8w6qGL+W/X5WlkSlxLcxNxFrg5
+         XZtyZklnRfovwB1SgtBUiHCpKYdtVbNMMcFHv5ME6PtdwsRRBVaabUKc1f844PcFbMpq
+         ncLgCfbkBXN5gdi991MCI6B7AH9GNB23xRCj1QR/+58iKP6fkEjIsBwAN2/9l6PxlKYc
+         KDu1Y92ZRuI+/bJmfXFQc07+P6iGqIuC3P/4Lnrzp0raum5QCamKsogZxD2Lld61g43O
+         SRV8rqYKx2+J0infozLmC+m0K/Hh2WMsR/oF0CmQqZP27HOD/MD0fLPAZWIr3s7ezClG
+         mfTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681351414;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=txKXh4wrdWgZPXoWJyQNrYSeqmxrC6VLhn9OwDe5xzI=;
+        b=ZHSa839a8hyWRaFSX12F2/MecBEu338fgH3AqOtwl1wl3ApwW65nEQ099HQETxcnO8
+         bW6B7mhgH+a0DYBXfRrssTwL5bUpHdantrxS3Rf1+w7SSxicLUzkH+s0eQAP916YKKhA
+         OLEuabIt23tuqX0VAOjESrmoPD6UKvPAE4odJczpBsFOyV1Z9F85teEhBn0GZzzmP8d1
+         ccxLbPmu5WDBqDuHfMGlWB1vWxATmomvgVAnpClVH/Nd+XwKYiKWdHx9pLXO8hbdYnVf
+         fMYJtbrciErWiPHMQCqgf7RA/ng1V4VzA6rdNlRg69pa1foM4yKKWsPneXpXutQr72Wl
+         pKAw==
+X-Gm-Message-State: AAQBX9dL5dogjUSfNlIH2Bce0jCm7xQ652IK/cSjHeC/2Km72SoyQor6
+	gO7FYuwVwlCTNLV+anMsZgQ=
+X-Google-Smtp-Source: AKy350auSXqCVk+faIi1r+2x0Tjq68wARrPpXKccPY6IJ41zfANEUiTGSME/ILJ3z1Zs4abUNQ422w==
+X-Received: by 2002:a17:903:2449:b0:1a2:c05b:151c with SMTP id l9-20020a170903244900b001a2c05b151cmr490202pls.34.1681351413734;
+        Wed, 12 Apr 2023 19:03:33 -0700 (PDT)
+Received: from debian.me (subs02-180-214-232-2.three.co.id. [180.214.232.2])
+        by smtp.gmail.com with ESMTPSA id je13-20020a170903264d00b001a1b808c1d8sm222317plb.245.2023.04.12.19.03.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Apr 2023 19:03:33 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id 08E8E106823; Thu, 13 Apr 2023 09:03:24 +0700 (WIB)
+Date: Thu, 13 Apr 2023 09:03:24 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/164] 6.1.24-rc1 review
+Message-ID: <ZDdi7JVDytc8nOi8@debian.me>
+References: <20230412082836.695875037@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7o9GAVR9jzCLmd38"
+Content-Disposition: inline
+In-Reply-To: <20230412082836.695875037@linuxfoundation.org>
+
+
+--7o9GAVR9jzCLmd38
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAGS_qxryWVOT9cBtKk28=NupbLP6_AiCj0P3np2GpMVKkyQOLg@mail.gmail.com>
-References: <20230327222159.3509818-1-sboyd@kernel.org> <20230327222159.3509818-6-sboyd@kernel.org> <CAGS_qxryWVOT9cBtKk28=NupbLP6_AiCj0P3np2GpMVKkyQOLg@mail.gmail.com>
-Subject: Re: [PATCH v3 05/11] of: Add a KUnit test for overlays and test managed APIs
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, Maxime Ripard <maxime@cerno.tech>
-To: Daniel Latypov <dlatypov@google.com>
-Date: Wed, 12 Apr 2023 17:26:02 -0700
-User-Agent: alot/0.10
 
-Quoting Daniel Latypov (2023-04-12 17:04:26)
-> On Mon, Mar 27, 2023 at 3:22=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> w=
-rote:
-> > +/* Test that of_overlay_apply_kunit() cleans up after the test is fini=
-shed */
-> > +static void of_overlay_apply_kunit_cleanup(struct kunit *test)
-> > +{
-> > +       struct device *dev;
-> > +       struct device_node *np;
-> > +
-> > +       KUNIT_ASSERT_EQ(test, 0,
-> > +                       of_overlay_apply_kunit(test, kunit_overlay_test=
-));
-> > +
-> > +       np =3D of_find_node_by_name(NULL, kunit_node_name);
-> > +       of_node_put(np); /* Not derefing 'np' after this */
-> > +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, np);
-> > +
-> > +       dev =3D bus_find_device(&platform_bus_type, NULL, np, bus_match=
-_np);
-> > +       put_device(dev); /* Not derefing 'device' after this */
-> > +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
-> > +
-> > +       /* Remove overlay */
-> > +       kunit_cleanup(test);
+On Wed, Apr 12, 2023 at 10:32:02AM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.24 release.
+> There are 164 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >=20
-> Note: this cleans up *all* resources associated with `test`.
-> Right now, it's probably fine, but this probably isn't the safest approac=
-h.
->=20
-> Notably, two of the new/upcoming API changes rely on resource,
-> kunit/static_stub.h and kunit_add_action() [1].
-> Calling kunit_cleanup() undoes all the stubs and immediately triggers
-> all the actions.
->=20
-> Perhaps you can create your own local `struct kunit` like in [2]
-> E.g.
->=20
-> struct kunit subtest; // not sure what to call this...
->=20
-> kunit_init_test(&subtest, "fake test", NULL);
-> /* use subtest */
-> kunit_cleanup(&subtest);
 
-Thanks for the pointers. I can change this to be a fake sub-test as
-that's the intention here. I was mostly following what
-kunit_resource_test_static() was doing, which was calling
-kunit_cleanup() on the existing test that's passed in.
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
+
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--7o9GAVR9jzCLmd38
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZDdi5wAKCRD2uYlJVVFO
+o2iqAP0WnutWnNBVz4DDXjKsMQ2GVRUSAFg8ckAdcmFuJnL/0QD+KOTIZrSE0FvW
+B/RmZX8TnNXesrVJRxHdIGVEfpEC3w4=
+=Q+aH
+-----END PGP SIGNATURE-----
+
+--7o9GAVR9jzCLmd38--
