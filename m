@@ -1,93 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD532BA4F
-	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 22:38:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404F8C4339C;
-	Thu, 13 Apr 2023 22:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657C5BA4E
+	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 22:48:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055A4C433D2;
+	Thu, 13 Apr 2023 22:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681425516;
-	bh=1ut5ph7e7MTXUwUNQA6pS+bDTFfCrhkn8nTjBsvJ2ls=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QuoWqeeI/4fHwhbcFRfE3XXX4wRw3ynb3QYEVORZyifc7y5EjVS7aGK0vth4n7Kbs
-	 jCRl3llEpbF56D80gAeaUKJqY8e8FtoU1zpK+ojPn7tqFkJuv0g0KRVCgy8bY8brqt
-	 IwJX6HeEBeW6D1nj55ybN+6Wvgl/e9WkkXilY4KDJIl51bsKNTeCPf7lkPibaGa6X6
-	 C/gdjRENXOpQUtNOYQAIdqQxANYr3J6OvyhlDB7k79qbjO2qyizSMQuGKZyUn88dzj
-	 bGZJnH94/H/HPtpNd6+KHFgzohUlyNmnc3m/Em6nyf58Hk6itMM9eEVxr2aHm/+khj
-	 Mx0N/QM6Xj+CQ==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 2/6] spmi: mtk-pmif: Convert to platform remove callback returning void
-Date: Thu, 13 Apr 2023 15:38:30 -0700
-Message-ID: <20230413223834.4084793-3-sboyd@kernel.org>
-X-Mailer: git-send-email 2.40.0.634.g4ca3ef3211-goog
-In-Reply-To: <20230413223834.4084793-1-sboyd@kernel.org>
-References: <20230413223834.4084793-1-sboyd@kernel.org>
+	s=k20201202; t=1681426105;
+	bh=2r4AGUeUoeN45ZcBLry7NPduP3jS6MEazXMcZDx4tSk=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=fe/70YgQzYpVg7kdBUWkl/HnpAoPIowg9lpjh74s/hQdBVwFbV0I3rF+fN4y4DSqm
+	 dabT3RGw7iBgtB/WE4qGpc+HigeDyVLJo6HqRwMPtNRcjTezZ5FHfd5XHMQfamtdhV
+	 9CsIbkabMl4mNgzvMOaaVzR0rcMeC1Cj56/BHX0DCNxm9mXmDx+uB1AXcYZyfT/c+W
+	 6jpMSLXbiavb68fmMIFBcSyfllCEG7p6CL8RUccbwyn8jGHoVmIFtTBiNWlEKeFgRC
+	 qYLS2tO743qgLz0u9/KEWh46c8aNhY7LJvzf3X12P2UEUv5OcXECiUNidi4tbeuoGg
+	 2T7YJSRlA6hcA==
+Message-ID: <e4cedf7608d84adb209aa889f524fc09.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230413205528.4044216-1-sboyd@kernel.org>
+References: <20230413205528.4044216-1-sboyd@kernel.org>
+Subject: Re: [PATCH] clk: starfive: Avoid casting iomem pointers
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Tommaso Merciai <tomm.merciai@gmail.com>, Emil Renner Berthing <emil.renner.berthing@canonical.com>, Hal Feng <hal.feng@starfivetech.com>, Conor Dooley <conor.dooley@microchip.com>, Xingyu Wu <xingyu.wu@starfivetech.com>
+To: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Date: Thu, 13 Apr 2023 15:48:22 -0700
+User-Agent: alot/0.10
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Quoting Stephen Boyd (2023-04-13 13:55:28)
+> Let's use a wrapper struct for the auxiliary_device made in
+> jh7110_reset_controller_register() so that we can stop casting iomem
+> pointers. The casts trip up tools like sparse, and make for some awkward
+> casts that are largely unnecessary. While we're here, change the
+> allocation from devm and actually free the auxiliary_device memory in
+> the release function. This avoids any use after free problems where the
+> parent device driver is unbound from the device but the
+> auxiliuary_device is still in use accessing devm freed memory.
+>=20
+> Cc: Tommaso Merciai <tomm.merciai@gmail.com>
+> Cc: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+> Cc: Hal Feng <hal.feng@starfivetech.com>
+> Cc: Conor Dooley <conor.dooley@microchip.com>
+> Cc: Xingyu Wu <xingyu.wu@starfivetech.com>
+> Fixes: edab7204afe5 ("clk: starfive: Add StarFive JH7110 system clock dri=
+ver")
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> ---
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
-
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230306073446.2194048-3-u.kleine-koenig@pengutronix.de
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/spmi/spmi-mtk-pmif.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/spmi/spmi-mtk-pmif.c b/drivers/spmi/spmi-mtk-pmif.c
-index ad511f2c3324..fbcb3921e70c 100644
---- a/drivers/spmi/spmi-mtk-pmif.c
-+++ b/drivers/spmi/spmi-mtk-pmif.c
-@@ -503,7 +503,7 @@ static int mtk_spmi_probe(struct platform_device *pdev)
- 	return err;
- }
- 
--static int mtk_spmi_remove(struct platform_device *pdev)
-+static void mtk_spmi_remove(struct platform_device *pdev)
- {
- 	struct spmi_controller *ctrl = platform_get_drvdata(pdev);
- 	struct pmif *arb = spmi_controller_get_drvdata(ctrl);
-@@ -511,7 +511,6 @@ static int mtk_spmi_remove(struct platform_device *pdev)
- 	clk_bulk_disable_unprepare(arb->nclks, arb->clks);
- 	spmi_controller_remove(ctrl);
- 	spmi_controller_put(ctrl);
--	return 0;
- }
- 
- static const struct of_device_id mtk_spmi_match_table[] = {
-@@ -533,7 +532,7 @@ static struct platform_driver mtk_spmi_driver = {
- 		.of_match_table = of_match_ptr(mtk_spmi_match_table),
- 	},
- 	.probe		= mtk_spmi_probe,
--	.remove		= mtk_spmi_remove,
-+	.remove_new	= mtk_spmi_remove,
- };
- module_platform_driver(mtk_spmi_driver);
- 
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
-
+Applied to clk-next
