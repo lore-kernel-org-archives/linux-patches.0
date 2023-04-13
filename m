@@ -1,97 +1,121 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62C062F
-	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 04:07:23 +0000 (UTC)
-Received: by mail-pj1-f48.google.com with SMTP id h24-20020a17090a9c1800b002404be7920aso13918974pjp.5
-        for <patches@lists.linux.dev>; Wed, 12 Apr 2023 21:07:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681358843; x=1683950843;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PO+vdvsIJNOaWSleJ6Y04GDPWKMtg3yaaz87ocesbmM=;
-        b=FDADdNbB8g5KFVSWjjoPntbHQk+UV8Hhw+3P3aGQbJWLqA3np5d+LEp2SI3ExlJvNC
-         MIENsd01RUW3NVrtIHjIfARMjLywWUqTNk2+Yp0bh62eZn9edzUFC4kX9AmX0pyADJ/c
-         NMEbV4zEVI0dq/dRJrbeCZIBtfr93VwWDq5vzA5Pu43ylhL+eMbgHEM60EzkGiOppogF
-         UomSrOZs2MvJQV7aLdtAfa+V11anglEMn1EbkYKi/Copb5OxSEHId1hcIR1+c8na4Lnq
-         8WAIzc/V9nRUhmadNjMlHD646noj7J14ztmC6M5ju1XWKg8rvvYFplhEz3oi7lU3qR7K
-         uPOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681358843; x=1683950843;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PO+vdvsIJNOaWSleJ6Y04GDPWKMtg3yaaz87ocesbmM=;
-        b=FLjJmLKYg1PdWnP351HKFDqG4/WoYTAAIE9bhJOhMl8pWI+jIK19KCIfshXTyu7MFR
-         WKQAsxfDNLuwqewxU2mddzjupVf7itL5iwaiknkWC/S6L7fo1x+zWKNUn9e5Z0AEMSz5
-         mApZIAWwakNNxqWRBkyZhlmlP2AjAS6M6XItD7ClzvNJBtkhk+ZUcRb4cRS1dnAn1QUi
-         pLedlja+plmZTGcEC+U2PqGTZYKmqRyksb0Fjg7IBaDt/423iICYQp4bhVI2Kv1aY2oS
-         x1ZMNOSFEujtbInFDZnhYB7g6U71Jda7r0bUzfICbxl/0bL4Ex2UEk6B1yhyXIRWsv7o
-         1KOQ==
-X-Gm-Message-State: AAQBX9fM/2g/suV5sK/aNxjCwpKo+Hb2pGimoiPwyEX6JFyR10RwbwI1
-	kNJmdq/88a8tpwyz6dvqI4U=
-X-Google-Smtp-Source: AKy350a4BPiDFFLqA6Z2k5yhYxWCmS2S5JDKkXycfKyuzADWf1WaDNcmu/oS6W4w88/4uCRN5UWrOw==
-X-Received: by 2002:a05:6a20:e94:b0:c2:b6cf:96db with SMTP id fk20-20020a056a200e9400b000c2b6cf96dbmr752512pzb.39.1681358843069;
-        Wed, 12 Apr 2023 21:07:23 -0700 (PDT)
-Received: from debian.me (subs03-180-214-233-66.three.co.id. [180.214.233.66])
-        by smtp.gmail.com with ESMTPSA id v6-20020aa78506000000b006227c3d5e29sm272859pfn.16.2023.04.12.21.07.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 21:07:22 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id D8D6D10681D; Thu, 13 Apr 2023 11:07:18 +0700 (WIB)
-Date: Thu, 13 Apr 2023 11:07:18 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/173] 6.2.11-rc1 review
-Message-ID: <ZDd/9j+H8C1rBo87@debian.me>
-References: <20230412082838.125271466@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817752581
+	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 08:34:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
+	t=1681374846; i=secu100@gmx.net;
+	bh=JuB/8Df5JPEkDBJvzkYX19UwLMGlrI3SNhkkgdoSeJo=;
+	h=X-UI-Sender-Class:Date:Subject:References:To:Cc:From:In-Reply-To;
+	b=iBPaUVJE2Tw9ftzeoxrvp8G+jwPE+L4NQOhDQQXW9vAXQTI5qG16np9HmqFvieWaK
+	 ITIU1thk0m11eyb/ZwWp3sRfDcnT5p/Z9XX9M+SADpYpV80cQeqmm6ppqdEwzzxp7F
+	 Rnin1Bk71Bw+snM9CYYuh4+tRcgScnsfOx89DVSNLwStCtU1ZU8grZndLBRfmHymHc
+	 tJXSYY3VvKcdZVI950UdNsZwt5xzB5wOG0bj2fqs4GnGfqIUkoAeyfj4r3C76FkK/Y
+	 uF1+BVqx5ha9dEjuJnvMDKSWC7eHDTCLzMH+IMBXFJXOsGLgJhsNNt9X8ouG4FgL+X
+	 Acf449GFKDTUg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.178.22] ([93.212.130.164]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTABZ-1pvyFt1AQ3-00Uce3; Thu, 13
+ Apr 2023 10:34:06 +0200
+Message-ID: <30f48ec1-df68-68e2-f81f-538e5526599e@gmx.net>
+Date: Thu, 13 Apr 2023 10:32:20 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yRolHaZ1TJc5Bwrm"
-Content-Disposition: inline
-In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
-
-
---yRolHaZ1TJc5Bwrm
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: [PATCH 6.1.23] ALSA: hda/realtek: Add quirk for HP ENVY Laptop
+ 17-cr0xxx
+References: <25ce0797-1d40-6e2b-0895-c4ca85aad2e6@gmx.net>
+To: stable@vger.kernel.org
+Cc: kernel@vger.kernel.org, patches@lists.linux.dev
+From: "secu100@gmx.net" <secu100@gmx.net>
+In-Reply-To: <25ce0797-1d40-6e2b-0895-c4ca85aad2e6@gmx.net>
+X-Forwarded-Message-Id: <25ce0797-1d40-6e2b-0895-c4ca85aad2e6@gmx.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:AeR3DtBk8wIp4Pd/PFDBNXTo5fGJiSxRvhN60wUsgQfF8o2QPo4
+ RV65YwiJWjUYIHNYERbg6vpUx3d8xU7CMVAIaBTh726xtG0zeDIq2e7tryS0stBYwXK7zDQ
+ SPsGZ+zjWAKn2ZpfefexDiqdSq1Kq5y6T+CEFyYMUik+/iHXmb8VfjZMPrfYo3kfY10dNNq
+ Ree1HGWITyF8wu0NY2kTg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:LrXcOaS+3w8=;+SjxOydbkme88SKtQG+LSv0mYKu
+ epgNC3JHX0vp5bOR7LSjsafxKHVRRFtNIo2RpShLQGnYNXPL5sDLrRyq6huVgGMi5bJmX0ouS
+ kNcx2moa0WhnY2zO3YcMQixOs0iJeZwsjeOQKlF//VvL/EvkAdMMEtXllfbH+o9hq40SDQTYJ
+ 0yR5GT2TSmvmN7HyG1KwnG98y/qRipz0EYyk62WPgpRnoABRfURlo/r4wJ6BS4nxtNAKed4KF
+ yNH2D6+WK4XguJzMIvt6rLbbGETR/9l2gEEg2EdP3AOxLp6cIMm+bukmh8PNgub8L0sZNXimM
+ UJZ6DBMFAQ09oFQenZVtAMzWxEuGRc/yuaRo8BjMRc+xAUxjxLC100LAux8Xk9d9GVoVQ+LtX
+ fu5jJbfRNLO114U5Ka/j8MILJ0uWrC+hD8iHdEy2VFIcdybsOhbrf218Lxs+bazpUJLuSPkbc
+ WDmIuOVMCcGJblBlZcwcnL/ATUcxZPuFSXlYbDk6NS6cNpcR9jpuHPXC2rf2aNFhUcYmD0uxZ
+ j5KkNobRvDXXBm/RHoHpPEVeNje+Ed7o74T9TO9L0VqKctFtfKAbo3Fech8tapWSzXXehGMNp
+ udd0ZhyWTqVhwyy9oXCN+4JlQuf1yVQSGHLsNC8uplupH69WrzRu5wTEXPx4wUltf2dsMuHj0
+ 9kjz90JY1V6WonlaU24F8rTxlO13fnUbh4cETSffVwSBscF/8yXO9FhUILztZwIVhgiRz/fuf
+ 6j8C4EhuFmca1MvEJ41IAe7RR50uB3qQ+vsdBAo9NPLbs5hS2ebP+fnv3HZobcaLMoEkObvY+
+ F+i18BDAUBekRCqylYXbg7Z09wtP81h5kBognq/o+F9mSRwMsE9o1KFVbpmRjwfE4ZPXbgwUC
+ IW2eRlyuLqjDud1hVZbt72ShrCTcwrWUOAA6PFgtAR/IBSLn6ulzqqDhuIdYjtOTTUsVFrmao
+ wL1dMQ/qgBWHxXHB1CUW+FPTH08=
 
-On Wed, Apr 12, 2023 at 10:32:06AM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.11 release.
-> There are 173 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
+The patch of the file patch_realtek.c fixes the speaker output on the HP
+ENVY Laptop 17-cr0xxx. The LEDs for muting the microphone and speakers
+still do not work. Likewise, the hotkey for microphone muting is without
+function.
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
+This laptop model uses actually the Realtek ALC245 codec alongside with
+Cirrus Logic amplifiers. In the bios there seems to be no _DSD property
+specified in the ACPI tables of the CSC3551 section. Therefore, the file
+cs35l41_hda.c must also be patched.
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Even if a patch of the file cs35l41_hda.c is excluded, it would make
+sense to make the adjustment in the file patch_realtek.c. then the sound
+output would work in case of a bios update on the part of the manufacturer=
+.
 
---=20
-An old man doll... just what I always wanted! - Clara
 
---yRolHaZ1TJc5Bwrm
-Content-Type: application/pgp-signature; name="signature.asc"
+=2D-- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9426,6 +9426,7 @@ static const struct snd_pci_quirk alc269
+ =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x89c6, "Zbook Fury 17 G9"=
+,
+ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x89ca, "HP",
+ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x89d3, "HP EliteBook 645 =
+G9 (MB 89D2)",
+ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x8a2e, "HP ENVY Laptop 17-cr0xx=
+x",
+ALC287_FIXUP_CS35L41_I2C_2),
+ =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One",
+ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
+ =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x8aa0, "HP ProBook 440 G9=
+ (MB 8A9E)",
+ALC236_FIXUP_HP_GPIO_LED),
+ =C2=A0=C2=A0=C2=A0=C2=A0 SND_PCI_QUIRK(0x103c, 0x8aa3, "HP ProBook 450 G9=
+ (MB 8AA1)",
+ALC236_FIXUP_HP_GPIO_LED),
 
------BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZDd/8gAKCRD2uYlJVVFO
-o6GBAQCcDE8+tD7AojGenlulHtVV7sbZE7pU6bf7sNjRuirv5QD/fw6Ma87ZMybJ
-tF3p305nGASkudNazE4iPxsdL5cR2QY=
-=OkXz
------END PGP SIGNATURE-----
 
---yRolHaZ1TJc5Bwrm--
+=2D-- a/sound/pci/hda/cs35l41_hda.c
++++ b/sound/pci/hda/cs35l41_hda.c
+@@ -1244,6 +1244,10 @@ static int cs35l41_no_acpi_dsd(struct cs
+ =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->bst_type =3D CS35L41_=
+EXT_BOOST;
+ =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->gpio1.func =3D CS35l4=
+1_VSPK_SWITCH;
+ =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->gpio1.valid =3D true;
++=C2=A0=C2=A0=C2=A0 } else if (strncmp(hid, "CSC3551", 7) =3D=3D 0) {
++=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->bst_type =3D CS35L41_EXT_BO=
+OST;
++=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->gpio1.func =3D CS35l41_VSPK=
+_SWITCH;
++=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 hw_cfg->gpio1.valid =3D true;
+ =C2=A0=C2=A0=C2=A0=C2=A0 } else {
+ =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 /*
+ =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 =C2=A0* Note: CLSA010(0/1) ar=
+e special cases which use a slightly
+different design.
+
