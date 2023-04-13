@@ -1,105 +1,83 @@
-Received: from qproxy5-pub.mail.unifiedlayer.com (qproxy5-pub.mail.unifiedlayer.com [69.89.21.30])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1A67E
-	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 00:20:58 +0000 (UTC)
-Received: from outbound-ss-820.bluehost.com (outbound-ss-820.bluehost.com [69.89.24.241])
-	by qproxy5.mail.unifiedlayer.com (Postfix) with ESMTP id A77E18032446
-	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 00:00:10 +0000 (UTC)
-Received: from cmgw11.mail.unifiedlayer.com (unknown [10.0.90.126])
-	by progateway2.mail.pro1.eigbox.com (Postfix) with ESMTP id C196010047FBB
-	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 00:00:02 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id mkNepVu0Ub9i8mkNepdP7I; Thu, 13 Apr 2023 00:00:02 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=Wd7J12tX c=1 sm=1 tr=0 ts=64374602
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=dKHAf1wccvYA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=SzeOFucmdXyTfrxGwj9i85r8K9+yKRcLgwBk0b6az8I=; b=n1WhtRJaaCnLuOWUOa5fNfpFoq
-	srov5aFalRygrpw2ch7jx8N2omIoR1q8XeKcTNskM6d1o3xo5CRwSLFP+pnqcZpwIIMlRqBno62rK
-	EhUwmlea+l9V/Bzdto/xsG1RtXm2mv3jx7T9aUr8Swvji9LhTPaKNg5BVijXmWUVWEfwAA73nqSk+
-	0HEBHK6FLRawuzGxW6MtptKpvctmPjGp0iSzWNmcumDTdiax1tGzWzFVvyObg1BsdOr191QFk3PCo
-	U0NU77mhkIFdRAcyHx1dGl5LMF6hVn+Aczu/lKphySW4YDoJ4rz+QR92XSWv+u4HAJVaMzFeWqvrN
-	5t7Utx4Q==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:34816 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pmkNd-002a7F-1J;
-	Wed, 12 Apr 2023 18:00:01 -0600
-Subject: Re: [PATCH 6.2 000/173] 6.2.11-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230412082838.125271466@linuxfoundation.org>
-In-Reply-To: <20230412082838.125271466@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <87f5f951-5dbc-bd2e-26f7-3c71378b967d@w6rz.net>
-Date: Wed, 12 Apr 2023 16:59:58 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBC07E
+	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 00:26:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072BEC433EF;
+	Thu, 13 Apr 2023 00:26:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1681345566;
+	bh=tQYSWNm02Rfoi3cW6r6HFWTCjEAasxZQGZXCvVRhjHo=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=RcqgakYq+dcD1F/KD6eHSmn/VuynpviBakPDOvGdPOiiMNusf0wtDni7ahcJvjDbD
+	 964hFnKfvfV8zMuiuQSi9ziYZ2rPnU5wG2+UZVOTeYq27aTls+lLd41k7Mk08CG4vu
+	 XtuiVOn4GBkblKM75Eg01Q4IFfDKl+DapbSQ8RP0/9UFj57xUfo0eiD4ASLw8ZZi9O
+	 elFCmO7fjlqhIh8M6zHakT+MndZWHVWcqkCw+/rOEBKu6Uj1HzRR7y2vmgMZKeSh2n
+	 JTO/SrSxf4ApeyzjKRb5pE23rCrzpeN3tIrsGQ1xUwi0K7pbyffV26H4AhPfeTO7Ic
+	 kRraecxfw91WA==
+Message-ID: <eaf237baf3a0bfd5bf4c7e97e32f9261.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pmkNd-002a7F-1J
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:34816
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAGS_qxryWVOT9cBtKk28=NupbLP6_AiCj0P3np2GpMVKkyQOLg@mail.gmail.com>
+References: <20230327222159.3509818-1-sboyd@kernel.org> <20230327222159.3509818-6-sboyd@kernel.org> <CAGS_qxryWVOT9cBtKk28=NupbLP6_AiCj0P3np2GpMVKkyQOLg@mail.gmail.com>
+Subject: Re: [PATCH v3 05/11] of: Add a KUnit test for overlays and test managed APIs
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, Maxime Ripard <maxime@cerno.tech>
+To: Daniel Latypov <dlatypov@google.com>
+Date: Wed, 12 Apr 2023 17:26:02 -0700
+User-Agent: alot/0.10
 
-On 4/12/23 1:32 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.11 release.
-> There are 173 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 14 Apr 2023 08:28:02 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.11-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Quoting Daniel Latypov (2023-04-12 17:04:26)
+> On Mon, Mar 27, 2023 at 3:22=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> w=
+rote:
+> > +/* Test that of_overlay_apply_kunit() cleans up after the test is fini=
+shed */
+> > +static void of_overlay_apply_kunit_cleanup(struct kunit *test)
+> > +{
+> > +       struct device *dev;
+> > +       struct device_node *np;
+> > +
+> > +       KUNIT_ASSERT_EQ(test, 0,
+> > +                       of_overlay_apply_kunit(test, kunit_overlay_test=
+));
+> > +
+> > +       np =3D of_find_node_by_name(NULL, kunit_node_name);
+> > +       of_node_put(np); /* Not derefing 'np' after this */
+> > +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, np);
+> > +
+> > +       dev =3D bus_find_device(&platform_bus_type, NULL, np, bus_match=
+_np);
+> > +       put_device(dev); /* Not derefing 'device' after this */
+> > +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
+> > +
+> > +       /* Remove overlay */
+> > +       kunit_cleanup(test);
+>=20
+> Note: this cleans up *all* resources associated with `test`.
+> Right now, it's probably fine, but this probably isn't the safest approac=
+h.
+>=20
+> Notably, two of the new/upcoming API changes rely on resource,
+> kunit/static_stub.h and kunit_add_action() [1].
+> Calling kunit_cleanup() undoes all the stubs and immediately triggers
+> all the actions.
+>=20
+> Perhaps you can create your own local `struct kunit` like in [2]
+> E.g.
+>=20
+> struct kunit subtest; // not sure what to call this...
+>=20
+> kunit_init_test(&subtest, "fake test", NULL);
+> /* use subtest */
+> kunit_cleanup(&subtest);
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
-
-Tested-by: Ron Economos <re@w6rz.net>
-
+Thanks for the pointers. I can change this to be a fake sub-test as
+that's the intention here. I was mostly following what
+kunit_resource_test_static() was doing, which was calling
+kunit_cleanup() on the existing test that's passed in.
