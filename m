@@ -1,40 +1,39 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BEF7C
-	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 16:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36507C
+	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 17:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
 	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=1UCbfNeo0PYl9cZDPYs2IwIaIuAlJgRFSP2KRabe9+Y=; b=SNUECSyS/wYFVVAx/O/SmvTXHb
-	1PUJxB2FTbh6UnjvkEAw8gvJIYAsoS68EdgbD7y3IYvKUpdNaVTZVQbJYPwAgG7oKvEQOYeU45BEf
-	SMpEvatAbDuf6gg8eiq+vs4voZUcvLAwzDAZl5D6JPpYmFlf5RxtAisE98gNUNxynovQ+cqRz1BV4
-	TTT5lzcxapnOipNyJMWWrQbD5/dsPCq+NF+pTRexivsVPsO+kM3GSepS8KIIvfpHGiwo8ndIQPJGa
-	gqXaMqG3OT6LsEWeRQ0bhqlYscoyaP1IliSfgtk850S0wcjpHbzVbVyye08F7GXachxL3ewmazjg+
-	l4kOeFlg==;
+	bh=Ti6cYdcZoKEE42acSDYdLZZ8XvUjNJ9ejinmTKxANOc=; b=4InsRRvRPC1aGBxCPZpgSSoMPY
+	OAvGUEm0s8N1CDjsOEQHbh4bxagIo50k+E8anop6y8pKG+Bkpwx+4kHHZ2MW987Jop7xaBluBUFPz
+	4qb765rlUELgMKnjJZkWPbez/wg9DHFF7O5WlAEFX1BFr8V33oIr+Au9sW4Lp8krQRKZBLpL7gRvz
+	HDVgLqcQsjCHeUd2fFhNFmz8hYgFh2ABxoJr6rRkAjk2U5GRtv2kv31AENQtFecfQ9+iP/fyt3+Gy
+	qbSh9X+mRUSGC+Hl/7I4OtP9k5tjcnJCb3jctZH4E+76SyPlxnGbLNQECO9pL/BmCvZ9/1wlNOwdR
+	VVRHeevA==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1pnMOF-00A7bv-1P;
-	Fri, 14 Apr 2023 16:35:11 +0000
-Date: Fri, 14 Apr 2023 09:35:11 -0700
+	id 1pnMwY-00ACgB-2N;
+	Fri, 14 Apr 2023 17:10:38 +0000
+Date: Fri, 14 Apr 2023 10:10:38 -0700
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: david@redhat.com, patches@lists.linux.dev,
+To: david@redhat.com, patches@lists.linux.dev,
 	linux-modules@vger.kernel.org, linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
-	prarit@redhat.com, torvalds@linux-foundation.org, rafael@kernel.org,
-	christophe.leroy@csgroup.eu, tglx@linutronix.de,
-	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
-	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
-	mhocko@suse.com, dave.hansen@linux.intel.com,
-	colin.i.king@gmail.com, jim.cromie@gmail.com,
-	catalin.marinas@arm.com, jbaron@akamai.com,
+	prarit@redhat.com, torvalds@linux-foundation.org,
+	gregkh@linuxfoundation.org, rafael@kernel.org
+Cc: christophe.leroy@csgroup.eu, tglx@linutronix.de, peterz@infradead.org,
+	song@kernel.org, rppt@kernel.org, dave@stgolabs.net,
+	willy@infradead.org, vbabka@suse.cz, mhocko@suse.com,
+	dave.hansen@linux.intel.com, colin.i.king@gmail.com,
+	jim.cromie@gmail.com, catalin.marinas@arm.com, jbaron@akamai.com,
 	rick.p.edgecombe@intel.com
-Subject: Re: [RFC 2/2] kread: avoid duplicates
-Message-ID: <ZDmAvwi+KNvie+OI@bombadil.infradead.org>
-References: <20230414052840.1994456-1-mcgrof@kernel.org>
- <20230414052840.1994456-3-mcgrof@kernel.org>
- <ZDj0SVelrvh1xaEv@kroah.com>
+Subject: Re: [PATCH v3 1/2] Change DEFINE_SEMAPHORE() to take a number
+ argument
+Message-ID: <ZDmJDq/9qU52TgMd@bombadil.infradead.org>
+References: <20230414051349.1986744-1-mcgrof@kernel.org>
+ <20230414051349.1986744-2-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,18 +42,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZDj0SVelrvh1xaEv@kroah.com>
+In-Reply-To: <20230414051349.1986744-2-mcgrof@kernel.org>
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Fri, Apr 14, 2023 at 08:35:53AM +0200, Greg KH wrote:
-> On Thu, Apr 13, 2023 at 10:28:40PM -0700, Luis Chamberlain wrote:
-> > With this we run into 0 wasted virtual memory bytes.
-> 
-> This changelog does not make any sense at all, sorry.  What are you
-> doing here and why?
+On Thu, Apr 13, 2023 at 10:13:48PM -0700, Luis Chamberlain wrote:
+> From: Peter Zijlstra <peterz@infradead.org>
+> [mcgrof: add some tribal knowledge about why some folks prefer
+>  binary sempahores over mutexes]
 
-It's an RFC and the cover letter described the motivation looking for
-ideas for an alternative, and it is the reason I was so terse on the
-commit log.
+Jeesh, sorry I thought I had replaced the tribal knowledge tibit with
+what Matthew had suggested before, will do that in v4.
 
   Luis
