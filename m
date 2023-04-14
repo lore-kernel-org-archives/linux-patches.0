@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A747650
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEAF652
 	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 05:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=jhQgpcdU6gyeXMobM0XSItVG4AvZoQZZ5MixvI3m4K8=; b=HpNHcEsQXfVvSFJkEJm8E3PUH+
-	kNmfgiNbIGwx5rIrHDAkIKGVBZlEn4AOltbU3ugrKNKKkFjMHm+Z36h56aM84Eqxi/ZOcD6elNgKW
-	MSj8OpTEki2t+XXAGuR0XOtpf7oDXRW3O3nO2zqCFTxasw+9HbF45Wq7kubF+jOmyEvv/rPuelMgg
-	FnHG1jGNse9yhUaRetIbIapaNZQEwlJIfkjXNAhjycsYOMhD19YkxeGd1+ZqmGlVySlFMATDbAn2V
-	XmlAnRZajDT4FPi2fZsJXCoaW7mT6inrtz+CZs5BC0591Z1PBmbuGQuI84SqxJnsPeODsYP7XfslU
-	BTtRi4SQ==;
+	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=TU8tmoj4+nC9iaV5IMo+u+NGjzkEv9TSC0uMqT3ZueI=; b=EyOGTA5xTDzDcGr8GSBjkFLAN8
+	nGjkRQkjVZyZ1K+MuXZXYknzkVx1pGnFe94XPuHo4pX/P+jISL8mSC74ra5XSjl1AhLiUBcKp5fHv
+	HTH3BHIqG/QCcwQsDxY47l8GSa8CI27vezXz4S8W5/UNxP1wlFF10VEDXPBlEczhj4nWzdiZLjwjX
+	7y3fYrCRccB7AfukcLW8wj8KzNE4sFjwAO8RmmNXBw3hKI83KBPOegRJadxHY8gH3WWgOCCElc0zS
+	AVLGLYqIZAsNBXE0Lnh18BuIo2GpcXFQIA723+MLHAFr/MYvdVp4KTBPRmb7fTKZtEPos+zmyZheG
+	vngAaacw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1pnBfp-008KKF-16;
+	id 1pnBfp-008KKL-23;
 	Fri, 14 Apr 2023 05:08:37 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: david@redhat.com,
@@ -44,10 +44,12 @@ Cc: christophe.leroy@csgroup.eu,
 	jbaron@akamai.com,
 	rick.p.edgecombe@intel.com,
 	mcgrof@kernel.org
-Subject: [PATCH v3 0/4] module: avoid userspace pressure on unwanted allocations
-Date: Thu, 13 Apr 2023 22:08:32 -0700
-Message-Id: <20230414050836.1984746-1-mcgrof@kernel.org>
+Subject: [PATCH v3 2/4] module: extract patient module check into helper
+Date: Thu, 13 Apr 2023 22:08:34 -0700
+Message-Id: <20230414050836.1984746-3-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20230414050836.1984746-1-mcgrof@kernel.org>
+References: <20230414050836.1984746-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,54 +59,170 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-This v3 series follows up on the second iteration of these patches [0]. This
-and other pending changes are avaiable on 20230413-module-alloc-opts
-branch [1] which is based on modules-next.
+The patient module check inside add_unformed_module() is large
+enough as we need it. It is a bit hard to read too, so just
+move it to a helper and do the inverse checks first to help
+shift the code and make it easier to read. The new helper then
+is module_patient_check_exists().
 
-Changes on this v3:
+To make this work we need to mvoe the finished_loading() up,
+we do that without making any functional changes to that routine.
 
-  o Catalin Marinas suggested we just use kmemleak_not_leak() for both
-    ELF allocations even if its init stuff.
-  o Considerable amount of effort went into trying to see if there's
-    relationship with CPU count and wasted virtual memory allocations.
-    The new module debugfs counters helped with creating this evaluation.
-    The result of that put me on a path to then add even more debugging
-    facilities to rule out and identify the culprits. In the end I have
-    patches now which can get this down to 0 bytes wasted. The patch
-    in this series which helps reduce the allocations has a graph
-    showing the findings of the relationship between wasted virtual
-    memory allocations and CPU count all during boot. It is insanity
-    that the graph has to go into gigabytes of wasted virtual memory all
-    at boot.
-  o To help folks compare apples to apples I've put the stats debug
-    patch *prior* to the one that helps with allocations. This way folks
-    can see for themselves what the results look like.
-  o Enhanced the statistics a bit more and added an example with 255 CPUs.
-  o Went with atomic_long and casting for the debugs big counters.
-  o Rolled in the patch that moved a helper as David suggested.
-  o Minor fixes reported by 0-day
-  o Added tags for Reviews, etc.
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ kernel/module/main.c | 112 +++++++++++++++++++++++--------------------
+ 1 file changed, 60 insertions(+), 52 deletions(-)
 
-[0] https://lkml.kernel.org/r/20230405022702.753323-1-mcgrof@kernel.org
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/log/?h=20230413-module-alloc-opts
-
-Luis Chamberlain (4):
-  module: fix kmemleak annotations for non init ELF sections
-  module: extract patient module check into helper
-  module: add debug stats to help identify memory pressure
-  module: avoid allocation if module is already present and ready
-
- Documentation/core-api/kernel-api.rst |  22 +-
- kernel/module/Kconfig                 |  37 +++
- kernel/module/Makefile                |   1 +
- kernel/module/decompress.c            |   4 +
- kernel/module/internal.h              |  74 +++++
- kernel/module/main.c                  | 194 ++++++++----
- kernel/module/stats.c                 | 432 ++++++++++++++++++++++++++
- kernel/module/tracking.c              |   7 +-
- 8 files changed, 703 insertions(+), 68 deletions(-)
- create mode 100644 kernel/module/stats.c
-
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index 32554d8a5791..75b23257128d 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -2447,27 +2447,6 @@ static int post_relocation(struct module *mod, const struct load_info *info)
+ 	return module_finalize(info->hdr, info->sechdrs, mod);
+ }
+ 
+-/* Is this module of this name done loading?  No locks held. */
+-static bool finished_loading(const char *name)
+-{
+-	struct module *mod;
+-	bool ret;
+-
+-	/*
+-	 * The module_mutex should not be a heavily contended lock;
+-	 * if we get the occasional sleep here, we'll go an extra iteration
+-	 * in the wait_event_interruptible(), which is harmless.
+-	 */
+-	sched_annotate_sleep();
+-	mutex_lock(&module_mutex);
+-	mod = find_module_all(name, strlen(name), true);
+-	ret = !mod || mod->state == MODULE_STATE_LIVE
+-		|| mod->state == MODULE_STATE_GOING;
+-	mutex_unlock(&module_mutex);
+-
+-	return ret;
+-}
+-
+ /* Call module constructors. */
+ static void do_mod_ctors(struct module *mod)
+ {
+@@ -2631,6 +2610,63 @@ static int may_init_module(void)
+ 	return 0;
+ }
+ 
++/* Is this module of this name done loading?  No locks held. */
++static bool finished_loading(const char *name)
++{
++	struct module *mod;
++	bool ret;
++
++	/*
++	 * The module_mutex should not be a heavily contended lock;
++	 * if we get the occasional sleep here, we'll go an extra iteration
++	 * in the wait_event_interruptible(), which is harmless.
++	 */
++	sched_annotate_sleep();
++	mutex_lock(&module_mutex);
++	mod = find_module_all(name, strlen(name), true);
++	ret = !mod || mod->state == MODULE_STATE_LIVE
++		|| mod->state == MODULE_STATE_GOING;
++	mutex_unlock(&module_mutex);
++
++	return ret;
++}
++
++/* Must be called with module_mutex held */
++static int module_patient_check_exists(const char *name)
++{
++	struct module *old;
++	int err = 0;
++
++	old = find_module_all(name, strlen(name), true);
++	if (old == NULL)
++		return 0;
++
++	if (old->state == MODULE_STATE_COMING ||
++	    old->state == MODULE_STATE_UNFORMED) {
++		/* Wait in case it fails to load. */
++		mutex_unlock(&module_mutex);
++		err = wait_event_interruptible(module_wq,
++				       finished_loading(name));
++		mutex_lock(&module_mutex);
++		if (err)
++			return err;
++
++		/* The module might have gone in the meantime. */
++		old = find_module_all(name, strlen(name), true);
++	}
++
++	/*
++	 * We are here only when the same module was being loaded. Do
++	 * not try to load it again right now. It prevents long delays
++	 * caused by serialized module load failures. It might happen
++	 * when more devices of the same type trigger load of
++	 * a particular module.
++	 */
++	if (old && old->state == MODULE_STATE_LIVE)
++		return -EEXIST;
++	return -EBUSY;
++}
++
+ /*
+  * We try to place it in the list now to make sure it's unique before
+  * we dedicate too many resources.  In particular, temporary percpu
+@@ -2639,41 +2675,14 @@ static int may_init_module(void)
+ static int add_unformed_module(struct module *mod)
+ {
+ 	int err;
+-	struct module *old;
+ 
+ 	mod->state = MODULE_STATE_UNFORMED;
+ 
+ 	mutex_lock(&module_mutex);
+-	old = find_module_all(mod->name, strlen(mod->name), true);
+-	if (old != NULL) {
+-		if (old->state == MODULE_STATE_COMING
+-		    || old->state == MODULE_STATE_UNFORMED) {
+-			/* Wait in case it fails to load. */
+-			mutex_unlock(&module_mutex);
+-			err = wait_event_interruptible(module_wq,
+-					       finished_loading(mod->name));
+-			if (err)
+-				goto out_unlocked;
+-
+-			/* The module might have gone in the meantime. */
+-			mutex_lock(&module_mutex);
+-			old = find_module_all(mod->name, strlen(mod->name),
+-					      true);
+-		}
+-
+-		/*
+-		 * We are here only when the same module was being loaded. Do
+-		 * not try to load it again right now. It prevents long delays
+-		 * caused by serialized module load failures. It might happen
+-		 * when more devices of the same type trigger load of
+-		 * a particular module.
+-		 */
+-		if (old && old->state == MODULE_STATE_LIVE)
+-			err = -EEXIST;
+-		else
+-			err = -EBUSY;
++	err = module_patient_check_exists(mod->name);
++	if (err)
+ 		goto out;
+-	}
++
+ 	mod_update_bounds(mod);
+ 	list_add_rcu(&mod->list, &modules);
+ 	mod_tree_insert(mod);
+@@ -2681,7 +2690,6 @@ static int add_unformed_module(struct module *mod)
+ 
+ out:
+ 	mutex_unlock(&module_mutex);
+-out_unlocked:
+ 	return err;
+ }
+ 
 -- 
 2.39.2
 
