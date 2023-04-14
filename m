@@ -1,56 +1,103 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36507C
-	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 17:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A7C7C
+	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 17:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=Ti6cYdcZoKEE42acSDYdLZZ8XvUjNJ9ejinmTKxANOc=; b=4InsRRvRPC1aGBxCPZpgSSoMPY
-	OAvGUEm0s8N1CDjsOEQHbh4bxagIo50k+E8anop6y8pKG+Bkpwx+4kHHZ2MW987Jop7xaBluBUFPz
-	4qb765rlUELgMKnjJZkWPbez/wg9DHFF7O5WlAEFX1BFr8V33oIr+Au9sW4Lp8krQRKZBLpL7gRvz
-	HDVgLqcQsjCHeUd2fFhNFmz8hYgFh2ABxoJr6rRkAjk2U5GRtv2kv31AENQtFecfQ9+iP/fyt3+Gy
-	qbSh9X+mRUSGC+Hl/7I4OtP9k5tjcnJCb3jctZH4E+76SyPlxnGbLNQECO9pL/BmCvZ9/1wlNOwdR
-	VVRHeevA==;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=3HOFuNsuGVoqF4T3OjWzrAAkX2klavHlrB4YyoEVapI=; b=YTXbS1xlcj8FcBaWMo0FtPuL+/
+	Q/iTd1fMbg7k9DDh5hPJ+m7zGYI8JAFV3exc3f/znHwwzGjYtWUUWdRzZm6DSFelzBY7qlCx3luVX
+	UkQbo2PuD2NleGtLLnBzwIOm1O8AYvSSzHPro4dXnALi3bTLpJ0lInAUNGCGOei8wSPGelph/sd3G
+	DzPQmw49lM54pq9Q0grd/npKBiI+6N3l+KWP5kb5HY+CU+dPpALIQTlap2Nh+/xZ/zeneFCpFt1rQ
+	+leqaRyoOioslLFZZxxzf+Lk08HGydap6kSzWK85unYJRdX9vvJXN8r1x9fCdlK0zzP4ktwi+4szt
+	mwhmklzw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1pnMwY-00ACgB-2N;
-	Fri, 14 Apr 2023 17:10:38 +0000
-Date: Fri, 14 Apr 2023 10:10:38 -0700
+	id 1pnN2k-00ADLX-2W;
+	Fri, 14 Apr 2023 17:17:02 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: david@redhat.com, patches@lists.linux.dev,
-	linux-modules@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
-	prarit@redhat.com, torvalds@linux-foundation.org,
-	gregkh@linuxfoundation.org, rafael@kernel.org
-Cc: christophe.leroy@csgroup.eu, tglx@linutronix.de, peterz@infradead.org,
-	song@kernel.org, rppt@kernel.org, dave@stgolabs.net,
-	willy@infradead.org, vbabka@suse.cz, mhocko@suse.com,
-	dave.hansen@linux.intel.com, colin.i.king@gmail.com,
-	jim.cromie@gmail.com, catalin.marinas@arm.com, jbaron@akamai.com,
-	rick.p.edgecombe@intel.com
-Subject: Re: [PATCH v3 1/2] Change DEFINE_SEMAPHORE() to take a number
- argument
-Message-ID: <ZDmJDq/9qU52TgMd@bombadil.infradead.org>
-References: <20230414051349.1986744-1-mcgrof@kernel.org>
- <20230414051349.1986744-2-mcgrof@kernel.org>
+To: david@redhat.com,
+	patches@lists.linux.dev,
+	linux-modules@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	pmladek@suse.com,
+	petr.pavlu@suse.com,
+	prarit@redhat.com,
+	torvalds@linux-foundation.org,
+	gregkh@linuxfoundation.org,
+	rafael@kernel.org
+Cc: christophe.leroy@csgroup.eu,
+	tglx@linutronix.de,
+	peterz@infradead.org,
+	song@kernel.org,
+	rppt@kernel.org,
+	dave@stgolabs.net,
+	willy@infradead.org,
+	vbabka@suse.cz,
+	mhocko@suse.com,
+	dave.hansen@linux.intel.com,
+	colin.i.king@gmail.com,
+	jim.cromie@gmail.com,
+	catalin.marinas@arm.com,
+	jbaron@akamai.com,
+	rick.p.edgecombe@intel.com,
+	mcgrof@kernel.org
+Subject: [PATCH v4 0/2] modules/kmod: replace implementation with a sempahore
+Date: Fri, 14 Apr 2023 10:16:42 -0700
+Message-Id: <20230414171644.2434448-1-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230414051349.1986744-2-mcgrof@kernel.org>
+Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Thu, Apr 13, 2023 at 10:13:48PM -0700, Luis Chamberlain wrote:
-> From: Peter Zijlstra <peterz@infradead.org>
-> [mcgrof: add some tribal knowledge about why some folks prefer
->  binary sempahores over mutexes]
+Changes on this v4:
 
-Jeesh, sorry I thought I had replaced the tribal knowledge tibit with
-what Matthew had suggested before, will do that in v4.
+  o Really add Matthew Wilcox' preferred tribal knowledge docs
+  o Add all the pending tags
 
-  Luis
+Changes on v3:
+
+  o Tons of spell checks thanks to Miroslav Benes
+  o Fixed a stupid bug where I was using the timeout without HZ as
+    reported by Miroslav Benes
+  o Enanced the tribal knowledge docs for the semaphore Vs mutex
+    considerations folks might make as suggested by Matthew Wilcox
+  o Added tags for patches   
+
+Changes on v2:                                                                                                                                                                                   
+  o split the series up into its own
+  o adopt Peter's patch and extend it with some documentation as to why
+    some folks stick to binary semaphores over mutexes
+  o modify kmod.c to use the preferred declaration
+
+Luis Chamberlain (1):
+  modules/kmod: replace implementation with a semaphore
+
+Peter Zijlstra (1):
+  Change DEFINE_SEMAPHORE() to take a number argument
+
+ arch/mips/cavium-octeon/setup.c               |  2 +-
+ arch/x86/kernel/cpu/intel.c                   |  2 +-
+ drivers/firmware/efi/runtime-wrappers.c       |  2 +-
+ drivers/firmware/efi/vars.c                   |  2 +-
+ drivers/macintosh/adb.c                       |  2 +-
+ .../net/ethernet/broadcom/bnx2x/bnx2x_main.c  |  2 +-
+ drivers/platform/x86/intel/ifs/sysfs.c        |  2 +-
+ drivers/scsi/esas2r/esas2r_ioctl.c            |  2 +-
+ .../interface/vchiq_arm/vchiq_arm.c           |  2 +-
+ include/linux/semaphore.h                     | 10 +++++--
+ kernel/module/kmod.c                          | 26 +++++--------------
+ kernel/printk/printk.c                        |  2 +-
+ net/rxrpc/call_object.c                       |  6 ++---
+ 13 files changed, 27 insertions(+), 35 deletions(-)
+
+-- 
+2.39.2
+
