@@ -1,21 +1,21 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DF0653
-	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 05:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1866F7C
+	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 05:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=E0LjocQZXclRQB8l3IvaHDmnaUKbJERLnQeMcmNYaaY=; b=DAZ/9FV+DD7XCMmi7Ry/72YGZA
-	hStOFcdNHpzcexPjDdDvn4/I3GzlDg3xmazuaJyrD8MDVpXMlJQGDprz6SaDCVp9+OF6Zh+kIOk0L
-	DVTpi5+W658yOpIzK2D7xQd6BPHUZ86qlyKhB4VRDhUaVcEi4F2xNwt1tZob++B0ed6NMJxJO8Yeq
-	I1D+uJZgTaJeh+2fwBbp2/0RB78r9GhkOL0LJzdu+WBD0Qpb9Pan//1/QzRqloeBRkj4SgEoHqnWN
-	q48Bc4ZQoHCCOn+Er3owoW6C7EWltqr7ULK1OlQjTs6+aZi+Sgm1BXgUx1wNDg6K7SP38lypvLfOx
-	WHW5aWkg==;
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=WTrjq/Hj7xVrgUTwXL4fhU02Kmf9Tqu/Teapat/Qe9U=; b=nrh5SDtLtFVCBqV9LcByXzOdcP
+	fXhCPG9ig8aJsOG7gPetVfxNTBbuzPyZkskWLeKVsmjPcuEk2cCOfpxGR02jXC/fUzmWFnPsOyscd
+	tc4Qi/T0dBYNpGiQzXWkCgMNGewsl84u+OBVY7+BPnz/UDbbg5Wo1OSWF5IVwBkE4C2kGI+NSmCn+
+	Zd4jl1uWkAD/IEm/bTzZtoWpqT1F6I+jvwdCYcLyoAk1+9kA55qTZXnYD7bAe2zgwOUVnZUoeg4Pl
+	9iQAxEaW6qucTufLGSa7Swyd2NQedIZfgXzGRsJOVGG30gme0xbCyDq4EiANSdnuqAM+e3dchOhRt
+	KlPkdRUg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1pnBks-008KqY-1v;
-	Fri, 14 Apr 2023 05:13:50 +0000
+	id 1pnBzK-008MsV-0U;
+	Fri, 14 Apr 2023 05:28:46 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: david@redhat.com,
 	patches@lists.linux.dev,
@@ -44,12 +44,10 @@ Cc: christophe.leroy@csgroup.eu,
 	jbaron@akamai.com,
 	rick.p.edgecombe@intel.com,
 	mcgrof@kernel.org
-Subject: [PATCH v3 2/2] modules/kmod: replace implementation with a semaphore
-Date: Thu, 13 Apr 2023 22:13:49 -0700
-Message-Id: <20230414051349.1986744-3-mcgrof@kernel.org>
+Subject: [RFC 0/2] module: fix virtual memory wasted on finit_module()
+Date: Thu, 13 Apr 2023 22:28:38 -0700
+Message-Id: <20230414052840.1994456-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230414051349.1986744-1-mcgrof@kernel.org>
-References: <20230414051349.1986744-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,77 +57,97 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Simplify the concurrency delimiter we use for kmod with the semaphore.
-I had used the kmod strategy to try to implement a similar concurrency
-delimiter for the kernel_read*() calls from the finit_module() path
-so to reduce vmalloc() memory pressure. That effort didn't provide yet
-conclusive results, but one thing that became clear is we can use
-the suggested alternative solution with semaphores which Linus hinted
-at instead of using the atomic / wait strategy.
+The graph from my v3 patch series [0] which tries to resolve the virtual
+memory lost bytes due to duplicates says it all:
 
-I've stress tested this with kmod test 0008:
+         +----------------------------------------------------------------------------+
+    14GB |-+          +            +            +           +           *+          +-|
+         |                                                          ****              |
+         |                                                       ***                  |
+         |                                                     **                     |
+    12GB |-+                                                 **                     +-|
+         |                                                 **                         |
+         |                                               **                           |
+         |                                             **                             |
+         |                                           **                               |
+    10GB |-+                                       **                               +-|
+         |                                       **                                   |
+         |                                     **                                     |
+         |                                   **                                       |
+     8GB |-+                               **                                       +-|
+waste    |                               **                             ###           |
+         |                             **                           ####              |
+         |                           **                      #######                  |
+     6GB |-+                     ****                    ####                       +-|
+         |                      *                    ####                             |
+         |                     *                 ####                                 |
+         |                *****              ####                                     |
+     4GB |-+            **               ####                                       +-|
+         |            **             ####                                             |
+         |          **           ####                                                 |
+         |        **         ####                                                     |
+     2GB |-+    **      #####                                                       +-|
+         |     *    ####                                                              |
+         |    * ####                                                   Before ******* |
+         |  **##      +            +            +           +           After ####### |
+         +----------------------------------------------------------------------------+
+         0            50          100          150         200          250          300
+                                          CPUs count
 
-time /data/linux-next/tools/testing/selftests/kmod/kmod.sh -t 0008
+So we really need to debug to see WTF, because really, WTF. The first
+patch tries to answer the question if the issue is module auto-loading
+being abused and that causing the issues. The patch proves that the
+answer is no, but it does also help us find *a few* requests which can
+get a bit of love to avoid duplicates. My system at least found one. So
+it adds a debugging facility to let you do that.
 
-And I get only a *slight* delay. That delay however is small, a few
-seconds for a full test loop run that runs 150 times, for about ~30-40
-seconds. The small delay is worth the simplfication IMHO.
+As I was writing the commit log for my first patch series [0] I was noting
+that this is it... and the obvious conclusion is that the culprit is udev
+issuing requests per CPU for tons of modules. I didn't feel comfortable in
+writing that this is it and we can't really do anything before really
+trying hard. So I gave it a good 'ol college try. At first I wondered if
+we could use file descriptor hints to just exlude users early on boot
+before SYSTEM_RUNNING. I couldn't find much, but if there are some ways
+to do that -- then the last patch can be simplified to do just that.
+The second patch proves essentially that we can just send -EBUSY to
+duplicate requests, at least for duplicate module loads and the world
+doesn't fall apart. It *would* solve the issue. The patch however
+borrows tons of the code from the first, and if we're realy going to
+rely on something like that we may as well share. But I'm hopeful that
+perhaps there are some jucier file descriptor tricks we can use to
+just make a file mutually exlusivive and introduce a new kread which
+lets finit_module() use that. The saving grace is that at least all
+finit_module() calls *wait*, contray to request_module() calls and so
+the solution can be much simpler.
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- kernel/module/kmod.c | 26 +++++++-------------------
- 1 file changed, 7 insertions(+), 19 deletions(-)
+The end result is 0 wasted virtual memory bytes.
 
-diff --git a/kernel/module/kmod.c b/kernel/module/kmod.c
-index b717134ebe17..5899083436a3 100644
---- a/kernel/module/kmod.c
-+++ b/kernel/module/kmod.c
-@@ -40,8 +40,7 @@
-  * effect. Systems like these are very unlikely if modules are enabled.
-  */
- #define MAX_KMOD_CONCURRENT 50
--static atomic_t kmod_concurrent_max = ATOMIC_INIT(MAX_KMOD_CONCURRENT);
--static DECLARE_WAIT_QUEUE_HEAD(kmod_wq);
-+static DEFINE_SEMAPHORE(kmod_concurrent_max, MAX_KMOD_CONCURRENT);
- 
- /*
-  * This is a restriction on having *all* MAX_KMOD_CONCURRENT threads
-@@ -148,29 +147,18 @@ int __request_module(bool wait, const char *fmt, ...)
- 	if (ret)
- 		return ret;
- 
--	if (atomic_dec_if_positive(&kmod_concurrent_max) < 0) {
--		pr_warn_ratelimited("request_module: kmod_concurrent_max (%u) close to 0 (max_modprobes: %u), for module %s, throttling...",
--				    atomic_read(&kmod_concurrent_max),
--				    MAX_KMOD_CONCURRENT, module_name);
--		ret = wait_event_killable_timeout(kmod_wq,
--						  atomic_dec_if_positive(&kmod_concurrent_max) >= 0,
--						  MAX_KMOD_ALL_BUSY_TIMEOUT * HZ);
--		if (!ret) {
--			pr_warn_ratelimited("request_module: modprobe %s cannot be processed, kmod busy with %d threads for more than %d seconds now",
--					    module_name, MAX_KMOD_CONCURRENT, MAX_KMOD_ALL_BUSY_TIMEOUT);
--			return -ETIME;
--		} else if (ret == -ERESTARTSYS) {
--			pr_warn_ratelimited("request_module: sigkill sent for modprobe %s, giving up", module_name);
--			return ret;
--		}
-+	ret = down_timeout(&kmod_concurrent_max, MAX_KMOD_ALL_BUSY_TIMEOUT * HZ);
-+	if (ret) {
-+		pr_warn_ratelimited("request_module: modprobe %s cannot be processed, kmod busy with %d threads for more than %d seconds now",
-+				    module_name, MAX_KMOD_CONCURRENT, MAX_KMOD_ALL_BUSY_TIMEOUT);
-+		return ret;
- 	}
- 
- 	trace_module_request(module_name, wait, _RET_IP_);
- 
- 	ret = call_modprobe(module_name, wait ? UMH_WAIT_PROC : UMH_WAIT_EXEC);
- 
--	atomic_inc(&kmod_concurrent_max);
--	wake_up(&kmod_wq);
-+	up(&kmod_concurrent_max);
- 
- 	return ret;
- }
+Any ideas how not to make patch 2 suck as-is ?
+
+Yes -- we can also go fix udev, or libkmod, and that's what should be
+done. However, it seems silly to not fix if the fix is as trivial as
+patch 2 demonstrates.
+
+If you want to test / muck with all this you can use my branch
+20230413-module-alloc-opts [1]:
+
+[0] https://lkml.kernel.org/r/20230414050836.1984746-1-mcgrof@kernel.org
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/log/?h=20230413-module-alloc-opts
+
+Luis Chamberlain (2):
+  module: add debugging auto-load duplicate module support
+  kread: avoid duplicates
+
+ fs/kernel_read_file.c    | 150 +++++++++++++++++++++++++
+ kernel/module/Kconfig    |  40 +++++++
+ kernel/module/Makefile   |   1 +
+ kernel/module/dups.c     | 234 +++++++++++++++++++++++++++++++++++++++
+ kernel/module/internal.h |  15 +++
+ kernel/module/kmod.c     |  23 +++-
+ kernel/module/main.c     |   6 +-
+ 7 files changed, 463 insertions(+), 6 deletions(-)
+ create mode 100644 kernel/module/dups.c
+
 -- 
 2.39.2
 
