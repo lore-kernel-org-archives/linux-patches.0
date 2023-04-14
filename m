@@ -1,510 +1,171 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2046.outbound.protection.outlook.com [40.107.220.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D512654
-	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 05:28:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=rAVcglQKGoDiPrgNmbJqJmJCewpnoiefCuDpW4aDLqc=; b=DtR7UPhBEXFLNFyZrfEWesrGrw
-	qOlciBpSWARmOVo91oa1EpHxsan0AJXosO5SkWUMD5RS2oXhxOkQ+abuI3cYelF6/DKyIuorH+1j4
-	J82IxuBZqCoPCLtEhdZFzwoThgC5BwTC5ILRi0YENsWoxc+WzBTF3y92WnbDe8jTiEj6uptHh0nE0
-	1ldW55XC5IelLaIW8Ye1otlx4imPC+lXRovp2AwxdqOUXKNjpVRhUt9smrqXykJVdjSS5WmtJQ1Ki
-	ApEsqySu3l4lFgY93NnS4H255n3EdiolsyEQbyw3jBFknQh+voEQDYdIEBrM6vqG/KiSikV360fWz
-	9e5W7dVQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1pnBzK-008Msg-0k;
-	Fri, 14 Apr 2023 05:28:46 +0000
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: david@redhat.com,
-	patches@lists.linux.dev,
-	linux-modules@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	pmladek@suse.com,
-	petr.pavlu@suse.com,
-	prarit@redhat.com,
-	torvalds@linux-foundation.org,
-	gregkh@linuxfoundation.org,
-	rafael@kernel.org
-Cc: christophe.leroy@csgroup.eu,
-	tglx@linutronix.de,
-	peterz@infradead.org,
-	song@kernel.org,
-	rppt@kernel.org,
-	dave@stgolabs.net,
-	willy@infradead.org,
-	vbabka@suse.cz,
-	mhocko@suse.com,
-	dave.hansen@linux.intel.com,
-	colin.i.king@gmail.com,
-	jim.cromie@gmail.com,
-	catalin.marinas@arm.com,
-	jbaron@akamai.com,
-	rick.p.edgecombe@intel.com,
-	mcgrof@kernel.org
-Subject: [RFC 1/2] module: add debugging auto-load duplicate module support
-Date: Thu, 13 Apr 2023 22:28:39 -0700
-Message-Id: <20230414052840.1994456-2-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230414052840.1994456-1-mcgrof@kernel.org>
-References: <20230414052840.1994456-1-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5017C
+	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 06:13:43 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZQcSa5+lq8qL9NfkRXDiYpkeT/WUInmv9dxAwxZM49PT6/cqT/EaGqAScqfD4/k1RuqB6sv9tRfifwfABX+QEuB7wvNhSfBm5tRCo9qIUqDC0J0/Yu8PON7AgJzAwaNyP3MJBaUGD9uwLLk12sLMQgFJFF6SCjv5RrjejLWOIg4nGrFMxovmWJ3f7QKsM34ACYHFXpxmkBjR/jMGHuI6o6Y6+/zHsoZVsreNed/J6OL/0/ffXsNNkzo5vHVb171BjJ3IBBCdIqm+XXhx0r0zAfY+0mPSVJCg7tpnRp/fBWScdS/ERcPjxmO0gG1aXSEAA0pNz9jEkfxiRJ0wTFLwXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=enzvtgOUWaRaenrRWQIIkTgK74ls3QEHVPGTqYxZuSc=;
+ b=chRTcrkwkJiUM+P8TGEqIxxgOMZt+RVpn1mB08RCG5S96EGCuWWw2p4RuW/3I8/AXnT744FK97fQHSh7wxyB83iIX08O1/tqrO4aWquJVU/IlDtk+sox2CxB34095cAZAOiM9X3BYGc/RnYOA+uhcbtL5l0zoRwdLjet64c1klPdyFjYTnSwpBt/W8YE8dVxe9gzLZMsL+9bR5vFhZAPHOOwzWZy6qvty4CoBsg9IQrKyJoxjx3HTQHXoHwiGBdbx9FeaXzPAmvTo76+NYAV+W3ECb0Lw0r7nKGwkdvcTkaSLpR2Hi2ty1g9UO16VIE9/fqncuyJVI5Pj3pbLM3l6Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=enzvtgOUWaRaenrRWQIIkTgK74ls3QEHVPGTqYxZuSc=;
+ b=zuk7ZWHrsz/7MHJqye2kUB9s9julo2QIcg+gZ5gEikCm/9ajLUpg2bRyseL/ipZehtqj+eYxEqBNSbT4VBlcitPmNsScVrfFwbMCCREEn8O+Iwt98AYIMJnWPrJWKsz9dZ3F4uJ3GxTY8b+PIXD4NVm03131/J/9XXWCZxXIz1c=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH0PR12MB5346.namprd12.prod.outlook.com (2603:10b6:610:d5::24)
+ by PH7PR12MB7282.namprd12.prod.outlook.com (2603:10b6:510:209::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6277.47; Fri, 14 Apr
+ 2023 06:13:41 +0000
+Received: from CH0PR12MB5346.namprd12.prod.outlook.com
+ ([fe80::51a6:a1e6:5fda:f57a]) by CH0PR12MB5346.namprd12.prod.outlook.com
+ ([fe80::51a6:a1e6:5fda:f57a%5]) with mapi id 15.20.6298.030; Fri, 14 Apr 2023
+ 06:13:41 +0000
+Message-ID: <3f9cab44-13bf-a725-7c33-9573c259facf@amd.com>
+Date: Fri, 14 Apr 2023 11:43:29 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH 5.10 092/173] tee: amdtee: fix race condition in
+ amdtee_open_session
+To: Pavel Machek <pavel@denx.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Sumit Garg <sumit.garg@linaro.org>,
+ Jens Wiklander <jens.wiklander@linaro.org>
+References: <20230403140414.174516815@linuxfoundation.org>
+ <20230403140417.410529300@linuxfoundation.org> <ZCwKjzsnhxkI+eFS@duo.ucw.cz>
+Content-Language: en-US
+From: Rijo Thomas <Rijo-john.Thomas@amd.com>
+In-Reply-To: <ZCwKjzsnhxkI+eFS@duo.ucw.cz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN0PR01CA0022.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:4e::19) To CH0PR12MB5346.namprd12.prod.outlook.com
+ (2603:10b6:610:d5::24)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH0PR12MB5346:EE_|PH7PR12MB7282:EE_
+X-MS-Office365-Filtering-Correlation-Id: 716fb287-077d-48a5-c7cd-08db3caf6460
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	8WOf+uhjBIAlXx+FP7M5Qn/i0ArBsg3c+9sGfLfXQ2sflXBMUVxHqalouT7J6DFyjzZhAqFvXhmt+7f10jD81yhppzU9jmic5eJWeb2LGolG/YtlFXOR9tgedpMKc/MK2IiCWsPfGDV4/g2CkZOHHpdDbf5Z6qwFHwxLSswWfx16KagZq1bfQscKTMGMi5e4vn+6oTAqWFG/ttMHQ/GoTfIaxyJyTHJwr1+F3mckWJkJ0xYvGqbmZKTJBIhTrkvQuIQjCT5XZXfVx0hZ6Mqc9ZoGW42KaKcu/Wu09stHLYLla/enPFdcxN0b3PkwtULb/i2pztypm7s3SVKgILjfeb4b3Vy/N6JcLOTutCUH31Fjbibi5UkHb3cbzEW1ybLk1/M6Ca5BbQJ9V+Q0XPKDL2PqMkw86bUMUfxhrm/oH1ekbBu0nIssUepvmyYjznCA2zban0WGq7u44WNQFY8sKoXroDZCpjC0dwIDmmRvbxHv4TYB3diOts0NsLuCcEpVFqUuy7JM1aC85xF5US4/ki1h7MWf2dQN6q0Sh69+ROS1fhDmEzH3Vqjwdz1n0T2KbNaKzsJ920SeAogH1uEPj/GYu/R6VEqE0nTcyeZgsL2f+f/2hgIyYJzcQ7YpeJFVzCVmTnO53BEqagvrrBCegw==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR12MB5346.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(136003)(346002)(376002)(39860400002)(366004)(451199021)(8936002)(54906003)(6486002)(5660300002)(316002)(110136005)(4326008)(41300700001)(8676002)(36756003)(66476007)(66556008)(66946007)(478600001)(38100700002)(2616005)(53546011)(86362001)(31696002)(26005)(6512007)(6506007)(186003)(83380400001)(6666004)(31686004)(2906002)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?MEsvU214bkxid202UG92TkdadFRyZ1VlZkh4RWlaNTZjSUNyaTNnTm5mbjRH?=
+ =?utf-8?B?dmkyTzVWcTBPSUE1d2xISlI5UnMxWGp1RkFWWnh5ZFdWTEYwVExFaWkrNWwx?=
+ =?utf-8?B?b0k5cnhzaGJ6RmdoUDJRQ1VlUExtbzFGWkhzc2o3eXdkZVEvM1Nic2JvN2tG?=
+ =?utf-8?B?V1BzSUFKMkoxWU5MejY3MjNMN1Z2U3JuTXp1NE9kaTRFT2lCNjk5dHdTNnRn?=
+ =?utf-8?B?NTdxUVRnZ0dCY3FrTHppbmhjdVhMcE1CTjNHdEp2SVFhUzlqejVFd3NZSG4y?=
+ =?utf-8?B?TWZkYy8zOHN2a2hTaW5wdmwzL25FekdWbWFOTWZPZEVRbkk5TWdLZGxEYmxy?=
+ =?utf-8?B?WE9zbDJkUHBrTVRicllacUhTN1ZZSEFHOVFaN3k0MFlYN1o5WVVka1BRS1A4?=
+ =?utf-8?B?RjBmbkordUlXQzdoMmFpRVVHTG1rZDNyeW0xTzZzSjJPa09rZzJhVTEwUzQ3?=
+ =?utf-8?B?TlZFSkVNb21PMVovaFBCTThyVnBZN09xeG55ZVFEbzNkZWYzNFhReVUxQW5I?=
+ =?utf-8?B?WWo3R1lkZUZpbTFqZ2RKM0ZLS20xZFVaOVk1RUV2eU5xcS9uejljUTJEQVVN?=
+ =?utf-8?B?eUY2cHp2QWFqZ2w3eEdZOFlYc1d6M1JYNXhHTkUvaFlKVi9VdGNYSVl5NlJS?=
+ =?utf-8?B?STU4QlJTeTFFY29uMmg2cWN0YTBsUTRFSVRtenhHd2RJYzNCbmpkQm1WeVJJ?=
+ =?utf-8?B?NkMwU0NlcWdJTjhmcVZIeFN5cmJpTUlOODh1UDdZUTQ5TnBDNGUzT2Zlb1pY?=
+ =?utf-8?B?dlhnbE5kVnBkZkhRYUpZMkJyb3VoN1RnTmZJam1HblFBcVVrWFJXTkxYUyt2?=
+ =?utf-8?B?TzFETytDVlVPY0RRVjJ1ZFFoeFpTV3cwVDVWTkxtckpmSDlvNm9lMDlIeGFZ?=
+ =?utf-8?B?WDdMTmV3Ykpob003dGRBSFZkVGFRdS9rc1JqNTlhWVlUYWw5QlVxL25OR2xr?=
+ =?utf-8?B?ZmQ5SkNVUTh6Wk1jMk5jS2dRdWIveDdSTHlVeFhQajJkYVhhR016NTY2Nmo2?=
+ =?utf-8?B?QzhzbTJDMFdac0wxTUxhd2gwbEg0L3lJZUhnc01qUzlYaFFYM09jeDNQTkNj?=
+ =?utf-8?B?YWtuc1RtaXdlOGJObmxUTGlYNEFHa2xiVHhxL3RtNjEwUkJ5TFlQVTk2bm5o?=
+ =?utf-8?B?U0dZR1pvb2tGR3oyNkxVT0VWN0RCVnQycjhSN3RlYXNVanFvcE1FeWJGUnFX?=
+ =?utf-8?B?VzRjU0E4ekVtdGVFamFjUkhWK0hYVHlOL2VnUVpjOUdicFp4NituYjFlc25a?=
+ =?utf-8?B?Rlh4VGREOVpla09TZXVuWERsOW1GbjFJZlRkRHZDRHVBenhKSWdLRmVMaUs1?=
+ =?utf-8?B?RWN3cWlVNnJudGpxQVA2Wmk5U0ZWU2dKTFRyRVNuN3NpNVhldHVUNDk5VjBS?=
+ =?utf-8?B?UmFpTjM0VzFxS3pCTlpBcHdXQzhtOTRNTnNMT2UzSmkzTUF4VnBiU1R2Umpp?=
+ =?utf-8?B?OC8yYnBFeFFXN2VhOEowNEI4Zjc1YzJIM25xTmJ5ZERLY2JMQ3EvVTlwK3pq?=
+ =?utf-8?B?YnlZUXNzN0VGSk1RODNGUHFoTEhhTlBXWVJOQS81aHZGY3M3M2VaRTFLNDd2?=
+ =?utf-8?B?c1NRVmhkU2dyWGhYdFR1a3hQUEhSOW93MUpjWkxTUzhIc1dPSXZLb3RIVEZU?=
+ =?utf-8?B?VDZqNi9zZW1JNDk0VStWNTBiNy9xczRsbk8valJiNkxldEVIVDZZSys3anRz?=
+ =?utf-8?B?ZWRpdTlVbndhOXN4OXEwUmJGVkI2UUk1TnYvb09vWFIzUzVSZndGY2lhMHlU?=
+ =?utf-8?B?M1V6dFlYT0FUZzI3UEwyRU8yaFdkNENKaXc0Q0c4QW95YVo4cjU0YThaVERx?=
+ =?utf-8?B?S2tRbjVCYkt2L2diMHBNVXk0dnJJMkFLNnlhM2tkZitPL1kxU1VGd3pnR0c5?=
+ =?utf-8?B?UVhqdkh3YnE5V2l4cStJZVNMSy9SOUM0b1JoZzZHV1pxOFQyWVVWME5RS1BL?=
+ =?utf-8?B?Ym5Cclh6V1BRYk5KOEtrMTF4VENOMUZXMnBoRVFuLzR5Sm5Qb0cveERFYVhS?=
+ =?utf-8?B?ckZmZmRrclFEREVZSEUyR3VrVlRkbVhHczlETnd5YTBpVDBIaElKUjBBRjBC?=
+ =?utf-8?B?VEFwYWJickRDVDhOaUo5SEQ0cWlveUlnUTFzUlFSeGViQXAzZStaUWgvZkZi?=
+ =?utf-8?Q?5avj+rvFDoralH5MjjZWTAVqq?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 716fb287-077d-48a5-c7cd-08db3caf6460
+X-MS-Exchange-CrossTenant-AuthSource: CH0PR12MB5346.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Apr 2023 06:13:40.8289
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8yDroo0juTkglLsIAbOraDgJG7bwPfqE6o4DQAn/amk/pjT1W/t1ViLF2pXC2oaftLRv6m5t2s2xXigvClWMiw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7282
 
-This adds debugging support to the kernel module auto-loader to
-easily detect and deal with duplicate module requests. To aid
-with possible bootup failure issues it will supress the waste
-in virtual memory when races happen before userspace loads a
-module and the kernel is still issuing requests for the same
-module.
 
-Folks debugging virtual memory abuse on bootup can and should
-enable this to see what WARN()s come on, to see if module
-auto-loading is to blame for their woes.
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- kernel/module/Kconfig    |  40 +++++++
- kernel/module/Makefile   |   1 +
- kernel/module/dups.c     | 234 +++++++++++++++++++++++++++++++++++++++
- kernel/module/internal.h |  15 +++
- kernel/module/kmod.c     |  23 +++-
- 5 files changed, 309 insertions(+), 4 deletions(-)
- create mode 100644 kernel/module/dups.c
+On 4/4/2023 5:01 PM, Pavel Machek wrote:
+> Hi!
+> 
+>> commit f8502fba45bd30e1a6a354d9d898bc99d1a11e6d upstream.
+>>
+>> There is a potential race condition in amdtee_open_session that may
+>> lead to use-after-free. For instance, in amdtee_open_session() after
+>> sess->sess_mask is set, and before setting:
+>>
+>>     sess->session_info[i] = session_info;
+>>
+>> if amdtee_close_session() closes this same session, then 'sess' data
+>> structure will be released, causing kernel panic when 'sess' is
+>> accessed within amdtee_open_session().
+>>
+>> The solution is to set the bit sess->sess_mask as the last step in
+>> amdtee_open_session().
+> 
+> Ok, but:
+> 
+>> +++ b/drivers/tee/amdtee/core.c
+>> @@ -267,35 +267,34 @@ int amdtee_open_session(struct tee_conte
+>>  		goto out;
+>>  	}
+>>  
+>> +	/* Open session with loaded TA */
+>> +	handle_open_session(arg, &session_info, param);
+>> +	if (arg->ret != TEEC_SUCCESS) {
+>> +		pr_err("open_session failed %d\n", arg->ret);
+>> +		handle_unload_ta(ta_handle);
+>> +		kref_put(&sess->refcount, destroy_session);
+>> +		goto out;
+>> +	}
+> 
+> rc needs to be set to something here, otherwise we'll return 0 below.
+> 
 
-diff --git a/kernel/module/Kconfig b/kernel/module/Kconfig
-index ca277b945a67..ac7d23679799 100644
---- a/kernel/module/Kconfig
-+++ b/kernel/module/Kconfig
-@@ -57,6 +57,46 @@ config MODULE_STATS
- 
- 	  If unsure, say N.
- 
-+config MODULE_AUTOLOAD_SUPRESS_DUPS
-+	bool "Debug duplicate modules with auto-loading"
-+	help
-+	  Module autoloading allows in-kernel code to request modules through
-+	  the *request_module*() API calls. This in turn just calls userspace
-+	  modprobe. Although modprobe checks to see if a module is already
-+	  loaded before trying to load a module there is a small time window in
-+	  which multiple duplicate requests can end up in userspace and multiple
-+	  modprobe calls race calling finit_module() around the same time for
-+	  duplicate modules. The finit_module() system call can consume in the
-+	  worst case more than twice the respective module size in virtual
-+	  memory for each duplicate module requests. Although duplicate module
-+	  requests are non-fatal virtual memory is a limited resource and each
-+	  duplicate module request ends up just wasting virtual memory.
-+
-+	  This debugging facility will create WARN() splats for duplicate module
-+	  requests to help identify if module auto-loading is the culprit to your
-+	  woes. Since virtual memory abuse caused by duplicate module requests
-+	  could render a system unusable this functionality will also suppresses
-+	  the waste in virtual memory caused by duplicate requests by sharing
-+	  races in requests for the same module to a single unified request.
-+	  Once a non-wait request_module() call completes a module should be
-+	  loaded and modprobe should simply not allow new finit_module() calls.
-+
-+	  Enable this functionality to try to debug virtual memory abuse during
-+	  boot on systems and identify if the abuse was due to module
-+	  auto-loading.
-+
-+	  If the first module request used request_module_nowait() we cannot
-+	  use that as the anchor to wait for duplicate module requests, since
-+	  users of request_module() do want a proper return value. If a call
-+	  for the same module happened earlier with request_module() though,
-+	  then a duplicate request_module_nowait() would be detected.
-+
-+	  You want to enable this if you want to debug and see if duplicate
-+	  module auto-loading might be causing virtual memory abuse during
-+	  bootup. A kernel trace will be provided for each duplicate request.
-+
-+	  Disable this if you are on production.
-+
- endif # MODULE_DEBUG
- 
- config MODULE_FORCE_LOAD
-diff --git a/kernel/module/Makefile b/kernel/module/Makefile
-index 52340bce497e..e8b121ac39cf 100644
---- a/kernel/module/Makefile
-+++ b/kernel/module/Makefile
-@@ -10,6 +10,7 @@ KCOV_INSTRUMENT_module.o := n
- obj-y += main.o
- obj-y += strict_rwx.o
- obj-y += kmod.o
-+obj-$(CONFIG_MODULE_AUTOLOAD_SUPRESS_DUPS) += dups.o
- obj-$(CONFIG_MODULE_DECOMPRESS) += decompress.o
- obj-$(CONFIG_MODULE_SIG) += signing.o
- obj-$(CONFIG_LIVEPATCH) += livepatch.o
-diff --git a/kernel/module/dups.c b/kernel/module/dups.c
-new file mode 100644
-index 000000000000..903ab7c7e8f4
---- /dev/null
-+++ b/kernel/module/dups.c
-@@ -0,0 +1,234 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * kmod dups - the kernel module autoloader duplicate suppressor
-+ *
-+ * Copyright (C) 2023 Luis Chamberlain <mcgrof@kernel.org>
-+ */
-+
-+#include <linux/module.h>
-+#include <linux/sched.h>
-+#include <linux/sched/task.h>
-+#include <linux/binfmts.h>
-+#include <linux/syscalls.h>
-+#include <linux/unistd.h>
-+#include <linux/kmod.h>
-+#include <linux/slab.h>
-+#include <linux/completion.h>
-+#include <linux/cred.h>
-+#include <linux/file.h>
-+#include <linux/fdtable.h>
-+#include <linux/workqueue.h>
-+#include <linux/security.h>
-+#include <linux/mount.h>
-+#include <linux/kernel.h>
-+#include <linux/init.h>
-+#include <linux/resource.h>
-+#include <linux/notifier.h>
-+#include <linux/suspend.h>
-+#include <linux/rwsem.h>
-+#include <linux/ptrace.h>
-+#include <linux/async.h>
-+#include <linux/uaccess.h>
-+
-+DEFINE_MUTEX(kmod_dup_mutex);
-+static LIST_HEAD(dup_kmod_reqs);
-+
-+struct kmod_dup_req {
-+	struct list_head list;
-+	char name[MODULE_NAME_LEN];
-+	struct completion first_req_done;
-+	struct work_struct complete_work;
-+	struct delayed_work delete_work;
-+	int dup_ret;
-+};
-+
-+static struct kmod_dup_req *kmod_dup_request_lookup(char *module_name)
-+{
-+	struct kmod_dup_req *kmod_req;
-+
-+	list_for_each_entry_rcu(kmod_req, &dup_kmod_reqs, list,
-+				lockdep_is_held(&kmod_dup_mutex)) {
-+		if (strlen(kmod_req->name) == strlen(module_name) &&
-+		    !memcmp(kmod_req->name, module_name, strlen(module_name))) {
-+			return kmod_req;
-+                }
-+        }
-+
-+	return NULL;
-+}
-+
-+static void kmod_dup_request_delete(struct work_struct *work)
-+{
-+	struct kmod_dup_req *kmod_req;
-+	kmod_req = container_of(to_delayed_work(work), struct kmod_dup_req, delete_work);
-+
-+	/*
-+	 * The typical situation is a module successully loaded. In that
-+	 * situation the module will be present already in userspace. If
-+	 * new requests come in after that, userspace will already know the
-+	 * module is loaded so will just return 0 right away. There is still
-+	 * a small chance right after we delete this entry new request_module()
-+	 * calls may happen after that, they can happen. These heuristics
-+	 * are to protect finit_module() abuse for auto-loading, if modules
-+	 * are still tryign to auto-load even if a module is already loaded,
-+	 * that's on them, and those inneficiencies should not be fixed by
-+	 * kmod. The inneficies there are a call to modprobe and modprobe
-+	 * just returning 0.
-+	 */
-+	mutex_lock(&kmod_dup_mutex);
-+	list_del_rcu(&kmod_req->list);
-+	synchronize_rcu();
-+	mutex_unlock(&kmod_dup_mutex);
-+	kfree(kmod_req);
-+}
-+
-+static void kmod_dup_request_complete(struct work_struct *work)
-+{
-+	struct kmod_dup_req *kmod_req;
-+
-+	kmod_req = container_of(work, struct kmod_dup_req, complete_work);
-+
-+	/*
-+	 * This will ensure that the kernel will let all the waiters get
-+	 * informed its time to check the return value. It's time to
-+	 * go home.
-+	 */
-+	complete_all(&kmod_req->first_req_done);
-+
-+	/*
-+	 * Now that we have allowed prior request_module() calls to go on
-+	 * with life, let's schedule deleting this entry. We don't have
-+	 * to do it right away, but we *eventually* want to do it so to not
-+	 * let this linger forever as this is just a boot optimization for
-+	 * possible abuses of vmalloc() incurred by finit_module() thrashing.
-+	 */
-+	queue_delayed_work(system_wq, &kmod_req->delete_work, 60 * HZ);
-+}
-+
-+bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
-+{
-+	struct kmod_dup_req *kmod_req, *new_kmod_req;
-+	int ret;
-+
-+	/*
-+	 * Pre-allocate the entry in case we have to use it later
-+	 * to avoid contention with the mutex.
-+	 */
-+	new_kmod_req = kzalloc(sizeof(*new_kmod_req), GFP_KERNEL);
-+	if (!new_kmod_req)
-+		return false;
-+
-+	memcpy(new_kmod_req->name, module_name, strlen(module_name));
-+	INIT_WORK(&new_kmod_req->complete_work, kmod_dup_request_complete);
-+	INIT_DELAYED_WORK(&new_kmod_req->delete_work, kmod_dup_request_delete);
-+	init_completion(&new_kmod_req->first_req_done);
-+
-+	mutex_lock(&kmod_dup_mutex);
-+
-+	kmod_req = kmod_dup_request_lookup(module_name);
-+	if (!kmod_req) {
-+		/*
-+		 * If the first request that came through for a module
-+		 * was with request_module_nowait() we cannot wait for it
-+		 * and share its return value with other users which may
-+		 * have used request_module() and need a proper return value
-+		 * so just skip using them as an anchor.
-+		 *
-+		 * If a prior request to this one came through with
-+		 * request_module() though, then a request_module_nowait()
-+		 * would benefit from duplicate detection.
-+		 */
-+		if (!wait) {
-+			kfree(new_kmod_req);
-+			pr_warn("New request_module_nowait() for %s -- cannot track duplicates for this request\n", module_name);
-+			mutex_unlock(&kmod_dup_mutex);
-+			return false;
-+		}
-+
-+		/*
-+		 * There was no duplicate, just add the request so we can
-+		 * keep tab on duplicates later.
-+		 */
-+		pr_info("New request_module() for %s\n", module_name);
-+		list_add_rcu(&new_kmod_req->list, &dup_kmod_reqs);
-+		mutex_unlock(&kmod_dup_mutex);
-+		return false;
-+	}
-+	mutex_unlock(&kmod_dup_mutex);
-+
-+	/* We are dealing with a duplicate request now */
-+
-+	kfree(new_kmod_req);
-+
-+	/*
-+	 * To fix these try to use try_then_request_module() instead as that
-+	 * will check if the component you are looking for is present or not.
-+	 * You could also just queue a single request to load the module once,
-+	 * instead of having each and everything you need try to request for
-+	 * the module.
-+	 *
-+	 * Duplicate request_module() calls  can cause quite a bit of wasted
-+	 * vmalloc() space when racing with userspace.
-+	 */
-+	WARN(1, "module-autoload: duplicate request for module %s\n", module_name);
-+
-+	if (!wait) {
-+		/*
-+		 * If request_module_nowait() was used then the user just
-+		 * wanted to issue the request and if another module request
-+		 * was already its way with the same name we don't care for
-+		 * the return value either. Let duplicate request_module_nowait()
-+		 * calls bail out right away.
-+		 */
-+		*dup_ret = 0;
-+		return true;
-+	}
-+
-+	/*
-+	 * If a duplicate request_module() was used they *may* care for
-+	 * the return value, so we have no other option but to wait for
-+	 * the first caller to complete. If the first caller used
-+	 * the request_module_nowait() call, subsquent callers will
-+	 * deal with the comprmise of getting a successful call with this
-+	 * optimization enabled ...
-+	 */
-+	ret = wait_for_completion_state(&kmod_req->first_req_done,
-+					TASK_UNINTERRUPTIBLE | TASK_KILLABLE);
-+	if (ret) {
-+		*dup_ret = ret;
-+		return true;
-+	}
-+
-+	/* Now the duplicate request has the same exact return value as the first request */
-+	*dup_ret = kmod_req->dup_ret;
-+
-+	return true;
-+}
-+
-+void kmod_dup_request_announce(char *module_name, int ret)
-+{
-+	struct kmod_dup_req *kmod_req;
-+
-+	mutex_lock(&kmod_dup_mutex);
-+
-+	kmod_req = kmod_dup_request_lookup(module_name);
-+	if (!kmod_req)
-+		goto out;
-+
-+	kmod_req->dup_ret = ret;
-+
-+	/*
-+	 * If we complete() here we may allow duplicate threads
-+	 * to continue before the first one that submitted the
-+	 * request. We're in no rush also, given that each and
-+	 * every bounce back to userspace is slow we avoid that
-+	 * with a slight delay here. So queueue up the completion
-+	 * and let duplicates suffer, just wait a tad bit longer.
-+	 * There is no rush. But we also don't want to hold the
-+	 * caller up forever or introduce any boot delays.
-+	 */
-+	queue_work(system_wq, &kmod_req->complete_work);
-+
-+out:
-+	mutex_unlock(&kmod_dup_mutex);
-+}
-diff --git a/kernel/module/internal.h b/kernel/module/internal.h
-index 9d97a59a9127..67d750549a44 100644
---- a/kernel/module/internal.h
-+++ b/kernel/module/internal.h
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (C) 2012 Red Hat, Inc. All Rights Reserved.
-  * Written by David Howells (dhowells@redhat.com)
-+ * Copyright (C) 2023 Luis Chamberlain <mcgrof@kernel.org>
-  */
- 
- #include <linux/elf.h>
-@@ -217,6 +218,20 @@ static inline void mod_stat_bump_becoming(struct load_info *info, int flags)
- 
- #endif /* CONFIG_MODULE_STATS */
- 
-+#ifdef CONFIG_MODULE_AUTOLOAD_SUPRESS_DUPS
-+bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret);
-+void kmod_dup_request_announce(char *module_name, int ret);
-+#else
-+static inline bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
-+{
-+	return false;
-+}
-+
-+static inline void kmod_dup_request_announce(char *module_name, int ret)
-+{
-+}
-+#endif
-+
- #ifdef CONFIG_MODULE_UNLOAD_TAINT_TRACKING
- struct mod_unload_taint {
- 	struct list_head list;
-diff --git a/kernel/module/kmod.c b/kernel/module/kmod.c
-index 5899083436a3..0800d9891692 100644
---- a/kernel/module/kmod.c
-+++ b/kernel/module/kmod.c
-@@ -1,6 +1,9 @@
- /*
-  * kmod - the kernel module loader
-+ *
-+ * Copyright (C) 2023 Luis Chamberlain <mcgrof@kernel.org>
-  */
-+
- #include <linux/module.h>
- #include <linux/sched.h>
- #include <linux/sched/task.h>
-@@ -27,6 +30,7 @@
- #include <linux/uaccess.h>
- 
- #include <trace/events/module.h>
-+#include "internal.h"
- 
- /*
-  * Assuming:
-@@ -65,7 +69,7 @@ static void free_modprobe_argv(struct subprocess_info *info)
- 	kfree(info->argv);
- }
- 
--static int call_modprobe(char *module_name, int wait)
-+static int call_modprobe(char *orig_module_name, int wait)
- {
- 	struct subprocess_info *info;
- 	static char *envp[] = {
-@@ -74,12 +78,14 @@ static int call_modprobe(char *module_name, int wait)
- 		"PATH=/sbin:/usr/sbin:/bin:/usr/bin",
- 		NULL
- 	};
-+	char *module_name;
-+	int ret;
- 
- 	char **argv = kmalloc(sizeof(char *[5]), GFP_KERNEL);
- 	if (!argv)
- 		goto out;
- 
--	module_name = kstrdup(module_name, GFP_KERNEL);
-+	module_name = kstrdup(orig_module_name, GFP_KERNEL);
- 	if (!module_name)
- 		goto free_argv;
- 
-@@ -94,13 +100,16 @@ static int call_modprobe(char *module_name, int wait)
- 	if (!info)
- 		goto free_module_name;
- 
--	return call_usermodehelper_exec(info, wait | UMH_KILLABLE);
-+	ret = call_usermodehelper_exec(info, wait | UMH_KILLABLE);
-+	kmod_dup_request_announce(orig_module_name, ret);
-+	return ret;
- 
- free_module_name:
- 	kfree(module_name);
- free_argv:
- 	kfree(argv);
- out:
-+	kmod_dup_request_announce(orig_module_name, -ENOMEM);
- 	return -ENOMEM;
- }
- 
-@@ -124,7 +133,7 @@ int __request_module(bool wait, const char *fmt, ...)
- {
- 	va_list args;
- 	char module_name[MODULE_NAME_LEN];
--	int ret;
-+	int ret, dup_ret;
- 
- 	/*
- 	 * We don't allow synchronous module loading from async.  Module
-@@ -156,8 +165,14 @@ int __request_module(bool wait, const char *fmt, ...)
- 
- 	trace_module_request(module_name, wait, _RET_IP_);
- 
-+	if (kmod_dup_request_exists_wait(module_name, wait, &dup_ret)) {
-+		ret = dup_ret;
-+		goto out;
-+	}
-+
- 	ret = call_modprobe(module_name, wait ? UMH_WAIT_PROC : UMH_WAIT_EXEC);
- 
-+out:
- 	up(&kmod_concurrent_max);
- 
- 	return ret;
--- 
-2.39.2
+Sorry about the delay in my response. Somehow missed this email.
 
+Yes, that is the expected behavior. rc will be 0 while arg->ret will have
+the return status.
+
+Thanks,
+Rijo
+
+>>  out:
+>>  	free_pages((u64)ta, get_order(ta_size));
+>>  	return rc;
+> 
+> Best regards,
+> 								Pavel
+> 
