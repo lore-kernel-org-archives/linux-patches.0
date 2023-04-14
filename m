@@ -1,39 +1,48 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from fd01.gateway.ufhost.com (fd01.gateway.ufhost.com [61.152.239.71])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657C5BA4E
-	for <patches@lists.linux.dev>; Thu, 13 Apr 2023 22:48:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055A4C433D2;
-	Thu, 13 Apr 2023 22:48:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681426105;
-	bh=2r4AGUeUoeN45ZcBLry7NPduP3jS6MEazXMcZDx4tSk=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=fe/70YgQzYpVg7kdBUWkl/HnpAoPIowg9lpjh74s/hQdBVwFbV0I3rF+fN4y4DSqm
-	 dabT3RGw7iBgtB/WE4qGpc+HigeDyVLJo6HqRwMPtNRcjTezZ5FHfd5XHMQfamtdhV
-	 9CsIbkabMl4mNgzvMOaaVzR0rcMeC1Cj56/BHX0DCNxm9mXmDx+uB1AXcYZyfT/c+W
-	 6jpMSLXbiavb68fmMIFBcSyfllCEG7p6CL8RUccbwyn8jGHoVmIFtTBiNWlEKeFgRC
-	 qYLS2tO743qgLz0u9/KEWh46c8aNhY7LJvzf3X12P2UEUv5OcXECiUNidi4tbeuoGg
-	 2T7YJSRlA6hcA==
-Message-ID: <e4cedf7608d84adb209aa889f524fc09.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65CA620
+	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 02:02:20 +0000 (UTC)
+Received: from EXMBX165.cuchost.com (unknown [175.102.18.54])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "EXMBX165", Issuer "EXMBX165" (not verified))
+	by fd01.gateway.ufhost.com (Postfix) with ESMTP id F27E48022;
+	Fri, 14 Apr 2023 09:59:44 +0800 (CST)
+Received: from EXMBX061.cuchost.com (172.16.6.61) by EXMBX165.cuchost.com
+ (172.16.6.75) with Microsoft SMTP Server (TLS) id 15.0.1497.42; Fri, 14 Apr
+ 2023 09:59:45 +0800
+Received: from [192.168.125.131] (183.27.97.249) by EXMBX061.cuchost.com
+ (172.16.6.61) with Microsoft SMTP Server (TLS) id 15.0.1497.42; Fri, 14 Apr
+ 2023 09:59:44 +0800
+Message-ID: <b41d8cf4-70aa-3b64-5254-46d92a188f63@starfivetech.com>
+Date: Fri, 14 Apr 2023 09:58:47 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230413205528.4044216-1-sboyd@kernel.org>
-References: <20230413205528.4044216-1-sboyd@kernel.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
 Subject: Re: [PATCH] clk: starfive: Avoid casting iomem pointers
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Tommaso Merciai <tomm.merciai@gmail.com>, Emil Renner Berthing <emil.renner.berthing@canonical.com>, Hal Feng <hal.feng@starfivetech.com>, Conor Dooley <conor.dooley@microchip.com>, Xingyu Wu <xingyu.wu@starfivetech.com>
-To: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Date: Thu, 13 Apr 2023 15:48:22 -0700
-User-Agent: alot/0.10
+Content-Language: en-US
+To: Stephen Boyd <sboyd@kernel.org>, Michael Turquette
+	<mturquette@baylibre.com>
+CC: <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+	<patches@lists.linux.dev>, Tommaso Merciai <tomm.merciai@gmail.com>, "Emil
+ Renner Berthing" <emil.renner.berthing@canonical.com>, Hal Feng
+	<hal.feng@starfivetech.com>, Conor Dooley <conor.dooley@microchip.com>
+References: <20230413205528.4044216-1-sboyd@kernel.org>
+From: Xingyu Wu <xingyu.wu@starfivetech.com>
+In-Reply-To: <20230413205528.4044216-1-sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [183.27.97.249]
+X-ClientProxiedBy: EXCAS066.cuchost.com (172.16.6.26) To EXMBX061.cuchost.com
+ (172.16.6.61)
+X-YovoleRuleAgent: yovoleflag
 
-Quoting Stephen Boyd (2023-04-13 13:55:28)
+On 2023/4/14 4:55, Stephen Boyd wrote:
 > Let's use a wrapper struct for the auxiliary_device made in
 > jh7110_reset_controller_register() so that we can stop casting iomem
 > pointers. The casts trip up tools like sparse, and make for some awkward
@@ -42,15 +51,162 @@ Quoting Stephen Boyd (2023-04-13 13:55:28)
 > the release function. This avoids any use after free problems where the
 > parent device driver is unbound from the device but the
 > auxiliuary_device is still in use accessing devm freed memory.
->=20
+> 
 > Cc: Tommaso Merciai <tomm.merciai@gmail.com>
 > Cc: Emil Renner Berthing <emil.renner.berthing@canonical.com>
 > Cc: Hal Feng <hal.feng@starfivetech.com>
 > Cc: Conor Dooley <conor.dooley@microchip.com>
 > Cc: Xingyu Wu <xingyu.wu@starfivetech.com>
-> Fixes: edab7204afe5 ("clk: starfive: Add StarFive JH7110 system clock dri=
-ver")
+> Fixes: edab7204afe5 ("clk: starfive: Add StarFive JH7110 system clock driver")
 > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 > ---
+> 
+> I can take this via clk tree.
+> 
+>  drivers/clk/starfive/clk-starfive-jh7110-sys.c | 15 ++++++++++++---
+>  drivers/reset/starfive/reset-starfive-jh7110.c |  9 ++++++---
+>  include/soc/starfive/reset-starfive-jh71x0.h   | 17 +++++++++++++++++
+>  3 files changed, 35 insertions(+), 6 deletions(-)
+>  create mode 100644 include/soc/starfive/reset-starfive-jh71x0.h
+> 
+> diff --git a/drivers/clk/starfive/clk-starfive-jh7110-sys.c b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+> index 5ec210644e1d..851b93d0f371 100644
+> --- a/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+> +++ b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+> @@ -11,6 +11,9 @@
+>  #include <linux/init.h>
+>  #include <linux/io.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/slab.h>
+> +
+> +#include <soc/starfive/reset-starfive-jh71x0.h>
+>  
+>  #include <dt-bindings/clock/starfive,jh7110-crg.h>
+>  
+> @@ -335,26 +338,32 @@ static void jh7110_reset_unregister_adev(void *_adev)
+>  	struct auxiliary_device *adev = _adev;
+>  
+>  	auxiliary_device_delete(adev);
+> +	auxiliary_device_uninit(adev);
+>  }
+>  
+>  static void jh7110_reset_adev_release(struct device *dev)
+>  {
+>  	struct auxiliary_device *adev = to_auxiliary_dev(dev);
+> +	struct jh71x0_reset_adev *rdev = to_jh71x0_reset_adev(adev);
+>  
+> -	auxiliary_device_uninit(adev);
+> +	kfree(rdev);
+>  }
+>  
+>  int jh7110_reset_controller_register(struct jh71x0_clk_priv *priv,
+>  				     const char *adev_name,
+>  				     u32 adev_id)
+>  {
+> +	struct jh71x0_reset_adev *rdev;
+>  	struct auxiliary_device *adev;
+>  	int ret;
+>  
+> -	adev = devm_kzalloc(priv->dev, sizeof(*adev), GFP_KERNEL);
+> -	if (!adev)
+> +	rdev = kzalloc(sizeof(*rdev), GFP_KERNEL);
+> +	if (!rdev)
+>  		return -ENOMEM;
+>  
+> +	rdev->base = priv->base;
+> +
+> +	adev = &rdev->adev;
+>  	adev->name = adev_name;
+>  	adev->dev.parent = priv->dev;
+>  	adev->dev.release = jh7110_reset_adev_release;
+> diff --git a/drivers/reset/starfive/reset-starfive-jh7110.c b/drivers/reset/starfive/reset-starfive-jh7110.c
+> index c1b3a490d951..2d26ae95c8cc 100644
+> --- a/drivers/reset/starfive/reset-starfive-jh7110.c
+> +++ b/drivers/reset/starfive/reset-starfive-jh7110.c
+> @@ -7,6 +7,8 @@
+>  
+>  #include <linux/auxiliary_bus.h>
+>  
+> +#include <soc/starfive/reset-starfive-jh71x0.h>
+> +
+>  #include "reset-starfive-jh71x0.h"
+>  
+>  #include <dt-bindings/reset/starfive,jh7110-crg.h>
+> @@ -33,14 +35,15 @@ static int jh7110_reset_probe(struct auxiliary_device *adev,
+>  			      const struct auxiliary_device_id *id)
+>  {
+>  	struct jh7110_reset_info *info = (struct jh7110_reset_info *)(id->driver_data);
+> -	void __iomem **base = (void __iomem **)dev_get_drvdata(adev->dev.parent);
 
-Applied to clk-next
+Thank you for doing that. BTW, if drop the dev_get_drvdata(), the dev_set_drvdata() should also be dropped.
+
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-aon.c b/drivers/clk/starfive/clk-starfive-jh7110-aon.c
+index a2799fe8a234..62954eb7b50a 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-aon.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-aon.c
+@@ -83,8 +83,6 @@ static int jh7110_aoncrg_probe(struct platform_device *pdev)
+        if (IS_ERR(priv->base))
+                return PTR_ERR(priv->base);
+
+-       dev_set_drvdata(priv->dev, (void *)(&priv->base));
+-
+        for (idx = 0; idx < JH7110_AONCLK_END; idx++) {
+                u32 max = jh7110_aonclk_data[idx].max;
+                struct clk_parent_data parents[4] = {};
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-sys.c b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+index 5ec210644e1d..0cda33fd47f8 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-sys.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+@@ -393,8 +393,6 @@ static int __init jh7110_syscrg_probe(struct platform_device *pdev)
+        if (IS_ERR(priv->base))
+                return PTR_ERR(priv->base);
+
+-       dev_set_drvdata(priv->dev, (void *)(&priv->base));
+-
+        /*
+         * These PLL clocks are not actually fixed factor clocks and can be
+         * controlled by the syscon registers of JH7110. They will be dropped
+
+
+> +	struct jh71x0_reset_adev *rdev = to_jh71x0_reset_adev(adev);
+> +	void __iomem *base = rdev->base;
+>  
+>  	if (!info || !base)
+>  		return -ENODEV;
+>  
+>  	return reset_starfive_jh71x0_register(&adev->dev, adev->dev.parent->of_node,
+> -					      *base + info->assert_offset,
+> -					      *base + info->status_offset,
+> +					      base + info->assert_offset,
+> +					      base + info->status_offset,
+>  					      NULL,
+>  					      info->nr_resets,
+>  					      NULL);
+> diff --git a/include/soc/starfive/reset-starfive-jh71x0.h b/include/soc/starfive/reset-starfive-jh71x0.h
+> new file mode 100644
+> index 000000000000..47b486ececc5
+> --- /dev/null
+> +++ b/include/soc/starfive/reset-starfive-jh71x0.h
+> @@ -0,0 +1,17 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#ifndef __SOC_STARFIVE_RESET_JH71X0_H
+> +#define __SOC_STARFIVE_RESET_JH71X0_H
+> +
+> +#include <linux/auxiliary_bus.h>
+> +#include <linux/compiler_types.h>
+> +#include <linux/container_of.h>
+> +
+> +struct jh71x0_reset_adev {
+> +	void __iomem *base;
+> +	struct auxiliary_device adev;
+> +};
+> +
+> +#define to_jh71x0_reset_adev(_adev) \
+> +	container_of((_adev), struct jh71x0_reset_adev, adev)
+> +
+> +#endif
+> 
+> base-commit: 601e5d464d535d655917c2cfb29c394d367fb676
+
+Best regards,
+Xingyu Wu
