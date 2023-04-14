@@ -1,82 +1,181 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from fd01.gateway.ufhost.com (fd01.gateway.ufhost.com [61.152.239.71])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0887C
-	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 17:25:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=J/6fKZJeiVQu9MpxQ2IzLW5njfnFTm8vpA4Cqb6je8s=; b=Nfmpo1Xz+ROfplpuPLDd/rZuP7
-	tnbpDoKbH654bILM+4w++OLD+Rb44/gAhB5RstSVHJDja1+ji7D1SLE5z5eGgS7mWTzqtWtX7YRqX
-	VPbJ908JpKdhJl8aP0PjEab7NT98TcciYwSPb1t7GXkEbALRGykckVZ/nL5yxgS7TZAZk80Lo4/Ci
-	+XPM3T4J+skaklt3kjdXQ5voC2Y+DmO9Yk/5i5FmA7Ygv24i6kGlH/bYGF/iBN8Pns0a5BCG1c2Xj
-	2i70Rw9gRjHL89v3GD5Vh65FsaXu47JAS6ikx2hKouoCOvzWSwj+euAfTLAkX9uG4Kdt0Zdtq9Nmy
-	NL4lE/bA==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1pnNAZ-00AEdf-30;
-	Fri, 14 Apr 2023 17:25:07 +0000
-Date: Fri, 14 Apr 2023 10:25:07 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Kees Cook <keescook@chromium.org>,
-	Christoph Hellwig <hch@infradead.org>, david@redhat.com,
-	patches@lists.linux.dev, linux-modules@vger.kernel.org,
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org, pmladek@suse.com,
-	petr.pavlu@suse.com, prarit@redhat.com,
-	torvalds@linux-foundation.org, gregkh@linuxfoundation.org,
-	rafael@kernel.org
-Cc: christophe.leroy@csgroup.eu, tglx@linutronix.de, peterz@infradead.org,
-	song@kernel.org, rppt@kernel.org, dave@stgolabs.net,
-	willy@infradead.org, vbabka@suse.cz, mhocko@suse.com,
-	dave.hansen@linux.intel.com, colin.i.king@gmail.com,
-	jim.cromie@gmail.com, catalin.marinas@arm.com, jbaron@akamai.com,
-	rick.p.edgecombe@intel.com
-Subject: Re: [RFC 0/2] module: fix virtual memory wasted on finit_module()
-Message-ID: <ZDmMc/95CulxNj4q@bombadil.infradead.org>
-References: <20230414052840.1994456-1-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C389630
+	for <patches@lists.linux.dev>; Fri, 14 Apr 2023 23:31:49 +0000 (UTC)
+Received: from EXMBX165.cuchost.com (unknown [175.102.18.54])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "EXMBX165", Issuer "EXMBX165" (not verified))
+	by fd01.gateway.ufhost.com (Postfix) with ESMTP id 4341724DB83;
+	Sat, 15 Apr 2023 07:31:47 +0800 (CST)
+Received: from EXMBX172.cuchost.com (172.16.6.92) by EXMBX165.cuchost.com
+ (172.16.6.75) with Microsoft SMTP Server (TLS) id 15.0.1497.42; Sat, 15 Apr
+ 2023 07:31:47 +0800
+Received: from [192.168.0.6] (113.102.16.222) by EXMBX172.cuchost.com
+ (172.16.6.92) with Microsoft SMTP Server (TLS) id 15.0.1497.42; Sat, 15 Apr
+ 2023 07:31:46 +0800
+Message-ID: <2aa668e3-d065-7376-5d41-ef855afa8518@starfivetech.com>
+Date: Sat, 15 Apr 2023 07:31:45 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230414052840.1994456-1-mcgrof@kernel.org>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH] clk: starfive: Avoid casting iomem pointers
+To: Xingyu Wu <xingyu.wu@starfivetech.com>, Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>
+CC: <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+	<patches@lists.linux.dev>, Tommaso Merciai <tomm.merciai@gmail.com>, "Emil
+ Renner Berthing" <emil.renner.berthing@canonical.com>, Conor Dooley
+	<conor.dooley@microchip.com>
+References: <20230413205528.4044216-1-sboyd@kernel.org>
+ <b41d8cf4-70aa-3b64-5254-46d92a188f63@starfivetech.com>
+Content-Language: en-US
+From: Hal Feng <hal.feng@starfivetech.com>
+In-Reply-To: <b41d8cf4-70aa-3b64-5254-46d92a188f63@starfivetech.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [113.102.16.222]
+X-ClientProxiedBy: EXCAS064.cuchost.com (172.16.6.24) To EXMBX172.cuchost.com
+ (172.16.6.92)
+X-YovoleRuleAgent: yovoleflag
 
-On Thu, Apr 13, 2023 at 10:28:38PM -0700, Luis Chamberlain wrote:
-> At first I wondered if
-> we could use file descriptor hints to just exlude users early on boot
-> before SYSTEM_RUNNING. I couldn't find much, but if there are some ways
-> to do that -- then the last patch can be simplified to do just that.
-> The second patch proves essentially that we can just send -EBUSY to
-> duplicate requests, at least for duplicate module loads and the world
-> doesn't fall apart. It *would* solve the issue. The patch however
-> borrows tons of the code from the first, and if we're realy going to
-> rely on something like that we may as well share. But I'm hopeful that
-> perhaps there are some jucier file descriptor tricks we can use to
-> just make a file mutually exlusivive and introduce a new kread which
-> lets finit_module() use that. The saving grace is that at least all
-> finit_module() calls *wait*, contray to request_module() calls and so
-> the solution can be much simpler.
+On Fri, 14 Apr 2023 09:58:47 +0800, Xingyu Wu wrote:
+> On 2023/4/14 4:55, Stephen Boyd wrote:
+>> Let's use a wrapper struct for the auxiliary_device made in
+>> jh7110_reset_controller_register() so that we can stop casting iomem
+>> pointers. The casts trip up tools like sparse, and make for some awkward
+>> casts that are largely unnecessary. While we're here, change the
+>> allocation from devm and actually free the auxiliary_device memory in
+>> the release function. This avoids any use after free problems where the
+>> parent device driver is unbound from the device but the
+>> auxiliuary_device is still in use accessing devm freed memory.
+>> 
+>> Cc: Tommaso Merciai <tomm.merciai@gmail.com>
+>> Cc: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+>> Cc: Hal Feng <hal.feng@starfivetech.com>
+>> Cc: Conor Dooley <conor.dooley@microchip.com>
+>> Cc: Xingyu Wu <xingyu.wu@starfivetech.com>
+>> Fixes: edab7204afe5 ("clk: starfive: Add StarFive JH7110 system clock driver")
+>> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+>> ---
+>> 
+>> I can take this via clk tree.
+>> 
+>>  drivers/clk/starfive/clk-starfive-jh7110-sys.c | 15 ++++++++++++---
+>>  drivers/reset/starfive/reset-starfive-jh7110.c |  9 ++++++---
+>>  include/soc/starfive/reset-starfive-jh71x0.h   | 17 +++++++++++++++++
+>>  3 files changed, 35 insertions(+), 6 deletions(-)
+>>  create mode 100644 include/soc/starfive/reset-starfive-jh71x0.h
+>> 
+>> diff --git a/drivers/clk/starfive/clk-starfive-jh7110-sys.c b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+>> index 5ec210644e1d..851b93d0f371 100644
+>> --- a/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+>> +++ b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+>> @@ -11,6 +11,9 @@
+>>  #include <linux/init.h>
+>>  #include <linux/io.h>
+>>  #include <linux/platform_device.h>
+>> +#include <linux/slab.h>
+>> +
+>> +#include <soc/starfive/reset-starfive-jh71x0.h>
+>>  
+>>  #include <dt-bindings/clock/starfive,jh7110-crg.h>
+>>  
+>> @@ -335,26 +338,32 @@ static void jh7110_reset_unregister_adev(void *_adev)
+>>  	struct auxiliary_device *adev = _adev;
+>>  
+>>  	auxiliary_device_delete(adev);
+>> +	auxiliary_device_uninit(adev);
+>>  }
+>>  
+>>  static void jh7110_reset_adev_release(struct device *dev)
+>>  {
+>>  	struct auxiliary_device *adev = to_auxiliary_dev(dev);
+>> +	struct jh71x0_reset_adev *rdev = to_jh71x0_reset_adev(adev);
+>>  
+>> -	auxiliary_device_uninit(adev);
+>> +	kfree(rdev);
+>>  }
+>>  
+>>  int jh7110_reset_controller_register(struct jh71x0_clk_priv *priv,
+>>  				     const char *adev_name,
+>>  				     u32 adev_id)
+>>  {
+>> +	struct jh71x0_reset_adev *rdev;
+>>  	struct auxiliary_device *adev;
+>>  	int ret;
+>>  
+>> -	adev = devm_kzalloc(priv->dev, sizeof(*adev), GFP_KERNEL);
+>> -	if (!adev)
+>> +	rdev = kzalloc(sizeof(*rdev), GFP_KERNEL);
+>> +	if (!rdev)
+>>  		return -ENOMEM;
+>>  
+>> +	rdev->base = priv->base;
+>> +
+>> +	adev = &rdev->adev;
+>>  	adev->name = adev_name;
+>>  	adev->dev.parent = priv->dev;
+>>  	adev->dev.release = jh7110_reset_adev_release;
+>> diff --git a/drivers/reset/starfive/reset-starfive-jh7110.c b/drivers/reset/starfive/reset-starfive-jh7110.c
+>> index c1b3a490d951..2d26ae95c8cc 100644
+>> --- a/drivers/reset/starfive/reset-starfive-jh7110.c
+>> +++ b/drivers/reset/starfive/reset-starfive-jh7110.c
+>> @@ -7,6 +7,8 @@
+>>  
+>>  #include <linux/auxiliary_bus.h>
+>>  
+>> +#include <soc/starfive/reset-starfive-jh71x0.h>
+>> +
+>>  #include "reset-starfive-jh71x0.h"
+>>  
+>>  #include <dt-bindings/reset/starfive,jh7110-crg.h>
+>> @@ -33,14 +35,15 @@ static int jh7110_reset_probe(struct auxiliary_device *adev,
+>>  			      const struct auxiliary_device_id *id)
+>>  {
+>>  	struct jh7110_reset_info *info = (struct jh7110_reset_info *)(id->driver_data);
+>> -	void __iomem **base = (void __iomem **)dev_get_drvdata(adev->dev.parent);
 > 
-> The end result is 0 wasted virtual memory bytes.
+> Thank you for doing that. BTW, if drop the dev_get_drvdata(), the dev_set_drvdata() should also be dropped.
 > 
-> Any ideas how not to make patch 2 suck as-is ?
+> diff --git a/drivers/clk/starfive/clk-starfive-jh7110-aon.c b/drivers/clk/starfive/clk-starfive-jh7110-aon.c
+> index a2799fe8a234..62954eb7b50a 100644
+> --- a/drivers/clk/starfive/clk-starfive-jh7110-aon.c
+> +++ b/drivers/clk/starfive/clk-starfive-jh7110-aon.c
+> @@ -83,8 +83,6 @@ static int jh7110_aoncrg_probe(struct platform_device *pdev)
+>         if (IS_ERR(priv->base))
+>                 return PTR_ERR(priv->base);
+> 
+> -       dev_set_drvdata(priv->dev, (void *)(&priv->base));
+> -
+>         for (idx = 0; idx < JH7110_AONCLK_END; idx++) {
+>                 u32 max = jh7110_aonclk_data[idx].max;
+>                 struct clk_parent_data parents[4] = {};
+> diff --git a/drivers/clk/starfive/clk-starfive-jh7110-sys.c b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+> index 5ec210644e1d..0cda33fd47f8 100644
+> --- a/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+> +++ b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+> @@ -393,8 +393,6 @@ static int __init jh7110_syscrg_probe(struct platform_device *pdev)
+>         if (IS_ERR(priv->base))
+>                 return PTR_ERR(priv->base);
+> 
+> -       dev_set_drvdata(priv->dev, (void *)(&priv->base));
+> -
+>         /*
+>          * These PLL clocks are not actually fixed factor clocks and can be
+>          * controlled by the syscon registers of JH7110. They will be dropped
+>
 
-The more I think about it, a file descriptor based approach would
-have to loop over all tasks as we're not sure if userspace would
-use the same thread and just fork requests or what. One would
-then have to loop over all tasks and look for files that match the
-same name. This approach is domain specific to internal kernel reads
-and I am thinking now it is more appropriate.
+Hi, Stephen,
 
-Since this is a bootup issue for races with module loading what we
-could do is just have say kernel_read_file_from_fd_excl() which
-would just call a shared __kernel_read_file_from_fd(..., bool excl, ...)
-and the kernel_read_file_from_fd() could just set that excl to false
-while the new one sets it to true. Then finit_module() could just use
-that.
+Thanks for your fix to my previous patches, and I have tested this patch
+on VisionFive 2 board. As Xingyu said above, I think dev_set_drvdata()
+should also be dropped in clk-starfive-jh7110-sys.c and
+clk-starfive-jh7110-aon.c.
 
-  Luis
+Best regards,
+Hal
