@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2D02566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE48C433D2;
-	Tue, 18 Apr 2023 12:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701CF2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93E0C433EF;
+	Tue, 18 Apr 2023 12:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821432;
-	bh=N+4i+yZYMRbWxZzRVTcYVu7G1SPVlXOuYNmOjLBduZE=;
+	s=korg; t=1681821435;
+	bh=cJsINUV4O0+bfXc26jmWZ2cSVuNdMVSmedNNpH0y7mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EAp6sMpRhYmR/AD1hEzSnCLAmmgKxfqv7oSDPCzGHBydzkgYOt2lgBuq/l/hyQe2R
-	 ZdeCxPvt/S/86n1LhYDuCzzrccczdH1jUhYDjQ4TIdOkprCw6Xb/1cNFDcOLjwh0dJ
-	 NjFZS0ofgyGSNWwIlbnmmh5g2yr3UoQAa5KBFBKE=
+	b=h7bD8qG40OEMYtbpCw0lItZKxHiS+jhqN+k/MBluEbDHisC/Jbm4kddS61H5yRhQv
+	 vdlS3KCuXPVPvn+5tGRCTNBGb+EUv0VdCCaxUSJojghYt2wvEkpSFuNhrnzsbsKNOp
+	 Hra6SYfmt8OU6fsA/lGPu7e37ISyLQI5boIzvUeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Glanzmann <thomas@glanzmann.de>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 5.10 096/124] x86/PCI: Add quirk for AMD XHCI controller that loses MSI-X state in D3hot
-Date: Tue, 18 Apr 2023 14:21:55 +0200
-Message-Id: <20230418120313.328948530@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 087/124] wifi: mwifiex: mark OF related data as maybe unused
+Date: Tue, 18 Apr 2023 14:21:46 +0200
+Message-Id: <20230418120313.032302424@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -36,65 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit f195fc1e9715ba826c3b62d58038f760f66a4fe9 upstream.
+[ Upstream commit 139f6973bf140c65d4d1d4bde5485badb4454d7a ]
 
-The AMD [1022:15b8] USB controller loses some internal functional MSI-X
-context when transitioning from D0 to D3hot. BIOS normally traps D0->D3hot
-and D3hot->D0 transitions so it can save and restore that internal context,
-but some firmware in the field can't do this because it fails to clear the
-AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit.
+The driver can be compile tested with !CONFIG_OF making certain data
+unused:
 
-Clear AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit before USB controller
-initialization during boot.
+  drivers/net/wireless/marvell/mwifiex/sdio.c:498:34: error: ‘mwifiex_sdio_of_match_table’ defined but not used [-Werror=unused-const-variable=]
+  drivers/net/wireless/marvell/mwifiex/pcie.c:175:34: error: ‘mwifiex_pcie_of_match_table’ defined but not used [-Werror=unused-const-variable=]
 
-Link: https://lore.kernel.org/linux-usb/Y%2Fz9GdHjPyF2rNG3@glanzmann.de/T/#u
-Link: https://lore.kernel.org/r/20230329172859.699743-1-Basavaraj.Natikar@amd.com
-Reported-by: Thomas Glanzmann <thomas@glanzmann.de>
-Tested-by: Thomas Glanzmann <thomas@glanzmann.de>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230312132523.352182-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/pci/fixup.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/pcie.c | 2 +-
+ drivers/net/wireless/marvell/mwifiex/sdio.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/pci/fixup.c
-+++ b/arch/x86/pci/fixup.c
-@@ -7,6 +7,7 @@
- #include <linux/dmi.h>
- #include <linux/pci.h>
- #include <linux/vgaarb.h>
-+#include <asm/amd_nb.h>
- #include <asm/hpet.h>
- #include <asm/pci_x86.h>
+diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
+index b0024893a1cba..50c34630ca302 100644
+--- a/drivers/net/wireless/marvell/mwifiex/pcie.c
++++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
+@@ -183,7 +183,7 @@ static const struct mwifiex_pcie_device mwifiex_pcie8997 = {
+ 	.can_ext_scan = true,
+ };
  
-@@ -824,3 +825,23 @@ static void rs690_fix_64bit_dma(struct p
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7910, rs690_fix_64bit_dma);
+-static const struct of_device_id mwifiex_pcie_of_match_table[] = {
++static const struct of_device_id mwifiex_pcie_of_match_table[] __maybe_unused = {
+ 	{ .compatible = "pci11ab,2b42" },
+ 	{ .compatible = "pci1b4b,2b42" },
+ 	{ }
+diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.c b/drivers/net/wireless/marvell/mwifiex/sdio.c
+index 7fb6eef409285..b09e60fedeb16 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sdio.c
++++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
+@@ -484,7 +484,7 @@ static struct memory_type_mapping mem_type_mapping_tbl[] = {
+ 	{"EXTLAST", NULL, 0, 0xFE},
+ };
  
- #endif
-+
-+#ifdef CONFIG_AMD_NB
-+
-+#define AMD_15B8_RCC_DEV2_EPF0_STRAP2                                  0x10136008
-+#define AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK       0x00000080L
-+
-+static void quirk_clear_strap_no_soft_reset_dev2_f0(struct pci_dev *dev)
-+{
-+	u32 data;
-+
-+	if (!amd_smn_read(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, &data)) {
-+		data &= ~AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK;
-+		if (amd_smn_write(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, data))
-+			pci_err(dev, "Failed to write data 0x%x\n", data);
-+	} else {
-+		pci_err(dev, "Failed to read data\n");
-+	}
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
-+#endif
+-static const struct of_device_id mwifiex_sdio_of_match_table[] = {
++static const struct of_device_id mwifiex_sdio_of_match_table[] __maybe_unused = {
+ 	{ .compatible = "marvell,sd8787" },
+ 	{ .compatible = "marvell,sd8897" },
+ 	{ .compatible = "marvell,sd8997" },
+-- 
+2.39.2
+
 
 
