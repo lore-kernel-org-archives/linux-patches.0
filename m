@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C5A2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:40:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570AEC4339B;
-	Tue, 18 Apr 2023 12:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73812572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:40:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27727C433D2;
+	Tue, 18 Apr 2023 12:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821621;
-	bh=qixoTPKxX7fBnzMb5Rb/7T5gr0XBR8HRO2HGJLduK0M=;
+	s=korg; t=1681821624;
+	bh=U5HtpG+d0dVGhYPv5g+6ZximuYd5Po6rEhcReZqduq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RpmAAw7PbVOZf6K+swD60+vVR38Ip1kDSOQt4qS0u+rk0G+CgU7G7/ErkasXTzaTd
-	 Nr4cJ8MlZ//bNvlIr/OPxtY4tLtzJQXq7iJJI+q3MfV2m5g3oWjtCl7iLJBeBtSURG
-	 ynRoNU7ZrScksKbFpRIs7N70n9YYUpSMjHIp2few=
+	b=Q7gFwByyOg2ti3xemgGcEtIzwwuzHYq97n/czEGlpCqg6AvqHzHx0pABIwA8OA3PO
+	 c8ZIpu/Byd7lCBGXBy20sNw69VDAJvkiJsMghRRSyGi6RGs/W5oHrGjcsVk7rygw9A
+	 W36ZN2PZLKPZ/MpMtfa37r/oZtCn3qgds5/M+DPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 40/91] wifi: mwifiex: mark OF related data as maybe unused
-Date: Tue, 18 Apr 2023 14:21:44 +0200
-Message-Id: <20230418120306.958187401@linuxfoundation.org>
+Subject: [PATCH 5.15 41/91] i2c: imx-lpi2c: clean rx/tx buffers upon new message
+Date: Tue, 18 Apr 2023 14:21:45 +0200
+Message-Id: <20230418120307.005599509@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -36,52 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 139f6973bf140c65d4d1d4bde5485badb4454d7a ]
+[ Upstream commit 987dd36c0141f6ab9f0fbf14d6b2ec3342dedb2f ]
 
-The driver can be compile tested with !CONFIG_OF making certain data
-unused:
+When start sending a new message clear the Rx & Tx buffer pointers in
+order to avoid using stale pointers.
 
-  drivers/net/wireless/marvell/mwifiex/sdio.c:498:34: error: ‘mwifiex_sdio_of_match_table’ defined but not used [-Werror=unused-const-variable=]
-  drivers/net/wireless/marvell/mwifiex/pcie.c:175:34: error: ‘mwifiex_pcie_of_match_table’ defined but not used [-Werror=unused-const-variable=]
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230312132523.352182-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Tested-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/pcie.c | 2 +-
- drivers/net/wireless/marvell/mwifiex/sdio.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-imx-lpi2c.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
-index d5fb29400bad5..94a6bbcae2d38 100644
---- a/drivers/net/wireless/marvell/mwifiex/pcie.c
-+++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
-@@ -184,7 +184,7 @@ static const struct mwifiex_pcie_device mwifiex_pcie8997 = {
- 	.can_ext_scan = true,
- };
+diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+index 2018dbcf241e9..d45ec26d51cb9 100644
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -462,6 +462,8 @@ static int lpi2c_imx_xfer(struct i2c_adapter *adapter,
+ 		if (num == 1 && msgs[0].len == 0)
+ 			goto stop;
  
--static const struct of_device_id mwifiex_pcie_of_match_table[] = {
-+static const struct of_device_id mwifiex_pcie_of_match_table[] __maybe_unused = {
- 	{ .compatible = "pci11ab,2b42" },
- 	{ .compatible = "pci1b4b,2b42" },
- 	{ }
-diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.c b/drivers/net/wireless/marvell/mwifiex/sdio.c
-index 7fb6eef409285..b09e60fedeb16 100644
---- a/drivers/net/wireless/marvell/mwifiex/sdio.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
-@@ -484,7 +484,7 @@ static struct memory_type_mapping mem_type_mapping_tbl[] = {
- 	{"EXTLAST", NULL, 0, 0xFE},
- };
- 
--static const struct of_device_id mwifiex_sdio_of_match_table[] = {
-+static const struct of_device_id mwifiex_sdio_of_match_table[] __maybe_unused = {
- 	{ .compatible = "marvell,sd8787" },
- 	{ .compatible = "marvell,sd8897" },
- 	{ .compatible = "marvell,sd8997" },
++		lpi2c_imx->rx_buf = NULL;
++		lpi2c_imx->tx_buf = NULL;
+ 		lpi2c_imx->delivered = 0;
+ 		lpi2c_imx->msglen = msgs[i].len;
+ 		init_completion(&lpi2c_imx->complete);
 -- 
 2.39.2
 
