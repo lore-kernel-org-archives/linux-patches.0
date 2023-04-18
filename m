@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2002566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AF6C433EF;
-	Tue, 18 Apr 2023 12:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BAD2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9EEC433EF;
+	Tue, 18 Apr 2023 12:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820836;
-	bh=xym05aVWm3wsfxCJxGKCnjVIagRzXni/w2Quug7b0+c=;
+	s=korg; t=1681820838;
+	bh=+4WkvlBKt0fZRLd0azoyPPnH7XVc21Df0UneaJ6iYTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRHAd/Ik5mHUjjRp5kEB74eZzMOlg9f0mbYQfo5gwMQwxugFBO1griLAV+pGoQBGg
-	 8Lo2FTk1f22Rdn6U9xV/gpwz4kFXxbaNIGk0Pp2QYKD0aKpaVLYXGbtm50F0pszLm5
-	 9lqVdqN13rwIiozLQzT4ES24UR1/UZFCazu78BvM=
+	b=ZdPHGDcXTQccy1uC6vNzjY0CYUh1ygAwvgqp2bXYzK0UI1CHE1xH8MCHI8kcQAKxp
+	 5R0AIBCN2HsBzOQcC6zqk1j5AMoHmb8IboYtbjb3VVu5GSTzA/ilmrkjXwZOQw3YyM
+	 Ypd15633slQ+RkVnyQzT6AmaQkalRZSQVZUPyB7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhaoLong Wang <wangzhaolong1@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 50/57] ubi: Fix deadlock caused by recursively holding work_sem
-Date: Tue, 18 Apr 2023 14:21:50 +0200
-Message-Id: <20230418120300.482408788@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 4.19 51/57] cgroup/cpuset: Wake up cpuset_attach_wq tasks in cpuset_cancel_attach()
+Date: Tue, 18 Apr 2023 14:21:51 +0200
+Message-Id: <20230418120300.522651013@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -36,66 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhaoLong Wang <wangzhaolong1@huawei.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit f773f0a331d6c41733b17bebbc1b6cae12e016f5 ]
+commit ba9182a89626d5f83c2ee4594f55cb9c1e60f0e2 upstream.
 
-During the processing of the bgt, if the sync_erase() return -EBUSY
-or some other error code in __erase_worker(),schedule_erase() called
-again lead to the down_read(ubi->work_sem) hold twice and may get
-block by down_write(ubi->work_sem) in ubi_update_fastmap(),
-which cause deadlock.
+After a successful cpuset_can_attach() call which increments the
+attach_in_progress flag, either cpuset_cancel_attach() or cpuset_attach()
+will be called later. In cpuset_attach(), tasks in cpuset_attach_wq,
+if present, will be woken up at the end. That is not the case in
+cpuset_cancel_attach(). So missed wakeup is possible if the attach
+operation is somehow cancelled. Fix that by doing the wakeup in
+cpuset_cancel_attach() as well.
 
-          ubi bgt                        other task
- do_work
-  down_read(&ubi->work_sem)          ubi_update_fastmap
-  erase_worker                         # Blocked by down_read
-   __erase_worker                      down_write(&ubi->work_sem)
-    schedule_erase
-     schedule_ubi_work
-      down_read(&ubi->work_sem)
-
-Fix this by changing input parameter @nested of the schedule_erase() to
-'true' to avoid recursively acquiring the down_read(&ubi->work_sem).
-
-Also, fix the incorrect comment about @nested parameter of the
-schedule_erase() because when down_write(ubi->work_sem) is held, the
-@nested is also need be true.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217093
-Fixes: 2e8f08deabbc ("ubi: Fix races around ubi_refill_pools()")
-Signed-off-by: ZhaoLong Wang <wangzhaolong1@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e44193d39e8d ("cpuset: let hotplug propagation work wait for task attaching")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
+Cc: stable@vger.kernel.org # v3.11+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/ubi/wl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/cgroup/cpuset.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
-index 210866614f492..83c460f7a8837 100644
---- a/drivers/mtd/ubi/wl.c
-+++ b/drivers/mtd/ubi/wl.c
-@@ -568,7 +568,7 @@ static int erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk,
-  * @vol_id: the volume ID that last used this PEB
-  * @lnum: the last used logical eraseblock number for the PEB
-  * @torture: if the physical eraseblock has to be tortured
-- * @nested: denotes whether the work_sem is already held in read mode
-+ * @nested: denotes whether the work_sem is already held
-  *
-  * This function returns zero in case of success and a %-ENOMEM in case of
-  * failure.
-@@ -1096,7 +1096,7 @@ static int __erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk)
- 		int err1;
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1504,7 +1504,9 @@ static void cpuset_cancel_attach(struct
+ 	cs = css_cs(css);
  
- 		/* Re-schedule the LEB for erasure */
--		err1 = schedule_erase(ubi, e, vol_id, lnum, 0, false);
-+		err1 = schedule_erase(ubi, e, vol_id, lnum, 0, true);
- 		if (err1) {
- 			spin_lock(&ubi->wl_lock);
- 			wl_entry_destroy(ubi, e);
--- 
-2.39.2
-
+ 	mutex_lock(&cpuset_mutex);
+-	css_cs(css)->attach_in_progress--;
++	cs->attach_in_progress--;
++	if (!cs->attach_in_progress)
++		wake_up(&cpuset_attach_wq);
+ 	mutex_unlock(&cpuset_mutex);
+ }
+ 
 
 
