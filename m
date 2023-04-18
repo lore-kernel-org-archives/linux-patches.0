@@ -1,53 +1,36 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4487C94A
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 21:47:17 +0000 (UTC)
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-187b70ab997so6355334fac.0
-        for <patches@lists.linux.dev>; Tue, 18 Apr 2023 14:47:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1681854436; x=1684446436;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VfZlw8AlHMxVsS3tiMBAvH71RDRSOAAoNTnFWBIvtwY=;
-        b=Md/5OB4ZHkMeXPiXDoQ3mKe5o9xdDBIf7ZW33imyrQ1i778qqYLcYBiG3njZNyfsbd
-         wK0xtH108mTALoDQma+YkiMjhwo3HHa0TuTwhdoyK0o2pwm/KpL/0yqW9c88x8PFGLTU
-         0kly5TX0D0WvS81iEzSTZ8NenHqqUH7xqfys8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681854436; x=1684446436;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VfZlw8AlHMxVsS3tiMBAvH71RDRSOAAoNTnFWBIvtwY=;
-        b=CNtKOFQHrFPBoO29fanYG9GYtMoyQoxkqbUxSY3XvlAK9nQ8gkRL2vBKcGQiwdyLl0
-         dUBLfl4SZs3Seoojtcibq1mTdDLqk/jzvutf7VJEAIl6s0yCMlhAHWyKSKoVaTxsDxu7
-         dtT/aVTPeSlKi+h0FSANta24dXg4UWDObJX7tzJlIqLJJ6P4PdQbe1OjdT4itBsENvse
-         TIbE6nMBsrIYPGY2SS7b7tFueQvKPWTlq2VNwmWrgKbQq06WTqXoIoi0XzWmBli+ee8v
-         iwCRxX4KxszoWUc6qcB6eqy/mxeQh/FObcGfu8Bbtzn/dh7XeTHztcnzfTFoAQbAcL7z
-         717Q==
-X-Gm-Message-State: AAQBX9dvElkblObxAX5Oxu/kwDAdPLmFtMgtZ01Ue8xw6aAACoOBqYLO
-	TznruV8zIc7sclo+D7UKdNc/DQ==
-X-Google-Smtp-Source: AKy350bvwxZIoP1TokwhqCpLgUkLtNzYMkJUALfJwFX186XZ4vsH3m7WlpcgTtoJidMsj/eG06rbIg==
-X-Received: by 2002:aca:3cd7:0:b0:38d:9dba:6a5a with SMTP id j206-20020aca3cd7000000b0038d9dba6a5amr175603oia.15.1681854436620;
-        Tue, 18 Apr 2023 14:47:16 -0700 (PDT)
-Received: from fedora64.linuxtx.org (99-47-93-78.lightspeed.rcsntx.sbcglobal.net. [99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id k206-20020acabad7000000b0038934c5b400sm6300453oif.25.2023.04.18.14.47.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 14:47:16 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Tue, 18 Apr 2023 16:47:14 -0500
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/139] 6.2.12-rc1 review
-Message-ID: <ZD8P4gAi03rLRNJA@fedora64.linuxtx.org>
-References: <20230418120313.725598495@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126FEC94A
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 21:49:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=JNM/PoaKdJVang9WqsbIURXjXnMB7kVw7Og7DK0+y/k=; b=NPvn3Y8PNf9X253zeDEbvUCEMD
+	gOA4qUsYzuP/RiqVYByAU8E1tcWRLyrDDPdWBL2v8THrJaQ+ArmYTwIZCrdc3rlybWppKyco44g27
+	QFkSMiHR1g8AawhfyR/Ml8/HpQFb0HmIsBORD9Zvl7rcHItkbCjppHyLtGMXUIFJOXlzxHZfJ7Wbz
+	1RU2UUvmvKQ1i6jgfcMJpZkfh+3gwGio3Rvb8cNGtgnT8dG4OUU9W1iFB+fPux3x5L8cyO8a+UcOK
+	W7ipP9jQvBItWBIlWS9iv18T59zhMe832aQac7NWnsBI93CCWPVOgtyv+4h66HRM4t2N4eJ7Kt6yy
+	zBFnjF+g==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1potC8-003RF5-25;
+	Tue, 18 Apr 2023 21:49:00 +0000
+Date: Tue, 18 Apr 2023 14:49:00 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Hugh Dickins <hughd@google.com>
+Cc: akpm@linux-foundation.org, willy@infradead.org, brauner@kernel.org,
+	linux-mm@kvack.org, p.raghav@samsung.com, da.gomez@samsung.com,
+	a.manzanares@samsung.com, dave@stgolabs.net, yosryahmed@google.com,
+	keescook@chromium.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH v2 5/6] shmem: update documentation
+Message-ID: <ZD8QTOsWQ0SscOYz@bombadil.infradead.org>
+References: <20230309230545.2930737-1-mcgrof@kernel.org>
+ <20230309230545.2930737-6-mcgrof@kernel.org>
+ <a4afef5c-27e4-5e67-9771-374132db61f8@google.com>
+ <ZD8JgfphE+HWCGve@bombadil.infradead.org>
+ <6064b468-33fb-3693-54e-6f1f8d316f64@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,28 +39,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
+In-Reply-To: <6064b468-33fb-3693-54e-6f1f8d316f64@google.com>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Tue, Apr 18, 2023 at 02:21:05PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.12 release.
-> There are 139 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Apr 18, 2023 at 02:41:07PM -0700, Hugh Dickins wrote:
+> On Tue, 18 Apr 2023, Luis Chamberlain wrote:
+> > On Mon, Apr 17, 2023 at 10:29:59PM -0700, Hugh Dickins wrote:
+> > > On Thu, 9 Mar 2023, Luis Chamberlain wrote:
+> > > 
+> > > > Update the docs to reflect a bit better why some folks prefer tmpfs
+> > > > over ramfs and clarify a bit more about the difference between brd
+> > > > ramdisks.
+> > > > 
+> > > > While at it, add THP docs for tmpfs, both the mount options and the
+> > > > sysfs file.
+> > > 
+> > > Okay: the original canonical reference for THP options on tmpfs has
+> > > been Documentation/admin-guide/mm/transhuge.rst.  You're right that
+> > > they would be helpful here too: IIRC (but I might well be confusing
+> > > with our Google tree) we used to have them documented in both places,
+> > > but grew tired of keeping the two in synch.  You're volunteering to
+> > > do so! so please check now that they tell the same story.
+> > 
+> > Hehe. Sure, we should just make one point to the other. Which one should
+> > be the authoritive source?
 > 
-> Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.12-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> Documentation/admin-guide/mm/transhuge.rst has been the authoritative
+> source up until this patch, so I suggest it remain so; but good if you
+> point to it from this Doc - unless in reading it you find that actually
+> its account is wrong.  (Haha, it refers to fadvise too, never mind that.)
 
-Tested rc1 against the Fedora build system (aarch64, armv7, ppc64le,
-s390x, x86_64), and boot tested x86_64. No regressions noted.
+Yeah I'll make the tmpfs kdoc point to the transhuge.rst page. I think
+that's possible.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+> But the man page is more important than either, so it would be good to
+> point to that too. 
+
+Sure I'll have the tmpfs kdoc also point to the tmpfs man page.
+
+> Mention the "huge=" option in this document, but
+> point to elsewhere for the detail of its values.
+
+Sounds good.
+
+  Luis
