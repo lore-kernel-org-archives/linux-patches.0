@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212D72566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983FDC433EF;
-	Tue, 18 Apr 2023 12:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C862572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55B1C433EF;
+	Tue, 18 Apr 2023 12:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821254;
-	bh=MTUNfAsmHbMJAoAT99tu01VGbukSgZfK5ybTOvlMCYg=;
+	s=korg; t=1681821259;
+	bh=7RKnwdtlR++x0iENO0akokjs7INYDOJoCLWy0tLtDMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SvhFvfnqMZ36KIRTgqXt+Q7DC6WV2lm/9xg1CPqV0CfXbl3D5/OvQCZjmKjWuo6qm
-	 PU8FDHPRfQ+9WF/nkIJnwwk3hjp0Cw3MVkTc3Dqjj6NL6R/aYXgzk4VBqs+JJGDf60
-	 gIFifYRT75KTJoirP7A88s2vAom26Or/r9YHb6bM=
+	b=la/D2LL14cO9teVNiKq+70hn+AUK8j1ZCcZKDi9n+rzbjQ4cIFL5pMjScvehvTZ2J
+	 vfu+HQDNMAA9p5RjZ8wVmc0fFKkqP1ruNhLEgi/L5mTUp8bmBfahmlv5HPKO1TStu7
+	 80EK/Ildef4q7wvl9uE9C8r+F5HH6H9KsyWY8C/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 055/124] ALSA: hda/sigmatel: add pin overrides for Intel DP45SG motherboard
-Date: Tue, 18 Apr 2023 14:21:14 +0200
-Message-Id: <20230418120311.838167765@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 5.10 029/124] tty: serial: sh-sci: Fix Rx on RZ/G2L SCI
+Date: Tue, 18 Apr 2023 14:20:48 +0200
+Message-Id: <20230418120310.813908846@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -34,44 +33,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit c17f8fd31700392b1bb9e7b66924333568cb3700 upstream.
+commit f92ed0cd9328aed918ebb0ebb64d259eccbcc6e7 upstream.
 
-Like the other boards from the D*45* series, this one sets up the
-outputs not quite correctly.
+SCI IP on RZ/G2L alike SoCs do not need regshift compared to other SCI
+IPs on the SH platform. Currently, it does regshift and configuring Rx
+wrongly. Drop adding regshift for RZ/G2L alike SoCs.
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230405201220.2197826-1-oswald.buddenhagen@gmx.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: dfc80387aefb ("serial: sh-sci: Compute the regshift value for SCI ports")
+Cc: stable@vger.kernel.org
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230321114753.75038-3-biju.das.jz@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/sound/hd-audio/models.rst |    2 +-
- sound/pci/hda/patch_sigmatel.c          |    2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/tty/serial/sh-sci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/sound/hd-audio/models.rst
-+++ b/Documentation/sound/hd-audio/models.rst
-@@ -704,7 +704,7 @@ ref
- no-jd
-     BIOS setup but without jack-detection
- intel
--    Intel DG45* mobos
-+    Intel D*45* mobos
- dell-m6-amic
-     Dell desktops/laptops with analog mics
- dell-m6-dmic
---- a/sound/pci/hda/patch_sigmatel.c
-+++ b/sound/pci/hda/patch_sigmatel.c
-@@ -1955,6 +1955,8 @@ static const struct snd_pci_quirk stac92
- 				"DFI LanParty", STAC_92HD73XX_REF),
- 	SND_PCI_QUIRK(PCI_VENDOR_ID_DFI, 0x3101,
- 				"DFI LanParty", STAC_92HD73XX_REF),
-+	SND_PCI_QUIRK(PCI_VENDOR_ID_INTEL, 0x5001,
-+				"Intel DP45SG", STAC_92HD73XX_INTEL),
- 	SND_PCI_QUIRK(PCI_VENDOR_ID_INTEL, 0x5002,
- 				"Intel DG45ID", STAC_92HD73XX_INTEL),
- 	SND_PCI_QUIRK(PCI_VENDOR_ID_INTEL, 0x5003,
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -2996,7 +2996,7 @@ static int sci_init_single(struct platfo
+ 	port->flags		= UPF_FIXED_PORT | UPF_BOOT_AUTOCONF | p->flags;
+ 	port->fifosize		= sci_port->params->fifosize;
+ 
+-	if (port->type == PORT_SCI) {
++	if (port->type == PORT_SCI && !dev->dev.of_node) {
+ 		if (sci_port->reg_size >= 0x20)
+ 			port->regshift = 2;
+ 		else
 
 
