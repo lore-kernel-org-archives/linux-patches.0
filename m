@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00B72566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7527AC433D2;
-	Tue, 18 Apr 2023 12:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F192566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F440C433D2;
+	Tue, 18 Apr 2023 12:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820788;
-	bh=TfKQsbHvsJVN/EJTm8/vLJSLbZiXxdnZY47olDoJwUs=;
+	s=korg; t=1681820791;
+	bh=4yn/4vJvWkzPbiAlesO176qkUcQbh+QNG6ozSoppfAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=osq6Yww5JatmhdWeNeIagRsPF6jDtB0dcEEyncbZyFYNbr3YJAespY3v0an+wFi6f
-	 dfG0joOr2D2ahdXNaW7EQvkNNCtl7Q10q/3FZX6mW18OOGBkI3tNAEvpe3epgWYio6
-	 EMn7CZDBUIur2hhsX8QYo2Tzhom7uWSNQ8wGwwrs=
+	b=rMrhLNo4Hy48eC7tQrB5D6Qtd9+Gjcvk5NapUbleYQNYZ8r3lMUNaU6f0+ShJfusZ
+	 C1xX70sull0HWrEhAjKyhsmWjadWqKHBwNlDj+suY92iirvD0meSLPgeFZ5inmJh0b
+	 AMQM263DHckO2LEtEy9+uw8p3geCJBpc9b+aFJAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 31/57] ALSA: i2c/cs8427: fix iec958 mixer control deactivation
-Date: Tue, 18 Apr 2023 14:21:31 +0200
-Message-Id: <20230418120259.841522022@linuxfoundation.org>
+Subject: [PATCH 4.19 32/57] ALSA: hda/sigmatel: fix S/PDIF out on Intel D*45* motherboards
+Date: Tue, 18 Apr 2023 14:21:32 +0200
+Message-Id: <20230418120259.872923133@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -36,38 +36,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-commit e98e7a82bca2b6dce3e03719cff800ec913f9af7 upstream.
+commit f342ac00da1064eb4f94b1f4bcacbdfea955797a upstream.
 
-snd_cs8427_iec958_active() would always delete
-SNDRV_CTL_ELEM_ACCESS_INACTIVE, even though the function has an
-argument `active`.
+The BIOS botches this one completely - it says the 2nd S/PDIF output is
+used, while in fact it's the 1st one. This is tested on DP45SG, but I'm
+assuming it's valid for the other boards in the series as well.
+
+Also add some comments regarding the pins.
+FWIW, the codec is apparently still sold by Tempo Semiconductor, Inc.,
+where one can download the documentation.
 
 Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230405201219.2197811-1-oswald.buddenhagen@gmx.de
+Link: https://lore.kernel.org/r/20230405201220.2197826-2-oswald.buddenhagen@gmx.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/i2c/cs8427.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_sigmatel.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/sound/i2c/cs8427.c
-+++ b/sound/i2c/cs8427.c
-@@ -568,10 +568,13 @@ int snd_cs8427_iec958_active(struct snd_
- 	if (snd_BUG_ON(!cs8427))
- 		return -ENXIO;
- 	chip = cs8427->private_data;
--	if (active)
-+	if (active) {
- 		memcpy(chip->playback.pcm_status,
- 		       chip->playback.def_status, 24);
--	chip->playback.pcm_ctl->vd[0].access &= ~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
-+		chip->playback.pcm_ctl->vd[0].access &= ~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
-+	} else {
-+		chip->playback.pcm_ctl->vd[0].access |= SNDRV_CTL_ELEM_ACCESS_INACTIVE;
-+	}
- 	snd_ctl_notify(cs8427->bus->card,
- 		       SNDRV_CTL_EVENT_MASK_VALUE | SNDRV_CTL_EVENT_MASK_INFO,
- 		       &chip->playback.pcm_ctl->id);
+--- a/sound/pci/hda/patch_sigmatel.c
++++ b/sound/pci/hda/patch_sigmatel.c
+@@ -1723,6 +1723,7 @@ static const struct snd_pci_quirk stac92
+ };
+ 
+ static const struct hda_pintbl ref92hd73xx_pin_configs[] = {
++	// Port A-H
+ 	{ 0x0a, 0x02214030 },
+ 	{ 0x0b, 0x02a19040 },
+ 	{ 0x0c, 0x01a19020 },
+@@ -1731,9 +1732,12 @@ static const struct hda_pintbl ref92hd73
+ 	{ 0x0f, 0x01014010 },
+ 	{ 0x10, 0x01014020 },
+ 	{ 0x11, 0x01014030 },
++	// CD in
+ 	{ 0x12, 0x02319040 },
++	// Digial Mic ins
+ 	{ 0x13, 0x90a000f0 },
+ 	{ 0x14, 0x90a000f0 },
++	// Digital outs
+ 	{ 0x22, 0x01452050 },
+ 	{ 0x23, 0x01452050 },
+ 	{}
+@@ -1774,6 +1778,7 @@ static const struct hda_pintbl alienware
+ };
+ 
+ static const struct hda_pintbl intel_dg45id_pin_configs[] = {
++	// Analog outputs
+ 	{ 0x0a, 0x02214230 },
+ 	{ 0x0b, 0x02A19240 },
+ 	{ 0x0c, 0x01013214 },
+@@ -1781,6 +1786,9 @@ static const struct hda_pintbl intel_dg4
+ 	{ 0x0e, 0x01A19250 },
+ 	{ 0x0f, 0x01011212 },
+ 	{ 0x10, 0x01016211 },
++	// Digital output
++	{ 0x22, 0x01451380 },
++	{ 0x23, 0x40f000f0 },
+ 	{}
+ };
+ 
 
 
