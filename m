@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBAC2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:29:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DA2C433EF;
-	Tue, 18 Apr 2023 12:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38552566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:29:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47551C433D2;
+	Tue, 18 Apr 2023 12:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820993;
-	bh=2wA44kDtgI9IRu4YzCwgCu50ewXF20yfzD+KbsOE260=;
+	s=korg; t=1681820995;
+	bh=gmW944o7DcwZ/rUiZO8Hn7nDwrDi2oWWytE3DszOy/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u29W9uoCwjLiM/MJVL4lXgJGc50OJvQqO7wq8zU0u00AC6HkHBJv9Kt1XJGdswZOn
-	 zM1hydybe8BcJMYmTDZ7hnzgnh31WGBYuVHAfofr5UcCh61An+FSJ90gfN1DQNGQXZ
-	 /rNwMBMKFkS7ZfR1RxqXmgG+HkZ1Wo5xEx2egKwU=
+	b=Wx3X1bHsYP4PCTS16dUESzgNKqFc824Hd+D+vQnVNmfp1B9rG2qyJxIz5nuKGZ9vd
+	 t4S9wVJBKa8yIy+uDQ2sdVLMNMCEMfTLH0WF0tt9uQ7gw19+wqtQ8gPJRC71Q7amEM
+	 UR1K3akqZyYEnXNi01jz0GmFnEVDdcyHZyGdHaow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.4 51/92] Bluetooth: Fix race condition in hidp_session_thread
-Date: Tue, 18 Apr 2023 14:21:26 +0200
-Message-Id: <20230418120306.641145622@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	John Keeping <john@metanate.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 34/92] ftrace: Mark get_lock_parent_ip() __always_inline
+Date: Tue, 18 Apr 2023 14:21:09 +0200
+Message-Id: <20230418120306.041237421@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -34,52 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Min Li <lm0963hack@gmail.com>
+From: John Keeping <john@metanate.com>
 
-commit c95930abd687fcd1aa040dc4fe90dff947916460 upstream.
+commit ea65b41807a26495ff2a73dd8b1bab2751940887 upstream.
 
-There is a potential race condition in hidp_session_thread that may
-lead to use-after-free. For instance, the timer is active while
-hidp_del_timer is called in hidp_session_thread(). After hidp_session_put,
-then 'session' will be freed, causing kernel panic when hidp_idle_timeout
-is running.
+If the compiler decides not to inline this function then preemption
+tracing will always show an IP inside the preemption disabling path and
+never the function actually calling preempt_{enable,disable}.
 
-The solution is to use del_timer_sync instead of del_timer.
+Link: https://lore.kernel.org/linux-trace-kernel/20230327173647.1690849-1-john@metanate.com
 
-Here is the call trace:
-
-? hidp_session_probe+0x780/0x780
-call_timer_fn+0x2d/0x1e0
-__run_timers.part.0+0x569/0x940
-hidp_session_probe+0x780/0x780
-call_timer_fn+0x1e0/0x1e0
-ktime_get+0x5c/0xf0
-lapic_next_deadline+0x2c/0x40
-clockevents_program_event+0x205/0x320
-run_timer_softirq+0xa9/0x1b0
-__do_softirq+0x1b9/0x641
-__irq_exit_rcu+0xdc/0x190
-irq_exit_rcu+0xe/0x20
-sysvec_apic_timer_interrupt+0xa1/0xc0
-
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: f904f58263e1d ("sched/debug: Fix preempt_disable_ip recording for preempt_disable()")
+Signed-off-by: John Keeping <john@metanate.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hidp/core.c |    2 +-
+ include/linux/ftrace.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/hidp/core.c
-+++ b/net/bluetooth/hidp/core.c
-@@ -433,7 +433,7 @@ static void hidp_set_timer(struct hidp_s
- static void hidp_del_timer(struct hidp_session *session)
- {
- 	if (session->idle_to > 0)
--		del_timer(&session->timer);
-+		del_timer_sync(&session->timer);
- }
+--- a/include/linux/ftrace.h
++++ b/include/linux/ftrace.h
+@@ -712,7 +712,7 @@ static inline void __ftrace_enabled_rest
+ #define CALLER_ADDR5 ((unsigned long)ftrace_return_address(5))
+ #define CALLER_ADDR6 ((unsigned long)ftrace_return_address(6))
  
- static void hidp_process_report(struct hidp_session *session, int type,
+-static inline unsigned long get_lock_parent_ip(void)
++static __always_inline unsigned long get_lock_parent_ip(void)
+ {
+ 	unsigned long addr = CALLER_ADDR0;
+ 
 
 
