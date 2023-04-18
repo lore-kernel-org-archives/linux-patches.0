@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBAD2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317A4C433EF;
-	Tue, 18 Apr 2023 12:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC8D2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2168C433D2;
+	Tue, 18 Apr 2023 12:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821356;
-	bh=U5HtpG+d0dVGhYPv5g+6ZximuYd5Po6rEhcReZqduq4=;
+	s=korg; t=1681821359;
+	bh=NFE4syDNGc2PVNgR+aIQqodqtd8VZv0IRwpEtsiitpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nCnlkIekjOi4y2rMibLCqtqeIVw4c58e6JB8PXs8IqCqaXLzmOg+UdBM/E9OCobI5
-	 CKRwPsK+T6kF7hmwmrh0kyM2LDUa+so/n51cx4hwayVDS/iWe454mer93XUlHe/afg
-	 Dlb81yEuA/GeV8q1+aKHjJ9ZtDJNxKQ2oZhl6fIQ=
+	b=iDYt5Ji8uTcN35fasXcep10q9P0HrXHZyg7dKMN3c7CBWdH/xHZftdrPLz8xYzn4c
+	 rs/p5KsphkYV7YntO36zOJuTnA1ntmlcgOrppgqRyAMYVFqSuyZ22wy/e5JvImjpfS
+	 B2v0lkSd0Uq5+57HGqzRClLJnn5YBpCHt7IP6y7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/124] i2c: imx-lpi2c: clean rx/tx buffers upon new message
-Date: Tue, 18 Apr 2023 14:21:47 +0200
-Message-Id: <20230418120313.061500545@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 5.10 097/124] cgroup/cpuset: Wake up cpuset_attach_wq tasks in cpuset_cancel_attach()
+Date: Tue, 18 Apr 2023 14:21:56 +0200
+Message-Id: <20230418120313.363587483@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -36,36 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 987dd36c0141f6ab9f0fbf14d6b2ec3342dedb2f ]
+commit ba9182a89626d5f83c2ee4594f55cb9c1e60f0e2 upstream.
 
-When start sending a new message clear the Rx & Tx buffer pointers in
-order to avoid using stale pointers.
+After a successful cpuset_can_attach() call which increments the
+attach_in_progress flag, either cpuset_cancel_attach() or cpuset_attach()
+will be called later. In cpuset_attach(), tasks in cpuset_attach_wq,
+if present, will be woken up at the end. That is not the case in
+cpuset_cancel_attach(). So missed wakeup is possible if the attach
+operation is somehow cancelled. Fix that by doing the wakeup in
+cpuset_cancel_attach() as well.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Tested-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e44193d39e8d ("cpuset: let hotplug propagation work wait for task attaching")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
+Cc: stable@vger.kernel.org # v3.11+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx-lpi2c.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/cgroup/cpuset.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
-index 2018dbcf241e9..d45ec26d51cb9 100644
---- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-+++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-@@ -462,6 +462,8 @@ static int lpi2c_imx_xfer(struct i2c_adapter *adapter,
- 		if (num == 1 && msgs[0].len == 0)
- 			goto stop;
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -2188,11 +2188,15 @@ out_unlock:
+ static void cpuset_cancel_attach(struct cgroup_taskset *tset)
+ {
+ 	struct cgroup_subsys_state *css;
++	struct cpuset *cs;
  
-+		lpi2c_imx->rx_buf = NULL;
-+		lpi2c_imx->tx_buf = NULL;
- 		lpi2c_imx->delivered = 0;
- 		lpi2c_imx->msglen = msgs[i].len;
- 		init_completion(&lpi2c_imx->complete);
--- 
-2.39.2
-
+ 	cgroup_taskset_first(tset, &css);
++	cs = css_cs(css);
+ 
+ 	percpu_down_write(&cpuset_rwsem);
+-	css_cs(css)->attach_in_progress--;
++	cs->attach_in_progress--;
++	if (!cs->attach_in_progress)
++		wake_up(&cpuset_attach_wq);
+ 	percpu_up_write(&cpuset_rwsem);
+ }
+ 
 
 
