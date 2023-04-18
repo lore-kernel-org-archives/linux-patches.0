@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ABF2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD97FC433EF;
-	Tue, 18 Apr 2023 12:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081942572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F69DC4339B;
+	Tue, 18 Apr 2023 12:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822001;
-	bh=UwyG6Gy9KDhGWvKveRFzAcaAt077RRfEM4d2FevbDdE=;
+	s=korg; t=1681822003;
+	bh=oNRHKlpBGx5o+DM+fn7UAlEabvjKmS3NKQxywnfXrY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HpAwKc7FjFgzLxSctIc7LBGRWcUDacS6X6ybyqD0ttCb8yJzgwd8QMIPODb+Bpdr2
-	 5RGQiIkiIlNCMTmaYeOIbrPFUGDEjFaV+YIz8LUQ+9mSnDVwuZ1VovfpOvdX+SbBYc
-	 9K7bDv8m4b6xVVOx6Ft/U5LhBAsukKEQuwIc3OrE=
+	b=ePNeZtz24vLKtb/0v5QVISUxUwih0fiYSXBFA9v/ca9Dix7T0bdKPX2Q3BRf+d6xA
+	 KjrQV0UAKQuevePR2lezxuP0gQ7SYpfLASSaPRbkMAyn8H3ypG+r3kCDNiphvy3M9p
+	 xav0CsBoTkhoGXLo0VQ4O4uPJMbF6cqC7YmIvyVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/134] i2c: mchp-pci1xxxx: Update Timing registers
-Date: Tue, 18 Apr 2023 14:22:56 +0200
-Message-Id: <20230418120317.364975549@linuxfoundation.org>
+Subject: [PATCH 6.1 121/134] powerpc/papr_scm: Update the NUMA distance table for the target node
+Date: Tue, 18 Apr 2023 14:22:57 +0200
+Message-Id: <20230418120317.409905949@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,171 +35,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>
+From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
 
-[ Upstream commit aa874cdfec07d4dd9c6f0c356d65c609ba31a26f ]
+[ Upstream commit b277fc793daf258877b4c0744b52f69d6e6ba22e ]
 
-Update I2C timing registers based on latest hardware design.
-This fix does not break functionality of chips with older design and
-existing users will not be affected.
+Platform device helper routines won't update the NUMA distance table
+while creating a platform device, even if the device is present on a
+NUMA node that doesn't have memory or CPU. This is especially true for
+pmem devices. If the target node of the pmem device is not online, we
+find the nearest online node to the device and associate the pmem device
+with that online node. To find the nearest online node, we should have
+the numa distance table updated correctly. Update the distance
+information during the device probe.
 
-Fixes: 361693697249 ("i2c: microchip: pci1xxxx: Add driver for I2C host controller in multifunction endpoint of pci1xxxx switch")
-Signed-off-by: Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+For a papr scm device on NUMA node 3 distance_lookup_table value for
+distance_ref_points_depth = 2 before and after fix is below:
+
+Before fix:
+  node 3 distance depth 0  - 0
+  node 3 distance depth 1  - 0
+  node 4 distance depth 0  - 4
+  node 4 distance depth 1  - 2
+  node 5 distance depth 0  - 5
+  node 5 distance depth 1  - 1
+
+After fix
+  node 3 distance depth 0  - 3
+  node 3 distance depth 1  - 1
+  node 4 distance depth 0  - 4
+  node 4 distance depth 1  - 2
+  node 5 distance depth 0  - 5
+  node 5 distance depth 1  - 1
+
+Without the fix, the nearest numa node to the pmem device (NUMA node 3)
+will be picked as 4. After the fix, we get the correct numa node which
+is 5.
+
+Fixes: da1115fdbd6e ("powerpc/nvdimm: Pick nearby online node if the device node is not online")
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230404041433.1781804-1-aneesh.kumar@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-mchp-pci1xxxx.c | 60 +++++++++++++-------------
- 1 file changed, 30 insertions(+), 30 deletions(-)
+ arch/powerpc/mm/numa.c                    | 1 +
+ arch/powerpc/platforms/pseries/papr_scm.c | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-mchp-pci1xxxx.c b/drivers/i2c/busses/i2c-mchp-pci1xxxx.c
-index 09af759211478..b21ffd6df9276 100644
---- a/drivers/i2c/busses/i2c-mchp-pci1xxxx.c
-+++ b/drivers/i2c/busses/i2c-mchp-pci1xxxx.c
-@@ -48,9 +48,9 @@
-  * SR_HOLD_TIME_XK_TICKS field will indicate the number of ticks of the
-  * baud clock required to program 'Hold Time' at X KHz.
-  */
--#define SR_HOLD_TIME_100K_TICKS	133
--#define SR_HOLD_TIME_400K_TICKS	20
--#define SR_HOLD_TIME_1000K_TICKS	11
-+#define SR_HOLD_TIME_100K_TICKS		150
-+#define SR_HOLD_TIME_400K_TICKS		20
-+#define SR_HOLD_TIME_1000K_TICKS	12
- 
- #define SMB_CORE_COMPLETION_REG_OFF3	(SMBUS_MAST_CORE_ADDR_BASE + 0x23)
- 
-@@ -65,17 +65,17 @@
-  * the baud clock required to program 'fair idle delay' at X KHz. Fair idle
-  * delay establishes the MCTP T(IDLE_DELAY) period.
-  */
--#define FAIR_BUS_IDLE_MIN_100K_TICKS		969
--#define FAIR_BUS_IDLE_MIN_400K_TICKS		157
--#define FAIR_BUS_IDLE_MIN_1000K_TICKS		157
-+#define FAIR_BUS_IDLE_MIN_100K_TICKS		992
-+#define FAIR_BUS_IDLE_MIN_400K_TICKS		500
-+#define FAIR_BUS_IDLE_MIN_1000K_TICKS		500
+diff --git a/arch/powerpc/mm/numa.c b/arch/powerpc/mm/numa.c
+index b44ce71917d75..16cfe56be05bb 100644
+--- a/arch/powerpc/mm/numa.c
++++ b/arch/powerpc/mm/numa.c
+@@ -366,6 +366,7 @@ void update_numa_distance(struct device_node *node)
+ 	WARN(numa_distance_table[nid][nid] == -1,
+ 	     "NUMA distance details for node %d not provided\n", nid);
+ }
++EXPORT_SYMBOL_GPL(update_numa_distance);
  
  /*
-  * FAIR_IDLE_DELAY_XK_TICKS field will indicate the number of ticks of the
-  * baud clock required to satisfy the fairness protocol at X KHz.
-  */
--#define FAIR_IDLE_DELAY_100K_TICKS	1000
--#define FAIR_IDLE_DELAY_400K_TICKS	500
--#define FAIR_IDLE_DELAY_1000K_TICKS	500
-+#define FAIR_IDLE_DELAY_100K_TICKS	963
-+#define FAIR_IDLE_DELAY_400K_TICKS	156
-+#define FAIR_IDLE_DELAY_1000K_TICKS	156
+  * ibm,numa-lookup-index-table= {N, domainid1, domainid2, ..... domainidN}
+diff --git a/arch/powerpc/platforms/pseries/papr_scm.c b/arch/powerpc/platforms/pseries/papr_scm.c
+index 2f8385523a132..1a53e048ceb76 100644
+--- a/arch/powerpc/platforms/pseries/papr_scm.c
++++ b/arch/powerpc/platforms/pseries/papr_scm.c
+@@ -1428,6 +1428,13 @@ static int papr_scm_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 	}
  
- #define SMB_IDLE_SCALING_100K		\
- 	((FAIR_IDLE_DELAY_100K_TICKS << 16) | FAIR_BUS_IDLE_MIN_100K_TICKS)
-@@ -105,7 +105,7 @@
-  */
- #define BUS_CLK_100K_LOW_PERIOD_TICKS		156
- #define BUS_CLK_400K_LOW_PERIOD_TICKS		41
--#define BUS_CLK_1000K_LOW_PERIOD_TICKS	15
-+#define BUS_CLK_1000K_LOW_PERIOD_TICKS		15
++	/*
++	 * open firmware platform device create won't update the NUMA 
++	 * distance table. For PAPR SCM devices we use numa_map_to_online_node()
++	 * to find the nearest online NUMA node and that requires correct
++	 * distance table information.
++	 */
++	update_numa_distance(dn);
  
- /*
-  * BUS_CLK_XK_HIGH_PERIOD_TICKS field defines the number of I2C Baud Clock
-@@ -131,7 +131,7 @@
-  */
- #define CLK_SYNC_100K			4
- #define CLK_SYNC_400K			4
--#define CLK_SYNC_1000K		4
-+#define CLK_SYNC_1000K			4
- 
- #define SMB_CORE_DATA_TIMING_REG_OFF	(SMBUS_MAST_CORE_ADDR_BASE + 0x40)
- 
-@@ -142,25 +142,25 @@
-  * determines the SCLK hold time following SDAT driven low during the first
-  * START bit in a transfer.
-  */
--#define FIRST_START_HOLD_100K_TICKS	22
--#define FIRST_START_HOLD_400K_TICKS	16
--#define FIRST_START_HOLD_1000K_TICKS	6
-+#define FIRST_START_HOLD_100K_TICKS	23
-+#define FIRST_START_HOLD_400K_TICKS	8
-+#define FIRST_START_HOLD_1000K_TICKS	12
- 
- /*
-  * STOP_SETUP_XK_TICKS will indicate the number of ticks of the baud clock
-  * required to program 'STOP_SETUP' timer at X KHz. This timer determines the
-  * SDAT setup time from the rising edge of SCLK for a STOP condition.
-  */
--#define STOP_SETUP_100K_TICKS		157
-+#define STOP_SETUP_100K_TICKS		150
- #define STOP_SETUP_400K_TICKS		20
--#define STOP_SETUP_1000K_TICKS	12
-+#define STOP_SETUP_1000K_TICKS		12
- 
- /*
-  * RESTART_SETUP_XK_TICKS will indicate the number of ticks of the baud clock
-  * required to program 'RESTART_SETUP' timer at X KHz. This timer determines the
-  * SDAT setup time from the rising edge of SCLK for a repeated START condition.
-  */
--#define RESTART_SETUP_100K_TICKS	157
-+#define RESTART_SETUP_100K_TICKS	156
- #define RESTART_SETUP_400K_TICKS	20
- #define RESTART_SETUP_1000K_TICKS	12
- 
-@@ -169,7 +169,7 @@
-  * required to program 'DATA_HOLD' timer at X KHz. This timer determines the
-  * SDAT hold time following SCLK driven low.
-  */
--#define DATA_HOLD_100K_TICKS		2
-+#define DATA_HOLD_100K_TICKS		12
- #define DATA_HOLD_400K_TICKS		2
- #define DATA_HOLD_1000K_TICKS		2
- 
-@@ -190,35 +190,35 @@
-  * Bus Idle Minimum time = BUS_IDLE_MIN[7:0] x Baud_Clock_Period x
-  * (BUS_IDLE_MIN_XK_TICKS[7] ? 4,1)
-  */
--#define BUS_IDLE_MIN_100K_TICKS		167UL
--#define BUS_IDLE_MIN_400K_TICKS		139UL
--#define BUS_IDLE_MIN_1000K_TICKS		133UL
-+#define BUS_IDLE_MIN_100K_TICKS		36UL
-+#define BUS_IDLE_MIN_400K_TICKS		10UL
-+#define BUS_IDLE_MIN_1000K_TICKS	4UL
- 
- /*
-  * CTRL_CUM_TIME_OUT_XK_TICKS defines SMBus Controller Cumulative Time-Out.
-  * SMBus Controller Cumulative Time-Out duration =
-  * CTRL_CUM_TIME_OUT_XK_TICKS[7:0] x Baud_Clock_Period x 2048
-  */
--#define CTRL_CUM_TIME_OUT_100K_TICKS		159
--#define CTRL_CUM_TIME_OUT_400K_TICKS		159
--#define CTRL_CUM_TIME_OUT_1000K_TICKS		159
-+#define CTRL_CUM_TIME_OUT_100K_TICKS		76
-+#define CTRL_CUM_TIME_OUT_400K_TICKS		76
-+#define CTRL_CUM_TIME_OUT_1000K_TICKS		76
- 
- /*
-  * TARGET_CUM_TIME_OUT_XK_TICKS defines SMBus Target Cumulative Time-Out duration.
-  * SMBus Target Cumulative Time-Out duration = TARGET_CUM_TIME_OUT_XK_TICKS[7:0] x
-  * Baud_Clock_Period x 4096
-  */
--#define TARGET_CUM_TIME_OUT_100K_TICKS	199
--#define TARGET_CUM_TIME_OUT_400K_TICKS	199
--#define TARGET_CUM_TIME_OUT_1000K_TICKS	199
-+#define TARGET_CUM_TIME_OUT_100K_TICKS	95
-+#define TARGET_CUM_TIME_OUT_400K_TICKS	95
-+#define TARGET_CUM_TIME_OUT_1000K_TICKS	95
- 
- /*
-  * CLOCK_HIGH_TIME_OUT_XK defines Clock High time out period.
-  * Clock High time out period = CLOCK_HIGH_TIME_OUT_XK[7:0] x Baud_Clock_Period x 8
-  */
--#define CLOCK_HIGH_TIME_OUT_100K_TICKS	204
--#define CLOCK_HIGH_TIME_OUT_400K_TICKS	204
--#define CLOCK_HIGH_TIME_OUT_1000K_TICKS	204
-+#define CLOCK_HIGH_TIME_OUT_100K_TICKS	97
-+#define CLOCK_HIGH_TIME_OUT_400K_TICKS	97
-+#define CLOCK_HIGH_TIME_OUT_1000K_TICKS	97
- 
- #define TO_SCALING_100K		\
- 	((BUS_IDLE_MIN_100K_TICKS << 24) | (CTRL_CUM_TIME_OUT_100K_TICKS << 16) | \
+ 	p = kzalloc(sizeof(*p), GFP_KERNEL);
+ 	if (!p)
 -- 
 2.39.2
 
