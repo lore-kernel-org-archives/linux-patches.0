@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F582572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741FFC433D2;
-	Tue, 18 Apr 2023 12:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3092566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B27C433EF;
+	Tue, 18 Apr 2023 12:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821000;
-	bh=9APf11+Ggi6YTTwaMcRKPqyRTF2eQj5R67YJj6vy0Sg=;
+	s=korg; t=1681821003;
+	bh=q4tP3sS2Av2FILYlonf6HCr6uNfNKnt40NBZ/HBWcSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CxrlMTdMJUZjEy7qeitsVD9Q6bAaSr3w90MmK3bl5AFVZLPFz7kiwKgtQXONWVhLr
-	 oHZzoiS51/xCqR2xtRIvsZZF7vNQxULPpbDa+VjTZ/I752SjDStEBKyil3DLnZqxaN
-	 T4bLrLPdAYR3JOrzROTWHI/oJL/KtD0nwSykfpRE=
+	b=S6M2mN7LKY/yWH0WA5llKqXHfzHBB+MmZ+1X7Yqt60EKHMBI9EIaeq8uwdsi920IA
+	 EaiXf31ATayvUHUTWXJdURmPtb6MM8EEwKjNd9OI6J6YlzO81JuqKvZGjLeL05HiMa
+	 sCEYGGCVjzFjci2nVbHVXOx0F6Cj5dd8cxVwmgi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 53/92] btrfs: fix fast csum implementation detection
-Date: Tue, 18 Apr 2023 14:21:28 +0200
-Message-Id: <20230418120306.710133391@linuxfoundation.org>
+	Bang Li <libang.linuxer@gmail.com>,
+	Richard Weinberger <richard@nod.at>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.4 54/92] mtdblock: tolerate corrected bit-flips
+Date: Tue, 18 Apr 2023 14:21:29 +0200
+Message-Id: <20230418120306.746239988@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -34,61 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Bang Li <libang.linuxer@gmail.com>
 
-commit 68d99ab0e9221ef54506f827576c5a914680eeaf upstream.
+commit 0c3089601f064d80b3838eceb711fcac04bceaad upstream.
 
-The BTRFS_FS_CSUM_IMPL_FAST flag is currently set whenever a non-generic
-crc32c is detected, which is the incorrect check if the file system uses
-a different checksumming algorithm.  Refactor the code to only check
-this if crc32c is actually used.  Note that in an ideal world the
-information if an algorithm is hardware accelerated or not should be
-provided by the crypto API instead, but that's left for another day.
+mtd_read() may return -EUCLEAN in case of corrected bit-flips.This
+particular condition should not be treated like an error.
 
-CC: stable@vger.kernel.org # 5.4.x: c8a5f8ca9a9c: btrfs: print checksum type and implementation at mount time
-CC: stable@vger.kernel.org # 5.4.x
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Bang Li <libang.linuxer@gmail.com>
+Fixes: e47f68587b82 ("mtd: check for max_bitflips in mtd_read_oob()")
+Cc: <stable@vger.kernel.org> # v3.7
+Acked-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230328163012.4264-1-libang.linuxer@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |   14 ++++++++++++++
- fs/btrfs/super.c   |    2 --
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/mtd/mtdblock.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2239,6 +2239,20 @@ static int btrfs_init_csum_hash(struct b
+--- a/drivers/mtd/mtdblock.c
++++ b/drivers/mtd/mtdblock.c
+@@ -150,7 +150,7 @@ static int do_cached_write (struct mtdbl
+ 				mtdblk->cache_state = STATE_EMPTY;
+ 				ret = mtd_read(mtd, sect_start, sect_size,
+ 					       &retlen, mtdblk->cache_data);
+-				if (ret)
++				if (ret && !mtd_is_bitflip(ret))
+ 					return ret;
+ 				if (retlen != sect_size)
+ 					return -EIO;
+@@ -185,8 +185,12 @@ static int do_cached_read (struct mtdblk
+ 	pr_debug("mtdblock: read on \"%s\" at 0x%lx, size 0x%x\n",
+ 			mtd->name, pos, len);
  
- 	fs_info->csum_shash = csum_shash;
- 
-+	/*
-+	 * Check if the checksum implementation is a fast accelerated one.
-+	 * As-is this is a bit of a hack and should be replaced once the csum
-+	 * implementations provide that information themselves.
-+	 */
-+	switch (csum_type) {
-+	case BTRFS_CSUM_TYPE_CRC32:
-+		if (!strstr(crypto_shash_driver_name(csum_shash), "generic"))
-+			set_bit(BTRFS_FS_CSUM_IMPL_FAST, &fs_info->flags);
-+		break;
-+	default:
-+		break;
+-	if (!sect_size)
+-		return mtd_read(mtd, pos, len, &retlen, buf);
++	if (!sect_size) {
++		ret = mtd_read(mtd, pos, len, &retlen, buf);
++		if (ret && !mtd_is_bitflip(ret))
++			return ret;
++		return 0;
 +	}
-+
- 	btrfs_info(fs_info, "using %s (%s) checksum algorithm",
- 			btrfs_super_csum_name(csum_type),
- 			crypto_shash_driver_name(csum_shash));
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -1567,8 +1567,6 @@ static struct dentry *btrfs_mount_root(s
- 	} else {
- 		snprintf(s->s_id, sizeof(s->s_id), "%pg", bdev);
- 		btrfs_sb(s)->bdev_holder = fs_type;
--		if (!strstr(crc32c_impl(), "generic"))
--			set_bit(BTRFS_FS_CSUM_IMPL_FAST, &fs_info->flags);
- 		error = btrfs_fill_super(s, fs_devices, data);
- 	}
- 	if (!error)
+ 
+ 	while (len > 0) {
+ 		unsigned long sect_start = (pos/sect_size)*sect_size;
+@@ -206,7 +210,7 @@ static int do_cached_read (struct mtdblk
+ 			memcpy (buf, mtdblk->cache_data + offset, size);
+ 		} else {
+ 			ret = mtd_read(mtd, pos, size, &retlen, buf);
+-			if (ret)
++			if (ret && !mtd_is_bitflip(ret))
+ 				return ret;
+ 			if (retlen != size)
+ 				return -EIO;
 
 
