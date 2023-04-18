@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4533C2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7550C433D2;
-	Tue, 18 Apr 2023 12:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7092572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729CCC4339B;
+	Tue, 18 Apr 2023 12:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821754;
-	bh=xtGEDVJm4OrHZzuvlFRTJ3y2iBEqnWKHjzoKnOyk48o=;
+	s=korg; t=1681821756;
+	bh=0mt26iVTqwPUcTu9GZ1KJp1Pi0NpaixLhjWQmQt46oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MazAw80YGbBcMUpL/qKeTH9lBAuLX6gTxr8vKOoQkwrgQNriJv3JU+T5gL4bvh8aI
-	 PH/QhDRnRauqdKjt1jvZDpohwMvxqW9zb8i4yNlB41O7lhoCWV5DYw9o7VSVz5gYVJ
-	 lPUGMD7LXWCP144wnl5Hb/C8Cf/DIREFWKJzNJbA=
+	b=lVpoMD1FGqvoFf541GnREt06kcUtChE57mFTvO82y7cuoCzFbK/KtcFTGRVKrvoZu
+	 5gbPZJrnD70z42/28RAbvwIXGu3/NhaTI1kFIvBoBw/ssx6+Gc3O2Zxq/uidCwe/Nw
+	 LFMtu6uNIOPvNAYpARejw4v+RYHzZFy4GxvGSGl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mustafa Ismail <mustafa.ismail@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/134] RDMA/irdma: Do not generate SW completions for NOPs
-Date: Tue, 18 Apr 2023 14:21:25 +0200
-Message-Id: <20230418120314.011040388@linuxfoundation.org>
+	stable@kernel.org,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Min Li <lm0963hack@gmail.com>
+Subject: [PATCH 6.1 012/134] Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}
+Date: Tue, 18 Apr 2023 14:21:08 +0200
+Message-Id: <20230418120313.425293208@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,42 +35,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mustafa Ismail <mustafa.ismail@intel.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 30ed9ee9a10a90ae719dcfcacead1d0506fa45ed ]
+commit a2a9339e1c9deb7e1e079e12e27a0265aea8421a upstream.
 
-Currently, artificial SW completions are generated for NOP wqes which can
-generate unexpected completions with wr_id = 0. Skip the generation of
-artificial completions for NOPs.
+Similar to commit d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free
+caused by l2cap_chan_put"), just use l2cap_chan_hold_unless_zero to
+prevent referencing a channel that is about to be destroyed.
 
-Fixes: 81091d7696ae ("RDMA/irdma: Add SW mechanism to generate completions on error")
-Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20230315145231.931-2-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Min Li <lm0963hack@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/irdma/utils.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c |   24 ++++++------------------
+ 1 file changed, 6 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
-index 445e69e864097..7887230c867b1 100644
---- a/drivers/infiniband/hw/irdma/utils.c
-+++ b/drivers/infiniband/hw/irdma/utils.c
-@@ -2595,7 +2595,10 @@ void irdma_generate_flush_completions(struct irdma_qp *iwqp)
- 			/* remove the SQ WR by moving SQ tail*/
- 			IRDMA_RING_SET_TAIL(*sq_ring,
- 				sq_ring->tail + qp->sq_wrtrk_array[sq_ring->tail].quanta);
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4652,33 +4652,27 @@ static inline int l2cap_disconnect_req(s
+ 
+ 	BT_DBG("scid 0x%4.4x dcid 0x%4.4x", scid, dcid);
+ 
+-	mutex_lock(&conn->chan_lock);
 -
-+			if (cmpl->cpi.op_type == IRDMAQP_OP_NOP) {
-+				kfree(cmpl);
-+				continue;
-+			}
- 			ibdev_dbg(iwqp->iwscq->ibcq.device,
- 				  "DEV: %s: adding wr_id = 0x%llx SQ Completion to list qp_id=%d\n",
- 				  __func__, cmpl->cpi.wr_id, qp->qp_id);
--- 
-2.39.2
-
+-	chan = __l2cap_get_chan_by_scid(conn, dcid);
++	chan = l2cap_get_chan_by_scid(conn, dcid);
+ 	if (!chan) {
+-		mutex_unlock(&conn->chan_lock);
+ 		cmd_reject_invalid_cid(conn, cmd->ident, dcid, scid);
+ 		return 0;
+ 	}
+ 
+-	l2cap_chan_hold(chan);
+-	l2cap_chan_lock(chan);
+-
+ 	rsp.dcid = cpu_to_le16(chan->scid);
+ 	rsp.scid = cpu_to_le16(chan->dcid);
+ 	l2cap_send_cmd(conn, cmd->ident, L2CAP_DISCONN_RSP, sizeof(rsp), &rsp);
+ 
+ 	chan->ops->set_shutdown(chan);
+ 
++	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_del(chan, ECONNRESET);
++	mutex_unlock(&conn->chan_lock);
+ 
+ 	chan->ops->close(chan);
+ 
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return 0;
+ }
+ 
+@@ -4698,33 +4692,27 @@ static inline int l2cap_disconnect_rsp(s
+ 
+ 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x", dcid, scid);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+-	chan = __l2cap_get_chan_by_scid(conn, scid);
++	chan = l2cap_get_chan_by_scid(conn, scid);
+ 	if (!chan) {
+ 		mutex_unlock(&conn->chan_lock);
+ 		return 0;
+ 	}
+ 
+-	l2cap_chan_hold(chan);
+-	l2cap_chan_lock(chan);
+-
+ 	if (chan->state != BT_DISCONN) {
+ 		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+-		mutex_unlock(&conn->chan_lock);
+ 		return 0;
+ 	}
+ 
++	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_del(chan, 0);
++	mutex_unlock(&conn->chan_lock);
+ 
+ 	chan->ops->close(chan);
+ 
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return 0;
+ }
+ 
 
 
