@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEEF2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F81FC433EF;
-	Tue, 18 Apr 2023 12:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E192572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8219C433EF;
+	Tue, 18 Apr 2023 12:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821562;
-	bh=BqMtq36f+7HGvPLAXLGwZSOUfHS2pj7KmuFL9BlVbdI=;
+	s=korg; t=1681821565;
+	bh=Dh0mpvG9Sy7u64XeR4kb8Q9jSntgUYXHrNWwxiNroLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SHmavKG3DSQw1VKLg/xvSxMgoo0NqnBAQGDwqc4UYijHy4++pDJBNg6vTkXedu5H4
-	 6uRYsz9KD0qqPVBGBIaloOjtFG9kCFdBC7Y+SfzQDVQCfGgBXzipgfljlMQgokV5wx
-	 OfHXOE40BlM/JxiJqfVGu7odhOuKSUIzrlOVGnJM=
+	b=S2Lscn/57vEA3vrKuGLRNdqiVtkSsf3pvrHw1oZk9cx0EB1tNAC2GyFgLrGGk94lx
+	 LavcQV7YikLmwRX0c+gEscJWDfTZv1MaL9jvRoLxDcxuQhU2QL3dwL4c/mCxhlE7Ou
+	 /iz+ASzv/IwSwUd0a815iLcJOpjfO1DPOvXtopFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	William Breathitt Gray <vilhelm.gray@gmail.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 49/91] counter: stm32-lptimer-cnt: Provide defines for clock polarities
-Date: Tue, 18 Apr 2023 14:21:53 +0200
-Message-Id: <20230418120307.279136448@linuxfoundation.org>
+Subject: [PATCH 5.15 50/91] counter: stm32-timer-cnt: Provide defines for slave mode selection
+Date: Tue, 18 Apr 2023 14:21:54 +0200
+Message-Id: <20230418120307.317426243@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -38,57 +38,86 @@ Content-Transfer-Encoding: 8bit
 
 From: William Breathitt Gray <vilhelm.gray@gmail.com>
 
-[ Upstream commit 05593a3fd1037b5fee85d3c8c28112f19e7baa06 ]
+[ Upstream commit ea434ff82649111de4fcabd76187270f8abdb63a ]
 
-The STM32 low-power timer permits configuration of the clock polarity
-via the LPTIMX_CFGR register CKPOL bits. This patch provides
-preprocessor defines for the supported clock polarities.
+The STM32 timer permits configuration of the counter encoder mode via
+the slave mode control register (SMCR) slave mode selection (SMS) bits.
+This patch provides preprocessor defines for the supported encoder
+modes.
 
 Cc: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 Signed-off-by: William Breathitt Gray <vilhelm.gray@gmail.com>
 Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/r/a111c8905c467805ca530728f88189b59430f27e.1630031207.git.vilhelm.gray@gmail.com
+Link: https://lore.kernel.org/r/ad3d9cd7af580d586316d368f74964cbc394f981.1630031207.git.vilhelm.gray@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Stable-dep-of: 00f4bc5184c1 ("counter: 104-quad-8: Fix Synapse action reported for Index signals")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/stm32-lptimer-cnt.c | 6 +++---
- include/linux/mfd/stm32-lptimer.h   | 5 +++++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/counter/stm32-timer-cnt.c | 16 ++++++++--------
+ include/linux/mfd/stm32-timers.h  |  4 ++++
+ 2 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/counter/stm32-lptimer-cnt.c b/drivers/counter/stm32-lptimer-cnt.c
-index fa7f86cf0ea32..a56fbe598e119 100644
---- a/drivers/counter/stm32-lptimer-cnt.c
-+++ b/drivers/counter/stm32-lptimer-cnt.c
-@@ -140,9 +140,9 @@ static const enum counter_function stm32_lptim_cnt_functions[] = {
- };
+diff --git a/drivers/counter/stm32-timer-cnt.c b/drivers/counter/stm32-timer-cnt.c
+index 3fb0debd7425d..1fbc46f4ee66e 100644
+--- a/drivers/counter/stm32-timer-cnt.c
++++ b/drivers/counter/stm32-timer-cnt.c
+@@ -93,16 +93,16 @@ static int stm32_count_function_get(struct counter_device *counter,
+ 	regmap_read(priv->regmap, TIM_SMCR, &smcr);
  
- enum stm32_lptim_synapse_action {
--	STM32_LPTIM_SYNAPSE_ACTION_RISING_EDGE,
--	STM32_LPTIM_SYNAPSE_ACTION_FALLING_EDGE,
--	STM32_LPTIM_SYNAPSE_ACTION_BOTH_EDGES,
-+	STM32_LPTIM_SYNAPSE_ACTION_RISING_EDGE = STM32_LPTIM_CKPOL_RISING_EDGE,
-+	STM32_LPTIM_SYNAPSE_ACTION_FALLING_EDGE = STM32_LPTIM_CKPOL_FALLING_EDGE,
-+	STM32_LPTIM_SYNAPSE_ACTION_BOTH_EDGES = STM32_LPTIM_CKPOL_BOTH_EDGES,
- 	STM32_LPTIM_SYNAPSE_ACTION_NONE,
- };
+ 	switch (smcr & TIM_SMCR_SMS) {
+-	case 0:
++	case TIM_SMCR_SMS_SLAVE_MODE_DISABLED:
+ 		*function = STM32_COUNT_SLAVE_MODE_DISABLED;
+ 		return 0;
+-	case 1:
++	case TIM_SMCR_SMS_ENCODER_MODE_1:
+ 		*function = STM32_COUNT_ENCODER_MODE_1;
+ 		return 0;
+-	case 2:
++	case TIM_SMCR_SMS_ENCODER_MODE_2:
+ 		*function = STM32_COUNT_ENCODER_MODE_2;
+ 		return 0;
+-	case 3:
++	case TIM_SMCR_SMS_ENCODER_MODE_3:
+ 		*function = STM32_COUNT_ENCODER_MODE_3;
+ 		return 0;
+ 	default:
+@@ -119,16 +119,16 @@ static int stm32_count_function_set(struct counter_device *counter,
  
-diff --git a/include/linux/mfd/stm32-lptimer.h b/include/linux/mfd/stm32-lptimer.h
-index 90b20550c1c8b..06d3f11dc3c9f 100644
---- a/include/linux/mfd/stm32-lptimer.h
-+++ b/include/linux/mfd/stm32-lptimer.h
-@@ -45,6 +45,11 @@
- #define STM32_LPTIM_PRESC	GENMASK(11, 9)
- #define STM32_LPTIM_CKPOL	GENMASK(2, 1)
- 
-+/* STM32_LPTIM_CKPOL */
-+#define STM32_LPTIM_CKPOL_RISING_EDGE	0
-+#define STM32_LPTIM_CKPOL_FALLING_EDGE	1
-+#define STM32_LPTIM_CKPOL_BOTH_EDGES	2
-+
- /* STM32_LPTIM_ARR */
- #define STM32_LPTIM_MAX_ARR	0xFFFF
- 
+ 	switch (function) {
+ 	case STM32_COUNT_SLAVE_MODE_DISABLED:
+-		sms = 0;
++		sms = TIM_SMCR_SMS_SLAVE_MODE_DISABLED;
+ 		break;
+ 	case STM32_COUNT_ENCODER_MODE_1:
+-		sms = 1;
++		sms = TIM_SMCR_SMS_ENCODER_MODE_1;
+ 		break;
+ 	case STM32_COUNT_ENCODER_MODE_2:
+-		sms = 2;
++		sms = TIM_SMCR_SMS_ENCODER_MODE_2;
+ 		break;
+ 	case STM32_COUNT_ENCODER_MODE_3:
+-		sms = 3;
++		sms = TIM_SMCR_SMS_ENCODER_MODE_3;
+ 		break;
+ 	default:
+ 		return -EINVAL;
+diff --git a/include/linux/mfd/stm32-timers.h b/include/linux/mfd/stm32-timers.h
+index f8db83aedb2b5..5f5c43fd69ddd 100644
+--- a/include/linux/mfd/stm32-timers.h
++++ b/include/linux/mfd/stm32-timers.h
+@@ -82,6 +82,10 @@
+ #define MAX_TIM_ICPSC		0x3
+ #define TIM_CR2_MMS_SHIFT	4
+ #define TIM_CR2_MMS2_SHIFT	20
++#define TIM_SMCR_SMS_SLAVE_MODE_DISABLED	0 /* counts on internal clock when CEN=1 */
++#define TIM_SMCR_SMS_ENCODER_MODE_1		1 /* counts TI1FP1 edges, depending on TI2FP2 level */
++#define TIM_SMCR_SMS_ENCODER_MODE_2		2 /* counts TI2FP2 edges, depending on TI1FP1 level */
++#define TIM_SMCR_SMS_ENCODER_MODE_3		3 /* counts on both TI1FP1 and TI2FP2 edges */
+ #define TIM_SMCR_TS_SHIFT	4
+ #define TIM_BDTR_BKF_MASK	0xF
+ #define TIM_BDTR_BKF_SHIFT(x)	(16 + (x) * 4)
 -- 
 2.39.2
 
