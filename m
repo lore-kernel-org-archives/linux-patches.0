@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBA62566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:28:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0F1C433D2;
-	Tue, 18 Apr 2023 12:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359332566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:28:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDD2C433EF;
+	Tue, 18 Apr 2023 12:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820907;
-	bh=TiMi9raqU+dwzmPfgrSQ0df/D9qckQeKfr42TFsg+oI=;
+	s=korg; t=1681820910;
+	bh=N+4i+yZYMRbWxZzRVTcYVu7G1SPVlXOuYNmOjLBduZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vtjes6J22+IH659zTNlgkNQCczXI3RImlJdErEUTmWOJGKV7tAsW5UBgATTmgKui4
-	 l8cJEXc1d81Wjt5uHAN256v+Z9em7Or+4SoQGcf5qx+wAUd9D7ZBE5A8Tkb69XuxgB
-	 4Cp/gto8reRDA+gbQ+8y2pSNP3mA4QYBM92TGc8E=
+	b=VrSz910is6Jco9S1ujfM1KxGrbf6m6z9CX2cUyS4PHFS8Aw9GXzf1bISsZ6aglGxw
+	 HcgrUKQ16a0U99gnCnA27kn784nLscWD2FlHEOXatNDhe3D/QFOlBMGqBoz0Aw9uxS
+	 Y1uZDOaGbI13ONBzCrcBvz9YcvQYJHVJuvvEIR84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 19/92] NFSD: callback request does not use correct credential for AUTH_SYS
-Date: Tue, 18 Apr 2023 14:20:54 +0200
-Message-Id: <20230418120305.473729344@linuxfoundation.org>
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 5.4 02/92] x86/PCI: Add quirk for AMD XHCI controller that loses MSI-X state in D3hot
+Date: Tue, 18 Apr 2023 14:20:37 +0200
+Message-Id: <20230418120304.777195991@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -36,43 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 7de82c2f36fb26aa78440bbf0efcf360b691d98b ]
+commit f195fc1e9715ba826c3b62d58038f760f66a4fe9 upstream.
 
-Currently callback request does not use the credential specified in
-CREATE_SESSION if the security flavor for the back channel is AUTH_SYS.
+The AMD [1022:15b8] USB controller loses some internal functional MSI-X
+context when transitioning from D0 to D3hot. BIOS normally traps D0->D3hot
+and D3hot->D0 transitions so it can save and restore that internal context,
+but some firmware in the field can't do this because it fails to clear the
+AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit.
 
-Problem was discovered by pynfs 4.1 DELEG5 and DELEG7 test with error:
-DELEG5   st_delegation.testCBSecParms     : FAILURE
-           expected callback with uid, gid == 17, 19, got 0, 0
+Clear AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit before USB controller
+initialization during boot.
 
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 8276c902bbe9 ("SUNRPC: remove uid and gid from struct auth_cred")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/linux-usb/Y%2Fz9GdHjPyF2rNG3@glanzmann.de/T/#u
+Link: https://lore.kernel.org/r/20230329172859.699743-1-Basavaraj.Natikar@amd.com
+Reported-by: Thomas Glanzmann <thomas@glanzmann.de>
+Tested-by: Thomas Glanzmann <thomas@glanzmann.de>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4callback.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/pci/fixup.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
-index ffc2b838b123c..771733396eab2 100644
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -840,8 +840,8 @@ static const struct cred *get_backchannel_cred(struct nfs4_client *clp, struct r
- 		if (!kcred)
- 			return NULL;
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -7,6 +7,7 @@
+ #include <linux/dmi.h>
+ #include <linux/pci.h>
+ #include <linux/vgaarb.h>
++#include <asm/amd_nb.h>
+ #include <asm/hpet.h>
+ #include <asm/pci_x86.h>
  
--		kcred->uid = ses->se_cb_sec.uid;
--		kcred->gid = ses->se_cb_sec.gid;
-+		kcred->fsuid = ses->se_cb_sec.uid;
-+		kcred->fsgid = ses->se_cb_sec.gid;
- 		return kcred;
- 	}
- }
--- 
-2.39.2
-
+@@ -824,3 +825,23 @@ static void rs690_fix_64bit_dma(struct p
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7910, rs690_fix_64bit_dma);
+ 
+ #endif
++
++#ifdef CONFIG_AMD_NB
++
++#define AMD_15B8_RCC_DEV2_EPF0_STRAP2                                  0x10136008
++#define AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK       0x00000080L
++
++static void quirk_clear_strap_no_soft_reset_dev2_f0(struct pci_dev *dev)
++{
++	u32 data;
++
++	if (!amd_smn_read(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, &data)) {
++		data &= ~AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK;
++		if (amd_smn_write(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, data))
++			pci_err(dev, "Failed to write data 0x%x\n", data);
++	} else {
++		pci_err(dev, "Failed to read data\n");
++	}
++}
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
++#endif
 
 
