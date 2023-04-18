@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D282566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:29:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A815C433EF;
-	Tue, 18 Apr 2023 12:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D007B2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:29:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242A5C433EF;
+	Tue, 18 Apr 2023 12:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820953;
-	bh=s5/biCfFXquLVPcaqrhw01kfeVd7SnWNXrUzIWjpJjA=;
+	s=korg; t=1681820956;
+	bh=QYFFB3k7rz2OOvpSoTXzRsOAYuZUEaWg4sFFMo2KC+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NKo2j6Z5+2XpMkrQRxDthLbo/7QW2qUJzsfrHMW+s+0ZU9rldcWsbwiG8GZPQCIcA
-	 jv30INLM7Rwjq3WF7u93kWXM3/2Du5ttwwwwBc2za8F8TdOWxlLIPQNytro20wlVPe
-	 gJCR35au2Q2vqAp5ovd+uQw4OTmKDZL/tBPlLdfw=
+	b=X1zVaJFPKTij8cgTWiZ9DMEIPSBrobJCCh3GunebulZAxWvPW2Q4bn2u/giw+uNRj
+	 tmo2sZvIpSDW33Mh3MQpFPLDh7hBsLqYZ93VYgu1dLluud43iEkjM1RqoFo98gcb3d
+	 zpSLDWMlJba66kBUFAd6R1MSsEwBTPf/TGbItZNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Aurelien Aptel <aaptel@suse.com>,
-	Pratyush Yadav <ptyadav@amazon.de>
-Subject: [PATCH 5.4 06/92] smb3: fix problem with null cifs super block with previous patch
-Date: Tue, 18 Apr 2023 14:20:41 +0200
-Message-Id: <20230418120304.957869543@linuxfoundation.org>
+	Linus Walleij <linus.walleij@linaro.org>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Sandeep Singh <sandeep.singh@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 07/92] pinctrl: amd: Use irqchip template
+Date: Tue, 18 Apr 2023 14:20:42 +0200
+Message-Id: <20230418120305.008378987@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -36,43 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-commit 87f93d82e0952da18af4d978e7d887b4c5326c0b upstream.
+[ Upstream commit e81376ebbafc679a5cea65f25f5ab242172f52df ]
 
-Add check for null cifs_sb to create_options helper
+This makes the driver use the irqchip template to assign
+properties to the gpio_irq_chip instead of using the
+explicit call to gpiochip_irqchip_add().
 
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Aurelien Aptel <aaptel@suse.com>
-Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The irqchip is instead added while adding the gpiochip.
+
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Cc: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Cc: Sandeep Singh <sandeep.singh@amd.com>
+Link: https://lore.kernel.org/r/20200722101545.144373-1-linus.walleij@linaro.org
+Stable-dep-of: b26cd9325be4 ("pinctrl: amd: Disable and mask interrupts on resume")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsproto.h |    2 +-
- fs/cifs/smb2ops.c   |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
---- a/fs/cifs/cifsproto.h
-+++ b/fs/cifs/cifsproto.h
-@@ -602,7 +602,7 @@ static inline int get_dfs_path(const uns
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index ca3f18aa16acb..c4e1ebd6e4ea1 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -852,6 +852,7 @@ static int amd_gpio_probe(struct platform_device *pdev)
+ 	int irq_base;
+ 	struct resource *res;
+ 	struct amd_gpio *gpio_dev;
++	struct gpio_irq_chip *girq;
  
- static inline int cifs_create_options(struct cifs_sb_info *cifs_sb, int options)
- {
--	if (backup_cred(cifs_sb))
-+	if (cifs_sb && (backup_cred(cifs_sb)))
- 		return options | CREATE_OPEN_BACKUP_INTENT;
- 	else
- 		return options;
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -2343,7 +2343,7 @@ smb2_queryfs(const unsigned int xid, str
- 				      FS_FULL_SIZE_INFORMATION,
- 				      SMB2_O_INFO_FILESYSTEM,
- 				      sizeof(struct smb2_fs_full_size_info),
--				      &rsp_iov, &buftype, NULL);
-+				      &rsp_iov, &buftype, cifs_sb);
- 	if (rc)
- 		goto qfs_exit;
+ 	gpio_dev = devm_kzalloc(&pdev->dev,
+ 				sizeof(struct amd_gpio), GFP_KERNEL);
+@@ -913,6 +914,15 @@ static int amd_gpio_probe(struct platform_device *pdev)
+ 		return PTR_ERR(gpio_dev->pctrl);
+ 	}
  
++	girq = &gpio_dev->gc.irq;
++	girq->chip = &amd_gpio_irqchip;
++	/* This will let us handle the parent IRQ in the driver */
++	girq->parent_handler = NULL;
++	girq->num_parents = 0;
++	girq->parents = NULL;
++	girq->default_type = IRQ_TYPE_NONE;
++	girq->handler = handle_simple_irq;
++
+ 	ret = gpiochip_add_data(&gpio_dev->gc, gpio_dev);
+ 	if (ret)
+ 		return ret;
+@@ -924,17 +934,6 @@ static int amd_gpio_probe(struct platform_device *pdev)
+ 		goto out2;
+ 	}
+ 
+-	ret = gpiochip_irqchip_add(&gpio_dev->gc,
+-				&amd_gpio_irqchip,
+-				0,
+-				handle_simple_irq,
+-				IRQ_TYPE_NONE);
+-	if (ret) {
+-		dev_err(&pdev->dev, "could not add irqchip\n");
+-		ret = -ENODEV;
+-		goto out2;
+-	}
+-
+ 	ret = devm_request_irq(&pdev->dev, irq_base, amd_gpio_irq_handler,
+ 			       IRQF_SHARED, KBUILD_MODNAME, gpio_dev);
+ 	if (ret)
+-- 
+2.39.2
+
 
 
