@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9642572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F225C433EF;
-	Tue, 18 Apr 2023 12:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5812572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA32C433EF;
+	Tue, 18 Apr 2023 12:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822222;
-	bh=aQCxiU54ViB6yPe5ndGrw1c7D57TOdde4wWqORNaCpU=;
+	s=korg; t=1681822225;
+	bh=UfVJAro4hS0sb7wS/UaCLZeYCdQCigB984hcleKeoXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0LHeIGJp+bpmmBgLkl7FuUOMqcJ5NNox/MNir0vbUQFJkZLBh5JgcZNUxy/05L+ob
-	 TvzhOnDQrk8vhbSAKp27gaVdXMGqTKVOeCVvHRDSsDDgsVymu2vmHMQQuLJyR6rzjI
-	 pk6lKT1n3Hva2I/ji1AYZZ4x6sELZlCFSJ4lvX98=
+	b=uhIeEyof+dXw/DmzJTiKovbkTeyMzSx3nHXUi7PDiCyyfFSPjHXwHQv/7gRfazZZB
+	 8azjK4pO6IhITxWc05gLInOQsivcsfGrrn2eo9pmY0Aqdjax6pCNLFCGR95VKwTeHH
+	 nspI1mV078Er7DoM1JtxpGxdeNMpeYfhrzj4X4+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 039/139] RDMA/erdma: Defer probing if netdevice can not be found
-Date: Tue, 18 Apr 2023 14:21:44 +0200
-Message-Id: <20230418120315.121174560@linuxfoundation.org>
+Subject: [PATCH 6.2 040/139] clk: rs9: Fix suspend/resume
+Date: Tue, 18 Apr 2023 14:21:45 +0200
+Message-Id: <20230418120315.160367179@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -35,35 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cheng Xu <chengyou@linux.alibaba.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 6bd1bca858f1734a75572a788213d1e1143f2f0a ]
+[ Upstream commit 632e04739c8f45c2d9ca4d4c5bd18d80c2ac9296 ]
 
-ERDMA device may be probed before its associated netdevice, returning
--EPROBE_DEFER allows OS try to probe erdma device later.
+Disabling the cache in commit 2ff4ba9e3702 ("clk: rs9: Fix I2C accessors")
+without removing cache synchronization in resume path results in a
+kernel panic as map->cache_ops is unset, due to REGCACHE_NONE.
+Enable flat cache again to support resume again. num_reg_defaults_raw
+is necessary to read the cache defaults from hardware. Some registers
+are strapped in hardware and cannot be provided in software.
 
-Fixes: d55e6fb4803c ("RDMA/erdma: Add the erdma module")
-Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230320084652.16807-5-chengyou@linux.alibaba.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2ff4ba9e3702 ("clk: rs9: Fix I2C accessors")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20230310074940.3475703-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-renesas-pcie.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_main.c b/drivers/infiniband/hw/erdma/erdma_main.c
-index 5dc31e5df5cba..4a29a53a6652e 100644
---- a/drivers/infiniband/hw/erdma/erdma_main.c
-+++ b/drivers/infiniband/hw/erdma/erdma_main.c
-@@ -56,7 +56,7 @@ static int erdma_netdev_event(struct notifier_block *nb, unsigned long event,
- static int erdma_enum_and_get_netdev(struct erdma_dev *dev)
- {
- 	struct net_device *netdev;
--	int ret = -ENODEV;
-+	int ret = -EPROBE_DEFER;
- 
- 	/* Already binded to a net_device, so we skip. */
- 	if (dev->netdev)
+diff --git a/drivers/clk/clk-renesas-pcie.c b/drivers/clk/clk-renesas-pcie.c
+index e6247141d0c05..3e98a16eba6bb 100644
+--- a/drivers/clk/clk-renesas-pcie.c
++++ b/drivers/clk/clk-renesas-pcie.c
+@@ -144,8 +144,9 @@ static int rs9_regmap_i2c_read(void *context,
+ static const struct regmap_config rs9_regmap_config = {
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
+-	.cache_type = REGCACHE_NONE,
++	.cache_type = REGCACHE_FLAT,
+ 	.max_register = RS9_REG_BCP,
++	.num_reg_defaults_raw = 0x8,
+ 	.rd_table = &rs9_readable_table,
+ 	.wr_table = &rs9_writeable_table,
+ 	.reg_write = rs9_regmap_i2c_write,
 -- 
 2.39.2
 
