@@ -1,42 +1,42 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F132510E6
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 04:41:44 +0000 (UTC)
-Received: by mail-yb1-f177.google.com with SMTP id m14so10658463ybk.4
-        for <patches@lists.linux.dev>; Mon, 17 Apr 2023 21:41:44 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA97315C7
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 05:30:02 +0000 (UTC)
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-54fe3cd445aso138334487b3.5
+        for <patches@lists.linux.dev>; Mon, 17 Apr 2023 22:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1681792904; x=1684384904;
+        d=google.com; s=20221208; t=1681795802; x=1684387802;
         h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MmNCqthD+HS7Zi170wxRoVdfC1QjJufvMpFTlluYfgk=;
-        b=5HIAuV2jRVPb0IzmRrjaTOEMld/LD1MF6ynGtV4zhwLZcRconkU/MaIg83VumtbJyk
-         3vqG1IjqeZVwIY0K0fYqOUdfgnohulgubhh+Vd/HhVJKuC048gWuKMC2TM6G7Mr8QU1p
-         y2AhDuMTlHUdw4tKtyhsDxLlaSSs2YUhbzu4kU8BqglUdL2wMIv5uqDgDW6zGokMf5XQ
-         yKOvJ2UtxcwtMBPmNvslcODjKwEUm88cmtOO5IyAX66LLF1IP3vRQ6ALitYGFOrovhgp
-         oUGPyt2zqjuAPLU2t1vmkJwXdpbJTBvuhxe0PnkdVTAqinwrOvkYMsux/hUVEcZBrNuC
-         092A==
+        bh=1+D5UP/13o4cYOkwXpINRdFlXLQ0G5MF9jQgRmeO+Kk=;
+        b=6DmLIFxk6N4hyG9u/W0g9Ak1/kgGeuLS8GfsWeDeqYxlHWm2I2Yt0JqhZ29Dbc8odt
+         Z3+7POIK2+3wBVMCHzPOrvLgyGviqLstRb3Ocp11fAC7oUFkHffvZ2NChRib5gXWd1xD
+         CVx4q0PA01/ZG1197T8E/u0p5a5+ocZXEwUcBO/qihB1RjtLCj+ss0X4cTifvOP+gFs3
+         vA073FrKzICaAw1Uun4CZhivamWpT/fG3kg/rQdFY3m0gHPD8XUNlVQ6xyjdfXWAbDY+
+         gOQf1QO8R/UKJzEbNn/nPrSyNrCOjaO2iIhKdN16RnNHgRqCDLhMEA+GSmHMV/h1JJ81
+         XpYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681792904; x=1684384904;
+        d=1e100.net; s=20221208; t=1681795802; x=1684387802;
         h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MmNCqthD+HS7Zi170wxRoVdfC1QjJufvMpFTlluYfgk=;
-        b=XndhzWQDK6p0aLXoi1s2RF6YRPuQ8Yjr50UmqAlWOOmUCofGp4I8u+hzvteejvTbHP
-         e5WY0dXrBqeMOYN63J/LHPkPo7zhtLPM2gEVBrg9Xnw+tEeI6NaCveMXZAxclXCfH5wb
-         +ZDhZDk6umJ1OiaFlP7l3V7zVH9np/xudab45CJVw5P7Wvn25nps7RV3E6jdd96Z+4Xl
-         dYB9q6LrZOF31G5UHF9dt2utj0MSIjPF2iIBmADkw1ceoVwxKXOI/yFqbC4szDedPVIt
-         SSYAj86GwXicarf4p9x2OuhSnoFY+j1oiSqJA6dhEOb/WesWK8uJhtKcVSNyd+eJBlNE
-         Unvg==
-X-Gm-Message-State: AAQBX9co9pu8o7WME2dOGVEXTVcVmmWSzNIja1C7KcOkDl6Hu+5Un+m9
-	+CO55VzcpJXvkXJbGchbP/kyoQ==
-X-Google-Smtp-Source: AKy350YSpBYh4FnbfdOkmTwnW4ECz0ExA/bjjnP+tRYaYmJoWhpFvQ8HJaqQh0Vrm08Y/2qCHvK31Q==
-X-Received: by 2002:a05:6902:114d:b0:b8f:384b:4f83 with SMTP id p13-20020a056902114d00b00b8f384b4f83mr19369905ybu.33.1681792903775;
-        Mon, 17 Apr 2023 21:41:43 -0700 (PDT)
+        bh=1+D5UP/13o4cYOkwXpINRdFlXLQ0G5MF9jQgRmeO+Kk=;
+        b=QuSDr6a9r6sLQ2BlKQsaq67SR6k32YoxXbuQhvsMMzxMFo/CRGt/QSHXUMD6BQtXw7
+         WQEBDhCTGo64RFUPJOev4cz5QrmmdHy+vo834uyIVWWtdPpB3hkfj3+8t0yMkybOTuq6
+         wWb7cw4CCKj3sZt1d8qAAvqD9MXPVus/yc63hsoT5VkpeyNZVLZA+HWkvu8vJL9HJMmh
+         P20A6iviI2g0mgT+MborkzTosjGC+SNNwaX7uvbj9+EvBgmEMNfKPCu/LQDMJ0myq1AM
+         z84Gy4GHQnmt4nvy919B/NeFqrU5ecEQ2q4PN9ldmDDhmZLJfLb/FYH3xDPVB3bhkxFm
+         R2VA==
+X-Gm-Message-State: AAQBX9erRrzw+jwvYKQX389jWYp/q9QIpetApsNSZHMpdmk6ufPcMo+M
+	kqTDTh/0qZWijcKDCupJ84CjFA==
+X-Google-Smtp-Source: AKy350azH/DscIsEsxNzaPwTyJ8Cxf7IWzTPkRANWFvihJI3Fq3OcrnvJZYiCP0nF5gRkYYr+Kt1Ww==
+X-Received: by 2002:a0d:d882:0:b0:552:1182:47dc with SMTP id a124-20020a0dd882000000b00552118247dcmr13161175ywe.6.1681795801636;
+        Mon, 17 Apr 2023 22:30:01 -0700 (PDT)
 Received: from ripple.attlocal.net (172-10-233-147.lightspeed.sntcca.sbcglobal.net. [172.10.233.147])
-        by smtp.gmail.com with ESMTPSA id w10-20020a05690204ea00b00b7767ca747csm3435131ybs.25.2023.04.17.21.41.42
+        by smtp.gmail.com with ESMTPSA id db15-20020a05690c0dcf00b00545a08184b8sm3587038ywb.72.2023.04.17.22.30.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 21:41:43 -0700 (PDT)
-Date: Mon, 17 Apr 2023 21:41:41 -0700 (PDT)
+        Mon, 17 Apr 2023 22:30:01 -0700 (PDT)
+Date: Mon, 17 Apr 2023 22:29:59 -0700 (PDT)
 From: Hugh Dickins <hughd@google.com>
 X-X-Sender: hugh@ripple.attlocal.net
 To: Luis Chamberlain <mcgrof@kernel.org>
@@ -45,10 +45,10 @@ cc: hughd@google.com, akpm@linux-foundation.org, willy@infradead.org,
     da.gomez@samsung.com, a.manzanares@samsung.com, dave@stgolabs.net, 
     yosryahmed@google.com, keescook@chromium.org, patches@lists.linux.dev, 
     linux-kernel@vger.kernel.org, David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH v2 4/6] shmem: skip page split if we're not reclaiming
-In-Reply-To: <20230309230545.2930737-5-mcgrof@kernel.org>
-Message-ID: <cfaac1a4-20c6-bdd6-ff68-981e9a8858e@google.com>
-References: <20230309230545.2930737-1-mcgrof@kernel.org> <20230309230545.2930737-5-mcgrof@kernel.org>
+Subject: Re: [PATCH v2 5/6] shmem: update documentation
+In-Reply-To: <20230309230545.2930737-6-mcgrof@kernel.org>
+Message-ID: <a4afef5c-27e4-5e67-9771-374132db61f8@google.com>
+References: <20230309230545.2930737-1-mcgrof@kernel.org> <20230309230545.2930737-6-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,57 +59,132 @@ Content-Type: text/plain; charset=US-ASCII
 
 On Thu, 9 Mar 2023, Luis Chamberlain wrote:
 
-> In theory when info->flags & VM_LOCKED we should not be getting
-> shem_writepage() called so we should be verifying this with a
-> WARN_ON_ONCE(). Since we should not be swapping then best to ensure
-> we also don't do the folio split earlier too. So just move the check
-> early to avoid folio splits in case its a dubious call.
+> Update the docs to reflect a bit better why some folks prefer tmpfs
+> over ramfs and clarify a bit more about the difference between brd
+> ramdisks.
 > 
-> We also have a similar early bail when !total_swap_pages so just move
-> that earlier to avoid the possible folio split in the same situation.
+> While at it, add THP docs for tmpfs, both the mount options and the
+> sysfs file.
+
+Okay: the original canonical reference for THP options on tmpfs has
+been Documentation/admin-guide/mm/transhuge.rst.  You're right that
+they would be helpful here too: IIRC (but I might well be confusing
+with our Google tree) we used to have them documented in both places,
+but grew tired of keeping the two in synch.  You're volunteering to
+do so! so please check now that they tell the same story.
+
+But nowadays, "man 5 tmpfs" is much more important (and that might
+give you a hint for what needs to be done after this series goes into
+6.4-rc - and I wonder if there are tmpfs manpage updates needed from
+Christian for idmapped too? or already taken care of?).
+
+There's a little detail we do need you to remove, indicated below.
+
 > 
-> Acked-by: David Hildenbrand <david@redhat.com>
 > Reviewed-by: Christian Brauner <brauner@kernel.org>
+> Reviewed-by: David Hildenbrand <david@redhat.com>
 > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 > ---
->  mm/shmem.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+>  Documentation/filesystems/tmpfs.rst | 57 +++++++++++++++++++++++++----
+>  1 file changed, 49 insertions(+), 8 deletions(-)
 > 
-> diff --git a/mm/shmem.c b/mm/shmem.c
-> index 68e9970baf1e..dfd995da77b4 100644
-> --- a/mm/shmem.c
-> +++ b/mm/shmem.c
-> @@ -1350,6 +1350,12 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
->  	if (WARN_ON_ONCE(!wbc->for_reclaim))
->  		goto redirty;
+> diff --git a/Documentation/filesystems/tmpfs.rst b/Documentation/filesystems/tmpfs.rst
+> index 0408c245785e..1ec9a9f8196b 100644
+> --- a/Documentation/filesystems/tmpfs.rst
+> +++ b/Documentation/filesystems/tmpfs.rst
+> @@ -13,14 +13,25 @@ everything stored therein is lost.
 >  
-> +	if (WARN_ON_ONCE(info->flags & VM_LOCKED))
-> +		goto redirty;
+>  tmpfs puts everything into the kernel internal caches and grows and
+>  shrinks to accommodate the files it contains and is able to swap
+> -unneeded pages out to swap space. It has maximum size limits which can
+> -be adjusted on the fly via 'mount -o remount ...'
+> -
+> -If you compare it to ramfs (which was the template to create tmpfs)
+> -you gain swapping and limit checking. Another similar thing is the RAM
+> -disk (/dev/ram*), which simulates a fixed size hard disk in physical
+> -RAM, where you have to create an ordinary filesystem on top. Ramdisks
+> -cannot swap and you do not have the possibility to resize them.
+> +unneeded pages out to swap space, and supports THP.
+> +
+> +tmpfs extends ramfs with a few userspace configurable options listed and
+> +explained further below, some of which can be reconfigured dynamically on the
+> +fly using a remount ('mount -o remount ...') of the filesystem. A tmpfs
+> +filesystem can be resized but it cannot be resized to a size below its current
+> +usage. tmpfs also supports POSIX ACLs, and extended attributes for the
+> +trusted.* and security.* namespaces. ramfs does not use swap and you cannot
+> +modify any parameter for a ramfs filesystem. The size limit of a ramfs
+> +filesystem is how much memory you have available, and so care must be taken if
+> +used so to not run out of memory.
+> +
+> +An alternative to tmpfs and ramfs is to use brd to create RAM disks
+> +(/dev/ram*), which allows you to simulate a block device disk in physical RAM.
+> +To write data you would just then need to create an regular filesystem on top
+> +this ramdisk. As with ramfs, brd ramdisks cannot swap. brd ramdisks are also
+> +configured in size at initialization and you cannot dynamically resize them.
+> +Contrary to brd ramdisks, tmpfs has its own filesystem, it does not rely on the
+> +block layer at all.
+>  
+>  Since tmpfs lives completely in the page cache and on swap, all tmpfs
+>  pages will be shown as "Shmem" in /proc/meminfo and "Shared" in
+> @@ -85,6 +96,36 @@ mount with such options, since it allows any user with write access to
+>  use up all the memory on the machine; but enhances the scalability of
+>  that instance in a system with many CPUs making intensive use of it.
+>  
+> +tmpfs also supports Transparent Huge Pages which requires a kernel
+> +configured with CONFIG_TRANSPARENT_HUGEPAGE and with huge supported for
+> +your system (has_transparent_hugepage(), which is architecture specific).
+> +The mount options for this are:
+> +
+> +======  ============================================================
+> +huge=0  never: disables huge pages for the mount
+> +huge=1  always: enables huge pages for the mount
+> +huge=2  within_size: only allocate huge pages if the page will be
+> +        fully within i_size, also respect fadvise()/madvise() hints.
+> +huge=3  advise: only allocate huge pages if requested with
+> +        fadvise()/madvise()
 
-Well, okay, I don't mind that.  But shall we take bets on how soon syzbot
-(hope it's not watching) will try flipping SHM_LOCK on while swapping out
-pages from a SHM segment, and hit that warning?  Perhaps I'm wrong, but I
-don't think any serialization prevents that.
+You're taking the source too literally there.  Minor point is that there
+is no fadvise() for this, to date anyway.  Major point is: have you tried
+mounting tmpfs with huge=0 etc?  I did propose "huge=0" and "huge=1" years
+ago, but those "never" went in, it's "always" been the named options.
+Please remove those misleading numbers, it's "huge=never" etc.
+
+(Old Google internal trees excepted: and trying to wean people off
+"huge=1" internally makes me a bit touchy when seeing those numbers above!)
+
+> +======  ============================================================
+> +
+> +There is a sysfs file which you can also use to control system wide THP
+> +configuration for all tmpfs mounts, the file is:
+> +
+> +/sys/kernel/mm/transparent_hugepage/shmem_enabled
+> +
+> +This sysfs file is placed on top of THP sysfs directory and so is registered
+> +by THP code. It is however only used to control all tmpfs mounts with one
+> +single knob. Since it controls all tmpfs mounts it should only be used either
+> +for emergency or testing purposes. The values you can set for shmem_enabled are:
+> +
+> +==  ============================================================
+> +-1  deny: disables huge on shm_mnt and all mounts, for
+> +    emergency use
+> +-2  force: enables huge on shm_mnt and all mounts, w/o needing
+> +    option, for testing
+
+Likewise here, please delete the invalid "-1" and "-2" notations,
+-1 and -2 are just #defines for use in the kernel source.
+
+And the description above is not quite accurate: it is very hard to
+describe shmem_enabled, partly because it combines two different things.
+It's partly the "huge=" mount option for any "internal mount", those
+things like SysV SHM and memfd and i915 and shared-anonymous: the shmem
+which has no user-visible mount to hold the option.  But also these
+"deny" and "force" overrides affecting *all* internal and visible mounts.
 
 Hugh
 
-> +
-> +	if (!total_swap_pages)
-> +		goto redirty;
-> +
->  	/*
->  	 * If /sys/kernel/mm/transparent_hugepage/shmem_enabled is "always" or
->  	 * "force", drivers/gpu/drm/i915/gem/i915_gem_shmem.c gets huge pages,
-> @@ -1365,10 +1371,6 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
->  	}
+> +==  ============================================================
 >  
->  	index = folio->index;
-> -	if (info->flags & VM_LOCKED)
-> -		goto redirty;
-> -	if (!total_swap_pages)
-> -		goto redirty;
->  
->  	/*
->  	 * This is somewhat ridiculous, but without plumbing a SWAP_MAP_FALLOC
+>  tmpfs has a mount option to set the NUMA memory allocation policy for
+>  all files in that instance (if CONFIG_NUMA is enabled) - which can be
 > -- 
 > 2.39.1
