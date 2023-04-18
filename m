@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6132566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0266EC433EF;
-	Tue, 18 Apr 2023 12:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212D72566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983FDC433EF;
+	Tue, 18 Apr 2023 12:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821251;
-	bh=hC//EILTmgsZv315SZZAnvyMSThWJwlXatm2mURPRPQ=;
+	s=korg; t=1681821254;
+	bh=MTUNfAsmHbMJAoAT99tu01VGbukSgZfK5ybTOvlMCYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lgF7wFSrk20cqhGlZ8a9DN70E5req+ejUsyy/U0fWKTfiIEak3PQJZFoWCi1ZbryU
-	 IzjI1zsjfDs6NLl6/1krFPEIXT6GpKdcAkXqzDVTMo3WJLZ/5hCtQ0bvXUCVBchcMX
-	 CHG2+R/EpY1RMKIPihQe7qmOOXzT162xKgQvF7Nc=
+	b=SvhFvfnqMZ36KIRTgqXt+Q7DC6WV2lm/9xg1CPqV0CfXbl3D5/OvQCZjmKjWuo6qm
+	 PU8FDHPRfQ+9WF/nkIJnwwk3hjp0Cw3MVkTc3Dqjj6NL6R/aYXgzk4VBqs+JJGDf60
+	 gIFifYRT75KTJoirP7A88s2vAom26Or/r9YHb6bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 054/124] ALSA: emu10k1: fix capture interrupt handler unlinking
-Date: Tue, 18 Apr 2023 14:21:13 +0200
-Message-Id: <20230418120311.799516882@linuxfoundation.org>
+Subject: [PATCH 5.10 055/124] ALSA: hda/sigmatel: add pin overrides for Intel DP45SG motherboard
+Date: Tue, 18 Apr 2023 14:21:14 +0200
+Message-Id: <20230418120311.838167765@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -36,47 +36,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-commit b09c551c77c7e01dc6e4f3c8bf06b5ffa7b06db5 upstream.
+commit c17f8fd31700392b1bb9e7b66924333568cb3700 upstream.
 
-Due to two copy/pastos, closing the MIC or EFX capture device would
-make a running ADC capture hang due to unsetting its interrupt handler.
-In principle, this would have also allowed dereferencing dangling
-pointers, but we're actually rather thorough at disabling and flushing
-the ints.
-
-While it may sound like one, this actually wasn't a hypothetical bug:
-PortAudio will open a capture stream at startup (and close it right
-away) even if not asked to. If the first device is busy, it will just
-proceed with the next one ... thus killing a concurrent capture.
+Like the other boards from the D*45* series, this one sets up the
+outputs not quite correctly.
 
 Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230405201220.2197923-1-oswald.buddenhagen@gmx.de
+Link: https://lore.kernel.org/r/20230405201220.2197826-1-oswald.buddenhagen@gmx.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/emu10k1/emupcm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/sound/hd-audio/models.rst |    2 +-
+ sound/pci/hda/patch_sigmatel.c          |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/pci/emu10k1/emupcm.c
-+++ b/sound/pci/emu10k1/emupcm.c
-@@ -1232,7 +1232,7 @@ static int snd_emu10k1_capture_mic_close
- {
- 	struct snd_emu10k1 *emu = snd_pcm_substream_chip(substream);
- 
--	emu->capture_interrupt = NULL;
-+	emu->capture_mic_interrupt = NULL;
- 	emu->pcm_capture_mic_substream = NULL;
- 	return 0;
- }
-@@ -1340,7 +1340,7 @@ static int snd_emu10k1_capture_efx_close
- {
- 	struct snd_emu10k1 *emu = snd_pcm_substream_chip(substream);
- 
--	emu->capture_interrupt = NULL;
-+	emu->capture_efx_interrupt = NULL;
- 	emu->pcm_capture_efx_substream = NULL;
- 	return 0;
- }
+--- a/Documentation/sound/hd-audio/models.rst
++++ b/Documentation/sound/hd-audio/models.rst
+@@ -704,7 +704,7 @@ ref
+ no-jd
+     BIOS setup but without jack-detection
+ intel
+-    Intel DG45* mobos
++    Intel D*45* mobos
+ dell-m6-amic
+     Dell desktops/laptops with analog mics
+ dell-m6-dmic
+--- a/sound/pci/hda/patch_sigmatel.c
++++ b/sound/pci/hda/patch_sigmatel.c
+@@ -1955,6 +1955,8 @@ static const struct snd_pci_quirk stac92
+ 				"DFI LanParty", STAC_92HD73XX_REF),
+ 	SND_PCI_QUIRK(PCI_VENDOR_ID_DFI, 0x3101,
+ 				"DFI LanParty", STAC_92HD73XX_REF),
++	SND_PCI_QUIRK(PCI_VENDOR_ID_INTEL, 0x5001,
++				"Intel DP45SG", STAC_92HD73XX_INTEL),
+ 	SND_PCI_QUIRK(PCI_VENDOR_ID_INTEL, 0x5002,
+ 				"Intel DG45ID", STAC_92HD73XX_INTEL),
+ 	SND_PCI_QUIRK(PCI_VENDOR_ID_INTEL, 0x5003,
 
 
