@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E24B2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:48:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FC3C433D2;
-	Tue, 18 Apr 2023 12:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053282572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:48:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81596C433EF;
+	Tue, 18 Apr 2023 12:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822127;
-	bh=Wv4e16uRRrKhpTeME6jbvXsBSDPmDTT148k+e8OyN9A=;
+	s=korg; t=1681822129;
+	bh=CgPIBuvQobeCEXJ85ow/D53Br8R3NtX34PVqfwAAaz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iPc+YJbPMHhVJbVa++B+wnj2G7FFX59jkWSoM2tmO1qhi4kLtbOfvhItix0C9HmRw
-	 nTSn3aQBWFb/SO1WThPmmXRIC02FTeD7T75qFKGDGy4u4Z4AVkUXJN/KowLuovmA56
-	 fDL82B/Px3ZqQWGQ0bE+kx6Y2VFRlIpLdBX6fgwg=
+	b=f6dCncl3nXUT9bi1isMeqdiuw/AH5lDUDquPuORZZIGCEVVkUt6VD1/00dsKvNbUn
+	 cAWzz3CteHGjq6OXkelF7fgGnIzVeBVWPji/+QN4mJoiDpUThihQUpdPSjsAQ6vkBf
+	 n3jrqliOUYegoPDabiFS67UQZl783jxqJ5o1PQ18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mustafa Ismail <mustafa.ismail@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 032/139] RDMA/irdma: Fix memory leak of PBLE objects
-Date: Tue, 18 Apr 2023 14:21:37 +0200
-Message-Id: <20230418120314.850859430@linuxfoundation.org>
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.2 006/139] ALSA: i2c/cs8427: fix iec958 mixer control deactivation
+Date: Tue, 18 Apr 2023 14:21:11 +0200
+Message-Id: <20230418120313.957642991@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,52 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mustafa Ismail <mustafa.ismail@intel.com>
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-[ Upstream commit b69a6979dbaa2453675fe9c71bdc2497fedb11f9 ]
+commit e98e7a82bca2b6dce3e03719cff800ec913f9af7 upstream.
 
-On rmmod of irdma, the PBLE object memory is not being freed. PBLE object
-memory are not statically pre-allocated at function initialization time
-unlike other HMC objects. PBLEs objects and the Segment Descriptors (SD)
-for it can be dynamically allocated during scale up and SD's remain
-allocated till function deinitialization.
+snd_cs8427_iec958_active() would always delete
+SNDRV_CTL_ELEM_ACCESS_INACTIVE, even though the function has an
+argument `active`.
 
-Fix this leak by adding IRDMA_HMC_IW_PBLE to the iw_hmc_obj_types[] table
-and skip pbles in irdma_create_hmc_obj but not in irdma_del_hmc_objects().
-
-Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
-Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20230315145231.931-3-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230405201219.2197811-1-oswald.buddenhagen@gmx.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/irdma/hw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/i2c/cs8427.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index 2e1e2bad04011..43dfa4761f069 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -41,6 +41,7 @@ static enum irdma_hmc_rsrc_type iw_hmc_obj_types[] = {
- 	IRDMA_HMC_IW_XFFL,
- 	IRDMA_HMC_IW_Q1,
- 	IRDMA_HMC_IW_Q1FL,
-+	IRDMA_HMC_IW_PBLE,
- 	IRDMA_HMC_IW_TIMER,
- 	IRDMA_HMC_IW_FSIMC,
- 	IRDMA_HMC_IW_FSIAV,
-@@ -827,6 +828,8 @@ static int irdma_create_hmc_objs(struct irdma_pci_f *rf, bool privileged,
- 	info.entry_type = rf->sd_type;
- 
- 	for (i = 0; i < IW_HMC_OBJ_TYPE_NUM; i++) {
-+		if (iw_hmc_obj_types[i] == IRDMA_HMC_IW_PBLE)
-+			continue;
- 		if (dev->hmc_info->hmc_obj[iw_hmc_obj_types[i]].cnt) {
- 			info.rsrc_type = iw_hmc_obj_types[i];
- 			info.count = dev->hmc_info->hmc_obj[info.rsrc_type].cnt;
--- 
-2.39.2
-
+--- a/sound/i2c/cs8427.c
++++ b/sound/i2c/cs8427.c
+@@ -561,10 +561,13 @@ int snd_cs8427_iec958_active(struct snd_
+ 	if (snd_BUG_ON(!cs8427))
+ 		return -ENXIO;
+ 	chip = cs8427->private_data;
+-	if (active)
++	if (active) {
+ 		memcpy(chip->playback.pcm_status,
+ 		       chip->playback.def_status, 24);
+-	chip->playback.pcm_ctl->vd[0].access &= ~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
++		chip->playback.pcm_ctl->vd[0].access &= ~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
++	} else {
++		chip->playback.pcm_ctl->vd[0].access |= SNDRV_CTL_ELEM_ACCESS_INACTIVE;
++	}
+ 	snd_ctl_notify(cs8427->bus->card,
+ 		       SNDRV_CTL_EVENT_MASK_VALUE | SNDRV_CTL_EVENT_MASK_INFO,
+ 		       &chip->playback.pcm_ctl->id);
 
 
