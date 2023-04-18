@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B320C2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382E4C433EF;
-	Tue, 18 Apr 2023 12:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8772572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DE0C433EF;
+	Tue, 18 Apr 2023 12:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821929;
-	bh=DNHA9w31gGi6slqGhnDugKrUxRmBTEkUVrJjeSv3J8w=;
+	s=korg; t=1681821932;
+	bh=mTw7pS+E56UDl04SnmlegHvLQWsAqfxXNPj99ME7320=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5OVaKyD6fGckW4kKwLlO2J82FaJuQvyW1SaTzv9P5+gueh3smohXE7rZiGgZMJtI
-	 rJA8t/Hi2JkOGcuQ01wDeOb25IEixnrgtkwqFjBTu+2dSW7/SF+0gMhW+ELkzGKRfm
-	 sMSg+DWDEuDU4RweWW8lXHniT/z4SF+CjeBVIws4=
+	b=ApXYiqZv4zmpRLlkpd/NmtXt4A5GfI3MwlHdduC3XQu/LK8qlHGuAgk1xhteX4MWs
+	 Tep/lkEP2AfSewR5VwcBEq+4DrWeR/miO/FsN+ffKbCXMhRpu/D1PUX3P6n4bRj2eV
+	 I1MC4lOLpPeAn+kb70aL5lnED1iRaDqelUDISrTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/134] wifi: mwifiex: mark OF related data as maybe unused
-Date: Tue, 18 Apr 2023 14:22:12 +0200
-Message-Id: <20230418120315.698617628@linuxfoundation.org>
+Subject: [PATCH 6.1 094/134] x86/hyperv: Move VMCB enlightenment definitions to hyperv-tlfs.h
+Date: Tue, 18 Apr 2023 14:22:30 +0200
+Message-Id: <20230418120316.456770863@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,52 +36,178 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 139f6973bf140c65d4d1d4bde5485badb4454d7a ]
+[ Upstream commit 089fe572a2e0a89e36a455d299d801770293d08f ]
 
-The driver can be compile tested with !CONFIG_OF making certain data
-unused:
+Move Hyper-V's VMCB enlightenment definitions to the TLFS header; the
+definitions come directly from the TLFS[*], not from KVM.
 
-  drivers/net/wireless/marvell/mwifiex/sdio.c:498:34: error: ‘mwifiex_sdio_of_match_table’ defined but not used [-Werror=unused-const-variable=]
-  drivers/net/wireless/marvell/mwifiex/pcie.c:175:34: error: ‘mwifiex_pcie_of_match_table’ defined but not used [-Werror=unused-const-variable=]
+No functional change intended.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230312132523.352182-1-krzysztof.kozlowski@linaro.org
+[*] https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/tlfs/datatypes/hv_svm_enlightened_vmcb_fields
+
+[vitaly: rename VMCB_HV_ -> HV_VMCB_ to match the rest of
+hyperv-tlfs.h, keep svm/hyperv.h]
+
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-Id: <20221101145426.251680-2-vkuznets@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: e5c972c1fada ("KVM: SVM: Flush Hyper-V TLB when required")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/pcie.c | 2 +-
- drivers/net/wireless/marvell/mwifiex/sdio.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/hyperv-tlfs.h            | 22 +++++++++++++++++++
+ arch/x86/kvm/svm/hyperv.h                     | 22 -------------------
+ arch/x86/kvm/svm/nested.c                     |  2 +-
+ arch/x86/kvm/svm/svm_onhyperv.c               |  2 +-
+ arch/x86/kvm/svm/svm_onhyperv.h               |  4 ++--
+ .../selftests/kvm/x86_64/hyperv_svm_test.c    |  6 ++---
+ 6 files changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
-index 5dcf61761a165..9a698a16a8f38 100644
---- a/drivers/net/wireless/marvell/mwifiex/pcie.c
-+++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
-@@ -172,7 +172,7 @@ static const struct mwifiex_pcie_device mwifiex_pcie8997 = {
- 	.can_ext_scan = true,
- };
+diff --git a/arch/x86/include/asm/hyperv-tlfs.h b/arch/x86/include/asm/hyperv-tlfs.h
+index 3089ec352743b..245a806a97170 100644
+--- a/arch/x86/include/asm/hyperv-tlfs.h
++++ b/arch/x86/include/asm/hyperv-tlfs.h
+@@ -598,6 +598,28 @@ struct hv_enlightened_vmcs {
  
--static const struct of_device_id mwifiex_pcie_of_match_table[] = {
-+static const struct of_device_id mwifiex_pcie_of_match_table[] __maybe_unused = {
- 	{ .compatible = "pci11ab,2b42" },
- 	{ .compatible = "pci1b4b,2b42" },
- 	{ }
-diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.c b/drivers/net/wireless/marvell/mwifiex/sdio.c
-index 9f506efa53705..ea1c1c2412e72 100644
---- a/drivers/net/wireless/marvell/mwifiex/sdio.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
-@@ -479,7 +479,7 @@ static struct memory_type_mapping mem_type_mapping_tbl[] = {
- 	{"EXTLAST", NULL, 0, 0xFE},
- };
+ #define HV_VMX_ENLIGHTENED_CLEAN_FIELD_ALL			0xFFFF
  
--static const struct of_device_id mwifiex_sdio_of_match_table[] = {
-+static const struct of_device_id mwifiex_sdio_of_match_table[] __maybe_unused = {
- 	{ .compatible = "marvell,sd8787" },
- 	{ .compatible = "marvell,sd8897" },
- 	{ .compatible = "marvell,sd8997" },
++/*
++ * Hyper-V uses the software reserved 32 bytes in VMCB control area to expose
++ * SVM enlightenments to guests.
++ */
++struct hv_enlightenments {
++	struct __packed hv_enlightenments_control {
++		u32 nested_flush_hypercall:1;
++		u32 msr_bitmap:1;
++		u32 enlightened_npt_tlb: 1;
++		u32 reserved:29;
++	} __packed hv_enlightenments_control;
++	u32 hv_vp_id;
++	u64 hv_vm_id;
++	u64 partition_assist_page;
++	u64 reserved;
++} __packed;
++
++/*
++ * Hyper-V uses the software reserved clean bit in VMCB.
++ */
++#define HV_VMCB_NESTED_ENLIGHTENMENTS		31
++
+ struct hv_partition_assist_pg {
+ 	u32 tlb_lock_count;
+ };
+diff --git a/arch/x86/kvm/svm/hyperv.h b/arch/x86/kvm/svm/hyperv.h
+index 7d6d97968fb98..c59544cdf03b7 100644
+--- a/arch/x86/kvm/svm/hyperv.h
++++ b/arch/x86/kvm/svm/hyperv.h
+@@ -10,26 +10,4 @@
+ 
+ #include "../hyperv.h"
+ 
+-/*
+- * Hyper-V uses the software reserved 32 bytes in VMCB
+- * control area to expose SVM enlightenments to guests.
+- */
+-struct hv_enlightenments {
+-	struct __packed hv_enlightenments_control {
+-		u32 nested_flush_hypercall:1;
+-		u32 msr_bitmap:1;
+-		u32 enlightened_npt_tlb: 1;
+-		u32 reserved:29;
+-	} __packed hv_enlightenments_control;
+-	u32 hv_vp_id;
+-	u64 hv_vm_id;
+-	u64 partition_assist_page;
+-	u64 reserved;
+-} __packed;
+-
+-/*
+- * Hyper-V uses the software reserved clean bit in VMCB
+- */
+-#define VMCB_HV_NESTED_ENLIGHTENMENTS VMCB_SW
+-
+ #endif /* __ARCH_X86_KVM_SVM_HYPERV_H__ */
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index 995bc0f907591..0be104ec79d96 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -194,7 +194,7 @@ static bool nested_svm_vmrun_msrpm(struct vcpu_svm *svm)
+ 	if (!svm->nested.force_msr_bitmap_recalc &&
+ 	    kvm_hv_hypercall_enabled(&svm->vcpu) &&
+ 	    hve->hv_enlightenments_control.msr_bitmap &&
+-	    (svm->nested.ctl.clean & BIT(VMCB_HV_NESTED_ENLIGHTENMENTS)))
++	    (svm->nested.ctl.clean & BIT(HV_VMCB_NESTED_ENLIGHTENMENTS)))
+ 		goto set_msrpm_base_pa;
+ 
+ 	if (!(vmcb12_is_intercept(&svm->nested.ctl, INTERCEPT_MSR_PROT)))
+diff --git a/arch/x86/kvm/svm/svm_onhyperv.c b/arch/x86/kvm/svm/svm_onhyperv.c
+index 8cdc62c74a964..ed5e793925441 100644
+--- a/arch/x86/kvm/svm/svm_onhyperv.c
++++ b/arch/x86/kvm/svm/svm_onhyperv.c
+@@ -32,7 +32,7 @@ int svm_hv_enable_direct_tlbflush(struct kvm_vcpu *vcpu)
+ 	hve->hv_vm_id = (unsigned long)vcpu->kvm;
+ 	if (!hve->hv_enlightenments_control.nested_flush_hypercall) {
+ 		hve->hv_enlightenments_control.nested_flush_hypercall = 1;
+-		vmcb_mark_dirty(to_svm(vcpu)->vmcb, VMCB_HV_NESTED_ENLIGHTENMENTS);
++		vmcb_mark_dirty(to_svm(vcpu)->vmcb, HV_VMCB_NESTED_ENLIGHTENMENTS);
+ 	}
+ 
+ 	return 0;
+diff --git a/arch/x86/kvm/svm/svm_onhyperv.h b/arch/x86/kvm/svm/svm_onhyperv.h
+index 4387173576d5e..35d69815d2f3a 100644
+--- a/arch/x86/kvm/svm/svm_onhyperv.h
++++ b/arch/x86/kvm/svm/svm_onhyperv.h
+@@ -64,7 +64,7 @@ static inline void svm_hv_vmcb_dirty_nested_enlightenments(
+ 		(struct hv_enlightenments *)vmcb->control.reserved_sw;
+ 
+ 	if (hve->hv_enlightenments_control.msr_bitmap)
+-		vmcb_mark_dirty(vmcb, VMCB_HV_NESTED_ENLIGHTENMENTS);
++		vmcb_mark_dirty(vmcb, HV_VMCB_NESTED_ENLIGHTENMENTS);
+ }
+ 
+ static inline void svm_hv_update_vp_id(struct vmcb *vmcb,
+@@ -76,7 +76,7 @@ static inline void svm_hv_update_vp_id(struct vmcb *vmcb,
+ 
+ 	if (hve->hv_vp_id != vp_index) {
+ 		hve->hv_vp_id = vp_index;
+-		vmcb_mark_dirty(vmcb, VMCB_HV_NESTED_ENLIGHTENMENTS);
++		vmcb_mark_dirty(vmcb, HV_VMCB_NESTED_ENLIGHTENMENTS);
+ 	}
+ }
+ #else
+diff --git a/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c b/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c
+index a380ad7bb9b34..5060fcfe17601 100644
+--- a/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c
++++ b/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c
+@@ -39,7 +39,7 @@ struct hv_enlightenments {
+ /*
+  * Hyper-V uses the software reserved clean bit in VMCB
+  */
+-#define VMCB_HV_NESTED_ENLIGHTENMENTS (1U << 31)
++#define HV_VMCB_NESTED_ENLIGHTENMENTS (1U << 31)
+ 
+ void l2_guest_code(void)
+ {
+@@ -98,14 +98,14 @@ static void __attribute__((__flatten__)) guest_code(struct svm_test_data *svm)
+ 	/* Intercept RDMSR 0xc0000101 without telling KVM about it */
+ 	set_bit(2 * (MSR_GS_BASE & 0x1fff), svm->msr + 0x800);
+ 	/* Make sure HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP is set */
+-	vmcb->control.clean |= VMCB_HV_NESTED_ENLIGHTENMENTS;
++	vmcb->control.clean |= HV_VMCB_NESTED_ENLIGHTENMENTS;
+ 	run_guest(vmcb, svm->vmcb_gpa);
+ 	/* Make sure we don't see SVM_EXIT_MSR here so eMSR bitmap works */
+ 	GUEST_ASSERT(vmcb->control.exit_code == SVM_EXIT_VMMCALL);
+ 	vmcb->save.rip += 3; /* vmcall */
+ 
+ 	/* Now tell KVM we've changed MSR-Bitmap */
+-	vmcb->control.clean &= ~VMCB_HV_NESTED_ENLIGHTENMENTS;
++	vmcb->control.clean &= ~HV_VMCB_NESTED_ENLIGHTENMENTS;
+ 	run_guest(vmcb, svm->vmcb_gpa);
+ 	GUEST_ASSERT(vmcb->control.exit_code == SVM_EXIT_MSR);
+ 	vmcb->save.rip += 2; /* rdmsr */
 -- 
 2.39.2
 
