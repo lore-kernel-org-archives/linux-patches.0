@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DD32566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2459C4339B;
-	Tue, 18 Apr 2023 12:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076E42566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83393C433EF;
+	Tue, 18 Apr 2023 12:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821209;
-	bh=4lD04OAjI3ZG8K6M4vFAQ14rVCyn7UTx7mUU/WP1TE0=;
+	s=korg; t=1681821211;
+	bh=il9EZBMpSktWRx/YbZv5P14enCH5plIWGFDp/lepElk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPLgtDzTP9BUMBXoJRieAemOj9HTpp0ZjYgCXPwdaU2SZd1WYL//WgMBCB3vfcMw6
-	 P1DK3TGGi9DRLZoEiN2YWdNK6vLfJgY8HjUsuEN6AT9bWFc+HG5PdGsArpSVEBVm78
-	 vPuGu3ClWmmjEYqcBauQChbuQMpaCD5JRT/kYDEE=
+	b=XVGRe+hv+C3nEanL2o+86O1i9vV5i5xeqtgASX5SQTcmdMN+Fpt9IGeXiRtZAB5LT
+	 bpAs0fRZwUqqAaon0Jc5qYmk1QuHKPAs3+DodgQkncGah2kgYgfmwUVbNid3rosXlY
+	 8Xx7A87AxF3kkKOrGh3A3ZeSIapl0e7lceJs+Hy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <sjb7183@psu.edu>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Michal Sojka <michal.sojka@cvut.cz>,
+	Jakub Jira <jirajak2@fel.cvut.cz>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 040/124] can: j1939: j1939_tp_tx_dat_new(): fix out-of-bounds memory access
-Date: Tue, 18 Apr 2023 14:20:59 +0200
-Message-Id: <20230418120311.288989764@linuxfoundation.org>
+Subject: [PATCH 5.10 041/124] can: isotp: isotp_ops: fix poll() to not report false EPOLLOUT events
+Date: Tue, 18 Apr 2023 14:21:00 +0200
+Message-Id: <20230418120311.321342969@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,53 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Michal Sojka <michal.sojka@cvut.cz>
 
-commit b45193cb4df556fe6251b285a5ce44046dd36b4a upstream.
+commit 79e19fa79cb5d5f1b3bf3e3ae24989ccb93c7b7b upstream.
 
-In the j1939_tp_tx_dat_new() function, an out-of-bounds memory access
-could occur during the memcpy() operation if the size of skb->cb is
-larger than the size of struct j1939_sk_buff_cb. This is because the
-memcpy() operation uses the size of skb->cb, leading to a read beyond
-the struct j1939_sk_buff_cb.
+When using select()/poll()/epoll() with a non-blocking ISOTP socket to
+wait for when non-blocking write is possible, a false EPOLLOUT event
+is sometimes returned. This can happen at least after sending a
+message which must be split to multiple CAN frames.
 
-Updated the memcpy() operation to use the size of struct
-j1939_sk_buff_cb instead of the size of skb->cb. This ensures that the
-memcpy() operation only reads the memory within the bounds of struct
-j1939_sk_buff_cb, preventing out-of-bounds memory access.
+The reason is that isotp_sendmsg() returns -EAGAIN when tx.state is
+not equal to ISOTP_IDLE and this behavior is not reflected in
+datagram_poll(), which is used in isotp_ops.
 
-Additionally, add a BUILD_BUG_ON() to check that the size of skb->cb
-is greater than or equal to the size of struct j1939_sk_buff_cb. This
-ensures that the skb->cb buffer is large enough to hold the
-j1939_sk_buff_cb structure.
+This is fixed by introducing ISOTP-specific poll function, which
+suppresses the EPOLLOUT events in that case.
 
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Reported-by: Shuangpeng Bai <sjb7183@psu.edu>
-Tested-by: Shuangpeng Bai <sjb7183@psu.edu>
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://groups.google.com/g/syzkaller/c/G_LL-C3plRs/m/-8xCi6dCAgAJ
-Link: https://lore.kernel.org/all/20230404073128.3173900-1-o.rempel@pengutronix.de
+v2: https://lore.kernel.org/all/20230302092812.320643-1-michal.sojka@cvut.cz
+v1: https://lore.kernel.org/all/20230224010659.48420-1-michal.sojka@cvut.cz
+    https://lore.kernel.org/all/b53a04a2-ba1f-3858-84c1-d3eb3301ae15@hartkopp.net
+
+Signed-off-by: Michal Sojka <michal.sojka@cvut.cz>
+Reported-by: Jakub Jira <jirajak2@fel.cvut.cz>
+Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Fixes: e057dd3fc20f ("can: add ISO 15765-2:2016 transport protocol")
+Link: https://lore.kernel.org/all/20230331125511.372783-1-michal.sojka@cvut.cz
 Cc: stable@vger.kernel.org
-[mkl: rephrase commit message]
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/transport.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/can/isotp.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -600,7 +600,10 @@ sk_buff *j1939_tp_tx_dat_new(struct j193
- 	/* reserve CAN header */
- 	skb_reserve(skb, offsetof(struct can_frame, data));
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1480,6 +1480,21 @@ static int isotp_init(struct sock *sk)
+ 	return 0;
+ }
  
--	memcpy(skb->cb, re_skcb, sizeof(skb->cb));
-+	/* skb->cb must be large enough to hold a j1939_sk_buff_cb structure */
-+	BUILD_BUG_ON(sizeof(skb->cb) < sizeof(*re_skcb));
++static __poll_t isotp_poll(struct file *file, struct socket *sock, poll_table *wait)
++{
++	struct sock *sk = sock->sk;
++	struct isotp_sock *so = isotp_sk(sk);
 +
-+	memcpy(skb->cb, re_skcb, sizeof(*re_skcb));
- 	skcb = j1939_skb_to_cb(skb);
- 	if (swap_src_dst)
- 		j1939_skbcb_swap(skcb);
++	__poll_t mask = datagram_poll(file, sock, wait);
++	poll_wait(file, &so->wait, wait);
++
++	/* Check for false positives due to TX state */
++	if ((mask & EPOLLWRNORM) && (so->tx.state != ISOTP_IDLE))
++		mask &= ~(EPOLLOUT | EPOLLWRNORM);
++
++	return mask;
++}
++
+ static int isotp_sock_no_ioctlcmd(struct socket *sock, unsigned int cmd,
+ 				  unsigned long arg)
+ {
+@@ -1495,7 +1510,7 @@ static const struct proto_ops isotp_ops
+ 	.socketpair = sock_no_socketpair,
+ 	.accept = sock_no_accept,
+ 	.getname = isotp_getname,
+-	.poll = datagram_poll,
++	.poll = isotp_poll,
+ 	.ioctl = isotp_sock_no_ioctlcmd,
+ 	.gettstamp = sock_gettstamp,
+ 	.listen = sock_no_listen,
 
 
