@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E502566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AFD7C433D2;
-	Tue, 18 Apr 2023 12:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6187B2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF1DC433EF;
+	Tue, 18 Apr 2023 12:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821166;
-	bh=kURrNZFOCRixyhpGhOj84iCQKJo1uVLAaTX/SGnFgTY=;
+	s=korg; t=1681821169;
+	bh=WZMMbIL27aSoGUrZHaLiR0Vf1KpvH08eDu2C6IT2ta0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7CVSIHquSSIxkm69JSLiIjLhtbfcsOuxVwrGFwUGQEJJOv4hrexkFheqSHs+g8+8
-	 dNWVrQjRZPDsi1swKduhxPUG65+/aldozraZk+VEIC278Cm3pFGTJfS4pmJSBDqWCs
-	 8H6w/Gx42NfXDKG6lu4melmkxdusT3rsVOCrI3gY=
+	b=b1IN5Y3lIR/GxCbxRI9pgdc+srikcyAQRNK/m20sgZ96IbbO5AXntgQyaY2rCJ4F7
+	 3HZ993OPQ+rUJxfT91HuP8wPaAxE8dS1R9LoDyb0fcbTXfDBh1SN5mrLuwjxIFy+Db
+	 kGNrRqkuuOrTmAxPD9ai5MsqXckQBLoXnIKqqO5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrico Sau <enrico.sau@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 023/124] USB: serial: option: add Telit FE990 compositions
-Date: Tue, 18 Apr 2023 14:20:42 +0200
-Message-Id: <20230418120310.535734683@linuxfoundation.org>
+	Guenter Roeck <groeck@chromium.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 003/124] pwm: cros-ec: Explicitly set .polarity in .get_state()
+Date: Tue, 18 Apr 2023 14:20:22 +0200
+Message-Id: <20230418120309.688458749@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -34,42 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Enrico Sau <enrico.sau@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 773e8e7d07b753474b2ccd605ff092faaa9e65b9 upstream.
+[ Upstream commit 30006b77c7e130e01d1ab2148cc8abf73dfcc4bf ]
 
-Add the following Telit FE990 compositions:
+The driver only supports normal polarity. Complete the implementation of
+.get_state() by setting .polarity accordingly.
 
-0x1080: tty, adb, rmnet, tty, tty, tty, tty
-0x1081: tty, adb, mbim, tty, tty, tty, tty
-0x1082: rndis, tty, adb, tty, tty, tty, tty
-0x1083: tty, adb, ecm, tty, tty, tty, tty
-
-Signed-off-by: Enrico Sau <enrico.sau@gmail.com>
-Link: https://lore.kernel.org/r/20230314090059.77876-1-enrico.sau@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Fixes: 1f0d3bb02785 ("pwm: Add ChromeOS EC PWM driver")
+Link: https://lore.kernel.org/r/20230228135508.1798428-3-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/pwm/pwm-cros-ec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1300,6 +1300,14 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(0) | RSVD(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990 (PCIe) */
- 	  .driver_info = RSVD(0) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1080, 0xff),	/* Telit FE990 (rmnet) */
-+	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1081, 0xff),	/* Telit FE990 (MBIM) */
-+	  .driver_info = NCTRL(0) | RSVD(1) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1082, 0xff),	/* Telit FE990 (RNDIS) */
-+	  .driver_info = NCTRL(2) | RSVD(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1083, 0xff),	/* Telit FE990 (ECM) */
-+	  .driver_info = NCTRL(0) | RSVD(1) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(3) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
+diff --git a/drivers/pwm/pwm-cros-ec.c b/drivers/pwm/pwm-cros-ec.c
+index c1c337969e4ec..d4f4a133656c7 100644
+--- a/drivers/pwm/pwm-cros-ec.c
++++ b/drivers/pwm/pwm-cros-ec.c
+@@ -154,6 +154,7 @@ static void cros_ec_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
+ 
+ 	state->enabled = (ret > 0);
+ 	state->period = EC_PWM_MAX_DUTY;
++	state->polarity = PWM_POLARITY_NORMAL;
+ 
+ 	/*
+ 	 * Note that "disabled" and "duty cycle == 0" are treated the same. If
+-- 
+2.39.2
+
 
 
