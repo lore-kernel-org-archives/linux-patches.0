@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3012572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2338AC433D2;
-	Tue, 18 Apr 2023 12:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A622572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3074C4339E;
+	Tue, 18 Apr 2023 12:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821886;
-	bh=ZlO6oyoBVDjCG5jtQnEfb6K3J648VHTb+OoCehevMjw=;
+	s=korg; t=1681821889;
+	bh=+IovbCe6nuZ9/16o7TlegxIi4CJTUJrV702zCIZVBG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1800eukZkd7aAJD/y8bji6sgw0Rn4s5scbJ8ciBLLw7p2+FurO+vjx0EhiQMupN0
-	 6OODFIfH2MOWroEhU0BsL/beoqaiDnfX8Dt2dUY1Kxkvi0uhlc1fzkPHtVQkXck5fU
-	 F0rFinIJzaFpG56Z+bvsd16mU1rcsJznYaNIEWSg=
+	b=NeVxQdub/mOLk8pNOyx3gxOHCB5N600fRfH0G+Qi8l1OiPnUVHQ2xhGt6Ofi8jYSI
+	 8r/3aXviAjbVzBtqnj2l3q165E4ISggd2KY3tYGeYqKoXWFJ/hjn5PwMyVqtUBsRbn
+	 d+UDC6IzmAkHbwIBuA0G5uwSv84WNJFfA6aI8PR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jonathan Toppins <jtoppins@redhat.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/134] tcp: restrict net.ipv4.tcp_app_win
-Date: Tue, 18 Apr 2023 14:21:45 +0200
-Message-Id: <20230418120314.647489018@linuxfoundation.org>
+Subject: [PATCH 6.1 050/134] bonding: fix ns validation on backup slaves
+Date: Tue, 18 Apr 2023 14:21:46 +0200
+Message-Id: <20230418120314.687539004@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -37,72 +37,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit dc5110c2d959c1707e12df5f792f41d90614adaa ]
+[ Upstream commit 4598380f9c548aa161eb4e990a1583f0a7d1e0d7 ]
 
-UBSAN: shift-out-of-bounds in net/ipv4/tcp_input.c:555:23
-shift exponent 255 is too large for 32-bit type 'int'
-CPU: 1 PID: 7907 Comm: ssh Not tainted 6.3.0-rc4-00161-g62bad54b26db-dirty #206
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x136/0x150
- __ubsan_handle_shift_out_of_bounds+0x21f/0x5a0
- tcp_init_transfer.cold+0x3a/0xb9
- tcp_finish_connect+0x1d0/0x620
- tcp_rcv_state_process+0xd78/0x4d60
- tcp_v4_do_rcv+0x33d/0x9d0
- __release_sock+0x133/0x3b0
- release_sock+0x58/0x1b0
+When arp_validate is set to 2, 3, or 6, validation is performed for
+backup slaves as well. As stated in the bond documentation, validation
+involves checking the broadcast ARP request sent out via the active
+slave. This helps determine which slaves are more likely to function in
+the event of an active slave failure.
 
-'maxwin' is int, shifting int for 32 or more bits is undefined behaviour.
+However, when the target is an IPv6 address, the NS message sent from
+the active interface is not checked on backup slaves. Additionally,
+based on the bond_arp_rcv() rule b, we must reverse the saddr and daddr
+when checking the NS message.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Note that when checking the NS message, the destination address is a
+multicast address. Therefore, we must convert the target address to
+solicited multicast in the bond_get_targets_ip6() function.
+
+Prior to the fix, the backup slaves had a mii status of "down", but
+after the fix, all of the slaves' mii status was updated to "UP".
+
+Fixes: 4e24be018eb9 ("bonding: add new parameter ns_targets")
+Reviewed-by: Jonathan Toppins <jtoppins@redhat.com>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/ip-sysctl.rst | 2 ++
- net/ipv4/sysctl_net_ipv4.c             | 3 +++
- 2 files changed, 5 insertions(+)
+ drivers/net/bonding/bond_main.c | 5 +++--
+ include/net/bonding.h           | 8 ++++++--
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
-index e7b3fa7bb3f73..4ecb549fd052e 100644
---- a/Documentation/networking/ip-sysctl.rst
-+++ b/Documentation/networking/ip-sysctl.rst
-@@ -337,6 +337,8 @@ tcp_app_win - INTEGER
- 	Reserve max(window/2^tcp_app_win, mss) of window for application
- 	buffer. Value 0 is special, it means that nothing is reserved.
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 45d3cb557de73..9f6824a6537bc 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -3266,7 +3266,8 @@ static int bond_na_rcv(const struct sk_buff *skb, struct bonding *bond,
  
-+	Possible values are [0, 31], inclusive.
-+
- 	Default: 31
+ 	combined = skb_header_pointer(skb, 0, sizeof(_combined), &_combined);
+ 	if (!combined || combined->ip6.nexthdr != NEXTHDR_ICMP ||
+-	    combined->icmp6.icmp6_type != NDISC_NEIGHBOUR_ADVERTISEMENT)
++	    (combined->icmp6.icmp6_type != NDISC_NEIGHBOUR_SOLICITATION &&
++	     combined->icmp6.icmp6_type != NDISC_NEIGHBOUR_ADVERTISEMENT))
+ 		goto out;
  
- tcp_autocorking - BOOLEAN
-diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
-index 9b8a6db7a66b3..39dbeb6071965 100644
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -25,6 +25,7 @@ static int ip_local_port_range_min[] = { 1, 1 };
- static int ip_local_port_range_max[] = { 65535, 65535 };
- static int tcp_adv_win_scale_min = -31;
- static int tcp_adv_win_scale_max = 31;
-+static int tcp_app_win_max = 31;
- static int tcp_min_snd_mss_min = TCP_MIN_SND_MSS;
- static int tcp_min_snd_mss_max = 65535;
- static int ip_privileged_port_min;
-@@ -1171,6 +1172,8 @@ static struct ctl_table ipv4_net_table[] = {
- 		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dou8vec_minmax,
-+		.extra1		= SYSCTL_ZERO,
-+		.extra2		= &tcp_app_win_max,
- 	},
- 	{
- 		.procname	= "tcp_adv_win_scale",
+ 	saddr = &combined->ip6.saddr;
+@@ -3288,7 +3289,7 @@ static int bond_na_rcv(const struct sk_buff *skb, struct bonding *bond,
+ 	else if (curr_active_slave &&
+ 		 time_after(slave_last_rx(bond, curr_active_slave),
+ 			    curr_active_slave->last_link_up))
+-		bond_validate_na(bond, slave, saddr, daddr);
++		bond_validate_na(bond, slave, daddr, saddr);
+ 	else if (curr_arp_slave &&
+ 		 bond_time_in_interval(bond, slave_last_tx(curr_arp_slave), 1))
+ 		bond_validate_na(bond, slave, saddr, daddr);
+diff --git a/include/net/bonding.h b/include/net/bonding.h
+index e999f851738bd..768348008d0c9 100644
+--- a/include/net/bonding.h
++++ b/include/net/bonding.h
+@@ -765,13 +765,17 @@ static inline int bond_get_targets_ip(__be32 *targets, __be32 ip)
+ #if IS_ENABLED(CONFIG_IPV6)
+ static inline int bond_get_targets_ip6(struct in6_addr *targets, struct in6_addr *ip)
+ {
++	struct in6_addr mcaddr;
+ 	int i;
+ 
+-	for (i = 0; i < BOND_MAX_NS_TARGETS; i++)
+-		if (ipv6_addr_equal(&targets[i], ip))
++	for (i = 0; i < BOND_MAX_NS_TARGETS; i++) {
++		addrconf_addr_solict_mult(&targets[i], &mcaddr);
++		if ((ipv6_addr_equal(&targets[i], ip)) ||
++		    (ipv6_addr_equal(&mcaddr, ip)))
+ 			return i;
+ 		else if (ipv6_addr_any(&targets[i]))
+ 			break;
++	}
+ 
+ 	return -1;
+ }
 -- 
 2.39.2
 
