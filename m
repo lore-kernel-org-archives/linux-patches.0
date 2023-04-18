@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2D72566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:24:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF0EC433A7;
-	Tue, 18 Apr 2023 12:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCE72566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:24:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F39C4339B;
+	Tue, 18 Apr 2023 12:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820664;
-	bh=JjN62ENM/WND6R5STgbrOgIKfmKR7fppjlWaoigcs4E=;
+	s=korg; t=1681820667;
+	bh=/8NdQGa/ROLTzs+jTM0whWEcbehms3Ue4zcMMEjo+yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0axecy4tGiEGbBQgw/wLcPdQBg/nhZ0M/UcjOqRvv/84HktHosbmCu3mJvXsYFh3
-	 gxRG46Pjbgbyo2oCaCgjHR6LJnhLfRUgnLQ/k/XSlQHBPeiNhVWocWopNVqOMq5Ls8
-	 l/u7ID0bmEQrG/ZVKwAE09MIf4WceU5kPtXRlhQw=
+	b=ftJr2e3KHsq01Utm+a0sQGNLTLM/mHrj6dGatWrBVB2d7hF+ADP9Pv7gD8gkGWDu8
+	 tajLqN+M2Q4PT04oIzXkwGjNAE624lcmoH6DGj5zIT9xQn1HyfFq/NSGnzyiYtCa8i
+	 b1do6Y0K6N4GiVT9g+PPKGsajxMkYSYs+fA5HEHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bang Li <libang.linuxer@gmail.com>,
-	Richard Weinberger <richard@nod.at>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 4.14 23/37] mtdblock: tolerate corrected bit-flips
-Date: Tue, 18 Apr 2023 14:21:33 +0200
-Message-Id: <20230418120255.476715866@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 24/37] 9p/xen : Fix use after free bug in xen_9pfs_front_remove due to race condition
+Date: Tue, 18 Apr 2023 14:21:34 +0200
+Message-Id: <20230418120255.518281826@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
 References: <20230418120254.687480980@linuxfoundation.org>
@@ -35,58 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bang Li <libang.linuxer@gmail.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-commit 0c3089601f064d80b3838eceb711fcac04bceaad upstream.
+[ Upstream commit ea4f1009408efb4989a0f139b70fb338e7f687d0 ]
 
-mtd_read() may return -EUCLEAN in case of corrected bit-flips.This
-particular condition should not be treated like an error.
+In xen_9pfs_front_probe, it calls xen_9pfs_front_alloc_dataring
+to init priv->rings and bound &ring->work with p9_xen_response.
 
-Signed-off-by: Bang Li <libang.linuxer@gmail.com>
-Fixes: e47f68587b82 ("mtd: check for max_bitflips in mtd_read_oob()")
-Cc: <stable@vger.kernel.org> # v3.7
-Acked-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230328163012.4264-1-libang.linuxer@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When it calls xen_9pfs_front_event_handler to handle IRQ requests,
+it will finally call schedule_work to start the work.
+
+When we call xen_9pfs_front_remove to remove the driver, there
+may be a sequence as follows:
+
+Fix it by finishing the work before cleanup in xen_9pfs_front_free.
+
+Note that, this bug is found by static analysis, which might be
+false positive.
+
+CPU0                  CPU1
+
+                     |p9_xen_response
+xen_9pfs_front_remove|
+  xen_9pfs_front_free|
+kfree(priv)          |
+//free priv          |
+                     |p9_tag_lookup
+                     |//use priv->client
+
+Fixes: 71ebd71921e4 ("xen/9pfs: connect to the backend")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdblock.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/9p/trans_xen.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mtd/mtdblock.c
-+++ b/drivers/mtd/mtdblock.c
-@@ -185,7 +185,7 @@ static int do_cached_write (struct mtdbl
- 				mtdblk->cache_state = STATE_EMPTY;
- 				ret = mtd_read(mtd, sect_start, sect_size,
- 					       &retlen, mtdblk->cache_data);
--				if (ret)
-+				if (ret && !mtd_is_bitflip(ret))
- 					return ret;
- 				if (retlen != sect_size)
- 					return -EIO;
-@@ -220,8 +220,12 @@ static int do_cached_read (struct mtdblk
- 	pr_debug("mtdblock: read on \"%s\" at 0x%lx, size 0x%x\n",
- 			mtd->name, pos, len);
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index ebe232fd45f74..f7008f1daaace 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -290,6 +290,10 @@ static void xen_9pfs_front_free(struct xen_9pfs_front_priv *priv)
+ 	write_unlock(&xen_9pfs_lock);
  
--	if (!sect_size)
--		return mtd_read(mtd, pos, len, &retlen, buf);
-+	if (!sect_size) {
-+		ret = mtd_read(mtd, pos, len, &retlen, buf);
-+		if (ret && !mtd_is_bitflip(ret))
-+			return ret;
-+		return 0;
-+	}
- 
- 	while (len > 0) {
- 		unsigned long sect_start = (pos/sect_size)*sect_size;
-@@ -241,7 +245,7 @@ static int do_cached_read (struct mtdblk
- 			memcpy (buf, mtdblk->cache_data + offset, size);
- 		} else {
- 			ret = mtd_read(mtd, pos, size, &retlen, buf);
--			if (ret)
-+			if (ret && !mtd_is_bitflip(ret))
- 				return ret;
- 			if (retlen != size)
- 				return -EIO;
+ 	for (i = 0; i < priv->num_rings; i++) {
++		struct xen_9pfs_dataring *ring = &priv->rings[i];
++
++		cancel_work_sync(&ring->work);
++
+ 		if (!priv->rings[i].intf)
+ 			break;
+ 		if (priv->rings[i].irq > 0)
+-- 
+2.39.2
+
 
 
