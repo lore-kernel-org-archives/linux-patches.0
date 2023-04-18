@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1C22566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:29:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CD4C433EF;
-	Tue, 18 Apr 2023 12:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AED02566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:29:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6753C433EF;
+	Tue, 18 Apr 2023 12:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820982;
-	bh=/0x4qIytua3tTDDEdLRx58OawLCMWWX5LblGQcA77MU=;
+	s=korg; t=1681820985;
+	bh=yl4ZRg6fUPQbkX5eOmCR7ZNSfCgeceTI+6ky0FgmFWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=juUJwA18hB/HjMpQ+sa4R9gP8cKx8/dN4hVuiJxbmZjFhmziKkC3rhH1APb8LX0Mi
-	 fTmyIZ3otromH9X4txLFNWF4Kr/AnAnNbEddiqNWdk3Rp90NbJGXqm/vSjQQ+Cl6x9
-	 VqKAz6tuU59VRmgBE8rAXp2kE+PnZ8N+IqO/2CBM=
+	b=WugGJ0/HJVSWtwx88xMIr5Io+92ygNG1sfGDVYI9OhOHQE17it/2GG729w89PcLJJ
+	 ZDDqtb2agsgY4OTHZJdSWmvoTXIHd4WpX7e8/uxQzXaKhELhIYnZroBKcqALuCoEIC
+	 qIKzMvv/hD1cNn5PkqRYDdPo7tj4Fnyx350p9eS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Xu Biang <xubiang@hust.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 47/92] ALSA: i2c/cs8427: fix iec958 mixer control deactivation
-Date: Tue, 18 Apr 2023 14:21:22 +0200
-Message-Id: <20230418120306.496690896@linuxfoundation.org>
+Subject: [PATCH 5.4 48/92] ALSA: firewire-tascam: add missing unwind goto in snd_tscm_stream_start_duplex()
+Date: Tue, 18 Apr 2023 14:21:23 +0200
+Message-Id: <20230418120306.534849182@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -34,40 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Xu Biang <xubiang@hust.edu.cn>
 
-commit e98e7a82bca2b6dce3e03719cff800ec913f9af7 upstream.
+commit fb4a624f88f658c7b7ae124452bd42eaa8ac7168 upstream.
 
-snd_cs8427_iec958_active() would always delete
-SNDRV_CTL_ELEM_ACCESS_INACTIVE, even though the function has an
-argument `active`.
+Smatch Warns:
+sound/firewire/tascam/tascam-stream.c:493 snd_tscm_stream_start_duplex()
+warn: missing unwind goto?
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+The direct return will cause the stream list of "&tscm->domain" unemptied
+and the session in "tscm" unfinished if amdtp_domain_start() returns with
+an error.
+
+Fix this by changing the direct return to a goto which will empty the
+stream list of "&tscm->domain" and finish the session in "tscm".
+
+The snd_tscm_stream_start_duplex() function is called in the prepare
+callback of PCM. According to "ALSA Kernel API Documentation", the prepare
+callback of PCM will be called many times at each setup. So, if the
+"&d->streams" list is not emptied, when the prepare callback is called
+next time, snd_tscm_stream_start_duplex() will receive -EBUSY from
+amdtp_domain_add_stream() that tries to add an existing stream to the
+domain. The error handling code after the "error" label will be executed
+in this case, and the "&d->streams" list will be emptied. So not emptying
+the "&d->streams" list will not cause an issue. But it is more efficient
+and readable to empty it on the first error by changing the direct return
+to a goto statement.
+
+The session in "tscm" has been begun before amdtp_domain_start(), so it
+needs to be finished when amdtp_domain_start() fails.
+
+Fixes: c281d46a51e3 ("ALSA: firewire-tascam: support AMDTP domain")
+Signed-off-by: Xu Biang <xubiang@hust.edu.cn>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Acked-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230405201219.2197811-1-oswald.buddenhagen@gmx.de
+Link: https://lore.kernel.org/r/20230406132801.105108-1-xubiang@hust.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/i2c/cs8427.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/firewire/tascam/tascam-stream.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/i2c/cs8427.c
-+++ b/sound/i2c/cs8427.c
-@@ -553,10 +553,13 @@ int snd_cs8427_iec958_active(struct snd_
- 	if (snd_BUG_ON(!cs8427))
- 		return -ENXIO;
- 	chip = cs8427->private_data;
--	if (active)
-+	if (active) {
- 		memcpy(chip->playback.pcm_status,
- 		       chip->playback.def_status, 24);
--	chip->playback.pcm_ctl->vd[0].access &= ~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
-+		chip->playback.pcm_ctl->vd[0].access &= ~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
-+	} else {
-+		chip->playback.pcm_ctl->vd[0].access |= SNDRV_CTL_ELEM_ACCESS_INACTIVE;
-+	}
- 	snd_ctl_notify(cs8427->bus->card,
- 		       SNDRV_CTL_EVENT_MASK_VALUE | SNDRV_CTL_EVENT_MASK_INFO,
- 		       &chip->playback.pcm_ctl->id);
+--- a/sound/firewire/tascam/tascam-stream.c
++++ b/sound/firewire/tascam/tascam-stream.c
+@@ -465,7 +465,7 @@ int snd_tscm_stream_start_duplex(struct
+ 
+ 		err = amdtp_domain_start(&tscm->domain);
+ 		if (err < 0)
+-			return err;
++			goto error;
+ 
+ 		if (!amdtp_stream_wait_callback(&tscm->rx_stream,
+ 						CALLBACK_TIMEOUT) ||
 
 
