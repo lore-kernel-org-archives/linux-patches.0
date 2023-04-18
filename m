@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1C02572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E75C433EF;
-	Tue, 18 Apr 2023 12:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C22D2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF74CC433D2;
+	Tue, 18 Apr 2023 12:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822333;
-	bh=1PTmcP2+6LuJsrULf4ZIc+pv2aA7YcGzRwoLHFAWLGU=;
+	s=korg; t=1681822336;
+	bh=OdXT5sRbrc2E28mPDHb4YEnv6+ZmVGqouxzMZZu68ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T8G+ljkIE7h+6ADFW9mHy2pqibU2EHhwlvPO5TylQ8/sOt+rkkpOj5RI6dfYskrTS
-	 d+3x+wKUntmpjIef7VqnPMRemLKWXYnjIp/FHcSBaiDuiH6/oX7Zqmgbt6Zrb30xL/
-	 5zuoL+wYr+V9oBBX7MaIGuc/Smgcd4mwwFG1GrEo=
+	b=dobcuCflhb8RPVJ/MEM62osu20Rf9mpsBDWOFMuh7kKlKtRvkcZXG24uyL99XNdx3
+	 pqXAFkNDLXKpPPujh26+OHI6J1e+aawGlB//o2tiFkXwv0uF9HGkfIdHo4ru8bIoEI
+	 TVjsw+LIc9MwAqKUU+d4YfeN6s1MHm09ojeykKxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kolar <mich.k@seznam.cz>,
-	Jiri Kosina <jkosina@suse.cz>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Ding Hui <dinghui@sangfor.com.cn>
-Subject: [PATCH 6.2 111/139] scsi: ses: Handle enclosure with just a primary component gracefully
-Date: Tue, 18 Apr 2023 14:22:56 +0200
-Message-Id: <20230418120317.941276260@linuxfoundation.org>
+	Rui Salvaterra <rsalvaterra@gmail.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"6 . 2+" <stable@kernel.org>
+Subject: [PATCH 6.2 112/139] thermal: intel: Avoid updating unsupported THERM_STATUS_CLEAR mask bits
+Date: Tue, 18 Apr 2023 14:22:57 +0200
+Message-Id: <20230418120317.972014393@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,141 +36,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Kosina <jkosina@suse.cz>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit c8e22b7a1694bb8d025ea636816472739d859145 upstream.
+commit 117e4e5bd9d47b89777dbf6b37a709dcfe59520f upstream.
 
-This reverts commit 3fe97ff3d949 ("scsi: ses: Don't attach if enclosure
-has no components") and introduces proper handling of case where there are
-no detected secondary components, but primary component (enumerated in
-num_enclosures) does exist. That fix was originally proposed by Ding Hui
-<dinghui@sangfor.com.cn>.
+Some older processors don't allow BIT(13) and BIT(15) in the current
+mask set by "THERM_STATUS_CLEAR_CORE_MASK". This results in:
 
-Completely ignoring devices that have one primary enclosure and no
-secondary one results in ses_intf_add() bailing completely
+unchecked MSR access error: WRMSR to 0x19c (tried to
+write 0x000000000000aaa8) at rIP: 0xffffffff816f66a6
+(throttle_active_work+0xa6/0x1d0)
 
-	scsi 2:0:0:254: enclosure has no enumerated components
-        scsi 2:0:0:254: Failed to bind enclosure -12ven in valid configurations such
+To avoid unchecked MSR issues, check CPUID for each relevant feature and
+use that information to set the supported feature bits only in the
+"clear" mask for cores. Do the same for the analogous package mask set
+by "THERM_STATUS_CLEAR_PKG_MASK".
 
-even on valid configurations with 1 primary and 0 secondary enclosures as
-below:
+Introduce functions thermal_intr_init_core_clear_mask() and
+thermal_intr_init_pkg_clear_mask() to set core and package mask bits,
+respectively. These functions are called during initialization.
 
-	# sg_ses /dev/sg0
-	  3PARdata  SES               3321
-	Supported diagnostic pages:
-	  Supported Diagnostic Pages [sdp] [0x0]
-	  Configuration (SES) [cf] [0x1]
-	  Short Enclosure Status (SES) [ses] [0x8]
-	# sg_ses -p cf /dev/sg0
-	  3PARdata  SES               3321
-	Configuration diagnostic page:
-	  number of secondary subenclosures: 0
-	  generation code: 0x0
-	  enclosure descriptor list
-	    Subenclosure identifier: 0 [primary]
-	      relative ES process id: 0, number of ES processes: 1
-	      number of type descriptor headers: 1
-	      enclosure logical identifier (hex): 20000002ac02068d
-	      enclosure vendor: 3PARdata  product: VV                rev: 3321
-	  type descriptor header and text list
-	    Element type: Unspecified, subenclosure id: 0
-	      number of possible elements: 1
-
-The changelog for the original fix follows
-
-=====
-We can get a crash when disconnecting the iSCSI session,
-the call trace like this:
-
-  [ffff00002a00fb70] kfree at ffff00000830e224
-  [ffff00002a00fba0] ses_intf_remove at ffff000001f200e4
-  [ffff00002a00fbd0] device_del at ffff0000086b6a98
-  [ffff00002a00fc50] device_unregister at ffff0000086b6d58
-  [ffff00002a00fc70] __scsi_remove_device at ffff00000870608c
-  [ffff00002a00fca0] scsi_remove_device at ffff000008706134
-  [ffff00002a00fcc0] __scsi_remove_target at ffff0000087062e4
-  [ffff00002a00fd10] scsi_remove_target at ffff0000087064c0
-  [ffff00002a00fd70] __iscsi_unbind_session at ffff000001c872c4
-  [ffff00002a00fdb0] process_one_work at ffff00000810f35c
-  [ffff00002a00fe00] worker_thread at ffff00000810f648
-  [ffff00002a00fe70] kthread at ffff000008116e98
-
-In ses_intf_add, components count could be 0, and kcalloc 0 size scomp,
-but not saved in edev->component[i].scratch
-
-In this situation, edev->component[0].scratch is an invalid pointer,
-when kfree it in ses_intf_remove_enclosure, a crash like above would happen
-The call trace also could be other random cases when kfree cannot catch
-the invalid pointer
-
-We should not use edev->component[] array when the components count is 0
-We also need check index when use edev->component[] array in
-ses_enclosure_data_process
-=====
-
-Reported-by: Michal Kolar <mich.k@seznam.cz>
-Originally-by: Ding Hui <dinghui@sangfor.com.cn>
-Cc: stable@vger.kernel.org
-Fixes: 3fe97ff3d949 ("scsi: ses: Don't attach if enclosure has no components")
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Link: https://lore.kernel.org/r/nycvar.YFH.7.76.2304042122270.29760@cbobk.fhfr.pm
-Tested-by: Michal Kolar <mich.k@seznam.cz>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 6fe1e64b6026 ("thermal: intel: Prevent accidental clearing of HFI status")
+Reported-by: Rui Salvaterra <rsalvaterra@gmail.com>
+Link: https://lore.kernel.org/lkml/cdf43fb423368ee3994124a9e8c9b4f8d00712c6.camel@linux.intel.com/T/
+Tested-by: Rui Salvaterra <rsalvaterra@gmail.com>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: 6.2+ <stable@kernel.org> # 6.2+
+[ rjw: Renamed 2 funtions and 2 static variables, edited subject and
+  changelog ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ses.c |   20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/thermal/intel/therm_throt.c |   73 ++++++++++++++++++++++++++++++++----
+ 1 file changed, 66 insertions(+), 7 deletions(-)
 
---- a/drivers/scsi/ses.c
-+++ b/drivers/scsi/ses.c
-@@ -503,9 +503,6 @@ static int ses_enclosure_find_by_addr(st
- 	int i;
- 	struct ses_component *scomp;
+--- a/drivers/thermal/intel/therm_throt.c
++++ b/drivers/thermal/intel/therm_throt.c
+@@ -193,8 +193,67 @@ static const struct attribute_group ther
+ #define THERM_THROT_POLL_INTERVAL	HZ
+ #define THERM_STATUS_PROCHOT_LOG	BIT(1)
  
--	if (!edev->component[0].scratch)
--		return 0;
+-#define THERM_STATUS_CLEAR_CORE_MASK (BIT(1) | BIT(3) | BIT(5) | BIT(7) | BIT(9) | BIT(11) | BIT(13) | BIT(15))
+-#define THERM_STATUS_CLEAR_PKG_MASK  (BIT(1) | BIT(3) | BIT(5) | BIT(7) | BIT(9) | BIT(11))
++static u64 therm_intr_core_clear_mask;
++static u64 therm_intr_pkg_clear_mask;
++
++static void thermal_intr_init_core_clear_mask(void)
++{
++	if (therm_intr_core_clear_mask)
++		return;
++
++	/*
++	 * Reference: Intel SDM  Volume 4
++	 * "Table 2-2. IA-32 Architectural MSRs", MSR 0x19C
++	 * IA32_THERM_STATUS.
++	 */
++
++	/*
++	 * Bit 1, 3, 5: CPUID.01H:EDX[22] = 1. This driver will not
++	 * enable interrupts, when 0 as it checks for X86_FEATURE_ACPI.
++	 */
++	therm_intr_core_clear_mask = (BIT(1) | BIT(3) | BIT(5));
++
++	/*
++	 * Bit 7 and 9: Thermal Threshold #1 and #2 log
++	 * If CPUID.01H:ECX[8] = 1
++	 */
++	if (boot_cpu_has(X86_FEATURE_TM2))
++		therm_intr_core_clear_mask |= (BIT(7) | BIT(9));
++
++	/* Bit 11: Power Limitation log (R/WC0) If CPUID.06H:EAX[4] = 1 */
++	if (boot_cpu_has(X86_FEATURE_PLN))
++		therm_intr_core_clear_mask |= BIT(11);
++
++	/*
++	 * Bit 13: Current Limit log (R/WC0) If CPUID.06H:EAX[7] = 1
++	 * Bit 15: Cross Domain Limit log (R/WC0) If CPUID.06H:EAX[7] = 1
++	 */
++	if (boot_cpu_has(X86_FEATURE_HWP))
++		therm_intr_core_clear_mask |= (BIT(13) | BIT(15));
++}
++
++static void thermal_intr_init_pkg_clear_mask(void)
++{
++	if (therm_intr_pkg_clear_mask)
++		return;
++
++	/*
++	 * Reference: Intel SDM  Volume 4
++	 * "Table 2-2. IA-32 Architectural MSRs", MSR 0x1B1
++	 * IA32_PACKAGE_THERM_STATUS.
++	 */
++
++	/* All bits except BIT 26 depend on CPUID.06H: EAX[6] = 1 */
++	if (boot_cpu_has(X86_FEATURE_PTS))
++		therm_intr_pkg_clear_mask = (BIT(1) | BIT(3) | BIT(5) | BIT(7) | BIT(9) | BIT(11));
++
++	/*
++	 * Intel SDM Volume 2A: Thermal and Power Management Leaf
++	 * Bit 26: CPUID.06H: EAX[19] = 1
++	 */
++	if (boot_cpu_has(X86_FEATURE_HFI))
++		therm_intr_pkg_clear_mask |= BIT(26);
++}
+ 
+ /*
+  * Clear the bits in package thermal status register for bit = 1
+@@ -207,13 +266,10 @@ void thermal_clear_package_intr_status(i
+ 
+ 	if (level == CORE_LEVEL) {
+ 		msr  = MSR_IA32_THERM_STATUS;
+-		msr_val = THERM_STATUS_CLEAR_CORE_MASK;
++		msr_val = therm_intr_core_clear_mask;
+ 	} else {
+ 		msr  = MSR_IA32_PACKAGE_THERM_STATUS;
+-		msr_val = THERM_STATUS_CLEAR_PKG_MASK;
+-		if (boot_cpu_has(X86_FEATURE_HFI))
+-			msr_val |= BIT(26);
 -
- 	for (i = 0; i < edev->components; i++) {
- 		scomp = edev->component[i].scratch;
- 		if (scomp->addr != efd->addr)
-@@ -596,8 +593,10 @@ static void ses_enclosure_data_process(s
- 						components++,
- 						type_ptr[0],
- 						name);
--				else
-+				else if (components < edev->components)
- 					ecomp = &edev->component[components++];
-+				else
-+					ecomp = ERR_PTR(-EINVAL);
- 
- 				if (!IS_ERR(ecomp)) {
- 					if (addl_desc_ptr) {
-@@ -728,11 +727,6 @@ static int ses_intf_add(struct device *c
- 			components += type_ptr[1];
++		msr_val = therm_intr_pkg_clear_mask;
  	}
  
--	if (components == 0) {
--		sdev_printk(KERN_WARNING, sdev, "enclosure has no enumerated components\n");
--		goto err_free;
--	}
--
- 	ses_dev->page1 = buf;
- 	ses_dev->page1_len = len;
- 	buf = NULL;
-@@ -774,9 +768,11 @@ static int ses_intf_add(struct device *c
- 		buf = NULL;
- 	}
- page2_not_supported:
--	scomp = kcalloc(components, sizeof(struct ses_component), GFP_KERNEL);
--	if (!scomp)
--		goto err_free;
-+	if (components > 0) {
-+		scomp = kcalloc(components, sizeof(struct ses_component), GFP_KERNEL);
-+		if (!scomp)
-+			goto err_free;
-+	}
+ 	msr_val &= ~bit_mask;
+@@ -708,6 +764,9 @@ void intel_init_thermal(struct cpuinfo_x
+ 	h = THERMAL_APIC_VECTOR | APIC_DM_FIXED | APIC_LVT_MASKED;
+ 	apic_write(APIC_LVTTHMR, h);
  
- 	edev = enclosure_register(cdev->parent, dev_name(&sdev->sdev_gendev),
- 				  components, &ses_enclosure_callbacks);
++	thermal_intr_init_core_clear_mask();
++	thermal_intr_init_pkg_clear_mask();
++
+ 	rdmsr(MSR_IA32_THERM_INTERRUPT, l, h);
+ 	if (cpu_has(c, X86_FEATURE_PLN) && !int_pln_enable)
+ 		wrmsr(MSR_IA32_THERM_INTERRUPT,
 
 
