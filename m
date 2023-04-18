@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473BC2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C6FC433D2;
-	Tue, 18 Apr 2023 12:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FE52566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5809AC4339B;
+	Tue, 18 Apr 2023 12:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821022;
-	bh=qaDObJuHAgHPTP/fXm7M+X/FfnY7LSsyocNSgaDB7CE=;
+	s=korg; t=1681821024;
+	bh=4lD04OAjI3ZG8K6M4vFAQ14rVCyn7UTx7mUU/WP1TE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZrLir4bF2a2B9QyTwKlB2XjXZ38FPAlEIVSxQgDhgvLf2jh2wFjoxpNDeG6csJgt
-	 Nsm3ct3nJJWjTEi5dl1UYLtjjdmje90OlQSHyJSQ+nMHqTLE7nvWeNTeC+RAJmX5Tb
-	 0apeCCYiIAxpNxbDobsOk9X6y4x3MDF3i2q8Sp3w=
+	b=B4+sczNKytWGRPJB8h3+eRzHgh85QClGxJPGmiaeMOSRfWmyiILcckESf6KxZdQ0N
+	 uUkzInTbHMl1IakXdHSkbF8X2mcXzDBos/zagXRcZ679j6qB2sjFC8Sa3WEZeyGYs6
+	 uYqWXQ+wJnq4MbG3sGbKADgrtmvQuj682hYlm+As=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 61/92] RDMA/core: Fix GID entry ref leak when create_ah fails
-Date: Tue, 18 Apr 2023 14:21:36 +0200
-Message-Id: <20230418120306.976762177@linuxfoundation.org>
+	Shuangpeng Bai <sjb7183@psu.edu>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.4 35/92] can: j1939: j1939_tp_tx_dat_new(): fix out-of-bounds memory access
+Date: Tue, 18 Apr 2023 14:21:10 +0200
+Message-Id: <20230418120306.069653726@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -36,38 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit aca3b0fa3d04b40c96934d86cc224cccfa7ea8e0 ]
+commit b45193cb4df556fe6251b285a5ce44046dd36b4a upstream.
 
-If AH create request fails, release sgid_attr to avoid GID entry
-referrence leak reported while releasing GID table
+In the j1939_tp_tx_dat_new() function, an out-of-bounds memory access
+could occur during the memcpy() operation if the size of skb->cb is
+larger than the size of struct j1939_sk_buff_cb. This is because the
+memcpy() operation uses the size of skb->cb, leading to a read beyond
+the struct j1939_sk_buff_cb.
 
-Fixes: 1a1f460ff151 ("RDMA: Hold the sgid_attr inside the struct ib_ah/qp")
-Link: https://lore.kernel.org/r/20230401063424.342204-1-saravanan.vajravel@broadcom.com
-Reviewed-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Updated the memcpy() operation to use the size of struct
+j1939_sk_buff_cb instead of the size of skb->cb. This ensures that the
+memcpy() operation only reads the memory within the bounds of struct
+j1939_sk_buff_cb, preventing out-of-bounds memory access.
+
+Additionally, add a BUILD_BUG_ON() to check that the size of skb->cb
+is greater than or equal to the size of struct j1939_sk_buff_cb. This
+ensures that the skb->cb buffer is large enough to hold the
+j1939_sk_buff_cb structure.
+
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Reported-by: Shuangpeng Bai <sjb7183@psu.edu>
+Tested-by: Shuangpeng Bai <sjb7183@psu.edu>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://groups.google.com/g/syzkaller/c/G_LL-C3plRs/m/-8xCi6dCAgAJ
+Link: https://lore.kernel.org/all/20230404073128.3173900-1-o.rempel@pengutronix.de
+Cc: stable@vger.kernel.org
+[mkl: rephrase commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/verbs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/can/j1939/transport.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
-index 93a7ff1bd02c7..f61933dacbfd8 100644
---- a/drivers/infiniband/core/verbs.c
-+++ b/drivers/infiniband/core/verbs.c
-@@ -521,6 +521,8 @@ static struct ib_ah *_rdma_create_ah(struct ib_pd *pd,
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -600,7 +600,10 @@ sk_buff *j1939_tp_tx_dat_new(struct j193
+ 	/* reserve CAN header */
+ 	skb_reserve(skb, offsetof(struct can_frame, data));
  
- 	ret = device->ops.create_ah(ah, ah_attr, flags, udata);
- 	if (ret) {
-+		if (ah->sgid_attr)
-+			rdma_put_gid_attr(ah->sgid_attr);
- 		kfree(ah);
- 		return ERR_PTR(ret);
- 	}
--- 
-2.39.2
-
+-	memcpy(skb->cb, re_skcb, sizeof(skb->cb));
++	/* skb->cb must be large enough to hold a j1939_sk_buff_cb structure */
++	BUILD_BUG_ON(sizeof(skb->cb) < sizeof(*re_skcb));
++
++	memcpy(skb->cb, re_skcb, sizeof(*re_skcb));
+ 	skcb = j1939_skb_to_cb(skb);
+ 	if (swap_src_dst)
+ 		j1939_skbcb_swap(skcb);
 
 
