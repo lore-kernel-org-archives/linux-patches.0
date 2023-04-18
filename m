@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD152566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:31:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99D0C433D2;
-	Tue, 18 Apr 2023 12:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE772566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:31:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5EA4C433D2;
+	Tue, 18 Apr 2023 12:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821111;
-	bh=PXrgjoxCAiyTLGkdrfEmudMLRAmtP2/RRWUBN2gPaso=;
+	s=korg; t=1681821114;
+	bh=/i4JeonNcl7yTmzvkZsMwUBtzVV6i0BqUJcQJfrhM4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TE46jOJXlgbrrVa6iAluRk+NVH0SUm+vVN20UICTesQ6q7oc7u3NiIICl0zabOuha
-	 TSJxt7MmavpYTmiv1lIbe2Hupg52GgKXwLEfF6GaHXaO1umheRypety4ChQc1u51K1
-	 ytB90YY6qqKuznt4clwGQ3ltB3ByPymhobUz9gAM=
+	b=2XSSidq48cRq5GXyhIAoM6cOolyzbVy3Jz7BEAHR15526BV10fHBEFIGzksXhDS+F
+	 52eOIbmZ8vGrlKmawcthe7w6iMa+w9JIELjKJxh0gDgvqBmEtkFzOnBL4X6CGXO0wi
+	 sf3KfIB11K3rDseGZsUnwlFJWkzxE4cYB05Y5Z/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robbie Harwood <rharwood@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	keyrings@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	kexec@lists.infradead.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 69/92] asymmetric_keys: log on fatal failures in PE/pkcs7
-Date: Tue, 18 Apr 2023 14:21:44 +0200
-Message-Id: <20230418120307.229337741@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Nicolas Schichan <nschichan@freebox.fr>,
+	Richard Weinberger <richard@nod.at>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.4 70/92] ubi: Fix failure attaching when vid_hdr offset equals to (sub)page size
+Date: Tue, 18 Apr 2023 14:21:45 +0200
+Message-Id: <20230418120307.257865827@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -41,158 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robbie Harwood <rharwood@redhat.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 3584c1dbfffdabf8e3dc1dd25748bb38dd01cd43 ]
+commit 1e020e1b96afdecd20680b5b5be2a6ffc3d27628 upstream.
 
-These particular errors can be encountered while trying to kexec when
-secureboot lockdown is in place.  Without this change, even with a
-signed debug build, one still needs to reboot the machine to add the
-appropriate dyndbg parameters (since lockdown blocks debugfs).
+Following process will make ubi attaching failed since commit
+1b42b1a36fc946 ("ubi: ensure that VID header offset ... size"):
 
-Accordingly, upgrade all pr_debug() before fatal error into pr_warn().
+ID="0xec,0xa1,0x00,0x15" # 128M 128KB 2KB
+modprobe nandsim id_bytes=$ID
+flash_eraseall /dev/mtd0
+modprobe ubi mtd="0,2048"  # set vid_hdr offset as 2048 (one page)
+(dmesg):
+  ubi0 error: ubi_attach_mtd_dev [ubi]: VID header offset 2048 too large.
+  UBI error: cannot attach mtd0
+  UBI error: cannot initialize UBI, error -22
 
-Signed-off-by: Robbie Harwood <rharwood@redhat.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Jarkko Sakkinen <jarkko@kernel.org>
-cc: Eric Biederman <ebiederm@xmission.com>
-cc: Herbert Xu <herbert@gondor.apana.org.au>
-cc: keyrings@vger.kernel.org
-cc: linux-crypto@vger.kernel.org
-cc: kexec@lists.infradead.org
-Link: https://lore.kernel.org/r/20230220171254.592347-3-rharwood@redhat.com/ # v2
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Rework original solution, the key point is making sure
+'vid_hdr_shift + UBI_VID_HDR_SIZE < ubi->vid_hdr_alsize',
+so we should check vid_hdr_shift rather not vid_hdr_offset.
+Then, ubi still support (sub)page aligined VID header offset.
+
+Fixes: 1b42b1a36fc946 ("ubi: ensure that VID header offset ... size")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Tested-by: Nicolas Schichan <nschichan@freebox.fr>
+Tested-by: Miquel Raynal <miquel.raynal@bootlin.com> # v5.10, v4.19
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/pkcs7_verify.c  | 10 +++++-----
- crypto/asymmetric_keys/verify_pefile.c | 24 ++++++++++++------------
- 2 files changed, 17 insertions(+), 17 deletions(-)
+ drivers/mtd/ubi/build.c |   21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/pkcs7_verify.c b/crypto/asymmetric_keys/pkcs7_verify.c
-index ce49820caa97f..01e54450c846f 100644
---- a/crypto/asymmetric_keys/pkcs7_verify.c
-+++ b/crypto/asymmetric_keys/pkcs7_verify.c
-@@ -79,16 +79,16 @@ static int pkcs7_digest(struct pkcs7_message *pkcs7,
- 		}
+--- a/drivers/mtd/ubi/build.c
++++ b/drivers/mtd/ubi/build.c
+@@ -644,12 +644,6 @@ static int io_init(struct ubi_device *ub
+ 	ubi->ec_hdr_alsize = ALIGN(UBI_EC_HDR_SIZE, ubi->hdrs_min_io_size);
+ 	ubi->vid_hdr_alsize = ALIGN(UBI_VID_HDR_SIZE, ubi->hdrs_min_io_size);
  
- 		if (sinfo->msgdigest_len != sig->digest_size) {
--			pr_debug("Sig %u: Invalid digest size (%u)\n",
--				 sinfo->index, sinfo->msgdigest_len);
-+			pr_warn("Sig %u: Invalid digest size (%u)\n",
-+				sinfo->index, sinfo->msgdigest_len);
- 			ret = -EBADMSG;
- 			goto error;
- 		}
- 
- 		if (memcmp(sig->digest, sinfo->msgdigest,
- 			   sinfo->msgdigest_len) != 0) {
--			pr_debug("Sig %u: Message digest doesn't match\n",
--				 sinfo->index);
-+			pr_warn("Sig %u: Message digest doesn't match\n",
-+				sinfo->index);
- 			ret = -EKEYREJECTED;
- 			goto error;
- 		}
-@@ -488,7 +488,7 @@ int pkcs7_supply_detached_data(struct pkcs7_message *pkcs7,
- 			       const void *data, size_t datalen)
- {
- 	if (pkcs7->data) {
--		pr_debug("Data already supplied\n");
-+		pr_warn("Data already supplied\n");
- 		return -EINVAL;
- 	}
- 	pkcs7->data = data;
-diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
-index c43b077ba37db..0701bb161b63f 100644
---- a/crypto/asymmetric_keys/verify_pefile.c
-+++ b/crypto/asymmetric_keys/verify_pefile.c
-@@ -74,7 +74,7 @@ static int pefile_parse_binary(const void *pebuf, unsigned int pelen,
- 		break;
- 
- 	default:
--		pr_debug("Unknown PEOPT magic = %04hx\n", pe32->magic);
-+		pr_warn("Unknown PEOPT magic = %04hx\n", pe32->magic);
- 		return -ELIBBAD;
+-	if (ubi->vid_hdr_offset && ((ubi->vid_hdr_offset + UBI_VID_HDR_SIZE) >
+-	    ubi->vid_hdr_alsize)) {
+-		ubi_err(ubi, "VID header offset %d too large.", ubi->vid_hdr_offset);
+-		return -EINVAL;
+-	}
+-
+ 	dbg_gen("min_io_size      %d", ubi->min_io_size);
+ 	dbg_gen("max_write_size   %d", ubi->max_write_size);
+ 	dbg_gen("hdrs_min_io_size %d", ubi->hdrs_min_io_size);
+@@ -667,6 +661,21 @@ static int io_init(struct ubi_device *ub
+ 						ubi->vid_hdr_aloffset;
  	}
  
-@@ -95,7 +95,7 @@ static int pefile_parse_binary(const void *pebuf, unsigned int pelen,
- 	ctx->certs_size = ddir->certs.size;
- 
- 	if (!ddir->certs.virtual_address || !ddir->certs.size) {
--		pr_debug("Unsigned PE binary\n");
-+		pr_warn("Unsigned PE binary\n");
- 		return -ENODATA;
- 	}
- 
-@@ -127,7 +127,7 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
- 	unsigned len;
- 
- 	if (ctx->sig_len < sizeof(wrapper)) {
--		pr_debug("Signature wrapper too short\n");
-+		pr_warn("Signature wrapper too short\n");
- 		return -ELIBBAD;
- 	}
- 
-@@ -142,16 +142,16 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
- 	 * rounded up since 0.110.
- 	 */
- 	if (wrapper.length > ctx->sig_len) {
--		pr_debug("Signature wrapper bigger than sig len (%x > %x)\n",
--			 ctx->sig_len, wrapper.length);
-+		pr_warn("Signature wrapper bigger than sig len (%x > %x)\n",
-+			ctx->sig_len, wrapper.length);
- 		return -ELIBBAD;
- 	}
- 	if (wrapper.revision != WIN_CERT_REVISION_2_0) {
--		pr_debug("Signature is not revision 2.0\n");
-+		pr_warn("Signature is not revision 2.0\n");
- 		return -ENOTSUPP;
- 	}
- 	if (wrapper.cert_type != WIN_CERT_TYPE_PKCS_SIGNED_DATA) {
--		pr_debug("Signature certificate type is not PKCS\n");
-+		pr_warn("Signature certificate type is not PKCS\n");
- 		return -ENOTSUPP;
- 	}
- 
-@@ -164,7 +164,7 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
- 	ctx->sig_offset += sizeof(wrapper);
- 	ctx->sig_len -= sizeof(wrapper);
- 	if (ctx->sig_len < 4) {
--		pr_debug("Signature data missing\n");
-+		pr_warn("Signature data missing\n");
- 		return -EKEYREJECTED;
- 	}
- 
-@@ -198,7 +198,7 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
- 		return 0;
- 	}
- not_pkcs7:
--	pr_debug("Signature data not PKCS#7\n");
-+	pr_warn("Signature data not PKCS#7\n");
- 	return -ELIBBAD;
- }
- 
-@@ -341,8 +341,8 @@ static int pefile_digest_pe(const void *pebuf, unsigned int pelen,
- 	digest_size = crypto_shash_digestsize(tfm);
- 
- 	if (digest_size != ctx->digest_len) {
--		pr_debug("Digest size mismatch (%zx != %x)\n",
--			 digest_size, ctx->digest_len);
-+		pr_warn("Digest size mismatch (%zx != %x)\n",
-+			digest_size, ctx->digest_len);
- 		ret = -EBADMSG;
- 		goto error_no_desc;
- 	}
-@@ -373,7 +373,7 @@ static int pefile_digest_pe(const void *pebuf, unsigned int pelen,
- 	 * PKCS#7 certificate.
- 	 */
- 	if (memcmp(digest, ctx->digest, ctx->digest_len) != 0) {
--		pr_debug("Digest mismatch\n");
-+		pr_warn("Digest mismatch\n");
- 		ret = -EKEYREJECTED;
- 	} else {
- 		pr_debug("The digests match!\n");
--- 
-2.39.2
-
++	/*
++	 * Memory allocation for VID header is ubi->vid_hdr_alsize
++	 * which is described in comments in io.c.
++	 * Make sure VID header shift + UBI_VID_HDR_SIZE not exceeds
++	 * ubi->vid_hdr_alsize, so that all vid header operations
++	 * won't access memory out of bounds.
++	 */
++	if ((ubi->vid_hdr_shift + UBI_VID_HDR_SIZE) > ubi->vid_hdr_alsize) {
++		ubi_err(ubi, "Invalid VID header offset %d, VID header shift(%d)"
++			" + VID header size(%zu) > VID header aligned size(%d).",
++			ubi->vid_hdr_offset, ubi->vid_hdr_shift,
++			UBI_VID_HDR_SIZE, ubi->vid_hdr_alsize);
++		return -EINVAL;
++	}
++
+ 	/* Similar for the data offset */
+ 	ubi->leb_start = ubi->vid_hdr_offset + UBI_VID_HDR_SIZE;
+ 	ubi->leb_start = ALIGN(ubi->leb_start, ubi->min_io_size);
 
 
