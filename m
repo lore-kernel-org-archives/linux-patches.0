@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27452566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:28:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773B0C433D2;
-	Tue, 18 Apr 2023 12:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6722566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:28:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABD9C433EF;
+	Tue, 18 Apr 2023 12:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820883;
-	bh=jvPtX05g2Q2bmP5hOMlJm09PnPT8KZlGsG0wEJHZawo=;
+	s=korg; t=1681820886;
+	bh=mHDeLuATb0Edfl2VAZmaSajd0/sEp9bfXCq8VOWtcOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WBNt0chNfcNOZR2LoF7mcS+H74jQUDRpW6ACKIWhejss9DuHH8EwkeKjeZ4HXu9RQ
-	 4Do5QUtZJJDO3irtDA3GQyq1mGr8O4JVsk1SxbDC2r4SpuQ1JJ0v5L8R9PVAXVSDVk
-	 tPWI/IZepCVrOWb2ul1r6UK7c99KCaj2YGPFjCDA=
+	b=ayBrXLDfN1t5y2FxPsP71dE2WojHsLjwrY7p0JNGJg6t3/mWQ1cqME++ReUqJOsf9
+	 5JL/eXDQ53YSwokj4zebSQ24qFfBR9oXw+KdOPTadUPsrhHmj9gHOre8M9R6nvLUt6
+	 iSxfuCikP5vJVesXzy6+NP5O9sTZ//4OIprG9WEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <groeck@chromium.org>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 10/92] pwm: cros-ec: Explicitly set .polarity in .get_state()
-Date: Tue, 18 Apr 2023 14:20:45 +0200
-Message-Id: <20230418120305.119692731@linuxfoundation.org>
+Subject: [PATCH 5.4 11/92] pwm: sprd: Explicitly set .polarity in .get_state()
+Date: Tue, 18 Apr 2023 14:20:46 +0200
+Message-Id: <20230418120305.157467859@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -38,33 +37,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 30006b77c7e130e01d1ab2148cc8abf73dfcc4bf ]
+[ Upstream commit 2be4dcf6627e1bcbbef8e6ba1811f5127d39202c ]
 
 The driver only supports normal polarity. Complete the implementation of
 .get_state() by setting .polarity accordingly.
 
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Fixes: 1f0d3bb02785 ("pwm: Add ChromeOS EC PWM driver")
-Link: https://lore.kernel.org/r/20230228135508.1798428-3-u.kleine-koenig@pengutronix.de
+Fixes: 8aae4b02e8a6 ("pwm: sprd: Add Spreadtrum PWM support")
+Link: https://lore.kernel.org/r/20230228135508.1798428-5-u.kleine-koenig@pengutronix.de
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-cros-ec.c | 1 +
+ drivers/pwm/pwm-sprd.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pwm/pwm-cros-ec.c b/drivers/pwm/pwm-cros-ec.c
-index 89497448d2177..ad4321f2b6f87 100644
---- a/drivers/pwm/pwm-cros-ec.c
-+++ b/drivers/pwm/pwm-cros-ec.c
-@@ -125,6 +125,7 @@ static void cros_ec_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
- 
- 	state->enabled = (ret > 0);
- 	state->period = EC_PWM_MAX_DUTY;
+diff --git a/drivers/pwm/pwm-sprd.c b/drivers/pwm/pwm-sprd.c
+index 892d853d48a1a..b30d664bf7d57 100644
+--- a/drivers/pwm/pwm-sprd.c
++++ b/drivers/pwm/pwm-sprd.c
+@@ -109,6 +109,7 @@ static void sprd_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	duty = val & SPRD_PWM_DUTY_MSK;
+ 	tmp = (prescale + 1) * NSEC_PER_SEC * duty;
+ 	state->duty_cycle = DIV_ROUND_CLOSEST_ULL(tmp, chn->clk_rate);
 +	state->polarity = PWM_POLARITY_NORMAL;
  
- 	/* Note that "disabled" and "duty cycle == 0" are treated the same */
- 	state->duty_cycle = ret;
+ 	/* Disable PWM clocks if the PWM channel is not in enable state. */
+ 	if (!state->enabled)
 -- 
 2.39.2
 
