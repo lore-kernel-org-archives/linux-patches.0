@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EB22572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1CFC433EF;
-	Tue, 18 Apr 2023 12:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382DF2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D88C433EF;
+	Tue, 18 Apr 2023 12:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822164;
-	bh=iu9wBuZ02aHx7fzvtDYgfYaQ2ZPGAD+kpBBVvDsJRyg=;
+	s=korg; t=1681822167;
+	bh=VGcpbzsup4Uq73RkhvEY94c7opY/O2aQ5Gq4NufBE1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWY895KP6wmyQVgQj5HgSb9HvInTnWJhsRMGd8dPEbxLqU/OzFBB5vZht5+E4xWlP
-	 qEEEw/aeou94efG6zyEGzhtp35LqGGlckzPJ38RN7HHKd4VGfONx9STqWo9IST0sif
-	 kfj1B0awI6cwlRFa+24B/JwRN2TWmjJLEIQCsqhk=
+	b=AByG7560/ngS20c7XZEBQ6asixhGW2pmecXOR2AhpP2OIkm8yZP7dZWOdqv/cb/Oq
+	 YMN/LWRMr9NJszkYflt+/fgEqXacbV4q7CZJmVoYmL/3ozOLzFPBu39xAFnKMPugXX
+	 grG+QZHnfB95HPKFE0J5UV4RLs7/mnqtTFPQNcOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Florent Revest <revest@chromium.org>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 047/139] 9p/xen : Fix use after free bug in xen_9pfs_front_remove due to race condition
-Date: Tue, 18 Apr 2023 14:21:52 +0200
-Message-Id: <20230418120315.442278518@linuxfoundation.org>
+Subject: [PATCH 6.2 048/139] bpf, arm64: Fixed a BTI error on returning to patched function
+Date: Tue, 18 Apr 2023 14:21:53 +0200
+Message-Id: <20230418120315.491278558@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,58 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-[ Upstream commit ea4f1009408efb4989a0f139b70fb338e7f687d0 ]
+[ Upstream commit 738a96c4a8c36950803fdd27e7c30aca92dccefd ]
 
-In xen_9pfs_front_probe, it calls xen_9pfs_front_alloc_dataring
-to init priv->rings and bound &ring->work with p9_xen_response.
+When BPF_TRAMP_F_CALL_ORIG is set, BPF trampoline uses BLR to jump
+back to the instruction next to call site to call the patched function.
+For BTI-enabled kernel, the instruction next to call site is usually
+PACIASP, in this case, it's safe to jump back with BLR. But when
+the call site is not followed by a PACIASP or bti, a BTI exception
+is triggered.
 
-When it calls xen_9pfs_front_event_handler to handle IRQ requests,
-it will finally call schedule_work to start the work.
+Here is a fault log:
 
-When we call xen_9pfs_front_remove to remove the driver, there
-may be a sequence as follows:
+ Unhandled 64-bit el1h sync exception on CPU0, ESR 0x0000000034000002 -- BTI
+ CPU: 0 PID: 263 Comm: test_progs Tainted: GF
+ Hardware name: linux,dummy-virt (DT)
+ pstate: 40400805 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=-c)
+ pc : bpf_fentry_test1+0xc/0x30
+ lr : bpf_trampoline_6442573892_0+0x48/0x1000
+ sp : ffff80000c0c3a50
+ x29: ffff80000c0c3a90 x28: ffff0000c2e6c080 x27: 0000000000000000
+ x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000050
+ x23: 0000000000000000 x22: 0000ffffcfd2a7f0 x21: 000000000000000a
+ x20: 0000ffffcfd2a7f0 x19: 0000000000000000 x18: 0000000000000000
+ x17: 0000000000000000 x16: 0000000000000000 x15: 0000ffffcfd2a7f0
+ x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+ x11: 0000000000000000 x10: ffff80000914f5e4 x9 : ffff8000082a1528
+ x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0101010101010101
+ x5 : 0000000000000000 x4 : 00000000fffffff2 x3 : 0000000000000001
+ x2 : ffff8001f4b82000 x1 : 0000000000000000 x0 : 0000000000000001
+ Kernel panic - not syncing: Unhandled exception
+ CPU: 0 PID: 263 Comm: test_progs Tainted: GF
+ Hardware name: linux,dummy-virt (DT)
+ Call trace:
+  dump_backtrace+0xec/0x144
+  show_stack+0x24/0x7c
+  dump_stack_lvl+0x8c/0xb8
+  dump_stack+0x18/0x34
+  panic+0x1cc/0x3ec
+  __el0_error_handler_common+0x0/0x130
+  el1h_64_sync_handler+0x60/0xd0
+  el1h_64_sync+0x78/0x7c
+  bpf_fentry_test1+0xc/0x30
+  bpf_fentry_test1+0xc/0x30
+  bpf_prog_test_run_tracing+0xdc/0x2a0
+  __sys_bpf+0x438/0x22a0
+  __arm64_sys_bpf+0x30/0x54
+  invoke_syscall+0x78/0x110
+  el0_svc_common.constprop.0+0x6c/0x1d0
+  do_el0_svc+0x38/0xe0
+  el0_svc+0x30/0xd0
+  el0t_64_sync_handler+0x1ac/0x1b0
+  el0t_64_sync+0x1a0/0x1a4
+ Kernel Offset: disabled
+ CPU features: 0x0000,00034c24,f994fdab
+ Memory Limit: none
 
-Fix it by finishing the work before cleanup in xen_9pfs_front_free.
+And the instruction next to call site of bpf_fentry_test1 is ADD,
+not PACIASP:
 
-Note that, this bug is found by static analysis, which might be
-false positive.
+<bpf_fentry_test1>:
+	bti     c
+	nop
+	nop
+	add     w0, w0, #0x1
+	paciasp
 
-CPU0                  CPU1
+For BPF prog, JIT always puts a PACIASP after call site for BTI-enabled
+kernel, so there is no problem. To fix it, replace BLR with RET to bypass
+the branch target check.
 
-                     |p9_xen_response
-xen_9pfs_front_remove|
-  xen_9pfs_front_free|
-kfree(priv)          |
-//free priv          |
-                     |p9_tag_lookup
-                     |//use priv->client
-
-Fixes: 71ebd71921e4 ("xen/9pfs: connect to the backend")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Fixes: efc9909fdce0 ("bpf, arm64: Add bpf trampoline for arm64")
+Reported-by: Florent Revest <revest@chromium.org>
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Florent Revest <revest@chromium.org>
+Acked-by: Florent Revest <revest@chromium.org>
+Link: https://lore.kernel.org/bpf/20230401234144.3719742-1-xukuohai@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/net/bpf_jit.h      | 4 ++++
+ arch/arm64/net/bpf_jit_comp.c | 3 ++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index c64050e839ac6..1fffe2bed5b02 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -280,6 +280,10 @@ static void xen_9pfs_front_free(struct xen_9pfs_front_priv *priv)
- 	write_unlock(&xen_9pfs_lock);
+diff --git a/arch/arm64/net/bpf_jit.h b/arch/arm64/net/bpf_jit.h
+index a6acb94ea3d63..c2edadb8ec6a3 100644
+--- a/arch/arm64/net/bpf_jit.h
++++ b/arch/arm64/net/bpf_jit.h
+@@ -281,4 +281,8 @@
+ /* DMB */
+ #define A64_DMB_ISH aarch64_insn_gen_dmb(AARCH64_INSN_MB_ISH)
  
- 	for (i = 0; i < priv->num_rings; i++) {
-+		struct xen_9pfs_dataring *ring = &priv->rings[i];
++/* ADR */
++#define A64_ADR(Rd, offset) \
++	aarch64_insn_gen_adr(0, offset, Rd, AARCH64_INSN_ADR_TYPE_ADR)
 +
-+		cancel_work_sync(&ring->work);
-+
- 		if (!priv->rings[i].intf)
- 			break;
- 		if (priv->rings[i].irq > 0)
+ #endif /* _BPF_JIT_H */
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 62f805f427b79..b26da8efa616e 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -1900,7 +1900,8 @@ static int prepare_trampoline(struct jit_ctx *ctx, struct bpf_tramp_image *im,
+ 		restore_args(ctx, args_off, nargs);
+ 		/* call original func */
+ 		emit(A64_LDR64I(A64_R(10), A64_SP, retaddr_off), ctx);
+-		emit(A64_BLR(A64_R(10)), ctx);
++		emit(A64_ADR(A64_LR, AARCH64_INSN_SIZE * 2), ctx);
++		emit(A64_RET(A64_R(10)), ctx);
+ 		/* store return value */
+ 		emit(A64_STR64I(A64_R(0), A64_SP, retval_off), ctx);
+ 		/* reserve a nop for bpf_tramp_image_put */
 -- 
 2.39.2
 
