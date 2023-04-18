@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE23B2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C91EC433D2;
-	Tue, 18 Apr 2023 12:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2972566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833ACC433EF;
+	Tue, 18 Apr 2023 12:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821256;
-	bh=H2HtnFPutSbT1AV3LWQ61DLo5X4z/uqzAVFuZdHElBM=;
+	s=korg; t=1681821261;
+	bh=eFPo3WGaTFUW+xRD0p37LAJxymtiGn9AHPBpN9sUYh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EXRdrKiGJhJeDLMbI5tXu04YVlSRba1lk1RughCxO5DK7ZCq7aQjLcZZx3pmV71Mc
-	 eIYcn6Apmjht+vRu+Yw5U0dJ5KE1oXCm+PD4YcRqewuROK+ji2NpA+WxFZdGoUcAbH
-	 /yADlnvYAU03nXmIeqt6prEt2VINJ5RuOe2cOL7k=
+	b=H4YjW6TNQxvcOPfdka9xHi2fIDJGKV/pjtbc1pA6vUfHu+NejAEzpeyrFcFWkAwMy
+	 iMaIMrzkWBHTWHxBG6OCUaGqvNKGA17lI9ZuURWWjaaWJJMep59kBEtwShiRdcu5ZD
+	 wiCA3kArrQHVWAmdTo/IUorp0vX+mpJzhMYyeUNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Biju Das <biju.das.jz@bp.renesas.com>
-Subject: [PATCH 5.10 028/124] tty: serial: sh-sci: Fix transmit end interrupt handler
-Date: Tue, 18 Apr 2023 14:20:47 +0200
-Message-Id: <20230418120310.762711076@linuxfoundation.org>
+	Sherry Sun <sherry.sun@nxp.com>
+Subject: [PATCH 5.10 030/124] tty: serial: fsl_lpuart: avoid checking for transfer complete when UARTCTRL_SBK is asserted in lpuart32_tx_empty
+Date: Tue, 18 Apr 2023 14:20:49 +0200
+Message-Id: <20230418120310.854389320@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,47 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-commit b43a18647f03c87e77d50d6fe74904b61b96323e upstream.
+commit 9425914f3de6febbd6250395f56c8279676d9c3c upstream.
 
-The fourth interrupt on SCI port is transmit end interrupt compared to
-the break interrupt on other port types. So, shuffle the interrupts to fix
-the transmit end interrupt handler.
+According to LPUART RM, Transmission Complete Flag becomes 0 if queuing
+a break character by writing 1 to CTRL[SBK], so here need to avoid
+checking for transmission complete when UARTCTRL_SBK is asserted,
+otherwise the lpuart32_tx_empty may never get TIOCSER_TEMT.
 
-Fixes: e1d0be616186 ("sh-sci: Add h8300 SCI")
+Commit 2411fd94ceaa("tty: serial: fsl_lpuart: skip waiting for
+transmission complete when UARTCTRL_SBK is asserted") only fix it in
+lpuart32_set_termios(), here also fix it in lpuart32_tx_empty().
+
+Fixes: 380c966c093e ("tty: serial: fsl_lpuart: add 32-bit register interface support")
 Cc: stable <stable@kernel.org>
-Suggested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20230317150403.154094-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20230323054415.20363-1-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/tty/serial/fsl_lpuart.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -31,6 +31,7 @@
- #include <linux/ioport.h>
- #include <linux/ktime.h>
- #include <linux/major.h>
-+#include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/mm.h>
- #include <linux/of.h>
-@@ -2923,6 +2924,13 @@ static int sci_init_single(struct platfo
- 			sci_port->irqs[i] = platform_get_irq(dev, i);
- 	}
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -809,11 +809,17 @@ static unsigned int lpuart32_tx_empty(st
+ 			struct lpuart_port, port);
+ 	unsigned long stat = lpuart32_read(port, UARTSTAT);
+ 	unsigned long sfifo = lpuart32_read(port, UARTFIFO);
++	unsigned long ctrl = lpuart32_read(port, UARTCTRL);
  
+ 	if (sport->dma_tx_in_progress)
+ 		return 0;
+ 
+-	if (stat & UARTSTAT_TC && sfifo & UARTFIFO_TXEMPT)
 +	/*
-+	 * The fourth interrupt on SCI port is transmit end interrupt, so
-+	 * shuffle the interrupts.
++	 * LPUART Transmission Complete Flag may never be set while queuing a break
++	 * character, so avoid checking for transmission complete when UARTCTRL_SBK
++	 * is asserted.
 +	 */
-+	if (p->type == PORT_SCI)
-+		swap(sci_port->irqs[SCIx_BRI_IRQ], sci_port->irqs[SCIx_TEI_IRQ]);
-+
- 	/* The SCI generates several interrupts. They can be muxed together or
- 	 * connected to different interrupt lines. In the muxed case only one
- 	 * interrupt resource is specified as there is only one interrupt ID.
++	if ((stat & UARTSTAT_TC && sfifo & UARTFIFO_TXEMPT) || ctrl & UARTCTRL_SBK)
+ 		return TIOCSER_TEMT;
+ 
+ 	return 0;
 
 
