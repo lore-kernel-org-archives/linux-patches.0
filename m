@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C7A2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:47:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E966C433EF;
-	Tue, 18 Apr 2023 12:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B6A2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:48:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F21C4339B;
+	Tue, 18 Apr 2023 12:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822077;
-	bh=2wA44kDtgI9IRu4YzCwgCu50ewXF20yfzD+KbsOE260=;
+	s=korg; t=1681822080;
+	bh=aXSOuYvmTIaGUJwOusY2pcfU4RwwyLNCWcxY7NsZPKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJ716IqCTzskK4PKp0/TLrpP9wwVaF5RU95xFkxr2AL5lkux4N6aV9hGAahy5H+v+
-	 iEfwR2Zg9/+6nT0g4sjlU3gngXpDxw7O3XRsB45i0kahcZfdmKuKckOJvpjSTDEf9J
-	 s29QItzMKBe54ya7HIlNLA4cs/JHO0azUS3T6uXU=
+	b=Ofc9t9SCq4ytg3w1P17YVULEbv9gVDHjW6LD0Du/y0aP93nrYisQiofYh9fXS8YbL
+	 2YoCIVHx1A20HQ3/OVJWpZK3CcRIkd+O6D0+nUDLpSxmdKVhq9/70Ur5UbPLCufLeL
+	 HF8ZJ1pMf87xUFNMF2G8FPeeu2Gs+ZJn95vlKiYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
+	Sasha Finkelstein <fnkl.kernel@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.2 014/139] Bluetooth: Fix race condition in hidp_session_thread
-Date: Tue, 18 Apr 2023 14:21:19 +0200
-Message-Id: <20230418120314.219818142@linuxfoundation.org>
+Subject: [PATCH 6.2 015/139] bluetooth: btbcm: Fix logic error in forming the board name.
+Date: Tue, 18 Apr 2023 14:21:20 +0200
+Message-Id: <20230418120314.253949729@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -34,52 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Min Li <lm0963hack@gmail.com>
+From: Sasha Finkelstein <fnkl.kernel@gmail.com>
 
-commit c95930abd687fcd1aa040dc4fe90dff947916460 upstream.
+commit b76abe4648c1acc791a207e7c08d1719eb9f4ea8 upstream.
 
-There is a potential race condition in hidp_session_thread that may
-lead to use-after-free. For instance, the timer is active while
-hidp_del_timer is called in hidp_session_thread(). After hidp_session_put,
-then 'session' will be freed, causing kernel panic when hidp_idle_timeout
-is running.
+This patch fixes an incorrect loop exit condition in code that replaces
+'/' symbols in the board name. There might also be a memory corruption
+issue here, but it is unlikely to be a real problem.
 
-The solution is to use del_timer_sync instead of del_timer.
-
-Here is the call trace:
-
-? hidp_session_probe+0x780/0x780
-call_timer_fn+0x2d/0x1e0
-__run_timers.part.0+0x569/0x940
-hidp_session_probe+0x780/0x780
-call_timer_fn+0x1e0/0x1e0
-ktime_get+0x5c/0xf0
-lapic_next_deadline+0x2c/0x40
-clockevents_program_event+0x205/0x320
-run_timer_softirq+0xa9/0x1b0
-__do_softirq+0x1b9/0x641
-__irq_exit_rcu+0xdc/0x190
-irq_exit_rcu+0xe/0x20
-sysvec_apic_timer_interrupt+0xa1/0xc0
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Min Li <lm0963hack@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Sasha Finkelstein <fnkl.kernel@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hidp/core.c |    2 +-
+ drivers/bluetooth/btbcm.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/hidp/core.c
-+++ b/net/bluetooth/hidp/core.c
-@@ -433,7 +433,7 @@ static void hidp_set_timer(struct hidp_s
- static void hidp_del_timer(struct hidp_session *session)
- {
- 	if (session->idle_to > 0)
--		del_timer(&session->timer);
-+		del_timer_sync(&session->timer);
- }
- 
- static void hidp_process_report(struct hidp_session *session, int type,
+--- a/drivers/bluetooth/btbcm.c
++++ b/drivers/bluetooth/btbcm.c
+@@ -511,7 +511,7 @@ static const char *btbcm_get_board_name(
+ 	len = strlen(tmp) + 1;
+ 	board_type = devm_kzalloc(dev, len, GFP_KERNEL);
+ 	strscpy(board_type, tmp, len);
+-	for (i = 0; i < board_type[i]; i++) {
++	for (i = 0; i < len; i++) {
+ 		if (board_type[i] == '/')
+ 			board_type[i] = '-';
+ 	}
 
 
