@@ -1,26 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEDB2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89295C4339B;
-	Tue, 18 Apr 2023 12:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56F92566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0167EC433D2;
+	Tue, 18 Apr 2023 12:36:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821416;
-	bh=31eF5yb0KysPbL63SCNaPAF3q6TJvNb+VehVv6PYndY=;
+	s=korg; t=1681821419;
+	bh=VCwMMj2q4qUoHuODRqKDgoLte/T7yupow6Vv8LVr/gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EcHQWUvhuWWb19qekKkHuAQ3bu3ikZ38EeN6D4ryzmMHvv56UYxYhzgYUG+U9kR7Q
-	 QaczlYJ6BT41pY31r4tadAdBQBeS9NCbdP7KKQqXU2CqJ6h1ReowoombeUHPqwRI+q
-	 BzUmHx28Xvn83db0fN9lw37iLk3i6NJATswR4amQ=
+	b=FytK8itgNs8sWjbg3UmWLfjnoZcpF1fUjFGX/0c4bLU7u1tU3kIyK9gnocRVOBDWo
+	 Q7n2TNqOLEQe4VQgPIOm/Rh2+yYG0eUwksb5i7Pwku/QieFbWC1bQt13FE4O/kiF5k
+	 u5/XwYiwhclY6eYcbWYfD2PJw40aLMzWXYd826q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 5.10 117/124] kbuild: check the minimum assembler version in Kconfig
-Date: Tue, 18 Apr 2023 14:22:16 +0200
-Message-Id: <20230418120314.029001297@linuxfoundation.org>
+	Robbie Harwood <rharwood@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	keyrings@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	kexec@lists.infradead.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 091/124] verify_pefile: relax wrapper length check
+Date: Tue, 18 Apr 2023 14:21:50 +0200
+Message-Id: <20230418120313.157770104@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -34,237 +41,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Robbie Harwood <rharwood@redhat.com>
 
-commit ba64beb17493a4bfec563100c86a462a15926f24 upstream.
+[ Upstream commit 4fc5c74dde69a7eda172514aaeb5a7df3600adb3 ]
 
-Documentation/process/changes.rst defines the minimum assembler version
-(binutils version), but we have never checked it in the build time.
+The PE Format Specification (section "The Attribute Certificate Table
+(Image Only)") states that `dwLength` is to be rounded up to 8-byte
+alignment when used for traversal.  Therefore, the field is not required
+to be an 8-byte multiple in the first place.
 
-Kbuild never invokes 'as' directly because all assembly files in the
-kernel tree are *.S, hence must be preprocessed. I do not expect
-raw assembly source files (*.s) would be added to the kernel tree.
+Accordingly, pesign has not performed this alignment since version
+0.110.  This causes kexec failure on pesign'd binaries with "PEFILE:
+Signature wrapper len wrong".  Update the comment and relax the check.
 
-Therefore, we always use $(CC) as the assembler driver, and commit
-aa824e0c962b ("kbuild: remove AS variable") removed 'AS'. However,
-we are still interested in the version of the assembler acting behind.
-
-As usual, the --version option prints the version string.
-
-  $ as --version | head -n 1
-  GNU assembler (GNU Binutils for Ubuntu) 2.35.1
-
-But, we do not have $(AS). So, we can add the -Wa prefix so that
-$(CC) passes --version down to the backing assembler.
-
-  $ gcc -Wa,--version | head -n 1
-  gcc: fatal error: no input files
-  compilation terminated.
-
-OK, we need to input something to satisfy gcc.
-
-  $ gcc -Wa,--version -c -x assembler /dev/null -o /dev/null | head -n 1
-  GNU assembler (GNU Binutils for Ubuntu) 2.35.1
-
-The combination of Clang and GNU assembler works in the same way:
-
-  $ clang -no-integrated-as -Wa,--version -c -x assembler /dev/null -o /dev/null | head -n 1
-  GNU assembler (GNU Binutils for Ubuntu) 2.35.1
-
-Clang with the integrated assembler fails like this:
-
-  $ clang -integrated-as -Wa,--version -c -x assembler /dev/null -o /dev/null | head -n 1
-  clang: error: unsupported argument '--version' to option 'Wa,'
-
-For the last case, checking the error message is fragile. If the
-proposal for -Wa,--version support [1] is accepted, this may not be
-even an error in the future.
-
-One easy way is to check if -integrated-as is present in the passed
-arguments. We did not pass -integrated-as to CLANG_FLAGS before, but
-we can make it explicit.
-
-Nathan pointed out -integrated-as is the default for all of the
-architectures/targets that the kernel cares about, but it goes
-along with "explicit is better than implicit" policy. [2]
-
-With all this in my mind, I implemented scripts/as-version.sh to
-check the assembler version in Kconfig time.
-
-  $ scripts/as-version.sh gcc
-  GNU 23501
-  $ scripts/as-version.sh clang -no-integrated-as
-  GNU 23501
-  $ scripts/as-version.sh clang -integrated-as
-  LLVM 0
-
-[1]: https://github.com/ClangBuiltLinux/linux/issues/1320
-[2]: https://lore.kernel.org/linux-kbuild/20210307044253.v3h47ucq6ng25iay@archlinux-ax161/
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-[nathan: Backport to 5.10. Drop minimum version checking, as it is not
-         required in 5.10]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Robbie Harwood <rharwood@redhat.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Jarkko Sakkinen <jarkko@kernel.org>
+cc: Eric Biederman <ebiederm@xmission.com>
+cc: Herbert Xu <herbert@gondor.apana.org.au>
+cc: keyrings@vger.kernel.org
+cc: linux-crypto@vger.kernel.org
+cc: kexec@lists.infradead.org
+Link: https://learn.microsoft.com/en-us/windows/win32/debug/pe-format#the-attribute-certificate-table-image-only
+Link: https://github.com/rhboot/pesign
+Link: https://lore.kernel.org/r/20230220171254.592347-2-rharwood@redhat.com/ # v2
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile                |    4 ++
- init/Kconfig            |   12 ++++++++
- scripts/Kconfig.include |    6 ++++
- scripts/as-version.sh   |   69 ++++++++++++++++++++++++++++++++++++++++++++++++
- scripts/dummy-tools/gcc |    6 ++++
- 5 files changed, 96 insertions(+), 1 deletion(-)
+ crypto/asymmetric_keys/verify_pefile.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 71caf5938361..44d9aff4f66a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -580,7 +580,9 @@ endif
- ifneq ($(GCC_TOOLCHAIN),)
- CLANG_FLAGS	+= --gcc-toolchain=$(GCC_TOOLCHAIN)
- endif
--ifneq ($(LLVM_IAS),1)
-+ifeq ($(LLVM_IAS),1)
-+CLANG_FLAGS	+= -integrated-as
-+else
- CLANG_FLAGS	+= -no-integrated-as
- endif
- CLANG_FLAGS	+= -Werror=unknown-warning-option
-diff --git a/init/Kconfig b/init/Kconfig
-index eba883d6d9ed..9807c66b24bb 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -47,6 +47,18 @@ config CLANG_VERSION
- 	int
- 	default $(shell,$(srctree)/scripts/clang-version.sh $(CC))
+diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
+index 7553ab18db898..fe1bb374239d7 100644
+--- a/crypto/asymmetric_keys/verify_pefile.c
++++ b/crypto/asymmetric_keys/verify_pefile.c
+@@ -135,11 +135,15 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
+ 	pr_debug("sig wrapper = { %x, %x, %x }\n",
+ 		 wrapper.length, wrapper.revision, wrapper.cert_type);
  
-+config AS_IS_GNU
-+	def_bool $(success,test "$(as-name)" = GNU)
-+
-+config AS_IS_LLVM
-+	def_bool $(success,test "$(as-name)" = LLVM)
-+
-+config AS_VERSION
-+	int
-+	# Use clang version if this is the integrated assembler
-+	default CLANG_VERSION if AS_IS_LLVM
-+	default $(as-version)
-+
- config LLD_VERSION
- 	int
- 	default $(shell,$(srctree)/scripts/lld-version.sh $(LD))
-diff --git a/scripts/Kconfig.include b/scripts/Kconfig.include
-index a5fe72c504ff..6d37cb780452 100644
---- a/scripts/Kconfig.include
-+++ b/scripts/Kconfig.include
-@@ -42,6 +42,12 @@ $(error-if,$(failure,command -v $(LD)),linker '$(LD)' not found)
- # Fail if the linker is gold as it's not capable of linking the kernel proper
- $(error-if,$(success, $(LD) -v | grep -q gold), gold linker '$(LD)' not supported)
- 
-+# Get the assembler name, version, and error out if it is not supported.
-+as-info := $(shell,$(srctree)/scripts/as-version.sh $(CC) $(CLANG_FLAGS))
-+$(error-if,$(success,test -z "$(as-info)"),Sorry$(comma) this assembler is not supported.)
-+as-name := $(shell,set -- $(as-info) && echo $1)
-+as-version := $(shell,set -- $(as-info) && echo $2)
-+
- # machine bit flags
- #  $(m32-flag): -m32 if the compiler supports it, or an empty string otherwise.
- #  $(m64-flag): -m64 if the compiler supports it, or an empty string otherwise.
-diff --git a/scripts/as-version.sh b/scripts/as-version.sh
-new file mode 100755
-index 000000000000..851dcb8a0e68
---- /dev/null
-+++ b/scripts/as-version.sh
-@@ -0,0 +1,69 @@
-+#!/bin/sh
-+# SPDX-License-Identifier: GPL-2.0-only
-+#
-+# Print the assembler name and its version in a 5 or 6-digit form.
-+# Also, perform the minimum version check.
-+# (If it is the integrated assembler, return 0 as the version, and
-+# skip the version check.)
-+
-+set -e
-+
-+# Convert the version string x.y.z to a canonical 5 or 6-digit form.
-+get_canonical_version()
-+{
-+	IFS=.
-+	set -- $1
-+
-+	# If the 2nd or 3rd field is missing, fill it with a zero.
-+	#
-+	# The 4th field, if present, is ignored.
-+	# This occurs in development snapshots as in 2.35.1.20201116
-+	echo $((10000 * $1 + 100 * ${2:-0} + ${3:-0}))
-+}
-+
-+# Clang fails to handle -Wa,--version unless -no-integrated-as is given.
-+# We check -(f)integrated-as, expecting it is explicitly passed in for the
-+# integrated assembler case.
-+check_integrated_as()
-+{
-+	while [ $# -gt 0 ]; do
-+		if [ "$1" = -integrated-as -o "$1" = -fintegrated-as ]; then
-+			# For the intergrated assembler, we do not check the
-+			# version here. It is the same as the clang version, and
-+			# it has been already checked by scripts/cc-version.sh.
-+			echo LLVM 0
-+			exit 0
-+		fi
-+		shift
-+	done
-+}
-+
-+check_integrated_as "$@"
-+
-+orig_args="$@"
-+
-+# Get the first line of the --version output.
-+IFS='
-+'
-+set -- $(LC_ALL=C "$@" -Wa,--version -c -x assembler /dev/null -o /dev/null 2>/dev/null)
-+
-+# Split the line on spaces.
-+IFS=' '
-+set -- $1
-+
-+if [ "$1" = GNU -a "$2" = assembler ]; then
-+	shift $(($# - 1))
-+	version=$1
-+	name=GNU
-+else
-+	echo "$orig_args: unknown assembler invoked" >&2
-+	exit 1
-+fi
-+
-+# Some distributions append a package release number, as in 2.34-4.fc32
-+# Trim the hyphen and any characters that follow.
-+version=${version%-*}
-+
-+cversion=$(get_canonical_version $version)
-+
-+echo $name $cversion
-diff --git a/scripts/dummy-tools/gcc b/scripts/dummy-tools/gcc
-index 346757a87dbc..485427f40dba 100755
---- a/scripts/dummy-tools/gcc
-+++ b/scripts/dummy-tools/gcc
-@@ -67,6 +67,12 @@ if arg_contain -E "$@"; then
- 	fi
- fi
- 
-+# To set CONFIG_AS_IS_GNU
-+if arg_contain -Wa,--version "$@"; then
-+	echo "GNU assembler (scripts/dummy-tools) 2.50"
-+	exit 0
-+fi
-+
- if arg_contain -S "$@"; then
- 	# For scripts/gcc-x86-*-has-stack-protector.sh
- 	if arg_contain -fstack-protector "$@"; then
-
+-	/* Both pesign and sbsign round up the length of certificate table
+-	 * (in optional header data directories) to 8 byte alignment.
++	/* sbsign rounds up the length of certificate table (in optional
++	 * header data directories) to 8 byte alignment.  However, the PE
++	 * specification states that while entries are 8-byte aligned, this is
++	 * not included in their length, and as a result, pesign has not
++	 * rounded up since 0.110.
+ 	 */
+-	if (round_up(wrapper.length, 8) != ctx->sig_len) {
+-		pr_debug("Signature wrapper len wrong\n");
++	if (wrapper.length > ctx->sig_len) {
++		pr_debug("Signature wrapper bigger than sig len (%x > %x)\n",
++			 ctx->sig_len, wrapper.length);
+ 		return -ELIBBAD;
+ 	}
+ 	if (wrapper.revision != WIN_CERT_REVISION_2_0) {
 -- 
-2.40.0
+2.39.2
 
 
 
