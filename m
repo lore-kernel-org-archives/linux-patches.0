@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE19D2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38632C433D2;
-	Tue, 18 Apr 2023 12:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B4D2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB3FC433EF;
+	Tue, 18 Apr 2023 12:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821541;
-	bh=gJleLW6bg7ntG8ihwYxRUcJ0eA9AqXpPFHotb/8krJ8=;
+	s=korg; t=1681821544;
+	bh=WUaaaGwJN4mEYWWihbKguDhQj34VlKelfByeOIeWcAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIUSlWpJCMcUtA//XIzi44njz2tM8LEgW4lApFT0rXVsacBnpdHxHCLmD5OBSZ+8X
-	 a1TyMmJb6G41IdXiYzzOUxZEvvkw2sG80ro47McyDexOURJSQGFv9KyB2bA3LenH4X
-	 imsXIpcyDaUBy/+0ioJ2D/6JpERNqjVeN5KjmSIo=
+	b=hsIZXLcC7rrWb54HckQi0bSgo0yIIpufUbZ8987Ui0Q+j7dD7F4sj9TaJLduU8hzZ
+	 nM7DnbBnWXswavACi1hKp+23tpWfyfaNnZpIoSjbpAPUrelATwVe2jNAHK099O3j2w
+	 q647jnA8cAXPclColfOeEGjXF14zw2uw63R9nsL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Nikolay Borisov <nborisov@suse.com>,
+	Christoph Hellwig <hch@lst.de>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 10/91] btrfs: print checksum type and implementation at mount time
-Date: Tue, 18 Apr 2023 14:21:14 +0200
-Message-Id: <20230418120305.904694785@linuxfoundation.org>
+Subject: [PATCH 5.15 11/91] btrfs: fix fast csum implementation detection
+Date: Tue, 18 Apr 2023 14:21:15 +0200
+Message-Id: <20230418120305.944836251@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -35,40 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Sterba <dsterba@suse.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit c8a5f8ca9a9c7d5c5bc31d54f47ea9d86f93ed69 upstream.
+commit 68d99ab0e9221ef54506f827576c5a914680eeaf upstream.
 
-Per user request, print the checksum type and implementation at mount
-time among the messages. The checksum is user configurable and the
-actual crypto implementation is useful to see for performance reasons.
-The same information is also available after mount in
-/sys/fs/FSID/checksum file.
+The BTRFS_FS_CSUM_IMPL_FAST flag is currently set whenever a non-generic
+crc32c is detected, which is the incorrect check if the file system uses
+a different checksumming algorithm.  Refactor the code to only check
+this if crc32c is actually used.  Note that in an ideal world the
+information if an algorithm is hardware accelerated or not should be
+provided by the crypto API instead, but that's left for another day.
 
-Example:
-
-  [25.323662] BTRFS info (device vdb): using sha256 (sha256-generic) checksum algorithm
-
-Link: https://github.com/kdave/btrfs-progs/issues/483
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Nikolay Borisov <nborisov@suse.com>
+CC: stable@vger.kernel.org # 5.4.x: c8a5f8ca9a9c: btrfs: print checksum type and implementation at mount time
+CC: stable@vger.kernel.org # 5.4.x
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/disk-io.c |   14 ++++++++++++++
+ fs/btrfs/super.c   |    2 --
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
 --- a/fs/btrfs/disk-io.c
 +++ b/fs/btrfs/disk-io.c
-@@ -2318,6 +2318,9 @@ static int btrfs_init_csum_hash(struct b
+@@ -2318,6 +2318,20 @@ static int btrfs_init_csum_hash(struct b
  
  	fs_info->csum_shash = csum_shash;
  
-+	btrfs_info(fs_info, "using %s (%s) checksum algorithm",
-+			btrfs_super_csum_name(csum_type),
-+			crypto_shash_driver_name(csum_shash));
- 	return 0;
- }
- 
++	/*
++	 * Check if the checksum implementation is a fast accelerated one.
++	 * As-is this is a bit of a hack and should be replaced once the csum
++	 * implementations provide that information themselves.
++	 */
++	switch (csum_type) {
++	case BTRFS_CSUM_TYPE_CRC32:
++		if (!strstr(crypto_shash_driver_name(csum_shash), "generic"))
++			set_bit(BTRFS_FS_CSUM_IMPL_FAST, &fs_info->flags);
++		break;
++	default:
++		break;
++	}
++
+ 	btrfs_info(fs_info, "using %s (%s) checksum algorithm",
+ 			btrfs_super_csum_name(csum_type),
+ 			crypto_shash_driver_name(csum_shash));
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1749,8 +1749,6 @@ static struct dentry *btrfs_mount_root(s
+ 	} else {
+ 		snprintf(s->s_id, sizeof(s->s_id), "%pg", bdev);
+ 		btrfs_sb(s)->bdev_holder = fs_type;
+-		if (!strstr(crc32c_impl(), "generic"))
+-			set_bit(BTRFS_FS_CSUM_IMPL_FAST, &fs_info->flags);
+ 		error = btrfs_fill_super(s, fs_devices, data);
+ 	}
+ 	if (!error)
 
 
