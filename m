@@ -1,32 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85032566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB46C433EF;
-	Tue, 18 Apr 2023 12:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444AF2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB77C433EF;
+	Tue, 18 Apr 2023 12:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821032;
-	bh=UdfLNpzNXIU8RRCdHeHy5c8lo2uTtmZZEQ1ODzw6GGg=;
+	s=korg; t=1681821035;
+	bh=6XhEvYrJCTz1ciT2/7zgYjLxhKowSkg9Bsv+rqrzEZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kfiLH4SMitBTRn9O81fC5EJvyPb2xAUB7Gqoj2pbmBkuacgCtKmeFy1hNowXqLxWr
-	 USEYsgDRt0cGktCfNI1+nsUBKSA6PUUfDKSBU26vyuBK6pJOXBHGZgLHTbASOtEhKT
-	 Fu4qM1JM6NWLe4fQYrDk05KoPqZdP/YK88ESfOvU=
+	b=ItxwECczqvX3kxR3ZB+sMywC/1vKtQqf1xVdvfkzIBw8YrRT6uDcC1kTwjUpHrOlg
+	 58HtvHz5lm3ceiIV8CDz7ZwZQtn/nHFJjng3zco83+l/oXqhbL30ImswLIJRfHNt/E
+	 /5oCNRW7C0iCrKV6u005MDTbqM2gSFMZTo3//Q/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 36/92] tracing: Free error logs of tracing instances
-Date: Tue, 18 Apr 2023 14:21:11 +0200
-Message-Id: <20230418120306.110227180@linuxfoundation.org>
+	Pratyush Yadav <ptyadav@amazon.de>
+Subject: [PATCH 5.4 37/92] net_sched: prevent NULL dereference if default qdisc setup failed
+Date: Tue, 18 Apr 2023 14:21:12 +0200
+Message-Id: <20230418120306.139900500@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -40,93 +33,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Pratyush Yadav <ptyadav@amazon.de>
 
-commit 3357c6e429643231e60447b52ffbb7ac895aca22 upstream.
+If qdisc_create_dflt() fails, it returns NULL. With CONFIG_NET_SCHED
+enabled, the check qdisc != &noop_qdisc passes and qdisc will be passed
+to qdisc_hash_add(), which dereferences it.
 
-When a tracing instance is removed, the error messages that hold errors
-that occurred in the instance needs to be freed. The following reports a
-memory leak:
+This assignment was present in the upstream commit 5891cd5ec46c2
+("net_sched: add __rcu annotation to netdev->qdisc") but was missed in
+the backport 22d95b5449249 ("net_sched: add __rcu annotation to
+netdev->qdisc"), perhaps due to merge conflicts.  dev->qdisc is
+&noop_qdisc by default and if qdisc_create_dflt() fails, this assignment
+will make sure qdisc == &noop_qdisc and no NULL dereference will take
+place.
 
- # cd /sys/kernel/tracing
- # mkdir instances/foo
- # echo 'hist:keys=x' > instances/foo/events/sched/sched_switch/trigger
- # cat instances/foo/error_log
- [  117.404795] hist:sched:sched_switch: error: Couldn't find field
-   Command: hist:keys=x
-                      ^
- # rmdir instances/foo
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
 
-Then check for memory leaks:
-
- # echo scan > /sys/kernel/debug/kmemleak
- # cat /sys/kernel/debug/kmemleak
-unreferenced object 0xffff88810d8ec700 (size 192):
-  comm "bash", pid 869, jiffies 4294950577 (age 215.752s)
-  hex dump (first 32 bytes):
-    60 dd 68 61 81 88 ff ff 60 dd 68 61 81 88 ff ff  `.ha....`.ha....
-    a0 30 8c 83 ff ff ff ff 26 00 0a 00 00 00 00 00  .0......&.......
-  backtrace:
-    [<00000000dae26536>] kmalloc_trace+0x2a/0xa0
-    [<00000000b2938940>] tracing_log_err+0x277/0x2e0
-    [<000000004a0e1b07>] parse_atom+0x966/0xb40
-    [<0000000023b24337>] parse_expr+0x5f3/0xdb0
-    [<00000000594ad074>] event_hist_trigger_parse+0x27f8/0x3560
-    [<00000000293a9645>] trigger_process_regex+0x135/0x1a0
-    [<000000005c22b4f2>] event_trigger_write+0x87/0xf0
-    [<000000002cadc509>] vfs_write+0x162/0x670
-    [<0000000059c3b9be>] ksys_write+0xca/0x170
-    [<00000000f1cddc00>] do_syscall_64+0x3e/0xc0
-    [<00000000868ac68c>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
-unreferenced object 0xffff888170c35a00 (size 32):
-  comm "bash", pid 869, jiffies 4294950577 (age 215.752s)
-  hex dump (first 32 bytes):
-    0a 20 20 43 6f 6d 6d 61 6e 64 3a 20 68 69 73 74  .  Command: hist
-    3a 6b 65 79 73 3d 78 0a 00 00 00 00 00 00 00 00  :keys=x.........
-  backtrace:
-    [<000000006a747de5>] __kmalloc+0x4d/0x160
-    [<000000000039df5f>] tracing_log_err+0x29b/0x2e0
-    [<000000004a0e1b07>] parse_atom+0x966/0xb40
-    [<0000000023b24337>] parse_expr+0x5f3/0xdb0
-    [<00000000594ad074>] event_hist_trigger_parse+0x27f8/0x3560
-    [<00000000293a9645>] trigger_process_regex+0x135/0x1a0
-    [<000000005c22b4f2>] event_trigger_write+0x87/0xf0
-    [<000000002cadc509>] vfs_write+0x162/0x670
-    [<0000000059c3b9be>] ksys_write+0xca/0x170
-    [<00000000f1cddc00>] do_syscall_64+0x3e/0xc0
-    [<00000000868ac68c>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-The problem is that the error log needs to be freed when the instance is
-removed.
-
-Link: https://lore.kernel.org/lkml/76134d9f-a5ba-6a0d-37b3-28310b4a1e91@alu.unizg.hr/
-Link: https://lore.kernel.org/linux-trace-kernel/20230404194504.5790b95f@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Eric Biggers <ebiggers@kernel.org>
-Fixes: 2f754e771b1a6 ("tracing: Have the error logs show up in the proper instances")
-Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 22d95b5449249 ("net_sched: add __rcu annotation to netdev->qdisc")
+Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
 ---
- kernel/trace/trace.c |    1 +
+ net/sched/sch_generic.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8542,6 +8542,7 @@ static int __remove_instance(struct trac
- 	ftrace_destroy_function_files(tr);
- 	tracefs_remove_recursive(tr->dir);
- 	free_trace_buffers(tr);
-+	clear_tracing_err_log(tr);
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -1116,6 +1116,7 @@ static void attach_default_qdiscs(struct
+ 			qdisc->ops->attach(qdisc);
+ 		}
+ 	}
++	qdisc = rtnl_dereference(dev->qdisc);
  
- 	for (i = 0; i < tr->nr_topts; i++) {
- 		kfree(tr->topts[i].topts);
+ #ifdef CONFIG_NET_SCHED
+ 	if (qdisc != &noop_qdisc)
 
 
