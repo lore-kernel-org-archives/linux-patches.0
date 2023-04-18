@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C22D2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF74CC433D2;
-	Tue, 18 Apr 2023 12:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFACB2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6683FC4339B;
+	Tue, 18 Apr 2023 12:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822336;
-	bh=OdXT5sRbrc2E28mPDHb4YEnv6+ZmVGqouxzMZZu68ms=;
+	s=korg; t=1681822338;
+	bh=5K+7JddlZrFYjRS2PhmvsYrGA2j2H6kx3Hz5/jx7L/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dobcuCflhb8RPVJ/MEM62osu20Rf9mpsBDWOFMuh7kKlKtRvkcZXG24uyL99XNdx3
-	 pqXAFkNDLXKpPPujh26+OHI6J1e+aawGlB//o2tiFkXwv0uF9HGkfIdHo4ru8bIoEI
-	 TVjsw+LIc9MwAqKUU+d4YfeN6s1MHm09ojeykKxo=
+	b=O6fCJSWhX3Hz1QNVSVnFfRzjR0AXZqbtRpXPnwSotha/UW5LRIIV5veAhtaV/tD5g
+	 BdfVdBKpLxz35BLRYDhjHHuyaAqi0xpY5k4n376uqLPQqa0BcuaPkS3dhUKux31dM2
+	 h+7bMsEkAEdF9QBX1OB/P5Vw/OXUldMoY9dl2tMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Salvaterra <rsalvaterra@gmail.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"6 . 2+" <stable@kernel.org>
-Subject: [PATCH 6.2 112/139] thermal: intel: Avoid updating unsupported THERM_STATUS_CLEAR mask bits
-Date: Tue, 18 Apr 2023 14:22:57 +0200
-Message-Id: <20230418120317.972014393@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.2 113/139] drm/amd/pm: correct the pcie link state check for SMU13
+Date: Tue, 18 Apr 2023 14:22:58 +0200
+Message-Id: <20230418120318.010994754@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,137 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Evan Quan <evan.quan@amd.com>
 
-commit 117e4e5bd9d47b89777dbf6b37a709dcfe59520f upstream.
+commit b9a24d8bd51e2db425602fa82d7f4c06aa3db852 upstream.
 
-Some older processors don't allow BIT(13) and BIT(15) in the current
-mask set by "THERM_STATUS_CLEAR_CORE_MASK". This results in:
+Update the driver implementations to fit those data exposed
+by PMFW.
 
-unchecked MSR access error: WRMSR to 0x19c (tried to
-write 0x000000000000aaa8) at rIP: 0xffffffff816f66a6
-(throttle_active_work+0xa6/0x1d0)
-
-To avoid unchecked MSR issues, check CPUID for each relevant feature and
-use that information to set the supported feature bits only in the
-"clear" mask for cores. Do the same for the analogous package mask set
-by "THERM_STATUS_CLEAR_PKG_MASK".
-
-Introduce functions thermal_intr_init_core_clear_mask() and
-thermal_intr_init_pkg_clear_mask() to set core and package mask bits,
-respectively. These functions are called during initialization.
-
-Fixes: 6fe1e64b6026 ("thermal: intel: Prevent accidental clearing of HFI status")
-Reported-by: Rui Salvaterra <rsalvaterra@gmail.com>
-Link: https://lore.kernel.org/lkml/cdf43fb423368ee3994124a9e8c9b4f8d00712c6.camel@linux.intel.com/T/
-Tested-by: Rui Salvaterra <rsalvaterra@gmail.com>
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: 6.2+ <stable@kernel.org> # 6.2+
-[ rjw: Renamed 2 funtions and 2 static variables, edited subject and
-  changelog ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/therm_throt.c |   73 ++++++++++++++++++++++++++++++++----
- 1 file changed, 66 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h         |    6 ++++++
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |    4 ++--
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |    4 ++--
+ 3 files changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/thermal/intel/therm_throt.c
-+++ b/drivers/thermal/intel/therm_throt.c
-@@ -193,8 +193,67 @@ static const struct attribute_group ther
- #define THERM_THROT_POLL_INTERVAL	HZ
- #define THERM_STATUS_PROCHOT_LOG	BIT(1)
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
+@@ -61,6 +61,12 @@
+ #define CTF_OFFSET_HOTSPOT		5
+ #define CTF_OFFSET_MEM			5
  
--#define THERM_STATUS_CLEAR_CORE_MASK (BIT(1) | BIT(3) | BIT(5) | BIT(7) | BIT(9) | BIT(11) | BIT(13) | BIT(15))
--#define THERM_STATUS_CLEAR_PKG_MASK  (BIT(1) | BIT(3) | BIT(5) | BIT(7) | BIT(9) | BIT(11))
-+static u64 therm_intr_core_clear_mask;
-+static u64 therm_intr_pkg_clear_mask;
++static const int pmfw_decoded_link_speed[5] = {1, 2, 3, 4, 5};
++static const int pmfw_decoded_link_width[7] = {0, 1, 2, 4, 8, 12, 16};
 +
-+static void thermal_intr_init_core_clear_mask(void)
-+{
-+	if (therm_intr_core_clear_mask)
-+		return;
++#define DECODE_GEN_SPEED(gen_speed_idx)		(pmfw_decoded_link_speed[gen_speed_idx])
++#define DECODE_LANE_WIDTH(lane_width_idx)	(pmfw_decoded_link_width[lane_width_idx])
 +
-+	/*
-+	 * Reference: Intel SDM  Volume 4
-+	 * "Table 2-2. IA-32 Architectural MSRs", MSR 0x19C
-+	 * IA32_THERM_STATUS.
-+	 */
-+
-+	/*
-+	 * Bit 1, 3, 5: CPUID.01H:EDX[22] = 1. This driver will not
-+	 * enable interrupts, when 0 as it checks for X86_FEATURE_ACPI.
-+	 */
-+	therm_intr_core_clear_mask = (BIT(1) | BIT(3) | BIT(5));
-+
-+	/*
-+	 * Bit 7 and 9: Thermal Threshold #1 and #2 log
-+	 * If CPUID.01H:ECX[8] = 1
-+	 */
-+	if (boot_cpu_has(X86_FEATURE_TM2))
-+		therm_intr_core_clear_mask |= (BIT(7) | BIT(9));
-+
-+	/* Bit 11: Power Limitation log (R/WC0) If CPUID.06H:EAX[4] = 1 */
-+	if (boot_cpu_has(X86_FEATURE_PLN))
-+		therm_intr_core_clear_mask |= BIT(11);
-+
-+	/*
-+	 * Bit 13: Current Limit log (R/WC0) If CPUID.06H:EAX[7] = 1
-+	 * Bit 15: Cross Domain Limit log (R/WC0) If CPUID.06H:EAX[7] = 1
-+	 */
-+	if (boot_cpu_has(X86_FEATURE_HWP))
-+		therm_intr_core_clear_mask |= (BIT(13) | BIT(15));
-+}
-+
-+static void thermal_intr_init_pkg_clear_mask(void)
-+{
-+	if (therm_intr_pkg_clear_mask)
-+		return;
-+
-+	/*
-+	 * Reference: Intel SDM  Volume 4
-+	 * "Table 2-2. IA-32 Architectural MSRs", MSR 0x1B1
-+	 * IA32_PACKAGE_THERM_STATUS.
-+	 */
-+
-+	/* All bits except BIT 26 depend on CPUID.06H: EAX[6] = 1 */
-+	if (boot_cpu_has(X86_FEATURE_PTS))
-+		therm_intr_pkg_clear_mask = (BIT(1) | BIT(3) | BIT(5) | BIT(7) | BIT(9) | BIT(11));
-+
-+	/*
-+	 * Intel SDM Volume 2A: Thermal and Power Management Leaf
-+	 * Bit 26: CPUID.06H: EAX[19] = 1
-+	 */
-+	if (boot_cpu_has(X86_FEATURE_HFI))
-+		therm_intr_pkg_clear_mask |= BIT(26);
-+}
+ struct smu_13_0_max_sustainable_clocks {
+ 	uint32_t display_clock;
+ 	uint32_t phy_clock;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -1125,8 +1125,8 @@ static int smu_v13_0_0_print_clk_levels(
+ 					(pcie_table->pcie_lane[i] == 5) ? "x12" :
+ 					(pcie_table->pcie_lane[i] == 6) ? "x16" : "",
+ 					pcie_table->clk_freq[i],
+-					((gen_speed - 1) == pcie_table->pcie_gen[i]) &&
+-					(lane_width == link_width[pcie_table->pcie_lane[i]]) ?
++					(gen_speed == DECODE_GEN_SPEED(pcie_table->pcie_gen[i])) &&
++					(lane_width == DECODE_LANE_WIDTH(link_width[pcie_table->pcie_lane[i]])) ?
+ 					"*" : "");
+ 		break;
  
- /*
-  * Clear the bits in package thermal status register for bit = 1
-@@ -207,13 +266,10 @@ void thermal_clear_package_intr_status(i
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -1074,8 +1074,8 @@ static int smu_v13_0_7_print_clk_levels(
+ 					(pcie_table->pcie_lane[i] == 5) ? "x12" :
+ 					(pcie_table->pcie_lane[i] == 6) ? "x16" : "",
+ 					pcie_table->clk_freq[i],
+-					(gen_speed == pcie_table->pcie_gen[i]) &&
+-					(lane_width == pcie_table->pcie_lane[i]) ?
++					(gen_speed == DECODE_GEN_SPEED(pcie_table->pcie_gen[i])) &&
++					(lane_width == DECODE_LANE_WIDTH(pcie_table->pcie_lane[i])) ?
+ 					"*" : "");
+ 		break;
  
- 	if (level == CORE_LEVEL) {
- 		msr  = MSR_IA32_THERM_STATUS;
--		msr_val = THERM_STATUS_CLEAR_CORE_MASK;
-+		msr_val = therm_intr_core_clear_mask;
- 	} else {
- 		msr  = MSR_IA32_PACKAGE_THERM_STATUS;
--		msr_val = THERM_STATUS_CLEAR_PKG_MASK;
--		if (boot_cpu_has(X86_FEATURE_HFI))
--			msr_val |= BIT(26);
--
-+		msr_val = therm_intr_pkg_clear_mask;
- 	}
- 
- 	msr_val &= ~bit_mask;
-@@ -708,6 +764,9 @@ void intel_init_thermal(struct cpuinfo_x
- 	h = THERMAL_APIC_VECTOR | APIC_DM_FIXED | APIC_LVT_MASKED;
- 	apic_write(APIC_LVTTHMR, h);
- 
-+	thermal_intr_init_core_clear_mask();
-+	thermal_intr_init_pkg_clear_mask();
-+
- 	rdmsr(MSR_IA32_THERM_INTERRUPT, l, h);
- 	if (cpu_has(c, X86_FEATURE_PLN) && !int_pln_enable)
- 		wrmsr(MSR_IA32_THERM_INTERRUPT,
 
 
