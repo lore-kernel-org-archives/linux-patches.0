@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004312566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B53EC433D2;
-	Tue, 18 Apr 2023 12:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948E52566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A740C433EF;
+	Tue, 18 Apr 2023 12:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820767;
-	bh=2T6rur25NKfmzE0lC8yrOcG5RkbSoPXJT7NLRZ6HSb4=;
+	s=korg; t=1681820770;
+	bh=sY350rwXdA0QhANuDelDQSa/2rjg2ZfGVj8/opnG3aM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Okys5XacU59hl+hltqBqhlYCeUNVlcfkwaId0ihuvwDhxxOfpkvXlvfKLy9DhtO3G
-	 aZ4obugekojSFD7tSv+D07I647ToHZsxvlfwDMrIe7gvNj3qhJ5+KjP+P9vzPfzKsq
-	 zAnhoWDeioK2VqvXo0WmrhhnNj2cwJnWoSBTYnN4=
+	b=Wq2mrKxCJLbogEYefmNJD3v5Ng+/4txBi4/1y7Tv3QWcEwMtLGL8d6elX8hzs3Spo
+	 lV+wJUHX2WZohsn7U+zeVC3GGJGC2HDHmU+j+iaOkfbJ1UeccKUYGIbpeGLndEYhHV
+	 tpeIv2NQQEU8Hpth6ja4hqcRqicsZ2gTSe4RVWJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Soller <jeremy@system76.com>,
-	Tim Crawford <tcrawford@system76.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 23/57] ALSA: hda/realtek: Add quirk for Clevo X370SNW
-Date: Tue, 18 Apr 2023 14:21:23 +0200
-Message-Id: <20230418120259.552890903@linuxfoundation.org>
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zhengjun Xing <zhengjun.xing@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 24/57] perf/core: Fix the same task check in perf_event_set_output
+Date: Tue, 18 Apr 2023 14:21:24 +0200
+Message-Id: <20230418120259.582043546@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -35,31 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Soller <jeremy@system76.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 36d4d213c6d4fffae2645a601e8ae996de4c3645 upstream.
+[ Upstream commit 24d3ae2f37d8bc3c14b31d353c5d27baf582b6a6 ]
 
-Fixes speaker output and headset detection on Clevo X370SNW.
+The same task check in perf_event_set_output has some potential issues
+for some usages.
 
-Signed-off-by: Jeremy Soller <jeremy@system76.com>
-Signed-off-by: Tim Crawford <tcrawford@system76.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230331162317.14992-1-tcrawford@system76.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For the current perf code, there is a problem if using of
+perf_event_open() to have multiple samples getting into the same mmap’d
+memory when they are both attached to the same process.
+https://lore.kernel.org/all/92645262-D319-4068-9C44-2409EF44888E@gmail.com/
+Because the event->ctx is not ready when the perf_event_set_output() is
+invoked in the perf_event_open().
+
+Besides the above issue, before the commit bd2756811766 ("perf: Rewrite
+core context handling"), perf record can errors out when sampling with
+a hardware event and a software event as below.
+ $ perf record -e cycles,dummy --per-thread ls
+ failed to mmap with 22 (Invalid argument)
+That's because that prior to the commit a hardware event and a software
+event are from different task context.
+
+The problem should be a long time issue since commit c3f00c70276d
+("perk: Separate find_get_context() from event initialization").
+
+The task struct is stored in the event->hw.target for each per-thread
+event. It is a more reliable way to determine whether two events are
+attached to the same task.
+
+The event->hw.target was also introduced several years ago by the
+commit 50f16a8bf9d7 ("perf: Remove type specific target pointers"). It
+can not only be used to fix the issue with the current code, but also
+back port to fix the issues with an older kernel.
+
+Note: The event->hw.target was introduced later than commit
+c3f00c70276d. The patch may cannot be applied between the commit
+c3f00c70276d and commit 50f16a8bf9d7. Anybody that wants to back-port
+this at that period may have to find other solutions.
+
+Fixes: c3f00c70276d ("perf: Separate find_get_context() from event initialization")
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Zhengjun Xing <zhengjun.xing@linux.intel.com>
+Link: https://lkml.kernel.org/r/20230322202449.512091-1-kan.liang@linux.intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/events/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -2556,6 +2556,7 @@ static const struct snd_pci_quirk alc882
- 	SND_PCI_QUIRK(0x1462, 0xda57, "MSI Z270-Gaming", ALC1220_FIXUP_GB_DUAL_CODECS),
- 	SND_PCI_QUIRK_VENDOR(0x1462, "MSI", ALC882_FIXUP_GPIO3),
- 	SND_PCI_QUIRK(0x147b, 0x107a, "Abit AW9D-MAX", ALC882_FIXUP_ABIT_AW9D_MAX),
-+	SND_PCI_QUIRK(0x1558, 0x3702, "Clevo X370SN[VW]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x50d3, "Clevo PC50[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x65d1, "Clevo PB51[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x65d2, "Clevo PB51R[CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 668e5492e4c4d..72ed3f3d078fc 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -10431,7 +10431,7 @@ perf_event_set_output(struct perf_event *event, struct perf_event *output_event)
+ 	/*
+ 	 * If its not a per-cpu rb, it must be the same task.
+ 	 */
+-	if (output_event->cpu == -1 && output_event->ctx != event->ctx)
++	if (output_event->cpu == -1 && output_event->hw.target != event->hw.target)
+ 		goto out;
+ 
+ 	/*
+-- 
+2.39.2
+
 
 
