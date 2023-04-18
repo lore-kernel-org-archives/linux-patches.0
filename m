@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78E12566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2C0C433EF;
-	Tue, 18 Apr 2023 12:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584182566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D096AC433EF;
+	Tue, 18 Apr 2023 12:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821369;
-	bh=aR5HqYXDIosARpzGY5pvgM/UXrnG0B8/kTybpgisEuc=;
+	s=korg; t=1681821372;
+	bh=OXvepQlQ/5N08bONYP+31CNVxstJgyDYCV+mZyFoU44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+TVoT7XnEQZ5q0z8RiT3pCJN4X9POghiQg0mVyWGU618JWfY4J2TUOOcXHJpzEet
-	 1OTcqyslEK4NQzdG6Z39MV0b/QLsRdJnUXUHmXX2uQF8aW08u5PJIT9VRjOhFHe2hC
-	 EKk/7gugBBGGXYWTvptxwUiA/+jP2E4pJKlU2020=
+	b=AQvtm3ewjraeI2MojzRAFpD8+Si4zzTikekseGcXq1ytlgN9CaORA+b8t5l0g1kGp
+	 gRqMag5Qtw7g8aNqzKfQKNdKpftLjwa4EW5gQPVjaubK6ew1EFsevxwFjsLVArePHH
+	 zpZivHxZb46gdOfbMnodjYpp1MoKMAWAqyQIfufE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Gibson <david@gibson.dropbear.id.au>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/124] powerpc/pseries: rename min_common_depth to primary_domain_index
-Date: Tue, 18 Apr 2023 14:22:00 +0200
-Message-Id: <20230418120313.503768348@linuxfoundation.org>
+Subject: [PATCH 5.10 102/124] powerpc/pseries: Rename TYPE1_AFFINITY to FORM1_AFFINITY
+Date: Tue, 18 Apr 2023 14:22:01 +0200
+Message-Id: <20230418120313.545026747@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -38,154 +38,166 @@ Content-Transfer-Encoding: 8bit
 
 From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
 
-[ Upstream commit 7e35ef662ca05c42dbc2f401bb76d9219dd7fd02 ]
+[ Upstream commit 0eacd06bb8adea8dd9edb0a30144166d9f227e64 ]
 
-No functional change in this patch.
+Also make related code cleanup that will allow adding FORM2_AFFINITY in
+later patches. No functional change in this patch.
 
 Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
 Reviewed-by: David Gibson <david@gibson.dropbear.id.au>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20210812132223.225214-2-aneesh.kumar@linux.ibm.com
+Link: https://lore.kernel.org/r/20210812132223.225214-3-aneesh.kumar@linux.ibm.com
 Stable-dep-of: b277fc793daf ("powerpc/papr_scm: Update the NUMA distance table for the target node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/numa.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ arch/powerpc/include/asm/firmware.h       |  4 +--
+ arch/powerpc/include/asm/prom.h           |  2 +-
+ arch/powerpc/kernel/prom_init.c           |  2 +-
+ arch/powerpc/mm/numa.c                    | 35 ++++++++++++++---------
+ arch/powerpc/platforms/pseries/firmware.c |  2 +-
+ 5 files changed, 26 insertions(+), 19 deletions(-)
 
+diff --git a/arch/powerpc/include/asm/firmware.h b/arch/powerpc/include/asm/firmware.h
+index aa6a5ef5d4830..0cf648d829f15 100644
+--- a/arch/powerpc/include/asm/firmware.h
++++ b/arch/powerpc/include/asm/firmware.h
+@@ -44,7 +44,7 @@
+ #define FW_FEATURE_OPAL		ASM_CONST(0x0000000010000000)
+ #define FW_FEATURE_SET_MODE	ASM_CONST(0x0000000040000000)
+ #define FW_FEATURE_BEST_ENERGY	ASM_CONST(0x0000000080000000)
+-#define FW_FEATURE_TYPE1_AFFINITY ASM_CONST(0x0000000100000000)
++#define FW_FEATURE_FORM1_AFFINITY ASM_CONST(0x0000000100000000)
+ #define FW_FEATURE_PRRN		ASM_CONST(0x0000000200000000)
+ #define FW_FEATURE_DRMEM_V2	ASM_CONST(0x0000000400000000)
+ #define FW_FEATURE_DRC_INFO	ASM_CONST(0x0000000800000000)
+@@ -69,7 +69,7 @@ enum {
+ 		FW_FEATURE_SPLPAR | FW_FEATURE_LPAR |
+ 		FW_FEATURE_CMO | FW_FEATURE_VPHN | FW_FEATURE_XCMO |
+ 		FW_FEATURE_SET_MODE | FW_FEATURE_BEST_ENERGY |
+-		FW_FEATURE_TYPE1_AFFINITY | FW_FEATURE_PRRN |
++		FW_FEATURE_FORM1_AFFINITY | FW_FEATURE_PRRN |
+ 		FW_FEATURE_HPT_RESIZE | FW_FEATURE_DRMEM_V2 |
+ 		FW_FEATURE_DRC_INFO | FW_FEATURE_BLOCK_REMOVE |
+ 		FW_FEATURE_PAPR_SCM | FW_FEATURE_ULTRAVISOR |
+diff --git a/arch/powerpc/include/asm/prom.h b/arch/powerpc/include/asm/prom.h
+index 324a13351749a..df9fec9d232cb 100644
+--- a/arch/powerpc/include/asm/prom.h
++++ b/arch/powerpc/include/asm/prom.h
+@@ -147,7 +147,7 @@ extern int of_read_drc_info_cell(struct property **prop,
+ #define OV5_MSI			0x0201	/* PCIe/MSI support */
+ #define OV5_CMO			0x0480	/* Cooperative Memory Overcommitment */
+ #define OV5_XCMO		0x0440	/* Page Coalescing */
+-#define OV5_TYPE1_AFFINITY	0x0580	/* Type 1 NUMA affinity */
++#define OV5_FORM1_AFFINITY	0x0580	/* FORM1 NUMA affinity */
+ #define OV5_PRRN		0x0540	/* Platform Resource Reassignment */
+ #define OV5_HP_EVT		0x0604	/* Hot Plug Event support */
+ #define OV5_RESIZE_HPT		0x0601	/* Hash Page Table resizing */
+diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
+index 9e71c0739f08d..a3bf3587a4162 100644
+--- a/arch/powerpc/kernel/prom_init.c
++++ b/arch/powerpc/kernel/prom_init.c
+@@ -1069,7 +1069,7 @@ static const struct ibm_arch_vec ibm_architecture_vec_template __initconst = {
+ #else
+ 		0,
+ #endif
+-		.associativity = OV5_FEAT(OV5_TYPE1_AFFINITY) | OV5_FEAT(OV5_PRRN),
++		.associativity = OV5_FEAT(OV5_FORM1_AFFINITY) | OV5_FEAT(OV5_PRRN),
+ 		.bin_opts = OV5_FEAT(OV5_RESIZE_HPT) | OV5_FEAT(OV5_HP_EVT),
+ 		.micro_checkpoint = 0,
+ 		.reserved0 = 0,
 diff --git a/arch/powerpc/mm/numa.c b/arch/powerpc/mm/numa.c
-index 275c60f92a7ce..a21f62fcda1e8 100644
+index a21f62fcda1e8..415cd3d258ff8 100644
 --- a/arch/powerpc/mm/numa.c
 +++ b/arch/powerpc/mm/numa.c
-@@ -51,7 +51,7 @@ EXPORT_SYMBOL(numa_cpu_lookup_table);
- EXPORT_SYMBOL(node_to_cpumask_map);
- EXPORT_SYMBOL(node_data);
+@@ -53,7 +53,10 @@ EXPORT_SYMBOL(node_data);
  
--static int min_common_depth;
-+static int primary_domain_index;
+ static int primary_domain_index;
  static int n_mem_addr_cells, n_mem_size_cells;
- static int form1_affinity;
+-static int form1_affinity;
++
++#define FORM0_AFFINITY 0
++#define FORM1_AFFINITY 1
++static int affinity_form;
  
-@@ -232,8 +232,8 @@ static int associativity_to_nid(const __be32 *associativity)
- 	if (!numa_enabled)
- 		goto out;
+ #define MAX_DISTANCE_REF_POINTS 4
+ static int distance_ref_points_depth;
+@@ -190,7 +193,7 @@ int __node_distance(int a, int b)
+ 	int i;
+ 	int distance = LOCAL_DISTANCE;
  
--	if (of_read_number(associativity, 1) >= min_common_depth)
--		nid = of_read_number(&associativity[min_common_depth], 1);
-+	if (of_read_number(associativity, 1) >= primary_domain_index)
-+		nid = of_read_number(&associativity[primary_domain_index], 1);
+-	if (!form1_affinity)
++	if (affinity_form == FORM0_AFFINITY)
+ 		return ((a == b) ? LOCAL_DISTANCE : REMOTE_DISTANCE);
  
- 	/* POWER4 LPAR uses 0xffff as invalid node */
- 	if (nid == 0xffff || nid >= nr_node_ids)
-@@ -284,9 +284,9 @@ int of_node_to_nid(struct device_node *device)
- }
- EXPORT_SYMBOL(of_node_to_nid);
- 
--static int __init find_min_common_depth(void)
-+static int __init find_primary_domain_index(void)
+ 	for (i = 0; i < distance_ref_points_depth; i++) {
+@@ -210,7 +213,7 @@ static void initialize_distance_lookup_table(int nid,
  {
--	int depth;
-+	int index;
+ 	int i;
+ 
+-	if (!form1_affinity)
++	if (affinity_form != FORM1_AFFINITY)
+ 		return;
+ 
+ 	for (i = 0; i < distance_ref_points_depth; i++) {
+@@ -289,6 +292,17 @@ static int __init find_primary_domain_index(void)
+ 	int index;
  	struct device_node *root;
  
++	/*
++	 * Check for which form of affinity.
++	 */
++	if (firmware_has_feature(FW_FEATURE_OPAL)) {
++		affinity_form = FORM1_AFFINITY;
++	} else if (firmware_has_feature(FW_FEATURE_FORM1_AFFINITY)) {
++		dbg("Using form 1 affinity\n");
++		affinity_form = FORM1_AFFINITY;
++	} else
++		affinity_form = FORM0_AFFINITY;
++
  	if (firmware_has_feature(FW_FEATURE_OPAL))
-@@ -326,7 +326,7 @@ static int __init find_min_common_depth(void)
+ 		root = of_find_node_by_path("/ibm,opal");
+ 	else
+@@ -318,23 +332,16 @@ static int __init find_primary_domain_index(void)
  	}
  
- 	if (form1_affinity) {
--		depth = of_read_number(distance_ref_points, 1);
-+		index = of_read_number(distance_ref_points, 1);
- 	} else {
+ 	distance_ref_points_depth /= sizeof(int);
+-
+-	if (firmware_has_feature(FW_FEATURE_OPAL) ||
+-	    firmware_has_feature(FW_FEATURE_TYPE1_AFFINITY)) {
+-		dbg("Using form 1 affinity\n");
+-		form1_affinity = 1;
+-	}
+-
+-	if (form1_affinity) {
+-		index = of_read_number(distance_ref_points, 1);
+-	} else {
++	if (affinity_form == FORM0_AFFINITY) {
  		if (distance_ref_points_depth < 2) {
  			printk(KERN_WARNING "NUMA: "
-@@ -334,7 +334,7 @@ static int __init find_min_common_depth(void)
+-				"short ibm,associativity-reference-points\n");
++			       "short ibm,associativity-reference-points\n");
  			goto err;
  		}
  
--		depth = of_read_number(&distance_ref_points[1], 1);
-+		index = of_read_number(&distance_ref_points[1], 1);
+ 		index = of_read_number(&distance_ref_points[1], 1);
++	} else {
++		index = of_read_number(distance_ref_points, 1);
  	}
  
  	/*
-@@ -348,7 +348,7 @@ static int __init find_min_common_depth(void)
- 	}
+diff --git a/arch/powerpc/platforms/pseries/firmware.c b/arch/powerpc/platforms/pseries/firmware.c
+index 4c7b7f5a2ebca..5d4c2bc20bbab 100644
+--- a/arch/powerpc/platforms/pseries/firmware.c
++++ b/arch/powerpc/platforms/pseries/firmware.c
+@@ -119,7 +119,7 @@ struct vec5_fw_feature {
  
- 	of_node_put(root);
--	return depth;
-+	return index;
- 
- err:
- 	of_node_put(root);
-@@ -437,16 +437,16 @@ int of_drconf_to_nid_single(struct drmem_lmb *lmb)
- 	int nid = default_nid;
- 	int rc, index;
- 
--	if ((min_common_depth < 0) || !numa_enabled)
-+	if ((primary_domain_index < 0) || !numa_enabled)
- 		return default_nid;
- 
- 	rc = of_get_assoc_arrays(&aa);
- 	if (rc)
- 		return default_nid;
- 
--	if (min_common_depth <= aa.array_sz &&
-+	if (primary_domain_index <= aa.array_sz &&
- 	    !(lmb->flags & DRCONF_MEM_AI_INVALID) && lmb->aa_index < aa.n_arrays) {
--		index = lmb->aa_index * aa.array_sz + min_common_depth - 1;
-+		index = lmb->aa_index * aa.array_sz + primary_domain_index - 1;
- 		nid = of_read_number(&aa.arrays[index], 1);
- 
- 		if (nid == 0xffff || nid >= nr_node_ids)
-@@ -708,18 +708,18 @@ static int __init parse_numa_properties(void)
- 		return -1;
- 	}
- 
--	min_common_depth = find_min_common_depth();
-+	primary_domain_index = find_primary_domain_index();
- 
--	if (min_common_depth < 0) {
-+	if (primary_domain_index < 0) {
- 		/*
--		 * if we fail to parse min_common_depth from device tree
-+		 * if we fail to parse primary_domain_index from device tree
- 		 * mark the numa disabled, boot with numa disabled.
- 		 */
- 		numa_enabled = false;
--		return min_common_depth;
-+		return primary_domain_index;
- 	}
- 
--	dbg("NUMA associativity depth for CPU/Memory: %d\n", min_common_depth);
-+	dbg("NUMA associativity depth for CPU/Memory: %d\n", primary_domain_index);
- 
- 	/*
- 	 * Even though we connect cpus to numa domains later in SMP
-@@ -926,7 +926,7 @@ static void __init find_possible_nodes(void)
- 			goto out;
- 	}
- 
--	max_nodes = of_read_number(&domains[min_common_depth], 1);
-+	max_nodes = of_read_number(&domains[primary_domain_index], 1);
- 	pr_info("Partition configured for %d NUMA nodes.\n", max_nodes);
- 
- 	for (i = 0; i < max_nodes; i++) {
-@@ -935,7 +935,7 @@ static void __init find_possible_nodes(void)
- 	}
- 
- 	prop_length /= sizeof(int);
--	if (prop_length > min_common_depth + 2)
-+	if (prop_length > primary_domain_index + 2)
- 		coregroup_enabled = 1;
- 
- out:
-@@ -1268,7 +1268,7 @@ int cpu_to_coregroup_id(int cpu)
- 		goto out;
- 
- 	index = of_read_number(associativity, 1);
--	if (index > min_common_depth + 1)
-+	if (index > primary_domain_index + 1)
- 		return of_read_number(&associativity[index - 1], 1);
- 
- out:
+ static __initdata struct vec5_fw_feature
+ vec5_fw_features_table[] = {
+-	{FW_FEATURE_TYPE1_AFFINITY,	OV5_TYPE1_AFFINITY},
++	{FW_FEATURE_FORM1_AFFINITY,	OV5_FORM1_AFFINITY},
+ 	{FW_FEATURE_PRRN,		OV5_PRRN},
+ 	{FW_FEATURE_DRMEM_V2,		OV5_DRMEM_V2},
+ 	{FW_FEATURE_DRC_INFO,		OV5_DRC_INFO},
 -- 
 2.39.2
 
