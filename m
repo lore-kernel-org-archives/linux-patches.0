@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD4E2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:40:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F811C433EF;
-	Tue, 18 Apr 2023 12:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3292572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:40:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40CC8C433EF;
+	Tue, 18 Apr 2023 12:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821634;
-	bh=VCwMMj2q4qUoHuODRqKDgoLte/T7yupow6Vv8LVr/gY=;
+	s=korg; t=1681821637;
+	bh=n58u0Tbsa25gml142dB+NUX9VNi3p/SJgdxipmZoWRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l4xh4h+eCEXXX9Ut5/f/cU8rxt/OtwjyHQ3nlpmLoC9P8b6BZ3lBDHL5QWU+gGJQX
-	 Mbo54vDNHCjUkL7y819xbfFN3VyQcKbqgSaBTTiou+f4x97NCz608EZTbcAoh0l5qU
-	 mQNzZPT3VsW8HcYnR1kxQgKaxT1OSQ74TE7F6tuM=
+	b=CJrvuQKc44Kmzf/fKIJlIRalm0OAxyyKxD9By9HD7tf8mtyJlEUVZsezunHUZcU4U
+	 YJG2jcxhOnOzK8G8crOOyfWaBpv8g4iDLaRFsrtdLIpm/j5K+SVjNTk8ygM0ZabDj2
+	 H9aAkQ/DWOErxghPjKNwhYHVpM3L9pQiAjfSyLCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robbie Harwood <rharwood@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	keyrings@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	kexec@lists.infradead.org,
+	Liang Chen <liangchen.linux@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 45/91] verify_pefile: relax wrapper length check
-Date: Tue, 18 Apr 2023 14:21:49 +0200
-Message-Id: <20230418120307.142778932@linuxfoundation.org>
+Subject: [PATCH 5.15 36/91] skbuff: Fix a race between coalescing and releasing SKBs
+Date: Tue, 18 Apr 2023 14:21:40 +0200
+Message-Id: <20230418120306.837235565@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -41,59 +36,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robbie Harwood <rharwood@redhat.com>
+From: Liang Chen <liangchen.linux@gmail.com>
 
-[ Upstream commit 4fc5c74dde69a7eda172514aaeb5a7df3600adb3 ]
+[ Upstream commit 0646dc31ca886693274df5749cd0c8c1eaaeb5ca ]
 
-The PE Format Specification (section "The Attribute Certificate Table
-(Image Only)") states that `dwLength` is to be rounded up to 8-byte
-alignment when used for traversal.  Therefore, the field is not required
-to be an 8-byte multiple in the first place.
+Commit 1effe8ca4e34 ("skbuff: fix coalescing for page_pool fragment
+recycling") allowed coalescing to proceed with non page pool page and page
+pool page when @from is cloned, i.e.
 
-Accordingly, pesign has not performed this alignment since version
-0.110.  This causes kexec failure on pesign'd binaries with "PEFILE:
-Signature wrapper len wrong".  Update the comment and relax the check.
+to->pp_recycle    --> false
+from->pp_recycle  --> true
+skb_cloned(from)  --> true
 
-Signed-off-by: Robbie Harwood <rharwood@redhat.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Jarkko Sakkinen <jarkko@kernel.org>
-cc: Eric Biederman <ebiederm@xmission.com>
-cc: Herbert Xu <herbert@gondor.apana.org.au>
-cc: keyrings@vger.kernel.org
-cc: linux-crypto@vger.kernel.org
-cc: kexec@lists.infradead.org
-Link: https://learn.microsoft.com/en-us/windows/win32/debug/pe-format#the-attribute-certificate-table-image-only
-Link: https://github.com/rhboot/pesign
-Link: https://lore.kernel.org/r/20230220171254.592347-2-rharwood@redhat.com/ # v2
+However, it actually requires skb_cloned(@from) to hold true until
+coalescing finishes in this situation. If the other cloned SKB is
+released while the merging is in process, from_shinfo->nr_frags will be
+set to 0 toward the end of the function, causing the increment of frag
+page _refcount to be unexpectedly skipped resulting in inconsistent
+reference counts. Later when SKB(@to) is released, it frees the page
+directly even though the page pool page is still in use, leading to
+use-after-free or double-free errors. So it should be prohibited.
+
+The double-free error message below prompted us to investigate:
+BUG: Bad page state in process swapper/1  pfn:0e0d1
+page:00000000c6548b28 refcount:-1 mapcount:0 mapping:0000000000000000
+index:0x2 pfn:0xe0d1
+flags: 0xfffffc0000000(node=0|zone=1|lastcpupid=0x1fffff)
+raw: 000fffffc0000000 0000000000000000 ffffffff00000101 0000000000000000
+raw: 0000000000000002 0000000000000000 ffffffffffffffff 0000000000000000
+page dumped because: nonzero _refcount
+
+CPU: 1 PID: 0 Comm: swapper/1 Tainted: G            E      6.2.0+
+Call Trace:
+ <IRQ>
+dump_stack_lvl+0x32/0x50
+bad_page+0x69/0xf0
+free_pcp_prepare+0x260/0x2f0
+free_unref_page+0x20/0x1c0
+skb_release_data+0x10b/0x1a0
+napi_consume_skb+0x56/0x150
+net_rx_action+0xf0/0x350
+? __napi_schedule+0x79/0x90
+__do_softirq+0xc8/0x2b1
+__irq_exit_rcu+0xb9/0xf0
+common_interrupt+0x82/0xa0
+</IRQ>
+<TASK>
+asm_common_interrupt+0x22/0x40
+RIP: 0010:default_idle+0xb/0x20
+
+Fixes: 53e0961da1c7 ("page_pool: add frag page recycling support in page pool")
+Signed-off-by: Liang Chen <liangchen.linux@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230413090353.14448-1-liangchen.linux@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/verify_pefile.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/core/skbuff.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
-index 7553ab18db898..fe1bb374239d7 100644
---- a/crypto/asymmetric_keys/verify_pefile.c
-+++ b/crypto/asymmetric_keys/verify_pefile.c
-@@ -135,11 +135,15 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
- 	pr_debug("sig wrapper = { %x, %x, %x }\n",
- 		 wrapper.length, wrapper.revision, wrapper.cert_type);
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 2d3f82b622366..46cc3a7632f79 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -5397,18 +5397,18 @@ bool skb_try_coalesce(struct sk_buff *to, struct sk_buff *from,
+ 	if (skb_cloned(to))
+ 		return false;
  
--	/* Both pesign and sbsign round up the length of certificate table
--	 * (in optional header data directories) to 8 byte alignment.
-+	/* sbsign rounds up the length of certificate table (in optional
-+	 * header data directories) to 8 byte alignment.  However, the PE
-+	 * specification states that while entries are 8-byte aligned, this is
-+	 * not included in their length, and as a result, pesign has not
-+	 * rounded up since 0.110.
+-	/* In general, avoid mixing slab allocated and page_pool allocated
+-	 * pages within the same SKB. However when @to is not pp_recycle and
+-	 * @from is cloned, we can transition frag pages from page_pool to
+-	 * reference counted.
+-	 *
+-	 * On the other hand, don't allow coalescing two pp_recycle SKBs if
+-	 * @from is cloned, in case the SKB is using page_pool fragment
++	/* In general, avoid mixing page_pool and non-page_pool allocated
++	 * pages within the same SKB. Additionally avoid dealing with clones
++	 * with page_pool pages, in case the SKB is using page_pool fragment
+ 	 * references (PP_FLAG_PAGE_FRAG). Since we only take full page
+ 	 * references for cloned SKBs at the moment that would result in
+ 	 * inconsistent reference counts.
++	 * In theory we could take full references if @from is cloned and
++	 * !@to->pp_recycle but its tricky (due to potential race with
++	 * the clone disappearing) and rare, so not worth dealing with.
  	 */
--	if (round_up(wrapper.length, 8) != ctx->sig_len) {
--		pr_debug("Signature wrapper len wrong\n");
-+	if (wrapper.length > ctx->sig_len) {
-+		pr_debug("Signature wrapper bigger than sig len (%x > %x)\n",
-+			 ctx->sig_len, wrapper.length);
- 		return -ELIBBAD;
- 	}
- 	if (wrapper.revision != WIN_CERT_REVISION_2_0) {
+-	if (to->pp_recycle != (from->pp_recycle && !skb_cloned(from)))
++	if (to->pp_recycle != from->pp_recycle ||
++	    (from->pp_recycle && skb_cloned(from)))
+ 		return false;
+ 
+ 	if (len <= skb_tailroom(to)) {
 -- 
 2.39.2
 
