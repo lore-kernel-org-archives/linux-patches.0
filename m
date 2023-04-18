@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2EE2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:25:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA942C433A7;
-	Tue, 18 Apr 2023 12:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F182566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E9DC43321;
+	Tue, 18 Apr 2023 12:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820757;
-	bh=RCIYvKF0ZjpsGOmr6O6TbZEw3m/J6vkgw6TYrAVSfXk=;
+	s=korg; t=1681820759;
+	bh=cL22PBSYfvX7dAg/Rl+kGlkmW0y/CcpNb7L+1jRVj+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HuIksjS41GG2EViVG0tO20zMUGg4lQN6oCEN4xASh8+XpvahGV2GyYTRuLvpNMzog
-	 bm+HGi5ZviikweCwRNa1D2/vwZGFEb65HyGPhJuuagOmcSjW1gZUhVu7BVJeNp1eEX
-	 fWu8MPsGQIi4Mz4kIoU5H8fgI3uh+bCGJxagyz0Q=
+	b=HKCa0tqNloporyMEW+Lcr8ebtmT5vC1r63heCEPsqJW5ITSG4B3b/krqk+e44IBdB
+	 3u3DA3moMNOyemXNspSyhRbI+nYl6GYUBgavw9nnrywcB6eoxobc75PjcYHtLkSN/x
+	 VBv/WWv4BsIFyGOWoJRKrvjFJdHgsCfw6cEkbuYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>
-Subject: [PATCH 4.19 20/57] tty: serial: sh-sci: Fix Rx on RZ/G2L SCI
-Date: Tue, 18 Apr 2023 14:21:20 +0200
-Message-Id: <20230418120259.456305991@linuxfoundation.org>
+	syzbot+b08ebcc22f8f3e6be43a@syzkaller.appspotmail.com,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 21/57] nilfs2: fix potential UAF of struct nilfs_sc_info in nilfs_segctor_thread()
+Date: Tue, 18 Apr 2023 14:21:21 +0200
+Message-Id: <20230418120259.494728727@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -33,33 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit f92ed0cd9328aed918ebb0ebb64d259eccbcc6e7 upstream.
+commit 6be49d100c22ffea3287a4b19d7639d259888e33 upstream.
 
-SCI IP on RZ/G2L alike SoCs do not need regshift compared to other SCI
-IPs on the SH platform. Currently, it does regshift and configuring Rx
-wrongly. Drop adding regshift for RZ/G2L alike SoCs.
+The finalization of nilfs_segctor_thread() can race with
+nilfs_segctor_kill_thread() which terminates that thread, potentially
+causing a use-after-free BUG as KASAN detected.
 
-Fixes: dfc80387aefb ("serial: sh-sci: Compute the regshift value for SCI ports")
-Cc: stable@vger.kernel.org
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20230321114753.75038-3-biju.das.jz@bp.renesas.com
+At the end of nilfs_segctor_thread(), it assigns NULL to "sc_task" member
+of "struct nilfs_sc_info" to indicate the thread has finished, and then
+notifies nilfs_segctor_kill_thread() of this using waitqueue
+"sc_wait_task" on the struct nilfs_sc_info.
+
+However, here, immediately after the NULL assignment to "sc_task", it is
+possible that nilfs_segctor_kill_thread() will detect it and return to
+continue the deallocation, freeing the nilfs_sc_info structure before the
+thread does the notification.
+
+This fixes the issue by protecting the NULL assignment to "sc_task" and
+its notification, with spinlock "sc_state_lock" of the struct
+nilfs_sc_info.  Since nilfs_segctor_kill_thread() does a final check to
+see if "sc_task" is NULL with "sc_state_lock" locked, this can eliminate
+the race.
+
+Link: https://lkml.kernel.org/r/20230327175318.8060-1-konishi.ryusuke@gmail.com
+Reported-by: syzbot+b08ebcc22f8f3e6be43a@syzkaller.appspotmail.com
+Link: https://lkml.kernel.org/r/00000000000000660d05f7dfa877@google.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/segment.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -2980,7 +2980,7 @@ static int sci_init_single(struct platfo
- 	port->flags		= UPF_FIXED_PORT | UPF_BOOT_AUTOCONF | p->flags;
- 	port->fifosize		= sci_port->params->fifosize;
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2609,11 +2609,10 @@ static int nilfs_segctor_thread(void *ar
+ 	goto loop;
  
--	if (port->type == PORT_SCI) {
-+	if (port->type == PORT_SCI && !dev->dev.of_node) {
- 		if (sci_port->reg_size >= 0x20)
- 			port->regshift = 2;
- 		else
+  end_thread:
+-	spin_unlock(&sci->sc_state_lock);
+-
+ 	/* end sync. */
+ 	sci->sc_task = NULL;
+ 	wake_up(&sci->sc_wait_task); /* for nilfs_segctor_kill_thread() */
++	spin_unlock(&sci->sc_state_lock);
+ 	return 0;
+ }
+ 
 
 
