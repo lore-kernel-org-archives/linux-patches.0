@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E582572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0C2C433EF;
-	Tue, 18 Apr 2023 12:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642FA2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0432C433EF;
+	Tue, 18 Apr 2023 12:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822325;
-	bh=oI9XVPZM4FM/hX+LowSasvuW2cpQ0pBbEc9Yy5lIQD0=;
+	s=korg; t=1681822328;
+	bh=GKB3CvPjbC66XIIeCxgUIgQb5ZQ3aGJWM4MYC0VZ5zM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJQiEX5nNTc/xl4CMtke705YiQ/4yXh1BrefRhqXs7dVnBEBwkRSbzLkT0HJqtDpW
-	 UvIilB6xREB8Z4RVZ/KrUIrjvJdxAeigOZnsneMXQ2ey/rSgeZgXJGQFkuBnN14hbK
-	 fieEUa+tTT11ki/H1oWOKie1uLD1LB07xZMYWUvs=
+	b=v78QfirPp9HmvcXbT+AUTWjtzHXfIPST0Foe5nv+9u+Hbh87Y0bnfPcXl+8XNP2ez
+	 M9kFfF2lygiQV2zyHSLbSy5xQpgoSD4sniXPLEOL9Pm9nxkkDPHVP/Lp2xXyumZVXB
+	 CBOacg/kyyLwSB92vve+SNByFoiLMZNBl3EUdR1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Ross Zwisler <zwisler@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 100/139] tracing: Add trace_array_puts() to write into instance
-Date: Tue, 18 Apr 2023 14:22:45 +0200
-Message-Id: <20230418120317.539555076@linuxfoundation.org>
+	"Radu Pirea (OSS)" <radu-nicolae.pirea@oss.nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.2 109/139] net: phy: nxp-c45-tja11xx: add remove callback
+Date: Tue, 18 Apr 2023 14:22:54 +0200
+Message-Id: <20230418120317.871736126@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -37,115 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Radu Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
 
-[ Upstream commit d503b8f7474fe7ac616518f7fc49773cbab49f36 ]
+commit a4506722dc39ca840593f14e3faa4c9ba9408211 upstream.
 
-Add a generic trace_array_puts() that can be used to "trace_puts()" into
-an allocated trace_array instance. This is just another variant of
-trace_array_printk().
+Unregister PTP clock when the driver is removed.
+Purge the RX and TX skb queues.
 
-Link: https://lkml.kernel.org/r/20230207173026.584717290@goodmis.org
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Ross Zwisler <zwisler@google.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 9d52727f8043 ("tracing: Have tracing_snapshot_instance_cond() write errors to the appropriate instance")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 514def5dd339 ("phy: nxp-c45-tja11xx: add timestamping support")
+CC: stable@vger.kernel.org # 5.15+
+Signed-off-by: Radu Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230406095904.75456-1-radu-nicolae.pirea@oss.nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/trace.h | 12 ++++++++++++
- kernel/trace/trace.c  | 27 +++++++++++++++++----------
- 2 files changed, 29 insertions(+), 10 deletions(-)
+ drivers/net/phy/nxp-c45-tja11xx.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/include/linux/trace.h b/include/linux/trace.h
-index 80ffda8717491..2a70a447184c9 100644
---- a/include/linux/trace.h
-+++ b/include/linux/trace.h
-@@ -33,6 +33,18 @@ struct trace_array;
- int register_ftrace_export(struct trace_export *export);
- int unregister_ftrace_export(struct trace_export *export);
- 
-+/**
-+ * trace_array_puts - write a constant string into the trace buffer.
-+ * @tr:    The trace array to write to
-+ * @str:   The constant string to write
-+ */
-+#define trace_array_puts(tr, str)					\
-+	({								\
-+		str ? __trace_array_puts(tr, _THIS_IP_, str, strlen(str)) : -1;	\
-+	})
-+int __trace_array_puts(struct trace_array *tr, unsigned long ip,
-+		       const char *str, int size);
-+
- void trace_printk_init_buffers(void);
- __printf(3, 4)
- int trace_array_printk(struct trace_array *tr, unsigned long ip,
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 1a931896ba042..13c46787ba5fa 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -1001,13 +1001,8 @@ __buffer_unlock_commit(struct trace_buffer *buffer, struct ring_buffer_event *ev
- 		ring_buffer_unlock_commit(buffer);
+--- a/drivers/net/phy/nxp-c45-tja11xx.c
++++ b/drivers/net/phy/nxp-c45-tja11xx.c
+@@ -1337,6 +1337,17 @@ no_ptp_support:
+ 	return ret;
  }
  
--/**
-- * __trace_puts - write a constant string into the trace buffer.
-- * @ip:	   The address of the caller
-- * @str:   The constant string to write
-- * @size:  The size of the string.
-- */
--int __trace_puts(unsigned long ip, const char *str, int size)
-+int __trace_array_puts(struct trace_array *tr, unsigned long ip,
-+		       const char *str, int size)
- {
- 	struct ring_buffer_event *event;
- 	struct trace_buffer *buffer;
-@@ -1015,7 +1010,7 @@ int __trace_puts(unsigned long ip, const char *str, int size)
- 	unsigned int trace_ctx;
- 	int alloc;
- 
--	if (!(global_trace.trace_flags & TRACE_ITER_PRINTK))
-+	if (!(tr->trace_flags & TRACE_ITER_PRINTK))
- 		return 0;
- 
- 	if (unlikely(tracing_selftest_running || tracing_disabled))
-@@ -1024,7 +1019,7 @@ int __trace_puts(unsigned long ip, const char *str, int size)
- 	alloc = sizeof(*entry) + size + 2; /* possible \n added */
- 
- 	trace_ctx = tracing_gen_ctx();
--	buffer = global_trace.array_buffer.buffer;
-+	buffer = tr->array_buffer.buffer;
- 	ring_buffer_nest_start(buffer);
- 	event = __trace_buffer_lock_reserve(buffer, TRACE_PRINT, alloc,
- 					    trace_ctx);
-@@ -1046,11 +1041,23 @@ int __trace_puts(unsigned long ip, const char *str, int size)
- 		entry->buf[size] = '\0';
- 
- 	__buffer_unlock_commit(buffer, event);
--	ftrace_trace_stack(&global_trace, buffer, trace_ctx, 4, NULL);
-+	ftrace_trace_stack(tr, buffer, trace_ctx, 4, NULL);
-  out:
- 	ring_buffer_nest_end(buffer);
- 	return size;
- }
-+EXPORT_SYMBOL_GPL(__trace_array_puts);
-+
-+/**
-+ * __trace_puts - write a constant string into the trace buffer.
-+ * @ip:	   The address of the caller
-+ * @str:   The constant string to write
-+ * @size:  The size of the string.
-+ */
-+int __trace_puts(unsigned long ip, const char *str, int size)
++static void nxp_c45_remove(struct phy_device *phydev)
 +{
-+	return __trace_array_puts(&global_trace, ip, str, size);
++	struct nxp_c45_phy *priv = phydev->priv;
++
++	if (priv->ptp_clock)
++		ptp_clock_unregister(priv->ptp_clock);
++
++	skb_queue_purge(&priv->tx_queue);
++	skb_queue_purge(&priv->rx_queue);
 +}
- EXPORT_SYMBOL_GPL(__trace_puts);
++
+ static struct phy_driver nxp_c45_driver[] = {
+ 	{
+ 		PHY_ID_MATCH_MODEL(PHY_ID_TJA_1103),
+@@ -1359,6 +1370,7 @@ static struct phy_driver nxp_c45_driver[
+ 		.set_loopback		= genphy_c45_loopback,
+ 		.get_sqi		= nxp_c45_get_sqi,
+ 		.get_sqi_max		= nxp_c45_get_sqi_max,
++		.remove			= nxp_c45_remove,
+ 	},
+ };
  
- /**
--- 
-2.39.2
-
 
 
