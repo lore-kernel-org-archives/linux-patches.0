@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0802572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:47:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C02C433EF;
-	Tue, 18 Apr 2023 12:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713FE2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:47:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8B4C433D2;
+	Tue, 18 Apr 2023 12:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822040;
-	bh=J8YeN0bcBGEjJ6rHDyK0jy1pVR8/z16ShKP8VJjOY4k=;
+	s=korg; t=1681822043;
+	bh=N+4i+yZYMRbWxZzRVTcYVu7G1SPVlXOuYNmOjLBduZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqcpfuHB6JaSLuABudhDnK2xeobKLtqsW1soAs48cHY0Cyg7KzL4w20x/QnYyWlWl
-	 VWcS/xcK7wzojso1QLllfAv/xOavjtAqK2eL4IgUUEgc1PH0bnjgtZ81pwMgP+3gNQ
-	 WXNpC09YqMoccGYnwia/IADeTsAaaY7ElhnNHk9U=
+	b=aqmUo0nM1Kq6Cp3ytU+P3iAQCXwtVMMTtyAN2f7QOkokfKhFYMR2aYndU4nPNjtaQ
+	 7JsiTwKf59WCY9T8BPGkYOLG9SM/fr6ZM/KTi0yOedU4Tt9wHW2jVRI7XBlmHHxE4y
+	 3kauHUg+0gdslqn2zt0XG5IzADctWELiN42cOAbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/134] cgroup/cpuset: Add cpuset_can_fork() and cpuset_cancel_fork() methods
-Date: Tue, 18 Apr 2023 14:23:10 +0200
-Message-Id: <20230418120317.838740115@linuxfoundation.org>
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 110/134] x86/PCI: Add quirk for AMD XHCI controller that loses MSI-X state in D3hot
+Date: Tue, 18 Apr 2023 14:22:46 +0200
+Message-Id: <20230418120317.030192692@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,173 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit eee87853794187f6adbe19533ed79c8b44b36a91 ]
+commit f195fc1e9715ba826c3b62d58038f760f66a4fe9 upstream.
 
-In the case of CLONE_INTO_CGROUP, not all cpusets are ready to accept
-new tasks. It is too late to check that in cpuset_fork(). So we need
-to add the cpuset_can_fork() and cpuset_cancel_fork() methods to
-pre-check it before we can allow attachment to a different cpuset.
+The AMD [1022:15b8] USB controller loses some internal functional MSI-X
+context when transitioning from D0 to D3hot. BIOS normally traps D0->D3hot
+and D3hot->D0 transitions so it can save and restore that internal context,
+but some firmware in the field can't do this because it fails to clear the
+AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit.
 
-We also need to set the attach_in_progress flag to alert other code
-that a new task is going to be added to the cpuset.
+Clear AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit before USB controller
+initialization during boot.
 
-Fixes: ef2c41cf38a7 ("clone3: allow spawning processes into cgroups")
-Suggested-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Cc: stable@vger.kernel.org # v5.7+
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/linux-usb/Y%2Fz9GdHjPyF2rNG3@glanzmann.de/T/#u
+Link: https://lore.kernel.org/r/20230329172859.699743-1-Basavaraj.Natikar@amd.com
+Reported-by: Thomas Glanzmann <thomas@glanzmann.de>
+Tested-by: Thomas Glanzmann <thomas@glanzmann.de>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c | 97 +++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 86 insertions(+), 11 deletions(-)
+ arch/x86/pci/fixup.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 85f071fb1a414..e276db7228451 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2453,6 +2453,20 @@ static int fmeter_getrate(struct fmeter *fmp)
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -7,6 +7,7 @@
+ #include <linux/dmi.h>
+ #include <linux/pci.h>
+ #include <linux/vgaarb.h>
++#include <asm/amd_nb.h>
+ #include <asm/hpet.h>
+ #include <asm/pci_x86.h>
  
- static struct cpuset *cpuset_attach_old_cs;
+@@ -824,3 +825,23 @@ static void rs690_fix_64bit_dma(struct p
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7910, rs690_fix_64bit_dma);
  
-+/*
-+ * Check to see if a cpuset can accept a new task
-+ * For v1, cpus_allowed and mems_allowed can't be empty.
-+ * For v2, effective_cpus can't be empty.
-+ * Note that in v1, effective_cpus = cpus_allowed.
-+ */
-+static int cpuset_can_attach_check(struct cpuset *cs)
+ #endif
++
++#ifdef CONFIG_AMD_NB
++
++#define AMD_15B8_RCC_DEV2_EPF0_STRAP2                                  0x10136008
++#define AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK       0x00000080L
++
++static void quirk_clear_strap_no_soft_reset_dev2_f0(struct pci_dev *dev)
 +{
-+	if (cpumask_empty(cs->effective_cpus) ||
-+	   (!is_in_v2_mode() && nodes_empty(cs->mems_allowed)))
-+		return -ENOSPC;
-+	return 0;
++	u32 data;
++
++	if (!amd_smn_read(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, &data)) {
++		data &= ~AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK;
++		if (amd_smn_write(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, data))
++			pci_err(dev, "Failed to write data 0x%x\n", data);
++	} else {
++		pci_err(dev, "Failed to read data\n");
++	}
 +}
-+
- /* Called by cgroups to determine if a cpuset is usable; cpuset_rwsem held */
- static int cpuset_can_attach(struct cgroup_taskset *tset)
- {
-@@ -2467,16 +2481,9 @@ static int cpuset_can_attach(struct cgroup_taskset *tset)
- 
- 	percpu_down_write(&cpuset_rwsem);
- 
--	/* allow moving tasks into an empty cpuset if on default hierarchy */
--	ret = -ENOSPC;
--	if (!is_in_v2_mode() &&
--	    (cpumask_empty(cs->cpus_allowed) || nodes_empty(cs->mems_allowed)))
--		goto out_unlock;
--
--	/*
--	 * Task cannot be moved to a cpuset with empty effective cpus.
--	 */
--	if (cpumask_empty(cs->effective_cpus))
-+	/* Check to see if task is allowed in the cpuset */
-+	ret = cpuset_can_attach_check(cs);
-+	if (ret)
- 		goto out_unlock;
- 
- 	cgroup_taskset_for_each(task, css, tset) {
-@@ -2493,7 +2500,6 @@ static int cpuset_can_attach(struct cgroup_taskset *tset)
- 	 * changes which zero cpus/mems_allowed.
- 	 */
- 	cs->attach_in_progress++;
--	ret = 0;
- out_unlock:
- 	percpu_up_write(&cpuset_rwsem);
- 	return ret;
-@@ -3238,6 +3244,68 @@ static void cpuset_bind(struct cgroup_subsys_state *root_css)
- 	percpu_up_write(&cpuset_rwsem);
- }
- 
-+/*
-+ * In case the child is cloned into a cpuset different from its parent,
-+ * additional checks are done to see if the move is allowed.
-+ */
-+static int cpuset_can_fork(struct task_struct *task, struct css_set *cset)
-+{
-+	struct cpuset *cs = css_cs(cset->subsys[cpuset_cgrp_id]);
-+	bool same_cs;
-+	int ret;
-+
-+	rcu_read_lock();
-+	same_cs = (cs == task_cs(current));
-+	rcu_read_unlock();
-+
-+	if (same_cs)
-+		return 0;
-+
-+	lockdep_assert_held(&cgroup_mutex);
-+	percpu_down_write(&cpuset_rwsem);
-+
-+	/* Check to see if task is allowed in the cpuset */
-+	ret = cpuset_can_attach_check(cs);
-+	if (ret)
-+		goto out_unlock;
-+
-+	ret = task_can_attach(task, cs->effective_cpus);
-+	if (ret)
-+		goto out_unlock;
-+
-+	ret = security_task_setscheduler(task);
-+	if (ret)
-+		goto out_unlock;
-+
-+	/*
-+	 * Mark attach is in progress.  This makes validate_change() fail
-+	 * changes which zero cpus/mems_allowed.
-+	 */
-+	cs->attach_in_progress++;
-+out_unlock:
-+	percpu_up_write(&cpuset_rwsem);
-+	return ret;
-+}
-+
-+static void cpuset_cancel_fork(struct task_struct *task, struct css_set *cset)
-+{
-+	struct cpuset *cs = css_cs(cset->subsys[cpuset_cgrp_id]);
-+	bool same_cs;
-+
-+	rcu_read_lock();
-+	same_cs = (cs == task_cs(current));
-+	rcu_read_unlock();
-+
-+	if (same_cs)
-+		return;
-+
-+	percpu_down_write(&cpuset_rwsem);
-+	cs->attach_in_progress--;
-+	if (!cs->attach_in_progress)
-+		wake_up(&cpuset_attach_wq);
-+	percpu_up_write(&cpuset_rwsem);
-+}
-+
- /*
-  * Make sure the new task conform to the current state of its parent,
-  * which could have been changed by cpuset just after it inherits the
-@@ -3266,6 +3334,11 @@ static void cpuset_fork(struct task_struct *task)
- 	percpu_down_write(&cpuset_rwsem);
- 	guarantee_online_mems(cs, &cpuset_attach_nodemask_to);
- 	cpuset_attach_task(cs, task);
-+
-+	cs->attach_in_progress--;
-+	if (!cs->attach_in_progress)
-+		wake_up(&cpuset_attach_wq);
-+
- 	percpu_up_write(&cpuset_rwsem);
- }
- 
-@@ -3279,6 +3352,8 @@ struct cgroup_subsys cpuset_cgrp_subsys = {
- 	.attach		= cpuset_attach,
- 	.post_attach	= cpuset_post_attach,
- 	.bind		= cpuset_bind,
-+	.can_fork	= cpuset_can_fork,
-+	.cancel_fork	= cpuset_cancel_fork,
- 	.fork		= cpuset_fork,
- 	.legacy_cftypes	= legacy_files,
- 	.dfl_cftypes	= dfl_files,
--- 
-2.39.2
-
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
++#endif
 
 
