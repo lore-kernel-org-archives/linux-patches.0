@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0622572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA2BC4339B;
-	Tue, 18 Apr 2023 12:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684EE2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FB6C4339C;
+	Tue, 18 Apr 2023 12:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821533;
-	bh=LJqsLK/fF+B3r7y04bZh1zbvBgs0fFmmwPmGP+1WkfE=;
+	s=korg; t=1681821536;
+	bh=0mt26iVTqwPUcTu9GZ1KJp1Pi0NpaixLhjWQmQt46oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TW8H55qp/h9hoC5D6JyKg6souZbpQiZAcw71s51fQO0YJtYsLgW5NHMHl8p2HOV0J
-	 +5Z1xEMOfqtKrwq27L+4R/G4UuXYkg84dfbEjDoLrW9YnmCuU+Y50vNA2I/HCgu/k3
-	 Yc62HKktfdi2+9SCQUHr1zyV2gOLLb+hC5LkBUwE=
+	b=NCnbdepZby+HmoY2XNWoFSBr7y8H9ChbptvaJjMuE+s+Ud35HY1HwrfoeqUc+ak99
+	 Z/UpWSsG7CfiD6Oj9bsuees7e0cvSFnGDhTaKeJ5U7h3dnpzC6ma6/Q3XLsBmOXaDl
+	 scK94wpH9kgUB4VHWCC+wwl4/29tOy5HpAxDEW8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 07/91] ALSA: hda/sigmatel: fix S/PDIF out on Intel D*45* motherboards
-Date: Tue, 18 Apr 2023 14:21:11 +0200
-Message-Id: <20230418120305.793212591@linuxfoundation.org>
+	stable@kernel.org,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Min Li <lm0963hack@gmail.com>
+Subject: [PATCH 5.15 08/91] Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}
+Date: Tue, 18 Apr 2023 14:21:12 +0200
+Message-Id: <20230418120305.824878860@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -34,67 +35,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit f342ac00da1064eb4f94b1f4bcacbdfea955797a upstream.
+commit a2a9339e1c9deb7e1e079e12e27a0265aea8421a upstream.
 
-The BIOS botches this one completely - it says the 2nd S/PDIF output is
-used, while in fact it's the 1st one. This is tested on DP45SG, but I'm
-assuming it's valid for the other boards in the series as well.
+Similar to commit d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free
+caused by l2cap_chan_put"), just use l2cap_chan_hold_unless_zero to
+prevent referencing a channel that is about to be destroyed.
 
-Also add some comments regarding the pins.
-FWIW, the codec is apparently still sold by Tempo Semiconductor, Inc.,
-where one can download the documentation.
-
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230405201220.2197826-2-oswald.buddenhagen@gmx.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@kernel.org
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Min Li <lm0963hack@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_sigmatel.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/bluetooth/l2cap_core.c |   24 ++++++------------------
+ 1 file changed, 6 insertions(+), 18 deletions(-)
 
---- a/sound/pci/hda/patch_sigmatel.c
-+++ b/sound/pci/hda/patch_sigmatel.c
-@@ -1707,6 +1707,7 @@ static const struct snd_pci_quirk stac92
- };
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4652,33 +4652,27 @@ static inline int l2cap_disconnect_req(s
  
- static const struct hda_pintbl ref92hd73xx_pin_configs[] = {
-+	// Port A-H
- 	{ 0x0a, 0x02214030 },
- 	{ 0x0b, 0x02a19040 },
- 	{ 0x0c, 0x01a19020 },
-@@ -1715,9 +1716,12 @@ static const struct hda_pintbl ref92hd73
- 	{ 0x0f, 0x01014010 },
- 	{ 0x10, 0x01014020 },
- 	{ 0x11, 0x01014030 },
-+	// CD in
- 	{ 0x12, 0x02319040 },
-+	// Digial Mic ins
- 	{ 0x13, 0x90a000f0 },
- 	{ 0x14, 0x90a000f0 },
-+	// Digital outs
- 	{ 0x22, 0x01452050 },
- 	{ 0x23, 0x01452050 },
- 	{}
-@@ -1758,6 +1762,7 @@ static const struct hda_pintbl alienware
- };
+ 	BT_DBG("scid 0x%4.4x dcid 0x%4.4x", scid, dcid);
  
- static const struct hda_pintbl intel_dg45id_pin_configs[] = {
-+	// Analog outputs
- 	{ 0x0a, 0x02214230 },
- 	{ 0x0b, 0x02A19240 },
- 	{ 0x0c, 0x01013214 },
-@@ -1765,6 +1770,9 @@ static const struct hda_pintbl intel_dg4
- 	{ 0x0e, 0x01A19250 },
- 	{ 0x0f, 0x01011212 },
- 	{ 0x10, 0x01016211 },
-+	// Digital output
-+	{ 0x22, 0x01451380 },
-+	{ 0x23, 0x40f000f0 },
- 	{}
- };
+-	mutex_lock(&conn->chan_lock);
+-
+-	chan = __l2cap_get_chan_by_scid(conn, dcid);
++	chan = l2cap_get_chan_by_scid(conn, dcid);
+ 	if (!chan) {
+-		mutex_unlock(&conn->chan_lock);
+ 		cmd_reject_invalid_cid(conn, cmd->ident, dcid, scid);
+ 		return 0;
+ 	}
+ 
+-	l2cap_chan_hold(chan);
+-	l2cap_chan_lock(chan);
+-
+ 	rsp.dcid = cpu_to_le16(chan->scid);
+ 	rsp.scid = cpu_to_le16(chan->dcid);
+ 	l2cap_send_cmd(conn, cmd->ident, L2CAP_DISCONN_RSP, sizeof(rsp), &rsp);
+ 
+ 	chan->ops->set_shutdown(chan);
+ 
++	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_del(chan, ECONNRESET);
++	mutex_unlock(&conn->chan_lock);
+ 
+ 	chan->ops->close(chan);
+ 
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return 0;
+ }
+ 
+@@ -4698,33 +4692,27 @@ static inline int l2cap_disconnect_rsp(s
+ 
+ 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x", dcid, scid);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+-	chan = __l2cap_get_chan_by_scid(conn, scid);
++	chan = l2cap_get_chan_by_scid(conn, scid);
+ 	if (!chan) {
+ 		mutex_unlock(&conn->chan_lock);
+ 		return 0;
+ 	}
+ 
+-	l2cap_chan_hold(chan);
+-	l2cap_chan_lock(chan);
+-
+ 	if (chan->state != BT_DISCONN) {
+ 		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+-		mutex_unlock(&conn->chan_lock);
+ 		return 0;
+ 	}
+ 
++	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_del(chan, 0);
++	mutex_unlock(&conn->chan_lock);
+ 
+ 	chan->ops->close(chan);
+ 
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return 0;
+ }
  
 
 
