@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662052566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:25:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE240C433EF;
-	Tue, 18 Apr 2023 12:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001212566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:25:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776A8C433EF;
+	Tue, 18 Apr 2023 12:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820704;
-	bh=or279UaVJlxRhmNkTvxmP4fSlP14U6E0jZSMHeocAyk=;
+	s=korg; t=1681820706;
+	bh=68LnmH4ScpxejkDjg45kUGtRl36NyvXpBHRPiypKo/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqhvcjrsAdL8Nn1QWpqWcx0qm9+eU42hRwsDjEtQ45jwxqN3LCLR/plIFe1kW1tG1
-	 LMetyxDtnzOLlK0letjxQvOqJJW82EmcMxz9uQo10tHinQkJXhBCZ2oXwMeDLlLEa4
-	 A8BNezvY522IhCkYtGrB5vBVBdXcgvwg+ONr9/QI=
+	b=ZIiQS2AftCshzUyCZCWuTiMkQHUPiWj96wRaoi1y/aKkEJ70DhhP0jlLuVNEbkV8f
+	 iBYGDEBaDtso8kdSjrjD0u/3cfrxWttdHyJ595p6c/ZLrhacm6htKYKtHWBvwPbTeo
+	 Dc75bbZwiJhKddkl0i25R/D3ZlJGquGMytzjpVoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Martin <Dave.Martin@arm.com>,
-	Andrew Jones <drjones@redhat.com>,
 	Marc Zyngier <marc.zyngier@arm.com>,
 	Takahiro Itazuri <itazur@amazon.com>
-Subject: [PATCH 4.14 36/37] KVM: arm64: Filter out invalid core register IDs in KVM_GET_REG_LIST
-Date: Tue, 18 Apr 2023 14:21:46 +0200
-Message-Id: <20230418120255.999706385@linuxfoundation.org>
+Subject: [PATCH 4.14 37/37] arm64: KVM: Fix system register enumeration
+Date: Tue, 18 Apr 2023 14:21:47 +0200
+Message-Id: <20230418120256.029568255@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
 References: <20230418120254.687480980@linuxfoundation.org>
@@ -36,125 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Martin <Dave.Martin@arm.com>
+From: Marc Zyngier <marc.zyngier@arm.com>
 
-commit df205b5c63281e4f32caac22adda18fd68795e80 upstream.
+commit 5d8d4af24460d079ecdb190254b14b528add1228 upstream.
 
-Since commit d26c25a9d19b ("arm64: KVM: Tighten guest core register
-access from userspace"), KVM_{GET,SET}_ONE_REG rejects register IDs
-that do not correspond to a single underlying architectural register.
+The introduction of the SVE registers to userspace started with a
+refactoring of the way we expose any register via the ONE_REG
+interface.
 
-KVM_GET_REG_LIST was not changed to match however: instead, it
-simply yields a list of 32-bit register IDs that together cover the
-whole kvm_regs struct.  This means that if userspace tries to use
-the resulting list of IDs directly to drive calls to KVM_*_ONE_REG,
-some of those calls will now fail.
+Unfortunately, this change doesn't exactly behave as expected
+if the number of registers is non-zero and consider everything
+to be an error. The visible result is that QEMU barfs very early
+when creating vcpus.
 
-This was not the intention.  Instead, iterating KVM_*_ONE_REG over
-the list of IDs returned by KVM_GET_REG_LIST should be guaranteed
-to work.
+Make sure we only exit early in case there is an actual error, rather
+than a positive number of registers...
 
-This patch fixes the problem by splitting validate_core_offset()
-into a backend core_reg_size_from_offset() which does all of the
-work except for checking that the size field in the register ID
-matches, and kvm_arm_copy_reg_indices() and num_core_regs() are
-converted to use this to enumerate the valid offsets.
-
-kvm_arm_copy_reg_indices() now also sets the register ID size field
-appropriately based on the value returned, so the register ID
-supplied to userspace is fully qualified for use with the register
-access ioctls.
-
-Cc: stable@vger.kernel.org
-Fixes: d26c25a9d19b ("arm64: KVM: Tighten guest core register access from userspace")
-Signed-off-by: Dave Martin <Dave.Martin@arm.com>
-Reviewed-by: Andrew Jones <drjones@redhat.com>
-Tested-by: Andrew Jones <drjones@redhat.com>
+Fixes: be25bbb392fa ("KVM: arm64: Factor out core register ID enumeration")
 Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
 Signed-off-by: Takahiro Itazuri <itazur@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/guest.c |   51 +++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 43 insertions(+), 8 deletions(-)
+ arch/arm64/kvm/guest.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/arch/arm64/kvm/guest.c
 +++ b/arch/arm64/kvm/guest.c
-@@ -57,9 +57,8 @@ static u64 core_reg_offset_from_id(u64 i
- 	return id & ~(KVM_REG_ARCH_MASK | KVM_REG_SIZE_MASK | KVM_REG_ARM_CORE);
- }
+@@ -326,17 +326,17 @@ int kvm_arm_copy_reg_indices(struct kvm_
+ 	int ret;
  
--static int validate_core_offset(const struct kvm_one_reg *reg)
-+static int core_reg_size_from_offset(u64 off)
- {
--	u64 off = core_reg_offset_from_id(reg->id);
- 	int size;
+ 	ret = kvm_arm_copy_core_reg_indices(uindices);
+-	if (ret)
++	if (ret < 0)
+ 		return ret;
+ 	uindices += ret;
  
- 	switch (off) {
-@@ -89,11 +88,24 @@ static int validate_core_offset(const st
- 		return -EINVAL;
- 	}
+ 	ret = kvm_arm_copy_fw_reg_indices(vcpu, uindices);
+-	if (ret)
++	if (ret < 0)
+ 		return ret;
+ 	uindices += kvm_arm_get_fw_num_regs(vcpu);
  
--	if (KVM_REG_SIZE(reg->id) == size &&
--	    IS_ALIGNED(off, size / sizeof(__u32)))
--		return 0;
-+	if (!IS_ALIGNED(off, size / sizeof(__u32)))
-+		return -EINVAL;
+ 	ret = copy_timer_indices(vcpu, uindices);
+-	if (ret)
++	if (ret < 0)
+ 		return ret;
+ 	uindices += NUM_TIMER_REGS;
  
--	return -EINVAL;
-+	return size;
-+}
-+
-+static int validate_core_offset(const struct kvm_one_reg *reg)
-+{
-+	u64 off = core_reg_offset_from_id(reg->id);
-+	int size = core_reg_size_from_offset(off);
-+
-+	if (size < 0)
-+		return -EINVAL;
-+
-+	if (KVM_REG_SIZE(reg->id) != size)
-+		return -EINVAL;
-+
-+	return 0;
- }
- 
- static int get_core_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
-@@ -197,11 +209,34 @@ static int kvm_arm_copy_core_reg_indices
- {
- 	unsigned int i;
- 	int n = 0;
--	const u64 core_reg = KVM_REG_ARM64 | KVM_REG_SIZE_U64 | KVM_REG_ARM_CORE;
- 
- 	for (i = 0; i < sizeof(struct kvm_regs) / sizeof(__u32); i++) {
-+		u64 reg = KVM_REG_ARM64 | KVM_REG_ARM_CORE | i;
-+		int size = core_reg_size_from_offset(i);
-+
-+		if (size < 0)
-+			continue;
-+
-+		switch (size) {
-+		case sizeof(__u32):
-+			reg |= KVM_REG_SIZE_U32;
-+			break;
-+
-+		case sizeof(__u64):
-+			reg |= KVM_REG_SIZE_U64;
-+			break;
-+
-+		case sizeof(__uint128_t):
-+			reg |= KVM_REG_SIZE_U128;
-+			break;
-+
-+		default:
-+			WARN_ON(1);
-+			continue;
-+		}
-+
- 		if (uindices) {
--			if (put_user(core_reg | i, uindices))
-+			if (put_user(reg, uindices))
- 				return -EFAULT;
- 			uindices++;
- 		}
 
 
