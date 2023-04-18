@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557642572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70CEC433EF;
-	Tue, 18 Apr 2023 12:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090B72572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB64C433EF;
+	Tue, 18 Apr 2023 12:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822352;
-	bh=Ccltu1PcoEKzkESOapk0mk3Wx6xSUETR124XIwTptA0=;
+	s=korg; t=1681822354;
+	bh=UwoDSbeHuJo8Pg8Uj7PGuCY/SERMjOSYdwZk01A2qvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rJnqWscVAAYF1LOgeiTrgNl6Mn30BGkhSaJKZxOAWo5N8ky9ZLGu3l9YKJmBsWOYw
-	 b8MXSvWTwW9yINHDx/GvcNpXfFKRTp2oCb4OaX8+dsNXgBLqHmwxh67mX+8RrqInGC
-	 O03BI/9lNfyqV/rS1bgk4ZTMDNEvMOBqbX1WK5tY=
+	b=e4aSs8Oer12xAaqvkOqA5xlU4ms+Xgd2RLbx/cTjRFDi7wjCep9C7L6nuzUqzvX+g
+	 Nl1joah7dE+wMexCPKRjVn3kQ4PnR9YtywDl1mT5iz92St9gYITWOkvFRiXLyA++IK
+	 bTj96dWWxB9o/8kX8zrj+wMErzlC8zeaSK44odUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.2 118/139] cgroup/cpuset: Fix partition roots cpuset.cpus update bug
-Date: Tue, 18 Apr 2023 14:23:03 +0200
-Message-Id: <20230418120318.238615119@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Ross Zwisler <zwisler@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 101/139] tracing: Have tracing_snapshot_instance_cond() write errors to the appropriate instance
+Date: Tue, 18 Apr 2023 14:22:46 +0200
+Message-Id: <20230418120317.588170046@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -34,68 +38,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 292fd843de26c551856e66faf134512c52dd78b4 upstream.
+[ Upstream commit 9d52727f8043cfda241ae96896628d92fa9c50bb ]
 
-It was found that commit 7a2127e66a00 ("cpuset: Call
-set_cpus_allowed_ptr() with appropriate mask for task") introduced a bug
-that corrupted "cpuset.cpus" of a partition root when it was updated.
+If a trace instance has a failure with its snapshot code, the error
+message is to be written to that instance's buffer. But currently, the
+message is written to the top level buffer. Worse yet, it may also disable
+the top level buffer and not the instance that had the issue.
 
-It is because the tmp->new_cpus field of the passed tmp parameter
-of update_parent_subparts_cpumask() should not be used at all as
-it contains important cpumask data that should not be overwritten.
-Fix it by using tmp->addmask instead.
+Link: https://lkml.kernel.org/r/20230405022341.688730321@goodmis.org
 
-Also update update_cpumask() to make sure that trialcs->cpu_allowed
-will not be corrupted until it is no longer needed.
-
-Fixes: 7a2127e66a00 ("cpuset: Call set_cpus_allowed_ptr() with appropriate mask for task")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Cc: stable@vger.kernel.org # v6.2+
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Ross Zwisler <zwisler@google.com>
+Fixes: 2824f50332486 ("tracing: Make the snapshot trigger work with instances")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ kernel/trace/trace.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1513,7 +1513,7 @@ static int update_parent_subparts_cpumas
- 	spin_unlock_irq(&callback_lock);
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 13c46787ba5fa..13b324f008256 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -1111,22 +1111,22 @@ static void tracing_snapshot_instance_cond(struct trace_array *tr,
+ 	unsigned long flags;
  
- 	if (adding || deleting)
--		update_tasks_cpumask(parent, tmp->new_cpus);
-+		update_tasks_cpumask(parent, tmp->addmask);
- 
- 	/*
- 	 * Set or clear CS_SCHED_LOAD_BALANCE when partcmd_update, if necessary.
-@@ -1770,10 +1770,13 @@ static int update_cpumask(struct cpuset
- 	/*
- 	 * Use the cpumasks in trialcs for tmpmasks when they are pointers
- 	 * to allocated cpumasks.
-+	 *
-+	 * Note that update_parent_subparts_cpumask() uses only addmask &
-+	 * delmask, but not new_cpus.
- 	 */
- 	tmp.addmask  = trialcs->subparts_cpus;
- 	tmp.delmask  = trialcs->effective_cpus;
--	tmp.new_cpus = trialcs->cpus_allowed;
-+	tmp.new_cpus = NULL;
- #endif
- 
- 	retval = validate_change(cs, trialcs);
-@@ -1838,6 +1841,11 @@ static int update_cpumask(struct cpuset
+ 	if (in_nmi()) {
+-		internal_trace_puts("*** SNAPSHOT CALLED FROM NMI CONTEXT ***\n");
+-		internal_trace_puts("*** snapshot is being ignored        ***\n");
++		trace_array_puts(tr, "*** SNAPSHOT CALLED FROM NMI CONTEXT ***\n");
++		trace_array_puts(tr, "*** snapshot is being ignored        ***\n");
+ 		return;
  	}
- 	spin_unlock_irq(&callback_lock);
  
-+#ifdef CONFIG_CPUMASK_OFFSTACK
-+	/* Now trialcs->cpus_allowed is available */
-+	tmp.new_cpus = trialcs->cpus_allowed;
-+#endif
-+
- 	/* effective_cpus will be updated here */
- 	update_cpumasks_hier(cs, &tmp, false);
+ 	if (!tr->allocated_snapshot) {
+-		internal_trace_puts("*** SNAPSHOT NOT ALLOCATED ***\n");
+-		internal_trace_puts("*** stopping trace here!   ***\n");
+-		tracing_off();
++		trace_array_puts(tr, "*** SNAPSHOT NOT ALLOCATED ***\n");
++		trace_array_puts(tr, "*** stopping trace here!   ***\n");
++		tracer_tracing_off(tr);
+ 		return;
+ 	}
  
+ 	/* Note, snapshot can not be used when the tracer uses it */
+ 	if (tracer->use_max_tr) {
+-		internal_trace_puts("*** LATENCY TRACER ACTIVE ***\n");
+-		internal_trace_puts("*** Can not use snapshot (sorry) ***\n");
++		trace_array_puts(tr, "*** LATENCY TRACER ACTIVE ***\n");
++		trace_array_puts(tr, "*** Can not use snapshot (sorry) ***\n");
+ 		return;
+ 	}
+ 
+-- 
+2.39.2
+
 
 
