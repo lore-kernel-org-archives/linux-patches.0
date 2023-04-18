@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6C22566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:29:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96349C4339B;
-	Tue, 18 Apr 2023 12:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE212566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:29:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E652C433D2;
+	Tue, 18 Apr 2023 12:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820966;
-	bh=SCPODjKnUasURIcodROQN4mRqOxwh3dCj1lMoZNt7mY=;
+	s=korg; t=1681820969;
+	bh=BWvdJm+mq3k7W9Xeu1eyS9XZW6krFPAPaK8DVroV3wY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXrmDNx2y8XExQuysh9ORtXL/yulrszcg+wFysgHVW57avMX4evMhatqrRJGUkVmR
-	 96wYjDO41DQLW/4BUXfHBlbDpeeWHFfFoG75v9ctG2zz2063PZMBlKXbvDphzADqk0
-	 4P0D+TdhQe6V8QsJsvbQVU090dSnmIL+Rh7WoaqU=
+	b=tOmruXbh/bEUE6DxRVApMQPD0mhPiFNQ+/THB/wP3QBchftlF4HVIZS2Danxl49zW
+	 r6MnvK+TjtD4fNsCRC5w9n9uk5O9GRkFtb7pCQKtspFdHSC63N9tDFTIIxFJzDdBuX
+	 yY06Y3u7SGp+WExx0o+wtf3UYwMJeV+W9Yp9tIew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Zhengjun Xing <zhengjun.xing@linux.intel.com>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 33/92] perf/core: Fix the same task check in perf_event_set_output
-Date: Tue, 18 Apr 2023 14:21:08 +0200
-Message-Id: <20230418120306.001111485@linuxfoundation.org>
+Subject: [PATCH 5.4 42/92] irqdomain: Refactor __irq_domain_alloc_irqs()
+Date: Tue, 18 Apr 2023 14:21:17 +0200
+Message-Id: <20230418120306.313115869@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -36,70 +37,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 24d3ae2f37d8bc3c14b31d353c5d27baf582b6a6 ]
+[ Upstream commit d55f7f4c58c07beb5050a834bf57ae2ede599c7e ]
 
-The same task check in perf_event_set_output has some potential issues
-for some usages.
+Refactor __irq_domain_alloc_irqs() so that it can be called internally
+while holding the irq_domain_mutex.
 
-For the current perf code, there is a problem if using of
-perf_event_open() to have multiple samples getting into the same mmap’d
-memory when they are both attached to the same process.
-https://lore.kernel.org/all/92645262-D319-4068-9C44-2409EF44888E@gmail.com/
-Because the event->ctx is not ready when the perf_event_set_output() is
-invoked in the perf_event_open().
+This will be used to fix a shared-interrupt mapping race, hence the
+Fixes tag.
 
-Besides the above issue, before the commit bd2756811766 ("perf: Rewrite
-core context handling"), perf record can errors out when sampling with
-a hardware event and a software event as below.
- $ perf record -e cycles,dummy --per-thread ls
- failed to mmap with 22 (Invalid argument)
-That's because that prior to the commit a hardware event and a software
-event are from different task context.
-
-The problem should be a long time issue since commit c3f00c70276d
-("perk: Separate find_get_context() from event initialization").
-
-The task struct is stored in the event->hw.target for each per-thread
-event. It is a more reliable way to determine whether two events are
-attached to the same task.
-
-The event->hw.target was also introduced several years ago by the
-commit 50f16a8bf9d7 ("perf: Remove type specific target pointers"). It
-can not only be used to fix the issue with the current code, but also
-back port to fix the issues with an older kernel.
-
-Note: The event->hw.target was introduced later than commit
-c3f00c70276d. The patch may cannot be applied between the commit
-c3f00c70276d and commit 50f16a8bf9d7. Anybody that wants to back-port
-this at that period may have to find other solutions.
-
-Fixes: c3f00c70276d ("perf: Separate find_get_context() from event initialization")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Zhengjun Xing <zhengjun.xing@linux.intel.com>
-Link: https://lkml.kernel.org/r/20230322202449.512091-1-kan.liang@linux.intel.com
+Fixes: b62b2cf5759b ("irqdomain: Fix handling of type settings for existing mappings")
+Cc: stable@vger.kernel.org      # 4.8
+Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230213104302.17307-6-johan+linaro@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/irq/irqdomain.c |   74 +++++++++++++++++++++++++++----------------------
+ 1 file changed, 42 insertions(+), 32 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index a1c89b675b0b9..1ef924d6a385e 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -10798,7 +10798,7 @@ perf_event_set_output(struct perf_event *event, struct perf_event *output_event)
- 	/*
- 	 * If its not a per-cpu rb, it must be the same task.
- 	 */
--	if (output_event->cpu == -1 && output_event->ctx != event->ctx)
-+	if (output_event->cpu == -1 && output_event->hw.target != event->hw.target)
- 		goto out;
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -1350,6 +1350,45 @@ int irq_domain_alloc_irqs_hierarchy(stru
+ 	return domain->ops->alloc(domain, irq_base, nr_irqs, arg);
+ }
  
- 	/*
--- 
-2.39.2
-
++static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
++					unsigned int nr_irqs, int node, void *arg,
++					bool realloc, const struct irq_affinity_desc *affinity)
++{
++	int i, ret, virq;
++
++	if (realloc && irq_base >= 0) {
++		virq = irq_base;
++	} else {
++		virq = irq_domain_alloc_descs(irq_base, nr_irqs, 0, node,
++					      affinity);
++		if (virq < 0) {
++			pr_debug("cannot allocate IRQ(base %d, count %d)\n",
++				 irq_base, nr_irqs);
++			return virq;
++		}
++	}
++
++	if (irq_domain_alloc_irq_data(domain, virq, nr_irqs)) {
++		pr_debug("cannot allocate memory for IRQ%d\n", virq);
++		ret = -ENOMEM;
++		goto out_free_desc;
++	}
++
++	ret = irq_domain_alloc_irqs_hierarchy(domain, virq, nr_irqs, arg);
++	if (ret < 0)
++		goto out_free_irq_data;
++	for (i = 0; i < nr_irqs; i++)
++		irq_domain_insert_irq(virq + i);
++
++	return virq;
++
++out_free_irq_data:
++	irq_domain_free_irq_data(virq, nr_irqs);
++out_free_desc:
++	irq_free_descs(virq, nr_irqs);
++	return ret;
++}
++
+ /**
+  * __irq_domain_alloc_irqs - Allocate IRQs from domain
+  * @domain:	domain to allocate from
+@@ -1376,7 +1415,7 @@ int __irq_domain_alloc_irqs(struct irq_d
+ 			    unsigned int nr_irqs, int node, void *arg,
+ 			    bool realloc, const struct irq_affinity_desc *affinity)
+ {
+-	int i, ret, virq;
++	int ret;
+ 
+ 	if (domain == NULL) {
+ 		domain = irq_default_domain;
+@@ -1384,40 +1423,11 @@ int __irq_domain_alloc_irqs(struct irq_d
+ 			return -EINVAL;
+ 	}
+ 
+-	if (realloc && irq_base >= 0) {
+-		virq = irq_base;
+-	} else {
+-		virq = irq_domain_alloc_descs(irq_base, nr_irqs, 0, node,
+-					      affinity);
+-		if (virq < 0) {
+-			pr_debug("cannot allocate IRQ(base %d, count %d)\n",
+-				 irq_base, nr_irqs);
+-			return virq;
+-		}
+-	}
+-
+-	if (irq_domain_alloc_irq_data(domain, virq, nr_irqs)) {
+-		pr_debug("cannot allocate memory for IRQ%d\n", virq);
+-		ret = -ENOMEM;
+-		goto out_free_desc;
+-	}
+-
+ 	mutex_lock(&irq_domain_mutex);
+-	ret = irq_domain_alloc_irqs_hierarchy(domain, virq, nr_irqs, arg);
+-	if (ret < 0) {
+-		mutex_unlock(&irq_domain_mutex);
+-		goto out_free_irq_data;
+-	}
+-	for (i = 0; i < nr_irqs; i++)
+-		irq_domain_insert_irq(virq + i);
++	ret = irq_domain_alloc_irqs_locked(domain, irq_base, nr_irqs, node, arg,
++					   realloc, affinity);
+ 	mutex_unlock(&irq_domain_mutex);
+ 
+-	return virq;
+-
+-out_free_irq_data:
+-	irq_domain_free_irq_data(virq, nr_irqs);
+-out_free_desc:
+-	irq_free_descs(virq, nr_irqs);
+ 	return ret;
+ }
+ 
 
 
