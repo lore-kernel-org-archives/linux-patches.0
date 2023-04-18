@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38F92566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4A1C433EF;
-	Tue, 18 Apr 2023 12:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955002566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5B8C433EF;
+	Tue, 18 Apr 2023 12:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821219;
-	bh=NhsScW4y2Y9pkswRHZwszDvBFBlk2v4xUQOht6nyfu0=;
+	s=korg; t=1681821222;
+	bh=PK2O2kuga9qF/HY3tyYU2746HL3Q8ni7QN9cHDNLmZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=he7QAfnN0qzTk8ZBKYc20EtxZkKxJWdDoIBOl8+7aHSLGQD2cg+wAFJAwGX3l5Qur
-	 0eV/EgMwHvC88G8UO1ZFUOPa1mUd+woZS3OopBZtCQ4t7HVw2XgvloMmnscegVDNdK
-	 A10gavZf/X2y3kLOb6aKbD9Qkh8XEmIpQz2yxmC0=
+	b=p1qvW93rYTloO0lQ4+M3+Bhqvd6nRazaVaGMh7TlnNs+7DImyO2vY9LAB7wYLXlY6
+	 pIqZhX5mHXPwNg6mJi6qxU4Xq8LwGY+Z+S9ZnsqpXETSojtfxYhrKpm9ZElfiun21F
+	 au1FOjX2D/UbJki6GxWSEOrFlLY+cL94iiKB43rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Breathitt Gray <william.gray@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 026/124] iio: dac: cio-dac: Fix max DAC write value check for 12-bit
-Date: Tue, 18 Apr 2023 14:20:45 +0200
-Message-Id: <20230418120310.675334531@linuxfoundation.org>
+	Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>
+Subject: [PATCH 5.10 044/124] drm/panfrost: Fix the panfrost_mmu_map_fault_addr() error path
+Date: Tue, 18 Apr 2023 14:21:03 +0200
+Message-Id: <20230418120311.435751356@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -34,38 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Breathitt Gray <william.gray@linaro.org>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-commit c3701185ee1973845db088d8b0fc443397ab0eb2 upstream.
+commit 764a2ab9eb56e1200083e771aab16186836edf1d upstream.
 
-The CIO-DAC series of devices only supports DAC values up to 12-bit
-rather than 16-bit. Trying to write a 16-bit value results in only the
-lower 12 bits affecting the DAC output which is not what the user
-expects. Instead, adjust the DAC write value check to reject values
-larger than 12-bit so that they fail explicitly as invalid for the user.
+Make sure all bo->base.pages entries are either NULL or pointing to a
+valid page before calling drm_gem_shmem_put_pages().
 
-Fixes: 3b8df5fd526e ("iio: Add IIO support for the Measurement Computing CIO-DAC family")
-Cc: stable@vger.kernel.org
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
-Link: https://lore.kernel.org/r/20230311002248.8548-1-william.gray@linaro.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reported-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
+Cc: <stable@vger.kernel.org>
+Fixes: 187d2929206e ("drm/panfrost: Add support for GPU heap allocations")
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210521093811.1018992-1-boris.brezillon@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/cio-dac.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_mmu.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/dac/cio-dac.c
-+++ b/drivers/iio/dac/cio-dac.c
-@@ -66,8 +66,8 @@ static int cio_dac_write_raw(struct iio_
- 	if (mask != IIO_CHAN_INFO_RAW)
- 		return -EINVAL;
- 
--	/* DAC can only accept up to a 16-bit value */
--	if ((unsigned int)val > 65535)
-+	/* DAC can only accept up to a 12-bit value */
-+	if ((unsigned int)val > 4095)
- 		return -EINVAL;
- 
- 	priv->chan_out_states[chan->channel] = val;
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+@@ -458,6 +458,7 @@ static int panfrost_mmu_map_fault_addr(s
+ 		if (IS_ERR(pages[i])) {
+ 			mutex_unlock(&bo->base.pages_lock);
+ 			ret = PTR_ERR(pages[i]);
++			pages[i] = NULL;
+ 			goto err_pages;
+ 		}
+ 	}
 
 
