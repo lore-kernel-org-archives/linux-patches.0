@@ -1,136 +1,232 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC2C2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:23:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA315C433D2;
-	Tue, 18 Apr 2023 12:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212F4256D
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:23:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA8DC433EF;
+	Tue, 18 Apr 2023 12:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820635;
-	bh=vl5WfW1Uni1hUz68P+dtE+h82J7ttTFD7ubursF/N2U=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K4uR8W3iuTYM7jl2K7qtyon1cSwHnHL0MgZCALrYaz50b2YBNB1K6ysIOL6zpIa/p
-	 vGI1ZIrVkWStZsAoWOEPBpvEHFXpSk+533eBfY4r230z+GdnWvuv9kj7fcJ5ACmfEC
-	 ZK8ry5G/tQ7ADzNvG0tDtB5PCECvyetxOMg+8W3o=
+	s=korg; t=1681820637;
+	bh=Hhx6ov/CsPO500xLzzF/Vw43A36iCQKkXonCC9OGrm4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=z6ODEoh26S6HBnKDXZdkSE1vPLtQK1wyutiykMhxcTwPj0Af09F4A9FP2Xy3oEYCy
+	 YqcPamnZIxoBINWHX0pSR9hQFGE3gYXFiqSOVMCjDlEEshpPvPf4+6Ptutfjq2hWd4
+	 yjIq151Nes90J3Wz/jmiAIWj6QRAG3FzDVuIfUvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8257f4dcef79de670baf@syzkaller.appspotmail.com,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 04/37] ipv6: Fix an uninit variable access bug in __ip6_make_skb()
-Date: Tue, 18 Apr 2023 14:21:14 +0200
-Message-Id: <20230418120254.838099040@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 4.14 00/37] 4.14.313-rc1 review
+Date: Tue, 18 Apr 2023 14:21:10 +0200
+Message-Id: <20230418120254.687480980@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
-References: <20230418120254.687480980@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.313-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.14.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.14.313-rc1
+X-KernelTest-Deadline: 2023-04-20T12:02+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+This is the start of the stable review cycle for the 4.14.313 release.
+There are 37 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit ea30388baebcce37fd594d425a65037ca35e59e8 ]
+Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
+Anything received after that time might be too late.
 
-Syzbot reported a bug as following:
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.313-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+and the diffstat can be found below.
 
-=====================================================
-BUG: KMSAN: uninit-value in arch_atomic64_inc arch/x86/include/asm/atomic64_64.h:88 [inline]
-BUG: KMSAN: uninit-value in arch_atomic_long_inc include/linux/atomic/atomic-long.h:161 [inline]
-BUG: KMSAN: uninit-value in atomic_long_inc include/linux/atomic/atomic-instrumented.h:1429 [inline]
-BUG: KMSAN: uninit-value in __ip6_make_skb+0x2f37/0x30f0 net/ipv6/ip6_output.c:1956
- arch_atomic64_inc arch/x86/include/asm/atomic64_64.h:88 [inline]
- arch_atomic_long_inc include/linux/atomic/atomic-long.h:161 [inline]
- atomic_long_inc include/linux/atomic/atomic-instrumented.h:1429 [inline]
- __ip6_make_skb+0x2f37/0x30f0 net/ipv6/ip6_output.c:1956
- ip6_finish_skb include/net/ipv6.h:1122 [inline]
- ip6_push_pending_frames+0x10e/0x550 net/ipv6/ip6_output.c:1987
- rawv6_push_pending_frames+0xb12/0xb90 net/ipv6/raw.c:579
- rawv6_sendmsg+0x297e/0x2e60 net/ipv6/raw.c:922
- inet_sendmsg+0x101/0x180 net/ipv4/af_inet.c:827
- sock_sendmsg_nosec net/socket.c:714 [inline]
- sock_sendmsg net/socket.c:734 [inline]
- ____sys_sendmsg+0xa8e/0xe70 net/socket.c:2476
- ___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2530
- __sys_sendmsg net/socket.c:2559 [inline]
- __do_sys_sendmsg net/socket.c:2568 [inline]
- __se_sys_sendmsg net/socket.c:2566 [inline]
- __x64_sys_sendmsg+0x367/0x540 net/socket.c:2566
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+thanks,
 
-Uninit was created at:
- slab_post_alloc_hook mm/slab.h:766 [inline]
- slab_alloc_node mm/slub.c:3452 [inline]
- __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
- __do_kmalloc_node mm/slab_common.c:967 [inline]
- __kmalloc_node_track_caller+0x114/0x3b0 mm/slab_common.c:988
- kmalloc_reserve net/core/skbuff.c:492 [inline]
- __alloc_skb+0x3af/0x8f0 net/core/skbuff.c:565
- alloc_skb include/linux/skbuff.h:1270 [inline]
- __ip6_append_data+0x51c1/0x6bb0 net/ipv6/ip6_output.c:1684
- ip6_append_data+0x411/0x580 net/ipv6/ip6_output.c:1854
- rawv6_sendmsg+0x2882/0x2e60 net/ipv6/raw.c:915
- inet_sendmsg+0x101/0x180 net/ipv4/af_inet.c:827
- sock_sendmsg_nosec net/socket.c:714 [inline]
- sock_sendmsg net/socket.c:734 [inline]
- ____sys_sendmsg+0xa8e/0xe70 net/socket.c:2476
- ___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2530
- __sys_sendmsg net/socket.c:2559 [inline]
- __do_sys_sendmsg net/socket.c:2568 [inline]
- __se_sys_sendmsg net/socket.c:2566 [inline]
- __x64_sys_sendmsg+0x367/0x540 net/socket.c:2566
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+greg k-h
 
-It is because icmp6hdr does not in skb linear region under the scenario
-of SOCK_RAW socket. Access icmp6_hdr(skb)->icmp6_type directly will
-trigger the uninit variable access bug.
+-------------
+Pseudo-Shortlog of commits:
 
-Use a local variable icmp6_type to carry the correct value in different
-scenarios.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.14.313-rc1
 
-Fixes: 14878f75abd5 ("[IPV6]: Add ICMPMsgStats MIB (RFC 4293) [rev 2]")
-Reported-by: syzbot+8257f4dcef79de670baf@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=3d605ec1d0a7f2a269a1a6936ac7f2b85975ee9c
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/ipv6/ip6_output.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Marc Zyngier <marc.zyngier@arm.com>
+    arm64: KVM: Fix system register enumeration
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 4f40331ceb5ae..36647d3211074 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1715,8 +1715,13 @@ struct sk_buff *__ip6_make_skb(struct sock *sk,
- 	IP6_UPD_PO_STATS(net, rt->rt6i_idev, IPSTATS_MIB_OUT, skb->len);
- 	if (proto == IPPROTO_ICMPV6) {
- 		struct inet6_dev *idev = ip6_dst_idev(skb_dst(skb));
-+		u8 icmp6_type;
- 
--		ICMP6MSGOUT_INC_STATS(net, idev, icmp6_hdr(skb)->icmp6_type);
-+		if (sk->sk_socket->type == SOCK_RAW && !inet_sk(sk)->hdrincl)
-+			icmp6_type = fl6->fl6_icmp_type;
-+		else
-+			icmp6_type = icmp6_hdr(skb)->icmp6_type;
-+		ICMP6MSGOUT_INC_STATS(net, idev, icmp6_type);
- 		ICMP6_INC_STATS(net, idev, ICMP6_MIB_OUTMSGS);
- 	}
- 
--- 
-2.39.2
+Dave Martin <Dave.Martin@arm.com>
+    KVM: arm64: Filter out invalid core register IDs in KVM_GET_REG_LIST
 
+Dave Martin <Dave.Martin@arm.com>
+    KVM: arm64: Factor out core register ID enumeration
+
+Steve Clevenger <scclevenger@os.amperecomputing.com>
+    coresight-etm4: Fix for() loop drvdata->nr_addr_cmp range bug
+
+George Cherian <george.cherian@marvell.com>
+    watchdog: sbsa_wdog: Make sure the timeout programming is within the limits
+
+Waiman Long <longman@redhat.com>
+    cgroup/cpuset: Wake up cpuset_attach_wq tasks in cpuset_cancel_attach()
+
+Zhihao Cheng <chengzhihao1@huawei.com>
+    ubi: Fix failure attaching when vid_hdr offset equals to (sub)page size
+
+Robbie Harwood <rharwood@redhat.com>
+    verify_pefile: relax wrapper length check
+
+Hans de Goede <hdegoede@redhat.com>
+    efi: sysfb_efi: Add quirk for Lenovo Yoga Book X91F/L
+
+Alexander Stein <alexander.stein@ew.tq-group.com>
+    i2c: imx-lpi2c: clean rx/tx buffers upon new message
+
+Roman Gushchin <roman.gushchin@linux.dev>
+    net: macb: fix a memory corruption in extended buffer descriptor mode
+
+Denis Plotnikov <den-plotnikov@yandex-team.ru>
+    qlcnic: check pci_reset_function result
+
+Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+    niu: Fix missing unwind goto in niu_alloc_channels()
+
+Zheng Wang <zyytlz.wz@163.com>
+    9p/xen : Fix use after free bug in xen_9pfs_front_remove due to race condition
+
+Bang Li <libang.linuxer@gmail.com>
+    mtdblock: tolerate corrected bit-flips
+
+Min Li <lm0963hack@gmail.com>
+    Bluetooth: Fix race condition in hidp_session_thread
+
+Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}
+
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+    ALSA: hda/sigmatel: fix S/PDIF out on Intel D*45* motherboards
+
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+    ALSA: i2c/cs8427: fix iec958 mixer control deactivation
+
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+    ALSA: hda/sigmatel: add pin overrides for Intel DP45SG motherboard
+
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+    ALSA: emu10k1: fix capture interrupt handler unlinking
+
+Rongwei Wang <rongwei.wang@linux.alibaba.com>
+    mm/swap: fix swap_info_struct race between swapoff and get_swap_pages()
+
+Zheng Yejian <zhengyejian1@huawei.com>
+    ring-buffer: Fix race while reader and writer are on the same page
+
+John Keeping <john@metanate.com>
+    ftrace: Mark get_lock_parent_ip() __always_inline
+
+Kan Liang <kan.liang@linux.intel.com>
+    perf/core: Fix the same task check in perf_event_set_output
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix sysfs interface lifetime
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix potential UAF of struct nilfs_sc_info in nilfs_segctor_thread()
+
+Biju Das <biju.das.jz@bp.renesas.com>
+    tty: serial: sh-sci: Fix Rx on RZ/G2L SCI
+
+William Breathitt Gray <william.gray@linaro.org>
+    iio: dac: cio-dac: Fix max DAC write value check for 12-bit
+
+Bjørn Mork <bjorn@mork.no>
+    USB: serial: option: add Quectel RM500U-CN modem
+
+Enrico Sau <enrico.sau@gmail.com>
+    USB: serial: option: add Telit FE990 compositions
+
+Kees Jan Koster <kjkoster@kjkoster.org>
+    USB: serial: cp210x: add Silicon Labs IFS-USB-DATACABLE IDs
+
+Dhruva Gole <d-gole@ti.com>
+    gpio: davinci: Add irq chip flag to skip set wake
+
+Ziyang Xuan <william.xuanziyang@huawei.com>
+    ipv6: Fix an uninit variable access bug in __ip6_make_skb()
+
+Eric Dumazet <edumazet@google.com>
+    icmp: guard against too small mtu
+
+Felix Fietkau <nbd@nbd.name>
+    wifi: mac80211: fix invalid drv_sta_pre_rcu_remove calls for non-uploaded sta
+
+Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+    pwm: cros-ec: Explicitly set .polarity in .get_state()
+
+
+-------------
+
+Diffstat:
+
+ Documentation/sound/hd-audio/models.rst         |  2 +-
+ Makefile                                        |  4 +-
+ arch/arm64/kvm/guest.c                          | 83 ++++++++++++++++++++-----
+ arch/x86/kernel/sysfb_efi.c                     |  8 +++
+ crypto/asymmetric_keys/verify_pefile.c          | 12 ++--
+ drivers/gpio/gpio-davinci.c                     |  2 +-
+ drivers/hwtracing/coresight/coresight-etm4x.c   |  2 +-
+ drivers/i2c/busses/i2c-imx-lpi2c.c              |  2 +
+ drivers/iio/dac/cio-dac.c                       |  4 +-
+ drivers/mtd/mtdblock.c                          | 12 ++--
+ drivers/mtd/ubi/build.c                         | 21 +++++--
+ drivers/net/ethernet/cadence/macb_main.c        |  4 ++
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c |  8 ++-
+ drivers/net/ethernet/sun/niu.c                  |  2 +-
+ drivers/pwm/pwm-cros-ec.c                       |  1 +
+ drivers/tty/serial/sh-sci.c                     |  2 +-
+ drivers/usb/serial/cp210x.c                     |  1 +
+ drivers/usb/serial/option.c                     | 10 +++
+ drivers/watchdog/sbsa_gwdt.c                    |  1 +
+ fs/nilfs2/segment.c                             |  3 +-
+ fs/nilfs2/super.c                               |  2 +
+ fs/nilfs2/the_nilfs.c                           | 12 ++--
+ include/linux/ftrace.h                          |  2 +-
+ kernel/cgroup/cpuset.c                          |  4 +-
+ kernel/events/core.c                            |  2 +-
+ kernel/trace/ring_buffer.c                      | 13 +++-
+ mm/swapfile.c                                   |  3 +-
+ net/9p/trans_xen.c                              |  4 ++
+ net/bluetooth/hidp/core.c                       |  2 +-
+ net/bluetooth/l2cap_core.c                      | 24 ++-----
+ net/ipv4/icmp.c                                 |  5 ++
+ net/ipv6/ip6_output.c                           |  7 ++-
+ net/mac80211/sta_info.c                         |  3 +-
+ sound/i2c/cs8427.c                              |  7 ++-
+ sound/pci/emu10k1/emupcm.c                      |  4 +-
+ sound/pci/hda/patch_sigmatel.c                  | 10 +++
+ 36 files changed, 211 insertions(+), 77 deletions(-)
 
 
