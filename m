@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3312566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42718C4339B;
-	Tue, 18 Apr 2023 12:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADF42566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B95C433D2;
+	Tue, 18 Apr 2023 12:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821411;
-	bh=4xr1XZArObM+crzBG5lcvdijzoG8rYv0Mqgdj1ghbaI=;
+	s=korg; t=1681821414;
+	bh=Aq8vcejyKWuvLtlAKkoLOGG9pzuV4Z9p3791cnIrGFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BB9n1zTaJYuEiF93vfE/D1QLv3AyGNZLFXiXBZG7ZASzV9jE6WqiFFhmECr2L60wS
-	 ekE2TTKFy2aRAC7rZ1fhhoCsaNSmFAjE9a52Qd3Fmr2OcHeWRrrPXEQCUV3xER/9pB
-	 Or2cWxWSMox4HIbu48g1+8coIdtblnSxgKvSZUb0=
+	b=lsLAEtR9TO7ay03JSHs1LE36WBTOgRHNiK9+B5W9/zTwYUOZrOuQxYYTVszW+qI8M
+	 HLIiRJp01BaGa9NrIsgxFktRABdsZlY5wM/zwLjQEw+FukEJfNj2YXnAWBbZn5ikIu
+	 PqDiAri5slyvhqsAR/to1qoQVFIj91dL0cr6fVyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Clevenger <scclevenger@os.amperecomputing.com>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 5.10 116/124] coresight-etm4: Fix for() loop drvdata->nr_addr_cmp range bug
-Date: Tue, 18 Apr 2023 14:22:15 +0200
-Message-Id: <20230418120313.999417668@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 090/124] drm: panel-orientation-quirks: Add quirk for Lenovo Yoga Book X90F
+Date: Tue, 18 Apr 2023 14:21:49 +0200
+Message-Id: <20230418120313.128567903@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,33 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve Clevenger <scclevenger@os.amperecomputing.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit bf84937e882009075f57fd213836256fc65d96bc upstream.
+[ Upstream commit 03aecb1acbcd7a660f97d645ca6c09d9de27ff9d ]
 
-In etm4_enable_hw, fix for() loop range to represent address comparator pairs.
+Like the Windows Lenovo Yoga Book X91F/L the Android Lenovo Yoga Book
+X90F/L has a portrait 1200x1920 screen used in landscape mode,
+add a quirk for this.
 
-Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve Clevenger <scclevenger@os.amperecomputing.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/4a4ee61ce8ef402615a4528b21a051de3444fb7b.1677540079.git.scclevenger@os.amperecomputing.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When the quirk for the X91F/L was initially added it was written to
+also apply to the X90F/L but this does not work because the Android
+version of the Yoga Book uses completely different DMI strings.
+Also adjust the X91F/L quirk to reflect that it only applies to
+the X91F/L models.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230301095218.28457-1-hdegoede@redhat.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -179,7 +179,7 @@ static int etm4_enable_hw(struct etmv4_d
- 		writel_relaxed(config->ss_pe_cmp[i],
- 			       drvdata->base + TRCSSPCICRn(i));
- 	}
--	for (i = 0; i < drvdata->nr_addr_cmp; i++) {
-+	for (i = 0; i < drvdata->nr_addr_cmp * 2; i++) {
- 		writeq_relaxed(config->addr_val[i],
- 			       drvdata->base + TRCACVRn(i));
- 		writeq_relaxed(config->addr_acc[i],
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 8768073794fbf..6106fa7c43028 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -284,10 +284,17 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "IdeaPad Duet 3 10IGL5"),
+ 		},
+ 		.driver_data = (void *)&lcd1200x1920_rightside_up,
+-	}, {	/* Lenovo Yoga Book X90F / X91F / X91L */
++	}, {	/* Lenovo Yoga Book X90F / X90L */
+ 		.matches = {
+-		  /* Non exact match to match all versions */
+-		  DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X9"),
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
++		},
++		.driver_data = (void *)&lcd1200x1920_rightside_up,
++	}, {	/* Lenovo Yoga Book X91F / X91L */
++		.matches = {
++		  /* Non exact match to match F + L versions */
++		  DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X91"),
+ 		},
+ 		.driver_data = (void *)&lcd1200x1920_rightside_up,
+ 	}, {	/* OneGX1 Pro */
+-- 
+2.39.2
+
 
 
