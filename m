@@ -1,33 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5B72572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8047C433EF;
-	Tue, 18 Apr 2023 12:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84CC2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BFFCC433EF;
+	Tue, 18 Apr 2023 12:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821701;
-	bh=tGN7Nof0RRG5/ebQ/BvD21XinrFNMlJo2LqnY65TsfM=;
+	s=korg; t=1681821703;
+	bh=8sb2Wy+tm6fkbGioQL/zhQrwbOwJbe8jjWAoDa8Jwks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PGbvN1YOIhPpW03RRVd2DLe3hz12JNg6STd/43U8Sj/A5k0l3iJFxwuHycvnt1/Bn
-	 KwhJYL874n8nDvky73e3dDCGQenpNf7FBeLqFr1B9X0H0BfJCsT7EI7hmc16CRGT87
-	 hO74cWfWmGrWssuQfO9kWlKS7Mk3pvpkox6TQDpI=
+	b=Ylpti39OK66vuH8GMLHRPfpeitR++ZArJvts/UI2IFKRoTB8bLAnY8PtgE0+gox5E
+	 esgEzM8LRfufsyDAMcm0mxV4IgHXuD8X022J7vlIKFDJddYJ/s+qLn6adq5SSvZ4dh
+	 ZUcNl85KXt7JwrijKHcZcLlgzbHXe1luu7jjJz34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@chromium.org>,
+	Jerry Zuo <Jerry.Zuo@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.1 001/134] Revert "pinctrl: amd: Disable and mask interrupts on resume"
-Date: Tue, 18 Apr 2023 14:20:57 +0200
-Message-Id: <20230418120313.066707779@linuxfoundation.org>
+	Veronika Schwan <veronika@pisquaredover6.de>
+Subject: [PATCH 6.1 002/134] drm/amd/display: Pass the right info to drm_dp_remove_payload
+Date: Tue, 18 Apr 2023 14:20:58 +0200
+Message-Id: <20230418120313.099853730@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,88 +39,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kornel Dulęba <korneld@chromium.org>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit 534e465845ebfb4a97eb5459d3931a0b35e3b9a5 upstream.
+commit b8ca445f550a9a079134f836466ddda3bfad6108 upstream.
 
-This reverts commit b26cd9325be4c1fcd331b77f10acb627c560d4d7.
+[Why & How]
+drm_dp_remove_payload() interface was changed. Correct amdgpu dm code
+to pass the right parameter to the drm helper function.
 
-This patch introduces a regression on Lenovo Z13, which can't wake
-from the lid with it applied; and some unspecified AMD based Dell
-platforms are unable to wake from hitting the power button
-
-Signed-off-by: Kornel Dulęba <korneld@chromium.org>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20230411134932.292287-1-korneld@chromium.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Jerry Zuo <Jerry.Zuo@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry-picked from b8ca445f550a9a079134f836466ddda3bfad6108)
+[Hand modified due to missing f0127cb11299df80df45583b216e13f27c408545 which
+ failed to apply due to missing 94dfeaa46925bb6b4d43645bbb6234e846dec257]
+Reported-and-tested-by: Veronika Schwan <veronika@pisquaredover6.de>
+Fixes: d7b5638bd337 ("drm/amd/display: Take FEC Overhead into Timeslot Calculation")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |   36 ++++++++++++++++--------------------
- 1 file changed, 16 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |   57 ++++++++++++--
+ 1 file changed, 50 insertions(+), 7 deletions(-)
 
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -865,34 +865,32 @@ static const struct pinconf_ops amd_pinc
- 	.pin_config_group_set = amd_pinconf_group_set,
- };
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -175,6 +175,40 @@ void dm_helpers_dp_update_branch_info(
+ 	const struct dc_link *link)
+ {}
  
--static void amd_gpio_irq_init_pin(struct amd_gpio *gpio_dev, int pin)
-+static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
- {
--	const struct pin_desc *pd;
-+	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
- 	unsigned long flags;
- 	u32 pin_reg, mask;
++static void dm_helpers_construct_old_payload(
++			struct dc_link *link,
++			int pbn_per_slot,
++			struct drm_dp_mst_atomic_payload *new_payload,
++			struct drm_dp_mst_atomic_payload *old_payload)
++{
++	struct link_mst_stream_allocation_table current_link_table =
++									link->mst_stream_alloc_table;
++	struct link_mst_stream_allocation *dc_alloc;
 +	int i;
- 
- 	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
- 		BIT(INTERRUPT_MASK_OFF) | BIT(INTERRUPT_ENABLE_OFF) |
- 		BIT(WAKE_CNTRL_OFF_S4);
- 
--	pd = pin_desc_get(gpio_dev->pctrl, pin);
--	if (!pd)
--		return;
-+	for (i = 0; i < desc->npins; i++) {
-+		int pin = desc->pins[i].number;
-+		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
- 
--	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
--	pin_reg = readl(gpio_dev->base + pin * 4);
--	pin_reg &= ~mask;
--	writel(pin_reg, gpio_dev->base + pin * 4);
--	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
--}
-+		if (!pd)
-+			continue;
- 
--static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
--{
--	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
--	int i;
-+		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
- 
--	for (i = 0; i < desc->npins; i++)
--		amd_gpio_irq_init_pin(gpio_dev, i);
-+		pin_reg = readl(gpio_dev->base + i * 4);
-+		pin_reg &= ~mask;
-+		writel(pin_reg, gpio_dev->base + i * 4);
 +
-+		raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
++	*old_payload = *new_payload;
++
++	/* Set correct time_slots/PBN of old payload.
++	 * other fields (delete & dsc_enabled) in
++	 * struct drm_dp_mst_atomic_payload are don't care fields
++	 * while calling drm_dp_remove_payload()
++	 */
++	for (i = 0; i < current_link_table.stream_count; i++) {
++		dc_alloc =
++			&current_link_table.stream_allocations[i];
++
++		if (dc_alloc->vcp_id == new_payload->vcpi) {
++			old_payload->time_slots = dc_alloc->slot_count;
++			old_payload->pbn = dc_alloc->slot_count * pbn_per_slot;
++			break;
++		}
 +	}
++
++	/* make sure there is an old payload*/
++	ASSERT(i != current_link_table.stream_count);
++
++}
++
+ /*
+  * Writes payload allocation table in immediate downstream device.
+  */
+@@ -186,7 +220,7 @@ bool dm_helpers_dp_mst_write_payload_all
+ {
+ 	struct amdgpu_dm_connector *aconnector;
+ 	struct drm_dp_mst_topology_state *mst_state;
+-	struct drm_dp_mst_atomic_payload *payload;
++	struct drm_dp_mst_atomic_payload *target_payload, *new_payload, old_payload;
+ 	struct drm_dp_mst_topology_mgr *mst_mgr;
+ 
+ 	aconnector = (struct amdgpu_dm_connector *)stream->dm_stream_context;
+@@ -202,17 +236,26 @@ bool dm_helpers_dp_mst_write_payload_all
+ 	mst_state = to_drm_dp_mst_topology_state(mst_mgr->base.state);
+ 
+ 	/* It's OK for this to fail */
+-	payload = drm_atomic_get_mst_payload_state(mst_state, aconnector->port);
+-	if (enable)
+-		drm_dp_add_payload_part1(mst_mgr, mst_state, payload);
+-	else
+-		drm_dp_remove_payload(mst_mgr, mst_state, payload, payload);
++	new_payload = drm_atomic_get_mst_payload_state(mst_state, aconnector->port);
++
++	if (enable) {
++		target_payload = new_payload;
++
++		drm_dp_add_payload_part1(mst_mgr, mst_state, new_payload);
++	} else {
++		/* construct old payload by VCPI*/
++		dm_helpers_construct_old_payload(stream->link, mst_state->pbn_div,
++						new_payload, &old_payload);
++		target_payload = &old_payload;
++
++		drm_dp_remove_payload(mst_mgr, mst_state, &old_payload, new_payload);
++	}
+ 
+ 	/* mst_mgr->->payloads are VC payload notify MST branch using DPCD or
+ 	 * AUX message. The sequence is slot 1-63 allocated sequence for each
+ 	 * stream. AMD ASIC stream slot allocation should follow the same
+ 	 * sequence. copy DRM MST allocation to dc */
+-	fill_dc_mst_payload_table_from_drm(stream->link, enable, payload, proposed_table);
++	fill_dc_mst_payload_table_from_drm(stream->link, enable, target_payload, proposed_table);
+ 
+ 	return true;
  }
- 
- #ifdef CONFIG_PM_SLEEP
-@@ -945,10 +943,8 @@ static int amd_gpio_resume(struct device
- 	for (i = 0; i < desc->npins; i++) {
- 		int pin = desc->pins[i].number;
- 
--		if (!amd_gpio_should_save(gpio_dev, pin)) {
--			amd_gpio_irq_init_pin(gpio_dev, pin);
-+		if (!amd_gpio_should_save(gpio_dev, pin))
- 			continue;
--		}
- 
- 		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
- 		gpio_dev->saved_regs[i] |= readl(gpio_dev->base + pin * 4) & PIN_IRQ_PENDING;
 
 
