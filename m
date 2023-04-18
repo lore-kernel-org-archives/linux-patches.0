@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADED22566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8C0C433EF;
-	Tue, 18 Apr 2023 12:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE5F2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A8EC433D2;
+	Tue, 18 Apr 2023 12:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821243;
-	bh=0qdgd+Q5SL2DX44G41a3KrVBqolN/UgnE2wv12pknUs=;
+	s=korg; t=1681821246;
+	bh=R+IU/AaI+zuGRzljSq6G9Hys8aJ9m2yfdsuLZfhfW4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TD/6HTJysn+eG/0F/1NTQHihHh+O5QzEVRY8wJHpe0iouBrQoweq97mjfLXBX6D7c
-	 tb6Ibh9twPx6Lp4FzfEIUTqUQEoNtDlMflS/XS1u4e/c4wppqN1UXXRMcqd+4ry461
-	 3tqh/mD7eMG+e6j1fmAqeZb67LDo9Pw+hMn+Xbxk=
+	b=WaeVTkIp7a+wH4399b440MpIXVV7PRW03BjCwZhhceslRI1BwZyDqYcYvQPPpzoZw
+	 +isouZ2yeoOP/5Z1y/h95C2TiJglej4iRxmlmHp7sq9wF1QUeY9RKuKnEJv2gT7SRV
+	 blq6M0ahococAFH3HNv8/opK6CHcU5+nTJ01U+Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/124] bpftool: Print newline before } for struct with padding only fields
-Date: Tue, 18 Apr 2023 14:21:11 +0200
-Message-Id: <20230418120311.727432139@linuxfoundation.org>
+	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@chromium.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.10 053/124] Revert "pinctrl: amd: Disable and mask interrupts on resume"
+Date: Tue, 18 Apr 2023 14:21:12 +0200
+Message-Id: <20230418120311.762025993@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,55 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Kornel Dulęba <korneld@chromium.org>
 
-[ Upstream commit 44a726c3f23cf762ef4ce3c1709aefbcbe97f62c ]
+commit 534e465845ebfb4a97eb5459d3931a0b35e3b9a5 upstream.
 
-btf_dump_emit_struct_def attempts to print empty structures at a
-single line, e.g. `struct empty {}`. However, it has to account for a
-case when there are no regular but some padding fields in the struct.
-In such case `vlen` would be zero, but size would be non-zero.
+This reverts commit b26cd9325be4c1fcd331b77f10acb627c560d4d7.
 
-E.g. here is struct bpf_timer from vmlinux.h before this patch:
+This patch introduces a regression on Lenovo Z13, which can't wake
+from the lid with it applied; and some unspecified AMD based Dell
+platforms are unable to wake from hitting the power button
 
- struct bpf_timer {
- 	long: 64;
-	long: 64;};
-
-And after this patch:
-
- struct bpf_dynptr {
- 	long: 64;
-	long: 64;
- };
-
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20221001104425.415768-1-eddyz87@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Kornel Dulęba <korneld@chromium.org>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230411134932.292287-1-korneld@chromium.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/btf_dump.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-amd.c |   36 ++++++++++++++++--------------------
+ 1 file changed, 16 insertions(+), 20 deletions(-)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index 558d34fbd331c..6a8d8ed34b760 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -969,7 +969,11 @@ static void btf_dump_emit_struct_def(struct btf_dump *d,
- 	if (is_struct)
- 		btf_dump_emit_bit_padding(d, off, t->size * 8, align, false, lvl + 1);
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -764,34 +764,32 @@ static const struct pinconf_ops amd_pinc
+ 	.pin_config_group_set = amd_pinconf_group_set,
+ };
  
--	if (vlen)
-+	/*
-+	 * Keep `struct empty {}` on a single line,
-+	 * only print newline when there are regular or padding fields.
-+	 */
-+	if (vlen || t->size)
- 		btf_dump_printf(d, "\n");
- 	btf_dump_printf(d, "%s}", pfx(lvl));
- 	if (packed)
--- 
-2.39.2
-
+-static void amd_gpio_irq_init_pin(struct amd_gpio *gpio_dev, int pin)
++static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
+ {
+-	const struct pin_desc *pd;
++	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
+ 	unsigned long flags;
+ 	u32 pin_reg, mask;
++	int i;
+ 
+ 	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
+ 		BIT(INTERRUPT_MASK_OFF) | BIT(INTERRUPT_ENABLE_OFF) |
+ 		BIT(WAKE_CNTRL_OFF_S4);
+ 
+-	pd = pin_desc_get(gpio_dev->pctrl, pin);
+-	if (!pd)
+-		return;
++	for (i = 0; i < desc->npins; i++) {
++		int pin = desc->pins[i].number;
++		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
+ 
+-	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
+-	pin_reg = readl(gpio_dev->base + pin * 4);
+-	pin_reg &= ~mask;
+-	writel(pin_reg, gpio_dev->base + pin * 4);
+-	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
+-}
++		if (!pd)
++			continue;
+ 
+-static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
+-{
+-	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
+-	int i;
++		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
+ 
+-	for (i = 0; i < desc->npins; i++)
+-		amd_gpio_irq_init_pin(gpio_dev, i);
++		pin_reg = readl(gpio_dev->base + i * 4);
++		pin_reg &= ~mask;
++		writel(pin_reg, gpio_dev->base + i * 4);
++
++		raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
++	}
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
+@@ -844,10 +842,8 @@ static int amd_gpio_resume(struct device
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
+ 
+-		if (!amd_gpio_should_save(gpio_dev, pin)) {
+-			amd_gpio_irq_init_pin(gpio_dev, pin);
++		if (!amd_gpio_should_save(gpio_dev, pin))
+ 			continue;
+-		}
+ 
+ 		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
+ 		gpio_dev->saved_regs[i] |= readl(gpio_dev->base + pin * 4) & PIN_IRQ_PENDING;
 
 
