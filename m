@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3485D2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8616C433D2;
-	Tue, 18 Apr 2023 12:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AC82572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4622BC433EF;
+	Tue, 18 Apr 2023 12:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821959;
-	bh=CM6XRlSLbRIFu9ZYWx2s0PTk7kALrNAe/TEpeKMf95c=;
+	s=korg; t=1681821961;
+	bh=uPMOlphHBamsx4/oDxVMrw3tPvD+rItJxPuTUtzs+Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dmW5CzMl8S7UcMV+wymIFLIFLihbwDh2B/ybWNRbK+Ayf/y7y9KkiKBnwnBgmQKok
-	 4XDcKKcHOGP3iFhQNYN8ihYEMN9L5fegAwBEF1qThMwaKcvVJYl4fzxJT+Mba3oZyn
-	 MKnG9CeBbvPieHllCScxNfoucTQG7Sl53Hf2Hx4c=
+	b=VO892dOUN0VAPVsKuhlrTw8DLmRgg9vAFmPqsl4Y0TOvajOS8L1tDCd3h2C9IGtYf
+	 +TMr3IWQwwGk/ZyCucWVrda1YQihQVFVWICaQqAV7JbOwyDIrqJ25OSBks6gsx72Yz
+	 ixYQizXDon+PKXRujVyPVPP9wfD9i4gZIbp193QI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 103/134] riscv: Do not set initial_boot_params to the linear address of the dtb
-Date: Tue, 18 Apr 2023 14:22:39 +0200
-Message-Id: <20230418120316.778855447@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Wolfram Sang <wsa@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 077/134] i2c: imx-lpi2c: clean rx/tx buffers upon new message
+Date: Tue, 18 Apr 2023 14:22:13 +0200
+Message-Id: <20230418120315.739811438@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -34,36 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit f1581626071c8e37c58c5e8f0b4126b17172a211 upstream.
+[ Upstream commit 987dd36c0141f6ab9f0fbf14d6b2ec3342dedb2f ]
 
-early_init_dt_verify() is already called in parse_dtb() and since the dtb
-address does not change anymore (it is now in the fixmap region), no need
-to reset initial_boot_params by calling early_init_dt_verify() again.
+When start sending a new message clear the Rx & Tx buffer pointers in
+order to avoid using stale pointers.
 
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20230329081932.79831-3-alexghiti@rivosinc.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Tested-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/setup.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-imx-lpi2c.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/riscv/kernel/setup.c
-+++ b/arch/riscv/kernel/setup.c
-@@ -278,10 +278,7 @@ void __init setup_arch(char **cmdline_p)
- #if IS_ENABLED(CONFIG_BUILTIN_DTB)
- 	unflatten_and_copy_device_tree();
- #else
--	if (early_init_dt_verify(__va(XIP_FIXUP(dtb_early_pa))))
--		unflatten_device_tree();
--	else
--		pr_err("No DTB found in kernel mappings\n");
-+	unflatten_device_tree();
- #endif
- 	early_init_fdt_scan_reserved_mem();
- 	misc_mem_init();
+diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+index 9b2f9544c5681..a49b14d52a986 100644
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -463,6 +463,8 @@ static int lpi2c_imx_xfer(struct i2c_adapter *adapter,
+ 		if (num == 1 && msgs[0].len == 0)
+ 			goto stop;
+ 
++		lpi2c_imx->rx_buf = NULL;
++		lpi2c_imx->tx_buf = NULL;
+ 		lpi2c_imx->delivered = 0;
+ 		lpi2c_imx->msglen = msgs[i].len;
+ 		init_completion(&lpi2c_imx->complete);
+-- 
+2.39.2
+
 
 
