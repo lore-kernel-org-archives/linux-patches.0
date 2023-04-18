@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F872572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:51:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7AB4C433D2;
-	Tue, 18 Apr 2023 12:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3108F2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:51:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8B6C433D2;
+	Tue, 18 Apr 2023 12:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822291;
-	bh=tZL4DKJKoUW8BGK7cCIIWkzg1Bq4GUlrjPFIyfxKvhg=;
+	s=korg; t=1681822293;
+	bh=pjCcLZxo+EFkCs/lSuGJLRLlxrBSP+qNbohOLc9Q8l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Evjx0RU8S83BB7aH8q4enEo3h7QIBW8H4PvoWtUR7i7IXFteLbhb4ueEjqQD0uoOz
-	 ASo7kZLs3tjojdy/34gkRR1wZzPNcjnD+DIGxm5HqAonUHZYrnurAn+DZnWJyqLuRd
-	 IQ2Ge6tSVocBzNcaoO8OQ4jvT/joWL8JeajIp4M8=
+	b=ZujNEhlSuP79uCvpEZIO9Ds4M4Vw8PhzD6XH9RopJswYqzQA1ITOOu/s/FOkMVwJj
+	 TMoSvTDx9X6PU8vu9UT2KAfVs8ME7BaNjMxQiR5amBGFFszinZnXDLYj9C8It6K/8q
+	 oouyhPjfu6lZe39gQ/dOJrj+5tribJDI9yKVfCZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 094/139] wifi: iwlwifi: mvm: fix mvmtxq->stopped handling
-Date: Tue, 18 Apr 2023 14:22:39 +0200
-Message-Id: <20230418120317.323895829@linuxfoundation.org>
+Subject: [PATCH 6.2 095/139] wifi: iwlwifi: mvm: protect TXQ list manipulation
+Date: Tue, 18 Apr 2023 14:22:40 +0200
+Message-Id: <20230418120317.361061068@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -38,93 +38,185 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b58e3d4311b54b6dd0e37165277965da0c9eb21d ]
+[ Upstream commit 923bf981eb6ecc027227716e30701bdcc1845fbf ]
 
-This could race if the queue is redirected while full, then
-the flushing internally would start it while it's not yet
-usable again. Fix it by using two state bits instead of just
-one.
+Some recent upstream debugging uncovered the fact that in
+iwlwifi, the TXQ list manipulation is racy.
+
+Introduce a new state bit for when the TXQ is completely
+ready and can be used without locking, and if that's not
+set yet acquire the lock to check everything correctly.
 
 Reviewed-by: Benjamin Berg <benjamin.berg@intel.com>
 Tested-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 5 ++++-
- drivers/net/wireless/intel/iwlwifi/mvm/mvm.h      | 4 +++-
- drivers/net/wireless/intel/iwlwifi/mvm/ops.c      | 5 ++++-
- drivers/net/wireless/intel/iwlwifi/mvm/sta.c      | 4 ++--
- 4 files changed, 13 insertions(+), 5 deletions(-)
+ .../net/wireless/intel/iwlwifi/mvm/mac80211.c | 45 ++++++-------------
+ drivers/net/wireless/intel/iwlwifi/mvm/mvm.h  |  2 +
+ drivers/net/wireless/intel/iwlwifi/mvm/ops.c  |  1 +
+ drivers/net/wireless/intel/iwlwifi/mvm/sta.c  | 25 +++++++++--
+ 4 files changed, 39 insertions(+), 34 deletions(-)
 
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 5273ade711176..5b4974181ff1c 100644
+index 5b4974181ff1c..1d46a2b345eb3 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -732,7 +732,10 @@ void iwl_mvm_mac_itxq_xmit(struct ieee80211_hw *hw, struct ieee80211_txq *txq)
+@@ -760,42 +760,25 @@ static void iwl_mvm_mac_wake_tx_queue(struct ieee80211_hw *hw,
+ 	struct iwl_mvm *mvm = IWL_MAC80211_GET_MVM(hw);
+ 	struct iwl_mvm_txq *mvmtxq = iwl_mvm_txq_from_mac80211(txq);
  
- 	rcu_read_lock();
- 	do {
--		while (likely(!mvmtxq->stopped &&
-+		while (likely(!test_bit(IWL_MVM_TXQ_STATE_STOP_FULL,
-+					&mvmtxq->state) &&
-+			      !test_bit(IWL_MVM_TXQ_STATE_STOP_REDIRECT,
-+					&mvmtxq->state) &&
- 			      !test_bit(IWL_MVM_STATUS_IN_D3, &mvm->status))) {
- 			skb = ieee80211_tx_dequeue(hw, txq);
+-	/*
+-	 * Please note that racing is handled very carefully here:
+-	 * mvmtxq->txq_id is updated during allocation, and mvmtxq->list is
+-	 * deleted afterwards.
+-	 * This means that if:
+-	 * mvmtxq->txq_id != INVALID_QUEUE && list_empty(&mvmtxq->list):
+-	 *	queue is allocated and we can TX.
+-	 * mvmtxq->txq_id != INVALID_QUEUE && !list_empty(&mvmtxq->list):
+-	 *	a race, should defer the frame.
+-	 * mvmtxq->txq_id == INVALID_QUEUE && list_empty(&mvmtxq->list):
+-	 *	need to allocate the queue and defer the frame.
+-	 * mvmtxq->txq_id == INVALID_QUEUE && !list_empty(&mvmtxq->list):
+-	 *	queue is already scheduled for allocation, no need to allocate,
+-	 *	should defer the frame.
+-	 */
+-
+-	/* If the queue is allocated TX and return. */
+-	if (!txq->sta || mvmtxq->txq_id != IWL_MVM_INVALID_QUEUE) {
+-		/*
+-		 * Check that list is empty to avoid a race where txq_id is
+-		 * already updated, but the queue allocation work wasn't
+-		 * finished
+-		 */
+-		if (unlikely(txq->sta && !list_empty(&mvmtxq->list)))
+-			return;
+-
++	if (likely(test_bit(IWL_MVM_TXQ_STATE_READY, &mvmtxq->state)) ||
++	    !txq->sta) {
+ 		iwl_mvm_mac_itxq_xmit(hw, txq);
+ 		return;
+ 	}
  
+-	/* The list is being deleted only after the queue is fully allocated. */
+-	if (!list_empty(&mvmtxq->list))
+-		return;
++	/* iwl_mvm_mac_itxq_xmit() will later be called by the worker
++	 * to handle any packets we leave on the txq now
++	 */
+ 
+-	list_add_tail(&mvmtxq->list, &mvm->add_stream_txqs);
+-	schedule_work(&mvm->add_stream_wk);
++	spin_lock_bh(&mvm->add_stream_lock);
++	/* The list is being deleted only after the queue is fully allocated. */
++	if (list_empty(&mvmtxq->list) &&
++	    /* recheck under lock */
++	    !test_bit(IWL_MVM_TXQ_STATE_READY, &mvmtxq->state)) {
++		list_add_tail(&mvmtxq->list, &mvm->add_stream_txqs);
++		schedule_work(&mvm->add_stream_wk);
++	}
++	spin_unlock_bh(&mvm->add_stream_lock);
+ }
+ 
+ #define CHECK_BA_TRIGGER(_mvm, _trig, _tid_bm, _tid, _fmt...)		\
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-index ce6b701f3f4cd..3146b3d02bae8 100644
+index 3146b3d02bae8..157de77e129e4 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-@@ -729,7 +729,9 @@ struct iwl_mvm_txq {
- 	struct list_head list;
- 	u16 txq_id;
+@@ -731,6 +731,7 @@ struct iwl_mvm_txq {
  	atomic_t tx_request;
--	bool stopped;
-+#define IWL_MVM_TXQ_STATE_STOP_FULL	0
-+#define IWL_MVM_TXQ_STATE_STOP_REDIRECT	1
-+	unsigned long state;
+ #define IWL_MVM_TXQ_STATE_STOP_FULL	0
+ #define IWL_MVM_TXQ_STATE_STOP_REDIRECT	1
++#define IWL_MVM_TXQ_STATE_READY		2
+ 	unsigned long state;
  };
  
- static inline struct iwl_mvm_txq *
+@@ -829,6 +830,7 @@ struct iwl_mvm {
+ 		struct iwl_mvm_tvqm_txq_info tvqm_info[IWL_MAX_TVQM_QUEUES];
+ 	};
+ 	struct work_struct add_stream_wk; /* To add streams to queues */
++	spinlock_t add_stream_lock;
+ 
+ 	const char *nvm_file_name;
+ 	struct iwl_nvm_data *nvm_data;
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-index ebe6d9c4ccafb..f43e617fb451f 100644
+index f43e617fb451f..c49a2a1ee4867 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-@@ -1690,7 +1690,10 @@ static void iwl_mvm_queue_state_change(struct iwl_op_mode *op_mode,
+@@ -1194,6 +1194,7 @@ iwl_op_mode_mvm_start(struct iwl_trans *trans, const struct iwl_cfg *cfg,
+ 	INIT_DELAYED_WORK(&mvm->scan_timeout_dwork, iwl_mvm_scan_timeout_wk);
+ 	INIT_WORK(&mvm->add_stream_wk, iwl_mvm_add_new_dqa_stream_wk);
+ 	INIT_LIST_HEAD(&mvm->add_stream_txqs);
++	spin_lock_init(&mvm->add_stream_lock);
  
- 		txq = sta->txq[tid];
- 		mvmtxq = iwl_mvm_txq_from_mac80211(txq);
--		mvmtxq->stopped = !start;
-+		if (start)
-+			clear_bit(IWL_MVM_TXQ_STATE_STOP_FULL, &mvmtxq->state);
-+		else
-+			set_bit(IWL_MVM_TXQ_STATE_STOP_FULL, &mvmtxq->state);
+ 	init_waitqueue_head(&mvm->rx_sync_waitq);
  
- 		if (start && mvmsta->sta_state != IEEE80211_STA_NOTEXIST)
- 			iwl_mvm_mac_itxq_xmit(mvm->hw, txq);
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-index 69634fb82a9bf..21ad7b85c434c 100644
+index 21ad7b85c434c..9caae77995ca9 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-@@ -693,7 +693,7 @@ static int iwl_mvm_redirect_queue(struct iwl_mvm *mvm, int queue, int tid,
- 			    queue, iwl_mvm_ac_to_tx_fifo[ac]);
+@@ -384,8 +384,11 @@ static int iwl_mvm_disable_txq(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
+ 		struct iwl_mvm_txq *mvmtxq =
+ 			iwl_mvm_txq_from_tid(sta, tid);
  
- 	/* Stop the queue and wait for it to empty */
--	txq->stopped = true;
-+	set_bit(IWL_MVM_TXQ_STATE_STOP_REDIRECT, &txq->state);
+-		mvmtxq->txq_id = IWL_MVM_INVALID_QUEUE;
++		spin_lock_bh(&mvm->add_stream_lock);
+ 		list_del_init(&mvmtxq->list);
++		clear_bit(IWL_MVM_TXQ_STATE_READY, &mvmtxq->state);
++		mvmtxq->txq_id = IWL_MVM_INVALID_QUEUE;
++		spin_unlock_bh(&mvm->add_stream_lock);
+ 	}
  
- 	ret = iwl_trans_wait_tx_queues_empty(mvm->trans, BIT(queue));
- 	if (ret) {
-@@ -736,7 +736,7 @@ static int iwl_mvm_redirect_queue(struct iwl_mvm *mvm, int queue, int tid,
+ 	/* Regardless if this is a reserved TXQ for a STA - mark it as false */
+@@ -479,8 +482,11 @@ static int iwl_mvm_remove_sta_queue_marking(struct iwl_mvm *mvm, int queue)
+ 			disable_agg_tids |= BIT(tid);
+ 		mvmsta->tid_data[tid].txq_id = IWL_MVM_INVALID_QUEUE;
  
- out:
- 	/* Continue using the queue */
--	txq->stopped = false;
-+	clear_bit(IWL_MVM_TXQ_STATE_STOP_REDIRECT, &txq->state);
+-		mvmtxq->txq_id = IWL_MVM_INVALID_QUEUE;
++		spin_lock_bh(&mvm->add_stream_lock);
+ 		list_del_init(&mvmtxq->list);
++		clear_bit(IWL_MVM_TXQ_STATE_READY, &mvmtxq->state);
++		mvmtxq->txq_id = IWL_MVM_INVALID_QUEUE;
++		spin_unlock_bh(&mvm->add_stream_lock);
+ 	}
  
- 	return ret;
+ 	mvmsta->tfd_queue_msk &= ~BIT(queue); /* Don't use this queue anymore */
+@@ -1444,12 +1450,22 @@ void iwl_mvm_add_new_dqa_stream_wk(struct work_struct *wk)
+ 		 * a queue in the function itself.
+ 		 */
+ 		if (iwl_mvm_sta_alloc_queue(mvm, txq->sta, txq->ac, tid)) {
++			spin_lock_bh(&mvm->add_stream_lock);
+ 			list_del_init(&mvmtxq->list);
++			spin_unlock_bh(&mvm->add_stream_lock);
+ 			continue;
+ 		}
+ 
+-		list_del_init(&mvmtxq->list);
++		/* now we're ready, any remaining races/concurrency will be
++		 * handled in iwl_mvm_mac_itxq_xmit()
++		 */
++		set_bit(IWL_MVM_TXQ_STATE_READY, &mvmtxq->state);
++
+ 		local_bh_disable();
++		spin_lock(&mvm->add_stream_lock);
++		list_del_init(&mvmtxq->list);
++		spin_unlock(&mvm->add_stream_lock);
++
+ 		iwl_mvm_mac_itxq_xmit(mvm->hw, txq);
+ 		local_bh_enable();
+ 	}
+@@ -1864,8 +1880,11 @@ static void iwl_mvm_disable_sta_queues(struct iwl_mvm *mvm,
+ 		struct iwl_mvm_txq *mvmtxq =
+ 			iwl_mvm_txq_from_mac80211(sta->txq[i]);
+ 
++		spin_lock_bh(&mvm->add_stream_lock);
+ 		mvmtxq->txq_id = IWL_MVM_INVALID_QUEUE;
+ 		list_del_init(&mvmtxq->list);
++		clear_bit(IWL_MVM_TXQ_STATE_READY, &mvmtxq->state);
++		spin_unlock_bh(&mvm->add_stream_lock);
+ 	}
  }
+ 
 -- 
 2.39.2
 
