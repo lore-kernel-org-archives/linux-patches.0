@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6032566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C9FC433EF;
-	Tue, 18 Apr 2023 12:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0940C2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82019C433EF;
+	Tue, 18 Apr 2023 12:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821280;
-	bh=Fw2A4ipcJcZC4qwi9MPkoNFOsuEwHAAOXOVBpAqgCuc=;
+	s=korg; t=1681821282;
+	bh=QIjYVfhD4/s7Kmz/eMUMK44QfMHT9KQvNLUIggOotl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uac5cDdgT8J7ScZLH4yRucVMucVccwQnrz1sd4YG3hGDbRmyDx7JJi8AZI7r1Sar2
-	 4C6WwZdLcoRNwAA9xDnt/bGIszXWSB4FshZb7hwAdFcAiIYi1yLeIo8TvtlsaZgFZE
-	 sNezrsTNk4JFrAUJTRvLG0AsrPwQRZszmjwgAWPA=
+	b=dMGi4IwAGQDlsx/eI0qZMxfwYLVovtmQ05FGIp6aEpNPoEss9reKtoVuf0iG9W+jZ
+	 XzvygkbTUXS7fqkN8Ms9wHTHhWBB+YK/z8hWo/RR943Xskw189qLlhJ5jyxZL3ldKf
+	 tWTS3WUL1M/oelEd9gZhiRS55pn/uAJl/VhwxY+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Kerello <christophe.kerello@foss.st.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 067/124] mtd: rawnand: stm32_fmc2: use timings.mode instead of checking tRC_min
-Date: Tue, 18 Apr 2023 14:21:26 +0200
-Message-Id: <20230418120312.286126241@linuxfoundation.org>
+	Chunyan Zhang <chunyan.zhang@unisoc.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 068/124] clk: sprd: set max_register according to mapping range
+Date: Tue, 18 Apr 2023 14:21:27 +0200
+Message-Id: <20230418120312.316655035@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,34 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Kerello <christophe.kerello@foss.st.com>
+From: Chunyan Zhang <chunyan.zhang@unisoc.com>
 
-commit ddbb664b6ab8de7dffa388ae0c88cd18616494e5 upstream.
+[ Upstream commit 47d43086531f10539470a63e8ad92803e686a3dd ]
 
-Use timings.mode value instead of checking tRC_min timing
-for EDO mode support.
+In sprd clock driver, regmap_config.max_register was set to a fixed value
+which is likely larger than the address range configured in device tree,
+when reading registers through debugfs it would cause access violation.
 
-Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Fixes: 2cd457f328c1 ("mtd: rawnand: stm32_fmc2: add STM32 FMC2 NAND flash controller driver")
-Cc: stable@vger.kernel.org #v5.10+
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230328155819.225521-3-christophe.kerello@foss.st.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d41f59fd92f2 ("clk: sprd: Add common infrastructure")
+Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
+Link: https://lore.kernel.org/r/20230316023624.758204-1-chunyan.zhang@unisoc.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/stm32_fmc2_nand.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/sprd/common.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/mtd/nand/raw/stm32_fmc2_nand.c
-+++ b/drivers/mtd/nand/raw/stm32_fmc2_nand.c
-@@ -1525,7 +1525,7 @@ static int stm32_fmc2_nfc_setup_interfac
- 	if (IS_ERR(sdrt))
- 		return PTR_ERR(sdrt);
+diff --git a/drivers/clk/sprd/common.c b/drivers/clk/sprd/common.c
+index ce81e4087a8fc..2bfbab8db94bf 100644
+--- a/drivers/clk/sprd/common.c
++++ b/drivers/clk/sprd/common.c
+@@ -17,7 +17,6 @@ static const struct regmap_config sprdclk_regmap_config = {
+ 	.reg_bits	= 32,
+ 	.reg_stride	= 4,
+ 	.val_bits	= 32,
+-	.max_register	= 0xffff,
+ 	.fast_io	= true,
+ };
  
--	if (sdrt->tRC_min < 30000)
-+	if (conf->timings.mode > 3)
- 		return -EOPNOTSUPP;
+@@ -43,6 +42,8 @@ int sprd_clk_regmap_init(struct platform_device *pdev,
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *node = dev->of_node, *np;
+ 	struct regmap *regmap;
++	struct resource *res;
++	struct regmap_config reg_config = sprdclk_regmap_config;
  
- 	if (chipnr == NAND_DATA_IFACE_CHECK_ONLY)
+ 	if (of_find_property(node, "sprd,syscon", NULL)) {
+ 		regmap = syscon_regmap_lookup_by_phandle(node, "sprd,syscon");
+@@ -59,12 +60,14 @@ int sprd_clk_regmap_init(struct platform_device *pdev,
+ 			return PTR_ERR(regmap);
+ 		}
+ 	} else {
+-		base = devm_platform_ioremap_resource(pdev, 0);
++		base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 		if (IS_ERR(base))
+ 			return PTR_ERR(base);
+ 
++		reg_config.max_register = resource_size(res) - reg_config.reg_stride;
++
+ 		regmap = devm_regmap_init_mmio(&pdev->dev, base,
+-					       &sprdclk_regmap_config);
++					       &reg_config);
+ 		if (IS_ERR(regmap)) {
+ 			pr_err("failed to init regmap\n");
+ 			return PTR_ERR(regmap);
+-- 
+2.39.2
+
 
 
