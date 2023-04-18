@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8672566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:25:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23042C433EF;
-	Tue, 18 Apr 2023 12:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651E22566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:25:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52AEC433AF;
+	Tue, 18 Apr 2023 12:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820709;
-	bh=RCcIzMqCRkDHlbXcY9Qu9etEFyg9ePZW9O64p7a5/C4=;
+	s=korg; t=1681820712;
+	bh=Sn7o0M0gmNJk+U/5QURtFL0W8LPBW1aTabZvYFHZhtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=epJ2L2X7qMAWDAXVyO5GX75+u/rKECxZyYziB7Gcy6OEIjPPUYR0zZEQffsThi1zI
-	 16XahZMgyhUTuVTaDsCP2BxLd6Qln8fsH7RvOU/sLmatuXzlV3NG4GyzbzNmBNwswe
-	 5SjQVfjE9TMsSIDyOoDVcERpmc6cHvp4jUcUCSsY=
+	b=ezVpeObBpktpLxFvAAActukgBHXMy8sqaJ7yf5X6NyMWiuraOjkc72vWVEtdAgJ5v
+	 EJb64r3/Wmarn7FiUFcr8noxOkmZ1s6N16Yyq/jMfhWNqxRPoQf4IDR9N3kZBrZoTG
+	 LdyQSk8KO13/OgEHt/IYDVRUbeCPUMaxUtUn4Peg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Breathitt Gray <william.gray@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.14 09/37] iio: dac: cio-dac: Fix max DAC write value check for 12-bit
-Date: Tue, 18 Apr 2023 14:21:19 +0200
-Message-Id: <20230418120255.002127672@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 4.14 10/37] tty: serial: sh-sci: Fix Rx on RZ/G2L SCI
+Date: Tue, 18 Apr 2023 14:21:20 +0200
+Message-Id: <20230418120255.040787316@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
 References: <20230418120254.687480980@linuxfoundation.org>
@@ -34,38 +33,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Breathitt Gray <william.gray@linaro.org>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit c3701185ee1973845db088d8b0fc443397ab0eb2 upstream.
+commit f92ed0cd9328aed918ebb0ebb64d259eccbcc6e7 upstream.
 
-The CIO-DAC series of devices only supports DAC values up to 12-bit
-rather than 16-bit. Trying to write a 16-bit value results in only the
-lower 12 bits affecting the DAC output which is not what the user
-expects. Instead, adjust the DAC write value check to reject values
-larger than 12-bit so that they fail explicitly as invalid for the user.
+SCI IP on RZ/G2L alike SoCs do not need regshift compared to other SCI
+IPs on the SH platform. Currently, it does regshift and configuring Rx
+wrongly. Drop adding regshift for RZ/G2L alike SoCs.
 
-Fixes: 3b8df5fd526e ("iio: Add IIO support for the Measurement Computing CIO-DAC family")
+Fixes: dfc80387aefb ("serial: sh-sci: Compute the regshift value for SCI ports")
 Cc: stable@vger.kernel.org
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
-Link: https://lore.kernel.org/r/20230311002248.8548-1-william.gray@linaro.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230321114753.75038-3-biju.das.jz@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/cio-dac.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/sh-sci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/dac/cio-dac.c
-+++ b/drivers/iio/dac/cio-dac.c
-@@ -74,8 +74,8 @@ static int cio_dac_write_raw(struct iio_
- 	if (mask != IIO_CHAN_INFO_RAW)
- 		return -EINVAL;
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -2839,7 +2839,7 @@ static int sci_init_single(struct platfo
+ 	port->flags		= UPF_FIXED_PORT | UPF_BOOT_AUTOCONF | p->flags;
+ 	port->fifosize		= sci_port->params->fifosize;
  
--	/* DAC can only accept up to a 16-bit value */
--	if ((unsigned int)val > 65535)
-+	/* DAC can only accept up to a 12-bit value */
-+	if ((unsigned int)val > 4095)
- 		return -EINVAL;
- 
- 	priv->chan_out_states[chan->channel] = val;
+-	if (port->type == PORT_SCI) {
++	if (port->type == PORT_SCI && !dev->dev.of_node) {
+ 		if (sci_port->reg_size >= 0x20)
+ 			port->regshift = 2;
+ 		else
 
 
