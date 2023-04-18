@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3222572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513F7C433D2;
-	Tue, 18 Apr 2023 12:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D152572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF85C433D2;
+	Tue, 18 Apr 2023 12:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822190;
-	bh=rpIu45qBzPZdf7AeMeZ1VRAqIeATZBw+5EFE9WnFHdw=;
+	s=korg; t=1681822193;
+	bh=hUhH4UZYXMJ8PKOZYaInp7KKb0cyL+zSVe5yqg4Nf8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LqE5UDFEw5YIhvzt/UlMjB5fq7g2yEF4eGFBm2kQmv0Fd5XlGJN0XKn3YWAZ1n7ri
-	 vy+ofP9CDdUgq3xxAeKHQhlqs85xXe4JcxHC8yHfOaMhuFUpiEM3k1FpQcgDq1z5x0
-	 NyU+9Q69CsRck0UVbVhWvWfsj3Hr9EHeU5RpJoYI=
+	b=rcu+7DN2PZJrX1lrXktGKO8oS2erPsTitY/vx0UA3J0oyWYifYI3lhygQ94oqFXcg
+	 k3Xbt8LxAjmidogjcax//G7owWJjtGAQrZdbdQpjJchQcVKHyT6wTqbHuYL2cYfRrw
+	 DfzC8Z6UnXA47sOongvSU6J1Qird10AQZvfoV5Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 056/139] Bluetooth: hci_conn: Fix not cleaning up on LE Connection failure
-Date: Tue, 18 Apr 2023 14:22:01 +0200
-Message-Id: <20230418120315.857275498@linuxfoundation.org>
+Subject: [PATCH 6.2 057/139] Bluetooth: Fix printing errors if LE Connection times out
+Date: Tue, 18 Apr 2023 14:22:02 +0200
+Message-Id: <20230418120315.895401713@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,114 +36,145 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 19cf60bf63cbaf5262eac400c707966e19999b83 ]
+[ Upstream commit b62e72200eaad523f08d8319bba50fc652e032a8 ]
 
-hci_connect_le_scan_cleanup shall always be invoked to cleanup the
-states and re-enable passive scanning if necessary, otherwise it may
-cause the pending action to stay active causing multiple attempts to
-connect.
+This fixes errors like bellow when LE Connection times out since that
+is actually not a controller error:
 
-Fixes: 9b3628d79b46 ("Bluetooth: hci_sync: Cleanup hci_conn if it cannot be aborted")
+ Bluetooth: hci0: Opcode 0x200d failed: -110
+ Bluetooth: hci0: request failed to create LE connection: err -110
+
+Instead the code shall properly detect if -ETIMEDOUT is returned and
+send HCI_OP_LE_CREATE_CONN_CANCEL to give up on the connection.
+
+Link: https://github.com/bluez/bluez/issues/340
+Fixes: 8e8b92ee60de ("Bluetooth: hci_sync: Add hci_le_create_conn_sync")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 52 +++++++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 28 deletions(-)
+ include/net/bluetooth/hci_core.h |  1 +
+ net/bluetooth/hci_conn.c         |  7 +++++--
+ net/bluetooth/hci_event.c        | 16 ++++++----------
+ net/bluetooth/hci_sync.c         | 13 ++++++++++---
+ 4 files changed, 22 insertions(+), 15 deletions(-)
 
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 7254edfba4c9c..ffb89b98b2714 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -954,6 +954,7 @@ enum {
+ 	HCI_CONN_STK_ENCRYPT,
+ 	HCI_CONN_AUTH_INITIATOR,
+ 	HCI_CONN_DROP,
++	HCI_CONN_CANCEL,
+ 	HCI_CONN_PARAM_REMOVAL_PEND,
+ 	HCI_CONN_NEW_LINK_KEY,
+ 	HCI_CONN_SCANNING,
 diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 17baea2bc1924..6fbc1fe7b1dcb 100644
+index 6fbc1fe7b1dcb..bd38e36e5a58a 100644
 --- a/net/bluetooth/hci_conn.c
 +++ b/net/bluetooth/hci_conn.c
-@@ -68,7 +68,7 @@ static const struct sco_param esco_param_msbc[] = {
- };
- 
- /* This function requires the caller holds hdev->lock */
--static void hci_connect_le_scan_cleanup(struct hci_conn *conn)
-+static void hci_connect_le_scan_cleanup(struct hci_conn *conn, u8 status)
+@@ -1245,6 +1245,8 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
  {
- 	struct hci_conn_params *params;
- 	struct hci_dev *hdev = conn->hdev;
-@@ -88,9 +88,28 @@ static void hci_connect_le_scan_cleanup(struct hci_conn *conn)
+ 	struct hci_conn *conn = data;
  
- 	params = hci_pend_le_action_lookup(&hdev->pend_le_conns, bdaddr,
- 					   bdaddr_type);
--	if (!params || !params->explicit_connect)
-+	if (!params)
- 		return;
- 
-+	if (params->conn) {
-+		hci_conn_drop(params->conn);
-+		hci_conn_put(params->conn);
-+		params->conn = NULL;
-+	}
++	bt_dev_dbg(hdev, "err %d", err);
 +
-+	if (!params->explicit_connect)
-+		return;
-+
-+	/* If the status indicates successful cancellation of
-+	 * the attempt (i.e. Unknown Connection Id) there's no point of
-+	 * notifying failure since we'll go back to keep trying to
-+	 * connect. The only exception is explicit connect requests
-+	 * where a timeout + cancel does indicate an actual failure.
-+	 */
-+	if (status && status != HCI_ERROR_UNKNOWN_CONN_ID)
-+		mgmt_connect_failed(hdev, &conn->dst, conn->type,
-+				    conn->dst_type, status);
-+
- 	/* The connection attempt was doing scan for new RPA, and is
- 	 * in scan phase. If params are not associated with any other
- 	 * autoconnect action, remove them completely. If they are, just unmark
-@@ -178,7 +197,7 @@ static void le_scan_cleanup(struct work_struct *work)
- 	rcu_read_unlock();
- 
- 	if (c == conn) {
--		hci_connect_le_scan_cleanup(conn);
-+		hci_connect_le_scan_cleanup(conn, 0x00);
- 		hci_conn_cleanup(conn);
- 	}
- 
-@@ -1191,31 +1210,8 @@ EXPORT_SYMBOL(hci_get_route);
- static void hci_le_conn_failed(struct hci_conn *conn, u8 status)
- {
- 	struct hci_dev *hdev = conn->hdev;
--	struct hci_conn_params *params;
- 
--	params = hci_pend_le_action_lookup(&hdev->pend_le_conns, &conn->dst,
--					   conn->dst_type);
--	if (params && params->conn) {
--		hci_conn_drop(params->conn);
--		hci_conn_put(params->conn);
--		params->conn = NULL;
--	}
--
--	/* If the status indicates successful cancellation of
--	 * the attempt (i.e. Unknown Connection Id) there's no point of
--	 * notifying failure since we'll go back to keep trying to
--	 * connect. The only exception is explicit connect requests
--	 * where a timeout + cancel does indicate an actual failure.
--	 */
--	if (status != HCI_ERROR_UNKNOWN_CONN_ID ||
--	    (params && params->explicit_connect))
--		mgmt_connect_failed(hdev, &conn->dst, conn->type,
--				    conn->dst_type, status);
--
--	/* Since we may have temporarily stopped the background scanning in
--	 * favor of connection establishment, we should restart it.
--	 */
--	hci_update_passive_scan(hdev);
-+	hci_connect_le_scan_cleanup(conn, status);
- 
- 	/* Enable advertising in case this was a failed connection
- 	 * attempt as a peripheral.
-@@ -1252,7 +1248,7 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
  	hci_dev_lock(hdev);
  
  	if (!err) {
--		hci_connect_le_scan_cleanup(conn);
-+		hci_connect_le_scan_cleanup(conn, 0x00);
+@@ -1252,8 +1254,6 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
  		goto done;
  	}
  
+-	bt_dev_err(hdev, "request failed to create LE connection: err %d", err);
+-
+ 	/* Check if connection is still pending */
+ 	if (conn != hci_lookup_le_connect(hdev))
+ 		goto done;
+@@ -2787,6 +2787,9 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ {
+ 	int r = 0;
+ 
++	if (test_and_set_bit(HCI_CONN_CANCEL, &conn->flags))
++		return 0;
++
+ 	switch (conn->state) {
+ 	case BT_CONNECTED:
+ 	case BT_CONFIG:
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index ad92a4be58517..e68f2a7d863ac 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2881,16 +2881,6 @@ static void cs_le_create_conn(struct hci_dev *hdev, bdaddr_t *peer_addr,
+ 
+ 	conn->resp_addr_type = peer_addr_type;
+ 	bacpy(&conn->resp_addr, peer_addr);
+-
+-	/* We don't want the connection attempt to stick around
+-	 * indefinitely since LE doesn't have a page timeout concept
+-	 * like BR/EDR. Set a timer for any connection that doesn't use
+-	 * the accept list for connecting.
+-	 */
+-	if (filter_policy == HCI_LE_USE_PEER_ADDR)
+-		queue_delayed_work(conn->hdev->workqueue,
+-				   &conn->le_conn_timeout,
+-				   conn->conn_timeout);
+ }
+ 
+ static void hci_cs_le_create_conn(struct hci_dev *hdev, u8 status)
+@@ -5902,6 +5892,12 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
+ 	if (status)
+ 		goto unlock;
+ 
++	/* Drop the connection if it has been aborted */
++	if (test_bit(HCI_CONN_CANCEL, &conn->flags)) {
++		hci_conn_drop(conn);
++		goto unlock;
++	}
++
+ 	if (conn->dst_type == ADDR_LE_DEV_PUBLIC)
+ 		addr_type = BDADDR_LE_PUBLIC;
+ 	else
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 5a6aa1627791b..632be12672887 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -246,8 +246,9 @@ int __hci_cmd_sync_status_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 
+ 	skb = __hci_cmd_sync_sk(hdev, opcode, plen, param, event, timeout, sk);
+ 	if (IS_ERR(skb)) {
+-		bt_dev_err(hdev, "Opcode 0x%4x failed: %ld", opcode,
+-				PTR_ERR(skb));
++		if (!event)
++			bt_dev_err(hdev, "Opcode 0x%4x failed: %ld", opcode,
++				   PTR_ERR(skb));
+ 		return PTR_ERR(skb);
+ 	}
+ 
+@@ -5126,8 +5127,11 @@ static int hci_le_connect_cancel_sync(struct hci_dev *hdev,
+ 	if (test_bit(HCI_CONN_SCANNING, &conn->flags))
+ 		return 0;
+ 
++	if (test_and_set_bit(HCI_CONN_CANCEL, &conn->flags))
++		return 0;
++
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_CREATE_CONN_CANCEL,
+-				     6, &conn->dst, HCI_CMD_TIMEOUT);
++				     0, NULL, HCI_CMD_TIMEOUT);
+ }
+ 
+ static int hci_connect_cancel_sync(struct hci_dev *hdev, struct hci_conn *conn)
+@@ -6102,6 +6106,9 @@ int hci_le_create_conn_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ 				       conn->conn_timeout, NULL);
+ 
+ done:
++	if (err == -ETIMEDOUT)
++		hci_le_connect_cancel_sync(hdev, conn);
++
+ 	/* Re-enable advertising after the connection attempt is finished. */
+ 	hci_resume_advertising_sync(hdev);
+ 	return err;
 -- 
 2.39.2
 
