@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA16257D
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA83C4339E;
-	Tue, 18 Apr 2023 12:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E7D2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C1BC433EF;
+	Tue, 18 Apr 2023 12:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821990;
-	bh=phccvm6yp0Roa2UoU0zNFZvTK811b8TuF8twIphPFf8=;
+	s=korg; t=1681821993;
+	bh=S25VDnCp8RQihbAz8ao1fgLNYX9CuiTx8r5yEZM5z60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3yoePYQdLO+0vC68sgavfjviXVP5kNPCh1ldDcYQHbu7rtBWC7mYRTCAzGmTprA7
-	 2mP3VzkO44Pz4miR61f2xUITTky4Ac8tmIUBMNsDzHnt40n8LpvlhVfmjhAIJRlRzB
-	 V/rs+w2k1FC19kLS8ViUhSKCuNv921qS11sEOShw=
+	b=P4o+BsRtQ61QXuBDdcOYf0XLU9oDkRR01S48DDS6dG/CgNgZDPv+fZ0l+ZMW8LWkV
+	 nTP8ruzoE/orCUE+DhcJ98tSbQYpk2Ov4HFE3vA2QmS/ZTijih7GIalYAN8UmGYqZi
+	 1saa1xv4MhkRhDN8u0oXktzSBHikZ/9cfKPlJAwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Radu Pirea (OSS)" <radu-nicolae.pirea@oss.nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Christoph Paasch <cpaasch@apple.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 108/134] net: phy: nxp-c45-tja11xx: fix unsigned long multiplication overflow
-Date: Tue, 18 Apr 2023 14:22:44 +0200
-Message-Id: <20230418120316.966616486@linuxfoundation.org>
+Subject: [PATCH 6.1 117/134] mptcp: stricter state check in mptcp_worker
+Date: Tue, 18 Apr 2023 14:22:53 +0200
+Message-Id: <20230418120317.261282619@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,38 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Radu Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit bdaaecc127d471c422ee9e994978617c8aa79e1e upstream.
+commit d6a0443733434408f2cbd4c53fea6910599bab9e upstream.
 
-Any multiplication between GENMASK(31, 0) and a number bigger than 1
-will be truncated because of the overflow, if the size of unsigned long
-is 32 bits.
+As reported by Christoph, the mptcp protocol can run the
+worker when the relevant msk socket is in an unexpected state:
 
-Replaced GENMASK with GENMASK_ULL to make sure that multiplication will
-be between 64 bits values.
+connect()
+// incoming reset + fastclose
+// the mptcp worker is scheduled
+mptcp_disconnect()
+// msk is now CLOSED
+listen()
+mptcp_worker()
 
-Cc: <stable@vger.kernel.org> # 5.15+
-Fixes: 514def5dd339 ("phy: nxp-c45-tja11xx: add timestamping support")
-Signed-off-by: Radu Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230406095953.75622-1-radu-nicolae.pirea@oss.nxp.com
+Leading to the following splat:
+
+divide error: 0000 [#1] PREEMPT SMP
+CPU: 1 PID: 21 Comm: kworker/1:0 Not tainted 6.3.0-rc1-gde5e8fd0123c #11
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+Workqueue: events mptcp_worker
+RIP: 0010:__tcp_select_window+0x22c/0x4b0 net/ipv4/tcp_output.c:3018
+RSP: 0018:ffffc900000b3c98 EFLAGS: 00010293
+RAX: 000000000000ffd7 RBX: 000000000000ffd7 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: ffffffff8214ce97 RDI: 0000000000000004
+RBP: 000000000000ffd7 R08: 0000000000000004 R09: 0000000000010000
+R10: 000000000000ffd7 R11: ffff888005afa148 R12: 000000000000ffd7
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  0000000000000000(0000) GS:ffff88803ed00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000405270 CR3: 000000003011e006 CR4: 0000000000370ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ tcp_select_window net/ipv4/tcp_output.c:262 [inline]
+ __tcp_transmit_skb+0x356/0x1280 net/ipv4/tcp_output.c:1345
+ tcp_transmit_skb net/ipv4/tcp_output.c:1417 [inline]
+ tcp_send_active_reset+0x13e/0x320 net/ipv4/tcp_output.c:3459
+ mptcp_check_fastclose net/mptcp/protocol.c:2530 [inline]
+ mptcp_worker+0x6c7/0x800 net/mptcp/protocol.c:2705
+ process_one_work+0x3bd/0x950 kernel/workqueue.c:2390
+ worker_thread+0x5b/0x610 kernel/workqueue.c:2537
+ kthread+0x138/0x170 kernel/kthread.c:376
+ ret_from_fork+0x2c/0x50 arch/x86/entry/entry_64.S:308
+ </TASK>
+
+This change addresses the issue explicitly checking for bad states
+before running the mptcp worker.
+
+Fixes: e16163b6e2b7 ("mptcp: refactor shutdown and close")
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/374
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/nxp-c45-tja11xx.c |    2 +-
+ net/mptcp/protocol.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/phy/nxp-c45-tja11xx.c
-+++ b/drivers/net/phy/nxp-c45-tja11xx.c
-@@ -191,7 +191,7 @@
- #define MAX_ID_PS			2260U
- #define DEFAULT_ID_PS			2000U
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2638,7 +2638,7 @@ static void mptcp_worker(struct work_str
  
--#define PPM_TO_SUBNS_INC(ppb)	div_u64(GENMASK(31, 0) * (ppb) * \
-+#define PPM_TO_SUBNS_INC(ppb)	div_u64(GENMASK_ULL(31, 0) * (ppb) * \
- 					PTP_CLK_PERIOD_100BT1, NSEC_PER_SEC)
+ 	lock_sock(sk);
+ 	state = sk->sk_state;
+-	if (unlikely(state == TCP_CLOSE))
++	if (unlikely((1 << state) & (TCPF_CLOSE | TCPF_LISTEN)))
+ 		goto unlock;
  
- #define NXP_C45_SKB_CB(skb)	((struct nxp_c45_skb_cb *)(skb)->cb)
+ 	mptcp_check_data_fin_ack(sk);
 
 
