@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7772572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7286AC4339B;
-	Tue, 18 Apr 2023 12:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C872572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EEBC433EF;
+	Tue, 18 Apr 2023 12:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822145;
-	bh=T+bcKzURiSu7tT9sZV8X4D3tDFSjNO+KceGYoPkhe1o=;
+	s=korg; t=1681822148;
+	bh=LJqsLK/fF+B3r7y04bZh1zbvBgs0fFmmwPmGP+1WkfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bbKcFU+1jgOA8velc89C4/PN00KOWH1tPd88iqNRFd5qXCUNks/DDBNAP1S5ItnMQ
-	 qVGxUH0wKtKNdQ1h5Fy22NYwLbvVueAYoFOsu19kGEEVzbFnDsi+sszTQ5qvgdMpjl
-	 joTuLRxK1JnEot70nmzLvKL+Gpl4sD7sbG4Q3xNg=
+	b=BsbkGLR4X4USqkbXZ9G9a6MMZrPaPg67+6CWZ072BYKZNE2AOUSFuTFTMSDDUF/Ru
+	 3bXTIdPZQITYF7QTPsG/lEcLIdzetjtN6YwslBLUhSKKmI98HegH55VmOT4WLyivFs
+	 UFRj9uRAO3m90lP6bwzL6JYLZPBbYcur9zW/Zxp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.2 010/139] ALSA: emu10k1: dont create old pass-through playback device on Audigy
-Date: Tue, 18 Apr 2023 14:21:15 +0200
-Message-Id: <20230418120314.090583853@linuxfoundation.org>
+Subject: [PATCH 6.2 011/139] ALSA: hda/sigmatel: fix S/PDIF out on Intel D*45* motherboards
+Date: Tue, 18 Apr 2023 14:21:16 +0200
+Message-Id: <20230418120314.118435530@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,49 +36,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-commit 8dd13214a810c695044aa168c0ddba1a9c433e4f upstream.
+commit f342ac00da1064eb4f94b1f4bcacbdfea955797a upstream.
 
-It could have never worked, as snd_emu10k1_fx8010_playback_prepare() and
-snd_emu10k1_fx8010_playback_hw_free() assume the emu10k1 offset for the
-ETRAM, and the default DSP code includes no handler for it. It also
-wouldn't make a lot of sense to make it work, as Audigy has an own, much
-simpler, pass-through mechanism. So just skip creation of the device.
+The BIOS botches this one completely - it says the 2nd S/PDIF output is
+used, while in fact it's the 1st one. This is tested on DP45SG, but I'm
+assuming it's valid for the other boards in the series as well.
+
+Also add some comments regarding the pins.
+FWIW, the codec is apparently still sold by Tempo Semiconductor, Inc.,
+where one can download the documentation.
 
 Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230405201220.2197938-1-oswald.buddenhagen@gmx.de
+Link: https://lore.kernel.org/r/20230405201220.2197826-2-oswald.buddenhagen@gmx.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/emu10k1/emupcm.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_sigmatel.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/sound/pci/emu10k1/emupcm.c
-+++ b/sound/pci/emu10k1/emupcm.c
-@@ -1781,17 +1781,21 @@ int snd_emu10k1_pcm_efx(struct snd_emu10
- 	struct snd_kcontrol *kctl;
- 	int err;
+--- a/sound/pci/hda/patch_sigmatel.c
++++ b/sound/pci/hda/patch_sigmatel.c
+@@ -1707,6 +1707,7 @@ static const struct snd_pci_quirk stac92
+ };
  
--	err = snd_pcm_new(emu->card, "emu10k1 efx", device, 8, 1, &pcm);
-+	err = snd_pcm_new(emu->card, "emu10k1 efx", device, emu->audigy ? 0 : 8, 1, &pcm);
- 	if (err < 0)
- 		return err;
+ static const struct hda_pintbl ref92hd73xx_pin_configs[] = {
++	// Port A-H
+ 	{ 0x0a, 0x02214030 },
+ 	{ 0x0b, 0x02a19040 },
+ 	{ 0x0c, 0x01a19020 },
+@@ -1715,9 +1716,12 @@ static const struct hda_pintbl ref92hd73
+ 	{ 0x0f, 0x01014010 },
+ 	{ 0x10, 0x01014020 },
+ 	{ 0x11, 0x01014030 },
++	// CD in
+ 	{ 0x12, 0x02319040 },
++	// Digial Mic ins
+ 	{ 0x13, 0x90a000f0 },
+ 	{ 0x14, 0x90a000f0 },
++	// Digital outs
+ 	{ 0x22, 0x01452050 },
+ 	{ 0x23, 0x01452050 },
+ 	{}
+@@ -1758,6 +1762,7 @@ static const struct hda_pintbl alienware
+ };
  
- 	pcm->private_data = emu;
+ static const struct hda_pintbl intel_dg45id_pin_configs[] = {
++	// Analog outputs
+ 	{ 0x0a, 0x02214230 },
+ 	{ 0x0b, 0x02A19240 },
+ 	{ 0x0c, 0x01013214 },
+@@ -1765,6 +1770,9 @@ static const struct hda_pintbl intel_dg4
+ 	{ 0x0e, 0x01A19250 },
+ 	{ 0x0f, 0x01011212 },
+ 	{ 0x10, 0x01016211 },
++	// Digital output
++	{ 0x22, 0x01451380 },
++	{ 0x23, 0x40f000f0 },
+ 	{}
+ };
  
--	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &snd_emu10k1_fx8010_playback_ops);
-+	if (!emu->audigy)
-+		snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &snd_emu10k1_fx8010_playback_ops);
- 	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_CAPTURE, &snd_emu10k1_capture_efx_ops);
- 
- 	pcm->info_flags = 0;
--	strcpy(pcm->name, "Multichannel Capture/PT Playback");
-+	if (emu->audigy)
-+		strcpy(pcm->name, "Multichannel Capture");
-+	else
-+		strcpy(pcm->name, "Multichannel Capture/PT Playback");
- 	emu->pcm_efx = pcm;
- 
- 	/* EFX capture - record the "FXBUS2" channels, by default we connect the EXTINs 
 
 
