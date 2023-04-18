@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C380E2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EC6C433D2;
-	Tue, 18 Apr 2023 12:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFCD2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D719AC433EF;
+	Tue, 18 Apr 2023 12:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821674;
-	bh=4vCFgUB8dsAxZcLxVprlaGaNdhN18fWEIuBfIUnmKhk=;
+	s=korg; t=1681821677;
+	bh=kbj36jtAV4D1b7Tsu97XVvIrmabLu59Ylra6ZXQ8xqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWr4Zx5LdjZ57bRPn+kBiuCgIVJJyonN1oK0oKEmrHaZQf9qXaAuH5w0GbIipCF9T
-	 IVIznjFxQqL5lDFwicJe0qZBLglz2wOq9ZFynDXasx5q2nJ/L8PILBi1NkzTDLXdPC
-	 A6SrAZjeUYvY4imrhsH3DGTv0AfK6TUViAnM1yLg=
+	b=Sliq+mnF/vKd5bjBJqtKVHKDDr7MT+lhSLoJe3kE2aM6UMaiEgiAq1oiFGrUxL5Tc
+	 AjhdMd8BKH7mwGFS2VHJTz72eSGQFtcdF6YJAIA9ddu/kGhhFRyCbFC08TtTgUnph/
+	 znw3Ud8S9R2ajQ69vkbzFS0VvbMa9a5vNTbXnbA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanteng Si <siyanteng@loongson.cn>,
-	William Breathitt Gray <vilhelm.gray@gmail.com>
-Subject: [PATCH 5.15 90/91] counter: Add the necessary colons and indents to the comments of counter_compi
-Date: Tue, 18 Apr 2023 14:22:34 +0200
-Message-Id: <20230418120308.680137501@linuxfoundation.org>
+	Xi Ruoyao <xry111@xry111.site>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chang Feng <flukehn@gmail.com>
+Subject: [PATCH 5.15 91/91] nvme-pci: avoid the deepest sleep state on ZHITAI TiPro5000 SSDs
+Date: Tue, 18 Apr 2023 14:22:35 +0200
+Message-Id: <20230418120308.722868604@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -34,114 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yanteng Si <siyanteng01@gmail.com>
+From: Xi Ruoyao <xry111@xry111.site>
 
-commit 0032ca576a79946492194ae4860b462d32815c66 upstream.
+commit d5d3c100ac40dcb03959a6f1d2f0f13204c4f145 upstream.
 
-Since commit aaec1a0f76ec ("counter: Internalize sysfs interface code")
-introduce a warning as:
+ZHITAI TiPro5000 SSDs has the same APST sleep problem as its cousin,
+TiPro7000.  The quirk for TiPro7000 has been added in
+commit 6b961bce50e4 ("nvme-pci: avoid the deepest sleep state on
+ZHITAI TiPro7000 SSDs"), use the same quirk for TiPro5000.
 
-linux-next/Documentation/driver-api/generic-counter:234: ./include/linux/counter.h:43: WARNING: Unexpected indentation.
-linux-next/Documentation/driver-api/generic-counter:234: ./include/linux/counter.h:45: WARNING: Block quote ends without a blank line; unexpected unindent.
+The ASPT data from "nvme id-ctrl /dev/nvme1":
 
-Add the necessary colons and indents.
+vid       : 0x1e49
+ssvid     : 0x1e49
+sn        : ZTA21T0KA2227304LM
+mn        : ZHITAI TiPlus5000 1TB
+fr        : ZTA09139
+[...]
+ps    0 : mp:6.50W operational enlat:0 exlat:0 rrt:0 rrl:0
+         rwt:0 rwl:0 idle_power:- active_power:-
+ps    1 : mp:5.80W operational enlat:0 exlat:0 rrt:1 rrl:1
+         rwt:1 rwl:1 idle_power:- active_power:-
+ps    2 : mp:3.60W operational enlat:0 exlat:0 rrt:2 rrl:2
+         rwt:2 rwl:2 idle_power:- active_power:-
+ps    3 : mp:0.0500W non-operational enlat:5000 exlat:10000 rrt:3 rrl:3
+         rwt:3 rwl:3 idle_power:- active_power:-
+ps    4 : mp:0.0025W non-operational enlat:8000 exlat:45000 rrt:4 rrl:4
+         rwt:4 rwl:4 idle_power:- active_power:-
 
-Fixes: aaec1a0f76ec ("counter: Internalize sysfs interface code")
-Signed-off-by: Yanteng Si <siyanteng@loongson.cn>
-Signed-off-by: William Breathitt Gray <vilhelm.gray@gmail.com>
-Link: https://lore.kernel.org/r/26011e814d6eca02c7ebdbb92f171a49928a7e89.1640072891.git.vilhelm.gray@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-and-tested-by: Chang Feng <flukehn@gmail.com>
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/counter.h |   40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ drivers/nvme/host/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/counter.h
-+++ b/include/linux/counter.h
-@@ -73,64 +73,64 @@ enum counter_synapse_action {
-  * @type:		Counter component data type
-  * @name:		device-specific component name
-  * @priv:		component-relevant data
-- * @action_read		Synapse action mode read callback. The read value of the
-+ * @action_read:		Synapse action mode read callback. The read value of the
-  *			respective Synapse action mode should be passed back via
-  *			the action parameter.
-- * @device_u8_read	Device u8 component read callback. The read value of the
-+ * @device_u8_read:		Device u8 component read callback. The read value of the
-  *			respective Device u8 component should be passed back via
-  *			the val parameter.
-- * @count_u8_read	Count u8 component read callback. The read value of the
-+ * @count_u8_read:		Count u8 component read callback. The read value of the
-  *			respective Count u8 component should be passed back via
-  *			the val parameter.
-- * @signal_u8_read	Signal u8 component read callback. The read value of the
-+ * @signal_u8_read:		Signal u8 component read callback. The read value of the
-  *			respective Signal u8 component should be passed back via
-  *			the val parameter.
-- * @device_u32_read	Device u32 component read callback. The read value of
-+ * @device_u32_read:		Device u32 component read callback. The read value of
-  *			the respective Device u32 component should be passed
-  *			back via the val parameter.
-- * @count_u32_read	Count u32 component read callback. The read value of the
-+ * @count_u32_read:		Count u32 component read callback. The read value of the
-  *			respective Count u32 component should be passed back via
-  *			the val parameter.
-- * @signal_u32_read	Signal u32 component read callback. The read value of
-+ * @signal_u32_read:		Signal u32 component read callback. The read value of
-  *			the respective Signal u32 component should be passed
-  *			back via the val parameter.
-- * @device_u64_read	Device u64 component read callback. The read value of
-+ * @device_u64_read:		Device u64 component read callback. The read value of
-  *			the respective Device u64 component should be passed
-  *			back via the val parameter.
-- * @count_u64_read	Count u64 component read callback. The read value of the
-+ * @count_u64_read:		Count u64 component read callback. The read value of the
-  *			respective Count u64 component should be passed back via
-  *			the val parameter.
-- * @signal_u64_read	Signal u64 component read callback. The read value of
-+ * @signal_u64_read:		Signal u64 component read callback. The read value of
-  *			the respective Signal u64 component should be passed
-  *			back via the val parameter.
-- * @action_write	Synapse action mode write callback. The write value of
-+ * @action_write:		Synapse action mode write callback. The write value of
-  *			the respective Synapse action mode is passed via the
-  *			action parameter.
-- * @device_u8_write	Device u8 component write callback. The write value of
-+ * @device_u8_write:		Device u8 component write callback. The write value of
-  *			the respective Device u8 component is passed via the val
-  *			parameter.
-- * @count_u8_write	Count u8 component write callback. The write value of
-+ * @count_u8_write:		Count u8 component write callback. The write value of
-  *			the respective Count u8 component is passed via the val
-  *			parameter.
-- * @signal_u8_write	Signal u8 component write callback. The write value of
-+ * @signal_u8_write:		Signal u8 component write callback. The write value of
-  *			the respective Signal u8 component is passed via the val
-  *			parameter.
-- * @device_u32_write	Device u32 component write callback. The write value of
-+ * @device_u32_write:		Device u32 component write callback. The write value of
-  *			the respective Device u32 component is passed via the
-  *			val parameter.
-- * @count_u32_write	Count u32 component write callback. The write value of
-+ * @count_u32_write:		Count u32 component write callback. The write value of
-  *			the respective Count u32 component is passed via the val
-  *			parameter.
-- * @signal_u32_write	Signal u32 component write callback. The write value of
-+ * @signal_u32_write:		Signal u32 component write callback. The write value of
-  *			the respective Signal u32 component is passed via the
-  *			val parameter.
-- * @device_u64_write	Device u64 component write callback. The write value of
-+ * @device_u64_write:		Device u64 component write callback. The write value of
-  *			the respective Device u64 component is passed via the
-  *			val parameter.
-- * @count_u64_write	Count u64 component write callback. The write value of
-+ * @count_u64_write:		Count u64 component write callback. The write value of
-  *			the respective Count u64 component is passed via the val
-  *			parameter.
-- * @signal_u64_write	Signal u64 component write callback. The write value of
-+ * @signal_u64_write:		Signal u64 component write callback. The write value of
-  *			the respective Signal u64 component is passed via the
-  *			val parameter.
-  */
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3390,6 +3390,8 @@ static const struct pci_device_id nvme_i
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1cc1, 0x5350),   /* ADATA XPG GAMMIX S50 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
++	{ PCI_DEVICE(0x1e49, 0x0021),   /* ZHITAI TiPro5000 NVMe SSD */
++		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
+ 	{ PCI_DEVICE(0x1e49, 0x0041),   /* ZHITAI TiPro7000 NVMe SSD */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
+ 	{ PCI_DEVICE(0xc0a9, 0x540a),   /* Crucial P2 */
 
 
