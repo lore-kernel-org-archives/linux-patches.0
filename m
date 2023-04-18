@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC8D2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2168C433D2;
-	Tue, 18 Apr 2023 12:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54A62566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C003C433EF;
+	Tue, 18 Apr 2023 12:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821359;
-	bh=NFE4syDNGc2PVNgR+aIQqodqtd8VZv0IRwpEtsiitpg=;
+	s=korg; t=1681821361;
+	bh=X87ecc4Vc708XTpJHQ5oCTjCn2rX778OdsSVHrDDEhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iDYt5Ji8uTcN35fasXcep10q9P0HrXHZyg7dKMN3c7CBWdH/xHZftdrPLz8xYzn4c
-	 rs/p5KsphkYV7YntO36zOJuTnA1ntmlcgOrppgqRyAMYVFqSuyZ22wy/e5JvImjpfS
-	 B2v0lkSd0Uq5+57HGqzRClLJnn5YBpCHt7IP6y7Y=
+	b=q8UPPnjih23BduUl/yuEBaXb3hZRRJsDyDzFVYNcHTfRHoQUVj0zPcrQmZvzWjXIX
+	 VcF+nVzuuckGy4j6gcLacbMFCTVI+oVAXjqVb5xTrntEx6WkDOOUUO1GwN9c1GNxml
+	 CHVUC/a32AgjZJTA9f4faUqaRw/6o22rBRK4IEwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 5.10 097/124] cgroup/cpuset: Wake up cpuset_attach_wq tasks in cpuset_cancel_attach()
-Date: Tue, 18 Apr 2023 14:21:56 +0200
-Message-Id: <20230418120313.363587483@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Nicolas Schichan <nschichan@freebox.fr>,
+	Richard Weinberger <richard@nod.at>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 098/124] ubi: Fix failure attaching when vid_hdr offset equals to (sub)page size
+Date: Tue, 18 Apr 2023 14:21:57 +0200
+Message-Id: <20230418120313.402423586@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,46 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit ba9182a89626d5f83c2ee4594f55cb9c1e60f0e2 upstream.
+commit 1e020e1b96afdecd20680b5b5be2a6ffc3d27628 upstream.
 
-After a successful cpuset_can_attach() call which increments the
-attach_in_progress flag, either cpuset_cancel_attach() or cpuset_attach()
-will be called later. In cpuset_attach(), tasks in cpuset_attach_wq,
-if present, will be woken up at the end. That is not the case in
-cpuset_cancel_attach(). So missed wakeup is possible if the attach
-operation is somehow cancelled. Fix that by doing the wakeup in
-cpuset_cancel_attach() as well.
+Following process will make ubi attaching failed since commit
+1b42b1a36fc946 ("ubi: ensure that VID header offset ... size"):
 
-Fixes: e44193d39e8d ("cpuset: let hotplug propagation work wait for task attaching")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Cc: stable@vger.kernel.org # v3.11+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+ID="0xec,0xa1,0x00,0x15" # 128M 128KB 2KB
+modprobe nandsim id_bytes=$ID
+flash_eraseall /dev/mtd0
+modprobe ubi mtd="0,2048"  # set vid_hdr offset as 2048 (one page)
+(dmesg):
+  ubi0 error: ubi_attach_mtd_dev [ubi]: VID header offset 2048 too large.
+  UBI error: cannot attach mtd0
+  UBI error: cannot initialize UBI, error -22
+
+Rework original solution, the key point is making sure
+'vid_hdr_shift + UBI_VID_HDR_SIZE < ubi->vid_hdr_alsize',
+so we should check vid_hdr_shift rather not vid_hdr_offset.
+Then, ubi still support (sub)page aligined VID header offset.
+
+Fixes: 1b42b1a36fc946 ("ubi: ensure that VID header offset ... size")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Tested-by: Nicolas Schichan <nschichan@freebox.fr>
+Tested-by: Miquel Raynal <miquel.raynal@bootlin.com> # v5.10, v4.19
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/mtd/ubi/build.c |   21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2188,11 +2188,15 @@ out_unlock:
- static void cpuset_cancel_attach(struct cgroup_taskset *tset)
- {
- 	struct cgroup_subsys_state *css;
-+	struct cpuset *cs;
+--- a/drivers/mtd/ubi/build.c
++++ b/drivers/mtd/ubi/build.c
+@@ -665,12 +665,6 @@ static int io_init(struct ubi_device *ub
+ 	ubi->ec_hdr_alsize = ALIGN(UBI_EC_HDR_SIZE, ubi->hdrs_min_io_size);
+ 	ubi->vid_hdr_alsize = ALIGN(UBI_VID_HDR_SIZE, ubi->hdrs_min_io_size);
  
- 	cgroup_taskset_first(tset, &css);
-+	cs = css_cs(css);
+-	if (ubi->vid_hdr_offset && ((ubi->vid_hdr_offset + UBI_VID_HDR_SIZE) >
+-	    ubi->vid_hdr_alsize)) {
+-		ubi_err(ubi, "VID header offset %d too large.", ubi->vid_hdr_offset);
+-		return -EINVAL;
+-	}
+-
+ 	dbg_gen("min_io_size      %d", ubi->min_io_size);
+ 	dbg_gen("max_write_size   %d", ubi->max_write_size);
+ 	dbg_gen("hdrs_min_io_size %d", ubi->hdrs_min_io_size);
+@@ -688,6 +682,21 @@ static int io_init(struct ubi_device *ub
+ 						ubi->vid_hdr_aloffset;
+ 	}
  
- 	percpu_down_write(&cpuset_rwsem);
--	css_cs(css)->attach_in_progress--;
-+	cs->attach_in_progress--;
-+	if (!cs->attach_in_progress)
-+		wake_up(&cpuset_attach_wq);
- 	percpu_up_write(&cpuset_rwsem);
- }
- 
++	/*
++	 * Memory allocation for VID header is ubi->vid_hdr_alsize
++	 * which is described in comments in io.c.
++	 * Make sure VID header shift + UBI_VID_HDR_SIZE not exceeds
++	 * ubi->vid_hdr_alsize, so that all vid header operations
++	 * won't access memory out of bounds.
++	 */
++	if ((ubi->vid_hdr_shift + UBI_VID_HDR_SIZE) > ubi->vid_hdr_alsize) {
++		ubi_err(ubi, "Invalid VID header offset %d, VID header shift(%d)"
++			" + VID header size(%zu) > VID header aligned size(%d).",
++			ubi->vid_hdr_offset, ubi->vid_hdr_shift,
++			UBI_VID_HDR_SIZE, ubi->vid_hdr_alsize);
++		return -EINVAL;
++	}
++
+ 	/* Similar for the data offset */
+ 	ubi->leb_start = ubi->vid_hdr_offset + UBI_VID_HDR_SIZE;
+ 	ubi->leb_start = ALIGN(ubi->leb_start, ubi->min_io_size);
 
 
