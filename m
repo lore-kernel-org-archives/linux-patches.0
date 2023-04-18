@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8CF2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E6EC433D2;
-	Tue, 18 Apr 2023 12:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AAA2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7ECC433A1;
+	Tue, 18 Apr 2023 12:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821493;
-	bh=+u1662A/TS/jEK57TZTkhaiBLkAVM7lwAXCYbZamQng=;
+	s=korg; t=1681821496;
+	bh=qDezilUMX6BqWDTwq6SUXe1vw8swDi/2+ZRZPudVva4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K3FUWiEBTdvkaryUrCA2MfHep6od7qYYgnmN9GZZRmChQ6nrsH3DtDNoWgQC6D11v
-	 LDklEd973Ij1EMZpwAggxNEJ4TDLG2VdXytxrK7Q3j3rzMzWto/usF7E71+VcRZw/4
-	 pY3RMm3rqbJNwxRpV5yoiBGX3xErMGXrRN6tAnXQ=
+	b=pnh2B27szw14s/8qxZu7LxMy3ZQipYUPPlD0OarvXANlrg8xG7y9w4+lEkhXwONaO
+	 ans6/xE9w7hYSrooFmSMCrTzZ3yUYJjqBg+r3CC9ZIPnTGxdCgzzjFvcrn+kBbLPt4
+	 rTZM6nuurpE6A9avAZymm7v5/GWg+i8JorTIU0dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Biang <xubiang@hust.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 05/91] ALSA: firewire-tascam: add missing unwind goto in snd_tscm_stream_start_duplex()
-Date: Tue, 18 Apr 2023 14:21:09 +0200
-Message-Id: <20230418120305.729954642@linuxfoundation.org>
+	Maher Sanalla <msanalla@nvidia.com>,
+	Aya Levin <ayal@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 23/91] IB/mlx5: Add support for 400G_8X lane speed
+Date: Tue, 18 Apr 2023 14:21:27 +0200
+Message-Id: <20230418120306.387376062@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -36,58 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Biang <xubiang@hust.edu.cn>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-commit fb4a624f88f658c7b7ae124452bd42eaa8ac7168 upstream.
+[ Upstream commit 88c9483faf15ada14eca82714114656893063458 ]
 
-Smatch Warns:
-sound/firewire/tascam/tascam-stream.c:493 snd_tscm_stream_start_duplex()
-warn: missing unwind goto?
+Currently, when driver queries PTYS to report which link speed is being
+used on its RoCE ports, it does not check the case of having 400Gbps
+transmitted over 8 lanes. Thus it fails to report the said speed and
+instead it defaults to report 10G over 4 lanes.
 
-The direct return will cause the stream list of "&tscm->domain" unemptied
-and the session in "tscm" unfinished if amdtp_domain_start() returns with
-an error.
+Add a check for the said speed when querying PTYS and report it back
+correctly when needed.
 
-Fix this by changing the direct return to a goto which will empty the
-stream list of "&tscm->domain" and finish the session in "tscm".
-
-The snd_tscm_stream_start_duplex() function is called in the prepare
-callback of PCM. According to "ALSA Kernel API Documentation", the prepare
-callback of PCM will be called many times at each setup. So, if the
-"&d->streams" list is not emptied, when the prepare callback is called
-next time, snd_tscm_stream_start_duplex() will receive -EBUSY from
-amdtp_domain_add_stream() that tries to add an existing stream to the
-domain. The error handling code after the "error" label will be executed
-in this case, and the "&d->streams" list will be emptied. So not emptying
-the "&d->streams" list will not cause an issue. But it is more efficient
-and readable to empty it on the first error by changing the direct return
-to a goto statement.
-
-The session in "tscm" has been begun before amdtp_domain_start(), so it
-needs to be finished when amdtp_domain_start() fails.
-
-Fixes: c281d46a51e3 ("ALSA: firewire-tascam: support AMDTP domain")
-Signed-off-by: Xu Biang <xubiang@hust.edu.cn>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Acked-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230406132801.105108-1-xubiang@hust.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 08e8676f1607 ("IB/mlx5: Add support for 50Gbps per lane link modes")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Aya Levin <ayal@nvidia.com>
+Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
+Link: https://lore.kernel.org/r/ec9040548d119d22557d6a4b4070d6f421701fd4.1678973994.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/tascam/tascam-stream.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/firewire/tascam/tascam-stream.c
-+++ b/sound/firewire/tascam/tascam-stream.c
-@@ -490,7 +490,7 @@ int snd_tscm_stream_start_duplex(struct
- 		// packet is important for media clock recovery.
- 		err = amdtp_domain_start(&tscm->domain, tx_init_skip_cycles, true, true);
- 		if (err < 0)
--			return err;
-+			goto error;
- 
- 		if (!amdtp_domain_wait_ready(&tscm->domain, READY_TIMEOUT_MS)) {
- 			err = -ETIMEDOUT;
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 827ee3040bea2..2361caa385471 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -443,6 +443,10 @@ static int translate_eth_ext_proto_oper(u32 eth_proto_oper, u16 *active_speed,
+ 		*active_width = IB_WIDTH_2X;
+ 		*active_speed = IB_SPEED_NDR;
+ 		break;
++	case MLX5E_PROT_MASK(MLX5E_400GAUI_8):
++		*active_width = IB_WIDTH_8X;
++		*active_speed = IB_SPEED_HDR;
++		break;
+ 	case MLX5E_PROT_MASK(MLX5E_400GAUI_4_400GBASE_CR4_KR4):
+ 		*active_width = IB_WIDTH_4X;
+ 		*active_speed = IB_SPEED_NDR;
+-- 
+2.39.2
+
 
 
