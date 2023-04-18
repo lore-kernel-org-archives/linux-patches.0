@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8772572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DE0C433EF;
-	Tue, 18 Apr 2023 12:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CAE2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651CEC433D2;
+	Tue, 18 Apr 2023 12:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821932;
-	bh=mTw7pS+E56UDl04SnmlegHvLQWsAqfxXNPj99ME7320=;
+	s=korg; t=1681821934;
+	bh=45TR7h11OXZLgsrqC2lRbf1QhDSEalskq339Wvvwnh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ApXYiqZv4zmpRLlkpd/NmtXt4A5GfI3MwlHdduC3XQu/LK8qlHGuAgk1xhteX4MWs
-	 Tep/lkEP2AfSewR5VwcBEq+4DrWeR/miO/FsN+ffKbCXMhRpu/D1PUX3P6n4bRj2eV
-	 I1MC4lOLpPeAn+kb70aL5lnED1iRaDqelUDISrTw=
+	b=G+437bw2mC+dOieTlPGpmDppwHkBkekLnPi6tt41X5v7r+A88oWPWTheUoZX4G2UD
+	 c3WzGnDRy3qUBuioF7ECN8bd343KTo5h1jRfpWxbrqjyX+dsRLx7ioBj8sp9lEiW7j
+	 W3Keg7V+mWqVFvqXrVaLUoKy6j5tqLEh5nTYvPWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vitaly Kuznetsov <vkuznets@redhat.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/134] x86/hyperv: Move VMCB enlightenment definitions to hyperv-tlfs.h
-Date: Tue, 18 Apr 2023 14:22:30 +0200
-Message-Id: <20230418120316.456770863@linuxfoundation.org>
+Subject: [PATCH 6.1 095/134] KVM: selftests: Move "struct hv_enlightenments" to x86_64/svm.h
+Date: Tue, 18 Apr 2023 14:22:31 +0200
+Message-Id: <20230418120316.495243176@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -38,46 +38,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 089fe572a2e0a89e36a455d299d801770293d08f ]
+[ Upstream commit 381fc63ac0754e05d3921e9d399b89dfdfd2b2e5 ]
 
-Move Hyper-V's VMCB enlightenment definitions to the TLFS header; the
-definitions come directly from the TLFS[*], not from KVM.
+Move Hyper-V's VMCB "struct hv_enlightenments" to the svm.h header so
+that the struct can be referenced in "struct vmcb_control_area".
+Alternatively, a dedicated header for SVM+Hyper-V could be added, a la
+x86_64/evmcs.h, but it doesn't appear that Hyper-V will end up needing
+a wholesale replacement for the VMCB.
 
 No functional change intended.
-
-[*] https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/tlfs/datatypes/hv_svm_enlightened_vmcb_fields
-
-[vitaly: rename VMCB_HV_ -> HV_VMCB_ to match the rest of
-hyperv-tlfs.h, keep svm/hyperv.h]
 
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-Id: <20221101145426.251680-2-vkuznets@redhat.com>
+Message-Id: <20221101145426.251680-3-vkuznets@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Stable-dep-of: e5c972c1fada ("KVM: SVM: Flush Hyper-V TLB when required")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/hyperv-tlfs.h            | 22 +++++++++++++++++++
- arch/x86/kvm/svm/hyperv.h                     | 22 -------------------
- arch/x86/kvm/svm/nested.c                     |  2 +-
- arch/x86/kvm/svm/svm_onhyperv.c               |  2 +-
- arch/x86/kvm/svm/svm_onhyperv.h               |  4 ++--
- .../selftests/kvm/x86_64/hyperv_svm_test.c    |  6 ++---
- 6 files changed, 29 insertions(+), 29 deletions(-)
+ .../testing/selftests/kvm/include/x86_64/svm.h | 17 +++++++++++++++++
+ .../selftests/kvm/x86_64/hyperv_svm_test.c     | 18 ------------------
+ 2 files changed, 17 insertions(+), 18 deletions(-)
 
-diff --git a/arch/x86/include/asm/hyperv-tlfs.h b/arch/x86/include/asm/hyperv-tlfs.h
-index 3089ec352743b..245a806a97170 100644
---- a/arch/x86/include/asm/hyperv-tlfs.h
-+++ b/arch/x86/include/asm/hyperv-tlfs.h
-@@ -598,6 +598,28 @@ struct hv_enlightened_vmcs {
+diff --git a/tools/testing/selftests/kvm/include/x86_64/svm.h b/tools/testing/selftests/kvm/include/x86_64/svm.h
+index c8343ff84f7f7..89ce2c6b57fe0 100644
+--- a/tools/testing/selftests/kvm/include/x86_64/svm.h
++++ b/tools/testing/selftests/kvm/include/x86_64/svm.h
+@@ -58,6 +58,23 @@ enum {
+ 	INTERCEPT_RDPRU,
+ };
  
- #define HV_VMX_ENLIGHTENED_CLEAN_FIELD_ALL			0xFFFF
- 
-+/*
-+ * Hyper-V uses the software reserved 32 bytes in VMCB control area to expose
-+ * SVM enlightenments to guests.
-+ */
 +struct hv_enlightenments {
 +	struct __packed hv_enlightenments_control {
 +		u32 nested_flush_hypercall:1;
@@ -92,25 +82,20 @@ index 3089ec352743b..245a806a97170 100644
 +} __packed;
 +
 +/*
-+ * Hyper-V uses the software reserved clean bit in VMCB.
++ * Hyper-V uses the software reserved clean bit in VMCB
 + */
-+#define HV_VMCB_NESTED_ENLIGHTENMENTS		31
-+
- struct hv_partition_assist_pg {
- 	u32 tlb_lock_count;
- };
-diff --git a/arch/x86/kvm/svm/hyperv.h b/arch/x86/kvm/svm/hyperv.h
-index 7d6d97968fb98..c59544cdf03b7 100644
---- a/arch/x86/kvm/svm/hyperv.h
-+++ b/arch/x86/kvm/svm/hyperv.h
-@@ -10,26 +10,4 @@
++#define HV_VMCB_NESTED_ENLIGHTENMENTS (1U << 31)
  
- #include "../hyperv.h"
+ struct __attribute__ ((__packed__)) vmcb_control_area {
+ 	u32 intercept_cr;
+diff --git a/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c b/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c
+index 5060fcfe17601..2fd64b419928a 100644
+--- a/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c
++++ b/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c
+@@ -23,24 +23,6 @@
  
--/*
-- * Hyper-V uses the software reserved 32 bytes in VMCB
-- * control area to expose SVM enlightenments to guests.
-- */
+ #define L2_GUEST_STACK_SIZE 256
+ 
 -struct hv_enlightenments {
 -	struct __packed hv_enlightenments_control {
 -		u32 nested_flush_hypercall:1;
@@ -127,87 +112,11 @@ index 7d6d97968fb98..c59544cdf03b7 100644
 -/*
 - * Hyper-V uses the software reserved clean bit in VMCB
 - */
--#define VMCB_HV_NESTED_ENLIGHTENMENTS VMCB_SW
+-#define HV_VMCB_NESTED_ENLIGHTENMENTS (1U << 31)
 -
- #endif /* __ARCH_X86_KVM_SVM_HYPERV_H__ */
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index 995bc0f907591..0be104ec79d96 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -194,7 +194,7 @@ static bool nested_svm_vmrun_msrpm(struct vcpu_svm *svm)
- 	if (!svm->nested.force_msr_bitmap_recalc &&
- 	    kvm_hv_hypercall_enabled(&svm->vcpu) &&
- 	    hve->hv_enlightenments_control.msr_bitmap &&
--	    (svm->nested.ctl.clean & BIT(VMCB_HV_NESTED_ENLIGHTENMENTS)))
-+	    (svm->nested.ctl.clean & BIT(HV_VMCB_NESTED_ENLIGHTENMENTS)))
- 		goto set_msrpm_base_pa;
- 
- 	if (!(vmcb12_is_intercept(&svm->nested.ctl, INTERCEPT_MSR_PROT)))
-diff --git a/arch/x86/kvm/svm/svm_onhyperv.c b/arch/x86/kvm/svm/svm_onhyperv.c
-index 8cdc62c74a964..ed5e793925441 100644
---- a/arch/x86/kvm/svm/svm_onhyperv.c
-+++ b/arch/x86/kvm/svm/svm_onhyperv.c
-@@ -32,7 +32,7 @@ int svm_hv_enable_direct_tlbflush(struct kvm_vcpu *vcpu)
- 	hve->hv_vm_id = (unsigned long)vcpu->kvm;
- 	if (!hve->hv_enlightenments_control.nested_flush_hypercall) {
- 		hve->hv_enlightenments_control.nested_flush_hypercall = 1;
--		vmcb_mark_dirty(to_svm(vcpu)->vmcb, VMCB_HV_NESTED_ENLIGHTENMENTS);
-+		vmcb_mark_dirty(to_svm(vcpu)->vmcb, HV_VMCB_NESTED_ENLIGHTENMENTS);
- 	}
- 
- 	return 0;
-diff --git a/arch/x86/kvm/svm/svm_onhyperv.h b/arch/x86/kvm/svm/svm_onhyperv.h
-index 4387173576d5e..35d69815d2f3a 100644
---- a/arch/x86/kvm/svm/svm_onhyperv.h
-+++ b/arch/x86/kvm/svm/svm_onhyperv.h
-@@ -64,7 +64,7 @@ static inline void svm_hv_vmcb_dirty_nested_enlightenments(
- 		(struct hv_enlightenments *)vmcb->control.reserved_sw;
- 
- 	if (hve->hv_enlightenments_control.msr_bitmap)
--		vmcb_mark_dirty(vmcb, VMCB_HV_NESTED_ENLIGHTENMENTS);
-+		vmcb_mark_dirty(vmcb, HV_VMCB_NESTED_ENLIGHTENMENTS);
- }
- 
- static inline void svm_hv_update_vp_id(struct vmcb *vmcb,
-@@ -76,7 +76,7 @@ static inline void svm_hv_update_vp_id(struct vmcb *vmcb,
- 
- 	if (hve->hv_vp_id != vp_index) {
- 		hve->hv_vp_id = vp_index;
--		vmcb_mark_dirty(vmcb, VMCB_HV_NESTED_ENLIGHTENMENTS);
-+		vmcb_mark_dirty(vmcb, HV_VMCB_NESTED_ENLIGHTENMENTS);
- 	}
- }
- #else
-diff --git a/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c b/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c
-index a380ad7bb9b34..5060fcfe17601 100644
---- a/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c
-+++ b/tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c
-@@ -39,7 +39,7 @@ struct hv_enlightenments {
- /*
-  * Hyper-V uses the software reserved clean bit in VMCB
-  */
--#define VMCB_HV_NESTED_ENLIGHTENMENTS (1U << 31)
-+#define HV_VMCB_NESTED_ENLIGHTENMENTS (1U << 31)
- 
  void l2_guest_code(void)
  {
-@@ -98,14 +98,14 @@ static void __attribute__((__flatten__)) guest_code(struct svm_test_data *svm)
- 	/* Intercept RDMSR 0xc0000101 without telling KVM about it */
- 	set_bit(2 * (MSR_GS_BASE & 0x1fff), svm->msr + 0x800);
- 	/* Make sure HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP is set */
--	vmcb->control.clean |= VMCB_HV_NESTED_ENLIGHTENMENTS;
-+	vmcb->control.clean |= HV_VMCB_NESTED_ENLIGHTENMENTS;
- 	run_guest(vmcb, svm->vmcb_gpa);
- 	/* Make sure we don't see SVM_EXIT_MSR here so eMSR bitmap works */
- 	GUEST_ASSERT(vmcb->control.exit_code == SVM_EXIT_VMMCALL);
- 	vmcb->save.rip += 3; /* vmcall */
- 
- 	/* Now tell KVM we've changed MSR-Bitmap */
--	vmcb->control.clean &= ~VMCB_HV_NESTED_ENLIGHTENMENTS;
-+	vmcb->control.clean &= ~HV_VMCB_NESTED_ENLIGHTENMENTS;
- 	run_guest(vmcb, svm->vmcb_gpa);
- 	GUEST_ASSERT(vmcb->control.exit_code == SVM_EXIT_MSR);
- 	vmcb->save.rip += 2; /* rdmsr */
+ 	GUEST_SYNC(3);
 -- 
 2.39.2
 
