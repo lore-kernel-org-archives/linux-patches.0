@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7350E2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED505C4339B;
-	Tue, 18 Apr 2023 12:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162452572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A9AC433EF;
+	Tue, 18 Apr 2023 12:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821823;
-	bh=QLuWp/FA/lwtuc7GQjwRB/DPIc3cr0LAm4izXSO+5pA=;
+	s=korg; t=1681821825;
+	bh=gDlxUZ1mPVhgwJcnDzU2x4Mp65YZFnSvOCftdKJLIog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gGZo/mA89jLMZuguJtjGMLb2otqpOcWux2GBSifNNoC7Skmk29kWngRVKvulWPRZu
-	 +e34XceB7TqvobKgCy9QO0Z5Lj4NmNK3vQLbSkqqLb1An4c7FjH4p0fAKwFg3rslTm
-	 yfF9u6lapUYNUmN1JyU2odzxU+WbF2wS0LV49RUo=
+	b=YHJNEZnz07YbtOdC+1YxB73ib1AmwaFJMKBCsP7OEQlkQLeVI9lXEB3z0t9X+Agb6
+	 j9Ni/ZU9bhX1sNW6ypQYCKSEntEEsrIqyoZ34hHYQ4RZg+eSPSi/ikEqOyhW5SDRfr
+	 L2sjRnzL6eXFKe6v7+FXbmZ+HTUdzSA9oMw9VMX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/134] Bluetooth: Fix printing errors if LE Connection times out
-Date: Tue, 18 Apr 2023 14:21:51 +0200
-Message-Id: <20230418120314.855365087@linuxfoundation.org>
+Subject: [PATCH 6.1 056/134] Bluetooth: SCO: Fix possible circular locking dependency sco_sock_getsockopt
+Date: Tue, 18 Apr 2023 14:21:52 +0200
+Message-Id: <20230418120314.902632866@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,145 +36,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit b62e72200eaad523f08d8319bba50fc652e032a8 ]
+[ Upstream commit 975abc0c90fc485ff9b4a6afa475c3b1398d5d47 ]
 
-This fixes errors like bellow when LE Connection times out since that
-is actually not a controller error:
+This attempts to fix the following trace:
 
- Bluetooth: hci0: Opcode 0x200d failed: -110
- Bluetooth: hci0: request failed to create LE connection: err -110
+======================================================
+WARNING: possible circular locking dependency detected
+6.3.0-rc2-g68fcb3a7bf97 #4706 Not tainted
+------------------------------------------------------
+sco-tester/31 is trying to acquire lock:
+ffff8880025b8070 (&hdev->lock){+.+.}-{3:3}, at:
+sco_sock_getsockopt+0x1fc/0xa90
 
-Instead the code shall properly detect if -ETIMEDOUT is returned and
-send HCI_OP_LE_CREATE_CONN_CANCEL to give up on the connection.
+but task is already holding lock:
+ffff888001eeb130 (sk_lock-AF_BLUETOOTH-BTPROTO_SCO){+.+.}-{0:0}, at:
+sco_sock_getsockopt+0x104/0xa90
 
-Link: https://github.com/bluez/bluez/issues/340
-Fixes: 8e8b92ee60de ("Bluetooth: hci_sync: Add hci_le_create_conn_sync")
+which lock already depends on the new lock.
+
+the existing dependency chain (in reverse order) is:
+
+-> #2 (sk_lock-AF_BLUETOOTH-BTPROTO_SCO){+.+.}-{0:0}:
+       lock_sock_nested+0x32/0x80
+       sco_connect_cfm+0x118/0x4a0
+       hci_sync_conn_complete_evt+0x1e6/0x3d0
+       hci_event_packet+0x55c/0x7c0
+       hci_rx_work+0x34c/0xa00
+       process_one_work+0x575/0x910
+       worker_thread+0x89/0x6f0
+       kthread+0x14e/0x180
+       ret_from_fork+0x2b/0x50
+
+-> #1 (hci_cb_list_lock){+.+.}-{3:3}:
+       __mutex_lock+0x13b/0xcc0
+       hci_sync_conn_complete_evt+0x1ad/0x3d0
+       hci_event_packet+0x55c/0x7c0
+       hci_rx_work+0x34c/0xa00
+       process_one_work+0x575/0x910
+       worker_thread+0x89/0x6f0
+       kthread+0x14e/0x180
+       ret_from_fork+0x2b/0x50
+
+-> #0 (&hdev->lock){+.+.}-{3:3}:
+       __lock_acquire+0x18cc/0x3740
+       lock_acquire+0x151/0x3a0
+       __mutex_lock+0x13b/0xcc0
+       sco_sock_getsockopt+0x1fc/0xa90
+       __sys_getsockopt+0xe9/0x190
+       __x64_sys_getsockopt+0x5b/0x70
+       do_syscall_64+0x42/0x90
+       entry_SYSCALL_64_after_hwframe+0x70/0xda
+
+other info that might help us debug this:
+
+Chain exists of:
+  &hdev->lock --> hci_cb_list_lock --> sk_lock-AF_BLUETOOTH-BTPROTO_SCO
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(sk_lock-AF_BLUETOOTH-BTPROTO_SCO);
+                               lock(hci_cb_list_lock);
+                               lock(sk_lock-AF_BLUETOOTH-BTPROTO_SCO);
+  lock(&hdev->lock);
+
+ *** DEADLOCK ***
+
+1 lock held by sco-tester/31:
+ #0: ffff888001eeb130 (sk_lock-AF_BLUETOOTH-BTPROTO_SCO){+.+.}-{0:0},
+ at: sco_sock_getsockopt+0x104/0xa90
+
+Fixes: 248733e87d50 ("Bluetooth: Allow querying of supported offload codecs over SCO socket")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  1 +
- net/bluetooth/hci_conn.c         |  7 +++++--
- net/bluetooth/hci_event.c        | 16 ++++++----------
- net/bluetooth/hci_sync.c         | 13 ++++++++++---
- 4 files changed, 22 insertions(+), 15 deletions(-)
+ net/bluetooth/sco.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 7f585e5dd71b8..061fec6fd0152 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -953,6 +953,7 @@ enum {
- 	HCI_CONN_STK_ENCRYPT,
- 	HCI_CONN_AUTH_INITIATOR,
- 	HCI_CONN_DROP,
-+	HCI_CONN_CANCEL,
- 	HCI_CONN_PARAM_REMOVAL_PEND,
- 	HCI_CONN_NEW_LINK_KEY,
- 	HCI_CONN_SCANNING,
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 1b80d94d639cc..c2c6dea01cc91 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1247,6 +1247,8 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct hci_conn *conn = data;
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 1111da4e2f2bd..1755f91a66f6a 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -1129,6 +1129,8 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
  
-+	bt_dev_dbg(hdev, "err %d", err);
++		release_sock(sk);
 +
- 	hci_dev_lock(hdev);
+ 		/* find total buffer size required to copy codec + caps */
+ 		hci_dev_lock(hdev);
+ 		list_for_each_entry(c, &hdev->local_codecs, list) {
+@@ -1146,15 +1148,13 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
+ 		buf_len += sizeof(struct bt_codecs);
+ 		if (buf_len > len) {
+ 			hci_dev_put(hdev);
+-			err = -ENOBUFS;
+-			break;
++			return -ENOBUFS;
+ 		}
+ 		ptr = optval;
  
- 	if (!err) {
-@@ -1254,8 +1256,6 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
- 		goto done;
- 	}
+ 		if (put_user(num_codecs, ptr)) {
+ 			hci_dev_put(hdev);
+-			err = -EFAULT;
+-			break;
++			return -EFAULT;
+ 		}
+ 		ptr += sizeof(num_codecs);
  
--	bt_dev_err(hdev, "request failed to create LE connection: err %d", err);
+@@ -1194,12 +1194,14 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
+ 			ptr += len;
+ 		}
+ 
+-		if (!err && put_user(buf_len, optlen))
+-			err = -EFAULT;
 -
- 	/* Check if connection is still pending */
- 	if (conn != hci_lookup_le_connect(hdev))
- 		goto done;
-@@ -2796,6 +2796,9 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
- {
- 	int r = 0;
+ 		hci_dev_unlock(hdev);
+ 		hci_dev_put(hdev);
  
-+	if (test_and_set_bit(HCI_CONN_CANCEL, &conn->flags))
-+		return 0;
++		lock_sock(sk);
 +
- 	switch (conn->state) {
- 	case BT_CONNECTED:
- 	case BT_CONFIG:
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 0e2425eb6aa79..78c505f528a47 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2876,16 +2876,6 @@ static void cs_le_create_conn(struct hci_dev *hdev, bdaddr_t *peer_addr,
- 
- 	conn->resp_addr_type = peer_addr_type;
- 	bacpy(&conn->resp_addr, peer_addr);
--
--	/* We don't want the connection attempt to stick around
--	 * indefinitely since LE doesn't have a page timeout concept
--	 * like BR/EDR. Set a timer for any connection that doesn't use
--	 * the accept list for connecting.
--	 */
--	if (filter_policy == HCI_LE_USE_PEER_ADDR)
--		queue_delayed_work(conn->hdev->workqueue,
--				   &conn->le_conn_timeout,
--				   conn->conn_timeout);
- }
- 
- static void hci_cs_le_create_conn(struct hci_dev *hdev, u8 status)
-@@ -5892,6 +5882,12 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
- 	if (status)
- 		goto unlock;
- 
-+	/* Drop the connection if it has been aborted */
-+	if (test_bit(HCI_CONN_CANCEL, &conn->flags)) {
-+		hci_conn_drop(conn);
-+		goto unlock;
-+	}
++		if (!err && put_user(buf_len, optlen))
++			err = -EFAULT;
 +
- 	if (conn->dst_type == ADDR_LE_DEV_PUBLIC)
- 		addr_type = BDADDR_LE_PUBLIC;
- 	else
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index f614f96c5c23d..9361fb3685cc7 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -246,8 +246,9 @@ int __hci_cmd_sync_status_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 		break;
  
- 	skb = __hci_cmd_sync_sk(hdev, opcode, plen, param, event, timeout, sk);
- 	if (IS_ERR(skb)) {
--		bt_dev_err(hdev, "Opcode 0x%4x failed: %ld", opcode,
--				PTR_ERR(skb));
-+		if (!event)
-+			bt_dev_err(hdev, "Opcode 0x%4x failed: %ld", opcode,
-+				   PTR_ERR(skb));
- 		return PTR_ERR(skb);
- 	}
- 
-@@ -5108,8 +5109,11 @@ static int hci_le_connect_cancel_sync(struct hci_dev *hdev,
- 	if (test_bit(HCI_CONN_SCANNING, &conn->flags))
- 		return 0;
- 
-+	if (test_and_set_bit(HCI_CONN_CANCEL, &conn->flags))
-+		return 0;
-+
- 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_CREATE_CONN_CANCEL,
--				     6, &conn->dst, HCI_CMD_TIMEOUT);
-+				     0, NULL, HCI_CMD_TIMEOUT);
- }
- 
- static int hci_connect_cancel_sync(struct hci_dev *hdev, struct hci_conn *conn)
-@@ -6084,6 +6088,9 @@ int hci_le_create_conn_sync(struct hci_dev *hdev, struct hci_conn *conn)
- 				       conn->conn_timeout, NULL);
- 
- done:
-+	if (err == -ETIMEDOUT)
-+		hci_le_connect_cancel_sync(hdev, conn);
-+
- 	/* Re-enable advertising after the connection attempt is finished. */
- 	hci_resume_advertising_sync(hdev);
- 	return err;
+ 	default:
 -- 
 2.39.2
 
