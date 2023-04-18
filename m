@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4A92572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60F8C433EF;
-	Tue, 18 Apr 2023 12:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AEC2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427BEC433EF;
+	Tue, 18 Apr 2023 12:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821876;
-	bh=VmykETqOcjF6Uy29X96uBxbZm48eC5ZmjKblSG7f64I=;
+	s=korg; t=1681821878;
+	bh=RWD+0QOoNI2ckTxN6Va5gez5ZQH3fblpg96OPwDwQz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VIVuofuuWiVNi4DCZwBddWaJQ6zXBDvBJRb1nxHFD1uWeiv0pykmLugpvf0crIe2M
-	 31HIJ//7EFvftBQtI6HemKas5q5q7aigBUe3wIlf00g77xvfSUfHUom19hwdRcMvav
-	 +ih/HzOI1tUObff0uLaZXHANq8OX9v33fLywGR2w=
+	b=hS+hQBuatuwyqYqNIcgK/0bMpCgLt28KeNekb7/qLeSiD5gf5Pv+dTIqpGK/99i9M
+	 zll+0NPUQlgyhsHQHy4+OzZENxYs2zxXC2jlm6NLiGjsdW3Pv2iqVVnE3zDHD7xiwe
+	 mBCcuQ03S9pPcnmdMLLV5l38nRlYCR9R0QaTHI4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grant Grundler <grundler@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Will Deacon <will@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/134] power: supply: cros_usbpd: reclassify "default case!" as debug
-Date: Tue, 18 Apr 2023 14:22:09 +0200
-Message-Id: <20230418120315.560606634@linuxfoundation.org>
+Subject: [PATCH 6.1 046/134] KVM: arm64: Initialise hypervisor copies of host symbols unconditionally
+Date: Tue, 18 Apr 2023 14:21:42 +0200
+Message-Id: <20230418120314.540868993@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,40 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Grant Grundler <grundler@chromium.org>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit 14c76b2e75bca4d96e2b85a0c12aa43e84fe3f74 ]
+[ Upstream commit 6c165223e9a6384aa1e934b90f2650e71adb972a ]
 
-This doesn't need to be printed every second as an error:
-...
-<3>[17438.628385] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-<3>[17439.634176] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-<3>[17440.640298] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-...
+The nVHE object at EL2 maintains its own copies of some host variables
+so that, when pKVM is enabled, the host cannot directly modify the
+hypervisor state. When running in normal nVHE mode, however, these
+variables are still mirrored at EL2 but are not initialised.
 
-Reduce priority from ERROR to DEBUG.
+Initialise the hypervisor symbols from the host copies regardless of
+pKVM, ensuring that any reference to this data at EL2 with normal nVHE
+will return a sensibly initialised value.
 
-Signed-off-by: Grant Grundler <grundler@chromium.org>
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221110190259.26861-16-will@kernel.org
+Stable-dep-of: e81625218bf7 ("KVM: arm64: Advertise ID_AA64PFR0_EL1.CSV2/3 to protected VMs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cros_usbpd-charger.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/arm.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/cros_usbpd-charger.c b/drivers/power/supply/cros_usbpd-charger.c
-index cadb6a0c2cc7e..b6c96376776a9 100644
---- a/drivers/power/supply/cros_usbpd-charger.c
-+++ b/drivers/power/supply/cros_usbpd-charger.c
-@@ -276,7 +276,7 @@ static int cros_usbpd_charger_get_power_info(struct port_data *port)
- 		port->psy_current_max = 0;
- 		break;
- 	default:
--		dev_err(dev, "Port %d: default case!\n", port->port_number);
-+		dev_dbg(dev, "Port %d: default case!\n", port->port_number);
- 		port->psy_usb_type = POWER_SUPPLY_USB_TYPE_SDP;
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 94d33e296e10c..e40606a560997 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1870,11 +1870,8 @@ static int do_pkvm_init(u32 hyp_va_bits)
+ 	return ret;
+ }
+ 
+-static int kvm_hyp_init_protection(u32 hyp_va_bits)
++static void kvm_hyp_init_symbols(void)
+ {
+-	void *addr = phys_to_virt(hyp_mem_base);
+-	int ret;
+-
+ 	kvm_nvhe_sym(id_aa64pfr0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
+ 	kvm_nvhe_sym(id_aa64pfr1_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64PFR1_EL1);
+ 	kvm_nvhe_sym(id_aa64isar0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64ISAR0_EL1);
+@@ -1883,6 +1880,12 @@ static int kvm_hyp_init_protection(u32 hyp_va_bits)
+ 	kvm_nvhe_sym(id_aa64mmfr0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64MMFR0_EL1);
+ 	kvm_nvhe_sym(id_aa64mmfr1_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64MMFR1_EL1);
+ 	kvm_nvhe_sym(id_aa64mmfr2_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64MMFR2_EL1);
++}
++
++static int kvm_hyp_init_protection(u32 hyp_va_bits)
++{
++	void *addr = phys_to_virt(hyp_mem_base);
++	int ret;
+ 
+ 	ret = create_hyp_mappings(addr, addr + hyp_mem_size, PAGE_HYP);
+ 	if (ret)
+@@ -2057,6 +2060,8 @@ static int init_hyp_mode(void)
+ 		cpu_prepare_hyp_mode(cpu);
  	}
  
++	kvm_hyp_init_symbols();
++
+ 	if (is_protected_kvm_enabled()) {
+ 		init_cpu_logical_map();
+ 
+@@ -2064,9 +2069,7 @@ static int init_hyp_mode(void)
+ 			err = -ENODEV;
+ 			goto out_err;
+ 		}
+-	}
+ 
+-	if (is_protected_kvm_enabled()) {
+ 		err = kvm_hyp_init_protection(hyp_va_bits);
+ 		if (err) {
+ 			kvm_err("Failed to init hyp memory protection\n");
 -- 
 2.39.2
 
