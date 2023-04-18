@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4282B2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CB8C433EF;
-	Tue, 18 Apr 2023 12:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99712566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCABC433D2;
+	Tue, 18 Apr 2023 12:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821477;
-	bh=H6SeAA+z8PDJPGN+ACBCjglYPp1bfSD3Pk45r2OUi8c=;
+	s=korg; t=1681821479;
+	bh=bWEL/jbx3Z92iSIHHt17nMB/y83auh3Q2U7Oys5J5Bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTqZYWOHpE2jcgobfoqjJBbhu5ChAJzBX8ExC3xKo4zqVF+Qh1QKtxk0yipP034qe
-	 15TTVGvUaG9bQYUfDkXo5kIMcfNT7OhC8bsc5tWbw2ZCsP7AXlY/tl7eK3Vu+UMFCJ
-	 KsZW4KEwdkEUWob7Mz+G/0G7CNiCDcq/OhFm6LFg=
+	b=ydBjXYSwiXveUI5KDBr8xD663c4TxjQw4CUriAAbTTafYmA3Ltw+Ad02hcS+e0OQ6
+	 TiuFzkd+4+ZwZGpRMR4AbIBbmBPYuBB6N9/vxzkz8keBqQSPF/rEAgNqFX/J8Ld6f5
+	 BQ/JVmaW79kg1ACSwP8gSlblAWohJ3sAEOwYf8sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Reiji Watanabe <reijiw@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 5.15 17/91] KVM: arm64: PMU: Restore the guests EL0 event counting after migration
-Date: Tue, 18 Apr 2023 14:21:21 +0200
-Message-Id: <20230418120306.177349989@linuxfoundation.org>
+	Ville Syrjala <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.15 18/91] drm/i915/dsi: fix DSS CTL register offsets for TGL+
+Date: Tue, 18 Apr 2023 14:21:22 +0200
+Message-Id: <20230418120306.207143957@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -35,57 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reiji Watanabe <reijiw@google.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit f9ea835e99bc8d049bf2a3ec8fa5a7cb4fcade23 upstream.
+commit 6b8446859c971a5783a2cdc90adf32e64de3bd23 upstream.
 
-Currently, with VHE, KVM enables the EL0 event counting for the
-guest on vcpu_load() or KVM enables it as a part of the PMU
-register emulation process, when needed.  However, in the migration
-case (with VHE), the same handling is lacking, as vPMU register
-values that were restored by userspace haven't been propagated yet
-(the PMU events haven't been created) at the vcpu load-time on the
-first KVM_RUN (kvm_vcpu_pmu_restore_guest() called from vcpu_load()
-on the first KVM_RUN won't do anything as events_{guest,host} of
-kvm_pmu_events are still zero).
+On TGL+ the DSS control registers are at different offsets, and there's
+one per pipe. Fix the offsets to fix dual link DSI for TGL+.
 
-So, with VHE, enable the guest's EL0 event counting on the first
-KVM_RUN (after the migration) when needed.  More specifically,
-have kvm_pmu_handle_pmcr() call kvm_vcpu_pmu_restore_guest()
-so that kvm_pmu_handle_pmcr() on the first KVM_RUN can take
-care of it.
+There would be helpers for this in the DSC code, but just do the quick
+fix now for DSI. Long term, we should probably move all the DSS handling
+into intel_vdsc.c, so exporting the helpers seems counter-productive.
 
-Fixes: d0c94c49792c ("KVM: arm64: Restore PMU configuration on first run")
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8232
+Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Reiji Watanabe <reijiw@google.com>
-Link: https://lore.kernel.org/r/20230329023944.2488484-1-reijiw@google.com
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230301151409.1581574-1-jani.nikula@intel.com
+(cherry picked from commit 1a62dd9895dca78bee28bba3a36f08836fdd143d)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/pmu-emul.c |    1 +
- arch/arm64/kvm/sys_regs.c |    1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/icl_dsi.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/kvm/pmu-emul.c
-+++ b/arch/arm64/kvm/pmu-emul.c
-@@ -554,6 +554,7 @@ void kvm_pmu_software_increment(struct k
- 			__vcpu_sys_reg(vcpu, PMOVSSET_EL0) |= BIT(i);
- 		}
+--- a/drivers/gpu/drm/i915/display/icl_dsi.c
++++ b/drivers/gpu/drm/i915/display/icl_dsi.c
+@@ -307,9 +307,21 @@ static void configure_dual_link_mode(str
+ {
+ 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
+ 	struct intel_dsi *intel_dsi = enc_to_intel_dsi(encoder);
++	i915_reg_t dss_ctl1_reg, dss_ctl2_reg;
+ 	u32 dss_ctl1;
+ 
+-	dss_ctl1 = intel_de_read(dev_priv, DSS_CTL1);
++	/* FIXME: Move all DSS handling to intel_vdsc.c */
++	if (DISPLAY_VER(dev_priv) >= 12) {
++		struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
++
++		dss_ctl1_reg = ICL_PIPE_DSS_CTL1(crtc->pipe);
++		dss_ctl2_reg = ICL_PIPE_DSS_CTL2(crtc->pipe);
++	} else {
++		dss_ctl1_reg = DSS_CTL1;
++		dss_ctl2_reg = DSS_CTL2;
++	}
++
++	dss_ctl1 = intel_de_read(dev_priv, dss_ctl1_reg);
+ 	dss_ctl1 |= SPLITTER_ENABLE;
+ 	dss_ctl1 &= ~OVERLAP_PIXELS_MASK;
+ 	dss_ctl1 |= OVERLAP_PIXELS(intel_dsi->pixel_overlap);
+@@ -330,16 +342,16 @@ static void configure_dual_link_mode(str
+ 
+ 		dss_ctl1 &= ~LEFT_DL_BUF_TARGET_DEPTH_MASK;
+ 		dss_ctl1 |= LEFT_DL_BUF_TARGET_DEPTH(dl_buffer_depth);
+-		dss_ctl2 = intel_de_read(dev_priv, DSS_CTL2);
++		dss_ctl2 = intel_de_read(dev_priv, dss_ctl2_reg);
+ 		dss_ctl2 &= ~RIGHT_DL_BUF_TARGET_DEPTH_MASK;
+ 		dss_ctl2 |= RIGHT_DL_BUF_TARGET_DEPTH(dl_buffer_depth);
+-		intel_de_write(dev_priv, DSS_CTL2, dss_ctl2);
++		intel_de_write(dev_priv, dss_ctl2_reg, dss_ctl2);
+ 	} else {
+ 		/* Interleave */
+ 		dss_ctl1 |= DUAL_LINK_MODE_INTERLEAVE;
  	}
-+	kvm_vcpu_pmu_restore_guest(vcpu);
+ 
+-	intel_de_write(dev_priv, DSS_CTL1, dss_ctl1);
++	intel_de_write(dev_priv, dss_ctl1_reg, dss_ctl1);
  }
  
- /**
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -702,7 +702,6 @@ static bool access_pmcr(struct kvm_vcpu
- 			val |= ARMV8_PMU_PMCR_LC;
- 		__vcpu_sys_reg(vcpu, PMCR_EL0) = val;
- 		kvm_pmu_handle_pmcr(vcpu, val);
--		kvm_vcpu_pmu_restore_guest(vcpu);
- 	} else {
- 		/* PMCR.P & PMCR.C are RAZ */
- 		val = __vcpu_sys_reg(vcpu, PMCR_EL0)
+ /* aka DSI 8X clock */
 
 
