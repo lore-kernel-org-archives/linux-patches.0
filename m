@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3112572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2FFC433D2;
-	Tue, 18 Apr 2023 12:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895682572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E50C4339B;
+	Tue, 18 Apr 2023 12:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821586;
-	bh=7EZMG0SaFZG0Pk5jCl9AoWvbj6mu7r41U/G+/BHfBdY=;
+	s=korg; t=1681821589;
+	bh=zRLMH/4M1S3OWNZU5MIgZLHkKCAM3Htt2XONDBZDETI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H6WVUHzdUpvN7N+oTF8iiebzHahg2Rv9QNmx15uLT2De/NIRb3XnzDRulf2CRHFwM
-	 906meRjIOFdapWaGZ7YyG+Z2M4/b9hnicFDpnL06nVHGVXuplNCf5BlYxdHqSVDKKM
-	 CpJtKT8+wlTxFYpnneS4mJ5V8DGVsHirzB7VRc4E=
+	b=hVcmRLaqNqCdh4bMzppkw/2MkhMe0KHko3w+YWy/3FWxbQ+DdiajKEA+5m1Y2b2RZ
+	 NcJT1mtmjw7h95ostVz29QgJ1Ay60JreWQuuUqzc3O/5Vi63spfdW4LGgNp7aHUKsZ
+	 /mlDj+9bju6XFwqONBUMoZ8/o060nBz7K4fOcsL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Mathis Salmen <mathis.salmen@matsal.de>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 57/91] riscv: Do not set initial_boot_params to the linear address of the dtb
-Date: Tue, 18 Apr 2023 14:22:01 +0200
-Message-Id: <20230418120307.576451817@linuxfoundation.org>
+Subject: [PATCH 5.15 58/91] riscv: add icache flush for nommu sigreturn trampoline
+Date: Tue, 18 Apr 2023 14:22:02 +0200
+Message-Id: <20230418120307.611756567@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -34,36 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Mathis Salmen <mathis.salmen@matsal.de>
 
-commit f1581626071c8e37c58c5e8f0b4126b17172a211 upstream.
+commit 8d736482749f6d350892ef83a7a11d43cd49981e upstream.
 
-early_init_dt_verify() is already called in parse_dtb() and since the dtb
-address does not change anymore (it is now in the fixmap region), no need
-to reset initial_boot_params by calling early_init_dt_verify() again.
+In a NOMMU kernel, sigreturn trampolines are generated on the user
+stack by setup_rt_frame. Currently, these trampolines are not instruction
+fenced, thus their visibility to ifetch is not guaranteed.
 
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20230329081932.79831-3-alexghiti@rivosinc.com
+This patch adds a flush_icache_range in setup_rt_frame to fix this
+problem.
+
+Signed-off-by: Mathis Salmen <mathis.salmen@matsal.de>
+Fixes: 6bd33e1ece52 ("riscv: add nommu support")
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230406101130.82304-1-mathis.salmen@matsal.de
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/setup.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ arch/riscv/kernel/signal.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/setup.c
-+++ b/arch/riscv/kernel/setup.c
-@@ -286,10 +286,7 @@ void __init setup_arch(char **cmdline_p)
- #if IS_ENABLED(CONFIG_BUILTIN_DTB)
- 	unflatten_and_copy_device_tree();
- #else
--	if (early_init_dt_verify(__va(XIP_FIXUP(dtb_early_pa))))
--		unflatten_device_tree();
--	else
--		pr_err("No DTB found in kernel mappings\n");
-+	unflatten_device_tree();
- #endif
- 	early_init_fdt_scan_reserved_mem();
- 	misc_mem_init();
+--- a/arch/riscv/kernel/signal.c
++++ b/arch/riscv/kernel/signal.c
+@@ -16,6 +16,7 @@
+ #include <asm/vdso.h>
+ #include <asm/switch_to.h>
+ #include <asm/csr.h>
++#include <asm/cacheflush.h>
+ 
+ extern u32 __user_rt_sigreturn[2];
+ 
+@@ -178,6 +179,7 @@ static int setup_rt_frame(struct ksignal
+ {
+ 	struct rt_sigframe __user *frame;
+ 	long err = 0;
++	unsigned long __maybe_unused addr;
+ 
+ 	frame = get_sigframe(ksig, regs, sizeof(*frame));
+ 	if (!access_ok(frame, sizeof(*frame)))
+@@ -206,7 +208,12 @@ static int setup_rt_frame(struct ksignal
+ 	if (copy_to_user(&frame->sigreturn_code, __user_rt_sigreturn,
+ 			 sizeof(frame->sigreturn_code)))
+ 		return -EFAULT;
+-	regs->ra = (unsigned long)&frame->sigreturn_code;
++
++	addr = (unsigned long)&frame->sigreturn_code;
++	/* Make sure the two instructions are pushed to icache. */
++	flush_icache_range(addr, addr + sizeof(frame->sigreturn_code));
++
++	regs->ra = addr;
+ #endif /* CONFIG_MMU */
+ 
+ 	/*
 
 
