@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D812572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24C7C433D2;
-	Tue, 18 Apr 2023 12:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2676C2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EEE7C433EF;
+	Tue, 18 Apr 2023 12:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821738;
-	bh=fzAd6xMVxPqoigDacFBZ1ZFRV4kxd6oevsFExFdBmOI=;
+	s=korg; t=1681821741;
+	bh=9FsBkvJfoNedzOC7iOtx1D71LcT7btf9yxzU2rZZ2So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=doMvaKrOxOAVKfCTHHWvkPxxeqC+s77/Ja4rjmFaMbvuzr6Us20Jk8l4OEB/389rW
-	 fNuDi9oIUiW3wr8uuX1EPJ8HrtsMaUNYWT/2bnl8c5DxIF2B8s9zBgmqSeHBxSR23c
-	 ab0Zoz6gg/hPc9jawPB2T0UK/lKmqiOwNveVqmoU=
+	b=eFbBVs25fPj7R0htOcam0FeNb+cogRnRMdCNUDmPYjG5+tWclZ3oPWQHojV7bEEPJ
+	 xBaOO2JgBrJj7qxGn14lUHUEnjNC5IYOkz1TSlVjxYl+Q6yLgyKbpgZYAc4VycPxMp
+	 hGwS9LhfBGTQbL0xmdgnSUEN8VU4hvHdtPq2JAC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Kerello <christophe.kerello@foss.st.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 023/134] mtd: rawnand: stm32_fmc2: use timings.mode instead of checking tRC_min
-Date: Tue, 18 Apr 2023 14:21:19 +0200
-Message-Id: <20230418120313.801710567@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Reiji Watanabe <reijiw@google.com>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.1 024/134] KVM: arm64: PMU: Restore the guests EL0 event counting after migration
+Date: Tue, 18 Apr 2023 14:21:20 +0200
+Message-Id: <20230418120313.846741117@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,34 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Kerello <christophe.kerello@foss.st.com>
+From: Reiji Watanabe <reijiw@google.com>
 
-commit ddbb664b6ab8de7dffa388ae0c88cd18616494e5 upstream.
+commit f9ea835e99bc8d049bf2a3ec8fa5a7cb4fcade23 upstream.
 
-Use timings.mode value instead of checking tRC_min timing
-for EDO mode support.
+Currently, with VHE, KVM enables the EL0 event counting for the
+guest on vcpu_load() or KVM enables it as a part of the PMU
+register emulation process, when needed.  However, in the migration
+case (with VHE), the same handling is lacking, as vPMU register
+values that were restored by userspace haven't been propagated yet
+(the PMU events haven't been created) at the vcpu load-time on the
+first KVM_RUN (kvm_vcpu_pmu_restore_guest() called from vcpu_load()
+on the first KVM_RUN won't do anything as events_{guest,host} of
+kvm_pmu_events are still zero).
 
-Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Fixes: 2cd457f328c1 ("mtd: rawnand: stm32_fmc2: add STM32 FMC2 NAND flash controller driver")
-Cc: stable@vger.kernel.org #v5.10+
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230328155819.225521-3-christophe.kerello@foss.st.com
+So, with VHE, enable the guest's EL0 event counting on the first
+KVM_RUN (after the migration) when needed.  More specifically,
+have kvm_pmu_handle_pmcr() call kvm_vcpu_pmu_restore_guest()
+so that kvm_pmu_handle_pmcr() on the first KVM_RUN can take
+care of it.
+
+Fixes: d0c94c49792c ("KVM: arm64: Restore PMU configuration on first run")
+Cc: stable@vger.kernel.org
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Reiji Watanabe <reijiw@google.com>
+Link: https://lore.kernel.org/r/20230329023944.2488484-1-reijiw@google.com
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/stm32_fmc2_nand.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/pmu-emul.c |    1 +
+ arch/arm64/kvm/sys_regs.c |    1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/stm32_fmc2_nand.c
-+++ b/drivers/mtd/nand/raw/stm32_fmc2_nand.c
-@@ -1531,7 +1531,7 @@ static int stm32_fmc2_nfc_setup_interfac
- 	if (IS_ERR(sdrt))
- 		return PTR_ERR(sdrt);
+--- a/arch/arm64/kvm/pmu-emul.c
++++ b/arch/arm64/kvm/pmu-emul.c
+@@ -531,6 +531,7 @@ void kvm_pmu_handle_pmcr(struct kvm_vcpu
+ 		for_each_set_bit(i, &mask, 32)
+ 			kvm_pmu_set_counter_value(vcpu, i, 0);
+ 	}
++	kvm_vcpu_pmu_restore_guest(vcpu);
+ }
  
--	if (sdrt->tRC_min < 30000)
-+	if (conf->timings.mode > 3)
- 		return -EOPNOTSUPP;
- 
- 	if (chipnr == NAND_DATA_IFACE_CHECK_ONLY)
+ static bool kvm_pmu_counter_is_enabled(struct kvm_vcpu *vcpu, u64 select_idx)
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -707,7 +707,6 @@ static bool access_pmcr(struct kvm_vcpu
+ 		if (!kvm_supports_32bit_el0())
+ 			val |= ARMV8_PMU_PMCR_LC;
+ 		kvm_pmu_handle_pmcr(vcpu, val);
+-		kvm_vcpu_pmu_restore_guest(vcpu);
+ 	} else {
+ 		/* PMCR.P & PMCR.C are RAZ */
+ 		val = __vcpu_sys_reg(vcpu, PMCR_EL0)
 
 
