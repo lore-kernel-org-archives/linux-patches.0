@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA222566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1680EC433EF;
-	Tue, 18 Apr 2023 12:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E012566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90EAC4339B;
+	Tue, 18 Apr 2023 12:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821214;
-	bh=ayLCKjBcXV8S6zyWST9efiwCeulaUxJVrHTjPzx/lD4=;
+	s=korg; t=1681821217;
+	bh=8HeqEwN9bz79Z34xpNI0lFd2kG0CISYLc/kdcOkTMdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtpnBjOSuA8sH6D228ZDvx6+EKwKKMIHb3YDw9DqUxK4fXRACrSHOELNQwdCwsYCI
-	 At4WAYZiSzly2WjfBY0GOvEFuGRmiGO/z5DuIdIXRZsNivI9xnGR522QzKDU+sSa9n
-	 Zps4WaM08ZPM/xYgjoWJuuAxRj2kGMAdYg7/c8G0=
+	b=uVoyKuHshCAg4/0i0KxBLIF5RZ1uGAX9NmJcGEZYXbB7pzFxbloZgIKZAHQexrJn8
+	 J+MnvVEjMGyn2AZP3RTW9IyBUbjk+1Y8FgR0AWBTZX4K13S+BVrkpBGU4Xy7x/VXVo
+	 PpVconIiBfBSJlhHQbcIV14w77+Bto7Tj8U71DeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 042/124] tracing: Free error logs of tracing instances
-Date: Tue, 18 Apr 2023 14:21:01 +0200
-Message-Id: <20230418120311.357110777@linuxfoundation.org>
+	Jason Montleon <jmontleo@redhat.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 043/124] ASoC: hdac_hdmi: use set_stream() instead of set_tdm_slots()
+Date: Tue, 18 Apr 2023 14:21:02 +0200
+Message-Id: <20230418120311.388752736@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -40,93 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Jason Montleon <jmontleo@redhat.com>
 
-commit 3357c6e429643231e60447b52ffbb7ac895aca22 upstream.
+commit f6887a71bdd2f0dcba9b8180dd2223cfa8637e85 upstream.
 
-When a tracing instance is removed, the error messages that hold errors
-that occurred in the instance needs to be freed. The following reports a
-memory leak:
-
- # cd /sys/kernel/tracing
- # mkdir instances/foo
- # echo 'hist:keys=x' > instances/foo/events/sched/sched_switch/trigger
- # cat instances/foo/error_log
- [  117.404795] hist:sched:sched_switch: error: Couldn't find field
-   Command: hist:keys=x
-                      ^
- # rmdir instances/foo
-
-Then check for memory leaks:
-
- # echo scan > /sys/kernel/debug/kmemleak
- # cat /sys/kernel/debug/kmemleak
-unreferenced object 0xffff88810d8ec700 (size 192):
-  comm "bash", pid 869, jiffies 4294950577 (age 215.752s)
-  hex dump (first 32 bytes):
-    60 dd 68 61 81 88 ff ff 60 dd 68 61 81 88 ff ff  `.ha....`.ha....
-    a0 30 8c 83 ff ff ff ff 26 00 0a 00 00 00 00 00  .0......&.......
-  backtrace:
-    [<00000000dae26536>] kmalloc_trace+0x2a/0xa0
-    [<00000000b2938940>] tracing_log_err+0x277/0x2e0
-    [<000000004a0e1b07>] parse_atom+0x966/0xb40
-    [<0000000023b24337>] parse_expr+0x5f3/0xdb0
-    [<00000000594ad074>] event_hist_trigger_parse+0x27f8/0x3560
-    [<00000000293a9645>] trigger_process_regex+0x135/0x1a0
-    [<000000005c22b4f2>] event_trigger_write+0x87/0xf0
-    [<000000002cadc509>] vfs_write+0x162/0x670
-    [<0000000059c3b9be>] ksys_write+0xca/0x170
-    [<00000000f1cddc00>] do_syscall_64+0x3e/0xc0
-    [<00000000868ac68c>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
-unreferenced object 0xffff888170c35a00 (size 32):
-  comm "bash", pid 869, jiffies 4294950577 (age 215.752s)
-  hex dump (first 32 bytes):
-    0a 20 20 43 6f 6d 6d 61 6e 64 3a 20 68 69 73 74  .  Command: hist
-    3a 6b 65 79 73 3d 78 0a 00 00 00 00 00 00 00 00  :keys=x.........
-  backtrace:
-    [<000000006a747de5>] __kmalloc+0x4d/0x160
-    [<000000000039df5f>] tracing_log_err+0x29b/0x2e0
-    [<000000004a0e1b07>] parse_atom+0x966/0xb40
-    [<0000000023b24337>] parse_expr+0x5f3/0xdb0
-    [<00000000594ad074>] event_hist_trigger_parse+0x27f8/0x3560
-    [<00000000293a9645>] trigger_process_regex+0x135/0x1a0
-    [<000000005c22b4f2>] event_trigger_write+0x87/0xf0
-    [<000000002cadc509>] vfs_write+0x162/0x670
-    [<0000000059c3b9be>] ksys_write+0xca/0x170
-    [<00000000f1cddc00>] do_syscall_64+0x3e/0xc0
-    [<00000000868ac68c>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-The problem is that the error log needs to be freed when the instance is
-removed.
-
-Link: https://lore.kernel.org/lkml/76134d9f-a5ba-6a0d-37b3-28310b4a1e91@alu.unizg.hr/
-Link: https://lore.kernel.org/linux-trace-kernel/20230404194504.5790b95f@gandalf.local.home
+hdac_hdmi was not updated to use set_stream() instead of set_tdm_slots()
+in the original commit so HDMI no longer produces audio.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Eric Biggers <ebiggers@kernel.org>
-Fixes: 2f754e771b1a6 ("tracing: Have the error logs show up in the proper instances")
-Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/regressions/CAJD_bPKQdtaExvVEKxhQ47G-ZXDA=k+gzhMJRHLBe=mysPnuKA@mail.gmail.com/
+Fixes: 636110411ca7 ("ASoC: Intel/SOF: use set_stream() instead of set_tdm_slots() for HDAudio")
+Signed-off-by: Jason Montleon <jmontleo@redhat.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230324170711.2526-1-jmontleo@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/hdac_hdmi.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8895,6 +8895,7 @@ static int __remove_instance(struct trac
- 	ftrace_destroy_function_files(tr);
- 	tracefs_remove(tr->dir);
- 	free_trace_buffers(tr);
-+	clear_tracing_err_log(tr);
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -436,23 +436,28 @@ static int hdac_hdmi_setup_audio_infofra
+ 	return 0;
+ }
  
- 	for (i = 0; i < tr->nr_topts; i++) {
- 		kfree(tr->topts[i].topts);
+-static int hdac_hdmi_set_tdm_slot(struct snd_soc_dai *dai,
+-		unsigned int tx_mask, unsigned int rx_mask,
+-		int slots, int slot_width)
++static int hdac_hdmi_set_stream(struct snd_soc_dai *dai,
++				void *stream, int direction)
+ {
+ 	struct hdac_hdmi_priv *hdmi = snd_soc_dai_get_drvdata(dai);
+ 	struct hdac_device *hdev = hdmi->hdev;
+ 	struct hdac_hdmi_dai_port_map *dai_map;
+ 	struct hdac_hdmi_pcm *pcm;
++	struct hdac_stream *hstream;
+ 
+-	dev_dbg(&hdev->dev, "%s: strm_tag: %d\n", __func__, tx_mask);
++	if (!stream)
++		return -EINVAL;
++
++	hstream = (struct hdac_stream *)stream;
++
++	dev_dbg(&hdev->dev, "%s: strm_tag: %d\n", __func__, hstream->stream_tag);
+ 
+ 	dai_map = &hdmi->dai_map[dai->id];
+ 
+ 	pcm = hdac_hdmi_get_pcm_from_cvt(hdmi, dai_map->cvt);
+ 
+ 	if (pcm)
+-		pcm->stream_tag = (tx_mask << 4);
++		pcm->stream_tag = (hstream->stream_tag << 4);
+ 
+ 	return 0;
+ }
+@@ -1544,7 +1549,7 @@ static const struct snd_soc_dai_ops hdmi
+ 	.startup = hdac_hdmi_pcm_open,
+ 	.shutdown = hdac_hdmi_pcm_close,
+ 	.hw_params = hdac_hdmi_set_hw_params,
+-	.set_tdm_slot = hdac_hdmi_set_tdm_slot,
++	.set_stream = hdac_hdmi_set_stream,
+ };
+ 
+ /*
 
 
