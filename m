@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1182572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A25C4339C;
-	Tue, 18 Apr 2023 12:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E5E2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE572C433EF;
+	Tue, 18 Apr 2023 12:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821682;
-	bh=XAdkwq/v7ensHuK/Jwi7tilFGTqQ2dc2NiexxrLVGSY=;
+	s=korg; t=1681821685;
+	bh=lhK3xitY2JVy52Kmt0YPT/Z/XI1bNXJ98P9QLBAXV2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVCAw0/B9uibM6f83HvoVNefKvx9JGGTdAm2l7aBilz1/mbNP+75PFb3bffHMix4o
-	 e0vZuZLt7HwfbcXsiW4ltCCCUoXVgBz8c9JETn+ny3ce1w8++yil0HJYEP7eaa36z4
-	 21iCCgU26xu2tk+TbSPxgAPhMA01is+136ptZx10=
+	b=lPUjCLxxerSWXumkWxi/oFUOa+exJCssiVpGF8UJ9jOucV8illsEwN+iPDdHWYB32
+	 pLPB13DPn1TDkol06lYDLSGpel7dLFqnLITX5Le8lL8Eo9r9gHSgbBFFg81hi8HUit
+	 U/WdkeBESnEJ83tqtbo6FK3Awvrxdiv7L9ZRnDWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@tq-group.com>,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Federico Vaga <federico.vaga@cern.ch>,
-	Wolfram Sang <wsa@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 73/91] i2c: ocores: generate stop condition after timeout in polling mode
-Date: Tue, 18 Apr 2023 14:22:17 +0200
-Message-Id: <20230418120308.082437992@linuxfoundation.org>
+Subject: [PATCH 5.15 74/91] sh: remove meaningless archclean line
+Date: Tue, 18 Apr 2023 14:22:18 +0200
+Message-Id: <20230418120308.112501810@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -39,104 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gregor Herburger <gregor.herburger@tq-group.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit f8160d3b35fc94491bb0cb974dbda310ef96c0e2 ]
+[ Upstream commit 10c6ae274fe29f732ca9bbcd7016e9827673c954 ]
 
-In polling mode, no stop condition is generated after a timeout. This
-causes SCL to remain low and thereby block the bus. If this happens
-during a transfer it can cause slaves to misinterpret the subsequent
-transfer and return wrong values.
+The vsyscall directory is cleaned up by the ordinary way
+via arch/sh/kernel/Makefile:
 
-To solve this, pass the ETIMEDOUT error up from ocores_process_polling()
-instead of setting STATE_ERROR directly. The caller is adjusted to call
-ocores_process_timeout() on error both in polling and in IRQ mode, which
-will set STATE_ERROR and generate a stop condition.
+  obj-$(CONFIG_VSYSCALL)          += vsyscall/
 
-Fixes: 69c8c0c0efa8 ("i2c: ocores: add polling interface")
-Signed-off-by: Gregor Herburger <gregor.herburger@tq-group.com>
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Federico Vaga <federico.vaga@cern.ch>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Stable-dep-of: d83806c4c0cc ("purgatory: fix disabling debug info")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-ocores.c | 35 ++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ arch/sh/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-ocores.c b/drivers/i2c/busses/i2c-ocores.c
-index a0af027db04c1..2e575856c5cd5 100644
---- a/drivers/i2c/busses/i2c-ocores.c
-+++ b/drivers/i2c/busses/i2c-ocores.c
-@@ -342,18 +342,18 @@ static int ocores_poll_wait(struct ocores_i2c *i2c)
-  * ocores_isr(), we just add our polling code around it.
-  *
-  * It can run in atomic context
-+ *
-+ * Return: 0 on success, -ETIMEDOUT on timeout
-  */
--static void ocores_process_polling(struct ocores_i2c *i2c)
-+static int ocores_process_polling(struct ocores_i2c *i2c)
- {
--	while (1) {
--		irqreturn_t ret;
--		int err;
-+	irqreturn_t ret;
-+	int err = 0;
+diff --git a/arch/sh/Makefile b/arch/sh/Makefile
+index 88ddb6f1c75b0..7814639006213 100644
+--- a/arch/sh/Makefile
++++ b/arch/sh/Makefile
+@@ -200,7 +200,6 @@ archprepare:
  
-+	while (1) {
- 		err = ocores_poll_wait(i2c);
--		if (err) {
--			i2c->state = STATE_ERROR;
-+		if (err)
- 			break; /* timeout */
--		}
+ archclean:
+ 	$(Q)$(MAKE) $(clean)=$(boot)
+-	$(Q)$(MAKE) $(clean)=arch/sh/kernel/vsyscall
  
- 		ret = ocores_isr(-1, i2c);
- 		if (ret == IRQ_NONE)
-@@ -364,13 +364,15 @@ static void ocores_process_polling(struct ocores_i2c *i2c)
- 					break;
- 		}
- 	}
-+
-+	return err;
- }
- 
- static int ocores_xfer_core(struct ocores_i2c *i2c,
- 			    struct i2c_msg *msgs, int num,
- 			    bool polling)
- {
--	int ret;
-+	int ret = 0;
- 	u8 ctrl;
- 
- 	ctrl = oc_getreg(i2c, OCI2C_CONTROL);
-@@ -388,15 +390,16 @@ static int ocores_xfer_core(struct ocores_i2c *i2c,
- 	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_START);
- 
- 	if (polling) {
--		ocores_process_polling(i2c);
-+		ret = ocores_process_polling(i2c);
- 	} else {
--		ret = wait_event_timeout(i2c->wait,
--					 (i2c->state == STATE_ERROR) ||
--					 (i2c->state == STATE_DONE), HZ);
--		if (ret == 0) {
--			ocores_process_timeout(i2c);
--			return -ETIMEDOUT;
--		}
-+		if (wait_event_timeout(i2c->wait,
-+				       (i2c->state == STATE_ERROR) ||
-+				       (i2c->state == STATE_DONE), HZ) == 0)
-+			ret = -ETIMEDOUT;
-+	}
-+	if (ret) {
-+		ocores_process_timeout(i2c);
-+		return ret;
- 	}
- 
- 	return (i2c->state == STATE_DONE) ? num : -EIO;
+ archheaders:
+ 	$(Q)$(MAKE) $(build)=arch/sh/kernel/syscalls all
 -- 
 2.39.2
 
