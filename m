@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8322566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C1EC4339C;
-	Tue, 18 Apr 2023 12:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453C72566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:28:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF65C433EF;
+	Tue, 18 Apr 2023 12:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820878;
-	bh=efiiKarjmrO4+BjbyzVnd63nkffzhlECuL7abW/zxYE=;
+	s=korg; t=1681820881;
+	bh=1PTmcP2+6LuJsrULf4ZIc+pv2aA7YcGzRwoLHFAWLGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MUgZzq8I8DqezBtn0DXDqi1Rgb8gL4b5Sbp3cO7HGnAe50qWlrjDT7Vptb6AAKKWX
-	 QOzHlk2VPA1HANgEG4CA9GH/R2OQpJUY+1UCYZhl9bK4nuKrvPbW0OepkfTrfljzKS
-	 h9UhV6P2tYYD2Cnao7pZTlNTBUUdoZ+vug9+d4ZE=
+	b=ly5/gDfloscuZ6qo65HTA16/CZc8LwJlA7mykIrbKo2uGSIkJ+vC0VWpT6ddOSSiL
+	 4c1IrRnoHgIH7ezQ+bY8yHo/9PbtwOFWTNn1Ve9E8OEr4Wsxrl0b72BMDdf4lboBWa
+	 6I0CPiILEaX+Nksk34f3MXhJbtY8q9X13rMzU2Sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bang Li <libang.linuxer@gmail.com>,
-	Richard Weinberger <richard@nod.at>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 4.19 35/57] mtdblock: tolerate corrected bit-flips
-Date: Tue, 18 Apr 2023 14:21:35 +0200
-Message-Id: <20230418120259.962150002@linuxfoundation.org>
+	Michal Kolar <mich.k@seznam.cz>,
+	Jiri Kosina <jkosina@suse.cz>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ding Hui <dinghui@sangfor.com.cn>
+Subject: [PATCH 5.4 01/92] scsi: ses: Handle enclosure with just a primary component gracefully
+Date: Tue, 18 Apr 2023 14:20:36 +0200
+Message-Id: <20230418120304.726850036@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
-References: <20230418120258.713853188@linuxfoundation.org>
+In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
+References: <20230418120304.658273364@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,58 +38,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bang Li <libang.linuxer@gmail.com>
+From: Jiri Kosina <jkosina@suse.cz>
 
-commit 0c3089601f064d80b3838eceb711fcac04bceaad upstream.
+commit c8e22b7a1694bb8d025ea636816472739d859145 upstream.
 
-mtd_read() may return -EUCLEAN in case of corrected bit-flips.This
-particular condition should not be treated like an error.
+This reverts commit 3fe97ff3d949 ("scsi: ses: Don't attach if enclosure
+has no components") and introduces proper handling of case where there are
+no detected secondary components, but primary component (enumerated in
+num_enclosures) does exist. That fix was originally proposed by Ding Hui
+<dinghui@sangfor.com.cn>.
 
-Signed-off-by: Bang Li <libang.linuxer@gmail.com>
-Fixes: e47f68587b82 ("mtd: check for max_bitflips in mtd_read_oob()")
-Cc: <stable@vger.kernel.org> # v3.7
-Acked-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230328163012.4264-1-libang.linuxer@gmail.com
+Completely ignoring devices that have one primary enclosure and no
+secondary one results in ses_intf_add() bailing completely
+
+	scsi 2:0:0:254: enclosure has no enumerated components
+        scsi 2:0:0:254: Failed to bind enclosure -12ven in valid configurations such
+
+even on valid configurations with 1 primary and 0 secondary enclosures as
+below:
+
+	# sg_ses /dev/sg0
+	  3PARdata  SES               3321
+	Supported diagnostic pages:
+	  Supported Diagnostic Pages [sdp] [0x0]
+	  Configuration (SES) [cf] [0x1]
+	  Short Enclosure Status (SES) [ses] [0x8]
+	# sg_ses -p cf /dev/sg0
+	  3PARdata  SES               3321
+	Configuration diagnostic page:
+	  number of secondary subenclosures: 0
+	  generation code: 0x0
+	  enclosure descriptor list
+	    Subenclosure identifier: 0 [primary]
+	      relative ES process id: 0, number of ES processes: 1
+	      number of type descriptor headers: 1
+	      enclosure logical identifier (hex): 20000002ac02068d
+	      enclosure vendor: 3PARdata  product: VV                rev: 3321
+	  type descriptor header and text list
+	    Element type: Unspecified, subenclosure id: 0
+	      number of possible elements: 1
+
+The changelog for the original fix follows
+
+=====
+We can get a crash when disconnecting the iSCSI session,
+the call trace like this:
+
+  [ffff00002a00fb70] kfree at ffff00000830e224
+  [ffff00002a00fba0] ses_intf_remove at ffff000001f200e4
+  [ffff00002a00fbd0] device_del at ffff0000086b6a98
+  [ffff00002a00fc50] device_unregister at ffff0000086b6d58
+  [ffff00002a00fc70] __scsi_remove_device at ffff00000870608c
+  [ffff00002a00fca0] scsi_remove_device at ffff000008706134
+  [ffff00002a00fcc0] __scsi_remove_target at ffff0000087062e4
+  [ffff00002a00fd10] scsi_remove_target at ffff0000087064c0
+  [ffff00002a00fd70] __iscsi_unbind_session at ffff000001c872c4
+  [ffff00002a00fdb0] process_one_work at ffff00000810f35c
+  [ffff00002a00fe00] worker_thread at ffff00000810f648
+  [ffff00002a00fe70] kthread at ffff000008116e98
+
+In ses_intf_add, components count could be 0, and kcalloc 0 size scomp,
+but not saved in edev->component[i].scratch
+
+In this situation, edev->component[0].scratch is an invalid pointer,
+when kfree it in ses_intf_remove_enclosure, a crash like above would happen
+The call trace also could be other random cases when kfree cannot catch
+the invalid pointer
+
+We should not use edev->component[] array when the components count is 0
+We also need check index when use edev->component[] array in
+ses_enclosure_data_process
+=====
+
+Reported-by: Michal Kolar <mich.k@seznam.cz>
+Originally-by: Ding Hui <dinghui@sangfor.com.cn>
+Cc: stable@vger.kernel.org
+Fixes: 3fe97ff3d949 ("scsi: ses: Don't attach if enclosure has no components")
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Link: https://lore.kernel.org/r/nycvar.YFH.7.76.2304042122270.29760@cbobk.fhfr.pm
+Tested-by: Michal Kolar <mich.k@seznam.cz>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdblock.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/scsi/ses.c |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/drivers/mtd/mtdblock.c
-+++ b/drivers/mtd/mtdblock.c
-@@ -164,7 +164,7 @@ static int do_cached_write (struct mtdbl
- 				mtdblk->cache_state = STATE_EMPTY;
- 				ret = mtd_read(mtd, sect_start, sect_size,
- 					       &retlen, mtdblk->cache_data);
--				if (ret)
-+				if (ret && !mtd_is_bitflip(ret))
- 					return ret;
- 				if (retlen != sect_size)
- 					return -EIO;
-@@ -199,8 +199,12 @@ static int do_cached_read (struct mtdblk
- 	pr_debug("mtdblock: read on \"%s\" at 0x%lx, size 0x%x\n",
- 			mtd->name, pos, len);
+--- a/drivers/scsi/ses.c
++++ b/drivers/scsi/ses.c
+@@ -503,9 +503,6 @@ static int ses_enclosure_find_by_addr(st
+ 	int i;
+ 	struct ses_component *scomp;
  
--	if (!sect_size)
--		return mtd_read(mtd, pos, len, &retlen, buf);
-+	if (!sect_size) {
-+		ret = mtd_read(mtd, pos, len, &retlen, buf);
-+		if (ret && !mtd_is_bitflip(ret))
-+			return ret;
-+		return 0;
+-	if (!edev->component[0].scratch)
+-		return 0;
+-
+ 	for (i = 0; i < edev->components; i++) {
+ 		scomp = edev->component[i].scratch;
+ 		if (scomp->addr != efd->addr)
+@@ -596,8 +593,10 @@ static void ses_enclosure_data_process(s
+ 						components++,
+ 						type_ptr[0],
+ 						name);
+-				else
++				else if (components < edev->components)
+ 					ecomp = &edev->component[components++];
++				else
++					ecomp = ERR_PTR(-EINVAL);
+ 
+ 				if (!IS_ERR(ecomp)) {
+ 					if (addl_desc_ptr) {
+@@ -728,11 +727,6 @@ static int ses_intf_add(struct device *c
+ 			components += type_ptr[1];
+ 	}
+ 
+-	if (components == 0) {
+-		sdev_printk(KERN_WARNING, sdev, "enclosure has no enumerated components\n");
+-		goto err_free;
+-	}
+-
+ 	ses_dev->page1 = buf;
+ 	ses_dev->page1_len = len;
+ 	buf = NULL;
+@@ -774,9 +768,11 @@ static int ses_intf_add(struct device *c
+ 		buf = NULL;
+ 	}
+ page2_not_supported:
+-	scomp = kcalloc(components, sizeof(struct ses_component), GFP_KERNEL);
+-	if (!scomp)
+-		goto err_free;
++	if (components > 0) {
++		scomp = kcalloc(components, sizeof(struct ses_component), GFP_KERNEL);
++		if (!scomp)
++			goto err_free;
 +	}
  
- 	while (len > 0) {
- 		unsigned long sect_start = (pos/sect_size)*sect_size;
-@@ -220,7 +224,7 @@ static int do_cached_read (struct mtdblk
- 			memcpy (buf, mtdblk->cache_data + offset, size);
- 		} else {
- 			ret = mtd_read(mtd, pos, size, &retlen, buf);
--			if (ret)
-+			if (ret && !mtd_is_bitflip(ret))
- 				return ret;
- 			if (retlen != size)
- 				return -EIO;
+ 	edev = enclosure_register(cdev->parent, dev_name(&sdev->sdev_gendev),
+ 				  components, &ses_enclosure_callbacks);
 
 
