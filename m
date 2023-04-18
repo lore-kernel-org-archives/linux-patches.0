@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C792566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99843C433EF;
-	Tue, 18 Apr 2023 12:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF22D2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C10C4339B;
+	Tue, 18 Apr 2023 12:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821422;
-	bh=xIRVmdSoxQHHV+WQF3InEHiP6aN6H/TEQ+/N5ju+cTU=;
+	s=korg; t=1681821424;
+	bh=zRLMH/4M1S3OWNZU5MIgZLHkKCAM3Htt2XONDBZDETI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GTZ/rCE9rS+zZ70jK73lxw6I4Xg0n+YBNjH4ga3+PGzj2SRXm9+bEZqjfGN/kqppw
-	 7TtwUqvVnrX64Swicg6p9IPRq/w+/45mNRsgYQ+oLdnVAwF6P4CfhNYTI7VgswFn1V
-	 NRd6T+zQu3cP84EW0T1WxRzjMH0FrLFQjS5gT6E4=
+	b=1rNuBOmViPjx9FT9Bw+MwyyECTS3ID+XcFB0M0/6eRhzYwiicxg+6Nt/WkzFSUgoG
+	 tGtOZeOem6osNFxYBdi67e0sblAaIcr+Cvolp1tGMpSk+01iRxVg/7gEHXCjiUwhjR
+	 yawhtO5nxDuTA4bU9ezVC6fH5f3ftlPicILBpq5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robbie Harwood <rharwood@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	keyrings@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	kexec@lists.infradead.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 092/124] asymmetric_keys: log on fatal failures in PE/pkcs7
-Date: Tue, 18 Apr 2023 14:21:51 +0200
-Message-Id: <20230418120313.191130834@linuxfoundation.org>
+	Mathis Salmen <mathis.salmen@matsal.de>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.10 093/124] riscv: add icache flush for nommu sigreturn trampoline
+Date: Tue, 18 Apr 2023 14:21:52 +0200
+Message-Id: <20230418120313.228546263@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -41,158 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robbie Harwood <rharwood@redhat.com>
+From: Mathis Salmen <mathis.salmen@matsal.de>
 
-[ Upstream commit 3584c1dbfffdabf8e3dc1dd25748bb38dd01cd43 ]
+commit 8d736482749f6d350892ef83a7a11d43cd49981e upstream.
 
-These particular errors can be encountered while trying to kexec when
-secureboot lockdown is in place.  Without this change, even with a
-signed debug build, one still needs to reboot the machine to add the
-appropriate dyndbg parameters (since lockdown blocks debugfs).
+In a NOMMU kernel, sigreturn trampolines are generated on the user
+stack by setup_rt_frame. Currently, these trampolines are not instruction
+fenced, thus their visibility to ifetch is not guaranteed.
 
-Accordingly, upgrade all pr_debug() before fatal error into pr_warn().
+This patch adds a flush_icache_range in setup_rt_frame to fix this
+problem.
 
-Signed-off-by: Robbie Harwood <rharwood@redhat.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Jarkko Sakkinen <jarkko@kernel.org>
-cc: Eric Biederman <ebiederm@xmission.com>
-cc: Herbert Xu <herbert@gondor.apana.org.au>
-cc: keyrings@vger.kernel.org
-cc: linux-crypto@vger.kernel.org
-cc: kexec@lists.infradead.org
-Link: https://lore.kernel.org/r/20230220171254.592347-3-rharwood@redhat.com/ # v2
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Mathis Salmen <mathis.salmen@matsal.de>
+Fixes: 6bd33e1ece52 ("riscv: add nommu support")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230406101130.82304-1-mathis.salmen@matsal.de
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/pkcs7_verify.c  | 10 +++++-----
- crypto/asymmetric_keys/verify_pefile.c | 24 ++++++++++++------------
- 2 files changed, 17 insertions(+), 17 deletions(-)
+ arch/riscv/kernel/signal.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/crypto/asymmetric_keys/pkcs7_verify.c b/crypto/asymmetric_keys/pkcs7_verify.c
-index ce49820caa97f..01e54450c846f 100644
---- a/crypto/asymmetric_keys/pkcs7_verify.c
-+++ b/crypto/asymmetric_keys/pkcs7_verify.c
-@@ -79,16 +79,16 @@ static int pkcs7_digest(struct pkcs7_message *pkcs7,
- 		}
+--- a/arch/riscv/kernel/signal.c
++++ b/arch/riscv/kernel/signal.c
+@@ -16,6 +16,7 @@
+ #include <asm/vdso.h>
+ #include <asm/switch_to.h>
+ #include <asm/csr.h>
++#include <asm/cacheflush.h>
  
- 		if (sinfo->msgdigest_len != sig->digest_size) {
--			pr_debug("Sig %u: Invalid digest size (%u)\n",
--				 sinfo->index, sinfo->msgdigest_len);
-+			pr_warn("Sig %u: Invalid digest size (%u)\n",
-+				sinfo->index, sinfo->msgdigest_len);
- 			ret = -EBADMSG;
- 			goto error;
- 		}
+ extern u32 __user_rt_sigreturn[2];
  
- 		if (memcmp(sig->digest, sinfo->msgdigest,
- 			   sinfo->msgdigest_len) != 0) {
--			pr_debug("Sig %u: Message digest doesn't match\n",
--				 sinfo->index);
-+			pr_warn("Sig %u: Message digest doesn't match\n",
-+				sinfo->index);
- 			ret = -EKEYREJECTED;
- 			goto error;
- 		}
-@@ -488,7 +488,7 @@ int pkcs7_supply_detached_data(struct pkcs7_message *pkcs7,
- 			       const void *data, size_t datalen)
+@@ -178,6 +179,7 @@ static int setup_rt_frame(struct ksignal
  {
- 	if (pkcs7->data) {
--		pr_debug("Data already supplied\n");
-+		pr_warn("Data already supplied\n");
- 		return -EINVAL;
- 	}
- 	pkcs7->data = data;
-diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
-index fe1bb374239d7..22beaf2213a22 100644
---- a/crypto/asymmetric_keys/verify_pefile.c
-+++ b/crypto/asymmetric_keys/verify_pefile.c
-@@ -74,7 +74,7 @@ static int pefile_parse_binary(const void *pebuf, unsigned int pelen,
- 		break;
+ 	struct rt_sigframe __user *frame;
+ 	long err = 0;
++	unsigned long __maybe_unused addr;
  
- 	default:
--		pr_debug("Unknown PEOPT magic = %04hx\n", pe32->magic);
-+		pr_warn("Unknown PEOPT magic = %04hx\n", pe32->magic);
- 		return -ELIBBAD;
- 	}
+ 	frame = get_sigframe(ksig, regs, sizeof(*frame));
+ 	if (!access_ok(frame, sizeof(*frame)))
+@@ -206,7 +208,12 @@ static int setup_rt_frame(struct ksignal
+ 	if (copy_to_user(&frame->sigreturn_code, __user_rt_sigreturn,
+ 			 sizeof(frame->sigreturn_code)))
+ 		return -EFAULT;
+-	regs->ra = (unsigned long)&frame->sigreturn_code;
++
++	addr = (unsigned long)&frame->sigreturn_code;
++	/* Make sure the two instructions are pushed to icache. */
++	flush_icache_range(addr, addr + sizeof(frame->sigreturn_code));
++
++	regs->ra = addr;
+ #endif /* CONFIG_MMU */
  
-@@ -95,7 +95,7 @@ static int pefile_parse_binary(const void *pebuf, unsigned int pelen,
- 	ctx->certs_size = ddir->certs.size;
- 
- 	if (!ddir->certs.virtual_address || !ddir->certs.size) {
--		pr_debug("Unsigned PE binary\n");
-+		pr_warn("Unsigned PE binary\n");
- 		return -ENODATA;
- 	}
- 
-@@ -127,7 +127,7 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
- 	unsigned len;
- 
- 	if (ctx->sig_len < sizeof(wrapper)) {
--		pr_debug("Signature wrapper too short\n");
-+		pr_warn("Signature wrapper too short\n");
- 		return -ELIBBAD;
- 	}
- 
-@@ -142,16 +142,16 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
- 	 * rounded up since 0.110.
- 	 */
- 	if (wrapper.length > ctx->sig_len) {
--		pr_debug("Signature wrapper bigger than sig len (%x > %x)\n",
--			 ctx->sig_len, wrapper.length);
-+		pr_warn("Signature wrapper bigger than sig len (%x > %x)\n",
-+			ctx->sig_len, wrapper.length);
- 		return -ELIBBAD;
- 	}
- 	if (wrapper.revision != WIN_CERT_REVISION_2_0) {
--		pr_debug("Signature is not revision 2.0\n");
-+		pr_warn("Signature is not revision 2.0\n");
- 		return -ENOTSUPP;
- 	}
- 	if (wrapper.cert_type != WIN_CERT_TYPE_PKCS_SIGNED_DATA) {
--		pr_debug("Signature certificate type is not PKCS\n");
-+		pr_warn("Signature certificate type is not PKCS\n");
- 		return -ENOTSUPP;
- 	}
- 
-@@ -164,7 +164,7 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
- 	ctx->sig_offset += sizeof(wrapper);
- 	ctx->sig_len -= sizeof(wrapper);
- 	if (ctx->sig_len < 4) {
--		pr_debug("Signature data missing\n");
-+		pr_warn("Signature data missing\n");
- 		return -EKEYREJECTED;
- 	}
- 
-@@ -198,7 +198,7 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
- 		return 0;
- 	}
- not_pkcs7:
--	pr_debug("Signature data not PKCS#7\n");
-+	pr_warn("Signature data not PKCS#7\n");
- 	return -ELIBBAD;
- }
- 
-@@ -341,8 +341,8 @@ static int pefile_digest_pe(const void *pebuf, unsigned int pelen,
- 	digest_size = crypto_shash_digestsize(tfm);
- 
- 	if (digest_size != ctx->digest_len) {
--		pr_debug("Digest size mismatch (%zx != %x)\n",
--			 digest_size, ctx->digest_len);
-+		pr_warn("Digest size mismatch (%zx != %x)\n",
-+			digest_size, ctx->digest_len);
- 		ret = -EBADMSG;
- 		goto error_no_desc;
- 	}
-@@ -373,7 +373,7 @@ static int pefile_digest_pe(const void *pebuf, unsigned int pelen,
- 	 * PKCS#7 certificate.
- 	 */
- 	if (memcmp(digest, ctx->digest, ctx->digest_len) != 0) {
--		pr_debug("Digest mismatch\n");
-+		pr_warn("Digest mismatch\n");
- 		ret = -EKEYREJECTED;
- 	} else {
- 		pr_debug("The digests match!\n");
--- 
-2.39.2
-
+ 	/*
 
 
