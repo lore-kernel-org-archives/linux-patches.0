@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2E12572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C13DC4339B;
-	Tue, 18 Apr 2023 12:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD882572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1EC9C4339B;
+	Tue, 18 Apr 2023 12:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821953;
-	bh=BaUXOOXroxl8QjYeJojfbRGqPg6LOFVZncl2S1g3djg=;
+	s=korg; t=1681821956;
+	bh=+dnhBPc/YfgR9BLsubh3mk4uFixd5cRxmk+2Yv1vbGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sS0++63lJZ42WE82rFc5K0TGI4LcG6b3GTdtjQW+iC2XASkU6z8jbIiOR8VX+9RQ+
-	 ZQmaOMA3x4GJCn7wLa5ThCCHzGs6K8LGoCOB0U+Vf1OzjtZmUOLccIZ3ZoW2vAarLc
-	 H0WkV+zwHnj3kwbjEN8UPLjIlg8x1ffSKxKpXV48=
+	b=dqcf5olZIGzPDh5QXIReJy6Xb+NrUmoF4KY6muyWKqBAwzpz5ZdWQrcJnwNMhjI4d
+	 +RwUlth8dkRlHmT6SPBcrMtg2kcpUajQw41C5VAqyvpTZ3tqkIGyMNHHQBIBjjjTMR
+	 B4WAGiEa0XX7hQ0HaqTaupD5dpzzl92FT2+0VMGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/134] maple_tree: fix write memory barrier of nodes once dead for RCU mode
-Date: Tue, 18 Apr 2023 14:22:37 +0200
-Message-Id: <20230418120316.702383368@linuxfoundation.org>
+	David Disseldorp <ddiss@suse.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 102/134] ksmbd: avoid out of bounds access in decode_preauth_ctxt()
+Date: Tue, 18 Apr 2023 14:22:38 +0200
+Message-Id: <20230418120316.749169958@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,194 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit c13af03de46ba27674dd9fb31a17c0d480081139 ]
+commit e7067a446264a7514fa1cfaa4052cdb6803bc6a2 upstream.
 
-During the development of the maple tree, the strategy of freeing multiple
-nodes changed and, in the process, the pivots were reused to store
-pointers to dead nodes.  To ensure the readers see accurate pivots, the
-writers need to mark the nodes as dead and call smp_wmb() to ensure any
-readers can identify the node as dead before using the pivot values.
+Confirm that the accessed pneg_ctxt->HashAlgorithms address sits within
+the SMB request boundary; deassemble_neg_contexts() only checks that the
+eight byte smb2_neg_context header + (client controlled) DataLength are
+within the packet boundary, which is insufficient.
 
-There were two places where the old method of marking the node as dead
-without smp_wmb() were being used, which resulted in RCU readers seeing
-the wrong pivot value before seeing the node was dead.  Fix this race
-condition by using mte_set_node_dead() which has the smp_wmb() call to
-ensure the race is closed.
+Checking for sizeof(struct smb2_preauth_neg_context) is overkill given
+that the type currently assumes SMB311_SALT_SIZE bytes of trailing Salt.
 
-Add a WARN_ON() to the ma_free_rcu() call to ensure all nodes being freed
-are marked as dead to ensure there are no other call paths besides the two
-updated paths.
-
-This is necessary for the RCU mode of the maple tree.
-
-Link: https://lkml.kernel.org/r/20230227173632.3292573-6-surenb@google.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c                 |  7 +++++--
- tools/testing/radix-tree/maple.c | 16 ++++++++++++++++
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ fs/ksmbd/smb2pdu.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/lib/maple_tree.c b/lib/maple_tree.c
-index 84530fb73bd9e..39f34ea7a9be5 100644
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -178,7 +178,7 @@ static void mt_free_rcu(struct rcu_head *head)
-  */
- static void ma_free_rcu(struct maple_node *node)
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -872,17 +872,21 @@ static void assemble_neg_contexts(struct
+ }
+ 
+ static __le32 decode_preauth_ctxt(struct ksmbd_conn *conn,
+-				  struct smb2_preauth_neg_context *pneg_ctxt)
++				  struct smb2_preauth_neg_context *pneg_ctxt,
++				  int len_of_ctxts)
  {
--	node->parent = ma_parent_ptr(node);
-+	WARN_ON(node->parent != ma_parent_ptr(node));
- 	call_rcu(&node->rcu, mt_free_rcu);
+-	__le32 err = STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP;
++	/*
++	 * sizeof(smb2_preauth_neg_context) assumes SMB311_SALT_SIZE Salt,
++	 * which may not be present. Only check for used HashAlgorithms[1].
++	 */
++	if (len_of_ctxts < MIN_PREAUTH_CTXT_DATA_LEN)
++		return STATUS_INVALID_PARAMETER;
+ 
+-	if (pneg_ctxt->HashAlgorithms == SMB2_PREAUTH_INTEGRITY_SHA512) {
+-		conn->preauth_info->Preauth_HashId =
+-			SMB2_PREAUTH_INTEGRITY_SHA512;
+-		err = STATUS_SUCCESS;
+-	}
++	if (pneg_ctxt->HashAlgorithms != SMB2_PREAUTH_INTEGRITY_SHA512)
++		return STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP;
+ 
+-	return err;
++	conn->preauth_info->Preauth_HashId = SMB2_PREAUTH_INTEGRITY_SHA512;
++	return STATUS_SUCCESS;
  }
  
-@@ -1780,8 +1780,10 @@ static inline void mas_replace(struct ma_state *mas, bool advanced)
- 		rcu_assign_pointer(slots[offset], mas->node);
- 	}
+ static void decode_encrypt_ctxt(struct ksmbd_conn *conn,
+@@ -1010,7 +1014,8 @@ static __le32 deassemble_neg_contexts(st
+ 				break;
  
--	if (!advanced)
-+	if (!advanced) {
-+		mte_set_node_dead(old_enode);
- 		mas_free(mas, old_enode);
-+	}
- }
- 
- /*
-@@ -4216,6 +4218,7 @@ static inline bool mas_wr_node_store(struct ma_wr_state *wr_mas)
- done:
- 	mas_leaf_set_meta(mas, newnode, dst_pivots, maple_leaf_64, new_end);
- 	if (in_rcu) {
-+		mte_set_node_dead(mas->node);
- 		mas->node = mt_mk_node(newnode, wr_mas->type);
- 		mas_replace(mas, false);
- 	} else {
-diff --git a/tools/testing/radix-tree/maple.c b/tools/testing/radix-tree/maple.c
-index aceb6011315c2..18e319e6ce335 100644
---- a/tools/testing/radix-tree/maple.c
-+++ b/tools/testing/radix-tree/maple.c
-@@ -107,6 +107,7 @@ static noinline void check_new_node(struct maple_tree *mt)
- 	MT_BUG_ON(mt, mn->slot[1] != NULL);
- 	MT_BUG_ON(mt, mas_allocated(&mas) != 0);
- 
-+	mn->parent = ma_parent_ptr(mn);
- 	ma_free_rcu(mn);
- 	mas.node = MAS_START;
- 	mas_nomem(&mas, GFP_KERNEL);
-@@ -159,6 +160,7 @@ static noinline void check_new_node(struct maple_tree *mt)
- 		MT_BUG_ON(mt, mas_allocated(&mas) != i);
- 		MT_BUG_ON(mt, !mn);
- 		MT_BUG_ON(mt, not_empty(mn));
-+		mn->parent = ma_parent_ptr(mn);
- 		ma_free_rcu(mn);
- 	}
- 
-@@ -191,6 +193,7 @@ static noinline void check_new_node(struct maple_tree *mt)
- 		MT_BUG_ON(mt, not_empty(mn));
- 		MT_BUG_ON(mt, mas_allocated(&mas) != i - 1);
- 		MT_BUG_ON(mt, !mn);
-+		mn->parent = ma_parent_ptr(mn);
- 		ma_free_rcu(mn);
- 	}
- 
-@@ -209,6 +212,7 @@ static noinline void check_new_node(struct maple_tree *mt)
- 			mn = mas_pop_node(&mas);
- 			MT_BUG_ON(mt, not_empty(mn));
- 			MT_BUG_ON(mt, mas_allocated(&mas) != j - 1);
-+			mn->parent = ma_parent_ptr(mn);
- 			ma_free_rcu(mn);
- 		}
- 		MT_BUG_ON(mt, mas_allocated(&mas) != 0);
-@@ -232,6 +236,7 @@ static noinline void check_new_node(struct maple_tree *mt)
- 			MT_BUG_ON(mt, mas_allocated(&mas) != i - j);
- 			mn = mas_pop_node(&mas);
- 			MT_BUG_ON(mt, not_empty(mn));
-+			mn->parent = ma_parent_ptr(mn);
- 			ma_free_rcu(mn);
- 			MT_BUG_ON(mt, mas_allocated(&mas) != i - j - 1);
- 		}
-@@ -268,6 +273,7 @@ static noinline void check_new_node(struct maple_tree *mt)
- 			mn = mas_pop_node(&mas); /* get the next node. */
- 			MT_BUG_ON(mt, mn == NULL);
- 			MT_BUG_ON(mt, not_empty(mn));
-+			mn->parent = ma_parent_ptr(mn);
- 			ma_free_rcu(mn);
- 		}
- 		MT_BUG_ON(mt, mas_allocated(&mas) != 0);
-@@ -293,6 +299,7 @@ static noinline void check_new_node(struct maple_tree *mt)
- 			mn = mas_pop_node(&mas2); /* get the next node. */
- 			MT_BUG_ON(mt, mn == NULL);
- 			MT_BUG_ON(mt, not_empty(mn));
-+			mn->parent = ma_parent_ptr(mn);
- 			ma_free_rcu(mn);
- 		}
- 		MT_BUG_ON(mt, mas_allocated(&mas2) != 0);
-@@ -333,10 +340,12 @@ static noinline void check_new_node(struct maple_tree *mt)
- 	MT_BUG_ON(mt, mas_allocated(&mas) != MAPLE_ALLOC_SLOTS + 2);
- 	mn = mas_pop_node(&mas);
- 	MT_BUG_ON(mt, not_empty(mn));
-+	mn->parent = ma_parent_ptr(mn);
- 	ma_free_rcu(mn);
- 	for (i = 1; i <= MAPLE_ALLOC_SLOTS + 1; i++) {
- 		mn = mas_pop_node(&mas);
- 		MT_BUG_ON(mt, not_empty(mn));
-+		mn->parent = ma_parent_ptr(mn);
- 		ma_free_rcu(mn);
- 	}
- 	MT_BUG_ON(mt, mas_allocated(&mas) != 0);
-@@ -374,6 +383,7 @@ static noinline void check_new_node(struct maple_tree *mt)
- 		mas_node_count(&mas, i); /* Request */
- 		mas_nomem(&mas, GFP_KERNEL); /* Fill request */
- 		mn = mas_pop_node(&mas); /* get the next node. */
-+		mn->parent = ma_parent_ptr(mn);
- 		ma_free_rcu(mn);
- 		mas_destroy(&mas);
- 
-@@ -381,10 +391,13 @@ static noinline void check_new_node(struct maple_tree *mt)
- 		mas_node_count(&mas, i); /* Request */
- 		mas_nomem(&mas, GFP_KERNEL); /* Fill request */
- 		mn = mas_pop_node(&mas); /* get the next node. */
-+		mn->parent = ma_parent_ptr(mn);
- 		ma_free_rcu(mn);
- 		mn = mas_pop_node(&mas); /* get the next node. */
-+		mn->parent = ma_parent_ptr(mn);
- 		ma_free_rcu(mn);
- 		mn = mas_pop_node(&mas); /* get the next node. */
-+		mn->parent = ma_parent_ptr(mn);
- 		ma_free_rcu(mn);
- 		mas_destroy(&mas);
- 	}
-@@ -35368,6 +35381,7 @@ static noinline void check_prealloc(struct maple_tree *mt)
- 	MT_BUG_ON(mt, allocated != 1 + height * 3);
- 	mn = mas_pop_node(&mas);
- 	MT_BUG_ON(mt, mas_allocated(&mas) != allocated - 1);
-+	mn->parent = ma_parent_ptr(mn);
- 	ma_free_rcu(mn);
- 	MT_BUG_ON(mt, mas_preallocate(&mas, ptr, GFP_KERNEL) != 0);
- 	mas_destroy(&mas);
-@@ -35385,6 +35399,7 @@ static noinline void check_prealloc(struct maple_tree *mt)
- 	mas_destroy(&mas);
- 	allocated = mas_allocated(&mas);
- 	MT_BUG_ON(mt, allocated != 0);
-+	mn->parent = ma_parent_ptr(mn);
- 	ma_free_rcu(mn);
- 
- 	MT_BUG_ON(mt, mas_preallocate(&mas, ptr, GFP_KERNEL) != 0);
-@@ -35755,6 +35770,7 @@ void farmer_tests(void)
- 	tree.ma_root = mt_mk_node(node, maple_leaf_64);
- 	mt_dump(&tree);
- 
-+	node->parent = ma_parent_ptr(node);
- 	ma_free_rcu(node);
- 
- 	/* Check things that will make lockdep angry */
--- 
-2.39.2
-
+ 			status = decode_preauth_ctxt(conn,
+-						     (struct smb2_preauth_neg_context *)pctx);
++						     (struct smb2_preauth_neg_context *)pctx,
++						     len_of_ctxts);
+ 			if (status != STATUS_SUCCESS)
+ 				break;
+ 		} else if (pctx->ContextType == SMB2_ENCRYPTION_CAPABILITIES) {
 
 
