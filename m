@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081942572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F69DC4339B;
-	Tue, 18 Apr 2023 12:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5E52572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222CFC433D2;
+	Tue, 18 Apr 2023 12:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822003;
-	bh=oNRHKlpBGx5o+DM+fn7UAlEabvjKmS3NKQxywnfXrY4=;
+	s=korg; t=1681822006;
+	bh=s4dBXLKRkJ8O07bMKNZikRQ+iaJQvsGa2Vk/OTY9CiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ePNeZtz24vLKtb/0v5QVISUxUwih0fiYSXBFA9v/ca9Dix7T0bdKPX2Q3BRf+d6xA
-	 KjrQV0UAKQuevePR2lezxuP0gQ7SYpfLASSaPRbkMAyn8H3ypG+r3kCDNiphvy3M9p
-	 xav0CsBoTkhoGXLo0VQ4O4uPJMbF6cqC7YmIvyVo=
+	b=dCIuvZgSbJnFnXqspuh01t66aMTwsNTiTdWeHJSrlq+ZRvyWhdUUaGXuVwrsJjHAl
+	 DBKhw3VCLVKPOQ/BvYYnNb7DAZY4/P8pSjkRNhE3pttzrXwnEVWknCQZtnkXnhFMkN
+	 v4QINzXyWeqf3Yio8P90SX0wOjeI8tWunLa3eXTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Tingjia Cao <tjcao980311@gmail.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 121/134] powerpc/papr_scm: Update the NUMA distance table for the target node
-Date: Tue, 18 Apr 2023 14:22:57 +0200
-Message-Id: <20230418120317.409905949@linuxfoundation.org>
+Subject: [PATCH 6.1 122/134] sched/fair: Fix imbalance overflow
+Date: Tue, 18 Apr 2023 14:22:58 +0200
+Message-Id: <20230418120317.439125199@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,82 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit b277fc793daf258877b4c0744b52f69d6e6ba22e ]
+[ Upstream commit 91dcf1e8068e9a8823e419a7a34ff4341275fb70 ]
 
-Platform device helper routines won't update the NUMA distance table
-while creating a platform device, even if the device is present on a
-NUMA node that doesn't have memory or CPU. This is especially true for
-pmem devices. If the target node of the pmem device is not online, we
-find the nearest online node to the device and associate the pmem device
-with that online node. To find the nearest online node, we should have
-the numa distance table updated correctly. Update the distance
-information during the device probe.
+When local group is fully busy but its average load is above system load,
+computing the imbalance will overflow and local group is not the best
+target for pulling this load.
 
-For a papr scm device on NUMA node 3 distance_lookup_table value for
-distance_ref_points_depth = 2 before and after fix is below:
-
-Before fix:
-  node 3 distance depth 0  - 0
-  node 3 distance depth 1  - 0
-  node 4 distance depth 0  - 4
-  node 4 distance depth 1  - 2
-  node 5 distance depth 0  - 5
-  node 5 distance depth 1  - 1
-
-After fix
-  node 3 distance depth 0  - 3
-  node 3 distance depth 1  - 1
-  node 4 distance depth 0  - 4
-  node 4 distance depth 1  - 2
-  node 5 distance depth 0  - 5
-  node 5 distance depth 1  - 1
-
-Without the fix, the nearest numa node to the pmem device (NUMA node 3)
-will be picked as 4. After the fix, we get the correct numa node which
-is 5.
-
-Fixes: da1115fdbd6e ("powerpc/nvdimm: Pick nearby online node if the device node is not online")
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230404041433.1781804-1-aneesh.kumar@linux.ibm.com
+Fixes: 0b0695f2b34a ("sched/fair: Rework load_balance()")
+Reported-by: Tingjia Cao <tjcao980311@gmail.com>
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Tingjia Cao <tjcao980311@gmail.com>
+Link: https://lore.kernel.org/lkml/CABcWv9_DAhVBOq2=W=2ypKE9dKM5s2DvoV8-U0+GDwwuKZ89jQ@mail.gmail.com/T/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/numa.c                    | 1 +
- arch/powerpc/platforms/pseries/papr_scm.c | 7 +++++++
- 2 files changed, 8 insertions(+)
+ kernel/sched/fair.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/powerpc/mm/numa.c b/arch/powerpc/mm/numa.c
-index b44ce71917d75..16cfe56be05bb 100644
---- a/arch/powerpc/mm/numa.c
-+++ b/arch/powerpc/mm/numa.c
-@@ -366,6 +366,7 @@ void update_numa_distance(struct device_node *node)
- 	WARN(numa_distance_table[nid][nid] == -1,
- 	     "NUMA distance details for node %d not provided\n", nid);
- }
-+EXPORT_SYMBOL_GPL(update_numa_distance);
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 88821ab009b30..ec2d913280e6a 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -10041,6 +10041,16 @@ static inline void calculate_imbalance(struct lb_env *env, struct sd_lb_stats *s
  
- /*
-  * ibm,numa-lookup-index-table= {N, domainid1, domainid2, ..... domainidN}
-diff --git a/arch/powerpc/platforms/pseries/papr_scm.c b/arch/powerpc/platforms/pseries/papr_scm.c
-index 2f8385523a132..1a53e048ceb76 100644
---- a/arch/powerpc/platforms/pseries/papr_scm.c
-+++ b/arch/powerpc/platforms/pseries/papr_scm.c
-@@ -1428,6 +1428,13 @@ static int papr_scm_probe(struct platform_device *pdev)
- 		return -ENODEV;
+ 		sds->avg_load = (sds->total_load * SCHED_CAPACITY_SCALE) /
+ 				sds->total_capacity;
++
++		/*
++		 * If the local group is more loaded than the average system
++		 * load, don't try to pull any tasks.
++		 */
++		if (local->avg_load >= sds->avg_load) {
++			env->imbalance = 0;
++			return;
++		}
++
  	}
  
-+	/*
-+	 * open firmware platform device create won't update the NUMA 
-+	 * distance table. For PAPR SCM devices we use numa_map_to_online_node()
-+	 * to find the nearest online NUMA node and that requires correct
-+	 * distance table information.
-+	 */
-+	update_numa_distance(dn);
- 
- 	p = kzalloc(sizeof(*p), GFP_KERNEL);
- 	if (!p)
+ 	/*
 -- 
 2.39.2
 
