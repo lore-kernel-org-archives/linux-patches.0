@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398352579
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29BAC433D2;
-	Tue, 18 Apr 2023 12:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCED52572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63169C433A0;
+	Tue, 18 Apr 2023 12:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821733;
-	bh=zkQ5AhsawpZj7Xix93umrARHMynvPlxsFMYwEHx6efU=;
+	s=korg; t=1681821735;
+	bh=JYpjVoq8LwBolFcohl3M9riLk9OOvKVgEN1lGOKG0b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAOXt9dItn1H2gI1PlBmprkUiwClCTsME9N+yQfGVLwA4U/9dE+0lFhi41h5lhK1Q
-	 Vp20jbBRhqpIaba7aVMWjEjb1kunIBF5itoOa2aZh8iSwBzamEjQ7Q8sNpCdzyYUL4
-	 zkEOkUn0ko1Qt6OIUCnIih0BoooaxywflftHrHaY=
+	b=QpKVwfPzEZYWtVWfO+GsCCW3t9uVkL7HHcptvHbcESTuMLumlsIuQlIrFcr5nansx
+	 U1G7V1BraHS0lFllq0u1sU6+c9eJbZciFUNYf4VR/mnkWwEdPTLYt1fC/RBHzFqKbE
+	 SMygkImAo75Mp3bWc1f8ViC8r11vpRSpAFJg96u4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
+	Christophe Kerello <christophe.kerello@foss.st.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 021/134] mtd: rawnand: meson: fix bitmask for length in command word
-Date: Tue, 18 Apr 2023 14:21:17 +0200
-Message-Id: <20230418120313.730250702@linuxfoundation.org>
+Subject: [PATCH 6.1 022/134] mtd: rawnand: stm32_fmc2: remove unsupported EDO mode
+Date: Tue, 18 Apr 2023 14:21:18 +0200
+Message-Id: <20230418120313.766581527@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,57 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arseniy Krasnov <avkrasnov@sberdevices.ru>
+From: Christophe Kerello <christophe.kerello@foss.st.com>
 
-commit 93942b70461574ca7fc3d91494ca89b16a4c64c7 upstream.
+commit f71e0e329c152c7f11ddfd97ffc62aba152fad3f upstream.
 
-Valid mask is 0x3FFF, without this patch the following problems were
-found:
+Remove the EDO mode support from as the FMC2 controller does not
+support the feature.
 
-1) [    0.938914] Could not find a valid ONFI parameter page, trying
-                  bit-wise majority to recover it
-   [    0.947384] ONFI parameter recovery failed, aborting
-
-2) Read with disabled ECC mode was broken.
-
-Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
+Fixes: 2cd457f328c1 ("mtd: rawnand: stm32_fmc2: add STM32 FMC2 NAND flash controller driver")
+Cc: stable@vger.kernel.org #v5.4+
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/3794ffbf-dfea-e96f-1f97-fe235b005e19@sberdevices.ru
+Link: https://lore.kernel.org/linux-mtd/20230328155819.225521-2-christophe.kerello@foss.st.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/meson_nand.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mtd/nand/raw/stm32_fmc2_nand.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mtd/nand/raw/meson_nand.c
-+++ b/drivers/mtd/nand/raw/meson_nand.c
-@@ -280,7 +280,7 @@ static void meson_nfc_cmd_access(struct
+--- a/drivers/mtd/nand/raw/stm32_fmc2_nand.c
++++ b/drivers/mtd/nand/raw/stm32_fmc2_nand.c
+@@ -1531,6 +1531,9 @@ static int stm32_fmc2_nfc_setup_interfac
+ 	if (IS_ERR(sdrt))
+ 		return PTR_ERR(sdrt);
  
- 	if (raw) {
- 		len = mtd->writesize + mtd->oobsize;
--		cmd = (len & GENMASK(5, 0)) | scrambler | DMA_DIR(dir);
-+		cmd = (len & GENMASK(13, 0)) | scrambler | DMA_DIR(dir);
- 		writel(cmd, nfc->reg_base + NFC_REG_CMD);
- 		return;
- 	}
-@@ -544,7 +544,7 @@ static int meson_nfc_read_buf(struct nan
- 	if (ret)
- 		goto out;
++	if (sdrt->tRC_min < 30000)
++		return -EOPNOTSUPP;
++
+ 	if (chipnr == NAND_DATA_IFACE_CHECK_ONLY)
+ 		return 0;
  
--	cmd = NFC_CMD_N2M | (len & GENMASK(5, 0));
-+	cmd = NFC_CMD_N2M | (len & GENMASK(13, 0));
- 	writel(cmd, nfc->reg_base + NFC_REG_CMD);
- 
- 	meson_nfc_drain_cmd(nfc);
-@@ -568,7 +568,7 @@ static int meson_nfc_write_buf(struct na
- 	if (ret)
- 		return ret;
- 
--	cmd = NFC_CMD_M2N | (len & GENMASK(5, 0));
-+	cmd = NFC_CMD_M2N | (len & GENMASK(13, 0));
- 	writel(cmd, nfc->reg_base + NFC_REG_CMD);
- 
- 	meson_nfc_drain_cmd(nfc);
 
 
