@@ -1,27 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA022566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C105C433EF;
-	Tue, 18 Apr 2023 12:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7452566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFDCC4339B;
+	Tue, 18 Apr 2023 12:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821440;
-	bh=mW8Y1CkHX8lCQV0Us4SDvk43W03NToPaBMbKohQPfJk=;
+	s=korg; t=1681821443;
+	bh=bGtU70Xo8SdDohsaWOtz3sFUxqQPQMrgxznkOwnVWJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtdgBELWd3CXnk3NrVZpFXakYA1XLjk1rPWkhXI9qY6E68Awxct/tNno94Izqy1RX
-	 M+ai+MOZx7J4cdxb85SF5YDJPxRIDFwHKGouBrWI9hpv+jmNqCHgb3pOt399+fK8mp
-	 GYxA7hBOVvxGEF3uyWp81RzkgMKOFch2hJGa9pJM=
+	b=Zy3exPqnnV7S5R9wS2GykkZHZ+GmMvzWmjmfj6qw8OdIjDlvT+Nw7tAYUtwaHkqeW
+	 rU9wpBOF4edHyFII2fQ7wMxfPQukAfuuPA89xStI+oNGj244TX/J1GrqsojKwFy1W+
+	 y8ksyDkBQcDxm7PNAiJyUdHjGuHNmk5WwwbdbH44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.10 120/124] riscv: Handle zicsr/zifencei issues between clang and binutils
-Date: Tue, 18 Apr 2023 14:22:19 +0200
-Message-Id: <20230418120314.128977947@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Helge Deller <deller@gmx.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@de.ibm.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Feng Tang <feng.tang@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Wen Yang <wenyang.linux@foxmail.com>,
+	Christoph Hellwig <hch@infradead.org>
+Subject: [PATCH 5.10 121/124] kexec: move locking into do_kexec_load
+Date: Tue, 18 Apr 2023 14:22:20 +0200
+Message-Id: <20230418120314.159047123@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,123 +57,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit e89c2e815e76471cb507bd95728bf26da7976430 upstream.
+commit 4b692e861619353ce069e547a67c8d0e32d9ef3d upstream.
 
-There are two related issues that appear in certain combinations with
-clang and GNU binutils.
+Patch series "compat: remove compat_alloc_user_space", v5.
 
-The first occurs when a version of clang that supports zicsr or zifencei
-via '-march=' [1] (i.e, >= 17.x) is used in combination with a version
-of GNU binutils that do not recognize zicsr and zifencei in the
-'-march=' value (i.e., < 2.36):
+Going through compat_alloc_user_space() to convert indirect system call
+arguments tends to add complexity compared to handling the native and
+compat logic in the same code.
 
-  riscv64-linux-gnu-ld: -march=rv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifencei2p0: Invalid or unknown z ISA extension: 'zifencei'
-  riscv64-linux-gnu-ld: failed to merge target specific data of file fs/efivarfs/file.o
-  riscv64-linux-gnu-ld: -march=rv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifencei2p0: Invalid or unknown z ISA extension: 'zifencei'
-  riscv64-linux-gnu-ld: failed to merge target specific data of file fs/efivarfs/super.o
+This patch (of 6):
 
-The second occurs when a version of clang that does not support zicsr or
-zifencei via '-march=' (i.e., <= 16.x) is used in combination with a
-version of GNU as that defaults to a newer ISA base spec, which requires
-specifying zicsr and zifencei in the '-march=' value explicitly (i.e, >=
-2.38):
+The locking is the same between the native and compat version of
+sys_kexec_load(), so it can be done in the common implementation to reduce
+duplication.
 
-  ../arch/riscv/kernel/kexec_relocate.S: Assembler messages:
-  ../arch/riscv/kernel/kexec_relocate.S:147: Error: unrecognized opcode `fence.i', extension `zifencei' required
-  clang-12: error: assembler command failed with exit code 1 (use -v to see invocation)
-
-This is the same issue addressed by commit 6df2a016c0c8 ("riscv: fix
-build with binutils 2.38") (see [2] for additional information) but
-older versions of clang miss out on it because the cc-option check
-fails:
-
-  clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupported standard user-level extension 'zicsr'
-  clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupported standard user-level extension 'zicsr'
-
-To resolve the first issue, only attempt to add zicsr and zifencei to
-the march string when using the GNU assembler 2.38 or newer, which is
-when the default ISA spec was updated, requiring these extensions to be
-specified explicitly. LLVM implements an older version of the base
-specification for all currently released versions, so these instructions
-are available as part of the 'i' extension. If LLVM's implementation is
-updated in the future, a CONFIG_AS_IS_LLVM condition can be added to
-CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI.
-
-To resolve the second issue, use version 2.2 of the base ISA spec when
-using an older version of clang that does not support zicsr or zifencei
-via '-march=', as that is the spec version most compatible with the one
-clang/LLVM implements and avoids the need to specify zicsr and zifencei
-explicitly due to still being a part of 'i'.
-
-[1]: https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d4498694e15bf8a16
-[2]: https://lore.kernel.org/ZAxT7T9Xy1Fo3d5W@aurel32.net/
-
-Cc: stable@vger.kernel.org
-Link: https://github.com/ClangBuiltLinux/linux/issues/1808
-Co-developed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230313-riscv-zicsr-zifencei-fiasco-v1-1-dd1b7840a551@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lkml.kernel.org/r/20210727144859.4150043-1-arnd@kernel.org
+Link: https://lkml.kernel.org/r/20210727144859.4150043-2-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Co-developed-by: Eric Biederman <ebiederm@xmission.com>
+Co-developed-by: Christoph Hellwig <hch@infradead.org>
+Acked-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Paul Mackerras <paulus@samba.org>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@de.ibm.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Feng Tang <feng.tang@intel.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Wen Yang <wenyang.linux@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Kconfig  |   22 ++++++++++++++++++++++
- arch/riscv/Makefile |   10 ++++++----
- 2 files changed, 28 insertions(+), 4 deletions(-)
+ kernel/kexec.c |   44 ++++++++++++++++----------------------------
+ 1 file changed, 16 insertions(+), 28 deletions(-)
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -331,6 +331,28 @@ config RISCV_BASE_PMU
+--- a/kernel/kexec.c
++++ b/kernel/kexec.c
+@@ -110,6 +110,17 @@ static int do_kexec_load(unsigned long e
+ 	unsigned long i;
+ 	int ret;
  
- endmenu
- 
-+config TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
-+	def_bool y
-+	# https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=aed44286efa8ae8717a77d94b51ac3614e2ca6dc
-+	depends on AS_IS_GNU && AS_VERSION >= 23800
-+	help
-+	  Newer binutils versions default to ISA spec version 20191213 which
-+	  moves some instructions from the I extension to the Zicsr and Zifencei
-+	  extensions.
++	/*
++	 * Because we write directly to the reserved memory region when loading
++	 * crash kernels we need a mutex here to prevent multiple crash kernels
++	 * from attempting to load simultaneously, and to prevent a crash kernel
++	 * from loading over the top of a in use crash kernel.
++	 *
++	 * KISS: always take the mutex.
++	 */
++	if (!mutex_trylock(&kexec_mutex))
++		return -EBUSY;
 +
-+config TOOLCHAIN_NEEDS_OLD_ISA_SPEC
-+	def_bool y
-+	depends on TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
-+	# https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d4498694e15bf8a16
-+	depends on CC_IS_CLANG && CLANG_VERSION < 170000
-+	help
-+	  Certain versions of clang do not support zicsr and zifencei via -march
-+	  but newer versions of binutils require it for the reasons noted in the
-+	  help text of CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI. This
-+	  option causes an older ISA spec compatible with these older versions
-+	  of clang to be passed to GAS, which has the same result as passing zicsr
-+	  and zifencei to -march.
-+
- config FPU
- 	bool "FPU support"
- 	default y
---- a/arch/riscv/Makefile
-+++ b/arch/riscv/Makefile
-@@ -53,10 +53,12 @@ riscv-march-$(CONFIG_ARCH_RV64I)	:= rv64
- riscv-march-$(CONFIG_FPU)		:= $(riscv-march-y)fd
- riscv-march-$(CONFIG_RISCV_ISA_C)	:= $(riscv-march-y)c
+ 	if (flags & KEXEC_ON_CRASH) {
+ 		dest_image = &kexec_crash_image;
+ 		if (kexec_crash_image)
+@@ -121,7 +132,8 @@ static int do_kexec_load(unsigned long e
+ 	if (nr_segments == 0) {
+ 		/* Uninstall image */
+ 		kimage_free(xchg(dest_image, NULL));
+-		return 0;
++		ret = 0;
++		goto out_unlock;
+ 	}
+ 	if (flags & KEXEC_ON_CRASH) {
+ 		/*
+@@ -134,7 +146,7 @@ static int do_kexec_load(unsigned long e
  
--# Newer binutils versions default to ISA spec version 20191213 which moves some
--# instructions from the I extension to the Zicsr and Zifencei extensions.
--toolchain-need-zicsr-zifencei := $(call cc-option-yn, -march=$(riscv-march-y)_zicsr_zifencei)
--riscv-march-$(toolchain-need-zicsr-zifencei) := $(riscv-march-y)_zicsr_zifencei
-+ifdef CONFIG_TOOLCHAIN_NEEDS_OLD_ISA_SPEC
-+KBUILD_CFLAGS += -Wa,-misa-spec=2.2
-+KBUILD_AFLAGS += -Wa,-misa-spec=2.2
-+else
-+riscv-march-$(CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI) := $(riscv-march-y)_zicsr_zifencei
-+endif
+ 	ret = kimage_alloc_init(&image, entry, nr_segments, segments, flags);
+ 	if (ret)
+-		return ret;
++		goto out_unlock;
  
- KBUILD_CFLAGS += -march=$(subst fd,,$(riscv-march-y))
- KBUILD_AFLAGS += -march=$(riscv-march-y)
+ 	if (flags & KEXEC_PRESERVE_CONTEXT)
+ 		image->preserve_context = 1;
+@@ -171,6 +183,8 @@ out:
+ 		arch_kexec_protect_crashkres();
+ 
+ 	kimage_free(image);
++out_unlock:
++	mutex_unlock(&kexec_mutex);
+ 	return ret;
+ }
+ 
+@@ -247,21 +261,8 @@ SYSCALL_DEFINE4(kexec_load, unsigned lon
+ 		((flags & KEXEC_ARCH_MASK) != KEXEC_ARCH_DEFAULT))
+ 		return -EINVAL;
+ 
+-	/* Because we write directly to the reserved memory
+-	 * region when loading crash kernels we need a mutex here to
+-	 * prevent multiple crash  kernels from attempting to load
+-	 * simultaneously, and to prevent a crash kernel from loading
+-	 * over the top of a in use crash kernel.
+-	 *
+-	 * KISS: always take the mutex.
+-	 */
+-	if (!mutex_trylock(&kexec_mutex))
+-		return -EBUSY;
+-
+ 	result = do_kexec_load(entry, nr_segments, segments, flags);
+ 
+-	mutex_unlock(&kexec_mutex);
+-
+ 	return result;
+ }
+ 
+@@ -301,21 +302,8 @@ COMPAT_SYSCALL_DEFINE4(kexec_load, compa
+ 			return -EFAULT;
+ 	}
+ 
+-	/* Because we write directly to the reserved memory
+-	 * region when loading crash kernels we need a mutex here to
+-	 * prevent multiple crash  kernels from attempting to load
+-	 * simultaneously, and to prevent a crash kernel from loading
+-	 * over the top of a in use crash kernel.
+-	 *
+-	 * KISS: always take the mutex.
+-	 */
+-	if (!mutex_trylock(&kexec_mutex))
+-		return -EBUSY;
+-
+ 	result = do_kexec_load(entry, nr_segments, ksegments, flags);
+ 
+-	mutex_unlock(&kexec_mutex);
+-
+ 	return result;
+ }
+ #endif
 
 
