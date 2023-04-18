@@ -1,134 +1,151 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58D7AFE6
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 18:46:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:
-	Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Reply-To:Content-ID:Content-Description;
-	bh=nB52nxujZdKTDJqU+NXGOBB2vkb1FAhhHGmtI1+SM4A=; b=a1381ug+O3Nh4vISHBwlSJpgdM
-	m4klJEBpaJu1lnWDaq8Xlc2VsXzkdTSb/tyopbUPR/HR3oaAUUlosR2wd1hf03TrJ7grjaoPTB20m
-	fEQvdBmFyZ7utVjbtR9Omn//3YPanCK9Z6HRhL+mQTfK1pqPS4yIagW0k1zvQdvxOkxgC6RjQtlXP
-	nHfHcCcbLqIgP+2uiFukGr4RPWezPs8AUd20L+8ER5BI0pVz4wvZEooGatFfCaxnew448u4AZjStu
-	vbarBCpSUKjaKUtkVTh0IKCM14l8vZyNsfFoyt5INwPcuadT9LXNpyEVhrCQ0ECRnu+zuVhyQQ5p2
-	XSyg2dsQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1poqLF-00374O-0h;
-	Tue, 18 Apr 2023 18:46:13 +0000
-Date: Tue, 18 Apr 2023 11:46:13 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-Cc: "keescook@chromium.org" <keescook@chromium.org>,
-	"hch@infradead.org" <hch@infradead.org>,
-	"prarit@redhat.com" <prarit@redhat.com>,
-	"rppt@kernel.org" <rppt@kernel.org>,
-	"catalin.marinas@arm.com" <catalin.marinas@arm.com>,
-	"Torvalds, Linus" <torvalds@linux-foundation.org>,
-	"willy@infradead.org" <willy@infradead.org>,
-	"song@kernel.org" <song@kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"pmladek@suse.com" <pmladek@suse.com>,
-	"david@redhat.com" <david@redhat.com>,
-	"colin.i.king@gmail.com" <colin.i.king@gmail.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"jim.cromie@gmail.com" <jim.cromie@gmail.com>,
-	"vbabka@suse.cz" <vbabka@suse.cz>,
-	"christophe.leroy@csgroup.eu" <christophe.leroy@csgroup.eu>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"tglx@linutronix.de" <tglx@linutronix.de>,
-	"jbaron@akamai.com" <jbaron@akamai.com>,
-	"peterz@infradead.org" <peterz@infradead.org>,
-	"linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>,
-	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-	"petr.pavlu@suse.com" <petr.pavlu@suse.com>,
-	"rafael@kernel.org" <rafael@kernel.org>,
-	"Hocko, Michal" <mhocko@suse.com>,
-	"dave@stgolabs.net" <dave@stgolabs.net>
-Subject: Re: [RFC 2/2] kread: avoid duplicates
-Message-ID: <ZD7ldcZoWfeN7poU@bombadil.infradead.org>
-References: <20230414052840.1994456-1-mcgrof@kernel.org>
- <20230414052840.1994456-3-mcgrof@kernel.org>
- <ZDuP3OCzN3x4NxRZ@infradead.org>
- <ZDuYmPB5oqKQLcQd@bombadil.infradead.org>
- <be5182b65384f6a7667c239134037649a468033d.camel@intel.com>
- <ZD3DYqYE4DOiJQaS@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD9EAFE6
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 18:47:46 +0000 (UTC)
+Received: by mail-pl1-f174.google.com with SMTP id q2so32943861pll.7
+        for <patches@lists.linux.dev>; Tue, 18 Apr 2023 11:47:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681843665; x=1684435665;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=qdrElW73CyUlcUQEClO9EDUAz3mThnr1vcZk4xLQL2k=;
+        b=MyDX1zU5nDUFfCk7a8bqMnmAoiE+/xQMuOgeWvgr4UbWB9NVcgfTrYc9XIwjtd6eLN
+         ekqQEyaGmCmygL7e31av4ogs7r9J+T0icRsx0szp56/AOvQYljJMfKowIcR4qP+5O3va
+         ps9my6LUGYeqHl0lm2ML51nFAmQZj/arP5PPQRVSuPvbG/OYpGpDXP2BKSHQS+B6eRWm
+         EEVLtnWEHp7TGl/EwnSUVEU/1Rp0KJQmksl2rQ7tse8nxTnYp/jkPuty2sK6ault5/fN
+         pOa1f/FV8xRwX1fhI/i3daIgQu8rJ9ZjgGfS7Wze2vmyUhqex8SzxQY+0NpWXUFicvqA
+         e+ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681843665; x=1684435665;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qdrElW73CyUlcUQEClO9EDUAz3mThnr1vcZk4xLQL2k=;
+        b=ZXufyUHq6EHhepzRU/IwCBOd+zYVJetzrkheLZIXn37MayoK0aGKl/VGJJ70PQrZ6X
+         l4JZwH5Zk+X2LF+iFHbyzgTgIua5hIfbZs9udR9qq+at+lHtlW+i1WiAx21LO1QgM+LF
+         QJdXAl1SNtkmtpgf1h82TQT0BAkRoDDm2fXAfRCyWM+lxmJ1pDdVxAigUNOkVHyY2GTL
+         GVJp5Zjb4WGTFpqzY4KV6u5teG9yzF8uBoXPYh1n11DRKP4X2Nia5n25ys4tKIhW5SLK
+         6TrEJO6C13i0EuNJN3Z8aK0cVIrDnga1wB9YEKKV5oHg7XSTwi34hWN2/dcrVZhIAQ1r
+         iN8w==
+X-Gm-Message-State: AAQBX9ckcav+iA/K6cU9UH6LafPy4dHtCvBf7EUHxlfgiJqwz+5DuK7K
+	bGjDIwLY9vAMQ83TdLbXMmY=
+X-Google-Smtp-Source: AKy350YWAZo62MlxCISzCzTXCWB6HNcLN+rogclsKSl19ZhfESlpqOSpTd+nyaD1f8ff6CcIRE3pqA==
+X-Received: by 2002:a05:6a20:938b:b0:ef:e017:c60f with SMTP id x11-20020a056a20938b00b000efe017c60fmr593762pzh.51.1681843665590;
+        Tue, 18 Apr 2023 11:47:45 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id d3-20020a63d703000000b0050bc4ca9024sm9106874pgg.65.2023.04.18.11.47.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Apr 2023 11:47:44 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <81e21f0a-a149-7bd7-e37d-741ddce101eb@roeck-us.net>
+Date: Tue, 18 Apr 2023 11:47:42 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZD3DYqYE4DOiJQaS@bombadil.infradead.org>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 5.10 000/124] 5.10.178-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, Waiman Long <longman@redhat.com>, Tejun Heo <tj@kernel.org>,
+ =?UTF-8?Q?Michal_Koutn=c3=bd?= <mkoutny@suse.com>
+References: <20230418120309.539243408@linuxfoundation.org>
+ <CA+G9fYsA+CzsxVYgQEN3c2pOV6F+1EOqY1vQrhj8yt1t-EYs7g@mail.gmail.com>
+ <2023041819-canyon-unarmored-38c6@gregkh>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <2023041819-canyon-unarmored-38c6@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Apr 17, 2023 at 03:08:34PM -0700, Luis Chamberlain wrote:
-> On Mon, Apr 17, 2023 at 05:33:49PM +0000, Edgecombe, Rick P wrote:
-> > On Sat, 2023-04-15 at 23:41 -0700, Luis Chamberlain wrote:
-> > > On Sat, Apr 15, 2023 at 11:04:12PM -0700, Christoph Hellwig wrote:
-> > > > On Thu, Apr 13, 2023 at 10:28:40PM -0700, Luis Chamberlain wrote:
-> > > > > With this we run into 0 wasted virtual memory bytes.
-> > > > 
-> > > > Avoid what duplicates?
-> > > 
-> > > David Hildenbrand had reported that with over 400 CPUs vmap space
-> > > runs out and it seems it was related to module loading. I took a
-> > > look and confirmed it. Module loading ends up requiring in the
-> > > worst case 3 vmalloc allocations, so typically at least twice
-> > > the size of the module size and in the worst case just add
-> > > the decompressed module size:
-> > > 
-> > > a) initial kernel_read*() call
-> > > b) optional module decompression
-> > > c) the actual module data copy we will keep
-> > > 
-> > > Duplicate module requests that come from userspace end up being
-> > > thrown
-> > > in the trash bin, as only one module will be allocated.  Although
-> > > there
-> > > are checks for a module prior to requesting a module udev still
-> > > doesn't
-> > > do the best of a job to avoid that and so we end up with tons of
-> > > duplicate module requests. We're talking about gigabytes of vmalloc
-> > > bytes just lost because of this for large systems and megabytes for
-> > > average systems. So for example with just 255 CPUs we can loose about
-> > > 13.58 GiB, and for 8 CPUs about 226.53 MiB.
-> > > 
-> > > I have patches to curtail 1/2 of that space by doing a check in
-> > > kernel
-> > > before we do the allocation in c) if the module is already present.
-> > > For
-> > > a) it is harder because userspace just passes a file descriptor. But
-> > > since we can get the file path without the vmalloc this RFC suggest
-> > > maybe we can add a new kernel_read*() for module loading where it
-> > > makes
-> > > sense to have only one read happen at a time.
-> > 
-> > I'm wondering how difficult it would be to just try to remove the
-> > vmallocs in (a) and (b) and operate on a list of pages.
+On 4/18/23 08:34, Greg Kroah-Hartman wrote:
+> On Tue, Apr 18, 2023 at 08:38:47PM +0530, Naresh Kamboju wrote:
+>> On Tue, 18 Apr 2023 at 18:03, Greg Kroah-Hartman
+>> <gregkh@linuxfoundation.org> wrote:
+>>>
+>>> This is the start of the stable review cycle for the 5.10.178 release.
+>>> There are 124 patches in this series, all will be posted as a response
+>>> to this one.  If anyone has any issues with these being applied, please
+>>> let me know.
+>>>
+>>> Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
+>>> Anything received after that time might be too late.
+>>>
+>>> The whole patch series can be found in one patch at:
+>>>          https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.178-rc1.gz
+>>> or in the git tree and branch at:
+>>>          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+>>> and the diffstat can be found below.
+>>>
+>>> thanks,
+>>>
+>>> greg k-h
+>>
+>> Following build errors noticed on 5.15 and 5.10.,
+>>
+>>
+>>> Waiman Long <longman@redhat.com>
+>>>      cgroup/cpuset: Change references of cpuset_mutex to cpuset_rwsem
+>>
 > 
-> Yes I think it's worth long term to do that, if possible with seq reads.
+> That's a documentation patch, it can not:
+> 
+>> kernel/cgroup/cpuset.c: In function 'cpuset_can_fork':
+>> kernel/cgroup/cpuset.c:2941:30: error: 'cgroup_mutex' undeclared
+>> (first use in this function); did you mean 'cgroup_put'?
+>>   2941 |         lockdep_assert_held(&cgroup_mutex);
+> 
+> Cause this.
+> 
+> What arch is failing here?  This builds for x86.
+> 
+No, it doesn't.
 
-OK here's what I suggest we do then:
+Build reference: v5.10.177-125-g19b9d9b9f62e
+Compiler version: x86_64-linux-gcc (GCC) 11.3.0
+Assembler version: GNU assembler (GNU Binutils) 2.39
 
-I'll resubmit the first patch which allows us to prove / disprove if
-module-autoloading is the culprit. With that in place folks can debug
-their setup and verify how udev is to blame.
-
-I'll drop the second kernel_read*() patch / effort and punt this as a
-userspace problem as this is also not extremely pressing.
-
-Long term should evaluate how we can avoid vmalloc for the kread and
-module decompression.
-
-If this really becomes a pressing issue we can revisit if we want an in
-kernel solution, but at this point that likely would be systems with
-over 400-500 CPUs with KASAN enabled. Without KASAN the issue should
-eventually trigger if you're enablig modules but its hard to say at what
-point you'd hit this issue.
-
-  Luis
+Building x86_64:defconfig ... failed
+--------------
+Error log:
+In file included from include/linux/rcupdate.h:29,
+                  from include/linux/rculist.h:11,
+                  from include/linux/pid.h:5,
+                  from include/linux/sched.h:14,
+                  from include/linux/ratelimit.h:6,
+                  from include/linux/dev_printk.h:16,
+                  from include/linux/device.h:15,
+                  from include/linux/node.h:18,
+                  from include/linux/cpu.h:17,
+                  from kernel/cgroup/cpuset.c:25:
+kernel/cgroup/cpuset.c: In function 'cpuset_can_fork':
+kernel/cgroup/cpuset.c:2941:30: error: 'cgroup_mutex' undeclared (first use in this function); did you mean 'cgroup_put'?
+  2941 |         lockdep_assert_held(&cgroup_mutex);
+       |                              ^~~~~~~~~~~~
+include/linux/lockdep.h:393:61: note: in definition of macro 'lockdep_assert_held'
+   393 | #define lockdep_assert_held(l)                  do { (void)(l); } while (0)
+       |                                                             ^
+kernel/cgroup/cpuset.c:2941:30: note: each undeclared identifier is reported only once for each function it appears in
+  2941 |         lockdep_assert_held(&cgroup_mutex);
+       |                              ^~~~~~~~~~~~
+include/linux/lockdep.h:393:61: note: in definition of macro 'lockdep_assert_held'
+   393 | #define lockdep_assert_held(l)                  do { (void)(l); } while (0)
+       |                                                             ^
+make[3]: *** [scripts/Makefile.build:286: kernel/cgroup/cpuset.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[2]: *** [scripts/Makefile.build:503: kernel/cgroup] Error 2
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [Makefile:1828: kernel] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:192: __sub-make] Error 2
