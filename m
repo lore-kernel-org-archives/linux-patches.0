@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AC82572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4622BC433EF;
-	Tue, 18 Apr 2023 12:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2C32572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5177C433EF;
+	Tue, 18 Apr 2023 12:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821961;
-	bh=uPMOlphHBamsx4/oDxVMrw3tPvD+rItJxPuTUtzs+Kk=;
+	s=korg; t=1681821964;
+	bh=L2qpSYZN89yg6JT/x90oJp6boUmemheD0VU0QcLFxgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VO892dOUN0VAPVsKuhlrTw8DLmRgg9vAFmPqsl4Y0TOvajOS8L1tDCd3h2C9IGtYf
-	 +TMr3IWQwwGk/ZyCucWVrda1YQihQVFVWICaQqAV7JbOwyDIrqJ25OSBks6gsx72Yz
-	 ixYQizXDon+PKXRujVyPVPP9wfD9i4gZIbp193QI=
+	b=yI9CsRTZLiaoRWEf2Ev1bBZUbpzxcbKVj+6iWd1w1Gpb3yBpFk0ZHr94n2JUkfF8F
+	 9KAN72FpSwoGaQNnvp+mpny9FJmfzG2Oa6xAZ4vHo7dmxLNKVdYWNdSvTsknVWMyIy
+	 d/GNbdRYbq9RgxReallfFf6pQr0u0qtDzjIKBKYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/134] i2c: imx-lpi2c: clean rx/tx buffers upon new message
-Date: Tue, 18 Apr 2023 14:22:13 +0200
-Message-Id: <20230418120315.739811438@linuxfoundation.org>
+	Mathis Salmen <mathis.salmen@matsal.de>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.1 104/134] riscv: add icache flush for nommu sigreturn trampoline
+Date: Tue, 18 Apr 2023 14:22:40 +0200
+Message-Id: <20230418120316.817971546@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,36 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Mathis Salmen <mathis.salmen@matsal.de>
 
-[ Upstream commit 987dd36c0141f6ab9f0fbf14d6b2ec3342dedb2f ]
+commit 8d736482749f6d350892ef83a7a11d43cd49981e upstream.
 
-When start sending a new message clear the Rx & Tx buffer pointers in
-order to avoid using stale pointers.
+In a NOMMU kernel, sigreturn trampolines are generated on the user
+stack by setup_rt_frame. Currently, these trampolines are not instruction
+fenced, thus their visibility to ifetch is not guaranteed.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Tested-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch adds a flush_icache_range in setup_rt_frame to fix this
+problem.
+
+Signed-off-by: Mathis Salmen <mathis.salmen@matsal.de>
+Fixes: 6bd33e1ece52 ("riscv: add nommu support")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230406101130.82304-1-mathis.salmen@matsal.de
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx-lpi2c.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/riscv/kernel/signal.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
-index 9b2f9544c5681..a49b14d52a986 100644
---- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-+++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-@@ -463,6 +463,8 @@ static int lpi2c_imx_xfer(struct i2c_adapter *adapter,
- 		if (num == 1 && msgs[0].len == 0)
- 			goto stop;
+--- a/arch/riscv/kernel/signal.c
++++ b/arch/riscv/kernel/signal.c
+@@ -19,6 +19,7 @@
+ #include <asm/signal32.h>
+ #include <asm/switch_to.h>
+ #include <asm/csr.h>
++#include <asm/cacheflush.h>
  
-+		lpi2c_imx->rx_buf = NULL;
-+		lpi2c_imx->tx_buf = NULL;
- 		lpi2c_imx->delivered = 0;
- 		lpi2c_imx->msglen = msgs[i].len;
- 		init_completion(&lpi2c_imx->complete);
--- 
-2.39.2
-
+ extern u32 __user_rt_sigreturn[2];
+ 
+@@ -181,6 +182,7 @@ static int setup_rt_frame(struct ksignal
+ {
+ 	struct rt_sigframe __user *frame;
+ 	long err = 0;
++	unsigned long __maybe_unused addr;
+ 
+ 	frame = get_sigframe(ksig, regs, sizeof(*frame));
+ 	if (!access_ok(frame, sizeof(*frame)))
+@@ -209,7 +211,12 @@ static int setup_rt_frame(struct ksignal
+ 	if (copy_to_user(&frame->sigreturn_code, __user_rt_sigreturn,
+ 			 sizeof(frame->sigreturn_code)))
+ 		return -EFAULT;
+-	regs->ra = (unsigned long)&frame->sigreturn_code;
++
++	addr = (unsigned long)&frame->sigreturn_code;
++	/* Make sure the two instructions are pushed to icache. */
++	flush_icache_range(addr, addr + sizeof(frame->sigreturn_code));
++
++	regs->ra = addr;
+ #endif /* CONFIG_MMU */
+ 
+ 	/*
 
 
