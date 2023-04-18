@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75ABB2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE07C433D2;
-	Tue, 18 Apr 2023 12:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2C72566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4FAC433EF;
+	Tue, 18 Apr 2023 12:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821427;
-	bh=4Qw3BGlNM2fmwGtPxT0weAgNI7WTvONXczuAN3z5Jzk=;
+	s=korg; t=1681821429;
+	bh=1PTmcP2+6LuJsrULf4ZIc+pv2aA7YcGzRwoLHFAWLGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QChUEAB6vEjmKtKyGVqMa5SRa7Nl5EZLel+qiz+d1ABtyjW5SQLivZHuC0yFdzsa2
-	 TzyI6XYL84shKAjpNXwU2vUkzy5qsydg3aFTgB/6UdhwE+xn715v0p3jrUSmSRYo09
-	 F/qDl7N2EpMNGCV7BHBDP1rcOmrNB5HT3BlmDCAg=
+	b=e9ZCb5R3VTOUsWVGVPp8xXSjZFERgHz4a7yRzuHeXNJ+9rSRwtmfgqInmGUJU3yML
+	 mjk3oKkjVLWBWLxcP3N+ZvpnEwk6DrzaH8IPFuO3EZi1qlTJ6zL/8AzR2SvH03WuJi
+	 Z2O8qfu/Yb36ZWmC7Rsu3ftGnf/AEok5EptZZIiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Bornyakov <i.bornyakov@metrotek.ru>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 094/124] net: sfp: initialize sfp->i2c_block_size at sfp allocation
-Date: Tue, 18 Apr 2023 14:21:53 +0200
-Message-Id: <20230418120313.262122201@linuxfoundation.org>
+	Michal Kolar <mich.k@seznam.cz>,
+	Jiri Kosina <jkosina@suse.cz>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ding Hui <dinghui@sangfor.com.cn>
+Subject: [PATCH 5.10 095/124] scsi: ses: Handle enclosure with just a primary component gracefully
+Date: Tue, 18 Apr 2023 14:21:54 +0200
+Message-Id: <20230418120313.299446501@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,78 +36,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Bornyakov <i.bornyakov@metrotek.ru>
+From: Jiri Kosina <jkosina@suse.cz>
 
-commit 813c2dd78618f108fdcf9cd726ea90f081ee2881 upstream.
+commit c8e22b7a1694bb8d025ea636816472739d859145 upstream.
 
-sfp->i2c_block_size is initialized at SFP module insertion in
-sfp_sm_mod_probe(). Because of that, if SFP module was never inserted
-since boot, sfp_read() call will lead to zero-length I2C read attempt,
-and not all I2C controllers are happy with zero-length reads.
+This reverts commit 3fe97ff3d949 ("scsi: ses: Don't attach if enclosure
+has no components") and introduces proper handling of case where there are
+no detected secondary components, but primary component (enumerated in
+num_enclosures) does exist. That fix was originally proposed by Ding Hui
+<dinghui@sangfor.com.cn>.
 
-One way to issue sfp_read() on empty SFP cage is to execute ethtool -m.
-If SFP module was never plugged since boot, there will be a zero-length
-I2C read attempt.
+Completely ignoring devices that have one primary enclosure and no
+secondary one results in ses_intf_add() bailing completely
 
-  # ethtool -m xge0
-  i2c i2c-3: adapter quirk: no zero length (addr 0x0050, size 0, read)
-  Cannot get Module EEPROM data: Operation not supported
+	scsi 2:0:0:254: enclosure has no enumerated components
+        scsi 2:0:0:254: Failed to bind enclosure -12ven in valid configurations such
 
-If SFP module was plugged then removed at least once,
-sfp->i2c_block_size will be initialized and ethtool -m will fail with
-different exit code and without I2C error
+even on valid configurations with 1 primary and 0 secondary enclosures as
+below:
 
-  # ethtool -m xge0
-  Cannot get Module EEPROM data: Remote I/O error
+	# sg_ses /dev/sg0
+	  3PARdata  SES               3321
+	Supported diagnostic pages:
+	  Supported Diagnostic Pages [sdp] [0x0]
+	  Configuration (SES) [cf] [0x1]
+	  Short Enclosure Status (SES) [ses] [0x8]
+	# sg_ses -p cf /dev/sg0
+	  3PARdata  SES               3321
+	Configuration diagnostic page:
+	  number of secondary subenclosures: 0
+	  generation code: 0x0
+	  enclosure descriptor list
+	    Subenclosure identifier: 0 [primary]
+	      relative ES process id: 0, number of ES processes: 1
+	      number of type descriptor headers: 1
+	      enclosure logical identifier (hex): 20000002ac02068d
+	      enclosure vendor: 3PARdata  product: VV                rev: 3321
+	  type descriptor header and text list
+	    Element type: Unspecified, subenclosure id: 0
+	      number of possible elements: 1
 
-Fix this by initializing sfp->i2_block_size at struct sfp allocation
-stage so no wild sfp_read() could issue zero-length I2C read.
+The changelog for the original fix follows
 
-Signed-off-by: Ivan Bornyakov <i.bornyakov@metrotek.ru>
-Fixes: 0d035bed2a4a ("net: sfp: VSOL V2801F / CarlitoxxPro CPGOS03-0490 v2.0 workaround")
+=====
+We can get a crash when disconnecting the iSCSI session,
+the call trace like this:
+
+  [ffff00002a00fb70] kfree at ffff00000830e224
+  [ffff00002a00fba0] ses_intf_remove at ffff000001f200e4
+  [ffff00002a00fbd0] device_del at ffff0000086b6a98
+  [ffff00002a00fc50] device_unregister at ffff0000086b6d58
+  [ffff00002a00fc70] __scsi_remove_device at ffff00000870608c
+  [ffff00002a00fca0] scsi_remove_device at ffff000008706134
+  [ffff00002a00fcc0] __scsi_remove_target at ffff0000087062e4
+  [ffff00002a00fd10] scsi_remove_target at ffff0000087064c0
+  [ffff00002a00fd70] __iscsi_unbind_session at ffff000001c872c4
+  [ffff00002a00fdb0] process_one_work at ffff00000810f35c
+  [ffff00002a00fe00] worker_thread at ffff00000810f648
+  [ffff00002a00fe70] kthread at ffff000008116e98
+
+In ses_intf_add, components count could be 0, and kcalloc 0 size scomp,
+but not saved in edev->component[i].scratch
+
+In this situation, edev->component[0].scratch is an invalid pointer,
+when kfree it in ses_intf_remove_enclosure, a crash like above would happen
+The call trace also could be other random cases when kfree cannot catch
+the invalid pointer
+
+We should not use edev->component[] array when the components count is 0
+We also need check index when use edev->component[] array in
+ses_enclosure_data_process
+=====
+
+Reported-by: Michal Kolar <mich.k@seznam.cz>
+Originally-by: Ding Hui <dinghui@sangfor.com.cn>
 Cc: stable@vger.kernel.org
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 3fe97ff3d949 ("scsi: ses: Don't attach if enclosure has no components")
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Link: https://lore.kernel.org/r/nycvar.YFH.7.76.2304042122270.29760@cbobk.fhfr.pm
+Tested-by: Michal Kolar <mich.k@seznam.cz>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/sfp.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/scsi/ses.c |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -207,6 +207,12 @@ static const enum gpiod_flags gpio_flags
-  */
- #define SFP_PHY_ADDR	22
+--- a/drivers/scsi/ses.c
++++ b/drivers/scsi/ses.c
+@@ -503,9 +503,6 @@ static int ses_enclosure_find_by_addr(st
+ 	int i;
+ 	struct ses_component *scomp;
  
-+/* SFP_EEPROM_BLOCK_SIZE is the size of data chunk to read the EEPROM
-+ * at a time. Some SFP modules and also some Linux I2C drivers do not like
-+ * reads longer than 16 bytes.
-+ */
-+#define SFP_EEPROM_BLOCK_SIZE	16
-+
- struct sff_data {
- 	unsigned int gpios;
- 	bool (*module_supported)(const struct sfp_eeprom_id *id);
-@@ -1754,11 +1760,7 @@ static int sfp_sm_mod_probe(struct sfp *
- 	u8 check;
- 	int ret;
+-	if (!edev->component[0].scratch)
+-		return 0;
+-
+ 	for (i = 0; i < edev->components; i++) {
+ 		scomp = edev->component[i].scratch;
+ 		if (scomp->addr != efd->addr)
+@@ -596,8 +593,10 @@ static void ses_enclosure_data_process(s
+ 						components++,
+ 						type_ptr[0],
+ 						name);
+-				else
++				else if (components < edev->components)
+ 					ecomp = &edev->component[components++];
++				else
++					ecomp = ERR_PTR(-EINVAL);
  
--	/* Some SFP modules and also some Linux I2C drivers do not like reads
--	 * longer than 16 bytes, so read the EEPROM in chunks of 16 bytes at
--	 * a time.
--	 */
--	sfp->i2c_block_size = 16;
-+	sfp->i2c_block_size = SFP_EEPROM_BLOCK_SIZE;
+ 				if (!IS_ERR(ecomp)) {
+ 					if (addl_desc_ptr) {
+@@ -728,11 +727,6 @@ static int ses_intf_add(struct device *c
+ 			components += type_ptr[1];
+ 	}
  
- 	ret = sfp_read(sfp, false, 0, &id.base, sizeof(id.base));
- 	if (ret < 0) {
-@@ -2385,6 +2387,7 @@ static struct sfp *sfp_alloc(struct devi
- 		return ERR_PTR(-ENOMEM);
+-	if (components == 0) {
+-		sdev_printk(KERN_WARNING, sdev, "enclosure has no enumerated components\n");
+-		goto err_free;
+-	}
+-
+ 	ses_dev->page1 = buf;
+ 	ses_dev->page1_len = len;
+ 	buf = NULL;
+@@ -774,9 +768,11 @@ static int ses_intf_add(struct device *c
+ 		buf = NULL;
+ 	}
+ page2_not_supported:
+-	scomp = kcalloc(components, sizeof(struct ses_component), GFP_KERNEL);
+-	if (!scomp)
+-		goto err_free;
++	if (components > 0) {
++		scomp = kcalloc(components, sizeof(struct ses_component), GFP_KERNEL);
++		if (!scomp)
++			goto err_free;
++	}
  
- 	sfp->dev = dev;
-+	sfp->i2c_block_size = SFP_EEPROM_BLOCK_SIZE;
- 
- 	mutex_init(&sfp->sm_mutex);
- 	mutex_init(&sfp->st_mutex);
+ 	edev = enclosure_register(cdev->parent, dev_name(&sdev->sdev_gendev),
+ 				  components, &ses_enclosure_callbacks);
 
 
