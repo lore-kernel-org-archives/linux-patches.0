@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640952572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:48:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD573C433EF;
-	Tue, 18 Apr 2023 12:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A782572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:48:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83EFBC433D2;
+	Tue, 18 Apr 2023 12:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822135;
-	bh=AjWffBPKR/X3PhDBE7mkUrwI8rycdobLW1wMHtd12ns=;
+	s=korg; t=1681822137;
+	bh=bDeK0m9SNktXyIdbP6hPB19l6qsk7ey/Kphqh7REGSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MoH2soazN/ojfTmQZe+1AGC1VhOTOR9pE7s+wvHC4suwv3XOs/4A7CGVTfZizLeO2
-	 B0lhHd70om0C9b5tXACXPSAdEAdWmcxBt7/2VdOhMvYnaTMLzv599/94dg24q9TEfa
-	 FbF7GLTG049B2yIlhuGezdtxf5Evu0ViRnUJzxCo=
+	b=t8MQyKIaXbRWrNoFJU/pIhFaAxQMfWt0GjwKenQJxD8S6bwdNl13CBTat3gmv4wB4
+	 JqYiqzRiapUj2sWjeL6K53+tAoHjTHFPXRmSGXqYaj1ta0ZsIp1KuVS11/rcmfd6lz
+	 srEwvAVu/wk5U+bwtuwPShDNdD249DpEKIRMV220=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 034/139] RDMA/irdma: Add ipv4 check to irdma_find_listener()
-Date: Tue, 18 Apr 2023 14:21:39 +0200
-Message-Id: <20230418120314.933150460@linuxfoundation.org>
+	Erik Brakkee <erik@brakkee.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.2 007/139] ALSA: hda: patch_realtek: add quirk for Asus N7601ZM
+Date: Tue, 18 Apr 2023 14:21:12 +0200
+Message-Id: <20230418120313.986330605@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,80 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit e4522c097ec10f23ea0933e9e69d4fa9d8ae9441 ]
+commit e959f2beec8e655dba79c5a7111beedae5e757e0 upstream.
 
-Add ipv4 check to irdma_find_listener(). Otherwise the function
-incorrectly finds and returns a listener with a different addr family for
-the zero IP addr, if a listener with a zero IP addr and the same port as
-the one searched for has already been created.
+Add pins and verbs needed to enable speakers and jack.
 
-Fixes: 146b9756f14c ("RDMA/irdma: Add connection manager")
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20230315145231.931-5-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The pins and verbs configurations were identified by snooping the
+Windows driver commands, with a nice write-up here:
+https://brakkee.org/site/2023/02/07/fixing-sound-on-the-asus-n7601zm/
+
+Reported-by: Erik Brakkee <erik@brakkee.org>
+Link: https://github.com/thesofproject/linux/issues/4176
+Tested-by: Erik Brakkee <erik@brakkee.org>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230406152725.15191-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/irdma/cm.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ sound/pci/hda/patch_realtek.c |   26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/cm.c b/drivers/infiniband/hw/irdma/cm.c
-index 195aa9ea18b6c..8817864154af1 100644
---- a/drivers/infiniband/hw/irdma/cm.c
-+++ b/drivers/infiniband/hw/irdma/cm.c
-@@ -1458,13 +1458,15 @@ static int irdma_send_fin(struct irdma_cm_node *cm_node)
-  * irdma_find_listener - find a cm node listening on this addr-port pair
-  * @cm_core: cm's core
-  * @dst_addr: listener ip addr
-+ * @ipv4: flag indicating IPv4 when true
-  * @dst_port: listener tcp port num
-  * @vlan_id: virtual LAN ID
-  * @listener_state: state to match with listen node's
-  */
- static struct irdma_cm_listener *
--irdma_find_listener(struct irdma_cm_core *cm_core, u32 *dst_addr, u16 dst_port,
--		    u16 vlan_id, enum irdma_cm_listener_state listener_state)
-+irdma_find_listener(struct irdma_cm_core *cm_core, u32 *dst_addr, bool ipv4,
-+		    u16 dst_port, u16 vlan_id,
-+		    enum irdma_cm_listener_state listener_state)
- {
- 	struct irdma_cm_listener *listen_node;
- 	static const u32 ip_zero[4] = { 0, 0, 0, 0 };
-@@ -1477,7 +1479,7 @@ irdma_find_listener(struct irdma_cm_core *cm_core, u32 *dst_addr, u16 dst_port,
- 	list_for_each_entry (listen_node, &cm_core->listen_list, list) {
- 		memcpy(listen_addr, listen_node->loc_addr, sizeof(listen_addr));
- 		listen_port = listen_node->loc_port;
--		if (listen_port != dst_port ||
-+		if (listen_node->ipv4 != ipv4 || listen_port != dst_port ||
- 		    !(listener_state & listen_node->listener_state))
- 			continue;
- 		/* compare node pair, return node handle if a match */
-@@ -2902,9 +2904,10 @@ irdma_make_listen_node(struct irdma_cm_core *cm_core,
- 	unsigned long flags;
- 
- 	/* cannot have multiple matching listeners */
--	listener = irdma_find_listener(cm_core, cm_info->loc_addr,
--				       cm_info->loc_port, cm_info->vlan_id,
--				       IRDMA_CM_LISTENER_EITHER_STATE);
-+	listener =
-+		irdma_find_listener(cm_core, cm_info->loc_addr, cm_info->ipv4,
-+				    cm_info->loc_port, cm_info->vlan_id,
-+				    IRDMA_CM_LISTENER_EITHER_STATE);
- 	if (listener &&
- 	    listener->listener_state == IRDMA_CM_LISTENER_ACTIVE_STATE) {
- 		refcount_dec(&listener->refcnt);
-@@ -3153,6 +3156,7 @@ void irdma_receive_ilq(struct irdma_sc_vsi *vsi, struct irdma_puda_buf *rbuf)
- 
- 		listener = irdma_find_listener(cm_core,
- 					       cm_info.loc_addr,
-+					       cm_info.ipv4,
- 					       cm_info.loc_port,
- 					       cm_info.vlan_id,
- 					       IRDMA_CM_LISTENER_ACTIVE_STATE);
--- 
-2.39.2
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6960,6 +6960,8 @@ enum {
+ 	ALC269_FIXUP_DELL_M101Z,
+ 	ALC269_FIXUP_SKU_IGNORE,
+ 	ALC269_FIXUP_ASUS_G73JW,
++	ALC269_FIXUP_ASUS_N7601ZM_PINS,
++	ALC269_FIXUP_ASUS_N7601ZM,
+ 	ALC269_FIXUP_LENOVO_EAPD,
+ 	ALC275_FIXUP_SONY_HWEQ,
+ 	ALC275_FIXUP_SONY_DISABLE_AAMIX,
+@@ -7256,6 +7258,29 @@ static const struct hda_fixup alc269_fix
+ 			{ }
+ 		}
+ 	},
++	[ALC269_FIXUP_ASUS_N7601ZM_PINS] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x19, 0x03A11050 },
++			{ 0x1a, 0x03A11C30 },
++			{ 0x21, 0x03211420 },
++			{ }
++		}
++	},
++	[ALC269_FIXUP_ASUS_N7601ZM] = {
++		.type = HDA_FIXUP_VERBS,
++		.v.verbs = (const struct hda_verb[]) {
++			{0x20, AC_VERB_SET_COEF_INDEX, 0x62},
++			{0x20, AC_VERB_SET_PROC_COEF, 0xa007},
++			{0x20, AC_VERB_SET_COEF_INDEX, 0x10},
++			{0x20, AC_VERB_SET_PROC_COEF, 0x8420},
++			{0x20, AC_VERB_SET_COEF_INDEX, 0x0f},
++			{0x20, AC_VERB_SET_PROC_COEF, 0x7774},
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC269_FIXUP_ASUS_N7601ZM_PINS,
++	},
+ 	[ALC269_FIXUP_LENOVO_EAPD] = {
+ 		.type = HDA_FIXUP_VERBS,
+ 		.v.verbs = (const struct hda_verb[]) {
+@@ -9465,6 +9490,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1043, 0x1271, "ASUS X430UN", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1290, "ASUS X441SA", ALC233_FIXUP_EAPD_COEF_AND_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x12a0, "ASUS X441UV", ALC233_FIXUP_EAPD_COEF_AND_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1043, 0x12a3, "Asus N7691ZM", ALC269_FIXUP_ASUS_N7601ZM),
+ 	SND_PCI_QUIRK(0x1043, 0x12af, "ASUS UX582ZS", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x12e0, "ASUS X541SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x12f0, "ASUS X541UV", ALC256_FIXUP_ASUS_MIC),
 
 
