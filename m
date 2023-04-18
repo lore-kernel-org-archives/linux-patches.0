@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F56A2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:47:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02532C433EF;
-	Tue, 18 Apr 2023 12:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DDA2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:47:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E38C433EF;
+	Tue, 18 Apr 2023 12:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822056;
-	bh=Bq7eLeDQuN5P523DdTnmowlXWXxJCDwZljSS5hG+XSA=;
+	s=korg; t=1681822058;
+	bh=Z23qsYjkjswYzo5W5QPfgQVqz+dhqviBg/SnuMzJerY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDwblORUrymz6bZOva8iNX8a98trO76yMMswPaNdqfbGKLML39gKmwtDCrGimysKh
-	 6EPtAhZ0eq3HnBy41yHzeK0WNXk+IWbkF9+a1yqtQs9R20IOtThUrNpeJMBBYnq4t9
-	 qKtfs/c27Wq4H9QpcaS30akKO9U3xYoqmmjZx7bs=
+	b=C+KUld/QRtO5aU0/tFyYX7l6e5NTqAmjyism0hy6idqbXvTqzTVrAPvPkIMzcUA0+
+	 faTQyGc5BwGty3lb84tRI54olbfgurshqNdamTzMOevagR3Lh2w/kNa6chWPDoVDIO
+	 yRCFLfNkaWKhpFUYqUccIDoPeGLsy651TbGtST2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatio Zhang <Hongkun.Zhang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 115/134] drm/amd/pm: correct SMU13.0.7 max shader clock reporting
-Date: Tue, 18 Apr 2023 14:22:51 +0200
-Message-Id: <20230418120317.201473765@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 116/134] mptcp: use mptcp_schedule_work instead of open-coding it
+Date: Tue, 18 Apr 2023 14:22:52 +0200
+Message-Id: <20230418120317.231573951@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,105 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Horatio Zhang <Hongkun.Zhang@amd.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 85e0689eb6b10cd3b2fb455d1b3f4d4d0b13ff78 upstream.
+commit a5cb752b125766524c921faab1a45cc96065b0a7 upstream.
 
-Correct the max shader clock reporting on SMU
-13.0.7.
+Beyond reducing code duplication this also avoids scheduling
+the mptcp_worker on a closed socket on some edge scenarios.
 
-Signed-off-by: Horatio Zhang <Hongkun.Zhang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+The addressed issue is actually older than the blamed commit
+below, but this fix needs it as a pre-requisite.
+
+Fixes: ba8f48f7a4d7 ("mptcp: introduce mptcp_schedule_work")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |   61 ++++++++++++++++++-
- 1 file changed, 60 insertions(+), 1 deletion(-)
+ net/mptcp/options.c |    5 ++---
+ net/mptcp/subflow.c |   18 ++++++------------
+ 2 files changed, 8 insertions(+), 15 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -575,6 +575,14 @@ static int smu_v13_0_7_set_default_dpm_t
- 						     dpm_table);
- 		if (ret)
- 			return ret;
-+
-+		if (skutable->DriverReportedClocks.GameClockAc &&
-+			(dpm_table->dpm_levels[dpm_table->count - 1].value >
-+			skutable->DriverReportedClocks.GameClockAc)) {
-+			dpm_table->dpm_levels[dpm_table->count - 1].value =
-+				skutable->DriverReportedClocks.GameClockAc;
-+			dpm_table->max = skutable->DriverReportedClocks.GameClockAc;
-+		}
- 	} else {
- 		dpm_table->count = 1;
- 		dpm_table->dpm_levels[0].value = smu->smu_table.boot_values.gfxclk / 100;
-@@ -828,6 +836,57 @@ static int smu_v13_0_7_get_smu_metrics_d
- 	return ret;
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -1183,9 +1183,8 @@ bool mptcp_incoming_options(struct sock
+ 	 */
+ 	if (TCP_SKB_CB(skb)->seq == TCP_SKB_CB(skb)->end_seq) {
+ 		if (mp_opt.data_fin && mp_opt.data_len == 1 &&
+-		    mptcp_update_rcv_data_fin(msk, mp_opt.data_seq, mp_opt.dsn64) &&
+-		    schedule_work(&msk->work))
+-			sock_hold(subflow->conn);
++		    mptcp_update_rcv_data_fin(msk, mp_opt.data_seq, mp_opt.dsn64))
++			mptcp_schedule_work((struct sock *)msk);
+ 
+ 		return true;
+ 	}
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -366,9 +366,8 @@ void mptcp_subflow_reset(struct sock *ss
+ 
+ 	tcp_send_active_reset(ssk, GFP_ATOMIC);
+ 	tcp_done(ssk);
+-	if (!test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &mptcp_sk(sk)->flags) &&
+-	    schedule_work(&mptcp_sk(sk)->work))
+-		return; /* worker will put sk for us */
++	if (!test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &mptcp_sk(sk)->flags))
++		mptcp_schedule_work(sk);
+ 
+ 	sock_put(sk);
+ }
+@@ -1054,8 +1053,8 @@ static enum mapping_status get_mapping_s
+ 				skb_ext_del(skb, SKB_EXT_MPTCP);
+ 				return MAPPING_OK;
+ 			} else {
+-				if (updated && schedule_work(&msk->work))
+-					sock_hold((struct sock *)msk);
++				if (updated)
++					mptcp_schedule_work((struct sock *)msk);
+ 
+ 				return MAPPING_DATA_FIN;
+ 			}
+@@ -1158,17 +1157,12 @@ static void mptcp_subflow_discard_data(s
+ /* sched mptcp worker to remove the subflow if no more data is pending */
+ static void subflow_sched_work_if_closed(struct mptcp_sock *msk, struct sock *ssk)
+ {
+-	struct sock *sk = (struct sock *)msk;
+-
+ 	if (likely(ssk->sk_state != TCP_CLOSE))
+ 		return;
+ 
+ 	if (skb_queue_empty(&ssk->sk_receive_queue) &&
+-	    !test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &msk->flags)) {
+-		sock_hold(sk);
+-		if (!schedule_work(&msk->work))
+-			sock_put(sk);
+-	}
++	    !test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &msk->flags))
++		mptcp_schedule_work((struct sock *)msk);
  }
  
-+static int smu_v13_0_7_get_dpm_ultimate_freq(struct smu_context *smu,
-+					     enum smu_clk_type clk_type,
-+					     uint32_t *min,
-+					     uint32_t *max)
-+{
-+	struct smu_13_0_dpm_context *dpm_context =
-+		smu->smu_dpm.dpm_context;
-+	struct smu_13_0_dpm_table *dpm_table;
-+
-+	switch (clk_type) {
-+	case SMU_MCLK:
-+	case SMU_UCLK:
-+		/* uclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.uclk_table;
-+		break;
-+	case SMU_GFXCLK:
-+	case SMU_SCLK:
-+		/* gfxclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.gfx_table;
-+		break;
-+	case SMU_SOCCLK:
-+		/* socclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.soc_table;
-+		break;
-+	case SMU_FCLK:
-+		/* fclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.fclk_table;
-+		break;
-+	case SMU_VCLK:
-+	case SMU_VCLK1:
-+		/* vclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.vclk_table;
-+		break;
-+	case SMU_DCLK:
-+	case SMU_DCLK1:
-+		/* dclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.dclk_table;
-+		break;
-+	default:
-+		dev_err(smu->adev->dev, "Unsupported clock type!\n");
-+		return -EINVAL;
-+	}
-+
-+	if (min)
-+		*min = dpm_table->min;
-+	if (max)
-+		*max = dpm_table->max;
-+
-+	return 0;
-+}
-+
- static int smu_v13_0_7_read_sensor(struct smu_context *smu,
- 				   enum amd_pp_sensors sensor,
- 				   void *data,
-@@ -1683,7 +1742,7 @@ static const struct pptable_funcs smu_v1
- 	.dpm_set_jpeg_enable = smu_v13_0_set_jpeg_enable,
- 	.init_pptable_microcode = smu_v13_0_init_pptable_microcode,
- 	.populate_umd_state_clk = smu_v13_0_7_populate_umd_state_clk,
--	.get_dpm_ultimate_freq = smu_v13_0_get_dpm_ultimate_freq,
-+	.get_dpm_ultimate_freq = smu_v13_0_7_get_dpm_ultimate_freq,
- 	.get_vbios_bootup_values = smu_v13_0_get_vbios_bootup_values,
- 	.read_sensor = smu_v13_0_7_read_sensor,
- 	.feature_is_enabled = smu_cmn_feature_is_enabled,
+ static bool subflow_can_fallback(struct mptcp_subflow_context *subflow)
 
 
