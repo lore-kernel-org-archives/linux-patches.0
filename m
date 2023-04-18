@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C1A2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72575C433D2;
-	Tue, 18 Apr 2023 12:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE322566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F2FC433EF;
+	Tue, 18 Apr 2023 12:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821332;
-	bh=0DnOj0yNGi/+TuI5y2F+ejDKKGNLZGMiSwRPOZsCzrQ=;
+	s=korg; t=1681821335;
+	bh=w+eQeY8xWmJH+xm58zvXHBkiJC8aAfsMU8f1VaxE4AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwU87FHoE133iJqG0KcQbXSyrUdgD6TqE7u4/t/30w7rTafNf+fK2HkVwbLtWdDh+
-	 gR3ZMrymTMZyyv2Uy13PI6/3hpyMdgpMh2FyOMkhgoHHtI22EAvsmOpwadHQtdo3uZ
-	 d+IYyadTfRXtIuDGNVaE7ts6RsX4lV05gAOIu2QM=
+	b=14WaAfSwfe/9J+iiWATlgau4qqjK46ndLHfyQzFntAZRYj6pEdkNAOPbFFdeVLy2a
+	 K313uV/GOMznmNlqWByPIV9G5bmc1VGqWrMGFuRVkJJ1sTnij4l+Gx+eIyxPt+nwIT
+	 awGnbwsq+GB6WKK3lJxCasg/jmsvcayjawPDuUeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Min Li <lm0963hack@gmail.com>
-Subject: [PATCH 5.10 059/124] Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}
-Date: Tue, 18 Apr 2023 14:21:18 +0200
-Message-Id: <20230418120311.989760613@linuxfoundation.org>
+	Grant Grundler <grundler@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 086/124] power: supply: cros_usbpd: reclassify "default case!" as debug
+Date: Tue, 18 Apr 2023 14:21:45 +0200
+Message-Id: <20230418120312.992646197@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,97 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Grant Grundler <grundler@chromium.org>
 
-commit a2a9339e1c9deb7e1e079e12e27a0265aea8421a upstream.
+[ Upstream commit 14c76b2e75bca4d96e2b85a0c12aa43e84fe3f74 ]
 
-Similar to commit d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free
-caused by l2cap_chan_put"), just use l2cap_chan_hold_unless_zero to
-prevent referencing a channel that is about to be destroyed.
+This doesn't need to be printed every second as an error:
+...
+<3>[17438.628385] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
+<3>[17439.634176] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
+<3>[17440.640298] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
+...
 
-Cc: stable@kernel.org
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reduce priority from ERROR to DEBUG.
+
+Signed-off-by: Grant Grundler <grundler@chromium.org>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c |   24 ++++++------------------
- 1 file changed, 6 insertions(+), 18 deletions(-)
+ drivers/power/supply/cros_usbpd-charger.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4647,33 +4647,27 @@ static inline int l2cap_disconnect_req(s
- 
- 	BT_DBG("scid 0x%4.4x dcid 0x%4.4x", scid, dcid);
- 
--	mutex_lock(&conn->chan_lock);
--
--	chan = __l2cap_get_chan_by_scid(conn, dcid);
-+	chan = l2cap_get_chan_by_scid(conn, dcid);
- 	if (!chan) {
--		mutex_unlock(&conn->chan_lock);
- 		cmd_reject_invalid_cid(conn, cmd->ident, dcid, scid);
- 		return 0;
+diff --git a/drivers/power/supply/cros_usbpd-charger.c b/drivers/power/supply/cros_usbpd-charger.c
+index d89e08efd2ad0..0a4f02e4ae7ba 100644
+--- a/drivers/power/supply/cros_usbpd-charger.c
++++ b/drivers/power/supply/cros_usbpd-charger.c
+@@ -276,7 +276,7 @@ static int cros_usbpd_charger_get_power_info(struct port_data *port)
+ 		port->psy_current_max = 0;
+ 		break;
+ 	default:
+-		dev_err(dev, "Port %d: default case!\n", port->port_number);
++		dev_dbg(dev, "Port %d: default case!\n", port->port_number);
+ 		port->psy_usb_type = POWER_SUPPLY_USB_TYPE_SDP;
  	}
  
--	l2cap_chan_hold(chan);
--	l2cap_chan_lock(chan);
--
- 	rsp.dcid = cpu_to_le16(chan->scid);
- 	rsp.scid = cpu_to_le16(chan->dcid);
- 	l2cap_send_cmd(conn, cmd->ident, L2CAP_DISCONN_RSP, sizeof(rsp), &rsp);
- 
- 	chan->ops->set_shutdown(chan);
- 
-+	mutex_lock(&conn->chan_lock);
- 	l2cap_chan_del(chan, ECONNRESET);
-+	mutex_unlock(&conn->chan_lock);
- 
- 	chan->ops->close(chan);
- 
- 	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
- 
--	mutex_unlock(&conn->chan_lock);
--
- 	return 0;
- }
- 
-@@ -4693,33 +4687,27 @@ static inline int l2cap_disconnect_rsp(s
- 
- 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x", dcid, scid);
- 
--	mutex_lock(&conn->chan_lock);
--
--	chan = __l2cap_get_chan_by_scid(conn, scid);
-+	chan = l2cap_get_chan_by_scid(conn, scid);
- 	if (!chan) {
- 		mutex_unlock(&conn->chan_lock);
- 		return 0;
- 	}
- 
--	l2cap_chan_hold(chan);
--	l2cap_chan_lock(chan);
--
- 	if (chan->state != BT_DISCONN) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
--		mutex_unlock(&conn->chan_lock);
- 		return 0;
- 	}
- 
-+	mutex_lock(&conn->chan_lock);
- 	l2cap_chan_del(chan, 0);
-+	mutex_unlock(&conn->chan_lock);
- 
- 	chan->ops->close(chan);
- 
- 	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
- 
--	mutex_unlock(&conn->chan_lock);
--
- 	return 0;
- }
- 
+-- 
+2.39.2
+
 
 
