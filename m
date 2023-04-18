@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274A12566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F5DC433D2;
-	Tue, 18 Apr 2023 12:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDA52566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B5EC433D2;
+	Tue, 18 Apr 2023 12:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820794;
-	bh=Ys3OuZ4JtmAeZJTaOuI3LluCDz3hvhlfGj6ux60KLuM=;
+	s=korg; t=1681820796;
+	bh=doowgFivflW0L+cXwPIZz4lx1IisSdGBiFOXO3tkNgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z4tbRXGS+d6S2CP4KiLwNEOqniUvsbix5B/g59T73U9NTQneJOWdukH1ehK4HnKVy
-	 7/ssDwxICHb1722P6/XtJPcZZfQ92a5uHq4s2oiFbGTXEiEd/WrVJ8raczYQ/VSc1+
-	 TI2ZJGScNKWVGBOk9XqyEotZ4NUwWkRUIBXYMBGU=
+	b=iHmchWuQBad/fxifM+LpUcmjX+3uVeAcfGTX0A2GSVJwuETJncOXeLUXGjKbUsSDX
+	 4WxUezHV4zG3jtslzQ5UcDUN8UaUqBlFJGuL4gphox4wF4zQ21+KzK9rBsBjVY5udH
+	 AnnkoKJNoBaKEhMwnzO9EvK+eaG+ccZvxwruUCOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 06/57] NFSv4: Check the return value of update_open_stateid()
-Date: Tue, 18 Apr 2023 14:21:06 +0200
-Message-Id: <20230418120258.941556756@linuxfoundation.org>
+	stable@kernel.org,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Min Li <lm0963hack@gmail.com>
+Subject: [PATCH 4.19 33/57] Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}
+Date: Tue, 18 Apr 2023 14:21:33 +0200
+Message-Id: <20230418120259.902666043@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -34,55 +35,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit e3c8dc761ead061da2220ee8f8132f729ac3ddfe ]
+commit a2a9339e1c9deb7e1e079e12e27a0265aea8421a upstream.
 
-Ensure that we always check the return value of update_open_stateid()
-so that we can retry if the update of local state failed. This fixes
-infinite looping on state recovery.
+Similar to commit d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free
+caused by l2cap_chan_put"), just use l2cap_chan_hold_unless_zero to
+prevent referencing a channel that is about to be destroyed.
 
-Fixes: e23008ec81ef3 ("NFSv4 reduce attribute requests for open reclaim")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Cc: stable@vger.kernel.org # v3.7+
-Stable-dep-of: 6165a16a5ad9 ("NFSv4: Fix hangs when recovering open state after a server reboot")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Min Li <lm0963hack@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4proc.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/bluetooth/l2cap_core.c |   24 ++++++------------------
+ 1 file changed, 6 insertions(+), 18 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 4f8775d9d0f06..70150894ed77f 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -1862,8 +1862,9 @@ _nfs4_opendata_reclaim_to_nfs4_state(struct nfs4_opendata *data)
- 	if (data->o_res.delegation_type != 0)
- 		nfs4_opendata_check_deleg(data, state);
- update:
--	update_open_stateid(state, &data->o_res.stateid, NULL,
--			    data->o_arg.fmode);
-+	if (!update_open_stateid(state, &data->o_res.stateid,
-+				NULL, data->o_arg.fmode))
-+		return ERR_PTR(-EAGAIN);
- 	refcount_inc(&state->count);
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4350,33 +4350,27 @@ static inline int l2cap_disconnect_req(s
  
- 	return state;
-@@ -1928,8 +1929,11 @@ _nfs4_opendata_to_nfs4_state(struct nfs4_opendata *data)
+ 	BT_DBG("scid 0x%4.4x dcid 0x%4.4x", scid, dcid);
  
- 	if (data->o_res.delegation_type != 0)
- 		nfs4_opendata_check_deleg(data, state);
--	update_open_stateid(state, &data->o_res.stateid, NULL,
--			data->o_arg.fmode);
-+	if (!update_open_stateid(state, &data->o_res.stateid,
-+				NULL, data->o_arg.fmode)) {
-+		nfs4_put_open_state(state);
-+		state = ERR_PTR(-EAGAIN);
-+	}
- out:
- 	nfs_release_seqid(data->o_arg.seqid);
- 	return state;
--- 
-2.39.2
-
+-	mutex_lock(&conn->chan_lock);
+-
+-	chan = __l2cap_get_chan_by_scid(conn, dcid);
++	chan = l2cap_get_chan_by_scid(conn, dcid);
+ 	if (!chan) {
+-		mutex_unlock(&conn->chan_lock);
+ 		cmd_reject_invalid_cid(conn, cmd->ident, dcid, scid);
+ 		return 0;
+ 	}
+ 
+-	l2cap_chan_hold(chan);
+-	l2cap_chan_lock(chan);
+-
+ 	rsp.dcid = cpu_to_le16(chan->scid);
+ 	rsp.scid = cpu_to_le16(chan->dcid);
+ 	l2cap_send_cmd(conn, cmd->ident, L2CAP_DISCONN_RSP, sizeof(rsp), &rsp);
+ 
+ 	chan->ops->set_shutdown(chan);
+ 
++	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_del(chan, ECONNRESET);
++	mutex_unlock(&conn->chan_lock);
+ 
+ 	chan->ops->close(chan);
+ 
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return 0;
+ }
+ 
+@@ -4396,33 +4390,27 @@ static inline int l2cap_disconnect_rsp(s
+ 
+ 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x", dcid, scid);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+-	chan = __l2cap_get_chan_by_scid(conn, scid);
++	chan = l2cap_get_chan_by_scid(conn, scid);
+ 	if (!chan) {
+ 		mutex_unlock(&conn->chan_lock);
+ 		return 0;
+ 	}
+ 
+-	l2cap_chan_hold(chan);
+-	l2cap_chan_lock(chan);
+-
+ 	if (chan->state != BT_DISCONN) {
+ 		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+-		mutex_unlock(&conn->chan_lock);
+ 		return 0;
+ 	}
+ 
++	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_del(chan, 0);
++	mutex_unlock(&conn->chan_lock);
+ 
+ 	chan->ops->close(chan);
+ 
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return 0;
+ }
+ 
 
 
