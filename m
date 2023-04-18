@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6313D2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D268BC433D2;
-	Tue, 18 Apr 2023 12:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DD32566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2459C4339B;
+	Tue, 18 Apr 2023 12:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821206;
-	bh=hdBRzJ09ojHdhzBgNZGolVrkfb0OKPCv4xaYzsyE4LY=;
+	s=korg; t=1681821209;
+	bh=4lD04OAjI3ZG8K6M4vFAQ14rVCyn7UTx7mUU/WP1TE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VrKxv8G5vJMYPWJTT8QGADYTqkUO6NNwKxclOkMFag0Wx7HliY0q4GXqHZM1akGzW
-	 SQiQGd7Xhj29id3ixdlLwJBz36NuQ6XbZ9Jhnon6hKSBrdTDg9qCVH8IJNQTLmqruR
-	 ofTst69cQYBrN3qoM0nvrSuWneEyzgo1/oEIIw9s=
+	b=NPLgtDzTP9BUMBXoJRieAemOj9HTpp0ZjYgCXPwdaU2SZd1WYL//WgMBCB3vfcMw6
+	 P1DK3TGGi9DRLZoEiN2YWdNK6vLfJgY8HjUsuEN6AT9bWFc+HG5PdGsArpSVEBVm78
+	 vPuGu3ClWmmjEYqcBauQChbuQMpaCD5JRT/kYDEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	mark.rutland@arm.com,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 039/124] ftrace: Fix issue that direct->addr not restored in modify_ftrace_direct()
-Date: Tue, 18 Apr 2023 14:20:58 +0200
-Message-Id: <20230418120311.242391812@linuxfoundation.org>
+	Shuangpeng Bai <sjb7183@psu.edu>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.10 040/124] can: j1939: j1939_tp_tx_dat_new(): fix out-of-bounds memory access
+Date: Tue, 18 Apr 2023 14:20:59 +0200
+Message-Id: <20230418120311.288989764@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -38,56 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 2a2d8c51defb446e8d89a83f42f8e5cd529111e9 upstream.
+commit b45193cb4df556fe6251b285a5ce44046dd36b4a upstream.
 
-Syzkaller report a WARNING: "WARN_ON(!direct)" in modify_ftrace_direct().
+In the j1939_tp_tx_dat_new() function, an out-of-bounds memory access
+could occur during the memcpy() operation if the size of skb->cb is
+larger than the size of struct j1939_sk_buff_cb. This is because the
+memcpy() operation uses the size of skb->cb, leading to a read beyond
+the struct j1939_sk_buff_cb.
 
-Root cause is 'direct->addr' was changed from 'old_addr' to 'new_addr' but
-not restored if error happened on calling ftrace_modify_direct_caller().
-Then it can no longer find 'direct' by that 'old_addr'.
+Updated the memcpy() operation to use the size of struct
+j1939_sk_buff_cb instead of the size of skb->cb. This ensures that the
+memcpy() operation only reads the memory within the bounds of struct
+j1939_sk_buff_cb, preventing out-of-bounds memory access.
 
-To fix it, restore 'direct->addr' to 'old_addr' explicitly in error path.
+Additionally, add a BUILD_BUG_ON() to check that the size of skb->cb
+is greater than or equal to the size of struct j1939_sk_buff_cb. This
+ensures that the skb->cb buffer is large enough to hold the
+j1939_sk_buff_cb structure.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230330025223.1046087-1-zhengyejian1@huawei.com
-
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Reported-by: Shuangpeng Bai <sjb7183@psu.edu>
+Tested-by: Shuangpeng Bai <sjb7183@psu.edu>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://groups.google.com/g/syzkaller/c/G_LL-C3plRs/m/-8xCi6dCAgAJ
+Link: https://lore.kernel.org/all/20230404073128.3173900-1-o.rempel@pengutronix.de
 Cc: stable@vger.kernel.org
-Cc: <mhiramat@kernel.org>
-Cc: <mark.rutland@arm.com>
-Cc: <ast@kernel.org>
-Cc: <daniel@iogearbox.net>
-Fixes: 8a141dd7f706 ("ftrace: Fix modify_ftrace_direct.")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[mkl: rephrase commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/can/j1939/transport.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -5390,12 +5390,15 @@ int modify_ftrace_direct(unsigned long i
- 		ret = 0;
- 	}
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -600,7 +600,10 @@ sk_buff *j1939_tp_tx_dat_new(struct j193
+ 	/* reserve CAN header */
+ 	skb_reserve(skb, offsetof(struct can_frame, data));
  
--	if (unlikely(ret && new_direct)) {
--		direct->count++;
--		list_del_rcu(&new_direct->next);
--		synchronize_rcu_tasks();
--		kfree(new_direct);
--		ftrace_direct_func_count--;
-+	if (ret) {
-+		direct->addr = old_addr;
-+		if (unlikely(new_direct)) {
-+			direct->count++;
-+			list_del_rcu(&new_direct->next);
-+			synchronize_rcu_tasks();
-+			kfree(new_direct);
-+			ftrace_direct_func_count--;
-+		}
- 	}
- 
-  out_unlock:
+-	memcpy(skb->cb, re_skcb, sizeof(skb->cb));
++	/* skb->cb must be large enough to hold a j1939_sk_buff_cb structure */
++	BUILD_BUG_ON(sizeof(skb->cb) < sizeof(*re_skcb));
++
++	memcpy(skb->cb, re_skcb, sizeof(*re_skcb));
+ 	skcb = j1939_skb_to_cb(skb);
+ 	if (swap_src_dst)
+ 		j1939_skbcb_swap(skcb);
 
 
