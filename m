@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB5A2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7A2C433D2;
-	Tue, 18 Apr 2023 12:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4952566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54002C433D2;
+	Tue, 18 Apr 2023 12:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821225;
-	bh=FuiqKjpWXyC67+hoP/2yhwlMpiu9wP6ougeSfop/jco=;
+	s=korg; t=1681821227;
+	bh=mytzdm4raV5g1S4qsTv20GNNKNMUGAPwcGA0DW/lXTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRgu1o8PoLI+QZPeOKvZo9kjBEVrXZs9QL9w26zLTq1Frqo4u9/Ns3wFhrGyw801E
-	 a6DR8yHrgdVJpdRGnGrAlAXttJR1wvCtSkz3G6idXxZVI089Klsh6eHOxLe7VBwH9G
-	 uQJWGYa6I6vPnVe7a2+s4BOUOQiuSLeeDYnXw6ds=
+	b=opkHEvR1bXM2cpsZWn+FHAjF2ruSLyi5F3ivp108ewNWaOcr9oL0UEwqrBYKWerZ5
+	 vI/MS9Jm6vEi8V3issrWsahtHK5ed8urATgtt0MhOkrhahlBnJWjC/pQH2gc5P3bU5
+	 oVGoSbq3oNeM8vrsVbBc1GtcI2UBQMRH6oxF7GB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Herbst <kherbst@redhat.com>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 5.10 045/124] drm/nouveau/disp: Support more modes by checking with lower bpc
-Date: Tue, 18 Apr 2023 14:21:04 +0200
-Message-Id: <20230418120311.465243036@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>
+Subject: [PATCH 5.10 046/124] ring-buffer: Fix race while reader and writer are on the same page
+Date: Tue, 18 Apr 2023 14:21:05 +0200
+Message-Id: <20230418120311.505997629@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -34,96 +34,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karol Herbst <kherbst@redhat.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 7f67aa097e875c87fba024e850cf405342300059 upstream.
+commit 6455b6163d8c680366663cdb8c679514d55fc30c upstream.
 
-This allows us to advertise more modes especially on HDR displays.
+When user reads file 'trace_pipe', kernel keeps printing following logs
+that warn at "cpu_buffer->reader_page->read > rb_page_size(reader)" in
+rb_get_reader_page(). It just looks like there's an infinite loop in
+tracing_read_pipe(). This problem occurs several times on arm64 platform
+when testing v5.10 and below.
 
-Fixes using 4K@60 modes on my TV and main display both using a HDMI to DP
-adapter. Also fixes similar issues for users running into this.
+  Call trace:
+   rb_get_reader_page+0x248/0x1300
+   rb_buffer_peek+0x34/0x160
+   ring_buffer_peek+0xbc/0x224
+   peek_next_entry+0x98/0xbc
+   __find_next_entry+0xc4/0x1c0
+   trace_find_next_entry_inc+0x30/0x94
+   tracing_read_pipe+0x198/0x304
+   vfs_read+0xb4/0x1e0
+   ksys_read+0x74/0x100
+   __arm64_sys_read+0x24/0x30
+   el0_svc_common.constprop.0+0x7c/0x1bc
+   do_el0_svc+0x2c/0x94
+   el0_svc+0x20/0x30
+   el0_sync_handler+0xb0/0xb4
+   el0_sync+0x160/0x180
 
-Cc: stable@vger.kernel.org # 5.10+
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230330223938.4025569-1-kherbst@redhat.com
+Then I dump the vmcore and look into the problematic per_cpu ring_buffer,
+I found that tail_page/commit_page/reader_page are on the same page while
+reader_page->read is obviously abnormal:
+  tail_page == commit_page == reader_page == {
+    .write = 0x100d20,
+    .read = 0x8f9f4805,  // Far greater than 0xd20, obviously abnormal!!!
+    .entries = 0x10004c,
+    .real_end = 0x0,
+    .page = {
+      .time_stamp = 0x857257416af0,
+      .commit = 0xd20,  // This page hasn't been full filled.
+      // .data[0...0xd20] seems normal.
+    }
+ }
+
+The root cause is most likely the race that reader and writer are on the
+same page while reader saw an event that not fully committed by writer.
+
+To fix this, add memory barriers to make sure the reader can see the
+content of what is committed. Since commit a0fcaaed0c46 ("ring-buffer: Fix
+race between reset page and reading page") has added the read barrier in
+rb_get_reader_page(), here we just need to add the write barrier.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230325021247.2923907-1-zhengyejian1@huawei.com
+
+Cc: stable@vger.kernel.org
+Fixes: 77ae365eca89 ("ring-buffer: make lockless")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/dispnv50/disp.c |   32 ++++++++++++++++++++++++++++++++
- drivers/gpu/drm/nouveau/nouveau_dp.c    |    8 +++++---
- 2 files changed, 37 insertions(+), 3 deletions(-)
+ kernel/trace/ring_buffer.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-@@ -396,6 +396,35 @@ nv50_outp_atomic_check_view(struct drm_e
- 	return 0;
- }
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2962,6 +2962,10 @@ rb_set_commit_to_write(struct ring_buffe
+ 		if (RB_WARN_ON(cpu_buffer,
+ 			       rb_is_reader_page(cpu_buffer->tail_page)))
+ 			return;
++		/*
++		 * No need for a memory barrier here, as the update
++		 * of the tail_page did it for this page.
++		 */
+ 		local_set(&cpu_buffer->commit_page->page->commit,
+ 			  rb_page_write(cpu_buffer->commit_page));
+ 		rb_inc_page(cpu_buffer, &cpu_buffer->commit_page);
+@@ -2971,6 +2975,8 @@ rb_set_commit_to_write(struct ring_buffe
+ 	while (rb_commit_index(cpu_buffer) !=
+ 	       rb_page_write(cpu_buffer->commit_page)) {
  
-+static void
-+nv50_outp_atomic_fix_depth(struct drm_encoder *encoder, struct drm_crtc_state *crtc_state)
-+{
-+	struct nv50_head_atom *asyh = nv50_head_atom(crtc_state);
-+	struct nouveau_encoder *nv_encoder = nouveau_encoder(encoder);
-+	struct drm_display_mode *mode = &asyh->state.adjusted_mode;
-+	unsigned int max_rate, mode_rate;
-+
-+	switch (nv_encoder->dcb->type) {
-+	case DCB_OUTPUT_DP:
-+		max_rate = nv_encoder->dp.link_nr * nv_encoder->dp.link_bw;
-+
-+		/* we don't support more than 10 anyway */
-+		asyh->or.bpc = min_t(u8, asyh->or.bpc, 10);
-+
-+		/* reduce the bpc until it works out */
-+		while (asyh->or.bpc > 6) {
-+			mode_rate = DIV_ROUND_UP(mode->clock * asyh->or.bpc * 3, 8);
-+			if (mode_rate <= max_rate)
-+				break;
-+
-+			asyh->or.bpc -= 2;
-+		}
-+		break;
-+	default:
-+		break;
-+	}
-+}
-+
- static int
- nv50_outp_atomic_check(struct drm_encoder *encoder,
- 		       struct drm_crtc_state *crtc_state,
-@@ -414,6 +443,9 @@ nv50_outp_atomic_check(struct drm_encode
- 	if (crtc_state->mode_changed || crtc_state->connectors_changed)
- 		asyh->or.bpc = connector->display_info.bpc;
++		/* Make sure the readers see the content of what is committed. */
++		smp_wmb();
+ 		local_set(&cpu_buffer->commit_page->page->commit,
+ 			  rb_page_write(cpu_buffer->commit_page));
+ 		RB_WARN_ON(cpu_buffer,
+@@ -4390,7 +4396,12 @@ rb_get_reader_page(struct ring_buffer_pe
  
-+	/* We might have to reduce the bpc */
-+	nv50_outp_atomic_fix_depth(encoder, crtc_state);
-+
- 	return 0;
- }
+ 	/*
+ 	 * Make sure we see any padding after the write update
+-	 * (see rb_reset_tail())
++	 * (see rb_reset_tail()).
++	 *
++	 * In addition, a writer may be writing on the reader page
++	 * if the page has not been fully filled, so the read barrier
++	 * is also needed to make sure we see the content of what is
++	 * committed by the writer (see rb_set_commit_to_write()).
+ 	 */
+ 	smp_rmb();
  
---- a/drivers/gpu/drm/nouveau/nouveau_dp.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_dp.c
-@@ -220,8 +220,6 @@ void nouveau_dp_irq(struct nouveau_drm *
- }
- 
- /* TODO:
-- * - Use the minimum possible BPC here, once we add support for the max bpc
-- *   property.
-  * - Validate against the DP caps advertised by the GPU (we don't check these
-  *   yet)
-  */
-@@ -233,7 +231,11 @@ nv50_dp_mode_valid(struct drm_connector
- {
- 	const unsigned int min_clock = 25000;
- 	unsigned int max_rate, mode_rate, ds_max_dotclock, clock = mode->clock;
--	const u8 bpp = connector->display_info.bpc * 3;
-+	/* Check with the minmum bpc always, so we can advertise better modes.
-+	 * In particlar not doing this causes modes to be dropped on HDR
-+	 * displays as we might check with a bpc of 16 even.
-+	 */
-+	const u8 bpp = 6 * 3;
- 
- 	if (mode->flags & DRM_MODE_FLAG_INTERLACE && !outp->caps.dp_interlace)
- 		return MODE_NO_INTERLACE;
 
 
