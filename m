@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C9F2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7694DC433EF;
-	Tue, 18 Apr 2023 12:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93612566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C62C433D2;
+	Tue, 18 Apr 2023 12:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821143;
-	bh=L9YzWPCOX6Tn37iacqmi5Bj9fqNMWIZIUte2ajJEPS0=;
+	s=korg; t=1681821145;
+	bh=d9nuNP5kEAoRRye1rk/4dX7muzbbp/uvS1B0wdP70N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9rPA31AhC9FEsPc93FAMXtVi3icdp/ZxLqeLKSKSZUbEjbjrt3lUN2+tGH56YTE1
-	 3y/3adEBAun7PkcU3wp/ukKrV6qFLKzcDAu6eBR7OaSFK5koawJSlXK7/SLxCjhrsN
-	 RaORVuK1D2OOVhb4zPFN4HpZULYf+5Db/+z59q34=
+	b=euLyumidZouzF3qbsm1sRmm1Bd/uW2XXoIeHb3FKGUV7l6s9I46dl3WgGYzivLEHD
+	 38ErHMBTSs1I77Jdmx/8FP18jaxpjEiEV0y5pC8yi3QnVWdtNKmufo1tWESWBVg48u
+	 e2h+y28hKT7cH2RW7ELn55mXLZe2phN0GxIOfW/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
+	Corinna Vinschen <vinschen@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/124] net: ethernet: ti: am65-cpsw: Fix mdio cleanup in probe
-Date: Tue, 18 Apr 2023 14:20:34 +0200
-Message-Id: <20230418120310.196071513@linuxfoundation.org>
+Subject: [PATCH 5.10 016/124] net: stmmac: fix up RX flow hash indirection table when setting channels
+Date: Tue, 18 Apr 2023 14:20:35 +0200
+Message-Id: <20230418120310.245730730@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -36,55 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Corinna Vinschen <vinschen@redhat.com>
 
-[ Upstream commit c6b486fb33680ad5a3a6390ce693c835caaae3f7 ]
+[ Upstream commit 218c597325f4faf7b7a6049233a30d7842b5b2dc ]
 
-In the am65_cpsw_nuss_probe() function's cleanup path, the call to
-of_platform_device_destroy() for the common->mdio_dev device is invoked
-unconditionally. It is possible that either the MDIO node is not present
-in the device-tree, or the MDIO node is disabled in the device-tree. In
-both these cases, the MDIO device is not created, resulting in a NULL
-pointer dereference when the of_platform_device_destroy() function is
-invoked on the common->mdio_dev device on the cleanup path.
+stmmac_reinit_queues() fails to fix up the RX hash.  Even if the number
+of channels gets restricted, the output of `ethtool -x' indicates that
+all RX queues are used:
 
-Fix this by ensuring that the common->mdio_dev device exists, before
-attempting to invoke of_platform_device_destroy().
+  $ ethtool -l enp0s29f2
+  Channel parameters for enp0s29f2:
+  Pre-set maximums:
+  RX:		8
+  TX:		8
+  Other:		n/a
+  Combined:	n/a
+  Current hardware settings:
+  RX:		8
+  TX:		8
+  Other:		n/a
+  Combined:	n/a
+  $ ethtool -x enp0s29f2
+  RX flow hash indirection table for enp0s29f2 with 8 RX ring(s):
+      0:      0     1     2     3     4     5     6     7
+      8:      0     1     2     3     4     5     6     7
+  [...]
+  $ ethtool -L enp0s29f2 rx 3
+  $ ethtool -x enp0s29f2
+  RX flow hash indirection table for enp0s29f2 with 3 RX ring(s):
+      0:      0     1     2     3     4     5     6     7
+      8:      0     1     2     3     4     5     6     7
+  [...]
 
-Fixes: a45cfcc69a25 ("net: ethernet: ti: am65-cpsw-nuss: use of_platform_device_create() for mdio")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20230403090321.835877-1-s-vadapalli@ti.com
+Fix this by setting the indirection table according to the number
+of specified queues.  The result is now as expected:
+
+  $ ethtool -L enp0s29f2 rx 3
+  $ ethtool -x enp0s29f2
+  RX flow hash indirection table for enp0s29f2 with 3 RX ring(s):
+      0:      0     1     2     0     1     2     0     1
+      8:      2     0     1     2     0     1     2     0
+  [...]
+
+Tested on Intel Elkhart Lake.
+
+Fixes: 0366f7e06a6b ("net: stmmac: add ethtool support for get/set channels")
+Signed-off-by: Corinna Vinschen <vinschen@redhat.com>
+Link: https://lore.kernel.org/r/20230403121120.489138-1-vinschen@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 4074310abcff4..e4af1f506b833 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -2153,7 +2153,8 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 04c59102a2863..de66406c50572 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4940,7 +4940,7 @@ static void stmmac_napi_del(struct net_device *dev)
+ int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
+ {
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+-	int ret = 0;
++	int ret = 0, i;
  
- err_of_clear:
--	of_platform_device_destroy(common->mdio_dev, NULL);
-+	if (common->mdio_dev)
-+		of_platform_device_destroy(common->mdio_dev, NULL);
- err_pm_clear:
- 	pm_runtime_put_sync(dev);
- 	pm_runtime_disable(dev);
-@@ -2179,7 +2180,8 @@ static int am65_cpsw_nuss_remove(struct platform_device *pdev)
- 	 */
- 	am65_cpsw_nuss_cleanup_ndev(common);
+ 	if (netif_running(dev))
+ 		stmmac_release(dev);
+@@ -4949,6 +4949,10 @@ int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
  
--	of_platform_device_destroy(common->mdio_dev, NULL);
-+	if (common->mdio_dev)
-+		of_platform_device_destroy(common->mdio_dev, NULL);
+ 	priv->plat->rx_queues_to_use = rx_cnt;
+ 	priv->plat->tx_queues_to_use = tx_cnt;
++	if (!netif_is_rxfh_configured(dev))
++		for (i = 0; i < ARRAY_SIZE(priv->rss.table); i++)
++			priv->rss.table[i] = ethtool_rxfh_indir_default(i,
++									rx_cnt);
  
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+ 	stmmac_napi_add(dev);
+ 
 -- 
 2.39.2
 
