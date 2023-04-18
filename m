@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC562566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:28:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DD6C433EF;
-	Tue, 18 Apr 2023 12:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578872566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:28:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF74BC433EF;
+	Tue, 18 Apr 2023 12:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820926;
-	bh=1FNGvXZKJ/grg9RH+9AYoFkTUlsuj7fNAa6rpb5+/tw=;
+	s=korg; t=1681820929;
+	bh=NhsScW4y2Y9pkswRHZwszDvBFBlk2v4xUQOht6nyfu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2wyjb2fr9UkvWOzlIAwCbwwE1O16dmZePLdUpAJ5AdsCz+lXHWqhFj4u/N+iwIIV
-	 tuLfOY2DKxdHxSG1o+qspwK9v9mAHlY+x52GWujpWT31qXbclh7UBPIkG+V7ZSQ4gK
-	 Pxd2ewktZT63V4qFnNlEIHvXSBue0m7p1pE9Ii+0=
+	b=uf1uavm5JPZRXo3pZ82SveK/N1h16tPh5Q5oVB9DdmhqsFRuTDSuQRC+tN1WdViif
+	 7HE+km4t9m2M4HQSq0deCHhheOJi19R5SLivmheKwiPfbDJtDYbFNZ8cLYollocOVO
+	 5UOkC00ykqdmITR26yaKcEPWrFOqZpaFt7K/ekCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	David Lechner <david@lechnology.com>,
-	Stable@vger.kernel.org,
+	William Breathitt Gray <william.gray@linaro.org>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 25/92] iio: adc: ti-ads7950: Set `can_sleep` flag for GPIO chip
-Date: Tue, 18 Apr 2023 14:21:00 +0200
-Message-Id: <20230418120305.706813029@linuxfoundation.org>
+Subject: [PATCH 5.4 26/92] iio: dac: cio-dac: Fix max DAC write value check for 12-bit
+Date: Tue, 18 Apr 2023 14:21:01 +0200
+Message-Id: <20230418120305.747051895@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -36,37 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: William Breathitt Gray <william.gray@linaro.org>
 
-commit 363c7dc72f79edd55bf1c4380e0fbf7f1bbc2c86 upstream.
+commit c3701185ee1973845db088d8b0fc443397ab0eb2 upstream.
 
-The ads7950 uses a mutex as well as SPI transfers in its GPIO callbacks.
-This means these callbacks can sleep and the `can_sleep` flag should be
-set.
+The CIO-DAC series of devices only supports DAC values up to 12-bit
+rather than 16-bit. Trying to write a 16-bit value results in only the
+lower 12 bits affecting the DAC output which is not what the user
+expects. Instead, adjust the DAC write value check to reject values
+larger than 12-bit so that they fail explicitly as invalid for the user.
 
-Having the flag set will make sure that warnings are generated when calling
-any of the callbacks from a potentially non-sleeping context.
-
-Fixes: c97dce792dc8 ("iio: adc: ti-ads7950: add GPIO support")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Acked-by: David Lechner <david@lechnology.com>
-Link: https://lore.kernel.org/r/20230312210933.2275376-1-lars@metafoo.de
-Cc: <Stable@vger.kernel.org>
+Fixes: 3b8df5fd526e ("iio: Add IIO support for the Measurement Computing CIO-DAC family")
+Cc: stable@vger.kernel.org
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Link: https://lore.kernel.org/r/20230311002248.8548-1-william.gray@linaro.org
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-ads7950.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/dac/cio-dac.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/ti-ads7950.c
-+++ b/drivers/iio/adc/ti-ads7950.c
-@@ -635,6 +635,7 @@ static int ti_ads7950_probe(struct spi_d
- 	st->chip.label = dev_name(&st->spi->dev);
- 	st->chip.parent = &st->spi->dev;
- 	st->chip.owner = THIS_MODULE;
-+	st->chip.can_sleep = true;
- 	st->chip.base = -1;
- 	st->chip.ngpio = TI_ADS7950_NUM_GPIOS;
- 	st->chip.get_direction = ti_ads7950_get_direction;
+--- a/drivers/iio/dac/cio-dac.c
++++ b/drivers/iio/dac/cio-dac.c
+@@ -66,8 +66,8 @@ static int cio_dac_write_raw(struct iio_
+ 	if (mask != IIO_CHAN_INFO_RAW)
+ 		return -EINVAL;
+ 
+-	/* DAC can only accept up to a 16-bit value */
+-	if ((unsigned int)val > 65535)
++	/* DAC can only accept up to a 12-bit value */
++	if ((unsigned int)val > 4095)
+ 		return -EINVAL;
+ 
+ 	priv->chan_out_states[chan->channel] = val;
 
 
