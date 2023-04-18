@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DE42572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AAF7C433EF;
-	Tue, 18 Apr 2023 12:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E582572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0C2C433EF;
+	Tue, 18 Apr 2023 12:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822322;
-	bh=gSl3TiatGp+t0OH5DFM93BUuo6xHWfhROJItxIlBKRU=;
+	s=korg; t=1681822325;
+	bh=oI9XVPZM4FM/hX+LowSasvuW2cpQ0pBbEc9Yy5lIQD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vdObjGtYo9Sz6rKivkXYUpOr7Xhsl6/sLEpR5oFj/yyc3xc+8OCPAEjfNtPukdMhW
-	 LKtzu0v/ElBxuJK7bB+5ROIJPFrm5d48+bRACfiRcU4qMoX3seZPHtILO3Fv9RLGqm
-	 p6uI9hdGn3kTFqAbOaKhomw7Mkq1hs7vDUuULAKA=
+	b=gJQiEX5nNTc/xl4CMtke705YiQ/4yXh1BrefRhqXs7dVnBEBwkRSbzLkT0HJqtDpW
+	 UvIilB6xREB8Z4RVZ/KrUIrjvJdxAeigOZnsneMXQ2ey/rSgeZgXJGQFkuBnN14hbK
+	 fieEUa+tTT11ki/H1oWOKie1uLD1LB07xZMYWUvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4436c9630a45820fda76@syzkaller.appspotmail.com,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Ross Zwisler <zwisler@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 067/139] net: qrtr: Fix an uninit variable access bug in qrtr_tx_resume()
-Date: Tue, 18 Apr 2023 14:22:12 +0200
-Message-Id: <20230418120316.328800838@linuxfoundation.org>
+Subject: [PATCH 6.2 100/139] tracing: Add trace_array_puts() to write into instance
+Date: Tue, 18 Apr 2023 14:22:45 +0200
+Message-Id: <20230418120317.539555076@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -38,96 +37,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 6417070918de3bcdbe0646e7256dae58fd8083ba ]
+[ Upstream commit d503b8f7474fe7ac616518f7fc49773cbab49f36 ]
 
-Syzbot reported a bug as following:
+Add a generic trace_array_puts() that can be used to "trace_puts()" into
+an allocated trace_array instance. This is just another variant of
+trace_array_printk().
 
-=====================================================
-BUG: KMSAN: uninit-value in qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
- qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
- qrtr_endpoint_post+0xf85/0x11b0 net/qrtr/af_qrtr.c:519
- qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
- call_write_iter include/linux/fs.h:2189 [inline]
- aio_write+0x63a/0x950 fs/aio.c:1600
- io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
- __do_sys_io_submit fs/aio.c:2078 [inline]
- __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
- __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Link: https://lkml.kernel.org/r/20230207173026.584717290@goodmis.org
 
-Uninit was created at:
- slab_post_alloc_hook mm/slab.h:766 [inline]
- slab_alloc_node mm/slub.c:3452 [inline]
- __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
- __do_kmalloc_node mm/slab_common.c:967 [inline]
- __kmalloc_node_track_caller+0x114/0x3b0 mm/slab_common.c:988
- kmalloc_reserve net/core/skbuff.c:492 [inline]
- __alloc_skb+0x3af/0x8f0 net/core/skbuff.c:565
- __netdev_alloc_skb+0x120/0x7d0 net/core/skbuff.c:630
- qrtr_endpoint_post+0xbd/0x11b0 net/qrtr/af_qrtr.c:446
- qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
- call_write_iter include/linux/fs.h:2189 [inline]
- aio_write+0x63a/0x950 fs/aio.c:1600
- io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
- __do_sys_io_submit fs/aio.c:2078 [inline]
- __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
- __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-It is because that skb->len requires at least sizeof(struct qrtr_ctrl_pkt)
-in qrtr_tx_resume(). And skb->len equals to size in qrtr_endpoint_post().
-But size is less than sizeof(struct qrtr_ctrl_pkt) when qrtr_cb->type
-equals to QRTR_TYPE_RESUME_TX in qrtr_endpoint_post() under the syzbot
-scenario. This triggers the uninit variable access bug.
-
-Add size check when qrtr_cb->type equals to QRTR_TYPE_RESUME_TX in
-qrtr_endpoint_post() to fix the bug.
-
-Fixes: 5fdeb0d372ab ("net: qrtr: Implement outgoing flow control")
-Reported-by: syzbot+4436c9630a45820fda76@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=c14607f0963d27d5a3d5f4c8639b500909e43540
-Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230410012352.3997823-1-william.xuanziyang@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Ross Zwisler <zwisler@google.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 9d52727f8043 ("tracing: Have tracing_snapshot_instance_cond() write errors to the appropriate instance")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ include/linux/trace.h | 12 ++++++++++++
+ kernel/trace/trace.c  | 27 +++++++++++++++++----------
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 3a70255c8d02f..76f0434d3d06a 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -498,6 +498,11 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 	if (!size || len != ALIGN(size, 4) + hdrlen)
- 		goto err;
+diff --git a/include/linux/trace.h b/include/linux/trace.h
+index 80ffda8717491..2a70a447184c9 100644
+--- a/include/linux/trace.h
++++ b/include/linux/trace.h
+@@ -33,6 +33,18 @@ struct trace_array;
+ int register_ftrace_export(struct trace_export *export);
+ int unregister_ftrace_export(struct trace_export *export);
  
-+	if ((cb->type == QRTR_TYPE_NEW_SERVER ||
-+	     cb->type == QRTR_TYPE_RESUME_TX) &&
-+	    size < sizeof(struct qrtr_ctrl_pkt))
-+		goto err;
++/**
++ * trace_array_puts - write a constant string into the trace buffer.
++ * @tr:    The trace array to write to
++ * @str:   The constant string to write
++ */
++#define trace_array_puts(tr, str)					\
++	({								\
++		str ? __trace_array_puts(tr, _THIS_IP_, str, strlen(str)) : -1;	\
++	})
++int __trace_array_puts(struct trace_array *tr, unsigned long ip,
++		       const char *str, int size);
 +
- 	if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
- 	    cb->type != QRTR_TYPE_RESUME_TX)
- 		goto err;
-@@ -510,9 +515,6 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 		/* Remote node endpoint can bridge other distant nodes */
- 		const struct qrtr_ctrl_pkt *pkt;
+ void trace_printk_init_buffers(void);
+ __printf(3, 4)
+ int trace_array_printk(struct trace_array *tr, unsigned long ip,
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 1a931896ba042..13c46787ba5fa 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -1001,13 +1001,8 @@ __buffer_unlock_commit(struct trace_buffer *buffer, struct ring_buffer_event *ev
+ 		ring_buffer_unlock_commit(buffer);
+ }
  
--		if (size < sizeof(*pkt))
--			goto err;
--
- 		pkt = data + hdrlen;
- 		qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
- 	}
+-/**
+- * __trace_puts - write a constant string into the trace buffer.
+- * @ip:	   The address of the caller
+- * @str:   The constant string to write
+- * @size:  The size of the string.
+- */
+-int __trace_puts(unsigned long ip, const char *str, int size)
++int __trace_array_puts(struct trace_array *tr, unsigned long ip,
++		       const char *str, int size)
+ {
+ 	struct ring_buffer_event *event;
+ 	struct trace_buffer *buffer;
+@@ -1015,7 +1010,7 @@ int __trace_puts(unsigned long ip, const char *str, int size)
+ 	unsigned int trace_ctx;
+ 	int alloc;
+ 
+-	if (!(global_trace.trace_flags & TRACE_ITER_PRINTK))
++	if (!(tr->trace_flags & TRACE_ITER_PRINTK))
+ 		return 0;
+ 
+ 	if (unlikely(tracing_selftest_running || tracing_disabled))
+@@ -1024,7 +1019,7 @@ int __trace_puts(unsigned long ip, const char *str, int size)
+ 	alloc = sizeof(*entry) + size + 2; /* possible \n added */
+ 
+ 	trace_ctx = tracing_gen_ctx();
+-	buffer = global_trace.array_buffer.buffer;
++	buffer = tr->array_buffer.buffer;
+ 	ring_buffer_nest_start(buffer);
+ 	event = __trace_buffer_lock_reserve(buffer, TRACE_PRINT, alloc,
+ 					    trace_ctx);
+@@ -1046,11 +1041,23 @@ int __trace_puts(unsigned long ip, const char *str, int size)
+ 		entry->buf[size] = '\0';
+ 
+ 	__buffer_unlock_commit(buffer, event);
+-	ftrace_trace_stack(&global_trace, buffer, trace_ctx, 4, NULL);
++	ftrace_trace_stack(tr, buffer, trace_ctx, 4, NULL);
+  out:
+ 	ring_buffer_nest_end(buffer);
+ 	return size;
+ }
++EXPORT_SYMBOL_GPL(__trace_array_puts);
++
++/**
++ * __trace_puts - write a constant string into the trace buffer.
++ * @ip:	   The address of the caller
++ * @str:   The constant string to write
++ * @size:  The size of the string.
++ */
++int __trace_puts(unsigned long ip, const char *str, int size)
++{
++	return __trace_array_puts(&global_trace, ip, str, size);
++}
+ EXPORT_SYMBOL_GPL(__trace_puts);
+ 
+ /**
 -- 
 2.39.2
 
