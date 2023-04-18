@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744B32572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84C7C433D2;
-	Tue, 18 Apr 2023 12:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC602572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEFFC433D2;
+	Tue, 18 Apr 2023 12:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821515;
-	bh=lVLKM0NOuTQExlSnMc3COC2k+sIlb8a9XFSwgYSHVBI=;
+	s=korg; t=1681821517;
+	bh=+tK4Lj1/Td4V4omdNS2drKpX1HGvutLLT/ZXPFiyg2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBQDUOvsGs6MFWnocUkKGeTtSKWpkG8wJCfHhk/2dgkQw0Wkw0QDfze4K4mYjR/hC
-	 mKa6kpw1k+nNjEkB+1Ajmz8moaETDreMWYO846hNmIpstJb3CJ9w2oSZL1apvePXl2
-	 3y7yzwRynqGKl2fnyhLWvXzZJ3DLRPjMQ/NvwIXc=
+	b=M2SgEXeHNAdB4UP6awoM63RpPbOMsnE5hbknlEpnzzwN62rPK0dI7aa57COrN8lYD
+	 ipvuCHnjo5RSPDNAWybk9OjXN+32dFShqTJDcCx5mwiaCR5LZnjgrzVJVxkyHF7MKW
+	 ahYmpuqslPcmruM627qhEmihKTdsAs0yKyd3LKuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Plotnikov <den-plotnikov@yandex-team.ru>,
+	syzbot+4436c9630a45820fda76@syzkaller.appspotmail.com,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 30/91] qlcnic: check pci_reset_function result
-Date: Tue, 18 Apr 2023 14:21:34 +0200
-Message-Id: <20230418120306.636061597@linuxfoundation.org>
+Subject: [PATCH 5.15 31/91] net: qrtr: Fix an uninit variable access bug in qrtr_tx_resume()
+Date: Tue, 18 Apr 2023 14:21:35 +0200
+Message-Id: <20230418120306.667627758@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -37,47 +38,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Denis Plotnikov <den-plotnikov@yandex-team.ru>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 7573099e10ca69c3be33995c1fcd0d241226816d ]
+[ Upstream commit 6417070918de3bcdbe0646e7256dae58fd8083ba ]
 
-Static code analyzer complains to unchecked return value.
-The result of pci_reset_function() is unchecked.
-Despite, the issue is on the FLR supported code path and in that
-case reset can be done with pcie_flr(), the patch uses less invasive
-approach by adding the result check of pci_reset_function().
+Syzbot reported a bug as following:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+=====================================================
+BUG: KMSAN: uninit-value in qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
+ qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
+ qrtr_endpoint_post+0xf85/0x11b0 net/qrtr/af_qrtr.c:519
+ qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
+ call_write_iter include/linux/fs.h:2189 [inline]
+ aio_write+0x63a/0x950 fs/aio.c:1600
+ io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
+ __do_sys_io_submit fs/aio.c:2078 [inline]
+ __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
+ __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: 7e2cf4feba05 ("qlcnic: change driver hardware interface mechanism")
-Signed-off-by: Denis Plotnikov <den-plotnikov@yandex-team.ru>
+Uninit was created at:
+ slab_post_alloc_hook mm/slab.h:766 [inline]
+ slab_alloc_node mm/slub.c:3452 [inline]
+ __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
+ __do_kmalloc_node mm/slab_common.c:967 [inline]
+ __kmalloc_node_track_caller+0x114/0x3b0 mm/slab_common.c:988
+ kmalloc_reserve net/core/skbuff.c:492 [inline]
+ __alloc_skb+0x3af/0x8f0 net/core/skbuff.c:565
+ __netdev_alloc_skb+0x120/0x7d0 net/core/skbuff.c:630
+ qrtr_endpoint_post+0xbd/0x11b0 net/qrtr/af_qrtr.c:446
+ qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
+ call_write_iter include/linux/fs.h:2189 [inline]
+ aio_write+0x63a/0x950 fs/aio.c:1600
+ io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
+ __do_sys_io_submit fs/aio.c:2078 [inline]
+ __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
+ __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+It is because that skb->len requires at least sizeof(struct qrtr_ctrl_pkt)
+in qrtr_tx_resume(). And skb->len equals to size in qrtr_endpoint_post().
+But size is less than sizeof(struct qrtr_ctrl_pkt) when qrtr_cb->type
+equals to QRTR_TYPE_RESUME_TX in qrtr_endpoint_post() under the syzbot
+scenario. This triggers the uninit variable access bug.
+
+Add size check when qrtr_cb->type equals to QRTR_TYPE_RESUME_TX in
+qrtr_endpoint_post() to fix the bug.
+
+Fixes: 5fdeb0d372ab ("net: qrtr: Implement outgoing flow control")
+Reported-by: syzbot+4436c9630a45820fda76@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=c14607f0963d27d5a3d5f4c8639b500909e43540
+Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20230410012352.3997823-1-william.xuanziyang@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/qrtr/af_qrtr.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c
-index 87f76bac2e463..eb827b86ecae8 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c
-@@ -628,7 +628,13 @@ int qlcnic_fw_create_ctx(struct qlcnic_adapter *dev)
- 	int i, err, ring;
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index 6e88ba812d2a2..e0a27a404404f 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -498,6 +498,11 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+ 	if (!size || len != ALIGN(size, 4) + hdrlen)
+ 		goto err;
  
- 	if (dev->flags & QLCNIC_NEED_FLR) {
--		pci_reset_function(dev->pdev);
-+		err = pci_reset_function(dev->pdev);
-+		if (err) {
-+			dev_err(&dev->pdev->dev,
-+				"Adapter reset failed (%d). Please reboot\n",
-+				err);
-+			return err;
-+		}
- 		dev->flags &= ~QLCNIC_NEED_FLR;
++	if ((cb->type == QRTR_TYPE_NEW_SERVER ||
++	     cb->type == QRTR_TYPE_RESUME_TX) &&
++	    size < sizeof(struct qrtr_ctrl_pkt))
++		goto err;
++
+ 	if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
+ 	    cb->type != QRTR_TYPE_RESUME_TX)
+ 		goto err;
+@@ -510,9 +515,6 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+ 		/* Remote node endpoint can bridge other distant nodes */
+ 		const struct qrtr_ctrl_pkt *pkt;
+ 
+-		if (size < sizeof(*pkt))
+-			goto err;
+-
+ 		pkt = data + hdrlen;
+ 		qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
  	}
- 
 -- 
 2.39.2
 
