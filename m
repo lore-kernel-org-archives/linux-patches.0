@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F252566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0957C433D2;
-	Tue, 18 Apr 2023 12:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98A82566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA97C433EF;
+	Tue, 18 Apr 2023 12:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821156;
-	bh=EoOLxCmV6kN7YU5aurC6eXFUkIrnO02h3+33ND/B66s=;
+	s=korg; t=1681821158;
+	bh=AcPItg8NvLaplLX1JB3P8phC12zXZ2Dd2KRzeOTis4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aSQj2zDp9G4ryFz63tnlFLBqwZpxyzcoml3oYZ0LQFpVgWZda5lk2GosQyjl9Lk9j
-	 MJ+K4LlzdbCBTrx4lgx+sA8AdhbXj1SJdwWDuTCeUXSr3xz4pOkY6VuMHzwQdtH8Bw
-	 SU1AqSuTkOvex7AOauNtb/t3ZD6VhkuO/5r5Ca6A=
+	b=A7CS6R1wyIWydlwDopPACWBcaM/D9c5lNNfeZ2m4vu0ZHcAC31zl0xXPk76wf+39I
+	 5lyiU6AVpltBjRYQDsDMNz8nKusjzukonMN9DgSSIFgXi6xCoQOPjPQaMfiHY/cLGF
+	 lQ7oXIOtHjk1GlrDSXoSQsKFWdJu+43lIB3w+g64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammed Gamal <mgamal@redhat.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/124] Drivers: vmbus: Check for channel allocation before looking up relids
-Date: Tue, 18 Apr 2023 14:20:21 +0200
-Message-Id: <20230418120309.648120834@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.10 020/124] xhci: also avoid the XHCI_ZERO_64B_REGS quirk with a passthrough iommu
+Date: Tue, 18 Apr 2023 14:20:39 +0200
+Message-Id: <20230418120310.404968830@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -36,48 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohammed Gamal <mgamal@redhat.com>
+From: D Scott Phillips <scott@os.amperecomputing.com>
 
-[ Upstream commit 1eb65c8687316c65140b48fad27133d583178e15 ]
+commit ecaa4902439298f6b0e29f47424a86b310a9ff4f upstream.
 
-relid2channel() assumes vmbus channel array to be allocated when called.
-However, in cases such as kdump/kexec, not all relids will be reset by the host.
-When the second kernel boots and if the guest receives a vmbus interrupt during
-vmbus driver initialization before vmbus_connect() is called, before it finishes,
-or if it fails, the vmbus interrupt service routine is called which in turn calls
-relid2channel() and can cause a null pointer dereference.
+Previously the quirk was skipped when no iommu was present. The same
+rationale for skipping the quirk also applies in the iommu.passthrough=1
+case.
 
-Print a warning and error out in relid2channel() for a channel id that's invalid
-in the second kernel.
+Skip applying the XHCI_ZERO_64B_REGS quirk if the device's iommu domain is
+passthrough.
 
-Fixes: 8b6a877c060e ("Drivers: hv: vmbus: Replace the per-CPU channel lists with a global array of channels")
-
-Signed-off-by: Mohammed Gamal <mgamal@redhat.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
-Link: https://lore.kernel.org/r/20230217204411.212709-1-mgamal@redhat.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 12de0a35c996 ("xhci: Add quirk to zero 64bit registers on Renesas PCIe controllers")
+Cc: stable <stable@kernel.org>
+Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230330143056.1390020-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/connection.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/host/xhci.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
-index bfd7f00a59ecf..683fdfa3e723e 100644
---- a/drivers/hv/connection.c
-+++ b/drivers/hv/connection.c
-@@ -305,6 +305,10 @@ void vmbus_disconnect(void)
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -9,6 +9,7 @@
   */
- struct vmbus_channel *relid2channel(u32 relid)
+ 
+ #include <linux/pci.h>
++#include <linux/iommu.h>
+ #include <linux/iopoll.h>
+ #include <linux/irq.h>
+ #include <linux/log2.h>
+@@ -226,6 +227,7 @@ int xhci_reset(struct xhci_hcd *xhci, u6
+ static void xhci_zero_64b_regs(struct xhci_hcd *xhci)
  {
-+	if (vmbus_connection.channels == NULL) {
-+		pr_warn_once("relid2channel: relid=%d: No channels mapped!\n", relid);
-+		return NULL;
-+	}
- 	if (WARN_ON(relid >= MAX_CHANNEL_RELIDS))
- 		return NULL;
- 	return READ_ONCE(vmbus_connection.channels[relid]);
--- 
-2.39.2
-
+ 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
++	struct iommu_domain *domain;
+ 	int err, i;
+ 	u64 val;
+ 	u32 intrs;
+@@ -244,7 +246,9 @@ static void xhci_zero_64b_regs(struct xh
+ 	 * an iommu. Doing anything when there is no iommu is definitely
+ 	 * unsafe...
+ 	 */
+-	if (!(xhci->quirks & XHCI_ZERO_64B_REGS) || !device_iommu_mapped(dev))
++	domain = iommu_get_domain_for_dev(dev);
++	if (!(xhci->quirks & XHCI_ZERO_64B_REGS) || !domain ||
++	    domain->type == IOMMU_DOMAIN_IDENTITY)
+ 		return;
+ 
+ 	xhci_info(xhci, "Zeroing 64bit base registers, expecting fault\n");
 
 
