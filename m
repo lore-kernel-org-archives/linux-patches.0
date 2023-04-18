@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2F12566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:24:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85CDBC433EF;
-	Tue, 18 Apr 2023 12:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD072566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:24:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604A3C433EF;
+	Tue, 18 Apr 2023 12:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820690;
-	bh=lhFgXouRcJVBXb9ZKVSN2C1yF227R7iljp1pi5Wb5EA=;
+	s=korg; t=1681820693;
+	bh=7P5FyF7dWbMmUfz1KqjjZ0wfuS6f2ex6qUAWYh8lfZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1mdkK9Qnt6Sj/T7USowl2m7dUoYdgGARUOu08vTkmtN6/gHByWn5AqFpoMytniQ7G
-	 VI0Tp5XLFkHKT59wmdz//HZyPIIyC2mYyWgvJCaL9i9qe+KoDVnWA8MnTIR/Cf6cCF
-	 A8bWhltD3NByydOi7BRkk3OWhL4O3y/XF77oJCRM=
+	b=VuallBQFT2JVnkJDtIxCDgBXiqddz/avmQIfMCEo/xQJC852rvIuEeTfCXDAdH2Kj
+	 dgLUtPihL8ywEYjwDqhZ0P3ynntXIr6DImhJuqTO95XgBcerqjYQyMUGnRtfEtQ4e7
+	 kOlYeSH1xtJLoZvPHCEFJCUvZG/91XoPVsaZUX+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 4.14 32/37] cgroup/cpuset: Wake up cpuset_attach_wq tasks in cpuset_cancel_attach()
-Date: Tue, 18 Apr 2023 14:21:42 +0200
-Message-Id: <20230418120255.840916258@linuxfoundation.org>
+	George Cherian <george.cherian@marvell.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	"Tyler Hicks (Microsoft)" <code@tyhicks.com>
+Subject: [PATCH 4.14 33/37] watchdog: sbsa_wdog: Make sure the timeout programming is within the limits
+Date: Tue, 18 Apr 2023 14:21:43 +0200
+Message-Id: <20230418120255.883205205@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
 References: <20230418120254.687480980@linuxfoundation.org>
@@ -35,40 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: George Cherian <george.cherian@marvell.com>
 
-commit ba9182a89626d5f83c2ee4594f55cb9c1e60f0e2 upstream.
+commit 000987a38b53c172f435142a4026dd71378ca464 upstream.
 
-After a successful cpuset_can_attach() call which increments the
-attach_in_progress flag, either cpuset_cancel_attach() or cpuset_attach()
-will be called later. In cpuset_attach(), tasks in cpuset_attach_wq,
-if present, will be woken up at the end. That is not the case in
-cpuset_cancel_attach(). So missed wakeup is possible if the attach
-operation is somehow cancelled. Fix that by doing the wakeup in
-cpuset_cancel_attach() as well.
+Make sure to honour the max_hw_heartbeat_ms while programming the timeout
+value to WOR. Clamp the timeout passed to sbsa_gwdt_set_timeout() to
+make sure the programmed value is within the permissible range.
 
-Fixes: e44193d39e8d ("cpuset: let hotplug propagation work wait for task attaching")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Cc: stable@vger.kernel.org # v3.11+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: abd3ac7902fb ("watchdog: sbsa: Support architecture version 1")
+
+Signed-off-by: George Cherian <george.cherian@marvell.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230209021117.1512097-1-george.cherian@marvell.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/watchdog/sbsa_gwdt.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1508,7 +1508,9 @@ static void cpuset_cancel_attach(struct
- 	cs = css_cs(css);
+--- a/drivers/watchdog/sbsa_gwdt.c
++++ b/drivers/watchdog/sbsa_gwdt.c
+@@ -130,6 +130,7 @@ static int sbsa_gwdt_set_timeout(struct
+ 	struct sbsa_gwdt *gwdt = watchdog_get_drvdata(wdd);
  
- 	mutex_lock(&cpuset_mutex);
--	css_cs(css)->attach_in_progress--;
-+	cs->attach_in_progress--;
-+	if (!cs->attach_in_progress)
-+		wake_up(&cpuset_attach_wq);
- 	mutex_unlock(&cpuset_mutex);
- }
+ 	wdd->timeout = timeout;
++	timeout = clamp_t(unsigned int, timeout, 1, wdd->max_hw_heartbeat_ms / 1000);
  
+ 	if (action)
+ 		writel(gwdt->clk * timeout,
 
 
