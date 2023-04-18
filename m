@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BB42566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E554BC433D2;
-	Tue, 18 Apr 2023 12:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A229256D
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB0EC433EF;
+	Tue, 18 Apr 2023 12:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820828;
-	bh=N+4i+yZYMRbWxZzRVTcYVu7G1SPVlXOuYNmOjLBduZE=;
+	s=korg; t=1681820830;
+	bh=OVUIj9ZFWuXLNnCrmONhVNpWloKC0xdf1duFy7tcfYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJTts8R1TOmk8H0eLvUpDoTvVr1/Af6EXQzcuChPGEK6QWoMJqxSo2+eJcDibaUSh
-	 FlBIs52b598UVrIxsAyTEHe85tQX0P2s/fY3UcQHB67LMFfOqi1jEzdS+9z2Tfg7P1
-	 LpSILOnl3D+4w4+9hSLVRTWLNjo2SN7GXZsGePEM=
+	b=TpWTH0FLcsgV6HqXU6pyUSoOouAMCbTM+qY/aEg9dm9kbx4EwxexIIj1ftYKWNfKz
+	 OXNqU7VAepbhEUM7FoQhylxbDHPVqS33l9Vv7OUmhZ8NKh4BCEyHQklTu4JxdhNwwm
+	 q9ARBct0mFETHIgvP2v05wkDe09hlbq+vWW2UKjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Glanzmann <thomas@glanzmann.de>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 4.19 47/57] x86/PCI: Add quirk for AMD XHCI controller that loses MSI-X state in D3hot
-Date: Tue, 18 Apr 2023 14:21:47 +0200
-Message-Id: <20230418120300.379462419@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Nicolas Schichan <nschichan@freebox.fr>,
+	Richard Weinberger <richard@nod.at>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 4.19 48/57] ubi: Fix failure attaching when vid_hdr offset equals to (sub)page size
+Date: Tue, 18 Apr 2023 14:21:48 +0200
+Message-Id: <20230418120300.419188637@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -36,65 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit f195fc1e9715ba826c3b62d58038f760f66a4fe9 upstream.
+commit 1e020e1b96afdecd20680b5b5be2a6ffc3d27628 upstream.
 
-The AMD [1022:15b8] USB controller loses some internal functional MSI-X
-context when transitioning from D0 to D3hot. BIOS normally traps D0->D3hot
-and D3hot->D0 transitions so it can save and restore that internal context,
-but some firmware in the field can't do this because it fails to clear the
-AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit.
+Following process will make ubi attaching failed since commit
+1b42b1a36fc946 ("ubi: ensure that VID header offset ... size"):
 
-Clear AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit before USB controller
-initialization during boot.
+ID="0xec,0xa1,0x00,0x15" # 128M 128KB 2KB
+modprobe nandsim id_bytes=$ID
+flash_eraseall /dev/mtd0
+modprobe ubi mtd="0,2048"  # set vid_hdr offset as 2048 (one page)
+(dmesg):
+  ubi0 error: ubi_attach_mtd_dev [ubi]: VID header offset 2048 too large.
+  UBI error: cannot attach mtd0
+  UBI error: cannot initialize UBI, error -22
 
-Link: https://lore.kernel.org/linux-usb/Y%2Fz9GdHjPyF2rNG3@glanzmann.de/T/#u
-Link: https://lore.kernel.org/r/20230329172859.699743-1-Basavaraj.Natikar@amd.com
-Reported-by: Thomas Glanzmann <thomas@glanzmann.de>
-Tested-by: Thomas Glanzmann <thomas@glanzmann.de>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Cc: stable@vger.kernel.org
+Rework original solution, the key point is making sure
+'vid_hdr_shift + UBI_VID_HDR_SIZE < ubi->vid_hdr_alsize',
+so we should check vid_hdr_shift rather not vid_hdr_offset.
+Then, ubi still support (sub)page aligined VID header offset.
+
+Fixes: 1b42b1a36fc946 ("ubi: ensure that VID header offset ... size")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Tested-by: Nicolas Schichan <nschichan@freebox.fr>
+Tested-by: Miquel Raynal <miquel.raynal@bootlin.com> # v5.10, v4.19
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/pci/fixup.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/mtd/ubi/build.c |   21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
---- a/arch/x86/pci/fixup.c
-+++ b/arch/x86/pci/fixup.c
-@@ -7,6 +7,7 @@
- #include <linux/dmi.h>
- #include <linux/pci.h>
- #include <linux/vgaarb.h>
-+#include <asm/amd_nb.h>
- #include <asm/hpet.h>
- #include <asm/pci_x86.h>
+--- a/drivers/mtd/ubi/build.c
++++ b/drivers/mtd/ubi/build.c
+@@ -657,12 +657,6 @@ static int io_init(struct ubi_device *ub
+ 	ubi->ec_hdr_alsize = ALIGN(UBI_EC_HDR_SIZE, ubi->hdrs_min_io_size);
+ 	ubi->vid_hdr_alsize = ALIGN(UBI_VID_HDR_SIZE, ubi->hdrs_min_io_size);
  
-@@ -824,3 +825,23 @@ static void rs690_fix_64bit_dma(struct p
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7910, rs690_fix_64bit_dma);
+-	if (ubi->vid_hdr_offset && ((ubi->vid_hdr_offset + UBI_VID_HDR_SIZE) >
+-	    ubi->vid_hdr_alsize)) {
+-		ubi_err(ubi, "VID header offset %d too large.", ubi->vid_hdr_offset);
+-		return -EINVAL;
+-	}
+-
+ 	dbg_gen("min_io_size      %d", ubi->min_io_size);
+ 	dbg_gen("max_write_size   %d", ubi->max_write_size);
+ 	dbg_gen("hdrs_min_io_size %d", ubi->hdrs_min_io_size);
+@@ -680,6 +674,21 @@ static int io_init(struct ubi_device *ub
+ 						ubi->vid_hdr_aloffset;
+ 	}
  
- #endif
-+
-+#ifdef CONFIG_AMD_NB
-+
-+#define AMD_15B8_RCC_DEV2_EPF0_STRAP2                                  0x10136008
-+#define AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK       0x00000080L
-+
-+static void quirk_clear_strap_no_soft_reset_dev2_f0(struct pci_dev *dev)
-+{
-+	u32 data;
-+
-+	if (!amd_smn_read(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, &data)) {
-+		data &= ~AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK;
-+		if (amd_smn_write(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, data))
-+			pci_err(dev, "Failed to write data 0x%x\n", data);
-+	} else {
-+		pci_err(dev, "Failed to read data\n");
++	/*
++	 * Memory allocation for VID header is ubi->vid_hdr_alsize
++	 * which is described in comments in io.c.
++	 * Make sure VID header shift + UBI_VID_HDR_SIZE not exceeds
++	 * ubi->vid_hdr_alsize, so that all vid header operations
++	 * won't access memory out of bounds.
++	 */
++	if ((ubi->vid_hdr_shift + UBI_VID_HDR_SIZE) > ubi->vid_hdr_alsize) {
++		ubi_err(ubi, "Invalid VID header offset %d, VID header shift(%d)"
++			" + VID header size(%zu) > VID header aligned size(%d).",
++			ubi->vid_hdr_offset, ubi->vid_hdr_shift,
++			UBI_VID_HDR_SIZE, ubi->vid_hdr_alsize);
++		return -EINVAL;
 +	}
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
-+#endif
++
+ 	/* Similar for the data offset */
+ 	ubi->leb_start = ubi->vid_hdr_offset + UBI_VID_HDR_SIZE;
+ 	ubi->leb_start = ALIGN(ubi->leb_start, ubi->min_io_size);
 
 
