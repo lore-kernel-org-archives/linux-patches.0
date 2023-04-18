@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9272572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70406C433EF;
-	Tue, 18 Apr 2023 12:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F212572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C68C433EF;
+	Tue, 18 Apr 2023 12:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821945;
-	bh=ZxYjEAXnh6dd0quJt0fvqUhN3yT3k7n1azYESX6nDhA=;
+	s=korg; t=1681821948;
+	bh=54vFzB7Zn9o1J6Zd/SMBvMATVSUT3DykuXs/AZCyD0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yl/bfpycRNVJOmeL+4+CR2X+DDFZOwfi9zKTcrWnhFn2V9duZ0W6P7VtkRVXYMoFy
-	 3Lc1KjzFUKsBXIWyxOgNpm3FLn4tgTkeeo96t+uK4yRofnUCJ/EIZDuFUf7U4p1eil
-	 fGqxRgnhrh2mTqnXIoVJia6jWdWGcck8exDoa+AM=
+	b=kGladqdaY249vOdciAyUnL43EDhvRXpOqO6btTtLt7KaE756n1dxoUTH+PgRwOQrh
+	 RVcO6DrDVeQFemHMq+aUnKM7djpk4U53wDef8MMZz1skwAvDfAxT+KEEvflbWQA+LU
+	 dyufwt9Zbnsu24v0cs5hL5WnokiGrhVYbAWvqHBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Ross Zwisler <zwisler@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/134] KVM: SVM: Flush Hyper-V TLB when required
-Date: Tue, 18 Apr 2023 14:22:34 +0200
-Message-Id: <20230418120316.593090666@linuxfoundation.org>
+Subject: [PATCH 6.1 099/134] tracing: Add trace_array_puts() to write into instance
+Date: Tue, 18 Apr 2023 14:22:35 +0200
+Message-Id: <20230418120316.633547449@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -37,165 +37,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit e5c972c1fadacc858b6a564d056f177275238040 ]
+[ Upstream commit d503b8f7474fe7ac616518f7fc49773cbab49f36 ]
 
-The Hyper-V "EnlightenedNptTlb" enlightenment is always enabled when KVM
-is running on top of Hyper-V and Hyper-V exposes support for it (which
-is always). On AMD CPUs this enlightenment results in ASID invalidations
-not flushing TLB entries derived from the NPT. To force the underlying
-(L0) hypervisor to rebuild its shadow page tables, an explicit hypercall
-is needed.
+Add a generic trace_array_puts() that can be used to "trace_puts()" into
+an allocated trace_array instance. This is just another variant of
+trace_array_printk().
 
-The original KVM implementation of Hyper-V's "EnlightenedNptTlb" on SVM
-only added remote TLB flush hooks. This worked out fine for a while, as
-sufficient remote TLB flushes where being issued in KVM to mask the
-problem. Since v5.17, changes in the TDP code reduced the number of
-flushes and the out-of-sync TLB prevents guests from booting
-successfully.
+Link: https://lkml.kernel.org/r/20230207173026.584717290@goodmis.org
 
-Split svm_flush_tlb_current() into separate callbacks for the 3 cases
-(guest/all/current), and issue the required Hyper-V hypercall when a
-Hyper-V TLB flush is needed. The most important case where the TLB flush
-was missing is when loading a new PGD, which is followed by what is now
-svm_flush_tlb_current().
-
-Cc: stable@vger.kernel.org # v5.17+
-Fixes: 1e0c7d40758b ("KVM: SVM: hyper-v: Remote TLB flush for SVM")
-Link: https://lore.kernel.org/lkml/43980946-7bbf-dcef-7e40-af904c456250@linux.microsoft.com/
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Message-Id: <20230324145233.4585-1-jpiotrowski@linux.microsoft.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Ross Zwisler <zwisler@google.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 9d52727f8043 ("tracing: Have tracing_snapshot_instance_cond() write errors to the appropriate instance")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/kvm_onhyperv.h     |  5 +++++
- arch/x86/kvm/svm/svm.c          | 37 ++++++++++++++++++++++++++++++---
- arch/x86/kvm/svm/svm_onhyperv.h | 15 +++++++++++++
- 3 files changed, 54 insertions(+), 3 deletions(-)
+ include/linux/trace.h | 12 ++++++++++++
+ kernel/trace/trace.c  | 27 +++++++++++++++++----------
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/kvm/kvm_onhyperv.h b/arch/x86/kvm/kvm_onhyperv.h
-index 287e98ef9df3d..6272dabec02da 100644
---- a/arch/x86/kvm/kvm_onhyperv.h
-+++ b/arch/x86/kvm/kvm_onhyperv.h
-@@ -12,6 +12,11 @@ int hv_remote_flush_tlb_with_range(struct kvm *kvm,
- int hv_remote_flush_tlb(struct kvm *kvm);
- void hv_track_root_tdp(struct kvm_vcpu *vcpu, hpa_t root_tdp);
- #else /* !CONFIG_HYPERV */
-+static inline int hv_remote_flush_tlb(struct kvm *kvm)
-+{
-+	return -EOPNOTSUPP;
-+}
+diff --git a/include/linux/trace.h b/include/linux/trace.h
+index 80ffda8717491..2a70a447184c9 100644
+--- a/include/linux/trace.h
++++ b/include/linux/trace.h
+@@ -33,6 +33,18 @@ struct trace_array;
+ int register_ftrace_export(struct trace_export *export);
+ int unregister_ftrace_export(struct trace_export *export);
+ 
++/**
++ * trace_array_puts - write a constant string into the trace buffer.
++ * @tr:    The trace array to write to
++ * @str:   The constant string to write
++ */
++#define trace_array_puts(tr, str)					\
++	({								\
++		str ? __trace_array_puts(tr, _THIS_IP_, str, strlen(str)) : -1;	\
++	})
++int __trace_array_puts(struct trace_array *tr, unsigned long ip,
++		       const char *str, int size);
 +
- static inline void hv_track_root_tdp(struct kvm_vcpu *vcpu, hpa_t root_tdp)
- {
- }
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 3629dd979667c..9599931c7d572 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -3719,7 +3719,7 @@ static void svm_enable_nmi_window(struct kvm_vcpu *vcpu)
- 	svm->vmcb->save.rflags |= (X86_EFLAGS_TF | X86_EFLAGS_RF);
- }
- 
--static void svm_flush_tlb_current(struct kvm_vcpu *vcpu)
-+static void svm_flush_tlb_asid(struct kvm_vcpu *vcpu)
- {
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 
-@@ -3736,6 +3736,37 @@ static void svm_flush_tlb_current(struct kvm_vcpu *vcpu)
- 		svm->current_vmcb->asid_generation--;
+ void trace_printk_init_buffers(void);
+ __printf(3, 4)
+ int trace_array_printk(struct trace_array *tr, unsigned long ip,
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 78855e74e355f..5016ae826c463 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -1002,13 +1002,8 @@ __buffer_unlock_commit(struct trace_buffer *buffer, struct ring_buffer_event *ev
+ 		ring_buffer_unlock_commit(buffer, event);
  }
  
-+static void svm_flush_tlb_current(struct kvm_vcpu *vcpu)
-+{
-+	hpa_t root_tdp = vcpu->arch.mmu->root.hpa;
-+
-+	/*
-+	 * When running on Hyper-V with EnlightenedNptTlb enabled, explicitly
-+	 * flush the NPT mappings via hypercall as flushing the ASID only
-+	 * affects virtual to physical mappings, it does not invalidate guest
-+	 * physical to host physical mappings.
-+	 */
-+	if (svm_hv_is_enlightened_tlb_enabled(vcpu) && VALID_PAGE(root_tdp))
-+		hyperv_flush_guest_mapping(root_tdp);
-+
-+	svm_flush_tlb_asid(vcpu);
-+}
-+
-+static void svm_flush_tlb_all(struct kvm_vcpu *vcpu)
-+{
-+	/*
-+	 * When running on Hyper-V with EnlightenedNptTlb enabled, remote TLB
-+	 * flushes should be routed to hv_remote_flush_tlb() without requesting
-+	 * a "regular" remote flush.  Reaching this point means either there's
-+	 * a KVM bug or a prior hv_remote_flush_tlb() call failed, both of
-+	 * which might be fatal to the guest.  Yell, but try to recover.
-+	 */
-+	if (WARN_ON_ONCE(svm_hv_is_enlightened_tlb_enabled(vcpu)))
-+		hv_remote_flush_tlb(vcpu->kvm);
-+
-+	svm_flush_tlb_asid(vcpu);
-+}
-+
- static void svm_flush_tlb_gva(struct kvm_vcpu *vcpu, gva_t gva)
+-/**
+- * __trace_puts - write a constant string into the trace buffer.
+- * @ip:	   The address of the caller
+- * @str:   The constant string to write
+- * @size:  The size of the string.
+- */
+-int __trace_puts(unsigned long ip, const char *str, int size)
++int __trace_array_puts(struct trace_array *tr, unsigned long ip,
++		       const char *str, int size)
  {
- 	struct vcpu_svm *svm = to_svm(vcpu);
-@@ -4733,10 +4764,10 @@ static struct kvm_x86_ops svm_x86_ops __initdata = {
- 	.set_rflags = svm_set_rflags,
- 	.get_if_flag = svm_get_if_flag,
+ 	struct ring_buffer_event *event;
+ 	struct trace_buffer *buffer;
+@@ -1016,7 +1011,7 @@ int __trace_puts(unsigned long ip, const char *str, int size)
+ 	unsigned int trace_ctx;
+ 	int alloc;
  
--	.flush_tlb_all = svm_flush_tlb_current,
-+	.flush_tlb_all = svm_flush_tlb_all,
- 	.flush_tlb_current = svm_flush_tlb_current,
- 	.flush_tlb_gva = svm_flush_tlb_gva,
--	.flush_tlb_guest = svm_flush_tlb_current,
-+	.flush_tlb_guest = svm_flush_tlb_asid,
+-	if (!(global_trace.trace_flags & TRACE_ITER_PRINTK))
++	if (!(tr->trace_flags & TRACE_ITER_PRINTK))
+ 		return 0;
  
- 	.vcpu_pre_run = svm_vcpu_pre_run,
- 	.vcpu_run = svm_vcpu_run,
-diff --git a/arch/x86/kvm/svm/svm_onhyperv.h b/arch/x86/kvm/svm/svm_onhyperv.h
-index 780b6c09cfe4b..9a6a34149919c 100644
---- a/arch/x86/kvm/svm/svm_onhyperv.h
-+++ b/arch/x86/kvm/svm/svm_onhyperv.h
-@@ -6,6 +6,8 @@
- #ifndef __ARCH_X86_KVM_SVM_ONHYPERV_H__
- #define __ARCH_X86_KVM_SVM_ONHYPERV_H__
+ 	if (unlikely(tracing_selftest_running || tracing_disabled))
+@@ -1025,7 +1020,7 @@ int __trace_puts(unsigned long ip, const char *str, int size)
+ 	alloc = sizeof(*entry) + size + 2; /* possible \n added */
  
-+#include <asm/mshyperv.h>
-+
- #if IS_ENABLED(CONFIG_HYPERV)
+ 	trace_ctx = tracing_gen_ctx();
+-	buffer = global_trace.array_buffer.buffer;
++	buffer = tr->array_buffer.buffer;
+ 	ring_buffer_nest_start(buffer);
+ 	event = __trace_buffer_lock_reserve(buffer, TRACE_PRINT, alloc,
+ 					    trace_ctx);
+@@ -1047,11 +1042,23 @@ int __trace_puts(unsigned long ip, const char *str, int size)
+ 		entry->buf[size] = '\0';
  
- #include "kvm_onhyperv.h"
-@@ -15,6 +17,14 @@ static struct kvm_x86_ops svm_x86_ops;
- 
- int svm_hv_enable_direct_tlbflush(struct kvm_vcpu *vcpu);
- 
-+static inline bool svm_hv_is_enlightened_tlb_enabled(struct kvm_vcpu *vcpu)
-+{
-+	struct hv_vmcb_enlightenments *hve = &to_svm(vcpu)->vmcb->control.hv_enlightenments;
-+
-+	return ms_hyperv.nested_features & HV_X64_NESTED_ENLIGHTENED_TLB &&
-+	       !!hve->hv_enlightenments_control.enlightened_npt_tlb;
-+}
-+
- static inline void svm_hv_init_vmcb(struct vmcb *vmcb)
- {
- 	struct hv_vmcb_enlightenments *hve = &vmcb->control.hv_enlightenments;
-@@ -80,6 +90,11 @@ static inline void svm_hv_update_vp_id(struct vmcb *vmcb, struct kvm_vcpu *vcpu)
+ 	__buffer_unlock_commit(buffer, event);
+-	ftrace_trace_stack(&global_trace, buffer, trace_ctx, 4, NULL);
++	ftrace_trace_stack(tr, buffer, trace_ctx, 4, NULL);
+  out:
+ 	ring_buffer_nest_end(buffer);
+ 	return size;
  }
- #else
- 
-+static inline bool svm_hv_is_enlightened_tlb_enabled(struct kvm_vcpu *vcpu)
-+{
-+	return false;
-+}
++EXPORT_SYMBOL_GPL(__trace_array_puts);
 +
- static inline void svm_hv_init_vmcb(struct vmcb *vmcb)
- {
- }
++/**
++ * __trace_puts - write a constant string into the trace buffer.
++ * @ip:	   The address of the caller
++ * @str:   The constant string to write
++ * @size:  The size of the string.
++ */
++int __trace_puts(unsigned long ip, const char *str, int size)
++{
++	return __trace_array_puts(&global_trace, ip, str, size);
++}
+ EXPORT_SYMBOL_GPL(__trace_puts);
+ 
+ /**
 -- 
 2.39.2
 
