@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7061A2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:40:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91C3C433EF;
-	Tue, 18 Apr 2023 12:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135BA2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:40:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89442C433EF;
+	Tue, 18 Apr 2023 12:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821611;
-	bh=w+eQeY8xWmJH+xm58zvXHBkiJC8aAfsMU8f1VaxE4AQ=;
+	s=korg; t=1681821613;
+	bh=3/hwt9cVdc9wCZLUDO3ZVG+Fy7j/VfaytC9NbOq2eBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkLRH3T2fEDzlQrb+sm7hQr15QxaoZHaDi/six2UKCE9TM0pH3DzrzL4kuvExqmmG
-	 Jtaym1WesFsJeEp95DVyThG8P0uqIXrF+t3pREVKu8E2JkqEyPcIOAoL+WKywOFyCr
-	 MNapZA8uMbR6cNwnOhzGfjctN6Gpyp3vk3+YlVrg=
+	b=YIZAgSDJTb5fp9f4WLd8eXtO6wdMSXZely2WJRHwJ8/THAQRTwrSwSZBzuRfExDV5
+	 +naAx3AbUdbOlbR2XcLkMnU9Mb4DOhQKNHsoBJVvuNtPThVerOC8nrsZy4Bik26/gm
+	 Zq4rhDnfMtP7iqnwl1WR/Y1G6Ygin+nhBUpcSj5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grant Grundler <grundler@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 39/91] power: supply: cros_usbpd: reclassify "default case!" as debug
-Date: Tue, 18 Apr 2023 14:21:43 +0200
-Message-Id: <20230418120306.925146078@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 66/91] mptcp: stricter state check in mptcp_worker
+Date: Tue, 18 Apr 2023 14:22:10 +0200
+Message-Id: <20230418120307.864966639@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -36,42 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Grant Grundler <grundler@chromium.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 14c76b2e75bca4d96e2b85a0c12aa43e84fe3f74 ]
+commit d6a0443733434408f2cbd4c53fea6910599bab9e upstream.
 
-This doesn't need to be printed every second as an error:
-...
-<3>[17438.628385] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-<3>[17439.634176] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-<3>[17440.640298] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-...
+As reported by Christoph, the mptcp protocol can run the
+worker when the relevant msk socket is in an unexpected state:
 
-Reduce priority from ERROR to DEBUG.
+connect()
+// incoming reset + fastclose
+// the mptcp worker is scheduled
+mptcp_disconnect()
+// msk is now CLOSED
+listen()
+mptcp_worker()
 
-Signed-off-by: Grant Grundler <grundler@chromium.org>
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Leading to the following splat:
+
+divide error: 0000 [#1] PREEMPT SMP
+CPU: 1 PID: 21 Comm: kworker/1:0 Not tainted 6.3.0-rc1-gde5e8fd0123c #11
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+Workqueue: events mptcp_worker
+RIP: 0010:__tcp_select_window+0x22c/0x4b0 net/ipv4/tcp_output.c:3018
+RSP: 0018:ffffc900000b3c98 EFLAGS: 00010293
+RAX: 000000000000ffd7 RBX: 000000000000ffd7 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: ffffffff8214ce97 RDI: 0000000000000004
+RBP: 000000000000ffd7 R08: 0000000000000004 R09: 0000000000010000
+R10: 000000000000ffd7 R11: ffff888005afa148 R12: 000000000000ffd7
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  0000000000000000(0000) GS:ffff88803ed00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000405270 CR3: 000000003011e006 CR4: 0000000000370ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ tcp_select_window net/ipv4/tcp_output.c:262 [inline]
+ __tcp_transmit_skb+0x356/0x1280 net/ipv4/tcp_output.c:1345
+ tcp_transmit_skb net/ipv4/tcp_output.c:1417 [inline]
+ tcp_send_active_reset+0x13e/0x320 net/ipv4/tcp_output.c:3459
+ mptcp_check_fastclose net/mptcp/protocol.c:2530 [inline]
+ mptcp_worker+0x6c7/0x800 net/mptcp/protocol.c:2705
+ process_one_work+0x3bd/0x950 kernel/workqueue.c:2390
+ worker_thread+0x5b/0x610 kernel/workqueue.c:2537
+ kthread+0x138/0x170 kernel/kthread.c:376
+ ret_from_fork+0x2c/0x50 arch/x86/entry/entry_64.S:308
+ </TASK>
+
+This change addresses the issue explicitly checking for bad states
+before running the mptcp worker.
+
+Fixes: e16163b6e2b7 ("mptcp: refactor shutdown and close")
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/374
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/cros_usbpd-charger.c | 2 +-
+ net/mptcp/protocol.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/cros_usbpd-charger.c b/drivers/power/supply/cros_usbpd-charger.c
-index d89e08efd2ad0..0a4f02e4ae7ba 100644
---- a/drivers/power/supply/cros_usbpd-charger.c
-+++ b/drivers/power/supply/cros_usbpd-charger.c
-@@ -276,7 +276,7 @@ static int cros_usbpd_charger_get_power_info(struct port_data *port)
- 		port->psy_current_max = 0;
- 		break;
- 	default:
--		dev_err(dev, "Port %d: default case!\n", port->port_number);
-+		dev_dbg(dev, "Port %d: default case!\n", port->port_number);
- 		port->psy_usb_type = POWER_SUPPLY_USB_TYPE_SDP;
- 	}
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2448,7 +2448,7 @@ static void mptcp_worker(struct work_str
  
--- 
-2.39.2
-
+ 	lock_sock(sk);
+ 	state = sk->sk_state;
+-	if (unlikely(state == TCP_CLOSE))
++	if (unlikely((1 << state) & (TCPF_CLOSE | TCPF_LISTEN)))
+ 		goto unlock;
+ 
+ 	mptcp_check_data_fin_ack(sk);
 
 
