@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49827257D
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3951C433D2;
-	Tue, 18 Apr 2023 12:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7772572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7286AC4339B;
+	Tue, 18 Apr 2023 12:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822143;
-	bh=+u1662A/TS/jEK57TZTkhaiBLkAVM7lwAXCYbZamQng=;
+	s=korg; t=1681822145;
+	bh=T+bcKzURiSu7tT9sZV8X4D3tDFSjNO+KceGYoPkhe1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=drni8X0E3Dfuk0aK38Rcz6AovZHWHLK6RsMa5oNRDxg3kQrZlo+ypSVr+Cx8Y9AaL
-	 +wiUZNnSRRzo+HLdeQv439Sw3sVbZFQDEGa+j0lUg5TTPLgChefPQuG8OcqwaI/4+R
-	 AcWVJksd3jNG2UDHjBod6b3spCiAgpiXH8wPnvTE=
+	b=bbKcFU+1jgOA8velc89C4/PN00KOWH1tPd88iqNRFd5qXCUNks/DDBNAP1S5ItnMQ
+	 qVGxUH0wKtKNdQ1h5Fy22NYwLbvVueAYoFOsu19kGEEVzbFnDsi+sszTQ5qvgdMpjl
+	 joTuLRxK1JnEot70nmzLvKL+Gpl4sD7sbG4Q3xNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Biang <xubiang@hust.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.2 009/139] ALSA: firewire-tascam: add missing unwind goto in snd_tscm_stream_start_duplex()
-Date: Tue, 18 Apr 2023 14:21:14 +0200
-Message-Id: <20230418120314.058253037@linuxfoundation.org>
+Subject: [PATCH 6.2 010/139] ALSA: emu10k1: dont create old pass-through playback device on Audigy
+Date: Tue, 18 Apr 2023 14:21:15 +0200
+Message-Id: <20230418120314.090583853@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,58 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Biang <xubiang@hust.edu.cn>
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-commit fb4a624f88f658c7b7ae124452bd42eaa8ac7168 upstream.
+commit 8dd13214a810c695044aa168c0ddba1a9c433e4f upstream.
 
-Smatch Warns:
-sound/firewire/tascam/tascam-stream.c:493 snd_tscm_stream_start_duplex()
-warn: missing unwind goto?
+It could have never worked, as snd_emu10k1_fx8010_playback_prepare() and
+snd_emu10k1_fx8010_playback_hw_free() assume the emu10k1 offset for the
+ETRAM, and the default DSP code includes no handler for it. It also
+wouldn't make a lot of sense to make it work, as Audigy has an own, much
+simpler, pass-through mechanism. So just skip creation of the device.
 
-The direct return will cause the stream list of "&tscm->domain" unemptied
-and the session in "tscm" unfinished if amdtp_domain_start() returns with
-an error.
-
-Fix this by changing the direct return to a goto which will empty the
-stream list of "&tscm->domain" and finish the session in "tscm".
-
-The snd_tscm_stream_start_duplex() function is called in the prepare
-callback of PCM. According to "ALSA Kernel API Documentation", the prepare
-callback of PCM will be called many times at each setup. So, if the
-"&d->streams" list is not emptied, when the prepare callback is called
-next time, snd_tscm_stream_start_duplex() will receive -EBUSY from
-amdtp_domain_add_stream() that tries to add an existing stream to the
-domain. The error handling code after the "error" label will be executed
-in this case, and the "&d->streams" list will be emptied. So not emptying
-the "&d->streams" list will not cause an issue. But it is more efficient
-and readable to empty it on the first error by changing the direct return
-to a goto statement.
-
-The session in "tscm" has been begun before amdtp_domain_start(), so it
-needs to be finished when amdtp_domain_start() fails.
-
-Fixes: c281d46a51e3 ("ALSA: firewire-tascam: support AMDTP domain")
-Signed-off-by: Xu Biang <xubiang@hust.edu.cn>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Acked-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230406132801.105108-1-xubiang@hust.edu.cn
+Link: https://lore.kernel.org/r/20230405201220.2197938-1-oswald.buddenhagen@gmx.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/tascam/tascam-stream.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/emu10k1/emupcm.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/sound/firewire/tascam/tascam-stream.c
-+++ b/sound/firewire/tascam/tascam-stream.c
-@@ -490,7 +490,7 @@ int snd_tscm_stream_start_duplex(struct
- 		// packet is important for media clock recovery.
- 		err = amdtp_domain_start(&tscm->domain, tx_init_skip_cycles, true, true);
- 		if (err < 0)
--			return err;
-+			goto error;
+--- a/sound/pci/emu10k1/emupcm.c
++++ b/sound/pci/emu10k1/emupcm.c
+@@ -1781,17 +1781,21 @@ int snd_emu10k1_pcm_efx(struct snd_emu10
+ 	struct snd_kcontrol *kctl;
+ 	int err;
  
- 		if (!amdtp_domain_wait_ready(&tscm->domain, READY_TIMEOUT_MS)) {
- 			err = -ETIMEDOUT;
+-	err = snd_pcm_new(emu->card, "emu10k1 efx", device, 8, 1, &pcm);
++	err = snd_pcm_new(emu->card, "emu10k1 efx", device, emu->audigy ? 0 : 8, 1, &pcm);
+ 	if (err < 0)
+ 		return err;
+ 
+ 	pcm->private_data = emu;
+ 
+-	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &snd_emu10k1_fx8010_playback_ops);
++	if (!emu->audigy)
++		snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &snd_emu10k1_fx8010_playback_ops);
+ 	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_CAPTURE, &snd_emu10k1_capture_efx_ops);
+ 
+ 	pcm->info_flags = 0;
+-	strcpy(pcm->name, "Multichannel Capture/PT Playback");
++	if (emu->audigy)
++		strcpy(pcm->name, "Multichannel Capture");
++	else
++		strcpy(pcm->name, "Multichannel Capture/PT Playback");
+ 	emu->pcm_efx = pcm;
+ 
+ 	/* EFX capture - record the "FXBUS2" channels, by default we connect the EXTINs 
 
 
