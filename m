@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A349C2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BB9C433EF;
-	Tue, 18 Apr 2023 12:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1B12566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C309AC4339E;
+	Tue, 18 Apr 2023 12:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821053;
-	bh=/jVknyqDoBXKUCtuDs+bg2w7QcWTLJv20qYAW+HF7aQ=;
+	s=korg; t=1681821056;
+	bh=UwAHvUIjp3nYOSwv4c7kg7PDjSa/URXdq1MvhJC35CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y0saa8sFhuVpRWDlqs5odkfWhlO1ymBQ9SiD/Z8+nqxdtaCvhSwUKkIaBEw0f1ovN
-	 bQJcN/CI5qmhluH40hWnXw+BPm7SXLgUSPwryKjaM4PYEpG8Lk2RJ9CAowq+mJMNvo
-	 bZVk++WsVInVaI6Q57yUlkFVSFMsWXT1o4wPHByM=
+	b=vqm0MXFf1WBrEwqw0C7iNB4xdjyCgGntKrAQBaAkMMzcL1pQHnYrFVc8H+SMpBNtV
+	 8Lv9pCZhcyXbd1V06OL3G3uUk4ZpdYXG1BE3LUhRzRj3XD9tTrM4uxyCa0lT6/fbgW
+	 ymhIE2JDpQsh3Ofry3v64YT+LEOu8fVqDZUrlsuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Cherian <george.cherian@marvell.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	"Tyler Hicks (Microsoft)" <code@tyhicks.com>
-Subject: [PATCH 5.4 74/92] watchdog: sbsa_wdog: Make sure the timeout programming is within the limits
-Date: Tue, 18 Apr 2023 14:21:49 +0200
-Message-Id: <20230418120307.376820411@linuxfoundation.org>
+	Steve Clevenger <scclevenger@os.amperecomputing.com>,
+	James Clark <james.clark@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH 5.4 75/92] coresight-etm4: Fix for() loop drvdata->nr_addr_cmp range bug
+Date: Tue, 18 Apr 2023 14:21:50 +0200
+Message-Id: <20230418120307.416582349@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -36,36 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: George Cherian <george.cherian@marvell.com>
+From: Steve Clevenger <scclevenger@os.amperecomputing.com>
 
-commit 000987a38b53c172f435142a4026dd71378ca464 upstream.
+commit bf84937e882009075f57fd213836256fc65d96bc upstream.
 
-Make sure to honour the max_hw_heartbeat_ms while programming the timeout
-value to WOR. Clamp the timeout passed to sbsa_gwdt_set_timeout() to
-make sure the programmed value is within the permissible range.
+In etm4_enable_hw, fix for() loop range to represent address comparator pairs.
 
-Fixes: abd3ac7902fb ("watchdog: sbsa: Support architecture version 1")
-
-Signed-off-by: George Cherian <george.cherian@marvell.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230209021117.1512097-1-george.cherian@marvell.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Signed-off-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
+Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve Clevenger <scclevenger@os.amperecomputing.com>
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/4a4ee61ce8ef402615a4528b21a051de3444fb7b.1677540079.git.scclevenger@os.amperecomputing.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/sbsa_gwdt.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwtracing/coresight/coresight-etm4x.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/watchdog/sbsa_gwdt.c
-+++ b/drivers/watchdog/sbsa_gwdt.c
-@@ -121,6 +121,7 @@ static int sbsa_gwdt_set_timeout(struct
- 	struct sbsa_gwdt *gwdt = watchdog_get_drvdata(wdd);
- 
- 	wdd->timeout = timeout;
-+	timeout = clamp_t(unsigned int, timeout, 1, wdd->max_hw_heartbeat_ms / 1000);
- 
- 	if (action)
- 		writel(gwdt->clk * timeout,
+--- a/drivers/hwtracing/coresight/coresight-etm4x.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x.c
+@@ -156,7 +156,7 @@ static int etm4_enable_hw(struct etmv4_d
+ 		writel_relaxed(config->ss_pe_cmp[i],
+ 			       drvdata->base + TRCSSPCICRn(i));
+ 	}
+-	for (i = 0; i < drvdata->nr_addr_cmp; i++) {
++	for (i = 0; i < drvdata->nr_addr_cmp * 2; i++) {
+ 		writeq_relaxed(config->addr_val[i],
+ 			       drvdata->base + TRCACVRn(i));
+ 		writeq_relaxed(config->addr_acc[i],
 
 
