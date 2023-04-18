@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444AF2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB77C433EF;
-	Tue, 18 Apr 2023 12:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E192566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 678EFC433EF;
+	Tue, 18 Apr 2023 12:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821035;
-	bh=6XhEvYrJCTz1ciT2/7zgYjLxhKowSkg9Bsv+rqrzEZw=;
+	s=korg; t=1681821037;
+	bh=8yuQmf4c41uS0KiWGa06rUuUPSrGNFfZKE8qvMfZzGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ItxwECczqvX3kxR3ZB+sMywC/1vKtQqf1xVdvfkzIBw8YrRT6uDcC1kTwjUpHrOlg
-	 58HtvHz5lm3ceiIV8CDz7ZwZQtn/nHFJjng3zco83+l/oXqhbL30ImswLIJRfHNt/E
-	 /5oCNRW7C0iCrKV6u005MDTbqM2gSFMZTo3//Q/g=
+	b=Fzifyu7TTHaBhT8+u/oYz/t1OCnhxbIXRXRngaE/GT7pUeXd0AL5QGzoHB57LdwSO
+	 KW0RhtRfkrUdmQ8eolt2matMhdIQtXMqkfhN4kVDKaE5lz7ioqgdEhlBsSDzx/i52o
+	 T1Ek2a9G9WPUd0h8jwWb6jcnxOPl0Shu1I7f9avc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <ptyadav@amazon.de>
-Subject: [PATCH 5.4 37/92] net_sched: prevent NULL dereference if default qdisc setup failed
-Date: Tue, 18 Apr 2023 14:21:12 +0200
-Message-Id: <20230418120306.139900500@linuxfoundation.org>
+	Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>
+Subject: [PATCH 5.4 38/92] drm/panfrost: Fix the panfrost_mmu_map_fault_addr() error path
+Date: Tue, 18 Apr 2023 14:21:13 +0200
+Message-Id: <20230418120306.170047286@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -33,40 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pratyush Yadav <ptyadav@amazon.de>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-If qdisc_create_dflt() fails, it returns NULL. With CONFIG_NET_SCHED
-enabled, the check qdisc != &noop_qdisc passes and qdisc will be passed
-to qdisc_hash_add(), which dereferences it.
+commit 764a2ab9eb56e1200083e771aab16186836edf1d upstream.
 
-This assignment was present in the upstream commit 5891cd5ec46c2
-("net_sched: add __rcu annotation to netdev->qdisc") but was missed in
-the backport 22d95b5449249 ("net_sched: add __rcu annotation to
-netdev->qdisc"), perhaps due to merge conflicts.  dev->qdisc is
-&noop_qdisc by default and if qdisc_create_dflt() fails, this assignment
-will make sure qdisc == &noop_qdisc and no NULL dereference will take
-place.
+Make sure all bo->base.pages entries are either NULL or pointing to a
+valid page before calling drm_gem_shmem_put_pages().
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
-
-Fixes: 22d95b5449249 ("net_sched: add __rcu annotation to netdev->qdisc")
-Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
+Reported-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
+Cc: <stable@vger.kernel.org>
+Fixes: 187d2929206e ("drm/panfrost: Add support for GPU heap allocations")
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210521093811.1018992-1-boris.brezillon@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
 ---
- net/sched/sch_generic.c |    1 +
+ drivers/gpu/drm/panfrost/panfrost_mmu.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -1116,6 +1116,7 @@ static void attach_default_qdiscs(struct
- 			qdisc->ops->attach(qdisc);
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+@@ -502,6 +502,7 @@ static int panfrost_mmu_map_fault_addr(s
+ 		if (IS_ERR(pages[i])) {
+ 			mutex_unlock(&bo->base.pages_lock);
+ 			ret = PTR_ERR(pages[i]);
++			pages[i] = NULL;
+ 			goto err_pages;
  		}
  	}
-+	qdisc = rtnl_dereference(dev->qdisc);
- 
- #ifdef CONFIG_NET_SCHED
- 	if (qdisc != &noop_qdisc)
 
 
