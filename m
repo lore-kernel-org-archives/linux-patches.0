@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7B82566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31A7C4339B;
-	Tue, 18 Apr 2023 12:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AB72566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880E5C433D2;
+	Tue, 18 Apr 2023 12:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821393;
-	bh=r0IEHCvOYJxVpanua8ayvCsQ+JLlHt4Qa5L2B+2OM88=;
+	s=korg; t=1681821395;
+	bh=jKiuCN/I0vQGbdQu4sXNSE0MfTP/mdjZ3CY85HF1b/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrRjEQtTUgitzWighE22tHA+xkZ79Pa2fOhZMQwPjme6AMcektHHZFZecb5X9y5fR
-	 +vrreYulUENENd5/7nBZT8jhsiYGEjbBbjk0gkxZEh29Cyd/ILIHyWt3rilEzKYfq5
-	 qTh21Rn+VYdSsnYI7CO4j0rZeKkisb+7xfwPvYy8=
+	b=rXeQnM/mRUkW963lEo0QoNAqifM2BcYPrjAHxWPsmG+8/mVIV9NJcZf6yYzER3CoW
+	 FhJS8nnTU49ylBnKgsqIjoZmoo2CM4gpIEbdl1ss/GuYUUlCxFKTXLOkJ13R9OZF4R
+	 m+PxcjIVqqHazA3EtGy0MQidAdZlpjSyr/+SRYP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matija Glavinic Pecotic <matija.glavinic-pecotic.ext@nokia.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Gregor Herburger <gregor.herburger@tq-group.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Federico Vaga <federico.vaga@cern.ch>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/124] x86/rtc: Remove __init for runtime functions
-Date: Tue, 18 Apr 2023 14:22:08 +0200
-Message-Id: <20230418120313.758889686@linuxfoundation.org>
+Subject: [PATCH 5.10 110/124] i2c: ocores: generate stop condition after timeout in polling mode
+Date: Tue, 18 Apr 2023 14:22:09 +0200
+Message-Id: <20230418120313.793526659@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -36,51 +39,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matija Glavinic Pecotic <matija.glavinic-pecotic.ext@nokia.com>
+From: Gregor Herburger <gregor.herburger@tq-group.com>
 
-[ Upstream commit 775d3c514c5b2763a50ab7839026d7561795924d ]
+[ Upstream commit f8160d3b35fc94491bb0cb974dbda310ef96c0e2 ]
 
-set_rtc_noop(), get_rtc_noop() are after booting, therefore their __init
-annotation is wrong.
+In polling mode, no stop condition is generated after a timeout. This
+causes SCL to remain low and thereby block the bus. If this happens
+during a transfer it can cause slaves to misinterpret the subsequent
+transfer and return wrong values.
 
-A crash was observed on an x86 platform where CMOS RTC is unused and
-disabled via device tree. set_rtc_noop() was invoked from ntp:
-sync_hw_clock(), although CONFIG_RTC_SYSTOHC=n, however sync_cmos_clock()
-doesn't honour that.
+To solve this, pass the ETIMEDOUT error up from ocores_process_polling()
+instead of setting STATE_ERROR directly. The caller is adjusted to call
+ocores_process_timeout() on error both in polling and in IRQ mode, which
+will set STATE_ERROR and generate a stop condition.
 
-  Workqueue: events_power_efficient sync_hw_clock
-  RIP: 0010:set_rtc_noop
-  Call Trace:
-   update_persistent_clock64
-   sync_hw_clock
-
-Fix this by dropping the __init annotation from set/get_rtc_noop().
-
-Fixes: c311ed6183f4 ("x86/init: Allow DT configured systems to disable RTC at boot time")
-Signed-off-by: Matija Glavinic Pecotic <matija.glavinic-pecotic.ext@nokia.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/59f7ceb1-446b-1d3d-0bc8-1f0ee94b1e18@nokia.com
+Fixes: 69c8c0c0efa8 ("i2c: ocores: add polling interface")
+Signed-off-by: Gregor Herburger <gregor.herburger@tq-group.com>
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Acked-by: Peter Korsgaard <peter@korsgaard.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Federico Vaga <federico.vaga@cern.ch>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/x86_init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-ocores.c | 35 ++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/arch/x86/kernel/x86_init.c b/arch/x86/kernel/x86_init.c
-index a3038d8deb6a4..b758eeea6090b 100644
---- a/arch/x86/kernel/x86_init.c
-+++ b/arch/x86/kernel/x86_init.c
-@@ -32,8 +32,8 @@ static int __init iommu_init_noop(void) { return 0; }
- static void iommu_shutdown_noop(void) { }
- bool __init bool_x86_init_noop(void) { return false; }
- void x86_op_int_noop(int cpu) { }
--static __init int set_rtc_noop(const struct timespec64 *now) { return -EINVAL; }
--static __init void get_rtc_noop(struct timespec64 *now) { }
-+static int set_rtc_noop(const struct timespec64 *now) { return -EINVAL; }
-+static void get_rtc_noop(struct timespec64 *now) { }
+diff --git a/drivers/i2c/busses/i2c-ocores.c b/drivers/i2c/busses/i2c-ocores.c
+index f5fc75b65a194..71e26aa6bd8ff 100644
+--- a/drivers/i2c/busses/i2c-ocores.c
++++ b/drivers/i2c/busses/i2c-ocores.c
+@@ -343,18 +343,18 @@ static int ocores_poll_wait(struct ocores_i2c *i2c)
+  * ocores_isr(), we just add our polling code around it.
+  *
+  * It can run in atomic context
++ *
++ * Return: 0 on success, -ETIMEDOUT on timeout
+  */
+-static void ocores_process_polling(struct ocores_i2c *i2c)
++static int ocores_process_polling(struct ocores_i2c *i2c)
+ {
+-	while (1) {
+-		irqreturn_t ret;
+-		int err;
++	irqreturn_t ret;
++	int err = 0;
  
- static __initconst const struct of_device_id of_cmos_match[] = {
- 	{ .compatible = "motorola,mc146818" },
++	while (1) {
+ 		err = ocores_poll_wait(i2c);
+-		if (err) {
+-			i2c->state = STATE_ERROR;
++		if (err)
+ 			break; /* timeout */
+-		}
+ 
+ 		ret = ocores_isr(-1, i2c);
+ 		if (ret == IRQ_NONE)
+@@ -365,13 +365,15 @@ static void ocores_process_polling(struct ocores_i2c *i2c)
+ 					break;
+ 		}
+ 	}
++
++	return err;
+ }
+ 
+ static int ocores_xfer_core(struct ocores_i2c *i2c,
+ 			    struct i2c_msg *msgs, int num,
+ 			    bool polling)
+ {
+-	int ret;
++	int ret = 0;
+ 	u8 ctrl;
+ 
+ 	ctrl = oc_getreg(i2c, OCI2C_CONTROL);
+@@ -389,15 +391,16 @@ static int ocores_xfer_core(struct ocores_i2c *i2c,
+ 	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_START);
+ 
+ 	if (polling) {
+-		ocores_process_polling(i2c);
++		ret = ocores_process_polling(i2c);
+ 	} else {
+-		ret = wait_event_timeout(i2c->wait,
+-					 (i2c->state == STATE_ERROR) ||
+-					 (i2c->state == STATE_DONE), HZ);
+-		if (ret == 0) {
+-			ocores_process_timeout(i2c);
+-			return -ETIMEDOUT;
+-		}
++		if (wait_event_timeout(i2c->wait,
++				       (i2c->state == STATE_ERROR) ||
++				       (i2c->state == STATE_DONE), HZ) == 0)
++			ret = -ETIMEDOUT;
++	}
++	if (ret) {
++		ocores_process_timeout(i2c);
++		return ret;
+ 	}
+ 
+ 	return (i2c->state == STATE_DONE) ? num : -EIO;
 -- 
 2.39.2
 
