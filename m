@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673CE2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:53:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50A6C433D2;
-	Tue, 18 Apr 2023 12:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AB42572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:53:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C3BC433D2;
+	Tue, 18 Apr 2023 12:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822405;
-	bh=K+j/i8K8kMMSszfNupuLxaXZnj31ATwCSwYFwNpMhPQ=;
+	s=korg; t=1681822407;
+	bh=Bo+Ov/mM8A2n+RHFUjybyOZiC0R85cbf+IkHUeRwAjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIuqkOTKZKjxC5RSKwnG0OylJS++I0htWMxnWqet1kceGwYd6BcfufC2N1Rcyhs29
-	 v3skviHmdF4KBBQ1CP7LrqpOg+7K7VVeL3rc8Hb21cH84HpeLtrO+ZRs380//KsVlg
-	 hndC38ubHexkGZP7eesawaUHCLK5VuMDTmieBiDs=
+	b=I+2Hyk3KDLDB9YOxcaOgqWF+HRlxGbLeOzWUAWoK6MCXzXt1VnITjgOdw7kbo55Yr
+	 K1J6EKyv4c0BLKNPND/HomOYXN71tWZ/Uh5tfb/R0c5NAywI/ozNTRJonDCFdUedAf
+	 2xBqHrpLBMd+97gVHFlEwyb51G+1CHt6l5wFGZYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanu Malhotra <tanu.malhotra@intel.com>,
-	Shaunak Saha <shaunak.saha@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 6.2 107/139] HID: intel-ish-hid: Fix kernel panic during warm reset
-Date: Tue, 18 Apr 2023 14:22:52 +0200
-Message-Id: <20230418120317.811231086@linuxfoundation.org>
+	Ivan Bornyakov <i.bornyakov@metrotek.ru>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.2 108/139] net: sfp: initialize sfp->i2c_block_size at sfp allocation
+Date: Tue, 18 Apr 2023 14:22:53 +0200
+Message-Id: <20230418120317.842195437@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,59 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tanu Malhotra <tanu.malhotra@intel.com>
+From: Ivan Bornyakov <i.bornyakov@metrotek.ru>
 
-commit 38518593ec55e897abda4b4be77b2ec8ec4447d1 upstream.
+commit 813c2dd78618f108fdcf9cd726ea90f081ee2881 upstream.
 
-During warm reset device->fw_client is set to NULL. If a bus driver is
-registered after this NULL setting and before new firmware clients are
-enumerated by ISHTP, kernel panic will result in the function
-ishtp_cl_bus_match(). This is because of reference to
-device->fw_client->props.protocol_name.
+sfp->i2c_block_size is initialized at SFP module insertion in
+sfp_sm_mod_probe(). Because of that, if SFP module was never inserted
+since boot, sfp_read() call will lead to zero-length I2C read attempt,
+and not all I2C controllers are happy with zero-length reads.
 
-ISH firmware after getting successfully loaded, sends a warm reset
-notification to remove all clients from the bus and sets
-device->fw_client to NULL. Until kernel v5.15, all enabled ISHTP kernel
-module drivers were loaded right after any of the first ISHTP device was
-registered, regardless of whether it was a matched or an unmatched
-device. This resulted in all drivers getting registered much before the
-warm reset notification from ISH.
+One way to issue sfp_read() on empty SFP cage is to execute ethtool -m.
+If SFP module was never plugged since boot, there will be a zero-length
+I2C read attempt.
 
-Starting kernel v5.16, this issue got exposed after the change was
-introduced to load only bus drivers for the respective matching devices.
-In this scenario, cros_ec_ishtp device and cros_ec_ishtp driver are
-registered after the warm reset device fw_client NULL setting.
-cros_ec_ishtp driver_register() triggers the callback to
-ishtp_cl_bus_match() to match ISHTP driver to the device and causes kernel
-panic in guid_equal() when dereferencing fw_client NULL pointer to get
-protocol_name.
+  # ethtool -m xge0
+  i2c i2c-3: adapter quirk: no zero length (addr 0x0050, size 0, read)
+  Cannot get Module EEPROM data: Operation not supported
 
-Fixes: f155dfeaa4ee ("platform/x86: isthp_eclite: only load for matching devices")
-Fixes: facfe0a4fdce ("platform/chrome: chros_ec_ishtp: only load for matching devices")
-Fixes: 0d0cccc0fd83 ("HID: intel-ish-hid: hid-client: only load for matching devices")
-Fixes: 44e2a58cb880 ("HID: intel-ish-hid: fw-loader: only load for matching devices")
-Cc: <stable@vger.kernel.org> # 5.16+
-Signed-off-by: Tanu Malhotra <tanu.malhotra@intel.com>
-Tested-by: Shaunak Saha <shaunak.saha@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+If SFP module was plugged then removed at least once,
+sfp->i2c_block_size will be initialized and ethtool -m will fail with
+different exit code and without I2C error
+
+  # ethtool -m xge0
+  Cannot get Module EEPROM data: Remote I/O error
+
+Fix this by initializing sfp->i2_block_size at struct sfp allocation
+stage so no wild sfp_read() could issue zero-length I2C read.
+
+Signed-off-by: Ivan Bornyakov <i.bornyakov@metrotek.ru>
+Fixes: 0d035bed2a4a ("net: sfp: VSOL V2801F / CarlitoxxPro CPGOS03-0490 v2.0 workaround")
+Cc: stable@vger.kernel.org
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/intel-ish-hid/ishtp/bus.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/sfp.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/intel-ish-hid/ishtp/bus.c
-+++ b/drivers/hid/intel-ish-hid/ishtp/bus.c
-@@ -241,8 +241,8 @@ static int ishtp_cl_bus_match(struct dev
- 	struct ishtp_cl_device *device = to_ishtp_cl_device(dev);
- 	struct ishtp_cl_driver *driver = to_ishtp_cl_driver(drv);
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -212,6 +212,12 @@ static const enum gpiod_flags gpio_flags
+ #define SFP_PHY_ADDR		22
+ #define SFP_PHY_ADDR_ROLLBALL	17
  
--	return guid_equal(&driver->id[0].guid,
--			  &device->fw_client->props.protocol_name);
-+	return(device->fw_client ? guid_equal(&driver->id[0].guid,
-+	       &device->fw_client->props.protocol_name) : 0);
- }
++/* SFP_EEPROM_BLOCK_SIZE is the size of data chunk to read the EEPROM
++ * at a time. Some SFP modules and also some Linux I2C drivers do not like
++ * reads longer than 16 bytes.
++ */
++#define SFP_EEPROM_BLOCK_SIZE	16
++
+ struct sff_data {
+ 	unsigned int gpios;
+ 	bool (*module_supported)(const struct sfp_eeprom_id *id);
+@@ -1927,11 +1933,7 @@ static int sfp_sm_mod_probe(struct sfp *
+ 	u8 check;
+ 	int ret;
  
- /**
+-	/* Some SFP modules and also some Linux I2C drivers do not like reads
+-	 * longer than 16 bytes, so read the EEPROM in chunks of 16 bytes at
+-	 * a time.
+-	 */
+-	sfp->i2c_block_size = 16;
++	sfp->i2c_block_size = SFP_EEPROM_BLOCK_SIZE;
+ 
+ 	ret = sfp_read(sfp, false, 0, &id.base, sizeof(id.base));
+ 	if (ret < 0) {
+@@ -2614,6 +2616,7 @@ static struct sfp *sfp_alloc(struct devi
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	sfp->dev = dev;
++	sfp->i2c_block_size = SFP_EEPROM_BLOCK_SIZE;
+ 
+ 	mutex_init(&sfp->sm_mutex);
+ 	mutex_init(&sfp->st_mutex);
 
 
