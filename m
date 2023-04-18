@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7029A2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F19C433D2;
-	Tue, 18 Apr 2023 12:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083522572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BB8C433EF;
+	Tue, 18 Apr 2023 12:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822230;
-	bh=Id7GFtZh4hW4W0Drte2YouIRbhqjeE2dYh5azugHUDY=;
+	s=korg; t=1681822232;
+	bh=wn4iI1GBaDSagx2FnwtlVAJZGs1bE4PSVxvDd8xHZAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKgMJ5UHVoIDm6qh/E+MUD7M3dbwgVl33sQAxlFXDAH4FWaTK8uCXzY1WyerqJqeM
-	 E5oPA7SpeOxddHHc2WMVPJn4JVLLRmiRPTGttzrek5JNosgDXK3oSIrPHv5ZNX3Qwv
-	 kVdjfJzBAK204X6rLmH3/bpW/aG53JYkgcDHvGlM=
+	b=rHlEJzY57lRlgcsIproCLh6rNqE8a3ai/dFzADZWzEUdS9GbwBnVH23h6og7EVlMg
+	 bMPNWqgvxHr89IpPuJjRGUIl1bYcAKKsEjUs0/5d5cnocovL/AbvPJ2Nx2mHf4Ykau
+	 YeOOCVa20yFCy+Cwg1lWBroHDpz1wg+k+4qZzz7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	George Guo <guodongtai@kylinos.cn>,
 	Daniel Borkmann <daniel@iogearbox.net>,
+	WANG Xuerui <git@xen0n.name>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 042/139] bpf: tcp: Use sock_gen_put instead of sock_put in bpf_iter_tcp
-Date: Tue, 18 Apr 2023 14:21:47 +0200
-Message-Id: <20230418120315.230258902@linuxfoundation.org>
+Subject: [PATCH 6.2 043/139] LoongArch, bpf: Fix jit to skip speculation barrier opcode
+Date: Tue, 18 Apr 2023 14:21:48 +0200
+Message-Id: <20230418120315.265927870@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -35,47 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: George Guo <guodongtai@kylinos.cn>
 
-[ Upstream commit 580031ff9952b7dbf48dedba6b56a100ae002bef ]
+[ Upstream commit a6f6a95f25803500079513780d11a911ce551d76 ]
 
-While reviewing the udp-iter batching patches, noticed the bpf_iter_tcp
-calling sock_put() is incorrect. It should call sock_gen_put instead
-because bpf_iter_tcp is iterating the ehash table which has the req sk
-and tw sk. This patch replaces all sock_put with sock_gen_put in the
-bpf_iter_tcp codepath.
+Just skip the opcode(BPF_ST | BPF_NOSPEC) in the BPF JIT instead of
+failing to JIT the entire program, given LoongArch currently has no
+couterpart of a speculation barrier instruction. To verify the issue,
+use the ltp testcase as shown below.
 
-Fixes: 04c7820b776f ("bpf: tcp: Bpf iter batching and lock_sock")
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Also, Wang says:
+
+  I can confirm there's currently no speculation barrier equivalent
+  on LonogArch. (Loongson says there are builtin mitigations for
+  Spectre-V1 and V2 on their chips, and AFAIK efforts to port the
+  exploits to mips/LoongArch have all failed a few years ago.)
+
+Without this patch:
+
+  $ ./bpf_prog02
+  [...]
+  bpf_common.c:123: TBROK: Failed verification: ??? (524)
+  [...]
+  Summary:
+  passed   0
+  failed   0
+  broken   1
+  skipped  0
+  warnings 0
+
+With this patch:
+
+  $ ./bpf_prog02
+  [...]
+  Summary:
+  passed   0
+  failed   0
+  broken   0
+  skipped  0
+  warnings 0
+
+Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
+Signed-off-by: George Guo <guodongtai@kylinos.cn>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230328004232.2134233-1-martin.lau@linux.dev
+Acked-by: WANG Xuerui <git@xen0n.name>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Link: https://lore.kernel.org/bpf/20230328071335.2664966-1-guodongtai@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/loongarch/net/bpf_jit.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 8320d0ecb13ae..339a9cea90473 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -2779,7 +2779,7 @@ static int tcp_prog_seq_show(struct bpf_prog *prog, struct bpf_iter_meta *meta,
- static void bpf_iter_tcp_put_batch(struct bpf_tcp_iter_state *iter)
- {
- 	while (iter->cur_sk < iter->end_sk)
--		sock_put(iter->batch[iter->cur_sk++]);
-+		sock_gen_put(iter->batch[iter->cur_sk++]);
- }
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index 288003a9f0cae..d586df48ecc64 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -1022,6 +1022,10 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
+ 		emit_atomic(insn, ctx);
+ 		break;
  
- static int bpf_iter_tcp_realloc_batch(struct bpf_tcp_iter_state *iter,
-@@ -2940,7 +2940,7 @@ static void *bpf_iter_tcp_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- 		 * st->bucket.  See tcp_seek_last_pos().
- 		 */
- 		st->offset++;
--		sock_put(iter->batch[iter->cur_sk++]);
-+		sock_gen_put(iter->batch[iter->cur_sk++]);
- 	}
- 
- 	if (iter->cur_sk < iter->end_sk)
++	/* Speculation barrier */
++	case BPF_ST | BPF_NOSPEC:
++		break;
++
+ 	default:
+ 		pr_err("bpf_jit: unknown opcode %02x\n", code);
+ 		return -EINVAL;
 -- 
 2.39.2
 
