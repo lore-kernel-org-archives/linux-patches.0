@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18E92566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DA6C433EF;
-	Tue, 18 Apr 2023 12:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664AE2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F3CC433D2;
+	Tue, 18 Apr 2023 12:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821306;
-	bh=zW9n//j2WvJ1W+jMmYYCVWTdLv9qHX/p60APwCAMP0g=;
+	s=korg; t=1681821309;
+	bh=YCz5Z0ggB9GHbRITYlaXLp5w4MLs4qZj+Hw5EKgws3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPA+iVFclimW6817nOC3DY221ZmOmxEPBu98wPOu+ljzbLFuYV+3s4hA9cZVCbb3M
-	 FuUKRxzFC6uqaRp37fcAo7XW1jdmnZHZ37E3gx4Y/7Ru7zOtg52TSGhK+hMfhgvfJL
-	 nqbQkCyLJfMvJ+2rmqtOmmkdMbffNwD9dopKHSw8=
+	b=19uRYFtCL9BCE7eM0U7Qgh9FcTKZsp3ZsRplc1Ayp0OG7JX8Un0vXSWUbSoWjqzzI
+	 vU3jhSQGT9S9UZKBIowf86ictAg8lF6Aqv3muoXpxQ6JK8djUOSVdFaXHqcgfC93JC
+	 HdxPRNOMuu9T8k5GwIVwz8cxbfheW2Y1AmrYNCjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	YueHaibing <yuehaibing@huawei.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 076/124] tcp: convert elligible sysctls to u8
-Date: Tue, 18 Apr 2023 14:21:35 +0200
-Message-Id: <20230418120312.629258550@linuxfoundation.org>
+Subject: [PATCH 5.10 077/124] tcp: restrict net.ipv4.tcp_app_win
+Date: Tue, 18 Apr 2023 14:21:36 +0200
+Message-Id: <20230418120312.660137303@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,489 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 4ecc1baf362c5df2dcabe242511e38ee28486545 ]
+[ Upstream commit dc5110c2d959c1707e12df5f792f41d90614adaa ]
 
-Many tcp sysctls are either bools or small ints that can fit into u8.
+UBSAN: shift-out-of-bounds in net/ipv4/tcp_input.c:555:23
+shift exponent 255 is too large for 32-bit type 'int'
+CPU: 1 PID: 7907 Comm: ssh Not tainted 6.3.0-rc4-00161-g62bad54b26db-dirty #206
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x136/0x150
+ __ubsan_handle_shift_out_of_bounds+0x21f/0x5a0
+ tcp_init_transfer.cold+0x3a/0xb9
+ tcp_finish_connect+0x1d0/0x620
+ tcp_rcv_state_process+0xd78/0x4d60
+ tcp_v4_do_rcv+0x33d/0x9d0
+ __release_sock+0x133/0x3b0
+ release_sock+0x58/0x1b0
 
-Reducing space taken by sysctls can save few cache line misses
-when sending/receiving data while cpu caches are empty,
-for example after cpu idle period.
+'maxwin' is int, shifting int for 32 or more bits is undefined behaviour.
 
-This is hard to measure with typical network performance tests,
-but after this patch, struct netns_ipv4 has shrunk
-by three cache lines.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: dc5110c2d959 ("tcp: restrict net.ipv4.tcp_app_win")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netns/ipv4.h   |  68 +++++++++----------
- net/ipv4/sysctl_net_ipv4.c | 136 ++++++++++++++++++-------------------
- 2 files changed, 102 insertions(+), 102 deletions(-)
+ Documentation/networking/ip-sysctl.rst | 2 ++
+ net/ipv4/sysctl_net_ipv4.c             | 3 +++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/include/net/netns/ipv4.h b/include/net/netns/ipv4.h
-index 92e3d8fe954ab..d8b320cf54ba0 100644
---- a/include/net/netns/ipv4.h
-+++ b/include/net/netns/ipv4.h
-@@ -114,11 +114,11 @@ struct netns_ipv4 {
- 	u8 sysctl_nexthop_compat_mode;
+diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
+index 0158dff638873..df26cf4110ef5 100644
+--- a/Documentation/networking/ip-sysctl.rst
++++ b/Documentation/networking/ip-sysctl.rst
+@@ -272,6 +272,8 @@ tcp_app_win - INTEGER
+ 	Reserve max(window/2^tcp_app_win, mss) of window for application
+ 	buffer. Value 0 is special, it means that nothing is reserved.
  
- 	u8 sysctl_fwmark_reflect;
--	int sysctl_tcp_fwmark_accept;
-+	u8 sysctl_tcp_fwmark_accept;
- #ifdef CONFIG_NET_L3_MASTER_DEV
--	int sysctl_tcp_l3mdev_accept;
-+	u8 sysctl_tcp_l3mdev_accept;
- #endif
--	int sysctl_tcp_mtu_probing;
-+	u8 sysctl_tcp_mtu_probing;
- 	int sysctl_tcp_mtu_probe_floor;
- 	int sysctl_tcp_base_mss;
- 	int sysctl_tcp_min_snd_mss;
-@@ -126,46 +126,47 @@ struct netns_ipv4 {
- 	u32 sysctl_tcp_probe_interval;
++	Possible values are [0, 31], inclusive.
++
+ 	Default: 31
  
- 	int sysctl_tcp_keepalive_time;
--	int sysctl_tcp_keepalive_probes;
- 	int sysctl_tcp_keepalive_intvl;
-+	u8 sysctl_tcp_keepalive_probes;
- 
--	int sysctl_tcp_syn_retries;
--	int sysctl_tcp_synack_retries;
--	int sysctl_tcp_syncookies;
-+	u8 sysctl_tcp_syn_retries;
-+	u8 sysctl_tcp_synack_retries;
-+	u8 sysctl_tcp_syncookies;
- 	int sysctl_tcp_reordering;
--	int sysctl_tcp_retries1;
--	int sysctl_tcp_retries2;
--	int sysctl_tcp_orphan_retries;
-+	u8 sysctl_tcp_retries1;
-+	u8 sysctl_tcp_retries2;
-+	u8 sysctl_tcp_orphan_retries;
-+	u8 sysctl_tcp_tw_reuse;
- 	int sysctl_tcp_fin_timeout;
- 	unsigned int sysctl_tcp_notsent_lowat;
--	int sysctl_tcp_tw_reuse;
--	int sysctl_tcp_sack;
--	int sysctl_tcp_window_scaling;
--	int sysctl_tcp_timestamps;
--	int sysctl_tcp_early_retrans;
--	int sysctl_tcp_recovery;
--	int sysctl_tcp_thin_linear_timeouts;
--	int sysctl_tcp_slow_start_after_idle;
--	int sysctl_tcp_retrans_collapse;
--	int sysctl_tcp_stdurg;
--	int sysctl_tcp_rfc1337;
--	int sysctl_tcp_abort_on_overflow;
--	int sysctl_tcp_fack;
-+	u8 sysctl_tcp_sack;
-+	u8 sysctl_tcp_window_scaling;
-+	u8 sysctl_tcp_timestamps;
-+	u8 sysctl_tcp_early_retrans;
-+	u8 sysctl_tcp_recovery;
-+	u8 sysctl_tcp_thin_linear_timeouts;
-+	u8 sysctl_tcp_slow_start_after_idle;
-+	u8 sysctl_tcp_retrans_collapse;
-+	u8 sysctl_tcp_stdurg;
-+	u8 sysctl_tcp_rfc1337;
-+	u8 sysctl_tcp_abort_on_overflow;
-+	u8 sysctl_tcp_fack; /* obsolete */
- 	int sysctl_tcp_max_reordering;
--	int sysctl_tcp_dsack;
--	int sysctl_tcp_app_win;
- 	int sysctl_tcp_adv_win_scale;
--	int sysctl_tcp_frto;
--	int sysctl_tcp_nometrics_save;
--	int sysctl_tcp_no_ssthresh_metrics_save;
--	int sysctl_tcp_moderate_rcvbuf;
--	int sysctl_tcp_tso_win_divisor;
--	int sysctl_tcp_workaround_signed_windows;
-+	u8 sysctl_tcp_dsack;
-+	u8 sysctl_tcp_app_win;
-+	u8 sysctl_tcp_frto;
-+	u8 sysctl_tcp_nometrics_save;
-+	u8 sysctl_tcp_no_ssthresh_metrics_save;
-+	u8 sysctl_tcp_moderate_rcvbuf;
-+	u8 sysctl_tcp_tso_win_divisor;
-+	u8 sysctl_tcp_workaround_signed_windows;
- 	int sysctl_tcp_limit_output_bytes;
- 	int sysctl_tcp_challenge_ack_limit;
--	int sysctl_tcp_min_tso_segs;
- 	int sysctl_tcp_min_rtt_wlen;
--	int sysctl_tcp_autocorking;
-+	u8 sysctl_tcp_min_tso_segs;
-+	u8 sysctl_tcp_autocorking;
-+	u8 sysctl_tcp_reflect_tos;
- 	int sysctl_tcp_invalid_ratelimit;
- 	int sysctl_tcp_pacing_ss_ratio;
- 	int sysctl_tcp_pacing_ca_ratio;
-@@ -183,7 +184,6 @@ struct netns_ipv4 {
- 	unsigned int sysctl_tcp_fastopen_blackhole_timeout;
- 	atomic_t tfo_active_disable_times;
- 	unsigned long tfo_active_disable_stamp;
--	int sysctl_tcp_reflect_tos;
- 
- 	int sysctl_udp_wmem_min;
- 	int sysctl_udp_rmem_min;
+ tcp_autocorking - BOOLEAN
 diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
-index cb587bdd683a6..1a2506f795d4e 100644
+index 1a2506f795d4e..3a34e9768bff0 100644
 --- a/net/ipv4/sysctl_net_ipv4.c
 +++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -720,17 +720,17 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_fwmark_accept",
- 		.data		= &init_net.ipv4.sysctl_tcp_fwmark_accept,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
+@@ -37,6 +37,7 @@ static int ip_local_port_range_min[] = { 1, 1 };
+ static int ip_local_port_range_max[] = { 65535, 65535 };
+ static int tcp_adv_win_scale_min = -31;
+ static int tcp_adv_win_scale_max = 31;
++static int tcp_app_win_max = 31;
+ static int tcp_min_snd_mss_min = TCP_MIN_SND_MSS;
+ static int tcp_min_snd_mss_max = 65535;
+ static int ip_privileged_port_min;
+@@ -1115,6 +1116,8 @@ static struct ctl_table ipv4_net_table[] = {
+ 		.maxlen		= sizeof(u8),
  		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- #ifdef CONFIG_NET_L3_MASTER_DEV
- 	{
- 		.procname	= "tcp_l3mdev_accept",
- 		.data		= &init_net.ipv4.sysctl_tcp_l3mdev_accept,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
-+		.proc_handler	= proc_dou8vec_minmax,
- 		.extra1		= SYSCTL_ZERO,
- 		.extra2		= SYSCTL_ONE,
- 	},
-@@ -738,9 +738,9 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_mtu_probing",
- 		.data		= &init_net.ipv4.sysctl_tcp_mtu_probing,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_base_mss",
-@@ -842,9 +842,9 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_keepalive_probes",
- 		.data		= &init_net.ipv4.sysctl_tcp_keepalive_probes,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_keepalive_intvl",
-@@ -856,26 +856,26 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_syn_retries",
- 		.data		= &init_net.ipv4.sysctl_tcp_syn_retries,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
-+		.proc_handler	= proc_dou8vec_minmax,
- 		.extra1		= &tcp_syn_retries_min,
- 		.extra2		= &tcp_syn_retries_max
- 	},
- 	{
- 		.procname	= "tcp_synack_retries",
- 		.data		= &init_net.ipv4.sysctl_tcp_synack_retries,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- #ifdef CONFIG_SYN_COOKIES
- 	{
- 		.procname	= "tcp_syncookies",
- 		.data		= &init_net.ipv4.sysctl_tcp_syncookies,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- #endif
- 	{
-@@ -888,24 +888,24 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_retries1",
- 		.data		= &init_net.ipv4.sysctl_tcp_retries1,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
-+		.proc_handler	= proc_dou8vec_minmax,
- 		.extra2		= &tcp_retr1_max
- 	},
- 	{
- 		.procname	= "tcp_retries2",
- 		.data		= &init_net.ipv4.sysctl_tcp_retries2,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_orphan_retries",
- 		.data		= &init_net.ipv4.sysctl_tcp_orphan_retries,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_fin_timeout",
-@@ -924,9 +924,9 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_tw_reuse",
- 		.data		= &init_net.ipv4.sysctl_tcp_tw_reuse,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
-+		.proc_handler	= proc_dou8vec_minmax,
- 		.extra1		= SYSCTL_ZERO,
- 		.extra2		= &two,
- 	},
-@@ -1012,88 +1012,88 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_sack",
- 		.data		= &init_net.ipv4.sysctl_tcp_sack,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_window_scaling",
- 		.data		= &init_net.ipv4.sysctl_tcp_window_scaling,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_timestamps",
- 		.data		= &init_net.ipv4.sysctl_tcp_timestamps,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_early_retrans",
- 		.data		= &init_net.ipv4.sysctl_tcp_early_retrans,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
-+		.proc_handler	= proc_dou8vec_minmax,
- 		.extra1		= SYSCTL_ZERO,
- 		.extra2		= &four,
- 	},
- 	{
- 		.procname	= "tcp_recovery",
- 		.data		= &init_net.ipv4.sysctl_tcp_recovery,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname       = "tcp_thin_linear_timeouts",
- 		.data           = &init_net.ipv4.sysctl_tcp_thin_linear_timeouts,
--		.maxlen         = sizeof(int),
-+		.maxlen         = sizeof(u8),
- 		.mode           = 0644,
--		.proc_handler   = proc_dointvec
-+		.proc_handler   = proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_slow_start_after_idle",
- 		.data		= &init_net.ipv4.sysctl_tcp_slow_start_after_idle,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_retrans_collapse",
- 		.data		= &init_net.ipv4.sysctl_tcp_retrans_collapse,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_stdurg",
- 		.data		= &init_net.ipv4.sysctl_tcp_stdurg,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_rfc1337",
- 		.data		= &init_net.ipv4.sysctl_tcp_rfc1337,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_abort_on_overflow",
- 		.data		= &init_net.ipv4.sysctl_tcp_abort_on_overflow,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_fack",
- 		.data		= &init_net.ipv4.sysctl_tcp_fack,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_max_reordering",
-@@ -1105,16 +1105,16 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_dsack",
- 		.data		= &init_net.ipv4.sysctl_tcp_dsack,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_app_win",
- 		.data		= &init_net.ipv4.sysctl_tcp_app_win,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
+ 		.proc_handler	= proc_dou8vec_minmax,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= &tcp_app_win_max,
  	},
  	{
  		.procname	= "tcp_adv_win_scale",
-@@ -1128,46 +1128,46 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_frto",
- 		.data		= &init_net.ipv4.sysctl_tcp_frto,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_no_metrics_save",
- 		.data		= &init_net.ipv4.sysctl_tcp_nometrics_save,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_no_ssthresh_metrics_save",
- 		.data		= &init_net.ipv4.sysctl_tcp_no_ssthresh_metrics_save,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
-+		.proc_handler	= proc_dou8vec_minmax,
- 		.extra1		= SYSCTL_ZERO,
- 		.extra2		= SYSCTL_ONE,
- 	},
- 	{
- 		.procname	= "tcp_moderate_rcvbuf",
- 		.data		= &init_net.ipv4.sysctl_tcp_moderate_rcvbuf,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_tso_win_divisor",
- 		.data		= &init_net.ipv4.sysctl_tcp_tso_win_divisor,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_workaround_signed_windows",
- 		.data		= &init_net.ipv4.sysctl_tcp_workaround_signed_windows,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname	= "tcp_limit_output_bytes",
-@@ -1186,9 +1186,9 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_min_tso_segs",
- 		.data		= &init_net.ipv4.sysctl_tcp_min_tso_segs,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
-+		.proc_handler	= proc_dou8vec_minmax,
- 		.extra1		= SYSCTL_ONE,
- 		.extra2		= &gso_max_segs,
- 	},
-@@ -1204,9 +1204,9 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname	= "tcp_autocorking",
- 		.data		= &init_net.ipv4.sysctl_tcp_autocorking,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
-+		.proc_handler	= proc_dou8vec_minmax,
- 		.extra1		= SYSCTL_ZERO,
- 		.extra2		= SYSCTL_ONE,
- 	},
-@@ -1277,9 +1277,9 @@ static struct ctl_table ipv4_net_table[] = {
- 	{
- 		.procname       = "tcp_reflect_tos",
- 		.data           = &init_net.ipv4.sysctl_tcp_reflect_tos,
--		.maxlen         = sizeof(int),
-+		.maxlen         = sizeof(u8),
- 		.mode           = 0644,
--		.proc_handler   = proc_dointvec_minmax,
-+		.proc_handler   = proc_dou8vec_minmax,
- 		.extra1         = SYSCTL_ZERO,
- 		.extra2         = SYSCTL_ONE,
- 	},
 -- 
 2.39.2
 
