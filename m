@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C44A2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87B1C433D2;
-	Tue, 18 Apr 2023 12:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E602579
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59835C433D2;
+	Tue, 18 Apr 2023 12:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821722;
-	bh=T+bcKzURiSu7tT9sZV8X4D3tDFSjNO+KceGYoPkhe1o=;
+	s=korg; t=1681821727;
+	bh=c1pR8cWxhFF/daZjSAkj5rolbIrm46/edDw3/QyGyRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CQATzi2z+Sp1/YIt0xOC66XgGOo2Ote9ohuKG4vnuiaQKQr6nMH0lgp+NR685QmYD
-	 gc+bzc/JLh6avCXshqKM/SudcqH/n5rU4fuOrnayxCqnBRrNkmp2xxnvpjvsPc3CSs
-	 +/wzBDfPmz2u3pHgdXSVuEj+h7T7GBs5G/53j2gc=
+	b=1Nc2c06Fs7nSzFE9Qgv0KZbVQxhFovmVcwxDvz6r+IrH6Ryis4eGY5KDoqBYaFfUQ
+	 QwsTAippAE6rfJPtwxxKNwbAnuf0JxrAVy+k9shX7GFwIDMPlNq2PTxetoCT5WPGYO
+	 xZfEgO4SDPz7QPZs92w5gFuua4Yc7CsCL3L0rhF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 009/134] ALSA: emu10k1: dont create old pass-through playback device on Audigy
-Date: Tue, 18 Apr 2023 14:21:05 +0200
-Message-Id: <20230418120313.333911145@linuxfoundation.org>
+Subject: [PATCH 6.1 011/134] ALSA: hda/hdmi: disable KAE for Intel DG2
+Date: Tue, 18 Apr 2023 14:21:07 +0200
+Message-Id: <20230418120313.392122857@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -34,51 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-commit 8dd13214a810c695044aa168c0ddba1a9c433e4f upstream.
+commit 6ab6f98fcdc9d4fbe245aa67de03542deea65322 upstream.
 
-It could have never worked, as snd_emu10k1_fx8010_playback_prepare() and
-snd_emu10k1_fx8010_playback_hw_free() assume the emu10k1 offset for the
-ETRAM, and the default DSP code includes no handler for it. It also
-wouldn't make a lot of sense to make it work, as Audigy has an own, much
-simpler, pass-through mechanism. So just skip creation of the device.
+Use of keep-alive (KAE) has resulted in loss of audio on some A750/770
+cards as the transition from keep-alive to stream playback is not
+working as expected. As there is limited benefit of the new KAE mode
+on discrete cards, revert back to older silent-stream implementation
+on these systems.
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230405201220.2197938-1-oswald.buddenhagen@gmx.de
+Cc: stable@vger.kernel.org
+Fixes: 15175a4f2bbb ("ALSA: hda/hdmi: add keep-alive support for ADL-P and DG2")
+Link: https://gitlab.freedesktop.org/drm/intel/-/issues/8307
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230413191153.3692049-1-kai.vehmanen@linux.intel.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/emu10k1/emupcm.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_hdmi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/emu10k1/emupcm.c
-+++ b/sound/pci/emu10k1/emupcm.c
-@@ -1781,17 +1781,21 @@ int snd_emu10k1_pcm_efx(struct snd_emu10
- 	struct snd_kcontrol *kctl;
- 	int err;
- 
--	err = snd_pcm_new(emu->card, "emu10k1 efx", device, 8, 1, &pcm);
-+	err = snd_pcm_new(emu->card, "emu10k1 efx", device, emu->audigy ? 0 : 8, 1, &pcm);
- 	if (err < 0)
- 		return err;
- 
- 	pcm->private_data = emu;
- 
--	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &snd_emu10k1_fx8010_playback_ops);
-+	if (!emu->audigy)
-+		snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &snd_emu10k1_fx8010_playback_ops);
- 	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_CAPTURE, &snd_emu10k1_capture_efx_ops);
- 
- 	pcm->info_flags = 0;
--	strcpy(pcm->name, "Multichannel Capture/PT Playback");
-+	if (emu->audigy)
-+		strcpy(pcm->name, "Multichannel Capture");
-+	else
-+		strcpy(pcm->name, "Multichannel Capture/PT Playback");
- 	emu->pcm_efx = pcm;
- 
- 	/* EFX capture - record the "FXBUS2" channels, by default we connect the EXTINs 
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -4604,7 +4604,7 @@ HDA_CODEC_ENTRY(0x80862814, "DG1 HDMI",
+ HDA_CODEC_ENTRY(0x80862815, "Alderlake HDMI",	patch_i915_tgl_hdmi),
+ HDA_CODEC_ENTRY(0x80862816, "Rocketlake HDMI",	patch_i915_tgl_hdmi),
+ HDA_CODEC_ENTRY(0x80862818, "Raptorlake HDMI",	patch_i915_tgl_hdmi),
+-HDA_CODEC_ENTRY(0x80862819, "DG2 HDMI",	patch_i915_adlp_hdmi),
++HDA_CODEC_ENTRY(0x80862819, "DG2 HDMI",	patch_i915_tgl_hdmi),
+ HDA_CODEC_ENTRY(0x8086281a, "Jasperlake HDMI",	patch_i915_icl_hdmi),
+ HDA_CODEC_ENTRY(0x8086281b, "Elkhartlake HDMI",	patch_i915_icl_hdmi),
+ HDA_CODEC_ENTRY(0x8086281c, "Alderlake-P HDMI", patch_i915_adlp_hdmi),
 
 
