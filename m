@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168232572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915A7C4339C;
-	Tue, 18 Apr 2023 12:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8CF2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E6EC433D2;
+	Tue, 18 Apr 2023 12:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821490;
-	bh=9xrZezkYN7ydKsfoRJeGhUlkNvA7pmv13b08FYg4RBA=;
+	s=korg; t=1681821493;
+	bh=+u1662A/TS/jEK57TZTkhaiBLkAVM7lwAXCYbZamQng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CkzGf5OdbimngTjNEWpWnVyrNqEWuUADRfaAEOmGdAT7uFUNeYScSW2Ga0r1Yd2z3
-	 SBiM5hn4vmnyT4Mm70/1JmC7/PhXdoDcDunuBYruxHU991B4hR7XhmUphf9q78sA9t
-	 1ru4NxoVu19moSYvsZs7GFUyKcLpA2Pdv7m5LhWs=
+	b=K3FUWiEBTdvkaryUrCA2MfHep6od7qYYgnmN9GZZRmChQ6nrsH3DtDNoWgQC6D11v
+	 LDklEd973Ij1EMZpwAggxNEJ4TDLG2VdXytxrK7Q3j3rzMzWto/usF7E71+VcRZw/4
+	 pY3RMm3rqbJNwxRpV5yoiBGX3xErMGXrRN6tAnXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/91] RDMA/irdma: Add ipv4 check to irdma_find_listener()
-Date: Tue, 18 Apr 2023 14:21:26 +0200
-Message-Id: <20230418120306.353307245@linuxfoundation.org>
+	Xu Biang <xubiang@hust.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 05/91] ALSA: firewire-tascam: add missing unwind goto in snd_tscm_stream_start_duplex()
+Date: Tue, 18 Apr 2023 14:21:09 +0200
+Message-Id: <20230418120305.729954642@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -36,80 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+From: Xu Biang <xubiang@hust.edu.cn>
 
-[ Upstream commit e4522c097ec10f23ea0933e9e69d4fa9d8ae9441 ]
+commit fb4a624f88f658c7b7ae124452bd42eaa8ac7168 upstream.
 
-Add ipv4 check to irdma_find_listener(). Otherwise the function
-incorrectly finds and returns a listener with a different addr family for
-the zero IP addr, if a listener with a zero IP addr and the same port as
-the one searched for has already been created.
+Smatch Warns:
+sound/firewire/tascam/tascam-stream.c:493 snd_tscm_stream_start_duplex()
+warn: missing unwind goto?
 
-Fixes: 146b9756f14c ("RDMA/irdma: Add connection manager")
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20230315145231.931-5-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The direct return will cause the stream list of "&tscm->domain" unemptied
+and the session in "tscm" unfinished if amdtp_domain_start() returns with
+an error.
+
+Fix this by changing the direct return to a goto which will empty the
+stream list of "&tscm->domain" and finish the session in "tscm".
+
+The snd_tscm_stream_start_duplex() function is called in the prepare
+callback of PCM. According to "ALSA Kernel API Documentation", the prepare
+callback of PCM will be called many times at each setup. So, if the
+"&d->streams" list is not emptied, when the prepare callback is called
+next time, snd_tscm_stream_start_duplex() will receive -EBUSY from
+amdtp_domain_add_stream() that tries to add an existing stream to the
+domain. The error handling code after the "error" label will be executed
+in this case, and the "&d->streams" list will be emptied. So not emptying
+the "&d->streams" list will not cause an issue. But it is more efficient
+and readable to empty it on the first error by changing the direct return
+to a goto statement.
+
+The session in "tscm" has been begun before amdtp_domain_start(), so it
+needs to be finished when amdtp_domain_start() fails.
+
+Fixes: c281d46a51e3 ("ALSA: firewire-tascam: support AMDTP domain")
+Signed-off-by: Xu Biang <xubiang@hust.edu.cn>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Acked-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230406132801.105108-1-xubiang@hust.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/irdma/cm.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ sound/firewire/tascam/tascam-stream.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/cm.c b/drivers/infiniband/hw/irdma/cm.c
-index a8ec3d8f6e465..64d4bb0e9a12f 100644
---- a/drivers/infiniband/hw/irdma/cm.c
-+++ b/drivers/infiniband/hw/irdma/cm.c
-@@ -1458,13 +1458,15 @@ static int irdma_send_fin(struct irdma_cm_node *cm_node)
-  * irdma_find_listener - find a cm node listening on this addr-port pair
-  * @cm_core: cm's core
-  * @dst_addr: listener ip addr
-+ * @ipv4: flag indicating IPv4 when true
-  * @dst_port: listener tcp port num
-  * @vlan_id: virtual LAN ID
-  * @listener_state: state to match with listen node's
-  */
- static struct irdma_cm_listener *
--irdma_find_listener(struct irdma_cm_core *cm_core, u32 *dst_addr, u16 dst_port,
--		    u16 vlan_id, enum irdma_cm_listener_state listener_state)
-+irdma_find_listener(struct irdma_cm_core *cm_core, u32 *dst_addr, bool ipv4,
-+		    u16 dst_port, u16 vlan_id,
-+		    enum irdma_cm_listener_state listener_state)
- {
- 	struct irdma_cm_listener *listen_node;
- 	static const u32 ip_zero[4] = { 0, 0, 0, 0 };
-@@ -1477,7 +1479,7 @@ irdma_find_listener(struct irdma_cm_core *cm_core, u32 *dst_addr, u16 dst_port,
- 	list_for_each_entry (listen_node, &cm_core->listen_list, list) {
- 		memcpy(listen_addr, listen_node->loc_addr, sizeof(listen_addr));
- 		listen_port = listen_node->loc_port;
--		if (listen_port != dst_port ||
-+		if (listen_node->ipv4 != ipv4 || listen_port != dst_port ||
- 		    !(listener_state & listen_node->listener_state))
- 			continue;
- 		/* compare node pair, return node handle if a match */
-@@ -2899,9 +2901,10 @@ irdma_make_listen_node(struct irdma_cm_core *cm_core,
- 	unsigned long flags;
+--- a/sound/firewire/tascam/tascam-stream.c
++++ b/sound/firewire/tascam/tascam-stream.c
+@@ -490,7 +490,7 @@ int snd_tscm_stream_start_duplex(struct
+ 		// packet is important for media clock recovery.
+ 		err = amdtp_domain_start(&tscm->domain, tx_init_skip_cycles, true, true);
+ 		if (err < 0)
+-			return err;
++			goto error;
  
- 	/* cannot have multiple matching listeners */
--	listener = irdma_find_listener(cm_core, cm_info->loc_addr,
--				       cm_info->loc_port, cm_info->vlan_id,
--				       IRDMA_CM_LISTENER_EITHER_STATE);
-+	listener =
-+		irdma_find_listener(cm_core, cm_info->loc_addr, cm_info->ipv4,
-+				    cm_info->loc_port, cm_info->vlan_id,
-+				    IRDMA_CM_LISTENER_EITHER_STATE);
- 	if (listener &&
- 	    listener->listener_state == IRDMA_CM_LISTENER_ACTIVE_STATE) {
- 		refcount_dec(&listener->refcnt);
-@@ -3150,6 +3153,7 @@ void irdma_receive_ilq(struct irdma_sc_vsi *vsi, struct irdma_puda_buf *rbuf)
- 
- 		listener = irdma_find_listener(cm_core,
- 					       cm_info.loc_addr,
-+					       cm_info.ipv4,
- 					       cm_info.loc_port,
- 					       cm_info.vlan_id,
- 					       IRDMA_CM_LISTENER_ACTIVE_STATE);
--- 
-2.39.2
-
+ 		if (!amdtp_domain_wait_ready(&tscm->domain, READY_TIMEOUT_MS)) {
+ 			err = -ETIMEDOUT;
 
 
