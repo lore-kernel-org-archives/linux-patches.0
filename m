@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF22D2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C10C4339B;
-	Tue, 18 Apr 2023 12:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75ABB2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE07C433D2;
+	Tue, 18 Apr 2023 12:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821424;
-	bh=zRLMH/4M1S3OWNZU5MIgZLHkKCAM3Htt2XONDBZDETI=;
+	s=korg; t=1681821427;
+	bh=4Qw3BGlNM2fmwGtPxT0weAgNI7WTvONXczuAN3z5Jzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rNuBOmViPjx9FT9Bw+MwyyECTS3ID+XcFB0M0/6eRhzYwiicxg+6Nt/WkzFSUgoG
-	 tGtOZeOem6osNFxYBdi67e0sblAaIcr+Cvolp1tGMpSk+01iRxVg/7gEHXCjiUwhjR
-	 yawhtO5nxDuTA4bU9ezVC6fH5f3ftlPicILBpq5A=
+	b=QChUEAB6vEjmKtKyGVqMa5SRa7Nl5EZLel+qiz+d1ABtyjW5SQLivZHuC0yFdzsa2
+	 TzyI6XYL84shKAjpNXwU2vUkzy5qsydg3aFTgB/6UdhwE+xn715v0p3jrUSmSRYo09
+	 F/qDl7N2EpMNGCV7BHBDP1rcOmrNB5HT3BlmDCAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathis Salmen <mathis.salmen@matsal.de>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.10 093/124] riscv: add icache flush for nommu sigreturn trampoline
-Date: Tue, 18 Apr 2023 14:21:52 +0200
-Message-Id: <20230418120313.228546263@linuxfoundation.org>
+	Ivan Bornyakov <i.bornyakov@metrotek.ru>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 094/124] net: sfp: initialize sfp->i2c_block_size at sfp allocation
+Date: Tue, 18 Apr 2023 14:21:53 +0200
+Message-Id: <20230418120313.262122201@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -34,58 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathis Salmen <mathis.salmen@matsal.de>
+From: Ivan Bornyakov <i.bornyakov@metrotek.ru>
 
-commit 8d736482749f6d350892ef83a7a11d43cd49981e upstream.
+commit 813c2dd78618f108fdcf9cd726ea90f081ee2881 upstream.
 
-In a NOMMU kernel, sigreturn trampolines are generated on the user
-stack by setup_rt_frame. Currently, these trampolines are not instruction
-fenced, thus their visibility to ifetch is not guaranteed.
+sfp->i2c_block_size is initialized at SFP module insertion in
+sfp_sm_mod_probe(). Because of that, if SFP module was never inserted
+since boot, sfp_read() call will lead to zero-length I2C read attempt,
+and not all I2C controllers are happy with zero-length reads.
 
-This patch adds a flush_icache_range in setup_rt_frame to fix this
-problem.
+One way to issue sfp_read() on empty SFP cage is to execute ethtool -m.
+If SFP module was never plugged since boot, there will be a zero-length
+I2C read attempt.
 
-Signed-off-by: Mathis Salmen <mathis.salmen@matsal.de>
-Fixes: 6bd33e1ece52 ("riscv: add nommu support")
+  # ethtool -m xge0
+  i2c i2c-3: adapter quirk: no zero length (addr 0x0050, size 0, read)
+  Cannot get Module EEPROM data: Operation not supported
+
+If SFP module was plugged then removed at least once,
+sfp->i2c_block_size will be initialized and ethtool -m will fail with
+different exit code and without I2C error
+
+  # ethtool -m xge0
+  Cannot get Module EEPROM data: Remote I/O error
+
+Fix this by initializing sfp->i2_block_size at struct sfp allocation
+stage so no wild sfp_read() could issue zero-length I2C read.
+
+Signed-off-by: Ivan Bornyakov <i.bornyakov@metrotek.ru>
+Fixes: 0d035bed2a4a ("net: sfp: VSOL V2801F / CarlitoxxPro CPGOS03-0490 v2.0 workaround")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230406101130.82304-1-mathis.salmen@matsal.de
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/signal.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/phy/sfp.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/arch/riscv/kernel/signal.c
-+++ b/arch/riscv/kernel/signal.c
-@@ -16,6 +16,7 @@
- #include <asm/vdso.h>
- #include <asm/switch_to.h>
- #include <asm/csr.h>
-+#include <asm/cacheflush.h>
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -207,6 +207,12 @@ static const enum gpiod_flags gpio_flags
+  */
+ #define SFP_PHY_ADDR	22
  
- extern u32 __user_rt_sigreturn[2];
- 
-@@ -178,6 +179,7 @@ static int setup_rt_frame(struct ksignal
- {
- 	struct rt_sigframe __user *frame;
- 	long err = 0;
-+	unsigned long __maybe_unused addr;
- 
- 	frame = get_sigframe(ksig, regs, sizeof(*frame));
- 	if (!access_ok(frame, sizeof(*frame)))
-@@ -206,7 +208,12 @@ static int setup_rt_frame(struct ksignal
- 	if (copy_to_user(&frame->sigreturn_code, __user_rt_sigreturn,
- 			 sizeof(frame->sigreturn_code)))
- 		return -EFAULT;
--	regs->ra = (unsigned long)&frame->sigreturn_code;
++/* SFP_EEPROM_BLOCK_SIZE is the size of data chunk to read the EEPROM
++ * at a time. Some SFP modules and also some Linux I2C drivers do not like
++ * reads longer than 16 bytes.
++ */
++#define SFP_EEPROM_BLOCK_SIZE	16
 +
-+	addr = (unsigned long)&frame->sigreturn_code;
-+	/* Make sure the two instructions are pushed to icache. */
-+	flush_icache_range(addr, addr + sizeof(frame->sigreturn_code));
-+
-+	regs->ra = addr;
- #endif /* CONFIG_MMU */
+ struct sff_data {
+ 	unsigned int gpios;
+ 	bool (*module_supported)(const struct sfp_eeprom_id *id);
+@@ -1754,11 +1760,7 @@ static int sfp_sm_mod_probe(struct sfp *
+ 	u8 check;
+ 	int ret;
  
- 	/*
+-	/* Some SFP modules and also some Linux I2C drivers do not like reads
+-	 * longer than 16 bytes, so read the EEPROM in chunks of 16 bytes at
+-	 * a time.
+-	 */
+-	sfp->i2c_block_size = 16;
++	sfp->i2c_block_size = SFP_EEPROM_BLOCK_SIZE;
+ 
+ 	ret = sfp_read(sfp, false, 0, &id.base, sizeof(id.base));
+ 	if (ret < 0) {
+@@ -2385,6 +2387,7 @@ static struct sfp *sfp_alloc(struct devi
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	sfp->dev = dev;
++	sfp->i2c_block_size = SFP_EEPROM_BLOCK_SIZE;
+ 
+ 	mutex_init(&sfp->sm_mutex);
+ 	mutex_init(&sfp->st_mutex);
 
 
