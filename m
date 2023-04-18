@@ -1,32 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD60A2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304D3C433D2;
-	Tue, 18 Apr 2023 12:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0162566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46C8C433D2;
+	Tue, 18 Apr 2023 12:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821124;
-	bh=OWsC+RlSBWRoNvougj80y3T8tX3mx0IkRNMcosEg6mo=;
+	s=korg; t=1681821127;
+	bh=IzaJUIUqzXqbTVID6vwBQYJ5wb34FkLDJb8emqLyKAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TdUd32vDNjvlu/nWhj6War0qdNFYOWNSAZ5gSRUtWcr/hE47535JNP5/LVxKuoYU3
-	 yo0af4yiSSWdVnHloW3kBlqbAwr0XRu8r2xQusmAc3fLqBDyUV5BMgaMr19PklAjrs
-	 qZqgKcMxy66aAX8GwIEIiC6I0szOxVJu1yU379tE=
+	b=064JZMCtlXMiF7sgOFqRkWvAxafghqwLM/+dXoRA1RefYw7etCj2FP1Q3mEumLbaQ
+	 5Y3G+7hGVCA1icYq5so7gG4gG8gFtrAnv/yYndMdvijroiC4wxrjJvQiZUrP/YTtmG
+	 vLK5+uiDZYVDzUWPv71CvgIMaywneWEKuPXi737Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grant Grundler <grundler@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Michael Walle <michael@walle.cc>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	linux-gpio@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 64/92] power: supply: cros_usbpd: reclassify "default case!" as debug
-Date: Tue, 18 Apr 2023 14:21:39 +0200
-Message-Id: <20230418120307.073068857@linuxfoundation.org>
+Subject: [PATCH 5.10 001/124] gpio: GPIO_REGMAP: select REGMAP instead of depending on it
+Date: Tue, 18 Apr 2023 14:20:20 +0200
+Message-Id: <20230418120309.597772360@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
-References: <20230418120304.658273364@linuxfoundation.org>
+In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
+References: <20230418120309.539243408@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,40 +41,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Grant Grundler <grundler@chromium.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 14c76b2e75bca4d96e2b85a0c12aa43e84fe3f74 ]
+[ Upstream commit d49765b5f4320a402fbc4ed5edfd73d87640f27c ]
 
-This doesn't need to be printed every second as an error:
-...
-<3>[17438.628385] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-<3>[17439.634176] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-<3>[17440.640298] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-...
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-Reduce priority from ERROR to DEBUG.
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
-Signed-off-by: Grant Grundler <grundler@chromium.org>
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+
+Fixes: ebe363197e52 ("gpio: add a reusable generic gpio_chip using regmap")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Michael Walle <michael@walle.cc>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-gpio@vger.kernel.org
+Acked-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cros_usbpd-charger.c | 2 +-
+ drivers/gpio/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/cros_usbpd-charger.c b/drivers/power/supply/cros_usbpd-charger.c
-index 6cc7c3910e098..0f80fdf88253c 100644
---- a/drivers/power/supply/cros_usbpd-charger.c
-+++ b/drivers/power/supply/cros_usbpd-charger.c
-@@ -282,7 +282,7 @@ static int cros_usbpd_charger_get_power_info(struct port_data *port)
- 		port->psy_current_max = 0;
- 		break;
- 	default:
--		dev_err(dev, "Port %d: default case!\n", port->port_number);
-+		dev_dbg(dev, "Port %d: default case!\n", port->port_number);
- 		port->psy_usb_type = POWER_SUPPLY_USB_TYPE_SDP;
- 	}
+diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+index d1300fc003ed7..39f3e13664099 100644
+--- a/drivers/gpio/Kconfig
++++ b/drivers/gpio/Kconfig
+@@ -99,7 +99,7 @@ config GPIO_GENERIC
+ 	tristate
  
+ config GPIO_REGMAP
+-	depends on REGMAP
++	select REGMAP
+ 	tristate
+ 
+ # put drivers in the right section, in alphabetical order
 -- 
 2.39.2
 
