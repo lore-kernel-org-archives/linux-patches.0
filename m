@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D222566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:24:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A803C433D2;
-	Tue, 18 Apr 2023 12:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6AC2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:24:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1D0C4339B;
+	Tue, 18 Apr 2023 12:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820640;
-	bh=45Z2sIyPYso/0Pe+ilbRjZ0rtqPtRogII/R61J9eVHM=;
+	s=korg; t=1681820643;
+	bh=pwFW+xnmMwyVJckVu8txLEFv6hQPU7wdAXAyhcGQNdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YxE2FKZW2+06G2/8pGFF2UO9BlQFAovkyORAXfEf8j7qItiqY31NfMZ9vHL/WQrnv
-	 aeGYNky8+zh7Uo/3CXCam4a9lec6Ti76AQW+IUKvxGv/olNs7quid9kAscLrNwV9zt
-	 gZMd/LOiQDnL9xX4EwykM1JmD4fn6A2Lhwnp4s1M=
+	b=EXZCfibFTmjQR3FH4GgcsFkqkGmnV85cyNE/pNL0taQSo+5p5ncRn4IrGUnZLgZ0o
+	 95ptBJ6nsdx52Diw3mOPLcPUP9GLR+96cuZkjqw/DoeI2/TjNZV5RjGo+x2wxUctT0
+	 fV1SqKkBOzIh9KSOKnh8tt4cAV4+OHO2uC0k6QuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Jan Koster <kjkoster@kjkoster.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.14 06/37] USB: serial: cp210x: add Silicon Labs IFS-USB-DATACABLE IDs
-Date: Tue, 18 Apr 2023 14:21:16 +0200
-Message-Id: <20230418120254.894945382@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>
+Subject: [PATCH 4.14 15/37] ring-buffer: Fix race while reader and writer are on the same page
+Date: Tue, 18 Apr 2023 14:21:25 +0200
+Message-Id: <20230418120255.201919084@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
 References: <20230418120254.687480980@linuxfoundation.org>
@@ -34,31 +34,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Jan Koster <kjkoster@kjkoster.org>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 71f8afa2b66e356f435b6141b4a9ccf953e18356 upstream.
+commit 6455b6163d8c680366663cdb8c679514d55fc30c upstream.
 
-The Silicon Labs IFS-USB-DATACABLE is used in conjunction with for example
-the Quint UPSes. It is used to enable Modbus communication with the UPS to
-query configuration, power and battery status.
+When user reads file 'trace_pipe', kernel keeps printing following logs
+that warn at "cpu_buffer->reader_page->read > rb_page_size(reader)" in
+rb_get_reader_page(). It just looks like there's an infinite loop in
+tracing_read_pipe(). This problem occurs several times on arm64 platform
+when testing v5.10 and below.
 
-Signed-off-by: Kees Jan Koster <kjkoster@kjkoster.org>
+  Call trace:
+   rb_get_reader_page+0x248/0x1300
+   rb_buffer_peek+0x34/0x160
+   ring_buffer_peek+0xbc/0x224
+   peek_next_entry+0x98/0xbc
+   __find_next_entry+0xc4/0x1c0
+   trace_find_next_entry_inc+0x30/0x94
+   tracing_read_pipe+0x198/0x304
+   vfs_read+0xb4/0x1e0
+   ksys_read+0x74/0x100
+   __arm64_sys_read+0x24/0x30
+   el0_svc_common.constprop.0+0x7c/0x1bc
+   do_el0_svc+0x2c/0x94
+   el0_svc+0x20/0x30
+   el0_sync_handler+0xb0/0xb4
+   el0_sync+0x160/0x180
+
+Then I dump the vmcore and look into the problematic per_cpu ring_buffer,
+I found that tail_page/commit_page/reader_page are on the same page while
+reader_page->read is obviously abnormal:
+  tail_page == commit_page == reader_page == {
+    .write = 0x100d20,
+    .read = 0x8f9f4805,  // Far greater than 0xd20, obviously abnormal!!!
+    .entries = 0x10004c,
+    .real_end = 0x0,
+    .page = {
+      .time_stamp = 0x857257416af0,
+      .commit = 0xd20,  // This page hasn't been full filled.
+      // .data[0...0xd20] seems normal.
+    }
+ }
+
+The root cause is most likely the race that reader and writer are on the
+same page while reader saw an event that not fully committed by writer.
+
+To fix this, add memory barriers to make sure the reader can see the
+content of what is committed. Since commit a0fcaaed0c46 ("ring-buffer: Fix
+race between reset page and reading page") has added the read barrier in
+rb_get_reader_page(), here we just need to add the write barrier.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230325021247.2923907-1-zhengyejian1@huawei.com
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 77ae365eca89 ("ring-buffer: make lockless")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/cp210x.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/ring_buffer.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -124,6 +124,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(0x10C4, 0x826B) }, /* Cygnal Integrated Products, Inc., Fasttrax GPS demonstration module */
- 	{ USB_DEVICE(0x10C4, 0x8281) }, /* Nanotec Plug & Drive */
- 	{ USB_DEVICE(0x10C4, 0x8293) }, /* Telegesis ETRX2USB */
-+	{ USB_DEVICE(0x10C4, 0x82AA) }, /* Silicon Labs IFS-USB-DATACABLE used with Quint UPS */
- 	{ USB_DEVICE(0x10C4, 0x82EF) }, /* CESINEL FALCO 6105 AC Power Supply */
- 	{ USB_DEVICE(0x10C4, 0x82F1) }, /* CESINEL MEDCAL EFD Earth Fault Detector */
- 	{ USB_DEVICE(0x10C4, 0x82F2) }, /* CESINEL MEDCAL ST Network Analyzer */
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2397,6 +2397,10 @@ rb_set_commit_to_write(struct ring_buffe
+ 		if (RB_WARN_ON(cpu_buffer,
+ 			       rb_is_reader_page(cpu_buffer->tail_page)))
+ 			return;
++		/*
++		 * No need for a memory barrier here, as the update
++		 * of the tail_page did it for this page.
++		 */
+ 		local_set(&cpu_buffer->commit_page->page->commit,
+ 			  rb_page_write(cpu_buffer->commit_page));
+ 		rb_inc_page(cpu_buffer, &cpu_buffer->commit_page);
+@@ -2410,6 +2414,8 @@ rb_set_commit_to_write(struct ring_buffe
+ 	while (rb_commit_index(cpu_buffer) !=
+ 	       rb_page_write(cpu_buffer->commit_page)) {
+ 
++		/* Make sure the readers see the content of what is committed. */
++		smp_wmb();
+ 		local_set(&cpu_buffer->commit_page->page->commit,
+ 			  rb_page_write(cpu_buffer->commit_page));
+ 		RB_WARN_ON(cpu_buffer,
+@@ -3725,7 +3731,12 @@ rb_get_reader_page(struct ring_buffer_pe
+ 
+ 	/*
+ 	 * Make sure we see any padding after the write update
+-	 * (see rb_reset_tail())
++	 * (see rb_reset_tail()).
++	 *
++	 * In addition, a writer may be writing on the reader page
++	 * if the page has not been fully filled, so the read barrier
++	 * is also needed to make sure we see the content of what is
++	 * committed by the writer (see rb_set_commit_to_write()).
+ 	 */
+ 	smp_rmb();
+ 
 
 
