@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30F42566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C436C433EF;
-	Tue, 18 Apr 2023 12:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C682566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F409C433EF;
+	Tue, 18 Apr 2023 12:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821482;
-	bh=QIjYVfhD4/s7Kmz/eMUMK44QfMHT9KQvNLUIggOotl8=;
+	s=korg; t=1681821485;
+	bh=6GfUFpde5H0g8pox6Ju67+Oa/gNglM3W1TllVUyJJW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RUyy1ybY+wTJpRSzQeXSzYytq+c6UDIm42W0HvxR8Cu86aZRaQN8s6zpvmO2IuTQY
-	 1sZDnwUIlaaP0LHZu4CUu6gzivMw2pd4sU7Mc8x2jJUuFNTovDWUcndGlLrIhcLHsi
-	 L+mgvJgwMGMkbj5zbC3UjWvb/OSlViOwb8oia86Y=
+	b=MfoRGdYNN2gPGJtTG44OL9JPucFUTufshlf7tdDqjfw/XFGrs9aLlvCUiOwxVkvtx
+	 H/wg8VgEZN74Qk2EtrfdxOZYEIpkAl8lPtQpSExeain97JRayysqzjsmJR3gcvC1Hr
+	 dW8bhtrA3P0ctQGmR/PAYAdjPCY6H0Rj5QpKh0nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunyan Zhang <chunyan.zhang@unisoc.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Mustafa Ismail <mustafa.ismail@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 19/91] clk: sprd: set max_register according to mapping range
-Date: Tue, 18 Apr 2023 14:21:23 +0200
-Message-Id: <20230418120306.254973665@linuxfoundation.org>
+Subject: [PATCH 5.15 20/91] RDMA/irdma: Fix memory leak of PBLE objects
+Date: Tue, 18 Apr 2023 14:21:24 +0200
+Message-Id: <20230418120306.285231110@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -35,61 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunyan Zhang <chunyan.zhang@unisoc.com>
+From: Mustafa Ismail <mustafa.ismail@intel.com>
 
-[ Upstream commit 47d43086531f10539470a63e8ad92803e686a3dd ]
+[ Upstream commit b69a6979dbaa2453675fe9c71bdc2497fedb11f9 ]
 
-In sprd clock driver, regmap_config.max_register was set to a fixed value
-which is likely larger than the address range configured in device tree,
-when reading registers through debugfs it would cause access violation.
+On rmmod of irdma, the PBLE object memory is not being freed. PBLE object
+memory are not statically pre-allocated at function initialization time
+unlike other HMC objects. PBLEs objects and the Segment Descriptors (SD)
+for it can be dynamically allocated during scale up and SD's remain
+allocated till function deinitialization.
 
-Fixes: d41f59fd92f2 ("clk: sprd: Add common infrastructure")
-Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
-Link: https://lore.kernel.org/r/20230316023624.758204-1-chunyan.zhang@unisoc.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fix this leak by adding IRDMA_HMC_IW_PBLE to the iw_hmc_obj_types[] table
+and skip pbles in irdma_create_hmc_obj but not in irdma_del_hmc_objects().
+
+Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
+Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20230315145231.931-3-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sprd/common.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/irdma/hw.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/sprd/common.c b/drivers/clk/sprd/common.c
-index ce81e4087a8fc..2bfbab8db94bf 100644
---- a/drivers/clk/sprd/common.c
-+++ b/drivers/clk/sprd/common.c
-@@ -17,7 +17,6 @@ static const struct regmap_config sprdclk_regmap_config = {
- 	.reg_bits	= 32,
- 	.reg_stride	= 4,
- 	.val_bits	= 32,
--	.max_register	= 0xffff,
- 	.fast_io	= true,
- };
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index b918f80d2e2c6..3b070cb3c4da7 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -41,6 +41,7 @@ static enum irdma_hmc_rsrc_type iw_hmc_obj_types[] = {
+ 	IRDMA_HMC_IW_XFFL,
+ 	IRDMA_HMC_IW_Q1,
+ 	IRDMA_HMC_IW_Q1FL,
++	IRDMA_HMC_IW_PBLE,
+ 	IRDMA_HMC_IW_TIMER,
+ 	IRDMA_HMC_IW_FSIMC,
+ 	IRDMA_HMC_IW_FSIAV,
+@@ -829,6 +830,8 @@ irdma_create_hmc_objs(struct irdma_pci_f *rf, bool privileged, enum irdma_vers v
+ 	info.entry_type = rf->sd_type;
  
-@@ -43,6 +42,8 @@ int sprd_clk_regmap_init(struct platform_device *pdev,
- 	struct device *dev = &pdev->dev;
- 	struct device_node *node = dev->of_node, *np;
- 	struct regmap *regmap;
-+	struct resource *res;
-+	struct regmap_config reg_config = sprdclk_regmap_config;
- 
- 	if (of_find_property(node, "sprd,syscon", NULL)) {
- 		regmap = syscon_regmap_lookup_by_phandle(node, "sprd,syscon");
-@@ -59,12 +60,14 @@ int sprd_clk_regmap_init(struct platform_device *pdev,
- 			return PTR_ERR(regmap);
- 		}
- 	} else {
--		base = devm_platform_ioremap_resource(pdev, 0);
-+		base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 		if (IS_ERR(base))
- 			return PTR_ERR(base);
- 
-+		reg_config.max_register = resource_size(res) - reg_config.reg_stride;
-+
- 		regmap = devm_regmap_init_mmio(&pdev->dev, base,
--					       &sprdclk_regmap_config);
-+					       &reg_config);
- 		if (IS_ERR(regmap)) {
- 			pr_err("failed to init regmap\n");
- 			return PTR_ERR(regmap);
+ 	for (i = 0; i < IW_HMC_OBJ_TYPE_NUM; i++) {
++		if (iw_hmc_obj_types[i] == IRDMA_HMC_IW_PBLE)
++			continue;
+ 		if (dev->hmc_info->hmc_obj[iw_hmc_obj_types[i]].cnt) {
+ 			info.rsrc_type = iw_hmc_obj_types[i];
+ 			info.count = dev->hmc_info->hmc_obj[info.rsrc_type].cnt;
 -- 
 2.39.2
 
