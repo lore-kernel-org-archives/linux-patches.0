@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8587F2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:31:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B346C433D2;
-	Tue, 18 Apr 2023 12:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331622566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:31:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4F9C433EF;
+	Tue, 18 Apr 2023 12:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821069;
-	bh=l2Rs6pZczwhRPcUMmW2xeDiVj1AeNt9qHT8oQAmVaN0=;
+	s=korg; t=1681821072;
+	bh=q5argzPEaClpJQEMbplI8xlCdFHDVW1Foo1B0xfKLaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0pXbr4Xww6MpsZKA7pycRgg+6XJqbFXSi9QNsCgLNCehprqiiU1KRLNhXDqSron0j
-	 4OZTa8mPwNKjxik4gBDj1VdoraC5mfjppvde+ZgiQ4hy4bxn84AhM8W0bcSj0DIdRX
-	 5tpfnotVxn1nDeSN4QQS+73Pgb0rrMv3D+7GDgo8=
+	b=p1smbpHlCFKJoFvEHHXOvPijMXnfgSMD/Ytyd23S8StabDTo2kmBiJNwd/7w4gMx/
+	 4gDYQUixQypBQmk55sV4/4csxDXdIbRj5en4oxeLvGyy3hXoWbZQr7tJC57R/rdN+S
+	 kaNdghX2hGLq26rvIs8uapSrpTlJlYl3W2bdAkSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
+	Brian Foster <bfoster@redhat.com>,
+	Chandan Rajendra <chandanrlinux@gmail.com>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
 	Chandan Babu R <chandan.babu@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>
-Subject: [PATCH 5.4 80/92] xfs: remove the kuid/kgid conversion wrappers
-Date: Tue, 18 Apr 2023 14:21:55 +0200
-Message-Id: <20230418120307.578587196@linuxfoundation.org>
+Subject: [PATCH 5.4 81/92] xfs: add a new xfs_sb_version_has_v3inode helper
+Date: Tue, 18 Apr 2023 14:21:56 +0200
+Message-Id: <20230418120307.616641452@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -38,249 +40,170 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-commit ba8adad5d036733d240fa8a8f4d055f3d4490562 upstream.
+commit b81b79f4eda2ea98ae5695c0b6eb384c8d90b74d upstream.
 
-Remove the XFS wrappers for converting from and to the kuid/kgid types.
-Mostly this means switching to VFS i_{u,g}id_{read,write} helpers, but
-in a few spots the calls to the conversion functions is open coded.
-To match the use of sb->s_user_ns in the helpers and other file systems,
-sb->s_user_ns is also used in the quota code.  The ACL code already does
-the conversion in a grotty layering violation in the VFS xattr code,
-so it keeps using init_user_ns for the identity mapping.
+Add a new wrapper to check if a file system supports the v3 inode format
+with a larger dinode core.  Previously we used xfs_sb_version_hascrc for
+that, which is technically correct but a little confusing to read.
+
+Also move xfs_dinode_good_version next to xfs_sb_version_has_v3inode
+so that we have one place that documents the superblock version to
+inode version relationship.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Chandan Rajendra <chandanrlinux@gmail.com>
 Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_inode_buf.c |    8 ++++----
- fs/xfs/xfs_acl.c              |   12 ++++++++----
- fs/xfs/xfs_dquot.c            |    4 ++--
- fs/xfs/xfs_inode_item.c       |    4 ++--
- fs/xfs/xfs_itable.c           |    4 ++--
- fs/xfs/xfs_linux.h            |   26 --------------------------
- fs/xfs/xfs_qm.c               |   23 +++++++++--------------
- 7 files changed, 27 insertions(+), 54 deletions(-)
+ fs/xfs/libxfs/xfs_format.h     |   17 +++++++++++++++++
+ fs/xfs/libxfs/xfs_ialloc.c     |    4 ++--
+ fs/xfs/libxfs/xfs_inode_buf.c  |   17 +++--------------
+ fs/xfs/libxfs/xfs_inode_buf.h  |    2 --
+ fs/xfs/libxfs/xfs_trans_resv.c |    2 +-
+ fs/xfs/xfs_buf_item.c          |    2 +-
+ fs/xfs/xfs_log_recover.c       |    2 +-
+ 7 files changed, 25 insertions(+), 21 deletions(-)
 
+--- a/fs/xfs/libxfs/xfs_format.h
++++ b/fs/xfs/libxfs/xfs_format.h
+@@ -497,6 +497,23 @@ static inline bool xfs_sb_version_hascrc
+ 	return XFS_SB_VERSION_NUM(sbp) == XFS_SB_VERSION_5;
+ }
+ 
++/*
++ * v5 file systems support V3 inodes only, earlier file systems support
++ * v2 and v1 inodes.
++ */
++static inline bool xfs_sb_version_has_v3inode(struct xfs_sb *sbp)
++{
++	return XFS_SB_VERSION_NUM(sbp) == XFS_SB_VERSION_5;
++}
++
++static inline bool xfs_dinode_good_version(struct xfs_sb *sbp,
++		uint8_t version)
++{
++	if (xfs_sb_version_has_v3inode(sbp))
++		return version == 3;
++	return version == 1 || version == 2;
++}
++
+ static inline bool xfs_sb_version_has_pquotino(struct xfs_sb *sbp)
+ {
+ 	return XFS_SB_VERSION_NUM(sbp) == XFS_SB_VERSION_5;
+--- a/fs/xfs/libxfs/xfs_ialloc.c
++++ b/fs/xfs/libxfs/xfs_ialloc.c
+@@ -303,7 +303,7 @@ xfs_ialloc_inode_init(
+ 	 * That means for v3 inode we log the entire buffer rather than just the
+ 	 * inode cores.
+ 	 */
+-	if (xfs_sb_version_hascrc(&mp->m_sb)) {
++	if (xfs_sb_version_has_v3inode(&mp->m_sb)) {
+ 		version = 3;
+ 		ino = XFS_AGINO_TO_INO(mp, agno, XFS_AGB_TO_AGINO(mp, agbno));
+ 
+@@ -2818,7 +2818,7 @@ xfs_ialloc_setup_geometry(
+ 	 * cannot change the behavior.
+ 	 */
+ 	igeo->inode_cluster_size_raw = XFS_INODE_BIG_CLUSTER_SIZE;
+-	if (xfs_sb_version_hascrc(&mp->m_sb)) {
++	if (xfs_sb_version_has_v3inode(&mp->m_sb)) {
+ 		int	new_size = igeo->inode_cluster_size_raw;
+ 
+ 		new_size *= mp->m_sb.sb_inodesize / XFS_DINODE_MIN_SIZE;
 --- a/fs/xfs/libxfs/xfs_inode_buf.c
 +++ b/fs/xfs/libxfs/xfs_inode_buf.c
-@@ -222,8 +222,8 @@ xfs_inode_from_disk(
+@@ -44,17 +44,6 @@ xfs_inobp_check(
+ }
+ #endif
+ 
+-bool
+-xfs_dinode_good_version(
+-	struct xfs_mount *mp,
+-	__u8		version)
+-{
+-	if (xfs_sb_version_hascrc(&mp->m_sb))
+-		return version == 3;
+-
+-	return version == 1 || version == 2;
+-}
+-
+ /*
+  * If we are doing readahead on an inode buffer, we might be in log recovery
+  * reading an inode allocation buffer that hasn't yet been replayed, and hence
+@@ -93,7 +82,7 @@ xfs_inode_buf_verify(
+ 		dip = xfs_buf_offset(bp, (i << mp->m_sb.sb_inodelog));
+ 		unlinked_ino = be32_to_cpu(dip->di_next_unlinked);
+ 		di_ok = xfs_verify_magic16(bp, dip->di_magic) &&
+-			xfs_dinode_good_version(mp, dip->di_version) &&
++			xfs_dinode_good_version(&mp->m_sb, dip->di_version) &&
+ 			xfs_verify_agino_or_null(mp, agno, unlinked_ino);
+ 		if (unlikely(XFS_TEST_ERROR(!di_ok, mp,
+ 						XFS_ERRTAG_ITOBP_INOTOBP))) {
+@@ -454,7 +443,7 @@ xfs_dinode_verify(
+ 
+ 	/* Verify v3 integrity information first */
+ 	if (dip->di_version >= 3) {
+-		if (!xfs_sb_version_hascrc(&mp->m_sb))
++		if (!xfs_sb_version_has_v3inode(&mp->m_sb))
+ 			return __this_address;
+ 		if (!xfs_verify_cksum((char *)dip, mp->m_sb.sb_inodesize,
+ 				      XFS_DINODE_CRC_OFF))
+@@ -629,7 +618,7 @@ xfs_iread(
+ 
+ 	/* shortcut IO on inode allocation if possible */
+ 	if ((iget_flags & XFS_IGET_CREATE) &&
+-	    xfs_sb_version_hascrc(&mp->m_sb) &&
++	    xfs_sb_version_has_v3inode(&mp->m_sb) &&
+ 	    !(mp->m_flags & XFS_MOUNT_IKEEP)) {
+ 		/* initialise the on-disk inode core */
+ 		memset(&ip->i_d, 0, sizeof(ip->i_d));
+--- a/fs/xfs/libxfs/xfs_inode_buf.h
++++ b/fs/xfs/libxfs/xfs_inode_buf.h
+@@ -59,8 +59,6 @@ void	xfs_inode_from_disk(struct xfs_inod
+ void	xfs_log_dinode_to_disk(struct xfs_log_dinode *from,
+ 			       struct xfs_dinode *to);
+ 
+-bool	xfs_dinode_good_version(struct xfs_mount *mp, __u8 version);
+-
+ #if defined(DEBUG)
+ void	xfs_inobp_check(struct xfs_mount *, struct xfs_buf *);
+ #else
+--- a/fs/xfs/libxfs/xfs_trans_resv.c
++++ b/fs/xfs/libxfs/xfs_trans_resv.c
+@@ -187,7 +187,7 @@ xfs_calc_inode_chunk_res(
+ 			       XFS_FSB_TO_B(mp, 1));
+ 	if (alloc) {
+ 		/* icreate tx uses ordered buffers */
+-		if (xfs_sb_version_hascrc(&mp->m_sb))
++		if (xfs_sb_version_has_v3inode(&mp->m_sb))
+ 			return res;
+ 		size = XFS_FSB_TO_B(mp, 1);
  	}
- 
- 	to->di_format = from->di_format;
--	inode->i_uid = xfs_uid_to_kuid(be32_to_cpu(from->di_uid));
--	inode->i_gid = xfs_gid_to_kgid(be32_to_cpu(from->di_gid));
-+	i_uid_write(inode, be32_to_cpu(from->di_uid));
-+	i_gid_write(inode, be32_to_cpu(from->di_gid));
- 	to->di_flushiter = be16_to_cpu(from->di_flushiter);
- 
- 	/*
-@@ -276,8 +276,8 @@ xfs_inode_to_disk(
- 
- 	to->di_version = from->di_version;
- 	to->di_format = from->di_format;
--	to->di_uid = cpu_to_be32(xfs_kuid_to_uid(inode->i_uid));
--	to->di_gid = cpu_to_be32(xfs_kgid_to_gid(inode->i_gid));
-+	to->di_uid = cpu_to_be32(i_uid_read(inode));
-+	to->di_gid = cpu_to_be32(i_gid_read(inode));
- 	to->di_projid_lo = cpu_to_be16(from->di_projid & 0xffff);
- 	to->di_projid_hi = cpu_to_be16(from->di_projid >> 16);
- 
---- a/fs/xfs/xfs_acl.c
-+++ b/fs/xfs/xfs_acl.c
-@@ -66,10 +66,12 @@ xfs_acl_from_disk(
- 
- 		switch (acl_e->e_tag) {
- 		case ACL_USER:
--			acl_e->e_uid = xfs_uid_to_kuid(be32_to_cpu(ace->ae_id));
-+			acl_e->e_uid = make_kuid(&init_user_ns,
-+						 be32_to_cpu(ace->ae_id));
- 			break;
- 		case ACL_GROUP:
--			acl_e->e_gid = xfs_gid_to_kgid(be32_to_cpu(ace->ae_id));
-+			acl_e->e_gid = make_kgid(&init_user_ns,
-+						 be32_to_cpu(ace->ae_id));
- 			break;
- 		case ACL_USER_OBJ:
- 		case ACL_GROUP_OBJ:
-@@ -102,10 +104,12 @@ xfs_acl_to_disk(struct xfs_acl *aclp, co
- 		ace->ae_tag = cpu_to_be32(acl_e->e_tag);
- 		switch (acl_e->e_tag) {
- 		case ACL_USER:
--			ace->ae_id = cpu_to_be32(xfs_kuid_to_uid(acl_e->e_uid));
-+			ace->ae_id = cpu_to_be32(
-+					from_kuid(&init_user_ns, acl_e->e_uid));
- 			break;
- 		case ACL_GROUP:
--			ace->ae_id = cpu_to_be32(xfs_kgid_to_gid(acl_e->e_gid));
-+			ace->ae_id = cpu_to_be32(
-+					from_kgid(&init_user_ns, acl_e->e_gid));
- 			break;
- 		default:
- 			ace->ae_id = cpu_to_be32(ACL_UNDEFINED_ID);
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -859,9 +859,9 @@ xfs_qm_id_for_quotatype(
- {
- 	switch (type) {
- 	case XFS_DQ_USER:
--		return xfs_kuid_to_uid(VFS_I(ip)->i_uid);
-+		return i_uid_read(VFS_I(ip));
- 	case XFS_DQ_GROUP:
--		return xfs_kgid_to_gid(VFS_I(ip)->i_gid);
-+		return i_gid_read(VFS_I(ip));
- 	case XFS_DQ_PROJ:
- 		return ip->i_d.di_projid;
- 	}
---- a/fs/xfs/xfs_inode_item.c
-+++ b/fs/xfs/xfs_inode_item.c
-@@ -308,8 +308,8 @@ xfs_inode_to_log_dinode(
- 
- 	to->di_version = from->di_version;
- 	to->di_format = from->di_format;
--	to->di_uid = xfs_kuid_to_uid(inode->i_uid);
--	to->di_gid = xfs_kgid_to_gid(inode->i_gid);
-+	to->di_uid = i_uid_read(inode);
-+	to->di_gid = i_gid_read(inode);
- 	to->di_projid_lo = from->di_projid & 0xffff;
- 	to->di_projid_hi = from->di_projid >> 16;
- 
---- a/fs/xfs/xfs_itable.c
-+++ b/fs/xfs/xfs_itable.c
-@@ -86,8 +86,8 @@ xfs_bulkstat_one_int(
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -328,7 +328,7 @@ xfs_buf_item_format(
+ 	 * occurs during recovery.
  	 */
- 	buf->bs_projectid = ip->i_d.di_projid;
- 	buf->bs_ino = ino;
--	buf->bs_uid = xfs_kuid_to_uid(inode->i_uid);
--	buf->bs_gid = xfs_kgid_to_gid(inode->i_gid);
-+	buf->bs_uid = i_uid_read(inode);
-+	buf->bs_gid = i_gid_read(inode);
- 	buf->bs_size = dic->di_size;
- 
- 	buf->bs_nlink = inode->i_nlink;
---- a/fs/xfs/xfs_linux.h
-+++ b/fs/xfs/xfs_linux.h
-@@ -163,32 +163,6 @@ struct xstats {
- 
- extern struct xstats xfsstats;
- 
--/* Kernel uid/gid conversion. These are used to convert to/from the on disk
-- * uid_t/gid_t types to the kuid_t/kgid_t types that the kernel uses internally.
-- * The conversion here is type only, the value will remain the same since we
-- * are converting to the init_user_ns. The uid is later mapped to a particular
-- * user namespace value when crossing the kernel/user boundary.
-- */
--static inline uint32_t xfs_kuid_to_uid(kuid_t uid)
--{
--	return from_kuid(&init_user_ns, uid);
--}
--
--static inline kuid_t xfs_uid_to_kuid(uint32_t uid)
--{
--	return make_kuid(&init_user_ns, uid);
--}
--
--static inline uint32_t xfs_kgid_to_gid(kgid_t gid)
--{
--	return from_kgid(&init_user_ns, gid);
--}
--
--static inline kgid_t xfs_gid_to_kgid(uint32_t gid)
--{
--	return make_kgid(&init_user_ns, gid);
--}
--
- static inline dev_t xfs_to_linux_dev_t(xfs_dev_t dev)
- {
- 	return MKDEV(sysv_major(dev) & 0x1ff, sysv_minor(dev));
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -331,8 +331,7 @@ xfs_qm_dqattach_locked(
- 	ASSERT(xfs_isilocked(ip, XFS_ILOCK_EXCL));
- 
- 	if (XFS_IS_UQUOTA_ON(mp) && !ip->i_udquot) {
--		error = xfs_qm_dqattach_one(ip,
--				xfs_kuid_to_uid(VFS_I(ip)->i_uid),
-+		error = xfs_qm_dqattach_one(ip, i_uid_read(VFS_I(ip)),
- 				XFS_DQ_USER, doalloc, &ip->i_udquot);
- 		if (error)
- 			goto done;
-@@ -340,8 +339,7 @@ xfs_qm_dqattach_locked(
- 	}
- 
- 	if (XFS_IS_GQUOTA_ON(mp) && !ip->i_gdquot) {
--		error = xfs_qm_dqattach_one(ip,
--				xfs_kgid_to_gid(VFS_I(ip)->i_gid),
-+		error = xfs_qm_dqattach_one(ip, i_gid_read(VFS_I(ip)),
- 				XFS_DQ_GROUP, doalloc, &ip->i_gdquot);
- 		if (error)
- 			goto done;
-@@ -1642,6 +1640,7 @@ xfs_qm_vop_dqalloc(
- {
- 	struct xfs_mount	*mp = ip->i_mount;
- 	struct inode		*inode = VFS_I(ip);
-+	struct user_namespace	*user_ns = inode->i_sb->s_user_ns;
- 	struct xfs_dquot	*uq = NULL;
- 	struct xfs_dquot	*gq = NULL;
- 	struct xfs_dquot	*pq = NULL;
-@@ -1681,7 +1680,7 @@ xfs_qm_vop_dqalloc(
- 			 * holding ilock.
- 			 */
- 			xfs_iunlock(ip, lockflags);
--			error = xfs_qm_dqget(mp, xfs_kuid_to_uid(uid),
-+			error = xfs_qm_dqget(mp, from_kuid(user_ns, uid),
- 					XFS_DQ_USER, true, &uq);
- 			if (error) {
- 				ASSERT(error != -ENOENT);
-@@ -1705,7 +1704,7 @@ xfs_qm_vop_dqalloc(
- 	if ((flags & XFS_QMOPT_GQUOTA) && XFS_IS_GQUOTA_ON(mp)) {
- 		if (!gid_eq(inode->i_gid, gid)) {
- 			xfs_iunlock(ip, lockflags);
--			error = xfs_qm_dqget(mp, xfs_kgid_to_gid(gid),
-+			error = xfs_qm_dqget(mp, from_kgid(user_ns, gid),
- 					XFS_DQ_GROUP, true, &gq);
- 			if (error) {
- 				ASSERT(error != -ENOENT);
-@@ -1832,8 +1831,7 @@ xfs_qm_vop_chown_reserve(
- 			XFS_QMOPT_RES_RTBLKS : XFS_QMOPT_RES_REGBLKS;
- 
- 	if (XFS_IS_UQUOTA_ON(mp) && udqp &&
--	    xfs_kuid_to_uid(VFS_I(ip)->i_uid) !=
--			be32_to_cpu(udqp->q_core.d_id)) {
-+	    i_uid_read(VFS_I(ip)) != be32_to_cpu(udqp->q_core.d_id)) {
- 		udq_delblks = udqp;
+ 	if (bip->bli_flags & XFS_BLI_INODE_BUF) {
+-		if (xfs_sb_version_hascrc(&lip->li_mountp->m_sb) ||
++		if (xfs_sb_version_has_v3inode(&lip->li_mountp->m_sb) ||
+ 		    !((bip->bli_flags & XFS_BLI_INODE_ALLOC_BUF) &&
+ 		      xfs_log_item_in_current_chkpt(lip)))
+ 			bip->__bli_format.blf_flags |= XFS_BLF_INODE_BUF;
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -3018,7 +3018,7 @@ xlog_recover_inode_pass2(
+ 	 * superblock flag to determine whether we need to look at di_flushiter
+ 	 * to skip replay when the on disk inode is newer than the log one
+ 	 */
+-	if (!xfs_sb_version_hascrc(&mp->m_sb) &&
++	if (!xfs_sb_version_has_v3inode(&mp->m_sb) &&
+ 	    ldip->di_flushiter < be16_to_cpu(dip->di_flushiter)) {
  		/*
- 		 * If there are delayed allocation blocks, then we have to
-@@ -1846,8 +1844,7 @@ xfs_qm_vop_chown_reserve(
- 		}
- 	}
- 	if (XFS_IS_GQUOTA_ON(ip->i_mount) && gdqp &&
--	    xfs_kgid_to_gid(VFS_I(ip)->i_gid) !=
--			be32_to_cpu(gdqp->q_core.d_id)) {
-+	    i_gid_read(VFS_I(ip)) != be32_to_cpu(gdqp->q_core.d_id)) {
- 		gdq_delblks = gdqp;
- 		if (delblks) {
- 			ASSERT(ip->i_gdquot);
-@@ -1944,16 +1941,14 @@ xfs_qm_vop_create_dqattach(
- 
- 	if (udqp && XFS_IS_UQUOTA_ON(mp)) {
- 		ASSERT(ip->i_udquot == NULL);
--		ASSERT(xfs_kuid_to_uid(VFS_I(ip)->i_uid) ==
--			be32_to_cpu(udqp->q_core.d_id));
-+		ASSERT(i_uid_read(VFS_I(ip)) == be32_to_cpu(udqp->q_core.d_id));
- 
- 		ip->i_udquot = xfs_qm_dqhold(udqp);
- 		xfs_trans_mod_dquot(tp, udqp, XFS_TRANS_DQ_ICOUNT, 1);
- 	}
- 	if (gdqp && XFS_IS_GQUOTA_ON(mp)) {
- 		ASSERT(ip->i_gdquot == NULL);
--		ASSERT(xfs_kgid_to_gid(VFS_I(ip)->i_gid) ==
--			be32_to_cpu(gdqp->q_core.d_id));
-+		ASSERT(i_gid_read(VFS_I(ip)) == be32_to_cpu(gdqp->q_core.d_id));
- 
- 		ip->i_gdquot = xfs_qm_dqhold(gdqp);
- 		xfs_trans_mod_dquot(tp, gdqp, XFS_TRANS_DQ_ICOUNT, 1);
+ 		 * Deal with the wrap case, DI_MAX_FLUSH is less
 
 
