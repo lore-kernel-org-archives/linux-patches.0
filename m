@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9E62566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:25:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56427C433D2;
-	Tue, 18 Apr 2023 12:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F01A2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:25:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E691FC4339B;
+	Tue, 18 Apr 2023 12:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820714;
-	bh=qF+wvf3RMFVXybSK2SYLuf3gG4TGOEXnjTL7cDZtxjU=;
+	s=korg; t=1681820717;
+	bh=QDqPwJSWbe3V13zoK0txnLyYgtCXXEXPuzJmx/nUdk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nEaBkWR/amyTRroiBbz6IxtnfIJIQdeSuFL/InewPtiP94BWHZ2HXtGuNPwtAqpWj
-	 zTZgNYgq5zOV0ZDHBQ1+Qm29iEA7T1I4rMXZHWAmucCaTm2d5bdc+qZ4z1ocHHA46z
-	 XDV7zNC/sD/14mcbTCA1OTm/ERuQQqOFikNjmLLs=
+	b=MJlCsm+wst4zXuuROSRnhIcdF4Ne/wU6s0r0cblogFsB0qKhtt1o21Tyk+PHmmn4k
+	 kAi7kcaSwo/yIF62mbnDYnn9j+QWAo4LYvP4Obm5rLqPSXyhdqtpNvK3ODS4qoyofN
+	 IU3HGKzB83EnGkkwDfjDk3euiyoOE3Ahmy2aHkHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b08ebcc22f8f3e6be43a@syzkaller.appspotmail.com,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+979fa7f9c0d086fdc282@syzkaller.appspotmail.com,
+	syzbot+5b7d542076d9bddc3c6a@syzkaller.appspotmail.com,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 11/37] nilfs2: fix potential UAF of struct nilfs_sc_info in nilfs_segctor_thread()
-Date: Tue, 18 Apr 2023 14:21:21 +0200
-Message-Id: <20230418120255.069072515@linuxfoundation.org>
+Subject: [PATCH 4.14 12/37] nilfs2: fix sysfs interface lifetime
+Date: Tue, 18 Apr 2023 14:21:22 +0200
+Message-Id: <20230418120255.098243477@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
 References: <20230418120254.687480980@linuxfoundation.org>
@@ -37,53 +39,116 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 6be49d100c22ffea3287a4b19d7639d259888e33 upstream.
+commit 42560f9c92cc43dce75dbf06cc0d840dced39b12 upstream.
 
-The finalization of nilfs_segctor_thread() can race with
-nilfs_segctor_kill_thread() which terminates that thread, potentially
-causing a use-after-free BUG as KASAN detected.
+The current nilfs2 sysfs support has issues with the timing of creation
+and deletion of sysfs entries, potentially leading to null pointer
+dereferences, use-after-free, and lockdep warnings.
 
-At the end of nilfs_segctor_thread(), it assigns NULL to "sc_task" member
-of "struct nilfs_sc_info" to indicate the thread has finished, and then
-notifies nilfs_segctor_kill_thread() of this using waitqueue
-"sc_wait_task" on the struct nilfs_sc_info.
+Some of the sysfs attributes for nilfs2 per-filesystem instance refer to
+metadata file "cpfile", "sufile", or "dat", but
+nilfs_sysfs_create_device_group that creates those attributes is executed
+before the inodes for these metadata files are loaded, and
+nilfs_sysfs_delete_device_group which deletes these sysfs entries is
+called after releasing their metadata file inodes.
 
-However, here, immediately after the NULL assignment to "sc_task", it is
-possible that nilfs_segctor_kill_thread() will detect it and return to
-continue the deallocation, freeing the nilfs_sc_info structure before the
-thread does the notification.
+Therefore, access to some of these sysfs attributes may occur outside of
+the lifetime of these metadata files, resulting in inode NULL pointer
+dereferences or use-after-free.
 
-This fixes the issue by protecting the NULL assignment to "sc_task" and
-its notification, with spinlock "sc_state_lock" of the struct
-nilfs_sc_info.  Since nilfs_segctor_kill_thread() does a final check to
-see if "sc_task" is NULL with "sc_state_lock" locked, this can eliminate
-the race.
+In addition, the call to nilfs_sysfs_create_device_group() is made during
+the locking period of the semaphore "ns_sem" of nilfs object, so the
+shrinker call caused by the memory allocation for the sysfs entries, may
+derive lock dependencies "ns_sem" -> (shrinker) -> "locks acquired in
+nilfs_evict_inode()".
 
-Link: https://lkml.kernel.org/r/20230327175318.8060-1-konishi.ryusuke@gmail.com
-Reported-by: syzbot+b08ebcc22f8f3e6be43a@syzkaller.appspotmail.com
-Link: https://lkml.kernel.org/r/00000000000000660d05f7dfa877@google.com
+Since nilfs2 may acquire "ns_sem" deep in the call stack holding other
+locks via its error handler __nilfs_error(), this causes lockdep to report
+circular locking.  This is a false positive and no circular locking
+actually occurs as no inodes exist yet when
+nilfs_sysfs_create_device_group() is called.  Fortunately, the lockdep
+warnings can be resolved by simply moving the call to
+nilfs_sysfs_create_device_group() out of "ns_sem".
+
+This fixes these sysfs issues by revising where the device's sysfs
+interface is created/deleted and keeping its lifetime within the lifetime
+of the metadata files above.
+
+Link: https://lkml.kernel.org/r/20230330205515.6167-1-konishi.ryusuke@gmail.com
+Fixes: dd70edbde262 ("nilfs2: integrate sysfs support into driver")
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+979fa7f9c0d086fdc282@syzkaller.appspotmail.com
+  Link: https://lkml.kernel.org/r/0000000000003414b505f7885f7e@google.com
+Reported-by: syzbot+5b7d542076d9bddc3c6a@syzkaller.appspotmail.com
+  Link: https://lkml.kernel.org/r/0000000000006ac86605f5f44eb9@google.com
+Cc: Viacheslav Dubeyko <slava@dubeyko.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/nilfs2/super.c     |    2 ++
+ fs/nilfs2/the_nilfs.c |   12 +++++++-----
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2623,11 +2623,10 @@ static int nilfs_segctor_thread(void *ar
- 	goto loop;
+--- a/fs/nilfs2/super.c
++++ b/fs/nilfs2/super.c
+@@ -494,6 +494,7 @@ static void nilfs_put_super(struct super
+ 		up_write(&nilfs->ns_sem);
+ 	}
  
-  end_thread:
--	spin_unlock(&sci->sc_state_lock);
++	nilfs_sysfs_delete_device_group(nilfs);
+ 	iput(nilfs->ns_sufile);
+ 	iput(nilfs->ns_cpfile);
+ 	iput(nilfs->ns_dat);
+@@ -1120,6 +1121,7 @@ nilfs_fill_super(struct super_block *sb,
+ 	nilfs_put_root(fsroot);
+ 
+  failed_unload:
++	nilfs_sysfs_delete_device_group(nilfs);
+ 	iput(nilfs->ns_sufile);
+ 	iput(nilfs->ns_cpfile);
+ 	iput(nilfs->ns_dat);
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -96,7 +96,6 @@ void destroy_nilfs(struct the_nilfs *nil
+ {
+ 	might_sleep();
+ 	if (nilfs_init(nilfs)) {
+-		nilfs_sysfs_delete_device_group(nilfs);
+ 		brelse(nilfs->ns_sbh[0]);
+ 		brelse(nilfs->ns_sbh[1]);
+ 	}
+@@ -284,6 +283,10 @@ int load_nilfs(struct the_nilfs *nilfs,
+ 		goto failed;
+ 	}
+ 
++	err = nilfs_sysfs_create_device_group(sb);
++	if (unlikely(err))
++		goto sysfs_error;
++
+ 	if (valid_fs)
+ 		goto skip_recovery;
+ 
+@@ -345,6 +348,9 @@ int load_nilfs(struct the_nilfs *nilfs,
+ 	goto failed;
+ 
+  failed_unload:
++	nilfs_sysfs_delete_device_group(nilfs);
++
++ sysfs_error:
+ 	iput(nilfs->ns_cpfile);
+ 	iput(nilfs->ns_sufile);
+ 	iput(nilfs->ns_dat);
+@@ -677,10 +683,6 @@ int init_nilfs(struct the_nilfs *nilfs,
+ 	if (err)
+ 		goto failed_sbh;
+ 
+-	err = nilfs_sysfs_create_device_group(sb);
+-	if (err)
+-		goto failed_sbh;
 -
- 	/* end sync. */
- 	sci->sc_task = NULL;
- 	wake_up(&sci->sc_wait_task); /* for nilfs_segctor_kill_thread() */
-+	spin_unlock(&sci->sc_state_lock);
- 	return 0;
- }
- 
+ 	set_nilfs_init(nilfs);
+ 	err = 0;
+  out:
 
 
