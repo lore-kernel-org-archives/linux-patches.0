@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4B32572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:53:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C39C4339B;
-	Tue, 18 Apr 2023 12:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341A72572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:53:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE13C4339B;
+	Tue, 18 Apr 2023 12:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822394;
-	bh=+dnhBPc/YfgR9BLsubh3mk4uFixd5cRxmk+2Yv1vbGY=;
+	s=korg; t=1681822397;
+	bh=CM6XRlSLbRIFu9ZYWx2s0PTk7kALrNAe/TEpeKMf95c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jwTW9lZXT+BBXYZQF+2vKhY0fdGwu0bag5XXPRdnoX8EC0KihKq8h0sjPrcQhSrvI
-	 wWVBU+3wGJY2XhDslN8DtCB49LZ4QEa0wuI4tMs/PYK4bdSHL58H915tPwMfdJhcjw
-	 F6mMsRQL2A3mCXhe1Iod8YGQoGX7JCQffIH6M0v8=
+	b=Nue+hqvHqEgLlc9JRp3cFW3j7/NzxH1L7kDbSYSA9tRlGuLQIBVR+fdOOXSYJ3vMt
+	 x2ulx2Jv9l6UnTzjXswb+SVYG92O2S7u2r+o2kgO+139b+FGdfjrCBx9ohTh+wZ3U8
+	 cVLZjUjciJgRfhTKPlM2RhhzzvSnPOmIDRrhhKqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Disseldorp <ddiss@suse.de>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.2 103/139] ksmbd: avoid out of bounds access in decode_preauth_ctxt()
-Date: Tue, 18 Apr 2023 14:22:48 +0200
-Message-Id: <20230418120317.665282002@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.2 104/139] riscv: Do not set initial_boot_params to the linear address of the dtb
+Date: Tue, 18 Apr 2023 14:22:49 +0200
+Message-Id: <20230418120317.712080553@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -35,68 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Disseldorp <ddiss@suse.de>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit e7067a446264a7514fa1cfaa4052cdb6803bc6a2 upstream.
+commit f1581626071c8e37c58c5e8f0b4126b17172a211 upstream.
 
-Confirm that the accessed pneg_ctxt->HashAlgorithms address sits within
-the SMB request boundary; deassemble_neg_contexts() only checks that the
-eight byte smb2_neg_context header + (client controlled) DataLength are
-within the packet boundary, which is insufficient.
+early_init_dt_verify() is already called in parse_dtb() and since the dtb
+address does not change anymore (it is now in the fixmap region), no need
+to reset initial_boot_params by calling early_init_dt_verify() again.
 
-Checking for sizeof(struct smb2_preauth_neg_context) is overkill given
-that the type currently assumes SMB311_SALT_SIZE bytes of trailing Salt.
-
-Signed-off-by: David Disseldorp <ddiss@suse.de>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20230329081932.79831-3-alexghiti@rivosinc.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ arch/riscv/kernel/setup.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -872,17 +872,21 @@ static void assemble_neg_contexts(struct
- }
- 
- static __le32 decode_preauth_ctxt(struct ksmbd_conn *conn,
--				  struct smb2_preauth_neg_context *pneg_ctxt)
-+				  struct smb2_preauth_neg_context *pneg_ctxt,
-+				  int len_of_ctxts)
- {
--	__le32 err = STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP;
-+	/*
-+	 * sizeof(smb2_preauth_neg_context) assumes SMB311_SALT_SIZE Salt,
-+	 * which may not be present. Only check for used HashAlgorithms[1].
-+	 */
-+	if (len_of_ctxts < MIN_PREAUTH_CTXT_DATA_LEN)
-+		return STATUS_INVALID_PARAMETER;
- 
--	if (pneg_ctxt->HashAlgorithms == SMB2_PREAUTH_INTEGRITY_SHA512) {
--		conn->preauth_info->Preauth_HashId =
--			SMB2_PREAUTH_INTEGRITY_SHA512;
--		err = STATUS_SUCCESS;
--	}
-+	if (pneg_ctxt->HashAlgorithms != SMB2_PREAUTH_INTEGRITY_SHA512)
-+		return STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP;
- 
--	return err;
-+	conn->preauth_info->Preauth_HashId = SMB2_PREAUTH_INTEGRITY_SHA512;
-+	return STATUS_SUCCESS;
- }
- 
- static void decode_encrypt_ctxt(struct ksmbd_conn *conn,
-@@ -1010,7 +1014,8 @@ static __le32 deassemble_neg_contexts(st
- 				break;
- 
- 			status = decode_preauth_ctxt(conn,
--						     (struct smb2_preauth_neg_context *)pctx);
-+						     (struct smb2_preauth_neg_context *)pctx,
-+						     len_of_ctxts);
- 			if (status != STATUS_SUCCESS)
- 				break;
- 		} else if (pctx->ContextType == SMB2_ENCRYPTION_CAPABILITIES) {
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -278,10 +278,7 @@ void __init setup_arch(char **cmdline_p)
+ #if IS_ENABLED(CONFIG_BUILTIN_DTB)
+ 	unflatten_and_copy_device_tree();
+ #else
+-	if (early_init_dt_verify(__va(XIP_FIXUP(dtb_early_pa))))
+-		unflatten_device_tree();
+-	else
+-		pr_err("No DTB found in kernel mappings\n");
++	unflatten_device_tree();
+ #endif
+ 	early_init_fdt_scan_reserved_mem();
+ 	misc_mem_init();
 
 
