@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBE92572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8A9C433D2;
-	Tue, 18 Apr 2023 12:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5D32572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7488C433EF;
+	Tue, 18 Apr 2023 12:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822214;
-	bh=fm62TvR7NPEE5/Hxdew0cOtJUmQncyfx90ZN00e6dm4=;
+	s=korg; t=1681822217;
+	bh=I6ga2qarMUTw/LBMWwkY72jb0CH+PxiO9wPzxj2uLZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YEB+tx7QHJDdGSBOOjVKcAFSUyvMdjSvvqqRgEYwOmik3KpIknhliyHWT8z51OHgR
-	 tZ7KU7GZTeZZuRKfMCvElZirP7uFMy/6GWnvyR4jJ0fj0KwWZU3cJi88AFhbhkZ8c4
-	 IbGn8kwVHCoYlVDr7JzJrEuNSwtn3Z6HxyO+AYeY=
+	b=dRajVXZDuem35WXcMZYpqcW4Sh1Rh5V6fr8TwlOYk4K7Ks1ybu72XFrjkhZINPi68
+	 eRNDI6gilKge5Twxicw/HhpnRpKKkwNvo30sZVmU/q6qYDbDlSRSyeCQyc3gPqLX6q
+	 83OAbTyoyI7c6tHqP2uArPAngdFgBP7A9NXiyl7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	syzbot <syzbot+c39682e86c9d84152f93@syzkaller.appspotmail.com>,
+	Hillf Danton <hdanton@sina.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 038/139] RDMA/erdma: Inline mtt entries into WQE if supported
-Date: Tue, 18 Apr 2023 14:21:43 +0200
-Message-Id: <20230418120315.085857589@linuxfoundation.org>
+Subject: [PATCH 6.2 065/139] cgroup,freezer: hold cpu_hotplug_lock before freezer_mutex
+Date: Tue, 18 Apr 2023 14:22:10 +0200
+Message-Id: <20230418120316.259134474@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -35,36 +39,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cheng Xu <chengyou@linux.alibaba.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 0dd83a4d7756713f81990d6c5547500f212a1190 ]
+[ Upstream commit 57dcd64c7e036299ef526b400a8d12b8a2352f26 ]
 
-The max inline mtt count supported is ERDMA_MAX_INLINE_MTT_ENTRIES.
-When mr->mem.mtt_nents == ERDMA_MAX_INLINE_MTT_ENTRIES, inline mtt
-is also supported, fix it.
+syzbot is reporting circular locking dependency between cpu_hotplug_lock
+and freezer_mutex, for commit f5d39b020809 ("freezer,sched: Rewrite core
+freezer logic") replaced atomic_inc() in freezer_apply_state() with
+static_branch_inc() which holds cpu_hotplug_lock.
 
-Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
-Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230320084652.16807-4-chengyou@linux.alibaba.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+cpu_hotplug_lock => cgroup_threadgroup_rwsem => freezer_mutex
+
+  cgroup_file_write() {
+    cgroup_procs_write() {
+      __cgroup_procs_write() {
+        cgroup_procs_write_start() {
+          cgroup_attach_lock() {
+            cpus_read_lock() {
+              percpu_down_read(&cpu_hotplug_lock);
+            }
+            percpu_down_write(&cgroup_threadgroup_rwsem);
+          }
+        }
+        cgroup_attach_task() {
+          cgroup_migrate() {
+            cgroup_migrate_execute() {
+              freezer_attach() {
+                mutex_lock(&freezer_mutex);
+                (...snipped...)
+              }
+            }
+          }
+        }
+        (...snipped...)
+      }
+    }
+  }
+
+freezer_mutex => cpu_hotplug_lock
+
+  cgroup_file_write() {
+    freezer_write() {
+      freezer_change_state() {
+        mutex_lock(&freezer_mutex);
+        freezer_apply_state() {
+          static_branch_inc(&freezer_active) {
+            static_key_slow_inc() {
+              cpus_read_lock();
+              static_key_slow_inc_cpuslocked();
+              cpus_read_unlock();
+            }
+          }
+        }
+        mutex_unlock(&freezer_mutex);
+      }
+    }
+  }
+
+Swap locking order by moving cpus_read_lock() in freezer_apply_state()
+to before mutex_lock(&freezer_mutex) in freezer_change_state().
+
+Reported-by: syzbot <syzbot+c39682e86c9d84152f93@syzkaller.appspotmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=c39682e86c9d84152f93
+Suggested-by: Hillf Danton <hdanton@sina.com>
+Fixes: f5d39b020809 ("freezer,sched: Rewrite core freezer logic")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_qp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cgroup/legacy_freezer.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_qp.c b/drivers/infiniband/hw/erdma/erdma_qp.c
-index ff473b208acfb..44923c51a01b4 100644
---- a/drivers/infiniband/hw/erdma/erdma_qp.c
-+++ b/drivers/infiniband/hw/erdma/erdma_qp.c
-@@ -405,7 +405,7 @@ static int erdma_push_one_sqe(struct erdma_qp *qp, u16 *pi,
- 			FIELD_PREP(ERDMA_SQE_MR_MTT_CNT_MASK,
- 				   mr->mem.mtt_nents);
+diff --git a/kernel/cgroup/legacy_freezer.c b/kernel/cgroup/legacy_freezer.c
+index 1b6b21851e9d4..936473203a6b5 100644
+--- a/kernel/cgroup/legacy_freezer.c
++++ b/kernel/cgroup/legacy_freezer.c
+@@ -22,6 +22,7 @@
+ #include <linux/freezer.h>
+ #include <linux/seq_file.h>
+ #include <linux/mutex.h>
++#include <linux/cpu.h>
  
--		if (mr->mem.mtt_nents < ERDMA_MAX_INLINE_MTT_ENTRIES) {
-+		if (mr->mem.mtt_nents <= ERDMA_MAX_INLINE_MTT_ENTRIES) {
- 			attrs |= FIELD_PREP(ERDMA_SQE_MR_MTT_TYPE_MASK, 0);
- 			/* Copy SGLs to SQE content to accelerate */
- 			memcpy(get_queue_entry(qp->kern_qp.sq_buf, idx + 1,
+ /*
+  * A cgroup is freezing if any FREEZING flags are set.  FREEZING_SELF is
+@@ -350,7 +351,7 @@ static void freezer_apply_state(struct freezer *freezer, bool freeze,
+ 
+ 	if (freeze) {
+ 		if (!(freezer->state & CGROUP_FREEZING))
+-			static_branch_inc(&freezer_active);
++			static_branch_inc_cpuslocked(&freezer_active);
+ 		freezer->state |= state;
+ 		freeze_cgroup(freezer);
+ 	} else {
+@@ -361,7 +362,7 @@ static void freezer_apply_state(struct freezer *freezer, bool freeze,
+ 		if (!(freezer->state & CGROUP_FREEZING)) {
+ 			freezer->state &= ~CGROUP_FROZEN;
+ 			if (was_freezing)
+-				static_branch_dec(&freezer_active);
++				static_branch_dec_cpuslocked(&freezer_active);
+ 			unfreeze_cgroup(freezer);
+ 		}
+ 	}
+@@ -379,6 +380,7 @@ static void freezer_change_state(struct freezer *freezer, bool freeze)
+ {
+ 	struct cgroup_subsys_state *pos;
+ 
++	cpus_read_lock();
+ 	/*
+ 	 * Update all its descendants in pre-order traversal.  Each
+ 	 * descendant will try to inherit its parent's FREEZING state as
+@@ -407,6 +409,7 @@ static void freezer_change_state(struct freezer *freezer, bool freeze)
+ 	}
+ 	rcu_read_unlock();
+ 	mutex_unlock(&freezer_mutex);
++	cpus_read_unlock();
+ }
+ 
+ static ssize_t freezer_write(struct kernfs_open_file *of,
 -- 
 2.39.2
 
