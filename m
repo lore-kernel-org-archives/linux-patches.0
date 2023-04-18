@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090B72572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB64C433EF;
-	Tue, 18 Apr 2023 12:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4022572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2083DC433D2;
+	Tue, 18 Apr 2023 12:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822354;
-	bh=UwoDSbeHuJo8Pg8Uj7PGuCY/SERMjOSYdwZk01A2qvY=;
+	s=korg; t=1681822357;
+	bh=5/GsWUizHK8E6bndtiZh6IjnMVuhsaW3BVQdLPuor+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e4aSs8Oer12xAaqvkOqA5xlU4ms+Xgd2RLbx/cTjRFDi7wjCep9C7L6nuzUqzvX+g
-	 Nl1joah7dE+wMexCPKRjVn3kQ4PnR9YtywDl1mT5iz92St9gYITWOkvFRiXLyA++IK
-	 bTj96dWWxB9o/8kX8zrj+wMErzlC8zeaSK44odUA=
+	b=QvZHrSpbn84aDCQSNHXxXwDZmVY7N/gDS3iptmrEgScgXeYQL4vNPg3cn/xiSmezW
+	 8d/xxoO4IJdpYtrbpV72kZ4hc6R6F0ylob+zMrlMUMd4tcUYE0a9IjISXbtQj/rU/X
+	 0E5DOD+HIahb4x8J0oezAHkhKhHZcUqW2NKrKiZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Ross Zwisler <zwisler@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 101/139] tracing: Have tracing_snapshot_instance_cond() write errors to the appropriate instance
-Date: Tue, 18 Apr 2023 14:22:46 +0200
-Message-Id: <20230418120317.588170046@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.2 119/139] cgroup/cpuset: Wake up cpuset_attach_wq tasks in cpuset_cancel_attach()
+Date: Tue, 18 Apr 2023 14:23:04 +0200
+Message-Id: <20230418120318.280512874@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -38,65 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 9d52727f8043cfda241ae96896628d92fa9c50bb ]
+commit ba9182a89626d5f83c2ee4594f55cb9c1e60f0e2 upstream.
 
-If a trace instance has a failure with its snapshot code, the error
-message is to be written to that instance's buffer. But currently, the
-message is written to the top level buffer. Worse yet, it may also disable
-the top level buffer and not the instance that had the issue.
+After a successful cpuset_can_attach() call which increments the
+attach_in_progress flag, either cpuset_cancel_attach() or cpuset_attach()
+will be called later. In cpuset_attach(), tasks in cpuset_attach_wq,
+if present, will be woken up at the end. That is not the case in
+cpuset_cancel_attach(). So missed wakeup is possible if the attach
+operation is somehow cancelled. Fix that by doing the wakeup in
+cpuset_cancel_attach() as well.
 
-Link: https://lkml.kernel.org/r/20230405022341.688730321@goodmis.org
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Ross Zwisler <zwisler@google.com>
-Fixes: 2824f50332486 ("tracing: Make the snapshot trigger work with instances")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e44193d39e8d ("cpuset: let hotplug propagation work wait for task attaching")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
+Cc: stable@vger.kernel.org # v3.11+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ kernel/cgroup/cpuset.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 13c46787ba5fa..13b324f008256 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -1111,22 +1111,22 @@ static void tracing_snapshot_instance_cond(struct trace_array *tr,
- 	unsigned long flags;
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -2502,11 +2502,15 @@ out_unlock:
+ static void cpuset_cancel_attach(struct cgroup_taskset *tset)
+ {
+ 	struct cgroup_subsys_state *css;
++	struct cpuset *cs;
  
- 	if (in_nmi()) {
--		internal_trace_puts("*** SNAPSHOT CALLED FROM NMI CONTEXT ***\n");
--		internal_trace_puts("*** snapshot is being ignored        ***\n");
-+		trace_array_puts(tr, "*** SNAPSHOT CALLED FROM NMI CONTEXT ***\n");
-+		trace_array_puts(tr, "*** snapshot is being ignored        ***\n");
- 		return;
- 	}
+ 	cgroup_taskset_first(tset, &css);
++	cs = css_cs(css);
  
- 	if (!tr->allocated_snapshot) {
--		internal_trace_puts("*** SNAPSHOT NOT ALLOCATED ***\n");
--		internal_trace_puts("*** stopping trace here!   ***\n");
--		tracing_off();
-+		trace_array_puts(tr, "*** SNAPSHOT NOT ALLOCATED ***\n");
-+		trace_array_puts(tr, "*** stopping trace here!   ***\n");
-+		tracer_tracing_off(tr);
- 		return;
- 	}
+ 	percpu_down_write(&cpuset_rwsem);
+-	css_cs(css)->attach_in_progress--;
++	cs->attach_in_progress--;
++	if (!cs->attach_in_progress)
++		wake_up(&cpuset_attach_wq);
+ 	percpu_up_write(&cpuset_rwsem);
+ }
  
- 	/* Note, snapshot can not be used when the tracer uses it */
- 	if (tracer->use_max_tr) {
--		internal_trace_puts("*** LATENCY TRACER ACTIVE ***\n");
--		internal_trace_puts("*** Can not use snapshot (sorry) ***\n");
-+		trace_array_puts(tr, "*** LATENCY TRACER ACTIVE ***\n");
-+		trace_array_puts(tr, "*** Can not use snapshot (sorry) ***\n");
- 		return;
- 	}
- 
--- 
-2.39.2
-
 
 
