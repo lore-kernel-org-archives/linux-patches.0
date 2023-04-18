@@ -1,114 +1,44 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D19AD2D
-	for <patches@lists.linux.dev>; Mon, 17 Apr 2023 22:08:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:
-	Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Reply-To:Content-ID:Content-Description;
-	bh=Cl/KOggIUYwh125y+9YwbpbwhMMF2Br/gvzyehMp5l4=; b=oeViYi4RB8m0SpCud7goSGJLhY
-	p9mePiQHwRTyX2C9LAmhxB6gnq7TJJIDRzwaAKAeDCt8WsuoaEVbjrwb1G3OIFH9HsUtWwnTCEVi8
-	3xHbCv2+vpPhAahrADkj0pPHkhPXmTvr/uf2Cof/fVZAMBSe/Fe8/FyHnxKQGuZzy081Yan/kdI2W
-	wAN2iF6yC2b9JekfZ8nftG5JzEJisniUBvCNvaD7cKVxg8ctSATi682rFhbTjAdRWelfJYesO1AaN
-	HEz9Gwcrgw1WyOaMMIDblI+04xI67UexrokU28LEWBtVKVzn3yLnErnYVGk8BXNI6dXZGBqxNmNr9
-	a3K6ijWA==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1poX1W-000Emt-2k;
-	Mon, 17 Apr 2023 22:08:34 +0000
-Date: Mon, 17 Apr 2023 15:08:34 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-Cc: "keescook@chromium.org" <keescook@chromium.org>,
-	"hch@infradead.org" <hch@infradead.org>,
-	"prarit@redhat.com" <prarit@redhat.com>,
-	"rppt@kernel.org" <rppt@kernel.org>,
-	"catalin.marinas@arm.com" <catalin.marinas@arm.com>,
-	"Torvalds, Linus" <torvalds@linux-foundation.org>,
-	"willy@infradead.org" <willy@infradead.org>,
-	"song@kernel.org" <song@kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"pmladek@suse.com" <pmladek@suse.com>,
-	"david@redhat.com" <david@redhat.com>,
-	"colin.i.king@gmail.com" <colin.i.king@gmail.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"jim.cromie@gmail.com" <jim.cromie@gmail.com>,
-	"vbabka@suse.cz" <vbabka@suse.cz>,
-	"christophe.leroy@csgroup.eu" <christophe.leroy@csgroup.eu>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"tglx@linutronix.de" <tglx@linutronix.de>,
-	"jbaron@akamai.com" <jbaron@akamai.com>,
-	"peterz@infradead.org" <peterz@infradead.org>,
-	"linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>,
-	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-	"petr.pavlu@suse.com" <petr.pavlu@suse.com>,
-	"rafael@kernel.org" <rafael@kernel.org>,
-	"Hocko, Michal" <mhocko@suse.com>,
-	"dave@stgolabs.net" <dave@stgolabs.net>
-Subject: Re: [RFC 2/2] kread: avoid duplicates
-Message-ID: <ZD3DYqYE4DOiJQaS@bombadil.infradead.org>
-References: <20230414052840.1994456-1-mcgrof@kernel.org>
- <20230414052840.1994456-3-mcgrof@kernel.org>
- <ZDuP3OCzN3x4NxRZ@infradead.org>
- <ZDuYmPB5oqKQLcQd@bombadil.infradead.org>
- <be5182b65384f6a7667c239134037649a468033d.camel@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DA3EBE
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 00:30:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB852C433D2;
+	Tue, 18 Apr 2023 00:30:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1681777820;
+	bh=ZmFwJ7m5ZLxH+t58ZzfiJLOLdybzzWisxpx1qHDzVPU=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=qksOjS7UehQHQU48wzAd/nTyFi31TTsNEgEIWIKQGpsxL2pE8hf/dsvnj0/Jcqjp8
+	 Vfineigagj/H2n+uleVsWnN8FPBxtpzGdFGz8Em4SnTJBpcV9yIcBDUNwuemcDSCYd
+	 2WykdHQLpI2Mg02n8TPm5sysYZ0e9bGHJyUSb25fdoBg9DmXPRIeQrps4ULCRzTydQ
+	 lceiWuzffBWt2lyYjxWIgIvUGL5Odt7WXCUv/soBT/6/CEmA5xGZzpXp6qRWC+WlIE
+	 bx0RXZoxQeRvjv2Pq7g6bm1tn5cosbH1GUgPzNqjUrUvoDGhQD+93ld7ltPUX9e9VO
+	 Yfln7MbSen6Uw==
+Message-ID: <866ffea2459ba57328afa800a30421b4.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <be5182b65384f6a7667c239134037649a468033d.camel@intel.com>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <2aa668e3-d065-7376-5d41-ef855afa8518@starfivetech.com>
+References: <20230413205528.4044216-1-sboyd@kernel.org> <b41d8cf4-70aa-3b64-5254-46d92a188f63@starfivetech.com> <2aa668e3-d065-7376-5d41-ef855afa8518@starfivetech.com>
+Subject: Re: [PATCH] clk: starfive: Avoid casting iomem pointers
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Tommaso Merciai <tomm.merciai@gmail.com>, Emil Renner Berthing <emil.renner.berthing@canonical.com>, Conor Dooley <conor.dooley@microchip.com>
+To: Hal Feng <hal.feng@starfivetech.com>, Michael Turquette <mturquette@baylibre.com>, Xingyu Wu <xingyu.wu@starfivetech.com>
+Date: Mon, 17 Apr 2023 17:30:18 -0700
+User-Agent: alot/0.10
 
-On Mon, Apr 17, 2023 at 05:33:49PM +0000, Edgecombe, Rick P wrote:
-> On Sat, 2023-04-15 at 23:41 -0700, Luis Chamberlain wrote:
-> > On Sat, Apr 15, 2023 at 11:04:12PM -0700, Christoph Hellwig wrote:
-> > > On Thu, Apr 13, 2023 at 10:28:40PM -0700, Luis Chamberlain wrote:
-> > > > With this we run into 0 wasted virtual memory bytes.
-> > > 
-> > > Avoid what duplicates?
-> > 
-> > David Hildenbrand had reported that with over 400 CPUs vmap space
-> > runs out and it seems it was related to module loading. I took a
-> > look and confirmed it. Module loading ends up requiring in the
-> > worst case 3 vmalloc allocations, so typically at least twice
-> > the size of the module size and in the worst case just add
-> > the decompressed module size:
-> > 
-> > a) initial kernel_read*() call
-> > b) optional module decompression
-> > c) the actual module data copy we will keep
-> > 
-> > Duplicate module requests that come from userspace end up being
-> > thrown
-> > in the trash bin, as only one module will be allocated.  Although
-> > there
-> > are checks for a module prior to requesting a module udev still
-> > doesn't
-> > do the best of a job to avoid that and so we end up with tons of
-> > duplicate module requests. We're talking about gigabytes of vmalloc
-> > bytes just lost because of this for large systems and megabytes for
-> > average systems. So for example with just 255 CPUs we can loose about
-> > 13.58 GiB, and for 8 CPUs about 226.53 MiB.
-> > 
-> > I have patches to curtail 1/2 of that space by doing a check in
-> > kernel
-> > before we do the allocation in c) if the module is already present.
-> > For
-> > a) it is harder because userspace just passes a file descriptor. But
-> > since we can get the file path without the vmalloc this RFC suggest
-> > maybe we can add a new kernel_read*() for module loading where it
-> > makes
-> > sense to have only one read happen at a time.
-> 
-> I'm wondering how difficult it would be to just try to remove the
-> vmallocs in (a) and (b) and operate on a list of pages.
+Quoting Hal Feng (2023-04-14 16:31:45)
+>=20
+> Thanks for your fix to my previous patches, and I have tested this patch
+> on VisionFive 2 board. As Xingyu said above, I think dev_set_drvdata()
+> should also be dropped in clk-starfive-jh7110-sys.c and
+> clk-starfive-jh7110-aon.c.
+>=20
 
-Yes I think it's worth long term to do that, if possible with seq reads.
-
-  Luis
+Sure. I see you sent the patch. Thanks.
