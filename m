@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1DA2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A86C433EF;
-	Tue, 18 Apr 2023 12:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA2F2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0EDC433EF;
+	Tue, 18 Apr 2023 12:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821272;
-	bh=yZhsL26w7ynhHE6fwUaWIiwrVBAi0quOqF/X4HOSl3c=;
+	s=korg; t=1681821275;
+	bh=82ymGgi/XRf4oKO2pBGyU9x/WaPULgbyCe9Jc1nUUhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tn2jgNNTJFOfUB9JSrdqkOV2uITykOd6BTvjD1aSmkmPdeQTygHedb7Yzy3iF7bxu
-	 RA41+wFjGY88e+2aTfpPCevVAhKp82J8dCyPwWdoYj3uTGKHk8FcwzSCnqLV8vHxYE
-	 qZ7Y5PmSPVC4Y2CvDmpZCcg0oIlY4r06733NmC3M=
+	b=wbGvzCM4o6bsyihKocqUh0WrNOwIxrgSfdeyup3J7UJJ+zTRkomXPbnp/61PEtdhu
+	 Xl2XUSYWud/e6Ugx2rhB7psCFdRH6+N5etHEy3xFsrFnOIDwb7ZdxAjqQVuDwFWUzZ
+	 ITv3DLqzlFo3TZtfL61yR+GBdQKUd8NfJx/TIt+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Green <askgreen@gmail.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 024/124] USB: serial: option: add Quectel RM500U-CN modem
-Date: Tue, 18 Apr 2023 14:20:43 +0200
-Message-Id: <20230418120310.577734689@linuxfoundation.org>
+	Xu Biang <xubiang@hust.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 057/124] ALSA: firewire-tascam: add missing unwind goto in snd_tscm_stream_start_duplex()
+Date: Tue, 18 Apr 2023 14:21:16 +0200
+Message-Id: <20230418120311.901068374@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,129 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjørn Mork <bjorn@mork.no>
+From: Xu Biang <xubiang@hust.edu.cn>
 
-commit 7708a3858e69db91a8b69487994f33b96d20192a upstream.
+commit fb4a624f88f658c7b7ae124452bd42eaa8ac7168 upstream.
 
-This modem supports several modes with a class network function
-and a number of serial functions, all using ff/00/00
+Smatch Warns:
+sound/firewire/tascam/tascam-stream.c:493 snd_tscm_stream_start_duplex()
+warn: missing unwind goto?
 
-The device ID is the same in all modes.
+The direct return will cause the stream list of "&tscm->domain" unemptied
+and the session in "tscm" unfinished if amdtp_domain_start() returns with
+an error.
 
-RNDIS mode
-----------
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0900 Rev= 4.04
-S:  Manufacturer=Quectel
-S:  Product=RM500U-CN
-S:  SerialNumber=0123456789ABCDEF
-C:* #Ifs= 7 Cfg#= 1 Atr=c0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Fix this by changing the direct return to a goto which will empty the
+stream list of "&tscm->domain" and finish the session in "tscm".
 
-ECM mode
---------
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0900 Rev= 4.04
-S:  Manufacturer=Quectel
-S:  Product=RM500U-CN
-S:  SerialNumber=0123456789ABCDEF
-C:* #Ifs= 7 Cfg#= 1 Atr=c0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+The snd_tscm_stream_start_duplex() function is called in the prepare
+callback of PCM. According to "ALSA Kernel API Documentation", the prepare
+callback of PCM will be called many times at each setup. So, if the
+"&d->streams" list is not emptied, when the prepare callback is called
+next time, snd_tscm_stream_start_duplex() will receive -EBUSY from
+amdtp_domain_add_stream() that tries to add an existing stream to the
+domain. The error handling code after the "error" label will be executed
+in this case, and the "&d->streams" list will be emptied. So not emptying
+the "&d->streams" list will not cause an issue. But it is more efficient
+and readable to empty it on the first error by changing the direct return
+to a goto statement.
 
-NCM mode
---------
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  5 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0900 Rev= 4.04
-S:  Manufacturer=Quectel
-S:  Product=RM500U-CN
-S:  SerialNumber=0123456789ABCDEF
-C:* #Ifs= 7 Cfg#= 1 Atr=c0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0d Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0d Prot=00 Driver=cdc_ncm
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+The session in "tscm" has been begun before amdtp_domain_start(), so it
+needs to be finished when amdtp_domain_start() fails.
 
-Reported-by: Andrew Green <askgreen@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: c281d46a51e3 ("ALSA: firewire-tascam: support AMDTP domain")
+Signed-off-by: Xu Biang <xubiang@hust.edu.cn>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Acked-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230406132801.105108-1-xubiang@hust.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/firewire/tascam/tascam-stream.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1198,6 +1198,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, 0x0900, 0xff, 0, 0), /* RM500U-CN */
-+	  .driver_info = ZLP },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200U, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
+--- a/sound/firewire/tascam/tascam-stream.c
++++ b/sound/firewire/tascam/tascam-stream.c
+@@ -475,7 +475,7 @@ int snd_tscm_stream_start_duplex(struct
+ 
+ 		err = amdtp_domain_start(&tscm->domain, 0);
+ 		if (err < 0)
+-			return err;
++			goto error;
+ 
+ 		if (!amdtp_stream_wait_callback(&tscm->rx_stream,
+ 						CALLBACK_TIMEOUT) ||
 
 
