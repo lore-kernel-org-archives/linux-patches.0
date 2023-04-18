@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC39B2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B93C433D2;
-	Tue, 18 Apr 2023 12:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520E32572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA222C433EF;
+	Tue, 18 Apr 2023 12:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821865;
-	bh=DEWe0jkc9Y6r28LdFAGOYrRGMnBiZ+L83NWmkJE1QTM=;
+	s=korg; t=1681821868;
+	bh=Rs1Lf/6xerP0nhHasfHfonk7pLvC2yJ/RHmR/8sYeOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rVyz1qNbZ5j267z8Nyb8Mb7TLQJR+eB7+RManAlJyA0ypzY9PB7TUhPHmeav7XRGM
-	 l6dPT22wfTGmor2e1SfBvogXHXi4fdCC3fVbgaDBYMY2tjUVy8aTNaVpJ1ljOgY/Xs
-	 1eKFow5FxI+HiPvUOyHLlATIpMFaBHJ32waamWuE=
+	b=s7C6qmSI15Qwm21FUBOUmvQu3I6rxLhv5mIvR+5tGkxhQ6SdCFc0SQWHaj2EtfNV5
+	 3ONRS21n6UqD4/FQ7DSDj04Bz3Ukug5hnLrk7foFNm0dGX0xqB817DMikttpJar3+G
+	 cGJa64G013YV/I8TsUNiwp33IZVfHMt513VxNZZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jeffery <andrew@aj.id.au>,
-	Zev Weiss <zev@bewilderbeest.net>,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Luca Weiss <luca@z3ntu.xyz>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/134] ARM: 9290/1: uaccess: Fix KASAN false-positives
-Date: Tue, 18 Apr 2023 14:22:06 +0200
-Message-Id: <20230418120315.432383269@linuxfoundation.org>
+Subject: [PATCH 6.1 071/134] ARM: dts: qcom: apq8026-lg-lenok: add missing reserved memory
+Date: Tue, 18 Apr 2023 14:22:07 +0200
+Message-Id: <20230418120315.471983667@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -37,54 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Jeffery <andrew@aj.id.au>
+From: Luca Weiss <luca@z3ntu.xyz>
 
-[ Upstream commit ceac10c83b330680cc01ceaaab86cd49f4f30d81 ]
+[ Upstream commit ecd240875e877d78fd03efbc62292f550872df3f ]
 
-__copy_to_user_memcpy() and __clear_user_memset() had been calling
-memcpy() and memset() respectively, leading to false-positive KASAN
-reports when starting userspace:
+Turns out these two memory regions also need to be avoided, otherwise
+weird things will happen when Linux tries to use this memory.
 
-    [   10.707901] Run /init as init process
-    [   10.731892] process '/bin/busybox' started with executable stack
-    [   10.745234] ==================================================================
-    [   10.745796] BUG: KASAN: user-memory-access in __clear_user_memset+0x258/0x3ac
-    [   10.747260] Write of size 2687 at addr 000de581 by task init/1
-
-Use __memcpy() and __memset() instead to allow userspace access, which
-is of course the intent of these functions.
-
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230308-lenok-reserved-memory-v1-1-b8bf6ff01207@z3ntu.xyz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/lib/uaccess_with_memcpy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm/lib/uaccess_with_memcpy.c b/arch/arm/lib/uaccess_with_memcpy.c
-index 14eecaaf295fa..e4c2677cc1e9e 100644
---- a/arch/arm/lib/uaccess_with_memcpy.c
-+++ b/arch/arm/lib/uaccess_with_memcpy.c
-@@ -116,7 +116,7 @@ __copy_to_user_memcpy(void __user *to, const void *from, unsigned long n)
- 			tocopy = n;
+diff --git a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
+index 193569f0ca5f7..4bdadb7681c30 100644
+--- a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
++++ b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
+@@ -26,6 +26,16 @@
+ 	};
  
- 		ua_flags = uaccess_save_and_enable();
--		memcpy((void *)to, from, tocopy);
-+		__memcpy((void *)to, from, tocopy);
- 		uaccess_restore(ua_flags);
- 		to += tocopy;
- 		from += tocopy;
-@@ -178,7 +178,7 @@ __clear_user_memset(void __user *addr, unsigned long n)
- 			tocopy = n;
- 
- 		ua_flags = uaccess_save_and_enable();
--		memset((void *)addr, 0, tocopy);
-+		__memset((void *)addr, 0, tocopy);
- 		uaccess_restore(ua_flags);
- 		addr += tocopy;
- 		n -= tocopy;
+ 	reserved-memory {
++		sbl_region: sbl@2f00000 {
++			reg = <0x02f00000 0x100000>;
++			no-map;
++		};
++
++		external_image_region: external-image@3100000 {
++			reg = <0x03100000 0x200000>;
++			no-map;
++		};
++
+ 		adsp_region: adsp@3300000 {
+ 			reg = <0x03300000 0x1400000>;
+ 			no-map;
 -- 
 2.39.2
 
