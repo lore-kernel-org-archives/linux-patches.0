@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4540E2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFE0C433D2;
-	Tue, 18 Apr 2023 12:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AE02572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A66FC433EF;
+	Tue, 18 Apr 2023 12:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821388;
-	bh=cb5aHSoMojPxGhhFtZN/E6stPrQdc9yWM8XqkfR9wCg=;
+	s=korg; t=1681821390;
+	bh=MXeqlNyXA7o7vUB1/hQxXX+F+UIf88IioKWB/+anQDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZoXwT3BYJbRMZ4kSEQLiUkg6rWIisbjNPYf9iawsFqUYG9kimaq+Cp8e3ofweecBR
-	 0xaOpTbgQcevb9aTthkc5nwBrJLclRZqLN730RBrOwgT7hBnL7QVA+ZPl4nQTFg8ew
-	 We8HVKv6EebCrYOAwdRiqyN5PDOFVaNkkMqn+sZs=
+	b=m6aDHItVBJES8k4ahf/o8n3bJqTom2CdRKSAr3In7QzHbG0/AVpwL6xVicpk9Be2t
+	 goO8bzBVgiPplPm2LX7MSG4r5zkuuYuZOrjoSae0XZWu7omklJKuw9/raSG7zZVoy8
+	 QZMZNXfvEVcSNRhGRFMDcJVd0H2pbXcrmkKvo9+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zgpeng <zgpeng@tencent.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Samuel Liao <samuelliao@tencent.com>,
+	Tingjia Cao <tjcao980311@gmail.com>,
 	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 107/124] sched/fair: Move calculate of avg_load to a better location
-Date: Tue, 18 Apr 2023 14:22:06 +0200
-Message-Id: <20230418120313.700527184@linuxfoundation.org>
+Subject: [PATCH 5.10 108/124] sched/fair: Fix imbalance overflow
+Date: Tue, 18 Apr 2023 14:22:07 +0200
+Message-Id: <20230418120313.729875424@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -37,45 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: zgpeng <zgpeng.linux@gmail.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 06354900787f25bf5be3c07a68e3cdbc5bf0fa69 ]
+[ Upstream commit 91dcf1e8068e9a8823e419a7a34ff4341275fb70 ]
 
-In calculate_imbalance function, when the value of local->avg_load is
-greater than or equal to busiest->avg_load, the calculated sds->avg_load is
-not used. So this calculation can be placed in a more appropriate position.
+When local group is fully busy but its average load is above system load,
+computing the imbalance will overflow and local group is not the best
+target for pulling this load.
 
-Signed-off-by: zgpeng <zgpeng@tencent.com>
+Fixes: 0b0695f2b34a ("sched/fair: Rework load_balance()")
+Reported-by: Tingjia Cao <tjcao980311@gmail.com>
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Samuel Liao <samuelliao@tencent.com>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/1649239025-10010-1-git-send-email-zgpeng@tencent.com
-Stable-dep-of: 91dcf1e8068e ("sched/fair: Fix imbalance overflow")
+Tested-by: Tingjia Cao <tjcao980311@gmail.com>
+Link: https://lore.kernel.org/lkml/CABcWv9_DAhVBOq2=W=2ypKE9dKM5s2DvoV8-U0+GDwwuKZ89jQ@mail.gmail.com/T/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/sched/fair.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index bb70a7856277f..22139e97b2a8e 100644
+index 22139e97b2a8e..57a58bc48021a 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -9342,8 +9342,6 @@ static inline void calculate_imbalance(struct lb_env *env, struct sd_lb_stats *s
- 		local->avg_load = (local->group_load * SCHED_CAPACITY_SCALE) /
- 				  local->group_capacity;
+@@ -9353,6 +9353,16 @@ static inline void calculate_imbalance(struct lb_env *env, struct sd_lb_stats *s
  
--		sds->avg_load = (sds->total_load * SCHED_CAPACITY_SCALE) /
--				sds->total_capacity;
- 		/*
- 		 * If the local group is more loaded than the selected
- 		 * busiest group don't try to pull any tasks.
-@@ -9352,6 +9350,9 @@ static inline void calculate_imbalance(struct lb_env *env, struct sd_lb_stats *s
- 			env->imbalance = 0;
- 			return;
- 		}
+ 		sds->avg_load = (sds->total_load * SCHED_CAPACITY_SCALE) /
+ 				sds->total_capacity;
 +
-+		sds->avg_load = (sds->total_load * SCHED_CAPACITY_SCALE) /
-+				sds->total_capacity;
++		/*
++		 * If the local group is more loaded than the average system
++		 * load, don't try to pull any tasks.
++		 */
++		if (local->avg_load >= sds->avg_load) {
++			env->imbalance = 0;
++			return;
++		}
++
  	}
  
  	/*
