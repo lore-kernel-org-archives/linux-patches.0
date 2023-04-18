@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86382572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:40:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B2BC433D2;
-	Tue, 18 Apr 2023 12:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838562572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:40:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACF4C433EF;
+	Tue, 18 Apr 2023 12:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821650;
-	bh=kApq0St8vRmC/0LFVXFs2akxnccxktrR2Ln7B5uxcfU=;
+	s=korg; t=1681821653;
+	bh=LQSsPFWcfI9+lKOI0FmyNxjNyg5abFg8Xgv/Opy3b3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HuKX+CHQEhEWeYMNcnl6MqVwq1MGYFF2PAHc57s+xLUYkOFjjHO4QytCxWNWChG/d
-	 Fqi9ilaEI+80p+ACY1XZq3pAJMKmJDpvr20kj+Teqp3HHN5Lfnebxu3JORKzyfjItl
-	 SRX/Mu/Hs5AhQ014R68C6QgNFHrnRTtm2hvj4PUo=
+	b=ZZVYgxp7FDSvYz6i0OtSpXtgwQw0g/48qlV5g3+a7/k01kS2xDSuYVw2esz8zF1Q5
+	 TEj/rBP/fa0pm/IcIP1JaPFWtSZ8yhe9lb7jnQbDTfYKOz5pZo2Z4G92oPH2zyXt4K
+	 F8BWaDI1wsJmmnuP1Zz+Sp8NHg0/+ftWB5Nr672U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juraj Pecigos <kernel@juraj.dev>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
+	Duy Truong <dory@dory.moe>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 82/91] nvme-pci: mark Lexar NM760 as IGNORE_DEV_SUBNQN
-Date: Tue, 18 Apr 2023 14:22:26 +0200
-Message-Id: <20230418120308.407047171@linuxfoundation.org>
+Subject: [PATCH 5.15 83/91] nvme-pci: add NVME_QUIRK_BOGUS_NID for T-FORCE Z330 SSD
+Date: Tue, 18 Apr 2023 14:22:27 +0200
+Message-Id: <20230418120308.446030203@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -36,59 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juraj Pecigos <kernel@juraj.dev>
+From: Duy Truong <dory@dory.moe>
 
-[ Upstream commit 1231363aec86704a6b0467a12e3ca7bdf890e01d ]
+[ Upstream commit 74391b3e69855e7dd65a9cef36baf5fc1345affd ]
 
-A system with more than one of these SSDs will only have one usable.
-The kernel fails to detect more than one nvme device due to duplicate
-cntlids.
+Added a quirk to fix the TeamGroup T-Force Cardea Zero Z330 SSDs reporting
+duplicate NGUIDs.
 
-before:
-[    9.395229] nvme 0000:01:00.0: platform quirk: setting simple suspend
-[    9.395262] nvme nvme0: pci function 0000:01:00.0
-[    9.395282] nvme 0000:03:00.0: platform quirk: setting simple suspend
-[    9.395305] nvme nvme1: pci function 0000:03:00.0
-[    9.409873] nvme nvme0: Duplicate cntlid 1 with nvme1, subsys nqn.2022-07.com.siliconmotion:nvm-subsystem-sn-                    , rejecting
-[    9.409982] nvme nvme0: Removing after probe failure status: -22
-[    9.427487] nvme nvme1: allocated 64 MiB host memory buffer.
-[    9.445088] nvme nvme1: 16/0/0 default/read/poll queues
-[    9.449898] nvme nvme1: Ignoring bogus Namespace Identifiers
-
-after:
-[    1.161890] nvme 0000:01:00.0: platform quirk: setting simple suspend
-[    1.162660] nvme nvme0: pci function 0000:01:00.0
-[    1.162684] nvme 0000:03:00.0: platform quirk: setting simple suspend
-[    1.162707] nvme nvme1: pci function 0000:03:00.0
-[    1.191354] nvme nvme0: allocated 64 MiB host memory buffer.
-[    1.193378] nvme nvme1: allocated 64 MiB host memory buffer.
-[    1.211044] nvme nvme1: 16/0/0 default/read/poll queues
-[    1.211080] nvme nvme0: 16/0/0 default/read/poll queues
-[    1.216145] nvme nvme0: Ignoring bogus Namespace Identifiers
-[    1.216261] nvme nvme1: Ignoring bogus Namespace Identifiers
-
-Adding the NVME_QUIRK_IGNORE_DEV_SUBNQN quirk to resolves the issue.
-
-Signed-off-by: Juraj Pecigos <kernel@juraj.dev>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Duy Truong <dory@dory.moe>
+Cc: stable@vger.kernel.org
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: 74391b3e6985 ("nvme-pci: add NVME_QUIRK_BOGUS_NID for T-FORCE Z330 SSD")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 308dda1e4cb58..bd8dbaaa3715c 100644
+index bd8dbaaa3715c..30c730a9f5188 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
-@@ -3397,7 +3397,8 @@ static const struct pci_device_id nvme_id_table[] = {
- 	{ PCI_DEVICE(0x1d97, 0x2263), /* Lexar NM610 */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+@@ -3399,6 +3399,8 @@ static const struct pci_device_id nvme_id_table[] = {
  	{ PCI_DEVICE(0x1d97, 0x2269), /* Lexar NM760 */
--		.driver_data = NVME_QUIRK_BOGUS_NID, },
-+		.driver_data = NVME_QUIRK_BOGUS_NID |
-+				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
+ 		.driver_data = NVME_QUIRK_BOGUS_NID |
+ 				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
++	{ PCI_DEVICE(0x10ec, 0x5763), /* TEAMGROUP T-FORCE CARDEA ZERO Z330 SSD */
++		.driver_data = NVME_QUIRK_BOGUS_NID, },
  	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0x0061),
  		.driver_data = NVME_QUIRK_DMA_ADDRESS_BITS_48, },
  	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0x0065),
