@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713FE2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:47:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8B4C433D2;
-	Tue, 18 Apr 2023 12:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4452572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:47:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A032C433D2;
+	Tue, 18 Apr 2023 12:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822043;
-	bh=N+4i+yZYMRbWxZzRVTcYVu7G1SPVlXOuYNmOjLBduZE=;
+	s=korg; t=1681822046;
+	bh=V7e/AyIHuQEgs1bKHSAVIrxY3J4tgCgRrxFN+SQ7H80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aqmUo0nM1Kq6Cp3ytU+P3iAQCXwtVMMTtyAN2f7QOkokfKhFYMR2aYndU4nPNjtaQ
-	 7JsiTwKf59WCY9T8BPGkYOLG9SM/fr6ZM/KTi0yOedU4Tt9wHW2jVRI7XBlmHHxE4y
-	 3kauHUg+0gdslqn2zt0XG5IzADctWELiN42cOAbw=
+	b=vZ2NlN9Uk6VGRF2JF6aGqxQ+zX7FaUIWclF7wZ4iMMaAaVq+iG05lonLvhXA1LS+Z
+	 ruV7FpMRbxepbnrpf7kFcyHwH9cHhv7ghxmjzqxZISxIbyognwe5E1Q0byPEBJm1cj
+	 mpe9J++/llNaHozaEt2P0qhddSUR/joXgM1k07DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Glanzmann <thomas@glanzmann.de>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 110/134] x86/PCI: Add quirk for AMD XHCI controller that loses MSI-X state in D3hot
-Date: Tue, 18 Apr 2023 14:22:46 +0200
-Message-Id: <20230418120317.030192692@linuxfoundation.org>
+	Josh Don <joshdon@google.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.1 111/134] cgroup: fix display of forceidle time at root
+Date: Tue, 18 Apr 2023 14:22:47 +0200
+Message-Id: <20230418120317.059603841@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,65 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Josh Don <joshdon@google.com>
 
-commit f195fc1e9715ba826c3b62d58038f760f66a4fe9 upstream.
+commit fcdb1eda5302599045bb366e679cccb4216f3873 upstream.
 
-The AMD [1022:15b8] USB controller loses some internal functional MSI-X
-context when transitioning from D0 to D3hot. BIOS normally traps D0->D3hot
-and D3hot->D0 transitions so it can save and restore that internal context,
-but some firmware in the field can't do this because it fails to clear the
-AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit.
+We need to reset forceidle_sum to 0 when reading from root, since the
+bstat we accumulate into is stack allocated.
 
-Clear AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit before USB controller
-initialization during boot.
+To make this more robust, just replace the existing cputime reset with a
+memset of the overall bstat.
 
-Link: https://lore.kernel.org/linux-usb/Y%2Fz9GdHjPyF2rNG3@glanzmann.de/T/#u
-Link: https://lore.kernel.org/r/20230329172859.699743-1-Basavaraj.Natikar@amd.com
-Reported-by: Thomas Glanzmann <thomas@glanzmann.de>
-Tested-by: Thomas Glanzmann <thomas@glanzmann.de>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Josh Don <joshdon@google.com>
+Fixes: 1fcf54deb767 ("sched/core: add forced idle accounting for cgroups")
+Cc: stable@vger.kernel.org # v6.0+
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/pci/fixup.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ kernel/cgroup/rstat.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/arch/x86/pci/fixup.c
-+++ b/arch/x86/pci/fixup.c
-@@ -7,6 +7,7 @@
- #include <linux/dmi.h>
- #include <linux/pci.h>
- #include <linux/vgaarb.h>
-+#include <asm/amd_nb.h>
- #include <asm/hpet.h>
- #include <asm/pci_x86.h>
+diff --git a/kernel/cgroup/rstat.c b/kernel/cgroup/rstat.c
+index 831f1f472bb8..0a2b4967e333 100644
+--- a/kernel/cgroup/rstat.c
++++ b/kernel/cgroup/rstat.c
+@@ -457,9 +457,7 @@ static void root_cgroup_cputime(struct cgroup_base_stat *bstat)
+ 	struct task_cputime *cputime = &bstat->cputime;
+ 	int i;
  
-@@ -824,3 +825,23 @@ static void rs690_fix_64bit_dma(struct p
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7910, rs690_fix_64bit_dma);
- 
- #endif
-+
-+#ifdef CONFIG_AMD_NB
-+
-+#define AMD_15B8_RCC_DEV2_EPF0_STRAP2                                  0x10136008
-+#define AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK       0x00000080L
-+
-+static void quirk_clear_strap_no_soft_reset_dev2_f0(struct pci_dev *dev)
-+{
-+	u32 data;
-+
-+	if (!amd_smn_read(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, &data)) {
-+		data &= ~AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK;
-+		if (amd_smn_write(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, data))
-+			pci_err(dev, "Failed to write data 0x%x\n", data);
-+	} else {
-+		pci_err(dev, "Failed to read data\n");
-+	}
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
-+#endif
+-	cputime->stime = 0;
+-	cputime->utime = 0;
+-	cputime->sum_exec_runtime = 0;
++	memset(bstat, 0, sizeof(*bstat));
+ 	for_each_possible_cpu(i) {
+ 		struct kernel_cpustat kcpustat;
+ 		u64 *cpustat = kcpustat.cpustat;
+-- 
+2.40.0
+
 
 
