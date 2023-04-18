@@ -1,103 +1,85 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA885C94A
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 21:41:20 +0000 (UTC)
-Received: by mail-yb1-f181.google.com with SMTP id n17so3425572ybq.2
-        for <patches@lists.linux.dev>; Tue, 18 Apr 2023 14:41:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1681854080; x=1684446080;
-        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/l5NmV5LTOy+MuZF5xVusIDHhnwmLcYQzsGvy/o6FI4=;
-        b=Pv9SA57WCaI0h5O+syMJxPCGe7ngSa+KNB/ytcvTS2xA0ArUjcFUFcGZ16ZtypomcT
-         JMoa1uPFNnUQAuyhcGMpaYZMDqfSNfSfPLc7TI4Np1hhUYBZigm96fLmxniMpEMpp76Y
-         hn8IYYMozPjcmJwXO+ddLqdEA/5U7hZ9BJajITz9rrVswELd9Na6053tL9Irhs/OwYAT
-         Ity6LtA0N24HWrG8dBKNKMPboyxGPFV30ynashqnpYqjrv8jTl1VmvAN6C1xA2otuP62
-         frtHWLg1vo7n7rSRpqrtmkuPufvrZwPa+bOlRMF3uAPrCw0mZOLVIe1ybIEWmTXzMkuG
-         6J7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681854080; x=1684446080;
-        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/l5NmV5LTOy+MuZF5xVusIDHhnwmLcYQzsGvy/o6FI4=;
-        b=Tw39vohz6S/DXDD88hTpHGf9f7lCfp2BrDofYzc/pkCt99MYBaOtvH44tObewPBNe6
-         8dnfm07hnkJr7u6kMuAete3zl1N/0/Fdj6RW/reQzNyZA+bF5z2Yyw0iP9Vy9tYyer6v
-         eFzb08Ox5nLncqtanRf+WzbhjUMGM4A9wQowRONW+yEdFeBu2ECCByt44DxkpFJI2N7N
-         rsdoYI1oLfCtUmg1NOcjIspJqKsTd0HW3C8mRhHkIlgfmsYM8jVCxZao4Z6XhNBbMXB/
-         YfsRhk+PtoHaiXyWbl39AUPQ/qvih3jaOlnSC9rI4oURnJkjf4owLmy3rJY+Q7cklhmr
-         E/iA==
-X-Gm-Message-State: AAQBX9fIs2PzcQRpOLAt/FGX2fvM5+gofetxgsxJVmsIMMKx9kwPLTMU
-	s6y7lQ/Pab2N3Q5KZAQd3Yd88w==
-X-Google-Smtp-Source: AKy350bBpV4DRJsoJMtUOdmmSo5lT/qQl5OOsDX8dIyNKzyq26sIVASCEbgl7SRgoGKjXd8OYcGPzg==
-X-Received: by 2002:a25:2fd0:0:b0:b8f:4182:2cc9 with SMTP id v199-20020a252fd0000000b00b8f41822cc9mr17849382ybv.6.1681854079745;
-        Tue, 18 Apr 2023 14:41:19 -0700 (PDT)
-Received: from ripple.attlocal.net (172-10-233-147.lightspeed.sntcca.sbcglobal.net. [172.10.233.147])
-        by smtp.gmail.com with ESMTPSA id k134-20020a25248c000000b00b958a4c8847sm573011ybk.11.2023.04.18.14.41.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 14:41:19 -0700 (PDT)
-Date: Tue, 18 Apr 2023 14:41:07 -0700 (PDT)
-From: Hugh Dickins <hughd@google.com>
-X-X-Sender: hugh@ripple.attlocal.net
-To: Luis Chamberlain <mcgrof@kernel.org>
-cc: Hugh Dickins <hughd@google.com>, akpm@linux-foundation.org, 
-    willy@infradead.org, brauner@kernel.org, linux-mm@kvack.org, 
-    p.raghav@samsung.com, da.gomez@samsung.com, a.manzanares@samsung.com, 
-    dave@stgolabs.net, yosryahmed@google.com, keescook@chromium.org, 
-    patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-    David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH v2 5/6] shmem: update documentation
-In-Reply-To: <ZD8JgfphE+HWCGve@bombadil.infradead.org>
-Message-ID: <6064b468-33fb-3693-54e-6f1f8d316f64@google.com>
-References: <20230309230545.2930737-1-mcgrof@kernel.org> <20230309230545.2930737-6-mcgrof@kernel.org> <a4afef5c-27e4-5e67-9771-374132db61f8@google.com> <ZD8JgfphE+HWCGve@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF1CC94A
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 21:44:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1E9C433EF;
+	Tue, 18 Apr 2023 21:44:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1681854268;
+	bh=fShyOiFtQErvDADUUDFhY+2tgV5ExyPswF84GvCNBZE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=J04K5N7gKP+5+xoE5xA2lOlYNmlAJ7lOSWuDt2uopOVJuJDYtRmuSALHOjILmiwmh
+	 7tKjStUheF6sj6YemX9ng1l57flCn/5TXP057lBOJ4YUkSD9CytiEAnJiPwZu68usF
+	 PWYnEi8mylSeJRYdDeW1TVk+SzmrApVc0k3xBihbMGMJMhj+NUFXpTC4ThLbDRNIb/
+	 RMuiafO6r8szTtNcFWkLk1ahc28x2XGU00x7pPiLW3p4595VLmLMQV0MN49fO5FMTG
+	 DaJwrP5JWJc1MY0SO+e2a3/B+1XCgqZ1THjiTBK9Qf/ChyfyGoDaMfEKMrU7ejaQPE
+	 B9g7mn8YlGmzw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Josh Stone <jistone@redhat.com>,
+	William Brown <william.brown@suse.com>,
+	Georgy Yakovlev <gyakovlev@gentoo.org>,
+	Jan Alexander Steffens <jan.steffens@gmail.com>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 0/3] Rust 1.68.2 upgrade
+Date: Tue, 18 Apr 2023 23:43:44 +0200
+Message-Id: <20230418214347.324156-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
 
-On Tue, 18 Apr 2023, Luis Chamberlain wrote:
-> On Mon, Apr 17, 2023 at 10:29:59PM -0700, Hugh Dickins wrote:
-> > On Thu, 9 Mar 2023, Luis Chamberlain wrote:
-> > 
-> > > Update the docs to reflect a bit better why some folks prefer tmpfs
-> > > over ramfs and clarify a bit more about the difference between brd
-> > > ramdisks.
-> > > 
-> > > While at it, add THP docs for tmpfs, both the mount options and the
-> > > sysfs file.
-> > 
-> > Okay: the original canonical reference for THP options on tmpfs has
-> > been Documentation/admin-guide/mm/transhuge.rst.  You're right that
-> > they would be helpful here too: IIRC (but I might well be confusing
-> > with our Google tree) we used to have them documented in both places,
-> > but grew tired of keeping the two in synch.  You're volunteering to
-> > do so! so please check now that they tell the same story.
-> 
-> Hehe. Sure, we should just make one point to the other. Which one should
-> be the authoritive source?
+This is the first upgrade to the Rust toolchain since the initial Rust
+merge, from 1.62.0 to 1.68.2 (i.e. the latest).
 
-Documentation/admin-guide/mm/transhuge.rst has been the authoritative
-source up until this patch, so I suggest it remain so; but good if you
-point to it from this Doc - unless in reading it you find that actually
-its account is wrong.  (Haha, it refers to fadvise too, never mind that.)
+Please see the last patch message for a long explanation of the upgrade,
+the policy for future upgrades and some indications on how to easily
+review this.
 
-But the man page is more important than either, so it would be good to
-point to that too.  Mention the "huge=" option in this document, but
-point to elsewhere for the detail of its values.
+The series is based on `rust-next`.
 
-> 
-> > But nowadays, "man 5 tmpfs" is much more important (and that might
-> > give you a hint for what needs to be done after this series goes into
-> > 6.4-rc - and I wonder if there are tmpfs manpage updates needed from
-> > Christian for idmapped too? or already taken care of?).
-> 
-> Sure, what's the man page git tree to use? I can do that once these
-> documents are settled as well. I'll send fixes.
+Miguel Ojeda (3):
+  rust: alloc: clarify what is the upstream version
+  rust: arc: fix intra-doc link in `Arc<T>::init`
+  rust: upgrade to Rust 1.68.2
 
-Thanks. I'll look up a mail to lkml from Alejandro and forward that
-to you, it has the details.
+ Documentation/process/changes.rst |   2 +-
+ rust/alloc/README.md              |   3 +
+ rust/alloc/alloc.rs               |  55 ++--
+ rust/alloc/boxed.rs               | 446 ++++++++++++++++++++++++++--
+ rust/alloc/collections/mod.rs     |   5 +-
+ rust/alloc/lib.rs                 |  71 +++--
+ rust/alloc/raw_vec.rs             |  16 +-
+ rust/alloc/slice.rs               | 447 ++++------------------------
+ rust/alloc/vec/drain.rs           |  81 +++++-
+ rust/alloc/vec/drain_filter.rs    |  60 +++-
+ rust/alloc/vec/into_iter.rs       | 125 ++++++--
+ rust/alloc/vec/is_zero.rs         |  96 ++++++-
+ rust/alloc/vec/mod.rs             | 464 +++++++++++++++++++++++-------
+ rust/alloc/vec/set_len_on_drop.rs |   5 +
+ rust/alloc/vec/spec_extend.rs     |  63 +---
+ rust/bindings/lib.rs              |   1 -
+ rust/kernel/build_assert.rs       |   2 +
+ rust/kernel/init.rs               |   5 +
+ rust/kernel/lib.rs                |   4 -
+ rust/kernel/std_vendor.rs         |   2 +
+ rust/kernel/sync/arc.rs           |   2 +-
+ scripts/Makefile.build            |   2 +-
+ scripts/min-tool-version.sh       |   2 +-
+ 23 files changed, 1278 insertions(+), 681 deletions(-)
 
-Hugh
+-- 
+2.40.0
+
