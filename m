@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654F52572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83ABC433D2;
-	Tue, 18 Apr 2023 12:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036B12572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D364C4339B;
+	Tue, 18 Apr 2023 12:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821881;
-	bh=mSsL7HZGPx3DaCzUaCYeDawLRizkN8o1Fw+ubaHMdhQ=;
+	s=korg; t=1681821883;
+	bh=aR4tzvaq6aFDgiKzOJuCoJ5m5puKPmDIg7ag4LBXosE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D3Fqj58yHkZkZJeHFD4CzKNoYWfHDqbC7GJw3ooWcaRD7kc//usNvnwakTjm6facJ
-	 m4xywCCASioQMpIC3gbyEJ/N3/GP4jAbfZOCLUFsAK8Y52EI9DIseAeP55eoDWCbtj
-	 R1yKoSiQshMEX+mdwOnvS9UbnB7+T+lhnVqdfdNo=
+	b=bE+I4Zf6gYfKSL+RZRlSWH71wBAemoYFnYSoSTsMg/CizcGKYrIzz+TOsSDEeT8rM
+	 RJQjXyC5+Xsfy6HeQp6NPt6zkCFKkz+Cdxoaxohi07AHc2usb96ueFp5kYMjn4eLkE
+	 eYGQsovxT+VIZuxfTF1Opl603ekvKMLDWCHkq7B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <tabba@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/134] KVM: arm64: Advertise ID_AA64PFR0_EL1.CSV2/3 to protected VMs
-Date: Tue, 18 Apr 2023 14:21:43 +0200
-Message-Id: <20230418120314.570071134@linuxfoundation.org>
+Subject: [PATCH 6.1 048/134] niu: Fix missing unwind goto in niu_alloc_channels()
+Date: Tue, 18 Apr 2023 14:21:44 +0200
+Message-Id: <20230418120314.608572928@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,112 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fuad Tabba <tabba@google.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit e81625218bf7986ba1351a98c43d346b15601d26 ]
+[ Upstream commit 8ce07be703456acb00e83d99f3b8036252c33b02 ]
 
-The existing pKVM code attempts to advertise CSV2/3 using values
-initialized to 0, but never set. To advertise CSV2/3 to protected
-guests, pass the CSV2/3 values to hyp when initializing hyp's
-view of guests' ID_AA64PFR0_EL1.
+Smatch reports: drivers/net/ethernet/sun/niu.c:4525
+	niu_alloc_channels() warn: missing unwind goto?
 
-Similar to non-protected KVM, these are system-wide, rather than
-per cpu, for simplicity.
+If niu_rbr_fill() fails, then we are directly returning 'err' without
+freeing the channels.
 
-Fixes: 6c30bfb18d0b ("KVM: arm64: Add handlers for protected VM System Registers")
-Signed-off-by: Fuad Tabba <tabba@google.com>
-Link: https://lore.kernel.org/r/20230404152321.413064-1-tabba@google.com
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Fix this by changing direct return to a goto 'out_err'.
+
+Fixes: a3138df9f20e ("[NIU]: Add Sun Neptune ethernet driver.")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/arm.c                          | 26 ++++++++++++++++++-
- .../arm64/kvm/hyp/include/nvhe/fixed_config.h |  5 +++-
- arch/arm64/kvm/hyp/nvhe/sys_regs.c            |  7 -----
- 3 files changed, 29 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/sun/niu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index e40606a560997..6ce6888cf73d6 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1870,9 +1870,33 @@ static int do_pkvm_init(u32 hyp_va_bits)
- 	return ret;
- }
+diff --git a/drivers/net/ethernet/sun/niu.c b/drivers/net/ethernet/sun/niu.c
+index e6144d963eaaa..4bbf011d53e69 100644
+--- a/drivers/net/ethernet/sun/niu.c
++++ b/drivers/net/ethernet/sun/niu.c
+@@ -4522,7 +4522,7 @@ static int niu_alloc_channels(struct niu *np)
  
-+static u64 get_hyp_id_aa64pfr0_el1(void)
-+{
-+	/*
-+	 * Track whether the system isn't affected by spectre/meltdown in the
-+	 * hypervisor's view of id_aa64pfr0_el1, used for protected VMs.
-+	 * Although this is per-CPU, we make it global for simplicity, e.g., not
-+	 * to have to worry about vcpu migration.
-+	 *
-+	 * Unlike for non-protected VMs, userspace cannot override this for
-+	 * protected VMs.
-+	 */
-+	u64 val = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
-+
-+	val &= ~(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2) |
-+		 ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3));
-+
-+	val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2),
-+			  arm64_get_spectre_v2_state() == SPECTRE_UNAFFECTED);
-+	val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3),
-+			  arm64_get_meltdown_state() == SPECTRE_UNAFFECTED);
-+
-+	return val;
-+}
-+
- static void kvm_hyp_init_symbols(void)
- {
--	kvm_nvhe_sym(id_aa64pfr0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
-+	kvm_nvhe_sym(id_aa64pfr0_el1_sys_val) = get_hyp_id_aa64pfr0_el1();
- 	kvm_nvhe_sym(id_aa64pfr1_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64PFR1_EL1);
- 	kvm_nvhe_sym(id_aa64isar0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64ISAR0_EL1);
- 	kvm_nvhe_sym(id_aa64isar1_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64ISAR1_EL1);
-diff --git a/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h b/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
-index 07edfc7524c94..37440e1dda930 100644
---- a/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
-+++ b/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
-@@ -33,11 +33,14 @@
-  * Allow for protected VMs:
-  * - Floating-point and Advanced SIMD
-  * - Data Independent Timing
-+ * - Spectre/Meltdown Mitigation
-  */
- #define PVM_ID_AA64PFR0_ALLOW (\
- 	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_FP) | \
- 	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_AdvSIMD) | \
--	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_DIT) \
-+	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_DIT) | \
-+	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2) | \
-+	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3) \
- 	)
+ 		err = niu_rbr_fill(np, rp, GFP_KERNEL);
+ 		if (err)
+-			return err;
++			goto out_err;
+ 	}
  
- /*
-diff --git a/arch/arm64/kvm/hyp/nvhe/sys_regs.c b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-index 0f9ac25afdf40..3d5121ee39777 100644
---- a/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-+++ b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-@@ -84,19 +84,12 @@ static u64 get_restricted_features_unsigned(u64 sys_reg_val,
- 
- static u64 get_pvm_id_aa64pfr0(const struct kvm_vcpu *vcpu)
- {
--	const struct kvm *kvm = (const struct kvm *)kern_hyp_va(vcpu->kvm);
- 	u64 set_mask = 0;
- 	u64 allow_mask = PVM_ID_AA64PFR0_ALLOW;
- 
- 	set_mask |= get_restricted_features_unsigned(id_aa64pfr0_el1_sys_val,
- 		PVM_ID_AA64PFR0_RESTRICT_UNSIGNED);
- 
--	/* Spectre and Meltdown mitigation in KVM */
--	set_mask |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2),
--			       (u64)kvm->arch.pfr0_csv2);
--	set_mask |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3),
--			       (u64)kvm->arch.pfr0_csv3);
--
- 	return (id_aa64pfr0_el1_sys_val & allow_mask) | set_mask;
- }
- 
+ 	tx_rings = kcalloc(num_tx_rings, sizeof(struct tx_ring_info),
 -- 
 2.39.2
 
