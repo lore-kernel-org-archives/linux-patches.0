@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083522572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BB8C433EF;
-	Tue, 18 Apr 2023 12:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F620257D
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94E6C4339B;
+	Tue, 18 Apr 2023 12:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822232;
-	bh=wn4iI1GBaDSagx2FnwtlVAJZGs1bE4PSVxvDd8xHZAM=;
+	s=korg; t=1681822238;
+	bh=k/HB4zxvp8gyenny9Zjs2yixtVMg9eZfyBxRQrGyrk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rHlEJzY57lRlgcsIproCLh6rNqE8a3ai/dFzADZWzEUdS9GbwBnVH23h6og7EVlMg
-	 bMPNWqgvxHr89IpPuJjRGUIl1bYcAKKsEjUs0/5d5cnocovL/AbvPJ2Nx2mHf4Ykau
-	 YeOOCVa20yFCy+Cwg1lWBroHDpz1wg+k+4qZzz7E=
+	b=vdT5rgZ0dXBmIJ+CTpnpxjrySeIX16IfBiummWMKGFhFof/sjzAm6W/vGhaLcuHyZ
+	 qI1VB6/ei3aJADBMVq/A8+i+LH6slBBi/NqYiyNUC5gKFswZE7NyzLSnssP8LxVxLM
+	 +Ou9esMY7hs7w8hemFsfTyAJdfTB3kqfMzZEcEDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Guo <guodongtai@kylinos.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	WANG Xuerui <git@xen0n.name>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Aya Levin <ayal@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 043/139] LoongArch, bpf: Fix jit to skip speculation barrier opcode
-Date: Tue, 18 Apr 2023 14:21:48 +0200
-Message-Id: <20230418120315.265927870@linuxfoundation.org>
+Subject: [PATCH 6.2 035/139] IB/mlx5: Add support for 400G_8X lane speed
+Date: Tue, 18 Apr 2023 14:21:40 +0200
+Message-Id: <20230418120314.974703458@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -37,72 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: George Guo <guodongtai@kylinos.cn>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit a6f6a95f25803500079513780d11a911ce551d76 ]
+[ Upstream commit 88c9483faf15ada14eca82714114656893063458 ]
 
-Just skip the opcode(BPF_ST | BPF_NOSPEC) in the BPF JIT instead of
-failing to JIT the entire program, given LoongArch currently has no
-couterpart of a speculation barrier instruction. To verify the issue,
-use the ltp testcase as shown below.
+Currently, when driver queries PTYS to report which link speed is being
+used on its RoCE ports, it does not check the case of having 400Gbps
+transmitted over 8 lanes. Thus it fails to report the said speed and
+instead it defaults to report 10G over 4 lanes.
 
-Also, Wang says:
+Add a check for the said speed when querying PTYS and report it back
+correctly when needed.
 
-  I can confirm there's currently no speculation barrier equivalent
-  on LonogArch. (Loongson says there are builtin mitigations for
-  Spectre-V1 and V2 on their chips, and AFAIK efforts to port the
-  exploits to mips/LoongArch have all failed a few years ago.)
-
-Without this patch:
-
-  $ ./bpf_prog02
-  [...]
-  bpf_common.c:123: TBROK: Failed verification: ??? (524)
-  [...]
-  Summary:
-  passed   0
-  failed   0
-  broken   1
-  skipped  0
-  warnings 0
-
-With this patch:
-
-  $ ./bpf_prog02
-  [...]
-  Summary:
-  passed   0
-  failed   0
-  broken   0
-  skipped  0
-  warnings 0
-
-Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
-Signed-off-by: George Guo <guodongtai@kylinos.cn>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: WANG Xuerui <git@xen0n.name>
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
-Link: https://lore.kernel.org/bpf/20230328071335.2664966-1-guodongtai@kylinos.cn
+Fixes: 08e8676f1607 ("IB/mlx5: Add support for 50Gbps per lane link modes")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Aya Levin <ayal@nvidia.com>
+Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
+Link: https://lore.kernel.org/r/ec9040548d119d22557d6a4b4070d6f421701fd4.1678973994.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c | 4 ++++
+ drivers/infiniband/hw/mlx5/main.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index 288003a9f0cae..d586df48ecc64 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -1022,6 +1022,10 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
- 		emit_atomic(insn, ctx);
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index c669ef6e47e73..eaa35e1df2a85 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -442,6 +442,10 @@ static int translate_eth_ext_proto_oper(u32 eth_proto_oper, u16 *active_speed,
+ 		*active_width = IB_WIDTH_2X;
+ 		*active_speed = IB_SPEED_NDR;
  		break;
- 
-+	/* Speculation barrier */
-+	case BPF_ST | BPF_NOSPEC:
++	case MLX5E_PROT_MASK(MLX5E_400GAUI_8):
++		*active_width = IB_WIDTH_8X;
++		*active_speed = IB_SPEED_HDR;
 +		break;
-+
- 	default:
- 		pr_err("bpf_jit: unknown opcode %02x\n", code);
- 		return -EINVAL;
+ 	case MLX5E_PROT_MASK(MLX5E_400GAUI_4_400GBASE_CR4_KR4):
+ 		*active_width = IB_WIDTH_4X;
+ 		*active_speed = IB_SPEED_NDR;
 -- 
 2.39.2
 
