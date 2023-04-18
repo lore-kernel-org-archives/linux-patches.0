@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FB82566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A690C433EF;
-	Tue, 18 Apr 2023 12:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417AC2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:34:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8133C433D2;
+	Tue, 18 Apr 2023 12:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821293;
-	bh=ShqvGE1M7Y7+NjGF3gSDbhUQGR4sLAXneL2rzd6nxG8=;
+	s=korg; t=1681821296;
+	bh=ol+lBlJkR7zdGSJo0GNax1VF07ZK1pzRC7x/a4MvU68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCVPLXqQyJeE+P0gqmbLmWLzUqLGX7hHOglMcr0ZCnc+e3Xq8BTcIcpsoCbsvykRa
-	 4zQbnMDbk9B2kTKKdCzJfI98+TkzNJBvwZ8IPHHxKgKXtEDxKd1rOWQpsG+u9WdPVf
-	 ynSnWWnRoxbUDREH24tcJLQIxH7BMfy73FVvt6LE=
+	b=uFF+KFMH/PybPfCJWCK2VthXjWIr1ocDVOPPRg6KLnxbkBfks4l8uCzDBlF0xqZ8E
+	 WdITkVqjRzowtcaJ+Ui1OqnUsNguA9z8PYWPUC2rnDq5ojKPV6ZfDZrvtw4fxcXYX/
+	 pTsymxhbOb8CyEIr9HPqsvnxDla4bXYGYEViRIxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 072/124] 9p/xen : Fix use after free bug in xen_9pfs_front_remove due to race condition
-Date: Tue, 18 Apr 2023 14:21:31 +0200
-Message-Id: <20230418120312.464104872@linuxfoundation.org>
+Subject: [PATCH 5.10 073/124] niu: Fix missing unwind goto in niu_alloc_channels()
+Date: Tue, 18 Apr 2023 14:21:32 +0200
+Message-Id: <20230418120312.504117959@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -36,58 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit ea4f1009408efb4989a0f139b70fb338e7f687d0 ]
+[ Upstream commit 8ce07be703456acb00e83d99f3b8036252c33b02 ]
 
-In xen_9pfs_front_probe, it calls xen_9pfs_front_alloc_dataring
-to init priv->rings and bound &ring->work with p9_xen_response.
+Smatch reports: drivers/net/ethernet/sun/niu.c:4525
+	niu_alloc_channels() warn: missing unwind goto?
 
-When it calls xen_9pfs_front_event_handler to handle IRQ requests,
-it will finally call schedule_work to start the work.
+If niu_rbr_fill() fails, then we are directly returning 'err' without
+freeing the channels.
 
-When we call xen_9pfs_front_remove to remove the driver, there
-may be a sequence as follows:
+Fix this by changing direct return to a goto 'out_err'.
 
-Fix it by finishing the work before cleanup in xen_9pfs_front_free.
-
-Note that, this bug is found by static analysis, which might be
-false positive.
-
-CPU0                  CPU1
-
-                     |p9_xen_response
-xen_9pfs_front_remove|
-  xen_9pfs_front_free|
-kfree(priv)          |
-//free priv          |
-                     |p9_tag_lookup
-                     |//use priv->client
-
-Fixes: 71ebd71921e4 ("xen/9pfs: connect to the backend")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Fixes: a3138df9f20e ("[NIU]: Add Sun Neptune ethernet driver.")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/sun/niu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index 220e8f4ac0cfe..da056170849bf 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -300,6 +300,10 @@ static void xen_9pfs_front_free(struct xen_9pfs_front_priv *priv)
- 	write_unlock(&xen_9pfs_lock);
+diff --git a/drivers/net/ethernet/sun/niu.c b/drivers/net/ethernet/sun/niu.c
+index 860644d182ab0..1a269fa8c1a07 100644
+--- a/drivers/net/ethernet/sun/niu.c
++++ b/drivers/net/ethernet/sun/niu.c
+@@ -4503,7 +4503,7 @@ static int niu_alloc_channels(struct niu *np)
  
- 	for (i = 0; i < priv->num_rings; i++) {
-+		struct xen_9pfs_dataring *ring = &priv->rings[i];
-+
-+		cancel_work_sync(&ring->work);
-+
- 		if (!priv->rings[i].intf)
- 			break;
- 		if (priv->rings[i].irq > 0)
+ 		err = niu_rbr_fill(np, rp, GFP_KERNEL);
+ 		if (err)
+-			return err;
++			goto out_err;
+ 	}
+ 
+ 	tx_rings = kcalloc(num_tx_rings, sizeof(struct tx_ring_info),
 -- 
 2.39.2
 
