@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74B12572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:40:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A065C433EF;
-	Tue, 18 Apr 2023 12:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7053E2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B8DC433EF;
+	Tue, 18 Apr 2023 12:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821658;
-	bh=nPHExvQb4lL04JhR3nioSKcfHc1FIn53aqQkraH2nqI=;
+	s=korg; t=1681821661;
+	bh=GX+rtvCD+IPEDRJ0AMtjWNKUKGFIwZ41KGnLROC8IwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njQ+fUVmFEqfIBEoh/rIoxcrunWc1+yt/3OuRmF17R6z7X4wIUS1p+wq3aAFmI5FO
-	 dK2HZYygy+N8XIhC8/WyMOVLH8eQaYR1sLOmSQESIgp0kJqgoUCpnK1s+1M0DbVVP5
-	 I6ILztfFLwplFKsXT29ZoYfGZuSILdsNOXJ4acFo=
+	b=lvA6svSq8W9Cb9cDx4DZOn+AZ860V2CHrMLvuE7ZUmPprKaEwtuQM8r3YItjN0SaR
+	 HWYbxcF8TlnZF9ZTQXs8u0lSznh5Y7pgBlhKSRi5KgyXrHdfU8phn5mSgR2DOZhsQ5
+	 lTGpzeojhm9EMYwQVJImrka6M/oqIFJHn6HPDFls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Scrivano <gscrivan@redhat.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
 	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 85/91] cgroup/cpuset: Make cpuset_fork() handle CLONE_INTO_CGROUP properly
-Date: Tue, 18 Apr 2023 14:22:29 +0200
-Message-Id: <20230418120308.512857363@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 5.15 86/91] cgroup/cpuset: Add cpuset_can_fork() and cpuset_cancel_fork() methods
+Date: Tue, 18 Apr 2023 14:22:30 +0200
+Message-Id: <20230418120308.548893720@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -38,131 +37,157 @@ Content-Transfer-Encoding: 8bit
 
 From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 42a11bf5c5436e91b040aeb04063be1710bb9f9c ]
+commit eee87853794187f6adbe19533ed79c8b44b36a91 upstream.
 
-By default, the clone(2) syscall spawn a child process into the same
-cgroup as its parent. With the use of the CLONE_INTO_CGROUP flag
-introduced by commit ef2c41cf38a7 ("clone3: allow spawning processes
-into cgroups"), the child will be spawned into a different cgroup which
-is somewhat similar to writing the child's tid into "cgroup.threads".
+In the case of CLONE_INTO_CGROUP, not all cpusets are ready to accept
+new tasks. It is too late to check that in cpuset_fork(). So we need
+to add the cpuset_can_fork() and cpuset_cancel_fork() methods to
+pre-check it before we can allow attachment to a different cpuset.
 
-The current cpuset_fork() method does not properly handle the
-CLONE_INTO_CGROUP case where the cpuset of the child may be different
-from that of its parent.  Update the cpuset_fork() method to treat the
-CLONE_INTO_CGROUP case similar to cpuset_attach().
-
-Since the newly cloned task has not been running yet, its actual
-memory usage isn't known. So it is not necessary to make change to mm
-in cpuset_fork().
+We also need to set the attach_in_progress flag to alert other code
+that a new task is going to be added to the cpuset.
 
 Fixes: ef2c41cf38a7 ("clone3: allow spawning processes into cgroups")
-Reported-by: Giuseppe Scrivano <gscrivan@redhat.com>
+Suggested-by: Michal Koutný <mkoutny@suse.com>
 Signed-off-by: Waiman Long <longman@redhat.com>
 Cc: stable@vger.kernel.org # v5.7+
 Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c | 62 ++++++++++++++++++++++++++++--------------
- 1 file changed, 42 insertions(+), 20 deletions(-)
+ kernel/cgroup/cpuset.c |   88 ++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 83 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 3d254498eb275..a6829e21b50c3 100644
 --- a/kernel/cgroup/cpuset.c
 +++ b/kernel/cgroup/cpuset.c
-@@ -2242,16 +2242,33 @@ static void cpuset_cancel_attach(struct cgroup_taskset *tset)
+@@ -2186,6 +2186,18 @@ static int fmeter_getrate(struct fmeter
+ 
+ static struct cpuset *cpuset_attach_old_cs;
+ 
++/*
++ * Check to see if a cpuset can accept a new task
++ * For v1, cpus_allowed and mems_allowed can't be empty.
++ */
++static int cpuset_can_attach_check(struct cpuset *cs)
++{
++	if (!is_in_v2_mode() &&
++	    (cpumask_empty(cs->cpus_allowed) || nodes_empty(cs->mems_allowed)))
++		return -ENOSPC;
++	return 0;
++}
++
+ /* Called by cgroups to determine if a cpuset is usable; cpuset_rwsem held */
+ static int cpuset_can_attach(struct cgroup_taskset *tset)
+ {
+@@ -2200,10 +2212,8 @@ static int cpuset_can_attach(struct cgro
+ 
+ 	percpu_down_write(&cpuset_rwsem);
+ 
+-	/* allow moving tasks into an empty cpuset if on default hierarchy */
+-	ret = -ENOSPC;
+-	if (!is_in_v2_mode() &&
+-	    (cpumask_empty(cs->cpus_allowed) || nodes_empty(cs->mems_allowed)))
++	ret = cpuset_can_attach_check(cs);
++	if (ret)
+ 		goto out_unlock;
+ 
+ 	cgroup_taskset_for_each(task, css, tset) {
+@@ -2220,7 +2230,6 @@ static int cpuset_can_attach(struct cgro
+ 	 * changes which zero cpus/mems_allowed.
+ 	 */
+ 	cs->attach_in_progress++;
+-	ret = 0;
+ out_unlock:
+ 	percpu_up_write(&cpuset_rwsem);
+ 	return ret;
+@@ -2951,6 +2960,68 @@ static void cpuset_bind(struct cgroup_su
  }
  
  /*
-- * Protected by cpuset_rwsem.  cpus_attach is used only by cpuset_attach()
-+ * Protected by cpuset_rwsem. cpus_attach is used only by cpuset_attach_task()
-  * but we can't allocate it dynamically there.  Define it global and
-  * allocate from cpuset_init().
-  */
- static cpumask_var_t cpus_attach;
-+static nodemask_t cpuset_attach_nodemask_to;
-+
-+static void cpuset_attach_task(struct cpuset *cs, struct task_struct *task)
++ * In case the child is cloned into a cpuset different from its parent,
++ * additional checks are done to see if the move is allowed.
++ */
++static int cpuset_can_fork(struct task_struct *task, struct css_set *cset)
 +{
-+	percpu_rwsem_assert_held(&cpuset_rwsem);
-+
-+	if (cs != &top_cpuset)
-+		guarantee_online_cpus(task, cpus_attach);
-+	else
-+		cpumask_copy(cpus_attach, task_cpu_possible_mask(task));
-+	/*
-+	 * can_attach beforehand should guarantee that this doesn't
-+	 * fail.  TODO: have a better way to handle failure here
-+	 */
-+	WARN_ON_ONCE(set_cpus_allowed_ptr(task, cpus_attach));
-+
-+	cpuset_change_task_nodemask(task, &cpuset_attach_nodemask_to);
-+	cpuset_update_task_spread_flags(cs, task);
-+}
- 
- static void cpuset_attach(struct cgroup_taskset *tset)
- {
--	/* static buf protected by cpuset_rwsem */
--	static nodemask_t cpuset_attach_nodemask_to;
- 	struct task_struct *task;
- 	struct task_struct *leader;
- 	struct cgroup_subsys_state *css;
-@@ -2266,20 +2283,8 @@ static void cpuset_attach(struct cgroup_taskset *tset)
- 
- 	guarantee_online_mems(cs, &cpuset_attach_nodemask_to);
- 
--	cgroup_taskset_for_each(task, css, tset) {
--		if (cs != &top_cpuset)
--			guarantee_online_cpus(task, cpus_attach);
--		else
--			cpumask_copy(cpus_attach, task_cpu_possible_mask(task));
--		/*
--		 * can_attach beforehand should guarantee that this doesn't
--		 * fail.  TODO: have a better way to handle failure here
--		 */
--		WARN_ON_ONCE(set_cpus_allowed_ptr(task, cpus_attach));
--
--		cpuset_change_task_nodemask(task, &cpuset_attach_nodemask_to);
--		cpuset_update_task_spread_flags(cs, task);
--	}
-+	cgroup_taskset_for_each(task, css, tset)
-+		cpuset_attach_task(cs, task);
- 
- 	/*
- 	 * Change mm for all threadgroup leaders. This is expensive and may
-@@ -2952,11 +2957,28 @@ static void cpuset_bind(struct cgroup_subsys_state *root_css)
-  */
- static void cpuset_fork(struct task_struct *task)
- {
--	if (task_css_is_root(task, cpuset_cgrp_id))
-+	struct cpuset *cs;
++	struct cpuset *cs = css_cs(cset->subsys[cpuset_cgrp_id]);
 +	bool same_cs;
++	int ret;
 +
 +	rcu_read_lock();
-+	cs = task_cs(task);
 +	same_cs = (cs == task_cs(current));
 +	rcu_read_unlock();
 +
-+	if (same_cs) {
-+		if (cs == &top_cpuset)
-+			return;
++	if (same_cs)
++		return 0;
 +
-+		set_cpus_allowed_ptr(task, current->cpus_ptr);
-+		task->mems_allowed = current->mems_allowed;
- 		return;
-+	}
- 
--	set_cpus_allowed_ptr(task, current->cpus_ptr);
--	task->mems_allowed = current->mems_allowed;
-+	/* CLONE_INTO_CGROUP */
++	lockdep_assert_held(&cgroup_mutex);
 +	percpu_down_write(&cpuset_rwsem);
-+	guarantee_online_mems(cs, &cpuset_attach_nodemask_to);
-+	cpuset_attach_task(cs, task);
++
++	/* Check to see if task is allowed in the cpuset */
++	ret = cpuset_can_attach_check(cs);
++	if (ret)
++		goto out_unlock;
++
++	ret = task_can_attach(task, cs->effective_cpus);
++	if (ret)
++		goto out_unlock;
++
++	ret = security_task_setscheduler(task);
++	if (ret)
++		goto out_unlock;
++
++	/*
++	 * Mark attach is in progress.  This makes validate_change() fail
++	 * changes which zero cpus/mems_allowed.
++	 */
++	cs->attach_in_progress++;
++out_unlock:
 +	percpu_up_write(&cpuset_rwsem);
++	return ret;
++}
++
++static void cpuset_cancel_fork(struct task_struct *task, struct css_set *cset)
++{
++	struct cpuset *cs = css_cs(cset->subsys[cpuset_cgrp_id]);
++	bool same_cs;
++
++	rcu_read_lock();
++	same_cs = (cs == task_cs(current));
++	rcu_read_unlock();
++
++	if (same_cs)
++		return;
++
++	percpu_down_write(&cpuset_rwsem);
++	cs->attach_in_progress--;
++	if (!cs->attach_in_progress)
++		wake_up(&cpuset_attach_wq);
++	percpu_up_write(&cpuset_rwsem);
++}
++
++/*
+  * Make sure the new task conform to the current state of its parent,
+  * which could have been changed by cpuset just after it inherits the
+  * state from the parent and before it sits on the cgroup's task list.
+@@ -2978,6 +3049,11 @@ static void cpuset_fork(struct task_stru
+ 	percpu_down_write(&cpuset_rwsem);
+ 	guarantee_online_mems(cs, &cpuset_attach_nodemask_to);
+ 	cpuset_attach_task(cs, task);
++
++	cs->attach_in_progress--;
++	if (!cs->attach_in_progress)
++		wake_up(&cpuset_attach_wq);
++
+ 	percpu_up_write(&cpuset_rwsem);
  }
  
- struct cgroup_subsys cpuset_cgrp_subsys = {
--- 
-2.39.2
-
+@@ -2991,6 +3067,8 @@ struct cgroup_subsys cpuset_cgrp_subsys
+ 	.attach		= cpuset_attach,
+ 	.post_attach	= cpuset_post_attach,
+ 	.bind		= cpuset_bind,
++	.can_fork	= cpuset_can_fork,
++	.cancel_fork	= cpuset_cancel_fork,
+ 	.fork		= cpuset_fork,
+ 	.legacy_cftypes	= legacy_files,
+ 	.dfl_cftypes	= dfl_files,
 
 
