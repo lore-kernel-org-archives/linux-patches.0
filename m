@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FF52579
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06840C4339B;
-	Tue, 18 Apr 2023 12:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBAC2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974B9C433D2;
+	Tue, 18 Apr 2023 12:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821549;
-	bh=MTUNfAsmHbMJAoAT99tu01VGbukSgZfK5ybTOvlMCYg=;
+	s=korg; t=1681821551;
+	bh=PWo7MQgWV7E7p8VWro5IUDYhkqLQYkJLflOtYdSNA4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+2+KZddvEbb/mCNb1ksmW1whBkN17y8MI9v+zUk/w7vxqGmT5BrR6+IAdo3uPejc
-	 uGui/RWvDemCKHmm+7YtOIu8usej3ZU+A5JkhaWLM7tIAcydEG+mhGQyfI1YDEL7Vt
-	 IezLhWyE2fwrGs+hQH//xxUclQ2nq8hvjw+ykXQQ=
+	b=CGxGkoRouedLlk23cStw7bCplHvQ/hoNEsaZ6ejX83RK4JWVD9olufwjyZA9Kdj+4
+	 y3m2zlAmBk5plCz+yPdPI/ATjXFdqVfBhZt1GkDxINp4oSqQx/MFcWv6WnwVWFUhDy
+	 eoGoFYf5fM2kSPtymX3d1U8ie0Wau1a05Uk8qTlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 03/91] ALSA: hda/sigmatel: add pin overrides for Intel DP45SG motherboard
-Date: Tue, 18 Apr 2023 14:21:07 +0200
-Message-Id: <20230418120305.649423681@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 37/91] libbpf: Fix single-line struct definition output in btf_dump
+Date: Tue, 18 Apr 2023 14:21:41 +0200
+Message-Id: <20230418120306.867382472@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -34,44 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit c17f8fd31700392b1bb9e7b66924333568cb3700 upstream.
+[ Upstream commit 872aec4b5f635d94111d48ec3c57fbe078d64e7d ]
 
-Like the other boards from the D*45* series, this one sets up the
-outputs not quite correctly.
+btf_dump APIs emit unnecessary tabs when emitting struct/union
+definition that fits on the single line. Before this patch we'd get:
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230405201220.2197826-1-oswald.buddenhagen@gmx.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+struct blah {<tab>};
+
+This patch fixes this and makes sure that we get more natural:
+
+struct blah {};
+
+Fixes: 44a726c3f23c ("bpftool: Print newline before '}' for struct with padding only fields")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20221212211505.558851-2-andrii@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/sound/hd-audio/models.rst |    2 +-
- sound/pci/hda/patch_sigmatel.c          |    2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ tools/lib/bpf/btf_dump.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/Documentation/sound/hd-audio/models.rst
-+++ b/Documentation/sound/hd-audio/models.rst
-@@ -704,7 +704,7 @@ ref
- no-jd
-     BIOS setup but without jack-detection
- intel
--    Intel DG45* mobos
-+    Intel D*45* mobos
- dell-m6-amic
-     Dell desktops/laptops with analog mics
- dell-m6-dmic
---- a/sound/pci/hda/patch_sigmatel.c
-+++ b/sound/pci/hda/patch_sigmatel.c
-@@ -1955,6 +1955,8 @@ static const struct snd_pci_quirk stac92
- 				"DFI LanParty", STAC_92HD73XX_REF),
- 	SND_PCI_QUIRK(PCI_VENDOR_ID_DFI, 0x3101,
- 				"DFI LanParty", STAC_92HD73XX_REF),
-+	SND_PCI_QUIRK(PCI_VENDOR_ID_INTEL, 0x5001,
-+				"Intel DP45SG", STAC_92HD73XX_INTEL),
- 	SND_PCI_QUIRK(PCI_VENDOR_ID_INTEL, 0x5002,
- 				"Intel DG45ID", STAC_92HD73XX_INTEL),
- 	SND_PCI_QUIRK(PCI_VENDOR_ID_INTEL, 0x5003,
+diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
+index a9f974e5fb856..98cb3831aa18c 100644
+--- a/tools/lib/bpf/btf_dump.c
++++ b/tools/lib/bpf/btf_dump.c
+@@ -1003,9 +1003,12 @@ static void btf_dump_emit_struct_def(struct btf_dump *d,
+ 	 * Keep `struct empty {}` on a single line,
+ 	 * only print newline when there are regular or padding fields.
+ 	 */
+-	if (vlen || t->size)
++	if (vlen || t->size) {
+ 		btf_dump_printf(d, "\n");
+-	btf_dump_printf(d, "%s}", pfx(lvl));
++		btf_dump_printf(d, "%s}", pfx(lvl));
++	} else {
++		btf_dump_printf(d, "}");
++	}
+ 	if (packed)
+ 		btf_dump_printf(d, " __attribute__((packed))");
+ }
+-- 
+2.39.2
+
 
 
