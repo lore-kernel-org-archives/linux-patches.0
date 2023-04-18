@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A122572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC79CC433D2;
-	Tue, 18 Apr 2023 12:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1E62572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C370C433EF;
+	Tue, 18 Apr 2023 12:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821852;
-	bh=iSKRnCMXnp7Af6WCSWCtH/isYlOhKmZjT8VkxonZ5eg=;
+	s=korg; t=1681821855;
+	bh=r+XkguQLIPaOpEoPrDQQWgS4BP2jncf4vlzLNDpRuus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CBmOV2IHM6HWFYKr1usBWxGHJjPGynm1pI3faVQoZCahwcAAkIt/WWVC1cXGffsFg
-	 gyiEXha2m5R1v/VfRhwKagPOw3E9cdlFZ2mT1kMEO3Ul9fD5Ak7lwrR+BTFeRexqV7
-	 Ggi11H5EB9RhMD2JgQeVlyOmEtY01UVYagIHc55w=
+	b=JMGpPj02cHotnH6rIMR2X1Z9G51OAKD14cxSyQDF/lerbrl8qc1C07FQ3H4nkMaMX
+	 9MqqCDGyBPNqQ19itH9RgYLv98XIxmxXqVTLHVxu9jyfDGBNmy1wqUJ5g+4tGqKFy1
+	 8bMUPC0QQayggtykZoAcLncoRQqZDdtVS3gA67L0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Conole <aconole@redhat.com>,
+	lena wang <lena.wang@mediatek.com>,
+	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/134] selftests: openvswitch: adjust datapath NL message declaration
-Date: Tue, 18 Apr 2023 14:22:01 +0200
-Message-Id: <20230418120315.225588375@linuxfoundation.org>
+Subject: [PATCH 6.1 066/134] udp6: fix potential access to stale information
+Date: Tue, 18 Apr 2023 14:22:02 +0200
+Message-Id: <20230418120315.266074779@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,37 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aaron Conole <aconole@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 306dc21361993f4fe50a15d4db6b1a4de5d0adb0 ]
+[ Upstream commit 1c5950fc6fe996235f1d18539b9c6b64b597f50f ]
 
-The netlink message for creating a new datapath takes an array
-of ports for the PID creation.  This shouldn't cause much issue
-but correct it for future cases where we need to do decode of
-datapath information that could include the per-cpu PID map.
+lena wang reported an issue caused by udpv6_sendmsg()
+mangling msg->msg_name and msg->msg_namelen, which
+are later read from ____sys_sendmsg() :
 
-Fixes: 25f16c873fb1 ("selftests: add openvswitch selftest suite")
-Signed-off-by: Aaron Conole <aconole@redhat.com>
-Link: https://lore.kernel.org/r/20230412115828.3991806-1-aconole@redhat.com
+	/*
+	 * If this is sendmmsg() and sending to current destination address was
+	 * successful, remember it.
+	 */
+	if (used_address && err >= 0) {
+		used_address->name_len = msg_sys->msg_namelen;
+		if (msg_sys->msg_name)
+			memcpy(&used_address->name, msg_sys->msg_name,
+			       used_address->name_len);
+	}
+
+udpv6_sendmsg() wants to pretend the remote address family
+is AF_INET in order to call udp_sendmsg().
+
+A fix would be to modify the address in-place, instead
+of using a local variable, but this could have other side effects.
+
+Instead, restore initial values before we return from udpv6_sendmsg().
+
+Fixes: c71d8ebe7a44 ("net: Fix security_socket_sendmsg() bypass problem.")
+Reported-by: lena wang <lena.wang@mediatek.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Maciej Żenczykowski <maze@google.com>
+Link: https://lore.kernel.org/r/20230412130308.1202254-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/openvswitch/ovs-dpctl.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/udp.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/openvswitch/ovs-dpctl.py b/tools/testing/selftests/net/openvswitch/ovs-dpctl.py
-index 3243c90d449e6..5d467d1993cb1 100644
---- a/tools/testing/selftests/net/openvswitch/ovs-dpctl.py
-+++ b/tools/testing/selftests/net/openvswitch/ovs-dpctl.py
-@@ -62,7 +62,7 @@ class OvsDatapath(GenericNetlinkSocket):
-         nla_map = (
-             ("OVS_DP_ATTR_UNSPEC", "none"),
-             ("OVS_DP_ATTR_NAME", "asciiz"),
--            ("OVS_DP_ATTR_UPCALL_PID", "uint32"),
-+            ("OVS_DP_ATTR_UPCALL_PID", "array(uint32)"),
-             ("OVS_DP_ATTR_STATS", "dpstats"),
-             ("OVS_DP_ATTR_MEGAFLOW_STATS", "megaflowstats"),
-             ("OVS_DP_ATTR_USER_FEATURES", "uint32"),
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 98a64e8d9bdaa..17d721a6add72 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1391,9 +1391,11 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 			msg->msg_name = &sin;
+ 			msg->msg_namelen = sizeof(sin);
+ do_udp_sendmsg:
+-			if (ipv6_only_sock(sk))
+-				return -ENETUNREACH;
+-			return udp_sendmsg(sk, msg, len);
++			err = ipv6_only_sock(sk) ?
++				-ENETUNREACH : udp_sendmsg(sk, msg, len);
++			msg->msg_name = sin6;
++			msg->msg_namelen = addr_len;
++			return err;
+ 		}
+ 	}
+ 
 -- 
 2.39.2
 
