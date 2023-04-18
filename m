@@ -1,23 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B932572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66282C433D2;
-	Tue, 18 Apr 2023 12:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9AD2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FBCC4339B;
+	Tue, 18 Apr 2023 12:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821663;
-	bh=Ym+RO+5c7Aq+Mz4/Q3VlGzj28c8PiRidh4rBuk3zfQg=;
+	s=korg; t=1681821666;
+	bh=lsK/TUZla+jC9yYFotjKe2v94tQT4NTuYAWRzpS0IkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uqZlYl6VvcoSfHrsnJUTzAItBWndI2Hgbmg4wrunOEHMYxxSZrSAdMBN7XNxLB47q
-	 RZZDUZ6U0LyuEKjISv6TIuvnFTwftdW7nq5w4gxdgW9/fxytGvRop+Pz1/yPTIUrDT
-	 FZA/iaF7gZIU+k6XG9pK1X1wjqb0jMv8N/wIbqIY=
+	b=JBBVeRcJJssezdxGC0nHg3RHEGh9bViJFCSPDSggeRCmTyb/X8Ca8EA5+sw5jmzZJ
+	 t3BXkn9Gzzpk5At6Nyzb8LwdNO6mvlwWHwJiVcRMFk1EDi0h8ZueTqsceff31ijY4R
+	 9gRBOgFpd9NOrqCuB9ogin99a7KNo4NfOje5O2N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Valentin Schneider <vschneid@redhat.com>,
 	Arnd Bergmann <arnd@arndb.de>,
+	Baoquan He <bhe@redhat.com>,
 	"Eric W . Biederman" <ebiederm@xmission.com>,
 	Juri Lelli <jlelli@redhat.com>,
 	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
@@ -25,12 +26,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Petr Mladek <pmladek@suse.com>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Baoquan He <bhe@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Wen Yang <wenyang.linux@foxmail.com>
-Subject: [PATCH 5.15 87/91] kexec: turn all kexec_mutex acquisitions into trylocks
-Date: Tue, 18 Apr 2023 14:22:31 +0200
-Message-Id: <20230418120308.583096015@linuxfoundation.org>
+Subject: [PATCH 5.15 88/91] panic, kexec: make __crash_kexec() NMI safe
+Date: Tue, 18 Apr 2023 14:22:32 +0200
+Message-Id: <20230418120308.613894049@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -46,33 +46,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Valentin Schneider <vschneid@redhat.com>
 
-commit 7bb5da0d490b2d836c5218f5186ee588d2145310 upstream.
+commit 05c6257433b7212f07a7e53479a8ab038fc1666a upstream.
 
-Patch series "kexec, panic: Making crash_kexec() NMI safe", v4.
+Attempting to get a crash dump out of a debug PREEMPT_RT kernel via an NMI
+panic() doesn't work.  The cause of that lies in the PREEMPT_RT definition
+of mutex_trylock():
 
+	if (IS_ENABLED(CONFIG_DEBUG_RT_MUTEXES) && WARN_ON_ONCE(!in_task()))
+		return 0;
 
-This patch (of 2):
+This prevents an nmi_panic() from executing the main body of
+__crash_kexec() which does the actual kexec into the kdump kernel.  The
+warning and return are explained by:
 
-Most acquistions of kexec_mutex are done via mutex_trylock() - those were
-a direct "translation" from:
+  6ce47fd961fa ("rtmutex: Warn if trylock is called from hard/softirq context")
+  [...]
+  The reasons for this are:
 
-  8c5a1cf0ad3a ("kexec: use a mutex for locking rather than xchg()")
+      1) There is a potential deadlock in the slowpath
 
-there have however been two additions since then that use mutex_lock():
-crash_get_memory_size() and crash_shrink_memory().
+      2) Another cpu which blocks on the rtmutex will boost the task
+	 which allegedly locked the rtmutex, but that cannot work
+	 because the hard/softirq context borrows the task context.
 
-A later commit will replace said mutex with an atomic variable, and
-locking operations will become atomic_cmpxchg().  Rather than having those
-mutex_lock() become while (atomic_cmpxchg(&lock, 0, 1)), turn them into
-trylocks that can return -EBUSY on acquisition failure.
+Furthermore, grabbing the lock isn't NMI safe, so do away with kexec_mutex
+and replace it with an atomic variable.  This is somewhat overzealous as
+*some* callsites could keep using a mutex (e.g.  the sysfs-facing ones
+like crash_shrink_memory()), but this has the benefit of involving a
+single unified lock and preventing any future NMI-related surprises.
 
-This does halve the printable size of the crash kernel, but that's still
-neighbouring 2G for 32bit kernels which should be ample enough.
+Tested by triggering NMI panics via:
 
-Link: https://lkml.kernel.org/r/20220630223258.4144112-1-vschneid@redhat.com
-Link: https://lkml.kernel.org/r/20220630223258.4144112-2-vschneid@redhat.com
+  $ echo 1 > /proc/sys/kernel/panic_on_unrecovered_nmi
+  $ echo 1 > /proc/sys/kernel/unknown_nmi_panic
+  $ echo 1 > /proc/sys/kernel/panic
+
+  $ ipmitool power diag
+
+Link: https://lkml.kernel.org/r/20220630223258.4144112-3-vschneid@redhat.com
+Fixes: 6ce47fd961fa ("rtmutex: Warn if trylock is called from hard/softirq context")
 Signed-off-by: Valentin Schneider <vschneid@redhat.com>
 Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Baoquan He <bhe@redhat.com>
 Cc: "Eric W . Biederman" <ebiederm@xmission.com>
 Cc: Juri Lelli <jlelli@redhat.com>
 Cc: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
@@ -80,75 +95,177 @@ Cc: Miaohe Lin <linmiaohe@huawei.com>
 Cc: Petr Mladek <pmladek@suse.com>
 Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Baoquan He <bhe@redhat.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Wen Yang <wenyang.linux@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kexec.h |    2 +-
- kernel/kexec_core.c   |   12 ++++++++----
- kernel/ksysfs.c       |    7 ++++++-
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ kernel/kexec.c          |   11 ++++-------
+ kernel/kexec_core.c     |   20 ++++++++++----------
+ kernel/kexec_file.c     |    4 ++--
+ kernel/kexec_internal.h |   15 ++++++++++++++-
+ 4 files changed, 30 insertions(+), 20 deletions(-)
 
---- a/include/linux/kexec.h
-+++ b/include/linux/kexec.h
-@@ -390,8 +390,8 @@ extern note_buf_t __percpu *crash_notes;
- extern bool kexec_in_progress;
+--- a/kernel/kexec.c
++++ b/kernel/kexec.c
+@@ -93,13 +93,10 @@ static int do_kexec_load(unsigned long e
  
- int crash_shrink_memory(unsigned long new_size);
--size_t crash_get_memory_size(void);
- void crash_free_reserved_phys_range(unsigned long begin, unsigned long end);
-+ssize_t crash_get_memory_size(void);
+ 	/*
+ 	 * Because we write directly to the reserved memory region when loading
+-	 * crash kernels we need a mutex here to prevent multiple crash kernels
+-	 * from attempting to load simultaneously, and to prevent a crash kernel
+-	 * from loading over the top of a in use crash kernel.
+-	 *
+-	 * KISS: always take the mutex.
++	 * crash kernels we need a serialization here to prevent multiple crash
++	 * kernels from attempting to load simultaneously.
+ 	 */
+-	if (!mutex_trylock(&kexec_mutex))
++	if (!kexec_trylock())
+ 		return -EBUSY;
  
- void arch_kexec_protect_crashkres(void);
- void arch_kexec_unprotect_crashkres(void);
+ 	if (flags & KEXEC_ON_CRASH) {
+@@ -165,7 +162,7 @@ out:
+ 
+ 	kimage_free(image);
+ out_unlock:
+-	mutex_unlock(&kexec_mutex);
++	kexec_unlock();
+ 	return ret;
+ }
+ 
 --- a/kernel/kexec_core.c
 +++ b/kernel/kexec_core.c
-@@ -989,13 +989,16 @@ void crash_kexec(struct pt_regs *regs)
+@@ -46,7 +46,7 @@
+ #include <crypto/hash.h>
+ #include "kexec_internal.h"
+ 
+-DEFINE_MUTEX(kexec_mutex);
++atomic_t __kexec_lock = ATOMIC_INIT(0);
+ 
+ /* Per cpu memory for storing cpu states in case of system crash. */
+ note_buf_t __percpu *crash_notes;
+@@ -944,7 +944,7 @@ int kexec_load_disabled;
+  */
+ void __noclone __crash_kexec(struct pt_regs *regs)
+ {
+-	/* Take the kexec_mutex here to prevent sys_kexec_load
++	/* Take the kexec_lock here to prevent sys_kexec_load
+ 	 * running on one cpu from replacing the crash kernel
+ 	 * we are using after a panic on a different cpu.
+ 	 *
+@@ -952,7 +952,7 @@ void __noclone __crash_kexec(struct pt_r
+ 	 * of memory the xchg(&kexec_crash_image) would be
+ 	 * sufficient.  But since I reuse the memory...
+ 	 */
+-	if (mutex_trylock(&kexec_mutex)) {
++	if (kexec_trylock()) {
+ 		if (kexec_crash_image) {
+ 			struct pt_regs fixed_regs;
+ 
+@@ -961,7 +961,7 @@ void __noclone __crash_kexec(struct pt_r
+ 			machine_crash_shutdown(&fixed_regs);
+ 			machine_kexec(kexec_crash_image);
+ 		}
+-		mutex_unlock(&kexec_mutex);
++		kexec_unlock();
  	}
  }
- 
--size_t crash_get_memory_size(void)
-+ssize_t crash_get_memory_size(void)
+ STACK_FRAME_NON_STANDARD(__crash_kexec);
+@@ -993,13 +993,13 @@ ssize_t crash_get_memory_size(void)
  {
--	size_t size = 0;
-+	ssize_t size = 0;
-+
-+	if (!mutex_trylock(&kexec_mutex))
-+		return -EBUSY;
+ 	ssize_t size = 0;
  
--	mutex_lock(&kexec_mutex);
+-	if (!mutex_trylock(&kexec_mutex))
++	if (!kexec_trylock())
+ 		return -EBUSY;
+ 
  	if (crashk_res.end != crashk_res.start)
  		size = resource_size(&crashk_res);
-+
- 	mutex_unlock(&kexec_mutex);
+ 
+-	mutex_unlock(&kexec_mutex);
++	kexec_unlock();
  	return size;
  }
-@@ -1016,7 +1019,8 @@ int crash_shrink_memory(unsigned long ne
+ 
+@@ -1019,7 +1019,7 @@ int crash_shrink_memory(unsigned long ne
  	unsigned long old_size;
  	struct resource *ram_res;
  
--	mutex_lock(&kexec_mutex);
-+	if (!mutex_trylock(&kexec_mutex))
-+		return -EBUSY;
+-	if (!mutex_trylock(&kexec_mutex))
++	if (!kexec_trylock())
+ 		return -EBUSY;
  
  	if (kexec_crash_image) {
- 		ret = -ENOENT;
---- a/kernel/ksysfs.c
-+++ b/kernel/ksysfs.c
-@@ -106,7 +106,12 @@ KERNEL_ATTR_RO(kexec_crash_loaded);
- static ssize_t kexec_crash_size_show(struct kobject *kobj,
- 				       struct kobj_attribute *attr, char *buf)
- {
--	return sprintf(buf, "%zu\n", crash_get_memory_size());
-+	ssize_t size = crash_get_memory_size();
-+
-+	if (size < 0)
-+		return size;
-+
-+	return sprintf(buf, "%zd\n", size);
+@@ -1058,7 +1058,7 @@ int crash_shrink_memory(unsigned long ne
+ 	insert_resource(&iomem_resource, ram_res);
+ 
+ unlock:
+-	mutex_unlock(&kexec_mutex);
++	kexec_unlock();
+ 	return ret;
  }
- static ssize_t kexec_crash_size_store(struct kobject *kobj,
- 				   struct kobj_attribute *attr,
+ 
+@@ -1130,7 +1130,7 @@ int kernel_kexec(void)
+ {
+ 	int error = 0;
+ 
+-	if (!mutex_trylock(&kexec_mutex))
++	if (!kexec_trylock())
+ 		return -EBUSY;
+ 	if (!kexec_image) {
+ 		error = -EINVAL;
+@@ -1206,7 +1206,7 @@ int kernel_kexec(void)
+ #endif
+ 
+  Unlock:
+-	mutex_unlock(&kexec_mutex);
++	kexec_unlock();
+ 	return error;
+ }
+ 
+--- a/kernel/kexec_file.c
++++ b/kernel/kexec_file.c
+@@ -343,7 +343,7 @@ SYSCALL_DEFINE5(kexec_file_load, int, ke
+ 
+ 	image = NULL;
+ 
+-	if (!mutex_trylock(&kexec_mutex))
++	if (!kexec_trylock())
+ 		return -EBUSY;
+ 
+ 	dest_image = &kexec_image;
+@@ -415,7 +415,7 @@ out:
+ 	if ((flags & KEXEC_FILE_ON_CRASH) && kexec_crash_image)
+ 		arch_kexec_protect_crashkres();
+ 
+-	mutex_unlock(&kexec_mutex);
++	kexec_unlock();
+ 	kimage_free(image);
+ 	return ret;
+ }
+--- a/kernel/kexec_internal.h
++++ b/kernel/kexec_internal.h
+@@ -13,7 +13,20 @@ void kimage_terminate(struct kimage *ima
+ int kimage_is_destination_range(struct kimage *image,
+ 				unsigned long start, unsigned long end);
+ 
+-extern struct mutex kexec_mutex;
++/*
++ * Whatever is used to serialize accesses to the kexec_crash_image needs to be
++ * NMI safe, as __crash_kexec() can happen during nmi_panic(), so here we use a
++ * "simple" atomic variable that is acquired with a cmpxchg().
++ */
++extern atomic_t __kexec_lock;
++static inline bool kexec_trylock(void)
++{
++	return atomic_cmpxchg_acquire(&__kexec_lock, 0, 1) == 0;
++}
++static inline void kexec_unlock(void)
++{
++	atomic_set_release(&__kexec_lock, 0);
++}
+ 
+ #ifdef CONFIG_KEXEC_FILE
+ #include <linux/purgatory.h>
 
 
