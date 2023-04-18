@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACDC2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23749C4339B;
-	Tue, 18 Apr 2023 12:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49827257D
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3951C433D2;
+	Tue, 18 Apr 2023 12:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822140;
-	bh=OWEVD0ohojHALATgPP8FCq2W61d+zvkqiiySV9zMESY=;
+	s=korg; t=1681822143;
+	bh=+u1662A/TS/jEK57TZTkhaiBLkAVM7lwAXCYbZamQng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FZEDmjS2AWdEqXt59FyRPpJqItK73L9SvpZ5NRgL8Z+topItsGi53MsgBo1jJaoyD
-	 PY36ZgmWm9YM+z0XmozEfK4bXptHULsF+5EHlfBhhGNkpXBD/Ojo7e8o0FoKTHB22A
-	 0AhovCjOcO05JyvHwXPwWlpLW5I5aMydcEYEOIqg=
+	b=drni8X0E3Dfuk0aK38Rcz6AovZHWHLK6RsMa5oNRDxg3kQrZlo+ypSVr+Cx8Y9AaL
+	 +wiUZNnSRRzo+HLdeQv439Sw3sVbZFQDEGa+j0lUg5TTPLgChefPQuG8OcqwaI/4+R
+	 AcWVJksd3jNG2UDHjBod6b3spCiAgpiXH8wPnvTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Xu Biang <xubiang@hust.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.2 008/139] ALSA: hda/realtek: Add quirks for Lenovo Z13/Z16 Gen2
-Date: Tue, 18 Apr 2023 14:21:13 +0200
-Message-Id: <20230418120314.020234542@linuxfoundation.org>
+Subject: [PATCH 6.2 009/139] ALSA: firewire-tascam: add missing unwind goto in snd_tscm_stream_start_duplex()
+Date: Tue, 18 Apr 2023 14:21:14 +0200
+Message-Id: <20230418120314.058253037@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -34,33 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Xu Biang <xubiang@hust.edu.cn>
 
-commit 8eda19cd59cedbfe4ec11aea4bcecabe4c98e9e4 upstream.
+commit fb4a624f88f658c7b7ae124452bd42eaa8ac7168 upstream.
 
-These Lenovo laptops use Realtek HDA codec combined with
-2xCS35L41 Amplifiers using I2C with External Boost.
+Smatch Warns:
+sound/firewire/tascam/tascam-stream.c:493 snd_tscm_stream_start_duplex()
+warn: missing unwind goto?
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+The direct return will cause the stream list of "&tscm->domain" unemptied
+and the session in "tscm" unfinished if amdtp_domain_start() returns with
+an error.
+
+Fix this by changing the direct return to a goto which will empty the
+stream list of "&tscm->domain" and finish the session in "tscm".
+
+The snd_tscm_stream_start_duplex() function is called in the prepare
+callback of PCM. According to "ALSA Kernel API Documentation", the prepare
+callback of PCM will be called many times at each setup. So, if the
+"&d->streams" list is not emptied, when the prepare callback is called
+next time, snd_tscm_stream_start_duplex() will receive -EBUSY from
+amdtp_domain_add_stream() that tries to add an existing stream to the
+domain. The error handling code after the "error" label will be executed
+in this case, and the "&d->streams" list will be emptied. So not emptying
+the "&d->streams" list will not cause an issue. But it is more efficient
+and readable to empty it on the first error by changing the direct return
+to a goto statement.
+
+The session in "tscm" has been begun before amdtp_domain_start(), so it
+needs to be finished when amdtp_domain_start() fails.
+
+Fixes: c281d46a51e3 ("ALSA: firewire-tascam: support AMDTP domain")
+Signed-off-by: Xu Biang <xubiang@hust.edu.cn>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Acked-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230412160531.182007-1-sbinding@opensource.cirrus.com
+Link: https://lore.kernel.org/r/20230406132801.105108-1-xubiang@hust.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/firewire/tascam/tascam-stream.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9688,6 +9688,9 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x17aa, 0x22f1, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x22f2, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x22f3, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x17aa, 0x2318, "Thinkpad Z13 Gen2", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x17aa, 0x2319, "Thinkpad Z16 Gen2", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x17aa, 0x231a, "Thinkpad Z16 Gen2", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x30bb, "ThinkCentre AIO", ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY),
- 	SND_PCI_QUIRK(0x17aa, 0x30e2, "ThinkCentre AIO", ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY),
- 	SND_PCI_QUIRK(0x17aa, 0x310c, "ThinkCentre Station", ALC294_FIXUP_LENOVO_MIC_LOCATION),
+--- a/sound/firewire/tascam/tascam-stream.c
++++ b/sound/firewire/tascam/tascam-stream.c
+@@ -490,7 +490,7 @@ int snd_tscm_stream_start_duplex(struct
+ 		// packet is important for media clock recovery.
+ 		err = amdtp_domain_start(&tscm->domain, tx_init_skip_cycles, true, true);
+ 		if (err < 0)
+-			return err;
++			goto error;
+ 
+ 		if (!amdtp_domain_wait_ready(&tscm->domain, READY_TIMEOUT_MS)) {
+ 			err = -ETIMEDOUT;
 
 
