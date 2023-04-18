@@ -1,37 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0162566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46C8C433D2;
-	Tue, 18 Apr 2023 12:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1792566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E351C433D2;
+	Tue, 18 Apr 2023 12:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821127;
-	bh=IzaJUIUqzXqbTVID6vwBQYJ5wb34FkLDJb8emqLyKAU=;
+	s=korg; t=1681821129;
+	bh=1ICOn+6FXvqQknWIpt4KjNuMXJcNqFesNUOBWeopI+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=064JZMCtlXMiF7sgOFqRkWvAxafghqwLM/+dXoRA1RefYw7etCj2FP1Q3mEumLbaQ
-	 5Y3G+7hGVCA1icYq5so7gG4gG8gFtrAnv/yYndMdvijroiC4wxrjJvQiZUrP/YTtmG
-	 vLK5+uiDZYVDzUWPv71CvgIMaywneWEKuPXi737Y=
+	b=FMH6UxACxP5QiKzmCgmEhBl5B+zRBL20fheSsgrHA0RWuPeSpjWmwSd3lsD/f2Jpk
+	 jsj7/ebj69KtwfSIX5eQp+Gy8W8LmHrpK8rmn/SUP5FIcRUzUsqjx5n893tyn7NMXY
+	 G5aEgFGwptCvVzL1KwXKOVP4j1aYuKlXupQ6kUBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Michael Walle <michael@walle.cc>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	linux-gpio@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 001/124] gpio: GPIO_REGMAP: select REGMAP instead of depending on it
-Date: Tue, 18 Apr 2023 14:20:20 +0200
-Message-Id: <20230418120309.597772360@linuxfoundation.org>
+Subject: [PATCH 5.10 010/124] net: dont let netpoll invoke NAPI if in xmit context
+Date: Tue, 18 Apr 2023 14:20:29 +0200
+Message-Id: <20230418120309.983691606@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,45 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit d49765b5f4320a402fbc4ed5edfd73d87640f27c ]
+[ Upstream commit 275b471e3d2daf1472ae8fa70dc1b50c9e0b9e75 ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+Commit 0db3dc73f7a3 ("[NETPOLL]: tx lock deadlock fix") narrowed
+down the region under netif_tx_trylock() inside netpoll_send_skb().
+(At that point in time netif_tx_trylock() would lock all queues of
+the device.) Taking the tx lock was problematic because driver's
+cleanup method may take the same lock. So the change made us hold
+the xmit lock only around xmit, and expected the driver to take
+care of locking within ->ndo_poll_controller().
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
+Unfortunately this only works if netpoll isn't itself called with
+the xmit lock already held. Netpoll code is careful and uses
+trylock(). The drivers, however, may be using plain lock().
+Printing while holding the xmit lock is going to result in rare
+deadlocks.
 
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+Luckily we record the xmit lock owners, so we can scan all the queues,
+the same way we scan NAPI owners. If any of the xmit locks is held
+by the local CPU we better not attempt any polling.
 
-Fixes: ebe363197e52 ("gpio: add a reusable generic gpio_chip using regmap")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Michael Walle <michael@walle.cc>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-gpio@vger.kernel.org
-Acked-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+It would be nice if we could narrow down the check to only the NAPIs
+and the queue we're trying to use. I don't see a way to do that now.
+
+Reported-by: Roman Gushchin <roman.gushchin@linux.dev>
+Fixes: 0db3dc73f7a3 ("[NETPOLL]: tx lock deadlock fix")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/netpoll.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-index d1300fc003ed7..39f3e13664099 100644
---- a/drivers/gpio/Kconfig
-+++ b/drivers/gpio/Kconfig
-@@ -99,7 +99,7 @@ config GPIO_GENERIC
- 	tristate
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index 960948290001e..2ad22511b9c6d 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -137,6 +137,20 @@ static void queue_process(struct work_struct *work)
+ 	}
+ }
  
- config GPIO_REGMAP
--	depends on REGMAP
-+	select REGMAP
- 	tristate
++static int netif_local_xmit_active(struct net_device *dev)
++{
++	int i;
++
++	for (i = 0; i < dev->num_tx_queues; i++) {
++		struct netdev_queue *txq = netdev_get_tx_queue(dev, i);
++
++		if (READ_ONCE(txq->xmit_lock_owner) == smp_processor_id())
++			return 1;
++	}
++
++	return 0;
++}
++
+ static void poll_one_napi(struct napi_struct *napi)
+ {
+ 	int work;
+@@ -183,7 +197,10 @@ void netpoll_poll_dev(struct net_device *dev)
+ 	if (!ni || down_trylock(&ni->dev_lock))
+ 		return;
  
- # put drivers in the right section, in alphabetical order
+-	if (!netif_running(dev)) {
++	/* Some drivers will take the same locks in poll and xmit,
++	 * we can't poll if local CPU is already in xmit.
++	 */
++	if (!netif_running(dev) || netif_local_xmit_active(dev)) {
+ 		up(&ni->dev_lock);
+ 		return;
+ 	}
 -- 
 2.39.2
 
