@@ -1,142 +1,141 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+Received: from JPN01-TYC-obe.outbound.protection.outlook.com (mail-tycjpn01on2137.outbound.protection.outlook.com [40.107.114.137])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA814290D
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 13:38:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1681825139; x=1713361139;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=pJJC11WAuc+OANctsWFTJZU6Xb9byC95sJdE8ckS274=;
-  b=C6ZrTw0cHQgNwS52Z+l79N0XINfG4MFqgUClhiAzxxeCDs6/gxODS14/
-   0fbu5aVVHEwO3lIRU7KV2R7E91F6BGOnz6Q5rjDggJuZiVFAR5nAdjRSd
-   XiNIcsXf+F6QOiN8NH4D2fpr8Q7PpgBqljary+9oKlfvLLDl4tckti/7h
-   YOY8VJaBf0oBiQBzcrtYO35YfBD5Zc5xBlsviXgoi176iaeIY5JWue7Mq
-   ZAYjYq0ZsZTFi/a5ONoFAo/2XkGyr58tU2Q98G90vVIA8frssapxq6zb8
-   Zb7ih1FVWDe/etfdWTSvYEZqe/uxbQS3fvndisB8q/h5eA4WNAfq3AAs3
-   g==;
-X-IronPort-AV: E=Sophos;i="5.99,207,1677567600"; 
-   d="asc'?scan'208";a="210081986"
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 18 Apr 2023 06:38:57 -0700
-Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Tue, 18 Apr 2023 06:38:56 -0700
-Received: from wendy (10.10.115.15) by chn-vm-ex01.mchp-main.com
- (10.10.85.143) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
- Transport; Tue, 18 Apr 2023 06:38:54 -0700
-Date: Tue, 18 Apr 2023 14:38:38 +0100
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>, Alyssa Ross
-	<hi@alyssa.is>, Nick Desaulniers <ndesaulniers@google.com>, Masahiro Yamada
-	<masahiroy@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 127/134] purgatory: fix disabling debug info
-Message-ID: <20230418-wrist-glory-14a2aa00b2cb@wendy>
-References: <20230418120313.001025904@linuxfoundation.org>
- <20230418120317.600787422@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A212F44
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 14:11:13 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Cm28c2eY3Nv8qwCK3wxj3ZrMoMnLFPdtLXxdmASqPxZUToErQvm3S8jeRWJH2NMvUPb2VztQqZK6nh0hEJ+k1AGSkN+guY4GZgbafeDnDmGCZPmDfYjcQE3LF84dVnIl20UvxbvJ4rA0YxnWrhss05dPqiesMpUzQhHtMSo55REK4zuVrP0CwF18HeRaIPNEIk+/m3ZUuLMg/iBaSY41aE2tRP6CVPgEhiVkNHeMmO2nAHloxkvSAsAktFZblaLETJ7sGlDLJaa6rqtIk29b7Kcva/6ZrBGwj57bPLvXzxf2z/nIGs6By9yUXI0NMpYT5gLWqFpqYCjYEGqEhv6jeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1kXx0SJo1IsmBc3/dllXiWrG27OQj59HtM9spSF/uaA=;
+ b=Ublu4cmDn2q86atCdKFT86XJbxL+krV+ysw/+GkLFpkD9ocPjyR0v7mCABIHpY6wB80PwTzj+KFn2CdxWDlS5E1kZLWHyczJ0SFamoLAT2CQqmaB9+/tVn/55WsWEtTl64x+fa3M3abolYmq92fF4hrAyYfJH3wbt6Xwg9Y/C1xZZ727JEVknoszjOWto+UzQYbpQ3eTuuQn4wv1nZwslssHuTp0wYZ4yVt3PSSC+U5TUPtxXkDilSfUpWsr4GdjLYzVg/4hArSu07JMDbtvADT+J967nhBxzXUliXB+YA/eBmF9XLL62M54QBtf47z/GXddsN6PEG/Scz00MhePNg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
+ dkim=pass header.d=renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1kXx0SJo1IsmBc3/dllXiWrG27OQj59HtM9spSF/uaA=;
+ b=F+/rAdFiuL5n/xijXLqv1WNQp3x62qawvivRUPYWMENA5oKIdgEv15hruzY3WP+TMYRfMEyC9urWbIgFk9VKbh7W/xdcyCjg0yeoMZ0DFaikfXT3s8ylOYfiPZp62I9TS/72LxJgN0XxXChNIWIpd7CJ6rjQvLT0E8wFvYH75+I=
+Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
+ by TYCPR01MB11801.jpnprd01.prod.outlook.com (2603:1096:400:3b8::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6298.45; Tue, 18 Apr
+ 2023 14:11:10 +0000
+Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
+ ([fe80::8b5:5f09:5a0f:370]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
+ ([fe80::8b5:5f09:5a0f:370%6]) with mapi id 15.20.6298.045; Tue, 18 Apr 2023
+ 14:11:10 +0000
+From: Chris Paterson <Chris.Paterson2@renesas.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
+	<stable@vger.kernel.org>
+CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
+	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net"
+	<linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
+	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
+	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
+	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com"
+	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
+	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
+	"rwarsow@gmx.de" <rwarsow@gmx.de>
+Subject: RE: [PATCH 4.14 00/37] 4.14.313-rc1 review
+Thread-Topic: [PATCH 4.14 00/37] 4.14.313-rc1 review
+Thread-Index: AQHZcfCtGpcmBaAPR0u9y5HG+ZTs/a8xGw7Q
+Date: Tue, 18 Apr 2023 14:11:10 +0000
+Message-ID:
+ <TY2PR01MB3788BED0AA52DA3F628B804BB79D9@TY2PR01MB3788.jpnprd01.prod.outlook.com>
+References: <20230418120254.687480980@linuxfoundation.org>
+In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=renesas.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|TYCPR01MB11801:EE_
+x-ms-office365-filtering-correlation-id: 12f623f8-f058-426d-df75-08db4016c2d2
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ 3LbS1rkSXAr6ueZ5bURnQcx5nv+8ODA7LReJSoUJ5eb2+tW1WUsG+DP1bT6r9Tv15HyurLb3V6iMJ1GhS9HasxLEIEOTQXAd8oy2Lm1YEIdfByaiRb9GyC5WV2evf2sNqdyF6bZpf5g5/dqssY98YNBcyL18bBQtq3A2tmNVQaN4bw6xSB8CS1C9EA9t3tsMYdCQ1qAEeyNMTA7ZFMdc+SoEA3DqBZrfarAzxaS8CI/qjY2iY4J1tTD+5fOtZgZJS3Sh6zWxGHG+QHPyppW8jivq4iYfNJZWCZI0HidLR9HDlmIXbK77SK7ouUImMXDm33OOvqpVOYMip1/5LirhyKEGL6P+duStJ+CZaTNrlOqcXLNM4mH41ydNSpbD5tytmWECc/mMyIpHCyX31ejM2G/JB7Znq8v+ZQsWMHwoIKQ3k/1F2m4hvybWzR/iK6waLpbHvWeygE2ZYNbibEEIXwfifKVhPMViX79pMmzQC8+JflxneL463RdHQcQdRXGaGsbSZ/Z3dIAfPQobC8JpDwqel7LftX3VCpOa8I5mjWZL3xeBe0KjcQoGueJThCJaDegJQsNGyFhxDYELW4RswcZGC0/H7x20GaeDi0cWNzBKixPC1l7ozIbnylH4ipEpoFMt08vTQeVfPlPKA3XKPw==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(376002)(346002)(366004)(136003)(396003)(451199021)(66556008)(4744005)(2906002)(66946007)(66446008)(4326008)(66476007)(7416002)(64756008)(5660300002)(52536014)(8936002)(316002)(54906003)(55016003)(86362001)(76116006)(478600001)(41300700001)(110136005)(33656002)(7696005)(71200400001)(122000001)(186003)(26005)(9686003)(6506007)(966005)(8676002)(38070700005)(38100700002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?fpIBP5FQBGAK8+a7+Q/lbXzClhaj9Ycw/kRANhY/S5hvQyIMeXYS5Ktj?=
+ =?Windows-1252?Q?ynuUKVej27n4fu4Rzx/LlOMwQBpaqAgliCcdbAGniPyzBbsXMXIEgrTD?=
+ =?Windows-1252?Q?s+Em9PsUw4wmpZYMXk7NSmKHWuGJFuuuA+HUWIjfArRf+GFuqUGNvwYt?=
+ =?Windows-1252?Q?pf2mIZyRBgtTslAe6W3BfXD5+91p5vDjdRSA+NmgSm/obl7073l5/uv4?=
+ =?Windows-1252?Q?pdWzZSFppnExDZBkcm3FihNZfwanTrvlkB0w0ECEhi6Sc35aTqgfypnd?=
+ =?Windows-1252?Q?f8SbpqULcHkpRC8q9uqV41KltviEBiv89tE6qvhHzbOH64vTnPzMw+/y?=
+ =?Windows-1252?Q?jagJIAswVNaiZaToXFQ9zdXB8h5kQeAsGaP7n4sahLzmX+lCyUevW7WL?=
+ =?Windows-1252?Q?TWxVXYsmxyRNsJFx3znvtSMag5Rj5yOFTjQ+cIN4OmREz1hbsH+GChPg?=
+ =?Windows-1252?Q?a2cc4G8KdnwhsvX7J9ydTalBVZFJRwzrTtBZFMCo2S+lw0lL/K/JGm4b?=
+ =?Windows-1252?Q?4mXpMQjc96gQdr+ZrddG3QH6093+ZP7BQ2rRYpoAmbq6u5oYhWYhM1EZ?=
+ =?Windows-1252?Q?jKPPtoOQysoS8VGsvLPqlS2cuoqFdhRhqMcDoUfXaXuAo+SO5P041QsX?=
+ =?Windows-1252?Q?yfpiLRF3gTyufI3jT5l3gwTl293lAgfNAJ3TyBnG4B9cft+sN5DpAU6l?=
+ =?Windows-1252?Q?rNSmj82Fjw8duh7fBhfqqSpvAG9yhrPCPJT5IkpCm5jDaW5H9VOYASra?=
+ =?Windows-1252?Q?bv9JYyo3O5ZHCxiExIEYh+e5u3jBOCUbIPWw5D8s0TNArwK9zDd94iTz?=
+ =?Windows-1252?Q?nyT+d+bdMsRhNdYrsVLbAAwsN8m3T1MF0XKkYmF6+Kmq/Ng1/FYS5YIY?=
+ =?Windows-1252?Q?Y1f3X1NNxX+XJ/ibHKUV+RrJC/Gd8PYdvmU+9PimYQHPzQs+Eisy1XG9?=
+ =?Windows-1252?Q?SzJBu1tNbQQcf1B8OScydbqokR20bH1bVN6pBD6vc9Z78DMYs3LFtIts?=
+ =?Windows-1252?Q?4MFIQQwuAsDNpur4NJrhFZrXTk5fG2Q6Hq9ki1XelSUUAlANx3s/QOmR?=
+ =?Windows-1252?Q?93Svlp52/CmRh2i57VXXlPlwR0Dsot2KfQYVhlKtt2dPZV4kWY104vBp?=
+ =?Windows-1252?Q?TJtDxNNncdwQoi6n/SMfGBMdvv4CpB4HULuRQlH/uMVCa4gRxd3I8/jT?=
+ =?Windows-1252?Q?SrrYfvkRKZoHZpyteXYXxOGvXvYX112IromTUHWL+9ugd72rj2UCZGFf?=
+ =?Windows-1252?Q?IWXz+CGov7punKb984LMTgy8rM+ziUlFEi6cTHWZHY+nYlo7AoBvrONK?=
+ =?Windows-1252?Q?k4wzbXdbgCnhYlBrCWxgNgAfSKAileDqd9hpA8MaKQ0UTa7gafRVoPqq?=
+ =?Windows-1252?Q?JWfSLXgZ4sCeKD5do/nRx8YCseTHNIVGqdbRk8B5fSRDjJzU/4/4Q3fz?=
+ =?Windows-1252?Q?cC32hLHp7spKkcKC2r/zkJtapKY2aBw3ihaAbHbJ4qXrifVuW10stNry?=
+ =?Windows-1252?Q?9QyVXAPK7nVZht79jc4v9gqWl0LUvOs11ZgUXIeBPqcpmHrTyqx1Thme?=
+ =?Windows-1252?Q?ONRYnxHmwbSKo+umY3nbvnujdIuvuKrBMCMv0d5h0j+CqxKVcTsMEDRj?=
+ =?Windows-1252?Q?DVoAwci52uj7PbZBF07YKz9j7fHri+jq7oCKmFOsx2mWdNp5NWpuoqWI?=
+ =?Windows-1252?Q?3cGpnkqmE9KzNtWjbIXbmQi23pDK8E2t+SjKAHlaFNBlnJ1BLGgzUg?=
+ =?Windows-1252?Q?=3D=3D?=
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="WwxYlZ02mBcemm70"
-Content-Disposition: inline
-In-Reply-To: <20230418120317.600787422@linuxfoundation.org>
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 12f623f8-f058-426d-df75-08db4016c2d2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Apr 2023 14:11:10.5094
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: t1JFUqWDPhyHAYYZ0fxHBPm6hXkuegxSO6Xmio7AfOd+YjB1X6JTqxIn4CBx5Mh46DhQWB+wB5m6wFsVSzAvmsN3qCjYq9pPeggn/PA8VIE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB11801
 
---WwxYlZ02mBcemm70
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hello Greg,
 
-Hey folks,
-
-On Tue, Apr 18, 2023 at 02:23:03PM +0200, Greg Kroah-Hartman wrote:
-> From: Alyssa Ross <hi@alyssa.is>
+> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Sent: Tuesday, April 18, 2023 1:21 PM
 >=20
-> [ Upstream commit d83806c4c0cccc0d6d3c3581a11983a9c186a138 ]
+> This is the start of the stable review cycle for the 4.14.313 release.
+> There are 37 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >=20
-> Since 32ef9e5054ec, -Wa,-gdwarf-2 is no longer used in KBUILD_AFLAGS.
-> Instead, it includes -g, the appropriate -gdwarf-* flag, and also the
-> -Wa versions of both of those if building with Clang and GNU as.  As a
-> result, debug info was being generated for the purgatory objects, even
-> though the intention was that it not be.
->=20
-> Fixes: 32ef9e5054ec ("Makefile.debug: re-enable debug info for .S files")
-> Signed-off-by: Alyssa Ross <hi@alyssa.is>
-> Cc: stable@vger.kernel.org
-> Acked-by: Nick Desaulniers <ndesaulniers@google.com>
-> Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  arch/riscv/purgatory/Makefile | 7 +------
->  arch/x86/purgatory/Makefile   | 3 +--
->  2 files changed, 2 insertions(+), 8 deletions(-)
->=20
-> diff --git a/arch/riscv/purgatory/Makefile b/arch/riscv/purgatory/Makefile
-> index d16bf715a586b..5730797a6b402 100644
-> --- a/arch/riscv/purgatory/Makefile
-> +++ b/arch/riscv/purgatory/Makefile
-> @@ -84,12 +84,7 @@ CFLAGS_string.o			+=3D $(PURGATORY_CFLAGS)
->  CFLAGS_REMOVE_ctype.o		+=3D $(PURGATORY_CFLAGS_REMOVE)
->  CFLAGS_ctype.o			+=3D $(PURGATORY_CFLAGS)
-> =20
-> -AFLAGS_REMOVE_entry.o		+=3D -Wa,-gdwarf-2
-> -AFLAGS_REMOVE_memcpy.o		+=3D -Wa,-gdwarf-2
-> -AFLAGS_REMOVE_memset.o		+=3D -Wa,-gdwarf-2
+> Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
+> Anything received after that time might be too late.
 
-> -AFLAGS_REMOVE_strcmp.o		+=3D -Wa,-gdwarf-2
-> -AFLAGS_REMOVE_strlen.o		+=3D -Wa,-gdwarf-2
-> -AFLAGS_REMOVE_strncmp.o		+=3D -Wa,-gdwarf-2
+CIP configurations built and booted with Linux 4.14.313-rc1 (cdc53f89dfa8):
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/8=
+40769024
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
+ux-4.14.y
 
-How about just deleting these 3 lines, rather than pulling back commit
-56e0790c7f9e ("RISC-V: add infrastructure to allow different str*
-implementations") <20230418120317.572094889@linuxfoundation.org>
-as that is just going to be a bunch of dead code?
+Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
 
-Cheers,
-Conor.
-
-> +asflags-remove-y		+=3D $(foreach x, -g -gdwarf-4 -gdwarf-5, $(x) -Wa,$(x=
-))
-> =20
->  $(obj)/purgatory.ro: $(PURGATORY_OBJS) FORCE
->  		$(call if_changed,ld)
-> diff --git a/arch/x86/purgatory/Makefile b/arch/x86/purgatory/Makefile
-> index 17f09dc263811..82fec66d46d29 100644
-> --- a/arch/x86/purgatory/Makefile
-> +++ b/arch/x86/purgatory/Makefile
-> @@ -69,8 +69,7 @@ CFLAGS_sha256.o			+=3D $(PURGATORY_CFLAGS)
->  CFLAGS_REMOVE_string.o		+=3D $(PURGATORY_CFLAGS_REMOVE)
->  CFLAGS_string.o			+=3D $(PURGATORY_CFLAGS)
-> =20
-> -AFLAGS_REMOVE_setup-x86_$(BITS).o	+=3D -Wa,-gdwarf-2
-> -AFLAGS_REMOVE_entry64.o			+=3D -Wa,-gdwarf-2
-> +asflags-remove-y		+=3D $(foreach x, -g -gdwarf-4 -gdwarf-5, $(x) -Wa,$(x=
-))
-> =20
->  $(obj)/purgatory.ro: $(PURGATORY_OBJS) FORCE
->  		$(call if_changed,ld)
-> --=20
-> 2.39.2
->=20
->=20
->=20
-
---WwxYlZ02mBcemm70
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZD6dXgAKCRB4tDGHoIJi
-0hqrAQCEeNdb+KYWF2N4id5tKtG5ZoL2bpCKDr/uNXuuzx5IFgEAg9rSS/khH/RN
-0uGQiWVMchGz1z1Ve/NpYM2P/qjSswY=
-=VJFp
------END PGP SIGNATURE-----
-
---WwxYlZ02mBcemm70--
+Kind regards, Chris
