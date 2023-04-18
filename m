@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11D32572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EB9C433EF;
-	Tue, 18 Apr 2023 12:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BFC2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B53C433D2;
+	Tue, 18 Apr 2023 12:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822153;
-	bh=EUObet2hIT1be7OH5BUhrq19QmW/9Rsc5ca2zW2wjmU=;
+	s=korg; t=1681822156;
+	bh=sgnAwlEzF26ishKFFok/I/STR5zd3qxwa8msNWEC4X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgyWHF0HD9m8b0IU9xJTdxMFOOsx6k9NHhYMWyLognT77kuPNx0V8COZCeO85Tdwf
-	 tbPPFA2twwvzzWBQaTTWQBzghs0zXwe8Iu+nU21XTssL8bsj3HtzRRjOTTZ7uePV6N
-	 78yCVbLnlLyGWZD9LjzxBYfxDIZaff0i4qFOOnkg=
+	b=OuKGxlkDrE09widkFUcplaTUaAcZkJa5lLY0T/4ZZdLACQo/1Hl3SaIHhWSyFXT6Y
+	 RhZa+iCqXJP9EaSj3qZYVpTHGXvZowLVEvPDkEnByMXOTT58uCJ2dCWRZmW8tn9XU7
+	 23460DGAnlRVclOCAJg7GjMGGFI4VdBpY5SEoZzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manasi Navare <navaremanasi@google.com>,
-	Drew Davenport <ddavenport@chromium.org>,
-	Imre Deak <imre.deak@intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.2 003/139] drm/i915: Workaround ICL CSC_MODE sticky arming
-Date: Tue, 18 Apr 2023 14:21:08 +0200
-Message-Id: <20230418120313.841656654@linuxfoundation.org>
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 036/139] RDMA/erdma: Fix some typos
+Date: Tue, 18 Apr 2023 14:21:41 +0200
+Message-Id: <20230418120315.013479699@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -38,114 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Cheng Xu <chengyou@linux.alibaba.com>
 
-commit 4d4e766f8b7dbdefa7a78e91eb9c7a29d0d818b8 upstream.
+[ Upstream commit 3fe26c0493e4c2da4b7d8ba8c975a6f48fb75ec2 ]
 
-Unlike SKL/GLK the ICL CSC unit suffers from a new issue where
-CSC_MODE arming is sticky. That is, once armed it remains armed
-causing the CSC coeff/offset registers to become effectively
-self-arming.
+FAA is short for atomic fetch and add, not FAD. Fix this.
 
-CSC coeff/offset registers writes no longer disarm the CSC,
-but fortunately register read still do. So we can use that
-to disarm the CSC unit once the registers for the current
-frame have been latched. This avoid s the self-arming behaviour
-from persisting into the next frame's .color_commit_noarm()
-call.
-
-Cc: <stable@vger.kernel.org> #v5.19+
-Cc: Manasi Navare <navaremanasi@google.com>
-Cc: Drew Davenport <ddavenport@chromium.org>
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Jouni Högander <jouni.hogander@intel.com>
-Fixes: d13dde449580 ("drm/i915: Split pipe+output CSC programming to noarm+arm pair")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230320095438.17328-5-ville.syrjala@linux.intel.com
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-(cherry picked from commit 92736f1b452bbb8a66bdb5b1d263ad00e04dd3b8)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0ca9c2e2844a ("RDMA/erdma: Implement atomic operations support")
+Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230320084652.16807-2-chengyou@linux.alibaba.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_color.c |   43 ++++++++++++++++++++++++++++-
- 1 file changed, 42 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/erdma/erdma_cq.c | 2 +-
+ drivers/infiniband/hw/erdma/erdma_hw.h | 2 +-
+ drivers/infiniband/hw/erdma/erdma_qp.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_color.c
-+++ b/drivers/gpu/drm/i915/display/intel_color.c
-@@ -516,6 +516,14 @@ static void ilk_lut_12p4_pack(struct drm
- 
- static void icl_color_commit_noarm(const struct intel_crtc_state *crtc_state)
- {
-+	/*
-+	 * Despite Wa_1406463849, ICL no longer suffers from the SKL
-+	 * DC5/PSR CSC black screen issue (see skl_color_commit_noarm()).
-+	 * Possibly due to the extra sticky CSC arming
-+	 * (see icl_color_post_update()).
-+	 *
-+	 * On TGL+ all CSC arming issues have been properly fixed.
-+	 */
- 	icl_load_csc_matrix(crtc_state);
- }
- 
-@@ -617,6 +625,28 @@ static void icl_color_commit_arm(const s
- 			  crtc_state->csc_mode);
- }
- 
-+static void icl_color_post_update(const struct intel_crtc_state *crtc_state)
-+{
-+	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
-+	struct drm_i915_private *i915 = to_i915(crtc->base.dev);
-+
-+	/*
-+	 * Despite Wa_1406463849, ICL CSC is no longer disarmed by
-+	 * coeff/offset register *writes*. Instead, once CSC_MODE
-+	 * is armed it stays armed, even after it has been latched.
-+	 * Afterwards the coeff/offset registers become effectively
-+	 * self-arming. That self-arming must be disabled before the
-+	 * next icl_color_commit_noarm() tries to write the next set
-+	 * of coeff/offset registers. Fortunately register *reads*
-+	 * do still disarm the CSC. Naturally this must not be done
-+	 * until the previously written CSC registers have actually
-+	 * been latched.
-+	 *
-+	 * TGL+ no longer need this workaround.
-+	 */
-+	intel_de_read_fw(i915, PIPE_CSC_PREOFF_HI(crtc->pipe));
-+}
-+
- static struct drm_property_blob *
- create_linear_lut(struct drm_i915_private *i915, int lut_size)
- {
-@@ -2345,10 +2375,19 @@ static const struct intel_color_funcs i9
- 	.read_luts = i9xx_read_luts,
+diff --git a/drivers/infiniband/hw/erdma/erdma_cq.c b/drivers/infiniband/hw/erdma/erdma_cq.c
+index cabd8678b3558..7bc354273d4ec 100644
+--- a/drivers/infiniband/hw/erdma/erdma_cq.c
++++ b/drivers/infiniband/hw/erdma/erdma_cq.c
+@@ -65,7 +65,7 @@ static const enum ib_wc_opcode wc_mapping_table[ERDMA_NUM_OPCODES] = {
+ 	[ERDMA_OP_LOCAL_INV] = IB_WC_LOCAL_INV,
+ 	[ERDMA_OP_READ_WITH_INV] = IB_WC_RDMA_READ,
+ 	[ERDMA_OP_ATOMIC_CAS] = IB_WC_COMP_SWAP,
+-	[ERDMA_OP_ATOMIC_FAD] = IB_WC_FETCH_ADD,
++	[ERDMA_OP_ATOMIC_FAA] = IB_WC_FETCH_ADD,
  };
  
-+static const struct intel_color_funcs tgl_color_funcs = {
-+	.color_check = icl_color_check,
-+	.color_commit_noarm = icl_color_commit_noarm,
-+	.color_commit_arm = icl_color_commit_arm,
-+	.load_luts = icl_load_luts,
-+	.read_luts = icl_read_luts,
-+};
-+
- static const struct intel_color_funcs icl_color_funcs = {
- 	.color_check = icl_color_check,
- 	.color_commit_noarm = icl_color_commit_noarm,
- 	.color_commit_arm = icl_color_commit_arm,
-+	.color_post_update = icl_color_post_update,
- 	.load_luts = icl_load_luts,
- 	.read_luts = icl_read_luts,
+ static const struct {
+diff --git a/drivers/infiniband/hw/erdma/erdma_hw.h b/drivers/infiniband/hw/erdma/erdma_hw.h
+index ab371fec610c3..cbeb6909580cf 100644
+--- a/drivers/infiniband/hw/erdma/erdma_hw.h
++++ b/drivers/infiniband/hw/erdma/erdma_hw.h
+@@ -491,7 +491,7 @@ enum erdma_opcode {
+ 	ERDMA_OP_LOCAL_INV = 15,
+ 	ERDMA_OP_READ_WITH_INV = 16,
+ 	ERDMA_OP_ATOMIC_CAS = 17,
+-	ERDMA_OP_ATOMIC_FAD = 18,
++	ERDMA_OP_ATOMIC_FAA = 18,
+ 	ERDMA_NUM_OPCODES = 19,
+ 	ERDMA_OP_INVALID = ERDMA_NUM_OPCODES + 1
  };
-@@ -2440,7 +2479,9 @@ void intel_color_init_hooks(struct drm_i
- 		else
- 			i915->display.funcs.color = &i9xx_color_funcs;
- 	} else {
--		if (DISPLAY_VER(i915) >= 11)
-+		if (DISPLAY_VER(i915) >= 12)
-+			i915->display.funcs.color = &tgl_color_funcs;
-+		else if (DISPLAY_VER(i915) == 11)
- 			i915->display.funcs.color = &icl_color_funcs;
- 		else if (DISPLAY_VER(i915) == 10)
- 			i915->display.funcs.color = &glk_color_funcs;
+diff --git a/drivers/infiniband/hw/erdma/erdma_qp.c b/drivers/infiniband/hw/erdma/erdma_qp.c
+index d088d6bef431a..ff473b208acfb 100644
+--- a/drivers/infiniband/hw/erdma/erdma_qp.c
++++ b/drivers/infiniband/hw/erdma/erdma_qp.c
+@@ -439,7 +439,7 @@ static int erdma_push_one_sqe(struct erdma_qp *qp, u16 *pi,
+ 				cpu_to_le64(atomic_wr(send_wr)->compare_add);
+ 		} else {
+ 			wqe_hdr |= FIELD_PREP(ERDMA_SQE_HDR_OPCODE_MASK,
+-					      ERDMA_OP_ATOMIC_FAD);
++					      ERDMA_OP_ATOMIC_FAA);
+ 			atomic_sqe->fetchadd_swap_data =
+ 				cpu_to_le64(atomic_wr(send_wr)->compare_add);
+ 		}
+-- 
+2.39.2
+
 
 
