@@ -1,27 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7053E2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B8DC433EF;
-	Tue, 18 Apr 2023 12:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B932572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:41:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66282C433D2;
+	Tue, 18 Apr 2023 12:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821661;
-	bh=GX+rtvCD+IPEDRJ0AMtjWNKUKGFIwZ41KGnLROC8IwY=;
+	s=korg; t=1681821663;
+	bh=Ym+RO+5c7Aq+Mz4/Q3VlGzj28c8PiRidh4rBuk3zfQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvA6svSq8W9Cb9cDx4DZOn+AZ860V2CHrMLvuE7ZUmPprKaEwtuQM8r3YItjN0SaR
-	 HWYbxcF8TlnZF9ZTQXs8u0lSznh5Y7pgBlhKSRi5KgyXrHdfU8phn5mSgR2DOZhsQ5
-	 lTGpzeojhm9EMYwQVJImrka6M/oqIFJHn6HPDFls=
+	b=uqZlYl6VvcoSfHrsnJUTzAItBWndI2Hgbmg4wrunOEHMYxxSZrSAdMBN7XNxLB47q
+	 RZZDUZ6U0LyuEKjISv6TIuvnFTwftdW7nq5w4gxdgW9/fxytGvRop+Pz1/yPTIUrDT
+	 FZA/iaF7gZIU+k6XG9pK1X1wjqb0jMv8N/wIbqIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 5.15 86/91] cgroup/cpuset: Add cpuset_can_fork() and cpuset_cancel_fork() methods
-Date: Tue, 18 Apr 2023 14:22:30 +0200
-Message-Id: <20230418120308.548893720@linuxfoundation.org>
+	Valentin Schneider <vschneid@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Eric W . Biederman" <ebiederm@xmission.com>,
+	Juri Lelli <jlelli@redhat.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Baoquan He <bhe@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Wen Yang <wenyang.linux@foxmail.com>
+Subject: [PATCH 5.15 87/91] kexec: turn all kexec_mutex acquisitions into trylocks
+Date: Tue, 18 Apr 2023 14:22:31 +0200
+Message-Id: <20230418120308.583096015@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -35,159 +44,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Valentin Schneider <vschneid@redhat.com>
 
-commit eee87853794187f6adbe19533ed79c8b44b36a91 upstream.
+commit 7bb5da0d490b2d836c5218f5186ee588d2145310 upstream.
 
-In the case of CLONE_INTO_CGROUP, not all cpusets are ready to accept
-new tasks. It is too late to check that in cpuset_fork(). So we need
-to add the cpuset_can_fork() and cpuset_cancel_fork() methods to
-pre-check it before we can allow attachment to a different cpuset.
+Patch series "kexec, panic: Making crash_kexec() NMI safe", v4.
 
-We also need to set the attach_in_progress flag to alert other code
-that a new task is going to be added to the cpuset.
 
-Fixes: ef2c41cf38a7 ("clone3: allow spawning processes into cgroups")
-Suggested-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Cc: stable@vger.kernel.org # v5.7+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+This patch (of 2):
+
+Most acquistions of kexec_mutex are done via mutex_trylock() - those were
+a direct "translation" from:
+
+  8c5a1cf0ad3a ("kexec: use a mutex for locking rather than xchg()")
+
+there have however been two additions since then that use mutex_lock():
+crash_get_memory_size() and crash_shrink_memory().
+
+A later commit will replace said mutex with an atomic variable, and
+locking operations will become atomic_cmpxchg().  Rather than having those
+mutex_lock() become while (atomic_cmpxchg(&lock, 0, 1)), turn them into
+trylocks that can return -EBUSY on acquisition failure.
+
+This does halve the printable size of the crash kernel, but that's still
+neighbouring 2G for 32bit kernels which should be ample enough.
+
+Link: https://lkml.kernel.org/r/20220630223258.4144112-1-vschneid@redhat.com
+Link: https://lkml.kernel.org/r/20220630223258.4144112-2-vschneid@redhat.com
+Signed-off-by: Valentin Schneider <vschneid@redhat.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: "Eric W . Biederman" <ebiederm@xmission.com>
+Cc: Juri Lelli <jlelli@redhat.com>
+Cc: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Baoquan He <bhe@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Wen Yang <wenyang.linux@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |   88 ++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 83 insertions(+), 5 deletions(-)
+ include/linux/kexec.h |    2 +-
+ kernel/kexec_core.c   |   12 ++++++++----
+ kernel/ksysfs.c       |    7 ++++++-
+ 3 files changed, 15 insertions(+), 6 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2186,6 +2186,18 @@ static int fmeter_getrate(struct fmeter
+--- a/include/linux/kexec.h
++++ b/include/linux/kexec.h
+@@ -390,8 +390,8 @@ extern note_buf_t __percpu *crash_notes;
+ extern bool kexec_in_progress;
  
- static struct cpuset *cpuset_attach_old_cs;
+ int crash_shrink_memory(unsigned long new_size);
+-size_t crash_get_memory_size(void);
+ void crash_free_reserved_phys_range(unsigned long begin, unsigned long end);
++ssize_t crash_get_memory_size(void);
  
-+/*
-+ * Check to see if a cpuset can accept a new task
-+ * For v1, cpus_allowed and mems_allowed can't be empty.
-+ */
-+static int cpuset_can_attach_check(struct cpuset *cs)
-+{
-+	if (!is_in_v2_mode() &&
-+	    (cpumask_empty(cs->cpus_allowed) || nodes_empty(cs->mems_allowed)))
-+		return -ENOSPC;
-+	return 0;
-+}
-+
- /* Called by cgroups to determine if a cpuset is usable; cpuset_rwsem held */
- static int cpuset_can_attach(struct cgroup_taskset *tset)
+ void arch_kexec_protect_crashkres(void);
+ void arch_kexec_unprotect_crashkres(void);
+--- a/kernel/kexec_core.c
++++ b/kernel/kexec_core.c
+@@ -989,13 +989,16 @@ void crash_kexec(struct pt_regs *regs)
+ 	}
+ }
+ 
+-size_t crash_get_memory_size(void)
++ssize_t crash_get_memory_size(void)
  {
-@@ -2200,10 +2212,8 @@ static int cpuset_can_attach(struct cgro
+-	size_t size = 0;
++	ssize_t size = 0;
++
++	if (!mutex_trylock(&kexec_mutex))
++		return -EBUSY;
  
- 	percpu_down_write(&cpuset_rwsem);
- 
--	/* allow moving tasks into an empty cpuset if on default hierarchy */
--	ret = -ENOSPC;
--	if (!is_in_v2_mode() &&
--	    (cpumask_empty(cs->cpus_allowed) || nodes_empty(cs->mems_allowed)))
-+	ret = cpuset_can_attach_check(cs);
-+	if (ret)
- 		goto out_unlock;
- 
- 	cgroup_taskset_for_each(task, css, tset) {
-@@ -2220,7 +2230,6 @@ static int cpuset_can_attach(struct cgro
- 	 * changes which zero cpus/mems_allowed.
- 	 */
- 	cs->attach_in_progress++;
--	ret = 0;
- out_unlock:
- 	percpu_up_write(&cpuset_rwsem);
- 	return ret;
-@@ -2951,6 +2960,68 @@ static void cpuset_bind(struct cgroup_su
+-	mutex_lock(&kexec_mutex);
+ 	if (crashk_res.end != crashk_res.start)
+ 		size = resource_size(&crashk_res);
++
+ 	mutex_unlock(&kexec_mutex);
+ 	return size;
  }
+@@ -1016,7 +1019,8 @@ int crash_shrink_memory(unsigned long ne
+ 	unsigned long old_size;
+ 	struct resource *ram_res;
  
- /*
-+ * In case the child is cloned into a cpuset different from its parent,
-+ * additional checks are done to see if the move is allowed.
-+ */
-+static int cpuset_can_fork(struct task_struct *task, struct css_set *cset)
-+{
-+	struct cpuset *cs = css_cs(cset->subsys[cpuset_cgrp_id]);
-+	bool same_cs;
-+	int ret;
+-	mutex_lock(&kexec_mutex);
++	if (!mutex_trylock(&kexec_mutex))
++		return -EBUSY;
+ 
+ 	if (kexec_crash_image) {
+ 		ret = -ENOENT;
+--- a/kernel/ksysfs.c
++++ b/kernel/ksysfs.c
+@@ -106,7 +106,12 @@ KERNEL_ATTR_RO(kexec_crash_loaded);
+ static ssize_t kexec_crash_size_show(struct kobject *kobj,
+ 				       struct kobj_attribute *attr, char *buf)
+ {
+-	return sprintf(buf, "%zu\n", crash_get_memory_size());
++	ssize_t size = crash_get_memory_size();
 +
-+	rcu_read_lock();
-+	same_cs = (cs == task_cs(current));
-+	rcu_read_unlock();
++	if (size < 0)
++		return size;
 +
-+	if (same_cs)
-+		return 0;
-+
-+	lockdep_assert_held(&cgroup_mutex);
-+	percpu_down_write(&cpuset_rwsem);
-+
-+	/* Check to see if task is allowed in the cpuset */
-+	ret = cpuset_can_attach_check(cs);
-+	if (ret)
-+		goto out_unlock;
-+
-+	ret = task_can_attach(task, cs->effective_cpus);
-+	if (ret)
-+		goto out_unlock;
-+
-+	ret = security_task_setscheduler(task);
-+	if (ret)
-+		goto out_unlock;
-+
-+	/*
-+	 * Mark attach is in progress.  This makes validate_change() fail
-+	 * changes which zero cpus/mems_allowed.
-+	 */
-+	cs->attach_in_progress++;
-+out_unlock:
-+	percpu_up_write(&cpuset_rwsem);
-+	return ret;
-+}
-+
-+static void cpuset_cancel_fork(struct task_struct *task, struct css_set *cset)
-+{
-+	struct cpuset *cs = css_cs(cset->subsys[cpuset_cgrp_id]);
-+	bool same_cs;
-+
-+	rcu_read_lock();
-+	same_cs = (cs == task_cs(current));
-+	rcu_read_unlock();
-+
-+	if (same_cs)
-+		return;
-+
-+	percpu_down_write(&cpuset_rwsem);
-+	cs->attach_in_progress--;
-+	if (!cs->attach_in_progress)
-+		wake_up(&cpuset_attach_wq);
-+	percpu_up_write(&cpuset_rwsem);
-+}
-+
-+/*
-  * Make sure the new task conform to the current state of its parent,
-  * which could have been changed by cpuset just after it inherits the
-  * state from the parent and before it sits on the cgroup's task list.
-@@ -2978,6 +3049,11 @@ static void cpuset_fork(struct task_stru
- 	percpu_down_write(&cpuset_rwsem);
- 	guarantee_online_mems(cs, &cpuset_attach_nodemask_to);
- 	cpuset_attach_task(cs, task);
-+
-+	cs->attach_in_progress--;
-+	if (!cs->attach_in_progress)
-+		wake_up(&cpuset_attach_wq);
-+
- 	percpu_up_write(&cpuset_rwsem);
++	return sprintf(buf, "%zd\n", size);
  }
- 
-@@ -2991,6 +3067,8 @@ struct cgroup_subsys cpuset_cgrp_subsys
- 	.attach		= cpuset_attach,
- 	.post_attach	= cpuset_post_attach,
- 	.bind		= cpuset_bind,
-+	.can_fork	= cpuset_can_fork,
-+	.cancel_fork	= cpuset_cancel_fork,
- 	.fork		= cpuset_fork,
- 	.legacy_cftypes	= legacy_files,
- 	.dfl_cftypes	= dfl_files,
+ static ssize_t kexec_crash_size_store(struct kobject *kobj,
+ 				   struct kobj_attribute *attr,
 
 
