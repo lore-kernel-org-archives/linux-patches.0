@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF382572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:47:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8837EC433EF;
-	Tue, 18 Apr 2023 12:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C7A2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:47:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E966C433EF;
+	Tue, 18 Apr 2023 12:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822074;
-	bh=0mt26iVTqwPUcTu9GZ1KJp1Pi0NpaixLhjWQmQt46oA=;
+	s=korg; t=1681822077;
+	bh=2wA44kDtgI9IRu4YzCwgCu50ewXF20yfzD+KbsOE260=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JiDHXduyob8zq4YVGu72k0miisaInARV5wg5XivPAbRUmxr4ofO0Y/OTjkH5CcuL6
-	 3AiSFSP11BcqkE6PxK5T/oBQKtk2MvhkEuB0VYCZipK46+vRajtmxpe6bR2jvlECL5
-	 G6IAcuzabpUqV78uug9tsePMi1MeC21CcSP3pvJk=
+	b=dJ716IqCTzskK4PKp0/TLrpP9wwVaF5RU95xFkxr2AL5lkux4N6aV9hGAahy5H+v+
+	 iEfwR2Zg9/+6nT0g4sjlU3gngXpDxw7O3XRsB45i0kahcZfdmKuKckOJvpjSTDEf9J
+	 s29QItzMKBe54ya7HIlNLA4cs/JHO0azUS3T6uXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Min Li <lm0963hack@gmail.com>
-Subject: [PATCH 6.2 013/139] Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}
-Date: Tue, 18 Apr 2023 14:21:18 +0200
-Message-Id: <20230418120314.191524637@linuxfoundation.org>
+	Min Li <lm0963hack@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.2 014/139] Bluetooth: Fix race condition in hidp_session_thread
+Date: Tue, 18 Apr 2023 14:21:19 +0200
+Message-Id: <20230418120314.219818142@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -35,97 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Min Li <lm0963hack@gmail.com>
 
-commit a2a9339e1c9deb7e1e079e12e27a0265aea8421a upstream.
+commit c95930abd687fcd1aa040dc4fe90dff947916460 upstream.
 
-Similar to commit d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free
-caused by l2cap_chan_put"), just use l2cap_chan_hold_unless_zero to
-prevent referencing a channel that is about to be destroyed.
+There is a potential race condition in hidp_session_thread that may
+lead to use-after-free. For instance, the timer is active while
+hidp_del_timer is called in hidp_session_thread(). After hidp_session_put,
+then 'session' will be freed, causing kernel panic when hidp_idle_timeout
+is running.
 
-Cc: stable@kernel.org
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The solution is to use del_timer_sync instead of del_timer.
+
+Here is the call trace:
+
+? hidp_session_probe+0x780/0x780
+call_timer_fn+0x2d/0x1e0
+__run_timers.part.0+0x569/0x940
+hidp_session_probe+0x780/0x780
+call_timer_fn+0x1e0/0x1e0
+ktime_get+0x5c/0xf0
+lapic_next_deadline+0x2c/0x40
+clockevents_program_event+0x205/0x320
+run_timer_softirq+0xa9/0x1b0
+__do_softirq+0x1b9/0x641
+__irq_exit_rcu+0xdc/0x190
+irq_exit_rcu+0xe/0x20
+sysvec_apic_timer_interrupt+0xa1/0xc0
+
+Cc: stable@vger.kernel.org
 Signed-off-by: Min Li <lm0963hack@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   24 ++++++------------------
- 1 file changed, 6 insertions(+), 18 deletions(-)
+ net/bluetooth/hidp/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4652,33 +4652,27 @@ static inline int l2cap_disconnect_req(s
- 
- 	BT_DBG("scid 0x%4.4x dcid 0x%4.4x", scid, dcid);
- 
--	mutex_lock(&conn->chan_lock);
--
--	chan = __l2cap_get_chan_by_scid(conn, dcid);
-+	chan = l2cap_get_chan_by_scid(conn, dcid);
- 	if (!chan) {
--		mutex_unlock(&conn->chan_lock);
- 		cmd_reject_invalid_cid(conn, cmd->ident, dcid, scid);
- 		return 0;
- 	}
- 
--	l2cap_chan_hold(chan);
--	l2cap_chan_lock(chan);
--
- 	rsp.dcid = cpu_to_le16(chan->scid);
- 	rsp.scid = cpu_to_le16(chan->dcid);
- 	l2cap_send_cmd(conn, cmd->ident, L2CAP_DISCONN_RSP, sizeof(rsp), &rsp);
- 
- 	chan->ops->set_shutdown(chan);
- 
-+	mutex_lock(&conn->chan_lock);
- 	l2cap_chan_del(chan, ECONNRESET);
-+	mutex_unlock(&conn->chan_lock);
- 
- 	chan->ops->close(chan);
- 
- 	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
- 
--	mutex_unlock(&conn->chan_lock);
--
- 	return 0;
+--- a/net/bluetooth/hidp/core.c
++++ b/net/bluetooth/hidp/core.c
+@@ -433,7 +433,7 @@ static void hidp_set_timer(struct hidp_s
+ static void hidp_del_timer(struct hidp_session *session)
+ {
+ 	if (session->idle_to > 0)
+-		del_timer(&session->timer);
++		del_timer_sync(&session->timer);
  }
  
-@@ -4698,33 +4692,27 @@ static inline int l2cap_disconnect_rsp(s
- 
- 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x", dcid, scid);
- 
--	mutex_lock(&conn->chan_lock);
--
--	chan = __l2cap_get_chan_by_scid(conn, scid);
-+	chan = l2cap_get_chan_by_scid(conn, scid);
- 	if (!chan) {
- 		mutex_unlock(&conn->chan_lock);
- 		return 0;
- 	}
- 
--	l2cap_chan_hold(chan);
--	l2cap_chan_lock(chan);
--
- 	if (chan->state != BT_DISCONN) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
--		mutex_unlock(&conn->chan_lock);
- 		return 0;
- 	}
- 
-+	mutex_lock(&conn->chan_lock);
- 	l2cap_chan_del(chan, 0);
-+	mutex_unlock(&conn->chan_lock);
- 
- 	chan->ops->close(chan);
- 
- 	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
- 
--	mutex_unlock(&conn->chan_lock);
--
- 	return 0;
- }
- 
+ static void hidp_process_report(struct hidp_session *session, int type,
 
 
