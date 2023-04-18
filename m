@@ -1,96 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from qproxy4-pub.mail.unifiedlayer.com (qproxy4-pub.mail.unifiedlayer.com [66.147.248.250])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F3715AC
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 23:31:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1734BC433EF;
-	Tue, 18 Apr 2023 23:31:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681860696;
-	bh=dXrs6HEsN21LvkE2B3upLi4G+i29wmCt/lPdjsvXpGI=;
-	h=From:To:Cc:Subject:Date:From;
-	b=kHUv3WsqPqzTUjKZj5daYdXJVOeGYPfR+HG/1Ev5CEQ8LdaBAskFK4XARG+8WHt/l
-	 GRshbswOxIG769iM5hqnzpq+Me6XxQeuva7mJ4pTq26GfkqPkePob7eqP4FjCFoGKj
-	 YVreXt3MhxRSydf5g8/5BTs4qeLw+dStiJ4bxqgBZehB3XlYIduJUmcsj0fLs2YxKs
-	 8zM7imnjJv5k5PVMlIrKpk2CRnIf3UhYDigJQ1XRnUJXxBvLly+IlibqKRWYDZDLEA
-	 P4yKAZZu33mYQriE3r4DblTGy29Q6smgowNEh7YCYmBkJBZ91sSGahWyPJPFjW+p2g
-	 cko7jlNtKcWhg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Jean Delvare <jdelvare@suse.de>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] .gitattributes: set diff driver for Rust source code files
-Date: Wed, 19 Apr 2023 01:30:48 +0200
-Message-Id: <20230418233048.335281-1-ojeda@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7670915AC
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 23:36:25 +0000 (UTC)
+Received: from gproxy1-pub.mail.unifiedlayer.com (gproxy1-pub.mail.unifiedlayer.com [69.89.25.95])
+	by qproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id 9A9B1803458A
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 23:11:24 +0000 (UTC)
+Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
+	by progateway3.mail.pro1.eigbox.com (Postfix) with ESMTP id C532310047DA3
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 23:11:17 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id ouTlpetbRNX2aouTlpHKPu; Tue, 18 Apr 2023 23:11:17 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=NMAQR22g c=1 sm=1 tr=0 ts=643f2395
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=dKHAf1wccvYA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=15JE0JZEoYPnltLmip+zJ+BHZ1cSXeCus0zKkgweIrE=; b=FkmFzTTfnBv886xngZr07BpC6N
+	AfPdwk2Fc4z/y+RQyI/cULHR9B5+otSM1qVviBDCqrmc2yIYXdnP/qyANq1JLvouDgnRScRFo9rtl
+	+LxbgF/Kp1fy7dqP1blo2+ZNbXPa9Q+LzRSJ66MSbox69vi9FCaq3L1gjyxCLz5L7jR8/H7huuedh
+	1G6w+Icz8koE2sSC7pq6b9/BxSoa0n3hAM4VDI8mV1vjELOIk7pjiw/GJjMt5aG4cXc+q6/nPwW1w
+	5jQaJR5i1F7XNtTiDRp8de2p9tX+8h+opRQYUHkAiwjUaugeKOVznetJ3BPIVzXFd9mS9dsqvADRl
+	xrdI9Hnw==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:35232 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1pouTk-0017Ud-Sl;
+	Tue, 18 Apr 2023 17:11:16 -0600
+Subject: Re: [PATCH 6.2 000/139] 6.2.12-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230418120313.725598495@linuxfoundation.org>
+In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <73a1a589-3f30-6888-4f11-dfe6cf69247f@w6rz.net>
+Date: Tue, 18 Apr 2023 16:11:14 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1pouTk-0017Ud-Sl
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:35232
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-Git supports a builtin Rust diff driver [1] since v2.23.0 (2019).
+On 4/18/23 5:21 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.2.12 release.
+> There are 139 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.12-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-It improves the choice of hunk headers in some cases, such as
-diffs within methods, since those are indented in Rust within
-an `impl` block, and therefore the default diff driver would
-pick the outer `impl` block instead (rather than the method
-where the changed code is).
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-For instance, with the default diff driver:
-
-    @@ -455,6 +455,8 @@ impl fmt::Write for RawFormatter {
-             // Amount that we can copy. `saturating_sub` ensures we get 0 if `pos` goes past `end`.
-             let len_to_copy = core::cmp::min(pos_new, self.end).saturating_sub(self.pos);
-
-    +        test_diff_driver();
-    +
-             if len_to_copy > 0 {
-                 // SAFETY: If `len_to_copy` is non-zero, then we know `pos` has not gone past `end`
-                 // yet, so it is valid for write per the type invariants.
-
-With the Rust diff driver:
-
-    @@ -455,6 +455,8 @@ fn write_str(&mut self, s: &str) -> fmt::Result {
-             // Amount that we can copy. `saturating_sub` ensures we get 0 if `pos` goes past `end`.
-             let len_to_copy = core::cmp::min(pos_new, self.end).saturating_sub(self.pos);
-
-    +        test_diff_driver();
-    +
-             if len_to_copy > 0 {
-                 // SAFETY: If `len_to_copy` is non-zero, then we know `pos` has not gone past `end`
-                 // yet, so it is valid for write per the type invariants.
-
-Thus set the `rust` diff driver for `*.rs` source files.
-
-Link: https://git-scm.com/docs/gitattributes#_defining_a_custom_hunk_header [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- .gitattributes | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/.gitattributes b/.gitattributes
-index c9ba5bfc4036..2325c529e185 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -2,3 +2,4 @@
- *.[ch] diff=cpp
- *.dts diff=dts
- *.dts[io] diff=dts
-+*.rs diff=rust
-
-base-commit: 09a9639e56c01c7a00d6c0ca63f4c7c41abe075d
--- 
-2.40.0
+Tested-by: Ron Economos <re@w6rz.net>
 
