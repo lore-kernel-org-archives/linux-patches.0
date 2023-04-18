@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBAC2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974B9C433D2;
-	Tue, 18 Apr 2023 12:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31E02572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131C0C4339B;
+	Tue, 18 Apr 2023 12:39:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821551;
-	bh=PWo7MQgWV7E7p8VWro5IUDYhkqLQYkJLflOtYdSNA4s=;
+	s=korg; t=1681821554;
+	bh=HPq4VGBl81F4lwzin8cZJ2MPhHPIfxlWUoMzT/tqjTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGxGkoRouedLlk23cStw7bCplHvQ/hoNEsaZ6ejX83RK4JWVD9olufwjyZA9Kdj+4
-	 y3m2zlAmBk5plCz+yPdPI/ATjXFdqVfBhZt1GkDxINp4oSqQx/MFcWv6WnwVWFUhDy
-	 eoGoFYf5fM2kSPtymX3d1U8ie0Wau1a05Uk8qTlI=
+	b=K5MIWASlhJf7D5xyV5xefEFKYYiSOpzrOj0YLXDOMu2XEHmpei++aElToIRWIHdYS
+	 4dkQrXuYDbVJ+ebUm93FnNL2vX6BVW3SQXPPrjXMh5VIZsINBSL7LKlS/lLm697UqK
+	 Tc3eoZTjWjvlcPtiT96NZYs5k3KXhqblUFXh7iUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Robbie Harwood <rharwood@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	keyrings@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	kexec@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 37/91] libbpf: Fix single-line struct definition output in btf_dump
-Date: Tue, 18 Apr 2023 14:21:41 +0200
-Message-Id: <20230418120306.867382472@linuxfoundation.org>
+Subject: [PATCH 5.15 46/91] asymmetric_keys: log on fatal failures in PE/pkcs7
+Date: Tue, 18 Apr 2023 14:21:50 +0200
+Message-Id: <20230418120307.173008698@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -35,47 +41,156 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Robbie Harwood <rharwood@redhat.com>
 
-[ Upstream commit 872aec4b5f635d94111d48ec3c57fbe078d64e7d ]
+[ Upstream commit 3584c1dbfffdabf8e3dc1dd25748bb38dd01cd43 ]
 
-btf_dump APIs emit unnecessary tabs when emitting struct/union
-definition that fits on the single line. Before this patch we'd get:
+These particular errors can be encountered while trying to kexec when
+secureboot lockdown is in place.  Without this change, even with a
+signed debug build, one still needs to reboot the machine to add the
+appropriate dyndbg parameters (since lockdown blocks debugfs).
 
-struct blah {<tab>};
+Accordingly, upgrade all pr_debug() before fatal error into pr_warn().
 
-This patch fixes this and makes sure that we get more natural:
-
-struct blah {};
-
-Fixes: 44a726c3f23c ("bpftool: Print newline before '}' for struct with padding only fields")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20221212211505.558851-2-andrii@kernel.org
+Signed-off-by: Robbie Harwood <rharwood@redhat.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Jarkko Sakkinen <jarkko@kernel.org>
+cc: Eric Biederman <ebiederm@xmission.com>
+cc: Herbert Xu <herbert@gondor.apana.org.au>
+cc: keyrings@vger.kernel.org
+cc: linux-crypto@vger.kernel.org
+cc: kexec@lists.infradead.org
+Link: https://lore.kernel.org/r/20230220171254.592347-3-rharwood@redhat.com/ # v2
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf_dump.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ crypto/asymmetric_keys/pkcs7_verify.c  | 10 +++++-----
+ crypto/asymmetric_keys/verify_pefile.c | 24 ++++++++++++------------
+ 2 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index a9f974e5fb856..98cb3831aa18c 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -1003,9 +1003,12 @@ static void btf_dump_emit_struct_def(struct btf_dump *d,
- 	 * Keep `struct empty {}` on a single line,
- 	 * only print newline when there are regular or padding fields.
+diff --git a/crypto/asymmetric_keys/pkcs7_verify.c b/crypto/asymmetric_keys/pkcs7_verify.c
+index f94a1d1ad3a6c..df279538cead3 100644
+--- a/crypto/asymmetric_keys/pkcs7_verify.c
++++ b/crypto/asymmetric_keys/pkcs7_verify.c
+@@ -79,16 +79,16 @@ static int pkcs7_digest(struct pkcs7_message *pkcs7,
+ 		}
+ 
+ 		if (sinfo->msgdigest_len != sig->digest_size) {
+-			pr_debug("Sig %u: Invalid digest size (%u)\n",
+-				 sinfo->index, sinfo->msgdigest_len);
++			pr_warn("Sig %u: Invalid digest size (%u)\n",
++				sinfo->index, sinfo->msgdigest_len);
+ 			ret = -EBADMSG;
+ 			goto error;
+ 		}
+ 
+ 		if (memcmp(sig->digest, sinfo->msgdigest,
+ 			   sinfo->msgdigest_len) != 0) {
+-			pr_debug("Sig %u: Message digest doesn't match\n",
+-				 sinfo->index);
++			pr_warn("Sig %u: Message digest doesn't match\n",
++				sinfo->index);
+ 			ret = -EKEYREJECTED;
+ 			goto error;
+ 		}
+@@ -481,7 +481,7 @@ int pkcs7_supply_detached_data(struct pkcs7_message *pkcs7,
+ 			       const void *data, size_t datalen)
+ {
+ 	if (pkcs7->data) {
+-		pr_debug("Data already supplied\n");
++		pr_warn("Data already supplied\n");
+ 		return -EINVAL;
+ 	}
+ 	pkcs7->data = data;
+diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
+index fe1bb374239d7..22beaf2213a22 100644
+--- a/crypto/asymmetric_keys/verify_pefile.c
++++ b/crypto/asymmetric_keys/verify_pefile.c
+@@ -74,7 +74,7 @@ static int pefile_parse_binary(const void *pebuf, unsigned int pelen,
+ 		break;
+ 
+ 	default:
+-		pr_debug("Unknown PEOPT magic = %04hx\n", pe32->magic);
++		pr_warn("Unknown PEOPT magic = %04hx\n", pe32->magic);
+ 		return -ELIBBAD;
+ 	}
+ 
+@@ -95,7 +95,7 @@ static int pefile_parse_binary(const void *pebuf, unsigned int pelen,
+ 	ctx->certs_size = ddir->certs.size;
+ 
+ 	if (!ddir->certs.virtual_address || !ddir->certs.size) {
+-		pr_debug("Unsigned PE binary\n");
++		pr_warn("Unsigned PE binary\n");
+ 		return -ENODATA;
+ 	}
+ 
+@@ -127,7 +127,7 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
+ 	unsigned len;
+ 
+ 	if (ctx->sig_len < sizeof(wrapper)) {
+-		pr_debug("Signature wrapper too short\n");
++		pr_warn("Signature wrapper too short\n");
+ 		return -ELIBBAD;
+ 	}
+ 
+@@ -142,16 +142,16 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
+ 	 * rounded up since 0.110.
  	 */
--	if (vlen || t->size)
-+	if (vlen || t->size) {
- 		btf_dump_printf(d, "\n");
--	btf_dump_printf(d, "%s}", pfx(lvl));
-+		btf_dump_printf(d, "%s}", pfx(lvl));
-+	} else {
-+		btf_dump_printf(d, "}");
-+	}
- 	if (packed)
- 		btf_dump_printf(d, " __attribute__((packed))");
+ 	if (wrapper.length > ctx->sig_len) {
+-		pr_debug("Signature wrapper bigger than sig len (%x > %x)\n",
+-			 ctx->sig_len, wrapper.length);
++		pr_warn("Signature wrapper bigger than sig len (%x > %x)\n",
++			ctx->sig_len, wrapper.length);
+ 		return -ELIBBAD;
+ 	}
+ 	if (wrapper.revision != WIN_CERT_REVISION_2_0) {
+-		pr_debug("Signature is not revision 2.0\n");
++		pr_warn("Signature is not revision 2.0\n");
+ 		return -ENOTSUPP;
+ 	}
+ 	if (wrapper.cert_type != WIN_CERT_TYPE_PKCS_SIGNED_DATA) {
+-		pr_debug("Signature certificate type is not PKCS\n");
++		pr_warn("Signature certificate type is not PKCS\n");
+ 		return -ENOTSUPP;
+ 	}
+ 
+@@ -164,7 +164,7 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
+ 	ctx->sig_offset += sizeof(wrapper);
+ 	ctx->sig_len -= sizeof(wrapper);
+ 	if (ctx->sig_len < 4) {
+-		pr_debug("Signature data missing\n");
++		pr_warn("Signature data missing\n");
+ 		return -EKEYREJECTED;
+ 	}
+ 
+@@ -198,7 +198,7 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
+ 		return 0;
+ 	}
+ not_pkcs7:
+-	pr_debug("Signature data not PKCS#7\n");
++	pr_warn("Signature data not PKCS#7\n");
+ 	return -ELIBBAD;
  }
+ 
+@@ -341,8 +341,8 @@ static int pefile_digest_pe(const void *pebuf, unsigned int pelen,
+ 	digest_size = crypto_shash_digestsize(tfm);
+ 
+ 	if (digest_size != ctx->digest_len) {
+-		pr_debug("Digest size mismatch (%zx != %x)\n",
+-			 digest_size, ctx->digest_len);
++		pr_warn("Digest size mismatch (%zx != %x)\n",
++			digest_size, ctx->digest_len);
+ 		ret = -EBADMSG;
+ 		goto error_no_desc;
+ 	}
+@@ -373,7 +373,7 @@ static int pefile_digest_pe(const void *pebuf, unsigned int pelen,
+ 	 * PKCS#7 certificate.
+ 	 */
+ 	if (memcmp(digest, ctx->digest, ctx->digest_len) != 0) {
+-		pr_debug("Digest mismatch\n");
++		pr_warn("Digest mismatch\n");
+ 		ret = -EKEYREJECTED;
+ 	} else {
+ 		pr_debug("The digests match!\n");
 -- 
 2.39.2
 
