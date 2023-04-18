@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F332572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B7EC433D2;
-	Tue, 18 Apr 2023 12:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536EB2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEE3C433D2;
+	Tue, 18 Apr 2023 12:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822370;
-	bh=JPpzubRtzrVGJlA9O+TXa7e8xCKT79R77S0NX6A99qQ=;
+	s=korg; t=1681822373;
+	bh=f2fTbvyjmUZ+F597QbBJuqwuDksjeIew8pO/V1G1zDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6tAi27LD9opOvZdintdHXjhEEYAf2C24W5YAFXU8QcVfAmdZwCan0/Gj3bsAd0EG
-	 7ABgt7hzsUvBwSI/bjtOIGi126zNp3rulu4fMrysdB0l7sw79xZK2GngnEcLq74yis
-	 /ZX3ZZPXLk3BHWLq3QsCyjOdDxSRo82uxcJWEMDg=
+	b=p5T7btfr3El4Tg+s1Ne29B2P5u/V4VBKavgwrtQ4DKx0Xk86xUfd0MO+Ha+DSIxOP
+	 sE4SWCjq1hL0Kcc201K7YZYBhsOtqOE/wwA0ZimvhPYG4GOQCRM3nWzxiikwAYRvKq
+	 OZYb/enC+4s+/QVs62MaJQfxWgoWFc1/bsAB9afU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christoph Paasch <cpaasch@apple.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.2 124/139] mptcp: use mptcp_schedule_work instead of open-coding it
-Date: Tue, 18 Apr 2023 14:23:09 +0200
-Message-Id: <20230418120318.510560357@linuxfoundation.org>
+Subject: [PATCH 6.2 125/139] mptcp: stricter state check in mptcp_worker
+Date: Tue, 18 Apr 2023 14:23:10 +0200
+Message-Id: <20230418120318.550235353@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -37,84 +38,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit a5cb752b125766524c921faab1a45cc96065b0a7 upstream.
+commit d6a0443733434408f2cbd4c53fea6910599bab9e upstream.
 
-Beyond reducing code duplication this also avoids scheduling
-the mptcp_worker on a closed socket on some edge scenarios.
+As reported by Christoph, the mptcp protocol can run the
+worker when the relevant msk socket is in an unexpected state:
 
-The addressed issue is actually older than the blamed commit
-below, but this fix needs it as a pre-requisite.
+connect()
+// incoming reset + fastclose
+// the mptcp worker is scheduled
+mptcp_disconnect()
+// msk is now CLOSED
+listen()
+mptcp_worker()
 
-Fixes: ba8f48f7a4d7 ("mptcp: introduce mptcp_schedule_work")
+Leading to the following splat:
+
+divide error: 0000 [#1] PREEMPT SMP
+CPU: 1 PID: 21 Comm: kworker/1:0 Not tainted 6.3.0-rc1-gde5e8fd0123c #11
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+Workqueue: events mptcp_worker
+RIP: 0010:__tcp_select_window+0x22c/0x4b0 net/ipv4/tcp_output.c:3018
+RSP: 0018:ffffc900000b3c98 EFLAGS: 00010293
+RAX: 000000000000ffd7 RBX: 000000000000ffd7 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: ffffffff8214ce97 RDI: 0000000000000004
+RBP: 000000000000ffd7 R08: 0000000000000004 R09: 0000000000010000
+R10: 000000000000ffd7 R11: ffff888005afa148 R12: 000000000000ffd7
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  0000000000000000(0000) GS:ffff88803ed00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000405270 CR3: 000000003011e006 CR4: 0000000000370ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ tcp_select_window net/ipv4/tcp_output.c:262 [inline]
+ __tcp_transmit_skb+0x356/0x1280 net/ipv4/tcp_output.c:1345
+ tcp_transmit_skb net/ipv4/tcp_output.c:1417 [inline]
+ tcp_send_active_reset+0x13e/0x320 net/ipv4/tcp_output.c:3459
+ mptcp_check_fastclose net/mptcp/protocol.c:2530 [inline]
+ mptcp_worker+0x6c7/0x800 net/mptcp/protocol.c:2705
+ process_one_work+0x3bd/0x950 kernel/workqueue.c:2390
+ worker_thread+0x5b/0x610 kernel/workqueue.c:2537
+ kthread+0x138/0x170 kernel/kthread.c:376
+ ret_from_fork+0x2c/0x50 arch/x86/entry/entry_64.S:308
+ </TASK>
+
+This change addresses the issue explicitly checking for bad states
+before running the mptcp worker.
+
+Fixes: e16163b6e2b7 ("mptcp: refactor shutdown and close")
 Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/374
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c |    5 ++---
- net/mptcp/subflow.c |   18 ++++++------------
- 2 files changed, 8 insertions(+), 15 deletions(-)
+ net/mptcp/protocol.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -1192,9 +1192,8 @@ bool mptcp_incoming_options(struct sock
- 	 */
- 	if (TCP_SKB_CB(skb)->seq == TCP_SKB_CB(skb)->end_seq) {
- 		if (mp_opt.data_fin && mp_opt.data_len == 1 &&
--		    mptcp_update_rcv_data_fin(msk, mp_opt.data_seq, mp_opt.dsn64) &&
--		    schedule_work(&msk->work))
--			sock_hold(subflow->conn);
-+		    mptcp_update_rcv_data_fin(msk, mp_opt.data_seq, mp_opt.dsn64))
-+			mptcp_schedule_work((struct sock *)msk);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2627,7 +2627,7 @@ static void mptcp_worker(struct work_str
  
- 		return true;
- 	}
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -407,9 +407,8 @@ void mptcp_subflow_reset(struct sock *ss
+ 	lock_sock(sk);
+ 	state = sk->sk_state;
+-	if (unlikely(state == TCP_CLOSE))
++	if (unlikely((1 << state) & (TCPF_CLOSE | TCPF_LISTEN)))
+ 		goto unlock;
  
- 	tcp_send_active_reset(ssk, GFP_ATOMIC);
- 	tcp_done(ssk);
--	if (!test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &mptcp_sk(sk)->flags) &&
--	    schedule_work(&mptcp_sk(sk)->work))
--		return; /* worker will put sk for us */
-+	if (!test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &mptcp_sk(sk)->flags))
-+		mptcp_schedule_work(sk);
- 
- 	sock_put(sk);
- }
-@@ -1117,8 +1116,8 @@ static enum mapping_status get_mapping_s
- 				skb_ext_del(skb, SKB_EXT_MPTCP);
- 				return MAPPING_OK;
- 			} else {
--				if (updated && schedule_work(&msk->work))
--					sock_hold((struct sock *)msk);
-+				if (updated)
-+					mptcp_schedule_work((struct sock *)msk);
- 
- 				return MAPPING_DATA_FIN;
- 			}
-@@ -1221,17 +1220,12 @@ static void mptcp_subflow_discard_data(s
- /* sched mptcp worker to remove the subflow if no more data is pending */
- static void subflow_sched_work_if_closed(struct mptcp_sock *msk, struct sock *ssk)
- {
--	struct sock *sk = (struct sock *)msk;
--
- 	if (likely(ssk->sk_state != TCP_CLOSE))
- 		return;
- 
- 	if (skb_queue_empty(&ssk->sk_receive_queue) &&
--	    !test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &msk->flags)) {
--		sock_hold(sk);
--		if (!schedule_work(&msk->work))
--			sock_put(sk);
--	}
-+	    !test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &msk->flags))
-+		mptcp_schedule_work((struct sock *)msk);
- }
- 
- static bool subflow_can_fallback(struct mptcp_subflow_context *subflow)
+ 	mptcp_check_data_fin_ack(sk);
 
 
