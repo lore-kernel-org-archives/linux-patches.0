@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B342566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF40BC4339B;
-	Tue, 18 Apr 2023 12:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C1A2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72575C433D2;
+	Tue, 18 Apr 2023 12:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821330;
-	bh=n2sqtCVFlFJlBSwGMtTjOHkL1IZrrjKKSW5acwb/gh4=;
+	s=korg; t=1681821332;
+	bh=0DnOj0yNGi/+TuI5y2F+ejDKKGNLZGMiSwRPOZsCzrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQyUbrwkeMEFDNYcWh/tih1GM8g8LdgDiLUnFQm/gbwH3hpfZf0ElsdTtubsCfjnN
-	 0bwckEfqSwdPRiCZKaGg7Kj7qGvEkOjferkDSKDFcj1Ozy9obO98HA15fPZPRQDWSH
-	 6qJF2yUVL1LkjE99YBVvA1J6VAd0VzyGW2F6nfNU=
+	b=XwU87FHoE133iJqG0KcQbXSyrUdgD6TqE7u4/t/30w7rTafNf+fK2HkVwbLtWdDh+
+	 gR3ZMrymTMZyyv2Uy13PI6/3hpyMdgpMh2FyOMkhgoHHtI22EAvsmOpwadHQtdo3uZ
+	 d+IYyadTfRXtIuDGNVaE7ts6RsX4lV05gAOIu2QM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/124] libbpf: Fix single-line struct definition output in btf_dump
-Date: Tue, 18 Apr 2023 14:21:44 +0200
-Message-Id: <20230418120312.962825749@linuxfoundation.org>
+	stable@kernel.org,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Min Li <lm0963hack@gmail.com>
+Subject: [PATCH 5.10 059/124] Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}
+Date: Tue, 18 Apr 2023 14:21:18 +0200
+Message-Id: <20230418120311.989760613@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,49 +35,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 872aec4b5f635d94111d48ec3c57fbe078d64e7d ]
+commit a2a9339e1c9deb7e1e079e12e27a0265aea8421a upstream.
 
-btf_dump APIs emit unnecessary tabs when emitting struct/union
-definition that fits on the single line. Before this patch we'd get:
+Similar to commit d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free
+caused by l2cap_chan_put"), just use l2cap_chan_hold_unless_zero to
+prevent referencing a channel that is about to be destroyed.
 
-struct blah {<tab>};
-
-This patch fixes this and makes sure that we get more natural:
-
-struct blah {};
-
-Fixes: 44a726c3f23c ("bpftool: Print newline before '}' for struct with padding only fields")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20221212211505.558851-2-andrii@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Min Li <lm0963hack@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/btf_dump.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_core.c |   24 ++++++------------------
+ 1 file changed, 6 insertions(+), 18 deletions(-)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index 6a8d8ed34b760..61aa2c47fbd5e 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -973,9 +973,12 @@ static void btf_dump_emit_struct_def(struct btf_dump *d,
- 	 * Keep `struct empty {}` on a single line,
- 	 * only print newline when there are regular or padding fields.
- 	 */
--	if (vlen || t->size)
-+	if (vlen || t->size) {
- 		btf_dump_printf(d, "\n");
--	btf_dump_printf(d, "%s}", pfx(lvl));
-+		btf_dump_printf(d, "%s}", pfx(lvl));
-+	} else {
-+		btf_dump_printf(d, "}");
-+	}
- 	if (packed)
- 		btf_dump_printf(d, " __attribute__((packed))");
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4647,33 +4647,27 @@ static inline int l2cap_disconnect_req(s
+ 
+ 	BT_DBG("scid 0x%4.4x dcid 0x%4.4x", scid, dcid);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+-	chan = __l2cap_get_chan_by_scid(conn, dcid);
++	chan = l2cap_get_chan_by_scid(conn, dcid);
+ 	if (!chan) {
+-		mutex_unlock(&conn->chan_lock);
+ 		cmd_reject_invalid_cid(conn, cmd->ident, dcid, scid);
+ 		return 0;
+ 	}
+ 
+-	l2cap_chan_hold(chan);
+-	l2cap_chan_lock(chan);
+-
+ 	rsp.dcid = cpu_to_le16(chan->scid);
+ 	rsp.scid = cpu_to_le16(chan->dcid);
+ 	l2cap_send_cmd(conn, cmd->ident, L2CAP_DISCONN_RSP, sizeof(rsp), &rsp);
+ 
+ 	chan->ops->set_shutdown(chan);
+ 
++	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_del(chan, ECONNRESET);
++	mutex_unlock(&conn->chan_lock);
+ 
+ 	chan->ops->close(chan);
+ 
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return 0;
  }
--- 
-2.39.2
-
+ 
+@@ -4693,33 +4687,27 @@ static inline int l2cap_disconnect_rsp(s
+ 
+ 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x", dcid, scid);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+-	chan = __l2cap_get_chan_by_scid(conn, scid);
++	chan = l2cap_get_chan_by_scid(conn, scid);
+ 	if (!chan) {
+ 		mutex_unlock(&conn->chan_lock);
+ 		return 0;
+ 	}
+ 
+-	l2cap_chan_hold(chan);
+-	l2cap_chan_lock(chan);
+-
+ 	if (chan->state != BT_DISCONN) {
+ 		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+-		mutex_unlock(&conn->chan_lock);
+ 		return 0;
+ 	}
+ 
++	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_del(chan, 0);
++	mutex_unlock(&conn->chan_lock);
+ 
+ 	chan->ops->close(chan);
+ 
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return 0;
+ }
+ 
 
 
