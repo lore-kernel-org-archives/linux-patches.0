@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860F22572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0810BC433D2;
-	Tue, 18 Apr 2023 12:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2690E2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C78AC433EF;
+	Tue, 18 Apr 2023 12:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821815;
-	bh=Uj98wVnSSFnzrcHZJVdxk3j00ymRjdBUVhBfZ/HlGeU=;
+	s=korg; t=1681821818;
+	bh=Jd2BkqQCgKKv5mm5zVYZkQ3a+PeEMhu+4n95OFhAPmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=12VkZWvBUOhlKKg7WBasNojQ8/1ueX5L39QD5QaQk0Ass6Btwo/iUHaH1IPTwqKzy
-	 GCr7g/plyaXDkxdk7pUgiZu0PjFKGFqb7Ua0+rGGkgKsmg0s4VEbYdK0r5/MWxwiMB
-	 PWn5qC90bBvFHJVPd8trKaelT63cxcHpSAUE93q0=
+	b=ikbqMS2x5JMeSuSsG2Eussh8fiZ60/4SHoymX5AnH8B4oYhcuMXyLyVJluBzDRK+p
+	 qSvBhyXrZaVzfDRK9tyUgtRH20kyEsfHyG5x5HkkqX6cS3GXHjOR9ZqVileMwJoxow
+	 nULJHY7iln8VcZBC3lpb2UlvPkofjnbWbmEj8CA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Zaki <ahmed.zaki@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Luca Czesla <luca.czesla@mail.schwarz>,
+	Felix Huettner <felix.huettner@mail.schwarz>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/134] iavf: remove active_cvlans and active_svlans bitmaps
-Date: Tue, 18 Apr 2023 14:21:48 +0200
-Message-Id: <20230418120314.763880194@linuxfoundation.org>
+Subject: [PATCH 6.1 053/134] net: openvswitch: fix race on port output
+Date: Tue, 18 Apr 2023 14:21:49 +0200
+Message-Id: <20230418120314.795559722@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,273 +38,238 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ahmed Zaki <ahmed.zaki@intel.com>
+From: Felix Huettner <felix.huettner@mail.schwarz>
 
-[ Upstream commit 9c85b7fa12ef2e4fc11a4e31ac595fb5f9d0ddf9 ]
+[ Upstream commit 066b86787fa3d97b7aefb5ac0a99a22dad2d15f8 ]
 
-The VLAN filters info is currently being held in a list and 2 bitmaps
-(active_cvlans and active_svlans). We are experiencing some racing where
-data is not in sync in the list and bitmaps. For example, the VLAN is
-initially added to the list but only when the PF replies, it is added to
-the bitmap. If a user adds many V2 VLANS before the PF responds:
+assume the following setup on a single machine:
+1. An openvswitch instance with one bridge and default flows
+2. two network namespaces "server" and "client"
+3. two ovs interfaces "server" and "client" on the bridge
+4. for each ovs interface a veth pair with a matching name and 32 rx and
+   tx queues
+5. move the ends of the veth pairs to the respective network namespaces
+6. assign ip addresses to each of the veth ends in the namespaces (needs
+   to be the same subnet)
+7. start some http server on the server network namespace
+8. test if a client in the client namespace can reach the http server
 
-    while [ $((i++)) ]
-        ip l add l eth0 name eth0.$i type vlan id $i
+when following the actions below the host has a chance of getting a cpu
+stuck in a infinite loop:
+1. send a large amount of parallel requests to the http server (around
+   3000 curls should work)
+2. in parallel delete the network namespace (do not delete interfaces or
+   stop the server, just kill the namespace)
 
-we might end up with more VLAN list entries than the designated limit.
-Also, The "ip link show" will show more links added than the PF limit.
+there is a low chance that this will cause the below kernel cpu stuck
+message. If this does not happen just retry.
+Below there is also the output of bpftrace for the functions mentioned
+in the output.
 
-On the other and, the bitmaps are only used to check the number of VLAN
-filters and to re-enable the filters when the interface goes from DOWN to
-UP.
+The series of events happening here is:
+1. the network namespace is deleted calling
+   `unregister_netdevice_many_notify` somewhere in the process
+2. this sets first `NETREG_UNREGISTERING` on both ends of the veth and
+   then runs `synchronize_net`
+3. it then calls `call_netdevice_notifiers` with `NETDEV_UNREGISTER`
+4. this is then handled by `dp_device_event` which calls
+   `ovs_netdev_detach_dev` (if a vport is found, which is the case for
+   the veth interface attached to ovs)
+5. this removes the rx_handlers of the device but does not prevent
+   packages to be sent to the device
+6. `dp_device_event` then queues the vport deletion to work in
+   background as a ovs_lock is needed that we do not hold in the
+   unregistration path
+7. `unregister_netdevice_many_notify` continues to call
+   `netdev_unregister_kobject` which sets `real_num_tx_queues` to 0
+8. port deletion continues (but details are not relevant for this issue)
+9. at some future point the background task deletes the vport
 
-This patch gets rid of the bitmaps and uses the list only. To do that,
-the states of the VLAN filter are modified:
-1 - IAVF_VLAN_REMOVE: the entry needs to be totally removed after informing
-  the PF. This is the "ip link del eth0.$i" path.
-2 - IAVF_VLAN_DISABLE: (new) the netdev went down. The filter needs to be
-  removed from the PF and then marked INACTIVE.
-3 - IAVF_VLAN_INACTIVE: (new) no PF filter exists, but the user did not
-  delete the VLAN.
+If after 7. but before 9. a packet is send to the ovs vport (which is
+not deleted at this point in time) which forwards it to the
+`dev_queue_xmit` flow even though the device is unregistering.
+In `skb_tx_hash` (which is called in the `dev_queue_xmit`) path there is
+a while loop (if the packet has a rx_queue recorded) that is infinite if
+`dev->real_num_tx_queues` is zero.
 
-Fixes: 48ccc43ecf10 ("iavf: Add support VIRTCHNL_VF_OFFLOAD_VLAN_V2 during netdev config")
-Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+To prevent this from happening we update `do_output` to handle devices
+without carrier the same as if the device is not found (which would
+be the code path after 9. is done).
+
+Additionally we now produce a warning in `skb_tx_hash` if we will hit
+the infinite loop.
+
+bpftrace (first word is function name):
+
+__dev_queue_xmit server: real_num_tx_queues: 1, cpu: 2, pid: 28024, tid: 28024, skb_addr: 0xffff9edb6f207000, reg_state: 1
+netdev_core_pick_tx server: addr: 0xffff9f0a46d4a000 real_num_tx_queues: 1, cpu: 2, pid: 28024, tid: 28024, skb_addr: 0xffff9edb6f207000, reg_state: 1
+dp_device_event server: real_num_tx_queues: 1 cpu 9, pid: 21024, tid: 21024, event 2, reg_state: 1
+synchronize_rcu_expedited: cpu 9, pid: 21024, tid: 21024
+synchronize_rcu_expedited: cpu 9, pid: 21024, tid: 21024
+synchronize_rcu_expedited: cpu 9, pid: 21024, tid: 21024
+synchronize_rcu_expedited: cpu 9, pid: 21024, tid: 21024
+dp_device_event server: real_num_tx_queues: 1 cpu 9, pid: 21024, tid: 21024, event 6, reg_state: 2
+ovs_netdev_detach_dev server: real_num_tx_queues: 1 cpu 9, pid: 21024, tid: 21024, reg_state: 2
+netdev_rx_handler_unregister server: real_num_tx_queues: 1, cpu: 9, pid: 21024, tid: 21024, reg_state: 2
+synchronize_rcu_expedited: cpu 9, pid: 21024, tid: 21024
+netdev_rx_handler_unregister ret server: real_num_tx_queues: 1, cpu: 9, pid: 21024, tid: 21024, reg_state: 2
+dp_device_event server: real_num_tx_queues: 1 cpu 9, pid: 21024, tid: 21024, event 27, reg_state: 2
+dp_device_event server: real_num_tx_queues: 1 cpu 9, pid: 21024, tid: 21024, event 22, reg_state: 2
+dp_device_event server: real_num_tx_queues: 1 cpu 9, pid: 21024, tid: 21024, event 18, reg_state: 2
+netdev_unregister_kobject: real_num_tx_queues: 1, cpu: 9, pid: 21024, tid: 21024
+synchronize_rcu_expedited: cpu 9, pid: 21024, tid: 21024
+ovs_vport_send server: real_num_tx_queues: 0, cpu: 2, pid: 28024, tid: 28024, skb_addr: 0xffff9edb6f207000, reg_state: 2
+__dev_queue_xmit server: real_num_tx_queues: 0, cpu: 2, pid: 28024, tid: 28024, skb_addr: 0xffff9edb6f207000, reg_state: 2
+netdev_core_pick_tx server: addr: 0xffff9f0a46d4a000 real_num_tx_queues: 0, cpu: 2, pid: 28024, tid: 28024, skb_addr: 0xffff9edb6f207000, reg_state: 2
+broken device server: real_num_tx_queues: 0, cpu: 2, pid: 28024, tid: 28024
+ovs_dp_detach_port server: real_num_tx_queues: 0 cpu 9, pid: 9124, tid: 9124, reg_state: 2
+synchronize_rcu_expedited: cpu 9, pid: 33604, tid: 33604
+
+stuck message:
+
+watchdog: BUG: soft lockup - CPU#5 stuck for 26s! [curl:1929279]
+Modules linked in: veth pktgen bridge stp llc ip_set_hash_net nft_counter xt_set nft_compat nf_tables ip_set_hash_ip ip_set nfnetlink_cttimeout nfnetlink openvswitch nsh nf_conncount nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 tls binfmt_misc nls_iso8859_1 input_leds joydev serio_raw dm_multipath scsi_dh_rdac scsi_dh_emc scsi_dh_alua sch_fq_codel drm efi_pstore virtio_rng ip_tables x_tables autofs4 btrfs blake2b_generic zstd_compress raid10 raid456 async_raid6_recov async_memcpy async_pq async_xor async_tx xor raid6_pq libcrc32c raid1 raid0 multipath linear hid_generic usbhid hid crct10dif_pclmul crc32_pclmul ghash_clmulni_intel aesni_intel virtio_net ahci net_failover crypto_simd cryptd psmouse libahci virtio_blk failover
+CPU: 5 PID: 1929279 Comm: curl Not tainted 5.15.0-67-generic #74-Ubuntu
+Hardware name: OpenStack Foundation OpenStack Nova, BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:netdev_pick_tx+0xf1/0x320
+Code: 00 00 8d 48 ff 0f b7 c1 66 39 ca 0f 86 e9 01 00 00 45 0f b7 ff 41 39 c7 0f 87 5b 01 00 00 44 29 f8 41 39 c7 0f 87 4f 01 00 00 <eb> f2 0f 1f 44 00 00 49 8b 94 24 28 04 00 00 48 85 d2 0f 84 53 01
+RSP: 0018:ffffb78b40298820 EFLAGS: 00000246
+RAX: 0000000000000000 RBX: ffff9c8773adc2e0 RCX: 000000000000083f
+RDX: 0000000000000000 RSI: ffff9c8773adc2e0 RDI: ffff9c870a25e000
+RBP: ffffb78b40298858 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: ffff9c870a25e000
+R13: ffff9c870a25e000 R14: ffff9c87fe043480 R15: 0000000000000000
+FS:  00007f7b80008f00(0000) GS:ffff9c8e5f740000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f7b80f6a0b0 CR3: 0000000329d66000 CR4: 0000000000350ee0
+Call Trace:
+ <IRQ>
+ netdev_core_pick_tx+0xa4/0xb0
+ __dev_queue_xmit+0xf8/0x510
+ ? __bpf_prog_exit+0x1e/0x30
+ dev_queue_xmit+0x10/0x20
+ ovs_vport_send+0xad/0x170 [openvswitch]
+ do_output+0x59/0x180 [openvswitch]
+ do_execute_actions+0xa80/0xaa0 [openvswitch]
+ ? kfree+0x1/0x250
+ ? kfree+0x1/0x250
+ ? kprobe_perf_func+0x4f/0x2b0
+ ? flow_lookup.constprop.0+0x5c/0x110 [openvswitch]
+ ovs_execute_actions+0x4c/0x120 [openvswitch]
+ ovs_dp_process_packet+0xa1/0x200 [openvswitch]
+ ? ovs_ct_update_key.isra.0+0xa8/0x120 [openvswitch]
+ ? ovs_ct_fill_key+0x1d/0x30 [openvswitch]
+ ? ovs_flow_key_extract+0x2db/0x350 [openvswitch]
+ ovs_vport_receive+0x77/0xd0 [openvswitch]
+ ? __htab_map_lookup_elem+0x4e/0x60
+ ? bpf_prog_680e8aff8547aec1_kfree+0x3b/0x714
+ ? trace_call_bpf+0xc8/0x150
+ ? kfree+0x1/0x250
+ ? kfree+0x1/0x250
+ ? kprobe_perf_func+0x4f/0x2b0
+ ? kprobe_perf_func+0x4f/0x2b0
+ ? __mod_memcg_lruvec_state+0x63/0xe0
+ netdev_port_receive+0xc4/0x180 [openvswitch]
+ ? netdev_port_receive+0x180/0x180 [openvswitch]
+ netdev_frame_hook+0x1f/0x40 [openvswitch]
+ __netif_receive_skb_core.constprop.0+0x23d/0xf00
+ __netif_receive_skb_one_core+0x3f/0xa0
+ __netif_receive_skb+0x15/0x60
+ process_backlog+0x9e/0x170
+ __napi_poll+0x33/0x180
+ net_rx_action+0x126/0x280
+ ? ttwu_do_activate+0x72/0xf0
+ __do_softirq+0xd9/0x2e7
+ ? rcu_report_exp_cpu_mult+0x1b0/0x1b0
+ do_softirq+0x7d/0xb0
+ </IRQ>
+ <TASK>
+ __local_bh_enable_ip+0x54/0x60
+ ip_finish_output2+0x191/0x460
+ __ip_finish_output+0xb7/0x180
+ ip_finish_output+0x2e/0xc0
+ ip_output+0x78/0x100
+ ? __ip_finish_output+0x180/0x180
+ ip_local_out+0x5e/0x70
+ __ip_queue_xmit+0x184/0x440
+ ? tcp_syn_options+0x1f9/0x300
+ ip_queue_xmit+0x15/0x20
+ __tcp_transmit_skb+0x910/0x9c0
+ ? __mod_memcg_state+0x44/0xa0
+ tcp_connect+0x437/0x4e0
+ ? ktime_get_with_offset+0x60/0xf0
+ tcp_v4_connect+0x436/0x530
+ __inet_stream_connect+0xd4/0x3a0
+ ? kprobe_perf_func+0x4f/0x2b0
+ ? aa_sk_perm+0x43/0x1c0
+ inet_stream_connect+0x3b/0x60
+ __sys_connect_file+0x63/0x70
+ __sys_connect+0xa6/0xd0
+ ? setfl+0x108/0x170
+ ? do_fcntl+0xe8/0x5a0
+ __x64_sys_connect+0x18/0x20
+ do_syscall_64+0x5c/0xc0
+ ? __x64_sys_fcntl+0xa9/0xd0
+ ? exit_to_user_mode_prepare+0x37/0xb0
+ ? syscall_exit_to_user_mode+0x27/0x50
+ ? do_syscall_64+0x69/0xc0
+ ? __sys_setsockopt+0xea/0x1e0
+ ? exit_to_user_mode_prepare+0x37/0xb0
+ ? syscall_exit_to_user_mode+0x27/0x50
+ ? __x64_sys_setsockopt+0x1f/0x30
+ ? do_syscall_64+0x69/0xc0
+ ? irqentry_exit+0x1d/0x30
+ ? exc_page_fault+0x89/0x170
+ entry_SYSCALL_64_after_hwframe+0x61/0xcb
+RIP: 0033:0x7f7b8101c6a7
+Code: 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2a 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 18 89 54 24 0c 48 89 34 24 89
+RSP: 002b:00007ffffd6b2198 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f7b8101c6a7
+RDX: 0000000000000010 RSI: 00007ffffd6b2360 RDI: 0000000000000005
+RBP: 0000561f1370d560 R08: 00002795ad21d1ac R09: 0030312e302e302e
+R10: 00007ffffd73f080 R11: 0000000000000246 R12: 0000561f1370c410
+R13: 0000000000000000 R14: 0000000000000005 R15: 0000000000000000
+ </TASK>
+
+Fixes: 7f8a436eaa2c ("openvswitch: Add conntrack action")
+Co-developed-by: Luca Czesla <luca.czesla@mail.schwarz>
+Signed-off-by: Luca Czesla <luca.czesla@mail.schwarz>
+Signed-off-by: Felix Huettner <felix.huettner@mail.schwarz>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/ZC0pBXBAgh7c76CA@kernel-bug-kernel-bug
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf.h        |  7 +--
- drivers/net/ethernet/intel/iavf/iavf_main.c   | 40 +++++++----------
- .../net/ethernet/intel/iavf/iavf_virtchnl.c   | 45 ++++++++++---------
- 3 files changed, 45 insertions(+), 47 deletions(-)
+ net/core/dev.c            | 1 +
+ net/openvswitch/actions.c | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
-index fdbb5d9a554cf..93a998f169de7 100644
---- a/drivers/net/ethernet/intel/iavf/iavf.h
-+++ b/drivers/net/ethernet/intel/iavf/iavf.h
-@@ -58,8 +58,6 @@ enum iavf_vsi_state_t {
- struct iavf_vsi {
- 	struct iavf_adapter *back;
- 	struct net_device *netdev;
--	unsigned long active_cvlans[BITS_TO_LONGS(VLAN_N_VID)];
--	unsigned long active_svlans[BITS_TO_LONGS(VLAN_N_VID)];
- 	u16 seid;
- 	u16 id;
- 	DECLARE_BITMAP(state, __IAVF_VSI_STATE_SIZE__);
-@@ -162,7 +160,9 @@ enum iavf_vlan_state_t {
- 	IAVF_VLAN_ADD,		/* filter needs to be added */
- 	IAVF_VLAN_IS_NEW,	/* filter is new, wait for PF answer */
- 	IAVF_VLAN_ACTIVE,	/* filter is accepted by PF */
--	IAVF_VLAN_REMOVE,	/* filter needs to be removed */
-+	IAVF_VLAN_DISABLE,	/* filter needs to be deleted by PF, then marked INACTIVE */
-+	IAVF_VLAN_INACTIVE,	/* filter is inactive, we are in IFF_DOWN */
-+	IAVF_VLAN_REMOVE,	/* filter needs to be removed from list */
- };
- 
- struct iavf_vlan_filter {
-@@ -260,6 +260,7 @@ struct iavf_adapter {
- 	wait_queue_head_t vc_waitqueue;
- 	struct iavf_q_vector *q_vectors;
- 	struct list_head vlan_filter_list;
-+	int num_vlan_filters;
- 	struct list_head mac_filter_list;
- 	struct mutex crit_lock;
- 	struct mutex client_lock;
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 8e4d0b0644e4a..34711a88dbaa0 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -792,6 +792,7 @@ iavf_vlan_filter *iavf_add_vlan(struct iavf_adapter *adapter,
- 
- 		list_add_tail(&f->list, &adapter->vlan_filter_list);
- 		f->state = IAVF_VLAN_ADD;
-+		adapter->num_vlan_filters++;
- 		adapter->aq_required |= IAVF_FLAG_AQ_ADD_VLAN_FILTER;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 24eae99dfe05a..a25b8741b1599 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3211,6 +3211,7 @@ static u16 skb_tx_hash(const struct net_device *dev,
  	}
  
-@@ -828,14 +829,18 @@ static void iavf_del_vlan(struct iavf_adapter *adapter, struct iavf_vlan vlan)
-  **/
- static void iavf_restore_filters(struct iavf_adapter *adapter)
+ 	if (skb_rx_queue_recorded(skb)) {
++		DEBUG_NET_WARN_ON_ONCE(qcount == 0);
+ 		hash = skb_get_rx_queue(skb);
+ 		if (hash >= qoffset)
+ 			hash -= qoffset;
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index ca3ebfdb30231..a8cf9a88758ef 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -913,7 +913,7 @@ static void do_output(struct datapath *dp, struct sk_buff *skb, int out_port,
  {
--	u16 vid;
-+	struct iavf_vlan_filter *f;
+ 	struct vport *vport = ovs_vport_rcu(dp, out_port);
  
- 	/* re-add all VLAN filters */
--	for_each_set_bit(vid, adapter->vsi.active_cvlans, VLAN_N_VID)
--		iavf_add_vlan(adapter, IAVF_VLAN(vid, ETH_P_8021Q));
-+	spin_lock_bh(&adapter->mac_vlan_list_lock);
+-	if (likely(vport)) {
++	if (likely(vport && netif_carrier_ok(vport->dev))) {
+ 		u16 mru = OVS_CB(skb)->mru;
+ 		u32 cutlen = OVS_CB(skb)->cutlen;
  
--	for_each_set_bit(vid, adapter->vsi.active_svlans, VLAN_N_VID)
--		iavf_add_vlan(adapter, IAVF_VLAN(vid, ETH_P_8021AD));
-+	list_for_each_entry(f, &adapter->vlan_filter_list, list) {
-+		if (f->state == IAVF_VLAN_INACTIVE)
-+			f->state = IAVF_VLAN_ADD;
-+	}
-+
-+	spin_unlock_bh(&adapter->mac_vlan_list_lock);
-+	adapter->aq_required |= IAVF_FLAG_AQ_ADD_VLAN_FILTER;
- }
- 
- /**
-@@ -844,8 +849,7 @@ static void iavf_restore_filters(struct iavf_adapter *adapter)
-  */
- u16 iavf_get_num_vlans_added(struct iavf_adapter *adapter)
- {
--	return bitmap_weight(adapter->vsi.active_cvlans, VLAN_N_VID) +
--		bitmap_weight(adapter->vsi.active_svlans, VLAN_N_VID);
-+	return adapter->num_vlan_filters;
- }
- 
- /**
-@@ -928,11 +932,6 @@ static int iavf_vlan_rx_kill_vid(struct net_device *netdev,
- 		return 0;
- 
- 	iavf_del_vlan(adapter, IAVF_VLAN(vid, be16_to_cpu(proto)));
--	if (proto == cpu_to_be16(ETH_P_8021Q))
--		clear_bit(vid, adapter->vsi.active_cvlans);
--	else
--		clear_bit(vid, adapter->vsi.active_svlans);
--
- 	return 0;
- }
- 
-@@ -1293,16 +1292,11 @@ static void iavf_clear_mac_vlan_filters(struct iavf_adapter *adapter)
- 		}
- 	}
- 
--	/* remove all VLAN filters */
-+	/* disable all VLAN filters */
- 	list_for_each_entry_safe(vlf, vlftmp, &adapter->vlan_filter_list,
--				 list) {
--		if (vlf->state == IAVF_VLAN_ADD) {
--			list_del(&vlf->list);
--			kfree(vlf);
--		} else {
--			vlf->state = IAVF_VLAN_REMOVE;
--		}
--	}
-+				 list)
-+		vlf->state = IAVF_VLAN_DISABLE;
-+
- 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
- }
- 
-@@ -2905,6 +2899,7 @@ static void iavf_disable_vf(struct iavf_adapter *adapter)
- 		list_del(&fv->list);
- 		kfree(fv);
- 	}
-+	adapter->num_vlan_filters = 0;
- 
- 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
- 
-@@ -3122,9 +3117,6 @@ static void iavf_reset_task(struct work_struct *work)
- 	adapter->aq_required |= IAVF_FLAG_AQ_ADD_CLOUD_FILTER;
- 	iavf_misc_irq_enable(adapter);
- 
--	bitmap_clear(adapter->vsi.active_cvlans, 0, VLAN_N_VID);
--	bitmap_clear(adapter->vsi.active_svlans, 0, VLAN_N_VID);
--
- 	mod_delayed_work(adapter->wq, &adapter->watchdog_task, 2);
- 
- 	/* We were running when the reset started, so we need to restore some
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-index 68d6e7c1e52b1..00dccdd290dce 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-@@ -643,15 +643,9 @@ static void iavf_vlan_add_reject(struct iavf_adapter *adapter)
- 	spin_lock_bh(&adapter->mac_vlan_list_lock);
- 	list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
- 		if (f->state == IAVF_VLAN_IS_NEW) {
--			if (f->vlan.tpid == ETH_P_8021Q)
--				clear_bit(f->vlan.vid,
--					  adapter->vsi.active_cvlans);
--			else
--				clear_bit(f->vlan.vid,
--					  adapter->vsi.active_svlans);
--
- 			list_del(&f->list);
- 			kfree(f);
-+			adapter->num_vlan_filters--;
- 		}
- 	}
- 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
-@@ -824,7 +818,12 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
- 		    !VLAN_FILTERING_ALLOWED(adapter)) {
- 			list_del(&f->list);
- 			kfree(f);
--		} else if (f->state == IAVF_VLAN_REMOVE) {
-+			adapter->num_vlan_filters--;
-+		} else if (f->state == IAVF_VLAN_DISABLE &&
-+		    !VLAN_FILTERING_ALLOWED(adapter)) {
-+			f->state = IAVF_VLAN_INACTIVE;
-+		} else if (f->state == IAVF_VLAN_REMOVE ||
-+			   f->state == IAVF_VLAN_DISABLE) {
- 			count++;
- 		}
- 	}
-@@ -856,11 +855,18 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
- 		vvfl->vsi_id = adapter->vsi_res->vsi_id;
- 		vvfl->num_elements = count;
- 		list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
--			if (f->state == IAVF_VLAN_REMOVE) {
-+			if (f->state == IAVF_VLAN_DISABLE) {
- 				vvfl->vlan_id[i] = f->vlan.vid;
-+				f->state = IAVF_VLAN_INACTIVE;
- 				i++;
-+				if (i == count)
-+					break;
-+			} else if (f->state == IAVF_VLAN_REMOVE) {
-+				vvfl->vlan_id[i] = f->vlan.vid;
- 				list_del(&f->list);
- 				kfree(f);
-+				adapter->num_vlan_filters--;
-+				i++;
- 				if (i == count)
- 					break;
- 			}
-@@ -900,7 +906,8 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
- 		vvfl_v2->vport_id = adapter->vsi_res->vsi_id;
- 		vvfl_v2->num_elements = count;
- 		list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
--			if (f->state == IAVF_VLAN_REMOVE) {
-+			if (f->state == IAVF_VLAN_DISABLE ||
-+			    f->state == IAVF_VLAN_REMOVE) {
- 				struct virtchnl_vlan_supported_caps *filtering_support =
- 					&adapter->vlan_v2_caps.filtering.filtering_support;
- 				struct virtchnl_vlan *vlan;
-@@ -914,8 +921,13 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
- 				vlan->tci = f->vlan.vid;
- 				vlan->tpid = f->vlan.tpid;
- 
--				list_del(&f->list);
--				kfree(f);
-+				if (f->state == IAVF_VLAN_DISABLE) {
-+					f->state = IAVF_VLAN_INACTIVE;
-+				} else {
-+					list_del(&f->list);
-+					kfree(f);
-+					adapter->num_vlan_filters--;
-+				}
- 				i++;
- 				if (i == count)
- 					break;
-@@ -2435,15 +2447,8 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 
- 		spin_lock_bh(&adapter->mac_vlan_list_lock);
- 		list_for_each_entry(f, &adapter->vlan_filter_list, list) {
--			if (f->state == IAVF_VLAN_IS_NEW) {
-+			if (f->state == IAVF_VLAN_IS_NEW)
- 				f->state = IAVF_VLAN_ACTIVE;
--				if (f->vlan.tpid == ETH_P_8021Q)
--					set_bit(f->vlan.vid,
--						adapter->vsi.active_cvlans);
--				else
--					set_bit(f->vlan.vid,
--						adapter->vsi.active_svlans);
--			}
- 		}
- 		spin_unlock_bh(&adapter->mac_vlan_list_lock);
- 		}
 -- 
 2.39.2
 
