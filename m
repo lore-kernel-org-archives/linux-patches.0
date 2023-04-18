@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DEB2579
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E07BC433D2;
-	Tue, 18 Apr 2023 12:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5052572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223F1C433D2;
+	Tue, 18 Apr 2023 12:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821748;
-	bh=AeAHrRlUGznp4R+iBgS5Igm05960uEjb2T0RJ8IGYUE=;
+	s=korg; t=1681821751;
+	bh=QIjYVfhD4/s7Kmz/eMUMK44QfMHT9KQvNLUIggOotl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1lrY4dTPdYA1+5FlqNGSmvVYpPo3BzKq+ELDk0rwiKSRaedHOdb9m30ql25/K2puX
-	 Ex4KcTGWxu8uu8pOnMWuwjq6xg1DjHSQR7Dc18Sipiq5DO/qZSs9xBaOstvIM2L7rG
-	 K4ks6PGUD8L61Nar7G+ab8pXAJb8PLFAN4i+5xm4=
+	b=OggXmGaGWC4JDjenHtj6KpMw94/X96gJgPzbeR2bCACMn44A3R/fRZA9SFwZrY6Zr
+	 ZAC5btIJbnGUyeQgVwhMmH5PsPDwpk1bT3jlZ8IXgCbqxSG49BWrJ9OpLZC+4odiIl
+	 4c/BPNC5bZSr59PmgoILuDz26SsDksxBEMmiTm+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ville Syrjala <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 027/134] drm/i915/dsi: fix DSS CTL register offsets for TGL+
-Date: Tue, 18 Apr 2023 14:21:23 +0200
-Message-Id: <20230418120313.952021160@linuxfoundation.org>
+	Chunyan Zhang <chunyan.zhang@unisoc.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 028/134] clk: sprd: set max_register according to mapping range
+Date: Tue, 18 Apr 2023 14:21:24 +0200
+Message-Id: <20230418120313.981638098@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -34,73 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Chunyan Zhang <chunyan.zhang@unisoc.com>
 
-commit 6b8446859c971a5783a2cdc90adf32e64de3bd23 upstream.
+[ Upstream commit 47d43086531f10539470a63e8ad92803e686a3dd ]
 
-On TGL+ the DSS control registers are at different offsets, and there's
-one per pipe. Fix the offsets to fix dual link DSI for TGL+.
+In sprd clock driver, regmap_config.max_register was set to a fixed value
+which is likely larger than the address range configured in device tree,
+when reading registers through debugfs it would cause access violation.
 
-There would be helpers for this in the DSC code, but just do the quick
-fix now for DSI. Long term, we should probably move all the DSS handling
-into intel_vdsc.c, so exporting the helpers seems counter-productive.
-
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8232
-Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230301151409.1581574-1-jani.nikula@intel.com
-(cherry picked from commit 1a62dd9895dca78bee28bba3a36f08836fdd143d)
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d41f59fd92f2 ("clk: sprd: Add common infrastructure")
+Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
+Link: https://lore.kernel.org/r/20230316023624.758204-1-chunyan.zhang@unisoc.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/icl_dsi.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/clk/sprd/common.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/icl_dsi.c
-+++ b/drivers/gpu/drm/i915/display/icl_dsi.c
-@@ -299,9 +299,21 @@ static void configure_dual_link_mode(str
- {
- 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
- 	struct intel_dsi *intel_dsi = enc_to_intel_dsi(encoder);
-+	i915_reg_t dss_ctl1_reg, dss_ctl2_reg;
- 	u32 dss_ctl1;
+diff --git a/drivers/clk/sprd/common.c b/drivers/clk/sprd/common.c
+index ce81e4087a8fc..2bfbab8db94bf 100644
+--- a/drivers/clk/sprd/common.c
++++ b/drivers/clk/sprd/common.c
+@@ -17,7 +17,6 @@ static const struct regmap_config sprdclk_regmap_config = {
+ 	.reg_bits	= 32,
+ 	.reg_stride	= 4,
+ 	.val_bits	= 32,
+-	.max_register	= 0xffff,
+ 	.fast_io	= true,
+ };
  
--	dss_ctl1 = intel_de_read(dev_priv, DSS_CTL1);
-+	/* FIXME: Move all DSS handling to intel_vdsc.c */
-+	if (DISPLAY_VER(dev_priv) >= 12) {
-+		struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
-+
-+		dss_ctl1_reg = ICL_PIPE_DSS_CTL1(crtc->pipe);
-+		dss_ctl2_reg = ICL_PIPE_DSS_CTL2(crtc->pipe);
-+	} else {
-+		dss_ctl1_reg = DSS_CTL1;
-+		dss_ctl2_reg = DSS_CTL2;
-+	}
-+
-+	dss_ctl1 = intel_de_read(dev_priv, dss_ctl1_reg);
- 	dss_ctl1 |= SPLITTER_ENABLE;
- 	dss_ctl1 &= ~OVERLAP_PIXELS_MASK;
- 	dss_ctl1 |= OVERLAP_PIXELS(intel_dsi->pixel_overlap);
-@@ -322,16 +334,16 @@ static void configure_dual_link_mode(str
+@@ -43,6 +42,8 @@ int sprd_clk_regmap_init(struct platform_device *pdev,
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *node = dev->of_node, *np;
+ 	struct regmap *regmap;
++	struct resource *res;
++	struct regmap_config reg_config = sprdclk_regmap_config;
  
- 		dss_ctl1 &= ~LEFT_DL_BUF_TARGET_DEPTH_MASK;
- 		dss_ctl1 |= LEFT_DL_BUF_TARGET_DEPTH(dl_buffer_depth);
--		dss_ctl2 = intel_de_read(dev_priv, DSS_CTL2);
-+		dss_ctl2 = intel_de_read(dev_priv, dss_ctl2_reg);
- 		dss_ctl2 &= ~RIGHT_DL_BUF_TARGET_DEPTH_MASK;
- 		dss_ctl2 |= RIGHT_DL_BUF_TARGET_DEPTH(dl_buffer_depth);
--		intel_de_write(dev_priv, DSS_CTL2, dss_ctl2);
-+		intel_de_write(dev_priv, dss_ctl2_reg, dss_ctl2);
+ 	if (of_find_property(node, "sprd,syscon", NULL)) {
+ 		regmap = syscon_regmap_lookup_by_phandle(node, "sprd,syscon");
+@@ -59,12 +60,14 @@ int sprd_clk_regmap_init(struct platform_device *pdev,
+ 			return PTR_ERR(regmap);
+ 		}
  	} else {
- 		/* Interleave */
- 		dss_ctl1 |= DUAL_LINK_MODE_INTERLEAVE;
- 	}
+-		base = devm_platform_ioremap_resource(pdev, 0);
++		base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 		if (IS_ERR(base))
+ 			return PTR_ERR(base);
  
--	intel_de_write(dev_priv, DSS_CTL1, dss_ctl1);
-+	intel_de_write(dev_priv, dss_ctl1_reg, dss_ctl1);
- }
- 
- /* aka DSI 8X clock */
++		reg_config.max_register = resource_size(res) - reg_config.reg_stride;
++
+ 		regmap = devm_regmap_init_mmio(&pdev->dev, base,
+-					       &sprdclk_regmap_config);
++					       &reg_config);
+ 		if (IS_ERR(regmap)) {
+ 			pr_err("failed to init regmap\n");
+ 			return PTR_ERR(regmap);
+-- 
+2.39.2
+
 
 
