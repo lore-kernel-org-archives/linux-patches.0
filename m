@@ -1,103 +1,110 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22031AFC3
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 17:24:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1681838659;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Jn5RPEGr1DTajVAXu1piR4pVm7hgdJHjJ9pFrb3qnus=;
-	b=YEYJA6k+322di1W+LkWzLobgm8fjQYxjjjtnnXF8SQeOy5Cbwdi3J/6quDNmtPTneCI1qV
-	edPV3B5ZLmEmhB8pU7cdOQF4OygF+lnX2/k5B8QQ4UvR4D6fUgS0UuUQplN+NoCMpxofkZ
-	3Q8DYVl2H9CuOYeH7VpL333VI6yje88=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-25-vrkqTGiTMBSQePpWxYnGUw-1; Tue, 18 Apr 2023 13:24:14 -0400
-X-MC-Unique: vrkqTGiTMBSQePpWxYnGUw-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com [10.11.54.9])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8283C85C6E0;
-	Tue, 18 Apr 2023 17:24:13 +0000 (UTC)
-Received: from [10.22.34.98] (unknown [10.22.34.98])
-	by smtp.corp.redhat.com (Postfix) with ESMTP id 8C643492B04;
-	Tue, 18 Apr 2023 17:24:12 +0000 (UTC)
-Message-ID: <76d8bf7a-20ec-481e-2c21-e456a29e731e@redhat.com>
-Date: Tue, 18 Apr 2023 13:24:12 -0400
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F62AFC3
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 17:27:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681838855; x=1713374855;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=FXgDRy7QEJxBTFnmKuyXp+5XXVFQ7tDgBlizVK+nwUo=;
+  b=j9UqY3v7p6N2pQfWwuI+ZeOQdtUTTVmnGCzuNl8PYuO7BTquzmRjCzEZ
+   ievHX9nT4dsES8T/Oy6VqlL+WnqUTTc2KhcigTudECvkn+AKXV5t9wds4
+   pXQFa4o/zvCWyBMVHxdKPvakKzifR6AvreB7d3e6lel78EPoPU9aA4ipj
+   cYG6aQ5/X1ltgbSNWNjHZNSh5bMeu+4ntOyiiyKYlqu3ypvVSbG7uua1M
+   RHEav/e0KOY0OeOAydkvxjvOz+X/aFr3jpam3EBM1rLg6TkQASbEJjrxx
+   /Bb0RMTTEGX4cuG2WQNaNYPCcKRhKu0I9H6xZs3vcCrqEkS/F8mc6gd6s
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10684"; a="347993630"
+X-IronPort-AV: E=Sophos;i="5.99,207,1677571200"; 
+   d="scan'208";a="347993630"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Apr 2023 10:27:34 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10684"; a="684665437"
+X-IronPort-AV: E=Sophos;i="5.99,207,1677571200"; 
+   d="scan'208";a="684665437"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Apr 2023 10:27:34 -0700
+Date: Tue, 18 Apr 2023 10:27:33 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Yazen Ghannam <yazen.ghannam@amd.com>
+Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, linux-edac@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] x86/mce: Check that memory address is usable for recovery
+Message-ID: <ZD7TBZex278dSYmc@agluck-desk3.sc.intel.com>
+References: <20230322005131.174499-1-tony.luck@intel.com>
+ <a5d0c575-ba4f-1120-c7ee-bc37e8d40402@amd.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 5.10 000/124] 5.10.178-rc1 review
-Content-Language: en-US
-To: Naresh Kamboju <naresh.kamboju@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, Tejun Heo <tj@kernel.org>,
- =?UTF-8?Q?Michal_Koutn=c3=bd?= <mkoutny@suse.com>
-References: <20230418120309.539243408@linuxfoundation.org>
- <CA+G9fYsA+CzsxVYgQEN3c2pOV6F+1EOqY1vQrhj8yt1t-EYs7g@mail.gmail.com>
-From: Waiman Long <longman@redhat.com>
-In-Reply-To: <CA+G9fYsA+CzsxVYgQEN3c2pOV6F+1EOqY1vQrhj8yt1t-EYs7g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a5d0c575-ba4f-1120-c7ee-bc37e8d40402@amd.com>
 
+On Tue, Apr 18, 2023 at 12:41:17PM -0400, Yazen Ghannam wrote:
+> On 3/21/23 20:51, Tony Luck wrote:
+> > uc_decode_notifier() includes a check that "struct mce"
+> > contains a valid address for recovery. But the machine
+> > check recovery code does not include a similar check.
+> > 
+> > Use mce_usable_address() to check that there is a valid
+> > address.
+> > 
+> > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > ---
+> >  arch/x86/kernel/cpu/mce/core.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+> > index 2eec60f50057..fa28b3f7d945 100644
+> > --- a/arch/x86/kernel/cpu/mce/core.c
+> > +++ b/arch/x86/kernel/cpu/mce/core.c
+> > @@ -1533,7 +1533,7 @@ noinstr void do_machine_check(struct pt_regs *regs)
+> >  		/* If this triggers there is no way to recover. Die hard. */
+> >  		BUG_ON(!on_thread_stack() || !user_mode(regs));
+> >  
+> > -		if (kill_current_task)
+> > +		if (kill_current_task || !mce_usable_address(&m))
+> >  			queue_task_work(&m, msg, kill_me_now);
+> >  		else
+> >  			queue_task_work(&m, msg, kill_me_maybe);
+> 
+> I think it should be like this:
+> 
+> 	if (mce_usable_address(&m))
+> 		queue_task_work(&m, msg, kill_me_maybe);
+> 	else
+> 		queue_task_work(&m, msg, kill_me_now);
+> 
+> A usable address should always go through memory_failure() so that the page is
+> marked as poison. If !RIPV, then memory_failure() will get the MF_MUST_KILL
+> flag and try to kill all processes after the page is poisoned.
+> 
+> I had a similar patch a while back:
+> https://lore.kernel.org/linux-edac/20210504174712.27675-3-Yazen.Ghannam@amd.com/
+> 
+> We could also get rid of kill_me_now() like you had suggested.
 
-On 4/18/23 11:08, Naresh Kamboju wrote:
-> On Tue, 18 Apr 2023 at 18:03, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
->> This is the start of the stable review cycle for the 5.10.178 release.
->> There are 124 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->>          https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.178-rc1.gz
->> or in the git tree and branch at:
->>          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
->> and the diffstat can be found below.
->>
->> thanks,
->>
->> greg k-h
-> Following build errors noticed on 5.15 and 5.10.,
->
->
->> Waiman Long <longman@redhat.com>
->>      cgroup/cpuset: Change references of cpuset_mutex to cpuset_rwsem
-> kernel/cgroup/cpuset.c: In function 'cpuset_can_fork':
-> kernel/cgroup/cpuset.c:2941:30: error: 'cgroup_mutex' undeclared
-> (first use in this function); did you mean 'cgroup_put'?
->   2941 |         lockdep_assert_held(&cgroup_mutex);
->        |                              ^~~~~~~~~~~~
->
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->
-> Suspected commit,
-> cgroup/cpuset: Add cpuset_can_fork() and cpuset_cancel_fork() methods
-> commit eee87853794187f6adbe19533ed79c8b44b36a91 upstream.
+Can we also get rid of "kill_current_task"? It is only set when there is
+no valid return address:
 
-Oh, cgroup_mutex needs the recent commit 354ed59744295 ("mm: multi-gen 
-LRU: kill switch") to make it available in include/linux/cgroup.h. I did 
-my testing with a debug Kconfig and so didn't catch that. This line can 
-be safely removed.
+        if (!(m.mcgstatus & MCG_STATUS_RIPV))
+                kill_current_task = 1;
 
-Regards,
-Longman
+kill_me_maybe() does an equivalent check:
 
+	if (!p->mce_ripv)
+                flags |= MF_MUST_KILL;
+
+Which only leaves this check to resolve in some way:
+
+        if (worst != MCE_AR_SEVERITY && !kill_current_task)
+                goto out;
+
+-Tony
