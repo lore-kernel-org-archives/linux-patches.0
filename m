@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC1A2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A2BC433EF;
-	Tue, 18 Apr 2023 12:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B812572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:46:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE068C433D2;
+	Tue, 18 Apr 2023 12:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821977;
-	bh=5aP2MZitRMu7m5JTImsGIFU6mtqfgvzLQMMYsFJgxqo=;
+	s=korg; t=1681821980;
+	bh=hVpfRZVb468saIdTkx3iUdwJkjPD/tAH5+SegKOrwZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMz/KXSgcA0cEA/mJsbmxKDvFqHIDL9D/Y2svRAQVQTElCWe3/N1c/66Yu9dGXmNl
-	 D2s0oAMtz+XbnARTEjs0CWX2HtbRN1kxom1FBz9uE48VG5vzECaz0hnjEo6RW4i452
-	 eb6KIPNjwxOLJFZ00u3u25PVgQKhdmTzivVYKCl8=
+	b=f0oL9JdooP5x0tNKZKEpWVGlwCM+FJAwkxk1vH1559zpmaJYrg3HorsoexG9ANj3+
+	 wcUPoVIFKHwhKYc4d6JDC6WYoi3Kuwmtn5dSG38VV11tebeHPcWnbdfm0lVmnaMYZv
+	 Ow+OFHnH4YADkpd/jkouU0a2ZV4GI09o9jcCislg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Zhang <ZiyangZhang@linux.alibaba.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/134] block: ublk_drv: mark device as LIVE before adding disk
-Date: Tue, 18 Apr 2023 14:22:16 +0200
-Message-Id: <20230418120315.851057960@linuxfoundation.org>
+Subject: [PATCH 6.1 081/134] ACPI: video: Add backlight=native DMI quirk for Acer Aspire 3830TG
+Date: Tue, 18 Apr 2023 14:22:17 +0200
+Message-Id: <20230418120315.897866840@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,50 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 4985e7b2c002eb4c5c794a1d3acd91b82c89a0fd ]
+[ Upstream commit 5e7a3bf65db57461d0f47955248fcadf37321a74 ]
 
-IO can be started before add_disk() returns, such as reading parititon table,
-then the monitor work should work for making forward progress.
+The Acer Aspire 3830TG predates Windows 8, so it defaults to using
+acpi_video# for backlight control, but this is non functional on
+this model.
 
-So mark device as LIVE before adding disk, meantime change to
-DEAD if add_disk() fails.
+Add a DMI quirk to use the native backlight interface which does
+work properly.
 
-Fixed: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Reviewed-by: Ziyang Zhang <ZiyangZhang@linux.alibaba.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230318141231.55562-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/video_detect.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 2ed994a313a91..c0cbc5f3eb266 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1571,17 +1571,18 @@ static int ublk_ctrl_start_dev(struct io_uring_cmd *cmd)
- 		set_bit(GD_SUPPRESS_PART_SCAN, &disk->state);
- 
- 	get_device(&ub->cdev_dev);
-+	ub->dev_info.state = UBLK_S_DEV_LIVE;
- 	ret = add_disk(disk);
- 	if (ret) {
- 		/*
- 		 * Has to drop the reference since ->free_disk won't be
- 		 * called in case of add_disk failure.
- 		 */
-+		ub->dev_info.state = UBLK_S_DEV_DEAD;
- 		ublk_put_device(ub);
- 		goto out_put_disk;
- 	}
- 	set_bit(UB_STATE_USED, &ub->state);
--	ub->dev_info.state = UBLK_S_DEV_LIVE;
- out_put_disk:
- 	if (ret)
- 		put_disk(disk);
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 42b5af5490a11..f0f41959faea6 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -530,6 +530,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Precision 7510"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_native,
++	 /* Acer Aspire 3830TG */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "Aspire 3830TG"),
++		},
++	},
+ 	{
+ 	 .callback = video_detect_force_native,
+ 	 /* Acer Aspire 4810T */
 -- 
 2.39.2
 
