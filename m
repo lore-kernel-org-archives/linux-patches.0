@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382DF2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D88C433EF;
-	Tue, 18 Apr 2023 12:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC97C2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:49:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532F8C4339B;
+	Tue, 18 Apr 2023 12:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822167;
-	bh=VGcpbzsup4Uq73RkhvEY94c7opY/O2aQ5Gq4NufBE1A=;
+	s=korg; t=1681822169;
+	bh=Bqo7UGfd2wKcituUJQ0KjPmUD2UvxAEVtyw5L1GElVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AByG7560/ngS20c7XZEBQ6asixhGW2pmecXOR2AhpP2OIkm8yZP7dZWOdqv/cb/Oq
-	 YMN/LWRMr9NJszkYflt+/fgEqXacbV4q7CZJmVoYmL/3ozOLzFPBu39xAFnKMPugXX
-	 grG+QZHnfB95HPKFE0J5UV4RLs7/mnqtTFPQNcOY=
+	b=nfum9jNdT5rJAk5iemLOfR1+xNronD95ajZT9IpMP/i9VhWbNQdVPwfqa/VKbrUBm
+	 2EFUC8++rUxLJVeeSa1dRe9MR/bhn/9ShjbZB+h5GxeMYXpxiAffTlRa4DeAdOvXV2
+	 LoydyvPkojvYyigTRJX1sutvOH/o9MtQ2hFzoqGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Fuad Tabba <tabba@google.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 048/139] bpf, arm64: Fixed a BTI error on returning to patched function
-Date: Tue, 18 Apr 2023 14:21:53 +0200
-Message-Id: <20230418120315.491278558@linuxfoundation.org>
+Subject: [PATCH 6.2 049/139] KVM: arm64: Advertise ID_AA64PFR0_EL1.CSV2/3 to protected VMs
+Date: Tue, 18 Apr 2023 14:21:54 +0200
+Message-Id: <20230418120315.542014389@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,117 +35,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Fuad Tabba <tabba@google.com>
 
-[ Upstream commit 738a96c4a8c36950803fdd27e7c30aca92dccefd ]
+[ Upstream commit e81625218bf7986ba1351a98c43d346b15601d26 ]
 
-When BPF_TRAMP_F_CALL_ORIG is set, BPF trampoline uses BLR to jump
-back to the instruction next to call site to call the patched function.
-For BTI-enabled kernel, the instruction next to call site is usually
-PACIASP, in this case, it's safe to jump back with BLR. But when
-the call site is not followed by a PACIASP or bti, a BTI exception
-is triggered.
+The existing pKVM code attempts to advertise CSV2/3 using values
+initialized to 0, but never set. To advertise CSV2/3 to protected
+guests, pass the CSV2/3 values to hyp when initializing hyp's
+view of guests' ID_AA64PFR0_EL1.
 
-Here is a fault log:
+Similar to non-protected KVM, these are system-wide, rather than
+per cpu, for simplicity.
 
- Unhandled 64-bit el1h sync exception on CPU0, ESR 0x0000000034000002 -- BTI
- CPU: 0 PID: 263 Comm: test_progs Tainted: GF
- Hardware name: linux,dummy-virt (DT)
- pstate: 40400805 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=-c)
- pc : bpf_fentry_test1+0xc/0x30
- lr : bpf_trampoline_6442573892_0+0x48/0x1000
- sp : ffff80000c0c3a50
- x29: ffff80000c0c3a90 x28: ffff0000c2e6c080 x27: 0000000000000000
- x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000050
- x23: 0000000000000000 x22: 0000ffffcfd2a7f0 x21: 000000000000000a
- x20: 0000ffffcfd2a7f0 x19: 0000000000000000 x18: 0000000000000000
- x17: 0000000000000000 x16: 0000000000000000 x15: 0000ffffcfd2a7f0
- x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
- x11: 0000000000000000 x10: ffff80000914f5e4 x9 : ffff8000082a1528
- x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0101010101010101
- x5 : 0000000000000000 x4 : 00000000fffffff2 x3 : 0000000000000001
- x2 : ffff8001f4b82000 x1 : 0000000000000000 x0 : 0000000000000001
- Kernel panic - not syncing: Unhandled exception
- CPU: 0 PID: 263 Comm: test_progs Tainted: GF
- Hardware name: linux,dummy-virt (DT)
- Call trace:
-  dump_backtrace+0xec/0x144
-  show_stack+0x24/0x7c
-  dump_stack_lvl+0x8c/0xb8
-  dump_stack+0x18/0x34
-  panic+0x1cc/0x3ec
-  __el0_error_handler_common+0x0/0x130
-  el1h_64_sync_handler+0x60/0xd0
-  el1h_64_sync+0x78/0x7c
-  bpf_fentry_test1+0xc/0x30
-  bpf_fentry_test1+0xc/0x30
-  bpf_prog_test_run_tracing+0xdc/0x2a0
-  __sys_bpf+0x438/0x22a0
-  __arm64_sys_bpf+0x30/0x54
-  invoke_syscall+0x78/0x110
-  el0_svc_common.constprop.0+0x6c/0x1d0
-  do_el0_svc+0x38/0xe0
-  el0_svc+0x30/0xd0
-  el0t_64_sync_handler+0x1ac/0x1b0
-  el0t_64_sync+0x1a0/0x1a4
- Kernel Offset: disabled
- CPU features: 0x0000,00034c24,f994fdab
- Memory Limit: none
-
-And the instruction next to call site of bpf_fentry_test1 is ADD,
-not PACIASP:
-
-<bpf_fentry_test1>:
-	bti     c
-	nop
-	nop
-	add     w0, w0, #0x1
-	paciasp
-
-For BPF prog, JIT always puts a PACIASP after call site for BTI-enabled
-kernel, so there is no problem. To fix it, replace BLR with RET to bypass
-the branch target check.
-
-Fixes: efc9909fdce0 ("bpf, arm64: Add bpf trampoline for arm64")
-Reported-by: Florent Revest <revest@chromium.org>
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Florent Revest <revest@chromium.org>
-Acked-by: Florent Revest <revest@chromium.org>
-Link: https://lore.kernel.org/bpf/20230401234144.3719742-1-xukuohai@huaweicloud.com
+Fixes: 6c30bfb18d0b ("KVM: arm64: Add handlers for protected VM System Registers")
+Signed-off-by: Fuad Tabba <tabba@google.com>
+Link: https://lore.kernel.org/r/20230404152321.413064-1-tabba@google.com
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit.h      | 4 ++++
- arch/arm64/net/bpf_jit_comp.c | 3 ++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/arm.c                          | 26 ++++++++++++++++++-
+ .../arm64/kvm/hyp/include/nvhe/fixed_config.h |  5 +++-
+ arch/arm64/kvm/hyp/nvhe/sys_regs.c            |  7 -----
+ 3 files changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit.h b/arch/arm64/net/bpf_jit.h
-index a6acb94ea3d63..c2edadb8ec6a3 100644
---- a/arch/arm64/net/bpf_jit.h
-+++ b/arch/arm64/net/bpf_jit.h
-@@ -281,4 +281,8 @@
- /* DMB */
- #define A64_DMB_ISH aarch64_insn_gen_dmb(AARCH64_INSN_MB_ISH)
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 9c5573bc46145..e57f8ae093875 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1877,9 +1877,33 @@ static int do_pkvm_init(u32 hyp_va_bits)
+ 	return ret;
+ }
  
-+/* ADR */
-+#define A64_ADR(Rd, offset) \
-+	aarch64_insn_gen_adr(0, offset, Rd, AARCH64_INSN_ADR_TYPE_ADR)
++static u64 get_hyp_id_aa64pfr0_el1(void)
++{
++	/*
++	 * Track whether the system isn't affected by spectre/meltdown in the
++	 * hypervisor's view of id_aa64pfr0_el1, used for protected VMs.
++	 * Although this is per-CPU, we make it global for simplicity, e.g., not
++	 * to have to worry about vcpu migration.
++	 *
++	 * Unlike for non-protected VMs, userspace cannot override this for
++	 * protected VMs.
++	 */
++	u64 val = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
 +
- #endif /* _BPF_JIT_H */
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 62f805f427b79..b26da8efa616e 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -1900,7 +1900,8 @@ static int prepare_trampoline(struct jit_ctx *ctx, struct bpf_tramp_image *im,
- 		restore_args(ctx, args_off, nargs);
- 		/* call original func */
- 		emit(A64_LDR64I(A64_R(10), A64_SP, retaddr_off), ctx);
--		emit(A64_BLR(A64_R(10)), ctx);
-+		emit(A64_ADR(A64_LR, AARCH64_INSN_SIZE * 2), ctx);
-+		emit(A64_RET(A64_R(10)), ctx);
- 		/* store return value */
- 		emit(A64_STR64I(A64_R(0), A64_SP, retval_off), ctx);
- 		/* reserve a nop for bpf_tramp_image_put */
++	val &= ~(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2) |
++		 ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3));
++
++	val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2),
++			  arm64_get_spectre_v2_state() == SPECTRE_UNAFFECTED);
++	val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3),
++			  arm64_get_meltdown_state() == SPECTRE_UNAFFECTED);
++
++	return val;
++}
++
+ static void kvm_hyp_init_symbols(void)
+ {
+-	kvm_nvhe_sym(id_aa64pfr0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
++	kvm_nvhe_sym(id_aa64pfr0_el1_sys_val) = get_hyp_id_aa64pfr0_el1();
+ 	kvm_nvhe_sym(id_aa64pfr1_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64PFR1_EL1);
+ 	kvm_nvhe_sym(id_aa64isar0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64ISAR0_EL1);
+ 	kvm_nvhe_sym(id_aa64isar1_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64ISAR1_EL1);
+diff --git a/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h b/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
+index 07edfc7524c94..37440e1dda930 100644
+--- a/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
++++ b/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
+@@ -33,11 +33,14 @@
+  * Allow for protected VMs:
+  * - Floating-point and Advanced SIMD
+  * - Data Independent Timing
++ * - Spectre/Meltdown Mitigation
+  */
+ #define PVM_ID_AA64PFR0_ALLOW (\
+ 	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_FP) | \
+ 	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_AdvSIMD) | \
+-	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_DIT) \
++	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_DIT) | \
++	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2) | \
++	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3) \
+ 	)
+ 
+ /*
+diff --git a/arch/arm64/kvm/hyp/nvhe/sys_regs.c b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
+index 0f9ac25afdf40..3d5121ee39777 100644
+--- a/arch/arm64/kvm/hyp/nvhe/sys_regs.c
++++ b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
+@@ -84,19 +84,12 @@ static u64 get_restricted_features_unsigned(u64 sys_reg_val,
+ 
+ static u64 get_pvm_id_aa64pfr0(const struct kvm_vcpu *vcpu)
+ {
+-	const struct kvm *kvm = (const struct kvm *)kern_hyp_va(vcpu->kvm);
+ 	u64 set_mask = 0;
+ 	u64 allow_mask = PVM_ID_AA64PFR0_ALLOW;
+ 
+ 	set_mask |= get_restricted_features_unsigned(id_aa64pfr0_el1_sys_val,
+ 		PVM_ID_AA64PFR0_RESTRICT_UNSIGNED);
+ 
+-	/* Spectre and Meltdown mitigation in KVM */
+-	set_mask |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2),
+-			       (u64)kvm->arch.pfr0_csv2);
+-	set_mask |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3),
+-			       (u64)kvm->arch.pfr0_csv3);
+-
+ 	return (id_aa64pfr0_el1_sys_val & allow_mask) | set_mask;
+ }
+ 
 -- 
 2.39.2
 
