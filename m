@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7092572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729CCC4339B;
-	Tue, 18 Apr 2023 12:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D652572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A205C433D2;
+	Tue, 18 Apr 2023 12:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821756;
-	bh=0mt26iVTqwPUcTu9GZ1KJp1Pi0NpaixLhjWQmQt46oA=;
+	s=korg; t=1681821759;
+	bh=Wv4e16uRRrKhpTeME6jbvXsBSDPmDTT148k+e8OyN9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lVpoMD1FGqvoFf541GnREt06kcUtChE57mFTvO82y7cuoCzFbK/KtcFTGRVKrvoZu
-	 5gbPZJrnD70z42/28RAbvwIXGu3/NhaTI1kFIvBoBw/ssx6+Gc3O2Zxq/uidCwe/Nw
-	 LFMtu6uNIOPvNAYpARejw4v+RYHzZFy4GxvGSGl0=
+	b=atTpylgXyZ4Mlnsidl/kaT57w+SKTZTPK2B2bkWL4YolCdRKfNonwE9DPNBVKv72H
+	 VvKaRgMJM4kt7f+NGMIIJbDG8T/qB0qa6ba4e2U2q6zdzFuBJ1EgokxKgbGIxBXlm9
+	 e4eQLi+h1PByMTbQs0azqjT1ZZdXH49igXTYYYmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Min Li <lm0963hack@gmail.com>
-Subject: [PATCH 6.1 012/134] Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}
-Date: Tue, 18 Apr 2023 14:21:08 +0200
-Message-Id: <20230418120313.425293208@linuxfoundation.org>
+	Mustafa Ismail <mustafa.ismail@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 030/134] RDMA/irdma: Fix memory leak of PBLE objects
+Date: Tue, 18 Apr 2023 14:21:26 +0200
+Message-Id: <20230418120314.039957191@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,97 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Mustafa Ismail <mustafa.ismail@intel.com>
 
-commit a2a9339e1c9deb7e1e079e12e27a0265aea8421a upstream.
+[ Upstream commit b69a6979dbaa2453675fe9c71bdc2497fedb11f9 ]
 
-Similar to commit d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free
-caused by l2cap_chan_put"), just use l2cap_chan_hold_unless_zero to
-prevent referencing a channel that is about to be destroyed.
+On rmmod of irdma, the PBLE object memory is not being freed. PBLE object
+memory are not statically pre-allocated at function initialization time
+unlike other HMC objects. PBLEs objects and the Segment Descriptors (SD)
+for it can be dynamically allocated during scale up and SD's remain
+allocated till function deinitialization.
 
-Cc: stable@kernel.org
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this leak by adding IRDMA_HMC_IW_PBLE to the iw_hmc_obj_types[] table
+and skip pbles in irdma_create_hmc_obj but not in irdma_del_hmc_objects().
+
+Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
+Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20230315145231.931-3-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c |   24 ++++++------------------
- 1 file changed, 6 insertions(+), 18 deletions(-)
+ drivers/infiniband/hw/irdma/hw.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4652,33 +4652,27 @@ static inline int l2cap_disconnect_req(s
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index 2e1e2bad04011..43dfa4761f069 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -41,6 +41,7 @@ static enum irdma_hmc_rsrc_type iw_hmc_obj_types[] = {
+ 	IRDMA_HMC_IW_XFFL,
+ 	IRDMA_HMC_IW_Q1,
+ 	IRDMA_HMC_IW_Q1FL,
++	IRDMA_HMC_IW_PBLE,
+ 	IRDMA_HMC_IW_TIMER,
+ 	IRDMA_HMC_IW_FSIMC,
+ 	IRDMA_HMC_IW_FSIAV,
+@@ -827,6 +828,8 @@ static int irdma_create_hmc_objs(struct irdma_pci_f *rf, bool privileged,
+ 	info.entry_type = rf->sd_type;
  
- 	BT_DBG("scid 0x%4.4x dcid 0x%4.4x", scid, dcid);
- 
--	mutex_lock(&conn->chan_lock);
--
--	chan = __l2cap_get_chan_by_scid(conn, dcid);
-+	chan = l2cap_get_chan_by_scid(conn, dcid);
- 	if (!chan) {
--		mutex_unlock(&conn->chan_lock);
- 		cmd_reject_invalid_cid(conn, cmd->ident, dcid, scid);
- 		return 0;
- 	}
- 
--	l2cap_chan_hold(chan);
--	l2cap_chan_lock(chan);
--
- 	rsp.dcid = cpu_to_le16(chan->scid);
- 	rsp.scid = cpu_to_le16(chan->dcid);
- 	l2cap_send_cmd(conn, cmd->ident, L2CAP_DISCONN_RSP, sizeof(rsp), &rsp);
- 
- 	chan->ops->set_shutdown(chan);
- 
-+	mutex_lock(&conn->chan_lock);
- 	l2cap_chan_del(chan, ECONNRESET);
-+	mutex_unlock(&conn->chan_lock);
- 
- 	chan->ops->close(chan);
- 
- 	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
- 
--	mutex_unlock(&conn->chan_lock);
--
- 	return 0;
- }
- 
-@@ -4698,33 +4692,27 @@ static inline int l2cap_disconnect_rsp(s
- 
- 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x", dcid, scid);
- 
--	mutex_lock(&conn->chan_lock);
--
--	chan = __l2cap_get_chan_by_scid(conn, scid);
-+	chan = l2cap_get_chan_by_scid(conn, scid);
- 	if (!chan) {
- 		mutex_unlock(&conn->chan_lock);
- 		return 0;
- 	}
- 
--	l2cap_chan_hold(chan);
--	l2cap_chan_lock(chan);
--
- 	if (chan->state != BT_DISCONN) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
--		mutex_unlock(&conn->chan_lock);
- 		return 0;
- 	}
- 
-+	mutex_lock(&conn->chan_lock);
- 	l2cap_chan_del(chan, 0);
-+	mutex_unlock(&conn->chan_lock);
- 
- 	chan->ops->close(chan);
- 
- 	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
- 
--	mutex_unlock(&conn->chan_lock);
--
- 	return 0;
- }
- 
+ 	for (i = 0; i < IW_HMC_OBJ_TYPE_NUM; i++) {
++		if (iw_hmc_obj_types[i] == IRDMA_HMC_IW_PBLE)
++			continue;
+ 		if (dev->hmc_info->hmc_obj[iw_hmc_obj_types[i]].cnt) {
+ 			info.rsrc_type = iw_hmc_obj_types[i];
+ 			info.count = dev->hmc_info->hmc_obj[info.rsrc_type].cnt;
+-- 
+2.39.2
+
 
 
