@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BC62566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0FB8C433D2;
-	Tue, 18 Apr 2023 12:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32102566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:30:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E42C433EF;
+	Tue, 18 Apr 2023 12:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821043;
-	bh=gJwGfhhbzrXH2LleKwZLtadwe6YlssC2QtloV+oJPfQ=;
+	s=korg; t=1681821045;
+	bh=e9hOYZK7Oxbu7FrZe1ql4FATK7F7lB/QKj4ydjcqhpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KHEfoFg0PTcswVAGfKYurogkmCGoXn4PkHL+0pIARwr/Es0x5/Dac0v2bFHI0pPqm
-	 WfnPkn+XZzoxVdeIxhHpWwBS5xEEo5z8qNrbtpoOPcme4jwZS5yglKU+IyDyz8NdCA
-	 5eFkyn5Tibq3KWp05mlC88ow8WNc5OYDSJDaLRb4=
+	b=UQlZ6Q2j8tCVfGZkjGFMjIAu8D5pmyrUA2OjojuPnjYPiIExwRrsHuDFcJZappS5r
+	 Los/Rhc48bF5tiRx3w5mj8nJICZSnn2EbwE2MeCJLd6CL4I3P5NwIEJHyqARfFyCQD
+	 mQDpVVKp6nI9txXG3zGr4/yXM3bB/GxAEpZwSHt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongchen Yin <wb-yyc939293@alibaba-inc.com>,
-	Rongwei Wang <rongwei.wang@linux.alibaba.com>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Aaron Lu <aaron.lu@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 40/92] mm/swap: fix swap_info_struct race between swapoff and get_swap_pages()
-Date: Tue, 18 Apr 2023 14:21:15 +0200
-Message-Id: <20230418120306.239168205@linuxfoundation.org>
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.4 41/92] irqdomain: Look for existing mapping only once
+Date: Tue, 18 Apr 2023 14:21:16 +0200
+Message-Id: <20230418120306.282328975@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -38,119 +36,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rongwei Wang <rongwei.wang@linux.alibaba.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 6fe7d6b992113719e96744d974212df3fcddc76c upstream.
+commit 6e6f75c9c98d2d246d90411ff2b6f0cd271f4cba upstream.
 
-The si->lock must be held when deleting the si from the available list.
-Otherwise, another thread can re-add the si to the available list, which
-can lead to memory corruption.  The only place we have found where this
-happens is in the swapoff path.  This case can be described as below:
+Avoid looking for an existing mapping twice when creating a new mapping
+using irq_create_fwspec_mapping() by factoring out the actual allocation
+which is shared with irq_create_mapping_affinity().
 
-core 0                       core 1
-swapoff
+The new helper function will also be used to fix a shared-interrupt
+mapping race, hence the Fixes tag.
 
-del_from_avail_list(si)      waiting
-
-try lock si->lock            acquire swap_avail_lock
-                             and re-add si into
-                             swap_avail_head
-
-acquire si->lock but missing si already being added again, and continuing
-to clear SWP_WRITEOK, etc.
-
-It can be easily found that a massive warning messages can be triggered
-inside get_swap_pages() by some special cases, for example, we call
-madvise(MADV_PAGEOUT) on blocks of touched memory concurrently, meanwhile,
-run much swapon-swapoff operations (e.g.  stress-ng-swap).
-
-However, in the worst case, panic can be caused by the above scene.  In
-swapoff(), the memory used by si could be kept in swap_info[] after
-turning off a swap.  This means memory corruption will not be caused
-immediately until allocated and reset for a new swap in the swapon path.
-A panic message caused: (with CONFIG_PLIST_DEBUG enabled)
-
-------------[ cut here ]------------
-top: 00000000e58a3003, n: 0000000013e75cda, p: 000000008cd4451a
-prev: 0000000035b1e58a, n: 000000008cd4451a, p: 000000002150ee8d
-next: 000000008cd4451a, n: 000000008cd4451a, p: 000000008cd4451a
-WARNING: CPU: 21 PID: 1843 at lib/plist.c:60 plist_check_prev_next_node+0x50/0x70
-Modules linked in: rfkill(E) crct10dif_ce(E)...
-CPU: 21 PID: 1843 Comm: stress-ng Kdump: ... 5.10.134+
-Hardware name: Alibaba Cloud ECS, BIOS 0.0.0 02/06/2015
-pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
-pc : plist_check_prev_next_node+0x50/0x70
-lr : plist_check_prev_next_node+0x50/0x70
-sp : ffff0018009d3c30
-x29: ffff0018009d3c40 x28: ffff800011b32a98
-x27: 0000000000000000 x26: ffff001803908000
-x25: ffff8000128ea088 x24: ffff800011b32a48
-x23: 0000000000000028 x22: ffff001800875c00
-x21: ffff800010f9e520 x20: ffff001800875c00
-x19: ffff001800fdc6e0 x18: 0000000000000030
-x17: 0000000000000000 x16: 0000000000000000
-x15: 0736076307640766 x14: 0730073007380731
-x13: 0736076307640766 x12: 0730073007380731
-x11: 000000000004058d x10: 0000000085a85b76
-x9 : ffff8000101436e4 x8 : ffff800011c8ce08
-x7 : 0000000000000000 x6 : 0000000000000001
-x5 : ffff0017df9ed338 x4 : 0000000000000001
-x3 : ffff8017ce62a000 x2 : ffff0017df9ed340
-x1 : 0000000000000000 x0 : 0000000000000000
-Call trace:
- plist_check_prev_next_node+0x50/0x70
- plist_check_head+0x80/0xf0
- plist_add+0x28/0x140
- add_to_avail_list+0x9c/0xf0
- _enable_swap_info+0x78/0xb4
- __do_sys_swapon+0x918/0xa10
- __arm64_sys_swapon+0x20/0x30
- el0_svc_common+0x8c/0x220
- do_el0_svc+0x2c/0x90
- el0_svc+0x1c/0x30
- el0_sync_handler+0xa8/0xb0
- el0_sync+0x148/0x180
-irq event stamp: 2082270
-
-Now, si->lock locked before calling 'del_from_avail_list()' to make sure
-other thread see the si had been deleted and SWP_WRITEOK cleared together,
-will not reinsert again.
-
-This problem exists in versions after stable 5.10.y.
-
-Link: https://lkml.kernel.org/r/20230404154716.23058-1-rongwei.wang@linux.alibaba.com
-Fixes: a2468cc9bfdff ("swap: choose swap device according to numa node")
-Tested-by: Yongchen Yin <wb-yyc939293@alibaba-inc.com>
-Signed-off-by: Rongwei Wang <rongwei.wang@linux.alibaba.com>
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Aaron Lu <aaron.lu@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b62b2cf5759b ("irqdomain: Fix handling of type settings for existing mappings")
+Cc: stable@vger.kernel.org      # 4.8
+Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230213104302.17307-5-johan+linaro@kernel.org
+Signed-off-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/swapfile.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/irq/irqdomain.c |   62 ++++++++++++++++++++++++++-----------------------
+ 1 file changed, 34 insertions(+), 28 deletions(-)
 
---- a/mm/swapfile.c
-+++ b/mm/swapfile.c
-@@ -672,6 +672,7 @@ static void __del_from_avail_list(struct
- {
- 	int nid;
- 
-+	assert_spin_locked(&p->lock);
- 	for_each_node(nid)
- 		plist_del(&p->avail_lists[nid], &swap_avail_heads[nid]);
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -672,6 +672,34 @@ unsigned int irq_create_direct_mapping(s
  }
-@@ -2579,8 +2580,8 @@ SYSCALL_DEFINE1(swapoff, const char __us
- 		spin_unlock(&swap_lock);
- 		goto out_dput;
+ EXPORT_SYMBOL_GPL(irq_create_direct_mapping);
+ 
++static unsigned int __irq_create_mapping_affinity(struct irq_domain *domain,
++						  irq_hw_number_t hwirq,
++						  const struct irq_affinity_desc *affinity)
++{
++	struct device_node *of_node = irq_domain_get_of_node(domain);
++	int virq;
++
++	pr_debug("irq_create_mapping(0x%p, 0x%lx)\n", domain, hwirq);
++
++	/* Allocate a virtual interrupt number */
++	virq = irq_domain_alloc_descs(-1, 1, hwirq, of_node_to_nid(of_node),
++				      affinity);
++	if (virq <= 0) {
++		pr_debug("-> virq allocation failed\n");
++		return 0;
++	}
++
++	if (irq_domain_associate(domain, virq, hwirq)) {
++		irq_free_desc(virq);
++		return 0;
++	}
++
++	pr_debug("irq %lu on domain %s mapped to virtual irq %u\n",
++		hwirq, of_node_full_name(of_node), virq);
++
++	return virq;
++}
++
+ /**
+  * irq_create_mapping_affinity() - Map a hardware interrupt into linux irq space
+  * @domain: domain owning this hardware interrupt or NULL for default domain
+@@ -684,49 +712,27 @@ EXPORT_SYMBOL_GPL(irq_create_direct_mapp
+  * on the number returned from that call.
+  */
+ unsigned int irq_create_mapping_affinity(struct irq_domain *domain,
+-				       irq_hw_number_t hwirq,
+-				       const struct irq_affinity_desc *affinity)
++					 irq_hw_number_t hwirq,
++					 const struct irq_affinity_desc *affinity)
+ {
+-	struct device_node *of_node;
+ 	int virq;
+ 
+-	pr_debug("irq_create_mapping(0x%p, 0x%lx)\n", domain, hwirq);
+-
+-	/* Look for default domain if nececssary */
++	/* Look for default domain if necessary */
+ 	if (domain == NULL)
+ 		domain = irq_default_domain;
+ 	if (domain == NULL) {
+ 		WARN(1, "%s(, %lx) called with NULL domain\n", __func__, hwirq);
+ 		return 0;
  	}
--	del_from_avail_list(p);
- 	spin_lock(&p->lock);
-+	del_from_avail_list(p);
- 	if (p->prio < 0) {
- 		struct swap_info_struct *si = p;
- 		int nid;
+-	pr_debug("-> using domain @%p\n", domain);
+-
+-	of_node = irq_domain_get_of_node(domain);
+ 
+ 	/* Check if mapping already exists */
+ 	virq = irq_find_mapping(domain, hwirq);
+ 	if (virq) {
+-		pr_debug("-> existing mapping on virq %d\n", virq);
++		pr_debug("existing mapping on virq %d\n", virq);
+ 		return virq;
+ 	}
+ 
+-	/* Allocate a virtual interrupt number */
+-	virq = irq_domain_alloc_descs(-1, 1, hwirq, of_node_to_nid(of_node),
+-				      affinity);
+-	if (virq <= 0) {
+-		pr_debug("-> virq allocation failed\n");
+-		return 0;
+-	}
+-
+-	if (irq_domain_associate(domain, virq, hwirq)) {
+-		irq_free_desc(virq);
+-		return 0;
+-	}
+-
+-	pr_debug("irq %lu on domain %s mapped to virtual irq %u\n",
+-		hwirq, of_node_full_name(of_node), virq);
+-
+-	return virq;
++	return __irq_create_mapping_affinity(domain, hwirq, affinity);
+ }
+ EXPORT_SYMBOL_GPL(irq_create_mapping_affinity);
+ 
+@@ -866,7 +872,7 @@ unsigned int irq_create_fwspec_mapping(s
+ 			return 0;
+ 	} else {
+ 		/* Create mapping */
+-		virq = irq_create_mapping(domain, hwirq);
++		virq = __irq_create_mapping_affinity(domain, hwirq, NULL);
+ 		if (!virq)
+ 			return virq;
+ 	}
 
 
