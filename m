@@ -1,70 +1,98 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB78C94A
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 21:31:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=cK6WZTCqxBa6ulq6LX+4lU7vuWA3n6M3EQUmCRHWpYg=; b=NPbEVuM/gB2VHB7LlJAfo3Fvnq
-	Q94MvKr/Mjw1VVA5m0mr0SDBIKwDmayD4OX+U2blHmcTrhBjX0JK0K/CKpAd4L594ptFESoihQ++Q
-	zKnN0osw36CLv0LWXd3TYsO2h85VQCXjJs96/jf2e1l95aWYKUMQQ2gNhBsW9fR1UtSHIEOHPtupB
-	qN3pyOtizpgPvK++8LlAzcnFMEH3mcbbTdJobh9Xf5d8UtircxI5INvR9EWBvxyu7AQwjH2wyG74f
-	V6JaJOGV+OWVLom9tgE5GzVvlmaMjTG7D6hovQFrAgjcxGoORSqffonxycqoN4EAlriCLFIZXeWJB
-	XVIX4O4g==;
-Received: from [2601:1c2:980:9ec0::2764]
-	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-	id 1posug-003OEO-1k;
-	Tue, 18 Apr 2023 21:30:58 +0000
-Message-ID: <5db6179d-985b-c08c-fad2-d7fbb2d40e4d@infradead.org>
-Date: Tue, 18 Apr 2023 14:30:55 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BB4C94A
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 21:36:54 +0000 (UTC)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 298571C0AB3; Tue, 18 Apr 2023 23:27:44 +0200 (CEST)
+Date: Tue, 18 Apr 2023 23:27:43 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de,
+	Waiman Long <longman@redhat.com>, Tejun Heo <tj@kernel.org>,
+	Michal =?iso-8859-1?Q?Koutn=FD?= <mkoutny@suse.com>
+Subject: Re: [PATCH 5.10 000/124] 5.10.178-rc1 review
+Message-ID: <ZD8LT95DKIT0PKmC@duo.ucw.cz>
+References: <20230418120309.539243408@linuxfoundation.org>
+ <CA+G9fYsA+CzsxVYgQEN3c2pOV6F+1EOqY1vQrhj8yt1t-EYs7g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 6/6] shmem: add support to ignore swap
-Content-Language: en-US
-To: Luis Chamberlain <mcgrof@kernel.org>, Hugh Dickins <hughd@google.com>
-Cc: akpm@linux-foundation.org, willy@infradead.org, brauner@kernel.org,
- linux-mm@kvack.org, p.raghav@samsung.com, da.gomez@samsung.com,
- a.manzanares@samsung.com, dave@stgolabs.net, yosryahmed@google.com,
- keescook@chromium.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20230309230545.2930737-1-mcgrof@kernel.org>
- <20230309230545.2930737-7-mcgrof@kernel.org>
- <79eae9fe-7818-a65c-89c6-138b55d609a@google.com>
- <ZD8J+I6uCqfp31sv@bombadil.infradead.org>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <ZD8J+I6uCqfp31sv@bombadil.infradead.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="TQZ0e1oGHiPq7BSO"
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYsA+CzsxVYgQEN3c2pOV6F+1EOqY1vQrhj8yt1t-EYs7g@mail.gmail.com>
 
 
+--TQZ0e1oGHiPq7BSO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 4/18/23 14:22, Luis Chamberlain wrote:
-> On Mon, Apr 17, 2023 at 10:50:59PM -0700, Hugh Dickins wrote:
->> You'll be sending a manpage update to Alejandro in due course, I think.
-> 
-> Sure thing! Just need a git tree. I can send the updates as we reach
-> a consensus on where to store / share huge page shmem updates.
-> 
->   Luis
+Hi!
 
-From the latest man-page announcement:
+> > This is the start of the stable review cycle for the 5.10.178 release.
+> > There are 124 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patc=
+h-5.10.178-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stab=
+le-rc.git linux-5.10.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+>=20
+> Following build errors noticed on 5.15 and 5.10.,
+>=20
+>=20
+> > Waiman Long <longman@redhat.com>
+> >     cgroup/cpuset: Change references of cpuset_mutex to cpuset_rwsem
+>=20
+> kernel/cgroup/cpuset.c: In function 'cpuset_can_fork':
+> kernel/cgroup/cpuset.c:2941:30: error: 'cgroup_mutex' undeclared
+> (first use in this function); did you mean 'cgroup_put'?
+>  2941 |         lockdep_assert_held(&cgroup_mutex);
+>       |                              ^~~~~~~~~~~~
 
+For the record, we can see the same failure in CIP testing.
 
-	man-pages-6.04 - manual pages for GNU/Linux
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/8=
+40769270
 
-The release tarball is already available at <kernel.org>.
+And it is the only build error I can see in a quick search.
 
-Tarball download:
-	<https://mirrors.edge.kernel.org/pub/linux/docs/man-pages/>
-Git repository:
-	<https://git.kernel.org/cgit/docs/man-pages/man-pages.git/>
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
--- 
-~Randy
+--TQZ0e1oGHiPq7BSO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZD8LTwAKCRAw5/Bqldv6
+8ojdAJ94Tx88lz9vazlcV37F4csfMvZRDACdHCUBoLiiaDK17WwQY99HSxqb4Ew=
+=IUAC
+-----END PGP SIGNATURE-----
+
+--TQZ0e1oGHiPq7BSO--
