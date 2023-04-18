@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0C82572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0965DC433D2;
-	Tue, 18 Apr 2023 12:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290342572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FEFC433D2;
+	Tue, 18 Apr 2023 12:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821894;
-	bh=A7mfIw+XEGZwAFLWejaqGe10w1JDqOHTkHZ0+8YiQ+w=;
+	s=korg; t=1681821897;
+	bh=JegotNx5fBXykk8QkNgylxdkaBH7T4nUuNR8kI4BsII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MbV4zKnlXdNBdena25dViR8CaVNqQud7enbAWc2wbdS1r+vN5G2NKzAnqHQXXIcr7
-	 BuC0jRXVDkcIVTkXDHFeAXb0kp0VQp8TbiFedVf9CX6weWmTyXIo8QhYEXGlX5QNkC
-	 KAjwiWXnBmgaLZsE+VIOYR2yJ7hR3cLAo/i4+Vms=
+	b=nS3cObzAv+jnwZ31NfWc1I8ElX22pok1Q5L7M5/abHyGbevktl13ABl7s0b+0EwH7
+	 De3qKiW3Iqo57NwCBohvuu0dhLqyBVsGRJcORtoR9CiApgf93m9EHg7Xv3Tya+c37M
+	 o/mkqrR1JHVKtWsNcdyYmsQhvUHXUTvhoJMUup/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/134] dmaengine: apple-admac: Set src_addr_widths capability
-Date: Tue, 18 Apr 2023 14:21:38 +0200
-Message-Id: <20230418120314.399984663@linuxfoundation.org>
+Subject: [PATCH 6.1 075/134] selftests/bpf: Fix progs/find_vma_fail1.c build error.
+Date: Tue, 18 Apr 2023 14:22:11 +0200
+Message-Id: <20230418120315.647096892@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,36 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Povišer <povik+lin@cutebit.org>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 6e96adcaa7a29827ac8ee8df290a44957a4823ec ]
+[ Upstream commit 32513d40d908b267508d37994753d9bd1600914b ]
 
-Add missing setting of 'src_addr_widths', which is the same as for the
-other direction.
+The commit 11e456cae91e ("selftests/bpf: Fix compilation errors: Assign a value to a constant")
+fixed the issue cleanly in bpf-next.
+This is an alternative fix in bpf tree to avoid merge conflict between bpf and bpf-next.
 
-Fixes: b127315d9a78 ("dmaengine: apple-admac: Add Apple ADMAC driver")
-Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
-Link: https://lore.kernel.org/r/20230224152222.26732-3-povik+lin@cutebit.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/apple-admac.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/bpf/progs/find_vma_fail1.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
-index 00cbfafe0ed9d..b9132b495d181 100644
---- a/drivers/dma/apple-admac.c
-+++ b/drivers/dma/apple-admac.c
-@@ -858,6 +858,9 @@ static int admac_probe(struct platform_device *pdev)
+diff --git a/tools/testing/selftests/bpf/progs/find_vma_fail1.c b/tools/testing/selftests/bpf/progs/find_vma_fail1.c
+index b3b326b8e2d1c..6dab9cffda132 100644
+--- a/tools/testing/selftests/bpf/progs/find_vma_fail1.c
++++ b/tools/testing/selftests/bpf/progs/find_vma_fail1.c
+@@ -2,6 +2,7 @@
+ /* Copyright (c) 2021 Facebook */
+ #include "vmlinux.h"
+ #include <bpf/bpf_helpers.h>
++#define vm_flags vm_start
  
- 	dma->directions = BIT(DMA_MEM_TO_DEV) | BIT(DMA_DEV_TO_MEM);
- 	dma->residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
-+	dma->src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
-+			BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
-+			BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	dma->dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
- 			BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
- 			BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
+ char _license[] SEC("license") = "GPL";
+ 
 -- 
 2.39.2
 
