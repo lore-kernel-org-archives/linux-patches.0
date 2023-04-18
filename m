@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5D32572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7488C433EF;
-	Tue, 18 Apr 2023 12:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D0E257D
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F40CC4339B;
+	Tue, 18 Apr 2023 12:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822217;
-	bh=I6ga2qarMUTw/LBMWwkY72jb0CH+PxiO9wPzxj2uLZg=;
+	s=korg; t=1681822219;
+	bh=V26JAyjDdHgLN/TnIpmRp3OAKzkjGSrx7oEYO2sxNGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dRajVXZDuem35WXcMZYpqcW4Sh1Rh5V6fr8TwlOYk4K7Ks1ybu72XFrjkhZINPi68
-	 eRNDI6gilKge5Twxicw/HhpnRpKKkwNvo30sZVmU/q6qYDbDlSRSyeCQyc3gPqLX6q
-	 83OAbTyoyI7c6tHqP2uArPAngdFgBP7A9NXiyl7g=
+	b=Vp6xV8ZT3gRzjvouenAipYUcPiSQ9+FTqsu9M7RyPLEBxAUC63ii6Ig4qbwhehHKp
+	 YvivOA4MjCvrFgt0KYIeU9yA1B1lG6ZzolRs0h1W6IpFJsOHoiGNZJQ8d6ZsKWGfXy
+	 KDbJbA1/K6rOSNM9pvD+oi3YuT/mPzp91eTxX/8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+c39682e86c9d84152f93@syzkaller.appspotmail.com>,
-	Hillf Danton <hdanton@sina.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Tejun Heo <tj@kernel.org>,
+	Martin Willi <martin@strongswan.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 065/139] cgroup,freezer: hold cpu_hotplug_lock before freezer_mutex
-Date: Tue, 18 Apr 2023 14:22:10 +0200
-Message-Id: <20230418120316.259134474@linuxfoundation.org>
+Subject: [PATCH 6.2 066/139] rtnetlink: Restore RTM_NEW/DELLINK notification behavior
+Date: Tue, 18 Apr 2023 14:22:11 +0200
+Message-Id: <20230418120316.297576918@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -39,125 +37,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Martin Willi <martin@strongswan.org>
 
-[ Upstream commit 57dcd64c7e036299ef526b400a8d12b8a2352f26 ]
+[ Upstream commit 59d3efd27c11c59b32291e5ebc307bed2edb65ee ]
 
-syzbot is reporting circular locking dependency between cpu_hotplug_lock
-and freezer_mutex, for commit f5d39b020809 ("freezer,sched: Rewrite core
-freezer logic") replaced atomic_inc() in freezer_apply_state() with
-static_branch_inc() which holds cpu_hotplug_lock.
+The commits referenced below allows userspace to use the NLM_F_ECHO flag
+for RTM_NEW/DELLINK operations to receive unicast notifications for the
+affected link. Prior to these changes, applications may have relied on
+multicast notifications to learn the same information without specifying
+the NLM_F_ECHO flag.
 
-cpu_hotplug_lock => cgroup_threadgroup_rwsem => freezer_mutex
+For such applications, the mentioned commits changed the behavior for
+requests not using NLM_F_ECHO. Multicast notifications are still received,
+but now use the portid of the requester and the sequence number of the
+request instead of zero values used previously. For the application, this
+message may be unexpected and likely handled as a response to the
+NLM_F_ACKed request, especially if it uses the same socket to handle
+requests and notifications.
 
-  cgroup_file_write() {
-    cgroup_procs_write() {
-      __cgroup_procs_write() {
-        cgroup_procs_write_start() {
-          cgroup_attach_lock() {
-            cpus_read_lock() {
-              percpu_down_read(&cpu_hotplug_lock);
-            }
-            percpu_down_write(&cgroup_threadgroup_rwsem);
-          }
-        }
-        cgroup_attach_task() {
-          cgroup_migrate() {
-            cgroup_migrate_execute() {
-              freezer_attach() {
-                mutex_lock(&freezer_mutex);
-                (...snipped...)
-              }
-            }
-          }
-        }
-        (...snipped...)
-      }
-    }
-  }
+To fix existing applications relying on the old notification behavior,
+set the portid and sequence number in the notification only if the
+request included the NLM_F_ECHO flag. This restores the old behavior
+for applications not using it, but allows unicasted notifications for
+others.
 
-freezer_mutex => cpu_hotplug_lock
-
-  cgroup_file_write() {
-    freezer_write() {
-      freezer_change_state() {
-        mutex_lock(&freezer_mutex);
-        freezer_apply_state() {
-          static_branch_inc(&freezer_active) {
-            static_key_slow_inc() {
-              cpus_read_lock();
-              static_key_slow_inc_cpuslocked();
-              cpus_read_unlock();
-            }
-          }
-        }
-        mutex_unlock(&freezer_mutex);
-      }
-    }
-  }
-
-Swap locking order by moving cpus_read_lock() in freezer_apply_state()
-to before mutex_lock(&freezer_mutex) in freezer_change_state().
-
-Reported-by: syzbot <syzbot+c39682e86c9d84152f93@syzkaller.appspotmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=c39682e86c9d84152f93
-Suggested-by: Hillf Danton <hdanton@sina.com>
-Fixes: f5d39b020809 ("freezer,sched: Rewrite core freezer logic")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: f3a63cce1b4f ("rtnetlink: Honour NLM_F_ECHO flag in rtnl_delete_link")
+Fixes: d88e136cab37 ("rtnetlink: Honour NLM_F_ECHO flag in rtnl_newlink_create")
+Signed-off-by: Martin Willi <martin@strongswan.org>
+Acked-by: Guillaume Nault <gnault@redhat.com>
+Acked-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20230411074319.24133-1-martin@strongswan.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/legacy_freezer.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/linux/rtnetlink.h |  3 ++-
+ net/core/dev.c            |  2 +-
+ net/core/rtnetlink.c      | 11 +++++++++--
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/cgroup/legacy_freezer.c b/kernel/cgroup/legacy_freezer.c
-index 1b6b21851e9d4..936473203a6b5 100644
---- a/kernel/cgroup/legacy_freezer.c
-+++ b/kernel/cgroup/legacy_freezer.c
-@@ -22,6 +22,7 @@
- #include <linux/freezer.h>
- #include <linux/seq_file.h>
- #include <linux/mutex.h>
-+#include <linux/cpu.h>
+diff --git a/include/linux/rtnetlink.h b/include/linux/rtnetlink.h
+index 92ad75549e9cd..b6e6378dcbbd7 100644
+--- a/include/linux/rtnetlink.h
++++ b/include/linux/rtnetlink.h
+@@ -25,7 +25,8 @@ void rtmsg_ifinfo_newnet(int type, struct net_device *dev, unsigned int change,
+ struct sk_buff *rtmsg_ifinfo_build_skb(int type, struct net_device *dev,
+ 				       unsigned change, u32 event,
+ 				       gfp_t flags, int *new_nsid,
+-				       int new_ifindex, u32 portid, u32 seq);
++				       int new_ifindex, u32 portid,
++				       const struct nlmsghdr *nlh);
+ void rtmsg_ifinfo_send(struct sk_buff *skb, struct net_device *dev,
+ 		       gfp_t flags, u32 portid, const struct nlmsghdr *nlh);
  
- /*
-  * A cgroup is freezing if any FREEZING flags are set.  FREEZING_SELF is
-@@ -350,7 +351,7 @@ static void freezer_apply_state(struct freezer *freezer, bool freeze,
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 127815273ce3c..404125e7a57a5 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10837,7 +10837,7 @@ void unregister_netdevice_many_notify(struct list_head *head,
+ 		    dev->rtnl_link_state == RTNL_LINK_INITIALIZED)
+ 			skb = rtmsg_ifinfo_build_skb(RTM_DELLINK, dev, ~0U, 0,
+ 						     GFP_KERNEL, NULL, 0,
+-						     portid, nlmsg_seq(nlh));
++						     portid, nlh);
  
- 	if (freeze) {
- 		if (!(freezer->state & CGROUP_FREEZING))
--			static_branch_inc(&freezer_active);
-+			static_branch_inc_cpuslocked(&freezer_active);
- 		freezer->state |= state;
- 		freeze_cgroup(freezer);
- 	} else {
-@@ -361,7 +362,7 @@ static void freezer_apply_state(struct freezer *freezer, bool freeze,
- 		if (!(freezer->state & CGROUP_FREEZING)) {
- 			freezer->state &= ~CGROUP_FROZEN;
- 			if (was_freezing)
--				static_branch_dec(&freezer_active);
-+				static_branch_dec_cpuslocked(&freezer_active);
- 			unfreeze_cgroup(freezer);
- 		}
- 	}
-@@ -379,6 +380,7 @@ static void freezer_change_state(struct freezer *freezer, bool freeze)
+ 		/*
+ 		 *	Flush the unicast and multicast chains
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 64289bc988878..f5114b2395ae3 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -3939,16 +3939,23 @@ static int rtnl_dump_all(struct sk_buff *skb, struct netlink_callback *cb)
+ struct sk_buff *rtmsg_ifinfo_build_skb(int type, struct net_device *dev,
+ 				       unsigned int change,
+ 				       u32 event, gfp_t flags, int *new_nsid,
+-				       int new_ifindex, u32 portid, u32 seq)
++				       int new_ifindex, u32 portid,
++				       const struct nlmsghdr *nlh)
  {
- 	struct cgroup_subsys_state *pos;
+ 	struct net *net = dev_net(dev);
+ 	struct sk_buff *skb;
+ 	int err = -ENOBUFS;
++	u32 seq = 0;
  
-+	cpus_read_lock();
- 	/*
- 	 * Update all its descendants in pre-order traversal.  Each
- 	 * descendant will try to inherit its parent's FREEZING state as
-@@ -407,6 +409,7 @@ static void freezer_change_state(struct freezer *freezer, bool freeze)
- 	}
- 	rcu_read_unlock();
- 	mutex_unlock(&freezer_mutex);
-+	cpus_read_unlock();
+ 	skb = nlmsg_new(if_nlmsg_size(dev, 0), flags);
+ 	if (skb == NULL)
+ 		goto errout;
+ 
++	if (nlmsg_report(nlh))
++		seq = nlmsg_seq(nlh);
++	else
++		portid = 0;
++
+ 	err = rtnl_fill_ifinfo(skb, dev, dev_net(dev),
+ 			       type, portid, seq, change, 0, 0, event,
+ 			       new_nsid, new_ifindex, -1, flags);
+@@ -3984,7 +3991,7 @@ static void rtmsg_ifinfo_event(int type, struct net_device *dev,
+ 		return;
+ 
+ 	skb = rtmsg_ifinfo_build_skb(type, dev, change, event, flags, new_nsid,
+-				     new_ifindex, portid, nlmsg_seq(nlh));
++				     new_ifindex, portid, nlh);
+ 	if (skb)
+ 		rtmsg_ifinfo_send(skb, dev, flags, portid, nlh);
  }
- 
- static ssize_t freezer_write(struct kernfs_open_file *of,
 -- 
 2.39.2
 
