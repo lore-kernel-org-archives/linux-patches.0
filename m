@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1552572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A28C433EF;
-	Tue, 18 Apr 2023 12:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116312572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E3DC433EF;
+	Tue, 18 Apr 2023 12:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821557;
-	bh=kQy34DEL3CbeSrP9sGPT9ua3j4jiQy/DOa34hpftVfc=;
+	s=korg; t=1681821559;
+	bh=4ObIQEFT28XMyBb0BYjDdLUP28ymPeN1aWYQT7wGy+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgHERbeP5O2ST2p5yzoIEgxlhtlA1TO8fsCMYkL8Y08+TzaZ6K4XxWQ7gaXblQIv1
-	 oQ6JTtpQtk5Xk+zOGR8XYQTyUa1IcFdfS6ixJ975Go3ma+ci7Z5Rzj7JJD1XI8Dpdx
-	 mxlYA2J/RSqA7kxEFTuQMkYwSx5CmOlxq/tbRvtc=
+	b=LLtxEEMIxrqQPHsJS1Z2cCvGusgjt13n4ew9mT5lE6BfNwkVtAnTaHJzF2UCFBnuQ
+	 QoN+wg5UbATVAs+Dz5wZ3z8ROYXIpqP0X2PQhccQIRnvO+uncns82HC2Hva2eTG4w/
+	 l1L9aTrqiOGMZn0dHaEsKnp6YoTvaPFhvezoiE7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Aymeric Wibo <obiwac@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 47/91] wifi: iwlwifi: mvm: fix mvmtxq->stopped handling
-Date: Tue, 18 Apr 2023 14:21:51 +0200
-Message-Id: <20230418120307.205856001@linuxfoundation.org>
+Subject: [PATCH 5.15 48/91] ACPI: resource: Add Medion S17413 to IRQ override quirk
+Date: Tue, 18 Apr 2023 14:21:52 +0200
+Message-Id: <20230418120307.245380470@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -36,95 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Aymeric Wibo <obiwac@gmail.com>
 
-[ Upstream commit b58e3d4311b54b6dd0e37165277965da0c9eb21d ]
+[ Upstream commit 2d0ab14634a26e54f8d6d231b47b7ef233e84599 ]
 
-This could race if the queue is redirected while full, then
-the flushing internally would start it while it's not yet
-usable again. Fix it by using two state bits instead of just
-one.
+Add DMI info of the Medion S17413 (board M1xA) to the IRQ override
+quirk table. This fixes the keyboard not working on these laptops.
 
-Reviewed-by: Benjamin Berg <benjamin.berg@intel.com>
-Tested-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=213031
+Signed-off-by: Aymeric Wibo <obiwac@gmail.com>
+[ rjw: Fixed up white space ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 5 ++++-
- drivers/net/wireless/intel/iwlwifi/mvm/mvm.h      | 4 +++-
- drivers/net/wireless/intel/iwlwifi/mvm/ops.c      | 5 ++++-
- drivers/net/wireless/intel/iwlwifi/mvm/sta.c      | 4 ++--
- 4 files changed, 13 insertions(+), 5 deletions(-)
+ drivers/acpi/resource.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 56c7a68a6491c..fa7de3e47b8cc 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -820,7 +820,10 @@ void iwl_mvm_mac_itxq_xmit(struct ieee80211_hw *hw, struct ieee80211_txq *txq)
- 
- 	rcu_read_lock();
- 	do {
--		while (likely(!mvmtxq->stopped &&
-+		while (likely(!test_bit(IWL_MVM_TXQ_STATE_STOP_FULL,
-+					&mvmtxq->state) &&
-+			      !test_bit(IWL_MVM_TXQ_STATE_STOP_REDIRECT,
-+					&mvmtxq->state) &&
- 			      !test_bit(IWL_MVM_STATUS_IN_D3, &mvm->status))) {
- 			skb = ieee80211_tx_dequeue(hw, txq);
- 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-index 46af8dd2dc930..6b59425dbdb19 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-@@ -727,7 +727,9 @@ struct iwl_mvm_txq {
- 	struct list_head list;
- 	u16 txq_id;
- 	atomic_t tx_request;
--	bool stopped;
-+#define IWL_MVM_TXQ_STATE_STOP_FULL	0
-+#define IWL_MVM_TXQ_STATE_STOP_REDIRECT	1
-+	unsigned long state;
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index 3b9f894873365..803dc6afa6d69 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -396,6 +396,13 @@ static const struct dmi_system_id medion_laptop[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "M17T"),
+ 		},
+ 	},
++	{
++		.ident = "MEDION S17413",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "MEDION"),
++			DMI_MATCH(DMI_BOARD_NAME, "M1xA"),
++		},
++	},
+ 	{ }
  };
  
- static inline struct iwl_mvm_txq *
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-index eeb81808db088..3ee4b3ecd0c82 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-@@ -1304,7 +1304,10 @@ static void iwl_mvm_queue_state_change(struct iwl_op_mode *op_mode,
- 
- 		txq = sta->txq[tid];
- 		mvmtxq = iwl_mvm_txq_from_mac80211(txq);
--		mvmtxq->stopped = !start;
-+		if (start)
-+			clear_bit(IWL_MVM_TXQ_STATE_STOP_FULL, &mvmtxq->state);
-+		else
-+			set_bit(IWL_MVM_TXQ_STATE_STOP_FULL, &mvmtxq->state);
- 
- 		if (start && mvmsta->sta_state != IEEE80211_STA_NOTEXIST)
- 			iwl_mvm_mac_itxq_xmit(mvm->hw, txq);
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-index 1bb456daff9e9..45dfee3ad8c60 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-@@ -640,7 +640,7 @@ static int iwl_mvm_redirect_queue(struct iwl_mvm *mvm, int queue, int tid,
- 			    queue, iwl_mvm_ac_to_tx_fifo[ac]);
- 
- 	/* Stop the queue and wait for it to empty */
--	txq->stopped = true;
-+	set_bit(IWL_MVM_TXQ_STATE_STOP_REDIRECT, &txq->state);
- 
- 	ret = iwl_trans_wait_tx_queues_empty(mvm->trans, BIT(queue));
- 	if (ret) {
-@@ -683,7 +683,7 @@ static int iwl_mvm_redirect_queue(struct iwl_mvm *mvm, int queue, int tid,
- 
- out:
- 	/* Continue using the queue */
--	txq->stopped = false;
-+	clear_bit(IWL_MVM_TXQ_STATE_STOP_REDIRECT, &txq->state);
- 
- 	return ret;
- }
 -- 
 2.39.2
 
