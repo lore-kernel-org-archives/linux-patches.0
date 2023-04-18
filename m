@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AED02566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:29:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6753C433EF;
-	Tue, 18 Apr 2023 12:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38AE256D
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:29:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A64C433EF;
+	Tue, 18 Apr 2023 12:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820985;
-	bh=yl4ZRg6fUPQbkX5eOmCR7ZNSfCgeceTI+6ky0FgmFWE=;
+	s=korg; t=1681820987;
+	bh=FJIbj5cdIM4VZXmLier+1/DGjlR61yP4ieGFHCup6dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WugGJ0/HJVSWtwx88xMIr5Io+92ygNG1sfGDVYI9OhOHQE17it/2GG729w89PcLJJ
-	 ZDDqtb2agsgY4OTHZJdSWmvoTXIHd4WpX7e8/uxQzXaKhELhIYnZroBKcqALuCoEIC
-	 qIKzMvv/hD1cNn5PkqRYDdPo7tj4Fnyx350p9eS8=
+	b=1S5XSD4lsWCVAhKruqxSbB7+ahyyueg5xwFjYcDoloyU9Id7QbUY4BFrW12Q/TVHj
+	 edXm3A5MOJdnNehFzE9PCnT0+89kdFm2k36MQXb56y+eBmmBiJhdaXw/leYeaPYvZp
+	 d2oTsN+uplluOC25GvK4JqwJzXMjAC6vXHEUBjao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Biang <xubiang@hust.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 48/92] ALSA: firewire-tascam: add missing unwind goto in snd_tscm_stream_start_duplex()
-Date: Tue, 18 Apr 2023 14:21:23 +0200
-Message-Id: <20230418120306.534849182@linuxfoundation.org>
+Subject: [PATCH 5.4 49/92] ALSA: hda/sigmatel: fix S/PDIF out on Intel D*45* motherboards
+Date: Tue, 18 Apr 2023 14:21:24 +0200
+Message-Id: <20230418120306.564525111@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -36,58 +34,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Biang <xubiang@hust.edu.cn>
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-commit fb4a624f88f658c7b7ae124452bd42eaa8ac7168 upstream.
+commit f342ac00da1064eb4f94b1f4bcacbdfea955797a upstream.
 
-Smatch Warns:
-sound/firewire/tascam/tascam-stream.c:493 snd_tscm_stream_start_duplex()
-warn: missing unwind goto?
+The BIOS botches this one completely - it says the 2nd S/PDIF output is
+used, while in fact it's the 1st one. This is tested on DP45SG, but I'm
+assuming it's valid for the other boards in the series as well.
 
-The direct return will cause the stream list of "&tscm->domain" unemptied
-and the session in "tscm" unfinished if amdtp_domain_start() returns with
-an error.
+Also add some comments regarding the pins.
+FWIW, the codec is apparently still sold by Tempo Semiconductor, Inc.,
+where one can download the documentation.
 
-Fix this by changing the direct return to a goto which will empty the
-stream list of "&tscm->domain" and finish the session in "tscm".
-
-The snd_tscm_stream_start_duplex() function is called in the prepare
-callback of PCM. According to "ALSA Kernel API Documentation", the prepare
-callback of PCM will be called many times at each setup. So, if the
-"&d->streams" list is not emptied, when the prepare callback is called
-next time, snd_tscm_stream_start_duplex() will receive -EBUSY from
-amdtp_domain_add_stream() that tries to add an existing stream to the
-domain. The error handling code after the "error" label will be executed
-in this case, and the "&d->streams" list will be emptied. So not emptying
-the "&d->streams" list will not cause an issue. But it is more efficient
-and readable to empty it on the first error by changing the direct return
-to a goto statement.
-
-The session in "tscm" has been begun before amdtp_domain_start(), so it
-needs to be finished when amdtp_domain_start() fails.
-
-Fixes: c281d46a51e3 ("ALSA: firewire-tascam: support AMDTP domain")
-Signed-off-by: Xu Biang <xubiang@hust.edu.cn>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Acked-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230406132801.105108-1-xubiang@hust.edu.cn
+Link: https://lore.kernel.org/r/20230405201220.2197826-2-oswald.buddenhagen@gmx.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/tascam/tascam-stream.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_sigmatel.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/sound/firewire/tascam/tascam-stream.c
-+++ b/sound/firewire/tascam/tascam-stream.c
-@@ -465,7 +465,7 @@ int snd_tscm_stream_start_duplex(struct
+--- a/sound/pci/hda/patch_sigmatel.c
++++ b/sound/pci/hda/patch_sigmatel.c
+@@ -1701,6 +1701,7 @@ static const struct snd_pci_quirk stac92
+ };
  
- 		err = amdtp_domain_start(&tscm->domain);
- 		if (err < 0)
--			return err;
-+			goto error;
+ static const struct hda_pintbl ref92hd73xx_pin_configs[] = {
++	// Port A-H
+ 	{ 0x0a, 0x02214030 },
+ 	{ 0x0b, 0x02a19040 },
+ 	{ 0x0c, 0x01a19020 },
+@@ -1709,9 +1710,12 @@ static const struct hda_pintbl ref92hd73
+ 	{ 0x0f, 0x01014010 },
+ 	{ 0x10, 0x01014020 },
+ 	{ 0x11, 0x01014030 },
++	// CD in
+ 	{ 0x12, 0x02319040 },
++	// Digial Mic ins
+ 	{ 0x13, 0x90a000f0 },
+ 	{ 0x14, 0x90a000f0 },
++	// Digital outs
+ 	{ 0x22, 0x01452050 },
+ 	{ 0x23, 0x01452050 },
+ 	{}
+@@ -1752,6 +1756,7 @@ static const struct hda_pintbl alienware
+ };
  
- 		if (!amdtp_stream_wait_callback(&tscm->rx_stream,
- 						CALLBACK_TIMEOUT) ||
+ static const struct hda_pintbl intel_dg45id_pin_configs[] = {
++	// Analog outputs
+ 	{ 0x0a, 0x02214230 },
+ 	{ 0x0b, 0x02A19240 },
+ 	{ 0x0c, 0x01013214 },
+@@ -1759,6 +1764,9 @@ static const struct hda_pintbl intel_dg4
+ 	{ 0x0e, 0x01A19250 },
+ 	{ 0x0f, 0x01011212 },
+ 	{ 0x10, 0x01016211 },
++	// Digital output
++	{ 0x22, 0x01451380 },
++	{ 0x23, 0x40f000f0 },
+ 	{}
+ };
+ 
 
 
