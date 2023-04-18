@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D9F2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:39:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C2EC433D2;
-	Tue, 18 Apr 2023 12:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0012572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:40:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37B1C433EF;
+	Tue, 18 Apr 2023 12:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821597;
-	bh=N41EXYR55Ch85XZze7JbwDJN4o6jv6/Uzj1LYWPsArA=;
+	s=korg; t=1681821600;
+	bh=1PTmcP2+6LuJsrULf4ZIc+pv2aA7YcGzRwoLHFAWLGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JCZJE9+h3nQIYyDpjDcQgWNzfBe6RKdh+SuoP9mStBoVYyim9Taa1SsDBxcfyHz+s
-	 +5uBKK7QgmpgemEkLpsI5OYIZLgGnP6mRIM2xrQdaOEVqONG3Wk9GL9iV5shmqFBVI
-	 B7SIyBuI6COcgV91UvQYBn6VOUpNN7GaiGoek+8c=
+	b=RTv1KV+K089jjErmpHybGbYMph72KpTUgYc/0lAbPwhm0LdYFYmIseVz+ojjI4tmB
+	 1SP627Dp1bFCyB1jsJZdJXYPFQHhn6fQwyETZpEwzh6cH283VbjRfM3nsSjJ+STiNL
+	 crJLPU/TkejjV/UvOQEgmGa0458R/Po0FrOhuoUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Radu Pirea (OSS)" <radu-nicolae.pirea@oss.nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 61/91] net: phy: nxp-c45-tja11xx: fix unsigned long multiplication overflow
-Date: Tue, 18 Apr 2023 14:22:05 +0200
-Message-Id: <20230418120307.707481181@linuxfoundation.org>
+	Michal Kolar <mich.k@seznam.cz>,
+	Jiri Kosina <jkosina@suse.cz>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ding Hui <dinghui@sangfor.com.cn>
+Subject: [PATCH 5.15 62/91] scsi: ses: Handle enclosure with just a primary component gracefully
+Date: Tue, 18 Apr 2023 14:22:06 +0200
+Message-Id: <20230418120307.742398613@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -35,38 +36,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Radu Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
+From: Jiri Kosina <jkosina@suse.cz>
 
-commit bdaaecc127d471c422ee9e994978617c8aa79e1e upstream.
+commit c8e22b7a1694bb8d025ea636816472739d859145 upstream.
 
-Any multiplication between GENMASK(31, 0) and a number bigger than 1
-will be truncated because of the overflow, if the size of unsigned long
-is 32 bits.
+This reverts commit 3fe97ff3d949 ("scsi: ses: Don't attach if enclosure
+has no components") and introduces proper handling of case where there are
+no detected secondary components, but primary component (enumerated in
+num_enclosures) does exist. That fix was originally proposed by Ding Hui
+<dinghui@sangfor.com.cn>.
 
-Replaced GENMASK with GENMASK_ULL to make sure that multiplication will
-be between 64 bits values.
+Completely ignoring devices that have one primary enclosure and no
+secondary one results in ses_intf_add() bailing completely
 
-Cc: <stable@vger.kernel.org> # 5.15+
-Fixes: 514def5dd339 ("phy: nxp-c45-tja11xx: add timestamping support")
-Signed-off-by: Radu Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230406095953.75622-1-radu-nicolae.pirea@oss.nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	scsi 2:0:0:254: enclosure has no enumerated components
+        scsi 2:0:0:254: Failed to bind enclosure -12ven in valid configurations such
+
+even on valid configurations with 1 primary and 0 secondary enclosures as
+below:
+
+	# sg_ses /dev/sg0
+	  3PARdata  SES               3321
+	Supported diagnostic pages:
+	  Supported Diagnostic Pages [sdp] [0x0]
+	  Configuration (SES) [cf] [0x1]
+	  Short Enclosure Status (SES) [ses] [0x8]
+	# sg_ses -p cf /dev/sg0
+	  3PARdata  SES               3321
+	Configuration diagnostic page:
+	  number of secondary subenclosures: 0
+	  generation code: 0x0
+	  enclosure descriptor list
+	    Subenclosure identifier: 0 [primary]
+	      relative ES process id: 0, number of ES processes: 1
+	      number of type descriptor headers: 1
+	      enclosure logical identifier (hex): 20000002ac02068d
+	      enclosure vendor: 3PARdata  product: VV                rev: 3321
+	  type descriptor header and text list
+	    Element type: Unspecified, subenclosure id: 0
+	      number of possible elements: 1
+
+The changelog for the original fix follows
+
+=====
+We can get a crash when disconnecting the iSCSI session,
+the call trace like this:
+
+  [ffff00002a00fb70] kfree at ffff00000830e224
+  [ffff00002a00fba0] ses_intf_remove at ffff000001f200e4
+  [ffff00002a00fbd0] device_del at ffff0000086b6a98
+  [ffff00002a00fc50] device_unregister at ffff0000086b6d58
+  [ffff00002a00fc70] __scsi_remove_device at ffff00000870608c
+  [ffff00002a00fca0] scsi_remove_device at ffff000008706134
+  [ffff00002a00fcc0] __scsi_remove_target at ffff0000087062e4
+  [ffff00002a00fd10] scsi_remove_target at ffff0000087064c0
+  [ffff00002a00fd70] __iscsi_unbind_session at ffff000001c872c4
+  [ffff00002a00fdb0] process_one_work at ffff00000810f35c
+  [ffff00002a00fe00] worker_thread at ffff00000810f648
+  [ffff00002a00fe70] kthread at ffff000008116e98
+
+In ses_intf_add, components count could be 0, and kcalloc 0 size scomp,
+but not saved in edev->component[i].scratch
+
+In this situation, edev->component[0].scratch is an invalid pointer,
+when kfree it in ses_intf_remove_enclosure, a crash like above would happen
+The call trace also could be other random cases when kfree cannot catch
+the invalid pointer
+
+We should not use edev->component[] array when the components count is 0
+We also need check index when use edev->component[] array in
+ses_enclosure_data_process
+=====
+
+Reported-by: Michal Kolar <mich.k@seznam.cz>
+Originally-by: Ding Hui <dinghui@sangfor.com.cn>
+Cc: stable@vger.kernel.org
+Fixes: 3fe97ff3d949 ("scsi: ses: Don't attach if enclosure has no components")
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Link: https://lore.kernel.org/r/nycvar.YFH.7.76.2304042122270.29760@cbobk.fhfr.pm
+Tested-by: Michal Kolar <mich.k@seznam.cz>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/nxp-c45-tja11xx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/ses.c |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/drivers/net/phy/nxp-c45-tja11xx.c
-+++ b/drivers/net/phy/nxp-c45-tja11xx.c
-@@ -168,7 +168,7 @@
- #define MAX_ID_PS			2260U
- #define DEFAULT_ID_PS			2000U
+--- a/drivers/scsi/ses.c
++++ b/drivers/scsi/ses.c
+@@ -503,9 +503,6 @@ static int ses_enclosure_find_by_addr(st
+ 	int i;
+ 	struct ses_component *scomp;
  
--#define PPM_TO_SUBNS_INC(ppb)	div_u64(GENMASK(31, 0) * (ppb) * \
-+#define PPM_TO_SUBNS_INC(ppb)	div_u64(GENMASK_ULL(31, 0) * (ppb) * \
- 					PTP_CLK_PERIOD_100BT1, NSEC_PER_SEC)
+-	if (!edev->component[0].scratch)
+-		return 0;
+-
+ 	for (i = 0; i < edev->components; i++) {
+ 		scomp = edev->component[i].scratch;
+ 		if (scomp->addr != efd->addr)
+@@ -596,8 +593,10 @@ static void ses_enclosure_data_process(s
+ 						components++,
+ 						type_ptr[0],
+ 						name);
+-				else
++				else if (components < edev->components)
+ 					ecomp = &edev->component[components++];
++				else
++					ecomp = ERR_PTR(-EINVAL);
  
- #define NXP_C45_SKB_CB(skb)	((struct nxp_c45_skb_cb *)(skb)->cb)
+ 				if (!IS_ERR(ecomp)) {
+ 					if (addl_desc_ptr) {
+@@ -728,11 +727,6 @@ static int ses_intf_add(struct device *c
+ 			components += type_ptr[1];
+ 	}
+ 
+-	if (components == 0) {
+-		sdev_printk(KERN_WARNING, sdev, "enclosure has no enumerated components\n");
+-		goto err_free;
+-	}
+-
+ 	ses_dev->page1 = buf;
+ 	ses_dev->page1_len = len;
+ 	buf = NULL;
+@@ -774,9 +768,11 @@ static int ses_intf_add(struct device *c
+ 		buf = NULL;
+ 	}
+ page2_not_supported:
+-	scomp = kcalloc(components, sizeof(struct ses_component), GFP_KERNEL);
+-	if (!scomp)
+-		goto err_free;
++	if (components > 0) {
++		scomp = kcalloc(components, sizeof(struct ses_component), GFP_KERNEL);
++		if (!scomp)
++			goto err_free;
++	}
+ 
+ 	edev = enclosure_register(cdev->parent, dev_name(&sdev->sdev_gendev),
+ 				  components, &ses_enclosure_callbacks);
 
 
