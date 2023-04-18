@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CA62566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B15EC433D2;
-	Tue, 18 Apr 2023 12:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA022566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:37:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C105C433EF;
+	Tue, 18 Apr 2023 12:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821437;
-	bh=Jx4AB8hoth22SJr2+al2uqhbZ2wbHM2ATm9tXM8vP4U=;
+	s=korg; t=1681821440;
+	bh=mW8Y1CkHX8lCQV0Us4SDvk43W03NToPaBMbKohQPfJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BM4L8njGaMjPPU7Sh9CEPVUWf0ComHvDqo8uKNQ5O3vo/voJuJu63rxuu/W9HZHOj
-	 G0i0gnlm2H26x+wjApRvFgy5CtsjjSxYWTP+U4j7tStCHpC1qAqYZrrjGoS0iwy2Ii
-	 9DB07IMPUlL8WGoJGFNDWF1Q1ze3ktQFeXAr0KAw=
+	b=RtdgBELWd3CXnk3NrVZpFXakYA1XLjk1rPWkhXI9qY6E68Awxct/tNno94Izqy1RX
+	 M+ai+MOZx7J4cdxb85SF5YDJPxRIDFwHKGouBrWI9hpv+jmNqCHgb3pOt399+fK8mp
+	 GYxA7hBOVvxGEF3uyWp81RzkgMKOFch2hJGa9pJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 5.10 119/124] kbuild: check CONFIG_AS_IS_LLVM instead of LLVM_IAS
-Date: Tue, 18 Apr 2023 14:22:18 +0200
-Message-Id: <20230418120314.094549503@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.10 120/124] riscv: Handle zicsr/zifencei issues between clang and binutils
+Date: Tue, 18 Apr 2023 14:22:19 +0200
+Message-Id: <20230418120314.128977947@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,62 +35,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 52cc02b910284d6bddba46cce402044ab775f314 upstream.
+commit e89c2e815e76471cb507bd95728bf26da7976430 upstream.
 
-LLVM_IAS is the user interface to set the -(no-)integrated-as flag,
-and it should be used only for that purpose.
+There are two related issues that appear in certain combinations with
+clang and GNU binutils.
 
-LLVM_IAS is checked in some places to determine the assembler type,
-but it is not precise.
+The first occurs when a version of clang that supports zicsr or zifencei
+via '-march=' [1] (i.e, >= 17.x) is used in combination with a version
+of GNU binutils that do not recognize zicsr and zifencei in the
+'-march=' value (i.e., < 2.36):
 
-For example,
+  riscv64-linux-gnu-ld: -march=rv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifencei2p0: Invalid or unknown z ISA extension: 'zifencei'
+  riscv64-linux-gnu-ld: failed to merge target specific data of file fs/efivarfs/file.o
+  riscv64-linux-gnu-ld: -march=rv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifencei2p0: Invalid or unknown z ISA extension: 'zifencei'
+  riscv64-linux-gnu-ld: failed to merge target specific data of file fs/efivarfs/super.o
 
- $ make CC=gcc LLVM_IAS=1
+The second occurs when a version of clang that does not support zicsr or
+zifencei via '-march=' (i.e., <= 16.x) is used in combination with a
+version of GNU as that defaults to a newer ISA base spec, which requires
+specifying zicsr and zifencei in the '-march=' value explicitly (i.e, >=
+2.38):
 
-... will use the GNU assembler (i.e. binutils) since LLVM_IAS=1 is
-effective only when $(CC) is clang.
+  ../arch/riscv/kernel/kexec_relocate.S: Assembler messages:
+  ../arch/riscv/kernel/kexec_relocate.S:147: Error: unrecognized opcode `fence.i', extension `zifencei' required
+  clang-12: error: assembler command failed with exit code 1 (use -v to see invocation)
 
-Of course, 'CC=gcc LLVM_IAS=1' is an odd combination, but the build
-system can be more robust against such insane input.
+This is the same issue addressed by commit 6df2a016c0c8 ("riscv: fix
+build with binutils 2.38") (see [2] for additional information) but
+older versions of clang miss out on it because the cc-option check
+fails:
 
-Commit ba64beb17493a ("kbuild: check the minimum assembler version in
-Kconfig") introduced CONFIG_AS_IS_GNU/LLVM, which is more precise
-because Kconfig checks the version string from the assembler in use.
+  clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupported standard user-level extension 'zicsr'
+  clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupported standard user-level extension 'zicsr'
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-[nathan: Backport to 5.10]
+To resolve the first issue, only attempt to add zicsr and zifencei to
+the march string when using the GNU assembler 2.38 or newer, which is
+when the default ISA spec was updated, requiring these extensions to be
+specified explicitly. LLVM implements an older version of the base
+specification for all currently released versions, so these instructions
+are available as part of the 'i' extension. If LLVM's implementation is
+updated in the future, a CONFIG_AS_IS_LLVM condition can be added to
+CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI.
+
+To resolve the second issue, use version 2.2 of the base ISA spec when
+using an older version of clang that does not support zicsr or zifencei
+via '-march=', as that is the spec version most compatible with the one
+clang/LLVM implements and avoids the need to specify zicsr and zifencei
+explicitly due to still being a part of 'i'.
+
+[1]: https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d4498694e15bf8a16
+[2]: https://lore.kernel.org/ZAxT7T9Xy1Fo3d5W@aurel32.net/
+
+Cc: stable@vger.kernel.org
+Link: https://github.com/ClangBuiltLinux/linux/issues/1808
+Co-developed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230313-riscv-zicsr-zifencei-fiasco-v1-1-dd1b7840a551@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile            |    2 +-
- arch/riscv/Makefile |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/Kconfig  |   22 ++++++++++++++++++++++
+ arch/riscv/Makefile |   10 ++++++----
+ 2 files changed, 28 insertions(+), 4 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -851,7 +851,7 @@ else
- DEBUG_CFLAGS	+= -g
- endif
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -331,6 +331,28 @@ config RISCV_BASE_PMU
  
--ifeq ($(LLVM_IAS),1)
-+ifdef CONFIG_AS_IS_LLVM
- KBUILD_AFLAGS	+= -g
- else
- KBUILD_AFLAGS	+= -Wa,-gdwarf-2
+ endmenu
+ 
++config TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
++	def_bool y
++	# https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=aed44286efa8ae8717a77d94b51ac3614e2ca6dc
++	depends on AS_IS_GNU && AS_VERSION >= 23800
++	help
++	  Newer binutils versions default to ISA spec version 20191213 which
++	  moves some instructions from the I extension to the Zicsr and Zifencei
++	  extensions.
++
++config TOOLCHAIN_NEEDS_OLD_ISA_SPEC
++	def_bool y
++	depends on TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
++	# https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d4498694e15bf8a16
++	depends on CC_IS_CLANG && CLANG_VERSION < 170000
++	help
++	  Certain versions of clang do not support zicsr and zifencei via -march
++	  but newer versions of binutils require it for the reasons noted in the
++	  help text of CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI. This
++	  option causes an older ISA spec compatible with these older versions
++	  of clang to be passed to GAS, which has the same result as passing zicsr
++	  and zifencei to -march.
++
+ config FPU
+ 	bool "FPU support"
+ 	default y
 --- a/arch/riscv/Makefile
 +++ b/arch/riscv/Makefile
-@@ -40,7 +40,7 @@ ifeq ($(CONFIG_LD_IS_LLD),y)
- ifeq ($(shell test $(CONFIG_LLD_VERSION) -lt 150000; echo $$?),0)
- 	KBUILD_CFLAGS += -mno-relax
- 	KBUILD_AFLAGS += -mno-relax
--ifneq ($(LLVM_IAS),1)
-+ifndef CONFIG_AS_IS_LLVM
- 	KBUILD_CFLAGS += -Wa,-mno-relax
- 	KBUILD_AFLAGS += -Wa,-mno-relax
- endif
+@@ -53,10 +53,12 @@ riscv-march-$(CONFIG_ARCH_RV64I)	:= rv64
+ riscv-march-$(CONFIG_FPU)		:= $(riscv-march-y)fd
+ riscv-march-$(CONFIG_RISCV_ISA_C)	:= $(riscv-march-y)c
+ 
+-# Newer binutils versions default to ISA spec version 20191213 which moves some
+-# instructions from the I extension to the Zicsr and Zifencei extensions.
+-toolchain-need-zicsr-zifencei := $(call cc-option-yn, -march=$(riscv-march-y)_zicsr_zifencei)
+-riscv-march-$(toolchain-need-zicsr-zifencei) := $(riscv-march-y)_zicsr_zifencei
++ifdef CONFIG_TOOLCHAIN_NEEDS_OLD_ISA_SPEC
++KBUILD_CFLAGS += -Wa,-misa-spec=2.2
++KBUILD_AFLAGS += -Wa,-misa-spec=2.2
++else
++riscv-march-$(CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI) := $(riscv-march-y)_zicsr_zifencei
++endif
+ 
+ KBUILD_CFLAGS += -march=$(subst fd,,$(riscv-march-y))
+ KBUILD_AFLAGS += -march=$(riscv-march-y)
 
 
