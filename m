@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489562572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:53:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47F2C433D2;
-	Tue, 18 Apr 2023 12:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CC12572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:53:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BE2C433EF;
+	Tue, 18 Apr 2023 12:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822381;
-	bh=GrbFPr1uIDerg+g5dzeCl7cYj+L0Zd2Sk5UU7sEuDGw=;
+	s=korg; t=1681822383;
+	bh=7LDD/xBz/TwO2+c7fqTXVr85Nb0HEZeIa/qy3SvRtYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iw0q8yXJdnytaFcF5A+zJCHKkiHRj9AyiL/k+vMuOhYhI1FEkiCXItOcLX9eDxY7b
-	 Z03UAfLzVLRMhyMSGAYAihjFft6HPShAoLStxqrAW0ARlTqoN43IIiiBwPMYUOpmPb
-	 HbSndZwFB5C5Zxq0p+TZQ+HPU/Y+Zc60g/eo3dhM=
+	b=jsUrNadmwOkNFpEP0z5MqngD5zNUFRh7lVs6XMZEmCd7iNJRxsZ6Wz6/QhnLgr6ua
+	 axZmrmehX8hSprCcVoEQkJpeY7dv2cg5JyzOmgXXLx+hC72RI0cWJJNjUkB4BMRv8s
+	 jTQTKz92cIw1Bsn1DcgCoOWBcHKVQHa1jdCNMSpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Nicolas Schichan <nschichan@freebox.fr>,
-	Richard Weinberger <richard@nod.at>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.2 128/139] ubi: Fix failure attaching when vid_hdr offset equals to (sub)page size
-Date: Tue, 18 Apr 2023 14:23:13 +0200
-Message-Id: <20230418120318.674125499@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 102/139] maple_tree: fix write memory barrier of nodes once dead for RCU mode
+Date: Tue, 18 Apr 2023 14:22:47 +0200
+Message-Id: <20230418120317.628357621@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,73 +36,194 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-commit 1e020e1b96afdecd20680b5b5be2a6ffc3d27628 upstream.
+[ Upstream commit c13af03de46ba27674dd9fb31a17c0d480081139 ]
 
-Following process will make ubi attaching failed since commit
-1b42b1a36fc946 ("ubi: ensure that VID header offset ... size"):
+During the development of the maple tree, the strategy of freeing multiple
+nodes changed and, in the process, the pivots were reused to store
+pointers to dead nodes.  To ensure the readers see accurate pivots, the
+writers need to mark the nodes as dead and call smp_wmb() to ensure any
+readers can identify the node as dead before using the pivot values.
 
-ID="0xec,0xa1,0x00,0x15" # 128M 128KB 2KB
-modprobe nandsim id_bytes=$ID
-flash_eraseall /dev/mtd0
-modprobe ubi mtd="0,2048"  # set vid_hdr offset as 2048 (one page)
-(dmesg):
-  ubi0 error: ubi_attach_mtd_dev [ubi]: VID header offset 2048 too large.
-  UBI error: cannot attach mtd0
-  UBI error: cannot initialize UBI, error -22
+There were two places where the old method of marking the node as dead
+without smp_wmb() were being used, which resulted in RCU readers seeing
+the wrong pivot value before seeing the node was dead.  Fix this race
+condition by using mte_set_node_dead() which has the smp_wmb() call to
+ensure the race is closed.
 
-Rework original solution, the key point is making sure
-'vid_hdr_shift + UBI_VID_HDR_SIZE < ubi->vid_hdr_alsize',
-so we should check vid_hdr_shift rather not vid_hdr_offset.
-Then, ubi still support (sub)page aligined VID header offset.
+Add a WARN_ON() to the ma_free_rcu() call to ensure all nodes being freed
+are marked as dead to ensure there are no other call paths besides the two
+updated paths.
 
-Fixes: 1b42b1a36fc946 ("ubi: ensure that VID header offset ... size")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Tested-by: Nicolas Schichan <nschichan@freebox.fr>
-Tested-by: Miquel Raynal <miquel.raynal@bootlin.com> # v5.10, v4.19
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is necessary for the RCU mode of the maple tree.
+
+Link: https://lkml.kernel.org/r/20230227173632.3292573-6-surenb@google.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ lib/maple_tree.c                 |  7 +++++--
+ tools/testing/radix-tree/maple.c | 16 ++++++++++++++++
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
---- a/drivers/mtd/ubi/build.c
-+++ b/drivers/mtd/ubi/build.c
-@@ -664,12 +664,6 @@ static int io_init(struct ubi_device *ub
- 	ubi->ec_hdr_alsize = ALIGN(UBI_EC_HDR_SIZE, ubi->hdrs_min_io_size);
- 	ubi->vid_hdr_alsize = ALIGN(UBI_VID_HDR_SIZE, ubi->hdrs_min_io_size);
+diff --git a/lib/maple_tree.c b/lib/maple_tree.c
+index fb452873914f2..022573f499578 100644
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -178,7 +178,7 @@ static void mt_free_rcu(struct rcu_head *head)
+  */
+ static void ma_free_rcu(struct maple_node *node)
+ {
+-	node->parent = ma_parent_ptr(node);
++	WARN_ON(node->parent != ma_parent_ptr(node));
+ 	call_rcu(&node->rcu, mt_free_rcu);
+ }
  
--	if (ubi->vid_hdr_offset && ((ubi->vid_hdr_offset + UBI_VID_HDR_SIZE) >
--	    ubi->vid_hdr_alsize)) {
--		ubi_err(ubi, "VID header offset %d too large.", ubi->vid_hdr_offset);
--		return -EINVAL;
--	}
--
- 	dbg_gen("min_io_size      %d", ubi->min_io_size);
- 	dbg_gen("max_write_size   %d", ubi->max_write_size);
- 	dbg_gen("hdrs_min_io_size %d", ubi->hdrs_min_io_size);
-@@ -687,6 +681,21 @@ static int io_init(struct ubi_device *ub
- 						ubi->vid_hdr_aloffset;
+@@ -1785,8 +1785,10 @@ static inline void mas_replace(struct ma_state *mas, bool advanced)
+ 		rcu_assign_pointer(slots[offset], mas->node);
  	}
  
-+	/*
-+	 * Memory allocation for VID header is ubi->vid_hdr_alsize
-+	 * which is described in comments in io.c.
-+	 * Make sure VID header shift + UBI_VID_HDR_SIZE not exceeds
-+	 * ubi->vid_hdr_alsize, so that all vid header operations
-+	 * won't access memory out of bounds.
-+	 */
-+	if ((ubi->vid_hdr_shift + UBI_VID_HDR_SIZE) > ubi->vid_hdr_alsize) {
-+		ubi_err(ubi, "Invalid VID header offset %d, VID header shift(%d)"
-+			" + VID header size(%zu) > VID header aligned size(%d).",
-+			ubi->vid_hdr_offset, ubi->vid_hdr_shift,
-+			UBI_VID_HDR_SIZE, ubi->vid_hdr_alsize);
-+		return -EINVAL;
+-	if (!advanced)
++	if (!advanced) {
++		mte_set_node_dead(old_enode);
+ 		mas_free(mas, old_enode);
 +	}
-+
- 	/* Similar for the data offset */
- 	ubi->leb_start = ubi->vid_hdr_offset + UBI_VID_HDR_SIZE;
- 	ubi->leb_start = ALIGN(ubi->leb_start, ubi->min_io_size);
+ }
+ 
+ /*
+@@ -4221,6 +4223,7 @@ static inline bool mas_wr_node_store(struct ma_wr_state *wr_mas)
+ done:
+ 	mas_leaf_set_meta(mas, newnode, dst_pivots, maple_leaf_64, new_end);
+ 	if (in_rcu) {
++		mte_set_node_dead(mas->node);
+ 		mas->node = mt_mk_node(newnode, wr_mas->type);
+ 		mas_replace(mas, false);
+ 	} else {
+diff --git a/tools/testing/radix-tree/maple.c b/tools/testing/radix-tree/maple.c
+index 1f36bc1c5d362..2a16939cf0285 100644
+--- a/tools/testing/radix-tree/maple.c
++++ b/tools/testing/radix-tree/maple.c
+@@ -108,6 +108,7 @@ static noinline void check_new_node(struct maple_tree *mt)
+ 	MT_BUG_ON(mt, mn->slot[1] != NULL);
+ 	MT_BUG_ON(mt, mas_allocated(&mas) != 0);
+ 
++	mn->parent = ma_parent_ptr(mn);
+ 	ma_free_rcu(mn);
+ 	mas.node = MAS_START;
+ 	mas_nomem(&mas, GFP_KERNEL);
+@@ -160,6 +161,7 @@ static noinline void check_new_node(struct maple_tree *mt)
+ 		MT_BUG_ON(mt, mas_allocated(&mas) != i);
+ 		MT_BUG_ON(mt, !mn);
+ 		MT_BUG_ON(mt, not_empty(mn));
++		mn->parent = ma_parent_ptr(mn);
+ 		ma_free_rcu(mn);
+ 	}
+ 
+@@ -192,6 +194,7 @@ static noinline void check_new_node(struct maple_tree *mt)
+ 		MT_BUG_ON(mt, not_empty(mn));
+ 		MT_BUG_ON(mt, mas_allocated(&mas) != i - 1);
+ 		MT_BUG_ON(mt, !mn);
++		mn->parent = ma_parent_ptr(mn);
+ 		ma_free_rcu(mn);
+ 	}
+ 
+@@ -210,6 +213,7 @@ static noinline void check_new_node(struct maple_tree *mt)
+ 			mn = mas_pop_node(&mas);
+ 			MT_BUG_ON(mt, not_empty(mn));
+ 			MT_BUG_ON(mt, mas_allocated(&mas) != j - 1);
++			mn->parent = ma_parent_ptr(mn);
+ 			ma_free_rcu(mn);
+ 		}
+ 		MT_BUG_ON(mt, mas_allocated(&mas) != 0);
+@@ -233,6 +237,7 @@ static noinline void check_new_node(struct maple_tree *mt)
+ 			MT_BUG_ON(mt, mas_allocated(&mas) != i - j);
+ 			mn = mas_pop_node(&mas);
+ 			MT_BUG_ON(mt, not_empty(mn));
++			mn->parent = ma_parent_ptr(mn);
+ 			ma_free_rcu(mn);
+ 			MT_BUG_ON(mt, mas_allocated(&mas) != i - j - 1);
+ 		}
+@@ -269,6 +274,7 @@ static noinline void check_new_node(struct maple_tree *mt)
+ 			mn = mas_pop_node(&mas); /* get the next node. */
+ 			MT_BUG_ON(mt, mn == NULL);
+ 			MT_BUG_ON(mt, not_empty(mn));
++			mn->parent = ma_parent_ptr(mn);
+ 			ma_free_rcu(mn);
+ 		}
+ 		MT_BUG_ON(mt, mas_allocated(&mas) != 0);
+@@ -294,6 +300,7 @@ static noinline void check_new_node(struct maple_tree *mt)
+ 			mn = mas_pop_node(&mas2); /* get the next node. */
+ 			MT_BUG_ON(mt, mn == NULL);
+ 			MT_BUG_ON(mt, not_empty(mn));
++			mn->parent = ma_parent_ptr(mn);
+ 			ma_free_rcu(mn);
+ 		}
+ 		MT_BUG_ON(mt, mas_allocated(&mas2) != 0);
+@@ -334,10 +341,12 @@ static noinline void check_new_node(struct maple_tree *mt)
+ 	MT_BUG_ON(mt, mas_allocated(&mas) != MAPLE_ALLOC_SLOTS + 2);
+ 	mn = mas_pop_node(&mas);
+ 	MT_BUG_ON(mt, not_empty(mn));
++	mn->parent = ma_parent_ptr(mn);
+ 	ma_free_rcu(mn);
+ 	for (i = 1; i <= MAPLE_ALLOC_SLOTS + 1; i++) {
+ 		mn = mas_pop_node(&mas);
+ 		MT_BUG_ON(mt, not_empty(mn));
++		mn->parent = ma_parent_ptr(mn);
+ 		ma_free_rcu(mn);
+ 	}
+ 	MT_BUG_ON(mt, mas_allocated(&mas) != 0);
+@@ -375,6 +384,7 @@ static noinline void check_new_node(struct maple_tree *mt)
+ 		mas_node_count(&mas, i); /* Request */
+ 		mas_nomem(&mas, GFP_KERNEL); /* Fill request */
+ 		mn = mas_pop_node(&mas); /* get the next node. */
++		mn->parent = ma_parent_ptr(mn);
+ 		ma_free_rcu(mn);
+ 		mas_destroy(&mas);
+ 
+@@ -382,10 +392,13 @@ static noinline void check_new_node(struct maple_tree *mt)
+ 		mas_node_count(&mas, i); /* Request */
+ 		mas_nomem(&mas, GFP_KERNEL); /* Fill request */
+ 		mn = mas_pop_node(&mas); /* get the next node. */
++		mn->parent = ma_parent_ptr(mn);
+ 		ma_free_rcu(mn);
+ 		mn = mas_pop_node(&mas); /* get the next node. */
++		mn->parent = ma_parent_ptr(mn);
+ 		ma_free_rcu(mn);
+ 		mn = mas_pop_node(&mas); /* get the next node. */
++		mn->parent = ma_parent_ptr(mn);
+ 		ma_free_rcu(mn);
+ 		mas_destroy(&mas);
+ 	}
+@@ -35369,6 +35382,7 @@ static noinline void check_prealloc(struct maple_tree *mt)
+ 	MT_BUG_ON(mt, allocated != 1 + height * 3);
+ 	mn = mas_pop_node(&mas);
+ 	MT_BUG_ON(mt, mas_allocated(&mas) != allocated - 1);
++	mn->parent = ma_parent_ptr(mn);
+ 	ma_free_rcu(mn);
+ 	MT_BUG_ON(mt, mas_preallocate(&mas, ptr, GFP_KERNEL) != 0);
+ 	mas_destroy(&mas);
+@@ -35386,6 +35400,7 @@ static noinline void check_prealloc(struct maple_tree *mt)
+ 	mas_destroy(&mas);
+ 	allocated = mas_allocated(&mas);
+ 	MT_BUG_ON(mt, allocated != 0);
++	mn->parent = ma_parent_ptr(mn);
+ 	ma_free_rcu(mn);
+ 
+ 	MT_BUG_ON(mt, mas_preallocate(&mas, ptr, GFP_KERNEL) != 0);
+@@ -35756,6 +35771,7 @@ void farmer_tests(void)
+ 	tree.ma_root = mt_mk_node(node, maple_leaf_64);
+ 	mt_dump(&tree);
+ 
++	node->parent = ma_parent_ptr(node);
+ 	ma_free_rcu(node);
+ 
+ 	/* Check things that will make lockdep angry */
+-- 
+2.39.2
+
 
 
