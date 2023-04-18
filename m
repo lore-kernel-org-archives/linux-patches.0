@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED832572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257D5C433EF;
-	Tue, 18 Apr 2023 12:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FF12572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:45:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28B8C433EF;
+	Tue, 18 Apr 2023 12:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821915;
-	bh=2pP/7F7VNBSB7j7XD5swCP3wrTQaO62LKbd0DZpgzp0=;
+	s=korg; t=1681821918;
+	bh=7H5totHyxq4yVx5iYXOEPlYPqoU+uIYlMPC64nUrdwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7zKBGfVLN0HSGNHXJy5az/o5Pfreak0N3O5siQ1LWCsJUQSdFqEtD/mm5J6RVs3E
-	 MlRJPGH9EN2GoK61LO+HVAREgmrXAuMfUeOosoD/S3oumalKhQP5RRjzVbnQ7aCk6J
-	 MmmsM3/WudbFHOQZ4TLGKWOY4jPT8u/asubVlkSY=
+	b=uaj+a2C9QEtBkq6mUnCL3rpCM96dClULtu+4wqVcIgH0NQr0f9RL/0yeLnn5Vp8jC
+	 +2c2B44+xqqIblLAiI6GkvHmurfnQW7tJjTuFyYiuZoyksWsYNvUyOfaS5wJqiGCb+
+	 VzUJPS7wNDmv+MpHdmgi9/aSh6+1jJe+bwSuBKqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tong Liu01 <Tong.Liu01@amd.com>,
+	YuBiao Wang <YuBiao.Wang@amd.com>,
+	Luben Tuikov <luben.tuikov@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/134] drm/amdgpu: add mes resume when do gfx post soft reset
-Date: Tue, 18 Apr 2023 14:22:26 +0200
-Message-Id: <20230418120316.305164708@linuxfoundation.org>
+Subject: [PATCH 6.1 091/134] drm/amdgpu: Force signal hw_fences that are embedded in non-sched jobs
+Date: Tue, 18 Apr 2023 14:22:27 +0200
+Message-Id: <20230418120316.343689921@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,53 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tong Liu01 <Tong.Liu01@amd.com>
+From: YuBiao Wang <YuBiao.Wang@amd.com>
 
-[ Upstream commit 4eb0b49a0ad3e004a6a65b84efe37bc7e66d560f ]
+[ Upstream commit 033c56474acf567a450f8bafca50e0b610f2b716 ]
 
-[why]
-when gfx do soft reset, mes will also do reset, if mes is not
-resumed when do recover from soft reset, mes is unable to respond
-in later sequence
+[Why]
+For engines not supporting soft reset, i.e. VCN, there will be a failed
+ib test before mode 1 reset during asic reset. The fences in this case
+are never signaled and next time when we try to free the sa_bo, kernel
+will hang.
 
-[how]
-resume mes when do gfx post soft reset
+[How]
+During pre_asic_reset, driver will clear job fences and afterwards the
+fences' refcount will be reduced to 1. For drm_sched_jobs it will be
+released in job_free_cb, and for non-sched jobs like ib_test, it's meant
+to be released in sa_bo_free but only when the fences are signaled. So
+we have to force signal the non_sched bad job's fence during
+pre_asic_reset or the clear is not complete.
 
-Signed-off-by: Tong Liu01 <Tong.Liu01@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: YuBiao Wang <YuBiao.Wang@amd.com>
+Acked-by: Luben Tuikov <luben.tuikov@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 9 +++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c | 9 +++++++++
  1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-index 90e739d9aeee7..7a13129842602 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -4625,6 +4625,14 @@ static bool gfx_v11_0_check_soft_reset(void *handle)
- 	return false;
- }
- 
-+static int gfx_v11_0_post_soft_reset(void *handle)
-+{
-+	/**
-+	 * GFX soft reset will impact MES, need resume MES when do GFX soft reset
-+	 */
-+	return amdgpu_mes_resume((struct amdgpu_device *)handle);
-+}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
+index 6fdb679321d0d..3cc1929285fc0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
+@@ -624,6 +624,15 @@ void amdgpu_fence_driver_clear_job_fences(struct amdgpu_ring *ring)
+ 		ptr = &ring->fence_drv.fences[i];
+ 		old = rcu_dereference_protected(*ptr, 1);
+ 		if (old && old->ops == &amdgpu_job_fence_ops) {
++			struct amdgpu_job *job;
 +
- static uint64_t gfx_v11_0_get_gpu_clock_counter(struct amdgpu_device *adev)
- {
- 	uint64_t clock;
-@@ -6068,6 +6076,7 @@ static const struct amd_ip_funcs gfx_v11_0_ip_funcs = {
- 	.wait_for_idle = gfx_v11_0_wait_for_idle,
- 	.soft_reset = gfx_v11_0_soft_reset,
- 	.check_soft_reset = gfx_v11_0_check_soft_reset,
-+	.post_soft_reset = gfx_v11_0_post_soft_reset,
- 	.set_clockgating_state = gfx_v11_0_set_clockgating_state,
- 	.set_powergating_state = gfx_v11_0_set_powergating_state,
- 	.get_clockgating_state = gfx_v11_0_get_clockgating_state,
++			/* For non-scheduler bad job, i.e. failed ib test, we need to signal
++			 * it right here or we won't be able to track them in fence_drv
++			 * and they will remain unsignaled during sa_bo free.
++			 */
++			job = container_of(old, struct amdgpu_job, hw_fence);
++			if (!job->base.s_fence && !dma_fence_is_signaled(old))
++				dma_fence_signal(old);
+ 			RCU_INIT_POINTER(*ptr, NULL);
+ 			dma_fence_put(old);
+ 		}
 -- 
 2.39.2
 
