@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F052572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:51:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C168C433D2;
-	Tue, 18 Apr 2023 12:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFEC2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:51:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E00C433EF;
+	Tue, 18 Apr 2023 12:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822272;
-	bh=jbo90pjhiOAqK6Dg1qWU7mQASa/+p/Puj1Kz8Hqp9mc=;
+	s=korg; t=1681822275;
+	bh=xdNacUZzDO8QPZ3U3zjunvBA8AJo5K39CPFIpA+F4cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDP5yJJdDg90tzs57+1oZFzkWJth+096YiEo+rLtpSU3oGLjexWw4fnEDUzRYv2WR
-	 xeck7h5pQtBDUB/Y3VHUo3s62i79co+yVDxBVnHl7YrMfNrHQ6uMa9m33d2FkVEmRF
-	 TLayB6WwTyOPHSRzEFJKvsUiexZ+vPrAmEnX0mZQ=
+	b=nOnM+JlINDjlIzzmClu3ilTI42kkXYwvnCoLcrmvKNE3zsQ/dzna3MWOjrZWSqB9/
+	 YPMo9viMJzSc5GN1pq+N7gnByc5WlXDJh36YzdJg80S/WSpkWmuga+RCtwKr7DFHV/
+	 mKUkw63lWC91BaujFgC+UbknvNsDamqEQItk7pao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 087/139] ACPI: video: Add backlight=native DMI quirk for Acer Aspire 3830TG
-Date: Tue, 18 Apr 2023 14:22:32 +0200
-Message-Id: <20230418120317.078005706@linuxfoundation.org>
+Subject: [PATCH 6.2 088/139] drm: panel-orientation-quirks: Add quirk for Lenovo Yoga Book X90F
+Date: Tue, 18 Apr 2023 14:22:33 +0200
+Message-Id: <20230418120317.111085808@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -37,41 +37,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 5e7a3bf65db57461d0f47955248fcadf37321a74 ]
+[ Upstream commit 03aecb1acbcd7a660f97d645ca6c09d9de27ff9d ]
 
-The Acer Aspire 3830TG predates Windows 8, so it defaults to using
-acpi_video# for backlight control, but this is non functional on
-this model.
+Like the Windows Lenovo Yoga Book X91F/L the Android Lenovo Yoga Book
+X90F/L has a portrait 1200x1920 screen used in landscape mode,
+add a quirk for this.
 
-Add a DMI quirk to use the native backlight interface which does
-work properly.
+When the quirk for the X91F/L was initially added it was written to
+also apply to the X90F/L but this does not work because the Android
+version of the Yoga Book uses completely different DMI strings.
+Also adjust the X91F/L quirk to reflect that it only applies to
+the X91F/L models.
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230301095218.28457-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index b3b0b06971df5..e85729fc481fd 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -532,6 +532,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Precision 7510"),
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 5522d610c5cfd..b1a38e6ce2f8f 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -328,10 +328,17 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "IdeaPad Duet 3 10IGL5"),
  		},
- 	},
-+	{
-+	 .callback = video_detect_force_native,
-+	 /* Acer Aspire 3830TG */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "Aspire 3830TG"),
+ 		.driver_data = (void *)&lcd1200x1920_rightside_up,
+-	}, {	/* Lenovo Yoga Book X90F / X91F / X91L */
++	}, {	/* Lenovo Yoga Book X90F / X90L */
+ 		.matches = {
+-		  /* Non exact match to match all versions */
+-		  DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X9"),
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
 +		},
-+	},
- 	{
- 	 .callback = video_detect_force_native,
- 	 /* Acer Aspire 4810T */
++		.driver_data = (void *)&lcd1200x1920_rightside_up,
++	}, {	/* Lenovo Yoga Book X91F / X91L */
++		.matches = {
++		  /* Non exact match to match F + L versions */
++		  DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X91"),
+ 		},
+ 		.driver_data = (void *)&lcd1200x1920_rightside_up,
+ 	}, {	/* Lenovo Yoga Tablet 2 830F / 830L */
 -- 
 2.39.2
 
