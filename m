@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276612566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:31:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DE2C4339B;
-	Tue, 18 Apr 2023 12:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1D22566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:31:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41789C433D2;
+	Tue, 18 Apr 2023 12:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821088;
-	bh=fPMVpcUOIDP+2ehlCYF+LjGptLRcd32g/q7TmXHKLzY=;
+	s=korg; t=1681821090;
+	bh=N21wMtQn63NagOixZ4zAZGnlBBW8v+o+UP864siyKn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lwb8YWFg9qWX8mBGJj1+9MIlrgiwurLyM1gSc/lcXMcpBRQEm6rwDGTCDBjbmpQgi
-	 wZR2dHDnISF+6w3ztX/I3h+0atx5OfSFgVzWEbS9O3DEgtL4KKtm/VAkt4CNfqM/Xe
-	 3n7Lf9dMux1sijvCvp827YVrMlue5OIX8UBPvQ7Y=
+	b=eiedJKJn6MsPCbBjMEFhAB1mDfay5ldr4f0PZD/pHGdI4sJ0hsv8fDgGyCEKdwFh/
+	 u+Zve0vZeY9GYCOY3MH/M15uQhyUbKkWB5YVXGh0zZvJbDIWnsm5xsM722g6ICalNI
+	 fNa5h6OZ9UclmvE/j2bEscTh2GIAfY0dm0QRWjcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Jeffrey Mitchell <jeffrey.mitchell@starlab.io>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Brian Foster <bfoster@redhat.com>,
 	Amir Goldstein <amir73il@gmail.com>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 86/92] xfs: fix up non-directory creation in SGID directories
-Date: Tue, 18 Apr 2023 14:22:01 +0200
-Message-Id: <20230418120307.790949945@linuxfoundation.org>
+Subject: [PATCH 5.4 87/92] xfs: set inode size after creating symlink
+Date: Tue, 18 Apr 2023 14:22:02 +0200
+Message-Id: <20230418120307.829460760@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -37,68 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Jeffrey Mitchell <jeffrey.mitchell@starlab.io>
 
-commit 01ea173e103edd5ec41acec65b9261b87e123fc2 upstream.
+commit 8aa921a95335d0a8c8e2be35a44467e7c91ec3e4 upstream.
 
-XFS always inherits the SGID bit if it is set on the parent inode, while
-the generic inode_init_owner does not do this in a few cases where it can
-create a possible security problem, see commit 0fa3ecd87848
-("Fix up non-directory creation in SGID directories") for details.
+When XFS creates a new symlink, it writes its size to disk but not to the
+VFS inode. This causes i_size_read() to return 0 for that symlink until
+it is re-read from disk, for example when the system is rebooted.
 
-Switch XFS to use the generic helper for the normal path to fix this,
-just keeping the simple field inheritance open coded for the case of the
-non-sgid case with the bsdgrpid mount option.
+I found this inconsistency while protecting directories with eCryptFS.
+The command "stat path/to/symlink/in/ecryptfs" will report "Size: 0" if
+the symlink was created after the last reboot on an XFS root.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Christian Brauner <christian.brauner@ubuntu.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Call i_size_write() in xfs_symlink()
+
+Signed-off-by: Jeffrey Mitchell <jeffrey.mitchell@starlab.io>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/xfs/xfs_symlink.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -750,6 +750,7 @@ xfs_ialloc(
- 	xfs_buf_t	**ialloc_context,
- 	xfs_inode_t	**ipp)
- {
-+	struct inode	*dir = pip ? VFS_I(pip) : NULL;
- 	struct xfs_mount *mp = tp->t_mountp;
- 	xfs_ino_t	ino;
- 	xfs_inode_t	*ip;
-@@ -795,18 +796,17 @@ xfs_ialloc(
- 		return error;
- 	ASSERT(ip != NULL);
- 	inode = VFS_I(ip);
--	inode->i_mode = mode;
- 	set_nlink(inode, nlink);
--	inode->i_uid = current_fsuid();
- 	inode->i_rdev = rdev;
- 	ip->i_d.di_projid = prid;
- 
--	if (pip && XFS_INHERIT_GID(pip)) {
--		inode->i_gid = VFS_I(pip)->i_gid;
--		if ((VFS_I(pip)->i_mode & S_ISGID) && S_ISDIR(mode))
--			inode->i_mode |= S_ISGID;
-+	if (dir && !(dir->i_mode & S_ISGID) &&
-+	    (mp->m_flags & XFS_MOUNT_GRPID)) {
-+		inode->i_uid = current_fsuid();
-+		inode->i_gid = dir->i_gid;
-+		inode->i_mode = mode;
- 	} else {
--		inode->i_gid = current_fsgid();
-+		inode_init_owner(inode, dir, mode);
+--- a/fs/xfs/xfs_symlink.c
++++ b/fs/xfs/xfs_symlink.c
+@@ -314,6 +314,7 @@ xfs_symlink(
+ 		}
+ 		ASSERT(pathlen == 0);
  	}
++	i_size_write(VFS_I(ip), ip->i_d.di_size);
  
  	/*
+ 	 * Create the directory entry for the symlink.
 
 
