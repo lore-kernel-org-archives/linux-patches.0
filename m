@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE052572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67F1C4339B;
-	Tue, 18 Apr 2023 12:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23272572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630D0C4339B;
+	Tue, 18 Apr 2023 12:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821810;
-	bh=LJqsLK/fF+B3r7y04bZh1zbvBgs0fFmmwPmGP+1WkfE=;
+	s=korg; t=1681821812;
+	bh=jaQaabwiGAugIc2jTfWH15Ai29yX7+57k6YWU76NwQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrWCNPCuqhj6lOwVevO7TEnT8EF0caiDyvjBHLLl4/Tth7shiaaMZALlUUS9Id/HL
-	 2mZoQnZsu0XLaxAKAhnGviYWruHBombvYM+7Zu9dLr6omSBw8/IPLSA0BEXKwWWlzm
-	 zvF/SIAxCtNTjfZ0O1+VtkVWAPVcLRgrmKWheczE=
+	b=erZCq2AAmnxQ54FklfsdRNerPlN7ymQrneMueFMf92ghqZ+Zv8k88ng80A600kOlI
+	 LdT7skywtT0gdrKJ1GjTv38laaJ1G9kJemmFOlbFmnMguwtb5nRjB+2lrIzAnl2QZg
+	 5Ap4KUnntyY0a2CB6PjCh4ajTNAFat0Pc65vygQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 010/134] ALSA: hda/sigmatel: fix S/PDIF out on Intel D*45* motherboards
-Date: Tue, 18 Apr 2023 14:21:06 +0200
-Message-Id: <20230418120313.363227645@linuxfoundation.org>
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 043/134] dmaengine: apple-admac: Fix current_tx not getting freed
+Date: Tue, 18 Apr 2023 14:21:39 +0200
+Message-Id: <20230418120314.432041259@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -34,67 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Martin Povišer <povik+lin@cutebit.org>
 
-commit f342ac00da1064eb4f94b1f4bcacbdfea955797a upstream.
+[ Upstream commit d9503be5a100c553731c0e8a82c7b4201e8a970c ]
 
-The BIOS botches this one completely - it says the 2nd S/PDIF output is
-used, while in fact it's the 1st one. This is tested on DP45SG, but I'm
-assuming it's valid for the other boards in the series as well.
+In terminate_all we should queue up all submitted descriptors to be
+freed. We do that for the content of the 'issued' and 'submitted' lists,
+but the 'current_tx' descriptor falls through the cracks as it's
+removed from the 'issued' list once it gets assigned to be the current
+descriptor. Explicitly queue up freeing of the 'current_tx' descriptor
+to address a memory leak that is otherwise present.
 
-Also add some comments regarding the pins.
-FWIW, the codec is apparently still sold by Tempo Semiconductor, Inc.,
-where one can download the documentation.
-
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230405201220.2197826-2-oswald.buddenhagen@gmx.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b127315d9a78 ("dmaengine: apple-admac: Add Apple ADMAC driver")
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+Link: https://lore.kernel.org/r/20230224152222.26732-2-povik+lin@cutebit.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_sigmatel.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/dma/apple-admac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_sigmatel.c
-+++ b/sound/pci/hda/patch_sigmatel.c
-@@ -1707,6 +1707,7 @@ static const struct snd_pci_quirk stac92
- };
+diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+index b9132b495d181..4cf8da77bdd91 100644
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -512,7 +512,10 @@ static int admac_terminate_all(struct dma_chan *chan)
+ 	admac_stop_chan(adchan);
+ 	admac_reset_rings(adchan);
  
- static const struct hda_pintbl ref92hd73xx_pin_configs[] = {
-+	// Port A-H
- 	{ 0x0a, 0x02214030 },
- 	{ 0x0b, 0x02a19040 },
- 	{ 0x0c, 0x01a19020 },
-@@ -1715,9 +1716,12 @@ static const struct hda_pintbl ref92hd73
- 	{ 0x0f, 0x01014010 },
- 	{ 0x10, 0x01014020 },
- 	{ 0x11, 0x01014030 },
-+	// CD in
- 	{ 0x12, 0x02319040 },
-+	// Digial Mic ins
- 	{ 0x13, 0x90a000f0 },
- 	{ 0x14, 0x90a000f0 },
-+	// Digital outs
- 	{ 0x22, 0x01452050 },
- 	{ 0x23, 0x01452050 },
- 	{}
-@@ -1758,6 +1762,7 @@ static const struct hda_pintbl alienware
- };
- 
- static const struct hda_pintbl intel_dg45id_pin_configs[] = {
-+	// Analog outputs
- 	{ 0x0a, 0x02214230 },
- 	{ 0x0b, 0x02A19240 },
- 	{ 0x0c, 0x01013214 },
-@@ -1765,6 +1770,9 @@ static const struct hda_pintbl intel_dg4
- 	{ 0x0e, 0x01A19250 },
- 	{ 0x0f, 0x01011212 },
- 	{ 0x10, 0x01016211 },
-+	// Digital output
-+	{ 0x22, 0x01451380 },
-+	{ 0x23, 0x40f000f0 },
- 	{}
- };
- 
+-	adchan->current_tx = NULL;
++	if (adchan->current_tx) {
++		list_add_tail(&adchan->current_tx->node, &adchan->to_free);
++		adchan->current_tx = NULL;
++	}
+ 	/*
+ 	 * Descriptors can only be freed after the tasklet
+ 	 * has been killed (in admac_synchronize).
+-- 
+2.39.2
+
 
 
