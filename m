@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83E72572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EABEC433D2;
-	Tue, 18 Apr 2023 12:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4827D2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C333CC433EF;
+	Tue, 18 Apr 2023 12:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821501;
-	bh=IhoVdGbYtAUE0wgqUSDPkAsmTE02piyLX9dU+fk1gX8=;
+	s=korg; t=1681821504;
+	bh=oqumtN+UpzTs0Xxsvqg+easqS6FeaIp0RlvEopGH24o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJ/3Wil1slqhnVUcZSE5HwrbQP7xBouDN485U8mCMI23mMADZoqSqbgCdbEKi0WNz
-	 7KER9OkCNlbfsIl6JKqRwucmp5uZUETWOSgt5xDUg2RNDpiIs1+O7ndlaCLVEx5lR6
-	 aqYu2SWpmlXGySSHy+jX5lAcEtb/tVQUlnpxM0QA=
+	b=fNMDM3rmGoArbmRgAbNaTDaDoV+kxjdjXz2cQQeF+WdfDX6+6gZkm9Y6hQCE4HF+e
+	 4QTOfCp7zT6Rbx54he4TCc1KQeHY7qccuoCvVUM+ItjYznJyenQQpLBT/LQo0RBMqV
+	 cdDUCsxzuanL8n1ADz/QVBkUG0iDe15g/QTSKh10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 25/91] bpf: tcp: Use sock_gen_put instead of sock_put in bpf_iter_tcp
-Date: Tue, 18 Apr 2023 14:21:29 +0200
-Message-Id: <20230418120306.466581509@linuxfoundation.org>
+Subject: [PATCH 5.15 26/91] 9p/xen : Fix use after free bug in xen_9pfs_front_remove due to race condition
+Date: Tue, 18 Apr 2023 14:21:30 +0200
+Message-Id: <20230418120306.496693915@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120305.520719816@linuxfoundation.org>
 References: <20230418120305.520719816@linuxfoundation.org>
@@ -35,47 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 580031ff9952b7dbf48dedba6b56a100ae002bef ]
+[ Upstream commit ea4f1009408efb4989a0f139b70fb338e7f687d0 ]
 
-While reviewing the udp-iter batching patches, noticed the bpf_iter_tcp
-calling sock_put() is incorrect. It should call sock_gen_put instead
-because bpf_iter_tcp is iterating the ehash table which has the req sk
-and tw sk. This patch replaces all sock_put with sock_gen_put in the
-bpf_iter_tcp codepath.
+In xen_9pfs_front_probe, it calls xen_9pfs_front_alloc_dataring
+to init priv->rings and bound &ring->work with p9_xen_response.
 
-Fixes: 04c7820b776f ("bpf: tcp: Bpf iter batching and lock_sock")
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230328004232.2134233-1-martin.lau@linux.dev
+When it calls xen_9pfs_front_event_handler to handle IRQ requests,
+it will finally call schedule_work to start the work.
+
+When we call xen_9pfs_front_remove to remove the driver, there
+may be a sequence as follows:
+
+Fix it by finishing the work before cleanup in xen_9pfs_front_free.
+
+Note that, this bug is found by static analysis, which might be
+false positive.
+
+CPU0                  CPU1
+
+                     |p9_xen_response
+xen_9pfs_front_remove|
+  xen_9pfs_front_free|
+kfree(priv)          |
+//free priv          |
+                     |p9_tag_lookup
+                     |//use priv->client
+
+Fixes: 71ebd71921e4 ("xen/9pfs: connect to the backend")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/9p/trans_xen.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 0e1fbad17dbe3..63472c9b39ae4 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -2760,7 +2760,7 @@ static int tcp_prog_seq_show(struct bpf_prog *prog, struct bpf_iter_meta *meta,
- static void bpf_iter_tcp_put_batch(struct bpf_tcp_iter_state *iter)
- {
- 	while (iter->cur_sk < iter->end_sk)
--		sock_put(iter->batch[iter->cur_sk++]);
-+		sock_gen_put(iter->batch[iter->cur_sk++]);
- }
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index 9e4da8c1b907e..99e6b2483311c 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -300,6 +300,10 @@ static void xen_9pfs_front_free(struct xen_9pfs_front_priv *priv)
+ 	write_unlock(&xen_9pfs_lock);
  
- static int bpf_iter_tcp_realloc_batch(struct bpf_tcp_iter_state *iter,
-@@ -2919,7 +2919,7 @@ static void *bpf_iter_tcp_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- 		 * st->bucket.  See tcp_seek_last_pos().
- 		 */
- 		st->offset++;
--		sock_put(iter->batch[iter->cur_sk++]);
-+		sock_gen_put(iter->batch[iter->cur_sk++]);
- 	}
- 
- 	if (iter->cur_sk < iter->end_sk)
+ 	for (i = 0; i < priv->num_rings; i++) {
++		struct xen_9pfs_dataring *ring = &priv->rings[i];
++
++		cancel_work_sync(&ring->work);
++
+ 		if (!priv->rings[i].intf)
+ 			break;
+ 		if (priv->rings[i].irq > 0)
 -- 
 2.39.2
 
