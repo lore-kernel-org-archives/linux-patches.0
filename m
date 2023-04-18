@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7797F2566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F240BC433EF;
-	Tue, 18 Apr 2023 12:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495402566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D8AC4339B;
+	Tue, 18 Apr 2023 12:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820799;
-	bh=sNNywKqsvfwkYYENnh9EVh9j/8u6Qie2S8/fLBu2cGc=;
+	s=korg; t=1681820802;
+	bh=s3dsItB7vcQSbe8IJwpN6EH8MFid+e+sYq566924UvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ixs3utP03Em/DNtKWKD2Elzf5PvJcxJFXWkKPvDdAp7rwb/PzPxdHse21S3/JVj1t
-	 G3if6dxKt4w2UQbd3JOgCdZ1m9ZUs+WYWMuhLF4nJXOFlGyQjlO80FMZJcm27YSvcA
-	 faqxnMF/e4uFPwTORCcEzjWYIZ8iBkyyLhQGWqkc=
+	b=CYkiDiij/j6S0aX1EOkjABCxsZxpPoaHBZl3Z7ub0CWZH+4BVk1XA7Sh3tqsR/+HD
+	 5TQ0dr3hJS75UET2akolcq1vA/q+fI9gs1lz/Qpr4+jUDmfn5DGb3zungOvY0toGd6
+	 nYgGaVhduEir/oNWdrJsisDA+832oSz8mCCxU5vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 4.19 34/57] Bluetooth: Fix race condition in hidp_session_thread
-Date: Tue, 18 Apr 2023 14:21:34 +0200
-Message-Id: <20230418120259.932608441@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 07/57] NFSv4: Fix hangs when recovering open state after a server reboot
+Date: Tue, 18 Apr 2023 14:21:07 +0200
+Message-Id: <20230418120258.971213286@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -34,52 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Min Li <lm0963hack@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit c95930abd687fcd1aa040dc4fe90dff947916460 upstream.
+[ Upstream commit 6165a16a5ad9b237bb3131cff4d3c601ccb8f9a3 ]
 
-There is a potential race condition in hidp_session_thread that may
-lead to use-after-free. For instance, the timer is active while
-hidp_del_timer is called in hidp_session_thread(). After hidp_session_put,
-then 'session' will be freed, causing kernel panic when hidp_idle_timeout
-is running.
+When we're using a cached open stateid or a delegation in order to avoid
+sending a CLAIM_PREVIOUS open RPC call to the server, we don't have a
+new open stateid to present to update_open_stateid().
+Instead rely on nfs4_try_open_cached(), just as if we were doing a
+normal open.
 
-The solution is to use del_timer_sync instead of del_timer.
-
-Here is the call trace:
-
-? hidp_session_probe+0x780/0x780
-call_timer_fn+0x2d/0x1e0
-__run_timers.part.0+0x569/0x940
-hidp_session_probe+0x780/0x780
-call_timer_fn+0x1e0/0x1e0
-ktime_get+0x5c/0xf0
-lapic_next_deadline+0x2c/0x40
-clockevents_program_event+0x205/0x320
-run_timer_softirq+0xa9/0x1b0
-__do_softirq+0x1b9/0x641
-__irq_exit_rcu+0xdc/0x190
-irq_exit_rcu+0xe/0x20
-sysvec_apic_timer_interrupt+0xa1/0xc0
-
+Fixes: d2bfda2e7aa0 ("NFSv4: don't reprocess cached open CLAIM_PREVIOUS")
 Cc: stable@vger.kernel.org
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hidp/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hidp/core.c
-+++ b/net/bluetooth/hidp/core.c
-@@ -428,7 +428,7 @@ static void hidp_set_timer(struct hidp_s
- static void hidp_del_timer(struct hidp_session *session)
- {
- 	if (session->idle_to > 0)
--		del_timer(&session->timer);
-+		del_timer_sync(&session->timer);
- }
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 70150894ed77f..3651619468d74 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -1851,8 +1851,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(struct nfs4_opendata *data)
+ 	if (!data->rpc_done) {
+ 		if (data->rpc_status)
+ 			return ERR_PTR(data->rpc_status);
+-		/* cached opens have already been processed */
+-		goto update;
++		return nfs4_try_open_cached(data);
+ 	}
  
- static void hidp_process_report(struct hidp_session *session, int type,
+ 	ret = nfs_refresh_inode(inode, &data->f_attr);
+@@ -1861,7 +1860,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(struct nfs4_opendata *data)
+ 
+ 	if (data->o_res.delegation_type != 0)
+ 		nfs4_opendata_check_deleg(data, state);
+-update:
++
+ 	if (!update_open_stateid(state, &data->o_res.stateid,
+ 				NULL, data->o_arg.fmode))
+ 		return ERR_PTR(-EAGAIN);
+-- 
+2.39.2
+
 
 
