@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933A92572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:53:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2134C433D2;
-	Tue, 18 Apr 2023 12:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673CE2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:53:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50A6C433D2;
+	Tue, 18 Apr 2023 12:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822402;
-	bh=L2qpSYZN89yg6JT/x90oJp6boUmemheD0VU0QcLFxgE=;
+	s=korg; t=1681822405;
+	bh=K+j/i8K8kMMSszfNupuLxaXZnj31ATwCSwYFwNpMhPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dysTxIqqTqPwiicPjsE12T3q6vBHKBNA0q3FSENFIIEqokTnpSJhvPrJCj6or+/2r
-	 7yLp88ZjZVZpFNo8GXXriwaHycBIblum3VM/KCw8WnhgCXsB95MC0vTrbjCyp0zS2H
-	 Xnov6Fy9MgfSOvNMT707jKZJpS9/XK7fhp6KhX64=
+	b=xIuqkOTKZKjxC5RSKwnG0OylJS++I0htWMxnWqet1kceGwYd6BcfufC2N1Rcyhs29
+	 v3skviHmdF4KBBQ1CP7LrqpOg+7K7VVeL3rc8Hb21cH84HpeLtrO+ZRs380//KsVlg
+	 hndC38ubHexkGZP7eesawaUHCLK5VuMDTmieBiDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathis Salmen <mathis.salmen@matsal.de>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.2 106/139] riscv: add icache flush for nommu sigreturn trampoline
-Date: Tue, 18 Apr 2023 14:22:51 +0200
-Message-Id: <20230418120317.776104085@linuxfoundation.org>
+	Tanu Malhotra <tanu.malhotra@intel.com>,
+	Shaunak Saha <shaunak.saha@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 6.2 107/139] HID: intel-ish-hid: Fix kernel panic during warm reset
+Date: Tue, 18 Apr 2023 14:22:52 +0200
+Message-Id: <20230418120317.811231086@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -34,58 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathis Salmen <mathis.salmen@matsal.de>
+From: Tanu Malhotra <tanu.malhotra@intel.com>
 
-commit 8d736482749f6d350892ef83a7a11d43cd49981e upstream.
+commit 38518593ec55e897abda4b4be77b2ec8ec4447d1 upstream.
 
-In a NOMMU kernel, sigreturn trampolines are generated on the user
-stack by setup_rt_frame. Currently, these trampolines are not instruction
-fenced, thus their visibility to ifetch is not guaranteed.
+During warm reset device->fw_client is set to NULL. If a bus driver is
+registered after this NULL setting and before new firmware clients are
+enumerated by ISHTP, kernel panic will result in the function
+ishtp_cl_bus_match(). This is because of reference to
+device->fw_client->props.protocol_name.
 
-This patch adds a flush_icache_range in setup_rt_frame to fix this
-problem.
+ISH firmware after getting successfully loaded, sends a warm reset
+notification to remove all clients from the bus and sets
+device->fw_client to NULL. Until kernel v5.15, all enabled ISHTP kernel
+module drivers were loaded right after any of the first ISHTP device was
+registered, regardless of whether it was a matched or an unmatched
+device. This resulted in all drivers getting registered much before the
+warm reset notification from ISH.
 
-Signed-off-by: Mathis Salmen <mathis.salmen@matsal.de>
-Fixes: 6bd33e1ece52 ("riscv: add nommu support")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230406101130.82304-1-mathis.salmen@matsal.de
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Starting kernel v5.16, this issue got exposed after the change was
+introduced to load only bus drivers for the respective matching devices.
+In this scenario, cros_ec_ishtp device and cros_ec_ishtp driver are
+registered after the warm reset device fw_client NULL setting.
+cros_ec_ishtp driver_register() triggers the callback to
+ishtp_cl_bus_match() to match ISHTP driver to the device and causes kernel
+panic in guid_equal() when dereferencing fw_client NULL pointer to get
+protocol_name.
+
+Fixes: f155dfeaa4ee ("platform/x86: isthp_eclite: only load for matching devices")
+Fixes: facfe0a4fdce ("platform/chrome: chros_ec_ishtp: only load for matching devices")
+Fixes: 0d0cccc0fd83 ("HID: intel-ish-hid: hid-client: only load for matching devices")
+Fixes: 44e2a58cb880 ("HID: intel-ish-hid: fw-loader: only load for matching devices")
+Cc: <stable@vger.kernel.org> # 5.16+
+Signed-off-by: Tanu Malhotra <tanu.malhotra@intel.com>
+Tested-by: Shaunak Saha <shaunak.saha@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/signal.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/hid/intel-ish-hid/ishtp/bus.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/riscv/kernel/signal.c
-+++ b/arch/riscv/kernel/signal.c
-@@ -19,6 +19,7 @@
- #include <asm/signal32.h>
- #include <asm/switch_to.h>
- #include <asm/csr.h>
-+#include <asm/cacheflush.h>
+--- a/drivers/hid/intel-ish-hid/ishtp/bus.c
++++ b/drivers/hid/intel-ish-hid/ishtp/bus.c
+@@ -241,8 +241,8 @@ static int ishtp_cl_bus_match(struct dev
+ 	struct ishtp_cl_device *device = to_ishtp_cl_device(dev);
+ 	struct ishtp_cl_driver *driver = to_ishtp_cl_driver(drv);
  
- extern u32 __user_rt_sigreturn[2];
+-	return guid_equal(&driver->id[0].guid,
+-			  &device->fw_client->props.protocol_name);
++	return(device->fw_client ? guid_equal(&driver->id[0].guid,
++	       &device->fw_client->props.protocol_name) : 0);
+ }
  
-@@ -181,6 +182,7 @@ static int setup_rt_frame(struct ksignal
- {
- 	struct rt_sigframe __user *frame;
- 	long err = 0;
-+	unsigned long __maybe_unused addr;
- 
- 	frame = get_sigframe(ksig, regs, sizeof(*frame));
- 	if (!access_ok(frame, sizeof(*frame)))
-@@ -209,7 +211,12 @@ static int setup_rt_frame(struct ksignal
- 	if (copy_to_user(&frame->sigreturn_code, __user_rt_sigreturn,
- 			 sizeof(frame->sigreturn_code)))
- 		return -EFAULT;
--	regs->ra = (unsigned long)&frame->sigreturn_code;
-+
-+	addr = (unsigned long)&frame->sigreturn_code;
-+	/* Make sure the two instructions are pushed to icache. */
-+	flush_icache_range(addr, addr + sizeof(frame->sigreturn_code));
-+
-+	regs->ra = addr;
- #endif /* CONFIG_MMU */
- 
- 	/*
+ /**
 
 
