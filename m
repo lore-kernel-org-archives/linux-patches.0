@@ -1,36 +1,35 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126FEC94A
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 21:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16ECC94A
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 21:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
 	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=JNM/PoaKdJVang9WqsbIURXjXnMB7kVw7Og7DK0+y/k=; b=NPvn3Y8PNf9X253zeDEbvUCEMD
-	gOA4qUsYzuP/RiqVYByAU8E1tcWRLyrDDPdWBL2v8THrJaQ+ArmYTwIZCrdc3rlybWppKyco44g27
-	QFkSMiHR1g8AawhfyR/Ml8/HpQFb0HmIsBORD9Zvl7rcHItkbCjppHyLtGMXUIFJOXlzxHZfJ7Wbz
-	1RU2UUvmvKQ1i6jgfcMJpZkfh+3gwGio3Rvb8cNGtgnT8dG4OUU9W1iFB+fPux3x5L8cyO8a+UcOK
-	W7ipP9jQvBItWBIlWS9iv18T59zhMe832aQac7NWnsBI93CCWPVOgtyv+4h66HRM4t2N4eJ7Kt6yy
-	zBFnjF+g==;
+	bh=ClDY4zHXRxRv2R7Gk0yxGFQ9XOyZD63mK1Ox3vqagFk=; b=tLrHj4dpnxEso0zEI7YDFkRe8c
+	ccFF/qmeH0RhHBIz3uv6kHhvZCxc2qY6avkIHU6R2A4DI7lyB4C2vyszGoON7OELrM18pDKzcOf+x
+	6V3NjGz5FcREQN1Rt3T7yReInwnEYFl7ve2fLcXs5A+UzX0oPcsEDH2MbmWx7CGLwIVnDRmPuaSSb
+	vFuqm5As8EbB7LF+Hrk/UH4w8yxfaFdeiY6ZZz38NF/ujIMZ+opaidxDOZu3v0lMkeGDdWiePSEzR
+	XDpgUX/FzPEt1EwQegGHRWoQBT47xC2RlFe/WAi2hLF30NkOso6UMWnwbJ75pExjMRt+dNuFCqRkk
+	6mGiSQDQ==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1potC8-003RF5-25;
-	Tue, 18 Apr 2023 21:49:00 +0000
-Date: Tue, 18 Apr 2023 14:49:00 -0700
+	id 1potEP-003RhZ-23;
+	Tue, 18 Apr 2023 21:51:21 +0000
+Date: Tue, 18 Apr 2023 14:51:21 -0700
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: Hugh Dickins <hughd@google.com>
-Cc: akpm@linux-foundation.org, willy@infradead.org, brauner@kernel.org,
-	linux-mm@kvack.org, p.raghav@samsung.com, da.gomez@samsung.com,
-	a.manzanares@samsung.com, dave@stgolabs.net, yosryahmed@google.com,
-	keescook@chromium.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH v2 5/6] shmem: update documentation
-Message-ID: <ZD8QTOsWQ0SscOYz@bombadil.infradead.org>
+To: Christian Brauner <brauner@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>, akpm@linux-foundation.org,
+	willy@infradead.org, linux-mm@kvack.org, p.raghav@samsung.com,
+	da.gomez@samsung.com, a.manzanares@samsung.com, dave@stgolabs.net,
+	yosryahmed@google.com, keescook@chromium.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 6/6] shmem: add support to ignore swap
+Message-ID: <ZD8Q2SzVr3xDmCgY@bombadil.infradead.org>
 References: <20230309230545.2930737-1-mcgrof@kernel.org>
- <20230309230545.2930737-6-mcgrof@kernel.org>
- <a4afef5c-27e4-5e67-9771-374132db61f8@google.com>
- <ZD8JgfphE+HWCGve@bombadil.infradead.org>
- <6064b468-33fb-3693-54e-6f1f8d316f64@google.com>
+ <20230309230545.2930737-7-mcgrof@kernel.org>
+ <79eae9fe-7818-a65c-89c6-138b55d609a@google.com>
+ <20230418-zynisch-satzglied-55821361f70a@brauner>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,47 +38,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6064b468-33fb-3693-54e-6f1f8d316f64@google.com>
+In-Reply-To: <20230418-zynisch-satzglied-55821361f70a@brauner>
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Tue, Apr 18, 2023 at 02:41:07PM -0700, Hugh Dickins wrote:
-> On Tue, 18 Apr 2023, Luis Chamberlain wrote:
-> > On Mon, Apr 17, 2023 at 10:29:59PM -0700, Hugh Dickins wrote:
-> > > On Thu, 9 Mar 2023, Luis Chamberlain wrote:
-> > > 
-> > > > Update the docs to reflect a bit better why some folks prefer tmpfs
-> > > > over ramfs and clarify a bit more about the difference between brd
-> > > > ramdisks.
-> > > > 
-> > > > While at it, add THP docs for tmpfs, both the mount options and the
-> > > > sysfs file.
-> > > 
-> > > Okay: the original canonical reference for THP options on tmpfs has
-> > > been Documentation/admin-guide/mm/transhuge.rst.  You're right that
-> > > they would be helpful here too: IIRC (but I might well be confusing
-> > > with our Google tree) we used to have them documented in both places,
-> > > but grew tired of keeping the two in synch.  You're volunteering to
-> > > do so! so please check now that they tell the same story.
+On Tue, Apr 18, 2023 at 09:38:10AM +0200, Christian Brauner wrote:
+> On Mon, Apr 17, 2023 at 10:50:59PM -0700, Hugh Dickins wrote:
+> > On Thu, 9 Mar 2023, Luis Chamberlain wrote:
 > > 
-> > Hehe. Sure, we should just make one point to the other. Which one should
-> > be the authoritive source?
+> > > In doing experimentations with shmem having the option to avoid swap
+> > > becomes a useful mechanism. One of the *raves* about brd over shmem is
+> > > you can avoid swap, but that's not really a good reason to use brd if
+> > > we can instead use shmem. Using brd has its own good reasons to exist,
+> > > but just because "tmpfs" doesn't let you do that is not a great reason
+> > > to avoid it if we can easily add support for it.
+> > > 
+> > > I don't add support for reconfiguring incompatible options, but if
+> > > we really wanted to we can add support for that.
+> > > 
+> > > To avoid swap we use mapping_set_unevictable() upon inode creation,
+> > > and put a WARN_ON_ONCE() stop-gap on writepages() for reclaim.
+> > 
+> > I have one big question here, which betrays my ignorance:
+> > I hope that you or Christian can reassure me on this.
+> > 
+> > tmpfs has fs_flags FS_USERNS_MOUNT.  I know nothing about namespaces,
+> > nothing; but from overhearings, wonder if an ordinary user in a namespace
+> > might be able to mount their own tmpfs with "noswap", and thereby evade
+> > all accounting of the locked memory.
+> > 
+> > That would be an absolute no-no for this patch; but I assume that even
+> > if so, it can be easily remedied by inserting an appropriate (unknown
+> > to me!) privilege check where the "noswap" option is validated.
 > 
-> Documentation/admin-guide/mm/transhuge.rst has been the authoritative
-> source up until this patch, so I suggest it remain so; but good if you
-> point to it from this Doc - unless in reading it you find that actually
-> its account is wrong.  (Haha, it refers to fadvise too, never mind that.)
+> Oh, good catch. Thanks! So you would just need sm like:
+> 
+> diff --git a/mm/shmem.c b/mm/shmem.c
+> index 787e83791eb5..21ce9b26bb4d 100644
+> --- a/mm/shmem.c
+> +++ b/mm/shmem.c
+> @@ -3571,6 +3571,10 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
+>                 ctx->seen |= SHMEM_SEEN_INUMS;
+>                 break;
+>         case Opt_noswap:
+> +               if ((fc->user_ns != &init_user_ns) || !capable(CAP_SYS_ADMIN)) {
+> +                       return invalfc(fc,
+> +                                      "Turning off swap in unprivileged tmpfs mounts unsupported");
+> +               }
+>                 ctx->noswap = true;
+>                 ctx->seen |= SHMEM_SEEN_NOSWAP;
+>                 break;
+> 
+> The fc->user_ns is the userns that the tmpfs mount will be mounted in, i.e.,
+> fc->user_ns will become sb->s_user_ns if FS_USERNS_MOUNT is raised. So with the
+> check above we require that the tmpfs instance must ultimately belong to the
+> initial userns and that the caller has CAP_SYS_ADMIN in the initial userns
+> (CAP_SYS_ADMIN guards swapon and swapoff) according to capabilities(7).
 
-Yeah I'll make the tmpfs kdoc point to the transhuge.rst page. I think
-that's possible.
-
-> But the man page is more important than either, so it would be good to
-> point to that too. 
-
-Sure I'll have the tmpfs kdoc also point to the tmpfs man page.
-
-> Mention the "huge=" option in this document, but
-> point to elsewhere for the detail of its values.
-
-Sounds good.
+Christian, mind sending this as a fix?
 
   Luis
