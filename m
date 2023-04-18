@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EC42566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:31:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0FAC4339B;
-	Tue, 18 Apr 2023 12:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB752566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85033C4339C;
+	Tue, 18 Apr 2023 12:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821119;
-	bh=5FbvnDcsV0iHBMA6EomBETRkk0lcdkcoABMf9AmA5DI=;
+	s=korg; t=1681821121;
+	bh=g1JdaTqc+GJwXQHupKB9cJr+LsSeKB6hTeeliZTCv5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WREINLnO9BtyoDUxhsuXzyo/7USuhEyO/tRXnnupAsSvWeVB0Kr/lNO8mmIqDRtEY
-	 6FyRFS6S+VXvl8Eg+27cWLPxSld/bpQGYrxAMp0apnntsYlhRht+8M+5IVINSkIsoi
-	 dhKqG4XJi/mOFIEjfb2amSOE7UQVvr09YXEssQBU=
+	b=VYu+/sxmRH8rab+uMucgOA8z6V3yujokpF61mvATO9Tut2/Bn7j7IDxn69F2tdS4b
+	 btCh7N9DOrqH1wctOuib1Ii/tsXAEB3OUIXKgaDGt/qLEznyIMGxpm0JPFOvBbfkEp
+	 bPcLbEePIED7Y1fAvVAdFz/o5is4PlKpN1Y7nI3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhaoLong Wang <wangzhaolong1@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Gregor Herburger <gregor.herburger@tq-group.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Federico Vaga <federico.vaga@cern.ch>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 72/92] ubi: Fix deadlock caused by recursively holding work_sem
-Date: Tue, 18 Apr 2023 14:21:47 +0200
-Message-Id: <20230418120307.317593602@linuxfoundation.org>
+Subject: [PATCH 5.4 73/92] i2c: ocores: generate stop condition after timeout in polling mode
+Date: Tue, 18 Apr 2023 14:21:48 +0200
+Message-Id: <20230418120307.347576921@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -36,64 +39,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhaoLong Wang <wangzhaolong1@huawei.com>
+From: Gregor Herburger <gregor.herburger@tq-group.com>
 
-[ Upstream commit f773f0a331d6c41733b17bebbc1b6cae12e016f5 ]
+[ Upstream commit f8160d3b35fc94491bb0cb974dbda310ef96c0e2 ]
 
-During the processing of the bgt, if the sync_erase() return -EBUSY
-or some other error code in __erase_worker(),schedule_erase() called
-again lead to the down_read(ubi->work_sem) hold twice and may get
-block by down_write(ubi->work_sem) in ubi_update_fastmap(),
-which cause deadlock.
+In polling mode, no stop condition is generated after a timeout. This
+causes SCL to remain low and thereby block the bus. If this happens
+during a transfer it can cause slaves to misinterpret the subsequent
+transfer and return wrong values.
 
-          ubi bgt                        other task
- do_work
-  down_read(&ubi->work_sem)          ubi_update_fastmap
-  erase_worker                         # Blocked by down_read
-   __erase_worker                      down_write(&ubi->work_sem)
-    schedule_erase
-     schedule_ubi_work
-      down_read(&ubi->work_sem)
+To solve this, pass the ETIMEDOUT error up from ocores_process_polling()
+instead of setting STATE_ERROR directly. The caller is adjusted to call
+ocores_process_timeout() on error both in polling and in IRQ mode, which
+will set STATE_ERROR and generate a stop condition.
 
-Fix this by changing input parameter @nested of the schedule_erase() to
-'true' to avoid recursively acquiring the down_read(&ubi->work_sem).
-
-Also, fix the incorrect comment about @nested parameter of the
-schedule_erase() because when down_write(ubi->work_sem) is held, the
-@nested is also need be true.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217093
-Fixes: 2e8f08deabbc ("ubi: Fix races around ubi_refill_pools()")
-Signed-off-by: ZhaoLong Wang <wangzhaolong1@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 69c8c0c0efa8 ("i2c: ocores: add polling interface")
+Signed-off-by: Gregor Herburger <gregor.herburger@tq-group.com>
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Acked-by: Peter Korsgaard <peter@korsgaard.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Federico Vaga <federico.vaga@cern.ch>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/wl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-ocores.c | 35 ++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
-index 28110cd4400b5..fd0e8f948c3da 100644
---- a/drivers/mtd/ubi/wl.c
-+++ b/drivers/mtd/ubi/wl.c
-@@ -576,7 +576,7 @@ static int erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk,
-  * @vol_id: the volume ID that last used this PEB
-  * @lnum: the last used logical eraseblock number for the PEB
-  * @torture: if the physical eraseblock has to be tortured
-- * @nested: denotes whether the work_sem is already held in read mode
-+ * @nested: denotes whether the work_sem is already held
+diff --git a/drivers/i2c/busses/i2c-ocores.c b/drivers/i2c/busses/i2c-ocores.c
+index ca8b3ecfa93d1..1c3595c8a761a 100644
+--- a/drivers/i2c/busses/i2c-ocores.c
++++ b/drivers/i2c/busses/i2c-ocores.c
+@@ -343,18 +343,18 @@ static int ocores_poll_wait(struct ocores_i2c *i2c)
+  * ocores_isr(), we just add our polling code around it.
   *
-  * This function returns zero in case of success and a %-ENOMEM in case of
-  * failure.
-@@ -1110,7 +1110,7 @@ static int __erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk)
- 		int err1;
+  * It can run in atomic context
++ *
++ * Return: 0 on success, -ETIMEDOUT on timeout
+  */
+-static void ocores_process_polling(struct ocores_i2c *i2c)
++static int ocores_process_polling(struct ocores_i2c *i2c)
+ {
+-	while (1) {
+-		irqreturn_t ret;
+-		int err;
++	irqreturn_t ret;
++	int err = 0;
  
- 		/* Re-schedule the LEB for erasure */
--		err1 = schedule_erase(ubi, e, vol_id, lnum, 0, false);
-+		err1 = schedule_erase(ubi, e, vol_id, lnum, 0, true);
- 		if (err1) {
- 			spin_lock(&ubi->wl_lock);
- 			wl_entry_destroy(ubi, e);
++	while (1) {
+ 		err = ocores_poll_wait(i2c);
+-		if (err) {
+-			i2c->state = STATE_ERROR;
++		if (err)
+ 			break; /* timeout */
+-		}
+ 
+ 		ret = ocores_isr(-1, i2c);
+ 		if (ret == IRQ_NONE)
+@@ -365,13 +365,15 @@ static void ocores_process_polling(struct ocores_i2c *i2c)
+ 					break;
+ 		}
+ 	}
++
++	return err;
+ }
+ 
+ static int ocores_xfer_core(struct ocores_i2c *i2c,
+ 			    struct i2c_msg *msgs, int num,
+ 			    bool polling)
+ {
+-	int ret;
++	int ret = 0;
+ 	u8 ctrl;
+ 
+ 	ctrl = oc_getreg(i2c, OCI2C_CONTROL);
+@@ -389,15 +391,16 @@ static int ocores_xfer_core(struct ocores_i2c *i2c,
+ 	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_START);
+ 
+ 	if (polling) {
+-		ocores_process_polling(i2c);
++		ret = ocores_process_polling(i2c);
+ 	} else {
+-		ret = wait_event_timeout(i2c->wait,
+-					 (i2c->state == STATE_ERROR) ||
+-					 (i2c->state == STATE_DONE), HZ);
+-		if (ret == 0) {
+-			ocores_process_timeout(i2c);
+-			return -ETIMEDOUT;
+-		}
++		if (wait_event_timeout(i2c->wait,
++				       (i2c->state == STATE_ERROR) ||
++				       (i2c->state == STATE_DONE), HZ) == 0)
++			ret = -ETIMEDOUT;
++	}
++	if (ret) {
++		ocores_process_timeout(i2c);
++		return ret;
+ 	}
+ 
+ 	return (i2c->state == STATE_DONE) ? num : -EIO;
 -- 
 2.39.2
 
