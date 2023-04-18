@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCFA2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:51:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7978C433EF;
-	Tue, 18 Apr 2023 12:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA2F2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:51:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D861C433EF;
+	Tue, 18 Apr 2023 12:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822307;
-	bh=LpDryaN6WiNagpJ8zj57/RCJ1k3qVuhfwXNU59XG290=;
+	s=korg; t=1681822309;
+	bh=/ikK3zxhLCGeODiyNWRWcTeAwaBULc8sOuXpWUqiKm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMLV2kounfPMRldCq0/x2fT1gtQsLsUgjlXDlwg1inmomBn7Jzdu/RdSAZxjj9RLa
-	 +CeujanwpXQHqYRiCpbh5NqBxqIp4t7Qb524lCV/uk1ttHMe/GNLiHv+ONYE65OmO/
-	 4rDeq3ot5tdQd7eynl5eReXVoBASY6RHpt+2AIFc=
+	b=Xj6B/uTcFuMiNt+MM8u7ccV5GLWJevI0sjsWk9140Sbr2f49IGBQPH9Tc1WjpIdI3
+	 nC7G6NeS7OM2HcZIpYeMrmajeoucK2/TmkBUsUUqAaI7saZSXQ2yJmPJtHyucU1roO
+	 6Tqxar9D2CwbFaixCVlYuArWrcg+W42OMOk4on+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lena wang <lena.wang@mediatek.com>,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 071/139] udp6: fix potential access to stale information
-Date: Tue, 18 Apr 2023 14:22:16 +0200
-Message-Id: <20230418120316.480819410@linuxfoundation.org>
+Subject: [PATCH 6.2 072/139] selftests: add the missing CONFIG_IP_SCTP in net config
+Date: Tue, 18 Apr 2023 14:22:17 +0200
+Message-Id: <20230418120316.527733460@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -37,63 +37,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 1c5950fc6fe996235f1d18539b9c6b64b597f50f ]
+[ Upstream commit 3a0385be133e7091cc9a9a998c7ec712bb9585db ]
 
-lena wang reported an issue caused by udpv6_sendmsg()
-mangling msg->msg_name and msg->msg_namelen, which
-are later read from ____sys_sendmsg() :
+The selftest sctp_vrf needs CONFIG_IP_SCTP set in config
+when building the kernel, so add it.
 
-	/*
-	 * If this is sendmmsg() and sending to current destination address was
-	 * successful, remember it.
-	 */
-	if (used_address && err >= 0) {
-		used_address->name_len = msg_sys->msg_namelen;
-		if (msg_sys->msg_name)
-			memcpy(&used_address->name, msg_sys->msg_name,
-			       used_address->name_len);
-	}
-
-udpv6_sendmsg() wants to pretend the remote address family
-is AF_INET in order to call udp_sendmsg().
-
-A fix would be to modify the address in-place, instead
-of using a local variable, but this could have other side effects.
-
-Instead, restore initial values before we return from udpv6_sendmsg().
-
-Fixes: c71d8ebe7a44 ("net: Fix security_socket_sendmsg() bypass problem.")
-Reported-by: lena wang <lena.wang@mediatek.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Maciej Żenczykowski <maze@google.com>
-Link: https://lore.kernel.org/r/20230412130308.1202254-1-edumazet@google.com
+Fixes: a61bd7b9fef3 ("selftests: add a selftest for sctp vrf")
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Link: https://lore.kernel.org/r/61dddebc4d2dd98fe7fb145e24d4b2430e42b572.1681312386.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/udp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/config | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 9fb2f33ee3a76..a675acfb901d1 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1395,9 +1395,11 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 			msg->msg_name = &sin;
- 			msg->msg_namelen = sizeof(sin);
- do_udp_sendmsg:
--			if (ipv6_only_sock(sk))
--				return -ENETUNREACH;
--			return udp_sendmsg(sk, msg, len);
-+			err = ipv6_only_sock(sk) ?
-+				-ENETUNREACH : udp_sendmsg(sk, msg, len);
-+			msg->msg_name = sin6;
-+			msg->msg_namelen = addr_len;
-+			return err;
- 		}
- 	}
- 
+diff --git a/tools/testing/selftests/net/config b/tools/testing/selftests/net/config
+index bd89198cd8176..84833cb491998 100644
+--- a/tools/testing/selftests/net/config
++++ b/tools/testing/selftests/net/config
+@@ -45,3 +45,4 @@ CONFIG_BAREUDP=m
+ CONFIG_IPV6_IOAM6_LWTUNNEL=y
+ CONFIG_CRYPTO_SM4_GENERIC=y
+ CONFIG_AMT=m
++CONFIG_IP_SCTP=m
 -- 
 2.39.2
 
