@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036B12572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D364C4339B;
-	Tue, 18 Apr 2023 12:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3012572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2338AC433D2;
+	Tue, 18 Apr 2023 12:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821883;
-	bh=aR4tzvaq6aFDgiKzOJuCoJ5m5puKPmDIg7ag4LBXosE=;
+	s=korg; t=1681821886;
+	bh=ZlO6oyoBVDjCG5jtQnEfb6K3J648VHTb+OoCehevMjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bE+I4Zf6gYfKSL+RZRlSWH71wBAemoYFnYSoSTsMg/CizcGKYrIzz+TOsSDEeT8rM
-	 RJQjXyC5+Xsfy6HeQp6NPt6zkCFKkz+Cdxoaxohi07AHc2usb96ueFp5kYMjn4eLkE
-	 eYGQsovxT+VIZuxfTF1Opl603ekvKMLDWCHkq7B4=
+	b=U1800eukZkd7aAJD/y8bji6sgw0Rn4s5scbJ8ciBLLw7p2+FurO+vjx0EhiQMupN0
+	 6OODFIfH2MOWroEhU0BsL/beoqaiDnfX8Dt2dUY1Kxkvi0uhlc1fzkPHtVQkXck5fU
+	 F0rFinIJzaFpG56Z+bvsd16mU1rcsJznYaNIEWSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/134] niu: Fix missing unwind goto in niu_alloc_channels()
-Date: Tue, 18 Apr 2023 14:21:44 +0200
-Message-Id: <20230418120314.608572928@linuxfoundation.org>
+Subject: [PATCH 6.1 049/134] tcp: restrict net.ipv4.tcp_app_win
+Date: Tue, 18 Apr 2023 14:21:45 +0200
+Message-Id: <20230418120314.647489018@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -36,40 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 8ce07be703456acb00e83d99f3b8036252c33b02 ]
+[ Upstream commit dc5110c2d959c1707e12df5f792f41d90614adaa ]
 
-Smatch reports: drivers/net/ethernet/sun/niu.c:4525
-	niu_alloc_channels() warn: missing unwind goto?
+UBSAN: shift-out-of-bounds in net/ipv4/tcp_input.c:555:23
+shift exponent 255 is too large for 32-bit type 'int'
+CPU: 1 PID: 7907 Comm: ssh Not tainted 6.3.0-rc4-00161-g62bad54b26db-dirty #206
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x136/0x150
+ __ubsan_handle_shift_out_of_bounds+0x21f/0x5a0
+ tcp_init_transfer.cold+0x3a/0xb9
+ tcp_finish_connect+0x1d0/0x620
+ tcp_rcv_state_process+0xd78/0x4d60
+ tcp_v4_do_rcv+0x33d/0x9d0
+ __release_sock+0x133/0x3b0
+ release_sock+0x58/0x1b0
 
-If niu_rbr_fill() fails, then we are directly returning 'err' without
-freeing the channels.
+'maxwin' is int, shifting int for 32 or more bits is undefined behaviour.
 
-Fix this by changing direct return to a goto 'out_err'.
-
-Fixes: a3138df9f20e ("[NIU]: Add Sun Neptune ethernet driver.")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/niu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/networking/ip-sysctl.rst | 2 ++
+ net/ipv4/sysctl_net_ipv4.c             | 3 +++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/sun/niu.c b/drivers/net/ethernet/sun/niu.c
-index e6144d963eaaa..4bbf011d53e69 100644
---- a/drivers/net/ethernet/sun/niu.c
-+++ b/drivers/net/ethernet/sun/niu.c
-@@ -4522,7 +4522,7 @@ static int niu_alloc_channels(struct niu *np)
+diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
+index e7b3fa7bb3f73..4ecb549fd052e 100644
+--- a/Documentation/networking/ip-sysctl.rst
++++ b/Documentation/networking/ip-sysctl.rst
+@@ -337,6 +337,8 @@ tcp_app_win - INTEGER
+ 	Reserve max(window/2^tcp_app_win, mss) of window for application
+ 	buffer. Value 0 is special, it means that nothing is reserved.
  
- 		err = niu_rbr_fill(np, rp, GFP_KERNEL);
- 		if (err)
--			return err;
-+			goto out_err;
- 	}
++	Possible values are [0, 31], inclusive.
++
+ 	Default: 31
  
- 	tx_rings = kcalloc(num_tx_rings, sizeof(struct tx_ring_info),
+ tcp_autocorking - BOOLEAN
+diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
+index 9b8a6db7a66b3..39dbeb6071965 100644
+--- a/net/ipv4/sysctl_net_ipv4.c
++++ b/net/ipv4/sysctl_net_ipv4.c
+@@ -25,6 +25,7 @@ static int ip_local_port_range_min[] = { 1, 1 };
+ static int ip_local_port_range_max[] = { 65535, 65535 };
+ static int tcp_adv_win_scale_min = -31;
+ static int tcp_adv_win_scale_max = 31;
++static int tcp_app_win_max = 31;
+ static int tcp_min_snd_mss_min = TCP_MIN_SND_MSS;
+ static int tcp_min_snd_mss_max = 65535;
+ static int ip_privileged_port_min;
+@@ -1171,6 +1172,8 @@ static struct ctl_table ipv4_net_table[] = {
+ 		.maxlen		= sizeof(u8),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dou8vec_minmax,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= &tcp_app_win_max,
+ 	},
+ 	{
+ 		.procname	= "tcp_adv_win_scale",
 -- 
 2.39.2
 
