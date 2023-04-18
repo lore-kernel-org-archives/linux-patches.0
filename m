@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816692572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2543C4339B;
-	Tue, 18 Apr 2023 12:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398352579
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29BAC433D2;
+	Tue, 18 Apr 2023 12:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821730;
-	bh=4e8JJtLHcDekISQnK6SwhspKcONFIcst1loA1gR9nec=;
+	s=korg; t=1681821733;
+	bh=zkQ5AhsawpZj7Xix93umrARHMynvPlxsFMYwEHx6efU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1MqtL/IZZwqB9aND2w7pzmogmbpjGzrtMgMUycaXwRkm6YRv2CjaJlQYUOdOitu/
-	 Ctg6O58Ni3SLB0r6u0x3382jArQHXGk6hAPPn2PLEygUeb3h8h6U8+OXL7kr9TbCzm
-	 uN7c7QFe2iDFwqJZkG1RZ1ROqdfjB1sENNE21GGo=
+	b=uAOXt9dItn1H2gI1PlBmprkUiwClCTsME9N+yQfGVLwA4U/9dE+0lFhi41h5lhK1Q
+	 Vp20jbBRhqpIaba7aVMWjEjb1kunIBF5itoOa2aZh8iSwBzamEjQ7Q8sNpCdzyYUL4
+	 zkEOkUn0ko1Qt6OIUCnIih0BoooaxywflftHrHaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bang Li <libang.linuxer@gmail.com>,
-	Richard Weinberger <richard@nod.at>,
+	Stable@vger.kernel.org,
+	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 020/134] mtdblock: tolerate corrected bit-flips
-Date: Tue, 18 Apr 2023 14:21:16 +0200
-Message-Id: <20230418120313.699566419@linuxfoundation.org>
+Subject: [PATCH 6.1 021/134] mtd: rawnand: meson: fix bitmask for length in command word
+Date: Tue, 18 Apr 2023 14:21:17 +0200
+Message-Id: <20230418120313.730250702@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,58 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bang Li <libang.linuxer@gmail.com>
+From: Arseniy Krasnov <avkrasnov@sberdevices.ru>
 
-commit 0c3089601f064d80b3838eceb711fcac04bceaad upstream.
+commit 93942b70461574ca7fc3d91494ca89b16a4c64c7 upstream.
 
-mtd_read() may return -EUCLEAN in case of corrected bit-flips.This
-particular condition should not be treated like an error.
+Valid mask is 0x3FFF, without this patch the following problems were
+found:
 
-Signed-off-by: Bang Li <libang.linuxer@gmail.com>
-Fixes: e47f68587b82 ("mtd: check for max_bitflips in mtd_read_oob()")
-Cc: <stable@vger.kernel.org> # v3.7
-Acked-by: Richard Weinberger <richard@nod.at>
+1) [    0.938914] Could not find a valid ONFI parameter page, trying
+                  bit-wise majority to recover it
+   [    0.947384] ONFI parameter recovery failed, aborting
+
+2) Read with disabled ECC mode was broken.
+
+Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230328163012.4264-1-libang.linuxer@gmail.com
+Link: https://lore.kernel.org/linux-mtd/3794ffbf-dfea-e96f-1f97-fe235b005e19@sberdevices.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdblock.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/mtd/nand/raw/meson_nand.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mtd/mtdblock.c
-+++ b/drivers/mtd/mtdblock.c
-@@ -153,7 +153,7 @@ static int do_cached_write (struct mtdbl
- 				mtdblk->cache_state = STATE_EMPTY;
- 				ret = mtd_read(mtd, sect_start, sect_size,
- 					       &retlen, mtdblk->cache_data);
--				if (ret)
-+				if (ret && !mtd_is_bitflip(ret))
- 					return ret;
- 				if (retlen != sect_size)
- 					return -EIO;
-@@ -188,8 +188,12 @@ static int do_cached_read (struct mtdblk
- 	pr_debug("mtdblock: read on \"%s\" at 0x%lx, size 0x%x\n",
- 			mtd->name, pos, len);
+--- a/drivers/mtd/nand/raw/meson_nand.c
++++ b/drivers/mtd/nand/raw/meson_nand.c
+@@ -280,7 +280,7 @@ static void meson_nfc_cmd_access(struct
  
--	if (!sect_size)
--		return mtd_read(mtd, pos, len, &retlen, buf);
-+	if (!sect_size) {
-+		ret = mtd_read(mtd, pos, len, &retlen, buf);
-+		if (ret && !mtd_is_bitflip(ret))
-+			return ret;
-+		return 0;
-+	}
+ 	if (raw) {
+ 		len = mtd->writesize + mtd->oobsize;
+-		cmd = (len & GENMASK(5, 0)) | scrambler | DMA_DIR(dir);
++		cmd = (len & GENMASK(13, 0)) | scrambler | DMA_DIR(dir);
+ 		writel(cmd, nfc->reg_base + NFC_REG_CMD);
+ 		return;
+ 	}
+@@ -544,7 +544,7 @@ static int meson_nfc_read_buf(struct nan
+ 	if (ret)
+ 		goto out;
  
- 	while (len > 0) {
- 		unsigned long sect_start = (pos/sect_size)*sect_size;
-@@ -209,7 +213,7 @@ static int do_cached_read (struct mtdblk
- 			memcpy (buf, mtdblk->cache_data + offset, size);
- 		} else {
- 			ret = mtd_read(mtd, pos, size, &retlen, buf);
--			if (ret)
-+			if (ret && !mtd_is_bitflip(ret))
- 				return ret;
- 			if (retlen != size)
- 				return -EIO;
+-	cmd = NFC_CMD_N2M | (len & GENMASK(5, 0));
++	cmd = NFC_CMD_N2M | (len & GENMASK(13, 0));
+ 	writel(cmd, nfc->reg_base + NFC_REG_CMD);
+ 
+ 	meson_nfc_drain_cmd(nfc);
+@@ -568,7 +568,7 @@ static int meson_nfc_write_buf(struct na
+ 	if (ret)
+ 		return ret;
+ 
+-	cmd = NFC_CMD_M2N | (len & GENMASK(5, 0));
++	cmd = NFC_CMD_M2N | (len & GENMASK(13, 0));
+ 	writel(cmd, nfc->reg_base + NFC_REG_CMD);
+ 
+ 	meson_nfc_drain_cmd(nfc);
 
 
