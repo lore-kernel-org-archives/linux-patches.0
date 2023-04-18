@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EC42566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7480AC433D2;
-	Tue, 18 Apr 2023 12:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8322566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C1EC4339C;
+	Tue, 18 Apr 2023 12:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820875;
-	bh=1+g7eqLuyOnPiPDUrW+1zFjZb3jUlRhPKvkJOd1CUj0=;
+	s=korg; t=1681820878;
+	bh=efiiKarjmrO4+BjbyzVnd63nkffzhlECuL7abW/zxYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x03SrAOS83u1QnP0z4Q+chtUhBvQpv6hQUHEISVfuQ+VFSn04CSFrRlIkpb/C19SI
-	 71PBQl9y/AZzs9gth4t9to/2X+yz8YOlhBEOmqnbULghzKhQ3MlFFMpqiQD7uXKkgp
-	 YoEQVkFcNtqkXh9lnhHDvMAeUhrn3EfCyZEvUNe4=
+	b=MUgZzq8I8DqezBtn0DXDqi1Rgb8gL4b5Sbp3cO7HGnAe50qWlrjDT7Vptb6AAKKWX
+	 QOzHlk2VPA1HANgEG4CA9GH/R2OQpJUY+1UCYZhl9bK4nuKrvPbW0OepkfTrfljzKS
+	 h9UhV6P2tYYD2Cnao7pZTlNTBUUdoZ+vug9+d4ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 44/57] efi: sysfb_efi: Add quirk for Lenovo Yoga Book X91F/L
-Date: Tue, 18 Apr 2023 14:21:44 +0200
-Message-Id: <20230418120300.268920348@linuxfoundation.org>
+	Bang Li <libang.linuxer@gmail.com>,
+	Richard Weinberger <richard@nod.at>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 4.19 35/57] mtdblock: tolerate corrected bit-flips
+Date: Tue, 18 Apr 2023 14:21:35 +0200
+Message-Id: <20230418120259.962150002@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -36,43 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Bang Li <libang.linuxer@gmail.com>
 
-[ Upstream commit 5ed213dd64681f84a01ceaa82fb336cf7d59ddcf ]
+commit 0c3089601f064d80b3838eceb711fcac04bceaad upstream.
 
-Another Lenovo convertable which reports a landscape resolution of
-1920x1200 with a pitch of (1920 * 4) bytes, while the actual framebuffer
-has a resolution of 1200x1920 with a pitch of (1200 * 4) bytes.
+mtd_read() may return -EUCLEAN in case of corrected bit-flips.This
+particular condition should not be treated like an error.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Bang Li <libang.linuxer@gmail.com>
+Fixes: e47f68587b82 ("mtd: check for max_bitflips in mtd_read_oob()")
+Cc: <stable@vger.kernel.org> # v3.7
+Acked-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230328163012.4264-1-libang.linuxer@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/sysfb_efi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/mtd/mtdblock.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/sysfb_efi.c b/arch/x86/kernel/sysfb_efi.c
-index dd8d7636c5420..5bc0fedb33420 100644
---- a/arch/x86/kernel/sysfb_efi.c
-+++ b/arch/x86/kernel/sysfb_efi.c
-@@ -273,6 +273,14 @@ static const struct dmi_system_id efifb_dmi_swap_width_height[] __initconst = {
- 					"IdeaPad Duet 3 10IGL5"),
- 		},
- 	},
-+	{
-+		/* Lenovo Yoga Book X91F / X91L */
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			/* Non exact match to match F + L versions */
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X91"),
-+		},
-+	},
- 	{},
- };
+--- a/drivers/mtd/mtdblock.c
++++ b/drivers/mtd/mtdblock.c
+@@ -164,7 +164,7 @@ static int do_cached_write (struct mtdbl
+ 				mtdblk->cache_state = STATE_EMPTY;
+ 				ret = mtd_read(mtd, sect_start, sect_size,
+ 					       &retlen, mtdblk->cache_data);
+-				if (ret)
++				if (ret && !mtd_is_bitflip(ret))
+ 					return ret;
+ 				if (retlen != sect_size)
+ 					return -EIO;
+@@ -199,8 +199,12 @@ static int do_cached_read (struct mtdblk
+ 	pr_debug("mtdblock: read on \"%s\" at 0x%lx, size 0x%x\n",
+ 			mtd->name, pos, len);
  
--- 
-2.39.2
-
+-	if (!sect_size)
+-		return mtd_read(mtd, pos, len, &retlen, buf);
++	if (!sect_size) {
++		ret = mtd_read(mtd, pos, len, &retlen, buf);
++		if (ret && !mtd_is_bitflip(ret))
++			return ret;
++		return 0;
++	}
+ 
+ 	while (len > 0) {
+ 		unsigned long sect_start = (pos/sect_size)*sect_size;
+@@ -220,7 +224,7 @@ static int do_cached_read (struct mtdblk
+ 			memcpy (buf, mtdblk->cache_data + offset, size);
+ 		} else {
+ 			ret = mtd_read(mtd, pos, size, &retlen, buf);
+-			if (ret)
++			if (ret && !mtd_is_bitflip(ret))
+ 				return ret;
+ 			if (retlen != size)
+ 				return -EIO;
 
 
