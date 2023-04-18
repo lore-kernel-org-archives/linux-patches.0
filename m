@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F620257D
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94E6C4339B;
-	Tue, 18 Apr 2023 12:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2552572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2209FC433D2;
+	Tue, 18 Apr 2023 12:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822238;
-	bh=k/HB4zxvp8gyenny9Zjs2yixtVMg9eZfyBxRQrGyrk8=;
+	s=korg; t=1681822235;
+	bh=8YUJalr43YpmpfEaz8yWBdBI4sfRtGFKgUpH/UCuEDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vdT5rgZ0dXBmIJ+CTpnpxjrySeIX16IfBiummWMKGFhFof/sjzAm6W/vGhaLcuHyZ
-	 qI1VB6/ei3aJADBMVq/A8+i+LH6slBBi/NqYiyNUC5gKFswZE7NyzLSnssP8LxVxLM
-	 +Ou9esMY7hs7w8hemFsfTyAJdfTB3kqfMzZEcEDs=
+	b=b2Jpy4jZPhNYqahE20yqpQiG/RdbN9g6s7WziT+a2vG9hwoqRShj7xLVYPqF/UklD
+	 ChJ11/wh6xD8g2ZLX/YxUbYIFze3MXDADC+6hQfuYj9nvQwP0OG161T4LyyArLGtKT
+	 uQOJHDFtYEmAeIl2bBU6jyFI6+n0p2jcFu0KVWUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Aya Levin <ayal@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 035/139] IB/mlx5: Add support for 400G_8X lane speed
-Date: Tue, 18 Apr 2023 14:21:40 +0200
-Message-Id: <20230418120314.974703458@linuxfoundation.org>
+Subject: [PATCH 6.2 044/139] dmaengine: apple-admac: Handle global interrupt flags
+Date: Tue, 18 Apr 2023 14:21:49 +0200
+Message-Id: <20230418120315.305084540@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -37,44 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit 88c9483faf15ada14eca82714114656893063458 ]
+[ Upstream commit a288fd158fbf85c06a9ac01cecabf97ac5d962e7 ]
 
-Currently, when driver queries PTYS to report which link speed is being
-used on its RoCE ports, it does not check the case of having 400Gbps
-transmitted over 8 lanes. Thus it fails to report the said speed and
-instead it defaults to report 10G over 4 lanes.
+In addition to TX channel and RX channel interrupt flags there's
+another class of 'global' interrupt flags with unknown semantics. Those
+weren't being handled up to now, and they are the suspected cause of
+stuck IRQ states that have been sporadically occurring. Check the global
+flags and clear them if raised.
 
-Add a check for the said speed when querying PTYS and report it back
-correctly when needed.
-
-Fixes: 08e8676f1607 ("IB/mlx5: Add support for 50Gbps per lane link modes")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Reviewed-by: Aya Levin <ayal@nvidia.com>
-Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/ec9040548d119d22557d6a4b4070d6f421701fd4.1678973994.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: b127315d9a78 ("dmaengine: apple-admac: Add Apple ADMAC driver")
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+Link: https://lore.kernel.org/r/20230224152222.26732-1-povik+lin@cutebit.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/apple-admac.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index c669ef6e47e73..eaa35e1df2a85 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -442,6 +442,10 @@ static int translate_eth_ext_proto_oper(u32 eth_proto_oper, u16 *active_speed,
- 		*active_width = IB_WIDTH_2X;
- 		*active_speed = IB_SPEED_NDR;
- 		break;
-+	case MLX5E_PROT_MASK(MLX5E_400GAUI_8):
-+		*active_width = IB_WIDTH_8X;
-+		*active_speed = IB_SPEED_HDR;
-+		break;
- 	case MLX5E_PROT_MASK(MLX5E_400GAUI_4_400GBASE_CR4_KR4):
- 		*active_width = IB_WIDTH_4X;
- 		*active_speed = IB_SPEED_NDR;
+diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+index 90f28bda29c8b..00cbfafe0ed9d 100644
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -75,6 +75,7 @@
+ 
+ #define REG_TX_INTSTATE(idx)		(0x0030 + (idx) * 4)
+ #define REG_RX_INTSTATE(idx)		(0x0040 + (idx) * 4)
++#define REG_GLOBAL_INTSTATE(idx)	(0x0050 + (idx) * 4)
+ #define REG_CHAN_INTSTATUS(ch, idx)	(0x8010 + (ch) * 0x200 + (idx) * 4)
+ #define REG_CHAN_INTMASK(ch, idx)	(0x8020 + (ch) * 0x200 + (idx) * 4)
+ 
+@@ -672,13 +673,14 @@ static void admac_handle_chan_int(struct admac_data *ad, int no)
+ static irqreturn_t admac_interrupt(int irq, void *devid)
+ {
+ 	struct admac_data *ad = devid;
+-	u32 rx_intstate, tx_intstate;
++	u32 rx_intstate, tx_intstate, global_intstate;
+ 	int i;
+ 
+ 	rx_intstate = readl_relaxed(ad->base + REG_RX_INTSTATE(ad->irq_index));
+ 	tx_intstate = readl_relaxed(ad->base + REG_TX_INTSTATE(ad->irq_index));
++	global_intstate = readl_relaxed(ad->base + REG_GLOBAL_INTSTATE(ad->irq_index));
+ 
+-	if (!tx_intstate && !rx_intstate)
++	if (!tx_intstate && !rx_intstate && !global_intstate)
+ 		return IRQ_NONE;
+ 
+ 	for (i = 0; i < ad->nchannels; i += 2) {
+@@ -693,6 +695,12 @@ static irqreturn_t admac_interrupt(int irq, void *devid)
+ 		rx_intstate >>= 1;
+ 	}
+ 
++	if (global_intstate) {
++		dev_warn(ad->dev, "clearing unknown global interrupt flag: %x\n",
++			 global_intstate);
++		writel_relaxed(~(u32) 0, ad->base + REG_GLOBAL_INTSTATE(ad->irq_index));
++	}
++
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
 2.39.2
 
