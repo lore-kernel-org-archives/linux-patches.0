@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B902566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BB1C433EF;
-	Tue, 18 Apr 2023 12:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4519F2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F5AC433D2;
+	Tue, 18 Apr 2023 12:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820820;
-	bh=U8OFq723jXo2iLIrGUXxVW0QPmwfnvUwDnjRL41GQUc=;
+	s=korg; t=1681820823;
+	bh=COtBPWd792pj4wDo6QCmYmv27EpEeD8uoH4fJakfhLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uVmH9hhTNBDou1cWdKUg9wWSbJOM0vSmsYwiyqTRdiATYR/f9fna8eJXVu9IFGPbb
-	 dDvUIfr3uGD5QjcT9bjlnPCr6yWrcE8Z4y+F28nePxNepymuJ7x8ukiFmE+ACH5Q6q
-	 q3rbxY/DX3RNaBxK3OpZHSbMR/W056QI3DCVGBQo=
+	b=PbotKGOYKw7sNKZeahCZW0LgeRiiixVX5nW0ybMeamx+GHro366gUxPkL92TQUQbi
+	 mbk/YHgKhDWKduXodEmnSVH1+JJOhKA4Q1uurAamQiZMB9x7VZcESXUnPu63IrpChT
+	 K6B9ZY75h9yfbqnXIkXrIyMjcBYto+L1fLPIDgkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Robbie Harwood <rharwood@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	keyrings@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	kexec@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 36/57] 9p/xen : Fix use after free bug in xen_9pfs_front_remove due to race condition
-Date: Tue, 18 Apr 2023 14:21:36 +0200
-Message-Id: <20230418120259.999336863@linuxfoundation.org>
+Subject: [PATCH 4.19 45/57] verify_pefile: relax wrapper length check
+Date: Tue, 18 Apr 2023 14:21:45 +0200
+Message-Id: <20230418120300.309593262@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -36,58 +41,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Robbie Harwood <rharwood@redhat.com>
 
-[ Upstream commit ea4f1009408efb4989a0f139b70fb338e7f687d0 ]
+[ Upstream commit 4fc5c74dde69a7eda172514aaeb5a7df3600adb3 ]
 
-In xen_9pfs_front_probe, it calls xen_9pfs_front_alloc_dataring
-to init priv->rings and bound &ring->work with p9_xen_response.
+The PE Format Specification (section "The Attribute Certificate Table
+(Image Only)") states that `dwLength` is to be rounded up to 8-byte
+alignment when used for traversal.  Therefore, the field is not required
+to be an 8-byte multiple in the first place.
 
-When it calls xen_9pfs_front_event_handler to handle IRQ requests,
-it will finally call schedule_work to start the work.
+Accordingly, pesign has not performed this alignment since version
+0.110.  This causes kexec failure on pesign'd binaries with "PEFILE:
+Signature wrapper len wrong".  Update the comment and relax the check.
 
-When we call xen_9pfs_front_remove to remove the driver, there
-may be a sequence as follows:
-
-Fix it by finishing the work before cleanup in xen_9pfs_front_free.
-
-Note that, this bug is found by static analysis, which might be
-false positive.
-
-CPU0                  CPU1
-
-                     |p9_xen_response
-xen_9pfs_front_remove|
-  xen_9pfs_front_free|
-kfree(priv)          |
-//free priv          |
-                     |p9_tag_lookup
-                     |//use priv->client
-
-Fixes: 71ebd71921e4 ("xen/9pfs: connect to the backend")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Signed-off-by: Robbie Harwood <rharwood@redhat.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Jarkko Sakkinen <jarkko@kernel.org>
+cc: Eric Biederman <ebiederm@xmission.com>
+cc: Herbert Xu <herbert@gondor.apana.org.au>
+cc: keyrings@vger.kernel.org
+cc: linux-crypto@vger.kernel.org
+cc: kexec@lists.infradead.org
+Link: https://learn.microsoft.com/en-us/windows/win32/debug/pe-format#the-attribute-certificate-table-image-only
+Link: https://github.com/rhboot/pesign
+Link: https://lore.kernel.org/r/20230220171254.592347-2-rharwood@redhat.com/ # v2
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ crypto/asymmetric_keys/verify_pefile.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index 08b96aeaff464..c87146a496363 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -299,6 +299,10 @@ static void xen_9pfs_front_free(struct xen_9pfs_front_priv *priv)
- 	write_unlock(&xen_9pfs_lock);
+diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
+index d178650fd524c..411977947adbe 100644
+--- a/crypto/asymmetric_keys/verify_pefile.c
++++ b/crypto/asymmetric_keys/verify_pefile.c
+@@ -139,11 +139,15 @@ static int pefile_strip_sig_wrapper(const void *pebuf,
+ 	pr_debug("sig wrapper = { %x, %x, %x }\n",
+ 		 wrapper.length, wrapper.revision, wrapper.cert_type);
  
- 	for (i = 0; i < priv->num_rings; i++) {
-+		struct xen_9pfs_dataring *ring = &priv->rings[i];
-+
-+		cancel_work_sync(&ring->work);
-+
- 		if (!priv->rings[i].intf)
- 			break;
- 		if (priv->rings[i].irq > 0)
+-	/* Both pesign and sbsign round up the length of certificate table
+-	 * (in optional header data directories) to 8 byte alignment.
++	/* sbsign rounds up the length of certificate table (in optional
++	 * header data directories) to 8 byte alignment.  However, the PE
++	 * specification states that while entries are 8-byte aligned, this is
++	 * not included in their length, and as a result, pesign has not
++	 * rounded up since 0.110.
+ 	 */
+-	if (round_up(wrapper.length, 8) != ctx->sig_len) {
+-		pr_debug("Signature wrapper len wrong\n");
++	if (wrapper.length > ctx->sig_len) {
++		pr_debug("Signature wrapper bigger than sig len (%x > %x)\n",
++			 ctx->sig_len, wrapper.length);
+ 		return -ELIBBAD;
+ 	}
+ 	if (wrapper.revision != WIN_CERT_REVISION_2_0) {
 -- 
 2.39.2
 
