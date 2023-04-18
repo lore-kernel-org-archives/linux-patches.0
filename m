@@ -1,27 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA8C2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AE5C4339B;
-	Tue, 18 Apr 2023 12:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BCC2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883EEC433EF;
+	Tue, 18 Apr 2023 12:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821348;
-	bh=4e8JJtLHcDekISQnK6SwhspKcONFIcst1loA1gR9nec=;
+	s=korg; t=1681821346;
+	bh=h7FEIe8ca7zvfq0mrRQUgHsit2vQHJj7yXRHnFW3K+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kPXh0l8gfCr3fsc68pJb9KtKRnMUnoy0kZi2jRVz3gOcuFy3eDD/huRRU3oy3N+QH
-	 PofEhrH8PQqYGKjx8OX7TaBaJp2TDzGLW8B16yHDiNDsL8M8suONypfnotaWU0Sgf6
-	 K4VD88G+dn/ukInKvXKpXFMbR5gtoThQ0V3kJ1Rg=
+	b=uLTNZVj6LfvEzuM32WH5Ybdio4XXNO52JO4/0FuGU94DC3Eqda5+ES3VPGiyJ4iOD
+	 E2tgN10/htk7rd3GL26xhLns+yev5hZlgyEdZXjBzkRqz14Qiq9rIz3RUtAF68g7Cz
+	 vMV7qs6Fnu3sO/T304qu77shnzUsxgZn2dxpYcFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bang Li <libang.linuxer@gmail.com>,
-	Richard Weinberger <richard@nod.at>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 064/124] mtdblock: tolerate corrected bit-flips
-Date: Tue, 18 Apr 2023 14:21:23 +0200
-Message-Id: <20230418120312.189246315@linuxfoundation.org>
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Daniel Vetter <daniel.vetter@intel.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	shlomo@fastmail.com,
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <michel@daenzer.net>,
+	=?UTF-8?q?Noralf=20Tr=C3=B8nnes?= <noralf@tronnes.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Maxime Ripard <mripard@kernel.org>,
+	David Airlie <airlied@linux.ie>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
+	Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Nathan Chancellor <natechancellor@gmail.com>,
+	Qiujun Huang <hqjagain@gmail.com>,
+	Peter Rosin <peda@axentia.se>,
+	linux-fbdev@vger.kernel.org,
+	Helge Deller <deller@gmx.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Shigeru Yoshida <syoshida@redhat.com>
+Subject: [PATCH 5.10 063/124] fbmem: Reject FB_ACTIVATE_KD_TEXT from userspace
+Date: Tue, 18 Apr 2023 14:21:22 +0200
+Message-Id: <20230418120312.152461472@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -35,58 +56,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bang Li <libang.linuxer@gmail.com>
+From: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-commit 0c3089601f064d80b3838eceb711fcac04bceaad upstream.
+commit 6fd33a3333c7916689b8f051a185defe4dd515b0 upstream.
 
-mtd_read() may return -EUCLEAN in case of corrected bit-flips.This
-particular condition should not be treated like an error.
+This is an oversight from dc5bdb68b5b3 ("drm/fb-helper: Fix vt
+restore") - I failed to realize that nasty userspace could set this.
 
-Signed-off-by: Bang Li <libang.linuxer@gmail.com>
-Fixes: e47f68587b82 ("mtd: check for max_bitflips in mtd_read_oob()")
-Cc: <stable@vger.kernel.org> # v3.7
-Acked-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230328163012.4264-1-libang.linuxer@gmail.com
+It's not pretty to mix up kernel-internal and userspace uapi flags
+like this, but since the entire fb_var_screeninfo structure is uapi
+we'd need to either add a new parameter to the ->fb_set_par callback
+and fb_set_par() function, which has a _lot_ of users. Or some other
+fairly ugly side-channel int fb_info. Neither is a pretty prospect.
+
+Instead just correct the issue at hand by filtering out this
+kernel-internal flag in the ioctl handling code.
+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Fixes: dc5bdb68b5b3 ("drm/fb-helper: Fix vt restore")
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: shlomo@fastmail.com
+Cc: Michel Dänzer <michel@daenzer.net>
+Cc: Noralf Trønnes <noralf@tronnes.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Daniel Vetter <daniel.vetter@intel.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.7+
+Cc: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Nathan Chancellor <natechancellor@gmail.com>
+Cc: Qiujun Huang <hqjagain@gmail.com>
+Cc: Peter Rosin <peda@axentia.se>
+Cc: linux-fbdev@vger.kernel.org
+Cc: Helge Deller <deller@gmx.de>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Cc: Shigeru Yoshida <syoshida@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230404193934.472457-1-daniel.vetter@ffwll.ch
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdblock.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/video/fbdev/core/fbmem.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mtd/mtdblock.c
-+++ b/drivers/mtd/mtdblock.c
-@@ -153,7 +153,7 @@ static int do_cached_write (struct mtdbl
- 				mtdblk->cache_state = STATE_EMPTY;
- 				ret = mtd_read(mtd, sect_start, sect_size,
- 					       &retlen, mtdblk->cache_data);
--				if (ret)
-+				if (ret && !mtd_is_bitflip(ret))
- 					return ret;
- 				if (retlen != sect_size)
- 					return -EIO;
-@@ -188,8 +188,12 @@ static int do_cached_read (struct mtdblk
- 	pr_debug("mtdblock: read on \"%s\" at 0x%lx, size 0x%x\n",
- 			mtd->name, pos, len);
- 
--	if (!sect_size)
--		return mtd_read(mtd, pos, len, &retlen, buf);
-+	if (!sect_size) {
-+		ret = mtd_read(mtd, pos, len, &retlen, buf);
-+		if (ret && !mtd_is_bitflip(ret))
-+			return ret;
-+		return 0;
-+	}
- 
- 	while (len > 0) {
- 		unsigned long sect_start = (pos/sect_size)*sect_size;
-@@ -209,7 +213,7 @@ static int do_cached_read (struct mtdblk
- 			memcpy (buf, mtdblk->cache_data + offset, size);
- 		} else {
- 			ret = mtd_read(mtd, pos, size, &retlen, buf);
--			if (ret)
-+			if (ret && !mtd_is_bitflip(ret))
- 				return ret;
- 			if (retlen != size)
- 				return -EIO;
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -1117,6 +1117,8 @@ static long do_fb_ioctl(struct fb_info *
+ 	case FBIOPUT_VSCREENINFO:
+ 		if (copy_from_user(&var, argp, sizeof(var)))
+ 			return -EFAULT;
++		/* only for kernel-internal use */
++		var.activate &= ~FB_ACTIVATE_KD_TEXT;
+ 		console_lock();
+ 		lock_fb_info(info);
+ 		ret = fbcon_modechange_possible(info, &var);
 
 
