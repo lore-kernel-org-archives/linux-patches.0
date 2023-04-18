@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5052572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223F1C433D2;
-	Tue, 18 Apr 2023 12:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4533C2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7550C433D2;
+	Tue, 18 Apr 2023 12:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821751;
-	bh=QIjYVfhD4/s7Kmz/eMUMK44QfMHT9KQvNLUIggOotl8=;
+	s=korg; t=1681821754;
+	bh=xtGEDVJm4OrHZzuvlFRTJ3y2iBEqnWKHjzoKnOyk48o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OggXmGaGWC4JDjenHtj6KpMw94/X96gJgPzbeR2bCACMn44A3R/fRZA9SFwZrY6Zr
-	 ZAC5btIJbnGUyeQgVwhMmH5PsPDwpk1bT3jlZ8IXgCbqxSG49BWrJ9OpLZC+4odiIl
-	 4c/BPNC5bZSr59PmgoILuDz26SsDksxBEMmiTm+E=
+	b=MazAw80YGbBcMUpL/qKeTH9lBAuLX6gTxr8vKOoQkwrgQNriJv3JU+T5gL4bvh8aI
+	 PH/QhDRnRauqdKjt1jvZDpohwMvxqW9zb8i4yNlB41O7lhoCWV5DYw9o7VSVz5gYVJ
+	 lPUGMD7LXWCP144wnl5Hb/C8Cf/DIREFWKJzNJbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunyan Zhang <chunyan.zhang@unisoc.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Mustafa Ismail <mustafa.ismail@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/134] clk: sprd: set max_register according to mapping range
-Date: Tue, 18 Apr 2023 14:21:24 +0200
-Message-Id: <20230418120313.981638098@linuxfoundation.org>
+Subject: [PATCH 6.1 029/134] RDMA/irdma: Do not generate SW completions for NOPs
+Date: Tue, 18 Apr 2023 14:21:25 +0200
+Message-Id: <20230418120314.011040388@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,61 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunyan Zhang <chunyan.zhang@unisoc.com>
+From: Mustafa Ismail <mustafa.ismail@intel.com>
 
-[ Upstream commit 47d43086531f10539470a63e8ad92803e686a3dd ]
+[ Upstream commit 30ed9ee9a10a90ae719dcfcacead1d0506fa45ed ]
 
-In sprd clock driver, regmap_config.max_register was set to a fixed value
-which is likely larger than the address range configured in device tree,
-when reading registers through debugfs it would cause access violation.
+Currently, artificial SW completions are generated for NOP wqes which can
+generate unexpected completions with wr_id = 0. Skip the generation of
+artificial completions for NOPs.
 
-Fixes: d41f59fd92f2 ("clk: sprd: Add common infrastructure")
-Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
-Link: https://lore.kernel.org/r/20230316023624.758204-1-chunyan.zhang@unisoc.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 81091d7696ae ("RDMA/irdma: Add SW mechanism to generate completions on error")
+Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20230315145231.931-2-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sprd/common.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/irdma/utils.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sprd/common.c b/drivers/clk/sprd/common.c
-index ce81e4087a8fc..2bfbab8db94bf 100644
---- a/drivers/clk/sprd/common.c
-+++ b/drivers/clk/sprd/common.c
-@@ -17,7 +17,6 @@ static const struct regmap_config sprdclk_regmap_config = {
- 	.reg_bits	= 32,
- 	.reg_stride	= 4,
- 	.val_bits	= 32,
--	.max_register	= 0xffff,
- 	.fast_io	= true,
- };
- 
-@@ -43,6 +42,8 @@ int sprd_clk_regmap_init(struct platform_device *pdev,
- 	struct device *dev = &pdev->dev;
- 	struct device_node *node = dev->of_node, *np;
- 	struct regmap *regmap;
-+	struct resource *res;
-+	struct regmap_config reg_config = sprdclk_regmap_config;
- 
- 	if (of_find_property(node, "sprd,syscon", NULL)) {
- 		regmap = syscon_regmap_lookup_by_phandle(node, "sprd,syscon");
-@@ -59,12 +60,14 @@ int sprd_clk_regmap_init(struct platform_device *pdev,
- 			return PTR_ERR(regmap);
- 		}
- 	} else {
--		base = devm_platform_ioremap_resource(pdev, 0);
-+		base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 		if (IS_ERR(base))
- 			return PTR_ERR(base);
- 
-+		reg_config.max_register = resource_size(res) - reg_config.reg_stride;
-+
- 		regmap = devm_regmap_init_mmio(&pdev->dev, base,
--					       &sprdclk_regmap_config);
-+					       &reg_config);
- 		if (IS_ERR(regmap)) {
- 			pr_err("failed to init regmap\n");
- 			return PTR_ERR(regmap);
+diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
+index 445e69e864097..7887230c867b1 100644
+--- a/drivers/infiniband/hw/irdma/utils.c
++++ b/drivers/infiniband/hw/irdma/utils.c
+@@ -2595,7 +2595,10 @@ void irdma_generate_flush_completions(struct irdma_qp *iwqp)
+ 			/* remove the SQ WR by moving SQ tail*/
+ 			IRDMA_RING_SET_TAIL(*sq_ring,
+ 				sq_ring->tail + qp->sq_wrtrk_array[sq_ring->tail].quanta);
+-
++			if (cmpl->cpi.op_type == IRDMAQP_OP_NOP) {
++				kfree(cmpl);
++				continue;
++			}
+ 			ibdev_dbg(iwqp->iwscq->ibcq.device,
+ 				  "DEV: %s: adding wr_id = 0x%llx SQ Completion to list qp_id=%d\n",
+ 				  __func__, cmpl->cpi.wr_id, qp->qp_id);
 -- 
 2.39.2
 
