@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAA82566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75FFC433EF;
-	Tue, 18 Apr 2023 12:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004312566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B53EC433D2;
+	Tue, 18 Apr 2023 12:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820765;
-	bh=pF4V/uSzBEDqsjjMXJICL3TlgrroEcdCv9l8XZ54jHE=;
+	s=korg; t=1681820767;
+	bh=2T6rur25NKfmzE0lC8yrOcG5RkbSoPXJT7NLRZ6HSb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kkIL5Nrj/Xc8dmgEcezfLfpp/pOFcgQJHbg2tGGUqiSmTVodBxZyjVbj+mCdl16k9
-	 z0i4i7LSOxFRQpg/RkSt2TiE0ZMYZIff9a0vPh55edm+/+Irw3AaGyLpu4Wiig5chM
-	 OisYlliSQcJuaupqHcp0fIxvN2HtwgtLAW1ag6mM=
+	b=Okys5XacU59hl+hltqBqhlYCeUNVlcfkwaId0ihuvwDhxxOfpkvXlvfKLy9DhtO3G
+	 aZ4obugekojSFD7tSv+D07I647ToHZsxvlfwDMrIe7gvNj3qhJ5+KjP+P9vzPfzKsq
+	 zAnhoWDeioK2VqvXo0WmrhhnNj2cwJnWoSBTYnN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 05/57] NFSv4: Convert struct nfs4_state to use refcount_t
-Date: Tue, 18 Apr 2023 14:21:05 +0200
-Message-Id: <20230418120258.913083090@linuxfoundation.org>
+	Jeremy Soller <jeremy@system76.com>,
+	Tim Crawford <tcrawford@system76.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 23/57] ALSA: hda/realtek: Add quirk for Clevo X370SNW
+Date: Tue, 18 Apr 2023 14:21:23 +0200
+Message-Id: <20230418120259.552890903@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -34,114 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Jeremy Soller <jeremy@system76.com>
 
-[ Upstream commit ace9fad43aa60a88af4b57a8328f0958e3d07bf0 ]
+commit 36d4d213c6d4fffae2645a601e8ae996de4c3645 upstream.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: 6165a16a5ad9 ("NFSv4: Fix hangs when recovering open state after a server reboot")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes speaker output and headset detection on Clevo X370SNW.
+
+Signed-off-by: Jeremy Soller <jeremy@system76.com>
+Signed-off-by: Tim Crawford <tcrawford@system76.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230331162317.14992-1-tcrawford@system76.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4_fs.h   | 2 +-
- fs/nfs/nfs4proc.c  | 8 ++++----
- fs/nfs/nfs4state.c | 8 ++++----
- 3 files changed, 9 insertions(+), 9 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/nfs4_fs.h b/fs/nfs/nfs4_fs.h
-index 5ac7bf24c507b..2d438318681a5 100644
---- a/fs/nfs/nfs4_fs.h
-+++ b/fs/nfs/nfs4_fs.h
-@@ -190,7 +190,7 @@ struct nfs4_state {
- 	unsigned int n_wronly;		/* Number of write-only references */
- 	unsigned int n_rdwr;		/* Number of read/write references */
- 	fmode_t state;			/* State on the server (R,W, or RW) */
--	atomic_t count;
-+	refcount_t count;
- 
- 	wait_queue_head_t waitq;
- };
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 250fa88303fad..4f8775d9d0f06 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -1792,7 +1792,7 @@ static struct nfs4_state *nfs4_try_open_cached(struct nfs4_opendata *opendata)
- out:
- 	return ERR_PTR(ret);
- out_return_state:
--	atomic_inc(&state->count);
-+	refcount_inc(&state->count);
- 	return state;
- }
- 
-@@ -1864,7 +1864,7 @@ _nfs4_opendata_reclaim_to_nfs4_state(struct nfs4_opendata *data)
- update:
- 	update_open_stateid(state, &data->o_res.stateid, NULL,
- 			    data->o_arg.fmode);
--	atomic_inc(&state->count);
-+	refcount_inc(&state->count);
- 
- 	return state;
- }
-@@ -1902,7 +1902,7 @@ nfs4_opendata_find_nfs4_state(struct nfs4_opendata *data)
- 		return ERR_CAST(inode);
- 	if (data->state != NULL && data->state->inode == inode) {
- 		state = data->state;
--		atomic_inc(&state->count);
-+		refcount_inc(&state->count);
- 	} else
- 		state = nfs4_get_open_state(inode, data->owner);
- 	iput(inode);
-@@ -1975,7 +1975,7 @@ static struct nfs4_opendata *nfs4_open_recoverdata_alloc(struct nfs_open_context
- 	if (opendata == NULL)
- 		return ERR_PTR(-ENOMEM);
- 	opendata->state = state;
--	atomic_inc(&state->count);
-+	refcount_inc(&state->count);
- 	return opendata;
- }
- 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index b9fbd01ef4cfe..e5b4c6987c846 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -675,7 +675,7 @@ nfs4_alloc_open_state(void)
- 	state = kzalloc(sizeof(*state), GFP_NOFS);
- 	if (!state)
- 		return NULL;
--	atomic_set(&state->count, 1);
-+	refcount_set(&state->count, 1);
- 	INIT_LIST_HEAD(&state->lock_states);
- 	spin_lock_init(&state->state_lock);
- 	seqlock_init(&state->seqlock);
-@@ -709,7 +709,7 @@ __nfs4_find_state_byowner(struct inode *inode, struct nfs4_state_owner *owner)
- 			continue;
- 		if (!nfs4_valid_open_stateid(state))
- 			continue;
--		if (atomic_inc_not_zero(&state->count))
-+		if (refcount_inc_not_zero(&state->count))
- 			return state;
- 	}
- 	return NULL;
-@@ -763,7 +763,7 @@ void nfs4_put_open_state(struct nfs4_state *state)
- 	struct inode *inode = state->inode;
- 	struct nfs4_state_owner *owner = state->owner;
- 
--	if (!atomic_dec_and_lock(&state->count, &owner->so_lock))
-+	if (!refcount_dec_and_lock(&state->count, &owner->so_lock))
- 		return;
- 	spin_lock(&inode->i_lock);
- 	list_del(&state->inode_states);
-@@ -1596,7 +1596,7 @@ static int nfs4_reclaim_open_state(struct nfs4_state_owner *sp, const struct nfs
- 			continue;
- 		if (state->state == 0)
- 			continue;
--		atomic_inc(&state->count);
-+		refcount_inc(&state->count);
- 		spin_unlock(&sp->so_lock);
- 		status = ops->recover_open(sp, state);
- 		if (status >= 0) {
--- 
-2.39.2
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -2556,6 +2556,7 @@ static const struct snd_pci_quirk alc882
+ 	SND_PCI_QUIRK(0x1462, 0xda57, "MSI Z270-Gaming", ALC1220_FIXUP_GB_DUAL_CODECS),
+ 	SND_PCI_QUIRK_VENDOR(0x1462, "MSI", ALC882_FIXUP_GPIO3),
+ 	SND_PCI_QUIRK(0x147b, 0x107a, "Abit AW9D-MAX", ALC882_FIXUP_ABIT_AW9D_MAX),
++	SND_PCI_QUIRK(0x1558, 0x3702, "Clevo X370SN[VW]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x50d3, "Clevo PC50[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x65d1, "Clevo PB51[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x65d2, "Clevo PB51R[CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
 
 
