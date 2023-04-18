@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9972572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A78C433EF;
-	Tue, 18 Apr 2023 12:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D5F2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1CEC433EF;
+	Tue, 18 Apr 2023 12:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821833;
-	bh=lVLKM0NOuTQExlSnMc3COC2k+sIlb8a9XFSwgYSHVBI=;
+	s=korg; t=1681821836;
+	bh=GC1ElIfd4d4yV76Nsn9CGAOKiO3k+cjxG6lcQ4FQguI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CI0DtlN8hwH6lAuy8B9S0zJQtA8t1WIWLfn8FuWv+4ZmqeL/abkuDeD5sexMpHL+H
-	 O4p8HupYO7JhLh4Ko7AIKBWOjApY8X8TxrFSQ8vWP+hu71jewYeQLl/pM5E8zTJx3C
-	 zsGouY4JaBPPtCinQFCv91xnMmAgpnhHOXj4G+oY=
+	b=dkD9xddRkOIy16JYTcQ7ZgNYw3Lu3H6Mr5Rn/XVuFZ7iBUytf3r1vKLwKbvTUO92l
+	 sNLpQ7G7062OCdqTiof7jMP+GNs4DgQYGDx9OAFwFyBMJiZ0KWOqakLrcjL+NBo4xI
+	 7vld8YHBoVkduIRaLwva1Rqkjcjmjwa7rJ0SbXcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Plotnikov <den-plotnikov@yandex-team.ru>,
 	Simon Horman <simon.horman@corigine.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/134] qlcnic: check pci_reset_function result
-Date: Tue, 18 Apr 2023 14:21:55 +0200
-Message-Id: <20230418120315.014699863@linuxfoundation.org>
+Subject: [PATCH 6.1 060/134] net: wwan: iosm: Fix error handling path in ipc_pcie_probe()
+Date: Tue, 18 Apr 2023 14:21:56 +0200
+Message-Id: <20230418120315.065180636@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -37,47 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Denis Plotnikov <den-plotnikov@yandex-team.ru>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 7573099e10ca69c3be33995c1fcd0d241226816d ]
+[ Upstream commit a56ef25619e079bd7d744636cf18d054d1e91982 ]
 
-Static code analyzer complains to unchecked return value.
-The result of pci_reset_function() is unchecked.
-Despite, the issue is on the FLR supported code path and in that
-case reset can be done with pcie_flr(), the patch uses less invasive
-approach by adding the result check of pci_reset_function().
+Smatch reports:
+	drivers/net/wwan/iosm/iosm_ipc_pcie.c:298 ipc_pcie_probe()
+	warn: missing unwind goto?
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+When dma_set_mask fails it directly returns without disabling pci
+device and freeing ipc_pcie. Fix this my calling a correct goto label
 
-Fixes: 7e2cf4feba05 ("qlcnic: change driver hardware interface mechanism")
-Signed-off-by: Denis Plotnikov <den-plotnikov@yandex-team.ru>
+As dma_set_mask returns either 0 or -EIO, we can use a goto label, as
+it finally returns -EIO.
+
+Add a set_mask_fail goto label which stands consistent with other goto
+labels in this function..
+
+Fixes: 035e3befc191 ("net: wwan: iosm: fix driver not working with INTEL_IOMMU disabled")
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wwan/iosm/iosm_ipc_pcie.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c
-index 87f76bac2e463..eb827b86ecae8 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_ctx.c
-@@ -628,7 +628,13 @@ int qlcnic_fw_create_ctx(struct qlcnic_adapter *dev)
- 	int i, err, ring;
- 
- 	if (dev->flags & QLCNIC_NEED_FLR) {
--		pci_reset_function(dev->pdev);
-+		err = pci_reset_function(dev->pdev);
-+		if (err) {
-+			dev_err(&dev->pdev->dev,
-+				"Adapter reset failed (%d). Please reboot\n",
-+				err);
-+			return err;
-+		}
- 		dev->flags &= ~QLCNIC_NEED_FLR;
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_pcie.c b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
+index 5bf5a93937c9c..04517bd3325a2 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_pcie.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
+@@ -295,7 +295,7 @@ static int ipc_pcie_probe(struct pci_dev *pci,
+ 	ret = dma_set_mask(ipc_pcie->dev, DMA_BIT_MASK(64));
+ 	if (ret) {
+ 		dev_err(ipc_pcie->dev, "Could not set PCI DMA mask: %d", ret);
+-		return ret;
++		goto set_mask_fail;
  	}
  
+ 	ipc_pcie_config_aspm(ipc_pcie);
+@@ -323,6 +323,7 @@ static int ipc_pcie_probe(struct pci_dev *pci,
+ imem_init_fail:
+ 	ipc_pcie_resources_release(ipc_pcie);
+ resources_req_fail:
++set_mask_fail:
+ 	pci_disable_device(pci);
+ pci_enable_fail:
+ 	kfree(ipc_pcie);
 -- 
 2.39.2
 
