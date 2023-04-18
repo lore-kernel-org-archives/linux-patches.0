@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AD92572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0421C4339E;
-	Tue, 18 Apr 2023 12:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DEB2579
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:42:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E07BC433D2;
+	Tue, 18 Apr 2023 12:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821746;
-	bh=76JEB8B+ffeW5lKj1shZ3Oh+S8yHioOzXCNOOvpndbE=;
+	s=korg; t=1681821748;
+	bh=AeAHrRlUGznp4R+iBgS5Igm05960uEjb2T0RJ8IGYUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOhFEuOujoIN2v2mBPkRnKsmkPFLUsw/Bd8WbpP9HusCFoLLS81Lj5qL+KN/O7D+0
-	 HBodDML2Qu5B3+G1UjBQDNOnb3xyFTO5ATOYb+WYsFGE54dXHE79Vivsj55xGuK2CE
-	 fC4hK/2O3ESMML7RSdnZRvun34fWZyJx84u3ooZo=
+	b=1lrY4dTPdYA1+5FlqNGSmvVYpPo3BzKq+ELDk0rwiKSRaedHOdb9m30ql25/K2puX
+	 Ex4KcTGWxu8uu8pOnMWuwjq6xg1DjHSQR7Dc18Sipiq5DO/qZSs9xBaOstvIM2L7rG
+	 K4ks6PGUD8L61Nar7G+ab8pXAJb8PLFAN4i+5xm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Vetter <daniel.vetter@intel.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Helge Deller <deller@gmx.de>,
-	Xingyuan Mo <hdthky0@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sam Ravnborg <sam@ravnborg.org>
-Subject: [PATCH 6.1 026/134] fbcon: set_con2fb_map needs to set con2fb_map!
-Date: Tue, 18 Apr 2023 14:21:22 +0200
-Message-Id: <20230418120313.914678771@linuxfoundation.org>
+	Ville Syrjala <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.1 027/134] drm/i915/dsi: fix DSS CTL register offsets for TGL+
+Date: Tue, 18 Apr 2023 14:21:23 +0200
+Message-Id: <20230418120313.952021160@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -38,54 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Vetter <daniel.vetter@ffwll.ch>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit fffb0b52d5258554c645c966c6cbef7de50b851d upstream.
+commit 6b8446859c971a5783a2cdc90adf32e64de3bd23 upstream.
 
-I got really badly confused in d443d9386472 ("fbcon: move more common
-code into fb_open()") because we set the con2fb_map before the failure
-points, which didn't look good.
+On TGL+ the DSS control registers are at different offsets, and there's
+one per pipe. Fix the offsets to fix dual link DSI for TGL+.
 
-But in trying to fix that I moved the assignment into the wrong path -
-we need to do it for _all_ vc we take over, not just the first one
-(which additionally requires the call to con2fb_acquire_newinfo).
+There would be helpers for this in the DSC code, but just do the quick
+fix now for DSI. Long term, we should probably move all the DSS handling
+into intel_vdsc.c, so exporting the helpers seems counter-productive.
 
-I've figured this out because of a KASAN bug report, where the
-fbcon_registered_fb and fbcon_display arrays went out of sync in
-fbcon_mode_deleted() because the con2fb_map pointed at the old
-fb_info, but the modes and everything was updated for the new one.
-
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Acked-by: Helge Deller <deller@gmx.de>
-Tested-by: Xingyuan Mo <hdthky0@gmail.com>
-Fixes: d443d9386472 ("fbcon: move more common code into fb_open()")
-Reported-by: Xingyuan Mo <hdthky0@gmail.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Xingyuan Mo <hdthky0@gmail.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # v5.19+
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8232
+Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230301151409.1581574-1-jani.nikula@intel.com
+(cherry picked from commit 1a62dd9895dca78bee28bba3a36f08836fdd143d)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/icl_dsi.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -846,10 +846,11 @@ static int set_con2fb_map(int unit, int
- 		if (err)
- 			return err;
+--- a/drivers/gpu/drm/i915/display/icl_dsi.c
++++ b/drivers/gpu/drm/i915/display/icl_dsi.c
+@@ -299,9 +299,21 @@ static void configure_dual_link_mode(str
+ {
+ 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
+ 	struct intel_dsi *intel_dsi = enc_to_intel_dsi(encoder);
++	i915_reg_t dss_ctl1_reg, dss_ctl2_reg;
+ 	u32 dss_ctl1;
  
--		con2fb_map[unit] = newidx;
- 		fbcon_add_cursor_work(info);
+-	dss_ctl1 = intel_de_read(dev_priv, DSS_CTL1);
++	/* FIXME: Move all DSS handling to intel_vdsc.c */
++	if (DISPLAY_VER(dev_priv) >= 12) {
++		struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
++
++		dss_ctl1_reg = ICL_PIPE_DSS_CTL1(crtc->pipe);
++		dss_ctl2_reg = ICL_PIPE_DSS_CTL2(crtc->pipe);
++	} else {
++		dss_ctl1_reg = DSS_CTL1;
++		dss_ctl2_reg = DSS_CTL2;
++	}
++
++	dss_ctl1 = intel_de_read(dev_priv, dss_ctl1_reg);
+ 	dss_ctl1 |= SPLITTER_ENABLE;
+ 	dss_ctl1 &= ~OVERLAP_PIXELS_MASK;
+ 	dss_ctl1 |= OVERLAP_PIXELS(intel_dsi->pixel_overlap);
+@@ -322,16 +334,16 @@ static void configure_dual_link_mode(str
+ 
+ 		dss_ctl1 &= ~LEFT_DL_BUF_TARGET_DEPTH_MASK;
+ 		dss_ctl1 |= LEFT_DL_BUF_TARGET_DEPTH(dl_buffer_depth);
+-		dss_ctl2 = intel_de_read(dev_priv, DSS_CTL2);
++		dss_ctl2 = intel_de_read(dev_priv, dss_ctl2_reg);
+ 		dss_ctl2 &= ~RIGHT_DL_BUF_TARGET_DEPTH_MASK;
+ 		dss_ctl2 |= RIGHT_DL_BUF_TARGET_DEPTH(dl_buffer_depth);
+-		intel_de_write(dev_priv, DSS_CTL2, dss_ctl2);
++		intel_de_write(dev_priv, dss_ctl2_reg, dss_ctl2);
+ 	} else {
+ 		/* Interleave */
+ 		dss_ctl1 |= DUAL_LINK_MODE_INTERLEAVE;
  	}
  
-+	con2fb_map[unit] = newidx;
-+
- 	/*
- 	 * If old fb is not mapped to any of the consoles,
- 	 * fbcon should release it.
+-	intel_de_write(dev_priv, DSS_CTL1, dss_ctl1);
++	intel_de_write(dev_priv, dss_ctl1_reg, dss_ctl1);
+ }
+ 
+ /* aka DSI 8X clock */
 
 
