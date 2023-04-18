@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A232566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB73C433EF;
-	Tue, 18 Apr 2023 12:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BB42566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:27:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E554BC433D2;
+	Tue, 18 Apr 2023 12:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820825;
-	bh=0hE04+07KsqCXzxoXjt/mN/mZRkql1GIDC8f1lk8dD8=;
+	s=korg; t=1681820828;
+	bh=N+4i+yZYMRbWxZzRVTcYVu7G1SPVlXOuYNmOjLBduZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=STQYr7lAXFiKNFJ2rgj6Rib409VQf06/oK9wwlTadaj31kUxNhre1i0pUYxdWFTge
-	 1C+JnxIWOOKMXtlPGaWm98VGAZg46uz4arsRfCGngqfR3mD8FA9U+yxqnMo1m/B28U
-	 rmgnUhzcBwtDvpNmkr07U0WUmFzjsFNVLslubNSk=
+	b=qJTts8R1TOmk8H0eLvUpDoTvVr1/Af6EXQzcuChPGEK6QWoMJqxSo2+eJcDibaUSh
+	 FlBIs52b598UVrIxsAyTEHe85tQX0P2s/fY3UcQHB67LMFfOqi1jEzdS+9z2Tfg7P1
+	 LpSILOnl3D+4w4+9hSLVRTWLNjo2SN7GXZsGePEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kolar <mich.k@seznam.cz>,
-	Jiri Kosina <jkosina@suse.cz>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Ding Hui <dinghui@sangfor.com.cn>
-Subject: [PATCH 4.19 46/57] scsi: ses: Handle enclosure with just a primary component gracefully
-Date: Tue, 18 Apr 2023 14:21:46 +0200
-Message-Id: <20230418120300.350581445@linuxfoundation.org>
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 4.19 47/57] x86/PCI: Add quirk for AMD XHCI controller that loses MSI-X state in D3hot
+Date: Tue, 18 Apr 2023 14:21:47 +0200
+Message-Id: <20230418120300.379462419@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -36,141 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Kosina <jkosina@suse.cz>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-commit c8e22b7a1694bb8d025ea636816472739d859145 upstream.
+commit f195fc1e9715ba826c3b62d58038f760f66a4fe9 upstream.
 
-This reverts commit 3fe97ff3d949 ("scsi: ses: Don't attach if enclosure
-has no components") and introduces proper handling of case where there are
-no detected secondary components, but primary component (enumerated in
-num_enclosures) does exist. That fix was originally proposed by Ding Hui
-<dinghui@sangfor.com.cn>.
+The AMD [1022:15b8] USB controller loses some internal functional MSI-X
+context when transitioning from D0 to D3hot. BIOS normally traps D0->D3hot
+and D3hot->D0 transitions so it can save and restore that internal context,
+but some firmware in the field can't do this because it fails to clear the
+AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit.
 
-Completely ignoring devices that have one primary enclosure and no
-secondary one results in ses_intf_add() bailing completely
+Clear AMD_15B8_RCC_DEV2_EPF0_STRAP2 NO_SOFT_RESET bit before USB controller
+initialization during boot.
 
-	scsi 2:0:0:254: enclosure has no enumerated components
-        scsi 2:0:0:254: Failed to bind enclosure -12ven in valid configurations such
-
-even on valid configurations with 1 primary and 0 secondary enclosures as
-below:
-
-	# sg_ses /dev/sg0
-	  3PARdata  SES               3321
-	Supported diagnostic pages:
-	  Supported Diagnostic Pages [sdp] [0x0]
-	  Configuration (SES) [cf] [0x1]
-	  Short Enclosure Status (SES) [ses] [0x8]
-	# sg_ses -p cf /dev/sg0
-	  3PARdata  SES               3321
-	Configuration diagnostic page:
-	  number of secondary subenclosures: 0
-	  generation code: 0x0
-	  enclosure descriptor list
-	    Subenclosure identifier: 0 [primary]
-	      relative ES process id: 0, number of ES processes: 1
-	      number of type descriptor headers: 1
-	      enclosure logical identifier (hex): 20000002ac02068d
-	      enclosure vendor: 3PARdata  product: VV                rev: 3321
-	  type descriptor header and text list
-	    Element type: Unspecified, subenclosure id: 0
-	      number of possible elements: 1
-
-The changelog for the original fix follows
-
-=====
-We can get a crash when disconnecting the iSCSI session,
-the call trace like this:
-
-  [ffff00002a00fb70] kfree at ffff00000830e224
-  [ffff00002a00fba0] ses_intf_remove at ffff000001f200e4
-  [ffff00002a00fbd0] device_del at ffff0000086b6a98
-  [ffff00002a00fc50] device_unregister at ffff0000086b6d58
-  [ffff00002a00fc70] __scsi_remove_device at ffff00000870608c
-  [ffff00002a00fca0] scsi_remove_device at ffff000008706134
-  [ffff00002a00fcc0] __scsi_remove_target at ffff0000087062e4
-  [ffff00002a00fd10] scsi_remove_target at ffff0000087064c0
-  [ffff00002a00fd70] __iscsi_unbind_session at ffff000001c872c4
-  [ffff00002a00fdb0] process_one_work at ffff00000810f35c
-  [ffff00002a00fe00] worker_thread at ffff00000810f648
-  [ffff00002a00fe70] kthread at ffff000008116e98
-
-In ses_intf_add, components count could be 0, and kcalloc 0 size scomp,
-but not saved in edev->component[i].scratch
-
-In this situation, edev->component[0].scratch is an invalid pointer,
-when kfree it in ses_intf_remove_enclosure, a crash like above would happen
-The call trace also could be other random cases when kfree cannot catch
-the invalid pointer
-
-We should not use edev->component[] array when the components count is 0
-We also need check index when use edev->component[] array in
-ses_enclosure_data_process
-=====
-
-Reported-by: Michal Kolar <mich.k@seznam.cz>
-Originally-by: Ding Hui <dinghui@sangfor.com.cn>
+Link: https://lore.kernel.org/linux-usb/Y%2Fz9GdHjPyF2rNG3@glanzmann.de/T/#u
+Link: https://lore.kernel.org/r/20230329172859.699743-1-Basavaraj.Natikar@amd.com
+Reported-by: Thomas Glanzmann <thomas@glanzmann.de>
+Tested-by: Thomas Glanzmann <thomas@glanzmann.de>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: 3fe97ff3d949 ("scsi: ses: Don't attach if enclosure has no components")
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Link: https://lore.kernel.org/r/nycvar.YFH.7.76.2304042122270.29760@cbobk.fhfr.pm
-Tested-by: Michal Kolar <mich.k@seznam.cz>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ses.c |   20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ arch/x86/pci/fixup.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/drivers/scsi/ses.c
-+++ b/drivers/scsi/ses.c
-@@ -519,9 +519,6 @@ static int ses_enclosure_find_by_addr(st
- 	int i;
- 	struct ses_component *scomp;
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -7,6 +7,7 @@
+ #include <linux/dmi.h>
+ #include <linux/pci.h>
+ #include <linux/vgaarb.h>
++#include <asm/amd_nb.h>
+ #include <asm/hpet.h>
+ #include <asm/pci_x86.h>
  
--	if (!edev->component[0].scratch)
--		return 0;
--
- 	for (i = 0; i < edev->components; i++) {
- 		scomp = edev->component[i].scratch;
- 		if (scomp->addr != efd->addr)
-@@ -612,8 +609,10 @@ static void ses_enclosure_data_process(s
- 						components++,
- 						type_ptr[0],
- 						name);
--				else
-+				else if (components < edev->components)
- 					ecomp = &edev->component[components++];
-+				else
-+					ecomp = ERR_PTR(-EINVAL);
+@@ -824,3 +825,23 @@ static void rs690_fix_64bit_dma(struct p
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7910, rs690_fix_64bit_dma);
  
- 				if (!IS_ERR(ecomp)) {
- 					if (addl_desc_ptr) {
-@@ -744,11 +743,6 @@ static int ses_intf_add(struct device *c
- 			components += type_ptr[1];
- 	}
- 
--	if (components == 0) {
--		sdev_printk(KERN_WARNING, sdev, "enclosure has no enumerated components\n");
--		goto err_free;
--	}
--
- 	ses_dev->page1 = buf;
- 	ses_dev->page1_len = len;
- 	buf = NULL;
-@@ -790,9 +784,11 @@ static int ses_intf_add(struct device *c
- 		buf = NULL;
- 	}
- page2_not_supported:
--	scomp = kcalloc(components, sizeof(struct ses_component), GFP_KERNEL);
--	if (!scomp)
--		goto err_free;
-+	if (components > 0) {
-+		scomp = kcalloc(components, sizeof(struct ses_component), GFP_KERNEL);
-+		if (!scomp)
-+			goto err_free;
+ #endif
++
++#ifdef CONFIG_AMD_NB
++
++#define AMD_15B8_RCC_DEV2_EPF0_STRAP2                                  0x10136008
++#define AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK       0x00000080L
++
++static void quirk_clear_strap_no_soft_reset_dev2_f0(struct pci_dev *dev)
++{
++	u32 data;
++
++	if (!amd_smn_read(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, &data)) {
++		data &= ~AMD_15B8_RCC_DEV2_EPF0_STRAP2_NO_SOFT_RESET_DEV2_F0_MASK;
++		if (amd_smn_write(0, AMD_15B8_RCC_DEV2_EPF0_STRAP2, data))
++			pci_err(dev, "Failed to write data 0x%x\n", data);
++	} else {
++		pci_err(dev, "Failed to read data\n");
 +	}
- 
- 	edev = enclosure_register(cdev->parent, dev_name(&sdev->sdev_gendev),
- 				  components, &ses_enclosure_callbacks);
++}
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
++#endif
 
 
