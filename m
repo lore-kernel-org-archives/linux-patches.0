@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578872566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:28:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF74BC433EF;
-	Tue, 18 Apr 2023 12:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E2E2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:28:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799E7C433D2;
+	Tue, 18 Apr 2023 12:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820929;
-	bh=NhsScW4y2Y9pkswRHZwszDvBFBlk2v4xUQOht6nyfu0=;
+	s=korg; t=1681820931;
+	bh=HHLCPK6/GT6dWKKz3rTCV12fmFyxE+LcbuXx8G/hhpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uf1uavm5JPZRXo3pZ82SveK/N1h16tPh5Q5oVB9DdmhqsFRuTDSuQRC+tN1WdViif
-	 7HE+km4t9m2M4HQSq0deCHhheOJi19R5SLivmheKwiPfbDJtDYbFNZ8cLYollocOVO
-	 5UOkC00ykqdmITR26yaKcEPWrFOqZpaFt7K/ekCg=
+	b=bCzm4FCPNXnfJwTb1MMsXwO8Qavv1PsKpkfij8XDu1WxTCrcjyniz9hrqrG+uxOQP
+	 KkYj89x4TZw1/cZPtdpSUHJbid5FujR1pNBAe8Hz6uIRs7vqnmaN1sMBskhFcE9Ci6
+	 tgr5E6y+gLe6IOTkGEHZLGBQgsuEdMBZupC9Avos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Breathitt Gray <william.gray@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 26/92] iio: dac: cio-dac: Fix max DAC write value check for 12-bit
-Date: Tue, 18 Apr 2023 14:21:01 +0200
-Message-Id: <20230418120305.747051895@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 5.4 27/92] tty: serial: sh-sci: Fix transmit end interrupt handler
+Date: Tue, 18 Apr 2023 14:21:02 +0200
+Message-Id: <20230418120305.779179312@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120304.658273364@linuxfoundation.org>
 References: <20230418120304.658273364@linuxfoundation.org>
@@ -34,38 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Breathitt Gray <william.gray@linaro.org>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit c3701185ee1973845db088d8b0fc443397ab0eb2 upstream.
+commit b43a18647f03c87e77d50d6fe74904b61b96323e upstream.
 
-The CIO-DAC series of devices only supports DAC values up to 12-bit
-rather than 16-bit. Trying to write a 16-bit value results in only the
-lower 12 bits affecting the DAC output which is not what the user
-expects. Instead, adjust the DAC write value check to reject values
-larger than 12-bit so that they fail explicitly as invalid for the user.
+The fourth interrupt on SCI port is transmit end interrupt compared to
+the break interrupt on other port types. So, shuffle the interrupts to fix
+the transmit end interrupt handler.
 
-Fixes: 3b8df5fd526e ("iio: Add IIO support for the Measurement Computing CIO-DAC family")
-Cc: stable@vger.kernel.org
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
-Link: https://lore.kernel.org/r/20230311002248.8548-1-william.gray@linaro.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: e1d0be616186 ("sh-sci: Add h8300 SCI")
+Cc: stable <stable@kernel.org>
+Suggested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230317150403.154094-1-biju.das.jz@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/cio-dac.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/sh-sci.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/iio/dac/cio-dac.c
-+++ b/drivers/iio/dac/cio-dac.c
-@@ -66,8 +66,8 @@ static int cio_dac_write_raw(struct iio_
- 	if (mask != IIO_CHAN_INFO_RAW)
- 		return -EINVAL;
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -2925,6 +2925,13 @@ static int sci_init_single(struct platfo
+ 			sci_port->irqs[i] = platform_get_irq(dev, i);
+ 	}
  
--	/* DAC can only accept up to a 16-bit value */
--	if ((unsigned int)val > 65535)
-+	/* DAC can only accept up to a 12-bit value */
-+	if ((unsigned int)val > 4095)
- 		return -EINVAL;
- 
- 	priv->chan_out_states[chan->channel] = val;
++	/*
++	 * The fourth interrupt on SCI port is transmit end interrupt, so
++	 * shuffle the interrupts.
++	 */
++	if (p->type == PORT_SCI)
++		swap(sci_port->irqs[SCIx_BRI_IRQ], sci_port->irqs[SCIx_TEI_IRQ]);
++
+ 	/* The SCI generates several interrupts. They can be muxed together or
+ 	 * connected to different interrupt lines. In the muxed case only one
+ 	 * interrupt resource is specified as there is only one interrupt ID.
 
 
