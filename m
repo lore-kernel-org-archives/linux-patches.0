@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1753F2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D6BC433A0;
-	Tue, 18 Apr 2023 12:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4412572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:52:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3166BC433EF;
+	Tue, 18 Apr 2023 12:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822375;
-	bh=/NR45N3PgFH8h88ZHi78X5s9YnrV7RoS4zn/luFPmHo=;
+	s=korg; t=1681822378;
+	bh=F6q80nabvQNpLFsM3og/BNMlWlZ7hNIBRWTm36hddvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aa0p9CnYkFExU8qALzEOOM1PxGS07qMgP6noakYUSmsygeeB0iwv8jZiCfqjV6j7a
-	 4U/JPm48WuQ6GYQ7+pU6JfZlG7CsX6gYrWp3of6GLm2sibgSkdE7OTzSfunQrlPl7h
-	 sT8gwuQspoWL8R+L3hML8Dx6BpHasyWnOtC+52yA=
+	b=AMMJWRV/wZNKOaZMkrK/otlZt/y7W75au7ad+viwb9YXesa45ParHD+8ya6KWnWWX
+	 y0ENj8rlInriFwejJgkMykM9X6Y8w3l6Neh6TN/pPOzJBNmIfQH3kjXkVa5IDctqZ3
+	 TYI4wg2k7fktoMiFsuV9o5zBgEugSauvn6VFPHkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.2 126/139] mptcp: fix NULL pointer dereference on fastopen early fallback
-Date: Tue, 18 Apr 2023 14:23:11 +0200
-Message-Id: <20230418120318.587047985@linuxfoundation.org>
+Subject: [PATCH 6.2 127/139] selftests: mptcp: userspace pm: uniform verify events
+Date: Tue, 18 Apr 2023 14:23:12 +0200
+Message-Id: <20230418120318.625690997@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -35,50 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit c0ff6f6da66a7791a32c0234388b1bdc00244917 upstream.
+commit 711ae788cbbb82818531b55e32b09518ee09a11a upstream.
 
-In case of early fallback to TCP, subflow_syn_recv_sock() deletes
-the subflow context before returning the newly allocated sock to
-the caller.
+Simply adding a "sleep" before checking something is usually not a good
+idea because the time that has been picked can not be enough or too
+much. The best is to wait for events with a timeout.
 
-The fastopen path does not cope with the above unconditionally
-dereferencing the subflow context.
+In this selftest, 'sleep 0.5' is used more than 40 times. It is always
+used before calling a 'verify_*' function except for this
+verify_listener_events which has been added later.
 
-Fixes: 36b122baf6a8 ("mptcp: add subflow_v(4,6)_send_synack()")
+At the end, using all these 'sleep 0.5' seems to work: the slow CIs
+don't complain so far. Also because it doesn't take too much time, we
+can just add two more 'sleep 0.5' to uniform what is done before calling
+a 'verify_*' function. For the same reasons, we can also delay a bigger
+refactoring to replace all these 'sleep 0.5' by functions waiting for
+events instead of waiting for a fix time and hope for the best.
+
+Fixes: 6c73008aa301 ("selftests: mptcp: listener test for userspace PM")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/fastopen.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/mptcp/userspace_pm.sh |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/mptcp/fastopen.c
-+++ b/net/mptcp/fastopen.c
-@@ -9,11 +9,18 @@
- void mptcp_fastopen_subflow_synack_set_params(struct mptcp_subflow_context *subflow,
- 					      struct request_sock *req)
- {
--	struct sock *ssk = subflow->tcp_sock;
--	struct sock *sk = subflow->conn;
-+	struct sock *sk, *ssk;
- 	struct sk_buff *skb;
- 	struct tcp_sock *tp;
+--- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
++++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
+@@ -884,6 +884,7 @@ test_listener()
+ 		$client4_port > /dev/null 2>&1 &
+ 	local listener_pid=$!
  
-+	/* on early fallback the subflow context is deleted by
-+	 * subflow_syn_recv_sock()
-+	 */
-+	if (!subflow)
-+		return;
-+
-+	ssk = subflow->tcp_sock;
-+	sk = subflow->conn;
- 	tp = tcp_sk(ssk);
++	sleep 0.5
+ 	verify_listener_events $client_evts $LISTENER_CREATED $AF_INET 10.0.2.2 $client4_port
  
- 	subflow->is_mptfo = 1;
+ 	# ADD_ADDR from client to server machine reusing the subflow port
+@@ -899,6 +900,7 @@ test_listener()
+ 	# Delete the listener from the client ns, if one was created
+ 	kill_wait $listener_pid
+ 
++	sleep 0.5
+ 	verify_listener_events $client_evts $LISTENER_CLOSED $AF_INET 10.0.2.2 $client4_port
+ }
+ 
 
 
