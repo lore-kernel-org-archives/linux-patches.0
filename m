@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982792572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD49C433EF;
-	Tue, 18 Apr 2023 12:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA692572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D77C433EF;
+	Tue, 18 Apr 2023 12:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821786;
-	bh=2wA44kDtgI9IRu4YzCwgCu50ewXF20yfzD+KbsOE260=;
+	s=korg; t=1681821789;
+	bh=T56x003GmgG+Wn2UewwsZMQpg9ril0zeHstqYDHIV2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V2NtOwFz5Qb0Y3R92LgJxRI+MWDRR3OlrRW9LXmw0xzJWw/FDPMzFPrHgngNKY3cl
-	 VtLOqr91IBKHgjL8+vAd1iNj5fo7djLkcHKXfNXz0aos4hThECmAnWI4MSgRdYWAuO
-	 FTRZjullPQeXP8iJ40eHST4bKazusGWN5kFAjNHc=
+	b=ce614aL4y6/9p/6Cdk2w9YxpbAFBh9LWaHhp4oFxJ8CU+U70FJdsXz2sDtYnR56zF
+	 I/YJG+CdGamBO/dNI+5ZODYjPMM2h+u3pmWGIiDdn4UtVw6fAhK7mmdOgMAAKw4mK9
+	 cbPwO1kL8ukpPuNIM7fXakK8YWH1o06mFWTH5CnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 013/134] Bluetooth: Fix race condition in hidp_session_thread
-Date: Tue, 18 Apr 2023 14:21:09 +0200
-Message-Id: <20230418120313.457969852@linuxfoundation.org>
+	George Guo <guodongtai@kylinos.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	WANG Xuerui <git@xen0n.name>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 040/134] LoongArch, bpf: Fix jit to skip speculation barrier opcode
+Date: Tue, 18 Apr 2023 14:21:36 +0200
+Message-Id: <20230418120314.335916209@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -34,52 +37,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Min Li <lm0963hack@gmail.com>
+From: George Guo <guodongtai@kylinos.cn>
 
-commit c95930abd687fcd1aa040dc4fe90dff947916460 upstream.
+[ Upstream commit a6f6a95f25803500079513780d11a911ce551d76 ]
 
-There is a potential race condition in hidp_session_thread that may
-lead to use-after-free. For instance, the timer is active while
-hidp_del_timer is called in hidp_session_thread(). After hidp_session_put,
-then 'session' will be freed, causing kernel panic when hidp_idle_timeout
-is running.
+Just skip the opcode(BPF_ST | BPF_NOSPEC) in the BPF JIT instead of
+failing to JIT the entire program, given LoongArch currently has no
+couterpart of a speculation barrier instruction. To verify the issue,
+use the ltp testcase as shown below.
 
-The solution is to use del_timer_sync instead of del_timer.
+Also, Wang says:
 
-Here is the call trace:
+  I can confirm there's currently no speculation barrier equivalent
+  on LonogArch. (Loongson says there are builtin mitigations for
+  Spectre-V1 and V2 on their chips, and AFAIK efforts to port the
+  exploits to mips/LoongArch have all failed a few years ago.)
 
-? hidp_session_probe+0x780/0x780
-call_timer_fn+0x2d/0x1e0
-__run_timers.part.0+0x569/0x940
-hidp_session_probe+0x780/0x780
-call_timer_fn+0x1e0/0x1e0
-ktime_get+0x5c/0xf0
-lapic_next_deadline+0x2c/0x40
-clockevents_program_event+0x205/0x320
-run_timer_softirq+0xa9/0x1b0
-__do_softirq+0x1b9/0x641
-__irq_exit_rcu+0xdc/0x190
-irq_exit_rcu+0xe/0x20
-sysvec_apic_timer_interrupt+0xa1/0xc0
+Without this patch:
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  $ ./bpf_prog02
+  [...]
+  bpf_common.c:123: TBROK: Failed verification: ??? (524)
+  [...]
+  Summary:
+  passed   0
+  failed   0
+  broken   1
+  skipped  0
+  warnings 0
+
+With this patch:
+
+  $ ./bpf_prog02
+  [...]
+  Summary:
+  passed   0
+  failed   0
+  broken   0
+  skipped  0
+  warnings 0
+
+Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
+Signed-off-by: George Guo <guodongtai@kylinos.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: WANG Xuerui <git@xen0n.name>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Link: https://lore.kernel.org/bpf/20230328071335.2664966-1-guodongtai@kylinos.cn
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hidp/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/net/bpf_jit.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/bluetooth/hidp/core.c
-+++ b/net/bluetooth/hidp/core.c
-@@ -433,7 +433,7 @@ static void hidp_set_timer(struct hidp_s
- static void hidp_del_timer(struct hidp_session *session)
- {
- 	if (session->idle_to > 0)
--		del_timer(&session->timer);
-+		del_timer_sync(&session->timer);
- }
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index 2467bfb8889a9..82b4402810da0 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -955,6 +955,10 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
+ 		emit_atomic(insn, ctx);
+ 		break;
  
- static void hidp_process_report(struct hidp_session *session, int type,
++	/* Speculation barrier */
++	case BPF_ST | BPF_NOSPEC:
++		break;
++
+ 	default:
+ 		pr_err("bpf_jit: unknown opcode %02x\n", code);
+ 		return -EINVAL;
+-- 
+2.39.2
+
 
 
