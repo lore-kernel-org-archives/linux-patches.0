@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AEC2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427BEC433EF;
-	Tue, 18 Apr 2023 12:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654F52572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83ABC433D2;
+	Tue, 18 Apr 2023 12:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821878;
-	bh=RWD+0QOoNI2ckTxN6Va5gez5ZQH3fblpg96OPwDwQz4=;
+	s=korg; t=1681821881;
+	bh=mSsL7HZGPx3DaCzUaCYeDawLRizkN8o1Fw+ubaHMdhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hS+hQBuatuwyqYqNIcgK/0bMpCgLt28KeNekb7/qLeSiD5gf5Pv+dTIqpGK/99i9M
-	 zll+0NPUQlgyhsHQHy4+OzZENxYs2zxXC2jlm6NLiGjsdW3Pv2iqVVnE3zDHD7xiwe
-	 mBCcuQ03S9pPcnmdMLLV5l38nRlYCR9R0QaTHI4A=
+	b=D3Fqj58yHkZkZJeHFD4CzKNoYWfHDqbC7GJw3ooWcaRD7kc//usNvnwakTjm6facJ
+	 m4xywCCASioQMpIC3gbyEJ/N3/GP4jAbfZOCLUFsAK8Y52EI9DIseAeP55eoDWCbtj
+	 R1yKoSiQshMEX+mdwOnvS9UbnB7+T+lhnVqdfdNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Will Deacon <will@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Fuad Tabba <tabba@google.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/134] KVM: arm64: Initialise hypervisor copies of host symbols unconditionally
-Date: Tue, 18 Apr 2023 14:21:42 +0200
-Message-Id: <20230418120314.540868993@linuxfoundation.org>
+Subject: [PATCH 6.1 047/134] KVM: arm64: Advertise ID_AA64PFR0_EL1.CSV2/3 to protected VMs
+Date: Tue, 18 Apr 2023 14:21:43 +0200
+Message-Id: <20230418120314.570071134@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -37,79 +35,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Will Deacon <will@kernel.org>
+From: Fuad Tabba <tabba@google.com>
 
-[ Upstream commit 6c165223e9a6384aa1e934b90f2650e71adb972a ]
+[ Upstream commit e81625218bf7986ba1351a98c43d346b15601d26 ]
 
-The nVHE object at EL2 maintains its own copies of some host variables
-so that, when pKVM is enabled, the host cannot directly modify the
-hypervisor state. When running in normal nVHE mode, however, these
-variables are still mirrored at EL2 but are not initialised.
+The existing pKVM code attempts to advertise CSV2/3 using values
+initialized to 0, but never set. To advertise CSV2/3 to protected
+guests, pass the CSV2/3 values to hyp when initializing hyp's
+view of guests' ID_AA64PFR0_EL1.
 
-Initialise the hypervisor symbols from the host copies regardless of
-pKVM, ensuring that any reference to this data at EL2 with normal nVHE
-will return a sensibly initialised value.
+Similar to non-protected KVM, these are system-wide, rather than
+per cpu, for simplicity.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221110190259.26861-16-will@kernel.org
-Stable-dep-of: e81625218bf7 ("KVM: arm64: Advertise ID_AA64PFR0_EL1.CSV2/3 to protected VMs")
+Fixes: 6c30bfb18d0b ("KVM: arm64: Add handlers for protected VM System Registers")
+Signed-off-by: Fuad Tabba <tabba@google.com>
+Link: https://lore.kernel.org/r/20230404152321.413064-1-tabba@google.com
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/arm.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ arch/arm64/kvm/arm.c                          | 26 ++++++++++++++++++-
+ .../arm64/kvm/hyp/include/nvhe/fixed_config.h |  5 +++-
+ arch/arm64/kvm/hyp/nvhe/sys_regs.c            |  7 -----
+ 3 files changed, 29 insertions(+), 9 deletions(-)
 
 diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 94d33e296e10c..e40606a560997 100644
+index e40606a560997..6ce6888cf73d6 100644
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -1870,11 +1870,8 @@ static int do_pkvm_init(u32 hyp_va_bits)
+@@ -1870,9 +1870,33 @@ static int do_pkvm_init(u32 hyp_va_bits)
  	return ret;
  }
  
--static int kvm_hyp_init_protection(u32 hyp_va_bits)
-+static void kvm_hyp_init_symbols(void)
- {
--	void *addr = phys_to_virt(hyp_mem_base);
--	int ret;
--
- 	kvm_nvhe_sym(id_aa64pfr0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
- 	kvm_nvhe_sym(id_aa64pfr1_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64PFR1_EL1);
- 	kvm_nvhe_sym(id_aa64isar0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64ISAR0_EL1);
-@@ -1883,6 +1880,12 @@ static int kvm_hyp_init_protection(u32 hyp_va_bits)
- 	kvm_nvhe_sym(id_aa64mmfr0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64MMFR0_EL1);
- 	kvm_nvhe_sym(id_aa64mmfr1_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64MMFR1_EL1);
- 	kvm_nvhe_sym(id_aa64mmfr2_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64MMFR2_EL1);
++static u64 get_hyp_id_aa64pfr0_el1(void)
++{
++	/*
++	 * Track whether the system isn't affected by spectre/meltdown in the
++	 * hypervisor's view of id_aa64pfr0_el1, used for protected VMs.
++	 * Although this is per-CPU, we make it global for simplicity, e.g., not
++	 * to have to worry about vcpu migration.
++	 *
++	 * Unlike for non-protected VMs, userspace cannot override this for
++	 * protected VMs.
++	 */
++	u64 val = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
++
++	val &= ~(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2) |
++		 ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3));
++
++	val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2),
++			  arm64_get_spectre_v2_state() == SPECTRE_UNAFFECTED);
++	val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3),
++			  arm64_get_meltdown_state() == SPECTRE_UNAFFECTED);
++
++	return val;
 +}
 +
-+static int kvm_hyp_init_protection(u32 hyp_va_bits)
-+{
-+	void *addr = phys_to_virt(hyp_mem_base);
-+	int ret;
+ static void kvm_hyp_init_symbols(void)
+ {
+-	kvm_nvhe_sym(id_aa64pfr0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
++	kvm_nvhe_sym(id_aa64pfr0_el1_sys_val) = get_hyp_id_aa64pfr0_el1();
+ 	kvm_nvhe_sym(id_aa64pfr1_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64PFR1_EL1);
+ 	kvm_nvhe_sym(id_aa64isar0_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64ISAR0_EL1);
+ 	kvm_nvhe_sym(id_aa64isar1_el1_sys_val) = read_sanitised_ftr_reg(SYS_ID_AA64ISAR1_EL1);
+diff --git a/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h b/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
+index 07edfc7524c94..37440e1dda930 100644
+--- a/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
++++ b/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
+@@ -33,11 +33,14 @@
+  * Allow for protected VMs:
+  * - Floating-point and Advanced SIMD
+  * - Data Independent Timing
++ * - Spectre/Meltdown Mitigation
+  */
+ #define PVM_ID_AA64PFR0_ALLOW (\
+ 	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_FP) | \
+ 	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_AdvSIMD) | \
+-	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_DIT) \
++	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_DIT) | \
++	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2) | \
++	ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3) \
+ 	)
  
- 	ret = create_hyp_mappings(addr, addr + hyp_mem_size, PAGE_HYP);
- 	if (ret)
-@@ -2057,6 +2060,8 @@ static int init_hyp_mode(void)
- 		cpu_prepare_hyp_mode(cpu);
- 	}
+ /*
+diff --git a/arch/arm64/kvm/hyp/nvhe/sys_regs.c b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
+index 0f9ac25afdf40..3d5121ee39777 100644
+--- a/arch/arm64/kvm/hyp/nvhe/sys_regs.c
++++ b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
+@@ -84,19 +84,12 @@ static u64 get_restricted_features_unsigned(u64 sys_reg_val,
  
-+	kvm_hyp_init_symbols();
-+
- 	if (is_protected_kvm_enabled()) {
- 		init_cpu_logical_map();
+ static u64 get_pvm_id_aa64pfr0(const struct kvm_vcpu *vcpu)
+ {
+-	const struct kvm *kvm = (const struct kvm *)kern_hyp_va(vcpu->kvm);
+ 	u64 set_mask = 0;
+ 	u64 allow_mask = PVM_ID_AA64PFR0_ALLOW;
  
-@@ -2064,9 +2069,7 @@ static int init_hyp_mode(void)
- 			err = -ENODEV;
- 			goto out_err;
- 		}
--	}
+ 	set_mask |= get_restricted_features_unsigned(id_aa64pfr0_el1_sys_val,
+ 		PVM_ID_AA64PFR0_RESTRICT_UNSIGNED);
  
--	if (is_protected_kvm_enabled()) {
- 		err = kvm_hyp_init_protection(hyp_va_bits);
- 		if (err) {
- 			kvm_err("Failed to init hyp memory protection\n");
+-	/* Spectre and Meltdown mitigation in KVM */
+-	set_mask |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV2),
+-			       (u64)kvm->arch.pfr0_csv2);
+-	set_mask |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3),
+-			       (u64)kvm->arch.pfr0_csv3);
+-
+ 	return (id_aa64pfr0_el1_sys_val & allow_mask) | set_mask;
+ }
+ 
 -- 
 2.39.2
 
