@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124602566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E39DC433D2;
-	Tue, 18 Apr 2023 12:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E502566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:32:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AFD7C433D2;
+	Tue, 18 Apr 2023 12:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821163;
-	bh=xdUwwh95LyyybatdEH4mKIdmURgYb9puifLOhQGOwcw=;
+	s=korg; t=1681821166;
+	bh=kURrNZFOCRixyhpGhOj84iCQKJo1uVLAaTX/SGnFgTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SUwCV8poQhSb2Cvith0+4X+T2SQqxWfGKyNQawBRhAMynXcaVI8Xl9LUlFRdouUP9
-	 komz4Y32DTw1KnfdS+oXeFHXFFwTqD6IBm/fdfFwnAdEc75huBj7QDNbnPozh1k6v3
-	 dUe+kBBfsFn2Ps3zcapFRwkQ2VmX+pY4064US6Q4=
+	b=l7CVSIHquSSIxkm69JSLiIjLhtbfcsOuxVwrGFwUGQEJJOv4hrexkFheqSHs+g8+8
+	 dNWVrQjRZPDsi1swKduhxPUG65+/aldozraZk+VEIC278Cm3pFGTJfS4pmJSBDqWCs
+	 8H6w/Gx42NfXDKG6lu4melmkxdusT3rsVOCrI3gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RD Babiera <rdbabiera@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 022/124] usb: typec: altmodes/displayport: Fix configure initial pin assignment
-Date: Tue, 18 Apr 2023 14:20:41 +0200
-Message-Id: <20230418120310.485681448@linuxfoundation.org>
+	Enrico Sau <enrico.sau@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 023/124] USB: serial: option: add Telit FE990 compositions
+Date: Tue, 18 Apr 2023 14:20:42 +0200
+Message-Id: <20230418120310.535734683@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -34,45 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: RD Babiera <rdbabiera@google.com>
+From: Enrico Sau <enrico.sau@gmail.com>
 
-commit eddebe39602efe631b83ff8d03f26eba12cfd760 upstream.
+commit 773e8e7d07b753474b2ccd605ff092faaa9e65b9 upstream.
 
-While determining the initial pin assignment to be sent in the configure
-message, using the DP_PIN_ASSIGN_DP_ONLY_MASK mask causes the DFP_U to
-send both Pin Assignment C and E when both are supported by the DFP_U and
-UFP_U. The spec (Table 5-7 DFP_U Pin Assignment Selection Mandates,
-VESA DisplayPort Alt Mode Standard v2.0) indicates that the DFP_U never
-selects Pin Assignment E when Pin Assignment C is offered.
+Add the following Telit FE990 compositions:
 
-Update the DP_PIN_ASSIGN_DP_ONLY_MASK conditional to intially select only
-Pin Assignment C if it is available.
+0x1080: tty, adb, rmnet, tty, tty, tty, tty
+0x1081: tty, adb, mbim, tty, tty, tty, tty
+0x1082: rndis, tty, adb, tty, tty, tty, tty
+0x1083: tty, adb, ecm, tty, tty, tty, tty
 
-Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
+Signed-off-by: Enrico Sau <enrico.sau@gmail.com>
+Link: https://lore.kernel.org/r/20230314090059.77876-1-enrico.sau@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230329215159.2046932-1-rdbabiera@google.com
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/altmodes/displayport.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -101,8 +101,12 @@ static int dp_altmode_configure(struct d
- 		if (dp->data.status & DP_STATUS_PREFER_MULTI_FUNC &&
- 		    pin_assign & DP_PIN_ASSIGN_MULTI_FUNC_MASK)
- 			pin_assign &= DP_PIN_ASSIGN_MULTI_FUNC_MASK;
--		else if (pin_assign & DP_PIN_ASSIGN_DP_ONLY_MASK)
-+		else if (pin_assign & DP_PIN_ASSIGN_DP_ONLY_MASK) {
- 			pin_assign &= DP_PIN_ASSIGN_DP_ONLY_MASK;
-+			/* Default to pin assign C if available */
-+			if (pin_assign & BIT(DP_PIN_ASSIGN_C))
-+				pin_assign = BIT(DP_PIN_ASSIGN_C);
-+		}
- 
- 		if (!pin_assign)
- 			return -EINVAL;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1300,6 +1300,14 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990 (PCIe) */
+ 	  .driver_info = RSVD(0) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1080, 0xff),	/* Telit FE990 (rmnet) */
++	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1081, 0xff),	/* Telit FE990 (MBIM) */
++	  .driver_info = NCTRL(0) | RSVD(1) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1082, 0xff),	/* Telit FE990 (RNDIS) */
++	  .driver_info = NCTRL(2) | RSVD(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1083, 0xff),	/* Telit FE990 (ECM) */
++	  .driver_info = NCTRL(0) | RSVD(1) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(3) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
 
 
