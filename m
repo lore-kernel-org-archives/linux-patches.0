@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A992572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC4BC433EF;
-	Tue, 18 Apr 2023 12:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC39B2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:44:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B93C433D2;
+	Tue, 18 Apr 2023 12:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821862;
-	bh=h5jL3Hg6H9iEd2qDvmvKK5sVY5mnyz3R/S0IEYbD0vQ=;
+	s=korg; t=1681821865;
+	bh=DEWe0jkc9Y6r28LdFAGOYrRGMnBiZ+L83NWmkJE1QTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DFNGamubDYD5Nn2gR/lb9HdhzQZoS7JWcr9eZvROTVdNykmuu5LhZar8wuQw47wvR
-	 oSIq7nNxHPde3AiW+jkFJnaWnD3U3CWhcEZqWxQvbzgtN7rnEmRO1K/ztkvvkxnogo
-	 P6JPugM1TqrQOC+tul3lPbZ5DP8L4DHWGpamdFxQ=
+	b=rVyz1qNbZ5j267z8Nyb8Mb7TLQJR+eB7+RManAlJyA0ypzY9PB7TUhPHmeav7XRGM
+	 l6dPT22wfTGmor2e1SfBvogXHXi4fdCC3fVbgaDBYMY2tjUVy8aTNaVpJ1ljOgY/Xs
+	 1eKFow5FxI+HiPvUOyHLlATIpMFaBHJ32waamWuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrew Jeffery <andrew@aj.id.au>,
+	Zev Weiss <zev@bewilderbeest.net>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/134] libbpf: Fix single-line struct definition output in btf_dump
-Date: Tue, 18 Apr 2023 14:22:05 +0200
-Message-Id: <20230418120315.394059906@linuxfoundation.org>
+Subject: [PATCH 6.1 070/134] ARM: 9290/1: uaccess: Fix KASAN false-positives
+Date: Tue, 18 Apr 2023 14:22:06 +0200
+Message-Id: <20230418120315.432383269@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -35,47 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Andrew Jeffery <andrew@aj.id.au>
 
-[ Upstream commit 872aec4b5f635d94111d48ec3c57fbe078d64e7d ]
+[ Upstream commit ceac10c83b330680cc01ceaaab86cd49f4f30d81 ]
 
-btf_dump APIs emit unnecessary tabs when emitting struct/union
-definition that fits on the single line. Before this patch we'd get:
+__copy_to_user_memcpy() and __clear_user_memset() had been calling
+memcpy() and memset() respectively, leading to false-positive KASAN
+reports when starting userspace:
 
-struct blah {<tab>};
+    [   10.707901] Run /init as init process
+    [   10.731892] process '/bin/busybox' started with executable stack
+    [   10.745234] ==================================================================
+    [   10.745796] BUG: KASAN: user-memory-access in __clear_user_memset+0x258/0x3ac
+    [   10.747260] Write of size 2687 at addr 000de581 by task init/1
 
-This patch fixes this and makes sure that we get more natural:
+Use __memcpy() and __memset() instead to allow userspace access, which
+is of course the intent of these functions.
 
-struct blah {};
-
-Fixes: 44a726c3f23c ("bpftool: Print newline before '}' for struct with padding only fields")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20221212211505.558851-2-andrii@kernel.org
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf_dump.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm/lib/uaccess_with_memcpy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index 80a15a6802094..4cd1d49c94d6d 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -1015,9 +1015,12 @@ static void btf_dump_emit_struct_def(struct btf_dump *d,
- 	 * Keep `struct empty {}` on a single line,
- 	 * only print newline when there are regular or padding fields.
- 	 */
--	if (vlen || t->size)
-+	if (vlen || t->size) {
- 		btf_dump_printf(d, "\n");
--	btf_dump_printf(d, "%s}", pfx(lvl));
-+		btf_dump_printf(d, "%s}", pfx(lvl));
-+	} else {
-+		btf_dump_printf(d, "}");
-+	}
- 	if (packed)
- 		btf_dump_printf(d, " __attribute__((packed))");
- }
+diff --git a/arch/arm/lib/uaccess_with_memcpy.c b/arch/arm/lib/uaccess_with_memcpy.c
+index 14eecaaf295fa..e4c2677cc1e9e 100644
+--- a/arch/arm/lib/uaccess_with_memcpy.c
++++ b/arch/arm/lib/uaccess_with_memcpy.c
+@@ -116,7 +116,7 @@ __copy_to_user_memcpy(void __user *to, const void *from, unsigned long n)
+ 			tocopy = n;
+ 
+ 		ua_flags = uaccess_save_and_enable();
+-		memcpy((void *)to, from, tocopy);
++		__memcpy((void *)to, from, tocopy);
+ 		uaccess_restore(ua_flags);
+ 		to += tocopy;
+ 		from += tocopy;
+@@ -178,7 +178,7 @@ __clear_user_memset(void __user *addr, unsigned long n)
+ 			tocopy = n;
+ 
+ 		ua_flags = uaccess_save_and_enable();
+-		memset((void *)addr, 0, tocopy);
++		__memset((void *)addr, 0, tocopy);
+ 		uaccess_restore(ua_flags);
+ 		addr += tocopy;
+ 		n -= tocopy;
 -- 
 2.39.2
 
