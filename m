@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323172566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC43C433EF;
-	Tue, 18 Apr 2023 12:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBAD2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:35:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317A4C433EF;
+	Tue, 18 Apr 2023 12:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821353;
-	bh=/0x4qIytua3tTDDEdLRx58OawLCMWWX5LblGQcA77MU=;
+	s=korg; t=1681821356;
+	bh=U5HtpG+d0dVGhYPv5g+6ZximuYd5Po6rEhcReZqduq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0//CEZg6o1B2SVnGTN/9q9eSppLpzl8LmJqymDAGegbB443wUlsY4kr6fpIj3d8v+
-	 7GoODen+gFw0HYLssDoAGyKEQCIB97VN9ZFJJgRCBHw+4oR5VeYDaPqh3MPxnsXd0f
-	 Zs0KB0lQJ6AA92d36IXGonImawg3QTlrF8h03O4Y=
+	b=nCnlkIekjOi4y2rMibLCqtqeIVw4c58e6JB8PXs8IqCqaXLzmOg+UdBM/E9OCobI5
+	 CKRwPsK+T6kF7hmwmrh0kyM2LDUa+so/n51cx4hwayVDS/iWe454mer93XUlHe/afg
+	 Dlb81yEuA/GeV8q1+aKHjJ9ZtDJNxKQ2oZhl6fIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 056/124] ALSA: i2c/cs8427: fix iec958 mixer control deactivation
-Date: Tue, 18 Apr 2023 14:21:15 +0200
-Message-Id: <20230418120311.870503040@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Wolfram Sang <wsa@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 088/124] i2c: imx-lpi2c: clean rx/tx buffers upon new message
+Date: Tue, 18 Apr 2023 14:21:47 +0200
+Message-Id: <20230418120313.061500545@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -34,40 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit e98e7a82bca2b6dce3e03719cff800ec913f9af7 upstream.
+[ Upstream commit 987dd36c0141f6ab9f0fbf14d6b2ec3342dedb2f ]
 
-snd_cs8427_iec958_active() would always delete
-SNDRV_CTL_ELEM_ACCESS_INACTIVE, even though the function has an
-argument `active`.
+When start sending a new message clear the Rx & Tx buffer pointers in
+order to avoid using stale pointers.
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230405201219.2197811-1-oswald.buddenhagen@gmx.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Tested-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/i2c/cs8427.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-imx-lpi2c.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/i2c/cs8427.c
-+++ b/sound/i2c/cs8427.c
-@@ -553,10 +553,13 @@ int snd_cs8427_iec958_active(struct snd_
- 	if (snd_BUG_ON(!cs8427))
- 		return -ENXIO;
- 	chip = cs8427->private_data;
--	if (active)
-+	if (active) {
- 		memcpy(chip->playback.pcm_status,
- 		       chip->playback.def_status, 24);
--	chip->playback.pcm_ctl->vd[0].access &= ~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
-+		chip->playback.pcm_ctl->vd[0].access &= ~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
-+	} else {
-+		chip->playback.pcm_ctl->vd[0].access |= SNDRV_CTL_ELEM_ACCESS_INACTIVE;
-+	}
- 	snd_ctl_notify(cs8427->bus->card,
- 		       SNDRV_CTL_EVENT_MASK_VALUE | SNDRV_CTL_EVENT_MASK_INFO,
- 		       &chip->playback.pcm_ctl->id);
+diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+index 2018dbcf241e9..d45ec26d51cb9 100644
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -462,6 +462,8 @@ static int lpi2c_imx_xfer(struct i2c_adapter *adapter,
+ 		if (num == 1 && msgs[0].len == 0)
+ 			goto stop;
+ 
++		lpi2c_imx->rx_buf = NULL;
++		lpi2c_imx->tx_buf = NULL;
+ 		lpi2c_imx->delivered = 0;
+ 		lpi2c_imx->msglen = msgs[i].len;
+ 		init_completion(&lpi2c_imx->complete);
+-- 
+2.39.2
+
 
 
