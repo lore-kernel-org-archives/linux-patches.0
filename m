@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A76A2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:53:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 810AFC433D2;
-	Tue, 18 Apr 2023 12:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4B32572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:53:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C39C4339B;
+	Tue, 18 Apr 2023 12:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822391;
-	bh=oNRHKlpBGx5o+DM+fn7UAlEabvjKmS3NKQxywnfXrY4=;
+	s=korg; t=1681822394;
+	bh=+dnhBPc/YfgR9BLsubh3mk4uFixd5cRxmk+2Yv1vbGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pu5UdJBWy4rFsOUV7vbIUV/k+Kae6+FxFgO4eXJdUHl3WtYdofCq8R35SJ7VBZ8FR
-	 Mz0/waKQcjLpMHhyrqL0a9VkADto5oHLntyV02aGAk3zEDQObZTOCk4XVnX/M2KoNn
-	 dY6f+/fytSeSjGb80CQPXjC7VX98BJ60+hJc6O6s=
+	b=jwTW9lZXT+BBXYZQF+2vKhY0fdGwu0bag5XXPRdnoX8EC0KihKq8h0sjPrcQhSrvI
+	 wWVBU+3wGJY2XhDslN8DtCB49LZ4QEa0wuI4tMs/PYK4bdSHL58H915tPwMfdJhcjw
+	 F6mMsRQL2A3mCXhe1Iod8YGQoGX7JCQffIH6M0v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 131/139] powerpc/papr_scm: Update the NUMA distance table for the target node
-Date: Tue, 18 Apr 2023 14:23:16 +0200
-Message-Id: <20230418120318.799248789@linuxfoundation.org>
+	David Disseldorp <ddiss@suse.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 103/139] ksmbd: avoid out of bounds access in decode_preauth_ctxt()
+Date: Tue, 18 Apr 2023 14:22:48 +0200
+Message-Id: <20230418120317.665282002@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -35,84 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit b277fc793daf258877b4c0744b52f69d6e6ba22e ]
+commit e7067a446264a7514fa1cfaa4052cdb6803bc6a2 upstream.
 
-Platform device helper routines won't update the NUMA distance table
-while creating a platform device, even if the device is present on a
-NUMA node that doesn't have memory or CPU. This is especially true for
-pmem devices. If the target node of the pmem device is not online, we
-find the nearest online node to the device and associate the pmem device
-with that online node. To find the nearest online node, we should have
-the numa distance table updated correctly. Update the distance
-information during the device probe.
+Confirm that the accessed pneg_ctxt->HashAlgorithms address sits within
+the SMB request boundary; deassemble_neg_contexts() only checks that the
+eight byte smb2_neg_context header + (client controlled) DataLength are
+within the packet boundary, which is insufficient.
 
-For a papr scm device on NUMA node 3 distance_lookup_table value for
-distance_ref_points_depth = 2 before and after fix is below:
+Checking for sizeof(struct smb2_preauth_neg_context) is overkill given
+that the type currently assumes SMB311_SALT_SIZE bytes of trailing Salt.
 
-Before fix:
-  node 3 distance depth 0  - 0
-  node 3 distance depth 1  - 0
-  node 4 distance depth 0  - 4
-  node 4 distance depth 1  - 2
-  node 5 distance depth 0  - 5
-  node 5 distance depth 1  - 1
-
-After fix
-  node 3 distance depth 0  - 3
-  node 3 distance depth 1  - 1
-  node 4 distance depth 0  - 4
-  node 4 distance depth 1  - 2
-  node 5 distance depth 0  - 5
-  node 5 distance depth 1  - 1
-
-Without the fix, the nearest numa node to the pmem device (NUMA node 3)
-will be picked as 4. After the fix, we get the correct numa node which
-is 5.
-
-Fixes: da1115fdbd6e ("powerpc/nvdimm: Pick nearby online node if the device node is not online")
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230404041433.1781804-1-aneesh.kumar@linux.ibm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/mm/numa.c                    | 1 +
- arch/powerpc/platforms/pseries/papr_scm.c | 7 +++++++
- 2 files changed, 8 insertions(+)
+ fs/ksmbd/smb2pdu.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/arch/powerpc/mm/numa.c b/arch/powerpc/mm/numa.c
-index b44ce71917d75..16cfe56be05bb 100644
---- a/arch/powerpc/mm/numa.c
-+++ b/arch/powerpc/mm/numa.c
-@@ -366,6 +366,7 @@ void update_numa_distance(struct device_node *node)
- 	WARN(numa_distance_table[nid][nid] == -1,
- 	     "NUMA distance details for node %d not provided\n", nid);
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -872,17 +872,21 @@ static void assemble_neg_contexts(struct
  }
-+EXPORT_SYMBOL_GPL(update_numa_distance);
  
- /*
-  * ibm,numa-lookup-index-table= {N, domainid1, domainid2, ..... domainidN}
-diff --git a/arch/powerpc/platforms/pseries/papr_scm.c b/arch/powerpc/platforms/pseries/papr_scm.c
-index 2f8385523a132..1a53e048ceb76 100644
---- a/arch/powerpc/platforms/pseries/papr_scm.c
-+++ b/arch/powerpc/platforms/pseries/papr_scm.c
-@@ -1428,6 +1428,13 @@ static int papr_scm_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
- 
+ static __le32 decode_preauth_ctxt(struct ksmbd_conn *conn,
+-				  struct smb2_preauth_neg_context *pneg_ctxt)
++				  struct smb2_preauth_neg_context *pneg_ctxt,
++				  int len_of_ctxts)
+ {
+-	__le32 err = STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP;
 +	/*
-+	 * open firmware platform device create won't update the NUMA 
-+	 * distance table. For PAPR SCM devices we use numa_map_to_online_node()
-+	 * to find the nearest online NUMA node and that requires correct
-+	 * distance table information.
++	 * sizeof(smb2_preauth_neg_context) assumes SMB311_SALT_SIZE Salt,
++	 * which may not be present. Only check for used HashAlgorithms[1].
 +	 */
-+	update_numa_distance(dn);
++	if (len_of_ctxts < MIN_PREAUTH_CTXT_DATA_LEN)
++		return STATUS_INVALID_PARAMETER;
  
- 	p = kzalloc(sizeof(*p), GFP_KERNEL);
- 	if (!p)
--- 
-2.39.2
-
+-	if (pneg_ctxt->HashAlgorithms == SMB2_PREAUTH_INTEGRITY_SHA512) {
+-		conn->preauth_info->Preauth_HashId =
+-			SMB2_PREAUTH_INTEGRITY_SHA512;
+-		err = STATUS_SUCCESS;
+-	}
++	if (pneg_ctxt->HashAlgorithms != SMB2_PREAUTH_INTEGRITY_SHA512)
++		return STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP;
+ 
+-	return err;
++	conn->preauth_info->Preauth_HashId = SMB2_PREAUTH_INTEGRITY_SHA512;
++	return STATUS_SUCCESS;
+ }
+ 
+ static void decode_encrypt_ctxt(struct ksmbd_conn *conn,
+@@ -1010,7 +1014,8 @@ static __le32 deassemble_neg_contexts(st
+ 				break;
+ 
+ 			status = decode_preauth_ctxt(conn,
+-						     (struct smb2_preauth_neg_context *)pctx);
++						     (struct smb2_preauth_neg_context *)pctx,
++						     len_of_ctxts);
+ 			if (status != STATUS_SUCCESS)
+ 				break;
+ 		} else if (pctx->ContextType == SMB2_ENCRYPTION_CAPABILITIES) {
 
 
