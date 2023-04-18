@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA692572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D77C433EF;
-	Tue, 18 Apr 2023 12:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E622C2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:43:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506D8C433D2;
+	Tue, 18 Apr 2023 12:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821789;
-	bh=T56x003GmgG+Wn2UewwsZMQpg9ril0zeHstqYDHIV2I=;
+	s=korg; t=1681821791;
+	bh=8YUJalr43YpmpfEaz8yWBdBI4sfRtGFKgUpH/UCuEDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ce614aL4y6/9p/6Cdk2w9YxpbAFBh9LWaHhp4oFxJ8CU+U70FJdsXz2sDtYnR56zF
-	 I/YJG+CdGamBO/dNI+5ZODYjPMM2h+u3pmWGIiDdn4UtVw6fAhK7mmdOgMAAKw4mK9
-	 cbPwO1kL8ukpPuNIM7fXakK8YWH1o06mFWTH5CnY=
+	b=EZXCVnh5JB5vC+9idd05wud0Vj5lTnW9iuL4CM+phT+Gfcgrs3QBl1L1DgmPDGWTu
+	 rYrC/lVihnTvrNWYUg1T2VYt3zgEQGQ5IgcfJxUfxM9OfZnlLvoSbiVW+W2WEWhf5u
+	 BVpuYepFUiNRRN42sTSpUp91vpgbOmeUnqPm5xHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Guo <guodongtai@kylinos.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	WANG Xuerui <git@xen0n.name>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/134] LoongArch, bpf: Fix jit to skip speculation barrier opcode
-Date: Tue, 18 Apr 2023 14:21:36 +0200
-Message-Id: <20230418120314.335916209@linuxfoundation.org>
+Subject: [PATCH 6.1 041/134] dmaengine: apple-admac: Handle global interrupt flags
+Date: Tue, 18 Apr 2023 14:21:37 +0200
+Message-Id: <20230418120314.370705292@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
 References: <20230418120313.001025904@linuxfoundation.org>
@@ -37,72 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: George Guo <guodongtai@kylinos.cn>
+From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit a6f6a95f25803500079513780d11a911ce551d76 ]
+[ Upstream commit a288fd158fbf85c06a9ac01cecabf97ac5d962e7 ]
 
-Just skip the opcode(BPF_ST | BPF_NOSPEC) in the BPF JIT instead of
-failing to JIT the entire program, given LoongArch currently has no
-couterpart of a speculation barrier instruction. To verify the issue,
-use the ltp testcase as shown below.
+In addition to TX channel and RX channel interrupt flags there's
+another class of 'global' interrupt flags with unknown semantics. Those
+weren't being handled up to now, and they are the suspected cause of
+stuck IRQ states that have been sporadically occurring. Check the global
+flags and clear them if raised.
 
-Also, Wang says:
-
-  I can confirm there's currently no speculation barrier equivalent
-  on LonogArch. (Loongson says there are builtin mitigations for
-  Spectre-V1 and V2 on their chips, and AFAIK efforts to port the
-  exploits to mips/LoongArch have all failed a few years ago.)
-
-Without this patch:
-
-  $ ./bpf_prog02
-  [...]
-  bpf_common.c:123: TBROK: Failed verification: ??? (524)
-  [...]
-  Summary:
-  passed   0
-  failed   0
-  broken   1
-  skipped  0
-  warnings 0
-
-With this patch:
-
-  $ ./bpf_prog02
-  [...]
-  Summary:
-  passed   0
-  failed   0
-  broken   0
-  skipped  0
-  warnings 0
-
-Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
-Signed-off-by: George Guo <guodongtai@kylinos.cn>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: WANG Xuerui <git@xen0n.name>
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
-Link: https://lore.kernel.org/bpf/20230328071335.2664966-1-guodongtai@kylinos.cn
+Fixes: b127315d9a78 ("dmaengine: apple-admac: Add Apple ADMAC driver")
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+Link: https://lore.kernel.org/r/20230224152222.26732-1-povik+lin@cutebit.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/apple-admac.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index 2467bfb8889a9..82b4402810da0 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -955,6 +955,10 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
- 		emit_atomic(insn, ctx);
- 		break;
+diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+index 90f28bda29c8b..00cbfafe0ed9d 100644
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -75,6 +75,7 @@
  
-+	/* Speculation barrier */
-+	case BPF_ST | BPF_NOSPEC:
-+		break;
+ #define REG_TX_INTSTATE(idx)		(0x0030 + (idx) * 4)
+ #define REG_RX_INTSTATE(idx)		(0x0040 + (idx) * 4)
++#define REG_GLOBAL_INTSTATE(idx)	(0x0050 + (idx) * 4)
+ #define REG_CHAN_INTSTATUS(ch, idx)	(0x8010 + (ch) * 0x200 + (idx) * 4)
+ #define REG_CHAN_INTMASK(ch, idx)	(0x8020 + (ch) * 0x200 + (idx) * 4)
+ 
+@@ -672,13 +673,14 @@ static void admac_handle_chan_int(struct admac_data *ad, int no)
+ static irqreturn_t admac_interrupt(int irq, void *devid)
+ {
+ 	struct admac_data *ad = devid;
+-	u32 rx_intstate, tx_intstate;
++	u32 rx_intstate, tx_intstate, global_intstate;
+ 	int i;
+ 
+ 	rx_intstate = readl_relaxed(ad->base + REG_RX_INTSTATE(ad->irq_index));
+ 	tx_intstate = readl_relaxed(ad->base + REG_TX_INTSTATE(ad->irq_index));
++	global_intstate = readl_relaxed(ad->base + REG_GLOBAL_INTSTATE(ad->irq_index));
+ 
+-	if (!tx_intstate && !rx_intstate)
++	if (!tx_intstate && !rx_intstate && !global_intstate)
+ 		return IRQ_NONE;
+ 
+ 	for (i = 0; i < ad->nchannels; i += 2) {
+@@ -693,6 +695,12 @@ static irqreturn_t admac_interrupt(int irq, void *devid)
+ 		rx_intstate >>= 1;
+ 	}
+ 
++	if (global_intstate) {
++		dev_warn(ad->dev, "clearing unknown global interrupt flag: %x\n",
++			 global_intstate);
++		writel_relaxed(~(u32) 0, ad->base + REG_GLOBAL_INTSTATE(ad->irq_index));
++	}
 +
- 	default:
- 		pr_err("bpf_jit: unknown opcode %02x\n", code);
- 		return -EINVAL;
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
 2.39.2
 
