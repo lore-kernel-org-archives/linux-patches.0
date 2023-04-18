@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82782566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600E6C4339B;
-	Tue, 18 Apr 2023 12:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE9F2566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:26:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048E8C433D2;
+	Tue, 18 Apr 2023 12:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820804;
-	bh=Vau21lWs5g8ri0sto/y0CK9LkEAQjCEyKq9VkIME0hA=;
+	s=korg; t=1681820807;
+	bh=gk88B8TVZq2GyERUwdbxwqku2V7lx7C84xjBklNMy5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KR7F7XPNFbJrQ5NQxKkeZse9qa/37Y+9xqrej/CGlDbNuX36eNEGotS3vu3WQRHqI
-	 Ju4GVhfxiwUGvLS0oxHKd2d4y+dP814twxDohAZ67D7Z6n6mfgxLUZEWmy5kaRKb78
-	 Yn/ALhO+z78KN/00HzfwkNJimHdMS1pew+0RCG6M=
+	b=ew2ja3g5KPNh7IPnfYoZXPZJHP0yRKQYlwusXd/3TXGJgNEK0D1hl5txj0IfA5IsH
+	 3MmAstbZy7ydZSCLV2rIllEtdCWTyUxLIhdQwm5nWpQuUeKt4hIL0/PoRuc09X0dwP
+	 8bqQXe6WVVUvBxiMM/I12Gw/hb1yQsCW2bUl21tI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <groeck@chromium.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Brian Coverstone <brian@mainsequence.net>,
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 08/57] pwm: cros-ec: Explicitly set .polarity in .get_state()
-Date: Tue, 18 Apr 2023 14:21:08 +0200
-Message-Id: <20230418120259.011062755@linuxfoundation.org>
+Subject: [PATCH 4.19 09/57] wifi: mac80211: fix invalid drv_sta_pre_rcu_remove calls for non-uploaded sta
+Date: Tue, 18 Apr 2023 14:21:09 +0200
+Message-Id: <20230418120259.042953033@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
 References: <20230418120258.713853188@linuxfoundation.org>
@@ -36,35 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 30006b77c7e130e01d1ab2148cc8abf73dfcc4bf ]
+[ Upstream commit 12b220a6171faf10638ab683a975cadcf1a352d6 ]
 
-The driver only supports normal polarity. Complete the implementation of
-.get_state() by setting .polarity accordingly.
+Avoid potential data corruption issues caused by uninitialized driver
+private data structures.
 
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Fixes: 1f0d3bb02785 ("pwm: Add ChromeOS EC PWM driver")
-Link: https://lore.kernel.org/r/20230228135508.1798428-3-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Reported-by: Brian Coverstone <brian@mainsequence.net>
+Fixes: 6a9d1b91f34d ("mac80211: add pre-RCU-sync sta removal driver operation")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20230324120924.38412-3-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-cros-ec.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/sta_info.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-cros-ec.c b/drivers/pwm/pwm-cros-ec.c
-index 98f6ac6cf6ab4..bedf6298acfbb 100644
---- a/drivers/pwm/pwm-cros-ec.c
-+++ b/drivers/pwm/pwm-cros-ec.c
-@@ -125,6 +125,7 @@ static void cros_ec_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 5e28be07cad88..5c209f72de701 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -969,7 +969,8 @@ static int __must_check __sta_info_destroy_part1(struct sta_info *sta)
+ 	list_del_rcu(&sta->list);
+ 	sta->removed = true;
  
- 	state->enabled = (ret > 0);
- 	state->period = EC_PWM_MAX_DUTY;
-+	state->polarity = PWM_POLARITY_NORMAL;
+-	drv_sta_pre_rcu_remove(local, sta->sdata, sta);
++	if (sta->uploaded)
++		drv_sta_pre_rcu_remove(local, sta->sdata, sta);
  
- 	/* Note that "disabled" and "duty cycle == 0" are treated the same */
- 	state->duty_cycle = ret;
+ 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
+ 	    rcu_access_pointer(sdata->u.vlan.sta) == sta)
 -- 
 2.39.2
 
