@@ -1,91 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A5B185A
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 07:38:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D9FC433D2;
-	Tue, 18 Apr 2023 07:38:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681803497;
-	bh=aywSGl7+sE6dTjQmK39DnKLM7QTCjnhC/MpmTJAZGeo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qPWwyDYJVFjNXr0MQOogfVNnADpvKkZYjxdvzqivGrwTCvkQibNVJJXBcc5gho//z
-	 z96gMpaI2SvUA5mPKw0t1mRmdJS9uRVI+OxgwkHM4/PUNOfNqvs955fP4Np2UiDY9v
-	 xutEPwMwPhAyX9c74/oHI2plz6BjafMXsZflMj6wgojaKmtiivzS1N3oYLS3C1s5ZT
-	 ehZy1uYfIfjGqj7tuxcZk0HTQlSHChBVI2EXZpbKbUorVHI8/MECayY+SakWjCwtPu
-	 gQABjByOkhR6Lt2Ws3uR69rPDranKEZx+FK6NeKB68XjDANGPvb59cku3i9Utm/xw7
-	 Y4lgqLWQ8cFyg==
-Date: Tue, 18 Apr 2023 09:38:10 +0200
-From: Christian Brauner <brauner@kernel.org>
-To: Hugh Dickins <hughd@google.com>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, akpm@linux-foundation.org,
-	willy@infradead.org, linux-mm@kvack.org, p.raghav@samsung.com,
-	da.gomez@samsung.com, a.manzanares@samsung.com, dave@stgolabs.net,
-	yosryahmed@google.com, keescook@chromium.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 6/6] shmem: add support to ignore swap
-Message-ID: <20230418-zynisch-satzglied-55821361f70a@brauner>
-References: <20230309230545.2930737-1-mcgrof@kernel.org>
- <20230309230545.2930737-7-mcgrof@kernel.org>
- <79eae9fe-7818-a65c-89c6-138b55d609a@google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C940256D
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:23:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67392C4339C;
+	Tue, 18 Apr 2023 12:23:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1681820629;
+	bh=YzRUwLwbwJenkdyUFzBK52VgfD3vlcZhzD2inaeePss=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ut7HoXu3trGy2chDER1AXT7bEVx70M/3IPkp4cCCqC3K4d2QfNnDf4RtRucQg7uKq
+	 2jCqGs//WSCCGTqO4qUo4yudEiejI8HdqahYv0dIhY4/cBnUiojSIx1WBsdQNPdAj9
+	 XFxpVW4vUxsLk6T+YCRQ69pMMDiJ0q2EHxatv5BI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Brian Coverstone <brian@mainsequence.net>,
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 02/37] wifi: mac80211: fix invalid drv_sta_pre_rcu_remove calls for non-uploaded sta
+Date: Tue, 18 Apr 2023 14:21:12 +0200
+Message-Id: <20230418120254.768428722@linuxfoundation.org>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
+References: <20230418120254.687480980@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <79eae9fe-7818-a65c-89c6-138b55d609a@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Apr 17, 2023 at 10:50:59PM -0700, Hugh Dickins wrote:
-> On Thu, 9 Mar 2023, Luis Chamberlain wrote:
-> 
-> > In doing experimentations with shmem having the option to avoid swap
-> > becomes a useful mechanism. One of the *raves* about brd over shmem is
-> > you can avoid swap, but that's not really a good reason to use brd if
-> > we can instead use shmem. Using brd has its own good reasons to exist,
-> > but just because "tmpfs" doesn't let you do that is not a great reason
-> > to avoid it if we can easily add support for it.
-> > 
-> > I don't add support for reconfiguring incompatible options, but if
-> > we really wanted to we can add support for that.
-> > 
-> > To avoid swap we use mapping_set_unevictable() upon inode creation,
-> > and put a WARN_ON_ONCE() stop-gap on writepages() for reclaim.
-> 
-> I have one big question here, which betrays my ignorance:
-> I hope that you or Christian can reassure me on this.
-> 
-> tmpfs has fs_flags FS_USERNS_MOUNT.  I know nothing about namespaces,
-> nothing; but from overhearings, wonder if an ordinary user in a namespace
-> might be able to mount their own tmpfs with "noswap", and thereby evade
-> all accounting of the locked memory.
-> 
-> That would be an absolute no-no for this patch; but I assume that even
-> if so, it can be easily remedied by inserting an appropriate (unknown
-> to me!) privilege check where the "noswap" option is validated.
+From: Felix Fietkau <nbd@nbd.name>
 
-Oh, good catch. Thanks! So you would just need sm like:
+[ Upstream commit 12b220a6171faf10638ab683a975cadcf1a352d6 ]
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 787e83791eb5..21ce9b26bb4d 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -3571,6 +3571,10 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
-                ctx->seen |= SHMEM_SEEN_INUMS;
-                break;
-        case Opt_noswap:
-+               if ((fc->user_ns != &init_user_ns) || !capable(CAP_SYS_ADMIN)) {
-+                       return invalfc(fc,
-+                                      "Turning off swap in unprivileged tmpfs mounts unsupported");
-+               }
-                ctx->noswap = true;
-                ctx->seen |= SHMEM_SEEN_NOSWAP;
-                break;
+Avoid potential data corruption issues caused by uninitialized driver
+private data structures.
 
-The fc->user_ns is the userns that the tmpfs mount will be mounted in, i.e.,
-fc->user_ns will become sb->s_user_ns if FS_USERNS_MOUNT is raised. So with the
-check above we require that the tmpfs instance must ultimately belong to the
-initial userns and that the caller has CAP_SYS_ADMIN in the initial userns
-(CAP_SYS_ADMIN guards swapon and swapoff) according to capabilities(7).
+Reported-by: Brian Coverstone <brian@mainsequence.net>
+Fixes: 6a9d1b91f34d ("mac80211: add pre-RCU-sync sta removal driver operation")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20230324120924.38412-3-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/mac80211/sta_info.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 0d5265adf5396..4e406cd115738 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -942,7 +942,8 @@ static int __must_check __sta_info_destroy_part1(struct sta_info *sta)
+ 	list_del_rcu(&sta->list);
+ 	sta->removed = true;
+ 
+-	drv_sta_pre_rcu_remove(local, sta->sdata, sta);
++	if (sta->uploaded)
++		drv_sta_pre_rcu_remove(local, sta->sdata, sta);
+ 
+ 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
+ 	    rcu_access_pointer(sdata->u.vlan.sta) == sta)
+-- 
+2.39.2
+
+
+
