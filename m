@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FBB2572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:48:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F72FC433EF;
-	Tue, 18 Apr 2023 12:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB4F2572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:48:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043FDC433D2;
+	Tue, 18 Apr 2023 12:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822116;
-	bh=q7rPS2itDY61B52ajRHYzcxXeT+7U+tZdyaE91ohcSE=;
+	s=korg; t=1681822119;
+	bh=+vb7HAUkb/Xzx7lFNrVSZ/ywGCQmc2XUFbEmGy+8HAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1xG+MsGkh6GARRbYlcSeORiBysK28AJjjMUCjGGVm+hXdUtdFi4XWvVcko+6JSMz
-	 qkjB9hAoH42AWh+pno9gjIuMI08jLwRTYLDic0PBwcxlotHDq3edgPEK9OQvL6Rnk4
-	 /5iP1Uj6P/KYvZ8aCCFD1R4Xu9NuI0uJrqbk0jtU=
+	b=zbROTEeGbEuOKPlGkm8908d6PZewwoqO24IabGYSY2P6KeYIUsLOq/DkJyB42VTHK
+	 R9yjTjwIrU45aP4hpnBBo+Yo2z8KqBqk1ivNaZQ5r3ZwfNMvklidZKapHAsZjHdQTZ
+	 Kmbhu8NoFMFzUPhZH7Ss4TptFTPgOimTEMuffWG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ville Syrjala <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.2 028/139] drm/i915/dsi: fix DSS CTL register offsets for TGL+
-Date: Tue, 18 Apr 2023 14:21:33 +0200
-Message-Id: <20230418120314.702206509@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Ming Lei <ming.lei@redhat.com>
+Subject: [PATCH 6.2 029/139] io_uring: complete request via task work in case of DEFER_TASKRUN
+Date: Tue, 18 Apr 2023 14:21:34 +0200
+Message-Id: <20230418120314.732112377@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -34,73 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 6b8446859c971a5783a2cdc90adf32e64de3bd23 upstream.
+commit 860e1c7f8b0b43fbf91b4d689adfaa13adb89452 upstream.
 
-On TGL+ the DSS control registers are at different offsets, and there's
-one per pipe. Fix the offsets to fix dual link DSI for TGL+.
+So far io_req_complete_post() only covers DEFER_TASKRUN by completing
+request via task work when the request is completed from IOWQ.
 
-There would be helpers for this in the DSC code, but just do the quick
-fix now for DSI. Long term, we should probably move all the DSS handling
-into intel_vdsc.c, so exporting the helpers seems counter-productive.
+However, uring command could be completed from any context, and if io
+uring is setup with DEFER_TASKRUN, the command is required to be
+completed from current context, otherwise wait on IORING_ENTER_GETEVENTS
+can't be wakeup, and may hang forever.
 
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8232
-Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
+The issue can be observed on removing ublk device, but turns out it is
+one generic issue for uring command & DEFER_TASKRUN, so solve it in
+io_uring core code.
+
+Fixes: e6aeb2721d3b ("io_uring: complete all requests in task context")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230301151409.1581574-1-jani.nikula@intel.com
-(cherry picked from commit 1a62dd9895dca78bee28bba3a36f08836fdd143d)
+Link: https://lore.kernel.org/linux-block/b3fc9991-4c53-9218-a8cc-5b4dd3952108@kernel.dk/
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Cc: Kanchan Joshi <joshi.k@samsung.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/icl_dsi.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ io_uring/io_uring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/icl_dsi.c
-+++ b/drivers/gpu/drm/i915/display/icl_dsi.c
-@@ -300,9 +300,21 @@ static void configure_dual_link_mode(str
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -962,7 +962,7 @@ static void __io_req_complete_post(struc
+ 
+ void io_req_complete_post(struct io_kiocb *req, unsigned issue_flags)
  {
- 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
- 	struct intel_dsi *intel_dsi = enc_to_intel_dsi(encoder);
-+	i915_reg_t dss_ctl1_reg, dss_ctl2_reg;
- 	u32 dss_ctl1;
- 
--	dss_ctl1 = intel_de_read(dev_priv, DSS_CTL1);
-+	/* FIXME: Move all DSS handling to intel_vdsc.c */
-+	if (DISPLAY_VER(dev_priv) >= 12) {
-+		struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
-+
-+		dss_ctl1_reg = ICL_PIPE_DSS_CTL1(crtc->pipe);
-+		dss_ctl2_reg = ICL_PIPE_DSS_CTL2(crtc->pipe);
-+	} else {
-+		dss_ctl1_reg = DSS_CTL1;
-+		dss_ctl2_reg = DSS_CTL2;
-+	}
-+
-+	dss_ctl1 = intel_de_read(dev_priv, dss_ctl1_reg);
- 	dss_ctl1 |= SPLITTER_ENABLE;
- 	dss_ctl1 &= ~OVERLAP_PIXELS_MASK;
- 	dss_ctl1 |= OVERLAP_PIXELS(intel_dsi->pixel_overlap);
-@@ -323,16 +335,16 @@ static void configure_dual_link_mode(str
- 
- 		dss_ctl1 &= ~LEFT_DL_BUF_TARGET_DEPTH_MASK;
- 		dss_ctl1 |= LEFT_DL_BUF_TARGET_DEPTH(dl_buffer_depth);
--		dss_ctl2 = intel_de_read(dev_priv, DSS_CTL2);
-+		dss_ctl2 = intel_de_read(dev_priv, dss_ctl2_reg);
- 		dss_ctl2 &= ~RIGHT_DL_BUF_TARGET_DEPTH_MASK;
- 		dss_ctl2 |= RIGHT_DL_BUF_TARGET_DEPTH(dl_buffer_depth);
--		intel_de_write(dev_priv, DSS_CTL2, dss_ctl2);
-+		intel_de_write(dev_priv, dss_ctl2_reg, dss_ctl2);
- 	} else {
- 		/* Interleave */
- 		dss_ctl1 |= DUAL_LINK_MODE_INTERLEAVE;
- 	}
- 
--	intel_de_write(dev_priv, DSS_CTL1, dss_ctl1);
-+	intel_de_write(dev_priv, dss_ctl1_reg, dss_ctl1);
- }
- 
- /* aka DSI 8X clock */
+-	if (req->ctx->task_complete && (issue_flags & IO_URING_F_IOWQ)) {
++	if (req->ctx->task_complete && req->ctx->submitter_task != current) {
+ 		req->io_task_work.func = io_req_task_complete;
+ 		io_req_task_work_add(req);
+ 	} else if (!(issue_flags & IO_URING_F_UNLOCKED) ||
 
 
