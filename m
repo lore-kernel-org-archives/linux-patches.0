@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37842572
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696B9C433EF;
-	Tue, 18 Apr 2023 12:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835D62572
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:50:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5F4C433D2;
+	Tue, 18 Apr 2023 12:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681822248;
-	bh=VmykETqOcjF6Uy29X96uBxbZm48eC5ZmjKblSG7f64I=;
+	s=korg; t=1681822251;
+	bh=yERQUqiGn9anUkbxhnMbdjm1L9VY9JBDcH1uL2RINgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JgEgtCc+aPKZkkZr2BbHJcOhXPCRfqB5PbTe3ihQ+MbXQM4prnv1d8W5R+PgAU+md
-	 J5nzFczteXXntJ3j0yD4riMg99+XfHZn0zuYSqyytd69f7/2tPgniMDjwUat4vJLbM
-	 z5rJQ6vro58Dtw6t3x10GTws9u7RpgPAM/yXq3k0=
+	b=VnWgGtH4G7mv2sp/3CQxj/+F98vOBpfiGWObVtrGA37UUFPjdSYtrYG/Ax0+aHUx5
+	 14Cl9CGnxN0zFAy5LUCAl0MFwvwbkqDTdP84yDnco+gtvPAZfwGE+Tbr9aAc0DZg8L
+	 9UIuzihFaKBgH9By03ufbk31mZP0p5lm944sizYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grant Grundler <grundler@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
+	Denis Arefev <arefev@swemel.ru>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 079/139] power: supply: cros_usbpd: reclassify "default case!" as debug
-Date: Tue, 18 Apr 2023 14:22:24 +0200
-Message-Id: <20230418120316.807741979@linuxfoundation.org>
+Subject: [PATCH 6.2 080/139] power: supply: axp288_fuel_gauge: Added check for negative values
+Date: Tue, 18 Apr 2023 14:22:25 +0200
+Message-Id: <20230418120316.843321526@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120313.725598495@linuxfoundation.org>
 References: <20230418120313.725598495@linuxfoundation.org>
@@ -36,40 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Grant Grundler <grundler@chromium.org>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit 14c76b2e75bca4d96e2b85a0c12aa43e84fe3f74 ]
+[ Upstream commit bf6c880d5d1448489ebf92e2d13d5713ff644930 ]
 
-This doesn't need to be printed every second as an error:
-...
-<3>[17438.628385] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-<3>[17439.634176] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-<3>[17440.640298] cros-usbpd-charger cros-usbpd-charger.3.auto: Port 1: default case!
-...
+Variable 'pirq', which may receive negative value
+in platform_get_irq().
+Used as an index in a function regmap_irq_get_virq().
 
-Reduce priority from ERROR to DEBUG.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Grant Grundler <grundler@chromium.org>
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cros_usbpd-charger.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/axp288_fuel_gauge.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/power/supply/cros_usbpd-charger.c b/drivers/power/supply/cros_usbpd-charger.c
-index cadb6a0c2cc7e..b6c96376776a9 100644
---- a/drivers/power/supply/cros_usbpd-charger.c
-+++ b/drivers/power/supply/cros_usbpd-charger.c
-@@ -276,7 +276,7 @@ static int cros_usbpd_charger_get_power_info(struct port_data *port)
- 		port->psy_current_max = 0;
- 		break;
- 	default:
--		dev_err(dev, "Port %d: default case!\n", port->port_number);
-+		dev_dbg(dev, "Port %d: default case!\n", port->port_number);
- 		port->psy_usb_type = POWER_SUPPLY_USB_TYPE_SDP;
- 	}
+diff --git a/drivers/power/supply/axp288_fuel_gauge.c b/drivers/power/supply/axp288_fuel_gauge.c
+index 8e6f8a6550790..05f4131784629 100644
+--- a/drivers/power/supply/axp288_fuel_gauge.c
++++ b/drivers/power/supply/axp288_fuel_gauge.c
+@@ -724,6 +724,8 @@ static int axp288_fuel_gauge_probe(struct platform_device *pdev)
  
+ 	for (i = 0; i < AXP288_FG_INTR_NUM; i++) {
+ 		pirq = platform_get_irq(pdev, i);
++		if (pirq < 0)
++			continue;
+ 		ret = regmap_irq_get_virq(axp20x->regmap_irqc, pirq);
+ 		if (ret < 0)
+ 			return dev_err_probe(dev, ret, "getting vIRQ %d\n", pirq);
 -- 
 2.39.2
 
