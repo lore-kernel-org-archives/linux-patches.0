@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584182566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D096AC433EF;
-	Tue, 18 Apr 2023 12:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10522566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:36:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712EAC433D2;
+	Tue, 18 Apr 2023 12:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821372;
-	bh=OXvepQlQ/5N08bONYP+31CNVxstJgyDYCV+mZyFoU44=;
+	s=korg; t=1681821374;
+	bh=bFCR90D9R1DGi9EikGU2LzfzpqWvFGUinT+2IYv4ic0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQvtm3ewjraeI2MojzRAFpD8+Si4zzTikekseGcXq1ytlgN9CaORA+b8t5l0g1kGp
-	 gRqMag5Qtw7g8aNqzKfQKNdKpftLjwa4EW5gQPVjaubK6ew1EFsevxwFjsLVArePHH
-	 zpZivHxZb46gdOfbMnodjYpp1MoKMAWAqyQIfufE=
+	b=PUN99qVKy4ftBYMcO8rMGb/726z/XG3yV0Kt3DiL17gCFNiq4R9qAxgug3p4ca6sa
+	 sYkzrBkEixMbeYvEWMvHyzUd9E0InVXSx5v1/3YpYl6orG18+yila6OcY8stcAFqAf
+	 aCskbDuKKaG6OAPoITZuCCRmEJwsn6BxAC/Scx2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	David Gibson <david@gibson.dropbear.id.au>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 102/124] powerpc/pseries: Rename TYPE1_AFFINITY to FORM1_AFFINITY
-Date: Tue, 18 Apr 2023 14:22:01 +0200
-Message-Id: <20230418120313.545026747@linuxfoundation.org>
+Subject: [PATCH 5.10 103/124] powerpc/pseries: Consolidate different NUMA distance update code paths
+Date: Tue, 18 Apr 2023 14:22:02 +0200
+Message-Id: <20230418120313.580302068@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -38,166 +37,387 @@ Content-Transfer-Encoding: 8bit
 
 From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
 
-[ Upstream commit 0eacd06bb8adea8dd9edb0a30144166d9f227e64 ]
+[ Upstream commit 8ddc6448ec5a5ef50eaa581a7dec0e12a02850ff ]
 
-Also make related code cleanup that will allow adding FORM2_AFFINITY in
-later patches. No functional change in this patch.
+The associativity details of the newly added resourced are collected from
+the hypervisor via "ibm,configure-connector" rtas call. Update the numa
+distance details of the newly added numa node after the above call.
+
+Instead of updating NUMA distance every time we lookup a node id
+from the associativity property, add helpers that can be used
+during boot which does this only once. Also remove the distance
+update from node id lookup helpers.
+
+Currently, we duplicate parsing code for ibm,associativity and
+ibm,associativity-lookup-arrays in the kernel. The associativity array provided
+by these device tree properties are very similar and hence can use
+a helper to parse the node id and numa distance details.
 
 Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Reviewed-by: David Gibson <david@gibson.dropbear.id.au>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20210812132223.225214-3-aneesh.kumar@linux.ibm.com
+Link: https://lore.kernel.org/r/20210812132223.225214-4-aneesh.kumar@linux.ibm.com
 Stable-dep-of: b277fc793daf ("powerpc/papr_scm: Update the NUMA distance table for the target node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/firmware.h       |  4 +--
- arch/powerpc/include/asm/prom.h           |  2 +-
- arch/powerpc/kernel/prom_init.c           |  2 +-
- arch/powerpc/mm/numa.c                    | 35 ++++++++++++++---------
- arch/powerpc/platforms/pseries/firmware.c |  2 +-
- 5 files changed, 26 insertions(+), 19 deletions(-)
+ arch/powerpc/include/asm/topology.h           |   2 +
+ arch/powerpc/mm/numa.c                        | 212 +++++++++++++-----
+ arch/powerpc/platforms/pseries/hotplug-cpu.c  |   2 +
+ .../platforms/pseries/hotplug-memory.c        |   2 +
+ 4 files changed, 161 insertions(+), 57 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/firmware.h b/arch/powerpc/include/asm/firmware.h
-index aa6a5ef5d4830..0cf648d829f15 100644
---- a/arch/powerpc/include/asm/firmware.h
-+++ b/arch/powerpc/include/asm/firmware.h
-@@ -44,7 +44,7 @@
- #define FW_FEATURE_OPAL		ASM_CONST(0x0000000010000000)
- #define FW_FEATURE_SET_MODE	ASM_CONST(0x0000000040000000)
- #define FW_FEATURE_BEST_ENERGY	ASM_CONST(0x0000000080000000)
--#define FW_FEATURE_TYPE1_AFFINITY ASM_CONST(0x0000000100000000)
-+#define FW_FEATURE_FORM1_AFFINITY ASM_CONST(0x0000000100000000)
- #define FW_FEATURE_PRRN		ASM_CONST(0x0000000200000000)
- #define FW_FEATURE_DRMEM_V2	ASM_CONST(0x0000000400000000)
- #define FW_FEATURE_DRC_INFO	ASM_CONST(0x0000000800000000)
-@@ -69,7 +69,7 @@ enum {
- 		FW_FEATURE_SPLPAR | FW_FEATURE_LPAR |
- 		FW_FEATURE_CMO | FW_FEATURE_VPHN | FW_FEATURE_XCMO |
- 		FW_FEATURE_SET_MODE | FW_FEATURE_BEST_ENERGY |
--		FW_FEATURE_TYPE1_AFFINITY | FW_FEATURE_PRRN |
-+		FW_FEATURE_FORM1_AFFINITY | FW_FEATURE_PRRN |
- 		FW_FEATURE_HPT_RESIZE | FW_FEATURE_DRMEM_V2 |
- 		FW_FEATURE_DRC_INFO | FW_FEATURE_BLOCK_REMOVE |
- 		FW_FEATURE_PAPR_SCM | FW_FEATURE_ULTRAVISOR |
-diff --git a/arch/powerpc/include/asm/prom.h b/arch/powerpc/include/asm/prom.h
-index 324a13351749a..df9fec9d232cb 100644
---- a/arch/powerpc/include/asm/prom.h
-+++ b/arch/powerpc/include/asm/prom.h
-@@ -147,7 +147,7 @@ extern int of_read_drc_info_cell(struct property **prop,
- #define OV5_MSI			0x0201	/* PCIe/MSI support */
- #define OV5_CMO			0x0480	/* Cooperative Memory Overcommitment */
- #define OV5_XCMO		0x0440	/* Page Coalescing */
--#define OV5_TYPE1_AFFINITY	0x0580	/* Type 1 NUMA affinity */
-+#define OV5_FORM1_AFFINITY	0x0580	/* FORM1 NUMA affinity */
- #define OV5_PRRN		0x0540	/* Platform Resource Reassignment */
- #define OV5_HP_EVT		0x0604	/* Hot Plug Event support */
- #define OV5_RESIZE_HPT		0x0601	/* Hash Page Table resizing */
-diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
-index 9e71c0739f08d..a3bf3587a4162 100644
---- a/arch/powerpc/kernel/prom_init.c
-+++ b/arch/powerpc/kernel/prom_init.c
-@@ -1069,7 +1069,7 @@ static const struct ibm_arch_vec ibm_architecture_vec_template __initconst = {
+diff --git a/arch/powerpc/include/asm/topology.h b/arch/powerpc/include/asm/topology.h
+index 3beeb030cd78e..1604920d8d2de 100644
+--- a/arch/powerpc/include/asm/topology.h
++++ b/arch/powerpc/include/asm/topology.h
+@@ -64,6 +64,7 @@ static inline int early_cpu_to_node(int cpu)
+ }
+ 
+ int of_drconf_to_nid_single(struct drmem_lmb *lmb);
++void update_numa_distance(struct device_node *node);
+ 
  #else
- 		0,
- #endif
--		.associativity = OV5_FEAT(OV5_TYPE1_AFFINITY) | OV5_FEAT(OV5_PRRN),
-+		.associativity = OV5_FEAT(OV5_FORM1_AFFINITY) | OV5_FEAT(OV5_PRRN),
- 		.bin_opts = OV5_FEAT(OV5_RESIZE_HPT) | OV5_FEAT(OV5_HP_EVT),
- 		.micro_checkpoint = 0,
- 		.reserved0 = 0,
+ 
+@@ -93,6 +94,7 @@ static inline int of_drconf_to_nid_single(struct drmem_lmb *lmb)
+ 	return first_online_node;
+ }
+ 
++static inline void update_numa_distance(struct device_node *node) {}
+ #endif /* CONFIG_NUMA */
+ 
+ #if defined(CONFIG_NUMA) && defined(CONFIG_PPC_SPLPAR)
 diff --git a/arch/powerpc/mm/numa.c b/arch/powerpc/mm/numa.c
-index a21f62fcda1e8..415cd3d258ff8 100644
+index 415cd3d258ff8..e61593ae25c9e 100644
 --- a/arch/powerpc/mm/numa.c
 +++ b/arch/powerpc/mm/numa.c
-@@ -53,7 +53,10 @@ EXPORT_SYMBOL(node_data);
+@@ -208,50 +208,35 @@ int __node_distance(int a, int b)
+ }
+ EXPORT_SYMBOL(__node_distance);
  
- static int primary_domain_index;
- static int n_mem_addr_cells, n_mem_size_cells;
--static int form1_affinity;
-+
-+#define FORM0_AFFINITY 0
-+#define FORM1_AFFINITY 1
-+static int affinity_form;
- 
- #define MAX_DISTANCE_REF_POINTS 4
- static int distance_ref_points_depth;
-@@ -190,7 +193,7 @@ int __node_distance(int a, int b)
- 	int i;
- 	int distance = LOCAL_DISTANCE;
- 
--	if (!form1_affinity)
-+	if (affinity_form == FORM0_AFFINITY)
- 		return ((a == b) ? LOCAL_DISTANCE : REMOTE_DISTANCE);
- 
- 	for (i = 0; i < distance_ref_points_depth; i++) {
-@@ -210,7 +213,7 @@ static void initialize_distance_lookup_table(int nid,
+-static void initialize_distance_lookup_table(int nid,
+-		const __be32 *associativity)
++static int __associativity_to_nid(const __be32 *associativity,
++				  int max_array_sz)
  {
- 	int i;
- 
--	if (!form1_affinity)
-+	if (affinity_form != FORM1_AFFINITY)
- 		return;
- 
- 	for (i = 0; i < distance_ref_points_depth; i++) {
-@@ -289,6 +292,17 @@ static int __init find_primary_domain_index(void)
- 	int index;
- 	struct device_node *root;
- 
+-	int i;
++	int nid;
 +	/*
-+	 * Check for which form of affinity.
++	 * primary_domain_index is 1 based array index.
 +	 */
-+	if (firmware_has_feature(FW_FEATURE_OPAL)) {
-+		affinity_form = FORM1_AFFINITY;
-+	} else if (firmware_has_feature(FW_FEATURE_FORM1_AFFINITY)) {
-+		dbg("Using form 1 affinity\n");
-+		affinity_form = FORM1_AFFINITY;
-+	} else
-+		affinity_form = FORM0_AFFINITY;
-+
- 	if (firmware_has_feature(FW_FEATURE_OPAL))
- 		root = of_find_node_by_path("/ibm,opal");
- 	else
-@@ -318,23 +332,16 @@ static int __init find_primary_domain_index(void)
- 	}
++	int index = primary_domain_index  - 1;
  
- 	distance_ref_points_depth /= sizeof(int);
--
--	if (firmware_has_feature(FW_FEATURE_OPAL) ||
--	    firmware_has_feature(FW_FEATURE_TYPE1_AFFINITY)) {
--		dbg("Using form 1 affinity\n");
--		form1_affinity = 1;
+-	if (affinity_form != FORM1_AFFINITY)
+-		return;
++	if (!numa_enabled || index >= max_array_sz)
++		return NUMA_NO_NODE;
+ 
+-	for (i = 0; i < distance_ref_points_depth; i++) {
+-		const __be32 *entry;
++	nid = of_read_number(&associativity[index], 1);
+ 
+-		entry = &associativity[be32_to_cpu(distance_ref_points[i]) - 1];
+-		distance_lookup_table[nid][i] = of_read_number(entry, 1);
 -	}
++	/* POWER4 LPAR uses 0xffff as invalid node */
++	if (nid == 0xffff || nid >= nr_node_ids)
++		nid = NUMA_NO_NODE;
++	return nid;
+ }
 -
--	if (form1_affinity) {
--		index = of_read_number(distance_ref_points, 1);
--	} else {
-+	if (affinity_form == FORM0_AFFINITY) {
- 		if (distance_ref_points_depth < 2) {
- 			printk(KERN_WARNING "NUMA: "
--				"short ibm,associativity-reference-points\n");
-+			       "short ibm,associativity-reference-points\n");
- 			goto err;
- 		}
+ /*
+  * Returns nid in the range [0..nr_node_ids], or -1 if no useful NUMA
+  * info is found.
+  */
+ static int associativity_to_nid(const __be32 *associativity)
+ {
+-	int nid = NUMA_NO_NODE;
+-
+-	if (!numa_enabled)
+-		goto out;
+-
+-	if (of_read_number(associativity, 1) >= primary_domain_index)
+-		nid = of_read_number(&associativity[primary_domain_index], 1);
+-
+-	/* POWER4 LPAR uses 0xffff as invalid node */
+-	if (nid == 0xffff || nid >= nr_node_ids)
+-		nid = NUMA_NO_NODE;
+-
+-	if (nid > 0 &&
+-		of_read_number(associativity, 1) >= distance_ref_points_depth) {
+-		/*
+-		 * Skip the length field and send start of associativity array
+-		 */
+-		initialize_distance_lookup_table(nid, associativity + 1);
+-	}
++	int array_sz = of_read_number(associativity, 1);
  
- 		index = of_read_number(&distance_ref_points[1], 1);
-+	} else {
-+		index = of_read_number(distance_ref_points, 1);
+-out:
+-	return nid;
++	/* Skip the first element in the associativity array */
++	return __associativity_to_nid((associativity + 1), array_sz);
+ }
+ 
+ /* Returns the nid associated with the given device tree node,
+@@ -287,6 +272,60 @@ int of_node_to_nid(struct device_node *device)
+ }
+ EXPORT_SYMBOL(of_node_to_nid);
+ 
++static void __initialize_form1_numa_distance(const __be32 *associativity,
++					     int max_array_sz)
++{
++	int i, nid;
++
++	if (affinity_form != FORM1_AFFINITY)
++		return;
++
++	nid = __associativity_to_nid(associativity, max_array_sz);
++	if (nid != NUMA_NO_NODE) {
++		for (i = 0; i < distance_ref_points_depth; i++) {
++			const __be32 *entry;
++			int index = be32_to_cpu(distance_ref_points[i]) - 1;
++
++			/*
++			 * broken hierarchy, return with broken distance table
++			 */
++			if (WARN(index >= max_array_sz, "Broken ibm,associativity property"))
++				return;
++
++			entry = &associativity[index];
++			distance_lookup_table[nid][i] = of_read_number(entry, 1);
++		}
++	}
++}
++
++static void initialize_form1_numa_distance(const __be32 *associativity)
++{
++	int array_sz;
++
++	array_sz = of_read_number(associativity, 1);
++	/* Skip the first element in the associativity array */
++	__initialize_form1_numa_distance(associativity + 1, array_sz);
++}
++
++/*
++ * Used to update distance information w.r.t newly added node.
++ */
++void update_numa_distance(struct device_node *node)
++{
++	if (affinity_form == FORM0_AFFINITY)
++		return;
++	else if (affinity_form == FORM1_AFFINITY) {
++		const __be32 *associativity;
++
++		associativity = of_get_associativity(node);
++		if (!associativity)
++			return;
++
++		initialize_form1_numa_distance(associativity);
++		return;
++	}
++}
++
+ static int __init find_primary_domain_index(void)
+ {
+ 	int index;
+@@ -433,6 +472,38 @@ static int of_get_assoc_arrays(struct assoc_arrays *aa)
+ 	return 0;
+ }
+ 
++static int get_nid_and_numa_distance(struct drmem_lmb *lmb)
++{
++	struct assoc_arrays aa = { .arrays = NULL };
++	int default_nid = NUMA_NO_NODE;
++	int nid = default_nid;
++	int rc, index;
++
++	if ((primary_domain_index < 0) || !numa_enabled)
++		return default_nid;
++
++	rc = of_get_assoc_arrays(&aa);
++	if (rc)
++		return default_nid;
++
++	if (primary_domain_index <= aa.array_sz &&
++	    !(lmb->flags & DRCONF_MEM_AI_INVALID) && lmb->aa_index < aa.n_arrays) {
++		const __be32 *associativity;
++
++		index = lmb->aa_index * aa.array_sz;
++		associativity = &aa.arrays[index];
++		nid = __associativity_to_nid(associativity, aa.array_sz);
++		if (nid > 0 && affinity_form == FORM1_AFFINITY) {
++			/*
++			 * lookup array associativity entries have
++			 * no length of the array as the first element.
++			 */
++			__initialize_form1_numa_distance(associativity, aa.array_sz);
++		}
++	}
++	return nid;
++}
++
+ /*
+  * This is like of_node_to_nid_single() for memory represented in the
+  * ibm,dynamic-reconfiguration-memory node.
+@@ -453,26 +524,19 @@ int of_drconf_to_nid_single(struct drmem_lmb *lmb)
+ 
+ 	if (primary_domain_index <= aa.array_sz &&
+ 	    !(lmb->flags & DRCONF_MEM_AI_INVALID) && lmb->aa_index < aa.n_arrays) {
+-		index = lmb->aa_index * aa.array_sz + primary_domain_index - 1;
+-		nid = of_read_number(&aa.arrays[index], 1);
+-
+-		if (nid == 0xffff || nid >= nr_node_ids)
+-			nid = default_nid;
++		const __be32 *associativity;
+ 
+-		if (nid > 0) {
+-			index = lmb->aa_index * aa.array_sz;
+-			initialize_distance_lookup_table(nid,
+-							&aa.arrays[index]);
+-		}
++		index = lmb->aa_index * aa.array_sz;
++		associativity = &aa.arrays[index];
++		nid = __associativity_to_nid(associativity, aa.array_sz);
  	}
+-
+ 	return nid;
+ }
+ 
+ #ifdef CONFIG_PPC_SPLPAR
+-static int vphn_get_nid(long lcpu)
++
++static int __vphn_get_associativity(long lcpu, __be32 *associativity)
+ {
+-	__be32 associativity[VPHN_ASSOC_BUFSIZE] = {0};
+ 	long rc, hwid;
  
  	/*
-diff --git a/arch/powerpc/platforms/pseries/firmware.c b/arch/powerpc/platforms/pseries/firmware.c
-index 4c7b7f5a2ebca..5d4c2bc20bbab 100644
---- a/arch/powerpc/platforms/pseries/firmware.c
-+++ b/arch/powerpc/platforms/pseries/firmware.c
-@@ -119,7 +119,7 @@ struct vec5_fw_feature {
+@@ -492,12 +556,30 @@ static int vphn_get_nid(long lcpu)
  
- static __initdata struct vec5_fw_feature
- vec5_fw_features_table[] = {
--	{FW_FEATURE_TYPE1_AFFINITY,	OV5_TYPE1_AFFINITY},
-+	{FW_FEATURE_FORM1_AFFINITY,	OV5_FORM1_AFFINITY},
- 	{FW_FEATURE_PRRN,		OV5_PRRN},
- 	{FW_FEATURE_DRMEM_V2,		OV5_DRMEM_V2},
- 	{FW_FEATURE_DRC_INFO,		OV5_DRC_INFO},
+ 		rc = hcall_vphn(hwid, VPHN_FLAG_VCPU, associativity);
+ 		if (rc == H_SUCCESS)
+-			return associativity_to_nid(associativity);
++			return 0;
+ 	}
+ 
++	return -1;
++}
++
++static int vphn_get_nid(long lcpu)
++{
++	__be32 associativity[VPHN_ASSOC_BUFSIZE] = {0};
++
++
++	if (!__vphn_get_associativity(lcpu, associativity))
++		return associativity_to_nid(associativity);
++
+ 	return NUMA_NO_NODE;
++
+ }
+ #else
++
++static int __vphn_get_associativity(long lcpu, __be32 *associativity)
++{
++	return -1;
++}
++
+ static int vphn_get_nid(long unused)
+ {
+ 	return NUMA_NO_NODE;
+@@ -692,7 +774,7 @@ static int __init numa_setup_drmem_lmb(struct drmem_lmb *lmb,
+ 			size = read_n_cells(n_mem_size_cells, usm);
+ 		}
+ 
+-		nid = of_drconf_to_nid_single(lmb);
++		nid = get_nid_and_numa_distance(lmb);
+ 		fake_numa_create_new_node(((base + size) >> PAGE_SHIFT),
+ 					  &nid);
+ 		node_set_online(nid);
+@@ -709,6 +791,7 @@ static int __init parse_numa_properties(void)
+ 	struct device_node *memory;
+ 	int default_nid = 0;
+ 	unsigned long i;
++	const __be32 *associativity;
+ 
+ 	if (numa_enabled == 0) {
+ 		printk(KERN_WARNING "NUMA disabled by user\n");
+@@ -734,18 +817,30 @@ static int __init parse_numa_properties(void)
+ 	 * each node to be onlined must have NODE_DATA etc backing it.
+ 	 */
+ 	for_each_present_cpu(i) {
++		__be32 vphn_assoc[VPHN_ASSOC_BUFSIZE];
+ 		struct device_node *cpu;
+-		int nid = vphn_get_nid(i);
++		int nid = NUMA_NO_NODE;
+ 
+-		/*
+-		 * Don't fall back to default_nid yet -- we will plug
+-		 * cpus into nodes once the memory scan has discovered
+-		 * the topology.
+-		 */
+-		if (nid == NUMA_NO_NODE) {
++		memset(vphn_assoc, 0, VPHN_ASSOC_BUFSIZE * sizeof(__be32));
++
++		if (__vphn_get_associativity(i, vphn_assoc) == 0) {
++			nid = associativity_to_nid(vphn_assoc);
++			initialize_form1_numa_distance(vphn_assoc);
++		} else {
++
++			/*
++			 * Don't fall back to default_nid yet -- we will plug
++			 * cpus into nodes once the memory scan has discovered
++			 * the topology.
++			 */
+ 			cpu = of_get_cpu_node(i, NULL);
+ 			BUG_ON(!cpu);
+-			nid = of_node_to_nid_single(cpu);
++
++			associativity = of_get_associativity(cpu);
++			if (associativity) {
++				nid = associativity_to_nid(associativity);
++				initialize_form1_numa_distance(associativity);
++			}
+ 			of_node_put(cpu);
+ 		}
+ 
+@@ -783,8 +878,11 @@ static int __init parse_numa_properties(void)
+ 		 * have associativity properties.  If none, then
+ 		 * everything goes to default_nid.
+ 		 */
+-		nid = of_node_to_nid_single(memory);
+-		if (nid < 0)
++		associativity = of_get_associativity(memory);
++		if (associativity) {
++			nid = associativity_to_nid(associativity);
++			initialize_form1_numa_distance(associativity);
++		} else
+ 			nid = default_nid;
+ 
+ 		fake_numa_create_new_node(((start + size) >> PAGE_SHIFT), &nid);
+diff --git a/arch/powerpc/platforms/pseries/hotplug-cpu.c b/arch/powerpc/platforms/pseries/hotplug-cpu.c
+index 325f3b220f360..1f8f97210d143 100644
+--- a/arch/powerpc/platforms/pseries/hotplug-cpu.c
++++ b/arch/powerpc/platforms/pseries/hotplug-cpu.c
+@@ -484,6 +484,8 @@ static ssize_t dlpar_cpu_add(u32 drc_index)
+ 		return saved_rc;
+ 	}
+ 
++	update_numa_distance(dn);
++
+ 	rc = dlpar_online_cpu(dn);
+ 	if (rc) {
+ 		saved_rc = rc;
+diff --git a/arch/powerpc/platforms/pseries/hotplug-memory.c b/arch/powerpc/platforms/pseries/hotplug-memory.c
+index 7efe6ec5d14a4..a5f968b5fa3a8 100644
+--- a/arch/powerpc/platforms/pseries/hotplug-memory.c
++++ b/arch/powerpc/platforms/pseries/hotplug-memory.c
+@@ -180,6 +180,8 @@ static int update_lmb_associativity_index(struct drmem_lmb *lmb)
+ 		return -ENODEV;
+ 	}
+ 
++	update_numa_distance(lmb_node);
++
+ 	dr_node = of_find_node_by_path("/ibm,dynamic-reconfiguration-memory");
+ 	if (!dr_node) {
+ 		dlpar_free_cc_nodes(lmb_node);
 -- 
 2.39.2
 
