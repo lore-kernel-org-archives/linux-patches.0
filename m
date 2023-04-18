@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348052566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:24:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA614C433D2;
-	Tue, 18 Apr 2023 12:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F052566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:25:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49880C433EF;
+	Tue, 18 Apr 2023 12:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681820699;
-	bh=jLXmT/xDMmRLz2LOZplCx17rCzu6Y/dZvss3YWjp/Vo=;
+	s=korg; t=1681820701;
+	bh=zbDScTyk1l1lcz3KWstCsDj0ChBrXA4kdLDEpt009JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWCecNVfLU7spDa28qwoyxdkvqd/f0Sm2T9GkDNNHZHqAUa9OUncHagtR1tsPmfEk
-	 GKSMh7tago7jBBABVseMpzCBnPksFBBlvCRxaY2NXJtNEZRhwLxUKPkeF959r+uoWE
-	 8hS92fCh+pQIGWkY69Ij+bzWquS+GhNr09UvOo1A=
+	b=rA8Df3SWyGaOwN8czi7DX9F2RB6Lg09XW3UPnTEk60ocsre0AIR9auqA81mymsZ6S
+	 +yxt0ZP6HCVl1oKo1W0ZkLCgqzlvyzVAUUrYrp0GV6SnCrIrJ9TkjRgGWYJQkOvzwg
+	 pn5noA/QUz//0fUKEhk+8kDbv0EJt3cL+G2HcF0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Green <askgreen@gmail.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.14 08/37] USB: serial: option: add Quectel RM500U-CN modem
-Date: Tue, 18 Apr 2023 14:21:18 +0200
-Message-Id: <20230418120254.963227068@linuxfoundation.org>
+	Dave Martin <Dave.Martin@arm.com>,
+	Julien Thierry <julien.thierry@arm.com>,
+	"zhang.lei" <zhang.lei@jp.fujitsu.com>,
+	Marc Zyngier <marc.zyngier@arm.com>,
+	Takahiro Itazuri <itazur@amazon.com>
+Subject: [PATCH 4.14 35/37] KVM: arm64: Factor out core register ID enumeration
+Date: Tue, 18 Apr 2023 14:21:45 +0200
+Message-Id: <20230418120255.949657379@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
 References: <20230418120254.687480980@linuxfoundation.org>
@@ -35,129 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjørn Mork <bjorn@mork.no>
+From: Dave Martin <Dave.Martin@arm.com>
 
-commit 7708a3858e69db91a8b69487994f33b96d20192a upstream.
+commit be25bbb392fad3a721d6d21b78639b60612b5439 upstream.
 
-This modem supports several modes with a class network function
-and a number of serial functions, all using ff/00/00
+In preparation for adding logic to filter out some KVM_REG_ARM_CORE
+registers from the KVM_GET_REG_LIST output, this patch factors out
+the core register enumeration into a separate function and rebuilds
+num_core_regs() on top of it.
 
-The device ID is the same in all modes.
+This may be a little more expensive (depending on how good a job
+the compiler does of specialising the code), but KVM_GET_REG_LIST
+is not a hot path.
 
-RNDIS mode
-----------
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0900 Rev= 4.04
-S:  Manufacturer=Quectel
-S:  Product=RM500U-CN
-S:  SerialNumber=0123456789ABCDEF
-C:* #Ifs= 7 Cfg#= 1 Atr=c0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+This will make it easier to consolidate ID filtering code in one
+place.
 
-ECM mode
---------
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0900 Rev= 4.04
-S:  Manufacturer=Quectel
-S:  Product=RM500U-CN
-S:  SerialNumber=0123456789ABCDEF
-C:* #Ifs= 7 Cfg#= 1 Atr=c0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+No functional change.
 
-NCM mode
---------
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  5 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0900 Rev= 4.04
-S:  Manufacturer=Quectel
-S:  Product=RM500U-CN
-S:  SerialNumber=0123456789ABCDEF
-C:* #Ifs= 7 Cfg#= 1 Atr=c0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0d Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0d Prot=00 Driver=cdc_ncm
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Reported-by: Andrew Green <askgreen@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Dave Martin <Dave.Martin@arm.com>
+Reviewed-by: Julien Thierry <julien.thierry@arm.com>
+Tested-by: zhang.lei <zhang.lei@jp.fujitsu.com>
+Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
+Signed-off-by: Takahiro Itazuri <itazur@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/kvm/guest.c |   32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1201,6 +1201,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, 0x0900, 0xff, 0, 0), /* RM500U-CN */
-+	  .driver_info = ZLP },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200U, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
+--- a/arch/arm64/kvm/guest.c
++++ b/arch/arm64/kvm/guest.c
+@@ -193,9 +193,28 @@ int kvm_arch_vcpu_ioctl_set_regs(struct
+ 	return -EINVAL;
+ }
+ 
++static int kvm_arm_copy_core_reg_indices(u64 __user *uindices)
++{
++	unsigned int i;
++	int n = 0;
++	const u64 core_reg = KVM_REG_ARM64 | KVM_REG_SIZE_U64 | KVM_REG_ARM_CORE;
++
++	for (i = 0; i < sizeof(struct kvm_regs) / sizeof(__u32); i++) {
++		if (uindices) {
++			if (put_user(core_reg | i, uindices))
++				return -EFAULT;
++			uindices++;
++		}
++
++		n++;
++	}
++
++	return n;
++}
++
+ static unsigned long num_core_regs(void)
+ {
+-	return sizeof(struct kvm_regs) / sizeof(__u32);
++	return kvm_arm_copy_core_reg_indices(NULL);
+ }
+ 
+ /**
+@@ -269,15 +288,12 @@ unsigned long kvm_arm_num_regs(struct kv
+  */
+ int kvm_arm_copy_reg_indices(struct kvm_vcpu *vcpu, u64 __user *uindices)
+ {
+-	unsigned int i;
+-	const u64 core_reg = KVM_REG_ARM64 | KVM_REG_SIZE_U64 | KVM_REG_ARM_CORE;
+ 	int ret;
+ 
+-	for (i = 0; i < sizeof(struct kvm_regs) / sizeof(__u32); i++) {
+-		if (put_user(core_reg | i, uindices))
+-			return -EFAULT;
+-		uindices++;
+-	}
++	ret = kvm_arm_copy_core_reg_indices(uindices);
++	if (ret)
++		return ret;
++	uindices += ret;
+ 
+ 	ret = kvm_arm_copy_fw_reg_indices(vcpu, uindices);
+ 	if (ret)
 
 
