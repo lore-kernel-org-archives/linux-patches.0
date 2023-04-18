@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076E42566
-	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83393C433EF;
-	Tue, 18 Apr 2023 12:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA222566
+	for <patches@lists.linux.dev>; Tue, 18 Apr 2023 12:33:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1680EC433EF;
+	Tue, 18 Apr 2023 12:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681821211;
-	bh=il9EZBMpSktWRx/YbZv5P14enCH5plIWGFDp/lepElk=;
+	s=korg; t=1681821214;
+	bh=ayLCKjBcXV8S6zyWST9efiwCeulaUxJVrHTjPzx/lD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVGRe+hv+C3nEanL2o+86O1i9vV5i5xeqtgASX5SQTcmdMN+Fpt9IGeXiRtZAB5LT
-	 bpAs0fRZwUqqAaon0Jc5qYmk1QuHKPAs3+DodgQkncGah2kgYgfmwUVbNid3rosXlY
-	 8Xx7A87AxF3kkKOrGh3A3ZeSIapl0e7lceJs+Hy0=
+	b=MtpnBjOSuA8sH6D228ZDvx6+EKwKKMIHb3YDw9DqUxK4fXRACrSHOELNQwdCwsYCI
+	 At4WAYZiSzly2WjfBY0GOvEFuGRmiGO/z5DuIdIXRZsNivI9xnGR522QzKDU+sSa9n
+	 Zps4WaM08ZPM/xYgjoWJuuAxRj2kGMAdYg7/c8G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Sojka <michal.sojka@cvut.cz>,
-	Jakub Jira <jirajak2@fel.cvut.cz>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 041/124] can: isotp: isotp_ops: fix poll() to not report false EPOLLOUT events
-Date: Tue, 18 Apr 2023 14:21:00 +0200
-Message-Id: <20230418120311.321342969@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Thorsten Leemhuis <regressions@leemhuis.info>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 042/124] tracing: Free error logs of tracing instances
+Date: Tue, 18 Apr 2023 14:21:01 +0200
+Message-Id: <20230418120311.357110777@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230418120309.539243408@linuxfoundation.org>
 References: <20230418120309.539243408@linuxfoundation.org>
@@ -36,71 +40,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Sojka <michal.sojka@cvut.cz>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 79e19fa79cb5d5f1b3bf3e3ae24989ccb93c7b7b upstream.
+commit 3357c6e429643231e60447b52ffbb7ac895aca22 upstream.
 
-When using select()/poll()/epoll() with a non-blocking ISOTP socket to
-wait for when non-blocking write is possible, a false EPOLLOUT event
-is sometimes returned. This can happen at least after sending a
-message which must be split to multiple CAN frames.
+When a tracing instance is removed, the error messages that hold errors
+that occurred in the instance needs to be freed. The following reports a
+memory leak:
 
-The reason is that isotp_sendmsg() returns -EAGAIN when tx.state is
-not equal to ISOTP_IDLE and this behavior is not reflected in
-datagram_poll(), which is used in isotp_ops.
+ # cd /sys/kernel/tracing
+ # mkdir instances/foo
+ # echo 'hist:keys=x' > instances/foo/events/sched/sched_switch/trigger
+ # cat instances/foo/error_log
+ [  117.404795] hist:sched:sched_switch: error: Couldn't find field
+   Command: hist:keys=x
+                      ^
+ # rmdir instances/foo
 
-This is fixed by introducing ISOTP-specific poll function, which
-suppresses the EPOLLOUT events in that case.
+Then check for memory leaks:
 
-v2: https://lore.kernel.org/all/20230302092812.320643-1-michal.sojka@cvut.cz
-v1: https://lore.kernel.org/all/20230224010659.48420-1-michal.sojka@cvut.cz
-    https://lore.kernel.org/all/b53a04a2-ba1f-3858-84c1-d3eb3301ae15@hartkopp.net
+ # echo scan > /sys/kernel/debug/kmemleak
+ # cat /sys/kernel/debug/kmemleak
+unreferenced object 0xffff88810d8ec700 (size 192):
+  comm "bash", pid 869, jiffies 4294950577 (age 215.752s)
+  hex dump (first 32 bytes):
+    60 dd 68 61 81 88 ff ff 60 dd 68 61 81 88 ff ff  `.ha....`.ha....
+    a0 30 8c 83 ff ff ff ff 26 00 0a 00 00 00 00 00  .0......&.......
+  backtrace:
+    [<00000000dae26536>] kmalloc_trace+0x2a/0xa0
+    [<00000000b2938940>] tracing_log_err+0x277/0x2e0
+    [<000000004a0e1b07>] parse_atom+0x966/0xb40
+    [<0000000023b24337>] parse_expr+0x5f3/0xdb0
+    [<00000000594ad074>] event_hist_trigger_parse+0x27f8/0x3560
+    [<00000000293a9645>] trigger_process_regex+0x135/0x1a0
+    [<000000005c22b4f2>] event_trigger_write+0x87/0xf0
+    [<000000002cadc509>] vfs_write+0x162/0x670
+    [<0000000059c3b9be>] ksys_write+0xca/0x170
+    [<00000000f1cddc00>] do_syscall_64+0x3e/0xc0
+    [<00000000868ac68c>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
+unreferenced object 0xffff888170c35a00 (size 32):
+  comm "bash", pid 869, jiffies 4294950577 (age 215.752s)
+  hex dump (first 32 bytes):
+    0a 20 20 43 6f 6d 6d 61 6e 64 3a 20 68 69 73 74  .  Command: hist
+    3a 6b 65 79 73 3d 78 0a 00 00 00 00 00 00 00 00  :keys=x.........
+  backtrace:
+    [<000000006a747de5>] __kmalloc+0x4d/0x160
+    [<000000000039df5f>] tracing_log_err+0x29b/0x2e0
+    [<000000004a0e1b07>] parse_atom+0x966/0xb40
+    [<0000000023b24337>] parse_expr+0x5f3/0xdb0
+    [<00000000594ad074>] event_hist_trigger_parse+0x27f8/0x3560
+    [<00000000293a9645>] trigger_process_regex+0x135/0x1a0
+    [<000000005c22b4f2>] event_trigger_write+0x87/0xf0
+    [<000000002cadc509>] vfs_write+0x162/0x670
+    [<0000000059c3b9be>] ksys_write+0xca/0x170
+    [<00000000f1cddc00>] do_syscall_64+0x3e/0xc0
+    [<00000000868ac68c>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Signed-off-by: Michal Sojka <michal.sojka@cvut.cz>
-Reported-by: Jakub Jira <jirajak2@fel.cvut.cz>
-Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Fixes: e057dd3fc20f ("can: add ISO 15765-2:2016 transport protocol")
-Link: https://lore.kernel.org/all/20230331125511.372783-1-michal.sojka@cvut.cz
+The problem is that the error log needs to be freed when the instance is
+removed.
+
+Link: https://lore.kernel.org/lkml/76134d9f-a5ba-6a0d-37b3-28310b4a1e91@alu.unizg.hr/
+Link: https://lore.kernel.org/linux-trace-kernel/20230404194504.5790b95f@gandalf.local.home
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Eric Biggers <ebiggers@kernel.org>
+Fixes: 2f754e771b1a6 ("tracing: Have the error logs show up in the proper instances")
+Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1480,6 +1480,21 @@ static int isotp_init(struct sock *sk)
- 	return 0;
- }
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -8895,6 +8895,7 @@ static int __remove_instance(struct trac
+ 	ftrace_destroy_function_files(tr);
+ 	tracefs_remove(tr->dir);
+ 	free_trace_buffers(tr);
++	clear_tracing_err_log(tr);
  
-+static __poll_t isotp_poll(struct file *file, struct socket *sock, poll_table *wait)
-+{
-+	struct sock *sk = sock->sk;
-+	struct isotp_sock *so = isotp_sk(sk);
-+
-+	__poll_t mask = datagram_poll(file, sock, wait);
-+	poll_wait(file, &so->wait, wait);
-+
-+	/* Check for false positives due to TX state */
-+	if ((mask & EPOLLWRNORM) && (so->tx.state != ISOTP_IDLE))
-+		mask &= ~(EPOLLOUT | EPOLLWRNORM);
-+
-+	return mask;
-+}
-+
- static int isotp_sock_no_ioctlcmd(struct socket *sock, unsigned int cmd,
- 				  unsigned long arg)
- {
-@@ -1495,7 +1510,7 @@ static const struct proto_ops isotp_ops
- 	.socketpair = sock_no_socketpair,
- 	.accept = sock_no_accept,
- 	.getname = isotp_getname,
--	.poll = datagram_poll,
-+	.poll = isotp_poll,
- 	.ioctl = isotp_sock_no_ioctlcmd,
- 	.gettstamp = sock_gettstamp,
- 	.listen = sock_no_listen,
+ 	for (i = 0; i < tr->nr_topts; i++) {
+ 		kfree(tr->topts[i].topts);
 
 
