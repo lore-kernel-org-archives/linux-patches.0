@@ -1,103 +1,81 @@
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C030317D4
-	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 03:04:18 +0000 (UTC)
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-38dfa504415so940735b6e.0
-        for <patches@lists.linux.dev>; Tue, 18 Apr 2023 20:04:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489E517D4
+	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 03:33:07 +0000 (UTC)
+Received: by mail-pl1-f173.google.com with SMTP id lh8so15291610plb.1
+        for <patches@lists.linux.dev>; Tue, 18 Apr 2023 20:33:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681873458; x=1684465458;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BZz6i90ANSJNgGgyhyyDzRsyGMboVoftdzyUn+nlq38=;
-        b=f1Ju3t7tMOnR01DfyqMznkIKJVQ0iTwOqES2zUGkyyOdIsYbY1wU/rNCN76G6sh8cj
-         XUdolT6KDcC1fL+mM+f55MW1PTfIWVHP0asirXp0i//JnmMiicUMNgQ4EtCxVRXus5t3
-         kBwiCIyBMXpEvao3Gg2qztOANNJ0hvPW0oOTXbDVTz6AACvap3SCaEitTVmmnimRA7Ep
-         iqkFwe6DfReOwdV+ctY5rW5C3Jw3pwBTahptLcwcibjGf1KhP7M6SXnqV8U5Xxd6JU6K
-         ZtX7lsgLv1haHU9tT0HDQJ9cqB2wZfcDHJF0+ZhMcbCk14UsdaWvguqKwTj8tOeCmYxd
-         68ng==
+        d=gmail.com; s=20221208; t=1681875187; x=1684467187;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5zouXbp8ZPl0MdWpzxDdQ30m2pJpDuz4uXDplfNvXnE=;
+        b=qJDcdkdBGGZ11t7TxtBnbnOAxPxjMKpp+W492ZTMl8nSA37rFYoV/8tGgvfuz6hDji
+         Ic2kTYRZmOiDXhkdhv+SHpfW1lttOkohXyAbNyl43r9/4yt6RFh1I3r0+gU51cuNJLKr
+         olQ7vBeVVtxmXaF1mHK7xSQGAU8/y/Wf8P+ZP3oC7jduylxsx2i3lXHnBDUPBEw2L36Y
+         W/9UCy2GeEM2RxSeqqDCtyCgIbU/lKOyWrORxH9M3UOGsaFn5T4NttgHMqoIg36P+G2v
+         ytPu0WU3uoafGrZn6sowa5ihAzqdbDG8TYv1wKov6gO/4j7s4cNC/JSSNn66oJYACPzJ
+         G/ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681873458; x=1684465458;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BZz6i90ANSJNgGgyhyyDzRsyGMboVoftdzyUn+nlq38=;
-        b=CPrbwGbrh5uBLPbpn+qZGRmLR3ijjEEPIkob2p795+arM6IZi2JzlNYCTXfg9ED7lA
-         dwld026Y4mU8xGaSBihFjr7Do9GFKKqu0eXYdidjJ89M6wANvwe1unDf7XkauTN/td+l
-         ppqlbFV/VjT6+eVtP/ALYse+OY8Kausc/TXPaxgHaEzf2sp9KOBNsAbVVENU9dEE5ip6
-         C4Om4fCokWD6BAmDiR+VqsxdT/8Yq/G/Bxpu/HF1Dz/GWX4QAop2/UBjWc/TFElapeY3
-         UGr/DcpJhpozwvPVtAG4biqYASjqPfjJ5N4mnBI59NmMGxENO4RWxZszNRdDd29DE4Ir
-         ObtQ==
-X-Gm-Message-State: AAQBX9eprAKKOSfqkvUWymLcgArm1R6evSEFjlZAcLqjh7bO7CKNBnQ0
-	kRqxyJBU2xXCTq5DqS1PW4U=
-X-Google-Smtp-Source: AKy350YIz34xLTEyr0mRlCYOMVaBn45XWhTy9z47u+61z8vbKc8AvNm/axZZabVX4nZ/QjP+YZgneA==
-X-Received: by 2002:a54:4386:0:b0:38b:e6:3d95 with SMTP id u6-20020a544386000000b0038b00e63d95mr2002371oiv.40.1681873457848;
-        Tue, 18 Apr 2023 20:04:17 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id bo34-20020a05680822a200b0038e29fb9ac9sm1533969oib.44.2023.04.18.20.04.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Apr 2023 20:04:17 -0700 (PDT)
-Message-ID: <1a52e123-3cda-83cb-64ee-580b306badb7@gmail.com>
-Date: Tue, 18 Apr 2023 23:51:52 -0300
+        d=1e100.net; s=20221208; t=1681875187; x=1684467187;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5zouXbp8ZPl0MdWpzxDdQ30m2pJpDuz4uXDplfNvXnE=;
+        b=IgKQGhrpH1xZ1/99BaxhRfuIp5sn4Ye6sI6cq0379UYLt0vk7kA5nYCevmjanHi2W2
+         Fpd1eOyz+6gsmqQfRVcdQyMocwdjBGfvZooXX/+sci6iDXomT/WhTUkP1Nag1L/hw2Wa
+         VVJX4NvUMLnGcE+jLFfu7EseObEWCX1nvgDc7aYo20U7hLry3aMZhMsbpTQhLiHjKFm8
+         C8zHzQsqxyZwyEPWEArTo2Ies4SJHHxeLouFN2khRshBwBqqmZjeZPS7Vf5nu5WkNa4T
+         KF9KT/ytmb+OKBxzMETJAT4OkvZsURJfnnksMjfTX3kgQeQJkNxOJrW2laQ4rl/HHiza
+         5Y8w==
+X-Gm-Message-State: AAQBX9dC6gXuU5/WSUmjiOW4k5rCDN8mccd7WC3j+v3UpeRAnEoWcsxX
+	okjfvC8LW1rKIzsm/w8AfZA=
+X-Google-Smtp-Source: AKy350aL3CS55612HBRg6wDR5eOE0B4NB3o76CO+7vysLQSHNmozyI/yzLumzO0+bivXo8zfj5N3dQ==
+X-Received: by 2002:a05:6a20:158c:b0:f0:5920:77b1 with SMTP id h12-20020a056a20158c00b000f0592077b1mr2001520pzj.28.1681875186566;
+        Tue, 18 Apr 2023 20:33:06 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id a20-20020aa78654000000b00627e55f383dsm364815pfo.3.2023.04.18.20.33.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Apr 2023 20:33:05 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Tue, 18 Apr 2023 20:33:03 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 4.14 00/37] 4.14.313-rc1 review
+Message-ID: <ac457e3c-fdbc-430a-a0a8-8850c69e06bd@roeck-us.net>
+References: <20230418120254.687480980@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 2/3] rust: arc: fix intra-doc link in `Arc<T>::init`
-Content-Language: en-US
-To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
- <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>, Josh Stone <jistone@redhat.com>,
- William Brown <william.brown@suse.com>,
- Georgy Yakovlev <gyakovlev@gentoo.org>,
- Jan Alexander Steffens <jan.steffens@gmail.com>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20230418214347.324156-1-ojeda@kernel.org>
- <20230418214347.324156-3-ojeda@kernel.org>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230418214347.324156-3-ojeda@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230418120254.687480980@linuxfoundation.org>
 
-On 4/18/23 18:43, Miguel Ojeda wrote:
-> `Arc<T>::init` refers to `Arc<T>::pin_init` via an intra-doc link
-> using the text `pin_init`, rather than more explicitly, which makes
-> `rustdoc` point it to the `pin_init!` macro instead.
+On Tue, Apr 18, 2023 at 02:21:10PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.313 release.
+> There are 37 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> This is required for the compiler upgrade since the newer `rustdoc`
-> would trigger the `broken_intra_doc_links` lint [1], but in this case
-> the macro was not the intended target to begin with, and so the actual
-> fix is to make it point to the right place, regardless of the upgrade.
+> Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
+> Anything received after that time might be too late.
 > 
-> Thus make it more explicit.
-> 
-> Fixes: 92c4a1e7e81c ("rust: init/sync: add `InPlaceInit` trait to pin-initialize smart pointers")
-> Link: https://github.com/rust-lang/rust/issues/106142 [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  rust/kernel/sync/arc.rs | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-> index e6d206242465..1b0734fdf6a7 100644
-> --- a/rust/kernel/sync/arc.rs
-> +++ b/rust/kernel/sync/arc.rs
-> @@ -185,7 +185,7 @@ impl<T> Arc<T> {
->  
->      /// Use the given initializer to in-place initialize a `T`.
->      ///
-> -    /// This is equivalent to [`pin_init`], since an [`Arc`] is always pinned.
-> +    /// This is equivalent to [`Arc<T>::pin_init`], since an [`Arc`] is always pinned.
->      #[inline]
->      pub fn init<E>(init: impl Init<T, E>) -> error::Result<Self>
->      where
 
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Build results:
+	total: 168 pass: 168 fail: 0
+Qemu test results:
+	total: 430 pass: 430 fail: 0
+
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+
+Guenter
