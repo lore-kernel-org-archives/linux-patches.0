@@ -1,134 +1,136 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2056.outbound.protection.outlook.com [40.107.92.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E453D2EA
-	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 20:28:39 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AQDquMuJZ8nPN06FVxbRdm380giPwXHXMjUB479yH5qjfUHPM7zFISNTgabIv1LhovcfFq83NFWQ9dvkhBUjkrEgQ5V64GIdmmWRWl/QPpCxWyqqg1omXME78kRQy48hj842CjXswqoqoKO/u1JiNPQP2n68edD/dJUgJKygluAUixAcqv/1/U9SXyL7caEZjptzvSlGEko52yXpU0telQSF4BMEx5KSL2XnzEPL6/DlvrLGPrkRU8srjunSCwnX3/nkYmKdA75raygx4B5EHy0QNDxElH2CrJbqQ6Gpc9x+WhBemxGSSMLmOrTF4gV9b1uqVqa+9ByLQZirsHFAWQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/GgM0xtrChp/eSAPoUXAd84+SLRPmq+TsEVO4tF7UTc=;
- b=eUY88/vCOSxVfIzc60z7ExgGEjgbVe+pRKaHq+OaiYYu2NgM0LYHP7llS9hjtixO11PeazTaoDAFQjmteU7T3AGafHjOjiHfRSg/QDwZ39cqc9LZtM1uiHtN/Y5+DQ4mgkChquqO2Q/PMQXMrvMVXTy3Rt8ihy2L9wayhVcJ+WU2C5qKoE2RChLaicRMmKckhsNr6xWSLj8Bdyk9LXCAdimwym0U0Xth4sq75zrNuSPsSB2vlvu2c4cGLHBbt8nVsJCQgX/9CJxkjKQzS4RrgCCIfF3JtRkA1cg+l8vbBDvwjm1y3ZMNFef0aGHpbAKDvmX0BTIwIcwX/bLHzhWj4A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/GgM0xtrChp/eSAPoUXAd84+SLRPmq+TsEVO4tF7UTc=;
- b=BOn5N2dJCnVQ4nHgrb4KQpPGuY7qNsu0Qk+EiOdK1wUuklJ99chY7TcCSYa2krZkjn7ksKyAmY5bgrLP0CZyiw1IcWdBVfr7WnBfpmxnPaIlipEu4WM08P+ggRhUkyZeHRN+JE+ULKJ/mHh2qXhKl0fvnMdTUFlbOMpKKCdSciIZ9kBdzZaamkyl+cFRDvT4CINaLn+FwAPSxSDcIJPTYeyxqmsZbyrvR2YBLZyosnCNdBASqEFtyi9PIG0DBEuQPZn1AipLR6vOa1DV0Z8zLX9rsE4BHJ/kQehGFxe5OvYRPe1iu3bsbNzkSY8X33LVZQ8gpaireyqteYTMD3kbAg==
-Received: from BN0PR10CA0004.namprd10.prod.outlook.com (2603:10b6:408:143::18)
- by SA1PR12MB5657.namprd12.prod.outlook.com (2603:10b6:806:234::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6298.30; Wed, 19 Apr
- 2023 20:28:35 +0000
-Received: from BL02EPF000145BB.namprd05.prod.outlook.com
- (2603:10b6:408:143:cafe::9e) by BN0PR10CA0004.outlook.office365.com
- (2603:10b6:408:143::18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6319.22 via Frontend
- Transport; Wed, 19 Apr 2023 20:28:35 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- BL02EPF000145BB.mail.protection.outlook.com (10.167.241.211) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6319.14 via Frontend Transport; Wed, 19 Apr 2023 20:28:35 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Wed, 19 Apr 2023
- 13:28:25 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.37; Wed, 19 Apr 2023 13:28:24 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
- Transport; Wed, 19 Apr 2023 13:28:24 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 6.1 000/129] 6.1.25-rc3 review
-In-Reply-To: <20230419132048.193275637@linuxfoundation.org>
-References: <20230419132048.193275637@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4202ED300
+	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 22:03:44 +0000 (UTC)
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1a50cb65c92so4386845ad.0
+        for <patches@lists.linux.dev>; Wed, 19 Apr 2023 15:03:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1681941823; x=1684533823;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zh5e890yF5vPU5jFDEQlJGrwn7FtrHqnTGkDM3PEhGk=;
+        b=nYVR6pd5ohHan4cvMM25Oc7l0XYFR7FKSc+MZWSm47m/oOsn4bUdrLtiApb2BMvn9W
+         WMcUClzdzEaRKUhQqYcVkdaaXR7KftttiGhQ7uahIeMcUbgwCNxXOFoRc0bqdUzsQNhH
+         TNIgJE1vhzIYwtrMizt4qj93JwRprxsgCnHVpqaBaO8fnbOpHZOl6pX9icRFTPPabgWH
+         AspQ5jLPqr23bvNYBUnbbxE6dz4gJfQw9RdJkVEwTGJ1vMBdxoV9soEmxUrCqrFDZaYs
+         5JTEhKZT+WcDaVg3XI73+vIz4c16Lv6VGec0UOth4LxNfXZuXXhJIDLO0/ERPMvIbgGy
+         4C2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681941823; x=1684533823;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zh5e890yF5vPU5jFDEQlJGrwn7FtrHqnTGkDM3PEhGk=;
+        b=KQifKEe5DcfCrzl7KszPj+jeVAV8WZ6UWhqdjg67FosbgegTpsybXalM2LSrnGn3pl
+         WghdpU0annSUADYNvyabIEQulvtr6AxOfQ4uFXKzvazdvh+iCW1xjYmezxJkht8aEkix
+         2gDkIkIKeeZFwTWvPnYnrGkLbl+NbUm2UuNuJtx6YIFF3+G4JVqqu19S6U/w1L06pLlT
+         exwT4JAwCi/SuwAMcocs3v3kxTfKeSoVHsWI2XekvnTOTscnfAaHIcmcVVxScUJ5gHES
+         JaesEucAO22sz4ROWB9Nienb4Oa9kVUBghg4oekNjZZNR2GCxsi3ORXBT0BJsaaoAwqK
+         e45w==
+X-Gm-Message-State: AAQBX9cCaOjtgxGkLuR6AZQWnVuLdxfJJuOHkkV0oEVDDIUnlhP7Mt0V
+	ftRg2HvN8ruCfBxNTPWBel8mD9sj2jGb4VLLvFbf/Q==
+X-Google-Smtp-Source: AKy350Y2Z2JjZ2qaX/ON4uPm2q//KaaWuchhgDJWWtGCJjwBgwDhMMx5Eo7igcV2qq6xRhf+gjVMj3nsuoCURnpIxZM=
+X-Received: by 2002:a17:902:f78c:b0:1a2:94bb:e104 with SMTP id
+ q12-20020a170902f78c00b001a294bbe104mr6667157pln.39.1681941823522; Wed, 19
+ Apr 2023 15:03:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <a1b757b7-8489-4872-a13b-b39e2175ba9b@drhqmail202.nvidia.com>
-Date: Wed, 19 Apr 2023 13:28:24 -0700
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF000145BB:EE_|SA1PR12MB5657:EE_
-X-MS-Office365-Filtering-Correlation-Id: cc4f9127-bbfb-48c9-3141-08db4114a6dd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	RcqRXjLqZguRt5xqdHkokT//P/5PCRM+RUXiIZk+eUicAMyPi4Wd2dw2G/8dbnK/Rc741xFWQNr/Oi9emxYJmZHDGVoPqN1srbIlQiAL0OrJXidH2YqgSBfsUMwdBQdWbfa/aKO6rbAvoR1RogFXO56ki3itFRs5UkpFxqqyAxNgX/lTNDyybk1ajSEY1XEDsOFg//k74gW79YtOPjfsV0zDWK+AB/A37pK8w3CzxckqiYY8mDixocCGQgEr/DxDQZkj1sY7+XirFMyN7FFWcKUx2WGqCkTr+s814JJ8akb4DeyJF05yL59MYbNQ+ITwfStcU9FqMBRK7D8VO+YTk1NaB6FZtBBqkahPZsd+XeuR4B43xUmENWHNmwYf1OUb4EcrqFSkXQcGpMghQpmyD3oHeDjLd1lBslaIViCMvLu32/UfTkswOTxxmgmKHa8/CbJykk0AP/9Yd5R3SBLcGmxoTbge/bgkMEhkl5RD/xMNu7ZFAc7BggHmokYWLFBccxR57fP+GHb+c20TL3DdVbRyqnMDGz/IiQZkMj3cHAuxh5xLF4mFutBzdQ97RDkpmx1FRqNt88xFppnzvssUWdJILYSxjKLkEyoKzPiXLaLX/b60e9jR8Tmt3Rx3yQuW/7grOgvr3MIYqc48HnwvonGtRSJ1mHHW+dESUMm2SEDuI5wxw8/U/QZ1ouS4r0Cfw6LmBM71O2X5Jxa+vZ3ys4IeymWsMAtgMPHQANIc4Y73bH2KSOy5nvT0TvPbkS5EcZvFIe7xD1TVv+PtK3WT88sE+Ef11WcwxhJpN6QRgEk=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(396003)(346002)(136003)(39860400002)(376002)(451199021)(40470700004)(36840700001)(46966006)(5660300002)(966005)(40460700003)(82740400003)(2906002)(4326008)(70206006)(70586007)(6916009)(7416002)(86362001)(8936002)(41300700001)(316002)(7636003)(356005)(82310400005)(8676002)(31696002)(478600001)(40480700001)(54906003)(26005)(31686004)(336012)(426003)(36860700001)(47076005)(186003);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Apr 2023 20:28:35.5847
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: cc4f9127-bbfb-48c9-3141-08db4114a6dd
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL02EPF000145BB.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB5657
+References: <20230419-mips-check_bugs-init-attribute-v1-1-91e6eed55b89@kernel.org>
+In-Reply-To: <20230419-mips-check_bugs-init-attribute-v1-1-91e6eed55b89@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Wed, 19 Apr 2023 15:03:31 -0700
+Message-ID: <CAKwvOdmuQBnZR_pB5bUdsF+OoB_4pxBT9TNFF83fZhzwZ1gbxw@mail.gmail.com>
+Subject: Re: [PATCH] MIPS: Mark check_bugs{,_early}() as __init
+To: Nathan Chancellor <nathan@kernel.org>, Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: jpoimboe@kernel.org, peterz@infradead.org, linux-mips@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 19 Apr 2023 15:21:54 +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.25 release.
-> There are 129 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 21 Apr 2023 13:20:20 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.25-rc3.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Wed, Apr 19, 2023 at 11:43=E2=80=AFAM Nathan Chancellor <nathan@kernel.o=
+rg> wrote:
+>
+> After commit ac7c3e4ff401 ("compiler: enable CONFIG_OPTIMIZE_INLINING
+> forcibly"), a compiler may choose not to inline a function marked with
+> just 'inline'. If check_bugs() is not inlined into start_kernel(), which
+> occurs when building with clang after commit 9ea7e6b62c2b ("init: Mark
+> [arch_call_]rest_init() __noreturn"), modpost complains with:
+>
+>   WARNING: modpost: vmlinux.o: section mismatch in reference: check_bugs =
+(section: .text) -> check_bugs32 (section: .init.text)
+>
+> check_bugs() is only called from start_kernel(), which itself is marked
+> __init, so mark check_bugs() as __init as well to clear up the warning
+> and make everything work properly.
+>
+> While there is currently no warning about check_bugs_early(), it could
+> have the same problem, as it is called from arch_setup() and calls
+> check_bugs64_early(), both marked __init. Mark it as __init for the same
+> reason as above.
+>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> NOTE: This is based on v6.3-rc7, as the issue shows up due to a patch in
+> the tip tree, but this appears to be an ancient issue that could have
+> showed up at any point (hence why no explicit Fixes tag), so I chose a
+> base that should allow either the MIPS or tip folks to apply this patch.
 
-All tests passing for Tegra ...
+Probably for the MIPS tree.
 
-Test results for stable-v6.1:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    130 tests:	130 pass, 0 fail
+>
+> Additionally, I was tempted to remove the explicit 'inline' since the
+> compiler is free to do whatever it wants anyways but this is a static
+> function in a header so we would need to add '__maybe_unused', which is
+> already added with 'inline' in a normal build so I just left it alone.
+> ---
+>  arch/mips/include/asm/bugs.h | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/arch/mips/include/asm/bugs.h b/arch/mips/include/asm/bugs.h
+> index d72dc6e1cf3c..9b9bf9bc7d24 100644
+> --- a/arch/mips/include/asm/bugs.h
+> +++ b/arch/mips/include/asm/bugs.h
+> @@ -24,13 +24,13 @@ extern void check_bugs64_early(void);
+>  extern void check_bugs32(void);
+>  extern void check_bugs64(void);
+>
+> -static inline void check_bugs_early(void)
+> +static inline void __init check_bugs_early(void)
+>  {
+>         if (IS_ENABLED(CONFIG_CPU_R4X00_BUGS64))
+>                 check_bugs64_early();
+>  }
 
-Linux version:	6.1.25-rc3-g45df5d9a8cbd
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+If the only call site is in arch/mips/kernel/setup.c, then perhaps we
+can move the definition of check_bugs_early there and mark it static
+__init and drop inline?
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Unless we foresee other callers potentially in the future?  Patch
+otherwise LGTM.  Thanks for the patch!
 
-Jon
+>
+> -static inline void check_bugs(void)
+> +static inline void __init check_bugs(void)
+>  {
+>         unsigned int cpu =3D smp_processor_id();
+>
+>
+> ---
+> base-commit: 6a8f57ae2eb07ab39a6f0ccad60c760743051026
+> change-id: 20230419-mips-check_bugs-init-attribute-026103bdb255
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
+
+
+--=20
+Thanks,
+~Nick Desaulniers
