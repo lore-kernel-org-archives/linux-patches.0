@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43F528F2
-	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 09:26:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9D9C433A0;
-	Wed, 19 Apr 2023 09:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570A128F2
+	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 09:36:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73189C4339C;
+	Wed, 19 Apr 2023 09:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681896417;
-	bh=qxflMxePag1Pfp9FeskoGvnzx5TEu05J4qB66RIz4rc=;
+	s=korg; t=1681897006;
+	bh=EvxYfdAaf82Jp7S5pqvrmPLb+c2V1A7/mIDfHv6xcw4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=wX8OfZTayjwW6YX7xOLU3POe0aPRl6JO4m/T5PLFXaqUZqdpxXFqQ/vxy7I0M/rxa
-	 +yS8acIoPwUueFeHp/yuP0hFYjsCaxuYaQHzRR8o84phECE1X0LN3EjP7f83i/Yqy1
-	 6YfVTF2fJBPdlEnn01u8jv8X+91DlXoaYnxPfgRI=
-Date: Wed, 19 Apr 2023 11:26:54 +0200
+	b=dBx8srcZFt1j/7v7kR/7quLyhd5l7qojg8w5G6kmDLNHwzeTylMfW5vDa8l4IguWC
+	 qp3ygnJ6eky/CH68nBU1z9tIhgjusCMACQbY52bj5OFGhfE00v1XK9fXjcxgB6F8wp
+	 lMogBTgaZsl3aHEBaHadYFBaPqfJe9D+Rt/UyAqQ=
+Date: Wed, 19 Apr 2023 11:36:43 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
+To: Conor Dooley <conor.dooley@microchip.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.15 00/88] 5.15.108-rc2 review
-Message-ID: <2023041934-affection-whisking-db24@gregkh>
-References: <20230419072156.965447596@linuxfoundation.org>
- <f10dd20e-6dce-490a-f3fb-fdf79e83bc1d@roeck-us.net>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 129/134] riscv: Move early dtb mapping into the
+ fixmap region
+Message-ID: <2023041918-stammer-subgroup-fbd1@gregkh>
+References: <20230418120313.001025904@linuxfoundation.org>
+ <20230418120317.673170852@linuxfoundation.org>
+ <20230418-tactile-cocoa-4242e87bf994@wendy>
+ <2023041948-overthrow-debtor-289d@gregkh>
+ <20230419-uninstall-fragile-51c326b1adbc@wendy>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,39 +35,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f10dd20e-6dce-490a-f3fb-fdf79e83bc1d@roeck-us.net>
+In-Reply-To: <20230419-uninstall-fragile-51c326b1adbc@wendy>
 
-On Wed, Apr 19, 2023 at 01:11:32AM -0700, Guenter Roeck wrote:
-> On 4/19/23 00:23, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.108 release.
-> > There are 88 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
+On Wed, Apr 19, 2023 at 08:55:34AM +0100, Conor Dooley wrote:
+> On Wed, Apr 19, 2023 at 09:27:04AM +0200, Greg Kroah-Hartman wrote:
+> > On Tue, Apr 18, 2023 at 02:10:54PM +0100, Conor Dooley wrote:
+> > > On Tue, Apr 18, 2023 at 02:23:05PM +0200, Greg Kroah-Hartman wrote:
+> > > > From: Alexandre Ghiti <alexghiti@rivosinc.com>
+> > > > 
+> > > > [ Upstream commit ef69d2559fe91f23d27a3d6fd640b5641787d22e ]
+> > > 
+> > > Hey Greg,
+> > > 
+> > > Please check out <e3a6656c-0ec4-9d54-b262-1af08c292ed5@microchip.com>
+> > > (I can't find a lore link for stable-commit@vger stuff)
+> > > as I am not sure whether it is okay to backport this in isolation.
 > > 
-> > Responses should be made by Fri, 21 Apr 2023 07:21:37 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.108-rc2.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> > 
-> > -------------
-> > Pseudo-Shortlog of commits:
-> > 
-> ...
-> > Alexandre Ghiti <alexghiti@rivosinc.com>
-> >      riscv: Do not set initial_boot_params to the linear address of the dtb
-> > 
+> > I'm confused, what is needed to be done here?
 > 
-> As expected, a quick test shows that this patch still results in immediate
-> riscv32/64 crashes.
+> Originally I got an email saying that some patches had failed to apply:
+> FAILED: patch "[PATCH] riscv: Move early dtb mapping into the fixmap region" failed to apply to 5.15-stable tree
+> <2023041706-esophagus-evacuate-b5a7@gregkh>
+> FAILED: patch "[PATCH] riscv: Move early dtb mapping into the fixmap region" failed to apply to 6.1-stable tree
+> <2023041708-sinless-rectangle-f480@gregkh>
+> 
+> I replied to:
+> Patch "riscv: No need to relocate the dtb as it lies in the fixmap region" has been added to the 5.15-stable tree
+> <2023041741-dirtiness-canon-8104@gregkh>
+> Where I said that without the failed patches, the above should not be
+> applied to 5.15.y or 6.1y. You said you would drop it from all stable
+> trees.
+> 
+> However, this patch ("riscv: Move early dtb mapping into the fixmap
+> region") did end up getting applied to 6.1.y and 6.2.y, despite what the
+> email I got said for 6.1.y!
 
-Thanks for the report, let me go drop this and push out a -rc3...
+That's because Sasha backported the dependent patches to get it to
+apply.
+
+> I don't think that either of the patches can be backported in isolation,
+> so either:
+> 
+> a) drop ("riscv: Move early dtb mapping into the fixmap region") from all
+>    stable trees & queue it up alongside (riscv: No need to relocate the
+>    dtb as it lies in the fixmap region) for the next stable update
+> 
+> b) pick ("riscv: No need to relocate the dtb as it lies in the fixmap
+>    region") up in such a way that it sits immediately after ("riscv: No
+>    need to relocate the dtb as it lies in the fixmap region") in the
+>    history
+> 
+> I am the original reporter of the issue and I have a workaround in place
+> so personally the backport is not urgent (to me at least), so which
+> option you go for doesn't matter to me.
+
+Let me just drop all of them, that makes it simpler and then if anyone
+wants them applied, then they can send us an explicit set of patches.
+
+thanks,
 
 greg k-h
