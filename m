@@ -1,100 +1,75 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D0915A8
-	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 01:26:00 +0000 (UTC)
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-94f0dd117dcso231502166b.3
-        for <patches@lists.linux.dev>; Tue, 18 Apr 2023 18:26:00 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD1D15CD
+	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 02:45:30 +0000 (UTC)
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-6a5eea94963so880764a34.3
+        for <patches@lists.linux.dev>; Tue, 18 Apr 2023 19:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1681867559; x=1684459559;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uxXITgakLQZjUNEWigiUIhamcKFCLzsMS5+jd7cbviE=;
-        b=dN7EGNUqn24hjZ1K1ZiPbjvrPoZ7/E0JgBK1YZVnNP/D4euPBMQj6Wj1oTbBqElPhQ
-         RDjPhyXDBm1cHvfDTjZ5kU+032R0OGuRJA7ImqR3lGc4gmNXrTFmOs7T9sVZoDFieeWQ
-         3jGRKTgk0yiNRli0UH1rJb6WMxk1ZFGlcQW801v5nGv8ep+YtWq45RGzq35boFTBwjMh
-         5yXO2Hb4nioc/Gyg968bN0ZWwdEC7AaliTSvDT6BipGowpBjNyeJHi+C8o1P5hTeRtkq
-         HM7DZN2VvLJFNEVx5BhdPVEZLtV9o8dDYB3mw4zA7+5KNmxd2HG74nrSmzLvTdsqUD85
-         bsLw==
+        d=gmail.com; s=20221208; t=1681872330; x=1684464330;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E069ZTY6nFYszV+/5FzOjU5LbuCwW8x4gHc3aSQEBg8=;
+        b=UhQs5Y/3zpq4zX5sMEGThvciVqiFLBfm1teJcsEZzz5FG1jhGuAJZkW4WWBG0z5odO
+         sIXPLrBUHBnj8uidXCrTBCqtfVRG8xeEpmxLVT4wVF5v9L7mSJMNlOrg6HfxAg1TN5dR
+         YJlOs7ksl1ob5qSztI2NE/qskge0XjDaEErG7SKNd9xxyH9QG3TH1LBOiA7wf8f4POs7
+         agk65MtIa5mBrXA3Yv3GHJazl3hkeLYE/yUpkGWPB8cBiJSR8ViIxrBVPPpkobNj+paK
+         XBKV6NG2FlizvxxbwP0GNoFJMjyPLaCxkz7LXDqjCF8abkw55v26qf3Q6kGodaDE5j3z
+         vsSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681867559; x=1684459559;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uxXITgakLQZjUNEWigiUIhamcKFCLzsMS5+jd7cbviE=;
-        b=QqPJvAnkw4E7ilA+RRD44CsVSobYmBmroU1eb72rPW8pLpY0PeDhWKiVTYrq7xLQPY
-         9dNWCg2Za4EM3cskS12SOJIVSePFGKvltvVmNnhS6kzM5JzGeBFdzqDQOO9fxty3h9q2
-         fwTcXeaJPVCRs+UhlV9mi59rP+CVlQiJDoXUkAt1XtUcV7kRmF/KHGQrOHS4Qeo3OtDL
-         xZ6jfNZxreT/E0mzCwjUyakLFmJ4PcOuSNYPq97NRotC7Dgg75pNcyv++PoNiQY/dPMJ
-         JTQsQfjNSrlL3hgyfpfLJZvydh7MH+X96VvwcFNTczuiXniT3PMnmZhWttXIHm9Z670I
-         /zxQ==
-X-Gm-Message-State: AAQBX9cDvjowiH89MISVq5awdKYCxmmX95gInxD0CuRI1gSe46luVHnd
-	1WpFI2EnDaLJTwd4aWkzTcgeuJcHsKJvqZW8CtV4Fw==
-X-Google-Smtp-Source: AKy350Z1r3MHtabcSD0aZjLFEKplpiH17REkLAHbs2RkjUZefY0gvuZrC2SMt/PEQWRJRyDn3SmxLfaORy73MLYbgsk=
-X-Received: by 2002:a05:6402:c1:b0:504:ae78:89c5 with SMTP id
- i1-20020a05640200c100b00504ae7889c5mr3522250edu.28.1681867558993; Tue, 18 Apr
- 2023 18:25:58 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681872330; x=1684464330;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E069ZTY6nFYszV+/5FzOjU5LbuCwW8x4gHc3aSQEBg8=;
+        b=MNefiYhWo3ZkZyfnlylis1RSqawuBCC26nTKXCpsj5N4pUabn9MDsO1tJEuRa/fR7w
+         /Xf7QsFlJ7BC+p3wJ8U0TnyKYN8M/rcnuWltk4wz5XHrDNenB1eO1XFjcfuEWLne37St
+         Raxz5orwepriJ21kLIwkRVkw9js3s9OXH+76tuBui1yrMMXft5L3VdbAkHA7XuME5ta0
+         qpLsF+PmyOEYPjDpUF6G+IeQeq90h4oamO63p/nXr7doa3SPb7n6DlJDak9xWlD4910f
+         v0fgCrC/JGUZm1QufMS4Dn/y8lU6qlQ3jnrcn9+HKeAKQhMCkzXyx0/gv0nRzkK7ae8/
+         lw4A==
+X-Gm-Message-State: AAQBX9f8OnhRGFQsH3YBH9xjxE71+iHykLUePuXGQz3bF2R+bMZ6zK2e
+	mWH0UlyRq1010BPi88fCUNM=
+X-Google-Smtp-Source: AKy350b+TpaRh7+IMRxW7bQHLeOF/kqFYVzDURhqDqBXE7Ss1mrHoC4nEcZ4sXwTsyTxEAG+z4Q4EQ==
+X-Received: by 2002:a9d:6d0f:0:b0:6a5:cf29:f310 with SMTP id o15-20020a9d6d0f000000b006a5cf29f310mr2239494otp.34.1681872329921;
+        Tue, 18 Apr 2023 19:45:29 -0700 (PDT)
+Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
+        by smtp.gmail.com with ESMTPSA id m14-20020a9d644e000000b006a4308f1e2asm6165250otl.54.2023.04.18.19.45.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Apr 2023 19:45:29 -0700 (PDT)
+Message-ID: <2fc535da-0d83-049a-53a6-e310d12a884a@gmail.com>
+Date: Tue, 18 Apr 2023 23:45:25 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230418120313.001025904@linuxfoundation.org>
-In-Reply-To: <20230418120313.001025904@linuxfoundation.org>
-From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
-Date: Wed, 19 Apr 2023 10:25:48 +0900
-Message-ID: <CAKL4bV7sw7AWc14eXOh2azGH+=eHWni=wcisHJfPAra4xYUmuA@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/134] 6.1.25-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH] .gitattributes: set diff driver for Rust source code
+ files
+To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
+ <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>, Masahiro Yamada
+ <masahiroy@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+ Jean Delvare <jdelvare@suse.de>, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20230418233048.335281-1-ojeda@kernel.org>
+Content-Language: en-US
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+In-Reply-To: <20230418233048.335281-1-ojeda@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Greg
+On 4/18/23 20:30, Miguel Ojeda wrote:
+> Git supports a builtin Rust diff driver [1] since v2.23.0 (2019).
+> 
+> [...]
 
-On Tue, Apr 18, 2023 at 9:42=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.25 release.
-> There are 134 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.25-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+At this stage in the game such an improvement in diffs is required.
 
-6.1.25-rc1 tested.
-
-x86_64
-
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P, arch linux)
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
