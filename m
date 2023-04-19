@@ -1,70 +1,247 @@
-Received: from mail-41104.protonmail.ch (mail-41104.protonmail.ch [185.70.41.104])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2DB2564
-	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 08:12:51 +0000 (UTC)
-Date: Wed, 19 Apr 2023 08:06:48 +0000
-Authentication-Results: mail-41104.protonmail.ch;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="BhU/Z8Wy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1681891613; x=1682150813;
-	bh=yDcINe1SSrAuEgU0eu40vrPrEWNwzjnrBuhCZcpXXBs=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=BhU/Z8WyZmwQMdSHDFz2vgO3Qz7wqusgLY+W616pPHAqVLEgPWdvoryP/1glt08BF
-	 zGBocVP2O77p7OAc4F0U9m5qSFqj6vnRONGTCu1DnlwRIHgw4auiLAKvxuqBXdzr1h
-	 pyjH5MJjzNplMpQnmGZd5J9kNZqR2qY3tUMTggzLWbQ6+btgJBKfW067K4sWMqkeV3
-	 FBPzfrq+/e6swskgoBd0HWYstakK+lQ2UB36nRg0X4eVlyxh5vTKOwdqKR/kBuMVu8
-	 5vqP425LM6IC4LzZzBJmALn1N40yRUR0NzvhIbw7hQjm7itslZt3dSBGXjYMJvZo7d
-	 MzMnuwgjMQj4Q==
-To: Miguel Ojeda <ojeda@kernel.org>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Josh Stone <jistone@redhat.com>, William Brown <william.brown@suse.com>, Georgy Yakovlev <gyakovlev@gentoo.org>, Jan Alexander Steffens <jan.steffens@gmail.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 1/3] rust: alloc: clarify what is the upstream version
-Message-ID: <kjzSDs4jT8f4VbiRFjQmaecqRpvv06jDQ3EGFsy0OmT3eNmicJJEqzRp6BZR9YNCu5k3E4ArIzgLOxkR3eYuv-iuuCMwGs4rHJJBg8Y2vR0=@proton.me>
-In-Reply-To: <20230418214347.324156-2-ojeda@kernel.org>
-References: <20230418214347.324156-1-ojeda@kernel.org> <20230418214347.324156-2-ojeda@kernel.org>
-Feedback-ID: 71780778:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E8119C
+	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 08:33:26 +0000 (UTC)
+Received: by mail-ua1-f54.google.com with SMTP id l17so9600183uak.0
+        for <patches@lists.linux.dev>; Wed, 19 Apr 2023 01:33:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681893205; x=1684485205;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=TFh8cKtmQeLzdNqi85aci1KA8iIgD65gwTL6N4mvUb4=;
+        b=bQfRm00TH335URMWMoIjUAnRVREHVpYBP5fzrRr2WpfOwN1TgW1GKkHzAMlacfepea
+         SCBUZRbUt587K6Vtuz5woZ6IKg0vEyy0mT7SmCTjNkdwKQb33cE5FQsv4hQv8WO7M65s
+         XOtV8Lj0kFMVi3yNlEhGHuzXrwgYuHQmWhyud8dckS+lNdzpTe5aAAp94YcJzA6LCoeA
+         oXFA56Qwo+PmpNv2trpwRsM/1wEISKkFIvkofQL/QkLGU6uUpgge9Uajz7kbsBg6Kc+/
+         VgqlAQHRU9B/5J7t7C0haLx8PXj6qmh0EBW/0UKPiodL5A+k1FrySaqprMviSljrLQ3O
+         q2Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681893205; x=1684485205;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TFh8cKtmQeLzdNqi85aci1KA8iIgD65gwTL6N4mvUb4=;
+        b=l0qncaH0nhugv5kKYk1a9lZyFHn7KZ0iuJ/3QoEXB6ENoPBiOEvvHk1XCiKaKQcjP4
+         4A/JWFoQiLnzSW4Txupj8QGqPSlylFZVrzghJeBRr0T91Tf3ov3GDBBAm98KT45XSCHN
+         t+Wd1uZjlxtvtE9hWJcOcu84B6rahVDte7KYREQT/kFq0EYrVZLXeK7/THUlel2Nqe8l
+         yx0Qm2U3g3lbDtP71IfqD0n6SzNn3f+O2EyOGFudAiNeuJn2SrlMY8icGwK7b9FsBz5n
+         sojKRKuNFKiIkO8vqt5d2fyAqVYDPWctUJO/4HN1+ZrVcqfp8x88Ki6/ag7C2GVdUGqT
+         elsg==
+X-Gm-Message-State: AAQBX9fmbFxCJ8YCDNtdZRMvL3JdTXaAKl0m+KeTbio3Gx5dxVW6ZjSz
+	Ia7S30dn/NTuKBx26fGgm/xHLvAHShSaScwCcUURZw==
+X-Google-Smtp-Source: AKy350aCAj0CmufVadvfZKn2S5DZRP2Jm81ER6UwRvOh7xB9fgGw8ImZRwGXf0ybp4mARVbrEA1jcZXOXojFkttjavs=
+X-Received: by 2002:a1f:5c43:0:b0:440:3629:846 with SMTP id
+ q64-20020a1f5c43000000b0044036290846mr7225925vkb.2.1681893205569; Wed, 19 Apr
+ 2023 01:33:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20230418120258.713853188@linuxfoundation.org>
+In-Reply-To: <20230418120258.713853188@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 19 Apr 2023 14:03:14 +0530
+Message-ID: <CA+G9fYtQZpMB=uuEj9QFVXRp-JteNLd2N7ezpbfOP_ee080DaQ@mail.gmail.com>
+Subject: Re: [PATCH 4.19 00/57] 4.19.281-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, LTP List <ltp@lists.linux.it>, 
+	chrubis <chrubis@suse.cz>, Petr Vorel <pvorel@suse.cz>, 
+	Anders Roxell <anders.roxell@linaro.org>, Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
 
-On 18.04.23 23:43, Miguel Ojeda wrote:
-> It may be unclear for readers which upstream Rust version these files
-> are based on. They may be unaware that they are intended to match the
-> minimum (and only, so far) supported version of Rust in the kernel.
->=20
-> Thus clarify it.
->=20
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On Tue, 18 Apr 2023 at 17:55, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.19.281 release.
+> There are 57 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.281-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Recently we have upgraded the LTP test suite version and started noticing
+these test failures on 4.19 and 4.14 only on arm64.
 
-> ---
->   rust/alloc/README.md | 3 +++
->   1 file changed, 3 insertions(+)
->=20
-> diff --git a/rust/alloc/README.md b/rust/alloc/README.md
-> index c89c753720b5..eb6f22e94ebf 100644
-> --- a/rust/alloc/README.md
-> +++ b/rust/alloc/README.md
-> @@ -10,6 +10,9 @@ upstream. In general, only additions should be performe=
-d (e.g. new
->   methods). Eventually, changes should make it into upstream so that,
->   at some point, this fork can be dropped from the kernel tree.
->=20
-> +The Rust upstream version on top of which these files are based matches
-> +the output of `scripts/min-tool-version.sh rustc`.
-> +
->=20
->   ## Rationale
->=20
-> --
-> 2.40.0
-> 
+Need to investigate test case issues or kernel issues.
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+NOTE:
+creat09.c:73: TINFO: User nobody: uid = 65534, gid = 65534
+creat09.c:75: TINFO: Found unused GID 11: SUCCESS (0)
+creat09.c:120: TINFO: File created with umask(0)
+creat09.c:106: TPASS: mntpoint/testdir/creat.tmp: Owned by correct group
+creat09.c:112: TPASS: mntpoint/testdir/creat.tmp: Setgid bit not set
+creat09.c:106: TPASS: mntpoint/testdir/open.tmp: Owned by correct group
+creat09.c:112: TPASS: mntpoint/testdir/open.tmp: Setgid bit not set
+creat09.c:120: TINFO: File created with umask(S_IXGRP)
+creat09.c:106: TPASS: mntpoint/testdir/creat.tmp: Owned by correct group
+creat09.c:110: TFAIL: mntpoint/testdir/creat.tmp: Setgid bit is set
+creat09.c:106: TPASS: mntpoint/testdir/open.tmp: Owned by correct group
+creat09.c:110: TFAIL: mntpoint/testdir/open.tmp: Setgid bit is set
+
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.279-143-gcc0a9b81697f/testrun/16319970/suite/ltp-syscalls/test/creat09/log
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.279-143-gcc0a9b81697f/testrun/16319970/suite/ltp-syscalls/test/creat09/history/
+
+
+## Build
+* kernel: 4.19.281-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-4.19.y
+* git commit: cc0a9b81697f7222c51d17365c5960680ba00260
+* git describe: v4.19.279-143-gcc0a9b81697f
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.279-143-gcc0a9b81697f
+
+## Test Regressions (compared to v4.19.279-85-ge4a87ad39c98)
+
+* qemu-arm64, ltp-cve
+  - cve-2018-13405 ( creat09 )
+
+* qemu-arm64, ltp-syscalls
+  - creat09
+
+## Metric Regressions (compared to v4.19.279-85-ge4a87ad39c98)
+
+## Test Fixes (compared to v4.19.279-85-ge4a87ad39c98)
+
+## Metric Fixes (compared to v4.19.279-85-ge4a87ad39c98)
+
+## Test result summary
+total: 96758, pass: 71960, fail: 3568, skip: 21047, xfail: 183
+
+## Build Summary
+* arc: 10 total, 10 passed, 0 failed
+* arm: 108 total, 107 passed, 1 failed
+* arm64: 34 total, 33 passed, 1 failed
+* i386: 20 total, 19 passed, 1 failed
+* mips: 22 total, 22 passed, 0 failed
+* parisc: 6 total, 6 passed, 0 failed
+* powerpc: 24 total, 24 passed, 0 failed
+* s390: 6 total, 6 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 28 total, 27 passed, 1 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
