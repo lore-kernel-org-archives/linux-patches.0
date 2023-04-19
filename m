@@ -1,148 +1,125 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17B82564
-	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 07:57:04 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id EDD5021905;
-	Wed, 19 Apr 2023 07:57:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1681891022; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cD0t6NezfCDx0oKUGN4T+tmhx6pXCtbhV9oaU4kpHdY=;
-	b=EPo0mk3BYne87vJI2zTBTtu9HzS4K8UbNwODrdDrEwQJGbnYjH3YQTJx4RWm4FFRnOCoww
-	a9QvMkMj7anBtRkY0XyvEgzQZSjaaA6G9nFXIvmFRp2KtO3dTF9nt6Cc2dmQWxTbNQCmIs
-	K1rSdWq9+rcLTqbeZcDXns+lwZ/YlOc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1681891022;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cD0t6NezfCDx0oKUGN4T+tmhx6pXCtbhV9oaU4kpHdY=;
-	b=+gYItwCqq24saD8UfWri5YBsxgw894Q6hcBVfdc0fyTmvyoLsJxZ4eF2YY54L5w+xyvX2q
-	EyI2j8KhVW4BrrAA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8357B1390E;
-	Wed, 19 Apr 2023 07:57:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id UooJIM6eP2QlVAAAMHmgww
-	(envelope-from <chrubis@suse.cz>); Wed, 19 Apr 2023 07:57:02 +0000
-Date: Wed, 19 Apr 2023 09:58:05 +0200
-From: Cyril Hrubis <chrubis@suse.cz>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, LTP List <ltp@lists.linux.it>,
-	Petr Vorel <pvorel@suse.cz>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 5.4 00/92] 5.4.241-rc1 review
-Message-ID: <ZD+fDeWVOXklD01f@yuki>
-References: <20230418120304.658273364@linuxfoundation.org>
- <CA+G9fYuT3N0LFaJGzQW2SYPJxEbEWLONDZO2OfBbeHNrsowy2w@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CCB2564
+	for <patches@lists.linux.dev>; Wed, 19 Apr 2023 08:11:36 +0000 (UTC)
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1a686260adcso31158235ad.0
+        for <patches@lists.linux.dev>; Wed, 19 Apr 2023 01:11:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681891896; x=1684483896;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Yl4uAwWa39pOxQAlHQJyprHiogKr6ebOfSFDzFtU5is=;
+        b=Nc1IJpv2Pmd+JcVQ3KKskMqBJfGqbmWCfPR7P/D8B3BQYRgvsyIh/sgHyp1EDQA9/7
+         ylYnxLTZPZT3fVTBDLchT5+m/KlLlobZo70mlzCAKRQJ56u39cqXA0H7u0UTzJLVX0IX
+         Ivak4YtM0OouFbdrihMEMlP4kC3q4brpE6H9QN/SapFH4Ulp1dpKIz5SasB0RbGMZsCE
+         Vtbu83V4703GSe0Wjx0fvOFyT2qcPvnnLYgaiNf7bBO1lAIMV2kow3jr1yYtP6swrAy8
+         ce16ZH348k2NNuqoa4FNv/Qyk2VvJNk2cTYdbLFRgRN6UfVmOoonodO6hzDzOchEvx/e
+         6BIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681891896; x=1684483896;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yl4uAwWa39pOxQAlHQJyprHiogKr6ebOfSFDzFtU5is=;
+        b=hrL3XUZ0asO5gJeyKT/mkeogypEY106jPh6Xa5hXHpqcoZIPHpPYnSF8wBT9Q12h/e
+         +WHTfyEGnr2zKYPdrYMRMGYuQmVN3nlKejDy9dwH1qm7uea0qoWrjVwU0Et5XYpZSAP3
+         H4gtU7IscCzDV8RGdRtqxR7iBvXFrOiqE1hdpg59UfCpFabWxFfpCKC8Z7Fq0+obMi/3
+         3rLFTmzTlVfo74as+xST5L+Pfu6dmdgSRnQtQ7phgja5r8bMEQ0CjYb3mM8UzQ+Bkjl+
+         iogHoSiQIbjE1hUMRp4zQq+Ey3nuI5d6969Na78TCwCvC1RYsbUZs32Rii8EuIx1WaHn
+         M7Aw==
+X-Gm-Message-State: AAQBX9f5ICisVvT4D8Abz8gEwkS0mHMbrPD5An4C/ffOk5mDNniakRIs
+	TQ41VfGptAr1l+Vqm5sC+ak=
+X-Google-Smtp-Source: AKy350agtmcoveHHtLRKiYiSljQJi3z/72Dzx+y9vn6FF+kB8WGHgzus0bFr50zIbxe2ajqcee0M0Q==
+X-Received: by 2002:a17:902:f54a:b0:1a6:523c:8589 with SMTP id h10-20020a170902f54a00b001a6523c8589mr5171217plf.5.1681891895989;
+        Wed, 19 Apr 2023 01:11:35 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id a7-20020a170902ecc700b0019719f752c5sm10819070plh.59.2023.04.19.01.11.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Apr 2023 01:11:35 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <f10dd20e-6dce-490a-f3fb-fdf79e83bc1d@roeck-us.net>
+Date: Wed, 19 Apr 2023 01:11:32 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYuT3N0LFaJGzQW2SYPJxEbEWLONDZO2OfBbeHNrsowy2w@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230419072156.965447596@linuxfoundation.org>
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 5.15 00/88] 5.15.108-rc2 review
+In-Reply-To: <20230419072156.965447596@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi!
-> > This is the start of the stable review cycle for the 5.4.241 release.
-> > There are 92 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Thu, 20 Apr 2023 12:02:44 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.241-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
+On 4/19/23 00:23, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.108 release.
+> There are 88 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
+> Responses should be made by Fri, 21 Apr 2023 07:21:37 +0000.
+> Anything received after that time might be too late.
 > 
-> Recently we have upgraded the LTP test suite version and started noticing
-> these test failures on 5.4.
-> Test getting skipped on 4.19 and 4.14 as not supported features.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.108-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 > 
-> Need to investigate test case issues or kernel issues.
+> thanks,
 > 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> greg k-h
 > 
-> NOTE:
+> -------------
+> Pseudo-Shortlog of commits:
 > 
-> ---
-> creat09.c:73: TINFO: User nobody: uid = 65534, gid = 65534
-> creat09.c:75: TINFO: Found unused GID 11: SUCCESS (0)
-> creat09.c:120: TINFO: File created with umask(0)
-> creat09.c:106: TPASS: mntpoint/testdir/creat.tmp: Owned by correct group
-> creat09.c:112: TPASS: mntpoint/testdir/creat.tmp: Setgid bit not set
-> creat09.c:106: TPASS: mntpoint/testdir/open.tmp: Owned by correct group
-> creat09.c:112: TPASS: mntpoint/testdir/open.tmp: Setgid bit not set
-> creat09.c:120: TINFO: File created with umask(S_IXGRP)
-> creat09.c:106: TPASS: mntpoint/testdir/creat.tmp: Owned by correct group
-> creat09.c:110: TFAIL: mntpoint/testdir/creat.tmp: Setgid bit is set
-> creat09.c:106: TPASS: mntpoint/testdir/open.tmp: Owned by correct group
-> creat09.c:110: TFAIL: mntpoint/testdir/open.tmp: Setgid bit is set
+...
+> Alexandre Ghiti <alexghiti@rivosinc.com>
+>      riscv: Do not set initial_boot_params to the linear address of the dtb
 > 
-> Test history links,
->  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.238-199-g230f1bde44b6/testrun/16338751/suite/ltp-syscalls/test/creat09/history/
->  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.238-199-g230f1bde44b6/testrun/16337895/suite/ltp-cve/test/cve-2018-13405/history/
->  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.238-199-g230f1bde44b6/testrun/16338751/suite/ltp-syscalls/test/creat09/log
 
-That's likely a missing kernel patch, as this is a regression test there
-should have been links to the patches and CVE referencies in the test
-output as the test is tagged with kernel commits and CVE numbers:
+As expected, a quick test shows that this patch still results in immediate
+riscv32/64 crashes.
 
-        .tags = (const struct tst_tag[]) {
-                {"linux-git", "0fa3ecd87848"},
-                {"CVE", "2018-13405"},
-                {"CVE", "2021-4037"},
-                {"linux-git", "01ea173e103e"},
-                {"linux-git", "1639a49ccdce"},
-                {"linux-git", "426b4ca2d6a5"},
-                {}
-        },
+[    0.000000] random: crng init done
+[    0.000000] OF: fdt: Ignoring memory range 0x80000000 - 0x80200000
+[    0.000000] Machine model: riscv-virtio,qemu
+[    0.000000] earlycon: uart8250 at MMIO 0x0000000010000000 (options '115200')
+[    0.000000] printk: bootconsole [uart8250] enabled
+[    0.000000] efi: UEFI not found.
+[    0.000000] Unable to handle kernel paging request at virtual address 0000000040000001
+[    0.000000] Oops [#1]
+[    0.000000] Modules linked in:
+[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 5.15.108-rc2-00089-g6405847d6038 #1
+[    0.000000] Hardware name: riscv-virtio,qemu (DT)
+[    0.000000] epc : fdt_check_header+0x6/0x1fc
+[    0.000000]  ra : __unflatten_device_tree+0x32/0x10a
+[    0.000000] epc : ffffffff804a76e2 ra : ffffffff80723c22 sp : ffffffff81403eb0
+[    0.000000]  gp : ffffffff815c6408 tp : ffffffff81411280 t0 : ffffffcefefff000
+[    0.000000]  t1 : 000000009ffff000 t2 : 0000000000000004 s0 : ffffffff81403ec0
+[    0.000000]  s1 : 0000000040000088 a0 : 0000000040000000 a1 : 0000000000000000
+[    0.000000]  a2 : ffffffff815cadd0 a3 : ffffffff80a26fbe a4 : 0000000000000000
+[    0.000000]  a5 : 0000000000000000 a6 : 0000000000001000 a7 : 0000000000000048
+[    0.000000]  s2 : 0000000040000000 s3 : ffffffff815cadd0 s4 : 0000000000000000
+[    0.000000]  s5 : ffffffff80a26fbe s6 : 0000000000000000 s7 : 000000000000007f
+[    0.000000]  s8 : 0000000080019038 s9 : 000000008003d6a8 s10: 0000000000000000
+[    0.000000]  s11: 0000000000000000 t3 : ffffffff80c191e8 t4 : ffffffff80c191e8
+[    0.000000]  t5 : ffffffff80c191e8 t6 : ffffffff80c19200
+[    0.000000] status: 0000000200000100 badaddr: 0000000040000001 cause: 000000000000000d
+[    0.000000] [<ffffffff804a76e2>] fdt_check_header+0x6/0x1fc
+[    0.000000] ---[ end trace 2baf78845f288dac ]---
 
-> ---
-> 
-> fanotify14.c:161: TCONF: FAN_REPORT_TARGET_FID not supported in kernel?
-> fanotify14.c:157: TINFO: Test case 7: fanotify_init(FAN_CLASS_NOTIF |
-> FAN_REPORT_TARGET_FID | FAN_REPORT_DFID_FID, O_RDONLY)
-> fanotify14.c:161: TCONF: FAN_REPORT_TARGET_FID not supported in kernel?
-> [  377.081993] EXT4-fs (loop0): mounting ext3 file system using the
-> ext4 subsystem
-> fanotify14.c:157: TINFO: Test case 8: fanotify_init(FAN_CLASS_NOTIF |
-> FAN_REPORT_DFID_FID, O_RDONLY)
-> [  377.099137] EXT4-fs (loop0): mounted filesystem with ordered data
-> mode. Opts: (null)
-> fanotify14.c:175: TFAIL: fanotify_init(tc->init.flags, O_RDONLY)
-> failed: EINVAL (22)
+Guenter
 
-Possibly like the test may be missing check for a FAN_REPORT_DFID_FID
-support.
-
--- 
-Cyril Hrubis
-chrubis@suse.cz
