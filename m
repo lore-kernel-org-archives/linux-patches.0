@@ -1,77 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186DC3C2F
-	for <patches@lists.linux.dev>; Thu, 20 Apr 2023 08:58:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BA0C433EF;
-	Thu, 20 Apr 2023 08:57:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681981080;
-	bh=KW/cOzzz0VeUWtRrIVVV/Jvq1YUVpWtNqR0e3LlJHpU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b2myTk6B5eriGxsU6/qGzfQumjVeH2e3afVEFIWlU8rfbkviTzxfnFOTr+a1fbLh8
-	 zWtjEyNyqdlnbur6mK5cefIAqwk90StKTjTec61TpMor9Xap1uHWxS5W/22bMVHn0E
-	 My3fk/2N/ilyUoS/47lxI5LJL1h7Eta0vkO6AfnQ4lkq2Q9eTOrCYGHKLzLSFZNVyu
-	 1xuwf6mcGZ9ndyzuAsgC19Sx5DCwNqszhddBEK3f1ncrVhlmhT46kWXt+KaEpWmrXJ
-	 bP7Ht/9+Q95uQ9N8JkGbnU8WreQSsdGYAEM2bxB6u7NFj6zniS8LX9vFSh/FnHBWD8
-	 lgMm12YTBcYCw==
-From: Christian Brauner <brauner@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>,
-	Hugh Dickins <hughd@google.com>
-Cc: Christian Brauner <brauner@kernel.org>,
-	akpm@linux-foundation.org,
-	willy@infradead.org,
-	linux-mm@kvack.org,
-	p.raghav@samsung.com,
-	da.gomez@samsung.com,
-	a.manzanares@samsung.com,
-	dave@stgolabs.net,
-	yosryahmed@google.com,
-	keescook@chromium.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] shmem: restrict noswap option to initial user namespace
-Date: Thu, 20 Apr 2023 10:57:43 +0200
-Message-Id: <20230420-faxen-advokat-40abb4c1a152@brauner>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <ZD8Q2SzVr3xDmCgY@bombadil.infradead.org>
-References: <ZD8Q2SzVr3xDmCgY@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C857539D
+	for <patches@lists.linux.dev>; Thu, 20 Apr 2023 09:47:53 +0000 (UTC)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-94f7a0818aeso46274666b.2
+        for <patches@lists.linux.dev>; Thu, 20 Apr 2023 02:47:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1681984071; x=1684576071;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EFE0QM7mSwfIIi0n4ixG0nvgw+870vPhmGd/YMAgiNg=;
+        b=rh+4cQ02gYMRNIgC1lR9QsAyv/SgDTgHZGUqIKcQvtHspBSCCoxvYwMMuTV+RTg1Z3
+         lq0OFXnAXGb4tVZ+moBCuAzSUtxkKbE+QEBDUqLyULbVAJqIJCAxzT2YC8U9LbKxfFe0
+         dedlkwoH0h1uKPPwUChjqQyCaqoCJbH1TexskaT87M6M73ov0cbVWjNd4NAi7pmK9bw1
+         U1YVZ+0G3zT5mMbAOBj2ON+3F3AU2Pq70xvy/1eJdQF+0hr6lMDmHd21Q0cPBnLH0rqF
+         s2Km9WyYl33+yBXqI4+Q2e2gp0cVK858s2M6E9x7mDAGA5HxuvYWXrprAYvGlneK2ylc
+         MBOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681984071; x=1684576071;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EFE0QM7mSwfIIi0n4ixG0nvgw+870vPhmGd/YMAgiNg=;
+        b=Psqn1qzfQp+56ysevkxwOxYH9NIk5Mv0R1weVaYlUbtgVa7Z55SEBnyvdpUnjX3Gnq
+         HTWWN0l0g4xlQ/kVyGPYBUvWqlGxsb20F8dl19cgBTu38mcDAv4HZDeGBv8x+JDrFD4j
+         +9o3q/sncsUaOVJaAdFO3b0M5mu52B+ZM5V3kk3LU9rwA9yfwWy2qI4bNbMDwTDSAZi8
+         BRq0SJBZTn+jsi1+EnekSEl8zHV/BsftwWUD+AqhJavjmRmNi0IIJL9gREJ7VZL3Hmvo
+         SpFG28Zg+q38+Fhg7QBcYe/soswFhkrZEVrq72fx/uI112LCxFgBR4k9pgdiPQlO0Uut
+         Xcbw==
+X-Gm-Message-State: AAQBX9f38/JdIfC3n1q4D00MnAT9rcwmyLFvguZnXdpTMDeSfoLbL5Ye
+	ICLV7Y1PoNM8/r3/XWdsOa7qVrDmFNczewnaH9m/ow==
+X-Google-Smtp-Source: AKy350YJvNpW5QSC7jTldr8UPGORonfYjgpgwfmUvDNR1qGS6/mJylOeB7ZbcRaO/Vws6EHNhgjJMWngKccFh2NZors=
+X-Received: by 2002:aa7:d686:0:b0:506:a44c:47e3 with SMTP id
+ d6-20020aa7d686000000b00506a44c47e3mr1057724edr.16.1681984071407; Thu, 20 Apr
+ 2023 02:47:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=973; i=brauner@kernel.org; h=from:subject:message-id; bh=KW/cOzzz0VeUWtRrIVVV/Jvq1YUVpWtNqR0e3LlJHpU=; b=owGbwMvMwCU28Zj0gdSKO4sYT6slMaQ4/CtY+P1BygbWTxsmz2v3mbW68tTFF9vkznTv/rC0+Fq8 kMSC6R2lLAxiXAyyYoosDu0m4XLLeSo2G2VqwMxhZQIZwsDFKQATOdTB8D8nUVBgesz9L2museLMgc rL8zcymz6qnLdhWmCKaJrYpHcMv5h3cMz02syXubEt6dTWisvnC8/H9OUImU3acTB4f4qbJB8A
-X-Developer-Key: i=brauner@kernel.org; a=openpgp; fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
-Content-Transfer-Encoding: 8bit
+References: <20230419132048.193275637@linuxfoundation.org>
+In-Reply-To: <20230419132048.193275637@linuxfoundation.org>
+From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
+Date: Thu, 20 Apr 2023 18:47:40 +0900
+Message-ID: <CAKL4bV6ebwfU120c4DxQ230_kggtO6KxruAuTO07xMfVXTA71w@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/129] 6.1.25-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Prevent tmpfs instances mounted in an unprivileged namespaces from
-evading accounting of locked memory by using the "noswap" mount option.
+Hi Greg
 
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Reported-by: Hugh Dickins <hughd@google.com>
-Link: https://lore.kernel.org/lkml/79eae9fe-7818-a65c-89c6-138b55d609a@google.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
----
- mm/shmem.c | 4 ++++
- 1 file changed, 4 insertions(+)
+On Wed, Apr 19, 2023 at 10:22=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.25 release.
+> There are 129 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 21 Apr 2023 13:20:20 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.25-rc3.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 787e83791eb5..21ce9b26bb4d 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -3571,6 +3571,10 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
- 		ctx->seen |= SHMEM_SEEN_INUMS;
- 		break;
- 	case Opt_noswap:
-+		if ((fc->user_ns != &init_user_ns) || !capable(CAP_SYS_ADMIN)) {
-+			return invalfc(fc,
-+				       "Turning off swap in unprivileged tmpfs mounts unsupported");
-+		}
- 		ctx->noswap = true;
- 		ctx->seen |= SHMEM_SEEN_NOSWAP;
- 		break;
--- 
-2.34.1
+6.1.25-rc3 tested.
 
+x86_64
+
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P, arch linux)
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
