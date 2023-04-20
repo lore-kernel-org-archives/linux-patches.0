@@ -1,140 +1,591 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D618BD310;
-	Wed, 19 Apr 2023 23:37:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAB3C433EF;
-	Wed, 19 Apr 2023 23:37:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681947432;
-	bh=RiJ8sZ4WJ7UP8H/LsivAO4Ph8LGZecE5A2kFeALbdlQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=g/HNMFE3cV1lmfiJJLo0zG9dTyRVVtMRJJzo13C1YO8PtnV8bzZHXkkzOwTxzPaIA
-	 1rxSt03W4s1Xul0xSnleXAazIoJuD84e0q2lUvZ+u28hBiAa3zM18HIoK72QyJHqpW
-	 suGYAzGdwXNe7JFLclUiB7sXCmaBMk66cdqtcDd6+2E/cwPegZiVtTijvYHPcq8qhe
-	 LIJLcLFbs3zu1XPufO7yDh7EgGqhFIX4wbp9PtZRh5tXdPugMCxGX/NCuZH32M4oXQ
-	 4v9Qf7rmvI9aiHZIC8YyfKXduvP0WT9oh4bLWg98sGydFVCbDMmW8dglPcl/w3/S+o
-	 jvpYBM6bTPghw==
-Date: Wed, 19 Apr 2023 16:37:10 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, jpoimboe@kernel.org,
-	peterz@infradead.org, linux-mips@vger.kernel.org,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] MIPS: Mark check_bugs{,_early}() as __init
-Message-ID: <20230419233710.GA1314058@dev-arch.thelio-3990X>
-References: <20230419-mips-check_bugs-init-attribute-v1-1-91e6eed55b89@kernel.org>
- <CAKwvOdmuQBnZR_pB5bUdsF+OoB_4pxBT9TNFF83fZhzwZ1gbxw@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844B1136A
+	for <patches@lists.linux.dev>; Thu, 20 Apr 2023 00:30:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=QNcP7Y8waGN8qINRX778MCg2Bb0i1HWpYFjQ+JXIBOg=; b=2/BnyOT7ySK6DBX4aw0Q+AQzLC
+	gwfNX+0z27ZWCRrPIJRlUpCL/5qeomkL9Y4Hn0XHoa4gborBuGswHmMrTcHFlETDrB/f58+4IgCzW
+	3eLDdsXzLYQnpFC9SxEvrnFX6NCK4bstuxELDdNaFXLquEDCT7sNv0Wi9xiM/wHsgMqwQ5PA77SEM
+	s91r+xNO3qcRQ3ZXVJD2/RugnD1MnIEcBk5ZB5pJR0A2cqe206U9yJaNlWCyV+s2hcgmnnJvACyFT
+	HzQn14ateCS0/nopjr9NKvc94gqYugy1aoeZ/dKvSMbI64WDa9J/MMrg7eF283kZxNTMjjU1i4w9C
+	kM/wS9vQ==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1ppICF-006jL8-0l;
+	Thu, 20 Apr 2023 00:30:47 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: david@redhat.com,
+	patches@lists.linux.dev,
+	linux-modules@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	pmladek@suse.com,
+	petr.pavlu@suse.com,
+	prarit@redhat.com,
+	torvalds@linux-foundation.org,
+	gregkh@linuxfoundation.org,
+	rafael@kernel.org
+Cc: christophe.leroy@csgroup.eu,
+	tglx@linutronix.de,
+	peterz@infradead.org,
+	song@kernel.org,
+	rppt@kernel.org,
+	dave@stgolabs.net,
+	willy@infradead.org,
+	vbabka@suse.cz,
+	mhocko@suse.com,
+	dave.hansen@linux.intel.com,
+	colin.i.king@gmail.com,
+	jim.cromie@gmail.com,
+	catalin.marinas@arm.com,
+	jbaron@akamai.com,
+	rick.p.edgecombe@intel.com,
+	mcgrof@kernel.org
+Subject: [PATCH v2] module: add debugging auto-load duplicate module support
+Date: Wed, 19 Apr 2023 17:30:46 -0700
+Message-Id: <20230420003046.1604251-1-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKwvOdmuQBnZR_pB5bUdsF+OoB_4pxBT9TNFF83fZhzwZ1gbxw@mail.gmail.com>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Wed, Apr 19, 2023 at 03:03:31PM -0700, Nick Desaulniers wrote:
-> On Wed, Apr 19, 2023 at 11:43 AM Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > After commit ac7c3e4ff401 ("compiler: enable CONFIG_OPTIMIZE_INLINING
-> > forcibly"), a compiler may choose not to inline a function marked with
-> > just 'inline'. If check_bugs() is not inlined into start_kernel(), which
-> > occurs when building with clang after commit 9ea7e6b62c2b ("init: Mark
-> > [arch_call_]rest_init() __noreturn"), modpost complains with:
-> >
-> >   WARNING: modpost: vmlinux.o: section mismatch in reference: check_bugs (section: .text) -> check_bugs32 (section: .init.text)
-> >
-> > check_bugs() is only called from start_kernel(), which itself is marked
-> > __init, so mark check_bugs() as __init as well to clear up the warning
-> > and make everything work properly.
-> >
-> > While there is currently no warning about check_bugs_early(), it could
-> > have the same problem, as it is called from arch_setup() and calls
-> > check_bugs64_early(), both marked __init. Mark it as __init for the same
-> > reason as above.
-> >
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> > NOTE: This is based on v6.3-rc7, as the issue shows up due to a patch in
-> > the tip tree, but this appears to be an ancient issue that could have
-> > showed up at any point (hence why no explicit Fixes tag), so I chose a
-> > base that should allow either the MIPS or tip folks to apply this patch.
-> 
-> Probably for the MIPS tree.
-> 
-> >
-> > Additionally, I was tempted to remove the explicit 'inline' since the
-> > compiler is free to do whatever it wants anyways but this is a static
-> > function in a header so we would need to add '__maybe_unused', which is
-> > already added with 'inline' in a normal build so I just left it alone.
-> > ---
-> >  arch/mips/include/asm/bugs.h | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/arch/mips/include/asm/bugs.h b/arch/mips/include/asm/bugs.h
-> > index d72dc6e1cf3c..9b9bf9bc7d24 100644
-> > --- a/arch/mips/include/asm/bugs.h
-> > +++ b/arch/mips/include/asm/bugs.h
-> > @@ -24,13 +24,13 @@ extern void check_bugs64_early(void);
-> >  extern void check_bugs32(void);
-> >  extern void check_bugs64(void);
-> >
-> > -static inline void check_bugs_early(void)
-> > +static inline void __init check_bugs_early(void)
-> >  {
-> >         if (IS_ENABLED(CONFIG_CPU_R4X00_BUGS64))
-> >                 check_bugs64_early();
-> >  }
-> 
-> If the only call site is in arch/mips/kernel/setup.c, then perhaps we
-> can move the definition of check_bugs_early there and mark it static
-> __init and drop inline?
+The finit_module() system call can in the worst case use up to more than
+twice of a module's size in virtual memory. Duplicate finit_module()
+system calls are non fatal, however they unnecessarily strain virtual
+memory during bootup and in the worst case can cause a system to fail
+to boot. This is only known to currently be an issue on systems with
+larger number of CPUs.
 
-Sure, we could even go a step further and just copy the body into the
-one call site ourselves, I see little reason for this to be a dedicated
-function. That is probably best done in a separate patch altogether in
-lieu of just adding __init.
+To help debug this situation we need to consider the different sources for
+finit_module(). Requests from the kernel that rely on module auto-loading,
+ie, the kernel's *request_module() API, are one source of calls. Although
+modprobe checks to see if a module is already loaded prior to calling
+finit_module() there is a small race possible allowing userspace to
+trigger multiple modprobe calls racing against modprobe and this not
+seeing the module yet loaded.
 
-> Unless we foresee other callers potentially in the future?  Patch
-> otherwise LGTM.  Thanks for the patch!
+This adds debugging support to the kernel module auto-loader (*request_module()
+calls) to easily detect duplicate module requests. To aid with possible bootup
+failure issues incurred by this, it will converge duplicates requests to a
+single request. This avoids any possible strain on virtual memory during
+bootup which could be incurred by duplicate module autoloading requests.
 
-Seems unlikely, I did a super scientific survey of several different
-revisions (:P) and check_bugs_early() is called once in each one:
+Folks debugging virtual memory abuse on bootup can and should enable
+this to see what pr_warn()s come on, to see if module auto-loading is to
+blame for their wores. If they see duplicates they can further debug this
+by enabling the module.enable_dups_trace kernel parameter or by enabling
+CONFIG_MODULE_DEBUG_AUTOLOAD_DUPS_TRACE.
 
-v3.0:arch/mips/kernel/setup.c:    check_bugs_early();
-v3.5:arch/mips/kernel/setup.c:    check_bugs_early();
-v3.10:arch/mips/kernel/setup.c:    check_bugs_early();
-v4.0:arch/mips/kernel/setup.c:    check_bugs_early();
-v4.5:arch/mips/kernel/setup.c:    check_bugs_early();
-v5.0:arch/mips/kernel/setup.c:    check_bugs_early();
-v4.10:arch/mips/kernel/setup.c:    check_bugs_early();
-v5.5:arch/mips/kernel/setup.c:    check_bugs_early();
-v5.10:arch/mips/kernel/setup.c:    check_bugs_early();
-v6.0:arch/mips/kernel/setup.c:    check_bugs_early();
+Current evidence seems to point to only a few duplicates for module
+auto-loading. And so the source for other duplicates creating heavy
+virtual memory pressure due to larger number of CPUs should becoming
+from another place (likely udev).
 
-I'll do whatever Thomas would prefer.
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
 
-> >
-> > -static inline void check_bugs(void)
-> > +static inline void __init check_bugs(void)
-> >  {
-> >         unsigned int cpu = smp_processor_id();
-> >
-> >
-> > ---
-> > base-commit: 6a8f57ae2eb07ab39a6f0ccad60c760743051026
-> > change-id: 20230419-mips-check_bugs-init-attribute-026103bdb255
-> >
-> > Best regards,
-> > --
-> > Nathan Chancellor <nathan@kernel.org>
-> >
-> 
-> 
-> -- 
-> Thanks,
-> ~Nick Desaulniers
+Changes on this v2:
+
+  o Tons of language adjustments based on feedback by Greg KH so
+    that folks understand this is for debugging purposes. The "lost"
+    language has been modified to clarify the issue with duplicates is
+    straining of virtual memory on bootup.
+  o The kconfig option was renamed to clarify the goal
+  o A new module paramter is added so to avoid WARN_ON() by default and
+    have the bots go crazy. A new kconfig option is also added so to
+    not have folks have to set this module parameter. Documentation is
+    added for this too.
+
+ .../admin-guide/kernel-parameters.txt         |   6 +
+ kernel/module/Kconfig                         |  59 +++++
+ kernel/module/Makefile                        |   1 +
+ kernel/module/dups.c                          | 246 ++++++++++++++++++
+ kernel/module/internal.h                      |  15 ++
+ kernel/module/kmod.c                          |  23 +-
+ 6 files changed, 346 insertions(+), 4 deletions(-)
+ create mode 100644 kernel/module/dups.c
+
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 6221a1d057dd..5915a23207da 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -3332,6 +3332,12 @@
+ 			specified, <module>.async_probe takes precedence for
+ 			the specific module.
+ 
++	module.enable_dups_trace
++			[KNL] When CONFIG_MODULE_DEBUG_AUTOLOAD_DUPS is set,
++			this means that duplicate request_module() calls will
++			trigger a WARN_ON() instead of a pr_warn(). Note that
++			if MODULE_DEBUG_AUTOLOAD_DUPS_TRACE is set, WARN_ON()s
++			will always be issued and this option does nothing.
+ 	module.sig_enforce
+ 			[KNL] When CONFIG_MODULE_SIG is set, this means that
+ 			modules without (valid) signatures will fail to load.
+diff --git a/kernel/module/Kconfig b/kernel/module/Kconfig
+index e6df183e2c80..33a2e991f608 100644
+--- a/kernel/module/Kconfig
++++ b/kernel/module/Kconfig
+@@ -59,6 +59,65 @@ config MODULE_STATS
+ 
+ 	  If unsure, say N.
+ 
++config MODULE_DEBUG_AUTOLOAD_DUPS
++	bool "Debug duplicate modules with auto-loading"
++	help
++	  Module autoloading allows in-kernel code to request modules through
++	  the *request_module*() API calls. This in turn just calls userspace
++	  modprobe. Although modprobe checks to see if a module is already
++	  loaded before trying to load a module there is a small time window in
++	  which multiple duplicate requests can end up in userspace and multiple
++	  modprobe calls race calling finit_module() around the same time for
++	  duplicate modules. The finit_module() system call can consume in the
++	  worst case more than twice the respective module size in virtual
++	  memory for each duplicate module requests. Although duplicate module
++	  requests are non-fatal virtual memory is a limited resource and each
++	  duplicate module request ends up just unnecessarily straining virtual
++	  memory.
++
++	  This debugging facility will create pr_warn() splats for duplicate
++	  module requests to help identify if module auto-loading may be the
++	  culprit to your early boot virtual memory pressure. Since virtual
++	  memory abuse caused by duplicate module requests could render a
++	  system unusable this functionality will also converge races in
++	  requests for the same module to a single request. You can boot with
++	  the module.enable_dups_trace=1 kernel parameter to use WARN_ON()
++	  instead of the pr_warn().
++
++	  If the first module request used request_module_nowait() we cannot
++	  use that as the anchor to wait for duplicate module requests, since
++	  users of request_module() do want a proper return value. If a call
++	  for the same module happened earlier with request_module() though,
++	  then a duplicate request_module_nowait() would be detected. The
++	  non-wait request_module() call is synchronous and waits until modprobe
++	  completes. Subsequent auto-loading requests for the same module do
++	  not trigger a new finit_module() calls and do not strain virtual
++	  memory, and so as soon as modprobe successfully completes we remove
++	  tracking for duplicates for that module.
++
++	  Enable this functionality to try to debug virtual memory abuse during
++	  boot on systems which are failing to boot or if you suspect you may be
++	  straining virtual memory during boot, and you want to identify if the
++	  abuse was due to module auto-loading. These issues are currently only
++	  known to occur on systems with many CPUs (over 400) and is likely the
++	  result of udev issuing duplicate module requests for each CPU, and so
++	  module auto-loading is not the culprit. There may very well still be
++	  many duplicate module auto-loading requests which could be optimized
++	  for and this debugging facility can be used to help identify them.
++
++	  Only enable this for debugging system functionality, never have it
++	  enabled on real systems.
++
++config MODULE_DEBUG_AUTOLOAD_DUPS_TRACE
++	bool "Force full stack trace when duplicates are found"
++	depends on MODULE_DEBUG_AUTOLOAD_DUPS
++	help
++	  Enabling this will force a full stack trace for duplicate module
++	  auto-loading requests using WARN_ON() instead of pr_warn(). You
++	  should keep this disabled at all times unless you are a developer
++	  and are doing a manual inspection and want to debug exactly why
++	  these duplicates occur.
++
+ endif # MODULE_DEBUG
+ 
+ config MODULE_FORCE_LOAD
+diff --git a/kernel/module/Makefile b/kernel/module/Makefile
+index 52340bce497e..a10b2b9a6fdf 100644
+--- a/kernel/module/Makefile
++++ b/kernel/module/Makefile
+@@ -10,6 +10,7 @@ KCOV_INSTRUMENT_module.o := n
+ obj-y += main.o
+ obj-y += strict_rwx.o
+ obj-y += kmod.o
++obj-$(CONFIG_MODULE_DEBUG_AUTOLOAD_DUPS) += dups.o
+ obj-$(CONFIG_MODULE_DECOMPRESS) += decompress.o
+ obj-$(CONFIG_MODULE_SIG) += signing.o
+ obj-$(CONFIG_LIVEPATCH) += livepatch.o
+diff --git a/kernel/module/dups.c b/kernel/module/dups.c
+new file mode 100644
+index 000000000000..aa8e1361fdb5
+--- /dev/null
++++ b/kernel/module/dups.c
+@@ -0,0 +1,246 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * kmod dups - the kernel module autoloader duplicate suppressor
++ *
++ * Copyright (C) 2023 Luis Chamberlain <mcgrof@kernel.org>
++ */
++
++#define pr_fmt(fmt)     "module: " fmt
++
++#include <linux/module.h>
++#include <linux/sched.h>
++#include <linux/sched/task.h>
++#include <linux/binfmts.h>
++#include <linux/syscalls.h>
++#include <linux/unistd.h>
++#include <linux/kmod.h>
++#include <linux/slab.h>
++#include <linux/completion.h>
++#include <linux/cred.h>
++#include <linux/file.h>
++#include <linux/fdtable.h>
++#include <linux/workqueue.h>
++#include <linux/security.h>
++#include <linux/mount.h>
++#include <linux/kernel.h>
++#include <linux/init.h>
++#include <linux/resource.h>
++#include <linux/notifier.h>
++#include <linux/suspend.h>
++#include <linux/rwsem.h>
++#include <linux/ptrace.h>
++#include <linux/async.h>
++#include <linux/uaccess.h>
++
++#undef MODULE_PARAM_PREFIX
++#define MODULE_PARAM_PREFIX "module."
++static bool enable_dups_trace = IS_ENABLED(CONFIG_MODULE_DEBUG_AUTOLOAD_DUPS_TRACE);
++module_param(enable_dups_trace, bool_enable_only, 0644);
++
++/*
++ * Protects dup_kmod_reqs list, adds / removals with RCU.
++ */
++static DEFINE_MUTEX(kmod_dup_mutex);
++static LIST_HEAD(dup_kmod_reqs);
++
++struct kmod_dup_req {
++	struct list_head list;
++	char name[MODULE_NAME_LEN];
++	struct completion first_req_done;
++	struct work_struct complete_work;
++	struct delayed_work delete_work;
++	int dup_ret;
++};
++
++static struct kmod_dup_req *kmod_dup_request_lookup(char *module_name)
++{
++	struct kmod_dup_req *kmod_req;
++
++	list_for_each_entry_rcu(kmod_req, &dup_kmod_reqs, list,
++				lockdep_is_held(&kmod_dup_mutex)) {
++		if (strlen(kmod_req->name) == strlen(module_name) &&
++		    !memcmp(kmod_req->name, module_name, strlen(module_name))) {
++			return kmod_req;
++                }
++        }
++
++	return NULL;
++}
++
++static void kmod_dup_request_delete(struct work_struct *work)
++{
++	struct kmod_dup_req *kmod_req;
++	kmod_req = container_of(to_delayed_work(work), struct kmod_dup_req, delete_work);
++
++	/*
++	 * The typical situation is a module successully loaded. In that
++	 * situation the module will be present already in userspace. If
++	 * new requests come in after that, userspace will already know the
++	 * module is loaded so will just return 0 right away. There is still
++	 * a small chance right after we delete this entry new request_module()
++	 * calls may happen after that, they can happen. These heuristics
++	 * are to protect finit_module() abuse for auto-loading, if modules
++	 * are still tryign to auto-load even if a module is already loaded,
++	 * that's on them, and those inneficiencies should not be fixed by
++	 * kmod. The inneficies there are a call to modprobe and modprobe
++	 * just returning 0.
++	 */
++	mutex_lock(&kmod_dup_mutex);
++	list_del_rcu(&kmod_req->list);
++	synchronize_rcu();
++	mutex_unlock(&kmod_dup_mutex);
++	kfree(kmod_req);
++}
++
++static void kmod_dup_request_complete(struct work_struct *work)
++{
++	struct kmod_dup_req *kmod_req;
++
++	kmod_req = container_of(work, struct kmod_dup_req, complete_work);
++
++	/*
++	 * This will ensure that the kernel will let all the waiters get
++	 * informed its time to check the return value. It's time to
++	 * go home.
++	 */
++	complete_all(&kmod_req->first_req_done);
++
++	/*
++	 * Now that we have allowed prior request_module() calls to go on
++	 * with life, let's schedule deleting this entry. We don't have
++	 * to do it right away, but we *eventually* want to do it so to not
++	 * let this linger forever as this is just a boot optimization for
++	 * possible abuses of vmalloc() incurred by finit_module() thrashing.
++	 */
++	queue_delayed_work(system_wq, &kmod_req->delete_work, 60 * HZ);
++}
++
++bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
++{
++	struct kmod_dup_req *kmod_req, *new_kmod_req;
++	int ret;
++
++	/*
++	 * Pre-allocate the entry in case we have to use it later
++	 * to avoid contention with the mutex.
++	 */
++	new_kmod_req = kzalloc(sizeof(*new_kmod_req), GFP_KERNEL);
++	if (!new_kmod_req)
++		return false;
++
++	memcpy(new_kmod_req->name, module_name, strlen(module_name));
++	INIT_WORK(&new_kmod_req->complete_work, kmod_dup_request_complete);
++	INIT_DELAYED_WORK(&new_kmod_req->delete_work, kmod_dup_request_delete);
++	init_completion(&new_kmod_req->first_req_done);
++
++	mutex_lock(&kmod_dup_mutex);
++
++	kmod_req = kmod_dup_request_lookup(module_name);
++	if (!kmod_req) {
++		/*
++		 * If the first request that came through for a module
++		 * was with request_module_nowait() we cannot wait for it
++		 * and share its return value with other users which may
++		 * have used request_module() and need a proper return value
++		 * so just skip using them as an anchor.
++		 *
++		 * If a prior request to this one came through with
++		 * request_module() though, then a request_module_nowait()
++		 * would benefit from duplicate detection.
++		 */
++		if (!wait) {
++			kfree(new_kmod_req);
++			pr_debug("New request_module_nowait() for %s -- cannot track duplicates for this request\n", module_name);
++			mutex_unlock(&kmod_dup_mutex);
++			return false;
++		}
++
++		/*
++		 * There was no duplicate, just add the request so we can
++		 * keep tab on duplicates later.
++		 */
++		pr_debug("New request_module() for %s\n", module_name);
++		list_add_rcu(&new_kmod_req->list, &dup_kmod_reqs);
++		mutex_unlock(&kmod_dup_mutex);
++		return false;
++	}
++	mutex_unlock(&kmod_dup_mutex);
++
++	/* We are dealing with a duplicate request now */
++	kfree(new_kmod_req);
++
++	/*
++	 * To fix these try to use try_then_request_module() instead as that
++	 * will check if the component you are looking for is present or not.
++	 * You could also just queue a single request to load the module once,
++	 * instead of having each and everything you need try to request for
++	 * the module.
++	 *
++	 * Duplicate request_module() calls  can cause quite a bit of wasted
++	 * vmalloc() space when racing with userspace.
++	 */
++	if (enable_dups_trace)
++		WARN(1, "module-autoload: duplicate request for module %s\n", module_name);
++	else
++		pr_warn("module-autoload: duplicate request for module %s\n", module_name);
++
++	if (!wait) {
++		/*
++		 * If request_module_nowait() was used then the user just
++		 * wanted to issue the request and if another module request
++		 * was already its way with the same name we don't care for
++		 * the return value either. Let duplicate request_module_nowait()
++		 * calls bail out right away.
++		 */
++		*dup_ret = 0;
++		return true;
++	}
++
++	/*
++	 * If a duplicate request_module() was used they *may* care for
++	 * the return value, so we have no other option but to wait for
++	 * the first caller to complete. If the first caller used
++	 * the request_module_nowait() call, subsquent callers will
++	 * deal with the comprmise of getting a successful call with this
++	 * optimization enabled ...
++	 */
++	ret = wait_for_completion_state(&kmod_req->first_req_done,
++					TASK_UNINTERRUPTIBLE | TASK_KILLABLE);
++	if (ret) {
++		*dup_ret = ret;
++		return true;
++	}
++
++	/* Now the duplicate request has the same exact return value as the first request */
++	*dup_ret = kmod_req->dup_ret;
++
++	return true;
++}
++
++void kmod_dup_request_announce(char *module_name, int ret)
++{
++	struct kmod_dup_req *kmod_req;
++
++	mutex_lock(&kmod_dup_mutex);
++
++	kmod_req = kmod_dup_request_lookup(module_name);
++	if (!kmod_req)
++		goto out;
++
++	kmod_req->dup_ret = ret;
++
++	/*
++	 * If we complete() here we may allow duplicate threads
++	 * to continue before the first one that submitted the
++	 * request. We're in no rush also, given that each and
++	 * every bounce back to userspace is slow we avoid that
++	 * with a slight delay here. So queueue up the completion
++	 * and let duplicates suffer, just wait a tad bit longer.
++	 * There is no rush. But we also don't want to hold the
++	 * caller up forever or introduce any boot delays.
++	 */
++	queue_work(system_wq, &kmod_req->complete_work);
++
++out:
++	mutex_unlock(&kmod_dup_mutex);
++}
+diff --git a/kernel/module/internal.h b/kernel/module/internal.h
+index 1fd75dd346dc..d67682489d14 100644
+--- a/kernel/module/internal.h
++++ b/kernel/module/internal.h
+@@ -3,6 +3,7 @@
+  *
+  * Copyright (C) 2012 Red Hat, Inc. All Rights Reserved.
+  * Written by David Howells (dhowells@redhat.com)
++ * Copyright (C) 2023 Luis Chamberlain <mcgrof@kernel.org>
+  */
+ 
+ #include <linux/elf.h>
+@@ -221,6 +222,20 @@ static inline void mod_stat_bump_becoming(struct load_info *info, int flags)
+ 
+ #endif /* CONFIG_MODULE_STATS */
+ 
++#ifdef CONFIG_MODULE_DEBUG_AUTOLOAD_DUPS
++bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret);
++void kmod_dup_request_announce(char *module_name, int ret);
++#else
++static inline bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
++{
++	return false;
++}
++
++static inline void kmod_dup_request_announce(char *module_name, int ret)
++{
++}
++#endif
++
+ #ifdef CONFIG_MODULE_UNLOAD_TAINT_TRACKING
+ struct mod_unload_taint {
+ 	struct list_head list;
+diff --git a/kernel/module/kmod.c b/kernel/module/kmod.c
+index 5899083436a3..0800d9891692 100644
+--- a/kernel/module/kmod.c
++++ b/kernel/module/kmod.c
+@@ -1,6 +1,9 @@
+ /*
+  * kmod - the kernel module loader
++ *
++ * Copyright (C) 2023 Luis Chamberlain <mcgrof@kernel.org>
+  */
++
+ #include <linux/module.h>
+ #include <linux/sched.h>
+ #include <linux/sched/task.h>
+@@ -27,6 +30,7 @@
+ #include <linux/uaccess.h>
+ 
+ #include <trace/events/module.h>
++#include "internal.h"
+ 
+ /*
+  * Assuming:
+@@ -65,7 +69,7 @@ static void free_modprobe_argv(struct subprocess_info *info)
+ 	kfree(info->argv);
+ }
+ 
+-static int call_modprobe(char *module_name, int wait)
++static int call_modprobe(char *orig_module_name, int wait)
+ {
+ 	struct subprocess_info *info;
+ 	static char *envp[] = {
+@@ -74,12 +78,14 @@ static int call_modprobe(char *module_name, int wait)
+ 		"PATH=/sbin:/usr/sbin:/bin:/usr/bin",
+ 		NULL
+ 	};
++	char *module_name;
++	int ret;
+ 
+ 	char **argv = kmalloc(sizeof(char *[5]), GFP_KERNEL);
+ 	if (!argv)
+ 		goto out;
+ 
+-	module_name = kstrdup(module_name, GFP_KERNEL);
++	module_name = kstrdup(orig_module_name, GFP_KERNEL);
+ 	if (!module_name)
+ 		goto free_argv;
+ 
+@@ -94,13 +100,16 @@ static int call_modprobe(char *module_name, int wait)
+ 	if (!info)
+ 		goto free_module_name;
+ 
+-	return call_usermodehelper_exec(info, wait | UMH_KILLABLE);
++	ret = call_usermodehelper_exec(info, wait | UMH_KILLABLE);
++	kmod_dup_request_announce(orig_module_name, ret);
++	return ret;
+ 
+ free_module_name:
+ 	kfree(module_name);
+ free_argv:
+ 	kfree(argv);
+ out:
++	kmod_dup_request_announce(orig_module_name, -ENOMEM);
+ 	return -ENOMEM;
+ }
+ 
+@@ -124,7 +133,7 @@ int __request_module(bool wait, const char *fmt, ...)
+ {
+ 	va_list args;
+ 	char module_name[MODULE_NAME_LEN];
+-	int ret;
++	int ret, dup_ret;
+ 
+ 	/*
+ 	 * We don't allow synchronous module loading from async.  Module
+@@ -156,8 +165,14 @@ int __request_module(bool wait, const char *fmt, ...)
+ 
+ 	trace_module_request(module_name, wait, _RET_IP_);
+ 
++	if (kmod_dup_request_exists_wait(module_name, wait, &dup_ret)) {
++		ret = dup_ret;
++		goto out;
++	}
++
+ 	ret = call_modprobe(module_name, wait ? UMH_WAIT_PROC : UMH_WAIT_EXEC);
+ 
++out:
+ 	up(&kmod_concurrent_max);
+ 
+ 	return ret;
+-- 
+2.39.2
+
