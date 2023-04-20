@@ -1,76 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5260F210B
-	for <patches@lists.linux.dev>; Thu, 20 Apr 2023 05:32:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D77AC433EF;
-	Thu, 20 Apr 2023 05:32:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1681968733;
-	bh=TUvSb3jLAD4SO/CabGVEytTuEPkD5hNOOi9zTj/3c4w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=S1F2Lp4RqFs0s9Hsn9ZCCA0dePukkSHX1+r0RpOoFBpNGP1YELgHENY1/MCq4oxcs
-	 Emlbr84myUVwwa+qldov5NAcHhhbJ40yZIiqS6Un1hLNoOB4KiARxk0LOrpEFFN/e7
-	 7UY8oSKGe/unFMChoD0RvqkmcEgETE8f6mDIc56Y=
-Date: Thu, 20 Apr 2023 07:32:10 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: david@redhat.com, patches@lists.linux.dev,
-	linux-modules@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
-	prarit@redhat.com, torvalds@linux-foundation.org, rafael@kernel.org,
-	christophe.leroy@csgroup.eu, tglx@linutronix.de,
-	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
-	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
-	mhocko@suse.com, dave.hansen@linux.intel.com,
-	colin.i.king@gmail.com, jim.cromie@gmail.com,
-	catalin.marinas@arm.com, jbaron@akamai.com,
-	rick.p.edgecombe@intel.com
-Subject: Re: [PATCH] module: add debugging auto-load duplicate module support
-Message-ID: <ZEDOWi8ifghwmOjp@kroah.com>
-References: <20230418204636.791699-1-mcgrof@kernel.org>
- <2023041951-evolution-unwitting-1791@gregkh>
- <ZEB6DmF+l3LVrpFI@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186DC3C2F
+	for <patches@lists.linux.dev>; Thu, 20 Apr 2023 08:58:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BA0C433EF;
+	Thu, 20 Apr 2023 08:57:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1681981080;
+	bh=KW/cOzzz0VeUWtRrIVVV/Jvq1YUVpWtNqR0e3LlJHpU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=b2myTk6B5eriGxsU6/qGzfQumjVeH2e3afVEFIWlU8rfbkviTzxfnFOTr+a1fbLh8
+	 zWtjEyNyqdlnbur6mK5cefIAqwk90StKTjTec61TpMor9Xap1uHWxS5W/22bMVHn0E
+	 My3fk/2N/ilyUoS/47lxI5LJL1h7Eta0vkO6AfnQ4lkq2Q9eTOrCYGHKLzLSFZNVyu
+	 1xuwf6mcGZ9ndyzuAsgC19Sx5DCwNqszhddBEK3f1ncrVhlmhT46kWXt+KaEpWmrXJ
+	 bP7Ht/9+Q95uQ9N8JkGbnU8WreQSsdGYAEM2bxB6u7NFj6zniS8LX9vFSh/FnHBWD8
+	 lgMm12YTBcYCw==
+From: Christian Brauner <brauner@kernel.org>
+To: Luis Chamberlain <mcgrof@kernel.org>,
+	Hugh Dickins <hughd@google.com>
+Cc: Christian Brauner <brauner@kernel.org>,
+	akpm@linux-foundation.org,
+	willy@infradead.org,
+	linux-mm@kvack.org,
+	p.raghav@samsung.com,
+	da.gomez@samsung.com,
+	a.manzanares@samsung.com,
+	dave@stgolabs.net,
+	yosryahmed@google.com,
+	keescook@chromium.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] shmem: restrict noswap option to initial user namespace
+Date: Thu, 20 Apr 2023 10:57:43 +0200
+Message-Id: <20230420-faxen-advokat-40abb4c1a152@brauner>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <ZD8Q2SzVr3xDmCgY@bombadil.infradead.org>
+References: <ZD8Q2SzVr3xDmCgY@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZEB6DmF+l3LVrpFI@bombadil.infradead.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=973; i=brauner@kernel.org; h=from:subject:message-id; bh=KW/cOzzz0VeUWtRrIVVV/Jvq1YUVpWtNqR0e3LlJHpU=; b=owGbwMvMwCU28Zj0gdSKO4sYT6slMaQ4/CtY+P1BygbWTxsmz2v3mbW68tTFF9vkznTv/rC0+Fq8 kMSC6R2lLAxiXAyyYoosDu0m4XLLeSo2G2VqwMxhZQIZwsDFKQATOdTB8D8nUVBgesz9L2museLMgc rL8zcymz6qnLdhWmCKaJrYpHcMv5h3cMz02syXubEt6dTWisvnC8/H9OUImU3acTB4f4qbJB8A
+X-Developer-Key: i=brauner@kernel.org; a=openpgp; fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Content-Transfer-Encoding: 8bit
 
-On Wed, Apr 19, 2023 at 04:32:30PM -0700, Luis Chamberlain wrote:
-> > It's not "wasted", as it is returned when the module is determined to be
-> > a duplicate.  Otherwise everyone will want this enabled as they think it
-> > will actually save memory.
-> 
-> I'll change the language to be clear the issue is memory pressure early
-> on boot. I'll also add a bit of language to help at least guide people
-> to realize that the real value-add for this, ie, I'll have to mention we
-> suspect issue is udev and not module auto-loading and that this however
-> may still help find a few cases we can optimize for.
+Prevent tmpfs instances mounted in an unprivileged namespaces from
+evading accounting of locked memory by using the "noswap" mount option.
 
-This isn't udev's "problem", all it is doing is what the kernel asked it
-to do.  The kernel said "Here's a new device I found, load a module for
-it please!"
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Reported-by: Hugh Dickins <hughd@google.com>
+Link: https://lore.kernel.org/lkml/79eae9fe-7818-a65c-89c6-138b55d609a@google.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+---
+ mm/shmem.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-And it's the kmod code here, not udev itself doing all of this.  Why not
-just rate-limit it in userspace if your system can't handle 10's of
-thousands of kmod calls all at once?  I think many s390 systems did this
-decades ago when they were controlling 10's of thousands of scsi devices
-and were hit with "device detection storms" at boot like this.
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 787e83791eb5..21ce9b26bb4d 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -3571,6 +3571,10 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
+ 		ctx->seen |= SHMEM_SEEN_INUMS;
+ 		break;
+ 	case Opt_noswap:
++		if ((fc->user_ns != &init_user_ns) || !capable(CAP_SYS_ADMIN)) {
++			return invalfc(fc,
++				       "Turning off swap in unprivileged tmpfs mounts unsupported");
++		}
+ 		ctx->noswap = true;
+ 		ctx->seen |= SHMEM_SEEN_NOSWAP;
+ 		break;
+-- 
+2.34.1
 
-If you really think it's the kernel's fault, just slow down the kernel's
-device detection code for the specific bus that is having problems.
-We've worked hard to make the kernel boot really fast and device
-detection happen in parallel, maybe that wasn't a good idea for some
-systems and so they need to boot slower.  If so, then just turn off the
-parallel probing for the offending bus type.
-
-What specific devices and bus types are the problem here for these systems?
-
-thanks,
-
-greg k-h
