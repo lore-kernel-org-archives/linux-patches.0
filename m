@@ -1,56 +1,85 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3A317C9
-	for <patches@lists.linux.dev>; Thu, 20 Apr 2023 02:10:36 +0000 (UTC)
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-63b50a02bffso487923b3a.2
-        for <patches@lists.linux.dev>; Wed, 19 Apr 2023 19:10:36 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2261C17ED
+	for <patches@lists.linux.dev>; Thu, 20 Apr 2023 03:23:26 +0000 (UTC)
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-3ef33a83ff1so883891cf.1
+        for <patches@lists.linux.dev>; Wed, 19 Apr 2023 20:23:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681956636; x=1684548636;
+        d=gmail.com; s=20221208; t=1681961006; x=1684553006;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OgvSLySd2lyqPfN3zgTP6Mv+w9DzPKKYJMRZtxRrQ5I=;
-        b=pnrESEu4umBVw/pjispzWFe3C4BcCqnCrIjdyCnKhpnoZzttxmtUxP3fiG8gAuT0Mz
-         byJmMOfWt51PVX8/8IuQr6ZsA6OgVN3XNmhfD6j3IzG3AnspodnH0FAuEHMtiIXwl8yr
-         psE+aVksC1B0gZFWCcah2jj7zWeTz96pu5+iVLj8Dwqzxki7SE5aE1CTSEUitzomY2xO
-         vdkTKLOZtdHVt1PkHOHJ5ODaraiMWErxMujS8U7ANnCsVMklE5wi7mUD61yFjhadMoYn
-         U4SH2dG4uUwU+BqKPmhivymJyGXWMqUxOdnX6p0NSe0MMCvf/jjw20vE1fOVXQCA70fT
-         Dnvg==
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=adX5pTpCGut2wVqn2rN7BfLycw+2K2wX215Yvm2Skj0=;
+        b=kN5PYjRolVrzo8OdzXjG2rOObhk9NXqlw5+diqgNyC2lFH+mHjybp2OrGa8qxslDst
+         DS6tzZKsYIX5JPMeMRj5vjJqmGTs5k1w6JyB6k+F6baS1FdhHaEs5Qm47/kAH9y6GL2z
+         CCjDdQvrrz7iH1bKXrbaj95wakTU1WL6x3HjKOrDmTkRvsUhU9c2KQjWe8yBpt+Dut8p
+         0noJ6Y3HC8HmyWAEF8wQuuMvYAiRpOGFoFJ+sJ1zsQmY5Fk1GBLChxhLWF8YcUz7S5wL
+         /HijpkFN/AxMBFCbKacgAXlmHb5sH1iTP2t9xSKHKuSNNXAbJJqMylw/FiHN3IzrAURw
+         9EiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681956636; x=1684548636;
+        d=1e100.net; s=20221208; t=1681961006; x=1684553006;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OgvSLySd2lyqPfN3zgTP6Mv+w9DzPKKYJMRZtxRrQ5I=;
-        b=hlFrQhU5TiFrCMUhJvZ1DKWv/I50QKAwKTFmaEVmsN0otLZC/rjSlnMBZWspEcgyvP
-         7Pha/SUyf7oeqsLGhgF9ekFZ+7vGuF6oZIwxItnkpaXnUe6tOoUVohiO1xWtehyRqL73
-         eB/s/IgJc1Cz9+wBtz+FyIKLTcEZPXSetAMF6C1tU9B5lpSGlOaqe5VgXw69bAoMaS2o
-         RyerVAc8NR/YTzFcGvkqTe6SMLKEkPR8lJzz6Ma67buG496XNVFZY59i4jHWx2j9dNEG
-         RuzhFVNDLZa5Z5jTZ+575Db5qVRdUEGsPyjWzKOufoTnzMW44gJ/rA2yv4PgChqd2rZO
-         2PYA==
-X-Gm-Message-State: AAQBX9demjEvUp2v+B0iTrmZqKRZalt1pe0T/I/hnTYi1d1fWn6KA/yx
-	7EQ/WNHTSGA8X3wFKSWElhQ=
-X-Google-Smtp-Source: AKy350bE5qL43cUsB/ObNnf6cOr6fLWFRm4WzLW66l8/O7TNR7kGfLvcx7/+OXjmLsAm64E5CnkY1A==
-X-Received: by 2002:a05:6a00:98d:b0:63b:5496:7afa with SMTP id u13-20020a056a00098d00b0063b54967afamr6572852pfg.11.1681956636462;
-        Wed, 19 Apr 2023 19:10:36 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id p10-20020a056a000a0a00b0062d8e79ea22sm69106pfh.40.2023.04.19.19.10.35
+        bh=adX5pTpCGut2wVqn2rN7BfLycw+2K2wX215Yvm2Skj0=;
+        b=SdVzokniGkBYYnT2ukYdrcOLLnPHMe45NlNTpMUWuODwA6vfm8yXekxGSVNl/levdp
+         dqwh7gimKRNhbT7j9u96aWysPbaUUTjqHz3lDL94xXaMC+mgK7mKjz3NkJS4k2FcUGyH
+         jsoP1s7ovXleMPxuGMrVok8dJdSN3qIyJcYVK5lX3KhEInEGKDDsZFJzgoNQQ0KG733O
+         8TnLaSCfaddD3d/YP3ztms0CnrIoStTJ+1IbWoC1wATHhSIw0ZVGzwnwkQc6BjmnKoqj
+         ycWDgaMTJZMxga89049MRmmC4uAAEm7TzzRQvUi1JwVTzQW1DTukGfe+4PO5ppAg4rYJ
+         cKsA==
+X-Gm-Message-State: AAQBX9eegoMyy+bekmBInKrGE+9OhetMSNDyw9IHY6fs7Hb6yO/wd7xN
+	bOvPqBmNxaZowxXEZUKKQvA=
+X-Google-Smtp-Source: AKy350aWroSwDmcbYQlKlOqteeglmMI/KFEwoMZCeXscp4drJ7QNHYwvApYy9mDszjXeHjptfUZPGQ==
+X-Received: by 2002:ac8:5f86:0:b0:3e6:3ba9:3c8d with SMTP id j6-20020ac85f86000000b003e63ba93c8dmr1285459qta.13.1681961005879;
+        Wed, 19 Apr 2023 20:23:25 -0700 (PDT)
+Received: from auth1-smtp.messagingengine.com (auth1-smtp.messagingengine.com. [66.111.4.227])
+        by smtp.gmail.com with ESMTPSA id m8-20020ac84448000000b003ec47cc3613sm199905qtn.85.2023.04.19.20.23.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Apr 2023 19:10:36 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 19 Apr 2023 19:10:34 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/135] 6.2.12-rc3 review
-Message-ID: <bcb4c9bc-b74c-4a00-b1d3-a87200bfd344@roeck-us.net>
-References: <20230419132054.228391649@linuxfoundation.org>
+        Wed, 19 Apr 2023 20:23:25 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailauth.nyi.internal (Postfix) with ESMTP id B79EA27C0054;
+	Wed, 19 Apr 2023 23:23:24 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Wed, 19 Apr 2023 23:23:24 -0400
+X-ME-Sender: <xms:LLBAZFPRcqepmUcS0jeaIyNE4UVu1tikgQGj8zb1cuFW_X0x5Mwawg>
+    <xme:LLBAZH_Oba4SUNRw87mNp4PpuxE0Mjx76Khqh4JNNnb6LakV8KsrFYigzOK3oqgtt
+    KJJ0vuHHaGz5_QXuQ>
+X-ME-Received: <xmr:LLBAZEReu2KuDj8YdVPSkyuiopHjytxBHMnarLKxRdgvUWXOSMHP3avW3Vn4aA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedtuddgjedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehoqhhu
+    nhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeehudfgudffffetuedtvdehueevledvhfelleeivedtgeeuhfegueeviedu
+    ffeivdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    gsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdeiledvgeehtdei
+    gedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmhgrihhlrdgtohhmsehfih
+    igmhgvrdhnrghmvg
+X-ME-Proxy: <xmx:LLBAZBunC4RgYkjvCJm8TfMS5nZZdXIvMpE-agTozO6MvBi0AmOCdA>
+    <xmx:LLBAZNcsQGQ3MLPiJP4ZtGzcP1GUvrAKg4g4VgNSejSSm_m5AM7r2A>
+    <xmx:LLBAZN3dtqCXWKUqBbSf-sUZZey272HecYmAHvxlBFI_wM0c57-GOw>
+    <xmx:LLBAZL18FVj0cmNgxoJvYsYBxzGLkJa6YQn1-Yo-AD_h22GMclj1PA>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 19 Apr 2023 23:23:23 -0400 (EDT)
+Date: Wed, 19 Apr 2023 20:23:01 -0700
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Josh Stone <jistone@redhat.com>,
+	William Brown <william.brown@suse.com>,
+	Georgy Yakovlev <gyakovlev@gentoo.org>,
+	Jan Alexander Steffens <jan.steffens@gmail.com>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 0/3] Rust 1.68.2 upgrade
+Message-ID: <ZECwFUyUt77E/5MO@boqun-archlinux>
+References: <20230418214347.324156-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,23 +88,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230419132054.228391649@linuxfoundation.org>
+In-Reply-To: <20230418214347.324156-1-ojeda@kernel.org>
 
-On Wed, Apr 19, 2023 at 03:22:02PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.12 release.
-> There are 135 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Apr 18, 2023 at 11:43:44PM +0200, Miguel Ojeda wrote:
+> This is the first upgrade to the Rust toolchain since the initial Rust
+> merge, from 1.62.0 to 1.68.2 (i.e. the latest).
 > 
-> Responses should be made by Fri, 21 Apr 2023 13:20:25 +0000.
-> Anything received after that time might be too late.
+> Please see the last patch message for a long explanation of the upgrade,
+> the policy for future upgrades and some indications on how to easily
+> review this.
+> 
+> The series is based on `rust-next`.
 > 
 
-Build results:
-	total: 155 pass: 155 fail: 0
-Qemu test results:
-	total: 520 pass: 520 fail: 0
+Works on my machine ;-)
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Boqun Feng <boqun.feng@gmail.com>
 
-Guenter
+Regards,
+Boqun
+
+> Miguel Ojeda (3):
+>   rust: alloc: clarify what is the upstream version
+>   rust: arc: fix intra-doc link in `Arc<T>::init`
+>   rust: upgrade to Rust 1.68.2
+> 
+>  Documentation/process/changes.rst |   2 +-
+>  rust/alloc/README.md              |   3 +
+>  rust/alloc/alloc.rs               |  55 ++--
+>  rust/alloc/boxed.rs               | 446 ++++++++++++++++++++++++++--
+>  rust/alloc/collections/mod.rs     |   5 +-
+>  rust/alloc/lib.rs                 |  71 +++--
+>  rust/alloc/raw_vec.rs             |  16 +-
+>  rust/alloc/slice.rs               | 447 ++++------------------------
+>  rust/alloc/vec/drain.rs           |  81 +++++-
+>  rust/alloc/vec/drain_filter.rs    |  60 +++-
+>  rust/alloc/vec/into_iter.rs       | 125 ++++++--
+>  rust/alloc/vec/is_zero.rs         |  96 ++++++-
+>  rust/alloc/vec/mod.rs             | 464 +++++++++++++++++++++++-------
+>  rust/alloc/vec/set_len_on_drop.rs |   5 +
+>  rust/alloc/vec/spec_extend.rs     |  63 +---
+>  rust/bindings/lib.rs              |   1 -
+>  rust/kernel/build_assert.rs       |   2 +
+>  rust/kernel/init.rs               |   5 +
+>  rust/kernel/lib.rs                |   4 -
+>  rust/kernel/std_vendor.rs         |   2 +
+>  rust/kernel/sync/arc.rs           |   2 +-
+>  scripts/Makefile.build            |   2 +-
+>  scripts/min-tool-version.sh       |   2 +-
+>  23 files changed, 1278 insertions(+), 681 deletions(-)
+> 
+> -- 
+> 2.40.0
+> 
