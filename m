@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AA1746F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD236746E
 	for <patches@lists.linux.dev>; Fri, 21 Apr 2023 21:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=QZSPgijKCu3Y3/12/R8LbE206e1fX9dQfHKdMNON/W8=; b=oFywjwINQnJi1wLFD/p2jy2j7L
-	YzaKpUjXYeUccWb/Nv5aW9K9NT0ZiPfQ5qLf6tyvltqi0NzPK5Dqiyjep/DwF9A0si0uEBf/bxZ1a
-	gC3ggPEPcz4//L5fnHODuyCTOEd+G0oIS3iCLNKOjC8gFEP6lxkUml1fa0r33CKeLmcMdw+EKZ/rz
-	EyUHrfWth/uiSWRR9n5AjEBXdeZUg2klO11cMNtkhUKw0bjosgZvqzfu1mlsfgxOhbCOoRLqLq3BB
-	w3QKnGmL5aC2RSOu972POaXT0PC9eMLB7F2HwvVQ38UMYkfPO3/V1FNdAdEMLhrhATJUDT86vHTiQ
-	0AVSMYmQ==;
+	bh=nny3k9GHvISmRebv/wiZT4olnvrgRU1LTkzNA8FqTDM=; b=4Ut9M+mnDbLVzS5mn357NtXNVg
+	iW973AulcqLzyWup7ygr0muRVGEjzVtqC6kqytGxva5A/sIYSQFeBlshjjpIhF6OYCvi05IojwxWE
+	tsKCO6qUCenqfN9MsAZAdEWGPc3v0HjGDax4M6XvZmaBXtzA5v2C3KaFqloimB+8x6u/npTruKLQs
+	036sfUHB5iNErVxwNzS974BCSyU1Ar0fEOvtLbwggh51AghvUuMZYxAGZfc5IZ52Xmohp9mLGlsCy
+	TaULQnEPNlB7MAFVSLGTPIcEwbgWNxO2AlGc26ENLqMM/u81jGPh5M591B/wApNppCBuEnfc313kb
+	pACYjTwA==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1ppyY1-00Btow-2i;
+	id 1ppyY1-00Btoo-2A;
 	Fri, 21 Apr 2023 21:44:05 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hughd@google.com,
@@ -36,9 +36,9 @@ Cc: p.raghav@samsung.com,
 	linux-fsdevel@vger.kernel.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC 8/8] shmem: add support to customize block size on multiple PAGE_SIZE
-Date: Fri, 21 Apr 2023 14:44:00 -0700
-Message-Id: <20230421214400.2836131-9-mcgrof@kernel.org>
+Subject: [RFC 4/8] shmem: add helpers to get block size
+Date: Fri, 21 Apr 2023 14:43:56 -0700
+Message-Id: <20230421214400.2836131-5-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230421214400.2836131-1-mcgrof@kernel.org>
 References: <20230421214400.2836131-1-mcgrof@kernel.org>
@@ -51,199 +51,101 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-This allows tmpfs mounts to use a custom block size. We only allow
-block sizes greater than PAGE_SIZE, and these must also be a multiple
-of the PAGE_SIZE too.
+Stuff the block size as a struct shmem_sb_info member when CONFIG_TMPFS
+is enabled, but keep the current static value for now, and use helpers
+to get the blocksize. This will make the subsequent change easier to read.
 
-Only simple tests have been run so far:
+The static value for block size of PAGE_SIZE is used currently.
 
-time for i in $(seq 1 1000000); do echo $i >> /root/ordered.txt; done
+The struct super_block s_blocksize_bits represents the blocksize in
+power of two, since the block size is always PAGE_SIZE this is PAGE_SHIFT
+today, but to help make this a bit more apt to scale we can use __ffs()
+for it instead.
 
-real    0m21.392s
-user    0m8.077s
-sys     0m13.098s
-
-du -h /root/ordered.txt
-6.6M    /root/ordered.txt
-
-sha1sum /root/ordered.txt
-2dcc06b7ca3b7dd8b5626af83c1be3cb08ddc76c  /root/ordered.txt
-
-stat /root/ordered.txt
-  File: /root/ordered.txt
-  Size: 6888896         Blocks: 13456      IO Block: 4096   regular file
-Device: 254,1   Inode: 655717      Links: 1
-Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
-Access: 2023-04-21 19:34:20.709869093 +0000
-Modify: 2023-04-21 19:34:43.833900042 +0000
-Change: 2023-04-21 19:34:43.833900042 +0000
- Birth: 2023-04-21 19:34:20.709869093 +0000
-
-8 KiB block size:
-
-sha1sum /root/ordered.txt
-mount -t tmpfs            -o size=10M,bsize=$((4096*2)) -o noswap tmpfs /data-tmpfs/
-cp /root/ordered.txt
-sha1sum /data-tmpfs/ordered.txt
-stat /data-tmpfs/ordered.txt
-2dcc06b7ca3b7dd8b5626af83c1be3cb08ddc76c  /root/ordered.txt
-2dcc06b7ca3b7dd8b5626af83c1be3cb08ddc76c  /data-tmpfs/ordered.txt
-  File: /data-tmpfs/ordered.txt
-  Size: 6888896         Blocks: 13456      IO Block: 8192   regular file
-Device: 0,42    Inode: 2           Links: 1
-Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
-Access: 2023-04-21 19:31:16.078390405 +0000
-Modify: 2023-04-21 19:31:16.070391363 +0000
-Change: 2023-04-21 19:31:16.070391363 +0000
- Birth: 2023-04-21 19:31:16.034395676 +0000
-
-64 KiB block size:
-
-sha1sum /root/ordered.txt
-mount -t tmpfs            -o size=10M,bsize=$((4096*16)) -o noswap tmpfs /data-tmpfs/
-cp /root/ordered.txt /data-tmpfs/; sha1sum /data-tmpfs/ordered.txt
-stat /data-tmpfs/ordered.txt
-2dcc06b7ca3b7dd8b5626af83c1be3cb08ddc76c  /root/ordered.txt
-2dcc06b7ca3b7dd8b5626af83c1be3cb08ddc76c  /data-tmpfs/ordered.txt
-  File: /data-tmpfs/ordered.txt
-  Size: 6888896         Blocks: 13568      IO Block: 65536  regular file
-Device: 0,42    Inode: 2           Links: 1
-Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
-Access: 2023-04-21 19:32:14.669796970 +0000
-Modify: 2023-04-21 19:32:14.661796959 +0000
-Change: 2023-04-21 19:32:14.661796959 +0000
- Birth: 2023-04-21 19:32:14.649796944 +0000
+This commit introduces no functional changes other than __ffs() for the
+s_blocksize_bits and extending the struct shmem_sb_info with the blocksize.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- mm/shmem.c | 47 ++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 42 insertions(+), 5 deletions(-)
+ include/linux/shmem_fs.h |  3 +++
+ mm/shmem.c               | 24 +++++++++++++++++++++---
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
+diff --git a/include/linux/shmem_fs.h b/include/linux/shmem_fs.h
+index 9029abd29b1c..89e471fcde1d 100644
+--- a/include/linux/shmem_fs.h
++++ b/include/linux/shmem_fs.h
+@@ -36,6 +36,9 @@ struct shmem_inode_info {
+ #define SHMEM_FL_INHERITED		(FS_NODUMP_FL | FS_NOATIME_FL)
+ 
+ struct shmem_sb_info {
++#ifdef CONFIG_TMPFS
++	u64 blocksize;
++#endif
+ 	unsigned long max_blocks;   /* How many blocks are allowed */
+ 	struct percpu_counter used_blocks;  /* How many are allocated */
+ 	unsigned long max_inodes;   /* How many inodes are allowed */
 diff --git a/mm/shmem.c b/mm/shmem.c
-index 740b4448f936..64108c28eebd 100644
+index d76e86ff356e..162384b58a5c 100644
 --- a/mm/shmem.c
 +++ b/mm/shmem.c
-@@ -118,11 +118,13 @@ struct shmem_options {
- 	int huge;
- 	int seen;
- 	bool noswap;
-+	u64 blocksize;
- #define SHMEM_SEEN_BLOCKS 1
- #define SHMEM_SEEN_INODES 2
- #define SHMEM_SEEN_HUGE 4
- #define SHMEM_SEEN_INUMS 8
+@@ -125,7 +125,17 @@ struct shmem_options {
  #define SHMEM_SEEN_NOSWAP 16
-+#define SHMEM_SEEN_BLOCKSIZE 32
  };
  
- static u64 shmem_default_bsize(void)
-@@ -3779,6 +3781,7 @@ enum shmem_param {
- 	Opt_inode32,
- 	Opt_inode64,
- 	Opt_noswap,
-+	Opt_bsize,
- };
++static u64 shmem_default_bsize(void)
++{
++	return PAGE_SIZE;
++}
++
+ #ifdef CONFIG_TMPFS
++static u64 shmem_sb_blocksize(struct shmem_sb_info *sbinfo)
++{
++	return sbinfo->blocksize;
++}
++
+ static unsigned long shmem_default_max_blocks(void)
+ {
+ 	return totalram_pages() / 2;
+@@ -137,6 +147,12 @@ static unsigned long shmem_default_max_inodes(void)
  
- static const struct constant_table shmem_param_enums_huge[] = {
-@@ -3801,6 +3804,7 @@ const struct fs_parameter_spec shmem_fs_parameters[] = {
- 	fsparam_flag  ("inode32",	Opt_inode32),
- 	fsparam_flag  ("inode64",	Opt_inode64),
- 	fsparam_flag  ("noswap",	Opt_noswap),
-+	fsparam_u32   ("bsize",		Opt_bsize),
- 	{}
- };
- 
-@@ -3827,7 +3831,14 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
- 		}
- 		if (*rest)
- 			goto bad_value;
--		ctx->blocks = DIV_ROUND_UP(size, shmem_default_bsize());
-+		if (!(ctx->seen & SHMEM_SEEN_BLOCKSIZE) ||
-+		    ctx->blocksize == shmem_default_bsize())
-+			ctx->blocks = DIV_ROUND_UP(size, shmem_default_bsize());
-+		else {
-+			if (size < ctx->blocksize || size % ctx->blocksize != 0)
-+				goto bad_value;
-+			ctx->blocks = DIV_ROUND_UP(size, ctx->blocksize);
-+		}
- 		ctx->seen |= SHMEM_SEEN_BLOCKS;
- 		break;
- 	case Opt_nr_blocks:
-@@ -3892,6 +3903,23 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
- 		ctx->noswap = true;
- 		ctx->seen |= SHMEM_SEEN_NOSWAP;
- 		break;
-+	case Opt_bsize:
-+		ctx->blocksize = result.uint_32;
-+		ctx->seen |= SHMEM_SEEN_BLOCKSIZE;
-+		/* Must be >= PAGE_SIZE */
-+		if (ctx->blocksize < PAGE_SIZE)
-+			goto bad_value;
-+		/*
-+		 * We cap this to allow a block to be at least allowed to
-+		 * be allocated using the buddy allocator. That's MAX_ORDER
-+		 * pages. So 4 MiB on x86_64.
-+		 */
-+		if (ctx->blocksize > (1 << (MAX_ORDER + PAGE_SHIFT)))
-+			goto bad_value;
-+		/* The blocksize must be a multiple of the page size so must be aligned */
-+		if (!PAGE_ALIGNED(ctx->blocksize))
-+			goto bad_value;
-+		break;
- 	}
- 	return 0;
- 
-@@ -3963,6 +3991,12 @@ static int shmem_reconfigure(struct fs_context *fc)
- 	raw_spin_lock(&sbinfo->stat_lock);
- 	inodes = sbinfo->max_inodes - sbinfo->free_inodes;
- 
-+	if (ctx->seen & SHMEM_SEEN_BLOCKSIZE) {
-+		if (ctx->blocksize != shmem_sb_blocksize(sbinfo)) {
-+			err = "Cannot modify block size on remount";
-+			goto out;
-+		}
-+	}
- 	if ((ctx->seen & SHMEM_SEEN_BLOCKS) && ctx->blocks) {
- 		if (!sbinfo->max_blocks) {
- 			err = "Cannot retroactively limit size";
-@@ -4078,6 +4112,8 @@ static int shmem_show_options(struct seq_file *seq, struct dentry *root)
- 	shmem_show_mpol(seq, sbinfo->mpol);
- 	if (sbinfo->noswap)
- 		seq_printf(seq, ",noswap");
-+	if (shmem_sb_blocksize(sbinfo) != shmem_default_bsize())
-+		seq_printf(seq, ",bsize=%llu", shmem_sb_blocksize(sbinfo));
- 	return 0;
+ 	return min(nr_pages - totalhigh_pages(), nr_pages / 2);
  }
++#else
++static u64 shmem_sb_blocksize(struct shmem_sb_info *sbinfo)
++{
++	return shmem_default_bsize();
++}
++
+ #endif
  
-@@ -4115,10 +4151,12 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
- 	 * but the internal instance is left unlimited.
- 	 */
- 	if (!(sb->s_flags & SB_KERNMOUNT)) {
-+		if (!(ctx->seen & SHMEM_SEEN_BLOCKSIZE))
-+			ctx->blocksize = shmem_default_bsize();
- 		if (!(ctx->seen & SHMEM_SEEN_BLOCKS))
--			ctx->blocks = shmem_default_max_blocks(shmem_default_bsize());
-+			ctx->blocks = shmem_default_max_blocks(ctx->blocksize);
- 		if (!(ctx->seen & SHMEM_SEEN_INODES))
--			ctx->inodes = shmem_default_max_inodes(shmem_default_bsize());
-+			ctx->inodes = shmem_default_max_inodes(ctx->blocksize);
- 		if (!(ctx->seen & SHMEM_SEEN_INUMS))
- 			ctx->full_inums = IS_ENABLED(CONFIG_TMPFS_INODE64);
- 		sbinfo->noswap = ctx->noswap;
-@@ -4127,7 +4165,7 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
+ static int shmem_swapin_folio(struct inode *inode, pgoff_t index,
+@@ -3190,7 +3206,7 @@ static int shmem_statfs(struct dentry *dentry, struct kstatfs *buf)
+ 	struct shmem_sb_info *sbinfo = SHMEM_SB(dentry->d_sb);
+ 
+ 	buf->f_type = TMPFS_MAGIC;
+-	buf->f_bsize = PAGE_SIZE;
++	buf->f_bsize = shmem_sb_blocksize(sbinfo);
+ 	buf->f_namelen = NAME_MAX;
+ 	if (sbinfo->max_blocks) {
+ 		buf->f_blocks = sbinfo->max_blocks;
+@@ -4100,6 +4116,7 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
  	}
  	sb->s_export_op = &shmem_export_ops;
  	sb->s_flags |= SB_NOSEC | SB_I_VERSION;
--	sbinfo->blocksize = shmem_default_bsize();
-+	sbinfo->blocksize = ctx->blocksize;
++	sbinfo->blocksize = shmem_default_bsize();
  #else
  	sb->s_flags |= SB_NOUSER;
  #endif
-@@ -4155,7 +4193,6 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
+@@ -4125,8 +4142,9 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	INIT_LIST_HEAD(&sbinfo->shrinklist);
+ 
  	sb->s_maxbytes = MAX_LFS_FILESIZE;
- 	sb->s_blocksize = shmem_sb_blocksize(sbinfo);
- 	sb->s_blocksize_bits = __ffs(sb->s_blocksize);
--	WARN_ON_ONCE(sb->s_blocksize_bits != PAGE_SHIFT);
+-	sb->s_blocksize = PAGE_SIZE;
+-	sb->s_blocksize_bits = PAGE_SHIFT;
++	sb->s_blocksize = shmem_sb_blocksize(sbinfo);
++	sb->s_blocksize_bits = __ffs(sb->s_blocksize);
++	WARN_ON_ONCE(sb->s_blocksize_bits != PAGE_SHIFT);
  	sb->s_magic = TMPFS_MAGIC;
  	sb->s_op = &shmem_ops;
  	sb->s_time_gran = 1;
