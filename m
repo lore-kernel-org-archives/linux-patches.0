@@ -1,120 +1,64 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B145B946F
-	for <patches@lists.linux.dev>; Thu, 20 Apr 2023 22:32:50 +0000 (UTC)
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-4ec8c2907c9so932749e87.3
-        for <patches@lists.linux.dev>; Thu, 20 Apr 2023 15:32:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682029969; x=1684621969;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Uu5fEGna14apSV36eBzrBJKSSgNGXIkFyyYc8j8im+A=;
-        b=M8NzpQPDufCc/THsQ6NUHXVlCqectlkQUml+fbYe0mHFdOks/dkqlkolj90S3/lw0z
-         tmpl/xt+3sQcegT2/5HKHE5EJz1Mg9l23K+YP60mBbUVx7cdf9FzhM8ghFYPOfDdCKfl
-         62mZ3X8cURbQccP7odvT/uplCzdlCyHNmXbJowfu+f8Ns7htPoln35fYpZeqQqzCxG2H
-         pt2Q48CyDaew2DAlrW7e5fhyZRSt1yK8jJjyGA3bNY7MTkvKvwpFIZWn7ryG+etzxse7
-         jAav/T8MPS7OYJurm3tadx19fg/wvc+EbPkjGwrO2mOKBHE9cnmRqyLm1z1OWoh9xUX8
-         3fTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682029969; x=1684621969;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Uu5fEGna14apSV36eBzrBJKSSgNGXIkFyyYc8j8im+A=;
-        b=WLXbYYWfTgVQ9flEmvgP+gkGJmD5/Hm27wJxaMmvMY40VsA/HM3UFzh1qEH1Lxf3j1
-         wOfUCPmwuBglohgCgqyIfH97/WDhs+fFFcgxucesGs8v2VaV+53BYfq9nVwEtQvgQh+h
-         BI41oNJ8aa+mhHgTY1IhvO+EA5XN6alu2kbHHFmsj3jo8PItJuIfhH+1982i90679lAU
-         FIyb14Av2vGUOSupS9TlTgSE6l5DuHrMww3xQ6o9ujOJtVsrXHnwydGbxioG5aMyqdbN
-         Vp6txFwapwrkbeafIFdD3sDLu2jDHVoY2TlEzAVqK0bnaegGU+BhFbNhA0fkeCM/sT6C
-         KY4A==
-X-Gm-Message-State: AAQBX9fHxAvbKRp9008IqdH2j530x8kecTonwoSNNDZmZX0zMMOkUdhg
-	V/dEZcMDdvx+UZkLQHMbzK1/QuVEFOv14CuGdTw=
-X-Google-Smtp-Source: AKy350YvQx5zR5xZc6+121+MdNqnfEy5eH4YDG5HCIQmBw1915BCnOfYvXxjmAJ627xWYymyLsV+CIwKOxUWVb8sgKU=
-X-Received: by 2002:a05:6512:69:b0:4eb:1192:ce6f with SMTP id
- i9-20020a056512006900b004eb1192ce6fmr804371lfo.13.1682029968553; Thu, 20 Apr
- 2023 15:32:48 -0700 (PDT)
+Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7AA417F8;
+	Fri, 21 Apr 2023 07:27:50 +0000 (UTC)
+Received: from uucp (helo=alpha)
+	by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
+	id 1pplBD-0004sS-00; Fri, 21 Apr 2023 09:27:39 +0200
+Received: by alpha.franken.de (Postfix, from userid 1000)
+	id E0BBCC0121; Fri, 21 Apr 2023 09:27:12 +0200 (CEST)
+Date: Fri, 21 Apr 2023 09:27:12 +0200
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>, jpoimboe@kernel.org,
+	peterz@infradead.org, linux-mips@vger.kernel.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] MIPS: Mark check_bugs{,_early}() as __init
+Message-ID: <20230421072712.GA5563@alpha.franken.de>
+References: <20230419-mips-check_bugs-init-attribute-v1-1-91e6eed55b89@kernel.org>
+ <CAKwvOdmuQBnZR_pB5bUdsF+OoB_4pxBT9TNFF83fZhzwZ1gbxw@mail.gmail.com>
+ <20230419233710.GA1314058@dev-arch.thelio-3990X>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230412221823.830135-1-ojeda@kernel.org> <CAFRnB2VygPYBY7MbxoftzEtqs52YG5AN_EO72Nm1ukLWnApa=Q@mail.gmail.com>
-In-Reply-To: <CAFRnB2VygPYBY7MbxoftzEtqs52YG5AN_EO72Nm1ukLWnApa=Q@mail.gmail.com>
-From: Alex Gaynor <alex.gaynor@gmail.com>
-Date: Thu, 20 Apr 2023 16:32:37 -0600
-Message-ID: <CAFRnB2W_KSpUMJQXvzyOcR8XBUmO=Bx+hDZH_Se-QrMfyiKsgQ@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: add Benno Lossin as Rust reviewer
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Benno Lossin <benno.lossin@proton.me>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230419233710.GA1314058@dev-arch.thelio-3990X>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-My previous line was incorrect. Corrected:
+On Wed, Apr 19, 2023 at 04:37:10PM -0700, Nathan Chancellor wrote:
+> > > diff --git a/arch/mips/include/asm/bugs.h b/arch/mips/include/asm/bugs.h
+> > > index d72dc6e1cf3c..9b9bf9bc7d24 100644
+> > > --- a/arch/mips/include/asm/bugs.h
+> > > +++ b/arch/mips/include/asm/bugs.h
+> > > @@ -24,13 +24,13 @@ extern void check_bugs64_early(void);
+> > >  extern void check_bugs32(void);
+> > >  extern void check_bugs64(void);
+> > >
+> > > -static inline void check_bugs_early(void)
+> > > +static inline void __init check_bugs_early(void)
+> > >  {
+> > >         if (IS_ENABLED(CONFIG_CPU_R4X00_BUGS64))
+> > >                 check_bugs64_early();
+> > >  }
+> > 
+> > If the only call site is in arch/mips/kernel/setup.c, then perhaps we
+> > can move the definition of check_bugs_early there and mark it static
+> > __init and drop inline?
+> 
+> Sure, we could even go a step further and just copy the body into the
+> one call site ourselves, I see little reason for this to be a dedicated
+> function. That is probably best done in a separate patch altogether in
+> lieu of just adding __init.
 
-Reviewed-by: Alex Gaynor <alex.gaynor@gmail.com>
+I don't expect any new checks added to check_bugs_early so let's
+move the whole function into the call site.
 
-On Wed, Apr 12, 2023 at 4:21=E2=80=AFPM Alex Gaynor <alex.gaynor@gmail.com>=
- wrote:
->
-> Signed-off-by: Alex Gaynor <alex.gaynor@gmail.com>
->
-> On Wed, Apr 12, 2023 at 6:18=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> w=
-rote:
-> >
-> > Benno has been involved with the Rust for Linux project for
-> > the better part of a year now. He has been working on solving
-> > the safe pinned initialization problem [1], which resulted in
-> > the pin-init API patch series [2] that allows to reduce the
-> > need for `unsafe` code in the kernel. He is also working on
-> > the field projection RFC for Rust [3] to bring pin-init as
-> > a language feature.
-> >
-> > His expertise with the language will be very useful to have
-> > around in the future if Rust grows within the kernel, thus
-> > add him to the `RUST` entry as reviewer.
-> >
-> > Link: https://rust-for-linux.com/the-safe-pinned-initialization-problem=
- [1]
-> > Link: https://lore.kernel.org/rust-for-linux/20230408122429.1103522-1-y=
-86-dev@protonmail.com/ [2]
-> > Link: https://github.com/rust-lang/rfcs/pull/3318 [3]
-> > Cc: Benno Lossin <benno.lossin@proton.me>
-> > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> > ---
-> >  MAINTAINERS | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 90abe83c02f3..bf9deaa4aa5a 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -18225,6 +18225,7 @@ M:      Wedson Almeida Filho <wedsonaf@gmail.co=
-m>
-> >  R:     Boqun Feng <boqun.feng@gmail.com>
-> >  R:     Gary Guo <gary@garyguo.net>
-> >  R:     Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
-> > +R:     Benno Lossin <benno.lossin@proton.me>
-> >  L:     rust-for-linux@vger.kernel.org
-> >  S:     Supported
-> >  W:     https://github.com/Rust-for-Linux/linux
-> >
-> > base-commit: 09a9639e56c01c7a00d6c0ca63f4c7c41abe075d
-> > --
-> > 2.40.0
-> >
->
->
-> --
-> All that is necessary for evil to succeed is for good people to do nothin=
-g.
+Thomas.
 
-
-
---=20
-All that is necessary for evil to succeed is for good people to do nothing.
+-- 
+Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
+good idea.                                                [ RFC1925, 2.3 ]
