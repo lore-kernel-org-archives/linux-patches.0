@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DD27476
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4387472
 	for <patches@lists.linux.dev>; Fri, 21 Apr 2023 21:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=ZUAOcNqD6LayzeKVCuQ/BLskBnjlrIyvlaP+338TFj0=; b=4faVVxfybgSKlFUw4CjuG22i97
-	71PGGt9QIrJ/HwbknwCDE//N0MK6Lp3ra+wQrXZsk0eWG60sRW0X5RUf4Kenfek+eG2paFJP/MaZa
-	0pWwiy4StWWh+SSoxTEvENx27Ue1WY0nZEQ5jvksW4DR5M1zwWo9akRwduyxRxOL7u3B+Vg/sEuOs
-	8Ct23zxr9jtxEu1k9C79r6F1cOvTy0vfzN2gpw8diBX/Hb0y0aSu/dsvGfqVJ/FI8leP+YAgddYgn
-	hK5IlPwLjcORNIqVDFOLTCGjGCfsFF6VGnKA9PA/rSAOR6sQOrz+AG5XTaTPZkVnxF4ht9+1OwIlY
-	CcAZD47g==;
+	bh=HAZkfNRruAgARTe618ACsQ6wCYRRSd9EZooPKA+qgbw=; b=DnGs3ejEo/+K910m27ugy2zmJh
+	qb5mcLlEfR2wdQNE/p1//CuFDbtuczZKd7j27Gu+GCzFIVBmDmCr5B7yxLhtPcDngNB4k80THHDuR
+	w2DMyrzuDU9msgM7Zy+oghoVKusNkUcBRoJC/pAS7Cc8RxdQEaVjJ+Bd2tc6Z6+C7gpfmYibKo708
+	Vi5Tb7IXkNa4kvn4N3d3BddjBa5cCKcG9E33SvWZ4GkM7ZwxcmNuAPg77qD1HGAf/ilG221q1rmJ5
+	9ejkkgHgonznxoi20BOMaCnyIcdksGRblL0lJg1XSWnZUtylSqq5ykxsRsCRkUyoDucbBY5Vd4B0h
+	p73Bmwcw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1ppyY1-00Btos-2R;
+	id 1ppyY1-00Btoi-1l;
 	Fri, 21 Apr 2023 21:44:05 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hughd@google.com,
@@ -36,9 +36,9 @@ Cc: p.raghav@samsung.com,
 	linux-fsdevel@vger.kernel.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC 6/8] shmem: consider block size in shmem_default_max_inodes()
-Date: Fri, 21 Apr 2023 14:43:58 -0700
-Message-Id: <20230421214400.2836131-7-mcgrof@kernel.org>
+Subject: [RFC 1/8] shmem: replace BLOCKS_PER_PAGE with PAGE_SECTORS
+Date: Fri, 21 Apr 2023 14:43:53 -0700
+Message-Id: <20230421214400.2836131-2-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230421214400.2836131-1-mcgrof@kernel.org>
 References: <20230421214400.2836131-1-mcgrof@kernel.org>
@@ -51,65 +51,77 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Today we allow for a max number of inodes in consideration for
-the smallest possible inodes with just one block of size PAGE_SIZE.
-The max number of inodes depend on the size of the block size then,
-and if we want to support higher block sizes we end up with less
-number of inodes.
+Instead of having our own macro use the generic PAGE_SECTORS.
+It also makes it clearer what we are trying to compute here on
+the inode->i_blocks. We get the inode size by as define din
+__inode_get_bytes() by:
 
-Account for this in the computation for the max number of inodes.
+(inode->i_blocks << SECTOR_SHIFT) + inode->i_bytes
 
-If the blocksize is greater than the PAGE_SIZE, we simply divide the
-number of pages usable, multiply by the page size and divide by the
-blocksize.
-
-This produces no functional changes right now as we don't support
-larger block sizes yet.
+This produces no functional changes.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- mm/shmem.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ mm/shmem.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/mm/shmem.c b/mm/shmem.c
-index b83596467706..5a64efd1f3c2 100644
+index b5d102a2a766..5bf92d571092 100644
 --- a/mm/shmem.c
 +++ b/mm/shmem.c
-@@ -143,11 +143,14 @@ static unsigned long shmem_default_max_blocks(u64 blocksize)
- 	return totalram_pages() >> (__ffs(blocksize) - PAGE_SHIFT + 1);
- }
+@@ -86,7 +86,6 @@ static struct vfsmount *shm_mnt;
  
--static unsigned long shmem_default_max_inodes(void)
-+static unsigned long shmem_default_max_inodes(u64 blocksize)
- {
- 	unsigned long nr_pages = totalram_pages();
-+	unsigned long pages_for_inodes = min(nr_pages - totalhigh_pages(), nr_pages / 2);
+ #include "internal.h"
  
--	return min(nr_pages - totalhigh_pages(), nr_pages / 2);
-+	if (blocksize == shmem_default_bsize())
-+		return pages_for_inodes;
-+	return pages_for_inodes >> (__ffs(blocksize) - PAGE_SHIFT);
+-#define BLOCKS_PER_PAGE  (PAGE_SIZE/512)
+ #define VM_ACCT(size)    (PAGE_ALIGN(size) >> PAGE_SHIFT)
+ 
+ /* Pretend that each entry is of this size in directory's i_size */
+@@ -363,7 +362,7 @@ static void shmem_recalc_inode(struct inode *inode)
+ 	freed = info->alloced - info->swapped - inode->i_mapping->nrpages;
+ 	if (freed > 0) {
+ 		info->alloced -= freed;
+-		inode->i_blocks -= freed * BLOCKS_PER_PAGE;
++		inode->i_blocks -= freed * PAGE_SECTORS;
+ 		shmem_inode_unacct_blocks(inode, freed);
+ 	}
  }
- #else
- static u64 shmem_sb_blocksize(struct shmem_sb_info *sbinfo)
-@@ -4028,7 +4031,7 @@ static int shmem_show_options(struct seq_file *seq, struct dentry *root)
- 	if (sbinfo->max_blocks != shmem_default_max_blocks(shmem_default_bsize()))
- 		seq_printf(seq, ",size=%luk",
- 			sbinfo->max_blocks << (PAGE_SHIFT - 10));
--	if (sbinfo->max_inodes != shmem_default_max_inodes())
-+	if (sbinfo->max_inodes != shmem_default_max_inodes(shmem_default_bsize()))
- 		seq_printf(seq, ",nr_inodes=%lu", sbinfo->max_inodes);
- 	if (sbinfo->mode != (0777 | S_ISVTX))
- 		seq_printf(seq, ",mode=%03ho", sbinfo->mode);
-@@ -4109,7 +4112,7 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
- 		if (!(ctx->seen & SHMEM_SEEN_BLOCKS))
- 			ctx->blocks = shmem_default_max_blocks(shmem_default_bsize());
- 		if (!(ctx->seen & SHMEM_SEEN_INODES))
--			ctx->inodes = shmem_default_max_inodes();
-+			ctx->inodes = shmem_default_max_inodes(shmem_default_bsize());
- 		if (!(ctx->seen & SHMEM_SEEN_INUMS))
- 			ctx->full_inums = IS_ENABLED(CONFIG_TMPFS_INODE64);
- 		sbinfo->noswap = ctx->noswap;
+@@ -381,7 +380,7 @@ bool shmem_charge(struct inode *inode, long pages)
+ 
+ 	spin_lock_irqsave(&info->lock, flags);
+ 	info->alloced += pages;
+-	inode->i_blocks += pages * BLOCKS_PER_PAGE;
++	inode->i_blocks += pages * PAGE_SECTORS;
+ 	shmem_recalc_inode(inode);
+ 	spin_unlock_irqrestore(&info->lock, flags);
+ 
+@@ -397,7 +396,7 @@ void shmem_uncharge(struct inode *inode, long pages)
+ 
+ 	spin_lock_irqsave(&info->lock, flags);
+ 	info->alloced -= pages;
+-	inode->i_blocks -= pages * BLOCKS_PER_PAGE;
++	inode->i_blocks -= pages * PAGE_SECTORS;
+ 	shmem_recalc_inode(inode);
+ 	spin_unlock_irqrestore(&info->lock, flags);
+ 
+@@ -2002,7 +2001,7 @@ static int shmem_get_folio_gfp(struct inode *inode, pgoff_t index,
+ 
+ 	spin_lock_irq(&info->lock);
+ 	info->alloced += folio_nr_pages(folio);
+-	inode->i_blocks += (blkcnt_t)BLOCKS_PER_PAGE << folio_order(folio);
++	inode->i_blocks += (blkcnt_t) PAGE_SECTORS << folio_order(folio);
+ 	shmem_recalc_inode(inode);
+ 	spin_unlock_irq(&info->lock);
+ 	alloced = true;
+@@ -2659,7 +2658,7 @@ int shmem_mfill_atomic_pte(pmd_t *dst_pmd,
+ 
+ 	spin_lock_irq(&info->lock);
+ 	info->alloced++;
+-	inode->i_blocks += BLOCKS_PER_PAGE;
++	inode->i_blocks += PAGE_SECTORS;
+ 	shmem_recalc_inode(inode);
+ 	spin_unlock_irq(&info->lock);
+ 
 -- 
 2.39.2
 
