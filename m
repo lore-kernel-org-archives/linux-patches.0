@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93437465
-	for <patches@lists.linux.dev>; Fri, 21 Apr 2023 21:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3727479
+	for <patches@lists.linux.dev>; Fri, 21 Apr 2023 21:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=kIm+HajOeoUPf2+lVY4BBZIQ0O/I9EyHtsPMg+rZ0Kc=; b=Len1yzwK9xjx59+qsKo1F+zvmo
-	+aUn2YbUJugrJe8dXSdbxmZlTKxrreA9IzoGdLVdC1eGVczJTAELlOsRwcJUqNaEGPL5rddVTdiuR
-	2paO6yV15AQmkvh/r2vO9b7zoXcIlpl5k+bxfP1tQYU7r0yIo0NJa57GpOa/vmN/iPcfQM25C9axc
-	9fAyhFR1UcdzhDQCHEodaN0a2CLAr7FSbG6HJhhQkhBXWfR0VxRZJhpFpyKBbupNefaohXdKaGvs2
-	iJXFqj+JOo/hz8cLkWi8cBerPGguStJhP3RoX47i5vHERUL+Etq2Peo/JaqIXZEyR3e8KdNnjBCCs
-	VqLXYKLQ==;
+	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=LRGm8v+C2VnFh3pJYXzbKwj2NvliqmXVbLHOoz9D9rs=; b=Gv4xXUfwg6Tqrov7HtOq12Iot5
+	YO5wR1wBRRe+FoidC8runo8IO16BDwaMfjnowR194HePAotck078Dc52Y5LhgHsJWaSdFz/ExDOoW
+	7UvJg+gaENVFRZFuUklS2jbQPIu6sP031vvUKDVO8op0VWHJ/pcNAbKtxQ6EJtE3JOGWA8i9aCI4G
+	c82Y5dwvzAyUa4CC4Jt/QPxPn6XSF0jejQ+JpFEAjr1mjFYM6xQTv/oz9ZsmadJRNPxXXDoGL2kGk
+	x5ARZON7gmkNiGzDhbMd8jQFJ5x3RYgTnUCgMJhDF50jxO3kH/6kEmfu6+iJAJL3r0nsysDSme+ZO
+	aDY1SY0g==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1ppyY1-00Btog-1d;
+	id 1ppyY1-00Btou-2Z;
 	Fri, 21 Apr 2023 21:44:05 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hughd@google.com,
@@ -36,10 +36,12 @@ Cc: p.raghav@samsung.com,
 	linux-fsdevel@vger.kernel.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC 0/8] shmem: add support for blocksize > PAGE_SIZE
-Date: Fri, 21 Apr 2023 14:43:52 -0700
-Message-Id: <20230421214400.2836131-1-mcgrof@kernel.org>
+Subject: [RFC 7/8] shmem: add high order page support
+Date: Fri, 21 Apr 2023 14:43:59 -0700
+Message-Id: <20230421214400.2836131-8-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20230421214400.2836131-1-mcgrof@kernel.org>
+References: <20230421214400.2836131-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,44 +51,39 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-This is an initial attempt to add support for block size > PAGE_SIZE for tmpfs.
-Why would you want this? It helps us experiment with higher order folio uses
-with fs APIS and helps us test out corner cases which would likely need
-to be accounted for sooner or later if and when filesystems enable support
-for this. Better review early and burn early than continue on in the wrong
-direction so looking for early feedback.
+To support high order block sizes we want to support a high order
+folios so to treat the larger block atomically. Add support for this
+for tmpfs mounts.
 
-I have other patches to convert shmem_write_begin() and shmem_file_read_iter()
-to folios too but those are not yet working. In the swap world the next
-thing to look at would be to convert swap_cluster_readahead() to folios.
+Right now this produces no functional changes since we only allow one
+single block size, matching the PAGE_SIZE and so the order is always 0.
 
-If folks want to experiment with tmpfs, brd or with things related to larger
-block sizes I've put a branch up with this, Hannes's brd patches, and some
-still work-in-progress patches on my large-block-20230421 branch [0]. Similarly
-you can also use kdevops with CONFIG_QEMU_ENABLE_EXTRA_DRIVE_LARGEIO support
-to get everything with just as that branch is used for that:
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ mm/shmem.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-  make
-  make bringup
-  make linux
-
-[0] https://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux-next.git/log/?h=large-block-20230421
-[1] https://github.com/linux-kdevops/kdevops
-
-Luis Chamberlain (8):
-  shmem: replace BLOCKS_PER_PAGE with PAGE_SECTORS
-  shmem: convert to use folio_test_hwpoison()
-  shmem: account for high order folios
-  shmem: add helpers to get block size
-  shmem: account for larger blocks sizes for shmem_default_max_blocks()
-  shmem: consider block size in shmem_default_max_inodes()
-  shmem: add high order page support
-  shmem: add support to customize block size on multiple PAGE_SIZE
-
- include/linux/shmem_fs.h |   3 +
- mm/shmem.c               | 146 +++++++++++++++++++++++++++++----------
- 2 files changed, 114 insertions(+), 35 deletions(-)
-
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 5a64efd1f3c2..740b4448f936 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1621,9 +1621,15 @@ static struct folio *shmem_alloc_folio(gfp_t gfp,
+ {
+ 	struct vm_area_struct pvma;
+ 	struct folio *folio;
++	struct inode *inode = &info->vfs_inode;
++	struct super_block *i_sb = inode->i_sb;
++	int order = 0;
++
++	if (!(i_sb->s_flags & SB_KERNMOUNT))
++		order = i_sb->s_blocksize_bits - PAGE_SHIFT;
+ 
+ 	shmem_pseudo_vma_init(&pvma, info, index);
+-	folio = vma_alloc_folio(gfp, 0, &pvma, 0, false);
++	folio = vma_alloc_folio(gfp, order, &pvma, 0, false);
+ 	shmem_pseudo_vma_destroy(&pvma);
+ 
+ 	return folio;
 -- 
 2.39.2
 
