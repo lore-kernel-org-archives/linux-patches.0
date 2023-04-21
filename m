@@ -1,187 +1,66 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D29747A
-	for <patches@lists.linux.dev>; Fri, 21 Apr 2023 21:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D016FD7
+	for <patches@lists.linux.dev>; Fri, 21 Apr 2023 22:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=TaEL6wJEWmG7v/Kj+xMCxG7l/Tv1LU1WrJwnB3EGy3E=; b=N942EdhFvz8Gq8X0vru14SS2Tz
-	NSMMc3ogGzPG2/igUrApVOD7nvcB5K/4UI28nLVYOwAB52r3+fcJXP9APHpwXmOM3q6qrw2BgTt/j
-	caFXw1rBuZp75667SgZQedCUy2WjgaS5ME72NMg2F8DmvIV9HV4lZYCengkZYqa2jjMLpEBGuGQm3
-	cAzPOhEk2Y75zB3VUvyjKzHud3xR7zENlmf188YTgv99Mkb7ucqaY9iy2HJd2LE35twbd41deBG5N
-	HX2mbF5Ndbygf6Towllz/Gv1UT754OGwbCZbye8ao31rI5EjMABW1FJPa80ME9BC2gfYF+I0GujRk
-	iyqZUPTw==;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=zJtElQBBcdjQLKuTgcAUU6SVKeCB/u/2QO+HYPXJ5yM=; b=TZu/Zi5uyNmtM3AYC5F+uKMVsg
+	hHiw+cqzzyEH5I7hS1byjWvZbtD93wTW5QBG4M2KWk+B9WNSSwm8v8mi/Pnh/wNHKblwtRlS/KMzQ
+	Ay3jyrkfXj38Eh37M4Cv7VwmsBNNmqrv9OwKF8lm0f+wSW4Om7abWzDRmsfs9KuyHuU0Imx3Q0AER
+	ZAbNWgHZn5tbTJvEdgqX6vx58Jc1AstSfU9BdUtC5U+O8zrXvOcpy1sMmYqObWFFEt0xJw9Ase7ZL
+	24pyTndrtdkUUd3SbhFseygDv/Okmg+4zGC/X9a2KfIdvJud/46SLd6TpOspXAPAEoF1aQEjJW7ON
+	WDwf8KDw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1ppyY1-00Btom-22;
-	Fri, 21 Apr 2023 21:44:05 +0000
+	id 1ppypq-00Bv2r-1H;
+	Fri, 21 Apr 2023 22:02:30 +0000
+Date: Fri, 21 Apr 2023 15:02:30 -0700
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: hughd@google.com,
-	akpm@linux-foundation.org,
-	willy@infradead.org,
-	brauner@kernel.org,
-	djwong@kernel.org
-Cc: p.raghav@samsung.com,
-	da.gomez@samsung.com,
-	a.manzanares@samsung.com,
-	dave@stgolabs.net,
-	yosryahmed@google.com,
-	keescook@chromium.org,
-	hare@suse.de,
-	kbusch@kernel.org,
-	mcgrof@kernel.org,
-	patches@lists.linux.dev,
-	linux-block@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [RFC 3/8] shmem: account for high order folios
-Date: Fri, 21 Apr 2023 14:43:55 -0700
-Message-Id: <20230421214400.2836131-4-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230421214400.2836131-1-mcgrof@kernel.org>
-References: <20230421214400.2836131-1-mcgrof@kernel.org>
+To: Matthew Wilcox <willy@infradead.org>
+Cc: axboe@kernel.dk, agk@redhat.com, snitzer@kernel.org,
+	philipp.reisner@linbit.com, lars.ellenberg@linbit.com,
+	christoph.boehmwalder@linbit.com, hch@infradead.org,
+	djwong@kernel.org, minchan@kernel.org, senozhatsky@chromium.org,
+	patches@lists.linux.dev, linux-block@vger.kernel.org,
+	linux-mm@kvack.org, linux-xfs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, dm-devel@redhat.com,
+	drbd-dev@lists.linbit.com, linux-kernel@vger.kernel.org,
+	hare@suse.de, p.raghav@samsung.com, da.gomez@samsung.com,
+	kbusch@kernel.org
+Subject: Re: [PATCH 3/5] iomap: simplify iomap_init() with PAGE_SECTORS
+Message-ID: <ZEMH9h/cd9Cp1t+X@bombadil.infradead.org>
+References: <20230421195807.2804512-1-mcgrof@kernel.org>
+ <20230421195807.2804512-4-mcgrof@kernel.org>
+ <ZELuiBNNHTk4EdxH@casper.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZELuiBNNHTk4EdxH@casper.infradead.org>
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-shmem uses the shem_info_inode alloced, swapped to account
-for allocated pages and swapped pages. In preparation for high
-order folios adjust the accounting to use folio_nr_pages().
+On Fri, Apr 21, 2023 at 09:14:00PM +0100, Matthew Wilcox wrote:
+> On Fri, Apr 21, 2023 at 12:58:05PM -0700, Luis Chamberlain wrote:
+> > Just use the PAGE_SECTORS generic define. This produces no functional
+> > changes. While at it use left shift to simplify this even further.
+> 
+> How is FOO << 2 simpler than FOO * 4?
+> 
+> > -	return bioset_init(&iomap_ioend_bioset, 4 * (PAGE_SIZE / SECTOR_SIZE),
+> > +	return bioset_init(&iomap_ioend_bioset, PAGE_SECTORS << 2,
 
-This should produce no functional changes yet as higher order
-folios are not yet used or supported in shmem.
+We could just do:
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- mm/shmem.c | 39 +++++++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 6f117c3cbe89..d76e86ff356e 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -806,15 +806,15 @@ unsigned long shmem_partial_swap_usage(struct address_space *mapping,
- 						pgoff_t start, pgoff_t end)
- {
- 	XA_STATE(xas, &mapping->i_pages, start);
--	struct page *page;
-+	struct folio *folio;
- 	unsigned long swapped = 0;
- 
- 	rcu_read_lock();
--	xas_for_each(&xas, page, end - 1) {
--		if (xas_retry(&xas, page))
-+	xas_for_each(&xas, folio, end - 1) {
-+		if (xas_retry(&xas, folio))
- 			continue;
--		if (xa_is_value(page))
--			swapped++;
-+		if (xa_is_value(folio))
-+			swapped+=(folio_nr_pages(folio));
- 
- 		if (need_resched()) {
- 			xas_pause(&xas);
-@@ -941,10 +941,15 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 			folio = fbatch.folios[i];
- 
- 			if (xa_is_value(folio)) {
-+				long swaps_freed = 0;
- 				if (unfalloc)
- 					continue;
--				nr_swaps_freed += !shmem_free_swap(mapping,
--							indices[i], folio);
-+				swaps_freed = folio_nr_pages(folio);
-+				if (!shmem_free_swap(mapping, indices[i], folio)) {
-+					if (swaps_freed > 1)
-+						pr_warn("swaps freed > 1 -- %lu\n", swaps_freed);
-+					nr_swaps_freed += swaps_freed;
-+				}
- 				continue;
- 			}
- 
-@@ -1010,14 +1015,18 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 			folio = fbatch.folios[i];
- 
- 			if (xa_is_value(folio)) {
-+				long swaps_freed = 0;
- 				if (unfalloc)
- 					continue;
-+				swaps_freed = folio_nr_pages(folio);
- 				if (shmem_free_swap(mapping, indices[i], folio)) {
- 					/* Swap was replaced by page: retry */
- 					index = indices[i];
- 					break;
- 				}
--				nr_swaps_freed++;
-+				if (swaps_freed > 1)
-+					pr_warn("swaps freed > 1 -- %lu\n", swaps_freed);
-+				nr_swaps_freed+=swaps_freed;
- 				continue;
- 			}
- 
-@@ -1448,7 +1457,7 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
- 			NULL) == 0) {
- 		spin_lock_irq(&info->lock);
- 		shmem_recalc_inode(inode);
--		info->swapped++;
-+		info->swapped+=folio_nr_pages(folio);
- 		spin_unlock_irq(&info->lock);
- 
- 		swap_shmem_alloc(swap);
-@@ -1723,6 +1732,7 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
- 	struct shmem_inode_info *info = SHMEM_I(inode);
- 	swp_entry_t swapin_error;
- 	void *old;
-+	long num_swap_pages;
- 
- 	swapin_error = make_swapin_error_entry();
- 	old = xa_cmpxchg_irq(&mapping->i_pages, index,
-@@ -1732,6 +1742,7 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
- 		return;
- 
- 	folio_wait_writeback(folio);
-+	num_swap_pages = folio_nr_pages(folio);
- 	delete_from_swap_cache(folio);
- 	spin_lock_irq(&info->lock);
- 	/*
-@@ -1739,8 +1750,8 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
- 	 * be 0 when inode is released and thus trigger WARN_ON(inode->i_blocks) in
- 	 * shmem_evict_inode.
- 	 */
--	info->alloced--;
--	info->swapped--;
-+	info->alloced-=num_swap_pages;
-+	info->swapped-=num_swap_pages;
- 	shmem_recalc_inode(inode);
- 	spin_unlock_irq(&info->lock);
- 	swap_free(swap);
-@@ -1830,7 +1841,7 @@ static int shmem_swapin_folio(struct inode *inode, pgoff_t index,
- 		goto failed;
- 
- 	spin_lock_irq(&info->lock);
--	info->swapped--;
-+	info->swapped-= folio_nr_pages(folio);
- 	shmem_recalc_inode(inode);
- 	spin_unlock_irq(&info->lock);
- 
-@@ -2657,8 +2668,8 @@ int shmem_mfill_atomic_pte(pmd_t *dst_pmd,
- 		goto out_delete_from_cache;
- 
- 	spin_lock_irq(&info->lock);
--	info->alloced++;
--	inode->i_blocks += PAGE_SECTORS;
-+	info->alloced += folio_nr_pages(folio);
-+	inode->i_blocks += PAGE_SECTORS << folio_order(folio);
- 	shmem_recalc_inode(inode);
- 	spin_unlock_irq(&info->lock);
- 
--- 
-2.39.2
+-	return bioset_init(&iomap_ioend_bioset, 4 * (PAGE_SIZE / SECTOR_SIZE),
++	return bioset_init(&iomap_ioend_bioset, 4 * PAGE_SECTORS,
 
+The shift just seemed optimal if we're just going to change it.
+
+  Luis
