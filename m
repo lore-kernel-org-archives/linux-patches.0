@@ -1,336 +1,108 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC9C2596
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 14:25:52 +0000 (UTC)
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-187b70ab997so24687136fac.0
-        for <patches@lists.linux.dev>; Mon, 24 Apr 2023 07:25:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682346351; x=1684938351;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zKS+UBunzq6RfUrusjalANtwKikt5ldpe5+nBfA+L40=;
-        b=dCtzoGH6Qn9+Lq9vX9Hoq0tuDq+B0xGs6WXZL4ZJjiV0wyiz3ZrffOrKd1lhNsEYcA
-         c5jgaQWBWVV85KdGWu4XFZVGf4zYmrCSf1A3qouLH4lSJKjQIw0Pte2EB6FvCYGMm9id
-         zob2QzjXP+H5ksLaqVQvXowYFSPu3kFxc4NqxBPuUWrqjAGJf0PEKICVFcO4M9iFmJC4
-         DAxieo3a4u20dH1y30Fxdfng59czns7NFttybfi4l6Y6As7cMwGMuxfB0Y7QaXXwspVv
-         I64Es9jBvK36KosnfvBa4NBPPoLa2LdLyuZFxm9bsEXTVSpYlg0L2GLrSm6PJldy/Ktv
-         yIiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682346351; x=1684938351;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zKS+UBunzq6RfUrusjalANtwKikt5ldpe5+nBfA+L40=;
-        b=H/jK2rOYjOiNX2cbxHqI94EAdLulxgtQNn1e4TzcDY01wqqJgX5NqX2X24STEvNCop
-         bSLcZ3wH1PPLoTz7udQB2UHfG0J1QeJst1eai+1p3OqnpmUetAmcuvwAZnPwtfI+Bitp
-         Uu60l0ErrFS/hp22hZPaxntWS3WN4MUMhjKBUc4f5J8E60NH6VC+qghFmT+0s4xS8baF
-         ypymUgjdnW9ah4EAlVpFXFwcdG7TMVjCcO2ft9T4oaGlJff58csEm1DQjOibCIv6FWUH
-         TapZa3OJ8DyPBrNDWF6pkwwR/AZWK10t5tP6zRweH6YcnYIRx4wYVW+s5gnhtwSbh5sF
-         qhFg==
-X-Gm-Message-State: AAQBX9cKu17rP0Jg1lp3eaHXcfU2AHIAyz0L9V+FDRZ9OFF08imHHfrZ
-	WWsC3Ot/pSTbmTI8Ibj0s8A=
-X-Google-Smtp-Source: AKy350YBZkhcmWOL6eMDDY6RuJrJMKAU7V18TedHplJCqLwmQ+gvFhsZzeTwfTlpU2SlmkQRWXpW4Q==
-X-Received: by 2002:aca:db56:0:b0:38e:4e96:1292 with SMTP id s83-20020acadb56000000b0038e4e961292mr10895461oig.3.1682346351041;
-        Mon, 24 Apr 2023 07:25:51 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id r66-20020acac145000000b0038c36edc51dsm4546095oif.24.2023.04.24.07.25.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Apr 2023 07:25:50 -0700 (PDT)
-Message-ID: <dfa10c1f-43f6-a93e-e4ca-2362b895636e@gmail.com>
-Date: Mon, 24 Apr 2023 11:24:54 -0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248B02CA2
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 15:21:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B19BC433EF
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 15:21:54 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=permerror (0-bit key) header.d=inbox.ru header.i=@inbox.ru header.b="lXmskqq7"
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Mon, 24 Apr 2023 16:21:50 +0100
+Resent-Message-ID: <ZEaejlnZbM/pIuEQ@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Fri, 21 Apr 2023 22:20:03 +0100
+Received: from dfw.source.kernel.org ([139.178.84.217])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=wsCX=AM=inbox.ru=fido_max@kernel.org>)
+	id 1ppyAi-00D6E7-94
+	for broonie@sirena.co.uk; Fri, 21 Apr 2023 22:20:02 +0100
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 8D176638DB
+	for <broonie@sirena.co.uk>; Fri, 21 Apr 2023 21:19:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id 108DCC4339E; Fri, 21 Apr 2023 21:19:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2C181C4339B
+	for <broonie@kernel.org>; Fri, 21 Apr 2023 21:19:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 2C181C4339B
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=inbox.ru
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=inbox.ru
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail4;
+	h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=mkBPQpT2uDxwxYBa8lzR7tPgzhfW+0Cg4P9/VNOLqkU=;
+	t=1682111996;x=1682201996; 
+	b=lXmskqq7hQbpafPGqakK1u8khFPDQ5St5EY92ANoeQ/1SIwND356tjmK1pnLkFyJHD2MR4iE9ZCv1CDD4KZok91Dz41yy7fHomg1s5UMQj8f8RT3DHHzkDgylCvtODj7QbqEHKbt3l6uk4xKTRr68/ZRCLkKKUgrMIvaK2MQRU6bvU2lm1L0TY2qK+ZI1Gjs9M3mR3CIO1RlvwljayvqgKPOxEL6fED3xkYSOWlfXsWc6pfQ0nY/nroPOlgsG5Ih4w1UWYE86b68obGTdACqxbg+7h0wzZlRAWfNmiO15vyAeKxsWx1blEoq6bw+ZXs+Gw2XVYwXmZaqrc1Q4PUqBA==;
+Received: by smtpng3.m.smailru.net with esmtpa (envelope-from <fido_max@inbox.ru>)
+	id 1ppyAb-0007fo-6Q; Sat, 22 Apr 2023 00:19:53 +0300
+From: Maxim Kochetkov <fido_max@inbox.ru>
+To: alsa-devel@alsa-project.org
+Cc: lgirdwood@gmail.com,
+	broonie@kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	krzysztof.kozlowski@linaro.org,
+	pierre-louis.bossart@linux.intel.com,
+	rf@opensource.cirrus.com,
+	ckeepax@opensource.cirrus.com,
+	shumingf@realtek.com,
+	ryans.lee@analog.com,
+	herve.codina@bootlin.com,
+	wangweidong.a@awinic.com,
+	ajye_huang@compal.corp-partner.google.com,
+	Maxim Kochetkov <fido_max@inbox.ru>
+Date: Sat, 22 Apr 2023 00:19:50 +0300
+Message-Id: <20230421211950.20972-1-fido_max@inbox.ru>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 4/4] rust: init: update macro expansion example in docs
-Content-Language: en-US
-To: Benno Lossin <benno.lossin@proton.me>, Miguel Ojeda <ojeda@kernel.org>,
- Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20230424081112.99890-1-benno.lossin@proton.me>
- <20230424081112.99890-4-benno.lossin@proton.me>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230424081112.99890-4-benno.lossin@proton.me>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtpng3.m.smailru.net; auth=pass smtp.auth=fido_max@inbox.ru smtp.mailfrom=fido_max@inbox.ru
+X-Mailru-Src: smtp
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD9D2463843EA06979D4923782C71F503BD5FD0CB5EA03BBE6C182A05F538085040897E8460EA5BFD48E58EBCDBA8257DB6C9035EBA01E2AAF0ED3A9DCD78103F7F
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE75C385DEB91CEC222EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006375FE8AD9F0D2764EB8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8D31C4A7601E1FFD751569911C20E60E86F9789CCF6C18C3F8528715B7D10C86878DA827A17800CE77A825AB47F0FC8649FA2833FD35BB23D9E625A9149C048EE599709FD55CB46A6CB629EEF1311BF91D2E47CDBA5A96583BD4B6F7A4D31EC0BC014FD901B82EE079FA2833FD35BB23D27C277FBC8AE2E8BCD8DAA7A11EFD9E5A471835C12D1D977C4224003CC8364762BB6847A3DEAEFB0F43C7A68FF6260569E8FC8737B5C22494854413538E1713FE827F84554CEF50127C277FBC8AE2E8BA83251EDC214901ED5E8D9A59859A8B65D56369A3576CBA5089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
+X-C1DE0DAB: 0D63561A33F958A57CAC927ECD9E36548924936084C36666DA065E124E547C8DF87CCE6106E1FC07E67D4AC08A07B9B06A1CB4668A9CA5FA9C5DF10A05D560A950611B66E3DA6D700B0A020F03D25A0997E3FB2386030E77
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF076D43E4B70E59512F934BB212E1E1C5F18277E75E8C258795EA9BD1FBC1427442A4A3B3B141354EF42790DB0C4B6428CBC098EC20143AA0289735F80CBCFD6309F6894F2AE0026643082AE146A756F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojr0si6YxBz7SnpGaumsYvHw==
+X-Mailru-Sender: 689FA8AB762F73933AF1F914F131DBF57B2B9E294042580675C1FDBA28D1CD9698CC072019C18A892CA7F8C7C9492E1F2F5E575105D0B01ADBE2EF17B331888EEAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mras: Ok
+X-SA-Exim-Connect-IP: 139.178.84.217
+X-SA-Exim-Mail-From: SRS0=wsCX=AM=inbox.ru=fido_max@kernel.org
+Subject: [PATCH v2] ASoC: max98090: make it selectable
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: VyWH9/EOBJJV
 
-On 4/24/23 05:11, Benno Lossin wrote:
-> Also improve the explaining comments.
-> 
-> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
-> ---
->  rust/kernel/init/macros.rs | 85 +++++++++++++++++++++-----------------
->  1 file changed, 48 insertions(+), 37 deletions(-)
-> 
-> diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
-> index 541cfad1d8be..00aa4e956c0a 100644
-> --- a/rust/kernel/init/macros.rs
-> +++ b/rust/kernel/init/macros.rs
-> @@ -16,8 +16,9 @@
->  //!
->  //! We will look at the following example:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! # use kernel::init::*;
-> +//! # use core::pin::Pin;
->  //! #[pin_data]
->  //! #[repr(C)]
->  //! struct Bar<T> {
-> @@ -71,11 +72,12 @@
->  //!
->  //! Here is the definition of `Bar` from our example:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! # use kernel::init::*;
->  //! #[pin_data]
->  //! #[repr(C)]
->  //! struct Bar<T> {
-> +//!     #[pin]
->  //!     t: T,
->  //!     pub x: usize,
->  //! }
-> @@ -83,7 +85,7 @@
->  //!
->  //! This expands to the following code:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! // Firstly the normal definition of the struct, attributes are preserved:
->  //! #[repr(C)]
->  //! struct Bar<T> {
-> @@ -116,20 +118,22 @@
->  //!         unsafe fn t<E>(
->  //!             self,
->  //!             slot: *mut T,
-> -//!             init: impl ::kernel::init::Init<T, E>,
-> +//!             // Since `t` is `#[pin]`, this is `PinInit`.
-> +//!             init: impl ::kernel::init::PinInit<T, E>,
->  //!         ) -> ::core::result::Result<(), E> {
-> -//!             unsafe { ::kernel::init::Init::__init(init, slot) }
-> +//!             unsafe { ::kernel::init::PinInit::__pinned_init(init, slot) }
->  //!         }
->  //!         pub unsafe fn x<E>(
->  //!             self,
->  //!             slot: *mut usize,
-> +//!             // Since `x` is not `#[pin]`, this is `Init`.
->  //!             init: impl ::kernel::init::Init<usize, E>,
->  //!         ) -> ::core::result::Result<(), E> {
->  //!             unsafe { ::kernel::init::Init::__init(init, slot) }
->  //!         }
->  //!     }
->  //!     // Implement the internal `HasPinData` trait that associates `Bar` with the pin-data struct
-> -//!     // that we constructed beforehand.
-> +//!     // that we constructed above.
->  //!     unsafe impl<T> ::kernel::init::__internal::HasPinData for Bar<T> {
->  //!         type PinData = __ThePinData<T>;
->  //!         unsafe fn __pin_data() -> Self::PinData {
-> @@ -160,6 +164,8 @@
->  //!     struct __Unpin<'__pin, T> {
->  //!         __phantom_pin: ::core::marker::PhantomData<fn(&'__pin ()) -> &'__pin ()>,
->  //!         __phantom: ::core::marker::PhantomData<fn(Bar<T>) -> Bar<T>>,
-> +//!         // Our only `#[pin]` field is `t`.
-> +//!         t: T,
->  //!     }
->  //!     #[doc(hidden)]
->  //!     impl<'__pin, T>
-> @@ -193,7 +199,7 @@
->  //!
->  //! Here is the impl on `Bar` defining the new function:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! impl<T> Bar<T> {
->  //!     fn new(t: T) -> impl PinInit<Self> {
->  //!         pin_init!(Self { t, x: 0 })
-> @@ -203,7 +209,7 @@
->  //!
->  //! This expands to the following code:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! impl<T> Bar<T> {
->  //!     fn new(t: T) -> impl PinInit<Self> {
->  //!         {
-> @@ -232,25 +238,31 @@
->  //!                     // that will refer to this struct instead of the one defined above.
->  //!                     struct __InitOk;
->  //!                     // This is the expansion of `t,`, which is syntactic sugar for `t: t,`.
-> -//!                     unsafe { ::core::ptr::write(&raw mut (*slot).t, t) };
-> +//!                     unsafe { ::core::ptr::write(::core::addr_of_mut!((*slot).t), t) };
->  //!                     // Since initialization could fail later (not in this case, since the error
-> -//!                     // type is `Infallible`) we will need to drop this field if it fails. This
-> -//!                     // `DropGuard` will drop the field when it gets dropped and has not yet
-> -//!                     // been forgotten. We make a reference to it, so users cannot `mem::forget`
-> -//!                     // it from the initializer, since the name is the same as the field.
-> +//!                     // type is `Infallible`) we will need to drop this field if there is an
-> +//!                     // error later. This `DropGuard` will drop the field when it gets dropped
-> +//!                     // and has not yet been forgotten. We make a reference to it, so users
-> +//!                     // cannot `mem::forget` it from the initializer, since the name is the same
-> +//!                     // as the field (including hygiene).
->  //!                     let t = &unsafe {
-> -//!                         ::kernel::init::__internal::DropGuard::new(&raw mut (*slot).t)
-> +//!                         ::kernel::init::__internal::DropGuard::new(
-> +//!                             ::core::addr_of_mut!((*slot).t),
-> +//!                         )
->  //!                     };
->  //!                     // Expansion of `x: 0,`:
->  //!                     // Since this can be an arbitrary expression we cannot place it inside of
->  //!                     // the `unsafe` block, so we bind it here.
->  //!                     let x = 0;
-> -//!                     unsafe { ::core::ptr::write(&raw mut (*slot).x, x) };
-> +//!                     unsafe { ::core::ptr::write(::core::addr_of_mut!((*slot).x), x) };
-> +//!                     // We again create a `DropGuard`.
->  //!                     let x = &unsafe {
-> -//!                         ::kernel::init::__internal::DropGuard::new(&raw mut (*slot).x)
-> +//!                         ::kernel::init::__internal::DropGuard::new(
-> +//!                             ::core::addr_of_mut!((*slot).x),
-> +//!                         )
->  //!                     };
->  //!
-> -//!                     // Here we use the type checker to ensuer that every field has been
-> +//!                     // Here we use the type checker to ensure that every field has been
->  //!                     // initialized exactly once, since this is `if false` it will never get
->  //!                     // executed, but still type-checked.
->  //!                     // Additionally we abuse `slot` to automatically infer the correct type for
-> @@ -272,7 +284,7 @@
->  //!                         };
->  //!                     }
->  //!                     // Since initialization has successfully completed, we can now forget the
-> -//!                     // guards.
-> +//!                     // guards. This is not `mem::forget`, since we only have `&DropGuard`.
->  //!                     unsafe { ::kernel::init::__internal::DropGuard::forget(t) };
->  //!                     unsafe { ::kernel::init::__internal::DropGuard::forget(x) };
->  //!                 }
-> @@ -280,7 +292,7 @@
->  //!                 // `__InitOk` that we need to return.
->  //!                 Ok(__InitOk)
->  //!             });
-> -//!             // Change the return type of the closure.
-> +//!             // Change the return type from `__InitOk` to `()`.
->  //!             let init = move |slot| -> ::core::result::Result<(), ::core::convert::Infallible> {
->  //!                 init(slot).map(|__InitOk| ())
->  //!             };
-> @@ -299,7 +311,7 @@
->  //! Since we already took a look at `#[pin_data]` on `Bar`, this section will only explain the
->  //! differences/new things in the expansion of the `Foo` definition:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! #[pin_data(PinnedDrop)]
->  //! struct Foo {
->  //!     a: usize,
-> @@ -310,7 +322,7 @@
->  //!
->  //! This expands to the following code:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! struct Foo {
->  //!     a: usize,
->  //!     b: Bar<u32>,
-> @@ -330,8 +342,6 @@
->  //!         unsafe fn b<E>(
->  //!             self,
->  //!             slot: *mut Bar<u32>,
-> -//!             // Note that this is `PinInit` instead of `Init`, this is because `b` is
-> -//!             // structurally pinned, as marked by the `#[pin]` attribute.
->  //!             init: impl ::kernel::init::PinInit<Bar<u32>, E>,
->  //!         ) -> ::core::result::Result<(), E> {
->  //!             unsafe { ::kernel::init::PinInit::__pinned_init(init, slot) }
-> @@ -359,14 +369,13 @@
->  //!     struct __Unpin<'__pin> {
->  //!         __phantom_pin: ::core::marker::PhantomData<fn(&'__pin ()) -> &'__pin ()>,
->  //!         __phantom: ::core::marker::PhantomData<fn(Foo) -> Foo>,
-> -//!         // Since this field is `#[pin]`, it is listed here.
->  //!         b: Bar<u32>,
->  //!     }
->  //!     #[doc(hidden)]
->  //!     impl<'__pin> ::core::marker::Unpin for Foo where __Unpin<'__pin>: ::core::marker::Unpin {}
->  //!     // Since we specified `PinnedDrop` as the argument to `#[pin_data]`, we expect `Foo` to
->  //!     // implement `PinnedDrop`. Thus we do not need to prevent `Drop` implementations like
-> -//!     // before, instead we implement it here and delegate to `PinnedDrop`.
-> +//!     // before, instead we implement `Drop` here and delegate to `PinnedDrop`.
->  //!     impl ::core::ops::Drop for Foo {
->  //!         fn drop(&mut self) {
->  //!             // Since we are getting dropped, no one else has a reference to `self` and thus we
-> @@ -388,7 +397,7 @@
->  //!
->  //! Here is the `PinnedDrop` impl for `Foo`:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! #[pinned_drop]
->  //! impl PinnedDrop for Foo {
->  //!     fn drop(self: Pin<&mut Self>) {
-> @@ -399,7 +408,7 @@
->  //!
->  //! This expands to the following code:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! // `unsafe`, full path and the token parameter are added, everything else stays the same.
->  //! unsafe impl ::kernel::init::PinnedDrop for Foo {
->  //!     fn drop(self: Pin<&mut Self>, _: ::kernel::init::__internal::OnlyCallFromDrop) {
-> @@ -410,10 +419,10 @@
->  //!
->  //! ## `pin_init!` on `Foo`
->  //!
-> -//! Since we already took a look at `pin_init!` on `Bar`, this section will only explain the
-> -//! differences/new things in the expansion of `pin_init!` on `Foo`:
-> +//! Since we already took a look at `pin_init!` on `Bar`, this section will only show the expansion
-> +//! of `pin_init!` on `Foo`:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! let a = 42;
->  //! let initializer = pin_init!(Foo {
->  //!     a,
-> @@ -423,7 +432,7 @@
->  //!
->  //! This expands to the following code:
->  //!
-> -//! ```rust
-> +//! ```rust,ignore
->  //! let a = 42;
->  //! let initializer = {
->  //!     struct __InitOk;
-> @@ -438,13 +447,15 @@
->  //!     >(data, move |slot| {
->  //!         {
->  //!             struct __InitOk;
-> -//!             unsafe { ::core::ptr::write(&raw mut (*slot).a, a) };
-> -//!             let a = &unsafe { ::kernel::init::__internal::DropGuard::new(&raw mut (*slot).a) };
-> +//!             unsafe { ::core::ptr::write(::core::addr_of_mut!((*slot).a), a) };
-> +//!             let a = &unsafe {
-> +//!                 ::kernel::init::__internal::DropGuard::new(::core::addr_of_mut!((*slot).a))
-> +//!             };
->  //!             let b = Bar::new(36);
-> -//!             // Here we use `data` to access the correct field and require that `b` is of type
-> -//!             // `PinInit<Bar<u32>, Infallible>`.
-> -//!             unsafe { data.b(&raw mut (*slot).b, b)? };
-> -//!             let b = &unsafe { ::kernel::init::__internal::DropGuard::new(&raw mut (*slot).b) };
-> +//!             unsafe { data.b(::core::addr_of_mut!((*slot).b), b)? };
-> +//!             let b = &unsafe {
-> +//!                 ::kernel::init::__internal::DropGuard::new(::core::addr_of_mut!((*slot).b))
-> +//!             };
->  //!
->  //!             #[allow(unreachable_code, clippy::diverging_sub_expression)]
->  //!             if false {
-> --
-> 2.40.0
-> 
-> 
+There is no way to select max98090 from menuconfig right now.
+Add a Kconfig menu description to allow building the driver standalone.
+It will allow this codec to be used by any other I2S master without
+adding extra sound card entry in Kconfig.
 
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Signed-off-by: Maxim Kochetkov <fido_max@inbox.ru>
+---
+ sound/soc/codecs/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index 79d2362ad055..8020097d4e4c 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -1090,7 +1090,7 @@ config SND_SOC_MAX98088
+ 	depends on I2C
+ 
+ config SND_SOC_MAX98090
+-	tristate
++	tristate "Maxim MAX98090 CODEC"
+ 	depends on I2C
+ 
+ config SND_SOC_MAX98095
+-- 
+2.39.2
+
