@@ -1,121 +1,132 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEC8625
-	for <patches@lists.linux.dev>; Fri, 21 Apr 2023 08:39:05 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id D5EC321A4D;
-	Fri, 21 Apr 2023 08:39:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1682066343; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=BTlq0dIo+CYwQTq80W5QX5pdZ/tX5QOHdE+5C7sG38Q=;
-	b=X/f+d+b8A8ImVeXEyEdSYf9yH+H1ZVBG43+kjfenmCp1mgKEA5ow88sjZsPwtB4Q+kGUNU
-	CWE4OoRzVIpXdY3iCQxZ1pIEQoz2DOXZIAOdxnnwnCS2BHYWuiURAtgcCRdSlrhKR9KMvD
-	WnF5bFdO0ZTjyDMWIcrXV5hZzr8Bu2M=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1682066343;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=BTlq0dIo+CYwQTq80W5QX5pdZ/tX5QOHdE+5C7sG38Q=;
-	b=kVSC8+LN9vrpsekbi6X2P6s9RdZTlecXkjUWgbTnhMQPFRlP/6ehCPzZHseSh6SLS0F2QJ
-	DFIb+nj/zFJx4PDw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id A98E41390E;
-	Fri, 21 Apr 2023 08:39:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id qJSwKKdLQmS+NQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 21 Apr 2023 08:39:03 +0000
-Message-ID: <a27e87a0-04f3-2f8e-2494-3036ed7dabc9@suse.cz>
-Date: Fri, 21 Apr 2023 10:39:03 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD73C5670
+	for <patches@lists.linux.dev>; Fri, 21 Apr 2023 15:12:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31CBC433D2;
+	Fri, 21 Apr 2023 15:12:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1682089974;
+	bh=YxpowVHwsKeFgDfSN4DkprW9h6O8h9UyRh/INgZFhQA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=u5TjJixiqGqbmI2F/94VhizZOx77gxuv7jWOSb6YCSISr8e7x5V7lE3URl+LlLgfF
+	 gJFeUEhWiiI9CPmZsAHPYWMYb+TJuYec0Ejv+XgWSphQe3ph01AHoz+VsHqItKXevB
+	 OQd0veR80QyuIlsy0eqg8XzV7CCslr7Qoeh6UXr0=
+Date: Fri, 21 Apr 2023 17:12:51 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: lucas.demarchi@intel.com, david@redhat.com, patches@lists.linux.dev,
+	linux-modules@vger.kernel.org, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
+	prarit@redhat.com, torvalds@linux-foundation.org, rafael@kernel.org,
+	christophe.leroy@csgroup.eu, tglx@linutronix.de,
+	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
+	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
+	mhocko@suse.com, dave.hansen@linux.intel.com,
+	colin.i.king@gmail.com, jim.cromie@gmail.com,
+	catalin.marinas@arm.com, jbaron@akamai.com,
+	rick.p.edgecombe@intel.com, j.granados@samsung.com
+Subject: Re: [PATCH] module: add debugging auto-load duplicate module support
+Message-ID: <ZEKn89wPH19r2bM4@kroah.com>
+References: <20230418204636.791699-1-mcgrof@kernel.org>
+ <2023041951-evolution-unwitting-1791@gregkh>
+ <ZEB6DmF+l3LVrpFI@bombadil.infradead.org>
+ <ZEDOWi8ifghwmOjp@kroah.com>
+ <ZEGopJ8VAYnE7LQ2@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: [GIT PULL] slab updates for 6.4
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZEGopJ8VAYnE7LQ2@bombadil.infradead.org>
 
+On Thu, Apr 20, 2023 at 02:03:32PM -0700, Luis Chamberlain wrote:
+> On Thu, Apr 20, 2023 at 07:32:10AM +0200, Greg KH wrote:
+> > On Wed, Apr 19, 2023 at 04:32:30PM -0700, Luis Chamberlain wrote:
+> > > > It's not "wasted", as it is returned when the module is determined to be
+> > > > a duplicate.  Otherwise everyone will want this enabled as they think it
+> > > > will actually save memory.
+> > > 
+> > > I'll change the language to be clear the issue is memory pressure early
+> > > on boot. I'll also add a bit of language to help at least guide people
+> > > to realize that the real value-add for this, ie, I'll have to mention we
+> > > suspect issue is udev and not module auto-loading and that this however
+> > > may still help find a few cases we can optimize for.
+> > 
+> > This isn't udev's "problem", all it is doing is what the kernel asked it
+> > to do.  The kernel said "Here's a new device I found, load a module for
+> > it please!"
+> 
+> If you believe that then the issue is still a kernel issue, and the
+> second part to that sentence "load a module for it" was done without
+> consideration of the implications, or without optimizations in mind.
+> Given the implications were perhaps not well understood it is unfair
+> for us to be hard on ourselves on that. But now we know, ideally if we
+> could we *should* only issue a request for a module *once* during boot.
 
-Hi Linus,
+But there is no mapping between devices and modules other than what is
+exported in the module info and that is up to userspace to handle.
 
-with the assumption that there's no rc8 this time, here's the slab pull
-request ahead of the 6.4 merge window. And if there is rc8 after all,
-shouldn't matter. Please pull:
+> Where does the kernel actually say "load a module"?
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.4
+The driver core says "hey a new device is now present!"
 
-The main change is naturally the SLOB removal. Since its deprecation
-in 6.2 I've seen no complaints so hopefully SLUB_(TINY) works well for
-everyone and we can proceed.
+Userspace takes that message and calls kmod with the device information
+which then determines what module to load by looking at the device
+aliases.
 
-Besides the code cleanup, the main immediate benefit will be allowing
-kfree() family of function to work on kmem_cache_alloc() objects, which
-was incompatible with SLOB. This includes kfree_rcu() which had no
-kmem_cache_free_rcu() counterpart yet and now it shouldn't be necessary
-anymore.
+> Isn't that just an implied gesture?
 
-Besides that, there are several small code and comment improvements from
-Thomas, Thorsten and Vernon.
+Yes.
 
-----------------------------------------------------------------
-Thomas Weißschuh (1):
-      mm: slub: make kobj_type structure constant
+> > And it's the kmod code here, not udev itself doing all of this.
+> 
+> Yes, IMHO kmod could and *should* be enhanced to share a loading context
+> during boot so to avoid duplicates too and then udev would have to
+> embrace such functionality. That's going to take time to propagate, as
+> you can imagine.
 
-Thorsten Scherer (1):
-      slab: Adjust comment after refactoring of gfp.h
+udev is just the transport to kmod here, it's not in the job of
+filtering duplicate messages.
 
-Vernon Yang (1):
-      mm/slub: fix help comment of SLUB_DEBUG
+> > Why not
+> > just rate-limit it in userspace if your system can't handle 10's of
+> > thousands of kmod calls all at once? I think many s390 systems did this
+> > decades ago when they were controlling 10's of thousands of scsi devices
+> > and were hit with "device detection storms" at boot like this.
+> 
+> Boot is a special context and in this particular case I agree userspace
+> kmod could/should be extended to avoid duplicate module requests in that
+> context. But likewise the kernel should only have to try to issue a
+> request for a single module once, if it could easily do that.
 
-Vlastimil Babka (8):
-      mm/slob: remove CONFIG_SLOB
-      mm, page_flags: remove PG_slob_free
-      mm, pagemap: remove SLOB and SLQB from comments and documentation
-      mm/slab: remove CONFIG_SLOB code from slab common code
-      mm/slob: remove slob.c
-      mm/slab: document kfree() as allowed for kmem_cache_alloc() objects
-      Merge branch 'slab/for-6.4/trivial' into slab/for-next
-      Merge branch 'slab/for-6.4/slob-removal' into slab/for-next
+Are you sure that this is happening at boot in a way that userspace
+didn't just trigger it on its own after init started up?  That happens
+as a "coldboot" walk of the device tree and all uevent are regenerated.
+That is userspace asking for this, so there's nothing that the kernel
+can do.
 
- Documentation/admin-guide/mm/pagemap.rst     |   6 +-
- Documentation/core-api/memory-allocation.rst |  17 +-
- fs/proc/page.c                               |   9 +-
- include/linux/page-flags.h                   |   4 -
- include/linux/rcupdate.h                     |   6 +-
- include/linux/slab.h                         |  41 +-
- init/Kconfig                                 |   2 +-
- kernel/configs/tiny.config                   |   1 -
- mm/Kconfig                                   |  22 -
- mm/Kconfig.debug                             |   6 +-
- mm/Makefile                                  |   2 -
- mm/slab.h                                    |  61 ---
- mm/slab_common.c                             |   7 +-
- mm/slob.c                                    | 757 ---------------------------
- mm/slub.c                                    |   2 +-
- tools/mm/page-types.c                        |   6 +-
- 16 files changed, 32 insertions(+), 917 deletions(-)
- delete mode 100644 mm/slob.c
+> This does beg the question, why force userspace to rate limit if we
+> can do better in the kernel? Specially if *we're the ones*, as you say,
+> that are hinting to userspace to shoot back loading modules for us and we
+> know we're just going to drop duplicates?
+
+Maybe error out of duplicate module loading earlier?  I don't know,
+sorry.
+
+> > What specific devices and bus types are the problem here for these systems?
+> 
+> My best assessment of the situation is that each CPU in udev ends up triggering
+> a load of duplicate set of modules, not just one, but *a lot*. Not sure
+> what heuristics udev uses to load a set of modules per CPU.
+
+Again, finding which device and bus is causing the problem is going to
+be key here to try to solve the issue.  Are you logging duplicate module
+loads by name as well?
+
+thanks,
+
+greg k-h
