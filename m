@@ -1,132 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD73C5670
-	for <patches@lists.linux.dev>; Fri, 21 Apr 2023 15:12:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31CBC433D2;
-	Fri, 21 Apr 2023 15:12:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682089974;
-	bh=YxpowVHwsKeFgDfSN4DkprW9h6O8h9UyRh/INgZFhQA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=u5TjJixiqGqbmI2F/94VhizZOx77gxuv7jWOSb6YCSISr8e7x5V7lE3URl+LlLgfF
-	 gJFeUEhWiiI9CPmZsAHPYWMYb+TJuYec0Ejv+XgWSphQe3ph01AHoz+VsHqItKXevB
-	 OQd0veR80QyuIlsy0eqg8XzV7CCslr7Qoeh6UXr0=
-Date: Fri, 21 Apr 2023 17:12:51 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: lucas.demarchi@intel.com, david@redhat.com, patches@lists.linux.dev,
-	linux-modules@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, pmladek@suse.com, petr.pavlu@suse.com,
-	prarit@redhat.com, torvalds@linux-foundation.org, rafael@kernel.org,
-	christophe.leroy@csgroup.eu, tglx@linutronix.de,
-	peterz@infradead.org, song@kernel.org, rppt@kernel.org,
-	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
-	mhocko@suse.com, dave.hansen@linux.intel.com,
-	colin.i.king@gmail.com, jim.cromie@gmail.com,
-	catalin.marinas@arm.com, jbaron@akamai.com,
-	rick.p.edgecombe@intel.com, j.granados@samsung.com
-Subject: Re: [PATCH] module: add debugging auto-load duplicate module support
-Message-ID: <ZEKn89wPH19r2bM4@kroah.com>
-References: <20230418204636.791699-1-mcgrof@kernel.org>
- <2023041951-evolution-unwitting-1791@gregkh>
- <ZEB6DmF+l3LVrpFI@bombadil.infradead.org>
- <ZEDOWi8ifghwmOjp@kroah.com>
- <ZEGopJ8VAYnE7LQ2@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE795670;
+	Fri, 21 Apr 2023 16:11:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF72C433D2;
+	Fri, 21 Apr 2023 16:11:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1682093499;
+	bh=c90AqEKiidJLf8KZtwvOkDfwb/ynOHdlsUMkIyFs9yE=;
+	h=From:Subject:Date:To:Cc:From;
+	b=KsMdUFQ7RAYytqEu5yiC7RiTDLpxfwzrQhCOZbFOk4nRCZgGe54rlQI93CFEr9ZmI
+	 9SUMhVRhXspg1GFDGqlbtU2j5hJaRBpp+cIy4/0aott+2sXoDNTS3vytPU6JcjGa5a
+	 jEkItwL2RmOyezIvUo/jUMKTLT+I0Gbd2cLOGmX+lA6y+u1oq8hF/EdL4tCQuI9S9r
+	 sCrgMmY7yoylUqIQ3PlIIMimMhewco19YLtAYrVSJY86NgRynjoMnpZjSjxMISOa7/
+	 gi/pzIWpiUhqHLVvsJAcpxDs9F5KceLEZdA3wE5M3NG/yPdNX7X9VrqzEuAxZJBZdG
+	 Q07HrinNJjiKQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH v2 0/2] MIPS: Fix check_bugs() modpost warning
+Date: Fri, 21 Apr 2023 09:11:25 -0700
+Message-Id: <20230419-mips-check_bugs-init-attribute-v2-0-60a7ee65d4bf@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZEGopJ8VAYnE7LQ2@bombadil.infradead.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAK21QmQC/42OUQ6CMBBEr0L67RpaLBG/vIchpoWVbpBCtoVoC
+ He3cAI/30zyZlYRkAmDuGWrYFwo0OgTqFMmGmd8h0BtYqFyVeQXWcFAU4DGYdM/7dwFIE8RTIx
+ Mdo4IuSplXtjWKq1FklgTECwb37hdM5gQkfdiYnzR51h+1IkdhTjy9ziyyD39e3ORIKGSWCK2W
+ ttrde+RPb7PI3ei3rbtB4pVg7rmAAAA
+To: tsbogend@alpha.franken.de
+Cc: ndesaulniers@google.com, linux-mips@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Naresh Kamboju <naresh.kamboju@linaro.org>, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1312; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=c90AqEKiidJLf8KZtwvOkDfwb/ynOHdlsUMkIyFs9yE=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDClOW3edXXEo5c2qg3dOC1izOSm/jlvcIfR9za6ZAfOmO
+ BWLzarh6ChlYRDjYJAVU2Spfqx63NBwzlnGG6cmwcxhZQIZwsDFKQATyephZGjQXXeKRVSdz+99
+ hE75rsZuAcVtsk/FXhkrSv82WDhp612Gf9b9FcceP5sbbrpjVnkn15FNWn2vW79ct2SdaWGx+oi
+ 0PAcA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Thu, Apr 20, 2023 at 02:03:32PM -0700, Luis Chamberlain wrote:
-> On Thu, Apr 20, 2023 at 07:32:10AM +0200, Greg KH wrote:
-> > On Wed, Apr 19, 2023 at 04:32:30PM -0700, Luis Chamberlain wrote:
-> > > > It's not "wasted", as it is returned when the module is determined to be
-> > > > a duplicate.  Otherwise everyone will want this enabled as they think it
-> > > > will actually save memory.
-> > > 
-> > > I'll change the language to be clear the issue is memory pressure early
-> > > on boot. I'll also add a bit of language to help at least guide people
-> > > to realize that the real value-add for this, ie, I'll have to mention we
-> > > suspect issue is udev and not module auto-loading and that this however
-> > > may still help find a few cases we can optimize for.
-> > 
-> > This isn't udev's "problem", all it is doing is what the kernel asked it
-> > to do.  The kernel said "Here's a new device I found, load a module for
-> > it please!"
-> 
-> If you believe that then the issue is still a kernel issue, and the
-> second part to that sentence "load a module for it" was done without
-> consideration of the implications, or without optimizations in mind.
-> Given the implications were perhaps not well understood it is unfair
-> for us to be hard on ourselves on that. But now we know, ideally if we
-> could we *should* only issue a request for a module *once* during boot.
+Hi all,
 
-But there is no mapping between devices and modules other than what is
-exported in the module info and that is up to userspace to handle.
+This series fixes a modpost warning visible in -next from check_bugs()
+and helps avoid a potential, albeit unlikely, warning from
+check_bugs_early().
 
-> Where does the kernel actually say "load a module"?
+---
+Changes in v2:
+- Now two separate patches: one to avoid current check_bugs() warning
+  and one to avoid potential check_bugs_early() warning.
+- Sink body of check_bugs_early() into setup_arch() directly, rather
+  than marking it as __init (Nick).
+- Add Naresh's reported-by to patch 1, which came after v1 was sent.
+- Reword commit messages to note that there is not a problem at run time
+  because check_bugs() and check_bugs_early(), while not marked __init,
+  are only called from __init functions; modpost does not know this
+  though, hence the warning.
+- Link to v1: https://lore.kernel.org/r/20230419-mips-check_bugs-init-attribute-v1-1-91e6eed55b89@kernel.org
 
-The driver core says "hey a new device is now present!"
+---
+Nathan Chancellor (2):
+      MIPS: Mark check_bugs() as __init
+      MIPS: Sink body of check_bugs_early() into its only call site
 
-Userspace takes that message and calls kmod with the device information
-which then determines what module to load by looking at the device
-aliases.
+ arch/mips/include/asm/bugs.h | 8 +-------
+ arch/mips/kernel/setup.c     | 3 ++-
+ 2 files changed, 3 insertions(+), 8 deletions(-)
+---
+base-commit: 6a8f57ae2eb07ab39a6f0ccad60c760743051026
+change-id: 20230419-mips-check_bugs-init-attribute-026103bdb255
 
-> Isn't that just an implied gesture?
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-Yes.
-
-> > And it's the kmod code here, not udev itself doing all of this.
-> 
-> Yes, IMHO kmod could and *should* be enhanced to share a loading context
-> during boot so to avoid duplicates too and then udev would have to
-> embrace such functionality. That's going to take time to propagate, as
-> you can imagine.
-
-udev is just the transport to kmod here, it's not in the job of
-filtering duplicate messages.
-
-> > Why not
-> > just rate-limit it in userspace if your system can't handle 10's of
-> > thousands of kmod calls all at once? I think many s390 systems did this
-> > decades ago when they were controlling 10's of thousands of scsi devices
-> > and were hit with "device detection storms" at boot like this.
-> 
-> Boot is a special context and in this particular case I agree userspace
-> kmod could/should be extended to avoid duplicate module requests in that
-> context. But likewise the kernel should only have to try to issue a
-> request for a single module once, if it could easily do that.
-
-Are you sure that this is happening at boot in a way that userspace
-didn't just trigger it on its own after init started up?  That happens
-as a "coldboot" walk of the device tree and all uevent are regenerated.
-That is userspace asking for this, so there's nothing that the kernel
-can do.
-
-> This does beg the question, why force userspace to rate limit if we
-> can do better in the kernel? Specially if *we're the ones*, as you say,
-> that are hinting to userspace to shoot back loading modules for us and we
-> know we're just going to drop duplicates?
-
-Maybe error out of duplicate module loading earlier?  I don't know,
-sorry.
-
-> > What specific devices and bus types are the problem here for these systems?
-> 
-> My best assessment of the situation is that each CPU in udev ends up triggering
-> a load of duplicate set of modules, not just one, but *a lot*. Not sure
-> what heuristics udev uses to load a set of modules per CPU.
-
-Again, finding which device and bus is causing the problem is going to
-be key here to try to solve the issue.  Are you logging duplicate module
-loads by name as well?
-
-thanks,
-
-greg k-h
