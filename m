@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613E1612D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5A46FBB
 	for <patches@lists.linux.dev>; Fri, 21 Apr 2023 19:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=u68XQLIrnZKRacEesRmgMeebDfY2xepEp8VfzdXWDIU=; b=v2Yysw6qnZCKZGHYViYMSlL9PX
-	OuzBIdMXAZi9a0Aylm9+m6X0SUR9QfSRQWt6BR+i2NRETsZ6Q+SXuK9lQy5WU4zsg8hL/d+3/HxHP
-	7u16cxddAAH0Levxw7QkEhPJYgLzQoxh9mTY0sW8D3nWNOMD2kKhBNI1vNdffgVDXr/2T8c82Y5qU
-	E9eADBnb7SD7yl0vil3K123jE0aHFhVSxq7uYbW8KiUJfJMdOCsVvAmqdVYeer9l8ep8otFOWRNnY
-	KtLnYHU/vkUk7ZqjMNP+nGPPo4GBK2IqyC7H5LPrFjy8QpCc92ciVZUd47CkvDBUuKvVuqlD5AieX
-	QRQ0Q9rQ==;
+	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=hmvMFrifaP2CWzwzaleGenI7Qmq7A3BDCDXiJa7DZeY=; b=PPDW9v79Yn0Yj4ggnf7g8Mg9q5
+	Xtl7diAuW97jY5PnrakPeKx7uEQritarSJ5Gy6GeiZKStBUOWkuqgoi2ruOuqQt8wRD8LH5r3jzFM
+	1TqV+37Fs6Y24l1+JsPwzN5IYGgcCOdgYYejZpB1GtTwrlpp6Nu0hWrIsmytKQxPVb4kEobOD2hL6
+	/l0IFzM7poLdy5jK5pZZWVKxfurtC0xwjMBvNGWDaEWzFOWcTBB/p7F+L2GKWhtaoYF96Qj3AALTI
+	Oi6Otl6ldN6hH+qNoTIBLDC/qTCgXrQtH5ZgqPsm0RrQZj6/zPyrIWxvLeyNztXQS0FsjDsYZzZsT
+	E44jXZfw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1ppwtU-00BlaV-1S;
+	id 1ppwtU-00Blab-1s;
 	Fri, 21 Apr 2023 19:58:08 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: axboe@kernel.dk,
@@ -41,10 +41,12 @@ Cc: patches@lists.linux.dev,
 	da.gomez@samsung.com,
 	kbusch@kernel.org,
 	mcgrof@kernel.org
-Subject: [PATCH 0/5] block: simplify with PAGE_SECTORS_SHIFT
-Date: Fri, 21 Apr 2023 12:58:02 -0700
-Message-Id: <20230421195807.2804512-1-mcgrof@kernel.org>
+Subject: [PATCH 3/5] iomap: simplify iomap_init() with PAGE_SECTORS
+Date: Fri, 21 Apr 2023 12:58:05 -0700
+Message-Id: <20230421195807.2804512-4-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20230421195807.2804512-1-mcgrof@kernel.org>
+References: <20230421195807.2804512-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,27 +56,27 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-A bit of block drivers have their own incantations with
-PAGE_SHIFT - SECTOR_SHIFT. Just simplfy and use PAGE_SECTORS_SHIFT
-all over.
+Just use the PAGE_SECTORS generic define. This produces no functional
+changes. While at it use left shift to simplify this even further.
 
-Based on linux-next next-20230421.
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ fs/iomap/buffered-io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Luis Chamberlain (5):
-  dm integrity: simplify by using PAGE_SECTORS_SHIFT
-  drbd: use PAGE_SECTORS_SHIFT and PAGE_SECTORS
-  iomap: simplify iomap_init() with PAGE_SECTORS
-  dm bufio: simplify by using PAGE_SECTORS_SHIFT
-  zram: use generic PAGE_SECTORS and PAGE_SECTORS_SHIFT
-
- drivers/block/drbd/drbd_bitmap.c |  4 ++--
- drivers/block/zram/zram_drv.c    | 12 ++++++------
- drivers/block/zram/zram_drv.h    |  2 --
- drivers/md/dm-bufio.c            |  4 ++--
- drivers/md/dm-integrity.c        | 10 +++++-----
- fs/iomap/buffered-io.c           |  2 +-
- 6 files changed, 16 insertions(+), 18 deletions(-)
-
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 063133ec77f4..ba2824f405df 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -1819,7 +1819,7 @@ EXPORT_SYMBOL_GPL(iomap_writepages);
+ 
+ static int __init iomap_init(void)
+ {
+-	return bioset_init(&iomap_ioend_bioset, 4 * (PAGE_SIZE / SECTOR_SIZE),
++	return bioset_init(&iomap_ioend_bioset, PAGE_SECTORS << 2,
+ 			   offsetof(struct iomap_ioend, io_inline_bio),
+ 			   BIOSET_NEED_BVECS);
+ }
 -- 
 2.39.2
 
