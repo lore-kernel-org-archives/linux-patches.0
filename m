@@ -1,72 +1,71 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD9333CC
-	for <patches@lists.linux.dev>; Sat, 22 Apr 2023 16:00:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3ECC433EF;
-	Sat, 22 Apr 2023 16:00:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682179220;
-	bh=ixZaYltQkP1Wtn2aJI1La0+GQQqOjwbo95aEe1P8Z+E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=d3qwRXpkx1cESgAYEnj4z/ukcZGp5OjIy/08Ayuj9k6WFkbmnEpaCKLuACQ4hkGKI
-	 ktl9cNHbtpnDcc3CF5LY+E8C4cj1044wBsqcyRXm6NS8002NEzHl77srSRme4TBQ7W
-	 6uVTUB1EJExtcoylmYzLoKegSECgufA+xNzdvIho=
-Date: Sat, 22 Apr 2023 18:00:17 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Guenter Roeck <groeck@chromium.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 003/124] pwm: cros-ec: Explicitly set .polarity in
- .get_state()
-Message-ID: <2023042200-glade-morale-1c08@gregkh>
-References: <20230418120309.539243408@linuxfoundation.org>
- <20230418120309.688458749@linuxfoundation.org>
- <20230418130121.rx2zfwkzjyasghkg@pengutronix.de>
- <2023042239-sloping-sprite-7c24@gregkh>
+Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68D4DA926;
+	Sat, 22 Apr 2023 21:31:06 +0000 (UTC)
+Received: from uucp (helo=alpha)
+	by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
+	id 1pqKoq-0004RI-00; Sat, 22 Apr 2023 23:30:56 +0200
+Received: by alpha.franken.de (Postfix, from userid 1000)
+	id 03F14C0135; Sat, 22 Apr 2023 23:30:42 +0200 (CEST)
+Date: Sat, 22 Apr 2023 23:30:42 +0200
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: ndesaulniers@google.com, linux-mips@vger.kernel.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, Naresh Kamboju <naresh.kamboju@linaro.org>
+Subject: Re: [PATCH v2 0/2] MIPS: Fix check_bugs() modpost warning
+Message-ID: <20230422213042.GA7318@alpha.franken.de>
+References: <20230419-mips-check_bugs-init-attribute-v2-0-60a7ee65d4bf@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2023042239-sloping-sprite-7c24@gregkh>
+In-Reply-To: <20230419-mips-check_bugs-init-attribute-v2-0-60a7ee65d4bf@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Sat, Apr 22, 2023 at 05:05:08PM +0200, Greg Kroah-Hartman wrote:
-> On Tue, Apr 18, 2023 at 03:01:21PM +0200, Uwe Kleine-König wrote:
-> > On Tue, Apr 18, 2023 at 02:20:22PM +0200, Greg Kroah-Hartman wrote:
-> > > From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-> > > 
-> > > [ Upstream commit 30006b77c7e130e01d1ab2148cc8abf73dfcc4bf ]
-> > > 
-> > > The driver only supports normal polarity. Complete the implementation of
-> > > .get_state() by setting .polarity accordingly.
-> > > 
-> > > Reviewed-by: Guenter Roeck <groeck@chromium.org>
-> > > Fixes: 1f0d3bb02785 ("pwm: Add ChromeOS EC PWM driver")
-> > > Link: https://lore.kernel.org/r/20230228135508.1798428-3-u.kleine-koenig@pengutronix.de
-> > > Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-> > > Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > 
-> > I see you picked this one and the similar sprd patch, but not
-> > 
-> > 	8caa81eb950c pwm: meson: Explicitly set .polarity in .get_state()
-> > 	b20b097128d9 pwm: iqs620a: Explicitly set .polarity in .get_state()
-> > 	6f5793798014 pwm: hibvt: Explicitly set .polarity in .get_state()
-> > 
-> > (At least I didn't get a mail about these). These should qualify in the same way.
+On Fri, Apr 21, 2023 at 09:11:25AM -0700, Nathan Chancellor wrote:
+> Hi all,
 > 
-> They didn't all apply very well (one did).
+> This series fixes a modpost warning visible in -next from check_bugs()
+> and helps avoid a potential, albeit unlikely, warning from
+> check_bugs_early().
+> 
+> ---
+> Changes in v2:
+> - Now two separate patches: one to avoid current check_bugs() warning
+>   and one to avoid potential check_bugs_early() warning.
+> - Sink body of check_bugs_early() into setup_arch() directly, rather
+>   than marking it as __init (Nick).
+> - Add Naresh's reported-by to patch 1, which came after v1 was sent.
+> - Reword commit messages to note that there is not a problem at run time
+>   because check_bugs() and check_bugs_early(), while not marked __init,
+>   are only called from __init functions; modpost does not know this
+>   though, hence the warning.
+> - Link to v1: https://lore.kernel.org/r/20230419-mips-check_bugs-init-attribute-v1-1-91e6eed55b89@kernel.org
+> 
+> ---
+> Nathan Chancellor (2):
+>       MIPS: Mark check_bugs() as __init
+>       MIPS: Sink body of check_bugs_early() into its only call site
+> 
+>  arch/mips/include/asm/bugs.h | 8 +-------
+>  arch/mips/kernel/setup.c     | 3 ++-
+>  2 files changed, 3 insertions(+), 8 deletions(-)
+> ---
+> base-commit: 6a8f57ae2eb07ab39a6f0ccad60c760743051026
+> change-id: 20230419-mips-check_bugs-init-attribute-026103bdb255
+> 
+> Best regards,
+> -- 
+> Nathan Chancellor <nathan@kernel.org>
 
-Nope, that one broke the build, so none of these applied, which is
-probably why Sasha didn't do it :)
+series applied to mips-next.
 
-thanks,
+Thomas.
 
-greg k-h
+-- 
+Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
+good idea.                                                [ RFC1925, 2.3 ]
