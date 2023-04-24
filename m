@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73397C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCBEC433D2;
-	Mon, 24 Apr 2023 13:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882087C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC56C433EF;
+	Mon, 24 Apr 2023 13:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343119;
-	bh=H32sTgX9vqAPxCmefmZDXQ3k5KLYCVqgbjxNg/JxO/c=;
+	s=korg; t=1682343122;
+	bh=8P34wgrPucba7calZnGun3FgSUEsAJcwMhGPrJMugXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oysg+KoNdNvm+UXZW39JGwlkwGEUnNHGXKpg5ktKZVi+aiX/4iPPZ6qqN2ViCA7qP
-	 Cg27FtJEEl7eQXC7bqqZHLRSP5iQobI7sgfmGQA3nOG24OMv4v+TyLCaEc+ek91yob
-	 qyfweOqOonS9vq57DgLyEUkprR4IFY/Qrsg/vgTw=
+	b=m12j0EEkdyXFetPumMEiyu55FpAaTJSc1ROKGplbVDc0cPNcsr9qieT4evVD5gtGC
+	 qRlMrAQPIRlrTZj4mjf0IBhL5WJ7B9rhwo7GJOao9b3D9Shaqpbu6djlOq+tYFCfR8
+	 igzqSPogqzudkkDtcnWOgDmGnVcHJrk5W72xUc4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.2 084/110] drm/rockchip: vop2: Use regcache_sync() to fix suspend/resume
-Date: Mon, 24 Apr 2023 15:17:46 +0200
-Message-Id: <20230424131139.637110466@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.2 085/110] mm: fix memory leak on mm_init error handling
+Date: Mon, 24 Apr 2023 15:17:47 +0200
+Message-Id: <20230424131139.677173051@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -34,58 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit b63a553e8f5aa6574eeb535a551817a93c426d8c upstream.
+commit b20b0368c614c609badfe16fbd113dfb4780acd9 upstream.
 
-afa965a45e01 ("drm/rockchip: vop2: fix suspend/resume") uses
-regmap_reinit_cache() to fix the suspend/resume issue with the VOP2
-driver. During discussion it came up that we should rather use
-regcache_sync() instead. As the original patch is already applied
-fix this up in this follow-up patch.
+commit f1a7941243c1 ("mm: convert mm's rss stats into percpu_counter")
+introduces a memory leak by missing a call to destroy_context() when a
+percpu_counter fails to allocate.
 
-Fixes: afa965a45e01 ("drm/rockchip: vop2: fix suspend/resume")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230417123747.2179695-1-s.hauer@pengutronix.de
+Before introducing the per-cpu counter allocations, init_new_context() was
+the last call that could fail in mm_init(), and thus there was no need to
+ever invoke destroy_context() in the error paths.  Adding the following
+percpu counter allocations adds error paths after init_new_context(),
+which means its associated destroy_context() needs to be called when
+percpu counters fail to allocate.
+
+Link: https://lkml.kernel.org/r/20230330133822.66271-1-mathieu.desnoyers@efficios.com
+Fixes: f1a7941243c1 ("mm: convert mm's rss stats into percpu_counter")
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c |   10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ kernel/fork.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -216,8 +216,6 @@ struct vop2 {
- 	struct vop2_win win[];
- };
- 
--static const struct regmap_config vop2_regmap_config;
--
- static struct vop2_video_port *to_vop2_video_port(struct drm_crtc *crtc)
- {
- 	return container_of(crtc, struct vop2_video_port, crtc);
-@@ -842,11 +840,7 @@ static void vop2_enable(struct vop2 *vop
- 		return;
- 	}
- 
--	ret = regmap_reinit_cache(vop2->map, &vop2_regmap_config);
--	if (ret) {
--		drm_err(vop2->drm, "failed to reinit cache: %d\n", ret);
--		return;
--	}
-+	regcache_sync(vop2->map);
- 
- 	if (vop2->data->soc_id == 3566)
- 		vop2_writel(vop2, RK3568_OTP_WIN_EN, 1);
-@@ -876,6 +870,8 @@ static void vop2_disable(struct vop2 *vo
- 
- 	pm_runtime_put_sync(vop2->dev);
- 
-+	regcache_mark_dirty(vop2->map);
-+
- 	clk_disable_unprepare(vop2->aclk);
- 	clk_disable_unprepare(vop2->hclk);
- }
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1177,6 +1177,7 @@ static struct mm_struct *mm_init(struct
+ fail_pcpu:
+ 	while (i > 0)
+ 		percpu_counter_destroy(&mm->rss_stat[--i]);
++	destroy_context(mm);
+ fail_nocontext:
+ 	mm_free_pgd(mm);
+ fail_nopgd:
 
 
