@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D702108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:35:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D80C433D2;
-	Mon, 24 Apr 2023 13:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698042108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:35:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF626C433EF;
+	Mon, 24 Apr 2023 13:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343338;
-	bh=ezrl7za7ZsksO0k+yZbnzYcxvC9LAjHJKkZ68ogRabk=;
+	s=korg; t=1682343341;
+	bh=6Pl+e3U2TNSCXdvrEJYvpWbm/KdHYSPKB9hipob65zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2ON9wV9terBmORMmS74wF/58jYO9wwyJHXxqWYVVCGHkD9JGgkUaVQX4Rat8s09t
-	 YdmX9TQvC5Q/BnAY1VD/viN7mKzJOdaErJYd7okrSc/8Eih4mxfRyFeHLO4H1zat+D
-	 dL1zXGjoGilvV1eXTy7WuRsR0WnH72+hHsnQtbMM=
+	b=SWfBykFK4yaiXsIGGxhOkUW5V7AEIXjSmK0eXgW5JUw/ZOhrMwhUnY+F+LVTLtPaY
+	 8aIJyVBKrmqCx81+oS19J5J9fqFahY/TwCx35iu8rA/oGKZcEPv6gtL/AKVfywT0K2
+	 VWi7a2XFQ6UyNxyVlAmKH0bYhwcZCVVOBaQxKPj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juan Jose Lopez Jaimez <jjlopezjaimez@google.com>,
-	Meador Inge <meadori@google.com>,
-	Simon Scannell <simonscannell@google.com>,
-	Nenad Stojanovski <thenenadx@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 17/68] bpf: Fix incorrect verifier pruning due to missing register precision taints
-Date: Mon, 24 Apr 2023 15:17:48 +0200
-Message-Id: <20230424131128.327388088@linuxfoundation.org>
+	Connor Kuehl <ckuehl@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Yang Bo <yb203166@antfin.com>
+Subject: [PATCH 5.10 50/68] virtiofs: split requests that exceed virtqueue size
+Date: Mon, 24 Apr 2023 15:18:21 +0200
+Message-Id: <20230424131129.589375128@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -40,424 +36,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Connor Kuehl <ckuehl@redhat.com>
 
-[ Upstream commit 71b547f561247897a0a14f3082730156c0533fed ]
+commit a7f0d7aab0b4f3f0780b1f77356e2fe7202ac0cb upstream.
 
-Juan Jose et al reported an issue found via fuzzing where the verifier's
-pruning logic prematurely marks a program path as safe.
+If an incoming FUSE request can't fit on the virtqueue, the request is
+placed onto a workqueue so a worker can try to resubmit it later where
+there will (hopefully) be space for it next time.
 
-Consider the following program:
+This is fine for requests that aren't larger than a virtqueue's maximum
+capacity.  However, if a request's size exceeds the maximum capacity of the
+virtqueue (even if the virtqueue is empty), it will be doomed to a life of
+being placed on the workqueue, removed, discovered it won't fit, and placed
+on the workqueue yet again.
 
-   0: (b7) r6 = 1024
-   1: (b7) r7 = 0
-   2: (b7) r8 = 0
-   3: (b7) r9 = -2147483648
-   4: (97) r6 %= 1025
-   5: (05) goto pc+0
-   6: (bd) if r6 <= r9 goto pc+2
-   7: (97) r6 %= 1
-   8: (b7) r9 = 0
-   9: (bd) if r6 <= r9 goto pc+1
-  10: (b7) r6 = 0
-  11: (b7) r0 = 0
-  12: (63) *(u32 *)(r10 -4) = r0
-  13: (18) r4 = 0xffff888103693400 // map_ptr(ks=4,vs=48)
-  15: (bf) r1 = r4
-  16: (bf) r2 = r10
-  17: (07) r2 += -4
-  18: (85) call bpf_map_lookup_elem#1
-  19: (55) if r0 != 0x0 goto pc+1
-  20: (95) exit
-  21: (77) r6 >>= 10
-  22: (27) r6 *= 8192
-  23: (bf) r1 = r0
-  24: (0f) r0 += r6
-  25: (79) r3 = *(u64 *)(r0 +0)
-  26: (7b) *(u64 *)(r1 +0) = r3
-  27: (95) exit
+Furthermore, from section 2.6.5.3.1 (Driver Requirements: Indirect
+Descriptors) of the virtio spec:
 
-The verifier treats this as safe, leading to oob read/write access due
-to an incorrect verifier conclusion:
+  "A driver MUST NOT create a descriptor chain longer than the Queue
+  Size of the device."
 
-  func#0 @0
-  0: R1=ctx(off=0,imm=0) R10=fp0
-  0: (b7) r6 = 1024                     ; R6_w=1024
-  1: (b7) r7 = 0                        ; R7_w=0
-  2: (b7) r8 = 0                        ; R8_w=0
-  3: (b7) r9 = -2147483648              ; R9_w=-2147483648
-  4: (97) r6 %= 1025                    ; R6_w=scalar()
-  5: (05) goto pc+0
-  6: (bd) if r6 <= r9 goto pc+2         ; R6_w=scalar(umin=18446744071562067969,var_off=(0xffffffff00000000; 0xffffffff)) R9_w=-2147483648
-  7: (97) r6 %= 1                       ; R6_w=scalar()
-  8: (b7) r9 = 0                        ; R9=0
-  9: (bd) if r6 <= r9 goto pc+1         ; R6=scalar(umin=1) R9=0
-  10: (b7) r6 = 0                       ; R6_w=0
-  11: (b7) r0 = 0                       ; R0_w=0
-  12: (63) *(u32 *)(r10 -4) = r0
-  last_idx 12 first_idx 9
-  regs=1 stack=0 before 11: (b7) r0 = 0
-  13: R0_w=0 R10=fp0 fp-8=0000????
-  13: (18) r4 = 0xffff8ad3886c2a00      ; R4_w=map_ptr(off=0,ks=4,vs=48,imm=0)
-  15: (bf) r1 = r4                      ; R1_w=map_ptr(off=0,ks=4,vs=48,imm=0) R4_w=map_ptr(off=0,ks=4,vs=48,imm=0)
-  16: (bf) r2 = r10                     ; R2_w=fp0 R10=fp0
-  17: (07) r2 += -4                     ; R2_w=fp-4
-  18: (85) call bpf_map_lookup_elem#1   ; R0=map_value_or_null(id=1,off=0,ks=4,vs=48,imm=0)
-  19: (55) if r0 != 0x0 goto pc+1       ; R0=0
-  20: (95) exit
+To fix this, limit the number of pages FUSE will use for an overall
+request.  This way, each request can realistically fit on the virtqueue
+when it is decomposed into a scattergather list and avoid violating section
+2.6.5.3.1 of the virtio spec.
 
-  from 19 to 21: R0=map_value(off=0,ks=4,vs=48,imm=0) R6=0 R7=0 R8=0 R9=0 R10=fp0 fp-8=mmmm????
-  21: (77) r6 >>= 10                    ; R6_w=0
-  22: (27) r6 *= 8192                   ; R6_w=0
-  23: (bf) r1 = r0                      ; R0=map_value(off=0,ks=4,vs=48,imm=0) R1_w=map_value(off=0,ks=4,vs=48,imm=0)
-  24: (0f) r0 += r6
-  last_idx 24 first_idx 19
-  regs=40 stack=0 before 23: (bf) r1 = r0
-  regs=40 stack=0 before 22: (27) r6 *= 8192
-  regs=40 stack=0 before 21: (77) r6 >>= 10
-  regs=40 stack=0 before 19: (55) if r0 != 0x0 goto pc+1
-  parent didn't have regs=40 stack=0 marks: R0_rw=map_value_or_null(id=1,off=0,ks=4,vs=48,imm=0) R6_rw=P0 R7=0 R8=0 R9=0 R10=fp0 fp-8=mmmm????
-  last_idx 18 first_idx 9
-  regs=40 stack=0 before 18: (85) call bpf_map_lookup_elem#1
-  regs=40 stack=0 before 17: (07) r2 += -4
-  regs=40 stack=0 before 16: (bf) r2 = r10
-  regs=40 stack=0 before 15: (bf) r1 = r4
-  regs=40 stack=0 before 13: (18) r4 = 0xffff8ad3886c2a00
-  regs=40 stack=0 before 12: (63) *(u32 *)(r10 -4) = r0
-  regs=40 stack=0 before 11: (b7) r0 = 0
-  regs=40 stack=0 before 10: (b7) r6 = 0
-  25: (79) r3 = *(u64 *)(r0 +0)         ; R0_w=map_value(off=0,ks=4,vs=48,imm=0) R3_w=scalar()
-  26: (7b) *(u64 *)(r1 +0) = r3         ; R1_w=map_value(off=0,ks=4,vs=48,imm=0) R3_w=scalar()
-  27: (95) exit
-
-  from 9 to 11: R1=ctx(off=0,imm=0) R6=0 R7=0 R8=0 R9=0 R10=fp0
-  11: (b7) r0 = 0                       ; R0_w=0
-  12: (63) *(u32 *)(r10 -4) = r0
-  last_idx 12 first_idx 11
-  regs=1 stack=0 before 11: (b7) r0 = 0
-  13: R0_w=0 R10=fp0 fp-8=0000????
-  13: (18) r4 = 0xffff8ad3886c2a00      ; R4_w=map_ptr(off=0,ks=4,vs=48,imm=0)
-  15: (bf) r1 = r4                      ; R1_w=map_ptr(off=0,ks=4,vs=48,imm=0) R4_w=map_ptr(off=0,ks=4,vs=48,imm=0)
-  16: (bf) r2 = r10                     ; R2_w=fp0 R10=fp0
-  17: (07) r2 += -4                     ; R2_w=fp-4
-  18: (85) call bpf_map_lookup_elem#1
-  frame 0: propagating r6
-  last_idx 19 first_idx 11
-  regs=40 stack=0 before 18: (85) call bpf_map_lookup_elem#1
-  regs=40 stack=0 before 17: (07) r2 += -4
-  regs=40 stack=0 before 16: (bf) r2 = r10
-  regs=40 stack=0 before 15: (bf) r1 = r4
-  regs=40 stack=0 before 13: (18) r4 = 0xffff8ad3886c2a00
-  regs=40 stack=0 before 12: (63) *(u32 *)(r10 -4) = r0
-  regs=40 stack=0 before 11: (b7) r0 = 0
-  parent didn't have regs=40 stack=0 marks: R1=ctx(off=0,imm=0) R6_r=P0 R7=0 R8=0 R9=0 R10=fp0
-  last_idx 9 first_idx 9
-  regs=40 stack=0 before 9: (bd) if r6 <= r9 goto pc+1
-  parent didn't have regs=40 stack=0 marks: R1=ctx(off=0,imm=0) R6_rw=Pscalar() R7_w=0 R8_w=0 R9_rw=0 R10=fp0
-  last_idx 8 first_idx 0
-  regs=40 stack=0 before 8: (b7) r9 = 0
-  regs=40 stack=0 before 7: (97) r6 %= 1
-  regs=40 stack=0 before 6: (bd) if r6 <= r9 goto pc+2
-  regs=40 stack=0 before 5: (05) goto pc+0
-  regs=40 stack=0 before 4: (97) r6 %= 1025
-  regs=40 stack=0 before 3: (b7) r9 = -2147483648
-  regs=40 stack=0 before 2: (b7) r8 = 0
-  regs=40 stack=0 before 1: (b7) r7 = 0
-  regs=40 stack=0 before 0: (b7) r6 = 1024
-  19: safe
-  frame 0: propagating r6
-  last_idx 9 first_idx 0
-  regs=40 stack=0 before 6: (bd) if r6 <= r9 goto pc+2
-  regs=40 stack=0 before 5: (05) goto pc+0
-  regs=40 stack=0 before 4: (97) r6 %= 1025
-  regs=40 stack=0 before 3: (b7) r9 = -2147483648
-  regs=40 stack=0 before 2: (b7) r8 = 0
-  regs=40 stack=0 before 1: (b7) r7 = 0
-  regs=40 stack=0 before 0: (b7) r6 = 1024
-
-  from 6 to 9: safe
-  verification time 110 usec
-  stack depth 4
-  processed 36 insns (limit 1000000) max_states_per_insn 0 total_states 3 peak_states 3 mark_read 2
-
-The verifier considers this program as safe by mistakenly pruning unsafe
-code paths. In the above func#0, code lines 0-10 are of interest. In line
-0-3 registers r6 to r9 are initialized with known scalar values. In line 4
-the register r6 is reset to an unknown scalar given the verifier does not
-track modulo operations. Due to this, the verifier can also not determine
-precisely which branches in line 6 and 9 are taken, therefore it needs to
-explore them both.
-
-As can be seen, the verifier starts with exploring the false/fall-through
-paths first. The 'from 19 to 21' path has both r6=0 and r9=0 and the pointer
-arithmetic on r0 += r6 is therefore considered safe. Given the arithmetic,
-r6 is correctly marked for precision tracking where backtracking kicks in
-where it walks back the current path all the way where r6 was set to 0 in
-the fall-through branch.
-
-Next, the pruning logics pops the path 'from 9 to 11' from the stack. Also
-here, the state of the registers is the same, that is, r6=0 and r9=0, so
-that at line 19 the path can be pruned as it is considered safe. It is
-interesting to note that the conditional in line 9 turned r6 into a more
-precise state, that is, in the fall-through path at the beginning of line
-10, it is R6=scalar(umin=1), and in the branch-taken path (which is analyzed
-here) at the beginning of line 11, r6 turned into a known const r6=0 as
-r9=0 prior to that and therefore (unsigned) r6 <= 0 concludes that r6 must
-be 0 (**):
-
-  [...]                                 ; R6_w=scalar()
-  9: (bd) if r6 <= r9 goto pc+1         ; R6=scalar(umin=1) R9=0
-  [...]
-
-  from 9 to 11: R1=ctx(off=0,imm=0) R6=0 R7=0 R8=0 R9=0 R10=fp0
-  [...]
-
-The next path is 'from 6 to 9'. The verifier considers the old and current
-state equivalent, and therefore prunes the search incorrectly. Looking into
-the two states which are being compared by the pruning logic at line 9, the
-old state consists of R6_rwD=Pscalar() R9_rwD=0 R10=fp0 and the new state
-consists of R1=ctx(off=0,imm=0) R6_w=scalar(umax=18446744071562067968)
-R7_w=0 R8_w=0 R9_w=-2147483648 R10=fp0. While r6 had the reg->precise flag
-correctly set in the old state, r9 did not. Both r6'es are considered as
-equivalent given the old one is a superset of the current, more precise one,
-however, r9's actual values (0 vs 0x80000000) mismatch. Given the old r9
-did not have reg->precise flag set, the verifier does not consider the
-register as contributing to the precision state of r6, and therefore it
-considered both r9 states as equivalent. However, for this specific pruned
-path (which is also the actual path taken at runtime), register r6 will be
-0x400 and r9 0x80000000 when reaching line 21, thus oob-accessing the map.
-
-The purpose of precision tracking is to initially mark registers (including
-spilled ones) as imprecise to help verifier's pruning logic finding equivalent
-states it can then prune if they don't contribute to the program's safety
-aspects. For example, if registers are used for pointer arithmetic or to pass
-constant length to a helper, then the verifier sets reg->precise flag and
-backtracks the BPF program instruction sequence and chain of verifier states
-to ensure that the given register or stack slot including their dependencies
-are marked as precisely tracked scalar. This also includes any other registers
-and slots that contribute to a tracked state of given registers/stack slot.
-This backtracking relies on recorded jmp_history and is able to traverse
-entire chain of parent states. This process ends only when all the necessary
-registers/slots and their transitive dependencies are marked as precise.
-
-The backtrack_insn() is called from the current instruction up to the first
-instruction, and its purpose is to compute a bitmask of registers and stack
-slots that need precision tracking in the parent's verifier state. For example,
-if a current instruction is r6 = r7, then r6 needs precision after this
-instruction and r7 needs precision before this instruction, that is, in the
-parent state. Hence for the latter r7 is marked and r6 unmarked.
-
-For the class of jmp/jmp32 instructions, backtrack_insn() today only looks
-at call and exit instructions and for all other conditionals the masks
-remain as-is. However, in the given situation register r6 has a dependency
-on r9 (as described above in **), so also that one needs to be marked for
-precision tracking. In other words, if an imprecise register influences a
-precise one, then the imprecise register should also be marked precise.
-Meaning, in the parent state both dest and src register need to be tracked
-for precision and therefore the marking must be more conservative by setting
-reg->precise flag for both. The precision propagation needs to cover both
-for the conditional: if the src reg was marked but not the dst reg and vice
-versa.
-
-After the fix the program is correctly rejected:
-
-  func#0 @0
-  0: R1=ctx(off=0,imm=0) R10=fp0
-  0: (b7) r6 = 1024                     ; R6_w=1024
-  1: (b7) r7 = 0                        ; R7_w=0
-  2: (b7) r8 = 0                        ; R8_w=0
-  3: (b7) r9 = -2147483648              ; R9_w=-2147483648
-  4: (97) r6 %= 1025                    ; R6_w=scalar()
-  5: (05) goto pc+0
-  6: (bd) if r6 <= r9 goto pc+2         ; R6_w=scalar(umin=18446744071562067969,var_off=(0xffffffff80000000; 0x7fffffff),u32_min=-2147483648) R9_w=-2147483648
-  7: (97) r6 %= 1                       ; R6_w=scalar()
-  8: (b7) r9 = 0                        ; R9=0
-  9: (bd) if r6 <= r9 goto pc+1         ; R6=scalar(umin=1) R9=0
-  10: (b7) r6 = 0                       ; R6_w=0
-  11: (b7) r0 = 0                       ; R0_w=0
-  12: (63) *(u32 *)(r10 -4) = r0
-  last_idx 12 first_idx 9
-  regs=1 stack=0 before 11: (b7) r0 = 0
-  13: R0_w=0 R10=fp0 fp-8=0000????
-  13: (18) r4 = 0xffff9290dc5bfe00      ; R4_w=map_ptr(off=0,ks=4,vs=48,imm=0)
-  15: (bf) r1 = r4                      ; R1_w=map_ptr(off=0,ks=4,vs=48,imm=0) R4_w=map_ptr(off=0,ks=4,vs=48,imm=0)
-  16: (bf) r2 = r10                     ; R2_w=fp0 R10=fp0
-  17: (07) r2 += -4                     ; R2_w=fp-4
-  18: (85) call bpf_map_lookup_elem#1   ; R0=map_value_or_null(id=1,off=0,ks=4,vs=48,imm=0)
-  19: (55) if r0 != 0x0 goto pc+1       ; R0=0
-  20: (95) exit
-
-  from 19 to 21: R0=map_value(off=0,ks=4,vs=48,imm=0) R6=0 R7=0 R8=0 R9=0 R10=fp0 fp-8=mmmm????
-  21: (77) r6 >>= 10                    ; R6_w=0
-  22: (27) r6 *= 8192                   ; R6_w=0
-  23: (bf) r1 = r0                      ; R0=map_value(off=0,ks=4,vs=48,imm=0) R1_w=map_value(off=0,ks=4,vs=48,imm=0)
-  24: (0f) r0 += r6
-  last_idx 24 first_idx 19
-  regs=40 stack=0 before 23: (bf) r1 = r0
-  regs=40 stack=0 before 22: (27) r6 *= 8192
-  regs=40 stack=0 before 21: (77) r6 >>= 10
-  regs=40 stack=0 before 19: (55) if r0 != 0x0 goto pc+1
-  parent didn't have regs=40 stack=0 marks: R0_rw=map_value_or_null(id=1,off=0,ks=4,vs=48,imm=0) R6_rw=P0 R7=0 R8=0 R9=0 R10=fp0 fp-8=mmmm????
-  last_idx 18 first_idx 9
-  regs=40 stack=0 before 18: (85) call bpf_map_lookup_elem#1
-  regs=40 stack=0 before 17: (07) r2 += -4
-  regs=40 stack=0 before 16: (bf) r2 = r10
-  regs=40 stack=0 before 15: (bf) r1 = r4
-  regs=40 stack=0 before 13: (18) r4 = 0xffff9290dc5bfe00
-  regs=40 stack=0 before 12: (63) *(u32 *)(r10 -4) = r0
-  regs=40 stack=0 before 11: (b7) r0 = 0
-  regs=40 stack=0 before 10: (b7) r6 = 0
-  25: (79) r3 = *(u64 *)(r0 +0)         ; R0_w=map_value(off=0,ks=4,vs=48,imm=0) R3_w=scalar()
-  26: (7b) *(u64 *)(r1 +0) = r3         ; R1_w=map_value(off=0,ks=4,vs=48,imm=0) R3_w=scalar()
-  27: (95) exit
-
-  from 9 to 11: R1=ctx(off=0,imm=0) R6=0 R7=0 R8=0 R9=0 R10=fp0
-  11: (b7) r0 = 0                       ; R0_w=0
-  12: (63) *(u32 *)(r10 -4) = r0
-  last_idx 12 first_idx 11
-  regs=1 stack=0 before 11: (b7) r0 = 0
-  13: R0_w=0 R10=fp0 fp-8=0000????
-  13: (18) r4 = 0xffff9290dc5bfe00      ; R4_w=map_ptr(off=0,ks=4,vs=48,imm=0)
-  15: (bf) r1 = r4                      ; R1_w=map_ptr(off=0,ks=4,vs=48,imm=0) R4_w=map_ptr(off=0,ks=4,vs=48,imm=0)
-  16: (bf) r2 = r10                     ; R2_w=fp0 R10=fp0
-  17: (07) r2 += -4                     ; R2_w=fp-4
-  18: (85) call bpf_map_lookup_elem#1
-  frame 0: propagating r6
-  last_idx 19 first_idx 11
-  regs=40 stack=0 before 18: (85) call bpf_map_lookup_elem#1
-  regs=40 stack=0 before 17: (07) r2 += -4
-  regs=40 stack=0 before 16: (bf) r2 = r10
-  regs=40 stack=0 before 15: (bf) r1 = r4
-  regs=40 stack=0 before 13: (18) r4 = 0xffff9290dc5bfe00
-  regs=40 stack=0 before 12: (63) *(u32 *)(r10 -4) = r0
-  regs=40 stack=0 before 11: (b7) r0 = 0
-  parent didn't have regs=40 stack=0 marks: R1=ctx(off=0,imm=0) R6_r=P0 R7=0 R8=0 R9=0 R10=fp0
-  last_idx 9 first_idx 9
-  regs=40 stack=0 before 9: (bd) if r6 <= r9 goto pc+1
-  parent didn't have regs=240 stack=0 marks: R1=ctx(off=0,imm=0) R6_rw=Pscalar() R7_w=0 R8_w=0 R9_rw=P0 R10=fp0
-  last_idx 8 first_idx 0
-  regs=240 stack=0 before 8: (b7) r9 = 0
-  regs=40 stack=0 before 7: (97) r6 %= 1
-  regs=40 stack=0 before 6: (bd) if r6 <= r9 goto pc+2
-  regs=240 stack=0 before 5: (05) goto pc+0
-  regs=240 stack=0 before 4: (97) r6 %= 1025
-  regs=240 stack=0 before 3: (b7) r9 = -2147483648
-  regs=40 stack=0 before 2: (b7) r8 = 0
-  regs=40 stack=0 before 1: (b7) r7 = 0
-  regs=40 stack=0 before 0: (b7) r6 = 1024
-  19: safe
-
-  from 6 to 9: R1=ctx(off=0,imm=0) R6_w=scalar(umax=18446744071562067968) R7_w=0 R8_w=0 R9_w=-2147483648 R10=fp0
-  9: (bd) if r6 <= r9 goto pc+1
-  last_idx 9 first_idx 0
-  regs=40 stack=0 before 6: (bd) if r6 <= r9 goto pc+2
-  regs=240 stack=0 before 5: (05) goto pc+0
-  regs=240 stack=0 before 4: (97) r6 %= 1025
-  regs=240 stack=0 before 3: (b7) r9 = -2147483648
-  regs=40 stack=0 before 2: (b7) r8 = 0
-  regs=40 stack=0 before 1: (b7) r7 = 0
-  regs=40 stack=0 before 0: (b7) r6 = 1024
-  last_idx 9 first_idx 0
-  regs=200 stack=0 before 6: (bd) if r6 <= r9 goto pc+2
-  regs=240 stack=0 before 5: (05) goto pc+0
-  regs=240 stack=0 before 4: (97) r6 %= 1025
-  regs=240 stack=0 before 3: (b7) r9 = -2147483648
-  regs=40 stack=0 before 2: (b7) r8 = 0
-  regs=40 stack=0 before 1: (b7) r7 = 0
-  regs=40 stack=0 before 0: (b7) r6 = 1024
-  11: R6=scalar(umax=18446744071562067968) R9=-2147483648
-  11: (b7) r0 = 0                       ; R0_w=0
-  12: (63) *(u32 *)(r10 -4) = r0
-  last_idx 12 first_idx 11
-  regs=1 stack=0 before 11: (b7) r0 = 0
-  13: R0_w=0 R10=fp0 fp-8=0000????
-  13: (18) r4 = 0xffff9290dc5bfe00      ; R4_w=map_ptr(off=0,ks=4,vs=48,imm=0)
-  15: (bf) r1 = r4                      ; R1_w=map_ptr(off=0,ks=4,vs=48,imm=0) R4_w=map_ptr(off=0,ks=4,vs=48,imm=0)
-  16: (bf) r2 = r10                     ; R2_w=fp0 R10=fp0
-  17: (07) r2 += -4                     ; R2_w=fp-4
-  18: (85) call bpf_map_lookup_elem#1   ; R0_w=map_value_or_null(id=3,off=0,ks=4,vs=48,imm=0)
-  19: (55) if r0 != 0x0 goto pc+1       ; R0_w=0
-  20: (95) exit
-
-  from 19 to 21: R0=map_value(off=0,ks=4,vs=48,imm=0) R6=scalar(umax=18446744071562067968) R7=0 R8=0 R9=-2147483648 R10=fp0 fp-8=mmmm????
-  21: (77) r6 >>= 10                    ; R6_w=scalar(umax=18014398507384832,var_off=(0x0; 0x3fffffffffffff))
-  22: (27) r6 *= 8192                   ; R6_w=scalar(smax=9223372036854767616,umax=18446744073709543424,var_off=(0x0; 0xffffffffffffe000),s32_max=2147475456,u32_max=-8192)
-  23: (bf) r1 = r0                      ; R0=map_value(off=0,ks=4,vs=48,imm=0) R1_w=map_value(off=0,ks=4,vs=48,imm=0)
-  24: (0f) r0 += r6
-  last_idx 24 first_idx 21
-  regs=40 stack=0 before 23: (bf) r1 = r0
-  regs=40 stack=0 before 22: (27) r6 *= 8192
-  regs=40 stack=0 before 21: (77) r6 >>= 10
-  parent didn't have regs=40 stack=0 marks: R0_rw=map_value(off=0,ks=4,vs=48,imm=0) R6_r=Pscalar(umax=18446744071562067968) R7=0 R8=0 R9=-2147483648 R10=fp0 fp-8=mmmm????
-  last_idx 19 first_idx 11
-  regs=40 stack=0 before 19: (55) if r0 != 0x0 goto pc+1
-  regs=40 stack=0 before 18: (85) call bpf_map_lookup_elem#1
-  regs=40 stack=0 before 17: (07) r2 += -4
-  regs=40 stack=0 before 16: (bf) r2 = r10
-  regs=40 stack=0 before 15: (bf) r1 = r4
-  regs=40 stack=0 before 13: (18) r4 = 0xffff9290dc5bfe00
-  regs=40 stack=0 before 12: (63) *(u32 *)(r10 -4) = r0
-  regs=40 stack=0 before 11: (b7) r0 = 0
-  parent didn't have regs=40 stack=0 marks: R1=ctx(off=0,imm=0) R6_rw=Pscalar(umax=18446744071562067968) R7_w=0 R8_w=0 R9_w=-2147483648 R10=fp0
-  last_idx 9 first_idx 0
-  regs=40 stack=0 before 9: (bd) if r6 <= r9 goto pc+1
-  regs=240 stack=0 before 6: (bd) if r6 <= r9 goto pc+2
-  regs=240 stack=0 before 5: (05) goto pc+0
-  regs=240 stack=0 before 4: (97) r6 %= 1025
-  regs=240 stack=0 before 3: (b7) r9 = -2147483648
-  regs=40 stack=0 before 2: (b7) r8 = 0
-  regs=40 stack=0 before 1: (b7) r7 = 0
-  regs=40 stack=0 before 0: (b7) r6 = 1024
-  math between map_value pointer and register with unbounded min value is not allowed
-  verification time 886 usec
-  stack depth 4
-  processed 49 insns (limit 1000000) max_states_per_insn 1 total_states 5 peak_states 5 mark_read 2
-
-Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
-Reported-by: Juan Jose Lopez Jaimez <jjlopezjaimez@google.com>
-Reported-by: Meador Inge <meadori@google.com>
-Reported-by: Simon Scannell <simonscannell@google.com>
-Reported-by: Nenad Stojanovski <thenenadx@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Co-developed-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Reviewed-by: Juan Jose Lopez Jaimez <jjlopezjaimez@google.com>
-Reviewed-by: Meador Inge <meadori@google.com>
-Reviewed-by: Simon Scannell <simonscannell@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Connor Kuehl <ckuehl@redhat.com>
+Reviewed-by: Vivek Goyal <vgoyal@redhat.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Yang Bo <yb203166@antfin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/fuse/fuse_i.h    |    3 +++
+ fs/fuse/inode.c     |    3 ++-
+ fs/fuse/virtio_fs.c |   19 +++++++++++++++++--
+ 3 files changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 9e5f1ebe67d7f..5a96a9dd51e4c 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -1931,6 +1931,21 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx,
+--- a/fs/fuse/fuse_i.h
++++ b/fs/fuse/fuse_i.h
+@@ -556,6 +556,9 @@ struct fuse_conn {
+ 	/** Maxmum number of pages that can be used in a single request */
+ 	unsigned int max_pages;
+ 
++	/** Constrain ->max_pages to this value during feature negotiation */
++	unsigned int max_pages_limit;
++
+ 	/** Input queue */
+ 	struct fuse_iqueue iq;
+ 
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -710,6 +710,7 @@ void fuse_conn_init(struct fuse_conn *fc
+ 	fc->pid_ns = get_pid_ns(task_active_pid_ns(current));
+ 	fc->user_ns = get_user_ns(user_ns);
+ 	fc->max_pages = FUSE_DEFAULT_MAX_PAGES_PER_REQ;
++	fc->max_pages_limit = FUSE_MAX_MAX_PAGES;
+ 
+ 	INIT_LIST_HEAD(&fc->mounts);
+ 	list_add(&fm->fc_entry, &fc->mounts);
+@@ -1056,7 +1057,7 @@ static void process_init_reply(struct fu
+ 				fc->abort_err = 1;
+ 			if (arg->flags & FUSE_MAX_PAGES) {
+ 				fc->max_pages =
+-					min_t(unsigned int, FUSE_MAX_MAX_PAGES,
++					min_t(unsigned int, fc->max_pages_limit,
+ 					max_t(unsigned int, arg->max_pages, 1));
  			}
- 		} else if (opcode == BPF_EXIT) {
- 			return -ENOTSUPP;
-+		} else if (BPF_SRC(insn->code) == BPF_X) {
-+			if (!(*reg_mask & (dreg | sreg)))
-+				return 0;
-+			/* dreg <cond> sreg
-+			 * Both dreg and sreg need precision before
-+			 * this insn. If only sreg was marked precise
-+			 * before it would be equally necessary to
-+			 * propagate it to dreg.
-+			 */
-+			*reg_mask |= (sreg | dreg);
-+			 /* else dreg <cond> K
-+			  * Only dreg still needs precision before
-+			  * this insn, so for the K-based conditional
-+			  * there is nothing new to be marked.
-+			  */
- 		}
- 	} else if (class == BPF_LD) {
- 		if (!(*reg_mask & dreg))
--- 
-2.39.2
-
+ 			if (IS_ENABLED(CONFIG_FUSE_DAX) &&
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -18,6 +18,12 @@
+ #include <linux/uio.h>
+ #include "fuse_i.h"
+ 
++/* Used to help calculate the FUSE connection's max_pages limit for a request's
++ * size. Parts of the struct fuse_req are sliced into scattergather lists in
++ * addition to the pages used, so this can help account for that overhead.
++ */
++#define FUSE_HEADER_OVERHEAD    4
++
+ /* List of virtio-fs device instances and a lock for the list. Also provides
+  * mutual exclusion in device removal and mounting path
+  */
+@@ -1426,9 +1432,10 @@ static int virtio_fs_get_tree(struct fs_
+ {
+ 	struct virtio_fs *fs;
+ 	struct super_block *sb;
+-	struct fuse_conn *fc;
++	struct fuse_conn *fc = NULL;
+ 	struct fuse_mount *fm;
+-	int err;
++	unsigned int virtqueue_size;
++	int err = -EIO;
+ 
+ 	/* This gets a reference on virtio_fs object. This ptr gets installed
+ 	 * in fc->iq->priv. Once fuse_conn is going away, it calls ->put()
+@@ -1440,6 +1447,10 @@ static int virtio_fs_get_tree(struct fs_
+ 		return -EINVAL;
+ 	}
+ 
++	virtqueue_size = virtqueue_get_vring_size(fs->vqs[VQ_REQUEST].vq);
++	if (WARN_ON(virtqueue_size <= FUSE_HEADER_OVERHEAD))
++		goto out_err;
++
+ 	err = -ENOMEM;
+ 	fc = kzalloc(sizeof(struct fuse_conn), GFP_KERNEL);
+ 	if (!fc)
+@@ -1454,6 +1465,10 @@ static int virtio_fs_get_tree(struct fs_
+ 	fc->delete_stale = true;
+ 	fc->auto_submounts = true;
+ 
++	/* Tell FUSE to split requests that exceed the virtqueue's size */
++	fc->max_pages_limit = min_t(unsigned int, fc->max_pages_limit,
++				    virtqueue_size - FUSE_HEADER_OVERHEAD);
++
+ 	fsc->s_fs_info = fm;
+ 	sb = sget_fc(fsc, virtio_fs_test_super, virtio_fs_set_super);
+ 	fuse_mount_put(fm);
 
 
