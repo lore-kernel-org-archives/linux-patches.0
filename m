@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388617C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:19:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A78C433D2;
-	Mon, 24 Apr 2023 13:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32317C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:19:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752D3C433EF;
+	Mon, 24 Apr 2023 13:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342364;
-	bh=uPchl7ZkQL+IK/urJ96O7Pbb/ToTjJOXYdfF1x0qsVQ=;
+	s=korg; t=1682342366;
+	bh=6uNGSZLcOj53ZjPsgvxhUUTbUq6Yn3WOkMofCHIjpSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGa3sej/V5aOgvu4kG7JdCVOo/0IjknGFQuTzF5KDcWbZZdSHl6jtdMNwOSdJ9USC
-	 l3krOLvksc85RYkCU+CWzLf8YFD1qX62RkyvrccTvr9+WFZczVkwrUXGILZtz3Hkoa
-	 8vQfPZq/WdvwhgL6VuluMMs+6NGS2Jgz8rdjB0pM=
+	b=PIrOseiTZrU6y/6OgMVp01UTdqDhwbwQoB9+s0daj7SmcjPEfN6J13on8mz+c72WW
+	 b44XZMQyuY9Z4IuzV68bOTAFvPBCgmeImXmA47RpLdPKxLPQOdnXl2O7RmT7MaghX3
+	 fXUlcrVacJSHAUapN3j+3++K0/sz/s6OlGRjQjMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 12/73] netfilter: nf_tables: fix ifdef to also consider nf_tables=m
-Date: Mon, 24 Apr 2023 15:16:26 +0200
-Message-Id: <20230424131129.487671734@linuxfoundation.org>
+Subject: [PATCH 5.15 02/73] arm64: dts: qcom: ipq8074-hk01: enable QMP device, not the PHY node
+Date: Mon, 24 Apr 2023 15:16:16 +0200
+Message-Id: <20230424131129.126382277@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -37,45 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit c55c0e91c813589dc55bea6bf9a9fbfaa10ae41d ]
+[ Upstream commit 72630ba422b70ea0874fc90d526353cf71c72488 ]
 
-nftables can be built as a module, so fix the preprocessor conditional
-accordingly.
+Correct PCIe PHY enablement to refer the QMP device nodes rather than
+PHY device nodes. QMP nodes have 'status = "disabled"' property in the
+ipq8074.dtsi, while PHY nodes do not correspond to the actual device and
+do not have the status property.
 
-Fixes: 478b360a47b7 ("netfilter: nf_tables: fix nf_trace always-on with XT_TRACE=n")
-Reported-by: Florian Fainelli <f.fainelli@gmail.com>
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: e8a7fdc505bb ("arm64: dts: ipq8074: qcom: Re-arrange dts nodes based on address")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230324021651.1799969-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 4 ++--
+ arch/arm64/boot/dts/qcom/ipq8074-hk01.dts | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index ef00dd3108362..7ed1d4472c0c8 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -4462,7 +4462,7 @@ static inline void nf_reset_ct(struct sk_buff *skb)
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
+index cc08dc4eb56a5..68698cdf56c46 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
++++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
+@@ -60,11 +60,11 @@
+ 	perst-gpio = <&tlmm 58 0x1>;
+ };
  
- static inline void nf_reset_trace(struct sk_buff *skb)
- {
--#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || defined(CONFIG_NF_TABLES)
-+#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || IS_ENABLED(CONFIG_NF_TABLES)
- 	skb->nf_trace = 0;
- #endif
- }
-@@ -4482,7 +4482,7 @@ static inline void __nf_copy(struct sk_buff *dst, const struct sk_buff *src,
- 	dst->_nfct = src->_nfct;
- 	nf_conntrack_get(skb_nfct(src));
- #endif
--#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || defined(CONFIG_NF_TABLES)
-+#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || IS_ENABLED(CONFIG_NF_TABLES)
- 	if (copy)
- 		dst->nf_trace = src->nf_trace;
- #endif
+-&pcie_phy0 {
++&pcie_qmp0 {
+ 	status = "okay";
+ };
+ 
+-&pcie_phy1 {
++&pcie_qmp1 {
+ 	status = "okay";
+ };
+ 
 -- 
 2.39.2
 
