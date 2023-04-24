@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557477C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D09C433EF;
-	Mon, 24 Apr 2023 13:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAC02108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B8EC433EF;
+	Mon, 24 Apr 2023 13:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343075;
-	bh=OJnp1eB1GU+IdWevcDAhKD+L9ozYSOlac/WkoeZhdY4=;
+	s=korg; t=1682343080;
+	bh=JNwwZ8erFC9UapkXT18tqn01jY1Hhw1A08NlEQTQ3sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F2yl8TxvtseSVw3T7WrnDEqo+RIXbJPjNwNopbUtCLFB/Q2iasZK9nsOF1BoaqNJn
-	 cCG/AchOvTps8iJKiC6f2UUhQTkaZrlrjUcB6uwaP18VLHrjQqobMZeAdw0upTHwyQ
-	 WH9luZs42h1FIZ79r3uKwMfCJSIqdCSOKPG7y33Y=
+	b=2fCa/SLyaJxDAI4hbotSq6Lq7KxniIJZKdCQPNOTBZz74i7865sutJY9ZKJKKH2FH
+	 lDECITIYEznh7yOpeUvFBBmV0zfoIMHo1nQTuF/7nlwHWYQfl1JrV5c2+z6/D/XnCS
+	 NTd5ruNrDlRDlukpREyn8twEcUTBq69Vw4EBgHYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Raillard <douglas.raillard@arm.com>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Alexander Aring <aahringo@redhat.com>,
+	maxpl0it <maxpl0it@protonmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 038/110] f2fs: Fix f2fs_truncate_partial_nodes ftrace event
-Date: Mon, 24 Apr 2023 15:17:00 +0200
-Message-Id: <20230424131137.570832775@linuxfoundation.org>
+Subject: [PATCH 6.2 030/110] net: rpl: fix rpl header size calculation
+Date: Mon, 24 Apr 2023 15:16:52 +0200
+Message-Id: <20230424131137.257042528@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -37,45 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Raillard <douglas.raillard@arm.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 0b04d4c0542e8573a837b1d81b94209e48723b25 ]
+[ Upstream commit 4e006c7a6dac0ead4c1bf606000aa90a372fc253 ]
 
-Fix the nid_t field so that its size is correctly reported in the text
-format embedded in trace.dat files. As it stands, it is reported as
-being of size 4:
+This patch fixes a missing 8 byte for the header size calculation. The
+ipv6_rpl_srh_size() is used to check a skb_pull() on skb->data which
+points to skb_transport_header(). Currently we only check on the
+calculated addresses fields using CmprI and CmprE fields, see:
 
-        field:nid_t nid[3];     offset:24;      size:4; signed:0;
+https://www.rfc-editor.org/rfc/rfc6554#section-3
 
-Instead of 12:
+there is however a missing 8 byte inside the calculation which stands
+for the fields before the addresses field. Those 8 bytes are represented
+by sizeof(struct ipv6_rpl_sr_hdr) expression.
 
-        field:nid_t nid[3];     offset:24;      size:12;        signed:0;
-
-This also fixes the reported offset of subsequent fields so that they
-match with the actual struct layout.
-
-Signed-off-by: Douglas Raillard <douglas.raillard@arm.com>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Reported-by: maxpl0it <maxpl0it@protonmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/f2fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/rpl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/f2fs.h b/include/trace/events/f2fs.h
-index 35ecb3118c7d5..111fafe049f7d 100644
---- a/include/trace/events/f2fs.h
-+++ b/include/trace/events/f2fs.h
-@@ -512,7 +512,7 @@ TRACE_EVENT(f2fs_truncate_partial_nodes,
- 	TP_STRUCT__entry(
- 		__field(dev_t,	dev)
- 		__field(ino_t,	ino)
--		__field(nid_t,	nid[3])
-+		__array(nid_t,	nid, 3)
- 		__field(int,	depth)
- 		__field(int,	err)
- 	),
+diff --git a/net/ipv6/rpl.c b/net/ipv6/rpl.c
+index 488aec9e1a74f..d1876f1922255 100644
+--- a/net/ipv6/rpl.c
++++ b/net/ipv6/rpl.c
+@@ -32,7 +32,8 @@ static void *ipv6_rpl_segdata_pos(const struct ipv6_rpl_sr_hdr *hdr, int i)
+ size_t ipv6_rpl_srh_size(unsigned char n, unsigned char cmpri,
+ 			 unsigned char cmpre)
+ {
+-	return (n * IPV6_PFXTAIL_LEN(cmpri)) + IPV6_PFXTAIL_LEN(cmpre);
++	return sizeof(struct ipv6_rpl_sr_hdr) + (n * IPV6_PFXTAIL_LEN(cmpri)) +
++		IPV6_PFXTAIL_LEN(cmpre);
+ }
+ 
+ void ipv6_rpl_srh_decompress(struct ipv6_rpl_sr_hdr *outhdr,
 -- 
 2.39.2
 
