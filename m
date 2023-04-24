@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4AD27C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:25:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48407C433EF;
-	Mon, 24 Apr 2023 13:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3827C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:25:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C34C433D2;
+	Mon, 24 Apr 2023 13:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342727;
-	bh=6ohgnT0gTadcyRL7A8QIlTK6u9RLNeZKhkssa8G7fow=;
+	s=korg; t=1682342730;
+	bh=3dVPcMbV3ggeR+q8y8Q6SKl2kZ8tYqnwVf4u6VuwgMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0tAgx3jnH7fFY39ZmY8si+REsHdFBkZQolQl/APyu+3x4S9A590elu9/fR42vvP+T
-	 RzWX6qUJGjtBIC0taluP0JpYz1cov4sAJqlQHUJLrWvPAyk9IOxqlhLMW6qoD2uDUu
-	 bMTmGV7dIRfS+5ZvPWr/gZWimo9nR5p4/jJRaJ/s=
+	b=bvDuKfb26UDXnKE07/6kecHF1DTMxJq6mAFJItXxjnBgsZHHH7kCrMyxGV7LR2ubT
+	 sMZ/+uAjKboH5FdmLWkfw432FEIO3mL0mTIDcRx/iyGGkjrXPHbpgt5Qkt5EuKrD7g
+	 wI+KTUEf0dj9DR3pgApn0b/YaSHC4lPV+dih+N6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
+	Frank Crawford <frank@crawford.emu.id.au>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 34/98] platform/x86/intel: vsec: Fix a memory leak in intel_vsec_add_aux
-Date: Mon, 24 Apr 2023 15:16:57 +0200
-Message-Id: <20230424131135.216087786@linuxfoundation.org>
+Subject: [PATCH 6.1 35/98] platform/x86 (gigabyte-wmi): Add support for A320M-S2H V2
+Date: Mon, 24 Apr 2023 15:16:58 +0200
+Message-Id: <20230424131135.247979912@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -36,38 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dongliang Mu <dzm91@hust.edu.cn>
+From: Frank Crawford <frank@crawford.emu.id.au>
 
-[ Upstream commit da0ba0ccce54059d6c6b788a75099bfce95126da ]
+[ Upstream commit b7c994f8c35e916e27c60803bb21457bc1373500 ]
 
-The first error handling code in intel_vsec_add_aux misses the
-deallocation of intel_vsec_dev->resource.
+Add support for A320M-S2H V2.  Tested using module force_load option.
 
-Fix this by adding kfree(intel_vsec_dev->resource) in the error handling
-code.
-
-Reviewed-by: David E. Box <david.e.box@linux.intel.com>
-Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230309040107.534716-4-dzm91@hust.edu.cn
+Signed-off-by: Frank Crawford <frank@crawford.emu.id.au>
+Acked-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/r/20230318091441.1240921-1-frank@crawford.emu.id.au
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/vsec.c | 1 +
+ drivers/platform/x86/gigabyte-wmi.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/intel/vsec.c b/drivers/platform/x86/intel/vsec.c
-index bb81b8b1f7e9b..483bb65651665 100644
---- a/drivers/platform/x86/intel/vsec.c
-+++ b/drivers/platform/x86/intel/vsec.c
-@@ -141,6 +141,7 @@ static int intel_vsec_add_aux(struct pci_dev *pdev, struct intel_vsec_device *in
+diff --git a/drivers/platform/x86/gigabyte-wmi.c b/drivers/platform/x86/gigabyte-wmi.c
+index 322cfaeda17ba..4dd39ab6ecfa2 100644
+--- a/drivers/platform/x86/gigabyte-wmi.c
++++ b/drivers/platform/x86/gigabyte-wmi.c
+@@ -140,6 +140,7 @@ static u8 gigabyte_wmi_detect_sensor_usability(struct wmi_device *wdev)
+ 	}}
  
- 	ret = ida_alloc(intel_vsec_dev->ida, GFP_KERNEL);
- 	if (ret < 0) {
-+		kfree(intel_vsec_dev->resource);
- 		kfree(intel_vsec_dev);
- 		return ret;
- 	}
+ static const struct dmi_system_id gigabyte_wmi_known_working_platforms[] = {
++	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("A320M-S2H V2-CF"),
+ 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B450M DS3H-CF"),
+ 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B450M DS3H WIFI-CF"),
+ 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B450M S2H V2"),
 -- 
 2.39.2
 
