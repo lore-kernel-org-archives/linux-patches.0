@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA5B7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:28:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0960BC433EF;
-	Mon, 24 Apr 2023 13:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284067C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:28:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A128DC433D2;
+	Mon, 24 Apr 2023 13:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342906;
-	bh=pRMLaFXOR23iu71aOV9NhmFlAHIUmJF8jeLXFXSD/Yc=;
+	s=korg; t=1682342909;
+	bh=n/w5OF3SZziTUVBEcMJfgelS+24erpL3mGQ9JlQEHsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2s5D20PNCXlMXvHfvyTEqAIJ+K5WiYIqXGWmUh/fRsut7AbPfXy8sBldbHClKBNq
-	 EoUp41sstTnqZXzSPoOKezB0a/uUAiQlnpQ09kSyLhvsMRUW3pS+fn0DZI6PS0v0RN
-	 gNOeLn/OSgLSKJQR7GZuDUcS5e1gbbFhomS+fDcU=
+	b=kChT8q8Yb1gxjwOkCB3iWx75mVLE0887sUlNUEnLMJ06g7tsZwZi2gHklAwJPWw9x
+	 TiNMj+KtcmeAmXdB7tJEU45CHdiXCijBmk7FM1KUdL4SyhskkdlEVqg5ES9PaM7SCt
+	 OjyCXRnzqinx8tO4+zcSEzx9bT8fCq5VvQisyIvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Steven Price <steven.price@arm.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.1 83/98] KVM: arm64: Fix buffer overflow in kvm_arm_set_fw_reg()
-Date: Mon, 24 Apr 2023 15:17:46 +0200
-Message-Id: <20230424131137.093817192@linuxfoundation.org>
+	"kernelci.org bot" <bot@kernelci.org>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.1 84/98] MIPS: Define RUNTIME_DISCARD_EXIT in LD script
+Date: Mon, 24 Apr 2023 15:17:47 +0200
+Message-Id: <20230424131137.142239983@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -37,36 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit a25bc8486f9c01c1af6b6c5657234b2eee2c39d6 upstream.
+commit 6dcbd0a69c84a8ae7a442840a8cf6b1379dc8f16 upstream.
 
-The KVM_REG_SIZE() comes from the ioctl and it can be a power of two
-between 0-32768 but if it is more than sizeof(long) this will corrupt
-memory.
+MIPS's exit sections are discarded at runtime as well.
 
-Fixes: 99adb567632b ("KVM: arm/arm64: Add save/restore support for firmware workaround state")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/4efbab8c-640f-43b2-8ac6-6d68e08280fe@kili.mountain
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Fixes link error:
+`.exit.text' referenced in section `__jump_table' of fs/fuse/inode.o:
+defined in discarded section `.exit.text' of fs/fuse/inode.o
+
+Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
+Reported-by: "kernelci.org bot" <bot@kernelci.org>
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hypercalls.c |    2 ++
+ arch/mips/kernel/vmlinux.lds.S |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/arch/arm64/kvm/hypercalls.c
-+++ b/arch/arm64/kvm/hypercalls.c
-@@ -397,6 +397,8 @@ int kvm_arm_set_fw_reg(struct kvm_vcpu *
- 	u64 val;
- 	int wa_level;
+--- a/arch/mips/kernel/vmlinux.lds.S
++++ b/arch/mips/kernel/vmlinux.lds.S
+@@ -15,6 +15,8 @@
+ #define EMITS_PT_NOTE
+ #endif
  
-+	if (KVM_REG_SIZE(reg->id) != sizeof(val))
-+		return -ENOENT;
- 	if (copy_from_user(&val, uaddr, KVM_REG_SIZE(reg->id)))
- 		return -EFAULT;
++#define RUNTIME_DISCARD_EXIT
++
+ #include <asm-generic/vmlinux.lds.h>
  
+ #undef mips
 
 
