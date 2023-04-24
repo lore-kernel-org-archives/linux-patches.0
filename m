@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DE52108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:36:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CCAC433EF;
-	Mon, 24 Apr 2023 13:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584E52108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:36:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7FE8C433D2;
+	Mon, 24 Apr 2023 13:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343362;
-	bh=k7ACBvInpBKAV6FXxXrjZ+wokD8+9sgV5Lw8IcOR0Tg=;
+	s=korg; t=1682343365;
+	bh=cwm9QDL/yG2AaeReu10xlSn3ZC5YStLYda6dDBn8rs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=srICt9M4It94yI4Tq7KgcYGxyEH/mdxh+Yqkk3mxYBHa30IWx29YjIxjJkZNnc2GC
-	 3NTWVdteyn3B5iM6bsMR0qqdohZxd9lyRC5HcFcI/snqnFFP1Le4hMbFSQqJjCvojR
-	 wICd3wb5fnYXk5VAo0yNZRlaz+JPEHkgnNxe9xI4=
+	b=kKLr3bM3EMyjoNq4s71X6Y3SoRvi9EqR1XNeAAjCt9QDkHDqtBZKnmzNxvZaxtiwX
+	 ic6EaabI/FMIt5MW4OV1um+nEDw2+gRKJLgtnNh5ffl1voGsFjOsCq3rBRK3c5FhZv
+	 raPFtDfmb0Ldwfz4Kkbwh+Zd+miXCHArYPuFMs6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 66/68] iio: adc: at91-sama5d2_adc: fix an error code in at91_adc_allocate_trigger()
-Date: Mon, 24 Apr 2023 15:18:37 +0200
-Message-Id: <20230424131130.151489762@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Natalia Petrova <n.petrova@fintech.ru>
+Subject: [PATCH 5.10 67/68] ASoC: fsl_asrc_dma: fix potential null-ptr-deref
+Date: Mon, 24 Apr 2023 15:18:38 +0200
+Message-Id: <20230424131130.190517755@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -34,32 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 73a428b37b9b538f8f8fe61caa45e7f243bab87c upstream.
+commit 86a24e99c97234f87d9f70b528a691150e145197 upstream.
 
-The at91_adc_allocate_trigger() function is supposed to return error
-pointers.  Returning a NULL will cause an Oops.
+dma_request_slave_channel() may return NULL which will lead to
+NULL pointer dereference error in 'tmp_chan->private'.
 
-Fixes: 5e1a1da0f8c9 ("iio: adc: at91-sama5d2_adc: add hw trigger and buffer support")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/5d728f9d-31d1-410d-a0b3-df6a63a2c8ba@kili.mountain
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Correct this behaviour by, first, switching from deprecated function
+dma_request_slave_channel() to dma_request_chan(). Secondly, enable
+sanity check for the resuling value of dma_request_chan().
+Also, fix description that follows the enacted changes and that
+concerns the use of dma_request_slave_channel().
+
+Fixes: 706e2c881158 ("ASoC: fsl_asrc_dma: Reuse the dma channel if available in Back-End")
+Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Link: https://lore.kernel.org/r/20230417133242.53339-1-n.zhandarovich@fintech.ru
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/at91-sama5d2_adc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/fsl_asrc_dma.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/adc/at91-sama5d2_adc.c
-+++ b/drivers/iio/adc/at91-sama5d2_adc.c
-@@ -1002,7 +1002,7 @@ static struct iio_trigger *at91_adc_allo
- 	trig = devm_iio_trigger_alloc(&indio->dev, "%s-dev%d-%s", indio->name,
- 				      indio->id, trigger_name);
- 	if (!trig)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
+--- a/sound/soc/fsl/fsl_asrc_dma.c
++++ b/sound/soc/fsl/fsl_asrc_dma.c
+@@ -207,14 +207,19 @@ static int fsl_asrc_dma_hw_params(struct
+ 		be_chan = soc_component_to_pcm(component_be)->chan[substream->stream];
+ 		tmp_chan = be_chan;
+ 	}
+-	if (!tmp_chan)
+-		tmp_chan = dma_request_slave_channel(dev_be, tx ? "tx" : "rx");
++	if (!tmp_chan) {
++		tmp_chan = dma_request_chan(dev_be, tx ? "tx" : "rx");
++		if (IS_ERR(tmp_chan)) {
++			dev_err(dev, "failed to request DMA channel for Back-End\n");
++			return -EINVAL;
++		}
++	}
  
- 	trig->dev.parent = indio->dev.parent;
- 	iio_trigger_set_drvdata(trig, indio);
+ 	/*
+ 	 * An EDMA DEV_TO_DEV channel is fixed and bound with DMA event of each
+ 	 * peripheral, unlike SDMA channel that is allocated dynamically. So no
+ 	 * need to configure dma_request and dma_request2, but get dma_chan of
+-	 * Back-End device directly via dma_request_slave_channel.
++	 * Back-End device directly via dma_request_chan.
+ 	 */
+ 	if (!asrc->use_edma) {
+ 		/* Get DMA request of Back-End */
 
 
