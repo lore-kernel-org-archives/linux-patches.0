@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AB07C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:27:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41D7C433D2;
-	Mon, 24 Apr 2023 13:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FC87C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:27:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D21C433EF;
+	Mon, 24 Apr 2023 13:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342867;
-	bh=5ZFJ/kl6fOCRCJfI8dq2WDVTqwmhBEZV1odLIr8sCzE=;
+	s=korg; t=1682342869;
+	bh=kjVw9yLpNnNDmsMYo1MXP032UzzbO/N4zSrIwJRVrQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPFe4OOMStO2zJ3Uz7oc+WvznARkuvGHMM1WqeuUg4sqqTQqv6aGBvSfsy+8Oma4k
-	 0a34wcvifnYbm3PRfIoeTDG0DKhRADx6BSAoU/BjirKfoNOajyyghl4uc5eMq5tHst
-	 UizDvJKzXuPSe4S0fTObFAWoa5Dbp2unqU8Gv5T4=
+	b=WCR8Fhi4Z3Ik4vShAwgpp58PVbUJIhx8K4U0PhsfjzH7VwD+FB3wXmvD/wVig24hI
+	 oTMYKf0dub+BY+asNqhebjfllsDKs7Zuag7JqIxK6fOcDOfMp/Zqjt0T9yizYy0CaL
+	 +Y780JIR8YJJ138E6Yl7zQ1SpaIxjKxFJ5GmCxdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Ziyang Xuan <william.xuanziyang@huawei.com>
-Subject: [PATCH 6.1 88/98] dccp: Call inet6_destroy_sock() via sk->sk_destruct().
-Date: Mon, 24 Apr 2023 15:17:51 +0200
-Message-Id: <20230424131137.292894985@linuxfoundation.org>
+Subject: [PATCH 6.1 89/98] sctp: Call inet6_destroy_sock() via sk->sk_destruct().
+Date: Mon, 24 Apr 2023 15:17:52 +0200
+Message-Id: <20230424131137.342144139@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -37,115 +37,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 1651951ebea54970e0bda60c638fc2eee7a6218f upstream.
+commit 6431b0f6ff1633ae598667e4cdd93830074a03e8 upstream.
 
 After commit d38afeec26ed ("tcp/udp: Call inet6_destroy_sock()
 in IPv6 sk->sk_destruct()."), we call inet6_destroy_sock() in
 sk->sk_destruct() by setting inet6_sock_destruct() to it to make
 sure we do not leak inet6-specific resources.
 
-DCCP sets its own sk->sk_destruct() in the dccp_init_sock(), and
-DCCPv6 socket shares it by calling the same init function via
-dccp_v6_init_sock().
+SCTP sets its own sk->sk_destruct() in the sctp_init_sock(), and
+SCTPv6 socket reuses it as the init function.
 
-To call inet6_sock_destruct() from DCCPv6 sk->sk_destruct(), we
-export it and set dccp_v6_sk_destruct() in the init function.
+To call inet6_sock_destruct() from SCTPv6 sk->sk_destruct(), we
+set sctp_v6_destruct_sock() in a new init function.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dccp/dccp.h     |    1 +
- net/dccp/ipv6.c     |   15 ++++++++-------
- net/dccp/proto.c    |    8 +++++++-
- net/ipv6/af_inet6.c |    1 +
- 4 files changed, 17 insertions(+), 8 deletions(-)
+ net/sctp/socket.c |   29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
---- a/net/dccp/dccp.h
-+++ b/net/dccp/dccp.h
-@@ -278,6 +278,7 @@ int dccp_rcv_state_process(struct sock *
- int dccp_rcv_established(struct sock *sk, struct sk_buff *skb,
- 			 const struct dccp_hdr *dh, const unsigned int len);
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -5102,13 +5102,17 @@ static void sctp_destroy_sock(struct soc
+ }
  
-+void dccp_destruct_common(struct sock *sk);
- int dccp_init_sock(struct sock *sk, const __u8 ctl_sock_initialized);
- void dccp_destroy_sock(struct sock *sk);
+ /* Triggered when there are no references on the socket anymore */
+-static void sctp_destruct_sock(struct sock *sk)
++static void sctp_destruct_common(struct sock *sk)
+ {
+ 	struct sctp_sock *sp = sctp_sk(sk);
  
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -1004,6 +1004,12 @@ static const struct inet_connection_sock
- 	.sockaddr_len	   = sizeof(struct sockaddr_in6),
- };
+ 	/* Free up the HMAC transform. */
+ 	crypto_free_shash(sp->hmac);
++}
  
-+static void dccp_v6_sk_destruct(struct sock *sk)
++static void sctp_destruct_sock(struct sock *sk)
 +{
-+	dccp_destruct_common(sk);
++	sctp_destruct_common(sk);
+ 	inet_sock_destruct(sk);
+ }
+ 
+@@ -9431,7 +9435,7 @@ void sctp_copy_sock(struct sock *newsk,
+ 	sctp_sk(newsk)->reuse = sp->reuse;
+ 
+ 	newsk->sk_shutdown = sk->sk_shutdown;
+-	newsk->sk_destruct = sctp_destruct_sock;
++	newsk->sk_destruct = sk->sk_destruct;
+ 	newsk->sk_family = sk->sk_family;
+ 	newsk->sk_protocol = IPPROTO_SCTP;
+ 	newsk->sk_backlog_rcv = sk->sk_prot->backlog_rcv;
+@@ -9666,11 +9670,20 @@ struct proto sctp_prot = {
+ 
+ #if IS_ENABLED(CONFIG_IPV6)
+ 
+-#include <net/transp_v6.h>
+-static void sctp_v6_destroy_sock(struct sock *sk)
++static void sctp_v6_destruct_sock(struct sock *sk)
++{
++	sctp_destruct_common(sk);
 +	inet6_sock_destruct(sk);
 +}
 +
- /* NOTE: A lot of things set to zero explicitly by call to
-  *       sk_alloc() so need not be done here.
-  */
-@@ -1016,17 +1022,12 @@ static int dccp_v6_init_sock(struct sock
- 		if (unlikely(!dccp_v6_ctl_sock_initialized))
- 			dccp_v6_ctl_sock_initialized = 1;
- 		inet_csk(sk)->icsk_af_ops = &dccp_ipv6_af_ops;
-+		sk->sk_destruct = dccp_v6_sk_destruct;
- 	}
- 
- 	return err;
- }
- 
--static void dccp_v6_destroy_sock(struct sock *sk)
--{
--	dccp_destroy_sock(sk);
--	inet6_destroy_sock(sk);
--}
--
- static struct timewait_sock_ops dccp6_timewait_sock_ops = {
- 	.twsk_obj_size	= sizeof(struct dccp6_timewait_sock),
- };
-@@ -1049,7 +1050,7 @@ static struct proto dccp_v6_prot = {
- 	.accept		   = inet_csk_accept,
- 	.get_port	   = inet_csk_get_port,
- 	.shutdown	   = dccp_shutdown,
--	.destroy	   = dccp_v6_destroy_sock,
-+	.destroy	   = dccp_destroy_sock,
- 	.orphan_count	   = &dccp_orphan_count,
- 	.max_header	   = MAX_DCCP_HEADER,
- 	.obj_size	   = sizeof(struct dccp6_sock),
---- a/net/dccp/proto.c
-+++ b/net/dccp/proto.c
-@@ -171,12 +171,18 @@ const char *dccp_packet_name(const int t
- 
- EXPORT_SYMBOL_GPL(dccp_packet_name);
- 
--static void dccp_sk_destruct(struct sock *sk)
-+void dccp_destruct_common(struct sock *sk)
++static int sctp_v6_init_sock(struct sock *sk)
  {
- 	struct dccp_sock *dp = dccp_sk(sk);
- 
- 	ccid_hc_tx_delete(dp->dccps_hc_tx_ccid, sk);
- 	dp->dccps_hc_tx_ccid = NULL;
-+}
-+EXPORT_SYMBOL_GPL(dccp_destruct_common);
+-	sctp_destroy_sock(sk);
+-	inet6_destroy_sock(sk);
++	int ret = sctp_init_sock(sk);
 +
-+static void dccp_sk_destruct(struct sock *sk)
-+{
-+	dccp_destruct_common(sk);
- 	inet_sock_destruct(sk);
++	if (!ret)
++		sk->sk_destruct = sctp_v6_destruct_sock;
++
++	return ret;
  }
  
---- a/net/ipv6/af_inet6.c
-+++ b/net/ipv6/af_inet6.c
-@@ -114,6 +114,7 @@ void inet6_sock_destruct(struct sock *sk
- 	inet6_cleanup_sock(sk);
- 	inet_sock_destruct(sk);
- }
-+EXPORT_SYMBOL_GPL(inet6_sock_destruct);
- 
- static int inet6_create(struct net *net, struct socket *sock, int protocol,
- 			int kern)
+ struct proto sctpv6_prot = {
+@@ -9680,8 +9693,8 @@ struct proto sctpv6_prot = {
+ 	.disconnect	= sctp_disconnect,
+ 	.accept		= sctp_accept,
+ 	.ioctl		= sctp_ioctl,
+-	.init		= sctp_init_sock,
+-	.destroy	= sctp_v6_destroy_sock,
++	.init		= sctp_v6_init_sock,
++	.destroy	= sctp_destroy_sock,
+ 	.shutdown	= sctp_shutdown,
+ 	.setsockopt	= sctp_setsockopt,
+ 	.getsockopt	= sctp_getsockopt,
 
 
