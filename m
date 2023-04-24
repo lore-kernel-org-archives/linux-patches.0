@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687ED7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE481C433D2;
-	Mon, 24 Apr 2023 13:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345B67C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA27C433D2;
+	Mon, 24 Apr 2023 13:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343014;
-	bh=myqHm/MN7G6R3HZTpB1HDaYKPLd2W5Hp9SmjuR0tUOQ=;
+	s=korg; t=1682343016;
+	bh=sbvEeEAH1fOXzYJuYw5C2KbyDNDubiZlIU+RDaCnxW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4fq7+OG8s1AuG8V/h4P6zxIW1gyLYFx2jFmsa+a8q0n13VRgk/zsxTR9aAqfgIpk
-	 h5mWosm6Qc1xA75T2/ws5xcVynBY5pbjKZmrpiG2JM1r3gkSUsARz3xq7QWnrD7M47
-	 A/UipMuSEZypZlaW3f7wlbwrSWvbWUTwVXWQE49E=
+	b=LNj2RmA6XAyuKO2TZ6+DY6VN83kCfGxzSEklH9RwLp6G2oh01HiUzt1+1ZTbinD/t
+	 W/ho6hN6HE1gNkQjCmIJD4O4DXjvhyTIwoOrEp4TpclUTUFwcV7McrxwIzU6gYBU0P
+	 4NmLMt2dcJfTHrfM37fMvlbV6FqNKFBOguxZIZ/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	got3nks <got3nks@users.noreply.github.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 045/110] platform/x86: gigabyte-wmi: add support for B650 AORUS ELITE AX
-Date: Mon, 24 Apr 2023 15:17:07 +0200
-Message-Id: <20230424131137.893445186@linuxfoundation.org>
+Subject: [PATCH 6.2 046/110] s390/ptrace: fix PTRACE_GET_LAST_BREAK error handling
+Date: Mon, 24 Apr 2023 15:17:08 +0200
+Message-Id: <20230424131137.938766131@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -36,35 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 441d901fbf669f6360566a4437b1e563b854de4a ]
+[ Upstream commit f9bbf25e7b2b74b52b2f269216a92657774f239c ]
 
-This has been reported as working.
+Return -EFAULT if put_user() for the PTRACE_GET_LAST_BREAK
+request fails, instead of silently ignoring it.
 
-Suggested-by: got3nks <got3nks@users.noreply.github.com>
-Link: https://github.com/t-8ch/linux-gigabyte-wmi-driver/issues/15#issuecomment-1483942966
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20230327-gigabyte-wmi-b650-elite-ax-v1-1-d4d645c21d0b@weissschuh.net
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/gigabyte-wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/kernel/ptrace.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/platform/x86/gigabyte-wmi.c b/drivers/platform/x86/gigabyte-wmi.c
-index 4dd39ab6ecfa2..5e5b17c50eb67 100644
---- a/drivers/platform/x86/gigabyte-wmi.c
-+++ b/drivers/platform/x86/gigabyte-wmi.c
-@@ -151,6 +151,7 @@ static const struct dmi_system_id gigabyte_wmi_known_working_platforms[] = {
- 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B550I AORUS PRO AX"),
- 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B550M AORUS PRO-P"),
- 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B550M DS3H"),
-+	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B650 AORUS ELITE AX"),
- 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B660 GAMING X DDR4"),
- 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B660I AORUS PRO DDR4"),
- 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("Z390 I AORUS PRO WIFI-CF"),
+diff --git a/arch/s390/kernel/ptrace.c b/arch/s390/kernel/ptrace.c
+index 53e0209229f87..092b16b4dd4f6 100644
+--- a/arch/s390/kernel/ptrace.c
++++ b/arch/s390/kernel/ptrace.c
+@@ -474,9 +474,7 @@ long arch_ptrace(struct task_struct *child, long request,
+ 		}
+ 		return 0;
+ 	case PTRACE_GET_LAST_BREAK:
+-		put_user(child->thread.last_break,
+-			 (unsigned long __user *) data);
+-		return 0;
++		return put_user(child->thread.last_break, (unsigned long __user *)data);
+ 	case PTRACE_ENABLE_TE:
+ 		if (!MACHINE_HAS_TE)
+ 			return -EIO;
+@@ -824,9 +822,7 @@ long compat_arch_ptrace(struct task_struct *child, compat_long_t request,
+ 		}
+ 		return 0;
+ 	case PTRACE_GET_LAST_BREAK:
+-		put_user(child->thread.last_break,
+-			 (unsigned int __user *) data);
+-		return 0;
++		return put_user(child->thread.last_break, (unsigned int __user *)data);
+ 	}
+ 	return compat_ptrace_request(child, request, addr, data);
+ }
 -- 
 2.39.2
 
