@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D9A7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0816DC433D2;
-	Mon, 24 Apr 2023 13:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED127C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5DEC433EF;
+	Mon, 24 Apr 2023 13:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342785;
-	bh=75P9ARHfHk1hx8qD3Um08bBYiViL7N9pwQf6/OCnP4Q=;
+	s=korg; t=1682342788;
+	bh=3JMwIcLEnNpI8C2ZRhAyW4fzqGUjSEX0W9hCEeJbn2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auaNeq/qK5t8L0gvlRSF15OqRjpJImqOmycddoFXbb7yKObW20GQeKV/nhPU5lH6W
-	 N6+f8SE7O8ydTIMejlNUCGx2gb3M/Igb7Tg0aCWHGtK+4R9qHhMAQ1ExQ9nbmvWu0M
-	 JOs2WEZrFWxAMn4biltz8AKBp8iRLrTWDEBZ7EMw=
+	b=oMXnWxBNZv/8/dBpaSTKbW7KropqHfVKYoWvyK+Iv1HLg5CvQyFERJsz5oMtlSh6z
+	 8DcsJTH+uuDhAL1/NKJ9/Shk0Km1rnrbAUR2ZgtFCBBTAFl20fiwNPiJELgRrA5CwQ
+	 ctav6EhZ6xL6Ye4s8KhHzQMI9mv3fawdqypUkGaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WANG Xuerui <git@xen0n.name>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 57/98] LoongArch: Mark 3 symbol exports as non-GPL
-Date: Mon, 24 Apr 2023 15:17:20 +0200
-Message-Id: <20230424131136.077611717@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 58/98] maple_tree: make maple state reusable after mas_empty_area_rev()
+Date: Mon, 24 Apr 2023 15:17:21 +0200
+Message-Id: <20230424131136.115980395@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -34,80 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-commit dce5ea1d0f45fa612f5760b88614a3f32bc75e3f upstream.
+commit fad8e4291da5e3243e086622df63cb952db444d8 upstream.
 
-vm_map_base, empty_zero_page and invalid_pmd_table could be accessed
-widely by some out-of-tree non-GPL but important file systems or drivers
-(e.g. OpenZFS). Let's use EXPORT_SYMBOL() instead of EXPORT_SYMBOL_GPL()
-to export them, so as to avoid build errors.
+Stop using maple state min/max for the range by passing through pointers
+for those values.  This will allow the maple state to be reused without
+resetting.
 
-1, Details about vm_map_base:
+Also add some logic to fail out early on searching with invalid
+arguments.
 
-This is a LoongArch-specific symbol and may be referenced through macros
-PCI_IOBASE, VMALLOC_START and VMALLOC_END.
-
-2, Details about empty_zero_page:
-
-As it stands today, only 3 architectures export empty_zero_page as a GPL
-symbol: IA64, LoongArch and MIPS. LoongArch gets the GPL export by
-inheriting from MIPS, and the MIPS export was first introduced in commit
-497d2adcbf50b ("[MIPS] Export empty_zero_page for sake of the ext4
-module."). The IA64 export was similar: commit a7d57ecf4216e ("[IA64]
-Export three symbols for module use") did so for kvm.
-
-In both IA64 and MIPS, the export of empty_zero_page was done for
-satisfying some in-kernel component built as module (kvm and ext4
-respectively), and given its reasonably low-level nature, GPL is a
-reasonable choice. But looking at the bigger picture it is evident most
-other architectures do not regard it as GPL, so in effect the symbol
-probably should not be treated as such, in favor of consistency.
-
-3, Details about invalid_pmd_table:
-
-Keep consistency with invalid_pte_table and make it be possible by some
-modules.
-
-Cc: stable@vger.kernel.org
-Reviewed-by: WANG Xuerui <git@xen0n.name>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://lkml.kernel.org/r/20230414145728.4067069-1-Liam.Howlett@oracle.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reported-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/cpu-probe.c |    2 +-
- arch/loongarch/mm/init.c          |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ lib/maple_tree.c |   27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
---- a/arch/loongarch/kernel/cpu-probe.c
-+++ b/arch/loongarch/kernel/cpu-probe.c
-@@ -60,7 +60,7 @@ static inline void set_elf_platform(int
- 
- /* MAP BASE */
- unsigned long vm_map_base;
--EXPORT_SYMBOL_GPL(vm_map_base);
-+EXPORT_SYMBOL(vm_map_base);
- 
- static void cpu_probe_addrbits(struct cpuinfo_loongarch *c)
- {
---- a/arch/loongarch/mm/init.c
-+++ b/arch/loongarch/mm/init.c
-@@ -41,7 +41,7 @@
-  * don't have to care about aliases on other CPUs.
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -4968,7 +4968,8 @@ not_found:
+  * Return: True if found in a leaf, false otherwise.
+  *
   */
- unsigned long empty_zero_page, zero_page_mask;
--EXPORT_SYMBOL_GPL(empty_zero_page);
-+EXPORT_SYMBOL(empty_zero_page);
- EXPORT_SYMBOL(zero_page_mask);
+-static bool mas_rev_awalk(struct ma_state *mas, unsigned long size)
++static bool mas_rev_awalk(struct ma_state *mas, unsigned long size,
++		unsigned long *gap_min, unsigned long *gap_max)
+ {
+ 	enum maple_type type = mte_node_type(mas->node);
+ 	struct maple_node *node = mas_mn(mas);
+@@ -5033,8 +5034,8 @@ static bool mas_rev_awalk(struct ma_stat
  
- void setup_zero_pages(void)
-@@ -231,7 +231,7 @@ pud_t invalid_pud_table[PTRS_PER_PUD] __
- #endif
- #ifndef __PAGETABLE_PMD_FOLDED
- pmd_t invalid_pmd_table[PTRS_PER_PMD] __page_aligned_bss;
--EXPORT_SYMBOL_GPL(invalid_pmd_table);
-+EXPORT_SYMBOL(invalid_pmd_table);
- #endif
- pte_t invalid_pte_table[PTRS_PER_PTE] __page_aligned_bss;
- EXPORT_SYMBOL(invalid_pte_table);
+ 	if (unlikely(ma_is_leaf(type))) {
+ 		mas->offset = offset;
+-		mas->min = min;
+-		mas->max = min + gap - 1;
++		*gap_min = min;
++		*gap_max = min + gap - 1;
+ 		return true;
+ 	}
+ 
+@@ -5310,6 +5311,9 @@ int mas_empty_area(struct ma_state *mas,
+ 	unsigned long *pivots;
+ 	enum maple_type mt;
+ 
++	if (min >= max)
++		return -EINVAL;
++
+ 	if (mas_is_start(mas))
+ 		mas_start(mas);
+ 	else if (mas->offset >= 2)
+@@ -5364,6 +5368,9 @@ int mas_empty_area_rev(struct ma_state *
+ {
+ 	struct maple_enode *last = mas->node;
+ 
++	if (min >= max)
++		return -EINVAL;
++
+ 	if (mas_is_start(mas)) {
+ 		mas_start(mas);
+ 		mas->offset = mas_data_end(mas);
+@@ -5383,7 +5390,7 @@ int mas_empty_area_rev(struct ma_state *
+ 	mas->index = min;
+ 	mas->last = max;
+ 
+-	while (!mas_rev_awalk(mas, size)) {
++	while (!mas_rev_awalk(mas, size, &min, &max)) {
+ 		if (last == mas->node) {
+ 			if (!mas_rewind_node(mas))
+ 				return -EBUSY;
+@@ -5398,17 +5405,9 @@ int mas_empty_area_rev(struct ma_state *
+ 	if (unlikely(mas->offset == MAPLE_NODE_SLOTS))
+ 		return -EBUSY;
+ 
+-	/*
+-	 * mas_rev_awalk() has set mas->min and mas->max to the gap values.  If
+-	 * the maximum is outside the window we are searching, then use the last
+-	 * location in the search.
+-	 * mas->max and mas->min is the range of the gap.
+-	 * mas->index and mas->last are currently set to the search range.
+-	 */
+-
+ 	/* Trim the upper limit to the max. */
+-	if (mas->max <= mas->last)
+-		mas->last = mas->max;
++	if (max <= mas->last)
++		mas->last = max;
+ 
+ 	mas->index = mas->last - size + 1;
+ 	return 0;
 
 
