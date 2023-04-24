@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0557A7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7E6C4339B;
-	Mon, 24 Apr 2023 13:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81A27C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F403C433EF;
+	Mon, 24 Apr 2023 13:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342491;
-	bh=9d9GEENHWJfdbU11UJXFJMpSGN5RKmIq64s1rACX3yQ=;
+	s=korg; t=1682342494;
+	bh=11EhVpa6UQ5d0MgbwWdBeP7qtvzkptP71hR3H4uIUm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tazeiP94zUYHiTCBaVV7ub/i+amqGW9cnKqik2t5eoOmJFR1jDYvaxnryeGhvMwe4
-	 /9KUxD/ctXlpqlA7Eq99mi7i83DDqw17Sejm7zJtq1k+GovgFqy5j2hWA7eS2Q18rt
-	 7+HCHvwO1blOk5D34TgJPG9RhIaMEZo3ca5zmSN4=
+	b=r0juMtRJYhCRhJ0Se3zNqEMI6/0MCvUgoQC1RUM3JzR6kIqa89sHn/R2RM9qG4eNY
+	 QnwoGD0qDFNcW/FOLUeMsJEtGuY47KPtsa+3taJ9AOGwUgo/nwAP/7FYp8EFluSabe
+	 kTZ6DvH2Jwomya+DM4+utKUtP3MPugwL/H4jsuyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	"David S. Miller" <davem@davemloft.net>,
 	Ziyang Xuan <william.xuanziyang@huawei.com>
-Subject: [PATCH 5.15 60/73] inet6: Remove inet6_destroy_sock() in sk->sk_prot->destroy().
-Date: Mon, 24 Apr 2023 15:17:14 +0200
-Message-Id: <20230424131131.275236016@linuxfoundation.org>
+Subject: [PATCH 5.15 61/73] dccp: Call inet6_destroy_sock() via sk->sk_destruct().
+Date: Mon, 24 Apr 2023 15:17:15 +0200
+Message-Id: <20230424131131.306912145@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -38,134 +37,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit b5fc29233d28be7a3322848ebe73ac327559cdb9 upstream.
+commit 1651951ebea54970e0bda60c638fc2eee7a6218f upstream.
 
 After commit d38afeec26ed ("tcp/udp: Call inet6_destroy_sock()
 in IPv6 sk->sk_destruct()."), we call inet6_destroy_sock() in
 sk->sk_destruct() by setting inet6_sock_destruct() to it to make
 sure we do not leak inet6-specific resources.
 
-Now we can remove unnecessary inet6_destroy_sock() calls in
-sk->sk_prot->destroy().
+DCCP sets its own sk->sk_destruct() in the dccp_init_sock(), and
+DCCPv6 socket shares it by calling the same init function via
+dccp_v6_init_sock().
 
-DCCP and SCTP have their own sk->sk_destruct() function, so we
-change them separately in the following patches.
+To call inet6_sock_destruct() from DCCPv6 sk->sk_destruct(), we
+export it and set dccp_v6_sk_destruct() in the init function.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ping.c      |    6 ------
- net/ipv6/raw.c       |    2 --
- net/ipv6/tcp_ipv6.c  |    8 +-------
- net/ipv6/udp.c       |    2 --
- net/l2tp/l2tp_ip6.c  |    2 --
- net/mptcp/protocol.c |    7 -------
- 6 files changed, 1 insertion(+), 26 deletions(-)
+ net/dccp/dccp.h     |    1 +
+ net/dccp/ipv6.c     |   15 ++++++++-------
+ net/dccp/proto.c    |    8 +++++++-
+ net/ipv6/af_inet6.c |    1 +
+ 4 files changed, 17 insertions(+), 8 deletions(-)
 
---- a/net/ipv6/ping.c
-+++ b/net/ipv6/ping.c
-@@ -22,11 +22,6 @@
- #include <linux/proc_fs.h>
- #include <net/ping.h>
+--- a/net/dccp/dccp.h
++++ b/net/dccp/dccp.h
+@@ -283,6 +283,7 @@ int dccp_rcv_state_process(struct sock *
+ int dccp_rcv_established(struct sock *sk, struct sk_buff *skb,
+ 			 const struct dccp_hdr *dh, const unsigned int len);
  
--static void ping_v6_destroy(struct sock *sk)
--{
--	inet6_destroy_sock(sk);
--}
--
- /* Compatibility glue so we can support IPv6 when it's compiled as a module */
- static int dummy_ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len,
- 				 int *addr_len)
-@@ -171,7 +166,6 @@ struct proto pingv6_prot = {
- 	.owner =	THIS_MODULE,
- 	.init =		ping_init_sock,
- 	.close =	ping_close,
--	.destroy =	ping_v6_destroy,
- 	.connect =	ip6_datagram_connect_v6_only,
- 	.disconnect =	__udp_disconnect,
- 	.setsockopt =	ipv6_setsockopt,
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -1211,8 +1211,6 @@ static void raw6_destroy(struct sock *sk
- 	lock_sock(sk);
- 	ip6_flush_pending_frames(sk);
- 	release_sock(sk);
--
--	inet6_destroy_sock(sk);
- }
++void dccp_destruct_common(struct sock *sk);
+ int dccp_init_sock(struct sock *sk, const __u8 ctl_sock_initialized);
+ void dccp_destroy_sock(struct sock *sk);
  
- static int rawv6_init_sk(struct sock *sk)
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1972,12 +1972,6 @@ static int tcp_v6_init_sock(struct sock
- 	return 0;
- }
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -1002,6 +1002,12 @@ static const struct inet_connection_sock
+ 	.sockaddr_len	   = sizeof(struct sockaddr_in6),
+ };
  
--static void tcp_v6_destroy_sock(struct sock *sk)
--{
--	tcp_v4_destroy_sock(sk);
--	inet6_destroy_sock(sk);
--}
--
- #ifdef CONFIG_PROC_FS
- /* Proc filesystem TCPv6 sock list dumping. */
- static void get_openreq6(struct seq_file *seq,
-@@ -2170,7 +2164,7 @@ struct proto tcpv6_prot = {
- 	.accept			= inet_csk_accept,
- 	.ioctl			= tcp_ioctl,
- 	.init			= tcp_v6_init_sock,
--	.destroy		= tcp_v6_destroy_sock,
-+	.destroy		= tcp_v4_destroy_sock,
- 	.shutdown		= tcp_shutdown,
- 	.setsockopt		= tcp_setsockopt,
- 	.getsockopt		= tcp_getsockopt,
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1649,8 +1649,6 @@ void udpv6_destroy_sock(struct sock *sk)
- 			udp_encap_disable();
- 		}
++static void dccp_v6_sk_destruct(struct sock *sk)
++{
++	dccp_destruct_common(sk);
++	inet6_sock_destruct(sk);
++}
++
+ /* NOTE: A lot of things set to zero explicitly by call to
+  *       sk_alloc() so need not be done here.
+  */
+@@ -1014,17 +1020,12 @@ static int dccp_v6_init_sock(struct sock
+ 		if (unlikely(!dccp_v6_ctl_sock_initialized))
+ 			dccp_v6_ctl_sock_initialized = 1;
+ 		inet_csk(sk)->icsk_af_ops = &dccp_ipv6_af_ops;
++		sk->sk_destruct = dccp_v6_sk_destruct;
  	}
--
--	inet6_destroy_sock(sk);
+ 
+ 	return err;
  }
  
- /*
---- a/net/l2tp/l2tp_ip6.c
-+++ b/net/l2tp/l2tp_ip6.c
-@@ -255,8 +255,6 @@ static void l2tp_ip6_destroy_sock(struct
- 
- 	if (tunnel)
- 		l2tp_tunnel_delete(tunnel);
--
--	inet6_destroy_sock(sk);
- }
- 
- static int l2tp_ip6_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len)
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3621,12 +3621,6 @@ static const struct proto_ops mptcp_v6_s
- 
- static struct proto mptcp_v6_prot;
- 
--static void mptcp_v6_destroy(struct sock *sk)
+-static void dccp_v6_destroy_sock(struct sock *sk)
 -{
--	mptcp_destroy(sk);
+-	dccp_destroy_sock(sk);
 -	inet6_destroy_sock(sk);
 -}
 -
- static struct inet_protosw mptcp_v6_protosw = {
- 	.type		= SOCK_STREAM,
- 	.protocol	= IPPROTO_MPTCP,
-@@ -3642,7 +3636,6 @@ int __init mptcp_proto_v6_init(void)
- 	mptcp_v6_prot = mptcp_prot;
- 	strcpy(mptcp_v6_prot.name, "MPTCPv6");
- 	mptcp_v6_prot.slab = NULL;
--	mptcp_v6_prot.destroy = mptcp_v6_destroy;
- 	mptcp_v6_prot.obj_size = sizeof(struct mptcp6_sock);
+ static struct timewait_sock_ops dccp6_timewait_sock_ops = {
+ 	.twsk_obj_size	= sizeof(struct dccp6_timewait_sock),
+ };
+@@ -1047,7 +1048,7 @@ static struct proto dccp_v6_prot = {
+ 	.accept		   = inet_csk_accept,
+ 	.get_port	   = inet_csk_get_port,
+ 	.shutdown	   = dccp_shutdown,
+-	.destroy	   = dccp_v6_destroy_sock,
++	.destroy	   = dccp_destroy_sock,
+ 	.orphan_count	   = &dccp_orphan_count,
+ 	.max_header	   = MAX_DCCP_HEADER,
+ 	.obj_size	   = sizeof(struct dccp6_sock),
+--- a/net/dccp/proto.c
++++ b/net/dccp/proto.c
+@@ -171,12 +171,18 @@ const char *dccp_packet_name(const int t
  
- 	err = proto_register(&mptcp_v6_prot, 1);
+ EXPORT_SYMBOL_GPL(dccp_packet_name);
+ 
+-static void dccp_sk_destruct(struct sock *sk)
++void dccp_destruct_common(struct sock *sk)
+ {
+ 	struct dccp_sock *dp = dccp_sk(sk);
+ 
+ 	ccid_hc_tx_delete(dp->dccps_hc_tx_ccid, sk);
+ 	dp->dccps_hc_tx_ccid = NULL;
++}
++EXPORT_SYMBOL_GPL(dccp_destruct_common);
++
++static void dccp_sk_destruct(struct sock *sk)
++{
++	dccp_destruct_common(sk);
+ 	inet_sock_destruct(sk);
+ }
+ 
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -113,6 +113,7 @@ void inet6_sock_destruct(struct sock *sk
+ 	inet6_cleanup_sock(sk);
+ 	inet_sock_destruct(sk);
+ }
++EXPORT_SYMBOL_GPL(inet6_sock_destruct);
+ 
+ static int inet6_create(struct net *net, struct socket *sock, int protocol,
+ 			int kern)
 
 
