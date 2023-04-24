@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C957C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31B5C433EF;
-	Mon, 24 Apr 2023 13:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5697C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E40C433EF;
+	Mon, 24 Apr 2023 13:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342468;
-	bh=9YaviG2U6DwHgTFdtK4IKVxDIg+IQaeYNyzgG0NE/Ag=;
+	s=korg; t=1682342470;
+	bh=EidAUh3Dv1OxnMS244VOjuU+4gHPip+54nkFy8EPWcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BhaZej6V86aiBaGvG9R6iI5Z5zrqGeb7W2W3owf5ffhtM5KGMKSfJ3szKVdLacfVL
-	 XHo2SKf8h0ZbDpbWf8RNJrCHise1P7wqCZnc14jMfr4dk1oqSPcEmK8qInpyu0OEjQ
-	 deGdp4tOBtVfF0+fniRxdO8ZuQ33q4W9ZoPu8Ixk=
+	b=Z7phQtv9Q2/Z6u0/vG0yVllr7v+i6QDbBA6dOun3qsMszDV5fFsLlLGgSRyb0U2tU
+	 HEDpLYdAV/OxngCEqp2i7iJ3gOSTePG07yKoM2BLUbX4mL89VHHeKpjfZSCphdf6PT
+	 oDSAjiy6+K+v9s+rptPAWeWvNXNDaRNtkDHy/PQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Li Lanzhe <u202212060@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 21/73] mlxsw: pci: Fix possible crash during initialization
-Date: Mon, 24 Apr 2023 15:16:35 +0200
-Message-Id: <20230424131129.798443664@linuxfoundation.org>
+Subject: [PATCH 5.15 22/73] spi: spi-rockchip: Fix missing unwind goto in rockchip_sfc_probe()
+Date: Mon, 24 Apr 2023 15:16:36 +0200
+Message-Id: <20230424131129.829637187@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -36,60 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Li Lanzhe <u202212060@hust.edu.cn>
 
-[ Upstream commit 1f64757ee2bb22a93ec89b4c71707297e8cca0ba ]
+[ Upstream commit 359f5b0d4e26b7a7bcc574d6148b31a17cefe47d ]
 
-During initialization the driver issues a reset command via its command
-interface in order to remove previous configuration from the device.
+If devm_request_irq() fails, then we are directly return 'ret' without
+clk_disable_unprepare(sfc->clk) and clk_disable_unprepare(sfc->hclk).
 
-After issuing the reset, the driver waits for 200ms before polling on
-the "system_status" register using memory-mapped IO until the device
-reaches a ready state (0x5E). The wait is necessary because the reset
-command only triggers the reset, but the reset itself happens
-asynchronously. If the driver starts polling too soon, the read of the
-"system_status" register will never return and the system will crash
-[1].
+Fix this by changing direct return to a goto 'err_irq'.
 
-The issue was discovered when the device was flashed with a development
-firmware version where the reset routine took longer to complete. The
-issue was fixed in the firmware, but it exposed the fact that the
-current wait time is borderline.
-
-Fix by increasing the wait time from 200ms to 400ms. With this patch and
-the buggy firmware version, the issue did not reproduce in 10 reboots
-whereas without the patch the issue is reproduced quite consistently.
-
-[1]
-mce: CPUs not responding to MCE broadcast (may include false positives): 0,4
-mce: CPUs not responding to MCE broadcast (may include false positives): 0,4
-Kernel panic - not syncing: Timeout: Not all CPUs entered broadcast exception handler
-Shutting down cpus with NMI
-Kernel Offset: 0x12000000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
-
-Fixes: ac004e84164e ("mlxsw: pci: Wait longer before accessing the device after reset")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 0b89fc0a367e ("spi: rockchip-sfc: add rockchip serial flash controller")
+Signed-off-by: Li Lanzhe <u202212060@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230419115030.6029-1-u202212060@hust.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/pci_hw.h | 2 +-
+ drivers/spi/spi-rockchip-sfc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/pci_hw.h b/drivers/net/ethernet/mellanox/mlxsw/pci_hw.h
-index 7b531228d6c0f..25e9f47db2a62 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/pci_hw.h
-+++ b/drivers/net/ethernet/mellanox/mlxsw/pci_hw.h
-@@ -26,7 +26,7 @@
- #define MLXSW_PCI_CIR_TIMEOUT_MSECS		1000
+diff --git a/drivers/spi/spi-rockchip-sfc.c b/drivers/spi/spi-rockchip-sfc.c
+index a46b385440273..014106f8f978c 100644
+--- a/drivers/spi/spi-rockchip-sfc.c
++++ b/drivers/spi/spi-rockchip-sfc.c
+@@ -634,7 +634,7 @@ static int rockchip_sfc_probe(struct platform_device *pdev)
+ 	if (ret) {
+ 		dev_err(dev, "Failed to request irq\n");
  
- #define MLXSW_PCI_SW_RESET_TIMEOUT_MSECS	900000
--#define MLXSW_PCI_SW_RESET_WAIT_MSECS		200
-+#define MLXSW_PCI_SW_RESET_WAIT_MSECS		400
- #define MLXSW_PCI_FW_READY			0xA1844
- #define MLXSW_PCI_FW_READY_MASK			0xFFFF
- #define MLXSW_PCI_FW_READY_MAGIC		0x5E
+-		return ret;
++		goto err_irq;
+ 	}
+ 
+ 	ret = rockchip_sfc_init(sfc);
 -- 
 2.39.2
 
