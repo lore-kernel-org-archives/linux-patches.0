@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196CF7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A61C4339C;
-	Mon, 24 Apr 2023 13:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A816C7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3038FC433EF;
+	Mon, 24 Apr 2023 13:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342483;
-	bh=mLSytBvQlfwB1tZGNfXw6XNAS4ua8mSIQH5mtpOa0vQ=;
+	s=korg; t=1682342486;
+	bh=gM0OhCcplzq8ceeEaQOPKKmufIRt6pznSqa3D9AavBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EB/h5pgUZPqMboy+MjeoxZU9LkNdVswYznItH3wRx2lpTTrggPx5rF6YgHAZjElWG
-	 K2kckE8Yjgm+b65l5JFrxj7EZV5663yg6+01i6mv9Mf1t+AjsKt90dQgc1793pVL5z
-	 PcIQDS92V9rTssTjnEKZn8KGV9x+UuXlASPt0JRs=
+	b=n6TlGvmdr9FGR/GMs7h2cUhPpsOJB2YIoGYtbxjAjSOJ5vnNq211DNRaJKMQpVlVe
+	 UjXNyeoglKmFOLN1xBuRw78F7qmjGczQX1vrmf2aP7zIm8oF13zjvKOxkgkvO+xV0c
+	 XEzUt9yxIn0WYPCon1stLx5HPvNuKVCVX7TIqDlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Yang Bo <yb203166@antfin.com>
-Subject: [PATCH 5.15 57/73] fuse: fix deadlock between atomic O_TRUNC and page invalidation
-Date: Mon, 24 Apr 2023 15:17:11 +0200
-Message-Id: <20230424131131.133700175@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>
+Subject: [PATCH 5.15 58/73] udp: Call inet6_destroy_sock() in setsockopt(IPV6_ADDRFORM).
+Date: Mon, 24 Apr 2023 15:17:12 +0200
+Message-Id: <20230424131131.184208970@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -35,169 +35,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 2fdbb8dd01556e1501132b5ad3826e8f71e24a8b upstream.
+commit 21985f43376cee092702d6cb963ff97a9d2ede68 upstream.
 
-fuse_finish_open() will be called with FUSE_NOWRITE set in case of atomic
-O_TRUNC open(), so commit 76224355db75 ("fuse: truncate pagecache on
-atomic_o_trunc") replaced invalidate_inode_pages2() by truncate_pagecache()
-in such a case to avoid the A-A deadlock. However, we found another A-B-B-A
-deadlock related to the case above, which will cause the xfstests
-generic/464 testcase hung in our virtio-fs test environment.
+Commit 4b340ae20d0e ("IPv6: Complete IPV6_DONTFRAG support") forgot
+to add a change to free inet6_sk(sk)->rxpmtu while converting an IPv6
+socket into IPv4 with IPV6_ADDRFORM.  After conversion, sk_prot is
+changed to udp_prot and ->destroy() never cleans it up, resulting in
+a memory leak.
 
-For example, consider two processes concurrently open one same file, one
-with O_TRUNC and another without O_TRUNC. The deadlock case is described
-below, if open(O_TRUNC) is already set_nowrite(acquired A), and is trying
-to lock a page (acquiring B), open() could have held the page lock
-(acquired B), and waiting on the page writeback (acquiring A). This would
-lead to deadlocks.
+This is due to the discrepancy between inet6_destroy_sock() and
+IPV6_ADDRFORM, so let's call inet6_destroy_sock() from IPV6_ADDRFORM
+to remove the difference.
 
-open(O_TRUNC)
-----------------------------------------------------------------
-fuse_open_common
-  inode_lock            [C acquire]
-  fuse_set_nowrite      [A acquire]
+However, this is not enough for now because rxpmtu can be changed
+without lock_sock() after commit 03485f2adcde ("udpv6: Add lockless
+sendmsg() support").  We will fix this case in the following patch.
 
-  fuse_finish_open
-    truncate_pagecache
-      lock_page         [B acquire]
-      truncate_inode_page
-      unlock_page       [B release]
+Note we will rename inet6_destroy_sock() to inet6_cleanup_sock() and
+remove unnecessary inet6_destroy_sock() calls in sk_prot->destroy()
+in the future.
 
-  fuse_release_nowrite  [A release]
-  inode_unlock          [C release]
-----------------------------------------------------------------
-
-open()
-----------------------------------------------------------------
-fuse_open_common
-  fuse_finish_open
-    invalidate_inode_pages2
-      lock_page         [B acquire]
-        fuse_launder_page
-          fuse_wait_on_page_writeback [A acquire & release]
-      unlock_page       [B release]
-----------------------------------------------------------------
-
-Besides this case, all calls of invalidate_inode_pages2() and
-invalidate_inode_pages2_range() in fuse code also can deadlock with
-open(O_TRUNC).
-
-Fix by moving the truncate_pagecache() call outside the nowrite protected
-region.  The nowrite protection is only for delayed writeback
-(writeback_cache) case, where inode lock does not protect against
-truncation racing with writes on the server.  Write syscalls racing with
-page cache truncation still get the inode lock protection.
-
-This patch also changes the order of filemap_invalidate_lock()
-vs. fuse_set_nowrite() in fuse_open_common().  This new order matches the
-order found in fuse_file_fallocate() and fuse_do_setattr().
-
-Reported-by: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
-Tested-by: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
-Fixes: e4648309b85a ("fuse: truncate pending writes on O_TRUNC")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Yang Bo <yb203166@antfin.com>
+Fixes: 4b340ae20d0e ("IPv6: Complete IPV6_DONTFRAG support")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dir.c  |    7 ++++++-
- fs/fuse/file.c |   29 +++++++++++++++++------------
- 2 files changed, 23 insertions(+), 13 deletions(-)
+ include/net/ipv6.h       |    1 +
+ net/ipv6/af_inet6.c      |    6 ++++++
+ net/ipv6/ipv6_sockglue.c |   20 ++++++++------------
+ 3 files changed, 15 insertions(+), 12 deletions(-)
 
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -476,6 +476,7 @@ static int fuse_create_open(struct inode
- 	struct fuse_entry_out outentry;
- 	struct fuse_inode *fi;
- 	struct fuse_file *ff;
-+	bool trunc = flags & O_TRUNC;
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -1118,6 +1118,7 @@ void ipv6_icmp_error(struct sock *sk, st
+ void ipv6_local_error(struct sock *sk, int err, struct flowi6 *fl6, u32 info);
+ void ipv6_local_rxpmtu(struct sock *sk, struct flowi6 *fl6, u32 mtu);
  
- 	/* Userspace expects S_IFREG in create mode */
- 	BUG_ON((mode & S_IFMT) != S_IFREG);
-@@ -500,7 +501,7 @@ static int fuse_create_open(struct inode
- 	inarg.mode = mode;
- 	inarg.umask = current_umask();
- 
--	if (fm->fc->handle_killpriv_v2 && (flags & O_TRUNC) &&
-+	if (fm->fc->handle_killpriv_v2 && trunc &&
- 	    !(flags & O_EXCL) && !capable(CAP_FSETID)) {
- 		inarg.open_flags |= FUSE_OPEN_KILL_SUIDGID;
- 	}
-@@ -549,6 +550,10 @@ static int fuse_create_open(struct inode
- 	} else {
- 		file->private_data = ff;
- 		fuse_finish_open(inode, file);
-+		if (fm->fc->atomic_o_trunc && trunc)
-+			truncate_pagecache(inode, 0);
-+		else if (!(ff->open_flags & FOPEN_KEEP_CACHE))
-+			invalidate_inode_pages2(inode->i_mapping);
- 	}
- 	return err;
- 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -210,12 +210,9 @@ void fuse_finish_open(struct inode *inod
- 		fi->attr_version = atomic64_inc_return(&fc->attr_version);
- 		i_size_write(inode, 0);
- 		spin_unlock(&fi->lock);
--		truncate_pagecache(inode, 0);
- 		fuse_invalidate_attr(inode);
- 		if (fc->writeback_cache)
- 			file_update_time(file);
--	} else if (!(ff->open_flags & FOPEN_KEEP_CACHE)) {
--		invalidate_inode_pages2(inode->i_mapping);
- 	}
- 
- 	if ((file->f_mode & FMODE_WRITE) && fc->writeback_cache)
-@@ -240,30 +237,38 @@ int fuse_open_common(struct inode *inode
- 	if (err)
- 		return err;
- 
--	if (is_wb_truncate || dax_truncate) {
-+	if (is_wb_truncate || dax_truncate)
- 		inode_lock(inode);
--		fuse_set_nowrite(inode);
--	}
- 
- 	if (dax_truncate) {
- 		filemap_invalidate_lock(inode->i_mapping);
- 		err = fuse_dax_break_layouts(inode, 0, 0);
- 		if (err)
--			goto out;
-+			goto out_inode_unlock;
- 	}
- 
-+	if (is_wb_truncate || dax_truncate)
-+		fuse_set_nowrite(inode);
-+
- 	err = fuse_do_open(fm, get_node_id(inode), file, isdir);
- 	if (!err)
- 		fuse_finish_open(inode, file);
- 
--out:
-+	if (is_wb_truncate || dax_truncate)
-+		fuse_release_nowrite(inode);
-+	if (!err) {
-+		struct fuse_file *ff = file->private_data;
-+
-+		if (fc->atomic_o_trunc && (file->f_flags & O_TRUNC))
-+			truncate_pagecache(inode, 0);
-+		else if (!(ff->open_flags & FOPEN_KEEP_CACHE))
-+			invalidate_inode_pages2(inode->i_mapping);
-+	}
- 	if (dax_truncate)
- 		filemap_invalidate_unlock(inode->i_mapping);
--
--	if (is_wb_truncate | dax_truncate) {
--		fuse_release_nowrite(inode);
-+out_inode_unlock:
-+	if (is_wb_truncate || dax_truncate)
- 		inode_unlock(inode);
--	}
- 
- 	return err;
++void inet6_cleanup_sock(struct sock *sk);
+ int inet6_release(struct socket *sock);
+ int inet6_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len);
+ int inet6_getname(struct socket *sock, struct sockaddr *uaddr,
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -507,6 +507,12 @@ void inet6_destroy_sock(struct sock *sk)
  }
+ EXPORT_SYMBOL_GPL(inet6_destroy_sock);
+ 
++void inet6_cleanup_sock(struct sock *sk)
++{
++	inet6_destroy_sock(sk);
++}
++EXPORT_SYMBOL_GPL(inet6_cleanup_sock);
++
+ /*
+  *	This does both peername and sockname.
+  */
+--- a/net/ipv6/ipv6_sockglue.c
++++ b/net/ipv6/ipv6_sockglue.c
+@@ -429,9 +429,6 @@ static int do_ipv6_setsockopt(struct soc
+ 		if (optlen < sizeof(int))
+ 			goto e_inval;
+ 		if (val == PF_INET) {
+-			struct ipv6_txoptions *opt;
+-			struct sk_buff *pktopt;
+-
+ 			if (sk->sk_type == SOCK_RAW)
+ 				break;
+ 
+@@ -462,7 +459,6 @@ static int do_ipv6_setsockopt(struct soc
+ 				break;
+ 			}
+ 
+-			fl6_free_socklist(sk);
+ 			__ipv6_sock_mc_close(sk);
+ 			__ipv6_sock_ac_close(sk);
+ 
+@@ -497,14 +493,14 @@ static int do_ipv6_setsockopt(struct soc
+ 				sk->sk_socket->ops = &inet_dgram_ops;
+ 				sk->sk_family = PF_INET;
+ 			}
+-			opt = xchg((__force struct ipv6_txoptions **)&np->opt,
+-				   NULL);
+-			if (opt) {
+-				atomic_sub(opt->tot_len, &sk->sk_omem_alloc);
+-				txopt_put(opt);
+-			}
+-			pktopt = xchg(&np->pktoptions, NULL);
+-			kfree_skb(pktopt);
++
++			/* Disable all options not to allocate memory anymore,
++			 * but there is still a race.  See the lockless path
++			 * in udpv6_sendmsg() and ipv6_local_rxpmtu().
++			 */
++			np->rxopt.all = 0;
++
++			inet6_cleanup_sock(sk);
+ 
+ 			/*
+ 			 * ... and add it to the refcnt debug socks count
 
 
