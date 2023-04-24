@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720EE7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBC3C433D2;
-	Mon, 24 Apr 2023 13:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B317C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A92BC4339B;
+	Mon, 24 Apr 2023 13:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343038;
-	bh=6nVlqJwBRNC1O9r0E4RzWVTpTGevWx/EOmM2z249EZY=;
+	s=korg; t=1682343040;
+	bh=TOHLKMNE2N04ShlJ935cEwbbALFg+w5eCiem8giX+pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N0vMkuip9vRXe4I6DrtKVPP8OpP4iwumDSGc5vY7zOGdAqkQpdT7qpxWdFAwyQrF1
-	 LrYAQZfpno6S+dvN9UfO5IaG7vvuGLXhHYU5flG69OBUC/PqsGaqYZ15kncB5sRj9w
-	 Kmb7e3k9W7p8Xi1rkPbw4mwwKtS9ymH1k18eagCQ=
+	b=Pa4qo6noGtyddRaV0ss9J7du8QlvNC6hxVBnUTU6QYGRmygEVUVLUT+3aw8CYx/0c
+	 MOE2LJ//YggdSzV41ICcD4TeqpHt2IX9bEF0oZ1tAL1eGhK8M0o1a35sbdIAxa4GQe
+	 soqeDu2weYzBNnt6pjXiMTmB+NM+xo/Z7GLG6cWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@microchip.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	linux-mtd@lists.infradead.org,
-	Michael Walle <michael@walle.cc>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 053/110] mtd: spi-nor: fix memory leak when using debugfs_lookup()
-Date: Mon, 24 Apr 2023 15:17:15 +0200
-Message-Id: <20230424131138.254716253@linuxfoundation.org>
+	Munehisa Kamata <kamatam@amazon.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>
+Subject: [PATCH 6.2 054/110] pwm: Zero-initialize the pwm_state passed to drivers .get_state()
+Date: Mon, 24 Apr 2023 15:17:16 +0200
+Message-Id: <20230424131138.305899483@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -40,103 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit ec738ca127d07ecac6afae36e2880341ec89150e ]
+commit 1271a7b98e7989ba6bb978e14403fc84efe16e13 upstream.
 
-When calling debugfs_lookup() the result must have dput() called on it,
-otherwise the memory will leak over time.  To solve this, remove the
-lookup and create the directory on the first device found, and then
-remove it when the module is unloaded.
+This is just to ensure that .usage_power is properly initialized and
+doesn't contain random stack data. The other members of struct pwm_state
+should get a value assigned in a successful call to .get_state(). So in
+the absence of bugs in driver implementations, this is only a safe-guard
+and no fix.
 
-Cc: Tudor Ambarus <tudor.ambarus@microchip.com>
-Cc: Pratyush Yadav <pratyush@kernel.org>
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Vignesh Raghavendra <vigneshr@ti.com>
-Cc: linux-mtd@lists.infradead.org
-Reviewed-by: Michael Walle <michael@walle.cc>
-Link: https://lore.kernel.org/r/20230208160230.2179905-1-gregkh@linuxfoundation.org
+Reported-by: Munehisa Kamata <kamatam@amazon.com>
+Link: https://lore.kernel.org/r/20230310214004.2619480-1-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/core.c    | 14 +++++++++++++-
- drivers/mtd/spi-nor/core.h    |  2 ++
- drivers/mtd/spi-nor/debugfs.c | 11 ++++++++---
- 3 files changed, 23 insertions(+), 4 deletions(-)
+ drivers/pwm/core.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 2ef2660f58180..4244c6fd98111 100644
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -3344,7 +3344,19 @@ static struct spi_mem_driver spi_nor_driver = {
- 	.remove = spi_nor_remove,
- 	.shutdown = spi_nor_shutdown,
- };
--module_spi_mem_driver(spi_nor_driver);
-+
-+static int __init spi_nor_module_init(void)
-+{
-+	return spi_mem_driver_register(&spi_nor_driver);
-+}
-+module_init(spi_nor_module_init);
-+
-+static void __exit spi_nor_module_exit(void)
-+{
-+	spi_mem_driver_unregister(&spi_nor_driver);
-+	spi_nor_debugfs_shutdown();
-+}
-+module_exit(spi_nor_module_exit);
+--- a/drivers/pwm/core.c
++++ b/drivers/pwm/core.c
+@@ -115,7 +115,14 @@ static int pwm_device_request(struct pwm
+ 	}
  
- MODULE_LICENSE("GPL v2");
- MODULE_AUTHOR("Huang Shijie <shijie8@gmail.com>");
-diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
-index 958cd143c9346..f4246c52a1def 100644
---- a/drivers/mtd/spi-nor/core.h
-+++ b/drivers/mtd/spi-nor/core.h
-@@ -714,8 +714,10 @@ static inline struct spi_nor *mtd_to_spi_nor(struct mtd_info *mtd)
+ 	if (pwm->chip->ops->get_state) {
+-		struct pwm_state state;
++		/*
++		 * Zero-initialize state because most drivers are unaware of
++		 * .usage_power. The other members of state are supposed to be
++		 * set by lowlevel drivers. We still initialize the whole
++		 * structure for simplicity even though this might paper over
++		 * faulty implementations of .get_state().
++		 */
++		struct pwm_state state = { 0, };
  
- #ifdef CONFIG_DEBUG_FS
- void spi_nor_debugfs_register(struct spi_nor *nor);
-+void spi_nor_debugfs_shutdown(void);
- #else
- static inline void spi_nor_debugfs_register(struct spi_nor *nor) {}
-+static inline void spi_nor_debugfs_shutdown(void) {}
- #endif
- 
- #endif /* __LINUX_MTD_SPI_NOR_INTERNAL_H */
-diff --git a/drivers/mtd/spi-nor/debugfs.c b/drivers/mtd/spi-nor/debugfs.c
-index ff895f6758ea1..558ffecf8ae6d 100644
---- a/drivers/mtd/spi-nor/debugfs.c
-+++ b/drivers/mtd/spi-nor/debugfs.c
-@@ -226,13 +226,13 @@ static void spi_nor_debugfs_unregister(void *data)
- 	nor->debugfs_root = NULL;
- }
- 
-+static struct dentry *rootdir;
-+
- void spi_nor_debugfs_register(struct spi_nor *nor)
+ 		err = pwm->chip->ops->get_state(pwm->chip, pwm, &state);
+ 		trace_pwm_get(pwm, &state, err);
+@@ -448,7 +455,7 @@ static void pwm_apply_state_debug(struct
  {
--	struct dentry *rootdir, *d;
-+	struct dentry *d;
- 	int ret;
+ 	struct pwm_state *last = &pwm->last;
+ 	struct pwm_chip *chip = pwm->chip;
+-	struct pwm_state s1, s2;
++	struct pwm_state s1 = { 0 }, s2 = { 0 };
+ 	int err;
  
--	/* Create rootdir once. Will never be deleted again. */
--	rootdir = debugfs_lookup(SPI_NOR_DEBUGFS_ROOT, NULL);
- 	if (!rootdir)
- 		rootdir = debugfs_create_dir(SPI_NOR_DEBUGFS_ROOT, NULL);
+ 	if (!IS_ENABLED(CONFIG_PWM_DEBUG))
+@@ -530,6 +537,7 @@ static void pwm_apply_state_debug(struct
+ 		return;
+ 	}
  
-@@ -247,3 +247,8 @@ void spi_nor_debugfs_register(struct spi_nor *nor)
- 	debugfs_create_file("capabilities", 0444, d, nor,
- 			    &spi_nor_capabilities_fops);
- }
-+
-+void spi_nor_debugfs_shutdown(void)
-+{
-+	debugfs_remove(rootdir);
-+}
--- 
-2.39.2
-
++	*last = (struct pwm_state){ 0 };
+ 	err = chip->ops->get_state(chip, pwm, last);
+ 	trace_pwm_get(pwm, last, err);
+ 	if (err)
 
 
