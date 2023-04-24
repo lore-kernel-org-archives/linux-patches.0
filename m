@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD6A7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C49C433EF;
-	Mon, 24 Apr 2023 13:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCF77C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A99C433D2;
+	Mon, 24 Apr 2023 13:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342534;
-	bh=yBdfyn5nOnxEPBgiukEqv9eTSbVvU2JgPuc2MNVNOVI=;
+	s=korg; t=1682342536;
+	bh=aYgl6PtIdJxWpq2jTLsNxjlK9XPuLFQr9aPh/OXikWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EirAQ6K7sHO+a4L8wX/D5QO60lXCArCWjgFoLwJ3Umnhxj+ZjC2Yr4d/mZUWP1McS
-	 v/kaLS90rD7sYCgn8wlQwsPhkuhYRLhGSeH1HSXdc+zLXPtuLR6xyiXH4zBAsswi3U
-	 k9jquDXnZP9vxRBlMcqQ1XKufzOsc8igYv3cLoQs=
+	b=Tr10HaOgLuWuAxOtSYDUB2vxYt2wgmRmKkL2ZCzfV+B0g5pfcXn0deAaDIU/0N3gQ
+	 YWB5oqOurukyoS0PZUPILgzoGibFep2DsrjHzcZ3nu7l5tQR1smJjzo4m6f/HdXo3a
+	 IPcmAQ/EbhpNnJ3tLlVL20DaBIV+fwzuoIm/+cOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	"Qais Yousef (Google)" <qyousef@layalina.io>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Qais Yousef (Google)" <qyousef@layalina.io>
-Subject: [PATCH 5.15 49/73] sched/fair: Consider capacity inversion in util_fits_cpu()
-Date: Mon, 24 Apr 2023 15:17:03 +0200
-Message-Id: <20230424131130.821848422@linuxfoundation.org>
+	Vincent Guittot <vincent.guittot@linaro.org>
+Subject: [PATCH 5.15 50/73] sched/uclamp: Fix a uninitialized variable warnings
+Date: Mon, 24 Apr 2023 15:17:04 +0200
+Message-Id: <20230424131130.862835450@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -35,57 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Qais Yousef <qyousef@layalina.io>
 
-commit aa69c36f31aadc1669bfa8a3de6a47b5e6c98ee8 upstream.
+commit e26fd28db82899be71b4b949527373d0a6be1e65 upstream.
 
-We do consider thermal pressure in util_fits_cpu() for uclamp_min only.
-With the exception of the biggest cores which by definition are the max
-performance point of the system and all tasks by definition should fit.
+Addresses the following warnings:
 
-Even under thermal pressure, the capacity of the biggest CPU is the
-highest in the system and should still fit every task. Except when it
-reaches capacity inversion point, then this is no longer true.
+> config: riscv-randconfig-m031-20221111
+> compiler: riscv64-linux-gcc (GCC) 12.1.0
+>
+> smatch warnings:
+> kernel/sched/fair.c:7263 find_energy_efficient_cpu() error: uninitialized symbol 'util_min'.
+> kernel/sched/fair.c:7263 find_energy_efficient_cpu() error: uninitialized symbol 'util_max'.
 
-We can handle this by using the inverted capacity as capacity_orig in
-util_fits_cpu(). Which not only addresses the problem above, but also
-ensure uclamp_max now considers the inverted capacity. Force fitting
-a task when a CPU is in this adverse state will contribute to making the
-thermal throttling last longer.
-
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
+Fixes: 244226035a1f ("sched/uclamp: Fix fits_capacity() check in feec()")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-10-qais.yousef@arm.com
-(cherry picked from commit aa69c36f31aadc1669bfa8a3de6a47b5e6c98ee8)
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20230112122708.330667-2-qyousef@layalina.io
+(cherry picked from commit e26fd28db82899be71b4b949527373d0a6be1e65)
+[Conflict in kernel/sched/fair.c due to new automatic variables being
+added on master vs 5.15]
 Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/fair.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ kernel/sched/fair.c |   35 ++++++++++++++++-------------------
+ 1 file changed, 16 insertions(+), 19 deletions(-)
 
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -4159,12 +4159,16 @@ static inline int util_fits_cpu(unsigned
- 	 * For uclamp_max, we can tolerate a drop in performance level as the
- 	 * goal is to cap the task. So it's okay if it's getting less.
- 	 *
--	 * In case of capacity inversion, which is not handled yet, we should
--	 * honour the inverted capacity for both uclamp_min and uclamp_max all
--	 * the time.
-+	 * In case of capacity inversion we should honour the inverted capacity
-+	 * for both uclamp_min and uclamp_max all the time.
- 	 */
--	capacity_orig = capacity_orig_of(cpu);
--	capacity_orig_thermal = capacity_orig - arch_scale_thermal_pressure(cpu);
-+	capacity_orig = cpu_in_capacity_inversion(cpu);
-+	if (capacity_orig) {
-+		capacity_orig_thermal = capacity_orig;
-+	} else {
-+		capacity_orig = capacity_orig_of(cpu);
-+		capacity_orig_thermal = capacity_orig - arch_scale_thermal_pressure(cpu);
-+	}
+@@ -7024,14 +7024,16 @@ static int find_energy_efficient_cpu(str
+ 		goto unlock;
  
- 	/*
- 	 * We want to force a task to fit a cpu as implied by uclamp_max.
+ 	for (; pd; pd = pd->next) {
++		unsigned long util_min = p_util_min, util_max = p_util_max;
+ 		unsigned long cur_delta, spare_cap, max_spare_cap = 0;
+ 		unsigned long rq_util_min, rq_util_max;
+-		unsigned long util_min, util_max;
+ 		bool compute_prev_delta = false;
+ 		unsigned long base_energy_pd;
+ 		int max_spare_cap_cpu = -1;
+ 
+ 		for_each_cpu_and(cpu, perf_domain_span(pd), sched_domain_span(sd)) {
++			struct rq *rq = cpu_rq(cpu);
++
+ 			if (!cpumask_test_cpu(cpu, p->cpus_ptr))
+ 				continue;
+ 
+@@ -7047,24 +7049,19 @@ static int find_energy_efficient_cpu(str
+ 			 * much capacity we can get out of the CPU; this is
+ 			 * aligned with sched_cpu_util().
+ 			 */
+-			if (uclamp_is_used()) {
+-				if (uclamp_rq_is_idle(cpu_rq(cpu))) {
+-					util_min = p_util_min;
+-					util_max = p_util_max;
+-				} else {
+-					/*
+-					 * Open code uclamp_rq_util_with() except for
+-					 * the clamp() part. Ie: apply max aggregation
+-					 * only. util_fits_cpu() logic requires to
+-					 * operate on non clamped util but must use the
+-					 * max-aggregated uclamp_{min, max}.
+-					 */
+-					rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
+-					rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
+-
+-					util_min = max(rq_util_min, p_util_min);
+-					util_max = max(rq_util_max, p_util_max);
+-				}
++			if (uclamp_is_used() && !uclamp_rq_is_idle(rq)) {
++				/*
++				 * Open code uclamp_rq_util_with() except for
++				 * the clamp() part. Ie: apply max aggregation
++				 * only. util_fits_cpu() logic requires to
++				 * operate on non clamped util but must use the
++				 * max-aggregated uclamp_{min, max}.
++				 */
++				rq_util_min = uclamp_rq_get(rq, UCLAMP_MIN);
++				rq_util_max = uclamp_rq_get(rq, UCLAMP_MAX);
++
++				util_min = max(rq_util_min, p_util_min);
++				util_max = max(rq_util_max, p_util_max);
+ 			}
+ 			if (!util_fits_cpu(util, util_min, util_max, cpu))
+ 				continue;
 
 
