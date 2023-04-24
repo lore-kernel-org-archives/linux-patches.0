@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B717C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:24:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1823EC433D2;
-	Mon, 24 Apr 2023 13:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2807C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:24:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D09C433EF;
+	Mon, 24 Apr 2023 13:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342653;
-	bh=tCCynyrnIJfQB2Eg5feIoBHwGYY3Vk1ymQA+xiDetCg=;
+	s=korg; t=1682342656;
+	bh=tBkSnrIt2m+7p4Ir4G2Vb3DYBKgIS58O0gdBptIAb1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRnLfFMng7yaSUUz5GDhKJEEfXIA0+K8/aF3AVH5/9IB0k2yhTpTZjWY5cvubuyCK
-	 LmaX1dmlE3rdWnbXqkgp6QX+cdC+0z/KkuCUqb03YdOkfbwwEpYkCKFN1GiPithvr0
-	 VvP2CiLsdzlaFVJ/vnTxjMATjB62IwJadLT16I6U=
+	b=AOnZ/fXXSGPUXuXeFxZ+w3TuKHZO47lKFvNjm1or+uQEP9JtLo6kf6rUPbH2P5U4s
+	 TqE3lLSPv8RdAepyT2l3rnIogGoKE6KP1JnIttF56g56fsLR4UcABNZhwMNLpzSffy
+	 Kmwu6fpJDpBoo7tCTZJSlnpFHeFNHvzLWT23efs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ekaterina Orlova <vorobushek.ok@gmail.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	James Bottomley <jejb@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	keyrings@vger.kernel.org,
-	linux-kbuild@vger.kernel.org,
-	David Howells <dhowells@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.4 39/39] ASN.1: Fix check for strdup() success
-Date: Mon, 24 Apr 2023 15:17:42 +0200
-Message-Id: <20230424131124.522123398@linuxfoundation.org>
+	Munehisa Kamata <kamatam@amazon.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>
+Subject: [PATCH 5.4 37/39] pwm: meson: Explicitly set .polarity in .get_state()
+Date: Mon, 24 Apr 2023 15:17:40 +0200
+Message-Id: <20230424131124.451394478@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
 References: <20230424131123.040556994@linuxfoundation.org>
@@ -40,40 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ekaterina Orlova <vorobushek.ok@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 5a43001c01691dcbd396541e6faa2c0077378f48 upstream.
+commit 8caa81eb950cb2e9d2d6959b37d853162d197f57 upstream.
 
-It seems there is a misprint in the check of strdup() return code that
-can lead to NULL pointer dereference.
+The driver only supports normal polarity. Complete the implementation of
+.get_state() by setting .polarity accordingly.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This fixes a regression that was possible since commit c73a3107624d
+("pwm: Handle .get_state() failures") which stopped to zero-initialize
+the state passed to the .get_state() callback. This was reported at
+https://forum.odroid.com/viewtopic.php?f=177&t=46360 . While this was an
+unintended side effect, the real issue is the driver's callback not
+setting the polarity.
 
-Fixes: 4520c6a49af8 ("X.509: Add simple ASN.1 grammar compiler")
-Signed-off-by: Ekaterina Orlova <vorobushek.ok@gmail.com>
-Cc: David Woodhouse <dwmw2@infradead.org>
-Cc: James Bottomley <jejb@linux.ibm.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: keyrings@vger.kernel.org
-Cc: linux-kbuild@vger.kernel.org
-Link: https://lore.kernel.org/r/20230315172130.140-1-vorobushek.ok@gmail.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+There is a complicating fact, that the .apply() callback fakes support
+for inversed polarity. This is not (and cannot) be matched by
+.get_state(). As fixing this isn't easy, only point it out in a comment
+to prevent authors of other drivers from copying that approach.
+
+Fixes: c375bcbaabdb ("pwm: meson: Read the full hardware state in meson_pwm_get_state()")
+Reported-by: Munehisa Kamata <kamatam@amazon.com>
+Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20230310191405.2606296-1-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/asn1_compiler.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-meson.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/scripts/asn1_compiler.c
-+++ b/scripts/asn1_compiler.c
-@@ -625,7 +625,7 @@ int main(int argc, char **argv)
- 	p = strrchr(argv[1], '/');
- 	p = p ? p + 1 : argv[1];
- 	grammar_name = strdup(p);
--	if (!p) {
-+	if (!grammar_name) {
- 		perror(NULL);
- 		exit(1);
+--- a/drivers/pwm/pwm-meson.c
++++ b/drivers/pwm/pwm-meson.c
+@@ -168,6 +168,12 @@ static int meson_pwm_calc(struct meson_p
+ 	duty = state->duty_cycle;
+ 	period = state->period;
+ 
++	/*
++	 * Note this is wrong. The result is an output wave that isn't really
++	 * inverted and so is wrongly identified by .get_state as normal.
++	 * Fixing this needs some care however as some machines might rely on
++	 * this.
++	 */
+ 	if (state->polarity == PWM_POLARITY_INVERSED)
+ 		duty = period - duty;
+ 
+@@ -366,6 +372,7 @@ static void meson_pwm_get_state(struct p
+ 		state->period = 0;
+ 		state->duty_cycle = 0;
  	}
++	state->polarity = PWM_POLARITY_NORMAL;
+ }
+ 
+ static const struct pwm_ops meson_pwm_ops = {
 
 
