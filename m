@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B426A7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0CAC433EF;
-	Mon, 24 Apr 2023 13:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBD87C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5376C433D2;
+	Mon, 24 Apr 2023 13:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342790;
-	bh=ONCt3OR/vxf6iAPQ0lpcmGNw8LVVdg8UNCKm8wxvi/E=;
+	s=korg; t=1682342793;
+	bh=VSVe3wCuYswIOk7rHrXb0nQdR5rTlsfIH0YCLcwz5kU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wwXL5er8Nl9Wfia/G7cOcTidd/gmjhBpi0/W/rzMbu/xLUaU/JyDzpgZtRtXJ9tvw
-	 sUhZsuE8M+yeWh6AAfRFEPRchehJHlAms42NuRmi4RXvwiKFnyy5eEBTQy7WySuaQ3
-	 8t/wqLGQ3aCcfn01SYZecakAT8zQfjlyRC0xKAXE=
+	b=inFp/VDkeCEkNp/MqYLHF97SFkwqb9ctdhLz0zZv5bKsVIGPJ8FazjA5jGMidweoE
+	 lVYkGBwy5bsJe8F1HurSxD8KaI/Y7vGRZTbocNjErMwKJMPHJvICzqKLEAdqMqI50w
+	 fvqhHg06IEYmDhAWOeZ2wjX/9GlvnYslPA4EZ1q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Peng Zhang <zhangpeng.00@bytedance.com>,
 	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 59/98] maple_tree: fix mas_empty_area() search
-Date: Mon, 24 Apr 2023 15:17:22 +0200
-Message-Id: <20230424131136.155716603@linuxfoundation.org>
+Subject: [PATCH 6.1 60/98] maple_tree: fix a potential memory leak, OOB access, or other unpredictable bug
+Date: Mon, 24 Apr 2023 15:17:23 +0200
+Message-Id: <20230424131136.191537070@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -35,65 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Peng Zhang <zhangpeng.00@bytedance.com>
 
-commit 06e8fd999334bcd76b4d72d7b9206d4aea89764e upstream.
+commit 1f5f12ece722aacea1769fb644f27790ede339dc upstream.
 
-The internal function of mas_awalk() was incorrectly skipping the last
-entry in a node, which could potentially be NULL.  This is only a problem
-for the left-most node in the tree - otherwise that NULL would not exist.
+In mas_alloc_nodes(), "node->node_count = 0" means to initialize the
+node_count field of the new node, but the node may not be a new node.  It
+may be a node that existed before and node_count has a value, setting it
+to 0 will cause a memory leak.  At this time, mas->alloc->total will be
+greater than the actual number of nodes in the linked list, which may
+cause many other errors.  For example, out-of-bounds access in
+mas_pop_node(), and mas_pop_node() may return addresses that should not be
+used.  Fix it by initializing node_count only for new nodes.
 
-Fix mas_awalk() by using the metadata to obtain the end of the node for
-the loop and the logical pivot as apposed to the raw pivot value.
+Also, by the way, an if-else statement was removed to simplify the code.
 
-Link: https://lkml.kernel.org/r/20230414145728.4067069-2-Liam.Howlett@oracle.com
+Link: https://lkml.kernel.org/r/20230411041005.26205-1-zhangpeng.00@bytedance.com
 Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reported-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Signed-off-by: Peng Zhang <zhangpeng.00@bytedance.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |   20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ lib/maple_tree.c |   19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
 --- a/lib/maple_tree.c
 +++ b/lib/maple_tree.c
-@@ -5059,10 +5059,10 @@ static inline bool mas_anode_descend(str
- {
- 	enum maple_type type = mte_node_type(mas->node);
- 	unsigned long pivot, min, gap = 0;
--	unsigned char offset;
--	unsigned long *gaps;
--	unsigned long *pivots = ma_pivots(mas_mn(mas), type);
--	void __rcu **slots = ma_slots(mas_mn(mas), type);
-+	unsigned char offset, data_end;
-+	unsigned long *gaps, *pivots;
-+	void __rcu **slots;
-+	struct maple_node *node;
- 	bool found = false;
+@@ -1293,26 +1293,21 @@ static inline void mas_alloc_nodes(struc
+ 	node = mas->alloc;
+ 	node->request_count = 0;
+ 	while (requested) {
+-		max_req = MAPLE_ALLOC_SLOTS;
+-		if (node->node_count) {
+-			unsigned int offset = node->node_count;
+-
+-			slots = (void **)&node->slot[offset];
+-			max_req -= offset;
+-		} else {
+-			slots = (void **)&node->slot;
+-		}
+-
++		max_req = MAPLE_ALLOC_SLOTS - node->node_count;
++		slots = (void **)&node->slot[node->node_count];
+ 		max_req = min(requested, max_req);
+ 		count = mt_alloc_bulk(gfp, max_req, slots);
+ 		if (!count)
+ 			goto nomem_bulk;
  
- 	if (ma_is_dense(type)) {
-@@ -5070,13 +5070,15 @@ static inline bool mas_anode_descend(str
- 		return true;
++		if (node->node_count == 0) {
++			node->slot[0]->node_count = 0;
++			node->slot[0]->request_count = 0;
++		}
++
+ 		node->node_count += count;
+ 		allocated += count;
+ 		node = node->slot[0];
+-		node->node_count = 0;
+-		node->request_count = 0;
+ 		requested -= count;
  	}
- 
--	gaps = ma_gaps(mte_to_node(mas->node), type);
-+	node = mas_mn(mas);
-+	pivots = ma_pivots(node, type);
-+	slots = ma_slots(node, type);
-+	gaps = ma_gaps(node, type);
- 	offset = mas->offset;
- 	min = mas_safe_min(mas, pivots, offset);
--	for (; offset < mt_slots[type]; offset++) {
--		pivot = mas_safe_pivot(mas, pivots, offset, type);
--		if (offset && !pivot)
--			break;
-+	data_end = ma_data_end(node, type, pivots, mas->max);
-+	for (; offset <= data_end; offset++) {
-+		pivot = mas_logical_pivot(mas, pivots, offset, type);
- 
- 		/* Not within lower bounds */
- 		if (mas->index > pivot)
+ 	mas->alloc->total = allocated;
 
 
