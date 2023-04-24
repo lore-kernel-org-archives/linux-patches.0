@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD65B2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:34:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55184C433EF;
-	Mon, 24 Apr 2023 13:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1B92108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:34:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD1AC433EF;
+	Mon, 24 Apr 2023 13:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343280;
-	bh=0F5eQlGxdY6rAWgVPlo8eM1iLlhEB//90tLNeN/pz0g=;
+	s=korg; t=1682343283;
+	bh=1r+ep6+5HhdZvrtZXGLC4VUoYJgSZoYrhwJSVy++huM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2w/12RzUTpVeR2NziIRS9zHNZ5yiWuSumgnEHAITMU6WVXjr2ya97kJunMUQdQ0y
-	 XFMdzvreXL+HAgLUhBNPpYtrhQsHaidHcsoOKFMklr7G7VEULlEAAL/ZkZm+2kpXpL
-	 YeOPuAU1QCncVVR0u1Ic4Zp8/EtYlJvH1Ny6LP8E=
+	b=Itzu4N6nugRstpey56m7WdQqoBybNUv91IJHjJF/TsZSixQeU2Q84zFdpRdRlbPFg
+	 JMmTyE+6Sch/j5waL5V5l62SdXpIB6tvQIKWYPElYTO1O3xaeoLrTxWhNDxfG22SsZ
+	 tHcB+Ll/K7ULMvC1K/ouUvTr9yx0+eZ9Xbribh5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Nadav Amit <nadav.amit@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 35/68] mm/khugepaged: check again on anon uffd-wp during isolation
-Date: Mon, 24 Apr 2023 15:18:06 +0200
-Message-Id: <20230424131129.014396671@linuxfoundation.org>
+	Qais Yousef <qais.yousef@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Qais Yousef (Google)" <qyousef@layalina.io>,
+	Vincent Guittot <vincent.guittot@linaro.org>
+Subject: [PATCH 5.10 36/68] sched/uclamp: Make task_fits_capacity() use util_fits_cpu()
+Date: Mon, 24 Apr 2023 15:18:07 +0200
+Message-Id: <20230424131129.054252367@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -40,60 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Xu <peterx@redhat.com>
+From: Qais Yousef <qais.yousef@arm.com>
 
-commit dd47ac428c3f5f3bcabe845f36be870fe6c20784 upstream.
+commit b48e16a69792b5dc4a09d6807369d11b2970cc36 upstream.
 
-Khugepaged collapse an anonymous thp in two rounds of scans.  The 2nd
-round done in __collapse_huge_page_isolate() after
-hpage_collapse_scan_pmd(), during which all the locks will be released
-temporarily.  It means the pgtable can change during this phase before 2nd
-round starts.
+So that the new uclamp rules in regard to migration margin and capacity
+pressure are taken into account correctly.
 
-It's logically possible some ptes got wr-protected during this phase, and
-we can errornously collapse a thp without noticing some ptes are
-wr-protected by userfault.  e1e267c7928f wanted to avoid it but it only
-did that for the 1st phase, not the 2nd phase.
-
-Since __collapse_huge_page_isolate() happens after a round of small page
-swapins, we don't need to worry on any !present ptes - if it existed
-khugepaged will already bail out.  So we only need to check present ptes
-with uffd-wp bit set there.
-
-This is something I found only but never had a reproducer, I thought it
-was one caused a bug in Muhammad's recent pagemap new ioctl work, but it
-turns out it's not the cause of that but an userspace bug.  However this
-seems to still be a real bug even with a very small race window, still
-worth to have it fixed and copy stable.
-
-Link: https://lkml.kernel.org/r/20230405155120.3608140-1-peterx@redhat.com
-Fixes: e1e267c7928f ("khugepaged: skip collapse if uffd-wp detected")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: a7008c07a568 ("sched/fair: Make task_fits_capacity() consider uclamp restrictions")
+Co-developed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Qais Yousef <qais.yousef@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220804143609.515789-3-qais.yousef@arm.com
+(cherry picked from commit b48e16a69792b5dc4a09d6807369d11b2970cc36)
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/sched/fair.c  |   26 ++++++++++++++++----------
+ kernel/sched/sched.h |    9 +++++++++
+ 2 files changed, 25 insertions(+), 10 deletions(-)
 
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -622,6 +622,10 @@ static int __collapse_huge_page_isolate(
- 			result = SCAN_PTE_NON_PRESENT;
- 			goto out;
- 		}
-+		if (pte_uffd_wp(pteval)) {
-+			result = SCAN_PTE_UFFD_WP;
-+			goto out;
-+		}
- 		page = vm_normal_page(vma, address, pteval);
- 		if (unlikely(!page)) {
- 			result = SCAN_PAGE_NULL;
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4197,10 +4197,12 @@ static inline int util_fits_cpu(unsigned
+ 	return fits;
+ }
+ 
+-static inline int task_fits_capacity(struct task_struct *p,
+-				     unsigned long capacity)
++static inline int task_fits_cpu(struct task_struct *p, int cpu)
+ {
+-	return fits_capacity(uclamp_task_util(p), capacity);
++	unsigned long uclamp_min = uclamp_eff_value(p, UCLAMP_MIN);
++	unsigned long uclamp_max = uclamp_eff_value(p, UCLAMP_MAX);
++	unsigned long util = task_util_est(p);
++	return util_fits_cpu(util, uclamp_min, uclamp_max, cpu);
+ }
+ 
+ static inline void update_misfit_status(struct task_struct *p, struct rq *rq)
+@@ -4213,7 +4215,7 @@ static inline void update_misfit_status(
+ 		return;
+ 	}
+ 
+-	if (task_fits_capacity(p, capacity_of(cpu_of(rq)))) {
++	if (task_fits_cpu(p, cpu_of(rq))) {
+ 		rq->misfit_task_load = 0;
+ 		return;
+ 	}
+@@ -7942,7 +7944,7 @@ static int detach_tasks(struct lb_env *e
+ 
+ 		case migrate_misfit:
+ 			/* This is not a misfit task */
+-			if (task_fits_capacity(p, capacity_of(env->src_cpu)))
++			if (task_fits_cpu(p, env->src_cpu))
+ 				goto next;
+ 
+ 			env->imbalance = 0;
+@@ -8884,6 +8886,10 @@ static inline void update_sg_wakeup_stat
+ 
+ 	memset(sgs, 0, sizeof(*sgs));
+ 
++	/* Assume that task can't fit any CPU of the group */
++	if (sd->flags & SD_ASYM_CPUCAPACITY)
++		sgs->group_misfit_task_load = 1;
++
+ 	for_each_cpu(i, sched_group_span(group)) {
+ 		struct rq *rq = cpu_rq(i);
+ 		unsigned int local;
+@@ -8903,12 +8909,12 @@ static inline void update_sg_wakeup_stat
+ 		if (!nr_running && idle_cpu_without(i, p))
+ 			sgs->idle_cpus++;
+ 
+-	}
++		/* Check if task fits in the CPU */
++		if (sd->flags & SD_ASYM_CPUCAPACITY &&
++		    sgs->group_misfit_task_load &&
++		    task_fits_cpu(p, i))
++			sgs->group_misfit_task_load = 0;
+ 
+-	/* Check if task fits in the group */
+-	if (sd->flags & SD_ASYM_CPUCAPACITY &&
+-	    !task_fits_capacity(p, group->sgc->max_capacity)) {
+-		sgs->group_misfit_task_load = 1;
+ 	}
+ 
+ 	sgs->group_capacity = group->sgc->capacity;
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -2468,6 +2468,15 @@ static inline bool uclamp_is_used(void)
+ 	return static_branch_likely(&sched_uclamp_used);
+ }
+ #else /* CONFIG_UCLAMP_TASK */
++static inline unsigned long uclamp_eff_value(struct task_struct *p,
++					     enum uclamp_id clamp_id)
++{
++	if (clamp_id == UCLAMP_MIN)
++		return 0;
++
++	return SCHED_CAPACITY_SCALE;
++}
++
+ static inline
+ unsigned long uclamp_rq_util_with(struct rq *rq, unsigned long util,
+ 				  struct task_struct *p)
 
 
