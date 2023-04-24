@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA287C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35592C433EF;
-	Mon, 24 Apr 2023 13:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D83D7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2462C433D2;
+	Mon, 24 Apr 2023 13:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343093;
-	bh=yNf+6MgrW2TLuDgOW6ptHVlZmMXDPGptF4rVUsUo/sU=;
+	s=korg; t=1682343096;
+	bh=ja7S2LB0OvCCmqEw1nb05oddZS4SuYkfKzmpFaLMeMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H1GNRXbkAD9qPDZZrsNsMvWHChvhUbneEifmiHaP/eUn2nKABLL6iRIA9aefOtKno
-	 O8OmWkPX56x16gJmxZ+qh2nVd4wZWVAb0vtWpJge9PWE6sOfPJeHwy61ykraS6nNtg
-	 XbdyafzB/L12nBu+FnPOdQs3vMYzvmLcLVJkTvuo=
+	b=qIT0y33lQiR4ym8Pb3SHhL1rgSJ6Ui/cJMdN9P85AEQLQo7BFs+jf/YejqI1b6Lws
+	 Gz3Ju31OFJgeQBfvy1q4Uy0GrPMKfn1V8KIfLAobXl8mt9foh2BlbP2b2+Bpn1eSGg
+	 iOkc836FIkwdJKUMfesj+lISrqWvwQRXIPapt8OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Chou <steve_chou@pesi.com.tw>,
-	Jiajian Ye <yejiajian2018@email.szu.edu.cn>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 075/110] tools/mm/page_owner_sort.c: fix TGID output when cull=tg is used
-Date: Mon, 24 Apr 2023 15:17:37 +0200
-Message-Id: <20230424131139.230156417@linuxfoundation.org>
+	Maxim Levitsky <maximlevitsky@gmail.com>,
+	Alex Dubov <oakad@yahoo.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Kay Sievers <kay.sievers@vrfy.org>,
+	linux-mmc@vger.kernel.org,
+	stable <stable@kernel.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Subject: [PATCH 6.2 076/110] memstick: fix memory leak if card device is never registered
+Date: Mon, 24 Apr 2023 15:17:38 +0200
+Message-Id: <20230424131139.281280747@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -35,34 +41,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve Chou <steve_chou@pesi.com.tw>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 9235756885e865070c4be2facda75262dbd85967 upstream.
+commit 4b6d621c9d859ff89e68cebf6178652592676013 upstream.
 
-When using cull option with 'tg' flag, the fprintf is using pid instead
-of tgid. It should use tgid instead.
+When calling dev_set_name() memory is allocated for the name for the
+struct device.  Once that structure device is registered, or attempted
+to be registerd, with the driver core, the driver core will handle
+cleaning up that memory when the device is removed from the system.
 
-Link: https://lkml.kernel.org/r/20230411034929.2071501-1-steve_chou@pesi.com.tw
-Fixes: 9c8a0a8e599f4a ("tools/vm/page_owner_sort.c: support for user-defined culling rules")
-Signed-off-by: Steve Chou <steve_chou@pesi.com.tw>
-Cc: Jiajian Ye <yejiajian2018@email.szu.edu.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Unfortunatly for the memstick code, there is an error path that causes
+the struct device to never be registered, and so the memory allocated in
+dev_set_name will be leaked.  Fix that leak by manually freeing it right
+before the memory for the device is freed.
+
+Cc: Maxim Levitsky <maximlevitsky@gmail.com>
+Cc: Alex Dubov <oakad@yahoo.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Kay Sievers <kay.sievers@vrfy.org>
+Cc: linux-mmc@vger.kernel.org
+Fixes: 0252c3b4f018 ("memstick: struct device - replace bus_id with dev_name(), dev_set_name()")
+Cc: stable <stable@kernel.org>
+Co-developed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Link: https://lore.kernel.org/r/20230401200327.16800-1-gregkh@linuxfoundation.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/vm/page_owner_sort.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/memstick/core/memstick.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/tools/vm/page_owner_sort.c
-+++ b/tools/vm/page_owner_sort.c
-@@ -847,7 +847,7 @@ int main(int argc, char **argv)
- 			if (cull & CULL_PID || filter & FILTER_PID)
- 				fprintf(fout, ", PID %d", list[i].pid);
- 			if (cull & CULL_TGID || filter & FILTER_TGID)
--				fprintf(fout, ", TGID %d", list[i].pid);
-+				fprintf(fout, ", TGID %d", list[i].tgid);
- 			if (cull & CULL_COMM || filter & FILTER_COMM)
- 				fprintf(fout, ", task_comm_name: %s", list[i].comm);
- 			if (cull & CULL_ALLOCATOR) {
+--- a/drivers/memstick/core/memstick.c
++++ b/drivers/memstick/core/memstick.c
+@@ -410,6 +410,7 @@ static struct memstick_dev *memstick_all
+ 	return card;
+ err_out:
+ 	host->card = old_card;
++	kfree_const(card->dev.kobj.name);
+ 	kfree(card);
+ 	return NULL;
+ }
+@@ -468,8 +469,10 @@ static void memstick_check(struct work_s
+ 				put_device(&card->dev);
+ 				host->card = NULL;
+ 			}
+-		} else
++		} else {
++			kfree_const(card->dev.kobj.name);
+ 			kfree(card);
++		}
+ 	}
+ 
+ out_power_off:
 
 
