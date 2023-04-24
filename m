@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517DB7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:24:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D9CC433EF;
-	Mon, 24 Apr 2023 13:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A377C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:24:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63002C4339B;
+	Mon, 24 Apr 2023 13:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342685;
-	bh=BF6lZF7RwdWzRqD4PH5wng31QXjSn7YGGHreWiAB9LI=;
+	s=korg; t=1682342687;
+	bh=HoYateV9CPjqYQA3fMmSc2t6e99pRonY5DvM+1OkD3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Arj98JaAGlJIDNNpdaet6yIsLLg2PnYtwKZXuLGNW705BCe6XM2FiFiCBRMhWbPVt
-	 NVpkVdFSs7sN1GeFzkIEsmHSpZbygMziMtITS7vHo4TsiueA96u2s/nTqgij29PPQb
-	 cYY6+wHhh4PY0i4q3DddHGvTBx/vomXIIxGis7II=
+	b=YM6lYq0HUFR8YJOsXpxJE4GHmpZCblKFgcHeDWFp1PvBT3dWhEjBE7OV42Ya4Qj/X
+	 fD+9734d2aQ3bwvTs/pimweo0NADU05o/yXiZZ3dULiT2G7lw2HOdaz4xyUHLiblA1
+	 Sl1widJQuKLwrtXgH3FG6AbgZj2GCz1m0HIVA/BI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Steev Klimaszewski <steev@kali.org>
-Subject: [PATCH 6.1 07/98] arm64: dts: qcom: sc8280xp-pmics: fix pon compatible and registers
-Date: Mon, 24 Apr 2023 15:16:30 +0200
-Message-Id: <20230424131134.115246247@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 08/98] arm64: dts: imx8mm-evk: correct pmic clock source
+Date: Mon, 24 Apr 2023 15:16:31 +0200
+Message-Id: <20230424131134.164246664@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -38,50 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit ad8cd35c58ca3ec5e93f52a0124899627b98efb2 ]
+[ Upstream commit 85af7ffd24da38e416a14bd6bf207154d94faa83 ]
 
-The pmk8280 PMIC PON peripheral is gen3 and uses two sets of registers;
-hlos and pbs.
+The osc_32k supports #clock-cells as 0, using an id is wrong, drop it.
 
-This specifically fixes the following error message during boot when the
-pbs registers are not defined:
-
-	PON_PBS address missing, can't read HW debounce time
-
-Note that this also enables the spurious interrupt workaround introduced
-by commit 0b65118e6ba3 ("Input: pm8941-pwrkey - add software key press
-debouncing support") (which may or may not be needed).
-
-Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Steev Klimaszewski <steev@kali.org> #Thinkpad X13s
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230327122948.4323-1-johan+linaro@kernel.org
+Fixes: a6a355ede574 ("arm64: dts: imx8mm-evk: Add 32.768 kHz clock to PMIC")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mm-evk.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-index 24836b6b9bbc9..be0df0856df9b 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-@@ -15,8 +15,9 @@
- 		#size-cells = <0>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-evk.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-evk.dtsi
+index 7d6317d95b131..1dd0617477fdf 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-evk.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-evk.dtsi
+@@ -193,7 +193,7 @@
+ 		rohm,reset-snvs-powered;
  
- 		pmk8280_pon: pon@1300 {
--			compatible = "qcom,pm8998-pon";
--			reg = <0x1300>;
-+			compatible = "qcom,pmk8350-pon";
-+			reg = <0x1300>, <0x800>;
-+			reg-names = "hlos", "pbs";
+ 		#clock-cells = <0>;
+-		clocks = <&osc_32k 0>;
++		clocks = <&osc_32k>;
+ 		clock-output-names = "clk-32k-out";
  
- 			pmk8280_pon_pwrkey: pwrkey {
- 				compatible = "qcom,pmk8350-pwrkey";
+ 		regulators {
 -- 
 2.39.2
 
