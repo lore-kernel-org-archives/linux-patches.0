@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425237C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3DEC433EF;
-	Mon, 24 Apr 2023 13:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FF67C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBB6C433D2;
+	Mon, 24 Apr 2023 13:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342569;
-	bh=ic5M+WBk/A6QoKKdXZiMgu7UjhhgBghwgfBK5+s0omQ=;
+	s=korg; t=1682342571;
+	bh=aWZlkEGYhdWaxC+yANlPuJJ2zwW0m//lhVBSIEskhnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aXaINcRLaBrMCABKm/OVQR9/oMeqFhM8UCd0oIzWptwe00tmqJhBk6/K2LZZE0Asy
-	 UGf/UFt0de9v1k19q5in0iH5m8oVY95m1ZL6/Pgv/LDKcp4WnM/wHQJR2EyvlC6W4T
-	 gHBV/1K++hczsa7IebP3fuXYWGiNfHafQnLW3ZNU=
+	b=WQauSNWuN9R2f1bvrOzwBaNSfTtaV9IvBQY8wxnEeB5Q1+FTKCVIXKE7+xULZsiBF
+	 Z7F1GFu+ZO4Lj+Tj/UUOATdLNgHcTN6GzNdk3ayTJGeed5ciw/piXa/JVCQpmIc+nG
+	 mytPHaZe61AwRQVk8CZxNkYrspPrk3dDpVvQgl7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Tomas Henzl <thenzl@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 15/39] selftests: sigaltstack: fix -Wuninitialized
-Date: Mon, 24 Apr 2023 15:17:18 +0200
-Message-Id: <20230424131123.625640153@linuxfoundation.org>
+Subject: [PATCH 5.4 16/39] scsi: megaraid_sas: Fix fw_crash_buffer_show()
+Date: Mon, 24 Apr 2023 15:17:19 +0200
+Message-Id: <20230424131123.663971811@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
 References: <20230424131123.040556994@linuxfoundation.org>
@@ -38,93 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Desaulniers <ndesaulniers@google.com>
+From: Tomas Henzl <thenzl@redhat.com>
 
-[ Upstream commit 05107edc910135d27fe557267dc45be9630bf3dd ]
+[ Upstream commit 0808ed6ebbc292222ca069d339744870f6d801da ]
 
-Building sigaltstack with clang via:
-$ ARCH=x86 make LLVM=1 -C tools/testing/selftests/sigaltstack/
+If crash_dump_buf is not allocated then crash dump can't be available.
+Replace logical 'and' with 'or'.
 
-produces the following warning:
-  warning: variable 'sp' is uninitialized when used here [-Wuninitialized]
-  if (sp < (unsigned long)sstack ||
-      ^~
-
-Clang expects these to be declared at global scope; we've fixed this in
-the kernel proper by using the macro `current_stack_pointer`. This is
-defined in different headers for different target architectures, so just
-create a new header that defines the arch-specific register names for
-the stack pointer register, and define it for more targets (at least the
-ones that support current_stack_pointer/ARCH_HAS_CURRENT_STACK_POINTER).
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Link: https://lore.kernel.org/lkml/CA+G9fYsi3OOu7yCsMutpzKDnBMAzJBCPimBp86LhGBa0eCnEpA@mail.gmail.com/
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://lore.kernel.org/r/20230324135249.9733-1-thenzl@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../sigaltstack/current_stack_pointer.h       | 23 +++++++++++++++++++
- tools/testing/selftests/sigaltstack/sas.c     |  7 +-----
- 2 files changed, 24 insertions(+), 6 deletions(-)
- create mode 100644 tools/testing/selftests/sigaltstack/current_stack_pointer.h
+ drivers/scsi/megaraid/megaraid_sas_base.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/sigaltstack/current_stack_pointer.h b/tools/testing/selftests/sigaltstack/current_stack_pointer.h
-new file mode 100644
-index 0000000000000..ea9bdf3a90b16
---- /dev/null
-+++ b/tools/testing/selftests/sigaltstack/current_stack_pointer.h
-@@ -0,0 +1,23 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+
-+#if __alpha__
-+register unsigned long sp asm("$30");
-+#elif __arm__ || __aarch64__ || __csky__ || __m68k__ || __mips__ || __riscv
-+register unsigned long sp asm("sp");
-+#elif __i386__
-+register unsigned long sp asm("esp");
-+#elif __loongarch64
-+register unsigned long sp asm("$sp");
-+#elif __ppc__
-+register unsigned long sp asm("r1");
-+#elif __s390x__
-+register unsigned long sp asm("%15");
-+#elif __sh__
-+register unsigned long sp asm("r15");
-+#elif __x86_64__
-+register unsigned long sp asm("rsp");
-+#elif __XTENSA__
-+register unsigned long sp asm("a1");
-+#else
-+#error "implement current_stack_pointer equivalent"
-+#endif
-diff --git a/tools/testing/selftests/sigaltstack/sas.c b/tools/testing/selftests/sigaltstack/sas.c
-index ad0f8df2ca0af..6e60545994916 100644
---- a/tools/testing/selftests/sigaltstack/sas.c
-+++ b/tools/testing/selftests/sigaltstack/sas.c
-@@ -19,6 +19,7 @@
- #include <errno.h>
+diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
+index a261ce511e9ed..617148567d8d7 100644
+--- a/drivers/scsi/megaraid/megaraid_sas_base.c
++++ b/drivers/scsi/megaraid/megaraid_sas_base.c
+@@ -3235,7 +3235,7 @@ fw_crash_buffer_show(struct device *cdev,
  
- #include "../kselftest.h"
-+#include "current_stack_pointer.h"
- 
- #ifndef SS_AUTODISARM
- #define SS_AUTODISARM  (1U << 31)
-@@ -40,12 +41,6 @@ void my_usr1(int sig, siginfo_t *si, void *u)
- 	stack_t stk;
- 	struct stk_data *p;
- 
--#if __s390x__
--	register unsigned long sp asm("%15");
--#else
--	register unsigned long sp asm("sp");
--#endif
--
- 	if (sp < (unsigned long)sstack ||
- 			sp >= (unsigned long)sstack + SIGSTKSZ) {
- 		ksft_exit_fail_msg("SP is not on sigaltstack\n");
+ 	spin_lock_irqsave(&instance->crashdump_lock, flags);
+ 	buff_offset = instance->fw_crash_buffer_offset;
+-	if (!instance->crash_dump_buf &&
++	if (!instance->crash_dump_buf ||
+ 		!((instance->fw_crash_state == AVAILABLE) ||
+ 		(instance->fw_crash_state == COPYING))) {
+ 		dev_err(&instance->pdev->dev,
 -- 
 2.39.2
 
