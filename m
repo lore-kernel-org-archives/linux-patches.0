@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A6E2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:24:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1F3C4339B;
-	Mon, 24 Apr 2023 13:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF912108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:24:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA05C433D2;
+	Mon, 24 Apr 2023 13:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342695;
-	bh=9BcY4NpXlmM8SJTPBshNDG4fj8b+emeHCZaMQ2kVci8=;
+	s=korg; t=1682342698;
+	bh=Vg72nImbLcC0CoXs3qf2I3oEiLr82I+pTHQofrRw1TE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=asMgW1Fkwxs70tXDNk63oHhqTRMMjnhCBVq0reGgSxOh3b/f5+r6xrg8qpAw5gH0A
-	 YugiZayhDMFj5qyYidW7irdxLPv7ZjufFxC+eHvflNd0hGtIMfW7JaGIBEQqkvPz8A
-	 xEwk6Ii8MHW7KfLuiENMXhK+BjnK/T/H3hRESfQ4=
+	b=FKbpyF1pnlVXKdSHdU8CcCNpN2hOTC+U8Ydm88mMQfVj4QzYjaLUsx1frNxmqUVGc
+	 vg8HvlJoEIjWLKFkjs1S63gMrlPZjb4A4zH5pU3rqyJZuDrG15helhNwBpSzRMY585
+	 /Isn9UbEBPKvMbjJEHSNmt8T2859z3FH1bAIYjs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 15/98] regulator: fan53555: Fix wrong TCS_SLEW_MASK
-Date: Mon, 24 Apr 2023 15:16:38 +0200
-Message-Id: <20230424131134.473284757@linuxfoundation.org>
+Subject: [PATCH 6.1 24/98] bnxt_en: Do not initialize PTP on older P3/P4 chips
+Date: Mon, 24 Apr 2023 15:16:47 +0200
+Message-Id: <20230424131134.834156927@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -35,38 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit c5d5b55b3c1a314137a251efc1001dfd435c6242 ]
+[ Upstream commit e8b51a1a15d5a3cce231e0669f6a161dc5bb9b75 ]
 
-The support for TCS4525 regulator has been introduced with a wrong
-ramp-rate mask, which has been defined as a logical expression instead
-of a bit shift operation.
+The driver does not support PTP on these older chips and it is assuming
+that firmware on these older chips will not return the
+PORT_MAC_PTP_QCFG_RESP_FLAGS_HWRM_ACCESS flag in __bnxt_hwrm_ptp_qcfg(),
+causing the function to abort quietly.
 
-For clarity, fix it using GENMASK() macro.
+But newer firmware now sets this flag and so __bnxt_hwrm_ptp_qcfg()
+will proceed further.  Eventually it will fail in bnxt_ptp_init() ->
+bnxt_map_ptp_regs() because there is no code to support the older chips.
+The driver will then complain:
 
-Fixes: 914df8faa7d6 ("regulator: fan53555: Add TCS4525 DCDC support")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20230406171806.948290-4-cristian.ciocaltea@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+"PTP initialization failed.\n"
+
+Fix it so that we abort quietly earlier without going through the
+unnecessary steps and alarming the user with the warning log.
+
+Fixes: ae5c42f0b92c ("bnxt_en: Get PTP hardware capability from firmware")
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/fan53555.c | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/fan53555.c b/drivers/regulator/fan53555.c
-index df53464afe3a0..ecd5a50c61660 100644
---- a/drivers/regulator/fan53555.c
-+++ b/drivers/regulator/fan53555.c
-@@ -61,7 +61,7 @@
- #define TCS_VSEL1_MODE		(1 << 6)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index c6e36603bd2db..e3e5a427222f6 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -7597,7 +7597,7 @@ static int __bnxt_hwrm_ptp_qcfg(struct bnxt *bp)
+ 	u8 flags;
+ 	int rc;
  
- #define TCS_SLEW_SHIFT		3
--#define TCS_SLEW_MASK		(0x3 < 3)
-+#define TCS_SLEW_MASK		GENMASK(4, 3)
- 
- enum fan53555_vendor {
- 	FAN53526_VENDOR_FAIRCHILD = 0,
+-	if (bp->hwrm_spec_code < 0x10801) {
++	if (bp->hwrm_spec_code < 0x10801 || !BNXT_CHIP_P5_THOR(bp)) {
+ 		rc = -ENODEV;
+ 		goto no_ptp;
+ 	}
 -- 
 2.39.2
 
