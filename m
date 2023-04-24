@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B4A7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:24:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5621AC433EF;
-	Mon, 24 Apr 2023 13:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745B31FA6
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:24:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA2BC433EF;
+	Mon, 24 Apr 2023 13:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342658;
-	bh=VoQDVZS1Ewy9efJOxzoFRDeHlglB3ww6SqZnZ0L7Kno=;
+	s=korg; t=1682342661;
+	bh=3fYupidKRbyX2OqXnlPRMTgM12gtXXdCssK8MekXBcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AU/ZoBA802jt0JVgE2N1bwZLxbeGmVgbtolyQDGX6Np4id1uEifytL2YiwjQyitOp
-	 3GwmJ5PV6nEGDKzlyUQzz5FEBRN61JTJxFSmjaWMCuX8t9MP9VZSZqleUNMwtBisTh
-	 3lqBeuUy9NNEWcxa5/Fb3MYgsSy56/7eoRhrkFK0=
+	b=1jSYcYsQUOZrU4fJySWGFT4traQf0BBLdW7FhNLU8Uq7cR5CA9EGRaq1gxaS4YYMN
+	 HlgkX65/EZV63NFx4tP+MAInbkf8Na0bhLhK5Csc13fB0kGljejHM1ErVf/qvag6dn
+	 2p4vOJc5b36dXyzAbsnLQEvYaza+ek2kZ7zvJcxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianqun Xu <jay.xu@rock-chips.com>,
-	Sjoerd Simons <sjoerd@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 01/98] ARM: dts: rockchip: fix a typo error for rk3288 spdif node
-Date: Mon, 24 Apr 2023 15:16:24 +0200
-Message-Id: <20230424131133.887886390@linuxfoundation.org>
+Subject: [PATCH 6.1 10/98] arm64: dts: imx8mp-verdin: correct off-on-delay
+Date: Mon, 24 Apr 2023 15:16:33 +0200
+Message-Id: <20230424131134.243154141@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,35 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianqun Xu <jay.xu@rock-chips.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 02c84f91adb9a64b75ec97d772675c02a3e65ed7 ]
+[ Upstream commit 02c447a0d79f0c966563e5095a017cbf9477ca6d ]
 
-Fix the address in the spdif node name.
+The property should be off-on-delay-us, not off-on-delay
 
-Fixes: 874e568e500a ("ARM: dts: rockchip: Add SPDIF transceiver for RK3288")
-Signed-off-by: Jianqun Xu <jay.xu@rock-chips.com>
-Reviewed-by: Sjoerd Simons <sjoerd@collabora.com>
-Link: https://lore.kernel.org/r/20230208091411.1603142-1-jay.xu@rock-chips.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: a39ed23bdf6e ("arm64: dts: freescale: add initial support for verdin imx8m plus")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3288.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mp-verdin-dev.dtsi | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi     | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/rk3288.dtsi b/arch/arm/boot/dts/rk3288.dtsi
-index 2ca76b69add78..511ca864c1b2d 100644
---- a/arch/arm/boot/dts/rk3288.dtsi
-+++ b/arch/arm/boot/dts/rk3288.dtsi
-@@ -942,7 +942,7 @@
- 		status = "disabled";
- 	};
- 
--	spdif: sound@ff88b0000 {
-+	spdif: sound@ff8b0000 {
- 		compatible = "rockchip,rk3288-spdif", "rockchip,rk3066-spdif";
- 		reg = <0x0 0xff8b0000 0x0 0x10000>;
- 		#sound-dai-cells = <0>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-dev.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-dev.dtsi
+index cefabe65b2520..c8b521d45fca1 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-dev.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-dev.dtsi
+@@ -12,7 +12,7 @@
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+ 		gpio = <&gpio_expander_21 4 GPIO_ACTIVE_HIGH>; /* ETH_PWR_EN */
+-		off-on-delay = <500000>;
++		off-on-delay-us = <500000>;
+ 		regulator-max-microvolt = <3300000>;
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-name = "+V3.3_ETH";
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
+index 5dcd1de586b52..371144eb40188 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
+@@ -86,7 +86,7 @@
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+ 		gpio = <&gpio2 20 GPIO_ACTIVE_HIGH>; /* PMIC_EN_ETH */
+-		off-on-delay = <500000>;
++		off-on-delay-us = <500000>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_reg_eth>;
+ 		regulator-always-on;
+@@ -127,7 +127,7 @@
+ 		enable-active-high;
+ 		/* Verdin SD_1_PWR_EN (SODIMM 76) */
+ 		gpio = <&gpio4 22 GPIO_ACTIVE_HIGH>;
+-		off-on-delay = <100000>;
++		off-on-delay-us = <100000>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_usdhc2_pwr_en>;
+ 		regulator-max-microvolt = <3300000>;
 -- 
 2.39.2
 
