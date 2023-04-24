@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110057C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68785C433EF;
-	Mon, 24 Apr 2023 13:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D9A7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0816DC433D2;
+	Mon, 24 Apr 2023 13:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342782;
-	bh=7Tai9VoDSP3fnzBapK+Q5uGS9uodF8uxdlqNPTTUOZY=;
+	s=korg; t=1682342785;
+	bh=75P9ARHfHk1hx8qD3Um08bBYiViL7N9pwQf6/OCnP4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TBWfuolH0xFItfGTUIHBtVMgN58r/Z8X8ifW2XR7YUq8Aq69avY7QaT9O40TXOoyS
-	 TEecXNCtALwXqqDZu5f/piiVw3cLs7SeBOLAjjit2b62c0iuugienjIs2uZz6ahP0P
-	 KGM/DfZIFZSF1GAfE717kdYIU/JfD6xduRlDPP/M=
+	b=auaNeq/qK5t8L0gvlRSF15OqRjpJImqOmycddoFXbb7yKObW20GQeKV/nhPU5lH6W
+	 N6+f8SE7O8ydTIMejlNUCGx2gb3M/Igb7Tg0aCWHGtK+4R9qHhMAQ1ExQ9nbmvWu0M
+	 JOs2WEZrFWxAMn4biltz8AKBp8iRLrTWDEBZ7EMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	WANG Xuerui <git@xen0n.name>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 56/98] LoongArch: Fix probing of the CRC32 feature
-Date: Mon, 24 Apr 2023 15:17:19 +0200
-Message-Id: <20230424131136.033362305@linuxfoundation.org>
+Subject: [PATCH 6.1 57/98] LoongArch: Mark 3 symbol exports as non-GPL
+Date: Mon, 24 Apr 2023 15:17:20 +0200
+Message-Id: <20230424131136.077611717@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -35,134 +36,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit df830336045db1246d3245d3737fee9939c5f731 upstream.
+commit dce5ea1d0f45fa612f5760b88614a3f32bc75e3f upstream.
 
-Not all LoongArch processors support CRC32 instructions. This feature
-is indicated by CPUCFG1.CRC32 (Bit25) but it is wrongly defined in the
-previous versions of the ISA manual (and so does in loongarch.h). The
-CRC32 feature is set unconditionally now, so fix it.
+vm_map_base, empty_zero_page and invalid_pmd_table could be accessed
+widely by some out-of-tree non-GPL but important file systems or drivers
+(e.g. OpenZFS). Let's use EXPORT_SYMBOL() instead of EXPORT_SYMBOL_GPL()
+to export them, so as to avoid build errors.
 
-BTW, expose the CRC32 feature in /proc/cpuinfo.
+1, Details about vm_map_base:
+
+This is a LoongArch-specific symbol and may be referenced through macros
+PCI_IOBASE, VMALLOC_START and VMALLOC_END.
+
+2, Details about empty_zero_page:
+
+As it stands today, only 3 architectures export empty_zero_page as a GPL
+symbol: IA64, LoongArch and MIPS. LoongArch gets the GPL export by
+inheriting from MIPS, and the MIPS export was first introduced in commit
+497d2adcbf50b ("[MIPS] Export empty_zero_page for sake of the ext4
+module."). The IA64 export was similar: commit a7d57ecf4216e ("[IA64]
+Export three symbols for module use") did so for kvm.
+
+In both IA64 and MIPS, the export of empty_zero_page was done for
+satisfying some in-kernel component built as module (kvm and ext4
+respectively), and given its reasonably low-level nature, GPL is a
+reasonable choice. But looking at the bigger picture it is evident most
+other architectures do not regard it as GPL, so in effect the symbol
+probably should not be treated as such, in favor of consistency.
+
+3, Details about invalid_pmd_table:
+
+Keep consistency with invalid_pte_table and make it be possible by some
+modules.
 
 Cc: stable@vger.kernel.org
+Reviewed-by: WANG Xuerui <git@xen0n.name>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/cpu-features.h |    1 
- arch/loongarch/include/asm/cpu.h          |   40 +++++++++++++++---------------
- arch/loongarch/include/asm/loongarch.h    |    2 -
- arch/loongarch/kernel/cpu-probe.c         |    7 ++++-
- arch/loongarch/kernel/proc.c              |    1 
- 5 files changed, 30 insertions(+), 21 deletions(-)
+ arch/loongarch/kernel/cpu-probe.c |    2 +-
+ arch/loongarch/mm/init.c          |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/loongarch/include/asm/cpu-features.h
-+++ b/arch/loongarch/include/asm/cpu-features.h
-@@ -42,6 +42,7 @@
- #define cpu_has_fpu		cpu_opt(LOONGARCH_CPU_FPU)
- #define cpu_has_lsx		cpu_opt(LOONGARCH_CPU_LSX)
- #define cpu_has_lasx		cpu_opt(LOONGARCH_CPU_LASX)
-+#define cpu_has_crc32		cpu_opt(LOONGARCH_CPU_CRC32)
- #define cpu_has_complex		cpu_opt(LOONGARCH_CPU_COMPLEX)
- #define cpu_has_crypto		cpu_opt(LOONGARCH_CPU_CRYPTO)
- #define cpu_has_lvz		cpu_opt(LOONGARCH_CPU_LVZ)
---- a/arch/loongarch/include/asm/cpu.h
-+++ b/arch/loongarch/include/asm/cpu.h
-@@ -78,25 +78,26 @@ enum cpu_type_enum {
- #define CPU_FEATURE_FPU			3	/* CPU has FPU */
- #define CPU_FEATURE_LSX			4	/* CPU has LSX (128-bit SIMD) */
- #define CPU_FEATURE_LASX		5	/* CPU has LASX (256-bit SIMD) */
--#define CPU_FEATURE_COMPLEX		6	/* CPU has Complex instructions */
--#define CPU_FEATURE_CRYPTO		7	/* CPU has Crypto instructions */
--#define CPU_FEATURE_LVZ			8	/* CPU has Virtualization extension */
--#define CPU_FEATURE_LBT_X86		9	/* CPU has X86 Binary Translation */
--#define CPU_FEATURE_LBT_ARM		10	/* CPU has ARM Binary Translation */
--#define CPU_FEATURE_LBT_MIPS		11	/* CPU has MIPS Binary Translation */
--#define CPU_FEATURE_TLB			12	/* CPU has TLB */
--#define CPU_FEATURE_CSR			13	/* CPU has CSR */
--#define CPU_FEATURE_WATCH		14	/* CPU has watchpoint registers */
--#define CPU_FEATURE_VINT		15	/* CPU has vectored interrupts */
--#define CPU_FEATURE_CSRIPI		16	/* CPU has CSR-IPI */
--#define CPU_FEATURE_EXTIOI		17	/* CPU has EXT-IOI */
--#define CPU_FEATURE_PREFETCH		18	/* CPU has prefetch instructions */
--#define CPU_FEATURE_PMP			19	/* CPU has perfermance counter */
--#define CPU_FEATURE_SCALEFREQ		20	/* CPU supports cpufreq scaling */
--#define CPU_FEATURE_FLATMODE		21	/* CPU has flat mode */
--#define CPU_FEATURE_EIODECODE		22	/* CPU has EXTIOI interrupt pin decode mode */
--#define CPU_FEATURE_GUESTID		23	/* CPU has GuestID feature */
--#define CPU_FEATURE_HYPERVISOR		24	/* CPU has hypervisor (running in VM) */
-+#define CPU_FEATURE_CRC32		6	/* CPU has CRC32 instructions */
-+#define CPU_FEATURE_COMPLEX		7	/* CPU has Complex instructions */
-+#define CPU_FEATURE_CRYPTO		8	/* CPU has Crypto instructions */
-+#define CPU_FEATURE_LVZ			9	/* CPU has Virtualization extension */
-+#define CPU_FEATURE_LBT_X86		10	/* CPU has X86 Binary Translation */
-+#define CPU_FEATURE_LBT_ARM		11	/* CPU has ARM Binary Translation */
-+#define CPU_FEATURE_LBT_MIPS		12	/* CPU has MIPS Binary Translation */
-+#define CPU_FEATURE_TLB			13	/* CPU has TLB */
-+#define CPU_FEATURE_CSR			14	/* CPU has CSR */
-+#define CPU_FEATURE_WATCH		15	/* CPU has watchpoint registers */
-+#define CPU_FEATURE_VINT		16	/* CPU has vectored interrupts */
-+#define CPU_FEATURE_CSRIPI		17	/* CPU has CSR-IPI */
-+#define CPU_FEATURE_EXTIOI		18	/* CPU has EXT-IOI */
-+#define CPU_FEATURE_PREFETCH		19	/* CPU has prefetch instructions */
-+#define CPU_FEATURE_PMP			20	/* CPU has perfermance counter */
-+#define CPU_FEATURE_SCALEFREQ		21	/* CPU supports cpufreq scaling */
-+#define CPU_FEATURE_FLATMODE		22	/* CPU has flat mode */
-+#define CPU_FEATURE_EIODECODE		23	/* CPU has EXTIOI interrupt pin decode mode */
-+#define CPU_FEATURE_GUESTID		24	/* CPU has GuestID feature */
-+#define CPU_FEATURE_HYPERVISOR		25	/* CPU has hypervisor (running in VM) */
- 
- #define LOONGARCH_CPU_CPUCFG		BIT_ULL(CPU_FEATURE_CPUCFG)
- #define LOONGARCH_CPU_LAM		BIT_ULL(CPU_FEATURE_LAM)
-@@ -104,6 +105,7 @@ enum cpu_type_enum {
- #define LOONGARCH_CPU_FPU		BIT_ULL(CPU_FEATURE_FPU)
- #define LOONGARCH_CPU_LSX		BIT_ULL(CPU_FEATURE_LSX)
- #define LOONGARCH_CPU_LASX		BIT_ULL(CPU_FEATURE_LASX)
-+#define LOONGARCH_CPU_CRC32		BIT_ULL(CPU_FEATURE_CRC32)
- #define LOONGARCH_CPU_COMPLEX		BIT_ULL(CPU_FEATURE_COMPLEX)
- #define LOONGARCH_CPU_CRYPTO		BIT_ULL(CPU_FEATURE_CRYPTO)
- #define LOONGARCH_CPU_LVZ		BIT_ULL(CPU_FEATURE_LVZ)
---- a/arch/loongarch/include/asm/loongarch.h
-+++ b/arch/loongarch/include/asm/loongarch.h
-@@ -117,7 +117,7 @@ static inline u32 read_cpucfg(u32 reg)
- #define  CPUCFG1_EP			BIT(22)
- #define  CPUCFG1_RPLV			BIT(23)
- #define  CPUCFG1_HUGEPG			BIT(24)
--#define  CPUCFG1_IOCSRBRD		BIT(25)
-+#define  CPUCFG1_CRC32			BIT(25)
- #define  CPUCFG1_MSGINT			BIT(26)
- 
- #define LOONGARCH_CPUCFG2		0x2
 --- a/arch/loongarch/kernel/cpu-probe.c
 +++ b/arch/loongarch/kernel/cpu-probe.c
-@@ -94,13 +94,18 @@ static void cpu_probe_common(struct cpui
- 	c->options = LOONGARCH_CPU_CPUCFG | LOONGARCH_CPU_CSR |
- 		     LOONGARCH_CPU_TLB | LOONGARCH_CPU_VINT | LOONGARCH_CPU_WATCH;
+@@ -60,7 +60,7 @@ static inline void set_elf_platform(int
  
--	elf_hwcap = HWCAP_LOONGARCH_CPUCFG | HWCAP_LOONGARCH_CRC32;
-+	elf_hwcap = HWCAP_LOONGARCH_CPUCFG;
+ /* MAP BASE */
+ unsigned long vm_map_base;
+-EXPORT_SYMBOL_GPL(vm_map_base);
++EXPORT_SYMBOL(vm_map_base);
  
- 	config = read_cpucfg(LOONGARCH_CPUCFG1);
- 	if (config & CPUCFG1_UAL) {
- 		c->options |= LOONGARCH_CPU_UAL;
- 		elf_hwcap |= HWCAP_LOONGARCH_UAL;
- 	}
-+	if (config & CPUCFG1_CRC32) {
-+		c->options |= LOONGARCH_CPU_CRC32;
-+		elf_hwcap |= HWCAP_LOONGARCH_CRC32;
-+	}
-+
+ static void cpu_probe_addrbits(struct cpuinfo_loongarch *c)
+ {
+--- a/arch/loongarch/mm/init.c
++++ b/arch/loongarch/mm/init.c
+@@ -41,7 +41,7 @@
+  * don't have to care about aliases on other CPUs.
+  */
+ unsigned long empty_zero_page, zero_page_mask;
+-EXPORT_SYMBOL_GPL(empty_zero_page);
++EXPORT_SYMBOL(empty_zero_page);
+ EXPORT_SYMBOL(zero_page_mask);
  
- 	config = read_cpucfg(LOONGARCH_CPUCFG2);
- 	if (config & CPUCFG2_LAM) {
---- a/arch/loongarch/kernel/proc.c
-+++ b/arch/loongarch/kernel/proc.c
-@@ -76,6 +76,7 @@ static int show_cpuinfo(struct seq_file
- 	if (cpu_has_fpu)	seq_printf(m, " fpu");
- 	if (cpu_has_lsx)	seq_printf(m, " lsx");
- 	if (cpu_has_lasx)	seq_printf(m, " lasx");
-+	if (cpu_has_crc32)	seq_printf(m, " crc32");
- 	if (cpu_has_complex)	seq_printf(m, " complex");
- 	if (cpu_has_crypto)	seq_printf(m, " crypto");
- 	if (cpu_has_lvz)	seq_printf(m, " lvz");
+ void setup_zero_pages(void)
+@@ -231,7 +231,7 @@ pud_t invalid_pud_table[PTRS_PER_PUD] __
+ #endif
+ #ifndef __PAGETABLE_PMD_FOLDED
+ pmd_t invalid_pmd_table[PTRS_PER_PMD] __page_aligned_bss;
+-EXPORT_SYMBOL_GPL(invalid_pmd_table);
++EXPORT_SYMBOL(invalid_pmd_table);
+ #endif
+ pte_t invalid_pte_table[PTRS_PER_PTE] __page_aligned_bss;
+ EXPORT_SYMBOL(invalid_pte_table);
 
 
