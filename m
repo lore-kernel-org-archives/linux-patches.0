@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0FF7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:25:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86646C433D2;
-	Mon, 24 Apr 2023 13:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D3E7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:25:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A285C433EF;
+	Mon, 24 Apr 2023 13:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342716;
-	bh=ra1x4jsE2PCOofIpGDZKW4G2CG4QGuG3/rRMcXp79uM=;
+	s=korg; t=1682342719;
+	bh=RzD+QsHvWoQkEeeiOSeSBdQISBdSyg6RZwMSTVc67tY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/cBNi22mkyt8A7JJUEeAoAXQh5nnm8qSYAfsFeF0pA4ViQ1no4FRhq3+Jk+v5SVW
-	 /fke8v9gsNYU3u36G9R5GwxOszW2XjtlI2l/sBo5e/pWC6LzWhWR4klfKz+nmecoSi
-	 dfRHfNLkfUsAUEDSZEJNGWsL3rXaAGBkBWaombOc=
+	b=OHUtRJ4eIph6aeersuM/B8TgChdhZSSIVd1p2/vy8p5tzQZi2NhozWUN/YQ7g1zmA
+	 HbbkNDcSiq9BwJMRAzTrFALHCtmPnARN2qz7bzSmiUV9Oo9dVJHW2Xs9P95IaSCVoR
+	 RiPQh0d999fblzz26CSvDgU9bLO9uFhhPk+NDj+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Basierski <sebastianx.basierski@intel.com>,
-	Mateusz Palczewski <mateusz.palczewski@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 31/98] e1000e: Disable TSO on i219-LM card to increase speed
-Date: Mon, 24 Apr 2023 15:16:54 +0200
-Message-Id: <20230424131135.102945697@linuxfoundation.org>
+Subject: [PATCH 6.1 32/98] net: bridge: switchdev: dont notify FDB entries with "master dynamic"
+Date: Mon, 24 Apr 2023 15:16:55 +0200
+Message-Id: <20230424131135.143976935@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -39,98 +37,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Basierski <sebastianx.basierski@intel.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 67d47b95119ad589b0a0b16b88b1dd9a04061ced ]
+[ Upstream commit 927cdea5d2095287ddd5246e5aa68eb5d68db2be ]
 
-While using i219-LM card currently it was only possible to achieve
-about 60% of maximum speed due to regression introduced in Linux 5.8.
-This was caused by TSO not being disabled by default despite commit
-f29801030ac6 ("e1000e: Disable TSO for buffer overrun workaround").
-Fix that by disabling TSO during driver probe.
+There is a structural problem in switchdev, where the flag bits in
+struct switchdev_notifier_fdb_info (added_by_user, is_local etc) only
+represent a simplified / denatured view of what's in struct
+net_bridge_fdb_entry :: flags (BR_FDB_ADDED_BY_USER, BR_FDB_LOCAL etc).
+Each time we want to pass more information about struct
+net_bridge_fdb_entry :: flags to struct switchdev_notifier_fdb_info
+(here, BR_FDB_STATIC), we find that FDB entries were already notified to
+switchdev with no regard to this flag, and thus, switchdev drivers had
+no indication whether the notified entries were static or not.
 
-Fixes: f29801030ac6 ("e1000e: Disable TSO for buffer overrun workaround")
-Signed-off-by: Sebastian Basierski <sebastianx.basierski@intel.com>
-Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230417205345.1030801-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For example, this command:
+
+ip link add br0 type bridge && ip link set swp0 master br0
+bridge fdb add dev swp0 00:01:02:03:04:05 master dynamic
+
+has never worked as intended with switchdev. It causes a struct
+net_bridge_fdb_entry to be passed to br_switchdev_fdb_notify() which has
+a single flag set: BR_FDB_ADDED_BY_USER.
+
+This is further passed to the switchdev notifier chain, where interested
+drivers have no choice but to assume this is a static (does not age) and
+sticky (does not migrate) FDB entry. So currently, all drivers offload
+it to hardware as such, as can be seen below ("offload" is set).
+
+bridge fdb get 00:01:02:03:04:05 dev swp0 master
+00:01:02:03:04:05 dev swp0 offload master br0
+
+The software FDB entry expires $ageing_time centiseconds after the
+kernel last sees a packet with this MAC SA, and the bridge notifies its
+deletion as well, so it eventually disappears from hardware too.
+
+This is a problem, because it is actually desirable to start offloading
+"master dynamic" FDB entries correctly - they should expire $ageing_time
+centiseconds after the *hardware* port last sees a packet with this
+MAC SA - and this is how the current incorrect behavior was discovered.
+With an offloaded data plane, it can be expected that software only sees
+exception path packets, so an otherwise active dynamic FDB entry would
+be aged out by software sooner than it should.
+
+With the change in place, these FDB entries are no longer offloaded:
+
+bridge fdb get 00:01:02:03:04:05 dev swp0 master
+00:01:02:03:04:05 dev swp0 master br0
+
+and this also constitutes a better way (assuming a backport to stable
+kernels) for user space to determine whether the kernel has the
+capability of doing something sane with these or not.
+
+As opposed to "master dynamic" FDB entries, on the current behavior of
+which no one currently depends on (which can be deduced from the lack of
+kselftests), Ido Schimmel explains that entries with the "extern_learn"
+flag (BR_FDB_ADDED_BY_EXT_LEARN) should still be notified to switchdev,
+since the spectrum driver listens to them (and this is kind of okay,
+because although they are treated identically to "static", they are
+expected to not age, and to roam).
+
+Fixes: 6b26b51b1d13 ("net: bridge: Add support for notifying devices about FDB add/del")
+Link: https://lore.kernel.org/netdev/20230327115206.jk5q5l753aoelwus@skbuf/
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20230418155902.898627-1-vladimir.oltean@nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/netdev.c | 51 +++++++++++-----------
- 1 file changed, 26 insertions(+), 25 deletions(-)
+ net/bridge/br_switchdev.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 55cf2f62bb308..db8e06157da29 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -5293,31 +5293,6 @@ static void e1000_watchdog_task(struct work_struct *work)
- 				ew32(TARC(0), tarc0);
- 			}
+diff --git a/net/bridge/br_switchdev.c b/net/bridge/br_switchdev.c
+index 8f3d76c751dd0..4b3982c368b35 100644
+--- a/net/bridge/br_switchdev.c
++++ b/net/bridge/br_switchdev.c
+@@ -146,6 +146,17 @@ br_switchdev_fdb_notify(struct net_bridge *br,
+ {
+ 	struct switchdev_notifier_fdb_info item;
  
--			/* disable TSO for pcie and 10/100 speeds, to avoid
--			 * some hardware issues
--			 */
--			if (!(adapter->flags & FLAG_TSO_FORCE)) {
--				switch (adapter->link_speed) {
--				case SPEED_10:
--				case SPEED_100:
--					e_info("10/100 speed: disabling TSO\n");
--					netdev->features &= ~NETIF_F_TSO;
--					netdev->features &= ~NETIF_F_TSO6;
--					break;
--				case SPEED_1000:
--					netdev->features |= NETIF_F_TSO;
--					netdev->features |= NETIF_F_TSO6;
--					break;
--				default:
--					/* oops */
--					break;
--				}
--				if (hw->mac.type == e1000_pch_spt) {
--					netdev->features &= ~NETIF_F_TSO;
--					netdev->features &= ~NETIF_F_TSO6;
--				}
--			}
--
- 			/* enable transmits in the hardware, need to do this
- 			 * after setting TARC(0)
- 			 */
-@@ -7532,6 +7507,32 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 			    NETIF_F_RXCSUM |
- 			    NETIF_F_HW_CSUM);
- 
-+	/* disable TSO for pcie and 10/100 speeds to avoid
-+	 * some hardware issues and for i219 to fix transfer
-+	 * speed being capped at 60%
++	/* Entries with these flags were created using ndm_state == NUD_REACHABLE,
++	 * ndm_flags == NTF_MASTER( | NTF_STICKY), ext_flags == 0 by something
++	 * equivalent to 'bridge fdb add ... master dynamic (sticky)'.
++	 * Drivers don't know how to deal with these, so don't notify them to
++	 * avoid confusing them.
 +	 */
-+	if (!(adapter->flags & FLAG_TSO_FORCE)) {
-+		switch (adapter->link_speed) {
-+		case SPEED_10:
-+		case SPEED_100:
-+			e_info("10/100 speed: disabling TSO\n");
-+			netdev->features &= ~NETIF_F_TSO;
-+			netdev->features &= ~NETIF_F_TSO6;
-+			break;
-+		case SPEED_1000:
-+			netdev->features |= NETIF_F_TSO;
-+			netdev->features |= NETIF_F_TSO6;
-+			break;
-+		default:
-+			/* oops */
-+			break;
-+		}
-+		if (hw->mac.type == e1000_pch_spt) {
-+			netdev->features &= ~NETIF_F_TSO;
-+			netdev->features &= ~NETIF_F_TSO6;
-+		}
-+	}
++	if (test_bit(BR_FDB_ADDED_BY_USER, &fdb->flags) &&
++	    !test_bit(BR_FDB_STATIC, &fdb->flags) &&
++	    !test_bit(BR_FDB_ADDED_BY_EXT_LEARN, &fdb->flags))
++		return;
 +
- 	/* Set user-changeable features (subset of all device features) */
- 	netdev->hw_features = netdev->features;
- 	netdev->hw_features |= NETIF_F_RXFCS;
+ 	br_switchdev_fdb_populate(br, &item, fdb, NULL);
+ 
+ 	switch (type) {
 -- 
 2.39.2
 
