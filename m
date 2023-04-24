@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7BF7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74090C433D2;
-	Mon, 24 Apr 2023 13:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FB17C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14954C433EF;
+	Mon, 24 Apr 2023 13:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342974;
-	bh=OoVgQZt3seXwT5OtRPIxWX1KCS61hqoGYCWr+9acZKM=;
+	s=korg; t=1682342977;
+	bh=/Vv9E/s5GyZt9nBZFKV3OCl+F/T4Q6mhJWQpzX86+jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nf3kIGo43Lkb2uDDS6/1vXsctxx7Mf00x80010QQKtl326XnRJDoNIMhzwOnD2dlE
-	 zNYJyTVUgBuMoTCSnDV04tBRDoyr+UITeHqAj4G/QtcVfd1KD3b0sKcR9+nqExzc/p
-	 bKQDPGIr3vIkKlJR2v0R6DUZcpYiBInoOu1AWbdM=
+	b=r7vsAn8+FZ3J9pF7C8rbeMk3AopCEPu6h07dsXNhRYCN5hlEl0B+VaiV3+r/VCGLx
+	 nc8zpqHn75RqVhXjVBlYVW578sje8rt0hXhA66WDLqH6z8xR8kAAI6HJ2iSIQn2x3/
+	 PkNm1hvGiavahXpt1OqiFdnKpgTppUWA3Z/veyIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 029/110] bonding: Fix memory leak when changing bond type to Ethernet
-Date: Mon, 24 Apr 2023 15:16:51 +0200
-Message-Id: <20230424131137.217891106@linuxfoundation.org>
+Subject: [PATCH 6.2 003/110] arm64: dts: qcom: ipq8074-hk01: enable QMP device, not the PHY node
+Date: Mon, 24 Apr 2023 15:16:25 +0200
+Message-Id: <20230424131136.263130743@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -37,138 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit c484fcc058bada604d7e4e5228d4affb646ddbc2 ]
+[ Upstream commit 72630ba422b70ea0874fc90d526353cf71c72488 ]
 
-When a net device is put administratively up, its 'IFF_UP' flag is set
-(if not set already) and a 'NETDEV_UP' notification is emitted, which
-causes the 8021q driver to add VLAN ID 0 on the device. The reverse
-happens when a net device is put administratively down.
+Correct PCIe PHY enablement to refer the QMP device nodes rather than
+PHY device nodes. QMP nodes have 'status = "disabled"' property in the
+ipq8074.dtsi, while PHY nodes do not correspond to the actual device and
+do not have the status property.
 
-When changing the type of a bond to Ethernet, its 'IFF_UP' flag is
-incorrectly cleared, resulting in the kernel skipping the above process
-and VLAN ID 0 being leaked [1].
-
-Fix by restoring the flag when changing the type to Ethernet, in a
-similar fashion to the restoration of the 'IFF_SLAVE' flag.
-
-The issue can be reproduced using the script in [2], with example out
-before and after the fix in [3].
-
-[1]
-unreferenced object 0xffff888103479900 (size 256):
-  comm "ip", pid 329, jiffies 4294775225 (age 28.561s)
-  hex dump (first 32 bytes):
-    00 a0 0c 15 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff81a6051a>] kmalloc_trace+0x2a/0xe0
-    [<ffffffff8406426c>] vlan_vid_add+0x30c/0x790
-    [<ffffffff84068e21>] vlan_device_event+0x1491/0x21a0
-    [<ffffffff81440c8e>] notifier_call_chain+0xbe/0x1f0
-    [<ffffffff8372383a>] call_netdevice_notifiers_info+0xba/0x150
-    [<ffffffff837590f2>] __dev_notify_flags+0x132/0x2e0
-    [<ffffffff8375ad9f>] dev_change_flags+0x11f/0x180
-    [<ffffffff8379af36>] do_setlink+0xb96/0x4060
-    [<ffffffff837adf6a>] __rtnl_newlink+0xc0a/0x18a0
-    [<ffffffff837aec6c>] rtnl_newlink+0x6c/0xa0
-    [<ffffffff837ac64e>] rtnetlink_rcv_msg+0x43e/0xe00
-    [<ffffffff839a99e0>] netlink_rcv_skb+0x170/0x440
-    [<ffffffff839a738f>] netlink_unicast+0x53f/0x810
-    [<ffffffff839a7fcb>] netlink_sendmsg+0x96b/0xe90
-    [<ffffffff8369d12f>] ____sys_sendmsg+0x30f/0xa70
-    [<ffffffff836a6d7a>] ___sys_sendmsg+0x13a/0x1e0
-unreferenced object 0xffff88810f6a83e0 (size 32):
-  comm "ip", pid 329, jiffies 4294775225 (age 28.561s)
-  hex dump (first 32 bytes):
-    a0 99 47 03 81 88 ff ff a0 99 47 03 81 88 ff ff  ..G.......G.....
-    81 00 00 00 01 00 00 00 cc cc cc cc cc cc cc cc  ................
-  backtrace:
-    [<ffffffff81a6051a>] kmalloc_trace+0x2a/0xe0
-    [<ffffffff84064369>] vlan_vid_add+0x409/0x790
-    [<ffffffff84068e21>] vlan_device_event+0x1491/0x21a0
-    [<ffffffff81440c8e>] notifier_call_chain+0xbe/0x1f0
-    [<ffffffff8372383a>] call_netdevice_notifiers_info+0xba/0x150
-    [<ffffffff837590f2>] __dev_notify_flags+0x132/0x2e0
-    [<ffffffff8375ad9f>] dev_change_flags+0x11f/0x180
-    [<ffffffff8379af36>] do_setlink+0xb96/0x4060
-    [<ffffffff837adf6a>] __rtnl_newlink+0xc0a/0x18a0
-    [<ffffffff837aec6c>] rtnl_newlink+0x6c/0xa0
-    [<ffffffff837ac64e>] rtnetlink_rcv_msg+0x43e/0xe00
-    [<ffffffff839a99e0>] netlink_rcv_skb+0x170/0x440
-    [<ffffffff839a738f>] netlink_unicast+0x53f/0x810
-    [<ffffffff839a7fcb>] netlink_sendmsg+0x96b/0xe90
-    [<ffffffff8369d12f>] ____sys_sendmsg+0x30f/0xa70
-    [<ffffffff836a6d7a>] ___sys_sendmsg+0x13a/0x1e0
-
-[2]
-ip link add name t-nlmon type nlmon
-ip link add name t-dummy type dummy
-ip link add name t-bond type bond mode active-backup
-
-ip link set dev t-bond up
-ip link set dev t-nlmon master t-bond
-ip link set dev t-nlmon nomaster
-ip link show dev t-bond
-ip link set dev t-dummy master t-bond
-ip link show dev t-bond
-
-ip link del dev t-bond
-ip link del dev t-dummy
-ip link del dev t-nlmon
-
-[3]
-Before:
-
-12: t-bond: <NO-CARRIER,BROADCAST,MULTICAST,MASTER,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
-    link/netlink
-12: t-bond: <BROADCAST,MULTICAST,MASTER,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
-    link/ether 46:57:39:a4:46:a2 brd ff:ff:ff:ff:ff:ff
-
-After:
-
-12: t-bond: <NO-CARRIER,BROADCAST,MULTICAST,MASTER,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
-    link/netlink
-12: t-bond: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
-    link/ether 66:48:7b:74:b6:8a brd ff:ff:ff:ff:ff:ff
-
-Fixes: e36b9d16c6a6 ("bonding: clean muticast addresses when device changes type")
-Fixes: 75c78500ddad ("bonding: remap muticast addresses without using dev_close() and dev_open()")
-Fixes: 9ec7eb60dcbc ("bonding: restore IFF_MASTER/SLAVE flags on bond enslave ether type change")
-Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Link: https://lore.kernel.org/netdev/78a8a03b-6070-3e6b-5042-f848dab16fb8@alu.unizg.hr/
-Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e8a7fdc505bb ("arm64: dts: ipq8074: qcom: Re-arrange dts nodes based on address")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230324021651.1799969-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074-hk01.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 415cd95fb140f..ddbf892e9b9ce 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1775,14 +1775,15 @@ void bond_lower_state_changed(struct slave *slave)
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
+index ca3f96646b90d..5cf07caf41033 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
++++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
+@@ -62,11 +62,11 @@
+ 	perst-gpios = <&tlmm 58 GPIO_ACTIVE_LOW>;
+ };
  
- /* The bonding driver uses ether_setup() to convert a master bond device
-  * to ARPHRD_ETHER, that resets the target netdevice's flags so we always
-- * have to restore the IFF_MASTER flag, and only restore IFF_SLAVE if it was set
-+ * have to restore the IFF_MASTER flag, and only restore IFF_SLAVE and IFF_UP
-+ * if they were set
-  */
- static void bond_ether_setup(struct net_device *bond_dev)
- {
--	unsigned int slave_flag = bond_dev->flags & IFF_SLAVE;
-+	unsigned int flags = bond_dev->flags & (IFF_SLAVE | IFF_UP);
+-&pcie_phy0 {
++&pcie_qmp0 {
+ 	status = "okay";
+ };
  
- 	ether_setup(bond_dev);
--	bond_dev->flags |= IFF_MASTER | slave_flag;
-+	bond_dev->flags |= IFF_MASTER | flags;
- 	bond_dev->priv_flags &= ~IFF_TX_SKB_SHARING;
- }
+-&pcie_phy1 {
++&pcie_qmp1 {
+ 	status = "okay";
+ };
  
 -- 
 2.39.2
