@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19292108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23642C433D2;
-	Mon, 24 Apr 2023 13:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F1D7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBBC4C433EF;
+	Mon, 24 Apr 2023 13:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342998;
-	bh=klTnNbqhhHKwmr0mRHTpdwPsdjCQ7bdTFVzX8ykdOSs=;
+	s=korg; t=1682343001;
+	bh=3dVPcMbV3ggeR+q8y8Q6SKl2kZ8tYqnwVf4u6VuwgMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4JnFLQZPsbq4jih9yFd9t8mU/ZmDEAWUiGYBshD1WrX+YgakwSDe81qOvqFEWYaY
-	 liRsDtGI1WcKvzreTrV/R/2zpyGJ9n/yGnzDrqRsdQWhJa6JE5fAWPXZkCVDwh/zwx
-	 WynmubbDe5f0CxA2FtKZatncEK1aIT3cYS2BkZIs=
+	b=vXbZ2zyzPpeHMrYXBOCFbV7au2i7gvDonC6C7aa+1H0geafRfnKyo/rIEkIECgNnN
+	 J2YhmYix7hDZDAHYJZnaKppy/u9zhKqXj/xTIFDbTOf4QOsKyoRDwlWkhPAIvxJURg
+	 eRL2BDzyTlt9L6TPWjESP4mDDrgU+kIqnWImSG3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Frank Crawford <frank@crawford.emu.id.au>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 031/110] mlxsw: pci: Fix possible crash during initialization
-Date: Mon, 24 Apr 2023 15:16:53 +0200
-Message-Id: <20230424131137.302086884@linuxfoundation.org>
+Subject: [PATCH 6.2 040/110] platform/x86 (gigabyte-wmi): Add support for A320M-S2H V2
+Date: Mon, 24 Apr 2023 15:17:02 +0200
+Message-Id: <20230424131137.665636232@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -36,60 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Frank Crawford <frank@crawford.emu.id.au>
 
-[ Upstream commit 1f64757ee2bb22a93ec89b4c71707297e8cca0ba ]
+[ Upstream commit b7c994f8c35e916e27c60803bb21457bc1373500 ]
 
-During initialization the driver issues a reset command via its command
-interface in order to remove previous configuration from the device.
+Add support for A320M-S2H V2.  Tested using module force_load option.
 
-After issuing the reset, the driver waits for 200ms before polling on
-the "system_status" register using memory-mapped IO until the device
-reaches a ready state (0x5E). The wait is necessary because the reset
-command only triggers the reset, but the reset itself happens
-asynchronously. If the driver starts polling too soon, the read of the
-"system_status" register will never return and the system will crash
-[1].
-
-The issue was discovered when the device was flashed with a development
-firmware version where the reset routine took longer to complete. The
-issue was fixed in the firmware, but it exposed the fact that the
-current wait time is borderline.
-
-Fix by increasing the wait time from 200ms to 400ms. With this patch and
-the buggy firmware version, the issue did not reproduce in 10 reboots
-whereas without the patch the issue is reproduced quite consistently.
-
-[1]
-mce: CPUs not responding to MCE broadcast (may include false positives): 0,4
-mce: CPUs not responding to MCE broadcast (may include false positives): 0,4
-Kernel panic - not syncing: Timeout: Not all CPUs entered broadcast exception handler
-Shutting down cpus with NMI
-Kernel Offset: 0x12000000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
-
-Fixes: ac004e84164e ("mlxsw: pci: Wait longer before accessing the device after reset")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Frank Crawford <frank@crawford.emu.id.au>
+Acked-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/r/20230318091441.1240921-1-frank@crawford.emu.id.au
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/pci_hw.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/gigabyte-wmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/pci_hw.h b/drivers/net/ethernet/mellanox/mlxsw/pci_hw.h
-index 48dbfea0a2a1d..7cdf0ce24f288 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/pci_hw.h
-+++ b/drivers/net/ethernet/mellanox/mlxsw/pci_hw.h
-@@ -26,7 +26,7 @@
- #define MLXSW_PCI_CIR_TIMEOUT_MSECS		1000
+diff --git a/drivers/platform/x86/gigabyte-wmi.c b/drivers/platform/x86/gigabyte-wmi.c
+index 322cfaeda17ba..4dd39ab6ecfa2 100644
+--- a/drivers/platform/x86/gigabyte-wmi.c
++++ b/drivers/platform/x86/gigabyte-wmi.c
+@@ -140,6 +140,7 @@ static u8 gigabyte_wmi_detect_sensor_usability(struct wmi_device *wdev)
+ 	}}
  
- #define MLXSW_PCI_SW_RESET_TIMEOUT_MSECS	900000
--#define MLXSW_PCI_SW_RESET_WAIT_MSECS		200
-+#define MLXSW_PCI_SW_RESET_WAIT_MSECS		400
- #define MLXSW_PCI_FW_READY			0xA1844
- #define MLXSW_PCI_FW_READY_MASK			0xFFFF
- #define MLXSW_PCI_FW_READY_MAGIC		0x5E
+ static const struct dmi_system_id gigabyte_wmi_known_working_platforms[] = {
++	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("A320M-S2H V2-CF"),
+ 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B450M DS3H-CF"),
+ 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B450M DS3H WIFI-CF"),
+ 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B450M S2H V2"),
 -- 
 2.39.2
 
