@@ -1,56 +1,42 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E28B7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 02:36:31 +0000 (UTC)
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-63b4e5fdb1eso4965575b3a.1
-        for <patches@lists.linux.dev>; Sun, 23 Apr 2023 19:36:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1682303790; x=1684895790;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Er9IodKAhu5Xy/24MmuM3ISnj8SFsqKhcDcV85YYtd4=;
-        b=Myis4J2Z9lmx+G/UGHQV666UFM6OJ8EKtdAre2rvRUUjU2E+rQLKwJ+D0eYgmT72Z9
-         5SaX6H/C77vylvdgFXO4tn7m7ArVvZvZSOxiW6NiLDX5h8w4cEfp1YoxEuHlyRXPz09e
-         5JgUmEmUJwM1H8XEmuezqPmJ+lzP8zXU2UJcc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682303790; x=1684895790;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Er9IodKAhu5Xy/24MmuM3ISnj8SFsqKhcDcV85YYtd4=;
-        b=dpk/MvoES5pXTZuXA5FDDo1USGeS6usN8/6SF4m98uQhxs8HmLPTN2PRG9mBCDXTuc
-         mk0gcoIIhbpixzQ+aYh5EbYaSCGxnnFrSRovwZkw69EsBza1kqKH8yIwq41dz/SEeqcS
-         UeBQ7clt2vVhkmpwdVBx0KaWykbrfRbbqt6JZwDh4NHObzMPH/aiSnt/AUixV2crFXCW
-         ziC/NSGd2hL34JDmAjFOmVUzMRP52A2FAUFcEyo0taUyDhm+X9xp9EQd4OtYC+pFPzWO
-         QcaxFZ7Zul1YuGOt6hOFADMhnWFgy3SlpeO02gn5wAwnqlQeeVhkIMQt2PufJ9NKErMj
-         4dkg==
-X-Gm-Message-State: AAQBX9ee47OYa0rmPQQnfc1wKuIELI81ym3NkN5pgowxPu/koPYhu9+I
-	norI/VULyr7b4G5FNGXWFYwkog==
-X-Google-Smtp-Source: AKy350a438RODTsIQbvbOZb4mhoGqhZ1pvzPivBPJ5Ra5hjJQnsR6/IRQqkIVQmM+kaUu2d3rd1IMA==
-X-Received: by 2002:a05:6a00:2406:b0:63d:38aa:5617 with SMTP id z6-20020a056a00240600b0063d38aa5617mr12656579pfh.6.1682303790512;
-        Sun, 23 Apr 2023 19:36:30 -0700 (PDT)
-Received: from google.com (KD124209188001.ppp-bb.dion.ne.jp. [124.209.188.1])
-        by smtp.gmail.com with ESMTPSA id h8-20020aa786c8000000b0063b8279d3aasm6183422pfo.159.2023.04.23.19.36.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Apr 2023 19:36:29 -0700 (PDT)
-Date: Mon, 24 Apr 2023 11:36:23 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: axboe@kernel.dk, agk@redhat.com, snitzer@kernel.org,
-	philipp.reisner@linbit.com, lars.ellenberg@linbit.com,
-	christoph.boehmwalder@linbit.com, hch@infradead.org,
-	djwong@kernel.org, minchan@kernel.org, senozhatsky@chromium.org,
-	patches@lists.linux.dev, linux-block@vger.kernel.org,
-	linux-mm@kvack.org, linux-xfs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, dm-devel@redhat.com,
-	drbd-dev@lists.linbit.com, linux-kernel@vger.kernel.org,
-	willy@infradead.org, hare@suse.de, p.raghav@samsung.com,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FC17C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 05:55:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
+	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=edf2YE6tOjy5o639pmoNCDDnqNTZQ8NPmup4HBvbC60=; b=qBKmlBP0RbumDgdRWERGFEVbSD
+	kDf8Kr5lk5aB2+nWak9xt17TfHD2PupAuPb1mUJmwaPm/dURvhYPVWSPaaOFCU9vr679O7rjTbCXX
+	FY14jwJ6foFME5jmhn6hiaV5cvLy3w+4wiA9HOCqY9FKPUwzVOJnoZoumJfKXe+j3dCSf+I4DhyyN
+	meS9IcfszZYuw8bakpryb8WeNnXvLqGFAShnlXlum+ZdAx1uWAgWfJ88JFAJBehhF7KCT0OC/pGsx
+	saWH2fGCCZFbpsAwVDoLKGMeyxz9Qo8euhIsqOiC8WZE42QMSALorud5SvHI394LQ9T2HdWzjtMUM
+	uj/muRvg==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1pqpAv-00FPys-1e;
+	Mon, 24 Apr 2023 05:55:45 +0000
+Date: Sun, 23 Apr 2023 22:55:45 -0700
+From: Christoph Hellwig <hch@infradead.org>
+To: Dave Chinner <david@fromorbit.com>
+Cc: Luis Chamberlain <mcgrof@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>, axboe@kernel.dk,
+	agk@redhat.com, snitzer@kernel.org, philipp.reisner@linbit.com,
+	lars.ellenberg@linbit.com, christoph.boehmwalder@linbit.com,
+	hch@infradead.org, djwong@kernel.org, minchan@kernel.org,
+	senozhatsky@chromium.org, patches@lists.linux.dev,
+	linux-block@vger.kernel.org, linux-mm@kvack.org,
+	linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	dm-devel@redhat.com, drbd-dev@lists.linbit.com,
+	linux-kernel@vger.kernel.org, hare@suse.de, p.raghav@samsung.com,
 	da.gomez@samsung.com, kbusch@kernel.org
-Subject: Re: [PATCH 5/5] zram: use generic PAGE_SECTORS and PAGE_SECTORS_SHIFT
-Message-ID: <20230424023623.GC1496740@google.com>
+Subject: Re: [PATCH 3/5] iomap: simplify iomap_init() with PAGE_SECTORS
+Message-ID: <ZEYZ4ScVDXviFJ/J@infradead.org>
 References: <20230421195807.2804512-1-mcgrof@kernel.org>
- <20230421195807.2804512-6-mcgrof@kernel.org>
+ <20230421195807.2804512-4-mcgrof@kernel.org>
+ <ZELuiBNNHTk4EdxH@casper.infradead.org>
+ <ZEMH9h/cd9Cp1t+X@bombadil.infradead.org>
+ <20230421223420.GH3223426@dread.disaster.area>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,19 +45,29 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230421195807.2804512-6-mcgrof@kernel.org>
+In-Reply-To: <20230421223420.GH3223426@dread.disaster.area>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 
-On (23/04/21 12:58), Luis Chamberlain wrote:
+On Sat, Apr 22, 2023 at 08:34:20AM +1000, Dave Chinner wrote:
+> > 
+> > -	return bioset_init(&iomap_ioend_bioset, 4 * (PAGE_SIZE / SECTOR_SIZE),
+> > +	return bioset_init(&iomap_ioend_bioset, 4 * PAGE_SECTORS,
 > 
-> Instead of re-defining the already existing constants use the provided ones:
+> Yes, please.
 > 
-> So replace:
+> > The shift just seemed optimal if we're just going to change it.
 > 
->  o SECTORS_PER_PAGE_SHIFT with PAGE_SECTORS_SHIFT
->  o SECTORS_PER_PAGE       with PAGE_SECTORS
-> 
-> This produces no functional changes.
-> 
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> Nope, it's just premature optimisation at the expense of
+> maintainability. The compiler will optimise the multiplication into
+> shifts if that is the fastest way to do it for the given
+> architecture the code is being compiled to.
 
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+We still had cases of the compiler not doing obvious
+multiplication/division to shift conversion lately.  That being said:
+
+ 1) this is an initialization path, no one actually cares
+ 2) we're dealing with constants here, and compilers are really good
+    at constant folding
+
+so yes, this should be using the much more readable version.
+
