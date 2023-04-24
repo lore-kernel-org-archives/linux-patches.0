@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C432108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:37:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF9DC433EF;
-	Mon, 24 Apr 2023 13:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A383A2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:37:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28125C433EF;
+	Mon, 24 Apr 2023 13:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343452;
-	bh=OYYZPC7sDFFiie1/PQOtpsv4EzOVthmnLcuL0/oylMI=;
+	s=korg; t=1682343455;
+	bh=4BsaFmY7SIWcZObBmEjADC32LqxECuvzXxAqTfXtgqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPUeqPcX5yKnOzsVqd655+buZanI4uitOEE12CyYdl0lCTjDNgs7gApFBr2NLvEj6
-	 byglMroTXGLxrTJbqBCqE8CNFldS+RCJpGFkilUcUC/WfsA0zIGCJ3k1BlWHVUgCyP
-	 1ORQWfetOxnUG8duoL3l2BhLvMIYmvjkd6aCZQRE=
+	b=GOO1QWppu2euEAbGtqMlC61iS9nhGboilunIvUxHUMYp0rxw39Tf8pA4E7S55al3/
+	 pbteCBlaGyVk6jEtOKm63fLQZjNiT8mgmcemR58Oxlk3gEtB7RWMKlllnxg2KxrbaO
+	 LuCn/kf6fT4PwOOVgjjVbk+ekWYVca8Cekxzmkrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 4.14 04/28] i40e: fix accessing vsi->active_filters without holding lock
-Date: Mon, 24 Apr 2023 15:18:25 +0200
-Message-Id: <20230424131121.464732497@linuxfoundation.org>
+Subject: [PATCH 4.14 05/28] i40e: fix i40e_setup_misc_vector() error handling
+Date: Mon, 24 Apr 2023 15:18:26 +0200
+Message-Id: <20230424131121.496213608@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131121.331252806@linuxfoundation.org>
 References: <20230424131121.331252806@linuxfoundation.org>
@@ -38,45 +38,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit 8485d093b076e59baff424552e8aecfc5bd2d261 ]
+[ Upstream commit c86c00c6935505929cc9adb29ddb85e48c71f828 ]
 
-Fix accessing vsi->active_filters without holding the mac_filter_hash_lock.
-Move vsi->active_filters = 0 inside critical section and
-move clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state) after the critical
-section to ensure the new filters from other threads can be added only after
-filters cleaning in the critical section is finished.
+Add error handling of i40e_setup_misc_vector() in i40e_rebuild().
+In case interrupt vectors setup fails do not re-open vsi-s and
+do not bring up vf-s, we have no interrupts to serve a traffic
+anyway.
 
-Fixes: 278e7d0b9d68 ("i40e: store MAC/VLAN filters in a hash with the MAC Address as key")
+Fixes: 41c445ff0f48 ("i40e: main driver core")
 Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index de8a713db078f..929e85b2eb21d 100644
+index 929e85b2eb21d..50aa53988b483 100644
 --- a/drivers/net/ethernet/intel/i40e/i40e_main.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -10078,15 +10078,15 @@ static int i40e_add_vsi(struct i40e_vsi *vsi)
- 		vsi->id = ctxt.vsi_number;
+@@ -7378,8 +7378,11 @@ static void i40e_rebuild(struct i40e_pf *pf, bool reinit, bool lock_acquired)
+ 					     pf->hw.aq.asq_last_status));
  	}
+ 	/* reinit the misc interrupt */
+-	if (pf->flags & I40E_FLAG_MSIX_ENABLED)
++	if (pf->flags & I40E_FLAG_MSIX_ENABLED) {
+ 		ret = i40e_setup_misc_vector(pf);
++		if (ret)
++			goto end_unlock;
++	}
  
--	vsi->active_filters = 0;
--	clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
- 	spin_lock_bh(&vsi->mac_filter_hash_lock);
-+	vsi->active_filters = 0;
- 	/* If macvlan filters already exist, force them to get loaded */
- 	hash_for_each_safe(vsi->mac_filter_hash, bkt, h, f, hlist) {
- 		f->state = I40E_FILTER_NEW;
- 		f_count++;
- 	}
- 	spin_unlock_bh(&vsi->mac_filter_hash_lock);
-+	clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
- 
- 	if (f_count) {
- 		vsi->flags |= I40E_VSI_FLAG_FILTER_CHANGED;
+ 	/* Add a filter to drop all Flow control frames from any VSI from being
+ 	 * transmitted. By doing so we stop a malicious VF from sending out
 -- 
 2.39.2
 
