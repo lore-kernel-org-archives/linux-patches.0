@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C402108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:38:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1381FC433D2;
-	Mon, 24 Apr 2023 13:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3189E2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:39:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD61C433EF;
+	Mon, 24 Apr 2023 13:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343537;
-	bh=tX943alFEAj2EnDWYkla04r0Y4G6WHtovotRMKxqkaU=;
+	s=korg; t=1682343540;
+	bh=0rW4xEviGQlH+Kh0yzDl9V9IHWSHr94idmaIK8J8JM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OuXcCkj9Hs6NqGFvpps07ZPGHQ2gQfi1vhT6AODOhyIAx5/XNCClvTpCAgFm95z+V
-	 SmJqTHMtIZmLI7Lr+pEPW47q4sP2TrohVomkuHX8oLcPeo08CrWdoQUtl5xl7L8Ahq
-	 EuwF5LB+ZoXiS27IqyV4Iwrm2cewMJ03rRDDp4tY=
+	b=Qc1HqMphOh8ino2vr/58p+SuWPNYnotuySteAoG2BLtaFwN5jT/SFLi/U/R4a6VuA
+	 UXBWaRXBKuJMI14mpzo/43WQ9PS9Z3dkMvs0iaORaftERMVMvmo0yeW4jO864+hAP5
+	 /MVv9LhKkJrHiJhwZIXyHjURbpRYjgfPb0uhVljM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Natalia Petrova <n.petrova@fintech.ru>
-Subject: [PATCH 4.19 06/29] mlxfw: fix null-ptr-deref in mlxfw_mfa2_tlv_next()
-Date: Mon, 24 Apr 2023 15:18:33 +0200
-Message-Id: <20230424131121.365613893@linuxfoundation.org>
+	Sebastian Basierski <sebastianx.basierski@intel.com>,
+	Mateusz Palczewski <mateusz.palczewski@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 07/29] e1000e: Disable TSO on i219-LM card to increase speed
+Date: Mon, 24 Apr 2023 15:18:34 +0200
+Message-Id: <20230424131121.394194506@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131121.155649464@linuxfoundation.org>
 References: <20230424131121.155649464@linuxfoundation.org>
@@ -37,43 +39,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Sebastian Basierski <sebastianx.basierski@intel.com>
 
-[ Upstream commit c0e73276f0fcbbd3d4736ba975d7dc7a48791b0c ]
+[ Upstream commit 67d47b95119ad589b0a0b16b88b1dd9a04061ced ]
 
-Function mlxfw_mfa2_tlv_multi_get() returns NULL if 'tlv' in
-question does not pass checks in mlxfw_mfa2_tlv_payload_get(). This
-behaviour may lead to NULL pointer dereference in 'multi->total_len'.
-Fix this issue by testing mlxfw_mfa2_tlv_multi_get()'s return value
-against NULL.
+While using i219-LM card currently it was only possible to achieve
+about 60% of maximum speed due to regression introduced in Linux 5.8.
+This was caused by TSO not being disabled by default despite commit
+f29801030ac6 ("e1000e: Disable TSO for buffer overrun workaround").
+Fix that by disabling TSO during driver probe.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 410ed13cae39 ("Add the mlxfw module for Mellanox firmware flash process")
-Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/20230417120718.52325-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f29801030ac6 ("e1000e: Disable TSO for buffer overrun workaround")
+Signed-off-by: Sebastian Basierski <sebastianx.basierski@intel.com>
+Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230417205345.1030801-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/e1000e/netdev.c | 51 +++++++++++-----------
+ 1 file changed, 26 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-index 0094b92a233ba..31c0d6ee81b16 100644
---- a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-+++ b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-@@ -62,6 +62,8 @@ mlxfw_mfa2_tlv_next(const struct mlxfw_mfa2_file *mfa2_file,
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 0629f87a20be7..202f734f8733b 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -5230,31 +5230,6 @@ static void e1000_watchdog_task(struct work_struct *work)
+ 				ew32(TARC(0), tarc0);
+ 			}
  
- 	if (tlv->type == MLXFW_MFA2_TLV_MULTI_PART) {
- 		multi = mlxfw_mfa2_tlv_multi_get(mfa2_file, tlv);
-+		if (!multi)
-+			return NULL;
- 		tlv_len = NLA_ALIGN(tlv_len + be16_to_cpu(multi->total_len));
- 	}
+-			/* disable TSO for pcie and 10/100 speeds, to avoid
+-			 * some hardware issues
+-			 */
+-			if (!(adapter->flags & FLAG_TSO_FORCE)) {
+-				switch (adapter->link_speed) {
+-				case SPEED_10:
+-				case SPEED_100:
+-					e_info("10/100 speed: disabling TSO\n");
+-					netdev->features &= ~NETIF_F_TSO;
+-					netdev->features &= ~NETIF_F_TSO6;
+-					break;
+-				case SPEED_1000:
+-					netdev->features |= NETIF_F_TSO;
+-					netdev->features |= NETIF_F_TSO6;
+-					break;
+-				default:
+-					/* oops */
+-					break;
+-				}
+-				if (hw->mac.type == e1000_pch_spt) {
+-					netdev->features &= ~NETIF_F_TSO;
+-					netdev->features &= ~NETIF_F_TSO6;
+-				}
+-			}
+-
+ 			/* enable transmits in the hardware, need to do this
+ 			 * after setting TARC(0)
+ 			 */
+@@ -7191,6 +7166,32 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 			    NETIF_F_RXCSUM |
+ 			    NETIF_F_HW_CSUM);
  
++	/* disable TSO for pcie and 10/100 speeds to avoid
++	 * some hardware issues and for i219 to fix transfer
++	 * speed being capped at 60%
++	 */
++	if (!(adapter->flags & FLAG_TSO_FORCE)) {
++		switch (adapter->link_speed) {
++		case SPEED_10:
++		case SPEED_100:
++			e_info("10/100 speed: disabling TSO\n");
++			netdev->features &= ~NETIF_F_TSO;
++			netdev->features &= ~NETIF_F_TSO6;
++			break;
++		case SPEED_1000:
++			netdev->features |= NETIF_F_TSO;
++			netdev->features |= NETIF_F_TSO6;
++			break;
++		default:
++			/* oops */
++			break;
++		}
++		if (hw->mac.type == e1000_pch_spt) {
++			netdev->features &= ~NETIF_F_TSO;
++			netdev->features &= ~NETIF_F_TSO6;
++		}
++	}
++
+ 	/* Set user-changeable features (subset of all device features) */
+ 	netdev->hw_features = netdev->features;
+ 	netdev->hw_features |= NETIF_F_RXFCS;
 -- 
 2.39.2
 
