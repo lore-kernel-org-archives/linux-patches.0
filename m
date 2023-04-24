@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D3E7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:25:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A285C433EF;
-	Mon, 24 Apr 2023 13:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904947C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:25:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EC8C433EF;
+	Mon, 24 Apr 2023 13:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342719;
-	bh=RzD+QsHvWoQkEeeiOSeSBdQISBdSyg6RZwMSTVc67tY=;
+	s=korg; t=1682342722;
+	bh=T7sPgeZWaMHUXeeot7fb5Pe61axswwSYZIpjGPzNdjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OHUtRJ4eIph6aeersuM/B8TgChdhZSSIVd1p2/vy8p5tzQZi2NhozWUN/YQ7g1zmA
-	 HbbkNDcSiq9BwJMRAzTrFALHCtmPnARN2qz7bzSmiUV9Oo9dVJHW2Xs9P95IaSCVoR
-	 RiPQh0d999fblzz26CSvDgU9bLO9uFhhPk+NDj+0=
+	b=a3e2PReRLFOFRt3IlqwXOCVhKwS6Y6KTejjNuDtpKepLW/hi5TfjrVdohLi17AGSN
+	 IFRBUu37MKp2FTBbBRCdzqBrtcc3B5ZCr0xdv9MuA6ZAMkMX4PIvPsQBezq3aDr5ss
+	 +7ofgKlQMu0eep7Arcs5jGQ9PTiLk2vZFJQbcPM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Douglas Raillard <douglas.raillard@arm.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 32/98] net: bridge: switchdev: dont notify FDB entries with "master dynamic"
-Date: Mon, 24 Apr 2023 15:16:55 +0200
-Message-Id: <20230424131135.143976935@linuxfoundation.org>
+Subject: [PATCH 6.1 33/98] f2fs: Fix f2fs_truncate_partial_nodes ftrace event
+Date: Mon, 24 Apr 2023 15:16:56 +0200
+Message-Id: <20230424131135.180709225@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -37,101 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Douglas Raillard <douglas.raillard@arm.com>
 
-[ Upstream commit 927cdea5d2095287ddd5246e5aa68eb5d68db2be ]
+[ Upstream commit 0b04d4c0542e8573a837b1d81b94209e48723b25 ]
 
-There is a structural problem in switchdev, where the flag bits in
-struct switchdev_notifier_fdb_info (added_by_user, is_local etc) only
-represent a simplified / denatured view of what's in struct
-net_bridge_fdb_entry :: flags (BR_FDB_ADDED_BY_USER, BR_FDB_LOCAL etc).
-Each time we want to pass more information about struct
-net_bridge_fdb_entry :: flags to struct switchdev_notifier_fdb_info
-(here, BR_FDB_STATIC), we find that FDB entries were already notified to
-switchdev with no regard to this flag, and thus, switchdev drivers had
-no indication whether the notified entries were static or not.
+Fix the nid_t field so that its size is correctly reported in the text
+format embedded in trace.dat files. As it stands, it is reported as
+being of size 4:
 
-For example, this command:
+        field:nid_t nid[3];     offset:24;      size:4; signed:0;
 
-ip link add br0 type bridge && ip link set swp0 master br0
-bridge fdb add dev swp0 00:01:02:03:04:05 master dynamic
+Instead of 12:
 
-has never worked as intended with switchdev. It causes a struct
-net_bridge_fdb_entry to be passed to br_switchdev_fdb_notify() which has
-a single flag set: BR_FDB_ADDED_BY_USER.
+        field:nid_t nid[3];     offset:24;      size:12;        signed:0;
 
-This is further passed to the switchdev notifier chain, where interested
-drivers have no choice but to assume this is a static (does not age) and
-sticky (does not migrate) FDB entry. So currently, all drivers offload
-it to hardware as such, as can be seen below ("offload" is set).
+This also fixes the reported offset of subsequent fields so that they
+match with the actual struct layout.
 
-bridge fdb get 00:01:02:03:04:05 dev swp0 master
-00:01:02:03:04:05 dev swp0 offload master br0
-
-The software FDB entry expires $ageing_time centiseconds after the
-kernel last sees a packet with this MAC SA, and the bridge notifies its
-deletion as well, so it eventually disappears from hardware too.
-
-This is a problem, because it is actually desirable to start offloading
-"master dynamic" FDB entries correctly - they should expire $ageing_time
-centiseconds after the *hardware* port last sees a packet with this
-MAC SA - and this is how the current incorrect behavior was discovered.
-With an offloaded data plane, it can be expected that software only sees
-exception path packets, so an otherwise active dynamic FDB entry would
-be aged out by software sooner than it should.
-
-With the change in place, these FDB entries are no longer offloaded:
-
-bridge fdb get 00:01:02:03:04:05 dev swp0 master
-00:01:02:03:04:05 dev swp0 master br0
-
-and this also constitutes a better way (assuming a backport to stable
-kernels) for user space to determine whether the kernel has the
-capability of doing something sane with these or not.
-
-As opposed to "master dynamic" FDB entries, on the current behavior of
-which no one currently depends on (which can be deduced from the lack of
-kselftests), Ido Schimmel explains that entries with the "extern_learn"
-flag (BR_FDB_ADDED_BY_EXT_LEARN) should still be notified to switchdev,
-since the spectrum driver listens to them (and this is kind of okay,
-because although they are treated identically to "static", they are
-expected to not age, and to roam).
-
-Fixes: 6b26b51b1d13 ("net: bridge: Add support for notifying devices about FDB add/del")
-Link: https://lore.kernel.org/netdev/20230327115206.jk5q5l753aoelwus@skbuf/
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/20230418155902.898627-1-vladimir.oltean@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Douglas Raillard <douglas.raillard@arm.com>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_switchdev.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ include/trace/events/f2fs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_switchdev.c b/net/bridge/br_switchdev.c
-index 8f3d76c751dd0..4b3982c368b35 100644
---- a/net/bridge/br_switchdev.c
-+++ b/net/bridge/br_switchdev.c
-@@ -146,6 +146,17 @@ br_switchdev_fdb_notify(struct net_bridge *br,
- {
- 	struct switchdev_notifier_fdb_info item;
- 
-+	/* Entries with these flags were created using ndm_state == NUD_REACHABLE,
-+	 * ndm_flags == NTF_MASTER( | NTF_STICKY), ext_flags == 0 by something
-+	 * equivalent to 'bridge fdb add ... master dynamic (sticky)'.
-+	 * Drivers don't know how to deal with these, so don't notify them to
-+	 * avoid confusing them.
-+	 */
-+	if (test_bit(BR_FDB_ADDED_BY_USER, &fdb->flags) &&
-+	    !test_bit(BR_FDB_STATIC, &fdb->flags) &&
-+	    !test_bit(BR_FDB_ADDED_BY_EXT_LEARN, &fdb->flags))
-+		return;
-+
- 	br_switchdev_fdb_populate(br, &item, fdb, NULL);
- 
- 	switch (type) {
+diff --git a/include/trace/events/f2fs.h b/include/trace/events/f2fs.h
+index e57f867191ef1..eb53e96b7a29c 100644
+--- a/include/trace/events/f2fs.h
++++ b/include/trace/events/f2fs.h
+@@ -505,7 +505,7 @@ TRACE_EVENT(f2fs_truncate_partial_nodes,
+ 	TP_STRUCT__entry(
+ 		__field(dev_t,	dev)
+ 		__field(ino_t,	ino)
+-		__field(nid_t,	nid[3])
++		__array(nid_t,	nid, 3)
+ 		__field(int,	depth)
+ 		__field(int,	err)
+ 	),
 -- 
 2.39.2
 
