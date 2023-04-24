@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EFE7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFE7C433D2;
-	Mon, 24 Apr 2023 13:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29E27C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59551C433EF;
+	Mon, 24 Apr 2023 13:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343104;
-	bh=f+RfwfcYOEofk3mFyHM16hFlSGfFoGNS42yTFlfIl4U=;
+	s=korg; t=1682343106;
+	bh=D9Oza+T8TEviv2IjtcOS3/W6BGLVAA5KjeGkf207Pek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jG1z0BUwm1hT/u1rGKYI2DFq1I39gL2/4mvgqleKJVEwJZA4OE/OdlYsncDhuO+gn
-	 Y5io2Fi4bQQugD6E8d3J2PzerYTe3dbno9nvUubp5Px4S2gPm1/PJvH3VgDW0jwUxc
-	 BkX4po726gcNL4xoItimC83MUVvalV2Ntvvawf2E=
+	b=cQdGeyS7a7BdSWXUdppnPRPGUIcLwK2ZDdlxMdcKVKb+YFAPaCwzerZTyp/vtYDYy
+	 sfC7Y5eJr4wTO4aPalo3VnmH3Ce6QZrt3JvTmRgeCb3aIsPp1CcNWjprcg6M2ntuCP
+	 0sJsoKDhLxAEAh6ZMhCO/DIjA4u7AW3Xn21ByrWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhavya Kapoor <b-kapoor@ti.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.2 079/110] mmc: sdhci_am654: Set HIGH_SPEED_ENA for SDR12 and SDR25
-Date: Mon, 24 Apr 2023 15:17:41 +0200
-Message-Id: <20230424131139.392902617@linuxfoundation.org>
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.2 080/110] drm/i915: Fix fast wake AUX sync len
+Date: Mon, 24 Apr 2023 15:17:42 +0200
+Message-Id: <20230424131139.447551361@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -34,35 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bhavya Kapoor <b-kapoor@ti.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 2265098fd6a6272fde3fd1be5761f2f5895bd99a upstream.
+commit e1c71f8f918047ce822dc19b42ab1261ed259fd1 upstream.
 
-Timing Information in Datasheet assumes that HIGH_SPEED_ENA=1 should be
-set for SDR12 and SDR25 modes. But sdhci_am654 driver clears
-HIGH_SPEED_ENA register. Thus, Modify sdhci_am654 to not clear
-HIGH_SPEED_ENA (HOST_CONTROL[2]) bit for SDR12 and SDR25 speed modes.
+Fast wake should use 8 SYNC pulses for the preamble
+and 10-16 SYNC pulses for the precharge. Reduce our
+fast wake SYNC count to match the maximum value.
+We also use the maximum precharge length for normal
+AUX transactions.
 
-Fixes: e374e87538f4 ("mmc: sdhci_am654: Clear HISPD_ENA in some lower speed modes")
-Signed-off-by: Bhavya Kapoor <b-kapoor@ti.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230317092711.660897-1-b-kapoor@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Jouni Högander <jouni.hogander@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230329172434.18744-1-ville.syrjala@linux.intel.com
+Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
+(cherry picked from commit 605f7c73133341d4b762cbd9a22174cc22d4c38b)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_am654.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp_aux.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -351,8 +351,6 @@ static void sdhci_am654_write_b(struct s
- 		 */
- 		case MMC_TIMING_SD_HS:
- 		case MMC_TIMING_MMC_HS:
--		case MMC_TIMING_UHS_SDR12:
--		case MMC_TIMING_UHS_SDR25:
- 			val &= ~SDHCI_CTRL_HISPD;
- 		}
- 	}
+--- a/drivers/gpu/drm/i915/display/intel_dp_aux.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_aux.c
+@@ -166,7 +166,7 @@ static u32 skl_get_aux_send_ctl(struct i
+ 	      DP_AUX_CH_CTL_TIME_OUT_MAX |
+ 	      DP_AUX_CH_CTL_RECEIVE_ERROR |
+ 	      (send_bytes << DP_AUX_CH_CTL_MESSAGE_SIZE_SHIFT) |
+-	      DP_AUX_CH_CTL_FW_SYNC_PULSE_SKL(32) |
++	      DP_AUX_CH_CTL_FW_SYNC_PULSE_SKL(24) |
+ 	      DP_AUX_CH_CTL_SYNC_PULSE_SKL(32);
+ 
+ 	if (intel_tc_port_in_tbt_alt_mode(dig_port))
 
 
