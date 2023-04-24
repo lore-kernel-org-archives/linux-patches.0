@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D017C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:20:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE3B1C433D2;
-	Mon, 24 Apr 2023 13:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7F41C36
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:20:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4223C433D2;
+	Mon, 24 Apr 2023 13:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342421;
-	bh=VXpVQw+GjyoNAIVpHEmky+0V63arsI94gum9hvPZPGs=;
+	s=korg; t=1682342426;
+	bh=92M1GKdP/0zGE9SErJaH+kBPncxID6AmAyQ6G+mp5Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B5dgYBEiSzat1+C9WCG9U8fsfeRtXGlIk/co8q831ncxmkqntlD87QfZqKLNyla6+
-	 sKtiZSejMhP860ZTAkiJJkdEN+uGVJeuRJK42vdwSXxLlY69o7+IH3ZoeRR4fcUkjq
-	 PQ2d4Um2I50SKZm9WWuA6jDv9tO9UTt4DEBLMVR4=
+	b=v2D2YZeiNP1r7+ZgQH/0Au+l5MARXvM6/Yt9ttY+5ap6iuSILc8JiP6r8EsF/Wii7
+	 kx2bSmC9trOS3dInownMokRQw2FjSCaMRlN1YGdWkw7UQfWYtYGEXloHB/2OAQmVNN
+	 qii0Rgq1cUUqtNyDG4Zdxa+91479z2vwdN452I6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 15/73] netfilter: nf_tables: validate catch-all set elements
-Date: Mon, 24 Apr 2023 15:16:29 +0200
-Message-Id: <20230424131129.580013240@linuxfoundation.org>
+Subject: [PATCH 5.15 34/73] xen/netback: use same error messages for same errors
+Date: Mon, 24 Apr 2023 15:16:48 +0200
+Message-Id: <20230424131130.242808416@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -34,175 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit d46fc894147cf98dd6e8210aa99ed46854191840 ]
+[ Upstream commit 2eca98e5b24d01c02b46c67be05a5f98cc9789b1 ]
 
-catch-all set element might jump/goto to chain that uses expressions
-that require validation.
+Issue the same error message in case an illegal page boundary crossing
+has been detected in both cases where this is tested.
 
-Fixes: aaa31047a6d2 ("netfilter: nftables: add catch-all set element support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Suggested-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Link: https://lore.kernel.org/r/20230329080259.14823-1-jgross@suse.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  4 ++
- net/netfilter/nf_tables_api.c     | 64 ++++++++++++++++++++++++++++---
- net/netfilter/nft_lookup.c        | 36 ++---------------
- 3 files changed, 66 insertions(+), 38 deletions(-)
+ drivers/net/xen-netback/netback.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 80df8ff5e6752..8def00a04541e 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1030,6 +1030,10 @@ struct nft_chain {
- };
+diff --git a/drivers/net/xen-netback/netback.c b/drivers/net/xen-netback/netback.c
+index 303d8ebbaafc4..63118b56c5289 100644
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -996,10 +996,8 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
  
- int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain);
-+int nft_setelem_validate(const struct nft_ctx *ctx, struct nft_set *set,
-+			 const struct nft_set_iter *iter,
-+			 struct nft_set_elem *elem);
-+int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set);
- 
- enum nft_chain_types {
- 	NFT_CHAIN_T_DEFAULT = 0,
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index dc276b6802ca9..aecb2f1e7af10 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3294,6 +3294,64 @@ static int nft_table_validate(struct net *net, const struct nft_table *table)
- 	return 0;
- }
- 
-+int nft_setelem_validate(const struct nft_ctx *ctx, struct nft_set *set,
-+			 const struct nft_set_iter *iter,
-+			 struct nft_set_elem *elem)
-+{
-+	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
-+	struct nft_ctx *pctx = (struct nft_ctx *)ctx;
-+	const struct nft_data *data;
-+	int err;
-+
-+	if (nft_set_ext_exists(ext, NFT_SET_EXT_FLAGS) &&
-+	    *nft_set_ext_flags(ext) & NFT_SET_ELEM_INTERVAL_END)
-+		return 0;
-+
-+	data = nft_set_ext_data(ext);
-+	switch (data->verdict.code) {
-+	case NFT_JUMP:
-+	case NFT_GOTO:
-+		pctx->level++;
-+		err = nft_chain_validate(ctx, data->verdict.chain);
-+		if (err < 0)
-+			return err;
-+		pctx->level--;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+struct nft_set_elem_catchall {
-+	struct list_head	list;
-+	struct rcu_head		rcu;
-+	void			*elem;
-+};
-+
-+int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set)
-+{
-+	u8 genmask = nft_genmask_next(ctx->net);
-+	struct nft_set_elem_catchall *catchall;
-+	struct nft_set_elem elem;
-+	struct nft_set_ext *ext;
-+	int ret = 0;
-+
-+	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
-+		ext = nft_set_elem_ext(set, catchall->elem);
-+		if (!nft_set_elem_active(ext, genmask))
-+			continue;
-+
-+		elem.priv = catchall->elem;
-+		ret = nft_setelem_validate(ctx, set, NULL, &elem);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
-+	return ret;
-+}
-+
- static struct nft_rule *nft_rule_lookup_byid(const struct net *net,
- 					     const struct nft_chain *chain,
- 					     const struct nlattr *nla);
-@@ -4598,12 +4656,6 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 	return err;
- }
- 
--struct nft_set_elem_catchall {
--	struct list_head	list;
--	struct rcu_head		rcu;
--	void			*elem;
--};
--
- static void nft_set_catchall_destroy(const struct nft_ctx *ctx,
- 				     struct nft_set *set)
- {
-diff --git a/net/netfilter/nft_lookup.c b/net/netfilter/nft_lookup.c
-index 90becbf5bff3d..bd3485dd930f5 100644
---- a/net/netfilter/nft_lookup.c
-+++ b/net/netfilter/nft_lookup.c
-@@ -198,37 +198,6 @@ static int nft_lookup_dump(struct sk_buff *skb, const struct nft_expr *expr)
- 	return -1;
- }
- 
--static int nft_lookup_validate_setelem(const struct nft_ctx *ctx,
--				       struct nft_set *set,
--				       const struct nft_set_iter *iter,
--				       struct nft_set_elem *elem)
--{
--	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
--	struct nft_ctx *pctx = (struct nft_ctx *)ctx;
--	const struct nft_data *data;
--	int err;
--
--	if (nft_set_ext_exists(ext, NFT_SET_EXT_FLAGS) &&
--	    *nft_set_ext_flags(ext) & NFT_SET_ELEM_INTERVAL_END)
--		return 0;
--
--	data = nft_set_ext_data(ext);
--	switch (data->verdict.code) {
--	case NFT_JUMP:
--	case NFT_GOTO:
--		pctx->level++;
--		err = nft_chain_validate(ctx, data->verdict.chain);
--		if (err < 0)
--			return err;
--		pctx->level--;
--		break;
--	default:
--		break;
--	}
--
--	return 0;
--}
--
- static int nft_lookup_validate(const struct nft_ctx *ctx,
- 			       const struct nft_expr *expr,
- 			       const struct nft_data **d)
-@@ -244,9 +213,12 @@ static int nft_lookup_validate(const struct nft_ctx *ctx,
- 	iter.skip	= 0;
- 	iter.count	= 0;
- 	iter.err	= 0;
--	iter.fn		= nft_lookup_validate_setelem;
-+	iter.fn		= nft_setelem_validate;
- 
- 	priv->set->ops->walk(ctx, priv->set, &iter);
-+	if (!iter.err)
-+		iter.err = nft_set_catchall_validate(ctx, priv->set);
-+
- 	if (iter.err < 0)
- 		return iter.err;
- 
+ 		/* No crossing a page as the payload mustn't fragment. */
+ 		if (unlikely((txreq.offset + txreq.size) > XEN_PAGE_SIZE)) {
+-			netdev_err(queue->vif->dev,
+-				   "txreq.offset: %u, size: %u, end: %lu\n",
+-				   txreq.offset, txreq.size,
+-				   (unsigned long)(txreq.offset&~XEN_PAGE_MASK) + txreq.size);
++			netdev_err(queue->vif->dev, "Cross page boundary, txreq.offset: %u, size: %u\n",
++				   txreq.offset, txreq.size);
+ 			xenvif_fatal_tx_err(queue->vif);
+ 			break;
+ 		}
 -- 
 2.39.2
 
