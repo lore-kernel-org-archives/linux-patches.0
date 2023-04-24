@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB217C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:19:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48F9C433EF;
-	Mon, 24 Apr 2023 13:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E877C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:19:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99103C433EF;
+	Mon, 24 Apr 2023 13:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342358;
-	bh=O5HgeAZAo4PqGPDrHSVnLDdEUsjg49XYq2wgAPfUb/I=;
+	s=korg; t=1682342361;
+	bh=47c5Rb3oT3g8gT3olZ2efPIPznwjUAe5J2RBNXcY7KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKP06gF2zF5pA6IXe5zmzQeZg+WQHo/3uzzENWGylm0uftyjUoBLhV7FTYyZ24lnE
-	 T6u8JeHIAxo26KtU5mJpW5760TL/aYxCQQSgizJ3kDvxQGVBBLpnNL6ADKznhy2FAR
-	 JJaJmAEeBRkCPaNuQoNP1UbisJVayztbXMMXKGNA=
+	b=abCg8ixTtFj4z7f8+ewevF9hO9gT+ZQl5fxlpPzPJ1492/wVPfxJNTgH2iMnfGbiJ
+	 kaF2Zm9MZ2TCmLAxoG0q3cfvquetmRTk2u1Ed3ku/KW/vVMnlLLhuG+q6xvbIuKm/H
+	 T/YAK/0CXMKx9CBDU6C4JWu6e0mb2ql93kkC4C/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cooper <jonathan.s.cooper@amd.com>,
+	Donglin Peng <pengdonglin@sangfor.com.cn>,
 	Martin Habets <habetsm.xilinx@gmail.com>,
+	Ding Hui <dinghui@sangfor.com.cn>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 10/73] sfc: Split STATE_READY in to STATE_NET_DOWN and STATE_NET_UP.
-Date: Mon, 24 Apr 2023 15:16:24 +0200
-Message-Id: <20230424131129.424315936@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Huang Cun <huangcun@sangfor.com.cn>
+Subject: [PATCH 5.15 11/73] sfc: Fix use-after-free due to selftest_work
+Date: Mon, 24 Apr 2023 15:16:25 +0200
+Message-Id: <20230424131129.453240056@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -36,311 +38,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Cooper <jonathan.s.cooper@amd.com>
+From: Ding Hui <dinghui@sangfor.com.cn>
 
-[ Upstream commit 813cf9d1e753e1e0a247d3d685212a06141b483e ]
+[ Upstream commit a80bb8e7233b2ad6ff119646b6e33fb3edcec37b ]
 
-This patch splits the READY state in to NET_UP and NET_DOWN. This
-is to prepare for future work to delay resource allocation until
-interface up so that we can use resources more efficiently in
-SRIOV environments, and also to lay the ground work for an extra
-PROBED state where we don't create a network interface,
-for VDPA operation.
+There is a use-after-free scenario that is:
 
-Signed-off-by: Jonathan Cooper <jonathan.s.cooper@amd.com>
-Acked-by: Martin Habets <habetsm.xilinx@gmail.com>
+When the NIC is down, user set mac address or vlan tag to VF,
+the xxx_set_vf_mac() or xxx_set_vf_vlan() will invoke efx_net_stop()
+and efx_net_open(), since netif_running() is false, the port will not
+start and keep port_enabled false, but selftest_work is scheduled
+in efx_net_open().
+
+If we remove the device before selftest_work run, the efx_stop_port()
+will not be called since the NIC is down, and then efx is freed,
+we will soon get a UAF in run_timer_softirq() like this:
+
+[ 1178.907941] ==================================================================
+[ 1178.907948] BUG: KASAN: use-after-free in run_timer_softirq+0xdea/0xe90
+[ 1178.907950] Write of size 8 at addr ff11001f449cdc80 by task swapper/47/0
+[ 1178.907950]
+[ 1178.907953] CPU: 47 PID: 0 Comm: swapper/47 Kdump: loaded Tainted: G           O     --------- -t - 4.18.0 #1
+[ 1178.907954] Hardware name: SANGFOR X620G40/WI2HG-208T1061A, BIOS SPYH051032-U01 04/01/2022
+[ 1178.907955] Call Trace:
+[ 1178.907956]  <IRQ>
+[ 1178.907960]  dump_stack+0x71/0xab
+[ 1178.907963]  print_address_description+0x6b/0x290
+[ 1178.907965]  ? run_timer_softirq+0xdea/0xe90
+[ 1178.907967]  kasan_report+0x14a/0x2b0
+[ 1178.907968]  run_timer_softirq+0xdea/0xe90
+[ 1178.907971]  ? init_timer_key+0x170/0x170
+[ 1178.907973]  ? hrtimer_cancel+0x20/0x20
+[ 1178.907976]  ? sched_clock+0x5/0x10
+[ 1178.907978]  ? sched_clock_cpu+0x18/0x170
+[ 1178.907981]  __do_softirq+0x1c8/0x5fa
+[ 1178.907985]  irq_exit+0x213/0x240
+[ 1178.907987]  smp_apic_timer_interrupt+0xd0/0x330
+[ 1178.907989]  apic_timer_interrupt+0xf/0x20
+[ 1178.907990]  </IRQ>
+[ 1178.907991] RIP: 0010:mwait_idle+0xae/0x370
+
+If the NIC is not actually brought up, there is no need to schedule
+selftest_work, so let's move invoking efx_selftest_async_start()
+into efx_start_all(), and it will be canceled by broughting down.
+
+Fixes: dd40781e3a4e ("sfc: Run event/IRQ self-test asynchronously when interface is brought up")
+Fixes: e340be923012 ("sfc: add ndo_set_vf_mac() function for EF10")
+Debugged-by: Huang Cun <huangcun@sangfor.com.cn>
+Cc: Donglin Peng <pengdonglin@sangfor.com.cn>
+Suggested-by: Martin Habets <habetsm.xilinx@gmail.com>
+Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: a80bb8e7233b ("sfc: Fix use-after-free due to selftest_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ef100_netdev.c   |  6 ++-
- drivers/net/ethernet/sfc/efx.c            | 29 ++++++-------
- drivers/net/ethernet/sfc/efx_common.c     | 10 ++---
- drivers/net/ethernet/sfc/efx_common.h     |  6 +--
- drivers/net/ethernet/sfc/ethtool_common.c |  2 +-
- drivers/net/ethernet/sfc/net_driver.h     | 50 +++++++++++++++++++++--
- 6 files changed, 72 insertions(+), 31 deletions(-)
+ drivers/net/ethernet/sfc/efx.c        | 1 -
+ drivers/net/ethernet/sfc/efx_common.c | 2 ++
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/sfc/ef100_netdev.c b/drivers/net/ethernet/sfc/ef100_netdev.c
-index 63a44ee763be7..b9429e8faba1e 100644
---- a/drivers/net/ethernet/sfc/ef100_netdev.c
-+++ b/drivers/net/ethernet/sfc/ef100_netdev.c
-@@ -96,6 +96,8 @@ static int ef100_net_stop(struct net_device *net_dev)
- 	efx_mcdi_free_vis(efx);
- 	efx_remove_interrupts(efx);
- 
-+	efx->state = STATE_NET_DOWN;
-+
- 	return 0;
- }
- 
-@@ -172,6 +174,8 @@ static int ef100_net_open(struct net_device *net_dev)
- 		efx_link_status_changed(efx);
- 	mutex_unlock(&efx->mac_lock);
- 
-+	efx->state = STATE_NET_UP;
-+
- 	return 0;
- 
- fail:
-@@ -272,7 +276,7 @@ int ef100_register_netdev(struct efx_nic *efx)
- 	/* Always start with carrier off; PHY events will detect the link */
- 	netif_carrier_off(net_dev);
- 
--	efx->state = STATE_READY;
-+	efx->state = STATE_NET_DOWN;
- 	rtnl_unlock();
- 	efx_init_mcdi_logging(efx);
- 
 diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
-index 16a896360f3fb..7ab592844df83 100644
+index 7ab592844df83..41eb6f9f5596e 100644
 --- a/drivers/net/ethernet/sfc/efx.c
 +++ b/drivers/net/ethernet/sfc/efx.c
-@@ -105,14 +105,6 @@ static int efx_xdp(struct net_device *dev, struct netdev_bpf *xdp);
- static int efx_xdp_xmit(struct net_device *dev, int n, struct xdp_frame **xdpfs,
- 			u32 flags);
+@@ -540,7 +540,6 @@ int efx_net_open(struct net_device *net_dev)
+ 	else
+ 		efx->state = STATE_NET_UP;
  
--#define EFX_ASSERT_RESET_SERIALISED(efx)		\
--	do {						\
--		if ((efx->state == STATE_READY) ||	\
--		    (efx->state == STATE_RECOVERY) ||	\
--		    (efx->state == STATE_DISABLED))	\
--			ASSERT_RTNL();			\
--	} while (0)
--
- /**************************************************************************
-  *
-  * Port handling
-@@ -377,6 +369,8 @@ static int efx_probe_all(struct efx_nic *efx)
- 	if (rc)
- 		goto fail5;
- 
-+	efx->state = STATE_NET_DOWN;
-+
- 	return 0;
- 
-  fail5:
-@@ -543,6 +537,9 @@ int efx_net_open(struct net_device *net_dev)
- 	efx_start_all(efx);
- 	if (efx->state == STATE_DISABLED || efx->reset_pending)
- 		netif_device_detach(efx->net_dev);
-+	else
-+		efx->state = STATE_NET_UP;
-+
- 	efx_selftest_async_start(efx);
+-	efx_selftest_async_start(efx);
  	return 0;
  }
-@@ -719,8 +716,6 @@ static int efx_register_netdev(struct efx_nic *efx)
- 	 * already requested.  If so, the NIC is probably hosed so we
- 	 * abort.
- 	 */
--	efx->state = STATE_READY;
--	smp_mb(); /* ensure we change state before checking reset_pending */
- 	if (efx->reset_pending) {
- 		pci_err(efx->pci_dev, "aborting probe due to scheduled reset\n");
- 		rc = -EIO;
-@@ -747,6 +742,8 @@ static int efx_register_netdev(struct efx_nic *efx)
  
- 	efx_associate(efx);
- 
-+	efx->state = STATE_NET_DOWN;
-+
- 	rtnl_unlock();
- 
- 	rc = device_create_file(&efx->pci_dev->dev, &dev_attr_phy_type);
-@@ -848,7 +845,7 @@ static void efx_pci_remove_main(struct efx_nic *efx)
- 	/* Flush reset_work. It can no longer be scheduled since we
- 	 * are not READY.
- 	 */
--	BUG_ON(efx->state == STATE_READY);
-+	WARN_ON(efx_net_active(efx->state));
- 	efx_flush_reset_workqueue(efx);
- 
- 	efx_disable_interrupts(efx);
-@@ -1153,13 +1150,13 @@ static int efx_pm_freeze(struct device *dev)
- 
- 	rtnl_lock();
- 
--	if (efx->state != STATE_DISABLED) {
--		efx->state = STATE_UNINIT;
--
-+	if (efx_net_active(efx->state)) {
- 		efx_device_detach_sync(efx);
- 
- 		efx_stop_all(efx);
- 		efx_disable_interrupts(efx);
-+
-+		efx->state = efx_freeze(efx->state);
- 	}
- 
- 	rtnl_unlock();
-@@ -1174,7 +1171,7 @@ static int efx_pm_thaw(struct device *dev)
- 
- 	rtnl_lock();
- 
--	if (efx->state != STATE_DISABLED) {
-+	if (efx_frozen(efx->state)) {
- 		rc = efx_enable_interrupts(efx);
- 		if (rc)
- 			goto fail;
-@@ -1187,7 +1184,7 @@ static int efx_pm_thaw(struct device *dev)
- 
- 		efx_device_attach_if_not_resetting(efx);
- 
--		efx->state = STATE_READY;
-+		efx->state = efx_thaw(efx->state);
- 
- 		efx->type->resume_wol(efx);
- 	}
 diff --git a/drivers/net/ethernet/sfc/efx_common.c b/drivers/net/ethernet/sfc/efx_common.c
-index 896b592531972..7c90e1e2d161b 100644
+index 7c90e1e2d161b..6038b7e3e8236 100644
 --- a/drivers/net/ethernet/sfc/efx_common.c
 +++ b/drivers/net/ethernet/sfc/efx_common.c
-@@ -897,7 +897,7 @@ static void efx_reset_work(struct work_struct *data)
- 	 * have changed by now.  Now that we have the RTNL lock,
- 	 * it cannot change again.
+@@ -542,6 +542,8 @@ void efx_start_all(struct efx_nic *efx)
+ 	/* Start the hardware monitor if there is one */
+ 	efx_start_monitor(efx);
+ 
++	efx_selftest_async_start(efx);
++
+ 	/* Link state detection is normally event-driven; we have
+ 	 * to poll now because we could have missed a change
  	 */
--	if (efx->state == STATE_READY)
-+	if (efx_net_active(efx->state))
- 		(void)efx_reset(efx, method);
- 
- 	rtnl_unlock();
-@@ -907,7 +907,7 @@ void efx_schedule_reset(struct efx_nic *efx, enum reset_type type)
- {
- 	enum reset_type method;
- 
--	if (efx->state == STATE_RECOVERY) {
-+	if (efx_recovering(efx->state)) {
- 		netif_dbg(efx, drv, efx->net_dev,
- 			  "recovering: skip scheduling %s reset\n",
- 			  RESET_TYPE(type));
-@@ -942,7 +942,7 @@ void efx_schedule_reset(struct efx_nic *efx, enum reset_type type)
- 	/* If we're not READY then just leave the flags set as the cue
- 	 * to abort probing or reschedule the reset later.
- 	 */
--	if (READ_ONCE(efx->state) != STATE_READY)
-+	if (!efx_net_active(READ_ONCE(efx->state)))
- 		return;
- 
- 	/* efx_process_channel() will no longer read events once a
-@@ -1216,7 +1216,7 @@ static pci_ers_result_t efx_io_error_detected(struct pci_dev *pdev,
- 	rtnl_lock();
- 
- 	if (efx->state != STATE_DISABLED) {
--		efx->state = STATE_RECOVERY;
-+		efx->state = efx_recover(efx->state);
- 		efx->reset_pending = 0;
- 
- 		efx_device_detach_sync(efx);
-@@ -1270,7 +1270,7 @@ static void efx_io_resume(struct pci_dev *pdev)
- 		netif_err(efx, hw, efx->net_dev,
- 			  "efx_reset failed after PCI error (%d)\n", rc);
- 	} else {
--		efx->state = STATE_READY;
-+		efx->state = efx_recovered(efx->state);
- 		netif_dbg(efx, hw, efx->net_dev,
- 			  "Done resetting and resuming IO after PCI error.\n");
- 	}
-diff --git a/drivers/net/ethernet/sfc/efx_common.h b/drivers/net/ethernet/sfc/efx_common.h
-index 65513fd0cf6c4..c72e819da8fd3 100644
---- a/drivers/net/ethernet/sfc/efx_common.h
-+++ b/drivers/net/ethernet/sfc/efx_common.h
-@@ -45,9 +45,7 @@ int efx_reconfigure_port(struct efx_nic *efx);
- 
- #define EFX_ASSERT_RESET_SERIALISED(efx)		\
- 	do {						\
--		if ((efx->state == STATE_READY) ||	\
--		    (efx->state == STATE_RECOVERY) ||	\
--		    (efx->state == STATE_DISABLED))	\
-+		if (efx->state != STATE_UNINIT)		\
- 			ASSERT_RTNL();			\
- 	} while (0)
- 
-@@ -64,7 +62,7 @@ void efx_port_dummy_op_void(struct efx_nic *efx);
- 
- static inline int efx_check_disabled(struct efx_nic *efx)
- {
--	if (efx->state == STATE_DISABLED || efx->state == STATE_RECOVERY) {
-+	if (efx->state == STATE_DISABLED || efx_recovering(efx->state)) {
- 		netif_err(efx, drv, efx->net_dev,
- 			  "device is disabled due to earlier errors\n");
- 		return -EIO;
-diff --git a/drivers/net/ethernet/sfc/ethtool_common.c b/drivers/net/ethernet/sfc/ethtool_common.c
-index bd552c7dffcb1..3846b76b89720 100644
---- a/drivers/net/ethernet/sfc/ethtool_common.c
-+++ b/drivers/net/ethernet/sfc/ethtool_common.c
-@@ -137,7 +137,7 @@ void efx_ethtool_self_test(struct net_device *net_dev,
- 	if (!efx_tests)
- 		goto fail;
- 
--	if (efx->state != STATE_READY) {
-+	if (!efx_net_active(efx->state)) {
- 		rc = -EBUSY;
- 		goto out;
- 	}
-diff --git a/drivers/net/ethernet/sfc/net_driver.h b/drivers/net/ethernet/sfc/net_driver.h
-index bf097264d8fbe..6df500dbb6b7f 100644
---- a/drivers/net/ethernet/sfc/net_driver.h
-+++ b/drivers/net/ethernet/sfc/net_driver.h
-@@ -627,12 +627,54 @@ enum efx_int_mode {
- #define EFX_INT_MODE_USE_MSI(x) (((x)->interrupt_mode) <= EFX_INT_MODE_MSI)
- 
- enum nic_state {
--	STATE_UNINIT = 0,	/* device being probed/removed or is frozen */
--	STATE_READY = 1,	/* hardware ready and netdev registered */
--	STATE_DISABLED = 2,	/* device disabled due to hardware errors */
--	STATE_RECOVERY = 3,	/* device recovering from PCI error */
-+	STATE_UNINIT = 0,	/* device being probed/removed */
-+	STATE_NET_DOWN,		/* hardware probed and netdev registered */
-+	STATE_NET_UP,		/* ready for traffic */
-+	STATE_DISABLED,		/* device disabled due to hardware errors */
-+
-+	STATE_RECOVERY = 0x100,/* recovering from PCI error */
-+	STATE_FROZEN = 0x200,	/* frozen by power management */
- };
- 
-+static inline bool efx_net_active(enum nic_state state)
-+{
-+	return state == STATE_NET_DOWN || state == STATE_NET_UP;
-+}
-+
-+static inline bool efx_frozen(enum nic_state state)
-+{
-+	return state & STATE_FROZEN;
-+}
-+
-+static inline bool efx_recovering(enum nic_state state)
-+{
-+	return state & STATE_RECOVERY;
-+}
-+
-+static inline enum nic_state efx_freeze(enum nic_state state)
-+{
-+	WARN_ON(!efx_net_active(state));
-+	return state | STATE_FROZEN;
-+}
-+
-+static inline enum nic_state efx_thaw(enum nic_state state)
-+{
-+	WARN_ON(!efx_frozen(state));
-+	return state & ~STATE_FROZEN;
-+}
-+
-+static inline enum nic_state efx_recover(enum nic_state state)
-+{
-+	WARN_ON(!efx_net_active(state));
-+	return state | STATE_RECOVERY;
-+}
-+
-+static inline enum nic_state efx_recovered(enum nic_state state)
-+{
-+	WARN_ON(!efx_recovering(state));
-+	return state & ~STATE_RECOVERY;
-+}
-+
- /* Forward declaration */
- struct efx_nic;
- 
 -- 
 2.39.2
 
