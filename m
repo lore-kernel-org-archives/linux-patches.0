@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E83A2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7935C433D2;
-	Mon, 24 Apr 2023 13:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4AC210F
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFFBC4339B;
+	Mon, 24 Apr 2023 13:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343196;
-	bh=IdxEnrIfq9hTKrt+8mXNMRtQp5DEACW2U8+nFUreq70=;
+	s=korg; t=1682343198;
+	bh=6/kKVYXJzRQM0mGxKmBlwKj+X5zuM1kNAvxpjUjBpCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cL/dQcWbHSjrlMz4mam8+t81O42MYVGaJxdWFdkskZZl2LTZlD8aDNUIh2dvP3zxr
-	 0jzbWmXcBfBrAIIE4MDn0jvDo+IhkQHa70TWOxDrWptviYpplVbbjihl6aaD6/9UPw
-	 qTigsfVqoB6CKDI6nnvhWSbrIjgtScrL8EQncxe4=
+	b=mGuGt/+zWUUlTvQtnh4VVqs5b+m8Ihg2Edmgml7Xv/TJV6v48Zvr1Wj21OzqMGbeG
+	 nLoRaExPfZzWkiwdHwiCmG8fF2KejvS71FRWzJISq47x4Qi7aC1OPo5JDpyieA7GOx
+	 s9A54GNA94OYB1Yylcv97pyKbP5oAunl6vtfN0A4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <David.Laight@aculab.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.2 100/110] PCI/MSI: Remove over-zealous hardware size check in pci_msix_validate_entries()
-Date: Mon, 24 Apr 2023 15:18:02 +0200
-Message-Id: <20230424131140.316756595@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.2 101/110] gcc: disable -Warray-bounds for gcc-13 too
+Date: Mon, 24 Apr 2023 15:18:03 +0200
+Message-Id: <20230424131140.349954542@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -34,73 +33,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit e3c026be4d3ca046799fde55ccbae9d0f059fb93 upstream.
+commit 0da6e5fd6c3726723e275603426e09178940dace upstream.
 
-pci_msix_validate_entries() validates the entries array which is handed in
-by the caller for a MSI-X interrupt allocation. Aside of consistency
-failures it also detects a failure when the size of the MSI-X hardware table
-in the device is smaller than the size of the entries array.
+We started disabling '-Warray-bounds' for gcc-12 originally on s390,
+because it resulted in some warnings that weren't realistically fixable
+(commit 8b202ee21839: "s390: disable -Warray-bounds").
 
-That's wrong for the case of range allocations where the caller provides
-the minimum and the maximum number of vectors to allocate, when the
-hardware size is greater or equal than the mininum, but smaller than the
-maximum.
+That s390-specific issue was then found to be less common elsewhere, but
+generic (see f0be87c42cbd: "gcc-12: disable '-Warray-bounds' universally
+for now"), and then later expanded the version check was expanded to
+gcc-11 (5a41237ad1d4: "gcc: disable -Warray-bounds for gcc-11 too").
 
-Remove the hardware size check completely from that function and just
-ensure that the entires array up to the maximum size is consistent.
+And it turns out that I was much too optimistic in thinking that it's
+all going to go away, and here we are with gcc-13 showing all the same
+issues.  So instead of expanding this one version at a time, let's just
+disable it for gcc-11+, and put an end limit to it only when we actually
+find a solution.
 
-The limitation and range checking versus the hardware size happens
-independently of that afterwards anyway because the entries array is
-optional.
+Yes, I'm sure some of this is because the kernel just does odd things
+(like our "container_of()" use, but also knowingly playing games with
+things like linker tables and array layouts).
 
-Fixes: 4644d22eb673 ("PCI/MSI: Validate MSI-X contiguous restriction early")
-Reported-by: David Laight <David.Laight@aculab.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/87v8i3sg62.ffs@tglx
+And yes, some of the warnings are likely signs of real bugs, but when
+there are hundreds of false positives, that doesn't really help.
+
+Oh well.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/msi/msi.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ init/Kconfig |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pci/msi/msi.c b/drivers/pci/msi/msi.c
-index 1f716624ca56..ef1d8857a51b 100644
---- a/drivers/pci/msi/msi.c
-+++ b/drivers/pci/msi/msi.c
-@@ -750,8 +750,7 @@ static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
- 	return ret;
- }
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -894,18 +894,14 @@ config CC_IMPLICIT_FALLTHROUGH
+ 	default "-Wimplicit-fallthrough=5" if CC_IS_GCC && $(cc-option,-Wimplicit-fallthrough=5)
+ 	default "-Wimplicit-fallthrough" if CC_IS_CLANG && $(cc-option,-Wunreachable-code-fallthrough)
  
--static bool pci_msix_validate_entries(struct pci_dev *dev, struct msix_entry *entries,
--				      int nvec, int hwsize)
-+static bool pci_msix_validate_entries(struct pci_dev *dev, struct msix_entry *entries, int nvec)
- {
- 	bool nogap;
- 	int i, j;
-@@ -762,10 +761,6 @@ static bool pci_msix_validate_entries(struct pci_dev *dev, struct msix_entry *en
- 	nogap = pci_msi_domain_supports(dev, MSI_FLAG_MSIX_CONTIGUOUS, DENY_LEGACY);
+-# Currently, disable gcc-11,12 array-bounds globally.
+-# We may want to target only particular configurations some day.
++# Currently, disable gcc-11+ array-bounds globally.
++# It's still broken in gcc-13, so no upper bound yet.
+ config GCC11_NO_ARRAY_BOUNDS
+ 	def_bool y
  
- 	for (i = 0; i < nvec; i++) {
--		/* Entry within hardware limit? */
--		if (entries[i].entry >= hwsize)
--			return false;
+-config GCC12_NO_ARRAY_BOUNDS
+-	def_bool y
 -
- 		/* Check for duplicate entries */
- 		for (j = i + 1; j < nvec; j++) {
- 			if (entries[i].entry == entries[j].entry)
-@@ -805,7 +800,7 @@ int __pci_enable_msix_range(struct pci_dev *dev, struct msix_entry *entries, int
- 	if (hwsize < 0)
- 		return hwsize;
+ config CC_NO_ARRAY_BOUNDS
+ 	bool
+-	default y if CC_IS_GCC && GCC_VERSION >= 110000 && GCC_VERSION < 120000 && GCC11_NO_ARRAY_BOUNDS
+-	default y if CC_IS_GCC && GCC_VERSION >= 120000 && GCC_VERSION < 130000 && GCC12_NO_ARRAY_BOUNDS
++	default y if CC_IS_GCC && GCC_VERSION >= 110000 && GCC11_NO_ARRAY_BOUNDS
  
--	if (!pci_msix_validate_entries(dev, entries, nvec, hwsize))
-+	if (!pci_msix_validate_entries(dev, entries, nvec))
- 		return -EINVAL;
- 
- 	if (hwsize < nvec) {
--- 
-2.40.0
-
+ #
+ # For architectures that know their GCC __int128 support is sound
 
 
