@@ -1,32 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F422D2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:36:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79827C433D2;
-	Mon, 24 Apr 2023 13:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9564A2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:36:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8B8C4339B;
+	Mon, 24 Apr 2023 13:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343367;
-	bh=tCCynyrnIJfQB2Eg5feIoBHwGYY3Vk1ymQA+xiDetCg=;
+	s=korg; t=1682343370;
+	bh=B9J5YQ8IBO2/Boe1gZNu1/MyMDEdfPBedYWCDUsidLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVcpNLG5yS2oQEaV/W2q7ljR8zbvpUV+p26ccKk9rucPRL9zaiaBLG6BSQG21wxvM
-	 LLKCUwX8Wuk9vOrU3wyZYo8FdB+PpBXurXkyXw2tmMpGXvj6MysojuBjHwl85bFgfm
-	 itneY8zF5Q0U4TdpxBEnXSh3g/m5v82t3V+tp1ok=
+	b=D2QrXwTQOcUrbAdtS7aCLyV6yE+is407xRxf/UVmo6ZlByIhjenAHlX2iA2d7zuXW
+	 KqQbjcMOrnQLxztYlNgVMFCHxUINF4E4gSatH9Xcn0hGu7AOeQMCedibK0H1qcYXxn
+	 YhaE5ydTdRmZ78Rjfoif3zt0uKwPCsVPxckz0arc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ekaterina Orlova <vorobushek.ok@gmail.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	James Bottomley <jejb@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	keyrings@vger.kernel.org,
-	linux-kbuild@vger.kernel.org,
-	David Howells <dhowells@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 68/68] ASN.1: Fix check for strdup() success
-Date: Mon, 24 Apr 2023 15:18:39 +0200
-Message-Id: <20230424131130.224441967@linuxfoundation.org>
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Yang Bo <yb203166@antfin.com>
+Subject: [PATCH 5.10 51/68] fuse: check s_root when destroying sb
+Date: Mon, 24 Apr 2023 15:18:22 +0200
+Message-Id: <20230424131129.624164183@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -40,40 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ekaterina Orlova <vorobushek.ok@gmail.com>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-commit 5a43001c01691dcbd396541e6faa2c0077378f48 upstream.
+commit d534d31d6a45d71de61db22090b4820afb68fddc upstream.
 
-It seems there is a misprint in the check of strdup() return code that
-can lead to NULL pointer dereference.
+Checking "fm" works because currently sb->s_fs_info is cleared on error
+paths; however, sb->s_root is what generic_shutdown_super() checks to
+determine whether the sb was fully initialized or not.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This change will allow cleanup of sb setup error paths.
 
-Fixes: 4520c6a49af8 ("X.509: Add simple ASN.1 grammar compiler")
-Signed-off-by: Ekaterina Orlova <vorobushek.ok@gmail.com>
-Cc: David Woodhouse <dwmw2@infradead.org>
-Cc: James Bottomley <jejb@linux.ibm.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: keyrings@vger.kernel.org
-Cc: linux-kbuild@vger.kernel.org
-Link: https://lore.kernel.org/r/20230315172130.140-1-vorobushek.ok@gmail.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Yang Bo <yb203166@antfin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/asn1_compiler.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fuse/inode.c     |    2 +-
+ fs/fuse/virtio_fs.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/scripts/asn1_compiler.c
-+++ b/scripts/asn1_compiler.c
-@@ -625,7 +625,7 @@ int main(int argc, char **argv)
- 	p = strrchr(argv[1], '/');
- 	p = p ? p + 1 : argv[1];
- 	grammar_name = strdup(p);
--	if (!p) {
-+	if (!grammar_name) {
- 		perror(NULL);
- 		exit(1);
- 	}
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -1596,7 +1596,7 @@ static void fuse_kill_sb_blk(struct supe
+ 	struct fuse_mount *fm = get_fuse_mount_super(sb);
+ 	bool last;
+ 
+-	if (fm) {
++	if (sb->s_root) {
+ 		last = fuse_mount_remove(fm);
+ 		if (last)
+ 			fuse_conn_destroy(fm);
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -1399,7 +1399,7 @@ static void virtio_kill_sb(struct super_
+ 	bool last;
+ 
+ 	/* If mount failed, we can still be called without any fc */
+-	if (fm) {
++	if (sb->s_root) {
+ 		last = fuse_mount_remove(fm);
+ 		if (last)
+ 			virtio_fs_conn_destroy(fm);
 
 
