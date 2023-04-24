@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1181B7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:20:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D7EC433EF;
-	Mon, 24 Apr 2023 13:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DE97C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:20:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B556C433EF;
+	Mon, 24 Apr 2023 13:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342428;
-	bh=ZwUs0C8f92E4m8Pbn3DijvNh+WuhjIMkgNjfhSREa1s=;
+	s=korg; t=1682342431;
+	bh=3rOnC9Pmb6xHeS8B47/8/ICny9UiuDz2w9ohlc4eejc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=menrvAGggcSL46sSx2HdawJjpKIRIOZ78ymBh9Uo3nzRfSNJV4Cx1Fb4SKMaGQLIJ
-	 RrSXVltnYNqIOQwBrow1GqM7uGXpqujROAiTC5KHWLR2xgq3f9KDFSYrH/JRyS2GD0
-	 sXoKLjfE/cKs4ZfMPkh5UcZSYayQwvWhJXu2eqIE=
+	b=oErCLcqvj32FnEPw/hF1OeD6PVWhL+oXAdKmSNam4EgjhalCCopfStoR0UljYVMZC
+	 W5A/777cYLWaoY571GhXQQ+qVnTV4PysMef1n2pfEwIVe0RQT3afzsTmYlAz2k5wIC
+	 l/4V4wI2dZAvQiWdhyjcP/mwBuGxNdmGEJheqJTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brandon Nielsen <nielsenb@jetfuse.net>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 35/73] platform/x86: gigabyte-wmi: add support for X570S AORUS ELITE
-Date: Mon, 24 Apr 2023 15:16:49 +0200
-Message-Id: <20230424131130.272783768@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH 5.15 36/73] rtmutex: Add acquire semantics for rtmutex lock acquisition slow path
+Date: Mon, 24 Apr 2023 15:16:50 +0200
+Message-Id: <20230424131130.302297883@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -35,34 +36,220 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Mel Gorman <mgorman@techsingularity.net>
 
-[ Upstream commit 52f91e51944808d83dfe2d5582601b5e84e472cc ]
+commit 1c0908d8e441631f5b8ba433523cf39339ee2ba0 upstream.
 
-Add "X570S AORUS ELITE" to known working boards
+Jan Kara reported the following bug triggering on 6.0.5-rt14 running dbench
+on XFS on arm64.
 
-Reported-by: Brandon Nielsen <nielsenb@jetfuse.net>
-Link: https://lore.kernel.org/r/20230331014902.7864-1-nielsenb@jetfuse.net
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ kernel BUG at fs/inode.c:625!
+ Internal error: Oops - BUG: 0 [#1] PREEMPT_RT SMP
+ CPU: 11 PID: 6611 Comm: dbench Tainted: G            E   6.0.0-rt14-rt+ #1
+ pc : clear_inode+0xa0/0xc0
+ lr : clear_inode+0x38/0xc0
+ Call trace:
+  clear_inode+0xa0/0xc0
+  evict+0x160/0x180
+  iput+0x154/0x240
+  do_unlinkat+0x184/0x300
+  __arm64_sys_unlinkat+0x48/0xc0
+  el0_svc_common.constprop.4+0xe4/0x2c0
+  do_el0_svc+0xac/0x100
+  el0_svc+0x78/0x200
+  el0t_64_sync_handler+0x9c/0xc0
+  el0t_64_sync+0x19c/0x1a0
+
+It also affects 6.1-rc7-rt5 and affects a preempt-rt fork of 5.14 so this
+is likely a bug that existed forever and only became visible when ARM
+support was added to preempt-rt. The same problem does not occur on x86-64
+and he also reported that converting sb->s_inode_wblist_lock to
+raw_spinlock_t makes the problem disappear indicating that the RT spinlock
+variant is the problem.
+
+Which in turn means that RT mutexes on ARM64 and any other weakly ordered
+architecture are affected by this independent of RT.
+
+Will Deacon observed:
+
+  "I'd be more inclined to be suspicious of the slowpath tbh, as we need to
+   make sure that we have acquire semantics on all paths where the lock can
+   be taken. Looking at the rtmutex code, this really isn't obvious to me
+   -- for example, try_to_take_rt_mutex() appears to be able to return via
+   the 'takeit' label without acquire semantics and it looks like we might
+   be relying on the caller's subsequent _unlock_ of the wait_lock for
+   ordering, but that will give us release semantics which aren't correct."
+
+Sebastian Andrzej Siewior prototyped a fix that does work based on that
+comment but it was a little bit overkill and added some fences that should
+not be necessary.
+
+The lock owner is updated with an IRQ-safe raw spinlock held, but the
+spin_unlock does not provide acquire semantics which are needed when
+acquiring a mutex.
+
+Adds the necessary acquire semantics for lock owner updates in the slow path
+acquisition and the waiter bit logic.
+
+It successfully completed 10 iterations of the dbench workload while the
+vanilla kernel fails on the first iteration.
+
+[ bigeasy@linutronix.de: Initial prototype fix ]
+
+Fixes: 700318d1d7b38 ("locking/rtmutex: Use acquire/release semantics")
+Fixes: 23f78d4a03c5 ("[PATCH] pi-futex: rt mutex core")
+Reported-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Mel Gorman <mgorman@techsingularity.net>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221202100223.6mevpbl7i6x5udfd@techsingularity.net
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/gigabyte-wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/locking/rtmutex.c     |   55 +++++++++++++++++++++++++++++++++++--------
+ kernel/locking/rtmutex_api.c |    6 ++--
+ 2 files changed, 49 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/platform/x86/gigabyte-wmi.c b/drivers/platform/x86/gigabyte-wmi.c
-index aea4f3144b68f..bf1b98dd00b99 100644
---- a/drivers/platform/x86/gigabyte-wmi.c
-+++ b/drivers/platform/x86/gigabyte-wmi.c
-@@ -156,6 +156,7 @@ static const struct dmi_system_id gigabyte_wmi_known_working_platforms[] = {
- 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("X570 GAMING X"),
- 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("X570 I AORUS PRO WIFI"),
- 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("X570 UD"),
-+	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("X570S AORUS ELITE"),
- 	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("Z690M AORUS ELITE AX DDR4"),
- 	{ }
- };
--- 
-2.39.2
-
+--- a/kernel/locking/rtmutex.c
++++ b/kernel/locking/rtmutex.c
+@@ -87,15 +87,31 @@ static inline int __ww_mutex_check_kill(
+  * set this bit before looking at the lock.
+  */
+ 
+-static __always_inline void
+-rt_mutex_set_owner(struct rt_mutex_base *lock, struct task_struct *owner)
++static __always_inline struct task_struct *
++rt_mutex_owner_encode(struct rt_mutex_base *lock, struct task_struct *owner)
+ {
+ 	unsigned long val = (unsigned long)owner;
+ 
+ 	if (rt_mutex_has_waiters(lock))
+ 		val |= RT_MUTEX_HAS_WAITERS;
+ 
+-	WRITE_ONCE(lock->owner, (struct task_struct *)val);
++	return (struct task_struct *)val;
++}
++
++static __always_inline void
++rt_mutex_set_owner(struct rt_mutex_base *lock, struct task_struct *owner)
++{
++	/*
++	 * lock->wait_lock is held but explicit acquire semantics are needed
++	 * for a new lock owner so WRITE_ONCE is insufficient.
++	 */
++	xchg_acquire(&lock->owner, rt_mutex_owner_encode(lock, owner));
++}
++
++static __always_inline void rt_mutex_clear_owner(struct rt_mutex_base *lock)
++{
++	/* lock->wait_lock is held so the unlock provides release semantics. */
++	WRITE_ONCE(lock->owner, rt_mutex_owner_encode(lock, NULL));
+ }
+ 
+ static __always_inline void clear_rt_mutex_waiters(struct rt_mutex_base *lock)
+@@ -104,7 +120,8 @@ static __always_inline void clear_rt_mut
+ 			((unsigned long)lock->owner & ~RT_MUTEX_HAS_WAITERS);
+ }
+ 
+-static __always_inline void fixup_rt_mutex_waiters(struct rt_mutex_base *lock)
++static __always_inline void
++fixup_rt_mutex_waiters(struct rt_mutex_base *lock, bool acquire_lock)
+ {
+ 	unsigned long owner, *p = (unsigned long *) &lock->owner;
+ 
+@@ -170,8 +187,21 @@ static __always_inline void fixup_rt_mut
+ 	 * still set.
+ 	 */
+ 	owner = READ_ONCE(*p);
+-	if (owner & RT_MUTEX_HAS_WAITERS)
+-		WRITE_ONCE(*p, owner & ~RT_MUTEX_HAS_WAITERS);
++	if (owner & RT_MUTEX_HAS_WAITERS) {
++		/*
++		 * See rt_mutex_set_owner() and rt_mutex_clear_owner() on
++		 * why xchg_acquire() is used for updating owner for
++		 * locking and WRITE_ONCE() for unlocking.
++		 *
++		 * WRITE_ONCE() would work for the acquire case too, but
++		 * in case that the lock acquisition failed it might
++		 * force other lockers into the slow path unnecessarily.
++		 */
++		if (acquire_lock)
++			xchg_acquire(p, owner & ~RT_MUTEX_HAS_WAITERS);
++		else
++			WRITE_ONCE(*p, owner & ~RT_MUTEX_HAS_WAITERS);
++	}
+ }
+ 
+ /*
+@@ -206,6 +236,13 @@ static __always_inline void mark_rt_mute
+ 		owner = *p;
+ 	} while (cmpxchg_relaxed(p, owner,
+ 				 owner | RT_MUTEX_HAS_WAITERS) != owner);
++
++	/*
++	 * The cmpxchg loop above is relaxed to avoid back-to-back ACQUIRE
++	 * operations in the event of contention. Ensure the successful
++	 * cmpxchg is visible.
++	 */
++	smp_mb__after_atomic();
+ }
+ 
+ /*
+@@ -1232,7 +1269,7 @@ static int __sched __rt_mutex_slowtryloc
+ 	 * try_to_take_rt_mutex() sets the lock waiters bit
+ 	 * unconditionally. Clean this up.
+ 	 */
+-	fixup_rt_mutex_waiters(lock);
++	fixup_rt_mutex_waiters(lock, true);
+ 
+ 	return ret;
+ }
+@@ -1592,7 +1629,7 @@ static int __sched __rt_mutex_slowlock(s
+ 	 * try_to_take_rt_mutex() sets the waiter bit
+ 	 * unconditionally. We might have to fix that up.
+ 	 */
+-	fixup_rt_mutex_waiters(lock);
++	fixup_rt_mutex_waiters(lock, true);
+ 	return ret;
+ }
+ 
+@@ -1702,7 +1739,7 @@ static void __sched rtlock_slowlock_lock
+ 	 * try_to_take_rt_mutex() sets the waiter bit unconditionally.
+ 	 * We might have to fix that up:
+ 	 */
+-	fixup_rt_mutex_waiters(lock);
++	fixup_rt_mutex_waiters(lock, true);
+ 	debug_rt_mutex_free_waiter(&waiter);
+ }
+ 
+--- a/kernel/locking/rtmutex_api.c
++++ b/kernel/locking/rtmutex_api.c
+@@ -245,7 +245,7 @@ void __sched rt_mutex_init_proxy_locked(
+ void __sched rt_mutex_proxy_unlock(struct rt_mutex_base *lock)
+ {
+ 	debug_rt_mutex_proxy_unlock(lock);
+-	rt_mutex_set_owner(lock, NULL);
++	rt_mutex_clear_owner(lock);
+ }
+ 
+ /**
+@@ -360,7 +360,7 @@ int __sched rt_mutex_wait_proxy_lock(str
+ 	 * try_to_take_rt_mutex() sets the waiter bit unconditionally. We might
+ 	 * have to fix that up.
+ 	 */
+-	fixup_rt_mutex_waiters(lock);
++	fixup_rt_mutex_waiters(lock, true);
+ 	raw_spin_unlock_irq(&lock->wait_lock);
+ 
+ 	return ret;
+@@ -416,7 +416,7 @@ bool __sched rt_mutex_cleanup_proxy_lock
+ 	 * try_to_take_rt_mutex() sets the waiter bit unconditionally. We might
+ 	 * have to fix that up.
+ 	 */
+-	fixup_rt_mutex_waiters(lock);
++	fixup_rt_mutex_waiters(lock, false);
+ 
+ 	raw_spin_unlock_irq(&lock->wait_lock);
+ 
 
 
