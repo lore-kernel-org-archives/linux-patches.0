@@ -1,28 +1,25 @@
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CE27C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 08:11:58 +0000 (UTC)
-Date: Mon, 24 Apr 2023 08:11:43 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C693ED2
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 08:12:00 +0000 (UTC)
+Date: Mon, 24 Apr 2023 08:11:33 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1682323916; x=1682583116;
-	bh=xsbkQLlU/8z2bpso9Wuc5fgrVJCsTlQwnkd8h5OEwvU=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=kqFIpKXHsXe4ce/a6ZebDqdoMZtkzYCsVdVV/oVVFk9qV/N8DvQP7fcO6BJDb/5xd
-	 rE7h4WP7hnTkSOzFte4OMLFvaqIJkaJxiKdG4N5nw4aDMMBB0DrmYGaXFqG1N50UJR
-	 XnYrRYSG/cdD0YtH/21BZj3Qcou4nRjSWQocJ0NWMCMd4QC+RAKB8dbm+9+Iu9gUdL
-	 nl4JTBvGUuCys0ordxlD0m/dxla8zNLDMSuQgl8zcE1h9o85Tna0W/I4Tv8wpF8a2t
-	 lfypQCpWvRd72Bf7pfQVrpoSDlsvYSsbpKY9+HFTlh3j9rEr2W6649rQUxwaJAzlZn
-	 O8esjaT61K8eQ==
+	s=protonmail; t=1682323903; x=1682583103;
+	bh=9tXLJw7aS2XfS2d3gc4JfQ1c+axPiaqoVKfXWCkw42E=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=bf4SNBhMwTguIdAncVzh5qLxV1ZYWi5GolZ7vhl4PHQALjDS4AaYfZPVsJxi3p4Xy
+	 J9c0TDW7wOHdvqGNedNTQfjXceAGYPKLW05jU0wRyPNiFDDJW5uDo1eVsOUag1aqkj
+	 dzDynwvOS/V1XjvKh9Wvz/1PjZksRH24dtFWDY1KvqhbNtAisuGuzEmhYvZrqCA53v
+	 59BuMDz2nIa3f41puY8UTwzFHvaMTBrIHbfP4W6q71ha+k477z6NSu9tcTXK3Uie0C
+	 h8JsTD9qERL7wpGzDU7nSSHk8//0sM7gDHTiWgE4CT+VN4lF6+yTEj158C8QFJO6J1
+	 fu/YtqWt9PCBw==
 To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
 From: Benno Lossin <benno.lossin@proton.me>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 3/4] rust: macros: replace Self with the concrete type in #[pin_data]
-Message-ID: <20230424081112.99890-3-benno.lossin@proton.me>
-In-Reply-To: <20230424081112.99890-1-benno.lossin@proton.me>
-References: <20230424081112.99890-1-benno.lossin@proton.me>
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <benno.lossin@proton.me>
+Subject: [PATCH 1/4] rust: macros: fix usage of `#[allow]` in `quote!`
+Message-ID: <20230424081112.99890-1-benno.lossin@proton.me>
 Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,181 +30,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-When using `#[pin_data]` on a struct that used `Self` in the field
-types, a type error would be emitted when trying to use `pin_init!`.
-Since an internal type would be referenced by `Self` instead of the
-defined struct.
-This patch fixes this issue by replacing all occurrences of `Self` in
-the `#[pin_data]` macro with the concrete type circumventing the issue.
-Since rust allows type definitions inside of blocks, which are
-expressions, the macro also checks for these and emits a compile error
-when it finds `trait`, `enum`, `union`, `struct` or `impl`. These
-keywords allow creating new `Self` contexts, which conflicts with the
-current implementation of replacing every `Self` ident. If these were
-allowed, some `Self` idents would be replaced incorrectly.
+When using `quote!` as part of an expression that was not the last one
+in a function, the `#[allow(clippy::vec_init_then_push)]` attribute
+would be present on an expression, which is not allowed.
+This patch refactors that part of the macro to use a statement instead.
 
 Signed-off-by: Benno Lossin <benno.lossin@proton.me>
-Reported-by: Alice Ryhl <aliceryhl@google.com>
 ---
- rust/macros/pin_data.rs | 108 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 104 insertions(+), 4 deletions(-)
+ rust/macros/quote.rs | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/rust/macros/pin_data.rs b/rust/macros/pin_data.rs
-index c593b05d9e8c..6d58cfda9872 100644
---- a/rust/macros/pin_data.rs
-+++ b/rust/macros/pin_data.rs
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: Apache-2.0 OR MIT
-
- use crate::helpers::{parse_generics, Generics};
--use proc_macro::TokenStream;
-+use proc_macro::{Group, Punct, Spacing, TokenStream, TokenTree};
-
- pub(crate) fn pin_data(args: TokenStream, input: TokenStream) -> TokenStre=
-am {
-     // This proc-macro only does some pre-parsing and then delegates the a=
-ctual parsing to
-@@ -12,16 +12,116 @@ pub(crate) fn pin_data(args: TokenStream, input: Token=
-Stream) -> TokenStream {
-             impl_generics,
-             ty_generics,
-         },
--        mut rest,
-+        rest,
-     ) =3D parse_generics(input);
-+    // The struct definition might contain the `Self` type. Since `__pin_d=
-ata!` will define a new
-+    // type with the same generics and bounds, this poses a problem, since=
- `Self` will refer to the
-+    // new type as opposed to this struct definition. Therefore we have to=
- replace `Self` with the
-+    // concrete name.
-+
-+    // Errors that occur when replacing `Self` with `struct_name`.
-+    let mut errs =3D TokenStream::new();
-+    // The name of the struct with ty_generics.
-+    let struct_name =3D rest
-+        .iter()
-+        .skip_while(|tt| !matches!(tt, TokenTree::Ident(i) if i.to_string(=
-) =3D=3D "struct"))
-+        .nth(1)
-+        .and_then(|tt| match tt {
-+            TokenTree::Ident(_) =3D> {
-+                let tt =3D tt.clone();
-+                let mut res =3D vec![tt];
-+                if !ty_generics.is_empty() {
-+                    // We add this, so it is maximally compatible with e.g=
-. `Self::CONST` which
-+                    // will be replaced by `StructName::<$generics>::CONST=
-`.
-+                    res.push(TokenTree::Punct(Punct::new(':', Spacing::Joi=
-nt)));
-+                    res.push(TokenTree::Punct(Punct::new(':', Spacing::Alo=
-ne)));
-+                    res.push(TokenTree::Punct(Punct::new('<', Spacing::Alo=
-ne)));
-+                    res.extend(ty_generics.iter().cloned());
-+                    res.push(TokenTree::Punct(Punct::new('>', Spacing::Alo=
-ne)));
-+                }
-+                Some(res)
-+            }
-+            _ =3D> None,
-+        })
-+        .unwrap_or_else(|| {
-+            // If we did not find the name of the struct then we will use =
-`Self` as the replacement
-+            // and add a compile error to ensure it does not compile.
-+            errs.extend(
-+                "::core::compile_error!(\"Could not locate type name.\");"
-+                    .parse::<TokenStream>()
-+                    .unwrap(),
-+            );
-+            "Self".parse::<TokenStream>().unwrap().into_iter().collect()
-+        });
-+    let impl_generics =3D impl_generics
-+        .into_iter()
-+        .flat_map(|tt| replace_self_and_deny_type_defs(&struct_name, tt, &=
-mut errs))
-+        .collect::<Vec<_>>();
-+    let mut rest =3D rest
-+        .into_iter()
-+        .flat_map(|tt| {
-+            // We ignore top level `struct` tokens, since they would emit =
-a compile error.
-+            if matches!(&tt, TokenTree::Ident(i) if i.to_string() =3D=3D "=
-struct") {
-+                vec![tt]
-+            } else {
-+                replace_self_and_deny_type_defs(&struct_name, tt, &mut err=
-s)
-+            }
-+        })
-+        .collect::<Vec<_>>();
-     // This should be the body of the struct `{...}`.
-     let last =3D rest.pop();
--    quote!(::kernel::__pin_data! {
-+    let mut quoted =3D quote!(::kernel::__pin_data! {
-         parse_input:
-         @args(#args),
-         @sig(#(#rest)*),
-         @impl_generics(#(#impl_generics)*),
-         @ty_generics(#(#ty_generics)*),
-         @body(#last),
--    })
-+    });
-+    quoted.extend(errs);
-+    quoted
-+}
-+
-+/// Replaces `Self` with `struct_name` and errors on `enum`, `trait`, `str=
-uct` `union` and `impl`
-+/// keywords.
-+///
-+/// The error is appended to `errs` to allow normal parsing to continue.
-+fn replace_self_and_deny_type_defs(
-+    struct_name: &Vec<TokenTree>,
-+    tt: TokenTree,
-+    errs: &mut TokenStream,
-+) -> Vec<TokenTree> {
-+    match tt {
-+        TokenTree::Ident(ref i)
-+            if i.to_string() =3D=3D "enum"
-+                || i.to_string() =3D=3D "trait"
-+                || i.to_string() =3D=3D "struct"
-+                || i.to_string() =3D=3D "union"
-+                || i.to_string() =3D=3D "impl" =3D>
+diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
+index c8e08b3c1e4c..dddbb4e6f4cb 100644
+--- a/rust/macros/quote.rs
++++ b/rust/macros/quote.rs
+@@ -39,12 +39,14 @@ impl ToTokens for TokenStream {
+ /// [`quote_spanned!`](https://docs.rs/quote/latest/quote/macro.quote_span=
+ned.html) macro from the
+ /// `quote` crate but provides only just enough functionality needed by th=
+e current `macros` crate.
+ macro_rules! quote_spanned {
+-    ($span:expr =3D> $($tt:tt)*) =3D> {
+-    #[allow(clippy::vec_init_then_push)]
+-    {
+-        let mut tokens =3D ::std::vec::Vec::new();
+-        let span =3D $span;
+-        quote_spanned!(@proc tokens span $($tt)*);
++    ($span:expr =3D> $($tt:tt)*) =3D> {{
++        let mut tokens;
++        #[allow(clippy::vec_init_then_push)]
 +        {
-+            errs.extend(
-+                format!(
-+                    "::core::compile_error!(\"Cannot use `{i}` inside of s=
-truct definition with \
-+                        `#[pin_data]`.\");"
-+                )
-+                .parse::<TokenStream>()
-+                .unwrap()
-+                .into_iter()
-+                .map(|mut tok| {
-+                    tok.set_span(tt.span());
-+                    tok
-+                }),
-+            );
-+            vec![tt]
++            tokens =3D ::std::vec::Vec::new();
++            let span =3D $span;
++            quote_spanned!(@proc tokens span $($tt)*);
 +        }
-+        TokenTree::Ident(i) if i.to_string() =3D=3D "Self" =3D> struct_nam=
-e.clone(),
-+        TokenTree::Literal(_) | TokenTree::Punct(_) | TokenTree::Ident(_) =
-=3D> vec![tt],
-+        TokenTree::Group(g) =3D> vec![TokenTree::Group(Group::new(
-+            g.delimiter(),
-+            g.stream()
-+                .into_iter()
-+                .flat_map(|tt| replace_self_and_deny_type_defs(struct_name=
-, tt, errs))
-+                .collect(),
-+        ))],
-+    }
- }
+         ::proc_macro::TokenStream::from_iter(tokens)
+     }};
+     (@proc $v:ident $span:ident) =3D> {};
+
+base-commit: ea76e08f4d901a450619831a255e9e0a4c0ed162
 --
 2.40.0
 
