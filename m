@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F0F7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDFDBC433EF;
-	Mon, 24 Apr 2023 13:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A427C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75DACC433D2;
+	Mon, 24 Apr 2023 13:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343046;
-	bh=Zwts10tNv+EforyZyRfjdqT/oWFrrG94yVF4zELsC2w=;
+	s=korg; t=1682343048;
+	bh=zZGXykFC65S68cdngIsxyzHu2u7OF5koxtcAp0i79+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrliaDht9GIsLxKUnmPvq23v6yPDEnuGausc7oyLp+sWP9UMv7yDx3lDfhrRBdM9G
-	 sjVZIG2D8jTtY16FLXG6kTgpBimy4ZwVyyQaB11rr37wmMYhLAQyvllji2kLjzZGhB
-	 C8gV9cjtWgq7Y4c1qLbDuAEsISOs8IYzW9u1HPWE=
+	b=ToLsEj5IN7d6JDWTxpSxTiV8nnnHp9Pwc8Y9PAmHF1DnQOs6P8SwhLpzj5/ycq8/Z
+	 JecTZwYvtc3z5xN6r6yxxXFR0dEh8ug+6UBAihjNe5BGVKORFEDqAmZTK/sFPPArn8
+	 s6NsRVI0MR2tr70cVp/hw6eNrKin8EMH00octMuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Jianmin Lv <lvjianmin@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Bob Moore <robert.moore@intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	stable@kernel.org
-Subject: [PATCH 6.2 056/110] Revert "ACPICA: Events: Support fixed PCIe wake event"
-Date: Mon, 24 Apr 2023 15:17:18 +0200
-Message-Id: <20230424131138.388793981@linuxfoundation.org>
+	Liang He <windhl@126.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.2 057/110] iio: dac: ad5755: Add missing fwnode_handle_put()
+Date: Mon, 24 Apr 2023 15:17:19 +0200
+Message-Id: <20230424131138.433051854@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -38,112 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Liang He <windhl@126.com>
 
-commit 8e41e0a575664d26bb87e012c39435c4c3914ed9 upstream.
+commit ffef73791574b8da872cfbf881d8e3e9955fc130 upstream.
 
-This reverts commit 5c62d5aab8752e5ee7bfbe75ed6060db1c787f98.
+In ad5755_parse_fw(), we should add fwnode_handle_put()
+when break out of the iteration device_for_each_child_node()
+as it will automatically increase and decrease the refcounter.
 
-This broke wake-on-lan for multiple people, and for much too long.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217069
-Link: https://lore.kernel.org/all/754225a2-95a9-2c36-1886-7da1a78308c2@loongson.cn/
-Link: https://github.com/acpica/acpica/pull/866
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Jianmin Lv <lvjianmin@loongson.cn>
-Cc: Huacai Chen <chenhuacai@loongson.cn>
-Cc: Bob Moore <robert.moore@intel.com>
-Cc: stable@kernel.org # 6.2
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 3ac27afefd5d ("iio:dac:ad5755: Switch to generic firmware properties and drop pdata")
+Signed-off-by: Liang He <windhl@126.com>
+Link: https://lore.kernel.org/r/20230322035627.1856421-1-windhl@126.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/evevent.c  |   11 -----------
- drivers/acpi/acpica/hwsleep.c  |   14 --------------
- drivers/acpi/acpica/utglobal.c |    4 ----
- include/acpi/actypes.h         |    3 +--
- 4 files changed, 1 insertion(+), 31 deletions(-)
+ drivers/iio/dac/ad5755.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/acpi/acpica/evevent.c
-+++ b/drivers/acpi/acpica/evevent.c
-@@ -142,9 +142,6 @@ static acpi_status acpi_ev_fixed_event_i
- 			status =
- 			    acpi_write_bit_register(acpi_gbl_fixed_event_info
- 						    [i].enable_register_id,
--						    (i ==
--						     ACPI_EVENT_PCIE_WAKE) ?
--						    ACPI_ENABLE_EVENT :
- 						    ACPI_DISABLE_EVENT);
- 			if (ACPI_FAILURE(status)) {
- 				return (status);
-@@ -188,11 +185,6 @@ u32 acpi_ev_fixed_event_detect(void)
- 		return (int_status);
- 	}
+--- a/drivers/iio/dac/ad5755.c
++++ b/drivers/iio/dac/ad5755.c
+@@ -802,6 +802,7 @@ static struct ad5755_platform_data *ad57
+ 	return pdata;
  
--	if (fixed_enable & ACPI_BITMASK_PCIEXP_WAKE_DISABLE)
--		fixed_enable &= ~ACPI_BITMASK_PCIEXP_WAKE_DISABLE;
--	else
--		fixed_enable |= ACPI_BITMASK_PCIEXP_WAKE_DISABLE;
--
- 	ACPI_DEBUG_PRINT((ACPI_DB_INTERRUPTS,
- 			  "Fixed Event Block: Enable %08X Status %08X\n",
- 			  fixed_enable, fixed_status));
-@@ -258,9 +250,6 @@ static u32 acpi_ev_fixed_event_dispatch(
- 	if (!acpi_gbl_fixed_event_handlers[event].handler) {
- 		(void)acpi_write_bit_register(acpi_gbl_fixed_event_info[event].
- 					      enable_register_id,
--					      (event ==
--					       ACPI_EVENT_PCIE_WAKE) ?
--					      ACPI_ENABLE_EVENT :
- 					      ACPI_DISABLE_EVENT);
- 
- 		ACPI_ERROR((AE_INFO,
---- a/drivers/acpi/acpica/hwsleep.c
-+++ b/drivers/acpi/acpica/hwsleep.c
-@@ -311,20 +311,6 @@ acpi_status acpi_hw_legacy_wake(u8 sleep
- 				    [ACPI_EVENT_SLEEP_BUTTON].
- 				    status_register_id, ACPI_CLEAR_STATUS);
- 
--	/* Enable pcie wake event if support */
--	if ((acpi_gbl_FADT.flags & ACPI_FADT_PCI_EXPRESS_WAKE)) {
--		(void)
--		    acpi_write_bit_register(acpi_gbl_fixed_event_info
--					    [ACPI_EVENT_PCIE_WAKE].
--					    enable_register_id,
--					    ACPI_DISABLE_EVENT);
--		(void)
--		    acpi_write_bit_register(acpi_gbl_fixed_event_info
--					    [ACPI_EVENT_PCIE_WAKE].
--					    status_register_id,
--					    ACPI_CLEAR_STATUS);
--	}
--
- 	acpi_hw_execute_sleep_method(METHOD_PATHNAME__SST, ACPI_SST_WORKING);
- 	return_ACPI_STATUS(status);
+  error_out:
++	fwnode_handle_put(pp);
+ 	devm_kfree(dev, pdata);
+ 	return NULL;
  }
---- a/drivers/acpi/acpica/utglobal.c
-+++ b/drivers/acpi/acpica/utglobal.c
-@@ -186,10 +186,6 @@ struct acpi_fixed_event_info acpi_gbl_fi
- 					ACPI_BITREG_RT_CLOCK_ENABLE,
- 					ACPI_BITMASK_RT_CLOCK_STATUS,
- 					ACPI_BITMASK_RT_CLOCK_ENABLE},
--	/* ACPI_EVENT_PCIE_WAKE     */ {ACPI_BITREG_PCIEXP_WAKE_STATUS,
--					ACPI_BITREG_PCIEXP_WAKE_DISABLE,
--					ACPI_BITMASK_PCIEXP_WAKE_STATUS,
--					ACPI_BITMASK_PCIEXP_WAKE_DISABLE},
- };
- #endif				/* !ACPI_REDUCED_HARDWARE */
- 
---- a/include/acpi/actypes.h
-+++ b/include/acpi/actypes.h
-@@ -723,8 +723,7 @@ typedef u32 acpi_event_type;
- #define ACPI_EVENT_POWER_BUTTON         2
- #define ACPI_EVENT_SLEEP_BUTTON         3
- #define ACPI_EVENT_RTC                  4
--#define ACPI_EVENT_PCIE_WAKE            5
--#define ACPI_EVENT_MAX                  5
-+#define ACPI_EVENT_MAX                  4
- #define ACPI_NUM_FIXED_EVENTS           ACPI_EVENT_MAX + 1
- 
- /*
 
 
