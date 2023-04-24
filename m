@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA7C7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E62C433EF;
-	Mon, 24 Apr 2023 13:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F5D7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B544C433D2;
+	Mon, 24 Apr 2023 13:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342577;
-	bh=F//45VwgUYwqnq/zqqoCuZrjr2a4lXeB7zZZmi+WW18=;
+	s=korg; t=1682342579;
+	bh=wR25MoF7TqcSV4qPjt5hyhxkfE7t1ZhmPlEB8TFCcC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBW3w6l/0Dna+0Ef/bfjwgP52pkz9lWYYCw91PkbhpREtuqytNVgDaTPeyJHp+1BD
-	 PSn27UyxgxVJv6/h6tDAfELsCgaqnP/cqju+8cES7apCApP8/8YXAsLlpciTwpPR2S
-	 iPZcYzcEHb97U102KqHJ0RLY0sd7XveNuZW0wrp0=
+	b=2BuP1V0FH7IRmlMhnEVgZyx0sRw0R040TBgG7sEpdujrYWnYo+S4fr99YSS6Az8/J
+	 G1+hkHLjZQ49MiU7J5iTaIp+XHHENQQSBNffBz2eXnM998UEVpwoHuVhsP4HodWct1
+	 Zdmfnz38NCfXDuPwN+nqaO9mnOf5DYHYvws4oSuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 18/39] net: dsa: b53: mmap: add phy ops
-Date: Mon, 24 Apr 2023 15:17:21 +0200
-Message-Id: <20230424131123.725819919@linuxfoundation.org>
+Subject: [PATCH 5.4 19/39] s390/ptrace: fix PTRACE_GET_LAST_BREAK error handling
+Date: Mon, 24 Apr 2023 15:17:22 +0200
+Message-Id: <20230424131123.763563361@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
 References: <20230424131123.040556994@linuxfoundation.org>
@@ -36,54 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Álvaro Fernández Rojas <noltari@gmail.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 45977e58ce65ed0459edc9a0466d9dfea09463f5 ]
+[ Upstream commit f9bbf25e7b2b74b52b2f269216a92657774f239c ]
 
-Implement phy_read16() and phy_write16() ops for B53 MMAP to avoid accessing
-B53_PORT_MII_PAGE registers which hangs the device.
-This access should be done through the MDIO Mux bus controller.
+Return -EFAULT if put_user() for the PTRACE_GET_LAST_BREAK
+request fails, instead of silently ignoring it.
 
-Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_mmap.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/s390/kernel/ptrace.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/dsa/b53/b53_mmap.c b/drivers/net/dsa/b53/b53_mmap.c
-index c628d0980c0b1..1d52cb3e46d52 100644
---- a/drivers/net/dsa/b53/b53_mmap.c
-+++ b/drivers/net/dsa/b53/b53_mmap.c
-@@ -215,6 +215,18 @@ static int b53_mmap_write64(struct b53_device *dev, u8 page, u8 reg,
- 	return 0;
+diff --git a/arch/s390/kernel/ptrace.c b/arch/s390/kernel/ptrace.c
+index ad74472ce967e..34ca344039bbf 100644
+--- a/arch/s390/kernel/ptrace.c
++++ b/arch/s390/kernel/ptrace.c
+@@ -502,9 +502,7 @@ long arch_ptrace(struct task_struct *child, long request,
+ 		}
+ 		return 0;
+ 	case PTRACE_GET_LAST_BREAK:
+-		put_user(child->thread.last_break,
+-			 (unsigned long __user *) data);
+-		return 0;
++		return put_user(child->thread.last_break, (unsigned long __user *)data);
+ 	case PTRACE_ENABLE_TE:
+ 		if (!MACHINE_HAS_TE)
+ 			return -EIO;
+@@ -856,9 +854,7 @@ long compat_arch_ptrace(struct task_struct *child, compat_long_t request,
+ 		}
+ 		return 0;
+ 	case PTRACE_GET_LAST_BREAK:
+-		put_user(child->thread.last_break,
+-			 (unsigned int __user *) data);
+-		return 0;
++		return put_user(child->thread.last_break, (unsigned int __user *)data);
+ 	}
+ 	return compat_ptrace_request(child, request, addr, data);
  }
- 
-+static int b53_mmap_phy_read16(struct b53_device *dev, int addr, int reg,
-+			       u16 *value)
-+{
-+	return -EIO;
-+}
-+
-+static int b53_mmap_phy_write16(struct b53_device *dev, int addr, int reg,
-+				u16 value)
-+{
-+	return -EIO;
-+}
-+
- static const struct b53_io_ops b53_mmap_ops = {
- 	.read8 = b53_mmap_read8,
- 	.read16 = b53_mmap_read16,
-@@ -226,6 +238,8 @@ static const struct b53_io_ops b53_mmap_ops = {
- 	.write32 = b53_mmap_write32,
- 	.write48 = b53_mmap_write48,
- 	.write64 = b53_mmap_write64,
-+	.phy_read16 = b53_mmap_phy_read16,
-+	.phy_write16 = b53_mmap_phy_write16,
- };
- 
- static int b53_mmap_probe(struct platform_device *pdev)
 -- 
 2.39.2
 
