@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89AC2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:38:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2517BC433D2;
-	Mon, 24 Apr 2023 13:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D0E2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:38:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE323C433EF;
+	Mon, 24 Apr 2023 13:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343529;
-	bh=n1QjoW+UKH6fRW7FMS5/dogPQnv0TvaqgEn8B2GCeH4=;
+	s=korg; t=1682343532;
+	bh=l8TJmZJm1p7ky8NHebFi9JWBSSTQxsm0kdJl/fJr4Sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yYTEnUVBEWwn3Q1eQWO+9joNgYPh8U9F+GHpTsXflgg5lyQ8c6JKKlPYOusbi8t5I
-	 7IeWEV6sBAiNqAyxhNWMs0A11fdlVkRTcymiKfWAIAHOClGi/0bg4N72cs+SV2NoiZ
-	 B243pGGssmwth2V8No0v/cgaaAVriUpwFLU9pI38=
+	b=DSV98LOVWSlXES9LGfXE0P0xqE9xeRWzoUjiW5PAtKPrjpLyMYdDCM6hhnMi0Ty7Q
+	 EEd+mP6HU6hzaRK+4AZ4KW0MiKpFnLe/NXPo2CoZB5xjSChbR9dKxoegyog0elFCYH
+	 spJ1Sg97UGyGHTyTOiMToyRe2Uj/xjUo6Vu4S1Jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 03/29] virtio_net: bugfix overflow inside xdp_linearize_page()
-Date: Mon, 24 Apr 2023 15:18:30 +0200
-Message-Id: <20230424131121.273546556@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 4.19 04/29] i40e: fix accessing vsi->active_filters without holding lock
+Date: Mon, 24 Apr 2023 15:18:31 +0200
+Message-Id: <20230424131121.302495085@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131121.155649464@linuxfoundation.org>
 References: <20230424131121.155649464@linuxfoundation.org>
@@ -37,57 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit 853618d5886bf94812f31228091cd37d308230f7 ]
+[ Upstream commit 8485d093b076e59baff424552e8aecfc5bd2d261 ]
 
-Here we copy the data from the original buf to the new page. But we
-not check that it may be overflow.
+Fix accessing vsi->active_filters without holding the mac_filter_hash_lock.
+Move vsi->active_filters = 0 inside critical section and
+move clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state) after the critical
+section to ensure the new filters from other threads can be added only after
+filters cleaning in the critical section is finished.
 
-As long as the size received(including vnethdr) is greater than 3840
-(PAGE_SIZE -VIRTIO_XDP_HEADROOM). Then the memcpy will overflow.
-
-And this is completely possible, as long as the MTU is large, such
-as 4096. In our test environment, this will cause crash. Since crash is
-caused by the written memory, it is meaningless, so I do not include it.
-
-Fixes: 72979a6c3590 ("virtio_net: xdp, add slowpath case for non contiguous buffers")
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 278e7d0b9d68 ("i40e: store MAC/VLAN filters in a hash with the MAC Address as key")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 406ef4cc636d4..0cd46735e3950 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -600,8 +600,13 @@ static struct page *xdp_linearize_page(struct receive_queue *rq,
- 				       int page_off,
- 				       unsigned int *len)
- {
--	struct page *page = alloc_page(GFP_ATOMIC);
-+	int tailroom = SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
-+	struct page *page;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 795f8fe2570e4..3f8c37660e860 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -12484,15 +12484,15 @@ static int i40e_add_vsi(struct i40e_vsi *vsi)
+ 		vsi->id = ctxt.vsi_number;
+ 	}
  
-+	if (page_off + *len + tailroom > PAGE_SIZE)
-+		return NULL;
-+
-+	page = alloc_page(GFP_ATOMIC);
- 	if (!page)
- 		return NULL;
+-	vsi->active_filters = 0;
+-	clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
+ 	spin_lock_bh(&vsi->mac_filter_hash_lock);
++	vsi->active_filters = 0;
+ 	/* If macvlan filters already exist, force them to get loaded */
+ 	hash_for_each_safe(vsi->mac_filter_hash, bkt, h, f, hlist) {
+ 		f->state = I40E_FILTER_NEW;
+ 		f_count++;
+ 	}
+ 	spin_unlock_bh(&vsi->mac_filter_hash_lock);
++	clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
  
-@@ -609,7 +614,6 @@ static struct page *xdp_linearize_page(struct receive_queue *rq,
- 	page_off += *len;
- 
- 	while (--*num_buf) {
--		int tailroom = SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
- 		unsigned int buflen;
- 		void *buf;
- 		int off;
+ 	if (f_count) {
+ 		vsi->flags |= I40E_VSI_FLAG_FILTER_CHANGED;
 -- 
 2.39.2
 
