@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19E17C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:28:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49008C433D2;
-	Mon, 24 Apr 2023 13:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A31F7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:28:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62C9C4339E;
+	Mon, 24 Apr 2023 13:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342911;
-	bh=BEQTPXr/8cYA5q4VrjqOEP4ZXCIWiRu6WXnBgFt9u2Y=;
+	s=korg; t=1682342914;
+	bh=5YtbPC1B/po0Q8vfP7wcPCCXtg3GFxfQU22h32K5xiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQfHweqoOIFYPPqJqyfM7aaiElcWrxzQLHzSrQrxlgGl4j1Ssp01y1VhAaSbFtnFg
-	 7UJPAGRdL5AGF+ZA4GIqP0/uYRQqPvewTQaBC8jCLyNgUopkokwEfB3c3Sq92MBGRF
-	 2BRV8A3dPKocib31qyqFPzxeoS7nFW8wgHKXjyyA=
+	b=lTPd+Qon3FYYl7VDWCA94SXQMT2NvjerW7rEU2JNKCAomD8hq+zWGkUxuGvl22Lio
+	 qhr1Qv4jiJW8Wl38y+t+5fViPvptCvpkxIZd4HQdCleQobTJmBhEH+ysCxg/pX4LN+
+	 Uo6ytSa1fNtMNqUPGODzknZM952IGldWW+Y77Zrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>,
-	Zhang Tianci <zhangtianci.1997@bytedance.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Yang Bo <yb203166@antfin.com>
-Subject: [PATCH 6.1 85/98] fuse: always revalidate rename target dentry
-Date: Mon, 24 Apr 2023 15:17:48 +0200
-Message-Id: <20230424131137.186268956@linuxfoundation.org>
+	Alyssa Ross <hi@alyssa.is>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.1 86/98] purgatory: fix disabling debug info
+Date: Mon, 24 Apr 2023 15:17:49 +0200
+Message-Id: <20230424131137.216210319@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -36,36 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
+From: Alyssa Ross <hi@alyssa.is>
 
-commit ccc031e26afe60d2a5a3d93dabd9c978210825fb upstream.
+commit d83806c4c0cccc0d6d3c3581a11983a9c186a138 upstream.
 
-The previous commit df8629af2934 ("fuse: always revalidate if exclusive
-create") ensures that the dentries are revalidated on O_EXCL creates.  This
-commit complements it by also performing revalidation for rename target
-dentries.  Otherwise, a rename target file that only exists in kernel
-dentry cache but not in the filesystem will result in EEXIST if
-RENAME_NOREPLACE flag is used.
+Since 32ef9e5054ec, -Wa,-gdwarf-2 is no longer used in KBUILD_AFLAGS.
+Instead, it includes -g, the appropriate -gdwarf-* flag, and also the
+-Wa versions of both of those if building with Clang and GNU as.  As a
+result, debug info was being generated for the purgatory objects, even
+though the intention was that it not be.
 
-Signed-off-by: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
-Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Yang Bo <yb203166@antfin.com>
+Fixes: 32ef9e5054ec ("Makefile.debug: re-enable debug info for .S files")
+Signed-off-by: Alyssa Ross <hi@alyssa.is>
+Cc: stable@vger.kernel.org
+Acked-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/purgatory/Makefile |    4 +---
+ arch/x86/purgatory/Makefile   |    3 +--
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -214,7 +214,7 @@ static int fuse_dentry_revalidate(struct
- 	if (inode && fuse_is_bad(inode))
- 		goto invalid;
- 	else if (time_before64(fuse_dentry_time(entry), get_jiffies_64()) ||
--		 (flags & (LOOKUP_EXCL | LOOKUP_REVAL))) {
-+		 (flags & (LOOKUP_EXCL | LOOKUP_REVAL | LOOKUP_RENAME_TARGET))) {
- 		struct fuse_entry_out outarg;
- 		FUSE_ARGS(args);
- 		struct fuse_forget_link *forget;
+--- a/arch/riscv/purgatory/Makefile
++++ b/arch/riscv/purgatory/Makefile
+@@ -74,9 +74,7 @@ CFLAGS_string.o			+= $(PURGATORY_CFLAGS)
+ CFLAGS_REMOVE_ctype.o		+= $(PURGATORY_CFLAGS_REMOVE)
+ CFLAGS_ctype.o			+= $(PURGATORY_CFLAGS)
+ 
+-AFLAGS_REMOVE_entry.o		+= -Wa,-gdwarf-2
+-AFLAGS_REMOVE_memcpy.o		+= -Wa,-gdwarf-2
+-AFLAGS_REMOVE_memset.o		+= -Wa,-gdwarf-2
++asflags-remove-y		+= $(foreach x, -g -gdwarf-4 -gdwarf-5, $(x) -Wa,$(x))
+ 
+ $(obj)/purgatory.ro: $(PURGATORY_OBJS) FORCE
+ 		$(call if_changed,ld)
+--- a/arch/x86/purgatory/Makefile
++++ b/arch/x86/purgatory/Makefile
+@@ -69,8 +69,7 @@ CFLAGS_sha256.o			+= $(PURGATORY_CFLAGS)
+ CFLAGS_REMOVE_string.o		+= $(PURGATORY_CFLAGS_REMOVE)
+ CFLAGS_string.o			+= $(PURGATORY_CFLAGS)
+ 
+-AFLAGS_REMOVE_setup-x86_$(BITS).o	+= -Wa,-gdwarf-2
+-AFLAGS_REMOVE_entry64.o			+= -Wa,-gdwarf-2
++asflags-remove-y		+= $(foreach x, -g -gdwarf-4 -gdwarf-5, $(x) -Wa,$(x))
+ 
+ $(obj)/purgatory.ro: $(PURGATORY_OBJS) FORCE
+ 		$(call if_changed,ld)
 
 
