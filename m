@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FC87C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:27:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D21C433EF;
-	Mon, 24 Apr 2023 13:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6879F7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:27:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FF9C433D2;
+	Mon, 24 Apr 2023 13:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342869;
-	bh=kjVw9yLpNnNDmsMYo1MXP032UzzbO/N4zSrIwJRVrQQ=;
+	s=korg; t=1682342872;
+	bh=nYYRro7bwihhg5VV6MrIjsbzsZvLhbFdrhYEIynNksQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCR8Fhi4Z3Ik4vShAwgpp58PVbUJIhx8K4U0PhsfjzH7VwD+FB3wXmvD/wVig24hI
-	 oTMYKf0dub+BY+asNqhebjfllsDKs7Zuag7JqIxK6fOcDOfMp/Zqjt0T9yizYy0CaL
-	 +Y780JIR8YJJ138E6Yl7zQ1SpaIxjKxFJ5GmCxdM=
+	b=p4YX7RcS3bDRlmCfZAoiSrlZveIXc6FiCh95zxa/VRx+dn5X1v6Ds5uBjj+6cIwsR
+	 o0hw+5Ne3rNa7smtIAZH58BMZjTncYnfUNA2tZed0J4gUE3kpDC0n+vq9uCIhqfaKW
+	 XaOx93MvFB5oq2mAlfYinrdB1XQcNh3wd4TNHQ+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>
-Subject: [PATCH 6.1 89/98] sctp: Call inet6_destroy_sock() via sk->sk_destruct().
-Date: Mon, 24 Apr 2023 15:17:52 +0200
-Message-Id: <20230424131137.342144139@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 90/98] gcc: disable -Warray-bounds for gcc-13 too
+Date: Mon, 24 Apr 2023 15:17:53 +0200
+Message-Id: <20230424131137.385303450@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -35,94 +33,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 6431b0f6ff1633ae598667e4cdd93830074a03e8 upstream.
+commit 0da6e5fd6c3726723e275603426e09178940dace upstream.
 
-After commit d38afeec26ed ("tcp/udp: Call inet6_destroy_sock()
-in IPv6 sk->sk_destruct()."), we call inet6_destroy_sock() in
-sk->sk_destruct() by setting inet6_sock_destruct() to it to make
-sure we do not leak inet6-specific resources.
+We started disabling '-Warray-bounds' for gcc-12 originally on s390,
+because it resulted in some warnings that weren't realistically fixable
+(commit 8b202ee21839: "s390: disable -Warray-bounds").
 
-SCTP sets its own sk->sk_destruct() in the sctp_init_sock(), and
-SCTPv6 socket reuses it as the init function.
+That s390-specific issue was then found to be less common elsewhere, but
+generic (see f0be87c42cbd: "gcc-12: disable '-Warray-bounds' universally
+for now"), and then later expanded the version check was expanded to
+gcc-11 (5a41237ad1d4: "gcc: disable -Warray-bounds for gcc-11 too").
 
-To call inet6_sock_destruct() from SCTPv6 sk->sk_destruct(), we
-set sctp_v6_destruct_sock() in a new init function.
+And it turns out that I was much too optimistic in thinking that it's
+all going to go away, and here we are with gcc-13 showing all the same
+issues.  So instead of expanding this one version at a time, let's just
+disable it for gcc-11+, and put an end limit to it only when we actually
+find a solution.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Yes, I'm sure some of this is because the kernel just does odd things
+(like our "container_of()" use, but also knowingly playing games with
+things like linker tables and array layouts).
+
+And yes, some of the warnings are likely signs of real bugs, but when
+there are hundreds of false positives, that doesn't really help.
+
+Oh well.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/socket.c |   29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ init/Kconfig |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -5102,13 +5102,17 @@ static void sctp_destroy_sock(struct soc
- }
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -892,18 +892,14 @@ config CC_IMPLICIT_FALLTHROUGH
+ 	default "-Wimplicit-fallthrough=5" if CC_IS_GCC && $(cc-option,-Wimplicit-fallthrough=5)
+ 	default "-Wimplicit-fallthrough" if CC_IS_CLANG && $(cc-option,-Wunreachable-code-fallthrough)
  
- /* Triggered when there are no references on the socket anymore */
--static void sctp_destruct_sock(struct sock *sk)
-+static void sctp_destruct_common(struct sock *sk)
- {
- 	struct sctp_sock *sp = sctp_sk(sk);
+-# Currently, disable gcc-11,12 array-bounds globally.
+-# We may want to target only particular configurations some day.
++# Currently, disable gcc-11+ array-bounds globally.
++# It's still broken in gcc-13, so no upper bound yet.
+ config GCC11_NO_ARRAY_BOUNDS
+ 	def_bool y
  
- 	/* Free up the HMAC transform. */
- 	crypto_free_shash(sp->hmac);
-+}
+-config GCC12_NO_ARRAY_BOUNDS
+-	def_bool y
+-
+ config CC_NO_ARRAY_BOUNDS
+ 	bool
+-	default y if CC_IS_GCC && GCC_VERSION >= 110000 && GCC_VERSION < 120000 && GCC11_NO_ARRAY_BOUNDS
+-	default y if CC_IS_GCC && GCC_VERSION >= 120000 && GCC_VERSION < 130000 && GCC12_NO_ARRAY_BOUNDS
++	default y if CC_IS_GCC && GCC_VERSION >= 110000 && GCC11_NO_ARRAY_BOUNDS
  
-+static void sctp_destruct_sock(struct sock *sk)
-+{
-+	sctp_destruct_common(sk);
- 	inet_sock_destruct(sk);
- }
- 
-@@ -9431,7 +9435,7 @@ void sctp_copy_sock(struct sock *newsk,
- 	sctp_sk(newsk)->reuse = sp->reuse;
- 
- 	newsk->sk_shutdown = sk->sk_shutdown;
--	newsk->sk_destruct = sctp_destruct_sock;
-+	newsk->sk_destruct = sk->sk_destruct;
- 	newsk->sk_family = sk->sk_family;
- 	newsk->sk_protocol = IPPROTO_SCTP;
- 	newsk->sk_backlog_rcv = sk->sk_prot->backlog_rcv;
-@@ -9666,11 +9670,20 @@ struct proto sctp_prot = {
- 
- #if IS_ENABLED(CONFIG_IPV6)
- 
--#include <net/transp_v6.h>
--static void sctp_v6_destroy_sock(struct sock *sk)
-+static void sctp_v6_destruct_sock(struct sock *sk)
-+{
-+	sctp_destruct_common(sk);
-+	inet6_sock_destruct(sk);
-+}
-+
-+static int sctp_v6_init_sock(struct sock *sk)
- {
--	sctp_destroy_sock(sk);
--	inet6_destroy_sock(sk);
-+	int ret = sctp_init_sock(sk);
-+
-+	if (!ret)
-+		sk->sk_destruct = sctp_v6_destruct_sock;
-+
-+	return ret;
- }
- 
- struct proto sctpv6_prot = {
-@@ -9680,8 +9693,8 @@ struct proto sctpv6_prot = {
- 	.disconnect	= sctp_disconnect,
- 	.accept		= sctp_accept,
- 	.ioctl		= sctp_ioctl,
--	.init		= sctp_init_sock,
--	.destroy	= sctp_v6_destroy_sock,
-+	.init		= sctp_v6_init_sock,
-+	.destroy	= sctp_destroy_sock,
- 	.shutdown	= sctp_shutdown,
- 	.setsockopt	= sctp_setsockopt,
- 	.getsockopt	= sctp_getsockopt,
+ #
+ # For architectures that know their GCC __int128 support is sound
 
 
