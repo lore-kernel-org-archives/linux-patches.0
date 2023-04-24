@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B447C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D828C433EF;
-	Mon, 24 Apr 2023 13:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730A07C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE76EC433EF;
+	Mon, 24 Apr 2023 13:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343085;
-	bh=LvP7QrQe49AfyW2vov+5OvXDAGbRc/YpJZlTrayh36o=;
+	s=korg; t=1682343088;
+	bh=AZ6NBXo8jEOeRe342FZl1dU8+mm4SgXHtVBYpwVZ0i4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xuGW/ojF0Zc8B7SlebiFka1DkJ8gXOZdJaL9K017jpQnBIsCg111L4DGeoMYP6wAo
-	 q7YRvNd65+nKVLE/oAAXUR2dfIaIpPvR8zh4nOOttr3r8p3JIm7hdU8JNhZXfHpJEP
-	 IaQxT82YEPy/PfSa53xVwlrqTHmnaRtesw4g6StY=
+	b=oI3TZLAlc0RyE2/ThjDG/G2yewHNUHwEC3Kg+iJOeQRn8sgEEQMF/1Mgp0Br667ul
+	 8Ka4ZcvuIOnv8WUOuNn1eWLTjcj6dPRtdzsuPak9a/peqXGGIp5V86o+7t2FPz0efC
+	 5bmyUy7/RR6lstuQyCPuMgiTmQGmVWIQvQ7PmF9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+048585f3f4227bb2b49b@syzkaller.appspotmail.com,
-	Alexander Potapenko <glider@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 072/110] nilfs2: initialize unused bytes in segment summary blocks
-Date: Mon, 24 Apr 2023 15:17:34 +0200
-Message-Id: <20230424131139.102282792@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.2 073/110] mptcp: stops worker on unaccepted sockets at listener close
+Date: Mon, 24 Apr 2023 15:17:35 +0200
+Message-Id: <20230424131139.152513230@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -36,80 +36,192 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit ef832747a82dfbc22a3702219cc716f449b24e4a upstream.
+commit 2a6a870e44dd88f1a6a2893c65ef756a9edfb4c7 upstream.
 
-Syzbot still reports uninit-value in nilfs_add_checksums_on_logs() for
-KMSAN enabled kernels after applying commit 7397031622e0 ("nilfs2:
-initialize "struct nilfs_binfo_dat"->bi_pad field").
+This is a partial revert of the blamed commit, with a relevant
+change: mptcp_subflow_queue_clean() now just change the msk
+socket status and stop the worker, so that the UaF issue addressed
+by the blamed commit is not re-introduced.
 
-This is because the unused bytes at the end of each block in segment
-summaries are not initialized.  So this fixes the issue by padding the
-unused bytes with null bytes.
+The above prevents the mptcp worker from running concurrently with
+inet_csk_listen_stop(), as such race would trigger a warning, as
+reported by Christoph:
 
-Link: https://lkml.kernel.org/r/20230417173513.12598-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+048585f3f4227bb2b49b@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?extid=048585f3f4227bb2b49b
-Cc: Alexander Potapenko <glider@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+RSP: 002b:00007f784fe09cd8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+WARNING: CPU: 0 PID: 25807 at net/ipv4/inet_connection_sock.c:1387 inet_csk_listen_stop+0x664/0x870 net/ipv4/inet_connection_sock.c:1387
+RAX: ffffffffffffffda RBX: 00000000006bc050 RCX: 00007f7850afd6a9
+RDX: 0000000000000000 RSI: 0000000020000340 RDI: 0000000000000004
+Modules linked in:
+RBP: 0000000000000002 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00000000006bc05c
+R13: fffffffffffffea8 R14: 00000000006bc050 R15: 000000000001fe40
+
+ </TASK>
+CPU: 0 PID: 25807 Comm: syz-executor.7 Not tainted 6.2.0-g778e54711659 #7
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+RIP: 0010:inet_csk_listen_stop+0x664/0x870 net/ipv4/inet_connection_sock.c:1387
+RAX: 0000000000000000 RBX: ffff888100dfbd40 RCX: 0000000000000000
+RDX: ffff8881363aab80 RSI: ffffffff81c494f4 RDI: 0000000000000005
+RBP: ffff888126dad080 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: ffff888100dfe040
+R13: 0000000000000001 R14: 0000000000000000 R15: ffff888100dfbdd8
+FS:  00007f7850a2c800(0000) GS:ffff88813bc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b32d26000 CR3: 000000012fdd8006 CR4: 0000000000770ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ __tcp_close+0x5b2/0x620 net/ipv4/tcp.c:2875
+ __mptcp_close_ssk+0x145/0x3d0 net/mptcp/protocol.c:2427
+ mptcp_destroy_common+0x8a/0x1c0 net/mptcp/protocol.c:3277
+ mptcp_destroy+0x41/0x60 net/mptcp/protocol.c:3304
+ __mptcp_destroy_sock+0x56/0x140 net/mptcp/protocol.c:2965
+ __mptcp_close+0x38f/0x4a0 net/mptcp/protocol.c:3057
+ mptcp_close+0x24/0xe0 net/mptcp/protocol.c:3072
+ inet_release+0x53/0xa0 net/ipv4/af_inet.c:429
+ __sock_release+0x4e/0xf0 net/socket.c:651
+ sock_close+0x15/0x20 net/socket.c:1393
+ __fput+0xff/0x420 fs/file_table.c:321
+ task_work_run+0x8b/0xe0 kernel/task_work.c:179
+ resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
+ exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
+ exit_to_user_mode_prepare+0x113/0x120 kernel/entry/common.c:203
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
+ syscall_exit_to_user_mode+0x1d/0x40 kernel/entry/common.c:296
+ do_syscall_64+0x46/0x90 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+RIP: 0033:0x7f7850af70dc
+RAX: 0000000000000000 RBX: 0000000000000004 RCX: 00007f7850af70dc
+RDX: 00007f7850a2c800 RSI: 0000000000000002 RDI: 0000000000000003
+RBP: 00000000006bd980 R08: 0000000000000000 R09: 00000000000018a0
+R10: 00000000316338a4 R11: 0000000000000293 R12: 0000000000211e31
+R13: 00000000006bc05c R14: 00007f785062c000 R15: 0000000000211af0
+
+Fixes: 0a3f4f1f9c27 ("mptcp: fix UaF in listener shutdown")
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/371
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ net/mptcp/protocol.c |    6 +++-
+ net/mptcp/protocol.h |    1 
+ net/mptcp/subflow.c  |   72 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 78 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -430,6 +430,23 @@ static int nilfs_segctor_reset_segment_b
- 	return 0;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2366,8 +2366,12 @@ static void __mptcp_close_ssk(struct soc
+ 		mptcp_subflow_drop_ctx(ssk);
+ 	} else {
+ 		/* otherwise tcp will dispose of the ssk and subflow ctx */
+-		if (ssk->sk_state == TCP_LISTEN)
++		if (ssk->sk_state == TCP_LISTEN) {
++			tcp_set_state(ssk, TCP_CLOSE);
++			mptcp_subflow_queue_clean(sk, ssk);
++			inet_csk_listen_stop(ssk);
+ 			mptcp_event_pm_listener(ssk, MPTCP_EVENT_LISTENER_CLOSED);
++		}
+ 
+ 		__tcp_close(ssk, 0);
+ 
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -629,6 +629,7 @@ void mptcp_close_ssk(struct sock *sk, st
+ 		     struct mptcp_subflow_context *subflow);
+ void __mptcp_subflow_send_ack(struct sock *ssk);
+ void mptcp_subflow_reset(struct sock *ssk);
++void mptcp_subflow_queue_clean(struct sock *sk, struct sock *ssk);
+ void mptcp_sock_graft(struct sock *sk, struct socket *parent);
+ struct socket *__mptcp_nmpc_socket(const struct mptcp_sock *msk);
+ bool __mptcp_close(struct sock *sk, long timeout);
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1816,6 +1816,78 @@ static void subflow_state_change(struct
+ 	}
  }
  
-+/**
-+ * nilfs_segctor_zeropad_segsum - zero pad the rest of the segment summary area
-+ * @sci: segment constructor object
-+ *
-+ * nilfs_segctor_zeropad_segsum() zero-fills unallocated space at the end of
-+ * the current segment summary block.
-+ */
-+static void nilfs_segctor_zeropad_segsum(struct nilfs_sc_info *sci)
++void mptcp_subflow_queue_clean(struct sock *listener_sk, struct sock *listener_ssk)
 +{
-+	struct nilfs_segsum_pointer *ssp;
++	struct request_sock_queue *queue = &inet_csk(listener_ssk)->icsk_accept_queue;
++	struct mptcp_sock *msk, *next, *head = NULL;
++	struct request_sock *req;
 +
-+	ssp = sci->sc_blk_cnt > 0 ? &sci->sc_binfo_ptr : &sci->sc_finfo_ptr;
-+	if (ssp->offset < ssp->bh->b_size)
-+		memset(ssp->bh->b_data + ssp->offset, 0,
-+		       ssp->bh->b_size - ssp->offset);
++	/* build a list of all unaccepted mptcp sockets */
++	spin_lock_bh(&queue->rskq_lock);
++	for (req = queue->rskq_accept_head; req; req = req->dl_next) {
++		struct mptcp_subflow_context *subflow;
++		struct sock *ssk = req->sk;
++
++		if (!sk_is_mptcp(ssk))
++			continue;
++
++		subflow = mptcp_subflow_ctx(ssk);
++		if (!subflow || !subflow->conn)
++			continue;
++
++		/* skip if already in list */
++		msk = mptcp_sk(subflow->conn);
++		if (msk->dl_next || msk == head)
++			continue;
++
++		sock_hold(subflow->conn);
++		msk->dl_next = head;
++		head = msk;
++	}
++	spin_unlock_bh(&queue->rskq_lock);
++	if (!head)
++		return;
++
++	/* can't acquire the msk socket lock under the subflow one,
++	 * or will cause ABBA deadlock
++	 */
++	release_sock(listener_ssk);
++
++	for (msk = head; msk; msk = next) {
++		struct sock *sk = (struct sock *)msk;
++
++		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
++		next = msk->dl_next;
++		msk->dl_next = NULL;
++
++		/* prevent the stack from later re-schedule the worker for
++		 * this socket
++		 */
++		inet_sk_state_store(sk, TCP_CLOSE);
++		release_sock(sk);
++
++		/* lockdep will report a false positive ABBA deadlock
++		 * between cancel_work_sync and the listener socket.
++		 * The involved locks belong to different sockets WRT
++		 * the existing AB chain.
++		 * Using a per socket key is problematic as key
++		 * deregistration requires process context and must be
++		 * performed at socket disposal time, in atomic
++		 * context.
++		 * Just tell lockdep to consider the listener socket
++		 * released here.
++		 */
++		mutex_release(&listener_sk->sk_lock.dep_map, _RET_IP_);
++		mptcp_cancel_work(sk);
++		mutex_acquire(&listener_sk->sk_lock.dep_map, 0, 0, _RET_IP_);
++
++		sock_put(sk);
++	}
++
++	/* we are still under the listener msk socket lock */
++	lock_sock_nested(listener_ssk, SINGLE_DEPTH_NESTING);
 +}
 +
- static int nilfs_segctor_feed_segment(struct nilfs_sc_info *sci)
+ static int subflow_ulp_init(struct sock *sk)
  {
- 	sci->sc_nblk_this_inc += sci->sc_curseg->sb_sum.nblocks;
-@@ -438,6 +455,7 @@ static int nilfs_segctor_feed_segment(st
- 				* The current segment is filled up
- 				* (internal code)
- 				*/
-+	nilfs_segctor_zeropad_segsum(sci);
- 	sci->sc_curseg = NILFS_NEXT_SEGBUF(sci->sc_curseg);
- 	return nilfs_segctor_reset_segment_buffer(sci);
- }
-@@ -542,6 +560,7 @@ static int nilfs_segctor_add_file_block(
- 		goto retry;
- 	}
- 	if (unlikely(required)) {
-+		nilfs_segctor_zeropad_segsum(sci);
- 		err = nilfs_segbuf_extend_segsum(segbuf);
- 		if (unlikely(err))
- 			goto failed;
-@@ -1531,6 +1550,7 @@ static int nilfs_segctor_collect(struct
- 		nadd = min_t(int, nadd << 1, SC_MAX_SEGDELTA);
- 		sci->sc_stage = prev_stage;
- 	}
-+	nilfs_segctor_zeropad_segsum(sci);
- 	nilfs_segctor_truncate_segments(sci, sci->sc_curseg, nilfs->ns_sufile);
- 	return 0;
- 
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
 
 
