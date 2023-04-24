@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9D17C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:20:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A6DC433EF;
-	Mon, 24 Apr 2023 13:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721387C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:20:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B4AC433D2;
+	Mon, 24 Apr 2023 13:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342436;
-	bh=LvP7QrQe49AfyW2vov+5OvXDAGbRc/YpJZlTrayh36o=;
+	s=korg; t=1682342439;
+	bh=ja7S2LB0OvCCmqEw1nb05oddZS4SuYkfKzmpFaLMeMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0OPAuZSYkCz79B7bErCtDANb3CtoU0V7rM7s1ZYiCW9AKHLbDXECBcwIzSHsOtXD0
-	 nOQpQoBgZHqNJnuTHfokGzanytlpEmyGbhkldRyDzMoRRVLLeXYNyCmog7dZoZa+Xe
-	 Vd0/xGpYrehRPibs5RhQ/hHZQBtcIccBFydCVfA0=
+	b=C2URBpIlfu2G7b8yoJhK0wA4f0b+iTmOsFiwif3UHIarEq6W/dRIrknMZEj2kdBkD
+	 Wr8qKQuOQBDIx4JY5ZZ0SB2ad90SubU9LMLfGwnm9mN6BAkPCJbd4Wpu5ivzxqFbNE
+	 HYU9zhLtDsOtncCjZkatBkfgOgfq4R2G+V7S9b9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+048585f3f4227bb2b49b@syzkaller.appspotmail.com,
-	Alexander Potapenko <glider@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 38/73] nilfs2: initialize unused bytes in segment summary blocks
-Date: Mon, 24 Apr 2023 15:16:52 +0200
-Message-Id: <20230424131130.371738284@linuxfoundation.org>
+	Maxim Levitsky <maximlevitsky@gmail.com>,
+	Alex Dubov <oakad@yahoo.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Kay Sievers <kay.sievers@vrfy.org>,
+	linux-mmc@vger.kernel.org,
+	stable <stable@kernel.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Subject: [PATCH 5.15 39/73] memstick: fix memory leak if card device is never registered
+Date: Mon, 24 Apr 2023 15:16:53 +0200
+Message-Id: <20230424131130.411709640@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -36,80 +41,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit ef832747a82dfbc22a3702219cc716f449b24e4a upstream.
+commit 4b6d621c9d859ff89e68cebf6178652592676013 upstream.
 
-Syzbot still reports uninit-value in nilfs_add_checksums_on_logs() for
-KMSAN enabled kernels after applying commit 7397031622e0 ("nilfs2:
-initialize "struct nilfs_binfo_dat"->bi_pad field").
+When calling dev_set_name() memory is allocated for the name for the
+struct device.  Once that structure device is registered, or attempted
+to be registerd, with the driver core, the driver core will handle
+cleaning up that memory when the device is removed from the system.
 
-This is because the unused bytes at the end of each block in segment
-summaries are not initialized.  So this fixes the issue by padding the
-unused bytes with null bytes.
+Unfortunatly for the memstick code, there is an error path that causes
+the struct device to never be registered, and so the memory allocated in
+dev_set_name will be leaked.  Fix that leak by manually freeing it right
+before the memory for the device is freed.
 
-Link: https://lkml.kernel.org/r/20230417173513.12598-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+048585f3f4227bb2b49b@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?extid=048585f3f4227bb2b49b
-Cc: Alexander Potapenko <glider@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Maxim Levitsky <maximlevitsky@gmail.com>
+Cc: Alex Dubov <oakad@yahoo.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Kay Sievers <kay.sievers@vrfy.org>
+Cc: linux-mmc@vger.kernel.org
+Fixes: 0252c3b4f018 ("memstick: struct device - replace bus_id with dev_name(), dev_set_name()")
+Cc: stable <stable@kernel.org>
+Co-developed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Link: https://lore.kernel.org/r/20230401200327.16800-1-gregkh@linuxfoundation.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/memstick/core/memstick.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -430,6 +430,23 @@ static int nilfs_segctor_reset_segment_b
- 	return 0;
+--- a/drivers/memstick/core/memstick.c
++++ b/drivers/memstick/core/memstick.c
+@@ -410,6 +410,7 @@ static struct memstick_dev *memstick_all
+ 	return card;
+ err_out:
+ 	host->card = old_card;
++	kfree_const(card->dev.kobj.name);
+ 	kfree(card);
+ 	return NULL;
  }
- 
-+/**
-+ * nilfs_segctor_zeropad_segsum - zero pad the rest of the segment summary area
-+ * @sci: segment constructor object
-+ *
-+ * nilfs_segctor_zeropad_segsum() zero-fills unallocated space at the end of
-+ * the current segment summary block.
-+ */
-+static void nilfs_segctor_zeropad_segsum(struct nilfs_sc_info *sci)
-+{
-+	struct nilfs_segsum_pointer *ssp;
-+
-+	ssp = sci->sc_blk_cnt > 0 ? &sci->sc_binfo_ptr : &sci->sc_finfo_ptr;
-+	if (ssp->offset < ssp->bh->b_size)
-+		memset(ssp->bh->b_data + ssp->offset, 0,
-+		       ssp->bh->b_size - ssp->offset);
-+}
-+
- static int nilfs_segctor_feed_segment(struct nilfs_sc_info *sci)
- {
- 	sci->sc_nblk_this_inc += sci->sc_curseg->sb_sum.nblocks;
-@@ -438,6 +455,7 @@ static int nilfs_segctor_feed_segment(st
- 				* The current segment is filled up
- 				* (internal code)
- 				*/
-+	nilfs_segctor_zeropad_segsum(sci);
- 	sci->sc_curseg = NILFS_NEXT_SEGBUF(sci->sc_curseg);
- 	return nilfs_segctor_reset_segment_buffer(sci);
- }
-@@ -542,6 +560,7 @@ static int nilfs_segctor_add_file_block(
- 		goto retry;
+@@ -468,8 +469,10 @@ static void memstick_check(struct work_s
+ 				put_device(&card->dev);
+ 				host->card = NULL;
+ 			}
+-		} else
++		} else {
++			kfree_const(card->dev.kobj.name);
+ 			kfree(card);
++		}
  	}
- 	if (unlikely(required)) {
-+		nilfs_segctor_zeropad_segsum(sci);
- 		err = nilfs_segbuf_extend_segsum(segbuf);
- 		if (unlikely(err))
- 			goto failed;
-@@ -1531,6 +1550,7 @@ static int nilfs_segctor_collect(struct
- 		nadd = min_t(int, nadd << 1, SC_MAX_SEGDELTA);
- 		sci->sc_stage = prev_stage;
- 	}
-+	nilfs_segctor_zeropad_segsum(sci);
- 	nilfs_segctor_truncate_segments(sci, sci->sc_curseg, nilfs->ns_sufile);
- 	return 0;
  
+ out_power_off:
 
 
