@@ -1,25 +1,28 @@
 Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C693ED2
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 08:12:00 +0000 (UTC)
-Date: Mon, 24 Apr 2023 08:11:33 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B9EED2
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 08:12:07 +0000 (UTC)
+Date: Mon, 24 Apr 2023 08:11:49 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1682323903; x=1682583103;
-	bh=9tXLJw7aS2XfS2d3gc4JfQ1c+axPiaqoVKfXWCkw42E=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=bf4SNBhMwTguIdAncVzh5qLxV1ZYWi5GolZ7vhl4PHQALjDS4AaYfZPVsJxi3p4Xy
-	 J9c0TDW7wOHdvqGNedNTQfjXceAGYPKLW05jU0wRyPNiFDDJW5uDo1eVsOUag1aqkj
-	 dzDynwvOS/V1XjvKh9Wvz/1PjZksRH24dtFWDY1KvqhbNtAisuGuzEmhYvZrqCA53v
-	 59BuMDz2nIa3f41puY8UTwzFHvaMTBrIHbfP4W6q71ha+k477z6NSu9tcTXK3Uie0C
-	 h8JsTD9qERL7wpGzDU7nSSHk8//0sM7gDHTiWgE4CT+VN4lF6+yTEj158C8QFJO6J1
-	 fu/YtqWt9PCBw==
+	s=protonmail; t=1682323916; x=1682583116;
+	bh=jlSr6JF5Fnj5YiX5jFHLOW1OnwcKWvvXtJXoTFNi8uY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=Hd+UjMji73bffnr1Vd7qGnI0gYyHhvDR3/n45+Gfw58wgqIOFOcGSMuwpRKgQeth/
+	 DmKuJXL0rbWpKlI5BZh+Wmc9HGvIEBHiPhkGeMZ6hSJ/P4RYnhZyEhpdjObeOmSuP2
+	 rUTZQ3wDumN7rDJU02zlQQ4HbPIhyufzCQXn3IsbtPml+McirbW83ClpdrVN67CZYw
+	 RfrnQZzA56YgWDuArvzsrIyen+m7u4/utiV7flzHkux9KJWX24TdoUUgoCKggFMEyv
+	 7ayrFBpY0kNbTPx50ai59tgOXcfUZteWa/v5Y4GXzsMt9l0J/+5N+kJd8cVk6kU8qg
+	 aHiIK774RJgBw==
 To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
 From: Benno Lossin <benno.lossin@proton.me>
 Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <benno.lossin@proton.me>
-Subject: [PATCH 1/4] rust: macros: fix usage of `#[allow]` in `quote!`
-Message-ID: <20230424081112.99890-1-benno.lossin@proton.me>
+Subject: [PATCH 4/4] rust: init: update macro expansion example in docs
+Message-ID: <20230424081112.99890-4-benno.lossin@proton.me>
+In-Reply-To: <20230424081112.99890-1-benno.lossin@proton.me>
+References: <20230424081112.99890-1-benno.lossin@proton.me>
 Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -30,45 +33,322 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-When using `quote!` as part of an expression that was not the last one
-in a function, the `#[allow(clippy::vec_init_then_push)]` attribute
-would be present on an expression, which is not allowed.
-This patch refactors that part of the macro to use a statement instead.
+Also improve the explaining comments.
 
 Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 ---
- rust/macros/quote.rs | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ rust/kernel/init/macros.rs | 85 +++++++++++++++++++++-----------------
+ 1 file changed, 48 insertions(+), 37 deletions(-)
 
-diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
-index c8e08b3c1e4c..dddbb4e6f4cb 100644
---- a/rust/macros/quote.rs
-+++ b/rust/macros/quote.rs
-@@ -39,12 +39,14 @@ impl ToTokens for TokenStream {
- /// [`quote_spanned!`](https://docs.rs/quote/latest/quote/macro.quote_span=
-ned.html) macro from the
- /// `quote` crate but provides only just enough functionality needed by th=
-e current `macros` crate.
- macro_rules! quote_spanned {
--    ($span:expr =3D> $($tt:tt)*) =3D> {
--    #[allow(clippy::vec_init_then_push)]
--    {
--        let mut tokens =3D ::std::vec::Vec::new();
--        let span =3D $span;
--        quote_spanned!(@proc tokens span $($tt)*);
-+    ($span:expr =3D> $($tt:tt)*) =3D> {{
-+        let mut tokens;
-+        #[allow(clippy::vec_init_then_push)]
-+        {
-+            tokens =3D ::std::vec::Vec::new();
-+            let span =3D $span;
-+            quote_spanned!(@proc tokens span $($tt)*);
-+        }
-         ::proc_macro::TokenStream::from_iter(tokens)
-     }};
-     (@proc $v:ident $span:ident) =3D> {};
-
-base-commit: ea76e08f4d901a450619831a255e9e0a4c0ed162
+diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
+index 541cfad1d8be..00aa4e956c0a 100644
+--- a/rust/kernel/init/macros.rs
++++ b/rust/kernel/init/macros.rs
+@@ -16,8 +16,9 @@
+ //!
+ //! We will look at the following example:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! # use kernel::init::*;
++//! # use core::pin::Pin;
+ //! #[pin_data]
+ //! #[repr(C)]
+ //! struct Bar<T> {
+@@ -71,11 +72,12 @@
+ //!
+ //! Here is the definition of `Bar` from our example:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! # use kernel::init::*;
+ //! #[pin_data]
+ //! #[repr(C)]
+ //! struct Bar<T> {
++//!     #[pin]
+ //!     t: T,
+ //!     pub x: usize,
+ //! }
+@@ -83,7 +85,7 @@
+ //!
+ //! This expands to the following code:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! // Firstly the normal definition of the struct, attributes are preserv=
+ed:
+ //! #[repr(C)]
+ //! struct Bar<T> {
+@@ -116,20 +118,22 @@
+ //!         unsafe fn t<E>(
+ //!             self,
+ //!             slot: *mut T,
+-//!             init: impl ::kernel::init::Init<T, E>,
++//!             // Since `t` is `#[pin]`, this is `PinInit`.
++//!             init: impl ::kernel::init::PinInit<T, E>,
+ //!         ) -> ::core::result::Result<(), E> {
+-//!             unsafe { ::kernel::init::Init::__init(init, slot) }
++//!             unsafe { ::kernel::init::PinInit::__pinned_init(init, slot=
+) }
+ //!         }
+ //!         pub unsafe fn x<E>(
+ //!             self,
+ //!             slot: *mut usize,
++//!             // Since `x` is not `#[pin]`, this is `Init`.
+ //!             init: impl ::kernel::init::Init<usize, E>,
+ //!         ) -> ::core::result::Result<(), E> {
+ //!             unsafe { ::kernel::init::Init::__init(init, slot) }
+ //!         }
+ //!     }
+ //!     // Implement the internal `HasPinData` trait that associates `Bar`=
+ with the pin-data struct
+-//!     // that we constructed beforehand.
++//!     // that we constructed above.
+ //!     unsafe impl<T> ::kernel::init::__internal::HasPinData for Bar<T> {
+ //!         type PinData =3D __ThePinData<T>;
+ //!         unsafe fn __pin_data() -> Self::PinData {
+@@ -160,6 +164,8 @@
+ //!     struct __Unpin<'__pin, T> {
+ //!         __phantom_pin: ::core::marker::PhantomData<fn(&'__pin ()) -> &=
+'__pin ()>,
+ //!         __phantom: ::core::marker::PhantomData<fn(Bar<T>) -> Bar<T>>,
++//!         // Our only `#[pin]` field is `t`.
++//!         t: T,
+ //!     }
+ //!     #[doc(hidden)]
+ //!     impl<'__pin, T>
+@@ -193,7 +199,7 @@
+ //!
+ //! Here is the impl on `Bar` defining the new function:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! impl<T> Bar<T> {
+ //!     fn new(t: T) -> impl PinInit<Self> {
+ //!         pin_init!(Self { t, x: 0 })
+@@ -203,7 +209,7 @@
+ //!
+ //! This expands to the following code:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! impl<T> Bar<T> {
+ //!     fn new(t: T) -> impl PinInit<Self> {
+ //!         {
+@@ -232,25 +238,31 @@
+ //!                     // that will refer to this struct instead of the o=
+ne defined above.
+ //!                     struct __InitOk;
+ //!                     // This is the expansion of `t,`, which is syntact=
+ic sugar for `t: t,`.
+-//!                     unsafe { ::core::ptr::write(&raw mut (*slot).t, t)=
+ };
++//!                     unsafe { ::core::ptr::write(::core::addr_of_mut!((=
+*slot).t), t) };
+ //!                     // Since initialization could fail later (not in t=
+his case, since the error
+-//!                     // type is `Infallible`) we will need to drop this=
+ field if it fails. This
+-//!                     // `DropGuard` will drop the field when it gets dr=
+opped and has not yet
+-//!                     // been forgotten. We make a reference to it, so u=
+sers cannot `mem::forget`
+-//!                     // it from the initializer, since the name is the =
+same as the field.
++//!                     // type is `Infallible`) we will need to drop this=
+ field if there is an
++//!                     // error later. This `DropGuard` will drop the fie=
+ld when it gets dropped
++//!                     // and has not yet been forgotten. We make a refer=
+ence to it, so users
++//!                     // cannot `mem::forget` it from the initializer, s=
+ince the name is the same
++//!                     // as the field (including hygiene).
+ //!                     let t =3D &unsafe {
+-//!                         ::kernel::init::__internal::DropGuard::new(&ra=
+w mut (*slot).t)
++//!                         ::kernel::init::__internal::DropGuard::new(
++//!                             ::core::addr_of_mut!((*slot).t),
++//!                         )
+ //!                     };
+ //!                     // Expansion of `x: 0,`:
+ //!                     // Since this can be an arbitrary expression we ca=
+nnot place it inside of
+ //!                     // the `unsafe` block, so we bind it here.
+ //!                     let x =3D 0;
+-//!                     unsafe { ::core::ptr::write(&raw mut (*slot).x, x)=
+ };
++//!                     unsafe { ::core::ptr::write(::core::addr_of_mut!((=
+*slot).x), x) };
++//!                     // We again create a `DropGuard`.
+ //!                     let x =3D &unsafe {
+-//!                         ::kernel::init::__internal::DropGuard::new(&ra=
+w mut (*slot).x)
++//!                         ::kernel::init::__internal::DropGuard::new(
++//!                             ::core::addr_of_mut!((*slot).x),
++//!                         )
+ //!                     };
+ //!
+-//!                     // Here we use the type checker to ensuer that eve=
+ry field has been
++//!                     // Here we use the type checker to ensure that eve=
+ry field has been
+ //!                     // initialized exactly once, since this is `if fal=
+se` it will never get
+ //!                     // executed, but still type-checked.
+ //!                     // Additionally we abuse `slot` to automatically i=
+nfer the correct type for
+@@ -272,7 +284,7 @@
+ //!                         };
+ //!                     }
+ //!                     // Since initialization has successfully completed=
+, we can now forget the
+-//!                     // guards.
++//!                     // guards. This is not `mem::forget`, since we onl=
+y have `&DropGuard`.
+ //!                     unsafe { ::kernel::init::__internal::DropGuard::fo=
+rget(t) };
+ //!                     unsafe { ::kernel::init::__internal::DropGuard::fo=
+rget(x) };
+ //!                 }
+@@ -280,7 +292,7 @@
+ //!                 // `__InitOk` that we need to return.
+ //!                 Ok(__InitOk)
+ //!             });
+-//!             // Change the return type of the closure.
++//!             // Change the return type from `__InitOk` to `()`.
+ //!             let init =3D move |slot| -> ::core::result::Result<(), ::c=
+ore::convert::Infallible> {
+ //!                 init(slot).map(|__InitOk| ())
+ //!             };
+@@ -299,7 +311,7 @@
+ //! Since we already took a look at `#[pin_data]` on `Bar`, this section w=
+ill only explain the
+ //! differences/new things in the expansion of the `Foo` definition:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! #[pin_data(PinnedDrop)]
+ //! struct Foo {
+ //!     a: usize,
+@@ -310,7 +322,7 @@
+ //!
+ //! This expands to the following code:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! struct Foo {
+ //!     a: usize,
+ //!     b: Bar<u32>,
+@@ -330,8 +342,6 @@
+ //!         unsafe fn b<E>(
+ //!             self,
+ //!             slot: *mut Bar<u32>,
+-//!             // Note that this is `PinInit` instead of `Init`, this is =
+because `b` is
+-//!             // structurally pinned, as marked by the `#[pin]` attribut=
+e.
+ //!             init: impl ::kernel::init::PinInit<Bar<u32>, E>,
+ //!         ) -> ::core::result::Result<(), E> {
+ //!             unsafe { ::kernel::init::PinInit::__pinned_init(init, slot=
+) }
+@@ -359,14 +369,13 @@
+ //!     struct __Unpin<'__pin> {
+ //!         __phantom_pin: ::core::marker::PhantomData<fn(&'__pin ()) -> &=
+'__pin ()>,
+ //!         __phantom: ::core::marker::PhantomData<fn(Foo) -> Foo>,
+-//!         // Since this field is `#[pin]`, it is listed here.
+ //!         b: Bar<u32>,
+ //!     }
+ //!     #[doc(hidden)]
+ //!     impl<'__pin> ::core::marker::Unpin for Foo where __Unpin<'__pin>: =
+::core::marker::Unpin {}
+ //!     // Since we specified `PinnedDrop` as the argument to `#[pin_data]=
+`, we expect `Foo` to
+ //!     // implement `PinnedDrop`. Thus we do not need to prevent `Drop` i=
+mplementations like
+-//!     // before, instead we implement it here and delegate to `PinnedDro=
+p`.
++//!     // before, instead we implement `Drop` here and delegate to `Pinne=
+dDrop`.
+ //!     impl ::core::ops::Drop for Foo {
+ //!         fn drop(&mut self) {
+ //!             // Since we are getting dropped, no one else has a referen=
+ce to `self` and thus we
+@@ -388,7 +397,7 @@
+ //!
+ //! Here is the `PinnedDrop` impl for `Foo`:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! #[pinned_drop]
+ //! impl PinnedDrop for Foo {
+ //!     fn drop(self: Pin<&mut Self>) {
+@@ -399,7 +408,7 @@
+ //!
+ //! This expands to the following code:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! // `unsafe`, full path and the token parameter are added, everything e=
+lse stays the same.
+ //! unsafe impl ::kernel::init::PinnedDrop for Foo {
+ //!     fn drop(self: Pin<&mut Self>, _: ::kernel::init::__internal::OnlyC=
+allFromDrop) {
+@@ -410,10 +419,10 @@
+ //!
+ //! ## `pin_init!` on `Foo`
+ //!
+-//! Since we already took a look at `pin_init!` on `Bar`, this section wil=
+l only explain the
+-//! differences/new things in the expansion of `pin_init!` on `Foo`:
++//! Since we already took a look at `pin_init!` on `Bar`, this section wil=
+l only show the expansion
++//! of `pin_init!` on `Foo`:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! let a =3D 42;
+ //! let initializer =3D pin_init!(Foo {
+ //!     a,
+@@ -423,7 +432,7 @@
+ //!
+ //! This expands to the following code:
+ //!
+-//! ```rust
++//! ```rust,ignore
+ //! let a =3D 42;
+ //! let initializer =3D {
+ //!     struct __InitOk;
+@@ -438,13 +447,15 @@
+ //!     >(data, move |slot| {
+ //!         {
+ //!             struct __InitOk;
+-//!             unsafe { ::core::ptr::write(&raw mut (*slot).a, a) };
+-//!             let a =3D &unsafe { ::kernel::init::__internal::DropGuard:=
+:new(&raw mut (*slot).a) };
++//!             unsafe { ::core::ptr::write(::core::addr_of_mut!((*slot).a=
+), a) };
++//!             let a =3D &unsafe {
++//!                 ::kernel::init::__internal::DropGuard::new(::core::add=
+r_of_mut!((*slot).a))
++//!             };
+ //!             let b =3D Bar::new(36);
+-//!             // Here we use `data` to access the correct field and requ=
+ire that `b` is of type
+-//!             // `PinInit<Bar<u32>, Infallible>`.
+-//!             unsafe { data.b(&raw mut (*slot).b, b)? };
+-//!             let b =3D &unsafe { ::kernel::init::__internal::DropGuard:=
+:new(&raw mut (*slot).b) };
++//!             unsafe { data.b(::core::addr_of_mut!((*slot).b), b)? };
++//!             let b =3D &unsafe {
++//!                 ::kernel::init::__internal::DropGuard::new(::core::add=
+r_of_mut!((*slot).b))
++//!             };
+ //!
+ //!             #[allow(unreachable_code, clippy::diverging_sub_expression=
+)]
+ //!             if false {
 --
 2.40.0
 
