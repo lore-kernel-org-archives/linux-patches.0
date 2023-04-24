@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4DB7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01659C433D2;
-	Mon, 24 Apr 2023 13:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295507C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E27C433D2;
+	Mon, 24 Apr 2023 13:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342460;
-	bh=tQmjXt9Cc7Z6kWHWMyjev3Vj4rxIBivhPAu7q7T9ULg=;
+	s=korg; t=1682342463;
+	bh=ZkSBZPR9CmhWILGzUWy52YoKCjHuoOzpqDhP1GkV1RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u6bzfw4sSyjedozMrXPfgLeGv0ydgIDr0u1qgl1AltPSFQlCDkstNaOI7sQV/o1tT
-	 /R0N8e0iDwmf1bYSsBWma7EyEiY4dMtmzqjS/F/MJHIiZnsgTXct4N5DN9UAiMU/7x
-	 8srl6A63YF9IJkZlWy0/O2kP66F2w7Fs2KD9TUuo=
+	b=h6NcbA9hEDbrqOIilkYOlsWLJ9Jjp/bhh3mpxCQGupRx2GjRLM7wiYbHjxwGrJ5j0
+	 oBw4+g+gKQ10GEcRl0Z5Du4NYulVc+wEoYKTHqSaFOyJdR3puFKwuCkNjHbtpnoomI
+	 juN3iL6Sz+R+5R8P6ePDYcnpvibCasYzgqaBdPcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Natalia Petrova <n.petrova@fintech.ru>
-Subject: [PATCH 5.15 18/73] mlxfw: fix null-ptr-deref in mlxfw_mfa2_tlv_next()
-Date: Mon, 24 Apr 2023 15:16:32 +0200
-Message-Id: <20230424131129.685645314@linuxfoundation.org>
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 19/73] bonding: Fix memory leak when changing bond type to Ethernet
+Date: Mon, 24 Apr 2023 15:16:33 +0200
+Message-Id: <20230424131129.714611973@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -37,42 +37,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit c0e73276f0fcbbd3d4736ba975d7dc7a48791b0c ]
+[ Upstream commit c484fcc058bada604d7e4e5228d4affb646ddbc2 ]
 
-Function mlxfw_mfa2_tlv_multi_get() returns NULL if 'tlv' in
-question does not pass checks in mlxfw_mfa2_tlv_payload_get(). This
-behaviour may lead to NULL pointer dereference in 'multi->total_len'.
-Fix this issue by testing mlxfw_mfa2_tlv_multi_get()'s return value
-against NULL.
+When a net device is put administratively up, its 'IFF_UP' flag is set
+(if not set already) and a 'NETDEV_UP' notification is emitted, which
+causes the 8021q driver to add VLAN ID 0 on the device. The reverse
+happens when a net device is put administratively down.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+When changing the type of a bond to Ethernet, its 'IFF_UP' flag is
+incorrectly cleared, resulting in the kernel skipping the above process
+and VLAN ID 0 being leaked [1].
 
-Fixes: 410ed13cae39 ("Add the mlxfw module for Mellanox firmware flash process")
-Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/20230417120718.52325-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix by restoring the flag when changing the type to Ethernet, in a
+similar fashion to the restoration of the 'IFF_SLAVE' flag.
+
+The issue can be reproduced using the script in [2], with example out
+before and after the fix in [3].
+
+[1]
+unreferenced object 0xffff888103479900 (size 256):
+  comm "ip", pid 329, jiffies 4294775225 (age 28.561s)
+  hex dump (first 32 bytes):
+    00 a0 0c 15 81 88 ff ff 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff81a6051a>] kmalloc_trace+0x2a/0xe0
+    [<ffffffff8406426c>] vlan_vid_add+0x30c/0x790
+    [<ffffffff84068e21>] vlan_device_event+0x1491/0x21a0
+    [<ffffffff81440c8e>] notifier_call_chain+0xbe/0x1f0
+    [<ffffffff8372383a>] call_netdevice_notifiers_info+0xba/0x150
+    [<ffffffff837590f2>] __dev_notify_flags+0x132/0x2e0
+    [<ffffffff8375ad9f>] dev_change_flags+0x11f/0x180
+    [<ffffffff8379af36>] do_setlink+0xb96/0x4060
+    [<ffffffff837adf6a>] __rtnl_newlink+0xc0a/0x18a0
+    [<ffffffff837aec6c>] rtnl_newlink+0x6c/0xa0
+    [<ffffffff837ac64e>] rtnetlink_rcv_msg+0x43e/0xe00
+    [<ffffffff839a99e0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff839a738f>] netlink_unicast+0x53f/0x810
+    [<ffffffff839a7fcb>] netlink_sendmsg+0x96b/0xe90
+    [<ffffffff8369d12f>] ____sys_sendmsg+0x30f/0xa70
+    [<ffffffff836a6d7a>] ___sys_sendmsg+0x13a/0x1e0
+unreferenced object 0xffff88810f6a83e0 (size 32):
+  comm "ip", pid 329, jiffies 4294775225 (age 28.561s)
+  hex dump (first 32 bytes):
+    a0 99 47 03 81 88 ff ff a0 99 47 03 81 88 ff ff  ..G.......G.....
+    81 00 00 00 01 00 00 00 cc cc cc cc cc cc cc cc  ................
+  backtrace:
+    [<ffffffff81a6051a>] kmalloc_trace+0x2a/0xe0
+    [<ffffffff84064369>] vlan_vid_add+0x409/0x790
+    [<ffffffff84068e21>] vlan_device_event+0x1491/0x21a0
+    [<ffffffff81440c8e>] notifier_call_chain+0xbe/0x1f0
+    [<ffffffff8372383a>] call_netdevice_notifiers_info+0xba/0x150
+    [<ffffffff837590f2>] __dev_notify_flags+0x132/0x2e0
+    [<ffffffff8375ad9f>] dev_change_flags+0x11f/0x180
+    [<ffffffff8379af36>] do_setlink+0xb96/0x4060
+    [<ffffffff837adf6a>] __rtnl_newlink+0xc0a/0x18a0
+    [<ffffffff837aec6c>] rtnl_newlink+0x6c/0xa0
+    [<ffffffff837ac64e>] rtnetlink_rcv_msg+0x43e/0xe00
+    [<ffffffff839a99e0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff839a738f>] netlink_unicast+0x53f/0x810
+    [<ffffffff839a7fcb>] netlink_sendmsg+0x96b/0xe90
+    [<ffffffff8369d12f>] ____sys_sendmsg+0x30f/0xa70
+    [<ffffffff836a6d7a>] ___sys_sendmsg+0x13a/0x1e0
+
+[2]
+ip link add name t-nlmon type nlmon
+ip link add name t-dummy type dummy
+ip link add name t-bond type bond mode active-backup
+
+ip link set dev t-bond up
+ip link set dev t-nlmon master t-bond
+ip link set dev t-nlmon nomaster
+ip link show dev t-bond
+ip link set dev t-dummy master t-bond
+ip link show dev t-bond
+
+ip link del dev t-bond
+ip link del dev t-dummy
+ip link del dev t-nlmon
+
+[3]
+Before:
+
+12: t-bond: <NO-CARRIER,BROADCAST,MULTICAST,MASTER,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/netlink
+12: t-bond: <BROADCAST,MULTICAST,MASTER,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 46:57:39:a4:46:a2 brd ff:ff:ff:ff:ff:ff
+
+After:
+
+12: t-bond: <NO-CARRIER,BROADCAST,MULTICAST,MASTER,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/netlink
+12: t-bond: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 66:48:7b:74:b6:8a brd ff:ff:ff:ff:ff:ff
+
+Fixes: e36b9d16c6a6 ("bonding: clean muticast addresses when device changes type")
+Fixes: 75c78500ddad ("bonding: remap muticast addresses without using dev_close() and dev_open()")
+Fixes: 9ec7eb60dcbc ("bonding: restore IFF_MASTER/SLAVE flags on bond enslave ether type change")
+Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Link: https://lore.kernel.org/netdev/78a8a03b-6070-3e6b-5042-f848dab16fb8@alu.unizg.hr/
+Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/bonding/bond_main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-index 017d68f1e1232..972c571b41587 100644
---- a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-+++ b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-@@ -31,6 +31,8 @@ mlxfw_mfa2_tlv_next(const struct mlxfw_mfa2_file *mfa2_file,
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index e1dc94f01cb5a..2816b6fc17392 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1746,14 +1746,15 @@ void bond_lower_state_changed(struct slave *slave)
  
- 	if (tlv->type == MLXFW_MFA2_TLV_MULTI_PART) {
- 		multi = mlxfw_mfa2_tlv_multi_get(mfa2_file, tlv);
-+		if (!multi)
-+			return NULL;
- 		tlv_len = NLA_ALIGN(tlv_len + be16_to_cpu(multi->total_len));
- 	}
+ /* The bonding driver uses ether_setup() to convert a master bond device
+  * to ARPHRD_ETHER, that resets the target netdevice's flags so we always
+- * have to restore the IFF_MASTER flag, and only restore IFF_SLAVE if it was set
++ * have to restore the IFF_MASTER flag, and only restore IFF_SLAVE and IFF_UP
++ * if they were set
+  */
+ static void bond_ether_setup(struct net_device *bond_dev)
+ {
+-	unsigned int slave_flag = bond_dev->flags & IFF_SLAVE;
++	unsigned int flags = bond_dev->flags & (IFF_SLAVE | IFF_UP);
+ 
+ 	ether_setup(bond_dev);
+-	bond_dev->flags |= IFF_MASTER | slave_flag;
++	bond_dev->flags |= IFF_MASTER | flags;
+ 	bond_dev->priv_flags &= ~IFF_TX_SKB_SHARING;
+ }
  
 -- 
 2.39.2
