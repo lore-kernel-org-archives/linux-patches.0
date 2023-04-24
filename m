@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94C72108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA85C433EF;
-	Mon, 24 Apr 2023 13:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748112108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6C4C433D2;
+	Mon, 24 Apr 2023 13:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343148;
-	bh=PcoHRoJfi7YMaCtwYswy2Dnjzk/YQsFLh9YTS2nO194=;
+	s=korg; t=1682343151;
+	bh=XrHlzTKbU7qkV17lX17Fstu9bTeTo0DA/bz4RI8TfFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RIXJsiKDnrUFUGOrEAwCc+zzUhGbjt7XaSx4fhqjew+8i3hx2WRYsJN7x1/Z3U37f
-	 UM4qOJFxTsquRca9ftyB63gqgirOzWuZC+RY9I3w9FtKAe5qos7lmbiOINd2zBQXeZ
-	 J+TJ/5YQjyqwPeJHQ4in8FRNkTAUgBkDF8ZI2T4Q=
+	b=iMGCFjW3VtEXgI6zPV7fO2vDB49Gq/d6SK7psZQrU6NPyVtTAGCph4EL9h3pidSe2
+	 l4NHQzKj8VLw8875+IYSMWPCHTzKd1PasG7YQkZ5Wx5YtDd+9UilP+3EcgsnpT6rZs
+	 dBeLStMO5uMyTPV8M9b53TRup0BfFzOVLwWF0NWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mostafa Saleh <smostafa@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.2 094/110] KVM: arm64: Make vcpu flag updates non-preemptible
-Date: Mon, 24 Apr 2023 15:17:56 +0200
-Message-Id: <20230424131140.065930247@linuxfoundation.org>
+	WANG Xuerui <git@xen0n.name>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.2 066/110] LoongArch: Mark 3 symbol exports as non-GPL
+Date: Mon, 24 Apr 2023 15:17:28 +0200
+Message-Id: <20230424131138.824903167@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -35,91 +34,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 35dcb3ac663a16510afc27ba2725d70c15e012a5 upstream.
+commit dce5ea1d0f45fa612f5760b88614a3f32bc75e3f upstream.
 
-Per-vcpu flags are updated using a non-atomic RMW operation.
-Which means it is possible to get preempted between the read and
-write operations.
+vm_map_base, empty_zero_page and invalid_pmd_table could be accessed
+widely by some out-of-tree non-GPL but important file systems or drivers
+(e.g. OpenZFS). Let's use EXPORT_SYMBOL() instead of EXPORT_SYMBOL_GPL()
+to export them, so as to avoid build errors.
 
-Another interesting thing to note is that preemption also updates
-flags, as we have some flag manipulation in both the load and put
-operations.
+1, Details about vm_map_base:
 
-It is thus possible to lose information communicated by either
-load or put, as the preempted flag update will overwrite the flags
-when the thread is resumed. This is specially critical if either
-load or put has stored information which depends on the physical
-CPU the vcpu runs on.
+This is a LoongArch-specific symbol and may be referenced through macros
+PCI_IOBASE, VMALLOC_START and VMALLOC_END.
 
-This results in really elusive bugs, and kudos must be given to
-Mostafa for the long hours of debugging, and finally spotting
-the problem.
+2, Details about empty_zero_page:
 
-Fix it by disabling preemption during the RMW operation, which
-ensures that the state stays consistent. Also upgrade vcpu_get_flag
-path to use READ_ONCE() to make sure the field is always atomically
-accessed.
+As it stands today, only 3 architectures export empty_zero_page as a GPL
+symbol: IA64, LoongArch and MIPS. LoongArch gets the GPL export by
+inheriting from MIPS, and the MIPS export was first introduced in commit
+497d2adcbf50b ("[MIPS] Export empty_zero_page for sake of the ext4
+module."). The IA64 export was similar: commit a7d57ecf4216e ("[IA64]
+Export three symbols for module use") did so for kvm.
 
-Fixes: e87abb73e594 ("KVM: arm64: Add helpers to manipulate vcpu flags among a set")
-Reported-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+In both IA64 and MIPS, the export of empty_zero_page was done for
+satisfying some in-kernel component built as module (kvm and ext4
+respectively), and given its reasonably low-level nature, GPL is a
+reasonable choice. But looking at the bigger picture it is evident most
+other architectures do not regard it as GPL, so in effect the symbol
+probably should not be treated as such, in favor of consistency.
+
+3, Details about invalid_pmd_table:
+
+Keep consistency with invalid_pte_table and make it be possible by some
+modules.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230418125737.2327972-1-maz@kernel.org
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Reviewed-by: WANG Xuerui <git@xen0n.name>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ arch/loongarch/kernel/cpu-probe.c |    2 +-
+ arch/loongarch/mm/init.c          |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -533,9 +533,22 @@ struct kvm_vcpu_arch {
- 	({							\
- 		__build_check_flag(v, flagset, f, m);		\
- 								\
--		v->arch.flagset & (m);				\
-+		READ_ONCE(v->arch.flagset) & (m);		\
- 	})
+--- a/arch/loongarch/kernel/cpu-probe.c
++++ b/arch/loongarch/kernel/cpu-probe.c
+@@ -60,7 +60,7 @@ static inline void set_elf_platform(int
  
-+/*
-+ * Note that the set/clear accessors must be preempt-safe in order to
-+ * avoid nesting them with load/put which also manipulate flags...
-+ */
-+#ifdef __KVM_NVHE_HYPERVISOR__
-+/* the nVHE hypervisor is always non-preemptible */
-+#define __vcpu_flags_preempt_disable()
-+#define __vcpu_flags_preempt_enable()
-+#else
-+#define __vcpu_flags_preempt_disable()	preempt_disable()
-+#define __vcpu_flags_preempt_enable()	preempt_enable()
-+#endif
-+
- #define __vcpu_set_flag(v, flagset, f, m)			\
- 	do {							\
- 		typeof(v->arch.flagset) *fset;			\
-@@ -543,9 +556,11 @@ struct kvm_vcpu_arch {
- 		__build_check_flag(v, flagset, f, m);		\
- 								\
- 		fset = &v->arch.flagset;			\
-+		__vcpu_flags_preempt_disable();			\
- 		if (HWEIGHT(m) > 1)				\
- 			*fset &= ~(m);				\
- 		*fset |= (f);					\
-+		__vcpu_flags_preempt_enable();			\
- 	} while (0)
+ /* MAP BASE */
+ unsigned long vm_map_base;
+-EXPORT_SYMBOL_GPL(vm_map_base);
++EXPORT_SYMBOL(vm_map_base);
  
- #define __vcpu_clear_flag(v, flagset, f, m)			\
-@@ -555,7 +570,9 @@ struct kvm_vcpu_arch {
- 		__build_check_flag(v, flagset, f, m);		\
- 								\
- 		fset = &v->arch.flagset;			\
-+		__vcpu_flags_preempt_disable();			\
- 		*fset &= ~(m);					\
-+		__vcpu_flags_preempt_enable();			\
- 	} while (0)
+ static void cpu_probe_addrbits(struct cpuinfo_loongarch *c)
+ {
+--- a/arch/loongarch/mm/init.c
++++ b/arch/loongarch/mm/init.c
+@@ -41,7 +41,7 @@
+  * don't have to care about aliases on other CPUs.
+  */
+ unsigned long empty_zero_page, zero_page_mask;
+-EXPORT_SYMBOL_GPL(empty_zero_page);
++EXPORT_SYMBOL(empty_zero_page);
+ EXPORT_SYMBOL(zero_page_mask);
  
- #define vcpu_get_flag(v, ...)	__vcpu_get_flag((v), __VA_ARGS__)
+ void setup_zero_pages(void)
+@@ -270,7 +270,7 @@ pud_t invalid_pud_table[PTRS_PER_PUD] __
+ #endif
+ #ifndef __PAGETABLE_PMD_FOLDED
+ pmd_t invalid_pmd_table[PTRS_PER_PMD] __page_aligned_bss;
+-EXPORT_SYMBOL_GPL(invalid_pmd_table);
++EXPORT_SYMBOL(invalid_pmd_table);
+ #endif
+ pte_t invalid_pte_table[PTRS_PER_PTE] __page_aligned_bss;
+ EXPORT_SYMBOL(invalid_pte_table);
 
 
