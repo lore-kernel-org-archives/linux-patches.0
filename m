@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F617C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:28:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED8BC4339C;
-	Mon, 24 Apr 2023 13:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2937C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:28:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647B9C43322;
+	Mon, 24 Apr 2023 13:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342930;
-	bh=Ac3f9BEUATaDx5Jr45R7YNxpn0q4DVf6NHFN5a9janI=;
+	s=korg; t=1682342932;
+	bh=JzBJeiC/bdZyGVqFff4OnpRR0fK549vYnjIcoF64Hy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFltCCjDFABXjXQCNxqTvE3rtJk2DWwRxcSflScQmOG7t3wVmrS6g4MLMcrgDx3k2
-	 aYkWOvHCbDbeTe3otkUH/Q1qRRdUZkDZY48B2dF5+aJ8++vBF68bPiB+WTgFclnm/5
-	 aOcYjSEGAdKd4fBX7cxcwD2FA9DZMonyE9hNTMOA=
+	b=kf5z9iIBkEA9fUnKF2WchQC3nU6HVrg20DFCTNvjdBe1JIT0IyCNaTI1N7XRy8i1h
+	 OR7UBlVz4XYhfINOU0AOPnPvKpL8V9dkPhm1GUsvPLrBZv4p5A3YGVEm1M6KoM6VYo
+	 t/rsZ2EQYhPjtnxlK79rBSeSI1UAS64zeL/VomlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Aotian <chenaotian2@163.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Patrick Blass <patrickblass@mailbox.org>,
+	Vincenzo Palazzo <vincenzopalazzodev@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 013/110] netfilter: nf_tables: Modify nla_memdups flag to GFP_KERNEL_ACCOUNT
-Date: Mon, 24 Apr 2023 15:16:35 +0200
-Message-Id: <20230424131136.615017402@linuxfoundation.org>
+Subject: [PATCH 6.2 014/110] rust: str: fix requierments->requirements typo
+Date: Mon, 24 Apr 2023 15:16:36 +0200
+Message-Id: <20230424131136.645492269@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -35,34 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Aotian <chenaotian2@163.com>
+From: Patrick Blass <patrickblass@mailbox.org>
 
-[ Upstream commit af0acf22aea359e04412237d68787401f96bb583 ]
+[ Upstream commit 88e8c2ec4ab84f9f05ed5af9693a3972baf386c4 ]
 
-For memory alloc that store user data from nla[NFTA_OBJ_USERDATA],
-use GFP_KERNEL_ACCOUNT is more suitable.
+Fix a trivial spelling error in the `rust/kernel/str.rs` file.
 
-Fixes: 33758c891479 ("memcg: enable accounting for nft objects")
-Signed-off-by: Chen Aotian <chenaotian2@163.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 247b365dc8dc ("rust: add `kernel` crate")
+Reported-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://github.com/Rust-for-Linux/linux/issues/978
+Signed-off-by: Patrick Blass <patrickblass@mailbox.org>
+Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+[Reworded slightly]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 2 +-
+ rust/kernel/str.rs | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 6023c9f72cdca..dc4f692d3005a 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -7028,7 +7028,7 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
- 	}
- 
- 	if (nla[NFTA_OBJ_USERDATA]) {
--		obj->udata = nla_memdup(nla[NFTA_OBJ_USERDATA], GFP_KERNEL);
-+		obj->udata = nla_memdup(nla[NFTA_OBJ_USERDATA], GFP_KERNEL_ACCOUNT);
- 		if (obj->udata == NULL)
- 			goto err_userdata;
- 
+diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
+index b771310fa4a49..cd3d2a6cf1fc1 100644
+--- a/rust/kernel/str.rs
++++ b/rust/kernel/str.rs
+@@ -408,7 +408,7 @@ impl RawFormatter {
+     /// If `pos` is less than `end`, then the region between `pos` (inclusive) and `end`
+     /// (exclusive) must be valid for writes for the lifetime of the returned [`RawFormatter`].
+     pub(crate) unsafe fn from_ptrs(pos: *mut u8, end: *mut u8) -> Self {
+-        // INVARIANT: The safety requierments guarantee the type invariants.
++        // INVARIANT: The safety requirements guarantee the type invariants.
+         Self {
+             beg: pos as _,
+             pos: pos as _,
 -- 
 2.39.2
 
