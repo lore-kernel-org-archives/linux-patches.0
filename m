@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137972108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:37:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE7DC433D2;
-	Mon, 24 Apr 2023 13:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCDD2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:37:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EA8C433D2;
+	Mon, 24 Apr 2023 13:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343444;
-	bh=wegdi/JDfRGu8EHJhCCM0Cv8OmE7QPWQ4UqhyOr5EPE=;
+	s=korg; t=1682343447;
+	bh=VcLv8JN1TgLe7NYl2Ie7loJzukPT4oWuE1B8SrIq7+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O1C+zmOnNsY8KhheRuqvdNlKTemzzdzQNt9KoQPx3BWsEUkK3tp+XJ50ttjf2Of7O
-	 eSuUDewBzuSJR44cafdCzoCqa3eX2lLIaoxbmYwWoORPSW4/zj9tose7N+gelJNKcZ
-	 Yeh5He4YCND+BYsWi/B16CM+mnGlkRH4HPGR5OCk=
+	b=wT1ipmYbnObn5CoYoihjbF27Iy67AiMewJ31dNdWdrSrjyTQQfVufQ+43HzOtO1fD
+	 fQ/fDxgMs2oKw864htobw5XSHziUAtix8pDxhRwONk4hCh71jnsUnH7LMBoaOFc23b
+	 P1SBD6EM3fKjBnziqqbkBAen4vo+7KcFWPzkH++c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.14 27/28] iio: adc: at91-sama5d2_adc: fix an error code in at91_adc_allocate_trigger()
-Date: Mon, 24 Apr 2023 15:18:48 +0200
-Message-Id: <20230424131122.244541163@linuxfoundation.org>
+	Ekaterina Orlova <vorobushek.ok@gmail.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	James Bottomley <jejb@linux.ibm.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	keyrings@vger.kernel.org,
+	linux-kbuild@vger.kernel.org,
+	David Howells <dhowells@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 4.14 28/28] ASN.1: Fix check for strdup() success
+Date: Mon, 24 Apr 2023 15:18:49 +0200
+Message-Id: <20230424131122.275020530@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131121.331252806@linuxfoundation.org>
 References: <20230424131121.331252806@linuxfoundation.org>
@@ -34,32 +40,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Ekaterina Orlova <vorobushek.ok@gmail.com>
 
-commit 73a428b37b9b538f8f8fe61caa45e7f243bab87c upstream.
+commit 5a43001c01691dcbd396541e6faa2c0077378f48 upstream.
 
-The at91_adc_allocate_trigger() function is supposed to return error
-pointers.  Returning a NULL will cause an Oops.
+It seems there is a misprint in the check of strdup() return code that
+can lead to NULL pointer dereference.
 
-Fixes: 5e1a1da0f8c9 ("iio: adc: at91-sama5d2_adc: add hw trigger and buffer support")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/5d728f9d-31d1-410d-a0b3-df6a63a2c8ba@kili.mountain
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 4520c6a49af8 ("X.509: Add simple ASN.1 grammar compiler")
+Signed-off-by: Ekaterina Orlova <vorobushek.ok@gmail.com>
+Cc: David Woodhouse <dwmw2@infradead.org>
+Cc: James Bottomley <jejb@linux.ibm.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: keyrings@vger.kernel.org
+Cc: linux-kbuild@vger.kernel.org
+Link: https://lore.kernel.org/r/20230315172130.140-1-vorobushek.ok@gmail.com/
+Signed-off-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/at91-sama5d2_adc.c |    2 +-
+ scripts/asn1_compiler.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/at91-sama5d2_adc.c
-+++ b/drivers/iio/adc/at91-sama5d2_adc.c
-@@ -400,7 +400,7 @@ static struct iio_trigger *at91_adc_allo
- 	trig = devm_iio_trigger_alloc(&indio->dev, "%s-dev%d-%s", indio->name,
- 				      indio->id, trigger_name);
- 	if (!trig)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	trig->dev.parent = indio->dev.parent;
- 	iio_trigger_set_drvdata(trig, indio);
+--- a/scripts/asn1_compiler.c
++++ b/scripts/asn1_compiler.c
+@@ -629,7 +629,7 @@ int main(int argc, char **argv)
+ 	p = strrchr(argv[1], '/');
+ 	p = p ? p + 1 : argv[1];
+ 	grammar_name = strdup(p);
+-	if (!p) {
++	if (!grammar_name) {
+ 		perror(NULL);
+ 		exit(1);
+ 	}
 
 
