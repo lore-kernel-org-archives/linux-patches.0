@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9551A2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:35:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A71FC433EF;
-	Mon, 24 Apr 2023 13:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560A82108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:35:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69DBC4339E;
+	Mon, 24 Apr 2023 13:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343333;
-	bh=CZZk9u3IGiZfwV+PoQJxc+hD0plj4XyLmNmrlErZZa4=;
+	s=korg; t=1682343336;
+	bh=8JtHFmxNEsRipiiss13B2lVWmqj/zrEEoxTPB1yFlgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KWXGID09cQpTa0lMWNSVl/Ic7LdfG3/7ujstzYMHqvMWU3wvl1WuiXX+Y4E+Ohp3s
-	 agB69kDXlSuKVcC02+t/jIbivsiyAOkjp+ppVdv4cKfY9yZ1IFe2WFe/CC4u4kwMBc
-	 hwMKsS+OF1tN4ly8cf6aFxNzSnuJb4DnIQA35eSA=
+	b=IWolc5w0jarbRLhrvtQB/ngV5j+LqNIYpQaTARHvzr682jBpV6Lvu7abcP+cmDHC6
+	 8cW4Yrt9aOs66s3wMeWtDfy43AzywaHvIMEQVwG7AehpqqG71YWchwaUgNZYG6mn1K
+	 YjTp0FXFkgEIh8CEFmJj1sWb3u/T+ybQfelxSCnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Yanjun Zhang <zhangyanjun@cestc.cn>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Yanjun Zhang <zhangyanjun@cestc.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 25/68] s390/ptrace: fix PTRACE_GET_LAST_BREAK error handling
-Date: Mon, 24 Apr 2023 15:17:56 +0200
-Message-Id: <20230424131128.600966463@linuxfoundation.org>
+Subject: [PATCH 5.10 26/68] nvme-tcp: fix a possible UAF when failing to allocate an io queue
+Date: Mon, 24 Apr 2023 15:17:57 +0200
+Message-Id: <20230424131128.630232159@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -36,47 +37,155 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit f9bbf25e7b2b74b52b2f269216a92657774f239c ]
+[ Upstream commit 88eaba80328b31ef81813a1207b4056efd7006a6 ]
 
-Return -EFAULT if put_user() for the PTRACE_GET_LAST_BREAK
-request fails, instead of silently ignoring it.
+When we allocate a nvme-tcp queue, we set the data_ready callback before
+we actually need to use it. This creates the potential that if a stray
+controller sends us data on the socket before we connect, we can trigger
+the io_work and start consuming the socket.
 
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+In this case reported: we failed to allocate one of the io queues, and
+as we start releasing the queues that we already allocated, we get
+a UAF [1] from the io_work which is running before it should really.
+
+Fix this by setting the socket ops callbacks only before we start the
+queue, so that we can't accidentally schedule the io_work in the
+initialization phase before the queue started. While we are at it,
+rename nvme_tcp_restore_sock_calls to pair with nvme_tcp_setup_sock_ops.
+
+[1]:
+[16802.107284] nvme nvme4: starting error recovery
+[16802.109166] nvme nvme4: Reconnecting in 10 seconds...
+[16812.173535] nvme nvme4: failed to connect socket: -111
+[16812.173745] nvme nvme4: Failed reconnect attempt 1
+[16812.173747] nvme nvme4: Reconnecting in 10 seconds...
+[16822.413555] nvme nvme4: failed to connect socket: -111
+[16822.413762] nvme nvme4: Failed reconnect attempt 2
+[16822.413765] nvme nvme4: Reconnecting in 10 seconds...
+[16832.661274] nvme nvme4: creating 32 I/O queues.
+[16833.919887] BUG: kernel NULL pointer dereference, address: 0000000000000088
+[16833.920068] nvme nvme4: Failed reconnect attempt 3
+[16833.920094] #PF: supervisor write access in kernel mode
+[16833.920261] nvme nvme4: Reconnecting in 10 seconds...
+[16833.920368] #PF: error_code(0x0002) - not-present page
+[16833.921086] Workqueue: nvme_tcp_wq nvme_tcp_io_work [nvme_tcp]
+[16833.921191] RIP: 0010:_raw_spin_lock_bh+0x17/0x30
+...
+[16833.923138] Call Trace:
+[16833.923271]  <TASK>
+[16833.923402]  lock_sock_nested+0x1e/0x50
+[16833.923545]  nvme_tcp_try_recv+0x40/0xa0 [nvme_tcp]
+[16833.923685]  nvme_tcp_io_work+0x68/0xa0 [nvme_tcp]
+[16833.923824]  process_one_work+0x1e8/0x390
+[16833.923969]  worker_thread+0x53/0x3d0
+[16833.924104]  ? process_one_work+0x390/0x390
+[16833.924240]  kthread+0x124/0x150
+[16833.924376]  ? set_kthread_struct+0x50/0x50
+[16833.924518]  ret_from_fork+0x1f/0x30
+[16833.924655]  </TASK>
+
+Reported-by: Yanjun Zhang <zhangyanjun@cestc.cn>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Tested-by: Yanjun Zhang <zhangyanjun@cestc.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/ptrace.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/nvme/host/tcp.c | 46 +++++++++++++++++++++++------------------
+ 1 file changed, 26 insertions(+), 20 deletions(-)
 
-diff --git a/arch/s390/kernel/ptrace.c b/arch/s390/kernel/ptrace.c
-index a76dd27fb2e81..3009bb5272524 100644
---- a/arch/s390/kernel/ptrace.c
-+++ b/arch/s390/kernel/ptrace.c
-@@ -500,9 +500,7 @@ long arch_ptrace(struct task_struct *child, long request,
- 		}
- 		return 0;
- 	case PTRACE_GET_LAST_BREAK:
--		put_user(child->thread.last_break,
--			 (unsigned long __user *) data);
--		return 0;
-+		return put_user(child->thread.last_break, (unsigned long __user *)data);
- 	case PTRACE_ENABLE_TE:
- 		if (!MACHINE_HAS_TE)
- 			return -EIO;
-@@ -854,9 +852,7 @@ long compat_arch_ptrace(struct task_struct *child, compat_long_t request,
- 		}
- 		return 0;
- 	case PTRACE_GET_LAST_BREAK:
--		put_user(child->thread.last_break,
--			 (unsigned int __user *) data);
--		return 0;
-+		return put_user(child->thread.last_break, (unsigned int __user *)data);
- 	}
- 	return compat_ptrace_request(child, request, addr, data);
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 57df87def8c33..e6147a9220f9a 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1535,22 +1535,7 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl,
+ 	if (ret)
+ 		goto err_init_connect;
+ 
+-	queue->rd_enabled = true;
+ 	set_bit(NVME_TCP_Q_ALLOCATED, &queue->flags);
+-	nvme_tcp_init_recv_ctx(queue);
+-
+-	write_lock_bh(&queue->sock->sk->sk_callback_lock);
+-	queue->sock->sk->sk_user_data = queue;
+-	queue->state_change = queue->sock->sk->sk_state_change;
+-	queue->data_ready = queue->sock->sk->sk_data_ready;
+-	queue->write_space = queue->sock->sk->sk_write_space;
+-	queue->sock->sk->sk_data_ready = nvme_tcp_data_ready;
+-	queue->sock->sk->sk_state_change = nvme_tcp_state_change;
+-	queue->sock->sk->sk_write_space = nvme_tcp_write_space;
+-#ifdef CONFIG_NET_RX_BUSY_POLL
+-	queue->sock->sk->sk_ll_usec = 1;
+-#endif
+-	write_unlock_bh(&queue->sock->sk->sk_callback_lock);
+ 
+ 	return 0;
+ 
+@@ -1569,7 +1554,7 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl,
+ 	return ret;
  }
+ 
+-static void nvme_tcp_restore_sock_calls(struct nvme_tcp_queue *queue)
++static void nvme_tcp_restore_sock_ops(struct nvme_tcp_queue *queue)
+ {
+ 	struct socket *sock = queue->sock;
+ 
+@@ -1584,7 +1569,7 @@ static void nvme_tcp_restore_sock_calls(struct nvme_tcp_queue *queue)
+ static void __nvme_tcp_stop_queue(struct nvme_tcp_queue *queue)
+ {
+ 	kernel_sock_shutdown(queue->sock, SHUT_RDWR);
+-	nvme_tcp_restore_sock_calls(queue);
++	nvme_tcp_restore_sock_ops(queue);
+ 	cancel_work_sync(&queue->io_work);
+ }
+ 
+@@ -1599,21 +1584,42 @@ static void nvme_tcp_stop_queue(struct nvme_ctrl *nctrl, int qid)
+ 	mutex_unlock(&queue->queue_lock);
+ }
+ 
++static void nvme_tcp_setup_sock_ops(struct nvme_tcp_queue *queue)
++{
++	write_lock_bh(&queue->sock->sk->sk_callback_lock);
++	queue->sock->sk->sk_user_data = queue;
++	queue->state_change = queue->sock->sk->sk_state_change;
++	queue->data_ready = queue->sock->sk->sk_data_ready;
++	queue->write_space = queue->sock->sk->sk_write_space;
++	queue->sock->sk->sk_data_ready = nvme_tcp_data_ready;
++	queue->sock->sk->sk_state_change = nvme_tcp_state_change;
++	queue->sock->sk->sk_write_space = nvme_tcp_write_space;
++#ifdef CONFIG_NET_RX_BUSY_POLL
++	queue->sock->sk->sk_ll_usec = 1;
++#endif
++	write_unlock_bh(&queue->sock->sk->sk_callback_lock);
++}
++
+ static int nvme_tcp_start_queue(struct nvme_ctrl *nctrl, int idx)
+ {
+ 	struct nvme_tcp_ctrl *ctrl = to_tcp_ctrl(nctrl);
++	struct nvme_tcp_queue *queue = &ctrl->queues[idx];
+ 	int ret;
+ 
++	queue->rd_enabled = true;
++	nvme_tcp_init_recv_ctx(queue);
++	nvme_tcp_setup_sock_ops(queue);
++
+ 	if (idx)
+ 		ret = nvmf_connect_io_queue(nctrl, idx, false);
+ 	else
+ 		ret = nvmf_connect_admin_queue(nctrl);
+ 
+ 	if (!ret) {
+-		set_bit(NVME_TCP_Q_LIVE, &ctrl->queues[idx].flags);
++		set_bit(NVME_TCP_Q_LIVE, &queue->flags);
+ 	} else {
+-		if (test_bit(NVME_TCP_Q_ALLOCATED, &ctrl->queues[idx].flags))
+-			__nvme_tcp_stop_queue(&ctrl->queues[idx]);
++		if (test_bit(NVME_TCP_Q_ALLOCATED, &queue->flags))
++			__nvme_tcp_stop_queue(queue);
+ 		dev_err(nctrl->device,
+ 			"failed to connect queue: %d ret=%d\n", idx, ret);
+ 	}
 -- 
 2.39.2
 
