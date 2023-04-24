@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519F27C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9D7C433D2;
-	Mon, 24 Apr 2023 13:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E691D7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C142C433D2;
+	Mon, 24 Apr 2023 13:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342598;
-	bh=ny6Sq3rBegr73NZMSw6IoC0xZyZOd1Ii7Sfts8o4hkI=;
+	s=korg; t=1682342600;
+	bh=W0+G7JCCa9E+xKCgvOsw7cNCZI/uAk2RgAcSNY+2Tr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i5U3MHaHZSrKx3/H62WOUdAm6/5etqZJaMWjuQtQtddsSEzr8dI28CTuweqSFD8DF
-	 Cs1j76RnKJFzSbTEYccJIOKvPKgrT/AYXM7h6sl6+xr9MeEZ4KSbJhfK9WfYS57khf
-	 4mmq16HYo15oI3RLbfWWHeASVan5XBXXHBgYk1R8=
+	b=ZXh6bH1FYlxeT+G8ic5VOGCej+3gxBFesa/ehcHNR5Q9PGIRNz6UUFJGpX6I383Hm
+	 6uhxqglnPDOzS6UA84OC+jC3ImojiyRCc5juPuQJIYiZ91wQk8jJRrEYnCDdmhNqmu
+	 69UpEayCeNElOpmU7zRUWTfgDEflWlx+DmCA411M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhavya Kapoor <b-kapoor@ti.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 25/39] mmc: sdhci_am654: Set HIGH_SPEED_ENA for SDR12 and SDR25
-Date: Mon, 24 Apr 2023 15:17:28 +0200
-Message-Id: <20230424131124.014273230@linuxfoundation.org>
+	"kernelci.org bot" <bot@kernelci.org>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.4 26/39] MIPS: Define RUNTIME_DISCARD_EXIT in LD script
+Date: Mon, 24 Apr 2023 15:17:29 +0200
+Message-Id: <20230424131124.054902950@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
 References: <20230424131123.040556994@linuxfoundation.org>
@@ -34,35 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bhavya Kapoor <b-kapoor@ti.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 2265098fd6a6272fde3fd1be5761f2f5895bd99a upstream.
+commit 6dcbd0a69c84a8ae7a442840a8cf6b1379dc8f16 upstream.
 
-Timing Information in Datasheet assumes that HIGH_SPEED_ENA=1 should be
-set for SDR12 and SDR25 modes. But sdhci_am654 driver clears
-HIGH_SPEED_ENA register. Thus, Modify sdhci_am654 to not clear
-HIGH_SPEED_ENA (HOST_CONTROL[2]) bit for SDR12 and SDR25 speed modes.
+MIPS's exit sections are discarded at runtime as well.
 
-Fixes: e374e87538f4 ("mmc: sdhci_am654: Clear HISPD_ENA in some lower speed modes")
-Signed-off-by: Bhavya Kapoor <b-kapoor@ti.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230317092711.660897-1-b-kapoor@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes link error:
+`.exit.text' referenced in section `__jump_table' of fs/fuse/inode.o:
+defined in discarded section `.exit.text' of fs/fuse/inode.o
+
+Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
+Reported-by: "kernelci.org bot" <bot@kernelci.org>
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_am654.c |    2 --
- 1 file changed, 2 deletions(-)
+ arch/mips/kernel/vmlinux.lds.S |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -227,8 +227,6 @@ static void sdhci_am654_write_b(struct s
- 		 */
- 		case MMC_TIMING_SD_HS:
- 		case MMC_TIMING_MMC_HS:
--		case MMC_TIMING_UHS_SDR12:
--		case MMC_TIMING_UHS_SDR25:
- 			val &= ~SDHCI_CTRL_HISPD;
- 		}
- 	}
+--- a/arch/mips/kernel/vmlinux.lds.S
++++ b/arch/mips/kernel/vmlinux.lds.S
+@@ -10,6 +10,8 @@
+  */
+ #define BSS_FIRST_SECTIONS *(.bss..swapper_pg_dir)
+ 
++#define RUNTIME_DISCARD_EXIT
++
+ #include <asm-generic/vmlinux.lds.h>
+ 
+ #undef mips
 
 
