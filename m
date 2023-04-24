@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED557C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:28:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FDDC433D2;
-	Mon, 24 Apr 2023 13:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA5B7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:28:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0960BC433EF;
+	Mon, 24 Apr 2023 13:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342903;
-	bh=M/ivO5pI7G9LXL9+kVD7pmfUQ4U4ZOCF/yqIMrUNrRw=;
+	s=korg; t=1682342906;
+	bh=pRMLaFXOR23iu71aOV9NhmFlAHIUmJF8jeLXFXSD/Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=15vk2BwtYhsTANQTmr7PiCWr35XskyIOfTGviD68dmj4vlEGaSvGyjHVwRTVg769M
-	 ZhQPd50vZpJBkNQtpvwbG2iPpxR0mQJBdFb6mhwA/xHBTpD70vt5PglGc3tcUjQsa+
-	 lW6VJ0l4x6o+w+/Nh5paqEBUQtAMULd/aTvdRQwg=
+	b=k2s5D20PNCXlMXvHfvyTEqAIJ+K5WiYIqXGWmUh/fRsut7AbPfXy8sBldbHClKBNq
+	 EoUp41sstTnqZXzSPoOKezB0a/uUAiQlnpQ09kSyLhvsMRUW3pS+fn0DZI6PS0v0RN
+	 gNOeLn/OSgLSKJQR7GZuDUcS5e1gbbFhomS+fDcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mostafa Saleh <smostafa@google.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Steven Price <steven.price@arm.com>,
+	Eric Auger <eric.auger@redhat.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.1 82/98] KVM: arm64: Make vcpu flag updates non-preemptible
-Date: Mon, 24 Apr 2023 15:17:45 +0200
-Message-Id: <20230424131137.054394553@linuxfoundation.org>
+Subject: [PATCH 6.1 83/98] KVM: arm64: Fix buffer overflow in kvm_arm_set_fw_reg()
+Date: Mon, 24 Apr 2023 15:17:46 +0200
+Message-Id: <20230424131137.093817192@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -35,91 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 35dcb3ac663a16510afc27ba2725d70c15e012a5 upstream.
+commit a25bc8486f9c01c1af6b6c5657234b2eee2c39d6 upstream.
 
-Per-vcpu flags are updated using a non-atomic RMW operation.
-Which means it is possible to get preempted between the read and
-write operations.
+The KVM_REG_SIZE() comes from the ioctl and it can be a power of two
+between 0-32768 but if it is more than sizeof(long) this will corrupt
+memory.
 
-Another interesting thing to note is that preemption also updates
-flags, as we have some flag manipulation in both the load and put
-operations.
-
-It is thus possible to lose information communicated by either
-load or put, as the preempted flag update will overwrite the flags
-when the thread is resumed. This is specially critical if either
-load or put has stored information which depends on the physical
-CPU the vcpu runs on.
-
-This results in really elusive bugs, and kudos must be given to
-Mostafa for the long hours of debugging, and finally spotting
-the problem.
-
-Fix it by disabling preemption during the RMW operation, which
-ensures that the state stays consistent. Also upgrade vcpu_get_flag
-path to use READ_ONCE() to make sure the field is always atomically
-accessed.
-
-Fixes: e87abb73e594 ("KVM: arm64: Add helpers to manipulate vcpu flags among a set")
-Reported-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230418125737.2327972-1-maz@kernel.org
+Fixes: 99adb567632b ("KVM: arm/arm64: Add save/restore support for firmware workaround state")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/4efbab8c-640f-43b2-8ac6-6d68e08280fe@kili.mountain
 Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/hypercalls.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -449,9 +449,22 @@ struct kvm_vcpu_arch {
- 	({							\
- 		__build_check_flag(v, flagset, f, m);		\
- 								\
--		v->arch.flagset & (m);				\
-+		READ_ONCE(v->arch.flagset) & (m);		\
- 	})
+--- a/arch/arm64/kvm/hypercalls.c
++++ b/arch/arm64/kvm/hypercalls.c
+@@ -397,6 +397,8 @@ int kvm_arm_set_fw_reg(struct kvm_vcpu *
+ 	u64 val;
+ 	int wa_level;
  
-+/*
-+ * Note that the set/clear accessors must be preempt-safe in order to
-+ * avoid nesting them with load/put which also manipulate flags...
-+ */
-+#ifdef __KVM_NVHE_HYPERVISOR__
-+/* the nVHE hypervisor is always non-preemptible */
-+#define __vcpu_flags_preempt_disable()
-+#define __vcpu_flags_preempt_enable()
-+#else
-+#define __vcpu_flags_preempt_disable()	preempt_disable()
-+#define __vcpu_flags_preempt_enable()	preempt_enable()
-+#endif
-+
- #define __vcpu_set_flag(v, flagset, f, m)			\
- 	do {							\
- 		typeof(v->arch.flagset) *fset;			\
-@@ -459,9 +472,11 @@ struct kvm_vcpu_arch {
- 		__build_check_flag(v, flagset, f, m);		\
- 								\
- 		fset = &v->arch.flagset;			\
-+		__vcpu_flags_preempt_disable();			\
- 		if (HWEIGHT(m) > 1)				\
- 			*fset &= ~(m);				\
- 		*fset |= (f);					\
-+		__vcpu_flags_preempt_enable();			\
- 	} while (0)
++	if (KVM_REG_SIZE(reg->id) != sizeof(val))
++		return -ENOENT;
+ 	if (copy_from_user(&val, uaddr, KVM_REG_SIZE(reg->id)))
+ 		return -EFAULT;
  
- #define __vcpu_clear_flag(v, flagset, f, m)			\
-@@ -471,7 +486,9 @@ struct kvm_vcpu_arch {
- 		__build_check_flag(v, flagset, f, m);		\
- 								\
- 		fset = &v->arch.flagset;			\
-+		__vcpu_flags_preempt_disable();			\
- 		*fset &= ~(m);					\
-+		__vcpu_flags_preempt_enable();			\
- 	} while (0)
- 
- #define vcpu_get_flag(v, ...)	__vcpu_get_flag((v), __VA_ARGS__)
 
 
