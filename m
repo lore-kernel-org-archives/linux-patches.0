@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6FF2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E83EC4339B;
-	Mon, 24 Apr 2023 13:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303BF2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDB4C433EF;
+	Mon, 24 Apr 2023 13:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343143;
-	bh=7HQpbArraXO722c7LsNvEPYtRBg/Il/qB6GVgKIof3E=;
+	s=korg; t=1682343146;
+	bh=WLgYMxy2p5o2evbGVrqjKBGVceZ7450KEpU2tpZOjQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ruLE+yQnCBXOmMDLYQQkYN4yKnSV4wBX/LzN1jiC8p6buywD2FPHn9+vGXx2eznd
-	 4R0COVEW9bjI/LSomSXtbQz/YKDGK+IXlGrbUE7Pcpb1k6HZoPZhzaCAvfu57mQBMs
-	 VNFNVQEJXPlMRukGyWH0MFN/t432Bl6k6OnoEffM=
+	b=2J9aGeLDo5HTMtfTkuTSPdVSeTxWz4I7CCqfEDtkNYdi11FZKLow2lCspBY4EZj53
+	 UhHxHTus/EfH6UWCYO7cm5xtD1E/qA760ZklzRm5O0uUO4EFHkD2jPf0oiQCQbzx/u
+	 7UW2Qi0EkMoOkN3kWhjkErtU+mKT4GPCCxKFKGyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 092/110] mm/mmap: regression fix for unmapped_area{_topdown}
-Date: Mon, 24 Apr 2023 15:17:54 +0200
-Message-Id: <20230424131139.988604476@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 093/110] cifs: avoid dup prefix path in dfs_get_automount_devname()
+Date: Mon, 24 Apr 2023 15:17:55 +0200
+Message-Id: <20230424131140.030245609@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -35,113 +34,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit 58c5d0d6d522112577c7eeb71d382ea642ed7be4 upstream.
+commit d5a863a153e90996ab2aef6b9e08d509f4d5662b upstream.
 
-The maple tree limits the gap returned to a window that specifically fits
-what was asked.  This may not be optimal in the case of switching search
-directions or a gap that does not satisfy the requested space for other
-reasons.  Fix the search by retrying the operation and limiting the search
-window in the rare occasion that a conflict occurs.
+@server->origin_fullpath already contains the tree name + optional
+prefix, so avoid calling __build_path_from_dentry_optional_prefix() as
+it might end up duplicating prefix path from @cifs_sb->prepath into
+final full path.
 
-Link: https://lkml.kernel.org/r/20230414185919.4175572-1-Liam.Howlett@oracle.com
-Fixes: 3499a13168da ("mm/mmap: use maple tree for unmapped_area{_topdown}")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reported-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Instead, generate DFS full path by simply merging
+@server->origin_fullpath with dentry's path.
+
+This fixes the following case
+
+	mount.cifs //root/dfs/dir /mnt/ -o ...
+	ls /mnt/link
+
+where cifs_dfs_do_automount() will call smb3_parse_devname() with
+@devname set to "//root/dfs/dir/link" instead of
+"//root/dfs/dir/dir/link".
+
+Fixes: 7ad54b98fc1f ("cifs: use origin fullpath for automounts")
+Cc: <stable@vger.kernel.org> # 6.2+
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mmap.c |   48 +++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 43 insertions(+), 5 deletions(-)
+ fs/cifs/cifs_dfs_ref.c |  2 --
+ fs/cifs/dfs.h          | 22 ++++++++++++++++++----
+ 2 files changed, 18 insertions(+), 6 deletions(-)
 
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -1565,7 +1565,8 @@ static inline int accountable_mapping(st
-  */
- static unsigned long unmapped_area(struct vm_unmapped_area_info *info)
- {
--	unsigned long length, gap;
-+	unsigned long length, gap, low_limit;
-+	struct vm_area_struct *tmp;
+diff --git a/fs/cifs/cifs_dfs_ref.c b/fs/cifs/cifs_dfs_ref.c
+index cb40074feb3e..0329a907bdfe 100644
+--- a/fs/cifs/cifs_dfs_ref.c
++++ b/fs/cifs/cifs_dfs_ref.c
+@@ -171,8 +171,6 @@ static struct vfsmount *cifs_dfs_do_automount(struct path *path)
+ 		mnt = ERR_CAST(full_path);
+ 		goto out;
+ 	}
+-
+-	convert_delimiter(full_path, '/');
+ 	cifs_dbg(FYI, "%s: full_path: %s\n", __func__, full_path);
  
- 	MA_STATE(mas, &current->mm->mm_mt, 0, 0);
- 
-@@ -1574,12 +1575,29 @@ static unsigned long unmapped_area(struc
- 	if (length < info->length)
- 		return -ENOMEM;
- 
--	if (mas_empty_area(&mas, info->low_limit, info->high_limit - 1,
--				  length))
-+	low_limit = info->low_limit;
-+retry:
-+	if (mas_empty_area(&mas, low_limit, info->high_limit - 1, length))
- 		return -ENOMEM;
- 
- 	gap = mas.index;
- 	gap += (info->align_offset - gap) & info->align_mask;
-+	tmp = mas_next(&mas, ULONG_MAX);
-+	if (tmp && (tmp->vm_flags & VM_GROWSDOWN)) { /* Avoid prev check if possible */
-+		if (vm_start_gap(tmp) < gap + length - 1) {
-+			low_limit = tmp->vm_end;
-+			mas_reset(&mas);
-+			goto retry;
-+		}
-+	} else {
-+		tmp = mas_prev(&mas, 0);
-+		if (tmp && vm_end_gap(tmp) > gap) {
-+			low_limit = vm_end_gap(tmp);
-+			mas_reset(&mas);
-+			goto retry;
-+		}
-+	}
-+
- 	return gap;
+ 	tmp = *cur_ctx;
+diff --git a/fs/cifs/dfs.h b/fs/cifs/dfs.h
+index 13f26e01f7b9..0b8cbf721fff 100644
+--- a/fs/cifs/dfs.h
++++ b/fs/cifs/dfs.h
+@@ -34,19 +34,33 @@ static inline int dfs_get_referral(struct cifs_mount_ctx *mnt_ctx, const char *p
+ 			      cifs_remap(cifs_sb), path, ref, tl);
  }
  
-@@ -1595,7 +1613,8 @@ static unsigned long unmapped_area(struc
-  */
- static unsigned long unmapped_area_topdown(struct vm_unmapped_area_info *info)
++/* Return DFS full path out of a dentry set for automount */
+ static inline char *dfs_get_automount_devname(struct dentry *dentry, void *page)
  {
--	unsigned long length, gap;
-+	unsigned long length, gap, high_limit, gap_end;
-+	struct vm_area_struct *tmp;
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(dentry->d_sb);
+ 	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
+ 	struct TCP_Server_Info *server = tcon->ses->server;
++	size_t len;
++	char *s;
  
- 	MA_STATE(mas, &current->mm->mm_mt, 0, 0);
- 	/* Adjust search length to account for worst case alignment overhead */
-@@ -1603,12 +1622,31 @@ static unsigned long unmapped_area_topdo
- 	if (length < info->length)
- 		return -ENOMEM;
+ 	if (unlikely(!server->origin_fullpath))
+ 		return ERR_PTR(-EREMOTE);
  
--	if (mas_empty_area_rev(&mas, info->low_limit, info->high_limit - 1,
-+	high_limit = info->high_limit;
-+retry:
-+	if (mas_empty_area_rev(&mas, info->low_limit, high_limit - 1,
- 				length))
- 		return -ENOMEM;
- 
- 	gap = mas.last + 1 - info->length;
- 	gap -= (gap - info->align_offset) & info->align_mask;
-+	gap_end = mas.last;
-+	tmp = mas_next(&mas, ULONG_MAX);
-+	if (tmp && (tmp->vm_flags & VM_GROWSDOWN)) { /* Avoid prev check if possible */
-+		if (vm_start_gap(tmp) <= gap_end) {
-+			high_limit = vm_start_gap(tmp);
-+			mas_reset(&mas);
-+			goto retry;
-+		}
-+	} else {
-+		tmp = mas_prev(&mas, 0);
-+		if (tmp && vm_end_gap(tmp) > gap) {
-+			high_limit = tmp->vm_start;
-+			mas_reset(&mas);
-+			goto retry;
-+		}
-+	}
+-	return __build_path_from_dentry_optional_prefix(dentry, page,
+-							server->origin_fullpath,
+-							strlen(server->origin_fullpath),
+-							true);
++	s = dentry_path_raw(dentry, page, PATH_MAX);
++	if (IS_ERR(s))
++		return s;
++	/* for root, we want "" */
++	if (!s[1])
++		s++;
 +
- 	return gap;
++	len = strlen(server->origin_fullpath);
++	if (s < (char *)page + len)
++		return ERR_PTR(-ENAMETOOLONG);
++
++	s -= len;
++	memcpy(s, server->origin_fullpath, len);
++	convert_delimiter(s, '/');
++	return s;
  }
  
+ static inline void dfs_put_root_smb_sessions(struct list_head *head)
+-- 
+2.40.0
+
 
 
