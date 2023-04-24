@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698042108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:35:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF626C433EF;
-	Mon, 24 Apr 2023 13:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DEE2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:35:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDE9C433D2;
+	Mon, 24 Apr 2023 13:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343341;
-	bh=6Pl+e3U2TNSCXdvrEJYvpWbm/KdHYSPKB9hipob65zo=;
+	s=korg; t=1682343343;
+	bh=EK3+mzMUuXH0ZkgsZfWgOqiq+oI0zHYUPUcrRe6MeXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWfBykFK4yaiXsIGGxhOkUW5V7AEIXjSmK0eXgW5JUw/ZOhrMwhUnY+F+LVTLtPaY
-	 8aIJyVBKrmqCx81+oS19J5J9fqFahY/TwCx35iu8rA/oGKZcEPv6gtL/AKVfywT0K2
-	 VWi7a2XFQ6UyNxyVlAmKH0bYhwcZCVVOBaQxKPj0=
+	b=JJ6QRrx5BHB+A/fhMe8czviQfxQHp3LlLCHB9gKkE3bcVFS6Klil6DJeRBOzBpagj
+	 jukrAqDOn4rEsLmjkeXg9aWUKnUWBMtFGktOisG3HQTwwbI0/h96rcp8cU5twEF+N5
+	 wB1ryQVwRh+XWHIZhwMKWYlAdsSjqrYh9SyHuims=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Connor Kuehl <ckuehl@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Yang Bo <yb203166@antfin.com>
-Subject: [PATCH 5.10 50/68] virtiofs: split requests that exceed virtqueue size
-Date: Mon, 24 Apr 2023 15:18:21 +0200
-Message-Id: <20230424131129.589375128@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>
+Subject: [PATCH 5.10 59/68] tcp/udp: Call inet6_destroy_sock() in IPv6 sk->sk_destruct().
+Date: Mon, 24 Apr 2023 15:18:30 +0200
+Message-Id: <20230424131129.916235117@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -36,122 +35,243 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Connor Kuehl <ckuehl@redhat.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit a7f0d7aab0b4f3f0780b1f77356e2fe7202ac0cb upstream.
+commit d38afeec26ed4739c640bf286c270559aab2ba5f upstream.
 
-If an incoming FUSE request can't fit on the virtqueue, the request is
-placed onto a workqueue so a worker can try to resubmit it later where
-there will (hopefully) be space for it next time.
+Originally, inet6_sk(sk)->XXX were changed under lock_sock(), so we were
+able to clean them up by calling inet6_destroy_sock() during the IPv6 ->
+IPv4 conversion by IPV6_ADDRFORM.  However, commit 03485f2adcde ("udpv6:
+Add lockless sendmsg() support") added a lockless memory allocation path,
+which could cause a memory leak:
 
-This is fine for requests that aren't larger than a virtqueue's maximum
-capacity.  However, if a request's size exceeds the maximum capacity of the
-virtqueue (even if the virtqueue is empty), it will be doomed to a life of
-being placed on the workqueue, removed, discovered it won't fit, and placed
-on the workqueue yet again.
+setsockopt(IPV6_ADDRFORM)                 sendmsg()
++-----------------------+                 +-------+
+- do_ipv6_setsockopt(sk, ...)             - udpv6_sendmsg(sk, ...)
+  - sockopt_lock_sock(sk)                   ^._ called via udpv6_prot
+    - lock_sock(sk)                             before WRITE_ONCE()
+  - WRITE_ONCE(sk->sk_prot, &tcp_prot)
+  - inet6_destroy_sock()                    - if (!corkreq)
+  - sockopt_release_sock(sk)                  - ip6_make_skb(sk, ...)
+    - release_sock(sk)                          ^._ lockless fast path for
+                                                    the non-corking case
 
-Furthermore, from section 2.6.5.3.1 (Driver Requirements: Indirect
-Descriptors) of the virtio spec:
+                                                - __ip6_append_data(sk, ...)
+                                                  - ipv6_local_rxpmtu(sk, ...)
+                                                    - xchg(&np->rxpmtu, skb)
+                                                      ^._ rxpmtu is never freed.
 
-  "A driver MUST NOT create a descriptor chain longer than the Queue
-  Size of the device."
+                                                - goto out_no_dst;
 
-To fix this, limit the number of pages FUSE will use for an overall
-request.  This way, each request can realistically fit on the virtqueue
-when it is decomposed into a scattergather list and avoid violating section
-2.6.5.3.1 of the virtio spec.
+                                            - lock_sock(sk)
 
-Signed-off-by: Connor Kuehl <ckuehl@redhat.com>
-Reviewed-by: Vivek Goyal <vgoyal@redhat.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Yang Bo <yb203166@antfin.com>
+For now, rxpmtu is only the case, but not to miss the future change
+and a similar bug fixed in commit e27326009a3d ("net: ping6: Fix
+memleak in ipv6_renew_options()."), let's set a new function to IPv6
+sk->sk_destruct() and call inet6_cleanup_sock() there.  Since the
+conversion does not change sk->sk_destruct(), we can guarantee that
+we can clean up IPv6 resources finally.
+
+We can now remove all inet6_destroy_sock() calls from IPv6 protocol
+specific ->destroy() functions, but such changes are invasive to
+backport.  So they can be posted as a follow-up later for net-next.
+
+Fixes: 03485f2adcde ("udpv6: Add lockless sendmsg() support")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/fuse_i.h    |    3 +++
- fs/fuse/inode.c     |    3 ++-
- fs/fuse/virtio_fs.c |   19 +++++++++++++++++--
- 3 files changed, 22 insertions(+), 3 deletions(-)
+ include/net/ipv6.h    |    1 +
+ include/net/udp.h     |    2 +-
+ include/net/udplite.h |    8 --------
+ net/ipv4/udp.c        |    9 ++++++---
+ net/ipv4/udplite.c    |    8 ++++++++
+ net/ipv6/af_inet6.c   |    8 +++++++-
+ net/ipv6/udp.c        |   15 ++++++++++++++-
+ net/ipv6/udp_impl.h   |    1 +
+ net/ipv6/udplite.c    |    9 ++++++++-
+ 9 files changed, 46 insertions(+), 15 deletions(-)
 
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -556,6 +556,9 @@ struct fuse_conn {
- 	/** Maxmum number of pages that can be used in a single request */
- 	unsigned int max_pages;
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -1110,6 +1110,7 @@ void ipv6_local_error(struct sock *sk, i
+ void ipv6_local_rxpmtu(struct sock *sk, struct flowi6 *fl6, u32 mtu);
  
-+	/** Constrain ->max_pages to this value during feature negotiation */
-+	unsigned int max_pages_limit;
-+
- 	/** Input queue */
- 	struct fuse_iqueue iq;
+ void inet6_cleanup_sock(struct sock *sk);
++void inet6_sock_destruct(struct sock *sk);
+ int inet6_release(struct socket *sock);
+ int inet6_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len);
+ int inet6_getname(struct socket *sock, struct sockaddr *uaddr,
+--- a/include/net/udp.h
++++ b/include/net/udp.h
+@@ -268,7 +268,7 @@ static inline bool udp_sk_bound_dev_eq(s
+ }
  
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -710,6 +710,7 @@ void fuse_conn_init(struct fuse_conn *fc
- 	fc->pid_ns = get_pid_ns(task_active_pid_ns(current));
- 	fc->user_ns = get_user_ns(user_ns);
- 	fc->max_pages = FUSE_DEFAULT_MAX_PAGES_PER_REQ;
-+	fc->max_pages_limit = FUSE_MAX_MAX_PAGES;
+ /* net/ipv4/udp.c */
+-void udp_destruct_sock(struct sock *sk);
++void udp_destruct_common(struct sock *sk);
+ void skb_consume_udp(struct sock *sk, struct sk_buff *skb, int len);
+ int __udp_enqueue_schedule_skb(struct sock *sk, struct sk_buff *skb);
+ void udp_skb_destructor(struct sock *sk, struct sk_buff *skb);
+--- a/include/net/udplite.h
++++ b/include/net/udplite.h
+@@ -24,14 +24,6 @@ static __inline__ int udplite_getfrag(vo
+ 	return copy_from_iter_full(to, len, &msg->msg_iter) ? 0 : -EFAULT;
+ }
  
- 	INIT_LIST_HEAD(&fc->mounts);
- 	list_add(&fm->fc_entry, &fc->mounts);
-@@ -1056,7 +1057,7 @@ static void process_init_reply(struct fu
- 				fc->abort_err = 1;
- 			if (arg->flags & FUSE_MAX_PAGES) {
- 				fc->max_pages =
--					min_t(unsigned int, FUSE_MAX_MAX_PAGES,
-+					min_t(unsigned int, fc->max_pages_limit,
- 					max_t(unsigned int, arg->max_pages, 1));
- 			}
- 			if (IS_ENABLED(CONFIG_FUSE_DAX) &&
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -18,6 +18,12 @@
- #include <linux/uio.h>
- #include "fuse_i.h"
- 
-+/* Used to help calculate the FUSE connection's max_pages limit for a request's
-+ * size. Parts of the struct fuse_req are sliced into scattergather lists in
-+ * addition to the pages used, so this can help account for that overhead.
-+ */
-+#define FUSE_HEADER_OVERHEAD    4
-+
- /* List of virtio-fs device instances and a lock for the list. Also provides
-  * mutual exclusion in device removal and mounting path
+-/* Designate sk as UDP-Lite socket */
+-static inline int udplite_sk_init(struct sock *sk)
+-{
+-	udp_init_sock(sk);
+-	udp_sk(sk)->pcflag = UDPLITE_BIT;
+-	return 0;
+-}
+-
+ /*
+  * 	Checksumming routines
   */
-@@ -1426,9 +1432,10 @@ static int virtio_fs_get_tree(struct fs_
- {
- 	struct virtio_fs *fs;
- 	struct super_block *sb;
--	struct fuse_conn *fc;
-+	struct fuse_conn *fc = NULL;
- 	struct fuse_mount *fm;
--	int err;
-+	unsigned int virtqueue_size;
-+	int err = -EIO;
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1582,7 +1582,7 @@ drop:
+ }
+ EXPORT_SYMBOL_GPL(__udp_enqueue_schedule_skb);
  
- 	/* This gets a reference on virtio_fs object. This ptr gets installed
- 	 * in fc->iq->priv. Once fuse_conn is going away, it calls ->put()
-@@ -1440,6 +1447,10 @@ static int virtio_fs_get_tree(struct fs_
- 		return -EINVAL;
+-void udp_destruct_sock(struct sock *sk)
++void udp_destruct_common(struct sock *sk)
+ {
+ 	/* reclaim completely the forward allocated memory */
+ 	struct udp_sock *up = udp_sk(sk);
+@@ -1595,10 +1595,14 @@ void udp_destruct_sock(struct sock *sk)
+ 		kfree_skb(skb);
+ 	}
+ 	udp_rmem_release(sk, total, 0, true);
++}
++EXPORT_SYMBOL_GPL(udp_destruct_common);
+ 
++static void udp_destruct_sock(struct sock *sk)
++{
++	udp_destruct_common(sk);
+ 	inet_sock_destruct(sk);
+ }
+-EXPORT_SYMBOL_GPL(udp_destruct_sock);
+ 
+ int udp_init_sock(struct sock *sk)
+ {
+@@ -1606,7 +1610,6 @@ int udp_init_sock(struct sock *sk)
+ 	sk->sk_destruct = udp_destruct_sock;
+ 	return 0;
+ }
+-EXPORT_SYMBOL_GPL(udp_init_sock);
+ 
+ void skb_consume_udp(struct sock *sk, struct sk_buff *skb, int len)
+ {
+--- a/net/ipv4/udplite.c
++++ b/net/ipv4/udplite.c
+@@ -17,6 +17,14 @@
+ struct udp_table 	udplite_table __read_mostly;
+ EXPORT_SYMBOL(udplite_table);
+ 
++/* Designate sk as UDP-Lite socket */
++static int udplite_sk_init(struct sock *sk)
++{
++	udp_init_sock(sk);
++	udp_sk(sk)->pcflag = UDPLITE_BIT;
++	return 0;
++}
++
+ static int udplite_rcv(struct sk_buff *skb)
+ {
+ 	return __udp4_lib_rcv(skb, &udplite_table, IPPROTO_UDPLITE);
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -107,6 +107,12 @@ static __inline__ struct ipv6_pinfo *ine
+ 	return (struct ipv6_pinfo *)(((u8 *)sk) + offset);
+ }
+ 
++void inet6_sock_destruct(struct sock *sk)
++{
++	inet6_cleanup_sock(sk);
++	inet_sock_destruct(sk);
++}
++
+ static int inet6_create(struct net *net, struct socket *sock, int protocol,
+ 			int kern)
+ {
+@@ -199,7 +205,7 @@ lookup_protocol:
+ 			inet->hdrincl = 1;
  	}
  
-+	virtqueue_size = virtqueue_get_vring_size(fs->vqs[VQ_REQUEST].vq);
-+	if (WARN_ON(virtqueue_size <= FUSE_HEADER_OVERHEAD))
-+		goto out_err;
-+
- 	err = -ENOMEM;
- 	fc = kzalloc(sizeof(struct fuse_conn), GFP_KERNEL);
- 	if (!fc)
-@@ -1454,6 +1465,10 @@ static int virtio_fs_get_tree(struct fs_
- 	fc->delete_stale = true;
- 	fc->auto_submounts = true;
+-	sk->sk_destruct		= inet_sock_destruct;
++	sk->sk_destruct		= inet6_sock_destruct;
+ 	sk->sk_family		= PF_INET6;
+ 	sk->sk_protocol		= protocol;
  
-+	/* Tell FUSE to split requests that exceed the virtqueue's size */
-+	fc->max_pages_limit = min_t(unsigned int, fc->max_pages_limit,
-+				    virtqueue_size - FUSE_HEADER_OVERHEAD);
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -54,6 +54,19 @@
+ #include <trace/events/skb.h>
+ #include "udp_impl.h"
+ 
++static void udpv6_destruct_sock(struct sock *sk)
++{
++	udp_destruct_common(sk);
++	inet6_sock_destruct(sk);
++}
 +
- 	fsc->s_fs_info = fm;
- 	sb = sget_fc(fsc, virtio_fs_test_super, virtio_fs_set_super);
- 	fuse_mount_put(fm);
++int udpv6_init_sock(struct sock *sk)
++{
++	skb_queue_head_init(&udp_sk(sk)->reader_queue);
++	sk->sk_destruct = udpv6_destruct_sock;
++	return 0;
++}
++
+ static u32 udp6_ehashfn(const struct net *net,
+ 			const struct in6_addr *laddr,
+ 			const u16 lport,
+@@ -1702,7 +1715,7 @@ struct proto udpv6_prot = {
+ 	.connect		= ip6_datagram_connect,
+ 	.disconnect		= udp_disconnect,
+ 	.ioctl			= udp_ioctl,
+-	.init			= udp_init_sock,
++	.init			= udpv6_init_sock,
+ 	.destroy		= udpv6_destroy_sock,
+ 	.setsockopt		= udpv6_setsockopt,
+ 	.getsockopt		= udpv6_getsockopt,
+--- a/net/ipv6/udp_impl.h
++++ b/net/ipv6/udp_impl.h
+@@ -12,6 +12,7 @@ int __udp6_lib_rcv(struct sk_buff *, str
+ int __udp6_lib_err(struct sk_buff *, struct inet6_skb_parm *, u8, u8, int,
+ 		   __be32, struct udp_table *);
+ 
++int udpv6_init_sock(struct sock *sk);
+ int udp_v6_get_port(struct sock *sk, unsigned short snum);
+ void udp_v6_rehash(struct sock *sk);
+ 
+--- a/net/ipv6/udplite.c
++++ b/net/ipv6/udplite.c
+@@ -12,6 +12,13 @@
+ #include <linux/proc_fs.h>
+ #include "udp_impl.h"
+ 
++static int udplitev6_sk_init(struct sock *sk)
++{
++	udpv6_init_sock(sk);
++	udp_sk(sk)->pcflag = UDPLITE_BIT;
++	return 0;
++}
++
+ static int udplitev6_rcv(struct sk_buff *skb)
+ {
+ 	return __udp6_lib_rcv(skb, &udplite_table, IPPROTO_UDPLITE);
+@@ -38,7 +45,7 @@ struct proto udplitev6_prot = {
+ 	.connect	   = ip6_datagram_connect,
+ 	.disconnect	   = udp_disconnect,
+ 	.ioctl		   = udp_ioctl,
+-	.init		   = udplite_sk_init,
++	.init		   = udplitev6_sk_init,
+ 	.destroy	   = udpv6_destroy_sock,
+ 	.setsockopt	   = udpv6_setsockopt,
+ 	.getsockopt	   = udpv6_getsockopt,
 
 
