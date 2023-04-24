@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDD07C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92C9C433EF;
-	Mon, 24 Apr 2023 13:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0817C7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81658C433EF;
+	Mon, 24 Apr 2023 13:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343059;
-	bh=F0xo3TK4nFYyr291iZuMfIYFpoQphmclRzYN+rsUH/g=;
+	s=korg; t=1682343061;
+	bh=pSLEgiBTAklJYbE4HYfduuFlerRfQs5FSyiDJXNZXNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=waO10aZSNrjcetGHgduVGvGqyMaETpeoQUavMZirY3LIuaLF2QshsLe6jasikwlDC
-	 nzpVmSkvanCkuAhJLr21qEB/GaLdD9VCOE70qtpniM+RQlxICtCbThJsiCKtz97vA5
-	 ngdLFDRmw9UaYLLbXDugWHhaDUNBbD0zGrN0ecwo=
+	b=cmohkWPy6RmILdS5MBI5NfyseSfcpOgcbS+ufESMT+kdIBUSO/C2ZqbhcXR+Heu0P
+	 w0FeqUztfafqCC/9AptAacf2Adwpajqd4c1vDW37FSuKWkuu92if4X/6KWLC4bc7ka
+	 YI2IeEaXgzzm7OuOR8tha9R/tABY1d0alUxwJHwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Neal Gompa <neal@gompa.dev>,
 	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.2 060/110] btrfs: set default discard iops_limit to 1000
-Date: Mon, 24 Apr 2023 15:17:22 +0200
-Message-Id: <20230424131138.552705731@linuxfoundation.org>
+Subject: [PATCH 6.2 061/110] btrfs: reinterpret async discard iops_limit=0 as no delay
+Date: Mon, 24 Apr 2023 15:17:23 +0200
+Message-Id: <20230424131138.595624714@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -36,39 +37,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Boris Burkov <boris@bur.io>
 
-commit e9f59429b87d35cf23ae9ca19629bd686a1c0304 upstream.
+commit ef9cddfe57d86aac6b509b550136395669159b30 upstream.
 
-Previously, the default was a relatively conservative 10. This results
-in a 100ms delay, so with ~300 discards in a commit, it takes the full
-30s till the next commit to finish the discards. On a workstation, this
-results in the disk never going idle, wasting power/battery, etc.
+Currently, a limit of 0 results in a hard coded metering over 6 hours.
+Since the default is a set limit, I suspect no one truly depends on this
+rather arbitrary setting. Repurpose it for an arguably more useful
+"unlimited" mode, where the delay is 0.
 
-Set the default to 1000, which results in using the smallest possible
-delay, currently, which is 1ms. This has shown to not pathologically
-keep the disk busy by the original reporter.
+Note that if block groups are too new, or go fully empty, there is still
+a delay associated with those conditions. Those delays implement
+heuristics for not trimming a region we are relatively likely to fully
+overwrite soon.
 
-Link: https://lore.kernel.org/linux-btrfs/Y%2F+n1wS%2F4XAH7X1p@nz/
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2182228
 CC: stable@vger.kernel.org # 6.2+
-Reviewed-by: Neal Gompa <neal@gompa.dev
+Reviewed-by: Neal Gompa <neal@gompa.dev>
 Signed-off-by: Boris Burkov <boris@bur.io>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/discard.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/discard.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
 --- a/fs/btrfs/discard.c
 +++ b/fs/btrfs/discard.c
-@@ -60,7 +60,7 @@
- #define BTRFS_DISCARD_TARGET_MSEC	(6 * 60 * 60UL * MSEC_PER_SEC)
+@@ -56,8 +56,6 @@
+ #define BTRFS_DISCARD_DELAY		(120ULL * NSEC_PER_SEC)
+ #define BTRFS_DISCARD_UNUSED_DELAY	(10ULL * NSEC_PER_SEC)
+ 
+-/* Target completion latency of discarding all discardable extents */
+-#define BTRFS_DISCARD_TARGET_MSEC	(6 * 60 * 60UL * MSEC_PER_SEC)
  #define BTRFS_DISCARD_MIN_DELAY_MSEC	(1UL)
  #define BTRFS_DISCARD_MAX_DELAY_MSEC	(1000UL)
--#define BTRFS_DISCARD_MAX_IOPS		(10U)
-+#define BTRFS_DISCARD_MAX_IOPS		(1000U)
+ #define BTRFS_DISCARD_MAX_IOPS		(1000U)
+@@ -577,6 +575,7 @@ void btrfs_discard_calc_delay(struct btr
+ 	s32 discardable_extents;
+ 	s64 discardable_bytes;
+ 	u32 iops_limit;
++	unsigned long min_delay = BTRFS_DISCARD_MIN_DELAY_MSEC;
+ 	unsigned long delay;
  
- /* Monotonically decreasing minimum length filters after index 0 */
- static int discard_minlen[BTRFS_NR_DISCARD_LISTS] = {
+ 	discardable_extents = atomic_read(&discard_ctl->discardable_extents);
+@@ -607,13 +606,19 @@ void btrfs_discard_calc_delay(struct btr
+ 	}
+ 
+ 	iops_limit = READ_ONCE(discard_ctl->iops_limit);
+-	if (iops_limit)
++
++	if (iops_limit) {
+ 		delay = MSEC_PER_SEC / iops_limit;
+-	else
+-		delay = BTRFS_DISCARD_TARGET_MSEC / discardable_extents;
++	} else {
++		/*
++		 * Unset iops_limit means go as fast as possible, so allow a
++		 * delay of 0.
++		 */
++		delay = 0;
++		min_delay = 0;
++	}
+ 
+-	delay = clamp(delay, BTRFS_DISCARD_MIN_DELAY_MSEC,
+-		      BTRFS_DISCARD_MAX_DELAY_MSEC);
++	delay = clamp(delay, min_delay, BTRFS_DISCARD_MAX_DELAY_MSEC);
+ 	discard_ctl->delay_ms = delay;
+ 
+ 	spin_unlock(&discard_ctl->lock);
 
 
