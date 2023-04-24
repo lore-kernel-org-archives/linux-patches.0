@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AAE2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C55C433D2;
-	Mon, 24 Apr 2023 13:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EEE2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F96C4339C;
+	Mon, 24 Apr 2023 13:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343222;
-	bh=lDawXoWDR2F3t4rdcviLk+Q6kQALaNFTjcUt/JCKwe0=;
+	s=korg; t=1682343225;
+	bh=tQmjXt9Cc7Z6kWHWMyjev3Vj4rxIBivhPAu7q7T9ULg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LpRcAC5l9u/Tz9j6KrHeZ6IQBkzRRjIrUPhSDdhXjc4qPKhuMEAYRZPuP+nCUaRjt
-	 DCIM9GJjtLWhvYy/sXPLHfOtctF+DDDt4vlILKRuINj8P0KCyhJlLu1rzM1gYaJLyw
-	 vBGLHdGm+nRx8VVq0YKCJeCfsnZdKZ0XGYaV11XI=
+	b=MXN4SMNHxDQ7pG9iwL+VmfSPia7ljYGipDraMfLMmOUqSrhklfK5cpyu1s8vYy0L8
+	 FkKb801fk+2ZdgFs/+oqITogIbv1pFTHcAgE8Uy60Xo+gQfWreLL8ymJym0QUJiv4k
+	 9/08l99Jb1AgZkGzZD2dhxcTrt0cB2xX4rIgsqxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.10 13/68] i40e: fix i40e_setup_misc_vector() error handling
-Date: Mon, 24 Apr 2023 15:17:44 +0200
-Message-Id: <20230424131128.180730186@linuxfoundation.org>
+	Natalia Petrova <n.petrova@fintech.ru>
+Subject: [PATCH 5.10 14/68] mlxfw: fix null-ptr-deref in mlxfw_mfa2_tlv_next()
+Date: Mon, 24 Apr 2023 15:17:45 +0200
+Message-Id: <20230424131128.219540591@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -36,41 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit c86c00c6935505929cc9adb29ddb85e48c71f828 ]
+[ Upstream commit c0e73276f0fcbbd3d4736ba975d7dc7a48791b0c ]
 
-Add error handling of i40e_setup_misc_vector() in i40e_rebuild().
-In case interrupt vectors setup fails do not re-open vsi-s and
-do not bring up vf-s, we have no interrupts to serve a traffic
-anyway.
+Function mlxfw_mfa2_tlv_multi_get() returns NULL if 'tlv' in
+question does not pass checks in mlxfw_mfa2_tlv_payload_get(). This
+behaviour may lead to NULL pointer dereference in 'multi->total_len'.
+Fix this issue by testing mlxfw_mfa2_tlv_multi_get()'s return value
+against NULL.
 
-Fixes: 41c445ff0f48 ("i40e: main driver core")
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 410ed13cae39 ("Add the mlxfw module for Mellanox firmware flash process")
+Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20230417120718.52325-1-n.zhandarovich@fintech.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 3a93d538b2d73..d23a467d0d209 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -10448,8 +10448,11 @@ static void i40e_rebuild(struct i40e_pf *pf, bool reinit, bool lock_acquired)
- 					     pf->hw.aq.asq_last_status));
- 	}
- 	/* reinit the misc interrupt */
--	if (pf->flags & I40E_FLAG_MSIX_ENABLED)
-+	if (pf->flags & I40E_FLAG_MSIX_ENABLED) {
- 		ret = i40e_setup_misc_vector(pf);
-+		if (ret)
-+			goto end_unlock;
-+	}
+diff --git a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
+index 017d68f1e1232..972c571b41587 100644
+--- a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
++++ b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
+@@ -31,6 +31,8 @@ mlxfw_mfa2_tlv_next(const struct mlxfw_mfa2_file *mfa2_file,
  
- 	/* Add a filter to drop all Flow control frames from any VSI from being
- 	 * transmitted. By doing so we stop a malicious VF from sending out
+ 	if (tlv->type == MLXFW_MFA2_TLV_MULTI_PART) {
+ 		multi = mlxfw_mfa2_tlv_multi_get(mfa2_file, tlv);
++		if (!multi)
++			return NULL;
+ 		tlv_len = NLA_ALIGN(tlv_len + be16_to_cpu(multi->total_len));
+ 	}
+ 
 -- 
 2.39.2
 
