@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D557C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AD8C433D2;
-	Mon, 24 Apr 2023 13:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519F27C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9D7C433D2;
+	Mon, 24 Apr 2023 13:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342595;
-	bh=EqN+rzAmug3lRlQTcmQ3dsyGdyHFe3qtIiSP2R5edUM=;
+	s=korg; t=1682342598;
+	bh=ny6Sq3rBegr73NZMSw6IoC0xZyZOd1Ii7Sfts8o4hkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1kHnt4rUq6e7HGFoQM7+EckYAI7TUpol5unSKHGnbXz7tI8JEAz8rJ03JLviy4Eg
-	 Jg1/ZTLfvvnKXOB/q5LWLYW117eXcIXFATDMfTRu5GkzEnk8MYmAM9LT/Bqk6U8/Bn
-	 CKsBhnC1jv5mqUw3CwKaNOoOCMm7Q+pr/Ahq44xg=
+	b=i5U3MHaHZSrKx3/H62WOUdAm6/5etqZJaMWjuQtQtddsSEzr8dI28CTuweqSFD8DF
+	 Cs1j76RnKJFzSbTEYccJIOKvPKgrT/AYXM7h6sl6+xr9MeEZ4KSbJhfK9WfYS57khf
+	 4mmq16HYo15oI3RLbfWWHeASVan5XBXXHBgYk1R8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <maximlevitsky@gmail.com>,
-	Alex Dubov <oakad@yahoo.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Kay Sievers <kay.sievers@vrfy.org>,
-	linux-mmc@vger.kernel.org,
-	stable <stable@kernel.org>,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Subject: [PATCH 5.4 24/39] memstick: fix memory leak if card device is never registered
-Date: Mon, 24 Apr 2023 15:17:27 +0200
-Message-Id: <20230424131123.971772094@linuxfoundation.org>
+	Bhavya Kapoor <b-kapoor@ti.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 25/39] mmc: sdhci_am654: Set HIGH_SPEED_ENA for SDR12 and SDR25
+Date: Mon, 24 Apr 2023 15:17:28 +0200
+Message-Id: <20230424131124.014273230@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
 References: <20230424131123.040556994@linuxfoundation.org>
@@ -41,61 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Bhavya Kapoor <b-kapoor@ti.com>
 
-commit 4b6d621c9d859ff89e68cebf6178652592676013 upstream.
+commit 2265098fd6a6272fde3fd1be5761f2f5895bd99a upstream.
 
-When calling dev_set_name() memory is allocated for the name for the
-struct device.  Once that structure device is registered, or attempted
-to be registerd, with the driver core, the driver core will handle
-cleaning up that memory when the device is removed from the system.
+Timing Information in Datasheet assumes that HIGH_SPEED_ENA=1 should be
+set for SDR12 and SDR25 modes. But sdhci_am654 driver clears
+HIGH_SPEED_ENA register. Thus, Modify sdhci_am654 to not clear
+HIGH_SPEED_ENA (HOST_CONTROL[2]) bit for SDR12 and SDR25 speed modes.
 
-Unfortunatly for the memstick code, there is an error path that causes
-the struct device to never be registered, and so the memory allocated in
-dev_set_name will be leaked.  Fix that leak by manually freeing it right
-before the memory for the device is freed.
-
-Cc: Maxim Levitsky <maximlevitsky@gmail.com>
-Cc: Alex Dubov <oakad@yahoo.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Kay Sievers <kay.sievers@vrfy.org>
-Cc: linux-mmc@vger.kernel.org
-Fixes: 0252c3b4f018 ("memstick: struct device - replace bus_id with dev_name(), dev_set_name()")
-Cc: stable <stable@kernel.org>
-Co-developed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Co-developed-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Link: https://lore.kernel.org/r/20230401200327.16800-1-gregkh@linuxfoundation.org
+Fixes: e374e87538f4 ("mmc: sdhci_am654: Clear HISPD_ENA in some lower speed modes")
+Signed-off-by: Bhavya Kapoor <b-kapoor@ti.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230317092711.660897-1-b-kapoor@ti.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memstick/core/memstick.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci_am654.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/memstick/core/memstick.c
-+++ b/drivers/memstick/core/memstick.c
-@@ -412,6 +412,7 @@ static struct memstick_dev *memstick_all
- 	return card;
- err_out:
- 	host->card = old_card;
-+	kfree_const(card->dev.kobj.name);
- 	kfree(card);
- 	return NULL;
- }
-@@ -470,8 +471,10 @@ static void memstick_check(struct work_s
- 				put_device(&card->dev);
- 				host->card = NULL;
- 			}
--		} else
-+		} else {
-+			kfree_const(card->dev.kobj.name);
- 			kfree(card);
-+		}
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -227,8 +227,6 @@ static void sdhci_am654_write_b(struct s
+ 		 */
+ 		case MMC_TIMING_SD_HS:
+ 		case MMC_TIMING_MMC_HS:
+-		case MMC_TIMING_UHS_SDR12:
+-		case MMC_TIMING_UHS_SDR25:
+ 			val &= ~SDHCI_CTRL_HISPD;
+ 		}
  	}
- 
- out_power_off:
 
 
