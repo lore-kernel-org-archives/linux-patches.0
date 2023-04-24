@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B8E7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:20:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90856C433D2;
-	Mon, 24 Apr 2023 13:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B957C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:20:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB36C433EF;
+	Mon, 24 Apr 2023 13:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342441;
-	bh=uV5UIvePZCSa75PsMKVa1RxsnhIX6eqLL9nqbRq7kgQ=;
+	s=korg; t=1682342444;
+	bh=f+RfwfcYOEofk3mFyHM16hFlSGfFoGNS42yTFlfIl4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZC3tzwYGv156cTcM1aRIQgS4jaSf3DbapGrgeAXaR8J1TIWnJx+Y4U5yoOlbulGz5
-	 3RAnh54E5qmKhmMrQdwH7bDmwbleo+dBVC33T7SJjZuNYW2M+ONRtpHtLrzw7hhmzg
-	 naXQYMeXmctEvhW0sa44Snsw4wIO2acj57xo87Jc=
+	b=J3vnwD7eVhR/K23Yi4Iu8AC8cumjWzRa76wjO3aoL5zJe2mWpnbb4yl9GxWbEwW7P
+	 Vmcp2W/+NQDCy3Mb/QjEW665k6HedQxtokNDEhoLhQ6f9Pw2fmj6ezHQRsAttc2CE+
+	 ANPzl69vZE5W4HAREYT/12Qv47G1Xs3TGAIS9rLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 40/73] kernel/sys.c: fix and improve control flow in __sys_setres[ug]id()
-Date: Mon, 24 Apr 2023 15:16:54 +0200
-Message-Id: <20230424131130.450544873@linuxfoundation.org>
+	Bhavya Kapoor <b-kapoor@ti.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 41/73] mmc: sdhci_am654: Set HIGH_SPEED_ENA for SDR12 and SDR25
+Date: Mon, 24 Apr 2023 15:16:55 +0200
+Message-Id: <20230424131130.480067768@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -35,151 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Bhavya Kapoor <b-kapoor@ti.com>
 
-commit 659c0ce1cb9efc7f58d380ca4bb2a51ae9e30553 upstream.
+commit 2265098fd6a6272fde3fd1be5761f2f5895bd99a upstream.
 
-Linux Security Modules (LSMs) that implement the "capable" hook will
-usually emit an access denial message to the audit log whenever they
-"block" the current task from using the given capability based on their
-security policy.
+Timing Information in Datasheet assumes that HIGH_SPEED_ENA=1 should be
+set for SDR12 and SDR25 modes. But sdhci_am654 driver clears
+HIGH_SPEED_ENA register. Thus, Modify sdhci_am654 to not clear
+HIGH_SPEED_ENA (HOST_CONTROL[2]) bit for SDR12 and SDR25 speed modes.
 
-The occurrence of a denial is used as an indication that the given task
-has attempted an operation that requires the given access permission, so
-the callers of functions that perform LSM permission checks must take care
-to avoid calling them too early (before it is decided if the permission is
-actually needed to perform the requested operation).
-
-The __sys_setres[ug]id() functions violate this convention by first
-calling ns_capable_setid() and only then checking if the operation
-requires the capability or not.  It means that any caller that has the
-capability granted by DAC (task's capability set) but not by MAC (LSMs)
-will generate a "denied" audit record, even if is doing an operation for
-which the capability is not required.
-
-Fix this by reordering the checks such that ns_capable_setid() is checked
-last and -EPERM is returned immediately if it returns false.
-
-While there, also do two small optimizations:
-* move the capability check before prepare_creds() and
-* bail out early in case of a no-op.
-
-Link: https://lkml.kernel.org/r/20230217162154.837549-1-omosnace@redhat.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e374e87538f4 ("mmc: sdhci_am654: Clear HISPD_ENA in some lower speed modes")
+Signed-off-by: Bhavya Kapoor <b-kapoor@ti.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230317092711.660897-1-b-kapoor@ti.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sys.c |   69 ++++++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 40 insertions(+), 29 deletions(-)
+ drivers/mmc/host/sdhci_am654.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/kernel/sys.c
-+++ b/kernel/sys.c
-@@ -656,6 +656,7 @@ long __sys_setresuid(uid_t ruid, uid_t e
- 	struct cred *new;
- 	int retval;
- 	kuid_t kruid, keuid, ksuid;
-+	bool ruid_new, euid_new, suid_new;
- 
- 	kruid = make_kuid(ns, ruid);
- 	keuid = make_kuid(ns, euid);
-@@ -670,25 +671,29 @@ long __sys_setresuid(uid_t ruid, uid_t e
- 	if ((suid != (uid_t) -1) && !uid_valid(ksuid))
- 		return -EINVAL;
- 
-+	old = current_cred();
-+
-+	/* check for no-op */
-+	if ((ruid == (uid_t) -1 || uid_eq(kruid, old->uid)) &&
-+	    (euid == (uid_t) -1 || (uid_eq(keuid, old->euid) &&
-+				    uid_eq(keuid, old->fsuid))) &&
-+	    (suid == (uid_t) -1 || uid_eq(ksuid, old->suid)))
-+		return 0;
-+
-+	ruid_new = ruid != (uid_t) -1        && !uid_eq(kruid, old->uid) &&
-+		   !uid_eq(kruid, old->euid) && !uid_eq(kruid, old->suid);
-+	euid_new = euid != (uid_t) -1        && !uid_eq(keuid, old->uid) &&
-+		   !uid_eq(keuid, old->euid) && !uid_eq(keuid, old->suid);
-+	suid_new = suid != (uid_t) -1        && !uid_eq(ksuid, old->uid) &&
-+		   !uid_eq(ksuid, old->euid) && !uid_eq(ksuid, old->suid);
-+	if ((ruid_new || euid_new || suid_new) &&
-+	    !ns_capable_setid(old->user_ns, CAP_SETUID))
-+		return -EPERM;
-+
- 	new = prepare_creds();
- 	if (!new)
- 		return -ENOMEM;
- 
--	old = current_cred();
--
--	retval = -EPERM;
--	if (!ns_capable_setid(old->user_ns, CAP_SETUID)) {
--		if (ruid != (uid_t) -1        && !uid_eq(kruid, old->uid) &&
--		    !uid_eq(kruid, old->euid) && !uid_eq(kruid, old->suid))
--			goto error;
--		if (euid != (uid_t) -1        && !uid_eq(keuid, old->uid) &&
--		    !uid_eq(keuid, old->euid) && !uid_eq(keuid, old->suid))
--			goto error;
--		if (suid != (uid_t) -1        && !uid_eq(ksuid, old->uid) &&
--		    !uid_eq(ksuid, old->euid) && !uid_eq(ksuid, old->suid))
--			goto error;
--	}
--
- 	if (ruid != (uid_t) -1) {
- 		new->uid = kruid;
- 		if (!uid_eq(kruid, old->uid)) {
-@@ -753,6 +758,7 @@ long __sys_setresgid(gid_t rgid, gid_t e
- 	struct cred *new;
- 	int retval;
- 	kgid_t krgid, kegid, ksgid;
-+	bool rgid_new, egid_new, sgid_new;
- 
- 	krgid = make_kgid(ns, rgid);
- 	kegid = make_kgid(ns, egid);
-@@ -765,23 +771,28 @@ long __sys_setresgid(gid_t rgid, gid_t e
- 	if ((sgid != (gid_t) -1) && !gid_valid(ksgid))
- 		return -EINVAL;
- 
-+	old = current_cred();
-+
-+	/* check for no-op */
-+	if ((rgid == (gid_t) -1 || gid_eq(krgid, old->gid)) &&
-+	    (egid == (gid_t) -1 || (gid_eq(kegid, old->egid) &&
-+				    gid_eq(kegid, old->fsgid))) &&
-+	    (sgid == (gid_t) -1 || gid_eq(ksgid, old->sgid)))
-+		return 0;
-+
-+	rgid_new = rgid != (gid_t) -1        && !gid_eq(krgid, old->gid) &&
-+		   !gid_eq(krgid, old->egid) && !gid_eq(krgid, old->sgid);
-+	egid_new = egid != (gid_t) -1        && !gid_eq(kegid, old->gid) &&
-+		   !gid_eq(kegid, old->egid) && !gid_eq(kegid, old->sgid);
-+	sgid_new = sgid != (gid_t) -1        && !gid_eq(ksgid, old->gid) &&
-+		   !gid_eq(ksgid, old->egid) && !gid_eq(ksgid, old->sgid);
-+	if ((rgid_new || egid_new || sgid_new) &&
-+	    !ns_capable_setid(old->user_ns, CAP_SETGID))
-+		return -EPERM;
-+
- 	new = prepare_creds();
- 	if (!new)
- 		return -ENOMEM;
--	old = current_cred();
--
--	retval = -EPERM;
--	if (!ns_capable_setid(old->user_ns, CAP_SETGID)) {
--		if (rgid != (gid_t) -1        && !gid_eq(krgid, old->gid) &&
--		    !gid_eq(krgid, old->egid) && !gid_eq(krgid, old->sgid))
--			goto error;
--		if (egid != (gid_t) -1        && !gid_eq(kegid, old->gid) &&
--		    !gid_eq(kegid, old->egid) && !gid_eq(kegid, old->sgid))
--			goto error;
--		if (sgid != (gid_t) -1        && !gid_eq(ksgid, old->gid) &&
--		    !gid_eq(ksgid, old->egid) && !gid_eq(ksgid, old->sgid))
--			goto error;
--	}
- 
- 	if (rgid != (gid_t) -1)
- 		new->gid = krgid;
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -351,8 +351,6 @@ static void sdhci_am654_write_b(struct s
+ 		 */
+ 		case MMC_TIMING_SD_HS:
+ 		case MMC_TIMING_MMC_HS:
+-		case MMC_TIMING_UHS_SDR12:
+-		case MMC_TIMING_UHS_SDR25:
+ 			val &= ~SDHCI_CTRL_HISPD;
+ 		}
+ 	}
 
 
