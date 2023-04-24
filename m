@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027C42108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:36:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B99EC4339B;
-	Mon, 24 Apr 2023 13:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DE52108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:36:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CCAC433EF;
+	Mon, 24 Apr 2023 13:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343359;
-	bh=VFBQkRXoFMtDfl9zLkTX692jLZiolvDNeBAtjuePkEk=;
+	s=korg; t=1682343362;
+	bh=k7ACBvInpBKAV6FXxXrjZ+wokD8+9sgV5Lw8IcOR0Tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msMP8vzYRm82TLbXVGcvm7llePKuuSzbNotJ7zRv56oWhHm4JrrShisXEuBl6VdcJ
-	 v2AGO0veguAUT1hR6KZ3uj7SExAjPKF5CZ85teQHAEj9p9ojAKhU45OhdFqLnqGOGR
-	 rJISRQATQ4OjVtmeWVtRjuf5kCYXQUSMg+oxGn/0=
+	b=srICt9M4It94yI4Tq7KgcYGxyEH/mdxh+Yqkk3mxYBHa30IWx29YjIxjJkZNnc2GC
+	 3NTWVdteyn3B5iM6bsMR0qqdohZxd9lyRC5HcFcI/snqnFFP1Le4hMbFSQqJjCvojR
+	 wICd3wb5fnYXk5VAo0yNZRlaz+JPEHkgnNxe9xI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	thierry.reding@gmail.com,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 5.10 65/68] pwm: hibvt: Explicitly set .polarity in .get_state()
-Date: Mon, 24 Apr 2023 15:18:36 +0200
-Message-Id: <20230424131130.113716221@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 66/68] iio: adc: at91-sama5d2_adc: fix an error code in at91_adc_allocate_trigger()
+Date: Mon, 24 Apr 2023 15:18:37 +0200
+Message-Id: <20230424131130.151489762@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -34,33 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Uwe Kleine-K�nig" <u.kleine-koenig@pengutronix.de>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 6f57937980142715e927697a6ffd2050f38ed6f6 ]
+commit 73a428b37b9b538f8f8fe61caa45e7f243bab87c upstream.
 
-The driver only both polarities. Complete the implementation of
-.get_state() by setting .polarity according to the configured hardware
-state.
+The at91_adc_allocate_trigger() function is supposed to return error
+pointers.  Returning a NULL will cause an Oops.
 
-Fixes: d09f00810850 ("pwm: Add PWM driver for HiSilicon BVT SOCs")
-Link: https://lore.kernel.org/r/20230228135508.1798428-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 5e1a1da0f8c9 ("iio: adc: at91-sama5d2_adc: add hw trigger and buffer support")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/5d728f9d-31d1-410d-a0b3-df6a63a2c8ba@kili.mountain
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-hibvt.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/at91-sama5d2_adc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pwm/pwm-hibvt.c
-+++ b/drivers/pwm/pwm-hibvt.c
-@@ -146,6 +146,7 @@ static void hibvt_pwm_get_state(struct p
+--- a/drivers/iio/adc/at91-sama5d2_adc.c
++++ b/drivers/iio/adc/at91-sama5d2_adc.c
+@@ -1002,7 +1002,7 @@ static struct iio_trigger *at91_adc_allo
+ 	trig = devm_iio_trigger_alloc(&indio->dev, "%s-dev%d-%s", indio->name,
+ 				      indio->id, trigger_name);
+ 	if (!trig)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
  
- 	value = readl(base + PWM_CTRL_ADDR(pwm->hwpwm));
- 	state->enabled = (PWM_ENABLE_MASK & value);
-+	state->polarity = (PWM_POLARITY_MASK & value) ? PWM_POLARITY_INVERSED : PWM_POLARITY_NORMAL;
- }
- 
- static int hibvt_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	trig->dev.parent = indio->dev.parent;
+ 	iio_trigger_set_drvdata(trig, indio);
 
 
