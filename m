@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFF27C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA0DC4339B;
-	Mon, 24 Apr 2023 13:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18447C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462C0C433D2;
+	Mon, 24 Apr 2023 13:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342627;
-	bh=XGwq8GQxWLk+9uzGbp+aURTXhAaHwDgKbZH2ki201Ic=;
+	s=korg; t=1682342629;
+	bh=IlfGK9Hx11FEog89R98f1zXdR9DIdGBgRcWwlNdTSj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U+WstsmDh/fGziFnwbddA78snAab8Jgrlkavw0jEmW6fRrbGqtT11EFR0SyWUFOeb
-	 dtY7qmJW8iJxo3Gq2dWC6+KISle8PhbHkky8j3vLZDvzV9jWfJDQz/NFJP4Zff6kaz
-	 Z+gZmlSFbpYoqDFunuLyTLlNZVTcjQCDWWtg6nug=
+	b=PVcP6QGPceMXJciQbXdmGQsHB+h3oX0G67ALBU//FabSRrlg9IBiCRtGwmv7RAwmf
+	 CfU4WlPKMUvAGInYWAL79EgshMokwFpMam2RvgpkTV3rhxaN1ARuPcpgx66Id53V45
+	 FxtamhKF59kXweXkgxaqExWi63wNz0bgzwNTp7LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>
-Subject: [PATCH 5.4 35/39] sctp: Call inet6_destroy_sock() via sk->sk_destruct().
-Date: Mon, 24 Apr 2023 15:17:38 +0200
-Message-Id: <20230424131124.376290381@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Gao Xiang <hsiangkao@redhat.com>,
+	"Darrick J. Wong" <darrick.wong@oracle.com>,
+	Chandan Babu R <chandan.babu@oracle.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dennis Gilmore <dgilmore@redhat.com>
+Subject: [PATCH 5.4 36/39] xfs: fix forkoff miscalculation related to XFS_LITINO(mp)
+Date: Mon, 24 Apr 2023 15:17:39 +0200
+Message-Id: <20230424131124.409970063@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
 References: <20230424131123.040556994@linuxfoundation.org>
@@ -35,94 +38,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Gao Xiang <hsiangkao@redhat.com>
 
-commit 6431b0f6ff1633ae598667e4cdd93830074a03e8 upstream.
+commit ada49d64fb3538144192181db05de17e2ffc3551 upstream.
 
-After commit d38afeec26ed ("tcp/udp: Call inet6_destroy_sock()
-in IPv6 sk->sk_destruct()."), we call inet6_destroy_sock() in
-sk->sk_destruct() by setting inet6_sock_destruct() to it to make
-sure we do not leak inet6-specific resources.
+Currently, commit e9e2eae89ddb dropped a (int) decoration from
+XFS_LITINO(mp), and since sizeof() expression is also involved,
+the result of XFS_LITINO(mp) is simply as the size_t type
+(commonly unsigned long).
 
-SCTP sets its own sk->sk_destruct() in the sctp_init_sock(), and
-SCTPv6 socket reuses it as the init function.
+Considering the expression in xfs_attr_shortform_bytesfit():
+  offset = (XFS_LITINO(mp) - bytes) >> 3;
+let "bytes" be (int)340, and
+    "XFS_LITINO(mp)" be (unsigned long)336.
 
-To call inet6_sock_destruct() from SCTPv6 sk->sk_destruct(), we
-set sctp_v6_destruct_sock() in a new init function.
+on 64-bit platform, the expression is
+  offset = ((unsigned long)336 - (int)340) >> 3 =
+           (int)(0xfffffffffffffffcUL >> 3) = -1
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+but on 32-bit platform, the expression is
+  offset = ((unsigned long)336 - (int)340) >> 3 =
+           (int)(0xfffffffcUL >> 3) = 0x1fffffff
+instead.
+
+so offset becomes a large positive number on 32-bit platform, and
+cause xfs_attr_shortform_bytesfit() returns maxforkoff rather than 0.
+
+Therefore, one result is
+  "ASSERT(new_size <= XFS_IFORK_SIZE(ip, whichfork));"
+
+assertion failure in xfs_idata_realloc(), which was also the root
+cause of the original bugreport from Dennis, see:
+   https://bugzilla.redhat.com/show_bug.cgi?id=1894177
+
+And it can also be manually triggered with the following commands:
+  $ touch a;
+  $ setfattr -n user.0 -v "`seq 0 80`" a;
+  $ setfattr -n user.1 -v "`seq 0 80`" a
+
+on 32-bit platform.
+
+Fix the case in xfs_attr_shortform_bytesfit() by bailing out
+"XFS_LITINO(mp) < bytes" in advance suggested by Eric and a misleading
+comment together with this bugfix suggested by Darrick. It seems the
+other users of XFS_LITINO(mp) are not impacted.
+
+Fixes: e9e2eae89ddb ("xfs: only check the superblock version for dinode size calculation")
+Cc: <stable@vger.kernel.org> # 5.7+
+Reported-and-tested-by: Dennis Gilmore <dgilmore@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Gao Xiang <hsiangkao@redhat.com>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/sctp/socket.c |   29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
 
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -5167,13 +5167,17 @@ static void sctp_destroy_sock(struct soc
- }
+---
+ fs/xfs/libxfs/xfs_attr_leaf.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+--- a/fs/xfs/libxfs/xfs_attr_leaf.c
++++ b/fs/xfs/libxfs/xfs_attr_leaf.c
+@@ -435,7 +435,7 @@ xfs_attr_copy_value(
+  *========================================================================*/
  
- /* Triggered when there are no references on the socket anymore */
--static void sctp_destruct_sock(struct sock *sk)
-+static void sctp_destruct_common(struct sock *sk)
- {
- 	struct sctp_sock *sp = sctp_sk(sk);
+ /*
+- * Query whether the requested number of additional bytes of extended
++ * Query whether the total requested number of attr fork bytes of extended
+  * attribute space will be able to fit inline.
+  *
+  * Returns zero if not, else the di_forkoff fork offset to be used in the
+@@ -455,6 +455,12 @@ xfs_attr_shortform_bytesfit(
+ 	int			maxforkoff;
+ 	int			offset;
  
- 	/* Free up the HMAC transform. */
- 	crypto_free_shash(sp->hmac);
-+}
- 
-+static void sctp_destruct_sock(struct sock *sk)
-+{
-+	sctp_destruct_common(sk);
- 	inet_sock_destruct(sk);
- }
- 
-@@ -9308,7 +9312,7 @@ void sctp_copy_sock(struct sock *newsk,
- 	sctp_sk(newsk)->reuse = sp->reuse;
- 
- 	newsk->sk_shutdown = sk->sk_shutdown;
--	newsk->sk_destruct = sctp_destruct_sock;
-+	newsk->sk_destruct = sk->sk_destruct;
- 	newsk->sk_family = sk->sk_family;
- 	newsk->sk_protocol = IPPROTO_SCTP;
- 	newsk->sk_backlog_rcv = sk->sk_prot->backlog_rcv;
-@@ -9539,11 +9543,20 @@ struct proto sctp_prot = {
- 
- #if IS_ENABLED(CONFIG_IPV6)
- 
--#include <net/transp_v6.h>
--static void sctp_v6_destroy_sock(struct sock *sk)
-+static void sctp_v6_destruct_sock(struct sock *sk)
-+{
-+	sctp_destruct_common(sk);
-+	inet6_sock_destruct(sk);
-+}
++	/*
++	 * Check if the new size could fit at all first:
++	 */
++	if (bytes > XFS_LITINO(mp))
++		return 0;
 +
-+static int sctp_v6_init_sock(struct sock *sk)
- {
--	sctp_destroy_sock(sk);
--	inet6_destroy_sock(sk);
-+	int ret = sctp_init_sock(sk);
-+
-+	if (!ret)
-+		sk->sk_destruct = sctp_v6_destruct_sock;
-+
-+	return ret;
- }
+ 	/* rounded down */
+ 	offset = (XFS_LITINO(mp) - bytes) >> 3;
  
- struct proto sctpv6_prot = {
-@@ -9553,8 +9566,8 @@ struct proto sctpv6_prot = {
- 	.disconnect	= sctp_disconnect,
- 	.accept		= sctp_accept,
- 	.ioctl		= sctp_ioctl,
--	.init		= sctp_init_sock,
--	.destroy	= sctp_v6_destroy_sock,
-+	.init		= sctp_v6_init_sock,
-+	.destroy	= sctp_destroy_sock,
- 	.shutdown	= sctp_shutdown,
- 	.setsockopt	= sctp_setsockopt,
- 	.getsockopt	= sctp_getsockopt,
 
 
