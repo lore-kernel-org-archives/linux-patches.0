@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DDD7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F74C433EF;
-	Mon, 24 Apr 2023 13:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719267C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACA3C4339C;
+	Mon, 24 Apr 2023 13:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342478;
-	bh=9qsBXT1RXKXnMQgwUxELknUgr6vmnV05+EAgaC7ZTgg=;
+	s=korg; t=1682342481;
+	bh=brqD9kovKbqqEMZDB77NVyqbOcjN1x5OLnk6UGGxg8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iNg+y2apBHobIi1W2AfMarKuF6rUhZ4LPfuVDPNbvx8MtpZbdp6aZ8nQZzP9bLl9X
-	 UOsMtbSESQQzmX+TyJSx02wTy7159UyMcBIv3y8gYDEVFYNnQXpgkPHvTnHZEOtf1v
-	 eyaY5EjFYHmZTIriU0gcVbhl9G5rDumR5A+WnBuQ=
+	b=wgP5JefELHaToBGbXxPUHN0AK1wPW9qFRd5I8seUxuHp/wEnfdnD/quJ2VyhAwcTo
+	 fdCKXayEamuGtvxMtVGYD6uoWquLrOcGLzvNOe7sCoUKVnpUzXjVyEgYpKqosIgO/N
+	 KNpHidxy7J3byjvHhwqp9Cmjj2pNHzN+m41gGacA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>,
+	Zhang Tianci <zhangtianci.1997@bytedance.com>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	Yang Bo <yb203166@antfin.com>
-Subject: [PATCH 5.15 55/73] fuse: fix attr version comparison in fuse_read_update_size()
-Date: Mon, 24 Apr 2023 15:17:09 +0200
-Message-Id: <20230424131131.062487048@linuxfoundation.org>
+Subject: [PATCH 5.15 56/73] fuse: always revalidate rename target dentry
+Date: Mon, 24 Apr 2023 15:17:10 +0200
+Message-Id: <20230424131131.091971274@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -34,33 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
 
-commit 484ce65715b06aead8c4901f01ca32c5a240bc71 upstream.
+commit ccc031e26afe60d2a5a3d93dabd9c978210825fb upstream.
 
-A READ request returning a short count is taken as indication of EOF, and
-the cached file size is modified accordingly.
+The previous commit df8629af2934 ("fuse: always revalidate if exclusive
+create") ensures that the dentries are revalidated on O_EXCL creates.  This
+commit complements it by also performing revalidation for rename target
+dentries.  Otherwise, a rename target file that only exists in kernel
+dentry cache but not in the filesystem will result in EEXIST if
+RENAME_NOREPLACE flag is used.
 
-Fix the attribute version checking to allow for changes to fc->attr_version
-on other inodes.
-
+Signed-off-by: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
+Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Yang Bo <yb203166@antfin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/file.c |    2 +-
+ fs/fuse/dir.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -793,7 +793,7 @@ static void fuse_read_update_size(struct
- 	struct fuse_inode *fi = get_fuse_inode(inode);
- 
- 	spin_lock(&fi->lock);
--	if (attr_ver == fi->attr_version && size < inode->i_size &&
-+	if (attr_ver >= fi->attr_version && size < inode->i_size &&
- 	    !test_bit(FUSE_I_SIZE_UNSTABLE, &fi->state)) {
- 		fi->attr_version = atomic64_inc_return(&fc->attr_version);
- 		i_size_write(inode, size);
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -205,7 +205,7 @@ static int fuse_dentry_revalidate(struct
+ 	if (inode && fuse_is_bad(inode))
+ 		goto invalid;
+ 	else if (time_before64(fuse_dentry_time(entry), get_jiffies_64()) ||
+-		 (flags & (LOOKUP_EXCL | LOOKUP_REVAL))) {
++		 (flags & (LOOKUP_EXCL | LOOKUP_REVAL | LOOKUP_RENAME_TARGET))) {
+ 		struct fuse_entry_out outarg;
+ 		FUSE_ARGS(args);
+ 		struct fuse_forget_link *forget;
 
 
