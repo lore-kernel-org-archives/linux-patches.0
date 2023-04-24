@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B978A2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3B6C433D2;
-	Mon, 24 Apr 2023 13:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1902108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B91C433EF;
+	Mon, 24 Apr 2023 13:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343135;
-	bh=tKFA7zVSbWCgqVyFcMZtMC5mlMAMW5m/di7ZuoPuMXs=;
+	s=korg; t=1682343138;
+	bh=uwBPoOCCBI8jAOfv+Jqtqs+PfoeF/VqY0RFKiKFpfS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=it9yRr1+pOjmWBa5aXM00eXImNPn/5eN94Xfs6ChXsVkoZqBn54VlMHG8LoF0akH/
-	 sESiWIHoemZCq1m6hK6QX+QJxkSnqcYg76zGSTcx6xXS2m6Ab0NdY7dwgZv7Uvj634
-	 9ZV5+q/8RSbhzH0Qb8AlR+8bQFsuV9muUoMYBjSU=
+	b=xjg9qwx4hQXeWhnV7DckMfc7e4J0nYOZNQCBxNpw6/rRVmi6mhNaKJjCmlpFXOxyk
+	 2m/2/7Sv8kr/aZwUhq5xjLtFaGLgaFnhpn4ka4uGD9b/9TkRB9xW0F87opeHf+LI51
+	 7ftsyjzfp7vBGfTK33ACtIgX2hhTDlKmFfY7RymQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Dipanjan Das <mail.dipanjan.das@gmail.com>,
-	Marco Elver <elver@google.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Yuanxi Liu <y.liu@naruida.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Hildenbrand <david@redhat.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Matthew Wilcox <willy@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 090/110] mm: kmsan: handle alloc failures in kmsan_vmap_pages_range_noflush()
-Date: Mon, 24 Apr 2023 15:17:52 +0200
-Message-Id: <20230424131139.899406466@linuxfoundation.org>
+Subject: [PATCH 6.2 091/110] mm: page_alloc: skip regions with hugetlbfs pages when allocating 1G pages
+Date: Mon, 24 Apr 2023 15:17:53 +0200
+Message-Id: <20230424131139.945247576@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -39,160 +40,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Mel Gorman <mgorman@techsingularity.net>
 
-commit 47ebd0310e89c087f56e58c103c44b72a2f6b216 upstream.
+commit 4d73ba5fa710fe7d432e0b271e6fecd252aef66e upstream.
 
-As reported by Dipanjan Das, when KMSAN is used together with kernel fault
-injection (or, generally, even without the latter), calls to kcalloc() or
-__vmap_pages_range_noflush() may fail, leaving the metadata mappings for
-the virtual mapping in an inconsistent state.  When these metadata
-mappings are accessed later, the kernel crashes.
+A bug was reported by Yuanxi Liu where allocating 1G pages at runtime is
+taking an excessive amount of time for large amounts of memory.  Further
+testing allocating huge pages that the cost is linear i.e.  if allocating
+1G pages in batches of 10 then the time to allocate nr_hugepages from
+10->20->30->etc increases linearly even though 10 pages are allocated at
+each step.  Profiles indicated that much of the time is spent checking the
+validity within already existing huge pages and then attempting a
+migration that fails after isolating the range, draining pages and a whole
+lot of other useless work.
 
-To address the problem, we return a non-zero error code from
-kmsan_vmap_pages_range_noflush() in the case of any allocation/mapping
-failure inside it, and make vmap_pages_range_noflush() return an error if
-KMSAN fails to allocate the metadata.
+Commit eb14d4eefdc4 ("mm,page_alloc: drop unnecessary checks from
+pfn_range_valid_contig") removed two checks, one which ignored huge pages
+for contiguous allocations as huge pages can sometimes migrate.  While
+there may be value on migrating a 2M page to satisfy a 1G allocation, it's
+potentially expensive if the 1G allocation fails and it's pointless to try
+moving a 1G page for a new 1G allocation or scan the tail pages for valid
+PFNs.
 
-This patch also removes KMSAN_WARN_ON() from vmap_pages_range_noflush(),
-as these allocation failures are not fatal anymore.
+Reintroduce the PageHuge check and assume any contiguous region with
+hugetlbfs pages is unsuitable for a new 1G allocation.
 
-Link: https://lkml.kernel.org/r/20230413131223.4135168-1-glider@google.com
-Fixes: b073d7f8aee4 ("mm: kmsan: maintain KMSAN metadata for page operations")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reported-by: Dipanjan Das <mail.dipanjan.das@gmail.com>
-  Link: https://lore.kernel.org/linux-mm/CANX2M5ZRrRA64k0hOif02TjmY9kbbO2aCBPyq79es34RXZ=cAw@mail.gmail.com/
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Uladzislau Rezki (Sony) <urezki@gmail.com>
+The hpagealloc test allocates huge pages in batches and reports the
+average latency per page over time.  This test happens just after boot
+when fragmentation is not an issue.  Units are in milliseconds.
+
+hpagealloc
+                               6.3.0-rc6              6.3.0-rc6              6.3.0-rc6
+                                 vanilla   hugeallocrevert-v1r1   hugeallocsimple-v1r2
+Min       Latency       26.42 (   0.00%)        5.07 (  80.82%)       18.94 (  28.30%)
+1st-qrtle Latency      356.61 (   0.00%)        5.34 (  98.50%)       19.85 (  94.43%)
+2nd-qrtle Latency      697.26 (   0.00%)        5.47 (  99.22%)       20.44 (  97.07%)
+3rd-qrtle Latency      972.94 (   0.00%)        5.50 (  99.43%)       20.81 (  97.86%)
+Max-1     Latency       26.42 (   0.00%)        5.07 (  80.82%)       18.94 (  28.30%)
+Max-5     Latency       82.14 (   0.00%)        5.11 (  93.78%)       19.31 (  76.49%)
+Max-10    Latency      150.54 (   0.00%)        5.20 (  96.55%)       19.43 (  87.09%)
+Max-90    Latency     1164.45 (   0.00%)        5.53 (  99.52%)       20.97 (  98.20%)
+Max-95    Latency     1223.06 (   0.00%)        5.55 (  99.55%)       21.06 (  98.28%)
+Max-99    Latency     1278.67 (   0.00%)        5.57 (  99.56%)       22.56 (  98.24%)
+Max       Latency     1310.90 (   0.00%)        8.06 (  99.39%)       26.62 (  97.97%)
+Amean     Latency      678.36 (   0.00%)        5.44 *  99.20%*       20.44 *  96.99%*
+
+                   6.3.0-rc6   6.3.0-rc6   6.3.0-rc6
+                     vanilla   revert-v1   hugeallocfix-v2
+Duration User           0.28        0.27        0.30
+Duration System       808.66       17.77       35.99
+Duration Elapsed      830.87       18.08       36.33
+
+The vanilla kernel is poor, taking up to 1.3 second to allocate a huge
+page and almost 10 minutes in total to run the test.  Reverting the
+problematic commit reduces it to 8ms at worst and the patch takes 26ms.
+This patch fixes the main issue with skipping huge pages but leaves the
+page_count() out because a page with an elevated count potentially can
+migrate.
+
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=217022
+Link: https://lkml.kernel.org/r/20230414141429.pwgieuwluxwez3rj@techsingularity.net
+Fixes: eb14d4eefdc4 ("mm,page_alloc: drop unnecessary checks from pfn_range_valid_contig")
+Signed-off-by: Mel Gorman <mgorman@techsingularity.net>
+Reported-by: Yuanxi Liu <y.liu@naruida.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: Matthew Wilcox <willy@infradead.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kmsan.h |   20 +++++++++++---------
- mm/kmsan/shadow.c     |   27 ++++++++++++++++++---------
- mm/vmalloc.c          |    6 +++++-
- 3 files changed, 34 insertions(+), 19 deletions(-)
+ mm/page_alloc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/include/linux/kmsan.h
-+++ b/include/linux/kmsan.h
-@@ -134,11 +134,12 @@ void kmsan_kfree_large(const void *ptr);
-  * @page_shift:	page_shift passed to vmap_range_noflush().
-  *
-  * KMSAN maps shadow and origin pages of @pages into contiguous ranges in
-- * vmalloc metadata address range.
-+ * vmalloc metadata address range. Returns 0 on success, callers must check
-+ * for non-zero return value.
-  */
--void kmsan_vmap_pages_range_noflush(unsigned long start, unsigned long end,
--				    pgprot_t prot, struct page **pages,
--				    unsigned int page_shift);
-+int kmsan_vmap_pages_range_noflush(unsigned long start, unsigned long end,
-+				   pgprot_t prot, struct page **pages,
-+				   unsigned int page_shift);
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -9407,6 +9407,9 @@ static bool pfn_range_valid_contig(struc
  
- /**
-  * kmsan_vunmap_kernel_range_noflush() - Notify KMSAN about a vunmap.
-@@ -282,12 +283,13 @@ static inline void kmsan_kfree_large(con
- {
- }
- 
--static inline void kmsan_vmap_pages_range_noflush(unsigned long start,
--						  unsigned long end,
--						  pgprot_t prot,
--						  struct page **pages,
--						  unsigned int page_shift)
-+static inline int kmsan_vmap_pages_range_noflush(unsigned long start,
-+						 unsigned long end,
-+						 pgprot_t prot,
-+						 struct page **pages,
-+						 unsigned int page_shift)
- {
-+	return 0;
- }
- 
- static inline void kmsan_vunmap_range_noflush(unsigned long start,
---- a/mm/kmsan/shadow.c
-+++ b/mm/kmsan/shadow.c
-@@ -216,27 +216,29 @@ void kmsan_free_page(struct page *page,
- 	kmsan_leave_runtime();
- }
- 
--void kmsan_vmap_pages_range_noflush(unsigned long start, unsigned long end,
--				    pgprot_t prot, struct page **pages,
--				    unsigned int page_shift)
-+int kmsan_vmap_pages_range_noflush(unsigned long start, unsigned long end,
-+				   pgprot_t prot, struct page **pages,
-+				   unsigned int page_shift)
- {
- 	unsigned long shadow_start, origin_start, shadow_end, origin_end;
- 	struct page **s_pages, **o_pages;
--	int nr, mapped;
-+	int nr, mapped, err = 0;
- 
- 	if (!kmsan_enabled)
--		return;
-+		return 0;
- 
- 	shadow_start = vmalloc_meta((void *)start, KMSAN_META_SHADOW);
- 	shadow_end = vmalloc_meta((void *)end, KMSAN_META_SHADOW);
- 	if (!shadow_start)
--		return;
-+		return 0;
- 
- 	nr = (end - start) / PAGE_SIZE;
- 	s_pages = kcalloc(nr, sizeof(*s_pages), GFP_KERNEL);
- 	o_pages = kcalloc(nr, sizeof(*o_pages), GFP_KERNEL);
--	if (!s_pages || !o_pages)
-+	if (!s_pages || !o_pages) {
-+		err = -ENOMEM;
- 		goto ret;
-+	}
- 	for (int i = 0; i < nr; i++) {
- 		s_pages[i] = shadow_page_for(pages[i]);
- 		o_pages[i] = origin_page_for(pages[i]);
-@@ -249,10 +251,16 @@ void kmsan_vmap_pages_range_noflush(unsi
- 	kmsan_enter_runtime();
- 	mapped = __vmap_pages_range_noflush(shadow_start, shadow_end, prot,
- 					    s_pages, page_shift);
--	KMSAN_WARN_ON(mapped);
-+	if (mapped) {
-+		err = mapped;
-+		goto ret;
-+	}
- 	mapped = __vmap_pages_range_noflush(origin_start, origin_end, prot,
- 					    o_pages, page_shift);
--	KMSAN_WARN_ON(mapped);
-+	if (mapped) {
-+		err = mapped;
-+		goto ret;
-+	}
- 	kmsan_leave_runtime();
- 	flush_tlb_kernel_range(shadow_start, shadow_end);
- 	flush_tlb_kernel_range(origin_start, origin_end);
-@@ -262,6 +270,7 @@ void kmsan_vmap_pages_range_noflush(unsi
- ret:
- 	kfree(s_pages);
- 	kfree(o_pages);
-+	return err;
- }
- 
- /* Allocate metadata for pages allocated at boot time. */
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -616,7 +616,11 @@ int __vmap_pages_range_noflush(unsigned
- int vmap_pages_range_noflush(unsigned long addr, unsigned long end,
- 		pgprot_t prot, struct page **pages, unsigned int page_shift)
- {
--	kmsan_vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
-+	int ret = kmsan_vmap_pages_range_noflush(addr, end, prot, pages,
-+						 page_shift);
+ 		if (PageReserved(page))
+ 			return false;
 +
-+	if (ret)
-+		return ret;
- 	return __vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
++		if (PageHuge(page))
++			return false;
+ 	}
+ 	return true;
  }
- 
 
 
