@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454E57C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:28:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17B0C433D2;
-	Mon, 24 Apr 2023 13:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869137C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:28:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8DFC433D2;
+	Mon, 24 Apr 2023 13:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342880;
-	bh=PPwxJBYzorSjWbwgdGjfpnxbSvSYCmt3OflGBLHn93g=;
+	s=korg; t=1682342885;
+	bh=E5MLtgRyfqBoZdloFp77SgptROvj0OSsfz/NoVgW8Ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gf/bovsGBFknGWzZminqpYfON4gopE1O7y063qGQdpH1bbGayS/mVbk9Z7eyt0QBn
-	 AO8slvLs9oTwchaIJJc3zLHkyLHKomkxrokcjYdS3EtayeznfIZpfFxfO0B5tkN0vd
-	 bARJrIkOfykCqVXbGgi+rOvG6zU7L2ku965JRgz0=
+	b=T7ZAtDI7wgj1SVjrRefF0lbDknCfMShvihMYx3aJUTkGDOoTrb2HKhH0cuxpfzB0w
+	 Zp4Xv20sZ1KUD/gU64lNgNq2elwxGpSzKj3tTJJph0Y/iQf3vnji8qbaxMW8sZkhuD
+	 aE6+ahoE9qT+j9WorEY/vAvR0ovac8SMSotYQiJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Xu Yilun <yilun.xu@intel.com>
-Subject: [PATCH 6.1 93/98] fpga: bridge: properly initialize bridge device before populating children
-Date: Mon, 24 Apr 2023 15:17:56 +0200
-Message-Id: <20230424131137.504258603@linuxfoundation.org>
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 95/98] ASoC: SOF: pm: Tear down pipelines only if DSP was active
+Date: Mon, 24 Apr 2023 15:17:58 +0200
+Message-Id: <20230424131137.577717904@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -34,53 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: Daniel Baluta <daniel.baluta@nxp.com>
 
-commit dc70eb868b9cd2ca01313e5a394e6ea001d513e9 upstream.
+commit 0b186bb06198653d74a141902a7739e0bde20cf4 upstream.
 
-The current code path can lead to warnings because of uninitialized device,
-which contains, as a consequence, uninitialized kobject. The uninitialized
-device is passed to of_platform_populate, which will at some point, while
-creating child device, try to get a reference on uninitialized parent,
-resulting in the following warning:
+With PCI if the device was suspended it is brought back to full
+power and then suspended again.
 
-kobject: '(null)' ((ptrval)): is not initialized, yet kobject_get() is
-being called.
+This doesn't happen when device is described via DT.
 
-The warning is observed after migrating a kernel 5.10.x to 6.1.x.
-Reverting commit 0d70af3c2530 ("fpga: bridge: Use standard dev_release for
-class driver") seems to remove the warning.
-This commit aggregates device_initialize() and device_add() into
-device_register() but this new call is done AFTER of_platform_populate
+We need to make sure that we tear down pipelines only if the device
+was previously active (thus the pipelines were setup).
 
-Fixes: 0d70af3c2530 ("fpga: bridge: Use standard dev_release for class driver")
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Acked-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20230404133102.2837535-2-alexis.lothore@bootlin.com
-Signed-off-by: Xu Yilun <yilun.xu@intel.com>
+Otherwise, we can break the use_count:
+
+[  219.009743] sof-audio-of-imx8m 3b6e8000.dsp:
+sof_ipc3_tear_down_all_pipelines: widget PIPELINE.2.SAI3.IN is still in use: count -1
+
+and after this everything stops working.
+
+Fixes: d185e0689abc ("ASoC: SOF: pm: Always tear down pipelines before DSP suspend")
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://lore.kernel.org/r/20230405092655.19587-1-daniel.baluta@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/fpga-bridge.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/sof/pm.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/fpga/fpga-bridge.c
-+++ b/drivers/fpga/fpga-bridge.c
-@@ -360,7 +360,6 @@ fpga_bridge_register(struct device *pare
- 	bridge->dev.parent = parent;
- 	bridge->dev.of_node = parent->of_node;
- 	bridge->dev.id = id;
--	of_platform_populate(bridge->dev.of_node, NULL, NULL, &bridge->dev);
+--- a/sound/soc/sof/pm.c
++++ b/sound/soc/sof/pm.c
+@@ -183,6 +183,7 @@ static int sof_suspend(struct device *de
+ 	const struct sof_ipc_tplg_ops *tplg_ops = sdev->ipc->ops->tplg;
+ 	pm_message_t pm_state;
+ 	u32 target_state = snd_sof_dsp_power_target(sdev);
++	u32 old_state = sdev->dsp_power_state.state;
+ 	int ret;
  
- 	ret = dev_set_name(&bridge->dev, "br%d", id);
- 	if (ret)
-@@ -372,6 +371,8 @@ fpga_bridge_register(struct device *pare
- 		return ERR_PTR(ret);
- 	}
+ 	/* do nothing if dsp suspend callback is not set */
+@@ -192,7 +193,12 @@ static int sof_suspend(struct device *de
+ 	if (runtime_suspend && !sof_ops(sdev)->runtime_suspend)
+ 		return 0;
  
-+	of_platform_populate(bridge->dev.of_node, NULL, NULL, &bridge->dev);
-+
- 	return bridge;
+-	if (tplg_ops && tplg_ops->tear_down_all_pipelines)
++	/* we need to tear down pipelines only if the DSP hardware is
++	 * active, which happens for PCI devices. if the device is
++	 * suspended, it is brought back to full power and then
++	 * suspended again
++	 */
++	if (tplg_ops && tplg_ops->tear_down_all_pipelines && (old_state == SOF_DSP_PM_D0))
+ 		tplg_ops->tear_down_all_pipelines(sdev, false);
  
- error_device:
+ 	if (sdev->fw_state != SOF_FW_BOOT_COMPLETE)
 
 
