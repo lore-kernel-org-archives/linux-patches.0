@@ -1,32 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211587C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E36C4339B;
-	Mon, 24 Apr 2023 13:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B185C7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39DD7C433EF;
+	Mon, 24 Apr 2023 13:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342521;
-	bh=tCCynyrnIJfQB2Eg5feIoBHwGYY3Vk1ymQA+xiDetCg=;
+	s=korg; t=1682342523;
+	bh=50zKGSO8Bw8Uo6ayP9XfVPJ6fGmXRAPG/UjIuMTDXnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sx7A1MK3939NEvtijcbKXfK7RAuFq6LNj6ehY2YnWi/zPATXfGgKa5RKTLl03666k
-	 oKJIfDxCBf5aR9LS7hCeypgmG0yVjCpJkJPSU5LuyGz00nPC813Sk1GZCYKFZPddqd
-	 cBWzYtnl1MNKrllKb1gMdZ5zX2ZzoDVK0AFQJ+sk=
+	b=0QAyOfZAITW+qldenR9Wq8PWArnMKGO0ObhwXEir49TA6hij0VmVTTrkwWj7KNTC/
+	 m+AQXSo5NtrEZuXk5sbS32e5Lgs0dfflvFDYJKThBUbD7dWItuMA3L58IEUsfVGrUQ
+	 xhxbQUI9zfdSEZYbc1yshbFgMX0t7gxN18KVcxik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ekaterina Orlova <vorobushek.ok@gmail.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	James Bottomley <jejb@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	keyrings@vger.kernel.org,
-	linux-kbuild@vger.kernel.org,
-	David Howells <dhowells@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 70/73] ASN.1: Fix check for strdup() success
-Date: Mon, 24 Apr 2023 15:17:24 +0200
-Message-Id: <20230424131131.686655830@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 5.15 71/73] soc: sifive: l2_cache: fix missing iounmap() in error path in sifive_l2_init()
+Date: Mon, 24 Apr 2023 15:17:25 +0200
+Message-Id: <20230424131131.727740347@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -40,40 +34,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ekaterina Orlova <vorobushek.ok@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 5a43001c01691dcbd396541e6faa2c0077378f48 upstream.
+commit 73e770f085023da327dc9ffeb6cd96b0bb22d97e upstream.
 
-It seems there is a misprint in the check of strdup() return code that
-can lead to NULL pointer dereference.
+Add missing iounmap() before return error from sifive_l2_init().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 4520c6a49af8 ("X.509: Add simple ASN.1 grammar compiler")
-Signed-off-by: Ekaterina Orlova <vorobushek.ok@gmail.com>
-Cc: David Woodhouse <dwmw2@infradead.org>
-Cc: James Bottomley <jejb@linux.ibm.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: keyrings@vger.kernel.org
-Cc: linux-kbuild@vger.kernel.org
-Link: https://lore.kernel.org/r/20230315172130.140-1-vorobushek.ok@gmail.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: a967a289f169 ("RISC-V: sifive_l2_cache: Add L2 cache controller driver for SiFive SoCs")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+[conor: ccache -> l2_cache]
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/asn1_compiler.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/sifive/sifive_l2_cache.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/scripts/asn1_compiler.c
-+++ b/scripts/asn1_compiler.c
-@@ -625,7 +625,7 @@ int main(int argc, char **argv)
- 	p = strrchr(argv[1], '/');
- 	p = p ? p + 1 : argv[1];
- 	grammar_name = strdup(p);
--	if (!p) {
-+	if (!grammar_name) {
- 		perror(NULL);
- 		exit(1);
+--- a/drivers/soc/sifive/sifive_l2_cache.c
++++ b/drivers/soc/sifive/sifive_l2_cache.c
+@@ -212,7 +212,8 @@ static int __init sifive_l2_init(void)
+ 	intr_num = of_property_count_u32_elems(np, "interrupts");
+ 	if (!intr_num) {
+ 		pr_err("L2CACHE: no interrupts property\n");
+-		return -ENODEV;
++		rc = -ENODEV;
++		goto err_unmap;
  	}
+ 
+ 	for (i = 0; i < intr_num; i++) {
+@@ -220,7 +221,7 @@ static int __init sifive_l2_init(void)
+ 		rc = request_irq(g_irq[i], l2_int_handler, 0, "l2_ecc", NULL);
+ 		if (rc) {
+ 			pr_err("L2CACHE: Could not request IRQ %d\n", g_irq[i]);
+-			return rc;
++			goto err_unmap;
+ 		}
+ 	}
+ 
+@@ -233,5 +234,9 @@ static int __init sifive_l2_init(void)
+ 	setup_sifive_debug();
+ #endif
+ 	return 0;
++
++err_unmap:
++	iounmap(l2_base);
++	return rc;
+ }
+ device_initcall(sifive_l2_init);
 
 
