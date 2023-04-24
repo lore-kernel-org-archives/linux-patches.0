@@ -1,36 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3242108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E888C433EF;
-	Mon, 24 Apr 2023 13:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39622108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DB3C433D2;
+	Mon, 24 Apr 2023 13:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343174;
-	bh=vHWxKxDUN3BMZcF9aMuJaenqi9baKzV2u3Gfzm0hxvY=;
+	s=korg; t=1682343177;
+	bh=E5MLtgRyfqBoZdloFp77SgptROvj0OSsfz/NoVgW8Ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wtTi0MJe+w6K59Uz78AY7009aU+3LhB8nwUr81YnOl2EDLWiW5ukahUmaGtM075oU
-	 G4xXpNK/2c8DaXz4BiUMwPvUsUNdhHkRsa7G7olLXthrx6LmCznyi957u+fBvutD0i
-	 LrXGmjCLwUMROtP6jeDKLv1aUEFTv5MIc9qg2WZQ=
+	b=HViSdYdJTdvmgmirAqpqyUcQ3yV/TNXXMEics06Px/aVs1IE03o8+eNolhYGXYZ+P
+	 x3EjD6hNsLeXM8mbAN1iKovEX8hkLAhamhWKsACtacqe+2MJFbWA3wzSUZoZwe2jZb
+	 LDu1HuHUr+tDhp3amwH4ZarC73QDLSMVajvfx3Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+223c7461c58c58a4cb10@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Michal Hocko <mhocko@suse.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Petr Mladek <pmladek@suse.com>,
-	David Hildenbrand <david@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	Patrick Daly <quic_pdaly@quicinc.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 106/110] mm/page_alloc: fix potential deadlock on zonelist_update_seq seqlock
-Date: Mon, 24 Apr 2023 15:18:08 +0200
-Message-Id: <20230424131140.571022096@linuxfoundation.org>
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.2 107/110] ASoC: SOF: pm: Tear down pipelines only if DSP was active
+Date: Mon, 24 Apr 2023 15:18:09 +0200
+Message-Id: <20230424131140.620199301@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -44,181 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Daniel Baluta <daniel.baluta@nxp.com>
 
-commit 1007843a91909a4995ee78a538f62d8665705b66 upstream.
+commit 0b186bb06198653d74a141902a7739e0bde20cf4 upstream.
 
-syzbot is reporting circular locking dependency which involves
-zonelist_update_seq seqlock [1], for this lock is checked by memory
-allocation requests which do not need to be retried.
+With PCI if the device was suspended it is brought back to full
+power and then suspended again.
 
-One deadlock scenario is kmalloc(GFP_ATOMIC) from an interrupt handler.
+This doesn't happen when device is described via DT.
 
-  CPU0
-  ----
-  __build_all_zonelists() {
-    write_seqlock(&zonelist_update_seq); // makes zonelist_update_seq.seqcount odd
-    // e.g. timer interrupt handler runs at this moment
-      some_timer_func() {
-        kmalloc(GFP_ATOMIC) {
-          __alloc_pages_slowpath() {
-            read_seqbegin(&zonelist_update_seq) {
-              // spins forever because zonelist_update_seq.seqcount is odd
-            }
-          }
-        }
-      }
-    // e.g. timer interrupt handler finishes
-    write_sequnlock(&zonelist_update_seq); // makes zonelist_update_seq.seqcount even
-  }
+We need to make sure that we tear down pipelines only if the device
+was previously active (thus the pipelines were setup).
 
-This deadlock scenario can be easily eliminated by not calling
-read_seqbegin(&zonelist_update_seq) from !__GFP_DIRECT_RECLAIM allocation
-requests, for retry is applicable to only __GFP_DIRECT_RECLAIM allocation
-requests.  But Michal Hocko does not know whether we should go with this
-approach.
+Otherwise, we can break the use_count:
 
-Another deadlock scenario which syzbot is reporting is a race between
-kmalloc(GFP_ATOMIC) from tty_insert_flip_string_and_push_buffer() with
-port->lock held and printk() from __build_all_zonelists() with
-zonelist_update_seq held.
+[  219.009743] sof-audio-of-imx8m 3b6e8000.dsp:
+sof_ipc3_tear_down_all_pipelines: widget PIPELINE.2.SAI3.IN is still in use: count -1
 
-  CPU0                                   CPU1
-  ----                                   ----
-  pty_write() {
-    tty_insert_flip_string_and_push_buffer() {
-                                         __build_all_zonelists() {
-                                           write_seqlock(&zonelist_update_seq);
-                                           build_zonelists() {
-                                             printk() {
-                                               vprintk() {
-                                                 vprintk_default() {
-                                                   vprintk_emit() {
-                                                     console_unlock() {
-                                                       console_flush_all() {
-                                                         console_emit_next_record() {
-                                                           con->write() = serial8250_console_write() {
-      spin_lock_irqsave(&port->lock, flags);
-      tty_insert_flip_string() {
-        tty_insert_flip_string_fixed_flag() {
-          __tty_buffer_request_room() {
-            tty_buffer_alloc() {
-              kmalloc(GFP_ATOMIC | __GFP_NOWARN) {
-                __alloc_pages_slowpath() {
-                  zonelist_iter_begin() {
-                    read_seqbegin(&zonelist_update_seq); // spins forever because zonelist_update_seq.seqcount is odd
-                                                             spin_lock_irqsave(&port->lock, flags); // spins forever because port->lock is held
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      spin_unlock_irqrestore(&port->lock, flags);
-                                                             // message is printed to console
-                                                             spin_unlock_irqrestore(&port->lock, flags);
-                                                           }
-                                                         }
-                                                       }
-                                                     }
-                                                   }
-                                                 }
-                                               }
-                                             }
-                                           }
-                                           write_sequnlock(&zonelist_update_seq);
-                                         }
-    }
-  }
+and after this everything stops working.
 
-This deadlock scenario can be eliminated by
-
-  preventing interrupt context from calling kmalloc(GFP_ATOMIC)
-
-and
-
-  preventing printk() from calling console_flush_all()
-
-while zonelist_update_seq.seqcount is odd.
-
-Since Petr Mladek thinks that __build_all_zonelists() can become a
-candidate for deferring printk() [2], let's address this problem by
-
-  disabling local interrupts in order to avoid kmalloc(GFP_ATOMIC)
-
-and
-
-  disabling synchronous printk() in order to avoid console_flush_all()
-
-.
-
-As a side effect of minimizing duration of zonelist_update_seq.seqcount
-being odd by disabling synchronous printk(), latency at
-read_seqbegin(&zonelist_update_seq) for both !__GFP_DIRECT_RECLAIM and
-__GFP_DIRECT_RECLAIM allocation requests will be reduced.  Although, from
-lockdep perspective, not calling read_seqbegin(&zonelist_update_seq) (i.e.
-do not record unnecessary locking dependency) from interrupt context is
-still preferable, even if we don't allow calling kmalloc(GFP_ATOMIC)
-inside
-write_seqlock(&zonelist_update_seq)/write_sequnlock(&zonelist_update_seq)
-section...
-
-Link: https://lkml.kernel.org/r/8796b95c-3da3-5885-fddd-6ef55f30e4d3@I-love.SAKURA.ne.jp
-Fixes: 3d36424b3b58 ("mm/page_alloc: fix race condition between build_all_zonelists and page allocation")
-Link: https://lkml.kernel.org/r/ZCrs+1cDqPWTDFNM@alley [2]
-Reported-by: syzbot <syzbot+223c7461c58c58a4cb10@syzkaller.appspotmail.com>
-  Link: https://syzkaller.appspot.com/bug?extid=223c7461c58c58a4cb10 [1]
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Mel Gorman <mgorman@techsingularity.net>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: Patrick Daly <quic_pdaly@quicinc.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d185e0689abc ("ASoC: SOF: pm: Always tear down pipelines before DSP suspend")
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://lore.kernel.org/r/20230405092655.19587-1-daniel.baluta@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/soc/sof/pm.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -6590,7 +6590,21 @@ static void __build_all_zonelists(void *
- 	int nid;
- 	int __maybe_unused cpu;
- 	pg_data_t *self = data;
-+	unsigned long flags;
+--- a/sound/soc/sof/pm.c
++++ b/sound/soc/sof/pm.c
+@@ -183,6 +183,7 @@ static int sof_suspend(struct device *de
+ 	const struct sof_ipc_tplg_ops *tplg_ops = sdev->ipc->ops->tplg;
+ 	pm_message_t pm_state;
+ 	u32 target_state = snd_sof_dsp_power_target(sdev);
++	u32 old_state = sdev->dsp_power_state.state;
+ 	int ret;
  
-+	/*
-+	 * Explicitly disable this CPU's interrupts before taking seqlock
-+	 * to prevent any IRQ handler from calling into the page allocator
-+	 * (e.g. GFP_ATOMIC) that could hit zonelist_iter_begin and livelock.
+ 	/* do nothing if dsp suspend callback is not set */
+@@ -192,7 +193,12 @@ static int sof_suspend(struct device *de
+ 	if (runtime_suspend && !sof_ops(sdev)->runtime_suspend)
+ 		return 0;
+ 
+-	if (tplg_ops && tplg_ops->tear_down_all_pipelines)
++	/* we need to tear down pipelines only if the DSP hardware is
++	 * active, which happens for PCI devices. if the device is
++	 * suspended, it is brought back to full power and then
++	 * suspended again
 +	 */
-+	local_irq_save(flags);
-+	/*
-+	 * Explicitly disable this CPU's synchronous printk() before taking
-+	 * seqlock to prevent any printk() from trying to hold port->lock, for
-+	 * tty_insert_flip_string_and_push_buffer() on other CPU might be
-+	 * calling kmalloc(GFP_ATOMIC | __GFP_NOWARN) with port->lock held.
-+	 */
-+	printk_deferred_enter();
- 	write_seqlock(&zonelist_update_seq);
++	if (tplg_ops && tplg_ops->tear_down_all_pipelines && (old_state == SOF_DSP_PM_D0))
+ 		tplg_ops->tear_down_all_pipelines(sdev, false);
  
- #ifdef CONFIG_NUMA
-@@ -6629,6 +6643,8 @@ static void __build_all_zonelists(void *
- 	}
- 
- 	write_sequnlock(&zonelist_update_seq);
-+	printk_deferred_exit();
-+	local_irq_restore(flags);
- }
- 
- static noinline void __init
+ 	if (sdev->fw_state != SOF_FW_BOOT_COMPLETE)
 
 
