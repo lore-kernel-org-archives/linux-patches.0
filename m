@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5A57C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6700C433D2;
-	Mon, 24 Apr 2023 13:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CC47C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B40C433EF;
+	Mon, 24 Apr 2023 13:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342553;
-	bh=FSdw20i2eAWWBseuqJJEkzPEl0K3AV1ijo7Qilen2TY=;
+	s=korg; t=1682342555;
+	bh=A1fF48+r/hgG7duh7K8YxDuxyBzcC2aJnlWqhcOTwtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G64I3JOKBLlqaG6ouEnixh56g9q2iAkHg13usPxYLUNw2qEN3OMDRPhMQH6bPbTM6
-	 8VOIlsGVfeeNKH/MIfm83+ytCbQteDRd5zkv+BY8tEUosZtkXg3zATxxrp/yPLcAig
-	 Kj6IYdlRDbG3Sz30CUHQdasvhoBVakR76BH5vTt0=
+	b=c7ieo+Z6AajDzafDkzJ3cma6SD+jcCcO3sfugjMFXvA/3wYpxnBIlbxzUKhJpq+RU
+	 ut6HxVz5lmFi27ly5uFI2Ujsx0fu/ZM6yHDnez+I0QdRBap9QCDTqec9xTCtlRcEzH
+	 soCOEEwxtGCwjiA5GNXBiYXNc9m1lyRbmGysH8sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianqun Xu <jay.xu@rock-chips.com>,
-	Sjoerd Simons <sjoerd@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Marc Gonzalez <mgonzalez@freebox.fr>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 01/39] ARM: dts: rockchip: fix a typo error for rk3288 spdif node
-Date: Mon, 24 Apr 2023 15:17:04 +0200
-Message-Id: <20230424131123.087626635@linuxfoundation.org>
+Subject: [PATCH 5.4 02/39] arm64: dts: meson-g12-common: specify full DMC range
+Date: Mon, 24 Apr 2023 15:17:05 +0200
+Message-Id: <20230424131123.127288092@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
 References: <20230424131123.040556994@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,35 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianqun Xu <jay.xu@rock-chips.com>
+From: Marc Gonzalez <mgonzalez@freebox.fr>
 
-[ Upstream commit 02c84f91adb9a64b75ec97d772675c02a3e65ed7 ]
+[ Upstream commit aec4353114a408b3a831a22ba34942d05943e462 ]
 
-Fix the address in the spdif node name.
+According to S905X2 Datasheet - Revision 07:
+DRAM Memory Controller (DMC) register area spans ff638000-ff63a000.
 
-Fixes: 874e568e500a ("ARM: dts: rockchip: Add SPDIF transceiver for RK3288")
-Signed-off-by: Jianqun Xu <jay.xu@rock-chips.com>
-Reviewed-by: Sjoerd Simons <sjoerd@collabora.com>
-Link: https://lore.kernel.org/r/20230208091411.1603142-1-jay.xu@rock-chips.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+According to DeviceTree Specification - Release v0.4-rc1:
+simple-bus nodes do not require reg property.
+
+Fixes: 1499218c80c99a ("arm64: dts: move common G12A & G12B modes to meson-g12-common.dtsi")
+Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20230327120932.2158389-2-mgonzalez@freebox.fr
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3288.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/rk3288.dtsi b/arch/arm/boot/dts/rk3288.dtsi
-index 3a7d375389d0e..36f943a3f3ad2 100644
---- a/arch/arm/boot/dts/rk3288.dtsi
-+++ b/arch/arm/boot/dts/rk3288.dtsi
-@@ -942,7 +942,7 @@
- 		status = "disabled";
- 	};
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+index 937b27549d56d..a31b623fedb75 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+@@ -1376,10 +1376,9 @@
  
--	spdif: sound@ff88b0000 {
-+	spdif: sound@ff8b0000 {
- 		compatible = "rockchip,rk3288-spdif", "rockchip,rk3066-spdif";
- 		reg = <0x0 0xff8b0000 0x0 0x10000>;
- 		#sound-dai-cells = <0>;
+ 			dmc: bus@38000 {
+ 				compatible = "simple-bus";
+-				reg = <0x0 0x38000 0x0 0x400>;
+ 				#address-cells = <2>;
+ 				#size-cells = <2>;
+-				ranges = <0x0 0x0 0x0 0x38000 0x0 0x400>;
++				ranges = <0x0 0x0 0x0 0x38000 0x0 0x2000>;
+ 
+ 				canvas: video-lut@48 {
+ 					compatible = "amlogic,canvas";
 -- 
 2.39.2
 
