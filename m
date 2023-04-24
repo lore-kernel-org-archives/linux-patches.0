@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984C17C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C549C433D2;
-	Mon, 24 Apr 2023 13:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488067C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2463C433EF;
+	Mon, 24 Apr 2023 13:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342510;
-	bh=/OLmyZE12K7PKskW1Q9yKeMtOE5uPBfrXASfVYl5gbk=;
+	s=korg; t=1682342513;
+	bh=c3XQw70ulSJANuu9SOUbuqCOOyjdoP4Eg6ETQfnC3SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WVB8+qLE/bhm4FrySmV1wiVTBh/wApD/mDRIUtJ/rV/ENIxpHwJ9TiCE3nKchxPgL
-	 bB0h2982GtdZSjHU9tcNEf8b4Qg5YuMdJRVbgoenNalMCc50yWCIaiKitVTkFj+7Ad
-	 xKJCOe83Kn/Z3cSRjfr9rq6IfvdIPg7tYWKbKIi4=
+	b=DyJAJvPqlx98jLZbyIHzYVR7hwXPCc5Wt8xiJnNGIXg/6MCcymgZQSXE80oyhZY4z
+	 749Y2/3P4L89j1OYqC21vxnxs09QZW7gFCNrtv2m56IAQuQajQNtqQvBBOjQHNSYRZ
+	 K8AhchkgXpj6YGwf1Xsb40jrJDLirrVcm9FO16tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Breathitt Gray <william.gray@linaro.org>
-Subject: [PATCH 5.15 66/73] counter: 104-quad-8: Fix race condition between FLAG and CNTR reads
-Date: Mon, 24 Apr 2023 15:17:20 +0200
-Message-Id: <20230424131131.522238893@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 67/73] iio: adc: at91-sama5d2_adc: fix an error code in at91_adc_allocate_trigger()
+Date: Mon, 24 Apr 2023 15:17:21 +0200
+Message-Id: <20230424131131.558921293@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -33,113 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Breathitt Gray <william.gray@linaro.org>
+From: Dan Carpenter <error27@gmail.com>
 
-commit 4aa3b75c74603c3374877d5fd18ad9cc3a9a62ed upstream.
+commit 73a428b37b9b538f8f8fe61caa45e7f243bab87c upstream.
 
-The Counter (CNTR) register is 24 bits wide, but we can have an
-effective 25-bit count value by setting bit 24 to the XOR of the Borrow
-flag and Carry flag. The flags can be read from the FLAG register, but a
-race condition exists: the Borrow flag and Carry flag are instantaneous
-and could change by the time the count value is read from the CNTR
-register.
+The at91_adc_allocate_trigger() function is supposed to return error
+pointers.  Returning a NULL will cause an Oops.
 
-Since the race condition could result in an incorrect 25-bit count
-value, remove support for 25-bit count values from this driver;
-hard-coded maximum count values are replaced by a LS7267_CNTR_MAX define
-for consistency and clarity.
-
-Fixes: 28e5d3bb0325 ("iio: 104-quad-8: Add IIO support for the ACCES 104-QUAD-8")
-Cc: <stable@vger.kernel.org> # 6.1.x
-Cc: <stable@vger.kernel.org> # 6.2.x
-Link: https://lore.kernel.org/r/20230312231554.134858-1-william.gray@linaro.org/
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Fixes: 5e1a1da0f8c9 ("iio: adc: at91-sama5d2_adc: add hw trigger and buffer support")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/5d728f9d-31d1-410d-a0b3-df6a63a2c8ba@kili.mountain
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/104-quad-8.c |   29 ++++++++---------------------
- 1 file changed, 8 insertions(+), 21 deletions(-)
+ drivers/iio/adc/at91-sama5d2_adc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/counter/104-quad-8.c
-+++ b/drivers/counter/104-quad-8.c
-@@ -61,10 +61,6 @@ struct quad8 {
- #define QUAD8_REG_CHAN_OP 0x11
- #define QUAD8_REG_INDEX_INPUT_LEVELS 0x16
- #define QUAD8_DIFF_ENCODER_CABLE_STATUS 0x17
--/* Borrow Toggle flip-flop */
--#define QUAD8_FLAG_BT BIT(0)
--/* Carry Toggle flip-flop */
--#define QUAD8_FLAG_CT BIT(1)
- /* Error flag */
- #define QUAD8_FLAG_E BIT(4)
- /* Up/Down flag */
-@@ -97,6 +93,9 @@ struct quad8 {
- #define QUAD8_CMR_QUADRATURE_X2 0x10
- #define QUAD8_CMR_QUADRATURE_X4 0x18
+--- a/drivers/iio/adc/at91-sama5d2_adc.c
++++ b/drivers/iio/adc/at91-sama5d2_adc.c
+@@ -1000,7 +1000,7 @@ static struct iio_trigger *at91_adc_allo
+ 	trig = devm_iio_trigger_alloc(&indio->dev, "%s-dev%d-%s", indio->name,
+ 				iio_device_id(indio), trigger_name);
+ 	if (!trig)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
  
-+/* Each Counter is 24 bits wide */
-+#define LS7267_CNTR_MAX GENMASK(23, 0)
-+
- static int quad8_signal_read(struct counter_device *counter,
- 			     struct counter_signal *signal,
- 			     enum counter_signal_level *level)
-@@ -121,17 +120,9 @@ static int quad8_count_read(struct count
- {
- 	struct quad8 *const priv = counter->priv;
- 	const int base_offset = priv->base + 2 * count->id;
--	unsigned int flags;
--	unsigned int borrow;
--	unsigned int carry;
- 	int i;
- 
--	flags = inb(base_offset + 1);
--	borrow = flags & QUAD8_FLAG_BT;
--	carry = !!(flags & QUAD8_FLAG_CT);
--
--	/* Borrow XOR Carry effectively doubles count range */
--	*val = (unsigned long)(borrow ^ carry) << 24;
-+	*val = 0;
- 
- 	mutex_lock(&priv->lock);
- 
-@@ -154,8 +145,7 @@ static int quad8_count_write(struct coun
- 	const int base_offset = priv->base + 2 * count->id;
- 	int i;
- 
--	/* Only 24-bit values are supported */
--	if (val > 0xFFFFFF)
-+	if (val > LS7267_CNTR_MAX)
- 		return -ERANGE;
- 
- 	mutex_lock(&priv->lock);
-@@ -627,8 +617,7 @@ static int quad8_count_preset_write(stru
- {
- 	struct quad8 *const priv = counter->priv;
- 
--	/* Only 24-bit values are supported */
--	if (preset > 0xFFFFFF)
-+	if (preset > LS7267_CNTR_MAX)
- 		return -ERANGE;
- 
- 	mutex_lock(&priv->lock);
-@@ -654,8 +643,7 @@ static int quad8_count_ceiling_read(stru
- 		*ceiling = priv->preset[count->id];
- 		break;
- 	default:
--		/* By default 0x1FFFFFF (25 bits unsigned) is maximum count */
--		*ceiling = 0x1FFFFFF;
-+		*ceiling = LS7267_CNTR_MAX;
- 		break;
- 	}
- 
-@@ -669,8 +657,7 @@ static int quad8_count_ceiling_write(str
- {
- 	struct quad8 *const priv = counter->priv;
- 
--	/* Only 24-bit values are supported */
--	if (ceiling > 0xFFFFFF)
-+	if (ceiling > LS7267_CNTR_MAX)
- 		return -ERANGE;
- 
- 	mutex_lock(&priv->lock);
+ 	trig->dev.parent = indio->dev.parent;
+ 	iio_trigger_set_drvdata(trig, indio);
 
 
