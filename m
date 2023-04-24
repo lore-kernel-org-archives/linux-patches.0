@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62B82108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:34:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8D1C4339B;
-	Mon, 24 Apr 2023 13:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521932108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:34:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7ABC433EF;
+	Mon, 24 Apr 2023 13:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343267;
-	bh=5tFhIybJQJN0Hb94BP2kJXGPvNh37fAzfNZ0oKQzSOA=;
+	s=korg; t=1682343270;
+	bh=sDrfIErAicyDZUpipZ/r+VFClfAXtKMYjykpbQLNPe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ee3CAh0OGYt0MNFMQ686qYohaGFXVvbeFe7lrHZnxaEidTHilpe+g0sRw9hBCOvIZ
-	 Yk9XMjVhMUuF/HS2Tdy1GFpuTvwkVZ9y612RzMCRnX6lPFTcx6dxUKE/dwnpAf4p7x
-	 3k89Cs0mV1+EAHKn8mbXE9yesVWRvqOmHcbf9y+U=
+	b=umTcFzSgzyuPcmLk8qeuo2QjH9HCVwhLdPLWbAE41g9g0uZkcRVHc06YquQPg0/Wc
+	 SMxVfiud95TIPaxGXPJJDlOuiMmHoBQy6XbPcVERH5PEIhXoVX7ClUQSeXNPpJCoSN
+	 c3x41JKQcCOwmLTLGpm9WJ7SE/gbSHa6CK9DmhKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rix <trix@redhat.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 30/68] iio: light: tsl2772: fix reading proximity-diodes from device tree
-Date: Mon, 24 Apr 2023 15:18:01 +0200
-Message-Id: <20230424131128.799794118@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+048585f3f4227bb2b49b@syzkaller.appspotmail.com,
+	Alexander Potapenko <glider@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 31/68] nilfs2: initialize unused bytes in segment summary blocks
+Date: Mon, 24 Apr 2023 15:18:02 +0200
+Message-Id: <20230424131128.849530958@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -36,36 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Masney <bmasney@redhat.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit b1cb00d51e361cf5af93649917d9790e1623647e upstream.
+commit ef832747a82dfbc22a3702219cc716f449b24e4a upstream.
 
-tsl2772_read_prox_diodes() will correctly parse the properties from
-device tree to determine which proximity diode(s) to read from, however
-it didn't actually set this value on the struct tsl2772_settings. Let's
-go ahead and fix that.
+Syzbot still reports uninit-value in nilfs_add_checksums_on_logs() for
+KMSAN enabled kernels after applying commit 7397031622e0 ("nilfs2:
+initialize "struct nilfs_binfo_dat"->bi_pad field").
 
-Reported-by: Tom Rix <trix@redhat.com>
-Link: https://lore.kernel.org/lkml/20230327120823.1369700-1-trix@redhat.com/
-Fixes: 94cd1113aaa0 ("iio: tsl2772: add support for reading proximity led settings from device tree")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20230404011455.339454-1-bmasney@redhat.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This is because the unused bytes at the end of each block in segment
+summaries are not initialized.  So this fixes the issue by padding the
+unused bytes with null bytes.
+
+Link: https://lkml.kernel.org/r/20230417173513.12598-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+048585f3f4227bb2b49b@syzkaller.appspotmail.com
+  Link: https://syzkaller.appspot.com/bug?extid=048585f3f4227bb2b49b
+Cc: Alexander Potapenko <glider@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/tsl2772.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nilfs2/segment.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/drivers/iio/light/tsl2772.c
-+++ b/drivers/iio/light/tsl2772.c
-@@ -606,6 +606,7 @@ static int tsl2772_read_prox_diodes(stru
- 			return -EINVAL;
- 		}
- 	}
-+	chip->settings.prox_diode = prox_diode_mask;
- 
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -435,6 +435,23 @@ static int nilfs_segctor_reset_segment_b
  	return 0;
  }
+ 
++/**
++ * nilfs_segctor_zeropad_segsum - zero pad the rest of the segment summary area
++ * @sci: segment constructor object
++ *
++ * nilfs_segctor_zeropad_segsum() zero-fills unallocated space at the end of
++ * the current segment summary block.
++ */
++static void nilfs_segctor_zeropad_segsum(struct nilfs_sc_info *sci)
++{
++	struct nilfs_segsum_pointer *ssp;
++
++	ssp = sci->sc_blk_cnt > 0 ? &sci->sc_binfo_ptr : &sci->sc_finfo_ptr;
++	if (ssp->offset < ssp->bh->b_size)
++		memset(ssp->bh->b_data + ssp->offset, 0,
++		       ssp->bh->b_size - ssp->offset);
++}
++
+ static int nilfs_segctor_feed_segment(struct nilfs_sc_info *sci)
+ {
+ 	sci->sc_nblk_this_inc += sci->sc_curseg->sb_sum.nblocks;
+@@ -443,6 +460,7 @@ static int nilfs_segctor_feed_segment(st
+ 				* The current segment is filled up
+ 				* (internal code)
+ 				*/
++	nilfs_segctor_zeropad_segsum(sci);
+ 	sci->sc_curseg = NILFS_NEXT_SEGBUF(sci->sc_curseg);
+ 	return nilfs_segctor_reset_segment_buffer(sci);
+ }
+@@ -547,6 +565,7 @@ static int nilfs_segctor_add_file_block(
+ 		goto retry;
+ 	}
+ 	if (unlikely(required)) {
++		nilfs_segctor_zeropad_segsum(sci);
+ 		err = nilfs_segbuf_extend_segsum(segbuf);
+ 		if (unlikely(err))
+ 			goto failed;
+@@ -1536,6 +1555,7 @@ static int nilfs_segctor_collect(struct
+ 		nadd = min_t(int, nadd << 1, SC_MAX_SEGDELTA);
+ 		sci->sc_stage = prev_stage;
+ 	}
++	nilfs_segctor_zeropad_segsum(sci);
+ 	nilfs_segctor_truncate_segments(sci, sci->sc_curseg, nilfs->ns_sufile);
+ 	return 0;
+ 
 
 
