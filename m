@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B607C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5310C433A0;
-	Mon, 24 Apr 2023 13:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DDD7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F74C433EF;
+	Mon, 24 Apr 2023 13:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342476;
-	bh=bB7ZOSh4TORDmWGI3374u5WwOIG/GDEF6YT5jR2n8XY=;
+	s=korg; t=1682342478;
+	bh=9qsBXT1RXKXnMQgwUxELknUgr6vmnV05+EAgaC7ZTgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HrCgRYn7zdX6sDusl6MkSFluaxaIZYIy/UQoUTlpaRlXoCLxXW2K+OvQODZUSgOpv
-	 2uLGSx43NKCNXmGXjIAA0uykVd3i654my7mPmS4b/XC1RnMlaDRCxfB2uN5PNWT8rz
-	 WS5R3/U0P6EDFoFjfCHzWm0j9rpzaQTzDsmnFcxs=
+	b=iNg+y2apBHobIi1W2AfMarKuF6rUhZ4LPfuVDPNbvx8MtpZbdp6aZ8nQZzP9bLl9X
+	 UOsMtbSESQQzmX+TyJSx02wTy7159UyMcBIv3y8gYDEVFYNnQXpgkPHvTnHZEOtf1v
+	 eyaY5EjFYHmZTIriU0gcVbhl9G5rDumR5A+WnBuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Qais Yousef (Google)" <qyousef@layalina.io>
-Subject: [PATCH 5.15 46/73] sched/uclamp: Make cpu_overutilized() use util_fits_cpu()
-Date: Mon, 24 Apr 2023 15:17:00 +0200
-Message-Id: <20230424131130.689803419@linuxfoundation.org>
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Yang Bo <yb203166@antfin.com>
+Subject: [PATCH 5.15 55/73] fuse: fix attr version comparison in fuse_read_update_size()
+Date: Mon, 24 Apr 2023 15:17:09 +0200
+Message-Id: <20230424131131.062487048@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -35,55 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-commit c56ab1b3506ba0e7a872509964b100912bde165d upstream.
+commit 484ce65715b06aead8c4901f01ca32c5a240bc71 upstream.
 
-So that it is now uclamp aware.
+A READ request returning a short count is taken as indication of EOF, and
+the cached file size is modified accordingly.
 
-This fixes a major problem of busy tasks capped with UCLAMP_MAX keeping
-the system in overutilized state which disables EAS and leads to wasting
-energy in the long run.
+Fix the attribute version checking to allow for changes to fc->attr_version
+on other inodes.
 
-Without this patch running a busy background activity like JIT
-compilation on Pixel 6 causes the system to be in overutilized state
-74.5% of the time.
-
-With this patch this goes down to  9.79%.
-
-It also fixes another problem when long running tasks that have their
-UCLAMP_MIN changed while running such that they need to upmigrate to
-honour the new UCLAMP_MIN value. The upmigration doesn't get triggered
-because overutilized state never gets set in this state, hence misfit
-migration never happens at tick in this case until the task wakes up
-again.
-
-Fixes: af24bde8df202 ("sched/uclamp: Add uclamp support to energy_compute()")
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-7-qais.yousef@arm.com
-(cherry picked from commit c56ab1b3506ba0e7a872509964b100912bde165d)
-[Fixed trivial conflict in cpu_overutilized() - use cpu_util() instead
-of cpu_util_cfs()]
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Yang Bo <yb203166@antfin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/fair.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/fuse/file.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -5739,7 +5739,10 @@ static inline unsigned long cpu_util(int
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -793,7 +793,7 @@ static void fuse_read_update_size(struct
+ 	struct fuse_inode *fi = get_fuse_inode(inode);
  
- static inline bool cpu_overutilized(int cpu)
- {
--	return !fits_capacity(cpu_util(cpu), capacity_of(cpu));
-+	unsigned long rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
-+	unsigned long rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
-+
-+	return !util_fits_cpu(cpu_util(cpu), rq_util_min, rq_util_max, cpu);
- }
- 
- static inline void update_overutilized_status(struct rq *rq)
+ 	spin_lock(&fi->lock);
+-	if (attr_ver == fi->attr_version && size < inode->i_size &&
++	if (attr_ver >= fi->attr_version && size < inode->i_size &&
+ 	    !test_bit(FUSE_I_SIZE_UNSTABLE, &fi->state)) {
+ 		fi->attr_version = atomic64_inc_return(&fc->attr_version);
+ 		i_size_write(inode, size);
 
 
