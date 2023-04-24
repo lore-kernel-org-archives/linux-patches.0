@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A356B7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265C7C433D2;
-	Mon, 24 Apr 2023 13:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4207A7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8D4C433D2;
+	Mon, 24 Apr 2023 13:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342764;
-	bh=S9dfBYtUbYLOwnobE1azqwXFuOt6xVyT4rBSX4DvF4M=;
+	s=korg; t=1682342767;
+	bh=7KbfGjzNmIWFk+zUV9wIBx5xikRJeYuYoog1CMAXKsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IGAyxkV2puICSHpmVAw2XH1iX0yZiKt9rteWXubjdiKTs1xTJquDa3pkga9OkK/gM
-	 lsp+M+0r+WPGjMmz0EfjcFgaIqL5RAD3YRxaYm88HRuHO9DsHAzRBnPnE9XyGeXxiN
-	 zZ8O2Y5tF3zzXlDHDwS/OW9dh255pVyREwu2iL+M=
+	b=Q0u/cRP96rumvyWh+NUkWvTDKrt4fa5ZbbXtdplvxhS2M5LDZkUYxHl73bzeONdq8
+	 bVmWBmdBxlY1fVllwoUrRS2/i6JSurzw0EaRuw66bSemPW5EpQjqyL0ztodgDxG5wz
+	 uZie3hR2dngIFk9KvqoIGrNDkPGFU7JTZsM6BA0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 19/98] netfilter: nf_tables: fix ifdef to also consider nf_tables=m
-Date: Mon, 24 Apr 2023 15:16:42 +0200
-Message-Id: <20230424131134.639964207@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 20/98] i40e: fix accessing vsi->active_filters without holding lock
+Date: Mon, 24 Apr 2023 15:16:43 +0200
+Message-Id: <20230424131134.687832973@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -37,45 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit c55c0e91c813589dc55bea6bf9a9fbfaa10ae41d ]
+[ Upstream commit 8485d093b076e59baff424552e8aecfc5bd2d261 ]
 
-nftables can be built as a module, so fix the preprocessor conditional
-accordingly.
+Fix accessing vsi->active_filters without holding the mac_filter_hash_lock.
+Move vsi->active_filters = 0 inside critical section and
+move clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state) after the critical
+section to ensure the new filters from other threads can be added only after
+filters cleaning in the critical section is finished.
 
-Fixes: 478b360a47b7 ("netfilter: nf_tables: fix nf_trace always-on with XT_TRACE=n")
-Reported-by: Florian Fainelli <f.fainelli@gmail.com>
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 278e7d0b9d68 ("i40e: store MAC/VLAN filters in a hash with the MAC Address as key")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 4 ++--
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index a0d271581b964..20ca1613f2e3e 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -4685,7 +4685,7 @@ static inline void nf_reset_ct(struct sk_buff *skb)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index da0cf87d3a1ca..a3119a180a346 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -14098,15 +14098,15 @@ static int i40e_add_vsi(struct i40e_vsi *vsi)
+ 		vsi->id = ctxt.vsi_number;
+ 	}
  
- static inline void nf_reset_trace(struct sk_buff *skb)
- {
--#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || defined(CONFIG_NF_TABLES)
-+#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || IS_ENABLED(CONFIG_NF_TABLES)
- 	skb->nf_trace = 0;
- #endif
- }
-@@ -4705,7 +4705,7 @@ static inline void __nf_copy(struct sk_buff *dst, const struct sk_buff *src,
- 	dst->_nfct = src->_nfct;
- 	nf_conntrack_get(skb_nfct(src));
- #endif
--#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || defined(CONFIG_NF_TABLES)
-+#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || IS_ENABLED(CONFIG_NF_TABLES)
- 	if (copy)
- 		dst->nf_trace = src->nf_trace;
- #endif
+-	vsi->active_filters = 0;
+-	clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
+ 	spin_lock_bh(&vsi->mac_filter_hash_lock);
++	vsi->active_filters = 0;
+ 	/* If macvlan filters already exist, force them to get loaded */
+ 	hash_for_each_safe(vsi->mac_filter_hash, bkt, h, f, hlist) {
+ 		f->state = I40E_FILTER_NEW;
+ 		f_count++;
+ 	}
+ 	spin_unlock_bh(&vsi->mac_filter_hash_lock);
++	clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
+ 
+ 	if (f_count) {
+ 		vsi->flags |= I40E_VSI_FLAG_FILTER_CHANGED;
 -- 
 2.39.2
 
