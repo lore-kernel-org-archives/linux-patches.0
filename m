@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E922C2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E3FC433D2;
-	Mon, 24 Apr 2023 13:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E98F2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E28C433EF;
+	Mon, 24 Apr 2023 13:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343211;
-	bh=jIbMscRZLDh+swCsTa/7ocPskf9pLOuEc31FuzFxq0k=;
+	s=korg; t=1682343214;
+	bh=ZEZ/Zg5gW+7FHAxs89+MxIqTxKovIxkPe8HUlTqmPh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jiMB8O3RceWufDanmzOocXgPkZ8k/DtehwctNZveIvYnAIqmuqGr75DUb8/sAuaM1
-	 7tDiSC7gGtcaGtblYnMpLlAw3MIYbiWgsSYBgDZSVt1yppgyOM+g5BJmO9vv9AQMAt
-	 XxLo6MvpDRaeyOGMgru7WXBSfYgljtR0yFG9XG08=
+	b=wwTJdfqoCaWHvAcS3dElfolVpSkpm1BIkfEun0spfPECC0Rg2xxl/kVmpfm6Odcme
+	 dMiCte4F5rO6e49MhGKkhodUUtDyl9cfLVNTkVmYGh4LyJ6Hpha9whgCwbal+9eMLB
+	 MiTGUqfBRBLb22hI1dQeb35p/bfrFd4qfPaAK9Hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianqun Xu <jay.xu@rock-chips.com>,
-	Sjoerd Simons <sjoerd@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 01/68] ARM: dts: rockchip: fix a typo error for rk3288 spdif node
-Date: Mon, 24 Apr 2023 15:17:32 +0200
-Message-Id: <20230424131127.706028686@linuxfoundation.org>
+	Donglin Peng <pengdonglin@sangfor.com.cn>,
+	Martin Habets <habetsm.xilinx@gmail.com>,
+	Ding Hui <dinghui@sangfor.com.cn>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Huang Cun <huangcun@sangfor.com.cn>
+Subject: [PATCH 5.10 10/68] sfc: Fix use-after-free due to selftest_work
+Date: Mon, 24 Apr 2023 15:17:41 +0200
+Message-Id: <20230424131128.067714898@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,35 +38,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianqun Xu <jay.xu@rock-chips.com>
+From: Ding Hui <dinghui@sangfor.com.cn>
 
-[ Upstream commit 02c84f91adb9a64b75ec97d772675c02a3e65ed7 ]
+[ Upstream commit a80bb8e7233b2ad6ff119646b6e33fb3edcec37b ]
 
-Fix the address in the spdif node name.
+There is a use-after-free scenario that is:
 
-Fixes: 874e568e500a ("ARM: dts: rockchip: Add SPDIF transceiver for RK3288")
-Signed-off-by: Jianqun Xu <jay.xu@rock-chips.com>
-Reviewed-by: Sjoerd Simons <sjoerd@collabora.com>
-Link: https://lore.kernel.org/r/20230208091411.1603142-1-jay.xu@rock-chips.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+When the NIC is down, user set mac address or vlan tag to VF,
+the xxx_set_vf_mac() or xxx_set_vf_vlan() will invoke efx_net_stop()
+and efx_net_open(), since netif_running() is false, the port will not
+start and keep port_enabled false, but selftest_work is scheduled
+in efx_net_open().
+
+If we remove the device before selftest_work run, the efx_stop_port()
+will not be called since the NIC is down, and then efx is freed,
+we will soon get a UAF in run_timer_softirq() like this:
+
+[ 1178.907941] ==================================================================
+[ 1178.907948] BUG: KASAN: use-after-free in run_timer_softirq+0xdea/0xe90
+[ 1178.907950] Write of size 8 at addr ff11001f449cdc80 by task swapper/47/0
+[ 1178.907950]
+[ 1178.907953] CPU: 47 PID: 0 Comm: swapper/47 Kdump: loaded Tainted: G           O     --------- -t - 4.18.0 #1
+[ 1178.907954] Hardware name: SANGFOR X620G40/WI2HG-208T1061A, BIOS SPYH051032-U01 04/01/2022
+[ 1178.907955] Call Trace:
+[ 1178.907956]  <IRQ>
+[ 1178.907960]  dump_stack+0x71/0xab
+[ 1178.907963]  print_address_description+0x6b/0x290
+[ 1178.907965]  ? run_timer_softirq+0xdea/0xe90
+[ 1178.907967]  kasan_report+0x14a/0x2b0
+[ 1178.907968]  run_timer_softirq+0xdea/0xe90
+[ 1178.907971]  ? init_timer_key+0x170/0x170
+[ 1178.907973]  ? hrtimer_cancel+0x20/0x20
+[ 1178.907976]  ? sched_clock+0x5/0x10
+[ 1178.907978]  ? sched_clock_cpu+0x18/0x170
+[ 1178.907981]  __do_softirq+0x1c8/0x5fa
+[ 1178.907985]  irq_exit+0x213/0x240
+[ 1178.907987]  smp_apic_timer_interrupt+0xd0/0x330
+[ 1178.907989]  apic_timer_interrupt+0xf/0x20
+[ 1178.907990]  </IRQ>
+[ 1178.907991] RIP: 0010:mwait_idle+0xae/0x370
+
+If the NIC is not actually brought up, there is no need to schedule
+selftest_work, so let's move invoking efx_selftest_async_start()
+into efx_start_all(), and it will be canceled by broughting down.
+
+Fixes: dd40781e3a4e ("sfc: Run event/IRQ self-test asynchronously when interface is brought up")
+Fixes: e340be923012 ("sfc: add ndo_set_vf_mac() function for EF10")
+Debugged-by: Huang Cun <huangcun@sangfor.com.cn>
+Cc: Donglin Peng <pengdonglin@sangfor.com.cn>
+Suggested-by: Martin Habets <habetsm.xilinx@gmail.com>
+Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3288.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/sfc/efx.c        | 1 -
+ drivers/net/ethernet/sfc/efx_common.c | 2 ++
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/rk3288.dtsi b/arch/arm/boot/dts/rk3288.dtsi
-index aab28161b9ae9..250a03a066a17 100644
---- a/arch/arm/boot/dts/rk3288.dtsi
-+++ b/arch/arm/boot/dts/rk3288.dtsi
-@@ -959,7 +959,7 @@
- 		status = "disabled";
- 	};
+diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
+index 5f064f185d553..7cf52fcdb3078 100644
+--- a/drivers/net/ethernet/sfc/efx.c
++++ b/drivers/net/ethernet/sfc/efx.c
+@@ -540,7 +540,6 @@ int efx_net_open(struct net_device *net_dev)
+ 	else
+ 		efx->state = STATE_NET_UP;
  
--	spdif: sound@ff88b0000 {
-+	spdif: sound@ff8b0000 {
- 		compatible = "rockchip,rk3288-spdif", "rockchip,rk3066-spdif";
- 		reg = <0x0 0xff8b0000 0x0 0x10000>;
- 		#sound-dai-cells = <0>;
+-	efx_selftest_async_start(efx);
+ 	return 0;
+ }
+ 
+diff --git a/drivers/net/ethernet/sfc/efx_common.c b/drivers/net/ethernet/sfc/efx_common.c
+index 1527678b241cf..476ef1c976375 100644
+--- a/drivers/net/ethernet/sfc/efx_common.c
++++ b/drivers/net/ethernet/sfc/efx_common.c
+@@ -542,6 +542,8 @@ void efx_start_all(struct efx_nic *efx)
+ 	/* Start the hardware monitor if there is one */
+ 	efx_start_monitor(efx);
+ 
++	efx_selftest_async_start(efx);
++
+ 	/* Link state detection is normally event-driven; we have
+ 	 * to poll now because we could have missed a change
+ 	 */
 -- 
 2.39.2
 
