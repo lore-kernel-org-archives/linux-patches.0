@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492687C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:20:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC09CC4339B;
-	Mon, 24 Apr 2023 13:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D017C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:20:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE3B1C433D2;
+	Mon, 24 Apr 2023 13:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342418;
-	bh=YXS4sk4xQSPlBlwT/UJczjasBY/YFGv4zvJqq5XP4OY=;
+	s=korg; t=1682342421;
+	bh=VXpVQw+GjyoNAIVpHEmky+0V63arsI94gum9hvPZPGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2GDoc3rDSQaA5QeSiuQC6JBWKiccb5OXMSRU4J+rD6PjwFH48XoIfGzNih4zs6W0
-	 lxGxtj8OHine4AFzrHu32+7dEKJ4UMoE9savteFNyQ9pO8YR0BEw8RkrAAWHTwJMUK
-	 ODXrXt0CID8vCAyBxjXz6zWp1fJKznKHiuUKIsic=
+	b=B5dgYBEiSzat1+C9WCG9U8fsfeRtXGlIk/co8q831ncxmkqntlD87QfZqKLNyla6+
+	 sKtiZSejMhP860ZTAkiJJkdEN+uGVJeuRJK42vdwSXxLlY69o7+IH3ZoeRR4fcUkjq
+	 PQ2d4Um2I50SKZm9WWuA6jDv9tO9UTt4DEBLMVR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 32/73] s390/ptrace: fix PTRACE_GET_LAST_BREAK error handling
-Date: Mon, 24 Apr 2023 15:16:46 +0200
-Message-Id: <20230424131130.179227252@linuxfoundation.org>
+Subject: [PATCH 5.15 15/73] netfilter: nf_tables: validate catch-all set elements
+Date: Mon, 24 Apr 2023 15:16:29 +0200
+Message-Id: <20230424131129.580013240@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -36,47 +34,175 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit f9bbf25e7b2b74b52b2f269216a92657774f239c ]
+[ Upstream commit d46fc894147cf98dd6e8210aa99ed46854191840 ]
 
-Return -EFAULT if put_user() for the PTRACE_GET_LAST_BREAK
-request fails, instead of silently ignoring it.
+catch-all set element might jump/goto to chain that uses expressions
+that require validation.
 
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: aaa31047a6d2 ("netfilter: nftables: add catch-all set element support")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/ptrace.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ include/net/netfilter/nf_tables.h |  4 ++
+ net/netfilter/nf_tables_api.c     | 64 ++++++++++++++++++++++++++++---
+ net/netfilter/nft_lookup.c        | 36 ++---------------
+ 3 files changed, 66 insertions(+), 38 deletions(-)
 
-diff --git a/arch/s390/kernel/ptrace.c b/arch/s390/kernel/ptrace.c
-index 0ea3d02b378de..516c21baf3ad3 100644
---- a/arch/s390/kernel/ptrace.c
-+++ b/arch/s390/kernel/ptrace.c
-@@ -481,9 +481,7 @@ long arch_ptrace(struct task_struct *child, long request,
- 		}
- 		return 0;
- 	case PTRACE_GET_LAST_BREAK:
--		put_user(child->thread.last_break,
--			 (unsigned long __user *) data);
--		return 0;
-+		return put_user(child->thread.last_break, (unsigned long __user *)data);
- 	case PTRACE_ENABLE_TE:
- 		if (!MACHINE_HAS_TE)
- 			return -EIO;
-@@ -837,9 +835,7 @@ long compat_arch_ptrace(struct task_struct *child, compat_long_t request,
- 		}
- 		return 0;
- 	case PTRACE_GET_LAST_BREAK:
--		put_user(child->thread.last_break,
--			 (unsigned int __user *) data);
--		return 0;
-+		return put_user(child->thread.last_break, (unsigned int __user *)data);
- 	}
- 	return compat_ptrace_request(child, request, addr, data);
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 80df8ff5e6752..8def00a04541e 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1030,6 +1030,10 @@ struct nft_chain {
+ };
+ 
+ int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain);
++int nft_setelem_validate(const struct nft_ctx *ctx, struct nft_set *set,
++			 const struct nft_set_iter *iter,
++			 struct nft_set_elem *elem);
++int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set);
+ 
+ enum nft_chain_types {
+ 	NFT_CHAIN_T_DEFAULT = 0,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index dc276b6802ca9..aecb2f1e7af10 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3294,6 +3294,64 @@ static int nft_table_validate(struct net *net, const struct nft_table *table)
+ 	return 0;
  }
+ 
++int nft_setelem_validate(const struct nft_ctx *ctx, struct nft_set *set,
++			 const struct nft_set_iter *iter,
++			 struct nft_set_elem *elem)
++{
++	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
++	struct nft_ctx *pctx = (struct nft_ctx *)ctx;
++	const struct nft_data *data;
++	int err;
++
++	if (nft_set_ext_exists(ext, NFT_SET_EXT_FLAGS) &&
++	    *nft_set_ext_flags(ext) & NFT_SET_ELEM_INTERVAL_END)
++		return 0;
++
++	data = nft_set_ext_data(ext);
++	switch (data->verdict.code) {
++	case NFT_JUMP:
++	case NFT_GOTO:
++		pctx->level++;
++		err = nft_chain_validate(ctx, data->verdict.chain);
++		if (err < 0)
++			return err;
++		pctx->level--;
++		break;
++	default:
++		break;
++	}
++
++	return 0;
++}
++
++struct nft_set_elem_catchall {
++	struct list_head	list;
++	struct rcu_head		rcu;
++	void			*elem;
++};
++
++int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set)
++{
++	u8 genmask = nft_genmask_next(ctx->net);
++	struct nft_set_elem_catchall *catchall;
++	struct nft_set_elem elem;
++	struct nft_set_ext *ext;
++	int ret = 0;
++
++	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
++		ext = nft_set_elem_ext(set, catchall->elem);
++		if (!nft_set_elem_active(ext, genmask))
++			continue;
++
++		elem.priv = catchall->elem;
++		ret = nft_setelem_validate(ctx, set, NULL, &elem);
++		if (ret < 0)
++			return ret;
++	}
++
++	return ret;
++}
++
+ static struct nft_rule *nft_rule_lookup_byid(const struct net *net,
+ 					     const struct nft_chain *chain,
+ 					     const struct nlattr *nla);
+@@ -4598,12 +4656,6 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 	return err;
+ }
+ 
+-struct nft_set_elem_catchall {
+-	struct list_head	list;
+-	struct rcu_head		rcu;
+-	void			*elem;
+-};
+-
+ static void nft_set_catchall_destroy(const struct nft_ctx *ctx,
+ 				     struct nft_set *set)
+ {
+diff --git a/net/netfilter/nft_lookup.c b/net/netfilter/nft_lookup.c
+index 90becbf5bff3d..bd3485dd930f5 100644
+--- a/net/netfilter/nft_lookup.c
++++ b/net/netfilter/nft_lookup.c
+@@ -198,37 +198,6 @@ static int nft_lookup_dump(struct sk_buff *skb, const struct nft_expr *expr)
+ 	return -1;
+ }
+ 
+-static int nft_lookup_validate_setelem(const struct nft_ctx *ctx,
+-				       struct nft_set *set,
+-				       const struct nft_set_iter *iter,
+-				       struct nft_set_elem *elem)
+-{
+-	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
+-	struct nft_ctx *pctx = (struct nft_ctx *)ctx;
+-	const struct nft_data *data;
+-	int err;
+-
+-	if (nft_set_ext_exists(ext, NFT_SET_EXT_FLAGS) &&
+-	    *nft_set_ext_flags(ext) & NFT_SET_ELEM_INTERVAL_END)
+-		return 0;
+-
+-	data = nft_set_ext_data(ext);
+-	switch (data->verdict.code) {
+-	case NFT_JUMP:
+-	case NFT_GOTO:
+-		pctx->level++;
+-		err = nft_chain_validate(ctx, data->verdict.chain);
+-		if (err < 0)
+-			return err;
+-		pctx->level--;
+-		break;
+-	default:
+-		break;
+-	}
+-
+-	return 0;
+-}
+-
+ static int nft_lookup_validate(const struct nft_ctx *ctx,
+ 			       const struct nft_expr *expr,
+ 			       const struct nft_data **d)
+@@ -244,9 +213,12 @@ static int nft_lookup_validate(const struct nft_ctx *ctx,
+ 	iter.skip	= 0;
+ 	iter.count	= 0;
+ 	iter.err	= 0;
+-	iter.fn		= nft_lookup_validate_setelem;
++	iter.fn		= nft_setelem_validate;
+ 
+ 	priv->set->ops->walk(ctx, priv->set, &iter);
++	if (!iter.err)
++		iter.err = nft_set_catchall_validate(ctx, priv->set);
++
+ 	if (iter.err < 0)
+ 		return iter.err;
+ 
 -- 
 2.39.2
 
