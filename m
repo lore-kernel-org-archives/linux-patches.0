@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29E27C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59551C433EF;
-	Mon, 24 Apr 2023 13:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790F67C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E97C433EF;
+	Mon, 24 Apr 2023 13:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343106;
-	bh=D9Oza+T8TEviv2IjtcOS3/W6BGLVAA5KjeGkf207Pek=;
+	s=korg; t=1682343109;
+	bh=+yTV0WLWqJzHYzsV2DuMvVc915oMZBAc/9+AmvPskkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQdGeyS7a7BdSWXUdppnPRPGUIcLwK2ZDdlxMdcKVKb+YFAPaCwzerZTyp/vtYDYy
-	 sfC7Y5eJr4wTO4aPalo3VnmH3Ce6QZrt3JvTmRgeCb3aIsPp1CcNWjprcg6M2ntuCP
-	 0sJsoKDhLxAEAh6ZMhCO/DIjA4u7AW3Xn21ByrWU=
+	b=Zim65XuZuPyTp4G5pz6yz2+JHU8GNRXcF4UJTxZmP35YRi/eOztTgW01wTKWZU9X4
+	 /98if9SZ0KfpAH2NzKihfAGS19AVtO7PHdu3jAPDVCDdfCpnrt7pjj58fx0WdM7Ja3
+	 KGeGeUJtQ5uPNz29zRfb4frboyBHtLLluHQvANeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.2 080/110] drm/i915: Fix fast wake AUX sync len
-Date: Mon, 24 Apr 2023 15:17:42 +0200
-Message-Id: <20230424131139.447551361@linuxfoundation.org>
+	Alan Liu <HaoPing.Liu@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.2 081/110] drm/amdgpu: Fix desktop freezed after gpu-reset
+Date: Mon, 24 Apr 2023 15:17:43 +0200
+Message-Id: <20230424131139.495083118@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -35,38 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Alan Liu <HaoPing.Liu@amd.com>
 
-commit e1c71f8f918047ce822dc19b42ab1261ed259fd1 upstream.
+commit c8b5a95b570949536a2b75cd8fc4f1de0bc60629 upstream.
 
-Fast wake should use 8 SYNC pulses for the preamble
-and 10-16 SYNC pulses for the precharge. Reduce our
-fast wake SYNC count to match the maximum value.
-We also use the maximum precharge length for normal
-AUX transactions.
+[Why]
+After gpu-reset, sometimes the driver fails to enable vblank irq,
+causing flip_done timed out and the desktop freezed.
 
+During gpu-reset, we disable and enable vblank irq in dm_suspend() and
+dm_resume(). Later on in amdgpu_irq_gpu_reset_resume_helper(), we check
+irqs' refcount and decide to enable or disable the irqs again.
+
+However, we have 2 sets of API for controling vblank irq, one is
+dm_vblank_get/put() and another is amdgpu_irq_get/put(). Each API has
+its own refcount and flag to store the state of vblank irq, and they
+are not synchronized.
+
+In drm we use the first API to control vblank irq but in
+amdgpu_irq_gpu_reset_resume_helper() we use the second set of API.
+
+The failure happens when vblank irq was enabled by dm_vblank_get()
+before gpu-reset, we have vblank->enabled true. However, during
+gpu-reset, in amdgpu_irq_gpu_reset_resume_helper() vblank irq's state
+checked from amdgpu_irq_update() is DISABLED. So finally it disables
+vblank irq again. After gpu-reset, if there is a cursor plane commit,
+the driver will try to enable vblank irq by calling drm_vblank_enable(),
+but the vblank->enabled is still true, so it fails to turn on vblank
+irq and causes flip_done can't be completed in vblank irq handler and
+desktop become freezed.
+
+[How]
+Combining the 2 vblank control APIs by letting drm's API finally calls
+amdgpu_irq's API, so the irq's refcount and state of both APIs can be
+synchronized. Also add a check to prevent refcount from being less then
+0 in amdgpu_irq_put().
+
+v2:
+- Add warning in amdgpu_irq_enable() if the irq is already disabled.
+- Call dc_interrupt_set() in dm_set_vblank() to avoid refcount change
+  if it is in gpu-reset.
+
+v3:
+- Improve commit message and code comments.
+
+Signed-off-by: Alan Liu <HaoPing.Liu@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Cc: Jouni Högander <jouni.hogander@intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230329172434.18744-1-ville.syrjala@linux.intel.com
-Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
-(cherry picked from commit 605f7c73133341d4b762cbd9a22174cc22d4c38b)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp_aux.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c                |    3 +++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   17 ++++++++++++++---
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dp_aux.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_aux.c
-@@ -166,7 +166,7 @@ static u32 skl_get_aux_send_ctl(struct i
- 	      DP_AUX_CH_CTL_TIME_OUT_MAX |
- 	      DP_AUX_CH_CTL_RECEIVE_ERROR |
- 	      (send_bytes << DP_AUX_CH_CTL_MESSAGE_SIZE_SHIFT) |
--	      DP_AUX_CH_CTL_FW_SYNC_PULSE_SKL(32) |
-+	      DP_AUX_CH_CTL_FW_SYNC_PULSE_SKL(24) |
- 	      DP_AUX_CH_CTL_SYNC_PULSE_SKL(32);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
+@@ -597,6 +597,9 @@ int amdgpu_irq_put(struct amdgpu_device
+ 	if (!src->enabled_types || !src->funcs->set)
+ 		return -EINVAL;
  
- 	if (intel_tc_port_in_tbt_alt_mode(dig_port))
++	if (WARN_ON(!amdgpu_irq_enabled(adev, src, type)))
++		return -EINVAL;
++
+ 	if (atomic_dec_and_test(&src->enabled_types[type]))
+ 		return amdgpu_irq_update(adev, src, type);
+ 
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -170,10 +170,21 @@ static inline int dm_set_vblank(struct d
+ 	if (rc)
+ 		return rc;
+ 
+-	irq_source = IRQ_TYPE_VBLANK + acrtc->otg_inst;
++	if (amdgpu_in_reset(adev)) {
++		irq_source = IRQ_TYPE_VBLANK + acrtc->otg_inst;
++		/* During gpu-reset we disable and then enable vblank irq, so
++		 * don't use amdgpu_irq_get/put() to avoid refcount change.
++		 */
++		if (!dc_interrupt_set(adev->dm.dc, irq_source, enable))
++			rc = -EBUSY;
++	} else {
++		rc = (enable)
++			? amdgpu_irq_get(adev, &adev->crtc_irq, acrtc->crtc_id)
++			: amdgpu_irq_put(adev, &adev->crtc_irq, acrtc->crtc_id);
++	}
+ 
+-	if (!dc_interrupt_set(adev->dm.dc, irq_source, enable))
+-		return -EBUSY;
++	if (rc)
++		return rc;
+ 
+ skip:
+ 	if (amdgpu_in_reset(adev))
 
 
