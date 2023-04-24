@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B697E7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDD6C433EF;
-	Mon, 24 Apr 2023 13:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547A57C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD43EC433EF;
+	Mon, 24 Apr 2023 13:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342961;
-	bh=VahnRxo7Kq5WbSP8gj2jf+/OfKsBxnlEmpy8qbtU+1o=;
+	s=korg; t=1682342964;
+	bh=GWbofcBYotdY4oby4aCzbMJnTAYFD3xvuCeiXXOdGeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hxi0nNMoTjikiRy6qqTTjslGpXIEB6vyjMrIxxFtt0fctKE06bFHO0gt+UVz+eLpn
-	 xvyrwGTK5r+6bYV2eycZ8ktmwGQWJaQTAaKGqdGLXJkubAb+LtBvLXzvBYj6fHzmw1
-	 Eg4MPWMj28pCM14cYmiyFhtjmULPNABY9pTKWnow=
+	b=TnS+8wuhCS+E/abslCuv7h8/PwWwm7Po565CghEWGnTehqAbeJxgnLBFolHR2+AIs
+	 WNATM5OmEK/RhsD3XvwoIxp9xlutQ7lCOLA4QOunHoosl+EtvyqMNlnVuMynWVeOV1
+	 Jqxk1l9+ZT5bXr8IBllG04UePRcNKDaj6fJZOZ6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 024/110] cxgb4: fix use after free bugs caused by circular dependency problem
-Date: Mon, 24 Apr 2023 15:16:46 +0200
-Message-Id: <20230424131137.040237149@linuxfoundation.org>
+Subject: [PATCH 6.2 025/110] netfilter: nf_tables: tighten netlink attribute requirements for catch-all elements
+Date: Mon, 24 Apr 2023 15:16:47 +0200
+Message-Id: <20230424131137.077241688@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -35,61 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit e50b9b9e8610d47b7c22529443e45a16b1ea3a15 ]
+[ Upstream commit d4eb7e39929a3b1ff30fb751b4859fc2410702a0 ]
 
-The flower_stats_timer can schedule flower_stats_work and
-flower_stats_work can also arm the flower_stats_timer. The
-process is shown below:
+If NFT_SET_ELEM_CATCHALL is set on, then userspace provides no set element
+key. Otherwise, bail out with -EINVAL.
 
------------ timer schedules work ------------
-ch_flower_stats_cb() //timer handler
-  schedule_work(&adap->flower_stats_work);
-
------------ work arms timer ------------
-ch_flower_stats_handler() //workqueue callback function
-  mod_timer(&adap->flower_stats_timer, ...);
-
-When the cxgb4 device is detaching, the timer and workqueue
-could still be rearmed. The process is shown below:
-
-  (cleanup routine)           | (timer and workqueue routine)
-remove_one()                  |
-  free_some_resources()       | ch_flower_stats_cb() //timer
-    cxgb4_cleanup_tc_flower() |   schedule_work()
-      del_timer_sync()        |
-                              | ch_flower_stats_handler() //workqueue
-                              |   mod_timer()
-      cancel_work_sync()      |
-  kfree(adapter) //FREE       | ch_flower_stats_cb() //timer
-                              |   adap->flower_stats_work //USE
-
-This patch changes del_timer_sync() to timer_shutdown_sync(),
-which could prevent rearming of the timer from the workqueue.
-
-Fixes: e0f911c81e93 ("cxgb4: fetch stats for offloaded tc flower flows")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230415081227.7463-1-duoming@zju.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: aaa31047a6d2 ("netfilter: nftables: add catch-all set element support")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c
-index dd9be229819a5..d3541159487dd 100644
---- a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c
-@@ -1135,7 +1135,7 @@ void cxgb4_cleanup_tc_flower(struct adapter *adap)
- 		return;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 94ad50ac91602..ce8a047ef8306 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6088,7 +6088,8 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	if (err < 0)
+ 		return err;
  
- 	if (adap->flower_stats_timer.function)
--		del_timer_sync(&adap->flower_stats_timer);
-+		timer_shutdown_sync(&adap->flower_stats_timer);
- 	cancel_work_sync(&adap->flower_stats_work);
- 	rhashtable_destroy(&adap->flower_tbl);
- 	adap->tc_flower_initialized = false;
+-	if (!nla[NFTA_SET_ELEM_KEY] && !(flags & NFT_SET_ELEM_CATCHALL))
++	if (((flags & NFT_SET_ELEM_CATCHALL) && nla[NFTA_SET_ELEM_KEY]) ||
++	    (!(flags & NFT_SET_ELEM_CATCHALL) && !nla[NFTA_SET_ELEM_KEY]))
+ 		return -EINVAL;
+ 
+ 	if (flags != 0) {
 -- 
 2.39.2
 
