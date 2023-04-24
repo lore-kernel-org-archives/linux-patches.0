@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95542108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:35:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F77BC433D2;
-	Mon, 24 Apr 2023 13:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9726E2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:35:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAC4C433EF;
+	Mon, 24 Apr 2023 13:35:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343314;
-	bh=bRMJMZZpgzwMBP+WHIcm5ARXb7ss27W3j3C0r5vPOTo=;
+	s=korg; t=1682343317;
+	bh=nxh/nNIrVThINx+3vd9bj9ZM++6RhoH+3cGJWJ7LkGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tylM++GeZVdIAHooyfkOOFdgxaTxUqoPbMtpf4OlGQMeYL/7MIAxY07y0THl6YCZG
-	 QR1BreuB9saSR3y3rKfARZ+hZ1ikvsivpkOMWCEyiBt4HkIgRWcA+qilu6z1InCP8i
-	 nKSvb7ZSK/YBV7gMIB8f8a+u/PkNq547V2TMLqxc=
+	b=trVlZNvEnDGIHogkXjazUdSbHPkZnvkl74Za094QBVem2CkZZIRyJmbek6mPPvreP
+	 rAHchWXY/8lhPgI7/+Ot0Db9Z7Daa781PlbxdAsBgIjR4YCXGJlKpNm+RqFn9OckXO
+	 UH2hekcDF0ZUmh3ehIrBNA25ZfC/eU/NdnuuN/Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Denose <jdenose@google.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 20/68] Input: i8042 - add quirk for Fujitsu Lifebook A574/H
-Date: Mon, 24 Apr 2023 15:17:51 +0200
-Message-Id: <20230424131128.422490283@linuxfoundation.org>
+	Salvatore Bonaccorso <carnil@debian.org>
+Subject: [PATCH 5.10 47/68] [PATCH v2 stable-5.10.y stable-5.15.y] docs: futex: Fix kernel-doc references after code split-up preparation
+Date: Mon, 24 Apr 2023 15:18:18 +0200
+Message-Id: <20230424131129.482042457@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -36,43 +33,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Denose <jdenose@chromium.org>
+From: Salvatore Bonaccorso <carnil@debian.org>
 
-[ Upstream commit f5bad62f9107b701a6def7cac1f5f65862219b83 ]
+In upstream commit 77e52ae35463 ("futex: Move to kernel/futex/") the
+futex code from kernel/futex.c was moved into kernel/futex/core.c in
+preparation of the split-up of the implementation in various files.
 
-Fujitsu Lifebook A574/H requires the nomux option to properly
-probe the touchpad, especially when waking from sleep.
+Point kernel-doc references to the new files as otherwise the
+documentation shows errors on build:
 
-Signed-off-by: Jonathan Denose <jdenose@google.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230303152623.45859-1-jdenose@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    [...]
+    Error: Cannot open file ./kernel/futex.c
+    Error: Cannot open file ./kernel/futex.c
+    [...]
+    WARNING: kernel-doc './scripts/kernel-doc -rst -enable-lineno -sphinx-version 3.4.3 -internal ./kernel/futex.c' failed with return code 2
+
+There is no direct upstream commit for this change. It is made in
+analogy to commit bc67f1c454fb ("docs: futex: Fix kernel-doc
+references") applied as consequence of the restructuring of the futex
+code.
+
+Fixes: 77e52ae35463 ("futex: Move to kernel/futex/")
+Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-x86ia64io.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ Documentation/kernel-hacking/locking.rst                    |    2 +-
+ Documentation/translations/it_IT/kernel-hacking/locking.rst |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/input/serio/i8042-x86ia64io.h b/drivers/input/serio/i8042-x86ia64io.h
-index 65c0081838e3d..9dcdf21c50bdc 100644
---- a/drivers/input/serio/i8042-x86ia64io.h
-+++ b/drivers/input/serio/i8042-x86ia64io.h
-@@ -601,6 +601,14 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
- 	},
-+	{
-+		/* Fujitsu Lifebook A574/H */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "FMVA0501PZ"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
-+	},
- 	{
- 		/* Gigabyte M912 */
- 		.matches = {
--- 
-2.39.2
-
+--- a/Documentation/kernel-hacking/locking.rst
++++ b/Documentation/kernel-hacking/locking.rst
+@@ -1358,7 +1358,7 @@ Mutex API reference
+ Futex API reference
+ ===================
+ 
+-.. kernel-doc:: kernel/futex.c
++.. kernel-doc:: kernel/futex/core.c
+    :internal:
+ 
+ Further reading
+--- a/Documentation/translations/it_IT/kernel-hacking/locking.rst
++++ b/Documentation/translations/it_IT/kernel-hacking/locking.rst
+@@ -1400,7 +1400,7 @@ Riferimento per l'API dei Mutex
+ Riferimento per l'API dei Futex
+ ===============================
+ 
+-.. kernel-doc:: kernel/futex.c
++.. kernel-doc:: kernel/futex/core.c
+    :internal:
+ 
+ Approfondimenti
 
 
