@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE9C2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8EBC433D2;
-	Mon, 24 Apr 2023 13:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EDA2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3D1C433EF;
+	Mon, 24 Apr 2023 13:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343188;
-	bh=/W9s31DHC7xP0Q+IyCK4NLGcdW4czDtsgWCdEtzKh/U=;
+	s=korg; t=1682343190;
+	bh=EYz7GiP6sk84FAw91gCcYbCExrJDlxCdKUxsrNo5WeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMZk132QcwXAv8QNVH1qmKXVROJbT5mfoNA+kC+8IPQp5krflQuCG/F8wBM7n1JTq
-	 /7ugOjDAJmbcACoPDj4S4uxC5MCc6NArUwQcWmjudxfGDlTnKuD0DQGLsOtm7UZgA2
-	 8rnSNw0Kdmz/JbjvKeLcVcSKvM632rsOakdIay04=
+	b=s2aPQ6HUr1Uq10eeSsuQISoOkXJ8LNZOUkk0zeqyv+xCZ2H6XB/1MA57iG8AE6MmB
+	 jITt1611yL746HtA2zdMj5D686FT5xn0wpSnCPLL9Jqcgk5FAYIvHkErPDG++1Nrxp
+	 R5vegVVNKbViqXj1FIebwRdNnNULdF7xJ83a/LUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	WANG Xuerui <kernel@xen0n.name>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.2 097/110] LoongArch: Make -mstrict-align configurable
-Date: Mon, 24 Apr 2023 15:17:59 +0200
-Message-Id: <20230424131140.190795824@linuxfoundation.org>
+Subject: [PATCH 6.2 098/110] LoongArch: Make WriteCombine configurable for ioremap()
+Date: Mon, 24 Apr 2023 15:18:00 +0200
+Message-Id: <20230424131140.230840389@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -36,134 +36,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 41596803302d83a67a80dc1efef4e51ac46acabb upstream.
+commit 16c52e503043aed1e2a2ce38d9249de5936c1f6b upstream.
 
-Introduce Kconfig option ARCH_STRICT_ALIGN to make -mstrict-align be
-configurable.
+LoongArch maintains cache coherency in hardware, but when paired with
+LS7A chipsets the WUC attribute (Weak-ordered UnCached, which is similar
+to WriteCombine) is out of the scope of cache coherency machanism for
+PCIe devices (this is a PCIe protocol violation, which may be fixed in
+newer chipsets).
 
-Not all LoongArch cores support h/w unaligned access, we can use the
--mstrict-align build parameter to prevent unaligned accesses.
+This means WUC can only used for write-only memory regions now, so this
+option is disabled by default, making WUC silently fallback to SUC for
+ioremap(). You can enable this option if the kernel is ensured to run on
+hardware without this bug.
 
-CPUs with h/w unaligned access support:
-Loongson-2K2000/2K3000/3A5000/3C5000/3D5000.
+Kernel parameter writecombine=on/off can be used to override the Kconfig
+option.
 
-CPUs without h/w unaligned access support:
-Loongson-2K500/2K1000.
-
-This option is enabled by default to make the kernel be able to run on
-all LoongArch systems. But you can disable it manually if you want to
-run kernel only on systems with h/w unaligned access support in order to
-optimise for performance.
-
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Cc: stable@vger.kernel.org
+Suggested-by: WANG Xuerui <kernel@xen0n.name>
+Reviewed-by: WANG Xuerui <kernel@xen0n.name>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/Kconfig         |   19 +++++++++++++++++++
- arch/loongarch/Makefile        |    5 +++++
- arch/loongarch/kernel/Makefile |    4 +++-
- arch/loongarch/kernel/traps.c  |    9 +++++++--
- 4 files changed, 34 insertions(+), 3 deletions(-)
+ Documentation/admin-guide/kernel-parameters.rst |    1 +
+ Documentation/admin-guide/kernel-parameters.txt |    6 ++++++
+ arch/loongarch/Kconfig                          |   16 ++++++++++++++++
+ arch/loongarch/include/asm/io.h                 |    4 +++-
+ arch/loongarch/kernel/setup.c                   |   21 +++++++++++++++++++++
+ 5 files changed, 47 insertions(+), 1 deletion(-)
 
+--- a/Documentation/admin-guide/kernel-parameters.rst
++++ b/Documentation/admin-guide/kernel-parameters.rst
+@@ -128,6 +128,7 @@ parameter is applicable::
+ 	KVM	Kernel Virtual Machine support is enabled.
+ 	LIBATA  Libata driver is enabled
+ 	LP	Printer support is enabled.
++	LOONGARCH LoongArch architecture is enabled.
+ 	LOOP	Loopback device support is enabled.
+ 	M68k	M68k architecture is enabled.
+ 			These options have more detailed description inside of
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -6874,6 +6874,12 @@
+ 			When enabled, memory and cache locality will be
+ 			impacted.
+ 
++	writecombine=	[LOONGARCH] Control the MAT (Memory Access Type) of
++			ioremap_wc().
++
++			on   - Enable writecombine, use WUC for ioremap_wc()
++			off  - Disable writecombine, use SUC for ioremap_wc()
++
+ 	x2apic_phys	[X86-64,APIC] Use x2apic physical mode instead of
+ 			default x2apic cluster mode on platforms
+ 			supporting x2apic.
 --- a/arch/loongarch/Kconfig
 +++ b/arch/loongarch/Kconfig
-@@ -94,6 +94,7 @@ config LOONGARCH
- 	select HAVE_DYNAMIC_FTRACE_WITH_ARGS
- 	select HAVE_DYNAMIC_FTRACE_WITH_REGS
- 	select HAVE_EBPF_JIT
-+	select HAVE_EFFICIENT_UNALIGNED_ACCESS if !ARCH_STRICT_ALIGN
- 	select HAVE_EXIT_THREAD
- 	select HAVE_FAST_GUP
- 	select HAVE_FTRACE_MCOUNT_RECORD
-@@ -441,6 +442,24 @@ config ARCH_IOREMAP
+@@ -442,6 +442,22 @@ config ARCH_IOREMAP
  	  protection support. However, you can enable LoongArch DMW-based
  	  ioremap() for better performance.
  
-+config ARCH_STRICT_ALIGN
-+	bool "Enable -mstrict-align to prevent unaligned accesses" if EXPERT
-+	default y
++config ARCH_WRITECOMBINE
++	bool "Enable WriteCombine (WUC) for ioremap()"
 +	help
-+	  Not all LoongArch cores support h/w unaligned access, we can use
-+	  -mstrict-align build parameter to prevent unaligned accesses.
++	  LoongArch maintains cache coherency in hardware, but when paired
++	  with LS7A chipsets the WUC attribute (Weak-ordered UnCached, which
++	  is similar to WriteCombine) is out of the scope of cache coherency
++	  machanism for PCIe devices (this is a PCIe protocol violation, which
++	  may be fixed in newer chipsets).
 +
-+	  CPUs with h/w unaligned access support:
-+	  Loongson-2K2000/2K3000/3A5000/3C5000/3D5000.
++	  This means WUC can only used for write-only memory regions now, so
++	  this option is disabled by default, making WUC silently fallback to
++	  SUC for ioremap(). You can enable this option if the kernel is ensured
++	  to run on hardware without this bug.
 +
-+	  CPUs without h/w unaligned access support:
-+	  Loongson-2K500/2K1000.
++	  You can override this setting via writecombine=on/off boot parameter.
 +
-+	  This option is enabled by default to make the kernel be able to run
-+	  on all LoongArch systems. But you can disable it manually if you want
-+	  to run kernel only on systems with h/w unaligned access support in
-+	  order to optimise for performance.
+ config ARCH_STRICT_ALIGN
+ 	bool "Enable -mstrict-align to prevent unaligned accesses" if EXPERT
+ 	default y
+--- a/arch/loongarch/include/asm/io.h
++++ b/arch/loongarch/include/asm/io.h
+@@ -54,8 +54,10 @@ static inline void __iomem *ioremap_prot
+  * @offset:    bus address of the memory
+  * @size:      size of the resource to map
+  */
++extern pgprot_t pgprot_wc;
 +
- config KEXEC
- 	bool "Kexec system call"
- 	select KEXEC_CORE
---- a/arch/loongarch/Makefile
-+++ b/arch/loongarch/Makefile
-@@ -91,10 +91,15 @@ KBUILD_CPPFLAGS += -DVMLINUX_LOAD_ADDRES
- # instead of .eh_frame so we don't discard them.
- KBUILD_CFLAGS += -fno-asynchronous-unwind-tables
+ #define ioremap_wc(offset, size)	\
+-	ioremap_prot((offset), (size), pgprot_val(PAGE_KERNEL_WUC))
++	ioremap_prot((offset), (size), pgprot_val(pgprot_wc))
  
-+ifdef CONFIG_ARCH_STRICT_ALIGN
- # Don't emit unaligned accesses.
- # Not all LoongArch cores support unaligned access, and as kernel we can't
- # rely on others to provide emulation for these accesses.
- KBUILD_CFLAGS += $(call cc-option,-mstrict-align)
-+else
-+# Optimise for performance on hardware supports unaligned access.
-+KBUILD_CFLAGS += $(call cc-option,-mno-strict-align)
-+endif
- 
- KBUILD_CFLAGS += -isystem $(shell $(CC) -print-file-name=include)
- 
---- a/arch/loongarch/kernel/Makefile
-+++ b/arch/loongarch/kernel/Makefile
-@@ -8,13 +8,15 @@ extra-y		:= vmlinux.lds
- obj-y		+= head.o cpu-probe.o cacheinfo.o env.o setup.o entry.o genex.o \
- 		   traps.o irq.o idle.o process.o dma.o mem.o io.o reset.o switch.o \
- 		   elf.o syscall.o signal.o time.o topology.o inst.o ptrace.o vdso.o \
--		   alternative.o unaligned.o unwind.o
-+		   alternative.o unwind.o
- 
- obj-$(CONFIG_ACPI)		+= acpi.o
- obj-$(CONFIG_EFI) 		+= efi.o
- 
- obj-$(CONFIG_CPU_HAS_FPU)	+= fpu.o
- 
-+obj-$(CONFIG_ARCH_STRICT_ALIGN)	+= unaligned.o
-+
- ifdef CONFIG_FUNCTION_TRACER
-   ifndef CONFIG_DYNAMIC_FTRACE
-     obj-y += mcount.o ftrace.o
---- a/arch/loongarch/kernel/traps.c
-+++ b/arch/loongarch/kernel/traps.c
-@@ -371,9 +371,14 @@ int no_unaligned_warning __read_mostly =
- 
- asmlinkage void noinstr do_ale(struct pt_regs *regs)
- {
--	unsigned int *pc;
- 	irqentry_state_t state = irqentry_enter(regs);
- 
-+#ifndef CONFIG_ARCH_STRICT_ALIGN
-+	die_if_kernel("Kernel ale access", regs);
-+	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)regs->csr_badvaddr);
-+#else
-+	unsigned int *pc;
-+
- 	perf_sw_event(PERF_COUNT_SW_ALIGNMENT_FAULTS, 1, regs, regs->csr_badvaddr);
- 
- 	/*
-@@ -397,8 +402,8 @@ asmlinkage void noinstr do_ale(struct pt
- sigbus:
- 	die_if_kernel("Kernel ale access", regs);
- 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)regs->csr_badvaddr);
--
- out:
-+#endif
- 	irqentry_exit(regs, state);
+ #define ioremap_cache(offset, size)	\
+ 	ioremap_prot((offset), (size), pgprot_val(PAGE_KERNEL))
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -160,6 +160,27 @@ static void __init smbios_parse(void)
+ 	dmi_walk(find_tokens, NULL);
  }
  
++#ifdef CONFIG_ARCH_WRITECOMBINE
++pgprot_t pgprot_wc = PAGE_KERNEL_WUC;
++#else
++pgprot_t pgprot_wc = PAGE_KERNEL_SUC;
++#endif
++
++EXPORT_SYMBOL(pgprot_wc);
++
++static int __init setup_writecombine(char *p)
++{
++	if (!strcmp(p, "on"))
++		pgprot_wc = PAGE_KERNEL_WUC;
++	else if (!strcmp(p, "off"))
++		pgprot_wc = PAGE_KERNEL_SUC;
++	else
++		pr_warn("Unknown writecombine setting \"%s\".\n", p);
++
++	return 0;
++}
++early_param("writecombine", setup_writecombine);
++
+ static int usermem __initdata;
+ 
+ static int __init early_parse_mem(char *p)
 
 
