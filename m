@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C5D7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350A7C433D2;
-	Mon, 24 Apr 2023 13:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D80F7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8270C433EF;
+	Mon, 24 Apr 2023 13:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342777;
-	bh=cw9+KipHJJNlFwS40WiYvrRjTyRcGuOlaoYVtmJUQTg=;
+	s=korg; t=1682342780;
+	bh=61CpfB4NPx3Sn2ArhV0R5wLaJ+ElHuIv6dOpo25OXQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dd+WmGQX+LfbFVR13xtQ2UTYfHbFLxAEFI9cowCpd//p1S+IBdiZyspic3qTBhZXe
-	 i4mcRMF+dEd1AKpS2Ie9O/nlE/ZeGheNLuJ3blLdIyNNDi2VKfEQ83nZ4KL213olbB
-	 k6Qytu+KFQ5OmPozfBoz4SUaZWS3gIgQiPF0fGtg=
+	b=U0C8BX1Jn0+VIo2YWn/mUFEkD2TiKAIdhQbl8UKjtC3ZzFxp9gw5snf3bkd1575le
+	 9RgmYd+eMXjnMA4WJWJqs7bfgl2dZh5JKExaRdmpnRClPj6SFQQfluiElacmQmGqka
+	 XRYyqr6Se40Au+38ckpyMautcdS5+UxqE04MOgTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	weiliang1503 <weiliang1503@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 14/98] regulator: fan53555: Explicitly include bits header
-Date: Mon, 24 Apr 2023 15:16:37 +0200
-Message-Id: <20230424131134.426328805@linuxfoundation.org>
+Subject: [PATCH 6.1 47/98] platform/x86: asus-nb-wmi: Add quirk_asus_tablet_mode to other ROG Flow X13 models
+Date: Mon, 24 Apr 2023 15:17:10 +0200
+Message-Id: <20230424131135.695296332@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -35,57 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: weiliang1503 <weiliang1503@gmail.com>
 
-[ Upstream commit 4fb9a5060f73627303bc531ceaab1b19d0a24aef ]
+[ Upstream commit e352d685fde427a8fc9beb2ba30888f5d6f2e5e6 ]
 
-Since commit f2a9eb975ab2 ("regulator: fan53555: Add support for
-FAN53526") the driver makes use of the BIT() macro, but relies on the
-bits header being implicitly included.
+Make quirk_asus_tablet_mode apply on other ROG Flow X13 devices,
+which only affects the GV301Q model before.
 
-Explicitly pull the header in to avoid potential build failures in some
-configurations.
-
-While here, reorder include directives alphabetically.
-
-Fixes: f2a9eb975ab2 ("regulator: fan53555: Add support for FAN53526")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20230406171806.948290-3-cristian.ciocaltea@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: weiliang1503 <weiliang1503@gmail.com>
+Link: https://lore.kernel.org/r/20230330114943.15057-1-weiliang1503@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/fan53555.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/platform/x86/asus-nb-wmi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/fan53555.c b/drivers/regulator/fan53555.c
-index dac1fb584fa35..df53464afe3a0 100644
---- a/drivers/regulator/fan53555.c
-+++ b/drivers/regulator/fan53555.c
-@@ -8,18 +8,19 @@
- // Copyright (c) 2012 Marvell Technology Ltd.
- // Yunfan Zhang <yfzhang@marvell.com>
- 
-+#include <linux/bits.h>
-+#include <linux/err.h>
-+#include <linux/i2c.h>
- #include <linux/module.h>
-+#include <linux/of_device.h>
- #include <linux/param.h>
--#include <linux/err.h>
- #include <linux/platform_device.h>
-+#include <linux/regmap.h>
- #include <linux/regulator/driver.h>
-+#include <linux/regulator/fan53555.h>
- #include <linux/regulator/machine.h>
- #include <linux/regulator/of_regulator.h>
--#include <linux/of_device.h>
--#include <linux/i2c.h>
- #include <linux/slab.h>
--#include <linux/regmap.h>
--#include <linux/regulator/fan53555.h>
- 
- /* Voltage setting */
- #define FAN53555_VSEL0		0x00
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index cb15acdf14a30..e2c9a68d12df9 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -464,7 +464,8 @@ static const struct dmi_system_id asus_quirks[] = {
+ 		.ident = "ASUS ROG FLOW X13",
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "GV301Q"),
++			/* Match GV301** */
++			DMI_MATCH(DMI_PRODUCT_NAME, "GV301"),
+ 		},
+ 		.driver_data = &quirk_asus_tablet_mode,
+ 	},
 -- 
 2.39.2
 
