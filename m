@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B206A7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323F3C433D2;
-	Mon, 24 Apr 2023 13:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571A37C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0839C433EF;
+	Mon, 24 Apr 2023 13:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343027;
-	bh=7Z6bMx4oCwqkksV1dpSf/lzDQSmNYW3uK/vGMR70Z0M=;
+	s=korg; t=1682343030;
+	bh=JYv8anrELkRS2InyKfowv6LTjAw5NsWku3VF0hOAG1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1qn6iah1JINYoo6bBNReYxWX3zmEboZTkB/YeA7nAHTwNW1u8gDHYUBwQM6yBLa+
-	 1wXe7s0FMnFDtJdRJ6SWzMq6rQfv6iGJb2y6P3apW+maPVxYxrPcSVGhrWnAt1QiOv
-	 7IHdi6oTvNgPVnGu2E6FRdniZuvcnlL+NEZQa+sE=
+	b=gvkcqRWE5SzLq0/Z6mnc1yR2ukrwI+FyRfaUkXd+pxSzuIfjhczkVwxuRUvZcBhpA
+	 rop0hYCcSkEjHaSQUVCke4192zncXZUOiYukffvhPqLnXiDqED0W6xgkJlg+FFZTkG
+	 w79PQClXgARb8pSXw//ow1HFGrU6ISysZOoJL5Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lanzhe <u202212060@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 032/110] spi: spi-rockchip: Fix missing unwind goto in rockchip_sfc_probe()
-Date: Mon, 24 Apr 2023 15:16:54 +0200
-Message-Id: <20230424131137.343997955@linuxfoundation.org>
+Subject: [PATCH 6.2 050/110] xen/netback: use same error messages for same errors
+Date: Mon, 24 Apr 2023 15:17:12 +0200
+Message-Id: <20230424131138.125613477@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -36,38 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Lanzhe <u202212060@hust.edu.cn>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 359f5b0d4e26b7a7bcc574d6148b31a17cefe47d ]
+[ Upstream commit 2eca98e5b24d01c02b46c67be05a5f98cc9789b1 ]
 
-If devm_request_irq() fails, then we are directly return 'ret' without
-clk_disable_unprepare(sfc->clk) and clk_disable_unprepare(sfc->hclk).
+Issue the same error message in case an illegal page boundary crossing
+has been detected in both cases where this is tested.
 
-Fix this by changing direct return to a goto 'err_irq'.
-
-Fixes: 0b89fc0a367e ("spi: rockchip-sfc: add rockchip serial flash controller")
-Signed-off-by: Li Lanzhe <u202212060@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230419115030.6029-1-u202212060@hust.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Link: https://lore.kernel.org/r/20230329080259.14823-1-jgross@suse.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rockchip-sfc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/xen-netback/netback.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-rockchip-sfc.c b/drivers/spi/spi-rockchip-sfc.c
-index bd87d3c92dd33..69347b6bf60cd 100644
---- a/drivers/spi/spi-rockchip-sfc.c
-+++ b/drivers/spi/spi-rockchip-sfc.c
-@@ -632,7 +632,7 @@ static int rockchip_sfc_probe(struct platform_device *pdev)
- 	if (ret) {
- 		dev_err(dev, "Failed to request irq\n");
+diff --git a/drivers/net/xen-netback/netback.c b/drivers/net/xen-netback/netback.c
+index 5c266062c08f0..c35c085dbc877 100644
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -996,10 +996,8 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
  
--		return ret;
-+		goto err_irq;
- 	}
- 
- 	ret = rockchip_sfc_init(sfc);
+ 		/* No crossing a page as the payload mustn't fragment. */
+ 		if (unlikely((txreq.offset + txreq.size) > XEN_PAGE_SIZE)) {
+-			netdev_err(queue->vif->dev,
+-				   "txreq.offset: %u, size: %u, end: %lu\n",
+-				   txreq.offset, txreq.size,
+-				   (unsigned long)(txreq.offset&~XEN_PAGE_MASK) + txreq.size);
++			netdev_err(queue->vif->dev, "Cross page boundary, txreq.offset: %u, size: %u\n",
++				   txreq.offset, txreq.size);
+ 			xenvif_fatal_tx_err(queue->vif);
+ 			break;
+ 		}
 -- 
 2.39.2
 
