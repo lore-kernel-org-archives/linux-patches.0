@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1B92108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:34:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD1AC433EF;
-	Mon, 24 Apr 2023 13:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1FC2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:34:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A7EC433EF;
+	Mon, 24 Apr 2023 13:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343283;
-	bh=1r+ep6+5HhdZvrtZXGLC4VUoYJgSZoYrhwJSVy++huM=;
+	s=korg; t=1682343286;
+	bh=j3/iw94mKIuIrszdGI4ABTDK7tgs5kCINVzSTavDhAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Itzu4N6nugRstpey56m7WdQqoBybNUv91IJHjJF/TsZSixQeU2Q84zFdpRdRlbPFg
-	 JMmTyE+6Sch/j5waL5V5l62SdXpIB6tvQIKWYPElYTO1O3xaeoLrTxWhNDxfG22SsZ
-	 tHcB+Ll/K7ULMvC1K/ouUvTr9yx0+eZ9Xbribh5w=
+	b=UfOYVcft1YQa/NHWoqo6JRc7/TNzII7y2LHiATlCuhW81ALOirvDiX1KvuQo38NKX
+	 REiKUVCRp3TNeAxqFlufT1jVls3uPfbjxmt3TrpWPO70HqgF3y8c9NlYApKAzeZGTG
+	 O0/qk5Urbxlf7aLtHqr0/mvH8zRN7nDI260+Fr60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Qais Yousef (Google)" <qyousef@layalina.io>,
-	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 5.10 36/68] sched/uclamp: Make task_fits_capacity() use util_fits_cpu()
-Date: Mon, 24 Apr 2023 15:18:07 +0200
-Message-Id: <20230424131129.054252367@linuxfoundation.org>
+	Douglas Raillard <douglas.raillard@arm.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 19/68] f2fs: Fix f2fs_truncate_partial_nodes ftrace event
+Date: Mon, 24 Apr 2023 15:17:50 +0200
+Message-Id: <20230424131128.390894684@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -36,108 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Douglas Raillard <douglas.raillard@arm.com>
 
-commit b48e16a69792b5dc4a09d6807369d11b2970cc36 upstream.
+[ Upstream commit 0b04d4c0542e8573a837b1d81b94209e48723b25 ]
 
-So that the new uclamp rules in regard to migration margin and capacity
-pressure are taken into account correctly.
+Fix the nid_t field so that its size is correctly reported in the text
+format embedded in trace.dat files. As it stands, it is reported as
+being of size 4:
 
-Fixes: a7008c07a568 ("sched/fair: Make task_fits_capacity() consider uclamp restrictions")
-Co-developed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-3-qais.yousef@arm.com
-(cherry picked from commit b48e16a69792b5dc4a09d6807369d11b2970cc36)
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+        field:nid_t nid[3];     offset:24;      size:4; signed:0;
+
+Instead of 12:
+
+        field:nid_t nid[3];     offset:24;      size:12;        signed:0;
+
+This also fixes the reported offset of subsequent fields so that they
+match with the actual struct layout.
+
+Signed-off-by: Douglas Raillard <douglas.raillard@arm.com>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c  |   26 ++++++++++++++++----------
- kernel/sched/sched.h |    9 +++++++++
- 2 files changed, 25 insertions(+), 10 deletions(-)
+ include/trace/events/f2fs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4197,10 +4197,12 @@ static inline int util_fits_cpu(unsigned
- 	return fits;
- }
- 
--static inline int task_fits_capacity(struct task_struct *p,
--				     unsigned long capacity)
-+static inline int task_fits_cpu(struct task_struct *p, int cpu)
- {
--	return fits_capacity(uclamp_task_util(p), capacity);
-+	unsigned long uclamp_min = uclamp_eff_value(p, UCLAMP_MIN);
-+	unsigned long uclamp_max = uclamp_eff_value(p, UCLAMP_MAX);
-+	unsigned long util = task_util_est(p);
-+	return util_fits_cpu(util, uclamp_min, uclamp_max, cpu);
- }
- 
- static inline void update_misfit_status(struct task_struct *p, struct rq *rq)
-@@ -4213,7 +4215,7 @@ static inline void update_misfit_status(
- 		return;
- 	}
- 
--	if (task_fits_capacity(p, capacity_of(cpu_of(rq)))) {
-+	if (task_fits_cpu(p, cpu_of(rq))) {
- 		rq->misfit_task_load = 0;
- 		return;
- 	}
-@@ -7942,7 +7944,7 @@ static int detach_tasks(struct lb_env *e
- 
- 		case migrate_misfit:
- 			/* This is not a misfit task */
--			if (task_fits_capacity(p, capacity_of(env->src_cpu)))
-+			if (task_fits_cpu(p, env->src_cpu))
- 				goto next;
- 
- 			env->imbalance = 0;
-@@ -8884,6 +8886,10 @@ static inline void update_sg_wakeup_stat
- 
- 	memset(sgs, 0, sizeof(*sgs));
- 
-+	/* Assume that task can't fit any CPU of the group */
-+	if (sd->flags & SD_ASYM_CPUCAPACITY)
-+		sgs->group_misfit_task_load = 1;
-+
- 	for_each_cpu(i, sched_group_span(group)) {
- 		struct rq *rq = cpu_rq(i);
- 		unsigned int local;
-@@ -8903,12 +8909,12 @@ static inline void update_sg_wakeup_stat
- 		if (!nr_running && idle_cpu_without(i, p))
- 			sgs->idle_cpus++;
- 
--	}
-+		/* Check if task fits in the CPU */
-+		if (sd->flags & SD_ASYM_CPUCAPACITY &&
-+		    sgs->group_misfit_task_load &&
-+		    task_fits_cpu(p, i))
-+			sgs->group_misfit_task_load = 0;
- 
--	/* Check if task fits in the group */
--	if (sd->flags & SD_ASYM_CPUCAPACITY &&
--	    !task_fits_capacity(p, group->sgc->max_capacity)) {
--		sgs->group_misfit_task_load = 1;
- 	}
- 
- 	sgs->group_capacity = group->sgc->capacity;
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2468,6 +2468,15 @@ static inline bool uclamp_is_used(void)
- 	return static_branch_likely(&sched_uclamp_used);
- }
- #else /* CONFIG_UCLAMP_TASK */
-+static inline unsigned long uclamp_eff_value(struct task_struct *p,
-+					     enum uclamp_id clamp_id)
-+{
-+	if (clamp_id == UCLAMP_MIN)
-+		return 0;
-+
-+	return SCHED_CAPACITY_SCALE;
-+}
-+
- static inline
- unsigned long uclamp_rq_util_with(struct rq *rq, unsigned long util,
- 				  struct task_struct *p)
+diff --git a/include/trace/events/f2fs.h b/include/trace/events/f2fs.h
+index df293bc7f03b8..e8cd19e91de11 100644
+--- a/include/trace/events/f2fs.h
++++ b/include/trace/events/f2fs.h
+@@ -513,7 +513,7 @@ TRACE_EVENT(f2fs_truncate_partial_nodes,
+ 	TP_STRUCT__entry(
+ 		__field(dev_t,	dev)
+ 		__field(ino_t,	ino)
+-		__field(nid_t,	nid[3])
++		__array(nid_t,	nid, 3)
+ 		__field(int,	depth)
+ 		__field(int,	err)
+ 	),
+-- 
+2.39.2
+
 
 
