@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EEE2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F96C4339C;
-	Mon, 24 Apr 2023 13:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFF02108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5089DC433D2;
+	Mon, 24 Apr 2023 13:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343225;
-	bh=tQmjXt9Cc7Z6kWHWMyjev3Vj4rxIBivhPAu7q7T9ULg=;
+	s=korg; t=1682343227;
+	bh=1lDhdgo6utFl0xp7ChlF2NSqxRW2Ba51OVhjNLJdgWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXN4SMNHxDQ7pG9iwL+VmfSPia7ljYGipDraMfLMmOUqSrhklfK5cpyu1s8vYy0L8
-	 FkKb801fk+2ZdgFs/+oqITogIbv1pFTHcAgE8Uy60Xo+gQfWreLL8ymJym0QUJiv4k
-	 9/08l99Jb1AgZkGzZD2dhxcTrt0cB2xX4rIgsqxc=
+	b=QkoNHN2ypwgUhT4jmAks0LcngBPwpBkwER0PQpkndXtFEj4yQgxGyZYgR0eQBR6mm
+	 kZuzd+Lk81nIUNMFTdjWnMo1b7slRzNWF1DDfIlzfywtTIkC3Q1Ml2Qft+BW6qT0N0
+	 CS5GDISIBVSJ5CKNjnuYws6SjoLobd6pAq5UiejE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Natalia Petrova <n.petrova@fintech.ru>
-Subject: [PATCH 5.10 14/68] mlxfw: fix null-ptr-deref in mlxfw_mfa2_tlv_next()
-Date: Mon, 24 Apr 2023 15:17:45 +0200
-Message-Id: <20230424131128.219540591@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	maxpl0it <maxpl0it@protonmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 15/68] net: rpl: fix rpl header size calculation
+Date: Mon, 24 Apr 2023 15:17:46 +0200
+Message-Id: <20230424131128.254149807@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131127.653885914@linuxfoundation.org>
 References: <20230424131127.653885914@linuxfoundation.org>
@@ -37,43 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit c0e73276f0fcbbd3d4736ba975d7dc7a48791b0c ]
+[ Upstream commit 4e006c7a6dac0ead4c1bf606000aa90a372fc253 ]
 
-Function mlxfw_mfa2_tlv_multi_get() returns NULL if 'tlv' in
-question does not pass checks in mlxfw_mfa2_tlv_payload_get(). This
-behaviour may lead to NULL pointer dereference in 'multi->total_len'.
-Fix this issue by testing mlxfw_mfa2_tlv_multi_get()'s return value
-against NULL.
+This patch fixes a missing 8 byte for the header size calculation. The
+ipv6_rpl_srh_size() is used to check a skb_pull() on skb->data which
+points to skb_transport_header(). Currently we only check on the
+calculated addresses fields using CmprI and CmprE fields, see:
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+https://www.rfc-editor.org/rfc/rfc6554#section-3
 
-Fixes: 410ed13cae39 ("Add the mlxfw module for Mellanox firmware flash process")
-Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/20230417120718.52325-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+there is however a missing 8 byte inside the calculation which stands
+for the fields before the addresses field. Those 8 bytes are represented
+by sizeof(struct ipv6_rpl_sr_hdr) expression.
+
+Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Reported-by: maxpl0it <maxpl0it@protonmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/rpl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-index 017d68f1e1232..972c571b41587 100644
---- a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-+++ b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-@@ -31,6 +31,8 @@ mlxfw_mfa2_tlv_next(const struct mlxfw_mfa2_file *mfa2_file,
+diff --git a/net/ipv6/rpl.c b/net/ipv6/rpl.c
+index 307f336b5353e..3b0386437f69d 100644
+--- a/net/ipv6/rpl.c
++++ b/net/ipv6/rpl.c
+@@ -32,7 +32,8 @@ static void *ipv6_rpl_segdata_pos(const struct ipv6_rpl_sr_hdr *hdr, int i)
+ size_t ipv6_rpl_srh_size(unsigned char n, unsigned char cmpri,
+ 			 unsigned char cmpre)
+ {
+-	return (n * IPV6_PFXTAIL_LEN(cmpri)) + IPV6_PFXTAIL_LEN(cmpre);
++	return sizeof(struct ipv6_rpl_sr_hdr) + (n * IPV6_PFXTAIL_LEN(cmpri)) +
++		IPV6_PFXTAIL_LEN(cmpre);
+ }
  
- 	if (tlv->type == MLXFW_MFA2_TLV_MULTI_PART) {
- 		multi = mlxfw_mfa2_tlv_multi_get(mfa2_file, tlv);
-+		if (!multi)
-+			return NULL;
- 		tlv_len = NLA_ALIGN(tlv_len + be16_to_cpu(multi->total_len));
- 	}
- 
+ void ipv6_rpl_srh_decompress(struct ipv6_rpl_sr_hdr *outhdr,
 -- 
 2.39.2
 
