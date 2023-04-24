@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855CF7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:24:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D55C433A0;
-	Mon, 24 Apr 2023 13:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A747C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:24:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE67AC4339B;
+	Mon, 24 Apr 2023 13:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342674;
-	bh=ci7W76DJWN3LqSP5Q6wCWtrjV2zSlq1xrPBPZvyGNbY=;
+	s=korg; t=1682342677;
+	bh=R38uLk+hE1VJzOZOp2vgaO9WZJoICvTpMOsyZbKSRmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q48jHECmCDQ3h2FOujH3JWGbZLYzGzU6EgqMOCjlLkcYiL7mEARWiYM8nJmPXxsb5
-	 O4f847fDIDdCeaKV9JCrs4BHPEhNZE3gsesI9a30obM7tMJQETPmHeQKdLBNOZqqFU
-	 7gOGlLxd5/3+q/EL8sJEHUdPIAG/U1p0H0ttQ2r4=
+	b=hvGqOeGk4PstyTxyiCeTwYHw4tdzRi1gKJ/jTjD7eakOWQ0BWGQKOM9ds/W3zpdJK
+	 7SAcx+AOeTv9AqSltaVtfXHqt2XSb1EMcUe0C4Q4i+2DsSoj+p1NIEpzZ/HYSAVgKn
+	 iSfbHjb/uLIp4Kc+bCeuHbUb+mLkYpYKZVjggiFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Robert Marko <robimarko@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 03/98] arm64: dts: qcom: ipq8074-hk01: enable QMP device, not the PHY node
-Date: Mon, 24 Apr 2023 15:16:26 +0200
-Message-Id: <20230424131133.965195121@linuxfoundation.org>
+Subject: [PATCH 6.1 04/98] arm64: dts: qcom: hk10: use "okay" instead of "ok"
+Date: Mon, 24 Apr 2023 15:16:27 +0200
+Message-Id: <20230424131134.007302429@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -35,42 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit 72630ba422b70ea0874fc90d526353cf71c72488 ]
+[ Upstream commit 7284a3943909606016128b79fb18dd107bc0fe26 ]
 
-Correct PCIe PHY enablement to refer the QMP device nodes rather than
-PHY device nodes. QMP nodes have 'status = "disabled"' property in the
-ipq8074.dtsi, while PHY nodes do not correspond to the actual device and
-do not have the status property.
+Use "okay" instead of "ok" in USB nodes as "ok" is deprecated.
 
-Fixes: e8a7fdc505bb ("arm64: dts: ipq8074: qcom: Re-arrange dts nodes based on address")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230324021651.1799969-1-dmitry.baryshkov@linaro.org
+Link: https://lore.kernel.org/r/20221107092930.33325-1-robimarko@gmail.com
+Stable-dep-of: 1dc40551f206 ("arm64: dts: qcom: ipq8074-hk10: enable QMP device, not the PHY node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074-hk01.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-index 7143c936de61e..bb0a838891f64 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-@@ -59,11 +59,11 @@
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+index db4b87944cdf2..262b937e0bc62 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+@@ -22,7 +22,7 @@
+ };
+ 
+ &blsp1_spi1 {
+-	status = "ok";
++	status = "okay";
+ 
+ 	flash@0 {
+ 		#address-cells = <1>;
+@@ -34,33 +34,33 @@
+ };
+ 
+ &blsp1_uart5 {
+-	status = "ok";
++	status = "okay";
+ };
+ 
+ &pcie0 {
+-	status = "ok";
++	status = "okay";
  	perst-gpios = <&tlmm 58 0x1>;
  };
  
--&pcie_phy0 {
-+&pcie_qmp0 {
- 	status = "okay";
+ &pcie1 {
+-	status = "ok";
++	status = "okay";
+ 	perst-gpios = <&tlmm 61 0x1>;
  };
  
--&pcie_phy1 {
-+&pcie_qmp1 {
- 	status = "okay";
+ &pcie_phy0 {
+-	status = "ok";
++	status = "okay";
  };
  
+ &pcie_phy1 {
+-	status = "ok";
++	status = "okay";
+ };
+ 
+ &qpic_bam {
+-	status = "ok";
++	status = "okay";
+ };
+ 
+ &qpic_nand {
+-	status = "ok";
++	status = "okay";
+ 
+ 	nand@0 {
+ 		reg = <0>;
 -- 
 2.39.2
 
