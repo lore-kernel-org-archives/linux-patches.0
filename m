@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E2E7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AE9C433D2;
-	Mon, 24 Apr 2023 13:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B607C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5310C433A0;
+	Mon, 24 Apr 2023 13:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342473;
-	bh=rALHxYIo2hBJOTXo50jVCR/YVJsbiCCB3CA7SUSGO5Y=;
+	s=korg; t=1682342476;
+	bh=bB7ZOSh4TORDmWGI3374u5WwOIG/GDEF6YT5jR2n8XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WpdGjqUa2m9sMwEdD6xJt/8EcnKqmbFOrPcOKVq2gDhKfvtOjWF4g7/Khy4E+wST5
-	 +qd7M2hyvnD9m//vFf44CCvLxeCyJtZheCXuiiEMeJCWdxXHF4VUdXqkxJqDx04I1z
-	 C1K6ytOngXwCsu5YzAaraM8UzSd85VnerGpIvuRI=
+	b=HrCgRYn7zdX6sDusl6MkSFluaxaIZYIy/UQoUTlpaRlXoCLxXW2K+OvQODZUSgOpv
+	 2uLGSx43NKCNXmGXjIAA0uykVd3i654my7mPmS4b/XC1RnMlaDRCxfB2uN5PNWT8rz
+	 WS5R3/U0P6EDFoFjfCHzWm0j9rpzaQTzDsmnFcxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.15 13/73] i40e: fix accessing vsi->active_filters without holding lock
-Date: Mon, 24 Apr 2023 15:16:27 +0200
-Message-Id: <20230424131129.517362026@linuxfoundation.org>
+	Qais Yousef <qais.yousef@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Qais Yousef (Google)" <qyousef@layalina.io>
+Subject: [PATCH 5.15 46/73] sched/uclamp: Make cpu_overutilized() use util_fits_cpu()
+Date: Mon, 24 Apr 2023 15:17:00 +0200
+Message-Id: <20230424131130.689803419@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -36,49 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+From: Qais Yousef <qais.yousef@arm.com>
 
-[ Upstream commit 8485d093b076e59baff424552e8aecfc5bd2d261 ]
+commit c56ab1b3506ba0e7a872509964b100912bde165d upstream.
 
-Fix accessing vsi->active_filters without holding the mac_filter_hash_lock.
-Move vsi->active_filters = 0 inside critical section and
-move clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state) after the critical
-section to ensure the new filters from other threads can be added only after
-filters cleaning in the critical section is finished.
+So that it is now uclamp aware.
 
-Fixes: 278e7d0b9d68 ("i40e: store MAC/VLAN filters in a hash with the MAC Address as key")
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This fixes a major problem of busy tasks capped with UCLAMP_MAX keeping
+the system in overutilized state which disables EAS and leads to wasting
+energy in the long run.
+
+Without this patch running a busy background activity like JIT
+compilation on Pixel 6 causes the system to be in overutilized state
+74.5% of the time.
+
+With this patch this goes down to  9.79%.
+
+It also fixes another problem when long running tasks that have their
+UCLAMP_MIN changed while running such that they need to upmigrate to
+honour the new UCLAMP_MIN value. The upmigration doesn't get triggered
+because overutilized state never gets set in this state, hence misfit
+migration never happens at tick in this case until the task wakes up
+again.
+
+Fixes: af24bde8df202 ("sched/uclamp: Add uclamp support to energy_compute()")
+Signed-off-by: Qais Yousef <qais.yousef@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220804143609.515789-7-qais.yousef@arm.com
+(cherry picked from commit c56ab1b3506ba0e7a872509964b100912bde165d)
+[Fixed trivial conflict in cpu_overutilized() - use cpu_util() instead
+of cpu_util_cfs()]
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/fair.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 85d48efce1d00..cafbabc687565 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -13945,15 +13945,15 @@ static int i40e_add_vsi(struct i40e_vsi *vsi)
- 		vsi->id = ctxt.vsi_number;
- 	}
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -5739,7 +5739,10 @@ static inline unsigned long cpu_util(int
  
--	vsi->active_filters = 0;
--	clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
- 	spin_lock_bh(&vsi->mac_filter_hash_lock);
-+	vsi->active_filters = 0;
- 	/* If macvlan filters already exist, force them to get loaded */
- 	hash_for_each_safe(vsi->mac_filter_hash, bkt, h, f, hlist) {
- 		f->state = I40E_FILTER_NEW;
- 		f_count++;
- 	}
- 	spin_unlock_bh(&vsi->mac_filter_hash_lock);
-+	clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
+ static inline bool cpu_overutilized(int cpu)
+ {
+-	return !fits_capacity(cpu_util(cpu), capacity_of(cpu));
++	unsigned long rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
++	unsigned long rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
++
++	return !util_fits_cpu(cpu_util(cpu), rq_util_min, rq_util_max, cpu);
+ }
  
- 	if (f_count) {
- 		vsi->flags |= I40E_VSI_FLAG_FILTER_CHANGED;
--- 
-2.39.2
-
+ static inline void update_overutilized_status(struct rq *rq)
 
 
