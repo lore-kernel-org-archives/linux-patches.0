@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DE77C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC2D4C433D2;
-	Mon, 24 Apr 2023 13:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C05B1FA6
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7956EC433EF;
+	Mon, 24 Apr 2023 13:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342582;
-	bh=u5MAtom7aMBxXmGB0d/tRguCLrtjim4+5AOJ1HFaQ44=;
+	s=korg; t=1682342584;
+	bh=DPDY4dLUTQFSWfyffi7VSXhzq2fp9bKn4Z6f3hsXLJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DW2I4JJlvKKg+m/gTUQJCPkgM1Xm6Z5uVUxmn3DjMZXwYxOCJ/eXVMTnZacSALhDq
-	 zLI4He/1lDHBor2v5uziaLeQEXWSojNjgdWhL8tG+31hRbo7GJRdIR6eGTTR3Bbg/b
-	 D/39OCgDFWtvcYlnrNFlbnefpj8QVOqFaSeo6gjE=
+	b=rbMtfQbGjblpkm+o2z0aKgve3ymsvLyaEHhzV2hcFS9MdXW2hLL1q3jBkney0BjQY
+	 Ig96zaR90c8vAVNzGYRfSrGkiCmKRoFoybkvEoL08YTYKR4qF6oZUhuv4Xr9pXvjjM
+	 HF5qAnQtQUcvCYMKMzrFokfUYJ/iEbxm5hoH7lw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanjun Zhang <zhangyanjun@cestc.cn>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Yanjun Zhang <zhangyanjun@cestc.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 20/39] nvme-tcp: fix a possible UAF when failing to allocate an io queue
-Date: Mon, 24 Apr 2023 15:17:23 +0200
-Message-Id: <20230424131123.804550969@linuxfoundation.org>
+Subject: [PATCH 5.4 21/39] xen/netback: use same error messages for same errors
+Date: Mon, 24 Apr 2023 15:17:24 +0200
+Message-Id: <20230424131123.852713022@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
 References: <20230424131123.040556994@linuxfoundation.org>
@@ -37,155 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 88eaba80328b31ef81813a1207b4056efd7006a6 ]
+[ Upstream commit 2eca98e5b24d01c02b46c67be05a5f98cc9789b1 ]
 
-When we allocate a nvme-tcp queue, we set the data_ready callback before
-we actually need to use it. This creates the potential that if a stray
-controller sends us data on the socket before we connect, we can trigger
-the io_work and start consuming the socket.
+Issue the same error message in case an illegal page boundary crossing
+has been detected in both cases where this is tested.
 
-In this case reported: we failed to allocate one of the io queues, and
-as we start releasing the queues that we already allocated, we get
-a UAF [1] from the io_work which is running before it should really.
-
-Fix this by setting the socket ops callbacks only before we start the
-queue, so that we can't accidentally schedule the io_work in the
-initialization phase before the queue started. While we are at it,
-rename nvme_tcp_restore_sock_calls to pair with nvme_tcp_setup_sock_ops.
-
-[1]:
-[16802.107284] nvme nvme4: starting error recovery
-[16802.109166] nvme nvme4: Reconnecting in 10 seconds...
-[16812.173535] nvme nvme4: failed to connect socket: -111
-[16812.173745] nvme nvme4: Failed reconnect attempt 1
-[16812.173747] nvme nvme4: Reconnecting in 10 seconds...
-[16822.413555] nvme nvme4: failed to connect socket: -111
-[16822.413762] nvme nvme4: Failed reconnect attempt 2
-[16822.413765] nvme nvme4: Reconnecting in 10 seconds...
-[16832.661274] nvme nvme4: creating 32 I/O queues.
-[16833.919887] BUG: kernel NULL pointer dereference, address: 0000000000000088
-[16833.920068] nvme nvme4: Failed reconnect attempt 3
-[16833.920094] #PF: supervisor write access in kernel mode
-[16833.920261] nvme nvme4: Reconnecting in 10 seconds...
-[16833.920368] #PF: error_code(0x0002) - not-present page
-[16833.921086] Workqueue: nvme_tcp_wq nvme_tcp_io_work [nvme_tcp]
-[16833.921191] RIP: 0010:_raw_spin_lock_bh+0x17/0x30
-...
-[16833.923138] Call Trace:
-[16833.923271]  <TASK>
-[16833.923402]  lock_sock_nested+0x1e/0x50
-[16833.923545]  nvme_tcp_try_recv+0x40/0xa0 [nvme_tcp]
-[16833.923685]  nvme_tcp_io_work+0x68/0xa0 [nvme_tcp]
-[16833.923824]  process_one_work+0x1e8/0x390
-[16833.923969]  worker_thread+0x53/0x3d0
-[16833.924104]  ? process_one_work+0x390/0x390
-[16833.924240]  kthread+0x124/0x150
-[16833.924376]  ? set_kthread_struct+0x50/0x50
-[16833.924518]  ret_from_fork+0x1f/0x30
-[16833.924655]  </TASK>
-
-Reported-by: Yanjun Zhang <zhangyanjun@cestc.cn>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Tested-by: Yanjun Zhang <zhangyanjun@cestc.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Suggested-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Link: https://lore.kernel.org/r/20230329080259.14823-1-jgross@suse.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 46 +++++++++++++++++++++++------------------
- 1 file changed, 26 insertions(+), 20 deletions(-)
+ drivers/net/xen-netback/netback.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 3169859cd3906..4250081595c14 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -1387,22 +1387,7 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl,
- 	if (ret)
- 		goto err_init_connect;
+diff --git a/drivers/net/xen-netback/netback.c b/drivers/net/xen-netback/netback.c
+index 3dfc5c66f1408..a3078755939e3 100644
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -989,10 +989,8 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
  
--	queue->rd_enabled = true;
- 	set_bit(NVME_TCP_Q_ALLOCATED, &queue->flags);
--	nvme_tcp_init_recv_ctx(queue);
--
--	write_lock_bh(&queue->sock->sk->sk_callback_lock);
--	queue->sock->sk->sk_user_data = queue;
--	queue->state_change = queue->sock->sk->sk_state_change;
--	queue->data_ready = queue->sock->sk->sk_data_ready;
--	queue->write_space = queue->sock->sk->sk_write_space;
--	queue->sock->sk->sk_data_ready = nvme_tcp_data_ready;
--	queue->sock->sk->sk_state_change = nvme_tcp_state_change;
--	queue->sock->sk->sk_write_space = nvme_tcp_write_space;
--#ifdef CONFIG_NET_RX_BUSY_POLL
--	queue->sock->sk->sk_ll_usec = 1;
--#endif
--	write_unlock_bh(&queue->sock->sk->sk_callback_lock);
- 
- 	return 0;
- 
-@@ -1419,7 +1404,7 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl,
- 	return ret;
- }
- 
--static void nvme_tcp_restore_sock_calls(struct nvme_tcp_queue *queue)
-+static void nvme_tcp_restore_sock_ops(struct nvme_tcp_queue *queue)
- {
- 	struct socket *sock = queue->sock;
- 
-@@ -1434,7 +1419,7 @@ static void nvme_tcp_restore_sock_calls(struct nvme_tcp_queue *queue)
- static void __nvme_tcp_stop_queue(struct nvme_tcp_queue *queue)
- {
- 	kernel_sock_shutdown(queue->sock, SHUT_RDWR);
--	nvme_tcp_restore_sock_calls(queue);
-+	nvme_tcp_restore_sock_ops(queue);
- 	cancel_work_sync(&queue->io_work);
- }
- 
-@@ -1448,21 +1433,42 @@ static void nvme_tcp_stop_queue(struct nvme_ctrl *nctrl, int qid)
- 	__nvme_tcp_stop_queue(queue);
- }
- 
-+static void nvme_tcp_setup_sock_ops(struct nvme_tcp_queue *queue)
-+{
-+	write_lock_bh(&queue->sock->sk->sk_callback_lock);
-+	queue->sock->sk->sk_user_data = queue;
-+	queue->state_change = queue->sock->sk->sk_state_change;
-+	queue->data_ready = queue->sock->sk->sk_data_ready;
-+	queue->write_space = queue->sock->sk->sk_write_space;
-+	queue->sock->sk->sk_data_ready = nvme_tcp_data_ready;
-+	queue->sock->sk->sk_state_change = nvme_tcp_state_change;
-+	queue->sock->sk->sk_write_space = nvme_tcp_write_space;
-+#ifdef CONFIG_NET_RX_BUSY_POLL
-+	queue->sock->sk->sk_ll_usec = 1;
-+#endif
-+	write_unlock_bh(&queue->sock->sk->sk_callback_lock);
-+}
-+
- static int nvme_tcp_start_queue(struct nvme_ctrl *nctrl, int idx)
- {
- 	struct nvme_tcp_ctrl *ctrl = to_tcp_ctrl(nctrl);
-+	struct nvme_tcp_queue *queue = &ctrl->queues[idx];
- 	int ret;
- 
-+	queue->rd_enabled = true;
-+	nvme_tcp_init_recv_ctx(queue);
-+	nvme_tcp_setup_sock_ops(queue);
-+
- 	if (idx)
- 		ret = nvmf_connect_io_queue(nctrl, idx, false);
- 	else
- 		ret = nvmf_connect_admin_queue(nctrl);
- 
- 	if (!ret) {
--		set_bit(NVME_TCP_Q_LIVE, &ctrl->queues[idx].flags);
-+		set_bit(NVME_TCP_Q_LIVE, &queue->flags);
- 	} else {
--		if (test_bit(NVME_TCP_Q_ALLOCATED, &ctrl->queues[idx].flags))
--			__nvme_tcp_stop_queue(&ctrl->queues[idx]);
-+		if (test_bit(NVME_TCP_Q_ALLOCATED, &queue->flags))
-+			__nvme_tcp_stop_queue(queue);
- 		dev_err(nctrl->device,
- 			"failed to connect queue: %d ret=%d\n", idx, ret);
- 	}
+ 		/* No crossing a page as the payload mustn't fragment. */
+ 		if (unlikely((txreq.offset + txreq.size) > XEN_PAGE_SIZE)) {
+-			netdev_err(queue->vif->dev,
+-				   "txreq.offset: %u, size: %u, end: %lu\n",
+-				   txreq.offset, txreq.size,
+-				   (unsigned long)(txreq.offset&~XEN_PAGE_MASK) + txreq.size);
++			netdev_err(queue->vif->dev, "Cross page boundary, txreq.offset: %u, size: %u\n",
++				   txreq.offset, txreq.size);
+ 			xenvif_fatal_tx_err(queue->vif);
+ 			break;
+ 		}
 -- 
 2.39.2
 
