@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6879F7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:27:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FF9C433D2;
-	Mon, 24 Apr 2023 13:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095337C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:27:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83797C433D2;
+	Mon, 24 Apr 2023 13:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342872;
-	bh=nYYRro7bwihhg5VV6MrIjsbzsZvLhbFdrhYEIynNksQ=;
+	s=korg; t=1682342874;
+	bh=Fd67DUmgcp3dcXuG3HRyaJFLs/SAgMjAeeVxLaWDe34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p4YX7RcS3bDRlmCfZAoiSrlZveIXc6FiCh95zxa/VRx+dn5X1v6Ds5uBjj+6cIwsR
-	 o0hw+5Ne3rNa7smtIAZH58BMZjTncYnfUNA2tZed0J4gUE3kpDC0n+vq9uCIhqfaKW
-	 XaOx93MvFB5oq2mAlfYinrdB1XQcNh3wd4TNHQ+Q=
+	b=XReUt/lbRJURydsBjxZVRnLBsPK0ywDMoKc5VwgXYSzKFiVrbpx1iIMpNNJmUdooi
+	 5UDWtDdb0ymOLVbc1/F6kLkI242CD9IkIaTbQKLS75nkOOJyaKcDf+jjAkZovBDyWh
+	 zXIFyWgihGqrQeY014kUPhC3XjFcPNdlSSIjejfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 90/98] gcc: disable -Warray-bounds for gcc-13 too
-Date: Mon, 24 Apr 2023 15:17:53 +0200
-Message-Id: <20230424131137.385303450@linuxfoundation.org>
+	Soumya Negi <soumya.negi97@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	syzbot+04ee0cb4caccaed12d78@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 91/98] Input: pegasus-notetaker - check pipe type when probing
+Date: Mon, 24 Apr 2023 15:17:54 +0200
+Message-Id: <20230424131137.423613827@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -33,63 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Soumya Negi <soumya.negi97@gmail.com>
 
-commit 0da6e5fd6c3726723e275603426e09178940dace upstream.
+commit b3d80fd27a3c2d8715a40cbf876139b56195f162 upstream.
 
-We started disabling '-Warray-bounds' for gcc-12 originally on s390,
-because it resulted in some warnings that weren't realistically fixable
-(commit 8b202ee21839: "s390: disable -Warray-bounds").
+Fix WARNING in pegasus_open/usb_submit_urb
+Syzbot bug: https://syzkaller.appspot.com/bug?id=bbc107584dcf3262253ce93183e51f3612aaeb13
 
-That s390-specific issue was then found to be less common elsewhere, but
-generic (see f0be87c42cbd: "gcc-12: disable '-Warray-bounds' universally
-for now"), and then later expanded the version check was expanded to
-gcc-11 (5a41237ad1d4: "gcc: disable -Warray-bounds for gcc-11 too").
+Warning raised because pegasus_driver submits transfer request for
+bogus URB (pipe type does not match endpoint type). Add sanity check at
+probe time for pipe value extracted from endpoint descriptor. Probe
+will fail if sanity check fails.
 
-And it turns out that I was much too optimistic in thinking that it's
-all going to go away, and here we are with gcc-13 showing all the same
-issues.  So instead of expanding this one version at a time, let's just
-disable it for gcc-11+, and put an end limit to it only when we actually
-find a solution.
-
-Yes, I'm sure some of this is because the kernel just does odd things
-(like our "container_of()" use, but also knowingly playing games with
-things like linker tables and array layouts).
-
-And yes, some of the warnings are likely signs of real bugs, but when
-there are hundreds of false positives, that doesn't really help.
-
-Oh well.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-and-tested-by: syzbot+04ee0cb4caccaed12d78@syzkaller.appspotmail.com
+Signed-off-by: Soumya Negi <soumya.negi97@gmail.com>
+Link: https://lore.kernel.org/r/20230404074145.11523-1-soumya.negi97@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- init/Kconfig |   10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/input/tablet/pegasus_notetaker.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -892,18 +892,14 @@ config CC_IMPLICIT_FALLTHROUGH
- 	default "-Wimplicit-fallthrough=5" if CC_IS_GCC && $(cc-option,-Wimplicit-fallthrough=5)
- 	default "-Wimplicit-fallthrough" if CC_IS_CLANG && $(cc-option,-Wunreachable-code-fallthrough)
+--- a/drivers/input/tablet/pegasus_notetaker.c
++++ b/drivers/input/tablet/pegasus_notetaker.c
+@@ -296,6 +296,12 @@ static int pegasus_probe(struct usb_inte
+ 	pegasus->intf = intf;
  
--# Currently, disable gcc-11,12 array-bounds globally.
--# We may want to target only particular configurations some day.
-+# Currently, disable gcc-11+ array-bounds globally.
-+# It's still broken in gcc-13, so no upper bound yet.
- config GCC11_NO_ARRAY_BOUNDS
- 	def_bool y
+ 	pipe = usb_rcvintpipe(dev, endpoint->bEndpointAddress);
++	/* Sanity check that pipe's type matches endpoint's type */
++	if (usb_pipe_type_check(dev, pipe)) {
++		error = -EINVAL;
++		goto err_free_mem;
++	}
++
+ 	pegasus->data_len = usb_maxpacket(dev, pipe);
  
--config GCC12_NO_ARRAY_BOUNDS
--	def_bool y
--
- config CC_NO_ARRAY_BOUNDS
- 	bool
--	default y if CC_IS_GCC && GCC_VERSION >= 110000 && GCC_VERSION < 120000 && GCC11_NO_ARRAY_BOUNDS
--	default y if CC_IS_GCC && GCC_VERSION >= 120000 && GCC_VERSION < 130000 && GCC12_NO_ARRAY_BOUNDS
-+	default y if CC_IS_GCC && GCC_VERSION >= 110000 && GCC11_NO_ARRAY_BOUNDS
- 
- #
- # For architectures that know their GCC __int128 support is sound
+ 	pegasus->data = usb_alloc_coherent(dev, pegasus->data_len, GFP_KERNEL,
 
 
