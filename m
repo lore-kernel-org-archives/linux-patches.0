@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E480C210F
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1C9C433D2;
-	Mon, 24 Apr 2023 13:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6FF2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E83EC4339B;
+	Mon, 24 Apr 2023 13:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343140;
-	bh=7Tai9VoDSP3fnzBapK+Q5uGS9uodF8uxdlqNPTTUOZY=;
+	s=korg; t=1682343143;
+	bh=7HQpbArraXO722c7LsNvEPYtRBg/Il/qB6GVgKIof3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Drb77OlvpXU/fVoZc7UrFsuViuNKqfPIurcyNbfzKMqKjSdOR6eeZHCkw7YWLJpr9
-	 Rj1aKTg1hcf6WedZt+h9x/rHa+k9loGCPgCk0pB1Usi2zH7YoTmTSpwxKCZ1FbGwYk
-	 zOTlR7GDvnKLjksisHp8VAm3qQh22/w/xr6Ai1Ek=
+	b=1ruLE+yQnCBXOmMDLYQQkYN4yKnSV4wBX/LzN1jiC8p6buywD2FPHn9+vGXx2eznd
+	 4R0COVEW9bjI/LSomSXtbQz/YKDGK+IXlGrbUE7Pcpb1k6HZoPZhzaCAvfu57mQBMs
+	 VNFNVQEJXPlMRukGyWH0MFN/t432Bl6k6OnoEffM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.2 065/110] LoongArch: Fix probing of the CRC32 feature
-Date: Mon, 24 Apr 2023 15:17:27 +0200
-Message-Id: <20230424131138.776178478@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.2 092/110] mm/mmap: regression fix for unmapped_area{_topdown}
+Date: Mon, 24 Apr 2023 15:17:54 +0200
+Message-Id: <20230424131139.988604476@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -33,136 +35,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-commit df830336045db1246d3245d3737fee9939c5f731 upstream.
+commit 58c5d0d6d522112577c7eeb71d382ea642ed7be4 upstream.
 
-Not all LoongArch processors support CRC32 instructions. This feature
-is indicated by CPUCFG1.CRC32 (Bit25) but it is wrongly defined in the
-previous versions of the ISA manual (and so does in loongarch.h). The
-CRC32 feature is set unconditionally now, so fix it.
+The maple tree limits the gap returned to a window that specifically fits
+what was asked.  This may not be optimal in the case of switching search
+directions or a gap that does not satisfy the requested space for other
+reasons.  Fix the search by retrying the operation and limiting the search
+window in the rare occasion that a conflict occurs.
 
-BTW, expose the CRC32 feature in /proc/cpuinfo.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://lkml.kernel.org/r/20230414185919.4175572-1-Liam.Howlett@oracle.com
+Fixes: 3499a13168da ("mm/mmap: use maple tree for unmapped_area{_topdown}")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reported-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/cpu-features.h |    1 
- arch/loongarch/include/asm/cpu.h          |   40 +++++++++++++++---------------
- arch/loongarch/include/asm/loongarch.h    |    2 -
- arch/loongarch/kernel/cpu-probe.c         |    7 ++++-
- arch/loongarch/kernel/proc.c              |    1 
- 5 files changed, 30 insertions(+), 21 deletions(-)
+ mm/mmap.c |   48 +++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 43 insertions(+), 5 deletions(-)
 
---- a/arch/loongarch/include/asm/cpu-features.h
-+++ b/arch/loongarch/include/asm/cpu-features.h
-@@ -42,6 +42,7 @@
- #define cpu_has_fpu		cpu_opt(LOONGARCH_CPU_FPU)
- #define cpu_has_lsx		cpu_opt(LOONGARCH_CPU_LSX)
- #define cpu_has_lasx		cpu_opt(LOONGARCH_CPU_LASX)
-+#define cpu_has_crc32		cpu_opt(LOONGARCH_CPU_CRC32)
- #define cpu_has_complex		cpu_opt(LOONGARCH_CPU_COMPLEX)
- #define cpu_has_crypto		cpu_opt(LOONGARCH_CPU_CRYPTO)
- #define cpu_has_lvz		cpu_opt(LOONGARCH_CPU_LVZ)
---- a/arch/loongarch/include/asm/cpu.h
-+++ b/arch/loongarch/include/asm/cpu.h
-@@ -78,25 +78,26 @@ enum cpu_type_enum {
- #define CPU_FEATURE_FPU			3	/* CPU has FPU */
- #define CPU_FEATURE_LSX			4	/* CPU has LSX (128-bit SIMD) */
- #define CPU_FEATURE_LASX		5	/* CPU has LASX (256-bit SIMD) */
--#define CPU_FEATURE_COMPLEX		6	/* CPU has Complex instructions */
--#define CPU_FEATURE_CRYPTO		7	/* CPU has Crypto instructions */
--#define CPU_FEATURE_LVZ			8	/* CPU has Virtualization extension */
--#define CPU_FEATURE_LBT_X86		9	/* CPU has X86 Binary Translation */
--#define CPU_FEATURE_LBT_ARM		10	/* CPU has ARM Binary Translation */
--#define CPU_FEATURE_LBT_MIPS		11	/* CPU has MIPS Binary Translation */
--#define CPU_FEATURE_TLB			12	/* CPU has TLB */
--#define CPU_FEATURE_CSR			13	/* CPU has CSR */
--#define CPU_FEATURE_WATCH		14	/* CPU has watchpoint registers */
--#define CPU_FEATURE_VINT		15	/* CPU has vectored interrupts */
--#define CPU_FEATURE_CSRIPI		16	/* CPU has CSR-IPI */
--#define CPU_FEATURE_EXTIOI		17	/* CPU has EXT-IOI */
--#define CPU_FEATURE_PREFETCH		18	/* CPU has prefetch instructions */
--#define CPU_FEATURE_PMP			19	/* CPU has perfermance counter */
--#define CPU_FEATURE_SCALEFREQ		20	/* CPU supports cpufreq scaling */
--#define CPU_FEATURE_FLATMODE		21	/* CPU has flat mode */
--#define CPU_FEATURE_EIODECODE		22	/* CPU has EXTIOI interrupt pin decode mode */
--#define CPU_FEATURE_GUESTID		23	/* CPU has GuestID feature */
--#define CPU_FEATURE_HYPERVISOR		24	/* CPU has hypervisor (running in VM) */
-+#define CPU_FEATURE_CRC32		6	/* CPU has CRC32 instructions */
-+#define CPU_FEATURE_COMPLEX		7	/* CPU has Complex instructions */
-+#define CPU_FEATURE_CRYPTO		8	/* CPU has Crypto instructions */
-+#define CPU_FEATURE_LVZ			9	/* CPU has Virtualization extension */
-+#define CPU_FEATURE_LBT_X86		10	/* CPU has X86 Binary Translation */
-+#define CPU_FEATURE_LBT_ARM		11	/* CPU has ARM Binary Translation */
-+#define CPU_FEATURE_LBT_MIPS		12	/* CPU has MIPS Binary Translation */
-+#define CPU_FEATURE_TLB			13	/* CPU has TLB */
-+#define CPU_FEATURE_CSR			14	/* CPU has CSR */
-+#define CPU_FEATURE_WATCH		15	/* CPU has watchpoint registers */
-+#define CPU_FEATURE_VINT		16	/* CPU has vectored interrupts */
-+#define CPU_FEATURE_CSRIPI		17	/* CPU has CSR-IPI */
-+#define CPU_FEATURE_EXTIOI		18	/* CPU has EXT-IOI */
-+#define CPU_FEATURE_PREFETCH		19	/* CPU has prefetch instructions */
-+#define CPU_FEATURE_PMP			20	/* CPU has perfermance counter */
-+#define CPU_FEATURE_SCALEFREQ		21	/* CPU supports cpufreq scaling */
-+#define CPU_FEATURE_FLATMODE		22	/* CPU has flat mode */
-+#define CPU_FEATURE_EIODECODE		23	/* CPU has EXTIOI interrupt pin decode mode */
-+#define CPU_FEATURE_GUESTID		24	/* CPU has GuestID feature */
-+#define CPU_FEATURE_HYPERVISOR		25	/* CPU has hypervisor (running in VM) */
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -1565,7 +1565,8 @@ static inline int accountable_mapping(st
+  */
+ static unsigned long unmapped_area(struct vm_unmapped_area_info *info)
+ {
+-	unsigned long length, gap;
++	unsigned long length, gap, low_limit;
++	struct vm_area_struct *tmp;
  
- #define LOONGARCH_CPU_CPUCFG		BIT_ULL(CPU_FEATURE_CPUCFG)
- #define LOONGARCH_CPU_LAM		BIT_ULL(CPU_FEATURE_LAM)
-@@ -104,6 +105,7 @@ enum cpu_type_enum {
- #define LOONGARCH_CPU_FPU		BIT_ULL(CPU_FEATURE_FPU)
- #define LOONGARCH_CPU_LSX		BIT_ULL(CPU_FEATURE_LSX)
- #define LOONGARCH_CPU_LASX		BIT_ULL(CPU_FEATURE_LASX)
-+#define LOONGARCH_CPU_CRC32		BIT_ULL(CPU_FEATURE_CRC32)
- #define LOONGARCH_CPU_COMPLEX		BIT_ULL(CPU_FEATURE_COMPLEX)
- #define LOONGARCH_CPU_CRYPTO		BIT_ULL(CPU_FEATURE_CRYPTO)
- #define LOONGARCH_CPU_LVZ		BIT_ULL(CPU_FEATURE_LVZ)
---- a/arch/loongarch/include/asm/loongarch.h
-+++ b/arch/loongarch/include/asm/loongarch.h
-@@ -117,7 +117,7 @@ static inline u32 read_cpucfg(u32 reg)
- #define  CPUCFG1_EP			BIT(22)
- #define  CPUCFG1_RPLV			BIT(23)
- #define  CPUCFG1_HUGEPG			BIT(24)
--#define  CPUCFG1_IOCSRBRD		BIT(25)
-+#define  CPUCFG1_CRC32			BIT(25)
- #define  CPUCFG1_MSGINT			BIT(26)
+ 	MA_STATE(mas, &current->mm->mm_mt, 0, 0);
  
- #define LOONGARCH_CPUCFG2		0x2
---- a/arch/loongarch/kernel/cpu-probe.c
-+++ b/arch/loongarch/kernel/cpu-probe.c
-@@ -94,13 +94,18 @@ static void cpu_probe_common(struct cpui
- 	c->options = LOONGARCH_CPU_CPUCFG | LOONGARCH_CPU_CSR |
- 		     LOONGARCH_CPU_TLB | LOONGARCH_CPU_VINT | LOONGARCH_CPU_WATCH;
+@@ -1574,12 +1575,29 @@ static unsigned long unmapped_area(struc
+ 	if (length < info->length)
+ 		return -ENOMEM;
  
--	elf_hwcap = HWCAP_LOONGARCH_CPUCFG | HWCAP_LOONGARCH_CRC32;
-+	elf_hwcap = HWCAP_LOONGARCH_CPUCFG;
+-	if (mas_empty_area(&mas, info->low_limit, info->high_limit - 1,
+-				  length))
++	low_limit = info->low_limit;
++retry:
++	if (mas_empty_area(&mas, low_limit, info->high_limit - 1, length))
+ 		return -ENOMEM;
  
- 	config = read_cpucfg(LOONGARCH_CPUCFG1);
- 	if (config & CPUCFG1_UAL) {
- 		c->options |= LOONGARCH_CPU_UAL;
- 		elf_hwcap |= HWCAP_LOONGARCH_UAL;
- 	}
-+	if (config & CPUCFG1_CRC32) {
-+		c->options |= LOONGARCH_CPU_CRC32;
-+		elf_hwcap |= HWCAP_LOONGARCH_CRC32;
+ 	gap = mas.index;
+ 	gap += (info->align_offset - gap) & info->align_mask;
++	tmp = mas_next(&mas, ULONG_MAX);
++	if (tmp && (tmp->vm_flags & VM_GROWSDOWN)) { /* Avoid prev check if possible */
++		if (vm_start_gap(tmp) < gap + length - 1) {
++			low_limit = tmp->vm_end;
++			mas_reset(&mas);
++			goto retry;
++		}
++	} else {
++		tmp = mas_prev(&mas, 0);
++		if (tmp && vm_end_gap(tmp) > gap) {
++			low_limit = vm_end_gap(tmp);
++			mas_reset(&mas);
++			goto retry;
++		}
 +	}
 +
+ 	return gap;
+ }
  
- 	config = read_cpucfg(LOONGARCH_CPUCFG2);
- 	if (config & CPUCFG2_LAM) {
---- a/arch/loongarch/kernel/proc.c
-+++ b/arch/loongarch/kernel/proc.c
-@@ -76,6 +76,7 @@ static int show_cpuinfo(struct seq_file
- 	if (cpu_has_fpu)	seq_printf(m, " fpu");
- 	if (cpu_has_lsx)	seq_printf(m, " lsx");
- 	if (cpu_has_lasx)	seq_printf(m, " lasx");
-+	if (cpu_has_crc32)	seq_printf(m, " crc32");
- 	if (cpu_has_complex)	seq_printf(m, " complex");
- 	if (cpu_has_crypto)	seq_printf(m, " crypto");
- 	if (cpu_has_lvz)	seq_printf(m, " lvz");
+@@ -1595,7 +1613,8 @@ static unsigned long unmapped_area(struc
+  */
+ static unsigned long unmapped_area_topdown(struct vm_unmapped_area_info *info)
+ {
+-	unsigned long length, gap;
++	unsigned long length, gap, high_limit, gap_end;
++	struct vm_area_struct *tmp;
+ 
+ 	MA_STATE(mas, &current->mm->mm_mt, 0, 0);
+ 	/* Adjust search length to account for worst case alignment overhead */
+@@ -1603,12 +1622,31 @@ static unsigned long unmapped_area_topdo
+ 	if (length < info->length)
+ 		return -ENOMEM;
+ 
+-	if (mas_empty_area_rev(&mas, info->low_limit, info->high_limit - 1,
++	high_limit = info->high_limit;
++retry:
++	if (mas_empty_area_rev(&mas, info->low_limit, high_limit - 1,
+ 				length))
+ 		return -ENOMEM;
+ 
+ 	gap = mas.last + 1 - info->length;
+ 	gap -= (gap - info->align_offset) & info->align_mask;
++	gap_end = mas.last;
++	tmp = mas_next(&mas, ULONG_MAX);
++	if (tmp && (tmp->vm_flags & VM_GROWSDOWN)) { /* Avoid prev check if possible */
++		if (vm_start_gap(tmp) <= gap_end) {
++			high_limit = vm_start_gap(tmp);
++			mas_reset(&mas);
++			goto retry;
++		}
++	} else {
++		tmp = mas_prev(&mas, 0);
++		if (tmp && vm_end_gap(tmp) > gap) {
++			high_limit = tmp->vm_start;
++			mas_reset(&mas);
++			goto retry;
++		}
++	}
++
+ 	return gap;
+ }
+ 
 
 
