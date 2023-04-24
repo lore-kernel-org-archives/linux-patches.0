@@ -1,36 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8037C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCADC433EF;
-	Mon, 24 Apr 2023 13:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1E32108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1FDC4339C;
+	Mon, 24 Apr 2023 13:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342806;
-	bh=G4HA5sFw9gr+Rt9vT2IK174y7Ls9WN8+4hZVTkd3eWc=;
+	s=korg; t=1682342809;
+	bh=lSOBpUnFu9VK1D1fFEX3s0tqrCknH4atbNI6skVNVjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ynXXuLd8KPPVbwYTTiLT2xMgUWrGPbxBQi2Oa85/3EOpChRcH4yrk+8ZkzYWSJkmu
-	 38DZS9JzORbQ3Dbu1WO1YXbt0WUsGVY/Xl5XzQjjMJPr5C1AR5im7k9DXbmezqjocb
-	 UbvS0kYUDD7EAa1dnBJXZdTvUL7BFVrSlhlYVgVg=
+	b=GbV9sC8tVtSg/qUFpAFNZnwLix9B5q82iOUYBoHIdPal4iNy9OXTZnuObLDj6ottR
+	 iGKsybOR4pwBhHBqMGocPNRjCdfDvM8k/UoYoe1v3cU3l3v3R6XdDhmnbl+NLO9PoM
+	 9mVEOpPjCjrw/C4u50w5Pp8nmBbngea5tnYHsspI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Tejun Heo <tj@kernel.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Christian Brauner <brauner@kernel.org>,
-	Dennis Zhou <dennis@kernel.org>,
-	Hou Tao <houtao1@huawei.com>,
-	yangerkun <yangerkun@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 65/98] writeback, cgroup: fix null-ptr-deref write in bdi_split_work_to_wbs
-Date: Mon, 24 Apr 2023 15:17:28 +0200
-Message-Id: <20230424131136.358973843@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Richard Weinberger <richard@nod.at>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	linux-mtd@lists.infradead.org,
+	Michael Walle <michael@walle.cc>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 48/98] mtd: spi-nor: fix memory leak when using debugfs_lookup()
+Date: Mon, 24 Apr 2023 15:17:11 +0200
+Message-Id: <20230424131135.738833650@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -44,172 +40,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 1ba1199ec5747f475538c0d25a32804e5ba1dfde upstream.
+[ Upstream commit ec738ca127d07ecac6afae36e2880341ec89150e ]
 
-KASAN report null-ptr-deref:
-==================================================================
-BUG: KASAN: null-ptr-deref in bdi_split_work_to_wbs+0x5c5/0x7b0
-Write of size 8 at addr 0000000000000000 by task sync/943
-CPU: 5 PID: 943 Comm: sync Tainted: 6.3.0-rc5-next-20230406-dirty #461
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7f/0xc0
- print_report+0x2ba/0x340
- kasan_report+0xc4/0x120
- kasan_check_range+0x1b7/0x2e0
- __kasan_check_write+0x24/0x40
- bdi_split_work_to_wbs+0x5c5/0x7b0
- sync_inodes_sb+0x195/0x630
- sync_inodes_one_sb+0x3a/0x50
- iterate_supers+0x106/0x1b0
- ksys_sync+0x98/0x160
-[...]
-==================================================================
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To solve this, remove the
+lookup and create the directory on the first device found, and then
+remove it when the module is unloaded.
 
-The race that causes the above issue is as follows:
-
-           cpu1                     cpu2
--------------------------|-------------------------
-inode_switch_wbs
- INIT_WORK(&isw->work, inode_switch_wbs_work_fn)
- queue_rcu_work(isw_wq, &isw->work)
- // queue_work async
-  inode_switch_wbs_work_fn
-   wb_put_many(old_wb, nr_switched)
-    percpu_ref_put_many
-     ref->data->release(ref)
-     cgwb_release
-      queue_work(cgwb_release_wq, &wb->release_work)
-      // queue_work async
-       &wb->release_work
-       cgwb_release_workfn
-                            ksys_sync
-                             iterate_supers
-                              sync_inodes_one_sb
-                               sync_inodes_sb
-                                bdi_split_work_to_wbs
-                                 kmalloc(sizeof(*work), GFP_ATOMIC)
-                                 // alloc memory failed
-        percpu_ref_exit
-         ref->data = NULL
-         kfree(data)
-                                 wb_get(wb)
-                                  percpu_ref_get(&wb->refcnt)
-                                   percpu_ref_get_many(ref, 1)
-                                    atomic_long_add(nr, &ref->data->count)
-                                     atomic64_add(i, v)
-                                     // trigger null-ptr-deref
-
-bdi_split_work_to_wbs() traverses &bdi->wb_list to split work into all
-wbs.  If the allocation of new work fails, the on-stack fallback will be
-used and the reference count of the current wb is increased afterwards.
-If cgroup writeback membership switches occur before getting the reference
-count and the current wb is released as old_wd, then calling wb_get() or
-wb_put() will trigger the null pointer dereference above.
-
-This issue was introduced in v4.3-rc7 (see fix tag1).  Both
-sync_inodes_sb() and __writeback_inodes_sb_nr() calls to
-bdi_split_work_to_wbs() can trigger this issue.  For scenarios called via
-sync_inodes_sb(), originally commit 7fc5854f8c6e ("writeback: synchronize
-sync(2) against cgroup writeback membership switches") reduced the
-possibility of the issue by adding wb_switch_rwsem, but in v5.14-rc1 (see
-fix tag2) removed the "inode_io_list_del_locked(inode, old_wb)" from
-inode_switch_wbs_work_fn() so that wb->state contains WB_has_dirty_io,
-thus old_wb is not skipped when traversing wbs in bdi_split_work_to_wbs(),
-and the issue becomes easily reproducible again.
-
-To solve this problem, percpu_ref_exit() is called under RCU protection to
-avoid race between cgwb_release_workfn() and bdi_split_work_to_wbs().
-Moreover, replace wb_get() with wb_tryget() in bdi_split_work_to_wbs(),
-and skip the current wb if wb_tryget() fails because the wb has already
-been shutdown.
-
-Link: https://lkml.kernel.org/r/20230410130826.1492525-1-libaokun1@huawei.com
-Fixes: b817525a4a80 ("writeback: bdi_writeback iteration must not skip dying ones")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Acked-by: Tejun Heo <tj@kernel.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Dennis Zhou <dennis@kernel.org>
-Cc: Hou Tao <houtao1@huawei.com>
-Cc: yangerkun <yangerkun@huawei.com>
-Cc: Zhang Yi <yi.zhang@huawei.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Tudor Ambarus <tudor.ambarus@microchip.com>
+Cc: Pratyush Yadav <pratyush@kernel.org>
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>
+Cc: linux-mtd@lists.infradead.org
+Reviewed-by: Michael Walle <michael@walle.cc>
+Link: https://lore.kernel.org/r/20230208160230.2179905-1-gregkh@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c |   17 ++++++++++-------
- mm/backing-dev.c  |   12 ++++++++++--
- 2 files changed, 20 insertions(+), 9 deletions(-)
+ drivers/mtd/spi-nor/core.c    | 14 +++++++++++++-
+ drivers/mtd/spi-nor/core.h    |  2 ++
+ drivers/mtd/spi-nor/debugfs.c | 11 ++++++++---
+ 3 files changed, 23 insertions(+), 4 deletions(-)
 
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -974,6 +974,16 @@ restart:
- 			continue;
- 		}
- 
-+		/*
-+		 * If wb_tryget fails, the wb has been shutdown, skip it.
-+		 *
-+		 * Pin @wb so that it stays on @bdi->wb_list.  This allows
-+		 * continuing iteration from @wb after dropping and
-+		 * regrabbing rcu read lock.
-+		 */
-+		if (!wb_tryget(wb))
-+			continue;
+diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
+index cda57cb863089..75e694791d8d9 100644
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -3272,7 +3272,19 @@ static struct spi_mem_driver spi_nor_driver = {
+ 	.remove = spi_nor_remove,
+ 	.shutdown = spi_nor_shutdown,
+ };
+-module_spi_mem_driver(spi_nor_driver);
 +
- 		/* alloc failed, execute synchronously using on-stack fallback */
- 		work = &fallback_work;
- 		*work = *base_work;
-@@ -982,13 +992,6 @@ restart:
- 		work->done = &fallback_work_done;
- 
- 		wb_queue_work(wb, work);
--
--		/*
--		 * Pin @wb so that it stays on @bdi->wb_list.  This allows
--		 * continuing iteration from @wb after dropping and
--		 * regrabbing rcu read lock.
--		 */
--		wb_get(wb);
- 		last_wb = wb;
- 
- 		rcu_read_unlock();
---- a/mm/backing-dev.c
-+++ b/mm/backing-dev.c
-@@ -380,6 +380,15 @@ static LIST_HEAD(offline_cgwbs);
- static void cleanup_offline_cgwbs_workfn(struct work_struct *work);
- static DECLARE_WORK(cleanup_offline_cgwbs_work, cleanup_offline_cgwbs_workfn);
- 
-+static void cgwb_free_rcu(struct rcu_head *rcu_head)
++static int __init spi_nor_module_init(void)
 +{
-+	struct bdi_writeback *wb = container_of(rcu_head,
-+			struct bdi_writeback, rcu);
-+
-+	percpu_ref_exit(&wb->refcnt);
-+	kfree(wb);
++	return spi_mem_driver_register(&spi_nor_driver);
 +}
++module_init(spi_nor_module_init);
 +
- static void cgwb_release_workfn(struct work_struct *work)
- {
- 	struct bdi_writeback *wb = container_of(work, struct bdi_writeback,
-@@ -402,11 +411,10 @@ static void cgwb_release_workfn(struct w
- 	list_del(&wb->offline_node);
- 	spin_unlock_irq(&cgwb_lock);
++static void __exit spi_nor_module_exit(void)
++{
++	spi_mem_driver_unregister(&spi_nor_driver);
++	spi_nor_debugfs_shutdown();
++}
++module_exit(spi_nor_module_exit);
  
--	percpu_ref_exit(&wb->refcnt);
- 	wb_exit(wb);
- 	bdi_put(bdi);
- 	WARN_ON_ONCE(!list_empty(&wb->b_attached));
--	kfree_rcu(wb, rcu);
-+	call_rcu(&wb->rcu, cgwb_free_rcu);
+ MODULE_LICENSE("GPL v2");
+ MODULE_AUTHOR("Huang Shijie <shijie8@gmail.com>");
+diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
+index d18dafeb020ab..00bf0d0e955a0 100644
+--- a/drivers/mtd/spi-nor/core.h
++++ b/drivers/mtd/spi-nor/core.h
+@@ -709,8 +709,10 @@ static inline struct spi_nor *mtd_to_spi_nor(struct mtd_info *mtd)
+ 
+ #ifdef CONFIG_DEBUG_FS
+ void spi_nor_debugfs_register(struct spi_nor *nor);
++void spi_nor_debugfs_shutdown(void);
+ #else
+ static inline void spi_nor_debugfs_register(struct spi_nor *nor) {}
++static inline void spi_nor_debugfs_shutdown(void) {}
+ #endif
+ 
+ #endif /* __LINUX_MTD_SPI_NOR_INTERNAL_H */
+diff --git a/drivers/mtd/spi-nor/debugfs.c b/drivers/mtd/spi-nor/debugfs.c
+index df76cb5de3f93..5f56b23205d8b 100644
+--- a/drivers/mtd/spi-nor/debugfs.c
++++ b/drivers/mtd/spi-nor/debugfs.c
+@@ -226,13 +226,13 @@ static void spi_nor_debugfs_unregister(void *data)
+ 	nor->debugfs_root = NULL;
  }
  
- static void cgwb_release(struct percpu_ref *refcnt)
++static struct dentry *rootdir;
++
+ void spi_nor_debugfs_register(struct spi_nor *nor)
+ {
+-	struct dentry *rootdir, *d;
++	struct dentry *d;
+ 	int ret;
+ 
+-	/* Create rootdir once. Will never be deleted again. */
+-	rootdir = debugfs_lookup(SPI_NOR_DEBUGFS_ROOT, NULL);
+ 	if (!rootdir)
+ 		rootdir = debugfs_create_dir(SPI_NOR_DEBUGFS_ROOT, NULL);
+ 
+@@ -247,3 +247,8 @@ void spi_nor_debugfs_register(struct spi_nor *nor)
+ 	debugfs_create_file("capabilities", 0444, d, nor,
+ 			    &spi_nor_capabilities_fops);
+ }
++
++void spi_nor_debugfs_shutdown(void)
++{
++	debugfs_remove(rootdir);
++}
+-- 
+2.39.2
+
 
 
