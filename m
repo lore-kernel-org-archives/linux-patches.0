@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC1C7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC68AC433D2;
-	Mon, 24 Apr 2023 13:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A7D7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A395C433EF;
+	Mon, 24 Apr 2023 13:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342619;
-	bh=E1/FLRbMWKAKHeKK7eyU76UeBHn2ETFKXqwZ6wUQQH4=;
+	s=korg; t=1682342621;
+	bh=SzVR1zDw1MjiXgnQ+vOPHx7hJKYdtyCYvDjd664KRpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNoQ/WY9gIwRZexOfYcJJMU2Yg6QFilOMkxrZnlrK+q6Rgs3POjHm5vKjuzqkl0hM
-	 azKhyhBiyI7YfQN6sSm2DHDMnUfRoS0m2mxtQIrohRIXddyXK8QcnwtpT8/3j5fN8T
-	 3YxcmmSmQ6dstqQvf4SwXXRIgZ/iZPPHohgezVyM=
+	b=INVpb4zyClIzNhDHJMVFXqYYsELkuhtM5U2oJJQ2QYU25yaivabKzswblGeocoZSY
+	 MZwP1SL60kGGlUL7kF9Gx9q0g6+ZS6RezEMji/nbJsJ11lpD0QuswOYZEI5VJ2MXRu
+	 nquSddc6PNhbMghi8ekSolQVcDebsB/1dd9/VRjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>
-Subject: [PATCH 5.4 33/39] inet6: Remove inet6_destroy_sock() in sk->sk_prot->destroy().
-Date: Mon, 24 Apr 2023 15:17:36 +0200
-Message-Id: <20230424131124.317671737@linuxfoundation.org>
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 07/39] netfilter: nf_tables: fix ifdef to also consider nf_tables=m
+Date: Mon, 24 Apr 2023 15:17:10 +0200
+Message-Id: <20230424131123.325779309@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
 References: <20230424131123.040556994@linuxfoundation.org>
@@ -36,112 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit b5fc29233d28be7a3322848ebe73ac327559cdb9 upstream.
+[ Upstream commit c55c0e91c813589dc55bea6bf9a9fbfaa10ae41d ]
 
-After commit d38afeec26ed ("tcp/udp: Call inet6_destroy_sock()
-in IPv6 sk->sk_destruct()."), we call inet6_destroy_sock() in
-sk->sk_destruct() by setting inet6_sock_destruct() to it to make
-sure we do not leak inet6-specific resources.
+nftables can be built as a module, so fix the preprocessor conditional
+accordingly.
 
-Now we can remove unnecessary inet6_destroy_sock() calls in
-sk->sk_prot->destroy().
-
-DCCP and SCTP have their own sk->sk_destruct() function, so we
-change them separately in the following patches.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 478b360a47b7 ("netfilter: nf_tables: fix nf_trace always-on with XT_TRACE=n")
+Reported-by: Florian Fainelli <f.fainelli@gmail.com>
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ping.c     |    6 ------
- net/ipv6/raw.c      |    2 --
- net/ipv6/tcp_ipv6.c |    8 +-------
- net/ipv6/udp.c      |    2 --
- net/l2tp/l2tp_ip6.c |    2 --
- 5 files changed, 1 insertion(+), 19 deletions(-)
+ include/linux/skbuff.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/ping.c
-+++ b/net/ipv6/ping.c
-@@ -22,11 +22,6 @@
- #include <linux/proc_fs.h>
- #include <net/ping.h>
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index c951d16a40a70..302a2ad679809 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -4227,7 +4227,7 @@ static inline void nf_reset_ct(struct sk_buff *skb)
  
--static void ping_v6_destroy(struct sock *sk)
--{
--	inet6_destroy_sock(sk);
--}
--
- /* Compatibility glue so we can support IPv6 when it's compiled as a module */
- static int dummy_ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len,
- 				 int *addr_len)
-@@ -170,7 +165,6 @@ struct proto pingv6_prot = {
- 	.owner =	THIS_MODULE,
- 	.init =		ping_init_sock,
- 	.close =	ping_close,
--	.destroy =	ping_v6_destroy,
- 	.connect =	ip6_datagram_connect_v6_only,
- 	.disconnect =	__udp_disconnect,
- 	.setsockopt =	ipv6_setsockopt,
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -1256,8 +1256,6 @@ static void raw6_destroy(struct sock *sk
- 	lock_sock(sk);
- 	ip6_flush_pending_frames(sk);
- 	release_sock(sk);
--
--	inet6_destroy_sock(sk);
+ static inline void nf_reset_trace(struct sk_buff *skb)
+ {
+-#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || defined(CONFIG_NF_TABLES)
++#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || IS_ENABLED(CONFIG_NF_TABLES)
+ 	skb->nf_trace = 0;
+ #endif
  }
- 
- static int rawv6_init_sk(struct sock *sk)
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1848,12 +1848,6 @@ static int tcp_v6_init_sock(struct sock
- 	return 0;
- }
- 
--static void tcp_v6_destroy_sock(struct sock *sk)
--{
--	tcp_v4_destroy_sock(sk);
--	inet6_destroy_sock(sk);
--}
--
- #ifdef CONFIG_PROC_FS
- /* Proc filesystem TCPv6 sock list dumping. */
- static void get_openreq6(struct seq_file *seq,
-@@ -2046,7 +2040,7 @@ struct proto tcpv6_prot = {
- 	.accept			= inet_csk_accept,
- 	.ioctl			= tcp_ioctl,
- 	.init			= tcp_v6_init_sock,
--	.destroy		= tcp_v6_destroy_sock,
-+	.destroy		= tcp_v4_destroy_sock,
- 	.shutdown		= tcp_shutdown,
- 	.setsockopt		= tcp_setsockopt,
- 	.getsockopt		= tcp_getsockopt,
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1573,8 +1573,6 @@ void udpv6_destroy_sock(struct sock *sk)
- 			udp_encap_disable();
- 		}
- 	}
--
--	inet6_destroy_sock(sk);
- }
- 
- /*
---- a/net/l2tp/l2tp_ip6.c
-+++ b/net/l2tp/l2tp_ip6.c
-@@ -268,8 +268,6 @@ static void l2tp_ip6_destroy_sock(struct
- 
- 	if (tunnel)
- 		l2tp_tunnel_delete(tunnel);
--
--	inet6_destroy_sock(sk);
- }
- 
- static int l2tp_ip6_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+@@ -4247,7 +4247,7 @@ static inline void __nf_copy(struct sk_buff *dst, const struct sk_buff *src,
+ 	dst->_nfct = src->_nfct;
+ 	nf_conntrack_get(skb_nfct(src));
+ #endif
+-#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || defined(CONFIG_NF_TABLES)
++#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || IS_ENABLED(CONFIG_NF_TABLES)
+ 	if (copy)
+ 		dst->nf_trace = src->nf_trace;
+ #endif
+-- 
+2.39.2
+
 
 
