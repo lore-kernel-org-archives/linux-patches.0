@@ -1,255 +1,169 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4522E7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9289AC4339B;
-	Mon, 24 Apr 2023 13:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88297C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:22:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A245C433EF;
+	Mon, 24 Apr 2023 13:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342561;
-	bh=5c6jDPnJuRXg9pVk5Sxjk5gThp8Z9aN4OHq9Go8uUVE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ZUiHCEPaM+mSVA5qwJ67Bi1H2+TR2oTh7b0br6ZHpCnrnwAHkmtnkcrA+Q6KU2ca1
-	 1S0HSY5mNjyE1keSKo4qpiaNBWD9WMi1ZWuT/1Mq2l2yaBaOd1hxCr8B33TlFdRZ7p
-	 v7WwO8ujHJDxx9zLwhk8CgXxXFNzwDGkIAW9c8n8=
+	s=korg; t=1682342563;
+	bh=oVhSfHcinp2f8RkrXUIDJGf88YbRbQRUxKbBH/1EqSY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=vsh+fAPKHI1+mnjoevbjyQeKj3eiRVtLU3Ikq0nL1rLQNwSLiOrGYSOZg+d2mWwdm
+	 G1yPooYrkfc6WUUQJQlJGzE5ptCUUCKU3q3382G8nEK3tEHWsymDIsf9tImHtTMB1O
+	 1Ycw6j9ITnt4gcXZDe+fyZlH6+dO/irxqZ7XX8O4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.4 00/39] 5.4.242-rc1 review
-Date: Mon, 24 Apr 2023 15:17:03 +0200
-Message-Id: <20230424131123.040556994@linuxfoundation.org>
+	Gwangun Jung <exsociety@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 05/39] net: sched: sch_qfq: prevent slab-out-of-bounds in qfq_activate_agg
+Date: Mon, 24 Apr 2023 15:17:08 +0200
+Message-Id: <20230424131123.238190997@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
+References: <20230424131123.040556994@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.242-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.242-rc1
-X-KernelTest-Deadline: 2023-04-26T13:11+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.4.242 release.
-There are 39 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Gwangun Jung <exsociety@gmail.com>
 
-Responses should be made by Wed, 26 Apr 2023 13:11:11 +0000.
-Anything received after that time might be too late.
+[ Upstream commit 3037933448f60f9acb705997eae62013ecb81e0d ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.242-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
+If the TCA_QFQ_LMAX value is not offered through nlattr, lmax is determined by the MTU value of the network device.
+The MTU of the loopback device can be set up to 2^31-1.
+As a result, it is possible to have an lmax value that exceeds QFQ_MIN_LMAX.
 
-thanks,
+Due to the invalid lmax value, an index is generated that exceeds the QFQ_MAX_INDEX(=24) value, causing out-of-bounds read/write errors.
 
-greg k-h
+The following reports a oob access:
 
--------------
-Pseudo-Shortlog of commits:
+[   84.582666] BUG: KASAN: slab-out-of-bounds in qfq_activate_agg.constprop.0 (net/sched/sch_qfq.c:1027 net/sched/sch_qfq.c:1060 net/sched/sch_qfq.c:1313)
+[   84.583267] Read of size 4 at addr ffff88810f676948 by task ping/301
+[   84.583686]
+[   84.583797] CPU: 3 PID: 301 Comm: ping Not tainted 6.3.0-rc5 #1
+[   84.584164] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+[   84.584644] Call Trace:
+[   84.584787]  <TASK>
+[   84.584906] dump_stack_lvl (lib/dump_stack.c:107 (discriminator 1))
+[   84.585108] print_report (mm/kasan/report.c:320 mm/kasan/report.c:430)
+[   84.585570] kasan_report (mm/kasan/report.c:538)
+[   84.585988] qfq_activate_agg.constprop.0 (net/sched/sch_qfq.c:1027 net/sched/sch_qfq.c:1060 net/sched/sch_qfq.c:1313)
+[   84.586599] qfq_enqueue (net/sched/sch_qfq.c:1255)
+[   84.587607] dev_qdisc_enqueue (net/core/dev.c:3776)
+[   84.587749] __dev_queue_xmit (./include/net/sch_generic.h:186 net/core/dev.c:3865 net/core/dev.c:4212)
+[   84.588763] ip_finish_output2 (./include/net/neighbour.h:546 net/ipv4/ip_output.c:228)
+[   84.589460] ip_output (net/ipv4/ip_output.c:430)
+[   84.590132] ip_push_pending_frames (./include/net/dst.h:444 net/ipv4/ip_output.c:126 net/ipv4/ip_output.c:1586 net/ipv4/ip_output.c:1606)
+[   84.590285] raw_sendmsg (net/ipv4/raw.c:649)
+[   84.591960] sock_sendmsg (net/socket.c:724 net/socket.c:747)
+[   84.592084] __sys_sendto (net/socket.c:2142)
+[   84.593306] __x64_sys_sendto (net/socket.c:2150)
+[   84.593779] do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+[   84.593902] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+[   84.594070] RIP: 0033:0x7fe568032066
+[   84.594192] Code: 0e 0d 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 41 89 ca 64 8b 04 25 18 00 00 00 85 c09[ 84.594796] RSP: 002b:00007ffce388b4e8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.242-rc1
+Code starting with the faulting instruction
+===========================================
+[   84.595047] RAX: ffffffffffffffda RBX: 00007ffce388cc70 RCX: 00007fe568032066
+[   84.595281] RDX: 0000000000000040 RSI: 00005605fdad6d10 RDI: 0000000000000003
+[   84.595515] RBP: 00005605fdad6d10 R08: 00007ffce388eeec R09: 0000000000000010
+[   84.595749] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000040
+[   84.595984] R13: 00007ffce388cc30 R14: 00007ffce388b4f0 R15: 0000001d00000001
+[   84.596218]  </TASK>
+[   84.596295]
+[   84.596351] Allocated by task 291:
+[   84.596467] kasan_save_stack (mm/kasan/common.c:46)
+[   84.596597] kasan_set_track (mm/kasan/common.c:52)
+[   84.596725] __kasan_kmalloc (mm/kasan/common.c:384)
+[   84.596852] __kmalloc_node (./include/linux/kasan.h:196 mm/slab_common.c:967 mm/slab_common.c:974)
+[   84.596979] qdisc_alloc (./include/linux/slab.h:610 ./include/linux/slab.h:731 net/sched/sch_generic.c:938)
+[   84.597100] qdisc_create (net/sched/sch_api.c:1244)
+[   84.597222] tc_modify_qdisc (net/sched/sch_api.c:1680)
+[   84.597357] rtnetlink_rcv_msg (net/core/rtnetlink.c:6174)
+[   84.597495] netlink_rcv_skb (net/netlink/af_netlink.c:2574)
+[   84.597627] netlink_unicast (net/netlink/af_netlink.c:1340 net/netlink/af_netlink.c:1365)
+[   84.597759] netlink_sendmsg (net/netlink/af_netlink.c:1942)
+[   84.597891] sock_sendmsg (net/socket.c:724 net/socket.c:747)
+[   84.598016] ____sys_sendmsg (net/socket.c:2501)
+[   84.598147] ___sys_sendmsg (net/socket.c:2557)
+[   84.598275] __sys_sendmsg (./include/linux/file.h:31 net/socket.c:2586)
+[   84.598399] do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+[   84.598520] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+[   84.598688]
+[   84.598744] The buggy address belongs to the object at ffff88810f674000
+[   84.598744]  which belongs to the cache kmalloc-8k of size 8192
+[   84.599135] The buggy address is located 2664 bytes to the right of
+[   84.599135]  allocated 7904-byte region [ffff88810f674000, ffff88810f675ee0)
+[   84.599544]
+[   84.599598] The buggy address belongs to the physical page:
+[   84.599777] page:00000000e638567f refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10f670
+[   84.600074] head:00000000e638567f order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+[   84.600330] flags: 0x200000000010200(slab|head|node=0|zone=2)
+[   84.600517] raw: 0200000000010200 ffff888100043180 dead000000000122 0000000000000000
+[   84.600764] raw: 0000000000000000 0000000080020002 00000001ffffffff 0000000000000000
+[   84.601009] page dumped because: kasan: bad access detected
+[   84.601187]
+[   84.601241] Memory state around the buggy address:
+[   84.601396]  ffff88810f676800: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   84.601620]  ffff88810f676880: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   84.601845] >ffff88810f676900: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   84.602069]                                               ^
+[   84.602243]  ffff88810f676980: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   84.602468]  ffff88810f676a00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   84.602693] ==================================================================
+[   84.602924] Disabling lock debugging due to kernel taint
 
-Ekaterina Orlova <vorobushek.ok@gmail.com>
-    ASN.1: Fix check for strdup() success
+Fixes: 3015f3d2a3cd ("pkt_sched: enable QFQ to support TSO/GSO")
+Reported-by: Gwangun Jung <exsociety@gmail.com>
+Signed-off-by: Gwangun Jung <exsociety@gmail.com>
+Acked-by: Jamal Hadi Salim<jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/sched/sch_qfq.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-Dan Carpenter <error27@gmail.com>
-    iio: adc: at91-sama5d2_adc: fix an error code in at91_adc_allocate_trigger()
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 1eb339d224ae5..603bd3097bd84 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -421,15 +421,16 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	} else
+ 		weight = 1;
+ 
+-	if (tb[TCA_QFQ_LMAX]) {
++	if (tb[TCA_QFQ_LMAX])
+ 		lmax = nla_get_u32(tb[TCA_QFQ_LMAX]);
+-		if (lmax < QFQ_MIN_LMAX || lmax > (1UL << QFQ_MTU_SHIFT)) {
+-			pr_notice("qfq: invalid max length %u\n", lmax);
+-			return -EINVAL;
+-		}
+-	} else
++	else
+ 		lmax = psched_mtu(qdisc_dev(sch));
+ 
++	if (lmax < QFQ_MIN_LMAX || lmax > (1UL << QFQ_MTU_SHIFT)) {
++		pr_notice("qfq: invalid max length %u\n", lmax);
++		return -EINVAL;
++	}
++
+ 	inv_w = ONE_FP / weight;
+ 	weight = ONE_FP / inv_w;
+ 
+-- 
+2.39.2
 
-Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-    pwm: meson: Explicitly set .polarity in .get_state()
-
-Gao Xiang <hsiangkao@redhat.com>
-    xfs: fix forkoff miscalculation related to XFS_LITINO(mp)
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    sctp: Call inet6_destroy_sock() via sk->sk_destruct().
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    dccp: Call inet6_destroy_sock() via sk->sk_destruct().
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    inet6: Remove inet6_destroy_sock() in sk->sk_prot->destroy().
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    tcp/udp: Call inet6_destroy_sock() in IPv6 sk->sk_destruct().
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    udp: Call inet6_destroy_sock() in setsockopt(IPV6_ADDRFORM).
-
-Baokun Li <libaokun1@huawei.com>
-    ext4: fix use-after-free in ext4_xattr_set_entry
-
-Ritesh Harjani <riteshh@linux.ibm.com>
-    ext4: remove duplicate definition of ext4_xattr_ibody_inline_set()
-
-Tudor Ambarus <tudor.ambarus@linaro.org>
-    Revert "ext4: fix use-after-free in ext4_xattr_set_entry"
-
-Pingfan Liu <kernelfans@gmail.com>
-    x86/purgatory: Don't generate debug info for purgatory.ro
-
-Jiaxun Yang <jiaxun.yang@flygoat.com>
-    MIPS: Define RUNTIME_DISCARD_EXIT in LD script
-
-Bhavya Kapoor <b-kapoor@ti.com>
-    mmc: sdhci_am654: Set HIGH_SPEED_ENA for SDR12 and SDR25
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    memstick: fix memory leak if card device is never registered
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: initialize unused bytes in segment summary blocks
-
-Brian Masney <bmasney@redhat.com>
-    iio: light: tsl2772: fix reading proximity-diodes from device tree
-
-Juergen Gross <jgross@suse.com>
-    xen/netback: use same error messages for same errors
-
-Sagi Grimberg <sagi@grimberg.me>
-    nvme-tcp: fix a possible UAF when failing to allocate an io queue
-
-Heiko Carstens <hca@linux.ibm.com>
-    s390/ptrace: fix PTRACE_GET_LAST_BREAK error handling
-
-Álvaro Fernández Rojas <noltari@gmail.com>
-    net: dsa: b53: mmap: add phy ops
-
-Damien Le Moal <damien.lemoal@opensource.wdc.com>
-    scsi: core: Improve scsi_vpd_inquiry() checks
-
-Tomas Henzl <thenzl@redhat.com>
-    scsi: megaraid_sas: Fix fw_crash_buffer_show()
-
-Nick Desaulniers <ndesaulniers@google.com>
-    selftests: sigaltstack: fix -Wuninitialized
-
-Jonathan Denose <jdenose@chromium.org>
-    Input: i8042 - add quirk for Fujitsu Lifebook A574/H
-
-Douglas Raillard <douglas.raillard@arm.com>
-    f2fs: Fix f2fs_truncate_partial_nodes ftrace event
-
-Sebastian Basierski <sebastianx.basierski@intel.com>
-    e1000e: Disable TSO on i219-LM card to increase speed
-
-Daniel Borkmann <daniel@iogearbox.net>
-    bpf: Fix incorrect verifier pruning due to missing register precision taints
-
-Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-    mlxfw: fix null-ptr-deref in mlxfw_mfa2_tlv_next()
-
-Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-    i40e: fix i40e_setup_misc_vector() error handling
-
-Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-    i40e: fix accessing vsi->active_filters without holding lock
-
-Florian Westphal <fw@strlen.de>
-    netfilter: nf_tables: fix ifdef to also consider nf_tables=m
-
-Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-    virtio_net: bugfix overflow inside xdp_linearize_page()
-
-Gwangun Jung <exsociety@gmail.com>
-    net: sched: sch_qfq: prevent slab-out-of-bounds in qfq_activate_agg
-
-Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-    regulator: fan53555: Explicitly include bits header
-
-Florian Westphal <fw@strlen.de>
-    netfilter: br_netfilter: fix recent physdev match breakage
-
-Marc Gonzalez <mgonzalez@freebox.fr>
-    arm64: dts: meson-g12-common: specify full DMC range
-
-Jianqun Xu <jay.xu@rock-chips.com>
-    ARM: dts: rockchip: fix a typo error for rk3288 spdif node
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |  4 +-
- arch/arm/boot/dts/rk3288.dtsi                      |  2 +-
- arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi  |  3 +-
- arch/mips/kernel/vmlinux.lds.S                     |  2 +
- arch/s390/kernel/ptrace.c                          |  8 +---
- arch/x86/purgatory/Makefile                        |  5 ++-
- drivers/iio/adc/at91-sama5d2_adc.c                 |  2 +-
- drivers/iio/light/tsl2772.c                        |  1 +
- drivers/input/serio/i8042-x86ia64io.h              |  8 ++++
- drivers/memstick/core/memstick.c                   |  5 ++-
- drivers/mmc/host/sdhci_am654.c                     |  2 -
- drivers/net/dsa/b53/b53_mmap.c                     | 14 ++++++
- drivers/net/ethernet/intel/e1000e/netdev.c         | 51 +++++++++++-----------
- drivers/net/ethernet/intel/i40e/i40e_main.c        |  9 ++--
- .../ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c |  2 +
- drivers/net/virtio_net.c                           |  8 +++-
- drivers/net/xen-netback/netback.c                  |  6 +--
- drivers/nvme/host/tcp.c                            | 46 ++++++++++---------
- drivers/pwm/pwm-meson.c                            |  7 +++
- drivers/regulator/fan53555.c                       | 11 ++---
- drivers/scsi/megaraid/megaraid_sas_base.c          |  2 +-
- drivers/scsi/scsi.c                                | 11 ++++-
- fs/ext4/inline.c                                   | 11 +++--
- fs/ext4/xattr.c                                    | 26 +----------
- fs/ext4/xattr.h                                    |  6 +--
- fs/nilfs2/segment.c                                | 20 +++++++++
- fs/xfs/libxfs/xfs_attr_leaf.c                      |  8 +++-
- include/linux/skbuff.h                             |  5 ++-
- include/net/ipv6.h                                 |  2 +
- include/net/udp.h                                  |  2 +-
- include/net/udplite.h                              |  8 ----
- include/trace/events/f2fs.h                        |  2 +-
- kernel/bpf/verifier.c                              | 15 +++++++
- net/bridge/br_netfilter_hooks.c                    | 17 +++++---
- net/dccp/dccp.h                                    |  1 +
- net/dccp/ipv6.c                                    | 15 ++++---
- net/dccp/proto.c                                   |  8 +++-
- net/ipv4/udp.c                                     |  9 ++--
- net/ipv4/udplite.c                                 |  8 ++++
- net/ipv6/af_inet6.c                                | 15 ++++++-
- net/ipv6/ipv6_sockglue.c                           | 20 ++++-----
- net/ipv6/ping.c                                    |  6 ---
- net/ipv6/raw.c                                     |  2 -
- net/ipv6/tcp_ipv6.c                                |  8 +---
- net/ipv6/udp.c                                     | 17 ++++++--
- net/ipv6/udp_impl.h                                |  1 +
- net/ipv6/udplite.c                                 |  9 +++-
- net/l2tp/l2tp_ip6.c                                |  2 -
- net/sched/sch_qfq.c                                | 13 +++---
- net/sctp/socket.c                                  | 29 ++++++++----
- scripts/asn1_compiler.c                            |  2 +-
- .../selftests/sigaltstack/current_stack_pointer.h  | 23 ++++++++++
- tools/testing/selftests/sigaltstack/sas.c          |  7 +--
- 53 files changed, 329 insertions(+), 197 deletions(-)
 
 
