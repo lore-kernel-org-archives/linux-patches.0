@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAE32108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:36:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02EA3C4339B;
-	Mon, 24 Apr 2023 13:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D90C2108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:37:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D60C433D2;
+	Mon, 24 Apr 2023 13:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343418;
-	bh=JME6NifGrTzE29YheuGLOG/vWfZgiZ0JJFbEIrx7y2M=;
+	s=korg; t=1682343421;
+	bh=cbV8s1f+4nwaatZU50V3X98LAnibAaJCKZ6/RQO63Ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vchRMblkvdl6KlM1EXnxitbmuEV73Wdda3nHaWIiqZzX2/al1BJFz9mlwsY0vOBaG
-	 sHHPv9XN457Tjx+dVaGW5frzFusPRRaFMBe02tWn4d2mqg8tEU4BHq0OseRSG/2zDa
-	 UgxRxDXZyGboUa1sGvqYApPa/BpQrN1bjbuZSds8=
+	b=dgbyB1gU+jmijORTICYJOLBaqCxM15fpmw3onF525ghuQWuvE0rqNzSGgccx5RFf1
+	 1Lh7PYhlDbkRuo/Oq5QQW1DXrkXS1hiY7tEJ3WGvMsuR7avoijG/kBzajcP58RbVhP
+	 mTOyhcuaXd8ab43U3dbhGsHymSWEvstqDw1HZQzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"tytso@mit.edu, adilger.kernel@dilger.ca, linux-ext4@vger.kernel.org, linux-kernel@vger.kernel.org, joneslee@google.com, Tudor Ambarus" <tudor.ambarus@linaro.org>,
+	Ritesh Harjani <riteshh@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 4.14 18/28] Revert "ext4: fix use-after-free in ext4_xattr_set_entry"
-Date: Mon, 24 Apr 2023 15:18:39 +0200
-Message-Id: <20230424131121.918926414@linuxfoundation.org>
+Subject: [PATCH 4.14 19/28] ext4: remove duplicate definition of ext4_xattr_ibody_inline_set()
+Date: Mon, 24 Apr 2023 15:18:40 +0200
+Message-Id: <20230424131121.966701590@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131121.331252806@linuxfoundation.org>
 References: <20230424131121.331252806@linuxfoundation.org>
@@ -34,49 +35,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Ritesh Harjani <riteshh@linux.ibm.com>
 
-This reverts commit bb8592efcf8ef2f62947745d3182ea05b5256a15 which is
-commit 67d7d8ad99beccd9fe92d585b87f1760dc9018e3 upstream.
+[ Upstream commit 310c097c2bdbea253d6ee4e064f3e65580ef93ac ]
 
-The order in which patches are queued to stable matters. This patch
-has a logical dependency on commit 310c097c2bdbea253d6ee4e064f3e65580ef93ac
-upstream, and failing to queue the latter results in a null-ptr-deref
-reported at the Link below.
+ext4_xattr_ibody_inline_set() & ext4_xattr_ibody_set() have the exact
+same definition.  Hence remove ext4_xattr_ibody_inline_set() and all
+its call references. Convert the callers of it to call
+ext4_xattr_ibody_set() instead.
 
-In order to avoid conflicts on stable, revert the commit just so that we
-can queue its prerequisite patch first and then queue the same after.
+[ Modified to preserve ext4_xattr_ibody_set() and remove
+  ext4_xattr_ibody_inline_set() instead. -- TYT ]
 
-Link: https://syzkaller.appspot.com/bug?extid=d5ebf56f3b1268136afd
+Signed-off-by: Ritesh Harjani <riteshh@linux.ibm.com>
+Link: https://lore.kernel.org/r/fd566b799bbbbe9b668eb5eecde5b5e319e3694f.1622685482.git.riteshh@linux.ibm.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ext4/inline.c |   11 +++++------
+ fs/ext4/xattr.c  |   26 +-------------------------
+ fs/ext4/xattr.h  |    6 +++---
+ 3 files changed, 9 insertions(+), 34 deletions(-)
 
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -212,7 +212,7 @@ out:
+ /*
+  * write the buffer to the inline inode.
+  * If 'create' is set, we don't need to do the extra copy in the xattr
+- * value since it is already handled by ext4_xattr_ibody_inline_set.
++ * value since it is already handled by ext4_xattr_ibody_set.
+  * That saves us one memcpy.
+  */
+ static void ext4_write_inline_data(struct inode *inode, struct ext4_iloc *iloc,
+@@ -294,7 +294,7 @@ static int ext4_create_inline_data(handl
+ 
+ 	BUG_ON(!is.s.not_found);
+ 
+-	error = ext4_xattr_ibody_inline_set(handle, inode, &i, &is);
++	error = ext4_xattr_ibody_set(handle, inode, &i, &is);
+ 	if (error) {
+ 		if (error == -ENOSPC)
+ 			ext4_clear_inode_state(inode,
+@@ -366,7 +366,7 @@ static int ext4_update_inline_data(handl
+ 	i.value = value;
+ 	i.value_len = len;
+ 
+-	error = ext4_xattr_ibody_inline_set(handle, inode, &i, &is);
++	error = ext4_xattr_ibody_set(handle, inode, &i, &is);
+ 	if (error)
+ 		goto out;
+ 
+@@ -439,7 +439,7 @@ static int ext4_destroy_inline_data_nolo
+ 	if (error)
+ 		goto out;
+ 
+-	error = ext4_xattr_ibody_inline_set(handle, inode, &i, &is);
++	error = ext4_xattr_ibody_set(handle, inode, &i, &is);
+ 	if (error)
+ 		goto out;
+ 
+@@ -1951,8 +1951,7 @@ int ext4_inline_data_truncate(struct ino
+ 			i.value = value;
+ 			i.value_len = i_size > EXT4_MIN_INLINE_DATA_SIZE ?
+ 					i_size - EXT4_MIN_INLINE_DATA_SIZE : 0;
+-			err = ext4_xattr_ibody_inline_set(handle, inode,
+-							  &i, &is);
++			err = ext4_xattr_ibody_set(handle, inode, &i, &is);
+ 			if (err)
+ 				goto out_error;
+ 		}
 --- a/fs/ext4/xattr.c
 +++ b/fs/ext4/xattr.c
-@@ -2200,9 +2200,8 @@ int ext4_xattr_ibody_find(struct inode *
- 	struct ext4_inode *raw_inode;
- 	int error;
+@@ -2221,31 +2221,7 @@ int ext4_xattr_ibody_find(struct inode *
+ 	return 0;
+ }
  
--	if (!EXT4_INODE_HAS_XATTR_SPACE(inode))
-+	if (EXT4_I(inode)->i_extra_isize == 0)
- 		return 0;
+-int ext4_xattr_ibody_inline_set(handle_t *handle, struct inode *inode,
+-				struct ext4_xattr_info *i,
+-				struct ext4_xattr_ibody_find *is)
+-{
+-	struct ext4_xattr_ibody_header *header;
+-	struct ext4_xattr_search *s = &is->s;
+-	int error;
 -
- 	raw_inode = ext4_raw_inode(&is->iloc);
- 	header = IHDR(inode, raw_inode);
- 	is->s.base = is->s.first = IFIRST(header);
-@@ -2230,9 +2229,8 @@ int ext4_xattr_ibody_inline_set(handle_t
- 	struct ext4_xattr_search *s = &is->s;
- 	int error;
+-	if (EXT4_I(inode)->i_extra_isize == 0)
+-		return -ENOSPC;
+-	error = ext4_xattr_set_entry(i, s, handle, inode, false /* is_block */);
+-	if (error)
+-		return error;
+-	header = IHDR(inode, ext4_raw_inode(&is->iloc));
+-	if (!IS_LAST_ENTRY(s->first)) {
+-		header->h_magic = cpu_to_le32(EXT4_XATTR_MAGIC);
+-		ext4_set_inode_state(inode, EXT4_STATE_XATTR);
+-	} else {
+-		header->h_magic = cpu_to_le32(0);
+-		ext4_clear_inode_state(inode, EXT4_STATE_XATTR);
+-	}
+-	return 0;
+-}
+-
+-static int ext4_xattr_ibody_set(handle_t *handle, struct inode *inode,
++int ext4_xattr_ibody_set(handle_t *handle, struct inode *inode,
+ 				struct ext4_xattr_info *i,
+ 				struct ext4_xattr_ibody_find *is)
+ {
+--- a/fs/ext4/xattr.h
++++ b/fs/ext4/xattr.h
+@@ -198,9 +198,9 @@ extern int ext4_xattr_ibody_find(struct
+ extern int ext4_xattr_ibody_get(struct inode *inode, int name_index,
+ 				const char *name,
+ 				void *buffer, size_t buffer_size);
+-extern int ext4_xattr_ibody_inline_set(handle_t *handle, struct inode *inode,
+-				       struct ext4_xattr_info *i,
+-				       struct ext4_xattr_ibody_find *is);
++extern int ext4_xattr_ibody_set(handle_t *handle, struct inode *inode,
++				struct ext4_xattr_info *i,
++				struct ext4_xattr_ibody_find *is);
  
--	if (!EXT4_INODE_HAS_XATTR_SPACE(inode))
-+	if (EXT4_I(inode)->i_extra_isize == 0)
- 		return -ENOSPC;
--
- 	error = ext4_xattr_set_entry(i, s, handle, inode, false /* is_block */);
- 	if (error)
- 		return error;
+ extern struct mb_cache *ext4_xattr_create_cache(void);
+ extern void ext4_xattr_destroy_cache(struct mb_cache *);
 
 
