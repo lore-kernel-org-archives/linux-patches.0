@@ -1,99 +1,105 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from qproxy3-pub.mail.unifiedlayer.com (qproxy3-pub.mail.unifiedlayer.com [67.222.38.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF77A7470
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 23:05:44 +0000 (UTC)
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2478485fd76so3539789a91.2
-        for <patches@lists.linux.dev>; Mon, 24 Apr 2023 16:05:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682377544; x=1684969544;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VQ8sFzZ9vlAXommM0w2/PXvGSOKBNi6JzIA9K33bVAU=;
-        b=WD+ceziX6bq4nghbfbXLNklOmtmN9i6mL4/A14bPp9VINUyoFGGw8A0p3dQ34YR+WV
-         V9UR0Cc1hxLra/AnBrIM2gSUcmRFtrM5vgBmxBXyH5v7k/iTTDcarBsO+NVHuUmNRLqk
-         dSPFhIKxc3ozN6inFnMIifOSp0RHJ/2bfCVGkAJqyAaWeKXijbsqYI4AwyageV940smm
-         vD8mw7+iTiazzzJQjSbKJtwtb48sO7QbkT+1hYFzC/8SxrZf/CzoX0kZPwM3nS41A+6/
-         q+e/CJ8lPeZJCI19Jmmuvmazx2ljqsBXJIf6qkom4c4wGxwyamVIDb5oE81/KJI0NGbi
-         vljw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682377544; x=1684969544;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VQ8sFzZ9vlAXommM0w2/PXvGSOKBNi6JzIA9K33bVAU=;
-        b=WeIh6CgiM9tWHgEZEx1undQsuTeysuBtbUelRPdIFytoJZ8cvrynfPw2D4O8juQLhV
-         nAEagJLVqj3VWXSebnQGfsTbpJNg+ZDztEB+IMg/8RhZB7GRmqahzFzhmnjyqne1t+ZV
-         jM/5sHw7COlbxKiZUcHgY0x7ojzRZT7t13Gf88LTc34h62WSuy5Jp+pKcUiZbms9NfCf
-         EmpHr/2DaaNytXZfBoyeuK1pmMPDIQEmO6xEXgp0AMR9vOBsXC9tc0rzsNDjTJwwxpE6
-         v3p0wfhqmoPZeF2nwXQeOxom9soGCmFr3Qe6Tt2UETS5byJFbH3TE5MXANus366kzIw4
-         FWzg==
-X-Gm-Message-State: AAQBX9fxb/2lK7c805sOiJN4mR/beJJWkwOQHTwE4Kr3o2DMgR8k8ab/
-	PW7F9QRLMpZGZXPsQWSc68domzJMl8HFw4Fn044=
-X-Google-Smtp-Source: AKy350YiJuL4duFP78n+ItNB+lUpN4w+zRdMWcrBiJgXD2Qk753AS4CLImpFJFw1UHLIr+HVloJCI3jyLWK4zIDEzVY=
-X-Received: by 2002:a17:90a:fd17:b0:247:1de8:8263 with SMTP id
- cv23-20020a17090afd1700b002471de88263mr16233416pjb.4.1682377544182; Mon, 24
- Apr 2023 16:05:44 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916437B
+	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 00:01:20 +0000 (UTC)
+Received: from gproxy4-pub.mail.unifiedlayer.com (gproxy4-pub.mail.unifiedlayer.com [69.89.23.142])
+	by qproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id B1236802BA15
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 23:39:03 +0000 (UTC)
+Received: from cmgw15.mail.unifiedlayer.com (unknown [10.0.90.130])
+	by progateway6.mail.pro1.eigbox.com (Postfix) with ESMTP id 01CCD10042E3B
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 23:38:30 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id r5lOpbDYV3i2Gr5lOp9nfj; Mon, 24 Apr 2023 23:38:30 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=Iv3bzJzg c=1 sm=1 tr=0 ts=644712f6
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=dKHAf1wccvYA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=fbc7EaZ9IEMMzL7cNU7E/iujHMBL13J7AXCMPZ7HnkM=; b=sTK4XmyWO+F2JzVuRC+av0Ey0Y
+	Qsqv/iGrhjsWJ/Ok8iXtL7H5aA0CgpE6VPmSJP4FYPg1AjQtRDOCmErqZQ9c4ErVpFLjUMB7EWfl5
+	E7nqKLusIOlSAcb2jHt24NE8Y7qvBPDN2ek3H71FZShTBL3gXMDf1VbwF5WDFCMze54KZWRM3T7E5
+	RlR7WJf78ehN2n3/B+PQbaJA8VuL8JWeKenAIkDx6T/SPznbGA9AQkFvHz7rfnlkAcbwE0JfUhj3H
+	MqSpBKASaWdZUrDqv3I1zyCm5AeqoV+oqdC1TKyYJOS9UEE3+Q1dQmfz0yszavztfeiOJMHkQD1cZ
+	AhSOFvhw==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:35994 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1pr5lO-003y1I-1q;
+	Mon, 24 Apr 2023 17:38:30 -0600
+Subject: Re: [PATCH 6.2 000/110] 6.2.13-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230424131136.142490414@linuxfoundation.org>
+In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <d7374363-e46f-4fed-ae05-6535b6f37bbc@w6rz.net>
+Date: Mon, 24 Apr 2023 16:38:28 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230421214400.2836131-1-mcgrof@kernel.org> <20230421214400.2836131-3-mcgrof@kernel.org>
- <ZEMRbcHSQqyek8Ov@casper.infradead.org> <ZENO4vZzmN8lJocK@bombadil.infradead.org>
- <CAHbLzkoEAJhz8GG91MSM9+wCYVqseSFzBQdVAP78W5WPq26GHQ@mail.gmail.com> <ZEb2eYX5btfLrUtQ@casper.infradead.org>
-In-Reply-To: <ZEb2eYX5btfLrUtQ@casper.infradead.org>
-From: Yang Shi <shy828301@gmail.com>
-Date: Mon, 24 Apr 2023 16:05:32 -0700
-Message-ID: <CAHbLzkqk2+woBTHEdkYcae6No40S6QXFPQk6hE+_C=7UHbe+Zg@mail.gmail.com>
-Subject: Re: [RFC 2/8] shmem: convert to use folio_test_hwpoison()
-To: Matthew Wilcox <willy@infradead.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, hughd@google.com, akpm@linux-foundation.org, 
-	brauner@kernel.org, djwong@kernel.org, p.raghav@samsung.com, 
-	da.gomez@samsung.com, a.manzanares@samsung.com, dave@stgolabs.net, 
-	yosryahmed@google.com, keescook@chromium.org, hare@suse.de, kbusch@kernel.org, 
-	patches@lists.linux.dev, linux-block@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1pr5lO-003y1I-1q
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:35994
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Mon, Apr 24, 2023 at 2:37=E2=80=AFPM Matthew Wilcox <willy@infradead.org=
-> wrote:
+On 4/24/23 6:16 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.2.13 release.
+> There are 110 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> On Mon, Apr 24, 2023 at 02:17:12PM -0700, Yang Shi wrote:
-> > On Fri, Apr 21, 2023 at 8:05=E2=80=AFPM Luis Chamberlain <mcgrof@kernel=
-.org> wrote:
-> > >
-> > > On Fri, Apr 21, 2023 at 11:42:53PM +0100, Matthew Wilcox wrote:
-> > > > On Fri, Apr 21, 2023 at 02:43:54PM -0700, Luis Chamberlain wrote:
-> > > > > The PageHWPoison() call can be converted over to the respective f=
-olio call
-> > > > > folio_test_hwpoison(). This introduces no functional changes.
-> > > >
-> > > > Um, no.  Nobody should use folio_test_hwpoison(), it's a nonsense.
-> > > >
-> > > > Individual pages are hwpoisoned.  You're only testing the head page
-> > > > if you use folio_test_hwpoison().  There's folio_has_hwpoisoned() t=
-o
-> > > > test if _any_ page in the folio is poisoned.  But blindly convertin=
-g
-> > > > PageHWPoison to folio_test_hwpoison() is wrong.
-> > >
-> > > Thanks! I don't see folio_has_hwpoisoned() though.
-> >
-> > We do have PageHasHWPoisoned(), which indicates at least one subpage
-> > is hwpoisoned in the huge page.
-> >
-> > You may need to add a folio variant.
+> Responses should be made by Wed, 26 Apr 2023 13:11:11 +0000.
+> Anything received after that time might be too late.
 >
-> PAGEFLAG(HasHWPoisoned, has_hwpoisoned, PF_SECOND)
->         TESTSCFLAG(HasHWPoisoned, has_hwpoisoned, PF_SECOND)
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.13-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
+> and the diffstat can be found below.
 >
-> That generates folio_has_hwpoisoned() along with
-> folio_set_has_hwpoisoned(), folio_clear_has_hwpoisoned(),
-> folio_test_set_has_hwpoisoned() and folio_test_clear_has_hwpoisoned().
+> thanks,
+>
+> greg k-h
 
-Oh, yeah, I missed that part. Thanks.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+
+Tested-by: Ron Economos <re@w6rz.net>
+
