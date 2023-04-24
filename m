@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284A42108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5624C433EF;
-	Mon, 24 Apr 2023 13:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E652108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC8BC433D2;
+	Mon, 24 Apr 2023 13:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343167;
-	bh=0Sm3/m/sbl6YkZnwnL8cRMncGNL49HXMeMUIbD4wg4o=;
+	s=korg; t=1682343169;
+	bh=n/w5OF3SZziTUVBEcMJfgelS+24erpL3mGQ9JlQEHsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gXejPbC0N9TVpq/89bvKOdUaCrzgJFIe37LZ6SPk8rmIwnwEMneC5q+ImKwRjas3S
-	 T3LXteVEqV47knQ0OpTslCFAlecqccxbGm8JiLkG6hdaZ9XKXhDI3LSW6eWLicdtGH
-	 Lvw+z6akHMr8ljG7PETRBAg1wQX+cevGvHj4OR30=
+	b=XLTuvj3VhjmmBrsgB8ZpJpsCE2stSmmnaFAd1pECHIVlOJw++1E9UKbxggJv6er14
+	 +87D7kWEbBL6hPmIrRro7RPtYAX2up7MUpTMmT9RYkNL3D3RjxuXtmClnG7Vm/Zn4D
+	 sYwnOK6cKckzKc3d9ZjCcccCsu1oaXOdH6Y6UvdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Vincenzo Palazzo <vincenzopalazzodev@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.2 062/110] rust: kernel: Mark rust_fmt_argument as extern "C"
-Date: Mon, 24 Apr 2023 15:17:24 +0200
-Message-Id: <20230424131138.643637908@linuxfoundation.org>
+	"kernelci.org bot" <bot@kernelci.org>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.2 096/110] MIPS: Define RUNTIME_DISCARD_EXIT in LD script
+Date: Mon, 24 Apr 2023 15:17:58 +0200
+Message-Id: <20230424131140.138889710@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -37,43 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Gow <davidgow@google.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit c682e4c37d2b8ba3bde1125cbbea4ee88824b4e2 upstream.
+commit 6dcbd0a69c84a8ae7a442840a8cf6b1379dc8f16 upstream.
 
-The rust_fmt_argument function is called from printk() to handle the %pA
-format specifier.
+MIPS's exit sections are discarded at runtime as well.
 
-Since it's called from C, we should mark it extern "C" to make sure it's
-ABI compatible.
+Fixes link error:
+`.exit.text' referenced in section `__jump_table' of fs/fuse/inode.o:
+defined in discarded section `.exit.text' of fs/fuse/inode.o
 
-Cc: stable@vger.kernel.org
-Fixes: 247b365dc8dc ("rust: add `kernel` crate")
-Signed-off-by: David Gow <davidgow@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
-Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
-[Applied `rustfmt`]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
+Reported-by: "kernelci.org bot" <bot@kernelci.org>
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/print.rs |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/mips/kernel/vmlinux.lds.S |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/rust/kernel/print.rs
-+++ b/rust/kernel/print.rs
-@@ -18,7 +18,11 @@ use crate::bindings;
+--- a/arch/mips/kernel/vmlinux.lds.S
++++ b/arch/mips/kernel/vmlinux.lds.S
+@@ -15,6 +15,8 @@
+ #define EMITS_PT_NOTE
+ #endif
  
- // Called from `vsprintf` with format specifier `%pA`.
- #[no_mangle]
--unsafe fn rust_fmt_argument(buf: *mut c_char, end: *mut c_char, ptr: *const c_void) -> *mut c_char {
-+unsafe extern "C" fn rust_fmt_argument(
-+    buf: *mut c_char,
-+    end: *mut c_char,
-+    ptr: *const c_void,
-+) -> *mut c_char {
-     use fmt::Write;
-     // SAFETY: The C contract guarantees that `buf` is valid if it's less than `end`.
-     let mut w = unsafe { RawFormatter::from_ptrs(buf.cast(), end.cast()) };
++#define RUNTIME_DISCARD_EXIT
++
+ #include <asm-generic/vmlinux.lds.h>
+ 
+ #undef mips
 
 
