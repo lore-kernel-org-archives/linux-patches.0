@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443F92108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:36:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F21C433EF;
-	Mon, 24 Apr 2023 13:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075652108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:36:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A35C433D2;
+	Mon, 24 Apr 2023 13:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343413;
-	bh=5y+jQjQjcSWOGGqd/O0W2Tb+6ltuxkOjdQ4o513ZV60=;
+	s=korg; t=1682343415;
+	bh=/DqfXu+qW5izewF+kSfBLxoYDo52LAZ+ZZmDVF5XaoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q2sJiEdxEMk5BL8OvBqawhfgJUT8RcFMxdsXvw6gVKMfSVZmykKRYz1mU9iK71qSU
-	 ZKjfknoGuSN8oY5t+3XAreFdxPQREg25lW0B2PQMe6ulrZfrU4txM7KdcxPcjn1B2/
-	 OxLJxTJKgEyqdhIaFwbA0aXqjg8i57xomfX2Ag80=
+	b=Pnzkzz8fWi2SSNMUsq4HzuGNLJaeVHJiHH2kt+zzOgBqFvU4KHhI3FzuKAGpvEI5u
+	 0pmx8aphQo3sTpbyJXjPklDSMxnWTplD88QXNZytPTyUIEEMK59EJt9wjBlLSC4I2g
+	 XbVSFnpkoJNMoCTMSrXiTirX/SxBlt6Vq4NrfgLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <maximlevitsky@gmail.com>,
-	Alex Dubov <oakad@yahoo.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Kay Sievers <kay.sievers@vrfy.org>,
-	linux-mmc@vger.kernel.org,
-	stable <stable@kernel.org>,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Subject: [PATCH 4.14 16/28] memstick: fix memory leak if card device is never registered
-Date: Mon, 24 Apr 2023 15:18:37 +0200
-Message-Id: <20230424131121.857848250@linuxfoundation.org>
+	Pingfan Liu <kernelfans@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Steve Wahl <steve.wahl@hpe.com>,
+	Dave Young <dyoung@redhat.com>,
+	Alyssa Ross <hi@alyssa.is>
+Subject: [PATCH 4.14 17/28] x86/purgatory: Dont generate debug info for purgatory.ro
+Date: Mon, 24 Apr 2023 15:18:38 +0200
+Message-Id: <20230424131121.889146262@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131121.331252806@linuxfoundation.org>
 References: <20230424131121.331252806@linuxfoundation.org>
@@ -41,61 +38,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Pingfan Liu <kernelfans@gmail.com>
 
-commit 4b6d621c9d859ff89e68cebf6178652592676013 upstream.
+commit 52416ffcf823ee11aa19792715664ab94757f111 upstream.
 
-When calling dev_set_name() memory is allocated for the name for the
-struct device.  Once that structure device is registered, or attempted
-to be registerd, with the driver core, the driver core will handle
-cleaning up that memory when the device is removed from the system.
+Purgatory.ro is a standalone binary that is not linked against the rest of
+the kernel.  Its image is copied into an array that is linked to the
+kernel, and from there kexec relocates it wherever it desires.
 
-Unfortunatly for the memstick code, there is an error path that causes
-the struct device to never be registered, and so the memory allocated in
-dev_set_name will be leaked.  Fix that leak by manually freeing it right
-before the memory for the device is freed.
+Unlike the debug info for vmlinux, which can be used for analyzing crash
+such info is useless in purgatory.ro. And discarding them can save about
+200K space.
 
-Cc: Maxim Levitsky <maximlevitsky@gmail.com>
-Cc: Alex Dubov <oakad@yahoo.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Kay Sievers <kay.sievers@vrfy.org>
-Cc: linux-mmc@vger.kernel.org
-Fixes: 0252c3b4f018 ("memstick: struct device - replace bus_id with dev_name(), dev_set_name()")
-Cc: stable <stable@kernel.org>
-Co-developed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Co-developed-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Link: https://lore.kernel.org/r/20230401200327.16800-1-gregkh@linuxfoundation.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+ Original:
+   259080  kexec-purgatory.o
+ Stripped debug info:
+    29152  kexec-purgatory.o
+
+Signed-off-by: Pingfan Liu <kernelfans@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Steve Wahl <steve.wahl@hpe.com>
+Acked-by: Dave Young <dyoung@redhat.com>
+Link: https://lore.kernel.org/r/1596433788-3784-1-git-send-email-kernelfans@gmail.com
+Signed-off-by: Alyssa Ross <hi@alyssa.is>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memstick/core/memstick.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/purgatory/Makefile |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/memstick/core/memstick.c
-+++ b/drivers/memstick/core/memstick.c
-@@ -416,6 +416,7 @@ static struct memstick_dev *memstick_all
- 	return card;
- err_out:
- 	host->card = old_card;
-+	kfree_const(card->dev.kobj.name);
- 	kfree(card);
- 	return NULL;
- }
-@@ -471,8 +472,10 @@ static void memstick_check(struct work_s
- 				put_device(&card->dev);
- 				host->card = NULL;
- 			}
--		} else
-+		} else {
-+			kfree_const(card->dev.kobj.name);
- 			kfree(card);
-+		}
- 	}
+--- a/arch/x86/purgatory/Makefile
++++ b/arch/x86/purgatory/Makefile
+@@ -20,6 +20,9 @@ KBUILD_CFLAGS := -fno-strict-aliasing -W
+ KBUILD_CFLAGS += -m$(BITS)
+ KBUILD_CFLAGS += $(call cc-option,-fno-PIE)
  
- out_power_off:
++AFLAGS_REMOVE_setup-x86_$(BITS).o	+= -Wa,-gdwarf-2
++AFLAGS_REMOVE_entry64.o			+= -Wa,-gdwarf-2
++
+ $(obj)/purgatory.ro: $(PURGATORY_OBJS) FORCE
+ 		$(call if_changed,ld)
+ 
 
 
