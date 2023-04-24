@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5697C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E40C433EF;
-	Mon, 24 Apr 2023 13:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E2E7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:21:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AE9C433D2;
+	Mon, 24 Apr 2023 13:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342470;
-	bh=EidAUh3Dv1OxnMS244VOjuU+4gHPip+54nkFy8EPWcQ=;
+	s=korg; t=1682342473;
+	bh=rALHxYIo2hBJOTXo50jVCR/YVJsbiCCB3CA7SUSGO5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7phQtv9Q2/Z6u0/vG0yVllr7v+i6QDbBA6dOun3qsMszDV5fFsLlLGgSRyb0U2tU
-	 HEDpLYdAV/OxngCEqp2i7iJ3gOSTePG07yKoM2BLUbX4mL89VHHeKpjfZSCphdf6PT
-	 oDSAjiy6+K+v9s+rptPAWeWvNXNDaRNtkDHy/PQE=
+	b=WpdGjqUa2m9sMwEdD6xJt/8EcnKqmbFOrPcOKVq2gDhKfvtOjWF4g7/Khy4E+wST5
+	 +qd7M2hyvnD9m//vFf44CCvLxeCyJtZheCXuiiEMeJCWdxXHF4VUdXqkxJqDx04I1z
+	 C1K6ytOngXwCsu5YzAaraM8UzSd85VnerGpIvuRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lanzhe <u202212060@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/73] spi: spi-rockchip: Fix missing unwind goto in rockchip_sfc_probe()
-Date: Mon, 24 Apr 2023 15:16:36 +0200
-Message-Id: <20230424131129.829637187@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.15 13/73] i40e: fix accessing vsi->active_filters without holding lock
+Date: Mon, 24 Apr 2023 15:16:27 +0200
+Message-Id: <20230424131129.517362026@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131129.040707961@linuxfoundation.org>
 References: <20230424131129.040707961@linuxfoundation.org>
@@ -36,38 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Lanzhe <u202212060@hust.edu.cn>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit 359f5b0d4e26b7a7bcc574d6148b31a17cefe47d ]
+[ Upstream commit 8485d093b076e59baff424552e8aecfc5bd2d261 ]
 
-If devm_request_irq() fails, then we are directly return 'ret' without
-clk_disable_unprepare(sfc->clk) and clk_disable_unprepare(sfc->hclk).
+Fix accessing vsi->active_filters without holding the mac_filter_hash_lock.
+Move vsi->active_filters = 0 inside critical section and
+move clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state) after the critical
+section to ensure the new filters from other threads can be added only after
+filters cleaning in the critical section is finished.
 
-Fix this by changing direct return to a goto 'err_irq'.
-
-Fixes: 0b89fc0a367e ("spi: rockchip-sfc: add rockchip serial flash controller")
-Signed-off-by: Li Lanzhe <u202212060@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230419115030.6029-1-u202212060@hust.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 278e7d0b9d68 ("i40e: store MAC/VLAN filters in a hash with the MAC Address as key")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rockchip-sfc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-rockchip-sfc.c b/drivers/spi/spi-rockchip-sfc.c
-index a46b385440273..014106f8f978c 100644
---- a/drivers/spi/spi-rockchip-sfc.c
-+++ b/drivers/spi/spi-rockchip-sfc.c
-@@ -634,7 +634,7 @@ static int rockchip_sfc_probe(struct platform_device *pdev)
- 	if (ret) {
- 		dev_err(dev, "Failed to request irq\n");
- 
--		return ret;
-+		goto err_irq;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 85d48efce1d00..cafbabc687565 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -13945,15 +13945,15 @@ static int i40e_add_vsi(struct i40e_vsi *vsi)
+ 		vsi->id = ctxt.vsi_number;
  	}
  
- 	ret = rockchip_sfc_init(sfc);
+-	vsi->active_filters = 0;
+-	clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
+ 	spin_lock_bh(&vsi->mac_filter_hash_lock);
++	vsi->active_filters = 0;
+ 	/* If macvlan filters already exist, force them to get loaded */
+ 	hash_for_each_safe(vsi->mac_filter_hash, bkt, h, f, hlist) {
+ 		f->state = I40E_FILTER_NEW;
+ 		f_count++;
+ 	}
+ 	spin_unlock_bh(&vsi->mac_filter_hash_lock);
++	clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
+ 
+ 	if (f_count) {
+ 		vsi->flags |= I40E_VSI_FLAG_FILTER_CHANGED;
 -- 
 2.39.2
 
