@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D7A7C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:27:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E73C433D2;
-	Mon, 24 Apr 2023 13:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C1D7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:27:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFC6C433EF;
+	Mon, 24 Apr 2023 13:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342835;
-	bh=ZnWImuo++u5QJkLWyAPqBvoIRL7D7h92pLLGGbzqBxo=;
+	s=korg; t=1682342838;
+	bh=VuZK+UOIHTteeJsgKN+1MOU15lgDM1LvZKmPdVMxrrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J4qq96S8vUiRWgIWnHcpSFecpDUEPMZZqS/5bUuixyBIapfTKENNFsCqTjDuSmHWP
-	 kATImlZzzu/s4YLqWDE83GoTGCOBwLcqPjJxHZH1380GFeIe+PTuGSXI29qLv54B3u
-	 Zswdbb8LGV+xNpA4VASiEx7Je1s2PL/HE5zht/c8=
+	b=XRI7vAUKHIbBoK/oX3lyFh3yHo266q9z3R0CdsJL4s67kgCkICEf7kCPzpYoqLAzS
+	 MxrwPGy2XAaXDM0iArlA26ZiFy0BAPtIRokMHBgHzLCQGpnsp0k87BywPIK2ugCF4i
+	 dNGZpH5U/U058yPg2IAXKa/pRZwrpjHMyDQBVa90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Dipanjan Das <mail.dipanjan.das@gmail.com>,
-	Marco Elver <elver@google.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Zach OKeefe <zokeefe@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 75/98] mm: kmsan: handle alloc failures in kmsan_ioremap_page_range()
-Date: Mon, 24 Apr 2023 15:17:38 +0200
-Message-Id: <20230424131136.762939004@linuxfoundation.org>
+Subject: [PATCH 6.1 49/98] Revert "userfaultfd: dont fail on unrecognized features"
+Date: Mon, 24 Apr 2023 15:17:12 +0200
+Message-Id: <20230424131135.767921029@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -39,170 +40,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Peter Xu <peterx@redhat.com>
 
-commit fdea03e12aa2a44a7bb34144208be97fc25dfd90 upstream.
+commit 2ff559f31a5d50c31a3f9d849f8af90dc36c7105 upstream.
 
-Similarly to kmsan_vmap_pages_range_noflush(), kmsan_ioremap_page_range()
-must also properly handle allocation/mapping failures.  In the case of
-such, it must clean up the already created metadata mappings and return an
-error code, so that the error can be propagated to ioremap_page_range().
-Without doing so, KMSAN may silently fail to bring the metadata for the
-page range into a consistent state, which will result in user-visible
-crashes when trying to access them.
+This is a proposal to revert commit 914eedcb9ba0ff53c33808.
 
-Link: https://lkml.kernel.org/r/20230413131223.4135168-2-glider@google.com
-Fixes: b073d7f8aee4 ("mm: kmsan: maintain KMSAN metadata for page operations")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reported-by: Dipanjan Das <mail.dipanjan.das@gmail.com>
-  Link: https://lore.kernel.org/linux-mm/CANX2M5ZRrRA64k0hOif02TjmY9kbbO2aCBPyq79es34RXZ=cAw@mail.gmail.com/
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Uladzislau Rezki (Sony) <urezki@gmail.com>
+I found this when writing a simple UFFDIO_API test to be the first unit
+test in this set.  Two things breaks with the commit:
+
+  - UFFDIO_API check was lost and missing.  According to man page, the
+  kernel should reject ioctl(UFFDIO_API) if uffdio_api.api != 0xaa.  This
+  check is needed if the api version will be extended in the future, or
+  user app won't be able to identify which is a new kernel.
+
+  - Feature flags checks were removed, which means UFFDIO_API with a
+  feature that does not exist will also succeed.  According to the man
+  page, we should (and it makes sense) to reject ioctl(UFFDIO_API) if
+  unknown features passed in.
+
+Link: https://lore.kernel.org/r/20220722201513.1624158-1-axelrasmussen@google.com
+Link: https://lkml.kernel.org/r/20230412163922.327282-2-peterx@redhat.com
+Fixes: 914eedcb9ba0 ("userfaultfd: don't fail on unrecognized features")
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Dmitry Safonov <0x7f454c46@gmail.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: Zach O'Keefe <zokeefe@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kmsan.h |   19 +++++++++--------
- mm/kmsan/hooks.c      |   55 ++++++++++++++++++++++++++++++++++++++++++--------
- mm/vmalloc.c          |    4 +--
- 3 files changed, 59 insertions(+), 19 deletions(-)
+ fs/userfaultfd.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/include/linux/kmsan.h
-+++ b/include/linux/kmsan.h
-@@ -159,11 +159,12 @@ void kmsan_vunmap_range_noflush(unsigned
-  * @page_shift:	page_shift argument passed to vmap_range_noflush().
-  *
-  * KMSAN creates new metadata pages for the physical pages mapped into the
-- * virtual memory.
-+ * virtual memory. Returns 0 on success, callers must check for non-zero return
-+ * value.
-  */
--void kmsan_ioremap_page_range(unsigned long addr, unsigned long end,
--			      phys_addr_t phys_addr, pgprot_t prot,
--			      unsigned int page_shift);
-+int kmsan_ioremap_page_range(unsigned long addr, unsigned long end,
-+			     phys_addr_t phys_addr, pgprot_t prot,
-+			     unsigned int page_shift);
- 
- /**
-  * kmsan_iounmap_page_range() - Notify KMSAN about a iounmap_page_range() call.
-@@ -294,12 +295,12 @@ static inline void kmsan_vunmap_range_no
- {
- }
- 
--static inline void kmsan_ioremap_page_range(unsigned long start,
--					    unsigned long end,
--					    phys_addr_t phys_addr,
--					    pgprot_t prot,
--					    unsigned int page_shift)
-+static inline int kmsan_ioremap_page_range(unsigned long start,
-+					   unsigned long end,
-+					   phys_addr_t phys_addr, pgprot_t prot,
-+					   unsigned int page_shift)
- {
-+	return 0;
- }
- 
- static inline void kmsan_iounmap_page_range(unsigned long start,
---- a/mm/kmsan/hooks.c
-+++ b/mm/kmsan/hooks.c
-@@ -148,35 +148,74 @@ void kmsan_vunmap_range_noflush(unsigned
-  * into the virtual memory. If those physical pages already had shadow/origin,
-  * those are ignored.
-  */
--void kmsan_ioremap_page_range(unsigned long start, unsigned long end,
--			      phys_addr_t phys_addr, pgprot_t prot,
--			      unsigned int page_shift)
-+int kmsan_ioremap_page_range(unsigned long start, unsigned long end,
-+			     phys_addr_t phys_addr, pgprot_t prot,
-+			     unsigned int page_shift)
- {
- 	gfp_t gfp_mask = GFP_KERNEL | __GFP_ZERO;
- 	struct page *shadow, *origin;
- 	unsigned long off = 0;
--	int nr;
-+	int nr, err = 0, clean = 0, mapped;
- 
- 	if (!kmsan_enabled || kmsan_in_runtime())
--		return;
-+		return 0;
- 
- 	nr = (end - start) / PAGE_SIZE;
- 	kmsan_enter_runtime();
--	for (int i = 0; i < nr; i++, off += PAGE_SIZE) {
-+	for (int i = 0; i < nr; i++, off += PAGE_SIZE, clean = i) {
- 		shadow = alloc_pages(gfp_mask, 1);
- 		origin = alloc_pages(gfp_mask, 1);
--		__vmap_pages_range_noflush(
-+		if (!shadow || !origin) {
-+			err = -ENOMEM;
-+			goto ret;
-+		}
-+		mapped = __vmap_pages_range_noflush(
- 			vmalloc_shadow(start + off),
- 			vmalloc_shadow(start + off + PAGE_SIZE), prot, &shadow,
- 			PAGE_SHIFT);
--		__vmap_pages_range_noflush(
-+		if (mapped) {
-+			err = mapped;
-+			goto ret;
-+		}
-+		shadow = NULL;
-+		mapped = __vmap_pages_range_noflush(
- 			vmalloc_origin(start + off),
- 			vmalloc_origin(start + off + PAGE_SIZE), prot, &origin,
- 			PAGE_SHIFT);
-+		if (mapped) {
-+			__vunmap_range_noflush(
-+				vmalloc_shadow(start + off),
-+				vmalloc_shadow(start + off + PAGE_SIZE));
-+			err = mapped;
-+			goto ret;
-+		}
-+		origin = NULL;
-+	}
-+	/* Page mapping loop finished normally, nothing to clean up. */
-+	clean = 0;
-+
-+ret:
-+	if (clean > 0) {
-+		/*
-+		 * Something went wrong. Clean up shadow/origin pages allocated
-+		 * on the last loop iteration, then delete mappings created
-+		 * during the previous iterations.
-+		 */
-+		if (shadow)
-+			__free_pages(shadow, 1);
-+		if (origin)
-+			__free_pages(origin, 1);
-+		__vunmap_range_noflush(
-+			vmalloc_shadow(start),
-+			vmalloc_shadow(start + clean * PAGE_SIZE));
-+		__vunmap_range_noflush(
-+			vmalloc_origin(start),
-+			vmalloc_origin(start + clean * PAGE_SIZE));
- 	}
- 	flush_cache_vmap(vmalloc_shadow(start), vmalloc_shadow(end));
- 	flush_cache_vmap(vmalloc_origin(start), vmalloc_origin(end));
- 	kmsan_leave_runtime();
-+	return err;
- }
- 
- void kmsan_iounmap_page_range(unsigned long start, unsigned long end)
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -321,8 +321,8 @@ int ioremap_page_range(unsigned long add
- 				 ioremap_max_page_shift);
- 	flush_cache_vmap(addr, end);
- 	if (!err)
--		kmsan_ioremap_page_range(addr, end, phys_addr, prot,
--					 ioremap_max_page_shift);
-+		err = kmsan_ioremap_page_range(addr, end, phys_addr, prot,
-+					       ioremap_max_page_shift);
- 	return err;
- }
- 
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -1966,8 +1966,10 @@ static int userfaultfd_api(struct userfa
+ 	ret = -EFAULT;
+ 	if (copy_from_user(&uffdio_api, buf, sizeof(uffdio_api)))
+ 		goto out;
+-	/* Ignore unsupported features (userspace built against newer kernel) */
+-	features = uffdio_api.features & UFFD_API_FEATURES;
++	features = uffdio_api.features;
++	ret = -EINVAL;
++	if (uffdio_api.api != UFFD_API || (features & ~UFFD_API_FEATURES))
++		goto err_out;
+ 	ret = -EPERM;
+ 	if ((features & UFFD_FEATURE_EVENT_FORK) && !capable(CAP_SYS_PTRACE))
+ 		goto err_out;
 
 
