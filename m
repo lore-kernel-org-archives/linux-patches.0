@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8687C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6588FC433D2;
-	Mon, 24 Apr 2023 13:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D557C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:23:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AD8C433D2;
+	Mon, 24 Apr 2023 13:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342592;
-	bh=Q+d9kzfViQFRkv0SboafWVIWrwbOn1it+2BFsFJBFaY=;
+	s=korg; t=1682342595;
+	bh=EqN+rzAmug3lRlQTcmQ3dsyGdyHFe3qtIiSP2R5edUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCI+Krh/PlrwooCuTBv02xcC6yqC2c0u5OOorkfEFKtocBVxxwd/0+VXOlJ/yvMem
-	 fBAM3NpZ2agu1yn2b5whoICf+kqS7z9av5KsjQ5vY6MqEyu5unzGZT1zzKVWsY5AcZ
-	 NY6nb2g6MviXP9YlNw9ZEuxgzr3e5Qi+woXfLxq8=
+	b=U1kHnt4rUq6e7HGFoQM7+EckYAI7TUpol5unSKHGnbXz7tI8JEAz8rJ03JLviy4Eg
+	 Jg1/ZTLfvvnKXOB/q5LWLYW117eXcIXFATDMfTRu5GkzEnk8MYmAM9LT/Bqk6U8/Bn
+	 CKsBhnC1jv5mqUw3CwKaNOoOCMm7Q+pr/Ahq44xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 06/39] virtio_net: bugfix overflow inside xdp_linearize_page()
-Date: Mon, 24 Apr 2023 15:17:09 +0200
-Message-Id: <20230424131123.276625533@linuxfoundation.org>
+	Maxim Levitsky <maximlevitsky@gmail.com>,
+	Alex Dubov <oakad@yahoo.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Kay Sievers <kay.sievers@vrfy.org>,
+	linux-mmc@vger.kernel.org,
+	stable <stable@kernel.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Subject: [PATCH 5.4 24/39] memstick: fix memory leak if card device is never registered
+Date: Mon, 24 Apr 2023 15:17:27 +0200
+Message-Id: <20230424131123.971772094@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
 References: <20230424131123.040556994@linuxfoundation.org>
@@ -37,59 +41,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 853618d5886bf94812f31228091cd37d308230f7 ]
+commit 4b6d621c9d859ff89e68cebf6178652592676013 upstream.
 
-Here we copy the data from the original buf to the new page. But we
-not check that it may be overflow.
+When calling dev_set_name() memory is allocated for the name for the
+struct device.  Once that structure device is registered, or attempted
+to be registerd, with the driver core, the driver core will handle
+cleaning up that memory when the device is removed from the system.
 
-As long as the size received(including vnethdr) is greater than 3840
-(PAGE_SIZE -VIRTIO_XDP_HEADROOM). Then the memcpy will overflow.
+Unfortunatly for the memstick code, there is an error path that causes
+the struct device to never be registered, and so the memory allocated in
+dev_set_name will be leaked.  Fix that leak by manually freeing it right
+before the memory for the device is freed.
 
-And this is completely possible, as long as the MTU is large, such
-as 4096. In our test environment, this will cause crash. Since crash is
-caused by the written memory, it is meaningless, so I do not include it.
-
-Fixes: 72979a6c3590 ("virtio_net: xdp, add slowpath case for non contiguous buffers")
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Maxim Levitsky <maximlevitsky@gmail.com>
+Cc: Alex Dubov <oakad@yahoo.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Kay Sievers <kay.sievers@vrfy.org>
+Cc: linux-mmc@vger.kernel.org
+Fixes: 0252c3b4f018 ("memstick: struct device - replace bus_id with dev_name(), dev_set_name()")
+Cc: stable <stable@kernel.org>
+Co-developed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Link: https://lore.kernel.org/r/20230401200327.16800-1-gregkh@linuxfoundation.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/memstick/core/memstick.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 5212d9cb03728..59d4449450ee8 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -646,8 +646,13 @@ static struct page *xdp_linearize_page(struct receive_queue *rq,
- 				       int page_off,
- 				       unsigned int *len)
- {
--	struct page *page = alloc_page(GFP_ATOMIC);
-+	int tailroom = SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
-+	struct page *page;
+--- a/drivers/memstick/core/memstick.c
++++ b/drivers/memstick/core/memstick.c
+@@ -412,6 +412,7 @@ static struct memstick_dev *memstick_all
+ 	return card;
+ err_out:
+ 	host->card = old_card;
++	kfree_const(card->dev.kobj.name);
+ 	kfree(card);
+ 	return NULL;
+ }
+@@ -470,8 +471,10 @@ static void memstick_check(struct work_s
+ 				put_device(&card->dev);
+ 				host->card = NULL;
+ 			}
+-		} else
++		} else {
++			kfree_const(card->dev.kobj.name);
+ 			kfree(card);
++		}
+ 	}
  
-+	if (page_off + *len + tailroom > PAGE_SIZE)
-+		return NULL;
-+
-+	page = alloc_page(GFP_ATOMIC);
- 	if (!page)
- 		return NULL;
- 
-@@ -655,7 +660,6 @@ static struct page *xdp_linearize_page(struct receive_queue *rq,
- 	page_off += *len;
- 
- 	while (--*num_buf) {
--		int tailroom = SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
- 		unsigned int buflen;
- 		void *buf;
- 		int off;
--- 
-2.39.2
-
+ out_power_off:
 
 
