@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEB57C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC38C433D2;
-	Mon, 24 Apr 2023 13:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C5D7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:26:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350A7C433D2;
+	Mon, 24 Apr 2023 13:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342774;
-	bh=eQSnHg300uK8ywpnsIofvZbhdNqHLW+/1DfO8bTNmZ0=;
+	s=korg; t=1682342777;
+	bh=cw9+KipHJJNlFwS40WiYvrRjTyRcGuOlaoYVtmJUQTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJsB74LkZK5QK73cPT7YBCiuwKZw5lGDhrWtepDvOUHY1FtdTj/tQbxkGnRKTbwNK
-	 O85aYQuV18+C5e/9O7nSz32qZJzFVhNLQZYZKdTQJ6KWZNy5huy8la4cPJXfFjrTXy
-	 S1Mr0PmvRo7uQx+P3QBj646fgy4X0fNepVkj1iVE=
+	b=Dd+WmGQX+LfbFVR13xtQ2UTYfHbFLxAEFI9cowCpd//p1S+IBdiZyspic3qTBhZXe
+	 i4mcRMF+dEd1AKpS2Ie9O/nlE/ZeGheNLuJ3blLdIyNNDi2VKfEQ83nZ4KL213olbB
+	 k6Qytu+KFQ5OmPozfBoz4SUaZWS3gIgQiPF0fGtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 23/98] netfilter: nf_tables: tighten netlink attribute requirements for catch-all elements
-Date: Mon, 24 Apr 2023 15:16:46 +0200
-Message-Id: <20230424131134.793725385@linuxfoundation.org>
+Subject: [PATCH 6.1 14/98] regulator: fan53555: Explicitly include bits header
+Date: Mon, 24 Apr 2023 15:16:37 +0200
+Message-Id: <20230424131134.426328805@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -34,34 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit d4eb7e39929a3b1ff30fb751b4859fc2410702a0 ]
+[ Upstream commit 4fb9a5060f73627303bc531ceaab1b19d0a24aef ]
 
-If NFT_SET_ELEM_CATCHALL is set on, then userspace provides no set element
-key. Otherwise, bail out with -EINVAL.
+Since commit f2a9eb975ab2 ("regulator: fan53555: Add support for
+FAN53526") the driver makes use of the BIT() macro, but relies on the
+bits header being implicitly included.
 
-Fixes: aaa31047a6d2 ("netfilter: nftables: add catch-all set element support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Explicitly pull the header in to avoid potential build failures in some
+configurations.
+
+While here, reorder include directives alphabetically.
+
+Fixes: f2a9eb975ab2 ("regulator: fan53555: Add support for FAN53526")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20230406171806.948290-3-cristian.ciocaltea@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/regulator/fan53555.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 251f4a9fbdb5a..12d815b9aa131 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6040,7 +6040,8 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	if (err < 0)
- 		return err;
+diff --git a/drivers/regulator/fan53555.c b/drivers/regulator/fan53555.c
+index dac1fb584fa35..df53464afe3a0 100644
+--- a/drivers/regulator/fan53555.c
++++ b/drivers/regulator/fan53555.c
+@@ -8,18 +8,19 @@
+ // Copyright (c) 2012 Marvell Technology Ltd.
+ // Yunfan Zhang <yfzhang@marvell.com>
  
--	if (!nla[NFTA_SET_ELEM_KEY] && !(flags & NFT_SET_ELEM_CATCHALL))
-+	if (((flags & NFT_SET_ELEM_CATCHALL) && nla[NFTA_SET_ELEM_KEY]) ||
-+	    (!(flags & NFT_SET_ELEM_CATCHALL) && !nla[NFTA_SET_ELEM_KEY]))
- 		return -EINVAL;
++#include <linux/bits.h>
++#include <linux/err.h>
++#include <linux/i2c.h>
+ #include <linux/module.h>
++#include <linux/of_device.h>
+ #include <linux/param.h>
+-#include <linux/err.h>
+ #include <linux/platform_device.h>
++#include <linux/regmap.h>
+ #include <linux/regulator/driver.h>
++#include <linux/regulator/fan53555.h>
+ #include <linux/regulator/machine.h>
+ #include <linux/regulator/of_regulator.h>
+-#include <linux/of_device.h>
+-#include <linux/i2c.h>
+ #include <linux/slab.h>
+-#include <linux/regmap.h>
+-#include <linux/regulator/fan53555.h>
  
- 	if (flags != 0) {
+ /* Voltage setting */
+ #define FAN53555_VSEL0		0x00
 -- 
 2.39.2
 
