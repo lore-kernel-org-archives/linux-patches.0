@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41D97C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D70C433D2;
-	Mon, 24 Apr 2023 13:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F0F7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:30:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDFDBC433EF;
+	Mon, 24 Apr 2023 13:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343043;
-	bh=VuZK+UOIHTteeJsgKN+1MOU15lgDM1LvZKmPdVMxrrY=;
+	s=korg; t=1682343046;
+	bh=Zwts10tNv+EforyZyRfjdqT/oWFrrG94yVF4zELsC2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eyG3s2Uu/W4rmMIr75NIjXBxs8hj45I7k72uv4gr8OjDf0yxlBobJVnh9a6N6jH3A
-	 CqynU3fh5zUkzalIqwbNfAFjzCmPDXhobjVea9/EqBus2XdUGJthlSGtJAm6eIDthK
-	 Yv5Q2RfrwezQmdkRSUYDM4QQdJJBxDcrmdDg8xiI=
+	b=XrliaDht9GIsLxKUnmPvq23v6yPDEnuGausc7oyLp+sWP9UMv7yDx3lDfhrRBdM9G
+	 sjVZIG2D8jTtY16FLXG6kTgpBimy4ZwVyyQaB11rr37wmMYhLAQyvllji2kLjzZGhB
+	 C8gV9cjtWgq7Y4c1qLbDuAEsISOs8IYzW9u1HPWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Dmitry Safonov <0x7f454c46@gmail.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Zach OKeefe <zokeefe@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 055/110] Revert "userfaultfd: dont fail on unrecognized features"
-Date: Mon, 24 Apr 2023 15:17:17 +0200
-Message-Id: <20230424131138.354164985@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Jianmin Lv <lvjianmin@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Bob Moore <robert.moore@intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	stable@kernel.org
+Subject: [PATCH 6.2 056/110] Revert "ACPICA: Events: Support fixed PCIe wake event"
+Date: Mon, 24 Apr 2023 15:17:18 +0200
+Message-Id: <20230424131138.388793981@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -40,56 +38,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Xu <peterx@redhat.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 2ff559f31a5d50c31a3f9d849f8af90dc36c7105 upstream.
+commit 8e41e0a575664d26bb87e012c39435c4c3914ed9 upstream.
 
-This is a proposal to revert commit 914eedcb9ba0ff53c33808.
+This reverts commit 5c62d5aab8752e5ee7bfbe75ed6060db1c787f98.
 
-I found this when writing a simple UFFDIO_API test to be the first unit
-test in this set.  Two things breaks with the commit:
+This broke wake-on-lan for multiple people, and for much too long.
 
-  - UFFDIO_API check was lost and missing.  According to man page, the
-  kernel should reject ioctl(UFFDIO_API) if uffdio_api.api != 0xaa.  This
-  check is needed if the api version will be extended in the future, or
-  user app won't be able to identify which is a new kernel.
-
-  - Feature flags checks were removed, which means UFFDIO_API with a
-  feature that does not exist will also succeed.  According to the man
-  page, we should (and it makes sense) to reject ioctl(UFFDIO_API) if
-  unknown features passed in.
-
-Link: https://lore.kernel.org/r/20220722201513.1624158-1-axelrasmussen@google.com
-Link: https://lkml.kernel.org/r/20230412163922.327282-2-peterx@redhat.com
-Fixes: 914eedcb9ba0 ("userfaultfd: don't fail on unrecognized features")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Dmitry Safonov <0x7f454c46@gmail.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Zach O'Keefe <zokeefe@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217069
+Link: https://lore.kernel.org/all/754225a2-95a9-2c36-1886-7da1a78308c2@loongson.cn/
+Link: https://github.com/acpica/acpica/pull/866
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Jianmin Lv <lvjianmin@loongson.cn>
+Cc: Huacai Chen <chenhuacai@loongson.cn>
+Cc: Bob Moore <robert.moore@intel.com>
+Cc: stable@kernel.org # 6.2
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/acpi/acpica/evevent.c  |   11 -----------
+ drivers/acpi/acpica/hwsleep.c  |   14 --------------
+ drivers/acpi/acpica/utglobal.c |    4 ----
+ include/acpi/actypes.h         |    3 +--
+ 4 files changed, 1 insertion(+), 31 deletions(-)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -1966,8 +1966,10 @@ static int userfaultfd_api(struct userfa
- 	ret = -EFAULT;
- 	if (copy_from_user(&uffdio_api, buf, sizeof(uffdio_api)))
- 		goto out;
--	/* Ignore unsupported features (userspace built against newer kernel) */
--	features = uffdio_api.features & UFFD_API_FEATURES;
-+	features = uffdio_api.features;
-+	ret = -EINVAL;
-+	if (uffdio_api.api != UFFD_API || (features & ~UFFD_API_FEATURES))
-+		goto err_out;
- 	ret = -EPERM;
- 	if ((features & UFFD_FEATURE_EVENT_FORK) && !capable(CAP_SYS_PTRACE))
- 		goto err_out;
+--- a/drivers/acpi/acpica/evevent.c
++++ b/drivers/acpi/acpica/evevent.c
+@@ -142,9 +142,6 @@ static acpi_status acpi_ev_fixed_event_i
+ 			status =
+ 			    acpi_write_bit_register(acpi_gbl_fixed_event_info
+ 						    [i].enable_register_id,
+-						    (i ==
+-						     ACPI_EVENT_PCIE_WAKE) ?
+-						    ACPI_ENABLE_EVENT :
+ 						    ACPI_DISABLE_EVENT);
+ 			if (ACPI_FAILURE(status)) {
+ 				return (status);
+@@ -188,11 +185,6 @@ u32 acpi_ev_fixed_event_detect(void)
+ 		return (int_status);
+ 	}
+ 
+-	if (fixed_enable & ACPI_BITMASK_PCIEXP_WAKE_DISABLE)
+-		fixed_enable &= ~ACPI_BITMASK_PCIEXP_WAKE_DISABLE;
+-	else
+-		fixed_enable |= ACPI_BITMASK_PCIEXP_WAKE_DISABLE;
+-
+ 	ACPI_DEBUG_PRINT((ACPI_DB_INTERRUPTS,
+ 			  "Fixed Event Block: Enable %08X Status %08X\n",
+ 			  fixed_enable, fixed_status));
+@@ -258,9 +250,6 @@ static u32 acpi_ev_fixed_event_dispatch(
+ 	if (!acpi_gbl_fixed_event_handlers[event].handler) {
+ 		(void)acpi_write_bit_register(acpi_gbl_fixed_event_info[event].
+ 					      enable_register_id,
+-					      (event ==
+-					       ACPI_EVENT_PCIE_WAKE) ?
+-					      ACPI_ENABLE_EVENT :
+ 					      ACPI_DISABLE_EVENT);
+ 
+ 		ACPI_ERROR((AE_INFO,
+--- a/drivers/acpi/acpica/hwsleep.c
++++ b/drivers/acpi/acpica/hwsleep.c
+@@ -311,20 +311,6 @@ acpi_status acpi_hw_legacy_wake(u8 sleep
+ 				    [ACPI_EVENT_SLEEP_BUTTON].
+ 				    status_register_id, ACPI_CLEAR_STATUS);
+ 
+-	/* Enable pcie wake event if support */
+-	if ((acpi_gbl_FADT.flags & ACPI_FADT_PCI_EXPRESS_WAKE)) {
+-		(void)
+-		    acpi_write_bit_register(acpi_gbl_fixed_event_info
+-					    [ACPI_EVENT_PCIE_WAKE].
+-					    enable_register_id,
+-					    ACPI_DISABLE_EVENT);
+-		(void)
+-		    acpi_write_bit_register(acpi_gbl_fixed_event_info
+-					    [ACPI_EVENT_PCIE_WAKE].
+-					    status_register_id,
+-					    ACPI_CLEAR_STATUS);
+-	}
+-
+ 	acpi_hw_execute_sleep_method(METHOD_PATHNAME__SST, ACPI_SST_WORKING);
+ 	return_ACPI_STATUS(status);
+ }
+--- a/drivers/acpi/acpica/utglobal.c
++++ b/drivers/acpi/acpica/utglobal.c
+@@ -186,10 +186,6 @@ struct acpi_fixed_event_info acpi_gbl_fi
+ 					ACPI_BITREG_RT_CLOCK_ENABLE,
+ 					ACPI_BITMASK_RT_CLOCK_STATUS,
+ 					ACPI_BITMASK_RT_CLOCK_ENABLE},
+-	/* ACPI_EVENT_PCIE_WAKE     */ {ACPI_BITREG_PCIEXP_WAKE_STATUS,
+-					ACPI_BITREG_PCIEXP_WAKE_DISABLE,
+-					ACPI_BITMASK_PCIEXP_WAKE_STATUS,
+-					ACPI_BITMASK_PCIEXP_WAKE_DISABLE},
+ };
+ #endif				/* !ACPI_REDUCED_HARDWARE */
+ 
+--- a/include/acpi/actypes.h
++++ b/include/acpi/actypes.h
+@@ -723,8 +723,7 @@ typedef u32 acpi_event_type;
+ #define ACPI_EVENT_POWER_BUTTON         2
+ #define ACPI_EVENT_SLEEP_BUTTON         3
+ #define ACPI_EVENT_RTC                  4
+-#define ACPI_EVENT_PCIE_WAKE            5
+-#define ACPI_EVENT_MAX                  5
++#define ACPI_EVENT_MAX                  4
+ #define ACPI_NUM_FIXED_EVENTS           ACPI_EVENT_MAX + 1
+ 
+ /*
 
 
