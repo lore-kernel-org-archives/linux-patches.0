@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8632108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B72C433D2;
-	Mon, 24 Apr 2023 13:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC322108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335DDC433D2;
+	Mon, 24 Apr 2023 13:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343203;
-	bh=Fd67DUmgcp3dcXuG3HRyaJFLs/SAgMjAeeVxLaWDe34=;
+	s=korg; t=1682343206;
+	bh=RC0twR+9KcpAPJ8hxqhLhYX2V4A/kj6xICjHVzzfHFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDsHGy0ohj/1SMSV/lzlyYWEZuib53ACUHhFzn3wu90pRXv60o0uXlV6/5FOZzREn
-	 n4hBM+GP1SYGSI9sMSermMi0cOC4eexmy9V2/NeQSNJIZw7IAT18Y3zXOflD6UW5Ir
-	 ocyt0KMuN8Megi2vUhd87+PdwUZ2S7SJBS/l9w94=
+	b=TjQ444vTb7AKyeddyXvlzNHao9UB1roea1ZKDF5NZ8ptUhsjYUmiDkO+yjoh1bWQh
+	 HUkzba/VggbBC87qZO0Ebw0meBIPXUEqggAF/oV6b7Ej4CT0iTgkoKypQ5QZM0DXTL
+	 4kjfPa1MvG2GF/1Y4H5IUvpetkFgBx0Cx2FWoCEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Soumya Negi <soumya.negi97@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	syzbot+04ee0cb4caccaed12d78@syzkaller.appspotmail.com
-Subject: [PATCH 6.2 103/110] Input: pegasus-notetaker - check pipe type when probing
-Date: Mon, 24 Apr 2023 15:18:05 +0200
-Message-Id: <20230424131140.442896054@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.2 104/110] iio: adc: at91-sama5d2_adc: fix an error code in at91_adc_allocate_trigger()
+Date: Mon, 24 Apr 2023 15:18:06 +0200
+Message-Id: <20230424131140.476871324@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -35,41 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Soumya Negi <soumya.negi97@gmail.com>
+From: Dan Carpenter <error27@gmail.com>
 
-commit b3d80fd27a3c2d8715a40cbf876139b56195f162 upstream.
+commit 73a428b37b9b538f8f8fe61caa45e7f243bab87c upstream.
 
-Fix WARNING in pegasus_open/usb_submit_urb
-Syzbot bug: https://syzkaller.appspot.com/bug?id=bbc107584dcf3262253ce93183e51f3612aaeb13
+The at91_adc_allocate_trigger() function is supposed to return error
+pointers.  Returning a NULL will cause an Oops.
 
-Warning raised because pegasus_driver submits transfer request for
-bogus URB (pipe type does not match endpoint type). Add sanity check at
-probe time for pipe value extracted from endpoint descriptor. Probe
-will fail if sanity check fails.
-
-Reported-and-tested-by: syzbot+04ee0cb4caccaed12d78@syzkaller.appspotmail.com
-Signed-off-by: Soumya Negi <soumya.negi97@gmail.com>
-Link: https://lore.kernel.org/r/20230404074145.11523-1-soumya.negi97@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 5e1a1da0f8c9 ("iio: adc: at91-sama5d2_adc: add hw trigger and buffer support")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/5d728f9d-31d1-410d-a0b3-df6a63a2c8ba@kili.mountain
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/tablet/pegasus_notetaker.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iio/adc/at91-sama5d2_adc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/tablet/pegasus_notetaker.c
-+++ b/drivers/input/tablet/pegasus_notetaker.c
-@@ -296,6 +296,12 @@ static int pegasus_probe(struct usb_inte
- 	pegasus->intf = intf;
+--- a/drivers/iio/adc/at91-sama5d2_adc.c
++++ b/drivers/iio/adc/at91-sama5d2_adc.c
+@@ -1409,7 +1409,7 @@ static struct iio_trigger *at91_adc_allo
+ 	trig = devm_iio_trigger_alloc(&indio->dev, "%s-dev%d-%s", indio->name,
+ 				iio_device_id(indio), trigger_name);
+ 	if (!trig)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
  
- 	pipe = usb_rcvintpipe(dev, endpoint->bEndpointAddress);
-+	/* Sanity check that pipe's type matches endpoint's type */
-+	if (usb_pipe_type_check(dev, pipe)) {
-+		error = -EINVAL;
-+		goto err_free_mem;
-+	}
-+
- 	pegasus->data_len = usb_maxpacket(dev, pipe);
- 
- 	pegasus->data = usb_alloc_coherent(dev, pegasus->data_len, GFP_KERNEL,
+ 	trig->dev.parent = indio->dev.parent;
+ 	iio_trigger_set_drvdata(trig, indio);
 
 
