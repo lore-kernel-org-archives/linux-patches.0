@@ -1,355 +1,106 @@
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B9EED2
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 08:12:07 +0000 (UTC)
-Date: Mon, 24 Apr 2023 08:11:49 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1682323916; x=1682583116;
-	bh=jlSr6JF5Fnj5YiX5jFHLOW1OnwcKWvvXtJXoTFNi8uY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Hd+UjMji73bffnr1Vd7qGnI0gYyHhvDR3/n45+Gfw58wgqIOFOcGSMuwpRKgQeth/
-	 DmKuJXL0rbWpKlI5BZh+Wmc9HGvIEBHiPhkGeMZ6hSJ/P4RYnhZyEhpdjObeOmSuP2
-	 rUTZQ3wDumN7rDJU02zlQQ4HbPIhyufzCQXn3IsbtPml+McirbW83ClpdrVN67CZYw
-	 RfrnQZzA56YgWDuArvzsrIyen+m7u4/utiV7flzHkux9KJWX24TdoUUgoCKggFMEyv
-	 7ayrFBpY0kNbTPx50ai59tgOXcfUZteWa/v5Y4GXzsMt9l0J/+5N+kJd8cVk6kU8qg
-	 aHiIK774RJgBw==
-To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Benno Lossin <benno.lossin@proton.me>
-Subject: [PATCH 4/4] rust: init: update macro expansion example in docs
-Message-ID: <20230424081112.99890-4-benno.lossin@proton.me>
-In-Reply-To: <20230424081112.99890-1-benno.lossin@proton.me>
-References: <20230424081112.99890-1-benno.lossin@proton.me>
-Feedback-ID: 71780778:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF4A7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 08:26:33 +0000 (UTC)
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-3f1950f569eso17399165e9.2
+        for <patches@lists.linux.dev>; Mon, 24 Apr 2023 01:26:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linbit-com.20221208.gappssmtp.com; s=20221208; t=1682324792; x=1684916792;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3pxlWKD7dnb+hgIonOTuPgqaiGVvQd+hXe0K6IdPi2M=;
+        b=BCLvweSQah01sJW9SBAyC5wgM9gcCgmoD6eVt1pixm6TIMPKSMsfDJ/G6pQ7WifY+a
+         jCWSatlOFJoGBGRyqNjpnC83+YZxWwidqcfJV7qrZVFpoOQQ5qGdcpNUfD/1uI304Bsr
+         n5t0aKbFfDOlYu2sfU/KiJsKG+tbC5Q3pej1LUOiQjmwv12srCYdM4fwvJqfC1vIGgHG
+         i7xM2mHs1udxBgFRdzJGUIySnuCvM4rCCc4KxRtFlArnjXACALMboZpw/c8XanndS9Ts
+         WTUnWIGWHkbm7Rk6Wg/mlO7SJDa+qk0PwimjElI9r8oOeFo6sLYUJveYcdOozE2aiQA6
+         piSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682324792; x=1684916792;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3pxlWKD7dnb+hgIonOTuPgqaiGVvQd+hXe0K6IdPi2M=;
+        b=Z8zWU7UJCTl6MEbBtXHngbIN2ULBdKKsJt+OSRReI7/++51NmyUx/jdXJ4k/70qBfK
+         mgfHv/QoFGHf0a4vwKPvi+c9RPnhMKnfzOkqNopLP7pChtK84A2DFAXuAaU5un/MPGNX
+         dayqUKNgEhGv3rloKkynI4snzho9T7FllxUaN9rZ31f+FYBiaLOTGuk0JOwxVcEgOdQQ
+         NooRNNtS+zWcMgAYMqHRcgkiC6QzI/xvmDVZQdjVFpcR+jTINoZcZh4y40U+gwXoksL2
+         fTzErVqWKkW3Q8rzfCjrYB44tv6Xm4jg21S1OOgJW9Hrkndc3TWYsA8MIc/u64ublCxU
+         ziwg==
+X-Gm-Message-State: AAQBX9fQ57gNG1DJbegHrwxI1UmJa39gs9JB3R34yNZFLOkdgvNIXlW9
+	jYjq3g+q3IcvZUqfIK3mICg/Ow==
+X-Google-Smtp-Source: AKy350byXoD5GzDBK8BfQEyK98TvcOHuQxalfYGEuCyUBUv+0C+wGb7Sf32jhfdSzffUY8tfHfxXdw==
+X-Received: by 2002:a05:600c:259:b0:3f1:662a:93d0 with SMTP id 25-20020a05600c025900b003f1662a93d0mr7829493wmj.15.1682324791970;
+        Mon, 24 Apr 2023 01:26:31 -0700 (PDT)
+Received: from [192.168.178.55] (h082218028181.host.wavenet.at. [82.218.28.181])
+        by smtp.gmail.com with ESMTPSA id l20-20020a05600c16d400b003f19bca8f03sm4904838wmn.43.2023.04.24.01.26.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Apr 2023 01:26:31 -0700 (PDT)
+Message-ID: <42c89d18-b68f-a7d0-921a-6f45b54da356@linbit.com>
+Date: Mon, 24 Apr 2023 10:26:30 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 2/5] drbd: use PAGE_SECTORS_SHIFT and PAGE_SECTORS
+To: Luis Chamberlain <mcgrof@kernel.org>, axboe@kernel.dk, agk@redhat.com,
+ snitzer@kernel.org, philipp.reisner@linbit.com, lars.ellenberg@linbit.com,
+ hch@infradead.org, djwong@kernel.org, minchan@kernel.org,
+ senozhatsky@chromium.org
+Cc: patches@lists.linux.dev, linux-block@vger.kernel.org, linux-mm@kvack.org,
+ linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ dm-devel@redhat.com, drbd-dev@lists.linbit.com,
+ linux-kernel@vger.kernel.org, willy@infradead.org, hare@suse.de,
+ p.raghav@samsung.com, da.gomez@samsung.com, kbusch@kernel.org
+References: <20230421195807.2804512-1-mcgrof@kernel.org>
+ <20230421195807.2804512-3-mcgrof@kernel.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Christoph_B=c3=b6hmwalder?= <christoph.boehmwalder@linbit.com>
+In-Reply-To: <20230421195807.2804512-3-mcgrof@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Also improve the explaining comments.
+Am 21.04.23 um 21:58 schrieb Luis Chamberlain:
+> Replace common constants with generic versions.
+> This produces no functional changes.
+> 
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
+>  drivers/block/drbd/drbd_bitmap.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/block/drbd/drbd_bitmap.c b/drivers/block/drbd/drbd_bitmap.c
+> index 6ac8c54b44c7..b556e6634f13 100644
+> --- a/drivers/block/drbd/drbd_bitmap.c
+> +++ b/drivers/block/drbd/drbd_bitmap.c
+> @@ -1000,7 +1000,7 @@ static void bm_page_io_async(struct drbd_bm_aio_ctx *ctx, int page_nr) __must_ho
+>  	unsigned int len;
+>  
+>  	first_bm_sect = device->ldev->md.md_offset + device->ldev->md.bm_offset;
+> -	on_disk_sector = first_bm_sect + (((sector_t)page_nr) << (PAGE_SHIFT-SECTOR_SHIFT));
+> +	on_disk_sector = first_bm_sect + (((sector_t)page_nr) << PAGE_SECTORS_SHIFT);
+>  
+>  	/* this might happen with very small
+>  	 * flexible external meta data device,
+> @@ -1008,7 +1008,7 @@ static void bm_page_io_async(struct drbd_bm_aio_ctx *ctx, int page_nr) __must_ho
+>  	last_bm_sect = drbd_md_last_bitmap_sector(device->ldev);
+>  	if (first_bm_sect <= on_disk_sector && last_bm_sect >= on_disk_sector) {
+>  		sector_t len_sect = last_bm_sect - on_disk_sector + 1;
+> -		if (len_sect < PAGE_SIZE/SECTOR_SIZE)
+> +		if (len_sect < PAGE_SECTORS)
+>  			len = (unsigned int)len_sect*SECTOR_SIZE;
+>  		else
+>  			len = PAGE_SIZE;
 
-Signed-off-by: Benno Lossin <benno.lossin@proton.me>
----
- rust/kernel/init/macros.rs | 85 +++++++++++++++++++++-----------------
- 1 file changed, 48 insertions(+), 37 deletions(-)
+Acked-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
 
-diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
-index 541cfad1d8be..00aa4e956c0a 100644
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -16,8 +16,9 @@
- //!
- //! We will look at the following example:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! # use kernel::init::*;
-+//! # use core::pin::Pin;
- //! #[pin_data]
- //! #[repr(C)]
- //! struct Bar<T> {
-@@ -71,11 +72,12 @@
- //!
- //! Here is the definition of `Bar` from our example:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! # use kernel::init::*;
- //! #[pin_data]
- //! #[repr(C)]
- //! struct Bar<T> {
-+//!     #[pin]
- //!     t: T,
- //!     pub x: usize,
- //! }
-@@ -83,7 +85,7 @@
- //!
- //! This expands to the following code:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! // Firstly the normal definition of the struct, attributes are preserv=
-ed:
- //! #[repr(C)]
- //! struct Bar<T> {
-@@ -116,20 +118,22 @@
- //!         unsafe fn t<E>(
- //!             self,
- //!             slot: *mut T,
--//!             init: impl ::kernel::init::Init<T, E>,
-+//!             // Since `t` is `#[pin]`, this is `PinInit`.
-+//!             init: impl ::kernel::init::PinInit<T, E>,
- //!         ) -> ::core::result::Result<(), E> {
--//!             unsafe { ::kernel::init::Init::__init(init, slot) }
-+//!             unsafe { ::kernel::init::PinInit::__pinned_init(init, slot=
-) }
- //!         }
- //!         pub unsafe fn x<E>(
- //!             self,
- //!             slot: *mut usize,
-+//!             // Since `x` is not `#[pin]`, this is `Init`.
- //!             init: impl ::kernel::init::Init<usize, E>,
- //!         ) -> ::core::result::Result<(), E> {
- //!             unsafe { ::kernel::init::Init::__init(init, slot) }
- //!         }
- //!     }
- //!     // Implement the internal `HasPinData` trait that associates `Bar`=
- with the pin-data struct
--//!     // that we constructed beforehand.
-+//!     // that we constructed above.
- //!     unsafe impl<T> ::kernel::init::__internal::HasPinData for Bar<T> {
- //!         type PinData =3D __ThePinData<T>;
- //!         unsafe fn __pin_data() -> Self::PinData {
-@@ -160,6 +164,8 @@
- //!     struct __Unpin<'__pin, T> {
- //!         __phantom_pin: ::core::marker::PhantomData<fn(&'__pin ()) -> &=
-'__pin ()>,
- //!         __phantom: ::core::marker::PhantomData<fn(Bar<T>) -> Bar<T>>,
-+//!         // Our only `#[pin]` field is `t`.
-+//!         t: T,
- //!     }
- //!     #[doc(hidden)]
- //!     impl<'__pin, T>
-@@ -193,7 +199,7 @@
- //!
- //! Here is the impl on `Bar` defining the new function:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! impl<T> Bar<T> {
- //!     fn new(t: T) -> impl PinInit<Self> {
- //!         pin_init!(Self { t, x: 0 })
-@@ -203,7 +209,7 @@
- //!
- //! This expands to the following code:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! impl<T> Bar<T> {
- //!     fn new(t: T) -> impl PinInit<Self> {
- //!         {
-@@ -232,25 +238,31 @@
- //!                     // that will refer to this struct instead of the o=
-ne defined above.
- //!                     struct __InitOk;
- //!                     // This is the expansion of `t,`, which is syntact=
-ic sugar for `t: t,`.
--//!                     unsafe { ::core::ptr::write(&raw mut (*slot).t, t)=
- };
-+//!                     unsafe { ::core::ptr::write(::core::addr_of_mut!((=
-*slot).t), t) };
- //!                     // Since initialization could fail later (not in t=
-his case, since the error
--//!                     // type is `Infallible`) we will need to drop this=
- field if it fails. This
--//!                     // `DropGuard` will drop the field when it gets dr=
-opped and has not yet
--//!                     // been forgotten. We make a reference to it, so u=
-sers cannot `mem::forget`
--//!                     // it from the initializer, since the name is the =
-same as the field.
-+//!                     // type is `Infallible`) we will need to drop this=
- field if there is an
-+//!                     // error later. This `DropGuard` will drop the fie=
-ld when it gets dropped
-+//!                     // and has not yet been forgotten. We make a refer=
-ence to it, so users
-+//!                     // cannot `mem::forget` it from the initializer, s=
-ince the name is the same
-+//!                     // as the field (including hygiene).
- //!                     let t =3D &unsafe {
--//!                         ::kernel::init::__internal::DropGuard::new(&ra=
-w mut (*slot).t)
-+//!                         ::kernel::init::__internal::DropGuard::new(
-+//!                             ::core::addr_of_mut!((*slot).t),
-+//!                         )
- //!                     };
- //!                     // Expansion of `x: 0,`:
- //!                     // Since this can be an arbitrary expression we ca=
-nnot place it inside of
- //!                     // the `unsafe` block, so we bind it here.
- //!                     let x =3D 0;
--//!                     unsafe { ::core::ptr::write(&raw mut (*slot).x, x)=
- };
-+//!                     unsafe { ::core::ptr::write(::core::addr_of_mut!((=
-*slot).x), x) };
-+//!                     // We again create a `DropGuard`.
- //!                     let x =3D &unsafe {
--//!                         ::kernel::init::__internal::DropGuard::new(&ra=
-w mut (*slot).x)
-+//!                         ::kernel::init::__internal::DropGuard::new(
-+//!                             ::core::addr_of_mut!((*slot).x),
-+//!                         )
- //!                     };
- //!
--//!                     // Here we use the type checker to ensuer that eve=
-ry field has been
-+//!                     // Here we use the type checker to ensure that eve=
-ry field has been
- //!                     // initialized exactly once, since this is `if fal=
-se` it will never get
- //!                     // executed, but still type-checked.
- //!                     // Additionally we abuse `slot` to automatically i=
-nfer the correct type for
-@@ -272,7 +284,7 @@
- //!                         };
- //!                     }
- //!                     // Since initialization has successfully completed=
-, we can now forget the
--//!                     // guards.
-+//!                     // guards. This is not `mem::forget`, since we onl=
-y have `&DropGuard`.
- //!                     unsafe { ::kernel::init::__internal::DropGuard::fo=
-rget(t) };
- //!                     unsafe { ::kernel::init::__internal::DropGuard::fo=
-rget(x) };
- //!                 }
-@@ -280,7 +292,7 @@
- //!                 // `__InitOk` that we need to return.
- //!                 Ok(__InitOk)
- //!             });
--//!             // Change the return type of the closure.
-+//!             // Change the return type from `__InitOk` to `()`.
- //!             let init =3D move |slot| -> ::core::result::Result<(), ::c=
-ore::convert::Infallible> {
- //!                 init(slot).map(|__InitOk| ())
- //!             };
-@@ -299,7 +311,7 @@
- //! Since we already took a look at `#[pin_data]` on `Bar`, this section w=
-ill only explain the
- //! differences/new things in the expansion of the `Foo` definition:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! #[pin_data(PinnedDrop)]
- //! struct Foo {
- //!     a: usize,
-@@ -310,7 +322,7 @@
- //!
- //! This expands to the following code:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! struct Foo {
- //!     a: usize,
- //!     b: Bar<u32>,
-@@ -330,8 +342,6 @@
- //!         unsafe fn b<E>(
- //!             self,
- //!             slot: *mut Bar<u32>,
--//!             // Note that this is `PinInit` instead of `Init`, this is =
-because `b` is
--//!             // structurally pinned, as marked by the `#[pin]` attribut=
-e.
- //!             init: impl ::kernel::init::PinInit<Bar<u32>, E>,
- //!         ) -> ::core::result::Result<(), E> {
- //!             unsafe { ::kernel::init::PinInit::__pinned_init(init, slot=
-) }
-@@ -359,14 +369,13 @@
- //!     struct __Unpin<'__pin> {
- //!         __phantom_pin: ::core::marker::PhantomData<fn(&'__pin ()) -> &=
-'__pin ()>,
- //!         __phantom: ::core::marker::PhantomData<fn(Foo) -> Foo>,
--//!         // Since this field is `#[pin]`, it is listed here.
- //!         b: Bar<u32>,
- //!     }
- //!     #[doc(hidden)]
- //!     impl<'__pin> ::core::marker::Unpin for Foo where __Unpin<'__pin>: =
-::core::marker::Unpin {}
- //!     // Since we specified `PinnedDrop` as the argument to `#[pin_data]=
-`, we expect `Foo` to
- //!     // implement `PinnedDrop`. Thus we do not need to prevent `Drop` i=
-mplementations like
--//!     // before, instead we implement it here and delegate to `PinnedDro=
-p`.
-+//!     // before, instead we implement `Drop` here and delegate to `Pinne=
-dDrop`.
- //!     impl ::core::ops::Drop for Foo {
- //!         fn drop(&mut self) {
- //!             // Since we are getting dropped, no one else has a referen=
-ce to `self` and thus we
-@@ -388,7 +397,7 @@
- //!
- //! Here is the `PinnedDrop` impl for `Foo`:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! #[pinned_drop]
- //! impl PinnedDrop for Foo {
- //!     fn drop(self: Pin<&mut Self>) {
-@@ -399,7 +408,7 @@
- //!
- //! This expands to the following code:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! // `unsafe`, full path and the token parameter are added, everything e=
-lse stays the same.
- //! unsafe impl ::kernel::init::PinnedDrop for Foo {
- //!     fn drop(self: Pin<&mut Self>, _: ::kernel::init::__internal::OnlyC=
-allFromDrop) {
-@@ -410,10 +419,10 @@
- //!
- //! ## `pin_init!` on `Foo`
- //!
--//! Since we already took a look at `pin_init!` on `Bar`, this section wil=
-l only explain the
--//! differences/new things in the expansion of `pin_init!` on `Foo`:
-+//! Since we already took a look at `pin_init!` on `Bar`, this section wil=
-l only show the expansion
-+//! of `pin_init!` on `Foo`:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! let a =3D 42;
- //! let initializer =3D pin_init!(Foo {
- //!     a,
-@@ -423,7 +432,7 @@
- //!
- //! This expands to the following code:
- //!
--//! ```rust
-+//! ```rust,ignore
- //! let a =3D 42;
- //! let initializer =3D {
- //!     struct __InitOk;
-@@ -438,13 +447,15 @@
- //!     >(data, move |slot| {
- //!         {
- //!             struct __InitOk;
--//!             unsafe { ::core::ptr::write(&raw mut (*slot).a, a) };
--//!             let a =3D &unsafe { ::kernel::init::__internal::DropGuard:=
-:new(&raw mut (*slot).a) };
-+//!             unsafe { ::core::ptr::write(::core::addr_of_mut!((*slot).a=
-), a) };
-+//!             let a =3D &unsafe {
-+//!                 ::kernel::init::__internal::DropGuard::new(::core::add=
-r_of_mut!((*slot).a))
-+//!             };
- //!             let b =3D Bar::new(36);
--//!             // Here we use `data` to access the correct field and requ=
-ire that `b` is of type
--//!             // `PinInit<Bar<u32>, Infallible>`.
--//!             unsafe { data.b(&raw mut (*slot).b, b)? };
--//!             let b =3D &unsafe { ::kernel::init::__internal::DropGuard:=
-:new(&raw mut (*slot).b) };
-+//!             unsafe { data.b(::core::addr_of_mut!((*slot).b), b)? };
-+//!             let b =3D &unsafe {
-+//!                 ::kernel::init::__internal::DropGuard::new(::core::add=
-r_of_mut!((*slot).b))
-+//!             };
- //!
- //!             #[allow(unreachable_code, clippy::diverging_sub_expression=
-)]
- //!             if false {
---
-2.40.0
-
-
+-- 
+Christoph Böhmwalder
+LINBIT | Keeping the Digital World Running
+DRBD HA —  Disaster Recovery — Software defined Storage
