@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790F67C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E97C433EF;
-	Mon, 24 Apr 2023 13:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD777C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:31:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F4AC4339B;
+	Mon, 24 Apr 2023 13:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343109;
-	bh=+yTV0WLWqJzHYzsV2DuMvVc915oMZBAc/9+AmvPskkE=;
+	s=korg; t=1682343111;
+	bh=IVKEMJJd8BBDFuG8UMI5H7FrwA616yd8Zt08N5eJnRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zim65XuZuPyTp4G5pz6yz2+JHU8GNRXcF4UJTxZmP35YRi/eOztTgW01wTKWZU9X4
-	 /98if9SZ0KfpAH2NzKihfAGS19AVtO7PHdu3jAPDVCDdfCpnrt7pjj58fx0WdM7Ja3
-	 KGeGeUJtQ5uPNz29zRfb4frboyBHtLLluHQvANeE=
+	b=OYp/jf+ACHfCSqpQcC4vLDnPVQxFCUFEaYYqZeblo5CViDjROYx1tEdhP8b8wVu87
+	 v+LLfMcWKRP/1anFOM/XyGOaYm5u1UqScdg+gi7MNlfwXhy9h14lxXL4i5l9Asj4Ln
+	 m3lCas6ocYQIqVdKTXzZ2r10O5tUNDBwCX3JrfqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Liu <HaoPing.Liu@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 081/110] drm/amdgpu: Fix desktop freezed after gpu-reset
-Date: Mon, 24 Apr 2023 15:17:43 +0200
-Message-Id: <20230424131139.495083118@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.2 064/110] LoongArch: Check unwind_error() in arch_stack_walk()
+Date: Mon, 24 Apr 2023 15:17:26 +0200
+Message-Id: <20230424131138.737749391@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -35,98 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Liu <HaoPing.Liu@amd.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit c8b5a95b570949536a2b75cd8fc4f1de0bc60629 upstream.
+commit 370a3b8f58743eceb97c5256538d6048c26d2d03 upstream.
 
-[Why]
-After gpu-reset, sometimes the driver fails to enable vblank irq,
-causing flip_done timed out and the desktop freezed.
+We can see the following messages with CONFIG_PROVE_LOCKING=y on
+LoongArch:
 
-During gpu-reset, we disable and enable vblank irq in dm_suspend() and
-dm_resume(). Later on in amdgpu_irq_gpu_reset_resume_helper(), we check
-irqs' refcount and decide to enable or disable the irqs again.
+  BUG: MAX_STACK_TRACE_ENTRIES too low!
+  turning off the locking correctness validator.
 
-However, we have 2 sets of API for controling vblank irq, one is
-dm_vblank_get/put() and another is amdgpu_irq_get/put(). Each API has
-its own refcount and flag to store the state of vblank irq, and they
-are not synchronized.
+This is because stack_trace_save() returns a big value after call
+arch_stack_walk(), here is the call trace:
 
-In drm we use the first API to control vblank irq but in
-amdgpu_irq_gpu_reset_resume_helper() we use the second set of API.
+  save_trace()
+    stack_trace_save()
+      arch_stack_walk()
+        stack_trace_consume_entry()
 
-The failure happens when vblank irq was enabled by dm_vblank_get()
-before gpu-reset, we have vblank->enabled true. However, during
-gpu-reset, in amdgpu_irq_gpu_reset_resume_helper() vblank irq's state
-checked from amdgpu_irq_update() is DISABLED. So finally it disables
-vblank irq again. After gpu-reset, if there is a cursor plane commit,
-the driver will try to enable vblank irq by calling drm_vblank_enable(),
-but the vblank->enabled is still true, so it fails to turn on vblank
-irq and causes flip_done can't be completed in vblank irq handler and
-desktop become freezed.
+arch_stack_walk() should return immediately if unwind_next_frame()
+failed, no need to do the useless loops to increase the value of c->len
+in stack_trace_consume_entry(), then we can fix the above problem.
 
-[How]
-Combining the 2 vblank control APIs by letting drm's API finally calls
-amdgpu_irq's API, so the irq's refcount and state of both APIs can be
-synchronized. Also add a check to prevent refcount from being less then
-0 in amdgpu_irq_put().
-
-v2:
-- Add warning in amdgpu_irq_enable() if the irq is already disabled.
-- Call dc_interrupt_set() in dm_set_vblank() to avoid refcount change
-  if it is in gpu-reset.
-
-v3:
-- Improve commit message and code comments.
-
-Signed-off-by: Alan Liu <HaoPing.Liu@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/all/8a44ad71-68d2-4926-892f-72bfc7a67e2a@roeck-us.net/
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c                |    3 +++
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   17 ++++++++++++++---
- 2 files changed, 17 insertions(+), 3 deletions(-)
+ arch/loongarch/kernel/stacktrace.c      |    2 +-
+ arch/loongarch/kernel/unwind.c          |    1 +
+ arch/loongarch/kernel/unwind_prologue.c |    4 +++-
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
-@@ -597,6 +597,9 @@ int amdgpu_irq_put(struct amdgpu_device
- 	if (!src->enabled_types || !src->funcs->set)
- 		return -EINVAL;
+--- a/arch/loongarch/kernel/stacktrace.c
++++ b/arch/loongarch/kernel/stacktrace.c
+@@ -30,7 +30,7 @@ void arch_stack_walk(stack_trace_consume
  
-+	if (WARN_ON(!amdgpu_irq_enabled(adev, src, type)))
-+		return -EINVAL;
-+
- 	if (atomic_dec_and_test(&src->enabled_types[type]))
- 		return amdgpu_irq_update(adev, src, type);
+ 	regs->regs[1] = 0;
+ 	for (unwind_start(&state, task, regs);
+-	      !unwind_done(&state); unwind_next_frame(&state)) {
++	     !unwind_done(&state) && !unwind_error(&state); unwind_next_frame(&state)) {
+ 		addr = unwind_get_return_address(&state);
+ 		if (!addr || !consume_entry(cookie, addr))
+ 			break;
+--- a/arch/loongarch/kernel/unwind.c
++++ b/arch/loongarch/kernel/unwind.c
+@@ -28,5 +28,6 @@ bool default_next_frame(struct unwind_st
  
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -170,10 +170,21 @@ static inline int dm_set_vblank(struct d
- 	if (rc)
- 		return rc;
+ 	} while (!get_stack_info(state->sp, state->task, info));
  
--	irq_source = IRQ_TYPE_VBLANK + acrtc->otg_inst;
-+	if (amdgpu_in_reset(adev)) {
-+		irq_source = IRQ_TYPE_VBLANK + acrtc->otg_inst;
-+		/* During gpu-reset we disable and then enable vblank irq, so
-+		 * don't use amdgpu_irq_get/put() to avoid refcount change.
-+		 */
-+		if (!dc_interrupt_set(adev->dm.dc, irq_source, enable))
-+			rc = -EBUSY;
-+	} else {
-+		rc = (enable)
-+			? amdgpu_irq_get(adev, &adev->crtc_irq, acrtc->crtc_id)
-+			: amdgpu_irq_put(adev, &adev->crtc_irq, acrtc->crtc_id);
-+	}
++	state->error = true;
+ 	return false;
+ }
+--- a/arch/loongarch/kernel/unwind_prologue.c
++++ b/arch/loongarch/kernel/unwind_prologue.c
+@@ -211,7 +211,7 @@ static bool next_frame(struct unwind_sta
+ 			pc = regs->csr_era;
  
--	if (!dc_interrupt_set(adev->dm.dc, irq_source, enable))
--		return -EBUSY;
-+	if (rc)
-+		return rc;
+ 			if (user_mode(regs) || !__kernel_text_address(pc))
+-				return false;
++				goto out;
  
- skip:
- 	if (amdgpu_in_reset(adev))
+ 			state->first = true;
+ 			state->pc = pc;
+@@ -226,6 +226,8 @@ static bool next_frame(struct unwind_sta
+ 
+ 	} while (!get_stack_info(state->sp, state->task, info));
+ 
++out:
++	state->error = true;
+ 	return false;
+ }
+ 
 
 
