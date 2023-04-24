@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651D97C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:27:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB02C433D2;
-	Mon, 24 Apr 2023 13:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078AC7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:27:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC1DC433EF;
+	Mon, 24 Apr 2023 13:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342843;
-	bh=QLoNmhu9kqp3KkVO9TzzPmCdmmGPKdam2MYXZLhis9s=;
+	s=korg; t=1682342845;
+	bh=zZGXykFC65S68cdngIsxyzHu2u7OF5koxtcAp0i79+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RDZIURdGpGxCdV+Zebl9an78jZ39RkBvbyoyayVlBjv3hnEEqjdhxustgPArDfDCI
-	 ypYun9/lV//MEbaH/y8j71RVQwhVX0HgqEnBWZANy/DdMRiIypeLHyps0+7pO6fHKs
-	 FgOCqTOW9C39z0qKRz4K41+EGQbP+3RXorvv/0/0=
+	b=WAIkFeA4kCiT+G4BYZU/9wuy4dsGyL238fi5SVqwe2aGwx6A8a/Ib9YZCdYN9F8jD
+	 wFstROs3SPIp8SAJ/GfpBssp+vP7GzCeTi+lWYHDGyZ9OHqIxbmXGdrzcnY04X2geu
+	 2avbBUJBqB7uTdLPOWP0N/hlpSf+NKIjNmIwxBIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Zhu <James.Zhu@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 50/98] drm/amdgpu/vcn: Disable indirect SRAM on Vangogh broken BIOSes
-Date: Mon, 24 Apr 2023 15:17:13 +0200
-Message-Id: <20230424131135.797373545@linuxfoundation.org>
+	Liang He <windhl@126.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 51/98] iio: dac: ad5755: Add missing fwnode_handle_put()
+Date: Mon, 24 Apr 2023 15:17:14 +0200
+Message-Id: <20230424131135.828250948@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 References: <20230424131133.829259077@linuxfoundation.org>
@@ -36,81 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Liang He <windhl@126.com>
 
-commit 542a56e8eb4467ae654eefab31ff194569db39cd upstream.
+commit ffef73791574b8da872cfbf881d8e3e9955fc130 upstream.
 
-The VCN firmware loading path enables the indirect SRAM mode if it's
-advertised as supported. We might have some cases of FW issues that
-prevents this mode to working properly though, ending-up in a failed
-probe. An example below, observed in the Steam Deck:
+In ad5755_parse_fw(), we should add fwnode_handle_put()
+when break out of the iteration device_for_each_child_node()
+as it will automatically increase and decrease the refcounter.
 
-[...]
-[drm] failed to load ucode VCN0_RAM(0x3A)
-[drm] psp gfx command LOAD_IP_FW(0x6) failed and response status is (0xFFFF0000)
-amdgpu 0000:04:00.0: [drm:amdgpu_ring_test_helper [amdgpu]] *ERROR* ring vcn_dec_0 test failed (-110)
-[drm:amdgpu_device_init.cold [amdgpu]] *ERROR* hw_init of IP block <vcn_v3_0> failed -110
-amdgpu 0000:04:00.0: amdgpu: amdgpu_device_ip_init failed
-amdgpu 0000:04:00.0: amdgpu: Fatal error during GPU init
-[...]
-
-Disabling the VCN block circumvents this, but it's a very invasive
-workaround that turns off the entire feature. So, let's add a quirk
-on VCN loading that checks for known problematic BIOSes on Vangogh,
-so we can proactively disable the indirect SRAM mode and allow the
-HW proper probe and VCN IP block to work fine.
-
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2385
-Fixes: 82132ecc5432 ("drm/amdgpu: enable Vangogh VCN indirect sram mode")
-Cc: stable@vger.kernel.org
-Cc: James Zhu <James.Zhu@amd.com>
-Cc: Leo Liu <leo.liu@amd.com>
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 3ac27afefd5d ("iio:dac:ad5755: Switch to generic firmware properties and drop pdata")
+Signed-off-by: Liang He <windhl@126.com>
+Link: https://lore.kernel.org/r/20230322035627.1856421-1-windhl@126.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/iio/dac/ad5755.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
-@@ -26,6 +26,7 @@
+--- a/drivers/iio/dac/ad5755.c
++++ b/drivers/iio/dac/ad5755.c
+@@ -802,6 +802,7 @@ static struct ad5755_platform_data *ad57
+ 	return pdata;
  
- #include <linux/firmware.h>
- #include <linux/module.h>
-+#include <linux/dmi.h>
- #include <linux/pci.h>
- #include <linux/debugfs.h>
- #include <drm/drm_drv.h>
-@@ -84,6 +85,7 @@ int amdgpu_vcn_sw_init(struct amdgpu_dev
- {
- 	unsigned long bo_size;
- 	const char *fw_name;
-+	const char *bios_ver;
- 	const struct common_firmware_header *hdr;
- 	unsigned char fw_check;
- 	unsigned int fw_shared_size, log_offset;
-@@ -159,6 +161,21 @@ int amdgpu_vcn_sw_init(struct amdgpu_dev
- 		if ((adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) &&
- 		    (adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG))
- 			adev->vcn.indirect_sram = true;
-+		/*
-+		 * Some Steam Deck's BIOS versions are incompatible with the
-+		 * indirect SRAM mode, leading to amdgpu being unable to get
-+		 * properly probed (and even potentially crashing the kernel).
-+		 * Hence, check for these versions here - notice this is
-+		 * restricted to Vangogh (Deck's APU).
-+		 */
-+		bios_ver = dmi_get_system_info(DMI_BIOS_VERSION);
-+
-+		if (bios_ver && (!strncmp("F7A0113", bios_ver, 7) ||
-+		     !strncmp("F7A0114", bios_ver, 7))) {
-+			adev->vcn.indirect_sram = false;
-+			dev_info(adev->dev,
-+				"Steam Deck quirk: indirect SRAM disabled on BIOS %s\n", bios_ver);
-+		}
- 		break;
- 	case IP_VERSION(3, 0, 16):
- 		fw_name = FIRMWARE_DIMGREY_CAVEFISH;
+  error_out:
++	fwnode_handle_put(pp);
+ 	devm_kfree(dev, pdata);
+ 	return NULL;
+ }
 
 
