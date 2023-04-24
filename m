@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DB77C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253EAC433D2;
-	Mon, 24 Apr 2023 13:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9457C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB65C433D2;
+	Mon, 24 Apr 2023 13:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342969;
-	bh=tQmjXt9Cc7Z6kWHWMyjev3Vj4rxIBivhPAu7q7T9ULg=;
+	s=korg; t=1682342972;
+	bh=XceAHinoPLvIfUIBuPBswUzyA8nZBrYRZs6HlidQhSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJzVbdv1ScNWILALNm7a++mqseBwF9gl03AYXZFY/0IVjdGVBmrE+4m9R0S6o/oDE
-	 CUtfsVSSOYLNWrQ+QwpYFHQLJ90mwPpEUZMtT9YKszgj51K8EqxNpdIHz/Gpb67fFD
-	 yuSDTSeRnrdUEedio47uqmFpoOe/c1r5JlTy6Lw4=
+	b=lGHYxijAgue2htwz1z8YvvH+ZF5VHXF0slGTZcs+CRAy++Vn5rFmftM8cpv6tqt64
+	 69ACNpwbi9phIqeDJB6tt9/GGl1CKPgaA7UPVkvzRFl4EZ3bP57qXBzkTsQFkI+wW7
+	 gFXv4DeXOAQB6rOAx4C502dzJ/cG23DvhTdhd+ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Natalia Petrova <n.petrova@fintech.ru>
-Subject: [PATCH 6.2 027/110] mlxfw: fix null-ptr-deref in mlxfw_mfa2_tlv_next()
-Date: Mon, 24 Apr 2023 15:16:49 +0200
-Message-Id: <20230424131137.154211982@linuxfoundation.org>
+	WANG Xuerui <git@xen0n.name>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 028/110] LoongArch: Fix build error if CONFIG_SUSPEND is not set
+Date: Mon, 24 Apr 2023 15:16:50 +0200
+Message-Id: <20230424131137.183655156@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -37,43 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit c0e73276f0fcbbd3d4736ba975d7dc7a48791b0c ]
+[ Upstream commit 1cf62488f5e465b1cd814d19be238a4b7ad5be38 ]
 
-Function mlxfw_mfa2_tlv_multi_get() returns NULL if 'tlv' in
-question does not pass checks in mlxfw_mfa2_tlv_payload_get(). This
-behaviour may lead to NULL pointer dereference in 'multi->total_len'.
-Fix this issue by testing mlxfw_mfa2_tlv_multi_get()'s return value
-against NULL.
+We can see the following build error on LoongArch if CONFIG_SUSPEND is
+not set:
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+  ld: drivers/acpi/sleep.o: in function 'acpi_pm_prepare':
+  sleep.c:(.text+0x2b8): undefined reference to 'loongarch_wakeup_start'
 
-Fixes: 410ed13cae39 ("Add the mlxfw module for Mellanox firmware flash process")
-Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/20230417120718.52325-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Here is the call trace:
+
+  acpi_pm_prepare()
+    __acpi_pm_prepare()
+      acpi_sleep_prepare()
+        acpi_get_wakeup_address()
+          loongarch_wakeup_start()
+
+Root cause: loongarch_wakeup_start() is defined in arch/loongarch/power/
+suspend_asm.S which is only built under CONFIG_SUSPEND. In order to fix
+the build error, just let acpi_get_wakeup_address() return 0 if CONFIG_
+SUSPEND is not set.
+
+Fixes: 366bb35a8e48 ("LoongArch: Add suspend (ACPI S3) support")
+Reviewed-by: WANG Xuerui <git@xen0n.name>
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/all/11215033-fa3c-ecb1-2fc0-e9aeba47be9b@infradead.org/
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/loongarch/include/asm/acpi.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-index 017d68f1e1232..972c571b41587 100644
---- a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-+++ b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_mfa2_tlv_multi.c
-@@ -31,6 +31,8 @@ mlxfw_mfa2_tlv_next(const struct mlxfw_mfa2_file *mfa2_file,
+diff --git a/arch/loongarch/include/asm/acpi.h b/arch/loongarch/include/asm/acpi.h
+index 4198753aa1d0f..976a810352c60 100644
+--- a/arch/loongarch/include/asm/acpi.h
++++ b/arch/loongarch/include/asm/acpi.h
+@@ -41,8 +41,11 @@ extern void loongarch_suspend_enter(void);
  
- 	if (tlv->type == MLXFW_MFA2_TLV_MULTI_PART) {
- 		multi = mlxfw_mfa2_tlv_multi_get(mfa2_file, tlv);
-+		if (!multi)
-+			return NULL;
- 		tlv_len = NLA_ALIGN(tlv_len + be16_to_cpu(multi->total_len));
- 	}
+ static inline unsigned long acpi_get_wakeup_address(void)
+ {
++#ifdef CONFIG_SUSPEND
+ 	extern void loongarch_wakeup_start(void);
+ 	return (unsigned long)loongarch_wakeup_start;
++#endif
++	return 0UL;
+ }
  
+ #endif /* _ASM_LOONGARCH_ACPI_H */
 -- 
 2.39.2
 
