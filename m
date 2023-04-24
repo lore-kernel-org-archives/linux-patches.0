@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E2D2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FDDC433EF;
-	Mon, 24 Apr 2023 13:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871E92108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:32:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F69C433EF;
+	Mon, 24 Apr 2023 13:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343161;
-	bh=0wJfMAum1yvWKuJd+v0oOt0cR8Z5A4nKexd+TetMkBI=;
+	s=korg; t=1682343164;
+	bh=LT55Mn/UfNnoYqllf3TgRjC4VCY9DWM25uqgDMO6Oh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BjGt6nxXGdbIdjc0LEiYus24T5riZsBBrbeqQDguVtxQti3xdw/c2PLEVpnRNO66f
-	 /Zlrz//I5/mZE6PWaetmX5a8qSXVp+eUTLgl+1v2p7wKIc8cxsj+HnQTbt6IkTRSfN
-	 Xb7Wc+voSFph+9RhwNBQ0HZqUjl8ieSpZP4Q58Hg=
+	b=gQeUy83gX1VGugNsLjPIMGsPM60jVe6YbqpF2o0vb8WhaZA8lhP2lTG3Y1KyaZ6f5
+	 lVxKZEhK+jgpSJEnjlkd5XVIz214J+s6IErEuTP8r2CgoObOkXB7Yks5Bc9yz1U2fm
+	 Ti3TFKPBJGBytoJ2FhC7EHXsOXlHEfheBJKGZ2DU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 070/110] maple_tree: fix a potential memory leak, OOB access, or other unpredictable bug
-Date: Mon, 24 Apr 2023 15:17:32 +0200
-Message-Id: <20230424131139.010840370@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.2 071/110] ASoC: SOF: ipc4-topology: Clarify bind failure caused by missing fw_module
+Date: Mon, 24 Apr 2023 15:17:33 +0200
+Message-Id: <20230424131139.060200523@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -35,67 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Zhang <zhangpeng.00@bytedance.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 1f5f12ece722aacea1769fb644f27790ede339dc upstream.
+commit de6aa72b265b72bca2b1897d5000c8f0147d3157 upstream.
 
-In mas_alloc_nodes(), "node->node_count = 0" means to initialize the
-node_count field of the new node, but the node may not be a new node.  It
-may be a node that existed before and node_count has a value, setting it
-to 0 will cause a memory leak.  At this time, mas->alloc->total will be
-greater than the actual number of nodes in the linked list, which may
-cause many other errors.  For example, out-of-bounds access in
-mas_pop_node(), and mas_pop_node() may return addresses that should not be
-used.  Fix it by initializing node_count only for new nodes.
+The original patch uses a feature in lib/vsprintf.c to handle the invalid
+address when tring to print *_fw_module->man4_module_entry.name when the
+*rc_fw_module is NULL.
+This case is handled by check_pointer_msg() internally and turns the
+invalid pointer to '(efault)' for printing but it is hiding useful
+information about the circumstances. Change the print to emmit the name
+of the widget and a note on which side's fw_module is missing.
 
-Also, by the way, an if-else statement was removed to simplify the code.
-
-Link: https://lkml.kernel.org/r/20230411041005.26205-1-zhangpeng.00@bytedance.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Peng Zhang <zhangpeng.00@bytedance.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e3720f92e023 ("ASoC: SOF: avoid a NULL dereference with unsupported widgets")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/alsa-devel/4826f662-42f0-4a82-ba32-8bf5f8a03256@kili.mountain/
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Rule: 'Cc: stable@vger.kernel.org' or 'commit <sha1> upstream.'
+Link: https://lore.kernel.org/r/20230403090909.18233-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |   19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ sound/soc/sof/ipc4-topology.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -1298,26 +1298,21 @@ static inline void mas_alloc_nodes(struc
- 	node = mas->alloc;
- 	node->request_count = 0;
- 	while (requested) {
--		max_req = MAPLE_ALLOC_SLOTS;
--		if (node->node_count) {
--			unsigned int offset = node->node_count;
--
--			slots = (void **)&node->slot[offset];
--			max_req -= offset;
--		} else {
--			slots = (void **)&node->slot;
--		}
--
-+		max_req = MAPLE_ALLOC_SLOTS - node->node_count;
-+		slots = (void **)&node->slot[node->node_count];
- 		max_req = min(requested, max_req);
- 		count = mt_alloc_bulk(gfp, max_req, slots);
- 		if (!count)
- 			goto nomem_bulk;
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -1687,10 +1687,12 @@ static int sof_ipc4_route_setup(struct s
+ 	int ret;
  
-+		if (node->node_count == 0) {
-+			node->slot[0]->node_count = 0;
-+			node->slot[0]->request_count = 0;
-+		}
+ 	if (!src_fw_module || !sink_fw_module) {
+-		/* The NULL module will print as "(efault)" */
+-		dev_err(sdev->dev, "source %s or sink %s widget weren't set up properly\n",
+-			src_fw_module->man4_module_entry.name,
+-			sink_fw_module->man4_module_entry.name);
++		dev_err(sdev->dev,
++			"cannot bind %s -> %s, no firmware module for: %s%s\n",
++			src_widget->widget->name, sink_widget->widget->name,
++			src_fw_module ? "" : " source",
++			sink_fw_module ? "" : " sink");
 +
- 		node->node_count += count;
- 		allocated += count;
- 		node = node->slot[0];
--		node->node_count = 0;
--		node->request_count = 0;
- 		requested -= count;
+ 		return -ENODEV;
  	}
- 	mas->alloc->total = allocated;
+ 
 
 
