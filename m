@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80717C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9C8C4339B;
-	Mon, 24 Apr 2023 13:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2FE7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1832C433EF;
+	Mon, 24 Apr 2023 13:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342948;
-	bh=558TS+8mHcQ/PtVYRqDmvCYhlgnr5r7Y1jjXylo/zbA=;
+	s=korg; t=1682342951;
+	bh=PSMaGthKbzXHGfDP4E2aS/9zJjRzXZ/4JtZfPQZsqyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDbwjyymYrr5emKjTvPywDCfSTIm8rNCgAvz/WU7DmvTRabYhknJe6RW2gf6C5EgF
-	 HO9js7r1W9F/9XawTfCdImAwTbesxZINebugPpQBaJFWRAAd0aA/CiMv31izBvovkt
-	 9aJJ01t6iR9J4uZmhyrrHrBsfrAEQqh+fhBN9N3s=
+	b=XuX0HD0JiRidKWEYrQiYI3k4iPGGwW4+G707UDJODaCMupnfCMnQ0QizHaC27EeLZ
+	 +CdYHmqOgrE3MxM+hS1Bv2yu0nuy7jj8jSebHS20mbfDTrSjdE2tE8UjvxJNwB79yW
+	 vdLxZ5VqNc84Uj1BJcxpYT11/898lzQ6TgasF/Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Johansen <strit@manjaro.org>,
-	Peter Geis <pgwipeout@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 002/110] arm64: dts: rockchip: Lower sd speed on rk3566-soquartz
-Date: Mon, 24 Apr 2023 15:16:24 +0200
-Message-Id: <20230424131136.234397113@linuxfoundation.org>
+Subject: [PATCH 6.2 020/110] netfilter: nf_tables: fix ifdef to also consider nf_tables=m
+Date: Mon, 24 Apr 2023 15:16:42 +0200
+Message-Id: <20230424131136.880655996@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -36,40 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Johansen <strit@manjaro.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 5912b647bd0732ae8c78a6e5b259c82efd177d93 ]
+[ Upstream commit c55c0e91c813589dc55bea6bf9a9fbfaa10ae41d ]
 
-Just like the Quartz64 Model B the previously stated speed of sdr-104
-in soquartz is too high for the hardware to reliably communicate with
-some fast SD cards.
-Especially on some carrierboards.
+nftables can be built as a module, so fix the preprocessor conditional
+accordingly.
 
-Lower this to sd-uhs-sdr50 to fix this.
-
-Fixes: 5859b5a9c3ac ("arm64: dts: rockchip: add SoQuartz CM4IO dts")
-Signed-off-by: Dan Johansen <strit@manjaro.org>
-Acked-by: Peter Geis <pgwipeout@gmail.com>
-Link: https://lore.kernel.org/r/20230304164135.28430-1-strit@manjaro.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 478b360a47b7 ("netfilter: nf_tables: fix nf_trace always-on with XT_TRACE=n")
+Reported-by: Florian Fainelli <f.fainelli@gmail.com>
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-soquartz.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/skbuff.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-soquartz.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-soquartz.dtsi
-index ce7165d7f1a14..102e448bc026a 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-soquartz.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-soquartz.dtsi
-@@ -598,7 +598,7 @@
- 	non-removable;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&sdmmc1_bus4 &sdmmc1_cmd &sdmmc1_clk>;
--	sd-uhs-sdr104;
-+	sd-uhs-sdr50;
- 	vmmc-supply = <&vcc3v3_sys>;
- 	vqmmc-supply = <&vcc_1v8>;
- 	status = "okay";
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index c75cb13bb1b13..a1e7920f14ebc 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -4688,7 +4688,7 @@ static inline void nf_reset_ct(struct sk_buff *skb)
+ 
+ static inline void nf_reset_trace(struct sk_buff *skb)
+ {
+-#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || defined(CONFIG_NF_TABLES)
++#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || IS_ENABLED(CONFIG_NF_TABLES)
+ 	skb->nf_trace = 0;
+ #endif
+ }
+@@ -4708,7 +4708,7 @@ static inline void __nf_copy(struct sk_buff *dst, const struct sk_buff *src,
+ 	dst->_nfct = src->_nfct;
+ 	nf_conntrack_get(skb_nfct(src));
+ #endif
+-#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || defined(CONFIG_NF_TABLES)
++#if IS_ENABLED(CONFIG_NETFILTER_XT_TARGET_TRACE) || IS_ENABLED(CONFIG_NF_TABLES)
+ 	if (copy)
+ 		dst->nf_trace = src->nf_trace;
+ #endif
 -- 
 2.39.2
 
