@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9457C
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB65C433D2;
-	Mon, 24 Apr 2023 13:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7BF7C
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:29:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74090C433D2;
+	Mon, 24 Apr 2023 13:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682342972;
-	bh=XceAHinoPLvIfUIBuPBswUzyA8nZBrYRZs6HlidQhSo=;
+	s=korg; t=1682342974;
+	bh=OoVgQZt3seXwT5OtRPIxWX1KCS61hqoGYCWr+9acZKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGHYxijAgue2htwz1z8YvvH+ZF5VHXF0slGTZcs+CRAy++Vn5rFmftM8cpv6tqt64
-	 69ACNpwbi9phIqeDJB6tt9/GGl1CKPgaA7UPVkvzRFl4EZ3bP57qXBzkTsQFkI+wW7
-	 gFXv4DeXOAQB6rOAx4C502dzJ/cG23DvhTdhd+ww=
+	b=nf3kIGo43Lkb2uDDS6/1vXsctxx7Mf00x80010QQKtl326XnRJDoNIMhzwOnD2dlE
+	 zNYJyTVUgBuMoTCSnDV04tBRDoyr+UITeHqAj4G/QtcVfd1KD3b0sKcR9+nqExzc/p
+	 bKQDPGIr3vIkKlJR2v0R6DUZcpYiBInoOu1AWbdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WANG Xuerui <git@xen0n.name>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 028/110] LoongArch: Fix build error if CONFIG_SUSPEND is not set
-Date: Mon, 24 Apr 2023 15:16:50 +0200
-Message-Id: <20230424131137.183655156@linuxfoundation.org>
+Subject: [PATCH 6.2 029/110] bonding: Fix memory leak when changing bond type to Ethernet
+Date: Mon, 24 Apr 2023 15:16:51 +0200
+Message-Id: <20230424131137.217891106@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -37,56 +37,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 1cf62488f5e465b1cd814d19be238a4b7ad5be38 ]
+[ Upstream commit c484fcc058bada604d7e4e5228d4affb646ddbc2 ]
 
-We can see the following build error on LoongArch if CONFIG_SUSPEND is
-not set:
+When a net device is put administratively up, its 'IFF_UP' flag is set
+(if not set already) and a 'NETDEV_UP' notification is emitted, which
+causes the 8021q driver to add VLAN ID 0 on the device. The reverse
+happens when a net device is put administratively down.
 
-  ld: drivers/acpi/sleep.o: in function 'acpi_pm_prepare':
-  sleep.c:(.text+0x2b8): undefined reference to 'loongarch_wakeup_start'
+When changing the type of a bond to Ethernet, its 'IFF_UP' flag is
+incorrectly cleared, resulting in the kernel skipping the above process
+and VLAN ID 0 being leaked [1].
 
-Here is the call trace:
+Fix by restoring the flag when changing the type to Ethernet, in a
+similar fashion to the restoration of the 'IFF_SLAVE' flag.
 
-  acpi_pm_prepare()
-    __acpi_pm_prepare()
-      acpi_sleep_prepare()
-        acpi_get_wakeup_address()
-          loongarch_wakeup_start()
+The issue can be reproduced using the script in [2], with example out
+before and after the fix in [3].
 
-Root cause: loongarch_wakeup_start() is defined in arch/loongarch/power/
-suspend_asm.S which is only built under CONFIG_SUSPEND. In order to fix
-the build error, just let acpi_get_wakeup_address() return 0 if CONFIG_
-SUSPEND is not set.
+[1]
+unreferenced object 0xffff888103479900 (size 256):
+  comm "ip", pid 329, jiffies 4294775225 (age 28.561s)
+  hex dump (first 32 bytes):
+    00 a0 0c 15 81 88 ff ff 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff81a6051a>] kmalloc_trace+0x2a/0xe0
+    [<ffffffff8406426c>] vlan_vid_add+0x30c/0x790
+    [<ffffffff84068e21>] vlan_device_event+0x1491/0x21a0
+    [<ffffffff81440c8e>] notifier_call_chain+0xbe/0x1f0
+    [<ffffffff8372383a>] call_netdevice_notifiers_info+0xba/0x150
+    [<ffffffff837590f2>] __dev_notify_flags+0x132/0x2e0
+    [<ffffffff8375ad9f>] dev_change_flags+0x11f/0x180
+    [<ffffffff8379af36>] do_setlink+0xb96/0x4060
+    [<ffffffff837adf6a>] __rtnl_newlink+0xc0a/0x18a0
+    [<ffffffff837aec6c>] rtnl_newlink+0x6c/0xa0
+    [<ffffffff837ac64e>] rtnetlink_rcv_msg+0x43e/0xe00
+    [<ffffffff839a99e0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff839a738f>] netlink_unicast+0x53f/0x810
+    [<ffffffff839a7fcb>] netlink_sendmsg+0x96b/0xe90
+    [<ffffffff8369d12f>] ____sys_sendmsg+0x30f/0xa70
+    [<ffffffff836a6d7a>] ___sys_sendmsg+0x13a/0x1e0
+unreferenced object 0xffff88810f6a83e0 (size 32):
+  comm "ip", pid 329, jiffies 4294775225 (age 28.561s)
+  hex dump (first 32 bytes):
+    a0 99 47 03 81 88 ff ff a0 99 47 03 81 88 ff ff  ..G.......G.....
+    81 00 00 00 01 00 00 00 cc cc cc cc cc cc cc cc  ................
+  backtrace:
+    [<ffffffff81a6051a>] kmalloc_trace+0x2a/0xe0
+    [<ffffffff84064369>] vlan_vid_add+0x409/0x790
+    [<ffffffff84068e21>] vlan_device_event+0x1491/0x21a0
+    [<ffffffff81440c8e>] notifier_call_chain+0xbe/0x1f0
+    [<ffffffff8372383a>] call_netdevice_notifiers_info+0xba/0x150
+    [<ffffffff837590f2>] __dev_notify_flags+0x132/0x2e0
+    [<ffffffff8375ad9f>] dev_change_flags+0x11f/0x180
+    [<ffffffff8379af36>] do_setlink+0xb96/0x4060
+    [<ffffffff837adf6a>] __rtnl_newlink+0xc0a/0x18a0
+    [<ffffffff837aec6c>] rtnl_newlink+0x6c/0xa0
+    [<ffffffff837ac64e>] rtnetlink_rcv_msg+0x43e/0xe00
+    [<ffffffff839a99e0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff839a738f>] netlink_unicast+0x53f/0x810
+    [<ffffffff839a7fcb>] netlink_sendmsg+0x96b/0xe90
+    [<ffffffff8369d12f>] ____sys_sendmsg+0x30f/0xa70
+    [<ffffffff836a6d7a>] ___sys_sendmsg+0x13a/0x1e0
 
-Fixes: 366bb35a8e48 ("LoongArch: Add suspend (ACPI S3) support")
-Reviewed-by: WANG Xuerui <git@xen0n.name>
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/all/11215033-fa3c-ecb1-2fc0-e9aeba47be9b@infradead.org/
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+[2]
+ip link add name t-nlmon type nlmon
+ip link add name t-dummy type dummy
+ip link add name t-bond type bond mode active-backup
+
+ip link set dev t-bond up
+ip link set dev t-nlmon master t-bond
+ip link set dev t-nlmon nomaster
+ip link show dev t-bond
+ip link set dev t-dummy master t-bond
+ip link show dev t-bond
+
+ip link del dev t-bond
+ip link del dev t-dummy
+ip link del dev t-nlmon
+
+[3]
+Before:
+
+12: t-bond: <NO-CARRIER,BROADCAST,MULTICAST,MASTER,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/netlink
+12: t-bond: <BROADCAST,MULTICAST,MASTER,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 46:57:39:a4:46:a2 brd ff:ff:ff:ff:ff:ff
+
+After:
+
+12: t-bond: <NO-CARRIER,BROADCAST,MULTICAST,MASTER,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/netlink
+12: t-bond: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 66:48:7b:74:b6:8a brd ff:ff:ff:ff:ff:ff
+
+Fixes: e36b9d16c6a6 ("bonding: clean muticast addresses when device changes type")
+Fixes: 75c78500ddad ("bonding: remap muticast addresses without using dev_close() and dev_open()")
+Fixes: 9ec7eb60dcbc ("bonding: restore IFF_MASTER/SLAVE flags on bond enslave ether type change")
+Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Link: https://lore.kernel.org/netdev/78a8a03b-6070-3e6b-5042-f848dab16fb8@alu.unizg.hr/
+Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/acpi.h | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/bonding/bond_main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/acpi.h b/arch/loongarch/include/asm/acpi.h
-index 4198753aa1d0f..976a810352c60 100644
---- a/arch/loongarch/include/asm/acpi.h
-+++ b/arch/loongarch/include/asm/acpi.h
-@@ -41,8 +41,11 @@ extern void loongarch_suspend_enter(void);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 415cd95fb140f..ddbf892e9b9ce 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1775,14 +1775,15 @@ void bond_lower_state_changed(struct slave *slave)
  
- static inline unsigned long acpi_get_wakeup_address(void)
+ /* The bonding driver uses ether_setup() to convert a master bond device
+  * to ARPHRD_ETHER, that resets the target netdevice's flags so we always
+- * have to restore the IFF_MASTER flag, and only restore IFF_SLAVE if it was set
++ * have to restore the IFF_MASTER flag, and only restore IFF_SLAVE and IFF_UP
++ * if they were set
+  */
+ static void bond_ether_setup(struct net_device *bond_dev)
  {
-+#ifdef CONFIG_SUSPEND
- 	extern void loongarch_wakeup_start(void);
- 	return (unsigned long)loongarch_wakeup_start;
-+#endif
-+	return 0UL;
+-	unsigned int slave_flag = bond_dev->flags & IFF_SLAVE;
++	unsigned int flags = bond_dev->flags & (IFF_SLAVE | IFF_UP);
+ 
+ 	ether_setup(bond_dev);
+-	bond_dev->flags |= IFF_MASTER | slave_flag;
++	bond_dev->flags |= IFF_MASTER | flags;
+ 	bond_dev->priv_flags &= ~IFF_TX_SKB_SHARING;
  }
  
- #endif /* _ASM_LOONGARCH_ACPI_H */
 -- 
 2.39.2
 
