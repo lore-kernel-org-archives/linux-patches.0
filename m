@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7064E2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D90C433EF;
-	Mon, 24 Apr 2023 13:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F052108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90953C433EF;
+	Mon, 24 Apr 2023 13:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343180;
-	bh=MyUoH/X7oQvxECshEf1qBDO57rFW1uTCmTA5sPUwDDo=;
+	s=korg; t=1682343182;
+	bh=mQF/e1PYqVooFHxlUefpRDrqwcJsaAT6/dZxM10n0a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2FDmPHkSkP1K31GIivWxwHhJ5EjtUyIsgHA2zxadZkH6l0rVwHJzbNio6wW5vVZW
-	 dHW58wDrz7s1P6GwsBaulLLFWcFNyvrFV/cWY6Ek7pZcpuAhrlBgrh7Jp9OKh9PWC6
-	 Y6oWUjIjqEmPWBaoedgDLYKPMRtPU5sNu98kTOrc=
+	b=AcgowC8a6kg5ncWjXOvlkcim7+K6GAITnYSRzAlrqixUuZ2r9wZL/xku8BmD7D3Gu
+	 0Pf5f6lChnC28yUi+dUsgp8kX8FATV8qKFbUcxodn98zfurNBh2mwvQrKpiSAlGN5Q
+	 bNT6OWMYoH/8lddhv9hoRgFLQbz9qlIYLpB5WsvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Chancel Liu <chancel.liu@nxp.com>,
 	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Natalia Petrova <n.petrova@fintech.ru>
-Subject: [PATCH 6.2 108/110] ASoC: fsl_asrc_dma: fix potential null-ptr-deref
-Date: Mon, 24 Apr 2023 15:18:10 +0200
-Message-Id: <20230424131140.667975037@linuxfoundation.org>
+	Iuliana Prodan <iuliana.prodan@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.2 109/110] ASoC: fsl_sai: Fix pins setting for i.MX8QM platform
+Date: Mon, 24 Apr 2023 15:18:11 +0200
+Message-Id: <20230424131140.716213399@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -36,54 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Chancel Liu <chancel.liu@nxp.com>
 
-commit 86a24e99c97234f87d9f70b528a691150e145197 upstream.
+commit 238787157d83969e5149c8e99787d5d90e85fbe5 upstream.
 
-dma_request_slave_channel() may return NULL which will lead to
-NULL pointer dereference error in 'tmp_chan->private'.
+SAI on i.MX8QM platform supports the data lines up to 4. So the pins
+setting should be corrected to 4.
 
-Correct this behaviour by, first, switching from deprecated function
-dma_request_slave_channel() to dma_request_chan(). Secondly, enable
-sanity check for the resuling value of dma_request_chan().
-Also, fix description that follows the enacted changes and that
-concerns the use of dma_request_slave_channel().
-
-Fixes: 706e2c881158 ("ASoC: fsl_asrc_dma: Reuse the dma channel if available in Back-End")
-Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Fixes: eba0f0077519 ("ASoC: fsl_sai: Enable combine mode soft")
+Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
 Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Link: https://lore.kernel.org/r/20230417133242.53339-1-n.zhandarovich@fintech.ru
+Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Link: https://lore.kernel.org/r/20230418094259.4150771-1-chancel.liu@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_asrc_dma.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ sound/soc/fsl/fsl_sai.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/fsl/fsl_asrc_dma.c
-+++ b/sound/soc/fsl/fsl_asrc_dma.c
-@@ -209,14 +209,19 @@ static int fsl_asrc_dma_hw_params(struct
- 		be_chan = soc_component_to_pcm(component_be)->chan[substream->stream];
- 		tmp_chan = be_chan;
- 	}
--	if (!tmp_chan)
--		tmp_chan = dma_request_slave_channel(dev_be, tx ? "tx" : "rx");
-+	if (!tmp_chan) {
-+		tmp_chan = dma_request_chan(dev_be, tx ? "tx" : "rx");
-+		if (IS_ERR(tmp_chan)) {
-+			dev_err(dev, "failed to request DMA channel for Back-End\n");
-+			return -EINVAL;
-+		}
-+	}
- 
- 	/*
- 	 * An EDMA DEV_TO_DEV channel is fixed and bound with DMA event of each
- 	 * peripheral, unlike SDMA channel that is allocated dynamically. So no
- 	 * need to configure dma_request and dma_request2, but get dma_chan of
--	 * Back-End device directly via dma_request_slave_channel.
-+	 * Back-End device directly via dma_request_chan.
- 	 */
- 	if (!asrc->use_edma) {
- 		/* Get DMA request of Back-End */
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -1543,7 +1543,7 @@ static const struct fsl_sai_soc_data fsl
+ 	.use_imx_pcm = true,
+ 	.use_edma = true,
+ 	.fifo_depth = 64,
+-	.pins = 1,
++	.pins = 4,
+ 	.reg_offset = 0,
+ 	.mclk0_is_mclk1 = false,
+ 	.flags = 0,
 
 
