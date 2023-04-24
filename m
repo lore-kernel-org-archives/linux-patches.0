@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C1B2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C93C433EF;
-	Mon, 24 Apr 2023 13:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8632108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:33:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B72C433D2;
+	Mon, 24 Apr 2023 13:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343201;
-	bh=av5o3vC55bbMILVskKfeoTt01agSyBcf5512qMmSJbE=;
+	s=korg; t=1682343203;
+	bh=Fd67DUmgcp3dcXuG3HRyaJFLs/SAgMjAeeVxLaWDe34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFGAicJ3rCLduLsOoqBTVpD1yjqmb+QpIIV8Tq12eXW035cdSYUL7AVti5933dqEO
-	 gNmZ0lVchrTmNjG90IAxV2Leiwrfh6JRDPPBuQ/MjQNQL+L70tnL50XPuy0FsFWsmN
-	 J43GpvrX7AEuvhv0IuJgvzVeKU7J6rPVzeSOnsCo=
+	b=vDsHGy0ohj/1SMSV/lzlyYWEZuib53ACUHhFzn3wu90pRXv60o0uXlV6/5FOZzREn
+	 n4hBM+GP1SYGSI9sMSermMi0cOC4eexmy9V2/NeQSNJIZw7IAT18Y3zXOflD6UW5Ir
+	 ocyt0KMuN8Megi2vUhd87+PdwUZ2S7SJBS/l9w94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hrdl <git@hrdl.eu>,
-	Alistair Francis <alistair@alistair23.me>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.2 102/110] Input: cyttsp5 - fix sensing configuration data structure
-Date: Mon, 24 Apr 2023 15:18:04 +0200
-Message-Id: <20230424131140.400353698@linuxfoundation.org>
+	Soumya Negi <soumya.negi97@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	syzbot+04ee0cb4caccaed12d78@syzkaller.appspotmail.com
+Subject: [PATCH 6.2 103/110] Input: pegasus-notetaker - check pipe type when probing
+Date: Mon, 24 Apr 2023 15:18:05 +0200
+Message-Id: <20230424131140.442896054@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
 References: <20230424131136.142490414@linuxfoundation.org>
@@ -35,36 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: hrdl <git@hrdl.eu>
+From: Soumya Negi <soumya.negi97@gmail.com>
 
-commit 5dc63e56a9cf8df0b59c234a505a1653f1bdf885 upstream.
+commit b3d80fd27a3c2d8715a40cbf876139b56195f162 upstream.
 
-Prior to this patch, the sensing configuration data was not parsed
-correctly, breaking detection of max_tch. The vendor driver includes
-this field. This change informs the driver about the correct maximum
-number of simultaneous touch inputs.
+Fix WARNING in pegasus_open/usb_submit_urb
+Syzbot bug: https://syzkaller.appspot.com/bug?id=bbc107584dcf3262253ce93183e51f3612aaeb13
 
-Tested on a Pine64 PineNote with a modified touch screen controller
-firmware.
+Warning raised because pegasus_driver submits transfer request for
+bogus URB (pipe type does not match endpoint type). Add sanity check at
+probe time for pipe value extracted from endpoint descriptor. Probe
+will fail if sanity check fails.
 
-Signed-off-by: hrdl <git@hrdl.eu>
-Reviewed-by: Alistair Francis <alistair@alistair23.me>
-Link: https://lore.kernel.org/r/20230411211651.3791304-1-git@hrdl.eu
+Reported-and-tested-by: syzbot+04ee0cb4caccaed12d78@syzkaller.appspotmail.com
+Signed-off-by: Soumya Negi <soumya.negi97@gmail.com>
+Link: https://lore.kernel.org/r/20230404074145.11523-1-soumya.negi97@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/cyttsp5.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/tablet/pegasus_notetaker.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/input/touchscreen/cyttsp5.c
-+++ b/drivers/input/touchscreen/cyttsp5.c
-@@ -111,6 +111,7 @@ struct cyttsp5_sensing_conf_data_dev {
- 	__le16 max_z;
- 	u8 origin_x;
- 	u8 origin_y;
-+	u8 panel_id;
- 	u8 btn;
- 	u8 scan_mode;
- 	u8 max_num_of_tch_per_refresh_cycle;
+--- a/drivers/input/tablet/pegasus_notetaker.c
++++ b/drivers/input/tablet/pegasus_notetaker.c
+@@ -296,6 +296,12 @@ static int pegasus_probe(struct usb_inte
+ 	pegasus->intf = intf;
+ 
+ 	pipe = usb_rcvintpipe(dev, endpoint->bEndpointAddress);
++	/* Sanity check that pipe's type matches endpoint's type */
++	if (usb_pipe_type_check(dev, pipe)) {
++		error = -EINVAL;
++		goto err_free_mem;
++	}
++
+ 	pegasus->data_len = usb_maxpacket(dev, pipe);
+ 
+ 	pegasus->data = usb_alloc_coherent(dev, pegasus->data_len, GFP_KERNEL,
 
 
