@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D90C2108
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:37:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D60C433D2;
-	Mon, 24 Apr 2023 13:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20392108
+	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 13:37:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55938C433D2;
+	Mon, 24 Apr 2023 13:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682343421;
-	bh=cbV8s1f+4nwaatZU50V3X98LAnibAaJCKZ6/RQO63Ic=;
+	s=korg; t=1682343423;
+	bh=H679DEubx8698IukzNFuB3GEdAoJiuYjRCsCrGJwtz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgbyB1gU+jmijORTICYJOLBaqCxM15fpmw3onF525ghuQWuvE0rqNzSGgccx5RFf1
-	 1Lh7PYhlDbkRuo/Oq5QQW1DXrkXS1hiY7tEJ3WGvMsuR7avoijG/kBzajcP58RbVhP
-	 mTOyhcuaXd8ab43U3dbhGsHymSWEvstqDw1HZQzw=
+	b=c/V/HjDQyKZvT7Zks8xrw8Yv53sPs3EVrJIghJQQPPxslVSEWyURrEZKRJ1GKJOAn
+	 oXbSG3nobmTvSkVNY79vbPvxmioc69VGXIRmbai37TxwOsp4HzaKH3yUquh+gEE0gc
+	 d164dPyYYIQqyxjSA+E9I+TG6UUfXgRS4a4DYGLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ritesh Harjani <riteshh@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 4.14 19/28] ext4: remove duplicate definition of ext4_xattr_ibody_inline_set()
-Date: Mon, 24 Apr 2023 15:18:40 +0200
-Message-Id: <20230424131121.966701590@linuxfoundation.org>
+	Gwangun Jung <exsociety@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 02/28] net: sched: sch_qfq: prevent slab-out-of-bounds in qfq_activate_agg
+Date: Mon, 24 Apr 2023 15:18:23 +0200
+Message-Id: <20230424131121.403819552@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230424131121.331252806@linuxfoundation.org>
 References: <20230424131121.331252806@linuxfoundation.org>
@@ -35,126 +36,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ritesh Harjani <riteshh@linux.ibm.com>
+From: Gwangun Jung <exsociety@gmail.com>
 
-[ Upstream commit 310c097c2bdbea253d6ee4e064f3e65580ef93ac ]
+[ Upstream commit 3037933448f60f9acb705997eae62013ecb81e0d ]
 
-ext4_xattr_ibody_inline_set() & ext4_xattr_ibody_set() have the exact
-same definition.  Hence remove ext4_xattr_ibody_inline_set() and all
-its call references. Convert the callers of it to call
-ext4_xattr_ibody_set() instead.
+If the TCA_QFQ_LMAX value is not offered through nlattr, lmax is determined by the MTU value of the network device.
+The MTU of the loopback device can be set up to 2^31-1.
+As a result, it is possible to have an lmax value that exceeds QFQ_MIN_LMAX.
 
-[ Modified to preserve ext4_xattr_ibody_set() and remove
-  ext4_xattr_ibody_inline_set() instead. -- TYT ]
+Due to the invalid lmax value, an index is generated that exceeds the QFQ_MAX_INDEX(=24) value, causing out-of-bounds read/write errors.
 
-Signed-off-by: Ritesh Harjani <riteshh@linux.ibm.com>
-Link: https://lore.kernel.org/r/fd566b799bbbbe9b668eb5eecde5b5e319e3694f.1622685482.git.riteshh@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The following reports a oob access:
+
+[   84.582666] BUG: KASAN: slab-out-of-bounds in qfq_activate_agg.constprop.0 (net/sched/sch_qfq.c:1027 net/sched/sch_qfq.c:1060 net/sched/sch_qfq.c:1313)
+[   84.583267] Read of size 4 at addr ffff88810f676948 by task ping/301
+[   84.583686]
+[   84.583797] CPU: 3 PID: 301 Comm: ping Not tainted 6.3.0-rc5 #1
+[   84.584164] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+[   84.584644] Call Trace:
+[   84.584787]  <TASK>
+[   84.584906] dump_stack_lvl (lib/dump_stack.c:107 (discriminator 1))
+[   84.585108] print_report (mm/kasan/report.c:320 mm/kasan/report.c:430)
+[   84.585570] kasan_report (mm/kasan/report.c:538)
+[   84.585988] qfq_activate_agg.constprop.0 (net/sched/sch_qfq.c:1027 net/sched/sch_qfq.c:1060 net/sched/sch_qfq.c:1313)
+[   84.586599] qfq_enqueue (net/sched/sch_qfq.c:1255)
+[   84.587607] dev_qdisc_enqueue (net/core/dev.c:3776)
+[   84.587749] __dev_queue_xmit (./include/net/sch_generic.h:186 net/core/dev.c:3865 net/core/dev.c:4212)
+[   84.588763] ip_finish_output2 (./include/net/neighbour.h:546 net/ipv4/ip_output.c:228)
+[   84.589460] ip_output (net/ipv4/ip_output.c:430)
+[   84.590132] ip_push_pending_frames (./include/net/dst.h:444 net/ipv4/ip_output.c:126 net/ipv4/ip_output.c:1586 net/ipv4/ip_output.c:1606)
+[   84.590285] raw_sendmsg (net/ipv4/raw.c:649)
+[   84.591960] sock_sendmsg (net/socket.c:724 net/socket.c:747)
+[   84.592084] __sys_sendto (net/socket.c:2142)
+[   84.593306] __x64_sys_sendto (net/socket.c:2150)
+[   84.593779] do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+[   84.593902] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+[   84.594070] RIP: 0033:0x7fe568032066
+[   84.594192] Code: 0e 0d 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 41 89 ca 64 8b 04 25 18 00 00 00 85 c09[ 84.594796] RSP: 002b:00007ffce388b4e8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+
+Code starting with the faulting instruction
+===========================================
+[   84.595047] RAX: ffffffffffffffda RBX: 00007ffce388cc70 RCX: 00007fe568032066
+[   84.595281] RDX: 0000000000000040 RSI: 00005605fdad6d10 RDI: 0000000000000003
+[   84.595515] RBP: 00005605fdad6d10 R08: 00007ffce388eeec R09: 0000000000000010
+[   84.595749] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000040
+[   84.595984] R13: 00007ffce388cc30 R14: 00007ffce388b4f0 R15: 0000001d00000001
+[   84.596218]  </TASK>
+[   84.596295]
+[   84.596351] Allocated by task 291:
+[   84.596467] kasan_save_stack (mm/kasan/common.c:46)
+[   84.596597] kasan_set_track (mm/kasan/common.c:52)
+[   84.596725] __kasan_kmalloc (mm/kasan/common.c:384)
+[   84.596852] __kmalloc_node (./include/linux/kasan.h:196 mm/slab_common.c:967 mm/slab_common.c:974)
+[   84.596979] qdisc_alloc (./include/linux/slab.h:610 ./include/linux/slab.h:731 net/sched/sch_generic.c:938)
+[   84.597100] qdisc_create (net/sched/sch_api.c:1244)
+[   84.597222] tc_modify_qdisc (net/sched/sch_api.c:1680)
+[   84.597357] rtnetlink_rcv_msg (net/core/rtnetlink.c:6174)
+[   84.597495] netlink_rcv_skb (net/netlink/af_netlink.c:2574)
+[   84.597627] netlink_unicast (net/netlink/af_netlink.c:1340 net/netlink/af_netlink.c:1365)
+[   84.597759] netlink_sendmsg (net/netlink/af_netlink.c:1942)
+[   84.597891] sock_sendmsg (net/socket.c:724 net/socket.c:747)
+[   84.598016] ____sys_sendmsg (net/socket.c:2501)
+[   84.598147] ___sys_sendmsg (net/socket.c:2557)
+[   84.598275] __sys_sendmsg (./include/linux/file.h:31 net/socket.c:2586)
+[   84.598399] do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+[   84.598520] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+[   84.598688]
+[   84.598744] The buggy address belongs to the object at ffff88810f674000
+[   84.598744]  which belongs to the cache kmalloc-8k of size 8192
+[   84.599135] The buggy address is located 2664 bytes to the right of
+[   84.599135]  allocated 7904-byte region [ffff88810f674000, ffff88810f675ee0)
+[   84.599544]
+[   84.599598] The buggy address belongs to the physical page:
+[   84.599777] page:00000000e638567f refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10f670
+[   84.600074] head:00000000e638567f order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+[   84.600330] flags: 0x200000000010200(slab|head|node=0|zone=2)
+[   84.600517] raw: 0200000000010200 ffff888100043180 dead000000000122 0000000000000000
+[   84.600764] raw: 0000000000000000 0000000080020002 00000001ffffffff 0000000000000000
+[   84.601009] page dumped because: kasan: bad access detected
+[   84.601187]
+[   84.601241] Memory state around the buggy address:
+[   84.601396]  ffff88810f676800: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   84.601620]  ffff88810f676880: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   84.601845] >ffff88810f676900: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   84.602069]                                               ^
+[   84.602243]  ffff88810f676980: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   84.602468]  ffff88810f676a00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   84.602693] ==================================================================
+[   84.602924] Disabling lock debugging due to kernel taint
+
+Fixes: 3015f3d2a3cd ("pkt_sched: enable QFQ to support TSO/GSO")
+Reported-by: Gwangun Jung <exsociety@gmail.com>
+Signed-off-by: Gwangun Jung <exsociety@gmail.com>
+Acked-by: Jamal Hadi Salim<jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inline.c |   11 +++++------
- fs/ext4/xattr.c  |   26 +-------------------------
- fs/ext4/xattr.h  |    6 +++---
- 3 files changed, 9 insertions(+), 34 deletions(-)
+ net/sched/sch_qfq.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -212,7 +212,7 @@ out:
- /*
-  * write the buffer to the inline inode.
-  * If 'create' is set, we don't need to do the extra copy in the xattr
-- * value since it is already handled by ext4_xattr_ibody_inline_set.
-+ * value since it is already handled by ext4_xattr_ibody_set.
-  * That saves us one memcpy.
-  */
- static void ext4_write_inline_data(struct inode *inode, struct ext4_iloc *iloc,
-@@ -294,7 +294,7 @@ static int ext4_create_inline_data(handl
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 4701019768955..2832e16b6c2e1 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -432,15 +432,16 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	} else
+ 		weight = 1;
  
- 	BUG_ON(!is.s.not_found);
+-	if (tb[TCA_QFQ_LMAX]) {
++	if (tb[TCA_QFQ_LMAX])
+ 		lmax = nla_get_u32(tb[TCA_QFQ_LMAX]);
+-		if (lmax < QFQ_MIN_LMAX || lmax > (1UL << QFQ_MTU_SHIFT)) {
+-			pr_notice("qfq: invalid max length %u\n", lmax);
+-			return -EINVAL;
+-		}
+-	} else
++	else
+ 		lmax = psched_mtu(qdisc_dev(sch));
  
--	error = ext4_xattr_ibody_inline_set(handle, inode, &i, &is);
-+	error = ext4_xattr_ibody_set(handle, inode, &i, &is);
- 	if (error) {
- 		if (error == -ENOSPC)
- 			ext4_clear_inode_state(inode,
-@@ -366,7 +366,7 @@ static int ext4_update_inline_data(handl
- 	i.value = value;
- 	i.value_len = len;
++	if (lmax < QFQ_MIN_LMAX || lmax > (1UL << QFQ_MTU_SHIFT)) {
++		pr_notice("qfq: invalid max length %u\n", lmax);
++		return -EINVAL;
++	}
++
+ 	inv_w = ONE_FP / weight;
+ 	weight = ONE_FP / inv_w;
  
--	error = ext4_xattr_ibody_inline_set(handle, inode, &i, &is);
-+	error = ext4_xattr_ibody_set(handle, inode, &i, &is);
- 	if (error)
- 		goto out;
- 
-@@ -439,7 +439,7 @@ static int ext4_destroy_inline_data_nolo
- 	if (error)
- 		goto out;
- 
--	error = ext4_xattr_ibody_inline_set(handle, inode, &i, &is);
-+	error = ext4_xattr_ibody_set(handle, inode, &i, &is);
- 	if (error)
- 		goto out;
- 
-@@ -1951,8 +1951,7 @@ int ext4_inline_data_truncate(struct ino
- 			i.value = value;
- 			i.value_len = i_size > EXT4_MIN_INLINE_DATA_SIZE ?
- 					i_size - EXT4_MIN_INLINE_DATA_SIZE : 0;
--			err = ext4_xattr_ibody_inline_set(handle, inode,
--							  &i, &is);
-+			err = ext4_xattr_ibody_set(handle, inode, &i, &is);
- 			if (err)
- 				goto out_error;
- 		}
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -2221,31 +2221,7 @@ int ext4_xattr_ibody_find(struct inode *
- 	return 0;
- }
- 
--int ext4_xattr_ibody_inline_set(handle_t *handle, struct inode *inode,
--				struct ext4_xattr_info *i,
--				struct ext4_xattr_ibody_find *is)
--{
--	struct ext4_xattr_ibody_header *header;
--	struct ext4_xattr_search *s = &is->s;
--	int error;
--
--	if (EXT4_I(inode)->i_extra_isize == 0)
--		return -ENOSPC;
--	error = ext4_xattr_set_entry(i, s, handle, inode, false /* is_block */);
--	if (error)
--		return error;
--	header = IHDR(inode, ext4_raw_inode(&is->iloc));
--	if (!IS_LAST_ENTRY(s->first)) {
--		header->h_magic = cpu_to_le32(EXT4_XATTR_MAGIC);
--		ext4_set_inode_state(inode, EXT4_STATE_XATTR);
--	} else {
--		header->h_magic = cpu_to_le32(0);
--		ext4_clear_inode_state(inode, EXT4_STATE_XATTR);
--	}
--	return 0;
--}
--
--static int ext4_xattr_ibody_set(handle_t *handle, struct inode *inode,
-+int ext4_xattr_ibody_set(handle_t *handle, struct inode *inode,
- 				struct ext4_xattr_info *i,
- 				struct ext4_xattr_ibody_find *is)
- {
---- a/fs/ext4/xattr.h
-+++ b/fs/ext4/xattr.h
-@@ -198,9 +198,9 @@ extern int ext4_xattr_ibody_find(struct
- extern int ext4_xattr_ibody_get(struct inode *inode, int name_index,
- 				const char *name,
- 				void *buffer, size_t buffer_size);
--extern int ext4_xattr_ibody_inline_set(handle_t *handle, struct inode *inode,
--				       struct ext4_xattr_info *i,
--				       struct ext4_xattr_ibody_find *is);
-+extern int ext4_xattr_ibody_set(handle_t *handle, struct inode *inode,
-+				struct ext4_xattr_info *i,
-+				struct ext4_xattr_ibody_find *is);
- 
- extern struct mb_cache *ext4_xattr_create_cache(void);
- extern void ext4_xattr_destroy_cache(struct mb_cache *);
+-- 
+2.39.2
+
 
 
