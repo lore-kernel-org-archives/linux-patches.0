@@ -1,151 +1,253 @@
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C087B
-	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 11:09:22 +0000 (UTC)
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20230425110914euoutp01a1c023e5e94f203189b0096c55669ba6~ZKPGinUBb2902429024euoutp01b
-	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 11:09:14 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230425110914euoutp01a1c023e5e94f203189b0096c55669ba6~ZKPGinUBb2902429024euoutp01b
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1682420954;
-	bh=Gc4jFl8KquubYFrW8xZv5Gqj3fqTntNDZhVWlXh2E4U=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=ZpSJzBmgfMItZFL1GydmZGuV7A9DANq+FLr4aQyVdi24VNkp/SuxI81tY4tcnNRaV
-	 3TrgU08eOtDduHCeRgPsbbuWnbT/tHv4qBl75aPD8lMuKfp3gUQQybyMeeCLzIy3wC
-	 b/oxmLOkUJ6jVhljx5E7e8dQa4fwLiz5ctZJI/P0=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20230425110913eucas1p16ebb723297aa94d2766c734d83183e6b~ZKPGNItUH1270512705eucas1p1e;
-	Tue, 25 Apr 2023 11:09:13 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-	eusmges1new.samsung.com (EUCPMTA) with SMTP id 6E.2B.42423.9D4B7446; Tue, 25
-	Apr 2023 12:09:13 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20230425110913eucas1p22cf9d4c7401881999adb12134b985273~ZKPFz5aeZ0812808128eucas1p2k;
-	Tue, 25 Apr 2023 11:09:13 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20230425110913eusmtrp2c46b12ef17d135e5deccacac75179df6~ZKPFzHa7Q1014910149eusmtrp2o;
-	Tue, 25 Apr 2023 11:09:13 +0000 (GMT)
-X-AuditID: cbfec7f2-25927a800002a5b7-37-6447b4d905ba
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-	eusmgms1.samsung.com (EUCPMTA) with SMTP id 2C.57.10549.9D4B7446; Tue, 25
-	Apr 2023 12:09:13 +0100 (BST)
-Received: from CAMSVWEXC02.scsc.local (unknown [106.1.227.72]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20230425110913eusmtip20311b17f49b03fde53a0b57a9dc3c58f~ZKPFnrhol0897708977eusmtip2H;
-	Tue, 25 Apr 2023 11:09:13 +0000 (GMT)
-Received: from localhost (106.110.32.140) by CAMSVWEXC02.scsc.local
-	(2002:6a01:e348::6a01:e348) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
-	Tue, 25 Apr 2023 12:09:12 +0100
-Date: Tue, 25 Apr 2023 13:00:25 +0200
-From: Pankaj Raghav <p.raghav@samsung.com>
-To: Matthew Wilcox <willy@infradead.org>
-CC: Luis Chamberlain <mcgrof@kernel.org>, <hughd@google.com>,
-	<akpm@linux-foundation.org>, <brauner@kernel.org>, <djwong@kernel.org>,
-	<da.gomez@samsung.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
-	<yosryahmed@google.com>, <keescook@chromium.org>, <hare@suse.de>,
-	<kbusch@kernel.org>, <patches@lists.linux.dev>,
-	<linux-block@vger.kernel.org>, <linux-fsdevel@vger.kernel.org>,
-	<linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>, <p.raghav@samsung.com>
-Subject: Re: [RFC 2/8] shmem: convert to use folio_test_hwpoison()
-Message-ID: <20230425110025.7tq5vdr2jfom2zdh@localhost>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F6C7B
+	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 11:13:46 +0000 (UTC)
+Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-440445a48c7so2124447e0c.1
+        for <patches@lists.linux.dev>; Tue, 25 Apr 2023 04:13:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682421225; x=1685013225;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=93dXe5MGpSc5fed6Fjsx0gENfCmJpSkSMYV5KcxSt9Q=;
+        b=rH5qPRvzcBkmEjA9OrixklL9mmyRZ93ThHfXowcyrqRk2wx08rDoJ+inLKlo+xbMY2
+         INESeuDhPJjjasspazwFkTWSx54hjYEWH5uz3oclgpFAbSWU9bajSBkkVwIxYzGGHE6l
+         ssBkeKF81rILKQmYTAcQZJCHVntyQ0lMBGAoUIsCMX80hcUUsGZ2Kn5bb+BOUFApErOX
+         46209TOt4qJ+vTEV7ntCnA3Xf3a1+sdoSvnimKXtrWGxHdR67vvMdc9Sgu0GkFK+goGc
+         B8eBcFWqVIo28du8F8XriENtet6rnNyMAXywvzZygYm2RDzxvfYJzy/Wv3Agm6AUixZJ
+         UlCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682421225; x=1685013225;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=93dXe5MGpSc5fed6Fjsx0gENfCmJpSkSMYV5KcxSt9Q=;
+        b=eQiui6WJy9vN2Bh7pVT+o86neEEIu1CHrq4UQop7uEgu/rJ6RE5+uuXQnWOMrcFO5G
+         YfT/NElbREjtcUZ/S/TpnubzvN/bALjqJYB3701TPxYqaY98dgd/ErAFU6QgRzE5Vc8J
+         GR09QT+AedeltwrLk5FdRXAcpJX9x+ao76fgOVdquzsL/RqUgjoSZcZcLSsxP30mlwyf
+         vf1+mINJFGoYLqD2YKaURU1Lwus0ViSn1ADTwnOCrdFTI/6fq3ogaupgSgOWgBWnBUM6
+         SLZndOFJoXkIgOHVfJS2OfZMd66JPzorTpeY+yypZ5bPf+qkS046idzsVj/SN+m5nuvk
+         ccrw==
+X-Gm-Message-State: AAQBX9dU0bbphMogOqfmN+SS1xblbcE0fWk56dH1aZTTZJS/4Ii3zaco
+	5XvbRgwy4yspG4fvgzcL04zAknXMQ5JtAAGx6V1GSg==
+X-Google-Smtp-Source: AKy350amCuilSr5bPCVSIYXv3x7/8EBQqYelQcUkNKz22Tsi9XU9FHjXiiEq8ydl8olMxCtDjj+6e5ECvj7Uu5Bs9uo=
+X-Received: by 2002:a1f:43d1:0:b0:443:ddb3:1512 with SMTP id
+ q200-20020a1f43d1000000b00443ddb31512mr4380394vka.3.1682421225077; Tue, 25
+ Apr 2023 04:13:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <ZEMRbcHSQqyek8Ov@casper.infradead.org>
-X-Originating-IP: [106.110.32.140]
-X-ClientProxiedBy: CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) To
-	CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMKsWRmVeSWpSXmKPExsWy7djPc7o3t7inGDyfrW4xZ/0aNovXhz8x
-	Wqy+uYbR4vITPos9iyYxWTz91MdiMenQNUaLM925FntvaVvs2XuSxeLyrjlsFvfW/Ge1uDHh
-	KVD5iUuMFr9/AMW274p0EPCY3XCRxWPBplKPzSu0PDat6mTz2PRpErvHiRm/WTxebJ7J6DF1
-	dr3H5tPVHp83yQVwRXHZpKTmZJalFunbJXBl/LhxhbngMG/F+iutbA2M07m7GDk4JARMJKas
-	l+5i5OIQEljBKLHvxHs2COcLo8SrO/9Zuhg5gZzPjBJ778WC2CANp1Z9Y4EoWs4ocWTLT0YI
-	B6jozPSbUO1bGCX+/v3GCtLCIqAq0behjxVkH5uAlkRjJzuIKSKgIfFmixFIObPATWaJi7cn
-	MoOUCws4Sfye38AEYvMKmEs8vH0ayhaUODnzCdhFnEBXvFm5gRHiIiWJhs1nWCDsWom9zQfY
-	QYZKCOzmlHg7YzITRMJF4smTDnYIW1ji1fEtULaMxP+d86FqqiWe3vjNDNHcwijRv3M9GySQ
-	rCX6zuSA1DALZEicWd3FCBF2lHjazQFh8knceCsIUcEnMWnbdGaIMK9ER5sQxHA1idX33rBA
-	hGUkzn3im8CoNAvJX7OQjIewdSQW7P7ENguog1lAWmL5Pw4IU1Ni/S79BYysqxjFU0uLc9NT
-	iw3zUsv1ihNzi0vz0vWS83M3MQLT4el/xz/tYJz76qPeIUYmDsZDjBIczEoivLyV7ilCvCmJ
-	lVWpRfnxRaU5qcWHGKU5WJTEebVtTyYLCaQnlqRmp6YWpBbBZJk4OKUamLqjbhv1RQRvNfxZ
-	Ofdz7pdfIsbRuUz7tuvJBEZITj5/+ljptPIHefFCDoZx5+IX35uxYG2NfFTmI9N7P904ufmX
-	Xmp+VZ16tKtpJUOW3pYXN7jEc/hrODd81vxr4xJaOClXTGhHdPzcGxlflv8V/68cqNKwaJ1O
-	mYeOpI1J71Y1kffntvo/fiH/Ilq6RslVvXJdzNmbqWZd64xN3p73uXVSU87detXKo5WX1eMV
-	Ao9Kfz+k/czg9UcW34PpUyTFOg1lDqzftCfGLnHmkrNi5287vkyXDX4mVCy1PfNa8urn2/0S
-	zdz0/q30Y3udvV5Uaeq6r7Eaa3svZ3XrPWT1/fFvyY6n5ZFFVaoVTpkZSizFGYmGWsxFxYkA
-	lh6Iw/YDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrDIsWRmVeSWpSXmKPExsVy+t/xe7o3t7inGByezmsxZ/0aNovXhz8x
-	Wqy+uYbR4vITPos9iyYxWTz91MdiMenQNUaLM925FntvaVvs2XuSxeLyrjlsFvfW/Ge1uDHh
-	KVD5iUuMFr9/AMW274p0EPCY3XCRxWPBplKPzSu0PDat6mTz2PRpErvHiRm/WTxebJ7J6DF1
-	dr3H5tPVHp83yQVwRenZFOWXlqQqZOQXl9gqRRtaGOkZWlroGZlY6hkam8daGZkq6dvZpKTm
-	ZJalFunbJehlzJ4uWNDMXfHo8FnGBsYPHF2MnBwSAiYSp1Z9Y+li5OIQEljKKHFz/2RGiISM
-	xMYvV1khbGGJP9e62CCKPjJKfN/2gx3C2cIocWDTFLAOFgFVib4NfUAdHBxsAloSjZ3sIKaI
-	gIbEmy1GIOXMAjeZJS7ensgMUi4s4CTxe34DE4jNK2Au8fD2aSaImRMZJb7134NKCEqcnPmE
-	BcRmFtCRWLD7ExvIUGYBaYnl/8A+4AT64M3KDVBHK0k0bD7DAmHXSnS+Os02gVF4FpJJs5BM
-	moUwaQEj8ypGkdTS4tz03GJDveLE3OLSvHS95PzcTYzAaN927OfmHYzzXn3UO8TIxMF4iFGC
-	g1lJhJe30j1FiDclsbIqtSg/vqg0J7X4EKMpMCQmMkuJJucD001eSbyhmYGpoYmZpYGppZmx
-	kjivZ0FHopBAemJJanZqakFqEUwfEwenVAPTzoR9s8tC7lw6lCf9LeB75a7fOgn/fGfWSSye
-	7H/ovKLE3nNn+zuXXe9qa5R6qMJxVER3Xf6R1as/rP2zI3JXwpLLN/07w2YcO66fVhVg7is7
-	52dP4/yCG1qTGH3/1KVYyz7xOryn46nV0q5Zk5gu6+1JnxOs7rCri/H620VaXd7J9xbNSAxM
-	3ddWENPxOEpYV3R3J8/PQnstg+fS6cXiE+uyGh9Pb315ifVCoTvnn121bx/VKVy/+uVF0Puc
-	x8el7k9+ma21/Wnhpcs/P4QLV5/4s0XUfaLbTPPtlr+rvu/cUOFnwcJn9bNVf4Z1ZlyRxxw2
-	Qesvm3UN1F6/VHSR7dmfFdrX82umSqrQd8kUJZbijERDLeai4kQAA3U0pX8DAAA=
-X-CMS-MailID: 20230425110913eucas1p22cf9d4c7401881999adb12134b985273
-X-Msg-Generator: CA
-Content-Type: multipart/mixed;
-	boundary="----t5a.LUSxvZ8UNChTG7xN-7.3lkNPyOm_Ty_DrQaWPiPzU4rz=_ea8fb_"
-X-RootMTR: 20230425110913eucas1p22cf9d4c7401881999adb12134b985273
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20230425110913eucas1p22cf9d4c7401881999adb12134b985273
-References: <20230421214400.2836131-1-mcgrof@kernel.org>
-	<20230421214400.2836131-3-mcgrof@kernel.org>
-	<ZEMRbcHSQqyek8Ov@casper.infradead.org>
-	<CGME20230425110913eucas1p22cf9d4c7401881999adb12134b985273@eucas1p2.samsung.com>
+References: <20230424131123.040556994@linuxfoundation.org>
+In-Reply-To: <20230424131123.040556994@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 25 Apr 2023 12:13:33 +0100
+Message-ID: <CA+G9fYs=S9B1OcpmXcA_LPY_mX_Bke+72a7AfA9o00VzCrBhtQ@mail.gmail.com>
+Subject: Re: [PATCH 5.4 00/39] 5.4.242-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	Steven Rostedt <rostedt@goodmis.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, Mark Rutland <mark.rutland@arm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-------t5a.LUSxvZ8UNChTG7xN-7.3lkNPyOm_Ty_DrQaWPiPzU4rz=_ea8fb_
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-
-On Fri, Apr 21, 2023 at 11:42:53PM +0100, Matthew Wilcox wrote:
-> On Fri, Apr 21, 2023 at 02:43:54PM -0700, Luis Chamberlain wrote:
-> > The PageHWPoison() call can be converted over to the respective folio call
-> > folio_test_hwpoison(). This introduces no functional changes.
-> 
-> Um, no.  Nobody should use folio_test_hwpoison(), it's a nonsense.
-> 
-> Individual pages are hwpoisoned.  You're only testing the head page
-> if you use folio_test_hwpoison().  There's folio_has_hwpoisoned() to
-> test if _any_ page in the folio is poisoned.  But blindly converting
-> PageHWPoison to folio_test_hwpoison() is wrong.
-
-I see a pattern in shmem.c where first the head is tested and for large
-folios, any of pages in the folio is tested for poison flag. Should we
-factor it out as a helper in shmem.c and use it here?
-
-static ssize_t shmem_file_splice_read(struct file *in, loff_t *ppos,
-...
-	if (folio_test_hwpoison(folio) ||
-	    (folio_test_large(folio) &&
-	     folio_test_has_hwpoisoned(folio))) {
-	..
-> 
-> If anyone knows how to poison folio_test_hwpoison() to make it not
-> work, I'd appreciate it.
-
-IMO, I think it will be clear if folio_test_hwpoison checks if any of the
-page in the folio is poisoned and we should have a explicit helper such
-as folio_test_head_hwpoison if the callers want to only test if the head
-page is poisoned (although I am not sure if that is useful).
-
-------t5a.LUSxvZ8UNChTG7xN-7.3lkNPyOm_Ty_DrQaWPiPzU4rz=_ea8fb_
-Content-Type: text/plain; charset="utf-8"
+On Mon, 24 Apr 2023 at 14:22, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.4.242 release.
+> There are 39 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 26 Apr 2023 13:11:11 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.4.242-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.4.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
 
-------t5a.LUSxvZ8UNChTG7xN-7.3lkNPyOm_Ty_DrQaWPiPzU4rz=_ea8fb_--
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
+
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+NOTE:
+----
+FYI, This is not a show stopper but worth reporting.
+
+As I reported on stable rc 4.19 kernel,
+
+Following kernel warning notices on stable rc 5.4.242-rc1 from the
+previous releases 5.4.238-rc1 noticed on arm64, i386 and x86_64.
+After this kernel warning, the system is still stable and up and running.
+
+This kernel is built with kselftest ftrace merge configs with all
+required Kconfigs.
+
+[    3.273073] WARNING: CPU: 1 PID: 0 at
+include/trace/events/lock.h:13 lock_acquire+0x142/0x150
+[    3.273847] WARNING: CPU: 0 PID: 0 at
+include/trace/events/lock.h:58 lock_release+0x1d7/0x260
+[    3.273847] Modules linked in:
+[    3.273073] Modules linked in:
+[    3.273847] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.4.242-rc1 #1
+[    3.273073] CPU: 1 PID: 0 Comm: swapper/1 Not tainted 5.4.242-rc1 #1
+[    3.273847] Hardware name: Supermicro SYS-5019S-ML/X11SSH-F, BIOS
+2.0b 07/27/2017
+[    3.273847] RIP: 0010:lock_release+0x1d7/0x260
+[    3.273073] Hardware name: Supermicro SYS-5019S-ML/X11SSH-F, BIOS
+2.0b 07/27/2017
+[    3.273073] RIP: 0010:lock_acquire+0x142/0x150
+
+log:
+- https://lkft.validation.linaro.org/scheduler/job/6288834#L860
+- https://lkft.validation.linaro.org/scheduler/job/6373719#L867
+
+## Build
+* kernel: 5.4.242-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.4.y
+* git commit: 00161130fc2321eeea08f3a2ffacfa653e685d5a
+* git describe: v5.4.238-239-g00161130fc23
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.2=
+38-239-g00161130fc23
+
+## Test Regressions (compared to v5.4.238-199-g230f1bde44b6)
+
+## Metric Regressions (compared to v5.4.238-199-g230f1bde44b6)
+
+## Test Fixes (compared to v5.4.238-199-g230f1bde44b6)
+
+## Metric Fixes (compared to v5.4.238-199-g230f1bde44b6)
+
+## Test result summary
+total: 135130, pass: 109048, fail: 3400, skip: 22432, xfail: 250
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 143 total, 142 passed, 1 failed
+* arm64: 43 total, 39 passed, 4 failed
+* i386: 26 total, 20 passed, 6 failed
+* mips: 27 total, 27 passed, 0 failed
+* parisc: 6 total, 6 passed, 0 failed
+* powerpc: 30 total, 30 passed, 0 failed
+* riscv: 12 total, 10 passed, 2 failed
+* s390: 6 total, 6 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 36 total, 34 passed, 2 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
