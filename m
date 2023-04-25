@@ -1,97 +1,81 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37897B
-	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 04:47:41 +0000 (UTC)
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-63d4595d60fso32834319b3a.0
-        for <patches@lists.linux.dev>; Mon, 24 Apr 2023 21:47:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682398061; x=1684990061;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=x7mjglO56uGEvHM/CvZvHdpiKNwZ+e2uyMhpZBFkVkE=;
-        b=MpjvQVeZ615veQ0dfUI3iJ5IOrl6uKSOlWytx+XxtudP1sK6WMjBXatV8TIGG3I/fm
-         yThgFvFnZhY6ZLunhNy3wluje5OfvaOpU+juESYW/Gxy+Knglu3halQWwh3+Q8xWU7K3
-         8AfdpgNdKiPYUfRzMXilRf0OEIWFCUqknuNLVhmILeKbJc+nvWY8K3aV9lP5NjNIOdVr
-         JFchFa+J/ZAOuyy00QvCr7wilBp+6nMr1DjLnqQpCSmutPwRs29x0BPiFt2HsilRrUnN
-         Vl1OxmEj1KOg+oLu4RDl8D+29oBV6PChAL5pQAAIcmpB80svzuQNLGh4vdiKKpBsE5VU
-         GIZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682398061; x=1684990061;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x7mjglO56uGEvHM/CvZvHdpiKNwZ+e2uyMhpZBFkVkE=;
-        b=DXS1jcHyaiqYRRatEtlAXLWiMa0uLKxDqcGEemJuitmD0lkZbf9N8uCSjkCThZlPy8
-         R9P1pYu4xzfSJNJCK+rXgCGN1uI3Ele9QY3lZgqW9ZTa+xLtBD4753QEYEKjTfY7W6e4
-         ro1J7lofibdUx03oJpY7FE80eHb+11TPUwtJSRBNcmqA05gK+jDfFyKvIeFRYucW9XsO
-         Pcnkjc7mk1/H2zluKkZ78zNVgWSHsCfYlXn/LPZYqN+rZbdfogV30PRYb/TJOTX/5k5l
-         +P8iJ+gdqkaqT1wknCS2CQqJocdNyzCiFIRKGGErxjbI8ux2Lrz1bBUkPLaEuzSi73XP
-         02uA==
-X-Gm-Message-State: AAQBX9f2BVwCL+362CZDym0fjYPjEej4qdZvgAYg+ZoNbGkhlpVq45Ku
-	aKYa1AipCvM9QHXein8Oj7M=
-X-Google-Smtp-Source: AKy350bOJYJTKZrlXFCQ2GhNblEqkGfNZrl02hvCz7jUd069I2qflDI/W1W3D87dc8W+v4PbEoucfg==
-X-Received: by 2002:a05:6a20:3d01:b0:e4:b52:76c9 with SMTP id y1-20020a056a203d0100b000e40b5276c9mr19136264pzi.23.1682398060985;
-        Mon, 24 Apr 2023 21:47:40 -0700 (PDT)
-Received: from debian.me (subs03-180-214-233-73.three.co.id. [180.214.233.73])
-        by smtp.gmail.com with ESMTPSA id b6-20020a63d806000000b005143d3fa0e0sm7255731pgh.2.2023.04.24.21.47.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 21:47:40 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id AF54610692C; Tue, 25 Apr 2023 11:47:37 +0700 (WIB)
-Date: Tue, 25 Apr 2023 11:47:37 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/110] 6.2.13-rc1 review
-Message-ID: <ZEdbaUGIKPHEXvnA@debian.me>
-References: <20230424131136.142490414@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63AF7B
+	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 07:02:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1682406164; x=1713942164;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=0uYU44IZRgxrVlK5Tyn1icFuk/3TdFAeptiXaTucBfM=;
+  b=Io7jU0vgDACql+0L8d0tRWQBsiTLRZS6oYUP/r75Jz2e4jThkHCWUTw3
+   XiEoRcfJH2LgO0dB5+jN0jwhPz5JLrCzY0EevrAzvUM8n5vr2U/yO+jcH
+   RxsxPrzNf8/akExlxLhyCZhZi77Wn7ymlb7ZvmKjc62xsSVdQ7j2da5YR
+   zamfi/ohkNPwEj2J/kix/qaOVDkyftzMaLdDp+/yRca6iTBhdVUf5ZKfd
+   SeMZ8nAAuP+21W3o+wOfFeSaoBoYRCASGV/3cXSR60OkV1HXIsuXGIGgx
+   IlZ/584jjDQHvU7ciTsgntPgTITgGMKbBG8ntq1jTvOxNb3hxRL0RqEuN
+   A==;
+X-IronPort-AV: E=Sophos;i="5.99,224,1677567600"; 
+   d="asc'?scan'208";a="211041873"
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Apr 2023 00:02:37 -0700
+Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
+ chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Tue, 25 Apr 2023 00:02:35 -0700
+Received: from wendy (10.10.115.15) by chn-vm-ex01.mchp-main.com
+ (10.10.85.143) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
+ Transport; Tue, 25 Apr 2023 00:02:32 -0700
+Date: Tue, 25 Apr 2023 08:02:15 +0100
+From: Conor Dooley <conor.dooley@microchip.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
+	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
+	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+	<srw@sladewatkins.net>, <rwarsow@gmx.de>
+Subject: Re: [PATCH 6.1 00/98] 6.1.26-rc1 review
+Message-ID: <20230425-blog-ninetieth-ab5861b38d16@wendy>
+References: <20230424131133.829259077@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MH4cRJTFut+TrASo"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="e9X7m7ankMwLleXD"
 Content-Disposition: inline
-In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
+In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
 
-
---MH4cRJTFut+TrASo
-Content-Type: text/plain; charset=utf-8
+--e9X7m7ankMwLleXD
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 24, 2023 at 03:16:22PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.13 release.
-> There are 110 patches in this series, all will be posted as a response
+On Mon, Apr 24, 2023 at 03:16:23PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.26 release.
+> There are 98 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
+No "drama" this time around :)
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Thanks,
+Conor.
 
---=20
-An old man doll... just what I always wanted! - Clara
-
---MH4cRJTFut+TrASo
+--e9X7m7ankMwLleXD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZEdbaQAKCRD2uYlJVVFO
-o0y0AP9dlyjXe9nttqfxl7kJvhqc3A8CkAbFLQBjY7sF73NGggEAkI1axTBzxJN1
-LgTaekGueQ7GHTTcQRRO25m1DT/L4wg=
-=HiEO
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZEd69wAKCRB4tDGHoIJi
+0hAkAP0Wz37/WAYlXp4x7m8T7fkSt8qV5Vx3H2xVBFRo6w2SigD7Bvi8ZQTVeuc0
+bB1s7mgT45soL/ZiS1i4KuToE2rz2wU=
+=VC0T
 -----END PGP SIGNATURE-----
 
---MH4cRJTFut+TrASo--
+--e9X7m7ankMwLleXD--
