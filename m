@@ -1,93 +1,111 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C888A93E
-	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 21:31:48 +0000 (UTC)
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-51452556acdso4694667a12.2
-        for <patches@lists.linux.dev>; Tue, 25 Apr 2023 14:31:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682458308; x=1685050308;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=U0vA8QVHgUjZYF8qTpB5oq5FSKH9ueIB5qfKOzgv5Xc=;
-        b=hPY2LO37GIbtiYPRXa/2siJxIqWLgMyESBN62oAnpjqtLNRYrJhLccrxSIq1UNWjN0
-         zD4ViPkefQJtFDxeQuErNIr0xHM6xsgH8jua+VhE6+4mxXH0YJr+kFfqVw8qfA0mi58n
-         RVBrR+enrU82OADVik+hyEX2F+slS8ol1A294IGsQSdgsuCd/yjcTwPoX/3k3jnRyM+Z
-         gN28H0vr2PTC0F5y1SjH3mT93IkRlkJ8eJVcEcaPyP/EMLWysqxUGv0fyBbqUyMcRvGg
-         0UhMM2zdRhHPfSDyHkE+mT6Ma2N2c7+FREBxo2OsxuXZn8UFnw5X5wl8IFH13nX7qUmn
-         y9TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682458308; x=1685050308;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U0vA8QVHgUjZYF8qTpB5oq5FSKH9ueIB5qfKOzgv5Xc=;
-        b=dpCDQwI9tt/phK4BaRY2rRIjKTCBJS3PX9iY0oMwPsm5S02Y5ZLFmE0arZYSyKQVNF
-         u5VTpaC7b84CzyY88Vb6EsXY4zeJ+cyT1xiL1iuyQEVk9uz1bMe9K8un230z75jIbJOf
-         qvveBiWJ/bqT5K2XhNwEG14hg8GRqlo9GFNsC5WKHsFmZxpfY63133E8wth3FyKw85I2
-         kdElnmiH3Pod8J15UvqH3tPhFPB8kfAsggVga4AZPlpzTlhTGpAgtQBBZ7ZsoV5XX0UN
-         3J0OSXs0WHllibNjkOv8AlWNIcYBGlMGVmopzrobC1OO6zpsziLQVLBXtOnGP5OtPnkQ
-         t6KA==
-X-Gm-Message-State: AAQBX9cN5RD/ygRX/osjFOfIbk+/88O6TcHFf0/JYQBMh5IHVMJmvd68
-	OOO7J+9HTVm/2Lh+V/RzOQo=
-X-Google-Smtp-Source: AKy350bF25AEWPOXQ+bACbox4eVWJ40M5EawJIvGlxlrMteGmyzBOuqlmqCY+G4YxLtvcRS0w0WdQg==
-X-Received: by 2002:a17:90a:9747:b0:23f:b369:c159 with SMTP id i7-20020a17090a974700b0023fb369c159mr16787769pjw.49.1682458307691;
-        Tue, 25 Apr 2023 14:31:47 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id y18-20020a17090aa41200b00244991b3f7asm12704831pjp.1.2023.04.25.14.31.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Apr 2023 14:31:46 -0700 (PDT)
-Message-ID: <2d1346ca-a82e-d297-92a8-1fa0e5ff786c@gmail.com>
-Date: Tue, 25 Apr 2023 14:31:41 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493402F49
+	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 22:47:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=87iK9xe7jEqj8FLY0xzpJ9YnRE4JGcq0drEI9hyBNkg=; b=4GfYCANTWjgXmoHN3XcHAVqKhO
+	Wm5QWX6++YtnjHBHGHTg60GjAXJv2MBHw1WsvoLZQiL4aS3HYRPL8o038Zyy//LYPN/RYVgeyVeQM
+	X6i7qDdmf+qoG5ZqIXTdD3rlXXv2jPXqw4g075XwfVDxzP3KdNKp6mh5iKdURhV0fWZfqvoVebtTK
+	XEdzUgPdfKi+1WkSFhz9VnapS1pwd6iQxOqpytTjH2F6h2JPQXoFKpKBlVqziSdShIbFjFi/DVJXW
+	MivQsut8Fi7nthd99bs6L4ydH/A6Eucfaj0zSPGiVhbBOGE0y1pHBncki098sN+u6OuPqW7q7irHu
+	BJGorXPQ==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1prRRU-002Lqt-2S;
+	Tue, 25 Apr 2023 22:47:24 +0000
+Date: Tue, 25 Apr 2023 15:47:24 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Pankaj Raghav <p.raghav@samsung.com>, hughd@google.com,
+	willy@infradead.org
+Cc: akpm@linux-foundation.org, brauner@kernel.org, djwong@kernel.org,
+	da.gomez@samsung.com, a.manzanares@samsung.com, dave@stgolabs.net,
+	yosryahmed@google.com, keescook@chromium.org, hare@suse.de,
+	kbusch@kernel.org, patches@lists.linux.dev,
+	linux-block@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC 2/8] shmem: convert to use folio_test_hwpoison()
+Message-ID: <ZEhYfHePaLpoUhbp@bombadil.infradead.org>
+References: <20230421214400.2836131-1-mcgrof@kernel.org>
+ <20230421214400.2836131-3-mcgrof@kernel.org>
+ <ZEMRbcHSQqyek8Ov@casper.infradead.org>
+ <CGME20230425110913eucas1p22cf9d4c7401881999adb12134b985273@eucas1p2.samsung.com>
+ <20230425110025.7tq5vdr2jfom2zdh@localhost>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-From: Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 6.1 00/98] 6.1.26-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230424131133.829259077@linuxfoundation.org>
-Content-Language: en-US
-In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230425110025.7tq5vdr2jfom2zdh@localhost>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-
-
-On 4/24/2023 6:16 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.26 release.
-> There are 98 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Apr 25, 2023 at 01:00:25PM +0200, Pankaj Raghav wrote:
+> On Fri, Apr 21, 2023 at 11:42:53PM +0100, Matthew Wilcox wrote:
+> > On Fri, Apr 21, 2023 at 02:43:54PM -0700, Luis Chamberlain wrote:
+> > > The PageHWPoison() call can be converted over to the respective folio call
+> > > folio_test_hwpoison(). This introduces no functional changes.
+> > 
+> > Um, no.  Nobody should use folio_test_hwpoison(), it's a nonsense.
+> > 
+> > Individual pages are hwpoisoned.  You're only testing the head page
+> > if you use folio_test_hwpoison().  There's folio_has_hwpoisoned() to
+> > test if _any_ page in the folio is poisoned.  But blindly converting
+> > PageHWPoison to folio_test_hwpoison() is wrong.
 > 
-> Responses should be made by Wed, 26 Apr 2023 13:11:11 +0000.
-> Anything received after that time might be too late.
+> I see a pattern in shmem.c where first the head is tested and for large
+> folios, any of pages in the folio is tested for poison flag. Should we
+> factor it out as a helper in shmem.c and use it here?
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.26-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> static ssize_t shmem_file_splice_read(struct file *in, loff_t *ppos,
+> ...
+> 	if (folio_test_hwpoison(folio) ||
+> 	    (folio_test_large(folio) &&
+> 	     folio_test_has_hwpoisoned(folio))) {
+> 	..
 
+Hugh's commit 72887c976a7c9e ("shmem: minor fixes to splice-read
+implementation") is on point about this :
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+  "Perhaps that ugliness can be improved at the mm end later"
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+So how about we put some lipstick on this guy now (notice right above it
+a similar compound page check for is_page_hwpoison()):
 
+diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+index 1c68d67b832f..6a4a571dbe50 100644
+--- a/include/linux/page-flags.h
++++ b/include/linux/page-flags.h
+@@ -883,6 +883,13 @@ static inline bool is_page_hwpoison(struct page *page)
+ 	return PageHuge(page) && PageHWPoison(compound_head(page));
+ }
+ 
++static inline bool is_folio_hwpoison(struct folio *folio)
++{
++	if (folio_test_hwpoison(folio))
++		return true;
++	return folio_test_large(folio) && folio_test_has_hwpoisoned(folio);
++}
++
+ /*
+  * For pages that are never mapped to userspace (and aren't PageSlab),
+  * page_type may be used.  Because it is initialised to -1, we invert the
+diff --git a/mm/shmem.c b/mm/shmem.c
+index ef7ad684f4fb..b7f47f6b75d5 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -3013,9 +3013,7 @@ static ssize_t shmem_file_splice_read(struct file *in, loff_t *ppos,
+ 		if (folio) {
+ 			folio_unlock(folio);
+ 
+-			if (folio_test_hwpoison(folio) ||
+-			    (folio_test_large(folio) &&
+-			     folio_test_has_hwpoisoned(folio))) {
++			if (is_folio_hwpoison(folio)) {
+ 				error = -EIO;
+ 				break;
+ 			}
