@@ -1,105 +1,81 @@
-Received: from qproxy3-pub.mail.unifiedlayer.com (qproxy3-pub.mail.unifiedlayer.com [67.222.38.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916437B
-	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 00:01:20 +0000 (UTC)
-Received: from gproxy4-pub.mail.unifiedlayer.com (gproxy4-pub.mail.unifiedlayer.com [69.89.23.142])
-	by qproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id B1236802BA15
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 23:39:03 +0000 (UTC)
-Received: from cmgw15.mail.unifiedlayer.com (unknown [10.0.90.130])
-	by progateway6.mail.pro1.eigbox.com (Postfix) with ESMTP id 01CCD10042E3B
-	for <patches@lists.linux.dev>; Mon, 24 Apr 2023 23:38:30 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id r5lOpbDYV3i2Gr5lOp9nfj; Mon, 24 Apr 2023 23:38:30 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=Iv3bzJzg c=1 sm=1 tr=0 ts=644712f6
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=dKHAf1wccvYA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=fbc7EaZ9IEMMzL7cNU7E/iujHMBL13J7AXCMPZ7HnkM=; b=sTK4XmyWO+F2JzVuRC+av0Ey0Y
-	Qsqv/iGrhjsWJ/Ok8iXtL7H5aA0CgpE6VPmSJP4FYPg1AjQtRDOCmErqZQ9c4ErVpFLjUMB7EWfl5
-	E7nqKLusIOlSAcb2jHt24NE8Y7qvBPDN2ek3H71FZShTBL3gXMDf1VbwF5WDFCMze54KZWRM3T7E5
-	RlR7WJf78ehN2n3/B+PQbaJA8VuL8JWeKenAIkDx6T/SPznbGA9AQkFvHz7rfnlkAcbwE0JfUhj3H
-	MqSpBKASaWdZUrDqv3I1zyCm5AeqoV+oqdC1TKyYJOS9UEE3+Q1dQmfz0yszavztfeiOJMHkQD1cZ
-	AhSOFvhw==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:35994 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pr5lO-003y1I-1q;
-	Mon, 24 Apr 2023 17:38:30 -0600
-Subject: Re: [PATCH 6.2 000/110] 6.2.13-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230424131136.142490414@linuxfoundation.org>
-In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <d7374363-e46f-4fed-ae05-6535b6f37bbc@w6rz.net>
-Date: Mon, 24 Apr 2023 16:38:28 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C7A7B
+	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 01:03:51 +0000 (UTC)
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1a68d61579bso40390135ad.1
+        for <patches@lists.linux.dev>; Mon, 24 Apr 2023 18:03:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682384631; x=1684976631;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uU63uYraJHI8toeOh6onSgWIkE13niAeeyHZ610UQo0=;
+        b=stAJvkIEj7Td7QdUJIew8hYIOegUMfhFUqQ4pG7xO0mDcKx6wNKUj3n2RekU6nQqpq
+         1EolTCuSYmPx33Ra4kegm4XRIHoH6P/Rddg4y5xvWwaBZox3sk1X8PFeZG3qvp77i/Cp
+         VjN/g+P7iO0jc1QGDfEB1v5CMwEp6ULvqGOZENF5pAvihMGnC61GTsMAVw1gBuuYvBi3
+         pDvBLb0mDu2X+Nfvdj0gLvNP3ORt2WGm8ehazj1EBcS10VKtpOM4aIFrD01hxgjuIFFo
+         3rRGuS/02ZavHu0sn0oBWmXw6zy3+yOx6kWKQRfP0lyvawjqZwXVo43oHf238YXOroCR
+         +aLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682384631; x=1684976631;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uU63uYraJHI8toeOh6onSgWIkE13niAeeyHZ610UQo0=;
+        b=fD0ClaFZBSBZSero/jPTdmyoTAb/VsmprW75hKZnJwNSVytBrh49Qr1+2lT9SNW6ig
+         TZpHnQlCEzv+TXkkFryktlB8lp5yLdnp0PxGZTjkaR0luPMgzhmCJkdjwO+8J1480nC+
+         gBdYIr5ywFvb1TXNT513nu92FdCMHp/gCCYDwG71pOlnNEvw1rMlOm5IlmMJ69QGGlSC
+         aW//xwBqC4ByaMGUfczUTms9xvKevJm2Whq6t4wl47ie7Bvejy5UoibwubjNwtrs02El
+         U+73y4WgwVaHmxQx6l/rcWHQGZ09xiU7C2XKtdUVRT/ACeLX8v+607bDLYrDACxc5RuC
+         F+2A==
+X-Gm-Message-State: AAQBX9dQURZ9Ypgzq0ZDV0ozGkssLu7mI2dgAeFPe+L0pGWKFi7X7JrT
+	0rFo1ZXHlDc8ds7+pr5cmRg=
+X-Google-Smtp-Source: AKy350YVGjlhBK4YxhTx5cYbwFRcDuLywoWA8lN+VCcTrFCWoLBzGoKl1ZDsyvqYz7qt5GxVk3mqyA==
+X-Received: by 2002:a17:902:dad0:b0:1a9:433e:41e7 with SMTP id q16-20020a170902dad000b001a9433e41e7mr15921845plx.43.1682384631156;
+        Mon, 24 Apr 2023 18:03:51 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id c2-20020a170902d90200b001a6dc4a98f9sm7093837plz.195.2023.04.24.18.03.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Apr 2023 18:03:50 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Mon, 24 Apr 2023 18:03:48 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 4.14 00/28] 4.14.314-rc1 review
+Message-ID: <9621c9a1-ddb8-4478-91b6-4d77a923d778@roeck-us.net>
+References: <20230424131121.331252806@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pr5lO-003y1I-1q
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:35994
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230424131121.331252806@linuxfoundation.org>
 
-On 4/24/23 6:16 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.13 release.
-> There are 110 patches in this series, all will be posted as a response
+On Mon, Apr 24, 2023 at 03:18:21PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.314 release.
+> There are 28 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Wed, 26 Apr 2023 13:11:11 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.13-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+> 
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Build results:
+	total: 168 pass: 168 fail: 0
+Qemu test results:
+	total: 430 pass: 430 fail: 0
 
-Tested-by: Ron Economos <re@w6rz.net>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
+Guenter
