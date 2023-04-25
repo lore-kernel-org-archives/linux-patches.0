@@ -1,134 +1,151 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2059.outbound.protection.outlook.com [40.107.94.59])
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4C87B
-	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 10:46:02 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RmUmUODAmVcn3t+h4GiOkcVaJ4oXpsvYzvgzhTiTtkKF9x8i6Z3B9m7Ht0nrU+4dt1dND/KPIPo3XfhsjOoRTxifFeuoHDOG/4rXTL46HZBxJkr3CLXBrBi/HopTJG0BHYgifI9YH/FRV3mq+8k0+T57xHxeHGlxlW2YwytjVjWNG7aHF+SoXx/fzRyI6ju3ed5esxGNZg6+5Bi0I58OMucuE0j94F24ojQqrJueMdcmGsW6oSmTnMY4VgLvYRu/uQLP1vT1U5tgKW/E1Ulhhm+mBZEeif5JDP7daljcU48fqs8oLNwJlwVJCy1DokWtqhcYiLdFyxHq773xnbzsSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vB4y/WKTJACB506PGnFVQhsKMeVamHJjveYfJLv0GDc=;
- b=hYvEd0jZ4xcELNcJtSG7wqnxWvhVNfsHl/pmGQOeoJ8aWvtBpUE0mK+vbIFkYtfNMoRgifdjnK+WhkOhTBJ2xH/mf9xeR7CUhd3QBJmv77fXQi/yjppT7ejc7VIgzLNYXoYVAgVKvp/KU5I02eE3pGPv277TrpzWuGAxBWDrq5pVHve1xCfnVmueTJofYwy+Y/EcTqAOwii6YMI1DJIYz1aX74WkxfzPjSkyyotNzUXqP3U4mioAlsAYTdmV4tM+mjRfJQhUTOv56sMijAX3Djayw44TO05MQOvj3/BZE+96APKWbd3FWkXw46CuH+TPxa+BwSZe5Wp9n9Gp+1PxKw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vB4y/WKTJACB506PGnFVQhsKMeVamHJjveYfJLv0GDc=;
- b=SC2w0KcYwyq3tTm8E5mG2VdYXmjXvPbRmx4oUBllZ+iUmLiigPmSj+vL99ZFmnMMmpTNnJo+B2030VurpcxE4IaBlIAedZ2SExA5VJ/3MbwpXit4bwhkvwVF55you6ZrG1OFzRe8yGnfSJMpI5WEB66cFieN8Evre1J4qJNoypYLKlVcCMIhrNfY+CbTpekk72Y+ngOcNciT6y7gT3ocVKWX7xKTQva1NmW4+dQIrJ/QTfgwo92/AZxLsyKuJAUPdMJZoPEqgpX77lcN5537Z/EQcZ0ioaZBoAuVwlqu6KThU4yiyrFBpO6C0XhdCE2raETmTGg076MmgE4Z951NXw==
-Received: from BN9PR03CA0775.namprd03.prod.outlook.com (2603:10b6:408:13a::30)
- by CH2PR12MB5003.namprd12.prod.outlook.com (2603:10b6:610:68::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6319.33; Tue, 25 Apr
- 2023 10:46:01 +0000
-Received: from BL02EPF0000C406.namprd05.prod.outlook.com
- (2603:10b6:408:13a:cafe::80) by BN9PR03CA0775.outlook.office365.com
- (2603:10b6:408:13a::30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6319.34 via Frontend
- Transport; Tue, 25 Apr 2023 10:46:01 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BL02EPF0000C406.mail.protection.outlook.com (10.167.241.8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6340.15 via Frontend Transport; Tue, 25 Apr 2023 10:46:00 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Tue, 25 Apr 2023
- 03:45:40 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Tue, 25 Apr
- 2023 03:45:40 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
- Transport; Tue, 25 Apr 2023 03:45:40 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 6.1 00/98] 6.1.26-rc1 review
-In-Reply-To: <20230424131133.829259077@linuxfoundation.org>
-References: <20230424131133.829259077@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C087B
+	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 11:09:22 +0000 (UTC)
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20230425110914euoutp01a1c023e5e94f203189b0096c55669ba6~ZKPGinUBb2902429024euoutp01b
+	for <patches@lists.linux.dev>; Tue, 25 Apr 2023 11:09:14 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230425110914euoutp01a1c023e5e94f203189b0096c55669ba6~ZKPGinUBb2902429024euoutp01b
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1682420954;
+	bh=Gc4jFl8KquubYFrW8xZv5Gqj3fqTntNDZhVWlXh2E4U=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
+	b=ZpSJzBmgfMItZFL1GydmZGuV7A9DANq+FLr4aQyVdi24VNkp/SuxI81tY4tcnNRaV
+	 3TrgU08eOtDduHCeRgPsbbuWnbT/tHv4qBl75aPD8lMuKfp3gUQQybyMeeCLzIy3wC
+	 b/oxmLOkUJ6jVhljx5E7e8dQa4fwLiz5ctZJI/P0=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+	20230425110913eucas1p16ebb723297aa94d2766c734d83183e6b~ZKPGNItUH1270512705eucas1p1e;
+	Tue, 25 Apr 2023 11:09:13 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+	eusmges1new.samsung.com (EUCPMTA) with SMTP id 6E.2B.42423.9D4B7446; Tue, 25
+	Apr 2023 12:09:13 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20230425110913eucas1p22cf9d4c7401881999adb12134b985273~ZKPFz5aeZ0812808128eucas1p2k;
+	Tue, 25 Apr 2023 11:09:13 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20230425110913eusmtrp2c46b12ef17d135e5deccacac75179df6~ZKPFzHa7Q1014910149eusmtrp2o;
+	Tue, 25 Apr 2023 11:09:13 +0000 (GMT)
+X-AuditID: cbfec7f2-25927a800002a5b7-37-6447b4d905ba
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+	eusmgms1.samsung.com (EUCPMTA) with SMTP id 2C.57.10549.9D4B7446; Tue, 25
+	Apr 2023 12:09:13 +0100 (BST)
+Received: from CAMSVWEXC02.scsc.local (unknown [106.1.227.72]) by
+	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20230425110913eusmtip20311b17f49b03fde53a0b57a9dc3c58f~ZKPFnrhol0897708977eusmtip2H;
+	Tue, 25 Apr 2023 11:09:13 +0000 (GMT)
+Received: from localhost (106.110.32.140) by CAMSVWEXC02.scsc.local
+	(2002:6a01:e348::6a01:e348) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
+	Tue, 25 Apr 2023 12:09:12 +0100
+Date: Tue, 25 Apr 2023 13:00:25 +0200
+From: Pankaj Raghav <p.raghav@samsung.com>
+To: Matthew Wilcox <willy@infradead.org>
+CC: Luis Chamberlain <mcgrof@kernel.org>, <hughd@google.com>,
+	<akpm@linux-foundation.org>, <brauner@kernel.org>, <djwong@kernel.org>,
+	<da.gomez@samsung.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
+	<yosryahmed@google.com>, <keescook@chromium.org>, <hare@suse.de>,
+	<kbusch@kernel.org>, <patches@lists.linux.dev>,
+	<linux-block@vger.kernel.org>, <linux-fsdevel@vger.kernel.org>,
+	<linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>, <p.raghav@samsung.com>
+Subject: Re: [RFC 2/8] shmem: convert to use folio_test_hwpoison()
+Message-ID: <20230425110025.7tq5vdr2jfom2zdh@localhost>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <ba53ed52-7fb7-4c17-aa00-e1e6a4c5bb9d@rnnvmail205.nvidia.com>
-Date: Tue, 25 Apr 2023 03:45:40 -0700
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0000C406:EE_|CH2PR12MB5003:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8197b990-5cd1-422d-7c0f-08db457a42a8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	sfIoTKinRmeJU8yey1J454NrGKF3lME5pK9pmxE/ofZDMIdmJM8pj377cYFu1TtR1/ypyREqDmB8dWXoYBs1xIxGc7rA0oKtgOS59/2XEJQzwhto6fX2SZNQOoKK3wgGn1X/GdOUCMsd8FVoVFBmMCfqPo2BR71qSsts+W74m5wrgIZresixoD+/mcJJzVhS0AUeGYzmlcIWytu8ocerUFx/U4qTxk8JaDV2CO1yWRx4lDpglUGA4DKg7pC1hPc2XZvicgVaVcNPRF8fJa0cybZFnppJ6oZ4p7ZbMJj8hxJ/nFHwSVcxOl02bhZb6VMy+AW0OafDoCANSe8dN/MAZU8C0+0XoBwSt/bZ4zrwRud6xBCUQAPOXbSsatyFGkblNeBKc1lqCHncJ6uJD43gzVI4jpaGtmKmi9gFXW2S9MMQrcEVc4l0XMnQ8iyceo0HiVzyj2mMAGmevSMXsJTusD8Q2b/PPM7ryJUacJY6bfHV13/8s2Ad4ENE2SzDQWS6kHGZXg2NCowdtIgOkunJmcXTFu1WBVJMbu6hkmOWHaYV8zT707dpEIITI9NIjBQQrl1jWczhg/XnPzs2/W0c4/v6vA62SXUdIOXrGLghqRA+goYYMCFcy2Kdvgjzf+uKCPWvXwfdDQ4Bs6GY/dyUUvldbKHPlh3jjynX2IOFPWpMLjvG0sNTnZc/VYESeqLCj8oA+biT/00jzulV4AgpTLDsprcp902NFT3R7KMKA2IaHckpzXWy7Yc2FGWJBifP
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(346002)(136003)(376002)(396003)(39860400002)(451199021)(40470700004)(46966006)(36840700001)(8676002)(31686004)(54906003)(7416002)(8936002)(478600001)(31696002)(70206006)(6916009)(86362001)(70586007)(82310400005)(41300700001)(2906002)(316002)(4326008)(5660300002)(966005)(26005)(186003)(47076005)(82740400003)(7636003)(356005)(40460700003)(336012)(426003)(40480700001)(36860700001);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2023 10:46:00.7690
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8197b990-5cd1-422d-7c0f-08db457a42a8
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL02EPF0000C406.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB5003
+In-Reply-To: <ZEMRbcHSQqyek8Ov@casper.infradead.org>
+X-Originating-IP: [106.110.32.140]
+X-ClientProxiedBy: CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) To
+	CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMKsWRmVeSWpSXmKPExsWy7djPc7o3t7inGDyfrW4xZ/0aNovXhz8x
+	Wqy+uYbR4vITPos9iyYxWTz91MdiMenQNUaLM925FntvaVvs2XuSxeLyrjlsFvfW/Ge1uDHh
+	KVD5iUuMFr9/AMW274p0EPCY3XCRxWPBplKPzSu0PDat6mTz2PRpErvHiRm/WTxebJ7J6DF1
+	dr3H5tPVHp83yQVwRXHZpKTmZJalFunbJXBl/LhxhbngMG/F+iutbA2M07m7GDk4JARMJKas
+	l+5i5OIQEljBKLHvxHs2COcLo8SrO/9Zuhg5gZzPjBJ778WC2CANp1Z9Y4EoWs4ocWTLT0YI
+	B6jozPSbUO1bGCX+/v3GCtLCIqAq0behjxVkH5uAlkRjJzuIKSKgIfFmixFIObPATWaJi7cn
+	MoOUCws4Sfye38AEYvMKmEs8vH0ayhaUODnzCdhFnEBXvFm5gRHiIiWJhs1nWCDsWom9zQfY
+	QYZKCOzmlHg7YzITRMJF4smTDnYIW1ji1fEtULaMxP+d86FqqiWe3vjNDNHcwijRv3M9GySQ
+	rCX6zuSA1DALZEicWd3FCBF2lHjazQFh8knceCsIUcEnMWnbdGaIMK9ER5sQxHA1idX33rBA
+	hGUkzn3im8CoNAvJX7OQjIewdSQW7P7ENguog1lAWmL5Pw4IU1Ni/S79BYysqxjFU0uLc9NT
+	iw3zUsv1ihNzi0vz0vWS83M3MQLT4el/xz/tYJz76qPeIUYmDsZDjBIczEoivLyV7ilCvCmJ
+	lVWpRfnxRaU5qcWHGKU5WJTEebVtTyYLCaQnlqRmp6YWpBbBZJk4OKUamLqjbhv1RQRvNfxZ
+	Ofdz7pdfIsbRuUz7tuvJBEZITj5/+ljptPIHefFCDoZx5+IX35uxYG2NfFTmI9N7P904ufmX
+	Xmp+VZ16tKtpJUOW3pYXN7jEc/hrODd81vxr4xJaOClXTGhHdPzcGxlflv8V/68cqNKwaJ1O
+	mYeOpI1J71Y1kffntvo/fiH/Ilq6RslVvXJdzNmbqWZd64xN3p73uXVSU87detXKo5WX1eMV
+	Ao9Kfz+k/czg9UcW34PpUyTFOg1lDqzftCfGLnHmkrNi5287vkyXDX4mVCy1PfNa8urn2/0S
+	zdz0/q30Y3udvV5Uaeq6r7Eaa3svZ3XrPWT1/fFvyY6n5ZFFVaoVTpkZSizFGYmGWsxFxYkA
+	lh6Iw/YDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrDIsWRmVeSWpSXmKPExsVy+t/xe7o3t7inGByezmsxZ/0aNovXhz8x
+	Wqy+uYbR4vITPos9iyYxWTz91MdiMenQNUaLM925FntvaVvs2XuSxeLyrjlsFvfW/Ge1uDHh
+	KVD5iUuMFr9/AMW274p0EPCY3XCRxWPBplKPzSu0PDat6mTz2PRpErvHiRm/WTxebJ7J6DF1
+	dr3H5tPVHp83yQVwRenZFOWXlqQqZOQXl9gqRRtaGOkZWlroGZlY6hkam8daGZkq6dvZpKTm
+	ZJalFunbJehlzJ4uWNDMXfHo8FnGBsYPHF2MnBwSAiYSp1Z9Y+li5OIQEljKKHFz/2RGiISM
+	xMYvV1khbGGJP9e62CCKPjJKfN/2gx3C2cIocWDTFLAOFgFVib4NfUAdHBxsAloSjZ3sIKaI
+	gIbEmy1GIOXMAjeZJS7ensgMUi4s4CTxe34DE4jNK2Au8fD2aSaImRMZJb7134NKCEqcnPmE
+	BcRmFtCRWLD7ExvIUGYBaYnl/8A+4AT64M3KDVBHK0k0bD7DAmHXSnS+Os02gVF4FpJJs5BM
+	moUwaQEj8ypGkdTS4tz03GJDveLE3OLSvHS95PzcTYzAaN927OfmHYzzXn3UO8TIxMF4iFGC
+	g1lJhJe30j1FiDclsbIqtSg/vqg0J7X4EKMpMCQmMkuJJucD001eSbyhmYGpoYmZpYGppZmx
+	kjivZ0FHopBAemJJanZqakFqEUwfEwenVAPTzoR9s8tC7lw6lCf9LeB75a7fOgn/fGfWSSye
+	7H/ovKLE3nNn+zuXXe9qa5R6qMJxVER3Xf6R1as/rP2zI3JXwpLLN/07w2YcO66fVhVg7is7
+	52dP4/yCG1qTGH3/1KVYyz7xOryn46nV0q5Zk5gu6+1JnxOs7rCri/H620VaXd7J9xbNSAxM
+	3ddWENPxOEpYV3R3J8/PQnstg+fS6cXiE+uyGh9Pb315ifVCoTvnn121bx/VKVy/+uVF0Puc
+	x8el7k9+ma21/Wnhpcs/P4QLV5/4s0XUfaLbTPPtlr+rvu/cUOFnwcJn9bNVf4Z1ZlyRxxw2
+	Qesvm3UN1F6/VHSR7dmfFdrX82umSqrQd8kUJZbijERDLeai4kQAA3U0pX8DAAA=
+X-CMS-MailID: 20230425110913eucas1p22cf9d4c7401881999adb12134b985273
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+	boundary="----t5a.LUSxvZ8UNChTG7xN-7.3lkNPyOm_Ty_DrQaWPiPzU4rz=_ea8fb_"
+X-RootMTR: 20230425110913eucas1p22cf9d4c7401881999adb12134b985273
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20230425110913eucas1p22cf9d4c7401881999adb12134b985273
+References: <20230421214400.2836131-1-mcgrof@kernel.org>
+	<20230421214400.2836131-3-mcgrof@kernel.org>
+	<ZEMRbcHSQqyek8Ov@casper.infradead.org>
+	<CGME20230425110913eucas1p22cf9d4c7401881999adb12134b985273@eucas1p2.samsung.com>
 
-On Mon, 24 Apr 2023 15:16:23 +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.26 release.
-> There are 98 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+------t5a.LUSxvZ8UNChTG7xN-7.3lkNPyOm_Ty_DrQaWPiPzU4rz=_ea8fb_
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+
+On Fri, Apr 21, 2023 at 11:42:53PM +0100, Matthew Wilcox wrote:
+> On Fri, Apr 21, 2023 at 02:43:54PM -0700, Luis Chamberlain wrote:
+> > The PageHWPoison() call can be converted over to the respective folio call
+> > folio_test_hwpoison(). This introduces no functional changes.
 > 
-> Responses should be made by Wed, 26 Apr 2023 13:11:11 +0000.
-> Anything received after that time might be too late.
+> Um, no.  Nobody should use folio_test_hwpoison(), it's a nonsense.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.26-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
+> Individual pages are hwpoisoned.  You're only testing the head page
+> if you use folio_test_hwpoison().  There's folio_has_hwpoisoned() to
+> test if _any_ page in the folio is poisoned.  But blindly converting
+> PageHWPoison to folio_test_hwpoison() is wrong.
+
+I see a pattern in shmem.c where first the head is tested and for large
+folios, any of pages in the folio is tested for poison flag. Should we
+factor it out as a helper in shmem.c and use it here?
+
+static ssize_t shmem_file_splice_read(struct file *in, loff_t *ppos,
+...
+	if (folio_test_hwpoison(folio) ||
+	    (folio_test_large(folio) &&
+	     folio_test_has_hwpoisoned(folio))) {
+	..
 > 
-> thanks,
-> 
-> greg k-h
+> If anyone knows how to poison folio_test_hwpoison() to make it not
+> work, I'd appreciate it.
 
-All tests passing for Tegra ...
+IMO, I think it will be clear if folio_test_hwpoison checks if any of the
+page in the folio is poisoned and we should have a explicit helper such
+as folio_test_head_hwpoison if the callers want to only test if the head
+page is poisoned (although I am not sure if that is useful).
 
-Test results for stable-v6.1:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    130 tests:	130 pass, 0 fail
+------t5a.LUSxvZ8UNChTG7xN-7.3lkNPyOm_Ty_DrQaWPiPzU4rz=_ea8fb_
+Content-Type: text/plain; charset="utf-8"
 
-Linux version:	6.1.26-rc1-ge4ff6ff54dea
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-
-Jon
+------t5a.LUSxvZ8UNChTG7xN-7.3lkNPyOm_Ty_DrQaWPiPzU4rz=_ea8fb_--
