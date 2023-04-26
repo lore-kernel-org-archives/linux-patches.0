@@ -1,53 +1,39 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEDA110B
-	for <patches@lists.linux.dev>; Wed, 26 Apr 2023 01:47:01 +0000 (UTC)
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-38e27409542so4615105b6e.0
-        for <patches@lists.linux.dev>; Tue, 25 Apr 2023 18:47:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1682473621; x=1685065621;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4ZsskTH5BhlaFFaEUUgbGihRjISLqNevqRfw2SlM6dk=;
-        b=KXn5qYVKMdtOdTO4P68ZvepK9XiPUB7jDwoQlDGOEOiJ0de7TrRx7it5k9knGL5HmJ
-         1F9UKdPzL2L1peyYkIO5AkUmWMWeJIDCBxVNCPXO2ZsuDgWbwQzn4V4Qqu/37v68tiqx
-         KCF1p2hFO71VaFyeSynXu7Tz8ybtYfOCknL7Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682473621; x=1685065621;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4ZsskTH5BhlaFFaEUUgbGihRjISLqNevqRfw2SlM6dk=;
-        b=f0J8QdMe1WeANMK7tFI0foBd+qRJ97mPW1N8rBYDoB1WwjQd14awNKI2oRNdPTf/mQ
-         vGOlWbyP5ta23SoRtjBWHCK+edrk+OSo9AvGkpkBymi6n3Vodd03lCzj8zn/cxylmdhR
-         7OK0cS4Nf5rzu9F91JzIeA+8iLzrHVPmh5LQ90f0fGYwd33EGSJWUFDdb5TfMSnMnyHl
-         ZsNJcTzyrxfIcvCmTn1W7ytT/+gdnYTBk80TDXBV13esUjFsHPHAznD/0SBmILVmRu9H
-         hv4l4eF95nYoncCXzc2tXyNBPZY6aQ1bXWXyzEj2Oo4iL7QwxiRC/KdsoA6RKfHVc5Or
-         TIug==
-X-Gm-Message-State: AAQBX9fa7AGb6foiCTh37KH0JR3h8X1dNS18wYayoz08Sg9+Nbf9lSHT
-	OUuJfY7Akeh79QgwFibAEA7cyg==
-X-Google-Smtp-Source: AKy350Y/k8gNDuC5ESi/KZW7Z0umdtFs+W28PYRjoB0A7+wtl9gzKvHW8TA8ZqeLvwKUclvLiZJuwQ==
-X-Received: by 2002:a05:6808:2389:b0:38e:2993:be7f with SMTP id bp9-20020a056808238900b0038e2993be7fmr12170976oib.38.1682473620818;
-        Tue, 25 Apr 2023 18:47:00 -0700 (PDT)
-Received: from fedora64.linuxtx.org ([99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id o189-20020acabec6000000b0038c2e1bdf2asm2844138oif.36.2023.04.25.18.47.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 18:47:00 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Tue, 25 Apr 2023 20:46:58 -0500
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/110] 6.2.13-rc1 review
-Message-ID: <ZEiCkmdPVfkRzwkq@fedora64.linuxtx.org>
-References: <20230424131136.142490414@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BD8C2E1
+	for <patches@lists.linux.dev>; Wed, 26 Apr 2023 07:43:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=YLBuKPBlg1otbpdJA1Gf3tRE4LAvlfNkgUvTKKV70wo=; b=WJgIVULIYQ39sjUOZ5s4mxqE8E
+	dHPM63xbMfd5wqw43T78yfNFrPvOYfM8KC+6TThNEQpMGmW1cqzRRu40pDKedIQ4MdNy7FC77bs/G
+	PN+3RLyO+rOla23sbrnFdZx+KXz5raCiVtmHuD4o91cn0jZFi81vJ+FT4RJkbC1BHIOPomxDnuL7e
+	+zLWXBDqx79hzBqjKJoZ+89ceJKO2T+LZRQeKH2RcSr85c7cHXRDbXmTLyry51mliJAeORkgytCzG
+	O/hGY0CXMhKplYhERj4Klj8ffHn+3guUXYqKtc/imEZDTvNUT30+P9edc7spmNMmtvvG21nb4RnLa
+	VXo2651Q==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1prZny-0034zX-1q;
+	Wed, 26 Apr 2023 07:43:10 +0000
+Date: Wed, 26 Apr 2023 00:43:10 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Pankaj Raghav <p.raghav@samsung.com>, hughd@google.com,
+	willy@infradead.org
+Cc: akpm@linux-foundation.org, brauner@kernel.org, djwong@kernel.org,
+	da.gomez@samsung.com, a.manzanares@samsung.com, dave@stgolabs.net,
+	yosryahmed@google.com, keescook@chromium.org, hare@suse.de,
+	kbusch@kernel.org, patches@lists.linux.dev,
+	linux-block@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC 2/8] shmem: convert to use folio_test_hwpoison()
+Message-ID: <ZEjWDvbfePjqXJ+4@bombadil.infradead.org>
+References: <20230421214400.2836131-1-mcgrof@kernel.org>
+ <20230421214400.2836131-3-mcgrof@kernel.org>
+ <ZEMRbcHSQqyek8Ov@casper.infradead.org>
+ <CGME20230425110913eucas1p22cf9d4c7401881999adb12134b985273@eucas1p2.samsung.com>
+ <20230425110025.7tq5vdr2jfom2zdh@localhost>
+ <ZEhYfHePaLpoUhbp@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,28 +42,235 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230424131136.142490414@linuxfoundation.org>
+In-Reply-To: <ZEhYfHePaLpoUhbp@bombadil.infradead.org>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Mon, Apr 24, 2023 at 03:16:22PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.13 release.
-> There are 110 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Apr 25, 2023 at 03:47:24PM -0700, Luis Chamberlain wrote:
+> On Tue, Apr 25, 2023 at 01:00:25PM +0200, Pankaj Raghav wrote:
+> > On Fri, Apr 21, 2023 at 11:42:53PM +0100, Matthew Wilcox wrote:
+> > > On Fri, Apr 21, 2023 at 02:43:54PM -0700, Luis Chamberlain wrote:
+> > > > The PageHWPoison() call can be converted over to the respective folio call
+> > > > folio_test_hwpoison(). This introduces no functional changes.
+> > > 
+> > > Um, no.  Nobody should use folio_test_hwpoison(), it's a nonsense.
+> > > 
+> > > Individual pages are hwpoisoned.  You're only testing the head page
+> > > if you use folio_test_hwpoison().  There's folio_has_hwpoisoned() to
+> > > test if _any_ page in the folio is poisoned.  But blindly converting
+> > > PageHWPoison to folio_test_hwpoison() is wrong.
+> > 
+> > I see a pattern in shmem.c where first the head is tested and for large
+> > folios, any of pages in the folio is tested for poison flag. Should we
+> > factor it out as a helper in shmem.c and use it here?
+> > 
+> > static ssize_t shmem_file_splice_read(struct file *in, loff_t *ppos,
+> > ...
+> > 	if (folio_test_hwpoison(folio) ||
+> > 	    (folio_test_large(folio) &&
+> > 	     folio_test_has_hwpoisoned(folio))) {
+> > 	..
 > 
-> Responses should be made by Wed, 26 Apr 2023 13:11:11 +0000.
-> Anything received after that time might be too late.
+> Hugh's commit 72887c976a7c9e ("shmem: minor fixes to splice-read
+> implementation") is on point about this :
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.13-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
-> and the diffstat can be found below.
+>   "Perhaps that ugliness can be improved at the mm end later"
 > 
-> thanks,
+> So how about we put some lipstick on this guy now (notice right above it
+> a similar compound page check for is_page_hwpoison()):
 > 
-> greg k-h
+> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+> index 1c68d67b832f..6a4a571dbe50 100644
+> --- a/include/linux/page-flags.h
+> +++ b/include/linux/page-flags.h
+> @@ -883,6 +883,13 @@ static inline bool is_page_hwpoison(struct page *page)
+>  	return PageHuge(page) && PageHWPoison(compound_head(page));
+>  }
+>  
+> +static inline bool is_folio_hwpoison(struct folio *folio)
+> +{
+> +	if (folio_test_hwpoison(folio))
+> +		return true;
+> +	return folio_test_large(folio) && folio_test_has_hwpoisoned(folio);
+> +}
+> +
+>  /*
+>   * For pages that are never mapped to userspace (and aren't PageSlab),
+>   * page_type may be used.  Because it is initialised to -1, we invert the
+> diff --git a/mm/shmem.c b/mm/shmem.c
+> index ef7ad684f4fb..b7f47f6b75d5 100644
+> --- a/mm/shmem.c
+> +++ b/mm/shmem.c
+> @@ -3013,9 +3013,7 @@ static ssize_t shmem_file_splice_read(struct file *in, loff_t *ppos,
+>  		if (folio) {
+>  			folio_unlock(folio);
+>  
+> -			if (folio_test_hwpoison(folio) ||
+> -			    (folio_test_large(folio) &&
+> -			     folio_test_has_hwpoisoned(folio))) {
+> +			if (is_folio_hwpoison(folio)) {
+>  				error = -EIO;
+>  				break;
+>  			}
 
-Tested rc1 against the Fedora build system (aarch64, armv7, ppc64le,
-s390x, x86_64), and boot tested x86_64. No regressions noted.
+With this, this I end up with the following for shmem_file_read_iter().
+For some odd reason without the first hunk I see that some non SB_KERNMOUNT
+end up with a silly inode->i_blkbits.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+I must be doing something wrong with the shmem_file_read_iter() conversion
+as I end up with a empty new line at the end, but I can't seem to
+understand why. Any ideas?
+
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 21a4b8522ac5..39ae17774dc3 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -2541,6 +2541,10 @@ static struct inode *shmem_get_inode(struct mnt_idmap *idmap, struct super_block
+ 		inode->i_ino = ino;
+ 		inode_init_owner(idmap, inode, dir, mode);
+ 		inode->i_blocks = 0;
++		if (sb->s_flags & SB_KERNMOUNT)
++			inode->i_blkbits = PAGE_SHIFT;
++		else
++			inode->i_blkbits = sb->s_blocksize_bits;
+ 		inode->i_atime = inode->i_mtime = inode->i_ctime = current_time(inode);
+ 		inode->i_generation = get_random_u32();
+ 		info = SHMEM_I(inode);
+@@ -2786,18 +2790,23 @@ static ssize_t shmem_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	struct file *file = iocb->ki_filp;
+ 	struct inode *inode = file_inode(file);
+ 	struct address_space *mapping = inode->i_mapping;
++	struct super_block *sb = inode->i_sb;
++	u64 bsize = i_blocksize(inode);
+ 	pgoff_t index;
+ 	unsigned long offset;
+ 	int error = 0;
+ 	ssize_t retval = 0;
+ 	loff_t *ppos = &iocb->ki_pos;
+ 
++	/*
++	 * Although our index is page specific, we can read a blocksize at a
++	 * time as we use a folio per block.
++	 */
+ 	index = *ppos >> PAGE_SHIFT;
+-	offset = *ppos & ~PAGE_MASK;
++	offset = *ppos & (bsize - 1);
+ 
+ 	for (;;) {
+ 		struct folio *folio = NULL;
+-		struct page *page = NULL;
+ 		pgoff_t end_index;
+ 		unsigned long nr, ret;
+ 		loff_t i_size = i_size_read(inode);
+@@ -2806,7 +2815,7 @@ static ssize_t shmem_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 		if (index > end_index)
+ 			break;
+ 		if (index == end_index) {
+-			nr = i_size & ~PAGE_MASK;
++			nr = i_size & (bsize - 1);
+ 			if (nr <= offset)
+ 				break;
+ 		}
+@@ -2819,9 +2828,7 @@ static ssize_t shmem_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 		}
+ 		if (folio) {
+ 			folio_unlock(folio);
+-
+-			page = folio_file_page(folio, index);
+-			if (PageHWPoison(page)) {
++			if (is_folio_hwpoison(folio)) {
+ 				folio_put(folio);
+ 				error = -EIO;
+ 				break;
+@@ -2831,50 +2838,63 @@ static ssize_t shmem_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 		/*
+ 		 * We must evaluate after, since reads (unlike writes)
+ 		 * are called without i_rwsem protection against truncate
++		 *
++		 * nr represents the number of bytes we can read per folio,
++		 * and this will depend on the blocksize set.
+ 		 */
+-		nr = PAGE_SIZE;
++		nr = bsize;
++		WARN_ON(!(sb->s_flags & SB_KERNMOUNT) && folio && bsize != folio_size(folio));
+ 		i_size = i_size_read(inode);
+ 		end_index = i_size >> PAGE_SHIFT;
+ 		if (index == end_index) {
+-			nr = i_size & ~PAGE_MASK;
++			nr = i_size & (bsize - 1);
+ 			if (nr <= offset) {
+ 				if (folio)
+ 					folio_put(folio);
+ 				break;
+ 			}
+ 		}
++		/*
++		 * On the first folio read this will amount to blocksize - offset. On subsequent
++		 * reads we can read blocksize at time until iov_iter_count(to) == 0.
++		 *
++		 * The offset represents the base we'll use to do the reads per folio, it
++		 * gets incremented by the number of bytes we read per folio and is aligned
++		 * to the blocksize. After a first offset block the offset would be 0 and
++		 * we'd read a block at a time.
++		 */
+ 		nr -= offset;
+ 
+ 		if (folio) {
+ 			/*
+-			 * If users can be writing to this page using arbitrary
++			 * If users can be writing to this folio using arbitrary
+ 			 * virtual addresses, take care about potential aliasing
+-			 * before reading the page on the kernel side.
++			 * before reading the folio on the kernel side.
+ 			 */
+ 			if (mapping_writably_mapped(mapping))
+-				flush_dcache_page(page);
++				flush_dcache_folio(folio);
+ 			/*
+-			 * Mark the page accessed if we read the beginning.
++			 * Mark the folio accessed if we read the beginning.
+ 			 */
+ 			if (!offset)
+ 				folio_mark_accessed(folio);
+ 			/*
+-			 * Ok, we have the page, and it's up-to-date, so
++			 * Ok, we have the folio, and it's up-to-date, so
+ 			 * now we can copy it to user space...
+ 			 */
+-			ret = copy_page_to_iter(page, offset, nr, to);
++			ret = copy_folio_to_iter(folio, offset, nr, to);
+ 			folio_put(folio);
+ 
+ 		} else if (user_backed_iter(to)) {
+ 			/*
+ 			 * Copy to user tends to be so well optimized, but
+ 			 * clear_user() not so much, that it is noticeably
+-			 * faster to copy the zero page instead of clearing.
++			 * faster to copy the zero folio instead of clearing.
+ 			 */
+-			ret = copy_page_to_iter(ZERO_PAGE(0), offset, nr, to);
++			ret = copy_folio_to_iter(page_folio(ZERO_PAGE(0)), offset, nr, to);
+ 		} else {
+ 			/*
+-			 * But submitting the same page twice in a row to
++			 * But submitting the same folio twice in a row to
+ 			 * splice() - or others? - can result in confusion:
+ 			 * so don't attempt that optimization on pipes etc.
+ 			 */
+@@ -2883,8 +2903,13 @@ static ssize_t shmem_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 
+ 		retval += ret;
+ 		offset += ret;
++
++		/*
++		 * Due to usage of folios per blocksize we know this will actually read
++		 * blocksize at a time after the first block read at offset.
++		 */
+ 		index += offset >> PAGE_SHIFT;
+-		offset &= ~PAGE_MASK;
++		offset &= (bsize - 1);
+ 
+ 		if (!iov_iter_count(to))
+ 			break;
+-- 
+2.39.2
+
