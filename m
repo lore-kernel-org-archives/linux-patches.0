@@ -1,97 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF59814263
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 20:00:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAF8C433C0
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 20:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8019014263
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 20:02:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3C1C433C0
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 20:02:01 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hOxDoPce"
+	dkim=permerror (0-bit key) header.d=gmail.com header.i=@gmail.com header.b="PZ37KPsD"
 Resent-From: Ard Biesheuvel <ardb@kernel.org>
-Resent-Date: Mon, 26 Jun 2023 22:00:26 +0200
-Resent-Message-ID: <ZJnuWlMdatO3A+ZA@gambale.home>
+Resent-Date: Mon, 26 Jun 2023 22:01:58 +0200
+Resent-Message-ID: <ZJnuti3o+EWdHZyf@gambale.home>
 Resent-To: patches@lists.linux.dev
-Received: by 2002:a05:6504:1595:b0:22f:342c:2b60 with SMTP id b21csp6867680ltq;
-        Sun, 25 Jun 2023 08:57:19 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ7rjAmP1XPurFY4PyZiAmqqRUCHxyEayn+IlIaEbnYFpaZcsvmfHdCTUSew7ksFZLGAZ2Tj
-X-Received: by 2002:a05:6870:44c1:b0:1b0:3b4b:8fb2 with SMTP id t1-20020a05687044c100b001b03b4b8fb2mr345882oai.10.1687708639441;
-        Sun, 25 Jun 2023 08:57:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1687708639; cv=none;
+Received: by 2002:ab3:5d14:0:b0:22b:28fe:6113 with SMTP id j20csp171670ltc;
+        Wed, 26 Apr 2023 21:05:10 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ5lAU44bAR1mM/V58eOgiObvh7MrltnOhld7g2sib+BmOoCBrknqRxtl601TtwkY2GDrOTS
+X-Received: by 2002:a05:6870:3a32:b0:17a:ccda:5c04 with SMTP id du50-20020a0568703a3200b0017accda5c04mr231347oab.14.1682568310284;
+        Wed, 26 Apr 2023 21:05:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1682568310; cv=none;
         d=google.com; s=arc-20160816;
-        b=TKnihQZV1C4h5eRX6wWsMz/sBpNC2epQX2XRRGbPDmud1lxHHttNvNnPZ1FEOdZkYQ
-         xn0MTrO+X/7FAEyVa0lJm87A3zJGly64gXOT2mF2f3hiPHMAyzeLDIOQKyXvVFNOLqvn
-         4780E+JTF/f/O9W9IAoUs7ir6DYsUsBZnVSy3alI1vnUhm1d9tjFVQ5yHltrmnid2CvX
-         0vudFrU5xBp8xC1IlnLcHc4NHlyNtY62YOAK8blXgzP8KP1csUJhJ33wqSMteAIeRyRh
-         0qUjESbSVwfqRlF+HPrV9cieIpQSbKCLAsBkY1cygSlW7Yt2fK7x0XpoYqVKclJ791bT
-         B7AQ==
+        b=z7SVIahTznY51BhTqk0Fa2rUIlu6l2KRfo+X6VwPLgsHUpkbK2tYD3xBdwIRZzI7bZ
+         RI8FYJ6Kggde4omjayVW686rEn2WV7OA8TrmxYU+GRJ5c+j9wyX4Fiw8llQTxUAil3jx
+         CtyqZoex7JGRhBt7sZtna34RzeZa/cYUTDRZrtXLcIB1YdN6bveqkCnjU6N86xyJay70
+         Wwoy1E3pwr3CfTmQFkCILBoFsvn3WMesIRq2Hv6vcjFjaOj7e7ejYXuCP40ScOl5x0AB
+         wiGYuTFuvxKKSTXVBzNp0Ep4V9SX4+sqWg3deb9V2B7pGCsztwWt1fZLUMBuCp3Bh4hd
+         4DoQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature:dmarc-filter:delivered-to;
-        bh=3djWlnhgTMbhkowbCnm3Axo9ahe5xnhqxOrhebgzMeQ=;
-        fh=jR/UThCfMP/RTzkk6YzprRaTed6SvvItvyhekvlRY0s=;
-        b=EozYXyRu7P/ddI1UmUF49y4bgz53+JVqZ9KEN7C95jObbMDS+hmc1UjOFQg9mNbHZh
-         /+77x9MeZQ/nlsylATX7HYyUN8rUMT6VbeBFQpBkB7lvq8kUAHItgwEQW29DaUC9/L3j
-         M/0TirGGfSX9vRfRL/J3kRZYFpw1+qc5UV1Fdp5qUVzvN0XTe71Zn/u+EX//Iv09E/1a
-         yL/dEPBae1mVYUbsQR83adMCjeC1Bzt0MxHoJJQQ5dZsz2jyfx8YZOlGk8V96r3IyDPF
-         tmmbktrudRHEFwdniEDb3L8ZOuXei3AyyCcmE5C2sd+Dy9TZ03oXNglfUlKSmzkN0RkU
-         HMfA==
+        bh=xFRFBtsjnNHabTVryZj98hadxLzsvBz2RVdC5gAyhq0=;
+        b=LUN/ii41DSnTppHBXum3egegEyjx1rBlEWHhLDJGrnqcISY0RtkkrjyMs9U6+dNec/
+         LjGHMDNVPWKDEeSk0aCN462jn+PZ1ZldGjZ4Pl4TPcnZ9BYo3pP4SMe97idH+JQlG7Lc
+         yDN/Ylicbat9tKZZ9XJFd8L3LxfOrhoRhWWX9Hl/VIIGabq3eOfY/1QsY02hUxS/rKJ0
+         B4kSxyoq5tJQiRpVVPi22cUql0LOhotQzP7/8ObzMRfroSIyx6J/gvLjKZOW/fDV7pNT
+         XUfDZSE+c+es8kM1TG/IMY8BANvi1dHVl9JJTVAgLBSS2kqaLtC4Ev7BZVRw6A6gZyYX
+         CmZQ==
 ARC-Authentication-Results: i=1; mx.google.com;
-       dkim=pass header.i=@gmail.com header.s=20221208 header.b=hOxDoPce;
-       spf=pass (google.com: domain of srs0=bkyn=cn=gmail.com=rminnich@kernel.org designates 2604:1380:4641:c500::1 as permitted sender) smtp.mailfrom="SRS0=BkyN=CN=gmail.com=rminnich@kernel.org";
+       dkim=pass header.i=@gmail.com header.s=20221208 header.b=PZ37KPsD;
+       spf=pass (google.com: domain of srs0=8ge6=as=gmail.com=rminnich@kernel.org designates 2604:1380:4641:c500::1 as permitted sender) smtp.mailfrom="SRS0=8GE6=AS=gmail.com=rminnich@kernel.org";
        dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com
 Received: from dfw.source.kernel.org (dfw.source.kernel.org. [2604:1380:4641:c500::1])
-        by mx.google.com with ESMTPS id q12-20020a056870828c00b00194b5c14d70si1661362oae.221.2023.06.25.08.57.19
+        by mx.google.com with ESMTPS id i28-20020a9d611c000000b006a12ffd44aasi17887863otj.40.2023.04.26.21.05.10
         for <workofard@gmail.com>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Jun 2023 08:57:19 -0700 (PDT)
-Received-SPF: pass (google.com: domain of srs0=bkyn=cn=gmail.com=rminnich@kernel.org designates 2604:1380:4641:c500::1 as permitted sender) client-ip=2604:1380:4641:c500::1;
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Apr 2023 21:05:10 -0700 (PDT)
+Received-SPF: pass (google.com: domain of srs0=8ge6=as=gmail.com=rminnich@kernel.org designates 2604:1380:4641:c500::1 as permitted sender) client-ip=2604:1380:4641:c500::1;
 Authentication-Results: mx.google.com;
-       dkim=pass header.i=@gmail.com header.s=20221208 header.b=hOxDoPce;
-       spf=pass (google.com: domain of srs0=bkyn=cn=gmail.com=rminnich@kernel.org designates 2604:1380:4641:c500::1 as permitted sender) smtp.mailfrom="SRS0=BkyN=CN=gmail.com=rminnich@kernel.org";
+       dkim=pass header.i=@gmail.com header.s=20221208 header.b=PZ37KPsD;
+       spf=pass (google.com: domain of srs0=8ge6=as=gmail.com=rminnich@kernel.org designates 2604:1380:4641:c500::1 as permitted sender) smtp.mailfrom="SRS0=8GE6=AS=gmail.com=rminnich@kernel.org";
        dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 13A5060BBD
-	for <workofard@gmail.com>; Sun, 25 Jun 2023 15:57:19 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id F3CE463A06
+	for <workofard@gmail.com>; Thu, 27 Apr 2023 04:05:09 +0000 (UTC)
 Received: by smtp.kernel.org (Postfix)
-	id 894BFC433C9; Sun, 25 Jun 2023 15:57:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 78FBFC433C0;
-	Sun, 25 Jun 2023 15:57:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 78FBFC433C0
+	id 7E283C433A0; Thu, 27 Apr 2023 04:05:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5CC6DC433EF;
+	Thu, 27 Apr 2023 04:05:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 5CC6DC433EF
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-634ddd17647so12098736d6.2;
-        Sun, 25 Jun 2023 08:57:17 -0700 (PDT)
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-5ef6e0f9d5aso78159436d6.0;
+        Wed, 26 Apr 2023 21:05:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687708636; x=1690300636;
+        d=gmail.com; s=20221208; t=1682568307; x=1685160307;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3djWlnhgTMbhkowbCnm3Axo9ahe5xnhqxOrhebgzMeQ=;
-        b=hOxDoPcegO0BMQENdcpMdB0qwPcz4NjnigkbcqjKGx59LZJKCeqKQfw/qwsbO53aq8
-         BO0mNlZH+bB8CbNFuUC6NOKo9czzE9SIE2suoEmKZvQLCwwftAnjlkx7cfQsb2QKusxG
-         aR/kKuRMcsP8qrWDoIynxLRecojHFi/XgjmaMApwys8rbGyWiJGuiyWILdTDatFDkITq
-         udZyyFE31kSzYI1YdEiJn5zmti30X2+59N/hXalMj3555zmXolPZ8JJyTLxX3X7E7ycr
-         UkcP1qO73Yy08TzcS9yVNz2QCVuX3AKMffLctc++t9lZliSvx/pYwd1JlAcl4azXl0GI
-         MUcA==
+        bh=xFRFBtsjnNHabTVryZj98hadxLzsvBz2RVdC5gAyhq0=;
+        b=PZ37KPsDgvYk5WhKQGFTA+y0ZOa4cm60Ow+VHybjjOlSM689gT5LCD3YSJOdvJpnAG
+         5vRSylllh3A8kkme0CwI4dctKEnNbKBn4NuU23xSWDlwy5DdUj6XKq537EGcGRLJwtrH
+         JufduAJpeH4bm2kLKGj+dKOOpiMGHS9ncz5Apozbh3tU1h0eI0kitNVF11t3sbAGiIEy
+         j3AhJHfvEL5QmoDgGqftO7+ORU8ZHi4R5OvhfbB/KnU4YhTZb4Lo8nlf3hc2H0ZdbhEV
+         f8sY1H02eJ3b0UxwmHPHleaKkaf+JCrGf3LbdtBfyQZMfnRHI3MT21WXE+waIJlvDhxs
+         H92w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687708636; x=1690300636;
+        d=1e100.net; s=20221208; t=1682568307; x=1685160307;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3djWlnhgTMbhkowbCnm3Axo9ahe5xnhqxOrhebgzMeQ=;
-        b=AWkmRCG9t+EZ5AhsExFYOMQzzi4p5u/U/n6l+ClkcTs4agCCCIrxCwaAF1Rs2VmmuK
-         iTw93N+IJqo6rEvEgtzLhMARb5yMSY6JEJHkE9pM8C7iCm0Fh5/wUTNH/3gYrt42HF2X
-         4zuU7KT/9oDbBF5rJ8zB1nz1GAJXy7URT65RPpNPmKXj1dpJNoteWEbL5klE4DJAA9o1
-         kSHNNCazOD7gQl11pTDHi84rWWHHwTiMMl9g/b2l9feDW8V7g1ya6Yt3ANKKNZJvUB8e
-         INDkoZ+52R8wyEnORW9RhCuEUZnXLwZOFeFnurusr862N9yx+XPIBl3OKGca3Yn5PQHQ
-         wlzw==
-X-Gm-Message-State: AC+VfDyMeohTTIGW5H01p59IYjH+8/No1xIT4tJBUNtUyY7jds8H3V8i
-	/fvQN9eIiXnu4k9Q1/yfSiXO/5/5yLqipc7K1Y1x6cphD+GrRg==
-X-Received: by 2002:ad4:5d66:0:b0:632:25c5:6fb8 with SMTP id
- fn6-20020ad45d66000000b0063225c56fb8mr12682617qvb.31.1687708636095; Sun, 25
- Jun 2023 08:57:16 -0700 (PDT)
+        bh=xFRFBtsjnNHabTVryZj98hadxLzsvBz2RVdC5gAyhq0=;
+        b=APn47hgU12x6CLZqy7X7VB69A2F6WZIShtVHj3ogKLiduioSu6C9Dg4FSLADv4TTq9
+         ScqIUyu2Xh5PHzLkn2uBBNDp0VV3BwxOlxQYtb1l5UmH+ll6L55/NQvYjPU/DSO9jHtB
+         4vNSM+TfTnp+qwnaVo/U2dYr3Pfu3vM+rR/Ya0qLXYXxv3GSZyiC2UvzDvr4hP5Xa5YB
+         PgZkGuWTEzjhA6dioGgvOJmMtlFRx7sBRTDyPQlVTSpkLV7PjFgNYjULuEVraisUBke8
+         pSGhNX6xG9Krdm+wDPPEYCkUoladLcpp2Y7agQi4DNSOg/NXJFUJajiHT4kR6OOyS16R
+         KLow==
+X-Gm-Message-State: AAQBX9fq2FdT373LPDxfOgK4JJKx/ZUhoKs9ydJEsLwAz2qDKvDmTY2x
+	dfqq9RZVlFJoFm4wFBD13FmtGLgWwEk1hd3zuXs=
+X-Received: by 2002:a05:6214:5185:b0:5d9:a36d:3ed2 with SMTP id
+ kl5-20020a056214518500b005d9a36d3ed2mr36818133qvb.45.1682568307301; Wed, 26
+ Apr 2023 21:05:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -101,91 +99,68 @@ MIME-Version: 1.0
 References: <20230426034001.16-1-cuiyunhui@bytedance.com> <CAMj1kXEKh9O-ndk3QFibJMYfMbG7vm-cLN2vVQM5eDsYK84NzQ@mail.gmail.com>
  <CAEEQ3wkJB5CKm33mHXUOPX5makYOHF8By6FYGnNzRkM-Mo72OQ@mail.gmail.com>
  <ZEj33QLZqEeL+/y4@FVFF77S0Q05N> <CAEEQ3wmDBJkfOeKCQfcnuE+1=1K0D2pzu+Sn+zPEWk+RHs0NFQ@mail.gmail.com>
- <CAP6exY+ydbzh1EkWTFejzwaW+PA-ySVO2Qj+CVJ1XbSMce2S9Q@mail.gmail.com>
- <CAP6exY+tqAU0j1TVEMTzTb18M6_mPH5bWWiAS=94gyDGTY3hyQ@mail.gmail.com>
- <CAEEQ3w=wBdpZWnUd2WWVBC3BtFiUp-PQtNAtdXE4cO4n0XT-fg@mail.gmail.com>
- <CAMj1kXFGpXEPtYpy1+bs13F2P_LLZf9rTMfYMU=6jzgd3=SEcw@mail.gmail.com>
- <CAEEQ3wnbXE0vJnQRLo5MhfDc-Q4PbNWBoWS-oMn71CcJU51JdA@mail.gmail.com>
- <CAMj1kXHfqkU2QxvjTkGBSkEcTf_HirbdOReOJwdpgz3hM8fBHw@mail.gmail.com>
- <CAEEQ3wn2n48TpNQ3MuvrRH4zzg28SaiOswunPeZ01jFm-TbJ5w@mail.gmail.com> <CAMj1kXHgaLD43jx0f6hn_j209LGT_4G+w5XEGaYB9znV5p9tdA@mail.gmail.com>
-In-Reply-To: <CAMj1kXHgaLD43jx0f6hn_j209LGT_4G+w5XEGaYB9znV5p9tdA@mail.gmail.com>
+In-Reply-To: <CAEEQ3wmDBJkfOeKCQfcnuE+1=1K0D2pzu+Sn+zPEWk+RHs0NFQ@mail.gmail.com>
 From: ron minnich <rminnich@gmail.com>
-Date: Sun, 25 Jun 2023 08:57:06 -0700
-Message-ID: <CAP6exYJRE8iM63SX3hQP9_5aKYcnN5x0KOAtZOgeEWU5bwLEBA@mail.gmail.com>
+Date: Wed, 26 Apr 2023 21:04:56 -0700
+Message-ID: <CAP6exY+ydbzh1EkWTFejzwaW+PA-ySVO2Qj+CVJ1XbSMce2S9Q@mail.gmail.com>
 Subject: Re: [External] Re: [PATCH] firmware: added a firmware information
  passing method FFI
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: =?UTF-8?B?6L+Q6L6J5bSU?= <cuiyunhui@bytedance.com>, 
-	Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, rafael@kernel.org, 
-	lenb@kernel.org, jdelvare@suse.com, yc.hung@mediatek.com, 
+To: =?UTF-8?B?6L+Q6L6J5bSU?= <cuiyunhui@bytedance.com>
+Cc: Mark Rutland <mark.rutland@arm.com>, Ard Biesheuvel <ardb@kernel.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, rafael@kernel.org, lenb@kernel.org, 
+	jdelvare@suse.com, yc.hung@mediatek.com, 
 	angelogioacchino.delregno@collabora.com, allen-kh.cheng@mediatek.com, 
 	pierre-louis.bossart@linux.intel.com, tinghan.shen@mediatek.com, 
-	lkml - Kernel Mailing List <linux-kernel@vger.kernel.org>, linux-acpi@vger.kernel.org, 
-	=?UTF-8?B?6JGb5aOr5bu6?= <geshijian@bytedance.com>, 
-	=?UTF-8?B?6Z+m5Lic?= <weidong.wd@bytedance.com>
+	linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hey Ard, thanks for the discussion, sounds like we are able to move forward
-now!
+The device tree is self describing data. Adding new information is easy. If
+you add new information to a node, and older software does not know about
+it, it is no big deal.
 
+So I can't agree with this comment: "We'd have to create entirely new ways
+to pass that information, which is not
+very desirable."
 
+The whole point of the dt is that you can always add new ways to pass
+information, by design.
 
-On Sun, Jun 25, 2023, 6:13 AM Ard Biesheuvel <ardb@kernel.org> wrote:
+Adding memory attributes would be quite easy.
 
-> On Sun, 25 Jun 2023 at 13:54, =E8=BF=90=E8=BE=89=E5=B4=94 <cuiyunhui@byte=
-dance.com> wrote:
+On Wed, Apr 26, 2023 at 8:38=E2=80=AFPM =E8=BF=90=E8=BE=89=E5=B4=94 <cuiyun=
+hui@bytedance.com> wrote:
+
+> Hi Mark,
+>
+> On Wed, Apr 26, 2023 at 6:07=E2=80=AFPM Mark Rutland <mark.rutland@arm.co=
+m> wrote:
 > >
-> > Hi Ard,
+> > Ard's point is that the device tree doesn't have all the same
+> information (e.g.
+> > nothing in DT describes the memory type attributes), and so this isn't
+> > sufficient.
+>
+> The device tree only needs to complete the parse of the memory type
+> attributes,
+> it should not be very complicated.
+>
 > >
-> > On Sun, Jun 25, 2023 at 3:43=E2=80=AFPM Ard Biesheuvel <ardb@kernel.org=
-> wrote:
-> > >
-> > > acpi_os_ioremap() is used by all ACPI core code that needs to map MMI=
-O
-> > > regions or DRAM from AML code. AML does not pass memory type
-> > > attributes, so we have to consult the EFI memory map for these.
-> > >
-> > > As I have explained to you multiple times, ACPI on arm64 is *broken*
-> > > without the EFI memory map.
-> > >
-> >
-> > As Ron's suggested:
-> > "...
-> > It would be nice to separate those pieces on RISC-V; certainly they
-> > were separate for a very long time in the x86 world (we had ACPI+SMM
-> > on coreboot laptops without UEFI for example)
-> > ...
-> > "
-> >
-> > If it cannot be solved temporarily on arm64, then we cannot let it
-> > continue to be bound in RISC-V.
-> > And on the linux-next branch, RISC-V arch is not bound to EFI.
-> > void *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
-> > {
-> >         return memremap(phys, size, MEMREMAP_WB);
-> > }
-> >
-> >
-> >
-> > >
-> > > Incorrect. We are talking about any physical region here, not just
-> > > DRAM. And some DRAM regions may not be covered by memblock.
-> > >
-> > It is very strange that so many devices can complete the hardware
-> > description through DTS without the problem you mentioned.
-> > Even if there is, then it shouldn't be the problem that this patch
-> > should solve, should it?
-> >
-> > > No, sorry. Please try to understand the objections that I am raising
-> > > first. I am not saying this to annoy you, I am saying this because
-> > > your approach is flawed.
-> >
-> > The implementation is right in front of us, we need to support ACPI on
-> > RISC-V based on coreboot.
+> > We'd have to create entirely new ways to pass that information, which i=
+s
+> not
+> > very desirable.
 > >
 >
-> If this is only used on RISC-V, and implemented under arch/riscv, I
-> have no objections.
+> >
+> > Can you extend coreboot to provide EFI services, or to chain-load an EF=
+I
+> > payload?
 >
-
+> Currently, coreboot does not support UEFI, and it may not support it
+> in the future.
+> Hi rminnich, what do you think?
+>
+> Thanks,
+> Yunhui
+>
