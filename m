@@ -1,79 +1,114 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB6B6FB9
-	for <patches@lists.linux.dev>; Thu, 27 Apr 2023 15:13:00 +0000 (UTC)
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-953343581a4so1321281166b.3
-        for <patches@lists.linux.dev>; Thu, 27 Apr 2023 08:13:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1682608379; x=1685200379;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/tnBlwR2KgjIrpyr1ey4GRZA/jG9gwGR13N6cjFqMs0=;
-        b=fKUaWjUJ8mKf36zHO3vuQML5HdFupvkc97Aet0N6roPO9Mvl1emFYI5ASnORVKNVVP
-         24vG050RF1h/m2pGUsY4Qs7K0X6dBSNg3CLH/amgUBi2nJnumZkI+F+rsnlHaA144sYe
-         0UxQZGO4FZAwz4bCC/i3t/YZamxccbGa10nE0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682608379; x=1685200379;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/tnBlwR2KgjIrpyr1ey4GRZA/jG9gwGR13N6cjFqMs0=;
-        b=U6OQNgevct+Q8Vkbp9rN5AtPvbGEM9KMfJQpnIZlhf9L8q3LYXeVGipx528twRS/NC
-         UaxYXxq9LV2JsIgylqQsM4q3wsL623/GaXy0t9oEYmIp2k54CVo8vBJ6OR8PQVIZcyyu
-         4hSkoUrfuLiFm83oTkDEPmbK1QcHT53MBFzQJob1GuYCvBvzSktMk4eDu8UT0h7RIFvf
-         pY+hi6U1YaZ/jsaXAN9ggEyFmSwJxViq6jN97siQuGQoBB5ub3Yc5V4ShZAEv3bcfp9z
-         UUs7btlEw4j86Z7DG/FNLXFpxFT1f9nPgMX+tOotFSBiyEpa6RWvKGJeE5KUXJ9zE7ge
-         +a8A==
-X-Gm-Message-State: AC+VfDwOah71govPhO33R0IjfLmwM4Tf5y3E2z4Q4uFY0o7OJiNdXkTt
-	47krX0BCWajtY6AQOCAA/ui6U+1pBHkVpyRhy1PyHw==
-X-Google-Smtp-Source: ACHHUZ6rnTpxAlm+hXpQScNczXWeoMioy5llHUELi1sfs5ms1S/9lEVl0e/SLbz5GNH/9R9qDNkUIA==
-X-Received: by 2002:a17:906:9754:b0:94a:921b:c805 with SMTP id o20-20020a170906975400b0094a921bc805mr2283508ejy.45.1682608379088;
-        Thu, 27 Apr 2023 08:12:59 -0700 (PDT)
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com. [209.85.208.48])
-        by smtp.gmail.com with ESMTPSA id d16-20020a1709063ed000b0094f499257f7sm9828949ejj.151.2023.04.27.08.12.57
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Apr 2023 08:12:57 -0700 (PDT)
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-506bf4cbecbso12812266a12.1
-        for <patches@lists.linux.dev>; Thu, 27 Apr 2023 08:12:57 -0700 (PDT)
-X-Received: by 2002:aa7:c946:0:b0:508:3b23:d84c with SMTP id
- h6-20020aa7c946000000b005083b23d84cmr1902412edt.1.1682608377021; Thu, 27 Apr
- 2023 08:12:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07769C2CB;
+	Thu, 27 Apr 2023 19:35:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24230C4339B;
+	Thu, 27 Apr 2023 19:35:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1682624111;
+	bh=I6bjmJKyg+OsI5C9yWHH3qaPQ1SmKzUJt4SHAnBFRZI=;
+	h=From:Date:Subject:To:Cc:From;
+	b=XierVmVdpa9Cp39YuWLeh+yshOeehlTOz9gNsgUitHVikKGFTxIiAKZkigJbZrsrg
+	 vgQa+Q3Ck2JIRvcGCVf3wpvIWrAypEQdMXGq1d1TO+aixd+IJz/1+t1VFZyja6lkkM
+	 MyoDXHe54cW6Tg9mh9XJ060LVRxv1g7MZMunUP5XiW6dIOZNp7+H4dBL9gwCtU6h+/
+	 Qg3IGXNqxWg5xgmmNvPpl+LSW9OUfesBRR/jjrB2ZTx7ori0yCkmb3fldCh/4J2gPe
+	 Ai+yXz746miKIZ6kO6lUawp5qy9F5179DlH2rfO5zvywSC/rpSwUudk3SS1HDoSanB
+	 wr23RJp6sCcPQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 27 Apr 2023 12:34:53 -0700
+Subject: [PATCH] powerpc/boot: Disable power10 features after BOOTAFLAGS
+ assignment
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230427140959.27655-1-vbabka@suse.cz> <2023042719-stratus-pavestone-505e@gregkh>
- <3cc6e10c-f054-a30a-bf87-966098ccb7bf@suse.cz>
-In-Reply-To: <3cc6e10c-f054-a30a-bf87-966098ccb7bf@suse.cz>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 27 Apr 2023 08:12:40 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wgdGzy6-3jzN6Kvtz1QxStTZBZPz1zy9i4gM9nbe5FGbA@mail.gmail.com>
-Message-ID: <CAHk-=wgdGzy6-3jzN6Kvtz1QxStTZBZPz1zy9i4gM9nbe5FGbA@mail.gmail.com>
-Subject: Re: [PATCH for v6.3 regression] mm/mremap: fix vm_pgoff in
- vma_merge() case 3
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Greg KH <greg@kroah.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>, lstoakes@gmail.com, regressions@lists.linux.dev, 
-	linux-mm@kvack.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Jiri Slaby <jirislaby@kernel.org>, Fabian Vogt <fvogt@suse.com>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230427-remove-power10-args-from-boot-aflags-clang-v1-1-9107f7c943bc@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAFzOSmQC/x2OwQqDMBBEf0Vy7kKM0kp/pfSwSTcaMFnZFS2I/
+ 97Y45thHnMYJUmk5tkcRmhLmrhUaG+NCROWkSB9KhtnXWd79wChzBvBwjtJawFlVIjCGTzzChh
+ nrEGY6xTcfQh9R0NoYzBV6FEJvGAJ06XMqCvJVSxCMX3/L17v8/wBDfVlOJUAAAA=
+To: mpe@ellerman.id.au
+Cc: npiggin@gmail.com, christophe.leroy@csgroup.eu, ndesaulniers@google.com, 
+ trix@redhat.com, linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, stable@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2693; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=I6bjmJKyg+OsI5C9yWHH3qaPQ1SmKzUJt4SHAnBFRZI=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCle5/I47l3VVrhda/xi+qvzUqkHPLpLjyWoL7h32nDxZ
+ 0XFY7urOkpZGMQ4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEUl8z/OF2N5n/qTdontgL
+ j/9b712ou3PowoKTqg/552x/apAX9DCekeF31rJjPwrXT1okOJnber27/ht53bCIeqOQgo7b8Wv
+ 3TuQDAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Thu, Apr 27, 2023 at 7:39=E2=80=AFAM Vlastimil Babka <vbabka@suse.cz> wr=
-ote:
->
-> Sorry, I wasn't clear what I meant here. I didn't intend to bypass that
-> stable rule that I'm aware of, just that it might be desirable to get thi=
-s
-> fix to Linus's tree faster so that stable tree can also take it soon.
+When building the boot wrapper assembly files with clang after
+commit 648a1783fe25 ("powerpc/boot: Fix boot wrapper code generation
+with CONFIG_POWER10_CPU"), the following warnings appear for each file
+built:
 
-Ack. It's in my tree as commit 7e7757876f25 right now (not pushed out
-yet, will do the usual build tests and look around for other things
-pending).
+  '-prefixed' is not a recognized feature for this target (ignoring feature)
+  '-pcrel' is not a recognized feature for this target (ignoring feature)
 
-                 Linus
+While it is questionable whether or not LLVM should be emitting a
+warning when passed negative versions of code generation flags when
+building assembly files (since it does not emit a warning for the
+altivec and vsx flags), it is easy enough to work around this by just
+moving the disabled flags to BOOTCFLAGS after the assignment of
+BOOTAFLAGS, so that they are not added when building assembly files.
+Do so to silence the warnings.
+
+Cc: stable@vger.kernel.org
+Fixes: 648a1783fe25 ("powerpc/boot: Fix boot wrapper code generation with CONFIG_POWER10_CPU")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1839
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+I do not think that 648a1783fe25 is truly to blame for this but the
+Fixes tag will help the stable team ensure that this change gets
+backported with 648a1783fe25. This is the minimal fix for the problem
+but the true fix is separating AFLAGS and CFLAGS, which should be done
+by this in-flight series by Nick:
+
+https://lore.kernel.org/20230426055848.402993-1-npiggin@gmail.com/
+---
+ arch/powerpc/boot/Makefile | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/arch/powerpc/boot/Makefile b/arch/powerpc/boot/Makefile
+index 85cde5bf04b7..771b79423bbc 100644
+--- a/arch/powerpc/boot/Makefile
++++ b/arch/powerpc/boot/Makefile
+@@ -34,8 +34,6 @@ endif
+ 
+ BOOTCFLAGS    := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+ 		 -fno-strict-aliasing -O2 -msoft-float -mno-altivec -mno-vsx \
+-		 $(call cc-option,-mno-prefixed) $(call cc-option,-mno-pcrel) \
+-		 $(call cc-option,-mno-mma) \
+ 		 $(call cc-option,-mno-spe) $(call cc-option,-mspe=no) \
+ 		 -pipe -fomit-frame-pointer -fno-builtin -fPIC -nostdinc \
+ 		 $(LINUXINCLUDE)
+@@ -71,6 +69,10 @@ BOOTAFLAGS	:= -D__ASSEMBLY__ $(BOOTCFLAGS) -nostdinc
+ 
+ BOOTARFLAGS	:= -crD
+ 
++BOOTCFLAGS	+= $(call cc-option,-mno-prefixed) \
++		   $(call cc-option,-mno-pcrel) \
++		   $(call cc-option,-mno-mma)
++
+ ifdef CONFIG_CC_IS_CLANG
+ BOOTCFLAGS += $(CLANG_FLAGS)
+ BOOTAFLAGS += $(CLANG_FLAGS)
+
+---
+base-commit: 169f8997968ab620d750d9a45e15c5288d498356
+change-id: 20230427-remove-power10-args-from-boot-aflags-clang-268c43e8c1fc
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
