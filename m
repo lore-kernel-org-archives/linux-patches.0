@@ -1,105 +1,79 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3A96FA5;
-	Thu, 27 Apr 2023 14:39:15 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id BC0611FE4C;
-	Thu, 27 Apr 2023 14:39:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1682606353; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gCaK1kQTBnKVzZEqwaD7vAZ7IWvkRl+dKm9iAKEVDFI=;
-	b=cYFyY+idWuItPkjEMcolMKnRrKN5hEPoZRc2eEE/bPlofPmIQPI1cC751gP6De6adKLs6o
-	FgkTN+b1VmccmmgW629pqDEOpxKu+zJinioe2buqHocyPh1xpvQKUR3k+fP1wtOa89obNa
-	PnV+EoMCLpRpPAoC5JOjVUcvogVliG4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1682606353;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gCaK1kQTBnKVzZEqwaD7vAZ7IWvkRl+dKm9iAKEVDFI=;
-	b=ksdxb+7kXsi4bLJ3SCvar5BCQBjnV93jUSmVL1D6/Ox2SZTBKLLjnm4xOq6e/9rBJebXZL
-	/x1Oz9hw/pB6VHAQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8F45113910;
-	Thu, 27 Apr 2023 14:39:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id G/5LIhGJSmRjIAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Thu, 27 Apr 2023 14:39:13 +0000
-Message-ID: <3cc6e10c-f054-a30a-bf87-966098ccb7bf@suse.cz>
-Date: Thu, 27 Apr 2023 16:39:13 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB6B6FB9
+	for <patches@lists.linux.dev>; Thu, 27 Apr 2023 15:13:00 +0000 (UTC)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-953343581a4so1321281166b.3
+        for <patches@lists.linux.dev>; Thu, 27 Apr 2023 08:13:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1682608379; x=1685200379;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/tnBlwR2KgjIrpyr1ey4GRZA/jG9gwGR13N6cjFqMs0=;
+        b=fKUaWjUJ8mKf36zHO3vuQML5HdFupvkc97Aet0N6roPO9Mvl1emFYI5ASnORVKNVVP
+         24vG050RF1h/m2pGUsY4Qs7K0X6dBSNg3CLH/amgUBi2nJnumZkI+F+rsnlHaA144sYe
+         0UxQZGO4FZAwz4bCC/i3t/YZamxccbGa10nE0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682608379; x=1685200379;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/tnBlwR2KgjIrpyr1ey4GRZA/jG9gwGR13N6cjFqMs0=;
+        b=U6OQNgevct+Q8Vkbp9rN5AtPvbGEM9KMfJQpnIZlhf9L8q3LYXeVGipx528twRS/NC
+         UaxYXxq9LV2JsIgylqQsM4q3wsL623/GaXy0t9oEYmIp2k54CVo8vBJ6OR8PQVIZcyyu
+         4hSkoUrfuLiFm83oTkDEPmbK1QcHT53MBFzQJob1GuYCvBvzSktMk4eDu8UT0h7RIFvf
+         pY+hi6U1YaZ/jsaXAN9ggEyFmSwJxViq6jN97siQuGQoBB5ub3Yc5V4ShZAEv3bcfp9z
+         UUs7btlEw4j86Z7DG/FNLXFpxFT1f9nPgMX+tOotFSBiyEpa6RWvKGJeE5KUXJ9zE7ge
+         +a8A==
+X-Gm-Message-State: AC+VfDwOah71govPhO33R0IjfLmwM4Tf5y3E2z4Q4uFY0o7OJiNdXkTt
+	47krX0BCWajtY6AQOCAA/ui6U+1pBHkVpyRhy1PyHw==
+X-Google-Smtp-Source: ACHHUZ6rnTpxAlm+hXpQScNczXWeoMioy5llHUELi1sfs5ms1S/9lEVl0e/SLbz5GNH/9R9qDNkUIA==
+X-Received: by 2002:a17:906:9754:b0:94a:921b:c805 with SMTP id o20-20020a170906975400b0094a921bc805mr2283508ejy.45.1682608379088;
+        Thu, 27 Apr 2023 08:12:59 -0700 (PDT)
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com. [209.85.208.48])
+        by smtp.gmail.com with ESMTPSA id d16-20020a1709063ed000b0094f499257f7sm9828949ejj.151.2023.04.27.08.12.57
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Apr 2023 08:12:57 -0700 (PDT)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-506bf4cbecbso12812266a12.1
+        for <patches@lists.linux.dev>; Thu, 27 Apr 2023 08:12:57 -0700 (PDT)
+X-Received: by 2002:aa7:c946:0:b0:508:3b23:d84c with SMTP id
+ h6-20020aa7c946000000b005083b23d84cmr1902412edt.1.1682608377021; Thu, 27 Apr
+ 2023 08:12:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
+References: <20230427140959.27655-1-vbabka@suse.cz> <2023042719-stratus-pavestone-505e@gregkh>
+ <3cc6e10c-f054-a30a-bf87-966098ccb7bf@suse.cz>
+In-Reply-To: <3cc6e10c-f054-a30a-bf87-966098ccb7bf@suse.cz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Thu, 27 Apr 2023 08:12:40 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgdGzy6-3jzN6Kvtz1QxStTZBZPz1zy9i4gM9nbe5FGbA@mail.gmail.com>
+Message-ID: <CAHk-=wgdGzy6-3jzN6Kvtz1QxStTZBZPz1zy9i4gM9nbe5FGbA@mail.gmail.com>
 Subject: Re: [PATCH for v6.3 regression] mm/mremap: fix vm_pgoff in
  vma_merge() case 3
-Content-Language: en-US
-To: Greg KH <greg@kroah.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>, lstoakes@gmail.com,
- regressions@lists.linux.dev, linux-mm@kvack.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, Jiri Slaby <jirislaby@kernel.org>,
- Fabian Vogt <fvogt@suse.com>, stable@vger.kernel.org
-References: <20230427140959.27655-1-vbabka@suse.cz>
- <2023042719-stratus-pavestone-505e@gregkh>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <2023042719-stratus-pavestone-505e@gregkh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Greg KH <greg@kroah.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>, lstoakes@gmail.com, regressions@lists.linux.dev, 
+	linux-mm@kvack.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Jiri Slaby <jirislaby@kernel.org>, Fabian Vogt <fvogt@suse.com>, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 4/27/23 16:27, Greg KH wrote:
-> On Thu, Apr 27, 2023 at 04:09:59PM +0200, Vlastimil Babka wrote:
->> After upgrading build guests to v6.3, rpm started segfaulting for
->> specific packages, which was bisected to commit 0503ea8f5ba7 ("mm/mmap:
->> remove __vma_adjust()"). rpm is doing many mremap() operations with file
->> mappings of its db. The problem is that in vma_merge() case 3 (we merge
->> with the next vma, expanding it downwards) vm_pgoff is not adjusted as
->> it should when vm_start changes. As a result the rpm process most likely
->> sees data from the wrong offset of the file. Fix the vm_pgoff
->> calculation.
->> 
->> For case 8 this is a non-functional change as the resulting vm_pgoff is
->> the same.
->> 
->> Reported-and-bisected-by: Jiri Slaby <jirislaby@kernel.org>
->> Reported-and-tested-by: Fabian Vogt <fvogt@suse.com>
->> Link: https://bugzilla.suse.com/show_bug.cgi?id=1210903
->> Fixes: 0503ea8f5ba7 ("mm/mmap: remove __vma_adjust()")
->> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
->> Cc: <stable@vger.kernel.org>
->> ---
->> Hi, I'm sending this patch on top of v6.3 as I think it should be
->> applied and backported to 6.3-stable rather sooner than later.
->> This means there would be a small conflict when merging mm/mm-stable
->> later. Alternatively it could be added to mm/mm-stable and upcoming 6.4
->> pull request, but then the stable backport would need adjustment.
->> It's up to Linus and Andrew.
-> 
-> That's not how the stable tree works, sorry, it needs to be in Linus's
-> tree _first_.
+On Thu, Apr 27, 2023 at 7:39=E2=80=AFAM Vlastimil Babka <vbabka@suse.cz> wr=
+ote:
+>
+> Sorry, I wasn't clear what I meant here. I didn't intend to bypass that
+> stable rule that I'm aware of, just that it might be desirable to get thi=
+s
+> fix to Linus's tree faster so that stable tree can also take it soon.
 
-Sorry, I wasn't clear what I meant here. I didn't intend to bypass that
-stable rule that I'm aware of, just that it might be desirable to get this
-fix to Linus's tree faster so that stable tree can also take it soon.
+Ack. It's in my tree as commit 7e7757876f25 right now (not pushed out
+yet, will do the usual build tests and look around for other things
+pending).
 
-> thanks,
-> 
-> greg k-h
-
+                 Linus
