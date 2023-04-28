@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E2C290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30685C433EF;
-	Fri, 28 Apr 2023 11:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6759290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D04AC433EF;
+	Fri, 28 Apr 2023 11:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681293;
-	bh=89AJIlv+eX2RQSjWzPOy1cjiYsERvx7x59ojXBCMBz8=;
+	s=korg; t=1682681298;
+	bh=i4+4io7BEgn+yPUpO4uBjS5u+w3TXOK5fbO62gmKwwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G+f3qVEVrN2N28DlFa6+3YKsuIGojUjrut0lqKiuOKuF698x9qUWGJsn2o6EzErJ5
-	 DXYWSB7QYURbtxHPhpQg4Gkc0drX1RW1LTrKkN098hzHkMOkJGP4d5pXQ8l94uvP8p
-	 MVVe8TFmpRYCyC+A/d6VwlDIYQDG8igwN8F0MaEA=
+	b=fsJ7qt0Pq2DUFBdUMWl/2Szh+x5yRHeB1I0/KOzN6oW4TZuaEjMdMHBTBNQSnPDvL
+	 J5uVGT+Q4DkKXG1bFdZv9MT3OoV0isXMjck46Q8P95Rny4gmrNz+ZX9SlDHoTUVKNo
+	 vykywOtCsNcAx17Bs4Wg+d8vgTi68Q14/eB97pUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruihan Li <lrh2000@pku.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.3 06/11] bluetooth: Perform careful capability checks in hci_sock_ioctl()
-Date: Fri, 28 Apr 2023 13:27:41 +0200
-Message-Id: <20230428112040.104272984@linuxfoundation.org>
+	k2ci <kernel-bot@kylinos.cn>,
+	Genjian Zhang <zhanggenjian@kylinos.cn>,
+	David Sterba <dsterba@suse.com>,
+	Ammar Faizi <ammarfaizi2@gnuweeb.org>
+Subject: [PATCH 6.3 08/11] btrfs: fix uninitialized variable warnings
+Date: Fri, 28 Apr 2023 13:27:43 +0200
+Message-Id: <20230428112040.168102058@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112039.886496777@linuxfoundation.org>
 References: <20230428112039.886496777@linuxfoundation.org>
@@ -34,50 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruihan Li <lrh2000@pku.edu.cn>
+From: Genjian Zhang <zhanggenjian@kylinos.cn>
 
-commit 25c150ac103a4ebeed0319994c742a90634ddf18 upstream.
+commit 8ba7d5f5ba931be68a94b8c91bcced1622934e7a upstream.
 
-Previously, capability was checked using capable(), which verified that the
-caller of the ioctl system call had the required capability. In addition,
-the result of the check would be stored in the HCI_SOCK_TRUSTED flag,
-making it persistent for the socket.
+There are some warnings on older compilers (gcc 10, 7) or non-x86_64
+architectures (aarch64).  As btrfs wants to enable -Wmaybe-uninitialized
+by default, fix the warnings even though it's not necessary on recent
+compilers (gcc 12+).
 
-However, malicious programs can abuse this approach by deliberately sharing
-an HCI socket with a privileged task. The HCI socket will be marked as
-trusted when the privileged task occasionally makes an ioctl call.
+../fs/btrfs/volumes.c: In function ‘btrfs_init_new_device’:
+../fs/btrfs/volumes.c:2703:3: error: ‘seed_devices’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+ 2703 |   btrfs_setup_sprout(fs_info, seed_devices);
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This problem can be solved by using sk_capable() to check capability, which
-ensures that not only the current task but also the socket opener has the
-specified capability, thus reducing the risk of privilege escalation
-through the previously identified vulnerability.
+../fs/btrfs/send.c: In function ‘get_cur_inode_state’:
+../include/linux/compiler.h:70:32: error: ‘right_gen’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+   70 |   (__if_trace.miss_hit[1]++,1) :  \
+      |                                ^
+../fs/btrfs/send.c:1878:6: note: ‘right_gen’ was declared here
+ 1878 |  u64 right_gen;
+      |      ^~~~~~~~~
 
-Cc: stable@vger.kernel.org
-Fixes: f81f5b2db869 ("Bluetooth: Send control open and close messages for HCI raw sockets")
-Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: k2ci <kernel-bot@kylinos.cn>
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+[ update changelog ]
+Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sock.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/btrfs/send.c    |    2 +-
+ fs/btrfs/volumes.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -1003,7 +1003,14 @@ static int hci_sock_ioctl(struct socket
- 	if (hci_sock_gen_cookie(sk)) {
- 		struct sk_buff *skb;
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -1875,7 +1875,7 @@ static int get_cur_inode_state(struct se
+ 	int left_ret;
+ 	int right_ret;
+ 	u64 left_gen;
+-	u64 right_gen;
++	u64 right_gen = 0;
+ 	struct btrfs_inode_info info;
  
--		if (capable(CAP_NET_ADMIN))
-+		/* Perform careful checks before setting the HCI_SOCK_TRUSTED
-+		 * flag. Make sure that not only the current task but also
-+		 * the socket opener has the required capability, since
-+		 * privileged programs can be tricked into making ioctl calls
-+		 * on HCI sockets, and the socket should not be marked as
-+		 * trusted simply because the ioctl caller is privileged.
-+		 */
-+		if (sk_capable(sk, CAP_NET_ADMIN))
- 			hci_sock_set_flag(sk, HCI_SOCK_TRUSTED);
- 
- 		/* Send event to monitor */
+ 	ret = get_inode_info(sctx->send_root, ino, &info);
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -2618,7 +2618,7 @@ int btrfs_init_new_device(struct btrfs_f
+ 	struct block_device *bdev;
+ 	struct super_block *sb = fs_info->sb;
+ 	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
+-	struct btrfs_fs_devices *seed_devices;
++	struct btrfs_fs_devices *seed_devices = NULL;
+ 	u64 orig_super_total_bytes;
+ 	u64 orig_super_num_devices;
+ 	int ret = 0;
 
 
