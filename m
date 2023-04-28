@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFA0290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:29:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4666BC433D2;
-	Fri, 28 Apr 2023 11:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60519290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:29:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F06C433D2;
+	Fri, 28 Apr 2023 11:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681366;
-	bh=I8fzXVLWx+5cs6wQMdcqu3QQighOHe1MMoBgcxKJvI8=;
+	s=korg; t=1682681369;
+	bh=J1pVn6benT5Br3zvPQHdVecG4Z4mpUkQeh2rFDjD/G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o49LUAw4X3SgwsduliFBwCTtKkXx8NJugquC/+0BR59p4B4YE6iqKKAY27Hm8rhqb
-	 c16ay6aUy8urdiDyEtSZ/10v3GZ3t2IZC8IE3sRUa6OkwKXNd0GZFs40WocuyGDu+z
-	 z6KV/nIVmDwS8X9n8THRlsbhQjQuNF8gNnaPOork=
+	b=yr0xBiJp/F2QUN2K0g70ltv0q9DHBBK31F5DsPATsX3B+amcvkdJQyF8Ea7mH2wsh
+	 g3cpVqlBkv5qHjMqonJr65O+rJxW4wIaOWkgk6A8sEw5BsXPK3Yrk7KK0a80mzPtvt
+	 AJ4AtPEzrEkdIKu61rBh6c6XE0WpuChSFtMD+3lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	syzbot+a7c1ec5b1d71ceaa5186@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 04/16] mm/mempolicy: fix use-after-free of VMA iterator
-Date: Fri, 28 Apr 2023 13:27:56 +0200
-Message-Id: <20230428112040.210767326@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 05/16] mptcp: stops worker on unaccepted sockets at listener close
+Date: Fri, 28 Apr 2023 13:27:57 +0200
+Message-Id: <20230428112040.251384476@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112040.063291126@linuxfoundation.org>
 References: <20230428112040.063291126@linuxfoundation.org>
@@ -35,211 +36,192 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit f4e9e0e69468583c2c6d9d5c7bfc975e292bf188 upstream.
+commit 2a6a870e44dd88f1a6a2893c65ef756a9edfb4c7 upstream.
 
-set_mempolicy_home_node() iterates over a list of VMAs and calls
-mbind_range() on each VMA, which also iterates over the singular list of
-the VMA passed in and potentially splits the VMA.  Since the VMA iterator
-is not passed through, set_mempolicy_home_node() may now point to a stale
-node in the VMA tree.  This can result in a UAF as reported by syzbot.
+This is a partial revert of the blamed commit, with a relevant
+change: mptcp_subflow_queue_clean() now just change the msk
+socket status and stop the worker, so that the UaF issue addressed
+by the blamed commit is not re-introduced.
 
-Avoid the stale maple tree node by passing the VMA iterator through to the
-underlying call to split_vma().
+The above prevents the mptcp worker from running concurrently with
+inet_csk_listen_stop(), as such race would trigger a warning, as
+reported by Christoph:
 
-mbind_range() is also overly complicated, since there are two calling
-functions and one already handles iterating over the VMAs.  Simplify
-mbind_range() to only handle merging and splitting of the VMAs.
+RSP: 002b:00007f784fe09cd8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+WARNING: CPU: 0 PID: 25807 at net/ipv4/inet_connection_sock.c:1387 inet_csk_listen_stop+0x664/0x870 net/ipv4/inet_connection_sock.c:1387
+RAX: ffffffffffffffda RBX: 00000000006bc050 RCX: 00007f7850afd6a9
+RDX: 0000000000000000 RSI: 0000000020000340 RDI: 0000000000000004
+Modules linked in:
+RBP: 0000000000000002 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00000000006bc05c
+R13: fffffffffffffea8 R14: 00000000006bc050 R15: 000000000001fe40
 
-Align the new loop in do_mbind() and existing loop in
-set_mempolicy_home_node() to use the reduced mbind_range() function.  This
-allows for a single location of the range calculation and avoids
-constantly looking up the previous VMA (since this is a loop over the
-VMAs).
+ </TASK>
+CPU: 0 PID: 25807 Comm: syz-executor.7 Not tainted 6.2.0-g778e54711659 #7
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+RIP: 0010:inet_csk_listen_stop+0x664/0x870 net/ipv4/inet_connection_sock.c:1387
+RAX: 0000000000000000 RBX: ffff888100dfbd40 RCX: 0000000000000000
+RDX: ffff8881363aab80 RSI: ffffffff81c494f4 RDI: 0000000000000005
+RBP: ffff888126dad080 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: ffff888100dfe040
+R13: 0000000000000001 R14: 0000000000000000 R15: ffff888100dfbdd8
+FS:  00007f7850a2c800(0000) GS:ffff88813bc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b32d26000 CR3: 000000012fdd8006 CR4: 0000000000770ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ __tcp_close+0x5b2/0x620 net/ipv4/tcp.c:2875
+ __mptcp_close_ssk+0x145/0x3d0 net/mptcp/protocol.c:2427
+ mptcp_destroy_common+0x8a/0x1c0 net/mptcp/protocol.c:3277
+ mptcp_destroy+0x41/0x60 net/mptcp/protocol.c:3304
+ __mptcp_destroy_sock+0x56/0x140 net/mptcp/protocol.c:2965
+ __mptcp_close+0x38f/0x4a0 net/mptcp/protocol.c:3057
+ mptcp_close+0x24/0xe0 net/mptcp/protocol.c:3072
+ inet_release+0x53/0xa0 net/ipv4/af_inet.c:429
+ __sock_release+0x4e/0xf0 net/socket.c:651
+ sock_close+0x15/0x20 net/socket.c:1393
+ __fput+0xff/0x420 fs/file_table.c:321
+ task_work_run+0x8b/0xe0 kernel/task_work.c:179
+ resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
+ exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
+ exit_to_user_mode_prepare+0x113/0x120 kernel/entry/common.c:203
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
+ syscall_exit_to_user_mode+0x1d/0x40 kernel/entry/common.c:296
+ do_syscall_64+0x46/0x90 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+RIP: 0033:0x7f7850af70dc
+RAX: 0000000000000000 RBX: 0000000000000004 RCX: 00007f7850af70dc
+RDX: 00007f7850a2c800 RSI: 0000000000000002 RDI: 0000000000000003
+RBP: 00000000006bd980 R08: 0000000000000000 R09: 00000000000018a0
+R10: 00000000316338a4 R11: 0000000000000293 R12: 0000000000211e31
+R13: 00000000006bc05c R14: 00007f785062c000 R15: 0000000000211af0
 
-Link: https://lore.kernel.org/linux-mm/000000000000c93feb05f87e24ad@google.com/
-Fixes: 66850be55e8e ("mm/mempolicy: use vma iterator & maple state instead of vma linked list")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reported-by: syzbot+a7c1ec5b1d71ceaa5186@syzkaller.appspotmail.com
-  Link: https://lkml.kernel.org/r/20230410152205.2294819-1-Liam.Howlett@oracle.com
-Tested-by: syzbot+a7c1ec5b1d71ceaa5186@syzkaller.appspotmail.com
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Fixes: 0a3f4f1f9c27 ("mptcp: fix UaF in listener shutdown")
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/371
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempolicy.c |  113 ++++++++++++++++++++++++++-------------------------------
- 1 file changed, 52 insertions(+), 61 deletions(-)
+ net/mptcp/protocol.c |    6 ++++
+ net/mptcp/protocol.h |    1 
+ net/mptcp/subflow.c  |   72 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 79 insertions(+)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -784,70 +784,56 @@ static int vma_replace_policy(struct vm_
- 	return err;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2380,6 +2380,12 @@ static void __mptcp_close_ssk(struct soc
+ 		mptcp_subflow_drop_ctx(ssk);
+ 	} else {
+ 		/* otherwise tcp will dispose of the ssk and subflow ctx */
++		if (ssk->sk_state == TCP_LISTEN) {
++			tcp_set_state(ssk, TCP_CLOSE);
++			mptcp_subflow_queue_clean(sk, ssk);
++			inet_csk_listen_stop(ssk);
++		}
++
+ 		__tcp_close(ssk, 0);
+ 
+ 		/* close acquired an extra ref */
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -615,6 +615,7 @@ void mptcp_close_ssk(struct sock *sk, st
+ 		     struct mptcp_subflow_context *subflow);
+ void __mptcp_subflow_send_ack(struct sock *ssk);
+ void mptcp_subflow_reset(struct sock *ssk);
++void mptcp_subflow_queue_clean(struct sock *sk, struct sock *ssk);
+ void mptcp_sock_graft(struct sock *sk, struct socket *parent);
+ struct socket *__mptcp_nmpc_socket(const struct mptcp_sock *msk);
+ bool __mptcp_close(struct sock *sk, long timeout);
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1758,6 +1758,78 @@ static void subflow_state_change(struct
+ 	}
  }
  
--/* Step 2: apply policy to a range and do splits. */
--static int mbind_range(struct mm_struct *mm, unsigned long start,
--		       unsigned long end, struct mempolicy *new_pol)
-+/* Split or merge the VMA (if required) and apply the new policy */
-+static int mbind_range(struct vma_iterator *vmi, struct vm_area_struct *vma,
-+		struct vm_area_struct **prev, unsigned long start,
-+		unsigned long end, struct mempolicy *new_pol)
- {
--	MA_STATE(mas, &mm->mm_mt, start, start);
--	struct vm_area_struct *prev;
--	struct vm_area_struct *vma;
--	int err = 0;
-+	struct vm_area_struct *merged;
-+	unsigned long vmstart, vmend;
- 	pgoff_t pgoff;
-+	int err;
- 
--	prev = mas_prev(&mas, 0);
--	if (unlikely(!prev))
--		mas_set(&mas, start);
-+	vmend = min(end, vma->vm_end);
-+	if (start > vma->vm_start) {
-+		*prev = vma;
-+		vmstart = start;
-+	} else {
-+		vmstart = vma->vm_start;
++void mptcp_subflow_queue_clean(struct sock *listener_sk, struct sock *listener_ssk)
++{
++	struct request_sock_queue *queue = &inet_csk(listener_ssk)->icsk_accept_queue;
++	struct mptcp_sock *msk, *next, *head = NULL;
++	struct request_sock *req;
++
++	/* build a list of all unaccepted mptcp sockets */
++	spin_lock_bh(&queue->rskq_lock);
++	for (req = queue->rskq_accept_head; req; req = req->dl_next) {
++		struct mptcp_subflow_context *subflow;
++		struct sock *ssk = req->sk;
++
++		if (!sk_is_mptcp(ssk))
++			continue;
++
++		subflow = mptcp_subflow_ctx(ssk);
++		if (!subflow || !subflow->conn)
++			continue;
++
++		/* skip if already in list */
++		msk = mptcp_sk(subflow->conn);
++		if (msk->dl_next || msk == head)
++			continue;
++
++		sock_hold(subflow->conn);
++		msk->dl_next = head;
++		head = msk;
 +	}
- 
--	vma = mas_find(&mas, end - 1);
--	if (WARN_ON(!vma))
-+	if (mpol_equal(vma_policy(vma), new_pol))
- 		return 0;
- 
--	if (start > vma->vm_start)
--		prev = vma;
-+	pgoff = vma->vm_pgoff + ((vmstart - vma->vm_start) >> PAGE_SHIFT);
-+	merged = vma_merge(vma->vm_mm, *prev, vmstart, vmend, vma->vm_flags,
-+			   vma->anon_vma, vma->vm_file, pgoff, new_pol,
-+			   vma->vm_userfaultfd_ctx, anon_vma_name(vma));
-+	if (merged) {
-+		*prev = merged;
-+		/* vma_merge() invalidated the mas */
-+		mas_pause(&vmi->mas);
-+		return vma_replace_policy(merged, new_pol);
-+	}
- 
--	for (; vma; vma = mas_next(&mas, end - 1)) {
--		unsigned long vmstart = max(start, vma->vm_start);
--		unsigned long vmend = min(end, vma->vm_end);
--
--		if (mpol_equal(vma_policy(vma), new_pol))
--			goto next;
--
--		pgoff = vma->vm_pgoff +
--			((vmstart - vma->vm_start) >> PAGE_SHIFT);
--		prev = vma_merge(mm, prev, vmstart, vmend, vma->vm_flags,
--				 vma->anon_vma, vma->vm_file, pgoff,
--				 new_pol, vma->vm_userfaultfd_ctx,
--				 anon_vma_name(vma));
--		if (prev) {
--			/* vma_merge() invalidated the mas */
--			mas_pause(&mas);
--			vma = prev;
--			goto replace;
--		}
--		if (vma->vm_start != vmstart) {
--			err = split_vma(vma->vm_mm, vma, vmstart, 1);
--			if (err)
--				goto out;
--			/* split_vma() invalidated the mas */
--			mas_pause(&mas);
--		}
--		if (vma->vm_end != vmend) {
--			err = split_vma(vma->vm_mm, vma, vmend, 0);
--			if (err)
--				goto out;
--			/* split_vma() invalidated the mas */
--			mas_pause(&mas);
--		}
--replace:
--		err = vma_replace_policy(vma, new_pol);
-+	if (vma->vm_start != vmstart) {
-+		err = split_vma(vma->vm_mm, vma, vmstart, 1);
- 		if (err)
--			goto out;
--next:
--		prev = vma;
-+			return err;
-+		/* split_vma() invalidated the mas */
-+		mas_pause(&vmi->mas);
- 	}
- 
--out:
--	return err;
-+	if (vma->vm_end != vmend) {
-+		err = split_vma(vma->vm_mm, vma, vmend, 0);
-+		if (err)
-+			return err;
-+		/* split_vma() invalidated the mas */
-+		mas_pause(&vmi->mas);
++	spin_unlock_bh(&queue->rskq_lock);
++	if (!head)
++		return;
++
++	/* can't acquire the msk socket lock under the subflow one,
++	 * or will cause ABBA deadlock
++	 */
++	release_sock(listener_ssk);
++
++	for (msk = head; msk; msk = next) {
++		struct sock *sk = (struct sock *)msk;
++
++		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
++		next = msk->dl_next;
++		msk->dl_next = NULL;
++
++		/* prevent the stack from later re-schedule the worker for
++		 * this socket
++		 */
++		inet_sk_state_store(sk, TCP_CLOSE);
++		release_sock(sk);
++
++		/* lockdep will report a false positive ABBA deadlock
++		 * between cancel_work_sync and the listener socket.
++		 * The involved locks belong to different sockets WRT
++		 * the existing AB chain.
++		 * Using a per socket key is problematic as key
++		 * deregistration requires process context and must be
++		 * performed at socket disposal time, in atomic
++		 * context.
++		 * Just tell lockdep to consider the listener socket
++		 * released here.
++		 */
++		mutex_release(&listener_sk->sk_lock.dep_map, _RET_IP_);
++		mptcp_cancel_work(sk);
++		mutex_acquire(&listener_sk->sk_lock.dep_map, 0, 0, _RET_IP_);
++
++		sock_put(sk);
 +	}
 +
-+	*prev = vma;
-+	return vma_replace_policy(vma, new_pol);
- }
- 
- /* Set the process memory policy */
-@@ -1259,6 +1245,8 @@ static long do_mbind(unsigned long start
- 		     nodemask_t *nmask, unsigned long flags)
++	/* we are still under the listener msk socket lock */
++	lock_sock_nested(listener_ssk, SINGLE_DEPTH_NESTING);
++}
++
+ static int subflow_ulp_init(struct sock *sk)
  {
- 	struct mm_struct *mm = current->mm;
-+	struct vm_area_struct *vma, *prev;
-+	struct vma_iterator vmi;
- 	struct mempolicy *new;
- 	unsigned long end;
- 	int err;
-@@ -1328,7 +1316,13 @@ static long do_mbind(unsigned long start
- 		goto up_out;
- 	}
- 
--	err = mbind_range(mm, start, end, new);
-+	vma_iter_init(&vmi, mm, start);
-+	prev = vma_prev(&vmi);
-+	for_each_vma_range(vmi, vma, end) {
-+		err = mbind_range(&vmi, vma, &prev, start, end, new);
-+		if (err)
-+			break;
-+	}
- 
- 	if (!err) {
- 		int nr_failed = 0;
-@@ -1489,10 +1483,8 @@ SYSCALL_DEFINE4(set_mempolicy_home_node,
- 		unsigned long, home_node, unsigned long, flags)
- {
- 	struct mm_struct *mm = current->mm;
--	struct vm_area_struct *vma;
-+	struct vm_area_struct *vma, *prev;
- 	struct mempolicy *new;
--	unsigned long vmstart;
--	unsigned long vmend;
- 	unsigned long end;
- 	int err = -ENOENT;
- 	VMA_ITERATOR(vmi, mm, start);
-@@ -1521,9 +1513,8 @@ SYSCALL_DEFINE4(set_mempolicy_home_node,
- 	if (end == start)
- 		return 0;
- 	mmap_write_lock(mm);
-+	prev = vma_prev(&vmi);
- 	for_each_vma_range(vmi, vma, end) {
--		vmstart = max(start, vma->vm_start);
--		vmend   = min(end, vma->vm_end);
- 		new = mpol_dup(vma_policy(vma));
- 		if (IS_ERR(new)) {
- 			err = PTR_ERR(new);
-@@ -1547,7 +1538,7 @@ SYSCALL_DEFINE4(set_mempolicy_home_node,
- 		}
- 
- 		new->home_node = home_node;
--		err = mbind_range(mm, vmstart, vmend, new);
-+		err = mbind_range(&vmi, vma, &prev, start, end, new);
- 		mpol_put(new);
- 		if (err)
- 			break;
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
 
 
