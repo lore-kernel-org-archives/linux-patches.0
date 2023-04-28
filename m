@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FF0290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00DDC433D2;
-	Fri, 28 Apr 2023 11:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85BB290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D7CC433D2;
+	Fri, 28 Apr 2023 11:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681327;
-	bh=uXyvhzQ4wIEj4oSU9+FZ+QsmAZlW6huXTk1Ox6zl70c=;
+	s=korg; t=1682681329;
+	bh=Y+Fo34Td6DhsWkVcBD5Lba6ZMPueE1ag2Q8PkSL9kB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7Vu3Eab6sIppDjJJ4K9kCzuZoGIHnhTuR5k2oPLKpDrabyqpzK0LPxejGeLbSy2+
-	 iO/lCy/RycruEExseqhkgfJvocTiJY+qA1z0brcCv57bbX5iQdLjMwpkvSlAZEkF+4
-	 pm0DR+g/+cprgTyND/S4tciJ5Gb04iOPqEIWj4qA=
+	b=lAAvEA35Qa/uIiSjS4NGTIF5rtj4bK2z4TQ0Hq0iK92CmE9X1g/LGYGyKjtyYLtnS
+	 BBXIujQlm7HR0ksu0PeCiaafz5E2Z8v01KVIZ4LV6+9kBNRJK+Yu5iEfJtL4zuI9se
+	 tlycRkuct/O1mjHS+HE2QxZuqwErmL+q5q5/TBiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+20dcf81733d43ddff661@syzkaller.appspotmail.com,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Daniel Vetter <daniel.vetter@intel.com>
-Subject: [PATCH 6.2 06/15] drm/fb-helper: set x/yres_virtual in drm_fb_helper_check_var
-Date: Fri, 28 Apr 2023 13:27:50 +0200
-Message-Id: <20230428112040.330852218@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.2 07/15] gpiolib: acpi: Add a ignore wakeup quirk for Clevo NL5xNU
+Date: Fri, 28 Apr 2023 13:27:51 +0200
+Message-Id: <20230428112040.361262179@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112040.137898986@linuxfoundation.org>
 References: <20230428112040.137898986@linuxfoundation.org>
@@ -37,39 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Vetter <daniel.vetter@ffwll.ch>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit 1935f0deb6116dd785ea64d8035eab0ff441255b upstream.
+commit 782eea0c89f7d071d6b56ecfa1b8b0c81164b9be upstream.
 
-Drivers are supposed to fix this up if needed if they don't outright
-reject it. Uncovered by 6c11df58fd1a ("fbmem: Check virtual screen
-sizes in fb_set_var()").
+commit 1796f808e4bb ("HID: i2c-hid: acpi: Stop setting wakeup_capable")
+changed the policy such that I2C touchpads may be able to wake up the
+system by default if the system is configured as such.
 
-Reported-by: syzbot+20dcf81733d43ddff661@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=c5faf983bfa4a607de530cd3bb008888bf06cefc
-Cc: stable@vger.kernel.org # v5.4+
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230404194038.472803-1-daniel.vetter@ffwll.ch
+However on Clevo NL5xNU there is a mistake in the ACPI tables that the
+TP_ATTN# signal connected to GPIO 9 is configured as ActiveLow and level
+triggered but connected to a pull up. As soon as the system suspends the
+touchpad loses power and then the system wakes up.
+
+To avoid this problem, introduce a quirk for this model that will prevent
+the wakeup capability for being set for GPIO 9.
+
+This patch is analoge to a very similar patch for NL5xRU, just the DMI
+string changed.
+
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_fb_helper.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpio/gpiolib-acpi.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -1558,6 +1558,9 @@ int drm_fb_helper_check_var(struct fb_va
- 		return -EINVAL;
- 	}
- 
-+	var->xres_virtual = fb->width;
-+	var->yres_virtual = fb->height;
-+
- 	/*
- 	 * Workaround for SDL 1.2, which is known to be setting all pixel format
- 	 * fields values to zero in some cases. We treat this situation as a
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -1634,6 +1634,19 @@ static const struct dmi_system_id gpioli
+ 		 * https://gitlab.freedesktop.org/drm/amd/-/issues/1722#note_1720627
+ 		 */
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "NL5xNU"),
++		},
++		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
++			.ignore_wake = "ELAN0415:00@9",
++		},
++	},
++	{
++		/*
++		 * Spurious wakeups from TP_ATTN# pin
++		 * Found in BIOS 1.7.8
++		 * https://gitlab.freedesktop.org/drm/amd/-/issues/1722#note_1720627
++		 */
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "NL5xRU"),
+ 		},
+ 		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
 
 
