@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BF5290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:30:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4D9C433EF;
-	Fri, 28 Apr 2023 11:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176B3290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:30:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94EC7C433D2;
+	Fri, 28 Apr 2023 11:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681422;
-	bh=mtW9KuZ254LusHAL1Xn6TPSKmP0K0y9MZMNCA3nk8sg=;
+	s=korg; t=1682681424;
+	bh=0LbQqQmtEsFbCPVJVbHvwe55W3kVBa5PQwngl7ACOf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ct7DkLVI5utQG0upkRHM/wMTC3N+hHb88aFcQRqHKdD0IPLZFaVLgEs6EcCyG4gPP
-	 ow0PzBL+76KQrsnRij0p1bmDvXiiZoC6vljE2S1tZQqkXk+y4zPzCaFiY0hkxSfq7u
-	 5tgtYTCzpv3GrrBVyBdcGCxuFFb1Uow4E4sjshbg=
+	b=eqEubPQmxLEx2ec2+ttYVPg3Lh8LbX9RTYm6yeuYmKndqEHpjtYmi/RiShfeWRx90
+	 2HY7nJIVh+s04w38/S7VTfYCvMrrSyf6vt9vA8N4jg/D/29zem0FsZs6Ct2cqrjJcK
+	 LiqlIgtHfoBofRljUqLJ+gBZ7u7r3GlLG1u9iA6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 12/13] riscv: Do not set initial_boot_params to the linear address of the dtb
-Date: Fri, 28 Apr 2023 13:28:16 +0200
-Message-Id: <20230428112039.606477187@linuxfoundation.org>
+Subject: [PATCH 5.15 13/13] riscv: No need to relocate the dtb as it lies in the fixmap region
+Date: Fri, 28 Apr 2023 13:28:17 +0200
+Message-Id: <20230428112039.647201707@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112039.133978540@linuxfoundation.org>
 References: <20230428112039.133978540@linuxfoundation.org>
@@ -36,34 +37,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit f1581626071c8e37c58c5e8f0b4126b17172a211 upstream.
+commit 1b50f956c8fe9082bdee4a9cfd798149c52f7043 upstream.
 
-early_init_dt_verify() is already called in parse_dtb() and since the dtb
-address does not change anymore (it is now in the fixmap region), no need
-to reset initial_boot_params by calling early_init_dt_verify() again.
+We used to access the dtb via its linear mapping address but now that the
+dtb early mapping was moved in the fixmap region, we can keep using this
+address since it is present in swapper_pg_dir, and remove the dtb
+relocation.
+
+Note that the relocation was wrong anyway since early_memremap() is
+restricted to 256K whereas the maximum fdt size is 2MB.
 
 Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20230329081932.79831-3-alexghiti@rivosinc.com
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230329081932.79831-4-alexghiti@rivosinc.com
 Cc: stable@vger.kernel.org # 5.15.x
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/setup.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ arch/riscv/mm/init.c |   21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
---- a/arch/riscv/kernel/setup.c
-+++ b/arch/riscv/kernel/setup.c
-@@ -286,10 +286,7 @@ void __init setup_arch(char **cmdline_p)
- #if IS_ENABLED(CONFIG_BUILTIN_DTB)
- 	unflatten_and_copy_device_tree();
- #else
--	if (early_init_dt_verify(__va(XIP_FIXUP(dtb_early_pa))))
--		unflatten_device_tree();
--	else
--		pr_err("No DTB found in kernel mappings\n");
-+	unflatten_device_tree();
- #endif
- 	misc_mem_init();
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -229,25 +229,8 @@ static void __init setup_bootmem(void)
+ 	 * early_init_fdt_reserve_self() since __pa() does
+ 	 * not work for DTB pointers that are fixmap addresses
+ 	 */
+-	if (!IS_ENABLED(CONFIG_BUILTIN_DTB)) {
+-		/*
+-		 * In case the DTB is not located in a memory region we won't
+-		 * be able to locate it later on via the linear mapping and
+-		 * get a segfault when accessing it via __va(dtb_early_pa).
+-		 * To avoid this situation copy DTB to a memory region.
+-		 * Note that memblock_phys_alloc will also reserve DTB region.
+-		 */
+-		if (!memblock_is_memory(dtb_early_pa)) {
+-			size_t fdt_size = fdt_totalsize(dtb_early_va);
+-			phys_addr_t new_dtb_early_pa = memblock_phys_alloc(fdt_size, PAGE_SIZE);
+-			void *new_dtb_early_va = early_memremap(new_dtb_early_pa, fdt_size);
+-
+-			memcpy(new_dtb_early_va, dtb_early_va, fdt_size);
+-			early_memunmap(new_dtb_early_va, fdt_size);
+-			_dtb_early_pa = new_dtb_early_pa;
+-		} else
+-			memblock_reserve(dtb_early_pa, fdt_totalsize(dtb_early_va));
+-	}
++	if (!IS_ENABLED(CONFIG_BUILTIN_DTB))
++		memblock_reserve(dtb_early_pa, fdt_totalsize(dtb_early_va));
  
+ 	dma_contiguous_reserve(dma32_phys_limit);
+ 	if (IS_ENABLED(CONFIG_64BIT))
 
 
