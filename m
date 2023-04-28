@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0B1290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:30:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B36C433EF;
-	Fri, 28 Apr 2023 11:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEFA290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:30:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A51C433D2;
+	Fri, 28 Apr 2023 11:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681416;
-	bh=xEMkT6Tabd/L9qxuWvznCQ5OGW/tqFFPCT1QzWODMz4=;
+	s=korg; t=1682681419;
+	bh=9yVD/60835pONKVFItm3G5E2KKiBrEN10zQYvzegbOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byLp8JeqORW3Q2w65T7I8tyIGne0oKfy35i2erDU8F0eQsu0PIjYr/SdtEedJjbKV
-	 4NW3qVosMQZMXiJrTozuf5wIul6RCxbr2fJjZHS6Uiiuhn107lCN0Z9fz9SS4AgUyk
-	 npX3WjYrvKb7pZybMhVhJPL7wXJ3MYXu18pgU7mY=
+	b=Go4fjFGZjhtxLYh5iTSYlGpiB6xdoZihzVuKdDDYvwiypW48sT0tMEFTdk/Gfe5Il
+	 dXS1jvu1hk7V3Q44Hz8KPUbRm83LmgrEoOb4jVp0BCylpkRQ70S2bLeAk0hedMrECX
+	 cqPxODPnK7mw41m6UVTKdfJUgeF92di2ALFhoxTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: [PATCH 5.15 10/13] selftests: mptcp: join: fix "invalid address, ADD_ADDR timeout"
-Date: Fri, 28 Apr 2023 13:28:14 +0200
-Message-Id: <20230428112039.531220050@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.15 11/13] riscv: Move early dtb mapping into the fixmap region
+Date: Fri, 28 Apr 2023 13:28:15 +0200
+Message-Id: <20230428112039.575933827@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112039.133978540@linuxfoundation.org>
 References: <20230428112039.133978540@linuxfoundation.org>
@@ -33,41 +35,210 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-The "Fixes" commit mentioned below adds new MIBs counters to track some
-particular cases that have been fixed by its parent commit 150d1e06c4f1
-("mptcp: fix race in incoming ADD_ADDR option processing").
+commit ef69d2559fe91f23d27a3d6fd640b5641787d22e upstream.
 
-Unfortunately, one of the new MIB counter (AddAddrDrop) shares the same
-prefix as an older one (AddAddr). This breaks one selftest because it
-was doing a grep on "AddAddr" and it now gets 2 counters instead of 1.
+riscv establishes 2 virtual mappings:
 
-This issue has been fixed upstream in a commit that was part of the same
-set but not backported to v5.15, see commit 6ef84b1517e0 ("selftests:
-mptcp: more robust signal race test"). It has not been backported
-because it was fixing multiple things, some where for >v5.15.
+- early_pg_dir maps the kernel which allows to discover the system
+  memory
+- swapper_pg_dir installs the final mapping (linear mapping included)
 
-This patch then simply extracts the only bit needed for v5.15. Now the
-test passes when validating the last stable v5.15 kernel.
+We used to map the dtb in early_pg_dir using DTB_EARLY_BASE_VA, and this
+mapping was not carried over in swapper_pg_dir. It happens that
+early_init_fdt_scan_reserved_mem() must be called before swapper_pg_dir is
+setup otherwise we could allocate reserved memory defined in the dtb.
+And this function initializes reserved_mem variable with addresses that
+lie in the early_pg_dir dtb mapping: when those addresses are reused
+with swapper_pg_dir, this mapping does not exist and then we trap.
 
-Fixes: f25ae162f4b3 ("mptcp: add mibs counter for ignored incoming options")
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+The previous "fix" was incorrect as early_init_fdt_scan_reserved_mem()
+must be called before swapper_pg_dir is set up otherwise we could
+allocate in reserved memory defined in the dtb.
+
+So move the dtb mapping in the fixmap region which is established in
+early_pg_dir and handed over to swapper_pg_dir.
+
+This patch had to be backported because:
+- the documentation for sv57 is not present here (as sv48/57 are not
+  present)
+- handling of sv48/57 is not needed (as not present)
+
+Fixes: 922b0375fc93 ("riscv: Fix memblock reservation for device tree blob")
+Fixes: 8f3a2b4a96dc ("RISC-V: Move DT mapping outof fixmap")
+Fixes: 50e63dd8ed92 ("riscv: fix reserved memory setup")
+Reported-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/all/f8e67f82-103d-156c-deb0-d6d6e2756f5e@microchip.com/
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230329081932.79831-2-alexghiti@rivosinc.com
+Cc: stable@vger.kernel.org # 5.15.x
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/riscv/vm-layout.rst |    2 -
+ arch/riscv/include/asm/fixmap.h   |    8 ++++++
+ arch/riscv/include/asm/pgtable.h  |    8 ++++--
+ arch/riscv/kernel/setup.c         |    1 
+ arch/riscv/mm/init.c              |   47 +++++++++++++++++++++++++++-----------
+ 5 files changed, 49 insertions(+), 17 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -732,7 +732,7 @@ chk_add_nr()
- 	local dump_stats
+--- a/Documentation/riscv/vm-layout.rst
++++ b/Documentation/riscv/vm-layout.rst
+@@ -48,7 +48,7 @@ RISC-V Linux Kernel SV39
+   ____________________________________________________________|___________________________________________________________
+                     |            |                  |         |
+    ffffffc000000000 | -256    GB | ffffffc7ffffffff |   32 GB | kasan
+-   ffffffcefee00000 | -196    GB | ffffffcefeffffff |    2 MB | fixmap
++   ffffffcefea00000 | -196    GB | ffffffcefeffffff |    6 MB | fixmap
+    ffffffceff000000 | -196    GB | ffffffceffffffff |   16 MB | PCI io
+    ffffffcf00000000 | -196    GB | ffffffcfffffffff |    4 GB | vmemmap
+    ffffffd000000000 | -192    GB | ffffffdfffffffff |   64 GB | vmalloc/ioremap space
+--- a/arch/riscv/include/asm/fixmap.h
++++ b/arch/riscv/include/asm/fixmap.h
+@@ -22,6 +22,14 @@
+  */
+ enum fixed_addresses {
+ 	FIX_HOLE,
++	/*
++	 * The fdt fixmap mapping must be PMD aligned and will be mapped
++	 * using PMD entries in fixmap_pmd in 64-bit and a PGD entry in 32-bit.
++	 */
++	FIX_FDT_END,
++	FIX_FDT = FIX_FDT_END + FIX_FDT_SIZE / PAGE_SIZE - 1,
++
++	/* Below fixmaps will be mapped using fixmap_pte */
+ 	FIX_PTE,
+ 	FIX_PMD,
+ 	FIX_TEXT_POKE1,
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -66,9 +66,13 @@
  
- 	printf "%-39s %s" " " "add"
--	count=`ip netns exec $ns2 nstat -as | grep MPTcpExtAddAddr | awk '{print $2}'`
-+	count=`ip netns exec $ns2 nstat -as MPTcpExtAddAddr | grep MPTcpExtAddAddr | awk '{print $2}'`
- 	[ -z "$count" ] && count=0
- 	if [ "$count" != "$add_nr" ]; then
- 		echo "[fail] got $count ADD_ADDR[s] expected $add_nr"
+ #define FIXADDR_TOP      PCI_IO_START
+ #ifdef CONFIG_64BIT
+-#define FIXADDR_SIZE     PMD_SIZE
++#define MAX_FDT_SIZE	 PMD_SIZE
++#define FIX_FDT_SIZE	 (MAX_FDT_SIZE + SZ_2M)
++#define FIXADDR_SIZE     (PMD_SIZE + FIX_FDT_SIZE)
+ #else
+-#define FIXADDR_SIZE     PGDIR_SIZE
++#define MAX_FDT_SIZE	 PGDIR_SIZE
++#define FIX_FDT_SIZE	 MAX_FDT_SIZE
++#define FIXADDR_SIZE     (PGDIR_SIZE + FIX_FDT_SIZE)
+ #endif
+ #define FIXADDR_START    (FIXADDR_TOP - FIXADDR_SIZE)
+ 
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -291,7 +291,6 @@ void __init setup_arch(char **cmdline_p)
+ 	else
+ 		pr_err("No DTB found in kernel mappings\n");
+ #endif
+-	early_init_fdt_scan_reserved_mem();
+ 	misc_mem_init();
+ 
+ 	init_resources();
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -49,7 +49,6 @@ unsigned long empty_zero_page[PAGE_SIZE
+ EXPORT_SYMBOL(empty_zero_page);
+ 
+ extern char _start[];
+-#define DTB_EARLY_BASE_VA      PGDIR_SIZE
+ void *_dtb_early_va __initdata;
+ uintptr_t _dtb_early_pa __initdata;
+ 
+@@ -216,6 +215,14 @@ static void __init setup_bootmem(void)
+ 	set_max_mapnr(max_low_pfn - ARCH_PFN_OFFSET);
+ 
+ 	reserve_initrd_mem();
++
++	/*
++	 * No allocation should be done before reserving the memory as defined
++	 * in the device tree, otherwise the allocation could end up in a
++	 * reserved region.
++	 */
++	early_init_fdt_scan_reserved_mem();
++
+ 	/*
+ 	 * If DTB is built in, no need to reserve its memblock.
+ 	 * Otherwise, do reserve it but avoid using
+@@ -265,7 +272,6 @@ pgd_t trampoline_pg_dir[PTRS_PER_PGD] __
+ static pte_t fixmap_pte[PTRS_PER_PTE] __page_aligned_bss;
+ 
+ pgd_t early_pg_dir[PTRS_PER_PGD] __initdata __aligned(PAGE_SIZE);
+-static pmd_t __maybe_unused early_dtb_pmd[PTRS_PER_PMD] __initdata __aligned(PAGE_SIZE);
+ 
+ #ifdef CONFIG_XIP_KERNEL
+ #define riscv_pfn_base         (*(unsigned long  *)XIP_FIXUP(&riscv_pfn_base))
+@@ -580,24 +586,28 @@ static void __init create_kernel_page_ta
+  * this means 2 PMD entries whereas for 32-bit kernel, this is only 1 PGDIR
+  * entry.
+  */
+-static void __init create_fdt_early_page_table(pgd_t *pgdir, uintptr_t dtb_pa)
++static void __init create_fdt_early_page_table(pgd_t *pgdir,
++					       uintptr_t fix_fdt_va,
++					       uintptr_t dtb_pa)
+ {
+-#ifndef CONFIG_BUILTIN_DTB
+ 	uintptr_t pa = dtb_pa & ~(PMD_SIZE - 1);
+ 
+-	create_pgd_mapping(early_pg_dir, DTB_EARLY_BASE_VA,
+-			   IS_ENABLED(CONFIG_64BIT) ? (uintptr_t)early_dtb_pmd : pa,
+-			   PGDIR_SIZE,
+-			   IS_ENABLED(CONFIG_64BIT) ? PAGE_TABLE : PAGE_KERNEL);
++#ifndef CONFIG_BUILTIN_DTB
++	/* Make sure the fdt fixmap address is always aligned on PMD size */
++	BUILD_BUG_ON(FIX_FDT % (PMD_SIZE / PAGE_SIZE));
+ 
+-	if (IS_ENABLED(CONFIG_64BIT)) {
+-		create_pmd_mapping(early_dtb_pmd, DTB_EARLY_BASE_VA,
++	/* In 32-bit only, the fdt lies in its own PGD */
++	if (!IS_ENABLED(CONFIG_64BIT)) {
++		create_pgd_mapping(early_pg_dir, fix_fdt_va,
++				   pa, MAX_FDT_SIZE, PAGE_KERNEL);
++	} else {
++		create_pmd_mapping(fixmap_pmd, fix_fdt_va,
+ 				   pa, PMD_SIZE, PAGE_KERNEL);
+-		create_pmd_mapping(early_dtb_pmd, DTB_EARLY_BASE_VA + PMD_SIZE,
++		create_pmd_mapping(fixmap_pmd, fix_fdt_va + PMD_SIZE,
+ 				   pa + PMD_SIZE, PMD_SIZE, PAGE_KERNEL);
+ 	}
+ 
+-	dtb_early_va = (void *)DTB_EARLY_BASE_VA + (dtb_pa & (PMD_SIZE - 1));
++	dtb_early_va = (void *)fix_fdt_va + (dtb_pa & (PMD_SIZE - 1));
+ #else
+ 	/*
+ 	 * For 64-bit kernel, __va can't be used since it would return a linear
+@@ -685,7 +695,8 @@ asmlinkage void __init setup_vm(uintptr_
+ 	create_kernel_page_table(early_pg_dir, true);
+ 
+ 	/* Setup early mapping for FDT early scan */
+-	create_fdt_early_page_table(early_pg_dir, dtb_pa);
++	create_fdt_early_page_table(early_pg_dir,
++				    __fix_to_virt(FIX_FDT), dtb_pa);
+ 
+ 	/*
+ 	 * Bootime fixmap only can handle PMD_SIZE mapping. Thus, boot-ioremap
+@@ -735,6 +746,16 @@ static void __init setup_vm_final(void)
+ 	pt_ops.get_pmd_virt = get_pmd_virt_fixmap;
+ #endif
+ 	/* Setup swapper PGD for fixmap */
++#if !defined(CONFIG_64BIT)
++	/*
++	 * In 32-bit, the device tree lies in a pgd entry, so it must be copied
++	 * directly in swapper_pg_dir in addition to the pgd entry that points
++	 * to fixmap_pte.
++	 */
++	unsigned long idx = pgd_index(__fix_to_virt(FIX_FDT));
++
++	set_pgd(&swapper_pg_dir[idx], early_pg_dir[idx]);
++#endif
+ 	create_pgd_mapping(swapper_pg_dir, FIXADDR_START,
+ 			   __pa_symbol(fixmap_pgd_next),
+ 			   PGDIR_SIZE, PAGE_TABLE);
 
 
