@@ -1,36 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6190C290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:29:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF70C433D2;
-	Fri, 28 Apr 2023 11:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A69D290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:29:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834C5C433EF;
+	Fri, 28 Apr 2023 11:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681348;
-	bh=Op2dXB//TRDl8Ibmf7f1Vl/mOLmzqoYEyjRsfAgm2Zw=;
+	s=korg; t=1682681350;
+	bh=89AJIlv+eX2RQSjWzPOy1cjiYsERvx7x59ojXBCMBz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QnZybIG8LSSvR1CgzcetbYg1Vv1568D+uEN1vz1j0DJlZmPR3Ffgt4lUFf85jbD+O
-	 ezXg5oIzoSSat96381abGNl+SHsiSAK3P5z/dEZVXWuorOyEZsTMGUnSnhL9Bnbaee
-	 FwxzgFiP+wtW3pJyXUfVJBbdQhe3weuZjtJkxZII=
+	b=uQ8TFB8wx/4ksh2GawT4iHaWoa6ccyYCpmNA8/9GG6Sgqq+o0JxELTu20NUv9fHHN
+	 UMUeAYIbmTS5xkq0SmAHB88pwFNjc43P6Qt9rTUVnXIyUbu7gjrtAxyBVvBdhJ5vVB
+	 b65CDWL6OeUU0owendjvM09Ifw4qZkJh1Iy2IiXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huaweicloud.com>,
-	SeongJae Park <sj@kernel.org>,
-	David Gow <davidgow@google.com>,
-	Vincenzo Palazzo <vincenzopalazzodev@gmail.com>,
-	Arthur Grillo <arthurgrillo@riseup.net>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.1 01/16] um: Only disable SSE on clang to work around old GCC bugs
-Date: Fri, 28 Apr 2023 13:27:53 +0200
-Message-Id: <20230428112040.110376428@linuxfoundation.org>
+	Ruihan Li <lrh2000@pku.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 10/16] bluetooth: Perform careful capability checks in hci_sock_ioctl()
+Date: Fri, 28 Apr 2023 13:28:02 +0200
+Message-Id: <20230428112040.398139972@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112040.063291126@linuxfoundation.org>
 References: <20230428112040.063291126@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,54 +34,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Gow <davidgow@google.com>
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-commit a3046a618a284579d1189af8711765f553eed707 upstream.
+commit 25c150ac103a4ebeed0319994c742a90634ddf18 upstream.
 
-As part of the Rust support for UML, we disable SSE (and similar flags)
-to match the normal x86 builds. This both makes sense (we ideally want a
-similar configuration to x86), and works around a crash bug with SSE
-generation under Rust with LLVM.
+Previously, capability was checked using capable(), which verified that the
+caller of the ioctl system call had the required capability. In addition,
+the result of the check would be stored in the HCI_SOCK_TRUSTED flag,
+making it persistent for the socket.
 
-However, this breaks compiling stdlib.h under gcc < 11, as the x86_64
-ABI requires floating-point return values be stored in an SSE register.
-gcc 11 fixes this by only doing register allocation when a function is
-actually used, and since we never use atof(), it shouldn't be a problem:
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99652
+However, malicious programs can abuse this approach by deliberately sharing
+an HCI socket with a privileged task. The HCI socket will be marked as
+trusted when the privileged task occasionally makes an ioctl call.
 
-Nevertheless, only disable SSE on clang setups, as that's a simple way
-of working around everyone's bugs.
+This problem can be solved by using sk_capable() to check capability, which
+ensures that not only the current task but also the socket opener has the
+specified capability, thus reducing the risk of privilege escalation
+through the previously identified vulnerability.
 
-Fixes: 884981867947 ("rust: arch/um: Disable FP/SIMD instruction to match x86")
-Reported-by: Roberto Sassu <roberto.sassu@huaweicloud.com>
-Link: https://lore.kernel.org/linux-um/6df2ecef9011d85654a82acd607fdcbc93ad593c.camel@huaweicloud.com/
-Tested-by: Roberto Sassu <roberto.sassu@huaweicloud.com>
-Tested-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: David Gow <davidgow@google.com>
-Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
-Tested-by: Arthur Grillo <arthurgrillo@riseup.net>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Cc: stable@vger.kernel.org
+Fixes: f81f5b2db869 ("Bluetooth: Send control open and close messages for HCI raw sockets")
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Makefile.um |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/bluetooth/hci_sock.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/x86/Makefile.um
-+++ b/arch/x86/Makefile.um
-@@ -3,9 +3,14 @@ core-y += arch/x86/crypto/
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -1003,7 +1003,14 @@ static int hci_sock_ioctl(struct socket
+ 	if (hci_sock_gen_cookie(sk)) {
+ 		struct sk_buff *skb;
  
- #
- # Disable SSE and other FP/SIMD instructions to match normal x86
-+# This is required to work around issues in older LLVM versions, but breaks
-+# GCC versions < 11. See:
-+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99652
- #
-+ifeq ($(CONFIG_CC_IS_CLANG),y)
- KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
- KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
-+endif
+-		if (capable(CAP_NET_ADMIN))
++		/* Perform careful checks before setting the HCI_SOCK_TRUSTED
++		 * flag. Make sure that not only the current task but also
++		 * the socket opener has the required capability, since
++		 * privileged programs can be tricked into making ioctl calls
++		 * on HCI sockets, and the socket should not be marked as
++		 * trusted simply because the ioctl caller is privileged.
++		 */
++		if (sk_capable(sk, CAP_NET_ADMIN))
+ 			hci_sock_set_flag(sk, HCI_SOCK_TRUSTED);
  
- ifeq ($(CONFIG_X86_32),y)
- START := 0x8048000
+ 		/* Send event to monitor */
 
 
