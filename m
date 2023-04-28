@@ -1,202 +1,231 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2659290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:30:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B192C433D2;
-	Fri, 28 Apr 2023 11:30:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681427;
-	bh=SVw41Ec17hTKIEqrs0KLIp4xUu7bVI4Q6cnKef0n0pk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9i0uUv9kjd+sxOO+Qwgzwdq8mymd2QxU56182d5FCqW4LJP0PHshgYFgnlZnyCry
-	 TttTAF6XgZM8VO2kra6Gb6kpjP+IjcHfk6Czj8f4a6D7/FanZVCreZsNPMsGbTJtHP
-	 28LuM3hgIjsHR2/QmIdhGE+hMXJ62AQh7n3wLCAg=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.15 05/13] wifi: brcmfmac: slab-out-of-bounds read in brcmf_get_assoc_ies()
-Date: Fri, 28 Apr 2023 13:28:09 +0200
-Message-Id: <20230428112039.335118395@linuxfoundation.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230428112039.133978540@linuxfoundation.org>
-References: <20230428112039.133978540@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58CF320C
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 22:02:12 +0000 (UTC)
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-44048c2de31so200643e0c.0
+        for <patches@lists.linux.dev>; Fri, 28 Apr 2023 15:02:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682719331; x=1685311331;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H4V4fWCdh5vAMScKzf2MsQ7kTvtaQZRkLxgm/CZVADY=;
+        b=hTTblH6TYlpLAmysHUI1ipY4o3wPLKmOsTRPQXHBa2h+BlC0WLsH+kn+fP+IZMNcUn
+         YIFJ2iAy7gw8M2ZcXah2tvSHCvM+31XOByL1ga68MhKccoKNj+/T6cDFtJV1dKsgz7YX
+         0YcAxjPA+QA60BeKAj4jG/U0MNnSVw4Ik01RUPKMWAXiQzg8z7ffWo4d2x15RXRrvacb
+         EoWRPl9gU8K/DLgAk4B57r73WchA9Sm3mjfWG5mXeYyDYxJIaf9mjGvMCze1L1SmtyT8
+         mirh/kM1dz9LyW4WRbV7Q0CMIvrxfWDfrXdxD2h7XOsDhOGUkKpjgrGqDF1tG/Ws7mV8
+         OrnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682719331; x=1685311331;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H4V4fWCdh5vAMScKzf2MsQ7kTvtaQZRkLxgm/CZVADY=;
+        b=f7CRm9M2THG4dtAx39OcHOAyeJUG1ncPDP+lIvkiIfsZgCBMJqbaISwqy3gv6I+GyH
+         4BKoiIXEZOQ8DnTFol5KJATLR2I9/ZvEsmzNb6PaGulryVZuVaeV9nL4iu71hWIublUI
+         WhzscG9xaciT/LQMMBBZoIS/ONvkfSWKclvKJQ2BvbLnuxWFrNfikaBs5jjegEoP3yRi
+         n9ye3Bs6if3CsSsnSDOkpBrfGM1U5+zWTQqrP9xsssnWBzbKSWVSi3KJGepGuVn17qXs
+         N6JKEnryE+u4eZw1DBPZX1R6HH7e//AJS2W6NBhEs+kgt2FBECXFsBAYUMpDISrTbqaj
+         +gNA==
+X-Gm-Message-State: AC+VfDwCsg/ahnMz4cqDEhQT8fr8d+zc5EqfAGu2Gu8rpRcb+Rgk3koB
+	5SbObEag23X1etpoAPC2t6248fNmGJa9J4OsRTMIVg==
+X-Google-Smtp-Source: ACHHUZ4KMZQw81GlX4zGgLgdzHHbV7hpKnhTMesF9GuOxXRTaAQEVvP69R6i4H4omBxnLB5ycgpeslfPexYDPsKtdxQ=
+X-Received: by 2002:a1f:ca47:0:b0:440:448c:27a0 with SMTP id
+ a68-20020a1fca47000000b00440448c27a0mr3049086vkg.8.1682719331456; Fri, 28 Apr
+ 2023 15:02:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20230428112040.137898986@linuxfoundation.org>
+In-Reply-To: <20230428112040.137898986@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 28 Apr 2023 23:02:00 +0100
+Message-ID: <CA+G9fYuTDZ36Z9qDHUDKQGj6Mm56xxiT_+M64fda4J+dj+=JNQ@mail.gmail.com>
+Subject: Re: [PATCH 6.2 00/15] 6.2.14-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+On Fri, 28 Apr 2023 at 12:29, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.2.14 release.
+> There are 15 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 30 Apr 2023 11:20:30 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.2.14-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.2.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-commit 0da40e018fd034d87c9460123fa7f897b69fdee7 upstream.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Fix a slab-out-of-bounds read that occurs in kmemdup() called from
-brcmf_get_assoc_ies().
-The bug could occur when assoc_info->req_len, data from a URB provided
-by a USB device, is bigger than the size of buffer which is defined as
-WL_EXTRA_BUF_MAX.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Add the size check for req_len/resp_len of assoc_info.
+## Build
+* kernel: 6.2.14-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.2.y
+* git commit: a451b003c3066aade2071a362d5d6d4a62c6da48
+* git describe: v6.2.9-624-ga451b003c306
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.2.y/build/v6.2.9=
+-624-ga451b003c306
 
-Found by a modified version of syzkaller.
+## Test Regressions (compared to v6.2.9-608-g9e5d20c13940)
 
-[   46.592467][    T7] ==================================================================
-[   46.594687][    T7] BUG: KASAN: slab-out-of-bounds in kmemdup+0x3e/0x50
-[   46.596572][    T7] Read of size 3014656 at addr ffff888019442000 by task kworker/0:1/7
-[   46.598575][    T7]
-[   46.599157][    T7] CPU: 0 PID: 7 Comm: kworker/0:1 Tainted: G           O      5.14.0+ #145
-[   46.601333][    T7] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-[   46.604360][    T7] Workqueue: events brcmf_fweh_event_worker
-[   46.605943][    T7] Call Trace:
-[   46.606584][    T7]  dump_stack_lvl+0x8e/0xd1
-[   46.607446][    T7]  print_address_description.constprop.0.cold+0x93/0x334
-[   46.608610][    T7]  ? kmemdup+0x3e/0x50
-[   46.609341][    T7]  kasan_report.cold+0x79/0xd5
-[   46.610151][    T7]  ? kmemdup+0x3e/0x50
-[   46.610796][    T7]  kasan_check_range+0x14e/0x1b0
-[   46.611691][    T7]  memcpy+0x20/0x60
-[   46.612323][    T7]  kmemdup+0x3e/0x50
-[   46.612987][    T7]  brcmf_get_assoc_ies+0x967/0xf60
-[   46.613904][    T7]  ? brcmf_notify_vif_event+0x3d0/0x3d0
-[   46.614831][    T7]  ? lock_chain_count+0x20/0x20
-[   46.615683][    T7]  ? mark_lock.part.0+0xfc/0x2770
-[   46.616552][    T7]  ? lock_chain_count+0x20/0x20
-[   46.617409][    T7]  ? mark_lock.part.0+0xfc/0x2770
-[   46.618244][    T7]  ? lock_chain_count+0x20/0x20
-[   46.619024][    T7]  brcmf_bss_connect_done.constprop.0+0x241/0x2e0
-[   46.620019][    T7]  ? brcmf_parse_configure_security.isra.0+0x2a0/0x2a0
-[   46.620818][    T7]  ? __lock_acquire+0x181f/0x5790
-[   46.621462][    T7]  brcmf_notify_connect_status+0x448/0x1950
-[   46.622134][    T7]  ? rcu_read_lock_bh_held+0xb0/0xb0
-[   46.622736][    T7]  ? brcmf_cfg80211_join_ibss+0x7b0/0x7b0
-[   46.623390][    T7]  ? find_held_lock+0x2d/0x110
-[   46.623962][    T7]  ? brcmf_fweh_event_worker+0x19f/0xc60
-[   46.624603][    T7]  ? mark_held_locks+0x9f/0xe0
-[   46.625145][    T7]  ? lockdep_hardirqs_on_prepare+0x3e0/0x3e0
-[   46.625871][    T7]  ? brcmf_cfg80211_join_ibss+0x7b0/0x7b0
-[   46.626545][    T7]  brcmf_fweh_call_event_handler.isra.0+0x90/0x100
-[   46.627338][    T7]  brcmf_fweh_event_worker+0x557/0xc60
-[   46.627962][    T7]  ? brcmf_fweh_call_event_handler.isra.0+0x100/0x100
-[   46.628736][    T7]  ? rcu_read_lock_sched_held+0xa1/0xd0
-[   46.629396][    T7]  ? rcu_read_lock_bh_held+0xb0/0xb0
-[   46.629970][    T7]  ? lockdep_hardirqs_on_prepare+0x273/0x3e0
-[   46.630649][    T7]  process_one_work+0x92b/0x1460
-[   46.631205][    T7]  ? pwq_dec_nr_in_flight+0x330/0x330
-[   46.631821][    T7]  ? rwlock_bug.part.0+0x90/0x90
-[   46.632347][    T7]  worker_thread+0x95/0xe00
-[   46.632832][    T7]  ? __kthread_parkme+0x115/0x1e0
-[   46.633393][    T7]  ? process_one_work+0x1460/0x1460
-[   46.633957][    T7]  kthread+0x3a1/0x480
-[   46.634369][    T7]  ? set_kthread_struct+0x120/0x120
-[   46.634933][    T7]  ret_from_fork+0x1f/0x30
-[   46.635431][    T7]
-[   46.635687][    T7] Allocated by task 7:
-[   46.636151][    T7]  kasan_save_stack+0x1b/0x40
-[   46.636628][    T7]  __kasan_kmalloc+0x7c/0x90
-[   46.637108][    T7]  kmem_cache_alloc_trace+0x19e/0x330
-[   46.637696][    T7]  brcmf_cfg80211_attach+0x4a0/0x4040
-[   46.638275][    T7]  brcmf_attach+0x389/0xd40
-[   46.638739][    T7]  brcmf_usb_probe+0x12de/0x1690
-[   46.639279][    T7]  usb_probe_interface+0x2aa/0x760
-[   46.639820][    T7]  really_probe+0x205/0xb70
-[   46.640342][    T7]  __driver_probe_device+0x311/0x4b0
-[   46.640876][    T7]  driver_probe_device+0x4e/0x150
-[   46.641445][    T7]  __device_attach_driver+0x1cc/0x2a0
-[   46.642000][    T7]  bus_for_each_drv+0x156/0x1d0
-[   46.642543][    T7]  __device_attach+0x23f/0x3a0
-[   46.643065][    T7]  bus_probe_device+0x1da/0x290
-[   46.643644][    T7]  device_add+0xb7b/0x1eb0
-[   46.644130][    T7]  usb_set_configuration+0xf59/0x16f0
-[   46.644720][    T7]  usb_generic_driver_probe+0x82/0xa0
-[   46.645295][    T7]  usb_probe_device+0xbb/0x250
-[   46.645786][    T7]  really_probe+0x205/0xb70
-[   46.646258][    T7]  __driver_probe_device+0x311/0x4b0
-[   46.646804][    T7]  driver_probe_device+0x4e/0x150
-[   46.647387][    T7]  __device_attach_driver+0x1cc/0x2a0
-[   46.647926][    T7]  bus_for_each_drv+0x156/0x1d0
-[   46.648454][    T7]  __device_attach+0x23f/0x3a0
-[   46.648939][    T7]  bus_probe_device+0x1da/0x290
-[   46.649478][    T7]  device_add+0xb7b/0x1eb0
-[   46.649936][    T7]  usb_new_device.cold+0x49c/0x1029
-[   46.650526][    T7]  hub_event+0x1c98/0x3950
-[   46.650975][    T7]  process_one_work+0x92b/0x1460
-[   46.651535][    T7]  worker_thread+0x95/0xe00
-[   46.651991][    T7]  kthread+0x3a1/0x480
-[   46.652413][    T7]  ret_from_fork+0x1f/0x30
-[   46.652885][    T7]
-[   46.653131][    T7] The buggy address belongs to the object at ffff888019442000
-[   46.653131][    T7]  which belongs to the cache kmalloc-2k of size 2048
-[   46.654669][    T7] The buggy address is located 0 bytes inside of
-[   46.654669][    T7]  2048-byte region [ffff888019442000, ffff888019442800)
-[   46.656137][    T7] The buggy address belongs to the page:
-[   46.656720][    T7] page:ffffea0000651000 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x19440
-[   46.657792][    T7] head:ffffea0000651000 order:3 compound_mapcount:0 compound_pincount:0
-[   46.658673][    T7] flags: 0x100000000010200(slab|head|node=0|zone=1)
-[   46.659422][    T7] raw: 0100000000010200 0000000000000000 dead000000000122 ffff888100042000
-[   46.660363][    T7] raw: 0000000000000000 0000000000080008 00000001ffffffff 0000000000000000
-[   46.661236][    T7] page dumped because: kasan: bad access detected
-[   46.661956][    T7] page_owner tracks the page as allocated
-[   46.662588][    T7] page last allocated via order 3, migratetype Unmovable, gfp_mask 0x52a20(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP), pid 7, ts 31136961085, free_ts 0
-[   46.664271][    T7]  prep_new_page+0x1aa/0x240
-[   46.664763][    T7]  get_page_from_freelist+0x159a/0x27c0
-[   46.665340][    T7]  __alloc_pages+0x2da/0x6a0
-[   46.665847][    T7]  alloc_pages+0xec/0x1e0
-[   46.666308][    T7]  allocate_slab+0x380/0x4e0
-[   46.666770][    T7]  ___slab_alloc+0x5bc/0x940
-[   46.667264][    T7]  __slab_alloc+0x6d/0x80
-[   46.667712][    T7]  kmem_cache_alloc_trace+0x30a/0x330
-[   46.668299][    T7]  brcmf_usbdev_qinit.constprop.0+0x50/0x470
-[   46.668885][    T7]  brcmf_usb_probe+0xc97/0x1690
-[   46.669438][    T7]  usb_probe_interface+0x2aa/0x760
-[   46.669988][    T7]  really_probe+0x205/0xb70
-[   46.670487][    T7]  __driver_probe_device+0x311/0x4b0
-[   46.671031][    T7]  driver_probe_device+0x4e/0x150
-[   46.671604][    T7]  __device_attach_driver+0x1cc/0x2a0
-[   46.672192][    T7]  bus_for_each_drv+0x156/0x1d0
-[   46.672739][    T7] page_owner free stack trace missing
-[   46.673335][    T7]
-[   46.673620][    T7] Memory state around the buggy address:
-[   46.674213][    T7]  ffff888019442700: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   46.675083][    T7]  ffff888019442780: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   46.675994][    T7] >ffff888019442800: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   46.676875][    T7]                    ^
-[   46.677323][    T7]  ffff888019442880: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   46.678190][    T7]  ffff888019442900: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   46.679052][    T7] ==================================================================
-[   46.679945][    T7] Disabling lock debugging due to kernel taint
-[   46.680725][    T7] Kernel panic - not syncing:
+## Metric Regressions (compared to v6.2.9-608-g9e5d20c13940)
 
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230309104457.22628-1-jisoo.jang@yonsei.ac.kr
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c |    5 +++++
- 1 file changed, 5 insertions(+)
+## Test Fixes (compared to v6.2.9-608-g9e5d20c13940)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -5890,6 +5890,11 @@ static s32 brcmf_get_assoc_ies(struct br
- 		(struct brcmf_cfg80211_assoc_ielen_le *)cfg->extra_buf;
- 	req_len = le32_to_cpu(assoc_info->req_len);
- 	resp_len = le32_to_cpu(assoc_info->resp_len);
-+	if (req_len > WL_EXTRA_BUF_MAX || resp_len > WL_EXTRA_BUF_MAX) {
-+		bphy_err(drvr, "invalid lengths in assoc info: req %u resp %u\n",
-+			 req_len, resp_len);
-+		return -EINVAL;
-+	}
- 	if (req_len) {
- 		err = brcmf_fil_iovar_data_get(ifp, "assoc_req_ies",
- 					       cfg->extra_buf,
+## Metric Fixes (compared to v6.2.9-608-g9e5d20c13940)
 
+## Test result summary
+total: 195174, pass: 163280, fail: 3868, skip: 27724, xfail: 302
 
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 141 total, 140 passed, 1 failed
+* arm64: 49 total, 49 passed, 0 failed
+* i386: 37 total, 36 passed, 1 failed
+* mips: 26 total, 26 passed, 0 failed
+* parisc: 6 total, 6 passed, 0 failed
+* powerpc: 34 total, 34 passed, 0 failed
+* riscv: 22 total, 22 passed, 0 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 42 total, 42 passed, 0 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
