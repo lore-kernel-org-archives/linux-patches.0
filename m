@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50401290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:29:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81AEC4331D;
-	Fri, 28 Apr 2023 11:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF23E290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:29:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6810CC433EF;
+	Fri, 28 Apr 2023 11:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681393;
-	bh=uci9wIk8BpcGmFwleZlnbCm2pQBYzVE/NZFFI1xTMCw=;
+	s=korg; t=1682681395;
+	bh=5jKGg+kksyoy3/ViMtyVzqSuv73GO3htbOWLcm00Tos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eu7sQKi4urB8dyqWiJN0ndKegALjNeu2f1C2w1zw14JWABUMCH56aqvGXp7ldTzzr
-	 PTUvuPPv5l2ldDHhdMtpoxMJu/pSLCJg3Ymt5rrsqzRk5Ph+hsHtPIwjRB8dw1WniP
-	 8itsg8G8gqZrCLHAAGieqdvTrczCJ1xyiCOOFVv0=
+	b=nIyXBCLz1zqiKfi/dsJZwjpVR2NEf3DdjYOkMwGBXqU5T5SEWmZM9GQss7OjII3yT
+	 ovMaqBQLN4eiZw3lcKExQvKeQadLw+abToNbv4S2VOxV9BOgJvOQH2PbsNjNRm9TpW
+	 0US6UR1VZoj2YGjoHGrbFVKvAAY+FA7HFQrbVpjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mark Hasemeyer <markhas@chromium.org>
-Subject: [PATCH 5.15 01/13] PCI/ASPM: Remove pcie_aspm_pm_state_change()
-Date: Fri, 28 Apr 2023 13:28:05 +0200
-Message-Id: <20230428112039.191223013@linuxfoundation.org>
+	SeongJae Park <sjpark@amazon.de>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.15 02/13] selftests/kselftest/runner/run_one(): allow running non-executable files
+Date: Fri, 28 Apr 2023 13:28:06 +0200
+Message-Id: <20230428112039.230577601@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112039.133978540@linuxfoundation.org>
 References: <20230428112039.133978540@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,92 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kai-Heng Feng <kai.heng.feng@canonical.com>
+From: SeongJae Park <sjpark@amazon.de>
 
-commit 08d0cc5f34265d1a1e3031f319f594bd1970976c upstream.
+commit 303f8e2d02002dbe331cab7813ee091aead3cd39 upstream.
 
-pcie_aspm_pm_state_change() was introduced at the inception of PCIe ASPM
-code, but it can cause some issues. For instance, when ASPM config is
-changed via sysfs, those changes won't persist across power state change
-because pcie_aspm_pm_state_change() overwrites them.
+When running a test program, 'run_one()' checks if the program has the
+execution permission and fails if it doesn't.  However, it's easy to
+mistakenly lose the permissions, as some common tools like 'diff' don't
+support the permission change well[1].  Compared to that, making mistakes
+in the test program's path would only rare, as those are explicitly listed
+in 'TEST_PROGS'.  Therefore, it might make more sense to resolve the
+situation on our own and run the program.
 
-Also, if the driver restores L1SS [1] after system resume, the restored
-state will also be overwritten by pcie_aspm_pm_state_change().
+For this reason, this commit makes the test program runner function still
+print the warning message but to try parsing the interpreter of the
+program and to explicitly run it with the interpreter, in this case.
 
-Remove pcie_aspm_pm_state_change().  If there's any hardware that really
-needs it to function, a quirk can be used instead.
+[1] https://lore.kernel.org/mm-commits/YRJisBs9AunccCD4@kroah.com/
 
-[1] https://lore.kernel.org/linux-pci/20220201123536.12962-1-vidyas@nvidia.com/
-Link: https://lore.kernel.org/r/20220509073639.2048236-1-kai.heng.feng@canonical.com
-[bhelgaas: remove additional pcie_aspm_pm_state_change() call in
-pci_set_low_power_state(), added by
-10aa5377fc8a ("PCI/PM: Split pci_raw_set_power_state()") and moved by
-7957d201456f ("PCI/PM: Relocate pci_set_low_power_state()")]
-Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-[manual backport: pci_set_low_power_state does not exist in v5.15]
-Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
+Link: https://lkml.kernel.org/r/20210810164534.25902-1-sj38.park@gmail.com
+Signed-off-by: SeongJae Park <sjpark@amazon.de>
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c       |    3 ---
- drivers/pci/pci.h       |    2 --
- drivers/pci/pcie/aspm.c |   19 -------------------
- 3 files changed, 24 deletions(-)
+ tools/testing/selftests/kselftest/runner.sh |   28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1140,9 +1140,6 @@ static int pci_raw_set_power_state(struc
- 	if (need_restore)
- 		pci_restore_bars(dev);
- 
--	if (dev->bus->self)
--		pcie_aspm_pm_state_change(dev->bus->self);
--
- 	return 0;
- }
- 
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -595,12 +595,10 @@ bool pcie_wait_for_link(struct pci_dev *
- #ifdef CONFIG_PCIEASPM
- void pcie_aspm_init_link_state(struct pci_dev *pdev);
- void pcie_aspm_exit_link_state(struct pci_dev *pdev);
--void pcie_aspm_pm_state_change(struct pci_dev *pdev);
- void pcie_aspm_powersave_config_link(struct pci_dev *pdev);
- #else
- static inline void pcie_aspm_init_link_state(struct pci_dev *pdev) { }
- static inline void pcie_aspm_exit_link_state(struct pci_dev *pdev) { }
--static inline void pcie_aspm_pm_state_change(struct pci_dev *pdev) { }
- static inline void pcie_aspm_powersave_config_link(struct pci_dev *pdev) { }
- #endif
- 
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -1020,25 +1020,6 @@ out:
- 	up_read(&pci_bus_sem);
- }
- 
--/* @pdev: the root port or switch downstream port */
--void pcie_aspm_pm_state_change(struct pci_dev *pdev)
--{
--	struct pcie_link_state *link = pdev->link_state;
--
--	if (aspm_disabled || !link)
--		return;
--	/*
--	 * Devices changed PM state, we should recheck if latency
--	 * meets all functions' requirement
--	 */
--	down_read(&pci_bus_sem);
--	mutex_lock(&aspm_lock);
--	pcie_update_aspm_capable(link->root);
--	pcie_config_aspm_path(link);
--	mutex_unlock(&aspm_lock);
--	up_read(&pci_bus_sem);
--}
--
- void pcie_aspm_powersave_config_link(struct pci_dev *pdev)
+--- a/tools/testing/selftests/kselftest/runner.sh
++++ b/tools/testing/selftests/kselftest/runner.sh
+@@ -33,9 +33,9 @@ tap_timeout()
  {
- 	struct pcie_link_state *link = pdev->link_state;
+ 	# Make sure tests will time out if utility is available.
+ 	if [ -x /usr/bin/timeout ] ; then
+-		/usr/bin/timeout --foreground "$kselftest_timeout" "$1"
++		/usr/bin/timeout --foreground "$kselftest_timeout" $1
+ 	else
+-		"$1"
++		$1
+ 	fi
+ }
+ 
+@@ -65,17 +65,25 @@ run_one()
+ 
+ 	TEST_HDR_MSG="selftests: $DIR: $BASENAME_TEST"
+ 	echo "# $TEST_HDR_MSG"
+-	if [ ! -x "$TEST" ]; then
+-		echo -n "# Warning: file $TEST is "
+-		if [ ! -e "$TEST" ]; then
+-			echo "missing!"
+-		else
+-			echo "not executable, correct this."
+-		fi
++	if [ ! -e "$TEST" ]; then
++		echo "# Warning: file $TEST is missing!"
+ 		echo "not ok $test_num $TEST_HDR_MSG"
+ 	else
++		cmd="./$BASENAME_TEST"
++		if [ ! -x "$TEST" ]; then
++			echo "# Warning: file $TEST is not executable"
++
++			if [ $(head -n 1 "$TEST" | cut -c -2) = "#!" ]
++			then
++				interpreter=$(head -n 1 "$TEST" | cut -c 3-)
++				cmd="$interpreter ./$BASENAME_TEST"
++			else
++				echo "not ok $test_num $TEST_HDR_MSG"
++				return
++			fi
++		fi
+ 		cd `dirname $TEST` > /dev/null
+-		((((( tap_timeout ./$BASENAME_TEST 2>&1; echo $? >&3) |
++		((((( tap_timeout "$cmd" 2>&1; echo $? >&3) |
+ 			tap_prefix >&4) 3>&1) |
+ 			(read xs; exit $xs)) 4>>"$logfile" &&
+ 		echo "ok $test_num $TEST_HDR_MSG") ||
 
 
