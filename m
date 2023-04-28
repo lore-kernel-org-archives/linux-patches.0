@@ -1,75 +1,142 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E34290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:30:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4CFC433EF;
-	Fri, 28 Apr 2023 11:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC03B290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:30:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B37BC433D2;
+	Fri, 28 Apr 2023 11:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681401;
-	bh=aaOGD4lC/ZWuwEA1UtJFvUBnGv7OR6jHFa8LwnIj1Xo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSbIOBA4W48Lb2hzehVj3E3CBffn0HJG/F74HQAlb71Ukm4OM6D3Ug27+BU+J35zz
-	 gMFr1Xt/YQK1TpKkOsBcroZEh9Hgq21nTXU0SDwZQ01aNf2+Se/R4xuPIVmJdHaY9V
-	 FjLSi27973BfUrhOp3yEVkjJUd7HRcgowGRvyAnQ=
+	s=korg; t=1682681403;
+	bh=hi6LvnQT2lEUem2/Uqw8NbA5f523DEKv1R81iVhRCmc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=r5v+LdmDlcpEGI+03BTBmc4awicoKoSSNFqc3+8KJ3LuprUXovxnWS6i+dEalCj9D
+	 0dUevmqPfsrtMyGXUU+LhSqxUkHnzjc4pVCy80keHGhKiz1te/dp2J1Jx5NOWev90/
+	 4L2cudA/liE5uE5W4SViH7oD9SpfmseH2Rcf1+b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Steven Price <steven.price@arm.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.15 04/13] KVM: arm64: Fix buffer overflow in kvm_arm_set_fw_reg()
-Date: Fri, 28 Apr 2023 13:28:08 +0200
-Message-Id: <20230428112039.297451207@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.15 00/13] 5.15.110-rc1 review
+Date: Fri, 28 Apr 2023 13:28:04 +0200
+Message-Id: <20230428112039.133978540@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230428112039.133978540@linuxfoundation.org>
-References: <20230428112039.133978540@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.110-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.15.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.15.110-rc1
+X-KernelTest-Deadline: 2023-04-30T11:20+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+This is the start of the stable review cycle for the 5.15.110 release.
+There are 13 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit a25bc8486f9c01c1af6b6c5657234b2eee2c39d6 upstream.
+Responses should be made by Sun, 30 Apr 2023 11:20:30 +0000.
+Anything received after that time might be too late.
 
-The KVM_REG_SIZE() comes from the ioctl and it can be a power of two
-between 0-32768 but if it is more than sizeof(long) this will corrupt
-memory.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.110-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+and the diffstat can be found below.
 
-Fixes: 99adb567632b ("KVM: arm/arm64: Add save/restore support for firmware workaround state")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/4efbab8c-640f-43b2-8ac6-6d68e08280fe@kili.mountain
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-[will: kvm_arm_set_fw_reg() lives in psci.c not hypercalls.c]
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/arm64/kvm/psci.c |    2 ++
- 1 file changed, 2 insertions(+)
+thanks,
 
---- a/arch/arm64/kvm/psci.c
-+++ b/arch/arm64/kvm/psci.c
-@@ -508,6 +508,8 @@ int kvm_arm_set_fw_reg(struct kvm_vcpu *
- 	u64 val;
- 	int wa_level;
- 
-+	if (KVM_REG_SIZE(reg->id) != sizeof(val))
-+		return -ENOENT;
- 	if (copy_from_user(&val, uaddr, KVM_REG_SIZE(reg->id)))
- 		return -EFAULT;
- 
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.15.110-rc1
+
+Alexandre Ghiti <alexghiti@rivosinc.com>
+    riscv: No need to relocate the dtb as it lies in the fixmap region
+
+Alexandre Ghiti <alexghiti@rivosinc.com>
+    riscv: Do not set initial_boot_params to the linear address of the dtb
+
+Alexandre Ghiti <alexghiti@rivosinc.com>
+    riscv: Move early dtb mapping into the fixmap region
+
+Matthieu Baerts <matthieu.baerts@tessares.net>
+    selftests: mptcp: join: fix "invalid address, ADD_ADDR timeout"
+
+Stephen Boyd <swboyd@chromium.org>
+    driver core: Don't require dynamic_debug for initcall_debug probe timing
+
+Arınç ÜNAL <arinc.unal@arinc9.com>
+    USB: serial: option: add UNISOC vendor and TOZED LT70C product
+
+Ruihan Li <lrh2000@pku.edu.cn>
+    bluetooth: Perform careful capability checks in hci_sock_ioctl()
+
+Daniel Vetter <daniel.vetter@ffwll.ch>
+    drm/fb-helper: set x/yres_virtual in drm_fb_helper_check_var
+
+Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+    wifi: brcmfmac: slab-out-of-bounds read in brcmf_get_assoc_ies()
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    KVM: arm64: Fix buffer overflow in kvm_arm_set_fw_reg()
+
+David Matlack <dmatlack@google.com>
+    KVM: arm64: Retry fault if vma_lookup() results become invalid
+
+SeongJae Park <sjpark@amazon.de>
+    selftests/kselftest/runner/run_one(): allow running non-executable files
+
+Kai-Heng Feng <kai.heng.feng@canonical.com>
+    PCI/ASPM: Remove pcie_aspm_pm_state_change()
+
+
+-------------
+
+Diffstat:
+
+ Documentation/riscv/vm-layout.rst                  |  2 +-
+ Makefile                                           |  4 +-
+ arch/arm64/kvm/mmu.c                               | 47 +++++++--------
+ arch/arm64/kvm/psci.c                              |  2 +
+ arch/riscv/include/asm/fixmap.h                    |  8 +++
+ arch/riscv/include/asm/pgtable.h                   |  8 ++-
+ arch/riscv/kernel/setup.c                          |  6 +-
+ arch/riscv/mm/init.c                               | 68 ++++++++++++----------
+ drivers/base/dd.c                                  |  7 ++-
+ drivers/gpu/drm/drm_fb_helper.c                    |  3 +
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c         |  5 ++
+ drivers/pci/pci.c                                  |  3 -
+ drivers/pci/pci.h                                  |  2 -
+ drivers/pci/pcie/aspm.c                            | 19 ------
+ drivers/usb/serial/option.c                        |  6 ++
+ net/bluetooth/hci_sock.c                           |  9 ++-
+ tools/testing/selftests/kselftest/runner.sh        | 28 +++++----
+ tools/testing/selftests/net/mptcp/mptcp_join.sh    |  2 +-
+ 18 files changed, 124 insertions(+), 105 deletions(-)
 
 
