@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6101A290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5C0C433D2;
-	Fri, 28 Apr 2023 11:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE01290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85498C433D2;
+	Fri, 28 Apr 2023 11:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681319;
-	bh=WR8/I5pWSt/IJbcJ6OcqzgPoECjc/Yy4arRZTlFEBNg=;
+	s=korg; t=1682681321;
+	bh=I8fzXVLWx+5cs6wQMdcqu3QQighOHe1MMoBgcxKJvI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlzK60pjbjvUuuLppSdxFU1jisbVHvRajh0E7NjveD1DxMUzaBlua/7S+1DNo7ND+
-	 0gnZOIxOW2iKbJ++78gUs8B/hIDQ1cKgcLcqepzC/O/ru7VdsJRHMzJYOkhbNt9oBV
-	 NC8EeB3Xz6rr7sAG4tkfBR6+Wm6e6F8QKwLi32L8=
+	b=T/a08H8nvl041wtiyu3t67xCOr/9Mr+KmwttI8TVu3PiNm9MS06TNX+rgt/8QuX56
+	 ozrDHuLE8+SRf/v1ANWoH0WHzXMUbU8J0rszjN/vY2DL9U/DD2n+GDWRKtNVgMr7hb
+	 w/aRJRBvzPdQDvcTyk9ViFOfZXmqK7S4DaLsM3W4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Ziwei Dai <ziwei.dai@unisoc.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 6.2 03/15] rcu/kvfree: Avoid freeing new kfree_rcu() memory after old grace period
-Date: Fri, 28 Apr 2023 13:27:47 +0200
-Message-Id: <20230428112040.246245037@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	syzbot+a7c1ec5b1d71ceaa5186@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.2 04/15] mm/mempolicy: fix use-after-free of VMA iterator
+Date: Fri, 28 Apr 2023 13:27:48 +0200
+Message-Id: <20230428112040.274580360@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112040.137898986@linuxfoundation.org>
 References: <20230428112040.137898986@linuxfoundation.org>
@@ -36,152 +35,211 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziwei Dai <ziwei.dai@unisoc.com>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-commit 5da7cb193db32da783a3f3e77d8b639989321d48 upstream.
+commit f4e9e0e69468583c2c6d9d5c7bfc975e292bf188 upstream.
 
-Memory passed to kvfree_rcu() that is to be freed is tracked by a
-per-CPU kfree_rcu_cpu structure, which in turn contains pointers
-to kvfree_rcu_bulk_data structures that contain pointers to memory
-that has not yet been handed to RCU, along with an kfree_rcu_cpu_work
-structure that tracks the memory that has already been handed to RCU.
-These structures track three categories of memory: (1) Memory for
-kfree(), (2) Memory for kvfree(), and (3) Memory for both that arrived
-during an OOM episode.  The first two categories are tracked in a
-cache-friendly manner involving a dynamically allocated page of pointers
-(the aforementioned kvfree_rcu_bulk_data structures), while the third
-uses a simple (but decidedly cache-unfriendly) linked list through the
-rcu_head structures in each block of memory.
+set_mempolicy_home_node() iterates over a list of VMAs and calls
+mbind_range() on each VMA, which also iterates over the singular list of
+the VMA passed in and potentially splits the VMA.  Since the VMA iterator
+is not passed through, set_mempolicy_home_node() may now point to a stale
+node in the VMA tree.  This can result in a UAF as reported by syzbot.
 
-On a given CPU, these three categories are handled as a unit, with that
-CPU's kfree_rcu_cpu_work structure having one pointer for each of the
-three categories.  Clearly, new memory for a given category cannot be
-placed in the corresponding kfree_rcu_cpu_work structure until any old
-memory has had its grace period elapse and thus has been removed.  And
-the kfree_rcu_monitor() function does in fact check for this.
+Avoid the stale maple tree node by passing the VMA iterator through to the
+underlying call to split_vma().
 
-Except that the kfree_rcu_monitor() function checks these pointers one
-at a time.  This means that if the previous kfree_rcu() memory passed
-to RCU had only category 1 and the current one has only category 2, the
-kfree_rcu_monitor() function will send that current category-2 memory
-along immediately.  This can result in memory being freed too soon,
-that is, out from under unsuspecting RCU readers.
+mbind_range() is also overly complicated, since there are two calling
+functions and one already handles iterating over the VMAs.  Simplify
+mbind_range() to only handle merging and splitting of the VMAs.
 
-To see this, consider the following sequence of events, in which:
+Align the new loop in do_mbind() and existing loop in
+set_mempolicy_home_node() to use the reduced mbind_range() function.  This
+allows for a single location of the range calculation and avoids
+constantly looking up the previous VMA (since this is a loop over the
+VMAs).
 
-o	Task A on CPU 0 calls rcu_read_lock(), then uses "from_cset",
-	then is preempted.
-
-o	CPU 1 calls kfree_rcu(cset, rcu_head) in order to free "from_cset"
-	after a later grace period.  Except that "from_cset" is freed
-	right after the previous grace period ended, so that "from_cset"
-	is immediately freed.  Task A resumes and references "from_cset"'s
-	member, after which nothing good happens.
-
-In full detail:
-
-CPU 0					CPU 1
-----------------------			----------------------
-count_memcg_event_mm()
-|rcu_read_lock()  <---
-|mem_cgroup_from_task()
- |// css_set_ptr is the "from_cset" mentioned on CPU 1
- |css_set_ptr = rcu_dereference((task)->cgroups)
- |// Hard irq comes, current task is scheduled out.
-
-					cgroup_attach_task()
-					|cgroup_migrate()
-					|cgroup_migrate_execute()
-					|css_set_move_task(task, from_cset, to_cset, true)
-					|cgroup_move_task(task, to_cset)
-					|rcu_assign_pointer(.., to_cset)
-					|...
-					|cgroup_migrate_finish()
-					|put_css_set_locked(from_cset)
-					|from_cset->refcount return 0
-					|kfree_rcu(cset, rcu_head) // free from_cset after new gp
-					|add_ptr_to_bulk_krc_lock()
-					|schedule_delayed_work(&krcp->monitor_work, ..)
-
-					kfree_rcu_monitor()
-					|krcp->bulk_head[0]'s work attached to krwp->bulk_head_free[]
-					|queue_rcu_work(system_wq, &krwp->rcu_work)
-					|if rwork->rcu.work is not in WORK_STRUCT_PENDING_BIT state,
-					|call_rcu(&rwork->rcu, rcu_work_rcufn) <--- request new gp
-
-					// There is a perious call_rcu(.., rcu_work_rcufn)
-					// gp end, rcu_work_rcufn() is called.
-					rcu_work_rcufn()
-					|__queue_work(.., rwork->wq, &rwork->work);
-
-					|kfree_rcu_work()
-					|krwp->bulk_head_free[0] bulk is freed before new gp end!!!
-					|The "from_cset" is freed before new gp end.
-
-// the task resumes some time later.
- |css_set_ptr->subsys[(subsys_id) <--- Caused kernel crash, because css_set_ptr is freed.
-
-This commit therefore causes kfree_rcu_monitor() to refrain from moving
-kfree_rcu() memory to the kfree_rcu_cpu_work structure until the RCU
-grace period has completed for all three categories.
-
-v2: Use helper function instead of inserted code block at kfree_rcu_monitor().
-
-Fixes: 34c881745549 ("rcu: Support kfree_bulk() interface in kfree_rcu()")
-Fixes: 5f3c8d620447 ("rcu/tree: Maintain separate array for vmalloc ptrs")
-Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Ziwei Dai <ziwei.dai@unisoc.com>
-Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Tested-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Link: https://lore.kernel.org/linux-mm/000000000000c93feb05f87e24ad@google.com/
+Fixes: 66850be55e8e ("mm/mempolicy: use vma iterator & maple state instead of vma linked list")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reported-by: syzbot+a7c1ec5b1d71ceaa5186@syzkaller.appspotmail.com
+  Link: https://lkml.kernel.org/r/20230410152205.2294819-1-Liam.Howlett@oracle.com
+Tested-by: syzbot+a7c1ec5b1d71ceaa5186@syzkaller.appspotmail.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/rcu/tree.c |   27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ mm/mempolicy.c |  113 ++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 52 insertions(+), 61 deletions(-)
 
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -3131,6 +3131,18 @@ need_offload_krc(struct kfree_rcu_cpu *k
- 	return !!krcp->head;
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -784,70 +784,56 @@ static int vma_replace_policy(struct vm_
+ 	return err;
  }
  
-+static bool
-+need_wait_for_krwp_work(struct kfree_rcu_cpu_work *krwp)
-+{
-+	int i;
-+
-+	for (i = 0; i < FREE_N_CHANNELS; i++)
-+		if (krwp->bkvhead_free[i])
-+			return true;
-+
-+	return !!krwp->head_free;
-+}
-+
- static void
- schedule_delayed_monitor_work(struct kfree_rcu_cpu *krcp)
+-/* Step 2: apply policy to a range and do splits. */
+-static int mbind_range(struct mm_struct *mm, unsigned long start,
+-		       unsigned long end, struct mempolicy *new_pol)
++/* Split or merge the VMA (if required) and apply the new policy */
++static int mbind_range(struct vma_iterator *vmi, struct vm_area_struct *vma,
++		struct vm_area_struct **prev, unsigned long start,
++		unsigned long end, struct mempolicy *new_pol)
  {
-@@ -3162,14 +3174,13 @@ static void kfree_rcu_monitor(struct wor
- 	for (i = 0; i < KFREE_N_BATCHES; i++) {
- 		struct kfree_rcu_cpu_work *krwp = &(krcp->krw_arr[i]);
+-	MA_STATE(mas, &mm->mm_mt, start, start);
+-	struct vm_area_struct *prev;
+-	struct vm_area_struct *vma;
+-	int err = 0;
++	struct vm_area_struct *merged;
++	unsigned long vmstart, vmend;
+ 	pgoff_t pgoff;
++	int err;
  
--		// Try to detach bkvhead or head and attach it over any
--		// available corresponding free channel. It can be that
--		// a previous RCU batch is in progress, it means that
--		// immediately to queue another one is not possible so
--		// in that case the monitor work is rearmed.
--		if ((krcp->bkvhead[0] && !krwp->bkvhead_free[0]) ||
--			(krcp->bkvhead[1] && !krwp->bkvhead_free[1]) ||
--				(krcp->head && !krwp->head_free)) {
-+		// Try to detach bulk_head or head and attach it, only when
-+		// all channels are free.  Any channel is not free means at krwp
-+		// there is on-going rcu work to handle krwp's free business.
-+		if (need_wait_for_krwp_work(krwp))
-+			continue;
+-	prev = mas_prev(&mas, 0);
+-	if (unlikely(!prev))
+-		mas_set(&mas, start);
++	vmend = min(end, vma->vm_end);
++	if (start > vma->vm_start) {
++		*prev = vma;
++		vmstart = start;
++	} else {
++		vmstart = vma->vm_start;
++	}
+ 
+-	vma = mas_find(&mas, end - 1);
+-	if (WARN_ON(!vma))
++	if (mpol_equal(vma_policy(vma), new_pol))
+ 		return 0;
+ 
+-	if (start > vma->vm_start)
+-		prev = vma;
++	pgoff = vma->vm_pgoff + ((vmstart - vma->vm_start) >> PAGE_SHIFT);
++	merged = vma_merge(vma->vm_mm, *prev, vmstart, vmend, vma->vm_flags,
++			   vma->anon_vma, vma->vm_file, pgoff, new_pol,
++			   vma->vm_userfaultfd_ctx, anon_vma_name(vma));
++	if (merged) {
++		*prev = merged;
++		/* vma_merge() invalidated the mas */
++		mas_pause(&vmi->mas);
++		return vma_replace_policy(merged, new_pol);
++	}
+ 
+-	for (; vma; vma = mas_next(&mas, end - 1)) {
+-		unsigned long vmstart = max(start, vma->vm_start);
+-		unsigned long vmend = min(end, vma->vm_end);
+-
+-		if (mpol_equal(vma_policy(vma), new_pol))
+-			goto next;
+-
+-		pgoff = vma->vm_pgoff +
+-			((vmstart - vma->vm_start) >> PAGE_SHIFT);
+-		prev = vma_merge(mm, prev, vmstart, vmend, vma->vm_flags,
+-				 vma->anon_vma, vma->vm_file, pgoff,
+-				 new_pol, vma->vm_userfaultfd_ctx,
+-				 anon_vma_name(vma));
+-		if (prev) {
+-			/* vma_merge() invalidated the mas */
+-			mas_pause(&mas);
+-			vma = prev;
+-			goto replace;
+-		}
+-		if (vma->vm_start != vmstart) {
+-			err = split_vma(vma->vm_mm, vma, vmstart, 1);
+-			if (err)
+-				goto out;
+-			/* split_vma() invalidated the mas */
+-			mas_pause(&mas);
+-		}
+-		if (vma->vm_end != vmend) {
+-			err = split_vma(vma->vm_mm, vma, vmend, 0);
+-			if (err)
+-				goto out;
+-			/* split_vma() invalidated the mas */
+-			mas_pause(&mas);
+-		}
+-replace:
+-		err = vma_replace_policy(vma, new_pol);
++	if (vma->vm_start != vmstart) {
++		err = split_vma(vma->vm_mm, vma, vmstart, 1);
+ 		if (err)
+-			goto out;
+-next:
+-		prev = vma;
++			return err;
++		/* split_vma() invalidated the mas */
++		mas_pause(&vmi->mas);
+ 	}
+ 
+-out:
+-	return err;
++	if (vma->vm_end != vmend) {
++		err = split_vma(vma->vm_mm, vma, vmend, 0);
++		if (err)
++			return err;
++		/* split_vma() invalidated the mas */
++		mas_pause(&vmi->mas);
++	}
 +
-+		if (need_offload_krc(krcp)) {
- 			// Channel 1 corresponds to the SLAB-pointer bulk path.
- 			// Channel 2 corresponds to vmalloc-pointer bulk path.
- 			for (j = 0; j < FREE_N_CHANNELS; j++) {
++	*prev = vma;
++	return vma_replace_policy(vma, new_pol);
+ }
+ 
+ /* Set the process memory policy */
+@@ -1259,6 +1245,8 @@ static long do_mbind(unsigned long start
+ 		     nodemask_t *nmask, unsigned long flags)
+ {
+ 	struct mm_struct *mm = current->mm;
++	struct vm_area_struct *vma, *prev;
++	struct vma_iterator vmi;
+ 	struct mempolicy *new;
+ 	unsigned long end;
+ 	int err;
+@@ -1328,7 +1316,13 @@ static long do_mbind(unsigned long start
+ 		goto up_out;
+ 	}
+ 
+-	err = mbind_range(mm, start, end, new);
++	vma_iter_init(&vmi, mm, start);
++	prev = vma_prev(&vmi);
++	for_each_vma_range(vmi, vma, end) {
++		err = mbind_range(&vmi, vma, &prev, start, end, new);
++		if (err)
++			break;
++	}
+ 
+ 	if (!err) {
+ 		int nr_failed = 0;
+@@ -1489,10 +1483,8 @@ SYSCALL_DEFINE4(set_mempolicy_home_node,
+ 		unsigned long, home_node, unsigned long, flags)
+ {
+ 	struct mm_struct *mm = current->mm;
+-	struct vm_area_struct *vma;
++	struct vm_area_struct *vma, *prev;
+ 	struct mempolicy *new;
+-	unsigned long vmstart;
+-	unsigned long vmend;
+ 	unsigned long end;
+ 	int err = -ENOENT;
+ 	VMA_ITERATOR(vmi, mm, start);
+@@ -1521,9 +1513,8 @@ SYSCALL_DEFINE4(set_mempolicy_home_node,
+ 	if (end == start)
+ 		return 0;
+ 	mmap_write_lock(mm);
++	prev = vma_prev(&vmi);
+ 	for_each_vma_range(vmi, vma, end) {
+-		vmstart = max(start, vma->vm_start);
+-		vmend   = min(end, vma->vm_end);
+ 		new = mpol_dup(vma_policy(vma));
+ 		if (IS_ERR(new)) {
+ 			err = PTR_ERR(new);
+@@ -1547,7 +1538,7 @@ SYSCALL_DEFINE4(set_mempolicy_home_node,
+ 		}
+ 
+ 		new->home_node = home_node;
+-		err = mbind_range(mm, vmstart, vmend, new);
++		err = mbind_range(&vmi, vma, &prev, start, end, new);
+ 		mpol_put(new);
+ 		if (err)
+ 			break;
 
 
