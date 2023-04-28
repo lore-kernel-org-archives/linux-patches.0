@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D61C290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:30:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9C3C433D2;
-	Fri, 28 Apr 2023 11:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8D7290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:30:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A365CC433D2;
+	Fri, 28 Apr 2023 11:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681406;
-	bh=hykzRaPDWoD/wJ2JZeXeP5rqspjJDQ6mf8tNWQT9DnU=;
+	s=korg; t=1682681409;
+	bh=I3liXfzhcubWUArSIqYShYhEWxsWBCNHe+zM7ilHZK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eKL34MYZLQcalnYqM3rj9NXaUYw9wOciB5pPe3BrKJmmtiTq5vnduET0ehee4QrGk
-	 MpcD5wNo2yxVSVTRNx97NkzPL1vXIXl3jjIAqTMBTY29k/IxReBKJVSwVV9fo2lwAG
-	 Jydr2RId9VFk+7Zz8LcKp6O2Gxl5Cm8DCUzRG1XE=
+	b=wgY/bA4IZt7Gcrdq7qLnqox+My8KkwXxfeYQluZI2dp62qoTSzCR0pKRTcrfg+I1R
+	 Js4NM08sp04MyUg4B0eyHf75qvkPmcsnlYKCjaqWkpuu3THsOGZletZhdP8pZeUiZ+
+	 vGGQVYWOA4nvXD/qNkZie0sB2R6bK3uXllIvn5JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+20dcf81733d43ddff661@syzkaller.appspotmail.com,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Daniel Vetter <daniel.vetter@intel.com>
-Subject: [PATCH 5.15 06/13] drm/fb-helper: set x/yres_virtual in drm_fb_helper_check_var
-Date: Fri, 28 Apr 2023 13:28:10 +0200
-Message-Id: <20230428112039.382772025@linuxfoundation.org>
+	Ruihan Li <lrh2000@pku.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 07/13] bluetooth: Perform careful capability checks in hci_sock_ioctl()
+Date: Fri, 28 Apr 2023 13:28:11 +0200
+Message-Id: <20230428112039.414116300@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112039.133978540@linuxfoundation.org>
 References: <20230428112039.133978540@linuxfoundation.org>
@@ -37,39 +34,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Vetter <daniel.vetter@ffwll.ch>
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-commit 1935f0deb6116dd785ea64d8035eab0ff441255b upstream.
+commit 25c150ac103a4ebeed0319994c742a90634ddf18 upstream.
 
-Drivers are supposed to fix this up if needed if they don't outright
-reject it. Uncovered by 6c11df58fd1a ("fbmem: Check virtual screen
-sizes in fb_set_var()").
+Previously, capability was checked using capable(), which verified that the
+caller of the ioctl system call had the required capability. In addition,
+the result of the check would be stored in the HCI_SOCK_TRUSTED flag,
+making it persistent for the socket.
 
-Reported-by: syzbot+20dcf81733d43ddff661@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=c5faf983bfa4a607de530cd3bb008888bf06cefc
-Cc: stable@vger.kernel.org # v5.4+
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230404194038.472803-1-daniel.vetter@ffwll.ch
+However, malicious programs can abuse this approach by deliberately sharing
+an HCI socket with a privileged task. The HCI socket will be marked as
+trusted when the privileged task occasionally makes an ioctl call.
+
+This problem can be solved by using sk_capable() to check capability, which
+ensures that not only the current task but also the socket opener has the
+specified capability, thus reducing the risk of privilege escalation
+through the previously identified vulnerability.
+
+Cc: stable@vger.kernel.org
+Fixes: f81f5b2db869 ("Bluetooth: Send control open and close messages for HCI raw sockets")
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_fb_helper.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/hci_sock.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -1327,6 +1327,9 @@ int drm_fb_helper_check_var(struct fb_va
- 		return -EINVAL;
- 	}
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -996,7 +996,14 @@ static int hci_sock_ioctl(struct socket
+ 	if (hci_sock_gen_cookie(sk)) {
+ 		struct sk_buff *skb;
  
-+	var->xres_virtual = fb->width;
-+	var->yres_virtual = fb->height;
-+
- 	/*
- 	 * Workaround for SDL 1.2, which is known to be setting all pixel format
- 	 * fields values to zero in some cases. We treat this situation as a
+-		if (capable(CAP_NET_ADMIN))
++		/* Perform careful checks before setting the HCI_SOCK_TRUSTED
++		 * flag. Make sure that not only the current task but also
++		 * the socket opener has the required capability, since
++		 * privileged programs can be tricked into making ioctl calls
++		 * on HCI sockets, and the socket should not be marked as
++		 * trusted simply because the ioctl caller is privileged.
++		 */
++		if (sk_capable(sk, CAP_NET_ADMIN))
+ 			hci_sock_set_flag(sk, HCI_SOCK_TRUSTED);
+ 
+ 		/* Send event to monitor */
 
 
