@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051C1290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:29:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BC5C433D2;
-	Fri, 28 Apr 2023 11:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997A1290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:29:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2148EC433EF;
+	Fri, 28 Apr 2023 11:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681358;
-	bh=4cfFJ7sb4McT8g3qXWpfk7aWMkzr8XGX+lpqZ6JRo5o=;
+	s=korg; t=1682681361;
+	bh=u2ImX3bGwlWGqc/nfLy2Ar/BmZ9LM3hO0uhSXRbR+/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/ydTUTKBZwZ7oSqCqwXFAaCbXrrLzD35KAewqvKgA/ZyBrtufsIulktMFnc9wszP
-	 Clp6QBTLbywmcznSBMjdDUHyb+Uz/E2YozvPhGIWaGXU/iUz0qQ3yiQokDb6fEhymv
-	 jmNZWyuh59NYGSh7i5Kbxviql7PjQTLmjC9kIkQ8=
+	b=rVi5oYCajm9skPmtggBgSwLamIn8aKAX3SY7XiozaB9ikvaHh3K3wh3+44koRj4St
+	 on00J4EvoAjaeye0BTpR8yQNUg8XQLW4x5uhsckCVyTs7b1OyBXMRh97zwJzsV/HWK
+	 VcTXulnO8ZB8UN90PZl6VlRDNHJjepicKL13ivTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Brian Norris <briannorris@chromium.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH 6.1 13/16] driver core: Dont require dynamic_debug for initcall_debug probe timing
-Date: Fri, 28 Apr 2023 13:28:05 +0200
-Message-Id: <20230428112040.500628629@linuxfoundation.org>
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Justin Chen <justinpopo6@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 02/16] phy: phy-brcm-usb: Utilize platform_get_irq_byname_optional()
+Date: Fri, 28 Apr 2023 13:27:54 +0200
+Message-Id: <20230428112040.138768041@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112040.063291126@linuxfoundation.org>
 References: <20230428112040.063291126@linuxfoundation.org>
@@ -37,46 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-commit e2f06aa885081e1391916367f53bad984714b4db upstream.
+commit 53bffe0055741440a6c91abb80bad1c62ea443e3 upstream.
 
-Don't require the use of dynamic debug (or modification of the kernel to
-add a #define DEBUG to the top of this file) to get the printk message
-about driver probe timing. This printk is only emitted when
-initcall_debug is enabled on the kernel commandline, and it isn't
-immediately obvious that you have to do something else to debug boot
-timing issues related to driver probe. Add a comment too so it doesn't
-get converted back to pr_debug().
+The wake-up interrupt lines are entirely optional, avoid printing
+messages that interrupts were not found by switching to the _optional
+variant.
 
-Fixes: eb7fbc9fb118 ("driver core: Add missing '\n' in log messages")
-Cc: stable <stable@kernel.org>
-Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Brian Norris <briannorris@chromium.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20230412225842.3196599-1-swboyd@chromium.org
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Acked-by: Justin Chen <justinpopo6@gmail.com>
+Link: https://lore.kernel.org/r/20221026224450.2958762-1-f.fainelli@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/dd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/phy/broadcom/phy-brcm-usb.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -718,7 +718,12 @@ static int really_probe_debug(struct dev
- 	calltime = ktime_get();
- 	ret = really_probe(dev, drv);
- 	rettime = ktime_get();
--	pr_debug("probe of %s returned %d after %lld usecs\n",
-+	/*
-+	 * Don't change this to pr_debug() because that requires
-+	 * CONFIG_DYNAMIC_DEBUG and we want a simple 'initcall_debug' on the
-+	 * kernel commandline to print this all the time at the debug level.
-+	 */
-+	printk(KERN_DEBUG "probe of %s returned %d after %lld usecs\n",
- 		 dev_name(dev), ret, ktime_us_delta(rettime, calltime));
- 	return ret;
- }
+--- a/drivers/phy/broadcom/phy-brcm-usb.c
++++ b/drivers/phy/broadcom/phy-brcm-usb.c
+@@ -445,9 +445,9 @@ static int brcm_usb_phy_dvr_init(struct
+ 		priv->suspend_clk = NULL;
+ 	}
+ 
+-	priv->wake_irq = platform_get_irq_byname(pdev, "wake");
++	priv->wake_irq = platform_get_irq_byname_optional(pdev, "wake");
+ 	if (priv->wake_irq < 0)
+-		priv->wake_irq = platform_get_irq_byname(pdev, "wakeup");
++		priv->wake_irq = platform_get_irq_byname_optional(pdev, "wakeup");
+ 	if (priv->wake_irq >= 0) {
+ 		err = devm_request_irq(dev, priv->wake_irq,
+ 				       brcm_usb_phy_wake_isr, 0,
 
 
