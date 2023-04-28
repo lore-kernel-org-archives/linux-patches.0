@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8800C290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EEF3C433D2;
-	Fri, 28 Apr 2023 11:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC3B290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8762C433EF;
+	Fri, 28 Apr 2023 11:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681332;
-	bh=89AJIlv+eX2RQSjWzPOy1cjiYsERvx7x59ojXBCMBz8=;
+	s=korg; t=1682681335;
+	bh=rpDuiGQFMqHLiOUGNWZuv0UIVvR5mfmhCuFKJioySt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flzTVMOek3tpxhUxKds5T00lrffRf1nPBr6jvrzx/lVUK2oiFvZWrtuEj82B7QpY1
-	 iW6erxpfWp0sb6tEazao5EXwwXdEx2h0qNCzroxBDuJuFR3CIeI/202HxCUWDpSTsk
-	 ZNC+hZ99YAgTUoY5TB4bNJx+fklCoyRymmUqEAeo=
+	b=ImQfeE3oqV6IU0w2nYRjufoWkE198YhD4fcedluAkgMLKiCITFjcuezkgGxCeGghk
+	 D2EkJgKgAaPSNG1b3FU0MA/tJtxMfa7DKezLW5eph3dR91Ddqkm8RAdJrsZrjmCH15
+	 4VIZ8EwwMUqA3Et/xiBPQvwC2zPokROUZUnQcQvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruihan Li <lrh2000@pku.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.2 08/15] bluetooth: Perform careful capability checks in hci_sock_ioctl()
-Date: Fri, 28 Apr 2023 13:27:52 +0200
-Message-Id: <20230428112040.399688213@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Marek Vasut <marex@denx.de>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.2 09/15] wifi: brcmfmac: add Cypress 43439 SDIO ids
+Date: Fri, 28 Apr 2023 13:27:53 +0200
+Message-Id: <20230428112040.429506497@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112040.137898986@linuxfoundation.org>
 References: <20230428112040.137898986@linuxfoundation.org>
@@ -34,50 +36,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruihan Li <lrh2000@pku.edu.cn>
+From: Marek Vasut <marex@denx.de>
 
-commit 25c150ac103a4ebeed0319994c742a90634ddf18 upstream.
+commit cc4cffc3c142d57df48c07851862444e1d33bdaa upstream.
 
-Previously, capability was checked using capable(), which verified that the
-caller of the ioctl system call had the required capability. In addition,
-the result of the check would be stored in the HCI_SOCK_TRUSTED flag,
-making it persistent for the socket.
+Add SDIO ids for use with the muRata 1YN (Cypress CYW43439).
+The odd thing about this is that the previous 1YN populated
+on M.2 card for evaluation purposes had BRCM SDIO vendor ID,
+while the chip populated on real hardware has a Cypress one.
+The device ID also differs between the two devices. But they
+are both 43439 otherwise, so add the IDs for both.
 
-However, malicious programs can abuse this approach by deliberately sharing
-an HCI socket with a privileged task. The HCI socket will be marked as
-trusted when the privileged task occasionally makes an ioctl call.
+On-device 1YN (43439), the new one, chip label reads "1YN":
+```
+/sys/.../mmc_host/mmc2/mmc2:0001 # cat vendor device
+0x04b4
+0xbd3d
+```
 
-This problem can be solved by using sk_capable() to check capability, which
-ensures that not only the current task but also the socket opener has the
-specified capability, thus reducing the risk of privilege escalation
-through the previously identified vulnerability.
+EA M.2 evaluation board 1YN (43439), the old one, chip label reads "1YN ES1.4":
+```
+/sys/.../mmc_host/mmc0/mmc0:0001/# cat vendor device
+0x02d0
+0xa9a6
+```
 
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: f81f5b2db869 ("Bluetooth: Send control open and close messages for HCI raw sockets")
-Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230407203752.128539-1-marex@denx.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sock.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c |    9 ++++++++-
+ include/linux/mmc/sdio_ids.h                              |    5 ++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -1003,7 +1003,14 @@ static int hci_sock_ioctl(struct socket
- 	if (hci_sock_gen_cookie(sk)) {
- 		struct sk_buff *skb;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+@@ -965,6 +965,12 @@ out:
+ 		.driver_data = BRCMF_FWVENDOR_ ## fw_vend \
+ 	}
  
--		if (capable(CAP_NET_ADMIN))
-+		/* Perform careful checks before setting the HCI_SOCK_TRUSTED
-+		 * flag. Make sure that not only the current task but also
-+		 * the socket opener has the required capability, since
-+		 * privileged programs can be tricked into making ioctl calls
-+		 * on HCI sockets, and the socket should not be marked as
-+		 * trusted simply because the ioctl caller is privileged.
-+		 */
-+		if (sk_capable(sk, CAP_NET_ADMIN))
- 			hci_sock_set_flag(sk, HCI_SOCK_TRUSTED);
++#define CYW_SDIO_DEVICE(dev_id, fw_vend) \
++	{ \
++		SDIO_DEVICE(SDIO_VENDOR_ID_CYPRESS, dev_id), \
++		.driver_data = BRCMF_FWVENDOR_ ## fw_vend \
++	}
++
+ /* devices we support, null terminated */
+ static const struct sdio_device_id brcmf_sdmmc_ids[] = {
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43143, WCC),
+@@ -979,6 +985,7 @@ static const struct sdio_device_id brcmf
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4335_4339, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4339, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43430, WCC),
++	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43439, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4345, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43455, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4354, WCC),
+@@ -986,9 +993,9 @@ static const struct sdio_device_id brcmf
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4359, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373, CYW),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43012, CYW),
+-	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439, CYW),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752, CYW),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_89359, CYW),
++	CYW_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439, CYW),
+ 	{ /* end: all zeroes */ }
+ };
+ MODULE_DEVICE_TABLE(sdio, brcmf_sdmmc_ids);
+--- a/include/linux/mmc/sdio_ids.h
++++ b/include/linux/mmc/sdio_ids.h
+@@ -74,10 +74,13 @@
+ #define SDIO_DEVICE_ID_BROADCOM_43362		0xa962
+ #define SDIO_DEVICE_ID_BROADCOM_43364		0xa9a4
+ #define SDIO_DEVICE_ID_BROADCOM_43430		0xa9a6
+-#define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439	0xa9af
++#define SDIO_DEVICE_ID_BROADCOM_43439		0xa9af
+ #define SDIO_DEVICE_ID_BROADCOM_43455		0xa9bf
+ #define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752	0xaae8
  
- 		/* Send event to monitor */
++#define SDIO_VENDOR_ID_CYPRESS			0x04b4
++#define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439	0xbd3d
++
+ #define SDIO_VENDOR_ID_MARVELL			0x02df
+ #define SDIO_DEVICE_ID_MARVELL_LIBERTAS		0x9103
+ #define SDIO_DEVICE_ID_MARVELL_8688_WLAN	0x9104
 
 
