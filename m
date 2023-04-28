@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD2C290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0856C4339B;
-	Fri, 28 Apr 2023 11:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92E9290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6178AC4339E;
+	Fri, 28 Apr 2023 11:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681306;
-	bh=TGacCA78SpAnhDpnDr4rgr74iXcfKsborm+MBtYH6hU=;
+	s=korg; t=1682681308;
+	bh=DUOgbj3ylczUFgnL/1sfqoQHw7sNRVWbevLEH3Y2wV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0tBWhUBPcupmPb2d7KzeaoUcheYPIAcMW9eiFVJAbh+vy18KVUwaiMYaFyISPXAf
-	 U7YG16zd1zD8NyNgeYuXAN1HGoCxLXaazKj7USlg1lG7QPki5aTGabt/qWUUgrElWk
-	 kBb5Lm4HlIJOxyqq9XDLuBVfGtsqDWvlrMKK9MDM=
+	b=2BU4OYTReP556vf3MbRgoGgHiFfZcXAk6WA+yurHopqGCvZSgheN7xOmKZDvxg+8E
+	 SrLKAsN5z4G+vKyTuDOf1Axs/+SkBtyD9otg9dH7DOZ9fDo5B28hyLFKOStFQ+FxeW
+	 adIHFAuKQW3eJYkvVZ2IaiyqqFg/R9RgueX3O+40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	=?UTF-8?q?Sergio=20Gonz=C3=A1lez=20Collado?= <sergio.collado@gmail.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.2 01/15] rust: arch/um: Disable FP/SIMD instruction to match x86
-Date: Fri, 28 Apr 2023 13:27:45 +0200
-Message-Id: <20230428112040.188522448@linuxfoundation.org>
+	k2ci <kernel-bot@kylinos.cn>,
+	Genjian Zhang <zhanggenjian@kylinos.cn>,
+	David Sterba <dsterba@suse.com>,
+	Ammar Faizi <ammarfaizi2@gnuweeb.org>
+Subject: [PATCH 6.2 10/15] btrfs: fix uninitialized variable warnings
+Date: Fri, 28 Apr 2023 13:27:54 +0200
+Message-Id: <20230428112040.458450917@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112040.137898986@linuxfoundation.org>
 References: <20230428112040.137898986@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,45 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Gow <davidgow@google.com>
+From: Genjian Zhang <zhanggenjian@kylinos.cn>
 
-commit 8849818679478933dd1d9718741f4daa3f4e8b86 upstream.
+commit 8ba7d5f5ba931be68a94b8c91bcced1622934e7a upstream.
 
-The kernel disables all SSE and similar FP/SIMD instructions on
-x86-based architectures (partly because we shouldn't be using floats in
-the kernel, and partly to avoid the need for stack alignment, see:
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53383 )
+There are some warnings on older compilers (gcc 10, 7) or non-x86_64
+architectures (aarch64).  As btrfs wants to enable -Wmaybe-uninitialized
+by default, fix the warnings even though it's not necessary on recent
+compilers (gcc 12+).
 
-UML does not do the same thing, which isn't in itself a problem, but
-does add to the list of differences between UML and "normal" x86 builds.
+../fs/btrfs/volumes.c: In function ‘btrfs_init_new_device’:
+../fs/btrfs/volumes.c:2703:3: error: ‘seed_devices’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+ 2703 |   btrfs_setup_sprout(fs_info, seed_devices);
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition, there was a crash bug with LLVM < 15 / rustc < 1.65 when
-building with SSE, so disabling it fixes rust builds with earlier
-compiler versions, see:
-https://github.com/Rust-for-Linux/linux/pull/881
+../fs/btrfs/send.c: In function ‘get_cur_inode_state’:
+../include/linux/compiler.h:70:32: error: ‘right_gen’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+   70 |   (__if_trace.miss_hit[1]++,1) :  \
+      |                                ^
+../fs/btrfs/send.c:1878:6: note: ‘right_gen’ was declared here
+ 1878 |  u64 right_gen;
+      |      ^~~~~~~~~
 
-Signed-off-by: David Gow <davidgow@google.com>
-Reviewed-by: Sergio González Collado <sergio.collado@gmail.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Reported-by: k2ci <kernel-bot@kylinos.cn>
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+[ update changelog ]
+Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Makefile.um |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/btrfs/send.c    |    2 +-
+ fs/btrfs/volumes.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/Makefile.um
-+++ b/arch/x86/Makefile.um
-@@ -1,6 +1,12 @@
- # SPDX-License-Identifier: GPL-2.0
- core-y += arch/x86/crypto/
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -1892,7 +1892,7 @@ static int get_cur_inode_state(struct se
+ 	int left_ret;
+ 	int right_ret;
+ 	u64 left_gen;
+-	u64 right_gen;
++	u64 right_gen = 0;
+ 	struct btrfs_inode_info info;
  
-+#
-+# Disable SSE and other FP/SIMD instructions to match normal x86
-+#
-+KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
-+KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
-+
- ifeq ($(CONFIG_X86_32),y)
- START := 0x8048000
- 
+ 	ret = get_inode_info(sctx->send_root, ino, &info);
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -2618,7 +2618,7 @@ int btrfs_init_new_device(struct btrfs_f
+ 	struct block_device *bdev;
+ 	struct super_block *sb = fs_info->sb;
+ 	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
+-	struct btrfs_fs_devices *seed_devices;
++	struct btrfs_fs_devices *seed_devices = NULL;
+ 	u64 orig_super_total_bytes;
+ 	u64 orig_super_num_devices;
+ 	int ret = 0;
 
 
