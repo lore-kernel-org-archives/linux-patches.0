@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC3B290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8762C433EF;
-	Fri, 28 Apr 2023 11:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EA72915
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:29:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FB9C4339B;
+	Fri, 28 Apr 2023 11:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681335;
-	bh=rpDuiGQFMqHLiOUGNWZuv0UIVvR5mfmhCuFKJioySt4=;
+	s=korg; t=1682681340;
+	bh=LaxiZCDscNvJZOigH1kkwWs2EILqChKNUexGWbNZixc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImQfeE3oqV6IU0w2nYRjufoWkE198YhD4fcedluAkgMLKiCITFjcuezkgGxCeGghk
-	 D2EkJgKgAaPSNG1b3FU0MA/tJtxMfa7DKezLW5eph3dR91Ddqkm8RAdJrsZrjmCH15
-	 4VIZ8EwwMUqA3Et/xiBPQvwC2zPokROUZUnQcQvA=
+	b=G/n/ywexaWDRidHVsfgaGIQ5PVM2RldgtmWsRm15EG0tkxlO0wQ6xKQKZENy6ZlOP
+	 4iSOeCHJiKHZ3nOEzcmkuKXYWmHTOdlRy8p4AskpR7d8h7rcrE+WH62Nf1ITR1dqZd
+	 hWoXtPeL3fY52xA/djdD8hHHocurpnQI0tlVk4JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Marek Vasut <marex@denx.de>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.2 09/15] wifi: brcmfmac: add Cypress 43439 SDIO ids
-Date: Fri, 28 Apr 2023 13:27:53 +0200
-Message-Id: <20230428112040.429506497@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.2 14/15] riscv: Do not set initial_boot_params to the linear address of the dtb
+Date: Fri, 28 Apr 2023 13:27:58 +0200
+Message-Id: <20230428112040.592659065@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112040.137898986@linuxfoundation.org>
 References: <20230428112040.137898986@linuxfoundation.org>
@@ -36,93 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit cc4cffc3c142d57df48c07851862444e1d33bdaa upstream.
+commit f1581626071c8e37c58c5e8f0b4126b17172a211 upstream.
 
-Add SDIO ids for use with the muRata 1YN (Cypress CYW43439).
-The odd thing about this is that the previous 1YN populated
-on M.2 card for evaluation purposes had BRCM SDIO vendor ID,
-while the chip populated on real hardware has a Cypress one.
-The device ID also differs between the two devices. But they
-are both 43439 otherwise, so add the IDs for both.
+early_init_dt_verify() is already called in parse_dtb() and since the dtb
+address does not change anymore (it is now in the fixmap region), no need
+to reset initial_boot_params by calling early_init_dt_verify() again.
 
-On-device 1YN (43439), the new one, chip label reads "1YN":
-```
-/sys/.../mmc_host/mmc2/mmc2:0001 # cat vendor device
-0x04b4
-0xbd3d
-```
-
-EA M.2 evaluation board 1YN (43439), the old one, chip label reads "1YN ES1.4":
-```
-/sys/.../mmc_host/mmc0/mmc0:0001/# cat vendor device
-0x02d0
-0xa9a6
-```
-
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230407203752.128539-1-marex@denx.de
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20230329081932.79831-3-alexghiti@rivosinc.com
+Cc: stable@vger.kernel.org # 6.2.x
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c |    9 ++++++++-
- include/linux/mmc/sdio_ids.h                              |    5 ++++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ arch/riscv/kernel/setup.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -965,6 +965,12 @@ out:
- 		.driver_data = BRCMF_FWVENDOR_ ## fw_vend \
- 	}
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -278,10 +278,7 @@ void __init setup_arch(char **cmdline_p)
+ #if IS_ENABLED(CONFIG_BUILTIN_DTB)
+ 	unflatten_and_copy_device_tree();
+ #else
+-	if (early_init_dt_verify(__va(XIP_FIXUP(dtb_early_pa))))
+-		unflatten_device_tree();
+-	else
+-		pr_err("No DTB found in kernel mappings\n");
++	unflatten_device_tree();
+ #endif
+ 	misc_mem_init();
  
-+#define CYW_SDIO_DEVICE(dev_id, fw_vend) \
-+	{ \
-+		SDIO_DEVICE(SDIO_VENDOR_ID_CYPRESS, dev_id), \
-+		.driver_data = BRCMF_FWVENDOR_ ## fw_vend \
-+	}
-+
- /* devices we support, null terminated */
- static const struct sdio_device_id brcmf_sdmmc_ids[] = {
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43143, WCC),
-@@ -979,6 +985,7 @@ static const struct sdio_device_id brcmf
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4335_4339, WCC),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4339, WCC),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43430, WCC),
-+	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43439, WCC),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4345, WCC),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43455, WCC),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4354, WCC),
-@@ -986,9 +993,9 @@ static const struct sdio_device_id brcmf
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4359, WCC),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373, CYW),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43012, CYW),
--	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439, CYW),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752, CYW),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_89359, CYW),
-+	CYW_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439, CYW),
- 	{ /* end: all zeroes */ }
- };
- MODULE_DEVICE_TABLE(sdio, brcmf_sdmmc_ids);
---- a/include/linux/mmc/sdio_ids.h
-+++ b/include/linux/mmc/sdio_ids.h
-@@ -74,10 +74,13 @@
- #define SDIO_DEVICE_ID_BROADCOM_43362		0xa962
- #define SDIO_DEVICE_ID_BROADCOM_43364		0xa9a4
- #define SDIO_DEVICE_ID_BROADCOM_43430		0xa9a6
--#define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439	0xa9af
-+#define SDIO_DEVICE_ID_BROADCOM_43439		0xa9af
- #define SDIO_DEVICE_ID_BROADCOM_43455		0xa9bf
- #define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752	0xaae8
- 
-+#define SDIO_VENDOR_ID_CYPRESS			0x04b4
-+#define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439	0xbd3d
-+
- #define SDIO_VENDOR_ID_MARVELL			0x02df
- #define SDIO_DEVICE_ID_MARVELL_LIBERTAS		0x9103
- #define SDIO_DEVICE_ID_MARVELL_8688_WLAN	0x9104
 
 
