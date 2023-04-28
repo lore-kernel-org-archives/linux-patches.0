@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C471290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CFAC433D2;
-	Fri, 28 Apr 2023 11:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97E9290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD74C433D2;
+	Fri, 28 Apr 2023 11:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681313;
-	bh=4cfFJ7sb4McT8g3qXWpfk7aWMkzr8XGX+lpqZ6JRo5o=;
+	s=korg; t=1682681316;
+	bh=Op2dXB//TRDl8Ibmf7f1Vl/mOLmzqoYEyjRsfAgm2Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FsKSjFaL6xpxmi8RUbvo8HykqnnJ1E1iu2vD3JvnGmXxacvbg6PQWICCHcROmLIJQ
-	 h0BNw4UzqhkbAutop4J0I5X6xYtmDFp0ovKYHqS/IJEFTBjCH0W0RtQTKTpoj5GXIR
-	 XylUvG8i+XK6f4ebkUuetttDGIEvugiH0fSg1aBo=
+	b=gZECbyPkEt5u54HlVKjg5ghm8YnoDZ9rMlqBE72xsaStKUv35QSUCrs+/oZ35Qhvy
+	 muXej5cD9X+BeqteiVGfJibtS9G8Dspyq+cf/4d3vZXW586BmNuw8ledAi2cy6ixt/
+	 U8ydHmUUYtTihytarmOoVBvkQv377Av7t4PWewqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Brian Norris <briannorris@chromium.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH 6.2 12/15] driver core: Dont require dynamic_debug for initcall_debug probe timing
-Date: Fri, 28 Apr 2023 13:27:56 +0200
-Message-Id: <20230428112040.523238335@linuxfoundation.org>
+	Roberto Sassu <roberto.sassu@huaweicloud.com>,
+	SeongJae Park <sj@kernel.org>,
+	David Gow <davidgow@google.com>,
+	Vincenzo Palazzo <vincenzopalazzodev@gmail.com>,
+	Arthur Grillo <arthurgrillo@riseup.net>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 6.2 02/15] um: Only disable SSE on clang to work around old GCC bugs
+Date: Fri, 28 Apr 2023 13:27:46 +0200
+Message-Id: <20230428112040.217604155@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112040.137898986@linuxfoundation.org>
 References: <20230428112040.137898986@linuxfoundation.org>
@@ -37,46 +38,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: David Gow <davidgow@google.com>
 
-commit e2f06aa885081e1391916367f53bad984714b4db upstream.
+commit a3046a618a284579d1189af8711765f553eed707 upstream.
 
-Don't require the use of dynamic debug (or modification of the kernel to
-add a #define DEBUG to the top of this file) to get the printk message
-about driver probe timing. This printk is only emitted when
-initcall_debug is enabled on the kernel commandline, and it isn't
-immediately obvious that you have to do something else to debug boot
-timing issues related to driver probe. Add a comment too so it doesn't
-get converted back to pr_debug().
+As part of the Rust support for UML, we disable SSE (and similar flags)
+to match the normal x86 builds. This both makes sense (we ideally want a
+similar configuration to x86), and works around a crash bug with SSE
+generation under Rust with LLVM.
 
-Fixes: eb7fbc9fb118 ("driver core: Add missing '\n' in log messages")
-Cc: stable <stable@kernel.org>
-Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Brian Norris <briannorris@chromium.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20230412225842.3196599-1-swboyd@chromium.org
+However, this breaks compiling stdlib.h under gcc < 11, as the x86_64
+ABI requires floating-point return values be stored in an SSE register.
+gcc 11 fixes this by only doing register allocation when a function is
+actually used, and since we never use atof(), it shouldn't be a problem:
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99652
+
+Nevertheless, only disable SSE on clang setups, as that's a simple way
+of working around everyone's bugs.
+
+Fixes: 884981867947 ("rust: arch/um: Disable FP/SIMD instruction to match x86")
+Reported-by: Roberto Sassu <roberto.sassu@huaweicloud.com>
+Link: https://lore.kernel.org/linux-um/6df2ecef9011d85654a82acd607fdcbc93ad593c.camel@huaweicloud.com/
+Tested-by: Roberto Sassu <roberto.sassu@huaweicloud.com>
+Tested-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: David Gow <davidgow@google.com>
+Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+Tested-by: Arthur Grillo <arthurgrillo@riseup.net>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/dd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/Makefile.um |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -718,7 +718,12 @@ static int really_probe_debug(struct dev
- 	calltime = ktime_get();
- 	ret = really_probe(dev, drv);
- 	rettime = ktime_get();
--	pr_debug("probe of %s returned %d after %lld usecs\n",
-+	/*
-+	 * Don't change this to pr_debug() because that requires
-+	 * CONFIG_DYNAMIC_DEBUG and we want a simple 'initcall_debug' on the
-+	 * kernel commandline to print this all the time at the debug level.
-+	 */
-+	printk(KERN_DEBUG "probe of %s returned %d after %lld usecs\n",
- 		 dev_name(dev), ret, ktime_us_delta(rettime, calltime));
- 	return ret;
- }
+--- a/arch/x86/Makefile.um
++++ b/arch/x86/Makefile.um
+@@ -3,9 +3,14 @@ core-y += arch/x86/crypto/
+ 
+ #
+ # Disable SSE and other FP/SIMD instructions to match normal x86
++# This is required to work around issues in older LLVM versions, but breaks
++# GCC versions < 11. See:
++# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99652
+ #
++ifeq ($(CONFIG_CC_IS_CLANG),y)
+ KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
+ KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
++endif
+ 
+ ifeq ($(CONFIG_X86_32),y)
+ START := 0x8048000
 
 
