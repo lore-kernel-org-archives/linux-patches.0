@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85BB290A
-	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D7CC433D2;
-	Fri, 28 Apr 2023 11:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8800C290A
+	for <patches@lists.linux.dev>; Fri, 28 Apr 2023 11:28:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EEF3C433D2;
+	Fri, 28 Apr 2023 11:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1682681329;
-	bh=Y+Fo34Td6DhsWkVcBD5Lba6ZMPueE1ag2Q8PkSL9kB4=;
+	s=korg; t=1682681332;
+	bh=89AJIlv+eX2RQSjWzPOy1cjiYsERvx7x59ojXBCMBz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAAvEA35Qa/uIiSjS4NGTIF5rtj4bK2z4TQ0Hq0iK92CmE9X1g/LGYGyKjtyYLtnS
-	 BBXIujQlm7HR0ksu0PeCiaafz5E2Z8v01KVIZ4LV6+9kBNRJK+Yu5iEfJtL4zuI9se
-	 tlycRkuct/O1mjHS+HE2QxZuqwErmL+q5q5/TBiw=
+	b=flzTVMOek3tpxhUxKds5T00lrffRf1nPBr6jvrzx/lVUK2oiFvZWrtuEj82B7QpY1
+	 iW6erxpfWp0sb6tEazao5EXwwXdEx2h0qNCzroxBDuJuFR3CIeI/202HxCUWDpSTsk
+	 ZNC+hZ99YAgTUoY5TB4bNJx+fklCoyRymmUqEAeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.2 07/15] gpiolib: acpi: Add a ignore wakeup quirk for Clevo NL5xNU
-Date: Fri, 28 Apr 2023 13:27:51 +0200
-Message-Id: <20230428112040.361262179@linuxfoundation.org>
+	Ruihan Li <lrh2000@pku.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.2 08/15] bluetooth: Perform careful capability checks in hci_sock_ioctl()
+Date: Fri, 28 Apr 2023 13:27:52 +0200
+Message-Id: <20230428112040.399688213@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230428112040.137898986@linuxfoundation.org>
 References: <20230428112040.137898986@linuxfoundation.org>
@@ -34,54 +34,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-commit 782eea0c89f7d071d6b56ecfa1b8b0c81164b9be upstream.
+commit 25c150ac103a4ebeed0319994c742a90634ddf18 upstream.
 
-commit 1796f808e4bb ("HID: i2c-hid: acpi: Stop setting wakeup_capable")
-changed the policy such that I2C touchpads may be able to wake up the
-system by default if the system is configured as such.
+Previously, capability was checked using capable(), which verified that the
+caller of the ioctl system call had the required capability. In addition,
+the result of the check would be stored in the HCI_SOCK_TRUSTED flag,
+making it persistent for the socket.
 
-However on Clevo NL5xNU there is a mistake in the ACPI tables that the
-TP_ATTN# signal connected to GPIO 9 is configured as ActiveLow and level
-triggered but connected to a pull up. As soon as the system suspends the
-touchpad loses power and then the system wakes up.
+However, malicious programs can abuse this approach by deliberately sharing
+an HCI socket with a privileged task. The HCI socket will be marked as
+trusted when the privileged task occasionally makes an ioctl call.
 
-To avoid this problem, introduce a quirk for this model that will prevent
-the wakeup capability for being set for GPIO 9.
+This problem can be solved by using sk_capable() to check capability, which
+ensures that not only the current task but also the socket opener has the
+specified capability, thus reducing the risk of privilege escalation
+through the previously identified vulnerability.
 
-This patch is analoge to a very similar patch for NL5xRU, just the DMI
-string changed.
-
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: f81f5b2db869 ("Bluetooth: Send control open and close messages for HCI raw sockets")
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/bluetooth/hci_sock.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -1634,6 +1634,19 @@ static const struct dmi_system_id gpioli
- 		 * https://gitlab.freedesktop.org/drm/amd/-/issues/1722#note_1720627
- 		 */
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "NL5xNU"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_wake = "ELAN0415:00@9",
-+		},
-+	},
-+	{
-+		/*
-+		 * Spurious wakeups from TP_ATTN# pin
-+		 * Found in BIOS 1.7.8
-+		 * https://gitlab.freedesktop.org/drm/amd/-/issues/1722#note_1720627
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -1003,7 +1003,14 @@ static int hci_sock_ioctl(struct socket
+ 	if (hci_sock_gen_cookie(sk)) {
+ 		struct sk_buff *skb;
+ 
+-		if (capable(CAP_NET_ADMIN))
++		/* Perform careful checks before setting the HCI_SOCK_TRUSTED
++		 * flag. Make sure that not only the current task but also
++		 * the socket opener has the required capability, since
++		 * privileged programs can be tricked into making ioctl calls
++		 * on HCI sockets, and the socket should not be marked as
++		 * trusted simply because the ioctl caller is privileged.
 +		 */
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "NL5xRU"),
- 		},
- 		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
++		if (sk_capable(sk, CAP_NET_ADMIN))
+ 			hci_sock_set_flag(sk, HCI_SOCK_TRUSTED);
+ 
+ 		/* Send event to monitor */
 
 
