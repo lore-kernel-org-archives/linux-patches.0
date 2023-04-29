@@ -1,89 +1,91 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8BC15A5
-	for <patches@lists.linux.dev>; Sat, 29 Apr 2023 00:37:19 +0000 (UTC)
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-24756a12ba0so403075a91.1
-        for <patches@lists.linux.dev>; Fri, 28 Apr 2023 17:37:19 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309A217E9
+	for <patches@lists.linux.dev>; Sat, 29 Apr 2023 02:57:46 +0000 (UTC)
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-5ef8af5d211so6243946d6.3
+        for <patches@lists.linux.dev>; Fri, 28 Apr 2023 19:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google; t=1682728639; x=1685320639;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fFTwTFgfpbct6eGfmZUAE1l/8Y7e2QTTmTdpZloJxgo=;
-        b=a9Y2JI73PE0/P2LphZdQuIeX21T/zbMqgnk2hcKSsUKr0UWhzGDQsRWE5sP21tP0fp
-         pdLw9xV19z6QsMKa1MaM50RaUDRnddhma8LqtdO1DP2KuC02QxiPNpio8OHOfyesBELS
-         hOSoYjgSvzIhzSxX39IWrMZ5RmWwuw8s8Z8mQ=
+        d=gmail.com; s=20221208; t=1682737065; x=1685329065;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9KWgSfBRX4/7Ituj2OvAS+wvcAoxKFvLr9noXKYmqF0=;
+        b=qe1x6DYNj8cmuducngKhKijZRivuXW9ENdmsbnUVee3sr1OZJ26XE+Vx2iih56yhDn
+         mvh1/+MWmRzjttCYFjwIjWAGn3x/NgCdWhxfWS9hPelwhgrsClS7SY8yw8LYWsmN+fLr
+         XX5G4Hk0AaIRDdb/XNPNnNe70ndj6br8ceZjF6AVyMNkaexllAYrkz+UKg1ce0XkkfTh
+         EVLaf3sdd9jL5i1F98ro7XSvOPDlxaDGFWxF93i+z9LHR6GRsCxCHqmuZwtNOEQhadAK
+         ATeD4wrVsK08c1gbmXIckO/wOvjMM+xTEDXQ2ktFfg4IXhGYKNpbeC6n8Na93DzTGrdh
+         lmFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682728639; x=1685320639;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fFTwTFgfpbct6eGfmZUAE1l/8Y7e2QTTmTdpZloJxgo=;
-        b=TJ8kGtbw8CFZvfj9RiGNj5LZf+E7C59Cw3kXc91YTg2Vv975QeRTZWjYc8doIEzT/y
-         KflGJ5QCOT5eHrVAoGHQGwG8KWQcbXt+0ym4r4dNPwvOozGAgGvRybbhcDRM4nxSCBQD
-         DCh1+5NTFAxGkMCBwUVbuuc3+9bAXEcG44ag2lwabYhXS1KwVDYRoicKFdV2DH0NPjHK
-         wlXlyUe2vsQxZKomSDDh3ADb/x6SwflTOqcK69sOgS+U7gnY/UUXs4O3ctWVfZRvCdjG
-         FNI/AYWOrGL2VuWjyVaX4vuxSikIpjjdN4tnfoHI7dEI8Lt8J+RQN5QC2x4CzRf3APWd
-         NxVQ==
-X-Gm-Message-State: AC+VfDyn1pZzRDHa4uCJk4UATvnRTR3sOeuljBbPuTpaZrufVsbHefmG
-	X1GqvfELoqPOJBL5ezvI8PgsyQ==
-X-Google-Smtp-Source: ACHHUZ7AaM7lFfHo5Pv4E1GlexT7X9j78VcNfpQ5SFUaPuV9zpadCcSjk/1t1Qd6XuNwQg8u8VP4/w==
-X-Received: by 2002:a17:90b:30c5:b0:24d:d8d2:ec90 with SMTP id hi5-20020a17090b30c500b0024dd8d2ec90mr158295pjb.8.1682728638520;
-        Fri, 28 Apr 2023 17:37:18 -0700 (PDT)
-Received: from 7fe0d01b56a2 ([122.199.31.200])
-        by smtp.gmail.com with ESMTPSA id np9-20020a17090b4c4900b002367325203fsm15400876pjb.50.2023.04.28.17.37.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Apr 2023 17:37:17 -0700 (PDT)
-Date: Sat, 29 Apr 2023 00:37:10 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.3 00/11] 6.3.1-rc1 review
-Message-ID: <20230429003710.GA4461@7fe0d01b56a2>
-References: <20230428112039.886496777@linuxfoundation.org>
+        d=1e100.net; s=20221208; t=1682737065; x=1685329065;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9KWgSfBRX4/7Ituj2OvAS+wvcAoxKFvLr9noXKYmqF0=;
+        b=gDawpTlc0ifmXEOWNNGjQnbxB8205EPtl0/ZG7nTmuYThw8fid3boMd7f1IuQpxG2O
+         gOZRvS6unBTRzuQO50Nwc/44X8/KIyn9eovGdbNshH8IWlXqaEd3efScBmVC0KHfRXH/
+         mikp05zwUNMto3v7z6irakLPm2163Pk9s8Mc7ejJBdEXqrAK5xs2rg6Apz3olsyUHHZx
+         XenTG1pDLYMszNwKbuADVFOTsqk8S9mZpXLko6aiRLnK9ClV49GmriSRYnQehlVfJUdL
+         SmL1VDCae42lpgvOZBh6OZvM9NBjn+Swoi2nCKftqvg/3QfCUcwQkGmrvOXtBSuvh8nq
+         xPXg==
+X-Gm-Message-State: AC+VfDxcm2iFPKlpFKg3mILKnzcgS0PHE4HKGu6py6kW8qHBwx2fVYtt
+	Hfizdqs8IqDHgDp7oLIaoeI=
+X-Google-Smtp-Source: ACHHUZ5hKNuG3+lGMBBMI9UZfGmHUBdYfDexhwTC921xD9e/LwzTr4ussOkGLZKqH2IhBWqgupsybA==
+X-Received: by 2002:ad4:5ce7:0:b0:5e5:c00c:8189 with SMTP id iv7-20020ad45ce7000000b005e5c00c8189mr14011833qvb.10.1682737065031;
+        Fri, 28 Apr 2023 19:57:45 -0700 (PDT)
+Received: from [192.168.1.105] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id n16-20020a0cdc90000000b005ef589381a8sm6840396qvk.52.2023.04.28.19.57.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Apr 2023 19:57:44 -0700 (PDT)
+Message-ID: <637f3669-c6d8-0556-28aa-6599551f0849@gmail.com>
+Date: Fri, 28 Apr 2023 19:57:41 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230428112039.886496777@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 5.15 00/13] 5.15.110-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230428112039.133978540@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230428112039.133978540@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Apr 28, 2023 at 01:27:35PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.1 release.
-> There are 11 patches in this series, all will be posted as a response
+
+
+On 4/28/2023 4:28 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.110 release.
+> There are 13 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
 > Responses should be made by Sun, 30 Apr 2023 11:20:30 +0000.
 > Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.110-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Hi Greg,
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-6.3.1-rc1 tested.
-
-Run tested on:
-- Intel Alder Lake x86_64 (nuc12 i7-1260P)
-
-In addition - build tested for:
-- Allwinner A64
-- Allwinner H3
-- Allwinner H5
-- NXP iMX6
-- NXP iMX8
-- Qualcomm Dragonboard
-- Rockchip RK3288
-- Rockchip RK3328
-- Rockchip RK3399pro
-- Samsung Exynos
-
-Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
---
-Rudi
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
