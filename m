@@ -1,91 +1,124 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F73553AF
-	for <patches@lists.linux.dev>; Sat, 29 Apr 2023 17:14:58 +0000 (UTC)
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-63b5c4c76aaso786833b3a.2
-        for <patches@lists.linux.dev>; Sat, 29 Apr 2023 10:14:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682788498; x=1685380498;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=A1ACuy/osQdCjo/PWg2MRsM2W3CTWTDNQjv55mAPc0g=;
-        b=FJvRi4nCQ7TyhpaQDMnrGMSJEze+SpsPv3qSPMGiXK40WBKKbacnkQErP1I3JpGqnA
-         TYFmG4mUT34g8+ygzmSjS0BIED2isLzz+rNQOeldkxPAZhJBACWpysNAQiaSfrgOWyd5
-         qXcLBtmBcSGbm36C732DDV7Gi2pg6jyQIZONy99YKglr1UidvN2paQ+TbLKj00+MIS2u
-         EFv5yR1Y7v35uJc+MYAiXAD/DPncNYn9AHD4if1WjuDo+K1e9vHi8tNBNN0zgXuwlTCn
-         b6Nnd9yhjXvVyGbbrjzCu6EO3OGnS7pgqKMgYqTetJOlr3w57UWa93QsR2E/NhNDrH+/
-         al8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682788498; x=1685380498;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A1ACuy/osQdCjo/PWg2MRsM2W3CTWTDNQjv55mAPc0g=;
-        b=ZJnjX6UaEWuK4C/kbNzdmw6VoBZjgYw6HQMNmDZqlzMkjkpidNxPPmlVLRLN/q6K9f
-         ATT8fsRDNFDa5AHai3JiUjUBLv7s/5n9+h2EWfUg3CWTGpwhIqSBfxxopm440RdIQT61
-         jtUs+tdYIJYJwVXynhPIyfPyFOTWDVamWBtPey+qiLNjvBR1EV9xQjJa5Hh67jVzT/bF
-         UakDslg82BZB1khxSEQD2tNllwFh6gSNVe0Osf7voOwMerQB8VArRwYJNoIjadWMcQw/
-         VtwdBL5jxRWCH4M3eA+LieDXLj5jPiCHnZTqaopKlbPWw3emTDaxsfu5WAI4BVtZ9k0U
-         rGTw==
-X-Gm-Message-State: AC+VfDx4o9mWwXccnf0D5J8hEG3eCcqKRSjAQ5wP8BtkjvPcRNYH1ZeJ
-	+cFAmInaYSYGLLxxjQbIr6U=
-X-Google-Smtp-Source: ACHHUZ5/zMXaqvvU2ATe1Cd0nE38gDYHd34xkMfhwXouXnro4NcP/N5HAywZopxkIQ05jz+jswqTPA==
-X-Received: by 2002:a05:6a00:2344:b0:63d:311a:a16b with SMTP id j4-20020a056a00234400b0063d311aa16bmr11895723pfj.23.1682788497815;
-        Sat, 29 Apr 2023 10:14:57 -0700 (PDT)
-Received: from ?IPV6:2600:8802:b00:4a48:1c98:2538:93cd:aefb? ([2600:8802:b00:4a48:1c98:2538:93cd:aefb])
-        by smtp.gmail.com with ESMTPSA id i12-20020a62870c000000b0063b7f3250e9sm17072699pfe.7.2023.04.29.10.14.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Apr 2023 10:14:57 -0700 (PDT)
-Message-ID: <4f7efcd3-df6a-1140-e60a-736c56966059@gmail.com>
-Date: Sat, 29 Apr 2023 10:14:54 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F334361
+	for <patches@lists.linux.dev>; Mon,  1 May 2023 02:49:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=6tZimcfHBp3vjpDs8vgvYhUPTHKa12CQe7EUdwtC4Og=; b=b/VTTHBp/NPZ9/UvIqn2ZKMgJT
+	OcQ+r29qBfhEEn6Cu5Gy1/U+t3xfrzG2brtuT4lq6aU3kvJKni/Ids1PlAa5x7MJecfI/YF63Qrfq
+	ou0+gd0nP/15n/voh17gtQ2WBZ9rqe9PiWkcI/E3s18BH9t6bc5G1Fd/zbbKVA14WEGtPTUGF2c8c
+	bPDmZHIEJNnY6VyoKViCP6D0SvEcJIETTqhnsI2nlhwqJ3Sxv5gGZZbzP8oPN1aVxREuSDIDtUBgR
+	fIjlG0yMGJ2nUXLt0zHkJgo+6uJVCHgs3ImumHEuQ/GPX5NdK6sJSUhTvUGvH2g/8mULtNQh30vPn
+	8gk/r7xw==;
+Received: from [2601:1c2:980:9ec0::2764] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+	id 1ptJbr-00F3Rs-2W;
+	Mon, 01 May 2023 02:49:51 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-arm-kernel@lists.infradead.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	linux-rockchip@lists.infradead.org
+Subject: [PATCH] soc/rockchip: dtpm: use C99 array init syntax
+Date: Sun, 30 Apr 2023 19:49:50 -0700
+Message-Id: <20230501024950.31518-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 6.3 00/11] 6.3.1-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230428112039.886496777@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230428112039.886496777@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+Eliminate sparse warnings in soc/rockchip/dtpm.c:
 
+drivers/soc/rockchip/dtpm.c:15:12: sparse: warning: obsolete array initializer, use C99 syntax
+drivers/soc/rockchip/dtpm.c:17:12: sparse: warning: obsolete array initializer, use C99 syntax
+drivers/soc/rockchip/dtpm.c:20:12: sparse: warning: obsolete array initializer, use C99 syntax
+drivers/soc/rockchip/dtpm.c:23:12: sparse: warning: obsolete array initializer, use C99 syntax
+drivers/soc/rockchip/dtpm.c:26:12: sparse: warning: obsolete array initializer, use C99 syntax
+drivers/soc/rockchip/dtpm.c:29:12: sparse: warning: obsolete array initializer, use C99 syntax
+drivers/soc/rockchip/dtpm.c:32:12: sparse: warning: obsolete array initializer, use C99 syntax
+drivers/soc/rockchip/dtpm.c:35:12: sparse: warning: obsolete array initializer, use C99 syntax
+drivers/soc/rockchip/dtpm.c:38:12: sparse: warning: obsolete array initializer, use C99 syntax
+drivers/soc/rockchip/dtpm.c:41:12: sparse: warning: obsolete array initializer, use C99 syntax
 
-On 4/28/2023 4:27 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.1 release.
-> There are 11 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 30 Apr 2023 11:20:30 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.1-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Fixes: b9d6c47a2be8 ("rockchip/soc/drivers: Add DTPM description for rk3399")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: Heiko Stuebner <heiko@sntech.de>
+Cc: linux-rockchip@lists.infradead.org
+---
+ drivers/soc/rockchip/dtpm.c |   54 +++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
-
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+diff -- a/drivers/soc/rockchip/dtpm.c b/drivers/soc/rockchip/dtpm.c
+--- a/drivers/soc/rockchip/dtpm.c
++++ b/drivers/soc/rockchip/dtpm.c
+@@ -12,33 +12,33 @@
+ #include <linux/platform_device.h>
+ 
+ static struct dtpm_node __initdata rk3399_hierarchy[] = {
+-	[0]{ .name = "rk3399",
+-	     .type = DTPM_NODE_VIRTUAL },
+-	[1]{ .name = "package",
+-	     .type = DTPM_NODE_VIRTUAL,
+-	     .parent = &rk3399_hierarchy[0] },
+-	[2]{ .name = "/cpus/cpu@0",
+-	     .type = DTPM_NODE_DT,
+-	     .parent = &rk3399_hierarchy[1] },
+-	[3]{ .name = "/cpus/cpu@1",
+-	     .type = DTPM_NODE_DT,
+-	     .parent = &rk3399_hierarchy[1] },
+-	[4]{ .name = "/cpus/cpu@2",
+-	     .type = DTPM_NODE_DT,
+-	     .parent = &rk3399_hierarchy[1] },
+-	[5]{ .name = "/cpus/cpu@3",
+-	     .type = DTPM_NODE_DT,
+-	     .parent = &rk3399_hierarchy[1] },
+-	[6]{ .name = "/cpus/cpu@100",
+-	     .type = DTPM_NODE_DT,
+-	     .parent = &rk3399_hierarchy[1] },
+-	[7]{ .name = "/cpus/cpu@101",
+-	     .type = DTPM_NODE_DT,
+-	     .parent = &rk3399_hierarchy[1] },
+-	[8]{ .name = "/gpu@ff9a0000",
+-	     .type = DTPM_NODE_DT,
+-	     .parent = &rk3399_hierarchy[1] },
+-	[9]{ /* sentinel */ }
++	[0] = { .name = "rk3399",
++		.type = DTPM_NODE_VIRTUAL },
++	[1] = { .name = "package",
++		.type = DTPM_NODE_VIRTUAL,
++		.parent = &rk3399_hierarchy[0] },
++	[2] = { .name = "/cpus/cpu@0",
++		.type = DTPM_NODE_DT,
++		.parent = &rk3399_hierarchy[1] },
++	[3] = { .name = "/cpus/cpu@1",
++		.type = DTPM_NODE_DT,
++		.parent = &rk3399_hierarchy[1] },
++	[4] = { .name = "/cpus/cpu@2",
++		.type = DTPM_NODE_DT,
++		.parent = &rk3399_hierarchy[1] },
++	[5] = { .name = "/cpus/cpu@3",
++		.type = DTPM_NODE_DT,
++		.parent = &rk3399_hierarchy[1] },
++	[6] = { .name = "/cpus/cpu@100",
++		.type = DTPM_NODE_DT,
++		.parent = &rk3399_hierarchy[1] },
++	[7] = { .name = "/cpus/cpu@101",
++		.type = DTPM_NODE_DT,
++		.parent = &rk3399_hierarchy[1] },
++	[8] = { .name = "/gpu@ff9a0000",
++		.type = DTPM_NODE_DT,
++		.parent = &rk3399_hierarchy[1] },
++	[9] = { /* sentinel */ }
+ };
+ 
+ static struct of_device_id __initdata rockchip_dtpm_match_table[] = {
