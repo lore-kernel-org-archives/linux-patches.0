@@ -1,91 +1,106 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D9F20E2
-	for <patches@lists.linux.dev>; Mon,  1 May 2023 12:08:59 +0000 (UTC)
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-3f178da21afso14383885e9.1
-        for <patches@lists.linux.dev>; Mon, 01 May 2023 05:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682942938; x=1685534938;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vUdzf3IvEdsxulw0zrmzJtlZgtzcorWmwsr5oTBgspM=;
-        b=yqgRWU3yM9bRw+uA0Y9/HD9qijSv2+UeJZvq2k02CwctK0NGULzDsHbDN2u7d+niop
-         fCSv60Fh0cNlH+EfXfbe78rXGb/KYAu+tsx92E9NikV0hgnuCeVpYdbWiOKMdAKEKQko
-         i6jNWeMa6lm6/KQg2mZje9mZZqPcagqsINJQ3QBmK9IHJwZi6zuT0ZttriADi1fnhBn+
-         ifaVnQXOMCF9iAm8cMYCfna8LsZ0uAw5McQr7C7jcEBr1JTTmCiUSMZJu/DiGcEZ3gLj
-         DDBDqeN/xYmEH285DjzyDeAGbNdh6srvuvXakQCjeZOoXi7n5TNa5lSkjPpGwp5P6AVm
-         ocYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682942938; x=1685534938;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vUdzf3IvEdsxulw0zrmzJtlZgtzcorWmwsr5oTBgspM=;
-        b=UPpDmw+REnfFO0UxW9ihfaopeEWZWgeyq8G+fQENeDrZsE0Vn7jf/u+Y/k78Dyh24v
-         If4YtBOcV2wrEsBpIveH6P2ShvgWqlZ3cGjPikTaaKY96kxNsoZU6fX5DDdDgD6Z5DWJ
-         pNUUo/8bGD/HmQsM22IPy7V14g0YFpJGC01h6DT+Q7jmzIE+9skygrG7+Tqb3+AA4Nck
-         kHAwMb5kus0rsfFj9bR3cyuLIjzinyiWwehXSx+aLBZOn3Xnt0J1hzNrBz7VvQjhmdiS
-         A4N5O/addRU6aCuDv/EmKGU320svEMnhpXjyWwWr/mbJAMSH97W0eK5EKOjs+p6c9bCi
-         ED9w==
-X-Gm-Message-State: AC+VfDw0dnMsoOo7vzvumJlWq/Yo5gGjoLSuGLSfIAXbS+jX4JapjdRA
-	VgZn1Ur0h5WyPWUQuh1VXyWzeg==
-X-Google-Smtp-Source: ACHHUZ54tiiVMytDtdZbk+O+s1aS7DXww0a8qsgFqay4XxReSxz3IOKsL6LnMUBSO1RrgEU3WOXjCQ==
-X-Received: by 2002:a7b:c8c3:0:b0:3f1:6f53:7207 with SMTP id f3-20020a7bc8c3000000b003f16f537207mr9467082wml.17.1682942937646;
-        Mon, 01 May 2023 05:08:57 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:492d:9712:4f67:3b93? ([2a05:6e02:1041:c10:492d:9712:4f67:3b93])
-        by smtp.googlemail.com with ESMTPSA id d9-20020a5d6dc9000000b00304adbeeabbsm11417548wrz.99.2023.05.01.05.08.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 May 2023 05:08:57 -0700 (PDT)
-Message-ID: <db038749-253b-cafc-2346-d684c81461be@linaro.org>
-Date: Mon, 1 May 2023 14:08:56 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FEB8C05;
+	Mon,  1 May 2023 21:35:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3932C433EF;
+	Mon,  1 May 2023 21:35:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1682976907;
+	bh=XnqhpFr6fnfhNPWyqQmtX3kBqxpEOgAFxsVlBRWbBPI=;
+	h=From:Date:Subject:To:Cc:From;
+	b=ZnOCr8fDXckc608qZzHYTAP81OsjQwPHx+kpYeRnbO8GwTsX4Mmp7thkxDQT7ktCz
+	 sXF4pS3skljGbgDEev83h1qbNEWAS7aALi2k1nfXkODnAoYd0qjj523FtoCOBq718w
+	 ovnGQ/wVI9ORmB17jnlCrKCT02P6nHKdBPkBUL7X6naonavE4pAE75FXGB1qObvEeO
+	 ZEAy4/RriaOmbCXzlzExr9M9LpuwtK5X3YmNZ4dEsq8mUSYDaJc0ggeeS+7Bk7Q6Un
+	 CsAz+bosOgwr2MkhL53MVah59NCUvMrPNHeqsThrYPlHmE7IAnZS1C73R1M0ZmF6zC
+	 eSJaY6LgYb7Aw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 01 May 2023 14:34:47 -0700
+Subject: [PATCH] clk: sp7021: Adjust width of _m in HWM_FIELD_PREP()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH] soc/rockchip: dtpm: use C99 array init syntax
-Content-Language: en-US
-To: Randy Dunlap <rdunlap@infradead.org>, linux-arm-kernel@lists.infradead.org
-Cc: patches@lists.linux.dev, Heiko Stuebner <heiko@sntech.de>,
- linux-rockchip@lists.infradead.org
-References: <20230501024950.31518-1-rdunlap@infradead.org>
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20230501024950.31518-1-rdunlap@infradead.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230501-sp7021-field_prep-warning-v1-1-5b36d71feefe@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAHYwUGQC/x2NUQrCQAwFr1LybWB3i1S8ioik7ds2oGtJRIXSu
+ 7v1c3jMvJUcpnA6NysZ3ur6LBXioaFhljKBdaxMKaQ2HENkX7qQImfFfbwthoU/YkXLxCm1OXY
+ CyAlU/V4c3JuUYd4LD/EXbB+qlfX7P71ct+0H5eGNcoQAAAA=
+To: qinjian@cqplus1.com, mturquette@baylibre.com, sboyd@kernel.org
+Cc: ndesaulniers@google.com, trix@redhat.com, 
+ linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2913; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=XnqhpFr6fnfhNPWyqQmtX3kBqxpEOgAFxsVlBRWbBPI=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCkBBl0x325mvvvMZK8y1diE+9rvAO2KpJkn+Xfe+3mPh
+ e9v6587HaUsDGIcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiczsZ/jtkKxpPiBOQYLl7
+ gEmbzfxfSkTYD+nfdzYtZ7t3OVrtwRyG/2XqGcHPXafO1rZdx6N4oCj9yj2tLNMH+9d0rDusPCd
+ LgRkA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 01/05/2023 04:49, Randy Dunlap wrote:
-> Eliminate sparse warnings in soc/rockchip/dtpm.c:
-> 
-> drivers/soc/rockchip/dtpm.c:15:12: sparse: warning: obsolete array initializer, use C99 syntax
-> drivers/soc/rockchip/dtpm.c:17:12: sparse: warning: obsolete array initializer, use C99 syntax
-> drivers/soc/rockchip/dtpm.c:20:12: sparse: warning: obsolete array initializer, use C99 syntax
-> drivers/soc/rockchip/dtpm.c:23:12: sparse: warning: obsolete array initializer, use C99 syntax
-> drivers/soc/rockchip/dtpm.c:26:12: sparse: warning: obsolete array initializer, use C99 syntax
-> drivers/soc/rockchip/dtpm.c:29:12: sparse: warning: obsolete array initializer, use C99 syntax
-> drivers/soc/rockchip/dtpm.c:32:12: sparse: warning: obsolete array initializer, use C99 syntax
-> drivers/soc/rockchip/dtpm.c:35:12: sparse: warning: obsolete array initializer, use C99 syntax
-> drivers/soc/rockchip/dtpm.c:38:12: sparse: warning: obsolete array initializer, use C99 syntax
-> drivers/soc/rockchip/dtpm.c:41:12: sparse: warning: obsolete array initializer, use C99 syntax
-> 
-> Fixes: b9d6c47a2be8 ("rockchip/soc/drivers: Add DTPM description for rk3399")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-> Cc: Heiko Stuebner <heiko@sntech.de>
-> Cc: linux-rockchip@lists.infradead.org
+When building with clang + W=1, there is a warning around an internal
+comparison check within the FIELD_PREP() macro, due to a 32-bit variable
+comparison against ~0ull:
 
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+  drivers/clk/clk-sp7021.c:316:8: error: result of comparison of constant 18446744073709551615 with expression of type 'typeof (_Generic((_m), ...' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+          r0 |= HWM_FIELD_PREP(MASK_SEL_FRA, clk->p[SEL_FRA]);
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/clk/clk-sp7021.c:45:15: note: expanded from macro 'HWM_FIELD_PREP'
+          (_m << 16) | FIELD_PREP(_m, value);     \
+                       ^~~~~~~~~~~~~~~~~~~~~
+  include/linux/bitfield.h:114:3: note: expanded from macro 'FIELD_PREP'
+                  __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: ");    \
+                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  include/linux/bitfield.h:71:53: note: expanded from macro '__BF_FIELD_CHECK'
+                  BUILD_BUG_ON_MSG(__bf_cast_unsigned(_mask, _mask) >     \
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~
+  note: (skipping 1 expansions in backtrace; use -fmacro-backtrace-limit=0 to see all)
+  include/linux/compiler_types.h:397:22: note: expanded from macro 'compiletime_assert'
+          _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+          ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  include/linux/compiler_types.h:385:23: note: expanded from macro '_compiletime_assert'
+          __compiletime_assert(condition, msg, prefix, suffix)
+          ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  include/linux/compiler_types.h:377:9: note: expanded from macro '__compiletime_assert'
+                  if (!(condition))                                       \
+                        ^~~~~~~~~
 
+This is expected given the tyoes of the input. Increase the size of the
+temporary variable in HWM_FIELD_PREP() to eliminate the warning, which
+follows the logic of commit cfd6fb45cfaf ("crypto: ccree - avoid
+out-of-range warnings from clang") for the same reasons.
 
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/clk/clk-sp7021.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clk/clk-sp7021.c b/drivers/clk/clk-sp7021.c
+index 8fec14120105..11d22043ddd7 100644
+--- a/drivers/clk/clk-sp7021.c
++++ b/drivers/clk/clk-sp7021.c
+@@ -41,7 +41,7 @@ enum {
+ /* HIWORD_MASK FIELD_PREP */
+ #define HWM_FIELD_PREP(mask, value)		\
+ ({						\
+-	u32 _m = mask;				\
++	u64 _m = mask;				\
+ 	(_m << 16) | FIELD_PREP(_m, value);	\
+ })
+ 
+
+---
+base-commit: d54c1fd4a51e8fbc7f9da86b0cd338a4f7cd2bb2
+change-id: 20230501-sp7021-field_prep-warning-223f17aeea8e
+
+Best regards,
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Nathan Chancellor <nathan@kernel.org>
 
