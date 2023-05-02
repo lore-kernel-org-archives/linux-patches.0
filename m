@@ -1,40 +1,40 @@
-Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC41D7E
-	for <patches@lists.linux.dev>; Tue,  2 May 2023 12:46:59 +0000 (UTC)
-Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-506b21104faso4326891a12.1
-        for <patches@lists.linux.dev>; Tue, 02 May 2023 05:46:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEBA27E
+	for <patches@lists.linux.dev>; Tue,  2 May 2023 12:53:37 +0000 (UTC)
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-b9a8023ccf1so7493448276.2
+        for <patches@lists.linux.dev>; Tue, 02 May 2023 05:53:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1683031618; x=1685623618;
+        d=google.com; s=20221208; t=1683032017; x=1685624017;
         h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ADtw/qW1A9BDeVMPTl0uodglbiJnCrGJeTfJlSlwBKg=;
-        b=wK27d6BGvYADsMaxuHyLqpOXqC9pb4EwTrCekKIa0wESUDbdGwNGIUd4yZ8Ws4QWjY
-         /vZfRYBoCU/ZiRsqN+VuBaMDzDCiqagJpeG6T0MScGFY2OD/2PWMK3A+KPdMiz1u19f4
-         UPspT7ukgGhejZ0AQiFCWEZO1ljco78t2h6Ma08f7O74YSNZWPamlOePA7GGeocoRidd
-         zRFOed/rGxVAZ70p58vqLKjAdSVWoBCWFLK6fyNPxhVQnpk2smSrwP+6SUy9BIyZQn0m
-         R70Oq1te08FqkVjDEEUUOg8YyzkpBKOQ3DTx8BKmPwRO476QS0joPsxGHSgeBZwo5LeO
-         2wtQ==
+        bh=yD3RHOmw2YonU9lq/qLKI0ISZtFJQuh0JdGUDdx5IQ4=;
+        b=Nd8aPNd3NegOIXfFnsIObxs6yMD8V4tXgHyCuXTTN/BZDFLwElKICS86m6HIeGPcJo
+         sa21trMsksNhMFTJpnRHFOxe6gNFa2PqBhWUMgMEqBNGYcOmhcrg8ei2+afLGBQtW/1I
+         YIMFA+EfZnd6QWWaANQ6O85meD1Xgamv1yPKfhukbtXAhHP9s5JJiBaZJQdgAi8CTqMJ
+         Qw+6goOIKN8vyJJALi4cHybsIVUi6VKK1rXv+P7sExw7GiS2FJJRPFi1pw8zKYjxwhbK
+         Ccmy/M8HU8QnaK9dBM6FoQA3CxY0dQgSjB+fxgTqTuEnRE+Rb8jAuL2v7MM0U9luLK2k
+         Agjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683031618; x=1685623618;
+        d=1e100.net; s=20221208; t=1683032017; x=1685624017;
         h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ADtw/qW1A9BDeVMPTl0uodglbiJnCrGJeTfJlSlwBKg=;
-        b=AZT9ve5AFBQ2K8OJxhhKNUyqdpZ0yfj4+hD8eR7bnUw4H4uQxuLkDUQOAasEnt5Zw2
-         zU5JvGYlr/yWuHtmN142aIuM8FkRYP9AbJbBevvjKBTb4FyhhWVu4Q6vf2HriD9Pb8M8
-         lTmUhRURTRKv2Gy9zS8VRIILb00/7b8LgAga4n8PZ+p92IXGyZsay9RNdpG7VJhwpx9/
-         CdOkP7ssIBEEPbHD2FbP2CVuVV8PE26+PA4KqjHGaRnOfvCfQYffCpNMVmq2/qTxKI7I
-         Sd0J2EShFhJ3Fs/53brMPTFU3eHtsNLhyONQRgkmOtCpfXM8445NoOzQvm/H5ATZwr18
-         3zxA==
-X-Gm-Message-State: AC+VfDx7uofQstsNFOmCOjT0xDWU1CYwB5rkosJH+HEvkyyb6VtEoHAz
-	jEU8A1OO9azreztALzqZRyNtfEIlS4Oz7Gw=
-X-Google-Smtp-Source: ACHHUZ4PGt9JNY1496rQhEH+WLmSav3+qf88yqqFPW52fA2YiYcRFGcqDl4OEBgAI76aE3ZWAWeGyNcuQPShBzg=
+        bh=yD3RHOmw2YonU9lq/qLKI0ISZtFJQuh0JdGUDdx5IQ4=;
+        b=EZ4UmPfczn5C7wXyPiaVigpm2c3vQzAoqOmLU1K3tDDdVETeq3b+526VTMiwOHv+N0
+         H2pXIPO5ENN6CiZSjf/a8GRZbpB0Xey+vMbLLC4NburF24bK0D5HxLfWt8FwLBGmciFR
+         vTg9SZB/8xzzd/uRV2I8fXXv+lAvbLaYG+QpYFr8MidFaLhYhVsZ9WcVIgAR45RAXtEx
+         IVEyTwXFVKQz8wpFKaFMIr0AcIxeid+KntTmCCHJ84wgFKZDkrRuBj5ulrURRGUPLu3X
+         MmaTpKoIlghWxO2nKgzqTA2EY/O1JW2IrDWTE3Fx3RwEbv057MrDLmkyVLV6mOM6wvy/
+         xxuQ==
+X-Gm-Message-State: AC+VfDzh9mitpvf1HEQhtFpeyTOMoxChFmwvgQQwQ5jvLmb06r7eIGoH
+	owyGcRVtRnrRcbpa+WT6hCzxdG0g1AiVQ70=
+X-Google-Smtp-Source: ACHHUZ5gPH29sQUYLHBCrXjx3vdTmEARKf1rg93iTFELyjd4V+wNVN9mwS0ZUXmZdt8eM/8Fc88lx09nESpYrVE=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a50:9fe3:0:b0:50b:c83b:22d8 with SMTP id
- c90-20020a509fe3000000b0050bc83b22d8mr2063829edf.3.1683031242984; Tue, 02 May
- 2023 05:40:42 -0700 (PDT)
-Date: Tue,  2 May 2023 12:40:15 +0000
+ (user=aliceryhl job=sendgmr) by 2002:a05:6902:100e:b0:b8f:47c4:58ed with SMTP
+ id w14-20020a056902100e00b00b8f47c458edmr10400410ybt.9.1683032016822; Tue, 02
+ May 2023 05:53:36 -0700 (PDT)
+Date: Tue,  2 May 2023 12:53:06 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,8 +42,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.40.1.495.gc816e09b53d-goog
-Message-ID: <20230502124015.356001-1-aliceryhl@google.com>
-Subject: [PATCH] rust: error: allow specifying error type on `Result`
+Message-ID: <20230502125306.358283-1-aliceryhl@google.com>
+Subject: [PATCH] rust: str: add conversion from `CStr` to `CString`
 From: Alice Ryhl <aliceryhl@google.com>
 To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Alex Gaynor <alex.gaynor@gmail.com>
@@ -53,34 +53,65 @@ Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
 	patches@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Currently, if the `kernel::error::Result` type is in scope (which is
-often is, since it's in the kernel's prelude), you cannot write
-`Result<T, SomeOtherErrorType>` when you want to use a different error
-type than `kernel::error::Error`.
+These methods can be used to copy the data in a temporary c string into
+a separate allocation, so that it can be accessed later even if the
+original is deallocated.
 
-To solve this we change the error type from being hard-coded to just
-being a default generic parameter. This still lets you write `Result<T>`
-when you just want to use the `Error` error type, but also lets you
-write `Result<T, SomeOtherErrorType>` when necessary.
+The API in this file mirrors the standard library API for the `&str` and
+`String` types. The `ToOwned` trait is not implemented because it
+assumes that allocations are infallible.
 
 Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 ---
- rust/kernel/error.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/str.rs | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
-index 5f4114b30b94..01dd4d2f63d2 100644
---- a/rust/kernel/error.rs
-+++ b/rust/kernel/error.rs
-@@ -177,7 +177,7 @@ impl From<core::convert::Infallible> for Error {
- /// Note that even if a function does not return anything when it succeeds,
- /// it should still be modeled as returning a `Result` rather than
- /// just an [`Error`].
--pub type Result<T = ()> = core::result::Result<T, Error>;
-+pub type Result<T = (), E = Error> = core::result::Result<T, E>;
+diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
+index b771310fa4a4..54935ff3a610 100644
+--- a/rust/kernel/str.rs
++++ b/rust/kernel/str.rs
+@@ -2,6 +2,7 @@
  
- /// Converts an integer as returned by a C kernel function to an error if it's negative, and
- /// `Ok(())` otherwise.
+ //! String representations.
+ 
++use alloc::collections::TryReserveError;
+ use alloc::vec::Vec;
+ use core::fmt::{self, Write};
+ use core::ops::{self, Deref, Index};
+@@ -199,6 +200,12 @@ impl CStr {
+     pub unsafe fn as_str_unchecked(&self) -> &str {
+         unsafe { core::str::from_utf8_unchecked(self.as_bytes()) }
+     }
++
++    /// Convert this [`CStr`] into a [`CString`] by allocating memory and
++    /// copying over the string data.
++    pub fn to_cstring(&self) -> Result<CString, TryReserveError> {
++        CString::try_from(self)
++    }
+ }
+ 
+ impl fmt::Display for CStr {
+@@ -584,6 +591,20 @@ impl Deref for CString {
+     }
+ }
+ 
++impl<'a> TryFrom<&'a CStr> for CString {
++    type Error = TryReserveError;
++
++    fn try_from(cstr: &'a CStr) -> Result<CString, TryReserveError> {
++        let len = cstr.len_with_nul();
++        let mut buf = Vec::try_with_capacity(len)?;
++        buf.try_extend_from_slice(cstr.as_bytes_with_nul())?;
++
++        // INVARIANT: The CStr and CString types have the same invariants for
++        // the string data, and we copied it over without changes.
++        Ok(CString { buf })
++    }
++}
++
+ /// A convenience alias for [`core::format_args`].
+ #[macro_export]
+ macro_rules! fmt {
 
 base-commit: ea76e08f4d901a450619831a255e9e0a4c0ed162
 -- 
