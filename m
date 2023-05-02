@@ -1,134 +1,129 @@
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2042.outbound.protection.outlook.com [40.107.96.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD188F4F
-	for <patches@lists.linux.dev>; Tue,  2 May 2023 16:18:40 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kbCG42J4wJBDWoG2jt3OUDMSUcLFnZ4Vz6yVn/C9AsYKrrrVzlI+6vlP41Izr2GJ2gtMmDLRkQ0Ume8HQ9Gj3hbt5dpeUwfAKyxxPtyZgiyDJJ55N+YB+b+s+2sthsy/ESxuuVWQLn5CYgAs7delJUHlybnzbtued1UZiHU3Gls86sRpOlLP2VJI7LnQ041aHzPWrDxqayZ1RglODs9NWoRyXdApQNTLcRnfcF1EF7+Tf5TBGVll8+0icCnYApa/Cv0TKPsszWWfwGYbBFUqi4ejDJEcRlMyOUuaMLRl+MaH1YnTv1z8LEhFftANzkNSTpIK7N7L3FUe9BqX/Pv0ag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zmN+O/MMxnIPRREcZP1DshVr4Mf/RyAyABZGRu7hras=;
- b=nxkeQDRC/Z8mZrfqXrlvvspVdncm1+/5gVsjOeVNZVDB0hcfxYI5GQwCgeY4qdyZjQnDF1pR6V1SWOmZUNn2APJM1XNgz4KerPF8bIN6Tp4NauT1koBapyXNc7BBzD1DlDaMMR0DocyschLprHiLATfHDKWQUGSBWGn9mClQlUSlJX7hDfcm8HKZCxtyaNCNCsDPxSgpCgQnkB6deG3IYTv9e5w9vqkUmuDWsAqzdq67HOBscc57RW6ofHZ6+PGb39L04zdv/HCoN28anla3lWW8A9BPP98RJAZKSZy0O1F8GcweZC0wd9rxmBuxvplptY8Vs5Tur+SwzrvI7BRB2A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zmN+O/MMxnIPRREcZP1DshVr4Mf/RyAyABZGRu7hras=;
- b=kWNC14wmDiIU1hgJfB56fdc3FnSvohhfuMgOMG9k/dn24dfgWDZtb/YQv0dOwFPk+BYvUkvtuBh6zk71fGA+3AShWlZkYGhQbkk8+8Mp7G/rM7+NeW9JhNOBVkxFmfRbebwuu90xGvD+X7+c81OM9snk0QnlUs1iXDKUUzO0VOpMS3aZ5x3P9hviDDaiN7NuAcwgnIibDRw6i4rSVi6uqNr0Gte3oyhz3xKX26cQi1bh4IUMGAeLCj7sTAcs6rary8fRm+7ykdEZz6pH9N4LUNmvT9nUhKKIdmG2kY2WmkwOULkWrj/49+EdRQi2BdCOdsifM84uGMBnkczQbaRSjA==
-Received: from DS7PR03CA0120.namprd03.prod.outlook.com (2603:10b6:5:3b7::35)
- by MN6PR12MB8470.namprd12.prod.outlook.com (2603:10b6:208:46d::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6340.30; Tue, 2 May
- 2023 16:18:38 +0000
-Received: from DM6NAM11FT104.eop-nam11.prod.protection.outlook.com
- (2603:10b6:5:3b7:cafe::83) by DS7PR03CA0120.outlook.office365.com
- (2603:10b6:5:3b7::35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6340.31 via Frontend
- Transport; Tue, 2 May 2023 16:18:38 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- DM6NAM11FT104.mail.protection.outlook.com (10.13.173.232) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6363.21 via Frontend Transport; Tue, 2 May 2023 16:18:38 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Tue, 2 May 2023
- 09:18:28 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Tue, 2 May 2023
- 09:18:27 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
- Transport; Tue, 2 May 2023 09:18:27 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 6.3 00/11] 6.3.1-rc1 review
-In-Reply-To: <20230428112039.886496777@linuxfoundation.org>
-References: <20230428112039.886496777@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA0033E9
+	for <patches@lists.linux.dev>; Tue,  2 May 2023 17:00:07 +0000 (UTC)
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-b9da6374fa2so5036699276.0
+        for <patches@lists.linux.dev>; Tue, 02 May 2023 10:00:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683046806; x=1685638806;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2JuzgaRSwqX93Paz8QMIW2w6sN1tsO1/zDhr8bQyJhU=;
+        b=eFRn/beJBSstmGMrZtoYnDVn0LbYK/XQfQeez8QUz+OFuKfJjo5HdP0RhIVCl/oKoQ
+         0beAEmckSFMVmC/FvrSqxNkyd/oze7dqbUYNYYXtZhFLwp34FhEmy+PyxECIglxEob3b
+         h61xNGFSSStI3aKEEiSetu0lubr5OPti/2v7lBAYxz11WmypJFzep6Du33BINW45Xa4O
+         QtyuxfJjPl03PTmspIcq4lRLFMIhqbtK2KGRY8b4JK4IZrUKw8SSqo8G/pv8cFF5w2s0
+         XU7leAQ+qTmAmfsJTn6tZGCiJNOZrrU7hDNgd9diAFWPrLAfzfDGiMxJsJdhUtD1u7pq
+         XA8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683046806; x=1685638806;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2JuzgaRSwqX93Paz8QMIW2w6sN1tsO1/zDhr8bQyJhU=;
+        b=MnHk80qe5EK4a2Oi5OfJvsfUelHn/utVyXVSmY2XwAfTGG15ElmVD+dIA6AuMNlvSC
+         U35aTx2qpIZ7IrKGKVCPp+TTa9lz+PTJNuG2k4oL0jn+TVSmfaQTNuSqs8NmMfVLl4Fu
+         uQt2vDiDAnsPOMGNInERVmG/9n+e7Z/VC1jlQH3gsZRysLtLKF4MVpEAXqtvwU2Zy3uH
+         AevDVDDxLTgKKBv+hd5v3o1ri1tBCJ68y5HAAcaMJYjPbezJsLMpon9Gl2RH1cdKZXPH
+         PsLESqxIgQxOjMpR7kxyq6OA2rHnM9CSvPxgaFMpxa32SN6Qe/F0lonfuqtyOloj45CU
+         lqjQ==
+X-Gm-Message-State: AC+VfDxFyONdvM68iPHL8Jt0fopjME9uiYV26HVQiDrRFyo/4NNwx5cR
+	bv66LQTg3fdMcPdFnQlTnUGZVFsHa926CjT4sUo=
+X-Google-Smtp-Source: ACHHUZ6bE/xq2Qn+iEAMe8Oxl5bvh8V3EXlR1Li/Xdmzx4xFCozf90pZSHDYVUQp6VAj57DeQOOyUAOUucuphEvie0U=
+X-Received: by 2002:a25:cd45:0:b0:b9d:7887:4423 with SMTP id
+ d66-20020a25cd45000000b00b9d78874423mr12778541ybf.16.1683046806559; Tue, 02
+ May 2023 10:00:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <801db81f-0bdf-48fa-91eb-ced63f922352@rnnvmail205.nvidia.com>
-Date: Tue, 2 May 2023 09:18:27 -0700
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6NAM11FT104:EE_|MN6PR12MB8470:EE_
-X-MS-Office365-Filtering-Correlation-Id: bc964329-af43-4108-ecc2-08db4b28e33c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	/+jSsEALe2UADJLxCMjxOePaXmqBD1nmhf7QQrRQWL4oGi5Q217nmkX46mInYyS2JproGLA+5+WmPgd98DPT706QmTWBRq3A3rtM6r+X2o0PG2Wqjq/Ad8rXSvMIayTiIytBSqFO+4L3NX9ZzQjidLXTOjHJrw9aJMZl5NvFy5qM3Q1geKBwqLaMGfCCwO6Stz2VfkuYhB4fw+zoAqlXCLRRsE9GNtA/9L0qeKsmjaW5Ul8LBNK+658v497ARS7zX5ye57tvSQVeInsyfWmv/1oEf+pjoN2zw/T4s07ayWCqsHbuccd9ggTDwIPbbtNqE9h/bvqhUNBQXuNfMmp6W9BhQIKj8ORbSIUqV5zA0B26DEPNvJgR9uEAU/0WU1z7XeFE0R7uSOOrYHL/zHC1Fb2Gb+PLA1w73g9ViGdiI9YZRvuqwmoHiTZj+on3sgtvXjXr06jFJFb7/wAlZE2tnO8QPfVf/yxDCNKvua1eP550RjjIw12dMDH76V3ybrjRAlxVi0ZrnNkSap2K4ob+CS6fsycgRySk1mZhyxvZpfDRAPIRdWrHVOap9fGeCI1z4KniRvvxtajd1M2lyQ8kopzxrCvoRkU0N5zlBXEMbD252ZPKCdXVCQfcGNdhbs/frNc/GCSIpnLRPA7SRJWq3qQQyOr2EH2jlPQS03pu6phPJec0woaGub4vk/j+hkrI3u6GFJEFU2GGoFJM3lsvYSaIGks1w8ADxnjLQyuvzmi2555sChqG+qOHDJlr2IU0
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(396003)(346002)(136003)(376002)(451199021)(40470700004)(36840700001)(46966006)(316002)(6916009)(4326008)(2906002)(31686004)(41300700001)(54906003)(70586007)(966005)(70206006)(336012)(426003)(8936002)(40460700003)(8676002)(36860700001)(7636003)(5660300002)(86362001)(47076005)(7416002)(40480700001)(82310400005)(186003)(478600001)(31696002)(356005)(82740400003)(26005);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 May 2023 16:18:38.4690
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: bc964329-af43-4108-ecc2-08db4b28e33c
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DM6NAM11FT104.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8470
+References: <20230502125306.358283-1-aliceryhl@google.com>
+In-Reply-To: <20230502125306.358283-1-aliceryhl@google.com>
+From: Wedson Almeida Filho <wedsonaf@gmail.com>
+Date: Tue, 2 May 2023 13:59:56 -0300
+Message-ID: <CANeycqo+htksD_nj-eyCTOtE0TQHJR+dHZ1Hu8cL5eXNt4cd=A@mail.gmail.com>
+Subject: Re: [PATCH] rust: str: add conversion from `CStr` to `CString`
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 28 Apr 2023 13:27:35 +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.1 release.
-> There are 11 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 30 Apr 2023 11:20:30 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.1-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Tue, 2 May 2023 at 09:53, Alice Ryhl <aliceryhl@google.com> wrote:
+>
+> These methods can be used to copy the data in a temporary c string into
+> a separate allocation, so that it can be accessed later even if the
+> original is deallocated.
+>
+> The API in this file mirrors the standard library API for the `&str` and
+> `String` types. The `ToOwned` trait is not implemented because it
+> assumes that allocations are infallible.
+>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> ---
+>  rust/kernel/str.rs | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
+>
+> diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
+> index b771310fa4a4..54935ff3a610 100644
+> --- a/rust/kernel/str.rs
+> +++ b/rust/kernel/str.rs
+> @@ -2,6 +2,7 @@
+>
+>  //! String representations.
+>
+> +use alloc::collections::TryReserveError;
+>  use alloc::vec::Vec;
+>  use core::fmt::{self, Write};
+>  use core::ops::{self, Deref, Index};
+> @@ -199,6 +200,12 @@ impl CStr {
+>      pub unsafe fn as_str_unchecked(&self) -> &str {
+>          unsafe { core::str::from_utf8_unchecked(self.as_bytes()) }
+>      }
+> +
+> +    /// Convert this [`CStr`] into a [`CString`] by allocating memory and
+> +    /// copying over the string data.
+> +    pub fn to_cstring(&self) -> Result<CString, TryReserveError> {
+> +        CString::try_from(self)
+> +    }
+>  }
+>
+>  impl fmt::Display for CStr {
+> @@ -584,6 +591,20 @@ impl Deref for CString {
+>      }
+>  }
+>
+> +impl<'a> TryFrom<&'a CStr> for CString {
+> +    type Error = TryReserveError;
 
-All tests passing for Tegra ...
+Wouldn't `AllocError` make more sense? Or even Error (with ENOMEM value).
 
-Test results for stable-v6.3:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    130 tests:	130 pass, 0 fail
+`TryReserveError` is documented as "The error type for try_reserve
+methods." -- that fact the we use a `Vec` is an implementation detail,
+I feel it's better not to leak this fact through the public API.
 
-Linux version:	6.3.1-rc1-gf45bb34ed520
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
-
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-
-Jon
+> +
+> +    fn try_from(cstr: &'a CStr) -> Result<CString, TryReserveError> {
+> +        let len = cstr.len_with_nul();
+> +        let mut buf = Vec::try_with_capacity(len)?;
+> +        buf.try_extend_from_slice(cstr.as_bytes_with_nul())?;
+> +
+> +        // INVARIANT: The CStr and CString types have the same invariants for
+> +        // the string data, and we copied it over without changes.
+> +        Ok(CString { buf })
+> +    }
+> +}
+> +
+>  /// A convenience alias for [`core::format_args`].
+>  #[macro_export]
+>  macro_rules! fmt {
+>
+> base-commit: ea76e08f4d901a450619831a255e9e0a4c0ed162
+> --
+> 2.40.1.495.gc816e09b53d-goog
+>
