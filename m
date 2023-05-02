@@ -1,249 +1,142 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2114.outbound.protection.outlook.com [40.107.113.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77A48C1C
-	for <patches@lists.linux.dev>; Mon,  1 May 2023 22:15:35 +0000 (UTC)
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1aaf91ae451so13628045ad.1
-        for <patches@lists.linux.dev>; Mon, 01 May 2023 15:15:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1682979335; x=1685571335;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0raH1j8ZUKh/4UCAXmruhx5VLOti7TNZ6SAauWoXEBk=;
-        b=EqofVeRkP6qKn+AFCEdWEoQwXkRwWVvec95qDbq8HeK6vMA68+P1RGt1KssyIGeLdL
-         /tidnKMvryR1PR6Hpn29CbgyWCqYZ5fxYSVCSssm64L0/g+bwjRC2QplRHP60mzb901U
-         88mG1efHI5AW8gUEITxjRKtLyGSd7StlZxTEOasUC8pUt0i+OHlukmlzuyPRPCDmJAlQ
-         Rn7RvNB1ilI61Mg/lhvU4bgkM3TFKnFp/GFuV52RkYXVfe2miETmw0aSD1KOoU0VAwG0
-         rX0RqbILc2etOWcns02LhmqWmls83kR6vECdz55rKQEzogUsA+oJMj8HQWy+o/P1IgKz
-         1AeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682979335; x=1685571335;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0raH1j8ZUKh/4UCAXmruhx5VLOti7TNZ6SAauWoXEBk=;
-        b=jJRI0NoTX5VJYN5/6XTsuaE2IysKr0H1C2fCOdDOSmRaU3sp6aVXrAUiyr6bAtqohw
-         iqugMcSiyjLDWG9ENOOJOwYaWkhpnlq1Nh7+m1E/UcnlCAQfQOGc+YUrgDxetNlGHcYS
-         PFcjeRQYdPp/kwCzj835A3TN01JCqD1wiJQkhglpvbXTcWteExkmCH5u37bzLF2WY58H
-         ohCfddmyDGNkfAxHBl0WiP9AkoF6U1xHXdDTO7fzmTM+mCKdvSitb97Bxmx9XD1f6tuP
-         j+Um69i2NJcZkCDKnl6bEGf1aECGRZnaw2v22jsFOopuJR4wNVimgxRKX0cqC8uwmUhL
-         ewCQ==
-X-Gm-Message-State: AC+VfDzWhScqgn5H1UdbokLItipnOputenRThEXWIk2r8IYIq+93xMM9
-	OpI+58jJ1Aw56iN3OqZbWZ85+UcpeNHWlJbC+Vuu8Q==
-X-Google-Smtp-Source: ACHHUZ7SJ+lx1QcWYu/jxX/bM1Lg29Q4d4/tH6ynO/js+mvlBne7nKLId+HZvdaDY6JxiY/hDxZpydQmcN9fpXM6uhA=
-X-Received: by 2002:a17:903:32cc:b0:1aa:f3c4:74e5 with SMTP id
- i12-20020a17090332cc00b001aaf3c474e5mr5834252plr.0.1682979335031; Mon, 01 May
- 2023 15:15:35 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23AA654
+	for <patches@lists.linux.dev>; Tue,  2 May 2023 05:39:14 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NJOPtUrv5uOxQs4ufm9t7lcduz3oTmAS7QhvXz3qoFOJk/4qKv3BchSAI8imbKqT2nA02cKaB/hpe6h/yyY7QUmsfJYQb2aLCkCUBrMx4A4fp2UnYXBEFJEvcv8bVs3qMphJKYmFJmpxQ2fSexvWh9zreKN4xwstqg1EBv9FXHxk+Mk6FUbtOXOx0dGeLlmSOFpdcnPQShb4KJ6/L12n5Pehkb8i4hJoaef8qP5h0pGiuxk1Y3UOCTw8TahOcOksJzsgnUh7MI17kq6SFsb5rJmfRMfwanYCcGv3TkTtAiMiuogWfQNdisWJorxIR3ePLxwffwE1MIJxQ5zMTKgJeA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8vpTlrKJKLnryuQ1+6l8mXlFKJFGbOay3mirt4XZwF8=;
+ b=I2T9J3WDX4RrzZbyQa8Y8Yv3LqdbCeFh3ZmbwVwoJHbbv4ARi3HbEfd37X1Oo9AE68AnmcXN140k6dyov6ZGrw8FqM6o5uV5JUW/FInfVEZbozZ1Q1HI34QDeHZM5rwrApRqoaTWhMbUvQBDEhX5w1H44DZsTYu4WO4eKkChn8o4VVdhFAdSJ+Ciyezd7hKcSYVtDzWqmtrUBoSRlrWjT4E/kqnFC2EsmquNY4PMWdVhqvgY+iZtJpCQGwlCG/gtKqpdDPzpXYsa/hG5ljLKkF6gNB63NHxMHHMs2+oQpJF9tEA5MLGYgJ3H8cpnCz4kErlrgapPrM61oJwE8DGU7w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
+ dkim=pass header.d=renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8vpTlrKJKLnryuQ1+6l8mXlFKJFGbOay3mirt4XZwF8=;
+ b=H64HzD3eSGkwZRilA6q6BtLyLpwgwD0ZBYehog0jXeCyi/d29O1K1srPBnd9LbKvDbYH/2+NcLQunIGKgoFPnVrUqDciUGhqnE2LA//tYor26LO7EJGhbc34LnBSyN+/VruAQ9zkXXsFFgrLAVUfNJT+RkuER7/cwifXwKAdqgI=
+Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
+ by TYWPR01MB9389.jpnprd01.prod.outlook.com (2603:1096:400:1a4::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6340.31; Tue, 2 May
+ 2023 05:39:11 +0000
+Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
+ ([fe80::8b5:5f09:5a0f:370]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
+ ([fe80::8b5:5f09:5a0f:370%7]) with mapi id 15.20.6340.031; Tue, 2 May 2023
+ 05:39:11 +0000
+From: Chris Paterson <Chris.Paterson2@renesas.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
+	<stable@vger.kernel.org>
+CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
+	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net"
+	<linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
+	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
+	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
+	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com"
+	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
+	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
+	"rwarsow@gmx.de" <rwarsow@gmx.de>
+Subject: RE: [PATCH 6.2 00/15] 6.2.14-rc1 review
+Thread-Topic: [PATCH 6.2 00/15] 6.2.14-rc1 review
+Thread-Index: AQHZecSpB3jQ4X9gB0GFjN/aHuIEj69GfCFg
+Date: Tue, 2 May 2023 05:39:11 +0000
+Message-ID:
+ <TY2PR01MB378886087FBE653B525422A9B76F9@TY2PR01MB3788.jpnprd01.prod.outlook.com>
+References: <20230428112040.137898986@linuxfoundation.org>
+In-Reply-To: <20230428112040.137898986@linuxfoundation.org>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=renesas.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|TYWPR01MB9389:EE_
+x-ms-office365-filtering-correlation-id: 036fc2c4-d051-4cc6-ffc5-08db4acf8e7a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ I5qfF4PI3f9VxcDqsexSgRUlrKrcebwCvoZXvoj8ZE5QociAPrJQ6o1xvSX7JGR4hiBRFphNrhxtIkdq8BQo2Kk4P7vG5KZZwzLZGxDo4v/vdrdH9cAdW9Y0mDvikGgNe2i/2OP5ksnqx5H5eviP21p7hP0UI/WFbFdSAzTBMkKj9UbguHBNClVG1As5TE+mR+K9fcYzcMztHkTnDRikN6j9MEtWc2Hz/jDiCsHYFcF+AZ1ytpy4dGNzRZ2WdKlzth/4OW9Ivciosj/AAH6pUsTpeCb9igdK96L/VxwnE6XD33TLiNH+qJRbkLi3xew1/jUo/GiVXFTZILUhQ3yMKeDL9R44/4DbiGNBFiANSD+LQuFueiXv1w7YEL3izAyKpp9rgK4VYYo1F9e1Ll+NCauBw+O5HSi6DdrFlIU31XVUGHSVzkqZBZ6f+Vj0LYc6NjZR2DMFCojfUDiNL/jntpMbCFCBC7lbZwLh/5eKLJCvzPrWUQ/wfR6y68Nhc98YnLPfwFl5t1qGfdrsTcCf58X60JcV8Ojbfw7p+D17WQMFonGlObpP1yv2ZAnv4Y4vswJ/2+cRUBgafhMlyhnfaX1vuQgl67tXc12/qXfgYRugH9HEQL6lry8ql7tq8D7M5Zyi+cLOPmvV3XZqOL1JDA==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(39860400002)(376002)(136003)(346002)(396003)(451199021)(7696005)(316002)(66946007)(66476007)(66556008)(66446008)(64756008)(71200400001)(38070700005)(54906003)(4326008)(41300700001)(110136005)(76116006)(86362001)(33656002)(966005)(26005)(6506007)(8936002)(5660300002)(52536014)(7416002)(2906002)(8676002)(478600001)(55016003)(4744005)(122000001)(186003)(9686003)(38100700002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-3?Q?cIrT60sGcrJFklthHt8Zx7TrUVJwPHrV51dDfV3MfNe6a/vxkhol+B4v/d?=
+ =?iso-8859-3?Q?pcT6ib699vrZBG8USzpcmmqdItFWdetGEgvwRTE2XGhst1bzI8vFRK9JPL?=
+ =?iso-8859-3?Q?7dERYiOgT4Lpv2sVlU+r/HZuQ3ZucznhxpyAoU7DqG8yTo2LpgXBjNy9r9?=
+ =?iso-8859-3?Q?wp/BOFJ4xYMbKHV6z51vF6uarwjNgR/GL9d4WYtTgw8kVa7XgfFr5x9cK3?=
+ =?iso-8859-3?Q?80UrMQogPp13DyW9312vDajQqazao/TF/X1Oay5ErBIghKuDZCdF2ChfnP?=
+ =?iso-8859-3?Q?Lxm+dxTKFuebdSxyYMYu7GXl0TM/7Rl7XNDYUXsMBgQYl7tsJtSd16iP23?=
+ =?iso-8859-3?Q?emtu1sBSvFrNK6iRM2bEuqgX6XqcS9HpPukFts0jJMHvgLt27dWKHEgpES?=
+ =?iso-8859-3?Q?Sx/EijNs9qordbe1zlCC499XiKCzB8xCrfF1U8To6McLVZfNozRnSO+TBN?=
+ =?iso-8859-3?Q?RX22LeAy2OnFspmVecanErvV1wCbzaxPJczH+/F3xmeQ75oJaunyMSRchg?=
+ =?iso-8859-3?Q?m5Kihem7ER1gTqK8mdbi4PN9yR6fn+WFjqWUjgNFdDvpigAjlLAZMYHRkZ?=
+ =?iso-8859-3?Q?vcuz2YwHtAF+JecGzCok6OPtvWqRp25W2IXZEm+8ZarGCqf3W2qCJGUwJF?=
+ =?iso-8859-3?Q?xdOFUutvlhllitUgKgLmvh0CqaQm4Qqs5D8Sr6PVpXC7TCAOAsfE0oF6Xk?=
+ =?iso-8859-3?Q?8bA/6D/QPXjD4oGj0IqaXbNj3b/mQkF7zfZZPdQLeD7cyPZ3sIw8I58ko4?=
+ =?iso-8859-3?Q?cfaRWo5gv3RcTsk5OM7Q2pYY/c8A09MzmPY7JiYQVOSOjn05T0otXx3ulA?=
+ =?iso-8859-3?Q?MsNzuhYkMgm+ymQrNF77Mnocfob5DyrsJoZTr6alkbquiIpCzA4B6KX68K?=
+ =?iso-8859-3?Q?2XSLU3c0UFJIxBmvX8eqF14WUjgCjkds325QVY7+6V+SIpFta+Zpo1IVEc?=
+ =?iso-8859-3?Q?Cb37TT2il0iVdw9tqBjoYvwormIGd+6jsf0eCwXrwZrxP+lSp4TfTVyVCE?=
+ =?iso-8859-3?Q?5H/qEdbCsVfz4rq3wcYNfTzZT92+boGaAlGL8jq8xQhmXC3lOMsJzcX+kz?=
+ =?iso-8859-3?Q?k/RLsnuv81r/WIegCkb0BCqI5MvLBuL4NEaOwrv7DidTKRiyKv9X4ljiGC?=
+ =?iso-8859-3?Q?NtmR2cl5wm7rtAo7dJFTswkHUNlfeYbpdvOKuIyV2PJ8MfMgf1V9dqLL5F?=
+ =?iso-8859-3?Q?qExMeKkpyJFXXn0ocv2WA+lxopDpNHA6COLdIYuVGpObqadyi/oVKWY4OT?=
+ =?iso-8859-3?Q?aOpwEhwkqgBYNVMXaco+HabqGnIAt9RpSM8bwInc2Yk4mND/TVPE2WxA/v?=
+ =?iso-8859-3?Q?eCKSfpLtWtDOVqnqUEvDKshBNth0SefF8ribHwCHKgBGzuwsDyiitYPH4z?=
+ =?iso-8859-3?Q?OhF/DX4qrSqSUMWMcC12zJyMXwXbrcf5ytWs7jPWqBTIMu79CwkIJjKYr6?=
+ =?iso-8859-3?Q?Wp7Avbn6vX6OUJNrhw/hQCWbL4MYGXkcGWbH1HkP2XT/JWuUpib/srTgPK?=
+ =?iso-8859-3?Q?Kuf9Mb66N5/7twcd5o19diRfYK6mb3Ksgu9R/X/CZ48klimeIfaIAzlYfJ?=
+ =?iso-8859-3?Q?uk2eYle2ZvAy1j9n9F+fXylv56ZKaC6oJYiIdDjoTPOXTWgmg4bUAYQH5q?=
+ =?iso-8859-3?Q?OSKyPBJ2ISVojL/Im7Uk6ZenVhHFQZKJDJOHzN2cskbDriIDumeIbpdg?=
+ =?iso-8859-3?Q?=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-3"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230501-sp7021-field_prep-warning-v1-1-5b36d71feefe@kernel.org>
- <20230501213714.GA1007102@dev-arch.thelio-3990X> <CAKwvOdkgSpKMkOGR9qNMxscxuYuYDxnsqTSZDmUtLP5QLSWWMA@mail.gmail.com>
-In-Reply-To: <CAKwvOdkgSpKMkOGR9qNMxscxuYuYDxnsqTSZDmUtLP5QLSWWMA@mail.gmail.com>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 1 May 2023 15:15:22 -0700
-Message-ID: <CAKwvOdm_prtk1UQNJQGidZm44Lk582S3p=of0y46+rVjnSgXJg@mail.gmail.com>
-Subject: Re: [PATCH] clk: sp7021: Adjust width of _m in HWM_FIELD_PREP()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: qinjian@cqplus1.com, mturquette@baylibre.com, sboyd@kernel.org, 
-	trix@redhat.com, linux-arm-kernel@lists.infradead.org, 
-	linux-clk@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
-	Arnd Bergmann <arnd@arndb.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 036fc2c4-d051-4cc6-ffc5-08db4acf8e7a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 May 2023 05:39:11.1729
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: YzKjQDlxhuwzk7yMXQMcfHh/x5uWP2R6QGannEHGQ8oT61mNI/bYUd7pqx9F3mLdIQV+yKf05NtobZuNpmyeC6WV0E+QpFaXIIs6OnoraFU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWPR01MB9389
 
-On Mon, May 1, 2023 at 3:03=E2=80=AFPM Nick Desaulniers <ndesaulniers@googl=
-e.com> wrote:
->
-> On Mon, May 1, 2023 at 2:37=E2=80=AFPM Nathan Chancellor <nathan@kernel.o=
-rg> wrote:
-> >
-> > On Mon, May 01, 2023 at 02:34:47PM -0700, Nathan Chancellor wrote:
-> > > When building with clang + W=3D1, there is a warning around an intern=
-al
-> > > comparison check within the FIELD_PREP() macro, due to a 32-bit varia=
-ble
-> > > comparison against ~0ull:
-> > >
-> > >   drivers/clk/clk-sp7021.c:316:8: error: result of comparison of cons=
-tant 18446744073709551615 with expression of type 'typeof (_Generic((_m), .=
-..' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-o=
-ut-of-range-compare]
-> > >           r0 |=3D HWM_FIELD_PREP(MASK_SEL_FRA, clk->p[SEL_FRA]);
-> > >                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > >   drivers/clk/clk-sp7021.c:45:15: note: expanded from macro 'HWM_FIEL=
-D_PREP'
-> > >           (_m << 16) | FIELD_PREP(_m, value);     \
-> > >                        ^~~~~~~~~~~~~~~~~~~~~
-> > >   include/linux/bitfield.h:114:3: note: expanded from macro 'FIELD_PR=
-EP'
-> > >                   __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: ")=
-;    \
-> > >                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > >   include/linux/bitfield.h:71:53: note: expanded from macro '__BF_FIE=
-LD_CHECK'
-> > >                   BUILD_BUG_ON_MSG(__bf_cast_unsigned(_mask, _mask) >=
-     \
-> > >                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^=
-~~~~~~
-> > >   note: (skipping 1 expansions in backtrace; use -fmacro-backtrace-li=
-mit=3D0 to see all)
-> > >   include/linux/compiler_types.h:397:22: note: expanded from macro 'c=
-ompiletime_assert'
-> > >           _compiletime_assert(condition, msg, __compiletime_assert_, =
-__COUNTER__)
-> > >           ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~~~~~~~~
-> > >   include/linux/compiler_types.h:385:23: note: expanded from macro '_=
-compiletime_assert'
-> > >           __compiletime_assert(condition, msg, prefix, suffix)
-> > >           ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > >   include/linux/compiler_types.h:377:9: note: expanded from macro '__=
-compiletime_assert'
-> > >                   if (!(condition))                                  =
-     \
-> > >                         ^~~~~~~~~
-> > >
-> > > This is expected given the tyoes of the input. Increase the size of t=
-he
->
-> s/tyoes/types/
->
-> Thanks for the patch!
->
-> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
->
-> Nathan, do you think anything can be done in FIELD_PREP or even
-> __BF_FIELD_CHECK using _Static_assert (or static_assert from
-> include/linux/build_bug.h) to help elucidate to developers that their
-> mask is too small?  I guess the line 71 of include/linux/bitfield.h
-> that is trying to warn via BUILD_BUG_ON is itself triggering a
-> -Wtautological-constant-out-of-range-compare warning that is perhaps
-> distracting from what the issue is?
->
-> If you're able to reproduce the issue locally still, does this seem to wo=
-rk?
-> ```
-> diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
-> index ebfa12f69501..762a27b5ae15 100644
-> --- a/include/linux/bitfield.h
-> +++ b/include/linux/bitfield.h
-> @@ -62,15 +62,15 @@
->
->  #define __BF_FIELD_CHECK(_mask, _reg, _val, _pfx)                      \
->         ({                                                              \
-> +               static_assert(__bf_cast_unsigned(_mask, _mask) <=3D      =
- \
-> +                             __bf_cast_unsigned(_reg, ~0ull),          \
-> +                             _pfx "type of reg too small for mask");   \
->                 BUILD_BUG_ON_MSG(!__builtin_constant_p(_mask),          \
->                                  _pfx "mask is not constant");          \
->                 BUILD_BUG_ON_MSG((_mask) =3D=3D 0, _pfx "mask is zero"); =
-   \
->                 BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?           \
->                                  ~((_mask) >> __bf_shf(_mask)) & (_val) :=
- 0, \
->                                  _pfx "value too large for the field"); \
-> -               BUILD_BUG_ON_MSG(__bf_cast_unsigned(_mask, _mask) >     \
-> -                                __bf_cast_unsigned(_reg, ~0ull),       \
-> -                                _pfx "type of reg too small for mask"); =
-\
->                 __BUILD_BUG_ON_NOT_POWER_OF_2((_mask) +                 \
->                                               (1ULL << __bf_shf(_mask)));=
- \
->         })
->
-> ```
+Hello Greg,
 
-Hmmm....maybe not:
-```
-drivers/gpu/drm/i915/i915_hwmon.c:97:14: error: static assertion
-expression is not an integral constant expression
-        reg_value =3D REG_FIELD_GET(field_msk, reg_value);
-                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-./drivers/gpu/drm/i915/i915_reg_defs.h:87:44: note: expanded from
-macro 'REG_FIELD_GET'
-#define REG_FIELD_GET(__mask, __val)    ((u32)FIELD_GET(__mask, __val))
-                                              ^~~~~~~~~~~~~~~~~~~~~~~~
-./include/linux/bitfield.h:154:3: note: expanded from macro 'FIELD_GET'
-                __BF_FIELD_CHECK(_mask, _reg, 0U, "FIELD_GET: ");       \
-                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-./include/linux/bitfield.h:65:17: note: expanded from macro '__BF_FIELD_CHE=
-CK'
-                static_assert(__bf_cast_unsigned(_mask, _mask) <=3D       \
-                ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-./include/linux/bitfield.h:61:70: note: expanded from macro '__bf_cast_unsi=
-gned'
-#define __bf_cast_unsigned(type, x)     ((__unsigned_scalar_typeof(type))(x=
-))
-                                                                         ^
-./include/linux/build_bug.h:77:50: note: expanded from macro 'static_assert=
-'
-#define static_assert(expr, ...) __static_assert(expr, ##__VA_ARGS__, #expr=
-)
-                                 ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~=
-~
-./include/linux/build_bug.h:78:56: note: expanded from macro '__static_asse=
-rt'
-#define __static_assert(expr, msg, ...) _Static_assert(expr, msg)
-                                                       ^~~~
-```
-so there's probably a use of REG_FIELD_GET that is
-__builtin_constant_p but not an integral constant expression. That's
-too bad...
+> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Sent: Friday, April 28, 2023 12:28 PM
+>=20
+> This is the start of the stable review cycle for the 6.2.14 release.
+> There are 15 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+> Responses should be made by Sun, 30 Apr 2023 11:20:30 +0000.
+> Anything received after that time might be too late.
 
->
->
-> > > temporary variable in HWM_FIELD_PREP() to eliminate the warning, whic=
-h
-> > > follows the logic of commit cfd6fb45cfaf ("crypto: ccree - avoid
-> > > out-of-range warnings from clang") for the same reasons.
-> >
-> > Gah, I forgot:
-> >
-> > Reported-by: kernel test robot <lkp@intel.com>
-> > Link: https://lore.kernel.org/202303221947.pXP2v4xJ-lkp@intel.com/
-> >
-> > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > > ---
-> > >  drivers/clk/clk-sp7021.c | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > >
-> > > diff --git a/drivers/clk/clk-sp7021.c b/drivers/clk/clk-sp7021.c
-> > > index 8fec14120105..11d22043ddd7 100644
-> > > --- a/drivers/clk/clk-sp7021.c
-> > > +++ b/drivers/clk/clk-sp7021.c
-> > > @@ -41,7 +41,7 @@ enum {
-> > >  /* HIWORD_MASK FIELD_PREP */
-> > >  #define HWM_FIELD_PREP(mask, value)          \
-> > >  ({                                           \
-> > > -     u32 _m =3D mask;                          \
-> > > +     u64 _m =3D mask;                          \
-> > >       (_m << 16) | FIELD_PREP(_m, value);     \
-> > >  })
-> > >
-> > >
-> > > ---
-> > > base-commit: d54c1fd4a51e8fbc7f9da86b0cd338a4f7cd2bb2
-> > > change-id: 20230501-sp7021-field_prep-warning-223f17aeea8e
-> > >
-> > > Best regards,
-> > > --
-> > > Nathan Chancellor <nathan@kernel.org>
-> > >
->
->
->
-> --
-> Thanks,
-> ~Nick Desaulniers
+Sorry it's late. Weekend & national holidays in the UK etc...
 
+CIP configurations built and booted with Linux 6.2.14-rc1 (a451b003c306):
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/8=
+52034529
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
+ux-6.2.y
 
+Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
 
---=20
-Thanks,
-~Nick Desaulniers
+Kind regards, Chris
