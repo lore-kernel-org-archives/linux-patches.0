@@ -1,78 +1,90 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88C9DF43
-	for <patches@lists.linux.dev>; Wed,  3 May 2023 19:18:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
-	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=4ZmM4HTiK/znMvvowe1LUd4PXCYNKLo7UX2p4qgTXGU=; b=VOJAVkEssu13qwWK2bqnx1KNc1
-	GZOztv8i2scsmcBqy1XJuLA7jOp8fZ5iN9T0EgmHYFXY0yTYipLKabV+U2edQrMvVEaN1TAVLpjeb
-	J6u02nSaz1f6pUu/q13fENzJCV/2VrXRNRRZquKp5PlaZ0BSYwTA6A/X6ph81tFdjzGSPNmI+jsPW
-	H0J5Cog8m3/n8MlP8061pfzaWc5+YdXBOhOE99YdAYPr+1luMCswGomVXPmxeUgUUK3ieEsZYMd4X
-	Sp+Z5Vg3WaBmIj77MONOGh37xsRghjira2MU4x7F/n01heKmwQohqL6ouIdyLpmT16BaLavGhgqpw
-	7ltG5cEQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1puHzB-005ZOl-2h;
-	Wed, 03 May 2023 19:17:57 +0000
-Date: Wed, 3 May 2023 12:17:57 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com,
-	j.granados@samsung.com, patches@lists.linux.dev,
-	ebiggers@kernel.org, jeffxu@google.com, akpm@linux-foundation.org,
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mcgrof@kernel.org
-Subject: [GIT PULL] sysctl changes for v6.4-rc4 v2
-Message-ID: <ZFKzZeAs5Mdfv5ha@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03303DF45
+	for <patches@lists.linux.dev>; Wed,  3 May 2023 19:24:10 +0000 (UTC)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-50bd2d7ba74so10028493a12.1
+        for <patches@lists.linux.dev>; Wed, 03 May 2023 12:24:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1683141849; x=1685733849;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lnk0azjKtvGmutcc0sPTCISsVHec16NyojRU9ojJrvg=;
+        b=causNhxWqRQ7hQahP6eEUcGtbqXlmaI3YjTVxYJjY8hH6lBDVDv9aoY+LBEKZ72thM
+         tLotGm4fqFDlI9ND1YgaeDbYcN3cKR8+ZPfh1D12xoBvGXZG+0gsqkWdabkdNVNUEFmH
+         SkOps+0GJ9eIygVoq/Ds5a0iys+ZPPeDDGr4g=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683141849; x=1685733849;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lnk0azjKtvGmutcc0sPTCISsVHec16NyojRU9ojJrvg=;
+        b=Agfh+uGz2UigfSXD+etcp/prPZLU9/iXFN0Lwkwajv1T8/z2CPI8pksP3w+uUFgzF8
+         kimAi9z2vqmhIoeeQCMVMjhYDFkkoo5cSeK/NTmIyO1sFQCYC80YXyRseBWXx6+/mVn1
+         9DWqbTi80E+2sxengO1PKD3bWyYMcf6vMQkK3XCaBVp55/ct70NWlLPH+b/fPFSmzBiD
+         QNvKuFSfjAlR3TE9dbJYMzgmW6VN4oLhoIPDt3tR344PZyXBmf3/JgCa7oIl08IJVU57
+         7xYud1bFMg7iuzOaT3QyF6cg0HvJ8YatrNbL89GyDSOlorHW86qyd/tSfqGQBQxIZVIs
+         v6RQ==
+X-Gm-Message-State: AC+VfDwgHbO/woxe0qQ0vyBzu/hGRWUxrmbhFpNJDtLQxhMiwksK/YE+
+	sE6kMCNzf1Z4yupS3u10GnX1VcsrziidgWQD/ADdeA==
+X-Google-Smtp-Source: ACHHUZ5kus2hB8HWdYwwbBxXkg9HDpbE+jQqLQOnYpj3nrzpqRq3rlXc66pc2+eeJ6WL6VINL43j/A==
+X-Received: by 2002:a17:907:d1f:b0:961:8fcd:53b2 with SMTP id gn31-20020a1709070d1f00b009618fcd53b2mr3266528ejc.33.1683141848904;
+        Wed, 03 May 2023 12:24:08 -0700 (PDT)
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com. [209.85.208.45])
+        by smtp.gmail.com with ESMTPSA id vv1-20020a170907a68100b00957278cfb2dsm16289336ejc.79.2023.05.03.12.24.07
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 May 2023 12:24:08 -0700 (PDT)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-50bd37ca954so10171414a12.0
+        for <patches@lists.linux.dev>; Wed, 03 May 2023 12:24:07 -0700 (PDT)
+X-Received: by 2002:a17:907:98c:b0:95f:969e:dc5a with SMTP id
+ bf12-20020a170907098c00b0095f969edc5amr2502183ejc.30.1683141846992; Wed, 03
+ May 2023 12:24:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+References: <20230503023329.752123-1-mcgrof@kernel.org> <ZFKKpQdx4nO8gWUT@bombadil.infradead.org>
+ <CAHk-=whGT-jpLRH_W+k-WP=VghAVa7wRfULg=KWhpxiVofsn0Q@mail.gmail.com> <ZFKxl2d+kqYN0ohG@bombadil.infradead.org>
+In-Reply-To: <ZFKxl2d+kqYN0ohG@bombadil.infradead.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 3 May 2023 12:23:50 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgUizDLEhvHdM=7yUmdGMB--CGV1ynMSQrd0r7C06ALUA@mail.gmail.com>
+Message-ID: <CAHk-=wgUizDLEhvHdM=7yUmdGMB--CGV1ynMSQrd0r7C06ALUA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] sysctl: death to register_sysctl_paths()
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com, 
+	j.granados@samsung.com, patches@lists.linux.dev, ebiggers@kernel.org, 
+	jeffxu@google.com, akpm@linux-foundation.org, linux-fsdevel@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The following changes since commit 348551ddaf311c76b01cdcbaf61b6fef06a49144:
+On Wed, May 3, 2023 at 12:10=E2=80=AFPM Luis Chamberlain <mcgrof@kernel.org=
+> wrote:
+>
+> Sorry thought you don't mind a few patches, so ditched the formalities
+> for the pull.
 
-  Merge tag 'pinctrl-v6.4-1' of git://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl (2023-05-02 15:40:41 -0700)
+So I don't mind patches per se, and when there's a reason for them I
+have no problem at all taking them.
 
-are available in the Git repository at:
+The reason is typically something like "let's short-circuit the normal
+channels just to get this trivial thing sorted out and we can forget
+about it", but it can also be just a practical thing like "I'm
+traveling so it would be easier if you'd just pick up this patch
+directly from the mailing list".
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-6.4-rc1-v2
+Or it could be "I don't have a git tree since I'm not a main
+developer, so I just send patches".
 
-for you to fetch changes up to 0199849acd07d07e2a8e42757653ca8b14a122f5:
+All of those are situations where I'll happily take patches directly.
 
-  sysctl: remove register_sysctl_paths() (2023-05-02 19:24:16 -0700)
+But on the whole, when there isn't any real reason to avoid a pull
+request, I'd much rather have the full thing with signature and
+everything...
 
-----------------------------------------------------------------
-sysctl-6.4-rc1-v2
-
-As mentioned on my first pull request for sysctl-next, for v6.4-rc1
-we're very close to being able to deprecating register_sysctl_paths().
-I was going to assess the situation after the first week of the merge
-window.
-
-That time is now and things are looking good. We only have one stragglers
-on the patch which had already an ACK for so I'm picking this up here now and
-the last patch is the one that uses an axe. Some careful eyeballing would
-be appreciated by others. If this doesn't get properly reviewed I can also
-just hold off on this in my tree for the next merge window. Either way is
-fine by me.
-
-I have boot tested the last patch and 0-day build completed successfully.
-
-----------------------------------------------------------------
-Luis Chamberlain (2):
-      kernel: pid_namespace: simplify sysctls with register_sysctl()
-      sysctl: remove register_sysctl_paths()
-
- fs/proc/proc_sysctl.c     | 55 ++++-------------------------------------------
- include/linux/sysctl.h    | 12 -----------
- kernel/pid_namespace.c    |  3 +--
- kernel/pid_sysctl.h       |  3 +--
- scripts/check-sysctl-docs | 16 --------------
- 5 files changed, 6 insertions(+), 83 deletions(-)
+               Linus
