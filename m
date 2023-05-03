@@ -1,40 +1,33 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345CA7F4
-	for <patches@lists.linux.dev>; Wed,  3 May 2023 02:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF0BA21
+	for <patches@lists.linux.dev>; Wed,  3 May 2023 03:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=gZLowJ+U8tFe9A6tdq+4RG9BmgHRQCFQgaNSl8HIKis=; b=SKXJ5IgU6w8xBXNodKYmsbADQa
-	cb8ozKk18M/mDru7G0yM6uTr6c/OC29VFiVzDJFlrCzh+KqsLYMvsJ2QqWMtJtBP+n+Dv5MrGU6H/
-	4TFC1mmuf/viW0hG9+M3JdQRLC+PE5V4O/NK8QS5F89gnuqOWWeLLaoaWwafmOC3SBHDT/frGe8i1
-	Unp/Po+yuLJuV2XbXmIVwtIMbgLumgGqUOCoGSsXI9YLiiErK6K1CRpfqBoMaXaw9xWr6hedF0dTZ
-	PqpMAE1NGqiSUWsRqxYMsFN7qd6/4OvnpvS12cc8+yqPZ8JjPEiv4Yhk4E4mXyTY0XmPBJphzMb7s
-	UdzsfPSw==;
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=ZIADMU0Kl928OS/WKfRbeOaDTqGObzNlyLZhin0OEhA=; b=Z6LjI6NPKvxa7F9MQg2+mHEqf6
+	BatQJO2ZLt9WUOwD0Ti+q3lhN7BjZHsoBx4dRIe/3xl8XgC80Z1Yo0i7T9gbB6Uzb5tjBfYAfVccU
+	3e/bvgfRhNQ89Beg7Y24Y3xyTpChATHEmd+GBHxMmcO0x6/gWY3JnN2i+kodjBfWWUFPE8Y4AKB3a
+	HdOCqzoFLE4a1o2xBnN9YqCH+fFKQBfEnyXgJcaABsWQw9XZN9Q5qI/67H4eG9t7S4YZEUJ32FZ8f
+	CV/HasI9G/AuAsIC8o++ybW6z1AN3AtfY0BoalPBLMZh5os6sa0NAktiSfgNo+12PN26+vhourEfs
+	b7oLqKag==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1pu2J8-0039fH-2V;
-	Wed, 03 May 2023 02:33:30 +0000
+	id 1pu3P7-003FF8-11;
+	Wed, 03 May 2023 03:43:45 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: torvalds@linux-foundation.org
-Cc: ebiederm@xmission.com,
-	keescook@chromium.org,
-	yzaikin@google.com,
-	j.granados@samsung.com,
+To: torvalds@linux-foundation.org,
 	patches@lists.linux.dev,
-	ebiggers@kernel.org,
-	jeffxu@google.com,
-	akpm@linux-foundation.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	linux-modules@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	kernel test robot <lkp@intel.com>,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 1/2] kernel: pid_namespace: simplify sysctls with register_sysctl()
-Date: Tue,  2 May 2023 19:33:28 -0700
-Message-Id: <20230503023329.752123-2-mcgrof@kernel.org>
+Subject: [PATCH] module: include internal.h in module/dups.c
+Date: Tue,  2 May 2023 20:43:44 -0700
+Message-Id: <20230503034344.773568-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230503023329.752123-1-mcgrof@kernel.org>
-References: <20230503023329.752123-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,56 +37,46 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-register_sysctl_paths() is only required if your child (directories)
-have entries and pid_namespace does not. So use register_sysctl_init()
-instead where we don't care about the return value and use
-register_sysctl() where we do.
+From: Arnd Bergmann <arnd@arndb.de>
 
+Two newly introduced functions are declared in a header that is not
+included before the definition, causing a warning with sparse or
+'make W=1':
+
+kernel/module/dups.c:118:6: error: no previous prototype for 'kmod_dup_request_exists_wait' [-Werror=missing-prototypes]
+  118 | bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+kernel/module/dups.c:220:6: error: no previous prototype for 'kmod_dup_request_announce' [-Werror=missing-prototypes]
+  220 | void kmod_dup_request_announce(char *module_name, int ret)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add an explicit include to ensure the prototypes match.
+
+Fixes: 8660484ed1cf ("module: add debugging auto-load duplicate module support")
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202304141440.DYO4NAzp-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Acked-by: Jeff Xu <jeffxu@google.com>
-Link: https://lore.kernel.org/r/20230302202826.776286-9-mcgrof@kernel.org
 ---
- kernel/pid_namespace.c | 3 +--
- kernel/pid_sysctl.h    | 3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
-index 46e0d5a3f91f..b43eee07b00c 100644
---- a/kernel/pid_namespace.c
-+++ b/kernel/pid_namespace.c
-@@ -314,7 +314,6 @@ static struct ctl_table pid_ns_ctl_table[] = {
- 	},
- 	{ }
- };
--static struct ctl_path kern_path[] = { { .procname = "kernel", }, { } };
- #endif	/* CONFIG_CHECKPOINT_RESTORE */
+ kernel/module/dups.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+Linus, only one fix so far for modules so might as well send this as a patch.
+
+diff --git a/kernel/module/dups.c b/kernel/module/dups.c
+index aa8e1361fdb5..f3d7ea1e96d8 100644
+--- a/kernel/module/dups.c
++++ b/kernel/module/dups.c
+@@ -32,6 +32,8 @@
+ #include <linux/async.h>
+ #include <linux/uaccess.h>
  
- int reboot_pid_ns(struct pid_namespace *pid_ns, int cmd)
-@@ -473,7 +472,7 @@ static __init int pid_namespaces_init(void)
- 	pid_ns_cachep = KMEM_CACHE(pid_namespace, SLAB_PANIC | SLAB_ACCOUNT);
- 
- #ifdef CONFIG_CHECKPOINT_RESTORE
--	register_sysctl_paths(kern_path, pid_ns_ctl_table);
-+	register_sysctl_init("kernel", pid_ns_ctl_table);
- #endif
- 
- 	register_pid_ns_sysctl_table_vm();
-diff --git a/kernel/pid_sysctl.h b/kernel/pid_sysctl.h
-index e22d072e1e24..d67a4d45bb42 100644
---- a/kernel/pid_sysctl.h
-+++ b/kernel/pid_sysctl.h
-@@ -46,10 +46,9 @@ static struct ctl_table pid_ns_ctl_table_vm[] = {
- 	},
- 	{ }
- };
--static struct ctl_path vm_path[] = { { .procname = "vm", }, { } };
- static inline void register_pid_ns_sysctl_table_vm(void)
- {
--	register_sysctl_paths(vm_path, pid_ns_ctl_table_vm);
-+	register_sysctl("vm", pid_ns_ctl_table_vm);
- }
- #else
- static inline void initialize_memfd_noexec_scope(struct pid_namespace *ns) {}
++#include "internal.h"
++
+ #undef MODULE_PARAM_PREFIX
+ #define MODULE_PARAM_PREFIX "module."
+ static bool enable_dups_trace = IS_ENABLED(CONFIG_MODULE_DEBUG_AUTOLOAD_DUPS_TRACE);
 -- 
 2.39.2
 
