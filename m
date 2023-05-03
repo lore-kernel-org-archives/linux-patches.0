@@ -1,79 +1,131 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D173DF40
-	for <patches@lists.linux.dev>; Wed,  3 May 2023 18:29:30 +0000 (UTC)
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-959a3e2dd27so1060293366b.3
-        for <patches@lists.linux.dev>; Wed, 03 May 2023 11:29:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42AA321D
+	for <patches@lists.linux.dev>; Wed,  3 May 2023 19:03:16 +0000 (UTC)
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-6a5e905e15aso2056886a34.1
+        for <patches@lists.linux.dev>; Wed, 03 May 2023 12:03:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1683138569; x=1685730569;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LKqR2DGNy5P181vP5/oL8+jtEnGqbzk0DswhgBhpOjQ=;
-        b=HciNp/FGShU3XLMHkn7wGXlmK30tWNxdf/jCPLCXq4pY8MI65Hl8J9H5wvJfFOHpfQ
-         kjnZRQHG8TpEy8p9H9H+8VQPH8CUHAAY0wA0E7hKovXOGv8Yii5LT9WBpSw1Eu8/hh/5
-         Tk4QpvHqtR1iYuRtJyPD0VZIahvjQjDsfaFTM=
+        d=gmail.com; s=20221208; t=1683140596; x=1685732596;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U0zanob5psot+MN0L3Jo7naT487S45wikpSmD7HcN6I=;
+        b=Y7pSDCAs4pgUkzQE6IaengKTj1KGR+dM7m5U3wjgt7c/cAzupQ8ZjRa/epStopoCba
+         Wyq07v5dOlnTpxO7t5xG29NSHxsXk2PcsRwDTFlq6fLPQBjmf4pPov6zNik3HWm3WHGN
+         GhAi44H8g1tTcl2btjSqtOPOoCgQLsteMFrkzQqXZZ3MPOqpBcTXZ7Ima21AVABQusnH
+         65dIh2UplkfUHuEMOTqqTtTzq2GFZUgwLfQsjiz7/6p5qq4mprddOXnvEWVPpIB5PIWg
+         kDNXb/T4+KqC1xLF/PMMpWiqvNhSzdm0DQZJNsakJrvOwxvzyIVu89RgUIaYh4/mY5+O
+         rchA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683138569; x=1685730569;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LKqR2DGNy5P181vP5/oL8+jtEnGqbzk0DswhgBhpOjQ=;
-        b=Vb5HDuPocCa02jmH/kigmLUa6iCgDyYBLmITXyoAz5St4DAjmmgKTju4mY59xLSPOD
-         +Zi94Chls8qe5TtmGJmWXsP4olHMhkHZMdrk1LBXKPkUKXQPb/XvVkk023heZUVn9NdO
-         W7GfYb9W9JuWByYpeIuHEGxWgpAYJg0WdzMOL+zD18yg8tSLKC/ma8Hkmd5bA7DK0C+Z
-         t+FF8vIv4TP3E+4oZgL8sCsKa2n+FIAif1uV44P+ratb1N741wyRmB/dZU8WHphmvLAb
-         UfDpIno2swApv8pTDPoGcLemC6bvJ0CKUp859stbVtM5OP864gioAc3SPc7IzPasSSFj
-         rAMQ==
-X-Gm-Message-State: AC+VfDxmXHNm2k7+YtKt7TPsalAwj5aIV2P54/JQtqrXrEEAhs+7DcE+
-	5Oj1CkkLd9jc40C339VdU1PCy6Hkn0aNQw75ig8fnA==
-X-Google-Smtp-Source: ACHHUZ7yVX1xfNujRSL2o1Ya6LFA+1nGDY0pqzLDb6oWGGazeQTKWkIu1nI+nXaUvko8XFc7ixqqig==
-X-Received: by 2002:a17:907:a427:b0:94f:4a87:7a77 with SMTP id sg39-20020a170907a42700b0094f4a877a77mr4644099ejc.36.1683138569151;
-        Wed, 03 May 2023 11:29:29 -0700 (PDT)
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com. [209.85.208.47])
-        by smtp.gmail.com with ESMTPSA id b21-20020a170906151500b0094edd8e38fasm17576003ejd.76.2023.05.03.11.29.27
-        for <patches@lists.linux.dev>
+        d=1e100.net; s=20221208; t=1683140596; x=1685732596;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U0zanob5psot+MN0L3Jo7naT487S45wikpSmD7HcN6I=;
+        b=l3Fnex8qDP02+u/YBTyT/Evn1WfBYA7oGpvMtAvPaI0VlqiNfZG4ZRu5uiPAqIoD1x
+         KgEsqtW+Sz0hMiX2rGYhReW3gIzs4/FIy203ZdNAe9NsQ4fT53HWd+YAByXOX+O0CVgq
+         oz/YvwAQbM6y+Ujcy2SmnwfnsIoeQdtlXdnwava+j7u00nrc4N/6jszs7Lsz2RAnwgT4
+         qKEhuSFuDe9YnfUSE3r4qutgtrB1mv6LT1B44L6GtqQn4xiUSoyHPArEvQSIk/k1dSQj
+         uj4eX1Ldd5GkxH1TzEn7zOqHwc5m64/APbm4V5GVkUTRIIXYPPRZIJtnnB/FjNYOaYCz
+         +mzQ==
+X-Gm-Message-State: AC+VfDwF7u4RT9QHijDIxVjNnA4pB48PDwqZvoe3pTwbkkkmc12kDtgo
+	O3virZSGrURk8douaK4ChuM=
+X-Google-Smtp-Source: ACHHUZ45fCKODtKeE+8Qp8r2XRVU4mmpJKXM3rSpGuOzwTDG+lKyAuq1oQHcakWua1AVejIv1wPKQA==
+X-Received: by 2002:a05:6870:a704:b0:191:d6cd:6f5b with SMTP id g4-20020a056870a70400b00191d6cd6f5bmr5786911oam.22.1683140595817;
+        Wed, 03 May 2023 12:03:15 -0700 (PDT)
+Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
+        by smtp.gmail.com with ESMTPSA id dv5-20020a056870d88500b0018459cc0f52sm897161oab.24.2023.05.03.12.03.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 May 2023 11:29:27 -0700 (PDT)
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-50bc070c557so8972025a12.0
-        for <patches@lists.linux.dev>; Wed, 03 May 2023 11:29:27 -0700 (PDT)
-X-Received: by 2002:a17:907:74d:b0:94f:250b:2536 with SMTP id
- xc13-20020a170907074d00b0094f250b2536mr3524559ejb.28.1683138566776; Wed, 03
- May 2023 11:29:26 -0700 (PDT)
+        Wed, 03 May 2023 12:03:15 -0700 (PDT)
+Message-ID: <0aef40dd-a437-58e1-5fa5-b44412a2a89f@gmail.com>
+Date: Wed, 3 May 2023 16:01:00 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230503023329.752123-1-mcgrof@kernel.org> <ZFKKpQdx4nO8gWUT@bombadil.infradead.org>
-In-Reply-To: <ZFKKpQdx4nO8gWUT@bombadil.infradead.org>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 3 May 2023 11:29:10 -0700
-X-Gmail-Original-Message-ID: <CAHk-=whGT-jpLRH_W+k-WP=VghAVa7wRfULg=KWhpxiVofsn0Q@mail.gmail.com>
-Message-ID: <CAHk-=whGT-jpLRH_W+k-WP=VghAVa7wRfULg=KWhpxiVofsn0Q@mail.gmail.com>
-Subject: Re: [PATCH 0/2] sysctl: death to register_sysctl_paths()
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com, 
-	j.granados@samsung.com, patches@lists.linux.dev, ebiggers@kernel.org, 
-	jeffxu@google.com, akpm@linux-foundation.org, linux-fsdevel@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v2] rust: str: add conversion from `CStr` to `CString`
+Content-Language: en-US
+To: Alice Ryhl <aliceryhl@google.com>, Miguel Ojeda <ojeda@kernel.org>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20230503141016.683634-1-aliceryhl@google.com>
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+In-Reply-To: <20230503141016.683634-1-aliceryhl@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 3, 2023 at 9:24=E2=80=AFAM Luis Chamberlain <mcgrof@kernel.org>=
- wrote:
->
-> On Tue, May 02, 2023 at 07:33:27PM -0700, Luis Chamberlain wrote:
-> > You can give it a day for a warm fuzzy build test result.
->
-> 0-day gives its blessings.
+On 5/3/23 11:10, Alice Ryhl wrote:
+> These methods can be used to copy the data in a temporary c string into
+> a separate allocation, so that it can be accessed later even if the
+> original is deallocated.
+> 
+> The API in this change mirrors the standard library API for the `&str`
+> and `String` types. The `ToOwned` trait is not implemented because it
+> assumes that allocations are infallible.
+> 
+> Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> ---
+>   rust/kernel/str.rs | 22 ++++++++++++++++++++++
+>   1 file changed, 22 insertions(+)
+> 
+> diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
+> index b771310fa4a4..f3dc5b24ea55 100644
+> --- a/rust/kernel/str.rs
+> +++ b/rust/kernel/str.rs
+> @@ -2,6 +2,7 @@
+>   
+>   //! String representations.
+>   
+> +use alloc::alloc::AllocError;
+>   use alloc::vec::Vec;
+>   use core::fmt::{self, Write};
+>   use core::ops::{self, Deref, Index};
+> @@ -199,6 +200,12 @@ impl CStr {
+>       pub unsafe fn as_str_unchecked(&self) -> &str {
+>           unsafe { core::str::from_utf8_unchecked(self.as_bytes()) }
+>       }
+> +
+> +    /// Convert this [`CStr`] into a [`CString`] by allocating memory and
+> +    /// copying over the string data.
+> +    pub fn to_cstring(&self) -> Result<CString, AllocError> {
+> +        CString::try_from(self)
+> +    }
+>   }
+>   
+>   impl fmt::Display for CStr {
+> @@ -584,6 +591,21 @@ impl Deref for CString {
+>       }
+>   }
+>   
+> +impl<'a> TryFrom<&'a CStr> for CString {
+> +    type Error = AllocError;
+> +
+> +    fn try_from(cstr: &'a CStr) -> Result<CString, AllocError> {
+> +        let mut buf = Vec::new();
+> +
+> +        buf.try_extend_from_slice(cstr.as_bytes_with_nul())
+> +            .map_err(|_| AllocError)?;
+> +
+> +        // INVARIANT: The `CStr` and `CString` types have the same invariants for
+> +        // the string data, and we copied it over without changes.
+> +        Ok(CString { buf })
+> +    }
+> +}
+> +
+>   /// A convenience alias for [`core::format_args`].
+>   #[macro_export]
+>   macro_rules! fmt {
+> 
+> base-commit: ea76e08f4d901a450619831a255e9e0a4c0ed162
 
-Well, it's not like I can pull anyway, since you didn't actually say
-where to pull *from*. And I don't want to randomly apply patches when
-I know you have a git tree for this.
-
-So please do a proper pull request.
-
-              Linus
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
