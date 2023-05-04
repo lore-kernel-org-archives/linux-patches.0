@@ -1,85 +1,186 @@
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBC37E
-	for <patches@lists.linux.dev>; Thu,  4 May 2023 12:40:35 +0000 (UTC)
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-38eb2984c82so148287b6e.0
-        for <patches@lists.linux.dev>; Thu, 04 May 2023 05:40:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683204034; x=1685796034;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=35PE1h4pn1H3d9SWO+8b0I5Y/uShSGFf9sil//g3S48=;
-        b=HO2Mrqz66zmORlnliP7P/qqLTd7aBsXSFdRsEd9qam/1QTKL+5Id65vN4S/svCm6HN
-         m/sycne3kjRoy0ScrIFGrqQ9yZWnVrhTBan7e2BBuxcbMzvOTNs6evdO4v8Vo13l55yp
-         FTVtKuNsUCvRJnzEO3IlicLkpcaIwe72FlKVTKDf8K/m4RmVC2te5AXXGjA4xQFeqCud
-         TVNUf6KFcWQ9lQ73h2ZGriwNXQOTVAT4VXU5jnXRirUldThOvLuVzUu/CQXkUuYRCG3U
-         vQtGHcoZw0VfILZjwBt1J3sf8/ZBYK3nyc/Fps6iX1X6V3pWQkPiRyejNlzZhTwdD8le
-         KLkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683204034; x=1685796034;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=35PE1h4pn1H3d9SWO+8b0I5Y/uShSGFf9sil//g3S48=;
-        b=SRT3+UEFur4l1t7WiSjJcJuYN3VOGcknAYEZmI81Am/8d+RR2Q7vLZH/2vMy07L+2Q
-         5JT5iINAIeTLsAH2Ehk+WVBBYwz1oaceBqOWLDMjrLX270IsEzIeeZiDk2lWg9/0R91/
-         gX5aG6iyWbRmmHlNlPpAr/ba3GBvbY1gqLr6mKrEXJKI/FL2Ocj5uVcBZ9Ipu7qZ5MNr
-         apxdXfB6+sCYytCC4K7g/BUbNonzQ5lPyMwAI4FurheF9cGS4dJNHLM1ci1TrCcOd6Cl
-         cjxIKYhXP2qX1Xzt+EEUx0Ie3qpKQ4Mdnk/TAxP+twclCZnu4GUSALbrifs/LTDHtUdG
-         u/bg==
-X-Gm-Message-State: AC+VfDxsgEhH+ZAo92nLJUjNtNH8QiZ6xsP2fhXHG4xrgFpgIwSXGHcH
-	RoO3VYCHJLgKl/MmCc7yxyY=
-X-Google-Smtp-Source: ACHHUZ4r0+KY1d0rd8nU9V16WDWrIjDjYajmTUEyv85OdpnQF4ASPMu/ZnHHR+GkxdcEAnHXGOoioA==
-X-Received: by 2002:a05:6808:23c1:b0:389:4c8c:d069 with SMTP id bq1-20020a05680823c100b003894c8cd069mr1589556oib.57.1683204034303;
-        Thu, 04 May 2023 05:40:34 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id k12-20020a05680808cc00b0038dd5bf922bsm1540620oij.22.2023.05.04.05.40.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 05:40:33 -0700 (PDT)
-Message-ID: <bc2cbdf3-16fc-7b16-375c-a753afff42cb@gmail.com>
-Date: Thu, 4 May 2023 09:40:30 -0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43DA7E
+	for <patches@lists.linux.dev>; Thu,  4 May 2023 13:57:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA33C433D2
+	for <patches@lists.linux.dev>; Thu,  4 May 2023 13:57:56 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key) header.d=inbox.ru header.i=@inbox.ru header.b="d86cETYY"
+Resent-From: Mark Brown <broonie@finisterre.sirena.org.uk>
+Resent-Date: Thu, 4 May 2023 22:57:54 +0900
+Resent-Message-ID: <ZFO54mVLEmIIVSYB@finisterre.sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Thu, 04 May 2023 08:16:47 +0100
+Received: from dfw.source.kernel.org ([139.178.84.217])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=KLAT=AZ=inbox.ru=fido_max@kernel.org>)
+	id 1puTCm-00Eaiy-PI
+	for broonie@sirena.co.uk; Thu, 04 May 2023 08:16:47 +0100
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id DF4E063143
+	for <broonie@sirena.co.uk>; Thu,  4 May 2023 07:16:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id 672EBC4339B; Thu,  4 May 2023 07:16:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E8975C433EF
+	for <broonie@kernel.org>; Thu,  4 May 2023 07:16:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org E8975C433EF
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=inbox.ru
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=inbox.ru
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail4;
+	h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=hKo0Mv5u8yOZd6F3jwlctKzLF0X+Iv4/yaslyz4Ip2M=;
+	t=1683184601;x=1683274601; 
+	b=d86cETYYP4mPppvWciViQGnp5x3SjxsV+B1ARbcVXT+ugbdEB4XAe78Ba0GRVyVbgAHBpgzEDTTIJBe1SBldzvRxrbjyqK74bkPJxC2rVaJ/QS3Avqi8dniCDo7RTud/rVgY6+Z52jd3XuS5pYI3ActoYYMnPPEIKgDo4nP6RAL8jTPdviXT1qGeHkMV4PlwjcUTFmWzR9nZ2gjAIwX/cGXHnYfmWl6vtSobvO11TdV1Lyb8i+yWUkq6Z8QvIrlkwkN7utJqOjd7ai+6dHYhsl3XGIqhIdEg49+55DpTgd5Rz8sG47kbd172UvWehp+EOLe1eyTj4KO6WV4ZEw9lww==;
+Received: by smtpng3.m.smailru.net with esmtpa (envelope-from <fido_max@inbox.ru>)
+	id 1puTCY-0007k3-0L; Thu, 04 May 2023 10:16:30 +0300
+From: Maxim Kochetkov <fido_max@inbox.ru>
+To: alsa-devel@alsa-project.org
+Cc: lgirdwood@gmail.com,
+	broonie@kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	p.zabel@pengutronix.de,
+	ckeepax@opensource.cirrus.com,
+	u.kleine-koenig@pengutronix.de,
+	nicolas.ferre@microchip.com,
+	Maxim Kochetkov <fido_max@inbox.ru>
+Date: Thu,  4 May 2023 10:16:17 +0300
+Message-Id: <20230504071618.52012-1-fido_max@inbox.ru>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v2] rust: error: add missing error codes
-To: Alice Ryhl <aliceryhl@google.com>, Miguel Ojeda <ojeda@kernel.org>,
- Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20230504064854.774820-1-aliceryhl@google.com>
-Content-Language: en-US
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230504064854.774820-1-aliceryhl@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtpng3.m.smailru.net; auth=pass smtp.auth=fido_max@inbox.ru smtp.mailfrom=fido_max@inbox.ru
+X-Mailru-Src: smtp
+X-7564579A: 78E4E2B564C1792B
+X-77F55803: 4F1203BC0FB41BD9EB47717F7D295292E0516141E5D86376F2DFE8ECF2FCA72A182A05F53808504034A9434BA99DB5352780EB93A9FD84D94814A8A05414E6CC0D364D197ADC1A70
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE789066434B85BF7C7EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006376AEB812070489DF38638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D849ACEA835D8E2583257C32809AED315D6F9789CCF6C18C3F8528715B7D10C86878DA827A17800CE709B92020B71E24959FA2833FD35BB23D9E625A9149C048EE85C08DA1A1AB276ACB629EEF1311BF91D2E47CDBA5A96583BD4B6F7A4D31EC0BC014FD901B82EE079FA2833FD35BB23D27C277FBC8AE2E8BAC2A732D1458794B389733CBF5DBD5E9B5C8C57E37DE458B9E9CE733340B9D5F3BBE47FD9DD3FB595F5C1EE8F4F765FC8C7ADC89C2F0B2A5E2021AF6380DFAD18AA50765F790063735872C767BF85DA227C277FBC8AE2E8BDAE3FA6833AEA0C275ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
+X-C1DE0DAB: 0D63561A33F958A503439DE132D5218B2658D2C8601A3F543E15D5C58A09B520F87CCE6106E1FC07E67D4AC08A07B9B062B3BD3CC35DA5889C5DF10A05D560A950611B66E3DA6D700B0A020F03D25A092FFDA4F57982C5F4CB5012B2E24CD356
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF07B5384B90BFA1E895DC25B431169CF5437927BBE18CB5AC602C074FBC6CF64449C71475D3C8093114EE98CD8E9D35FC436DDACEF6D4C3FDB5CF41F06F5DEB836E346BF9FA413E5543082AE146A756F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojtUGOBMG7VVMIApYSxRkWyw==
+X-Mailru-Sender: 689FA8AB762F73933AF1F914F131DBF5234E1EED9E5D9F257AEAE2297C377E2D98CC072019C18A892CA7F8C7C9492E1F2F5E575105D0B01ADBE2EF17B331888EEAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mras: Ok
+X-SA-Exim-Connect-IP: 139.178.84.217
+X-SA-Exim-Mail-From: SRS0=KLAT=AZ=inbox.ru=fido_max@kernel.org
+Subject: [PATCH v2 1/2] ASoC: dwc: add optional reset support
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: Elkc9C6JF+al
 
-On 5/4/23 03:48, Alice Ryhl wrote:
-> This adds the error codes from `include/linux/errno.h` to the list of
-> Rust error constants. These errors were not included originally, because
-> they are not supposed to be visible from userspace. However, they are
-> still a perfectly valid error to use when writing a kernel driver. For
-> example, you might want to return ERESTARTSYS if you receive a signal
-> during a call to `schedule`.
-> 
-> This patch inserts an annotation to skip rustfmt on the list of error
-> codes. Without it, three of the error codes are split over several
-> lines, which looks terribly inconsistent.
-> 
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> ---
->   rust/kernel/error.rs | 20 ++++++++++++++++++++
->   1 file changed, 20 insertions(+)
-> 
-> [...]
+Some SoC may have resets for I2S subsystem. So add optional reset support.
 
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Signed-off-by: Maxim Kochetkov <fido_max@inbox.ru>
+---
+ sound/soc/dwc/dwc-i2s.c | 27 +++++++++++++++++++++------
+ sound/soc/dwc/local.h   |  1 +
+ 2 files changed, 22 insertions(+), 6 deletions(-)
+
+diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
+index acdf98b2ee9c..e2b2ba014a2e 100644
+--- a/sound/soc/dwc/dwc-i2s.c
++++ b/sound/soc/dwc/dwc-i2s.c
+@@ -17,6 +17,7 @@
+ #include <linux/io.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
++#include <linux/reset.h>
+ #include <linux/slab.h>
+ #include <linux/pm_runtime.h>
+ #include <sound/designware_i2s.h>
+@@ -648,6 +649,14 @@ static int dw_i2s_probe(struct platform_device *pdev)
+ 	if (IS_ERR(dev->i2s_base))
+ 		return PTR_ERR(dev->i2s_base);
+ 
++	dev->reset = devm_reset_control_array_get_optional_shared(&pdev->dev);
++	if (IS_ERR(dev->reset))
++		return PTR_ERR(dev->reset);
++
++	ret = reset_control_deassert(dev->reset);
++	if (ret)
++		return ret;
++
+ 	dev->dev = &pdev->dev;
+ 
+ 	irq = platform_get_irq_optional(pdev, 0);
+@@ -656,7 +665,7 @@ static int dw_i2s_probe(struct platform_device *pdev)
+ 				pdev->name, dev);
+ 		if (ret < 0) {
+ 			dev_err(&pdev->dev, "failed to request irq\n");
+-			return ret;
++			goto err_assert_reset;
+ 		}
+ 	}
+ 
+@@ -676,24 +685,27 @@ static int dw_i2s_probe(struct platform_device *pdev)
+ 		ret = dw_configure_dai_by_dt(dev, dw_i2s_dai, res);
+ 	}
+ 	if (ret < 0)
+-		return ret;
++		goto err_assert_reset;
+ 
+ 	if (dev->capability & DW_I2S_MASTER) {
+ 		if (pdata) {
+ 			dev->i2s_clk_cfg = pdata->i2s_clk_cfg;
+ 			if (!dev->i2s_clk_cfg) {
+ 				dev_err(&pdev->dev, "no clock configure method\n");
+-				return -ENODEV;
++				ret = -ENODEV;
++				goto err_assert_reset;
+ 			}
+ 		}
+ 		dev->clk = devm_clk_get(&pdev->dev, clk_id);
+ 
+-		if (IS_ERR(dev->clk))
+-			return PTR_ERR(dev->clk);
++		if (IS_ERR(dev->clk)) {
++			ret = PTR_ERR(dev->clk);
++			goto err_assert_reset;
++		}
+ 
+ 		ret = clk_prepare_enable(dev->clk);
+ 		if (ret < 0)
+-			return ret;
++			goto err_assert_reset;
+ 	}
+ 
+ 	dev_set_drvdata(&pdev->dev, dev);
+@@ -727,6 +739,8 @@ static int dw_i2s_probe(struct platform_device *pdev)
+ err_clk_disable:
+ 	if (dev->capability & DW_I2S_MASTER)
+ 		clk_disable_unprepare(dev->clk);
++err_assert_reset:
++	reset_control_assert(dev->reset);
+ 	return ret;
+ }
+ 
+@@ -737,6 +751,7 @@ static void dw_i2s_remove(struct platform_device *pdev)
+ 	if (dev->capability & DW_I2S_MASTER)
+ 		clk_disable_unprepare(dev->clk);
+ 
++	reset_control_assert(dev->reset);
+ 	pm_runtime_disable(&pdev->dev);
+ }
+ 
+diff --git a/sound/soc/dwc/local.h b/sound/soc/dwc/local.h
+index 1c361eb6127e..d64bd4f8fd34 100644
+--- a/sound/soc/dwc/local.h
++++ b/sound/soc/dwc/local.h
+@@ -89,6 +89,7 @@ union dw_i2s_snd_dma_data {
+ struct dw_i2s_dev {
+ 	void __iomem *i2s_base;
+ 	struct clk *clk;
++	struct reset_control *reset;
+ 	int active;
+ 	unsigned int capability;
+ 	unsigned int quirks;
+-- 
+2.39.2
+
