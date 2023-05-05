@@ -1,55 +1,50 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C044E156D4
-	for <patches@lists.linux.dev>; Fri,  5 May 2023 12:44:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F29DC433D2
-	for <patches@lists.linux.dev>; Fri,  5 May 2023 12:44:47 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=inbox.ru header.i=@inbox.ru header.b="sxzMg9Y6"
-Resent-From: Mark Brown <broonie@finisterre.sirena.org.uk>
-Resent-Date: Fri, 5 May 2023 21:44:45 +0900
-Resent-Message-ID: <ZFT6PcM4g28evm2W@finisterre.sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Fri, 05 May 2023 07:28:40 +0100
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=4qAs=A2=inbox.ru=fido_max@kernel.org>)
-	id 1puovk-00EjYf-TD
-	for broonie@sirena.co.uk; Fri, 05 May 2023 07:28:40 +0100
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id EB06060A0F
-	for <broonie@sirena.co.uk>; Fri,  5 May 2023 06:28:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 6F2ACC433EF; Fri,  5 May 2023 06:28:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DC98FC433D2
-	for <broonie@kernel.org>; Fri,  5 May 2023 06:28:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org DC98FC433D2
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=inbox.ru
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=inbox.ru
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail4;
-	h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=w19r/bnmeQETgryQv1iIi3iN09PWER6hP3yMlsCH8eY=;
-	t=1683268113;x=1683358113; 
-	b=sxzMg9Y6F0Uzs6Mb5g61bVdI8N4fMUPqqoxaYfVsuFHnLiWEMqoIVjZBIXeOa34R2pJ2NmbEAqC/dX33gRJdgcwjRzrSBGUw1gpYi/u/tBeuk+hS4VObdNFHSfmxi9V8zAx3Y+NBDlFy8+LgA6gNj4s+60Q9eEC09ZXDsKaHO3IaCV7FEUARZsTdswoarvqInW5O7L8lb1C1jarNL9glHu78Cu+Bxzzl5htia3Aok9b61GHgseA0YTjaBqvnJ4c8t+wRVmCtZluJjpfLEl7AMvDfFlEK1dd1uuEtmMPCs5X/Tto24eVQyIdjTXP6ZflKsA2SGUgGB804WZzEeKOIuA==;
-Received: by smtpng1.m.smailru.net with esmtpa (envelope-from <fido_max@inbox.ru>)
-	id 1puovW-00028V-MP; Fri, 05 May 2023 09:28:23 +0300
-From: Maxim Kochetkov <fido_max@inbox.ru>
-To: alsa-devel@alsa-project.org
-Cc: lgirdwood@gmail.com,
-	broonie@kernel.org,
-	perex@perex.cz,
-	tiwai@suse.com,
-	ckeepax@opensource.cirrus.com,
-	nicolas.ferre@microchip.com,
-	u.kleine-koenig@pengutronix.de,
-	Maxim Kochetkov <fido_max@inbox.ru>
-Date: Fri,  5 May 2023 09:28:20 +0300
-Message-Id: <20230505062820.21840-1-fido_max@inbox.ru>
-X-Mailer: git-send-email 2.39.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E28C8C5
+	for <patches@lists.linux.dev>; Fri,  5 May 2023 23:24:19 +0000 (UTC)
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6436e075166so1856840b3a.0
+        for <patches@lists.linux.dev>; Fri, 05 May 2023 16:24:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1683329059; x=1685921059;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JKLAfQ+XdRp0UM94hCtSrE5esZwKrW294YS+Ttx9oOQ=;
+        b=ZJ3jsPEwRlg76oKOSRpSUBfW+D+nc+3Xm7uZdmvIgP2yqAOq0tNsRw5hGBiuLydPhP
+         34pbfqDv26JAPKb1tmv6C/wb5HSZ8aQujzeIJ0I+oATGDlKhIDuIKBhLHKZAscXeP1u1
+         tiNcrl0I/LPQIzxLfQd5bfG99UFIY/xJGzzGw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683329059; x=1685921059;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JKLAfQ+XdRp0UM94hCtSrE5esZwKrW294YS+Ttx9oOQ=;
+        b=F6/bkpA4YnNR5BGuSp+gXPTlukunldKOZmgF15lgnT6siUZpt+cE7/tUpTpG5h8UCQ
+         3nAioDWK1B42VaPbJE0Bm/CrZRxj7Ier5y29Yda25BwwVy5eKUX4IUsdWb9bSaGgg+jP
+         FH4eC3qOwswo66RGidKzZSzTF7MhkhVmOHxZ6oeiXFbXQrfJHGyVky0MBPkc3zlsRg0O
+         DnuBf344gTZP0Dzq09l7aBnJdpP7aUJEpICbONI765M6s3no6ceUhyTN2Hj/p3doc7nm
+         Oz720dbshCsaWigwsQCD3o/KnPHrSXBEoxUdXxDfcpD6MBYjApHtuFyfldo7X5S1NCkl
+         ny3Q==
+X-Gm-Message-State: AC+VfDxKfYlCCPwCD69Vs5Gocnw8iMW9h0poPmEKMU5x1wEfnvpULaRj
+	wjyHjje96BnhztpVM8ADoeTpYg==
+X-Google-Smtp-Source: ACHHUZ6vAi6Y3g8TdEqafnS+y9IbU+RTnliBu7VGQb+/9r2d/tK73wImW6vOpHdU9YlDstOdwgsqsg==
+X-Received: by 2002:a05:6a21:2d8a:b0:ee:73bf:425d with SMTP id ty10-20020a056a212d8a00b000ee73bf425dmr3288313pzb.39.1683329059346;
+        Fri, 05 May 2023 16:24:19 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:11a:201:e1a8:5a47:8ccc:adb3])
+        by smtp.gmail.com with ESMTPSA id c1-20020aa781c1000000b0062e0010c6c1sm2070080pfn.164.2023.05.05.16.24.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 May 2023 16:24:18 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-input@vger.kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH] HID: google: Don't use devm for hid_hw_stop()
+Date: Fri,  5 May 2023 16:24:16 -0700
+Message-ID: <20230505232417.1377393-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.40.1.521.gf1e218fcd8-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,52 +52,149 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Authentication-Results: smtpng1.m.smailru.net; auth=pass smtp.auth=fido_max@inbox.ru smtp.mailfrom=fido_max@inbox.ru
-X-Mailru-Src: smtp
-X-7564579A: EEAE043A70213CC8
-X-77F55803: 4F1203BC0FB41BD9CDD72DB02570E1E69F65CF5A383CA60943DD864320CF4B411313CFAB8367EF908E2BE116634AD74D4F6BBD8AD64DF50C24F29287ACC5C24655FADD5F4B5A515B7B9585C59A2DDEF7
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE716FAD50E497B9C14EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006376AFB9B40001E44068638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D802F15FF47CBB9EA07155B019091615D06F9789CCF6C18C3F8528715B7D10C86878DA827A17800CE71DD432BB81541BCF9FA2833FD35BB23D9E625A9149C048EE0A8783F69A4C1398BDFBBEFFF4125B51D2E47CDBA5A96583BD4B6F7A4D31EC0BC014FD901B82EE079FA2833FD35BB23D27C277FBC8AE2E8B3066B9820929774A389733CBF5DBD5E9B5C8C57E37DE458B9E9CE733340B9D5F3BBE47FD9DD3FB595F5C1EE8F4F765FC8C7ADC89C2F0B2A5E2021AF6380DFAD18AA50765F790063735872C767BF85DA227C277FBC8AE2E8BD00653D74F80EC5F75ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
-X-C1DE0DAB: 0D63561A33F958A56E546AF34195C6F10E2829C2CF38B811FE7B195693D6E021F87CCE6106E1FC07E67D4AC08A07B9B0A6C7FFFE744CA7FB9C5DF10A05D560A950611B66E3DA6D700B0A020F03D25A092FFDA4F57982C5F4CB5012B2E24CD356
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFC6C1A3D38B6795CE317A5A611E1D04D2960524E4A57BBC48CC3F3EFA9E2777E3B9228B76B87D064D14EE98CD8E9D35FCC3674DFEE1CD913126CA9985D1D297CD0CB5B17375C3CAE6
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojAeDCk4EFldEolkEDguM7oQ==
-X-Mailru-Sender: 689FA8AB762F73933AF1F914F131DBF590C713BA32C72AB5C7F0208CF814589798CC072019C18A892CA7F8C7C9492E1F2F5E575105D0B01ADBE2EF17B331888EEAB4BC95F72C04283CDA0F3B3F5B9367
-X-Mras: Ok
-X-SA-Exim-Connect-IP: 2604:1380:4641:c500::1
-X-SA-Exim-Mail-From: SRS0=4qAs=A2=inbox.ru=fido_max@kernel.org
-Subject: [PATCH 1/1] ASoC: dwc: limit the number of overrun messages
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: X4t256zwp05k
 
-On slow CPU (FPGA/QEMU emulated) printing overrun messages from
-interrupt handler to uart console may leads to more overrun errors.
-So use dev_err_ratelimited to limit the number of error messages.
+We (ChromeOS) got a syzkaller report of a KASAN use after free read in
+hidinput_find_key(). The callstack is from evdev_ioctl() calling
+hidinput_setkeycode():
 
-Signed-off-by: Maxim Kochetkov <fido_max@inbox.ru>
+ __asan_report_load4_noabort+0x44/0x50
+ hidinput_find_key+0x25c/0x340
+ hidinput_locate_usage+0x31c/0x400
+ hidinput_setkeycode+0x70/0x460
+ input_set_keycode+0xd4/0x3f8
+ evdev_do_ioctl+0x2508/0x6678
+ evdev_ioctl_handler+0x12c/0x180
+ evdev_ioctl+0x40/0x54
+
+The memory being read was allocated during hammer_probe() by
+hid_open_report():
+
+ Allocated by task 19025:
+ kasan_save_stack+0x38/0x68
+ __kasan_kmalloc+0x90/0xac
+ __kmalloc+0x27c/0x45c
+ hid_add_field+0x4b0/0x125c
+ hid_parser_main+0x214/0x994
+ hid_open_report+0x388/0x7a8
+ hammer_probe+0x80/0x698 [hid_google_hammer]
+
+and the memory was freed by hid_close_report() called from
+hid_destroy_device().
+
+ Freed by task 19025:
+ kasan_save_stack+0x38/0x68
+ kasan_set_track+0x28/0x3c
+ kasan_set_free_info+0x28/0x4c
+ ____kasan_slab_free+0x110/0x164
+ __kasan_slab_free+0x18/0x28
+ kfree+0x208/0x950
+ hid_close_report+0xd0/0x29c
+ hid_device_remove+0x104/0x198
+ device_release_driver_internal+0x204/0x400
+ device_release_driver+0x30/0x40
+ bus_remove_device+0x2a0/0x390
+ device_del+0x49c/0x858
+ hid_destroy_device+0x78/0x11c
+ usbhid_disconnect+0xb4/0x100
+ usb_unbind_interface+0x178/0x6f4
+ device_release_driver_internal+0x240/0x400
+ device_release_driver+0x30/0x40
+ bus_remove_device+0x2a0/0x390
+
+The memory that's being read by the ioctl is an HID report that's been
+freed when the HID device is destroyed because the usb interface is
+unbound. In hid_device_remove() we assume that the hid report can be
+closed with hid_close_report() after the hid_driver is unbound, which is
+generally safe because the driver should have stopped the hardware with
+hid_hw_stop() when it was unbound. In fact, hid_device_remove() falls
+back to calling hid_hw_stop() directly if the hid driver doesn't have a
+remove() function, so the assumption is that hid_hw_stop() has been
+called once the hid_driver::remove() function returns. hid_hw_stop()
+will eventually call hidinput_disconnect() which will unregister the
+hidinput device; ensuring that userspace can't call ioctls on the
+hidinput device when hid_hw_stop() returns.
+
+Unfortunately, the hid google hammer driver hand rolls a devm function
+to call hid_hw_stop() when the driver is unbound and implements an
+hid_driver::remove() function. The driver core doesn't call the devm
+release functions until _after_ the bus unbinds the driver, so the order
+of operations is like this:
+
+  __device_release_driver()
+   ...
+   device_remove(dev)
+    hid_device_remove(hdev)
+      hdrv->remove(hdev);
+      hid_close_report(hdev)  <---- Frees the report
+   device_unbind_cleanup(dev)
+    devres_release_all(dev)
+      ...
+      hid_hw_stop(hdev) <--- Removes the hid_input device
+
+We want the order of operations to be hid_hw_stop() and then
+hid_close_report() so that the report can be freed without the hid_input
+device hanging around attempting to deref the report. Remove the hand
+rolled devm function and call hid_hw_stop() from the hammer_remove()
+function to fix the ordering.
+
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: d950db3f80a8 ("HID: google: switch to devm when registering keyboard backlight LED")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- sound/soc/dwc/dwc-i2s.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-google-hammer.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
-index acdf98b2ee9c..ca20cade6840 100644
---- a/sound/soc/dwc/dwc-i2s.c
-+++ b/sound/soc/dwc/dwc-i2s.c
-@@ -132,13 +132,13 @@ static irqreturn_t i2s_irq_handler(int irq, void *dev_id)
+diff --git a/drivers/hid/hid-google-hammer.c b/drivers/hid/hid-google-hammer.c
+index 7ae5f27df54d..e7f7c3c68747 100644
+--- a/drivers/hid/hid-google-hammer.c
++++ b/drivers/hid/hid-google-hammer.c
+@@ -495,11 +495,6 @@ static void hammer_get_folded_state(struct hid_device *hdev)
+ 	kfree(buf);
+ }
  
- 		/* Error Handling: TX */
- 		if (isr[i] & ISR_TXFO) {
--			dev_err(dev->dev, "TX overrun (ch_id=%d)\n", i);
-+			dev_err_ratelimited(dev->dev, "TX overrun (ch_id=%d)\n", i);
- 			irq_valid = true;
- 		}
+-static void hammer_stop(void *hdev)
+-{
+-	hid_hw_stop(hdev);
+-}
+-
+ static int hammer_probe(struct hid_device *hdev,
+ 			const struct hid_device_id *id)
+ {
+@@ -520,10 +515,6 @@ static int hammer_probe(struct hid_device *hdev,
+ 	if (error)
+ 		return error;
  
- 		/* Error Handling: TX */
- 		if (isr[i] & ISR_RXFO) {
--			dev_err(dev->dev, "RX overrun (ch_id=%d)\n", i);
-+			dev_err_ratelimited(dev->dev, "RX overrun (ch_id=%d)\n", i);
- 			irq_valid = true;
- 		}
+-	error = devm_add_action(&hdev->dev, hammer_stop, hdev);
+-	if (error)
+-		return error;
+-
+ 	/*
+ 	 * We always want to poll for, and handle tablet mode events from
+ 	 * devices that have folded usage, even when nobody has opened the input
+@@ -533,8 +524,10 @@ static int hammer_probe(struct hid_device *hdev,
+ 	if (hammer_has_folded_event(hdev)) {
+ 		hdev->quirks |= HID_QUIRK_ALWAYS_POLL;
+ 		error = hid_hw_open(hdev);
+-		if (error)
++		if (error) {
++			hid_hw_stop(hdev);
+ 			return error;
++		}
+ 
+ 		hammer_get_folded_state(hdev);
  	}
+@@ -576,7 +569,8 @@ static void hammer_remove(struct hid_device *hdev)
+ 		spin_unlock_irqrestore(&cbas_ec_lock, flags);
+ 	}
+ 
+-	/* Unregistering LEDs and stopping the hardware is done via devm */
++	/* Unregistering LEDs is done via devm */
++	hid_hw_stop(hdev);
+ }
+ 
+ static const struct hid_device_id hammer_devices[] = {
+
+base-commit: 457391b0380335d5e9a5babdec90ac53928b23b4
 -- 
-2.39.2
+https://chromeos.dev
 
