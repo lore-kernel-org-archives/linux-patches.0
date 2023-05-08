@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139F4168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:54:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B203C433D2;
-	Mon,  8 May 2023 10:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3FF168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:54:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A22AC433D2;
+	Mon,  8 May 2023 10:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543289;
-	bh=5Nd3KwLurXLJ3q+bnw86FQWMK0Oauaq5h1mkvU4l7Kk=;
+	s=korg; t=1683543293;
+	bh=Z/VOo4C395BFOcK/X7kGuEpCBT6UF2P86VQTWrcHIbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XKLx6LZ9IWB1+BXK/hmhRD8/0HvwGWEWaXwtMNP6gVSnIizR0TdpZcFOrO2Umz8mx
-	 BGGHr68dmsP1+IM8IB0htHPC9/Zne7N+t4T0ShOqoeHyoM6z/SUoFEdwle+bgPnZtI
-	 E85Y42HUZakQxSG87xPRK6D14DNH2KiTFtrz3mE4=
+	b=CBW+cLr3XjLig8DBZ94kIZqdLm4NApcrnrkp8XW0H51WQe4vWDqHUcI60U7yhUFym
+	 mQnG0fMeqhmj7Pzn66GesoDrbkxkDtG/ViEEtu+CNru5Shl6s6wPBD3JaoevoAlAaB
+	 bfIxiuDilwOIHZWTbBFpga1rUBtC5LzYrdDotR/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Thierry Reding <thierry.reding@gmail.com>
-Subject: [PATCH 6.3 042/694] pwm: meson: Fix axg ao mux parents
-Date: Mon,  8 May 2023 11:37:57 +0200
-Message-Id: <20230508094433.988042146@linuxfoundation.org>
+	Babu Moger <babu.moger@amd.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.3 016/694] hwmon: (k10temp) Check range scale when CUR_TEMP register is read-write
+Date: Mon,  8 May 2023 11:37:31 +0200
+Message-Id: <20230508094433.157349602@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,36 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Babu Moger <Babu.Moger@amd.com>
 
-commit eb411c0cf59ae6344b34bc6f0d298a22b300627e upstream.
+commit 0c072385348e3ac5229145644055d3e2afb5b3db upstream.
 
-This fix is basically the same as 9bce02ef0dfa ("pwm: meson: Fix the
-G12A AO clock parents order"). Vendor driver referenced there has
-xtal as first parent also for axg ao. In addition fix the name
-of the aoclk81 clock. Apparently name aoclk81 as used by the vendor
-driver was changed when mainlining the axg clock driver.
+Spec says, when CUR_TEMP_TJ_SEL == 3 and CUR_TEMP_RANGE_SEL == 0,
+it should use RangeUnadjusted is 0, which is (CurTmp*0.125 -49) C. The
+CUR_TEMP register is read-write when CUR_TEMP_TJ_SEL == 3 (bit 17-16).
 
-Fixes: bccaa3f917c9 ("pwm: meson: Add clock source configuration for Meson-AXG")
+Add the check to detect it.
+
+Sensors command's output before the patch.
+$sensors
+ k10temp-pci-00c3
+ Adapter: PCI adapter
+ Tctl:         +76.6°C <- Wrong value
+ Tccd1:        +26.5°C
+ Tccd2:        +27.5°C
+ Tccd3:        +27.2°C
+ Tccd4:        +27.5°C
+ Tccd5:        +26.0°C
+ Tccd6:        +26.2°C
+ Tccd7:        +25.0°C
+ Tccd8:        +26.5°C
+
+Sensors command's output after the patch.
+$sensors
+ k10temp-pci-00c3
+ Adapter: PCI adapter
+ Tctl:         +28.8°C <- corrected value
+ Tccd1:        +27.5°C
+ Tccd2:        +28.5°C
+ Tccd3:        +28.5°C
+ Tccd4:        +28.5°C
+ Tccd5:        +27.0°C
+ Tccd6:        +27.5°C
+ Tccd7:        +27.0°C
+ Tccd8:        +27.5°C
+
+Signed-off-by: Babu Moger <babu.moger@amd.com>
+Fixes: 1b59788979ac ("hwmon: (k10temp) Add temperature offset for Ryzen 2700X")
+Link: https://lore.kernel.org/r/20230413213958.847634-1-babu.moger@amd.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-meson.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/k10temp.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -418,7 +418,7 @@ static const struct meson_pwm_data pwm_a
- };
+--- a/drivers/hwmon/k10temp.c
++++ b/drivers/hwmon/k10temp.c
+@@ -75,6 +75,7 @@ static DEFINE_MUTEX(nb_smu_ind_mutex);
  
- static const char * const pwm_axg_ao_parent_names[] = {
--	"aoclk81", "xtal", "fclk_div4", "fclk_div5"
-+	"xtal", "axg_ao_clk81", "fclk_div4", "fclk_div5"
- };
+ #define ZEN_CUR_TEMP_SHIFT			21
+ #define ZEN_CUR_TEMP_RANGE_SEL_MASK		BIT(19)
++#define ZEN_CUR_TEMP_TJ_SEL_MASK		GENMASK(17, 16)
  
- static const struct meson_pwm_data pwm_axg_ao_data = {
+ struct k10temp_data {
+ 	struct pci_dev *pdev;
+@@ -155,7 +156,8 @@ static long get_raw_temp(struct k10temp_
+ 
+ 	data->read_tempreg(data->pdev, &regval);
+ 	temp = (regval >> ZEN_CUR_TEMP_SHIFT) * 125;
+-	if (regval & data->temp_adjust_mask)
++	if ((regval & data->temp_adjust_mask) ||
++	    (regval & ZEN_CUR_TEMP_TJ_SEL_MASK) == ZEN_CUR_TEMP_TJ_SEL_MASK)
+ 		temp -= 49000;
+ 	return temp;
+ }
 
 
