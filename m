@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA58171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF98C433EF;
-	Mon,  8 May 2023 11:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2465171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC15C433D2;
+	Mon,  8 May 2023 11:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545920;
-	bh=MpV/tME49A0im8djAWQjfqraKNIUPCBrQXz4ubCEK2w=;
+	s=korg; t=1683545923;
+	bh=RXod3Kex7x8kPIpIdidJx2dPmqspXj5HjTm/WpllcxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOzHANuEkuCjW7JQ6koKW1aQgNaP1bz6K7MUDC4/DclfyMB9uAAa8OHfFiTp1PvQ8
-	 qc9IsWjYv2LDli4khMxPzRj9IleMskScnAze8Qp80mHelUnmRh0DKrnUUPXTaGQZDv
-	 2j97bVCEIErkYGQNbDLeGlqRY+4lLvvBrZJZtd+0=
+	b=CCrWulRFI9FBsvA0m625UVpJHh7sHx6BUNa2sZDnDuJ9q4/XJ+PHE/H2oRrfM82S0
+	 FvGhP8EmKHwDQX8803g+DXOqnH4o3zamCKrRQshfOHC19ZYv79FChHbGFv5Xj/l2UB
+	 s2g6Lvl9zX4a/K+CkOHZgEVcd0Q9eIg90uw6ZP/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 157/371] wifi: rtw88: mac: Return the original error from rtw_mac_power_switch()
-Date: Mon,  8 May 2023 11:45:58 +0200
-Message-Id: <20230508094818.316105453@linuxfoundation.org>
+Subject: [PATCH 5.15 191/371] nvmet: use i_size_read() to set size for file-ns
+Date: Mon,  8 May 2023 11:46:32 +0200
+Message-Id: <20230508094819.705131363@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,48 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-[ Upstream commit 15c8e267dfa62f207ee1db666c822324e3362b84 ]
+[ Upstream commit 2caecd62ea5160803b25d96cb1a14ce755c2c259 ]
 
-rtw_mac_power_switch() calls rtw_pwr_seq_parser() which can return
--EINVAL, -EBUSY or 0. Propagate the original error code instead of
-unconditionally returning -EINVAL in case of an error.
+Instead of calling vfs_getattr() use i_size_read() to read the size of
+file so we can read the size of not only file type but also block type
+with one call. This is needed to implement buffered_io support for the
+NVMeOF block device backend.
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230226221004.138331-3-martin.blumenstingl@googlemail.com
+We also change return type of function nvmet_file_ns_revalidate() from
+int to void, since this function does not return any meaning value.
+
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: ab76e7206b67 ("nvmet: fix error handling in nvmet_execute_identify_cns_cs_ns()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/mac.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/nvme/target/io-cmd-file.c | 17 ++++-------------
+ drivers/nvme/target/nvmet.h       |  2 +-
+ 2 files changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/mac.c b/drivers/net/wireless/realtek/rtw88/mac.c
-index 6ad235d7145e1..a0576cc0c8452 100644
---- a/drivers/net/wireless/realtek/rtw88/mac.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac.c
-@@ -247,6 +247,7 @@ static int rtw_mac_power_switch(struct rtw_dev *rtwdev, bool pwr_on)
- 	const struct rtw_pwr_seq_cmd **pwr_seq;
- 	u8 rpwm;
- 	bool cur_pwr;
-+	int ret;
+diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
+index eadba13b276de..098b6bf12cd0a 100644
+--- a/drivers/nvme/target/io-cmd-file.c
++++ b/drivers/nvme/target/io-cmd-file.c
+@@ -13,16 +13,9 @@
  
- 	if (rtw_chip_wcpu_11ac(rtwdev)) {
- 		rpwm = rtw_read8(rtwdev, rtwdev->hci.rpwm_addr);
-@@ -270,8 +271,9 @@ static int rtw_mac_power_switch(struct rtw_dev *rtwdev, bool pwr_on)
- 		return -EALREADY;
+ #define NVMET_MIN_MPOOL_OBJ		16
  
- 	pwr_seq = pwr_on ? chip->pwr_on_seq : chip->pwr_off_seq;
--	if (rtw_pwr_seq_parser(rtwdev, pwr_seq))
--		return -EINVAL;
-+	ret = rtw_pwr_seq_parser(rtwdev, pwr_seq);
-+	if (ret)
-+		return ret;
- 
- 	return 0;
+-int nvmet_file_ns_revalidate(struct nvmet_ns *ns)
++void nvmet_file_ns_revalidate(struct nvmet_ns *ns)
+ {
+-	struct kstat stat;
+-	int ret;
+-
+-	ret = vfs_getattr(&ns->file->f_path, &stat, STATX_SIZE,
+-			  AT_STATX_FORCE_SYNC);
+-	if (!ret)
+-		ns->size = stat.size;
+-	return ret;
++	ns->size = i_size_read(ns->file->f_mapping->host);
  }
+ 
+ void nvmet_file_ns_disable(struct nvmet_ns *ns)
+@@ -40,7 +33,7 @@ void nvmet_file_ns_disable(struct nvmet_ns *ns)
+ int nvmet_file_ns_enable(struct nvmet_ns *ns)
+ {
+ 	int flags = O_RDWR | O_LARGEFILE;
+-	int ret;
++	int ret = 0;
+ 
+ 	if (!ns->buffered_io)
+ 		flags |= O_DIRECT;
+@@ -54,9 +47,7 @@ int nvmet_file_ns_enable(struct nvmet_ns *ns)
+ 		return ret;
+ 	}
+ 
+-	ret = nvmet_file_ns_revalidate(ns);
+-	if (ret)
+-		goto err;
++	nvmet_file_ns_revalidate(ns);
+ 
+ 	/*
+ 	 * i_blkbits can be greater than the universally accepted upper bound,
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index fdb06a9d430d2..f3e42d2c85c6c 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -542,7 +542,7 @@ u16 nvmet_bdev_flush(struct nvmet_req *req);
+ u16 nvmet_file_flush(struct nvmet_req *req);
+ void nvmet_ns_changed(struct nvmet_subsys *subsys, u32 nsid);
+ void nvmet_bdev_ns_revalidate(struct nvmet_ns *ns);
+-int nvmet_file_ns_revalidate(struct nvmet_ns *ns);
++void nvmet_file_ns_revalidate(struct nvmet_ns *ns);
+ void nvmet_ns_revalidate(struct nvmet_ns *ns);
+ u16 blk_to_nvme_status(struct nvmet_req *req, blk_status_t blk_sts);
+ 
 -- 
 2.39.2
 
