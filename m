@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFD3168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C18DC433A0;
-	Mon,  8 May 2023 11:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B620168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856D1C4339C;
+	Mon,  8 May 2023 11:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544362;
-	bh=4J2iWfJU2C+tt7wLi20WoTGu5dk8wMXzPsErRq+9Q9A=;
+	s=korg; t=1683544366;
+	bh=CaJ896jZnLu9YzzndB9cOVeB8GlBwBH2gfTWnZzEV78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwaoSGNrygrqI50E7R5kJHWS8n+QHNfVVE4C8lSLqg0GtXw7v6a+9+h8pXzcaNR7U
-	 xrkupjoYmTNXpLcZiTyv0sEvvTVNM8IJlmUd8+RfQerVrBcCwTNnEwcesKrLsNFTji
-	 r2bt3EzTWkA1/sa6au455Dh3K7cF1KNsVcKc8mD4=
+	b=K6mViSuagUQMZoq3R8KsGyGs01Ago/+ws8CH8ya7RTqN0fnQVCJSWnSciPPysxfCa
+	 M+a1tZEUXqBQW0KEidjwtfPrnlFmxNTe+B2pWIJGmIdqhVIt4cblUJQIlP+GeCM11O
+	 GcmsF0TwN6k1oOpo9pS2IaKu8Jdt+orBpTNgbKls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 355/694] net/packet: convert po->auxdata to an atomic flag
-Date: Mon,  8 May 2023 11:43:10 +0200
-Message-Id: <20230508094444.154526508@linuxfoundation.org>
+Subject: [PATCH 6.3 346/694] wifi: ath11k: fix deinitialization of firmware resources
+Date: Mon,  8 May 2023 11:43:01 +0200
+Message-Id: <20230508094443.777522989@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,93 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Aditya Kumar Singh <quic_adisi@quicinc.com>
 
-[ Upstream commit fd53c297aa7b077ae98a3d3d2d3aa278a1686ba6 ]
+[ Upstream commit 5a78ac33e3cb8822da64dd1af196e83664b332b0 ]
 
-po->auxdata can be read while another thread
-is changing its value, potentially raising KCSAN splat.
+Currently, in ath11k_ahb_fw_resources_init(), iommu domain
+mapping is done only for the chipsets having fixed firmware
+memory. Also, for such chipsets, mapping is done only if it
+does not have TrustZone support.
 
-Convert it to PACKET_SOCK_AUXDATA flag.
+During deinitialization, only if TrustZone support is not there,
+iommu is unmapped back. However, for non fixed firmware memory
+chipsets, TrustZone support is not there and this makes the
+condition check to true and it tries to unmap the memory which
+was not mapped during initialization.
 
-Fixes: 8dc419447415 ("[PACKET]: Add optional checksum computation for recvmsg")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This leads to the following trace -
+
+[   83.198790] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+[   83.259537] Modules linked in: ath11k_ahb ath11k qmi_helpers
+.. snip ..
+[   83.280286] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   83.287228] pc : __iommu_unmap+0x30/0x140
+[   83.293907] lr : iommu_unmap+0x5c/0xa4
+[   83.298072] sp : ffff80000b3abad0
+.. snip ..
+[   83.369175] Call trace:
+[   83.376282]  __iommu_unmap+0x30/0x140
+[   83.378541]  iommu_unmap+0x5c/0xa4
+[   83.382360]  ath11k_ahb_fw_resource_deinit.part.12+0x2c/0xac [ath11k_ahb]
+[   83.385666]  ath11k_ahb_free_resources+0x140/0x17c [ath11k_ahb]
+[   83.392521]  ath11k_ahb_shutdown+0x34/0x40 [ath11k_ahb]
+[   83.398248]  platform_shutdown+0x20/0x2c
+[   83.403455]  device_shutdown+0x16c/0x1c4
+[   83.407621]  kernel_restart_prepare+0x34/0x3c
+[   83.411529]  kernel_restart+0x14/0x74
+[   83.415781]  __do_sys_reboot+0x1c4/0x22c
+[   83.419427]  __arm64_sys_reboot+0x1c/0x24
+[   83.423420]  invoke_syscall+0x44/0xfc
+[   83.427326]  el0_svc_common.constprop.3+0xac/0xe8
+[   83.430974]  do_el0_svc+0xa0/0xa8
+[   83.435659]  el0_svc+0x1c/0x44
+[   83.438957]  el0t_64_sync_handler+0x60/0x144
+[   83.441910]  el0t_64_sync+0x15c/0x160
+[   83.446343] Code: aa0103f4 f9400001 f90027a1 d2800001 (f94006a0)
+[   83.449903] ---[ end trace 0000000000000000 ]---
+
+This can be reproduced by probing an AHB chipset which is not
+having a fixed memory region. During reboot (or rmmod) trace
+can be seen.
+
+Fix this issue by adding a condition check on firmware fixed memory
+hw_param as done in the counter initialization function.
+
+Tested-on: IPQ8074 hw2.0 AHB WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+
+Fixes: f9eec4947add ("ath11k: Add support for targets without trustzone")
+Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230309095308.24937-1-quic_adisi@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 8 +++-----
- net/packet/diag.c      | 2 +-
- net/packet/internal.h  | 4 ++--
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath11k/ahb.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index af7c44169b869..ecd9fc27e360c 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -3514,7 +3514,7 @@ static int packet_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 		memcpy(msg->msg_name, &PACKET_SKB_CB(skb)->sa, copy_len);
- 	}
+diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
+index b549576d0b513..5cbba9a8b6ba9 100644
+--- a/drivers/net/wireless/ath/ath11k/ahb.c
++++ b/drivers/net/wireless/ath/ath11k/ahb.c
+@@ -1078,6 +1078,12 @@ static int ath11k_ahb_fw_resource_deinit(struct ath11k_base *ab)
+ 	struct iommu_domain *iommu;
+ 	size_t unmapped_size;
  
--	if (pkt_sk(sk)->auxdata) {
-+	if (packet_sock_flag(pkt_sk(sk), PACKET_SOCK_AUXDATA)) {
- 		struct tpacket_auxdata aux;
- 
- 		aux.tp_status = TP_STATUS_USER;
-@@ -3900,9 +3900,7 @@ packet_setsockopt(struct socket *sock, int level, int optname, sockptr_t optval,
- 		if (copy_from_sockptr(&val, optval, sizeof(val)))
- 			return -EFAULT;
- 
--		lock_sock(sk);
--		po->auxdata = !!val;
--		release_sock(sk);
-+		packet_sock_flag_set(po, PACKET_SOCK_AUXDATA, val);
++	/* Chipsets not requiring MSA would have not initialized
++	 * MSA resources, return success in such cases.
++	 */
++	if (!ab->hw_params.fixed_fw_mem)
++		return 0;
++
+ 	if (ab_ahb->fw.use_tz)
  		return 0;
- 	}
- 	case PACKET_ORIGDEV:
-@@ -4060,7 +4058,7 @@ static int packet_getsockopt(struct socket *sock, int level, int optname,
  
- 		break;
- 	case PACKET_AUXDATA:
--		val = po->auxdata;
-+		val = packet_sock_flag(po, PACKET_SOCK_AUXDATA);
- 		break;
- 	case PACKET_ORIGDEV:
- 		val = packet_sock_flag(po, PACKET_SOCK_ORIGDEV);
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index e1ac9bb375b31..d704c7bf51b20 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -23,7 +23,7 @@ static int pdiag_put_info(const struct packet_sock *po, struct sk_buff *nlskb)
- 	pinfo.pdi_flags = 0;
- 	if (po->running)
- 		pinfo.pdi_flags |= PDI_RUNNING;
--	if (po->auxdata)
-+	if (packet_sock_flag(po, PACKET_SOCK_AUXDATA))
- 		pinfo.pdi_flags |= PDI_AUXDATA;
- 	if (packet_sock_flag(po, PACKET_SOCK_ORIGDEV))
- 		pinfo.pdi_flags |= PDI_ORIGDEV;
-diff --git a/net/packet/internal.h b/net/packet/internal.h
-index 178cd1852238d..3bae8ea7a36f5 100644
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -118,8 +118,7 @@ struct packet_sock {
- 	struct mutex		pg_vec_lock;
- 	unsigned long		flags;
- 	unsigned int		running;	/* bind_lock must be held */
--	unsigned int		auxdata:1,	/* writer must hold sock lock */
--				has_vnet_hdr:1,
-+	unsigned int		has_vnet_hdr:1, /* writer must hold sock lock */
- 				tp_loss:1,
- 				tp_tx_has_off:1;
- 	int			pressure;
-@@ -146,6 +145,7 @@ static inline struct packet_sock *pkt_sk(struct sock *sk)
- 
- enum packet_sock_flags {
- 	PACKET_SOCK_ORIGDEV,
-+	PACKET_SOCK_AUXDATA,
- };
- 
- static inline void packet_sock_flag_set(struct packet_sock *po,
 -- 
 2.39.2
 
