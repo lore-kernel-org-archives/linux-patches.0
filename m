@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85937168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:26:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D70EC433D2;
-	Mon,  8 May 2023 10:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25055168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:26:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E434C433EF;
+	Mon,  8 May 2023 10:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541596;
-	bh=M82G4mt7f7DkARdfV2MTHP4hvUZr3/3CB7NtSy2CymA=;
+	s=korg; t=1683541599;
+	bh=RM0x9Ywbxb5+SoOgEKtrf+2ABeiT584y+WoxyKk9Nfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EXhp5mIhKJp5v83tcs6PUcnNiT4dsUDYhoyIwNxNsOfmTl3WC4daEfDreVHskA+ur
-	 NI+6oDjrAElFiM9OxGMa3SCoNd9A6Lq1RmPFOPi7OCrLMDRlZnUQx4gW9D4oanLhsZ
-	 Jb9wsFkqBwA3MpbIJp6YCFDlCyVV1elmnJq/fADI=
+	b=2b3qtLoIDvzVHR2afWQnBOEGK06tNHu+T9I882yz/meYJMC4+/TM4z3kG7xsWTg60
+	 b3VLnO65UnS+FncFAnxSjGhIEvuqwiSLVnJ4+8JFT9YrIWBLyqYN8QkZqlLUS/gXZr
+	 /SIDL5yhfK51Kz26fUV2AAEhVc9PQjP5QoEslkMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 165/663] arm64: dts: qcom: ipq6018: Fix the PCI I/O port range
-Date: Mon,  8 May 2023 11:39:51 +0200
-Message-Id: <20230508094433.835491128@linuxfoundation.org>
+Subject: [PATCH 6.2 166/663] arm64: dts: qcom: msm8996: Fix the PCI I/O port range
+Date: Mon,  8 May 2023 11:39:52 +0200
+Message-Id: <20230508094433.863908999@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -38,38 +38,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 75a6e1fdb351189f55097741e8460ca3f9b2883f ]
+[ Upstream commit cf0ac10feb17661987d0018eb9475dc03e2a2253 ]
 
-For 64KiB of the I/O region, the I/O ports of the legacy PCI devices are
-located in the range of 0x0 to 0x10000. Hence, fix the bogus PCI address
-(0x20200000) specified in the ranges property for I/O region.
+For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
+located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI addresses
+(0x0c200000, 0x0d200000, 0x0e200000) specified in the ranges property for
+I/O region.
 
-While at it, let's use the missing 0x prefix for the addresses.
+While at it, let's also align the entries.
 
-Fixes: 095bbdd9a5c3 ("arm64: dts: qcom: ipq6018: Add pcie support")
+Fixes: ed965ef89227 ("arm64: dts: qcom: msm8996: add support to pcie")
 Reported-by: Arnd Bergmann <arnd@arndb.de>
 Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Reviewed-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230228164752.55682-7-manivannan.sadhasivam@linaro.org
+Link: https://lore.kernel.org/r/20230228164752.55682-8-manivannan.sadhasivam@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq6018.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -441,8 +441,8 @@
- 			phys = <&pcie_phy0>;
- 			phy-names = "pciephy";
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 71678749d66f6..25d97cc2d08ff 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1841,8 +1841,8 @@
  
--			ranges = <0x81000000 0 0x20200000 0 0x20200000 0 0x10000>,
--				 <0x82000000 0 0x20220000 0 0x20220000 0 0xfde0000>;
-+			ranges = <0x81000000 0x0 0x00000000 0x0 0x20200000 0x0 0x10000>,
-+				 <0x82000000 0x0 0x20220000 0x0 0x20220000 0x0 0xfde0000>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+-				ranges = <0x01000000 0x0 0x0c200000 0x0c200000 0x0 0x100000>,
+-					<0x02000000 0x0 0x0c300000 0x0c300000 0x0 0xd00000>;
++				ranges = <0x01000000 0x0 0x00000000 0x0c200000 0x0 0x100000>,
++					 <0x02000000 0x0 0x0c300000 0x0c300000 0x0 0xd00000>;
  
- 			interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi";
+ 				device_type = "pci";
+ 
+@@ -1895,8 +1895,8 @@
+ 
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+-				ranges = <0x01000000 0x0 0x0d200000 0x0d200000 0x0 0x100000>,
+-					<0x02000000 0x0 0x0d300000 0x0d300000 0x0 0xd00000>;
++				ranges = <0x01000000 0x0 0x00000000 0x0d200000 0x0 0x100000>,
++					 <0x02000000 0x0 0x0d300000 0x0d300000 0x0 0xd00000>;
+ 
+ 				device_type = "pci";
+ 
+@@ -1946,8 +1946,8 @@
+ 
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+-				ranges = <0x01000000 0x0 0x0e200000 0x0e200000 0x0 0x100000>,
+-					<0x02000000 0x0 0x0e300000 0x0e300000 0x0 0x1d00000>;
++				ranges = <0x01000000 0x0 0x00000000 0x0e200000 0x0 0x100000>,
++					 <0x02000000 0x0 0x0e300000 0x0e300000 0x0 0x1d00000>;
+ 
+ 				device_type = "pci";
+ 
+-- 
+2.39.2
+
 
 
