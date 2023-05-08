@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AE9168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:22:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA65EC433EF;
-	Mon,  8 May 2023 10:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEF8168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:22:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52C7C433D2;
+	Mon,  8 May 2023 10:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541368;
-	bh=umZwhx9moBd5VhiNpykp4gODR1Hew9NqKztJDGBaYKM=;
+	s=korg; t=1683541371;
+	bh=fnuaofywZ2/5O8yqHUDcIPxOi6LGC8EzXuTSfrxlI0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kU9Wd5N2GHVx+OxvLydgkInN7kft4cA/uY2MkpBtDQJlKZ5vCHU/icjW3lCXDAfY8
-	 zGZ/g62N3+BldN22vQvjKgXqg97mUZvFCsawXhJfp0qa0PirpADkI979lTWL261Szl
-	 uSmt/RJ5Hh5VkYYskVOTDuHT7gjYyzOeDz8McOH4=
+	b=KB9rrpQ2Cui5GoR/NSckXUg096Tce64VdAzjV9fFgt+TSmvazS1Qjglyr8BDLOowa
+	 YT/Tx0FgHdwR1HyxIwnUJ2oS+4l8u8CewNohjtJoa32u7B17FMzDtU7BShh4IszmFt
+	 Cr9CIFmKG/WEtq9685Enpaw0VuJVceRLuhPDXDOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.2 092/663] ksmbd: fix NULL pointer dereference in smb2_get_info_filesystem()
-Date: Mon,  8 May 2023 11:38:38 +0200
-Message-Id: <20230508094431.442700852@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.2 066/663] pinctrl: qcom: lpass-lpi: set output value before enabling output
+Date: Mon,  8 May 2023 11:38:12 +0200
+Message-Id: <20230508094430.617100750@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,33 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 3ac00a2ab69b34189942afa9e862d5170cdcb018 upstream.
+commit 163bfb0cb1f6fbf961cf912cbde57399ea1ae0e8 upstream.
 
-If share is , share->path is NULL and it cause NULL pointer
-dereference issue.
+As per Hardware Programming Guide, when configuring pin as output,
+set the pin value before setting output-enable (OE).  Similar approach
+is in main SoC TLMM pin controller.
 
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-20479
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: <stable@vger.kernel.org>
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230309154949.658380-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -4915,6 +4915,9 @@ static int smb2_get_info_filesystem(stru
- 	int rc = 0, len;
- 	int fs_infoclass_size = 0;
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -221,6 +221,15 @@ static int lpi_config_set(struct pinctrl
+ 		}
+ 	}
  
-+	if (!share->path)
-+		return -EIO;
++	/*
++	 * As per Hardware Programming Guide, when configuring pin as output,
++	 * set the pin value before setting output-enable (OE).
++	 */
++	if (output_enabled) {
++		val = u32_encode_bits(value ? 1 : 0, LPI_GPIO_VALUE_OUT_MASK);
++		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
++	}
 +
- 	rc = kern_path(share->path, LOOKUP_NO_SYMLINKS, &path);
- 	if (rc) {
- 		pr_err("cannot create vfs path\n");
+ 	val = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG);
+ 
+ 	u32p_replace_bits(&val, pullup, LPI_GPIO_PULL_MASK);
+@@ -230,11 +239,6 @@ static int lpi_config_set(struct pinctrl
+ 
+ 	lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
+ 
+-	if (output_enabled) {
+-		val = u32_encode_bits(value ? 1 : 0, LPI_GPIO_VALUE_OUT_MASK);
+-		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
+-	}
+-
+ 	return 0;
+ }
+ 
 
 
