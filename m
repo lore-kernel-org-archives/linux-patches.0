@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C60D320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19C6C433EF;
-	Mon,  8 May 2023 11:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44C0320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C650C433D2;
+	Mon,  8 May 2023 11:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544801;
-	bh=W29Abkm0TWikFEtq8/EsxEVpSoYVm4vLwO0LW4PF61k=;
+	s=korg; t=1683544804;
+	bh=KSxizf7datX2HEfGJf+3bDanl/ZKUkPm3AsmV9jLRa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=adrr+ZAecWe9fA9o65/8d1RFU9EpZMKctQWMMNZZnpctbqva67tZzuJOWLk0EqJHv
-	 C5uw28buXdjJ0ZYvc2B+aS7P7LRKSztmmFEcrgTUPa11H8vRkGfcz7UivR2KBz+H2j
-	 khgnLDWBBAsaumaiUO7VIclYpCTnRix6Rg6a40EA=
+	b=ARDnCD8hm76vIWa1+fULX/M1/cUE7OgqJuwu41sWP//KkZ4Csf2qaZ6RP99zDHx9a
+	 q7PHcGYyvlvsQYLCuq7eNfw70YC6ZgDUMXiO/BXmH0ABCS4XD7mfcCTTpSCOLkPQ12
+	 iO7awEShQQouWEDYnCbYTjTDp5B/ymKcwM+mT2yM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 528/694] HID: amd_sfh: Correct the stop all command
-Date: Mon,  8 May 2023 11:46:03 +0200
-Message-Id: <20230508094451.456787422@linuxfoundation.org>
+Subject: [PATCH 6.3 511/694] spi: mchp-pci1xxxx: Fix length of SPI transactions not set properly in driver
+Date: Mon,  8 May 2023 11:45:46 +0200
+Message-Id: <20230508094450.758746740@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,38 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>
 
-[ Upstream commit 82c2a0d137794f5ef47982231593a00aee26ce3b ]
+[ Upstream commit 35c8c5e503a82e0a4bf251d32096211eba8c2be6 ]
 
-Misinterpreted the stop all command in SHF1.1 firmware. Therefore, it is
-necessary to update the stop all command accordingly to disable all
-sensors.
+In pci1xxxx_spi_transfer_one API, length of SPI transaction gets cleared
+by setting of length mask. Set length of transaction only after masking
+length field.
 
-Fixes: 93ce5e0231d7 ("HID: amd_sfh: Implement SFH1.1 functionality")
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: 1cc0cbea7167 ("spi: microchip: pci1xxxx: Add driver for SPI controller of PCI1XXXX PCIe switch")
+Signed-off-by: Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>
+Link: https://lore.kernel.org/r/20230404171613.1336093-2-tharunkumar.pasumarthi@microchip.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-pci1xxxx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-index 6e19ccc124508..6f6047f7f12e9 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-@@ -58,8 +58,10 @@ static void amd_stop_all_sensor(struct amd_mp2_dev *privdata)
- 	struct sfh_cmd_base cmd_base;
+diff --git a/drivers/spi/spi-pci1xxxx.c b/drivers/spi/spi-pci1xxxx.c
+index a31c3b612a430..0805c441b4065 100644
+--- a/drivers/spi/spi-pci1xxxx.c
++++ b/drivers/spi/spi-pci1xxxx.c
+@@ -199,8 +199,9 @@ static int pci1xxxx_spi_transfer_one(struct spi_controller *spi_ctlr,
+ 			else
+ 				regval &= ~SPI_MST_CTL_MODE_SEL;
  
- 	cmd_base.ul = 0;
--	cmd_base.cmd.cmd_id = STOP_ALL_SENSORS;
-+	cmd_base.cmd.cmd_id = DISABLE_SENSOR;
- 	cmd_base.cmd.intr_disable = 0;
-+	/* 0xf indicates all sensors */
-+	cmd_base.cmd.sensor_id = 0xf;
- 
- 	writel(cmd_base.ul, privdata->mmio + AMD_C2P_MSG(0));
- }
+-			regval |= ((clkdiv << 5) | SPI_FORCE_CE | (len << 8));
++			regval |= ((clkdiv << 5) | SPI_FORCE_CE);
+ 			regval &= ~SPI_MST_CTL_CMD_LEN_MASK;
++			regval |= (len << 8);
+ 			writel(regval, par->reg_base +
+ 			       SPI_MST_CTL_REG_OFFSET(p->hw_inst));
+ 			regval = readl(par->reg_base +
 -- 
 2.39.2
 
