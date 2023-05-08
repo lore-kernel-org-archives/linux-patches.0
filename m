@@ -1,30 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0577D168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:30:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C24C4339B;
-	Mon,  8 May 2023 11:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33752168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:30:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C3BC4339C;
+	Mon,  8 May 2023 11:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545450;
-	bh=TqhDylr0mgzPohfexxYqFOWmzDhqykEIKRLO6VGx6vQ=;
+	s=korg; t=1683545454;
+	bh=Ul6tG1LmCxNFZc85V2ZhhhkXh0XCagWpXLmhMA8I4h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFzloLPeabaa0y60P6T/4YoDrtJnLXnYH1wsJ8WIzN++5cHPyJPnfqRI024dlnL8V
-	 lKNFr8Rgg49ta1kKI4P1ybClF0zji0LwuVqSHDDpXpfNRvPvtc05FErvpBpqA5EOzd
-	 D49UllMM/8wjN8yjoJuBwllOZ/oB824+tAQtYJCI=
+	b=whnzRLCU/CfVUQFljIKfb8KT8cFDYxM2kmHoMd+3GCiftzpf7siFVDXc8od1Ke6id
+	 EYsKyOVI8ybXfhsqpGcnDsDW2F3Sp01wnifsghzrSMCsepy3BJpykLOFmxbAWqCYVp
+	 /3UaGGTGEBIfMJtLzc/HAm3lHlyhLceFpLSvpPQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zhengming <zhang.zhengming@h3c.com>,
-	Zhao Lei <zhao_lei1@hoperun.com>,
-	Zhou Kete <zhou.kete@h3c.com>,
-	Pengcheng Yang <yangpc@wangsu.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Tejun Heo <tj@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Christian Brauner <brauner@kernel.org>,
+	Dennis Zhou <dennis@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
+	yangerkun <yangerkun@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Jens Axboe <axboe@kernel.dk>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 044/371] relayfs: fix out-of-bounds access in relay_file_read
-Date: Mon,  8 May 2023 11:44:05 +0200
-Message-Id: <20230508094813.812412440@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 045/371] writeback, cgroup: fix null-ptr-deref write in bdi_split_work_to_wbs
+Date: Mon,  8 May 2023 11:44:06 +0200
+Message-Id: <20230508094813.842205275@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -38,77 +45,171 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Zhengming <zhang.zhengming@h3c.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 43ec16f1450f4936025a9bdf1a273affdb9732c1 upstream.
+[ Upstream commit 1ba1199ec5747f475538c0d25a32804e5ba1dfde ]
 
-There is a crash in relay_file_read, as the var from
-point to the end of last subbuf.
+KASAN report null-ptr-deref:
+==================================================================
+BUG: KASAN: null-ptr-deref in bdi_split_work_to_wbs+0x5c5/0x7b0
+Write of size 8 at addr 0000000000000000 by task sync/943
+CPU: 5 PID: 943 Comm: sync Tainted: 6.3.0-rc5-next-20230406-dirty #461
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7f/0xc0
+ print_report+0x2ba/0x340
+ kasan_report+0xc4/0x120
+ kasan_check_range+0x1b7/0x2e0
+ __kasan_check_write+0x24/0x40
+ bdi_split_work_to_wbs+0x5c5/0x7b0
+ sync_inodes_sb+0x195/0x630
+ sync_inodes_one_sb+0x3a/0x50
+ iterate_supers+0x106/0x1b0
+ ksys_sync+0x98/0x160
+[...]
+==================================================================
 
-The oops looks something like:
-pc : __arch_copy_to_user+0x180/0x310
-lr : relay_file_read+0x20c/0x2c8
-Call trace:
- __arch_copy_to_user+0x180/0x310
- full_proxy_read+0x68/0x98
- vfs_read+0xb0/0x1d0
- ksys_read+0x6c/0xf0
- __arm64_sys_read+0x20/0x28
- el0_svc_common.constprop.3+0x84/0x108
- do_el0_svc+0x74/0x90
- el0_svc+0x1c/0x28
- el0_sync_handler+0x88/0xb0
- el0_sync+0x148/0x180
+The race that causes the above issue is as follows:
 
-We get the condition by analyzing the vmcore:
+           cpu1                     cpu2
+-------------------------|-------------------------
+inode_switch_wbs
+ INIT_WORK(&isw->work, inode_switch_wbs_work_fn)
+ queue_rcu_work(isw_wq, &isw->work)
+ // queue_work async
+  inode_switch_wbs_work_fn
+   wb_put_many(old_wb, nr_switched)
+    percpu_ref_put_many
+     ref->data->release(ref)
+     cgwb_release
+      queue_work(cgwb_release_wq, &wb->release_work)
+      // queue_work async
+       &wb->release_work
+       cgwb_release_workfn
+                            ksys_sync
+                             iterate_supers
+                              sync_inodes_one_sb
+                               sync_inodes_sb
+                                bdi_split_work_to_wbs
+                                 kmalloc(sizeof(*work), GFP_ATOMIC)
+                                 // alloc memory failed
+        percpu_ref_exit
+         ref->data = NULL
+         kfree(data)
+                                 wb_get(wb)
+                                  percpu_ref_get(&wb->refcnt)
+                                   percpu_ref_get_many(ref, 1)
+                                    atomic_long_add(nr, &ref->data->count)
+                                     atomic64_add(i, v)
+                                     // trigger null-ptr-deref
 
-1). The last produced byte and last consumed byte
-    both at the end of the last subbuf
+bdi_split_work_to_wbs() traverses &bdi->wb_list to split work into all
+wbs.  If the allocation of new work fails, the on-stack fallback will be
+used and the reference count of the current wb is increased afterwards.
+If cgroup writeback membership switches occur before getting the reference
+count and the current wb is released as old_wd, then calling wb_get() or
+wb_put() will trigger the null pointer dereference above.
 
-2). A softirq calls function(e.g __blk_add_trace)
-    to write relay buffer occurs when an program is calling
-    relay_file_read_avail().
+This issue was introduced in v4.3-rc7 (see fix tag1).  Both
+sync_inodes_sb() and __writeback_inodes_sb_nr() calls to
+bdi_split_work_to_wbs() can trigger this issue.  For scenarios called via
+sync_inodes_sb(), originally commit 7fc5854f8c6e ("writeback: synchronize
+sync(2) against cgroup writeback membership switches") reduced the
+possibility of the issue by adding wb_switch_rwsem, but in v5.14-rc1 (see
+fix tag2) removed the "inode_io_list_del_locked(inode, old_wb)" from
+inode_switch_wbs_work_fn() so that wb->state contains WB_has_dirty_io,
+thus old_wb is not skipped when traversing wbs in bdi_split_work_to_wbs(),
+and the issue becomes easily reproducible again.
 
-        relay_file_read
-                relay_file_read_avail
-                        relay_file_read_consume(buf, 0, 0);
-                        //interrupted by softirq who will write subbuf
-                        ....
-                        return 1;
-                //read_start point to the end of the last subbuf
-                read_start = relay_file_read_start_pos
-                //avail is equal to subsize
-                avail = relay_file_read_subbuf_avail
-                //from  points to an invalid memory address
-                from = buf->start + read_start
-                //system is crashed
-                copy_to_user(buffer, from, avail)
+To solve this problem, percpu_ref_exit() is called under RCU protection to
+avoid race between cgwb_release_workfn() and bdi_split_work_to_wbs().
+Moreover, replace wb_get() with wb_tryget() in bdi_split_work_to_wbs(),
+and skip the current wb if wb_tryget() fails because the wb has already
+been shutdown.
 
-Link: https://lkml.kernel.org/r/20230419040203.37676-1-zhang.zhengming@h3c.com
-Fixes: 8d62fdebdaf9 ("relay file read: start-pos fix")
-Signed-off-by: Zhang Zhengming <zhang.zhengming@h3c.com>
-Reviewed-by: Zhao Lei <zhao_lei1@hoperun.com>
-Reviewed-by: Zhou Kete <zhou.kete@h3c.com>
-Reviewed-by: Pengcheng Yang <yangpc@wangsu.com>
+Link: https://lkml.kernel.org/r/20230410130826.1492525-1-libaokun1@huawei.com
+Fixes: b817525a4a80 ("writeback: bdi_writeback iteration must not skip dying ones")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Acked-by: Tejun Heo <tj@kernel.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Hou Tao <houtao1@huawei.com>
+Cc: yangerkun <yangerkun@huawei.com>
+Cc: Zhang Yi <yi.zhang@huawei.com>
 Cc: Jens Axboe <axboe@kernel.dk>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/relay.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/fs-writeback.c |   17 ++++++++++-------
+ mm/backing-dev.c  |   12 ++++++++++--
+ 2 files changed, 20 insertions(+), 9 deletions(-)
 
---- a/kernel/relay.c
-+++ b/kernel/relay.c
-@@ -992,7 +992,8 @@ static size_t relay_file_read_start_pos(
- 	size_t subbuf_size = buf->chan->subbuf_size;
- 	size_t n_subbufs = buf->chan->n_subbufs;
- 	size_t consumed = buf->subbufs_consumed % n_subbufs;
--	size_t read_pos = consumed * subbuf_size + buf->bytes_consumed;
-+	size_t read_pos = (consumed * subbuf_size + buf->bytes_consumed)
-+			% (n_subbufs * subbuf_size);
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -1009,6 +1009,16 @@ restart:
+ 			continue;
+ 		}
  
- 	read_subbuf = read_pos / subbuf_size;
- 	padding = buf->padding[read_subbuf];
++		/*
++		 * If wb_tryget fails, the wb has been shutdown, skip it.
++		 *
++		 * Pin @wb so that it stays on @bdi->wb_list.  This allows
++		 * continuing iteration from @wb after dropping and
++		 * regrabbing rcu read lock.
++		 */
++		if (!wb_tryget(wb))
++			continue;
++
+ 		/* alloc failed, execute synchronously using on-stack fallback */
+ 		work = &fallback_work;
+ 		*work = *base_work;
+@@ -1017,13 +1027,6 @@ restart:
+ 		work->done = &fallback_work_done;
+ 
+ 		wb_queue_work(wb, work);
+-
+-		/*
+-		 * Pin @wb so that it stays on @bdi->wb_list.  This allows
+-		 * continuing iteration from @wb after dropping and
+-		 * regrabbing rcu read lock.
+-		 */
+-		wb_get(wb);
+ 		last_wb = wb;
+ 
+ 		rcu_read_unlock();
+--- a/mm/backing-dev.c
++++ b/mm/backing-dev.c
+@@ -385,6 +385,15 @@ static LIST_HEAD(offline_cgwbs);
+ static void cleanup_offline_cgwbs_workfn(struct work_struct *work);
+ static DECLARE_WORK(cleanup_offline_cgwbs_work, cleanup_offline_cgwbs_workfn);
+ 
++static void cgwb_free_rcu(struct rcu_head *rcu_head)
++{
++	struct bdi_writeback *wb = container_of(rcu_head,
++			struct bdi_writeback, rcu);
++
++	percpu_ref_exit(&wb->refcnt);
++	kfree(wb);
++}
++
+ static void cgwb_release_workfn(struct work_struct *work)
+ {
+ 	struct bdi_writeback *wb = container_of(work, struct bdi_writeback,
+@@ -407,10 +416,9 @@ static void cgwb_release_workfn(struct w
+ 	list_del(&wb->offline_node);
+ 	spin_unlock_irq(&cgwb_lock);
+ 
+-	percpu_ref_exit(&wb->refcnt);
+ 	wb_exit(wb);
+ 	WARN_ON_ONCE(!list_empty(&wb->b_attached));
+-	kfree_rcu(wb, rcu);
++	call_rcu(&wb->rcu, cgwb_free_rcu);
+ }
+ 
+ static void cgwb_release(struct percpu_ref *refcnt)
 
 
