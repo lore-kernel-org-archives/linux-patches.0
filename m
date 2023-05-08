@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404EB320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07B0C433EF;
-	Mon,  8 May 2023 11:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6BC320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823C4C4339B;
+	Mon,  8 May 2023 11:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545836;
-	bh=tlBL5eAyzhc85dbQWz/9IbJLu6EJUFszUcMny6Lk7fk=;
+	s=korg; t=1683545838;
+	bh=aLugme2fVYpzQG82zzXtRtx9p+sY7VrVAmlyoDOnTXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u2EXZ0GwdxRfUFATIMP/zZVim3O0ReleE1k15UZFd0Vk+EB6yMyJPt9MqbZ+9s4v2
-	 KBh61DfRkGImcRjoTm6yKUYrvvOINyYa5gGsHxm//6nFm75L6lLZeGlyP9ELENzU7/
-	 4SJN82n+6MRHtRAHNkqtzvZkLAV8VuY9fOpyX7lM=
+	b=Q49YKXj0ZJPXR2bu5SrzLg1KmbzaGqp+YCzOFNipjL2K6NpPsICsEe78h0H3fuRkX
+	 voJPJNCm5r43oyQqfHRWWShHivU3kbhOEXXI4CigCjZlNT400yPzBZ9kmbbpbZy6jp
+	 56CpCDL+PhSWNpVscfoX9S5/7X8pWD1ViphDRNIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yangtao Li <frank.li@vivo.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 170/371] scsi: megaraid: Fix mega_cmd_done() CMDID_INT_CMDS
-Date: Mon,  8 May 2023 11:46:11 +0200
-Message-Id: <20230508094818.880537541@linuxfoundation.org>
+Subject: [PATCH 5.15 171/371] f2fs: handle dqget error in f2fs_transfer_project_quota()
+Date: Mon,  8 May 2023 11:46:12 +0200
+Message-Id: <20230508094818.920431799@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,36 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit 75cb113cd43f06aaf4f1bda0069cfd5b98e909eb ]
+[ Upstream commit 8051692f5f23260215bfe9a72e712d93606acc5f ]
 
-When cmdid == CMDID_INT_CMDS, the 'cmds' pointer is NULL but is
-dereferenced below.
+We should set the error code when dqget() failed.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 0f2bb84d2a68 ("[SCSI] megaraid: simplify internal command handling")
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Link: https://lore.kernel.org/r/20230317175109.18585-1-listdansp@mail.ru
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 2c1d03056991 ("f2fs: support F2FS_IOC_FS{GET,SET}XATTR")
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/file.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/megaraid.c b/drivers/scsi/megaraid.c
-index 7dd6dd74d2bc2..6122cc60a8b3d 100644
---- a/drivers/scsi/megaraid.c
-+++ b/drivers/scsi/megaraid.c
-@@ -1443,6 +1443,7 @@ mega_cmd_done(adapter_t *adapter, u8 completed[], int nstatus, int status)
- 		 */
- 		if (cmdid == CMDID_INT_CMDS) {
- 			scb = &adapter->int_scb;
-+			cmd = scb->cmd;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 3be34ea4e2998..2c24162f72f0c 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2977,15 +2977,16 @@ int f2fs_transfer_project_quota(struct inode *inode, kprojid_t kprojid)
+ 	struct dquot *transfer_to[MAXQUOTAS] = {};
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	struct super_block *sb = sbi->sb;
+-	int err = 0;
++	int err;
  
- 			list_del_init(&scb->list);
- 			scb->state = SCB_FREE;
+ 	transfer_to[PRJQUOTA] = dqget(sb, make_kqid_projid(kprojid));
+-	if (!IS_ERR(transfer_to[PRJQUOTA])) {
+-		err = __dquot_transfer(inode, transfer_to);
+-		if (err)
+-			set_sbi_flag(sbi, SBI_QUOTA_NEED_REPAIR);
+-		dqput(transfer_to[PRJQUOTA]);
+-	}
++	if (IS_ERR(transfer_to[PRJQUOTA]))
++		return PTR_ERR(transfer_to[PRJQUOTA]);
++
++	err = __dquot_transfer(inode, transfer_to);
++	if (err)
++		set_sbi_flag(sbi, SBI_QUOTA_NEED_REPAIR);
++	dqput(transfer_to[PRJQUOTA]);
+ 	return err;
+ }
+ 
 -- 
 2.39.2
 
