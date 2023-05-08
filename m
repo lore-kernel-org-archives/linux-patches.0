@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07759168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:10:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D35C4339B;
-	Mon,  8 May 2023 11:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B67168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:10:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE30C433D2;
+	Mon,  8 May 2023 11:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544230;
-	bh=a10Z9gk8KifaWlkndg4PwUl0YBly/ikSQjbzOAHQbNE=;
+	s=korg; t=1683544234;
+	bh=7k1f7joZo1YjPW06nG9XCmo++fUu2Aw18ach7E2efPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uK6GjbaL32G9ASZKo9wLohOtq2hnLhCbMnHW2WDFIdUh/SyM/lfS1mvSefhDtBZ27
-	 sw1/Yr5OQ2gMJNA7W3KSIdIzDpWEKJ1KKHgBlCNyAebiuRlLVkQvSaglsyYHjYAEOI
-	 SvwyZac4Ho8TaIsf24su3SrKGAXi+SY+aBgkg4go=
+	b=06U1s/DpH+Z/A0mxE5h3kneTZqazwpp2KY8EpAhANBjhCocLmH/IhRAklawf78c3W
+	 0VQoejbt8uMMkki+YBK06DThr735KxUKlt6SDF+44a/3S1nNBZgvJ1NhBVIM+/QBdx
+	 IYpchhjujsRBoCF8YrwA5vIWoVdjC+ABWUL3iIDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Shashank Gupta <shashank.gupta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 342/694] bpf: fix precision propagation verbose logging
-Date: Mon,  8 May 2023 11:42:57 +0200
-Message-Id: <20230508094443.606489925@linuxfoundation.org>
+Subject: [PATCH 6.3 343/694] crypto: qat - fix concurrency issue when device state changes
+Date: Mon,  8 May 2023 11:42:58 +0200
+Message-Id: <20230508094443.648940443@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,44 +36,204 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Shashank Gupta <shashank.gupta@intel.com>
 
-[ Upstream commit 34f0677e7afd3a292bc1aadda7ce8e35faedb204 ]
+[ Upstream commit 1bdc85550a2b59bb7f62ead7173134e66dd2d60e ]
 
-Fix wrong order of frame index vs register/slot index in precision
-propagation verbose (level 2) output. It's wrong and very confusing as is.
+The sysfs `state` attribute is not protected against race conditions.
+If multiple processes perform a device state transition on the same
+device in parallel, unexpected behaviors might occur.
 
-Fixes: 529409ea92d5 ("bpf: propagate precision across all frames, not just the last one")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20230313184017.4083374-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+For transitioning the device state, adf_sysfs.c calls the functions
+adf_dev_init(), adf_dev_start(), adf_dev_stop() and adf_dev_shutdown()
+which are unprotected and interdependent on each other. To perform a
+state transition, these functions needs to be called in a specific
+order:
+  * device up:   adf_dev_init() -> adf_dev_start()
+  * device down: adf_dev_stop() -> adf_dev_shutdown()
+
+This change introduces the functions adf_dev_up() and adf_dev_down()
+which wrap the state machine functions and protect them with a
+per-device lock. These are then used in adf_sysfs.c instead of the
+individual state transition functions.
+
+Fixes: 5ee52118ac14 ("crypto: qat - expose device state through sysfs for 4xxx")
+Signed-off-by: Shashank Gupta <shashank.gupta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../crypto/qat/qat_common/adf_accel_devices.h |  1 +
+ .../crypto/qat/qat_common/adf_common_drv.h    |  3 +
+ drivers/crypto/qat/qat_common/adf_dev_mgr.c   |  2 +
+ drivers/crypto/qat/qat_common/adf_init.c      | 64 +++++++++++++++++++
+ drivers/crypto/qat/qat_common/adf_sysfs.c     | 23 +------
+ 5 files changed, 73 insertions(+), 20 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 63510f8a1c7dc..856e2088289da 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -14229,7 +14229,7 @@ static int propagate_precision(struct bpf_verifier_env *env,
- 			    !(state_reg->live & REG_LIVE_READ))
- 				continue;
- 			if (env->log.level & BPF_LOG_LEVEL2)
--				verbose(env, "frame %d: propagating r%d\n", i, fr);
-+				verbose(env, "frame %d: propagating r%d\n", fr, i);
- 			err = mark_chain_precision_frame(env, fr, i);
- 			if (err < 0)
- 				return err;
-@@ -14245,7 +14245,7 @@ static int propagate_precision(struct bpf_verifier_env *env,
- 				continue;
- 			if (env->log.level & BPF_LOG_LEVEL2)
- 				verbose(env, "frame %d: propagating fp%d\n",
--					(-i - 1) * BPF_REG_SIZE, fr);
-+					fr, (-i - 1) * BPF_REG_SIZE);
- 			err = mark_chain_precision_stack_frame(env, fr, i);
- 			if (err < 0)
- 				return err;
+diff --git a/drivers/crypto/qat/qat_common/adf_accel_devices.h b/drivers/crypto/qat/qat_common/adf_accel_devices.h
+index 284f5aad3ee0b..7be933d6f0ffa 100644
+--- a/drivers/crypto/qat/qat_common/adf_accel_devices.h
++++ b/drivers/crypto/qat/qat_common/adf_accel_devices.h
+@@ -310,6 +310,7 @@ struct adf_accel_dev {
+ 			u8 pf_compat_ver;
+ 		} vf;
+ 	};
++	struct mutex state_lock; /* protect state of the device */
+ 	bool is_vf;
+ 	u32 accel_id;
+ };
+diff --git a/drivers/crypto/qat/qat_common/adf_common_drv.h b/drivers/crypto/qat/qat_common/adf_common_drv.h
+index 7189265573c08..4bf1fceb7052b 100644
+--- a/drivers/crypto/qat/qat_common/adf_common_drv.h
++++ b/drivers/crypto/qat/qat_common/adf_common_drv.h
+@@ -58,6 +58,9 @@ void adf_dev_stop(struct adf_accel_dev *accel_dev);
+ void adf_dev_shutdown(struct adf_accel_dev *accel_dev);
+ int adf_dev_shutdown_cache_cfg(struct adf_accel_dev *accel_dev);
+ 
++int adf_dev_up(struct adf_accel_dev *accel_dev, bool init_config);
++int adf_dev_down(struct adf_accel_dev *accel_dev, bool cache_config);
++
+ void adf_devmgr_update_class_index(struct adf_hw_device_data *hw_data);
+ void adf_clean_vf_map(bool);
+ 
+diff --git a/drivers/crypto/qat/qat_common/adf_dev_mgr.c b/drivers/crypto/qat/qat_common/adf_dev_mgr.c
+index 4c752eed10fea..86ee36feefad3 100644
+--- a/drivers/crypto/qat/qat_common/adf_dev_mgr.c
++++ b/drivers/crypto/qat/qat_common/adf_dev_mgr.c
+@@ -223,6 +223,7 @@ int adf_devmgr_add_dev(struct adf_accel_dev *accel_dev,
+ 		map->attached = true;
+ 		list_add_tail(&map->list, &vfs_table);
+ 	}
++	mutex_init(&accel_dev->state_lock);
+ unlock:
+ 	mutex_unlock(&table_lock);
+ 	return ret;
+@@ -269,6 +270,7 @@ void adf_devmgr_rm_dev(struct adf_accel_dev *accel_dev,
+ 		}
+ 	}
+ unlock:
++	mutex_destroy(&accel_dev->state_lock);
+ 	list_del(&accel_dev->list);
+ 	mutex_unlock(&table_lock);
+ }
+diff --git a/drivers/crypto/qat/qat_common/adf_init.c b/drivers/crypto/qat/qat_common/adf_init.c
+index cef7bb8ec0073..988cffd0b8338 100644
+--- a/drivers/crypto/qat/qat_common/adf_init.c
++++ b/drivers/crypto/qat/qat_common/adf_init.c
+@@ -400,3 +400,67 @@ int adf_dev_shutdown_cache_cfg(struct adf_accel_dev *accel_dev)
+ 
+ 	return 0;
+ }
++
++int adf_dev_down(struct adf_accel_dev *accel_dev, bool reconfig)
++{
++	int ret = 0;
++
++	if (!accel_dev)
++		return -EINVAL;
++
++	mutex_lock(&accel_dev->state_lock);
++
++	if (!adf_dev_started(accel_dev)) {
++		dev_info(&GET_DEV(accel_dev), "Device qat_dev%d already down\n",
++			 accel_dev->accel_id);
++		ret = -EINVAL;
++		goto out;
++	}
++
++	if (reconfig) {
++		ret = adf_dev_shutdown_cache_cfg(accel_dev);
++		goto out;
++	}
++
++	adf_dev_stop(accel_dev);
++	adf_dev_shutdown(accel_dev);
++
++out:
++	mutex_unlock(&accel_dev->state_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(adf_dev_down);
++
++int adf_dev_up(struct adf_accel_dev *accel_dev, bool config)
++{
++	int ret = 0;
++
++	if (!accel_dev)
++		return -EINVAL;
++
++	mutex_lock(&accel_dev->state_lock);
++
++	if (adf_dev_started(accel_dev)) {
++		dev_info(&GET_DEV(accel_dev), "Device qat_dev%d already up\n",
++			 accel_dev->accel_id);
++		ret = -EALREADY;
++		goto out;
++	}
++
++	if (config && GET_HW_DATA(accel_dev)->dev_config) {
++		ret = GET_HW_DATA(accel_dev)->dev_config(accel_dev);
++		if (unlikely(ret))
++			goto out;
++	}
++
++	ret = adf_dev_init(accel_dev);
++	if (unlikely(ret))
++		goto out;
++
++	ret = adf_dev_start(accel_dev);
++
++out:
++	mutex_unlock(&accel_dev->state_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(adf_dev_up);
+diff --git a/drivers/crypto/qat/qat_common/adf_sysfs.c b/drivers/crypto/qat/qat_common/adf_sysfs.c
+index e8b078e719c20..3eb6611ab1b11 100644
+--- a/drivers/crypto/qat/qat_common/adf_sysfs.c
++++ b/drivers/crypto/qat/qat_common/adf_sysfs.c
+@@ -50,38 +50,21 @@ static ssize_t state_store(struct device *dev, struct device_attribute *attr,
+ 
+ 	switch (ret) {
+ 	case DEV_DOWN:
+-		if (!adf_dev_started(accel_dev)) {
+-			dev_info(dev, "Device qat_dev%d already down\n",
+-				 accel_id);
+-			return -EINVAL;
+-		}
+-
+ 		dev_info(dev, "Stopping device qat_dev%d\n", accel_id);
+ 
+-		ret = adf_dev_shutdown_cache_cfg(accel_dev);
++		ret = adf_dev_down(accel_dev, true);
+ 		if (ret < 0)
+ 			return -EINVAL;
+ 
+ 		break;
+ 	case DEV_UP:
+-		if (adf_dev_started(accel_dev)) {
+-			dev_info(dev, "Device qat_dev%d already up\n",
+-				 accel_id);
+-			return -EINVAL;
+-		}
+-
+ 		dev_info(dev, "Starting device qat_dev%d\n", accel_id);
+ 
+-		ret = GET_HW_DATA(accel_dev)->dev_config(accel_dev);
+-		if (!ret)
+-			ret = adf_dev_init(accel_dev);
+-		if (!ret)
+-			ret = adf_dev_start(accel_dev);
+-
++		ret = adf_dev_up(accel_dev, true);
+ 		if (ret < 0) {
+ 			dev_err(dev, "Failed to start device qat_dev%d\n",
+ 				accel_id);
+-			adf_dev_shutdown_cache_cfg(accel_dev);
++			adf_dev_down(accel_dev, true);
+ 			return ret;
+ 		}
+ 		break;
 -- 
 2.39.2
 
