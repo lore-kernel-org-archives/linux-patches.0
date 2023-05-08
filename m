@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDBE168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:24:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A44AC43443;
-	Mon,  8 May 2023 10:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1940168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:24:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8BBC433D2;
+	Mon,  8 May 2023 10:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541449;
-	bh=tABDN212CA76MVrgvoONGmEu4F/MywUwtIQNv3n17ak=;
+	s=korg; t=1683541452;
+	bh=p2jOAqfTUG+lhGE8yFbCbVhaP/o6oN3h1uXpODlee3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GeAkqVKV5N/4/8lYYR0ORx13Z04lgIVonoTKATntAhyfrl9d8drxko9/6FtfHPBoH
-	 +WDM2oxGelXsyhP0sRCJMLO/RnTe9h2F6yGOmh3yy+RJ3d5lgMUIvOxYaBZcaE/JnC
-	 3TaeNmrmDsFPIZ2sOi/sqiGHTfdU0Z6NMBcgAXwk=
+	b=w4BJvycrlB/c+wNXlzzyVuQlEcdOoLeoSkWRGFs9ACMM7a5bvqp/SfmpJikb2Wb1F
+	 bFtfswiVwLE3eOmr6h/4RPxyj5c2tSZF/4VxDslYHbU6XVPBFUKppyiuWEbxdSmMnI
+	 Bim/OBZqeMUBjenO/nlcGaXfSnvgr57gYc/JcO2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Reinette Chatre <reinette.chatre@intel.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 118/663] selftests/resctrl: Return NULL if malloc_and_init_memory() did not alloc mem
-Date: Mon,  8 May 2023 11:39:04 +0200
-Message-Id: <20230508094432.339821160@linuxfoundation.org>
+Subject: [PATCH 6.2 119/663] selftests/resctrl: Move ->setup() call outside of test specific branches
+Date: Mon,  8 May 2023 11:39:05 +0200
+Message-Id: <20230508094432.372877646@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -39,38 +39,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 22a8be280383812235131dda18a8212a59fadd2d ]
+[ Upstream commit c90b3b588e369c20087699316259fa5ebbb16f2d ]
 
-malloc_and_init_memory() in fill_buf isn't checking if memalign()
-successfully allocated memory or not before accessing the memory.
+resctrl_val() function is called only by MBM, MBA, and CMT tests which
+means the else branch is never used.
 
-Check the return value of memalign() and return NULL if allocating
-aligned memory fails.
+Both test branches call param->setup().
 
-Fixes: a2561b12fe39 ("selftests/resctrl: Add built in benchmark")
+Remove the unused else branch and place the ->setup() call outside of
+the test specific branches reducing code duplication.
+
 Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
 Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Stable-dep-of: fa10366cc6f4 ("selftests/resctrl: Allow ->setup() to return errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/fill_buf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/resctrl/resctrl_val.c | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/fill_buf.c b/tools/testing/selftests/resctrl/fill_buf.c
-index 56ccbeae0638d..c20d0a7ecbe63 100644
---- a/tools/testing/selftests/resctrl/fill_buf.c
-+++ b/tools/testing/selftests/resctrl/fill_buf.c
-@@ -68,6 +68,8 @@ static void *malloc_and_init_memory(size_t s)
- 	size_t s64;
+diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
+index b32b96356ec70..787546a528493 100644
+--- a/tools/testing/selftests/resctrl/resctrl_val.c
++++ b/tools/testing/selftests/resctrl/resctrl_val.c
+@@ -734,29 +734,22 @@ int resctrl_val(char **benchmark_cmd, struct resctrl_val_param *param)
  
- 	void *p = memalign(PAGE_SIZE, s);
-+	if (!p)
-+		return NULL;
+ 	/* Test runs until the callback setup() tells the test to stop. */
+ 	while (1) {
++		ret = param->setup(1, param);
++		if (ret) {
++			ret = 0;
++			break;
++		}
++
+ 		if (!strncmp(resctrl_val, MBM_STR, sizeof(MBM_STR)) ||
+ 		    !strncmp(resctrl_val, MBA_STR, sizeof(MBA_STR))) {
+-			ret = param->setup(1, param);
+-			if (ret) {
+-				ret = 0;
+-				break;
+-			}
+-
+ 			ret = measure_vals(param, &bw_resc_start);
+ 			if (ret)
+ 				break;
+ 		} else if (!strncmp(resctrl_val, CMT_STR, sizeof(CMT_STR))) {
+-			ret = param->setup(1, param);
+-			if (ret) {
+-				ret = 0;
+-				break;
+-			}
+ 			sleep(1);
+ 			ret = measure_cache_vals(param, bm_pid);
+ 			if (ret)
+ 				break;
+-		} else {
+-			break;
+ 		}
+ 	}
  
- 	p64 = (uint64_t *)p;
- 	s64 = s / sizeof(uint64_t);
 -- 
 2.39.2
 
