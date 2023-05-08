@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6F2171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E83C433EF;
-	Mon,  8 May 2023 11:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D90171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E23C4339C;
+	Mon,  8 May 2023 11:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546369;
-	bh=4ZDjMyZlTE9Oi+5UsaZHV9CcbRHm4y+tdZZZXlM/SyQ=;
+	s=korg; t=1683546373;
+	bh=1WdQWqfYY/q/QVlDQKU22+HlJQpQc3nrsZWgO3vfDpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n7AzAuDJOuMrnwi5Vx/DrUSvpmtgd3k7WE8J2ZwtmmJuTKcTvSBMa/ORg98wqxv/L
-	 4K2ibzcoLp7DZBFQt0jrSFK1LthCBDQsF15mQ9wdquVSFwRboRCzS9GvYBqqMt/5yu
-	 44lM9s1Guyfp/pPHjGR+tBqJ8xqdQIIid/LYxaeY=
+	b=t4kZ5nwzLQ2+H1yvAmmeS7hlpgSbju7e4y33KqS/nkrTqyOgMq+SgVZCuEgxtyvmq
+	 yJEZRUowG3acewWnP9HZqgs8vfdXj7BW5ROFf3qA2g8P+IMzAfz/2J+zWw6GAfZyLz
+	 V5HnJYnffTqcqSitPHpVD5O/AogCnyUd9xcXJrng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.15 345/371] parisc: Fix argument pointer in real64_call_asm()
-Date: Mon,  8 May 2023 11:49:06 +0200
-Message-Id: <20230508094825.836800557@linuxfoundation.org>
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	=?UTF-8?q?Gr=C3=A9gory=20Desor?= <gregory.desor@free.fr>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 346/371] ALSA: usb-audio: Add quirk for Pioneer DDJ-800
+Date: Mon,  8 May 2023 11:49:07 +0200
+Message-Id: <20230508094825.871394715@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -33,48 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Geraldo Nascimento <geraldogabriel@gmail.com>
 
-commit 6e3220ba3323a2c24be834aebf5d6e9f89d0993f upstream.
+commit 7501f472977df233d039d86c6981e0641708e1ca upstream.
 
-Fix the argument pointer (ap) to point to real-mode memory
-instead of virtual memory.
+One more Pioneer quirk, this time for DDJ-800, which is quite similar like
+other DJ DDJ models but with slightly different EPs or channels.
 
-It's interesting that this issue hasn't shown up earlier, as this could
-have happened with any 64-bit PDC ROM code.
-
-I just noticed it because I suddenly faced a HPMC while trying to execute
-the 64-bit STI ROM code of an Visualize-FXe graphics card for the STI
-text console.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+Tested-by: Grégory Desor <gregory.desor@free.fr>
 Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/ZFLLzgEcsSF5aIHG@geday
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/real2.S |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/usb/quirks-table.h |   58 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
---- a/arch/parisc/kernel/real2.S
-+++ b/arch/parisc/kernel/real2.S
-@@ -248,9 +248,6 @@ ENTRY_CFI(real64_call_asm)
- 	/* save fn */
- 	copy	%arg2, %r31
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -3808,6 +3808,64 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 	}
+ },
  
--	/* set up the new ap */
--	ldo	64(%arg1), %r29
--
- 	/* load up the arg registers from the saved arg area */
- 	/* 32-bit calling convention passes first 4 args in registers */
- 	ldd	0*REG_SZ(%arg1), %arg0		/* note overwriting arg0 */
-@@ -262,7 +259,9 @@ ENTRY_CFI(real64_call_asm)
- 	ldd	7*REG_SZ(%arg1), %r19
- 	ldd	1*REG_SZ(%arg1), %arg1		/* do this one last! */
- 
-+	/* set up real-mode stack and real-mode ap */
- 	tophys_r1 %sp
-+	ldo	-16(%sp), %r29			/* Reference param save area */
- 
- 	b,l	rfi_virt2real,%r2
- 	nop
++{
++	/*
++	 * PIONEER DJ DDJ-800
++	 * PCM is 6 channels out, 6 channels in @ 44.1 fixed
++	 * The Feedback for the output is the input
++	 */
++	USB_DEVICE_VENDOR_SPEC(0x2b73, 0x0029),
++		.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
++		.ifnum = QUIRK_ANY_INTERFACE,
++		.type = QUIRK_COMPOSITE,
++		.data = (const struct snd_usb_audio_quirk[]) {
++			{
++				.ifnum = 0,
++				.type = QUIRK_AUDIO_FIXED_ENDPOINT,
++				.data = &(const struct audioformat) {
++					.formats = SNDRV_PCM_FMTBIT_S24_3LE,
++					.channels = 6,
++					.iface = 0,
++					.altsetting = 1,
++					.altset_idx = 1,
++					.endpoint = 0x01,
++					.ep_attr = USB_ENDPOINT_XFER_ISOC|
++						USB_ENDPOINT_SYNC_ASYNC,
++					.rates = SNDRV_PCM_RATE_44100,
++					.rate_min = 44100,
++					.rate_max = 44100,
++					.nr_rates = 1,
++					.rate_table = (unsigned int[]) { 44100 }
++				}
++			},
++			{
++				.ifnum = 0,
++				.type = QUIRK_AUDIO_FIXED_ENDPOINT,
++				.data = &(const struct audioformat) {
++					.formats = SNDRV_PCM_FMTBIT_S24_3LE,
++					.channels = 6,
++					.iface = 0,
++					.altsetting = 1,
++					.altset_idx = 1,
++					.endpoint = 0x82,
++					.ep_idx = 1,
++					.ep_attr = USB_ENDPOINT_XFER_ISOC|
++						USB_ENDPOINT_SYNC_ASYNC|
++					USB_ENDPOINT_USAGE_IMPLICIT_FB,
++					.rates = SNDRV_PCM_RATE_44100,
++					.rate_min = 44100,
++					.rate_max = 44100,
++					.nr_rates = 1,
++					.rate_table = (unsigned int[]) { 44100 }
++				}
++			},
++			{
++				.ifnum = -1
++			}
++		}
++	}
++},
++
+ /*
+  * MacroSilicon MS2100/MS2106 based AV capture cards
+  *
 
 
