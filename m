@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2376E168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF0AC433A0;
-	Mon,  8 May 2023 11:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C32C168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B94C433D2;
+	Mon,  8 May 2023 11:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544582;
-	bh=0EtESPJ9ns3FZ29SfoOrK+BwKaLqd1DG0mtlEAfj15s=;
+	s=korg; t=1683544584;
+	bh=WxENUDu9XKD4KrfOb2w89Rm4uQPwqtCXpkL0Ma9kfPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQ1NH1Ve1oLttepzVobtnx1mb+3Qzsa+Q3aeJsX6xugq75I+TzcvWyCQqwsCzSYwo
-	 gaLzsmlhQztJ6O3Olcc6B63u+eJaEBU5mMsmtQij4sh7i6q/wzVGx1LqgANJMRdoUI
-	 k68At3Uh3EGZnOi4RbU8qUe1Hqy1A9ro02QwffwY=
+	b=0iwPiWJbmsxvdrTkP7yMavGrj0zpkbfZSXtg78p44zkEfE4qy0mueigGtZy8QDKz3
+	 9w2CPQr56EoY8Bpy5/eheMuRNLxoozWEssZVFpkY7kauS8RNTctNxEU7poyxXuT/IB
+	 pqD8cV8xg8g+Y5Tx4xms6V6NOSEorAZwuJEdUnbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 457/694] net: libwx: fix memory leak in wx_setup_rx_resources
-Date: Mon,  8 May 2023 11:44:52 +0200
-Message-Id: <20230508094448.456184109@linuxfoundation.org>
+	Joe Damato <jdamato@fastly.com>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.3 458/694] ixgbe: Allow flow hash to be set via ethtool
+Date: Mon,  8 May 2023 11:44:53 +0200
+Message-Id: <20230508094448.499913878@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,43 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Joe Damato <jdamato@fastly.com>
 
-[ Upstream commit e315e7b83a22043bffee450437d7089ef373cbf6 ]
+[ Upstream commit 4f3ed1293feb9502dc254b05802faf1ad3317ac6 ]
 
-When wx_alloc_page_pool() failed in wx_setup_rx_resources(), it doesn't
-release DMA buffer. Add dma_free_coherent() in the error path to release
-the DMA buffer.
+ixgbe currently returns `EINVAL` whenever the flowhash it set by ethtool
+because the ethtool code in the kernel passes a non-zero value for hfunc
+that ixgbe should allow.
 
-Fixes: 850b971110b2 ("net: libwx: Allocate Rx and Tx resources")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230418065450.2268522-1-shaozhengchao@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+When ethtool is called with `ETHTOOL_SRXFHINDIR`,
+`ethtool_set_rxfh_indir` will call ixgbe's set_rxfh function
+with `ETH_RSS_HASH_NO_CHANGE`. This value should be accepted.
+
+When ethtool is called with `ETHTOOL_SRSSH`, `ethtool_set_rxfh` will
+call ixgbe's set_rxfh function with `rxfh.hfunc`, which appears to be
+hardcoded in ixgbe to always be `ETH_RSS_HASH_TOP`. This value should
+also be accepted.
+
+Before this patch:
+
+$ sudo ethtool -L eth1 combined 10
+$ sudo ethtool -X eth1 default
+Cannot set RX flow hash configuration: Invalid argument
+
+After this patch:
+
+$ sudo ethtool -L eth1 combined 10
+$ sudo ethtool -X eth1 default
+$ sudo ethtool -x eth1
+RX flow hash indirection table for eth1 with 10 RX ring(s):
+    0:      0     1     2     3     4     5     6     7
+    8:      8     9     0     1     2     3     4     5
+   16:      6     7     8     9     0     1     2     3
+   24:      4     5     6     7     8     9     0     1
+   ...
+
+Fixes: 1c7cf0784e4d ("ixgbe: support for ethtool set_rxfh")
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-index eb89a274083e7..1e8d8b7b0c62e 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -1798,10 +1798,13 @@ static int wx_setup_rx_resources(struct wx_ring *rx_ring)
- 	ret = wx_alloc_page_pool(rx_ring);
- 	if (ret < 0) {
- 		dev_err(rx_ring->dev, "Page pool creation failed: %d\n", ret);
--		goto err;
-+		goto err_desc;
- 	}
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
+index 6cfc9dc165378..821dfd323fa9a 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
+@@ -3131,8 +3131,8 @@ static int ixgbe_set_rxfh(struct net_device *netdev, const u32 *indir,
+ 	int i;
+ 	u32 reta_entries = ixgbe_rss_indir_tbl_entries(adapter);
  
- 	return 0;
-+
-+err_desc:
-+	dma_free_coherent(dev, rx_ring->size, rx_ring->desc, rx_ring->dma);
- err:
- 	kvfree(rx_ring->rx_buffer_info);
- 	rx_ring->rx_buffer_info = NULL;
+-	if (hfunc)
+-		return -EINVAL;
++	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
++		return -EOPNOTSUPP;
+ 
+ 	/* Fill out the redirection table */
+ 	if (indir) {
 -- 
 2.39.2
 
