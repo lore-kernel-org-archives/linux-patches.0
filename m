@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9EA2915
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:41:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B07C433EF;
-	Mon,  8 May 2023 10:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C4A8BF9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:41:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC97C433A0;
+	Mon,  8 May 2023 10:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542466;
-	bh=nDEMnWd+EuASQpGCscuzQoO4JYuhzm2i1ixt+YU41VU=;
+	s=korg; t=1683542469;
+	bh=X2ZQBkmNO4tFyqHEhbe8mX3cVuiFc3Tmpkey0gyQouA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CwuJQQr0AvJNpKYNN480TZHoIpZNMxVDtt4DdCeE2wi1JHUJeetJtP57O6J8bZGcW
-	 0N2W/D7QMzdIvTWaehn9TZpBk7f64/0+GxaW+niwnjOyw79EVjGpHSjrMZ3EBzEdrd
-	 13IJxf2Q9OZs1Y9bQIqOReHVLAkAN0W68Gu6IKQs=
+	b=UE7KJKAdbPFBoIaCtTOldGfa4ZxsT3eXhYSmrK+9OB6En1CM/yNxBi58XCP2tp4cw
+	 bHJVfKNTItJ48j9xvMzjB7uJFx3aFVg5Y0jVH9xuEvKNWBaQVssZtGilPayYbYb6qb
+	 U7HiF48wII4uD7f0DZDj7V+1kW5w4yGAIL9a7j8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 444/663] iommufd/selftest: Catch overflow of uptr and length
-Date: Mon,  8 May 2023 11:44:30 +0200
-Message-Id: <20230508094442.482028778@linuxfoundation.org>
+Subject: [PATCH 6.2 445/663] iio: light: max44009: add missing OF device matching
+Date: Mon,  8 May 2023 11:44:31 +0200
+Message-Id: <20230508094442.519151555@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,80 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit fd8c1a4aee973e87d890a5861e106625a33b2c4e ]
+[ Upstream commit b29c49026c3c05a11f845dba17cad0b3ba06836d ]
 
-syzkaller hits a WARN_ON when trying to have a uptr close to UINTPTR_MAX:
+The driver currently matches only via i2c_device_id, but also has
+of_device_id table:
 
-  WARNING: CPU: 1 PID: 393 at drivers/iommu/iommufd/selftest.c:403 iommufd_test+0xb19/0x16f0
-  Modules linked in:
-  CPU: 1 PID: 393 Comm: repro Not tainted 6.2.0-c9c3395d5e3d #1
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-  RIP: 0010:iommufd_test+0xb19/0x16f0
-  Code: 94 c4 31 ff 44 89 e6 e8 a5 54 17 ff 45 84 e4 0f 85 bb 0b 00 00 41 be fb ff ff ff e8 31 53 17 ff e9 a0 f7 ff ff e8 27 53 17 ff <0f> 0b 41 be 8
-  RSP: 0018:ffffc90000eabdc0 EFLAGS: 00010246
-  RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff8214c487
-  RDX: 0000000000000000 RSI: ffff88800f5c8000 RDI: 0000000000000002
-  RBP: ffffc90000eabe48 R08: 0000000000000000 R09: 0000000000000001
-  R10: 0000000000000001 R11: 0000000000000000 R12: 00000000cd2b0000
-  R13: 00000000cd2af000 R14: 0000000000000000 R15: ffffc90000eabe68
-  FS:  00007f94d76d5740(0000) GS:ffff88807dd00000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000020000043 CR3: 0000000006880006 CR4: 0000000000770ee0
-  PKRU: 55555554
-  Call Trace:
-   <TASK>
-   ? write_comp_data+0x2f/0x90
-   iommufd_fops_ioctl+0x1ef/0x310
-   __x64_sys_ioctl+0x10e/0x160
-   ? __pfx_iommufd_fops_ioctl+0x10/0x10
-   do_syscall_64+0x3b/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
+  drivers/iio/light/max44009.c:545:34: error: ‘max44009_of_match’ defined but not used [-Werror=unused-const-variable=]
 
-Check that the user memory range doesn't overflow.
-
-Fixes: f4b20bb34c83 ("iommufd: Add kernel support for testing iommufd")
-Link: https://lore.kernel.org/r/0-v1-95390ed1df8d+8f-iommufd_mock_overflow_jgg@nvidia.com
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Link: https://lore.kernel.org/r/Y/hOiilV1wJvu/Hv@xpf.sh.intel.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 6aef699a7d7e ("iio: light: add driver for MAX44009")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230312153429.371702-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/selftest.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/iio/light/max44009.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-index cfb5fe9a5e0ee..76c46847dc494 100644
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -339,10 +339,12 @@ static int iommufd_test_md_check_pa(struct iommufd_ucmd *ucmd,
- {
- 	struct iommufd_hw_pagetable *hwpt;
- 	struct mock_iommu_domain *mock;
-+	uintptr_t end;
- 	int rc;
+diff --git a/drivers/iio/light/max44009.c b/drivers/iio/light/max44009.c
+index 801e5a0ad496b..f3648f20ef2c0 100644
+--- a/drivers/iio/light/max44009.c
++++ b/drivers/iio/light/max44009.c
+@@ -528,6 +528,12 @@ static int max44009_probe(struct i2c_client *client,
+ 	return devm_iio_device_register(&client->dev, indio_dev);
+ }
  
- 	if (iova % MOCK_IO_PAGE_SIZE || length % MOCK_IO_PAGE_SIZE ||
--	    (uintptr_t)uptr % MOCK_IO_PAGE_SIZE)
-+	    (uintptr_t)uptr % MOCK_IO_PAGE_SIZE ||
-+	    check_add_overflow((uintptr_t)uptr, (uintptr_t)length, &end))
- 		return -EINVAL;
- 
- 	hwpt = get_md_pagetable(ucmd, mockpt_id, &mock);
-@@ -390,7 +392,10 @@ static int iommufd_test_md_check_refs(struct iommufd_ucmd *ucmd,
- 				      void __user *uptr, size_t length,
- 				      unsigned int refs)
- {
--	if (length % PAGE_SIZE || (uintptr_t)uptr % PAGE_SIZE)
-+	uintptr_t end;
++static const struct of_device_id max44009_of_match[] = {
++	{ .compatible = "maxim,max44009" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, max44009_of_match);
 +
-+	if (length % PAGE_SIZE || (uintptr_t)uptr % PAGE_SIZE ||
-+	    check_add_overflow((uintptr_t)uptr, (uintptr_t)length, &end))
- 		return -EINVAL;
+ static const struct i2c_device_id max44009_id[] = {
+ 	{ "max44009", 0 },
+ 	{ }
+@@ -537,18 +543,13 @@ MODULE_DEVICE_TABLE(i2c, max44009_id);
+ static struct i2c_driver max44009_driver = {
+ 	.driver = {
+ 		.name = MAX44009_DRV_NAME,
++		.of_match_table = max44009_of_match,
+ 	},
+ 	.probe = max44009_probe,
+ 	.id_table = max44009_id,
+ };
+ module_i2c_driver(max44009_driver);
  
- 	for (; length; length -= PAGE_SIZE) {
+-static const struct of_device_id max44009_of_match[] = {
+-	{ .compatible = "maxim,max44009" },
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(of, max44009_of_match);
+-
+ MODULE_AUTHOR("Robert Eshleman <bobbyeshleman@gmail.com>");
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("MAX44009 ambient light sensor driver");
 -- 
 2.39.2
 
