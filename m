@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8643A171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9A6C433EF;
-	Mon,  8 May 2023 11:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789D0171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15F6C433EF;
+	Mon,  8 May 2023 11:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545562;
-	bh=SGPhHBryQm1bcXIDesbpsA5tl+pAabv8YSVP8MgXpdc=;
+	s=korg; t=1683545565;
+	bh=oRZYP3fl9VvAQMvBV6hIb/dLpZUR47uxCxsZ5EQ20/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMRcD3ktRVIBuMeohyVjf4fxD9rDkRafqx2IQY16GZ8H4ysxwxStgbTo5SNbT9jC9
-	 BYTDuO6OZSCRyOtV6usYm15HDY55l8hy0H9dzDP0dGIOJzwjtC+OHC4l2rqrvG1D+F
-	 Fg+1hslgQP1qeu33KzPI24b0dgGlZzknbUTQmLNk=
+	b=Thx9PlaTT0BiSgsIApu3lxcMl7iroHGGwrDKbXP6SBNz4XZfGlRGHgVERxispNhaj
+	 ZgbxPOe1D6yZecDqvvpUvzhKu362XutgVeXjZk2LYK2tQVCy1Tpn2xdZRvg9pqnf7r
+	 TC02sTVoNWg2n8JnEElfMkhO9Vec1w+PmmtYNZlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/371] arm64: dts: renesas: r8a774c0: Remove bogus voltages from OPP table
-Date: Mon,  8 May 2023 11:44:42 +0200
-Message-Id: <20230508094815.318633073@linuxfoundation.org>
+Subject: [PATCH 5.15 064/371] selftests/resctrl: Check for return value after write_schemata()
+Date: Mon,  8 May 2023 11:44:25 +0200
+Message-Id: <20230508094814.621598448@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -34,48 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 554edc3e9239bb81e61be9f0f5dbbeb528a69e72 ]
+[ Upstream commit 0d45c83b95da414e98ad333e723141a94f6e2c64 ]
 
-According to the RZ/G Series, 2nd Generation Hardware User’s Manual
-Rev. 1.11, the System CPU cores on RZ/G2E do not have their own power
-supply, but use the common internal power supply (typical 1.03V).
+MBA test case writes schemata but it does not check if the write is
+successful or not.
 
-Hence remove the "opp-microvolt" properties from the Operating
-Performance Points table.  They are optional, and unused, when none of
-the CPU nodes is tied to a regulator using the "cpu-supply" property.
+Add the error check and return error properly.
 
-Fixes: 231d8908a66fa98f ("arm64: dts: renesas: r8a774c0: Add OPPs table for cpu devices")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/8348e18a011ded94e35919cd8e17c0be1f9acf2f.1676560856.git.geert+renesas@glider.be
+Fixes: 01fee6b4d1f9 ("selftests/resctrl: Add MBA test")
+Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
+Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a774c0.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+ tools/testing/selftests/resctrl/mba_test.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
-index 9eb08be3b98e2..50189209b6605 100644
---- a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
-@@ -49,17 +49,14 @@
- 		opp-shared;
- 		opp-800000000 {
- 			opp-hz = /bits/ 64 <800000000>;
--			opp-microvolt = <820000>;
- 			clock-latency-ns = <300000>;
- 		};
- 		opp-1000000000 {
- 			opp-hz = /bits/ 64 <1000000000>;
--			opp-microvolt = <820000>;
- 			clock-latency-ns = <300000>;
- 		};
- 		opp-1200000000 {
- 			opp-hz = /bits/ 64 <1200000000>;
--			opp-microvolt = <820000>;
- 			clock-latency-ns = <300000>;
- 			opp-suspend;
- 		};
+diff --git a/tools/testing/selftests/resctrl/mba_test.c b/tools/testing/selftests/resctrl/mba_test.c
+index f32289ae17aeb..97dc98c0c9497 100644
+--- a/tools/testing/selftests/resctrl/mba_test.c
++++ b/tools/testing/selftests/resctrl/mba_test.c
+@@ -28,6 +28,7 @@ static int mba_setup(int num, ...)
+ 	struct resctrl_val_param *p;
+ 	char allocation_str[64];
+ 	va_list param;
++	int ret;
+ 
+ 	va_start(param, num);
+ 	p = va_arg(param, struct resctrl_val_param *);
+@@ -45,7 +46,11 @@ static int mba_setup(int num, ...)
+ 
+ 	sprintf(allocation_str, "%d", allocation);
+ 
+-	write_schemata(p->ctrlgrp, allocation_str, p->cpu_no, p->resctrl_val);
++	ret = write_schemata(p->ctrlgrp, allocation_str, p->cpu_no,
++			     p->resctrl_val);
++	if (ret < 0)
++		return ret;
++
+ 	allocation -= ALLOCATION_STEP;
+ 
+ 	return 0;
 -- 
 2.39.2
 
