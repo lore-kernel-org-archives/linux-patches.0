@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B569320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217B3C433D2;
-	Mon,  8 May 2023 11:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0A3320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A593C433D2;
+	Mon,  8 May 2023 11:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544160;
-	bh=W4SvYe4rKZkIlVlw5Ner+meN9XLyf8/ABcPjE9u0W1M=;
+	s=korg; t=1683544163;
+	bh=ojc58rMjtvQJnZH5ift4m2BaI2Ddu85cIVhMmcACl14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mg7vh49dHebaoJTDB5YZRqgSpmEEQuT5iATQzlaOl1iusdS63Qxpj+GkzcHt0UXZl
-	 Cs+tOdk0xXHGTS7qhh3BG6D2XwfUCwyu4GdE9O4FTO1Q3n8kGWeKNSQmoPknXz/aT3
-	 tjBa1bncDn4fKfYpt0p7kcvlahb57pOpaxhvMRvQ=
+	b=OSiTlqjvEJ/6szxXLGxFtNIHg4/73CWVfOAVziAwNg7f6HrTcQ07e544UnACc5uV6
+	 gUa9TcG3jM5SID4412x0yZDv6duqBLPtRJgpYAs3EEYHrZdrypfoy2ZWQfG4laF2Wu
+	 2OErDSzMpCWMMrmNzxUabRw4ogA3d4JrujeReH18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 313/694] drm/i915: Make intel_get_crtc_new_encoder() less oopsy
-Date: Mon,  8 May 2023 11:42:28 +0200
-Message-Id: <20230508094442.463887281@linuxfoundation.org>
+Subject: [PATCH 6.3 322/694] wifi: ath6kl: minor fix for allocation size
+Date: Mon,  8 May 2023 11:42:37 +0200
+Message-Id: <20230508094442.790854799@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,40 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Alexey V. Vissarionov <gremlin@altlinux.org>
 
-[ Upstream commit 631420b06597a33c72b6dcef78d1c2dea17f452d ]
+[ Upstream commit 778f83f889e7fca37780d9640fcbd0229ae38eaa ]
 
-The point of the WARN was to print something, not oops
-straight up. Currently that is precisely what happens
-if we can't find the connector for the crtc in the atomic
-state. Get the dev pointer from the atomic state instead
-of the potentially NULL encoder to avoid that.
+Although the "param" pointer occupies more or equal space compared
+to "*param", the allocation size should use the size of variable
+itself.
 
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230413200602.6037-2-ville.syrjala@linux.intel.com
-Fixes: 3a47ae201e07 ("drm/i915/display: Make WARN* drm specific where encoder ptr is available")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 3b6692357f70498f617ea1b31a0378070a0acf1c)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: bdcd81707973cf8a ("Add ath6kl cleaned up driver")
+Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230117110414.GC12547@altlinux.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c | 2 +-
+ drivers/net/wireless/ath/ath6kl/bmi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-index 63b4b73f47c6a..2bef50ab0ad19 100644
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -1053,7 +1053,7 @@ intel_get_crtc_new_encoder(const struct intel_atomic_state *state,
- 		num_encoders++;
+diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
+index bde5a10d470c8..af98e871199d3 100644
+--- a/drivers/net/wireless/ath/ath6kl/bmi.c
++++ b/drivers/net/wireless/ath/ath6kl/bmi.c
+@@ -246,7 +246,7 @@ int ath6kl_bmi_execute(struct ath6kl *ar, u32 addr, u32 *param)
+ 		return -EACCES;
  	}
  
--	drm_WARN(encoder->base.dev, num_encoders != 1,
-+	drm_WARN(state->base.dev, num_encoders != 1,
- 		 "%d encoders for pipe %c\n",
- 		 num_encoders, pipe_name(master_crtc->pipe));
- 
+-	size = sizeof(cid) + sizeof(addr) + sizeof(param);
++	size = sizeof(cid) + sizeof(addr) + sizeof(*param);
+ 	if (size > ar->bmi.max_cmd_size) {
+ 		WARN_ON(1);
+ 		return -EINVAL;
 -- 
 2.39.2
 
