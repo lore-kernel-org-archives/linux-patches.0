@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8856168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:57:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA79C433EF;
-	Mon,  8 May 2023 10:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93C9168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:57:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51421C433EF;
+	Mon,  8 May 2023 10:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543461;
-	bh=LzhMOySrmXuA5k/i9z9IQwcnngHdDfoxDLAC/s5FWWo=;
+	s=korg; t=1683543464;
+	bh=n1IcSOAvQll2yh0jpLbA8jk4DZOpWW+3pcW7KM2DQYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGJwMTJc7n2AfJNwCsx71J1wV/nLjy7rLomOVfSL2qQ+bG2WCDkqUGX/5tmQzNQMc
-	 uUpRrNisHZZwKyeoBiojPm2NRx/ZDT2lRsmSLVJe+IS1YEFNFdZEQuhKqX7ON5Rd5B
-	 ytm88LRsyzEYeJVb8+u2k27PhSBGFaJuqOHIljnQ=
+	b=AVsBY8iEVNDon9W8ZCj6A1fDvr9HfLV697YGshC0DJ6My548lE81SEJjTGO63TnHS
+	 6BaaNxRiCRRQHea6dXRHjyr2pPyY1kpjy/1OXjzGTv+7IW/fdmpN7pdSLRU8vVE8OM
+	 n83OC17ov83glfFnPhdRk0PbXrTvmnnbrEjCrNeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Risto A. Paju" <teknohog@iki.fi>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"6 . 3+" <stable@kernel.org>
-Subject: [PATCH 6.3 080/694] thermal: intel: powerclamp: Fix NULL pointer access issue
-Date: Mon,  8 May 2023 11:38:35 +0200
-Message-Id: <20230508094435.132360577@linuxfoundation.org>
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.3 098/694] bus: mhi: host: Range check CHDBOFF and ERDBOFF
+Date: Mon,  8 May 2023 11:38:53 +0200
+Message-Id: <20230508094435.687243079@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,52 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-commit b5d68f84f4c62c78bc3d004911d80da5aa22df8b upstream.
+commit 6a0c637bfee69a74c104468544d9f2a6579626d0 upstream.
 
-If cur_state for the powerclamp cooling device is set to the default
-minimum state of 0, without setting first to cur_state > 0, this results
-in NULL pointer access.
+If the value read from the CHDBOFF and ERDBOFF registers is outside the
+range of the MHI register space then an invalid address might be computed
+which later causes a kernel panic.  Range check the read value to prevent
+a crash due to bad data from the device.
 
-This NULL pointer access happens in the powercap core idle-inject
-function idle_inject_set_duration() as there is no NULL check for
-idle_inject_device pointer. This pointer must be allocated by calling
-idle_inject_register() or idle_inject_register_full().
-
-In the function powerclamp_set_cur_state(), idle_inject_device pointer
-is allocated only when the cur_state > 0. But setting 0 without changing
-to any other state, idle_inject_set_duration() will be called with a
-NULL idle_inject_device pointer.
-
-To address this, just return from powerclamp_set_cur_state() if the
-current cooling device state is the same as the last one. Since the
-power-up default cooling device state is 0, changing the state to 0
-again here will return without calling idle_inject_set_duration().
-
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Fixes: 8526eb7fc75a ("thermal: intel: powerclamp: Use powercap idle-inject feature")
-Bugzilla: https://bugzilla.kernel.org/show_bug.cgi?id=217386
-Tested-by: Risto A. Paju <teknohog@iki.fi>
-Cc: 6.3+ <stable@kernel.org> # 6.3+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/1679674384-27209-1-git-send-email-quic_jhugo@quicinc.com
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/intel_powerclamp.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bus/mhi/host/init.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/thermal/intel/intel_powerclamp.c
-+++ b/drivers/thermal/intel/intel_powerclamp.c
-@@ -703,6 +703,10 @@ static int powerclamp_set_cur_state(stru
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -516,6 +516,12 @@ int mhi_init_mmio(struct mhi_controller
+ 		return -EIO;
+ 	}
  
- 	new_target_ratio = clamp(new_target_ratio, 0UL,
- 				(unsigned long) (max_idle - 1));
++	if (val >= mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB)) {
++		dev_err(dev, "CHDB offset: 0x%x is out of range: 0x%zx\n",
++			val, mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB));
++		return -ERANGE;
++	}
 +
-+	if (powerclamp_data.target_ratio == new_target_ratio)
-+		goto exit_set;
+ 	/* Setup wake db */
+ 	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
+ 	mhi_cntrl->wake_set = false;
+@@ -532,6 +538,12 @@ int mhi_init_mmio(struct mhi_controller
+ 		return -EIO;
+ 	}
+ 
++	if (val >= mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings)) {
++		dev_err(dev, "ERDB offset: 0x%x is out of range: 0x%zx\n",
++			val, mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings));
++		return -ERANGE;
++	}
 +
- 	if (!powerclamp_data.target_ratio && new_target_ratio > 0) {
- 		pr_info("Start idle injection to reduce power\n");
- 		powerclamp_data.target_ratio = new_target_ratio;
+ 	/* Setup event db address for each ev_ring */
+ 	mhi_event = mhi_cntrl->mhi_event;
+ 	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, val += 8, mhi_event++) {
 
 
