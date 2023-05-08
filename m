@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF37B1549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:53:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34382C433EF;
-	Mon,  8 May 2023 09:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8DB154A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:53:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E57C4339B;
+	Mon,  8 May 2023 09:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539604;
-	bh=EgEpN3u6KUsqa3IMvxIf7z8hBKPx4Uxm1j8a+nHXDpA=;
+	s=korg; t=1683539607;
+	bh=ac+JQiSMUJHnpMPT2RcEs/WQMbbLhmXG/Ob2RNf2yP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ww8gVhvITcnkTPGBizbSMSeA1VAANIisXi0rI998Au52K/cgdW8Hf3tyrvp1NFs/A
-	 dfUWf+D4c/1OAM0zbpAmH4zFAcMMGNq+vUCnfO1gYZVFUsMA0O309loqfq+7E8yDvj
-	 BesaRk2GqyDR1Tt/eckqf1pWeUOg0+ZYKLkUw0EI=
+	b=ocBGTJV8nDsLKglkXIh7o8DomDiseApRi8gtQuLPlm6gk9+he8qJ1Q5wwL8jrTrfQ
+	 aMqXAWrCM53GzCWv2LFMG86HV5oxgfC8E6mzpGOiaFYyngS/p65Vs937EqafAf2CS9
+	 bfpRzutQ52J3Tg9xlNNtC+kT8U/31mWt+LuZb9kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan McDowell <noodles@earth.li>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 070/611] crypto: safexcel - Cleanup ring IRQ workqueues on load failure
-Date: Mon,  8 May 2023 11:38:32 +0200
-Message-Id: <20230508094424.281726071@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.1 079/611] KVM: arm64: Use config_lock to protect vgic state
+Date: Mon,  8 May 2023 11:38:41 +0200
+Message-Id: <20230508094424.632968359@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -34,154 +34,531 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan McDowell <noodles@earth.li>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit ca25c00ccbc5f942c63897ed23584cfc66e8ec81 upstream.
+commit f00327731131d1b5aa6a1aa9f50bcf8d620ace4c upstream.
 
-A failure loading the safexcel driver results in the following warning
-on boot, because the IRQ affinity has not been correctly cleaned up.
-Ensure we clean up the affinity and workqueues on a failure to load the
-driver.
+Almost all of the vgic state is VM-scoped but accessed from the context
+of a vCPU. These accesses were serialized on the kvm->lock which cannot
+be nested within a vcpu->mutex critical section.
 
-crypto-safexcel: probe of f2800000.crypto failed with error -2
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 232 at kernel/irq/manage.c:1913 free_irq+0x300/0x340
-Modules linked in: hwmon mdio_i2c crypto_safexcel(+) md5 sha256_generic libsha256 authenc libdes omap_rng rng_core nft_masq nft_nat nft_chain_nat nf_nat nft_ct nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nf_tables libcrc32c nfnetlink fuse autofs4
-CPU: 1 PID: 232 Comm: systemd-udevd Tainted: G        W          6.1.6-00002-g9d4898824677 #3
-Hardware name: MikroTik RB5009 (DT)
-pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : free_irq+0x300/0x340
-lr : free_irq+0x2e0/0x340
-sp : ffff800008fa3890
-x29: ffff800008fa3890 x28: 0000000000000000 x27: 0000000000000000
-x26: ffff8000008e6dc0 x25: ffff000009034cac x24: ffff000009034d50
-x23: 0000000000000000 x22: 000000000000004a x21: ffff0000093e0d80
-x20: ffff000009034c00 x19: ffff00000615fc00 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000000 x15: 000075f5c1584c5e
-x14: 0000000000000017 x13: 0000000000000000 x12: 0000000000000040
-x11: ffff000000579b60 x10: ffff000000579b62 x9 : ffff800008bbe370
-x8 : ffff000000579dd0 x7 : 0000000000000000 x6 : ffff000000579e18
-x5 : ffff000000579da8 x4 : ffff800008ca0000 x3 : ffff800008ca0188
-x2 : 0000000013033204 x1 : ffff000009034c00 x0 : ffff8000087eadf0
-Call trace:
- free_irq+0x300/0x340
- devm_irq_release+0x14/0x20
- devres_release_all+0xa0/0x100
- device_unbind_cleanup+0x14/0x60
- really_probe+0x198/0x2d4
- __driver_probe_device+0x74/0xdc
- driver_probe_device+0x3c/0x110
- __driver_attach+0x8c/0x190
- bus_for_each_dev+0x6c/0xc0
- driver_attach+0x20/0x30
- bus_add_driver+0x148/0x1fc
- driver_register+0x74/0x120
- __platform_driver_register+0x24/0x30
- safexcel_init+0x48/0x1000 [crypto_safexcel]
- do_one_initcall+0x4c/0x1b0
- do_init_module+0x44/0x1cc
- load_module+0x1724/0x1be4
- __do_sys_finit_module+0xbc/0x110
- __arm64_sys_finit_module+0x1c/0x24
- invoke_syscall+0x44/0x110
- el0_svc_common.constprop.0+0xc0/0xe0
- do_el0_svc+0x20/0x80
- el0_svc+0x14/0x4c
- el0t_64_sync_handler+0xb0/0xb4
- el0t_64_sync+0x148/0x14c
----[ end trace 0000000000000000 ]---
+Move over the vgic state to using the config_lock. Tweak the lock
+ordering where necessary to ensure that the config_lock is acquired
+after the vcpu->mutex. Acquire the config_lock in kvm_vgic_create() to
+avoid a race between the converted flows and GIC creation. Where
+necessary, continue to acquire kvm->lock to avoid a race with vCPU
+creation (i.e. flows that use lock_all_vcpus()).
 
-Fixes: 1b44c5a60c13 ("inside-secure - add SafeXcel EIP197 crypto engine driver")
-Signed-off-by: Jonathan McDowell <noodles@earth.li>
+Finally, promote the locking expectations in comments to lockdep
+assertions and update the locking documentation for the config_lock as
+well as vcpu->mutex.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230327164747.2466958-5-oliver.upton@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/inside-secure/safexcel.c |   37 +++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 10 deletions(-)
+ arch/arm64/kvm/vgic/vgic-debug.c      |    8 ++---
+ arch/arm64/kvm/vgic/vgic-init.c       |   36 ++++++++++++++++----------
+ arch/arm64/kvm/vgic/vgic-its.c        |   18 ++++++++-----
+ arch/arm64/kvm/vgic/vgic-kvm-device.c |   47 ++++++++++++++++++++--------------
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c    |    4 +-
+ arch/arm64/kvm/vgic/vgic-mmio.c       |   12 ++++----
+ arch/arm64/kvm/vgic/vgic-v4.c         |   11 ++++---
+ arch/arm64/kvm/vgic/vgic.c            |   12 +++++---
+ 8 files changed, 88 insertions(+), 60 deletions(-)
 
---- a/drivers/crypto/inside-secure/safexcel.c
-+++ b/drivers/crypto/inside-secure/safexcel.c
-@@ -1631,19 +1631,23 @@ static int safexcel_probe_generic(void *
- 						     &priv->ring[i].rdr);
- 		if (ret) {
- 			dev_err(dev, "Failed to initialize rings\n");
--			return ret;
-+			goto err_cleanup_rings;
- 		}
+--- a/arch/arm64/kvm/vgic/vgic-debug.c
++++ b/arch/arm64/kvm/vgic/vgic-debug.c
+@@ -85,7 +85,7 @@ static void *vgic_debug_start(struct seq
+ 	struct kvm *kvm = s->private;
+ 	struct vgic_state_iter *iter;
  
- 		priv->ring[i].rdr_req = devm_kcalloc(dev,
- 			EIP197_DEFAULT_RING_SIZE,
- 			sizeof(*priv->ring[i].rdr_req),
- 			GFP_KERNEL);
--		if (!priv->ring[i].rdr_req)
--			return -ENOMEM;
-+		if (!priv->ring[i].rdr_req) {
-+			ret = -ENOMEM;
-+			goto err_cleanup_rings;
-+		}
- 
- 		ring_irq = devm_kzalloc(dev, sizeof(*ring_irq), GFP_KERNEL);
--		if (!ring_irq)
--			return -ENOMEM;
-+		if (!ring_irq) {
-+			ret = -ENOMEM;
-+			goto err_cleanup_rings;
-+		}
- 
- 		ring_irq->priv = priv;
- 		ring_irq->ring = i;
-@@ -1657,7 +1661,8 @@ static int safexcel_probe_generic(void *
- 						ring_irq);
- 		if (irq < 0) {
- 			dev_err(dev, "Failed to get IRQ ID for ring %d\n", i);
--			return irq;
-+			ret = irq;
-+			goto err_cleanup_rings;
- 		}
- 
- 		priv->ring[i].irq = irq;
-@@ -1669,8 +1674,10 @@ static int safexcel_probe_generic(void *
- 		snprintf(wq_name, 9, "wq_ring%d", i);
- 		priv->ring[i].workqueue =
- 			create_singlethread_workqueue(wq_name);
--		if (!priv->ring[i].workqueue)
--			return -ENOMEM;
-+		if (!priv->ring[i].workqueue) {
-+			ret = -ENOMEM;
-+			goto err_cleanup_rings;
-+		}
- 
- 		priv->ring[i].requests = 0;
- 		priv->ring[i].busy = false;
-@@ -1687,16 +1694,26 @@ static int safexcel_probe_generic(void *
- 	ret = safexcel_hw_init(priv);
- 	if (ret) {
- 		dev_err(dev, "HW init failed (%d)\n", ret);
--		return ret;
-+		goto err_cleanup_rings;
- 	}
- 
- 	ret = safexcel_register_algorithms(priv);
- 	if (ret) {
- 		dev_err(dev, "Failed to register algorithms (%d)\n", ret);
--		return ret;
-+		goto err_cleanup_rings;
- 	}
- 
- 	return 0;
-+
-+err_cleanup_rings:
-+	for (i = 0; i < priv->config.rings; i++) {
-+		if (priv->ring[i].irq)
-+			irq_set_affinity_hint(priv->ring[i].irq, NULL);
-+		if (priv->ring[i].workqueue)
-+			destroy_workqueue(priv->ring[i].workqueue);
-+	}
-+
-+	return ret;
+-	mutex_lock(&kvm->lock);
++	mutex_lock(&kvm->arch.config_lock);
+ 	iter = kvm->arch.vgic.iter;
+ 	if (iter) {
+ 		iter = ERR_PTR(-EBUSY);
+@@ -104,7 +104,7 @@ static void *vgic_debug_start(struct seq
+ 	if (end_of_vgic(iter))
+ 		iter = NULL;
+ out:
+-	mutex_unlock(&kvm->lock);
++	mutex_unlock(&kvm->arch.config_lock);
+ 	return iter;
  }
  
- static void safexcel_hw_reset_rings(struct safexcel_crypto_priv *priv)
+@@ -132,12 +132,12 @@ static void vgic_debug_stop(struct seq_f
+ 	if (IS_ERR(v))
+ 		return;
+ 
+-	mutex_lock(&kvm->lock);
++	mutex_lock(&kvm->arch.config_lock);
+ 	iter = kvm->arch.vgic.iter;
+ 	kfree(iter->lpi_array);
+ 	kfree(iter);
+ 	kvm->arch.vgic.iter = NULL;
+-	mutex_unlock(&kvm->lock);
++	mutex_unlock(&kvm->arch.config_lock);
+ }
+ 
+ static void print_dist_state(struct seq_file *s, struct vgic_dist *dist)
+--- a/arch/arm64/kvm/vgic/vgic-init.c
++++ b/arch/arm64/kvm/vgic/vgic-init.c
+@@ -74,9 +74,6 @@ int kvm_vgic_create(struct kvm *kvm, u32
+ 	unsigned long i;
+ 	int ret;
+ 
+-	if (irqchip_in_kernel(kvm))
+-		return -EEXIST;
+-
+ 	/*
+ 	 * This function is also called by the KVM_CREATE_IRQCHIP handler,
+ 	 * which had no chance yet to check the availability of the GICv2
+@@ -87,10 +84,20 @@ int kvm_vgic_create(struct kvm *kvm, u32
+ 		!kvm_vgic_global_state.can_emulate_gicv2)
+ 		return -ENODEV;
+ 
++	/* Must be held to avoid race with vCPU creation */
++	lockdep_assert_held(&kvm->lock);
++
+ 	ret = -EBUSY;
+ 	if (!lock_all_vcpus(kvm))
+ 		return ret;
+ 
++	mutex_lock(&kvm->arch.config_lock);
++
++	if (irqchip_in_kernel(kvm)) {
++		ret = -EEXIST;
++		goto out_unlock;
++	}
++
+ 	kvm_for_each_vcpu(i, vcpu, kvm) {
+ 		if (vcpu_has_run_once(vcpu))
+ 			goto out_unlock;
+@@ -118,6 +125,7 @@ int kvm_vgic_create(struct kvm *kvm, u32
+ 		INIT_LIST_HEAD(&kvm->arch.vgic.rd_regions);
+ 
+ out_unlock:
++	mutex_unlock(&kvm->arch.config_lock);
+ 	unlock_all_vcpus(kvm);
+ 	return ret;
+ }
+@@ -227,9 +235,9 @@ int kvm_vgic_vcpu_init(struct kvm_vcpu *
+ 	 * KVM io device for the redistributor that belongs to this VCPU.
+ 	 */
+ 	if (dist->vgic_model == KVM_DEV_TYPE_ARM_VGIC_V3) {
+-		mutex_lock(&vcpu->kvm->lock);
++		mutex_lock(&vcpu->kvm->arch.config_lock);
+ 		ret = vgic_register_redist_iodev(vcpu);
+-		mutex_unlock(&vcpu->kvm->lock);
++		mutex_unlock(&vcpu->kvm->arch.config_lock);
+ 	}
+ 	return ret;
+ }
+@@ -250,7 +258,6 @@ static void kvm_vgic_vcpu_enable(struct
+  * The function is generally called when nr_spis has been explicitly set
+  * by the guest through the KVM DEVICE API. If not nr_spis is set to 256.
+  * vgic_initialized() returns true when this function has succeeded.
+- * Must be called with kvm->lock held!
+  */
+ int vgic_init(struct kvm *kvm)
+ {
+@@ -259,6 +266,8 @@ int vgic_init(struct kvm *kvm)
+ 	int ret = 0, i;
+ 	unsigned long idx;
+ 
++	lockdep_assert_held(&kvm->arch.config_lock);
++
+ 	if (vgic_initialized(kvm))
+ 		return 0;
+ 
+@@ -373,12 +382,13 @@ void kvm_vgic_vcpu_destroy(struct kvm_vc
+ 	vgic_cpu->rd_iodev.base_addr = VGIC_ADDR_UNDEF;
+ }
+ 
+-/* To be called with kvm->lock held */
+ static void __kvm_vgic_destroy(struct kvm *kvm)
+ {
+ 	struct kvm_vcpu *vcpu;
+ 	unsigned long i;
+ 
++	lockdep_assert_held(&kvm->arch.config_lock);
++
+ 	vgic_debug_destroy(kvm);
+ 
+ 	kvm_for_each_vcpu(i, vcpu, kvm)
+@@ -389,9 +399,9 @@ static void __kvm_vgic_destroy(struct kv
+ 
+ void kvm_vgic_destroy(struct kvm *kvm)
+ {
+-	mutex_lock(&kvm->lock);
++	mutex_lock(&kvm->arch.config_lock);
+ 	__kvm_vgic_destroy(kvm);
+-	mutex_unlock(&kvm->lock);
++	mutex_unlock(&kvm->arch.config_lock);
+ }
+ 
+ /**
+@@ -414,9 +424,9 @@ int vgic_lazy_init(struct kvm *kvm)
+ 		if (kvm->arch.vgic.vgic_model != KVM_DEV_TYPE_ARM_VGIC_V2)
+ 			return -EBUSY;
+ 
+-		mutex_lock(&kvm->lock);
++		mutex_lock(&kvm->arch.config_lock);
+ 		ret = vgic_init(kvm);
+-		mutex_unlock(&kvm->lock);
++		mutex_unlock(&kvm->arch.config_lock);
+ 	}
+ 
+ 	return ret;
+@@ -441,7 +451,7 @@ int kvm_vgic_map_resources(struct kvm *k
+ 	if (likely(vgic_ready(kvm)))
+ 		return 0;
+ 
+-	mutex_lock(&kvm->lock);
++	mutex_lock(&kvm->arch.config_lock);
+ 	if (vgic_ready(kvm))
+ 		goto out;
+ 
+@@ -459,7 +469,7 @@ int kvm_vgic_map_resources(struct kvm *k
+ 		dist->ready = true;
+ 
+ out:
+-	mutex_unlock(&kvm->lock);
++	mutex_unlock(&kvm->arch.config_lock);
+ 	return ret;
+ }
+ 
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -2045,6 +2045,13 @@ static int vgic_its_attr_regs_access(str
+ 
+ 	mutex_lock(&dev->kvm->lock);
+ 
++	if (!lock_all_vcpus(dev->kvm)) {
++		mutex_unlock(&dev->kvm->lock);
++		return -EBUSY;
++	}
++
++	mutex_lock(&dev->kvm->arch.config_lock);
++
+ 	if (IS_VGIC_ADDR_UNDEF(its->vgic_its_base)) {
+ 		ret = -ENXIO;
+ 		goto out;
+@@ -2058,11 +2065,6 @@ static int vgic_its_attr_regs_access(str
+ 		goto out;
+ 	}
+ 
+-	if (!lock_all_vcpus(dev->kvm)) {
+-		ret = -EBUSY;
+-		goto out;
+-	}
+-
+ 	addr = its->vgic_its_base + offset;
+ 
+ 	len = region->access_flags & VGIC_ACCESS_64bit ? 8 : 4;
+@@ -2076,8 +2078,9 @@ static int vgic_its_attr_regs_access(str
+ 	} else {
+ 		*reg = region->its_read(dev->kvm, its, addr, len);
+ 	}
+-	unlock_all_vcpus(dev->kvm);
+ out:
++	mutex_unlock(&dev->kvm->arch.config_lock);
++	unlock_all_vcpus(dev->kvm);
+ 	mutex_unlock(&dev->kvm->lock);
+ 	return ret;
+ }
+@@ -2757,6 +2760,8 @@ static int vgic_its_ctrl(struct kvm *kvm
+ 		return -EBUSY;
+ 	}
+ 
++	mutex_lock(&kvm->arch.config_lock);
++
+ 	switch (attr) {
+ 	case KVM_DEV_ARM_ITS_CTRL_RESET:
+ 		vgic_its_reset(kvm, its);
+@@ -2769,6 +2774,7 @@ static int vgic_its_ctrl(struct kvm *kvm
+ 		break;
+ 	}
+ 
++	mutex_unlock(&kvm->arch.config_lock);
+ 	unlock_all_vcpus(kvm);
+ 	mutex_unlock(&its->its_lock);
+ 	mutex_unlock(&kvm->lock);
+--- a/arch/arm64/kvm/vgic/vgic-kvm-device.c
++++ b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+@@ -46,7 +46,7 @@ int kvm_set_legacy_vgic_v2_addr(struct k
+ 	struct vgic_dist *vgic = &kvm->arch.vgic;
+ 	int r;
+ 
+-	mutex_lock(&kvm->lock);
++	mutex_lock(&kvm->arch.config_lock);
+ 	switch (FIELD_GET(KVM_ARM_DEVICE_TYPE_MASK, dev_addr->id)) {
+ 	case KVM_VGIC_V2_ADDR_TYPE_DIST:
+ 		r = vgic_check_type(kvm, KVM_DEV_TYPE_ARM_VGIC_V2);
+@@ -68,7 +68,7 @@ int kvm_set_legacy_vgic_v2_addr(struct k
+ 		r = -ENODEV;
+ 	}
+ 
+-	mutex_unlock(&kvm->lock);
++	mutex_unlock(&kvm->arch.config_lock);
+ 
+ 	return r;
+ }
+@@ -102,7 +102,7 @@ static int kvm_vgic_addr(struct kvm *kvm
+ 		if (get_user(addr, uaddr))
+ 			return -EFAULT;
+ 
+-	mutex_lock(&kvm->lock);
++	mutex_lock(&kvm->arch.config_lock);
+ 	switch (attr->attr) {
+ 	case KVM_VGIC_V2_ADDR_TYPE_DIST:
+ 		r = vgic_check_type(kvm, KVM_DEV_TYPE_ARM_VGIC_V2);
+@@ -191,7 +191,7 @@ static int kvm_vgic_addr(struct kvm *kvm
+ 	}
+ 
+ out:
+-	mutex_unlock(&kvm->lock);
++	mutex_unlock(&kvm->arch.config_lock);
+ 
+ 	if (!r && !write)
+ 		r =  put_user(addr, uaddr);
+@@ -227,7 +227,7 @@ static int vgic_set_common_attr(struct k
+ 		    (val & 31))
+ 			return -EINVAL;
+ 
+-		mutex_lock(&dev->kvm->lock);
++		mutex_lock(&dev->kvm->arch.config_lock);
+ 
+ 		if (vgic_ready(dev->kvm) || dev->kvm->arch.vgic.nr_spis)
+ 			ret = -EBUSY;
+@@ -235,16 +235,16 @@ static int vgic_set_common_attr(struct k
+ 			dev->kvm->arch.vgic.nr_spis =
+ 				val - VGIC_NR_PRIVATE_IRQS;
+ 
+-		mutex_unlock(&dev->kvm->lock);
++		mutex_unlock(&dev->kvm->arch.config_lock);
+ 
+ 		return ret;
+ 	}
+ 	case KVM_DEV_ARM_VGIC_GRP_CTRL: {
+ 		switch (attr->attr) {
+ 		case KVM_DEV_ARM_VGIC_CTRL_INIT:
+-			mutex_lock(&dev->kvm->lock);
++			mutex_lock(&dev->kvm->arch.config_lock);
+ 			r = vgic_init(dev->kvm);
+-			mutex_unlock(&dev->kvm->lock);
++			mutex_unlock(&dev->kvm->arch.config_lock);
+ 			return r;
+ 		case KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES:
+ 			/*
+@@ -260,7 +260,10 @@ static int vgic_set_common_attr(struct k
+ 				mutex_unlock(&dev->kvm->lock);
+ 				return -EBUSY;
+ 			}
++
++			mutex_lock(&dev->kvm->arch.config_lock);
+ 			r = vgic_v3_save_pending_tables(dev->kvm);
++			mutex_unlock(&dev->kvm->arch.config_lock);
+ 			unlock_all_vcpus(dev->kvm);
+ 			mutex_unlock(&dev->kvm->lock);
+ 			return r;
+@@ -411,15 +414,17 @@ static int vgic_v2_attr_regs_access(stru
+ 
+ 	mutex_lock(&dev->kvm->lock);
+ 
++	if (!lock_all_vcpus(dev->kvm)) {
++		mutex_unlock(&dev->kvm->lock);
++		return -EBUSY;
++	}
++
++	mutex_lock(&dev->kvm->arch.config_lock);
++
+ 	ret = vgic_init(dev->kvm);
+ 	if (ret)
+ 		goto out;
+ 
+-	if (!lock_all_vcpus(dev->kvm)) {
+-		ret = -EBUSY;
+-		goto out;
+-	}
+-
+ 	switch (attr->group) {
+ 	case KVM_DEV_ARM_VGIC_GRP_CPU_REGS:
+ 		ret = vgic_v2_cpuif_uaccess(vcpu, is_write, addr, &val);
+@@ -432,8 +437,9 @@ static int vgic_v2_attr_regs_access(stru
+ 		break;
+ 	}
+ 
+-	unlock_all_vcpus(dev->kvm);
+ out:
++	mutex_unlock(&dev->kvm->arch.config_lock);
++	unlock_all_vcpus(dev->kvm);
+ 	mutex_unlock(&dev->kvm->lock);
+ 
+ 	if (!ret && !is_write)
+@@ -569,12 +575,14 @@ static int vgic_v3_attr_regs_access(stru
+ 
+ 	mutex_lock(&dev->kvm->lock);
+ 
+-	if (unlikely(!vgic_initialized(dev->kvm))) {
+-		ret = -EBUSY;
+-		goto out;
++	if (!lock_all_vcpus(dev->kvm)) {
++		mutex_unlock(&dev->kvm->lock);
++		return -EBUSY;
+ 	}
+ 
+-	if (!lock_all_vcpus(dev->kvm)) {
++	mutex_lock(&dev->kvm->arch.config_lock);
++
++	if (unlikely(!vgic_initialized(dev->kvm))) {
+ 		ret = -EBUSY;
+ 		goto out;
+ 	}
+@@ -609,8 +617,9 @@ static int vgic_v3_attr_regs_access(stru
+ 		break;
+ 	}
+ 
+-	unlock_all_vcpus(dev->kvm);
+ out:
++	mutex_unlock(&dev->kvm->arch.config_lock);
++	unlock_all_vcpus(dev->kvm);
+ 	mutex_unlock(&dev->kvm->lock);
+ 
+ 	if (!ret && uaccess && !is_write) {
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -111,7 +111,7 @@ static void vgic_mmio_write_v3_misc(stru
+ 	case GICD_CTLR: {
+ 		bool was_enabled, is_hwsgi;
+ 
+-		mutex_lock(&vcpu->kvm->lock);
++		mutex_lock(&vcpu->kvm->arch.config_lock);
+ 
+ 		was_enabled = dist->enabled;
+ 		is_hwsgi = dist->nassgireq;
+@@ -139,7 +139,7 @@ static void vgic_mmio_write_v3_misc(stru
+ 		else if (!was_enabled && dist->enabled)
+ 			vgic_kick_vcpus(vcpu->kvm);
+ 
+-		mutex_unlock(&vcpu->kvm->lock);
++		mutex_unlock(&vcpu->kvm->arch.config_lock);
+ 		break;
+ 	}
+ 	case GICD_TYPER:
+--- a/arch/arm64/kvm/vgic/vgic-mmio.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio.c
+@@ -527,13 +527,13 @@ unsigned long vgic_mmio_read_active(stru
+ 	u32 intid = VGIC_ADDR_TO_INTID(addr, 1);
+ 	u32 val;
+ 
+-	mutex_lock(&vcpu->kvm->lock);
++	mutex_lock(&vcpu->kvm->arch.config_lock);
+ 	vgic_access_active_prepare(vcpu, intid);
+ 
+ 	val = __vgic_mmio_read_active(vcpu, addr, len);
+ 
+ 	vgic_access_active_finish(vcpu, intid);
+-	mutex_unlock(&vcpu->kvm->lock);
++	mutex_unlock(&vcpu->kvm->arch.config_lock);
+ 
+ 	return val;
+ }
+@@ -622,13 +622,13 @@ void vgic_mmio_write_cactive(struct kvm_
+ {
+ 	u32 intid = VGIC_ADDR_TO_INTID(addr, 1);
+ 
+-	mutex_lock(&vcpu->kvm->lock);
++	mutex_lock(&vcpu->kvm->arch.config_lock);
+ 	vgic_access_active_prepare(vcpu, intid);
+ 
+ 	__vgic_mmio_write_cactive(vcpu, addr, len, val);
+ 
+ 	vgic_access_active_finish(vcpu, intid);
+-	mutex_unlock(&vcpu->kvm->lock);
++	mutex_unlock(&vcpu->kvm->arch.config_lock);
+ }
+ 
+ int vgic_mmio_uaccess_write_cactive(struct kvm_vcpu *vcpu,
+@@ -659,13 +659,13 @@ void vgic_mmio_write_sactive(struct kvm_
+ {
+ 	u32 intid = VGIC_ADDR_TO_INTID(addr, 1);
+ 
+-	mutex_lock(&vcpu->kvm->lock);
++	mutex_lock(&vcpu->kvm->arch.config_lock);
+ 	vgic_access_active_prepare(vcpu, intid);
+ 
+ 	__vgic_mmio_write_sactive(vcpu, addr, len, val);
+ 
+ 	vgic_access_active_finish(vcpu, intid);
+-	mutex_unlock(&vcpu->kvm->lock);
++	mutex_unlock(&vcpu->kvm->arch.config_lock);
+ }
+ 
+ int vgic_mmio_uaccess_write_sactive(struct kvm_vcpu *vcpu,
+--- a/arch/arm64/kvm/vgic/vgic-v4.c
++++ b/arch/arm64/kvm/vgic/vgic-v4.c
+@@ -232,9 +232,8 @@ int vgic_v4_request_vpe_irq(struct kvm_v
+  * @kvm:	Pointer to the VM being initialized
+  *
+  * We may be called each time a vITS is created, or when the
+- * vgic is initialized. This relies on kvm->lock to be
+- * held. In both cases, the number of vcpus should now be
+- * fixed.
++ * vgic is initialized. In both cases, the number of vcpus
++ * should now be fixed.
+  */
+ int vgic_v4_init(struct kvm *kvm)
+ {
+@@ -243,6 +242,8 @@ int vgic_v4_init(struct kvm *kvm)
+ 	int nr_vcpus, ret;
+ 	unsigned long i;
+ 
++	lockdep_assert_held(&kvm->arch.config_lock);
++
+ 	if (!kvm_vgic_global_state.has_gicv4)
+ 		return 0; /* Nothing to see here... move along. */
+ 
+@@ -309,14 +310,14 @@ int vgic_v4_init(struct kvm *kvm)
+ /**
+  * vgic_v4_teardown - Free the GICv4 data structures
+  * @kvm:	Pointer to the VM being destroyed
+- *
+- * Relies on kvm->lock to be held.
+  */
+ void vgic_v4_teardown(struct kvm *kvm)
+ {
+ 	struct its_vm *its_vm = &kvm->arch.vgic.its_vm;
+ 	int i;
+ 
++	lockdep_assert_held(&kvm->arch.config_lock);
++
+ 	if (!its_vm->vpes)
+ 		return;
+ 
+--- a/arch/arm64/kvm/vgic/vgic.c
++++ b/arch/arm64/kvm/vgic/vgic.c
+@@ -24,11 +24,13 @@ struct vgic_global kvm_vgic_global_state
+ /*
+  * Locking order is always:
+  * kvm->lock (mutex)
+- *   its->cmd_lock (mutex)
+- *     its->its_lock (mutex)
+- *       vgic_cpu->ap_list_lock		must be taken with IRQs disabled
+- *         kvm->lpi_list_lock		must be taken with IRQs disabled
+- *           vgic_irq->irq_lock		must be taken with IRQs disabled
++ *   vcpu->mutex (mutex)
++ *     kvm->arch.config_lock (mutex)
++ *       its->cmd_lock (mutex)
++ *         its->its_lock (mutex)
++ *           vgic_cpu->ap_list_lock		must be taken with IRQs disabled
++ *             kvm->lpi_list_lock		must be taken with IRQs disabled
++ *               vgic_irq->irq_lock		must be taken with IRQs disabled
+  *
+  * As the ap_list_lock might be taken from the timer interrupt handler,
+  * we have to disable IRQs before taking this lock and everything lower
 
 
