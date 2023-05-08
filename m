@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A5C171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:45:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D836EC4339B;
-	Mon,  8 May 2023 11:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FA1171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:45:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7821C433EF;
+	Mon,  8 May 2023 11:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546346;
-	bh=gKIOR95WUef8LKZ/cNkTQg9yqfyMyVk7dx8MwJU4g1M=;
+	s=korg; t=1683546349;
+	bh=F753jiFqFfVCKZ9Q9CF9z7+WQn9M5M9lyQOMkbb8O9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aND0/2gWknRJgvLyEQKMSntxnSWizggwpNvLAkbu5vlNz51av/5zA/VPLfkF/LdNx
-	 JNBUbjFIuxoE38n8Xp9Y6DKK7zYklYgeI3nWeukMYHvWY/u8JaleEzyVzmAUM5zo+x
-	 FDw2gON4Owkzw9VQNcdixuHPIZp60Z8PZ7FbUHmU=
+	b=P9I0d46B+nJwbdiLJu7kgc1pz9Vf8Bs/cPiAX73dUR2LJkH1UA9NuWCaWtHq4WBN2
+	 66s1sj9HoKhP0X43MXCMWVjhP+0QnnGDhiInK5A2xM4aXOQOMEOkXGkjhAQ787GXUL
+	 bilKy+w/DTs3FbzEwkH/L2ik4tBcu/IgCPiHllbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@microchip.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Stafford Horne <shorne@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 338/371] dmaengine: at_xdmac: Fix race for the tx desc callback
-Date: Mon,  8 May 2023 11:48:59 +0200
-Message-Id: <20230508094825.542387929@linuxfoundation.org>
+Subject: [PATCH 5.15 321/371] openrisc: Properly store r31 to pt_regs on unhandled exceptions
+Date: Mon,  8 May 2023 11:48:42 +0200
+Message-Id: <20230508094824.817424383@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,83 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tudor Ambarus <tudor.ambarus@microchip.com>
+From: Stafford Horne <shorne@gmail.com>
 
-[ Upstream commit b63e5cb94ad6947ab5fe38b5a9417dcfd0bc6122 ]
+[ Upstream commit 812489ac4dd91144a74ce65ecf232252a2e406fb ]
 
-The transfer descriptors were wrongly moved to the free descriptors list
-before calling the tx desc callback. As the DMA engine drivers drop any
-locks before calling the callback function, txd could be taken again,
-resulting in its callback called prematurely. Fix the race for the tx desc
-callback by moving the xfer desc into the free desc list after the
-callback is invoked.
+In commit 91993c8c2ed5 ("openrisc: use shadow registers to save regs on
+exception") the unhandled exception path was changed to do an early
+store of r30 instead of r31.  The entry code was not updated and r31 is
+not getting stored to pt_regs.
 
-Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
-Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Link: https://lore.kernel.org/r/20211215110115.191749-6-tudor.ambarus@microchip.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This patch updates the entry handler to store r31 instead of r30.  We
+also remove some misleading commented out store r30 and r31
+instructrions.
+
+I noticed this while working on adding floating point exception
+handling,  This issue probably would never impact anything since we kill
+the process or Oops right away on unhandled exceptions.
+
+Fixes: 91993c8c2ed5 ("openrisc: use shadow registers to save regs on exception")
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/at_xdmac.c | 25 ++++++++-----------------
- 1 file changed, 8 insertions(+), 17 deletions(-)
+ arch/openrisc/kernel/entry.S | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index c6b200f0145ba..f7b0de4f4667d 100644
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -1586,20 +1586,6 @@ at_xdmac_tx_status(struct dma_chan *chan, dma_cookie_t cookie,
- 	return ret;
- }
- 
--/* Call must be protected by lock. */
--static void at_xdmac_remove_xfer(struct at_xdmac_chan *atchan,
--				    struct at_xdmac_desc *desc)
--{
--	dev_dbg(chan2dev(&atchan->chan), "%s: desc 0x%p\n", __func__, desc);
--
--	/*
--	 * Remove the transfer from the transfer list then move the transfer
--	 * descriptors into the free descriptors list.
--	 */
--	list_del(&desc->xfer_node);
--	list_splice_init(&desc->descs_list, &atchan->free_descs_list);
--}
--
- static void at_xdmac_advance_work(struct at_xdmac_chan *atchan)
- {
- 	struct at_xdmac_desc	*desc;
-@@ -1711,7 +1697,8 @@ static void at_xdmac_tasklet(struct tasklet_struct *t)
- 
- 		txd = &desc->tx_dma_desc;
- 		dma_cookie_complete(txd);
--		at_xdmac_remove_xfer(atchan, desc);
-+		/* Remove the transfer from the transfer list. */
-+		list_del(&desc->xfer_node);
- 		spin_unlock_irq(&atchan->lock);
- 
- 		if (txd->flags & DMA_PREP_INTERRUPT)
-@@ -1720,6 +1707,8 @@ static void at_xdmac_tasklet(struct tasklet_struct *t)
- 		dma_run_dependencies(txd);
- 
- 		spin_lock_irq(&atchan->lock);
-+		/* Move the xfer descriptors into the free descriptors list. */
-+		list_splice_init(&desc->descs_list, &atchan->free_descs_list);
- 		at_xdmac_advance_work(atchan);
- 		spin_unlock_irq(&atchan->lock);
- 	}
-@@ -1866,8 +1855,10 @@ static int at_xdmac_device_terminate_all(struct dma_chan *chan)
- 		cpu_relax();
- 
- 	/* Cancel all pending transfers. */
--	list_for_each_entry_safe(desc, _desc, &atchan->xfers_list, xfer_node)
--		at_xdmac_remove_xfer(atchan, desc);
-+	list_for_each_entry_safe(desc, _desc, &atchan->xfers_list, xfer_node) {
-+		list_del(&desc->xfer_node);
-+		list_splice_init(&desc->descs_list, &atchan->free_descs_list);
-+	}
- 
- 	clear_bit(AT_XDMAC_CHAN_IS_PAUSED, &atchan->status);
- 	clear_bit(AT_XDMAC_CHAN_IS_CYCLIC, &atchan->status);
+diff --git a/arch/openrisc/kernel/entry.S b/arch/openrisc/kernel/entry.S
+index c68f3349c1741..d32906e89aafd 100644
+--- a/arch/openrisc/kernel/entry.S
++++ b/arch/openrisc/kernel/entry.S
+@@ -173,7 +173,6 @@ handler:							;\
+ 	l.sw    PT_GPR28(r1),r28					;\
+ 	l.sw    PT_GPR29(r1),r29					;\
+ 	/* r30 already save */					;\
+-/*        l.sw    PT_GPR30(r1),r30*/					;\
+ 	l.sw    PT_GPR31(r1),r31					;\
+ 	TRACE_IRQS_OFF_ENTRY						;\
+ 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
+@@ -211,9 +210,8 @@ handler:							;\
+ 	l.sw    PT_GPR27(r1),r27					;\
+ 	l.sw    PT_GPR28(r1),r28					;\
+ 	l.sw    PT_GPR29(r1),r29					;\
+-	/* r31 already saved */					;\
+-	l.sw    PT_GPR30(r1),r30					;\
+-/*        l.sw    PT_GPR31(r1),r31	*/				;\
++	/* r30 already saved */						;\
++	l.sw    PT_GPR31(r1),r31					;\
+ 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
+ 	l.addi	r30,r0,-1					;\
+ 	l.sw	PT_ORIG_GPR11(r1),r30				;\
 -- 
 2.39.2
 
