@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBEB168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:51:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26848C433D2;
-	Mon,  8 May 2023 10:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9D0168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:51:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5730EC433D2;
+	Mon,  8 May 2023 10:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543069;
-	bh=CL1HLDwUN1mkeYzB5XCFDH+3dVdjRatD5TFejnbijEY=;
+	s=korg; t=1683543074;
+	bh=eW60ZPeDAo2K/gdp1icDzLlbYiLJ1t0cpuJ8cKZtxXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/4OoYzB39zma3TmZ0I461M4ZGggM8W5GnAyE0q055iiNi4a8jrb/BDJnG5PfrEk4
-	 9g/7bbaWZ/Kb6UXygJzF3PuzJEXEoZ0PkR0qS3bzxROdAzLEnUz1eyJadSxLGR+I3c
-	 sxKMWNybVepPhjezfsNjOFHK8xRbAL7VoM63sXfE=
+	b=d7OXZfGGj/W0OFJaqczEYRlNoYF2xPxSdrU0GNOXr5V+zIzsyzIng54QocpmlBZE4
+	 /RpSwsTTmfhr6TBchUB1BYc/bXuinpdKvRPWFneSevv5ung1hZzF6DOOO/oWgGRrrh
+	 pjnK7J1znls9uCjlrlA8XAVqyN5G2yKPbJQXgnI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 641/663] s390/dasd: fix hanging blockdevice after request requeue
-Date: Mon,  8 May 2023 11:47:47 +0200
-Message-Id: <20230508094450.787056212@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.2 642/663] ia64: fix an addr to taddr in huge_pte_offset()
+Date: Mon,  8 May 2023 11:47:48 +0200
+Message-Id: <20230508094450.834845521@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,39 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Hugh Dickins <hughd@google.com>
 
-commit d8898ee50edecacdf0141f26fd90acf43d7e9cd7 upstream.
+commit 3647ebcfbfca384840231fe13fae665453238a61 upstream.
 
-The DASD driver does not kick the requeue list when requeuing IO requests
-to the blocklayer. This might lead to hanging blockdevice when there is
-no other trigger for this.
+I know nothing of ia64 htlbpage_to_page(), but guess that the p4d
+line should be using taddr rather than addr, like everywhere else.
 
-Fix by automatically kick the requeue list when requeuing DASD requests
-to the blocklayer.
-
-Fixes: e443343e509a ("s390/dasd: blk-mq conversion")
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230405142017.2446986-8-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lkml.kernel.org/r/732eae88-3beb-246-2c72-281de786740@google.com
+Fixes: c03ab9e32a2c ("ia64: add support for folded p4d page tables")
+Signed-off-by: Hugh Dickins <hughd@google.com
+Acked-by: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd.c |    2 +-
+ arch/ia64/mm/hugetlbpage.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -2941,7 +2941,7 @@ static int _dasd_requeue_request(struct
- 		return 0;
- 	spin_lock_irq(&cqr->dq->lock);
- 	req = (struct request *) cqr->callback_data;
--	blk_mq_requeue_request(req, false);
-+	blk_mq_requeue_request(req, true);
- 	spin_unlock_irq(&cqr->dq->lock);
+--- a/arch/ia64/mm/hugetlbpage.c
++++ b/arch/ia64/mm/hugetlbpage.c
+@@ -58,7 +58,7 @@ huge_pte_offset (struct mm_struct *mm, u
  
- 	return 0;
+ 	pgd = pgd_offset(mm, taddr);
+ 	if (pgd_present(*pgd)) {
+-		p4d = p4d_offset(pgd, addr);
++		p4d = p4d_offset(pgd, taddr);
+ 		if (p4d_present(*p4d)) {
+ 			pud = pud_offset(p4d, taddr);
+ 			if (pud_present(*pud)) {
 
 
