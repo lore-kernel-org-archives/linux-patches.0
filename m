@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048BB168DC
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:34:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49281C433D2;
-	Mon,  8 May 2023 11:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32BD168DC
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:34:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31EE9C433EF;
+	Mon,  8 May 2023 11:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545695;
-	bh=PTohp8NhdeiYIBb5TnIGzvAeEh16kS7PL2q+suwLRek=;
+	s=korg; t=1683545698;
+	bh=QCWwQmbbbuPpVyBF5rGNNbyKOpXZR9yyE+6SDlr/gFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x2SwouXfuN2KH0AIb/omwwXg9W6wIDjY882pfJi5gqaNlZqciCiTkVNA+RSd0IbJ4
-	 u8Zp0RuyQyFzkSD2I8sEPUMdywcFRFX/USae7SORNqIrzZYnc18aMUc23w7O41VWKV
-	 R5XbznaEmCofidaek4BGvbcBmBbTUdhBRCb4lKLY=
+	b=cgetVEPDVQ8bMq2XPNNmmmHYIUWL1f0pRCY9If1ropii/ag4+f/Jm1ANXMfuELMBV
+	 dT7vSiEMrc8pIKdbgEMMoqJN93QtMK/Z39ATcEoF+/l+aZXCEogym5iCEbHoSJVyD7
+	 FT91ADqnca/FA710u8nRCJ8nkb7T7RmtBHwFUdtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 123/371] arm64: dts: qcom: sc7180-trogdor-lazor: correct trackpad supply
-Date: Mon,  8 May 2023 11:45:24 +0200
-Message-Id: <20230508094816.900836142@linuxfoundation.org>
+Subject: [PATCH 5.15 097/371] arm64: dts: qcom: msm8998: Fix the PCI I/O port range
+Date: Mon,  8 May 2023 11:44:58 +0200
+Message-Id: <20230508094815.890829301@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -38,40 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 52e2996f253d82520011340d40dbc1c76ea79208 ]
+[ Upstream commit c30a27dcfe4545edbda1578b3a63ed6147519cdd ]
 
-The hid-over-i2c takes VDD, not VCC supply.  Fix copy-pasta from other
-boards which use elan,ekth3000 with valid VCC:
+For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
+located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI address
+(0x1b200000) specified in the ranges property for I/O region.
 
-  sc7180-trogdor-lazor-limozeen-nots-r4.dtb: trackpad@2c: 'vcc-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
-
-Fixes: 2c26adb8dbab ("arm64: dts: qcom: Add sc7180-lazor-limozeen skus")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Fixes: b84dfd175c09 ("arm64: dts: qcom: msm8998: Add PCIe PHY and RC nodes")
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230312183622.460488-3-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230228164752.55682-3-manivannan.sadhasivam@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts     | 2 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
-index 6ebde0828550c..8a98a6f849c4f 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
-@@ -26,7 +26,7 @@
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 5ddf9fa904aba..b7d72b0d579e4 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -951,7 +951,7 @@
+ 			phy-names = "pciephy";
+ 			status = "disabled";
  
--		vcc-supply = <&pp3300_fp_tp>;
-+		vdd-supply = <&pp3300_fp_tp>;
- 		hid-descr-addr = <0x20>;
+-			ranges = <0x01000000 0x0 0x1b200000 0x1b200000 0x0 0x100000>,
++			ranges = <0x01000000 0x0 0x00000000 0x1b200000 0x0 0x100000>,
+ 				 <0x02000000 0x0 0x1b300000 0x1b300000 0x0 0xd00000>;
  
- 		wakeup-source;
+ 			#interrupt-cells = <1>;
 -- 
 2.39.2
 
