@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547E6168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:09:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD714C433EF;
-	Mon,  8 May 2023 10:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8455168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:09:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C95EC433EF;
+	Mon,  8 May 2023 10:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540571;
-	bh=BNxcnzdLJZHgu7qjYslyIlNkhJkx2msTwNhABDfQ5eU=;
+	s=korg; t=1683540573;
+	bh=Xiirx7cPwY2MtZxUrOUtjGSKgrhhGJE5VKfliRBOCrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBu5hxs6h6A6kr/yI7DqteQj4P4lawtGGr0rhkNEcvRxk/kfvmeon+MS9y2mwnoo3
-	 zZBbTbRHV6Iak/F2D6am7orrSdaUiAJxq7x8veYNmDMnAFU9otkwKwcSdLF+E401TC
-	 GlNFZvg+4bc3L5jFoR471m0vmZcYt46JB74+6gZ4=
+	b=bvm25uprtRz0z3Rj4cog41JB+YudhzOiMk99qnHwCeRuh+gX2YFe0+TjDmg7MbSOC
+	 IgHCILUMLLrCrZMyMRI2CpaSEPzlAOaikbWJKWktYMppt7ANVbJoVn32Xoa1jY9ogR
+	 iPO4nE79AiFGCHQjfddlbpYDnE/wFs4h5xwB1bxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 414/611] ASoC: es8316: Handle optional IRQ assignment
-Date: Mon,  8 May 2023 11:44:16 +0200
-Message-Id: <20230508094435.687647236@linuxfoundation.org>
+Subject: [PATCH 6.1 383/611] Revert "net/mlx5: Remove "recovery" arg from mlx5_load_one() function"
+Date: Mon,  8 May 2023 11:43:45 +0200
+Message-Id: <20230508094434.766124169@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,60 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 39db65a0a17b54915b269d3685f253a4731f344c ]
+[ Upstream commit 21608a2cf38e9f743636b5f86507ffbca18ecee7 ]
 
-The driver is able to work fine without relying on a mandatory interrupt
-being assigned to the I2C device. This is only needed when making use of
-the jack-detect support.
+This reverts commit 5977ac3910f1cbaf44dca48179118b25c206ac29.
 
-However, the following warning message is always emitted when there is
-no such interrupt available:
+Revert this patch as we need the "recovery" arg back in mlx5_load_one()
+function. This arg will be used in the next patch for using recovery
+timeout during sync reset flow.
 
-  es8316 0-0011: Failed to get IRQ 0: -22
-
-Do not attempt to request an IRQ if it is not available/valid. This also
-ensures the rather misleading message is not displayed anymore.
-
-Also note the IRQ validation relies on commit dab472eb931bc291 ("i2c /
-ACPI: Use 0 to indicate that device does not have interrupt assigned").
-
-Fixes: 822257661031 ("ASoC: es8316: Add jack-detect support")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230328094901.50763-1-cristian.ciocaltea@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Stable-dep-of: dfad99750c0f ("net/mlx5: Use recovery timeout on sync reset flow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8316.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c  | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/main.c      | 9 +++++----
+ drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h | 2 +-
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
-index 056c3082fe02c..f7d7a9c91e04c 100644
---- a/sound/soc/codecs/es8316.c
-+++ b/sound/soc/codecs/es8316.c
-@@ -842,12 +842,14 @@ static int es8316_i2c_probe(struct i2c_client *i2c_client)
- 	es8316->irq = i2c_client->irq;
- 	mutex_init(&es8316->lock);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+index 2ef42d76ac6a3..2b74729180394 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+@@ -154,7 +154,7 @@ static void mlx5_fw_reset_complete_reload(struct mlx5_core_dev *dev)
+ 		if (mlx5_health_wait_pci_up(dev))
+ 			mlx5_core_err(dev, "reset reload flow aborted, PCI reads still not working\n");
+ 		else
+-			mlx5_load_one(dev);
++			mlx5_load_one(dev, false);
+ 		devlink_remote_reload_actions_performed(priv_to_devlink(dev), 0,
+ 							BIT(DEVLINK_RELOAD_ACTION_DRIVER_REINIT) |
+ 							BIT(DEVLINK_RELOAD_ACTION_FW_ACTIVATE));
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 4c72cb3ac30cd..cc8057c4f9080 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1484,13 +1484,13 @@ int mlx5_load_one_devl_locked(struct mlx5_core_dev *dev, bool recovery)
+ 	return err;
+ }
  
--	ret = devm_request_threaded_irq(dev, es8316->irq, NULL, es8316_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT | IRQF_NO_AUTOEN,
--					"es8316", es8316);
--	if (ret) {
--		dev_warn(dev, "Failed to get IRQ %d: %d\n", es8316->irq, ret);
--		es8316->irq = -ENXIO;
-+	if (es8316->irq > 0) {
-+		ret = devm_request_threaded_irq(dev, es8316->irq, NULL, es8316_irq,
-+						IRQF_TRIGGER_HIGH | IRQF_ONESHOT | IRQF_NO_AUTOEN,
-+						"es8316", es8316);
-+		if (ret) {
-+			dev_warn(dev, "Failed to get IRQ %d: %d\n", es8316->irq, ret);
-+			es8316->irq = -ENXIO;
-+		}
- 	}
+-int mlx5_load_one(struct mlx5_core_dev *dev)
++int mlx5_load_one(struct mlx5_core_dev *dev, bool recovery)
+ {
+ 	struct devlink *devlink = priv_to_devlink(dev);
+ 	int ret;
  
- 	return devm_snd_soc_register_component(&i2c_client->dev,
+ 	devl_lock(devlink);
+-	ret = mlx5_load_one_devl_locked(dev, false);
++	ret = mlx5_load_one_devl_locked(dev, recovery);
+ 	devl_unlock(devlink);
+ 	return ret;
+ }
+@@ -1875,7 +1875,8 @@ static void mlx5_pci_resume(struct pci_dev *pdev)
+ 
+ 	mlx5_pci_trace(dev, "Enter, loading driver..\n");
+ 
+-	err = mlx5_load_one(dev);
++	err = mlx5_load_one(dev, false);
++
+ 	if (!err)
+ 		devlink_health_reporter_state_update(dev->priv.health.fw_fatal_reporter,
+ 						     DEVLINK_HEALTH_REPORTER_STATE_HEALTHY);
+@@ -1966,7 +1967,7 @@ static int mlx5_resume(struct pci_dev *pdev)
+ {
+ 	struct mlx5_core_dev *dev = pci_get_drvdata(pdev);
+ 
+-	return mlx5_load_one(dev);
++	return mlx5_load_one(dev, false);
+ }
+ 
+ static const struct pci_device_id mlx5_core_pci_table[] = {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+index 02fef8b2d268a..1a35b3c2a3674 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+@@ -321,7 +321,7 @@ int mlx5_init_one(struct mlx5_core_dev *dev);
+ void mlx5_uninit_one(struct mlx5_core_dev *dev);
+ void mlx5_unload_one(struct mlx5_core_dev *dev, bool suspend);
+ void mlx5_unload_one_devl_locked(struct mlx5_core_dev *dev, bool suspend);
+-int mlx5_load_one(struct mlx5_core_dev *dev);
++int mlx5_load_one(struct mlx5_core_dev *dev, bool recovery);
+ int mlx5_load_one_devl_locked(struct mlx5_core_dev *dev, bool recovery);
+ 
+ int mlx5_vport_get_other_func_cap(struct mlx5_core_dev *dev, u16 function_id, void *out);
 -- 
 2.39.2
 
