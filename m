@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CD1320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E240C433EF;
-	Mon,  8 May 2023 11:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F60320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417BAC433D2;
+	Mon,  8 May 2023 11:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544154;
-	bh=NN+y6O8IajfjOcSalIZBOb2or+PXqa+pqr8O28XTn+w=;
+	s=korg; t=1683544157;
+	bh=V6c7x2Bkf/H7GdclbSjZoJir9+56LWuFk27QSP9RJfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzS9RAPArWlCRAaaEw97EF0oDcTuwi/ZdZPTzlZl9JEpz7PYCKUK4lfrLOinH+qEy
-	 LansGqnVHS4KT7iOaiy8ZdLvvadWWP3vtoqDcAu142f1KRS9r6iXSpIW2dcS4oeWdL
-	 UcZakbwCkYR+GO8+l8kdjJOHvn/Ce5EBlW1cmcWU=
+	b=ryV4nrMd1CRiYeHRDPzDFz1emv2D/uxz30KGCqFExBiFUyMm3P2f2l3lyrY8FJBRm
+	 Ee0JTcU4WiyTDkBWanQJWTDbnlilFva70TGGorfBqh67vDmxegFEpd06fpZ9PA3DyO
+	 LXVqy1tNsEdUbgbGqENN1eLeDvsvREgW5CpbIAJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patil Rajesh Reddy <Patil.Reddy@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 287/694] platform/x86/amd/pmf: Move out of BIOS SMN pair for driver probe
-Date: Mon,  8 May 2023 11:42:02 +0200
-Message-Id: <20230508094441.608932424@linuxfoundation.org>
+Subject: [PATCH 6.3 278/694] media: mediatek: vcodec: add params to record lat and core lat_buf count
+Date: Mon,  8 May 2023 11:41:53 +0200
+Message-Id: <20230508094441.283014908@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,99 +37,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit aec8298c093f052fc8a86f9411b69b23953b0edb ]
+[ Upstream commit 5bbb6e2ca67477ab41163b32e6b3444faea74a5e ]
 
-The current SMN index used for the driver probe seems to be meant
-for the BIOS pair and there are potential concurrency problems that can
-occur with an inopportune SMI.
+Using lat_buf to share decoder information between lat and core work
+queue, adding params to record the buf count.
 
-It is been advised to use SMN_INDEX_0 instead of SMN_INDEX_2, which is
-what amd_nb.c provides and this function has protections to ensure that
-only one caller can use it at a time.
-
-Fixes: da5ce22df5fe ("platform/x86/amd/pmf: Add support for PMF core layer")
-Co-developed-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Signed-off-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20230406164807.50969-4-Shyam-sundar.S-k@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/Kconfig |  1 +
- drivers/platform/x86/amd/pmf/core.c  | 22 +++++-----------------
- 2 files changed, 6 insertions(+), 17 deletions(-)
+ .../platform/mediatek/vcodec/vdec_msg_queue.c | 23 ++++++++++++++++++-
+ .../platform/mediatek/vcodec/vdec_msg_queue.h |  6 +++++
+ 2 files changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/amd/pmf/Kconfig b/drivers/platform/x86/amd/pmf/Kconfig
-index 6d89528c31779..d87986adf91e1 100644
---- a/drivers/platform/x86/amd/pmf/Kconfig
-+++ b/drivers/platform/x86/amd/pmf/Kconfig
-@@ -7,6 +7,7 @@ config AMD_PMF
- 	tristate "AMD Platform Management Framework"
- 	depends on ACPI && PCI
- 	depends on POWER_SUPPLY
-+	depends on AMD_NB
- 	select ACPI_PLATFORM_PROFILE
- 	help
- 	  This driver provides support for the AMD Platform Management Framework.
-diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
-index da23639071d79..0acc0b6221290 100644
---- a/drivers/platform/x86/amd/pmf/core.c
-+++ b/drivers/platform/x86/amd/pmf/core.c
-@@ -8,6 +8,7 @@
-  * Author: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-  */
- 
-+#include <asm/amd_nb.h>
- #include <linux/debugfs.h>
- #include <linux/iopoll.h>
- #include <linux/module.h>
-@@ -22,8 +23,6 @@
- #define AMD_PMF_REGISTER_ARGUMENT	0xA58
- 
- /* Base address of SMU for mapping physical address to virtual address */
--#define AMD_PMF_SMU_INDEX_ADDRESS	0xB8
--#define AMD_PMF_SMU_INDEX_DATA		0xBC
- #define AMD_PMF_MAPPING_SIZE		0x01000
- #define AMD_PMF_BASE_ADDR_OFFSET	0x10000
- #define AMD_PMF_BASE_ADDR_LO		0x13B102E8
-@@ -348,30 +347,19 @@ static int amd_pmf_probe(struct platform_device *pdev)
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
+index dc2004790a472..3f016c87d722c 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
+@@ -52,6 +52,22 @@ static struct list_head *vdec_get_buf_list(int hardware_index, struct vdec_lat_b
  	}
+ }
  
- 	dev->cpu_id = rdev->device;
--	err = pci_write_config_dword(rdev, AMD_PMF_SMU_INDEX_ADDRESS, AMD_PMF_BASE_ADDR_LO);
--	if (err) {
--		dev_err(dev->dev, "error writing to 0x%x\n", AMD_PMF_SMU_INDEX_ADDRESS);
--		pci_dev_put(rdev);
--		return pcibios_err_to_errno(err);
--	}
++static void vdec_msg_queue_inc(struct vdec_msg_queue *msg_queue, int hardware_index)
++{
++	if (hardware_index == MTK_VDEC_CORE)
++		atomic_inc(&msg_queue->core_list_cnt);
++	else
++		atomic_inc(&msg_queue->lat_list_cnt);
++}
++
++static void vdec_msg_queue_dec(struct vdec_msg_queue *msg_queue, int hardware_index)
++{
++	if (hardware_index == MTK_VDEC_CORE)
++		atomic_dec(&msg_queue->core_list_cnt);
++	else
++		atomic_dec(&msg_queue->lat_list_cnt);
++}
++
+ int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf *buf)
+ {
+ 	struct list_head *head;
+@@ -66,6 +82,7 @@ int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf
+ 	list_add_tail(head, &msg_ctx->ready_queue);
+ 	msg_ctx->ready_num++;
  
--	err = pci_read_config_dword(rdev, AMD_PMF_SMU_INDEX_DATA, &val);
-+	err = amd_smn_read(0, AMD_PMF_BASE_ADDR_LO, &val);
- 	if (err) {
-+		dev_err(dev->dev, "error in reading from 0x%x\n", AMD_PMF_BASE_ADDR_LO);
- 		pci_dev_put(rdev);
- 		return pcibios_err_to_errno(err);
++	vdec_msg_queue_inc(&buf->ctx->msg_queue, msg_ctx->hardware_index);
+ 	if (msg_ctx->hardware_index != MTK_VDEC_CORE)
+ 		wake_up_all(&msg_ctx->ready_to_use);
+ 	else
+@@ -127,6 +144,7 @@ struct vdec_lat_buf *vdec_msg_queue_dqbuf(struct vdec_msg_queue_ctx *msg_ctx)
+ 		return NULL;
  	}
+ 	list_del(head);
++	vdec_msg_queue_dec(&buf->ctx->msg_queue, msg_ctx->hardware_index);
  
- 	base_addr_lo = val & AMD_PMF_BASE_ADDR_HI_MASK;
+ 	msg_ctx->ready_num--;
+ 	mtk_v4l2_debug(3, "dqueue buf type:%d addr: 0x%p num: %d",
+@@ -241,10 +259,13 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
  
--	err = pci_write_config_dword(rdev, AMD_PMF_SMU_INDEX_ADDRESS, AMD_PMF_BASE_ADDR_HI);
--	if (err) {
--		dev_err(dev->dev, "error writing to 0x%x\n", AMD_PMF_SMU_INDEX_ADDRESS);
--		pci_dev_put(rdev);
--		return pcibios_err_to_errno(err);
--	}
+ 	vdec_msg_queue_init_ctx(&msg_queue->lat_ctx, MTK_VDEC_LAT0);
+ 	INIT_WORK(&msg_queue->core_work, vdec_msg_queue_core_work);
++
++	atomic_set(&msg_queue->lat_list_cnt, 0);
++	atomic_set(&msg_queue->core_list_cnt, 0);
++
+ 	msg_queue->wdma_addr.size =
+ 		vde_msg_queue_get_trans_size(ctx->picinfo.buf_w,
+ 					     ctx->picinfo.buf_h);
 -
--	err = pci_read_config_dword(rdev, AMD_PMF_SMU_INDEX_DATA, &val);
-+	err = amd_smn_read(0, AMD_PMF_BASE_ADDR_HI, &val);
+ 	err = mtk_vcodec_mem_alloc(ctx, &msg_queue->wdma_addr);
  	if (err) {
-+		dev_err(dev->dev, "error in reading from 0x%x\n", AMD_PMF_BASE_ADDR_HI);
- 		pci_dev_put(rdev);
- 		return pcibios_err_to_errno(err);
- 	}
+ 		mtk_v4l2_err("failed to allocate wdma_addr buf");
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
+index c43d427f5f544..b1aa5572ba49f 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
++++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
+@@ -72,6 +72,9 @@ struct vdec_lat_buf {
+  * @wdma_wptr_addr: ube write point
+  * @core_work: core hardware work
+  * @lat_ctx: used to store lat buffer list
++ *
++ * @lat_list_cnt: used to record each instance lat list count
++ * @core_list_cnt: used to record each instance core list count
+  */
+ struct vdec_msg_queue {
+ 	struct vdec_lat_buf lat_buf[NUM_BUFFER_COUNT];
+@@ -82,6 +85,9 @@ struct vdec_msg_queue {
+ 
+ 	struct work_struct core_work;
+ 	struct vdec_msg_queue_ctx lat_ctx;
++
++	atomic_t lat_list_cnt;
++	atomic_t core_list_cnt;
+ };
+ 
+ /**
 -- 
 2.39.2
 
