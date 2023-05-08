@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA798171A5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:29:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DE8C433EF;
-	Mon,  8 May 2023 11:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD93D171A5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:29:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A402C433EF;
+	Mon,  8 May 2023 11:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545345;
-	bh=KQBoVz47dUV/NC1LnE0YmKV9npUXjJR4A2kw/fkkYek=;
+	s=korg; t=1683545348;
+	bh=w7sULu6r8WNx77TfKSMLmhRoEJA7Kn+M7Gg7/lBdzJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ygxm+hdswAQF2uau/IjEHbQiq/Ff2CP8q1KYSvnjXVCA0vYWvjDaMlgrAPGDE1kUU
-	 7ZfXKwht6MYBOyeYLUxIpoQGgwip+rOEGcDuw/HNenBB1cWvSLWcCeQC+JecqGCYUa
-	 UFYmf+lgWPPZuBcXoX0cW3CHNYq2PQBqkNOimadg=
+	b=j4baiPNm/N8L5UwyUj2fU6O6ZDXGcnjT5xotecS0HcqbVXR+zR4LG0Kt6kMvu00n7
+	 cWofuWHraRVHSylzEX4BGzX/8rDdCpYYF6Gr0qdKuXE/GY7hW+hWUB7UqjpfpilSs3
+	 OTu10FJ8XfNwE6gtLAKhfWJEVzQ4YraUZz5BUnZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anson Tsao <anson.tsao@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 5.15 010/371] wifi: mt76: mt7921e: Set memory space enable in PCI_COMMAND if unset
-Date: Mon,  8 May 2023 11:43:31 +0200
-Message-Id: <20230508094812.435739489@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Kees Cook <keescook@chromium.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.15 011/371] arm64: Always load shadow stack pointer directly from the task struct
+Date: Mon,  8 May 2023 11:43:32 +0200
+Message-Id: <20230508094812.479557519@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,47 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 09d4d6da1b65d09414e7bce61459593f3c80ead1 upstream.
+commit 2198d07c509f1db4a1185d1f65aaada794c6ea59 upstream.
 
-When the BIOS has been configured for Fast Boot, systems with mt7921e
-have non-functional wifi.  Turning on Fast boot caused both bus master
-enable and memory space enable bits in PCI_COMMAND not to get configured.
+All occurrences of the scs_load macro load the value of the shadow call
+stack pointer from the task which is current at that point. So instead
+of taking a task struct register argument in the scs_load macro to
+specify the task struct to load from, let's always reference the current
+task directly. This should make it much harder to exploit any
+instruction sequences reloading the shadow call stack pointer register
+from memory.
 
-The mt7921 driver already sets bus master enable, but explicitly check
-and set memory access enable as well to fix this problem.
-
-Tested-by: Anson Tsao <anson.tsao@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230109174800.3286265-2-ardb@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/pci.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/include/asm/scs.h |    7 ++++---
+ arch/arm64/kernel/entry.S    |    4 ++--
+ arch/arm64/kernel/head.S     |    2 +-
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-@@ -218,6 +218,7 @@ static int mt7921_pci_probe(struct pci_d
- 	struct mt7921_dev *dev;
- 	struct mt76_dev *mdev;
- 	int ret;
-+	u16 cmd;
+--- a/arch/arm64/include/asm/scs.h
++++ b/arch/arm64/include/asm/scs.h
+@@ -9,15 +9,16 @@
+ #ifdef CONFIG_SHADOW_CALL_STACK
+ 	scs_sp	.req	x18
  
- 	ret = pcim_enable_device(pdev);
- 	if (ret)
-@@ -227,6 +228,11 @@ static int mt7921_pci_probe(struct pci_d
- 	if (ret)
- 		return ret;
+-	.macro scs_load tsk
+-	ldr	scs_sp, [\tsk, #TSK_TI_SCS_SP]
++	.macro scs_load_current
++	get_current_task scs_sp
++	ldr	scs_sp, [scs_sp, #TSK_TI_SCS_SP]
+ 	.endm
  
-+	pci_read_config_word(pdev, PCI_COMMAND, &cmd);
-+	if (!(cmd & PCI_COMMAND_MEMORY)) {
-+		cmd |= PCI_COMMAND_MEMORY;
-+		pci_write_config_word(pdev, PCI_COMMAND, cmd);
-+	}
- 	pci_set_master(pdev);
+ 	.macro scs_save tsk
+ 	str	scs_sp, [\tsk, #TSK_TI_SCS_SP]
+ 	.endm
+ #else
+-	.macro scs_load tsk
++	.macro scs_load_current
+ 	.endm
  
- 	ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
+ 	.macro scs_save tsk
+--- a/arch/arm64/kernel/entry.S
++++ b/arch/arm64/kernel/entry.S
+@@ -272,7 +272,7 @@ alternative_if ARM64_HAS_ADDRESS_AUTH
+ alternative_else_nop_endif
+ 1:
+ 
+-	scs_load tsk
++	scs_load_current
+ 	.else
+ 	add	x21, sp, #PT_REGS_SIZE
+ 	get_current_task tsk
+@@ -855,7 +855,7 @@ SYM_FUNC_START(cpu_switch_to)
+ 	msr	sp_el0, x1
+ 	ptrauth_keys_install_kernel x1, x8, x9, x10
+ 	scs_save x0
+-	scs_load x1
++	scs_load_current
+ 	ret
+ SYM_FUNC_END(cpu_switch_to)
+ NOKPROBE(cpu_switch_to)
+--- a/arch/arm64/kernel/head.S
++++ b/arch/arm64/kernel/head.S
+@@ -409,7 +409,7 @@ SYM_FUNC_END(__create_page_tables)
+ 	stp	xzr, xzr, [sp, #S_STACKFRAME]
+ 	add	x29, sp, #S_STACKFRAME
+ 
+-	scs_load \tsk
++	scs_load_current
+ 
+ 	adr_l	\tmp1, __per_cpu_offset
+ 	ldr	w\tmp2, [\tsk, #TSK_CPU]
 
 
