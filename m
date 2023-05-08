@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871FE168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C026C433EF;
-	Mon,  8 May 2023 10:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C068E168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B74C433EF;
+	Mon,  8 May 2023 10:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540987;
-	bh=s+AD8z/fY2tRHDrnGgTTPXdxXbvcWSXHSdjJew5qCZo=;
+	s=korg; t=1683540992;
+	bh=GxhpzCUdc+GGys2JPDZt8d66H9ArkOuBHirXZ2SfNc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sox5S/qEHx95BJyv6Shex93PtpccBT1robF+qK26xCNiVIfU8VtifjvAYBW9qWT3K
-	 JcwTewXbjqs2hgXnfzbbPhGfUU8mJTfb/guNey8a5hhWJDR8eD8n7+E5Txgvhcm/RR
-	 9eWTGPoxLgGYjUk2zhUP82k2iFXj+mX93IPpeHOI=
+	b=xhM/heSIGff5qlSir7Hlg7GyT2GDpUEzQ1S8m0oaDIRqV+CGu4SOITG9OkGDOfVBc
+	 NMXYnNzdfvVJGl8r8CeE76nCRCd+oyq1W/4W3mmun+3tDO36WLcPY93ZSFG47uGDs2
+	 zjY84IAtxcJehGgFnlQRPK4zOS+RlmhiDRmZvtno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Walle <michael@walle.cc>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 573/611] mtd: core: provide unique name for nvmem device, take two
-Date: Mon,  8 May 2023 11:46:55 +0200
-Message-Id: <20230508094440.561611069@linuxfoundation.org>
+Subject: [PATCH 6.1 575/611] mtd: core: fix error path for nvmem provider
+Date: Mon,  8 May 2023 11:46:57 +0200
+Message-Id: <20230508094440.618996378@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,46 +36,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Walle <michael@walle.cc>
 
-commit 1cd9ceaa5282ff10ea20a7fbadde5a476a1cc99e upstream.
+commit e0489f6e221f5ddee6cb3bd51b992b790c5fa4b9 upstream.
 
-Commit c048b60d39e1 ("mtd: core: provide unique name for nvmem device")
-tries to give the nvmem device a unique name, but fails badly if the mtd
-device doesn't have a "struct device" associated with it, i.e. if
-CONFIG_MTD_PARTITIONED_MASTER is not set. This will result in the name
-"(null)-user-otp", which is not unique. It seems the best we can do is
-to use the compatible name together with a unique identifier added by
-the nvmem subsystem by using NVMEM_DEVID_AUTO.
+If mtd_otp_nvmem_add() fails, the partitions won't be removed
+because there is simply no call to del_mtd_partitions().
+Unfortunately, add_mtd_partitions() will print all partitions to
+the kernel console. If mtd_otp_nvmem_add() returns -EPROBE_DEFER
+this would print the partitions multiple times to the kernel
+console. Instead move mtd_otp_nvmem_add() to the beginning of the
+function.
 
-Fixes: c048b60d39e1 ("mtd: core: provide unique name for nvmem device")
+Fixes: 4b361cfa8624 ("mtd: core: add OTP nvmem provider support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Michael Walle <michael@walle.cc>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230308082021.870459-1-michael@walle.cc
+Link: https://lore.kernel.org/linux-mtd/20230308082021.870459-3-michael@walle.cc
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdcore.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/mtd/mtdcore.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 --- a/drivers/mtd/mtdcore.c
 +++ b/drivers/mtd/mtdcore.c
-@@ -884,8 +884,8 @@ static struct nvmem_device *mtd_otp_nvme
+@@ -1019,10 +1019,14 @@ int mtd_device_parse_register(struct mtd
  
- 	/* OTP nvmem will be registered on the physical device */
- 	config.dev = mtd->dev.parent;
--	config.name = kasprintf(GFP_KERNEL, "%s-%s", dev_name(&mtd->dev), compatible);
--	config.id = NVMEM_DEVID_NONE;
-+	config.name = compatible;
-+	config.id = NVMEM_DEVID_AUTO;
- 	config.owner = THIS_MODULE;
- 	config.type = NVMEM_TYPE_OTP;
- 	config.root_only = true;
-@@ -901,7 +901,6 @@ static struct nvmem_device *mtd_otp_nvme
- 		nvmem = NULL;
+ 	mtd_set_dev_defaults(mtd);
  
- 	of_node_put(np);
--	kfree(config.name);
++	ret = mtd_otp_nvmem_add(mtd);
++	if (ret)
++		goto out;
++
+ 	if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER)) {
+ 		ret = add_mtd_device(mtd);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 	}
  
- 	return nvmem;
- }
+ 	/* Prefer parsed partitions over driver-provided fallback */
+@@ -1057,9 +1061,12 @@ int mtd_device_parse_register(struct mtd
+ 		register_reboot_notifier(&mtd->reboot_notifier);
+ 	}
+ 
+-	ret = mtd_otp_nvmem_add(mtd);
+-
+ out:
++	if (ret) {
++		nvmem_unregister(mtd->otp_user_nvmem);
++		nvmem_unregister(mtd->otp_factory_nvmem);
++	}
++
+ 	if (ret && device_is_registered(&mtd->dev))
+ 		del_mtd_device(mtd);
+ 
 
 
