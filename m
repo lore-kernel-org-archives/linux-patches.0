@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BD213AE0
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:59:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212B1C433D2;
-	Mon,  8 May 2023 10:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E489A13AE0
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:59:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F68C433D2;
+	Mon,  8 May 2023 10:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543554;
-	bh=eUicCCTacN+4HZa4ZS17SedqqLgYkcBdUACFtoKMKHk=;
+	s=korg; t=1683543557;
+	bh=FtV+m2S0jaIWeJiyxNUkr0FhixAtSJNNEoRnu34VeVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZUR1icCGcN+kAKk/hWEzEjHz7moQjPGVAlx9apeCgcIABwFsq1KoQw3RkT2HNEXV
-	 Nj7fc7/yLp/Oh+167ZyYQr/ymT3VCDtrAKOlohK8qlc1j5TA74FCs8wtxjOPl0pPzE
-	 mNX/cnaoqYX8ljhUP0NVsGYgUqvwwFAhytYCykcM=
+	b=fQJQ15408o1QnMcqZxu8/qyCKi73SPI7SktHcp247+niGCUkM6SvaqQOnjsnkXH+a
+	 eX6/CmKFmuCi7JwyMD5ec7h7gvYi/PVFQk2ynlY67o/H/eJvUhBaTsIJJud0L7duZu
+	 B21Xfvu1kKVEiWne2eS8034hofVhFCeIJf6NVJ8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.3 128/694] clk: microchip: fix potential UAF in auxdev release callback
-Date: Mon,  8 May 2023 11:39:23 +0200
-Message-Id: <20230508094436.626002671@linuxfoundation.org>
+	Christoph Hellwig <hch@infradead.org>,
+	Thomas Voegtle <tv@lio96.de>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.3 111/694] drbd: correctly submit flush bio on barrier
+Date: Mon,  8 May 2023 11:39:06 +0200
+Message-Id: <20230508094436.078004848@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,47 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
 
-commit 7455b7007b9e93bcc2bc9c1c6c73a228e3152069 upstream.
+commit 3899d94e3831ee07ea6821c032dc297aec80586a upstream.
 
-Similar to commit 1c11289b34ab ("peci: cpu: Fix use-after-free in
-adev_release()"), the auxiliary device is not torn down in the correct
-order. If auxiliary_device_add() fails, the release callback will be
-called twice, resulting in a UAF. Due to timing, the auxdev code in this
-driver "took inspiration" from the aforementioned commit, and thus its
-bugs too!
+When we receive a flush command (or "barrier" in DRBD), we currently use
+a REQ_OP_FLUSH with the REQ_PREFLUSH flag set.
 
-Moving auxiliary_device_uninit() to the unregister callback instead
-avoids the issue.
+The correct way to submit a flush bio is by using a REQ_OP_WRITE without
+any data, and set the REQ_PREFLUSH flag.
 
-CC: stable@vger.kernel.org
-Fixes: b56bae2dd6fd ("clk: microchip: mpfs: add reset controller")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230413-critter-synopsis-dac070a86cb4@spud
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Since commit b4a6bb3a67aa ("block: add a sanity check for non-write
+flush/fua bios"), this triggers a warning in the block layer, but this
+has been broken for quite some time before that.
+
+So use the correct set of flags to actually make the flush happen.
+
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: stable@vger.kernel.org
+Fixes: f9ff0da56437 ("drbd: allow parallel flushes for multi-volume resources")
+Reported-by: Thomas Voegtle <tv@lio96.de>
+Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230503121937.17232-1-christoph.boehmwalder@linbit.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/microchip/clk-mpfs.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/block/drbd/drbd_receiver.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/microchip/clk-mpfs.c
-+++ b/drivers/clk/microchip/clk-mpfs.c
-@@ -374,14 +374,13 @@ static void mpfs_reset_unregister_adev(v
- 	struct auxiliary_device *adev = _adev;
- 
- 	auxiliary_device_delete(adev);
-+	auxiliary_device_uninit(adev);
- }
- 
- static void mpfs_reset_adev_release(struct device *dev)
+--- a/drivers/block/drbd/drbd_receiver.c
++++ b/drivers/block/drbd/drbd_receiver.c
+@@ -1283,7 +1283,7 @@ static void one_flush_endio(struct bio *
+ static void submit_one_flush(struct drbd_device *device, struct issue_flush_context *ctx)
  {
- 	struct auxiliary_device *adev = to_auxiliary_dev(dev);
+ 	struct bio *bio = bio_alloc(device->ldev->backing_bdev, 0,
+-				    REQ_OP_FLUSH | REQ_PREFLUSH, GFP_NOIO);
++				    REQ_OP_WRITE | REQ_PREFLUSH, GFP_NOIO);
+ 	struct one_flush_context *octx = kmalloc(sizeof(*octx), GFP_NOIO);
  
--	auxiliary_device_uninit(adev);
--
- 	kfree(adev);
- }
- 
+ 	if (!octx) {
 
 
