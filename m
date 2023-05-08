@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80201168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:23:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E412BC433D2;
-	Mon,  8 May 2023 11:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA3C168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:23:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42794C433EF;
+	Mon,  8 May 2023 11:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544983;
-	bh=mtk1jRQLs5sLc7mjQpW/vR5jAzlhjbDn5pGZ7T+l0dE=;
+	s=korg; t=1683544986;
+	bh=Z1nXqxFNUKRWTLICumPnwlkqPjsoIMIj2M1bXdCYmBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v59aPBlDAE2Dlp3iBHuRjWJ9MnyHfGq0ACJwVs+BaDwQlspmxCpTS4DEoyhCI/1gP
-	 XQ7ZdN0pXBWLGIV70wJduMnzKvm57p9kTOPzWoch4UklsY+iiGGz75X5BqfyW3n1XS
-	 0npgfCjQy4DkIrIPg3rCZsjgP5Z+r2l5Z6hCBnAk=
+	b=BlbQb+/bDIV4EzThwIQUoRIhCbjTMXG2YKiY2MpQNURQXy1hSXIrxykMSUNw3d7WW
+	 TDkXnP1GtJchs88rGiKCsuLvBcZODxWpbb/Z+eHPQAYxiSoTUbYgq+KSYlHhTwVbbL
+	 bcx8ip6gcGw147XhHH8gJRSX4ol7hYBSh8Q2HweM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Nishanth Menon <nm@ti.com>,
+	Dhruva Gole <d-gole@ti.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 587/694] rtc: meson-vrtc: Use ktime_get_real_ts64() to get the current time
-Date: Mon,  8 May 2023 11:47:02 +0200
-Message-Id: <20230508094454.094979837@linuxfoundation.org>
+Subject: [PATCH 6.3 588/694] rtc: k3: handle errors while enabling wake irq
+Date: Mon,  8 May 2023 11:47:03 +0200
+Message-Id: <20230508094454.142238770@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,58 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Dhruva Gole <d-gole@ti.com>
 
-[ Upstream commit 0e6255fa3f649170da6bd1a544680589cfae1131 ]
+[ Upstream commit d31d7300ebc0c43021ec48c0e6a3a427386f4617 ]
 
-The VRTC alarm register can be programmed with an amount of seconds
-after which the SoC will be woken up by the VRTC timer again. We are
-already converting the alarm time from meson_vrtc_set_alarm() to
-"seconds since 1970". This means we also need to use "seconds since
-1970" for the current time.
+Due to the potential failure of enable_irq_wake(), it would be better to
+return error if it fails.
 
-This fixes a problem where setting the alarm to one minute in the future
-results in the firmware (which handles wakeup) to output (on the serial
-console) that the system will be woken up in billions of seconds.
-ktime_get_raw_ts64() returns the time since boot, not since 1970. Switch
-to ktime_get_real_ts64() to fix the calculation of the alarm time and to
-make the SoC wake up at the specified date/time. Also the firmware
-(which manages suspend) now prints either 59 or 60 seconds until wakeup
-(depending on how long it takes for the system to enter suspend).
-
-Fixes: 6ef35398e827 ("rtc: Add Amlogic Virtual Wake RTC")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Link: https://lore.kernel.org/r/20230320212142.2355062-1-martin.blumenstingl@googlemail.com
+Fixes: b09d633575e5 ("rtc: Introduce ti-k3-rtc")
+Cc: Nishanth Menon <nm@ti.com>
+Signed-off-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20230323085904.957999-1-d-gole@ti.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-meson-vrtc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-ti-k3.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-meson-vrtc.c b/drivers/rtc/rtc-meson-vrtc.c
-index 1463c86215615..648fa362ec447 100644
---- a/drivers/rtc/rtc-meson-vrtc.c
-+++ b/drivers/rtc/rtc-meson-vrtc.c
-@@ -23,7 +23,7 @@ static int meson_vrtc_read_time(struct device *dev, struct rtc_time *tm)
- 	struct timespec64 time;
+diff --git a/drivers/rtc/rtc-ti-k3.c b/drivers/rtc/rtc-ti-k3.c
+index ba23163cc0428..0d90fe9233550 100644
+--- a/drivers/rtc/rtc-ti-k3.c
++++ b/drivers/rtc/rtc-ti-k3.c
+@@ -632,7 +632,8 @@ static int __maybe_unused ti_k3_rtc_suspend(struct device *dev)
+ 	struct ti_k3_rtc *priv = dev_get_drvdata(dev);
  
- 	dev_dbg(dev, "%s\n", __func__);
--	ktime_get_raw_ts64(&time);
-+	ktime_get_real_ts64(&time);
- 	rtc_time64_to_tm(time.tv_sec, tm);
- 
+ 	if (device_may_wakeup(dev))
+-		enable_irq_wake(priv->irq);
++		return enable_irq_wake(priv->irq);
++
  	return 0;
-@@ -96,7 +96,7 @@ static int __maybe_unused meson_vrtc_suspend(struct device *dev)
- 		long alarm_secs;
- 		struct timespec64 time;
+ }
  
--		ktime_get_raw_ts64(&time);
-+		ktime_get_real_ts64(&time);
- 		local_time = time.tv_sec;
- 
- 		dev_dbg(dev, "alarm_time = %lus, local_time=%lus\n",
 -- 
 2.39.2
 
