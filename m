@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258CC168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB23C433EF;
-	Mon,  8 May 2023 10:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC24E168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4006CC433D2;
+	Mon,  8 May 2023 10:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540964;
-	bh=GTTMHKXhuQKGN/ciIr5pTlTHX/TDFVT/E4fualPsiTM=;
+	s=korg; t=1683540966;
+	bh=sF7/9hSzn6I7He+vP/un3tn6wM1DRU3TVYvJjKahI4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qd+BuJedc5nvITBymr6KKqPW2gSdx2Qx2qTiBtG0khS06CnnaCLR3AH/3AW5IuIzP
-	 JwMAU6Gd8zQWox6yWfsJVrFIoBkzLiFCFOZScvrOod1bqkUdrwXJSYxUvIpYCDt6Y3
-	 xoOAQzs0Wi/18/d1rkdYH1F9RDyxDzRRLPfj1Eo0=
+	b=P3XloNcHasLj8qVYye/r2tuZakGTJsbI7zuf2aK2V1X+w7wdy1pNBLt+wJI+1qIqe
+	 VrCSJsmZ5cu1vlBLYLWz4PlLsiPG5LZB8dMUASdjsEIW2Nb1x0it96FuB8VsLFAmyQ
+	 9KmDtVaQjkZxcfLp66jEH7XqTKyfwtv9IJxhTjdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 565/611] ALSA: hda/realtek: Fix mute and micmute LEDs for an HP laptop
-Date: Mon,  8 May 2023 11:46:47 +0200
-Message-Id: <20230508094440.327750268@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+2af3bc9585be7f23f290@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 566/611] nilfs2: do not write dirty data after degenerating to read-only
+Date: Mon,  8 May 2023 11:46:48 +0200
+Message-Id: <20230508094440.356747355@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -34,31 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kai-Heng Feng <kai.heng.feng@canonical.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 56fc217f0db4fc78e02a1b8450df06389474a5e5 upstream.
+commit 28a65b49eb53e172d23567005465019658bfdb4d upstream.
 
-There's another laptop that needs the fixup to enable mute and micmute
-LEDs. So do it accordingly.
+According to syzbot's report, mark_buffer_dirty() called from
+nilfs_segctor_do_construct() outputs a warning with some patterns after
+nilfs2 detects metadata corruption and degrades to read-only mode.
 
-Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+After such read-only degeneration, page cache data may be cleared through
+nilfs_clear_dirty_page() which may also clear the uptodate flag for their
+buffer heads.  However, even after the degeneration, log writes are still
+performed by unmount processing etc., which causes mark_buffer_dirty() to
+be called for buffer heads without the "uptodate" flag and causes the
+warning.
+
+Since any writes should not be done to a read-only file system in the
+first place, this fixes the warning in mark_buffer_dirty() by letting
+nilfs_segctor_do_construct() abort early if in read-only mode.
+
+This also changes the retry check of nilfs_segctor_write_out() to avoid
+unnecessary log write retries if it detects -EROFS that
+nilfs_segctor_do_construct() returned.
+
+Link: https://lkml.kernel.org/r/20230427011526.13457-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+2af3bc9585be7f23f290@syzkaller.appspotmail.com
+  Link: https://syzkaller.appspot.com/bug?extid=2af3bc9585be7f23f290
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230505125925.543601-1-kai.heng.feng@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nilfs2/segment.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9479,6 +9479,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8b8d, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b8f, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b92, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8b96, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2039,6 +2039,9 @@ static int nilfs_segctor_do_construct(st
+ 	struct the_nilfs *nilfs = sci->sc_super->s_fs_info;
+ 	int err;
+ 
++	if (sb_rdonly(sci->sc_super))
++		return -EROFS;
++
+ 	nilfs_sc_cstage_set(sci, NILFS_ST_INIT);
+ 	sci->sc_cno = nilfs->ns_cno;
+ 
+@@ -2722,7 +2725,7 @@ static void nilfs_segctor_write_out(stru
+ 
+ 		flush_work(&sci->sc_iput_work);
+ 
+-	} while (ret && retrycount-- > 0);
++	} while (ret && ret != -EROFS && retrycount-- > 0);
+ }
+ 
+ /**
 
 
