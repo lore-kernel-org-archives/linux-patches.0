@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D90171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E23C4339C;
-	Mon,  8 May 2023 11:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE90171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C42C433EF;
+	Mon,  8 May 2023 11:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546373;
-	bh=1WdQWqfYY/q/QVlDQKU22+HlJQpQc3nrsZWgO3vfDpg=;
+	s=korg; t=1683546376;
+	bh=LQpPxz336d3/UAH0yBAQ+cpt6pas4oy/AMZdR09vzSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t4kZ5nwzLQ2+H1yvAmmeS7hlpgSbju7e4y33KqS/nkrTqyOgMq+SgVZCuEgxtyvmq
-	 yJEZRUowG3acewWnP9HZqgs8vfdXj7BW5ROFf3qA2g8P+IMzAfz/2J+zWw6GAfZyLz
-	 V5HnJYnffTqcqSitPHpVD5O/AogCnyUd9xcXJrng=
+	b=LG/JMt/Yc/u4FwP88MY63Hoj6DOInZ2/Q6GHKfhhEgS5RWOSGdoUFBFiJ6y/KDQU1
+	 DffZJE00uWKsv/Eb+HrzUEWfWXzBDXwGZCn/tKVg+EV2F1hCT2tQ48/Fm7GevRPi5v
+	 jmAPQEmxUSdMg3ACk8v8bhnniBKCC6JZ6Ef8c8fE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	=?UTF-8?q?Gr=C3=A9gory=20Desor?= <gregory.desor@free.fr>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 346/371] ALSA: usb-audio: Add quirk for Pioneer DDJ-800
-Date: Mon,  8 May 2023 11:49:07 +0200
-Message-Id: <20230508094825.871394715@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+2af3bc9585be7f23f290@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 347/371] nilfs2: do not write dirty data after degenerating to read-only
+Date: Mon,  8 May 2023 11:49:08 +0200
+Message-Id: <20230508094825.911206355@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,89 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geraldo Nascimento <geraldogabriel@gmail.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 7501f472977df233d039d86c6981e0641708e1ca upstream.
+commit 28a65b49eb53e172d23567005465019658bfdb4d upstream.
 
-One more Pioneer quirk, this time for DDJ-800, which is quite similar like
-other DJ DDJ models but with slightly different EPs or channels.
+According to syzbot's report, mark_buffer_dirty() called from
+nilfs_segctor_do_construct() outputs a warning with some patterns after
+nilfs2 detects metadata corruption and degrades to read-only mode.
 
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Tested-by: Grégory Desor <gregory.desor@free.fr>
+After such read-only degeneration, page cache data may be cleared through
+nilfs_clear_dirty_page() which may also clear the uptodate flag for their
+buffer heads.  However, even after the degeneration, log writes are still
+performed by unmount processing etc., which causes mark_buffer_dirty() to
+be called for buffer heads without the "uptodate" flag and causes the
+warning.
+
+Since any writes should not be done to a read-only file system in the
+first place, this fixes the warning in mark_buffer_dirty() by letting
+nilfs_segctor_do_construct() abort early if in read-only mode.
+
+This also changes the retry check of nilfs_segctor_write_out() to avoid
+unnecessary log write retries if it detects -EROFS that
+nilfs_segctor_do_construct() returned.
+
+Link: https://lkml.kernel.org/r/20230427011526.13457-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+2af3bc9585be7f23f290@syzkaller.appspotmail.com
+  Link: https://syzkaller.appspot.com/bug?extid=2af3bc9585be7f23f290
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/ZFLLzgEcsSF5aIHG@geday
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks-table.h |   58 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ fs/nilfs2/segment.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -3808,6 +3808,64 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 	}
- },
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2039,6 +2039,9 @@ static int nilfs_segctor_do_construct(st
+ 	struct the_nilfs *nilfs = sci->sc_super->s_fs_info;
+ 	int err;
  
-+{
-+	/*
-+	 * PIONEER DJ DDJ-800
-+	 * PCM is 6 channels out, 6 channels in @ 44.1 fixed
-+	 * The Feedback for the output is the input
-+	 */
-+	USB_DEVICE_VENDOR_SPEC(0x2b73, 0x0029),
-+		.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
-+		.ifnum = QUIRK_ANY_INTERFACE,
-+		.type = QUIRK_COMPOSITE,
-+		.data = (const struct snd_usb_audio_quirk[]) {
-+			{
-+				.ifnum = 0,
-+				.type = QUIRK_AUDIO_FIXED_ENDPOINT,
-+				.data = &(const struct audioformat) {
-+					.formats = SNDRV_PCM_FMTBIT_S24_3LE,
-+					.channels = 6,
-+					.iface = 0,
-+					.altsetting = 1,
-+					.altset_idx = 1,
-+					.endpoint = 0x01,
-+					.ep_attr = USB_ENDPOINT_XFER_ISOC|
-+						USB_ENDPOINT_SYNC_ASYNC,
-+					.rates = SNDRV_PCM_RATE_44100,
-+					.rate_min = 44100,
-+					.rate_max = 44100,
-+					.nr_rates = 1,
-+					.rate_table = (unsigned int[]) { 44100 }
-+				}
-+			},
-+			{
-+				.ifnum = 0,
-+				.type = QUIRK_AUDIO_FIXED_ENDPOINT,
-+				.data = &(const struct audioformat) {
-+					.formats = SNDRV_PCM_FMTBIT_S24_3LE,
-+					.channels = 6,
-+					.iface = 0,
-+					.altsetting = 1,
-+					.altset_idx = 1,
-+					.endpoint = 0x82,
-+					.ep_idx = 1,
-+					.ep_attr = USB_ENDPOINT_XFER_ISOC|
-+						USB_ENDPOINT_SYNC_ASYNC|
-+					USB_ENDPOINT_USAGE_IMPLICIT_FB,
-+					.rates = SNDRV_PCM_RATE_44100,
-+					.rate_min = 44100,
-+					.rate_max = 44100,
-+					.nr_rates = 1,
-+					.rate_table = (unsigned int[]) { 44100 }
-+				}
-+			},
-+			{
-+				.ifnum = -1
-+			}
-+		}
-+	}
-+},
++	if (sb_rdonly(sci->sc_super))
++		return -EROFS;
 +
- /*
-  * MacroSilicon MS2100/MS2106 based AV capture cards
-  *
+ 	nilfs_sc_cstage_set(sci, NILFS_ST_INIT);
+ 	sci->sc_cno = nilfs->ns_cno;
+ 
+@@ -2724,7 +2727,7 @@ static void nilfs_segctor_write_out(stru
+ 
+ 		flush_work(&sci->sc_iput_work);
+ 
+-	} while (ret && retrycount-- > 0);
++	} while (ret && ret != -EROFS && retrycount-- > 0);
+ }
+ 
+ /**
 
 
