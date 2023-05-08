@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33CE168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:35:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F222C4339B;
-	Mon,  8 May 2023 11:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77707168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:35:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E35C433D2;
+	Mon,  8 May 2023 11:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545735;
-	bh=kChHTehMV1l8xDYafLA9Zt7gyOSafMvzNRV+SfBQ4AA=;
+	s=korg; t=1683545739;
+	bh=pv8PHLFE6jTWcyVkXvvPDQxNrBloMri4nCUmzYjHdvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNdZFR97mbHc7HmTbyG/Pn3LsGUcj0IoTVVkIWWju7jwx8jKqIEWX1jDsVrm7ij6z
-	 KU00qMyW+1j8pryVFRQuet/YFeuJzYuMheBPt/eoj5TndRachPtLEEOR4t2AoEuFOB
-	 /lPFYG6klm96BVH1QRPkV1P/mai23B1QhOy53Ybw=
+	b=jCV5JGGtEAH1GV0KHFIpNiheGB7fRKeUvMW9Fk/+ot58Txr5wpHm0sdXzKclR+kkd
+	 4SpUdnw33qNYKSyZiUOE5I2WqSIRAFzDRlrmijlbf1o3lR+AmABNGDG3SbobvlV1QS
+	 88FJG7AYAm9vdlhrSWYVqVPawTnwGzMOAG7qtOOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/371] media: rcar_fdp1: Convert to platform remove callback returning void
-Date: Mon,  8 May 2023 11:45:38 +0200
-Message-Id: <20230508094817.481577015@linuxfoundation.org>
+Subject: [PATCH 5.15 138/371] media: rcar_fdp1: Fix refcount leak in probe and remove function
+Date: Mon,  8 May 2023 11:45:39 +0200
+Message-Id: <20230508094817.516371843@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,61 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 0e82d3715fd208de567b8e4307fbf91ae5e57db4 ]
+[ Upstream commit c766c90faf93897b77c9c5daa603cffab85ba907 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+rcar_fcp_get() take reference, which should be balanced with
+rcar_fcp_put(). Add missing rcar_fcp_put() in fdp1_remove and
+the error paths of fdp1_probe() to fix this.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 4710b752e029 ("[media] v4l: Add Renesas R-Car FDP1 Driver")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+[hverkuil: resolve merge conflict, remove() is now void]
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: c766c90faf93 ("media: rcar_fdp1: Fix refcount leak in probe and remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rcar_fdp1.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/media/platform/rcar_fdp1.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/media/platform/rcar_fdp1.c b/drivers/media/platform/rcar_fdp1.c
-index 37ecf489d112e..d80b3214dfae1 100644
+index d80b3214dfae1..c548cb01957b0 100644
 --- a/drivers/media/platform/rcar_fdp1.c
 +++ b/drivers/media/platform/rcar_fdp1.c
-@@ -2396,7 +2396,7 @@ static int fdp1_probe(struct platform_device *pdev)
+@@ -2313,8 +2313,10 @@ static int fdp1_probe(struct platform_device *pdev)
+ 
+ 	/* Determine our clock rate */
+ 	clk = clk_get(&pdev->dev, NULL);
+-	if (IS_ERR(clk))
+-		return PTR_ERR(clk);
++	if (IS_ERR(clk)) {
++		ret = PTR_ERR(clk);
++		goto put_dev;
++	}
+ 
+ 	fdp1->clk_rate = clk_get_rate(clk);
+ 	clk_put(clk);
+@@ -2323,7 +2325,7 @@ static int fdp1_probe(struct platform_device *pdev)
+ 	ret = v4l2_device_register(&pdev->dev, &fdp1->v4l2_dev);
+ 	if (ret) {
+ 		v4l2_err(&fdp1->v4l2_dev, "Failed to register video device\n");
+-		return ret;
++		goto put_dev;
+ 	}
+ 
+ 	/* M2M registration */
+@@ -2393,6 +2395,8 @@ static int fdp1_probe(struct platform_device *pdev)
+ unreg_dev:
+ 	v4l2_device_unregister(&fdp1->v4l2_dev);
+ 
++put_dev:
++	rcar_fcp_put(fdp1->fcp);
  	return ret;
  }
  
--static int fdp1_remove(struct platform_device *pdev)
-+static void fdp1_remove(struct platform_device *pdev)
- {
- 	struct fdp1_dev *fdp1 = platform_get_drvdata(pdev);
- 
-@@ -2404,8 +2404,6 @@ static int fdp1_remove(struct platform_device *pdev)
+@@ -2404,6 +2408,7 @@ static void fdp1_remove(struct platform_device *pdev)
  	video_unregister_device(&fdp1->vfd);
  	v4l2_device_unregister(&fdp1->v4l2_dev);
  	pm_runtime_disable(&pdev->dev);
--
--	return 0;
++	rcar_fcp_put(fdp1->fcp);
  }
  
  static int __maybe_unused fdp1_pm_runtime_suspend(struct device *dev)
-@@ -2441,7 +2439,7 @@ MODULE_DEVICE_TABLE(of, fdp1_dt_ids);
- 
- static struct platform_driver fdp1_pdrv = {
- 	.probe		= fdp1_probe,
--	.remove		= fdp1_remove,
-+	.remove_new	= fdp1_remove,
- 	.driver		= {
- 		.name	= DRIVER_NAME,
- 		.of_match_table = fdp1_dt_ids,
 -- 
 2.39.2
 
