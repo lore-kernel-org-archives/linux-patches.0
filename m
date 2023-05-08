@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CB8168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:27:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD40FC433D2;
-	Mon,  8 May 2023 10:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC0B168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:27:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C667AC433D2;
+	Mon,  8 May 2023 10:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541650;
-	bh=FB5zIdNKUsbBvvRi0nukRLj+XGzkU2XSMGo4o80cqr0=;
+	s=korg; t=1683541653;
+	bh=AP++7PdnSpfvOIuIV7P6kQ9eLUcDL9xu6UCnqt0PVSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U2Vt4/bFubkm94gF+4GoKLxeWUex/Ud044y2EVGKPSWejSIFfKJ8bhrIXFaAmUJj+
-	 hd4r/pTzDBi2NYzJW2rFNWVw/tTS9lehsBmdY+7SmeTUrUpAgxopJAEozHOmW8W+3P
-	 n3ZsbYLQIPG6+X0BTuBv/A0dicJIu+uMRqLoIKj4=
+	b=mbU34gncgynZ0ZCIRrnraLFEp76cBp/TL34xyFGG4d+8P54cX+ha4V/anBUS54h3P
+	 tu0E6AlPbt4pi5BiTNqNMurw1CLFMo/9cSubquxi8EMGKXl6Of2hWek8ecOcn7cJYY
+	 3otsn4a1m2oE5yHDedKH9mapJ4eWDtqL3OBZ9rH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Oded Gabbay <ogabbay@kernel.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 183/663] accel: Link to compute accelerator subsystem intro
-Date: Mon,  8 May 2023 11:40:09 +0200
-Message-Id: <20230508094434.376820909@linuxfoundation.org>
+Subject: [PATCH 6.2 184/663] arm64: dts: ti: k3-am625: Correct L2 cache size to 512KB
+Date: Mon,  8 May 2023 11:40:10 +0200
+Message-Id: <20230508094434.405530399@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,41 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-[ Upstream commit 6d179f84f274a87da51f24ac3e9427221bbaed51 ]
+[ Upstream commit 6974371cab1c488a53960945cb139b20ebb5f16b ]
 
-Commit 2c204f3d53218d ("accel: add dedicated minor for accelerator
-devices") adds link to accelerator nodes section of DRM internals doc
-(Documentation/gpu/drm-internals.rst), but the target doesn't exist.
-Instead, there is only an introduction doc for computer accelerator
-subsytem.
+Per AM62x SoC datasheet[0] L2 cache is 512KB.
 
-Link to that doc until there is documentation of accelerator internals.
+[0] https://www.ti.com/lit/gpn/am625 Page 1.
 
-Fixes: 2c204f3d53218d ("accel: add dedicated minor for accelerator devices")
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
+Fixes: f1d17330a5be ("arm64: dts: ti: Introduce base support for AM62x SoC")
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Link: https://lore.kernel.org/r/20230320044935.2512288-1-vigneshr@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_file.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am625.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
-index 0d1f853092ab8..ecffe24e2b1b0 100644
---- a/include/drm/drm_file.h
-+++ b/include/drm/drm_file.h
-@@ -408,7 +408,8 @@ static inline bool drm_is_render_client(const struct drm_file *file_priv)
-  * Returns true if this is an open file of the compute acceleration node, i.e.
-  * &drm_file.minor of @file_priv is a accel minor.
-  *
-- * See also the :ref:`section on accel nodes <drm_accel_node>`.
-+ * See also :doc:`Introduction to compute accelerators subsystem
-+ * </accel/introduction>`.
-  */
- static inline bool drm_is_accel_client(const struct drm_file *file_priv)
- {
+diff --git a/arch/arm64/boot/dts/ti/k3-am625.dtsi b/arch/arm64/boot/dts/ti/k3-am625.dtsi
+index cea2cc7de5dd3..26d78562ceba7 100644
+--- a/arch/arm64/boot/dts/ti/k3-am625.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am625.dtsi
+@@ -147,7 +147,7 @@
+ 	L2_0: l2-cache0 {
+ 		compatible = "cache";
+ 		cache-level = <2>;
+-		cache-size = <0x40000>;
++		cache-size = <0x80000>;
+ 		cache-line-size = <64>;
+ 		cache-sets = <512>;
+ 	};
 -- 
 2.39.2
 
