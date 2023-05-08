@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5F0168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:07:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1B9C433D2;
-	Mon,  8 May 2023 10:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E845168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:07:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA19CC433D2;
+	Mon,  8 May 2023 10:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540427;
-	bh=EaOjM2OVktzvVH0MK6i6J317g45mzTNyqpkmldZdpZs=;
+	s=korg; t=1683540430;
+	bh=NKI7URWHclErG7JWSAy4HRVV1fTqy1bNBgqwEaAaLlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlaEQxqXTs5HTkgl3E3LbvBbETCf5uoqDFWvX3odtis6bcQZ/vmCcBtXpVNOi5TBb
-	 mHOUZou1Mx02EXKpbxxVCqON9XLgI16N3Vf3hRJ7/AQh4jNU7zYNf4bhFxHpMI5SuA
-	 31kDH5K4kXP2WVAQ/JoW/dKUp30jEKVzuDBsMB7w=
+	b=V8x7K0NWh1cFuSYPbOxehEYwCBPnuWNr2SgOOZe53rm6MUmd4vUEv9R9692pWa+Hc
+	 1qSPnNnvvy1E34N6zS4JsGPIl9vitK0eqsTHKCg5LlIw42QVa10vh6Z2zMcjI4avAX
+	 3O0fi4ATPu9KOOjqtFC1VAJyAisP48VvjpHxzF6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenz Brun <lorenz@brun.one>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Kang Chen <void0red@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 361/611] wifi: mt76: mt7915: expose device tree match table
-Date: Mon,  8 May 2023 11:43:23 +0200
-Message-Id: <20230508094434.129102190@linuxfoundation.org>
+Subject: [PATCH 6.1 362/611] wifi: mt76: handle failure of vzalloc in mt7615_coredump_work
+Date: Mon,  8 May 2023 11:43:24 +0200
+Message-Id: <20230508094434.157676401@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,38 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenz Brun <lorenz@brun.one>
+From: Kang Chen <void0red@gmail.com>
 
-[ Upstream commit 90fb69212c60e26ef70ed0e8532b116c7649ac88 ]
+[ Upstream commit 9e47dd9f64a47ae00ca0123017584c37209ee900 ]
 
-On MT7986 the WiFi driver currently does not get automatically loaded,
-requiring manual modprobing because the device tree compatibles are not
-exported into metadata.
+vzalloc may fails, dump might be null and will cause
+illegal address access later.
 
-Add the missing MODULE_DEVICE_TABLE macro to fix this.
-
-Fixes: 99ad32a4ca3a2 ("mt76: mt7915: add support for MT7986")
-Signed-off-by: Lorenz Brun <lorenz@brun.one>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/all/Y%2Fy5Asxw3T3m4jCw@lore-desk
+Fixes: d2bf7959d9c0 ("mt76: mt7663: introduce coredump support")
+Signed-off-by: Kang Chen <void0red@gmail.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/soc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7615/mac.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/soc.c b/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
-index ee7ddda4288b8..20a6724ab5dba 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
-@@ -1228,6 +1228,8 @@ static const struct of_device_id mt7986_wmac_of_match[] = {
- 	{},
- };
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+index d7a76c00d775f..faed43b11ec93 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+@@ -2343,7 +2343,7 @@ void mt7615_coredump_work(struct work_struct *work)
+ 			break;
  
-+MODULE_DEVICE_TABLE(of, mt7986_wmac_of_match);
+ 		skb_pull(skb, sizeof(struct mt7615_mcu_rxd));
+-		if (data + skb->len - dump > MT76_CONNAC_COREDUMP_SZ) {
++		if (!dump || data + skb->len - dump > MT76_CONNAC_COREDUMP_SZ) {
+ 			dev_kfree_skb(skb);
+ 			continue;
+ 		}
+@@ -2353,6 +2353,8 @@ void mt7615_coredump_work(struct work_struct *work)
+ 
+ 		dev_kfree_skb(skb);
+ 	}
+-	dev_coredumpv(dev->mt76.dev, dump, MT76_CONNAC_COREDUMP_SZ,
+-		      GFP_KERNEL);
 +
- struct platform_driver mt7986_wmac_driver = {
- 	.driver = {
- 		.name = "mt7986-wmac",
++	if (dump)
++		dev_coredumpv(dev->mt76.dev, dump, MT76_CONNAC_COREDUMP_SZ,
++			      GFP_KERNEL);
+ }
 -- 
 2.39.2
 
