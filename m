@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2375168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:14:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E621BC433EF;
-	Mon,  8 May 2023 11:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13E4168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:14:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5D2C433D2;
+	Mon,  8 May 2023 11:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544476;
-	bh=POKbqvt9fvc6l7RP4ZCjGBg8ML0uBWcn0rP1sofmOEQ=;
+	s=korg; t=1683544479;
+	bh=SXPu0ZK+xVCHUr18bqc5J5bNBEsYhCD0P47GsAePr9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMU9xLKj2x0k3KIe7x3AmLehzovbs1/m4hMcI97hM5fAEXuoLLemtVM93ZvpM7nh3
-	 ZJKKpoQNW+zztpaqadIeP46RF8d/QIrIEx1sJnHu99EcUJxrZL+h2qIQbm3aqODrgU
-	 Wh1ZJZBUDoeSc/CovHwTSUBofWXmWcJYtx4jepnU=
+	b=m/K/9P/ixTeLSVxJ46s5eDqR+wA5PSStefqNaYHFqZzDaL6v3ohArQKWp+dTKF1n7
+	 bOEXJiDF8HvhXIBt6YpKIrfekbJij2c/Q7ilP+FMyCMJH6vDX7I/eQnjEV1tOIonVb
+	 xPOvawtow8UDVKFMIEOrAkaHB/SNB0Ba0HeTrND8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ayala Beker <ayala.beker@intel.com>,
+	Daniel Gabay <daniel.gabay@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 423/694] wifi: iwlwifi: mvm: dont drop unencrypted MCAST frames
-Date: Mon,  8 May 2023 11:44:18 +0200
-Message-Id: <20230508094447.021261243@linuxfoundation.org>
+Subject: [PATCH 6.3 424/694] wifi: iwlwifi: yoyo: skip dump correctly on hw error
+Date: Mon,  8 May 2023 11:44:19 +0200
+Message-Id: <20230508094447.061164259@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,41 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ayala Beker <ayala.beker@intel.com>
+From: Daniel Gabay <daniel.gabay@intel.com>
 
-[ Upstream commit 8e5a26360cbe29b896b6758518280d41c3704d43 ]
+[ Upstream commit 11195ab0d6f3202cf7af1a4c69570f59c377d8ad ]
 
-MCAST frames are filtered out by the driver if we are not
-authorized yet.
-Fix it to filter out only protected frames.
+When NIC is in a bad state, reading data will return 28 bits as
+0xa5a5a5a and the lowest 4 bits are not fixed value.
 
-Fixes: 147eb05f24e6 ("iwlwifi: mvm: always tell the firmware to accept MCAST frames in BSS")
-Signed-off-by: Ayala Beker <ayala.beker@intel.com>
+Mask these bits in a few places to skip the dump correctly.
+
+Fixes: 89639e06d0f3 ("iwlwifi: yoyo: support for new DBGI_SRAM region")
+Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413213309.9cedcc27db60.I8fb7057981392660da482dd215e85c15946d3f4b@changeid
+Link: https://lore.kernel.org/r/20230413213309.df6c0663179d.I36d8487b2419c6fefa65e5514855d94327c3b1eb@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/rx.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rx.c b/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
-index 49ca1e168fc5b..eee98cebbb46a 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
-@@ -384,9 +384,10 @@ void iwl_mvm_rx_rx_mpdu(struct iwl_mvm *mvm, struct napi_struct *napi,
- 		 * Don't even try to decrypt a MCAST frame that was received
- 		 * before the managed vif is authorized, we'd fail anyway.
- 		 */
--		if (vif->type == NL80211_IFTYPE_STATION &&
-+		if (is_multicast_ether_addr(hdr->addr1) &&
-+		    vif->type == NL80211_IFTYPE_STATION &&
- 		    !mvmvif->authorized &&
--		    is_multicast_ether_addr(hdr->addr1)) {
-+		    ieee80211_has_protected(hdr->frame_control)) {
- 			IWL_DEBUG_DROP(mvm, "MCAST before the vif is authorized\n");
- 			kfree_skb(skb);
- 			rcu_read_unlock();
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+index abf49022edbe4..bde6f0764a538 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -1038,7 +1038,7 @@ iwl_dump_ini_prph_mac_iter(struct iwl_fw_runtime *fwrt,
+ 	range->range_data_size = reg->dev_addr.size;
+ 	for (i = 0; i < le32_to_cpu(reg->dev_addr.size); i += 4) {
+ 		prph_val = iwl_read_prph(fwrt->trans, addr + i);
+-		if (prph_val == 0x5a5a5a5a)
++		if ((prph_val & ~0xf) == 0xa5a5a5a0)
+ 			return -EBUSY;
+ 		*val++ = cpu_to_le32(prph_val);
+ 	}
+@@ -1562,7 +1562,7 @@ iwl_dump_ini_dbgi_sram_iter(struct iwl_fw_runtime *fwrt,
+ 		prph_data = iwl_read_prph_no_grab(fwrt->trans, (i % 2) ?
+ 					  DBGI_SRAM_TARGET_ACCESS_RDATA_MSB :
+ 					  DBGI_SRAM_TARGET_ACCESS_RDATA_LSB);
+-		if (prph_data == 0x5a5a5a5a) {
++		if ((prph_data & ~0xf) == 0xa5a5a5a0) {
+ 			iwl_trans_release_nic_access(fwrt->trans);
+ 			return -EBUSY;
+ 		}
 -- 
 2.39.2
 
