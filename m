@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661D1168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:51:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08E1C433EF;
-	Mon,  8 May 2023 09:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1B6168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:51:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8497EC433EF;
+	Mon,  8 May 2023 09:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539490;
-	bh=u2ifpftMhKqpEYDiTOHYOLI0gumrbaP0Xx5/Ggt+uT4=;
+	s=korg; t=1683539492;
+	bh=0tlCgn/g2uLNgXFgxB/PsjI7UdfHzqyRNbDgd1eDnxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dAXvBjs8hjr7qvqqJF/KOCg8yfTCr2dT2g56qnffuCFPF4yA7fEiDVorN4GFsBgfp
-	 rAStPov/JKwclQL1j4+xzkIQoSoasryjfjdc+eSvmZVYd2JGythSXXNpx4BjgujCSc
-	 DjvUx+eFOiue8iqHWvoNWurkBK0X8fSOeXg/Rzfs=
+	b=EdHKVo0SvoyJWQRv9pnsEV3tXQ/IZrCNgqp1S4FMIazHi5Tleud+/Ca2KGpQLen47
+	 4et39PJKj42/2n4Z4Lt2H7q/ITBw//nTqKz6JcAWfNhCNtXkgL5tAIvPmRY6PpCsq+
+	 UwKc22F+Nd1V4dh+BmSqAJNoo01htwDfKXm1M8SA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Jun <jun.li@nxp.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 6.1 034/611] USB: dwc3: fix runtime pm imbalance on unbind
-Date: Mon,  8 May 2023 11:37:56 +0200
-Message-Id: <20230508094422.899196591@linuxfoundation.org>
+	=?UTF-8?q?Patrik=20Dahlstr=C3=B6m?= <risca@dalakolonin.se>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 006/611] iio: adc: palmas_gpadc: fix NULL dereference on rmmod
+Date: Mon,  8 May 2023 11:37:28 +0200
+Message-Id: <20230508094421.795984810@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,34 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Patrik Dahlström <risca@dalakolonin.se>
 
-commit 44d257e9012ee8040e41d224d0e5bfb5ef5427ea upstream.
+[ Upstream commit 49f76c499d38bf67803438eee88c8300d0f6ce09 ]
 
-Make sure to balance the runtime PM usage count on driver unbind by
-adding back the pm_runtime_allow() call that had been erroneously
-removed.
+Calling dev_to_iio_dev() on a platform device pointer is undefined and
+will make adc NULL.
 
-Fixes: 266d0493900a ("usb: dwc3: core: don't trigger runtime pm when remove driver")
-Cc: stable@vger.kernel.org	# 5.9
-Cc: Li Jun <jun.li@nxp.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230404072524.19014-3-johan+linaro@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Patrik Dahlström <risca@dalakolonin.se>
+Link: https://lore.kernel.org/r/20230313205029.1881745-1-risca@dalakolonin.se
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/palmas_gpadc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1979,6 +1979,7 @@ static int dwc3_remove(struct platform_d
- 	dwc3_core_exit(dwc);
- 	dwc3_ulpi_exit(dwc);
+diff --git a/drivers/iio/adc/palmas_gpadc.c b/drivers/iio/adc/palmas_gpadc.c
+index fd000345ec5cf..849a697a467e5 100644
+--- a/drivers/iio/adc/palmas_gpadc.c
++++ b/drivers/iio/adc/palmas_gpadc.c
+@@ -639,7 +639,7 @@ static int palmas_gpadc_probe(struct platform_device *pdev)
  
-+	pm_runtime_allow(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
+ static int palmas_gpadc_remove(struct platform_device *pdev)
+ {
+-	struct iio_dev *indio_dev = dev_to_iio_dev(&pdev->dev);
++	struct iio_dev *indio_dev = dev_get_drvdata(&pdev->dev);
+ 	struct palmas_gpadc *adc = iio_priv(indio_dev);
+ 
+ 	if (adc->wakeup1_enable || adc->wakeup2_enable)
+-- 
+2.39.2
+
 
 
