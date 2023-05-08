@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DDE168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59A8C433D2;
-	Mon,  8 May 2023 10:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F1B168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40691C433EF;
+	Mon,  8 May 2023 10:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541424;
-	bh=ydqqOy8nE5f+6DyKMekGq+xvhigWUAr9WsliuyvSpFU=;
+	s=korg; t=1683541427;
+	bh=c4s/d7N9CygnHM5HXhDB3gqOhdRQiA9yT9344RTsDz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQsJpVeXsR3yQ1JFLscOIjHHCYQdEgUvzb6hzoU4qcHlGtsFTsjHWadUwM6c9upBi
-	 BPs0i4wnNhvFHjcuK1Ole9XU//cDsn55yQepQkM2HYTwVQfWMicfoXLXafFVknW1ws
-	 VQb34CAtM06SO36B9L//LGgSSMdwdCPcQHVfBkBw=
+	b=BCzvwo7zeINfCwH6sUInWkQIBLkF886OmorQOAhL3VD8MNbEIMBslfFnyqBfPctNR
+	 QfGjnfIZp1axxgHjjsrsGbmK9knQTkmWeJSETLG23A8LsT+quFGqthF2zlhupNOdYi
+	 l6CctvpPVK4SS3Aa73pD3dSWxJsG5FCbV358QVoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.2 111/663] cxl/hdm: Fail upon detecting 0-sized decoders
-Date: Mon,  8 May 2023 11:38:57 +0200
-Message-Id: <20230508094432.100452689@linuxfoundation.org>
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Carl Vanderlip <quic_carlv@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.2 112/663] bus: mhi: host: Remove duplicate ee check for syserr
+Date: Mon,  8 May 2023 11:38:58 +0200
+Message-Id: <20230508094432.130386788@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,64 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-commit 7701c8bef4f14bd9f7940c6ed0e6a73584115a96 upstream.
+commit d469d9448a0f1a33c175d3280b1542fa0158ad7a upstream.
 
-Decoders committed with 0-size lead to later crashes on shutdown as
-__cxl_dpa_release() assumes a 'struct resource' has been established in
-the in 'cxlds->dpa_res'. Just fail the driver load in this instance
-since there are deeper problems with the enumeration or the setup when
-this happens.
+If we detect a system error via intvec, we only process the syserr if the
+current ee is different than the last observed ee.  The reason for this
+check is to prevent bhie from running multiple times, but with the single
+queue handling syserr, that is not possible.
 
-Fixes: 9c57cde0dcbd ("cxl/hdm: Enumerate allocated DPA")
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://lore.kernel.org/r/168149843516.792294.11872242648319572632.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+The check can cause an issue with device recovery.  If PBL loads a bad SBL
+via BHI, but that SBL hangs before notifying the host of an ee change,
+then issuing soc_reset to crash the device and retry (after supplying a
+fixed SBL) will not recover the device as the host will observe a PBL->PBL
+transition and not process the syserr.  The device will be stuck until
+either the driver is reloaded, or the host is rebooted.  Instead, remove
+the check so that we can attempt to recover the device.
+
+Fixes: ef2126c4e2ea ("bus: mhi: core: Process execution environment changes serially")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/1681142292-27571-2-git-send-email-quic_jhugo@quicinc.com
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/hdm.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/bus/mhi/host/main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -219,8 +219,11 @@ static int __cxl_dpa_reserve(struct cxl_
- 
- 	lockdep_assert_held_write(&cxl_dpa_rwsem);
- 
--	if (!len)
--		goto success;
-+	if (!len) {
-+		dev_warn(dev, "decoder%d.%d: empty reservation attempted\n",
-+			 port->id, cxled->cxld.id);
-+		return -EINVAL;
-+	}
- 
- 	if (cxled->dpa_res) {
- 		dev_dbg(dev, "decoder%d.%d: existing allocation %pr assigned\n",
-@@ -273,7 +276,6 @@ static int __cxl_dpa_reserve(struct cxl_
- 		cxled->mode = CXL_DECODER_MIXED;
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -503,7 +503,7 @@ irqreturn_t mhi_intvec_threaded_handler(
  	}
+ 	write_unlock_irq(&mhi_cntrl->pm_lock);
  
--success:
- 	port->hdm_end++;
- 	get_device(&cxled->cxld.dev);
- 	return 0;
-@@ -732,6 +734,13 @@ static int init_hdm_decoder(struct cxl_p
- 				 port->id, cxld->id);
- 			return -ENXIO;
- 		}
-+
-+		if (size == 0) {
-+			dev_warn(&port->dev,
-+				 "decoder%d.%d: Committed with zero size\n",
-+				 port->id, cxld->id);
-+			return -ENXIO;
-+		}
- 		port->commit_end = cxld->id;
- 	} else {
- 		/* unless / until type-2 drivers arrive, assume type-3 */
+-	if (pm_state != MHI_PM_SYS_ERR_DETECT || ee == mhi_cntrl->ee)
++	if (pm_state != MHI_PM_SYS_ERR_DETECT)
+ 		goto exit_intvec;
+ 
+ 	switch (ee) {
 
 
