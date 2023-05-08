@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E924171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D904EC433D2;
-	Mon,  8 May 2023 11:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B6D171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDECEC433EF;
+	Mon,  8 May 2023 11:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545540;
-	bh=SPxZirT/bHY3dQIgrezzLp/sGUs+i2l6URTHdwbueDU=;
+	s=korg; t=1683545543;
+	bh=8nh+o8XEC23BIwYSBOdipw0t9rt6xUGitr+RfO5HDzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1W6TfvuAsC/WuwRW0pTb2nXf57jZhKZ9fNvT1VMde6kSknFEbmPTmRJ50O+/mmTu
-	 Yhqb8s7nfgiNEKoOVeJbZksH1/kE0PAZytvXXln4jKAp/zfvQfLYdQ65+6B36IrvNw
-	 LVOTr9E7hEs8b6j8DAxgccAkN52xK2QaSNyYoWZ8=
+	b=zc2E1AVjfbytZm2eOzDzLk7ssM1ygYa2juJbXy/jeKwSqqiQacWmh9HNSlm8O5Hew
+	 NKPN7YcYETfpqvfEf7gVsqb7vYJHRI80hAqLZDM65UxbSljGmxH+m0k3MtvhPRuAYn
+	 clr7F1HDYlCCpplKJj6qQe18fxNautvSpK9shDTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/371] erofs: fix potential overflow calculating xattr_isize
-Date: Mon,  8 May 2023 11:44:35 +0200
-Message-Id: <20230508094815.058789635@linuxfoundation.org>
+Subject: [PATCH 5.15 075/371] drm/rockchip: Drop unbalanced obj unref
+Date: Mon,  8 May 2023 11:44:36 +0200
+Message-Id: <20230508094815.099970154@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,40 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 1b3567a1969b26f709d82a874498c0754ea841c3 ]
+[ Upstream commit 8ee3b0e85f6ccd9e6c527bc50eaba774c3bb18d0 ]
 
-Given on-disk i_xattr_icount is 16 bits and xattr_isize is calculated
-from i_xattr_icount multiplying 4, xattr_isize has a theoretical maximum
-of 256K (64K * 4).
+In the error path, rockchip_drm_gem_object_mmap() is dropping an obj
+reference that it doesn't own.
 
-Thus declare xattr_isize as unsigned int to avoid the potential overflow.
-
-Fixes: bfb8674dc044 ("staging: erofs: add erofs in-memory stuffs")
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20230414061810.6479-1-jefflexu@linux.alibaba.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: 41315b793e13 ("drm/rockchip: use drm_gem_mmap helpers")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230119231734.2884543-1-robdclark@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/internal.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
-index b77acf09726c6..beadb06d8feb9 100644
---- a/fs/erofs/internal.h
-+++ b/fs/erofs/internal.h
-@@ -226,7 +226,7 @@ struct erofs_inode {
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+index 7971f57436dd7..3b18b6a7acd3e 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+@@ -251,9 +251,6 @@ static int rockchip_drm_gem_object_mmap(struct drm_gem_object *obj,
+ 	else
+ 		ret = rockchip_drm_gem_object_mmap_dma(obj, vma);
  
- 	unsigned char datalayout;
- 	unsigned char inode_isize;
--	unsigned short xattr_isize;
-+	unsigned int xattr_isize;
+-	if (ret)
+-		drm_gem_vm_close(vma);
+-
+ 	return ret;
+ }
  
- 	unsigned int xattr_shared_count;
- 	unsigned int *xattr_shared_xattrs;
 -- 
 2.39.2
 
