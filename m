@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EE8320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42B9C433D2;
-	Mon,  8 May 2023 11:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6009D320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D245EC433EF;
+	Mon,  8 May 2023 11:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545830;
-	bh=rszymbFq5zZVWAgGUxBrekaqXqO9lazuz0E3Ypirt0w=;
+	s=korg; t=1683545833;
+	bh=lQiaExQBbPXEUjP4rBAmN/Mk5MD8SiWaEXvLJzhPYy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eEV4wwa8xbl5KKXjwmn48IhGfaHB3xE/5IillOPD0CcDtN2yWULG7KHaOzxOONA1q
-	 fUwrFf0FynkBv4CHhV/Cq+joANM1L2NWM/KEJ4A8qOVvK6F/kbZnPVHLT3spQVpxty
-	 xRPKyPFxubRhlH1kSj76eNouFbUWIn7KLrQNKbRI=
+	b=WKFo1iC6VKjDi6zPnx0VtpktHF4DVbQmjYVXdgwMV1V10NPdE1sgCZmpvXbhasAx1
+	 s4IU/GGR5zDeAAlw+aBQUJdJlbHL673CQq8C5ofnrMMSyYhYsIT4zFIV+fi4P6sBGf
+	 1junEI93LVMsFmbjPmTPs2dRSPO2PN1VuGFmhdCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mike Christie <michael.christie@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/371] scsi: target: Fix multiple LUN_RESET handling
-Date: Mon,  8 May 2023 11:46:09 +0200
-Message-Id: <20230508094818.793607647@linuxfoundation.org>
+Subject: [PATCH 5.15 169/371] scsi: target: iscsit: Fix TAS handling during conn cleanup
+Date: Mon,  8 May 2023 11:46:10 +0200
+Message-Id: <20230508094818.840953569@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -37,138 +37,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 673db054d7a2b5a470d7a25baf65956d005ad729 ]
+[ Upstream commit cc79da306ebb2edb700c3816b90219223182ac3c ]
 
-This fixes a bug where an initiator thinks a LUN_RESET has cleaned up
-running commands when it hasn't. The bug was added in commit 51ec502a3266
-("target: Delete tmr from list before processing").
+Fix a bug added in commit f36199355c64 ("scsi: target: iscsi: Fix cmd abort
+fabric stop race").
 
-The problem occurs when:
+If CMD_T_TAS is set on the se_cmd we must call iscsit_free_cmd() to do the
+last put on the cmd and free it, because the connection is down and we will
+not up sending the response and doing the put from the normal I/O
+path.
 
- 1. We have N I/O cmds running in the target layer spread over 2 sessions.
+Add a check for CMD_T_TAS in iscsit_release_commands_from_conn() so we now
+detect this case and run iscsit_free_cmd().
 
- 2. The initiator sends a LUN_RESET for each session.
-
- 3. session1's LUN_RESET loops over all the running commands from both
-    sessions and moves them to its local drain_task_list.
-
- 4. session2's LUN_RESET does not see the LUN_RESET from session1 because
-    the commit above has it remove itself. session2 also does not see any
-    commands since the other reset moved them off the state lists.
-
- 5. sessions2's LUN_RESET will then complete with a successful response.
-
- 6. sessions2's inititor believes the running commands on its session are
-    now cleaned up due to the successful response and cleans up the running
-    commands from its side. It then restarts them.
-
- 7. The commands do eventually complete on the backend and the target
-    starts to return aborted task statuses for them. The initiator will
-    either throw a invalid ITT error or might accidentally lookup a new
-    task if the ITT has been reallocated already.
-
-Fix the bug by reverting the patch, and serialize the execution of
-LUN_RESETs and Preempt and Aborts.
-
-Also prevent us from waiting on LUN_RESETs in core_tmr_drain_tmr_list,
-because it turns out the original patch fixed a bug that was not
-mentioned. For LUN_RESET1 core_tmr_drain_tmr_list can see a second
-LUN_RESET and wait on it. Then the second reset will run
-core_tmr_drain_tmr_list and see the first reset and wait on it resulting in
-a deadlock.
-
-Fixes: 51ec502a3266 ("target: Delete tmr from list before processing")
+Fixes: f36199355c64 ("scsi: target: iscsi: Fix cmd abort fabric stop race")
 Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20230319015620.96006-8-michael.christie@oracle.com
+Link: https://lore.kernel.org/r/20230319015620.96006-9-michael.christie@oracle.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_device.c |  1 +
- drivers/target/target_core_tmr.c    | 26 +++++++++++++++++++++++---
- include/target/target_core_base.h   |  1 +
- 3 files changed, 25 insertions(+), 3 deletions(-)
+ drivers/target/iscsi/iscsi_target.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
-index fa866acef5bb2..e18617371a9b2 100644
---- a/drivers/target/target_core_device.c
-+++ b/drivers/target/target_core_device.c
-@@ -773,6 +773,7 @@ struct se_device *target_alloc_device(struct se_hba *hba, const char *name)
- 	spin_lock_init(&dev->t10_alua.lba_map_lock);
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 2c54c5d8412d8..9c6b98438f98f 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -4086,9 +4086,12 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
+ 	list_for_each_entry_safe(cmd, cmd_tmp, &tmp_list, i_conn_node) {
+ 		struct se_cmd *se_cmd = &cmd->se_cmd;
  
- 	INIT_WORK(&dev->delayed_cmd_work, target_do_delayed_work);
-+	mutex_init(&dev->lun_reset_mutex);
- 
- 	dev->t10_wwn.t10_dev = dev;
- 	/*
-diff --git a/drivers/target/target_core_tmr.c b/drivers/target/target_core_tmr.c
-index 2b95b4550a637..4718db628222b 100644
---- a/drivers/target/target_core_tmr.c
-+++ b/drivers/target/target_core_tmr.c
-@@ -188,14 +188,23 @@ static void core_tmr_drain_tmr_list(
- 	 * LUN_RESET tmr..
- 	 */
- 	spin_lock_irqsave(&dev->se_tmr_lock, flags);
--	if (tmr)
--		list_del_init(&tmr->tmr_list);
- 	list_for_each_entry_safe(tmr_p, tmr_pp, &dev->dev_tmr_list, tmr_list) {
-+		if (tmr_p == tmr)
+-		if (se_cmd->se_tfo != NULL) {
+-			spin_lock_irq(&se_cmd->t_state_lock);
+-			if (se_cmd->transport_state & CMD_T_ABORTED) {
++		if (!se_cmd->se_tfo)
 +			continue;
 +
- 		cmd = tmr_p->task_cmd;
- 		if (!cmd) {
- 			pr_err("Unable to locate struct se_cmd for TMR\n");
- 			continue;
++		spin_lock_irq(&se_cmd->t_state_lock);
++		if (se_cmd->transport_state & CMD_T_ABORTED) {
++			if (!(se_cmd->transport_state & CMD_T_TAS))
+ 				/*
+ 				 * LIO's abort path owns the cleanup for this,
+ 				 * so put it back on the list and let
+@@ -4096,11 +4099,10 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
+ 				 */
+ 				list_move_tail(&cmd->i_conn_node,
+ 					       &conn->conn_cmd_list);
+-			} else {
+-				se_cmd->transport_state |= CMD_T_FABRIC_STOP;
+-			}
+-			spin_unlock_irq(&se_cmd->t_state_lock);
++		} else {
++			se_cmd->transport_state |= CMD_T_FABRIC_STOP;
  		}
-+
-+		/*
-+		 * We only execute one LUN_RESET at a time so we can't wait
-+		 * on them below.
-+		 */
-+		if (tmr_p->function == TMR_LUN_RESET)
-+			continue;
-+
- 		/*
- 		 * If this function was called with a valid pr_res_key
- 		 * parameter (eg: for PROUT PREEMPT_AND_ABORT service action
-@@ -379,14 +388,25 @@ int core_tmr_lun_reset(
- 				tmr_nacl->initiatorname);
- 		}
++		spin_unlock_irq(&se_cmd->t_state_lock);
  	}
-+
-+
-+	/*
-+	 * We only allow one reset or preempt and abort to execute at a time
-+	 * to prevent one call from claiming all the cmds causing a second
-+	 * call from returning while cmds it should have waited on are still
-+	 * running.
-+	 */
-+	mutex_lock(&dev->lun_reset_mutex);
-+
- 	pr_debug("LUN_RESET: %s starting for [%s], tas: %d\n",
- 		(preempt_and_abort_list) ? "Preempt" : "TMR",
- 		dev->transport->name, tas);
--
- 	core_tmr_drain_tmr_list(dev, tmr, preempt_and_abort_list);
- 	core_tmr_drain_state_list(dev, prout_cmd, tmr_sess, tas,
- 				preempt_and_abort_list);
+ 	spin_unlock_bh(&conn->cmd_lock);
  
-+	mutex_unlock(&dev->lun_reset_mutex);
-+
- 	/*
- 	 * Clear any legacy SPC-2 reservation when called during
- 	 * LOGICAL UNIT RESET
-diff --git a/include/target/target_core_base.h b/include/target/target_core_base.h
-index 2121a323fd6c3..c83bb58bfcd1f 100644
---- a/include/target/target_core_base.h
-+++ b/include/target/target_core_base.h
-@@ -865,6 +865,7 @@ struct se_device {
- 	struct rcu_head		rcu_head;
- 	int			queue_cnt;
- 	struct se_device_queue	*queues;
-+	struct mutex		lun_reset_mutex;
- };
- 
- struct se_hba {
 -- 
 2.39.2
 
