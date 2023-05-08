@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2B11549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:59:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5CAC4339B;
-	Mon,  8 May 2023 09:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4133A1549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:59:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA496C433D2;
+	Mon,  8 May 2023 09:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539973;
-	bh=6QHdSxgOiOqKxFvZzYeaWNF3IttFGI+xjhYuVopaj3I=;
+	s=korg; t=1683539976;
+	bh=3dk/XAkuEKG2WYjzVFey2SCwt3wQXanmOM523PXSLjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GnLX4UL69Z1sJ1sCgp/yDJauN0Dg/sQRBQnt0CaGN6C7H3VXJj5aYKn/Fe0u+yd8D
-	 9UcQyQ2WHqEABUWub3tdaZodds+Uq5XxIKEAAhhFp0kN/GloJcfpTk9Z7XwmI5x7cw
-	 xF1fr/ktnSigS4gZmnMQzO/wSais/s6J+q/SQxYk=
+	b=OgMTGmdQ9hneHOwfL4h5e1s4TocLpNrdCt1bK5F/s6hsqUrUXXdY8jvV9ZeT47nrD
+	 JeoYtC+Fo8mNUrdzUXesJLsrkJgKGRmcN6PKSqfVDByvrBYAw51c7qZuttUetoj4xH
+	 bE4DfvCmIeSdFL1O8Nk3YRTu5z1zhc6oLFBkg7+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Jia-Wei Chang <jia-wei.chang@mediatek.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 197/611] cpufreq: mediatek: Raise proc and sram max voltage for MT7622/7623
-Date: Mon,  8 May 2023 11:40:39 +0200
-Message-Id: <20230508094428.776187519@linuxfoundation.org>
+Subject: [PATCH 6.1 198/611] cpufreq: qcom-cpufreq-hw: Revert adding cpufreq qos
+Date: Mon,  8 May 2023 11:40:40 +0200
+Message-Id: <20230508094428.806772075@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,65 +37,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 0883426fd07e39355362e3f2eb9aee1a154dcaf6 ]
+[ Upstream commit e2b47e585931a988c856fd4ba31e1296f749aee3 ]
 
-During the addition of SRAM voltage tracking for CCI scaling, this
-driver got some voltage limits set for the vtrack algorithm: these
-were moved to platform data first, then enforced in a later commit
-6a17b3876bc8 ("cpufreq: mediatek: Refine mtk_cpufreq_voltage_tracking()")
-using these as max values for the regulator_set_voltage() calls.
+The OSM/EPSS hardware controls the frequency of each CPU cluster based
+on requests from the OS and various throttling events in the system.
+While throttling is in effect the related dcvs interrupt will be kept
+high. The purpose of the code handling this interrupt is to
+continuously report the thermal pressure based on the throttled
+frequency.
 
-In this case, the vsram/vproc constraints for MT7622 and MT7623
-were supposed to be the same as MT2701 (and a number of other SoCs),
-but that turned out to be a mistake because the aforementioned two
-SoCs' maximum voltage for both VPROC and VPROC_SRAM is 1.36V.
+The reasoning for adding QoS control to this mechanism is not entirely
+clear, but the introduction of commit 'c4c0efb06f17 ("cpufreq:
+qcom-cpufreq-hw: Add cpufreq qos for LMh")' causes the
+scaling_max_frequncy to be set to the throttled frequency. On the next
+iteration of polling, the throttled frequency is above or equal to the
+newly requested frequency, so the polling is stopped.
 
-Fix that by adding new platform data for MT7622/7623 declaring the
-right {proc,sram}_max_volt parameter.
+With cpufreq limiting the max frequency, the hardware no longer report a
+throttling state and no further updates to thermal pressure or qos
+state are made.
 
-Fixes: ead858bd128d ("cpufreq: mediatek: Move voltage limits to platform data")
-Fixes: 6a17b3876bc8 ("cpufreq: mediatek: Refine mtk_cpufreq_voltage_tracking()")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Jia-Wei Chang <jia-wei.chang@mediatek.com>
+The result of this is that scaling_max_frequency can only go down, and
+the system becomes slower and slower every time a thermal throttling
+event is reported by the hardware.
+
+Even if the logic could be improved, there is no reason for software to
+limit the max freqency in response to the hardware limiting the max
+frequency. At best software will follow the reported hardware state, but
+typically it will cause slower backoff of the throttling.
+
+This reverts commit c4c0efb06f17fa4a37ad99e7752b18a5405c76dc.
+
+Fixes: c4c0efb06f17 ("cpufreq: qcom-cpufreq-hw: Add cpufreq qos for LMh")
+Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/mediatek-cpufreq.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/cpufreq/qcom-cpufreq-hw.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
-index 764e4fbdd536c..9a39a7ccfae96 100644
---- a/drivers/cpufreq/mediatek-cpufreq.c
-+++ b/drivers/cpufreq/mediatek-cpufreq.c
-@@ -693,6 +693,15 @@ static const struct mtk_cpufreq_platform_data mt2701_platform_data = {
- 	.ccifreq_supported = false,
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index d10bf7635a0d5..749b60c78da5d 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -13,7 +13,6 @@
+ #include <linux/of_address.h>
+ #include <linux/of_platform.h>
+ #include <linux/pm_opp.h>
+-#include <linux/pm_qos.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+ #include <linux/units.h>
+@@ -57,8 +56,6 @@ struct qcom_cpufreq_data {
+ 	struct cpufreq_policy *policy;
+ 
+ 	bool per_core_dcvs;
+-
+-	struct freq_qos_request throttle_freq_req;
  };
  
-+static const struct mtk_cpufreq_platform_data mt7622_platform_data = {
-+	.min_volt_shift = 100000,
-+	.max_volt_shift = 200000,
-+	.proc_max_volt = 1360000,
-+	.sram_min_volt = 0,
-+	.sram_max_volt = 1360000,
-+	.ccifreq_supported = false,
-+};
-+
- static const struct mtk_cpufreq_platform_data mt8183_platform_data = {
- 	.min_volt_shift = 100000,
- 	.max_volt_shift = 200000,
-@@ -724,8 +733,8 @@ static const struct mtk_cpufreq_platform_data mt8516_platform_data = {
- static const struct of_device_id mtk_cpufreq_machines[] __initconst = {
- 	{ .compatible = "mediatek,mt2701", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt2712", .data = &mt2701_platform_data },
--	{ .compatible = "mediatek,mt7622", .data = &mt2701_platform_data },
--	{ .compatible = "mediatek,mt7623", .data = &mt2701_platform_data },
-+	{ .compatible = "mediatek,mt7622", .data = &mt7622_platform_data },
-+	{ .compatible = "mediatek,mt7623", .data = &mt7622_platform_data },
- 	{ .compatible = "mediatek,mt8167", .data = &mt8516_platform_data },
- 	{ .compatible = "mediatek,mt817x", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt8173", .data = &mt2701_platform_data },
+ static unsigned long cpu_hw_rate, xo_rate;
+@@ -343,8 +340,6 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+ 
+ 	throttled_freq = freq_hz / HZ_PER_KHZ;
+ 
+-	freq_qos_update_request(&data->throttle_freq_req, throttled_freq);
+-
+ 	/* Update thermal pressure (the boost frequencies are accepted) */
+ 	arch_update_thermal_pressure(policy->related_cpus, throttled_freq);
+ 
+@@ -437,14 +432,6 @@ static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
+ 	if (data->throttle_irq < 0)
+ 		return data->throttle_irq;
+ 
+-	ret = freq_qos_add_request(&policy->constraints,
+-				   &data->throttle_freq_req, FREQ_QOS_MAX,
+-				   FREQ_QOS_MAX_DEFAULT_VALUE);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "Failed to add freq constraint (%d)\n", ret);
+-		return ret;
+-	}
+-
+ 	data->cancel_throttle = false;
+ 	data->policy = policy;
+ 
+@@ -511,7 +498,6 @@ static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
+ 	if (data->throttle_irq <= 0)
+ 		return;
+ 
+-	freq_qos_remove_request(&data->throttle_freq_req);
+ 	free_irq(data->throttle_irq, data);
+ }
+ 
 -- 
 2.39.2
 
