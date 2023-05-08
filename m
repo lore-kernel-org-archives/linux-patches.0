@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D51171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA7CC433D2;
-	Mon,  8 May 2023 11:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07C5171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5554CC433EF;
+	Mon,  8 May 2023 11:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546405;
-	bh=Olm/0fAL/5r/H152NekgGKXzc6/Vqe3sbvhMyTHN0/w=;
+	s=korg; t=1683546408;
+	bh=C12pHeQBtQ9+/DHnFwg8xg4GwReZtdvwpa5+3Nj5veM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BjHkrxEuREgWD1sfdF5+Q8+8M2ZK686u35wRRVsDgYf2Z08kV4f5vPuY2W5BtnmiI
-	 MxCVLch+/fw8qZznYSzmglCJuz0UhA4KVGLWmxvO2u+WXvu0C+VAaiGJsVEHuLT99k
-	 SvSR7AZHMvrXGJgyMBnryxkS8uvacLvcnbNQcPLE=
+	b=ggqHyUi1c+Gywonh1SE4LImR2Px4BsBE3UrhgVdN5BfDlTSLQtMnyhT65bWTqdZRs
+	 DHSgYtkRNM5es1x3gH8GNWaMMpBdtsARrhbXc2w6CvLz8Qu+tPaT5dvoGZFm/1GdZK
+	 y1PQq97S4NRwXKBO5Yrblz1thuY+VcaqlVzAXDbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hai Pham <hai.pham.ud@renesas.com>,
-	LUU HOAI <hoai.luu.ub@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Pavel Machek <pavel@ucw.cz>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 327/371] pinctrl: renesas: r8a779a0: Remove incorrect AVB[01] pinmux configuration
-Date: Mon,  8 May 2023 11:48:48 +0200
-Message-Id: <20230508094825.063962341@linuxfoundation.org>
+Subject: [PATCH 5.15 328/371] leds: TI_LMU_COMMON: select REGMAP instead of depending on it
+Date: Mon,  8 May 2023 11:48:49 +0200
+Message-Id: <20230508094825.111991338@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,47 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hai Pham <hai.pham.ud@renesas.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit a145c9a8674ac8fbfa1595276e1b6cbfc5139038 ]
+[ Upstream commit a61079efc87888587e463afaed82417b162fbd69 ]
 
-AVB[01]_{MAGIC,MDC,MDIO,TXCREFCLK} are registered as both
-PINMUX_SINGLE(fn) and PINMUX_IPSR_GPSR(fn) in the pinmux_data array.
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-The latter are correct, hence remove the former.
-Without this fix, the Ethernet PHY is not operational on the MDIO bus.
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
-Signed-off-by: Hai Pham <hai.pham.ud@renesas.com>
-Signed-off-by: LUU HOAI <hoai.luu.ub@renesas.com>
-Fixes: 741a7370fc3b8b54 ("pinctrl: renesas: Initial R8A779A0 (V3U) PFC support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/6fd217b71e83ba9a8157513ed671a1fa218b23b6.1674824958.git.geert+renesas@glider.be
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+
+Fixes: 3fce8e1eb994 ("leds: TI LMU: Add common code for TI LMU devices")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Pavel Machek <pavel@ucw.cz>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230226053953.4681-5-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pfc-r8a779a0.c | 8 --------
- 1 file changed, 8 deletions(-)
+ drivers/leds/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/renesas/pfc-r8a779a0.c b/drivers/pinctrl/renesas/pfc-r8a779a0.c
-index a480677dd03d1..aa4fd56e0250d 100644
---- a/drivers/pinctrl/renesas/pfc-r8a779a0.c
-+++ b/drivers/pinctrl/renesas/pfc-r8a779a0.c
-@@ -710,16 +710,8 @@ static const u16 pinmux_data[] = {
- 	PINMUX_SINGLE(PCIE0_CLKREQ_N),
- 
- 	PINMUX_SINGLE(AVB0_PHY_INT),
--	PINMUX_SINGLE(AVB0_MAGIC),
--	PINMUX_SINGLE(AVB0_MDC),
--	PINMUX_SINGLE(AVB0_MDIO),
--	PINMUX_SINGLE(AVB0_TXCREFCLK),
- 
- 	PINMUX_SINGLE(AVB1_PHY_INT),
--	PINMUX_SINGLE(AVB1_MAGIC),
--	PINMUX_SINGLE(AVB1_MDC),
--	PINMUX_SINGLE(AVB1_MDIO),
--	PINMUX_SINGLE(AVB1_TXCREFCLK),
- 
- 	PINMUX_SINGLE(AVB2_AVTP_PPS),
- 	PINMUX_SINGLE(AVB2_AVTP_CAPTURE),
+diff --git a/drivers/leds/Kconfig b/drivers/leds/Kconfig
+index ed800f5da7d88..8bf545100fb04 100644
+--- a/drivers/leds/Kconfig
++++ b/drivers/leds/Kconfig
+@@ -821,7 +821,7 @@ config LEDS_SPI_BYTE
+ config LEDS_TI_LMU_COMMON
+ 	tristate "LED driver for TI LMU"
+ 	depends on LEDS_CLASS
+-	depends on REGMAP
++	select REGMAP
+ 	help
+ 	  Say Y to enable the LED driver for TI LMU devices.
+ 	  This supports common features between the TI LM3532, LM3631, LM3632,
 -- 
 2.39.2
 
